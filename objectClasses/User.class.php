@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-10-14 21:12:59  dankert
+// Revision 1.5  2004-11-10 22:48:25  dankert
+// Neue Methoden zum Einlesen der Berechtigungen
+//
+// Revision 1.4  2004/10/14 21:12:59  dankert
 // Methoden fuer Berechtigungen
 //
 // Revision 1.3  2004/05/07 21:29:16  dankert
@@ -51,6 +54,8 @@ class User
 	var $desc;
 	var $style;
 	var $isAdmin;
+	var $projects;
+	var $rights;
 
 
 	// Konstruktor
@@ -159,13 +164,19 @@ class User
 			                '  FROM {t_acl}'.
 			                '  LEFT JOIN {t_object} ON {t_object}.id={t_acl}.objectid '.
 			                '  WHERE userid={userid} OR'.
-			                '        '.$this->getGroupClause() );
+			                '        '.$this->getGroupClause().
+			                '  ORDER BY {t_project}.name' );
 			$sql->setInt   ( 'userid',$this->userid );
 
 			return $db->getCol( $sql->query );
 		}
 	}
 
+
+	function loadProjects()
+	{
+		$this->projects = $this->getReadableProjects();
+	}
 
 
 	// Lesen Benutzer aus der Datenbank
@@ -517,6 +528,60 @@ class User
 	}
 	
 
+	function loadRights( $projectid,$languageid )
+	{
+		Logger::debug( 'Lade Berechtigungen' );
+
+		$this->delRights();
+
+		global $SESS,$conf_php;
+		$db = db_connection();
+
+		$group_clause = $this->getGroupClause();
+
+		$sql = new Sql( 'SELECT {t_acl}.* FROM {t_acl}'.
+		                '  LEFT JOIN {t_object} '.
+		                '         ON {t_object}.id={t_acl}.objectid '.
+		                '  WHERE projectid={projectid}'.
+		                '    AND ( languageid={languageid} OR languageid IS NULL )'.
+		                '    AND ( {t_acl}.userid={userid} OR '.$group_clause   .')' );
+		$sql->setInt  ( 'languageid',$languageid    );
+		$sql->setInt  ( 'projectid' ,$projectid     );
+		$sql->setInt  ( 'userid'    ,$this->userid );
+		Logger::debug( 'sql='.$sql->query );
+		foreach( $db->getAll( $sql->query ) as $row )
+		{
+			Logger::debug( 'aclid '.$row['id'] );
+			$objectid = $row['objectid'];
+			
+			$acl = new Acl();
+			$acl->setDatabaseRow( $row );
+			foreach( $acl->getTrueProperties() as $type )
+				$this->addRight($objectid,$type);
+
+			// Vererben der Berechtigung an Unterordner
+			if	( $acl->transmit )
+			{
+				$f = new Folder( $o->parentid );
+				foreach( $f->getAllSubfolderIds as $sfid )
+					foreach( $acl->getTrueProperties() as $type )
+						$this->addRight($sfid,$type);
+			}
+
+			// Uebergeordneten Ordnern das Leserecht geben
+			$o = new Object( $objectid );
+			$o->objectLoadRaw();
+			if	( !$o->isRoot )
+			{
+				$f = new Folder( $o->parentid );
+				$oids = $f->parentObjectIds( true, true );
+				foreach( $oids as $oid )
+					$this->addRight($oid,'read');
+			}
+		}
+	}
+
+
 	// Alle Berechtigungen ermitteln
 	function getRights()
 	{
@@ -575,29 +640,40 @@ class User
 	}
 
 
-	// Berechtigung dem Benutzer hinzufuegen
-	function addRight( $data )
+	function delRights()
 	{
-		global $REQ,$SESS;
-		$db = db_connection();
-		
-		$sql = new SQL('INSERT INTO {t_acl} '.
-		               '(userid,groupid,folderid,`read`,`write`,`create`,`delete`,publish) '.
-		               'VALUES({userid},{groupid},{folderid},{read},{write},{create},{delete},{publish})');
-		               
-		$sql->setInt ('userid',$this->userid);
-		$sql->setNull('groupid');
-		$sql->setInt ('projectid',$SESS['projectid']);
-		$sql->setInt ('folderid',$data['folderid']);
+		$this->rights = array();
+	}
 
-		$sql->setInt ('read'   ,$data['read'   ]);
-		$sql->setInt ('write'  ,$data['write'  ]);
-		$sql->setInt ('create' ,$data['create' ]);
-		$sql->setInt ('delete' ,$data['delete' ]);
-		$sql->setInt ('publish',$data['publish']);
-	
-		// Datenbankabfrage ausf?hren
-		$db->query( $sql->query );
+
+	// Berechtigung dem Benutzer hinzufuegen
+	function addRight( $objectid,$type )
+	{
+		if	( !isset($this->rights[$objectid]) )
+			$this->rights[$objectid] = array();
+			
+		$this->rights[$objectid][$type] = true;
+		Logger::trace( 'Objekt '.$objectid.' erhaelt Recht '.$type );
+//		global $REQ,$SESS;
+//		$db = db_connection();
+//		
+//		$sql = new SQL('INSERT INTO {t_acl} '.
+//		               '(userid,groupid,folderid,`read`,`write`,`create`,`delete`,publish) '.
+//		               'VALUES({userid},{groupid},{folderid},{read},{write},{create},{delete},{publish})');
+//		               
+//		$sql->setInt ('userid',$this->userid);
+//		$sql->setNull('groupid');
+//		$sql->setInt ('projectid',$SESS['projectid']);
+//		$sql->setInt ('folderid',$data['folderid']);
+//
+//		$sql->setInt ('read'   ,$data['read'   ]);
+//		$sql->setInt ('write'  ,$data['write'  ]);
+//		$sql->setInt ('create' ,$data['create' ]);
+//		$sql->setInt ('delete' ,$data['delete' ]);
+//		$sql->setInt ('publish',$data['publish']);
+//	
+//		// Datenbankabfrage ausf?hren
+//		$db->query( $sql->query );
 	}
 	
 	
