@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-09-07 21:12:08  dankert
+// Revision 1.10  2004-10-05 10:00:49  dankert
+// Neue Funktionalit?t: Austauschen einer Vorlage
+//
+// Revision 1.9  2004/09/07 21:12:08  dankert
 // Seiten laden bei elsave()
 //
 // Revision 1.8  2004/05/03 20:22:58  dankert
@@ -188,6 +191,75 @@ class PageAction extends Action
 	}
 
 
+	function ReplaceTemplateSelectElements()
+	{
+		$newTemplateId = intval($this->getRequestVar('templateid'));
+
+		if   ( $newTemplateId != 0  )
+		{
+			$this->setTemplateVar('newTemplateId',$newTemplateId );
+
+			$oldElements = Array();
+			$oldTemplate = new Template( $this->page->templateid );
+			$newTemplate = new Template( $newTemplateId );
+			
+			foreach( $oldTemplate->getElementIds() as $elementid )
+			{
+				$e = new Element( $elementid );
+				$e->load();
+				
+				if	( !$e->isWritable() )
+					continue;
+
+				$oldElements[$elementid] = $e->name.' - '.lang('EL_'.$e->type );
+
+				$newElements = Array();
+				$newElements[0] = lang('ELEMENT_DELETE_VALUES');
+	
+				foreach( $newTemplate->getElementIds() as $newelementid )
+				{
+					$ne = new Element( $newelementid );
+					$ne->load();
+					
+					// Nur neue Elemente anbieten, deren Typ identisch ist
+					if	( $ne->type == $e->type )
+						$newElements[$newelementid] = lang('ELEMENT').': '.$e->name.' - '.lang('EL_'.$e->type );
+				}
+				$this->setTemplateVar('newTemplateElementsOf'.$elementid,$newElements );
+			}
+			$this->setTemplateVar('oldTemplateElements',$oldElements );
+
+
+			$this->forward('page_replacetemplate');
+		}
+		else
+		{
+			$this->callSubAction('prop');
+		}
+	}
+
+
+	function replaceTemplate()
+	{
+		$newTemplateId = intval($this->getRequestVar('newTemplateId'));
+		$replaceElementMap = Array();
+		
+		$oldTemplate = new Template( $this->page->templateid );
+		foreach( $oldTemplate->getElementIds() as $elementid )
+		{
+			$replaceElementMap[$elementid] = $this->getRequestVar('from'.$elementid);
+		}
+		
+		if   ($newTemplateId != 0  )
+		{
+			print_r( $replaceElementMap );
+			$this->page->replaceTemplate( $newTemplateId,$replaceElementMap );
+		}
+
+		$this->callSubAction('prop');
+	}
+
+
 	function el()
 	{
 		global $conf_php;
@@ -300,6 +372,15 @@ class PageAction extends Action
 		}
 		asort( $folders );
 		$this->setTemplateVar('folder',$folders); 
+
+		$templates = Array();
+		foreach( Template::getAll() as $id=>$name )
+		{
+			if	( $id != $this->page->templateid )
+				$templates[$id]=$name;
+		}
+		$this->setTemplateVar('templates',$templates); 
+		 
 	
 		$this->forward('page_prop');
 	}
