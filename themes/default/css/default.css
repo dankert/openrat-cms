@@ -1,0 +1,38 @@
+/* $Id$ */
+
+a:link{color:#022A50; font-weight:normal; text-decoration:none }
+a:active{color:#022A50; font-weight:normal; text-decoration:underline }
+a:visited{color:#022A50; font-weight:normal; text-decoration:none }
+a:hover{color:#022A50; font-weight:normal; text-decoration:underline }
+
+a.mainmenu:link{color:#FFFFFF; font-weight:bold; text-decoration:none }
+a.mainmenu:active{color:#FFFFFF; font-weight:bold; text-decoration:underline }
+a.mainmenu:visited{color:#FFFFFF; font-weight:bold; text-decoration:none }
+a.mainmenu:hover{color:#FFFFFF; font-weight:bold; text-decoration:underline }
+
+body{color:#000000; font-family:Arial;font-size:13px; background-color:#dad2b6;
+     scrollbar-face-color:#dad2b6;scrollbar-arrow-color:#000000;scrollbar-base-color:#dad2b6;}
+body.title { margin:0px; }
+
+pre{ font-family:Courier;font-size:13px; }
+
+th {background-color:#7B9CBD; color:white; font-family:Arial;font-size:13px; vertical-align:top; font-weight:bold; border-bottom:1px solid grey;}
+td {color:#000000; font-family:Arial;font-size:13px; vertical-align:top; }
+
+th.help    { background-color:#eae2c6; color:black; }
+td.title   { background-color:#cac2a6; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
+td.menu    { background-color:#7B9CBD;vertical-align:middle; }
+td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
+td.f1 {background-color:#cac2a6; padding:5px; border-top:5px solid #dad2b6;border-left:3px solid #dad2b6; border-bottom:1px solid grey; border-right:3px solid #dad2b6;}
+td.f2 {background-color:#cac2a6; padding:5px; border-top:5px solid #dad2b6;border-left:3px solid #dad2b6; border-bottom:1px solid grey; border-right:3px solid #dad2b6; }
+/*td.f2 {background-color:#dad2b6; padding:5px; }*/
+td.act {background-color:#eae2c6; padding:15px; border-top:0px solid grey;  }
+.mainmenu_headline{color:#CCCCCC; font-weight:normal; }
+.mainmenu_name{color:#CCCCCC; font-weight:bold; }
+.mainmenu_val{color:white; font-weight:normal; }
+p.copyright { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; text-align:center; }
+
+table.main { border:1px solid black; margin-top:30px; }
+
+input, select, textarea { color:#000000; background-color:#dad2b6; }
+input.submit { color:#FFFFFF; background-color:#7B9CBD; }
