@@ -48,35 +48,9 @@
 </form>
 
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="<?php echo session_name() ?>" value="<?php echo session_id() ?>">
-<input type="hidden" name="folderaction" value="move">
-
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('MOVE') ?></th>
-</tr>
-
-<tr>
-<td width="50%" class="f1"><?php echo lang('FOLDER') ?></a></td>
-<td width="50%" class="f1"><?php echo Html::selectBox('movetoobjectid',$folder,$act_objectid) ?></td>
-</tr>
-
-<tr>
-<td class="act" colspan="2"><input type="submit"  class="submit" value="<?php echo lang('MOVE') ?>"></td>
-</tr>
-
-</table>
-
-</form>
-
 
 </center>
 
-<script name="JavaScript" type="text/javascript"><!--
-document.forms[0].name.focus();
-//--></script>
+<?php Html::focusField('name') ?>
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>
