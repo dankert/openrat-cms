@@ -99,12 +99,41 @@
 </tr>
 <?php } ?>
 <tr>
+  <td><a href="javascript:mark();"><?php echo lang('FOLDER_MARK_ALL') ?></a> | <a href="javascript:unmark();"><?php echo lang('FOLDER_UNMARK_ALL') ?></a> | <a href="javascript:flip();"><?php echo lang('FOLDER_FLIP_MARK') ?></a></td>
+</tr>
+<tr>
 <td class="act" colspan="3"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>"></td>
 </tr>
 
 </table>
 
 </form>
+
+
+<script name="JavaScript">
+<!--
+function mark()
+{
+<?php foreach( $show as $t ) { if($t=='read') continue; ?>
+document.forms[0].elements['<?php echo $t ?>'].checked=true;
+<?php } ?>
+}
+function unmark()
+{
+<?php foreach( $show as $t ) { if($t=='read') continue; ?>
+document.forms[0].elements['<?php echo $t ?>'].checked=false;
+<?php } ?>
+}
+function flip()
+{
+<?php foreach( $show as $t ) { if($t=='read') continue; ?>
+if	(document.forms[0].elements['<?php echo $t ?>'].checked==false)
+ document.forms[0].elements['<?php echo $t ?>'].checked=true;
+else document.forms[0].elements['<?php echo $t ?>'].checked=false;
+<?php } ?>
+}
+//-->
+</script>
 
 
 
