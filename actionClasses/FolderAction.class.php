@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-11-10 22:36:16  dankert
+// Revision 1.10  2004-11-27 13:06:26  dankert
+// Ausgabe von Meldungen
+//
+// Revision 1.9  2004/11/10 22:36:16  dankert
 // Dateioperationen, Verschieben/Kopieren/Verknuepfen von mehreren Objekten in einem Arbeitsschritt
 //
 // Revision 1.8  2004/10/14 22:57:44  dankert
@@ -57,7 +60,7 @@
  * @package openrat.actions
  */
 
-class FolderAction extends Action
+class FolderAction extends ObjectAction
 {
 	var $defaultSubAction = 'show';
 	var $folder;
@@ -167,6 +170,7 @@ class FolderAction extends Action
 			$this->folder->save();
 		}
 	
+		$this->addNotice($this->folder->getType(),$this->folder->name,lang('PROP_SAVED'),'ok');
 		$this->setTemplateVar('tree_refresh',true);
 		$this->callSubAction('show');
 	}
@@ -209,17 +213,20 @@ class FolderAction extends Action
 		if	( $targetObjectId == 0 )
 			exit('fatal: no target');
 
+		$notices = array();
+
 		foreach( $ids as $id )
 		{
 			// Nur, wenn Objekt ausgewaehlt wurde
 			if	( $this->getRequestVar('obj'.$id) != '1' )
 				continue;
 
+			$o = new Object( $id );
+			$o->load();
+
 			switch( $type )
 			{
 				case 'move':
-					$o = new Object( $id );
-					$o->load();
 					if	( $o->isFolder )
 					{
 						$f = new Folder( $id );
@@ -231,25 +238,29 @@ class FolderAction extends Action
 						// - Das Zielverzeichnis nicht der zu verschiebene Ordner ist
 						// dann verschieben
 						if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
-							echo "versch!!!!";
+						{
+							$this->addNotice($o->getType(),$o->objectid,lang('MOVED'),'ok');
 							//$o->setParentId( $targetObjectId );
+						}
 						else
-							$this->message('ERROR','Cannot move folder into his own subfolder!');
+						{
+							$this->addNotice($o->getType(),$o->objectid,lang('MOVED'),'error');
+						}
 					}
 					else
 					{
 						$o->setParentId( $targetObjectId );
+						$this->addNotice($o->getType(),$o->objectid,lang('MOVED'),'ok');
 					}
 					break;
 	
 				case 'copy':
-					$o = new Object( $id );
-					$o->load();
 					switch( $o->getType() )
 					{
 						case 'folder':
 							// Ordner zur Zeit nicht kopieren
 							// Funktion waere zu verwirrend
+							$this->addNotice($o->getType(),$o->objectid,lang('CANNOT_COPY_FOLDER'),'error');
 							break;
 						
 						case 'file':
@@ -260,6 +271,7 @@ class FolderAction extends Action
 							$f->parentid = $targetObjectId;
 							$f->add();
 							$f->copyValueFromFile( $id );
+							$this->addNotice($o->getType(),$o->objectid,lang('COPIED'),'ok');
 							break;
 						
 						case 'page':
@@ -270,6 +282,7 @@ class FolderAction extends Action
 							$p->parentid = $targetObjectId;
 							$p->add();
 							$p->copyValuesFromPage( $id );
+							$this->addNotice($o->getType(),$o->objectid,lang('COPIED'),'ok');
 							break;
 						
 						case 'link':
@@ -279,17 +292,17 @@ class FolderAction extends Action
 							$l->name     = lang('COPY_OF').' '.$l->name;
 							$l->parentid = $targetObjectId;
 							$l->add();
+							$this->addNotice($o->getType(),$o->objectid,lang('COPIED'),'ok');
 							break;
 						
 						default:
 							die('fatal: what type to delete?');
 					}
+					$notices[] = lang('COPIED');
 					break;
 	
 				case 'link':
 
-					$o = new Object( $id );
-					$o->load();
 					if	( $o->isFile  ||
 						  $o->isPage  )  // Nur Seiten oder Dateien sind verknuepfbar
 					{
@@ -300,13 +313,16 @@ class FolderAction extends Action
 						$link->isLinkToObject = true;
 						$link->name           = lang('GLOBAL_LINK_TO').' '.$o->name;
 						$link->add();
+						$this->addNotice($o->getType(),$o->objectid,lang('WAS_LINKED'),'ok');
+					}
+					else
+					{
+						$this->addNotice($o->getType(),$o->objectid,lang('WAS_LINKED'),'error');
 					}
 					break;
 	
 				case 'delete':
 
-					$o = new Object( $id );
-					$o->load();
 					switch( $o->getType() )
 					{
 						case 'folder':
@@ -332,6 +348,7 @@ class FolderAction extends Action
 						default:
 							die('fatal: what type to delete?');
 					}
+					$this->addNotice($o->getType(),$o->objectid,lang('DELETED'),'ok');
 					break;
 			}
 
@@ -479,13 +496,12 @@ class FolderAction extends Action
 		$last_objectid = 0;
 
 		// Schleife ueber alle Objekte in diesem Ordner
-		foreach( $this->folder->getObjectIds() as $id )
+		foreach( $this->folder->getObjects() as $o )
 		{
-			$o = new Object( $id );
-			
+			$id = $o->objectid;
+
 			if   ( $o->hasRight('read') )
 			{
-				$o->objectLoad();
 				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
 				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );

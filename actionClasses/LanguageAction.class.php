@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-11-10 22:37:23  dankert
+// Revision 1.4  2004-11-27 13:06:44  dankert
+// Ausgabe von Meldungen
+//
+// Revision 1.3  2004/11/10 22:37:23  dankert
 // Korrektur Auswahl-Url
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
@@ -98,12 +101,14 @@ class LanguageAction extends Action
 				$this->language->delete();
 				$this->setSessionVar('languageid','');
 
+				$this->addNotice( 'language',$this->language->name,lang('DELETED') );
 				$this->callSubAction( 'listing' );
 			}
 			else
 			{
 				$this->language->name    = $this->getRequestVar('name'   );
 				$this->language->isoCode = $this->getRequestVar('isocode');
+				$this->addNotice( 'lang',$this->language->name,lang('GLOBAL_SAVED') );
 				$this->language->save();
 			}
 		}
