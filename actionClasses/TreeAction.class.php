@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-12-15 23:24:58  dankert
+// Revision 1.10  2004-12-18 00:16:15  dankert
+// language_read() entfernt
+//
+// Revision 1.9  2004/12/15 23:24:58  dankert
 // Html::url()-Parameter angepasst
 //
 // Revision 1.8  2004/11/27 13:08:49  dankert
@@ -110,7 +113,6 @@ class TreeAction extends Action
 
 		// Erzeugen des Menue-Baums
 		//
-		language_read(); // TODO Beim 1. stable-Release entfernen!
 	
 		if	( $projectid == -1 )
 		{

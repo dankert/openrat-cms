@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-12-15 23:23:27  dankert
+// Revision 1.7  2004-12-18 00:16:26  dankert
+// language_read() entfernt
+//
+// Revision 1.6  2004/12/15 23:23:27  dankert
 // div. neue Methoden
 //
 // Revision 1.5  2004/11/28 18:26:15  dankert
@@ -335,9 +338,6 @@ class IndexAction extends Action
 		global $conf;
 		global $PHP_AUTH_USER;
 		global $PHP_AUTH_PW;
-
-		if   ( Session::getLanguage() === '' )
-			language_read();
 
 		$user = Session::getUser();
 		if   ( ! is_object($user) )
