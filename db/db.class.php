@@ -18,21 +18,9 @@
 // +----------------------------------------------------------------------+
 //
 
-
 // This is the database abstraction layer. This class was inspired by the
-// great PHP-Pear-DB package. Thanks to its developers.
+// PHP-Pear-DB package. Thanks to its developers.
 
-
-// Column data indexed by numbers, ordered from 0 and up
-define('DB_FETCHMODE_ORDERED', 1);
-
-// Column data indexed by column names
-define('DB_FETCHMODE_ASSOC'  , 2);
-
-// Column data as object properties
-define('DB_FETCHMODE_OBJECT' , 3);
-
-define('DB_FETCHMODE_DEFAULT', DB_FETCHMODE_ASSOC);
 
 
 
@@ -44,10 +32,7 @@ define('DB_FETCHMODE_DEFAULT', DB_FETCHMODE_ASSOC);
  */
 class DB
 {
-	var $isError = false;
-	var $error   = '';
 	var $dbh;
-	var $fetchmode = DB_FETCHMODE_ORDERED;
 	var $conf;
 	var $id;
 
@@ -55,12 +40,6 @@ class DB
 	function DB( $conf = array() )
 	{
 		$this->connect( $conf );
-	}
-	
-	
-	function setFetchMode( $fetchmode )
-	{
-		$this->fetchmode = $fetchmode;
 	}
 	
 	
@@ -76,9 +55,6 @@ class DB
 		$this->dbh = & new $classname;
 
 		$this->dbh->connect( $this->conf );
-
-		if ( $this->dbh->isError )
-			return false;
 
 		return true;
 	}
@@ -115,10 +91,20 @@ class DB
 	{
 		$res = $this->query($query);
 
-		$err = $res->fetchInto( &$row, DB_FETCHMODE_ORDERED );
-		$res->free();
-
-		return $row[0];
+		if	( $res->numRows() > 0 )
+		{
+			$row = $res->fetchRow( 0 );
+			$res->free();
+	
+			$keys = array_keys($row);
+	
+			return $row[ $keys[0] ];
+		}
+		else
+		{
+			$res->free();
+			return array();
+		}
 	}
 
 
@@ -126,7 +112,10 @@ class DB
 	{
 		$res = $this->query($query);
 
-		$err = $res->fetchInto($row);
+		if	( $res->numRows() > 0 )
+			$row = $res->fetchRow( 0 );
+		else
+			$row = array();
 
 		$res->free();
 
@@ -134,19 +123,20 @@ class DB
 	}
 
 
-	function &getCol( $query, $col=0 )
+	function &getCol( $query )
 	{
 		$res = $this->query( $query );
 		
-		if   ( is_integer( $col ) )
-			$fetchmode = DB_FETCHMODE_ORDERED;
-		else $fetchmode = DB_FETCHMODE_ASSOC;
-
 		$ret = array();
 
-		while( is_array($row = $res->fetchRow($fetchmode)) )
+		$numRows = $res->numRows();
+		
+		for( $i=0; $i<$numRows; $i++ )
 		{
-			$ret[] = $row[$col];
+			$row = $res->fetchRow($i);
+			
+			$keys = array_keys($row);
+			$ret[] = $row[ $keys[0] ];
 		}
 
 		$res->free();
@@ -159,23 +149,35 @@ class DB
 	{
 		$res = $this->query($query);
 
-		$cols = $res->numCols();
+		$numCols = $res->numCols();
+		$numRows = $res->numRows();
 
 		$results = array();
 
-		if ( $cols > 2 || $force_array )
+		if ( $numCols > 2 || $force_array )
 		{
-			while( is_array($row = $res->fetchRow(DB_FETCHMODE_ORDERED)) )
+			for( $i=0; $i<$numRows; $i++ )
 			{
-				reset($row);
-				$results[ $row[0] ] = array_slice($row, 1);
+				$row = $res->fetchRow($i);
+
+				$keys = array_keys($row);
+				$key1 = $keys[0];
+
+				unset( $row[$key1] );
+				$results[ $row[$key1] ] = $row;
 			}
 		}
 		else
 		{
-			while (is_array($row = $res->fetchRow(DB_FETCHMODE_ORDERED)))
+			for( $i=0; $i<$numRows; $i++ )
 			{
-				$results[$row[0]] = $row[1];
+				$row = $res->fetchRow($i);
+
+				$keys = array_keys($row);
+				$key1 = $keys[0];
+				$key2 = $keys[1];
+
+				$results[ $row[$key1] ] = $row[$key2];
 			}
 		}
 
@@ -184,17 +186,17 @@ class DB
 		return $results;
 	}
 
-	function &getAll($query, $fetchmode = DB_FETCHMODE_DEFAULT )
+
+	function &getAll( $query )
 	{
-
-		$fetchmode = (empty($fetchmode)) ? DB_FETCHMODE_DEFAULT : $fetchmode;
-
 		$res = $this->query( $query );
 
 		$results = array();
+		$numRows = $res->numRows();
 
-		while( $row = $res->fetchRow( $fetchmode) )
+		for( $i=0; $i<$numRows; $i++ )
 		{
+			$row = $res->fetchRow($i);
 			$results[] = $row;
 		}
 
@@ -227,19 +229,11 @@ class DB_result
 	}
 
 
-	function fetchRow( $fetchmode = null, $rownum = null )
+	function fetchRow( $rownum = 0 )
 	{
-		$arr = $this->dbh->fetchRow( $this->result, $fetchmode, $rownum );
+		$arr = $this->dbh->fetchRow( $this->result, $rownum );
 
 		return $arr;
-	}
-
-
-	function fetchInto( &$arr, $fetchmode = null, $rownum=null )
-	{
-		$arr = $this->fetchRow( $fetchmode, $rownum );
-
-		return true;
 	}
 
 
@@ -251,12 +245,7 @@ class DB_result
 
 	function numRows()
 	{
-		$rows = $this->dbh->numRows( $this->result );
-
-		if   ( $this->dbh->isError )
-			echo "Fehler";
-		
-		return $rows;
+		return $this->dbh->numRows( $this->result );
 	}
 
 

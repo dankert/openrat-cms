@@ -28,9 +28,7 @@
 class DB_postgresql
 {
 	var $connection;
-	var $autocommit = true;
-	var $fetchmode  = DB_FETCHMODE_ORDERED; /* Default fetch mode */
-	var $isError    = false;
+
 
 	function connect( $conf )
 	{
@@ -70,74 +68,35 @@ class DB_postgresql
 	{
 		$result = @pg_exec( $this->connection,$query );
 
-		if   ( ! $result )
-		{
+		if	( ! $result )
 			die( '<pre>'.$query."\n".'<span style="color:red;">'.pg_errormessage().'</span></pre>' );
-		}
 
 		return $result;;
 	}
 
 
-	function affectedRows( $result=null )
+	function fetchRow( $result, $rownum )
 	{
-		return pg_affected_rows( $result );
-	}
-
-
-	function fetchRow( $result, $fetchmode, $rownum )
-	{
-		if   ( $rownum !== null )
-		{
-			$arr = pg_fetch_array( $result,$rownum,PGSQL_ASSOC );
-		}
-		else
-		{
-			$arr = pg_fetch_array( $result );
-		}
-
-		if   ( ! $arr )
-		{
-			$this->isError = true;
-		}
-		
-		return $arr;
+		return pg_fetch_array( $result,$rownum,PGSQL_ASSOC );
 	}
 
  
 	function freeResult($result)
 	{
-		if (is_resource($result))
-		{
-			return pg_freeresult($result);
-		}
-		return true;
+		return pg_freeresult($result);
 	}
 
 
-	function numCols($result)
+	function numCols($result )
 	{
-		$cols = pg_numfields( $result );
-
-		if   ( ! $cols )
-		{
-			return $this->postgresRaiseError();
-		}
-
-		return $cols;
+		return pg_numfields( $result );
 	}
 
 
 
 	function numRows( $result )
 	{
-		$rows = pg_numrows($result);
-
-		if   ($rows === null )
-		{
-			$this->isError = true;
-		}
-		return $rows;
+		return pg_numrows($result);
 	}
 }
 

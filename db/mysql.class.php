@@ -28,9 +28,7 @@
 class DB_mysql
 {
 	var $connection;
-	var $autocommit = true;
-	var $fetchmode  = DB_FETCHMODE_ORDERED; /* Default fetch mode */
-	var $isError    = false;
+
 
 	function connect( $conf )
 	{
@@ -63,23 +61,6 @@ class DB_mysql
 
 
 
-//	function nextId( $sequenceName )
-//	{
-//		$res = mysql_query("SELECT id FROM `$sequenceName`",$this->connection );
-//		if	( mysql_errno($this->connection) != 0 )
-//			die( mysql_error($this->connection) );
-//		
-//		$nextId = intval( mysql_result($res,0,0) ) + 1;
-//
-//		mysql_query("UPDATE `$sequenceName` SET id=".$nextId,$this->connection );
-//		if	( mysql_errno($this->connection) != 0 )
-//			die( mysql_error($this->connection) );
-//
-//		return $nextId;
-//	}
-//
-//
-//
 	function disconnect()
 	{
 		$ret = mysql_close( $this->connection );
@@ -93,84 +74,37 @@ class DB_mysql
 	{
 		$result = mysql_query($query, $this->connection);
 
-		if   ( ! $result )
-		{
+		if	( ! $result )
 			die( '<pre>'.$query."\n".'<span style="color:red;">'.mysql_error().'</span></pre>' );
-		}
 
 		return $result;;
 	}
 
 
-	function affectedRows()
+	function fetchRow( $result, $rownum )
 	{
-		return mysql_affected_rows();
-	}
-
-
-	function fetchRow( $result, $fetchmode, $rownum )
-	{
-		if   ( $rownum !== null )
-		{
-			if   ( ! @mysql_data_seek($result, $rownum) )
-			{
-				return null;
-			}
-		}
-
-		if   ( $fetchmode == DB_FETCHMODE_ORDERED )
-		{
-			$arr = @mysql_fetch_row( $result );
-		}
-		else
-		{
-			$arr = @mysql_fetch_array( $result,MYSQL_ASSOC );
-		}
-
-		if   ( ! $arr )
-		{
-			$this->isError = true;
-		}
-		
-		return $arr;
+		return mysql_fetch_array( $result,MYSQL_ASSOC );
 	}
 
  
 	function freeResult($result)
 	{
-		if (is_resource($result))
-		{
+		if	( is_resource($result) )
 			return mysql_free_result($result);
-		}
 		return true;
 	}
 
 
 	function numCols($result)
 	{
-		$cols = mysql_num_fields( $result );
-
-		if   ( ! $cols )
-		{
-			return $this->mysqlRaiseError();
-		}
-
-		return $cols;
+		return mysql_num_fields( $result );
 	}
 
 
 
 	function numRows( $result )
 	{
-		//echo "yo";
-		//print_r($result);
-		$rows = mysql_num_rows($result);
-
-		if   ($rows === null )
-		{
-			$this->isError = true;
-		}
-		return $rows;
+		return mysql_num_rows($result);
 	}
 }
 
