@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2004-12-19 14:53:54  dankert
+// Revision 1.18  2004-12-19 20:40:51  dankert
+// Korrektur URLs
+//
+// Revision 1.17  2004/12/19 14:53:54  dankert
 // pub2() -> pubnow()
 //
 // Revision 1.16  2004/12/15 23:23:11  dankert
@@ -535,7 +538,7 @@ class FolderAction extends ObjectAction
 				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
-					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+					$list[$id]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
 
 				$list[$id]['type'] = $o->getType();
@@ -554,27 +557,19 @@ class FolderAction extends ObjectAction
 //						$list[$id]['icon'] = 'text';
 				}
 
-				$list[$id]['url' ] = Html::url(array('action'    =>'main',
-				                                     'callAction'=>$o->getType(),
-				                                     'objectid'  =>$id));
-				$list[$id]['propurl' ] = Html::url(array('action'=>$o->getType(),
-				                                         'subaction'=>'prop',
-				                                         'objectid'=>$id));
+				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
 				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchange_date );
 				$list[$id]['user'] = User::getUserName( $o->lastchange_userid );
 
 				if   ( $last_objectid != 0 && $o->hasRight(ACL_WRITE) )
 				{
-					$list[$id           ]['upurl'    ] = Html::url(array('action'   =>'folder',
-					                                                     'subaction'=>'changesequence',
+					$list[$id           ]['upurl'    ] = Html::url('folder','changesequence',array(
 					                                                     'objectid1'=>$id,
 					                                                     'objectid2'=>$last_objectid));
 					$list[$last_objectid]['downurl'  ] = $list[$id]['upurl'];
-					$list[$last_objectid]['bottomurl'] = Html::url(array('action'   =>'folder',
-					                                                     'subaction'=>'setbottom',
+					$list[$last_objectid]['bottomurl'] = Html::url('folder','setbottom',array(
 					                                                     'objectid1'=>$last_objectid));
-					$list[$id           ]['topurl'   ] = Html::url(array('action'   =>'folder',
-					                                                     'subaction'=>'settop',
+					$list[$id           ]['topurl'   ] = Html::url('folder','settop',array(
 					                                                     'objectid1'=>$id));
 				}
 
@@ -597,19 +592,11 @@ class FolderAction extends ObjectAction
 			$this->setTemplateVar('folder',$otherfolder);
 	
 			// URLs zum Umsortieren der Eintraege
-			$this->setTemplateVar('orderbytype_url'      ,Html::url(array('action'   =>'folder',
-			                                                              'subaction'=>'reorder',
-			                                                              'type'     =>'type')) );
-			$this->setTemplateVar('orderbyname_url'      ,Html::url(array('action'   =>'folder',
-			                                                              'subaction'=>'reorder',
-			                                                              'type'     =>'name')) );
-			$this->setTemplateVar('orderbylastchange_url',Html::url(array('action'   =>'folder',
-			                                                              'subaction'=>'reorder',
-			                                                              'type'     =>'lastchange')) );
-			$this->setTemplateVar('flip_url'             ,Html::url(array('action'   =>'folder',
-			                                                              'subaction'=>'reorder',
-			                                                              'type'     =>'flip')) );
+			$this->setTemplateVar('orderbytype_url'      ,Html::url('folder','reorder',array('type'=>'type'      )) );
+			$this->setTemplateVar('orderbyname_url'      ,Html::url('folder','reorder',array('type'=>'name'      )) );
+			$this->setTemplateVar('orderbylastchange_url',Html::url('folder','reorder',array('type'=>'lastchange')) );
 		}	
+			$this->setTemplateVar('flip_url'             ,Html::url('folder','reorder',array('type'=>'flip'      )) );
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
 
