@@ -14,7 +14,7 @@
       		{
       			foreach( $folder as $id=>$ftext )
       			{
-      				echo '<a href="'.Html::url(array('action'=>'main','callAction'=>'folder','objectid'=>$id,'callSubaction'=>'show')).'" target="cms_main" class="mainmenu">';
+      				echo '<a href="'.Html::url('main','folder',$id).'" target="cms_main" class="mainmenu">';
       				echo '<img src="'.$image_dir.'icon_folder'.IMG_EXT.'" align="middle" alt="" border="0" />';
       				echo $ftext;
       				echo '</a><strong>'.FILE_SEP.'</strong>&nbsp;';
@@ -53,7 +53,7 @@
 
 
 			if   ( ++$i > 1 ) echo ' | ';
-			echo '<a href="'.Html::url(array('action'=>$action,'subaction'=>$act,$param=>$this->getSessionVar($param))).'"'.$attrAccesskey.' target="cms_main_main" title="'.$title.'">'.$text.'</a>';
+			echo '<a href="'.Html::url($action,$act,$actionid).'"'.$attrAccesskey.' target="cms_main_main" title="'.$title.'">'.$text.'</a>';
 		}
     ?></td>
   </tr>
