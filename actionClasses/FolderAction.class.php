@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.24  2004-12-29 20:43:30  dankert
+// Revision 1.25  2004-12-30 21:44:23  dankert
+// Nach Speichern der Eigenschaften wieder Eigenschaften aufrufen
+//
+// Revision 1.24  2004/12/29 20:43:30  dankert
 // Kontextsensitives Anzeigen der Veroeffentlichungs-Checkboxen
 //
 // Revision 1.23  2004/12/28 22:58:23  dankert
@@ -224,7 +227,7 @@ class FolderAction extends ObjectAction
 		}
 	
 		$this->setTemplateVar('tree_refresh',true);
-		$this->callSubAction('show');
+		$this->callSubAction('prop');
 	}
 
 
