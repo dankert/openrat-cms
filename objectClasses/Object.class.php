@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-12-19 15:23:56  dankert
+// Revision 1.14  2004-12-20 20:01:20  dankert
+// Benutzen von switch() in filename()
+//
+// Revision 1.13  2004/12/19 15:23:56  dankert
 // Anpassung Session-Funktionen
 //
 // Revision 1.12  2004/12/15 23:18:09  dankert
@@ -352,16 +355,24 @@ class Object
 	{
 
 		global $conf;
-		if	( $conf['publish']['filename'] == 'id' )
-			$this->filename = $this->objectid;
-		elseif	( $conf['publish']['filename'] == 'crc32' )
-			$this->filename = crc32($this->objectid);
-		elseif	( $conf['publish']['filename'] == 'md5' )
-			$this->filename = md5($this->objectid);
-		elseif	( $conf['publish']['filename'] == 'ss' )
-			$this->filename = '0,'.abs(crc32($this->objectid)).','.abs(crc32($this->objectid+1)).',00';
 
-		if ($this->filename != '')
+		switch( $conf['publish']['filename'] )
+		{
+		 	case 'crc32':
+				$this->filename = crc32($this->objectid);
+				break;
+			case 'md5':
+				$this->filename = md5($this->objectid);
+				break;
+			case  'ss':
+				$this->filename = '0,'.abs(crc32($this->objectid)).','.abs(crc32($this->objectid+1)).',00';
+				break;
+			case 'id':
+				$this->filename = $this->objectid;
+				break;
+		}
+
+		if	( $this->filename != '' )
 			return $this->filename;
 
 		$this->load();
