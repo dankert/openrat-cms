@@ -2,7 +2,7 @@
 ; <?php exit('direct access denied') ?>
 
 [database]
-databases = TEST,CMSPROD,CMSLEER
+databases = TEST,CMSPROD,CMSLEER,FOEHR
 ;databases = TEST
 
 
@@ -37,6 +37,22 @@ database = cmsprod
 prefix = 
 persistent = yes
 
+
+[database_FOEHR]
+comment = "CMS Wohnung auf F&ouml;hr"
+type = mysql
+user = cms
+password = horst
+host = :/var/run/mysqld/mysqld.sock
+database = wohnung_auf_foehr_de
+prefix = 
+persistent = yes
+
+
+
+
+[auth]
+type=form
 
 
 [debug]
@@ -123,20 +139,23 @@ languagedir = "./language"
 plugindir   = "./plugins"
 tmpdir      = "./tmp"
 
+
 [log]
 
 level    = "debug"
-file     = "./data/cms.log"
+file     = "./log/cms.log"
 
+; %user    = username
+; %host    = host
+; %time    = time
+; %level   = facility
+; %agent   = browser string
+; %action  = the message
 
-; ---------------------------------------------------------------------
-; Session config
-; ---------------------------------------------------------------------
-
-[session]
-
-cookies = no
-transient = no
+; date_format is parameter for PHP-function date()
+date_format = "M j H:i:s"
+dns_lookup  = true
+format   = "%time %host %user %level %action '%agent'"
 
 
 ; ---------------------------------------------------------------------
