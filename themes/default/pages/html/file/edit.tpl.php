@@ -25,7 +25,7 @@
 
 </table>
 
-<?php if	( substr($mimetype,0,6) == 'image/' )
+<?php if ( count($formats) > 0 )
       { ?>
 <form action="<?php echo $self ?>" method="post" target="_self">
 
@@ -51,7 +51,7 @@
 </tr>
 <tr>
 <td width="50%" class="f2"><?php echo lang('FILE_IMAGE_FORMAT') ?></td>
-<td width="50%" class="f2"><?php echo Html::selectBox('format',$formats,$extension) ?></td>
+<td width="50%" class="f2"><?php echo Html::selectBox('format',$formats,$default_format) ?></td>
 </tr>
 <tr>
 <td width="50%" class="f2"><?php echo lang('FILE_IMAGE_JPEG_COMPRESSION') ?></td>
