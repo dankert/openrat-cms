@@ -16,7 +16,7 @@
 </tr>
 
 <tr>
-<td colspan="2"><img src="<?php echo $image_dir ?>/logo.jpg"></td>
+<td colspan="2"><a href="http://www.openrat.de/" target="_top"><img src="<?php echo $image_dir ?>/logo.jpg" border="0" /></a></td>
 </tr>
 
 <?php if ($loginmessage!='')
@@ -56,7 +56,10 @@
 
 </form>
 
-<?php include( $tpl_dir.'copyright.tpl.php') ?>
+<!-- The GPL licence requires this text, so NEVER remove nor change it. -->
+
+<br><br>
+<p class="copyright"><a href="http://www.gnu.org/copyleft/gpl.html" target="_top"><?php echo lang('login_gpl') ?></a></p>
 
 </center>
 
