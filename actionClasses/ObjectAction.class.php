@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-11-27 13:08:22  dankert
+// Revision 1.2  2004-11-28 16:55:20  dankert
+// Berechtigungen f?r "alle" hinzufuegen
+//
+// Revision 1.1  2004/11/27 13:08:22  dankert
 // Neu: Beinhaltet objekt?bergreifende Methoden. Die Klassen File,Page,Link und Folder erben nun von dieser Klasse
 //
 // Revision 1.9  2004/11/10 22:36:16  dankert
@@ -74,9 +77,16 @@ class ObjectAction extends Action
 
 		$acl->objectid = $this->getSessionVar('objectid');
 		
-		if   ( $this->getRequestVar('type') == 'user' )
-			$acl->userid  = $this->getRequestVar('userid' );
-		else	$acl->groupid = $this->getRequestVar('groupid');
+		switch( $this->getRequestVar('type') )
+		{
+			case 'user':
+				$acl->userid  = $this->getRequestVar('userid' );
+				break;
+			case 'group':
+				$acl->groupid = $this->getRequestVar('groupid');
+				break;
+			default:
+		}
 
 		$acl->languageid    = $this->getRequestVar('languageid');
 
