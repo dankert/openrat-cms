@@ -190,11 +190,11 @@ class Value
 		// Links
 		if   ( $this->element->html )
 			$pf = '>';
-		else $pf = '&gt;';
+		else $pf = '&amp;gt;';
 
 		if   ( $this->element->html )
 			$pf = '>';
-		else $pf = '&gt;';
+		else $pf = '&amp;gt;';
 		
 		// Zeichenkette in die einzelnen Zeilen zerlegen
 		$zeilen = explode("\n",$text);
