@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-12-19 14:53:11  dankert
+// Revision 1.8  2004-12-26 20:20:40  dankert
+// Konstante FILE_SEP benutzen
+//
+// Revision 1.7  2004/12/19 14:53:11  dankert
 // Verwenden von getRequestId()
 //
 // Revision 1.6  2004/12/15 23:22:37  dankert
@@ -77,13 +80,19 @@ class ElementAction extends Action
 
 
 	/**
-	 * ?ndern des Element-Typs
+	 * Aendern des Element-Typs
 	 */
 	function changetype()
 	{
-		// Neuen Typ setzen und speichern
-		$this->element->setType( $this->getRequestVar('type') );
-		$this->element->load();
+		if	( !$this->userIsAdmin && $this->getRequestVar('type') == 'code' )
+		{
+			// Code-Elemente fuer Nicht-Administratoren nicht benutzbar
+		}
+		else
+		{
+			// Neuen Typ setzen und speichern
+			$this->element->setType( $this->getRequestVar('type') );
+		}
 	
 		$this->callSubAction('edit');
 	}
@@ -107,6 +116,11 @@ class ElementAction extends Action
 		{
 			$types[ $t ] = lang('EL_'.$t);
 		}
+
+		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
+		if	( !$this->userIsAdmin )
+			unset( $types['code'] );
+		
 		$this->setTemplateVar('type',$types);
 		
 		$this->setTemplateVar('default_type',$this->element->type);
@@ -349,9 +363,9 @@ class ElementAction extends Action
 							$f = new Folder( $o->parentid );
 							$f->load();
 							
-							$objects[ $id ]  = lang( $o->getType() ).': '; 
-							$objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) ); 
-							$objects[ $id ] .= ' &raquo; '.$o->name;
+							$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+							$objects[ $id ] .= implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
+							$objects[ $id ] .= FILE_SEP.$o->name;
 						} 
 					}
 			
