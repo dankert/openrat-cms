@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-04-25 12:50:11  dankert
+// Korrektur: Projektliste
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // Revision 1.1  2003/09/29 18:19:48  dankert
@@ -198,7 +201,10 @@ class TreeAction extends Action
 			// Administration wurde ausgewählt!
 	
 		     $SESS['tree']['projects'] = array('text'  => lang('PROJECTS'),
-		                                    'url'   => Html::url(array('action'=>'main','callAction'=>'project','projectid'=>'0')),
+		                                    'url'   => Html::url(array('action'       =>'main',
+			                                                          'callSubaction'=>'listing',
+		                                                               'callAction'   =>'project',
+		                                                               'projectid'    =>'0')),
 		                                    'icon'  => 'project_list',
 		                                    'desc'  => '',
 		                                    'target'=> 'cms_main' );
