@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.4  2004-11-28 23:55:36  dankert
+// addNotice()
+//
+// Revision 1.3  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.2  2004/04/24 20:30:23  dankert
 // addslashes() entfernt
@@ -59,22 +62,18 @@ class TransferAction extends Action
 
 			if   ( !is_resource( $dir ) )
 			{
-				$this->message('ERROR',"'$folderName' is not a directory or not readable");
+				$this->addNotice('file',"directory '$folderName' not readable",'ERROR','error');
 			}
 			else
 			{
-				$fileLog = "starting import ...\n";
-				$fileLog = "reading directory '$folderName'\n";
 				while( $filename = readdir($dir) )
 				{
-    					$full_filename = $folderName.'/'.$filename;
+					$full_filename = $folderName.'/'.$filename;
 
 	    				if ( $filename != "."  &&
 	    				     $filename != ".." &&
 	    				     is_file($full_filename) )
 	    				{
-	    					$fileLog .= "importing file '$full_filename'\n"; 
-
 	        				$file = new File();
 	        				$file->parentid = intval( $this->getRequestVar('objectid') );
 	        				$file->parse_filename( basename($filename) );
@@ -86,17 +85,19 @@ class TransferAction extends Action
 						$file->value = fread($f,filesize($full_filename));
 						fclose( $f );
 
-	        				$file->add();
+        				$file->add();
+						$this->addNotice('file',$file->name,'IMPORTED','ok');
 	
-	        				unset( $file );
+	        			unset( $file );
 					} 
 				}
 				closedir( $dir );
-				$fileLog .= "... import finished\n";
-
-				$this->setTemplateVar( 'fileLog',$fileLog );
-			} 
+			}
 		} 
+		else
+		{
+			$this->addNotice('file','directory empty','ERROR','error');
+		}
 
 		$folders = array();
 	
