@@ -266,9 +266,9 @@ CREATE TABLE or_value (
      , number INT
      , date INT
      , active INT DEFAULT 0 NOT NULL
-     , public INT NOT NULL
+     , publish INT NOT NULL
      , lastchange_date INT DEFAULT 0 NOT NULL
-     , lastchange_userid CHAR(10) DEFAULT '0'
+     , lastchange_userid INT DEFAULT 0
      , PRIMARY KEY (id)
      , CONSTRAINT fk_value_01 FOREIGN KEY (pageid)
                   REFERENCES or_page (id) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -287,7 +287,7 @@ CREATE INDEX idx_value_03 ON or_value (elementid);
 CREATE INDEX idx_value_04 ON or_value (active);
 CREATE INDEX idx_value_05 ON or_value (lastchange_date);
 CREATE INDEX idx_value_06 ON or_value (elementid);
-CREATE INDEX idx_value_07 ON or_value (public);
+CREATE INDEX idx_value_07 ON or_value (publish);
 
 CREATE TABLE or_acl (
        id INT NOT NULL
