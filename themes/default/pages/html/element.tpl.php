@@ -272,7 +272,7 @@
 	        $fx = fx($fx); ?>
   <tr>
     <td></td>
-    <td class="help"><?php echo $dynamic_class_description['description'] ?></td>
+    <td class="help"><?php echo $dynamic_class_description ?></td>
   </tr>
   <?php if	( count($dynamic_class_description['parameters']) > 0 )
         { ?>
@@ -282,9 +282,9 @@
   </tr>
   <tr>
     <td></td>
-    <td class="help"><ul><?php foreach( $dynamic_class_description['parameters'] as $paramName=>$paramDesc )
+    <td class="help"><ul><?php foreach( $dynamic_class_parameters as $paramName=>$defaultValue )
                            { ?>
-                     <li><strong><?php echo $paramName ?></strong>: <?php echo $paramDesc['description'] ?><br/><?php echo lang('GLOBAL_DEFAULT') ?>: <em><?php echo $paramDesc['default'] ?></em></li> 
+                     <li><strong><?php echo $paramName ?></strong>: <em><?php echo lang('GLOBAL_DEFAULT') ?></em> = <?php echo $defaultValue ?><br/></li> 
                      <?php } ?>
                      </ul>
     </td>
