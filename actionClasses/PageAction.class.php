@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-10-05 10:00:49  dankert
+// Revision 1.11  2004-10-13 22:12:57  dankert
+// Neue Seitenfunktion zum gleichzeitigen Bearbeiten aller Seiteninhalte
+//
+// Revision 1.10  2004/10/05 10:00:49  dankert
 // Neue Funktionalit?t: Austauschen einer Vorlage
 //
 // Revision 1.9  2004/09/07 21:12:08  dankert
@@ -103,6 +106,85 @@ class PageAction extends Action
 	}
 
 
+	/**
+	 * Alle Daten aus dem Formular speichern
+	 */
+	function saveform()
+	{
+		$this->page->public = true;
+		$this->page->simple = true;
+		$this->page->generate_elements();
+
+		foreach( $this->page->values as $id=>$value )
+		{
+			if   ( $value->element->isWritable() && $this->getRequestVar('saveid'.$value->element->elementid)=='1' )
+			{
+				$value = new Value();
+				$value->objectid   = $this->page->objectid;
+				$value->pageid     = Page::getPageIdFromObjectId( $value->objectid );
+				$value->element = new Element( $id );
+				$value->element->load();
+				$value->publish = false;
+				$value->load();
+		
+				$varname = 'id'.$value->element->elementid;
+				$inhalt  = $this->getRequestVar($varname);
+		
+				switch( $value->element->type )
+				{
+					case 'number':
+						$value->number = $inhalt * pow(10,$value->element->decimals);
+						break;
+
+					case 'date':
+						$value->date = strtotime( $inhalt );
+						break;
+
+					case 'text':
+					case 'longtext':
+					case 'select':
+						$value->text = $inhalt;
+						break;
+
+					case 'link':
+					case 'list':
+						$value->linkToObjectId = intval($inhalt);
+						break;
+				}
+			
+				$value->page = &$this->page;
+				
+				// Ermitteln, ob Inhalt sofort freigegeben werden kann und soll
+				if	( $this->page->hasRight('release') && $this->getRequestVar('release')!='' )
+					$value->publish = true;
+				else
+					$value->publish = false;
+		
+				// Inhalt speichern
+				// Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
+				// fuer jede Sprache einzeln gespeichert.
+				if	( $value->element->allLanguages )
+				{
+					$p = new Project();
+					foreach( $p->getLanguageIds() as $languageid )
+					{
+						$value->languageid = $languageid;
+						$value->save();
+					}
+				}
+				else
+				{
+					// sonst nur 1x speichern (fuer die aktuelle Sprache)
+					$value->languageid = $this->getSessionVar('languageid');
+					$value->save();
+				}
+			}
+		}
+	
+		$this->callSubAction( 'form');
+	}
+
+
 	function elsave()
 	{
 		$value = new Value();
@@ -146,7 +228,7 @@ class PageAction extends Action
 		// Inhalt speichern
 		
 		// Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
-		// f?r jede Sprache einzeln gespeichert.
+		// fuer jede Sprache einzeln gespeichert.
 		if	( $value->element->allLanguages )
 		{
 			$p = new Project();
@@ -158,7 +240,7 @@ class PageAction extends Action
 		}
 		else
 		{
-			// sonst nur 1x speichern (f?r die aktuelle Sprache)
+			// sonst nur 1x speichern (fuer die aktuelle Sprache)
 			$value->save();
 		}
 	
@@ -295,6 +377,100 @@ class PageAction extends Action
 		$this->setTemplateVar('el',$list);
 		$this->forward('page_element');
 
+	}
+
+
+	/**
+	 * Alle editierbaren Felder in einem Formular bereitstellen
+	 */
+	function form()
+	{
+		global $conf_php;
+
+		$this->page->public = false;
+		$this->page->simple = true;
+		$this->page->generate_elements();
+		
+		$list = array();
+	
+		foreach( $this->page->values as $id=>$value )
+		{
+			if   ( $value->element->isWritable() )
+			{
+				$list[$id] = array();
+				$list[$id]['name']        = $value->element->name;
+				$list[$id]['desc']        = $value->element->desc;
+				$list[$id]['type']        = $value->element->type;
+
+				switch( $value->element->type )
+				{
+					case 'text':
+					case 'longtext':
+						$list[$id]['value'] = $value->text;
+						break;
+
+					case 'date':
+						$list[$id]['value'] = date( 'Y-m-d H:i:s',$value->date );
+						break;
+
+					case 'number':
+						$list[$id]['value'] = $value->number / pow(10,$value->element->decimals);
+						break;
+
+					case 'select':
+						$list[$id]['list' ] = $value->element->getSelectItems();
+						$list[$id]['value'] = $value->text;
+						break;
+
+					case 'link':
+						$objects = array();
+				
+						foreach( Folder::getAllObjectIds() as $oid )
+						{
+							$o = new Object( $oid );
+							$o->load();
+							
+							if	( $o->getType() != 'folder' )
+							{ 
+								$f = new Folder( $o->parentid );
+								$f->load();
+								
+								$objects[ $oid ]  = lang( $o->getType() ).': '; 
+								$objects[ $oid ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) ); 
+								$objects[ $oid ] .= ' &raquo; '.$o->name;
+							} 
+						}
+		
+						asort( $objects ); // Sortieren
+				
+						$list[$id]['list' ] = $objects;
+						$list[$id]['value'] = $value->linkToObjectId;
+						break;
+
+					case 'list':
+						$objects = array();
+						foreach( Folder::getAllFolders() as $oid )
+						{
+							$f = new Folder( $oid );
+							$f->load();
+							
+							$objects[ $oid ]  = lang( $f->getType() ).': '; 
+							$objects[ $oid ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) ); 
+						}
+				
+						asort( $objects ); // Sortieren
+				
+						$this->setTemplateVar('list' ,$objects);
+						$this->setTemplateVar('value',$this->value->linkToObjectId);
+		
+						break;
+						break;
+				}
+			}
+		}
+	
+		$this->setTemplateVar('el',$list);
+		$this->forward('page_form');
 	}
 
 
