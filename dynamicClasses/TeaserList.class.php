@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-10-14 21:15:43  dankert
+// Revision 1.2  2005-01-04 19:59:55  dankert
+// Allgemeine Korrekturen, Erben von "Dynamic"-klasse
+//
+// Revision 1.1  2004/10/14 21:15:43  dankert
 // Anzeige einer Nachrichtenliste
 //
 // ---------------------------------------------------------------------------
@@ -28,10 +31,10 @@
 
 
 /**
- * Erstellen eines Hauptmenues
+ * Erstellen einer Teaser-Liste
  * @author Jan Dankert
  */
-class TeaserList
+class TeaserList extends Dynamic
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
@@ -76,28 +79,24 @@ class TeaserList
 
 		// Lesen des Root-Ordners
 		if	( intval($this->folderid) == 0 )
-			$folder = new Folder( $this->api->getRootObjectId() );
+			$folder = new Folder( $this->getRootObjectId() );
 		else
 			$folder = new Folder( intval($this->folderid) );
 
 		$folder->load();
 
 		// Schleife ueber alle Inhalte des Root-Ordners
-		foreach( $folder->getObjectIds() as $id )
+		foreach( $folder->getObjects() as $o )
 		{
-			$o = new Object( $id );
-			$o->languageid = $this->page->languageid;
-			$o->load();
 			if ( $o->isPage ) // Nur wenn Ordner
 			{
 				$p = new Page( $id );
 				$p->load();
 
-				$this->api->output( '<'.$this->title_html_tag.$this->title_css_class.'>'.$p->name.'</'.$this->title_html_tag.'>' );
-				$this->api->output( '<p'.$this->description_css_class.'>'.$p->desc.'</p>' );
-				$this->api->output( '<p><a href="'.$this->api->page->path_to_object($id).'"'.$this->link_css_class.'>'.$this->forward_text.'</a></p>' );
+				$this->output( '<'.$this->title_html_tag.$this->title_css_class.'>'.$p->name.'</'.$this->title_html_tag.'>' );
+				$this->output( '<p'.$this->description_css_class.'>'.$p->desc.'</p>' );
+				$this->output( '<p><a href="'.$this->pathToObject($o->objectid).'"'.$this->link_css_class.'>'.$this->forward_text.'</a></p>' );
 			}
 		}
-		
 	}
 }

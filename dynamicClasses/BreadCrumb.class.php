@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-11-10 22:43:35  dankert
+// Revision 1.2  2005-01-04 19:59:55  dankert
+// Allgemeine Korrekturen, Erben von "Dynamic"-klasse
+//
+// Revision 1.1  2004/11/10 22:43:35  dankert
 // Beispiele fuer dynamische Templateelemente
 //
 // ---------------------------------------------------------------------------
@@ -28,10 +31,10 @@
 
 
 /**
- * Erstellen eines Menues
+ * Erstellen einer sog. Brotkruemel-Navigation
  * @author Jan Dankert
  */
-class Sitemap /*extends DynamicElement*/
+class BreadCrumb extends Dynamic
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
@@ -51,8 +54,7 @@ class Sitemap /*extends DynamicElement*/
 	/**
 	 * Zeichenkette, die vor einem aktiven Menuepunkt gezeigt wird 
 	 */
-	var $beforeEntry = '<li><strong>';
-	var $afterEntry  = '</strong></li>';
+	var $beforeEntry = '&raquo;';
 	
 	var $api;
 
@@ -64,50 +66,33 @@ class Sitemap /*extends DynamicElement*/
 		// Erstellen eines Untermenues
 		
 		// Ermitteln der aktuellen Seite
-		$thispage = new Page( $this->api->getObjectId() );
-		$thispage->load(); // Seite laden
-		
-		// uebergeordneter Ordner dieser Seite
-		$this->showFolder( Folder::getRootObjectId() );
-	}
+		$f = new Folder($this->page->parentid);
+		$parentIds = $f->parentObjectIds(false,true);
+		$lastoid = 0;
 
-	function showFolder( $oid )
-	{
-		// uebergeordneter Ordner dieser Seite
-		$f = new Folder( $oid );
-		
-		// Schleife ueber alle Objekte im aktuellen Ordner
-		foreach( $f->getObjectIds() as $id )
+		foreach( $parentIds as $oid )
 		{
-			$o = new Object( $id );
-			$o->languageid = $this->page->languageid;
-			$o->load();
-	
-			// Ordner
-			if ($o->isFolder )
-			{
-				$this->api->output( '<li><strong>'.$o->name.'</strong><br/>' );
-				$this->api->output( '<ul>' );
-				$this->showFolder( $id ); // Rekursiver Aufruf dieser Methode
-				$this->api->output( '</ul></li>' );
-			}
+			$of = new Folder($oid);
+			$of->load();
+			$pl = $of->getFirstPageOrLink();
+			
+			$this->output( $this->beforeEntry );
 
-			// Seiten und Verkn?fpungen
-			if ($o->isPage || $o->isLink )
-			{
-				// Wenn aktuelle Seite, dann markieren, sonst Link
-				if ( $this->api->getObjectId() == $id )
-				{
-					// aktuelle Seite
-					$this->api->output( '<li><strong>'.$o->name.'</strong></li>' );
-				}
-				else
-				{
-					// Link erzeugen
-					$this->api->output( '<li><a href="'.$this->api->page->path_to_object($id).'">'.$o->name.'</a></li>' );
-				}
-			}
+			if	( is_object($pl) && $pl->objectid != $this->page->objectid )
+				$this->output('<a href="'.$this->pathToObject($pl->objectid).'" class="breadcrumb">'.$of->name.'</a>' );
+			else
+				$this->output('<span class="breadcrumb">'.$of->name.'</span>' );
+
+			if	( is_object($pl) )
+				$lastoid = $pl->objectid;
 		}
+
+		if	( $lastoid != $this->page->objectid )
+		{
+			$this->output( $this->beforeEntry );
+			$this->output('<span class="breadcrumb">'.$this->page->name.'</span>' );
+		}
+			
 	}
 }
 

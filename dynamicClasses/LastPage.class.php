@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-11-10 22:43:35  dankert
+// Revision 1.2  2005-01-04 19:59:55  dankert
+// Allgemeine Korrekturen, Erben von "Dynamic"-klasse
+//
+// Revision 1.1  2004/11/10 22:43:35  dankert
 // Beispiele fuer dynamische Templateelemente
 //
 // ---------------------------------------------------------------------------
@@ -28,10 +31,10 @@
 
 
 /**
- * Erstellen eines Hauptmenues
+ * Erstellen eines Links zur Seite davor
  * @author Jan Dankert
  */
-class MainMenu /*extends DynamicElement*/
+class LastPage extends Dynamic
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
@@ -50,28 +53,26 @@ class MainMenu /*extends DynamicElement*/
 	 */
 	var $description = 'Creates a main menu.';
 	var $version     = '$Id$';
-	var $api;
 
-	// Erstellen des Hauptmenues
+
 	function execute()
 	{
-		// Lesen des Root-Ordners
-		$folder = new Folder( Api::getRootObjectId() );
-		
-		// Schleife ueber alle Inhalte des Root-Ordners
-		foreach( $folder->getObjectIds() as $id )
+		$folder = new Folder( $this->page->parentid );
+
+		$lastObject = null;
+ 
+		// Schleife ueber alle Inhalte des Ordners
+		foreach( $folder->getObjects() as $o )
 		{
-			$o = new Object( $id );
-			$o->languageid = $this->page->languageid;
-			$o->load();
-			if ( $o->isFolder ) // Nur wenn Ordner
+			if ( $o->isPage || $o->isLink )
 			{
-				$f = new Folder( $id );
-				
-				// Ermitteln eines Objektes mit dem Dateinamen index
-				$oid = $f->getObjectIdByFileName('index');
-				if ( is_numeric($oid) && $oid!=0 )
-					$this->api->output( $this->arrowChar.'<a href="'.$this->page->path_to_object($oid).'" title="'.$o->desc.'">'.$o->name.'</a>' );
+				if	( is_object($lastObject) && $o->objectid == $this->page->objectid )
+				{
+					$this->output( '<a href="'.$this->pathToObject($lastObject->objectid).' class="next">'.$lastObject->name.'</a>' );
+					break;
+				}
+
+				$lastObject = $o->objectid; 
 			}
 		}
 	}
