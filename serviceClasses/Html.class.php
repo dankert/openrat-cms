@@ -169,7 +169,7 @@ class Html
 
 		$url = Html::url( $action,$subaction,$id );
 
-		$text = '<form name="'.$name.'" target="'.$target.'" action="'.$url.'" method="'.$method.'" enctype="'.$enctype.'" />'."\n";
+		$text = '<form name="'.$name.'" target="'.$target.'" action="'.$url.'" method="'.$method.'" enctype="'.$enctype.'" >'."\n";
 
 		$text.= '<input type="hidden" name="'.REQ_PARAM_ACTION.'" value="'.$action.'" />'."\n";
 		$text.= '<input type="hidden" name="'.REQ_PARAM_SUBACTION.'" value="'.$subaction.'" />'."\n";
