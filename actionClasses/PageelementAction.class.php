@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2004-12-29 20:18:50  dankert
+// Revision 1.16  2005-01-14 23:47:42  dankert
+// Bei Longtext-Elementen auch Laden der Objektliste
+//
+// Revision 1.15  2004/12/29 20:18:50  dankert
 // Freigabe (release-Funktion) korrigiert
 //
 // Revision 1.14  2004/12/28 22:59:41  dankert
@@ -211,6 +214,26 @@ class PageelementAction extends Action
 
 
 			case 'longtext':
+
+				// Ermitteln aller verlinkbaren Objekte (fuer Editor)
+				$objects = array();
+		
+				foreach( Folder::getAllObjectIds() as $id )
+				{
+					$o = new Object( $id );
+					$o->load();
+					
+					if	( $o->getType() != 'folder' )
+					{ 
+						$f = new Folder( $o->parentid );
+						$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
+						$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
+						$objects[ $id ] .= FILE_SEP.$o->name;
+					} 
+				}
+				$this->setTemplateVar( 'objects',$objects );
+				$this->setTemplateVar( 'images' ,$objects );
+
 			case 'text':
 				$this->setTemplateVar( 'html',$this->value->element->html );
 				$this->setTemplateVar( 'wiki',$this->value->element->wiki );

@@ -169,6 +169,24 @@ class PageAction extends ObjectAction
 			$value->page->languageid = $value->languageid;
 			$value->page->load();
 			$value->generate();
+
+			// Ermitteln aller verlinkbaren Objekte (fuer Editor)
+			$objects = array();
+	
+			foreach( Folder::getAllObjectIds() as $id )
+			{
+				$o = new Object( $id );
+				$o->load();
+				
+				if	( $o->getType() != 'folder' )
+				{ 
+					$f = new Folder( $o->parentid );
+					$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
+					$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
+					$objects[ $id ] .= FILE_SEP.$o->name;
+				} 
+			}
+			$this->setTemplateVar( 'objects',$objects );
 	
 			$this->setTemplateVar( 'release',$this->page->hasRight(ACL_RELEASE) );
 			$this->setTemplateVar( 'publish',$this->page->hasRight(ACL_PUBLISH) );
