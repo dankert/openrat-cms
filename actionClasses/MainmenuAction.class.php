@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-11-28 22:33:14  dankert
+// Revision 1.10  2004-12-13 21:44:09  dankert
+// Anpassung template()
+//
+// Revision 1.9  2004/11/28 22:33:14  dankert
 // Benutzer/Gruppen Menue
 //
 // Revision 1.8  2004/11/28 19:46:45  dankert
@@ -64,16 +67,6 @@ class MainmenuAction extends Action
 	var $obj;
 	
 
-//	function start()
-//	{
-//		$this->setTemplateVar('folder',array()      );
-////		$this->setTemplateVar('subaction',array('select' =>lang('PROJECT'),
-////		                                        'profile'=>lang('PROFILE') ));
-//		$this->setTemplateVar('subaction',array('select' =>lang('SELECT')));
-//		$this->callSubAction('show');
-//	}
-
-
 	function element()
 	{
 		$this->subActionName = 'template';
@@ -91,12 +84,8 @@ class MainmenuAction extends Action
 	function template()
 	{
 		$this->setTemplateVar('folder',array() );
-		// Ermitteln Projectmodell
-		$model = new Model($this->getSessionVar('modelid'));
-		$model->load();		
-		$this->setTemplateVar('projectmodel_name',$model->name);
-		
 		$this->setTemplateVar('id','tpl'.$this->getSessionVar('templateid'));
+		$this->addSubaction('listing');
 	
 		if   ( intval($this->getSessionVar('templateid')) != 0 )
 		{
@@ -104,18 +93,14 @@ class MainmenuAction extends Action
 			$template->load();
 			$this->setTemplateVar('text',$template->name );
 			
-			$this->setTemplateVar('subaction',array('listing'=>lang('LISTING'),
-			                                        'show'   =>lang('SHOW'),
-			                                        'el'     =>lang('ELEMENTS'),
-			                                        'src'    =>lang('SOURCECODE'),
-			                                        'prop'   =>lang('PROP') ));
+			$this->addSubaction('show' );
+			$this->addSubaction('el'   );
+			$this->addSubaction('src'  );
+			$this->addSubaction('prop' );
 		}
-		else
-		{
-			$this->setTemplateVar('subaction',array('listing'=>lang('LISTING')));
-		
-		}
+
 		$this->setTemplateVar('param' ,'templateid');
+		$this->setTemplateVar('subaction',$this->subActionList);
 
 		$this->callSubAction('show');
 	}
