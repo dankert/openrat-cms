@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-24 16:55:27  dankert
+// Revision 1.3  2004-04-25 19:01:02  dankert
+// Speichern von Elementen, die in allen Sprachen gleich sind
+//
+// Revision 1.2  2004/04/24 16:55:27  dankert
 // Korrektur: pub()
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
@@ -105,7 +108,23 @@ class PageAction extends Action
 		$value->text = $this->getRequestVar('text');
 
 		// Inhalt speichern
-		$value->save();
+		
+		// Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
+		// für jede Sprache einzeln gespeichert.
+		if	( $value->element->allLanguages )
+		{
+			$p = new Project();
+			foreach( $p->getLanguageIds() as $languageid )
+			{
+				$value->languageid = $languageid;
+				$value->save();
+			}
+		}
+		else
+		{
+			// sonst nur 1x speichern (für die aktuelle Sprache)
+			$value->save();
+		}
 	
 		$this->callSubAction( $this->getRequestVar('old_pageaction') );
 	}
