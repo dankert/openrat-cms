@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-12-15 23:14:48  dankert
+// Revision 1.3  2004-12-19 15:26:56  dankert
+// get/setLanguage entfernt, neu get(), set()
+//
+// Revision 1.2  2004/12/15 23:14:48  dankert
 // speichern/lesen Konfiguration
 //
 // Revision 1.1  2004/11/10 22:51:30  dankert
@@ -84,6 +87,23 @@ else $FILES = &$HTTP_POST_FILES;
 
 class Session
 {
+	function get( $var )
+	{
+		global $SESS;
+		if	( isset($SESS[$var]) )
+			return $SESS[$var];
+		else
+			return '';
+	}
+	
+	function set( $var,$value )
+	{
+		global $SESS;
+		$SESS[ $var ] = $value;
+	}	
+
+
+
 	function getConfig()
 	{
 		global $SESS;
@@ -186,19 +206,19 @@ class Session
 
 
 
-	function getLanguage()
+	function getElement()
 	{
 		global $SESS;
-		if	( isset($SESS['language']) )
-			return $SESS['language'];
+		if	( isset($SESS['element']) )
+			return $SESS['element'];
 		else
 			return '';
 	}
 	
-	function setLanguage( $var )
+	function setElement( $var )
 	{
 		global $SESS;
-		$SESS['language'] = $var;
+		$SESS['element'] = $var;
 	}	
 
 
