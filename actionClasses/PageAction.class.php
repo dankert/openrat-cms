@@ -97,7 +97,7 @@ class PageAction extends ObjectAction
 				$value->page = &$this->page;
 				
 				// Ermitteln, ob Inhalt sofort freigegeben werden kann und soll
-				if	( $this->page->hasRight('release') && $this->getRequestVar('release')!='' )
+				if	( $this->page->hasRight( ACL_RELEASE ) && $this->hasRequestVar('release') )
 					$value->publish = true;
 				else
 					$value->publish = false;
@@ -123,8 +123,11 @@ class PageAction extends ObjectAction
 			}
 		}
 		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
-	
-		$this->callSubAction( 'el' );
+
+		if	( $this->hasRequestVar('publish') )
+			$this->callSubAction( 'pubnow' );
+		else
+			$this->callSubAction( 'el' );
 	}
 
 
@@ -200,8 +203,12 @@ class PageAction extends ObjectAction
 		}
 
 		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
-		$this->callSubAction( 'el' );
-		//$this->callSubAction( $this->getRequestVar('old_pageaction') );
+
+		// Falls ausgewaehlt die Seite sofort veroeffentlichen
+		if	( $this->hasRequestVar('publish') )
+			$this->callSubAction( 'pubnow' ); // Weiter zum veroeffentlichen
+		else
+			$this->callSubAction( 'el' ); // Element-Liste anzeigen
 	}
 
 
@@ -437,6 +444,9 @@ class PageAction extends ObjectAction
 			}
 		}
 
+		$this->setTemplateVar( 'release',$this->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->page->hasRight(ACL_PUBLISH) );
+
 		$this->setTemplateVar('el',$list);
 		$this->forward('page_form');
 	}
@@ -571,6 +581,9 @@ class PageAction extends ObjectAction
 	 */
 	function pubnow()
 	{
+		if	( !$this->page->hasRight( ACL_PUBLISH ) )
+			die( 'no right for publish' );
+
 		$this->page->publish();
 
 		foreach( $this->page->publish->publishedObjects as $o )
