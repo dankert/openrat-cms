@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-11-28 16:55:20  dankert
+// Revision 1.3  2004-11-28 19:25:38  dankert
+// Anpassen an neue Sprachdatei-Konventionen
+//
+// Revision 1.2  2004/11/28 16:55:20  dankert
 // Berechtigungen f?r "alle" hinzufuegen
 //
 // Revision 1.1  2004/11/27 13:08:22  dankert
@@ -140,7 +143,7 @@ class ObjectAction extends Action
 		$this->setTemplateVar('users'    ,User::listAll()   );
 		$this->setTemplateVar('groups'   ,Group::getAll()   );
 
-		$languages = array(0=>lang('ALL_LANGUAGES'));
+		$languages = array(0=>lang('GLOBAL_ALL_LANGUAGES'));
 		$languages += Language::getAll();
 		$this->setTemplateVar('languages',$languages       );
 		$this->setTemplateVar('objectid' ,$o->objectid     );

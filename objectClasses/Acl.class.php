@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-11-28 11:22:55  dankert
+// Revision 1.7  2004-11-28 19:25:51  dankert
+// Anpassen an neue Sprachdatei-Konventionen
+//
+// Revision 1.6  2004/11/28 11:22:55  dankert
 // Speichern einer Berechtigung fuer "alle"
 //
 // Revision 1.5  2004/11/15 21:02:32  dankert
@@ -221,7 +224,7 @@ class Acl
 		$this->setDatabaseRow( $row );		
 
 		if	( intval($this->languageid)==0 )
-			$this->languagename = lang('ALL_LANGUAGES');
+			$this->languagename = lang('GLOBAL_ALL_LANGUAGES');
 		else	$this->languagename = $row['languagename'];
 		$this->username     = $row['username'    ];
 		$this->groupname    = $row['groupname'   ];

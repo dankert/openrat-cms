@@ -9,7 +9,7 @@
   <th colspan="15"><?php echo lang('ACL') ?></th>
 </tr>
   <tr>
-    <td class="help"><?php echo lang('GLOBAL_NAME') ?></td>
+    <td class="help"><?php echo lang('GLOBAL_NAME')     ?></td>
     <td class="help"><?php echo lang('GLOBAL_LANGUAGE') ?></td>
     <?php foreach( $show as $t ) { ?>
     <td class="help"><span title="<?php echo lang('ACL_'.strtoupper($t)) ?>"><strong><?php echo lang('ACL_'.strtoupper($t).'_ABBREV') ?></strong></span></td>
@@ -44,12 +44,12 @@
 
 <?php if (isset($z['delete_url']))
       { ?>
-<td class="<?php echo $fx ?>"><a href="<?php echo $z['delete_url'] ?>"><?php echo lang('DELETE') ?></a></td>
+<td class="<?php echo $fx ?>"><a href="<?php echo $z['delete_url'] ?>"><?php echo lang('GLOBAL_DELETE') ?></a></td>
 <?php }
       else
       { ?>
 
-<td class="<?php echo $fx ?>"><?php echo lang('inherited') ?></td>
+<td class="<?php echo $fx ?>"><?php echo lang('ACL_INHERITED') ?></td>
 <?php } ?>
 </tr>
 <?php }
@@ -71,20 +71,20 @@
 <td class="<?php echo $fx ?>"><input type="radio" name="type" value="all" checked="checked" /></td>
 </tr>
 <tr>
-<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('USER') ?></td>
+<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('GLOBAL_USER') ?></td>
 <td class="<?php echo $fx ?>"><input type="radio" name="type" value="user" />&nbsp;<?php echo Html::selectBox( 'userid',$users,0,array('onfocus'=>'document.forms[0].type[1].checked=true')); ?></td>
 </tr>
 
 <?php if (count($groups)>0)
       { ?>
 <tr>
-<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('GLOBAL_OR').' '.lang('GROUP') ?></td>
+<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('GLOBAL_GROUP') ?></td>
 <td class="<?php echo $fx ?>"><input type="radio" name="type" value="group" />&nbsp;<?php echo Html::selectBox( 'groupid',$groups,0,array('onfocus'=>'document.forms[0].type[2].checked=true')); ?></td>
 </tr>
 <?php } ?>
 
 <tr>
-<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('LANGUAGE') ?></td>
+<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('GLOBAL_LANGUAGE') ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::selectBox( 'languageid',$languages); ?></td>
 </tr>
 <tr>
