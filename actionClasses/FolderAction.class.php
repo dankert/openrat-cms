@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.18  2004-12-19 20:40:51  dankert
+// Revision 1.19  2004-12-20 22:31:22  dankert
+// Uebertragen des Benutzers geaendert
+//
+// Revision 1.18  2004/12/19 20:40:51  dankert
 // Korrektur URLs
 //
 // Revision 1.17  2004/12/19 14:53:54  dankert
@@ -558,8 +561,8 @@ class FolderAction extends ObjectAction
 				}
 
 				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
-				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchange_date );
-				$list[$id]['user'] = User::getUserName( $o->lastchange_userid );
+				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
+				$list[$id]['user'] = $o->lastchangeUser;
 
 				if   ( $last_objectid != 0 && $o->hasRight(ACL_WRITE) )
 				{
