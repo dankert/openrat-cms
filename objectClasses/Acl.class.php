@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-10 22:45:06  dankert
+// Revision 1.5  2004-11-15 21:02:32  dankert
+// Erzeugen einer Bitmaske der Berechtigungsbits
+//
+// Revision 1.4  2004/11/10 22:45:06  dankert
 // Neue Methode: getTrueProperties()
 //
 // Revision 1.3  2004/05/02 14:41:31  dankert
@@ -32,7 +35,20 @@
 // Revision 1.1  2004/04/24 15:15:12  dankert
 // Initiale Version
 //
-// ---------------------------------------------------------------------------
+// --------------------------------------------------------------------------- 
+
+define('ACL_READ'         ,1   );
+define('ACL_WRITE'        ,2   );
+define('ACL_PROP'         ,4   );
+define('ACL_DELETE'       ,8   );
+define('ACL_RELEASE'      ,16  );
+define('ACL_PUBLISH'      ,32  );
+define('ACL_CREATE_FOLDER',64  );
+define('ACL_CREATE_FILE'  ,128 );
+define('ACL_CREATE_LINK'  ,256 );
+define('ACL_CREATE_PAGE'  ,512 );
+define('ACL_GRANT'        ,1024);
+define('ACL_TRANSMIT'     ,2048);
 
 /**
  * Darstellen einer Berechtigung (ACL "Access Control List")
@@ -278,6 +294,29 @@ class Acl
 		              'languagename' => $this->languagename,
 		              'objectid'     => $this->objectid );
 
+	}
+
+
+	/**
+	 * Erzeugt eine Bitmaske mit allen Berechtigungen
+	 */
+	function getMask()
+	{
+		// intval(boolean) erzeugt numerisch 0 oder 1
+		$this->mask =  ACL_READ;   // immer lesen
+		$this->mask += ACL_WRITE         *intval($this->write        );
+		$this->mask += ACL_PROP          *intval($this->prop         );
+		$this->mask += ACL_DELETE        *intval($this->delete       );
+		$this->mask += ACL_RELEASE       *intval($this->release      );
+		$this->mask += ACL_PUBLISH       *intval($this->publish      );
+		$this->mask += ACL_CREATE_FOLDER *intval($this->create_folder);
+		$this->mask += ACL_CREATE_FILE   *intval($this->create_file  );
+		$this->mask += ACL_CREATE_LINK   *intval($this->create_link  );
+		$this->mask += ACL_CREATE_PAGE   *intval($this->create_page  );
+		$this->mask += ACL_GRANT         *intval($this->grant        );
+		$this->mask += ACL_TRANSMIT      *intval($this->transmit     );
+		Logger::trace('mask of acl'.$this->aclid.': '.$this->mask );
+		return $this->mask;
 	}
 
 
