@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-10-14 21:13:49  dankert
+// Revision 1.14  2004-11-10 22:49:10  dankert
+// Einsatz der Api-Klasse ge?ndert
+//
+// Revision 1.13  2004/10/14 21:13:49  dankert
 // Nutzen von getDynamicParameters aus dem Element-Objekt
 //
 // Revision 1.12  2004/10/10 20:07:20  dankert
@@ -880,19 +883,16 @@ class Value
 			case 'code':
 
 				$this->page->load();
-				
-				Api::delOutput('');
-				Api::setObjectId( $this->page->objectid ); // haesslich :-/
-				$code = "<?php\n".$this->element->code."\n?>";
-				$tmp  = $conf_tmpdir.'/'.md5($this->element->elementid).'.tmp';
-				$f = fopen( $tmp,'w' );
-				fwrite( $f,$code );
-				fclose( $f );
-				
-				require( $tmp ); // Ausfuehren des temporaeren PHP-Codes
 
-				$inhalt = Api::getOutput();
-				
+				$api = new Api();
+				$api->page = &$this->page;
+				$api->setObjectId( $this->page->objectid );
+				$api->delOutput();
+
+				// Jetzt ausfuehren des temporaeren PHP-Codes				
+				$api->execute( $this->element->code );
+				$inhalt = $api->getOutput();
+
 				break;
 
 
