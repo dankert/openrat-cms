@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2004-11-29 23:48:00  dankert
+// Revision 1.17  2004-11-29 23:52:33  dankert
+// Korrektur Vorversion
+//
+// Revision 1.16  2004/11/29 23:48:00  dankert
 // Korrektur Vorversion
 //
 // Revision 1.15  2004/11/29 23:34:59  dankert
@@ -355,8 +358,6 @@ class PageAction extends ObjectAction
 			}
 		}
 
-		$this->page->setTimestamp();
-	
 		$this->setTemplateVar('el',$list);
 		$this->forward('page_element');
 
@@ -451,7 +452,7 @@ class PageAction extends ObjectAction
 				}
 			}
 		}
-	
+
 		$this->setTemplateVar('el',$list);
 		$this->forward('page_form');
 	}
