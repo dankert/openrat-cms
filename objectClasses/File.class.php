@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-29 23:24:36  dankert
+// Revision 1.6  2004-11-30 22:27:45  dankert
+// Optimierung imageResize()-Methode
+//
+// Revision 1.5  2004/11/29 23:24:36  dankert
 // Korrektur Veroeffentlichung
 //
 // Revision 1.4  2004/11/28 21:28:05  dankert
@@ -187,13 +190,10 @@ class File extends Object
 	}
 
 
-	function imageResize( $newWidth,$newHeight,$format,$jpegquality )
+	function imageResize( $newWidth,$newHeight,$oldformat,$newformat,$jpegquality )
 	{
 		global $conf;
 
-		// Schalter, ob GD in Version 2 verfuegbar ist
-		$gd2 = $conf['gd']['version2'];
-		
 		$this->write(); // Datei schreiben
 		
 		// Bildinformationen ermitteln
@@ -225,20 +225,19 @@ class File extends Object
 			$newHeight = $newWidth * $aspectRatio; 
 
 
-		switch( strtolower($this->extension) )
+		switch( $oldformat )
 		{
-			case 'gif': // GIF
+			case IMG_GIF: // GIF
 
 				$oldImage = ImageCreateFromGIF( $this->tmpfile ); 
 				break;
 
-			case 'jpg':
-			case 'jpeg': // JPEG
+			case IMG_JPG: // JPEG
 
 				$oldImage = ImageCreateFromJPEG($this->tmpfile);
 				break;
 
-			case 'png': // PNG
+			case IMG_PNG: // PNG
 
 				$oldImage = imagecreatefrompng($this->tmpfile);
 				break;
@@ -247,10 +246,13 @@ class File extends Object
 				die('unsupported image format "'.$this->extension.'", cannot load image. resize failed');
 		}
 
+		// Ab Version 2 der GD-Bibliothek sind TrueColor-Umwandlungen moeglich.
+		global $conf;
+ 		$hasTrueColor = $conf['image']['truecolor'];
 
-		switch( $format )
+		switch( $newformat )
 		{
-			case 'gif': // GIF
+			case IMG_GIF: // GIF
 
 				if	( $resizing )
 				{
@@ -260,7 +262,7 @@ class File extends Object
 				}
 				else
 				{
-					$newImage = $oldImage;
+					$newImage = &$oldImage;
 				} 
 
 				ImageGIF($newImage, $this->tmpfile() );
@@ -268,16 +270,15 @@ class File extends Object
 
 				break;
 
-			case 'jpg':
-			case 'jpeg': // JPEG
+			case IMG_JPG: // JPEG
 
 				if	( !$resizing )
 				{
-					$newImage = $oldImage;
+					$newImage = &$oldImage;
 				} 
-				elseif   ( $gd2 )
+				elseif   ( $hasTrueColor )
 				{
-					// Verwende TrueColor
+					// Verwende TrueColor (GD2)
 					$newImage = imageCreateTrueColor( $newWidth,$newHeight );
 	
 					ImageCopyResampled($newImage,$oldImage,0,0,0,0,$newWidth,
@@ -297,15 +298,15 @@ class File extends Object
 
 				break;
 
-			case 'png': // PNG
+			case IMG_PNG: // PNG
 
 				if	( !$resizing )
 				{
-					$newImage = $oldImage;
+					$newImage = &$oldImage;
 				} 
-				elseif   ( $gd2 )
+				elseif   ( $hasTrueColor )
 				{
-					// Verwende TrueColor
+					// Verwende TrueColor (GD2)
 					$newImage = imageCreateTrueColor( $newWidth,$newHeight );
 		
 					ImageCopyResampled($newImage,$oldImage,0,0,0,0,$newWidth,
@@ -332,6 +333,9 @@ class File extends Object
 		$f = fopen( $this->tmpfile(), "r" );
 		$this->value = fread( $f,filesize($this->tmpfile()) );
 		fclose( $f );
+
+		imagedestroy( $oldImage );
+		//imagedestroy( $newImage );
 	}
 
 
