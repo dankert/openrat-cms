@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-11-27 13:06:26  dankert
+// Revision 1.11  2004-11-28 16:53:51  dankert
+// Korrektur create()
+//
+// Revision 1.10  2004/11/27 13:06:26  dankert
 // Ausgabe von Meldungen
 //
 // Revision 1.9  2004/11/10 22:36:16  dankert
@@ -471,14 +474,11 @@ class FolderAction extends ObjectAction
 
 	function create()
 	{
-
-		if   ( $this->folder->hasRight('create_page') )
-			$this->setTemplateVar('templates',Template::getAll());
-
-		$this->setTemplateVar('create_folder',$this->folder->hasRight('create_folder'));
-		$this->setTemplateVar('create_file'  ,$this->folder->hasRight('create_file')  );
-		$this->setTemplateVar('create_link'  ,$this->folder->hasRight('create_link')  );
-		$this->setTemplateVar('create_page'  ,$this->folder->hasRight('create_page')  );
+		$this->setTemplateVar('templates',Template::getAll());
+		$this->setTemplateVar('new_folder',$this->folder->hasRight(ACL_CREATE_FOLDER));
+		$this->setTemplateVar('new_file'  ,$this->folder->hasRight(ACL_CREATE_FILE  ));
+		$this->setTemplateVar('new_link'  ,$this->folder->hasRight(ACL_CREATE_LINK  ));
+		$this->setTemplateVar('new_page'  ,$this->folder->hasRight(ACL_CREATE_PAGE  ));
 		
 		$this->forward('folder_new');
 	}
@@ -500,7 +500,7 @@ class FolderAction extends ObjectAction
 		{
 			$id = $o->objectid;
 
-			if   ( $o->hasRight('read') )
+			if   ( $o->hasRight(ACL_READ) )
 			{
 				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
 				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
@@ -534,7 +534,7 @@ class FolderAction extends ObjectAction
 				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchange_date );
 				$list[$id]['user'] = User::getUserName( $o->lastchange_userid );
 
-				if   ( $last_objectid != 0 )
+				if   ( $last_objectid != 0 && $o->hasRight(ACL_WRITE) )
 				{
 					$list[$id           ]['upurl'    ] = Html::url(array('action'   =>'folder',
 					                                                     'subaction'=>'changesequence',
@@ -551,18 +551,22 @@ class FolderAction extends ObjectAction
 
 				$last_objectid = $id;
 			}
+		}
 
+		if   ( $o->hasRight(ACL_WRITE) )
+		{
 			// Alle anderen Ordner ermitteln
 			$otherfolder = array();
 			foreach( $this->folder->getAllFolders() as $id )
 			{
 				$f = new Folder( $id );
-				$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
+				if	( $f->hasRight( ACL_WRITE ) )
+					$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
 			}
 			asort( $otherfolder );
-
+	
 			$this->setTemplateVar('folder',$otherfolder);
-
+	
 			// URLs zum Umsortieren der Eintraege
 			$this->setTemplateVar('orderbytype_url'      ,Html::url(array('action'   =>'folder',
 			                                                              'subaction'=>'reorder',
@@ -575,8 +579,8 @@ class FolderAction extends ObjectAction
 			                                                              'type'     =>'lastchange')) );
 			$this->setTemplateVar('flip_url'             ,Html::url(array('action'   =>'folder',
 			                                                              'subaction'=>'reorder',
-			                                                              'type'     =>'flip')) );	
-		}
+			                                                              'type'     =>'flip')) );
+		}	
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
 
