@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-10-06 09:54:19  dankert
+// Revision 1.5  2004-10-06 10:38:21  dankert
+// Elementtyp dynamic ist nie beschreibbar
+//
+// Revision 1.4  2004/10/06 09:54:19  dankert
 // Neuer Elementtyp: dynamic
 //
 // Revision 1.3  2004/07/07 20:45:10  dankert
@@ -366,7 +369,7 @@ class Element
 	function isWritable()
 	{
 		// Bei bestimmten Feldern immer false zurueckgeben
-		if	( in_array($this->type,Array('info','infodate','code')) )
+		if	( in_array($this->type,Array('info','infodate','code','dynamic')) )
 			return false;
 
 		return $this->writable;
