@@ -50,8 +50,10 @@ use_browser_language = true         ; use HTTP_ACCEPT_LANGUAGE header to determi
 show_duration        = false        ; Show duration on every page
 timeout              =              ; Request timeout in seconds (blank=system default)
 
+
 [login]
-logo=./themes/default/images/logo.jpg    ; url of logo in login mask 
+logo=./themes/default/images/logo.jpg    ; logo (url to image) in login mask 
+logo_url=http://www.openrat.de           ; linked url in login mask 
 
 
 [mail]
