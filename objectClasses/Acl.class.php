@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-15 21:02:32  dankert
+// Revision 1.6  2004-11-28 11:22:55  dankert
+// Speichern einer Berechtigung fuer "alle"
+//
+// Revision 1.5  2004/11/15 21:02:32  dankert
 // Erzeugen einer Bitmaske der Berechtigungsbits
 //
 // Revision 1.4  2004/11/10 22:45:06  dankert
@@ -372,15 +375,14 @@ class Acl
 		$sql->setInt('objectid',$this->objectid);
 		
 		if	( intval($this->groupid) == 0 )
-		{
-			$sql->setInt ('userid',$this->userid);
 			$sql->setNull('groupid');
-		}
 		else
-		{
-			$sql->setNull('userid');
 			$sql->setInt ('groupid',$this->groupid);
-		}
+		
+		if	( intval($this->userid) == 0 )
+			$sql->setNull('userid');
+		else
+			$sql->setInt ('userid',$this->userid);
 
 		$sql->setBoolean('is_default'   ,$this->isDefault     );
 		$sql->setBoolean('prop'         ,$this->prop          );
