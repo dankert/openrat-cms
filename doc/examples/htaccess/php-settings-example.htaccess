@@ -9,25 +9,22 @@
 php_flag register_globals off
 
 # Change this to anything you like. Must be a valid URL variable name
-php_value session.name cmsid
-
-# Do you want to use cookies for auth?
-php_flag session.use_cookies off
+php_value session.name openratid
 
 # Let this be off
 php_flag session.auto_start off
 
 # Lifetime in seconds of Session cookie. 0 is the browser lifetime.
-php_value session.cookie_lifetime 3600
+php_value session.cookie_lifetime 0
 
 # Want to use cookies?
 # Because trans_sid is off, you can EITHER use cookies OR url rewriting
 # off = url rewriting
 # on  = cookies
-php_flag session.use_cookies on
+php_flag session.use_cookies off
 
 # No need for Transient Urls, because the application can to this
-php_flag session.use_trans_sid off
+php_flag session.use_trans_sid on
 
 php_flag magic_quotes_gpc on
 php_flag magic_quotes_runtime off
