@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-12-26 20:22:03  dankert
+// Revision 1.10  2005-01-04 19:58:22  dankert
+// Bei Datum auch Default-Text als Eigenschaft
+//
+// Revision 1.9  2004/12/26 20:22:03  dankert
 // Erweiterung bei setType()
 //
 // Revision 1.8  2004/12/26 01:06:31  dankert
@@ -345,7 +348,7 @@ class Element
 		                  'select'  =>Array('withIcon','allLanguages','writable','defaultText','code'),
 		                  'number'  =>Array('withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
 		                  'link'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		                  'date'    =>Array('withIcon','allLanguages','writable','dateformat'),
+		                  'date'    =>Array('withIcon','allLanguages','writable','dateformat','defaultText'),
 		                  'list'    =>Array('withIcon','allLanguages','writable','folderObjectId'),
 		                  'code'    =>Array('code'),
 		                  'dynamic' =>Array('subtype','code'),
