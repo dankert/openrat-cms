@@ -62,7 +62,7 @@
 </form>
 </center>
 
-<script name="JavaScript"><!--
+<script name="JavaScript" type="text/javascript"><!--
 document.forms[0].pagename.focus();
 //--></script>
 <?php include( $tpl_dir.'footer.tpl.php') ?>

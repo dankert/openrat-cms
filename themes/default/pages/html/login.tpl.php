@@ -60,7 +60,7 @@
 
 </center>
 
-<script name="JavaScript">
+<script name="JavaScript" type="text/javascript">
 <!--
 window.document.login.login_name.focus();
 //-->

@@ -44,7 +44,7 @@
 
 </center>
 
-<script name="JavaScript"><!--
+<script name="JavaScript" type="text/javascript"><!--
 document.forms[0].src.focus();
 //--></script>
 

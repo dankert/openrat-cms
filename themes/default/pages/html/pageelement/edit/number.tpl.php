@@ -38,7 +38,7 @@
 
 </center>
 
-<script name="JavaScript"><!--
+<script name="JavaScript" type="text/javascript"><!--
 document.forms[0].number.focus();
 //--></script>
 
