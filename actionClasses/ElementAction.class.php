@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-04-24 17:41:51  dankert
+// Subtypes von Info geaendert
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
@@ -119,11 +122,13 @@ class ElementAction extends Action
 							                 'page_fullfilename',
 							                 'page_filename',
 							                 'page_extension',
-							                 'lastchange_user_username',
-							                 'lastchange_user_fullname',
-							                 'lastchange_user_mail',
-							                 'lastchange_user_desc',
-							                 'lastchange_user_tel',
+							                 'edit_url',
+							                 'edit_fullurl',
+							                 'lastch_user_username',
+							                 'lastch_user_fullname',
+							                 'lastch_user_mail',
+							                 'lastch_user_desc',
+							                 'lastch_user_tel',
 							                 'create_user_username',
 							                 'create_user_fullname',
 							                 'create_user_mail',
