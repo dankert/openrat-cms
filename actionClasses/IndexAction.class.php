@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.19  2005-02-17 19:21:00  dankert
+// Revision 1.20  2005-03-13 16:39:00  dankert
+// Neue Methoden, um Baum ein- und auszublenden
+//
+// Revision 1.19  2005/02/17 19:21:00  dankert
 // Titelanzeige geaendert
 //
 // Revision 1.18  2005/01/27 00:03:57  dankert
@@ -237,6 +240,7 @@ class IndexAction extends Action
 		$this->forward('project_select');
 	}
 
+
 	function login()
 	{
 		global $conf;
@@ -247,6 +251,10 @@ class IndexAction extends Action
 		if	( $conf['login']['nologin'] )
 			die('login disabled');
 
+		// Ermitteln, ob der Baum angezeigt werden soll
+		// Ist die Breite zu klein, dann wird der Baum nicht angezeigt
+		Session::set('showtree',intval($this->getRequestVar('screenwidth')) > $conf['interface']['min_width'] );
+		
 		$this->checkLogin( $this->getRequestVar('login_name'    ),
 		                   $this->getRequestVar('login_password')  );
 		
@@ -398,6 +406,20 @@ class IndexAction extends Action
 	}
 
 
+	function showtree()
+	{
+		Session::set('showtree',true );
+		$this->callSubAction('show');
+	}
+		
+
+	function hidetree()
+	{
+		Session::set('showtree',false );
+		$this->callSubAction('show');
+	}
+		
+
 	function show()
 	{
 		global $conf;
@@ -476,6 +498,9 @@ class IndexAction extends Action
 		}
 		
 		$this->setTemplateVar( 'frame_src_title'   ,Html::url( 'title'          ) );
+
+		$this->setTemplateVar( 'show_tree',(Session::get('showtree')==true) );
+
 		$this->setTemplateVar( 'frame_src_treemenu',Html::url( 'treemenu'       ) );
 		$this->setTemplateVar( 'frame_src_tree'    ,Html::url( 'tree'    ,'load') );
 
