@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-12-15 23:23:11  dankert
+// Revision 1.4  2004-12-19 19:23:05  dankert
+// Ausgeben von "Notices"
+//
+// Revision 1.3  2004/12/15 23:23:11  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
@@ -47,43 +50,44 @@ class GroupAction extends Action
 
 	function GroupAction()
 	{
-		$this->group = new Group( $this->getRequestId() );
-		$this->group->load();
+		if   ( !$this->userIsAdmin() )
+			die('you are not an admin');
+
+		if	( $this->getRequestId() != 0 )
+		{
+			$this->group = new Group( $this->getRequestId() );
+			$this->group->load();
+			$this->setTemplateVar( 'groupid',$this->group->groupid );
+		}
 	}
 
 
 	function save()
 	{
-		global $SESS;
-
-		if   ( $this->getRequestVar('delete')!='' )
+		if   ( $this->hasRequestVar('delete') )
 		{
 			$this->group->delete();
 
-			unset( $SESS['groupid'] );
-			$this->setTemplateVar['tree_refresh'] = true;
-
-			$this->callSubAction('listing');
+			$this->addNotice('group',$this->group->name,'DELETED','ok');
 		}
 		else
 		{
 			$this->group->name = $this->getRequestVar('name');
 			$this->group->save();
-			
-			$this->callSubAction('edit');
+
+			$this->addNotice('group',$this->group->name,'SAVED','ok');
 		}
+		$this->callSubAction('listing');
 	}
 
 
 	function add()
 	{
-		global $REQ;
-
-		$this->group->name = $REQ['name'];
+		$this->group = new Group();
+		$this->group->name = $this->getRequestVar('name');
 		$this->group->add();
 	
-		$this->setTemplateVar('tree_refresh',true);
-	
+		$this->addNotice('group',$this->group->name,'ADDED','ok');
 		$this->callSubAction('listing');
 	}
 
@@ -92,6 +96,8 @@ class GroupAction extends Action
 	{
 		// Benutzer der Gruppe hinzuf?gen
 		$this->group->addUser( $this->getRequestVar('userid') );
+
+		$this->addNotice('group',$this->group->name,'SAVED','ok');
 	
 		$this->callSubAction('users');
 	}
@@ -99,37 +105,36 @@ class GroupAction extends Action
 
 	function deluser()
 	{
-		global $REQ;
-		$this->group->delUser( $REQ['userid'] );
+		$this->group->delUser( intval($this->getRequestVar('userid')) );
 	
+		$this->addNotice('group',$this->group->name,'DELETED','ok');
 		$this->callSubAction('users');
 	}
 
 
-	function delright()
-	{
-
-		$this->group->addRight( $REQ['aclid'] );
-
-		// Berechtigungen anzeigen
-		$SESS['groupaction'] = 'rights';
-
-	}
-
-
-	function addright()
-	{
-		$this->group->addRight( $REQ );
-	
-		// Berechtigungen anzeigen
-		$SESS['groupaction'] = 'rights';
-	}
-
+//	function delright()
+//	{
+//
+//		$this->group->addRight( $REQ['aclid'] );
+//
+//		// Berechtigungen anzeigen
+//		$SESS['groupaction'] = 'rights';
+//
+//	}
+//
+//
+//	function addright()
+//	{
+//		$this->group->addRight( $REQ );
+//	
+//		// Berechtigungen anzeigen
+//		$SESS['groupaction'] = 'rights';
+//	}
+//
+//
 
 	function listing()
 	{
-		global $conf_php;
-		// Liste aller Gruppen
 		$list = array();
 
 		foreach( Group::getAll() as $id=>$name )
