@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-05-02 11:40:00  dankert
+// Revision 1.5  2004-05-02 12:01:33  dankert
+// Funktion release() zum freigeben von Inhalten
+//
+// Revision 1.4  2004/05/02 11:40:00  dankert
 // Freigabestatus der Seiteninhalte verarbeiten
 //
 // Revision 1.3  2004/04/24 18:11:28  dankert
@@ -492,6 +495,37 @@ class Value
 		return $db->getCol( $sql->query );
 	}
 
+
+	/**
+	 * Inhalt freigeben
+	 */
+	function release()
+	{
+		$db = db_connection();
+
+		$sql = new Sql( 'UPDATE {t_value}'.
+		                '  SET publish=0'.
+		                '  WHERE elementid ={elementid}'.
+		                '    AND pageid    ={pageid}'.
+		                '    AND languageid={languageid}' );
+		$sql->setInt( 'elementid' ,$this->element->elementid );
+		$sql->setInt( 'pageid'    ,$this->pageid    );
+		$sql->setInt( 'languageid',$this->languageid);
+
+		$db->query( $sql->query );
+
+		$sql = new Sql( 'UPDATE {t_value}'.
+		                '  SET publish=1'.
+		                '  WHERE active    = 1'.
+		                '    AND elementid ={elementid}'.
+		                '    AND pageid    ={pageid}'.
+		                '    AND languageid={languageid}' );
+		$sql->setInt( 'elementid' ,$this->element->elementid );
+		$sql->setInt( 'pageid'    ,$this->pageid    );
+		$sql->setInt( 'languageid',$this->languageid);
+
+		$db->query( $sql->query );
+	}
 
 	/**
 	 * Inhalt speichern
