@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-12-19 15:16:02  dankert
+// Revision 1.7  2004-12-26 20:24:16  dankert
+// Korrektur Abfrage Berechtigungen
+//
+// Revision 1.6  2004/12/19 15:16:02  dankert
 // div. Korrekturen
 //
 // Revision 1.5  2004/12/15 23:25:32  dankert
@@ -55,6 +58,9 @@ class ProjectAction extends Action
 
 	function ProjectAction()
 	{
+		if	( !$this->userIsAdmin() )
+			die('n/a');
+
 		if	( $this->getRequestId()!=0 )
 		{
 			$this->project = new Project( $this->getRequestId() );
