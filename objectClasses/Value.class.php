@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-05-02 14:41:31  dankert
+// Revision 1.7  2004-05-03 20:21:49  dankert
+// setzen von ObjectId bei Code-Elementen
+//
+// Revision 1.6  2004/05/02 14:41:31  dankert
 // Einfügen package-name (@package)
 //
 // Revision 1.5  2004/05/02 12:01:33  dankert
@@ -802,13 +805,14 @@ class Value
 				$this->page->load();
 				
 				Api::delOutput('');
+				Api::setObjectId( $this->page->objectid ); // haesslich :-/
 				$code = "<?php\n".$this->element->code."\n?>";
 				$tmp  = $conf_tmpdir.'/'.md5($this->element->elementid).'.tmp';
 				$f = fopen( $tmp,'w' );
 				fwrite( $f,$code );
 				fclose( $f );
 				
-				require( $tmp );
+				require( $tmp ); // Ausfuehren des temporaeren PHP-Codes
 
 				$inhalt = Api::getOutput();
 				
