@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-12-27 23:34:20  dankert
+// Revision 1.10  2004-12-30 23:23:21  dankert
+// Werte vorbelegen
+//
+// Revision 1.9  2004/12/27 23:34:20  dankert
 // Korrektur add()
 //
 // Revision 1.8  2004/12/26 01:06:31  dankert
@@ -69,19 +72,19 @@ class Template
 	 * Projekt-ID des aktuell ausgew?hlten Projektes
 	 * @type Integer
 	 */
-	var $projectid;
+	var $projectid = 0;
 
 	/**
 	 * Logischer Name
 	 * @type String
 	 */
-	var $name;
+	var $name = 'unnamed';
 	
 	/**
 	 * ID der Projektvariante
 	 * @type Integer
 	 */
-	var $modelid;
+	var $modelid = 0;
 
 	/**
 	 * Dateierweiterung dieses Templates (abh?ngig von der Projektvariante)
@@ -333,8 +336,14 @@ class Template
 		$sql->setInt   ('templateid',$this->templateid   );
 		$sql->setString('name'      ,$name               );
 
-		$project = Session::getProject();
-		$sql->setInt   ('projectid' ,$project->projectid );
+		// Wenn Projektid nicht vorhanden, dann aus Session lesen
+		if	( intval($this->projectid) == 0 )
+		{
+			$project = Session::getProject();
+			$this->projectid = $project->projectid;
+		}
+
+		$sql->setInt   ('projectid' ,$this->projectid );
 
 		$db->query( $sql->query );
 	}
