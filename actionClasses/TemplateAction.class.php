@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:49:37  dankert
+// Revision 1.3  2004-05-07 21:34:58  dankert
+// Url über Html::url erzeugen
+//
+// Revision 1.2  2004/05/02 14:49:37  dankert
 // Einfügen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
@@ -299,15 +302,13 @@ class TemplateAction extends Action
 			$element->load();
 			
 			$text = str_replace('{{'.$elid.'}}',
-			                    '<a href="do.'.$conf_php.'?action=element&subaction=edit'.
-			                    '&elementid='.$elid.
+			                    '<a href="'.Html::url(array('action'=>'element','subaction'=>'edit','elementid'=>$elid)).
 			                    '" class="el_'.
 			                    $element->type.'" target="cms_main_main" title="'.$element->desc.'">{{'.
 			                    $element->name.'}}</a>',
 			                    $text );
 			$text = str_replace('{{-&gt;'.$elid.'}}',
-			                    '<a href="do.'.$conf_php.'?action=element&subaction=edit'.
-			                    '&elementid='.$elid.
+			                    '<a href="'.Html::url(array('action'=>'element','subaction'=>'edit','elementid'=>$elid)).
 			                    '" class="el_'.
 			                    $element->type.'" target="cms_main_main" title="'.$element->desc.'">{{-&gt;'.
 			                    $element->name.'}}</a>',
@@ -335,7 +336,7 @@ class TemplateAction extends Action
 			$element->load();
 
 			$list[$elid]         = array();
-			$list[$elid]['url' ] = 'do.'.$conf_php.'?action=element&subaction=edit&elementid='.$elid;
+			$list[$elid]['url' ] = Html::url(array('action'=>'element','subaction'=>'edit','elementid'=>$elid));
 			$list[$elid]['name'] = $element->name;
 			$list[$elid]['desc'] = $element->desc;
 			$list[$elid]['type'] = $element->type;
