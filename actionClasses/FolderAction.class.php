@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-10-13 21:18:50  dankert
+// Revision 1.8  2004-10-14 22:57:44  dankert
+// Neue Verknuepfungen mit dem Linknamen als Url vorbelegen
+//
+// Revision 1.7  2004/10/13 21:18:50  dankert
 // Neue Links zum Verschieben nach ganz oben/unten
 //
 // Revision 1.6  2004/05/07 21:30:59  dankert
@@ -122,10 +125,10 @@ class FolderAction extends Action
 				if   ( $this->getRequestVar('linkname') != '' )
 				{
 					$link = new Link();
-					$link->name     = $this->getRequestVar('linkname');
-					$link->parentid = $this->folder->objectid; 
+					$link->name           = $this->getRequestVar('linkname');
+					$link->parentid       = $this->folder->objectid; 
 					$link->isLinkToObject = false;
-					$link->url = '/';
+					$link->url            = $this->getRequestVar('linkname');;
 					$link->add();
 				}
 				break;
