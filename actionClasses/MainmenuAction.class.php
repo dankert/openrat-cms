@@ -1,7 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
 // $Id$
-// ---------------------------------------------------------------------------
+//
 // OpenRat Content Management System
 // Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
 //
@@ -18,60 +17,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.17  2005-01-14 21:41:23  dankert
-// Aufruf von lastModified() fuer Conditional-GET
-//
-// Revision 1.16  2004/12/25 22:17:59  dankert
-// Korrektur transfer()
-//
-// Revision 1.15  2004/12/25 22:11:03  dankert
-// Erweiterung/Korrektur der Kennwortaenderung
-//
-// Revision 1.14  2004/12/19 18:09:05  dankert
-// Korrektur Gruppen-Men?
-//
-// Revision 1.13  2004/12/19 18:06:41  dankert
-// Korrektur Benutzer-Men?
-//
-// Revision 1.12  2004/12/15 23:24:38  dankert
-// diverse Aenderungen
-//
-// Revision 1.11  2004/12/13 22:11:55  dankert
-// Anpassung model() und language()
-//
-// Revision 1.10  2004/12/13 21:44:09  dankert
-// Anpassung template()
-//
-// Revision 1.9  2004/11/28 22:33:14  dankert
-// Benutzer/Gruppen Menue
-//
-// Revision 1.8  2004/11/28 19:46:45  dankert
-// Bei Dateien immer Menuepunkt "Bearbeiten"
-//
-// Revision 1.7  2004/11/28 18:39:18  dankert
-// Anpassen an neue Sprachdatei-Konventionen
-//
-// Revision 1.6  2004/11/28 16:54:56  dankert
-// Abfrage der Berechtigungen bei Menueaufbau
-//
-// Revision 1.5  2004/11/27 13:07:34  dankert
-// Korrektur in page()
-//
-// Revision 1.4  2004/11/10 22:37:46  dankert
-// Verlinken von Sprach/Modell-Angabe
-//
-// Revision 1.3  2004/10/13 21:20:11  dankert
-// Neue Seitenfunktion zum gleichzeitigen Bearbeiten aller Seiteninhalte
-//
-// Revision 1.2  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**
@@ -86,9 +31,8 @@ class MainmenuAction extends Action
 
 	var $subActionList = array();
 	var $obj;
+
 	
-
-
 	function element()
 	{
 		$this->subActionName = 'template';
@@ -116,7 +60,8 @@ class MainmenuAction extends Action
 			
 			$this->addSubaction('show' );
 			$this->addSubaction('el'   );
-			$this->addSubaction('src'  );
+			if	( $this->writable )
+				$this->addSubaction('src'  );
 			$this->addSubaction('prop' );
 		}
 
