@@ -23,8 +23,16 @@
 </tr>
 <?php } ?>
 
+
+<?php if ( count($templates)==0 )
+      { ?>
+ <tr>
+    <td class="help"><?php echo lang('GLOBAL_NO_TEMPLATES_AVAILABLE_DESC') ?></td>
+  </tr>
+<?php } ?>
+  
 <tr>
-<td class="act"><input type="text" name="name" value="">&nbsp;<input type="submit" class="submit" value="<?php echo lang('ADD') ?>"></td>
+<td class="act"><input type="text" name="name" value="">&nbsp;<input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>"></td>
 </tr>
 
 </table>
