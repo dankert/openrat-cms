@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-04-28 20:01:52  dankert
+// Revision 1.4  2004-05-02 14:49:37  dankert
+// Einfügen package-name (@package)
+//
+// Revision 1.3  2004/04/28 20:01:52  dankert
 // Ordner löschen ermöglichen
 //
 // Revision 1.2  2004/04/24 16:57:13  dankert
@@ -31,6 +34,13 @@
 //
 // ---------------------------------------------------------------------------
 
+
+/**
+ * Action-Klasse zum Bearbeiten eines Ordners
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.actions
+ */
 
 class FolderAction extends Action
 {

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-30 20:31:57  dankert
+// Revision 1.3  2004-05-02 14:49:37  dankert
+// Einfügen package-name (@package)
+//
+// Revision 1.2  2004/04/30 20:31:57  dankert
 // Berechtigung: freigeben
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
@@ -29,6 +32,16 @@
 // ---------------------------------------------------------------------------
 
 
+/**
+ * Eltern-Klasse fuer alle Actions.
+ *
+ * Diese Klasse stellt grundlegende action-uebergreifende Methoden
+ * bereit.
+ *
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.actions
+ */
 class Action
 {
 	var $db;

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-05-02 12:00:44  dankert
+// Revision 1.7  2004-05-02 14:49:37  dankert
+// Einfügen package-name (@package)
+//
+// Revision 1.6  2004/05/02 12:00:44  dankert
 // Initialisieren von $value->publish
 //
 // Revision 1.5  2004/04/30 21:07:32  dankert
@@ -40,6 +43,12 @@
 //
 // ---------------------------------------------------------------------------
 
+/**
+ * Action-Klasse zum Bearbeiten einer Seite
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.actions
+ */
 
 class PageAction extends Action
 {

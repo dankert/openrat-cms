@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-05-02 12:00:26  dankert
+// Revision 1.5  2004-05-02 14:49:37  dankert
+// Einfügen package-name (@package)
+//
+// Revision 1.4  2004/05/02 12:00:26  dankert
 // Funktion release() zum freigeben von Inhalten
 //
 // Revision 1.3  2004/05/02 11:40:00  dankert
@@ -39,6 +42,7 @@
  * Action-Klasse zum Bearbeiten eines Seitenelementes
  * @author $Author$
  * @version $Revision$
+ * @package openrat.actions
  */
 class PageelementAction extends Action
 {

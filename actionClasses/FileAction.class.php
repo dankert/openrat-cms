@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-04-28 20:22:32  dankert
+// Revision 1.5  2004-05-02 14:49:37  dankert
+// Einfügen package-name (@package)
+//
+// Revision 1.4  2004/04/28 20:22:32  dankert
 // Rechte hinzufügen
 //
 // Revision 1.3  2004/04/24 17:02:47  dankert
@@ -35,6 +38,12 @@
 // ---------------------------------------------------------------------------
 
 
+/**
+ * Action-Klasse zum Bearbeiten einer Datei
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.actions
+ */
 class FileAction extends Action
 {
 	var $file;
