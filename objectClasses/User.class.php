@@ -20,11 +20,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-07 21:29:16  dankert
-// Url über Html::url erzeugen
+// Revision 1.4  2004-10-14 21:12:59  dankert
+// Methoden fuer Berechtigungen
+//
+// Revision 1.3  2004/05/07 21:29:16  dankert
+// Url ?ber Html::url erzeugen
 //
 // Revision 1.2  2004/05/02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // ---------------------------------------------------------------------------
 
@@ -80,7 +83,89 @@ class User
 		global $SESS;
 
 		$SESS['user'] = $this->getProperties();
+		$SESS['userobject'] = $this;
 	}
+
+
+	function getGroupClause()
+	{
+		$groupIds = $this->getGroupIds();
+
+		if	( count($groupIds) > 0 )
+			$groupclause = ' groupid='.implode(' OR groupid=',$groupIds );
+		else
+			$groupclause = ' 1=0 ';
+
+		return $groupclause;
+	}
+
+
+	// Prueft, ob der Benutzer fuer ein Projekt berechtigt ist
+	function hasProject( $projectid )
+	{
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT COUNT(*)'.
+		                '  FROM {t_acl}'.
+		                '  LEFT JOIN {t_object} ON {t_object}.id={t_acl}.objectid '.
+		                '  WHERE projectid={projectidid} AND '.
+		                '        ( userid={userid} OR'.
+		                '          '.$this->getGroupClause().'    )' );
+		$sql->setInt   ( 'userid',$this->userid );
+
+		return $db->getOne( $sql->query ) > 0;
+	}
+
+
+
+	// Prueft, ob der Benutzer fuer ein Projekt berechtigt ist
+	function getReadableProjects()
+	{
+		$db = db_connection();
+
+		if	( $this->isAdmin )
+		{
+			return Project::getAllProjects();
+		}
+		else
+		{
+			$sql = new Sql( 'SELECT {t_project}.id,{t_project}.name'.
+			                '  FROM {t_acl}'.
+			                '  LEFT JOIN {t_object}  ON {t_object}.id ={t_acl}.objectid '.
+			                '  LEFT JOIN {t_project} ON {t_project}.id={t_object}.projectid '.
+			                '  WHERE userid={userid} OR'.
+			                '        '.$this->getGroupClause().
+			                '  ORDER BY {t_project}.name' );
+			$sql->setInt   ( 'userid',$this->userid );
+
+			return $db->getAssoc( $sql->query );
+		}
+	}
+
+
+
+	// Prueft, ob der Benutzer fuer ein Projekt berechtigt ist
+	function getReadableProjectIds()
+	{
+		$db = db_connection();
+
+		if	( $this->isAdmin )
+		{
+			return Project::getAllProjectIds();
+		}
+		else
+		{
+			$sql = new Sql( 'SELECT DISTINCT {t_object}.projectid'.
+			                '  FROM {t_acl}'.
+			                '  LEFT JOIN {t_object} ON {t_object}.id={t_acl}.objectid '.
+			                '  WHERE userid={userid} OR'.
+			                '        '.$this->getGroupClause() );
+			$sql->setInt   ( 'userid',$this->userid );
+
+			return $db->getCol( $sql->query );
+		}
+	}
+
 
 
 	// Lesen Benutzer aus der Datenbank
@@ -240,19 +325,19 @@ class User
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql->query );
 
-		// Alle Berechtigungen dieses Benutzers löschen
+		// Alle Berechtigungen dieses Benutzers l?schen
 		$sql = new Sql( 'DELETE FROM {t_acl} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql->query );
 
-		// Alle Gruppenzugehörigkeiten dieses Benutzers löschen
+		// Alle Gruppenzugeh?rigkeiten dieses Benutzers l?schen
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql->query );
 
-		// Benutzer löschen
+		// Benutzer l?schen
 		$sql = new Sql( 'DELETE FROM {t_user} '.
 		                'WHERE id={userid}' );
 		$sql->setInt   ('userid',$this->userid );
@@ -329,7 +414,7 @@ class User
 			{
 				Logger::debug( 'checking md5-password '.md5($password).' against database' );
 
-				// Prüfen ob Kennwort mit Datenbank übereinstimmt
+				// Pr?fen ob Kennwort mit Datenbank ?bereinstimmt
 				if   ( $row_user['password'] == md5( $password ) )
 				{
 					// Login erfolgreich
@@ -511,15 +596,15 @@ class User
 		$sql->setInt ('delete' ,$data['delete' ]);
 		$sql->setInt ('publish',$data['publish']);
 	
-		// Datenbankabfrage ausführen
+		// Datenbankabfrage ausf?hren
 		$db->query( $sql->query );
 	}
 	
 	
 	/**
-	  * Benutzer erhält eine Berechtigung
+	  * Benutzer erh?lt eine Berechtigung
 	  *
-	  * @param Integer ID der hinzuzufügenden ACL
+	  * @param Integer ID der hinzuzuf?genden ACL
 	  * @access public
 	 */
 	function addACL( $aclid )
@@ -529,7 +614,7 @@ class User
 		$acl = new Acl( $aclid );
 		$acl->load();
 		
-		// Falls Berechtigung für dieses Objekt nicht vorhanden, dann anlegen
+		// Falls Berechtigung f?r dieses Objekt nicht vorhanden, dann anlegen
 		if	( !isset($SESS['rights'][$acl->objectid]) )
 			$SESS['rights'][$acl->objectid] = Array( 'read'         =>true,
 			                                         'prop'         =>false,		
@@ -541,7 +626,7 @@ class User
 			                                         'create_link'  =>false,		
 			                                         'create_page'  =>false );		
 
-		// Hinzufügen der Flags
+		// Hinzuf?gen der Flags
 		if	( $acl->prop )
 			$SESS['rights'][$acl->objectid]['prop'   ] = true;		
 
@@ -576,7 +661,7 @@ class User
 		$sql = new SQL('DELETE FROM {t_acl} WHERE id={aclid}');
 		$sql->setInt( 'aclid',$aclid );
 	
-		// Datenbankabfrage ausführen
+		// Datenbankabfrage ausf?hren
 		$db->query( $sql->query );
 	}
 }
