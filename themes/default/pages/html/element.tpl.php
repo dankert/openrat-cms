@@ -63,7 +63,7 @@
   </tr>
   <tr>
     <td class="f1" width="30%"><?php echo lang('GLOBAL_TYPE') ?></td>
-    <td class="f1" width="70%"><?php echo Html::selectBox('type',$type,$default_type,Array('onChange'=>'submit();')) ?> <noscript><input type="submit" class="submit" value="<?php echo lang('CHANGE') ?>"></noscript></td>
+    <td class="f1" width="70%"><?php echo Html::selectBox('type',$type,$default_type,Array('onChange'=>'submit();')) ?> <noscript><input type="submit" class="submit" value="<?php echo lang('GLOBAL_CHANGE') ?>"></noscript></td>
   </tr>
   <tr>
     <td></td>
