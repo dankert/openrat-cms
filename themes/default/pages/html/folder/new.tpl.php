@@ -13,6 +13,8 @@
     <th colspan="4"><?php echo lang('NEW') ?></th>
   </tr>
 
+  <?php if (count($templates)>0) // Nur, wenn Vorlagen vorhanden
+        { ?>
   <tr>
     <td class="f1">
       <input type="radio" name="type" value="page" onClick="document.forms[0].pagename.focus();"><?php echo lang('PAGE') ?>
@@ -22,6 +24,13 @@
       <input type="text" name="pagename" size="20" value="" onFocus="document.forms[0].type[0].checked=true;" tabindex="1">
     </td>
   </tr>
+  <?php }
+        else
+        { ?>
+  <tr>
+    <td class="help" colspan="2"><?php echo lang('GLOBAL_NO_TEMPLATES_AVAILABLE_DESC') ?></td>
+  </tr>
+  <?php } ?>
 
   <tr>
     <td class="f1">
