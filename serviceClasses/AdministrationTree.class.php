@@ -132,25 +132,23 @@ class AdministrationTree extends AbstractTree
 	
 	function users( $id )
 	{	
-		foreach( User::listAll() as $id=>$name )
+		foreach( User::getAllUsers() as $user )
 		{
 			$treeElement = new TreeElement();
 			
-			$u = new User( $id );
-			$u->load();
-			$treeElement->internalId  = $id;
-			$treeElement->text        = $u->name;
-			$treeElement->url         = Html::url('main','user',$id);
+			$treeElement->internalId  = $user->userid;
+			$treeElement->text        = $user->name;
+			$treeElement->url         = Html::url('main','user',$user->userid);
 			$treeElement->icon        = 'user';
 			
-			$desc =  $u->fullname;
+			$desc =  $user->fullname;
 
-			if	( $u->isAdmin )
-				$desc .= ' ('.lang('GLOBAL_ADMIN').') ';
-			if	( $u->desc == "" )
+			if	( $user->isAdmin )
+				$desc .= ' ('.lang('USER_ADMIN').') ';
+			if	( $user->desc == "" )
 				$desc .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 			else
-				$desc .= ' - '.$u->desc;
+				$desc .= ' - '.$user->desc;
 
 			$treeElement->description = $desc;
 			$treeElement->target      = 'cms_main';
