@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Revision 1.4  2004-11-10 22:45:06  dankert
+// Neue Methode: getTrueProperties()
+//
+// Revision 1.3  2004/05/02 14:41:31  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.2  2004/04/30 20:36:25  dankert
 // Neu: Freigabe
@@ -50,21 +53,21 @@ class Acl
 	var $aclid;
 
 	/**
-	  * ID des Objektes, für das diese Berechtigung gilt
+	  * ID des Objektes, f?r das diese Berechtigung gilt
 	  * @type Integer
 	  */
 	var $objectid   = 0;
 
 	/**
 	  * ID des Benutzers
-	  * ( = 0 falls die Berechtigung für eine Gruppe gilt)
+	  * ( = 0 falls die Berechtigung f?r eine Gruppe gilt)
 	  * @type Integer
 	  */
 	var $userid     = 0;
 
 	/**
 	  * ID der Gruppe
-	  * ( = 0 falls die Berechtigung für einen Benutzer gilt)
+	  * ( = 0 falls die Berechtigung f?r einen Benutzer gilt)
 	  * @type Integer
 	  */
 	var $groupid    = 0;
@@ -83,13 +86,13 @@ class Acl
 	var $isDefault  = false;
 
 	/**
-	  * Name des Benutzers, für den diese Berechtigung gilt
+	  * Name des Benutzers, f?r den diese Berechtigung gilt
 	  * @type String
 	  */
 	var $username   = '';
 
 	/**
-	  * Name der Gruppe, für die diese Berechtigung gilt
+	  * Name der Gruppe, f?r die diese Berechtigung gilt
 	  * @type String
 	  */
 	var $groupname  = '';
@@ -113,7 +116,7 @@ class Acl
 	var $prop          = false;
 
 	/**
-	  * Objekt löschen
+	  * Objekt l?schen
 	  * @type Boolean
 	  */
 	var $delete        = false;
@@ -125,7 +128,7 @@ class Acl
 	var $release       = false;
 
 	/**
-	  * Objekt veröffentlichen
+	  * Objekt ver?ffentlichen
 	  * @type Boolean
 	  */
 	var $publish       = false;
@@ -143,7 +146,7 @@ class Acl
 	var $create_file   = false;
 
 	/**
-	  * Verknüpfung anlegen
+	  * Verkn?pfung anlegen
 	  * @type Boolean
 	  */
 	var $create_link   = false;
@@ -179,7 +182,7 @@ class Acl
 
 
 	/**
-	 * Laden einer ACL
+	 * Laden einer ACL inklusive Benutzer-, Gruppen- und Sprachbezeichnungen
 	 */
 	function load()
 	{
@@ -196,6 +199,44 @@ class Acl
 		
 		$row = $db->getRow( $sql->query );
 		
+		$this->setDatabaseRow( $row );		
+
+		if	( intval($this->languageid)==0 )
+			$this->languagename = lang('ALL_LANGUAGES');
+		else	$this->languagename = $row['languagename'];
+		$this->username     = $row['username'    ];
+		$this->groupname    = $row['groupname'   ];
+	}
+
+
+	/**
+	 * Laden einer ACL (ohne verknuepfte Namen)
+	 */
+	function loadRaw()
+	{
+		$db = db_connection();
+		
+		$sql = new Sql( 'SELECT * '.
+		                '  FROM {t_acl} '.
+		                '  WHERE {t_acl}.id={aclid}' );
+
+		$sql->setInt('aclid',$this->aclid);
+		
+		$row = $db->getRow( $sql->query );
+
+		$this->setDatabaseRow( $row );		
+	}
+
+
+	/**
+	 * Setzt die Eigenschaften des Objektes mit einer Datenbank-Ergebniszeile
+	 *
+	 * @param row Ergebniszeile aus ACL-Datenbanktabelle
+	 */
+	function setDatabaseRow( $row )
+	{
+		$this->aclid         =   $row['id'];
+
 		$this->write         = ( $row['is_write'        ] == '1' );
 		$this->prop          = ( $row['is_prop'         ] == '1' );
 		$this->delete        = ( $row['is_delete'       ] == '1' );
@@ -212,17 +253,12 @@ class Acl
 		$this->languageid   = intval($row['languageid']);
 		$this->userid       = intval($row['userid'    ]);
 		$this->groupid      = intval($row['groupid'   ]);
-		if	( intval($this->languageid)==0 )
-			$this->languagename = lang('ALL_LANGUAGES');
-		else	$this->languagename = $row['languagename'];
-		$this->username     = $row['username'    ];
-		$this->groupname    = $row['groupname'   ];
 	}
-
 
 	function getProperties()
 	{
-		return Array( 'write'        => $this->write,
+		return Array( 'read'         => true,
+		              'write'        => $this->write,
 		              'prop'         => $this->prop,
 		              'create_folder'=> $this->create_folder,
 		              'create_file'  => $this->create_file,
@@ -242,6 +278,25 @@ class Acl
 		              'languagename' => $this->languagename,
 		              'objectid'     => $this->objectid );
 
+	}
+
+
+	function getTrueProperties()
+	{
+		$erg = array('read');
+		if	( $this->write         ) $erg[] = 'write';
+		if	( $this->prop          ) $erg[] = 'prop';
+		if	( $this->create_folder ) $erg[] = 'create_folder';
+		if	( $this->create_file   ) $erg[] = 'create_file';
+		if	( $this->create_link   ) $erg[] = 'create_link';
+		if	( $this->create_page   ) $erg[] = 'create_page';
+		if	( $this->delete        ) $erg[] = 'delete';
+		if	( $this->release       ) $erg[] = 'release';
+		if	( $this->publish       ) $erg[] = 'publish';
+		if	( $this->grant         ) $erg[] = 'grant';
+		if	( $this->transmit      ) $erg[] = 'transmit';
+
+		return $erg;
 	}
 
 
