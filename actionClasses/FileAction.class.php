@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-05-02 14:49:37  dankert
+// Revision 1.6  2004-09-26 12:12:31  dankert
+// Erweiterung HTTP-Header bei Anzeige der Bin?rdatei
+//
+// Revision 1.5  2004/05/02 14:49:37  dankert
 // Einfügen package-name (@package)
 //
 // Revision 1.4  2004/04/28 20:22:32  dankert
@@ -146,15 +149,29 @@ class FileAction extends Action
 	{
 		// Angabe Content-Type
 		header('Content-Type: '.$this->file->mimeType() );
+		header('X-File-Id: '.$this->file->fileid );
 
-		// Angabe Content-Disposition mit Dateinamen
-		header('Content-Disposition: filename='.$this->file->filenameWithExtension().';' );
+		// Angabe Content-Disposition
+		// - Bild soll "inline" gezeigt werden
+		// - Dateiname wird benutzt, wenn der Browser das Bild speichern moechte
+		header('Content-Disposition: inline; filename='.$this->file->filenameWithExtension() );
+		header('Content-Transfer-Encoding: binary' );
+		header('Content-Description: '.$this->file->name );
 
-		echo $this->file->loadValue();
+		$this->file->loadValue(); // Bild aus Datenbank laden
+
+		// Groesse des Bildes in Bytes
+		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
+		header('Content-Length: '.strlen($this->file->value) );
+
+		echo $this->file->value;
 		exit;
-	}	
+	}
 
 
+	/**
+	 * Bildgroesse eines Bildes aendern
+	 */
 	function resize()
 	{
 		$width  = $this->getRequestVar('width' );
