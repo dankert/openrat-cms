@@ -13,10 +13,10 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
   <tr>
-    <th colspan="2"><?php echo lang('NAME') ?></th>
+    <th colspan="2"><?php echo lang('GLOBAL_NAME') ?></th>
   </tr>
   <tr>
-    <td class="f1" rowspan="2"><?php echo lang('NAME') ?></td>
+    <td class="f1" rowspan="2" width="30%"><?php echo lang('GLOBAL_NAME') ?></td>
     <td class="f1"><input type="text" name="name" class="name" value="<?php echo $name ?>"></td>
   </tr>
   <tr>
@@ -24,7 +24,7 @@
   </tr>
 
   <tr>
-    <td class="f2" rowspan="2"><?php echo lang('DESCRIPTION') ?></td>
+    <td class="f2" rowspan="2" width="30%"><?php echo lang('GLOBAL_DESCRIPTION') ?></td>
     <td class="f2"><textarea name="desc" rows="5" cols="50"><?php echo $desc ?></textarea></td>
   </tr>
   <tr>
@@ -32,14 +32,14 @@
   </tr>
 
   <tr>
-    <td class="f1" rowspan="2"><?php echo lang('ELEMENT_DELETE_VALUES') ?></a></td>
+    <td class="f1" rowspan="2" width="30%"><?php echo lang('ELEMENT_DELETE_VALUES') ?></a></td>
     <td class="f1"><input type="checkbox" name="deletevalues" value="1"></td>
   </tr>
   <tr>
     <td class="help"><?php echo lang('ELEMENT_DELETE_VALUES_DESC') ?></td>
   </tr>
   <tr>
-    <td class="f1" rowspan="2"><?php echo lang('DELETE') ?></a></td>
+    <td class="f1" rowspan="2"><?php echo lang('GLOBAL_DELETE') ?></a></td>
     <td class="f1"><input type="checkbox" name="delete" value="1"></td>
   </tr>
   <tr>
@@ -47,7 +47,7 @@
   </tr>
 
   <tr>
-    <td colspan="2" class="act"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
+    <td colspan="2" class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
   </tr>
 
 </table>
@@ -63,10 +63,10 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
   <tr>
-    <th colspan="2"><?php echo lang('TYPE') ?></th>
+    <th colspan="2"><?php echo lang('GLOBAL_TYPE') ?></th>
   </tr>
   <tr>
-    <td class="f1" width="30%"><?php echo lang('TYPE') ?></td>
+    <td class="f1" width="30%"><?php echo lang('GLOBAL_TYPE') ?></td>
     <td class="f1" width="70%"><?php echo Html::selectBox('type',$type,$default_type,Array('onChange'=>'submit();')) ?> <noscript><input type="submit" class="submit" value="<?php echo lang('CHANGE') ?>"></noscript></td>
   </tr>
   <tr>
@@ -95,7 +95,7 @@
         if (isset($subtype))
         {  $fx = fx($fx); ?>
   <tr>
-    <td class="<?php echo $fx ?>"><?php echo lang('SUBTYPE') ?></td>
+    <td class="<?php echo $fx ?>" width="30%"><?php echo lang('SUBTYPE') ?></td>
     <td class="<?php echo $fx ?>"><?php echo Html::selectBox('subtype',$subtype,$act_subtype) ?></td>
   </tr>
   <?php } ?>
@@ -288,6 +288,16 @@
     <td class="<?php echo $fx ?>"><?php echo lang('EL_PROP_DYNAMIC_PARAMETERS') ?></td>
     <td class="<?php echo $fx ?>"><textarea name="code" rows="15" cols="40"><?php echo $parameters ?></textarea></td>
   </tr>
+  <?php foreach( $dynamic_class_parameters as $paramName=>$paramDesc ) { ?>
+  <tr>
+    <td class="<?php echo $fx ?>"><?php echo $paramName ?></td>
+    <td class="<?php echo $fx ?>"><input type="text" name="<?php echo $paramName ?>" /></td>
+  </tr>
+  <tr>
+    <td class="help">&nbsp;</td>
+    <td class="help"><?php echo $paramDesc ?></td>
+  </tr>
+  <?php } ?>
   <tr>
     <td></td>
     <td class="help"><ul><?php foreach( $dynamic_class_parameters as $paramName=>$paramDesc )
@@ -357,7 +367,7 @@
 
 
   <tr>
-    <td colspan="2" class="act"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
+    <td colspan="2" class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
   </tr>
 
 </table>
