@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-29 21:10:29  dankert
+// Revision 1.6  2004-12-15 23:18:36  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.5  2004/11/29 21:10:29  dankert
 // publish() mit 3 Parametern
 //
 // Revision 1.4  2004/11/24 22:05:45  dankert
@@ -94,7 +97,11 @@ class Folder extends Object
 		// Wenn Methode statisch aufgerufen wird, ist $this nicht vorhanden
 		if	( isset($this) )
 			$sql->setInt('projectid',$this->projectid );
-		else	$sql->setInt('projectid',$SESS['projectid'] );
+		else
+		{
+			$project = Session::getProject();
+			$sql->setInt('projectid',$project->projectid );
+		}
 		
 		// Datenbankabfrage ausf?hren
 		return $db->getOne( $sql->query );
@@ -120,31 +127,22 @@ class Folder extends Object
 
 	function load()
 	{
-		$db = db_connection();
-
-		$sql = new Sql('SELECT * FROM {t_folder} WHERE objectid={objectid}');
-		$sql->setInt('objectid',$this->objectid);
-
-		$row = $db->getRow( $sql->query );
-		
+//		$db = db_connection();
+//
+//		$sql = new Sql('SELECT * FROM {t_folder} WHERE objectid={objectid}');
+//		$sql->setInt('objectid',$this->objectid);
+//
+//		$row = $db->getRow( $sql->query );
+//
 		$this->objectLoad();
 		
-		$this->folderid = $row['id' ];
+//		$this->folderid = $row['id' ];
 	}
 
 
 
 	function save()
 	{
-		$db = db_connection();
-
-//		$sql = new Sql('UPDATE {t_folder}'.
-//		               'SET xx ={xx}'.
-//		                '   WHERE objectid={objectid}' );
-//		$sql->setInt('parentid' ,$this->parentId);
-//		$sql->setInt('objectid' ,$this->objectid);
-//		$db->query( $sql->query );
-
 		$this->objectSave();
 	}
 
@@ -337,7 +335,7 @@ class Folder extends Object
 	}
 
 	
-	function getRootObjectId()
+	function dgetRootObjectId()
 	{
 		global $SESS;
 		$db = db_connection();
@@ -543,86 +541,170 @@ class Folder extends Object
 	}
 
 
+	function addParentFolder( $id,$name )
+	{
+		if	( intval($id) != 0 )
+			$this->parentfolders[ $id ] = $name;
+	}
+
+
+	function checkParentFolders( $with_root, $with_self )
+	{
+		// Reihenfolge umdrehen
+		$this->parentfolders = array_reverse($this->parentfolders,true);
+
+		// Ordner ist bereits hoechster Ordner
+//		if   ( count($this->parentfolders) == 2 && $this->isRoot && $with_root && $with_self )
+//		{
+//			array_pop  ( $this->parentfolders );
+//			return;
+//		}
+
+
+		if   ( !$with_root )
+		{
+			$keys = array_keys( $this->parentfolders );
+			unset( $this->parentfolders[$keys[0]] );
+		}
+
+		if   ( !$with_self )
+		{
+			$keys = array_keys( $this->parentfolders );
+			unset( $this->parentfolders[$keys[count($keys)-1]] );
+		}
+	}
+
+
 	// Ermitteln aller ?bergeordneten Ordner
 	//
 	function parentObjectIds( $with_root = false, $with_self = false )
 	{
-		$db = db_connection();
+		$db = Session::getDatabase();
 		$this->parentfolders = array();
 		
 		// ?bergeordneten Ordner lesen
-		$sql = new Sql('SELECT parentid FROM {t_object} WHERE id={objectid}');
+		//$sql = new Sql('SELECT parentid FROM {t_object} WHERE id={objectid}');
+		$sql = new Sql('SELECT F0.id AS f0id,'.
+		               '       F1.id AS f1id,'.
+		               '       F2.id AS f2id,'.
+		               '       F3.id AS f3id,'.
+		               '       F4.id AS f4id,'.
+		               '       F5.id AS f5id '.
+		               '  FROM {t_object} AS F0'.
+		               ' LEFT JOIN {t_object} AS F1 on F0.parentid=F1.id '.
+		               ' LEFT JOIN {t_object} AS F2 on F1.parentid=F2.id '.
+		               ' LEFT JOIN {t_object} AS F3 on F2.parentid=F3.id '.
+		               ' LEFT JOIN {t_object} AS F4 on F3.parentid=F4.id '.
+		               ' LEFT JOIN {t_object} AS F5 on F4.parentid=F5.id '.
+		               ' WHERE F0.id={objectid}');
+
+//		               ' LEFT JOIN {t_name} '.
+//		               '   ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
 
 		$sql->setInt('objectid',$this->objectid);
-		$parentid = $db->getOne( $sql->query );
 
-		// Ordner ist bereits h?chster Ordner
-		if   ( !is_numeric($parentid))
-		{
-			// Falls Anzeige h?chster oder aktueller Ordner
-			if   ( $with_root && $with_self )
-			{
-				$this->parentfolders[] = $this->objectid;
-			}
+		$row = $db->getRow( $sql->query );
 
-			return $this->parentfolders;
-		}
+		$this->parentfolders = array();
+		$this->addParentfolder( $row['f0id'],$row['f0id'] );
+		$this->addParentfolder( $row['f1id'],$row['f1id'] );
+		$this->addParentfolder( $row['f2id'],$row['f2id'] );
+		$this->addParentfolder( $row['f3id'],$row['f3id'] );
+		$this->addParentfolder( $row['f4id'],$row['f4id'] );
+		$this->addParentfolder( $row['f5id'],$row['f5id'] );
 
-		// Aktuellen Ordner hinzuf?gen
-		if   ( $with_self )
-		{
-			$this->parentfolders[] = $this->objectid;
-		}
-
-		// Schleife ?ber alle ?bergeordneten Ordner
-		while( is_numeric($parentid) )
-		{
-			$sql = new Sql('SELECT parentid FROM {t_object} WHERE id={objectid}');
-			$sql->setInt('objectid',$parentid);
-
-			$row_folder = $db->getRow( $sql->query );
-
-			if   (is_numeric($row_folder['parentid']) || $with_root)
-			{
-				$this->parentfolders[] = $parentid;
-			}
-			
-			$parentid = $row_folder['parentid'];
-		}
-
+		$this->checkParentFolders($with_root,$with_self);
 	
-		// Reihenfolge umdrehen
-		$this->parentfolders = array_reverse($this->parentfolders,true);
-		
 		return $this->parentfolders;
 	}
 
 
 	function parentObjectFileNames(  $with_root = false, $with_self = false  )
 	{
-		$erg = array();
+		$db = Session::getDatabase();
+
+		$sql = new Sql('SELECT F0.id       AS f0id,'.
+		               '       F0.filename AS f0filename,'.
+		               '       F1.id       AS f1id,'.
+		               '       F1.filename AS f1filename,'.
+		               '       F2.id       AS f2id,'.
+		               '       F2.filename AS f2filename,'.
+		               '       F3.id       AS f3id,'.
+		               '       F3.filename AS f3filename,'.
+		               '       F4.id       AS f4id,'.
+		               '       F4.filename AS f4filename,'.
+		               '       F5.id       AS f5id, '.
+		               '       F5.filename AS f5filename'.
+		               '  FROM {t_object} AS F0'.
+		               ' LEFT JOIN {t_object} AS F1 on F0.parentid=F1.id '.
+		               ' LEFT JOIN {t_object} AS F2 on F1.parentid=F2.id '.
+		               ' LEFT JOIN {t_object} AS F3 on F2.parentid=F3.id '.
+		               ' LEFT JOIN {t_object} AS F4 on F3.parentid=F4.id '.
+		               ' LEFT JOIN {t_object} AS F5 on F4.parentid=F5.id '.
+		               ' WHERE F0.id={objectid}');
+
+		$sql->setInt('objectid'  ,$this->objectid  );
+		$sql->setInt('languageid',$this->languageid);
+
+		$row = $db->getRow( $sql->query );
+
+		$this->addParentfolder( $row['f0id'],$row['f0filename'] );
+		$this->addParentfolder( $row['f1id'],$row['f1filename'] );
+		$this->addParentfolder( $row['f2id'],$row['f2filename'] );
+		$this->addParentfolder( $row['f3id'],$row['f3filename'] );
+		$this->addParentfolder( $row['f4id'],$row['f4filename'] );
+		$this->addParentfolder( $row['f5id'],$row['f5filename'] );
+
+		$this->checkParentFolders($with_root,$with_self);
 		
-		foreach( $this->parentObjectIds( $with_root,$with_self ) as $oid )
-		{
-			$f = new Folder( $oid );
-			$f->load();
-			$erg[$oid] = $f->filename;
-		}
-		
-		return $erg;
+		return $this->parentfolders;
 	}
 
 	function parentObjectNames( $with_root = false, $with_self = false )
 	{
-		$erg = array();
+		$db = Session::getDatabase();
+
+		$sql = new Sql('SELECT F0.id       AS f0id,'.
+		               '       F0NAME.name AS f0name,'.
+		               '       F1.id       AS f1id,'.
+		               '       F1NAME.name AS f1name,'.
+		               '       F2.id       AS f2id,'.
+		               '       F2NAME.name AS f2name,'.
+		               '       F3.id       AS f3id,'.
+		               '       F3NAME.name AS f3name,'.
+		               '       F4.id       AS f4id,'.
+		               '       F4NAME.name AS f4name,'.
+		               '       F5.id       AS f5id, '.
+		               '       F5NAME.name AS f5name'.
+		               '  FROM {t_object} AS F0'.
+		               ' LEFT JOIN {t_name}   AS F0NAME ON F0NAME.objectid=F0.id AND F0NAME.languageid={languageid} '.
+		               ' LEFT JOIN {t_object} AS F1 on F0.parentid=F1.id '.
+		               ' LEFT JOIN {t_name}   AS F1NAME ON F1NAME.objectid=F1.id AND F1NAME.languageid={languageid} '.
+		               ' LEFT JOIN {t_object} AS F2 on F1.parentid=F2.id '.
+		               ' LEFT JOIN {t_name}   AS F2NAME ON F2NAME.objectid=F2.id AND F2NAME.languageid={languageid} '.
+		               ' LEFT JOIN {t_object} AS F3 on F2.parentid=F3.id '.
+		               ' LEFT JOIN {t_name}   AS F3NAME ON F3NAME.objectid=F3.id AND F3NAME.languageid={languageid} '.
+		               ' LEFT JOIN {t_object} AS F4 on F3.parentid=F4.id '.
+		               ' LEFT JOIN {t_name}   AS F4NAME ON F4NAME.objectid=F4.id AND F4NAME.languageid={languageid} '.
+		               ' LEFT JOIN {t_object} AS F5 on F4.parentid=F5.id '.
+		               ' LEFT JOIN {t_name}   AS F5NAME ON F5NAME.objectid=F5.id AND F5NAME.languageid={languageid} '.
+		               ' WHERE F0.id={objectid}');
+
+		$sql->setInt('objectid'  ,$this->objectid  );
+		$sql->setInt('languageid',$this->languageid);
+
+		$row = $db->getRow( $sql->query );
+
+		$this->addParentfolder( $row['f0id'],$row['f0name'] );
+		$this->addParentfolder( $row['f1id'],$row['f1name'] );
+		$this->addParentfolder( $row['f2id'],$row['f2name'] );
+		$this->addParentfolder( $row['f3id'],$row['f3name'] );
+		$this->addParentfolder( $row['f4id'],$row['f4name'] );
+		$this->addParentfolder( $row['f5id'],$row['f5name'] );
+
+		$this->checkParentFolders($with_root,$with_self);
 		
-		foreach( $this->parentObjectIds( $with_root,$with_self ) as $oid )
-		{
-			$f = new Folder( $oid );
-			$f->load();
-			$erg[$oid] = $f->name;
-		}
-		return $erg;
+		return $this->parentfolders;
 	}
 
 
@@ -657,7 +739,8 @@ class Folder extends Object
 			$ids[] = $id;
 
 			$f = new Folder( $id );
-			$f->projectid = $this->projectid;
+			if	( !empty($this->projectid) )
+				$f->projectid = $this->projectid;
 
 			foreach( $f->getAllSubFolderIds() as $xid )
 			{

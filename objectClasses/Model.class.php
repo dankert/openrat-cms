@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-11-10 22:46:27  dankert
+// Revision 1.4  2004-12-15 23:18:36  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.3  2004/11/10 22:46:27  dankert
 // *** empty log message ***
 //
 // Revision 1.2  2004/04/25 12:58:24  dankert
@@ -172,7 +175,11 @@ class Model
 		                '   ORDER BY is_default DESC' );
 		if	( isset($this->projectid) )
 			$sql->setInt('projectid',$this->projectid );
-		else	$sql->setInt('projectid',$SESS['projectid'] );
+		else
+		{
+			$project = Session::getProject();
+			$sql->setInt('projectid',$project->projectid);
+		}
 		
 		return $db->getOne( $sql->query );
 	}

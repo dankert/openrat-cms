@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-11-10 22:46:18  dankert
+// Revision 1.4  2004-12-15 23:18:36  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.3  2004/11/10 22:46:18  dankert
 // *** empty log message ***
 //
 // Revision 1.2  2004/05/02 14:41:31  dankert
@@ -55,7 +58,7 @@ class Language
 		if   ( is_numeric($languageid) )
 			$this->languageid = $languageid;
 
-		$this->projectid = $SESS['projectid'];
+//		$this->projectid = $SESS['projectid'];
 	}
 
 
@@ -69,9 +72,13 @@ class Language
 		                "   WHERE projectid = {projectid} ".
 		                "   ORDER BY name" );
 
-		if	( isset($this->projectid) )
+		if	( !empty($this->projectid) )
 			$sql->setInt('projectid',$this->projectid );
-		else	$sql->setInt('projectid',$SESS['projectid'] );
+		else
+		{
+			$project = Session::getProject();
+			$sql->setInt('projectid',$project->projectid);
+		}
 
 		return $db->getAssoc( $sql->query );
 	}
@@ -195,7 +202,11 @@ class Language
 
 		if	( isset($this->projectid) )
 			$sql->setInt('projectid',$this->projectid );
-		else	$sql->setInt('projectid',$SESS['projectid'] );
+		else
+		{
+			$project = Session::getProject();
+			$sql->setInt('projectid',$project->projectid);
+		}
 		
 		return $db->getOne( $sql->query );
 	}

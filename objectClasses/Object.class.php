@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-11-29 23:54:36  dankert
+// Revision 1.12  2004-12-15 23:18:09  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.11  2004/11/29 23:54:36  dankert
 // Korrektur Vorversion
 //
 // Revision 1.10  2004/11/29 23:34:39  dankert
@@ -204,22 +207,21 @@ class Object
 	{
 		global $SESS;
 
-		if (is_numeric($objectid))
+		if	( is_numeric($objectid) )
 		{
 			$this->objectid = $objectid;
 			$this->id       = $objectid;
 		}
 
-		if	( isset($SESS['languageid']) )
-			$this->languageid = $SESS['languageid'];
-		else	$this->languageid = 0;
 
-		if	( isset($SESS['modelid']) )
-			$this->modelid = $SESS['modelid'];
-		else	$this->modelid = 0;
+		$language = Session::getProjectLanguage();
+		$this->languageid = $language->languageid;
 
-		if	( isset($SESS['projectid']) )
-			$this->projectid  = $SESS['projectid'];
+		$model = Session::getProjectModel();
+		$this->modelid = $model->modelid;
+
+		$project = Session::getProject();
+		$this->projectid = $project->projectid;
 	}
 
 
@@ -284,13 +286,13 @@ class Object
 	function getType()
 	{
 		if ($this->isFolder)
-			return 'folder';
+			return OR_TYPE_FOLDER;
 		if ($this->isFile)
-			return 'file';
+			return OR_TYPE_FILE;
 		if ($this->isPage)
-			return 'page';
+			return OR_TYPE_PAGE;
 		if ($this->isLink)
-			return 'link';
+			return OR_TYPE_LINK;
 
 		return 'unknown';
 	}
@@ -339,6 +341,17 @@ class Object
 	 */
 	function filename()
 	{
+
+		global $conf;
+		if	( $conf['publish']['filename'] == 'id' )
+			$this->filename = $this->objectid;
+		elseif	( $conf['publish']['filename'] == 'crc32' )
+			$this->filename = crc32($this->objectid);
+		elseif	( $conf['publish']['filename'] == 'md5' )
+			$this->filename = md5($this->objectid);
+		elseif	( $conf['publish']['filename'] == 'ss' )
+			$this->filename = '0,'.abs(crc32($this->objectid)).','.abs(crc32($this->objectid+1)).',00';
+
 		if ($this->filename != '')
 			return $this->filename;
 
@@ -363,6 +376,10 @@ class Object
 		$sql->setInt('languageid', $this->languageid);
 
 		$row = $db->getRow($sql->query);
+		
+		if	( count($row)==0 )
+			die('cannot load object '.$this->objectid );
+
 		$this->setDatabaseRow( $row );
 
 		if (count($row) == 0)
@@ -420,13 +437,16 @@ class Object
 	 */
 	function setDatabaseRow( $row )
 	{
+		if	( count($row)==0 )
+			die('setDatabaseRow() got empty array, oid='.$this->objectid);
+
 		$this->parentid  = $row['parentid' ];
 		$this->projectid = $row['projectid'];
 		$this->filename  = $row['filename' ];
 		
 		if	( intval($this->parentid) == 0 )
 			$this->isRoot = true;
-		else	$this->isroot = false;
+		else	$this->isRoot = false;
 
 		$this->create_date       = $row['create_date'      ];
 		$this->create_userid     = $row['create_userid'    ];
@@ -440,8 +460,7 @@ class Object
 
 		if	( $this->isRoot )
 		{
-			$project = new Project( $this->projectid );
-			$project->load();
+			$project = Session::getProject();
 			$this->name = $project->name;
 			$this->desc = '';
 		}
@@ -528,7 +547,7 @@ class Object
 		$db->query($sql->query);
 
 		// Nur wenn nicht Wurzelordner
-		if	( !$this->isroot )
+		if	( !$this->isRoot )
 		{
 			if	( $this->name == '' )
 				$this->name = $this->filename;
@@ -880,10 +899,11 @@ class Object
 	 */
 	function tmpfile()
 	{
-		global $conf_tmpdir;
+		if	( isset($this->tmpfile) && $this->tmpfile != '' )
+			return $this->tmpfile;
 
-		$this->tmpfile = $conf_tmpdir.'/tmp_file'.$this->objectid.'.tmp';
-		//$this->tmpfile = $conf_tmpdir.'/'.md5('f'.$this->fileid).'.tmp';
+		$this->tmpfile = tempnam( 0,'openrat_tmp' );
+		Logger::debug( 'creating temporary file: '.$this->tmpfile );
 
 		return $this->tmpfile;
 	}
