@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.25  2004-12-30 21:44:23  dankert
+// Revision 1.26  2004-12-30 23:11:03  dankert
+// Wenn Root-Folder, dann keine Eigenschaften
+//
+// Revision 1.25  2004/12/30 21:44:23  dankert
 // Nach Speichern der Eigenschaften wieder Eigenschaften aufrufen
 //
 // Revision 1.24  2004/12/29 20:43:30  dankert
@@ -630,6 +633,9 @@ class FolderAction extends ObjectAction
 
 	function prop()
 	{
+		if	( $this->folder->isRoot )
+			$this->callSubAction('show');
+
 		$this->setTemplateVars( $this->folder->getProperties() );
 	
 		// Alle Ordner ermitteln
