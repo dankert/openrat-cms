@@ -102,6 +102,47 @@ class UserAction extends Action
 	}
 
 
+	/**
+	 * Das Kennwort wird an den Benutzer geschickt
+	 *
+	 * @access private
+	 */
+	function mailPw( $pw )
+	{
+		global $conf;
+		
+		$nl = "\r\n";
+
+		// Header der E-Mail ermitteln
+		$header = 'X-Mailer: '.OR_TITLE.' '.OR_VERSION;
+		if	( !empty($conf['mail']['from']) )
+			$header .= $nl.'From: '.$conf['mail']['from'];
+
+		$to      = $this->user->fullname.' <'.$this->user->mail.'>';
+		$subject = lang('USER_MAIL_SUBJECT');
+
+		// Text der E-Mail zusammenfuegen
+		$text  = $nl;
+		$text .= wordwrap(str_replace(';',$nl,lang('USER_MAIL_TEXT_PREFIX')),70,$nl).$nl.$nl;
+		$text .= lang('USER_USERNAME').': '.$this->user->name.$nl;
+		$text .= lang('USER_PASSWORD').': '.$pw.$nl.$nl;
+		$text .= wordwrap(str_replace(';',$nl,lang('USER_MAIL_TEXT_SUFFIX')),70,$nl);
+
+		// Signatur anhaengen (sofern konfiguriert)
+		if	( !empty($conf['mail']['signature']) )
+		{
+			$text .= $nl.$nl.'-- '.$nl;
+			$text .= str_replace(';',$nl,$conf['mail']['signature']);
+		}
+
+		// Mail versenden
+		mail($to,$subject,$text,$header);
+	}
+
+
+	/**
+	 * Aendern des Kennwortes
+	 */
 	function pwchange()
 	{
 		global $conf;
@@ -126,24 +167,7 @@ class UserAction extends Action
 			// E-Mail mit dem neuen Kennwort an Benutzer senden
 			if	( $this->hasRequestVar('mail') && !empty($this->user->mail) && $conf['mail']['enabled'] )
 			{
-				$header = 'X-Mailer: '.OR_TITLE.' '.OR_VERSION;
-				if	( !empty($conf['mail']['from']) )
-					$header .= "\nFrom: ".$conf['mail']['from'];
-
-				// Text der E-Mail zusammenfuegen
-				$text =  "\n".wordwrap(str_replace(';',"\n",lang('USER_MAIL_TEXT_PREFIX')),70,"\n")."\n\n";
-				$text .= $pw1."\n\n";
-				$text .=      wordwrap(str_replace(';',"\n",lang('USER_MAIL_TEXT_SUFFIX')),70,"\n");
-
-				// Signatur anhaengen (sofern konfiguriert)
-				if	( !empty($conf['mail']['signature']) )
-				{
-					$text .= "\n\n-- \n";
-					$text .= str_replace(';',"\n",$conf['mail']['signature']);
-				}
-
-				// Mail versenden
-				mail($this->user->mail,lang('USER_MAIL_SUBJECT'),$text,$header);
+				$this->mailPw( $pw1 );
 			}
 
 			$this->addNotice('user',$this->user->name,'SAVED','ok');
