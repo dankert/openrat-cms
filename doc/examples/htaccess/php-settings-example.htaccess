@@ -23,14 +23,24 @@ php_value session.cookie_lifetime 0
 # on  = cookies
 php_flag session.use_cookies off
 
-# No need for Transient Urls, because the application can to this
+# Transient Urls is needed for url-Rewriting
 php_flag session.use_trans_sid on
+php_value url_rewriter.tags "a=href,link=href,frame=src,img=src,form=fakeentry"
 
 php_flag magic_quotes_gpc on
 php_flag magic_quotes_runtime off
 
 # Set this higher if you get errors like "max execution time reached"
 php_value max_execution_time 180
+
+# Show PHP Error Messages
+# 1 E_ERROR  
+# 2 E_WARNING  
+# 4 E_PARSE  
+# 8 E_NOTICE  
+# 16 E_CORE_ERROR  
+# 32 E_CORE_WARNING  
+php_value error_reporting 2047
 
 # This limits the file sizes
 php_value memory_limit 32M
@@ -40,4 +50,4 @@ php_flag short_open_tag off
 php_flag asp_tags off
 
 # Try this, its faster on slow connections
-php_flag zlib.output_compression on
+php_flag zlib.output_compression off
