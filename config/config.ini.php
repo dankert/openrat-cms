@@ -47,7 +47,8 @@ url_sessionid        = false        ; only needed if cookies and transid not ava
 theme                = default      ;
 language             = en           ; default language
 use_browser_language = true         ; use HTTP_ACCEPT_LANGUAGE header to determine language
-
+show_duration        = false        ; Show duration on every page
+timeout              =              ; Request timeout in seconds (blank=system default)
 
 [login]
 logo=./themes/default/images/logo.jpg    ; url of logo in login mask 
