@@ -4,9 +4,7 @@
 
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="action"    value="user">
-<input type="hidden" name="subaction" value="addgroup">
+<?php echo Html::form('user','addgroup',$userid) ?>
 
 <table class="main" width="60%" cellspacing="0" cellpadding="4">
 
@@ -17,8 +15,8 @@
       foreach( $memberships as $id=>$name )
       { ?>
 <tr>
-<td width="70%" class="<?php if($f1==true) {echo'f1';          }else{echo'f2';         }?>"><img src="<?php echo $image_dir.'icon_group.png' ?>" align="left"><?php echo $name ?></td>
-<td width="30%" class="<?php if($f1==true) {echo'f1';$f1=false;}else{echo'f2';$f1=true;}?>"><a href="<?php echo Html::url(array('action'=>'user','subaction'=>'delgroup','groupid'=>$id)) ?>"><?php echo lang('GLOBAL_DELETE') ?></a></td>
+<td width="70%" class="<?php if($f1==true) {echo'f1';          }else{echo'f2';         }?>"><img src="<?php echo $image_dir.'icon_group'.IMG_EXT ?>" align="left"><?php echo $name ?></td>
+<td width="30%" class="<?php if($f1==true) {echo'f1';$f1=false;}else{echo'f2';$f1=true;}?>"><a href="<?php echo Html::url('user','delgroup',$userid,array('groupid'=>$id)) ?>"><?php echo lang('GLOBAL_DELETE') ?></a></td>
 </tr>
 <?php }
       if   ( count($memberships) == 0 )

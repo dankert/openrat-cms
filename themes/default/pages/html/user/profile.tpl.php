@@ -4,7 +4,7 @@
 
 <center>
 
-<?php echo Html::form('user','saveprofile',$userid) ?>
+<?php echo Html::form('profile','saveprofile',$userid) ?>
 
 <?php
 	$table_title_text    = lang('GLOBAL_USER');
@@ -46,10 +46,7 @@
 
 </form>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="<?php echo session_name() ?>" value="<?php echo session_id() ?>">
-<input type="hidden" name="useraction" value="pwchange">
-
+<?php echo Html::form('profile','pwchange',$userid) ?>
 
 <?php
 	$table_title_text    = lang('USER_PASSWORD');
@@ -80,8 +77,6 @@
 
 </center>
 
-<script name="JavaScript" type="text/javascript"><!--
-document.forms[0].fullname.focus();
-//--></script>
+<?php Html::focusField('fullname') ?>
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>

@@ -26,8 +26,8 @@
       foreach( $rights[$projectid] as $oid=>$z )
       { $fx = fx($fx); ?>
   <tr>
-<?php $objectUrl = Html::url( array('action'=>'index','subaction'=>'object','id'=>$oid) ) ?>
-    <td class="<?php echo $fx ?>"><a href="<?php echo $objectUrl ?>" target="_top"><img src="<?php echo $image_dir.'icon_'.$objects[$oid]['type'].'.png' ?>" border="0" align="left"><?php echo $objects[$oid]['filename'] ?></a></td>
+<?php $objectUrl = Html::url( 'index','object',$oid ) ?>
+    <td class="<?php echo $fx ?>"><a href="<?php echo $objectUrl ?>" target="_top"><img src="<?php echo $image_dir.'icon_'.$objects[$oid]['type'].IMG_EXT ?>" border="0" align="left"><?php echo $objects[$oid]['filename'] ?></a></td>
     <td class="<?php echo $fx ?>"><?php echo $z['languagename'] ?></td>
 
 <?php foreach( $show as $t ) { ?>

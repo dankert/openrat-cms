@@ -4,10 +4,7 @@
 
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="user"    />
-<input type="hidden" name="subaction" value="pwchange"/>
+<?php echo Html::form('user','pwchange',$userid) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 <tr>

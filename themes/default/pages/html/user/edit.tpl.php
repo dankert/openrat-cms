@@ -4,7 +4,7 @@
 
 <center>
 
-<?php echo Html::form('user','form',$userid) ?>
+<?php echo Html::form('user','save',$userid) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
