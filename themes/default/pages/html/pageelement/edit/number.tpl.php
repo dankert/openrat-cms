@@ -24,6 +24,12 @@
 <td class="f2"><?php echo Html::checkBox('release',true,true) ?> <?php echo lang('GLOBAL_RELEASE') ?></td>
 </tr>
 <?php } ?>
+<?php if	( $publish )
+      { ?>
+<tr>
+  <td class="f2"><?php echo Html::checkBox('publish',false) ?> <?php echo lang('PAGE_PUBLISH_AFTER_SAVE') ?></td>
+</tr>
+<?php } ?>
 
 <tr>
 <td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>

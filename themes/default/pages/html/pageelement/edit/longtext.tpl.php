@@ -8,30 +8,28 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th><?php echo $name ?></th>
+  <th colspan="2"><?php echo $name ?></th>
 </tr>
 <tr>
-  <td class="help"><?php echo $desc ?><br><!--<br><?php echo lang('HELP_LONGTEXT_WIKI') ?><br>--></td>
-</tr>
-
-<tr>
-<td class="f1"><br><textarea class="longtext" name="text"><?php echo $text ?></textarea></td>
-</tr>
-
-<?php if	( $release )
-      { ?>
-<tr>
-<td class="f2"><?php echo Html::checkBox('release',true,true) ?> <?php echo lang('GLOBAL_RELEASE') ?></td>
-</tr>
-<?php } ?>
-
-<tr>
-<td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
+  <td colspan="2" class="help"><?php echo $desc ?><br><!--<br><?php echo lang('HELP_LONGTEXT_WIKI') ?><br>--></td>
 </tr>
 
 <tr>
-<td class="help"><br><?php echo lang('HELP_LONGTEXT_WIKI') ?><br>
-</td>
+  <td colspan="2" class="f1"><br><textarea class="longtext" name="text"><?php echo $text ?></textarea></td>
+</tr>
+
+<tr>
+  <td class="f2"><?php if ( $release ) echo Html::checkBox('release',true).' '.lang('GLOBAL_RELEASE') ?></td>
+  <td class="f2"><?php echo Html::checkBox('html',$html,false) ?> <span title="<?php echo lang('EL_PROP_HTML_DESC') ?>"><?php echo lang('EL_PROP_HTML') ?></span></td>
+</tr>
+
+<tr>
+  <td class="f2"><?php if	( $publish ) echo Html::checkBox('publish',false).' '.lang('PAGE_PUBLISH_AFTER_SAVE') ?>&nbsp;</td>
+  <td class="f2" rowspan="2"><?php echo Html::checkBox('wiki',$wiki,false) ?> <span title="<?php echo lang('EL_PROP_WIKI_DESC') ?>"><?php echo lang('EL_PROP_WIKI') ?></span><?php if ($wiki) echo '<br/>'.lang('PAGE_LONGTEXT_WIKI_DESC') ?></td>
+</tr>
+
+<tr>
+  <td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" /></td>
 </tr>
 
 </table>
@@ -40,8 +38,6 @@
 
 </center>
 
-<script name="JavaScript"><!--
-document.forms[0].text.focus();
-//--></script>
+<?php Html::focusField('text') ?>
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>

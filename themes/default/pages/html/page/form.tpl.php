@@ -59,11 +59,19 @@
 </tr>
 <?php } ?>
 
-<?php if	( isset($release) || true )
+<?php if	( $release )
       { ?>
 <tr>
-<td class="<?php echo $fx ?>&nbsp;</td>
-<td class="<?php echo $fx ?> colspan="2"><?php echo Html::checkBox('release',true,true) ?> <?php echo lang('GLOBAL_RELEASE') ?></td>
+  <td class="<?php echo $fx ?>">&nbsp;</td>
+  <td class="<?php echo $fx ?>" colspan="2"><?php echo Html::checkBox('release',true) ?> <?php echo lang('GLOBAL_RELEASE') ?></td>
+</tr>
+<?php } ?>
+
+<?php if	( $publish )
+      { ?>
+<tr>
+  <td class="<?php echo $fx ?>">&nbsp;</td>
+  <td class="<?php echo $fx ?>" colspan="2"><?php echo Html::checkBox('publish',false) ?> <?php echo lang('PAGE_PUBLISH_AFTER_SAVE') ?></td>
 </tr>
 <?php } ?>
 
