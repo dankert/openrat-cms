@@ -3,10 +3,13 @@
 
 <center>
 
+<?php if ( count($acls) > 0 )
+      { ?>
+
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="15"><?php echo lang('ACL') ?></th>
+  <th colspan="<?php echo count($show)+3 ?>"><?php echo lang('ACL') ?></th>
 </tr>
   <tr>
     <td class="help"><?php echo lang('GLOBAL_NAME')     ?></td>
@@ -14,6 +17,7 @@
     <?php foreach( $show as $t ) { ?>
     <td class="help"><span title="<?php echo lang('ACL_'.strtoupper($t)) ?>"><strong><?php echo lang('ACL_'.strtoupper($t).'_ABBREV') ?></strong></span></td>
     <?php } ?>
+    <td class="help">&nbsp;</td>
   </tr>
 
 
@@ -53,13 +57,16 @@
 <?php } ?>
 </tr>
 <?php }
-      $fx = fx($fx); ?>
+      ?>
 
 </table>
 
-
-
 <br/><br/><br/>
+<?php }
+      $fx = '';
+      $fx = fx($fx);  ?>
+
+
 <?php echo Html::form( $action,'addacl',$objectid ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
