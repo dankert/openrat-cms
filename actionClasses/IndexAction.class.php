@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2005-01-23 11:13:54  dankert
+// Revision 1.18  2005-01-27 00:03:57  dankert
+// Variable "nopublish" an das Template liefern
+//
+// Revision 1.17  2005/01/23 11:13:54  dankert
 // Schalter "nologin" beruecksichtigen
 //
 // Revision 1.16  2005/01/14 21:41:23  dankert
@@ -193,11 +196,12 @@ class IndexAction extends Action
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
-		$this->setTemplateVar('logo'    ,$conf['login'   ]['logo'    ]);
-		$this->setTemplateVar('logo_url',$conf['login'   ]['logo_url']);
-		$this->setTemplateVar('motd'    ,$conf['login'   ]['motd'    ]);
-		$this->setTemplateVar('readonly',$conf['security']['readonly']);
-		$this->setTemplateVar('nologin' ,$conf['login'   ]['nologin' ]);
+		$this->setTemplateVar('logo'        ,$conf['login'   ]['logo'    ] );
+		$this->setTemplateVar('logo_url'    ,$conf['login'   ]['logo_url'] );
+		$this->setTemplateVar('motd'        ,$conf['login'   ]['motd'    ] );
+		$this->setTemplateVar('readonly'    ,$conf['security']['readonly'] );
+		$this->setTemplateVar('nologin'     ,$conf['login'   ]['nologin' ] );
+		$this->setTemplateVar('nopublish'   ,$conf['security']['nopublish']);
 		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
 		$this->setSessionVar('loginmessage','');
 
