@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-12-19 15:22:17  dankert
+// Revision 1.8  2005-01-04 19:58:56  dankert
+// neue Methoden getFirst/LastPageOrLink()
+//
+// Revision 1.7  2004/12/19 15:22:17  dankert
 // Anpassung Session-Funktionen
 //
 // Revision 1.6  2004/12/15 23:18:36  dankert
@@ -402,6 +405,48 @@ class Folder extends Object
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
 		return $db->getCol( $sql->query );
+	}
+
+	
+	function getFirstPageOrLink()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT id FROM {t_object} '.
+		               '  WHERE parentid={objectid}'.
+		               '    AND (is_page=1 OR is_link=1)'.
+		               '  ORDER BY orderid ASC' );
+		$sql->setInt( 'objectid' ,$this->objectid  );
+
+		$oid = intval($db->getOne( $sql->query ));
+		
+		if	( $oid != 0 )
+			$o = new Object($oid);
+		else
+			$o = null;
+
+		return $o;
+	}
+
+
+	function getLastPageOrLink()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT id FROM {t_object} '.
+		               '  WHERE parentid={objectid}'.
+		               '    AND (is_page=1 OR is_link=1)'.
+		               '  ORDER BY orderid DESC' );
+		$sql->setInt( 'objectid' ,$this->objectid  );
+
+		$oid = intval($db->getOne( $sql->query ));
+		
+		if	( $oid != 0 )
+			$o = new Object($oid);
+		else
+			$o = null;
+
+		return $o;
 	}
 
 	
