@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2005-01-14 21:41:23  dankert
+// Revision 1.7  2005-02-17 20:08:51  dankert
+// Einbau von Baum offen/zu
+//
+// Revision 1.6  2005/01/14 21:41:23  dankert
 // Aufruf von lastModified() fuer Conditional-GET
 //
 // Revision 1.5  2004/12/19 19:23:20  dankert
@@ -76,10 +79,23 @@ class TitleAction extends Action
 		$this->setTemplateVar('userfullname',$user->fullname);
 		
 		// Urls zum Benutzerprofil und zum Abmelden
-		$this->setTemplateVar('profile_url',Html::url( 'profile' ));
+		$this->setTemplateVar('profile_url',Html::url( 'profile'         ));
 		$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
 		
 		$this->setTemplateVar('css_body_class','title');
+
+
+		if	( Session::get('showtree') )
+		{
+			$this->setTemplateVar('showtree_url' ,Html::url('index','hidetree') );
+			$this->setTemplateVar('showtree_text',lang('GLOBAL_HIDETREE')       );
+		}
+		else
+		{
+			$this->setTemplateVar('showtree_url' ,Html::url('index','showtree') );
+			$this->setTemplateVar('showtree_text',lang('GLOBAL_SHOWTREE')       );
+		}
+		
 		$this->forward( 'title' );
 	}
 }
