@@ -38,6 +38,21 @@ function lang( $text )
 
 
 
+/**
+ * Diese Funktion prueft, ob ein Sprachelement vorhanden ist
+ * @package openrat.functions
+ */
+function hasLang( $text )
+{
+	$text = strtoupper($text);
+	$lang = &Session::getLanguage();
+	return isset( $lang[$text] );
+}
+
+
+
+
+
 # Spracheinstellungen laden
 
 function language_from_http()
