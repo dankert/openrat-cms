@@ -14,7 +14,7 @@
 </tr>
 
 <tr>
-<td colspan="2"><a href="http://www.openrat.de/" target="_top"><img src="<?php echo $image_dir ?>/logo.jpg" border="0" /></a></td>
+<td colspan="2"><a href="http://www.openrat.de/" target="_top"><img src="<?php echo $logo ?>" border="0" /></a></td>
 </tr>
 
 <?php if ($loginmessage!='')
