@@ -55,50 +55,47 @@
 
 
 
-
-
-
 <br/><br/><br/>
-<form action="<?php echo $self ?>" method="post" name="add" target="_self">
-<input type="hidden" name="subaction" value="addACL">
+<?php echo Html::form( array('subaction'=>'addacl','action'=>$action,'objectid'=>$objectid,'method'=>'post','target'=>'_self') ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 <tr>
-  <th colspan="2"><?php echo lang('GLOBAL_ADD') ?></th>
+  <th colspan="3"><?php echo lang('GLOBAL_ADD') ?></th>
 </tr>
 <tr>
-<td class="<?php echo $fx ?>"><?php echo lang('GLOBAL_ALL') ?></td>
+<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('GLOBAL_ALL') ?></td>
 <td class="<?php echo $fx ?>"><input type="radio" name="type" value="all" checked="checked" /></td>
 </tr>
 <tr>
-<td class="<?php echo $fx ?>"><?php echo lang('USER') ?></td>
+<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('USER') ?></td>
 <td class="<?php echo $fx ?>"><input type="radio" name="type" value="user" />&nbsp;<?php echo Html::selectBox( 'userid',$users,0,array('onfocus'=>'document.forms[0].type[1].checked=true')); ?></td>
 </tr>
 
 <?php if (count($groups)>0)
       { ?>
 <tr>
-<td class="<?php echo $fx ?>"><?php echo lang('GLOBAL_OR').' '.lang('GROUP') ?></td>
+<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('GLOBAL_OR').' '.lang('GROUP') ?></td>
 <td class="<?php echo $fx ?>"><input type="radio" name="type" value="group" />&nbsp;<?php echo Html::selectBox( 'groupid',$groups,0,array('onfocus'=>'document.forms[0].type[2].checked=true')); ?></td>
 </tr>
 <?php } ?>
 
 <tr>
-<td class="<?php echo $fx ?>"><?php echo lang('LANGUAGE') ?></td>
+<td class="<?php echo $fx ?>" colspan="2"><?php echo lang('LANGUAGE') ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::selectBox( 'languageid',$languages); ?></td>
 </tr>
 <tr>
-  <td colspan="2" class="help">&nbsp;</td>
+  <td colspan="3" class="help">&nbsp;</td>
 </tr>
 
 <?php foreach( $show as $t ) { ?>
 <tr>
 <td class="<?php echo $fx ?>"><?php echo lang('ACL_'.strtoupper($t)) ?></td>
+<td class="<?php echo $fx ?>" width="20"><?php echo lang('ACL_'.strtoupper($t).'_ABBREV') ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox($t,($t=='read'),($t!='read'),array('title'=>lang('ACL_'.strtoupper($t) )) ) ?></td>
 </tr>
 <?php } ?>
 <tr>
-<td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>"></td>
+<td class="act" colspan="3"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>"></td>
 </tr>
 
 </table>
