@@ -6,9 +6,6 @@
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
-  <meta http-equiv="expires" content="0" />
-  <meta http-equiv="cache-control" content="no-cache" />
-  <meta http-equiv="pragma" content="no-cache" />
   <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
 </head>
 
