@@ -132,43 +132,6 @@
 
 
 
-
-
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="file">
-<input type="hidden" name="subaction" value="move">
-
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('MOVE') ?></th>
-</tr>
-<tr>
-  <td colspan="2" class="help"><?php echo lang('HELP_FILE_MOVE') ?></td>
-</tr>
-
-<tr>
-<td width="50%" class="f1"><?php echo lang('FOLDER') ?></a></td>
-<td width="50%" class="f1"><?php echo Html::selectBox('movetoobjectid',$folderobject,$act_folderobjectid) ?></td>
-</tr>
-
-<!--
-<tr>
-<td width="50%" class="f2">&nbsp;</td>
-<td width="50%" class="f2"><input type="checkbox" name="copy" value="1"> <?php echo lang('COPY_INSTEAD_OF_MOVE') ?></td>
-</tr>
--->
-
-<tr>
-<td class="act" colspan="2"><input type="submit"  class="submit" value="<?php echo lang('MOVE') ?>"></td>
-</tr>
-
-</table>
-
-</form>
-
-
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
