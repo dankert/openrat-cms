@@ -20,11 +20,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-07-07 20:43:57  dankert
+// Revision 1.5  2004-10-06 09:54:43  dankert
+// Neuer Elementtyp: dynamic
+//
+// Revision 1.4  2004/07/07 20:43:57  dankert
 // Neuer Elementtyp: select
 //
 // Revision 1.3  2004/05/02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.2  2004/04/24 17:41:51  dankert
 // Subtypes von Info geaendert
@@ -58,7 +61,7 @@ class ElementAction extends Action
 
 
 	/**
-	 * Ändern des Element-Typs
+	 * ?ndern des Element-Typs
 	 */
 	function changetype()
 	{
@@ -89,7 +92,7 @@ class ElementAction extends Action
 		
 		$this->setTemplateVar('default_type',$this->element->type);
 
-		// Abhängig vom aktuellen Element-Typ die Eigenschaften anzeigen
+		// Abh?ngig vom aktuellen Element-Typ die Eigenschaften anzeigen
 		
 		$properties = $this->element->getRelatedProperties();
 
@@ -117,6 +120,7 @@ class ElementAction extends Action
 
 				case 'subtype':
 
+					$convertToLang = false;
 					switch( $this->element->type )
 					{
 						case 'info':
@@ -150,22 +154,42 @@ class ElementAction extends Action
 							                 'act_user_mail',
 							                 'act_user_desc',
 							                 'act_user_tel' );
+							$convertToLang = true;
 							break;
 
 						case 'infodate':
 							$subtype = Array('date_published',
 							                 'date_saved',
 							                 'date_created' );
-					          break;
+							$convertToLang = true;
+							break;
+
+						case 'dynamic':
+							
+							$files = Array();
+							$handle = opendir ('./dynamicClasses');
+							while ( $file = readdir($handle) )
+							{
+								$file = substr($file,0,strlen($file)-10);
+								if	( $file != '' )
+									$files[$file] = $file;
+							}
+							closedir($handle);
+
+							$subtypes = $files;
+							break;
 
 						default:
 							$subtype = array();
 							break;
 					}
 
-					foreach( $subtype as $t )
+					if	( $convertToLang == true )
 					{
-						$subtypes[$t] = lang('EL_'.$this->element->type.'_'.$t);
+						foreach( $subtype as $t )
+						{
+							$subtypes[$t] = lang('EL_'.$this->element->type.'_'.$t);
+						}
 					}
 	
 					$this->setTemplateVar('subtype'    ,$subtypes              );
@@ -228,6 +252,49 @@ class ElementAction extends Action
 						case 'select':
 							$this->setTemplateVar('select_items',$this->element->code );
 							break;
+						case 'dynamic':
+							$className = $this->element->subtype;
+							$fileName  = './dynamicClasses/'.$className.'.class.php';
+							if	( is_file( $fileName ) )
+							{
+								require( $fileName );
+
+								if	( class_exists($className) )
+								{
+									$dynEl = new $className;
+
+									if	( method_exists( $dynEl,'execute' ) )
+									{
+										if	( isset( $dynEl->description ) )
+											$this->setTemplateVar('dynamic_class_description',$dynEl->description );
+										else
+											$this->setTemplateVar('dynamic_class_description',lang('NO_DESCRIPTION_AVAILABLE' ) );
+	
+										if	( isset( $dynEl->parameters ) )
+											$this->setTemplateVar('dynamic_class_parameters',$dynEl->parameters );
+										else
+											$this->setTemplateVar('dynamic_class_parameters',Array() );
+									}
+									else
+									{
+										$this->setTemplateVar('dynamic_class_description',"WARNING: Class $className has no execute()-Method" );
+										$this->setTemplateVar('dynamic_class_parameters',Array() );
+									}
+								}
+								else
+								{
+									$this->setTemplateVar('dynamic_class_description',"WARNING: Class $className not found" );
+									$this->setTemplateVar('dynamic_class_parameters' ,Array() );
+								}
+							}
+							else
+							{
+									$this->setTemplateVar('dynamic_class_description',"WARNING: File $fileName not found" );
+									$this->setTemplateVar('dynamic_class_parameters' ,Array() );
+							}
+							$this->setTemplateVar('parameters',$this->element->code );
+							break;
+
 						case 'code':
 							$this->setTemplateVar('code',$this->element->code);
 							break;
@@ -253,7 +320,7 @@ class ElementAction extends Action
 
 					$objects = array();
 	
-					// Ermitteln aller verfügbaren Objekt-IDs
+					// Ermitteln aller verf?gbaren Objekt-IDs
 					foreach( Folder::getAllObjectIds() as $id )
 					{
 						$o = new Object( $id );
@@ -283,7 +350,7 @@ class ElementAction extends Action
 
 					$folders = array();
 	
-					// Ermitteln aller verfügbaren Objekt-IDs
+					// Ermitteln aller verf?gbaren Objekt-IDs
 					foreach( Folder::getAllFolders() as $id )
 					{
 						$o = new Object( $id );

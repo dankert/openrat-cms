@@ -275,6 +275,36 @@
   <?php } ?>
 
 
+  <?php if   ( isset($parameters) )
+        {
+	        $fx = fx($fx); ?>
+  <tr>
+    <td></td>
+    <td class="help"><?php echo $dynamic_class_description ?></td>
+  </tr>
+  <?php if	( count($dynamic_class_parameters) > 0 )
+        { ?>
+  <tr>
+    <td class="<?php echo $fx ?>"><?php echo lang('EL_PROP_DYNAMIC_PARAMETERS') ?></td>
+    <td class="<?php echo $fx ?>"><textarea name="code" rows="15" cols="40"><?php echo $parameters ?></textarea></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="help"><ul><?php foreach( $dynamic_class_parameters as $paramName=>$paramDesc )
+                           { ?>
+                     <li><strong><?php echo $paramName ?></strong>: <?php echo $paramDesc ?></li> 
+                     <?php } ?>
+                     </ul>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="help"><?php echo lang('EL_PROP_DYNAMIC_PARAMETERS_DESC') ?></td>
+  </tr>
+  <?php } ?>
+  <?php } ?>
+
+
   <?php if   ( isset($select_items) )
         {
 	        $fx = fx($fx); ?>

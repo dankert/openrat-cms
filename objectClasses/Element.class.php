@@ -20,11 +20,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-07-07 20:45:10  dankert
+// Revision 1.4  2004-10-06 09:54:19  dankert
+// Neuer Elementtyp: dynamic
+//
+// Revision 1.3  2004/07/07 20:45:10  dankert
 // Neuer Elementtyp: select
 //
 // Revision 1.2  2004/05/02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.2  2004/04/30 20:36:25  dankert
 // Neu: Freigabe
@@ -123,7 +126,7 @@ class Element
 
 
 	/**
-	 * Hinzufügen eines Elementes
+	 * Hinzuf?gen eines Elementes
 	 * Das aktuelle Element wird in die Datenbank geschrieben.
 	 */
 	function add()
@@ -260,7 +263,7 @@ class Element
 
 	/**
 	 * Setzt den Typ des Elementes
-	 * @param String Der neue Typ, siehe getAvailableTypes() für mögliche Typen
+	 * @param String Der neue Typ, siehe getAvailableTypes() f?r m?gliche Typen
 	 * @see #type
 	 */
 	function setType( $type )
@@ -279,7 +282,7 @@ class Element
 
 
 	/**
-	 * Löschen des Elementes und aller Inhalte
+	 * L?schen des Elementes und aller Inhalte
 	 */
 	function delete()
 	{
@@ -299,7 +302,7 @@ class Element
 
 	/**
 	 * L?schen aller Seiteninhalte mit diesem Element
-	 * Das Element wird nicht gelöscht.
+	 * Das Element wird nicht gel?scht.
 	 */
 	function deleteValues()
 	{
@@ -327,6 +330,7 @@ class Element
 		                  'date'    =>Array('withIcon','allLanguages','writable','dateformat'),
 		                  'list'    =>Array('withIcon','allLanguages','writable','folderObjectId'),
 		                  'code'    =>Array('code'),
+		                  'dynamic' =>Array('subtype','code'),
 		                  'info'    =>Array('subtype'),
 		                  'infodate'=>Array('subtype','dateformat') );
 		                  
@@ -348,6 +352,7 @@ class Element
 		             'date',
 		             'list',
 		             'code',
+		             'dynamic',
 		             'info',
 		             'infodate');
 	}
@@ -355,7 +360,7 @@ class Element
 
 	/**
 	 * Ermittelt, ob das Element beschreibbar ist.
-	 * Bestimmte Typen (z.B. Info-Felder) sind nie beschreibbar, dann wird immer false zurückgegeben.
+	 * Bestimmte Typen (z.B. Info-Felder) sind nie beschreibbar, dann wird immer false zur?ckgegeben.
 	 * Ansonsten wird ermittelt, ob dieses Element als beschreibbar markiert ist.
 	 */
 	function isWritable()

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-07-07 20:48:33  dankert
+// Revision 1.10  2004-10-06 09:55:02  dankert
+// Neuer Elementtyp: dynamic
+//
+// Revision 1.9  2004/07/07 20:48:33  dankert
 // Neuer Elementtyp: select
 //
 // Revision 1.8  2004/05/03 21:15:30  dankert
@@ -30,7 +33,7 @@
 // setzen von ObjectId bei Code-Elementen
 //
 // Revision 1.6  2004/05/02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.5  2004/05/02 12:01:33  dankert
 // Funktion release() zum freigeben von Inhalten
@@ -70,7 +73,7 @@ class Value
 	var $valueid=0;
 
 	/**
-	 * Seiten-Objekt der übergeordneten Seite
+	 * Seiten-Objekt der ?bergeordneten Seite
 	 * @type Object
 	 */
 	var $page;
@@ -88,7 +91,7 @@ class Value
 	var $text;
 	
 	/**
-	 * Zahl. Auch Fließkommazahlen werden als Ganzzahl gespeichert
+	 * Zahl. Auch Flie?kommazahlen werden als Ganzzahl gespeichert
 	 * @type Integer
 	 */
 	var $number;
@@ -113,13 +116,13 @@ class Value
 	var $value;
 	
 	/**
-	 * TimeStamp der letzten Änderung
+	 * TimeStamp der letzten ?nderung
 	 * @type Integer
 	 */
 	var $lastchangeTimeStamp;
 	
 	/**
-	 * Benutzer-ID der letzten Änderung
+	 * Benutzer-ID der letzten ?nderung
 	 * @type Integer
 	 */
 	var $lastchangeUserId;
@@ -235,7 +238,7 @@ class Value
 				$quote = false;
 			}
 		
-			// Präformatierter Text Anfang
+			// Pr?formatierter Text Anfang
 			if   ( $zeile == '='  &&  !$pre )
 			{
 				if	( $p )
@@ -248,7 +251,7 @@ class Value
 				$pre = true;
 			}
 	
-			// Präformatierter Text Ende
+			// Pr?formatierter Text Ende
 			if   ( $zeile == '='  &&  $pre )
 			{
 				$zeile = '</pre>';
@@ -256,7 +259,7 @@ class Value
 			}
 		
 
-			// Überschriften
+			// ?berschriften
 			if	( preg_match('/^([+]{1,}) ?(.*)/',$zeile,$match) && !$nowiki && !$pre && !$quote )
 			{
 				if	( $p )
@@ -271,7 +274,7 @@ class Value
 				$zeile = '<h'.$hlev.'><a name="toc'.$tocid.'"></a>'.$match[2].'</h'.$hlev.'>';
 			}
 
-			// Bei präformatierem Text keine weiteren Formatierungen durchführen	
+			// Bei pr?formatierem Text keine weiteren Formatierungen durchf?hren	
 			if   ( !$pre )
 			{
 				// Tabellen
@@ -295,12 +298,12 @@ class Value
 					$zeile = ereg_replace( '\|?$','</td></tr>',$zeile );
 					$zeile = str_replace( '|','</td><td>',$zeile );
 
-					// Spaltenübergreifende Zellen
+					// Spalten?bergreifende Zellen
 					$zeile = str_replace('<td></td><td>','<td colspan\="2">',$zeile);
 					for( $i=2; $i<=10; $i++)
 						$zeile = str_replace('</td><td colspan\="'.$i.'"></td><td>','</td><td colspan\="'.($i+1).'">',$zeile);
 
-					// Spalten-Überschriften <th>
+					// Spalten-?berschriften <th>
 					$zeile = eregi_replace( '<td([^<]*)>!([^<]+)</td>','<th\\1>\\2</th>',$zeile );
 
 					// CSS-Klassen
@@ -316,7 +319,7 @@ class Value
 				}
 
 
-				// Aufzählungen		
+				// Aufz?hlungen		
 				if	( preg_match('/^( *)([\*#-]) (.*)/',$zeile,$match) && !$nowiki )
 				{
 					if	( $p )
@@ -367,7 +370,7 @@ class Value
 			}
 	
 			
-			// Absätze einrichten
+			// Abs?tze einrichten
 			if   (!$pre && !$ol && !$ul && !$table && substr($zeile,0,1)!='<' )
 			{
 				if   ( $zeile != '' && $p )
@@ -391,7 +394,7 @@ class Value
 	
 	
 			// Textauszeichnungen fett,kursiv,fest		
-			if   ( !$pre && !$nowiki )  // nicht bei präformatiertem Text
+			if   ( !$pre && !$nowiki )  // nicht bei pr?formatiertem Text
 			{
 				// *Fett*	
 				//$zeile = ereg_replace( '\*([^*]+[^\\])\*' , '<strong>\\1</strong>' , $zeile );
@@ -404,7 +407,7 @@ class Value
 				$zeile = ereg_replace( '=([^=]+[^\\])='        , '<tt>\\1</tt>' , $zeile );
 
 				// Text->... umsetzen nach "Text"->... (Anfuehrungszeichen ergaenzen)
-				$zeile = ereg_replace( '([A-Za-z0-9._?äöüÄÖÜß-]+)-'.$pf, '"\\1"-'.$pf, $zeile );
+				$zeile = ereg_replace( '([A-Za-z0-9._????????-]+)-'.$pf, '"\\1"-'.$pf, $zeile );
 
 				// ...->Link umsetzen nach ...->"Link" (Anfuehrungszeichen ergaenzen)
 				$zeile = ereg_replace( '-'.$pf.'([A-Za-z0-9.:_\/\,\?\=\&-]+)', '-'.$pf.'"\\1"',$zeile );
@@ -465,7 +468,7 @@ class Value
 			if	($t['level'] == 1 && count($toctext)>0) $toctext[] = '';
 			$toctext[] = str_repeat('&nbsp;',$t['level']*2).'<a href="#toc'.$t['id'].'">'.$t['text'].'</a>';
 		}
-		$text = str_replace( '##TOC##',implode("<br/>\n",$toctext),$text ); // Inhaltsverzeichnis einfügen
+		$text = str_replace( '##TOC##',implode("<br/>\n",$toctext),$text ); // Inhaltsverzeichnis einf?gen
 		
 		foreach( $ini_chars  as $key=>$val)
 		{
@@ -674,7 +677,7 @@ class Value
 
 
 	/**
-	 * Diesen Inhalt löschen
+	 * Diesen Inhalt l?schen
 	 */
 	function delete()
 	{
@@ -691,7 +694,7 @@ class Value
 
 
 	/**
-	 * Inhalt ermitteln
+	 * Diese Methode erzeugt fuer alle Elementtypen den Inhalt
 	 */
 	function generate()
 	{
@@ -704,6 +707,7 @@ class Value
 	
 		$inhalt = '';
 
+		Logger::debug('Generating Element '.$this->element->name.', type='.$this->element->type );
 		switch( $this->element->type )
 		{
 			case 'list':
@@ -824,7 +828,7 @@ class Value
 					$inhalt = str_replace('>','&amp;',$inhalt);
 				}
 	
-				// Schnellformatierung ('Wiki') durchführen
+				// Schnellformatierung ('Wiki') durchf?hren
 				if   ( $this->element->wiki )
 				{
 					$inhalt = $this->decode_wiki( $inhalt );
@@ -880,6 +884,52 @@ class Value
 
 				$inhalt = Api::getOutput();
 				
+				break;
+
+
+			// Programmcode (PHP)
+			case 'dynamic':
+
+				$this->page->load();
+				
+				$className = $this->element->subtype;
+				$fileName  = './dynamicClasses/'.$className.'.class.php';
+				if	( is_file( $fileName ) )
+				{
+					// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
+					if	( !class_exists($className) )
+						require( $fileName );
+
+					if	( class_exists($className) )
+					{
+						$dynEl = new $className;
+						$dynEl->page = &$this->page;
+
+						if	( method_exists( $dynEl,'execute' ) )
+						{
+							$dynEl->api = new Api();
+							$dynEl->api->delOutput('');
+							$dynEl->api->objectid = $this->page->objectid;
+							$dynEl->api->page = &$this->page;
+			
+							$dynEl->execute();
+							$inhalt = $dynEl->api->getOutput();
+						}
+						else
+						{
+							Logger::warn("WARNING: Class $className has no execute()-Method" );
+						}
+					}
+					else
+					{
+						Logger::warn("WARNING: Class $className not found" );
+					}
+				}
+				else
+				{
+					Logger::warn("WARNING: File $fileName not found" );
+				}
+
 				break;
 
 
@@ -1081,7 +1131,7 @@ class Value
 
 	/**
 	  * Es werden Objekte mit einer UserId ermittelt
-	  * @param Integer Benutzer-Id der letzten Änderung
+	  * @param Integer Benutzer-Id der letzten ?nderung
 	  * @return Array Liste der gefundenen Objekt-IDs
 	  */
 	function getObjectIdsByLastChangeUserId( $userid )
