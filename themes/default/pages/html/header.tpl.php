@@ -52,7 +52,7 @@ function unmark( id )
 
 <?php if   ( isset($tree_refresh) )
       { ?>
-<script name="JavaScript">
+<script name="JavaScript" type="text/javascript">
 <!--
 top.cms_tree.location.href='<?php echo Html::url(array('action'=>'tree','subaction'=>'reload',session_name()=>session_id())) ?>';
 //-->
