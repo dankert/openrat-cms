@@ -306,7 +306,7 @@
         {
 	        $fx = fx($fx); ?>
   <tr>
-    <td class="<?php echo $fx ?>"><?php echo lang('CODE') ?></td>
+    <td class="<?php echo $fx ?>"><?php echo lang('EL_PROP_CODE') ?></td>
     <td class="<?php echo $fx ?>"><textarea name="code" rows="35" cols="60"><?php echo $code ?></textarea></td>
   </tr>
   <?php } ?>
