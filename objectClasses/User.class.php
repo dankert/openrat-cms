@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-11-28 22:32:33  dankert
+// Revision 1.9  2004-12-19 19:24:27  dankert
+// getAvailableStyles()
+//
+// Revision 1.8  2004/11/28 22:32:33  dankert
 // getAllAcls(): Lesen aller Rechte des Benutzers
 //
 // Revision 1.7  2004/11/28 16:56:38  dankert
@@ -732,6 +735,29 @@ class User
 		$this->rights[$objectid] = $this->rights[$objectid] | $type;
 			
 		Logger::trace( 'Objekt '.$objectid.' erhaelt Recht '.$type );
+	}
+
+
+	/**
+	 * Ermitteln aller zur Verfuegung stehenden Stylesheets
+	 */
+	function getAvailableStyles()
+	{
+		global $conf_themedir;
+		$allstyles = array();
+		$handle=opendir( $conf_themedir.'/css' ); 
+
+		while ($file = readdir ($handle))
+		{ 
+			if ( eregi('\.css$',$file) )
+			{ 
+				$file = eregi_replace('\.css$','',$file);
+				$allstyles[$file] = $file;
+			}
+		}
+		closedir($handle);
+
+		return $allstyles;	
 	}
 }
 
