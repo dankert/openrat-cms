@@ -1,0 +1,21 @@
+
+OpenRat Installation:
+---------------------
+
+1. SQL-Dump aus Datei doc/database/sql/openrat.sql in die Datenbank einspielen
+2. Anpassen der Datenbankparameter in Datei config.ini.php
+3. Login mit admin/admin
+
+
+Voraussetzungen:
+----------------
+
+Datenbank: MySQL >= 3.23 oder PostgreSQL >= 7.21
+PHP      : >= 4.1.2
+
+
+Mögliche Probleme:
+------------------
+
+- "Internal Server Error"
+   => Datei .htaccess löschen.
