@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2004-11-29 23:24:36  dankert
+// Revision 1.16  2004-12-15 23:23:11  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.15  2004/11/29 23:24:36  dankert
 // Korrektur Veroeffentlichung
 //
 // Revision 1.14  2004/11/29 21:09:51  dankert
@@ -83,11 +86,16 @@ class FolderAction extends ObjectAction
 
 	function FolderAction()
 	{
-		$this->folder = new Folder( $this->getSessionVar('objectid') );
-		$this->folder->load();
-
-		if	( ! $this->folder->isFolder )
-			die( ' id '.$this->folder->objectid.' is not a folder' );
+		if	( $this->getRequestId() != 0  )
+		{
+			$this->folder = new Folder( $this->getRequestId() );
+			$this->folder->load();
+			Session::setObject( $this->folder );
+		}
+		else
+		{
+			$this->folder = Session::getObject();
+		}
 	}
 
 
@@ -489,18 +497,10 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function move()
-	{
-		$this->objectMove();
-
-		$this->callSubAction('show');
-	}
-
-
 	function create()
 	{
 		$this->setTemplateVar('templates',Template::getAll());
-		$this->setTemplateVar('new_folder',$this->folder->hasRight(ACL_CREATE_FOLDER));
+		$this->setTemplateVar('new_folder',$this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectIds(true,true)) < MAX_FOLDER_DEPTH );
 		$this->setTemplateVar('new_file'  ,$this->folder->hasRight(ACL_CREATE_FILE  ));
 		$this->setTemplateVar('new_link'  ,$this->folder->hasRight(ACL_CREATE_LINK  ));
 		$this->setTemplateVar('new_page'  ,$this->folder->hasRight(ACL_CREATE_PAGE  ));
@@ -578,7 +578,7 @@ class FolderAction extends ObjectAction
 			}
 		}
 
-		if   ( $o->hasRight(ACL_WRITE) )
+		if   ( $this->folder->hasRight(ACL_WRITE) )
 		{
 			// Alle anderen Ordner ermitteln
 			$otherfolder = array();

@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-12-15 23:23:11  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.2  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -44,7 +47,7 @@ class GroupAction extends Action
 
 	function GroupAction()
 	{
-		$this->group = new Group( $this->getSessionVar('groupid') );
+		$this->group = new Group( $this->getRequestId() );
 		$this->group->load();
 	}
 
@@ -87,7 +90,7 @@ class GroupAction extends Action
 
 	function adduser()
 	{
-		// Benutzer der Gruppe hinzufügen
+		// Benutzer der Gruppe hinzuf?gen
 		$this->group->addUser( $this->getRequestVar('userid') );
 	
 		$this->callSubAction('users');
@@ -132,7 +135,7 @@ class GroupAction extends Action
 		foreach( Group::getAll() as $id=>$name )
 		{
 			$list[$id]         = array();
-			$list[$id]['url' ] = Html::url(array('action'=>'main','callAction'=>'group','callSubaction'=>'edit','groupid'=>$id));
+			$list[$id]['url' ] = Html::url('main','group',$id);
 			$list[$id]['name'] = $name;
 		}
 
@@ -157,7 +160,7 @@ class GroupAction extends Action
 		$this->setTemplateVar('memberships',$this->group->getUsers());
 
 
-		// Alle hinzufügbaren Benutzer ermitteln
+		// Alle hinzuf?gbaren Benutzer ermitteln
 		//
 		$this->setTemplateVar('users',$this->group->getOtherUsers());
 

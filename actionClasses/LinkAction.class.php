@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-24 21:28:36  dankert
+// Revision 1.5  2004-12-15 23:23:11  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.4  2004/11/24 21:28:36  dankert
 // "Verschieben" entfernt
 //
 // Revision 1.3  2004/05/02 14:49:37  dankert
@@ -51,8 +54,16 @@ class LinkAction extends ObjectAction
 	 */
 	function LinkAction()
 	{
-		$this->link = new Link( $this->getSessionVar('objectid') );
-		$this->link->load();
+		if	( $this->getRequestId() != 0  )
+		{
+			$this->link = new Link( $this->getRequestId() );
+			$this->link->load();
+			Session::setObject( $this->link );
+		}
+		else
+		{
+			$this->link = Session::getObject();
+		}
 	}
 
 

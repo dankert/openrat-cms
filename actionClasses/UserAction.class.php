@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-28 22:46:55  dankert
+// Revision 1.6  2004-12-15 23:23:11  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.5  2004/11/28 22:46:55  dankert
 // Rechte des Benutzers anzeigen
 //
 // Revision 1.4  2004/11/10 22:42:10  dankert
@@ -57,7 +60,7 @@ class UserAction extends Action
 
 	function UserAction()
 	{
-		$this->user = new User( $this->getSessionVar('userid') );
+		$this->user = new User( $this->getRequestId() );
 		$this->user->load();
 	}
 
@@ -207,7 +210,7 @@ class UserAction extends Action
 		foreach( $this->user->listAll() as $userid=>$name )
 		{
 			$list[$userid]         = array();
-			$list[$userid]['url' ] = Html::url(array('action'=>'main','callAction'=>'user','callSubaction'=>'edit','userid'=>$userid));
+			$list[$userid]['url' ] = Html::url('main','user',$userid);
 			$list[$userid]['name'] = $name;
 		}
 		$this->setTemplateVar('el',$list);

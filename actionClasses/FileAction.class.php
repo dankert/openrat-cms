@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-11-30 22:28:20  dankert
+// Revision 1.11  2004-12-15 23:23:11  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.10  2004/11/30 22:28:20  dankert
 // Automatische Feststellen, ob GD installiert und welche Bildformate unterstuetzt werden
 //
 // Revision 1.9  2004/11/29 23:24:36  dankert
@@ -69,8 +72,16 @@ class FileAction extends ObjectAction
 	 */
 	function FileAction()
 	{
-		$this->file = new File( $this->getSessionVar('objectid') );
-		$this->file->load();
+		if	( $this->getRequestId() != 0  )
+		{
+			$this->file = new File( $this->getRequestId() );
+			$this->file->load();
+			Session::setObject( $this->file );
+		}
+		else
+		{
+			$this->file = Session::getObject();
+		}
 	}
 
 

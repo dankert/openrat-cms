@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2004-11-29 23:52:33  dankert
+// Revision 1.18  2004-12-15 23:23:11  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.17  2004/11/29 23:52:33  dankert
 // Korrektur Vorversion
 //
 // Revision 1.16  2004/11/29 23:48:00  dankert
@@ -88,11 +91,18 @@ class PageAction extends ObjectAction
 
 	function PageAction()
 	{
-		if	( $this->getRequestVar('objectid') != '' )
-			$this->page = new Page( $this->getRequestVar('objectid') );
-		else	$this->page = new Page( $this->getSessionVar('objectid') );
-
-		$this->page->load();
+		$this->page = Session::getObject();
+		
+		if	( $this->getRequestId() != 0  )
+		{
+			$this->page = new Page( $this->getRequestId() );
+			$this->page->load();
+			Session::setObject( $this->page );
+		}
+		else
+		{
+			$this->page = Session::getObject();
+		}
 	}
 
 
@@ -464,8 +474,10 @@ class PageAction extends ObjectAction
 		$this->page->load();
 		$this->page->generate();
 		$this->page->write();
-		require( $this->page->tmpfile() );
 
+		require( $this->page->tmpfile );
+
+		unlink( $this->page->tmpfile );
 	}
 
 
