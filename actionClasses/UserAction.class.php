@@ -152,11 +152,10 @@ class UserAction extends Action
 	{
 		$list = array();
 
-		foreach( User::listAll() as $userid=>$name )
+		foreach( User::getAllUsers() as $user )
 		{
-			$list[$userid]         = array();
-			$list[$userid]['url' ] = Html::url('main','user',$userid);
-			$list[$userid]['name'] = $name;
+			$list[$user->userid]         = $user->getProperties();
+			$list[$user->userid]['url' ] = Html::url('main','user',$user->userid);
 		}
 		$this->setTemplateVar('el',$list);
 
