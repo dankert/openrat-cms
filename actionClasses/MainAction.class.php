@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-11-27 13:07:05  dankert
+// *** empty log message ***
+//
+// Revision 1.2  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -47,8 +50,8 @@ class MainAction extends Action
 			$this->setSessionVar( $this->getRequestVar('callAction').'action',$this->getRequestVar('callSubaction') );
 		}
 
-		$this->setTemplateVar('frame_src_main_menu',Html::url( array('action'=>'mainmenu'                        ,'subaction'=>$this->getRequestVar('callAction'   ) ) ));
-		$this->setTemplateVar('frame_src_main_main',Html::url( array('action'=>$this->getRequestVar('callAction'),'subaction'=>$this->getSessionVar( $this->getRequestVar('callAction').'action' ) ) ));
+		$this->setTemplateVar('frame_src_main_menu',Html::url( array('action'=>'mainmenu','subaction'=>$this->getRequestVar('subaction') ) ));
+		$this->setTemplateVar('frame_src_main_main',Html::url( array('action'=>$this->getRequestVar('subaction')) ));
 		
 		$this->forward('frameset_main');
 	}
