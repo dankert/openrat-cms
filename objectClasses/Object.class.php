@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-11-29 23:34:39  dankert
+// Revision 1.11  2004-11-29 23:54:36  dankert
+// Korrektur Vorversion
+//
+// Revision 1.10  2004/11/29 23:34:39  dankert
 // neue Methode setTimestamp()
 //
 // Revision 1.9  2004/11/29 23:24:36  dankert
@@ -545,12 +548,13 @@ class Object
 
 		$sql = new Sql('UPDATE {t_object} SET '.
 		               '  lastchange_date   = {time}  ,'.
-		               '  lastchange_userid = {userid},'.
+		               '  lastchange_userid = {userid} '.
 		               ' WHERE id={objectid}');
 
 		$user = Session::getUser();
-		$sql->setInt   ('userid',$user->userid);
-		$sql->setInt   ('time'  ,time()       );
+		$sql->setInt   ('userid'  ,$user->userid  );
+		$sql->setInt   ('objectid',$this->objectid);
+		$sql->setInt   ('time'    ,time()         );
 
 		$db->query( $sql->query );
 	}
