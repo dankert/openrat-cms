@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-11-28 21:27:52  dankert
+// Revision 1.9  2004-11-29 21:08:13  dankert
+// neue Methode hasRequestVar()
+//
+// Revision 1.8  2004/11/28 21:27:52  dankert
 // addNotice()
 //
 // Revision 1.7  2004/11/27 13:05:37  dankert
@@ -101,6 +104,15 @@ class Action
 			return '';
 		else	return $REQ[ $varName ];
 	}
+
+
+	function hasRequestVar( $varName )
+	{
+		global $REQ;
+
+		return( isset($REQ[$varName]) );
+	}
+
 
 
 	function setTemplateVar( $varName,$value )
