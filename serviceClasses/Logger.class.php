@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 15:04:16  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-10-04 19:57:17  dankert
+// Bugfix und trace()
+//
+// Revision 1.2  2004/05/02 15:04:16  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 17:03:28  dankert
 // Initiale Version
@@ -29,10 +32,11 @@
 // ---------------------------------------------------------------------------
 
 
-define('OR_LOG_LEVEL_DEBUG'  ,1);
-define('OR_LOG_LEVEL_INFO'   ,2);
-define('OR_LOG_LEVEL_WARNING',3);
-define('OR_LOG_LEVEL_ERROR'  ,4);
+define('OR_LOG_LEVEL_TRACE',1);
+define('OR_LOG_LEVEL_DEBUG',2);
+define('OR_LOG_LEVEL_INFO' ,3);
+define('OR_LOG_LEVEL_WARN' ,4);
+define('OR_LOG_LEVEL_ERROR',5);
 
 /**
  * Schreiben eines Eintrages in die Logdatei
@@ -44,13 +48,24 @@ define('OR_LOG_LEVEL_ERROR'  ,4);
 class Logger
 {
 	/**
+	 * Schreiben einer Trace-Meldung in die Logdatei
+	 *
+	 * @param message Log-Text
+	 */
+	function trace( $message )
+	{
+		Logger::doLog( 'trace',$message );
+	}
+
+
+	/**
 	 * Schreiben einer Debug-Meldung in die Logdatei
 	 *
 	 * @param message Log-Text
 	 */
 	function debug( $message )
 	{
-		Logger::doLog( OR_LOG_LEVEL_DEBUG,$message );
+		Logger::doLog( 'debug',$message );
 	}
 
 
@@ -61,7 +76,7 @@ class Logger
 	 */
 	function info( $message )
 	{
-		Logger::doLog( OR_LOG_LEVEL_INFO,$message );
+		Logger::doLog( 'info',$message );
 	}
 
 
@@ -70,9 +85,9 @@ class Logger
 	 *
 	 * @param message Log-Text
 	 */
-	function warning( $message )
+	function warn( $message )
 	{
-		$this->doLog( OR_LOG_LEVEL_WARN,$message );
+		Logger::doLog( 'warn',$message );
 	}
 
 
@@ -83,7 +98,7 @@ class Logger
 	 */
 	function error( $message )
 	{
-		$this->doLog( OR_LOG_LEVEL_ERROR,$message );
+		Logger::doLog( 'error',$message );
 	}
 
 
@@ -110,10 +125,19 @@ class Logger
 
 		$confLevel         = strtoupper($conf['log']['level']);
 		$confLevelConstant = 'OR_LOG_LEVEL_'.$confLevel;
+
 		if	( !defined($confLevelConstant) )
-			die( "unknown log level $confLevel in config" );
-			
-		if	( constant($confLevelConstant) > $facility )
+			die( "unknown log level '$confLevel' in config" );
+
+		$thisLevel         = strtoupper($facility);
+		$thisLevelConstant = 'OR_LOG_LEVEL_'.$thisLevel;
+
+		if	( !defined($thisLevelConstant) )
+			die( "unknown log level '$thisLevel' in parameter" );
+
+
+		// Wenn konfiguriertes Mindest-Loglevel nicht erreicht, dann Return
+		if	( constant($confLevelConstant) > constant($confLevelConstant) )
 			return;
 		
 		if	( isset($SESS['user']) )
@@ -126,10 +150,15 @@ class Logger
 		if   ( $conf['log']['dns_lookup'] )
 			$text = str_replace( '%host',gethostbyaddr(getenv('REMOTE_ADDR')),$text );
 		else	$text = str_replace( '%host',getenv('REMOTE_ADDR'),$text );
-		$text = str_replace( '%user'  ,str_pad($username,8),$text );
-		$text = str_replace( '%level' ,str_pad($confLevel,5),$text );
+		
+		if	( isset( $SESS['action'] ) )
+			$action = $SESS['action'];
+		else
+			$action = 'n/a';
+		$text = str_replace( '%user'  ,str_pad($username ,8),$text );
+		$text = str_replace( '%level' ,str_pad($thisLevel,5),$text );
 		$text = str_replace( '%agent' ,getenv('HTTP_USER_AGENT'),$text );
-		$text = str_replace( '%action',str_pad($SESS['action'],12),$text );
+		$text = str_replace( '%action',str_pad($action,12),$text );
 		$text = str_replace( '%text'  ,$message,$text );
 		$text = str_replace( '%time'  ,date($conf['log']['date_format']),$text );
 
