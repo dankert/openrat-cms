@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-12-30 21:44:03  dankert
+// Revision 1.14  2005-01-14 21:41:09  dankert
+// Neue Methode lastModified()
+//
+// Revision 1.13  2004/12/30 21:44:03  dankert
 // Subaction-Wechsel speichern
 //
 // Revision 1.12  2004/12/26 21:57:16  dankert
@@ -200,7 +203,8 @@ class Action
 		$user = Session::getUser();
 		if	( !is_object($user) )
 			$stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/default.css';
-		else $stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$user->style.'.css';
+		else
+			$stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$user->style.'.css';
 		
 		$self = $HTTP_SERVER_VARS['PHP_SELF'];
 	
@@ -311,4 +315,67 @@ class Action
 	{
 		return Session::getUser();
 	}
+
+
+	
+	/**
+	 * Benutzen eines sog. "Conditional GET".
+	 *
+	 * Diese Funktion setzt einen "Last-Modified"-HTTP-Header.
+	 * Ist der Inhalt der Seite nicht neuer, so wird der Inhalt
+	 * der Seite nicht ausgegeben, sondern nur HTTP-Status 304
+	 * ("304 not modified") gesetzt.
+	 * Der Rest der Seite muss dann nicht mehr erzeugt werden,
+	 * wodurch die Performance stark erhoeht werden kann.
+	 * Ggf. kann das Benutzen dieses Mechanismus zu unerwünschten
+	 * Effekten führen, dann muss "conditional GET" in der
+	 * Konfiguration deaktiviert werden.
+	 *
+	 * Credits: Danke an Charles Miller
+	 * @see http://fishbowl.pastiche.org/2002/10/21/http_conditional_get_for_rss_hackers
+	 *
+	 * Gefunden auf:
+	 * @see http://simon.incutio.com/archive/2003/04/23/conditionalGet
+	 *
+	 * @param Timestamp Letztes Aenderungsdatum dieser Seite
+	 */
+	function lastModified( $time )
+	{
+		// Conditional-Get eingeschaltet?
+		global $conf;
+		if	( ! $conf['cache']['conditional_get'] )
+			return;
+
+		$lastModified = substr(date('r',$time),0,-5).'GMT';
+		$etag         = '"'.md5($lastModified).'"';
+
+		// Header senden
+		header('Last-Modified: '.$lastModified );
+		header('ETag: '         .$etag          );
+		
+		// Die vom Interpreter sonst automatisch gesetzten
+		// Header uebersteuern
+		header('Cache-Control:');
+		header('Pragma:'       );
+
+		// See if the client has provided the required headers
+		$if_modified_since = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']) : false;
+		$if_none_match     = isset($_SERVER['HTTP_IF_NONE_MATCH']    ) ? stripslashes($_SERVER['HTTP_IF_NONE_MATCH']    ) :	false;
+
+		if	( !$if_modified_since && !$if_none_match )
+			return;
+
+		// At least one of the headers is there - check them
+		if	( $if_none_match && $if_none_match != $etag )
+			return; // etag is there but doesn't match
+
+		if	( $if_modified_since && $if_modified_since != $lastModified )
+			return; // if-modified-since is there but doesn't match
+
+		// Der entfernte Browser bzw. Proxy holt die Seite nun aus seinem Cache 
+		header('HTTP/1.0 304 Not Modified');
+		exit;  // Sofortiges Skript-Ende
+	}
 }
+
+?>
