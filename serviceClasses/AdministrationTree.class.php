@@ -34,8 +34,8 @@ class AdministrationTree extends AbstractTree
 	function root()
 	{
 		$treeElement = new TreeElement();
-		$treeElement->text        = lang('ADMINISTRATION');
-		$treeElement->description = lang('ADMINISTRATION');
+		$treeElement->text        = lang('GLOBAL_ADMINISTRATION');
+		$treeElement->description = lang('GLOBAL_ADMINISTRATION');
 		$treeElement->type        = 'administration';
 		$treeElement->icon        = 'project_list';
 		
@@ -47,8 +47,8 @@ class AdministrationTree extends AbstractTree
 	function administration()
 	{
 		$treeElement = new TreeElement();
-		$treeElement->text        = lang('PROJECTS');
-		$treeElement->description = lang('PROJECTS');
+		$treeElement->text        = lang('GLOBAL_PROJECTS');
+		$treeElement->description = lang('GLOBAL_PROJECTS');
 		$treeElement->url         = Html::url(array('action'       =>'main',
 		                                            'callSubaction'=>'listing',
 		                                            'callAction'   =>'project',
@@ -93,8 +93,8 @@ class AdministrationTree extends AbstractTree
 	function userandgroups( $id )
 	{
 		$treeElement = new TreeElement();
-		$treeElement->text        = lang('USER');
-		$treeElement->description = lang('USER');
+		$treeElement->text        = lang('GLOBAL_USER');
+		$treeElement->description = lang('GLOBAL_USER');
 		$treeElement->url         = Html::url(array('action'       =>'main',
 		                                            'callSubaction'=>'listing',
 		                                            'callAction'   =>'user',
@@ -106,8 +106,8 @@ class AdministrationTree extends AbstractTree
 		$this->addTreeElement( $treeElement );
 
 		$treeElement = new TreeElement();
-		$treeElement->text        = lang('GROUPS');
-		$treeElement->description = lang('GROUPS');
+		$treeElement->text        = lang('GLOBAL_GROUPS');
+		$treeElement->description = lang('GLOBAL_GROUPS');
 		$treeElement->url         = Html::url(array('action'       =>'main',
 		                                            'callSubaction'=>'listing',
 		                                            'callAction'   =>'group',
@@ -161,9 +161,9 @@ class AdministrationTree extends AbstractTree
 			$desc =  $u->fullname;
 
 			if	( $u->isAdmin )
-				$desc .= ' ('.lang('ADMIN').') ';
+				$desc .= ' ('.lang('GLOBAL_ADMIN').') ';
 			if	( $u->desc == "" )
-				$desc .= ' - '.lang('NO_DESCRIPTION_AVAILABLE');
+				$desc .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 			else
 				$desc .= ' - '.$u->desc;
 
@@ -191,7 +191,7 @@ class AdministrationTree extends AbstractTree
 		                                                                 'callAction'   =>'group',
 		                                                                 'groupid'    =>$id       ));
 			$treeElement->icon        = 'group';
-	     	$treeElement->description = lang('GROUP').' '.$g->name.': '.implode(', ',$g->getUsers());
+	     	$treeElement->description = lang('GLOBAL_GROUP').' '.$g->name.': '.implode(', ',$g->getUsers());
 			$treeElement->target      = 'cms_main';
 			$treeElement->type        = 'userofgroup';
 

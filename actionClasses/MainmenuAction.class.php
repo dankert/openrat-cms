@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-11-28 16:54:56  dankert
+// Revision 1.7  2004-11-28 18:39:18  dankert
+// Anpassen an neue Sprachdatei-Konventionen
+//
+// Revision 1.6  2004/11/28 16:54:56  dankert
 // Abfrage der Berechtigungen bei Menueaufbau
 //
 // Revision 1.5  2004/11/27 13:07:34  dankert
@@ -74,7 +77,7 @@ class MainmenuAction extends Action
 
 	function addSubAction( $name,$aclbit=0 )
 	{
-		if   ( $this->obj->hasRight($aclbit) )
+		if   ( $aclbit==0 || $this->obj->hasRight($aclbit) )
 			$this->subActionList[ $name ] = lang( 'MENU_'.strtoupper($name) );
 	}
 
@@ -304,13 +307,13 @@ class MainmenuAction extends Action
 	{
 		$this->setTemplateVar('folder',array() );
 
-		$list = array();	
-		$list['listing'] = lang('LISTING');
+		$this->addSubaction('listing');
 
 		if   ( intval($this->getSessionVar('projectid')) != 0 )
 		{
-			$list['edit'] = lang('EDIT');
-			$project = new Project($this->getSessionVar('projectid'));
+			$this->addSubaction('edit');
+
+			$project = new Project( $this->getSessionVar('projectid') );
 			$project->load();
 			$this->setTemplateVar('text',$project->name );
 		}
@@ -319,7 +322,7 @@ class MainmenuAction extends Action
 			$this->setTemplateVar('text','' );
 		}
 
-		$this->setTemplateVar('subaction',$list);
+		$this->setTemplateVar('subaction',$this->subActionList);
 		$this->setTemplateVar('param','projectid');
 
 		$this->callSubAction('show');
