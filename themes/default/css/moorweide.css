@@ -117,6 +117,13 @@ body.title
 	margin:0px;
 }
 
+
+form
+{
+	margin:0px;
+	padding:0px;
+}
+
 pre
 {
 	font-family:Courier;

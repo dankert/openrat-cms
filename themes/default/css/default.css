@@ -126,6 +126,14 @@ body.title {
 	background-color:#cac2a6;
 }
 
+
+form
+{
+	margin:0px;
+	padding:0px;
+}
+
+
 pre{ font-family:Courier;font-size:13px; }
 small
 {
