@@ -10,17 +10,17 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="2"><?php echo lang('MODEL') ?></a></th>
+  <th colspan="2"><?php echo lang('GLOBAL_MODEL') ?></a></th>
 </tr>
 
 <tr>
-<td width="50%" class="f1"><?php echo lang('NAME') ?></td>
+<td width="50%" class="f1"><?php echo lang('GLOBAL_NAME') ?></td>
 <td width="50%" class="f1"><input type="text" name="name" value="<?php echo $name ?>"></td>
 </tr>
 <?php if ( $delete )
       { ?>
 <tr>
-<td width="50%" class="f2" rowspan="2"><?php echo lang('DELETE') ?></a></td>
+<td width="50%" class="f2" rowspan="2"><?php echo lang('GLOBAL_DELETE') ?></a></td>
 <td width="50%" class="f2"><input type="checkbox" name="delete" value="1"></td>
 </tr>
 <tr>
@@ -28,7 +28,7 @@
 </tr>
 <?php } ?>
 <tr>
-<td colspan="2" class="act"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></a></td>
+<td colspan="2" class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></a></td>
 </tr>
 
 </table>
