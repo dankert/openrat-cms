@@ -12,7 +12,7 @@
 <table width="80%">
 
 <tr>
-  <th colspan="2"><?php echo lang('USER') ?> <a href="<?php echo sid($action.'?useraction=edit') ?>"><?php echo lang('EDIT') ?></a></th>
+  <th colspan="2"><?php echo lang('USER') ?> <a href="<?php echo Html::url(array('action'=>'user','subaction'=>'edit')) ?>"><?php echo lang('EDIT') ?></a></th>
 </tr>
 
 <tr>
@@ -51,7 +51,7 @@
 
 <table width="80%">
 <tr>
-  <th colspan="2"><?php echo lang('MEMBERSHIPS') ?><a href="<?php echo sid($action.'?useraction=groups') ?>"><?php echo lang('EDIT') ?></a></th>
+  <th colspan="2"><?php echo lang('MEMBERSHIPS') ?><a href="<?php echo $action.'?useraction=groups' ?>"><?php echo lang('EDIT') ?></a></th>
 </tr>
 <?php $f1=true;
       foreach( $memberships as $id=>$name )
@@ -74,7 +74,7 @@
       { ?>
 <tr>
 <td width="50%" class="<?php if($f1==true) {echo'f1';          }else{echo'f2';         }?>"><?php echo $name ?></td>
-<td width="50%" class="<?php if($f1==true) {echo'f1';$f1=false;}else{echo'f2';$f1=true;}?>"><a href="<?php echo sid($action.'?useraction=delacl&aclid='.$id) ?>"><?php echo lang('DELETE') ?></a></td>
+<td width="50%" class="<?php if($f1==true) {echo'f1';$f1=false;}else{echo'f2';$f1=true;}?>"><a href="<?php echo Html::url(array('action'=>'user','subaction'=>'delacl','aclid'=>$id)) ?>"><?php echo lang('DELETE') ?></a></td>
 </tr>
 <?php } ?>
 </table>

@@ -4,22 +4,20 @@
 
 <center>
 
-<form action="<?php echo $action ?>" method="post" target="_self">
-<input type="hidden" name="<?php echo session_name() ?>" value="<?php echo session_id() ?>">
+<form action="<?php echo $self ?>" method="post" target="_self">
 <input type="hidden" name="useraction" value="add">
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
+<table class="main" width="50%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="2"><?php echo lang('USERS') ?></th>
+  <th><?php echo lang('USERS') ?></th>
 </tr>
 
 <?php $f1=true;
       foreach( $el as $id=>$e )
       { ?>
 <tr>
-<td width="50%" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo sid($e['url']) ?>"><?php echo $e['name'] ?></a></td>
-<td width="50%" class="<?php if($f1==true) {echo'f1';$f1=false;} else{echo'f2';$f1=true;}?>"><?php echo $e['type'] ?></td>
+<td class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $e['url'] ?>" target="cms_main"><img src="<?php echo $image_dir ?>icon_user.png" border="0" align="left"><?php echo $e['name'] ?></a></td>
 </tr>
 <?php } ?>
 
@@ -32,4 +30,11 @@
 </form>
 
 </center>
+
+<script name="JavaScript">
+<!--
+window.document.forms[0].name.focus();
+//-->
+</script>
+
 <?php include( $tpl_dir.'footer.tpl.php') ?>
