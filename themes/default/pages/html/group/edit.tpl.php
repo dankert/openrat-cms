@@ -11,16 +11,16 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
   <tr>
-    <th colspan="2"><?php echo lang('GROUP') ?></th>
+    <th colspan="2"><?php echo lang('GLOBAL_GROUP') ?></th>
   </tr>
 
   <tr>
-    <td width="50%" class="f1"><?php echo lang('NAME') ?></a></td>
+    <td width="50%" class="f1"><?php echo lang('GLOBAL_NAME') ?></a></td>
     <td width="50%" class="f1"><input type="text" name="name" value="<?php echo $name ?>"></td>
   </tr>
 
   <tr>
-    <td class="f1" rowspan="2"><?php echo lang('DELETE') ?></a></td>
+    <td class="f1" rowspan="2"><?php echo lang('GLOBAL_DELETE') ?></a></td>
     <td class="f1"><input type="checkbox" name="delete" value="1"></td>
   </tr>
   <tr>
@@ -28,7 +28,7 @@
   </tr>
 
   <tr>
-    <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
+    <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
   </tr>
 
 </table>

@@ -11,7 +11,7 @@
 <table class="main" width="50%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th><?php echo lang('USERS') ?></th>
+  <th><?php echo lang('GLOBAL_USERS') ?></th>
 </tr>
 
 <?php $f1=true;
@@ -23,7 +23,7 @@
 <?php } ?>
 
 <tr>
-<td class="act"><input type="text" name="name" value="">&nbsp;<input type="submit" class="submit" value="<?php echo lang('ADD') ?>"></td>
+<td class="act"><input type="text" name="name" value="">&nbsp;<input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>"></td>
 </tr>
 
 </table>
