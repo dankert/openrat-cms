@@ -240,14 +240,21 @@ class ProjectTree extends AbstractTree
 		$treeElement->icon       = 'lang_list';
 		$treeElement->description= lang('GLOBAL_LANGUAGES_DESC');
 		$treeElement->target     = 'cms_main';
-		$treeElement->type       = 'languages';
+
+		// Nur fuer Projekt-Administratoren aufklappbar
+		if	( $this->userIsProjectAdmin )
+			$treeElement->type   = 'languages';
+
 		$this->addTreeElement( $treeElement );
 
 
 		// Projektmodelle
 		$treeElement = new TreeElement();
 		$treeElement->description= '';
-		$treeElement->type       = 'models';
+
+		// Nur fuer Projekt-Administratoren aufklappbar
+		if	( $this->userIsProjectAdmin )
+			$treeElement->type   = 'models';
 
 		$treeElement->description= lang('GLOBAL_MODELS_DESC');
 		$treeElement->text       = lang('GLOBAL_MODELS');
@@ -264,59 +271,7 @@ class ProjectTree extends AbstractTree
 		$treeElement->icon       = 'other';
 		$treeElement->type       = 'other';
 		$this->addTreeElement( $treeElement );
-
-
-		// Wechseln zu Administration
-		/*
-		$treeElement = new TreeElement();
-		$treeElement->text       = lang('ADMINISTRATION');
-		$treeElement->description='';
-		$treeElement->icon       = 'other';
-		$treeElement->type       = '';
-		$treeElement->target     = 'cms_tree';
-		$treeElement->url        = Html::url(array('action'       =>'tree',
-				                                 'subaction'    =>'reload',
-				                                 'projectid'    =>'-1'));
-		$this->addTreeElement( $treeElement );
-		*/
-
-
-		// Wechsel zu ...
-
-		/*
-		$treeElement = new TreeElement();
-		
-		$treeElement->text         = lang('CHANGE_TO');
-		$treeElement->icon         = 'project';
-		$treeElement->type         = 'changeto';
-		$treeElement->description  = '';
-
-		$this->addTreeElement( $treeElement );
-		*/
 	}
-
-
-	/*
-	function changeto()
-	{
-		// Wechseln zu: Projekte...
-		foreach( Project::getAll() as $id=>$name )
-		{
-			$treeElement = new TreeElement();
-			
-			$treeElement->text         = lang('PROJECT').' '.$name;
-			$treeElement->url          = Html::url(array('action'       =>'tree',
-		                                                  'subaction'    =>'reload',
-			                                             'projectid'    =>$id       ));
-			$treeElement->icon         = 'project';
-			$treeElement->description  = '';
-			$treeElement->target       = 'cms_tree';
-
-			$this->addTreeElement( $treeElement );
-		}
-	}
-	*/
-
 
 
 	function templates()
@@ -372,6 +327,9 @@ class ProjectTree extends AbstractTree
 	}
 
 
+	/**
+	 * Sprachen
+	 */
 	function languages()
 	{
 		// Sprachvarianten
@@ -381,11 +339,6 @@ class ProjectTree extends AbstractTree
 
 		foreach( $languages as $languageid=>$name )
 		{
-			if	( $this->userIsProjectAdmin )
-				$subAction = 'edit';
-			else
-				$subAction = 'view';
-
 			$treeElement = new TreeElement();
 			$treeElement->text         = $name;
 			$treeElement->url          = Html::url('main','language',$languageid);
@@ -403,11 +356,6 @@ class ProjectTree extends AbstractTree
 	{
 		$m = Session::getProjectModel();
 		$models = $m->getAll();
-
-		if	( $this->userIsProjectAdmin )
-			$subAction = 'edit';
-		else
-			$subAction = 'view';
 
 		foreach( $models as $id=>$name )
 		{
