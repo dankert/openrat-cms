@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2004-12-15 23:24:38  dankert
+// Revision 1.13  2004-12-19 18:06:41  dankert
+// Korrektur Benutzer-Men?
+//
+// Revision 1.12  2004/12/15 23:24:38  dankert
 // diverse Aenderungen
 //
 // Revision 1.11  2004/12/13 22:11:55  dankert
@@ -166,11 +169,10 @@ class MainmenuAction extends Action
 			
 		$this->setTemplateVar('text',$user->name);
 	
-		if	( intval($this->getSessionVar('userid') == 0 ))
-			$this->addSubaction('listing');
-		else
+		$this->addSubaction('listing');
+
+		if	( $this->getRequestId() != 0 )
 		{
-			$this->addSubaction('listing');
 			$this->addSubaction('edit'   );
 			$this->addSubaction('groups' );
 			$this->addSubaction('pw'     );
