@@ -11,10 +11,12 @@
 </tr>
 
 <tr>
-<td width="50%" class="f1"><?php echo Html::checkbox('pages'  ,true)  ?>&nbsp;<?php echo lang('GLOBAL_pages') ?><br/>
-                           <?php echo Html::checkbox('files'  ,true)  ?>&nbsp;<?php echo lang('GLOBAL_files') ?></td>
-<td width="50%" class="f1"><?php echo Html::checkbox('subdirs',false) ?>&nbsp;<?php echo lang('GLOBAL_PUBLISH_WITH_SUBDIRS') ?><br/>
-                           <?php echo Html::checkbox('clean'  ,false) ?>&nbsp;<?php echo lang('GLOBAL_CLEAN_AFTER_PUBLISH') ?></td>
+  <td width="50%" class="f1"><?php if	($pages||$subdirs) echo Html::checkbox('pages'  ,$pages).'&nbsp;'.lang('GLOBAL_pages'               ).'<br/>' ?>
+                             <?php if	($files||$subdirs) echo Html::checkbox('files'  ,$files).'&nbsp;'.lang('GLOBAL_files'               ).'<br/>' ?>
+  </td>
+  <td width="50%" class="f1"><?php if	($subdirs)         echo Html::checkbox('subdirs',false).'&nbsp;'.lang('GLOBAL_PUBLISH_WITH_SUBDIRS').'<br/>' ?>
+                             <?php if	($clean)           echo Html::checkbox('clean'  ,false).'&nbsp;'.lang('GLOBAL_CLEAN_AFTER_PUBLISH' ).'<br/>' ?>
+  </td>
 </tr>
 
 <tr>

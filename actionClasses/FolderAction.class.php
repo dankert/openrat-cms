@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.23  2004-12-28 22:58:23  dankert
+// Revision 1.24  2004-12-29 20:43:30  dankert
+// Kontextsensitives Anzeigen der Veroeffentlichungs-Checkboxen
+//
+// Revision 1.23  2004/12/28 22:58:23  dankert
 // Neuer Schalter fuer "Liveserver aufraeumen"
 //
 // Revision 1.22  2004/12/27 23:26:39  dankert
@@ -652,12 +655,20 @@ class FolderAction extends ObjectAction
 
 	function pub()
 	{
+		// Schalter nur anzeigen, wenn sinnvoll
+		$this->setTemplateVar('files'  ,count($this->folder->getFiles()) > 0 );
+		$this->setTemplateVar('pages'  ,count($this->folder->getPages()) > 0 );
+		$this->setTemplateVar('subdirs',count($this->folder->getSubFolderIds()) > 0 );
+		$this->setTemplateVar('clean'  ,$this->folder->isRoot );
 		$this->forward('folder_pub');
 	}
 
 
 	function pubnow()
 	{
+		if	( !$this->folder->hasRight( ACL_PUBLISH ) )
+			die('no rights for publish');
+
 		$subdirs = ( $this->hasRequestVar('subdirs') );
 		$pages   = ( $this->hasRequestVar('pages'  ) );
 		$files   = ( $this->hasRequestVar('files'  ) );
@@ -672,9 +683,8 @@ class FolderAction extends ObjectAction
 			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
 		}
 		
-		if	( $subdirs && $pages && $files &&
-			  $this->folder->isRoot        &&
-			  $this->hasRequestVar('clean')      )
+		// Wenn gewuenscht, das Zielverzeichnis aufraeumen
+		if	( $this->hasRequestVar('clean')      )
 			$publish->clean();
 
 		$this->callSubaction( 'pub' );
