@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-02 14:49:37  dankert
+// Revision 1.4  2004-07-07 20:43:57  dankert
+// Neuer Elementtyp: select
+//
+// Revision 1.3  2004/05/02 14:49:37  dankert
 // Einfügen package-name (@package)
 //
 // Revision 1.2  2004/04/24 17:41:51  dankert
@@ -193,34 +196,43 @@ class ElementAction extends Action
 				// Eigenschaften Text und Text-Absatz
 				case 'defaultText':
 				
-					if	( $this->element->type == 'longtext')
-						$this->setTemplateVar('default_longtext',$this->element->defaultText );
-					else	$this->setTemplateVar('default_text'    ,$this->element->defaultText );
+					switch( $this->element->type )
+					{
+						case 'longtext':
+							$this->setTemplateVar('default_longtext',$this->element->defaultText );
+							break;
+
+						case 'select':
+						case 'text':
+							$this->setTemplateVar('default_text'    ,$this->element->defaultText );
+							break;
+					}
 					break;
 				
 				
 				case 'wiki':
-					$this->setTemplateVar('wiki'            ,$this->element->wiki        );
+					$this->setTemplateVar('wiki',$this->element->wiki        );
 					break;
 				
 				
 				case 'html':
-					$this->setTemplateVar('html'            ,$this->element->html        );
+					$this->setTemplateVar('html',$this->element->html        );
 					break;
 			
 			
 				// Eigenschaften PHP-Code
 				case 'code':
-					$this->setTemplateVar('code',$this->element->code);
+
+					switch( $this->element->type )
+					{
+						case 'select':
+							$this->setTemplateVar('select_items',$this->element->code );
+							break;
+						case 'code':
+							$this->setTemplateVar('code',$this->element->code);
+							break;
+					}
 					break;
-			
-			
-				// Eigenschaften Text und Text-Absatz
-				case 'defaultText':
-				{
-					$this->setTemplateVar('default_longtext',$this->element->defaultText);
-					break;
-				}
 			
 			
 				case 'decimals':
@@ -295,7 +307,7 @@ class ElementAction extends Action
 					$this->setTemplateVar('act_folderobjectid'  ,$this->element->folderObjectId  );
 	
 					break;
-					
+
 				default:
 					$this->message('ERROR','not an element property: '.$propertyName );
 			}

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:41:31  dankert
+// Revision 1.3  2004-07-07 20:45:10  dankert
+// Neuer Elementtyp: select
+//
+// Revision 1.2  2004/05/02 14:41:31  dankert
 // Einfügen package-name (@package)
 //
 // Revision 1.2  2004/04/30 20:36:25  dankert
@@ -32,57 +35,63 @@
 // ---------------------------------------------------------------------------
 
 /**
- * Darstellen eines Template-Elementes
+ * Diese Objektklasse stellt ein Element das.
+ * Ein Element ist ein Platzhalter in einem Template und kann verschiedenen
+ * Typs sein, z.B. Text oder ein Bild.
  *
  * @package openrat.objects
  */
 class Element
 {
 	/**
-	 * ID dieses Elementes
+	 * Eindeutige ID dieses Elementes
 	 * @type Integer
 	 */
 	var $elementid;
 
 	/**
-	 * Template-ID zu der dieses Elementes gehört
+	 * Template-ID zu der dieses Elementes geh?rt
 	 * @type Integer
 	 */
 	var $templateid;
 
 	/**
-	 * Sprachen-ID dieses Elementes
-	 * @type Integer
-	 */
-	var $languageid;
-
-	/**
 	 * Typ des Elementes
+	 * Folgende Typen sind moeglich:
+	 * <ul>
+	 * <li>text</li>
+	 * <li>longtext</li>
+	 * <li>select</li>
+	 * <li>number</li>
+	 * <li>link</li>
+	 * <li>date</li>
+	 * <li>list</li>
+	 * <li>code</li>
+	 * <li>info</li>
+	 * <li>infodate</li>
+	 * </ul>
+	 *
 	 * @type String
 	 */
 	var $type;
 
 	/**
-	 * Name dieses Elementes
+	 * Logischer Name dieses Elementes
 	 * @type String
 	 */
 	var $name;
 
 	/**
 	 * Beschreibung zu diesem Element
+	 * Zu jedem Element kann eine Beschreibung hinterlegt werden, die dem Redakteur bei der Bearbeitung
+	 * der Inhalte als Bearbeitungshilfe dienen kann.
 	 * @type String
 	 */
 	var $desc;
 
 	/**
-	 * ID dieses Elementes
-	 * @type String
-	 */
-	var $value;
-
-	/**
 	 * Objekt-ID eines Ordners, aus diesem Ordner (samt Unterordner)
-	 * können zu verlinkende Objekte ausgewählt werden 
+	 * k?nnen zu verlinkende Objekte ausgew?hlt werden 
 	 * @type Integer
 	 */
 	var $folderobjectid = 0;
@@ -94,11 +103,16 @@ class Element
 	var $writable;
 
 	/**
-	 * Schalter ob dieses Element in allen Sprachen den gleichen Inhalt hat
+	 * Schalter, ob dieses Element in allen Sprachen den gleichen Inhalt haben soll
 	 * @type Boolean
 	 */
 	var $allLanguages;
 
+
+	/**
+	 * Im Konstruktor wird die Element-Id gesetzt
+	 * @param Integer Element-Id
+	 */
 	function Element( $elementid=0 )
 	{
 		global $SESS;
@@ -108,6 +122,10 @@ class Element
 	}
 
 
+	/**
+	 * Hinzufügen eines Elementes
+	 * Das aktuelle Element wird in die Datenbank geschrieben.
+	 */
 	function add()
 	{
 		$db = db_connection();
@@ -140,7 +158,10 @@ class Element
 //	}
 
 
-
+	/**
+	 * Lesen des Elementes aus der Datenbank
+	 * Alle Eigenschaften des Elementes werden aus der Datenbank gelesen
+	 */
 	function load()
 	{
 		$db = db_connection();
@@ -165,19 +186,22 @@ class Element
 
 		if	( !$this->writable)
 			$this->withIcon = false;
-  
-		$this->decimals         = $prop['decimals'];
-		$this->decPoint         = $prop['dec_point'];
-		$this->thousandSep      = $prop['thousand_sep'];
-		$this->code             = $prop['code'];
-		$this->defaultText      = $prop['default_text'];
-		$this->folderObjectId   = intval($prop['folderobjectid' ]);
-		$this->defaultObjectId  = intval($prop['default_objectid']);
+
+		$this->decimals         = intval( $prop['decimals'        ] );
+		$this->decPoint         = strval( $prop['dec_point'       ] );
+		$this->thousandSep      = strval( $prop['thousand_sep'    ] );
+		$this->code             = strval( $prop['code'            ] );
+		$this->defaultText      = strval( $prop['default_text'    ] );
+		$this->folderObjectId   = intval( $prop['folderobjectid'  ] );
+		$this->defaultObjectId  = intval( $prop['default_objectid'] );
 	}
 
 
 
-	// Element speichern
+	/**
+	 * Abspeichern des Elementes
+	 * Das aktuelle Element wird in der Datenbank gespeichert
+	 */
 	function save()
 	{
 		$db = db_connection();
@@ -234,7 +258,11 @@ class Element
 
 
 
-	// Element speichern
+	/**
+	 * Setzt den Typ des Elementes
+	 * @param String Der neue Typ, siehe getAvailableTypes() für mögliche Typen
+	 * @see #type
+	 */
 	function setType( $type )
 	{
 		$db = db_connection();
@@ -257,10 +285,10 @@ class Element
 	{
 		$db = db_connection();
 
-		// Inhalte löschen
+		// Inhalte l?schen
 		$this->deleteValues();
 
-		// Element löschen
+		// Element l?schen
 		$sql = new Sql('DELETE FROM {t_element} '.
 		               '  WHERE id={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
@@ -270,13 +298,14 @@ class Element
 
 
 	/**
-	 * Löschen aller Seiteninhalte mit diesem Element
+	 * L?schen aller Seiteninhalte mit diesem Element
+	 * Das Element wird nicht gelöscht.
 	 */
 	function deleteValues()
 	{
 		$db = db_connection();
 
-		// Alle Inhalte mit diesem Element löschen
+		// Alle Inhalte mit diesem Element l?schen
 		$sql = new Sql('DELETE FROM {t_value} '.
 		               '  WHERE elementid={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
@@ -285,14 +314,15 @@ class Element
 
 
 	/**
-	 * Abhängig vom Element-Typ werden die zur Darstellung notwendigen Eigenschaften ermittelt
+	 * Abh?ngig vom Element-Typ werden die zur Darstellung notwendigen Eigenschaften ermittelt
 	 * @return Array()
 	 */
 	function getRelatedProperties()
 	{
 		$typeprop = Array('text'    =>Array('withIcon','allLanguages','writable','html','wiki','defaultText'),
 		                  'longtext'=>Array('withIcon','allLanguages','writable','html','wiki','defaultText'),
-		                  'number'  =>Array('withIcon','allLanguages','writable','decPoint','decimals','thousandSep','defaultText'),
+		                  'select'  =>Array('withIcon','allLanguages','writable','defaultText','code'),
+		                  'number'  =>Array('withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
 		                  'link'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
 		                  'date'    =>Array('withIcon','allLanguages','writable','dateformat'),
 		                  'list'    =>Array('withIcon','allLanguages','writable','folderObjectId'),
@@ -312,6 +342,7 @@ class Element
 	{
 		return array('text',
 		             'longtext',
+		             'select',
 		             'number',
 		             'link',
 		             'date',
@@ -322,11 +353,19 @@ class Element
 	}
 
 
+	/**
+	 * Ermittelt, ob das Element beschreibbar ist.
+	 * Bestimmte Typen (z.B. Info-Felder) sind nie beschreibbar, dann wird immer false zurückgegeben.
+	 * Ansonsten wird ermittelt, ob dieses Element als beschreibbar markiert ist.
+	 */
 	function isWritable()
 	{
+		// Bei bestimmten Feldern immer false zurueckgeben
 		if	( in_array($this->type,Array('info','infodate','code')) )
 			return false;
 
 		return $this->writable;
 	}
 }
+
+?>

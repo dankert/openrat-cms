@@ -275,6 +275,20 @@
   <?php } ?>
 
 
+  <?php if   ( isset($select_items) )
+        {
+	        $fx = fx($fx); ?>
+  <tr>
+    <td class="<?php echo $fx ?>"><?php echo lang('EL_PROP_SELECT_ITEMS') ?></td>
+    <td class="<?php echo $fx ?>"><textarea name="code" rows="15" cols="40"><?php echo $select_items ?></textarea></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="help"><?php echo lang('EL_PROP_SELECT_ITEMS_DESC') ?></td>
+  </tr>
+  <?php } ?>
+
+
   <?php if (isset($act_folderobjectid))
         {  $fx = fx($fx); ?>
   <tr>
