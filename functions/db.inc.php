@@ -29,8 +29,9 @@ function table_names()
 	global $conf;
 	global $SESS;
 
-	if	( isset($SESS['dbid']) )
-		$conf_db_prefix = $conf['database_'.$SESS['dbid']]['prefix'];
+	$db = Session::getDatabase();
+	if	( is_object( $db ) )
+		$conf_db_prefix = $db->conf['prefix'];
 	else $conf_db_prefix = '';
 
 	$t['t_include']         = $conf_db_prefix.'include';
@@ -60,17 +61,8 @@ function table_names()
 
 function db_connection()
 {
-	global $SESS,
-	       $conf,
-	       $db;
 
-	if   ( !isset($db) )
-	{
-		$db = new DB( $conf['database_'.$SESS['dbid']] );
-		$db->setFetchMode( DB_FETCHMODE_ASSOC );
-	}
-
-	return( $db );
+	return Session::getDatabase();
 }
 
 //extract( table_names() );

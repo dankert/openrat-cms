@@ -27,17 +27,13 @@
  */
 function lang( $text )
 {
-     global $SESS;
+	$lang = &Session::getLanguage();
 	$text = strtoupper($text);
 
-     if   ( isset( $SESS['lang'][$text] ) )
-     {
-          return $SESS['lang'][$text];
-     }
+     if   ( isset( $lang[$text] ) )
+          return $lang[$text];
      else
-     {
           return( '?'.$text.'?' );
-     }
 }
 
 
@@ -73,7 +69,7 @@ function language_read( $l='' )
      
 	$l = language_from_http();
 	Logger::debug( 'reading language file: '.$l );
-	$SESS['lang'] = parse_ini_file( "./language/$l.ini.$conf_php" );
+	Session::setLanguage( parse_ini_file( "./language/$l.ini.$conf_php" ) );
 }
 
 ?>
