@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-05-02 14:30:27  dankert
+// E-Mail versenden wenn neues Kennwort gesetzt
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // Revision 1.2  2003/10/02 20:56:17  dankert
@@ -127,21 +130,26 @@ class UserAction extends Action
 		if   ($this->getRequestVar('password1') != '' && $this->getRequestVar('password1') == $this->getRequestVar('password2'))
 		{
 			if   ($SESS['user']['is_admin'] != '1')
-			{
 				$ok = $this->user->checkPassword( $this->getRequestVar('act_password') );
+			else $ok = true;
 				
-				if	( $ok )
-				{
-					$this->user->setPassword( $this->getRequestVar('password1') );
-				}
-				else
-				{
-					message('ERROR_USER_PW','old password not accepted');
-				}
+			if	( !$ok )
+			{
+				message('ERROR_USER_PW','old password not accepted');
 			}
 			else
 			{
 				$this->user->setPassword( $this->getRequestVar('password1') );
+				
+				// E-Mail mit dem neuen Kennwort an Benutzer senden
+				if	( $this->getRequestVar('mail') != '' && $this->user->mail != '')
+				{
+					// Text der E-Mail zusammenfuegen
+					$text = wordwrap(lang('USER_MAIL_PREFIX'),70,"\n")."\n\n".$this->getRequestVar('password1')."\n\n".wordwrap(lang('USER_MAIL_SUFFFIX'),70,"\n");
+
+					// Mail versenden
+					mail($this->user->mail,lang('USER_MAIL_SUBJECT'),$text);
+				}
 			}
 		}
 		else
