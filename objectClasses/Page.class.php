@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-10-14 21:10:57  dankert
+// Revision 1.10  2004-11-10 22:47:17  dankert
+// Methode copyValuesFromPage() zum Kopiern einer Seite
+//
+// Revision 1.9  2004/10/14 21:10:57  dankert
 // neue Methode getElementIds()
 //
 // Revision 1.8  2004/10/05 10:01:56  dankert
@@ -411,6 +414,41 @@ class Page extends Object
 		
 		$this->objectDelete();
 	}
+
+
+	/**
+	 * Kopieren der Inhalts von einer anderen Seite
+	 * @param ID der Seite, von der der Inhalt kopiert werden soll
+	 */
+	function copyValuesFromPage( $otherpageid )
+	{
+		$this->load();
+
+		foreach( $this->getElementIds() as $elementid )
+		{
+			foreach( Language::getAll() as $lid=>$lname )
+			{
+				$val = new Value();
+				$val->publish = false;
+				$val->element = new Element( $elementid );
+	
+				$val->objectid   = $otherpageid;
+				$val->pageid     = Page::getPageIdFromObjectId( $otherpageid );
+				$val->languageid = $lid;
+				$val->load();
+
+				// Inhalt nur speichern, wenn vorher vorhanden	
+				if	( $val->valueid != 0 )
+				{
+					$val->objectid   = $this->objectid;
+					$val->pageid     = Page::getPageIdFromObjectId( $this->objectid );
+					$val->save();
+				}
+			}
+		}
+	}
+
+
 
 
 	function save()
