@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-10-14 21:08:32  dankert
+// Revision 1.10  2004-12-19 15:15:37  dankert
+// Konstruktor erweitert
+//
+// Revision 1.9  2004/10/14 21:08:32  dankert
 // Vergleichen von Versionen
 //
 // Revision 1.8  2004/10/13 21:19:50  dankert
@@ -62,16 +65,17 @@ class PageelementAction extends Action
 
 
 	/**
-	 * Enth?lt das Seitenobjekt
+	 * Enthaelt das Seitenobjekt
 	 * @type Object
 	 */
 	var $page;
 	
 	/**
-	 * Enth?lt das Elementobjekt
+	 * Enthaelt das Elementobjekt
 	 * @type Object
 	 */
 	var $element;
+
 
 
 	/**
@@ -80,15 +84,44 @@ class PageelementAction extends Action
 	function PageelementAction()
 	{
 		$this->value = new Value();
+
+		$this->page = Session::getObject();
+		
+		if	( $this->getRequestId() != 0  )
+		{
+			$this->page = new Page( $this->getRequestId() );
+			$this->page->load();
+			Session::setObject( $this->page );
+		}
+		else
+		{
+			$this->page = Session::getObject();
+		}
+
+		if	( $this->hasRequestVar('elementid') != ''  )
+		{
+			$this->element = new Element( $this->getRequestVar('elementid') );
+			Session::setElement( $this->element );
+		}
+		else
+		{
+			$this->element = Session::getElement();
+		}
 	}
 
 
+	/**
+	 * Ein Element der Seite bearbeiten
+	 *
+	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
+	 */
 	function edit()
 	{
-		$this->value->languageid = $this->getSessionVar('languageid');
-		$this->value->objectid   = $this->getSessionVar('objectid');
-		$this->value->pageid     = Page::getPageIdFromObjectId( $this->getSessionVar('objectid') );
-		$this->value->element = new Element( $this->getSessionVar('elementid') );
+		$language = Session::getProjectLanguage();
+		$this->value->languageid = $language->languageid;
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+		$this->value->element = &$this->element;
 		$this->value->element->load();
 		$this->value->publish = false;
 
@@ -96,12 +129,13 @@ class PageelementAction extends Action
 			$this->value->loadWithId();
 		else	$this->value->load();
 
-		$this->setTemplateVar('name',$this->value->element->name);
-		$this->setTemplateVar('desc',$this->value->element->desc);
+		$this->setTemplateVar('name'     ,$this->value->element->name     );
+		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
+		$this->setTemplateVar('elementid',$this->value->element->elementid);
 
+		// Auswahl ueber alle Elementtypen
 		switch( $this->value->element->type )
 		{
-
 			case 'link':
 
 				$objects = array();
@@ -193,7 +227,7 @@ class PageelementAction extends Action
 		
 				$this->setTemplateVar('days'  ,date('t',$date) );
 		
-				$this->setTemplateVar('title' ,lang('MONTH'.date('n',$date)).' '.date('Y',$date) );
+				$this->setTemplateVar('title' ,lang('DATE_MONTH'.date('n',$date)).' '.date('Y',$date) );
 				
 				// Wochentag des 1. des Monats ermitteln
 				$wday1 = date( 'w',$date );
@@ -212,7 +246,7 @@ class PageelementAction extends Action
 				$all_hours   = array();
 				$all_minutes = array();
 				for( $i=1850; $i<=2100;$i++ ) $all_years  [$i] = $i; 
-				for( $i=1;    $i<=12;  $i++ ) $all_months [$i] = lang('MONTH'.$i); 
+				for( $i=1;    $i<=12;  $i++ ) $all_months [$i] = lang('DATE_MONTH'.$i); 
 				for( $i=1;    $i<=31;  $i++ ) $all_days   [$i] = str_pad($i,2,'0',STR_PAD_LEFT); 
 				for( $i=0;    $i<=23;  $i++ ) $all_hours  [$i] = str_pad($i,2,'0',STR_PAD_LEFT); 
 				for( $i=0;    $i<=59;  $i++ ) $all_minutes[$i] = str_pad($i,2,'0',STR_PAD_LEFT);
@@ -227,23 +261,26 @@ class PageelementAction extends Action
 				break;
 				
 			default:
-				$this->message('ERROR','unknown element type: '.$this->value->element->type );
+				// Unbekannter Typ, Abbruch
+				die( 'unknown element type: '.$this->value->element->type );
 		}
 	
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
 
-		$this->value->page             = new Page( $this->getSessionVar('objectid') );
+		$this->value->page             = new Page( $this->page->objectid );
 		$this->value->page->languageid = $this->value->languageid;
 		$this->value->page->load();
 
-		if	( $this->value->page->hasRight('release') )
+		if	( $this->value->page->hasRight(ACL_RELEASE) )
 			$this->setTemplateVar( 'release',true  );
-		else	$this->setTemplateVar( 'release',false );
+		else
+			$this->setTemplateVar( 'release',false );
 
 		$this->forward('pageelement_edit_'.$this->value->element->type);
 	}
+
 
 
 	/**
@@ -258,15 +295,16 @@ class PageelementAction extends Action
 	}
 
 
+
 	/**
 	 * Freigeben eines Inhaltes
 	 */
 	function release()
 	{
 		$this->value->languageid = $this->getSessionVar('languageid');
-		$this->value->objectid   = $this->getSessionVar('objectid');
-		$this->value->pageid     = Page::getPageIdFromObjectId( $this->getSessionVar('objectid') );
-		$this->value->element = new Element( $this->getSessionVar('elementid') );
+		$this->value->objectid   = $$this->getRequestId();
+		$this->value->pageid     = Page::getPageIdFromObjectId( $this->getRequestId() );
+		$this->value->element = new Element( $this->getRequestVar('elementid') );
 
 		$this->value->valueid = $this->getRequestVar('valueid');
 		$this->value->release();
@@ -281,16 +319,17 @@ class PageelementAction extends Action
 	 */
 	function archive()
 	{
-		$this->value->page = new Page( $this->getSessionVar('objectid') );
+		$this->value->page = &$this->page;
 		$this->value->page->load();
 		$this->value->page->public = true;
 		$this->value->page->simple = true;
 
 		$this->value->simple = true;
-		$this->value->languageid = $this->getSessionVar('languageid');
-		$this->value->objectid   = $this->getSessionVar('objectid'  );
-		$this->value->pageid     = Page::getPageIdFromObjectId( $this->getSessionVar('objectid') );
-		$this->value->element    = new Element( $this->getSessionVar('elementid') );
+		$language = Session::getProjectLanguage();
+		$this->value->languageid = $language->languageid;
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+		$this->value->element    = &$this->element;
 		$this->value->element->load();
 
 		$list         = array();
