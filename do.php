@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-12-18 00:34:33  dankert
+// Revision 1.12  2004-12-19 15:27:51  dankert
+// Korrektur Variablen fuer Mime-Types, Datumformate
+//
+// Revision 1.11  2004/12/18 00:34:33  dankert
 // Anpassung Lesen der Konfiguration
 //
 // Revision 1.10  2004/12/15 23:11:41  dankert
@@ -149,13 +152,13 @@ if	( !is_array( $conf ) )
 	closedir($handle);
 
 	// Mime-Types aus eigener Datei lesen und zur Konfiguration hinzufuegen 
-	$conf['mime-types']   = parse_ini_file( OR_CONFIG_DIR.'/mime-types.ini.'.PHP_EXT );
+	$conf['mime_types']   = parse_ini_file( OR_CONFIG_DIR.'/mime-types.ini.'.PHP_EXT );
 
 	// Laender aus eigener Datei lesen und zur Konfiguration hinzufuegen 
 	$conf['countries']    = parse_ini_file( OR_CONFIG_DIR.'/countries.ini.'.PHP_EXT );
 
 	// Datum-Formate aus eigener Datei lesen und zur Konfiguration hinzufuegen 
-	$conf['date-formats'] = parse_ini_file( OR_CONFIG_DIR.'/date-formats.ini.'.PHP_EXT );
+	$conf['date_formats'] = parse_ini_file( OR_CONFIG_DIR.'/date-formats.ini.'.PHP_EXT );
 
 	// Ersetze-mit-Angaben aus eigener Datei lesen und zur Konfiguration hinzufuegen 
 	$conf['replace']      = parse_ini_file( OR_CONFIG_DIR.'/replace.ini.'.PHP_EXT );
@@ -200,6 +203,7 @@ define('FILE_SEP',$conf['interface']['file_separator']);
 
 define('REQ_PARAM_ACTION'       ,'action'       );
 define('REQ_PARAM_SUBACTION'    ,'subaction'    );
+define('REQ_PARAM_ID'           ,'id'           );
 
 define('TEMPLATE_DIR',OR_THEMES_DIR.$conf['interface']['theme'].'/templates');
 define('CSS_DIR'     ,OR_THEMES_DIR.$conf['interface']['theme'].'/css'      );
