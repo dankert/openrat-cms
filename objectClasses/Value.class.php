@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-10-10 17:41:23  dankert
+// Revision 1.12  2004-10-10 20:07:20  dankert
+// Korrektur Parsen von Parametern
+//
+// Revision 1.11  2004/10/10 17:41:23  dankert
 // Setzen von Parametern bei Elementtyp: dynamic
 //
 // Revision 1.10  2004/10/06 09:55:02  dankert
@@ -919,7 +922,7 @@ class Value
 
 							foreach( $parameters as $it )
 							{
-								$paar = explode( ":",$it );
+								$paar = explode( ":",$it,2 );
 								if	( count($paar) > 1 && isset( $dynEl->$paar[0] ) )
 								{
 									Logger::debug("Setting parameter for dynamic Class $className, ".$paar[0].':'.$paar[1] );
