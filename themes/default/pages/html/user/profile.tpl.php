@@ -7,7 +7,11 @@
 <form action="<?php echo $self ?>" method="post" target="_self">
 <input type="hidden" name="subaction" value="saveprofile">
 
-<?php $table_title = lang('user'); include( $tpl_dir.'table_open.tpl.php') ?>
+<?php
+	$table_title_text    = lang('GLOBAL_USER');
+	$table_title_colspan = 2;
+	include( $tpl_dir.'table_open.tpl.php');
+?>
 
 <tr>
 <td width="50%" class="f1"><?php echo lang('user_username') ?></a></td>
@@ -28,11 +32,11 @@
 <?php if	( count($allstyles) > 1 )
     	 { ?>
 <tr>
-<td width="50%" class="f1"><?php echo lang('style') ?></a></td>
+<td width="50%" class="f1"><?php echo lang('USER_style') ?></a></td>
 <td width="50%" class="f1"><?php echo Html::selectBox('style',$allstyles,$style) ?></td>
 </tr>
   <tr>
-    <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
+    <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
   </tr>
 <?php } ?>
 
@@ -48,24 +52,27 @@
 <input type="hidden" name="useraction" value="pwchange">
 
 
-<?php $table_title = lang('password');
-      include( $tpl_dir.'table_open.tpl.php'); ?>
+<?php
+	$table_title_text    = lang('USER_PASSWORD');
+	$table_title_colspan = 2;
+	include( $tpl_dir.'table_open.tpl.php');
+?>
 
 <tr>
-<td width="50%" class="f2"><?php echo lang('act_password') ?></a></td>
+<td width="50%" class="f2"><?php echo lang('user_password') ?></a></td>
 <td width="50%" class="f2"><input type="password" name="act_password"></td>
 </tr>
 <tr>
-<td width="50%" class="f1"><?php echo lang('new_password') ?></a></td>
+<td width="50%" class="f1"><?php echo lang('user_new_password') ?></a></td>
 <td width="50%" class="f1"><input type="password" name="password1"></td>
 </tr>
 <tr>
-<td width="50%" class="f2"><?php echo lang('new_password_repeat') ?></a></td>
+<td width="50%" class="f2"><?php echo lang('user_new_password_repeat') ?></a></td>
 <td width="50%" class="f2"><input type="password" name="password2"></td>
 </tr>
 <?php } ?>
   <tr>
-    <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
+    <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
   </tr>
 
 <?php include( $tpl_dir.'table_close.tpl.php') ?>
