@@ -6,7 +6,7 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th><?php echo lang('SOURCE') ?></th>
+  <th><?php echo lang('PAGE_SOURCE') ?></th>
 </tr>
 
 <tr>

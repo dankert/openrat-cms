@@ -6,15 +6,15 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="6"><?php echo lang('ARCHIVE') ?> (<?php echo lang('ELEMENT') ?>: <?php echo $name ?>)</th>
+  <th colspan="6"><?php echo lang('GLOBAL_ARCHIVE') ?> (<?php echo lang('ELEMENT') ?>: <?php echo $name ?>)</th>
 </tr>
 <?php if (count($el)>0)
       { ?>
 <tr>
   <td class="help"><?php echo lang('GLOBAL_NR')    ?></td>
   <td class="help"><?php echo lang('DATE')  ?></td>
-  <td class="help"><?php echo lang('USER')  ?></td>
-  <td class="help"><?php echo lang('VALUE') ?></td>
+  <td class="help"><?php echo lang('GLOBAL_USER')  ?></td>
+  <td class="help"><?php echo lang('GLOBAL_VALUE') ?></td>
   <td class="help">&nbsp;</td>
   <td class="help">&nbsp;</td>
 </tr>
@@ -29,8 +29,8 @@
 <td width="20%" class="<?php echo $fx ?>"><?php echo $e['date']   ?></td>
 <td width="20%" class="<?php echo $fx ?>"><?php echo $e['user' ]  ?></td>
 <td width="45%" class="<?php echo $fx ?>"><?php echo $e['value']  ?></td>
-<td width="15%" class="<?php echo $fx ?>"><?php if ($e['public']) echo lang('public'); elseif ($e['releaseUrl']!='') { ?><a href="<?php echo $e['releaseUrl'] ?>"><?php echo lang('RELEASE') ?></a><?php } else { ?>&nbsp;<?php } ?></td>
-<td width="10%" class="<?php echo $fx ?>"><?php if ($e['active']) echo lang('active'); elseif ($e['useUrl'    ]!='') { ?><a href="<?php echo $e['useUrl'    ] ?>"><?php echo lang('USE'    ) ?></a><?php } else { ?>&nbsp;<?php }  ?></td>
+<td width="15%" class="<?php echo $fx ?>"><?php if ($e['public']) echo lang('GLOBAL_PUBLIC'); elseif ($e['releaseUrl']!='') { ?><a href="<?php echo $e['releaseUrl'] ?>"><?php echo lang('GLOBAL_RELEASE') ?></a><?php } else { ?>&nbsp;<?php } ?></td>
+<td width="10%" class="<?php echo $fx ?>"><?php if ($e['active']) echo lang('GLOBAL_ACTIVE'); elseif ($e['useUrl'    ]!='') { ?><a href="<?php echo $e['useUrl'    ] ?>"><?php echo lang('GLOBAL_USE'    ) ?></a><?php } else { ?>&nbsp;<?php }  ?></td>
 </tr>
 <?php } ?>
 <tr>
