@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-24 22:06:24  dankert
+// Revision 1.6  2004-11-28 16:56:04  dankert
+// in hasRight() auch Abfrage des Parent-Ordners
+//
+// Revision 1.5  2004/11/24 22:06:24  dankert
 // Neu: setDatabaseRow() zur Performancesteigerung
 //
 // Revision 1.4  2004/11/15 21:34:44  dankert
@@ -257,7 +260,7 @@ class Object
 	function hasRight( $type )
 	{
 		$user = Session::getUser();
-		return $user->hasRight( $this->objectid,$type );
+		return $user->hasRight( $this->objectid,$type ) || (isset($this->parentid)&&$user->hasRight($this->parentid,$type)&&$user->hasRight($this->parentid,ACL_TRANSMIT));
 	}
 
 
