@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-12-13 21:44:09  dankert
+// Revision 1.11  2004-12-13 22:11:55  dankert
+// Anpassung model() und language()
+//
+// Revision 1.10  2004/12/13 21:44:09  dankert
 // Anpassung template()
 //
 // Revision 1.9  2004/11/28 22:33:14  dankert
@@ -331,9 +334,9 @@ class MainmenuAction extends Action
 
 	function language()
 	{
-		$this->setTemplateVar('id','lang');
-	
-		$this->setTemplateVar('subaction',array('listing'=>lang('LISTING')));
+		$this->addSubaction('listing');
+
+		$this->setTemplateVar('subaction',$this->subActionList);
 		$this->setTemplateVar('param','languageid');
 
 		$this->callSubAction('show');
@@ -343,9 +346,8 @@ class MainmenuAction extends Action
 
 	function model()
 	{
-		$this->setTemplateVar('id','pvar');
-	
-		$this->setTemplateVar('subaction',array('listing'=>lang('LISTING')));
+		$this->addSubaction('listing');
+		$this->setTemplateVar('subaction',$this->subActionList);
 		$this->setTemplateVar('param','modelid');
 
 		$this->callSubAction('show');
