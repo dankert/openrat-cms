@@ -358,7 +358,7 @@ class ProjectTree extends AbstractTree
 
 			$treeElement = new TreeElement();
 			$treeElement->text        = $e->name;
-			$treeElement->url         = Html::url('main','element',$elementid);
+			$treeElement->url         = Html::url('main','element',$t->templateid,array('elementid'=>$elementid) );
 			$treeElement->icon        = 'el_'.$e->type;
 			
 			if	( $e->desc == '' )
