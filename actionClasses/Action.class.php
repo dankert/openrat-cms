@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2005-01-14 21:41:09  dankert
+// Revision 1.15  2005-01-23 11:55:52  dankert
+// Setzen Eigenschaft, ob Readonly-Mode
+//
+// Revision 1.14  2005/01/14 21:41:09  dankert
 // Neue Methode lastModified()
 //
 // Revision 1.13  2004/12/30 21:44:03  dankert
@@ -84,12 +87,15 @@ class Action
 	var $actionName;
 	var $subActionName;
 
+	var $writable;
+	var $publishing;
+
 
 	function Action()
 	{
-		global $SESS;
-//		if	( $SESS['action'] != 'login')
-//			$db = db_connection();
+		global $conf;
+		$this->writable   = !$conf['security']['readonly' ];
+		$this->publishing = !$conf['security']['nopublish'];
 	}
 
 
