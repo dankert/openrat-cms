@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-12-25 22:11:20  dankert
+// Revision 1.11  2004-12-26 18:49:58  dankert
+// Projektname im Seiten-Titel
+//
+// Revision 1.10  2004/12/25 22:11:20  dankert
 // Logo-Bild ueber Parameter
 //
 // Revision 1.9  2004/12/19 21:57:02  dankert
@@ -394,8 +397,6 @@ class IndexAction extends Action
 			}
 		}
 
-		$title = OR_TITLE.' '.OR_VERSION;
-
 
 		$projectid  = intval( $this->getRequestVar('projectid' ) );
 		$languageid = intval( $this->getRequestVar('languageid') );
@@ -405,6 +406,7 @@ class IndexAction extends Action
 		{
 			$project = new Project( $projectid );
 			$project->projectid = PROJECTID_ADMIN;
+			$project->name = lang('GLOBAL_ADMINISTRATION');
 			Session::setProject( $project );
 
 			Session::setProjectLanguage( '' );
@@ -412,12 +414,11 @@ class IndexAction extends Action
 			Session::setObject( '' );
 		}
 
-
-		$db = Session::getDatabase();
-		$this->setTemplateVar( 'title',$user->name.' @'.$db->conf['comment'].' - '.$title );
+		$project = Session::getProject();
+		$db      = Session::getDatabase();
+		$this->setTemplateVar( 'title',$user->name.'@'.$project->name.' ('.$db->conf['comment'].') - '.OR_TITLE.' '.OR_VERSION );
 
 		$object  = Session::getObject();
-		$project = Session::getProject();
 
 		if	( is_object($object) )
 		{
