@@ -20,18 +20,15 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-05-02 19:27:22  dankert
+// Revision 1.2  2004-11-10 22:44:36  dankert
+// *** empty log message ***
+//
+// Revision 1.1  2004/05/02 19:27:22  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
 
-if   (isset($_SESSION))
-	 $SESS = &$_SESSION;
-else $SESS = &$HTTP_SESSION_VARS;
 
-if   (isset($_FILES))
-	 $FILES = &$_FILES;
-else $FILES = &$HTTP_POST_FILES;
 
 $REQ = array_merge($HTTP_GET_VARS,$HTTP_POST_VARS,$_GET,$_POST);
 

@@ -20,14 +20,17 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-11-10 22:45:24  dankert
+// *** empty log message ***
+//
+// Revision 1.2  2004/05/02 14:41:31  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:15:12  dankert
 // Initiale Version
 //
 // Revision 1.1  2003/10/27 23:21:55  dankert
-// Methode(n) hinzugefügt: savevalue(), save()
+// Methode(n) hinzugef?gt: savevalue(), save()
 //
 // ---------------------------------------------------------------------------
 
@@ -51,7 +54,7 @@ class File extends Object
 	
 	/**
 	 * Um Probleme mit BLOB-Feldern und Datenbank-Besonderheiten zu vermeiden,
-	 * kann der Binärinhalt BASE64-kodiert gespeichert werden.
+	 * kann der Bin?rinhalt BASE64-kodiert gespeichert werden.
 	 * @type Boolean
 	 */
 	var $storeValueAsBase64 = false;
@@ -60,10 +63,8 @@ class File extends Object
 	{
 		global $conf,$SESS;
 		
-		if	( isset($conf['database_'.$SESS['dbid']]['base64']) &&
-		       $conf['database_'.$SESS['dbid']]['base64'] == true )
-			$this->storeValueAsBase64 = true;
-		else	$this->storeValueAsBase64 = false;
+		$db = Session::getDatabase();
+		$this->storeValueAsBase64 = $db->conf['base64'];
 
 		$this->Object( $objectid );
 		$this->isFile = true;
@@ -145,7 +146,7 @@ class File extends Object
 
 	/**
 	  * Es werden Objekte zu einer Dateierweiterung ermittelt
-	  * @param String Dateierweiterung ohne führenden Punkt (z.B. 'jpeg')
+	  * @param String Dateierweiterung ohne f?hrenden Punkt (z.B. 'jpeg')
 	  * @return Array Liste der gefundenen Objekt-IDs
 	  */
 	function getObjectIdsByExtension( $extension )
@@ -229,7 +230,7 @@ class File extends Object
 				}
 				else
 				{
-					// GD Version 1.x unterstützt kein TrueColor
+					// GD Version 1.x unterst?tzt kein TrueColor
 					$newImage = ImageCreate($newWidth,$newHeight);
 	
 					ImageCopyResized($newImage,$oldImage,0,0,0,0,$newWidth,
@@ -254,7 +255,7 @@ class File extends Object
 				}
 				else
 				{
-					// GD Version 1.x unterstützt kein TrueColor
+					// GD Version 1.x unterst?tzt kein TrueColor
 					$newImage = ImageCreate($newWidth,$newHeight);
 		
 					ImageCopyResized($newImage,$oldImage,0,0,0,0,$newWidth,
@@ -300,7 +301,7 @@ class File extends Object
 	{
 		$db = db_connection();
 
-		// Datei löschen
+		// Datei l?schen
 		$sql = new Sql( 'DELETE FROM {t_file} '.
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
@@ -311,7 +312,7 @@ class File extends Object
 
 
 	/**
-	 * Stellt fest, ob es sich bei dieser Datei um ein Bild handelt
+	 * Stellt anhand der Dateiendung fest, ob es sich bei dieser Datei um ein Bild handelt
 	 */
 	function isImage()
 	{
@@ -363,6 +364,18 @@ class File extends Object
 		$db->query( $sql->query );
 		
 		$this->objectSave();
+	}
+
+
+	/**
+	 * Kopieren des Inhaltes von einer anderen Datei
+	 * @param ID der Datei, von der der Inhalt kopiert werden soll
+	 */
+	function copyValueFromFile( $otherfileid )
+	{
+		$of = new File( $otherfileid );
+		$this->value = &$of->loadValue();
+		$this->saveValue();
 	}
 
 

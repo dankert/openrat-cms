@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-25 12:58:24  dankert
+// Revision 1.3  2004-11-10 22:46:27  dankert
+// *** empty log message ***
+//
+// Revision 1.2  2004/04/25 12:58:24  dankert
 // Spalte "selflink" entfernt
 //
 // ---------------------------------------------------------------------------
@@ -50,12 +53,8 @@ class Model
 	 */
 	function Model( $modelid='' )
 	{
-		global $SESS;
-
 		if   ( is_numeric($modelid) )
 			$this->modelid = $modelid;
-
-		$this->projectid = $SESS['projectid'];
 	}
 
 
@@ -92,7 +91,8 @@ class Model
 
 		$row = $db->getRow( $sql->query );
 
-		$this->name = $row['name'];
+		$this->name      = $row['name'     ];
+		$this->projectid = $row['projectid'];
 	
 		if	( $row['is_default'] == '1' )
 			$this->isDefault = true;
@@ -149,7 +149,7 @@ class Model
 		$sql = new Sql('SELECT MAX(id) FROM {t_model}');
 		$this->modelid = intval($db->getOne($sql->query))+1;
 
-		// Modell hinzufügen
+		// Modell hinzuf?gen
 		$sql = new Sql( 'INSERT INTO {t_model} '.
 		                "(id,projectid,name,extension,is_default) VALUES( {modelid},{projectid},{name},'',0 )");
 
@@ -192,7 +192,7 @@ class Model
 		$sql->setInt('projectid',$this->projectid );
 		$db->query( $sql->query );
 	
-		// Jetzt die gewünschte Sprachvariante auf Standard setzen
+		// Jetzt die gew?nschte Sprachvariante auf Standard setzen
 		$sql = new Sql( 'UPDATE {t_model} '.
 		                '  SET is_default = 1 '.
 		                '  WHERE id={modelid}' );
@@ -210,7 +210,7 @@ class Model
 	{
 		$db = db_connection();
 
-		// Modell löschen
+		// Modell l?schen
 		$sql = new Sql( 'DELETE FROM {t_model} WHERE id={modelid}' );
 		$sql->setInt( 'modelid',$this->modelid );
 		$db->query( $sql->query );

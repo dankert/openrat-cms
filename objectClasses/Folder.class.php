@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-11-10 22:45:56  dankert
+// *** empty log message ***
+//
+// Revision 1.2  2004/05/02 14:41:31  dankert
+// Einf?gen package-name (@package)
 //
 // ---------------------------------------------------------------------------
 
@@ -87,8 +90,25 @@ class Folder extends Object
 			$sql->setInt('projectid',$this->projectid );
 		else	$sql->setInt('projectid',$SESS['projectid'] );
 		
-		// Datenbankabfrage ausführen
+		// Datenbankabfrage ausf?hren
 		return $db->getOne( $sql->query );
+	}
+
+
+	function hasFilename( $filename )
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT COUNT(*) FROM {t_object}'.'  WHERE parentid={objectid} AND filename={filename}');
+
+		if	( intval($this->objectid)== 0 )
+			$sql->setNull('objectid');
+		else
+			$sql->setString('objectid', $this->objectid);
+
+		$sql->setString('filename', $filename      );
+
+		return( $db->getOne($sql->query) > 0 );
 	}
 
 
@@ -155,13 +175,59 @@ class Folder extends Object
 //	}
 
 	
+	// Liest alle Objekte in diesem Ordner
 	function getObjectIds()
 	{
 		$db = db_connection();
 
-			$sql = new Sql('SELECT id FROM {t_object}'.
-			               '  WHERE parentid={objectid}'.
-			               '  ORDER BY orderid ASC' );
+		$sql = new Sql('SELECT id FROM {t_object}'.
+		               '  WHERE parentid={objectid}'.
+		               '  ORDER BY orderid ASC' );
+		$sql->setInt('projectid',$this->projectid );
+		$sql->setInt('objectid' ,$this->objectid  );
+		
+		return( $db->getCol( $sql->query ) );
+	}
+
+
+	// Liest alle Objekte in diesem Ordner
+	function getObjectIdsByType()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT id FROM {t_object}'.
+		               '  WHERE parentid={objectid}'.
+		               '  ORDER BY is_link,is_page,is_file,is_folder,orderid ASC' );
+		$sql->setInt('projectid',$this->projectid );
+		$sql->setInt('objectid' ,$this->objectid  );
+		
+		return( $db->getCol( $sql->query ) );
+	}
+
+
+	// Liest alle Objekte in diesem Ordner sortiert nach dem Namen (nicht Dateinamen!)
+	function getObjectIdsByName()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT {t_object}.id FROM {t_object}'.
+		               '  LEFT JOIN {t_name} ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
+                       ' WHERE parentid={objectid}'.
+                       ' ORDER BY {t_name}.name,{t_object}.filename ASC');
+		$sql->setInt('objectid'  , $this->objectid  );
+		$sql->setInt('languageid', $this->languageid);
+		return( $db->getCol( $sql->query ) );
+	}
+
+
+	// Liest alle Objekte in diesem Ordner
+	function getObjectIdsByLastChange()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT id FROM {t_object}'.
+		               '  WHERE parentid={objectid}'.
+		               '  ORDER BY lastchange_date,orderid ASC' );
 		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
@@ -323,7 +389,7 @@ class Folder extends Object
 	}
 
 	
-	// Rechte für diesen Ordner hinzufügen
+	// Rechte f?r diesen Ordner hinzuf?gen
 	function addrights( $rights,$inherit = true )
 	{
 		global $SESS;
@@ -342,13 +408,13 @@ class Folder extends Object
 			$SESS['rights'][$rights['projectid']][$this->folderid]['publish'] = 1;
 		
 		// Rechte auf Unterordner vererben
-		// sowie für übergeordnete Ordner die Anzeige erzwingen 	
+		// sowie f?r ?bergeordnete Ordner die Anzeige erzwingen 	
 		if   ( $inherit )
 		{
-			// Übergeordnete Ordner ermitteln
+			// ?bergeordnete Ordner ermitteln
 			$parentfolder = $this->parentObjectIds();
 
-			// Übergeordnete Ordner immer anzeigen (Schalter 'show'=true)
+			// ?bergeordnete Ordner immer anzeigen (Schalter 'show'=true)
 			foreach( $parentfolder as $folderid=>$name )
 			{
 				$f = new Folder( $folderid );
@@ -379,23 +445,23 @@ class Folder extends Object
 	}
 
 
-	// Ermitteln aller übergeordneten Ordner
+	// Ermitteln aller ?bergeordneten Ordner
 	//
 	function parentfolder_bak( $with_root = false, $with_self = false )
 	{
 		$db = db_connection();
 		$this->parentfolders = array();
 		
-		// Übergeordneten Ordner lesen
+		// ?bergeordneten Ordner lesen
 		$sql = new Sql('SELECT parentid FROM {t_folder} WHERE id={folderid}');
 
 		$sql->setInt('folderid',$this->folderid);
 		$parentid = $db->getOne( $sql->query );
 
-		// Ordner ist bereits höchster Ordner
+		// Ordner ist bereits h?chster Ordner
 		if   ( !is_numeric($parentid))
 		{
-			// Falls Anzeige höchster oder aktueller Ordner
+			// Falls Anzeige h?chster oder aktueller Ordner
 			if   ( $with_root && $with_self )
 			{
 				if   ( $this->filenames )
@@ -406,7 +472,7 @@ class Folder extends Object
 			return $this->parentfolders;
 		}
 
-		// Aktuellen Ordner hinzufügen
+		// Aktuellen Ordner hinzuf?gen
 		if   ( $with_self )
 		{
 			if   ( $this->filenames )
@@ -414,7 +480,7 @@ class Folder extends Object
 			else	$this->parentfolders[ $this->folderid ] = $this->name;
 		}
 
-		// Schleife über alle übergeordneten Ordner
+		// Schleife ?ber alle ?bergeordneten Ordner
 		while( is_numeric($parentid) )
 		{
 			$sql = new Sql('SELECT * FROM {t_folder} WHERE id={folderid}');
@@ -440,23 +506,23 @@ class Folder extends Object
 	}
 
 
-	// Ermitteln aller übergeordneten Ordner
+	// Ermitteln aller ?bergeordneten Ordner
 	//
 	function parentObjectIds( $with_root = false, $with_self = false )
 	{
 		$db = db_connection();
 		$this->parentfolders = array();
 		
-		// Übergeordneten Ordner lesen
+		// ?bergeordneten Ordner lesen
 		$sql = new Sql('SELECT parentid FROM {t_object} WHERE id={objectid}');
 
 		$sql->setInt('objectid',$this->objectid);
 		$parentid = $db->getOne( $sql->query );
 
-		// Ordner ist bereits höchster Ordner
+		// Ordner ist bereits h?chster Ordner
 		if   ( !is_numeric($parentid))
 		{
-			// Falls Anzeige höchster oder aktueller Ordner
+			// Falls Anzeige h?chster oder aktueller Ordner
 			if   ( $with_root && $with_self )
 			{
 				$this->parentfolders[] = $this->objectid;
@@ -465,13 +531,13 @@ class Folder extends Object
 			return $this->parentfolders;
 		}
 
-		// Aktuellen Ordner hinzufügen
+		// Aktuellen Ordner hinzuf?gen
 		if   ( $with_self )
 		{
 			$this->parentfolders[] = $this->objectid;
 		}
 
-		// Schleife über alle übergeordneten Ordner
+		// Schleife ?ber alle ?bergeordneten Ordner
 		while( is_numeric($parentid) )
 		{
 			$sql = new Sql('SELECT parentid FROM {t_object} WHERE id={objectid}');
@@ -569,7 +635,7 @@ class Folder extends Object
 
 	/**
 	 * Loeschen dieses Ordners.
-	 * Der Ordner wird nur geloescht, wenn er keine Unterelemente mehr enthält.
+	 * Der Ordner wird nur geloescht, wenn er keine Unterelemente mehr enth?lt.
 	 * Zum Loeschen inklusive Unterelemente dient die Methode deleteAll()
 	 */
 	function delete()
@@ -605,7 +671,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		// Löschen aller Unterordner
+		// L?schen aller Unterordner
 		foreach( $this->subfolder() as $folderid )
 		{
 			$folder = new Folder( $folderid );
@@ -614,7 +680,7 @@ class Folder extends Object
 			}
 		}
 		
-		// Löschen aller Seiten,Verknuepfungen und Dateien in
+		// L?schen aller Seiten,Verknuepfungen und Dateien in
 		// diesem Ordner
 		foreach( $this->getObjectIds() as $oid )
 		{
