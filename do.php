@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-11-10 22:52:53  dankert
+// Revision 1.7  2004-11-24 21:31:44  dankert
+// Wenn Subaction nicht vorhanden, dann immer default-Subaction aufrufen
+//
+// Revision 1.6  2004/11/10 22:52:53  dankert
 // Reihenfolge beim Include von Dateien korrigiert
 //
 // Revision 1.5  2004/10/04 19:56:56  dankert
@@ -148,6 +151,7 @@ else $subaction = '';
 $actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
 
 require( 'actionClasses/Action.class.php' );
+require( 'actionClasses/ObjectAction.class.php' );
 require( 'actionClasses/'.$actionClassName.'.class.php' );
 
 $do = new $actionClassName;
@@ -157,11 +161,8 @@ if	( $subaction == '' )
 	$subaction = $do->defaultSubAction;
 
 if	( !method_exists($do,$subaction) )
-{
-	$action = new Action();
-	$action->message('ERROR',"subaction $subaction not defined in class $actionClassName");
-}
-
+	$subaction = $do->defaultSubAction;
+	
 Logger::trace("controller is calling subaction '$subaction'");
 
 $do->subActionName = $subaction;
