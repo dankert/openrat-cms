@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2004-12-28 22:55:51  dankert
+// Revision 1.18  2004-12-29 20:21:42  dankert
+// Korrektur Bearbeiten-Funktion, Parameter zu Html::url()
+//
+// Revision 1.17  2004/12/28 22:55:51  dankert
 // Korrektur Dateinamen-Ermittlung
 //
 // Revision 1.16  2004/12/26 01:06:31  dankert
@@ -711,7 +714,7 @@ class Page extends Object
 			}
 			
 			if   ( $this->icons )
-				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url('pageelement','edit',array('elementid'=>$id)).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_EXT.'" border="0"></a>',$src );
+				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url('pageelement','edit',$this->objectid,array('elementid'=>$id)).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_EXT.'" border="0"></a>',$src );
 			else
 				$src = str_replace( '{{->'.$id.'}}','',$src );
 		}
