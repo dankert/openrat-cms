@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-24 16:57:13  dankert
+// Revision 1.3  2004-04-28 20:01:52  dankert
+// Ordner löschen ermöglichen
+//
+// Revision 1.2  2004/04/24 16:57:13  dankert
 // Korrektur: pub()
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
@@ -116,11 +119,20 @@ class FolderAction extends Action
 	}	
 
 
+	/**
+	 * Abspeichern der Ordner-Eigenschaften. Ist der Schalter "delete" gesetzt, wird
+	 * der Ordner stattdessen gelöscht.
+	 */
 	function save()
 	{
-		// Wenn Dateiname gefüllt, dann Datenbank-Update
-		if   ( $this->getRequestVar('filename') != '' )
+		if   ( $this->getRequestVar('delete') != '' )
 		{
+			// Ordner löschen
+			$this->folder->delete();
+		}
+		else
+		{
+			// Ordnereigenschaften speichern
 			if   ( $this->getRequestVar('name') != '' )
 				$this->folder->name     = $this->getRequestVar('name'    );
 			else	$this->folder->name     = $this->getRequestVar('filename');
@@ -285,6 +297,11 @@ class FolderAction extends Action
 		}
 		asort( $list );
 		$this->setTemplateVar('folder',$list);
+		
+		// Wenn Ordner leer ist, dann Löschen ermöglichen
+		if	( count($this->folder->getObjectIds()) == 0 )
+			$this->setTemplateVar('delete',true );
+		else	$this->setTemplateVar('delete',false);
 	
 		$this->forward('folder_prop');
 	}
