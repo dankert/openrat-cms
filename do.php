@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2004-12-26 21:56:31  dankert
+// Revision 1.15  2004-12-30 21:44:37  dankert
+// Speichern der Subaction
+//
+// Revision 1.14  2004/12/26 21:56:31  dankert
 // Startzeit merken, Time-Limit setzen
 //
 // Revision 1.13  2004/12/25 20:50:54  dankert
@@ -257,7 +260,8 @@ else	$action = 'index';
 
 if	( !empty( $REQ[REQ_PARAM_SUBACTION] ) )
 	$subaction = $REQ[REQ_PARAM_SUBACTION];
-else $subaction = '';
+else
+	$subaction = Session::getSubaction();
 
 $actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
 
@@ -275,6 +279,9 @@ if	( !method_exists($do,$subaction) )
 	$subaction = $do->defaultSubAction;
 	
 Logger::trace("controller is calling subaction '$subaction'");
+
+if	( in_array($action,array('page','file','link','folder')) )
+	Session::setSubaction( $subaction );
 
 $do->subActionName = $subaction;
 $do->$subaction();
