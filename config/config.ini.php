@@ -59,6 +59,7 @@ timeout              =              ; Request timeout in seconds (blank=system d
 logo="./themes/default/images/logo.jpg"  ; logo (url to image) in login mask 
 logo_url="http://www.openrat.de"         ; linked url in login mask 
 motd=""                                  ; Message of the day, shown in login mask 
+nologin=false                            ; Disable Login (for maintanance jobs)
 
 
 [mail]
@@ -71,6 +72,7 @@ signature="http://www.openrat.de"   ; Signature (blank if unused)
 random_password_length=8            ; length of automatic generated password
 min_password_length=4               ; minimum passwort length
 readonly=false                      ; All is readonly (for maintanance jobs)
+nopublish=false                     ; Disable publishing
 
 
 [html]
