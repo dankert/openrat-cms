@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-04-24 20:30:23  dankert
+// addslashes() entfernt
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
@@ -70,7 +73,7 @@ class TransferAction extends Action
 
 						// Datei lesen
 						$f = fopen( $full_filename,'r' );
-						$file->value = addslashes( fread($f,filesize($full_filename)) );
+						$file->value = fread($f,filesize($full_filename));
 						fclose( $f );
 
 	        				$file->add();
