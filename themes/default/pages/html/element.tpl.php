@@ -7,8 +7,8 @@
 <center>
 <form action="<?php echo $self ?>" method="post" target="_self">
 
-<input type="hidden" name="action"    value="template">
-<input type="hidden" name="subaction" value="elementrename">
+<input type="hidden" name="action"    value="template"      />
+<input type="hidden" name="subaction" value="elementrename" />
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
