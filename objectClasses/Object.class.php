@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2004-12-20 22:03:45  dankert
+// Revision 1.16  2004-12-20 22:42:03  dankert
+// Kl. Korrekturen
+//
+// Revision 1.15  2004/12/20 22:03:45  dankert
 // Lesen des Benutzers und speichern als Objekt
 //
 // Revision 1.14  2004/12/20 20:01:20  dankert
@@ -482,15 +485,22 @@ class Object
 
 		$this->createUser = new User();
 		$this->createUser->userid       = $row['create_userid'          ];
-		$this->createUser->name         = $row['create_username'        ];
-		$this->createUser->fullname     = $row['create_userfullname'    ];
-		$this->createUser->mail         = $row['create_usermail'        ];
+		if	( !empty($row['create_username']) )
+		{
+			$this->createUser->name         = $row['create_username'        ];
+			$this->createUser->fullname     = $row['create_userfullname'    ];
+			$this->createUser->mail         = $row['create_usermail'        ];
+		}
 
 		$this->lastchangeUser = new User();
 		$this->lastchangeUser->userid   = $row['lastchange_userid'      ];
-		$this->lastchangeUser->name     = $row['lastchange_username'    ];
-		$this->lastchangeUser->fullname = $row['lastchange_userfullname'];
-		$this->lastchangeUser->mail     = $row['lastchange_usermail'    ];
+		
+		if	( !empty($row['lastchange_username']) )
+		{
+			$this->lastchangeUser->name     = $row['lastchange_username'    ];
+			$this->lastchangeUser->fullname = $row['lastchange_userfullname'];
+			$this->lastchangeUser->mail     = $row['lastchange_usermail'    ];
+		}
 
 		$this->isFolder = ( $row['is_folder'] == '1' );
 		$this->isFile   = ( $row['is_file'  ] == '1' );
