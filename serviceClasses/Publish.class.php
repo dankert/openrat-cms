@@ -39,45 +39,33 @@ class Publish
 	// Konstruktor
 	function Publish()
 	{
-		global $SESS;
+		$project = Session::getProject();
 
-		$db = db_connection();
-		
-		// Projektdaten ermitteln
-		$sql = new Sql( 'SELECT * FROM {t_project}'.
-		                ' WHERE id={projectid}' );
-		$sql->setInt( 'projectid',$SESS['projectid'] );
-		$row = $db->getRow( $sql->query );
-	
-		if   ( $row['ftp_url'] != '' )
+		if   ( !empty($project->ftp_url) )
 		{
-			$this->ftp = new Ftp( $row['ftp_url'] );
+			$this->ftp = new Ftp( $project->ftp_url );
 			$this->with_ftp = true;
 
-			if   ( $row['ftp_passive'] == '1' )
-				$this->ftp->passive = true;
+			$this->ftp->passive = ( $project->ftp_passive == '1' );
 		}
 		
-		$this->local_destdir = ereg_replace( '\/$','',$row['target_dir']);
+		$this->local_destdir = ereg_replace( '\/$','',$project->target_dir);
 
-		// Sofort prüfen, ob das Zielverzeichnis überhaupt beschreibbar ist.
+		// Sofort pruefen, ob das Zielverzeichnis ueberhaupt beschreibbar ist.
 		if   ( $this->local_destdir != '' )
 		{
 			if   ( !is_writeable( $this->local_destdir ) )
 			{
-				message('ERROR','ERROR_DESTDIR_NOT_WRITEABLE','not writable: '.$this->local_destdir );
+				die( 'directory not writable: '.$this->local_destdir );
 			}
 
 			$this->with_local = true;
 		}
 		
-		if   ( $row['content_negotiation'] == '1' )
-			$this->content_negotiation = true; 
+		$this->content_negotiation = ( $project->content_negotiation == '1' );
+		$this->cut_index           = ( $project->cut_index == '1' );
 
-		if   ( $row['cut_index'] == '1' )
-			$this->cut_index = true;
-
-		$this->cms_after_publish = $row['cmd_after_publish'];
+		$this->cmd_after_publish   = $project->cmd_after_publish;
 	}
 
 	function copy( $tmp_filename,$dest_filename )
@@ -88,14 +76,13 @@ class Publish
 		{
 			$dest   = $this->local_destdir.'/'.$dest_filename; 
 			//echo "$source &gt; $dest<br>";
-			if   (!copy( $source,$dest ));
+			if   (!@copy( $source,$dest ));
 			{
 				$this->mkdirs( dirname($dest) );
 		
 				if   (!copy( $source,$dest ))
 				{
-					//echo "$source &gt; $dest<br>";
-					error('ERROR','ERROR_DESTDIR_NOT_WRITEABLE','cannot write file '.$dest);
+					die('failed writing file: '.$dest);
 				}
 			}
 		}
@@ -105,8 +92,6 @@ class Publish
 			$dest = $dest_filename;
 			$this->ftp->put( $source,$dest,FTP_ASCII );
 		}
-		
-		$this->publishedObjects[] = Array( 'filename'=>$dest_filename );
 	}
 	
 	

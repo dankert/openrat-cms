@@ -31,7 +31,7 @@ class Ftp
 {
 	var $verb;
 	var $url;
-	var $log;
+	var $log = '';
 	var $mode=FTP_ASCII;
 	var $passive = false;
 	
@@ -55,7 +55,7 @@ class Ftp
 		$ftp = parse_url( $this->url );
 		
 		// Wenn kein Port vorgegeben, dann Port 21 verwenden
-		if   ( $ftp['port'] == '' )
+		if   ( empty($ftp['port']) )
 			$ftp['port'] = '21';
 	
 		// Nur FTP und FTPS (seit PHP 4.3) erlaubt
@@ -85,7 +85,7 @@ class Ftp
 		$this->log .= 'user: '.$ftp['user']."\n";
 		$this->log .= 'ok'."\n";
 
-		if   ( $ftp['fragment'] == 'passive' )
+		if   ( !empty($ftp['fragment']) && $ftp['fragment'] == 'passive' )
 		{
 			$this->log .= 'entering passive mode'."\n";
 			$erg = ftp_pasv( $this->verb,true  );
@@ -106,7 +106,7 @@ class Ftp
 			}
 		}
 		
-		if   ( $ftp['query'] != '' )
+		if   ( !empty($ftp['query']) )
 		{
 			parse_str( $ftp['query'],$ftp_var );
 			
@@ -145,9 +145,8 @@ class Ftp
 		$dest = $this->path.'/'.$dest;
 		
 		$this->log .= "Copying file: $source -&gt; $dest ...\n";
-		if   ( !ftp_put( $this->verb,$dest,$source,$this->mode ) )
+		if   ( !@ftp_put( $this->verb,$dest,$source,$this->mode ) )
 		{
-			echo "ging nicht: $dest<br>";
 			$this->log .= "Copying FAILED, checking path: ".dirname($dest)."\n";
 
 			$erg = $this->mkdirs( dirname($dest) );
@@ -175,7 +174,7 @@ class Ftp
 	function mkdirs( $strPath )
 	{
 		echo $strPath.'<br>';
-		if	( ftp_chdir($this->verb,$strPath) )
+		if	( @ftp_chdir($this->verb,$strPath) )
 			return true;
 	 
 		$pStrPath = dirname($strPath);
@@ -183,7 +182,7 @@ class Ftp
 			return false;
 		
 		$this->log .= "Creating directory: $strPath ...\n";
-		echo "lege an $strPath ...<br>";
+		//echo "lege an $strPath ...<br>";
 		return ftp_mkdir($this->verb,$strPath);
 	}
 	

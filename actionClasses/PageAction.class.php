@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-11-27 09:55:54  dankert
+// Revision 1.14  2004-11-29 23:24:36  dankert
+// Korrektur Veroeffentlichung
+//
+// Revision 1.13  2004/11/27 09:55:54  dankert
 // Rechte-Funktionen entfernt, Anzahl Versionen in Elementliste
 //
 // Revision 1.12  2004/11/10 22:39:24  dankert
@@ -228,23 +231,14 @@ class PageAction extends ObjectAction
 
 	function propsave()
 	{
-		if   ($this->getRequestVar('name') != '')
+		if   ( !empty($this->getRequestVar('name')) )
 		{
-			if   ( $this->getRequestVar('delete') == '1' )
-			{
-				$this->page->delete();
-				$this->forward('');
-			}
-			else
-			{
-				$this->page->name        = $this->getRequestVar('name'    );
-				$this->page->filename    = $this->getRequestVar('filename');
-				$this->page->desc        = $this->getRequestVar('desc'    );
+			$this->page->name        = $this->getRequestVar('name'    );
+			$this->page->filename    = $this->getRequestVar('filename');
+			$this->page->desc        = $this->getRequestVar('desc'    );
 
-				$this->page->save();
-			}
-			$this->setTemplateVar('tree_refresh',true);
-	
+			$this->page->save();
+			$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
 		}
 		
 		$this->callSubAction('prop');
@@ -544,17 +538,20 @@ class PageAction extends ObjectAction
 
 	function pub()
 	{
+		$this->forward('page_pub');
+	}
+
+
+	function pub2()
+	{
 		$this->page->publish();
 
-		$list = array();
 		foreach( $this->page->publish->publishedObjects as $o )
 		{
-			$list[] = $o['filename'];
+			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
 		}
 
-		$this->setTemplateVar('filenames',$list);
-
-		$this->forward('publish');
+		$this->callSubaction('pub');
 	}
 }
 

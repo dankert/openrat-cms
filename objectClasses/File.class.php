@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-28 21:28:05  dankert
+// Revision 1.5  2004-11-29 23:24:36  dankert
+// Korrektur Veroeffentlichung
+//
+// Revision 1.4  2004/11/28 21:28:05  dankert
 // Bildbearbeitung erweitert
 //
 // Revision 1.3  2004/11/10 22:45:24  dankert
@@ -53,6 +56,7 @@ class File extends Object
 	var $value = '';
 	var $extension     = '';
 	var $log_filenames = array();
+	var $fullFilename  = '';
 	var $publish = null;
 	
 	/**
@@ -81,13 +85,15 @@ class File extends Object
 	  */
 	function full_filename()
 	{
+		if	( !empty($this->fullFilename) )
+			return $this->fullFilename;
+
 		$filename = parent::full_filename();
 
-		if	( $this->extension != '' )
-		{
+		if	( !empty($this->extension) )
 			$filename .= '.'.$this->extension;
-		}
 
+		$this->fullFilename = $filename;
 		return $filename;
 	}
 
@@ -113,7 +119,7 @@ class File extends Object
 	function getProperties()
 	{
 		return array_merge( parent::getProperties(),
-		                    Array('full_filename'=>$this->full_filename(),
+		                    array('full_filename'=>$this->fullFilename,
 		                          'extension'    =>$this->extension,
 		                          'size'         =>$this->size,
 		                          'mimetype'     =>$this->mimetype()   ) );
@@ -511,8 +517,8 @@ class File extends Object
 
 		$this->write();
 		$this->publish->copy( $this->tmpfile(),$this->full_filename() );
-
-//		$this->log_filenames = $this->publish->log_filenames;
+		
+		$this->publish->publishedObjects[] = $this->getProperties();
 	}
 }
 

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-11-10 22:47:17  dankert
+// Revision 1.11  2004-11-29 23:24:36  dankert
+// Korrektur Veroeffentlichung
+//
+// Revision 1.10  2004/11/10 22:47:17  dankert
 // Methode copyValuesFromPage() zum Kopiern einer Seite
 //
 // Revision 1.9  2004/10/14 21:10:57  dankert
@@ -83,6 +86,7 @@ class Page extends Object
 	var $cut_index           = false;
 	var $default_language    = false;
 	var $link                = false;
+	var $fullFilename = '';
 
 	var $log_filenames       = array();
 	var $projectmodelid = 0;
@@ -150,7 +154,7 @@ class Page extends Object
 	function getProperties()
 	{
 		return array_merge( parent::getProperties(),
-		                    Array('full_filename'=>$this->full_filename(),
+		                    array('full_filename'=>$this->fullFilename,
 		                          'pageid'       =>$this->pageid,
 		                          'templateid'   =>$this->templateid ) );
 	}
@@ -208,6 +212,8 @@ class Page extends Object
 		$object = new Object( $objectid );
 		$object->objectLoad();
 		
+		$cut_index           = ( is_object($this->publish) && $this->publish->cut_index           );
+		$content_negotiation = ( is_object($this->publish) && $this->publish->content_negotiation );
 
 		if   ( $this->public )
 		{ 
@@ -227,7 +233,9 @@ class Page extends Object
 					$inhalt  = $this->up_path();
 					
 					$p = new Page( $objectid );
-					$p->languageid = $this->languageid;
+					$p->languageid          = $this->languageid;
+					$p->cut_index           = $cut_index;
+					$p->content_negotiation = $content_negotiation;
 					$p->load();
 					$inhalt .= $p->full_filename();
 					break;
@@ -252,7 +260,9 @@ class Page extends Object
 			
 							case 'page':
 								$p = new Page( $link->linkedObjectId );
-								$p->languageid = $this->languageid;
+								$p->languageid          = $this->languageid;
+								$p->cut_index           = $cut_index;
+								$p->content_negotiation = $content_negotiation;
 								$p->load();
 								$inhalt  = $this->up_path();
 								$inhalt .= $p->full_filename();
@@ -527,25 +537,33 @@ class Page extends Object
 	  */
 	function full_filename()
 	{
-		$filename = parent::full_filename();
+		$filename = $this->path();
 
-		if	( !$this->default_language )
-		{		
-			$l = new Language( $this->languageid );
-			$l->load();
-			$filename .= '.'.$l->isoCode;
-		}
+		if	( !empty($filename) )
+			$filename .= '/';
 
-		$t = new Template( $this->templateid );
-		$t->projectmodelid = $this->modelid;
-		$t->load();
-		$filename .= '.'.$t->extension;
-
-		if	( $this->default_language )
-		{		
+		if	( !$this->cut_index || $this->filename != 'index' )
+		{
+			$filename .= $this->filename();
+			if	( !$this->default_language )
+			{		
+				$l = new Language( $this->languageid );
+				$l->load();
+				$filename .= '.'.$l->isoCode;
+			}
+	
+			$t = new Template( $this->templateid );
+			$t->projectmodelid = $this->modelid;
+			$t->load();
 			$filename .= '.'.$t->extension;
+	
+			if	( $this->default_language )
+			{		
+				$filename .= '.'.$t->extension;
+			}
 		}
 
+		$this->fullFilename = $filename;
 		return $filename;
 	}
 
@@ -709,8 +727,8 @@ class Page extends Object
 		if	( ! is_object($this->publish) )
 			$this->publish = new Publish();
 		
-		$this->content_negotiation = $this->publish->content_negotiation;
-		$this->cut_index           = $this->publish->cut_index;
+		//$this->content_negotiation = $this->publish->content_negotiation;
+		//$this->cut_index           = $this->publish->cut_index;
 		$this->public              = true;
 
 		// Schleife ?ber alle Sprachvarianten
@@ -727,8 +745,8 @@ class Page extends Object
 				$this->generate();
 				$this->write();
 				
-				//echo $this->tmpfile().' &gt; '.$this->full_filename().'<br>';
 				$this->publish->copy( $this->tmpfile(),$this->full_filename() );
+				$this->publish->publishedObjects[] = $this->getProperties();
 			}
 		}
 
@@ -751,6 +769,7 @@ class Page extends Object
 				
 				//echo $this->tmpfile().' &gt; '.$this->full_filename().'<br>';
 				$publish->copy( $this->tmpfile(),$this->full_filename() );
+				$this->publish->publishedObjects[] = $this->getProperties();
 			}
 		}
 

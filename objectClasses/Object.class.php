@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-11-29 00:02:41  dankert
+// Revision 1.9  2004-11-29 23:24:36  dankert
+// Korrektur Veroeffentlichung
+//
+// Revision 1.8  2004/11/29 00:02:41  dankert
 // Bei L?schen von Objekten alle Referenzen in Tabelle or_link entfernen
 //
 // Revision 1.7  2004/11/28 22:32:52  dankert
@@ -245,9 +248,6 @@ class Object
 
 		$path.= $this->filename();
 
-//		if ($this->extension() != '')
-//			$path.= '.'.$this->extension();
-
 		return $path;
 	}
 
@@ -383,14 +383,15 @@ class Object
 		if (count($row) == 0)
 			die('fatal: objectid not found: '.$this->objectid);
 
-		$this->parentid = $row['parentid'];
+		$this->parentid  = $row['parentid' ];
+		$this->filename  = $row['filename' ];
+		$this->projectid = $row['projectid'];
 		
 		if	( intval($this->parentid) == 0 )
 			$this->isRoot = true;
 		else
 			$this->isRoot = false;
 
-		$this->checkFilename();
 		$this->name = 'n/a';
 
 		$this->create_date       = $row['create_date'];
@@ -398,7 +399,6 @@ class Object
 		$this->lastchange_date   = $row['lastchange_date'];
 		$this->lastchange_userid = $row['lastchange_userid'];
 
-		$this->projectid = $row['projectid'];
 
 		$this->isFolder = ( $row['is_folder'] == '1' );
 		$this->isFile   = ( $row['is_file'  ] == '1' );
@@ -414,7 +414,9 @@ class Object
 	 */
 	function setDatabaseRow( $row )
 	{
-		$this->parentid = $row['parentid'];
+		$this->parentid  = $row['parentid' ];
+		$this->projectid = $row['projectid'];
+		$this->filename  = $row['filename' ];
 		
 		if	( intval($this->parentid) == 0 )
 			$this->isRoot = true;
@@ -424,8 +426,6 @@ class Object
 		$this->create_userid     = $row['create_userid'    ];
 		$this->lastchange_date   = $row['lastchange_date'  ];
 		$this->lastchange_userid = $row['lastchange_userid'];
-
-		$this->projectid = $row['projectid'];
 
 		$this->isFolder = ( $row['is_folder'] == '1' );
 		$this->isFile   = ( $row['is_file'  ] == '1' );
@@ -445,7 +445,6 @@ class Object
 			$this->desc = $row['descr'];
 		}
 
-		$this->checkFilename();
 		$this->checkName();
 	}
 
@@ -660,7 +659,7 @@ class Object
 	 */
 	function checkFilename()
 	{
-		if	( $this->filename == '' )
+		if	( empty($this->filename) )
 			$this->filename = $this->objectid;
 
 		$this->filename = trim(strtolower($this->filename));
@@ -674,15 +673,28 @@ class Object
 		if	( $this->isRoot )
 			return;
 
-		$pf = new Folder( $this->parentid );
-		
-		if	( $pf->hasFilename( $this->filename ) )
+		if	( !$this->filenameIsUnique( $this->filename ) )
 		{
 			$this->filename = $this->objectid;
 
-			if	( $pf->hasFilename( $this->filename ) )
+			if	( !$this->filenameIsUnique( $this->filename ) )
 				$this->filename = md5(microtime());
 		}
+	}
+
+
+	function filenameIsUnique( $filename )
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT COUNT(*) FROM {t_object}'.' WHERE parentid={parentid} AND filename={filename} AND NOT id = {objectid}');
+
+		$sql->setString('parentid', $this->parentid);
+		$sql->setString('objectid', $this->objectid);
+
+		$sql->setString('filename', $filename      );
+
+		return( intval($db->getOne($sql->query)) == 0 );
 	}
 
 
@@ -691,10 +703,10 @@ class Object
 	 */
 	function checkName()
 	{
-		if	( $this->name == '' )
+		if	( empty($this->name) )
 			$this->name = $this->filename;
 
-		if	( $this->name == '' )
+		if	( empty($this->name) )
 			$this->name = $this->objectid;
 	}
 

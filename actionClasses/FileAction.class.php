@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-11-28 21:27:21  dankert
+// Revision 1.9  2004-11-29 23:24:36  dankert
+// Korrektur Veroeffentlichung
+//
+// Revision 1.8  2004/11/28 21:27:21  dankert
 // Bildbearbeitung erweitert
 //
 // Revision 1.7  2004/11/27 13:05:59  dankert
@@ -104,28 +107,15 @@ class FileAction extends ObjectAction
 	{
 		global $SESS;
 
-		// Wenn Dateiname gefuellt, dann Datenbank-Update
-		if   ( $this->getRequestVar('delete') != '' )
-		{
-			// Datei loeschen
-			$this->file->delete();
+		// Eigenschaften speichern
+		$this->file->filename  = $this->getRequestVar('filename' );
+		$this->file->name      = $this->getRequestVar('name'     );
+		$this->file->extension = $this->getRequestVar('extension');
+		$this->file->desc      = $this->getRequestVar('desc'     );
+		
+		$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
+		$this->file->save();
 
-			$this->addNotice($this->file->getType(),$this->file->name,'DELETED','ok');
-			unset( $SESS['objectid'] );
-		}
-		else
-		{
-			// Eigenschaften speichern
-			$this->file->filename  = $this->getRequestVar('filename' );
-			$this->file->name      = $this->getRequestVar('name'     );
-			$this->file->extension = $this->getRequestVar('extension');
-			$this->file->desc      = $this->getRequestVar('desc'     );
-			
-			$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
-			$this->file->save();
-		}
-
-		$this->setTemplateVar('tree_refresh',true);
 		$this->callSubAction('prop');
 	}
 
@@ -169,7 +159,7 @@ class FileAction extends ObjectAction
 		$format          =        $this->getRequestVar('format'          ) ;
 		
 		$this->file->imageResize( intval($width),intval($height),$format,$jpegcompression );
-		$this->file->save();
+		$this->file->save();      // Um z.B. Groesse abzuspeichern
 		$this->file->saveValue();
 
 		$this->addNotice($this->file->getType(),$this->file->name,'IMAGE_RESIZED','ok');
@@ -251,17 +241,23 @@ class FileAction extends ObjectAction
 	 */
 	function pub()
 	{
+		$this->forward('file_pub');
+	}
+
+
+	/**
+	 * Datei ver?ffentlichen
+	 */
+	function pub2()
+	{
 		$this->file->publish();
 
-		$list = array();
 		foreach( $this->file->publish->publishedObjects as $o )
 		{
-			$list[] = $o['filename'];
+			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
 		}
 
-		$this->setTemplateVar('filenames',$list);
-
-		$this->forward('publish');
+		$this->callSubaction('pub');
 	}
 }
 

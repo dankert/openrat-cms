@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2004-11-29 21:09:51  dankert
+// Revision 1.15  2004-11-29 23:24:36  dankert
+// Korrektur Veroeffentlichung
+//
+// Revision 1.14  2004/11/29 21:09:51  dankert
 // neue Methode pub2()
 //
 // Revision 1.13  2004/11/28 22:59:48  dankert
@@ -286,7 +289,7 @@ class FolderAction extends ObjectAction
 							$f = new File( $id );
 							$f->load();
 							$f->filename = '';
-							$f->name     = lang('COPY_OF').' '.$f->name;
+							$f->name     = lang('GLOBAL_COPY_OF').' '.$f->name;
 							$f->parentid = $targetObjectId;
 							$f->add();
 							$f->copyValueFromFile( $id );
@@ -297,7 +300,7 @@ class FolderAction extends ObjectAction
 							$p = new Page( $id );
 							$p->load();
 							$p->filename = '';
-							$p->name     = lang('COPY_OF').' '.$p->name;
+							$p->name     = lang('GLOBAL_COPY_OF').' '.$p->name;
 							$p->parentid = $targetObjectId;
 							$p->add();
 							$p->copyValuesFromPage( $id );
@@ -308,7 +311,7 @@ class FolderAction extends ObjectAction
 							$l = new Link( $id );
 							$l->load();
 							$l->filename = '';
-							$l->name     = lang('COPY_OF').' '.$l->name;
+							$l->name     = lang('GLOBAL_COPY_OF').' '.$l->name;
 							$l->parentid = $targetObjectId;
 							$l->add();
 							$this->addNotice($o->getType(),$o->name,'COPIED','ok');
@@ -658,7 +661,7 @@ class FolderAction extends ObjectAction
 
 		foreach( $publish->publishedObjects as $o )
 		{
-			$this->addNotice('',$o['filename'],'PUBLISHED','ok');
+			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
 		}
 
 		$this->callSubaction( 'pub' );
