@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-12-15 23:24:23  dankert
+// Revision 1.5  2004-12-19 19:23:20  dankert
+// Link auf Profil korrigiert
+//
+// Revision 1.4  2004/12/15 23:24:23  dankert
 // Html::url()-Parameter angepasst
 //
 // Revision 1.3  2004/11/10 22:40:32  dankert
@@ -66,7 +69,7 @@ class TitleAction extends Action
 		$this->setTemplateVar('userfullname',$user->fullname);
 		
 		// Urls zum Benutzerprofil und zum Abmelden
-		$this->setTemplateVar('profile_url',Html::url( 'user' ,'profile' ));
+		$this->setTemplateVar('profile_url',Html::url( 'profile' ));
 		$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
 		
 		$this->setTemplateVar('css_body_class','title');
