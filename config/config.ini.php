@@ -39,6 +39,10 @@ format      = "%time %level %host %user %action %text"   ; format
 truecolor            = true         ; 'true' if GD2 is available, otherwise 'false'
 
 
+[cache]
+conditional_get      = true         ; Conditional-GET enables the "304 not modified" HTTP-Header
+                                    ; This  is much faster, but sometimes caching is unwanted
+
 [interface]
 tree_width           = "25%"        ; width of navigation frame (tree)
 file_separator       = " &raquo; "  ; chars between directory names
