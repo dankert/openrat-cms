@@ -7,7 +7,7 @@
     <td class="menu">
 
       <?php echo Html::form( 'index','project','-',array('target'=>'_parent','method'=>'get') ) ?>
-      <table>
+      <table cellpadding="0" cellspacing="0">
       <tr>
       <td>
         <?php
