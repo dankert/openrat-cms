@@ -18,33 +18,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.7  2004-12-15 23:18:46  dankert
-// *** empty log message ***
-//
-// Revision 1.6  2004/11/30 22:27:45  dankert
-// Optimierung imageResize()-Methode
-//
-// Revision 1.5  2004/11/29 23:24:36  dankert
-// Korrektur Veroeffentlichung
-//
-// Revision 1.4  2004/11/28 21:28:05  dankert
-// Bildbearbeitung erweitert
-//
-// Revision 1.3  2004/11/10 22:45:24  dankert
-// *** empty log message ***
-//
-// Revision 1.2  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:15:12  dankert
-// Initiale Version
-//
-// Revision 1.1  2003/10/27 23:21:55  dankert
-// Methode(n) hinzugef?gt: savevalue(), save()
-//
-// ---------------------------------------------------------------------------
+
+
+// Standard Mime-Type 
+define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
 
 
 /**
@@ -58,20 +35,30 @@ class File extends Object
 {
 	var $fileid;
 
-	var $size  = 0;
-	var $value = '';
+	var $size          = 0;
+	var $value         = '';
 	var $extension     = '';
 	var $log_filenames = array();
 	var $fullFilename  = '';
-	var $publish = null;
-	
+	var $publish       = null;
+	var $mime_type     = '';
+
+
+
 	/**
 	 * Um Probleme mit BLOB-Feldern und Datenbank-Besonderheiten zu vermeiden,
-	 * kann der Bin?rinhalt BASE64-kodiert gespeichert werden.
+	 * kann der Binaerinhalt BASE64-kodiert gespeichert werden.
 	 * @type Boolean
 	 */
 	var $storeValueAsBase64 = false;
 
+
+
+	/**
+	 * Konstruktor
+	 *
+	 * @param Objekt-Id
+	 */
 	function File( $objectid='' )
 	{
 		global $conf,$SESS;
@@ -82,6 +69,7 @@ class File extends Object
 		$this->Object( $objectid );
 		$this->isFile = true;
 	}
+
 
 
 	/**
@@ -104,6 +92,7 @@ class File extends Object
 	}
 
 
+
 	/**
 	  * Ermitteln des Dateinamens dieser Datei (ohne Pfadangabe)
 	  *
@@ -115,6 +104,7 @@ class File extends Object
 			return $this->filename.'.'.$this->extension;
 		else	return $this->filename;
 	}
+
 
 
 	/**
@@ -132,6 +122,10 @@ class File extends Object
 	}
 
 
+
+	/**
+	 * @deprecated
+	 */
 	function getFileObjectIdsByExtension( $extension )
 	{
 		global $SESS;
@@ -159,9 +153,11 @@ class File extends Object
 	}
 
 
+
 	/**
 	  * Es werden Objekte zu einer Dateierweiterung ermittelt
-	  * @param String Dateierweiterung ohne f?hrenden Punkt (z.B. 'jpeg')
+	  *
+	  * @param String Dateierweiterung ohne fuehrenden Punkt (z.B. 'jpeg')
 	  * @return Array Liste der gefundenen Objekt-IDs
 	  */
 	function getObjectIdsByExtension( $extension )
@@ -180,20 +176,44 @@ class File extends Object
 	}
 
 
+
+	/**
+	 * Ermittelt den Mime-Type zu dieser Datei
+	 *
+	 * @return String Mime-Type  
+	 */
 	function mimeType()
 	{
-		global $conf_languagedir,$conf_php;
-		$mime_types = parse_ini_file( "$conf_languagedir/mime-types.ini.$conf_php" );
+		if	( !empty( $this->mime_type ) )
+			return $this->mime_type;
 
-		if	( isset($mime_types[ strtolower($this->extension) ]) )
-			$mime = $mime_types[ strtolower($this->extension) ];
-		else	$mime = 'application/octet-stream';
+		global $conf;
+		$mime_types = $conf['mime-types'];
+
+		if	( !empty($mime_types[ strtolower($this->extension) ]) )
+			$this->mime_type = $mime_types[ strtolower($this->extension) ];
+		else
+			// Wenn kein Mime-Type gefunden, dann Standartwert setzen
+			$this->mime_type = OR_FILE_DEFAULT_MIMETYPE;
 			
-		return( $mime );
+		return( $this->mime_type );
 	}
 
 
+
+	/**
+	 * Veraendert die Bildgroesse eines Bildes
+	 *
+	 * Diese Methode sollte natuerlich nur bei Bildern ausgefuehrt werden.
+	 *
+	 * @param Neue Breite
+	 * @param Neue Hoehe
+	 * @param Altes Format als Integer-Konstante IMG_xxx
+	 * @param Neues Format als Integer-Konstante IMG_xxx
+	 * @param Jpeg-Qualitaet (sofern neues Format = Jpeg)
+	 */
 	function imageResize( $newWidth,$newHeight,$oldformat,$newformat,$jpegquality )
+
 	{
 		global $conf;
 
