@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-28 23:55:36  dankert
+// Revision 1.5  2004-12-26 20:20:57  dankert
+// Bei erstem Aufruf Fehlermeldung vermeiden
+//
+// Revision 1.4  2004/11/28 23:55:36  dankert
 // addNotice()
 //
 // Revision 1.3  2004/05/02 14:49:37  dankert
@@ -94,10 +97,6 @@ class TransferAction extends Action
 				closedir( $dir );
 			}
 		} 
-		else
-		{
-			$this->addNotice('file','directory empty','ERROR','error');
-		}
 
 		$folders = array();
 	
@@ -105,7 +104,7 @@ class TransferAction extends Action
 		foreach( $folder->getAllFolders() as $objectid )
 		{
 			$f = new Folder( $objectid );
-			$folders[$objectid] = implode( ' &raquo; ',$f->parentObjectNames(true,true) );
+			$folders[$objectid] = implode( FILE_SEP,$f->parentObjectNames(true,true) );
 		}
 	
 		asort( $folders );
