@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2005-01-04 19:59:55  dankert
+// Revision 1.2  2005-01-04 21:01:24  dankert
+// Benutzen von CSS-Klassen
+//
+// Revision 1.1  2005/01/04 19:59:55  dankert
 // Allgemeine Korrekturen, Erben von "Dynamic"-klasse
 //
 // Revision 1.3  2004/12/19 22:35:23  dankert
@@ -43,16 +46,7 @@
 class ClassicMenu extends Dynamic
 {
 	/**
-	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
-	 * @type String
-	 */
-	var $parameters  = Array(
-		'beforeEntry'=>'Chars before an active menu entry',
-		'afterEntry' =>'Chars after an active menu entry'
-		);
-
-	/**
-	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
+	 * Beschreibung dieser Klasse
 	 * @type String
 	 */
 	var $description = 'This is a dynamic Menue which contains all pages. Folders are opened when useful. Nice standard menu :-)';
@@ -63,6 +57,7 @@ class ClassicMenu extends Dynamic
 	 */
 	var $beforeEntry = '<li><strong>';
 	var $afterEntry  = '</strong></li>';
+	var $csspraefix  = 'menu';
 	
 
 	// Erstellen des Hauptmenues
@@ -74,18 +69,18 @@ class ClassicMenu extends Dynamic
 		$f = new Folder( $this->page->parentid );
 		$this->parentFolders = $f->parentObjectIds(false,true);
 		
-		$this->showFolder( $rootId );
+		$this->showFolder( $rootId,0 );
 	}
 
-	function showFolder( $oid )
+	function showFolder( $oid,$level )
 	{
-		$this->output('<ul>');
+		$this->outputLn('<ul class="'.$this->csspraefix.$level.'">');
 		$f = new Folder( $oid );
 
 		// Schleife ueber alle Objekte im aktuellen Ordner
 		foreach( $f->getObjects() as $o )
 		{
-			// Nur Seiten anzeigen
+			// Ordner anzeigen
 			if ($o->isFolder )
 			{
 				$nf = new Folder($o->objectid);
@@ -97,30 +92,30 @@ class ClassicMenu extends Dynamic
 					// Wenn aktuelle Seite, dann markieren, sonst Link
 					if ( $this->page->objectid == $fp->objectid )
 						// aktuelle Seite
-						$this->output( '<li><strong>'.$o->name.'</strong><br/>' );
+						$this->outputLn( '<li class="'.$this->csspraefix.$level.'"><strong class="'.$this->csspraefix.$level.'">'.$o->name.'</strong><br/>' );
 					else
 						// Link erzeugen
-						$this->output( '<li><a href="'.$this->pathToObject($fp->objectid).'">'.$o->name.'</a><br/>' );
+						$this->outputLn( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.$this->pathToObject($fp->objectid).'">'.$o->name.'</a><br/>' );
 
 					if	( in_array($o->objectid,$this->parentFolders) )
 					{
-						$this->showFolder($o->objectid);
+						$this->showFolder($o->objectid,$level+1);
 					}
 
-					$this->output( '</li>' );
+					$this->outputLn( '</li>' );
 				}
 			}
 
-			// Nur Seiten anzeigen
+			// Seiten und Verknuepfungen anzeigen
 			if ($o->isPage ||  $o->isLink )
 			{
 				// Wenn aktuelle Seite, dann markieren, sonst Link
 				if ( $this->getObjectId() == $o->objectid)
 					// aktuelle Seite
-					$this->output( '<li><strong>'.$o->name.'</strong></li>' );
+					$this->output( '<li class="'.$this->csspraefix.$level.'"><strong class="'.$this->csspraefix.$level.'">'.$o->name.'</strong></li>' );
 				else
 					// Link erzeugen
-					$this->output( '<li><a href="'.$this->page->path_to_object($o->objectid).'">'.$o->name.'</a></li>' );
+					$this->output( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.$this->pathToObject($o->objectid).'">'.$o->name.'</a></li>' );
 			}
 		}
 		$this->output('</ul>');
