@@ -7,7 +7,7 @@
       <table cellpadding="0" cellspacing="0" width="100%">
         <tr>
           <td rowspan="2" width="20">
-            <img src="<?php echo $image_dir.'action_'.$type.'.png' ?>" title="" alt="<?php echo $type ?>">
+            <img src="<?php echo $image_dir.'action_'.$type.'.png' ?>" style="margin-right:10px;" title="" alt="<?php echo $type ?>">
           </td>
           <td><span class="mainmenu_headline"><?php echo lang($type) ?></span></td>
           <?php $cols = 1;
@@ -16,9 +16,9 @@
                      $cols=3;
                      ?>
           <td class="mainmenu_headline" width="20"><?php echo lang('id') ?>:&nbsp;</td>
-          <td class="mainmenu_val" width="50"><strong><?php echo $nr ?></strong></td>
+          <td class="mainmenu_val"      width="50"><strong><?php echo $nr ?></strong></td>
           <td class="mainmenu_headline" width="50"><?php echo lang('LANGUAGE') ?>:&nbsp;</td>
-          <td class="mainmenu_val" width="50"><?php echo $language_name ?></td>
+          <td class="mainmenu_val"      width="50"><a href="<?php echo $language_url ?>" target="cms_main"><?php echo $language_name ?></a></td>
           <?php }   ?>
         </tr>
         <tr>
@@ -27,7 +27,7 @@
       		{
       			foreach( $folder as $id=>$ftext )
       			{
-      				echo '<a href="'.Html::url(array('action'=>'main','callAction'=>'folder','objectid'=>$id,'callSubaction'=>'show')).'" target="cms_main" class="mainmenu">'.$ftext.'</a>&nbsp;<strong>&raquo;</strong>&nbsp;';
+      				echo '<a href="'.Html::url(array('action'=>'main','callAction'=>'folder','objectid'=>$id,'callSubaction'=>'show')).'" target="cms_main" class="mainmenu">'.$ftext.'</a>&nbsp;<strong>'.FILE_SEP.'</strong>&nbsp;';
       			}
 		      }
           ?><span class="mainmenu_name"><?php if (isset($text)) echo $text ?></span></td>          
@@ -36,7 +36,7 @@
                 {   $cols=3;
                 	?>
           <td width="50" class="mainmenu_headline"><?php echo lang('MODEL') ?>:&nbsp;</td>
-          <td width="50" class="mainmenu_val"><?php echo $projectmodel_name ?></td>
+          <td width="50" class="mainmenu_val"     ><a href="<?php echo $projectmodel_url ?>" target="cms_main"><?php echo $projectmodel_name ?></a></td>
           <?php }   ?>
         </tr>
       </table>
