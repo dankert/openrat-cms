@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-04-30 21:07:32  dankert
+// Revision 1.6  2004-05-02 12:00:44  dankert
+// Initialisieren von $value->publish
+//
+// Revision 1.5  2004/04/30 21:07:32  dankert
 // Auswerten von Schalter $release
 //
 // Revision 1.4  2004/04/30 20:31:47  dankert
@@ -90,6 +93,7 @@ class PageAction extends Action
 		$value->pageid     = Page::getPageIdFromObjectId( $this->getSessionVar('objectid') );
 		$value->element = new Element( $this->getSessionVar('elementid') );
 		$value->element->load();
+		$value->publish = false;
 		$value->load();
 
 		$value->number = $this->getRequestVar('number') * pow(10,$value->element->decimals);
