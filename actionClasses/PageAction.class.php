@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2004-11-29 23:34:59  dankert
+// Revision 1.16  2004-11-29 23:48:00  dankert
+// Korrektur Vorversion
+//
+// Revision 1.15  2004/11/29 23:34:59  dankert
 // Beim Speichern von Seiteninhalten den Zeitstempel setzen
 //
 // Revision 1.14  2004/11/29 23:24:36  dankert
@@ -228,14 +231,14 @@ class PageAction extends ObjectAction
 			// sonst nur 1x speichern (fuer die aktuelle Sprache)
 			$value->save();
 		}
-	
+		$this->page->setTimestamp();
 		$this->callSubAction( $this->getRequestVar('old_pageaction') );
 	}
 
 
 	function propsave()
 	{
-		if   ( !empty($this->getRequestVar('name')) )
+		if   ( $this->getRequestVar('name')!='' )
 		{
 			$this->page->name        = $this->getRequestVar('name'    );
 			$this->page->filename    = $this->getRequestVar('filename');
@@ -502,6 +505,7 @@ class PageAction extends ObjectAction
 	
 		$this->page->public = true;
 		$this->page->load();
+		$this->page->full_filename();
 		$this->setTemplateVars( $this->page->getProperties() );
 		
 		$this->setTemplateVar('delete',$this->page->hasRight('delete'));
