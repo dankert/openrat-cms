@@ -81,7 +81,6 @@ CREATE TABLE or_template (
      , CONSTRAINT fk_template_01 FOREIGN KEY (projectid)
                   REFERENCES or_project (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-COMMENT ON COLUMN or_template.id IS 'auto_increment';
 CREATE INDEX idx_template_01 ON or_template (projectid);
 CREATE INDEX idx_template_02 ON or_template (name);
 CREATE UNIQUE INDEX idx_template_uk ON or_template (projectid, name);
@@ -121,7 +120,6 @@ CREATE TABLE or_projectmodel (
      , CONSTRAINT fk_projectmodel_01 FOREIGN KEY (projectid)
                   REFERENCES or_project (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-COMMENT ON COLUMN or_projectmodel.extension IS 'not in use';
 CREATE INDEX idx_projectmodel_01 ON or_projectmodel (projectid);
 CREATE UNIQUE INDEX idx_projectmodel_uk ON or_projectmodel (projectid, name);
 
@@ -153,24 +151,6 @@ CREATE TABLE or_element (
      , CONSTRAINT fk_element_03 FOREIGN KEY (templateid)
                   REFERENCES or_template (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-COMMENT ON COLUMN or_element.templateid IS 'Template fuer das dieses Element gilt';
-COMMENT ON COLUMN or_element.name IS 'Name des Elementes';
-COMMENT ON COLUMN or_element.descr IS 'Beschreibung fuer den Redakteur';
-COMMENT ON COLUMN or_element.type IS 'interner Typ des Elementes';
-COMMENT ON COLUMN or_element.subtype IS 'Untertyp, fuer bestimmte Typen notwendig';
-COMMENT ON COLUMN or_element.with_icon IS 'ja/nein ob Editier-Ikon vor Element erscheint';
-COMMENT ON COLUMN or_element.dateformat IS 'Datumsformat (nur bei Datums-Elementen)';
-COMMENT ON COLUMN or_element.wiki IS 'ja/nein ob Text-Schnellauszeichnung erfolgen soll (nur bei Textelementen)';
-COMMENT ON COLUMN or_element.html IS 'ja/nein ob HTML im Text erlaubt ist (nur bei Textelementen)';
-COMMENT ON COLUMN or_element.all_languages IS 'ja/nein ob Inhalt fuer alle Sprachen gilt';
-COMMENT ON COLUMN or_element.writable IS 'ja/nein ob Inhalt vom Redakteur veraenderbar';
-COMMENT ON COLUMN or_element.decimals IS 'Anzahl Nachkommastellen (bei Typ Zahl)';
-COMMENT ON COLUMN or_element.dec_point IS 'Dezimalstelle (bei Typ Zahl)';
-COMMENT ON COLUMN or_element.thousand_sep IS 'Tausenderpunkt (bei Typ Zahl)';
-COMMENT ON COLUMN or_element.code IS 'PHP-Code fuer dynamische Inhalte';
-COMMENT ON COLUMN or_element.default_text IS 'Standard-Inhalt wenn kein Inhalt vorhanden ist';
-COMMENT ON COLUMN or_element.folderobjectid IS 'Verweis auf Ordner';
-COMMENT ON COLUMN or_element.default_objectid IS 'verlinktes Objekt, wenn kein anderer Inhalt verfuegbar ist.';
 CREATE INDEX idx_element_01 ON or_element (templateid);
 CREATE INDEX idx_element_02 ON or_element (name);
 CREATE UNIQUE INDEX idx_element_uk ON or_element (templateid, name);
