@@ -34,7 +34,7 @@
   </tr>
   <tr>
     <td width="50%" class="f2"><?php echo lang('GLOBAL_created') ?></a></td>
-    <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$create_date) ?>, <?php Html::printUser($create_user) ?><? print_r($create_user)?></td>
+    <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$create_date) ?>, <?php Html::printUser($create_user) ?></td>
   </tr>
   <tr>
     <td width="50%" class="f2"><?php echo lang('GLOBAL_lastchange') ?></a></td>
