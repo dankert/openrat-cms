@@ -7,7 +7,7 @@
       <table cellpadding="0" cellspacing="0" width="100%">
         <tr>
           <td rowspan="2" width="20">
-            <img src="<?php echo $image_dir.'action_'.$type.'.png' ?>">
+            <img src="<?php echo $image_dir.'action_'.$type.'.png' ?>" title="" alt="<?php echo $type ?>">
           </td>
           <td><span class="mainmenu_headline"><?php echo lang($type) ?></span></td>
           <?php $cols = 1;
