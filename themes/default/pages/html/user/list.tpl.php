@@ -5,7 +5,8 @@
 <center>
 
 <form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="useraction" value="add">
+<input type="hidden" name="action"    value="user" />
+<input type="hidden" name="subaction" value="add"  />
 
 <table class="main" width="50%" cellspacing="0" cellpadding="4">
 
