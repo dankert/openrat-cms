@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-12-19 15:19:29  dankert
+// Revision 1.3  2004-12-19 22:35:23  dankert
+// Parameter -Angabe
+//
+// Revision 1.2  2004/12/19 15:19:29  dankert
 // Klasse erbt von "Dynamic"
 //
 // Revision 1.1  2004/11/10 22:43:35  dankert
@@ -41,7 +44,8 @@ class CommonMenu extends Dynamic
 	 * @type String
 	 */
 	var $parameters  = Array(
-		'beforeEntry'=>'Chars before an active menu entry'
+		'beforeEntry'=>'Chars before an active menu entry',
+		'afterEntry' =>'Chars after an active menu entry'
 		);
 
 	/**
