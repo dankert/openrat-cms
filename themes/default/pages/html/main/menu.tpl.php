@@ -6,7 +6,7 @@
     <td class="menu">
       <table cellpadding="0" cellspacing="0" width="100%">
         <tr>
-          <td width="2%"><span class="mainmenu_title"><?php echo lang($type) ?>&nbsp;&nbsp;</span>
+          <td width="2%"><span class="mainmenu_title"><?php echo lang('GLOBAL_'.$type) ?>&nbsp;&nbsp;</span>
           </td>
           <td width="2%" nowrap>
             <?php
@@ -26,7 +26,7 @@
           </td>
 
           <?php if(isset($nr)) { ?>
-          <td class="mainmenu_headline" width="20"><?php echo lang('id') ?>:&nbsp;
+          <td class="mainmenu_headline" width="20"><?php echo lang('GLOBAL_ID') ?>:&nbsp;
           </td>
 
           <td class="mainmenu_val"      width="50"><strong><?php echo $nr ?></strong>
@@ -41,25 +41,19 @@
 		$i = 0;
 		foreach( $subaction as $act=>$text )
 		{
-			switch( $act )
-			{
-				case 'prop'   : $accesskey = 'p'; break;
-				case 'show'   : $accesskey = 'v'; break;
-				case 'pub'    : $accesskey = 'w'; break;
-				case 'edit'   : $accesskey = 'e'; break;
-				case 'el'     : $accesskey = 'l'; break;
-				case 'rights' : $accesskey = 'a'; break;
-				case 'new'    : $accesskey = 'n'; break;
-				case 'src'    : $accesskey = 's'; break;
-				default:        $accesskey = '' ;
-			}
+			$title = lang('MENU_'.$act.'_DESC' );
 
-			if	( $accesskey != '')
-				$title = 'ALT+'.strtoupper( $accesskey );
-			else $title = '';
+			if	( hasLang('MENU_'.$act.'_KEY' ) )
+			{
+				$attrAccesskey = ' accesskey="'.lang('MENU_'.$act.'_KEY').'"';
+				$title.=' ('.lang('GLOBAL_KEY').': ALT+'.lang('MENU_'.$act.'_KEY').')';
+			}
+			else
+				$attrAccesskey = '';
+
 
 			if   ( ++$i > 1 ) echo ' | ';
-			echo '<a href="'.Html::url(array('action'=>$action,'subaction'=>$act,$param=>$this->getSessionVar($param))).'" accesskey="'.$accesskey.'" target="cms_main_main" title="'.$title.'">'.$text.'</a>';
+			echo '<a href="'.Html::url(array('action'=>$action,'subaction'=>$act,$param=>$this->getSessionVar($param))).'"'.$attrAccesskey.' target="cms_main_main" title="'.$title.'">'.$text.'</a>';
 		}
     ?></td>
   </tr>
