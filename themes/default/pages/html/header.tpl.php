@@ -65,8 +65,7 @@ function unmark( id )
 <!-- $Id$ -->
 <center>
 
-<table class="main" width="60%" cellspacing="0" cellpadding="4">
-
+<table class="main" width="98%" cellspacing="0" cellpadding="4">
   <tr>
     <th><?php echo $title ?></th>
   </tr>
@@ -78,6 +77,33 @@ function unmark( id )
     ?>
     </td>
   </tr>
+
+</table>
+
+</center>
+
+<?php } ?>
+
+
+
+<?php if (isset($notices) && count($notices)>0 )
+      { ?>
+<!-- $Id$ -->
+<center>
+
+<table class="main" width="99%" cellspacing="0" cellpadding="4">
+
+  <tr>
+    <th colspan="3"><?php echo lang('GLOBAL_NOTICES') ?></th>
+  </tr>
+
+  <?php foreach( $notices as $notice ) { ?>
+  <tr>
+    <td class="f1"><img src="<?php echo $image_dir.'icon_'.$notice['type'] ?>.png" align="left" /><?php echo $notice['name'] ?></td>
+    <td class="f1"><img src="<?php echo $image_dir.$notice['status'].'.gif' ?>" align="left" />
+                   <strong><?php echo $notice['text'] ?></strong></td>
+  </tr>
+  <?php } ?>
 
 </table>
 
