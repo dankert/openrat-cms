@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-11-10 22:43:35  dankert
+// Revision 1.2  2004-12-19 15:19:29  dankert
+// Klasse erbt von "Dynamic"
+//
+// Revision 1.1  2004/11/10 22:43:35  dankert
 // Beispiele fuer dynamische Templateelemente
 //
 // ---------------------------------------------------------------------------
@@ -31,7 +34,7 @@
  * Erstellen eines Menues
  * @author Jan Dankert
  */
-class CommonMenu /*extends DynamicElement*/
+class CommonMenu extends Dynamic
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
@@ -54,7 +57,6 @@ class CommonMenu /*extends DynamicElement*/
 	var $beforeEntry = '<li><strong>';
 	var $afterEntry  = '</strong></li>';
 	
-	var $api;
 
 	// Erstellen des Hauptmenues
 	function execute()
@@ -62,7 +64,7 @@ class CommonMenu /*extends DynamicElement*/
 		// Erstellen eines Untermenues
 		
 		// Ermitteln der aktuellen Seite
-		$thispage = new Page( $this->api->getObjectId() );
+		$thispage = new Page( $this->getObjectId() );
 		$thispage->load(); // Seite laden
 		
 		// uebergeordneter Ordner dieser Seite
@@ -79,15 +81,15 @@ class CommonMenu /*extends DynamicElement*/
 			if (!$o->isPage && !$o->isLink ) continue;
 	
 			// Wenn aktuelle Seite, dann markieren, sonst Link
-			if ( $this->api->getObjectId() == $id )
+			if ( $this->getObjectId() == $id )
 			{
 				// aktuelle Seite
-				$this->api->output( '<li><strong>'.$o->name.'</strong></li>' );
+				$this->output( '<li><strong>'.$o->name.'</strong></li>' );
 			}
 			else
 			{
 				// Link erzeugen
-				$this->api->output( '<li><a href="'.$this->api->page->path_to_object($id).'">'.$o->name.'</a></li>' );
+				$this->output( '<li><a href="'.$this->page->path_to_object($id).'">'.$o->name.'</a></li>' );
 			}
 		}
 	}

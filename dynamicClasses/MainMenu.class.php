@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-10-14 21:15:57  dankert
+// Revision 1.2  2004-12-19 15:19:16  dankert
+// Klasse erbt von "Dynamic"
+//
+// Revision 1.1  2004/10/14 21:15:57  dankert
 // Erzeugen eines Hauptmenues
 //
 // ---------------------------------------------------------------------------
@@ -31,7 +34,7 @@
  * Erstellen eines Hauptmenues
  * @author Jan Dankert
  */
-class MainMenu /*extends DynamicElement*/
+class MainMenu extends Dynamic
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
@@ -50,13 +53,12 @@ class MainMenu /*extends DynamicElement*/
 	 */
 	var $description = 'Creates a main menu.';
 	var $version     = '$Id$';
-	var $api;
 
 	// Erstellen des Hauptmenues
 	function execute()
 	{
 		// Lesen des Root-Ordners
-		$folder = new Folder( Api::getRootObjectId() );
+		$folder = new Folder( $this->getRootObjectId() );
 		
 		// Schleife ueber alle Inhalte des Root-Ordners
 		foreach( $folder->getObjectIds() as $id )
@@ -71,7 +73,7 @@ class MainMenu /*extends DynamicElement*/
 				// Ermitteln eines Objektes mit dem Dateinamen index
 				$oid = $f->getObjectIdByFileName('index');
 				if ( is_numeric($oid) && $oid!=0 )
-					$this->api->output( $this->arrowChar.'<a href="'.$this->page->path_to_object($oid).'" title="'.$o->desc.'">'.$o->name.'</a>' );
+					$this->output( $this->arrowChar.'<a href="'.$this->page->path_to_object($oid).'" title="'.$o->desc.'">'.$o->name.'</a>' );
 			}
 		}
 	}
