@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-04-30 20:31:57  dankert
+// Berechtigung: freigeben
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
@@ -185,6 +188,7 @@ class Action
 		$acl->write         = ( $this->getRequestVar('write'        ) != '' );
 		$acl->prop          = ( $this->getRequestVar('prop'         ) != '' );
 		$acl->delete        = ( $this->getRequestVar('delete'       ) != '' );
+		$acl->release       = ( $this->getRequestVar('release'      ) != '' );
 		$acl->publish       = ( $this->getRequestVar('publish'      ) != '' );
 		$acl->create_folder = ( $this->getRequestVar('create_folder') != '' );
 		$acl->create_file   = ( $this->getRequestVar('create_file'  ) != '' );
