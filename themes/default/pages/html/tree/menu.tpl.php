@@ -40,8 +40,11 @@
   </tr>
   <tr>
     <td class="submenu" height="20">
+      <?php if (isset($language_name)) { ?>
       <?php echo lang('LANGUAGE') ?>:&nbsp;<a href="<?php echo $language_url     ?>" target="cms_main"><?php echo $language_name     ?></a> | 
       <?php echo lang('MODEL')    ?>:&nbsp;<a href="<?php echo $projectmodel_url ?>" target="cms_main"><?php echo $projectmodel_name ?></a>
+  	  <?php } else  { ?>&nbsp;
+	  <?php } ?>
     </td>
   </tr>
 </table>
