@@ -104,19 +104,46 @@ class UserAction extends Action
 
 	function pwchange()
 	{
-		if	( $this->getRequestVar('password1') != '' &&
-			  $this->getRequestVar('password1') == $this->getRequestVar('password2') )
+		global $conf;
+
+		$pw1 = $this->getRequestVar('password1');
+		$pw2 = $this->getRequestVar('password2');
+
+		// Zufaelliges Kennwort erzeugen
+		if	( $this->hasRequestVar('random') && $this->hasRequestVar('mail') )
 		{
-			$this->user->setPassword( $this->getRequestVar('password1') );
+			$pw1 = substr( md5(microtime().session_id()),0,intval($conf['security']['random_password_length']) );
+			$pw2 = $pw1;
+		}
+
+
+		// Wenn Kennwoerter identisch und lang genug
+		if	( $pw1 == $pw2 &&
+			  strlen($pw1)>=intval($conf['security']['min_password_length'])  )
+		{
+			$this->user->setPassword($pw1); // Kennwort setzen
 			
 			// E-Mail mit dem neuen Kennwort an Benutzer senden
-			if	( $this->hasRequestVar('mail') && !empty($this->user->mail) )
+			if	( $this->hasRequestVar('mail') && !empty($this->user->mail) && $conf['mail']['enabled'] )
 			{
+				$header = 'X-Mailer: '.OR_TITLE.' '.OR_VERSION;
+				if	( !empty($conf['mail']['from']) )
+					$header .= "\nFrom: ".$conf['mail']['from'];
+
 				// Text der E-Mail zusammenfuegen
-				$text = wordwrap(lang('USER_MAIL_PREFIX'),70,"\n")."\n\n".$this->getRequestVar('password1')."\n\n".wordwrap(lang('USER_MAIL_SUFFFIX'),70,"\n");
+				$text =  "\n".wordwrap(str_replace(';',"\n",lang('USER_MAIL_TEXT_PREFIX')),70,"\n")."\n\n";
+				$text .= $pw1."\n\n";
+				$text .=      wordwrap(str_replace(';',"\n",lang('USER_MAIL_TEXT_SUFFIX')),70,"\n");
+
+				// Signatur anhaengen (sofern konfiguriert)
+				if	( !empty($conf['mail']['signature']) )
+				{
+					$text .= "\n\n-- \n";
+					$text .= str_replace(';',"\n",$conf['mail']['signature']);
+				}
 
 				// Mail versenden
-				mail($this->user->mail,lang('USER_MAIL_SUBJECT'),$text);
+				mail($this->user->mail,lang('USER_MAIL_SUBJECT'),$text,$header);
 			}
 
 			$this->addNotice('user',$this->user->name,'SAVED','ok');
@@ -125,27 +152,6 @@ class UserAction extends Action
 		$this->callSubAction('edit');
 	}
 
-//	function delright()
-//	{
-//		if   ($SESS['user']['is_admin'] != '1') die('weah');
-//
-//		$user->delRight( $this->getRequestVar('aclid') );
-//	
-//		// Berechtigungen anzeigen
-//		$this->callSubAction('rights');
-//	}
-//
-//
-//	function addright()
-//	{
-//		global $REQ;
-//		if   ($SESS['user']['is_admin'] != '1') die('go away hacker');
-//		
-//		$user->addRight( $REQ );
-//
-//		// Berechtigungen anzeigen
-//		$this->callSubAction('rights');
-//	}
 
 
 	function listing()
@@ -193,6 +199,8 @@ class UserAction extends Action
 	 */
 	function pw()
 	{
+		$this->setTemplateVar('mail',$this->user->mail);
+		
 		$this->forward('user_pw');
 	}
 

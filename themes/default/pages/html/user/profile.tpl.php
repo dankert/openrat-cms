@@ -39,13 +39,12 @@
   </tr>
 <?php } ?>
 
-<?php if (!isset($use_ldap))
-      { ?>
-
 <?php include( $tpl_dir.'table_close.tpl.php'); ?>
 
 </form>
 
+
+<?php if ( empty($ldap_dn) ) { ?>
 <?php echo Html::form('profile','pwchange',$userid) ?>
 
 <?php
@@ -66,15 +65,15 @@
 <td width="50%" class="f2"><?php echo lang('user_new_password_repeat') ?></a></td>
 <td width="50%" class="f2"><input type="password" name="password2"></td>
 </tr>
-<?php } ?>
-  <tr>
-    <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
-  </tr>
+<tr>
+  <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
+</tr>
 
 <?php include( $tpl_dir.'table_close.tpl.php') ?>
 
 </form>
 
+<?php } ?>
 </center>
 
 <?php Html::focusField('fullname') ?>
