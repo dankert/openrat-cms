@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-10-04 19:57:17  dankert
+// Revision 1.4  2004-11-10 22:50:37  dankert
+// Benutzen von Konstanten zur Performancesteigerung
+//
+// Revision 1.3  2004/10/04 19:57:17  dankert
 // Bugfix und trace()
 //
 // Revision 1.2  2004/05/02 15:04:16  dankert
@@ -32,11 +35,31 @@
 // ---------------------------------------------------------------------------
 
 
-define('OR_LOG_LEVEL_TRACE',1);
-define('OR_LOG_LEVEL_DEBUG',2);
-define('OR_LOG_LEVEL_INFO' ,3);
-define('OR_LOG_LEVEL_WARN' ,4);
-define('OR_LOG_LEVEL_ERROR',5);
+switch( strtolower($conf['log']['level']) )
+{
+	case 'trace':
+		define('OR_LOG_LEVEL_TRACE',true );
+
+	case 'debug':
+		define('OR_LOG_LEVEL_DEBUG',true );
+
+	case 'info':
+		define('OR_LOG_LEVEL_INFO' ,true );
+
+	case 'warn':
+		define('OR_LOG_LEVEL_WARN' ,true );
+
+	case 'error':
+		define('OR_LOG_LEVEL_ERROR',true );
+}
+
+if	( !defined('OR_LOG_LEVEL_TRACE') ) define('OR_LOG_LEVEL_TRACE',false );
+if	( !defined('OR_LOG_LEVEL_DEBUG') ) define('OR_LOG_LEVEL_DEBUG',false );
+if	( !defined('OR_LOG_LEVEL_INFO' ) ) define('OR_LOG_LEVEL_INFO' ,false );
+if	( !defined('OR_LOG_LEVEL_WARN' ) ) define('OR_LOG_LEVEL_WARN' ,false );
+if	( !defined('OR_LOG_LEVEL_ERROR') ) define('OR_LOG_LEVEL_ERROR',false );
+
+
 
 /**
  * Schreiben eines Eintrages in die Logdatei
@@ -54,7 +77,8 @@ class Logger
 	 */
 	function trace( $message )
 	{
-		Logger::doLog( 'trace',$message );
+		if	( OR_LOG_LEVEL_TRACE )
+			Logger::doLog( 'trace',$message );
 	}
 
 
@@ -65,7 +89,8 @@ class Logger
 	 */
 	function debug( $message )
 	{
-		Logger::doLog( 'debug',$message );
+		if	( OR_LOG_LEVEL_DEBUG )
+			Logger::doLog( 'debug',$message );
 	}
 
 
@@ -76,7 +101,8 @@ class Logger
 	 */
 	function info( $message )
 	{
-		Logger::doLog( 'info',$message );
+		if	( OR_LOG_LEVEL_INFO )
+			Logger::doLog( 'info',$message );
 	}
 
 
@@ -87,7 +113,8 @@ class Logger
 	 */
 	function warn( $message )
 	{
-		Logger::doLog( 'warn',$message );
+		if	( OR_LOG_LEVEL_WARN )
+			Logger::doLog( 'warn',$message );
 	}
 
 
@@ -98,7 +125,8 @@ class Logger
 	 */
 	function error( $message )
 	{
-		Logger::doLog( 'error',$message );
+		if	( OR_LOG_LEVEL_ERROR )
+			Logger::doLog( 'error',$message );
 	}
 
 
@@ -123,25 +151,11 @@ class Logger
 		if	( ! is_writable($filename) )
 			die( "logfile $filename is not writable by the server" );
 
-		$confLevel         = strtoupper($conf['log']['level']);
-		$confLevelConstant = 'OR_LOG_LEVEL_'.$confLevel;
-
-		if	( !defined($confLevelConstant) )
-			die( "unknown log level '$confLevel' in config" );
-
-		$thisLevel         = strtoupper($facility);
-		$thisLevelConstant = 'OR_LOG_LEVEL_'.$thisLevel;
-
-		if	( !defined($thisLevelConstant) )
-			die( "unknown log level '$thisLevel' in parameter" );
-
-
-		// Wenn konfiguriertes Mindest-Loglevel nicht erreicht, dann Return
-		if	( constant($confLevelConstant) > constant($confLevelConstant) )
-			return;
+		$thisLevel = strtoupper($facility);
 		
-		if	( isset($SESS['user']) )
-			$username = $SESS['user']['name'];
+		$user = Session::getUser();
+		if	( is_object($user) )
+			$username = $user->name;
 		else	$username = 'unknown';
 	
 		$text = $conf['log']['format']; // Format der Logdatei lesen
