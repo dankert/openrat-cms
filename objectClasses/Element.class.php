@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-12-26 01:06:31  dankert
+// Revision 1.9  2004-12-26 20:22:03  dankert
+// Erweiterung bei setType()
+//
+// Revision 1.8  2004/12/26 01:06:31  dankert
 // Perfomanceverbesserung Seite/Elemente
 //
 // Revision 1.7  2004/12/19 15:21:21  dankert
@@ -282,6 +285,7 @@ class Element
 	 */
 	function setType( $type )
 	{
+		$this->type = $type;
 		$db = db_connection();
 		
 		$sql = new Sql( 'UPDATE {t_element}'.
@@ -289,7 +293,7 @@ class Element
 		                ' WHERE id={elementid}'         );
 
 		$sql->setInt    ( 'elementid',$this->elementid );
-		$sql->setString ( 'type'     ,$type            );
+		$sql->setString ( 'type'     ,$this->type      );
 
 		$db->query( $sql->query );
 	}
