@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-11-28 23:55:49  dankert
+// Ausgabe performanter
+//
+// Revision 1.2  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -38,7 +41,7 @@
 class SearchAction extends Action
 {
 	/**
-	 * Falls keine Unteraktion ausgewählt wurde wird diese genommen
+	 * Falls keine Unteraktion ausgew?hlt wurde wird diese genommen
 	 * @type String
 	 */
 	var $defaultSubAction = 'prop';
@@ -53,7 +56,7 @@ class SearchAction extends Action
 
 
 	/**
-	 * Durchführen der Suche
+	 * Durchf?hren der Suche
 	 * und Anzeige der Ergebnisse
 	 */
 	function search()
@@ -145,20 +148,14 @@ class SearchAction extends Action
 			$o = new Object( $objectid );
 			$o->load();
 			$resultList[$objectid] = array();
-			$resultList[$objectid]['url']  = Html::url(array('action'=>'main','callAction'=>$o->getType(),'objectid'=>$objectid));
+			$resultList[$objectid]['url']  = Html::url(array('action'=>'main','subaction'=>$o->getType(),'objectid'=>$objectid));
 			$resultList[$objectid]['type'] = $o->getType();
+			$resultList[$objectid]['name'] = $o->name;
 
-			if	( !$o->isRoot )
-			{
-				$folder = new Folder( $o->parentid );
-				$folder->load();
-				$resultList[$objectid]['name'] = implode(' &raquo; ',$folder->parentObjectNames(true,true) ).' &raquo; '.$o->name;
-			}
+			if	( $o->desc != '' )
+				$resultList[$objectid]['desc'] = $o->desc;
 			else
-			{
-				$resultList[$objectid]['name'] = '&raquo; '.$o->name;
-			}
-			$resultList[$objectid]['desc'] = $o->desc;
+				$resultList[$objectid]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 		}
 
 		foreach( $listTemplateIds as $templateid )
@@ -166,10 +163,10 @@ class SearchAction extends Action
 			$t = new Template( $templateid );
 			$t->load();
 			$resultList['t'.$templateid] = array();
-			$resultList['t'.$templateid]['url' ]  = Html::url(array('action'=>'main','callAction'=>'template','templateid'=>$templateid));
+			$resultList['t'.$templateid]['url' ]  = Html::url(array('action'=>'main','subaction'=>'template','templateid'=>$templateid));
 			$resultList['t'.$templateid]['type'] = 'tpl';
 			$resultList['t'.$templateid]['name'] = $t->name;
-			$resultList['t'.$templateid]['desc'] = '';
+			$resultList['t'.$templateid]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 		}
 
 		$this->setTemplateVar( 'result',$resultList );
