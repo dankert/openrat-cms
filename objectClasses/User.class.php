@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-11-15 21:35:39  dankert
+// Revision 1.7  2004-11-28 16:56:38  dankert
+// Beruecksichtigen von Berechtigungen fuer "alle"
+//
+// Revision 1.6  2004/11/15 21:35:39  dankert
 // Berechtigungen mit Bitmasken
 //
 // Revision 1.5  2004/11/10 22:48:25  dankert
@@ -145,7 +148,8 @@ class User
 			                '  LEFT JOIN {t_object}  ON {t_object}.id ={t_acl}.objectid '.
 			                '  LEFT JOIN {t_project} ON {t_project}.id={t_object}.projectid '.
 			                '  WHERE userid={userid} OR'.
-			                '        '.$this->getGroupClause().
+			                '        '.$this->getGroupClause().' OR '.
+			                '        ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) '.
 			                '  ORDER BY {t_project}.name' );
 			$sql->setInt   ( 'userid',$this->userid );
 
@@ -170,7 +174,8 @@ class User
 			                '  FROM {t_acl}'.
 			                '  LEFT JOIN {t_object} ON {t_object}.id={t_acl}.objectid '.
 			                '  WHERE userid={userid} OR'.
-			                '        '.$this->getGroupClause().
+			                '        '.$this->getGroupClause().' OR '.
+			                '        ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) '.
 			                '  ORDER BY {t_project}.name' );
 			$sql->setInt   ( 'userid',$this->userid );
 
@@ -550,7 +555,8 @@ class User
 		                '         ON {t_object}.id={t_acl}.objectid '.
 		                '  WHERE projectid={projectid}'.
 		                '    AND ( languageid={languageid} OR languageid IS NULL )'.
-		                '    AND ( {t_acl}.userid={userid} OR '.$group_clause   .')' );
+		                '    AND ( {t_acl}.userid={userid} OR '.$group_clause.
+		                                                 ' OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )' );
 		$sql->setInt  ( 'languageid',$languageid    );
 		$sql->setInt  ( 'projectid' ,$projectid     );
 		$sql->setInt  ( 'userid'    ,$this->userid );
@@ -571,6 +577,8 @@ class User
 			if	( $acl->transmit )
 			{
 				$f = new Folder( $o->objectid );
+				Logger::debug( 'vererbung!' );
+			
 				foreach( $f->getAllSubfolderIds() as $sfid )
 					$this->addRight($sfid,$acl->getMask() );
 			}
