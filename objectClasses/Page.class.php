@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2004-12-19 21:48:31  dankert
+// Revision 1.15  2004-12-25 21:05:29  dankert
+// Korrektur Edit-Icons
+//
+// Revision 1.14  2004/12/19 21:48:31  dankert
 // Links auf andere Objekte korrigiert
 //
 // Revision 1.13  2004/12/19 15:23:06  dankert
@@ -673,7 +676,7 @@ class Page extends Object
 			}
 			else
 			{
-				// Wenn Feld gef?llt
+				// Wenn Feld gefuellt
 				$src = str_replace( '{{IFNOTEMPTY:'.$id.':BEGIN}}','',$src );
 				$src = str_replace( '{{IFNOTEMPTY:'.$id.':END}}'  ,'',$src );
 
@@ -681,8 +684,9 @@ class Page extends Object
 			}
 			
 			if   ( $this->icons )
-				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url(array('action'=>'pagelement','elementid'=>$id,'subaction'=>'edit')).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.$conf['directories']['themedir'].'/images/icon_el_'.$value->element->type.'.png" border="0"></a>',$src );
-			else	$src = str_replace( '{{->'.$id.'}}','',$src );
+				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url('pageelement','edit',array('elementid'=>$id)).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_EXT.'" border="0"></a>',$src );
+			else
+				$src = str_replace( '{{->'.$id.'}}','',$src );
 		}
 
 		$this->value = &$src;

@@ -737,9 +737,7 @@ class Value
 		if	( intval($this->valueid)==0 )
 			$this->load();
 		$db = db_connection();
-		global $conf,
-		       $conf_tmpdir,
-		       $SESS;
+		global $conf;
 	
 		$inhalt = '';
 
@@ -958,7 +956,7 @@ class Value
 
 						if	( method_exists( $dynEl,'execute' ) )
 						{
-							$dynEl->delOutput();
+							//$dynEl->delOutput();
 							$dynEl->objectid = $this->page->objectid;
 							$dynEl->page    = &$this->page;
 
@@ -1061,13 +1059,13 @@ class Value
 						$inhalt = '';
 						break;
 					case 'edit_url':
-						$inhalt = Html::url(array('objectid'=>$this->page->objectid,'dbid'=>$SESS['dbid']));
+						$inhalt = Html::url('index','object',$this->page->objectid,array('dbid'=>$db->dbid));
 						break;
 					case 'edit_fullurl':
 						$inhalt = 'http://';
 						$inhalt .= getenv('SERVER_NAME');
 						$inhalt .= dirname(getenv('SCRIPT_NAME'));
-						$inhalt .= '/'.Html::url(array('objectid'=>$this->page->objectid,'dbid'=>$SESS['dbid']));;
+						$inhalt .= '/'.Html::url('index','object',$this->page->objectid,array('dbid'=>$db->dbid));;
 						break;
 					case 'lastch_user_username':
 						$user = new User($this->page->lastchange_userid);
@@ -1153,7 +1151,7 @@ class Value
 		}
 		
 		if   ( $this->page->icons && $this->element->withIcon )
-			$inhalt = '<a href="'.Html::url(array('action'=>'pageelement','elementid'=>$this->element->elementid,'objectid'=>$this->page->objectid,'subaction'=>'edit')).'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.$conf['directories']['themedir'].'/images/icon_el_'.$this->element->type.'.png" border="0" align="left"></a>'.$inhalt;
+			$inhalt = '<a href="'.Html::url('pageelement','edit',$this->page->objectid,array('elementid'=>$this->element->elementid)).'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_EXT.'" border="0" align="left"></a>'.$inhalt;
 		
 		$this->value = $inhalt;
 	}
