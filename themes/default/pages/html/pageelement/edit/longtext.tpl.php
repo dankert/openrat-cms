@@ -24,7 +24,7 @@ function link()
 
 function image()
 {
-	insert('','{"'+document.forms[0].objectid.value+'"}');
+	insert('text','','{"'+document.forms[0].objectid.value+'"}');
 }
 
 
@@ -52,7 +52,7 @@ function table()
 <!-- $Id$ -->
 <center>
 
-<?php echo Html::form('page','elsave') ?>
+<?php echo Html::form('page','elsave',$objectid) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
