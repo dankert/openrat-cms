@@ -5,24 +5,6 @@
 -- Licensed under the GNU General Public Licence
 
 
-DROP TABLE or_acl;
-DROP TABLE or_value;
-DROP TABLE or_usergroup;
-DROP TABLE or_templatemodel;
-DROP TABLE or_name;
-DROP TABLE or_link;
-DROP TABLE or_folder;
-DROP TABLE or_file;
-DROP TABLE or_element;
-DROP TABLE or_projectmodel;
-DROP TABLE or_page;
-DROP TABLE or_language;
-DROP TABLE or_template;
-DROP TABLE or_object;
-DROP TABLE or_group;
-DROP TABLE or_user;
-DROP TABLE or_project;
-
 CREATE TABLE or_project (
        id INT NOT NULL
      , name VARCHAR(128) NOT NULL
@@ -93,12 +75,13 @@ CREATE UNIQUE INDEX idx_object_uk ON or_object (parentid, filename);
 
 CREATE TABLE or_template (
        id INT NOT NULL
-     , projectid INT
+     , projectid INT NOT NULL
      , name VARCHAR(50) NOT NULL
      , PRIMARY KEY (id)
-     , CONSTRAINT FK_template_1 FOREIGN KEY (projectid)
+     , CONSTRAINT fk_template_01 FOREIGN KEY (projectid)
                   REFERENCES or_project (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+COMMENT ON COLUMN or_template.id IS 'auto_increment';
 CREATE INDEX idx_template_01 ON or_template (projectid);
 CREATE INDEX idx_template_02 ON or_template (name);
 CREATE UNIQUE INDEX idx_template_uk ON or_template (projectid, name);
@@ -110,7 +93,7 @@ CREATE TABLE or_language (
      , name VARCHAR(50) NOT NULL
      , is_default INT DEFAULT 0 NOT NULL
      , PRIMARY KEY (id)
-     , CONSTRAINT FK_language_1 FOREIGN KEY (projectid)
+     , CONSTRAINT fk_language_01 FOREIGN KEY (projectid)
                   REFERENCES or_project (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 CREATE UNIQUE INDEX idx_language_uk ON or_language (projectid, isocode);
@@ -120,10 +103,10 @@ CREATE TABLE or_page (
      , objectid INT DEFAULT 0 NOT NULL
      , templateid INT DEFAULT 0 NOT NULL
      , PRIMARY KEY (id)
-     , CONSTRAINT FK_page_1 FOREIGN KEY (templateid)
-                  REFERENCES or_template (id) ON DELETE RESTRICT ON UPDATE NO ACTION
-     , CONSTRAINT FK_page_2 FOREIGN KEY (objectid)
-                  REFERENCES or_object (id) ON DELETE RESTRICT ON UPDATE NO ACTION
+     , CONSTRAINT fk_page_01 FOREIGN KEY (templateid)
+                  REFERENCES or_template (id) ON DELETE RESTRICT ON UPDATE RESTRICT
+     , CONSTRAINT fk_page_02 FOREIGN KEY (objectid)
+                  REFERENCES or_object (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 CREATE UNIQUE INDEX idx_page_uk ON or_page (objectid);
 CREATE INDEX idx_page_01 ON or_page (templateid);
@@ -132,11 +115,13 @@ CREATE TABLE or_projectmodel (
        id INT NOT NULL
      , projectid INT DEFAULT 0 NOT NULL
      , name VARCHAR(50) NOT NULL
-     , is_default INT DEFAULT 0 NOT NULL
+     , extension VARCHAR(10)
+     , is_default CHAR(10) DEFAULT '0' NOT NULL
      , PRIMARY KEY (id)
-     , CONSTRAINT FK_projectmodel_1 FOREIGN KEY (projectid)
+     , CONSTRAINT fk_projectmodel_01 FOREIGN KEY (projectid)
                   REFERENCES or_project (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+COMMENT ON COLUMN or_projectmodel.extension IS 'not in use';
 CREATE INDEX idx_projectmodel_01 ON or_projectmodel (projectid);
 CREATE UNIQUE INDEX idx_projectmodel_uk ON or_projectmodel (projectid, name);
 
@@ -168,6 +153,24 @@ CREATE TABLE or_element (
      , CONSTRAINT fk_element_03 FOREIGN KEY (templateid)
                   REFERENCES or_template (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+COMMENT ON COLUMN or_element.templateid IS 'Template fuer das dieses Element gilt';
+COMMENT ON COLUMN or_element.name IS 'Name des Elementes';
+COMMENT ON COLUMN or_element.descr IS 'Beschreibung fuer den Redakteur';
+COMMENT ON COLUMN or_element.type IS 'interner Typ des Elementes';
+COMMENT ON COLUMN or_element.subtype IS 'Untertyp, fuer bestimmte Typen notwendig';
+COMMENT ON COLUMN or_element.with_icon IS 'ja/nein ob Editier-Ikon vor Element erscheint';
+COMMENT ON COLUMN or_element.dateformat IS 'Datumsformat (nur bei Datums-Elementen)';
+COMMENT ON COLUMN or_element.wiki IS 'ja/nein ob Text-Schnellauszeichnung erfolgen soll (nur bei Textelementen)';
+COMMENT ON COLUMN or_element.html IS 'ja/nein ob HTML im Text erlaubt ist (nur bei Textelementen)';
+COMMENT ON COLUMN or_element.all_languages IS 'ja/nein ob Inhalt fuer alle Sprachen gilt';
+COMMENT ON COLUMN or_element.writable IS 'ja/nein ob Inhalt vom Redakteur veraenderbar';
+COMMENT ON COLUMN or_element.decimals IS 'Anzahl Nachkommastellen (bei Typ Zahl)';
+COMMENT ON COLUMN or_element.dec_point IS 'Dezimalstelle (bei Typ Zahl)';
+COMMENT ON COLUMN or_element.thousand_sep IS 'Tausenderpunkt (bei Typ Zahl)';
+COMMENT ON COLUMN or_element.code IS 'PHP-Code fuer dynamische Inhalte';
+COMMENT ON COLUMN or_element.default_text IS 'Standard-Inhalt wenn kein Inhalt vorhanden ist';
+COMMENT ON COLUMN or_element.folderobjectid IS 'Verweis auf Ordner';
+COMMENT ON COLUMN or_element.default_objectid IS 'verlinktes Objekt, wenn kein anderer Inhalt verfuegbar ist.';
 CREATE INDEX idx_element_01 ON or_element (templateid);
 CREATE INDEX idx_element_02 ON or_element (name);
 CREATE UNIQUE INDEX idx_element_uk ON or_element (templateid, name);
@@ -179,8 +182,8 @@ CREATE TABLE or_file (
      , size INT DEFAULT 0 NOT NULL
      , value TEXT NOT NULL
      , PRIMARY KEY (id)
-     , CONSTRAINT FK_file_1 FOREIGN KEY (objectid)
-                  REFERENCES or_object (id) ON DELETE RESTRICT ON UPDATE NO ACTION
+     , CONSTRAINT fk_file_01 FOREIGN KEY (objectid)
+                  REFERENCES or_object (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 CREATE UNIQUE INDEX idx_file_01 ON or_file (objectid);
 
@@ -188,7 +191,7 @@ CREATE TABLE or_folder (
        id INT NOT NULL
      , objectid INT DEFAULT 0 NOT NULL
      , PRIMARY KEY (id)
-     , CONSTRAINT FK_folder_objectid FOREIGN KEY (objectid)
+     , CONSTRAINT fk_folder_01 FOREIGN KEY (objectid)
                   REFERENCES or_object (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 CREATE UNIQUE INDEX idx_folder_01 ON or_folder (objectid);
@@ -214,9 +217,9 @@ CREATE TABLE or_name (
      , descr VARCHAR(255) NOT NULL
      , languageid INT DEFAULT 0 NOT NULL
      , PRIMARY KEY (id)
-     , CONSTRAINT FK_name_1 FOREIGN KEY (objectid)
-                  REFERENCES or_object (id) ON DELETE RESTRICT ON UPDATE NO ACTION
-     , CONSTRAINT FK_name_2 FOREIGN KEY (languageid)
+     , CONSTRAINT fk_name_01 FOREIGN KEY (objectid)
+                  REFERENCES or_object (id) ON DELETE RESTRICT ON UPDATE RESTRICT
+     , CONSTRAINT fk_name_02 FOREIGN KEY (languageid)
                   REFERENCES or_language (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 CREATE INDEX idx_name_01 ON or_name (objectid);
@@ -231,10 +234,10 @@ CREATE TABLE or_templatemodel (
      , text TEXT NOT NULL
      , PRIMARY KEY (id)
      , CONSTRAINT UQ_or_templatemodel_1 UNIQUE (templateid, extension)
-     , CONSTRAINT FK_templatemodel_1 FOREIGN KEY (templateid)
-                  REFERENCES or_template (id) ON DELETE RESTRICT ON UPDATE NO ACTION
-     , CONSTRAINT FK_templatemodel_2 FOREIGN KEY (projectmodelid)
-                  REFERENCES or_projectmodel (id) ON DELETE RESTRICT ON UPDATE NO ACTION
+     , CONSTRAINT fk_templatemodel_01 FOREIGN KEY (templateid)
+                  REFERENCES or_template (id) ON DELETE RESTRICT ON UPDATE RESTRICT
+     , CONSTRAINT fk_templatemodel_02 FOREIGN KEY (projectmodelid)
+                  REFERENCES or_projectmodel (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 CREATE INDEX idx_templatemodel_01 ON or_templatemodel (templateid);
 CREATE UNIQUE INDEX idx_templatemodel_uk_01 ON or_templatemodel (templateid, projectmodelid);
@@ -244,9 +247,9 @@ CREATE TABLE or_usergroup (
      , userid INT DEFAULT 0 NOT NULL
      , groupid INT DEFAULT 0 NOT NULL
      , PRIMARY KEY (id)
-     , CONSTRAINT FK_usergroup_1 FOREIGN KEY (groupid)
+     , CONSTRAINT fk_usergroup_01 FOREIGN KEY (groupid)
                   REFERENCES or_group (id) ON DELETE RESTRICT ON UPDATE RESTRICT
-     , CONSTRAINT FK_usergroup_2 FOREIGN KEY (userid)
+     , CONSTRAINT fk_usergroup_02 FOREIGN KEY (userid)
                   REFERENCES or_user (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 CREATE INDEX idx_usergroup_01 ON or_usergroup (groupid);
@@ -266,15 +269,15 @@ CREATE TABLE or_value (
      , lastchange_date INT DEFAULT 0 NOT NULL
      , lastchange_userid INT DEFAULT 0
      , PRIMARY KEY (id)
-     , CONSTRAINT FK_value_1 FOREIGN KEY (pageid)
-                  REFERENCES or_page (id) ON DELETE RESTRICT ON UPDATE NO ACTION
-     , CONSTRAINT FK_value_2 FOREIGN KEY (elementid)
+     , CONSTRAINT fk_value_01 FOREIGN KEY (pageid)
+                  REFERENCES or_page (id) ON DELETE RESTRICT ON UPDATE RESTRICT
+     , CONSTRAINT fk_value_02 FOREIGN KEY (elementid)
                   REFERENCES or_element (id) ON DELETE RESTRICT ON UPDATE RESTRICT
-     , CONSTRAINT FK_value_3 FOREIGN KEY (languageid)
+     , CONSTRAINT fk_value_03 FOREIGN KEY (languageid)
                   REFERENCES or_language (id) ON DELETE RESTRICT ON UPDATE RESTRICT
-     , CONSTRAINT FK_value_4 FOREIGN KEY (lastchange_userid)
+     , CONSTRAINT fk_value_04 FOREIGN KEY (lastchange_userid)
                   REFERENCES or_user (id) ON DELETE RESTRICT ON UPDATE RESTRICT
-     , CONSTRAINT FK_value_5 FOREIGN KEY (linkobjectid)
+     , CONSTRAINT fk_value_05 FOREIGN KEY (linkobjectid)
                   REFERENCES or_object (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 CREATE INDEX idx_value_01 ON or_value (pageid);
@@ -301,13 +304,13 @@ CREATE TABLE or_acl (
      , is_grant INT DEFAULT 0 NOT NULL
      , is_transmit INT NOT NULL
      , PRIMARY KEY (id)
-     , CONSTRAINT fk_acl_groupid FOREIGN KEY (groupid)
+     , CONSTRAINT fk_acl_01 FOREIGN KEY (groupid)
                   REFERENCES or_group (id) ON DELETE RESTRICT ON UPDATE RESTRICT
-     , CONSTRAINT fk_acl_userid FOREIGN KEY (userid)
+     , CONSTRAINT fk_acl_02 FOREIGN KEY (userid)
                   REFERENCES or_user (id) ON DELETE RESTRICT ON UPDATE RESTRICT
-     , CONSTRAINT fk_acl_objectid FOREIGN KEY (objectid)
+     , CONSTRAINT fk_acl_03 FOREIGN KEY (objectid)
                   REFERENCES or_object (id) ON DELETE RESTRICT ON UPDATE RESTRICT
-     , CONSTRAINT FK_or_acl_languageid FOREIGN KEY (languageid)
+     , CONSTRAINT fk_acl_04 FOREIGN KEY (languageid)
                   REFERENCES or_language (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 CREATE INDEX idx_acl_01 ON or_acl (userid);
