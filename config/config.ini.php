@@ -28,7 +28,7 @@ filename = id            ; filename-mode 'ss','crc32','md5','edit' or 'id'
 
 
 [log]
-file        = "./log/cms.log"       ; logfile ( blank if no logging )
+file        = ""                    ; logfile ( blank if no logging )
 level       = "trace"               ; loglevel 'trace','debug','info','warn','error'
 date_format = "M j H:i:s"           ; date format
 dns_lookup  = true                  ; lookup hostname of client-IP 
@@ -65,7 +65,7 @@ tag_speech_close     = "&rdquo;"    ; HTML-tag end   of speech
 
 [wiki]
 convert_html         = true         ; convert simple HTML-tags to wiki-markup (if HTML is disabled)
-convert_bbcode=true  = true         ; convert a few BB-code tags to wiki-markup
+convert_bbcode       = true         ; convert a few BB-code tags to wiki-markup
 tag_strong           = "*"          ; how strong text is marked
 tag_emphatic         = "_"          ; how emphatic text is marked
 
