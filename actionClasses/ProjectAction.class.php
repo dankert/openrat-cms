@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-12-15 23:25:32  dankert
+// Revision 1.6  2004-12-19 15:16:02  dankert
+// div. Korrekturen
+//
+// Revision 1.5  2004/12/15 23:25:32  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.4  2004/11/10 22:40:14  dankert
@@ -89,12 +92,14 @@ class ProjectAction extends Action
 	function add()
 	{
 		// Projekt hinzufuegen
-		$this->project->name = $this->getRequestVar('name');
-		$this->project->add();
+		if	( $this->getRequestVar('name') != '' )
+		{
+			$this->project = new Project();
+			$this->project->name = $this->getRequestVar('name');
+			$this->project->add();
+		}
 
-		$this->setTemplateVar('tree_refresh',true);
-
-		$this->callSubAction('edit');
+		$this->callSubAction('listing');
 	}
 
 
@@ -105,11 +110,12 @@ class ProjectAction extends Action
 		// Projekte ermitteln
 		$list = array();
 
-		foreach( $this->project->getAll() as $id=>$name )
+		foreach( Project::getAll() as $id=>$name )
 		{
-			$list[$id]         = array();
-			$list[$id]['url' ] = Html::url('main','project',$id);
-			$list[$id]['name'] = $name;
+			$list[$id]             = array();
+			$list[$id]['url'     ] = Html::url('main' ,'project',$id);
+			$list[$id]['use_url' ] = Html::url('index','project',$id);
+			$list[$id]['name'    ] = $name;
 		}
 		$this->setTemplateVar('el',$list);
 	
