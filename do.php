@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-11-24 21:31:44  dankert
+// Revision 1.8  2004-11-27 13:12:26  dankert
+// Erzeugen object-Objekt wenn Parameter "objectid" vorhanden
+//
+// Revision 1.7  2004/11/24 21:31:44  dankert
 // Wenn Subaction nicht vorhanden, dann immer default-Subaction aufrufen
 //
 // Revision 1.6  2004/11/10 22:52:53  dankert
@@ -124,6 +127,12 @@ request_into_session('modelid'   );
 request_into_session('userid'    );
 request_into_session('groupid'   );
 request_into_session('languageid');
+
+if   (isset($REQ['objectid']))
+{
+	$o = new Object( $REQ['objectid'] );
+	Session::setObject($o);
+}
 
 // Verbindung zur Datenbank
 //
