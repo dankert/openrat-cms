@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-11-28 22:32:52  dankert
+// Revision 1.8  2004-11-29 00:02:41  dankert
+// Bei L?schen von Objekten alle Referenzen in Tabelle or_link entfernen
+//
+// Revision 1.7  2004/11/28 22:32:52  dankert
 // in getProperties() auch den Typ zurueckgeben
 //
 // Revision 1.6  2004/11/28 16:56:04  dankert
@@ -589,6 +592,12 @@ class Object
 		$sql = new Sql( 'UPDATE {t_value} '.
 		                '  SET linkobjectid=NULL '.
 		                '  WHERE linkobjectid={objectid}' );
+		$sql->setInt('objectid',$this->objectid);
+		$db->query( $sql->query );
+
+		$sql = new Sql( 'UPDATE {t_link} '.
+		                '  SET link_objectid=NULL '.
+		                '  WHERE link_objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
 		$db->query( $sql->query );
 
