@@ -73,8 +73,11 @@ class Html
 	 * @param Id fuer diesen Aufruf
 	 * @param Weitere beliebige Parameter
 	 */
-	function url( $action,$subaction='',$id='-',$params=array() )
+	function url( $action,$subaction='',$id='',$params=array() )
 	{
+		if	( intval($id)==0 )
+			$id='-';
+
 		global $conf;
 		
 		if	( is_array($action) )
