@@ -28,10 +28,10 @@
       	$sortable = (count($object)>1 && $writable);
       ?>
 <tr>
-<td width="5%"  class="help"            >&nbsp;</td>
-<td width="60%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbytype_url       ?>" title="<?php echo lang('FOLDER_ORDERBYTYPE'      ) ?>"><?php } ?><?php echo lang('GLOBAL_TYPE'      )  ?><?php if ($sortable) { ?></a><?php } ?> / <?php if ($sortable) { ?><a href="<?php echo $orderbyname_url ?>" title="<?php echo lang('FOLDER_ORDERBYNAME') ?>"><?php } ?><?php echo lang('GLOBAL_NAME') ?><?php if ($sortable) { ?></a><?php } ?></td>
-<td width="20%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbylastchange_url ?>" title="<?php echo lang('FOLDER_ORDERBYLASTCHANGE') ?>"><?php } ?><?php echo lang('GLOBAL_LASTCHANGE')  ?><?php if ($sortable) { ?></a><?php } ?></td>
-<td width="30%" class="help" colspan="4"><?php if ($sortable) { ?><a href="<?php echo $flip_url              ?>" title="<?php echo lang('FOLDER_FLIP')              ?>"><?php } ?><?php echo lang('FOLDER_ORDER'     ) ?><?php if ($sortable) { ?></a><?php } ?></td>
+  <td width="5%"  class="help"            >&nbsp;</td>
+  <td width="60%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbytype_url       ?>" title="<?php echo lang('FOLDER_ORDERBYTYPE'      ) ?>"><?php } ?><?php echo lang('GLOBAL_TYPE'      )  ?><?php if ($sortable) { ?></a><?php } ?> / <?php if ($sortable) { ?><a href="<?php echo $orderbyname_url ?>" title="<?php echo lang('FOLDER_ORDERBYNAME') ?>"><?php } ?><?php echo lang('GLOBAL_NAME') ?><?php if ($sortable) { ?></a><?php } ?></td>
+  <td width="20%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbylastchange_url ?>" title="<?php echo lang('FOLDER_ORDERBYLASTCHANGE') ?>"><?php } ?><?php echo lang('GLOBAL_LASTCHANGE')  ?><?php if ($sortable) { ?></a><?php } ?></td>
+  <td width="30%" class="help" colspan="4"><?php if ($sortable) { ?><a href="<?php echo $flip_url              ?>" title="<?php echo lang('FOLDER_FLIP')              ?>"><?php } ?><?php echo lang('FOLDER_ORDER'     ) ?><?php if ($sortable) { ?></a><?php } ?></td>
 </tr>
 
 <?php   $f1=true;
@@ -40,26 +40,26 @@
           $fx = fx($f1);
       	?>
 <tr>
-<td width="5%"  class="<?php echo $fx; ?>"><?php if($writable) { ?><input type="checkbox" name="obj<?php echo $id ?>" value="1" /><?php } ?></td>
-<td width="40%" class="<?php echo $fx; ?>"><a href="<?php echo $z['url'] ?>" target="cms_main" title="<?php echo $z['desc'] ?>"><img src="<?php echo $image_dir.'icon_'.$z['icon'].IMG_EXT ?>" align="left" border="0"><?php echo $z['name'] ?></a>&nbsp;</td>
-<td width="18%" class="<?php echo $fx; ?>"><span title="<?php echo lang('USER').': '.$z['user'] ?>"><?php echo $z['date'] ?></span></td>
-<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['upurl'    ])) { ?><a href="<?php echo $z['upurl'    ]  ?>"><img src="<?php echo $image_dir ?>arrow_up<?php echo IMG_EXT ?>"     title="<?php echo lang('UP'    ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
-<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['topurl'   ])) { ?><a href="<?php echo $z['topurl'   ]  ?>"><img src="<?php echo $image_dir ?>arrow_top<?php echo IMG_EXT ?>"    title="<?php echo lang('TOP'   ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
-<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['bottomurl'])) { ?><a href="<?php echo $z['bottomurl']  ?>"><img src="<?php echo $image_dir ?>arrow_bottom<?php echo IMG_EXT ?>" title="<?php echo lang('BOTTOM') ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
-<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['downurl'  ])) { ?><a href="<?php echo $z['downurl'  ]  ?>"><img src="<?php echo $image_dir ?>arrow_down<?php echo IMG_EXT ?>"   title="<?php echo lang('DOWN'  ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
+  <td width="5%"  class="<?php echo $fx; ?>"><?php if($writable) { ?><input type="checkbox" name="obj<?php echo $id ?>" value="1" /><?php } ?></td>
+  <td width="40%" class="<?php echo $fx; ?>"><a href="<?php echo $z['url'] ?>" target="cms_main" title="<?php echo $z['desc'] ?>"><img src="<?php echo $image_dir.'icon_'.$z['icon'].IMG_EXT ?>" align="left" border="0"><?php echo $z['name'] ?></a>&nbsp;</td>
+  <td width="18%" class="<?php echo $fx; ?>"><span title="<?php if (!empty($user->name)) echo lang('GLOBAL_USER').': '.$user->name ?>"><?php echo $z['date'] ?></span></td>
+  <td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['upurl'    ])) { ?><a href="<?php echo $z['upurl'    ]  ?>"><img src="<?php echo $image_dir ?>arrow_up<?php echo IMG_EXT ?>"     title="<?php echo lang('GLOBAL_UP'    ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
+  <td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['topurl'   ])) { ?><a href="<?php echo $z['topurl'   ]  ?>"><img src="<?php echo $image_dir ?>arrow_top<?php echo IMG_EXT ?>"    title="<?php echo lang('GLOBAL_TOP'   ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
+  <td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['bottomurl'])) { ?><a href="<?php echo $z['bottomurl']  ?>"><img src="<?php echo $image_dir ?>arrow_bottom<?php echo IMG_EXT ?>" title="<?php echo lang('GLOBAL_BOTTOM') ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
+  <td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['downurl'  ])) { ?><a href="<?php echo $z['downurl'  ]  ?>"><img src="<?php echo $image_dir ?>arrow_down<?php echo IMG_EXT ?>"   title="<?php echo lang('GLOBAL_DOWN'  ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
 </tr>
 <?php   } ?>
 
 <?php   if($writable) { ?>
 <tr>
-<td colspan="7" class="<?php echo $fx; ?>">
-  <img src="<?php echo $image_dir ?>tree_none_end.gif" align="left" />&nbsp;
-  <a href="javascript:mark();"><?php echo lang('FOLDER_MARK_ALL') ?></a> | <a href="javascript:unmark();"><?php echo lang('FOLDER_UNMARK_ALL') ?></a> | <a href="javascript:flip();"><?php echo lang('FOLDER_FLIP_MARK') ?></a>
-</td>
+  <td colspan="7" class="<?php echo $fx; ?>">
+    <img src="<?php echo $image_dir ?>tree_none_end.gif" align="left" />&nbsp;
+    <a href="javascript:mark();"><?php echo lang('FOLDER_MARK_ALL') ?></a> | <a href="javascript:unmark();"><?php echo lang('FOLDER_UNMARK_ALL') ?></a> | <a href="javascript:flip();"><?php echo lang('FOLDER_FLIP_MARK') ?></a>
+  </td>
 </tr>
 <tr>
-<td></td>
-<td colspan="1" class="<?php echo $fx; ?>">
+  <td></td>
+  <td colspan="1" class="<?php echo $fx; ?>">
   <table>
   <tr>
   <td>
@@ -89,7 +89,7 @@
       else
       { ?>
 <tr>
-<td colspan="2" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><?php echo lang('GLOBAL_NOT_FOUND') ?></td>
+  <td colspan="2" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><?php echo lang('GLOBAL_NOT_FOUND') ?></td>
 </tr>
 <?php } ?>
 
