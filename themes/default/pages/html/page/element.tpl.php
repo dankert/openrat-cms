@@ -26,7 +26,7 @@
 <tr>
 <td width="25%" class="<?php echo $fx ?>"><a href="<?php echo $e['url'] ?>" title="<?php echo $e['desc'] ?>"><img src="<?php echo $image_dir.'icon_el_'.$e['type'].'.png' ?>" border="0" align="left"><?php echo $e['name'] ?></a></td>
 <td width="40%" class="<?php echo $fx ?>"><?php echo $e['value'] ?>&nbsp;</td>
-<td width="15%" class="<?php echo $fx ?>"><a href="<?php echo $e['archive_url'] ?>"><?php echo lang('ARCHIVE') ?></a></td>
+<td width="15%" class="<?php echo $fx ?>"><a href="<?php echo $e['archive_url'] ?>"><?php echo lang('ARCHIVE') ?></a> (<?php echo $e['archive_count'] ?>)</td>
 <td width="20%" class="<?php echo $fx ?>"><span title="<?php echo $e['date'].', '.$e['userfullname'] ?>"><?php echo $e['username'] ?></span></td>
 </tr>
 <?php } ?>
