@@ -6,7 +6,7 @@
 <table class="main" width="50%" cellspacing="0" cellpadding="4">
 
 <tr>
-	<th><?php echo lang('PROJECTS') ?></th>
+	<th><?php echo lang('GLOBAL_PROJECTS') ?></th>
 </tr>
 
 <?php $f1=true;
