@@ -81,16 +81,22 @@ class Value
 	var $value;
 	
 	/**
-	 * TimeStamp der letzten ?nderung
+	 * TimeStamp der letzten Aenderung
 	 * @type Integer
 	 */
 	var $lastchangeTimeStamp;
 	
 	/**
-	 * Benutzer-ID der letzten ?nderung
+	 * Benutzer-ID der letzten Aenderung
 	 * @type Integer
 	 */
 	var $lastchangeUserId;
+
+	/**
+	 * Benutzername der letzten Aenderung
+	 * @type Integer
+	 */
+	var $lastchangeUserName;
 	
 	/**
 	 * Schalter, ob dieser Inhalt der aktive Inhalt ist
@@ -110,12 +116,11 @@ class Value
 	 */
 	function Value()
 	{
-		global $SESS;
-
 		$this->lastchangeUserId    = 0;
 		$this->lastchangeTimeStamp = 0;
 		
-		$this->languageid = $SESS['languageid'];
+		$language = Session::getProjectLanguage();
+		$this->languageid = $language->languageid;
 	}
 
 
@@ -549,8 +554,10 @@ class Value
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT * FROM {t_value}'.
-		                '  WHERE id={valueid}' );
+		$sql = new Sql( 'SELECT {t_value}.*,{t_user}.name as lastchange_username'.
+		                ' FROM {t_value}'.
+		                ' LEFT JOIN {t_user} ON {t_user}.id={t_value}.lastchange_userid'.
+		                '  WHERE {t_value}.id={valueid}' );
 		$sql->setInt( 'valueid',$this->valueid);
 		$row = $db->getRow( $sql->query );
 		
@@ -563,8 +570,9 @@ class Value
 		$this->active         = ( $row['active' ]=='1' );
 		$this->publish        = ( $row['publish']=='1' );
 
-		$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
-		$this->lastchangeUserId    = intval($row['lastchange_userid']);
+		$this->lastchangeTimeStamp = intval($row['lastchange_date'    ]);
+		$this->lastchangeUserId    = intval($row['lastchange_userid'  ]);
+		$this->lastchangeUserName  = $row['lastchange_username'];
 	}
 
 
@@ -576,7 +584,9 @@ class Value
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id FROM {t_value}'.
+		$sql = new Sql( 'SELECT {t_value}.*,{t_user}.name as lastchange_username'.
+		                '  FROM {t_value}'.
+		                '  LEFT JOIN {t_user} ON {t_user}.id={t_value}.lastchange_userid'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
 		                '    AND languageid={languageid}'.
@@ -585,7 +595,27 @@ class Value
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		return $db->getCol( $sql->query );
+		$list = array();
+		foreach( $db->getAll( $sql->query ) as $row )
+		{
+			$val = new Value();
+			$val->valueid = $row['id'];
+			
+			$val->text           = $row['text'];
+			$val->valueid        = intval($row['id']          );
+			$val->linkToObjectId = intval($row['linkobjectid']);
+			$val->number         = intval($row['number'      ]);
+			$val->date           = intval($row['date'        ]);
+	
+			$val->active         = ( $row['active' ]=='1' );
+			$val->publish        = ( $row['publish']=='1' );
+	
+			$val->lastchangeTimeStamp = intval($row['lastchange_date'    ]);
+			$val->lastchangeUserId    = intval($row['lastchange_userid'  ]);
+			$val->lastchangeUserName  = $row['lastchange_username'];
+			$list[] = $val;
+		}
+		return $list;
 	}
 
 
@@ -836,9 +866,9 @@ class Value
 				}
 				elseif   ( $this->simple )
 				{
-					$p = new Page( $objectid );
-					$p->load();
-					$inhalt = $p->name;
+					$o = new Object( $objectid );
+					$o->load();
+					$inhalt = $o->name;
 				}
 				else
 				{

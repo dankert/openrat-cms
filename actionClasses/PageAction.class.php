@@ -332,11 +332,6 @@ class PageAction extends ObjectAction
 				$list[$id]['desc']       = $value->element->desc;
 				$list[$id]['type']       = $value->element->type;
 	
-				$u = new User( $value->lastchangeUserId );
-				$u->load();
-				$list[$id]['username'     ] = $u->name;
-				$list[$id]['userfullname' ] = $u->fullname;
-
 				$list[$id]['date'         ] = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
 				$list[$id]['archive_count'] = $value->getCountVersions();
 				$list[$id]['archive_url'  ] = Html::url( 'pageelement','archive','0',array('elementid'=>$id) );

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-12-19 15:15:37  dankert
+// Revision 1.11  2004-12-26 01:06:31  dankert
+// Perfomanceverbesserung Seite/Elemente
+//
+// Revision 1.10  2004/12/19 15:15:37  dankert
 // Konstruktor erweitert
 //
 // Revision 1.9  2004/10/14 21:08:32  dankert
@@ -319,10 +322,10 @@ class PageelementAction extends Action
 	 */
 	function archive()
 	{
+		$this->page->public = true;
+		$this->page->simple = true;
+		$this->page->load();
 		$this->value->page = &$this->page;
-		$this->value->page->load();
-		$this->value->page->public = true;
-		$this->value->page->simple = true;
 
 		$this->value->simple = true;
 		$language = Session::getProjectLanguage();
@@ -336,51 +339,46 @@ class PageelementAction extends Action
 		$version_list = array();
 		$lfd_nr       = 0;
 
-		foreach( $this->value->getVersionList() as $valueid )
+		foreach( $this->value->getVersionList() as $value )
 		{
 			$lfd_nr++;
-			$this->value->valueid = $valueid;
-			$this->value->loadWithId();
-			$this->value->generate();
+			$value->element = &$this->element;
+			$value->page    = &$this->page;
+			$value->simple  = true;
+			$value->generate();
 
-			if	( $this->value->lastchangeTimeStamp != 0 )
-				$date = date( lang('DATE_FORMAT'),$this->value->lastchangeTimeStamp);
-			else $date = lang('UNKNOWN');
+			$date = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
 			
-			if	( in_array(	$this->value->element->type,array('text','longtext') ) )
-				$version_list[ $valueid ] = '('.$lfd_nr.') '.$date;
+			if	( in_array(	$this->element->type,array('text','longtext') ) )
+				$version_list[ $value->valueid ] = '('.$lfd_nr.') '.$date;
 
-			if	( ! $this->value->active )
-				$useUrl = Html::url(array('action'   =>'pageelement',
-			                                            'subaction'=>'usevalue',
-			                                            'valueid'  =>$valueid ));
+			if	( ! $value->active )
+				$useUrl = Html::url('pageelement','usevalue',$this->page->objectid,array('valueid'  =>$value->valueid));
 			else	$useUrl = '';
 
-			if	( ! $this->value->publish && $this->value->active )
-				$releaseUrl = Html::url(array('action'   =>'pageelement',
-			                                                'subaction'=>'release',
-			                                                'valueid'  =>$valueid ));
+			if	( ! $value->publish && $value->active )
+				$releaseUrl = Html::url('pageelement','release',$this->page->objectid,array('valueid'  =>$value->valueid ));
 			else	$releaseUrl = '';
 
-			if	( $this->value->publish )
+			if	( $value->publish )
 				$public = true;
 			else $public = false;
 
-			if	( $this->value->active )
+			if	( $value->active )
 				$active = true;
 			else $active = false;
 
-			$list[] = array( 'value'     => Text::maxLaenge( 50,$this->value->value),
+			$list[] = array( 'value'     => Text::maxLaenge( 50,$value->value),
 			                 'date'      => $date,	
 			                 'lfd_nr'    => $lfd_nr,	
-			                 'user'      => User::getUserName($this->value->lastchangeUserId),
+			                 'user'      => $value->lastchangeUserName,
 			                 'useUrl'    => $useUrl,
 			                 'public'    => $public,  
 			                 'active'    => $active,  
 			                 'releaseUrl'=> $releaseUrl );
 		}
 
-		$this->setTemplateVar('name'        ,$this->value->element->name);
+		$this->setTemplateVar('name'        ,$value->element->name);
 		$this->setTemplateVar('el'          ,$list);
 		$this->setTemplateVar('version_list',$version_list);
 		$this->forward('pageelement_archive');

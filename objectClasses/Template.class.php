@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-12-19 15:23:56  dankert
+// Revision 1.8  2004-12-26 01:06:31  dankert
+// Perfomanceverbesserung Seite/Elemente
+//
+// Revision 1.7  2004/12/19 15:23:56  dankert
 // Anpassung Session-Funktionen
 //
 // Revision 1.6  2004/12/18 00:37:50  dankert
@@ -242,6 +245,33 @@ class Template
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
 		return $db->getCol( $sql->query );
+	}
+
+
+
+	/**
+ 	 * Ermitteln aller Elemente zu diesem Template
+ 	 * Es wird eine Liste mit den kompletten Elementen ermittelt und zurueckgegeben
+ 	 * @return Array
+ 	 */
+	function getElements()
+	{
+		$list = array();
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT * FROM {t_element}'.
+		                '  WHERE templateid={templateid}'.
+		                '  ORDER BY name ASC' );
+		$sql->setInt( 'templateid',$this->templateid );
+		foreach( $db->getAll( $sql->query ) as $row )
+		{
+			$e = new Element( $row['id'] );
+			$e->setDatabaseRow( $row );
+			
+			$list[$e->elementid] = $e;
+			unset($e);
+		}
+		return $list;
 	}
 
 

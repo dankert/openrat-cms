@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2004-12-25 21:05:29  dankert
+// Revision 1.16  2004-12-26 01:06:31  dankert
+// Perfomanceverbesserung Seite/Elemente
+//
+// Revision 1.15  2004/12/25 21:05:29  dankert
 // Korrektur Edit-Icons
 //
 // Revision 1.14  2004/12/19 21:48:31  dankert
@@ -608,27 +611,41 @@ class Page extends Object
 	  *
 	  * @access private 
 	  */
+	function getElements()
+	{
+		if	( !isset($this->template) )
+			$this->template = new Template( $this->templateid );
+		
+		return $this->template->getElements();
+	}
+
+
+
+	/**
+	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
+	  * wird von generate() aufgerufen
+	  *
+	  * @access private 
+	  */
 	function generate_elements()
 	{
 		$this->values = array();
-
-		$t = new Template( $this->templateid );
 		
-		foreach( $this->getElementIds() as $elementid )
+		foreach( $this->getElements() as $elementid=>$element )
 		{
 			// neues Elementobjekt erzeugen
 			$val = new Value();
 			$val->publish = $this->public;
-			$val->element = new Element( $elementid );
-			$val->element->load();
+			$val->element = $element;
 
 			$val->objectid   = $this->objectid;
-			$val->pageid     = Page::getPageIdFromObjectId( $this->objectid );
+			$val->pageid     = $this->pageid;
 			$val->languageid = $this->languageid;
 			$val->simple     = $this->simple;
 			$val->modelid    = $this->modelid;
-			$val->page       = &$this;
+			$val->page       = $this;
 			$val->generate();
+			$val->page       = null;
 			$this->values[$elementid] = $val;
 		}
 	}
@@ -744,31 +761,6 @@ class Page extends Object
 			}
 		}
 
-		// Bei Verwendung der Content-Negotiation wird eine Default-Variante
-		// ohne Sprachversion, aber mit doppelter Extension
-		// z.B. index.html.html erzeugt
-//		if   ( $this->publish->content_negotiation && count(Language::getAll())>1 )
-//		{
-//			$this->languageid = Language::getDefaultId();
-//			$this->default_language = true;
-//
-//			// Schleife ?ber alle Projektvarianten
-//			foreach( Model::getAll() as $projectmodelid )
-//			{
-//				$this->projectmodelid = $projectmodelid;
-//			
-//				$this->load();
-//				$this->generate();
-//				$this->write();
-//				
-//				//echo $this->tmpfile().' &gt; '.$this->full_filename().'<br>';
-//				$publish->copy( $this->tmpfile(),$this->full_filename() );
-//				unlink( $this->tmpfile );
-//				$this->publish->publishedObjects[] = $this->getProperties();
-//			}
-//		}
-
-//		$this->log_filenames = $this->publish->log_filenames;
 	}
 }
 

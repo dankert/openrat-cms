@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-12-19 15:21:21  dankert
+// Revision 1.8  2004-12-26 01:06:31  dankert
+// Perfomanceverbesserung Seite/Elemente
+//
+// Revision 1.7  2004/12/19 15:21:21  dankert
 // Aenderung getDynamicParameters()
 //
 // Revision 1.6  2004/10/14 21:10:29  dankert
@@ -127,8 +130,6 @@ class Element
 	 */
 	function Element( $elementid=0 )
 	{
-		global $SESS;
-
 		if	( intval($elementid)!=0 )
 			$this->elementid = $elementid;
 	}
@@ -181,13 +182,18 @@ class Element
 		$sql = new Sql( 'SELECT * FROM {t_element}'.
 		                ' WHERE id={elementid}'      );
 		$sql->setInt( 'elementid',$this->elementid );
-		$prop = $db->getRow( $sql->query );
-		
+
+		$this->setDatabaseRow( $db->getRow( $sql->query ) );
+	}
+
+
+	function setDatabaseRow( $prop )
+	{
 		$this->templateid     = $prop['templateid'];
-		$this->name           = $prop['name'];
-		$this->desc           = $prop['descr'];
-		$this->type           = $prop['type'];
-		$this->subtype        = $prop['subtype'];
+		$this->name           = $prop['name'      ];
+		$this->desc           = $prop['descr'     ];
+		$this->type           = $prop['type'      ];
+		$this->subtype        = $prop['subtype'   ];
 
 		$this->dateformat     = $prop['dateformat'];
 		$this->wiki           = ( $prop['wiki'         ] == '1' );
@@ -207,7 +213,6 @@ class Element
 		$this->folderObjectId   = intval( $prop['folderobjectid'  ] );
 		$this->defaultObjectId  = intval( $prop['default_objectid'] );
 	}
-
 
 
 	/**
