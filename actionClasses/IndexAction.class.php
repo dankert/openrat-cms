@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-12-28 22:58:39  dankert
+// Revision 1.14  2004-12-29 20:19:55  dankert
+// Korrektur
+//
+// Revision 1.13  2004/12/28 22:58:39  dankert
 // Fuellen Variablen logo* fuer Loginmaske
 //
 // Revision 1.12  2004/12/26 20:20:17  dankert
@@ -411,19 +414,18 @@ class IndexAction extends Action
 		$languageid = intval( $this->getRequestVar('languageid') );
 		$objectid   = intval( $this->getRequestVar('objectid'  ) );
 
-		if ( $projectid == PROJECTID_ADMIN )
+		$project = Session::getProject();
+
+		if ( $project->projectid == PROJECTID_ADMIN )
 		{
-			$project = new Project( $projectid );
-			$project->projectid = PROJECTID_ADMIN;
 			$project->name = lang('GLOBAL_ADMINISTRATION');
 			Session::setProject( $project );
 
 			Session::setProjectLanguage( '' );
-			Session::setProjectModel( '' );
-			Session::setObject( '' );
+			Session::setProjectModel   ( '' );
+			Session::setObject         ( '' );
 		}
 
-		$project = Session::getProject();
 		$db      = Session::getDatabase();
 		$this->setTemplateVar( 'title',$user->name.'@'.$project->name.' ('.$db->conf['comment'].') - '.OR_TITLE.' '.OR_VERSION );
 
