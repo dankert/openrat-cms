@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-15 21:34:05  dankert
+// Revision 1.5  2004-11-28 18:26:15  dankert
+// Anpassen an neue Sprachdatei-Konventionen
+//
+// Revision 1.4  2004/11/15 21:34:05  dankert
 // Korrektur fuer Administrationsmodus
 //
 // Revision 1.3  2004/11/10 22:36:45  dankert
@@ -142,7 +145,7 @@ class IndexAction extends Action
 
 		// Administrator sieht Administrationsbereich
 		if   ( $user->isAdmin )
-			$projects = array("-1"=>lang('ADMINISTRATION')) +  $projects;
+			$projects = array("-1"=>lang('GLOBAL_ADMINISTRATION')) +  $projects;
 
 		// Projekte ermitteln
 
