@@ -101,21 +101,28 @@
 <form action="<?php echo $self ?>" method="post" target="_self">
 
 <input type="hidden" name="action"    value="page" />
-<input type="hidden" name="subaction" value="move" />
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
   <tr>
-    <th colspan="2"><?php echo lang('MOVE') ?></th>
+    <th colspan="2"><?php echo lang('GLOBAL_MOVE') ?> / <?php echo lang('GLOBAL_COPY') ?></th>
   </tr>
 
   <tr>
-    <td width="50%" class="f1"><?php echo lang('FOLDER') ?></a></td>
-    <td width="50%" class="f1"><?php echo Html::selectBox('movetoobjectid',$folder,$act_folderobjectid) ?></td>
+    <td width="50%" class="f1"><?php echo lang('GLOBAL_ACTION') ?></a></td>
+    <td width="50%" class="f1"><input type="radio" name="subaction" value="move" checked="checked" /> <?php echo lang('GLOBAL_MOVE') ?><br />
+    <input type="radio" name="subaction" value="copy" /> <?php echo lang('GLOBAL_COPY') ?><br />
+    <input type="radio" name="subaction" value="link" /> <?php echo lang('GLOBAL_LINK') ?><br />
+    </td>
   </tr>
 
   <tr>
-    <td class="act" colspan="2"><input type="submit"  class="submit" value="<?php echo lang('MOVE') ?>"></td>
+    <td width="50%" class="f1"><?php echo lang('GLOBAL_FOLDER') ?></a></td>
+    <td width="50%" class="f1"><?php echo Html::selectBox('targetobjectid',$folder,$act_folderobjectid) ?></td>
+  </tr>
+
+  <tr>
+    <td class="act" colspan="2"><input type="submit"  class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
   </tr>
 
 </table>
