@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:15:12  dankert
+// Revision 1.2  2004-04-24 15:28:17  dankert
+// Korrektur: relative Pfad bei Listen
+//
+// Revision 1.1  2004/04/24 15:15:12  dankert
 // Initiale Version
 //
 // Revision 1.1  2004/03/13 23:09:48  dankert
@@ -554,6 +557,7 @@ class Value
 			case 'list':
 
 				$objectid = $this->linkToObjectId;
+				$this->page->up_path();
 				
 				if   ( intval($objectid) == 0 )
 					$objectid = $this->element->defaultObjectId;
@@ -581,6 +585,7 @@ class Value
 									case 'page':
 										$p = new Page( $oid );
 										$p->public         = $this->page->public;
+										$p->up_path        = $this->page->up_path();
 										$p->projectmodelid = $this->page->projectmodelid;
 										$p->languageid     = $this->languageid;
 										$p->load();
@@ -599,6 +604,7 @@ class Value
 											{
 												$p = new Page( $l->linkedObjectId );
 												$p->public         = $this->page->public;
+												$p->up_path        = $this->page->up_path();
 												$p->projectmodelid = $this->page->projectmodelid;
 												$p->languageid     = $this->languageid;
 												$p->load();

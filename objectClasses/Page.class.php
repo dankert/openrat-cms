@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:15:12  dankert
+// Revision 1.2  2004-04-24 15:28:17  dankert
+// Korrektur: relative Pfad bei Listen
+//
+// Revision 1.1  2004/04/24 15:15:12  dankert
 // Initiale Version
 //
 // Revision 1.1  2004/03/20 14:15:00  dankert
@@ -53,6 +56,7 @@ class Page extends Object
 	var $projectmodelid = 0;
 	
 	var $publish = null;
+	var $up_path = '';
 
 
 	function Page( $objectid='' )
@@ -278,13 +282,16 @@ class Page extends Object
 
 	/**
 	  * Erzeugt Präfix für eine relative Pfadangabe
-	  * Beispiel: Seite liegt in Ordner /pfad/pfad =&gt; '../../'
+	  * Beispiel: Seite liegt in Ordner /pfad/pfad dann '../../'
 	  *
 	  * @return String Pfadangabe
 	  * @access private 
 	  */ 
 	function up_path()
 	{
+		if	( $this->up_path != '' )
+			return $this->up_path;
+
 		$folder = new Folder( $this->parentid );
 		$folder->load();
 		$folder->parentObjectIds(false,true);
@@ -295,12 +302,14 @@ class Page extends Object
 		
 		if   ( $f == 0 )
 		{
-			return './';
+			$this->up_path = './';
 		}
 		else
 		{
-			return str_repeat( '../',$f );
+			$this->up_path = str_repeat( '../',$f );
 		}
+
+		return $this->up_path;
 	}
 
 
