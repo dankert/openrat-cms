@@ -30,7 +30,7 @@
       	$fx = fx($f1);
       	?>
 <tr>
-<td width="30%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_el_'.$e['type'].'.png' ?>" border="0" align="left"><?php echo $e['name'] ?></td>
+<td width="30%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_el_'.$e['type'].IMG_EXT ?>" border="0" align="left"><?php echo $e['name'] ?></td>
 <td width="5%" class="<?php echo $fx ?>"><input type="checkbox" name="saveid<?php echo $id ?>" value="1" /> </td>
 <td width="65%" class="<?php echo $fx ?>">
 
