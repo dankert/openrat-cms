@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-10-14 22:57:44  dankert
+// Revision 1.9  2004-11-10 22:36:16  dankert
+// Dateioperationen, Verschieben/Kopieren/Verknuepfen von mehreren Objekten in einem Arbeitsschritt
+//
+// Revision 1.8  2004/10/14 22:57:44  dankert
 // Neue Verknuepfungen mit dem Linknamen als Url vorbelegen
 //
 // Revision 1.7  2004/10/13 21:18:50  dankert
@@ -196,6 +199,195 @@ class FolderAction extends Action
 	}
 
 
+	// Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner
+	function multiple()
+	{
+		$ids  = $this->folder->getObjectIds();
+		$type = $this->getRequestVar('type');
+		$targetObjectId = intval($this->getRequestVar('targetobjectid'));
+
+		if	( $targetObjectId == 0 )
+			exit('fatal: no target');
+
+		foreach( $ids as $id )
+		{
+			// Nur, wenn Objekt ausgewaehlt wurde
+			if	( $this->getRequestVar('obj'.$id) != '1' )
+				continue;
+
+			switch( $type )
+			{
+				case 'move':
+					$o = new Object( $id );
+					$o->load();
+					if	( $o->isFolder )
+					{
+						$f = new Folder( $id );
+						$allsubfolders = $f->getAllSubFolderIds();
+						
+						// Wenn
+						// - Das Zielverzeichnis sich nicht in einem Unterverzeichnis des zu verschiebenen Ordners liegt
+						// und
+						// - Das Zielverzeichnis nicht der zu verschiebene Ordner ist
+						// dann verschieben
+						if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
+							echo "versch!!!!";
+							//$o->setParentId( $targetObjectId );
+						else
+							$this->message('ERROR','Cannot move folder into his own subfolder!');
+					}
+					else
+					{
+						$o->setParentId( $targetObjectId );
+					}
+					break;
+	
+				case 'copy':
+					$o = new Object( $id );
+					$o->load();
+					switch( $o->getType() )
+					{
+						case 'folder':
+							// Ordner zur Zeit nicht kopieren
+							// Funktion waere zu verwirrend
+							break;
+						
+						case 'file':
+							$f = new File( $id );
+							$f->load();
+							$f->filename = '';
+							$f->name     = lang('COPY_OF').' '.$f->name;
+							$f->parentid = $targetObjectId;
+							$f->add();
+							$f->copyValueFromFile( $id );
+							break;
+						
+						case 'page':
+							$p = new Page( $id );
+							$p->load();
+							$p->filename = '';
+							$p->name     = lang('COPY_OF').' '.$p->name;
+							$p->parentid = $targetObjectId;
+							$p->add();
+							$p->copyValuesFromPage( $id );
+							break;
+						
+						case 'link':
+							$l = new Link( $id );
+							$l->load();
+							$l->filename = '';
+							$l->name     = lang('COPY_OF').' '.$l->name;
+							$l->parentid = $targetObjectId;
+							$l->add();
+							break;
+						
+						default:
+							die('fatal: what type to delete?');
+					}
+					break;
+	
+				case 'link':
+
+					$o = new Object( $id );
+					$o->load();
+					if	( $o->isFile  ||
+						  $o->isPage  )  // Nur Seiten oder Dateien sind verknuepfbar
+					{
+						$link = new Link();
+						$link->parentid       = $targetObjectId;
+				
+						$link->linkedObjectId = $id;
+						$link->isLinkToObject = true;
+						$link->name           = lang('GLOBAL_LINK_TO').' '.$o->name;
+						$link->add();
+					}
+					break;
+	
+				case 'delete':
+
+					$o = new Object( $id );
+					$o->load();
+					switch( $o->getType() )
+					{
+						case 'folder':
+							$f = new Folder( $id );
+							$f->delete();
+							break;
+						
+						case 'file':
+							$f = new File( $id );
+							$f->delete();
+							break;
+						
+						case 'page':
+							$p = new Page( $id );
+							$p->delete();
+							break;
+						
+						case 'link':
+							$l = new Link( $id );
+							$l->delete();
+							break;
+						
+						default:
+							die('fatal: what type to delete?');
+					}
+					break;
+			}
+
+		}
+		
+		// Ordner anzeigen
+		$this->callSubAction('show');
+	}
+
+
+	// Reihenfolge von Objekten aendern
+	function reorder()
+	{
+		$type = $this->getRequestVar('type');
+		
+		switch( $type )
+		{
+			case 'type':
+				$ids = $this->folder->getObjectIdsByType();
+				break;
+
+			case 'name':
+				$ids = $this->folder->getObjectIdsByName();
+				break;
+
+			case 'lastchange':
+				$ids = $this->folder->getObjectIdsByLastChange();
+				break;
+
+			case 'flip':
+				$ids = $this->folder->getObjectIds();
+				$ids = array_reverse( $ids ); // Reihenfolge drehen
+				
+				break;
+
+			default:
+				die('fatal: unknown reordertype');
+		}
+
+		// Und jetzt die neu ermittelte Reihenfolge speichern
+		$seq = 0;
+		foreach( $ids as $id )
+		{
+			$seq++; // Sequenz um 1 erhoehen
+			
+			$o = new Object( $id );
+			$o->setOrderId( $seq );
+	
+			unset( $o );
+		}
+		
+		// Ordner anzeigen
+		$this->callSubAction('show');
+	}
+
+
 	function settop()
 	{
 		$o = new Object( $this->getRequestVar('objectid1') );
@@ -260,22 +452,6 @@ class FolderAction extends Action
 	}
 
 
-	function addACL()
-	{
-		$this->objectAddACL();
-
-		$this->callSubAction('rights');
-	}
-
-
-	function delACL()
-	{
-		$this->objectDelACL();
-
-		$this->callSubAction('rights');
-	}
-
-
 	function create()
 	{
 
@@ -288,7 +464,6 @@ class FolderAction extends Action
 		$this->setTemplateVar('create_page'  ,$this->folder->hasRight('create_page')  );
 		
 		$this->forward('folder_new');
-		
 	}
 
 
@@ -314,6 +489,9 @@ class FolderAction extends Action
 				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
 				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
+				if	( $list[$id]['desc'] == '' )
+					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
 
 				$list[$id]['type'] = $o->getType();
 				
@@ -323,6 +501,8 @@ class FolderAction extends Action
 				{
 					$file = new File( $id );
 					$file->load();
+					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
+
 					if	( substr($file->mimeType(),0,6) == 'image/' )
 						$list[$id]['icon'] = 'image';
 //					if	( substr($file->mimeType(),0,5) == 'text/' )
@@ -355,8 +535,34 @@ class FolderAction extends Action
 
 				$last_objectid = $id;
 			}
+
+			// Alle anderen Ordner ermitteln
+			$otherfolder = array();
+			foreach( $this->folder->getAllFolders() as $id )
+			{
+				$f = new Folder( $id );
+				$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
+			}
+			asort( $otherfolder );
+
+			$this->setTemplateVar('folder',$otherfolder);
+
+			// URLs zum Umsortieren der Eintraege
+			$this->setTemplateVar('orderbytype_url'      ,Html::url(array('action'   =>'folder',
+			                                                              'subaction'=>'reorder',
+			                                                              'type'     =>'type')) );
+			$this->setTemplateVar('orderbyname_url'      ,Html::url(array('action'   =>'folder',
+			                                                              'subaction'=>'reorder',
+			                                                              'type'     =>'name')) );
+			$this->setTemplateVar('orderbylastchange_url',Html::url(array('action'   =>'folder',
+			                                                              'subaction'=>'reorder',
+			                                                              'type'     =>'lastchange')) );
+			$this->setTemplateVar('flip_url'             ,Html::url(array('action'   =>'folder',
+			                                                              'subaction'=>'reorder',
+			                                                              'type'     =>'flip')) );	
 		}
-		$this->setTemplateVar('object',$list);
+		$this->setTemplateVar('object'      ,$list            );
+		$this->setTemplateVar('act_objectid',$this->folder->id);
 
 		$this->forward('folder_show');
 		
@@ -388,47 +594,6 @@ class FolderAction extends Action
 		else	$this->setTemplateVar('delete',false);
 	
 		$this->forward('folder_prop');
-	}
-
-
-	function rights()
-	{
-		global $SESS;
-		global $conf_php;
-		if   ($SESS['user']['is_admin'] != '1') die('nice try');
-
-		$acllist = array();	
-		foreach( $this->folder->getAllInheritedAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-		}
-
-//		$this->setTemplateVar('inherited_acls',$acllist );
-//		$acllist = array();	
-
-		foreach( $this->folder->getAllAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-			$acllist[$key]['delete_url'] = Html::url(array('subaction'=>'delACL','aclid'=>$aclid));
-		}
-		ksort( $acllist );
-
-		$this->setTemplateVar('acls',$acllist );
-
-		$this->setTemplateVar('users'    ,User::listAll()   );
-		$this->setTemplateVar('groups'   ,Group::getAll()   );
-
-		$languages = Language::getAll();
-		$languages[0] = lang('ALL_LANGUAGES');
-		$this->setTemplateVar('languages',$languages);
-
-		$this->forward('folder_rights');
 	}
 
 
