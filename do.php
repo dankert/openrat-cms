@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-09-07 21:10:18  dankert
+// Revision 1.5  2004-10-04 19:56:56  dankert
+// trace() hinzugef?gt
+//
+// Revision 1.4  2004/09/07 21:10:18  dankert
 // Klassendefinitionsdateien vor dem Start der Session einbinden
 //
 // Revision 1.3  2004/05/02 18:40:46  dankert
@@ -136,6 +139,8 @@ if	( !method_exists($do,$subaction) )
 	$action = new Action();
 	$action->message('ERROR',"subaction $subaction not defined in class $actionClassName");
 }
+
+Logger::trace("controller is calling subaction '$subaction'");
 
 $do->subActionName = $subaction;
 $do->$subaction();
