@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.4  2004-10-04 19:58:05  dankert
+// Logging hinzugef?gt
+//
+// Revision 1.3  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.2  2004/04/30 20:31:57  dankert
 // Berechtigung: freigeben
@@ -37,6 +40,8 @@
  *
  * Diese Klasse stellt grundlegende action-uebergreifende Methoden
  * bereit.
+ * Dienst als Ueberklasse fuer alle abgeleiteten Action-Klassen in
+ * diesem Package bzw. Verzeichnis.
  *
  * @author $Author$
  * @version $Revision$
@@ -103,6 +108,8 @@ class Action
 
 	function message( $title='ERROR',$add_info='' )
 	{
+		Logger::warn( 'creating error message, info='.$add_info );
+
 		$this->setTemplateVar( 'title',lang( $title         ) );
 		$this->setTemplateVar( 'text' ,lang( $title.'_DESC' ) );
 		$this->setTemplateVar( 'info' ,$add_info );
@@ -113,7 +120,7 @@ class Action
 
 	/** Ausgabe des Templates
 	 *
-	 * Es wird das gewünschte Template auf die Standardausgabe
+	 * Es wird das gew?nschte Template auf die Standardausgabe
 	 * ausgegeben.
 	 *
 	 * @param String Dateiname des Templates
@@ -133,7 +140,7 @@ class Action
 //		$tpl .= $this->actionName-'_'.$this->subActionName.'.tpl.'.$conf_php;
 		$tplFileName = $tplName.'.tpl.'.$conf_php;
 	
-		// Übertragen der Array-Variablen in den aktuellen Kontext
+		// ?bertragen der Array-Variablen in den aktuellen Kontext
 		//
 		extract( $this->templateVars );
 	
@@ -158,6 +165,11 @@ class Action
 	
 	function callSubAction( $subActionName )
 	{
+		//global $conf;
+		//if	( strtoupper($conf['log']['level']) == 'TRACE' )
+		
+		Logger::trace("next subaction is '$subActionName'");
+		
 		global $SESS;
 		
 		$SESS[ $this->actionName.'action' ] = $subActionName;
