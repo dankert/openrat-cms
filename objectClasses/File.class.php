@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:15:12  dankert
+// Revision 1.2  2004-05-02 14:41:31  dankert
+// Einfügen package-name (@package)
+//
+// Revision 1.1  2004/04/24 15:15:12  dankert
 // Initiale Version
 //
 // Revision 1.1  2003/10/27 23:21:55  dankert
@@ -29,6 +32,13 @@
 // ---------------------------------------------------------------------------
 
 
+/**
+ * Darstellen einer Datei
+ *
+ * @version $Revision$
+ * @author $Author$
+ * @package openrat.objects
+ */
 class File extends Object
 {
 	var $fileid;

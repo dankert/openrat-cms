@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-25 17:31:46  dankert
+// Revision 1.3  2004-05-02 14:41:31  dankert
+// Einfügen package-name (@package)
+//
+// Revision 1.2  2004/04/25 17:31:46  dankert
 // Bei Löschen auch Elemente entfernen
 //
 // Revision 1.1  2004/04/24 15:15:12  dankert
@@ -34,6 +37,7 @@
  *
  * @author: $Author$
  * @version: $Revision$
+ * @package openrat.objects
  */ 
 class Template
 {

@@ -2,8 +2,8 @@
 // ---------------------------------------------------------------------------
 // $Id$
 // ---------------------------------------------------------------------------
-// DaCMS Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// OpenRat Content Management System
+// Copyright (C) 2002-2004 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -20,15 +20,22 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:15:12  dankert
-// Initiale Version
+// Revision 1.2  2004-05-02 14:41:31  dankert
+// Einfügen package-name (@package)
 //
-// Revision 1.1  2004/03/13 23:09:48  dankert
-// *** empty log message ***
+// Revision 1.2  2004/04/30 20:36:25  dankert
+// Neu: Freigabe
+//
+// Revision 1.1  2004/04/24 15:15:12  dankert
+// Initiale Version
 //
 // ---------------------------------------------------------------------------
 
-
+/**
+ * Darstellen eines Template-Elementes
+ *
+ * @package openrat.objects
+ */
 class Element
 {
 	/**
