@@ -13,9 +13,12 @@
 <td width="1%"><img src="<?php echo $image_dir.'tree_'.$i ?>.gif" border="0" alt=""></td>
 <?php } ?>
 
+<?php if (isset($z['image']))
+      { ?>
 <td width="1%">
 <?php if (isset($z['image_url'])) { ?><a href="<?php echo $z['image_url'].'#'.$z['name'] ?>" class="tree" target="_self"><?php } ?><img src="<?php echo $image_dir.'tree_'.$z['image'] ?>.gif" alt="" border="0"><?php if (isset($z['image_url'])) { ?></a><?php } ?>
 </td>
+<?php } ?>
 
 <td colspan="<?php echo intval(20-count($z['cols'])) ?>" id="<?php echo $z['name'] ?>" valign="middle" style="white-space:nowrap;">
 <a name="<?php echo $z['name'] ?>"></a>
