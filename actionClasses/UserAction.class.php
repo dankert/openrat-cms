@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-10 22:42:10  dankert
+// Revision 1.5  2004-11-28 22:46:55  dankert
+// Rechte des Benutzers anzeigen
+//
+// Revision 1.4  2004/11/10 22:42:10  dankert
 // *** empty log message ***
 //
 // Revision 1.3  2004/05/02 14:49:37  dankert
@@ -272,13 +275,30 @@ class UserAction extends Action
 	 */
 	function rights()
 	{
-		if   ($SESS['user']['is_admin'] != '1')
-			die('nice try');
+		$rights = $this->user->getAllAcls();
 
-		$var['projects'] = $user->getRights();
+		$rightList  = array();
+		$objectList = array();
 		
-		$var['action_url'] = 'user.'.$conf_php;
+		foreach( $rights as $acl )
+		{
+			if	( !isset($rightList[$acl->projectid]) )
+				$rightList[$acl->projectid]=array();
+			$rightList[$acl->projectid][$acl->objectid] = $acl->getProperties();
+			
+			$o = new Object($acl->objectid);
+			$o->objectLoadRaw();
+			$objectList[$o->objectid] = $o->getProperties();
+		}
+		$o = new Object();
+		$o->isFolder = true;
+		$show = $o->getRelatedAclTypes();
 		
+		$this->setTemplateVar('projects',$this->user->getReadableProjects() );
+		$this->setTemplateVar('rights'  ,$rightList                         );
+		$this->setTemplateVar('objects' ,$objectList                        );
+		$this->setTemplateVar('show'    ,$show                              );
+
 		$this->forward('user_rights');
 	}
 
