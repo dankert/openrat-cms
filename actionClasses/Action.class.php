@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-10-10 17:42:52  dankert
+// Revision 1.6  2004-11-10 22:35:23  dankert
+// Unbenennen einzelner Methoden
+//
+// Revision 1.5  2004/10/10 17:42:52  dankert
 // Neue Methode: getUserFromSession()
 //
 // Revision 1.4  2004/10/04 19:58:05  dankert
@@ -185,15 +188,58 @@ class Action
 	 * Verschieben eines Objektes
 	 * @access protected
 	 */
-	function objectMove()
+	function move()
 	{
-		if   ( $this->getRequestVar('movetoobjectid') != '' )
+		if   ( $this->getRequestVar('targetobjectid') != '' )
+		{
+			$o = new Object( $this->getSessionVar('objectid') );
+			
+			if	( $o->hasRight('prop') )
+				$o->setParentId( $this->getRequestVar('targetobjectid') );
+		}
+
+		$this->callSubAction('prop');
+	}
+
+
+	/**
+	 * Kopieren eines Objektes
+	 * @access protected
+	 */
+	function copy()
+	{
+		if   ( $this->getRequestVar('targetobjectid') != '' )
 		{
 			$o = new Object( $this->getSessionVar('objectid') );
 			
 			if	( $o->hasRight('prop') )
 				$o->setParentId( $this->getRequestVar('movetoobjectid') );
+
+			$o->name = lang('GLOBAL_COPY_OF').' '.$o->name;
+			$o->add();
 		}
+
+		$this->callSubAction('prop');
+	}
+
+
+	/**
+	 * Erzeugen einer Verknuepfung auf das aktuelle Objekt
+	 * @access protected
+	 */
+	function link()
+	{
+		$link = new Link();
+		$link->parentid       = $this->getRequestVar('targetobjectid');
+
+		$o = new Object( $this->getSessionVar('objectid') );
+		$o->load();
+		$link->linkedObjectId = $o->objectid;
+		$link->isLinkToObject = true;
+		$link->name           = lang('GLOBAL_LINK_TO').' '.$o->name;
+		$link->add();
+
+		$this->callSubAction('prop');
 	}
 
 
@@ -201,7 +247,7 @@ class Action
 	  * ACL zu einem Objekt setzen
 	  * @access protected
 	  */
-	function objectAddACL()
+	function addACL()
 	{
 		$acl = new Acl();
 
@@ -226,6 +272,51 @@ class Action
 		$acl->transmit      = ( $this->getRequestVar('transmit'     ) != '' );
 
 		$acl->add();
+		
+		$this->callSubAction('rights');
+	}
+
+
+	function rights()
+	{
+		$o = new Object( $this->getSessionVar('objectid') );
+
+		global $SESS;
+		global $conf_php;
+		if   ($SESS['user']['is_admin'] != '1') die('nice try');
+
+		$acllist = array();	
+		foreach( $this->folder->getAllInheritedAclIds() as $aclid )
+		{
+			$acl = new Acl( $aclid );
+			$acl->load();
+			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
+			$acllist[$key] = $acl->getProperties();
+		}
+
+//		$this->setTemplateVar('inherited_acls',$acllist );
+//		$acllist = array();	
+
+		foreach( $this->folder->getAllAclIds() as $aclid )
+		{
+			$acl = new Acl( $aclid );
+			$acl->load();
+			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
+			$acllist[$key] = $acl->getProperties();
+			$acllist[$key]['delete_url'] = Html::url(array('subaction'=>'delACL','aclid'=>$aclid));
+		}
+		ksort( $acllist );
+
+		$this->setTemplateVar('acls',$acllist );
+
+		$this->setTemplateVar('users'    ,User::listAll()   );
+		$this->setTemplateVar('groups'   ,Group::getAll()   );
+
+		$languages = Language::getAll();
+		$languages[0] = lang('ALL_LANGUAGES');
+		$this->setTemplateVar('languages',$languages);
+
+		$this->forward('object_rights');
 	}
 
 
@@ -258,9 +349,11 @@ class Action
 	 * Entfernen einer ACL
 	 * @access protected
 	 */
-	function objectDelACL()
+	function delACL()
 	{
 		$acl = new Acl( $this->getRequestVar('aclid') );
 		$acl->delete();
+
+		$this->callSubAction('rights');
 	}
 }
