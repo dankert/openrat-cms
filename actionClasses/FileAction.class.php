@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-12-15 23:23:11  dankert
+// Revision 1.12  2004-12-19 14:53:54  dankert
+// pub2() -> pubnow()
+//
+// Revision 1.11  2004/12/15 23:23:11  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.10  2004/11/30 22:28:20  dankert
@@ -311,7 +314,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Datei ver?ffentlichen
 	 */
-	function pub2()
+	function pubnow()
 	{
 		$this->file->publish();
 

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2004-12-15 23:23:11  dankert
+// Revision 1.17  2004-12-19 14:53:54  dankert
+// pub2() -> pubnow()
+//
+// Revision 1.16  2004/12/15 23:23:11  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.15  2004/11/29 23:24:36  dankert
@@ -196,7 +199,7 @@ class FolderAction extends ObjectAction
 			$this->folder->filename = $this->getRequestVar('filename');
 			$this->folder->desc     = $this->getRequestVar('desc');
 			$this->folder->save();
-			$this->addNotice($this->folder->getType(),$this->folder->name,lang('PROP_SAVED'),'ok');
+			$this->addNotice($this->folder->getType(),$this->folder->name,'PROP_SAVED','ok');
 		}
 	
 		$this->setTemplateVar('tree_refresh',true);
@@ -499,7 +502,8 @@ class FolderAction extends ObjectAction
 
 	function create()
 	{
-		$this->setTemplateVar('templates',Template::getAll());
+		$this->setTemplateVar('templates' ,Template::getAll()      );
+		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 		$this->setTemplateVar('new_folder',$this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectIds(true,true)) < MAX_FOLDER_DEPTH );
 		$this->setTemplateVar('new_file'  ,$this->folder->hasRight(ACL_CREATE_FILE  ));
 		$this->setTemplateVar('new_link'  ,$this->folder->hasRight(ACL_CREATE_LINK  ));
@@ -648,7 +652,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function pub2()
+	function pubnow()
 	{
 		$subdirs = ( $this->hasRequestVar('subdirs') );
 		$pages   = ( $this->hasRequestVar('pages'  ) );
