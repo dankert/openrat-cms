@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-12-19 15:23:56  dankert
+// Revision 1.8  2004-12-29 20:18:20  dankert
+// Konstruktor geaendert
+//
+// Revision 1.7  2004/12/19 15:23:56  dankert
 // Anpassung Session-Funktionen
 //
 // Revision 1.6  2004/12/15 23:16:58  dankert
@@ -60,9 +63,8 @@ class Project
 	// Konstruktor
 	function Project( $projectid='' )
 	{
-		if   ( intval($projectid)!=0 )
+		if   ( intval($projectid) != 0 )
 			$this->projectid = $projectid;
-//		else	die('need projectid in constructor Project()');
 	}
 
 
