@@ -20,14 +20,17 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-07-09 20:57:29  dankert
+// Revision 1.5  2004-09-30 20:31:19  dankert
+// Auch leere Extension speichern
+//
+// Revision 1.4  2004/07/09 20:57:29  dankert
 // Dynamische Bereiche (IFEMPTY...)
 //
 // Revision 1.3  2004/05/07 21:34:58  dankert
-// Url über Html::url erzeugen
+// Url ?ber Html::url erzeugen
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -67,7 +70,7 @@ class TemplateAction extends Action
 		//
 		$text = $this->getRequestVar('src');
 		
-		// Falls dieses Element hinzugefügt werden soll
+		// Falls dieses Element hinzugef?gt werden soll
 		if   ( $this->getRequestVar('addelement') != '' )
 		{
 			$text .= "\n".'{{'.$this->getRequestVar('elementid').'}}';
@@ -101,7 +104,7 @@ class TemplateAction extends Action
 		$this->template->save();
 		$this->template->load();
 
-		// Wenn Element hinzugefügt wurde, dann bleibt es beim Quelltext-Modus.
+		// Wenn Element hinzugef?gt wurde, dann bleibt es beim Quelltext-Modus.
 		// Sonst wird zur Anzeige umgeschaltet
 	
 		if   ( $this->getRequestVar('addelement'   ) != '' ||
@@ -142,17 +145,14 @@ class TemplateAction extends Action
 	//
 	function extensionsave()
 	{
-		if   ( $this->getRequestVar('extension') != '' )
-		{
-			$this->template->extension = $this->getRequestVar('extension');
-			$this->template->save(); 
-		}
+		$this->template->extension = $this->getRequestVar('extension');
+		$this->template->save(); 
 
 		$this->callSubAction('show');
 	}
 
 
-	// Element hinzufügen
+	// Element hinzuf?gen
 	//
 	function addelement()
 	{
@@ -169,7 +169,7 @@ class TemplateAction extends Action
 
 	function add()
 	{
-		// Hinzufügen eines Templates
+		// Hinzuf?gen eines Templates
 		if   ( $this->getRequestVar('name')  != '' )
 		{
 			Template::add( $this->getRequestVar('name') );
@@ -288,7 +288,7 @@ class TemplateAction extends Action
 		$this->setTemplateVar('extension',$this->template->extension); 
 		$this->setTemplateVar('name'     ,$this->template->name     );
 		 
-		// von diesem Template abhängige Seiten ermitteln
+		// von diesem Template abh?ngige Seiten ermitteln
 		//
 		$list = array();
 		foreach( $this->template->getDependentObjectIds() as $oid )
