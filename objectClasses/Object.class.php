@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2004-12-20 20:01:20  dankert
+// Revision 1.15  2004-12-20 22:03:45  dankert
+// Lesen des Benutzers und speichern als Objekt
+//
+// Revision 1.14  2004/12/20 20:01:20  dankert
 // Benutzen von switch() in filename()
 //
 // Revision 1.13  2004/12/19 15:23:56  dankert
@@ -119,32 +122,22 @@ class Object
 	/** Zeitpunkt der Erstellung. Die Variable beinhaltet den Unix-Timestamp.
 	 * @type Integer
 	 */
-	var $create_date;
-
-	/** Benutzer-ID welche dieses Objekt erstellt hat.
-	 * @type Integer
-	 */
-	var $create_userid;
-
-	/** Name des Benutzers, welcher dieses Objekt erstellt hat.
-	 * @type Integer
-	 */
-	var $create_username;
+	var $createDate;
 
 	/** Zeitpunkt der letzten Aenderung. Die Variable beinhaltet den Unix-Timestamp.
 	 * @type Integer
 	 */
-	var $lastchange_date;
+	var $lastchangeDate;
 
-	/** Benutzer-ID welche dieses Objekt zuletzt geaendert hat.
+	/** Benutzer, welcher dieses Objekt erstellt hat.
 	 * @type Integer
 	 */
-	var $lastchange_userid;
+	var $createUser;
 
-	/** Name des Benutzers, welcher dieses Objekt zuletzt geaendert hat.
+	/** Benutzer, welcher dieses Objekt zuletzt geaendert hat.
 	 * @type Integer
 	 */
-	var $lastchange_username;
+	var $lastchangeUser;
 
 	/**
 	 * Kennzeichen, ob Objekt ein Ordner ist
@@ -319,10 +312,10 @@ class Object
 		              'name'             =>$this->name,
 		              'desc'             =>$this->desc,
 		              'description'      =>$this->desc,
-		              'create_date'      =>$this->create_date,
-		              'create_userid'    =>$this->create_userid,
-		              'lastchange_date'  =>$this->lastchange_date,
-		              'lastchange_userid'=>$this->lastchange_userid,
+		              'create_date'      =>$this->createDate,
+		              'create_user'      =>$this->createUser,
+		              'lastchange_date'  =>$this->lastchangeDate,
+		              'lastchange_user'  =>$this->lastchangeUser,
 		              'isFolder'         =>$this->isFolder,
 		              'isFile'           =>$this->isFile,
 		              'isLink'           =>$this->isLink,
@@ -391,7 +384,23 @@ class Object
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql('SELECT {t_object}.*,{t_name}.name,{t_name}.descr'.' FROM {t_object}'.' LEFT JOIN {t_name} ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.' WHERE {t_object}.id={objectid}');
+		$sql = new Sql('SELECT {t_object}.*,' .
+		               '       {t_name}.name,{t_name}.descr,'.
+		               '       lastchangeuser.name     as lastchange_username,     '.
+		               '       lastchangeuser.fullname as lastchange_userfullname, '.
+		               '       lastchangeuser.mail     as lastchange_usermail,     '.
+		               '       createuser.name         as create_username,     '.
+		               '       createuser.fullname     as create_userfullname, '.
+		               '       createuser.mail         as create_usermail,     '.
+		               '       {t_name}.name,{t_name}.descr'.
+		               ' FROM {t_object}'.
+		               ' LEFT JOIN {t_name} '.
+		               '        ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
+		               ' LEFT JOIN {t_user} as lastchangeuser '.
+		               '        ON {t_object}.lastchange_userid=lastchangeuser.id '.
+		               ' LEFT JOIN {t_user} as createuser '.
+		               '        ON {t_object}.create_userid=createuser.id '.
+		               ' WHERE {t_object}.id={objectid}');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
 
@@ -468,10 +477,20 @@ class Object
 			$this->isRoot = true;
 		else	$this->isRoot = false;
 
-		$this->create_date       = $row['create_date'      ];
-		$this->create_userid     = $row['create_userid'    ];
-		$this->lastchange_date   = $row['lastchange_date'  ];
-		$this->lastchange_userid = $row['lastchange_userid'];
+		$this->createDate     = $row['create_date'    ];
+		$this->lastchangeDate = $row['lastchange_date'];
+
+		$this->createUser = new User();
+		$this->createUser->userid       = $row['create_userid'          ];
+		$this->createUser->name         = $row['create_username'        ];
+		$this->createUser->fullname     = $row['create_userfullname'    ];
+		$this->createUser->mail         = $row['create_usermail'        ];
+
+		$this->lastchangeUser = new User();
+		$this->lastchangeUser->userid   = $row['lastchange_userid'      ];
+		$this->lastchangeUser->name     = $row['lastchange_username'    ];
+		$this->lastchangeUser->fullname = $row['lastchange_userfullname'];
+		$this->lastchangeUser->mail     = $row['lastchange_usermail'    ];
 
 		$this->isFolder = ( $row['is_folder'] == '1' );
 		$this->isFile   = ( $row['is_file'  ] == '1' );
@@ -562,7 +581,8 @@ class Object
 		$sql->setInt   ('objectid', $this->objectid);
 		$sql->setString('filename', $this->filename);
 		$sql->setInt   ('time'    , time());
-		$sql->setInt   ('userid'  , $SESS['user']['id']);
+		$user = Session::getUser();
+		$sql->setInt   ('userid'  , $user->userid  );
 
 		$db->query($sql->query);
 
@@ -708,9 +728,10 @@ class Object
 		$sql->setInt   ('objectid' , $this->objectid );
 		$sql->setString('filename' , $this->filename );
 		$sql->setString('projectid', $this->projectid);
-		$sql->setInt   ('orderid'  , 99999  );
-		$sql->setInt   ('time'     , time() );
-		$sql->setInt   ('userid'   , $SESS['user']['id']);
+		$sql->setInt   ('orderid'  , 99999           );
+		$sql->setInt   ('time'     , time()          );
+		$user = Session::getUser();
+		$sql->setInt   ('userid'   , $user->userid   );
 
 		$sql->setBoolean('is_folder',$this->isFolder);
 		$sql->setBoolean('is_file',  $this->isFile);
