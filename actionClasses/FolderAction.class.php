@@ -20,17 +20,20 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-05-07 21:30:59  dankert
+// Revision 1.7  2004-10-13 21:18:50  dankert
+// Neue Links zum Verschieben nach ganz oben/unten
+//
+// Revision 1.6  2004/05/07 21:30:59  dankert
 // Korrektur up_url
 //
 // Revision 1.5  2004/05/07 21:29:16  dankert
-// Url über Html::url erzeugen
+// Url ?ber Html::url erzeugen
 //
 // Revision 1.4  2004/05/02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.3  2004/04/28 20:01:52  dankert
-// Ordner löschen ermöglichen
+// Ordner l?schen erm?glichen
 //
 // Revision 1.2  2004/04/24 16:57:13  dankert
 // Korrektur: pub()
@@ -137,13 +140,13 @@ class FolderAction extends Action
 
 	/**
 	 * Abspeichern der Ordner-Eigenschaften. Ist der Schalter "delete" gesetzt, wird
-	 * der Ordner stattdessen gelöscht.
+	 * der Ordner stattdessen gel?scht.
 	 */
 	function save()
 	{
 		if   ( $this->getRequestVar('delete') != '' )
 		{
-			// Ordner löschen
+			// Ordner l?schen
 			$this->folder->delete();
 		}
 		else
@@ -183,6 +186,62 @@ class FolderAction extends Action
 	
 			unset( $o ); // Selfmade Garbage Collection :-)
 		}
+		
+		// Ordner anzeigen
+		$this->callSubAction('show');
+		
+	}
+
+
+	function settop()
+	{
+		$o = new Object( $this->getRequestVar('objectid1') );
+		$o->setOrderId( 1 );
+
+		$ids = $this->folder->getObjectIds();
+		$seq = 1;
+
+		foreach( $ids as $id )
+		{
+			if   ( $id != $this->getRequestVar('objectid1') )
+			{
+				$seq++; // Sequenz um 1 erhoehen
+
+				$o = new Object( $id );
+				$o->setOrderId( $seq );
+	
+				unset( $o ); // Selfmade Garbage Collection :-)
+			}
+		}
+		
+		// Ordner anzeigen
+		$this->callSubAction('show');
+		
+	}
+
+
+	function setbottom()
+	{
+		$ids = $this->folder->getObjectIds();
+		$seq = 0;
+
+		foreach( $ids as $id )
+		{
+			if   ( $id != $this->getRequestVar('objectid1') )
+			{
+				$seq++; // Sequenz um 1 erhoehen
+
+				$o = new Object( $id );
+				$o->setOrderId( $seq );
+	
+				unset( $o ); // Selfmade Garbage Collection :-)
+			}
+		}
+
+		$seq++; // Sequenz um 1 erhoehen
+		$o = new Object( $this->getRequestVar('objectid1') );
+		$o->setOrderId( $seq );
+
 		
 		// Ordner anzeigen
 		$this->callSubAction('show');
@@ -278,11 +337,17 @@ class FolderAction extends Action
 
 				if   ( $last_objectid != 0 )
 				{
-					$list[$id           ]['upurl'  ] = Html::url(array('action'=>'folder',
-					                                                   'subaction'=>'changesequence',
-					                                                   'objectid1'=>$id,
-					                                                   'objectid2'=>$last_objectid));
-					$list[$last_objectid]['downurl'] = $list[$id]['upurl'];
+					$list[$id           ]['upurl'    ] = Html::url(array('action'   =>'folder',
+					                                                     'subaction'=>'changesequence',
+					                                                     'objectid1'=>$id,
+					                                                     'objectid2'=>$last_objectid));
+					$list[$last_objectid]['downurl'  ] = $list[$id]['upurl'];
+					$list[$last_objectid]['bottomurl'] = Html::url(array('action'   =>'folder',
+					                                                     'subaction'=>'setbottom',
+					                                                     'objectid1'=>$last_objectid));
+					$list[$id           ]['topurl'   ] = Html::url(array('action'   =>'folder',
+					                                                     'subaction'=>'settop',
+					                                                     'objectid1'=>$id));
 				}
 
 				$last_objectid = $id;
@@ -314,7 +379,7 @@ class FolderAction extends Action
 		asort( $list );
 		$this->setTemplateVar('folder',$list);
 		
-		// Wenn Ordner leer ist, dann Löschen ermöglichen
+		// Wenn Ordner leer ist, dann L?schen erm?glichen
 		if	( count($this->folder->getObjectIds()) == 0 )
 			$this->setTemplateVar('delete',true );
 		else	$this->setTemplateVar('delete',false);
