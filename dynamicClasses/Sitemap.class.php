@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-10-14 21:15:29  dankert
+// Revision 1.2  2004-12-28 22:57:56  dankert
+// Korrektur Vererbung, "api" ausgebaut
+//
+// Revision 1.1  2004/10/14 21:15:29  dankert
 // Erzeugen und Anzeigen einer Sitemap
 //
 // ---------------------------------------------------------------------------
@@ -31,7 +34,7 @@
  * Erstellen eines Menues
  * @author Jan Dankert
  */
-class Sitemap /*extends DynamicElement*/
+class Sitemap extends Dynamic
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
@@ -64,11 +67,11 @@ class Sitemap /*extends DynamicElement*/
 		// Erstellen eines Untermenues
 		
 		// Ermitteln der aktuellen Seite
-		$thispage = new Page( $this->api->getObjectId() );
+		$thispage = new Page( $this->getObjectId() );
 		$thispage->load(); // Seite laden
 		
 		// uebergeordneter Ordner dieser Seite
-		$this->showFolder( Folder::getRootObjectId() );
+		$this->showFolder( $this->getRootObjectId() );
 	}
 
 	function showFolder( $oid )
@@ -86,25 +89,25 @@ class Sitemap /*extends DynamicElement*/
 			// Ordner
 			if ($o->isFolder )
 			{
-				$this->api->output( '<li><strong>'.$o->name.'</strong><br/>' );
-				$this->api->output( '<ul>' );
+				$this->output( '<li><strong>'.$o->name.'</strong><br/>' );
+				$this->output( '<ul>' );
 				$this->showFolder( $id ); // Rekursiver Aufruf dieser Methode
-				$this->api->output( '</ul></li>' );
+				$this->output( '</ul></li>' );
 			}
 
 			// Seiten und Verkn?fpungen
 			if ($o->isPage || $o->isLink )
 			{
 				// Wenn aktuelle Seite, dann markieren, sonst Link
-				if ( $this->api->getObjectId() == $id )
+				if ( $this->getObjectId() == $id )
 				{
 					// aktuelle Seite
-					$this->api->output( '<li><strong>'.$o->name.'</strong></li>' );
+					$this->output( '<li><strong>'.$o->name.'</strong></li>' );
 				}
 				else
 				{
 					// Link erzeugen
-					$this->api->output( '<li><a href="'.$this->api->page->path_to_object($id).'">'.$o->name.'</a></li>' );
+					$this->output( '<li><a href="'.$this->pathToObject($id).'">'.$o->name.'</a></li>' );
 				}
 			}
 		}

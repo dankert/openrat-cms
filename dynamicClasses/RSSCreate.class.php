@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-10-14 21:14:52  dankert
+// Revision 1.2  2004-12-28 22:57:56  dankert
+// Korrektur Vererbung, "api" ausgebaut
+//
+// Revision 1.1  2004/10/14 21:14:52  dankert
 // Erzeugen eines RSS-Feeds aus einem Ordner
 //
 // ---------------------------------------------------------------------------
@@ -31,7 +34,7 @@
  * Erstellen eines Hauptmenues
  * @author Jan Dankert
  */
-class RSSCreate /*extends DynamicElement*/
+class RSSCreate extends Dynamic
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
@@ -97,7 +100,7 @@ class RSSCreate /*extends DynamicElement*/
 				$item = array();
 				$item['title'      ] = $p->name;
 				$item['description'] = $p->desc;
-				$item['pubDate'    ] = $p->lastchange_date;
+				$item['pubDate'    ] = $p->lastchangeDate;
 				
 				$feed['items'][] = $item;
 			}
@@ -108,13 +111,13 @@ class RSSCreate /*extends DynamicElement*/
 		if	( $this->htmlentities )
 			$rss = htmlentities( $rss );
 
-		$this->api->output( $rss );
+		$this->output( $rss );
 	}
 	
 	
 	function rss($input, $stylesheet='')
 	{
-		print_r($input);
+//		print_r($input);
 		 // Builds the XML RSS schema using the array
 		$input["encoding"]  = (empty($input["encoding"] ))?"UTF-8":$input["encoding"];
 		$input["language"]  = (empty($input["language"] ))?"en-us":$input["language"];
