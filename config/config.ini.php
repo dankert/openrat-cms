@@ -53,6 +53,8 @@ language             = en           ; default language
 use_browser_language = true         ; use HTTP_ACCEPT_LANGUAGE header to determine language
 show_duration        = false        ; Show duration on every page
 timeout              =              ; Request timeout in seconds (blank=system default)
+override_title       =              ; Replace the default title (Program name+version) with this text
+min_width            = 950          ; Minimal Width of the browser window. If smaller, denn tree is disabled.
 
 
 [login]
