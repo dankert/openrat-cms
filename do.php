@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-10-04 19:56:56  dankert
+// Revision 1.6  2004-11-10 22:52:53  dankert
+// Reihenfolge beim Include von Dateien korrigiert
+//
+// Revision 1.5  2004/10/04 19:56:56  dankert
 // trace() hinzugef?gt
 //
 // Revision 1.4  2004/09/07 21:10:18  dankert
@@ -45,7 +48,6 @@ require_once( "serviceClasses/Ftp.class.$conf_php" );
 require_once( "serviceClasses/Text.class.$conf_php" );
 require_once( "serviceClasses/Publish.class.$conf_php" );
 require_once( "serviceClasses/Api.class.$conf_php" );
-require_once( "serviceClasses/Logger.class.$conf_php" );
 require_once( "serviceClasses/TreeElement.class.$conf_php" );
 require_once( "serviceClasses/AbstractTree.class.$conf_php" );
 require_once( "serviceClasses/AdministrationTree.class.$conf_php" );
@@ -64,6 +66,9 @@ require_once( "objectClasses/Page.class.$conf_php" );
 require_once( "objectClasses/Language.class.$conf_php" );
 require_once( "objectClasses/Model.class.$conf_php" );
 require_once( "objectClasses/Element.class.$conf_php" );
+require_once( "db/db.class.php" );
+require_once( "db/postgresql.class.php" );
+require_once( "db/mysql.class.php" );
 
 session_start();
 
@@ -89,7 +94,17 @@ else
 	$conf = $SESS['conf'];
 }
 
-require_once( "db/db.class.php" );
+define('PHP_EXT' ,$conf_php );
+define('FILE_SEP',$conf['interface']['file_separator']);
+
+define('REQ_PARAM_ACTION'       ,'action');
+define('REQ_PARAM_SUBACTION'    ,'subaction');
+define('REQ_PARAM_CALLACTION'   ,'callAction');
+define('REQ_PARAM_CALLSUBACTION','callSubaction');
+
+
+require_once( "serviceClasses/Logger.class.$conf_php" );
+require_once( "serviceClasses/Session.class.$conf_php" );
 require_once( "functions/config.inc.php" );
 require_once( "functions/language.inc.$conf_php" );
 require_once( "functions/theme.inc.$conf_php" );
@@ -109,8 +124,15 @@ request_into_session('languageid');
 
 // Verbindung zur Datenbank
 //
-if	( isset($SESS['dbid']))
-	$db = db_connection();
+$db = Session::getDatabase();
+if	( is_object( $db ) )
+{
+	$db->connect();
+	Session::setDatabase( $db );
+}
+	
+//if	( isset($SESS['dbid']))
+//	$db = db_connection();
 
 if	( isset( $SESS['action'] ) )
 	$action = $SESS['action'];
