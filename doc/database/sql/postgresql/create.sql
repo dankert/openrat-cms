@@ -136,7 +136,7 @@ CREATE TABLE or_element (
      , html CHAR(1) DEFAULT '0'
      , all_languages CHAR(1) DEFAULT '0' NOT NULL
      , writable CHAR(1) DEFAULT '0' NOT NULL
-     , decimals CHAR(4) DEFAULT '0'
+     , decimals INT DEFAULT 0
      , dec_point VARCHAR(5)
      , thousand_sep CHAR(1)
      , code TEXT
