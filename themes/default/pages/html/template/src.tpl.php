@@ -32,6 +32,25 @@
                <?php echo lang('ADD') ?>
                <?php echo Html::selectBox('iconid',$icon_elements) ?></td>
 </tr>
+
+<?php } ?>
+
+<?php if ( count($ifempty_elements)>0 )
+      { ?>
+<tr>
+<td class="f2"><input type="checkbox" name="addifempty" value="1">
+               <?php echo lang('ADD') ?>
+               <?php echo Html::selectBox('ifemptyid',$ifempty_elements) ?></td>
+</tr>
+<?php } ?>
+
+<?php if ( count($ifnotempty_elements)>0 )
+      { ?>
+<tr>
+<td class="f2"><input type="checkbox" name="addifnotempty" value="1">
+               <?php echo lang('ADD') ?>
+               <?php echo Html::selectBox('ifnotemptyid',$ifnotempty_elements) ?></td>
+</tr>
 <?php } ?>
 
 <tr>
