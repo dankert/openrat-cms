@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-11-28 16:56:04  dankert
+// Revision 1.7  2004-11-28 22:32:52  dankert
+// in getProperties() auch den Typ zurueckgeben
+//
+// Revision 1.6  2004/11/28 16:56:04  dankert
 // in hasRight() auch Abfrage des Parent-Ordners
 //
 // Revision 1.5  2004/11/24 22:06:24  dankert
@@ -304,7 +307,8 @@ class Object
 		              'isRoot'           =>$this->isRoot,
 		              'languageid'       =>$this->languageid,
 		              'modelid'          =>$this->modelid,
-		              'projectid'        =>$this->projectid );
+		              'projectid'        =>$this->projectid,
+		              'type'             =>$this->getType()  );
 	}
 
 
