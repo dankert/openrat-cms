@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.22  2004-12-27 23:26:39  dankert
+// Revision 1.23  2004-12-28 22:58:23  dankert
+// Neuer Schalter fuer "Liveserver aufraeumen"
+//
+// Revision 1.22  2004/12/27 23:26:39  dankert
 // Seite vor dem Loeschen laden
 //
 // Revision 1.21  2004/12/27 23:24:50  dankert
@@ -668,6 +671,11 @@ class FolderAction extends ObjectAction
 		{
 			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
 		}
+		
+		if	( $subdirs && $pages && $files &&
+			  $this->folder->isRoot        &&
+			  $this->hasRequestVar('clean')      )
+			$publish->clean();
 
 		$this->callSubaction( 'pub' );
 	}
