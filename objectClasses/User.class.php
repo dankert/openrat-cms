@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:41:31  dankert
+// Revision 1.3  2004-05-07 21:29:16  dankert
+// Url über Html::url erzeugen
+//
+// Revision 1.2  2004/05/02 14:41:31  dankert
 // Einfügen package-name (@package)
 //
 // ---------------------------------------------------------------------------
@@ -463,7 +466,7 @@ class User
 				$folder->load();
 				$var[$projectid]['rights'][$aclid] = $acl;
 				$var[$projectid]['rights'][$aclid]['foldername'] = implode(' &raquo; ',$folder->parentfolder( false,true ));
-				$var[$projectid]['rights'][$aclid]['delete_url'] = 'user.'.$conf_php.'?useraction=delright&aclid='.$aclid;
+				$var[$projectid]['rights'][$aclid]['delete_url'] = Html::url(array('action'=>'user','subaction'=>'delright','aclid'=>$aclid));
 			}
 			
 			$sql = new Sql( 'SELECT id FROM {t_folder}'.
