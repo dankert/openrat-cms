@@ -1,0 +1,171 @@
+<?php
+// ---------------------------------------------------------------------------
+// $Id$
+// ---------------------------------------------------------------------------
+// DaCMS Content Management System
+// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+// ---------------------------------------------------------------------------
+// $Log$
+// Revision 1.1  2004-04-24 15:15:12  dankert
+// Initiale Version
+//
+// Revision 1.1  2003/10/27 23:21:55  dankert
+// Methode(n) hinzugefügt: savevalue(), save()
+//
+// ---------------------------------------------------------------------------
+
+
+class Link extends Object
+{
+	var $linkid;
+	var $linkedObjectId = 0;
+	var $url            = '';
+	var $isLinkToUrl    = false;
+	var $isLinkToObject = false;
+
+	function Link( $objectid='' )
+	{
+		$this->Object( $objectid );
+		$this->isLink = true;
+		$this->isLinkToObject = false;
+	}
+	
+
+	// Lesen der Verknüpfung aus der Datenbank
+	function load()
+	{
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT *'.
+		                ' FROM {t_link}'.
+		                ' WHERE objectid={objectid}' );
+		$sql->setInt( 'objectid',$this->objectid );
+		$row = $db->getRow( $sql->query );
+
+		$this->url            = $row['url'];
+		$this->linkedObjectId = $row['link_objectid'];
+		
+		if	( is_numeric( $this->linkedObjectId ) )
+		{
+			$this->isLinkToUrl    = false;
+			$this->isLinkToObject = true;
+		}
+		else
+		{
+			$this->isLinkToUrl    = true;
+			$this->isLinkToObject = false;
+		}
+		
+		$this->objectLoad();
+	}
+
+
+
+	function delete()
+	{
+		$db = db_connection();
+
+		// Verknüpfung löschen
+		$sql = new Sql( 'DELETE FROM {t_link} '.
+		                ' WHERE objectid={objectid}' );
+		$sql->setInt( 'objectid',$this->objectid );
+		
+		$db->query( $sql->query );
+
+		$this->objectDelete();
+	}
+
+
+
+	function save()
+	{
+		global $SESS;
+		$db = db_connection();
+		
+		$sql = new Sql('UPDATE {t_link} SET '.
+		               '  url           = {url},'.
+		               '  link_objectid = {linkobjectid}'.
+		                ' WHERE objectid={objectid}' );
+		$sql->setInt   ('objectid'    ,$this->objectid );
+		
+		if	( $this->isLinkToObject )
+		{
+			$sql->setInt ('linkobjectid',$this->linkedObjectId );
+			$sql->setNull('url' );
+		}
+		else
+		{
+			$sql->setNull  ('linkobjectid');
+			$sql->setString('url',$this->url );
+		}
+		
+		$db->query( $sql->query );
+
+		$this->objectSave();
+	}
+
+
+	function getProperties()
+	{
+		return array_merge( parent::getProperties(),
+		                    Array( 'objectid'       =>$this->objectid,
+		                           'linkobjectid'   =>$this->linkedObjectId,
+		                           'url'            =>$this->url,
+		                           'isLinkToUrl'    =>$this->isLinkToUrl,
+		                           'isLinkToObject' =>$this->isLinkToObject) );
+	}
+
+
+	function getType()
+	{
+		if	( $this->isLinkToObject )
+			return 'link';
+		else	return 'url';
+	}
+
+
+	function add()
+	{
+		$this->objectAdd();
+
+		$db = db_connection();
+
+		$sql = new Sql('SELECT MAX(id) FROM {t_link}');
+		$this->linkid = intval($db->getOne($sql->query))+1;
+
+		$sql = new Sql('INSERT INTO {t_link}'.
+		               ' (id,objectid,url,link_objectid)'.
+		               ' VALUES( {linkid},{objectid},{url},{linkobjectid} )' );
+		$sql->setInt   ('linkid'      ,$this->linkid         );
+		$sql->setInt   ('objectid'    ,$this->objectid       );
+
+		if	( $this->isLinkToObject )
+		{
+			$sql->setInt ('linkobjectid',$this->linkedObjectId );
+			$sql->setNull('url' );
+		}
+		else
+		{
+			$sql->setNull  ('linkobjectid');
+			$sql->setString('url',$this->url );
+		}
+		
+		$db->query( $sql->query );
+	}	
+}
+
+?>
