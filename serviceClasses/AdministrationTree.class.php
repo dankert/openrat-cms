@@ -96,7 +96,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->text        = lang('USER');
 		$treeElement->description = lang('USER');
 		$treeElement->url         = Html::url(array('action'       =>'main',
-		                                            'callSubaction'=>'user',
+		                                            'callSubaction'=>'listing',
 		                                            'callAction'   =>'user',
 		                                            'userid'    =>'0'));
 		$treeElement->icon        = 'user';
@@ -110,7 +110,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->description = lang('GROUPS');
 		$treeElement->url         = Html::url(array('action'       =>'main',
 		                                            'callSubaction'=>'listing',
-		                                            'callAction'   =>'listing',
+		                                            'callAction'   =>'group',
 		                                            'groupid'      =>'0'));
 		$treeElement->icon        = 'group';
 		$treeElement->target      = 'cms_main';
