@@ -32,11 +32,11 @@ class Project
 	var $cut_index;
 	
 	// Konstruktor
-	function Project( $projectid )
+	function Project( $projectid='' )
 	{
 		global $SESS;
 
-		if   ( is_numeric($projectid) )
+		if   ( intval($projectid)>0 )
 			$this->projectid = $projectid;
 		else	$this->projectid = $SESS['projectid'];
 	}
