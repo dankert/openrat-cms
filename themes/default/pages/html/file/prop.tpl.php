@@ -3,10 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="file" />
-<input type="hidden" name="subaction" value="save" />
+<?php echo Html::form('file','save') ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -55,16 +52,16 @@
   <td width="50%" class="f2"><?php echo lang('GLOBAL_FULL_FILENAME') ?></a></td>
   <td width="50%" class="f2"><tt><?php echo $full_filename ?></tt></td>
 </tr>
+ <tr>
+    <td width="50%" class="f2"><?php echo lang('GLOBAL_created') ?></a></td>
+    <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$create_date) ?>, <?php Html::printUser($create_user) ?></td>
+  </tr>
+  <tr>
+    <td width="50%" class="f2"><?php echo lang('GLOBAL_lastchange') ?></a></td>
+    <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$lastchange_date) ?>, <?php Html::printUser($lastchange_user) ?></td>
+  </tr>
 <tr>
-  <td width="50%" class="f2"><?php echo lang('GLOBAL_created') ?></a></td>
-  <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$create_date) ?>, <?php if (isset($create_user['url'])) echo'<a href="'.$create_user['url'].'" target="cms_main">' ?><?php echo $create_user['name'] ?><?php if (isset($create__user['url'])) echo'</a>' ?></td>
-</tr>
-<tr>
-  <td width="50%" class="f2"><?php echo lang('GLOBAL_lastchange') ?></a></td>
-  <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$lastchange_date) ?>, <?php if (isset($lastchange_user['url'])) echo'<a href="'.$lastchange_user['url'].'" target="cms_main">' ?><?php echo $lastchange_user['name'] ?><?php if (isset($lastchange_user['url'])) echo'</a>' ?></td>
-</tr>
-<tr>
-  <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
+  <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" /></td>
 </tr>
 
 </table>
@@ -90,7 +87,7 @@
       foreach( $pages as $id=>$p )
       { ?>
 <tr>
-<td class="f1"><a href="<?php echo $p['url'] ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_page.png' ?>" align="left" border="0"><?php echo $p['name'] ?></a></td>
+<td class="f1"><a href="<?php echo $p['url'] ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_page'.IMG_EXT ?>" align="left" border="0"><?php echo $p['name'] ?></a></td>
 </tr>
 <?php }
       if ( count($pages)==0)
