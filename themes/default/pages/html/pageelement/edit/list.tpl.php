@@ -16,7 +16,7 @@
 </tr>
 
 <tr>
-<td class="f1"><?php echo Html::selectBox( 'linkobjectid',$objects,$act_linkobjectid,array('onchange'=>'submit();')) ?></td>
+<td class="f1"><?php echo Html::selectBox( 'linkobjectid',$objects,$act_linkobjectid) ?></td>
 </tr>
 
 <?php if	( $release )
@@ -33,7 +33,7 @@
 <?php } ?>
 
 <tr>
-<td class="act"><noscript><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></noscript></td>
+<td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
 </tr>
 
 </table>
