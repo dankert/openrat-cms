@@ -20,11 +20,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-19 21:12:49  dankert
+// Revision 1.4  2004-11-10 22:40:14  dankert
+// Neue Funktion zur Projektauswahl nach dem Login
+//
+// Revision 1.3  2004/05/19 21:12:49  dankert
 // Korrektur listing()
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -46,8 +49,11 @@ class ProjectAction extends Action
 
 	function ProjectAction()
 	{
-		$this->project = new Project( $this->getSessionVar('projectid') );
-		$this->project->load();
+		if	( intval($this->getSessionVar('projectid'))!=0 )
+		{
+			$this->project = new Project( $this->getSessionVar('projectid') );
+			$this->project->load();
+		}
 	}
 
 
@@ -55,7 +61,7 @@ class ProjectAction extends Action
 	{
 		if   ( $this->getRequestVar('delete') != '' )
 		{
-			// Gesamtes Projekt löschen
+			// Gesamtes Projekt l?schen
 			$this->project->delete();
 
 			$this->setTemplateVar('tree_refresh',true);
@@ -105,6 +111,30 @@ class ProjectAction extends Action
 		$this->setTemplateVar('el',$list);
 	
 		$this->forward('project_list');
+	}
+
+
+	function select()
+	{
+		$user     = Session::getUser();
+		$projects = $user->projects;
+
+		// Administrator sieht Administrationsbereich
+		if   ( $user->isAdmin )
+			$projects = array_merge( array("-1"=>lang('ADMINISTRATION')),$projects );
+
+		// Projekte ermitteln
+		$list = array();
+
+		foreach( $projects as $id=>$name )
+		{
+			$list[$id]         = array();
+			$list[$id]['url' ] = Html::url(array('action'=>'index','subaction'=>'show','projectid'=>$id));
+			$list[$id]['name'] = $name;
+		}
+		$this->setTemplateVar('el',$list);
+	
+		$this->forward('project_select');
 	}
 
 
