@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2004-12-26 01:06:31  dankert
+// Revision 1.17  2004-12-28 22:55:51  dankert
+// Korrektur Dateinamen-Ermittlung
+//
+// Revision 1.16  2004/12/26 01:06:31  dankert
 // Perfomanceverbesserung Seite/Elemente
 //
 // Revision 1.15  2004/12/25 21:05:29  dankert
@@ -86,6 +89,7 @@ class Page extends Object
 {
 	var $pageid;
 	var $templateid;
+	var $template;
 
 	var $simple = false;
 	var $public = false;
@@ -99,6 +103,7 @@ class Page extends Object
 	var $content_negotiation = false;
 	var $cut_index           = false;
 	var $default_language    = false;
+	var $withLanguage        = false;
 	var $link                = false;
 	var $fullFilename = '';
 
@@ -242,6 +247,7 @@ class Page extends Object
 					$p->languageid          = $this->languageid;
 					$p->cut_index           = $cut_index;
 					$p->content_negotiation = $content_negotiation;
+					$p->withLanguage        = $this->withLanguage;
 					$p->load();
 					$inhalt .= $p->full_filename();
 					break;
@@ -540,21 +546,25 @@ class Page extends Object
 		if	( !$this->cut_index || $this->filename != 'index' )
 		{
 			$filename .= $this->filename();
-			if	( !$this->default_language )
-			{		
-				$l = new Language( $this->languageid );
-				$l->load();
-				$filename .= '.'.$l->isoCode;
-			}
-	
-			$t = new Template( $this->templateid );
-			$t->projectmodelid = $this->modelid;
-			$t->load();
-			$filename .= '.'.$t->extension;
-	
-			if	( $this->default_language )
-			{		
+			
+			if	( !$this->content_negotiation )
+			{
+				if	( !$this->default_language && $this->withLanguage )
+				{		
+					$l = new Language( $this->languageid );
+					$l->load();
+					$filename .= '.'.$l->isoCode;
+				}
+		
+				$t = new Template( $this->templateid );
+				$t->projectmodelid = $this->modelid;
+				$t->load();
 				$filename .= '.'.$t->extension;
+		
+				if	( $this->default_language && $this->withLanguage )
+				{		
+					$filename .= '.'.$t->extension;
+				}
 			}
 		}
 
@@ -563,31 +573,31 @@ class Page extends Object
 	}
 
 
-	function language_filename()
-	{
-		global $SESS;
-		
-		$db = db_connection();
-
-		$sql  = new Sql( 'SELECT COUNT(*) FROM {t_language}'.
-		                 ' WHERE projectid={projectid}' );
-		$sql->setInt('projectid',$SESS['projectid']);
-
-		if   ( $db->getOne( $sql->query ) == 1 )
-		{
-			// Wenn es nur eine Sprache gibt, keine Sprachangabe im Dateinamen
-			return '';
-		}
-		else
-		{
-			$sql = new Sql( 'SELECT isocode FROM {t_language}'.
-			                ' WHERE id={languageid}' );
-			$sql->setInt('languageid',$this->languageid);
-			$isocode = $db->getOne( $sql->query );
-
-			return strtolower( $isocode );
-		}		
-	}
+//	function language_filename()
+//	{
+//		global $SESS;
+//		
+//		$db = db_connection();
+//
+//		$sql  = new Sql( 'SELECT COUNT(*) FROM {t_language}'.
+//		                 ' WHERE projectid={projectid}' );
+//		$sql->setInt('projectid',$SESS['projectid']);
+//
+//		if   ( $db->getOne( $sql->query ) == 1 )
+//		{
+//			// Wenn es nur eine Sprache gibt, keine Sprachangabe im Dateinamen
+//			return '';
+//		}
+//		else
+//		{
+//			$sql = new Sql( 'SELECT isocode FROM {t_language}'.
+//			                ' WHERE id={languageid}' );
+//			$sql->setInt('languageid',$this->languageid);
+//			$isocode = $db->getOne( $sql->query );
+//
+//			return strtolower( $isocode );
+//		}		
+//	}
 
 
 	/**
@@ -667,12 +677,12 @@ class Page extends Object
 	
 		$this->generate_elements();
 
-		$template = new Template( $this->templateid );
-		$template->load();
+		$this->template = new Template( $this->templateid );
+		$this->template->load();
 
-		$this->ext = $template->extension;
+		$this->ext = $this->template->extension;
 		 
-		$src = $template->src;
+		$src = $this->template->src;
 
 		// Ersetzen der Platzhalter durch die Element-Inhalte
 		//
@@ -727,8 +737,8 @@ class Page extends Object
 
 
 	/**
-	  * Generieren dieser Seite in Dateisystem und/oder auf FTP-Server
-	  */
+	 * Generieren dieser Seite in Dateisystem und/oder auf FTP-Server
+	 */
 	function publish()
 	{
 		global $SESS;
@@ -737,16 +747,17 @@ class Page extends Object
 		if	( ! is_object($this->publish) )
 			$this->publish = new Publish();
 		
-		//$this->content_negotiation = $this->publish->content_negotiation;
-		//$this->cut_index           = $this->publish->cut_index;
 		$this->public              = true;
 
-		// Schleife ?ber alle Sprachvarianten
-		foreach( Language::getAll() as $languageid=>$x )
+		// Schleife ueber alle Sprachvarianten
+		$allLanguages = Language::getAll();
+		
+		foreach( $allLanguages as $languageid=>$x )
 		{
-			$this->languageid = $languageid;
+			$this->languageid   = $languageid;
+			$this->withLanguage = count($allLanguages) > 1;
 
-			// Schleife ?ber alle Projektvarianten
+			// Schleife ueber alle Projektvarianten
 			foreach( Model::getAll() as $projectmodelid )
 			{
 				$this->projectmodelid = $projectmodelid;
@@ -755,9 +766,13 @@ class Page extends Object
 				$this->generate();
 				$this->write();
 				
-				$this->publish->copy( $this->tmpfile(),$this->full_filename() );
-				unlink( $this->tmpfile );
-				$this->publish->publishedObjects[] = $this->getProperties();
+				// Nur wenn eine Datei-Endung vorliegt wird die Seite veroeffentlicht
+				if	( !empty($this->template->extension) )
+				{ 	
+					$this->publish->copy( $this->tmpfile(),$this->full_filename() );
+					unlink( $this->tmpfile );
+					$this->publish->publishedObjects[] = $this->getProperties();
+				}
 			}
 		}
 
