@@ -33,11 +33,11 @@
     <td width="50%" class="f1"><?php echo lang('GLOBAL_TEMPLATE') ?></a></td>
     <?php if (isset($template_url))
           { ?>
-    <td width="50%" class="f1"><a href="<?php echo $template_url ?>" target="cms_main"><img src="<?php echo $image_dir ?>icon_tpl<?php echo IMG_EXT ?>" border="0" align="left"><?php echo $template_name ?></a></td>
+    <td width="50%" class="f1"><a href="<?php echo $template_url ?>" target="cms_main"><img src="<?php echo $image_dir ?>icon_template<?php echo IMG_EXT ?>" border="0" align="left"><?php echo $template_name ?></a></td>
     <?php }
           else
           { ?>
-    <td width="50%" class="f1"><img src="<?php echo $image_dir ?>icon_tpl.png" align="left"><?php echo $template_name ?></td>
+    <td width="50%" class="f1"><img src="<?php echo $image_dir ?>icon_template<?php echo IMG_EXT ?>" align="left"><?php echo $template_name ?></td>
     <?php } ?>
   </tr>
   <tr>
