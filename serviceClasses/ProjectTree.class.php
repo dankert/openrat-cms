@@ -136,7 +136,7 @@ class ProjectTree extends AbstractTree
 			$treeElement->internalId = $o->objectid;
 			$treeElement->target     = 'cms_main';
 			$treeElement->text       = Text::maxLaenge( 25,$o->name );
-			$treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$id;
+			$treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$o->objectid;
 
 			if	( $o->desc != '' )
 				$treeElement->description .= ': '.$o->desc;
