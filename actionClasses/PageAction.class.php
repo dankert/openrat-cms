@@ -222,15 +222,16 @@ class PageAction extends ObjectAction
 				} 
 			}
 			asort($objects);
-			$this->setTemplateVar( 'objects',$objects );
+			$this->setTemplateVar( 'objects' ,$objects );
 	
-			$this->setTemplateVar( 'release',$this->page->hasRight(ACL_RELEASE) );
-			$this->setTemplateVar( 'publish',$this->page->hasRight(ACL_PUBLISH) );
-			$this->setTemplateVar( 'html'   ,$value->element->html );
-			$this->setTemplateVar( 'wiki'   ,$value->element->wiki );
-			$this->setTemplateVar( 'text'   ,$value->text          );
-			$this->setTemplateVar( 'name'   ,$value->element->name );
-			$this->setTemplateVar( 'desc'   ,$value->element->desc );
+			$this->setTemplateVar( 'release' ,$this->page->hasRight(ACL_RELEASE) );
+			$this->setTemplateVar( 'publish' ,$this->page->hasRight(ACL_PUBLISH) );
+			$this->setTemplateVar( 'html'    ,$value->element->html );
+			$this->setTemplateVar( 'wiki'    ,$value->element->wiki );
+			$this->setTemplateVar( 'text'    ,$value->text          );
+			$this->setTemplateVar( 'name'    ,$value->element->name );
+			$this->setTemplateVar( 'desc'    ,$value->element->desc );
+			$this->setTemplateVar( 'objectid',$this->page->objectid );
 			$this->forward( 'pageelement_edit_longtext' );
 		}
 

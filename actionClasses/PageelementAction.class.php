@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2005-01-23 00:09:25  dankert
+// Revision 1.18  2005-01-27 00:02:47  dankert
+// Immer Objektid an das Template liefern
+//
+// Revision 1.17  2005/01/23 00:09:25  dankert
 // Sortieren Link-Liste
 //
 // Revision 1.16  2005/01/14 23:47:42  dankert
@@ -320,6 +323,8 @@ class PageelementAction extends Action
 
 		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
 		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 
 		$this->forward('pageelement_edit_'.$this->value->element->type);
 	}
