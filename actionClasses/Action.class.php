@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-12-19 14:40:18  dankert
+// Revision 1.12  2004-12-26 21:57:16  dankert
+// Feststellen, ob Request-Dauer ausgegeben werden soll
+//
+// Revision 1.11  2004/12/19 14:40:18  dankert
 // neue Methode hasRequestVar()
 //
 // Revision 1.10  2004/12/15 23:22:26  dankert
@@ -200,6 +203,8 @@ class Action
 	
 		$tplFileName = str_replace( '_','/',$tplFileName );
 		$cms_title = OR_TITLE.' '.OR_VERSION;
+
+		$showDuration = $conf['interface']['show_duration'];
 
 		// Einbinden des Templates
 		//
