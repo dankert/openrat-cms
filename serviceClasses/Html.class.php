@@ -96,20 +96,29 @@ class Html
 		}
 		
 		if	( $fake_urls )
-			return $action.','.$subaction.$id.$urlParameter;
+			return './'.$action.','.$subaction.$id.$urlParameter;
 		else
-			return 'do.php'.$urlParameter;
+			return './'.'do.php'.$urlParameter;
 	}
 
 
 	function form( $params )
 	{
-		if	( !isset($params['target'   ])) $params['target'   ] = '_self';
-		if	( !isset($params['action'   ])) $params['action'   ] = '';
+		extract( $params );
+
+		if	( !isset($target) )  $target = '_self';
+		if	( !isset($method) )  $method = 'post';
+		if	( !isset($name  ) )  $name   = '';
+
+		unset( $params['name'     ]);
+		unset( $params['method'   ]);
+		unset( $params['target'   ]);
+		$action = Html::url($params);
+
 		if	( !isset($params['subaction'])) $params['subaction'] = '';
 		if	( !isset($params['id'       ])) $params['id'       ] = '';
 
-		$text = '<form name="'.$params['name'].'" target="'.$params['target'].'" action="'.Html::url($params).'" method="post" />'."\n";
+		$text = '<form name="'.$name.'" target="'.$target.'" action="'.$action.'" method="'.$method.'" />'."\n";
 		$text.= '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
 
 		return $text;
