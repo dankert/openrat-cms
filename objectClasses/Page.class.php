@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-11-29 23:24:36  dankert
+// Revision 1.12  2004-12-15 23:17:53  dankert
+// temporaere Dateien vom System
+//
+// Revision 1.11  2004/11/29 23:24:36  dankert
 // Korrektur Veroeffentlichung
 //
 // Revision 1.10  2004/11/10 22:47:17  dankert
@@ -79,7 +82,6 @@ class Page extends Object
 
 	var $icons = false;
 	var $src   = '';
-	var $tmpfile;
 	var $edit  = false;
 
 	var $content_negotiation = false;
@@ -99,14 +101,6 @@ class Page extends Object
 	{
 		$this->Object( $objectid );
 		$this->isPage = true;
-	}
-
-
-	function tmpfile()
-	{
-		$this->tmpfile = parent::tmpfile();
-		$this->tmpfile .= '.php';
-		return $this->tmpfile;
 	}
 
 
@@ -352,17 +346,6 @@ class Page extends Object
 		}
 
 		return $this->up_path;
-	}
-
-
-	/**
-	  * getter-Methode f?r den Dateinamen
-	  *
-	  * @return String Dateiname
-	  */
-	function filename()
-	{
-		return $this->filename;
 	}
 
 
@@ -710,7 +693,7 @@ class Page extends Object
 		// Schreiben der Cache-Datei
 		//
 
-		$f = fopen( $this->tmpfile(),'w' );
+		$f = fopen( $this->tmpfile(),'a' );
 		fwrite( $f,$this->value );
 		fclose( $f );
 	}
@@ -746,6 +729,7 @@ class Page extends Object
 				$this->write();
 				
 				$this->publish->copy( $this->tmpfile(),$this->full_filename() );
+				unlink( $this->tmpfile );
 				$this->publish->publishedObjects[] = $this->getProperties();
 			}
 		}
@@ -769,6 +753,7 @@ class Page extends Object
 				
 				//echo $this->tmpfile().' &gt; '.$this->full_filename().'<br>';
 				$publish->copy( $this->tmpfile(),$this->full_filename() );
+				unlink( $this->tmpfile );
 				$this->publish->publishedObjects[] = $this->getProperties();
 			}
 		}
