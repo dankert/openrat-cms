@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.4  2004-11-24 21:28:36  dankert
+// "Verschieben" entfernt
+//
+// Revision 1.3  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.2  2004/04/30 20:31:47  dankert
 // Berechtigungen anzeigen
@@ -33,12 +36,12 @@
 
 
 /**
- * Action-Klasse für Verknüpfungen
+ * Action-Klasse f?r Verkn?pfungen
  * @version $Id$
  * @author $Author$
  * @package openrat.actions
  */
-class LinkAction extends Action
+class LinkAction extends ObjectAction
 {
 	var $link;
 	var $defaultSubAction = 'prop';
@@ -54,7 +57,7 @@ class LinkAction extends Action
 
 
 	/**
-	 * Verschieben der Verknüpfung
+	 * Verschieben der Verkn?pfung
 	 */
 	function move()
 	{
@@ -65,33 +68,18 @@ class LinkAction extends Action
 	}
 
 
-	function addACL()
-	{
-		$this->objectAddACL();
-
-		$this->callSubAction('rights');
-	}
-
-
-	function delACL()
-	{
-		$this->objectDelACL();
-
-		$this->callSubAction('rights');
-	}
-
 
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
 	function save()
 	{
-		// Wenn Name gefüllt, dann Datenbank-Update
+		// Wenn Name gef?llt, dann Datenbank-Update
 		if   ( $this->getRequestVar('name') != '' )
 		{
 			if   ( $this->getRequestVar('delete') != '' )
 			{
-				// Verknuepfung löschen
+				// Verknuepfung l?schen
 				$this->link->delete();
 
 				$this->getRequestVar('tree_refresh',true);
@@ -158,7 +146,7 @@ class LinkAction extends Action
 
 
 
-		// Typ der Verknüpfung
+		// Typ der Verkn?pfung
 		$this->setTemplateVar('type'            ,$this->link->getType()     );
 		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
 		$this->setTemplateVar('url'             ,$this->link->url           );
@@ -185,58 +173,6 @@ class LinkAction extends Action
 		asort( $list );
 		$this->setTemplateVar('objects',$list);		
 
-
-		// Alle Ordner ermitteln
-		$this->setTemplateVar('act_objectid',$this->link->parentid);
-		$list = array();
-		
-		$f = new Folder( $this->link->parentid );
-		foreach( $f->getOtherFolders() as $oid )
-		{
-			$folder = new Folder( $oid );
-			$list[$oid] = implode(' &raquo; ',$folder->parentObjectNames( true,true ) );
-		}
-		asort( $list );
-		$this->setTemplateVar('folder',$list);
 		$this->forward('link_prop');
 	}
-
-
-	function rights()
-	{
-		global $SESS;
-		global $conf_php;
-		if   ($SESS['user']['is_admin'] != '1') die('nice try');
-
-		$acllist = array();	
-		foreach( $this->link->getAllInheritedAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-		}
-
-		foreach( $this->link->getAllAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-			$acllist[$key]['delete_url'] = Html::url(array('subaction'=>'delACL','aclid'=>$aclid));
-		}
-		ksort( $acllist );
-
-		$this->setTemplateVar('acls',$acllist );
-
-		$this->setTemplateVar('users'    ,User::listAll()   );
-		$this->setTemplateVar('groups'   ,Group::getAll()   );
-
-		$languages = Language::getAll();
-		$languages[0] = lang('ALL_LANGUAGES');
-		$this->setTemplateVar('languages',$languages);
-
-		$this->forward('link_rights');
-	}
-
 }
