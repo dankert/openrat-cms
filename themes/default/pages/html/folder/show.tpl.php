@@ -10,6 +10,8 @@
 <?php $table_title_text    = lang('FOLDER');
       $table_title_colspan = 7;
       include( $tpl_dir.'table_open.tpl.php');
+      
+      $writable = isset($folder);
 ?>
 <tr>
 <td colspan="7" class="help"><?php echo lang('HELP_FOLDER') ?></td>
@@ -20,18 +22,18 @@
       { ?>
 <tr>
 <td width="50%" colspan="8" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $up_url ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_folder.png' ?>" align="left" border="0"><strong>..</strong></a></td>
-<!--<td width="50%" colspan="3" class="<?php if($f1==true) {echo'f1';$f1=false;} else{echo'f2';$f1=true;}?>">&nbsp;</td>-->
 </tr>
 <?php }
 
       if   ( count( $object) > 0 )
       {
+      	$sortable = (count($object)>1 && $writable);
       ?>
 <tr>
 <td width="5%"  class="help"            >&nbsp;</td>
-<td width="60%" class="help"            ><a href="<?php echo $orderbytype_url       ?>" title="<?php echo lang('FOLDER_ORDERBYTYPE'      ) ?>"><?php echo lang('GLOBAL_TYPE') ?></a> / <a href="<?php echo $orderbyname_url ?>" title="<?php echo lang('FOLDER_ORDERBYNAME') ?>"><?php echo lang('GLOBAL_NAME') ?></a></td>
-<td width="20%" class="help"            ><a href="<?php echo $orderbylastchange_url ?>" title="<?php echo lang('FOLDER_ORDERBYLASTCHANGE') ?>"><?php echo lang('LASTCHANGE' ) ?></td>
-<td width="30%" class="help" colspan="4"><?php if (count( $object)>1) ?><a href="<?php echo $flip_url ?>" title="<?php echo lang('FOLDER_FLIP') ?>"><?php echo lang('FOLDER_ORDER') ?></a></td>
+<td width="60%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbytype_url       ?>" title="<?php echo lang('FOLDER_ORDERBYTYPE'      ) ?>"><?php } ?><?php echo lang('GLOBAL_TYPE')  ?><?php if ($sortable) { ?></a><?php } ?> / <?php if ($sortable) { ?><a href="<?php echo $orderbyname_url ?>" title="<?php echo lang('FOLDER_ORDERBYNAME') ?>"><?php } ?><?php echo lang('GLOBAL_NAME') ?><?php if ($sortable) { ?></a><?php } ?></td>
+<td width="20%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbylastchange_url ?>" title="<?php echo lang('FOLDER_ORDERBYLASTCHANGE') ?>"><?php } ?><?php echo lang('LASTCHANGE' )  ?><?php if ($sortable) { ?></a><?php } ?></td>
+<td width="30%" class="help" colspan="4"><?php if ($sortable) { ?><a href="<?php echo $flip_url              ?>" title="<?php echo lang('FOLDER_FLIP')              ?>"><?php } ?><?php echo lang('FOLDER_ORDER') ?><?php if ($sortable) { ?></a><?php } ?></td>
 </tr>
 
 <?php   $f1=true;
@@ -40,7 +42,7 @@
           $fx = fx($f1);
       	?>
 <tr>
-<td width="5%"  class="<?php echo $fx; ?>"><input type="checkbox" name="obj<?php echo $id ?>" value="1" /></td>
+<td width="5%"  class="<?php echo $fx; ?>"><?php if($writable) { ?><input type="checkbox" name="obj<?php echo $id ?>" value="1" /><?php } ?></td>
 <td width="40%" class="<?php echo $fx; ?>"><a href="<?php echo $z['url'] ?>" target="cms_main" title="<?php echo $z['desc'] ?>"><img src="<?php echo $image_dir.'icon_'.$z['icon'].'.png' ?>" align="left" border="0"><?php echo $z['name'] ?></a>&nbsp;</td>
 <td width="18%" class="<?php echo $fx; ?>"><span title="<?php echo lang('USER').': '.$z['user'] ?>"><?php echo $z['date'] ?></span></td>
 <td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['upurl'    ])) { ?><a href="<?php echo $z['upurl'    ]  ?>"><img src="<?php echo $image_dir ?>up.gif"     title="<?php echo lang('UP'    ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
@@ -50,6 +52,7 @@
 </tr>
 <?php   } ?>
 
+<?php   if($writable) { ?>
 <tr>
 <td colspan="7" class="<?php echo $fx; ?>">
   <img src="<?php echo $image_dir ?>tree_none_end.gif" align="left" />&nbsp;
@@ -83,6 +86,7 @@
   <input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" />
 </td>
 </tr>
+<?php   } ?>
 <?php }
       else
       { ?>
