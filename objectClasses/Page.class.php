@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-05-02 14:41:31  dankert
+// Revision 1.5  2004-05-07 21:41:14  dankert
+// Url über Html::url erzeugen
+//
+// Revision 1.4  2004/05/02 14:41:31  dankert
 // Einfügen package-name (@package)
 //
 // Revision 1.3  2004/05/02 11:40:00  dankert
@@ -254,11 +257,11 @@ class Page extends Object
 			switch( $object->getType() )
 			{
 				case 'file':
-					$inhalt = "do.$conf_php?action=file&subaction=show&objectid=".$objectid;
+					$inhalt = Html::url(array('action'=>'file','subaction'=>'show','objectid'=>$objectid));
 					break;
 
 				case 'page':
-					$inhalt = "do.$conf_php?action=page&objectid=".$objectid;
+					$inhalt = Html::url(array('action'=>'page','objectid'=>$objectid));
 					break;
 
 				case 'link':
@@ -273,11 +276,11 @@ class Page extends Object
 						switch( $linkedObject->getType() )
 						{
 							case 'file':
-								$inhalt = "do.$conf_php?action=file&subaction=show&objectid=".$link->linkedObjectId;
+								$inhalt = Html::url(array('action'=>'file','subaction'=>'show','objectid'=>$link->linkedObjectId));
 							break;
 			
 							case 'page':
-								$inhalt = "do.$conf_php?action=page&objectid=".$link->linkedObjectId;
+								$inhalt = Html::url(array('action'=>'page','objectid'=>$link->linkedObjectId));
 							break;
 						}
 					}
@@ -535,7 +538,7 @@ class Page extends Object
 			$src = str_replace( '{{'.$id.'}}',$inh,$src );
 			
 			if   ( $this->icons )
-				$src = str_replace( '{{->'.$id.'}}','<a href="do.'.$conf_php.'?action=pagelement&elementid='.$id.'&pageelementaction=edit" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.$conf['directories']['themedir'].'/images/icon_el_'.$value->element->type.'.png" border="0"></a>',$src );
+				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url(array('action'=>'pagelement','elementid'=>$id,'subaction'=>'edit')).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.$conf['directories']['themedir'].'/images/icon_el_'.$value->element->type.'.png" border="0"></a>',$src );
 			else	$src = str_replace( '{{->'.$id.'}}','',$src );
 		}
 
