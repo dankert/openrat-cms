@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-24 15:28:17  dankert
+// Revision 1.3  2004-04-24 18:11:28  dankert
+// Info-elemente
+//
+// Revision 1.2  2004/04/24 15:28:17  dankert
 // Korrektur: relative Pfad bei Listen
 //
 // Revision 1.1  2004/04/24 15:15:12  dankert
@@ -544,9 +547,8 @@ class Value
 	{
 		if	( intval($this->valueid)==0 )
 			$this->load();
-		global $db,
-		       $conf,
-		       $conf_php,
+		$db = db_connection();
+		global $conf,
 		       $conf_tmpdir,
 		       $SESS;
 	
@@ -736,15 +738,15 @@ class Value
 						break;
 						
 					case 'date_saved':
-						$inhalt = date( $this->element->dateformat );
+						$inhalt = date( $this->element->dateformat,$this->page->lastchange_date );
 						break;
 
 					case 'date_created':
-						$inhalt = date( $this->element->dateformat );
+						$inhalt = date( $this->element->dateformat,$this->page->create_date );
 						break;
 
 					default:  
-						$inhalt = date( $this->element->dateformat );
+						$inhalt = 'please select subtype. unknown: '.$this->element->subtype;
 				}
 				
 				break;
@@ -759,94 +761,141 @@ class Value
 						$inhalt = $SESS['dbid'];
 						break;
 					case 'db_name':
-						$inhalt = '';
+						$inhalt = $conf['database_'.$SESS['dbid']]['comment'];
 						break;
 					case 'project_id':
-						$inhalt = '';
+						$inhalt = $this->page->projectid;
 						break;
 					case 'project_name':
-						$inhalt = '';
+						$project = new Project( $this->page->projectid );
+						$project->load();
+						$inhalt = $project->name;
 						break;
 					case 'language_id':
-						$inhalt = '';
+						$inhalt = $this->page->languageid;
 						break;
 					case 'language_iso':
-						$inhalt = '';
+						$language = new Language( $this->page->languageid );
+						$language->load();
+						$inhalt = $language->isoCode;
 						break;
 					case 'language_name':
-						$inhalt = '';
+						$language = new Language( $this->page->languageid );
+						$language->load();
+						$inhalt = $language->name;
 						break;
 					case 'page_id':
-						$inhalt = '';
+						$inhalt = $this->page->objectid;
 						break;
 					case 'page_name':
-						$inhalt = '';
+						$inhalt = $this->page->name;
 						break;
 					case 'page_desc':
-						$inhalt = '';
+						$inhalt = $this->page->desc;
 						break;
 					case 'page_fullfilename':
-						$inhalt = '';
+						$inhalt = $this->page->full_filename();
 						break;
 					case 'page_filename':
-						$inhalt = '';
+						$inhalt = $this->page->filename;
 						break;
 					case 'page_extension':
 						$inhalt = '';
 						break;
-					case 'lastchange_user_username':
-						$inhalt = '';
+					case 'edit_url':
+						$inhalt = Html::url(array('objectid'=>$this->page->objectid,'dbid'=>$SESS['dbid']));
 						break;
-					case 'lastchange_user_fullname':
-						$inhalt = '';
+					case 'edit_fullurl':
+						$inhalt = 'http://';
+						$inhalt .= getenv('SERVER_NAME');
+						$inhalt .= dirname(getenv('SCRIPT_NAME'));
+						$inhalt .= '/'.Html::url(array('objectid'=>$this->page->objectid,'dbid'=>$SESS['dbid']));;
 						break;
-					case 'lastchange_user_mail':
-						$inhalt = '';
+					case 'lastch_user_username':
+						$user = new User($this->page->lastchange_userid);
+						$user->load();
+						$inhalt = $user->name;
 						break;
-					case 'lastchange_user_desc':
-						$inhalt = '';
+					case 'lastch_user_fullname':
+						$user = new User($this->page->lastchange_userid);
+						$user->load();
+						$inhalt = $user->fullname;
 						break;
-					case 'lastchange_user_tel':
-						$inhalt = '';
+					case 'lastch_user_mail':
+						$user = new User($this->page->lastchange_userid);
+						$user->load();
+						$inhalt = $user->mail;
 						break;
+					case 'lastch_user_desc':
+						$user = new User($this->page->lastchange_userid);
+						$user->load();
+						$inhalt = $user->desc;
+						break;
+					case 'lastch_user_tel':
+						$user = new User($this->page->lastchange_userid);
+						$user->load();
+						$inhalt = $user->tel;
+						break;
+
 					case 'create_user_username':
-						$inhalt = '';
+						$user = new User($this->page->create_userid);
+						$user->load();
+						$inhalt = $user->name;
 						break;
 					case 'create_user_fullname':
-						$inhalt = '';
+						$user = new User($this->page->create_userid);
+						$user->load();
+						$inhalt = $user->fullname;
 						break;
 					case 'create_user_mail':
-						$inhalt = '';
+						$user = new User($this->page->create_userid);
+						$user->load();
+						$inhalt = $user->mail;
 						break;
 					case 'create_user_desc':
-						$inhalt = '';
+						$user = new User($this->page->create_userid);
+						$user->load();
+						$inhalt = $user->desc;
 						break;
 					case 'create_user_tel':
-						$inhalt = '';
+						$user = new User($this->page->create_userid);
+						$user->load();
+						$inhalt = $user->tel;
 						break;
+
 					case 'act_user_username':
-						$inhalt = '';
+						$user = new User($SESS['user']['id']);
+						$user->load();
+						$inhalt = $user->name;
 						break;
 					case 'act_user_fullname':
-						$inhalt = '';
+						$user = new User($SESS['user']['id']);
+						$user->load();
+						$inhalt = $user->fullname;
 						break;
 					case 'act_user_mail':
-						$inhalt = '';
+						$user = new User($SESS['user']['id']);
+						$user->load();
+						$inhalt = $user->mail;
 						break;
 					case 'act_user_desc':
-						$inhalt = '';
+						$user = new User($SESS['user']['id']);
+						$user->load();
+						$inhalt = $user->desc;
 						break;
 					case 'act_user_tel':
-						$inhalt = '';
+						$user = new User($SESS['user']['id']);
+						$user->load();
+						$inhalt = $user->tel;
 						break;
 					default:
-						$inhalt = '';
+						$inhalt = 'please select subtype. unknown: '.$this->element->subtype;
 				}
 				break;
 		}
 		
 		if   ( $this->page->icons && $this->element->withIcon )
-			$inhalt = '<a href="do.'.$conf_php.'?action=pageelement&elementid='.$this->element->elementid.'&pageelementaction=edit'.'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.$conf['directories']['themedir'].'/images/icon_el_'.$this->element->type.'.png" border="0" align="left"></a>'.$inhalt;
+			$inhalt = '<a href="'.Html::url(array('action'=>'pageelement','elementid'=>$this->element->elementid,'pageelementaction'=>'edit')).'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.$conf['directories']['themedir'].'/images/icon_el_'.$this->element->type.'.png" border="0" align="left"></a>'.$inhalt;
 		
 		$this->value = $inhalt;
 	}
