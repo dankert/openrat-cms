@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-04-25 17:35:42  dankert
+// openall_url setzen
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
@@ -75,9 +78,10 @@ class TreemenuAction extends Action
 		}
 		$this->setTemplateVar('projects',$projects);
 
-		$this->setTemplateVar('reload_url'   ,Html::url( array('action'   =>'tree',
-		                                                       'subaction'=>'reload',
-		                                                       ) ));
+		$this->setTemplateVar('reload_url'  ,Html::url( array('action'   =>'tree',
+		                                                      'subaction'=>'reload') ));
+		$this->setTemplateVar('openall_url' ,Html::url( array('action'   =>'tree',
+		                                                      'subaction'=>'openall') ));
 		
 		// Ausgabe des Templates
 		$this->forward('tree_menu');
