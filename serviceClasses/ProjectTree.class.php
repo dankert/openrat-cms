@@ -65,7 +65,12 @@ class ProjectTree extends AbstractTree
 		                                                      'objectid'        =>$id,
 		                                                      'elementid'       =>$elementid       ));
 		          $treeElement->icon        = 'el_'.$element->type;
-				$treeElement->description = Text::maxLaenge( 25,$element->desc );
+
+				$treeElement->description = lang('EL_'.$element->type);
+				if	( $element->desc != '' )
+					$treeElement->description .= ' - '.Text::maxLaenge( 25,$element->desc );
+				else
+					$treeElement->description .= ' - '.lang('NO_DESCRIPTION_AVAILABLE');
 				$treeElement->target      = 'cms_main';
 				$this->addTreeElement( $treeElement );
 			}
@@ -99,13 +104,19 @@ class ProjectTree extends AbstractTree
 			$treeElement->internalId = $id;
 			$treeElement->target     = 'cms_main';
 			$treeElement->text       = Text::maxLaenge( 25,$o->name );
-			$treeElement->description= lang( $o->getType() ).' '.$id.' '.$o->desc;
+			$treeElement->description= lang( $o->getType() ).' '.$id;
+
+			if	( $o->desc != '' )
+				$treeElement->description .= ': '.$o->desc;
+			else
+				$treeElement->description .= ' - '.lang('NO_DESCRIPTION_AVAILABLE');
+
 			$treeElement->url        = Html::url(array('action'       =>'main',
 		                                                'callAction'   =>$o->getType(),
 		                                                'objectid'       =>$id ));
 			$treeElement->icon       = $o->getType();
 			
-			// Besonderheiten für bestimmte Objekttypen	
+			// Besonderheiten f?r bestimmte Objekttypen	
 
 			if   ( $o->isPage )
 			{
@@ -147,7 +158,7 @@ class ProjectTree extends AbstractTree
 			$SESS['modelid'] = Model::getDefaultId();
 
 
-		// Höchster Ordner der Projektstruktur
+		// H?chster Ordner der Projektstruktur
 		$f      = new Folder();
 		$f->projectid = $this->projectid;
 		$folder = new Folder( $f->getRootObjectId() );
@@ -222,6 +233,7 @@ class ProjectTree extends AbstractTree
 
 
 		// Wechseln zu Administration
+		/*
 		$treeElement = new TreeElement();
 		$treeElement->text       = lang('ADMINISTRATION');
 		$treeElement->description='';
@@ -232,9 +244,12 @@ class ProjectTree extends AbstractTree
 				                                 'subaction'    =>'reload',
 				                                 'projectid'    =>'-1'));
 		$this->addTreeElement( $treeElement );
+		*/
 
 
 		// Wechsel zu ...
+
+		/*
 		$treeElement = new TreeElement();
 		
 		$treeElement->text         = lang('CHANGE_TO');
@@ -243,10 +258,11 @@ class ProjectTree extends AbstractTree
 		$treeElement->description  = '';
 
 		$this->addTreeElement( $treeElement );
+		*/
 	}
 
 
-
+	/*
 	function changeto()
 	{
 		// Wechseln zu: Projekte...
@@ -265,32 +281,29 @@ class ProjectTree extends AbstractTree
 			$this->addTreeElement( $treeElement );
 		}
 	}
+	*/
 
 
 
 	function templates()
 	{
-		// Templates anzeigen
-		//
-//		if   ( $SESS['user']['is_admin'] == '1' )
-//		{
-			foreach( Template::getAll() as $id=>$name )
-			{
-				$treeElement = new TreeElement();
+		foreach( Template::getAll() as $id=>$name )
+		{
+			$treeElement = new TreeElement();
 
-				$t = new Template( $id );
-				$t->load();
-				$treeElement->text        = $t->name;
-				$treeElement->url         = Html::url(array('action'       =>'main',
-		                                                      'callAction'   =>'template',
-		                                                      'templateid'    =>$id       ));
-				$treeElement->icon        = 'tpl';
-				$treeElement->target      = 'cms_main';
-				$treeElement->internalId  = $id;
-				$treeElement->type        = 'template';
-				$this->addTreeElement( $treeElement );
-			}
-//		}
+			$t = new Template( $id );
+			$t->load();
+			$treeElement->text        = $t->name;
+			$treeElement->url         = Html::url(array('action'       =>'main',
+	                                                      'callAction'   =>'template',
+	                                                      'templateid'    =>$id       ));
+			$treeElement->icon        = 'tpl';
+			$treeElement->target      = 'cms_main';
+			$treeElement->internalId  = $id;
+			$treeElement->type        = 'template';
+			$treeElement->description = $t->name.' ('.lang('TEMPLATE').' '.$id.'): '.htmlentities(Text::maxLaenge( 40,$t->src ));
+			$this->addTreeElement( $treeElement );
+		}
 	}
 
 
@@ -307,14 +320,20 @@ class ProjectTree extends AbstractTree
 			$e = new Element( $elementid );
 			$e->load();
 			$treeElement = new TreeElement();
-			$treeElement->text = $e->name;
-			$treeElement->url  = Html::url(array('action'       =>'main',
-                                                    'callAction'   =>'element',
-                                                    'callSubaction'=>'edit',
-                                                    'templateid'=>$id,
-                                                    'elementid'    =>$elementid       ));
-			$treeElement->icon = 'el_'.$e->type;
-			$treeElement->target = 'cms_main';
+			$treeElement->text        = $e->name;
+			$treeElement->url         = Html::url(array('action'       =>'main',
+                                                           'callAction'   =>'element',
+                                                           'callSubaction'=>'edit',
+                                                           'templateid'   =>$id,
+                                                           'elementid'    =>$elementid       ));
+			$treeElement->icon        = 'el_'.$e->type;
+			
+			if	( $e->desc == "" )
+				$desc = lang('NO_DESCRIPTION_AVAILABLE');
+			else
+				$desc = $e->desc; 
+			$treeElement->description = $e->name.' ('.lang('EL_'.$e->type).'): '.Text::maxLaenge( 40,$desc );
+			$treeElement->target      = 'cms_main';
 			$this->addTreeElement( $treeElement );
 		}
 	}
