@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2004-12-20 23:04:15  dankert
+// Revision 1.18  2004-12-27 23:19:47  dankert
+// ungueltige Zeichen im Dateinamen mit Punkt ersetzen
+//
+// Revision 1.17  2004/12/20 23:04:15  dankert
 // Korrektur Timestamp setzen
 //
 // Revision 1.16  2004/12/20 22:42:03  dankert
@@ -777,9 +780,9 @@ class Object
 
 		// Dateiname muss gueltig sein,
 		// ungueltige Zeichen werden entfernt
-		$gueltig = 'abcdefghijklmnopqrstuvwxyz0123456789-_.';
+		$gueltig = 'abcdefghijklmnopqrstuvwxyz0123456789-_';
 		$tmp = strtr($this->filename, $gueltig, str_repeat('#', strlen($gueltig)));
-		$this->filename = strtr($this->filename, $tmp, str_repeat('x', strlen($tmp)));
+		$this->filename = strtr($this->filename, $tmp, str_repeat('-', strlen($tmp)));
 
 		if	( $this->isRoot )
 			return;
