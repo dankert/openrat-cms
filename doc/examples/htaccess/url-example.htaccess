@@ -1,0 +1,7 @@
+
+# Copy this into your .htaccess
+# you need the rewriting module loaded in your apache
+
+#Options FollowSymLinks
+RewriteEngine on
+RewriteRule ([a-z]+)\,([a-z]*)\.?([0-9]*)$ do.php?action=$1&subaction=$2&id=$3&%{QUERY_STRING}

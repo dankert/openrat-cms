@@ -1,0 +1,80 @@
+; <!-- $Id: config.ini.php,v 1.6 2004/11/24 21:29:16 dankert Exp $ -->
+; <?php exit ?>
+
+; Konfigurationsdatei fuer das OpenRat Content Management System
+; Kommentarzeilen beginnen mit einem Semikolon. Leere Zeile werden ignoriert.
+
+; Schnellstart:
+; Normalerweise aendern Sie nur die Datenbankparameter unter [database_DB]
+
+
+
+[database]
+
+databases = DB
+default = DB
+
+
+[database_DB]
+
+comment = "OpenRat Datenbank"    ; beliebiger Text der diese Datenbank beschreibt
+type = mysql                     ; moegliche Werte: 'mysql' oder 'postgresql' 
+user = dbuser                    ; Datenbank-Benutzer
+password = dbpass                ; Datenbank-Kennwort
+host = localhost                 ; Adresse desDatenbank-Servers
+;port                            ; TCP/IP-Port (optional)
+database = cms                   ; Logischer Name der Datenbank
+base64 = false                   ; Binaerdateien als BASE64 speichern (in Mysql=true, in Postgresql=false)
+prefix = or_                     ; Praefix der Tabellen
+persistent = yes                 ; Persistene Datenbankverbindungen (schneller)
+
+
+[ldap]                           ; optinaler LDAP-Server zur Kennwortauthentifizierung
+host = "10.1.2.3"                ; LDAP-Hostname
+port = "389"                     ; LDAP-Port
+
+
+[ftp]
+
+asciimode = html,htm,php
+
+
+[global]
+
+default_language = de             ; Spracheinstellung, wenn keine gueltige vom Browser angefordert
+title = "OpenRat"                 ; Name der Anwendung im Titel des Browserfensters
+version = "0.3"                   ; Version
+ext = php                         ; nur aendern, wenn notwendig
+tree_width = "25%"                ; Breite des Auswahlbaumes (Angabe in Pixel oder Prozent)
+
+
+[directories]
+
+datadir     = "./data"
+incldir     = "./functions"
+themedir    = "./themes/default"
+languagedir = "./language"
+tmpdir      = "./tmp"
+
+
+[log]
+
+file        = ""                    ; Wenn leer, wird nichts geloggt. Sonst Dateinamen angeben
+level       = "info"                ; Level, eines von trace,debug,info,warn,error
+date_format = "M j H:i:s"           ; Format des Datums in der Logdatei
+dns_lookup  = false                 ; IP-Adressen der Clients aufloesen (langsamer)
+format      = "%time %level %host %user %action %text"   ; Format der Logdatei
+
+
+[image]
+
+truecolor = true                      ; Unterstuetzt die installierde GD-Bibliothek Truecolor-Operationen?
+
+
+[interface]
+
+file_separator = " &raquo; "           ; Trennzeichen von Ordnern
+fake_urls      = true                  ; Kurze Urls (erfordert RewriteRegel in .htaccess-Datei!)
+
+
+; ...................................  ; Ende

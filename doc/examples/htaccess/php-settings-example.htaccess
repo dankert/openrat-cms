@@ -5,8 +5,7 @@
 #
 # Make sure to have "AllowOverride Options" or "AllowOverride All" set in httpd.conf
 # to make this possible.
-# If you get an "Internal Server Error" you do not have this setting, in this case
-# rename this file or push it out of the way.
+# If you get an "Internal Server Error" you do not have this setting
 #
 # $Id$
 
