@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-10-14 21:13:56  dankert
+// Revision 1.5  2004-11-10 22:47:57  dankert
+// Methoden zum Lesen von Standardmodell, Standardsprache dieses Projektes
+//
+// Revision 1.4  2004/10/14 21:13:56  dankert
 // *** empty log message ***
 //
 // Revision 1.3  2004/05/02 14:41:31  dankert
@@ -62,7 +65,7 @@ class Project
 	// Liefert alle verf?gbaren Projekte
 	function getAll()
 	{
-		return $this->getAllProjects();
+		return Project::getAllProjects();
 	}
 
 
@@ -153,13 +156,13 @@ class Project
 
 		$row = $db->getRow( $sql->query );
 
-		$this->name                = $row['name'];
-		$this->target_dir          = $row['target_dir'];
-		$this->ftp_url             = $row['ftp_url'];
-		$this->ftp_passive         = $row['ftp_passive'];
-		$this->cmd_after_publish   = $row['cmd_after_publish'];
+		$this->name                = $row['name'               ];
+		$this->target_dir          = $row['target_dir'         ];
+		$this->ftp_url             = $row['ftp_url'            ];
+		$this->ftp_passive         = $row['ftp_passive'        ];
+		$this->cmd_after_publish   = $row['cmd_after_publish'  ];
 		$this->content_negotiation = $row['content_negotiation'];
-		$this->cut_index           = $row['cut_index'];
+		$this->cut_index           = $row['cut_index'          ];
 	}
 
 
@@ -283,6 +286,36 @@ class Project
 		                '  WHERE id= {projectid} ' );
 		$sql->setInt( 'projectid',$this->projectid );
 		$db->query( $sql->query );
+	}
+	
+	function getDefaultLanguageId()
+	{
+		$db = &Session::getDatabase();
+
+		// ORDER BY deswegen, damit immer mind. eine Sprache
+		// gelesen wird
+		$sql = new Sql( 'SELECT id FROM {t_language} '.
+		                '  WHERE projectid={projectid}'.
+		                '   ORDER BY is_default DESC' );
+
+		$sql->setInt('projectid',$this->projectid );
+		
+		return $db->getOne( $sql->query );
+	}
+
+
+	function getDefaultModelId()
+	{
+		$db = &Session::getDatabase();
+
+		// ORDER BY deswegen, damit immer mind. eine Sprache
+		// gelesen wird
+		$sql = new Sql( 'SELECT id FROM {t_model} '.
+		                '  WHERE projectid={projectid}'.
+		                '   ORDER BY is_default DESC' );
+		$sql->setInt('projectid',$this->projectid );
+		
+		return $db->getOne( $sql->query );
 	}
 }
 
