@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-11-29 23:24:36  dankert
+// Revision 1.10  2004-11-29 23:34:39  dankert
+// neue Methode setTimestamp()
+//
+// Revision 1.9  2004/11/29 23:24:36  dankert
 // Korrektur Veroeffentlichung
 //
 // Revision 1.8  2004/11/29 00:02:41  dankert
@@ -530,6 +533,29 @@ class Object
 			$this->objectSaveName();
 		}
 	}
+
+
+
+	/**
+	 * Aenderungsdatum auf Systemzeit setzen
+	 */
+	function setTimestamp()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('UPDATE {t_object} SET '.
+		               '  lastchange_date   = {time}  ,'.
+		               '  lastchange_userid = {userid},'.
+		               ' WHERE id={objectid}');
+
+		$user = Session::getUser();
+		$sql->setInt   ('userid',$user->userid);
+		$sql->setInt   ('time'  ,time()       );
+
+		$db->query( $sql->query );
+	}
+
+
 
 	/**
 	 * Logischen Namen und Beschreibung des Objektes in Datenbank speichern
