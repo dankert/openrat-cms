@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.20  2004-12-26 20:54:29  dankert
+// Revision 1.21  2004-12-27 23:24:50  dankert
+// Korrektur Html::url(...)
+//
+// Revision 1.20  2004/12/26 20:54:29  dankert
 // Sortierfunktion korrigiert
 //
 // Revision 1.19  2004/12/20 22:31:22  dankert
@@ -528,7 +531,7 @@ class FolderAction extends ObjectAction
 		global $conf_php;
 
 		if   ( ! $this->folder->isRoot )
-			$this->setTemplateVar('up_url',Html::url(array('action'=>'main','callAction'=>'folder','callSubaction'=>'show','objectid'=>$this->folder->parentid)));
+			$this->setTemplateVar('up_url',Html::url('main','folder',$this->folder->parentid));
 		
 		$list = array();
 		$last_objectid = 0;
@@ -598,11 +601,12 @@ class FolderAction extends ObjectAction
 			$this->setTemplateVar('folder',$otherfolder);
 	
 			// URLs zum Umsortieren der Eintraege
-			$this->setTemplateVar('orderbytype_url'      ,Html::url('folder','reorder',array('type'=>'type'      )) );
-			$this->setTemplateVar('orderbyname_url'      ,Html::url('folder','reorder',array('type'=>'name'      )) );
-			$this->setTemplateVar('orderbylastchange_url',Html::url('folder','reorder',array('type'=>'lastchange')) );
+			$this->setTemplateVar('orderbytype_url'      ,Html::url('folder','reorder',0,array('type'=>'type'      )) );
+			$this->setTemplateVar('orderbyname_url'      ,Html::url('folder','reorder',0,array('type'=>'name'      )) );
+			$this->setTemplateVar('orderbylastchange_url',Html::url('folder','reorder',0,array('type'=>'lastchange')) );
 		}	
-			$this->setTemplateVar('flip_url'             ,Html::url('folder','reorder',array('type'=>'flip'      )) );
+
+		$this->setTemplateVar('flip_url'             ,Html::url('folder','reorder',0,array('type'=>'flip'      )) );
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
 
