@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-12-26 01:06:31  dankert
+// Revision 1.9  2004-12-27 23:34:20  dankert
+// Korrektur add()
+//
+// Revision 1.8  2004/12/26 01:06:31  dankert
 // Perfomanceverbesserung Seite/Elemente
 //
 // Revision 1.7  2004/12/19 15:23:56  dankert
@@ -327,9 +330,12 @@ class Template
 		$sql = new Sql( 'INSERT INTO {t_template}'.
 		                ' (id,name,projectid)'.
 		                ' VALUES({templateid},{name},{projectid})' );
-		$sql->setInt   ('templateid',$this->templateid );
-		$sql->setString('name'      ,$name             );
-		$sql->setInt   ('projectid' ,$this->projectid  );
+		$sql->setInt   ('templateid',$this->templateid   );
+		$sql->setString('name'      ,$name               );
+
+		$project = Session::getProject();
+		$sql->setInt   ('projectid' ,$project->projectid );
+
 		$db->query( $sql->query );
 	}
 
