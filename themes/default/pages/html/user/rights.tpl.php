@@ -23,20 +23,32 @@
 
 
 <?php $fx = '';
-      foreach( $rights[$projectid] as $oid=>$z )
-      { $fx = fx($fx); ?>
+      if (isset($rights[$projectid]) && is_array($rights[$projectid]))
+      {
+        foreach( $rights[$projectid] as $oid=>$z )
+        { $fx = fx($fx); ?>
   <tr>
 <?php $objectUrl = Html::url( 'index','object',$oid ) ?>
     <td class="<?php echo $fx ?>"><a href="<?php echo $objectUrl ?>" target="_top"><img src="<?php echo $image_dir.'icon_'.$objects[$oid]['type'].IMG_EXT ?>" border="0" align="left"><?php echo $objects[$oid]['filename'] ?></a></td>
     <td class="<?php echo $fx ?>"><?php echo $z['languagename'] ?></td>
 
-<?php foreach( $show as $t ) { ?>
+<?php foreach( $show as $t )
+      { ?>
     <td class="<?php echo $fx ?>"><?php echo Html::checkBox('',$z[$t],false,array('title'=>lang('ACL_'.strtoupper($t))) ) ?></td>
 <?php } ?>
+
 
   </tr>
 <?php }
       $fx = fx($fx); ?>
+<?php }
+      else
+      { $fx = fx($fx); ?>
+  <tr>
+    <td colspan="14" class="<?php echo $fx ?>"><?php echo lang('GLOBAL_NOT_FOUND') ?></td>
+  </tr>
+<?php } ?>
+
 
 </table>
 
