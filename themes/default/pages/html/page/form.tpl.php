@@ -91,7 +91,7 @@
 </center>
 
 <script name="JavaScript" type="text/javascript"><!--
-document.forms[0].el<?php echo $firstId ?>.focus();
+document.forms[0].id<?php echo $firstId ?>.focus();
 //--></script>
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>
