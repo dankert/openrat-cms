@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-12-13 22:55:41  dankert
+// Revision 1.10  2004-12-15 23:11:41  dankert
+// aufgeraeumt
+//
+// Revision 1.9  2004/12/13 22:55:41  dankert
 // Neue Konstanten, Lesen der DB-Config aus mehreren Dateien
 //
 // Revision 1.8  2004/11/27 13:12:26  dankert
@@ -63,12 +66,14 @@ define('OR_TYPE_FOLDER','folder');
 define('OR_ACTIONCLASSES_DIR' ,'./actionClasses/' );
 define('OR_OBJECTCLASSES_DIR' ,'./objectClasses/' );
 define('OR_SERVICECLASSES_DIR','./serviceClasses/');
+define('OR_LANGUAGE_DIR'      ,'./language/'      );
 define('OR_DBCLASSES_DIR'     ,'./db/'            );
 define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/');
 define('OR_THEMES_DIR'        ,'./themes/'        );
 define('OR_TMP_DIR'           ,'./tmp/'           );
 
 require_once( OR_SERVICECLASSES_DIR."GlobalFunctions.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Http.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Html.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Upload.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Ftp.class.".PHP_EXT );
@@ -148,8 +153,6 @@ define('FILE_SEP',$conf['interface']['file_separator']);
 
 define('REQ_PARAM_ACTION'       ,'action'       );
 define('REQ_PARAM_SUBACTION'    ,'subaction'    );
-define('REQ_PARAM_CALLACTION'   ,'callAction'   );
-define('REQ_PARAM_CALLSUBACTION','callSubaction');
 
 define('TEMPLATE_DIR',OR_THEMES_DIR.$conf['interface']['theme'].'/templates');
 define('CSS_DIR'     ,OR_THEMES_DIR.$conf['interface']['theme'].'/css'      );
@@ -162,22 +165,22 @@ require_once( "functions/theme.inc.".PHP_EXT );
 require_once( "functions/db.inc.".PHP_EXT );
 
 // Request-Variablen in Session speichern
-request_into_session('action'    );
-request_into_session('subaction' );
-request_into_session('objectid'  );
-request_into_session('templateid');
-request_into_session('elementid' );
-request_into_session('projectid' );
-request_into_session('modelid'   );
-request_into_session('userid'    );
-request_into_session('groupid'   );
-request_into_session('languageid');
+//request_into_session('action'    );
+//request_into_session('subaction' );
+//request_into_session('objectid'  );
+//request_into_session('templateid');
+//request_into_session('elementid' );
+//request_into_session('projectid' );
+//request_into_session('modelid'   );
+//request_into_session('userid'    );
+//request_into_session('groupid'   );
+//request_into_session('languageid');
 
-if	( isset($REQ['objectid']) )
-{
-	$o = new Object( $REQ['objectid'] );
-	Session::setObject($o);
-}
+//if	( isset($REQ['objectid']) )
+//{
+//	$o = new Object( $REQ['objectid'] );
+//	Session::setObject($o);
+//}
 
 // Verbindung zur Datenbank
 //
@@ -188,15 +191,12 @@ if	( is_object( $db ) )
 	Session::setDatabase( $db );
 }
 	
-if	( isset( $SESS['action'] ) )
-	$action = $SESS['action'];
+if	( !empty($REQ[REQ_PARAM_ACTION]) )
+	$action = $REQ[REQ_PARAM_ACTION];
 else	$action = 'index';
 
-if	( isset( $REQ['subaction'] ) )
-	$SESS[ $action.'action' ] = $REQ['subaction'];
-
-if	( isset($SESS[ $action.'action']) )
-	$subaction = $SESS[ $action.'action'];
+if	( !empty( $REQ[REQ_PARAM_SUBACTION] ) )
+	$subaction = $REQ[REQ_PARAM_SUBACTION];
 else $subaction = '';
 
 $actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
