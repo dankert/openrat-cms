@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-12-20 23:29:51  dankert
+// Revision 1.12  2005-01-24 21:41:25  dankert
+// Abfrage auf Readonly-Mode
+//
+// Revision 1.11  2004/12/20 23:29:51  dankert
 // neue Methode setDatabaseRow()
 //
 // Revision 1.10  2004/12/20 23:19:41  dankert
@@ -751,7 +754,11 @@ class User
 	 */ 
 	function hasRight( $objectid,$type )
 	{
-		if	( $this->isAdmin )
+		global $conf;
+		if	( $this->isAdmin && !$conf['security']['readonly'] )
+			return true;
+
+		if	( $this->isAdmin && $type & ACL_READ )
 			return true;
 			
 		if	( !isset($this->rights[$objectid]) )
@@ -768,6 +775,18 @@ class User
 	 */
 	function addRight( $objectid,$type )
 	{
+		global $conf;
+		
+		if	( $conf['security']['readonly'] )
+			if	( $type & ACL_READ )
+				$type = ACL_READ;
+			else
+				$type = 0;
+
+		if	( $type & ACL_PUBLISH && $conf['security']['nopublish'] )
+			$type -= ACL_PUBLISH;
+
+
 		if	( !isset($this->rights[$objectid]) )
 			$this->rights[$objectid] = 0;
 
