@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-12-15 23:22:26  dankert
+// Revision 1.11  2004-12-19 14:40:18  dankert
+// neue Methode hasRequestVar()
+//
+// Revision 1.10  2004/12/15 23:22:26  dankert
 // Konstanten, getRequestid()
 //
 // Revision 1.9  2004/11/29 21:08:13  dankert
@@ -106,6 +109,14 @@ class Action
 		if	( !isset($REQ[ $varName ]) )
 			return '';
 		else	return $REQ[ $varName ];
+	}
+
+
+	function hasRequestVar( $varName )
+	{
+		global $REQ;
+
+		return( !empty($REQ[$varName]) );
 	}
 
 
