@@ -48,17 +48,6 @@
     <td width="50%" class="f1"><tt><?php echo $full_filename ?></tt></td>
   </tr>
 
-  <?php if ($delete)
-        { ?>
-  <tr>
-    <td class="f1" rowspan="2"><?php echo lang('GLOBAL_DELETE') ?></a></td>
-    <td class="f1"><input type="checkbox" name="delete" value="1"></td>
-  </tr>
-  <tr>
-    <td class="help"><?php echo lang('PAGE_DELETE_DESC') ?></td>
-  </tr>
-  <?php } ?>
-
   <tr>
     <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
   </tr>
@@ -83,7 +72,7 @@
   </tr>
 
   <tr>
-    <td width="50%" class="f1"><?php echo lang('TEMPLATES') ?></a></td>
+    <td width="50%" class="f1"><?php echo lang('GLOBAL_TEMPLATES') ?></a></td>
     <td width="50%" class="f1"><?php echo Html::selectBox('templateid',$templates) ?></td>
   </tr>
 
