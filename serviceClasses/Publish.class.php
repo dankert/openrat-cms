@@ -120,7 +120,48 @@ class Publish
 		{
 			$this->ftp->close();
 		}
-	}	
+	}
+	
+	
+	function clean()
+	{
+		if	( !empty($this->local_destdir) )
+			$this->cleanFolder($this->local_destdir);
+	} 
+
+
+	function cleanFolder( $folderName )
+	{
+		$dh = opendir( $folderName );
+
+		while( $file = readdir($dh) )
+		{
+			if	( $file != '.' && $file != '..')
+			{
+				$fullpath = $folderName.'/'.$file;
+
+				// Wenn eine Datei beschreibbar und entsprechend alt
+				// ist, dann entfernen
+				if	( is_file($fullpath)     &&
+					  is_writable($fullpath) &&
+					  filemtime($fullpath) < START_TIME  )
+					unlink($fullpath);
+
+				if	( is_file($fullpath)     &&
+					  is_writable($fullpath) &&
+					  filemtime($fullpath) < START_TIME  )
+					  echo( $fullpath ).'<br/>';
+
+				// Bei Ordnern rekursiv absteigen				
+				if	( is_dir( $fullpath) )
+				{
+					$this->cleanFolder($fullpath);
+					@rmdir($fullpath);
+				}
+			}
+		}
+	}
+
 }
 
 ?>
