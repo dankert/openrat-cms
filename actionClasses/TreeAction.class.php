@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-25 12:50:11  dankert
+// Revision 1.3  2004-04-25 17:53:37  dankert
+// Neue Methode openall()
+//
+// Revision 1.2  2004/04/25 12:50:11  dankert
 // Korrektur: Projektliste
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
@@ -37,6 +40,27 @@ class TreeAction extends Action
 	var $defaultSubAction = 'reload';
 
 
+	/**
+	 * Öffnen aller Baumelemente
+	 */
+	function openall()
+	{
+		global $SESS;
+		$projectid = $this->getSessionVar('projectid');
+		$SESS['tree_open'][$projectid] = array();
+
+		foreach( $SESS['tree'] as $key=>$val )
+		{
+			array_push($SESS['tree_open'][$projectid],$key);
+		}
+
+		$this->callSubAction('show');
+	}
+	
+	
+	/**
+	 * Öffnen eines Baumelementes
+	 */
 	function open()
 	{
 		global $SESS;
@@ -46,6 +70,9 @@ class TreeAction extends Action
 	}
 	
 	
+	/**
+	 * Schließen eines Baumelementes
+	 */
 	function close()
 	{
 		global $SESS;
@@ -57,6 +84,9 @@ class TreeAction extends Action
 	}
 	
 		
+	/**
+	 * Neues Laden des Baumes
+	 */
 	function reload()
 	{
 		// Hinzufügen eines Ordners incl. Unterelemente zur Projektstruktur
@@ -321,6 +351,10 @@ class TreeAction extends Action
 			                                                                 'callAction'   =>'folder',
 			                                                                 'objectid'    =>$folder->objectid       )),
 				                                   'target' => 'cms_main' );
+				// Diesen Ordner immer aufklappen
+				if	( !in_array('o'.$folder->objectid,$SESS['tree_open'][$projectid]))
+					array_push( $SESS['tree_open'][$projectid],'o'.$folder->objectid);
+
 				add_folder( $folder->objectid );
 			}
 	
