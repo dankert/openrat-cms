@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-11-28 19:25:38  dankert
+// Revision 1.4  2004-12-19 14:56:33  dankert
+// Abfrage von Rechten
+//
+// Revision 1.3  2004/11/28 19:25:38  dankert
 // Anpassen an neue Sprachdatei-Konventionen
 //
 // Revision 1.2  2004/11/28 16:55:20  dankert
@@ -70,15 +73,22 @@ class ObjectAction extends Action
 {
 	var $objectid;
 
+
 	/**
 	  * ACL zu einem Objekt setzen
-	  * @access protected
+	  *
+	  * @access public
 	  */
 	function addacl()
 	{
 		$acl = new Acl();
 
-		$acl->objectid = $this->getSessionVar('objectid');
+		$acl->objectid = $this->getRequestId();
+		
+		$o = new Object( $acl->objectid );
+
+		if	( !$o->hasRight( ACL_GRANT ) )
+			die('uh?');
 		
 		switch( $this->getRequestVar('type') )
 		{
@@ -111,6 +121,10 @@ class ObjectAction extends Action
 	}
 
 
+
+	/**
+	 * Alle Rechte anzeigen
+	 */
 	function rights()
 	{
 		$o = Session::getObject();
@@ -153,13 +167,21 @@ class ObjectAction extends Action
 	}
 
 
+
 	/**
 	 * Entfernen einer ACL
 	 * @access protected
 	 */
 	function delacl()
 	{
-		$acl = new Acl( $this->getRequestVar('aclid') );
+		$acl = new Acl($this->getRequestVar('aclid'));
+		$acl->objectid = $this->getRequestId();
+
+		$o = new Object( $this->getRequestId() );
+
+		if	( !$o->hasRight( ACL_GRANT ) )
+			die('ehm?');
+
 		$acl->delete();
 
 		$this->callSubAction('rights');
