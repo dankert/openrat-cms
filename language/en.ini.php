@@ -450,3 +450,15 @@ USER_TEL = "Telephone"
 USER_USERNAME = Username
 USER_USERNAME_DESC = "With this name the user is logging in"
 USER_YOURPROFILE = "My settings"
+
+PAGE_EDITOR_ADD_TABLE="Insert Table"
+PAGE_EDITOR_ADD_STRONG="Mark text as strong (bold)"
+PAGE_EDITOR_ADD_EMPHATIC="Mark text as emphatic (italic)"
+PAGE_EDITOR_ADD_NUMLIST="Insert a numbered list"
+PAGE_EDITOR_ADD_LIST="Insert a simple list"
+PAGE_EDITOR_ADD_IMAGE="Insert selected image"
+PAGE_EDITOR_ADD_LINK="link with selected page or file"
+LOGIN_NOLOGIN_DESC="Login is disabled at the moment."
+
+GLOBAL_NOPUBLISH="Publishing not available"
+GLOBAL_NOPUBLISH_DESC="All publishing functions are deactivated at the moment."
