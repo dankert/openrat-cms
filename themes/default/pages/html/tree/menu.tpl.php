@@ -18,7 +18,7 @@
         ?>
         <input type="hidden" name="action"    value="index">
         <input type="hidden" name="subaction" value="show">
-        <?php echo Html::selectBox( 'projectid',$projects,$act_projectid,array('onchange'=>'submit();','style'=>'margin:0px;padding:0px;')+$attrDisabled ) ?></td><td><noscript>&nbsp;<input type="submit" class="submit" value="&raquo;"></noscript>
+        <?php echo Html::selectBox( 'projectid',$projects,$act_projectid,array('onchange'=>'submit();','title'=>lang('PROJECT_SELECT_DESC'),'style'=>'margin:0px;padding:0px;')+$attrDisabled ) ?></td><td><noscript>&nbsp;<input type="submit" class="submit" value="&raquo;"></noscript>
       </td>
       </tr>
       </table>
