@@ -47,6 +47,14 @@
     <td width="50%" class="f1"><?php echo lang('GLOBAL_FULL_FILENAME') ?></a></td>
     <td width="50%" class="f1"><tt><?php echo $full_filename ?></tt></td>
   </tr>
+  <tr>
+    <td width="50%" class="f2"><?php echo lang('GLOBAL_created') ?></a></td>
+    <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$create_date) ?></td>
+  </tr>
+  <tr>
+    <td width="50%" class="f2"><?php echo lang('GLOBAL_lastchange') ?></a></td>
+    <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$lastchange_date) ?></td>
+  </tr>
 
   <tr>
     <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
