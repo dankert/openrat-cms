@@ -28,16 +28,17 @@
 <td width="50%" class="f2"><?php echo lang('GLOBAL_description') ?></a></td>
 <td width="50%" class="f2"><textarea  class="desc" cols="40" rows="10" name="desc"><?php echo $desc ?></textarea></td>
 </tr>
-<?php if($delete)
-      { ?>
+  <tr>
+    <td width="50%" class="f2"><?php echo lang('GLOBAL_created') ?></a></td>
+    <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$create_date) ?>, <?php Html::printUser($create_user) ?></td>
+  </tr>
+  <tr>
+    <td width="50%" class="f2"><?php echo lang('GLOBAL_lastchange') ?></a></td>
+    <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$lastchange_date) ?>, <?php Html::printUser($lastchange_user) ?></td>
+  </tr>
 <tr>
-<td width="50%" class="f2"><?php echo lang('GLOBAL_delete') ?></a></td>
-<td width="50%" class="f2"><?php echo Html::checkBox('delete') ?></td>
-</tr>
-<?php } ?>
-<tr>
-<td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
-<td class="act"><input type="reset"  class="reset"  value="<?php echo lang('GLOBAL_UNDO') ?>" onClick="document.forms[0].name.focus();"></td>
+<td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" /></td>
+<td class="act"><input type="reset"  class="reset"  value="<?php echo lang('GLOBAL_UNDO') ?>" onClick="document.forms[0].name.focus();" /></td>
 </tr>
 
 </table>
