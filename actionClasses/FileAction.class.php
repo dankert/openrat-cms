@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2004-12-19 14:53:54  dankert
+// Revision 1.13  2004-12-20 22:43:12  dankert
+// Uebertragen des Benutzers geaendert
+//
+// Revision 1.12  2004/12/19 14:53:54  dankert
 // pub2() -> pubnow()
 //
 // Revision 1.11  2004/12/15 23:23:11  dankert
@@ -233,32 +236,6 @@ class FileAction extends ObjectAction
 
 		$this->setTemplateVar('full_filename',$this->file->full_filename());
 
-		if	( is_numeric($this->file->lastchange_userid) )
-		{
-			$user = new User( $this->file->lastchange_userid );
-			$user->load();
-			$this->setTemplateVar('lastchange_user',array('name'=>$user->name,
-			                                              'url' =>Html::url(array('action'=>'user',
-			                                                                      'userid'=>$user->userid))));
-		}
-		else
-		{
-			$this->setTemplateVar('lastchange_user',array('name'=>lang('UNKNOWN')));
-		}
-	
-		if	( is_numeric($this->file->create_userid) )
-		{
-			$user = new User( $this->file->create_userid );
-			$user->load();
-			$this->setTemplateVar('create_user',array('name'=>$user->name,
-			                                          'url' =>Html::url(array('action'=>'user',
-			                                                                  'userid'=>$user->userid))));
-		}
-		else
-		{
-			$this->setTemplateVar('create_user',array('name'=>lang('UNKNOWN')));
-		}
-		
 		// Alle Seiten mit dieser Datei ermitteln
 		$pages = $this->file->getDependentObjectIds();
 			
@@ -268,7 +245,7 @@ class FileAction extends ObjectAction
 			$o = new Object( $id );
 			$o->load();
 			$list[$id] = array();
-			$list[$id]['url' ] = Html::url(array('action'=>'main','callAction'=>'page','objectid'=>$id));
+			$list[$id]['url' ] = Html::url('main','page',$id);
 			$list[$id]['name'] = $o->name;
 		}
 		asort( $list );

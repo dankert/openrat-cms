@@ -512,7 +512,6 @@ class PageAction extends ObjectAction
 	 */
 	function prop()
 	{
-		global $SESS;
 		$this->setTemplateVar('id',$this->page->objectid);
 	
 		$this->page->public = true;
@@ -520,9 +519,7 @@ class PageAction extends ObjectAction
 		$this->page->full_filename();
 		$this->setTemplateVars( $this->page->getProperties() );
 		
-		$this->setTemplateVar('delete',$this->page->hasRight('delete'));
-	
-		if   ( $SESS['user']['is_admin'] == '1' )
+		if   ( $this->userIsAdmin() )
 		{
 			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
 		}
@@ -532,18 +529,18 @@ class PageAction extends ObjectAction
 		$this->setTemplateVar('template_name',$template->name);
 	
 		// Alle Ordner ermitteln
-		$this->setTemplateVar('act_folderobjectid',$this->page->parentid);
-
-		$folders = array();
-		$folder = new Folder( $this->page->parentid );
+//		$this->setTemplateVar('act_folderobjectid',$this->page->parentid);
+//
+//		$folders = array();
+//		$folder = new Folder( $this->page->parentid );
 		
-		foreach( $folder->getOtherFolders() as $oid )
-		{
-			$f = new Folder( $oid );
-			$folders[$oid] = implode(' &raquo; ',$f->parentObjectNames(true,true) );
-		}
-		asort( $folders );
-		$this->setTemplateVar('folder',$folders); 
+//		foreach( $folder->getOtherFolders() as $oid )
+//		{
+//			$f = new Folder( $oid );
+//			$folders[$oid] = implode( FILE_SEP,$f->parentObjectNames(true,true) );
+//		}
+//		asort( $folders );
+//		$this->setTemplateVar('folder',$folders); 
 
 		$templates = Array();
 		foreach( Template::getAll() as $id=>$name )
