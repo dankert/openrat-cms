@@ -95,12 +95,12 @@ class ProjectTree extends AbstractTree
 		foreach( $f->getObjectIds() as $id )
 		{
 			$o = new Object( $id );
+			$o->load();
 	
 			// Wenn keine Leseberechtigung	
-			if	( !$o->hasRight('read') )
+			if	( !$o->hasRight( ACL_READ ) )
 				continue;
 	
-			$o->load();
 			$treeElement = new TreeElement();
 			$treeElement->internalId = $id;
 			$treeElement->target     = 'cms_main';
@@ -123,7 +123,7 @@ class ProjectTree extends AbstractTree
 			{
 				// Nur wenn die Seite beschreibbar ist, werden die
 				// Elemente im Baum angezeigt
-				if   ( $o->hasRight('write') )
+				if   ( $o->hasRight( ACL_WRITE ) )
 					$treeElement->type='pageelements';
 			}
 
@@ -167,10 +167,10 @@ class ProjectTree extends AbstractTree
 		
 		// Ermitteln, ob der Benutzer Projektadministrator ist
 		// Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
-		if   ( $folder->hasRight('prop') )
+		if   ( $folder->hasRight( ACL_PROP ) )
 			$this->userIsProjectAdmin = true;
 
-		if   ( $folder->hasRight('read') )
+		if   ( $folder->hasRight( ACL_READ ) )
 		{
 			$treeElement = new TreeElement();
 			$treeElement->text        = $folder->name;
