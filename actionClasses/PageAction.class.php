@@ -157,7 +157,7 @@ class PageAction extends ObjectAction
 		$value->linkToObjectId = intval($this->getRequestVar('linkobjectid'));
 		$value->text           = $this->getRequestVar('text');
 
-		if   ( $this->hasRequestVar('year') )
+		if   ( $this->hasRequestVar('year') ) // Wird ein Datum gespeichert?
 		{
 			// Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
 			if   ( $this->getRequestVar('ansidate') != $this->getRequestVar('ansidate_orig') )
@@ -178,10 +178,13 @@ class PageAction extends ObjectAction
 		$value->page = new Page( $value->objectid );
 		$value->page->load();
 		
-		// Ermitteln, ob Inhalt sofort freigegeben werden kann und soll
-		if	( $value->page->hasRight('release') && $this->getRequestVar('release')!='' )
+		// Inhalt sofort freigegeben, wenn
+		// - Recht vorhanden
+		// - Freigabe gewuenscht
+		if	( $value->page->hasRight( ACL_RELEASE ) && $this->getRequestVar('release')!='' )
 			$value->publish = true;
-		else	$value->publish = false;
+		else
+			$value->publish = false;
 
 		// Inhalt speichern
 		

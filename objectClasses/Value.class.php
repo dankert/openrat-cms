@@ -75,6 +75,12 @@ class Value
 	var $element;
 	
 	/**
+	 * Element-Id
+	 * @type Integer
+	 */
+	var $elementid;
+	
+	/**
 	 * Der eigentliche Inhalt des Elementes
 	 * @type String
 	 */
@@ -550,8 +556,11 @@ class Value
 	/**
 	 * Laden eines bestimmten Inhaltes aus der Datenbank
 	 */
-	function loadWithId()
+	function loadWithId( $valueid=0 )
 	{
+		if	( $valueid != 0 )
+			$this->valueid = $valueid;
+
 		$db = db_connection();
 
 		$sql = new Sql( 'SELECT {t_value}.*,{t_user}.name as lastchange_username'.
@@ -561,8 +570,11 @@ class Value
 		$sql->setInt( 'valueid',$this->valueid);
 		$row = $db->getRow( $sql->query );
 		
-		$this->text           = $row['text'];
-		$this->valueid        = intval($row['id']          );
+		$this->text           =        $row['text'        ];
+		$this->pageid         = intval($row['pageid'      ]);
+		$this->elementid      = intval($row['elementid'   ]);
+		$this->languageid     = intval($row['languageid'  ]);
+		$this->valueid        = intval($row['id'          ]);
 		$this->linkToObjectId = intval($row['linkobjectid']);
 		$this->number         = intval($row['number'      ]);
 		$this->date           = intval($row['date'        ]);
@@ -572,7 +584,7 @@ class Value
 
 		$this->lastchangeTimeStamp = intval($row['lastchange_date'    ]);
 		$this->lastchangeUserId    = intval($row['lastchange_userid'  ]);
-		$this->lastchangeUserName  = $row['lastchange_username'];
+		$this->lastchangeUserName  =        $row['lastchange_username'];
 	}
 
 
@@ -651,7 +663,7 @@ class Value
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
 		                '    AND languageid={languageid}' );
-		$sql->setInt( 'elementid' ,$this->element->elementid );
+		$sql->setInt( 'elementid' ,$this->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
@@ -663,7 +675,7 @@ class Value
 		                '    AND elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
 		                '    AND languageid={languageid}' );
-		$sql->setInt( 'elementid' ,$this->element->elementid );
+		$sql->setInt( 'elementid' ,$this->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 

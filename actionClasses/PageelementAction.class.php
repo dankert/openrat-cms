@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2004-12-28 22:59:41  dankert
+// Revision 1.15  2004-12-29 20:18:50  dankert
+// Freigabe (release-Funktion) korrigiert
+//
+// Revision 1.14  2004/12/28 22:59:41  dankert
 // Schalter fuer HTML und WIKI
 //
 // Revision 1.13  2004/12/26 20:21:04  dankert
@@ -132,7 +135,7 @@ class PageelementAction extends Action
 		$language = Session::getProjectLanguage();
 		$this->value->languageid = $language->languageid;
 		$this->value->objectid   = $this->page->objectid;
-		$this->value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+		$this->value->pageid     = $this->page->pageid;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
 		$this->value->publish = false;
@@ -313,12 +316,17 @@ class PageelementAction extends Action
 	 */
 	function release()
 	{
-		$this->value->languageid = $this->getSessionVar('languageid');
-		$this->value->objectid   = $$this->getRequestId();
-		$this->value->pageid     = Page::getPageIdFromObjectId( $this->getRequestId() );
-		$this->value->element = new Element( $this->getRequestVar('elementid') );
+		$this->value->valueid = intval($this->getRequestVar('valueid'));
+		$this->value->loadWithId();
+		
+		if	( $this->value->pageid != $this->page->pageid )
+			die( 'cannot release, bad page' );
 
-		$this->value->valueid = $this->getRequestVar('valueid');
+		// Pruefen, ob Berechtigung zum Freigeben besteht
+		if	( !$this->page->hasRight(ACL_RELEASE) )
+			die( 'cannot release, no right' );
+		
+		// Inhalt freigeben
 		$this->value->release();
 		
 		// Versionen anzeigen
