@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-11-10 22:45:56  dankert
+// Revision 1.4  2004-11-24 22:05:45  dankert
+// Korrektur getObjects()
+//
+// Revision 1.3  2004/11/10 22:45:56  dankert
 // *** empty log message ***
 //
 // Revision 1.2  2004/05/02 14:41:31  dankert
@@ -187,6 +190,37 @@ class Folder extends Object
 		$sql->setInt('objectid' ,$this->objectid  );
 		
 		return( $db->getCol( $sql->query ) );
+	}
+
+
+
+	/**
+	 * Liest alle Objekte in diesem Ordner
+	 * @return Array von Objekten
+	 */
+	function getObjects()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT {t_object}.*,{t_name}.name,{t_name}.descr'.
+		               '  FROM {t_object}'.
+		               ' LEFT JOIN {t_name} '.
+		               '   ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
+		               '  WHERE parentid={objectid}'.
+		               '  ORDER BY orderid ASC' );
+		$sql->setInt('languageid',$this->languageid );
+		$sql->setInt('objectid'  ,$this->objectid   );
+		
+		$liste = array();
+		$res = $db->getAll( $sql->query );
+		foreach( $res as $row )
+		{
+			$o = new Object( $row['id'] );
+			$o->setDatabaseRow( $row );
+			$liste[] = $o;
+		}
+
+		return $liste;
 	}
 
 
