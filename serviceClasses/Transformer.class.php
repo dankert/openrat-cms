@@ -77,14 +77,7 @@ class Transformer
 		$p     = false;
 
 		// Links
-		if   ( $this->html )
-			$pf = '>';
-		else $pf = '&amp;gt;';
-
-		if   ( $this->html )
-			$pf = '>';
-		else $pf = '&amp;gt;';
-
+		$pf = '>';
 
 		$this->text = preg_replace( '/([^\n]*)\r\n[\=]{3,}/','+ \\1',$this->text );
 		$this->text = preg_replace( '/([^\n]*)\r\n[\-]{3,}/','++ \\1',$this->text );
@@ -118,7 +111,7 @@ class Transformer
 			}
 
 			// Zitat Anfang
-			if   ( $zeile == $pf  &&  !$quote && !$pre )
+			if   ( $this->zeile == $pf  &&  !$quote && !$pre )
 			{
 				if	( $p )
 				{
@@ -131,7 +124,7 @@ class Transformer
 			}
 	
 			// Zitat Ende
-			if   ( $zeile == $pf &&  $quote  && !$pre )
+			if   ( $this->zeile == $pf &&  $quote  && !$pre )
 			{
 				if	( $p )
 				{
@@ -164,7 +157,7 @@ class Transformer
 		
 
 			// ?berschriften
-			if	( preg_match('/^([+]{1,}) ?(.*)/',$zeile,$match) && !$nowiki && !$pre && !$quote )
+			if	( preg_match('/^([+]{1,}) ?(.*)/',$this->zeile,$match) && !$nowiki && !$pre && !$quote )
 			{
 				if	( $p )
 				{
@@ -182,7 +175,7 @@ class Transformer
 			if   ( !$pre )
 			{
 				// Tabellen
-				$beg = substr($zeile,0,1);
+				$beg = substr($this->zeile,0,1);
 				
 				if   ( $beg == '|' )
 				{
@@ -221,9 +214,8 @@ class Transformer
 					}
 				}
 
-
 				// Aufz?hlungen		
-				if	( preg_match('/^( *)([\*#-]) (.*)/',$zeile,$match) && !$nowiki )
+				if	( preg_match('/^( *)([\*#-]) (.*)/',$this->zeile,$match) && !$nowiki )
 				{
 					if	( $p )
 					{
@@ -275,29 +267,28 @@ class Transformer
 				}
 			}
 	
-			
 			// Abs?tze einrichten
 			if   (!$pre && !$ol && !$ul && !$table && substr($this->zeile,0,1)!='{' )
 			{
-				if   ( $zeile != '' && $p )
+				if   ( $this->zeile != '' && $p )
 				{
 					$this->parsedText[] = '{line-break}';
 				}
 	
-				if   ( $zeile == '' && $p )
+				if   ( $this->zeile == '' && $p )
 				{
 					$this->parsedText[] = '{paragraph-close}';
 					$p = false;
 				}
 	
-				if   ( $zeile != '' && !$p )
+				if   ( $this->zeile != '' && !$p )
 				{
 					$this->parsedText[] = '{paragraph-open}';
 					$p = true;
 				}
 			}
 		
-	
+
 	
 			// Textauszeichnungen fett,kursiv,fest		
 			if   ( !$pre && !$nowiki )  // nicht bei praeformatiertem Text
@@ -312,7 +303,6 @@ class Transformer
 				$this->replaceRegexp( '-'.$pf.'\'\'([0-9]+)\'\'', '-'.$pf.'\'\'object\\1\'\'' );
 	
 				$this->replaceRegexp( '-'.$pf.'\'\'([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)\'\'', '-'.$pf.'\'\'mailto:\\1\'\'' );
-		
 		
 				# Links "mit->..."
 				$this->replaceRegexp(  '\'\'([^\']+)\'\'-'.$pf.'\'\'([^\']+)\'\'', '{link:"\\2","\\1"}' );
@@ -334,8 +324,8 @@ class Transformer
 				$this->replaceRegexp( '\*([^\*]+[^\\])\*', '{strong-open}\\1{strong-close}'     );
 				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
 
-				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
-				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
+//				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
+//				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
 	
 				// "Wortliche Rede"
 				if	( !$this->html )
@@ -346,10 +336,11 @@ class Transformer
 
 				$this->zeile = ereg_replace( '([^\\\\])\\\\','\\1', $this->zeile );
 			}
-			else
-			{
-				$this->replace( "''",'"' );
-			}
+
+			$this->replace( "''",'"' );
+
+			if	( !$this->html )
+				$this->zeile = Text::encodeHtml( $this->zeile );
 			
 			$this->parsedText[] = $this->zeile;
 		}
@@ -367,8 +358,6 @@ class Transformer
 	
 	function render()
 	{
-//		echo '<pre>'.implode("\n",$this->parsedText).'</pre>';
-
 		foreach( $this->parsedText as $zeile )
 		{
 			$this->zeile = $zeile;
@@ -495,7 +484,6 @@ class Transformer
 		preg_match_all( '|object:?([0-9]+)|',$this->zeile,$objects,PREG_SET_ORDER );
 		foreach( $objects as $object )
 		{
-//			print_r($this->page);
 			$var = $this->page->path_to_object( $object[1] );
 			$this->replace( $object[0],$var );
 		}
