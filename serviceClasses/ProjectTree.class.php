@@ -150,15 +150,11 @@ class ProjectTree extends AbstractTree
 
 	function project()
 	{
-		if	( !isset($SESS['languageid']) || intval($SESS['languageid']) == 0 )
-			// Ermitteln Default-Sprache
-			$SESS['languageid'] = Language::getDefaultId();
-	
-		// Ermitteln Default-Projektmodell
-		if	( !isset($SESS['modelid']) || intval($SESS['modelid']) == 0 )
-			$SESS['modelid'] = Model::getDefaultId();
+		$language = Session::getProjectLanguage();
+		$model    = Session::getProjectModel();
+		$user     = Session::getUser();
 
-		$project = Session::getProject();
+		$project  = Session::getProject();
 		$this->projectid = $project->projectid;
 
 		// Hoechster Ordner der Projektstruktur
@@ -167,6 +163,7 @@ class ProjectTree extends AbstractTree
 		$folder = new Folder( $f->getRootObjectId() );
 		unset( $f );
 		$folder->load();
+
 		
 		// Ermitteln, ob der Benutzer Projektadministrator ist
 		// Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
