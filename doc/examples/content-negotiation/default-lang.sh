@@ -39,16 +39,15 @@ fi
 
 orig=$1
 link=$2
-
 for oldlink in `find -type l -name "*$link"`
 do
-        if [ ! -r "$oldlink" ]; then
-                rm -v $oldlink
-        fi
+#        if [ ! -r "$oldlink" ]; then
+#                rm -v $oldlink
+#        fi
+         rm -v $oldlink
 done
 
-
-for file in `find -type f -name *$orig`
+for file in `find -type f -name "*$orig"`
 do
         #echo found $file
         sf=`echo $file|sed -e "s/\$orig$//g"`
