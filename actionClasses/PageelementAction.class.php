@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-07-07 20:43:48  dankert
+// Revision 1.8  2004-10-13 21:19:50  dankert
+// Lesen der Selectitem-Liste ueber Element-Objekt
+//
+// Revision 1.7  2004/07/07 20:43:48  dankert
 // Neuer Elementtyp: select
 //
 // Revision 1.6  2004/05/30 21:55:21  dankert
@@ -144,21 +147,8 @@ class PageelementAction extends Action
 		
 
 			case 'select':
-			
-				
-				$list  = explode( "\n",$this->value->element->code );
-				$items = array();
-
-				foreach( $list as $it )
-				{
-					$paar = explode( ":",$it );
-					if	( count( $paar ) > 1 )
-						$items[ $paar[0] ] = $paar[1];
-					else	$items[ $it ] = $it;
-				}
-		
-				$this->setTemplateVar('items',$items            );
-				$this->setTemplateVar('text' ,$this->value->text);
+				$this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
+				$this->setTemplateVar( 'text' ,$this->value->text                      );
 
 				break;
 		
@@ -166,11 +156,13 @@ class PageelementAction extends Action
 			case 'number':
 				$this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
 				break;
-			
+
+
 			case 'longtext':
 			case 'text':
 				$this->setTemplateVar('text',$this->value->text);
 				break;
+
 		
 			case 'date':
 
