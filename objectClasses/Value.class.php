@@ -180,8 +180,6 @@ class Value
 		       $conf_php;
 		global $conf;
 
-		//$ini_chars = parse_ini_file( $conf_languagedir.'/specialchars.ini.'.$conf_php );
-
 		$neu = array();
 
 		$toc = array();
@@ -919,7 +917,13 @@ class Value
 				// Schnellformatierung ('Wiki') durchf?hren
 				if   ( $this->element->wiki )
 				{
-					$inhalt = $this->decode_wiki( $inhalt );
+					$transformer = new Transformer();
+					$transformer->text = $inhalt;
+					$transformer->page = $this->page;
+					$transformer->html = $this->element->html;
+					$transformer->type = 'html';
+					$transformer->transform();
+					$inhalt = $transformer->text;
 				}
 	
 				if   ( $this->simple )
