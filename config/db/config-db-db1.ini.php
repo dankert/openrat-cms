@@ -3,6 +3,7 @@
 
 ; Database configuration
 
+enabled    = true
 comment    = "OpenRat DB"          ; comment of this database 
 
 type       = mysql                 ; 'mysql' or 'postgresql' 
