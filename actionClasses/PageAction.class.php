@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-04-24 16:55:27  dankert
+// Korrektur: pub()
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
@@ -257,12 +260,12 @@ class PageAction extends Action
 		$list = array();
 		foreach( $this->page->publish->publishedObjects as $o )
 		{
-			$var['filenames'][] = $o['filename'];
+			$list[] = $o['filename'];
 		}
 
 		$this->setTemplateVar('filenames',$list);
 
-		$this->forward('all_publish');
+		$this->forward('publish');
 	}
 
 
