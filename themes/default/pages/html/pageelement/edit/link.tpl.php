@@ -24,12 +24,12 @@
 <?php if	( $release )
       { ?>
 <tr>
-<td class="f2"><?php echo Html::checkBox('release',true,true) ?> <?php echo lang('RELEASE') ?></td>
+<td class="f2"><?php echo Html::checkBox('release',true,true) ?> <?php echo lang('GLOBAL_RELEASE') ?></td>
 </tr>
 <?php } ?>
 
 <tr>
-<td class="act"><noscript><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></noscript></td>
+<td class="act"><noscript><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></noscript></td>
 </tr>
 
 </table>

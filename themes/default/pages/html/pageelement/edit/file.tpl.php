@@ -23,7 +23,7 @@
 </tr>
 
 <tr>
-<td class="act"><noscript><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></noscript></td>
+<td class="act"><noscript><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></noscript></td>
 </tr>
 
 </table>
