@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-12-15 23:16:26  dankert
+// Revision 1.6  2004-12-18 00:37:50  dankert
+// Projekt aus Session lesen
+//
+// Revision 1.5  2004/12/15 23:16:26  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.4  2004/09/30 20:20:54  dankert
@@ -110,7 +113,11 @@ class Template
 		                ' ORDER BY name ASC '  );
 		if	( isset($this->projectid) )
 			$sql->setInt( 'projectid',$this->projectid   );
-		else	$sql->setInt( 'projectid',$SESS['projectid'] );
+		else
+		{
+			$project = Session::getProject();
+			$sql->setInt( 'projectid',$project->projectid );
+		}
 
 		return $db->getAssoc( $sql->query );
 	}
