@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-11-28 16:56:38  dankert
+// Revision 1.8  2004-11-28 22:32:33  dankert
+// getAllAcls(): Lesen aller Rechte des Benutzers
+//
+// Revision 1.7  2004/11/28 16:56:38  dankert
 // Beruecksichtigen von Berechtigungen fuer "alle"
 //
 // Revision 1.6  2004/11/15 21:35:39  dankert
@@ -592,6 +595,45 @@ class User
 					$this->addRight($oid,ACL_READ);
 			}
 		}
+	}
+
+
+	function getAllAcls()
+	{
+		Logger::debug( 'Lade Berechtigungen' );
+
+		$this->delRights();
+
+		global $SESS,$conf_php;
+		$db = db_connection();
+
+		$group_clause = $this->getGroupClause();
+
+		$sql = new Sql( 'SELECT {t_acl}.*,{t_object}.projectid,{t_language}.name AS languagename FROM {t_acl}'.
+		                '  LEFT JOIN {t_object} '.
+		                '         ON {t_object}.id={t_acl}.objectid '.
+		                '  LEFT JOIN {t_language} '.
+		                '         ON {t_language}.id={t_acl}.languageid '.
+		                '  WHERE ( {t_acl}.userid={userid} OR '.$group_clause.
+		                                                 ' OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )'.
+		                '  ORDER BY {t_object}.projectid,{t_acl}.languageid' );
+		$sql->setInt  ( 'userid'    ,$this->userid );
+
+		$aclList = array();
+
+		foreach( $db->getAll( $sql->query ) as $row )
+		{
+			$acl = new Acl();
+			$acl->setDatabaseRow( $row );
+			$acl->projectid    = $row['projectid'   ];
+			if	( intval($acl->languageid) == 0 )
+				$acl->languagename = lang('GLOBAL_ALL_LANGUAGES');
+			else
+				$acl->languagename = $row['languagename'];
+			$aclList[] = $acl;
+		}
+		
+		return $aclList;
 	}
 
 
