@@ -16,7 +16,7 @@
 <?php if (isset($z['image']))
       { ?>
 <td width="1%">
-<?php if (isset($z['image_url'])) { ?><a href="<?php echo $z['image_url'].'#'.$z['name'] ?>" class="tree" target="_self"><?php } ?><img src="<?php echo $image_dir.'tree_'.$z['image'] ?>.gif" alt="" border="0"><?php if (isset($z['image_url'])) { ?></a><?php } ?>
+<?php if (isset($z['image_url'])) { ?><a href="<?php echo $z['image_url'].'#'.$z['name'] ?>" class="tree" target="_self" title="<?php echo $z['image_url_desc'] ?>"><?php } ?><img src="<?php echo $image_dir.'tree_'.$z['image'] ?>.gif" alt="" border="0"><?php if (isset($z['image_url'])) { ?></a><?php } ?>
 </td>
 <?php } ?>
 
