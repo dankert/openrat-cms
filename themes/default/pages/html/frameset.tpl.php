@@ -2,7 +2,7 @@
 <html>
 <!-- $Id$ -->
 <head>
-<title><?php echo $title ?></title>
+<title><?php echo $title ?> - <?php echo $cms_title ?></title>
 <link rel="shortcut icon" href="<?php echo $image_dir.'favicon.ico' ?>">
 </head>
 
