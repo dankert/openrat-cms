@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-11-10 22:40:32  dankert
+// Benutzen der Session-Klasse
+//
+// Revision 1.2  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -49,21 +52,15 @@ class TitleAction extends Action
 	 */
 	function show()
 	{
-		global $SESS,$conf;
-
 		$this->setTemplateVar('css_body_class','title');
 
-		if  ( $this->getSessionVar('dbid') != '' )
-		{
-			$this->setTemplateVar('dbid'  ,$this->getSessionVar('dbid')                               ); 
-			$this->setTemplateVar('dbname',$conf['database_'.$this->getSessionVar('dbid')]['comment'] );
-		}
-		
-		if  ( isset($SESS['user']) )
-		{
-			$this->setTemplateVar('username'    ,$SESS['user']['name']    );
-			$this->setTemplateVar('userfullname',$SESS['user']['fullname']);
-		}
+		$db = Session::getDatabase();
+		$this->setTemplateVar('dbid'  ,$db->id              ); 
+		$this->setTemplateVar('dbname',$db->conf['comment'] );
+
+		$user = Session::getUser();		
+		$this->setTemplateVar('username'    ,$user->name    );
+		$this->setTemplateVar('userfullname',$user->fullname);
 		
 		// Urls zum Benutzerprofil und zum Abmelden
 		$this->setTemplateVar('profile_url',Html::url( array('action'   =>'user',

@@ -20,14 +20,17 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-09-30 20:28:30  dankert
+// Revision 1.7  2004-11-10 22:40:49  dankert
+// Benutzen der Session-Klasse
+//
+// Revision 1.6  2004/09/30 20:28:30  dankert
 // Titel bei ?ffnen/Schlie?en von Baumzweigen
 //
 // Revision 1.5  2004/09/07 21:12:30  dankert
 // F?llen des Navigationsbaumes mit neuen Klassen
 //
 // Revision 1.4  2004/05/02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.3  2004/04/25 17:53:37  dankert
 // Neue Methode openall()
@@ -52,11 +55,12 @@
 
 class TreeAction extends Action
 {
-	var $defaultSubAction = 'reload';
+	var $defaultSubAction = 'load';
+	var $tree;
 
 
 	/**
-	 * Öffnen aller Baumelemente
+	 * ?ffnen aller Baumelemente
 	 */
 	function openall()
 	{
@@ -64,29 +68,26 @@ class TreeAction extends Action
 	
 	
 	/**
-	 * Öffnen eines Baumelementes
+	 * ?ffnen eines Baumelementes
 	 */
 	function open()
 	{
-		$tree = $this->getSessionVar('tree');
-
-		$tree->open( $this->getRequestVar('open') );
-		$this->setSessionVar( 'tree',$tree );
+		$this->tree = Session::getTree();
+		$this->tree->open( $this->getRequestVar('open') );
+		Session::setTree( $this->tree );
 
 		$this->callSubAction('show');
 	}
 	
 	
 	/**
-	 * Schließen eines Baumelementes
+	 * Schlie?en eines Baumelementes
 	 */
 	function close()
 	{
-		language_read(); // TODO Beim 1. stable-Release entfernen!
-
-		$tree = $this->getSessionVar('tree');
-		$tree->close( $this->getRequestVar('close') );
-		$this->setSessionVar( 'tree',$tree );
+		$this->tree = Session::getTree();
+		$this->tree->close( $this->getRequestVar('close') );
+		Session::setTree( $this->tree );
 
 		$this->callSubAction('show');
 	}
@@ -95,42 +96,31 @@ class TreeAction extends Action
 	/**
 	 * Neues Laden des Baumes
 	 */
-	function reload()
+	function load()
 	{
 		global $SESS;
-		$projectid = $this->getSessionVar('projectid');
+		$project   = Session::getProject();
+		$projectid = $project->projectid; 
 
-		if	( $this->getRequestVar('projectid') != '' )
-		{
-			// Beim Laden eines neuen Projektes die bisherigen
-			// Sprach- und Projektmodelleinstellungen entfernen
-			unset( $SESS['modelid'] );
-			unset( $SESS['languageid'    ] );
-		}
-		
 		// Erzeugen des Menue-Baums
 		//
 		language_read(); // TODO Beim 1. stable-Release entfernen!
 	
-		if ( $projectid == 0 )
+		if	( $projectid == -1 )
 		{
-			$this->forward('blank');
-		}
-		elseif	( $projectid == -1 )
-		{
-			$tree = new AdministrationTree();
+			$this->tree = new AdministrationTree();
 			
 		}
 		else
 		{
-			$tree = new ProjectTree();
-			$tree->projectId = $projectid;
+			$this->tree = new ProjectTree();
+			$this->tree->projectId = $projectid;
+
 			$SESS['languageid'] = Language::getDefaultId();
 			$SESS['modelid'   ] = Model::getDefaultId();
 		}
 
-		$this->setSessionVar( 'tree',$tree );
-
+		Session::setTree( $this->tree );
 
 		// Weiter mit show()
 		//
@@ -140,13 +130,7 @@ class TreeAction extends Action
 
 	function outputElement( $elId,$tiefe,$isLast )
 	{
-//		echo "elid $elId in tiefe $tiefe";
-		global
-			$tree,
-			$SESS,
-			$PHP_SELF;
-	
-		$treeElement = $tree->elements[$elId]; 
+		$treeElement = $this->tree->elements[$elId]; 
 
 		$zeilen = array();
 		$zeile  = array();
@@ -214,10 +198,10 @@ class TreeAction extends Action
 		$zeilen[] = $zeile;
 		// Rekursiv alle Unter-Elemente lesen
 		$nr = 0;
-		foreach( $tree->elements[$elId]->subElementIds as $subElementId )
+		foreach( $this->tree->elements[$elId]->subElementIds as $subElementId )
 		{
 			$nr++;
-			if   ( $nr == count($tree->elements[$elId]->subElementIds) )
+			if   ( $nr == count($this->tree->elements[$elId]->subElementIds) )
 				$isLast[$tiefe+1] = true;
 			else $isLast[$tiefe+1] = false;
 
@@ -240,9 +224,6 @@ class TreeAction extends Action
 			$var;
 
 		$var['zeilen']=array();
-
-		global $tree;
-		$tree = $this->getSessionVar('tree');
 
 //		echo '<pre>';
 //		print_r($tree);
