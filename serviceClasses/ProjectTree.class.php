@@ -27,6 +27,7 @@
 class ProjectTree extends AbstractTree
 {
 	var $projectId;
+	var $userIsProjectAdmin = false;
 
 
 	function root()
@@ -36,13 +37,13 @@ class ProjectTree extends AbstractTree
 		$treeElement->description = lang('PROJECT');
 		$treeElement->type        = 'project';
 		$treeElement->icon        = 'project';
-		
+
 		$this->addTreeElement( $treeElement );
 	}
 
 
 
-	
+
 	function pageelements( $id )
 	{
 		$page = new Page( $id );
@@ -64,7 +65,7 @@ class ProjectTree extends AbstractTree
 		                                                      'callSubaction'   =>'edit',
 		                                                      'objectid'        =>$id,
 		                                                      'elementid'       =>$elementid       ));
-		          $treeElement->icon        = 'el_'.$element->type;
+		        $treeElement->icon        = 'el_'.$element->type;
 
 				$treeElement->description = lang('EL_'.$element->type);
 				if	( $element->desc != '' )
@@ -116,7 +117,7 @@ class ProjectTree extends AbstractTree
 		                                                'objectid'       =>$id ));
 			$treeElement->icon       = $o->getType();
 			
-			// Besonderheiten f?r bestimmte Objekttypen	
+			// Besonderheiten fuer bestimmte Objekttypen	
 
 			if   ( $o->isPage )
 			{
@@ -157,13 +158,20 @@ class ProjectTree extends AbstractTree
 		if	( !isset($SESS['modelid']) || intval($SESS['modelid']) == 0 )
 			$SESS['modelid'] = Model::getDefaultId();
 
+		$project = Session::getProject();
+		$this->projectid = $project->projectid;
 
-		// H?chster Ordner der Projektstruktur
+		// Hoechster Ordner der Projektstruktur
 		$f      = new Folder();
 		$f->projectid = $this->projectid;
 		$folder = new Folder( $f->getRootObjectId() );
 		unset( $f );
 		$folder->load();
+		
+		// Ermitteln, ob der Benutzer Projektadministrator ist
+		// Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
+		if   ( $folder->hasRight('prop') )
+			$this->userIsProjectAdmin = true;
 
 		if   ( $folder->hasRight('read') )
 		{
@@ -172,8 +180,8 @@ class ProjectTree extends AbstractTree
 			$treeElement->description = $folder->desc;
 			$treeElement->icon        = 'folder';
 			$treeElement->url         = Html::url(array('action'       =>'main',
-			                                                                 'callAction'   =>'folder',
-			                                                                 'objectid'    =>$folder->objectid       ));
+			                                                             'callAction'   =>'folder',
+			                                                             'objectid'    =>$folder->objectid       ));
 			$treeElement->target      = 'cms_main';
 			$treeElement->type        = 'folder';
 			$treeElement->internalId  = $folder->objectid;
@@ -181,18 +189,21 @@ class ProjectTree extends AbstractTree
 		}
 
 
-		// Templates
-		$treeElement = new TreeElement();
-		$treeElement->text       = lang('TEMPLATES');
-		$treeElement->url        = Html::url(array('action'       =>'main',
-			                                      'callAction'   =>'template',
-			                                      'callSubaction'=>'listing',
-			                                      'templateid'   =>'0' ));
-		$treeElement->description= '';
-		$treeElement->icon       = 'tpl_list';
-		$treeElement->target     = 'cms_main';
-		$treeElement->type       = 'templates';
-		$this->addTreeElement( $treeElement );
+		if	( $this->userIsProjectAdmin )
+		{
+			// Templates
+			$treeElement = new TreeElement();
+			$treeElement->text       = lang('TEMPLATES');
+			$treeElement->url        = Html::url(array('action'       =>'main',
+				                                      'callAction'   =>'template',
+				                                      'callSubaction'=>'listing',
+				                                      'templateid'   =>'0' ));
+			$treeElement->description= '';
+			$treeElement->icon       = 'tpl_list';
+			$treeElement->target     = 'cms_main';
+			$treeElement->type       = 'templates';
+			$this->addTreeElement( $treeElement );
+		}
 
 
 		// Sprachen
@@ -319,13 +330,18 @@ class ProjectTree extends AbstractTree
 		{
 			$e = new Element( $elementid );
 			$e->load();
+
+			// "Code"-Element nur fuer Administratoren			
+			if	( $e->type == 'code' && !$this->userIsAdmin )
+				continue;
+
 			$treeElement = new TreeElement();
 			$treeElement->text        = $e->name;
 			$treeElement->url         = Html::url(array('action'       =>'main',
-                                                           'callAction'   =>'element',
-                                                           'callSubaction'=>'edit',
-                                                           'templateid'   =>$id,
-                                                           'elementid'    =>$elementid       ));
+                                                        'callAction'   =>'element',
+                                                        'callSubaction'=>'edit',
+                                                        'templateid'   =>$id,
+                                                        'elementid'    =>$elementid       ));
 			$treeElement->icon        = 'el_'.$e->type;
 			
 			if	( $e->desc == "" )
@@ -341,77 +357,73 @@ class ProjectTree extends AbstractTree
 
 	function languages()
 	{
-          // Sprachvarianten
-          //
-          $l = new Language();
-//		$l->projectid = $projectid;
+		// Sprachvarianten
+		//
+		$l = Session::getProjectLanguage();
 		$languages = $l->getAll();
 
-		if	( count($languages) > 0)
+		foreach( $languages as $languageid=>$name )
 		{
-	
-			foreach( $languages as $languageid=>$name )
-			{
-				$treeElement = new TreeElement();
-				$treeElement->text         = $name;
-				$treeElement->url          = Html::url(array('action'       =>'main',
-			                                                  'callAction'   =>'language',
-			                                                  'callSubaction'=>'edit',
-			                                                  'languageid'    =>$languageid       ));
-				$treeElement->icon         = 'lang';
-				$treeElement->description  = '';
-				$treeElement->target       = 'cms_main';
-				$this->addTreeElement( $treeElement );
-			}
+			if	( $this->userIsProjectAdmin )
+				$subAction = 'edit';
+			else
+				$subAction = 'view';
+
+			$treeElement = new TreeElement();
+			$treeElement->text         = $name;
+			$treeElement->url          = Html::url(array('action'       =>'main',
+			                                             'callAction'   =>'language',
+			                                             'callSubaction' =>$subAction,
+			                                             'languageid'    =>$languageid       ));
+			$treeElement->icon         = 'lang';
+			$treeElement->description  = '';
+			$treeElement->target       = 'cms_main';
+			$this->addTreeElement( $treeElement );
 		}
 	}
 
 
+	// Projektvarianten
+	//
 	function models()
 	{
-          // Projektvarianten
-          //
-		$m = new Model();
-//		$m->projectid = $projectid;
-	
+		$m = Session::getProjectModel();
 		$models = $m->getAll();
 
-		if	( count($models) > 1 )
-		{
+		if	( $this->userIsProjectAdmin )
+			$subAction = 'edit';
+		else
+			$subAction = 'view';
 
-			if	( $this->userIsAdmin() )
-			{
-				foreach( $models as $id=>$name )
-				{
-					$treeElement = new TreeElement();
-					$treeElement->text        = $name;
-					$treeElement->url         = Html::url(array('action'       =>'main',
-				                                                 'callAction'   =>'model',
-				                                                 'callSubaction'=>'edit',
-				                                                 'modelid'    =>$id       ));
-					$treeElement->icon        = 'model';
-					$treeElement->description = '';
-					$treeElement->target      = 'cms_main';
-					$this->addTreeElement( $treeElement );
-				}
-			}
+		foreach( $models as $id=>$name )
+		{
+			$treeElement = new TreeElement();
+			$treeElement->text        = $name;
+			$treeElement->url         = Html::url(array('action'       =>'main',
+			                                            'callAction'   =>'model',
+			                                            'callSubaction'=>$subAction,
+			                                            'modelid'      =>$id       ));
+			$treeElement->icon        = 'model';
+			$treeElement->description = '';
+			$treeElement->target      = 'cms_main';
+			$this->addTreeElement( $treeElement );
 		}
 	}
 
 
 	function other()
 	{
-//		if	( $SESS['user']['is_admin'] )
-//		{
+		if	( $this->userIsProjectAdmin )
+		{
 			$treeElement = new TreeElement();
-		     $treeElement->text        = lang('FILE_TRANSFER');
-		     $treeElement->description = '';
-		     $treeElement->url         = Html::url(array('action'       =>'main',
-		                                                 'callAction'   =>'transfer'));
+			$treeElement->text        = lang('FILE_TRANSFER');
+			$treeElement->description = '';
+			$treeElement->url         = Html::url(array('action'       =>'main',
+			                                            'callAction'   =>'transfer'));
 			$treeElement->icon        = 'transfer';
 			$treeElement->target      = 'cms_main';
 			$this->addTreeElement( $treeElement );
-//		}
+		}
 
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('SEARCH');
