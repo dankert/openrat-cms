@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-10-14 21:16:12  dankert
+// Revision 1.2  2004-12-25 21:05:14  dankert
+// erbt von Klasse Dynamic
+//
+// Revision 1.1  2004/10/14 21:16:12  dankert
 // Erzeugen eines Menues in Bloecken
 //
 // ---------------------------------------------------------------------------
@@ -31,7 +34,7 @@
  * Erstellen eines Hauptmenues
  * @author Jan Dankert
  */
-class BlockMenu /*extends DynamicElement*/
+class BlockMenu extends Dynamic
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
@@ -58,7 +61,7 @@ class BlockMenu /*extends DynamicElement*/
 		// Erstellen des Hauptmenues
 		
 		// Lesen des Root-Ordners
-		$folder = new Folder( $this->api->getRootObjectId() );
+		$folder = new Folder( $this->getRootObjectId() );
 		
 		// Schleife ueber alle Inhalte des Root-Ordners
 		foreach( $folder->getObjectIds() as $id )
@@ -75,7 +78,7 @@ class BlockMenu /*extends DynamicElement*/
 				
 				if	( count($f->getLinks())+count($f->getPages()) > 0 )
 				{
-					$this->api->output( '
+					$this->output( '
 			<!-- sidebox -->
 		     <table bgcolor="#000000" border="0" cellpadding="0" cellspacing="0" width="100%">
 		      <tr>
@@ -100,23 +103,23 @@ class BlockMenu /*extends DynamicElement*/
 						if (!$o->isPage && !$o->isLink ) continue;
 						
 						// Wenn aktuelle Seite, dann markieren, sonst Link
-						if ( $this->api->getObjectId() == $xid )
+						if ( $this->getObjectId() == $xid )
 						{
 							// aktuelle Seite
-							$this->api->output( '            <span class="small">o</span>
+							$this->output( '            <span class="small">o</span>
 							<strong class="nav">'.$o->name.'</strong>
 							<br />' );
 						}
 						else
 						{
-							$this->api->output( '            <span class="small">o</span>
+							$this->output( '            <span class="small">o</span>
 						       <a class="nav" href="'.$this->page->path_to_object($xid).'">'.$o->name.'</a>
 						       <br />' );
 						}
 					//Api::output( '<br/>' );
 					}
 			
-					$this->api->output( '
+					$this->output( '
 			          </td>
 			         </tr>
 			        </table>
