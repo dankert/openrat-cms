@@ -22,7 +22,7 @@
 
 /**
  * Diese Funktion stellt ein Wort in der eingestellten
- * Sprache zur Verfügung.
+ * Sprache zur Verf?gung.
  * @package openrat.functions
  */
 function lang( $text )
@@ -72,5 +72,8 @@ function language_read( $l='' )
 	       $conf_php;
      
 	$l = language_from_http();
+	Logger::debug( 'reading language file: '.$l );
 	$SESS['lang'] = parse_ini_file( "./language/$l.ini.$conf_php" );
 }
+
+?>
