@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-04-30 20:31:47  dankert
+// Berechtigungen anzeigen
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
@@ -55,6 +58,14 @@ class LinkAction extends Action
 		$this->link->load();
 
 		$this->callSubAction('prop');
+	}
+
+
+	function addACL()
+	{
+		$this->objectAddACL();
+
+		$this->callSubAction('rights');
 	}
 
 
@@ -189,24 +200,39 @@ class LinkAction extends Action
 
 	function rights()
 	{
-		$acl = new Acl();
-		$acl->objectid = $this->link->objectid;
+		global $SESS;
+		global $conf_php;
+		if   ($SESS['user']['is_admin'] != '1') die('nice try');
 
-		$var['access_acls']  = array();
-
-		foreach( $acl->getAccessACLsFromObject() as $id )
+		$acllist = array();	
+		foreach( $this->link->getAllInheritedAclIds() as $aclid )
 		{
-			$acl = new Acl( $id );
+			$acl = new Acl( $aclid );
 			$acl->load();
-			$var['access_acls'][$id] = $acl->getProperties();
-			$var['access_acls'][$id]['delete_url'] = 'folder.'.$conf_php.'?folderaction=delACL&aclid='.$id;
+			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
+			$acllist[$key] = $acl->getProperties();
 		}
 
-		$var['users']     = User::listAll();
-		$var['groups']    = Group::getAll();
-		$var['languages'] = Language::getAll();
+		foreach( $this->link->getAllAclIds() as $aclid )
+		{
+			$acl = new Acl( $aclid );
+			$acl->load();
+			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
+			$acllist[$key] = $acl->getProperties();
+			$acllist[$key]['delete_url'] = Html::url(array('subaction'=>'delACL','aclid'=>$aclid));
+		}
+		ksort( $acllist );
 
-		$this->forward('link_rights');	
+		$this->setTemplateVar('acls',$acllist );
+
+		$this->setTemplateVar('users'    ,User::listAll()   );
+		$this->setTemplateVar('groups'   ,Group::getAll()   );
+
+		$languages = Language::getAll();
+		$languages[0] = lang('ALL_LANGUAGES');
+		$this->setTemplateVar('languages',$languages);
+
+		$this->forward('link_rights');
 	}
 
 }

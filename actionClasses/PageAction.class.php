@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-04-25 19:01:02  dankert
+// Revision 1.4  2004-04-30 20:31:47  dankert
+// Berechtigungen anzeigen
+//
+// Revision 1.3  2004/04/25 19:01:02  dankert
 // Speichern von Elementen, die in allen Sprachen gleich sind
 //
 // Revision 1.2  2004/04/24 16:55:27  dankert
@@ -60,9 +63,9 @@ class PageAction extends Action
 	}
 
 
-	function addAccessACL()
+	function addACL()
 	{
-		$this->objectAddAccessACL();
+		$this->objectAddACL();
 
 		$this->callSubAction('rights');
 	}
@@ -291,26 +294,38 @@ class PageAction extends Action
 	function rights()
 	{
 		global $SESS;
+		global $conf_php;
 		if   ($SESS['user']['is_admin'] != '1') die('nice try');
-	
-		$acl = new Acl();
-		$acl->objectid = $this->page->objectid;
 
-		$var['access_acls']  = array();
-
-		foreach( $acl->getAccessACLsFromObject() as $id )
+		$acllist = array();	
+		foreach( $this->page->getAllInheritedAclIds() as $aclid )
 		{
-			$acl = new Acl( $id );
+			$acl = new Acl( $aclid );
 			$acl->load();
-			$var['access_acls'][$id] = $acl->getProperties();
-			$var['access_acls'][$id]['delete_url'] = '?pageaction=delACL&aclid='.$id;
+			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
+			$acllist[$key] = $acl->getProperties();
 		}
 
-		$var['users']  = User::listAll();
-		$var['groups'] = Group::getAll();
+		foreach( $this->page->getAllAclIds() as $aclid )
+		{
+			$acl = new Acl( $aclid );
+			$acl->load();
+			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
+			$acllist[$key] = $acl->getProperties();
+			$acllist[$key]['delete_url'] = Html::url(array('subaction'=>'delACL','aclid'=>$aclid));
+		}
+		ksort( $acllist );
+
+		$this->setTemplateVar('acls',$acllist );
+
+		$this->setTemplateVar('users'    ,User::listAll()   );
+		$this->setTemplateVar('groups'   ,Group::getAll()   );
+
+		$languages = Language::getAll();
+		$languages[0] = lang('ALL_LANGUAGES');
+		$this->setTemplateVar('languages',$languages);
 
 		$this->forward('page_rights');
-		
 	}
 }
 
