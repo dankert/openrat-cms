@@ -1,0 +1,3 @@
+# $Id: $
+order deny,allow
+deny from all
