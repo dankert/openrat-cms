@@ -4,6 +4,7 @@
 ;
 ; $Id$
 ;
+PAGEELEMENT = "Seitenelement"
 LINK = "Verkn&uuml;pfung"
 NEW = "Neu"
 COPY_OF = "Kopie von"
@@ -48,8 +49,7 @@ DATE_SAVED = "Datum/Zeit der letzten Speicherung"
 DECIMALS = Dezimalstellen
 DEC_POINT = Dezimalpunkt
 DEFAULT = Standard
-DEFAULT_FILE = "Vorbelegte Datei"
-DEFAULT_PAGE = "Vorbelegte Seite"
+DEFAULT_OBJECT = "Vorbelegtes Objekt"
 DELETE = "L&ouml;schen"
 DESCRIPTION = Beschreibung
 DESC = Beschreibung
@@ -63,7 +63,7 @@ EL_FILE = "Link auf Datei"
 EL_INCLUDE = "Einf&uuml;gen"
 EL_INFO = Info
 EL_INFODATE = "Info-Datum"
-EL_LINK = "Link auf Seite"
+EL_LINK = "Link (Anchor)"
 EL_LIST_BEGIN = "Liste Beginn"
 EL_LIST_END = "Liste Ende"
 EL_LONGTEXT = "Text Absatz"
