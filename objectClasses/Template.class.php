@@ -20,11 +20,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Revision 1.4  2004-09-30 20:20:54  dankert
+// Beim Speichern Sicherstellen, dass ein Name vorhanden ist
+//
+// Revision 1.3  2004/05/02 14:41:31  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.2  2004/04/25 17:31:46  dankert
-// Bei Löschen auch Elemente entfernen
+// Bei L?schen auch Elemente entfernen
 //
 // Revision 1.1  2004/04/24 15:15:12  dankert
 // Initiale Version
@@ -48,7 +51,7 @@ class Template
 	var $templateid = 0;
 
 	/**
-	 * Projekt-ID des aktuell ausgewählten Projektes
+	 * Projekt-ID des aktuell ausgew?hlten Projektes
 	 * @type Integer
 	 */
 	var $projectid;
@@ -66,13 +69,13 @@ class Template
 	var $modelid;
 
 	/**
-	 * Dateierweiterung dieses Templates (abhängig von der Projektvariante)
+	 * Dateierweiterung dieses Templates (abh?ngig von der Projektvariante)
 	 * @type String
 	 */
 	var $extension;
 
 	/**
-	 * Inhalt des Templates (abhängig von der Projektvariante)
+	 * Inhalt des Templates (abh?ngig von der Projektvariante)
 	 * @type String
 	 */
 	var $src;
@@ -110,7 +113,7 @@ class Template
 
 
 	/**
- 	 * Laden des Templates aus der Datenbank und füllen der Objekteigenschaften
+ 	 * Laden des Templates aus der Datenbank und f?llen der Objekteigenschaften
  	 */
 	function load()
 	{
@@ -134,7 +137,6 @@ class Template
 
 		$this->extension = $row['extension'];
 		$this->src       = $row['text'];
-
 	}
 
 
@@ -143,6 +145,9 @@ class Template
  	 */
 	function save()
 	{
+		if	( $this->name == "" )
+			$this->name = lang('TEMPLATE').' #'.$this->templateid;
+
 		$db = db_connection();
 
 		$sql = new Sql( 'UPDATE {t_template}'.
@@ -207,7 +212,7 @@ class Template
 
 	/**
  	 * Ermitteln aller Elemente zu diesem Template
- 	 * Es wird eine Liste nur mit den Element-IDs ermittelt und zurückgegeben
+ 	 * Es wird eine Liste nur mit den Element-IDs ermittelt und zur?ckgegeben
  	 * @return Array
  	 */
 	function getElementIds()
@@ -226,7 +231,7 @@ class Template
 
 	/**
  	 * Ermitteln aller Elemente zu diesem Template
- 	 * Es wird eine Liste mit den Element-Namen zurückgegeben
+ 	 * Es wird eine Liste mit den Element-Namen zur?ckgegeben
  	 * @return Array
  	 */
 	function getElementNames()
@@ -243,7 +248,7 @@ class Template
 
 
 	/**
- 	 * Hinzufügen eines Elementes
+ 	 * Hinzuf?gen eines Elementes
  	 * @param String Name des Elementes
  	 */
 	function addElement( $name )
@@ -259,7 +264,7 @@ class Template
 
 
 	/**
- 	 * Hinzufügen eines Templates
+ 	 * Hinzuf?gen eines Templates
  	 * @param String Name des Templates
  	 */
 	function add( $name )
