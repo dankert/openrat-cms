@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.19  2004-12-20 22:31:22  dankert
+// Revision 1.20  2004-12-26 20:54:29  dankert
+// Sortierfunktion korrigiert
+//
+// Revision 1.19  2004/12/20 22:31:22  dankert
 // Uebertragen des Benutzers geaendert
 //
 // Revision 1.18  2004/12/19 20:40:51  dankert
@@ -566,13 +569,13 @@ class FolderAction extends ObjectAction
 
 				if   ( $last_objectid != 0 && $o->hasRight(ACL_WRITE) )
 				{
-					$list[$id           ]['upurl'    ] = Html::url('folder','changesequence',array(
+					$list[$id           ]['upurl'    ] = Html::url('folder','changesequence',0,array(
 					                                                     'objectid1'=>$id,
 					                                                     'objectid2'=>$last_objectid));
 					$list[$last_objectid]['downurl'  ] = $list[$id]['upurl'];
-					$list[$last_objectid]['bottomurl'] = Html::url('folder','setbottom',array(
+					$list[$last_objectid]['bottomurl'] = Html::url('folder','setbottom',0,array(
 					                                                     'objectid1'=>$last_objectid));
-					$list[$id           ]['topurl'   ] = Html::url('folder','settop',array(
+					$list[$id           ]['topurl'   ] = Html::url('folder','settop',0,array(
 					                                                     'objectid1'=>$id));
 				}
 
