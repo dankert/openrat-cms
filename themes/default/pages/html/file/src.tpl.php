@@ -3,10 +3,10 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $action ?>" method="post" target="_self">
+<form action="<?php echo $self ?>" method="post" target="_self">
 
-<input type="hidden" name="<?php echo session_name() ?>" value="<?php echo session_id() ?>">
-<input type="hidden" name="fileaction" value="savevalue">
+<input type="hidden" name="action"    value="file">
+<input type="hidden" name="subaction" value="savevalue">
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
