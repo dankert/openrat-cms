@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-11-28 19:25:51  dankert
+// Revision 1.8  2004-12-19 15:20:27  dankert
+// Korrektur delete()
+//
+// Revision 1.7  2004/11/28 19:25:51  dankert
 // Anpassen an neue Sprachdatei-Konventionen
 //
 // Revision 1.6  2004/11/28 11:22:55  dankert
@@ -350,9 +353,11 @@ class Acl
 		$db = db_connection();
 		
 		$sql = new Sql( 'DELETE FROM {t_acl} '.
-		                ' WHERE id = {aclid}' );
+		                ' WHERE id      = {aclid}   '.
+		                '   AND objectid= {objectid}' );
 
-		$sql->setInt('aclid',$this->aclid);
+		$sql->setInt('aclid'   ,$this->aclid   );
+		$sql->setInt('objectid',$this->objectid);
 		
 		$db->query( $sql->query );
 		
