@@ -5,8 +5,8 @@
 <center>
 
 <form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="action"      value="group">
-<input type="hidden" name="groupaction" value="add">
+<input type="hidden" name="action"      value="group" />
+<input type="hidden" name="groupaction" value="add"   />
 
 <table class="main" width="50%" cellspacing="0" cellpadding="4">
 
