@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.6  2004-05-30 21:55:21  dankert
+// Korrektur Kasten "Freigabe"
+//
+// Revision 1.5  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.4  2004/05/02 12:00:26  dankert
 // Funktion release() zum freigeben von Inhalten
@@ -50,13 +53,13 @@ class PageelementAction extends Action
 
 
 	/**
-	 * Enthält das Seitenobjekt
+	 * Enth?lt das Seitenobjekt
 	 * @type Object
 	 */
 	var $page;
 	
 	/**
-	 * Enthält das Elementobjekt
+	 * Enth?lt das Elementobjekt
 	 * @type Object
 	 */
 	var $element;
@@ -213,7 +216,10 @@ class PageelementAction extends Action
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
 
-		$this->value->page = new Page( $this->getSessionVar('objectid') );
+		$this->value->page             = new Page( $this->getSessionVar('objectid') );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
 		if	( $this->value->page->hasRight('release') )
 			$this->setTemplateVar( 'release',true  );
 		else	$this->setTemplateVar( 'release',false );
@@ -229,7 +235,7 @@ class PageelementAction extends Action
 	{
 		$this->value->valueid = $this->getRequestVar('valueid');
 		
-		// Das ausgewählte Element für die Bearbeitung verwenden
+		// Das ausgew?hlte Element f?r die Bearbeitung verwenden
 		$this->callSubAction('edit');
 	}
 
@@ -253,7 +259,7 @@ class PageelementAction extends Action
 
 
 	/**
-	 * Erzeugt eine Liste aller Versionsstände zu diesem Inhalt
+	 * Erzeugt eine Liste aller Versionsst?nde zu diesem Inhalt
 	 */
 	function archive()
 	{
