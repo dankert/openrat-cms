@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-05-02 14:49:37  dankert
+// Revision 1.8  2004-05-03 20:22:58  dankert
+// move() korrigiert
+//
+// Revision 1.7  2004/05/02 14:49:37  dankert
 // Einfügen package-name (@package)
 //
 // Revision 1.6  2004/05/02 12:00:44  dankert
@@ -72,7 +75,7 @@ class PageAction extends Action
 	function move()
 	{
 		$this->objectMove();
-		$this->link->load();
+		$this->page->load();
 
 		$this->callSubAction('prop');
 	}
