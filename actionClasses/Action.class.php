@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-10-04 19:58:05  dankert
+// Revision 1.5  2004-10-10 17:42:52  dankert
+// Neue Methode: getUserFromSession()
+//
+// Revision 1.4  2004/10/04 19:58:05  dankert
 // Logging hinzugef?gt
 //
 // Revision 1.3  2004/05/02 14:49:37  dankert
@@ -236,6 +239,17 @@ class Action
 		if	( $user['is_admin'] )
 			return true;
 		else	return false;
+	}
+
+
+
+	/**
+	 * Ermitteln des Benutzerobjektes aus der Session
+	 * @return User
+	 */
+	function getUserFromSession()
+	{
+		return $this->getSessionVar('userobject');
 	}
 
 
