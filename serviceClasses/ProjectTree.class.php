@@ -225,7 +225,7 @@ class ProjectTree extends AbstractTree
 			$treeElement->text       = lang('GLOBAL_TEMPLATES');
 			$treeElement->url        = Html::url('main','template');
 			$treeElement->description= lang('GLOBAL_TEMPLATES_DESC');
-			$treeElement->icon       = 'tpl_list';
+			$treeElement->icon       = 'template_list';
 			$treeElement->target     = 'cms_main';
 			$treeElement->type       = 'templates';
 			$this->addTreeElement( $treeElement );
@@ -329,7 +329,7 @@ class ProjectTree extends AbstractTree
 			$t->load();
 			$treeElement->text        = $t->name;
 			$treeElement->url         = Html::url('main','template',$id);
-			$treeElement->icon        = 'tpl';
+			$treeElement->icon        = 'template';
 			$treeElement->target      = 'cms_main';
 			$treeElement->internalId  = $id;
 			$treeElement->type        = 'template';
