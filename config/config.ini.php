@@ -12,7 +12,7 @@ suffix   = .ini.php      ; suffix  of database configuration files
 default  = db1           ; preselected database (used for http-auth)
 
 [auth]
-type     = http          ; 'http' or 'form'  (must 'form' for more than 1 database connection)
+type     = form          ; 'http' or 'form'  (must 'form' for more than 1 database connection)
 
 [ldap]
 host     =               ; host of ldap server ( blank if not used )  
@@ -46,7 +46,22 @@ nice_urls            = false        ; if 'true' you need special rewrite rules i
 url_sessionid        = false        ; only needed if cookies and transid not available 
 theme                = default      ;
 language             = en           ; default language
-use_browser_language = true         ; use the HTTP_ACCEPT_LANGUAGE header to determine language
+use_browser_language = true         ; use HTTP_ACCEPT_LANGUAGE header to determine language
+
+
+[login]
+logo=./themes/default/images/logo.jpg    ; url of logo in login mask 
+
+
+[mail]
+enabled=true                        ; Enable sending E-Mails
+from="OpenRat <user@example.com>"   ; Sender Adress
+signature="http://www.openrat.de"   ; Signature (blank if unused)
+
+
+[security]
+random_password_length=8            ; length of automatic generated password
+min_password_length=4               ; minimum passwort length
 
 
 [html]
