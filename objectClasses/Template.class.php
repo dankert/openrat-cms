@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-12-30 23:23:21  dankert
+// Revision 1.11  2004-12-30 23:31:52  dankert
+// Werte vorbelegen
+//
+// Revision 1.10  2004/12/30 23:23:21  dankert
 // Werte vorbelegen
 //
 // Revision 1.9  2004/12/27 23:34:20  dankert
@@ -337,7 +340,7 @@ class Template
 		$sql->setString('name'      ,$name               );
 
 		// Wenn Projektid nicht vorhanden, dann aus Session lesen
-		if	( intval($this->projectid) == 0 )
+		if	( !isset($this->projectid) || intval($this->projectid) == 0 )
 		{
 			$project = Session::getProject();
 			$this->projectid = $project->projectid;
