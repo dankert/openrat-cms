@@ -80,7 +80,11 @@ a.el_number:hover
 a.el_code:link,
 a.el_code:active,
 a.el_code:visited,
-a.el_code:hover
+a.el_code:hover,
+a.el_dynamic:link,
+a.el_dynamic:active,
+a.el_dynamic:visited,
+a.el_dynamic:hover
 {
 	background-color: gray;
 }
