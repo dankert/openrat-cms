@@ -40,7 +40,11 @@ input.name { font-weight:bold; }
 input.filename { font-family:Courier;font-size:13px; }
 textarea.desc { font-family:Arial;font-size:13px; }
 textarea.longtext { font-family:Arial;font-size:13px; width:100%; height:300; }
-input.ansidate { font-family:Courier; font-size:13px; }
+input.ansidate
+{
+	font-family:Courier;
+	font-size:13px;
+}
 
 body, textarea
 {
