@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2004-12-26 20:20:17  dankert
+// Revision 1.13  2004-12-28 22:58:39  dankert
+// Fuellen Variablen logo* fuer Loginmaske
+//
+// Revision 1.12  2004/12/26 20:20:17  dankert
 // Bei Logout entfernen aller Session-Variablen
 //
 // Revision 1.11  2004/12/26 18:49:58  dankert
@@ -170,7 +173,8 @@ class IndexAction extends Action
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
-		$this->setTemplateVar('logo',$conf['login']['logo']);
+		$this->setTemplateVar('logo'    ,$conf['login']['logo'    ]);
+		$this->setTemplateVar('logo_url',$conf['login']['logo_url']);
 
 		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
 		$this->setSessionVar('loginmessage','');
