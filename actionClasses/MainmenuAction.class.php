@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-11-28 18:39:18  dankert
+// Revision 1.8  2004-11-28 19:46:45  dankert
+// Bei Dateien immer Menuepunkt "Bearbeiten"
+//
+// Revision 1.7  2004/11/28 18:39:18  dankert
 // Anpassen an neue Sprachdatei-Konventionen
 //
 // Revision 1.6  2004/11/28 16:54:56  dankert
@@ -217,14 +220,13 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('id','o'.$file->objectid);
 	
 		$this->obj = &$file;
-		$this->addSubAction('show',ACL_READ    );
+		$this->addSubAction('show'  ,ACL_READ    );
 
-		if   ( substr($file->mimeType(),0,5) == 'text/'  )
-			$this->addSubAction('edit',ACL_WRITE   );
+		$this->addSubAction('edit'  ,ACL_WRITE   );
 
-		$this->addSubAction('pub' ,ACL_PUBLISH );
-		$this->addSubAction('prop',ACL_PROP    );
-		$this->addSubAction('rights' ,ACL_GRANT);
+		$this->addSubAction('pub'   ,ACL_PUBLISH );
+		$this->addSubAction('prop'  ,ACL_PROP    );
+		$this->addSubAction('rights',ACL_GRANT   );
 
 		$this->setTemplateVar('subaction',$this->subActionList);
 
