@@ -16,7 +16,7 @@
           else
           	$attrDisabled = array();
         ?>
-        <?php echo Html::selectBox( 'id',$projects,$act_projectid,array('onchange'=>'submit();','title'=>lang('PROJECT_SELECT_DESC'),'style'=>'margin:0px;padding:0px;')+$attrDisabled ) ?></td><td><noscript>&nbsp;<input type="submit" class="submit" value="&raquo;"></noscript>
+        <?php echo Html::selectBox( 'projectid',$projects,$act_projectid,array('onchange'=>'submit();','title'=>lang('PROJECT_SELECT_DESC'),'style'=>'margin:0px;padding:0px;')+$attrDisabled ) ?></td><td><noscript>&nbsp;<input type="submit" class="submit" value="&raquo;"></noscript>
       </td>
       </tr>
       </table>
