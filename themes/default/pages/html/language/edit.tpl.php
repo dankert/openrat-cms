@@ -14,7 +14,7 @@
 
 <tr>
 <td width="50%" class="f1"><?php echo lang('GLOBAL_LANGUAGE') ?></a></td>
-<td width="50%" class="f2"><?php echo Html::selectBox('isocode',$isocodes,$act_isocode) ?></td>
+<td width="50%" class="f2"><?php echo Html::selectBox('isocode',$isocodes,strtoupper($act_isocode)) ?></td>
 </tr>
 
 <?php if ( $delete )
@@ -36,8 +36,6 @@
 </form>
 </center>
 
-<script name="JavaScript" type="text/javascript"><!--
-document.forms[0].name.focus();
-//--></script>
+<?php Html::focusField('name') ?>
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>

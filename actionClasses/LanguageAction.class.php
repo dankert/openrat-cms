@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-12-19 14:55:00  dankert
+// Revision 1.7  2004-12-25 20:50:13  dankert
+// Korrektur Sprach-Aenderung
+//
+// Revision 1.6  2004/12/19 14:55:00  dankert
 // Korrektur der Laenderlisten
 //
 // Revision 1.5  2004/12/13 22:17:51  dankert
@@ -122,9 +125,9 @@ class LanguageAction extends Action
 		}
 		else
 		{
-			$iso = 	$this->getRequestVar('isocode');
-			$this->language->iso  = $iso;
-			$this->language->name = $countryList[$iso];
+			$iso = $this->getRequestVar('isocode');
+			$this->language->isoCode = strtolower( $iso );
+			$this->language->name    = $countryList[$iso];
 			$this->language->save();
 	
 		}
@@ -149,7 +152,7 @@ class LanguageAction extends Action
 			$l = new Language( $id );
 			$l->load();
 			
-			unset( $countryList[$l->isoCode] );
+			unset( $countryList[strtoupper($l->isoCode)] );
 			
 			$list[$id] = array();
 			$list[$id]['name'] = $l->name;
