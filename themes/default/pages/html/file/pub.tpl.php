@@ -14,19 +14,13 @@
 </tr>
 
 <tr>
-<td width="50%" class="f1"><?php echo Html::checkbox('pages',true) ?>&nbsp;<?php echo lang('GLOBAL_pages') ?><br>
-                           <?php echo Html::checkbox('files',true) ?>&nbsp;<?php echo lang('GLOBAL_files') ?></td>
-<td width="50%" class="f1"><?php echo Html::checkbox('subdirs',false) ?>&nbsp;<?php echo lang('GLOBAL_PUBLISH_WITH_SUBDIRS') ?></td>
-</tr>
-
-<tr>
-  <td class="help" colspan="2"><?php echo lang('GLOBAL_MUCH_TIME') ?></td>
+  <td width="50%" class="f1">&nbsp;</td>
+  <td width="50%" class="f1">&nbsp;</td>
 </tr>
 
 <tr>
   <td class="act" colspan="2"><input type="submit"  class="submit" value="<?php echo lang('GLOBAL_PUBLISH') ?>"></td>
 </tr>
-
 
 </table>
 
