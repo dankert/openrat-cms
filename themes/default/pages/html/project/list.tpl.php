@@ -5,12 +5,13 @@
 
 <form action="<?php echo $self ?>" method="post" target="_self">
 <input type="hidden" name="<?php echo session_name() ?>" value="<?php echo session_id() ?>">
-<input type="hidden" name="projectaction" value="add">
+<input type="hidden" name="action"    value="project" />
+<input type="hidden" name="subaction" value="add"     />
 
 <table class="main" width="50%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th><?php echo lang('PROJECTS') ?></th>
+	<th><?php echo lang('PROJECTS') ?></th>
 </tr>
 
 <?php $f1=true;
