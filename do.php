@@ -20,24 +20,26 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-16 22:58:06  dankert
+// Revision 1.2  2004-04-24 15:17:19  dankert
+// div. Erweiterungen
+//
+// Revision 1.1  2004/04/16 22:58:06  dankert
 // Controller
-//
-// Revision 1.1  2004/04/03 22:55:00  dankert
-// Neuer Controller
-//
 // ---------------------------------------------------------------------------
-
-$conf = parse_ini_file( 'config.ini.php',true );
-
-require_once( $conf['directories']['incldir'].
-              '/config.inc.'.
-              $conf['global']['ext']            );
 
 session_start();
 
-require_once( "./DB.php" );
+require_once( "functions/request.inc.php" );
 
+if	( !isset( $SESS['conf'] ))
+{
+	$conf = parse_ini_file( 'config.ini.php',true );
+	$SESS['conf'] = $conf;
+}
+else $conf = $SESS['conf'];
+
+require_once( "db/db.class.php" );
+require_once( "functions/config.inc.php" );
 require_once( "serviceClasses/GlobalFunctions.class.$conf_php" );
 require_once( "serviceClasses/Html.class.$conf_php" );
 require_once( "serviceClasses/Upload.class.$conf_php" );
@@ -60,10 +62,9 @@ require_once( "objectClasses/Page.class.$conf_php" );
 require_once( "objectClasses/Language.class.$conf_php" );
 require_once( "objectClasses/Model.class.$conf_php" );
 require_once( "objectClasses/Element.class.$conf_php" );
-require_once( "$conf_incldir/language.inc.$conf_php" );
-require_once( "$conf_incldir/theme.inc.$conf_php" );
-require_once( "$conf_incldir/db.inc.$conf_php" );
-require_once( "$conf_incldir/request.inc.$conf_php" );
+require_once( "functions/language.inc.$conf_php" );
+require_once( "functions/theme.inc.$conf_php" );
+require_once( "functions/db.inc.$conf_php" );
 
 request_into_session('action');
 request_into_session('subaction');
@@ -122,6 +123,7 @@ if	( !method_exists($do,$subaction) )
 	$action->message('ERROR',"subaction $subaction not defined in class $actionClassName");
 }
 
+$do->subActionName = $subaction;
 $do->$subaction();
 
 ?>

@@ -1,9 +1,18 @@
 /* $Id$ */
 
-a:link,a:visited{color:green; font-weight:normal; text-decoration:none }
-a:active,a:hover{color:green; font-weight:bold; text-decoration:underline }
+a:link,a:visited
+{
+	color:green;
+	font-weight:normal;
+	text-decoration:none;
+}
 
-
+a:active,a:hover
+{
+	color:green;
+	font-weight:bold;
+	text-decoration:underline
+}
 
 a.el_include:link,
 a.el_include:active,
@@ -28,7 +37,6 @@ a.el_text:hover
 {
 	background-color: lime;
 }
-
 
 a.el_infodate:link,
 a.el_infodate:active,
@@ -82,7 +90,6 @@ a.el_icon:hover
 	background-color: yellow;
 }
 
-		            
 a.mainmenu:link,
 a.mainmenu:visited
 {
@@ -97,12 +104,29 @@ a.mainmenu:hover
 	color:#CCCCCC; font-weight:bold; text-decoration:underline;
 }
 
+body
+{
+	color:#000000;
+	font-family:Arial;
+	font-size:13px;
+	background-color:white;
+}
 
-body{color:#000000; font-family:Arial;font-size:13px; background-color:white;}
-body.title { margin:0px; }
+body.title
+{
+	margin:0px;
+}
 
-pre{ font-family:Courier;font-size:13px; }
-small {color:grey; }
+pre
+{
+	font-family:Courier;
+	font-size:13px;
+}
+
+small
+{
+	color:grey;
+}
 
 .mark
 {
@@ -110,11 +134,48 @@ small {color:grey; }
 	background-color:#DDFFDD;
 }
 
-th {background-color:green; color:white; font-family:Arial;font-size:13px; vertical-align:top; font-weight:bold; border-bottom:1px solid grey;}
-td {color:#000000; font-family:Arial;font-size:13px; vertical-align:top; }
+th
+{
+	background-color:green;
+	color:white;
+	font-family:Arial;
+	font-size:13px;
+	vertical-align:top;
+	font-weight:bold;
+	border-bottom:1px solid grey;
+}
 
-td.help    { color:black; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
-td.message { padding:10px; font-weight:bold; }
+td
+{
+	color:#000000;
+	font-family:Arial;font-size:13px;
+	vertical-align:top;
+}
+
+td.line
+{
+	background-color: silver;
+	border-left: 10px solid white;
+	border-right: 10px solid white;
+	color:black;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+}
+
+td.help
+{
+	color:black;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	padding-bottom:10px;
+}
+
+td.message
+{
+	padding:20px;
+	font-weight:normal;
+}
+
 td.title   { background-color:#DDFFDD; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.menu    { background-color:green;vertical-align:middle; }
 td.submenu { border-bottom:solid 1px black; background-color:#DDFFDD; }
