@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-12-19 15:25:12  dankert
+// Revision 1.3  2004-12-19 21:49:02  dankert
+// Methode pathToObject()
+//
+// Revision 1.2  2004/12/19 15:25:12  dankert
 // Anpassung Session-Funktionen
 //
 // Revision 1.1  2004/12/15 23:14:21  dankert
@@ -125,4 +128,14 @@ class Dynamic
 	{
 		return Session::get( $var );
 	}
+
+
+	function pathToObject( $obj )
+	{
+		if	( is_object($obj) )
+			return $this->page->path_to_object($obj->objectid);
+		else
+			return $this->page->path_to_object($obj);
+	}
+
 }
