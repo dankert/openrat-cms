@@ -34,6 +34,12 @@ define('DB_FETCHMODE_OBJECT' , 3);
 
 
 
+/**
+ * Grundsaetzliche Darstellung einer Datenbank-Verbindung
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.database
+ */
 class DB
 {
 	var $isError = false;
@@ -194,6 +200,13 @@ class DB
 
 
 
+
+/**
+ * Darstellung eines Datenbank-Ergebnisses
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.database
+ */
 
 class DB_result
 {

@@ -20,13 +20,21 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 17:03:28  dankert
+// Revision 1.2  2004-05-02 15:04:16  dankert
+// Einfügen package-name (@package)
+//
+// Revision 1.1  2004/04/24 17:03:28  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
 
 
-// Klasse fuer Textfunktionen
+/**
+ * Nuetzliche Funktionen fuer das Bearbeiten von Texten/Zeichenketten
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.services
+ */
 class Text
 {
 	// Einen Text auf eine maximale Laenge beschränken.

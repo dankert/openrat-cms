@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Bereitstellen von globalen Funktionen
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.services
+ */
 class GlobalFunctions
 {
 	function getIsoCodes()

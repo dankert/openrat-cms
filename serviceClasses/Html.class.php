@@ -1,6 +1,12 @@
 <?php
 
-
+/**
+ * Bereitstellen von Methoden fuer die Darstellung von HTML-Elementen
+ *
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.services
+ */
 class Html
 {
 	function selectBox( $name,$values,$default='',$params=Array() )

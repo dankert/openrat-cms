@@ -18,7 +18,13 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-
+/**
+ * Diese Klasse stellt stellt einige Eigenschaften des Projektes dar, welche fuer
+ * das Veroeffentlichen von Objekten nuetzlich sind
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.services
+ */
 class Publish
 {
 	var $ftp;

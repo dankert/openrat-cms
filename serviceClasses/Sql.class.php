@@ -19,12 +19,17 @@
 #
 
 
-// Namen der Datenbanktabellen in Variablen schreiben
-//
 
 
+/**
+ * Darstellen eines SQL-Statements incl. Methoden zum Fuellen von
+ * Platzhaltern im SQL-Befehl.
+ *
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.services
+ */
 
-// Verwalten eines SQL-Statements
 class Sql
 {
 	var $query = '';

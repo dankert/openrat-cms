@@ -19,6 +19,12 @@
 // +----------------------------------------------------------------------+
 //
 
+/**
+ * Datenbank-abhaengige Methoden fuer PostgreSQL 
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.database
+ */
 class DB_postgresql
 {
 	var $connection;

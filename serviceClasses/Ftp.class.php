@@ -18,7 +18,15 @@
 #  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-
+/**
+ * Darstellen einer FTP-Verbindung, das beinhaltet
+ * das Login, das Kopieren von Dateien sowie praktische
+ * FTP-Funktionen
+ *
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.services
+ */
 class Ftp
 {
 	var $verb;

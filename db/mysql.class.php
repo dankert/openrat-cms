@@ -19,6 +19,12 @@
 // +----------------------------------------------------------------------+
 //
 
+/**
+ * Datenbank-abhaengige Methoden fuer MySQL 
+ * @author $Author$
+ * @version $Revision$
+ * @package openrat.database
+ */
 class DB_mysql
 {
 	var $connection;
