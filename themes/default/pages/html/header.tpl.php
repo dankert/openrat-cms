@@ -26,10 +26,7 @@ function mark( id )
 	{
 		var el = top.cms_tree.document.getElementById( id );
 
-		if ((el.style)&& (el.style.backgroundColor!=null))
-		{
-			el.style.backgroundColor = "#7B9CBD";      
-    		}
+		el.className="mark";      
 	}
 }	
 function unmark( id )
@@ -38,10 +35,10 @@ function unmark( id )
 	{
 		var el = top.cms_tree.document.getElementById( id );
 
-		if ((el.style)&& (el.style.backgroundColor!=null))
-		{
-			el.style.backgroundColor = "#dad2b6";      
-    		}
+		//if ((el.style)&& (el.style.backgroundColor!=null))
+		//{
+			el.className="";      
+    		//}
 	}
 }	
 //-->
@@ -51,13 +48,39 @@ function unmark( id )
 
 </head>
 
-<body<?php if($css_body_class!="")echo ' class="'.$css_body_class.'"' ?><?php if(isset($id)) echo ' onLoad="mark('."'".$id."'".')" onUnload="unmark('."'".$id."'".')"' ?>>
+<body<?php if( isset($css_body_class) )echo ' class="'.$css_body_class.'"' ?><?php if(isset($id)) echo ' onLoad="mark('."'".$id."'".')" onUnload="unmark('."'".$id."'".')"' ?>>
 
-<?php if   ( $tree_refresh )
+<?php if   ( isset($tree_refresh) )
       { ?>
 <script name="JavaScript">
 <!--
-top.cms_tree.location.href='tree.<?php echo $conf_php ?>?refresh=1&jo=1&<?php echo session_name() ?>=<?php echo session_id() ?>';
+top.cms_tree.location.href='<?php echo Html::url(array('action'=>'tree','subaction'=>'reload',session_name()=>session_id())) ?>';
 //-->
 </script>
+<?php } ?>
+
+
+<?php if (isset($message))
+      { ?>
+<!-- $Id$ -->
+<center>
+
+<table class="main" width="60%" cellspacing="0" cellpadding="4">
+
+  <tr>
+    <th><?php echo $title ?></th>
+  </tr>
+  <tr>
+    <td class="message"><?php echo $message ?>
+    
+    <?php if ($info!='')
+             echo '<br /><br /><br /><strong>'.lang('ADDITIONAL_INFO').'</strong><pre>'.htmlentities($info).'</pre>';
+    ?>
+    </td>
+  </tr>
+
+</table>
+
+</center>
+
 <?php } ?>
