@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.28  2005-01-27 22:21:30  dankert
+// Revision 1.29  2005-01-28 23:05:39  dankert
+// Bei Aenderungen des Verzeichnis-Inhaltes den Timestamp des Verzeichnisses aktualisieren
+//
+// Revision 1.28  2005/01/27 22:21:30  dankert
 // Nach Generierung Systembefehl mit exec() ausf?hren
 //
 // Revision 1.27  2005/01/14 21:40:57  dankert
@@ -207,6 +210,7 @@ class FolderAction extends ObjectAction
 			
 			default: die();
 		}
+		$this->folder->setTimestamp();
 
 		$this->setTemplateVar('tree_refresh',true);
 		$this->callSubAction('show');
@@ -265,6 +269,7 @@ class FolderAction extends ObjectAction
 		}
 		
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
+		$this->folder->setTimestamp();
 
 		// Ordner anzeigen
 		$this->callSubAction('show');
@@ -426,6 +431,8 @@ class FolderAction extends ObjectAction
 			}
 
 		}
+
+		$this->folder->setTimestamp();
 		
 		// Ordner anzeigen
 		$this->callSubAction('show');
@@ -473,6 +480,8 @@ class FolderAction extends ObjectAction
 			unset( $o );
 		}
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
+
+		$this->folder->setTimestamp();
 		
 		// Ordner anzeigen
 		$this->callSubAction('show');
@@ -501,6 +510,7 @@ class FolderAction extends ObjectAction
 		}
 
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
+		$this->folder->setTimestamp();
 		
 		// Ordner anzeigen
 		$this->callSubAction('show');
@@ -530,6 +540,7 @@ class FolderAction extends ObjectAction
 		$o->setOrderId( $seq );
 
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
+		$this->folder->setTimestamp();
 		
 		// Ordner anzeigen
 		$this->callSubAction('show');
