@@ -18,8 +18,8 @@
       { ?>
 <tr>
   <td class="help"><?php echo lang('PAGE_ELEMENT_NAME') ?></td>
-  <td class="help"><?php echo lang('CHANGE') ?></td>
-  <td class="help"><?php echo lang('VALUE') ?></td>
+  <td class="help"><?php echo lang('GLOBAL_CHANGE') ?></td>
+  <td class="help"><?php echo lang('GLOBAL_VALUE') ?></td>
 </tr>
 
 <?php $f1=true;
@@ -66,12 +66,12 @@
       { ?>
 <tr>
 <td class="<?php echo $fx ?>&nbsp;</td>
-<td class="<?php echo $fx ?> colspan="2"><?php echo Html::checkBox('release',true,true) ?> <?php echo lang('RELEASE') ?></td>
+<td class="<?php echo $fx ?> colspan="2"><?php echo Html::checkBox('release',true,true) ?> <?php echo lang('GLOBAL_RELEASE') ?></td>
 </tr>
 <?php } ?>
 
 <tr>
-  <td class="act" colspan="4"><input type="submit" value="<?php echo lang('SAVE') ?>" class="submit" /></td>
+  <td class="act" colspan="4"><input type="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" class="submit" /></td>
 </tr>
 
 
@@ -79,7 +79,7 @@
       else
       { ?>
 <tr>
-<td colspan="4" class="f1"><strong><?php echo lang('NOT_FOUND') ?></strong></td>
+<td colspan="4" class="f1"><strong><?php echo lang('GLOBAL_NOT_FOUND') ?></strong></td>
 </tr>
 <?php } ?>
 
