@@ -98,7 +98,7 @@ class DB
 
 	function query( $query )
 	{
-
+		Logger::trace('DB query: '.substr($query,0,45));
 		$result = $this->dbh->simpleQuery($query);
 
 		return new DB_result( $this->dbh,$result );
