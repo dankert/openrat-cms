@@ -20,7 +20,9 @@
     </td>
   </tr>
   <tr>
-    <td class="submenu" height="20"><a accesskey="r" href="<?php echo $reload_url ?>" target="cms_tree"><?php echo lang('REFRESH') ?></a> | <a href="<?php echo $openall_url ?>" target="cms_tree">++</a></td>
+    <td class="submenu" height="20">&nbsp;<!--
+    <a accesskey="r" href="<?php echo $reload_url ?>" target="cms_tree"><?php echo lang('REFRESH') ?></a> | <a href="<?php echo $openall_url ?>" target="cms_tree">++</a>-->
+    </td>
   </tr>
 </table>
 
