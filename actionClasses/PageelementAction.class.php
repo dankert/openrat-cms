@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-30 20:52:11  dankert
+// Revision 1.3  2004-05-02 11:40:00  dankert
+// Freigabestatus der Seiteninhalte verarbeiten
+//
+// Revision 1.2  2004/04/30 20:52:11  dankert
 // Schalter $release setzen
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
@@ -68,6 +71,7 @@ class PageelementAction extends Action
 		$this->value->pageid     = Page::getPageIdFromObjectId( $this->getSessionVar('objectid') );
 		$this->value->element = new Element( $this->getSessionVar('elementid') );
 		$this->value->element->load();
+		$this->value->publish = false;
 
 		if	( intval($this->value->valueid)!=0 )
 			$this->value->loadWithId();
@@ -252,12 +256,33 @@ class PageelementAction extends Action
 				$date = date( lang('DATE_FORMAT'),$this->value->lastchangeTimeStamp);
 			else $date = '&nbsp;';
 
-			$list[] = array( 'value'=>Text::maxLaenge( 50,$this->value->value),
-			                 'date' =>$date,	
-			                 'user' =>User::getUserName($this->value->lastchangeUserId),
-			                 'url'  =>Html::url(array('action'   =>'pageelement',
-			                                          'subaction'=>'usevalue',
-			                                          'valueid'  =>$valueid )) );
+			if	( ! $this->value->active )
+				$useUrl = Html::url(array('action'   =>'pageelement',
+			                                            'subaction'=>'usevalue',
+			                                            'valueid'  =>$valueid ));
+			else	$useUrl = '';
+
+			if	( ! $this->value->publish && $this->value->active )
+				$releaseUrl = Html::url(array('action'   =>'pageelement',
+			                                                'subaction'=>'release',
+			                                                'valueid'  =>$valueid ));
+			else	$releaseUrl = '';
+
+			if	( $this->value->publish )
+				$public = true;
+			else $public = false;
+
+			if	( $this->value->active )
+				$active = true;
+			else $active = false;
+
+			$list[] = array( 'value'     => Text::maxLaenge( 50,$this->value->value),
+			                 'date'      => $date,	
+			                 'user'      => User::getUserName($this->value->lastchangeUserId),
+			                 'useUrl'    => $useUrl,
+			                 'public'    => $public,  
+			                 'active'    => $active,  
+			                 'releaseUrl'=> $releaseUrl );
 		}
 
 		$this->setTemplateVar('name',$this->value->element->name);

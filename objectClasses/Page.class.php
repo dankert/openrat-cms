@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-24 15:28:17  dankert
+// Revision 1.3  2004-05-02 11:40:00  dankert
+// Freigabestatus der Seiteninhalte verarbeiten
+//
+// Revision 1.2  2004/04/24 15:28:17  dankert
 // Korrektur: relative Pfad bei Listen
 //
 // Revision 1.1  2004/04/24 15:15:12  dankert
@@ -426,7 +429,6 @@ class Page extends Object
 			$filename .= '.'.$t->extension;
 		}
 
-
 		return $filename;
 	}
 
@@ -474,6 +476,7 @@ class Page extends Object
 		{
 			// neues Elementobjekt erzeugen
 			$val = new Value();
+			$val->publish = $this->public;
 			$val->element = new Element( $elementid );
 			$val->element->load();
 

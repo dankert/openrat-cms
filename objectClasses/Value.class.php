@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-04-24 18:11:28  dankert
+// Revision 1.4  2004-05-02 11:40:00  dankert
+// Freigabestatus der Seiteninhalte verarbeiten
+//
+// Revision 1.3  2004/04/24 18:11:28  dankert
 // Info-elemente
 //
 // Revision 1.2  2004/04/24 15:28:17  dankert
@@ -97,6 +100,19 @@ class Value
 	 * @type Integer
 	 */
 	var $lastchangeUserId;
+	
+	/**
+	 * Schalter, ob dieser Inhalt der aktive Inhalt ist
+	 * @type Boolean
+	 */
+	var $active;
+	
+	/**
+	 * Schalter, ob dieser Inhalt der Inhalt ist, der veroeffentlicht
+	 * werden soll
+	 * @type Boolean
+	 */
+	var $publish;
 	
 	/**
 	 * Konstruktor
@@ -393,15 +409,24 @@ class Value
 	}
 
 
+	/**
+	 * Laden des aktuellen Inhaltes aus der Datenbank
+	 */
 	function load()
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT * FROM {t_value}'.
-		                '  WHERE elementid ={elementid}'.
-		                '    AND pageid    ={pageid}'.
-		                '    AND languageid={languageid}'.
-		                '    AND active=1' );
+		if	( $this->publish )
+			$sql = new Sql( 'SELECT * FROM {t_value}'.
+			                '  WHERE elementid ={elementid}'.
+			                '    AND pageid    ={pageid}'.
+			                '    AND languageid={languageid}'.
+			                '    AND publish=1' );
+		else	$sql = new Sql( 'SELECT * FROM {t_value}'.
+			                '  WHERE elementid ={elementid}'.
+			                '    AND pageid    ={pageid}'.
+			                '    AND languageid={languageid}'.
+			                '    AND active=1' );
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
@@ -413,11 +438,17 @@ class Value
 		$this->number         = intval($row['number'      ]);
 		$this->date           = intval($row['date'        ]);
 
+		$this->active         = ( $row['active' ]=='1' );
+		$this->publish        = ( $row['publish']=='1' );
+
 		$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
 		$this->lastchangeUserId    = intval($row['lastchange_userid']);
 	}
 
 
+	/**
+	 * Laden eines bestimmten Inhaltes aus der Datenbank
+	 */
 	function loadWithId()
 	{
 		$db = db_connection();
@@ -432,6 +463,9 @@ class Value
 		$this->linkToObjectId = intval($row['linkobjectid']);
 		$this->number         = intval($row['number'      ]);
 		$this->date           = intval($row['date'        ]);
+
+		$this->active         = ( $row['active' ]=='1' );
+		$this->publish        = ( $row['publish']=='1' );
 
 		$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
 		$this->lastchangeUserId    = intval($row['lastchange_userid']);
@@ -467,16 +501,6 @@ class Value
 		global $SESS;
 		$db = db_connection();
 
-//		$sql = new Sql( 'UPDATE {t_value}'.
-//		                ' SET '.
-//		                '     linkobjectid    = {linkobjectid},'.
-//		                '     text            = {defaultText},'.
-//		                '     number          = {folderObjectId},'.
-//		                '     date            = {defaultObjectId},'.
-//		                '     active          = 1'.
-//		                '  WHERE elementid ={elementid}'.
-//		                '    AND pageid    ={pageid}'.
-//		                '    AND languageid={languageid}' );
 		$sql = new Sql( 'UPDATE {t_value}'.
 		                '  SET active=0'.
 		                '  WHERE elementid ={elementid}'.
@@ -488,12 +512,29 @@ class Value
 
 		$db->query( $sql->query );
 
+		if	( $this->publish )
+		{
+			// Wenn Inhalt sofort veroeffentlicht werden kann, dann
+			// alle anderen Inhalte auf nicht-veroeffentlichen stellen 
+			$sql = new Sql( 'UPDATE {t_value}'.
+			                '  SET publish=0'.
+			                '  WHERE elementid ={elementid}'.
+			                '    AND pageid    ={pageid}'.
+			                '    AND languageid={languageid}' );
+			$sql->setInt( 'elementid' ,$this->element->elementid );
+			$sql->setInt( 'pageid'    ,$this->pageid    );
+			$sql->setInt( 'languageid',$this->languageid);
+
+			$db->query( $sql->query );
+		}
+
+		// Naechste ID aus Datenbank besorgen
 		$sql = new Sql('SELECT MAX(id) FROM {t_value}');
 		$this->valueid = intval($db->getOne($sql->query))+1;
 
 		$sql->setQuery( 'INSERT INTO {t_value}'.
-		                '        (id,linkobjectid,text,number,date,elementid,pageid,languageid,active,lastchange_date,lastchange_userid)'.
-		                ' VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{pageid},{languageid},1,{lastchange_date},{lastchange_userid})' );
+		                '        (id,linkobjectid,text,number,date,elementid,pageid,languageid,active,publish,lastchange_date,lastchange_userid)'.
+		                ' VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{pageid},{languageid},1,{publish},{lastchange_date},{lastchange_userid})' );
 
 		$sql->setInt( 'valueid'   ,$this->valueid            );
 		$sql->setInt( 'elementid' ,$this->element->elementid );
@@ -516,8 +557,9 @@ class Value
 			$sql->setNull  ( 'date' );
 		else	$sql->setInt   ( 'date',$this->date );
 
-		$sql->setInt   ( 'lastchange_date'  ,time()  );
-		$sql->setInt   ( 'lastchange_userid',$SESS['user']['userid'] );
+		$sql->setBoolean( 'publish'          ,$this->publish          );
+		$sql->setInt    ( 'lastchange_date'  ,time()                  );
+		$sql->setInt    ( 'lastchange_userid',$SESS['user']['userid'] );
 
 		$db->query( $sql->query );
 	}
@@ -895,7 +937,7 @@ class Value
 		}
 		
 		if   ( $this->page->icons && $this->element->withIcon )
-			$inhalt = '<a href="'.Html::url(array('action'=>'pageelement','elementid'=>$this->element->elementid,'pageelementaction'=>'edit')).'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.$conf['directories']['themedir'].'/images/icon_el_'.$this->element->type.'.png" border="0" align="left"></a>'.$inhalt;
+			$inhalt = '<a href="'.Html::url(array('action'=>'pageelement','elementid'=>$this->element->elementid,'objectid'=>$this->page->objectid,'subaction'=>'edit')).'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.$conf['directories']['themedir'].'/images/icon_el_'.$this->element->type.'.png" border="0" align="left"></a>'.$inhalt;
 		
 		$this->value = $inhalt;
 	}
