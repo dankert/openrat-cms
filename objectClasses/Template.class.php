@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-09-30 20:20:54  dankert
+// Revision 1.5  2004-12-15 23:16:26  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.4  2004/09/30 20:20:54  dankert
 // Beim Speichern Sicherstellen, dass ein Name vorhanden ist
 //
 // Revision 1.3  2004/05/02 14:41:31  dankert
@@ -83,9 +86,10 @@ class Template
 	// Konstruktor
 	function Template( $templateid='' )
 	{
-		global $SESS;
-		$this->modelid   = $SESS['modelid'];
-		$this->projectid = $SESS['projectid'];
+		$model   = Session::getProjectModel();
+		$project = Session::getProject();
+		$this->modelid   = $model->modelid;
+		$this->projectid = $project->projectid;
 
 		if   ( is_numeric($templateid) )
 			$this->templateid = $templateid;

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-10 22:47:57  dankert
+// Revision 1.6  2004-12-15 23:16:58  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.5  2004/11/10 22:47:57  dankert
 // Methoden zum Lesen von Standardmodell, Standardsprache dieses Projektes
 //
 // Revision 1.4  2004/10/14 21:13:56  dankert
@@ -54,11 +57,9 @@ class Project
 	// Konstruktor
 	function Project( $projectid='' )
 	{
-		global $SESS;
-
-		if   ( intval($projectid)>0 )
+		if   ( intval($projectid)!=0 )
 			$this->projectid = $projectid;
-		else	$this->projectid = $SESS['projectid'];
+//		else	die('need projectid in constructor Project()');
 	}
 
 
