@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-12-18 00:16:26  dankert
+// Revision 1.8  2004-12-19 14:54:31  dankert
+// language() und model() korrigiert
+//
+// Revision 1.7  2004/12/18 00:16:26  dankert
 // language_read() entfernt
 //
 // Revision 1.6  2004/12/15 23:23:27  dankert
@@ -131,7 +134,7 @@ class IndexAction extends Action
 		else
 		{
 			Logger::info( "login for user $name failed" );
-			$SESS['loginmessage'] = lang('LOGIN_FAILED');
+			$SESS['loginmessage'] = lang('USER_LOGIN_FAILED');
 
 			return false;
 		}
@@ -295,14 +298,19 @@ class IndexAction extends Action
 		$project->load();
 		Session::setProject( $project );
 
-		$model = new Model( $project->getDefaultModelId() );
-		$model->load();
-		Session::setProjectModel( $model );
+		$model = Session::getProjectModel();
+		if	( !is_object($model) )
+		{
+			$model = new Model( $project->getDefaultModelId() );
+			$model->load();
+			Session::setProjectModel( $model );
+		}
 
 		$object = new Object( $project->getRootObjectId() );
 		$object->objectLoadRaw();
 		Session::setObject( $object );
 
+		$user = Session::getUser();
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
 		$this->callSubAction('show');
@@ -311,22 +319,27 @@ class IndexAction extends Action
 
 	function model()
 	{
-		$language = new Language( $languageid );
-		$language->load();
-		Session::setProjectLanguage( $language );
+		$model = new Model( $this->getRequestId() );
+		$model->load();
+		Session::setProjectModel( $model );
 
-		$project = new Project( $language->projectid );
+		$project = new Project( $model->projectid );
 		$project->load();
 		Session::setProject( $project );
 
-		$model = new Model( $project->getDefaultModelId() );
-		$model->load();
-		Session::setProjectModel( $model );
+		$language = Session::getProjectLanguage();
+		if	( !is_object($language) || $language->projectid != $project->projectid )
+		{
+			$language = new Language( $project->getDefaultLanguageId() );
+			$language->load();
+			Session::setProjectLanguage( $language );
+		}
 
 		$object = new Object( $project->getRootObjectId() );
 		$object->objectLoadRaw();
 		Session::setObject( $object );
 
+		$user = Session::getUser();
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
 		$this->callSubAction('show');
