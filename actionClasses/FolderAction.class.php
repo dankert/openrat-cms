@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.21  2004-12-27 23:24:50  dankert
+// Revision 1.22  2004-12-27 23:26:39  dankert
+// Seite vor dem Loeschen laden
+//
+// Revision 1.21  2004/12/27 23:24:50  dankert
 // Korrektur Html::url(...)
 //
 // Revision 1.20  2004/12/26 20:54:29  dankert
@@ -382,6 +385,7 @@ class FolderAction extends ObjectAction
 						
 						case 'page':
 							$p = new Page( $id );
+							$p->load();
 							$p->delete();
 							break;
 						
