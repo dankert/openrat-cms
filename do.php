@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2004-12-19 15:27:51  dankert
+// Revision 1.13  2004-12-25 20:50:54  dankert
+// Version geaendert (Konstante)
+//
+// Revision 1.12  2004/12/19 15:27:51  dankert
 // Korrektur Variablen fuer Mime-Types, Datumformate
 //
 // Revision 1.11  2004/12/18 00:34:33  dankert
@@ -61,7 +64,7 @@ define('PHP_EXT'         ,'php'    );
 define('IMG_EXT'         ,'.gif'   );
 define('MAX_FOLDER_DEPTH',5        );
 define('OR_CONFIG_DIR'   ,'config' );
-define('OR_VERSION'      ,'0.3'    );
+define('OR_VERSION'      ,'0.4'    );
 define('OR_TITLE'        ,'OpenRat');
 
 define('OR_TYPE_PAGE'  ,'page'  );
