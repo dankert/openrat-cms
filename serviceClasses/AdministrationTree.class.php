@@ -70,6 +70,7 @@ class AdministrationTree extends AbstractTree
 
 
 		// Wechseln zu: Projekte...
+		/*
 		foreach( Project::getAll() as $id=>$name )
 		{
 			$treeElement = new TreeElement();
@@ -84,6 +85,7 @@ class AdministrationTree extends AbstractTree
 
 			$this->addTreeElement( $treeElement );
 		}
+		*/
 	}
 
 
@@ -120,7 +122,7 @@ class AdministrationTree extends AbstractTree
 
 	function projects( $id )
 	{
-		// Schleife über alle Projekte
+		// Schleife ?ber alle Projekte
 		foreach( Project::getAll() as $id=>$name )
 		{
 			$treeElement = new TreeElement();
@@ -155,7 +157,17 @@ class AdministrationTree extends AbstractTree
 		                                                 'callSubaction'=>'edit',
 		                                                 'userid'       =>$id ));
 			$treeElement->icon        = 'user';
-			$treeElement->description = $u->fullname;
+			
+			$desc =  $u->fullname;
+
+			if	( $u->isAdmin )
+				$desc .= ' ('.lang('ADMIN').') ';
+			if	( $u->desc == "" )
+				$desc .= ' - '.lang('NO_DESCRIPTION_AVAILABLE');
+			else
+				$desc .= ' - '.$u->desc;
+
+			$treeElement->description = $desc;
 			$treeElement->target      = 'cms_main';
 
 			$this->addTreeElement( $treeElement );
@@ -172,13 +184,14 @@ class AdministrationTree extends AbstractTree
 			
 			$g = new Group( $id );
 			$g->load();
+
 			$treeElement->internalId  = $id;
 			$treeElement->text        = $g->name;
 			$treeElement->url         = Html::url(array('action'       =>'main',
 		                                                                 'callAction'   =>'group',
 		                                                                 'groupid'    =>$id       ));
 			$treeElement->icon        = 'group';
-	     	$treeElement->description = lang('GROUP').' '.$g->name;
+	     	$treeElement->description = lang('GROUP').' '.$g->name.': '.implode(', ',$g->getUsers());
 			$treeElement->target      = 'cms_main';
 			$treeElement->type        = 'userofgroup';
 
