@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Revision 1.4  2004-10-14 21:13:56  dankert
+// *** empty log message ***
+//
+// Revision 1.3  2004/05/02 14:41:31  dankert
+// Einf?gen package-name (@package)
 //
 // ---------------------------------------------------------------------------
 
@@ -56,14 +59,32 @@ class Project
 	}
 
 
-	// Liefert alle verfügbaren Projekte
+	// Liefert alle verf?gbaren Projekte
 	function getAll()
+	{
+		return $this->getAllProjects();
+	}
+
+
+	// Liefert alle verf?gbaren Projekte
+	function getAllProjects()
 	{
 		$db = db_connection();
 		$sql = new Sql( 'SELECT id,name FROM {t_project} '.
 		                '   ORDER BY name' );
 
 		return $db->getAssoc( $sql->query );
+	}
+
+
+	// Liefert alle verf?gbaren Projekt-Ids
+	function getAllProjectIds()
+	{
+		$db = db_connection();
+		$sql = new Sql( 'SELECT id FROM {t_project} '.
+		                '   ORDER BY name' );
+
+		return $db->getCol( $sql->query );
 	}
 
 
@@ -193,7 +214,7 @@ class Project
 		$this->projectid = intval($db->getOne($sql->query))+1;
 
 
-		// Projekt hinzufügen
+		// Projekt hinzuf?gen
 		$sql = new Sql( 'INSERT INTO {t_project} (id,name,target_dir,ftp_url,ftp_passive,cmd_after_publish,content_negotiation,cut_index) '.
 		                "  VALUES( {projectid},{name},'','',0,'',0,0 ) " );
 		$sql->setString('name'     ,$this->name );
@@ -257,7 +278,7 @@ class Project
 		}
 		
 
-		// Projekt löschen
+		// Projekt l?schen
 		$sql = new Sql( 'DELETE FROM {t_project}'.
 		                '  WHERE id= {projectid} ' );
 		$sql->setInt( 'projectid',$this->projectid );
