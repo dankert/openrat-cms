@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-12-19 15:23:06  dankert
+// Revision 1.14  2004-12-19 21:48:31  dankert
+// Links auf andere Objekte korrigiert
+//
+// Revision 1.13  2004/12/19 15:23:06  dankert
 // Aussschalten content-negotiation
 //
 // Revision 1.12  2004/12/15 23:17:53  dankert
@@ -279,11 +282,11 @@ class Page extends Object
 			switch( $object->getType() )
 			{
 				case 'file':
-					$inhalt = Html::url(array('action'=>'file','subaction'=>'show','objectid'=>$objectid));
+					$inhalt = Html::url('file','show',$objectid);
 					break;
 
 				case 'page':
-					$inhalt = Html::url(array('action'=>'page','objectid'=>$objectid));
+					$inhalt = Html::url('page','show',$objectid);
 					break;
 
 				case 'link':
@@ -298,11 +301,11 @@ class Page extends Object
 						switch( $linkedObject->getType() )
 						{
 							case 'file':
-								$inhalt = Html::url(array('action'=>'file','subaction'=>'show','objectid'=>$link->linkedObjectId));
+								$inhalt = Html::url('file','show',$link->linkedObjectId);
 							break;
 			
 							case 'page':
-								$inhalt = Html::url(array('action'=>'page','objectid'=>$link->linkedObjectId));
+								$inhalt = Html::url('page','show',$link->linkedObjectId);
 							break;
 						}
 					}
