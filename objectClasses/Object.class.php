@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-11-10 22:46:52  dankert
+// Revision 1.4  2004-11-15 21:34:44  dankert
+// Aenderung methode hasRight()
+//
+// Revision 1.3  2004/11/10 22:46:52  dankert
 // Neue Methoden checkFilename(), objectLoadRaw()
 //
 // Revision 1.2  2004/05/02 14:41:31  dankert
@@ -240,29 +243,8 @@ class Object
 	 */
 	function hasRight( $type )
 	{
-		global $SESS;
-
-		// Administratoren d?rfen alles
-		if ($SESS['user']['is_admin'] == '1')
-			return true;
-			
-		$user = new user( $SESS['user']['id'] );
-		$groups = $user->getGroupIds();
-
-		foreach( array_merge($this->getAclIds(),$this->getInheritedAclIds()) as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			
-			if	( $user->userid == $acl->userid  || 
-			       in_array( $acl->groupid,$groups ) )
-			{
-				if	( $acl->$type )
-					return true;
-			}
-		}
-
-		return false;
+		$user = Session::getUser();
+		return $user->hasRight( $this->objectid,$type );
 	}
 
 
