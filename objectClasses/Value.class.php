@@ -451,7 +451,8 @@ class Value
 				$zeile = ereg_replace( '^((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))', '<a href="\\1">\\3</a>', $zeile );
 				
 				// Einbinden von Bildern
-				$zeile = ereg_replace( '(ima?ge?):\/?\/?(([0-9]+))(\{.*\})?', '<img src="object:\\2" alt="" />', $zeile );
+				$zeile = ereg_replace( '(ima?ge?):\/?\/?(([0-9]+))(\{.*\})?', '<img src="object:\\2" class="text" alt="" />', $zeile );
+				$zeile = ereg_replace( '{([0-9]+)}'                         , '<img src="object:\\1" class="text" alt="" />', $zeile );
 		
 				# mailto:...-Links
 				$zeile = ereg_replace( '([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)', '<a href="mailto:\\1">\\1</a>', $zeile );
