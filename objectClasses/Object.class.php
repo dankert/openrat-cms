@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-11-10 22:46:52  dankert
+// Neue Methoden checkFilename(), objectLoadRaw()
+//
+// Revision 1.2  2004/05/02 14:41:31  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:15:12  dankert
 // Initiale Version
@@ -62,8 +65,8 @@ class Object
 	 */
 	var $parentid;
 
-	/** Physikalischer Dateiname des Objektes (bei Links nicht gefüllt)
-	  * <em>enthält nicht die Dateinamen-Erweiterung</em>
+	/** Physikalischer Dateiname des Objektes (bei Links nicht gef?llt)
+	  * <em>enth?lt nicht die Dateinamen-Erweiterung</em>
 	  * @type String
 	  */
 	var $filename = '';
@@ -157,7 +160,7 @@ class Object
 
 
 	/** <strong>Konstruktor</strong>
-	  * Füllen des neuen Objektes mit Init-Werten
+	  * F?llen des neuen Objektes mit Init-Werten
 	  * Es werden die Standardwerte aus der Session benutzt, um
 	  * Sprach-ID, Projektmodell-Id und Projekt-ID zu setzen
 	  *
@@ -170,7 +173,7 @@ class Object
 		if (is_numeric($objectid))
 		{
 			$this->objectid = $objectid;
-			$this->id = $objectid;
+			$this->id       = $objectid;
 		}
 
 		if	( isset($SESS['languageid']) )
@@ -224,7 +227,7 @@ class Object
 	}
 
 	/**
-	 * Prüfen einer Berechtigung zu diesem Objekt
+	 * Pr?fen einer Berechtigung zu diesem Objekt
 	 */
 	function checkRight( $type )
 	{
@@ -233,13 +236,13 @@ class Object
 
 
 	/**
-	 * Prüfen einer Berechtigung zu diesem Objekt
+	 * Pr?fen einer Berechtigung zu diesem Objekt
 	 */
 	function hasRight( $type )
 	{
 		global $SESS;
 
-		// Administratoren dürfen alles
+		// Administratoren d?rfen alles
 		if ($SESS['user']['is_admin'] == '1')
 			return true;
 			
@@ -336,8 +339,8 @@ class Object
 	/**
 	 * Lesen der Eigenschaften aus der Datenbank
 	 * Es werden
-	 * - die sprachunabhängigen Daten wie Dateiname, Typ sowie Erstellungs- und Änderungsdatum geladen 
-	 * - die sprachabhängigen Daten wie Name und Beschreibung geladen
+	 * - die sprachunabh?ngigen Daten wie Dateiname, Typ sowie Erstellungs- und ?nderungsdatum geladen 
+	 * - die sprachabh?ngigen Daten wie Name und Beschreibung geladen
 	 */
 	function objectLoad()
 	{
@@ -358,14 +361,6 @@ class Object
 			$this->isRoot = true;
 		else	$this->isroot = false;
 
-		$this->filename = trim(strtolower($row['filename']));
-
-		// Dateiname muss gueltig sein,
-		// ungueltige Zeichen werden entfernt
-		$gueltig = 'abcdefghijklmnopqrstuvwxyz0123456789-_.';
-		$tmp = strtr($this->filename, $gueltig, str_repeat('#', strlen($gueltig)));
-		$this->filename = strtr($this->filename, $tmp, str_repeat('_', strlen($tmp)));
-
 		// Falls leer, id<objectnr> als Dateinamen verwenden
 		if ($this->filename == '')
 			$this->filename = $this->objectid;
@@ -375,24 +370,12 @@ class Object
 		$this->lastchange_date   = $row['lastchange_date'];
 		$this->lastchange_userid = $row['lastchange_userid'];
 
-		$this->isFolder = false;
-		$this->isFile   = false;
-		$this->isPage   = false;
-		$this->isLink   = false;
-
 		$this->projectid = $row['projectid'];
 
-		if ($row['is_folder'] == '1')
-			$this->isFolder = true;
-
-		if ($row['is_file'] == '1')
-			$this->isFile = true;
-
-		if ($row['is_page'] == '1')
-			$this->isPage = true;
-
-		if ($row['is_link'] == '1')
-			$this->isLink = true;
+		$this->isFolder = ( $row['is_folder'] == '1' );
+		$this->isFile   = ( $row['is_file'  ] == '1' );
+		$this->isPage   = ( $row['is_page'  ] == '1' );
+		$this->isLink   = ( $row['is_link'  ] == '1' );
 
 		if	( $this->isRoot )
 		{
@@ -411,6 +394,47 @@ class Object
 		// Falls leer, id<objectnr> als Dateinamen verwenden
 		if ($this->name == '')
 			$this->name = $this->filename;
+	}
+
+
+	/**
+	 * Lesen der Eigenschaften aus der Datenbank
+	 * Es werden
+	 * - die sprachunabhaengigen Daten wie Dateiname, Typ sowie Erstellungs- und Aenderungsdatum geladen 
+	 */
+	function objectLoadRaw()
+	{
+		global $SESS;
+		$db = db_connection();
+
+		$sql = new Sql('SELECT * FROM {t_object}'.
+                       ' WHERE {t_object}.id={objectid}');
+		$sql->setInt('objectid'  , $this->objectid  );
+		$row = $db->getRow($sql->query);
+
+		if (count($row) == 0)
+			die('fatal: objectid not found: '.$this->objectid);
+
+		$this->parentid = $row['parentid'];
+		
+		if	( intval($this->parentid) == 0 )
+			$this->isRoot = true;
+		else
+			$this->isRoot = false;
+
+		$this->checkFilename();
+
+		$this->create_date       = $row['create_date'];
+		$this->create_userid     = $row['create_userid'];
+		$this->lastchange_date   = $row['lastchange_date'];
+		$this->lastchange_userid = $row['lastchange_userid'];
+
+		$this->projectid = $row['projectid'];
+
+		$this->isFolder = ( $row['is_folder'] == '1' );
+		$this->isFile   = ( $row['is_file'  ] == '1' );
+		$this->isPage   = ( $row['is_page'  ] == '1' );
+		$this->isLink   = ( $row['is_link'  ] == '1' );
 	}
 
 
@@ -464,6 +488,8 @@ class Object
 	{
 		global $SESS;
 		$db = db_connection();
+
+		$this->checkFilename();
 
 		$sql = new Sql('UPDATE {t_object} SET '.
 		               '  parentid={parentid},'.
@@ -557,12 +583,12 @@ class Object
 		$db->query( $sql->query );
 
 
-		// Objekt-Namen löschen
+		// Objekt-Namen l?schen
 		$sql = new Sql('DELETE FROM {t_name} WHERE objectid={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$db->query($sql->query);
 
-		// Objekt löschen
+		// Objekt l?schen
 		$sql = new Sql('DELETE FROM {t_object} WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$db->query($sql->query);
@@ -583,22 +609,7 @@ class Object
 		$sql = new Sql('SELECT MAX(id) FROM {t_object}');
 		$this->objectid = intval($db->getOne($sql->query))+1;
 
-		if	( $this->filename == '' )
-			$this->filename = $this->objectid;
-
-		$sql = new Sql('SELECT COUNT(*) FROM {t_object}'.'  WHERE parentid={parentid} AND filename={filename}');
-		$sql->setString('filename', $this->filename);
-
-		if	( $this->isRoot )
-			$sql->setNull('parentid');
-		else	$sql->setInt ('parentid',$this->parentid );
-
-		// Falls Objekt mit diesem Dateinamen bereits existiert, dann Dateinamen aendern
-		if ($db->getOne($sql->query) > 0)
-		{
-			$this->filename .= md5(microtime());
-		}
-
+		$this->checkFilename();
 		$sql = new Sql('INSERT INTO {t_object}'.
 		               ' (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,is_folder,is_file,is_page,is_link)'.
 		               ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{userid},{time},{userid},{is_folder},{is_file},{is_page},{is_link} )');
@@ -622,6 +633,34 @@ class Object
 		$db->query($sql->query);
 
 		$this->objectSaveName();
+	}
+
+
+	function checkFilename()
+	{
+		if	( $this->filename == '' )
+			$this->filename = $this->objectid;
+
+		$this->filename = trim(strtolower($this->filename));
+
+		// Dateiname muss gueltig sein,
+		// ungueltige Zeichen werden entfernt
+		$gueltig = 'abcdefghijklmnopqrstuvwxyz0123456789-_.';
+		$tmp = strtr($this->filename, $gueltig, str_repeat('#', strlen($gueltig)));
+		$this->filename = strtr($this->filename, $tmp, str_repeat('x', strlen($tmp)));
+
+		if	( $this->isRoot )
+			return;
+
+		$pf = new Folder( $this->parentid );
+		
+		if	( $pf->hasFilename( $this->filename ) )
+		{
+			$this->filename = $this->objectid;
+
+			if	( $pf->hasFilename( $this->filename ) )
+				$this->filename = md5(microtime());
+		}
 	}
 
 
@@ -760,10 +799,10 @@ class Object
 
 
 	/**
-	 * Übergeordnete Objekt-ID dieses Objektes neu speichern
+	 * ?bergeordnete Objekt-ID dieses Objektes neu speichern
 	 * die Nr. wird sofort in der Datenbank gespeichert.
 	 *
-	 * @param Integer Übergeordnete Objekt-ID
+	 * @param Integer ?bergeordnete Objekt-ID
 	 */
 	function setParentId( $parentid )
 	{
@@ -877,7 +916,7 @@ class Object
 
 	/**
 	  * Es werden Objekte mit einer UserId ermittelt
-	  * @param Integer Benutzer-Id der letzten Änderung
+	  * @param Integer Benutzer-Id der letzten ?nderung
 	  * @return Array Liste der gefundenen Objekt-IDs
 	  */
 	function getObjectIdsByLastChangeUserId( $userid )
@@ -895,7 +934,7 @@ class Object
 
 
 	/**
-	  * Gibt true zurück, wenn die angegebene Objekt-ID existiert
+	  * Gibt true zur?ck, wenn die angegebene Objekt-ID existiert
 	  * @param Integer Objekt-ID
 	  * @return Boolean
 	  */
