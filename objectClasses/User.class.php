@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-10 22:48:25  dankert
+// Revision 1.6  2004-11-15 21:35:39  dankert
+// Berechtigungen mit Bitmasken
+//
+// Revision 1.5  2004/11/10 22:48:25  dankert
 // Neue Methoden zum Einlesen der Berechtigungen
 //
 // Revision 1.4  2004/10/14 21:12:59  dankert
@@ -123,7 +126,10 @@ class User
 
 
 
-	// Prueft, ob der Benutzer fuer ein Projekt berechtigt ist
+	/**
+	 * Lesen aller Projekte, fuer die der Benutzer berechtigt ist.
+	 *
+	 */
 	function getReadableProjects()
 	{
 		$db = db_connection();
@@ -551,32 +557,31 @@ class User
 		Logger::debug( 'sql='.$sql->query );
 		foreach( $db->getAll( $sql->query ) as $row )
 		{
-			Logger::debug( 'aclid '.$row['id'] );
-			$objectid = $row['objectid'];
+			Logger::debug( 'lese aclid '.$row['id'] );
 			
 			$acl = new Acl();
 			$acl->setDatabaseRow( $row );
-			foreach( $acl->getTrueProperties() as $type )
-				$this->addRight($objectid,$type);
+
+			$this->addRight($acl->objectid,$acl->getMask() );
+
+			$o = new Object( $acl->objectid );
+			$o->objectLoadRaw();
 
 			// Vererben der Berechtigung an Unterordner
 			if	( $acl->transmit )
 			{
-				$f = new Folder( $o->parentid );
-				foreach( $f->getAllSubfolderIds as $sfid )
-					foreach( $acl->getTrueProperties() as $type )
-						$this->addRight($sfid,$type);
+				$f = new Folder( $o->objectid );
+				foreach( $f->getAllSubfolderIds() as $sfid )
+					$this->addRight($sfid,$acl->getMask() );
 			}
 
 			// Uebergeordneten Ordnern das Leserecht geben
-			$o = new Object( $objectid );
-			$o->objectLoadRaw();
 			if	( !$o->isRoot )
 			{
 				$f = new Folder( $o->parentid );
 				$oids = $f->parentObjectIds( true, true );
 				foreach( $oids as $oid )
-					$this->addRight($oid,'read');
+					$this->addRight($oid,ACL_READ);
 			}
 		}
 	}
@@ -646,99 +651,37 @@ class User
 	}
 
 
-	// Berechtigung dem Benutzer hinzufuegen
+	/**
+	 * Ueberpruft, ob der Benutzer ein bestimmtes Recht hat
+	 *
+	 * @param objectid Objekt-Id zu dem Objekt, dessen Rechte untersucht werden sollen
+	 * @param type Typ des Rechts (Lesen,Schreiben,...)
+	 */ 
+	function hasRight( $objectid,$type )
+	{
+		if	( $this->isAdmin )
+			return true;
+			
+		if	( !isset($this->rights[$objectid]) )
+			return false;
+
+		return $this->rights[$objectid] & $type;
+	}
+
+
+	/**
+	 * Berechtigung dem Benutzer hinzufuegen
+	 * @param objectid Objekt-Id, zu dem eine Berechtigung hinzugefuegt werden soll
+	 * @param Art des Rechtes, welches hinzugefuegt werden soll
+	 */
 	function addRight( $objectid,$type )
 	{
 		if	( !isset($this->rights[$objectid]) )
-			$this->rights[$objectid] = array();
+			$this->rights[$objectid] = 0;
+
+		$this->rights[$objectid] = $this->rights[$objectid] | $type;
 			
-		$this->rights[$objectid][$type] = true;
 		Logger::trace( 'Objekt '.$objectid.' erhaelt Recht '.$type );
-//		global $REQ,$SESS;
-//		$db = db_connection();
-//		
-//		$sql = new SQL('INSERT INTO {t_acl} '.
-//		               '(userid,groupid,folderid,`read`,`write`,`create`,`delete`,publish) '.
-//		               'VALUES({userid},{groupid},{folderid},{read},{write},{create},{delete},{publish})');
-//		               
-//		$sql->setInt ('userid',$this->userid);
-//		$sql->setNull('groupid');
-//		$sql->setInt ('projectid',$SESS['projectid']);
-//		$sql->setInt ('folderid',$data['folderid']);
-//
-//		$sql->setInt ('read'   ,$data['read'   ]);
-//		$sql->setInt ('write'  ,$data['write'  ]);
-//		$sql->setInt ('create' ,$data['create' ]);
-//		$sql->setInt ('delete' ,$data['delete' ]);
-//		$sql->setInt ('publish',$data['publish']);
-//	
-//		// Datenbankabfrage ausf?hren
-//		$db->query( $sql->query );
-	}
-	
-	
-	/**
-	  * Benutzer erh?lt eine Berechtigung
-	  *
-	  * @param Integer ID der hinzuzuf?genden ACL
-	  * @access public
-	 */
-	function addACL( $aclid )
-	{
-		global $SESS;
-
-		$acl = new Acl( $aclid );
-		$acl->load();
-		
-		// Falls Berechtigung f?r dieses Objekt nicht vorhanden, dann anlegen
-		if	( !isset($SESS['rights'][$acl->objectid]) )
-			$SESS['rights'][$acl->objectid] = Array( 'read'         =>true,
-			                                         'prop'         =>false,		
-			                                         'write'        =>false,		
-			                                         'delete'       =>false,		
-			                                         'publish'      =>false,		
-			                                         'create_folder'=>false,		
-			                                         'create_file'  =>false,		
-			                                         'create_link'  =>false,		
-			                                         'create_page'  =>false );		
-
-		// Hinzuf?gen der Flags
-		if	( $acl->prop )
-			$SESS['rights'][$acl->objectid]['prop'   ] = true;		
-
-		if	( $acl->write )
-			$SESS['rights'][$acl->objectid]['write'  ] = true;		
-
-		if	( $acl->delete )
-			$SESS['rights'][$acl->objectid]['delete' ] = true;		
-
-		if	( $acl->publish )
-			$SESS['rights'][$acl->objectid]['publish'] = true;		
-
-		if	( $acl->create_folder )
-			$SESS['rights'][$acl->objectid]['create_folder' ] = true;		
-
-		if	( $acl->create_file )
-			$SESS['rights'][$acl->objectid]['create_file' ] = true;		
-
-		if	( $acl->create_link )
-			$SESS['rights'][$acl->objectid]['create_link' ] = true;		
-
-		if	( $acl->create_page )
-			$SESS['rights'][$acl->objectid]['create_page' ] = true;		
-	}
-
-
-	// Berechtigung entfernen
-	function delRight( $aclid )
-	{
-		$db = db_connection();
-
-		$sql = new SQL('DELETE FROM {t_acl} WHERE id={aclid}');
-		$sql->setInt( 'aclid',$aclid );
-	
-		// Datenbankabfrage ausf?hren
-		$db->query( $sql->query );
 	}
 }
 
