@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2005-01-14 21:41:23  dankert
+// Revision 1.17  2005-01-23 11:13:54  dankert
+// Schalter "nologin" beruecksichtigen
+//
+// Revision 1.16  2005/01/14 21:41:23  dankert
 // Aufruf von lastModified() fuer Conditional-GET
 //
 // Revision 1.15  2005/01/04 21:42:09  dankert
@@ -194,7 +197,7 @@ class IndexAction extends Action
 		$this->setTemplateVar('logo_url',$conf['login'   ]['logo_url']);
 		$this->setTemplateVar('motd'    ,$conf['login'   ]['motd'    ]);
 		$this->setTemplateVar('readonly',$conf['security']['readonly']);
-
+		$this->setTemplateVar('nologin' ,$conf['login'   ]['nologin' ]);
 		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
 		$this->setSessionVar('loginmessage','');
 
@@ -228,13 +231,13 @@ class IndexAction extends Action
 
 	function login()
 	{
-		global $SESS;
 		global $conf;
-		# Ein Benutzer versucht sich anzumelden
-		#
+
 		$this->checkForDb();
-		unset( $SESS['user'] );
 		Session::setUser('');
+		
+		if	( $conf['login']['nologin'] )
+			die('login disabled');
 
 		$this->checkLogin( $this->getRequestVar('login_name'    ),
 		                   $this->getRequestVar('login_password')  );
