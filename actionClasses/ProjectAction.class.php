@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-10 22:40:14  dankert
+// Revision 1.5  2004-12-15 23:25:32  dankert
+// Anpassung an Session-Funktionen
+//
+// Revision 1.4  2004/11/10 22:40:14  dankert
 // Neue Funktion zur Projektauswahl nach dem Login
 //
 // Revision 1.3  2004/05/19 21:12:49  dankert
@@ -49,9 +52,9 @@ class ProjectAction extends Action
 
 	function ProjectAction()
 	{
-		if	( intval($this->getSessionVar('projectid'))!=0 )
+		if	( $this->getRequestId()!=0 )
 		{
-			$this->project = new Project( $this->getSessionVar('projectid') );
+			$this->project = new Project( $this->getRequestId() );
 			$this->project->load();
 		}
 	}
@@ -105,7 +108,7 @@ class ProjectAction extends Action
 		foreach( $this->project->getAll() as $id=>$name )
 		{
 			$list[$id]         = array();
-			$list[$id]['url' ] = Html::url(array('action'=>'main','callAction'=>'project','callSubaction'=>'edit','projectid'=>$id));
+			$list[$id]['url' ] = Html::url('main','project',$id);
 			$list[$id]['name'] = $name;
 		}
 		$this->setTemplateVar('el',$list);
@@ -129,7 +132,7 @@ class ProjectAction extends Action
 		foreach( $projects as $id=>$name )
 		{
 			$list[$id]         = array();
-			$list[$id]['url' ] = Html::url(array('action'=>'index','subaction'=>'show','projectid'=>$id));
+			$list[$id]['url' ] = Html::url('index','project',$id);
 			$list[$id]['name'] = $name;
 		}
 		$this->setTemplateVar('el',$list);
