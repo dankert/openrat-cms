@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-12-25 20:50:54  dankert
+// Revision 1.14  2004-12-26 21:56:31  dankert
+// Startzeit merken, Time-Limit setzen
+//
+// Revision 1.13  2004/12/25 20:50:54  dankert
 // Version geaendert (Konstante)
 //
 // Revision 1.12  2004/12/19 15:27:51  dankert
@@ -80,6 +83,7 @@ define('OR_DBCLASSES_DIR'     ,'./db/'             );
 define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/' );
 define('OR_THEMES_DIR'        ,'./themes/'         );
 define('OR_TMP_DIR'           ,'./tmp/'            );
+define('START_TIME'           ,time()              );
 
 require_once( OR_SERVICECLASSES_DIR."GlobalFunctions.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Http.class.".PHP_EXT );
@@ -201,6 +205,8 @@ if	( !is_array( $conf ) )
 	Session::setConfig( $conf );
 }
 
+if	( !empty($conf['interface']['timeout']) )
+	set_time_limit( intval($conf['interface']['timeout']) );
 
 define('FILE_SEP',$conf['interface']['file_separator']);
 
