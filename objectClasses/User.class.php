@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-12-19 19:24:27  dankert
+// Revision 1.10  2004-12-20 23:19:41  dankert
+// Neue Methode getAllUsers()
+//
+// Revision 1.9  2004/12/19 19:24:27  dankert
 // getAvailableStyles()
 //
 // Revision 1.8  2004/11/28 22:32:33  dankert
@@ -89,6 +92,36 @@ class User
 		                '  ORDER BY name' );
 
 		return $db->getAssoc( $sql->query );
+	}
+
+
+	// Lesen Benutzer aus der Datenbank
+	function getAllUsers()
+	{
+		$list = array();
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT id,name,fullname,is_admin,mail,descr '.
+		                '  FROM {t_user}'.
+		                '  ORDER BY name' );
+
+		foreach( $db->getAll( $sql->query ) as $row )
+		{
+			$user = new User();
+			$user->userid   = $row['id'      ];
+			$user->name     = $row['name'    ];
+			$user->isAdmin  = $row['is_admin'];
+			$user->fullname = $row['fullname'];
+			$user->mail     = $row['mail'    ];
+			$user->desc     = $row['descr'   ];
+
+			if	( $user->fullname == '' )
+				$user->fullname = $user->name;
+
+			$list[] = $user;
+		}
+		
+		return $list;
 	}
 
 
@@ -211,7 +244,7 @@ class User
 		{
 			$this->name     = $row['name'    ];
 			$this->style    = $row['style'   ];
-			$this->isAdmin  = $row['is_admin'];
+			$this->isAdmin  = ( $row['is_admin'] == '1');
 			$this->ldap_dn  = $row['ldap_dn' ];
 			$this->fullname = $row['fullname'];
 			$this->tel      = $row['tel'     ];
