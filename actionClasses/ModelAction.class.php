@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-12-13 22:17:51  dankert
+// Revision 1.5  2004-12-19 14:55:27  dankert
+// Anpassung von urls
+//
+// Revision 1.4  2004/12/13 22:17:51  dankert
 // URL-Korrektur
 //
 // Revision 1.3  2004/05/07 21:37:31  dankert
@@ -49,24 +52,24 @@ class ModelAction extends Action
 
 	function ModelAction()
 	{
-		$this->model = new Model();
-		
-		if	( intval($this->getSessionVar('modelid')) != 0 )
+		if	( $this->getRequestId() != 0 )
 		{
-			$this->model->modelid = $this->getSessionVar('modelid');
+			$this->model = new Model( $this->getRequestId() );
 			$this->model->load();
 		}
+		
+		$this->project = Session::getProject();
 	}
 
 
 	function add()
 	{
 		$model = new Model();
-		$model->add( $this->getRequestVar('name') );
+		$model->projectid = $this->project->projectid;
+		$model->name      = $this->getRequestVar('name');
+		$model->add();
 	
-		$this->setTemplateVar('tree_refresh',true);
-		
-		$this->callSubAction('edit');
+		$this->callSubAction('listing');
 	}
 
 
@@ -107,22 +110,15 @@ class ModelAction extends Action
 	}
 
 
-	function select()
-	{
-		$this->setSessionVar('projectmodelid',$this->getRequestVar('projectmodelid'));
-
-		$this->callSubAction('listing');
-	}
-
-
 	function listing()
 	{
 		global $conf_php;
+		$actModel = Session::getProjectModel();
 
-		$var['act_modelid'] = $this->getSessionVar('modelid');
+//		$var['act_modelid'] = $this->getSessionVar('modelid');
 	
 		$list = array();
-		foreach( $this->model->getAll() as $id=>$name )
+		foreach( $this->project->getModelIds() as $id )
 		{
 			$m = new Model( $id );
 			$m->load();
@@ -130,13 +126,13 @@ class ModelAction extends Action
 			$list[$id]['name'] = $m->name;
 			
 			if	( $this->userIsAdmin() )
-				$list[$id]['url' ] = Html::url(array('action'=>'model','subaction'=>'edit','modelid'=>$id));
+				$list[$id]['url' ] = Html::url('model','edit',$id);
 
 			if	( ! $m->isDefault && $this->userIsAdmin() )
-				$list[$id]['default_url'] = Html::url(array('action'=>'model','subaction'=>'setdefault','modelid'=>$id));
+				$list[$id]['default_url'] = Html::url('model','setdefault',$id);
 
-			if	( $this->getSessionVar('modelid') != $m->modelid )
-				$list[$id]['select_url' ] = Html::url(array('action'=>'model','subaction'=>'select' ,'modelid'=>$id));
+			if	( $actModel->modelid != $m->modelid )
+				$list[$id]['select_url' ] = Html::url('index','model',$id);
 		}
 		$this->setTemplateVar( 'el',$list );
 		$this->setTemplateVar( 'add',$this->userIsAdmin() );
