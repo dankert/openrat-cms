@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2004-11-10 22:39:24  dankert
+// Revision 1.13  2004-11-27 09:55:54  dankert
+// Rechte-Funktionen entfernt, Anzahl Versionen in Elementliste
+//
+// Revision 1.12  2004/11/10 22:39:24  dankert
 // Entfernen der Methode move()
 //
 // Revision 1.11  2004/10/13 22:12:57  dankert
@@ -65,7 +68,7 @@
  * @package openrat.actions
  */
 
-class PageAction extends Action
+class PageAction extends ObjectAction
 {
 	var $page;
 	var $defaultSubAction = 'show';
@@ -78,22 +81,6 @@ class PageAction extends Action
 		else	$this->page = new Page( $this->getSessionVar('objectid') );
 
 		$this->page->load();
-	}
-
-
-	function addACL()
-	{
-		$this->objectAddACL();
-
-		$this->callSubAction('rights');
-	}
-
-
-	function delACL()
-	{
-		$this->objectDelACL();
-
-		$this->callSubAction('rights');
 	}
 
 
@@ -354,11 +341,13 @@ class PageAction extends Action
 	
 				$u = new User( $value->lastchangeUserId );
 				$u->load();
-				$list[$id]['username'    ] = $u->name;
-				$list[$id]['userfullname'] = $u->fullname;
-				$list[$id]['date'        ] = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
-				$list[$id]['archive_url' ] = Html::url(array('action'=>'pageelement','elementid'=>$id,'subaction'=>'archive'));
-				$list[$id]['url'         ] = Html::url(array('action'=>'pageelement','elementid'=>$id,'subaction'=>'edit'   ));
+				$list[$id]['username'     ] = $u->name;
+				$list[$id]['userfullname' ] = $u->fullname;
+
+				$list[$id]['date'         ] = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
+				$list[$id]['archive_count'] = $value->getCountVersions();
+				$list[$id]['archive_url'  ] = Html::url(array('action'=>'pageelement','elementid'=>$id,'subaction'=>'archive'));
+				$list[$id]['url'          ] = Html::url(array('action'=>'pageelement','elementid'=>$id,'subaction'=>'edit'   ));
 				
 				// Maximal 50 Stellen des Inhaltes anzeigen
 				$list[$id]['value'] = Text::maxLaenge( 50,$value->value );
@@ -566,44 +555,6 @@ class PageAction extends Action
 		$this->setTemplateVar('filenames',$list);
 
 		$this->forward('publish');
-	}
-
-
-	function rights()
-	{
-		global $SESS;
-		global $conf_php;
-		if   ($SESS['user']['is_admin'] != '1') die('nice try');
-
-		$acllist = array();	
-		foreach( $this->page->getAllInheritedAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-		}
-
-		foreach( $this->page->getAllAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-			$acllist[$key]['delete_url'] = Html::url(array('subaction'=>'delACL','aclid'=>$aclid));
-		}
-		ksort( $acllist );
-
-		$this->setTemplateVar('acls',$acllist );
-
-		$this->setTemplateVar('users'    ,User::listAll()   );
-		$this->setTemplateVar('groups'   ,Group::getAll()   );
-
-		$languages = Language::getAll();
-		$languages[0] = lang('ALL_LANGUAGES');
-		$this->setTemplateVar('languages',$languages);
-
-		$this->forward('page_rights');
 	}
 }
 
