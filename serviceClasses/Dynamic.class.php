@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-12-19 21:49:02  dankert
+// Revision 1.4  2005-01-03 19:38:03  dankert
+// Neue Methode outputLn
+//
+// Revision 1.3  2004/12/19 21:49:02  dankert
 // Methode pathToObject()
 //
 // Revision 1.2  2004/12/19 15:25:12  dankert
@@ -110,6 +113,11 @@ class Dynamic
 	function output( $text )
 	{
 		$this->output .= $text;
+	}
+
+	function outputLn( $text )
+	{
+		$this->output .= $text."\n";
 	}
 
 
