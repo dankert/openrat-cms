@@ -946,9 +946,15 @@ class Value
 			case 'date':
 
 				$date = $this->date;
-				if   ( intval($date) == 0 )
-					$date = time();
 
+				if   ( intval($date) == 0 )
+				{
+					// Datum wurde noch nicht eingegeben
+					$date = $this->element->defaultText;
+					break;
+				}
+
+				// Datum gemaess Elementeinstellung formatieren
 				$inhalt = date( $this->element->dateformat,$date );
 				
 				break;
