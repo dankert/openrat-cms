@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-12-15 23:22:37  dankert
+// Revision 1.7  2004-12-19 14:53:11  dankert
+// Verwenden von getRequestId()
+//
+// Revision 1.6  2004/12/15 23:22:37  dankert
 // *** empty log message ***
 //
 // Revision 1.5  2004/10/06 09:54:43  dankert
@@ -56,10 +59,20 @@ class ElementAction extends Action
 	 */
 	function ElementAction()
 	{
-		$this->element = new Element( $this->getSessionVar('elementid') );
+		if	( $this->getRequestId() == 0 )
+			die('no template-id available');
+
+		if	( $this->getRequestVar('elementid') == 0 )
+			die('no element-id available');
+
+		$this->template = new Template( $this->getRequestId() );
+		$this->template->load();
+
+		$this->element = new Element( $this->getRequestVar('elementid') );
 		$this->element->load();
-		
-		$this->setSessionVar('templateid',$this->element->templateid);
+
+		$this->setTemplateVar( 'templateid',$this->template->templateid );
+		$this->setTemplateVar( 'elementid' ,$this->element->elementid   );
 	}
 
 
@@ -68,6 +81,7 @@ class ElementAction extends Action
 	 */
 	function changetype()
 	{
+		// Neuen Typ setzen und speichern
 		$this->element->setType( $this->getRequestVar('type') );
 		$this->element->load();
 	
@@ -80,6 +94,8 @@ class ElementAction extends Action
 	 */
 	function edit()
 	{
+		global $conf;
+
 		// Name und Beschreibung
 		$this->setTemplateVar('name',$this->element->name);
 		$this->setTemplateVar('desc',$this->element->desc);
@@ -203,7 +219,7 @@ class ElementAction extends Action
 	
 				case 'dateformat':
 
-					$ini_date_format = parse_ini_file( CONF_LANGUAGEDIR.'/dateformat.ini.'.CONF_PHP );
+					$ini_date_format = $conf['date_formats'];
 					$dateformat = array();
 
 					$this->setTemplateVar('act_dateformat','');
@@ -256,8 +272,10 @@ class ElementAction extends Action
 							$this->setTemplateVar('select_items',$this->element->code );
 							break;
 						case 'dynamic':
+
 							$className = $this->element->subtype;
-							$fileName  = './dynamicClasses/'.$className.'.class.php';
+							$fileName  = OR_DYNAMICCLASSES_DIR.'/'.$className.'.class.'.PHP_EXT;
+
 							if	( is_file( $fileName ) )
 							{
 								require( $fileName );
@@ -266,36 +284,33 @@ class ElementAction extends Action
 								{
 									$dynEl = new $className;
 
-									if	( method_exists( $dynEl,'execute' ) )
+									$desc = array();
+									$desc['description'] = $dynEl->description;
+									$desc['parameters' ] = array();
+
+									$old = $this->element->getDynamicParameters();
+									$parameters = '';
+
+									foreach( $dynEl->parameters as $paramName=>$paramDesc )
 									{
-										if	( isset( $dynEl->description ) )
-											$this->setTemplateVar('dynamic_class_description',$dynEl->description );
-										else
-											$this->setTemplateVar('dynamic_class_description',lang('NO_DESCRIPTION_AVAILABLE' ) );
-	
-										if	( isset( $dynEl->parameters ) )
-											$this->setTemplateVar('dynamic_class_parameters',$dynEl->parameters );
-										else
-											$this->setTemplateVar('dynamic_class_parameters',Array() );
+										if	( isset( $dynEl->$paramName ) )
+										{
+											$desc['parameters'][$paramName] = array();
+											$desc['parameters'][$paramName]['description'] = $paramDesc;
+											$desc['parameters'][$paramName]['default'    ] = $dynEl->$paramName;
+
+											$parameters .= $paramName.':';
+											if	( !empty($old[$paramName]) )
+												$parameters .= $old[$paramName];
+											$parameters .= "\n";
+										}
 									}
-									else
-									{
-										$this->setTemplateVar('dynamic_class_description',"WARNING: Class $className has no execute()-Method" );
-										$this->setTemplateVar('dynamic_class_parameters',Array() );
-									}
-								}
-								else
-								{
-									$this->setTemplateVar('dynamic_class_description',"WARNING: Class $className not found" );
-									$this->setTemplateVar('dynamic_class_parameters' ,Array() );
+									
+									$this->setTemplateVar('dynamic_class_description',$desc );
+									$this->setTemplateVar('parameters',htmlentities($parameters) );
 								}
 							}
-							else
-							{
-									$this->setTemplateVar('dynamic_class_description',"WARNING: File $fileName not found" );
-									$this->setTemplateVar('dynamic_class_parameters' ,Array() );
-							}
-							$this->setTemplateVar('parameters',$this->element->code );
+							
 							break;
 
 						case 'code':
