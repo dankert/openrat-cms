@@ -69,6 +69,8 @@
 
 
 <!-- Vorlage tauschen -->
+<?php if (count($templates)>0) // Nur anzeigen, wenn es Vorlagen zu tauschen gibt
+      { ?>
 <form action="<?php echo $self ?>" method="post" target="_self">
 
 <input type="hidden" name="action"    value="page" />
@@ -92,6 +94,7 @@
 </table>
 
 </form>
+<?php } ?>
 
 
 <!-- Verschieben -->
