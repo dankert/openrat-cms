@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-12-20 23:19:41  dankert
+// Revision 1.11  2004-12-20 23:29:51  dankert
+// neue Methode setDatabaseRow()
+//
+// Revision 1.10  2004/12/20 23:19:41  dankert
 // Neue Methode getAllUsers()
 //
 // Revision 1.9  2004/12/19 19:24:27  dankert
@@ -101,22 +104,14 @@ class User
 		$list = array();
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id,name,fullname,is_admin,mail,descr '.
+		$sql = new Sql( 'SELECT * '.
 		                '  FROM {t_user}'.
 		                '  ORDER BY name' );
 
 		foreach( $db->getAll( $sql->query ) as $row )
 		{
 			$user = new User();
-			$user->userid   = $row['id'      ];
-			$user->name     = $row['name'    ];
-			$user->isAdmin  = $row['is_admin'];
-			$user->fullname = $row['fullname'];
-			$user->mail     = $row['mail'    ];
-			$user->desc     = $row['descr'   ];
-
-			if	( $user->fullname == '' )
-				$user->fullname = $user->name;
+			$user->setDatabaseRow( $row );
 
 			$list[] = $user;
 		}
@@ -229,6 +224,7 @@ class User
 	}
 
 
+
 	// Lesen Benutzer aus der Datenbank
 	function load()
 	{
@@ -239,9 +235,18 @@ class User
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
 		$row = $db->getRow( $sql->query );
-		
+
+		$this->setDatabaseRow( $row );		
+	}
+
+
+
+	// Lesen Benutzer aus der Datenbank
+	function setDatabaseRow( $row )
+	{
 		if	( count($row) > 1 )
 		{
+			$this->userid   = $row['id'      ];
 			$this->name     = $row['name'    ];
 			$this->style    = $row['style'   ];
 			$this->isAdmin  = ( $row['is_admin'] == '1');
@@ -259,6 +264,7 @@ class User
 		}
 		else
 		{
+			$this->userid   = -99;
 			$this->name     = lang('UNKNOWN');
 			$this->style    = 'default';
 			$this->isAdmin  = false;
