@@ -26,11 +26,15 @@
 <tr>
 <?php 	if ( $z['username'] != '' )
       	{ ?>
-<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_user.png' ?>" align="left"><?php echo $z['username'] ?></a></td>
+<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_user.png' ?>" align="left"><?php echo $z['username'] ?></td>
+<?php 	}
+      	elseif ( $z['groupname'] != '' )
+      	{ ?>
+<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_group.png' ?>" align="left"><?php echo $z['groupname'] ?></td>
 <?php 	}
       	else
       	{ ?>
-<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_group.png' ?>" align="left"><?php echo $z['groupname'] ?></a></td>
+<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_group.png' ?>" align="left"><?php echo lang('GLOBAL_ALL') ?></td>
 <?php 	} ?>
 <td class="<?php echo $fx ?>"><?php echo $z['languagename'] ?></td>
 
@@ -44,7 +48,7 @@
 <?php }
       else
       { ?>
-<td class="<?php echo $fx ?>">&nbsp;</td>
+
 <td class="<?php echo $fx ?>"><?php echo lang('inherited') ?></td>
 <?php } ?>
 </tr>
