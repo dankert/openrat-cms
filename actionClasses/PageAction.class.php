@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-04-30 20:31:47  dankert
+// Revision 1.5  2004-04-30 21:07:32  dankert
+// Auswerten von Schalter $release
+//
+// Revision 1.4  2004/04/30 20:31:47  dankert
 // Berechtigungen anzeigen
 //
 // Revision 1.3  2004/04/25 19:01:02  dankert
@@ -109,6 +112,13 @@ class PageAction extends Action
 		else $value->date = 0;
 	
 		$value->text = $this->getRequestVar('text');
+
+		$value->page = new Page( $value->objectid );
+		
+		// Ermitteln, ob Inhalt sofort freigegeben werden kann und soll
+		if	( $value->page->hasRight('release') && $this->getRequestVar('release')!='' )
+			$value->publish = true;
+		else	$value->publish = false;
 
 		// Inhalt speichern
 		
