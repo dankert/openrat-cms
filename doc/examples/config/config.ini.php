@@ -249,5 +249,15 @@ extension = jpeg,jpg,png
 file_separator = " &raquo; "
 ; -------------------------------------------------------------------
 
+; -------------------------------------------------------------------
+; Fake urls, so instead "do.php?action=a&subaction=b&id=y"
+; they'll become shorter, like "a.b,y".
+; In this case, you have to activate the rewrite rule as shown in the
+; example .htacess file 
+; -------------------------------------------------------------------
+fake_urls = true
+; -------------------------------------------------------------------
+
+
 
 ; END OF DOCUMENT
