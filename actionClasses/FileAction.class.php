@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-11-29 23:24:36  dankert
+// Revision 1.10  2004-11-30 22:28:20  dankert
+// Automatische Feststellen, ob GD installiert und welche Bildformate unterstuetzt werden
+//
+// Revision 1.9  2004/11/29 23:24:36  dankert
 // Korrektur Veroeffentlichung
 //
 // Revision 1.8  2004/11/28 21:27:21  dankert
@@ -148,6 +151,48 @@ class FileAction extends ObjectAction
 	}
 
 
+	function imageFormat()
+	{
+		if	( ! function_exists( 'imagetypes' ) )
+			return 0;
+
+		$ext      = strtolower($this->file->extension);
+		$types    = imagetypes();
+		$formats  = array( 'gif' =>IMG_GIF,
+		                   'jpg' =>IMG_JPG,
+		                   'jpeg'=>IMG_JPG,
+		                   'png' =>IMG_PNG );
+		
+		if	( !isset($formats[$ext]) )
+			return 0;
+
+		if	( $types & $formats[$ext] )
+			return $formats[$ext];
+
+		return 0;
+	}
+
+
+
+	function imageFormats()
+	{
+		if	( ! function_exists( 'imagetypes' ) )
+			return array();
+
+		$types    = imagetypes();
+		$formats  = array( IMG_GIF => 'gif',
+		                   IMG_JPG => 'jpeg',
+		                   IMG_PNG => 'png' );
+		$formats2 = $formats;		
+
+		foreach( $formats as $b=>$f )
+			if	( !($types & $b) )
+				unset( $formats2[$b] );
+
+		return $formats2;
+	}
+
+
 	/**
 	 * Bildgroesse eines Bildes aendern
 	 */
@@ -158,7 +203,7 @@ class FileAction extends ObjectAction
 		$jpegcompression =        $this->getRequestVar('jpeg_compression') ;
 		$format          =        $this->getRequestVar('format'          ) ;
 		
-		$this->file->imageResize( intval($width),intval($height),$format,$jpegcompression );
+		$this->file->imageResize( intval($width),intval($height),$this->imageFormat(),$format,$jpegcompression );
 		$this->file->save();      // Um z.B. Groesse abzuspeichern
 		$this->file->saveValue();
 
@@ -228,10 +273,17 @@ class FileAction extends ObjectAction
 		// MIME-Types aus Datei lesen
 		$this->setTemplateVars( $this->file->getProperties() );
 		$this->setTemplateVar('value',$this->file->loadValue());
-		$formats = array();
-		foreach( explode(',',$conf['gd']['extension']) as $f )
-			$formats[$f] = $f;
-		$this->setTemplateVar('formats',$formats);
+		
+		$imageFormat = $this->imageFormat();
+
+		if	( $imageFormat != 0 )
+			$formats = $this->imageFormats();
+		else
+			$formats = array();
+
+		$this->setTemplateVar('formats'       ,$formats    );
+		$this->setTemplateVar('default_format',$imageFormat);
+
 		$this->forward('file_edit');
 	}
 
