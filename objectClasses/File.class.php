@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-11-30 22:27:45  dankert
+// Revision 1.7  2004-12-15 23:18:46  dankert
+// *** empty log message ***
+//
+// Revision 1.6  2004/11/30 22:27:45  dankert
 // Optimierung imageResize()-Methode
 //
 // Revision 1.5  2004/11/29 23:24:36  dankert
@@ -349,10 +352,13 @@ class File extends Object
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 		$row = $db->getRow( $sql->query );
-
-		$this->fileid    = $row['id'       ];
-		$this->extension = $row['extension'];
-		$this->size      = $row['size'     ];
+		
+		if	( count($row)!=0 )
+		{
+			$this->fileid    = $row['id'       ];
+			$this->extension = $row['extension'];
+			$this->size      = $row['size'     ];
+		}
 		
 		$this->objectLoad();
 	}
@@ -521,6 +527,7 @@ class File extends Object
 
 		$this->write();
 		$this->publish->copy( $this->tmpfile(),$this->full_filename() );
+		unlink( $this->tmpfile );
 		
 		$this->publish->publishedObjects[] = $this->getProperties();
 	}
