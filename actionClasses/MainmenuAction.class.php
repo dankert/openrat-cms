@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2004-12-25 22:11:03  dankert
+// Revision 1.16  2004-12-25 22:17:59  dankert
+// Korrektur transfer()
+//
+// Revision 1.15  2004/12/25 22:11:03  dankert
 // Erweiterung/Korrektur der Kennwortaenderung
 //
 // Revision 1.14  2004/12/19 18:09:05  dankert
@@ -381,8 +384,8 @@ class MainmenuAction extends Action
 
 	function transfer()
 	{
-		$this->setTemplateVar('subaction',array('import'=>lang('import')));
-		$this->setTemplateVar('param','objectid');
+		$this->addSubaction('import');
+		$this->setTemplateVar('subaction',$this->subActionList);
 
 		$this->callSubAction('show');
 	}
