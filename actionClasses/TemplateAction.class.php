@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-07 21:34:58  dankert
+// Revision 1.4  2004-07-09 20:57:29  dankert
+// Dynamische Bereiche (IFEMPTY...)
+//
+// Revision 1.3  2004/05/07 21:34:58  dankert
 // Url über Html::url erzeugen
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
@@ -74,11 +77,24 @@ class TemplateAction extends Action
 		{
 			$text .= "\n".'{{->'.$this->getRequestVar('iconid').'}}';
 		}
+
+		if   ( $this->getRequestVar('addifempty') != '' )
+		{
+			$text .= "\n".'{{IFEMPTY:'.$this->getRequestVar('ifemptyid').':BEGIN}}  {{IFEMPTY:'.$this->getRequestVar('ifemptyid').':END}}';
+		}
+		if   ( $this->getRequestVar('addifnotempty') != '' )
+		{
+			$text .= "\n".'{{IFNOTEMPTY:'.$this->getRequestVar('ifnotemptyid').':BEGIN}}  {{IFNOTEMPTY:'.$this->getRequestVar('ifnotemptyid').':END}}';
+		}
 		
 		foreach( $this->template->getElementNames() as $elid=>$elname )
 		{
 			$text = str_replace('{{'.$elname.'}}'  ,'{{'.$elid.'}}',$text );
 			$text = str_replace('{{->'.$elname.'}}','{{->'.$elid.'}}',$text );
+			$text = str_replace('{{'.lang('IFEMPTY'   ).':'.$elname.':'.lang('BEGIN').'}}','{{IFEMPTY:'   .$elid.':BEGIN}}',$text );
+			$text = str_replace('{{'.lang('IFEMPTY'   ).':'.$elname.':'.lang('END'  ).'}}','{{IFEMPTY:'   .$elid.':END}}'  ,$text );
+			$text = str_replace('{{'.lang('IFNOTEMPTY').':'.$elname.':'.lang('BEGIN').'}}','{{IFNOTEMPTY:'.$elid.':BEGIN}}',$text );
+			$text = str_replace('{{'.lang('IFNOTEMPTY').':'.$elname.':'.lang('END'  ).'}}','{{IFNOTEMPTY:'.$elid.':END}}'  ,$text );
 		}
 	
 		$this->template->src = $text;
@@ -88,8 +104,10 @@ class TemplateAction extends Action
 		// Wenn Element hinzugefügt wurde, dann bleibt es beim Quelltext-Modus.
 		// Sonst wird zur Anzeige umgeschaltet
 	
-		if   ( $this->getRequestVar('addelement') != '' ||
-		       $this->getRequestVar('addicon'   ) != ''    )
+		if   ( $this->getRequestVar('addelement'   ) != '' ||
+		       $this->getRequestVar('addicon'      ) != '' ||
+		       $this->getRequestVar('addifempty'   ) != '' ||
+		       $this->getRequestVar('addifnotempty') != ''    )
 		{
 			$this->callSubAction('src');
 		}
@@ -300,18 +318,35 @@ class TemplateAction extends Action
 		{
 			$element = new Element( $elid );
 			$element->load();
+			$url = Html::url(array('action'=>'element','subaction'=>'edit','elementid'=>$elid));
 			
 			$text = str_replace('{{'.$elid.'}}',
-			                    '<a href="'.Html::url(array('action'=>'element','subaction'=>'edit','elementid'=>$elid)).
-			                    '" class="el_'.
+			                    '<a href="'.$url.'" class="el_'.
 			                    $element->type.'" target="cms_main_main" title="'.$element->desc.'">{{'.
 			                    $element->name.'}}</a>',
 			                    $text );
 			$text = str_replace('{{-&gt;'.$elid.'}}',
-			                    '<a href="'.Html::url(array('action'=>'element','subaction'=>'edit','elementid'=>$elid)).
-			                    '" class="el_'.
+			                    '<a href="'.$url.'" class="el_'.
 			                    $element->type.'" target="cms_main_main" title="'.$element->desc.'">{{-&gt;'.
 			                    $element->name.'}}</a>',
+			                    $text );
+
+			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
+			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('IFEMPTY').':'.
+			                    $element->name.':'.lang('BEGIN').'}}</a>',
+			                    $text );
+			$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
+			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('IFEMPTY').':'.
+			                    $element->name.':'.lang('END').'}}</a>',
+			                    $text );
+
+			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
+			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('IFNOTEMPTY').':'.
+			                    $element->name.':'.lang('BEGIN').'}}</a>',
+			                    $text );
+			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
+			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('IFNOTEMPTY').':'.
+			                    $element->name.':'.lang('END').'}}</a>',
 			                    $text );
 			                    
 			unset( $element );
@@ -348,8 +383,9 @@ class TemplateAction extends Action
 	}
 
 
-	// Anzeigen des Template-Quellcodes
-	//
+	/**
+	  * Anzeigen des Template-Quellcodes
+	  */
 	function src()
 	{
 		$elements      = array();
@@ -366,10 +402,12 @@ class TemplateAction extends Action
 			$element = new Element( $elid );
 			$element->load();
 
-			if	( $element->type != 'info'     &&
-			       $element->type != 'infodate' &&
-			       $element->type != 'code'        )
-				$icon_elements[$elid] = lang('icon').' '.$element->name;
+			if	( $element->isWritable() )
+			{
+				$icon_elements      [$elid] = lang('icon'      ).' '.$element->name;
+				$ifempty_elements   [$elid] = lang('ifempty'   ).' '.$element->name;
+				$ifnotempty_elements[$elid] = lang('ifnotempty').' '.$element->name;
+			}
 			
 			$text = str_replace('{{'.$elid.'}}',
 			                           '{{'.$element->name.'}}',
@@ -377,11 +415,25 @@ class TemplateAction extends Action
 			$text = str_replace('{{->'.$elid.'}}',
 			                           '{{->'.$element->name.'}}',
 			                           $text );
+			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
+			                           '{{'.lang('IFEMPTY').':'.$element->name.':'.lang('BEGIN').'}}',
+			                           $text );
+			$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
+			                           '{{'.lang('IFEMPTY').':'.$element->name.':'.lang('END').'}}',
+			                           $text );
+			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
+			                           '{{'.lang('IFNOTEMPTY').':'.$element->name.':'.lang('BEGIN').'}}',
+			                           $text );
+			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
+			                           '{{'.lang('IFNOTEMPTY').':'.$element->name.':'.lang('END').'}}',
+			                           $text );
 		}
 
-		$this->setTemplateVar('elements'     ,$elements          );
-		$this->setTemplateVar('icon_elements',$icon_elements     );
-		$this->setTemplateVar('text'         ,htmlentities($text));
+		$this->setTemplateVar('elements'           ,$elements             );
+		$this->setTemplateVar('icon_elements'      ,$icon_elements        );
+		$this->setTemplateVar('ifempty_elements'   ,$ifempty_elements     );
+		$this->setTemplateVar('ifnotempty_elements',$ifnotempty_elements  );
+		$this->setTemplateVar('text'               ,htmlentities($text)   );
 	
 		$this->forward('template_src');
 	}

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-07-07 20:47:22  dankert
+// Revision 1.7  2004-07-09 20:57:14  dankert
+// Dynamische Bereiche (IFEMPTY...)
+//
+// Revision 1.6  2004/07/07 20:47:22  dankert
 // Korrektur f. Verkn?pfungen
 //
 // Revision 1.5  2004/05/07 21:41:14  dankert
@@ -539,6 +542,24 @@ class Page extends Object
 		{
 			$inh = $value->value;
 			$src = str_replace( '{{'.$id.'}}',$inh,$src );
+			
+			// Dynamische Bereiche ein- oder ausblenden
+			if	( $inh == '' )
+			{
+				// Wenn Feld leer
+				$src = str_replace( '{{IFEMPTY:'.$id.':BEGIN}}','',$src );
+				$src = str_replace( '{{IFEMPTY:'.$id.':END}}'  ,'',$src );
+
+				$src = eregi_replace( '{{IFNOTEMPTY:'.$id.':BEGIN}}.*{{IFNOTEMPTY:'.$id.':END}}','',$src );
+			}
+			else
+			{
+				// Wenn Feld gefüllt
+				$src = str_replace( '{{IFNOTEMPTY:'.$id.':BEGIN}}','',$src );
+				$src = str_replace( '{{IFNOTEMPTY:'.$id.':END}}'  ,'',$src );
+
+				$src = eregi_replace( '{{IFEMPTY:'.$id.':BEGIN}}.*{{IFEMPTY:'.$id.':END}}','',$src );
+			}
 			
 			if   ( $this->icons )
 				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url(array('action'=>'pagelement','elementid'=>$id,'subaction'=>'edit')).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.$conf['directories']['themedir'].'/images/icon_el_'.$value->element->type.'.png" border="0"></a>',$src );
