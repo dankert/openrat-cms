@@ -20,14 +20,17 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-09-26 12:12:31  dankert
+// Revision 1.7  2004-11-27 13:05:59  dankert
+// Einzelne Funktionen verlagert
+//
+// Revision 1.6  2004/09/26 12:12:31  dankert
 // Erweiterung HTTP-Header bei Anzeige der Bin?rdatei
 //
 // Revision 1.5  2004/05/02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.4  2004/04/28 20:22:32  dankert
-// Rechte hinzufügen
+// Rechte hinzuf?gen
 //
 // Revision 1.3  2004/04/24 17:02:47  dankert
 // Korrektur: Link auf Seite
@@ -47,7 +50,7 @@
  * @version $Revision$
  * @package openrat.actions
  */
-class FileAction extends Action
+class FileAction extends ObjectAction
 {
 	var $file;
 	var $defaultSubAction = 'show';
@@ -62,30 +65,9 @@ class FileAction extends Action
 	}
 
 
-	function move()
-	{
-		$this->objectMove();
-
-		$this->callSubAction('show');
-	}
-
-
-	function addACL()
-	{
-		$this->objectAddACL();
-
-		$this->callSubAction('rights');
-	}
-
-
-	function delACL()
-	{
-		$this->objectDelACL();
-
-		$this->callSubAction('rights');
-	}
-
-
+	/**
+	 * Ersetzt den Inhalt mit einer anderen Datei
+	 */
 	function replace()
 	{
 		$upload = new Upload();
@@ -117,10 +99,10 @@ class FileAction extends Action
 	{
 		global $SESS;
 
-		// Wenn Dateiname gefüllt, dann Datenbank-Update
+		// Wenn Dateiname gef?llt, dann Datenbank-Update
 		if   ( $this->getRequestVar('delete') != '' )
 		{
-			// Datei löschen
+			// Datei l?schen
 			$this->file->delete();
 
 			unset( $SESS['objectid'] );
@@ -271,7 +253,7 @@ class FileAction extends Action
 
 
 	/**
-	 * Datei veröffentlichen
+	 * Datei ver?ffentlichen
 	 */
 	function pub()
 	{
@@ -286,47 +268,6 @@ class FileAction extends Action
 		$this->setTemplateVar('filenames',$list);
 
 		$this->forward('publish');
-	}
-
-
-	function rights()
-	{
-		global $SESS;
-		global $conf_php;
-		if   ($SESS['user']['is_admin'] != '1') die('nice try');
-
-		$acllist = array();	
-		foreach( $this->file->getAllInheritedAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-		}
-
-//		$this->setTemplateVar('inherited_acls',$acllist );
-//		$acllist = array();	
-
-		foreach( $this->file->getAllAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-			$acllist[$key]['delete_url'] = Html::url(array('subaction'=>'delACL','aclid'=>$aclid));
-		}
-		ksort( $acllist );
-
-		$this->setTemplateVar('acls',$acllist );
-
-		$this->setTemplateVar('users'    ,User::listAll()   );
-		$this->setTemplateVar('groups'   ,Group::getAll()   );
-
-		$languages = Language::getAll();
-		$languages[0] = lang('ALL_LANGUAGES');
-		$this->setTemplateVar('languages',$languages);
-
-		$this->forward('file_rights');
 	}
 }
 

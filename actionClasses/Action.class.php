@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-11-10 22:35:23  dankert
+// Revision 1.7  2004-11-27 13:05:37  dankert
+// Einzelne Funktionen verlagert
+//
+// Revision 1.6  2004/11/10 22:35:23  dankert
 // Unbenennen einzelner Methoden
 //
 // Revision 1.5  2004/10/10 17:42:52  dankert
@@ -103,6 +106,18 @@ class Action
 	}
 
 
+	function addNotice( $type,$name,$text,$status='ok' )
+	{
+		if	( !isset($this->templateVars['notices']) )
+			$this->templateVars['notices'] = array();
+
+		$this->templateVars['notices'][] = array('type'=>$type,
+                                                 'name'=>$name,
+		                                         'text'=>$text,
+		                                       'status'=>$status);
+	}
+
+
 	function setTemplateVars( $varList )
 	{
 		foreach( $varList as $name=>$value )
@@ -161,6 +176,7 @@ class Action
 		
 		$self = $HTTP_SERVER_VARS['PHP_SELF'];
 	
+		$tplFileName = str_replace( '_','/',$tplFileName );
 		// Einbinden des Templates
 		//
 		require( 'themes/default/templates/'.$tplFileName );
@@ -188,136 +204,61 @@ class Action
 	 * Verschieben eines Objektes
 	 * @access protected
 	 */
-	function move()
-	{
-		if   ( $this->getRequestVar('targetobjectid') != '' )
-		{
-			$o = new Object( $this->getSessionVar('objectid') );
-			
-			if	( $o->hasRight('prop') )
-				$o->setParentId( $this->getRequestVar('targetobjectid') );
-		}
-
-		$this->callSubAction('prop');
-	}
+//	function move()
+//	{
+//		if   ( $this->getRequestVar('targetobjectid') != '' )
+//		{
+//			$o = new Object( $this->getSessionVar('objectid') );
+//			
+//			if	( $o->hasRight('prop') )
+//				$o->setParentId( $this->getRequestVar('targetobjectid') );
+//		}
+//
+//		$this->callSubAction('prop');
+//	}
 
 
 	/**
 	 * Kopieren eines Objektes
 	 * @access protected
 	 */
-	function copy()
-	{
-		if   ( $this->getRequestVar('targetobjectid') != '' )
-		{
-			$o = new Object( $this->getSessionVar('objectid') );
-			
-			if	( $o->hasRight('prop') )
-				$o->setParentId( $this->getRequestVar('movetoobjectid') );
-
-			$o->name = lang('GLOBAL_COPY_OF').' '.$o->name;
-			$o->add();
-		}
-
-		$this->callSubAction('prop');
-	}
+//	function copy()
+//	{
+//		if   ( $this->getRequestVar('targetobjectid') != '' )
+//		{
+//			$o = new Object( $this->getSessionVar('objectid') );
+//			
+//			if	( $o->hasRight('prop') )
+//				$o->setParentId( $this->getRequestVar('movetoobjectid') );
+//
+//			$o->name = lang('GLOBAL_COPY_OF').' '.$o->name;
+//			$o->add();
+//		}
+//
+//		$this->callSubAction('prop');
+//	}
 
 
 	/**
 	 * Erzeugen einer Verknuepfung auf das aktuelle Objekt
 	 * @access protected
 	 */
-	function link()
-	{
-		$link = new Link();
-		$link->parentid       = $this->getRequestVar('targetobjectid');
-
-		$o = new Object( $this->getSessionVar('objectid') );
-		$o->load();
-		$link->linkedObjectId = $o->objectid;
-		$link->isLinkToObject = true;
-		$link->name           = lang('GLOBAL_LINK_TO').' '.$o->name;
-		$link->add();
-
-		$this->callSubAction('prop');
-	}
-
-
-	/**
-	  * ACL zu einem Objekt setzen
-	  * @access protected
-	  */
-	function addACL()
-	{
-		$acl = new Acl();
-
-		$acl->objectid = $this->getSessionVar('objectid');
-		
-		if   ( $this->getRequestVar('type') == 'user' )
-			$acl->userid  = $this->getRequestVar('userid' );
-		else	$acl->groupid = $this->getRequestVar('groupid');
-
-		$acl->languageid    = $this->getRequestVar('languageid');
-
-		$acl->write         = ( $this->getRequestVar('write'        ) != '' );
-		$acl->prop          = ( $this->getRequestVar('prop'         ) != '' );
-		$acl->delete        = ( $this->getRequestVar('delete'       ) != '' );
-		$acl->release       = ( $this->getRequestVar('release'      ) != '' );
-		$acl->publish       = ( $this->getRequestVar('publish'      ) != '' );
-		$acl->create_folder = ( $this->getRequestVar('create_folder') != '' );
-		$acl->create_file   = ( $this->getRequestVar('create_file'  ) != '' );
-		$acl->create_link   = ( $this->getRequestVar('create_link'  ) != '' );
-		$acl->create_page   = ( $this->getRequestVar('create_page'  ) != '' );
-		$acl->grant         = ( $this->getRequestVar('grant'        ) != '' );
-		$acl->transmit      = ( $this->getRequestVar('transmit'     ) != '' );
-
-		$acl->add();
-		
-		$this->callSubAction('rights');
-	}
+//	function link()
+//	{
+//		$link = new Link();
+//		$link->parentid       = $this->getRequestVar('targetobjectid');
+//
+//		$o = new Object( $this->getSessionVar('objectid') );
+//		$o->load();
+//		$link->linkedObjectId = $o->objectid;
+//		$link->isLinkToObject = true;
+//		$link->name           = lang('GLOBAL_LINK_TO').' '.$o->name;
+//		$link->add();
+//
+//		$this->callSubAction('prop');
+//	}
 
 
-	function rights()
-	{
-		$o = new Object( $this->getSessionVar('objectid') );
-
-		global $SESS;
-		global $conf_php;
-		if   ($SESS['user']['is_admin'] != '1') die('nice try');
-
-		$acllist = array();	
-		foreach( $this->folder->getAllInheritedAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-		}
-
-//		$this->setTemplateVar('inherited_acls',$acllist );
-//		$acllist = array();	
-
-		foreach( $this->folder->getAllAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-			$acllist[$key]['delete_url'] = Html::url(array('subaction'=>'delACL','aclid'=>$aclid));
-		}
-		ksort( $acllist );
-
-		$this->setTemplateVar('acls',$acllist );
-
-		$this->setTemplateVar('users'    ,User::listAll()   );
-		$this->setTemplateVar('groups'   ,Group::getAll()   );
-
-		$languages = Language::getAll();
-		$languages[0] = lang('ALL_LANGUAGES');
-		$this->setTemplateVar('languages',$languages);
-
-		$this->forward('object_rights');
-	}
 
 
 	/**
@@ -326,10 +267,8 @@ class Action
 	 */
 	function userIsAdmin()
 	{
-		$user = $this->getSessionVar('user');
-		if	( $user['is_admin'] )
-			return true;
-		else	return false;
+		$user = Session::getUser();
+		return $user->isAdmin;
 	}
 
 
@@ -340,20 +279,6 @@ class Action
 	 */
 	function getUserFromSession()
 	{
-		return $this->getSessionVar('userobject');
-	}
-
-
-
-	/**
-	 * Entfernen einer ACL
-	 * @access protected
-	 */
-	function delACL()
-	{
-		$acl = new Acl( $this->getRequestVar('aclid') );
-		$acl->delete();
-
-		$this->callSubAction('rights');
+		return Session::getUser();
 	}
 }
