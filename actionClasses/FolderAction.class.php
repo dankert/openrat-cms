@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-05-07 21:29:16  dankert
+// Revision 1.6  2004-05-07 21:30:59  dankert
+// Korrektur up_url
+//
+// Revision 1.5  2004/05/07 21:29:16  dankert
 // Url über Html::url erzeugen
 //
 // Revision 1.4  2004/05/02 14:49:37  dankert
@@ -233,7 +236,7 @@ class FolderAction extends Action
 		global $conf_php;
 
 		if   ( ! $this->folder->isRoot )
-			$this->setTemplateVar('up_url',Html::url(array('action'=>'folder','subaction'=>'show','objectid'=>$this->folder->parentid)));
+			$this->setTemplateVar('up_url',Html::url(array('action'=>'main','callAction'=>'folder','callSubaction'=>'show','objectid'=>$this->folder->parentid)));
 		
 		$list = array();
 		$last_objectid = 0;
