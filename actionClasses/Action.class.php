@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-11-27 13:05:37  dankert
+// Revision 1.8  2004-11-28 21:27:52  dankert
+// addNotice()
+//
+// Revision 1.7  2004/11/27 13:05:37  dankert
 // Einzelne Funktionen verlagert
 //
 // Revision 1.6  2004/11/10 22:35:23  dankert
@@ -113,7 +116,7 @@ class Action
 
 		$this->templateVars['notices'][] = array('type'=>$type,
                                                  'name'=>$name,
-		                                         'text'=>$text,
+		                                         'text'=>lang('NOTICE_'.$text),
 		                                       'status'=>$status);
 	}
 
