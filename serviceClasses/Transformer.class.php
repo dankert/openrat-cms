@@ -60,12 +60,7 @@ class Transformer
 	}
 
 
-	function parseLine()
-	{
-	}
 
-
-	
 	function parse()
 	{
 		$tocid = 0;
@@ -310,7 +305,7 @@ class Transformer
 	
 			
 			// Abs?tze einrichten
-			if   (!$pre && !$ol && !$ul && !$table && substr($zeile,0,1)!='<' )
+			if   (!$pre && !$ol && !$ul && !$table && substr($this->zeile,0,1)!='{' )
 			{
 				if   ( $zeile != '' && $p )
 				{
@@ -356,7 +351,6 @@ class Transformer
 				$this->replace( "''",'"' );
 			}
 			
-			$this->parseLine();
 			$this->parsedText[] = $this->zeile;
 		}
 
