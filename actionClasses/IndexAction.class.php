@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-11-10 22:36:45  dankert
+// Revision 1.4  2004-11-15 21:34:05  dankert
+// Korrektur fuer Administrationsmodus
+//
+// Revision 1.3  2004/11/10 22:36:45  dankert
 // Laden von Projektklassen und Lesen/Schreiben von/nach Session
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
@@ -31,6 +34,8 @@
 //
 // ---------------------------------------------------------------------------
 
+
+define('PROJECTID_ADMIN',-1);
 
 /**
  * Action-Klasse fuer die Start-Action
@@ -281,6 +286,16 @@ class IndexAction extends Action
 			$user->loadRights( $project->projectid,$language->languageid );
 			Session::setUser( $user );
 		}
+		elseif ( $projectid == PROJECTID_ADMIN )
+		{
+			$project = new Project( $projectid );
+			$project->projectid = PROJECTID_ADMIN;
+			Session::setProject( $project );
+
+			Session::setProjectLanguage( '' );
+			Session::setProjectModel( '' );
+			Session::setObject( '' );
+		}
 
 
 		$db = Session::getDatabase();
@@ -296,9 +311,13 @@ class IndexAction extends Action
 		}
 		elseif	( is_object($project) )
 		{
-
-			$this->setTemplateVar( 'frame_src_main'    ,Html::url( array('action'=>'main',
-			                                                         'callAction'=>'folder' )) );
+			if	( $project->projectid != PROJECTID_ADMIN )
+				$this->setTemplateVar( 'frame_src_main'    ,Html::url( array('action'=>'main',
+				                                                         'callAction'=>'folder' )) );
+			else
+				$this->setTemplateVar( 'frame_src_main'    ,Html::url( array('action'=>'main',
+				                                                         'callAction'=>'project',
+				                                                      'callSubaction'=>'listing' )) );
 		}
 		else
 		{
