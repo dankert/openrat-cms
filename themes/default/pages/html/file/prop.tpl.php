@@ -11,7 +11,7 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="2"><?php echo lang('PROP') ?></th>
+  <th colspan="2"><?php echo lang('GLOBAL_PROP') ?></th>
 </tr>
 
 <?php if (isset($message))
@@ -63,23 +63,6 @@
   <td width="50%" class="f2"><?php echo lang('GLOBAL_lastchange') ?></a></td>
   <td width="50%" class="f2"><?php echo date(lang('DATE_FORMAT'),$lastchange_date) ?>, <?php if (isset($lastchange_user['url'])) echo'<a href="'.$lastchange_user['url'].'" target="cms_main">' ?><?php echo $lastchange_user['name'] ?><?php if (isset($lastchange_user['url'])) echo'</a>' ?></td>
 </tr>
-  <?php if ( count($pages)==0)
-        { ?>
-  <tr>
-    <td class="f1" rowspan="2"><?php echo lang('GLOBAL_DELETE') ?></a></td>
-    <td class="f1"><input type="checkbox" name="delete" value="1"></td>
-  </tr>
-  <tr>
-    <td class="help"><?php echo lang('FILE_DELETE_DESC') ?></td>
-  </tr>
-<?php }
-      else
-      {
-      	 ?>
-  <tr>
-    <td class="help" colspan="2"><?php echo lang('FILE_NO_DELETE_BECAUSE_LINKED') ?></td>
-  </tr>
-<?php } ?>
 <tr>
   <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
 </tr>
