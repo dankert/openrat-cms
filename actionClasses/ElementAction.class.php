@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-12-30 23:31:27  dankert
+// Revision 1.10  2005-01-03 19:37:15  dankert
+// Bei dynamic-Elementen einfaches Array erzeugen
+//
+// Revision 1.9  2004/12/30 23:31:27  dankert
 // Korrektur userIsAdmin()
 //
 // Revision 1.8  2004/12/26 20:20:40  dankert
@@ -302,19 +305,22 @@ class ElementAction extends Action
 									$dynEl = new $className;
 
 									$desc = array();
-									$desc['description'] = $dynEl->description;
-									$desc['parameters' ] = array();
+									
+									$description = $dynEl->description;
+									$paramList   = array();
 
 									$old = $this->element->getDynamicParameters();
 									$parameters = '';
 
-									foreach( $dynEl->parameters as $paramName=>$paramDesc )
+									foreach( get_object_vars($dynEl) as $paramName=>$paramDesc )
 									{
+										if	( in_array($paramName,array('objectid','output','parameters','description')) )
+											continue;
+ 
 										if	( isset( $dynEl->$paramName ) )
 										{
-											$desc['parameters'][$paramName] = array();
-											$desc['parameters'][$paramName]['description'] = $paramDesc;
-											$desc['parameters'][$paramName]['default'    ] = $dynEl->$paramName;
+											echo "Ja";
+											$paramList[$paramName] = $dynEl->$paramName;
 
 											$parameters .= $paramName.':';
 											if	( !empty($old[$paramName]) )
@@ -323,7 +329,8 @@ class ElementAction extends Action
 										}
 									}
 									
-									$this->setTemplateVar('dynamic_class_description',$desc );
+									$this->setTemplateVar('dynamic_class_description',$dynEl->description );
+									$this->setTemplateVar('dynamic_class_parameters' ,$paramList );
 									$this->setTemplateVar('parameters',htmlentities($parameters) );
 								}
 							}
