@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-11-10 22:44:36  dankert
+// Revision 1.3  2004-12-19 21:16:43  dankert
+// Workaround, falls magic_quotes_gpc eingeschaltet ist
+//
+// Revision 1.2  2004/11/10 22:44:36  dankert
 // *** empty log message ***
 //
 // Revision 1.1  2004/05/02 19:27:22  dankert
@@ -31,6 +34,12 @@
 
 
 $REQ = array_merge($HTTP_GET_VARS,$HTTP_POST_VARS,$_GET,$_POST);
+
+if	( get_magic_quotes_gpc() == 1 )
+{
+	foreach( $REQ as $p=>$v )
+		$REQ[$p] = stripslashes($v);
+}
 
 function request_into_session( $name )
 {
