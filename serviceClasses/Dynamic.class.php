@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-12-15 23:14:21  dankert
+// Revision 1.2  2004-12-19 15:25:12  dankert
+// Anpassung Session-Funktionen
+//
+// Revision 1.1  2004/12/15 23:14:21  dankert
 // *** empty log message ***
 //
 // Revision 1.5  2004/11/10 22:50:10  dankert
@@ -50,20 +53,17 @@
  */
 class Dynamic
 {
+	var $project;
 	var $output   = '';
 	var $objectid = 0;
 	var $page;
+	var $parameters  = array();
+	var $description = '';
+	
 	
 	function db()
 	{
 		return db_connection();
-	}
-
-	function pageid()
-	{
-		echo 'WARNING: pageid() deprecated!<br>';
-		global $SESS;
-		return $SESS['objectid'];
 	}
 
 	function getObjectId()
@@ -83,7 +83,8 @@ class Dynamic
 
 	function getRootObjectId()
 	{
-		return Folder::getRootObjectId();
+		$project = Session::getProject();
+		return $project->getRootObjectId();
 	}
 
 	function folderid()
@@ -112,5 +113,16 @@ class Dynamic
 	function getOutput()
 	{
 		return $this->output;
+	}
+	
+	function setSessionVar( $var,$value )
+	{
+		Session::set( $var,$value );
+	}
+
+
+	function getSessionVar( $var )
+	{
+		return Session::get( $var );
 	}
 }
