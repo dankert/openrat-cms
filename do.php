@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2004-12-30 21:44:37  dankert
+// Revision 1.16  2005-01-27 00:07:10  dankert
+// Einbinden von transformer.class
+//
+// Revision 1.15  2004/12/30 21:44:37  dankert
 // Speichern der Subaction
 //
 // Revision 1.14  2004/12/26 21:56:31  dankert
@@ -102,6 +105,8 @@ require_once( OR_SERVICECLASSES_DIR."AdministrationTree.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."ProjectTree.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Transformer.class.".PHP_EXT );
+
 require_once( OR_OBJECTCLASSES_DIR."Value.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Acl.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Template.class.".PHP_EXT );
@@ -116,6 +121,7 @@ require_once( OR_OBJECTCLASSES_DIR."Page.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Language.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Model.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Element.class.".PHP_EXT );
+
 require_once( OR_DBCLASSES_DIR."db.class.php" );
 require_once( OR_DBCLASSES_DIR."postgresql.class.php" );
 require_once( OR_DBCLASSES_DIR."mysql.class.php" );
