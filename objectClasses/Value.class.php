@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-10-06 09:55:02  dankert
+// Revision 1.11  2004-10-10 17:41:23  dankert
+// Setzen von Parametern bei Elementtyp: dynamic
+//
+// Revision 1.10  2004/10/06 09:55:02  dankert
 // Neuer Elementtyp: dynamic
 //
 // Revision 1.9  2004/07/07 20:48:33  dankert
@@ -891,7 +894,6 @@ class Value
 			case 'dynamic':
 
 				$this->page->load();
-				
 				$className = $this->element->subtype;
 				$fileName  = './dynamicClasses/'.$className.'.class.php';
 				if	( is_file( $fileName ) )
@@ -911,7 +913,20 @@ class Value
 							$dynEl->api->delOutput('');
 							$dynEl->api->objectid = $this->page->objectid;
 							$dynEl->api->page = &$this->page;
-			
+
+
+							$parameters = explode( "\n",$this->element->code );
+
+							foreach( $parameters as $it )
+							{
+								$paar = explode( ":",$it );
+								if	( count($paar) > 1 && isset( $dynEl->$paar[0] ) )
+								{
+									Logger::debug("Setting parameter for dynamic Class $className, ".$paar[0].':'.$paar[1] );
+									$dynEl->$paar[0] = $paar[1];
+								}
+							}
+
 							$dynEl->execute();
 							$inhalt = $dynEl->api->getOutput();
 						}
