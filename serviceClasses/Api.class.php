@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-10-06 09:53:39  dankert
+// Revision 1.5  2004-11-10 22:50:10  dankert
+// Neue Methode execute()
+//
+// Revision 1.4  2004/10/06 09:53:39  dankert
 // Benutzung auch nicht-statisch
 //
 // Revision 1.3  2004/05/03 20:21:34  dankert
@@ -80,7 +83,24 @@ class Api
 		global $SESS;
 		return $SESS['folderid'];
 	}
-	
+
+
+	function execute( $code )
+	{
+		global $conf_tmpdir;
+		$code = "<?php\n".$code."\n?>";
+
+		$tmp  = $conf_tmpdir.'/'.md5(microtime()).'.tmp';
+		$f = fopen( $tmp,'w' );
+		fwrite( $f,$code );
+		fclose( $f );
+		
+		require( $tmp ); // Ausfuehren des temporaeren PHP-Codes
+
+		unlink( $tmp );
+		$inhalt = Api::getOutput();
+		$this->output( $inhalt );
+	}	
 	
 	function delOutput()
 	{
