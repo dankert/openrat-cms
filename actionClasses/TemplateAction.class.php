@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-09-30 20:31:19  dankert
+// Revision 1.6  2004-12-15 23:25:13  dankert
+// Sprachvariablen korrigiert
+//
+// Revision 1.5  2004/09/30 20:31:19  dankert
 // Auch leere Extension speichern
 //
 // Revision 1.4  2004/07/09 20:57:29  dankert
@@ -94,10 +97,10 @@ class TemplateAction extends Action
 		{
 			$text = str_replace('{{'.$elname.'}}'  ,'{{'.$elid.'}}',$text );
 			$text = str_replace('{{->'.$elname.'}}','{{->'.$elid.'}}',$text );
-			$text = str_replace('{{'.lang('IFEMPTY'   ).':'.$elname.':'.lang('BEGIN').'}}','{{IFEMPTY:'   .$elid.':BEGIN}}',$text );
-			$text = str_replace('{{'.lang('IFEMPTY'   ).':'.$elname.':'.lang('END'  ).'}}','{{IFEMPTY:'   .$elid.':END}}'  ,$text );
-			$text = str_replace('{{'.lang('IFNOTEMPTY').':'.$elname.':'.lang('BEGIN').'}}','{{IFNOTEMPTY:'.$elid.':BEGIN}}',$text );
-			$text = str_replace('{{'.lang('IFNOTEMPTY').':'.$elname.':'.lang('END'  ).'}}','{{IFNOTEMPTY:'.$elid.':END}}'  ,$text );
+			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFEMPTY'   ).':'.$elname.':'.lang('TEMPLATE_SRC_BEGIN').'}}','{{IFEMPTY:'   .$elid.':BEGIN}}',$text );
+			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFEMPTY'   ).':'.$elname.':'.lang('TEMPLATE_SRC_END'  ).'}}','{{IFEMPTY:'   .$elid.':END}}'  ,$text );
+			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$elname.':'.lang('TEMPLATE_SRC_BEGIN').'}}','{{IFNOTEMPTY:'.$elid.':BEGIN}}',$text );
+			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$elname.':'.lang('TEMPLATE_SRC_END'  ).'}}','{{IFNOTEMPTY:'.$elid.':END}}'  ,$text );
 		}
 	
 		$this->template->src = $text;
@@ -332,21 +335,21 @@ class TemplateAction extends Action
 			                    $text );
 
 			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('IFEMPTY').':'.
-			                    $element->name.':'.lang('BEGIN').'}}</a>',
+			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
+			                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
 			                    $text );
 			$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('IFEMPTY').':'.
-			                    $element->name.':'.lang('END').'}}</a>',
+			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
+			                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
 			                    $text );
 
 			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('IFNOTEMPTY').':'.
-			                    $element->name.':'.lang('BEGIN').'}}</a>',
+			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
+			                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
 			                    $text );
 			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('IFNOTEMPTY').':'.
-			                    $element->name.':'.lang('END').'}}</a>',
+			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
+			                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
 			                    $text );
 			                    
 			unset( $element );
@@ -404,9 +407,9 @@ class TemplateAction extends Action
 
 			if	( $element->isWritable() )
 			{
-				$icon_elements      [$elid] = lang('icon'      ).' '.$element->name;
-				$ifempty_elements   [$elid] = lang('ifempty'   ).' '.$element->name;
-				$ifnotempty_elements[$elid] = lang('ifnotempty').' '.$element->name;
+				$icon_elements      [$elid] = lang('GLOBAL_icon'      ).' '.$element->name;
+				$ifempty_elements   [$elid] = lang('TEMPLATE_SRC_ifempty'   ).' '.$element->name;
+				$ifnotempty_elements[$elid] = lang('TEMPLATE_SRC_ifnotempty').' '.$element->name;
 			}
 			
 			$text = str_replace('{{'.$elid.'}}',
@@ -416,16 +419,16 @@ class TemplateAction extends Action
 			                           '{{->'.$element->name.'}}',
 			                           $text );
 			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-			                           '{{'.lang('IFEMPTY').':'.$element->name.':'.lang('BEGIN').'}}',
+			                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
 			                           $text );
 			$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-			                           '{{'.lang('IFEMPTY').':'.$element->name.':'.lang('END').'}}',
+			                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
 			                           $text );
 			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-			                           '{{'.lang('IFNOTEMPTY').':'.$element->name.':'.lang('BEGIN').'}}',
+			                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
 			                           $text );
 			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-			                           '{{'.lang('IFNOTEMPTY').':'.$element->name.':'.lang('END').'}}',
+			                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
 			                           $text );
 		}
 
