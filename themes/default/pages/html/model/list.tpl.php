@@ -3,9 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="action"    value="model">
-<input type="hidden" name="subaction" value="add">
+<?php echo Html::form('model','add') ?>
 
 <table class="main" width="60%" cellspacing="0" cellpadding="4">
 
@@ -20,14 +18,14 @@
 <?php 	if (isset($e['url']))
       	{ ?>
 <td width="50%" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $e['url'] ?>"><?php echo $e['name'] ?></a></td>
-<td width="25%" class="<?php if($f1==true) {echo'f1';$f1=false;} else{echo'f2';$f1=true;}?>"><?php if ( !isset($e['default_url'])) echo '<strong>'.lang('GLOBAL_default' ).'</strong>'; else echo '<a href="'.$e['default_url'].'">'.lang('GLOBAL_make_default').'</a>' ?></td>
+<td width="25%" class="<?php if($f1==true) {echo'f1';$f1=false;} else{echo'f2';$f1=true;}?>"><?php if ( !isset($e['default_url'])) echo '<strong>'.lang('GLOBAL_default' ).'</strong>'; else echo '<a href="'.$e['default_url'].'" target="_self">'.lang('GLOBAL_make_default').'</a>' ?></td>
 <?php 	}
       	else
       	{ ?>
 <td width="50%" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><?php echo $e['name'] ?></td>
 <td width="25%" class="<?php if($f1==true) {echo'f1';$f1=false;} else{echo'f2';$f1=true;}?>">&nbsp;</td>
 <?php 	} ?>
-<td width="25%" class="<?php if($f1==true) {echo'f1';$f1=false;} else{echo'f2';$f1=true;}?>"><?php if ( !isset($e['select_url' ])) echo '<strong>'.lang('GLOBAL_selected').'</strong>'; else echo '<a href="'.$e['select_url' ].'">'.lang('GLOBAL_select'      ).'</a>' ?></td>
+<td width="25%" class="<?php if($f1==true) {echo'f1';$f1=false;} else{echo'f2';$f1=true;}?>"><?php if ( !isset($e['select_url' ])) echo '<strong>'.lang('GLOBAL_selected').'</strong>'; else echo '<a href="'.$e['select_url' ].'" target="_top" >'.lang('GLOBAL_select'      ).'</a>' ?></td>
 </tr>
 <?php } ?>
 

@@ -3,11 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"        value="page"    />
-<input type="hidden" name="subaction"     value="replaceTemplate"/>
-<input type="hidden" name="newTemplateId" value="<?php echo $newTemplateId ?>" />
+<?php echo Html::form('page','replacetemplate','',array('newTemplateId'=>$newTemplateId)) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 

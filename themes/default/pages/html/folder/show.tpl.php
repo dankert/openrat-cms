@@ -91,7 +91,7 @@
       else
       { ?>
 <tr>
-<td colspan="2" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><?php echo lang('NOT_FOUND') ?></td>
+<td colspan="2" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><?php echo lang('GLOBAL_NOT_FOUND') ?></td>
 </tr>
 <?php } ?>
 

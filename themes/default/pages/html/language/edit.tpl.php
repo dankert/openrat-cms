@@ -4,9 +4,7 @@
 
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="action"    value="language">
-<input type="hidden" name="subaction" value="save">
+<?php echo Html::form('language','save',$languageid) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -16,12 +14,9 @@
 
 <tr>
 <td width="50%" class="f1"><?php echo lang('GLOBAL_LANGUAGE') ?></a></td>
-<td width="50%" class="f1"><input type="text" size="50" name="name" value="<?php echo $name ?>"></td>
+<td width="50%" class="f2"><?php echo Html::selectBox('isocode',$isocodes,$act_isocode) ?></td>
 </tr>
-<tr>
-<td width="50%" class="f2"><?php echo lang('LANGUAGE_ISOCODE') ?></a></td>
-<td width="50%" class="f2"><input type="text" size="10" name="isocode" maxlength="10" value="<?php echo $isocode ?>"></td>
-</tr>
+
 <?php if ( $delete )
       { ?>
 <tr>
@@ -30,8 +25,8 @@
 </tr>
 <tr>
 <td class="help"><?php echo lang('HELP_LANGUAGE_DELETE') ?></td>
-</tr>
 <?php } ?>
+</tr>
 
 <tr>
 <td colspan="2" class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></a></td>

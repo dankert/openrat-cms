@@ -6,7 +6,7 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="6"><?php echo lang('GLOBAL_ARCHIVE') ?> (<?php echo lang('ELEMENT') ?>: <?php echo $name ?>)</th>
+  <th colspan="6"><?php echo lang('GLOBAL_ARCHIVE') ?> (<?php echo lang('PAGE_PAGEELEMENT') ?>: <?php echo $name ?>)</th>
 </tr>
 <?php if (count($el)>0)
       { ?>
@@ -40,7 +40,7 @@
       else
       { ?>
 <tr>
-  <td class="f1" colspan="6"><strong><?php echo lang('NOT_FOUND') ?></strong></td>
+  <td class="f1" colspan="6"><strong><?php echo lang('GLOBAL_NOT_FOUND') ?></strong></td>
 </tr>
 <?php } ?>
 
@@ -50,9 +50,7 @@
 
 <?php if (count($version_list)>1)
       { ?>
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="action"    value="pageelement" />
-<input type="hidden" name="subaction" value="diff"        />
+<?php echo Html::form('pageelement','diff') ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -71,7 +69,7 @@
   <td class="<?php echo $fx ?>" width="50%"><?php echo lang('GLOBAL_WITH'   ) ?>&nbsp;<?php echo Html::selectBox('value2id',$version_list,$default2id) ?></td>
 </tr>
 <tr>
-  <td colspan="2" class="act"><input class="submit" type="submit" value="<?php echo lang('SAVE') ?>" /></td>
+  <td colspan="2" class="act"><input class="submit" type="submit" value="<?php echo lang('MENU_SHOW') ?>" /></td>
 </tr>
 
 </table>

@@ -14,10 +14,9 @@
 
 <tr>
 <td colspan="2" class="act">
-  <form action="<?php echo $self ?>" method="post" enctype="multipart/form-data">
-  <input type="hidden" name="action"    value="file">
-  <input type="hidden" name="subaction" value="replace">
-  <input type="file" name="file"> <input type="submit" class="submit" value="<?php echo lang('GLOBAL_UPLOAD') ?>">
+  <?php echo Html::form( 'file','replace',$id,array('enctype'=>'multipart/form-data') ) ?>
+
+    <input type="file" name="file"> <input type="submit" class="submit" value="<?php echo lang('GLOBAL_UPLOAD') ?>">
   </form>
 
 </td>
@@ -27,10 +26,7 @@
 
 <?php if ( count($formats) > 0 )
       { ?>
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="file">
-<input type="hidden" name="subaction" value="resize">
+<?php echo Html::form( 'file','resize',$id ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -79,10 +75,7 @@
 <?php if	( substr($mimetype,0,5) == 'text/' )
       { ?>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="file">
-<input type="hidden" name="subaction" value="savevalue">
+<?php echo Html::form( 'file','savevalue',$id ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -102,8 +95,6 @@
 
 </form>
 <?php } ?>
-
-
 
 </center>
 

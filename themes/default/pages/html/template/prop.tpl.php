@@ -3,9 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="action"    value="template">
-<input type="hidden" name="subaction" value="propsave">
+<?php echo Html::form('template','propsave',$templateid ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -37,11 +35,7 @@
 </form>
 
 
-
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="template">
-<input type="hidden" name="subaction" value="extensionsave">
+<?php echo Html::form('template','extensionsave',$templateid ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -74,13 +68,13 @@
       foreach( $pages as $id=>$p )
       { ?>
 <tr>
-<td class="f1"><a href="<?php echo $p['url'] ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_page.png' ?>" border="0" align="left"><?php echo $p['name'] ?></a></td>
+<td class="f1"><a href="<?php echo $p['url'] ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_page'.IMG_EXT ?>" border="0" align="left"><?php echo $p['name'] ?></a></td>
 </tr>
 <?php }
       if ( count($pages)==0)
       { ?>
 <tr>
-<td class="f1"><?php echo lang('NOT_FOUND') ?></td>
+<td class="f1"><?php echo lang('GLOBAL_NOT_FOUND') ?></td>
 </tr>
 <?php } ?>
   
@@ -90,8 +84,7 @@
 
 </center>
 
-<script name="JavaScript" type="text/javascript"><!--
-document.forms[0].name.focus();
-//--></script>
+<?php Html::focusField('name') ?>
+
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>

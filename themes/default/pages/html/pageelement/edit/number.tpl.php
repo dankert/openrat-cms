@@ -3,10 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="subaction" value="elsave">
-<input type="hidden" name="action" value="page">
-<input type="hidden" name="old_pageaction" value="<?php echo $old_pageaction ?>">
+<?php echo Html::form('page','elsave') ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -38,8 +35,6 @@
 
 </center>
 
-<script name="JavaScript" type="text/javascript"><!--
-document.forms[0].number.focus();
-//--></script>
+<?php Html::focusField('number') ?>
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>

@@ -2,10 +2,7 @@
 
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="<?php echo session_name() ?>" value="<?php echo session_id() ?>">
-<input type="hidden" name="subaction" value="pub2">
+<?php echo Html::form('file','pubnow','-' ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -29,8 +26,5 @@
 
 </center>
 
-<script name="JavaScript" type="text/javascript"><!--
-document.forms[0].subdirs.focus();
-//--></script>
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>

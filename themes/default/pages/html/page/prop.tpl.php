@@ -3,10 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="page"    />
-<input type="hidden" name="subaction" value="propsave"/>
+<?php echo Html::form('page','propsave') ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -36,7 +33,7 @@
     <td width="50%" class="f1"><?php echo lang('GLOBAL_TEMPLATE') ?></a></td>
     <?php if (isset($template_url))
           { ?>
-    <td width="50%" class="f1"><a href="<?php echo $template_url ?>" target="cms_main"><img src="<?php echo $image_dir ?>icon_tpl.png" border="0" align="left"><?php echo $template_name ?></a></td>
+    <td width="50%" class="f1"><a href="<?php echo $template_url ?>" target="cms_main"><img src="<?php echo $image_dir ?>icon_tpl<?php echo IMG_EXT ?>" border="0" align="left"><?php echo $template_name ?></a></td>
     <?php }
           else
           { ?>
@@ -68,10 +65,7 @@
 <!-- Vorlage tauschen -->
 <?php if (count($templates)>0) // Nur anzeigen, wenn es Vorlagen zu tauschen gibt
       { ?>
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="page" />
-<input type="hidden" name="subaction" value="replaceTemplateSelectElements" />
+<?php echo Html::form('page','replacetemplateselectelements') ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 

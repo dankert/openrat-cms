@@ -3,9 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="action"    value="template"   />
-<input type="hidden" name="subaction" value="addelement" />
+<?php echo Html::form('template','addelement',$templateid ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -18,7 +16,7 @@
       if (count($el)>0) foreach( $el as $id=>$e )
       { $fx = fx($fx); ?>
 <tr>
-<td width="50%" class="<?php echo $fx ?>"><a href="<?php echo $e['url'] ?>" title="<?php echo $e['desc'] ?>"><img src="<?php echo $image_dir.'icon_el_'.$e['type'].'.png' ?>" border="0" align="left"><?php echo $e['name'] ?></a></td>
+<td width="50%" class="<?php echo $fx ?>"><a href="<?php echo $e['url'] ?>" title="<?php echo $e['desc'] ?>"><img src="<?php echo $image_dir.'icon_el_'.$e['type'].IMG_EXT ?>" border="0" align="left"><?php echo $e['name'] ?></a></td>
 <td width="50%" class="<?php echo $fx ?>"><?php echo lang('el_'.$e['type']) ?></td>
 </tr>
 <?php }

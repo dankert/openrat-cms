@@ -2,10 +2,7 @@
 
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="<?php echo session_name() ?>" value="<?php echo session_id() ?>">
-<input type="hidden" name="subaction" value="pub2">
+<?php echo Html::form('folder','pubnow') ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -14,8 +11,8 @@
 </tr>
 
 <tr>
-<td width="50%" class="f1"><?php echo Html::checkbox('pages',true) ?>&nbsp;<?php echo lang('GLOBAL_pages') ?><br>
-                           <?php echo Html::checkbox('files',true) ?>&nbsp;<?php echo lang('GLOBAL_files') ?></td>
+<td width="50%" class="f1"><?php echo Html::checkbox('pages',true)    ?>&nbsp;<?php echo lang('GLOBAL_pages') ?><br>
+                           <?php echo Html::checkbox('files',true)    ?>&nbsp;<?php echo lang('GLOBAL_files') ?></td>
 <td width="50%" class="f1"><?php echo Html::checkbox('subdirs',false) ?>&nbsp;<?php echo lang('GLOBAL_PUBLISH_WITH_SUBDIRS') ?></td>
 </tr>
 
@@ -35,8 +32,6 @@
 
 </center>
 
-<script name="JavaScript" type="text/javascript"><!--
-document.forms[0].subdirs.focus();
-//--></script>
+<?php Html::focusField('subdirs') ?>
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>

@@ -5,7 +5,7 @@
 
 <center>
 
-<?php echo Html::form( array('name'=>'login','action'=>'index','subaction'=>'login','target'=>'_top') ) ?>
+<?php echo Html::form( 'index','login','',array('target'=>'_top') ) ?>
 
 <table class="main" width="400" cellspacing="0" cellpadding="4">
 
@@ -61,10 +61,6 @@
 
 </center>
 
-<script name="JavaScript" type="text/javascript">
-<!--
-window.document.login.login_name.focus();
-//-->
-</script>
+<?php Html::focusField('login_name') ?>
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>

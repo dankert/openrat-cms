@@ -11,19 +11,22 @@
 <table class="main" width="50%" cellspacing="0" cellpadding="4">
 
 <tr>
-	<th><?php echo lang('GLOBAL_PROJECTS') ?></th>
+	<th colspan="2"><?php echo lang('GLOBAL_PROJECTS') ?></th>
 </tr>
 
 <?php $f1=true;
       foreach( $el as $id=>$e )
       { ?>
 <tr>
-<td class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $e['url'] ?>" target="cms_main"><img src="<?php echo $image_dir ?>icon_project<?php echo IMG_EXT ?>" border="0" align="left"><?php echo $e['name'] ?></a></td>
+  <td class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $e['url']     ?>" target="cms_main"><img src="<?php echo $image_dir ?>icon_project<?php echo IMG_EXT ?>" border="0" align="left"><?php echo $e['name'] ?></a></td>
+  <td class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $e['use_url'] ?>" target="_top"    ><?php echo lang('GLOBAL_SELECT') ?></a></td>
 </tr>
 <?php } ?>
 
 <tr>
-<td class="act" colspan="2"><input type="text" name="name" value="">&nbsp;<input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>"></td>
+  <td class="act" colspan="2">
+    <input type="text" name="name" value="">&nbsp;<input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>">
+  </td>
 </tr>
 
 </table>

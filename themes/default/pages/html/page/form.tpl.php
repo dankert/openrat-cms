@@ -3,15 +3,12 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="page"    />
-<input type="hidden" name="subaction" value="saveform"/>
+<?php echo Html::form('page','saveform') ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="4"><?php echo lang('ELEMENTS') ?></th>
+  <th colspan="4"><?php echo lang('TEMPLATE_ELEMENTS') ?></th>
 </tr>
 
 <?php if ( count($el) > 0 )

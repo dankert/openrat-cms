@@ -5,10 +5,8 @@
 <span style="text-align:center; ">
 
 <center>
-<form action="<?php echo $self ?>" method="post" target="_self">
 
-<input type="hidden" name="action"    value="template"      />
-<input type="hidden" name="subaction" value="elementrename" />
+<?php echo Html::form('template','elementrename',$templateid,array('elementid'=>$elementid) ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -55,10 +53,8 @@
 </form>
 
 
-<form action="<?php echo $self ?>" method="post" target="_self">
+<?php echo Html::form('element','changetype',$templateid,array('elementid'=>$elementid) ) ?>
 
-<input type="hidden" name="action"    value="element">
-<input type="hidden" name="subaction" value="changetype">
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -78,11 +74,7 @@
 
 </form>
 
-
-<form action="<?php echo $self ?>" method="post" target="_self">
-
-<input type="hidden" name="action"    value="template">
-<input type="hidden" name="subaction" value="elementsave">
+<?php echo Html::form('template','elementsave',$templateid,array('elementid'=>$elementid) ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -95,7 +87,7 @@
         if (isset($subtype))
         {  $fx = fx($fx); ?>
   <tr>
-    <td class="<?php echo $fx ?>" width="30%"><?php echo lang('SUBTYPE') ?></td>
+    <td class="<?php echo $fx ?>" width="30%"><?php echo lang('ELEMENT_SUBTYPE') ?></td>
     <td class="<?php echo $fx ?>"><?php echo Html::selectBox('subtype',$subtype,$act_subtype) ?></td>
   </tr>
   <?php } ?>
@@ -280,36 +272,22 @@
 	        $fx = fx($fx); ?>
   <tr>
     <td></td>
-    <td class="help"><?php echo $dynamic_class_description ?></td>
+    <td class="help"><?php echo $dynamic_class_description['description'] ?></td>
   </tr>
-  <?php if	( count($dynamic_class_parameters) > 0 )
+  <?php if	( count($dynamic_class_description['parameters']) > 0 )
         { ?>
   <tr>
     <td class="<?php echo $fx ?>"><?php echo lang('EL_PROP_DYNAMIC_PARAMETERS') ?></td>
     <td class="<?php echo $fx ?>"><textarea name="code" rows="15" cols="40"><?php echo $parameters ?></textarea></td>
   </tr>
-  <?php foreach( $dynamic_class_parameters as $paramName=>$paramDesc ) { ?>
-  <tr>
-    <td class="<?php echo $fx ?>"><?php echo $paramName ?></td>
-    <td class="<?php echo $fx ?>"><input type="text" name="<?php echo $paramName ?>" /></td>
-  </tr>
-  <tr>
-    <td class="help">&nbsp;</td>
-    <td class="help"><?php echo $paramDesc ?></td>
-  </tr>
-  <?php } ?>
   <tr>
     <td></td>
-    <td class="help"><ul><?php foreach( $dynamic_class_parameters as $paramName=>$paramDesc )
+    <td class="help"><ul><?php foreach( $dynamic_class_description['parameters'] as $paramName=>$paramDesc )
                            { ?>
-                     <li><strong><?php echo $paramName ?></strong>: <?php echo $paramDesc ?></li> 
+                     <li><strong><?php echo $paramName ?></strong>: <?php echo $paramDesc['description'] ?><br/><?php echo lang('GLOBAL_DEFAULT') ?>: <em><?php echo $paramDesc['default'] ?></em></li> 
                      <?php } ?>
                      </ul>
     </td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="help"><?php echo lang('EL_PROP_DYNAMIC_PARAMETERS_DESC') ?></td>
   </tr>
   <?php } ?>
   <?php } ?>

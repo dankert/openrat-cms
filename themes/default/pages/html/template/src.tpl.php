@@ -3,8 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="subaction" value="srcsave">
+<?php echo Html::form('template','srcsave',$templateid ) ?>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
