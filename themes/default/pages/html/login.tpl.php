@@ -5,9 +5,7 @@
 
 <center>
 
-<form name="login" action="<?php echo $self ?>" method="post" target="_top">
-<input type="hidden" name="action"    value="index">
-<input type="hidden" name="subaction" value="login">
+<?php echo Html::form( array('name'=>'login','action'=>'index','subaction'=>'login','target'=>'_top') ) ?>
 
 <table class="main" width="400" cellspacing="0" cellpadding="4">
 
