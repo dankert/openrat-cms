@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-12-13 22:11:55  dankert
+// Revision 1.12  2004-12-15 23:24:38  dankert
+// diverse Aenderungen
+//
+// Revision 1.11  2004/12/13 22:11:55  dankert
 // Anpassung model() und language()
 //
 // Revision 1.10  2004/12/13 21:44:09  dankert
@@ -87,12 +90,11 @@ class MainmenuAction extends Action
 	function template()
 	{
 		$this->setTemplateVar('folder',array() );
-		$this->setTemplateVar('id','tpl'.$this->getSessionVar('templateid'));
 		$this->addSubaction('listing');
 	
-		if   ( intval($this->getSessionVar('templateid')) != 0 )
+		if   ( $this->getRequestId() != 0 )
 		{
-			$template = new Template( $this->getSessionVar('templateid') );
+			$template = new Template( $this->getRequestId() );
 			$template->load();
 			$this->setTemplateVar('text',$template->name );
 			
@@ -118,12 +120,17 @@ class MainmenuAction extends Action
 
 	function page()
 	{
-
-		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
-	
-		$page = new Page($this->getSessionVar('objectid'));
+		$page = Session::getObject();
+		if	( $page->objectid != $this->getRequestId() )
+		{
+			$page = new Page( $this->getRequestId() );
+			Session::setObject( $page );
+		}
 		$page->load();
 		
+		$this->setTemplateVar('nr'      ,$page->objectid);
+		$this->setTemplateVar('actionid',$page->objectid);
+	
 		$folder = new Folder( $page->parentid );
 		$folder->filenames = false;
 		$folder->load();
@@ -132,8 +139,6 @@ class MainmenuAction extends Action
 	
 		// Ermitteln Namen der Seite
 		$this->setTemplateVar('text',$page->name);
-	
-		$this->setTemplateVar('id','o'.$page->objectid);
 	
 		$this->obj = &$page;
 		$this->addSubAction('show'  ,ACL_READ    );
@@ -147,7 +152,6 @@ class MainmenuAction extends Action
 		$this->addSubAction('rights',ACL_GRANT   );
 
 		$this->setTemplateVar('subaction',$this->subActionList);
-		$this->setTemplateVar('param','objectid');
 
 		$this->callSubAction('show');
 	}
@@ -157,7 +161,7 @@ class MainmenuAction extends Action
 	function user()
 	{
 		$this->setTemplateVar('folder',array() );
-		$user = new User( $this->getSessionVar('userid') );
+		$user = new User( $this->getRequestId() );
 		$user->load();
 			
 		$this->setTemplateVar('text',$user->name);
@@ -185,7 +189,7 @@ class MainmenuAction extends Action
 	{
 		$this->setTemplateVar('folder',array() );
 
-		$group = new Group( $this->getSessionVar('groupid') );
+		$group = new Group( $this->getRequestId() );
 		$group->load();
 		$this->setTemplateVar('text',$group->name);
 
@@ -206,7 +210,7 @@ class MainmenuAction extends Action
 
 	function file()
 	{
-		$file = new File( $this->getSessionVar('objectid') );
+		$file = new File( $this->getRequestId() );
 		$file->load();
 		
 		$folder = new Folder( $file->parentid );
@@ -241,7 +245,7 @@ class MainmenuAction extends Action
 	function link()
 	{
 		// Ermitteln Sprache
-		$link = new Link( $this->getSessionVar('objectid') );
+		$link = new Link( $this->getRequestId() );
 		$link->load();
 		
 		$folder = new Folder( $link->parentid );
@@ -269,23 +273,23 @@ class MainmenuAction extends Action
 
 	function folder()
 	{
+		$folder = Session::getObject();
+		if	( $folder->objectid != $this->getRequestId() )
+		{
+			$folder = new Folder( $this->getRequestId() );
+			Session::setObject( $folder );
+		}
+		$folder = new Folder( $folder->objectid );
+		$folder->load();
+		$this->obj = &$folder;
+		$this->setTemplateVar('nr',$folder->objectid);
 
-		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
-		if   ( !is_numeric($this->getSessionVar('objectid')) )
-			$SESS['objectid'] = Folder::getRootObjectId();
-
-		$folder = new Folder( $this->getSessionVar('objectid') );
-		$folder->filenames = false;
 		$folder->load();
 
 		$this->setTemplateVar('folder',$folder->parentObjectNames(true,false));
 		
 		$this->setTemplateVar('text',$folder->name);
-
-		$this->setTemplateVar('id','o'.$folder->objectid);
 	
-		$this->obj = &$folder;
-		
 		$this->addSubAction('show',ACL_READ    );
 
 		if   ( !$folder->isRoot )
@@ -312,11 +316,11 @@ class MainmenuAction extends Action
 
 		$this->addSubaction('listing');
 
-		if   ( intval($this->getSessionVar('projectid')) != 0 )
+		if   ( $this->getRequestId() > 0 )
 		{
 			$this->addSubaction('edit');
 
-			$project = new Project( $this->getSessionVar('projectid') );
+			$project = new Project( $this->getRequestId() );
 			$project->load();
 			$this->setTemplateVar('text',$project->name );
 		}
@@ -375,7 +379,8 @@ class MainmenuAction extends Action
 
 	function show()
 	{
-		$this->setTemplateVar('action',$this->subActionName);
+		$this->setTemplateVar('actionid',$this->getRequestId() );
+		$this->setTemplateVar('action'  ,$this->subActionName  );
 
 		if	( $this->subActionName == 'pageelement')
 			$this->setTemplateVar('action','page');
