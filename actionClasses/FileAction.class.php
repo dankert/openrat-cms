@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-12-20 22:43:12  dankert
+// Revision 1.14  2005-01-14 21:41:23  dankert
+// Aufruf von lastModified() fuer Conditional-GET
+//
+// Revision 1.13  2004/12/20 22:43:12  dankert
 // Uebertragen des Benutzers geaendert
 //
 // Revision 1.12  2004/12/19 14:53:54  dankert
@@ -88,6 +91,8 @@ class FileAction extends ObjectAction
 		{
 			$this->file = Session::getObject();
 		}
+
+		$this->lastModified( $this->file->lastchangeDate );
 	}
 
 

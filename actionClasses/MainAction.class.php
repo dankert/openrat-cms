@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-12-19 14:55:50  dankert
+// Revision 1.6  2005-01-14 21:41:23  dankert
+// Aufruf von lastModified() fuer Conditional-GET
+//
+// Revision 1.5  2004/12/19 14:55:50  dankert
 // Bestimmte Paramer weiterleiten
 //
 // Revision 1.4  2004/12/15 23:23:47  dankert
@@ -51,6 +54,10 @@ class MainAction extends Action
 	
 	function show()
 	{
+		$user = Session::getUser();
+		if	( is_object($user) && isset($user->loginDate) )
+			$this->lastModified( $user->loginDate );
+
 		// Bestimmte Paramer weiterleiten
 		$params = array(); 
 		

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2005-01-04 21:42:09  dankert
+// Revision 1.16  2005-01-14 21:41:23  dankert
+// Aufruf von lastModified() fuer Conditional-GET
+//
+// Revision 1.15  2005/01/04 21:42:09  dankert
 // Uebertragen von MOTD
 //
 // Revision 1.14  2004/12/29 20:19:55  dankert
@@ -147,6 +150,7 @@ class IndexAction extends Action
 			$user->loadProjects();
 			//$user->loadRights();
 			$user->setCurrent();
+			$user->loginDate = time();
 			Session::setUser( $user );
 			Logger::info( 'login successful' );
 
@@ -162,6 +166,13 @@ class IndexAction extends Action
 	}
 
 
+	/**
+	 * Anzeigen der Loginmaske.
+	 *
+	 * Es wird nur die Loginmaske angezeigt.
+	 * Hier nie "304 not modified" setzen, da sonst keine
+	 * Login-Fehlermeldung erscheinen kann
+	 */
 	function showlogin()
 	{
 		global $conf;
@@ -194,6 +205,8 @@ class IndexAction extends Action
 	{
 		$user     = Session::getUser();
 		$projects = $user->projects;
+
+		$this->lastModified( $user->loginDate );
 
 		// Administrator sieht Administrationsbereich
 		if   ( $user->isAdmin )
@@ -414,6 +427,8 @@ class IndexAction extends Action
 			}
 		}
 
+		// Seite ändert sich nur 1x pro Session
+		$this->lastModified( $user->loginDate );
 
 		$projectid  = intval( $this->getRequestVar('projectid' ) );
 		$languageid = intval( $this->getRequestVar('languageid') );

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2004-12-25 22:17:59  dankert
+// Revision 1.17  2005-01-14 21:41:23  dankert
+// Aufruf von lastModified() fuer Conditional-GET
+//
+// Revision 1.16  2004/12/25 22:17:59  dankert
 // Korrektur transfer()
 //
 // Revision 1.15  2004/12/25 22:11:03  dankert
@@ -85,6 +88,7 @@ class MainmenuAction extends Action
 	var $obj;
 	
 
+
 	function element()
 	{
 		$this->subActionName = 'template';
@@ -139,6 +143,7 @@ class MainmenuAction extends Action
 			Session::setObject( $page );
 		}
 		$page->load();
+		$this->lastModified( $page->lastchangeDate );
 		
 		$this->setTemplateVar('nr'      ,$page->objectid);
 		$this->setTemplateVar('actionid',$page->objectid);
@@ -226,6 +231,7 @@ class MainmenuAction extends Action
 	{
 		$file = new File( $this->getRequestId() );
 		$file->load();
+		$this->lastModified( $file->lastchangeDate );
 		
 		$folder = new Folder( $file->parentid );
 		$folder->filenames = false;

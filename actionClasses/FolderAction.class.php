@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.26  2004-12-30 23:11:03  dankert
+// Revision 1.27  2005-01-14 21:40:57  dankert
+// Aufruf von lastModified() fuer Conditional-GET
+//
+// Revision 1.26  2004/12/30 23:11:03  dankert
 // Wenn Root-Folder, dann keine Eigenschaften
 //
 // Revision 1.25  2004/12/30 21:44:23  dankert
@@ -126,6 +129,9 @@ class FolderAction extends ObjectAction
 		{
 			$this->folder = Session::getObject();
 		}
+		
+		// Datum letzte Aenderung an Browser uebertragen
+		$this->lastModified( $this->folder->lastchangeDate );
 	}
 
 

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-12-19 19:23:20  dankert
+// Revision 1.6  2005-01-14 21:41:23  dankert
+// Aufruf von lastModified() fuer Conditional-GET
+//
+// Revision 1.5  2004/12/19 19:23:20  dankert
 // Link auf Profil korrigiert
 //
 // Revision 1.4  2004/12/15 23:24:23  dankert
@@ -58,6 +61,10 @@ class TitleAction extends Action
 	 */
 	function show()
 	{
+		$user = Session::getUser();
+		if	( is_object($user) && isset($user->loginDate) )
+			$this->lastModified( $user->loginDate );
+
 		$this->setTemplateVar('css_body_class','title');
 
 		$db = Session::getDatabase();
