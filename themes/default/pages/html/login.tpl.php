@@ -13,9 +13,11 @@
   <th colspan="2"><?php echo lang('GLOBAL_LOGIN') ?></th>
 </tr>
 
+<?php if ( $logo != '' ) { ?>
 <tr>
-<td colspan="2"><a href="http://www.openrat.de/" target="_top"><img src="<?php echo $logo ?>" border="0" /></a></td>
+  <td colspan="2"><?php if ( $logo_url != '' ) { ?><a href="<?php echo $logo_url ?>" target="_top"><?php } ?><img src="<?php echo $logo ?>" border="0" /><?php if ( $logo_url != '' ) { ?></a><?php } ?></td>
 </tr>
+<?php } ?>
 
 <?php if ($loginmessage!='')
       { ?>
@@ -25,18 +27,18 @@
 <?php } ?>
 
 <tr>
-<td class="f1" width="50%"><?php echo lang('USER_USERNAME') ?></td>
-<td class="f1" width="50%"><input name="login_name" type="text" value="<?php #echo $login ?>" width="20"></td>
+  <td class="f1" width="50%"><?php echo lang('USER_USERNAME') ?></td>
+  <td class="f1" width="50%"><input name="login_name"     type="text"     value="" width="25"></td>
 <tr>
-<td class="f2" width="50%"><?php echo lang('USER_PASSWORD') ?></td>
-<td class="f2" width="50%"><input name="login_password" type="password" value="<?php echo #$password ?>" width="20"></td>
+  <td class="f2" width="50%"><?php echo lang('USER_PASSWORD') ?></td>
+  <td class="f2" width="50%"><input name="login_password" type="password" value="" width="25"></td>
 <tr>
 
 <?php if (count($dbids)>1)
       { ?>
 <tr>
-<td class="f1" width="50%"><?php echo lang('GLOBAL_DATABASE') ?></td>
-<td class="f1" width="50%"><?php echo Html::selectBox('dbid',$dbids,$actdbid) ?></td>
+  <td class="f1" width="50%"><?php echo lang('GLOBAL_DATABASE') ?></td>
+  <td class="f1" width="50%"><?php echo Html::selectBox('dbid',$dbids,$actdbid) ?></td>
 </tr>
 <?php } ?>
 
