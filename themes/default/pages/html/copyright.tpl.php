@@ -3,6 +3,9 @@
 
 <br><br>
 <p class="copyright">
-Copyright (C) <a href="mailto:cms-author@jandankert.de">Jan Dankert</a><br>
-This program comes with ABSOLUTELY NO WARRANTY.<br>
-This is free software, and you are welcome to redistribute it under certain conditions; <a href="http://www.gnu.org/copyleft/gpl.html" target="_top">details</a>.</p>
+<br><br>
+<p class="copyright">
+<?php echo lang('help_copyright') ?><br><br>
+<?php echo lang('help_gpl') ?>
+</p>
+<a href="http://www.gnu.org/copyleft/gpl.html" target="_top">details</a>
