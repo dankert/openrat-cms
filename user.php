@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2003-09-29 18:18:21  dankert
+// Revision 1.2  2003-10-02 20:56:17  dankert
+// Benutzer entfernen
+//
+// Revision 1.1  2003/09/29 18:18:21  dankert
 // erste Version
 //
 // ---------------------------------------------------------------------------
@@ -37,6 +40,7 @@ session_start();
 
 include( "DB.php" );
 
+include( "$conf_incldir/db.inc.$conf_php" );
 include( "$conf_incldir/language.inc.$conf_php" );
 include( "$conf_incldir/theme.inc.$conf_php" );
 include( "$conf_incldir/request.inc.$conf_php" );
@@ -49,7 +53,7 @@ if   ( $SESS['user']['is_admin'] != '1' )
 	die('access denied');
 
 
-$db = new DB( $conf['database_'.$SESS['dbid']] );
+$db = db_connection();
 
 $var = array();
 
@@ -61,21 +65,70 @@ if   ( $SESS['useraction'] == 'save' )
 {
 	if   ( $REQ['is_admin']!=1 )
 		$REQ['is_admin'] = 0;
-		
-	$t_user = $conf_db_prefix.'user';
-	$sql = "UPDATE $t_user ".
-	       "SET ".
-	       "name      ='".$REQ['name']."', ".
-	       "fullname  ='".$REQ['fullname']."', ".
-	       "is_admin  = ".$REQ['is_admin'].", ".
-	       "ldap      ='".$REQ['ldap']."', ".
-	       "mail      ='".$REQ['mail']."', ".
-	       "lang      ='".$REQ['lang']."', ".
-	       "style     ='".$REQ['style']."' ".
-	       "WHERE id=".$SESS['userid'];
-	$res = $db->query($sql);
 
-	$SESS['useraction'] = 'show';
+	if   ( $REQ['delete'] == '1' )
+	{
+		// Alle Archivdaten in Dateien mit diesem Benutzer entfernen
+		$sql = new Sql( 'UPDATE {t_file} '.
+		                'SET create_userid=null '.
+		                'WHERE create_userid={userid}' );
+		$sql->setInt   ('userid',$SESS['userid'] );
+		$res = $db->query($sql->query);
+
+		$sql = new Sql( 'UPDATE {t_file} '.
+		                'SET lastchange_userid=null '.
+		                'WHERE lastchange_userid={userid}' );
+		$sql->setInt   ('userid',$SESS['userid'] );
+		$res = $db->query($sql->query);
+
+		// Alle Berechtigungen dieses Benutzers löschen
+		$sql = new Sql( 'DELETE FROM {t_acl} '.
+		                'WHERE userid={userid}' );
+		$sql->setInt   ('userid',$SESS['userid'] );
+		$res = $db->query($sql->query);
+
+		// Alle Gruppenzugehörigkeiten dieses Benutzers löschen
+		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
+		                'WHERE userid={userid}' );
+		$sql->setInt('userid',$SESS['userid'] );
+		$res = $db->query($sql->query);
+
+		// Benutzer löschen
+		$sql = new Sql( 'DELETE FROM {t_user} '.
+		                'WHERE id={userid}' );
+		$sql->setInt   ('userid',$SESS['userid'] );
+		$res = $db->query($sql->query);
+
+		unset( $SESS['userid'] );
+		$SESS['useraction'] = 'list';
+		
+		$var['tree_refresh'] = true;
+	}
+	else
+	{
+		// Benutzer speichern		
+		$sql = new Sql( 'UPDATE {t_user} '.
+		                'SET name={name}, '. 
+		                    'fullname = {fullname}, '.
+		                    'is_admin = {is_admin}, '.
+		                    'ldap     = {ldap}, '.
+		                    'mail     = {mail}, '.
+		                    'lang     = {lang}, '.
+		                    'style    = {style} '.
+		                'WHERE id= {userid}' );
+		$sql->setString('name'    ,$REQ['name']    );
+		$sql->setString('fullname',$REQ['fullname']);
+		$sql->setInt   ('is_admin',$REQ['is_admin']);
+		$sql->setString('ldap'    ,$REQ['ldap']    );
+		$sql->setString('mail'    ,$REQ['mail']    );
+		$sql->setString('lang'    ,$REQ['lang']    );
+		$sql->setString('style'   ,$REQ['style']   );
+		$sql->setInt   ('userid'  ,$SESS['userid'] );
+		$res = $db->query($sql->query);
+
+		$SESS['useraction'] = 'edit';
+	}
+
 }
 
 if   ( $SESS['useraction'] == 'add' )
@@ -219,10 +272,11 @@ if   ( $SESS['useraction'] == 'groups' )
 		$var['groups'][$row['id']] = $row['name'];
 	}
 
+
 	// Mitgliedschaften ermitteln
 	//
 	$var['memberships'] = array();
-	$t_usergroup = $conf_db_prefix.'usergroup';
+
 	$sql = "SELECT * FROM $t_usergroup ".
 	       "WHERE userid=".$SESS['userid'];
 	$res = $db->query($sql);
