@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-12-15 23:11:41  dankert
+// Revision 1.11  2004-12-18 00:34:33  dankert
+// Anpassung Lesen der Konfiguration
+//
+// Revision 1.10  2004/12/15 23:11:41  dankert
 // aufgeraeumt
 //
 // Revision 1.9  2004/12/13 22:55:41  dankert
@@ -63,14 +66,14 @@ define('OR_TYPE_FILE'  ,'file'  );
 define('OR_TYPE_LINK'  ,'link'  );
 define('OR_TYPE_FOLDER','folder');
 
-define('OR_ACTIONCLASSES_DIR' ,'./actionClasses/' );
-define('OR_OBJECTCLASSES_DIR' ,'./objectClasses/' );
-define('OR_SERVICECLASSES_DIR','./serviceClasses/');
-define('OR_LANGUAGE_DIR'      ,'./language/'      );
-define('OR_DBCLASSES_DIR'     ,'./db/'            );
-define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/');
-define('OR_THEMES_DIR'        ,'./themes/'        );
-define('OR_TMP_DIR'           ,'./tmp/'           );
+define('OR_ACTIONCLASSES_DIR' ,'./actionClasses/'  );
+define('OR_OBJECTCLASSES_DIR' ,'./objectClasses/'  );
+define('OR_SERVICECLASSES_DIR','./serviceClasses/' );
+define('OR_LANGUAGE_DIR'      ,'./config/language/');
+define('OR_DBCLASSES_DIR'     ,'./db/'             );
+define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/' );
+define('OR_THEMES_DIR'        ,'./themes/'         );
+define('OR_TMP_DIR'           ,'./tmp/'            );
 
 require_once( OR_SERVICECLASSES_DIR."GlobalFunctions.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Http.class.".PHP_EXT );
@@ -116,10 +119,10 @@ $conf = Session::getConfig();
 // aus Datei lesen.
 if	( !is_array( $conf ) )
 {
-	$conf_filename = OR_CONFIG_DIR.'/config.ini.php';
+	$conf_filename = OR_CONFIG_DIR.'/config.ini.'.PHP_EXT;
 
 	if	( !is_file( $conf_filename ) )
-		die( $conf_file.': file not found' );
+		die( $conf_filename.': file not found' );
 
 	// Datei lesen, parsen und in Session schreiben
 	$conf = parse_ini_file( $conf_filename,true );
@@ -145,6 +148,50 @@ if	( !is_array( $conf ) )
 	}
 	closedir($handle);
 
+	// Mime-Types aus eigener Datei lesen und zur Konfiguration hinzufuegen 
+	$conf['mime-types']   = parse_ini_file( OR_CONFIG_DIR.'/mime-types.ini.'.PHP_EXT );
+
+	// Laender aus eigener Datei lesen und zur Konfiguration hinzufuegen 
+	$conf['countries']    = parse_ini_file( OR_CONFIG_DIR.'/countries.ini.'.PHP_EXT );
+
+	// Datum-Formate aus eigener Datei lesen und zur Konfiguration hinzufuegen 
+	$conf['date-formats'] = parse_ini_file( OR_CONFIG_DIR.'/date-formats.ini.'.PHP_EXT );
+
+	// Ersetze-mit-Angaben aus eigener Datei lesen und zur Konfiguration hinzufuegen 
+	$conf['replace']      = parse_ini_file( OR_CONFIG_DIR.'/replace.ini.'.PHP_EXT );
+
+	// Sprache lesen und zur Konfiguration hinzufuegen
+
+	if	( $conf['interface']['use_browser_language'] )
+		// Die vom Browser angeforderten Sprachen ermitteln     
+		$languages = Http::getLanguages();
+	else
+		// Nur Default-Sprache erlauben
+		$languages = array();
+
+	// Default-Sprache hinzufuegen.
+	// Wird verwendet, wenn die vom Browser angeforderten Sprachen
+	// nicht vorhanden sind
+	$languages[] = $conf['interface']['language'];
+
+	foreach( $languages as $l )
+	{
+		$l = substr($l,0,2);
+
+		// Pruefen, ob Sprache vorhanden ist.
+		$langFile = OR_LANGUAGE_DIR.$l.'.ini.'.PHP_EXT;
+
+		if	( file_exists( $langFile ) )
+		{
+//			Logger::debug( 'reading language file: '.$l );
+			$conf['language'] = parse_ini_file( $langFile );
+			break;
+		}
+	}
+
+	if	( !isset($conf['language']) )
+		die( 'no language found! (languages='.implode(',',$languages).')' );
+	
 	Session::setConfig( $conf );
 }
 
