@@ -18,57 +18,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.15  2004-11-27 10:21:32  dankert
-// Wenn Generierungstyp "simple", dann nur notwendige Elemente generieren
-//
-// Revision 1.14  2004/11/10 22:49:10  dankert
-// Einsatz der Api-Klasse ge?ndert
-//
-// Revision 1.13  2004/10/14 21:13:49  dankert
-// Nutzen von getDynamicParameters aus dem Element-Objekt
-//
-// Revision 1.12  2004/10/10 20:07:20  dankert
-// Korrektur Parsen von Parametern
-//
-// Revision 1.11  2004/10/10 17:41:23  dankert
-// Setzen von Parametern bei Elementtyp: dynamic
-//
-// Revision 1.10  2004/10/06 09:55:02  dankert
-// Neuer Elementtyp: dynamic
-//
-// Revision 1.9  2004/07/07 20:48:33  dankert
-// Neuer Elementtyp: select
-//
-// Revision 1.8  2004/05/03 21:15:30  dankert
-// Umstellung auf dezimale ASCII-Werte
-//
-// Revision 1.7  2004/05/03 20:21:49  dankert
-// setzen von ObjectId bei Code-Elementen
-//
-// Revision 1.6  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.5  2004/05/02 12:01:33  dankert
-// Funktion release() zum freigeben von Inhalten
-//
-// Revision 1.4  2004/05/02 11:40:00  dankert
-// Freigabestatus der Seiteninhalte verarbeiten
-//
-// Revision 1.3  2004/04/24 18:11:28  dankert
-// Info-elemente
-//
-// Revision 1.2  2004/04/24 15:28:17  dankert
-// Korrektur: relative Pfad bei Listen
-//
-// Revision 1.1  2004/04/24 15:15:12  dankert
-// Initiale Version
-//
-// Revision 1.1  2004/03/13 23:09:48  dankert
-// *** empty log message ***
-//
-// ---------------------------------------------------------------------------
+
 
 
 /**
@@ -97,19 +47,19 @@ class Value
 	 * Objekt-ID, auf die verlinkt wird
 	 * @type Integer
 	 */
-	var $linkToObjectId;
+	var $linkToObjectId=0;
 
 	/**
 	 * Text-Inhalt
 	 * @type String
 	 */
-	var $text;
+	var $text='';
 	
 	/**
 	 * Zahl. Auch Flie?kommazahlen werden als Ganzzahl gespeichert
 	 * @type Integer
 	 */
-	var $number;
+	var $number=0;
 
 	
 	/**
@@ -170,6 +120,42 @@ class Value
 
 
 	/**
+	 * Umwandeln von BB-Code in Wiki-Textauszeichnungen
+	 *
+	 * @param text zu bearbeitender Text
+	 *
+	 * @return String Ausgabe
+	 */
+	function convert_bbcode( $inhalt )
+	{
+		$inhalt = eregi_replace('\[b\]([^\[]*)\[\/b\]'       , '*\\1*' ,$inhalt);
+		$inhalt = eregi_replace('\[i\]([^\[]*)\[\/i\]'       , '_\\1_' ,$inhalt);
+		$inhalt = eregi_replace('\[code\]([^\[]*)\[\/code\]' , '=\\1=' ,$inhalt);
+
+		$inhalt = eregi_replace('\[url\]([^\[]*)[\/url\]'          ,'"\\1"->"\\1"' ,$inhalt);
+		$inhalt = eregi_replace('\[url=([^\[]*)\]([^\[]*)\[\/url\]','"\\2"->"\\1"' ,$inhalt);
+		return $inhalt;
+	}
+
+
+	/**
+	 * Umwandeln von einfachen HTML-Befehlen in Wiki-Textauszeichnungen
+	 *
+	 * @param text zu bearbeitender Text
+	 *
+	 * @return String Ausgabe
+	 */
+	function convert_html( $inhalt )
+	{
+		$inhalt = eregi_replace('<b(.*)>(.*)</b>','*\\2*' ,$inhalt);
+		$inhalt = eregi_replace('<i(.*)>(.*)</i>','_\\2_' ,$inhalt);
+		$inhalt = eregi_replace('<a(.*)href="(.*)">(.*)</a>','"\\3"->"\\2"' ,$inhalt);
+		return $inhalt;
+	}
+	
+	
+	
+	/**
 	 * Umwandeln von Wiki-Textauszeichnungen in HTML-Auszeichnungen
 	 *
 	 * @param text zu bearbeitender Text
@@ -181,8 +167,9 @@ class Value
 	{
 		global $conf_languagedir,
 		       $conf_php;
+		global $conf;
 
-		$ini_chars = parse_ini_file( $conf_languagedir.'/specialchars.ini.'.$conf_php );
+		//$ini_chars = parse_ini_file( $conf_languagedir.'/specialchars.ini.'.$conf_php );
 
 		$neu = array();
 
@@ -409,17 +396,22 @@ class Value
 	
 	
 			// Textauszeichnungen fett,kursiv,fest		
-			if   ( !$pre && !$nowiki )  // nicht bei pr?formatiertem Text
+			if   ( !$pre && !$nowiki )  // nicht bei praeformatiertem Text
 			{
+				$html = $conf['html'];
 				// *Fett*	
-				//$zeile = ereg_replace( '\*([^*]+[^\\])\*' , '<strong>\\1</strong>' , $zeile );
-				$zeile = preg_replace( '/\*([^*]+[^\\\\]+)\*/' , '<strong>\\1</strong>' , $zeile );
+				$zeile = ereg_replace( '\*([^\*]+[^\\])\*'      , $html['tag_strong_open'].'\\1'.$html['tag_strong_close']       , $zeile );
 	
-				// kursiv
-				$zeile = ereg_replace( '_([^_]+[^\\])_'        , '<em>\\1</em>' , $zeile );
+				// _kursiv_
+				$zeile = ereg_replace( '_([^_]+[^\\])_'         , $html['tag_emphatic_open'].'\\1'.$html['tag_emphatic_close']   , $zeile );
+
+				// "Wortliche Rede"
+				if	( !$html )
+					$zeile = ereg_replace( '([^\-].{1,4})"([^"\-]+[^\\])"([^\-])', '\\1'.$html['tag_speech_open'].'\\2'.$html['tag_speech_close'].'\\3' , $zeile );
 	
-				// feste Breite
-				$zeile = ereg_replace( '=([^=]+[^\\])='        , '<tt>\\1</tt>' , $zeile );
+				// =feste Breite=
+				$zeile = ereg_replace( '=([^=]+[^\\])='         , $html['tag_teletype_open'].'\\1'.$html['tag_teletype_close']   , $zeile );
+
 
 				// Text->... umsetzen nach "Text"->... (Anfuehrungszeichen ergaenzen)
 				$zeile = ereg_replace( '([A-Za-z0-9._????????-]+)-'.$pf, '"\\1"-'.$pf, $zeile );
@@ -485,9 +477,15 @@ class Value
 		}
 		$text = str_replace( '##TOC##',implode("<br/>\n",$toctext),$text ); // Inhaltsverzeichnis einf?gen
 		
-		foreach( $ini_chars  as $key=>$val)
+//		foreach( $ini_chars  as $key=>$val)
+//		{
+//			$text = str_replace( chr($key),$val,$text );
+//		}
+		foreach( $conf['replace'] as $replace )
 		{
-			$text = str_replace( chr($key),$val,$text );
+			$repl = explode(',',$replace);
+			if	( count($repl) == 2 )
+				$text = str_replace( $repl[0],$repl[1],$text );
 		}
 		
 		return $text;
@@ -527,17 +525,20 @@ class Value
 		$sql->setInt( 'languageid',$this->languageid);
 		$row = $db->getRow( $sql->query );
 		
-		$this->text           = $row['text'];
-		$this->valueid        = intval($row['id']          );
-		$this->linkToObjectId = intval($row['linkobjectid']);
-		$this->number         = intval($row['number'      ]);
-		$this->date           = intval($row['date'        ]);
-
-		$this->active         = ( $row['active' ]=='1' );
-		$this->publish        = ( $row['publish']=='1' );
-
-		$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
-		$this->lastchangeUserId    = intval($row['lastchange_userid']);
+		if	( count($row) > 0 ) // Wenn Inhalt gefunden
+		{
+			$this->text           = $row['text'];
+			$this->valueid        = intval($row['id']          );
+			$this->linkToObjectId = intval($row['linkobjectid']);
+			$this->number         = intval($row['number'      ]);
+			$this->date           = intval($row['date'        ]);
+	
+			$this->active         = ( $row['active' ]=='1' );
+			$this->publish        = ( $row['publish']=='1' );
+	
+			$this->lastchangeTimeStamp = intval($row['lastchange_date'  ]);
+			$this->lastchangeUserId    = intval($row['lastchange_userid']);
+		}
 	}
 
 
@@ -773,7 +774,7 @@ class Value
 								$o->load();
 								switch( $o->getType() )
 								{
-									case 'page':
+									case OR_TYPE_PAGE:
 										$p = new Page( $oid );
 										$p->public         = $this->page->public;
 										$p->up_path        = $this->page->up_path();
@@ -784,7 +785,7 @@ class Value
 										$inhalt .= $p->value;
 										unset( $p );
 										break;
-									case 'link':
+									case OR_TYPE_LINK:
 										$l = new Link( $oid );
 										$l->load();
 										if	( $l->isLinkToObject )
@@ -813,7 +814,7 @@ class Value
 					else die('FATAL: recursion detected');
 				}
 
-				if   ( $this->simple )
+				if	( $this->simple )
 				{
 					$inhalt = strip_tags( $inhalt );
 					$inhalt = str_replace( "\n",'',$inhalt );
@@ -830,7 +831,12 @@ class Value
 				if   ( intval($objectid) == 0 )
 					$objectid = $this->element->defaultObjectId;
 	
-				if   ( $this->simple )
+				if   ( $objectid==0 )
+				{
+					// Link noch nicht gefuellt
+					$inhalt = '';
+				}
+				elseif   ( $this->simple )
 				{
 					$p = new Page( $objectid );
 					$p->load();
@@ -860,8 +866,14 @@ class Value
 					
 					$inhalt = str_replace('<','&lt;' ,$inhalt);
 					$inhalt = str_replace('>','&gt;' ,$inhalt);
-					$inhalt = str_replace('>','&amp;',$inhalt);
+					$inhalt = str_replace('&','&amp;',$inhalt);
 				}
+
+				if   ( !$this->element->html && $this->element->wiki && $conf['wiki']['convert_html'] )
+					$inhalt = $this->convert_html( $inhalt );
+
+				if   ( $this->element->wiki && $conf['wiki']['convert_bbcode'] )
+					$inhalt = $this->convert_bbcode( $inhalt );
 	
 				// Schnellformatierung ('Wiki') durchf?hren
 				if   ( $this->element->wiki )
@@ -910,14 +922,16 @@ class Value
 
 				$this->page->load();
 
-				$api = new Api();
-				$api->page = &$this->page;
-				$api->setObjectId( $this->page->objectid );
-				$api->delOutput();
+				$code = new Code();
+				$code->page = &$this->page;
+				$code->setObjectId( $this->page->objectid );
+				$code->delOutput();
+				$code->code = $this->element->code;
 
 				// Jetzt ausfuehren des temporaeren PHP-Codes				
-				$api->execute( $this->element->code );
-				$inhalt = $api->getOutput();
+				$code->execute();
+
+				$inhalt = $code->getOutput();
 
 				break;
 
