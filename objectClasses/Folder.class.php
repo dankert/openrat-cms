@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-24 22:05:45  dankert
+// Revision 1.5  2004-11-29 21:10:29  dankert
+// publish() mit 3 Parametern
+//
+// Revision 1.4  2004/11/24 22:05:45  dankert
 // Korrektur getObjects()
 //
 // Revision 1.3  2004/11/10 22:45:56  dankert
@@ -269,7 +272,7 @@ class Folder extends Object
 	}
 
 
-	function publish( $subdirs = false )
+	function publish( $withPages,$withFiles,$subdirs = false )
 	{
 		if	( ! is_object($this->publish) )
 			$this->publish = new Publish();
@@ -277,9 +280,9 @@ class Folder extends Object
 		foreach( $this->getObjectIds() as $oid )
 		{
 			$o = new Object( $oid );
-			$o->load();
+			$o->objectLoadRaw();
 
-			if	( $o->isPage )
+			if	( $o->isPage && $withPages )
 			{
 				$p = new Page( $oid );
 				$p->load();
@@ -287,7 +290,7 @@ class Folder extends Object
 				$p->publish();
 			}
 
-			if	( $o->isFile )
+			if	( $o->isFile && $withFiles )
 			{
 				$f = new File( $oid );
 				$f->load();
@@ -300,7 +303,7 @@ class Folder extends Object
 				$f = new Folder( $oid );
 				$f->load();
 				$f->publish = &$this->publish;
-				$f->publish( true );			
+				$f->publish( $withPages,$withFiles,true );			
 			}
 		}
 	}
