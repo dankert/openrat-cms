@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-11-10 22:51:30  dankert
+// Revision 1.2  2004-12-15 23:14:48  dankert
+// speichern/lesen Konfiguration
+//
+// Revision 1.1  2004/11/10 22:51:30  dankert
 // Bereitstellen von Methoden, zum Lesen/Schreiben von Variablen von/nach HTTP-Session
 //
 // Revision 1.8  2004/10/14 22:57:44  dankert
@@ -81,6 +84,23 @@ else $FILES = &$HTTP_POST_FILES;
 
 class Session
 {
+	function getConfig()
+	{
+		global $SESS;
+		if	( isset($SESS['config']) )
+			return $SESS['config'];
+		else
+			return '';
+	}
+	
+	function setConfig( $var )
+	{
+		global $SESS;
+		$SESS['config'] = $var;
+	}	
+
+
+
 	function getProjectModel()
 	{
 		global $SESS;
