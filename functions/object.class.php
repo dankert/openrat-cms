@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-03-20 01:47:33  dankert
+// Revision 1.2  2004-03-20 14:15:07  dankert
+// Kommentare
+//
+// Revision 1.1  2004/03/20 01:47:33  dankert
 // *** empty log message ***
 //
 // ---------------------------------------------------------------------------
@@ -70,18 +73,48 @@ class Object
 	 */
 	var $desc = '';
 
-	// Datum/Benutzer Erstellung
+	/** Zeitpunkt der Erstellung. Die Variable beinhaltet den Unix-Timestamp.
+	 * @type Integer
+	 */
 	var $create_date;
+
+	/** Benutzer-ID welche dieses Objekt erstellt hat.
+	 * @type Integer
+	 */
 	var $create_userid;
 
-	// Datum/Benutzer letzte Aenderung
+	/** Zeitpunkt der letzten Aenderung. Die Variable beinhaltet den Unix-Timestamp.
+	 * @type Integer
+	 */
 	var $lastchange_date;
+
+	/** Benutzer-ID welche dieses Objekt zuletzt geaendert hat.
+	 * @type Integer
+	 */
 	var $lastchange_userid;
 
-	// Flags für den Objekttyp
+	/**
+	 * Kennzeichen, ob Objekt ein Ordner ist
+	 * @type Boolean
+	 */
 	var $isFolder = false;
+
+	/**
+	 * Kennzeichen, ob Objekt eine binaere Datei ist
+	 * @type Boolean
+	 */
 	var $isFile = false;
+
+	/**
+	 * Kennzeichen, ob Objekt eine Seite ist
+	 * @type Boolean
+	 */
 	var $isPage = false;
+
+	/**
+	 * Kennzeichen, ob Objekt eine Verknuepfung (Link) ist
+	 * @type Boolean
+	 */
 	var $isLink = false;
 	
 	/** Kennzeichen ob Objekt den Wurzelordner des Projektes darstellt (parentid ist dann NULL)
@@ -95,24 +128,29 @@ class Object
 	 */
 	var $languageid;
 	
-	/** Projektmodell-ID
-	 *  @see Projectmodel
-	 *  @type Integer
+	/**
+	 * Projektmodell-ID
+	 * @see Projectmodel
+	 * @type Integer
 	 */
 	var $modelid;
 	
-	/** Projekt-ID
+	/**
+	 * Projekt-ID
 	 * @see Project
 	 * @type Integer
 	 */
 	var $projectid;
 
-	/** Dateiname der temporaeren Datei
+	/**
+	 * Dateiname der temporaeren Datei
 	 * @type String
 	 */
 	var $tmpfile;
 
-	/** Füllen des neuen Objektes mit Init-Werten
+
+	/** <strong>Konstruktor</strong>
+	  * Füllen des neuen Objektes mit Init-Werten
 	  * Es werden die Standardwerte aus der Session benutzt, um
 	  * Sprach-ID, Projektmodell-Id und Projekt-ID zu setzen
 	  *
@@ -181,6 +219,12 @@ class Object
 		return false;
 	}
 
+
+	/**
+	  * Typ des Objektes ermitteln
+	  *
+	  * @return String der Typ des Objektes entweder 'folder','file','page' oder 'link'
+	  */
 	function getType()
 	{
 		if ($this->isFolder)
@@ -195,6 +239,11 @@ class Object
 		return 'unknown';
 	}
 
+
+	/**
+	 * Ermitteln des physikalischen Dateipfades, in dem sich das Objekt befindet
+	 * @return String Pfadangabe, z.B. 'pfad/zu/objekt' 
+	 */
 	function path()
 	{
 		$folder = new Folder($this->parentid);
@@ -202,6 +251,11 @@ class Object
 		return implode('/', $folder->parentObjectFileNames(false, true));
 	}
 
+
+	/**
+	 * Ermitteln des Dateinamens und Rueckgabe desselben
+	 * @return String Dateiname
+	 */
 	function filename()
 	{
 		if ($this->filename != '')
@@ -292,15 +346,22 @@ class Object
 			$this->name = $this->filename;
 	}
 
+
+	/**
+	 * Laden des Objektes
+	 * @deprecated bitte objectLoad() benutzen
+	 */
 	function load()
 	{
 		$this->objectLoad();
 	}
 
-	// Lesen von logischem Namen und Beschreibung
-	//
-	// Diese Eigenschaften sind sprachabhaengig und stehen deswegen in einer
-	// separaten Tabelle
+	/**
+	 * Lesen von logischem Namen und Beschreibung
+	 * Diese Eigenschaften sind sprachabhaengig und stehen deswegen in einer
+	 * separaten Tabelle
+	 * @access private
+	 */
 	function objectLoadName()
 	{
 		die();
@@ -329,7 +390,9 @@ class Object
 			$this->name = $this->filename;
 	}
 
-	// Eigenschaften in Datenbank speichern
+	/**
+	 * Eigenschaften des Objektes in Datenbank speichern
+	 */
 	function objectSave()
 	{
 		global $SESS;
@@ -353,9 +416,17 @@ class Object
 
 		$db->query($sql->query);
 
-		$this->objectSaveName();
+		// Nur wenn nicht Wurzelordner
+		if	( !$this->isroot )
+			$this->objectSaveName();
 	}
 
+	/**
+	 * Logischen Namen und Beschreibung des Objektes in Datenbank speichern
+	 * (wird von objectSave() automatisch aufgerufen)
+	 *
+	 * @access private
+	 */
 	function ObjectSaveName()
 	{
 		global $SESS;
@@ -382,6 +453,11 @@ class Object
 		}
 	}
 
+	/**
+	 * Objekt loeschen. Es muss sichergestellt sein, dass auch das Unterobjekt geloeschet wird.
+	 * Diese Methode wird daher normalerweise nur vom Unterobjekt augerufen
+	 * @access protected
+	 */
 	function objectDelete()
 	{
 		$db = db_connection();
@@ -398,6 +474,10 @@ class Object
 
 	}
 
+
+	/**
+	 * Objekt hinzufuegen
+	 */
 	function objectAdd()
 	{
 		global $SESS;
@@ -444,6 +524,10 @@ class Object
 		$this->objectSaveName();
 	}
 
+
+	/**
+	 * Dateinamen der temporaeren Datei bestimmen
+	 */
 	function tmpfile()
 	{
 		global $conf_tmpdir;
@@ -454,7 +538,14 @@ class Object
 		return $this->tmpfile;
 	}
 
-	function setOrderId($orderid)
+
+	/**
+	 * Reihenfolge-Sequenznr. dieses Objektes neu speichern
+	 * die Nr. wird sofort in der Datenbank gespeichert.
+	 *
+	 * @param Integer neue Sequenz-Nr.
+	 */
+	function setOrderId( $orderid )
 	{
 		$db = db_connection();
 
