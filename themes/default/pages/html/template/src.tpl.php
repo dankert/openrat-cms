@@ -1,5 +1,32 @@
 <?php include( $tpl_dir.'header.tpl.php') ?>
 
+<script name="Javascript" type="text/javascript" src="<?php echo $tpl_dir ?>../js/editor.js" ></script>
+<script name="JavaScript" type="text/javascript">
+<!--
+function add_element()
+{
+	var elementName = document.forms[0].elementid.options[document.forms[0].elementid.selectedIndex].text;
+	insert('src',"{{"+elementName+"}}",'');
+}
+function add_icon()
+{
+	var elementName = document.forms[0].elementid.options[document.forms[0].iconid.selectedIndex].text;
+	insert('src',"{{->"+elementName+"}}",'');
+}
+function add_ifempty_tag()
+{
+	var elementName = document.forms[0].elementid.options[document.forms[0].ifemptyid.selectedIndex].text;
+	insert('src',"{{<?php echo lang('IFEMPTY') ?>:"+elementName+":<?php echo lang('BEGIN') ?>}}","{{<?php echo lang('IFEMPTY') ?>:"+elementName+":<?php echo lang('END') ?>}}");
+}
+
+function add_ifnotempty_tag()
+{
+	var elementName = document.forms[0].elementid.options[document.forms[0].ifnotemptyid.selectedIndex].text;
+	insert('src',"{{<?php echo lang('IFNOTEMPTY') ?>:"+elementName+":<?php echo lang('BEGIN') ?>}}","{{<?php echo lang('IFNOTEMPTY') ?>:"+elementName+":<?php echo lang('END') ?>}}");
+}
+//-->
+</script>
+
 <!-- $Id$ -->
 <center>
 
@@ -19,7 +46,7 @@
       { ?>
 <tr>
   <td class="f2" width="30%"><?php echo Html::selectBox('elementid',$elements) ?></td>
-  <td class="f2"><input type="submit" name="addelement" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>" /></td>
+  <td class="f2"><input type="submit" name="addelement" class="submit" onClick="add_element(); return false;" value="<?php echo lang('GLOBAL_ADD') ?>" /></td>
 </tr>
 <?php } ?>
 
