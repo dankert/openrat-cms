@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-04-30 20:52:11  dankert
+// Schalter $release setzen
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
@@ -198,6 +201,11 @@ class PageelementAction extends Action
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page = new Page( $this->getSessionVar('objectid') );
+		if	( $this->value->page->hasRight('release') )
+			$this->setTemplateVar( 'release',true  );
+		else	$this->setTemplateVar( 'release',false );
 
 		$this->forward('pageelement_edit_'.$this->value->element->type);
 	}
