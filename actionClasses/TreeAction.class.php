@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-11-10 22:40:49  dankert
+// Revision 1.8  2004-11-27 13:08:49  dankert
+// Benutzen "id"-Attribut
+//
+// Revision 1.7  2004/11/10 22:40:49  dankert
 // Benutzen der Session-Klasse
 //
 // Revision 1.6  2004/09/30 20:28:30  dankert
@@ -73,7 +76,7 @@ class TreeAction extends Action
 	function open()
 	{
 		$this->tree = Session::getTree();
-		$this->tree->open( $this->getRequestVar('open') );
+		$this->tree->open( $this->getRequestVar('id') );
 		Session::setTree( $this->tree );
 
 		$this->callSubAction('show');
@@ -86,7 +89,7 @@ class TreeAction extends Action
 	function close()
 	{
 		$this->tree = Session::getTree();
-		$this->tree->close( $this->getRequestVar('close') );
+		$this->tree->close( $this->getRequestVar('id') );
 		Session::setTree( $this->tree );
 
 		$this->callSubAction('show');
@@ -158,7 +161,7 @@ class TreeAction extends Action
 	                    $zeile['image'] = 'plus_end';
 	               else $zeile['image'] = 'plus';
 
-	               $zeile['image_url'     ] = Html::url(array('action'=>'tree','subaction'=>'open','open'=>$elId));
+	               $zeile['image_url'     ] = Html::url(array('action'=>'tree','subaction'=>'open','id'=>$elId));
 	               $zeile['image_url_desc'] = lang('TREE_OPEN_ELEMENT');
 	          }
 	          else
@@ -167,7 +170,7 @@ class TreeAction extends Action
 	                    $zeile['image'] = 'minus_end';
 	               else $zeile['image'] = 'minus';
 
-	               $zeile['image_url'     ] = Html::url(array('action'=>'tree','subaction'=>'close','close'=>$elId));
+	               $zeile['image_url'     ] = Html::url(array('action'=>'tree','subaction'=>'close','id'=>$elId));
 	               $zeile['image_url_desc'] = lang('TREE_CLOSE_ELEMENT');
 	          }
 	     }
