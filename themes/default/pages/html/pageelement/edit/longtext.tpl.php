@@ -10,13 +10,25 @@
 <tr>
   <th colspan="2"><?php echo $name ?></th>
 </tr>
+
 <tr>
-  <td colspan="2" class="help"><?php echo $desc ?><br><!--<br><?php echo lang('HELP_LONGTEXT_WIKI') ?><br>--></td>
+  <td colspan="2" class="help"><?php echo $desc ?></td>
 </tr>
+
+<?php if (isset($preview_text)) { ?>
+<tr>
+  <td colspan="2" class="f1"><?php echo $preview_text ?></td>
+</tr>
+<?php } ?>
 
 <tr>
   <td colspan="2" class="f1"><br><textarea class="longtext" name="text"><?php echo $text ?></textarea></td>
 </tr>
+
+<!--
+<tr>
+  <td class="f2" colspan="2"><?php echo Html::checkBox('preview',false).' '.lang('PAGE_PREVIEW') ?></td>
+</tr>-->
 
 <tr>
   <td class="f2"><?php if ( $release ) echo Html::checkBox('release',true).' '.lang('GLOBAL_RELEASE') ?></td>
@@ -29,7 +41,8 @@
 </tr>
 
 <tr>
-  <td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" /></td>
+  <td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" />
+                  <input type="submit" class="submit" name="preview" value="<?php echo lang('PAGE_PREVIEW') ?>" /></td>
 </tr>
 
 </table>

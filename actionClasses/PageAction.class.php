@@ -157,7 +157,27 @@ class PageAction extends ObjectAction
 		$value->linkToObjectId = intval($this->getRequestVar('linkobjectid'));
 		$value->text           = $this->getRequestVar('text');
 
-		if   ( $this->hasRequestVar('year') ) // Wird ein Datum gespeichert?
+		// Vorschau anzeigen
+		if	( $value->element->type=='longtext' && $this->hasRequestVar('preview') )
+		{
+			$value->page             = $this->page;
+			$value->simple           = false;
+			$value->page->languageid = $value->languageid;
+			$value->page->load();
+			$value->generate();
+	
+			$this->setTemplateVar( 'release',$this->page->hasRight(ACL_RELEASE) );
+			$this->setTemplateVar( 'publish',$this->page->hasRight(ACL_PUBLISH) );
+			$this->setTemplateVar( 'html'   ,$value->element->html );
+			$this->setTemplateVar( 'wiki'   ,$value->element->wiki );
+			$this->setTemplateVar( 'text'   ,$value->text          );
+			$this->setTemplateVar( 'name'   ,$value->element->name );
+			$this->setTemplateVar( 'desc'   ,$value->element->desc );
+			$this->setTemplateVar('preview_text',$value->value );
+			$this->forward( 'pageelement_edit_longtext' );
+		}
+
+		if	( $this->hasRequestVar('year') ) // Wird ein Datum gespeichert?
 		{
 			// Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
 			if   ( $this->getRequestVar('ansidate') != $this->getRequestVar('ansidate_orig') )
