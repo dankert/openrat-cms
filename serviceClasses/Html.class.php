@@ -55,7 +55,7 @@ class Html
 		{
 			if	( $url == '' )
 				$url = '?';
-			else	$url .= '&';
+			else	$url .= '&amp;';
 			
 			$url .= urlencode($var).'='.urlencode($value);
 		}
