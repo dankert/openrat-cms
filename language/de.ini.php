@@ -385,6 +385,7 @@ PAGE_LONGTEXT_WIKI_DESC = "<ul><li>*<strong>wichtig</strong>*</li><li>_<em>kursi
 PAGE_PAGEELEMENT = "Seitenelement"
 PAGE_PAGEELEMENTS = "Seitenelemente"
 PAGE_PUBLISH_AFTER_SAVE="Nach dem Speichern die Seite ver&ouml;ffentlichen"
+PAGE_PREVIEW="Vorschau (nicht speichern)"
 PAGE_REPLACE_TEMPLATE="Vorlage auswechseln"
 PAGE_REPLACE_TEMPLATE_DESC="Sie koennen die Vorlage dieser Seite gegen eine andere austauschen. Inhalte k&ouml;nnen &uuml;bernommen werden, wenn es in der Zielvorlage entsprechende Elemente gibt."
 PAGE_SOURCE = "Erzeugter Quellcode der Seite"
