@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-27 13:06:44  dankert
+// Revision 1.5  2004-12-13 22:17:51  dankert
+// URL-Korrektur
+//
+// Revision 1.4  2004/11/27 13:06:44  dankert
 // Ausgabe von Meldungen
 //
 // Revision 1.3  2004/11/10 22:37:23  dankert
@@ -79,7 +82,7 @@ class LanguageAction extends Action
 	 * Diese Sprache wird benutzt beim Ausw?hlen des Projektes sowie
 	 * als Default-Sprache bei mehrsprachigen Webseiten ("content-negotiation") 
 	 */
-	function setDefault()
+	function setdefault()
 	{
 		$this->language->setDefault();
 
@@ -152,7 +155,9 @@ class LanguageAction extends Action
 				                                      'languageid'    =>$id    ) );
 			
 				if	( ! $l->isDefault )
-					$list[$id]['default_url'] = 'languageaction=setDefault&languageid='.$id;
+					$list[$id]['default_url'] = Html::url( array('action'        =>'language',
+				                                      'subaction'     =>'setdefault',
+				                                      'languageid'    =>$id    ) );
 			}
 				
 			if	( $this->getSessionVar('languageid') != $l->languageid )

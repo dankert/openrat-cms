@@ -20,11 +20,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-07 21:37:31  dankert
-// Url über Html::url erzeugen
+// Revision 1.4  2004-12-13 22:17:51  dankert
+// URL-Korrektur
+//
+// Revision 1.3  2004/05/07 21:37:31  dankert
+// Url ?ber Html::url erzeugen
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -94,7 +97,7 @@ class ModelAction extends Action
 	}
 
 
-	function setDefault()
+	function setdefault()
 	{
 		if	( !$this->userIsAdmin() ) exit();
 
@@ -130,7 +133,7 @@ class ModelAction extends Action
 				$list[$id]['url' ] = Html::url(array('action'=>'model','subaction'=>'edit','modelid'=>$id));
 
 			if	( ! $m->isDefault && $this->userIsAdmin() )
-				$list[$id]['default_url'] = Html::url(array('action'=>'model','subaction'=>'default','modelid'=>$id));
+				$list[$id]['default_url'] = Html::url(array('action'=>'model','subaction'=>'setdefault','modelid'=>$id));
 
 			if	( $this->getSessionVar('modelid') != $m->modelid )
 				$list[$id]['select_url' ] = Html::url(array('action'=>'model','subaction'=>'select' ,'modelid'=>$id));
