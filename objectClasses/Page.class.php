@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2004-12-15 23:17:53  dankert
+// Revision 1.13  2004-12-19 15:23:06  dankert
+// Aussschalten content-negotiation
+//
+// Revision 1.12  2004/12/15 23:17:53  dankert
 // temporaere Dateien vom System
 //
 // Revision 1.11  2004/11/29 23:24:36  dankert
@@ -737,26 +740,26 @@ class Page extends Object
 		// Bei Verwendung der Content-Negotiation wird eine Default-Variante
 		// ohne Sprachversion, aber mit doppelter Extension
 		// z.B. index.html.html erzeugt
-		if   ( $this->publish->content_negotiation && count(Language::getAll())>1 )
-		{
-			$this->languageid = Language::getDefaultId();
-			$this->default_language = true;
-
-			// Schleife ?ber alle Projektvarianten
-			foreach( Model::getAll() as $projectmodelid )
-			{
-				$this->projectmodelid = $projectmodelid;
-			
-				$this->load();
-				$this->generate();
-				$this->write();
-				
-				//echo $this->tmpfile().' &gt; '.$this->full_filename().'<br>';
-				$publish->copy( $this->tmpfile(),$this->full_filename() );
-				unlink( $this->tmpfile );
-				$this->publish->publishedObjects[] = $this->getProperties();
-			}
-		}
+//		if   ( $this->publish->content_negotiation && count(Language::getAll())>1 )
+//		{
+//			$this->languageid = Language::getDefaultId();
+//			$this->default_language = true;
+//
+//			// Schleife ?ber alle Projektvarianten
+//			foreach( Model::getAll() as $projectmodelid )
+//			{
+//				$this->projectmodelid = $projectmodelid;
+//			
+//				$this->load();
+//				$this->generate();
+//				$this->write();
+//				
+//				//echo $this->tmpfile().' &gt; '.$this->full_filename().'<br>';
+//				$publish->copy( $this->tmpfile(),$this->full_filename() );
+//				unlink( $this->tmpfile );
+//				$this->publish->publishedObjects[] = $this->getProperties();
+//			}
+//		}
 
 //		$this->log_filenames = $this->publish->log_filenames;
 	}
