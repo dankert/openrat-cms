@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2004-12-29 20:19:55  dankert
+// Revision 1.15  2005-01-04 21:42:09  dankert
+// Uebertragen von MOTD
+//
+// Revision 1.14  2004/12/29 20:19:55  dankert
 // Korrektur
 //
 // Revision 1.13  2004/12/28 22:58:39  dankert
@@ -176,8 +179,10 @@ class IndexAction extends Action
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
-		$this->setTemplateVar('logo'    ,$conf['login']['logo'    ]);
-		$this->setTemplateVar('logo_url',$conf['login']['logo_url']);
+		$this->setTemplateVar('logo'    ,$conf['login'   ]['logo'    ]);
+		$this->setTemplateVar('logo_url',$conf['login'   ]['logo_url']);
+		$this->setTemplateVar('motd'    ,$conf['login'   ]['motd'    ]);
+		$this->setTemplateVar('readonly',$conf['security']['readonly']);
 
 		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
 		$this->setSessionVar('loginmessage','');
