@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-10-13 21:20:11  dankert
+// Neue Seitenfunktion zum gleichzeitigen Bearbeiten aller Seiteninhalte
+//
+// Revision 1.2  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -135,6 +138,7 @@ class MainmenuAction extends Action
 		{
 			$list['edit'] = lang('EDIT');
 			$list['el'  ] = lang('ELEMENTS');
+			$list['form'] = lang('FORM');
 		}
 		if   ( $page->hasRight('publish') )
 		{
