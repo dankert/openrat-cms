@@ -48,25 +48,22 @@ class Html
 	}
 
 
-	function url( $params )
+	function url( $action,$subaction='',$id='-',$params=array() )
 	{
 		global $conf;
-
-		$fake_urls = $conf['interface']['fake_urls'];
 		
-		if	( isset($params['callAction']) )
+		if	( is_array($action) )
 		{
-			$params['subaction'] = $params['callAction']; 
-			unset( $params['callAction'] );
-			unset( $params['callSubaction'] );
-		}
+			$params = $action;
 
-		if	( isset($params['objectid']) && !isset($params['id']) )
-			$params['id'] = $params['objectid']; 
+			if	( isset($params['callAction']) )
+			{
+				$params['subaction'] = $params['callAction']; 
+				unset( $params['callAction'] );
+				unset( $params['callSubaction'] );
+			}
+	
 
-
-		if	( $fake_urls )
-		{		
 			if	( !isset($params['action'   ])) $params['action'   ] = '';
 			if	( !isset($params['subaction'])) $params['subaction'] = '';
 			if	( !isset($params['id'       ])) $params['id'       ] = '';
@@ -76,9 +73,24 @@ class Html
 			unset( $params['action'   ] );
 			unset( $params['subaction'] );
 			unset( $params['id'       ] );
+			$params['old']='true';
+		}
 
+		$fake_urls = $conf['interface']['nice_urls'];
+		
+		if	( isset($params['objectid']) && !isset($params['id']) )
+			$params['id'] = $params['objectid']; 
+
+		if	( $fake_urls )
+		{		
 			if	( $id != '' )
 				$id = '.'.$id;
+		}
+		else
+		{
+			$params[REQ_PARAM_ACTION   ] = $action;
+			$params[REQ_PARAM_SUBACTION] = $subaction;
+			$params[REQ_PARAM_ID       ] = $id;
 		}
 
 		if	( count($params) > 0 )

@@ -59,22 +59,56 @@ class ProjectTree extends AbstractTree
 			if	( $element->isWritable() )
 			{
 				$treeElement = new TreeElement();
-				$treeElement->text        = $element->name;
-				$treeElement->url         = Html::url(array('action'  =>'main',
-		                                                      'callAction'      =>'pageelement',
-		                                                      'callSubaction'   =>'edit',
-		                                                      'objectid'        =>$id,
-		                                                      'elementid'       =>$elementid       ));
-		        $treeElement->icon        = 'el_'.$element->type;
+				$treeElement->text   = $element->name;
+				$treeElement->url    = Html::url('main','pageelement',$id,array('elementid'=>$elementid));
+				$treeElement->icon   = 'el_'.$element->type;
 
 				$treeElement->description = lang('EL_'.$element->type);
 				if	( $element->desc != '' )
 					$treeElement->description .= ' - '.Text::maxLaenge( 25,$element->desc );
 				else
-					$treeElement->description .= ' - '.lang('NO_DESCRIPTION_AVAILABLE');
+					$treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 				$treeElement->target      = 'cms_main';
 				$this->addTreeElement( $treeElement );
 			}
+		}
+	}
+
+
+	function link( $id )
+	{
+		$link = new Link( $id );
+		$link->load();
+
+		if	( $link->isLinkToObject )
+		{
+			$o = new Object( $link->linkedObjectId );
+			$o->load();
+			
+			$treeElement = new TreeElement();
+			$treeElement->internalId = $o->objectid;
+			$treeElement->target     = 'cms_main';
+			$treeElement->text       = Text::maxLaenge( 25,$o->name );
+			$treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$id;
+
+			if	( $o->desc != '' )
+				$treeElement->description .= ': '.$o->desc;
+			else
+				$treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+
+			$treeElement->url        = Html::url('main',$o->getType(),$o->objectid );
+			$treeElement->icon       = $o->getType();
+			
+			// Besonderheiten fuer bestimmte Objekttypen	
+
+			if   ( $o->isPage )
+			{
+				// Nur wenn die Seite beschreibbar ist, werden die
+				// Elemente im Baum angezeigt
+				if   ( $o->hasRight( ACL_WRITE ) )
+					$treeElement->type='pageelements';
+			}
+			$this->addTreeElement( $treeElement );
 		}
 	}
 
@@ -92,17 +126,14 @@ class ProjectTree extends AbstractTree
 		$f = new Folder( $id );
 		$t = time();
 	
-		foreach( $f->getObjectIds() as $id )
+		foreach( $f->getObjects() as $o )
 		{
-			$o = new Object( $id );
-			$o->load();
-	
 			// Wenn keine Leseberechtigung	
 			if	( !$o->hasRight( ACL_READ ) )
 				continue;
 	
 			$treeElement = new TreeElement();
-			$treeElement->internalId = $id;
+			$treeElement->internalId = $o->objectid;
 			$treeElement->target     = 'cms_main';
 			$treeElement->text       = Text::maxLaenge( 25,$o->name );
 			$treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$id;
@@ -112,12 +143,15 @@ class ProjectTree extends AbstractTree
 			else
 				$treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
-			$treeElement->url        = Html::url(array('action'       =>'main',
-		                                                'callAction'   =>$o->getType(),
-		                                                'objectid'       =>$id ));
+			$treeElement->url        = Html::url( 'main',$o->getType(),$o->objectid );
 			$treeElement->icon       = $o->getType();
 			
 			// Besonderheiten fuer bestimmte Objekttypen	
+
+			if   ( $o->isLink )
+			{
+				$treeElement->type='link';
+			}
 
 			if   ( $o->isPage )
 			{
@@ -129,7 +163,7 @@ class ProjectTree extends AbstractTree
 
 			if   ( $o->isFile )
 			{
-				$file = new File( $id );
+				$file = new File( $o->objectid );
 				$file->load();
 
 				if	( substr($file->mimeType(),0,6) == 'image/' )
@@ -160,7 +194,7 @@ class ProjectTree extends AbstractTree
 		// Hoechster Ordner der Projektstruktur
 		$f      = new Folder();
 		$f->projectid = $this->projectid;
-		$folder = new Folder( $f->getRootObjectId() );
+		$folder = new Folder( $project->getRootObjectId() );
 		unset( $f );
 		$folder->load();
 
@@ -176,9 +210,7 @@ class ProjectTree extends AbstractTree
 			$treeElement->text        = $folder->name;
 			$treeElement->description = lang('FOLDER_ROOT_DESC');
 			$treeElement->icon        = 'folder';
-			$treeElement->url         = Html::url(array('action'       =>'main',
-			                                                             'callAction'   =>'folder',
-			                                                             'objectid'    =>$folder->objectid       ));
+			$treeElement->url         = Html::url( 'main','folder',$folder->objectid );
 			$treeElement->target      = 'cms_main';
 			$treeElement->type        = 'folder';
 			$treeElement->internalId  = $folder->objectid;
@@ -191,10 +223,7 @@ class ProjectTree extends AbstractTree
 			// Templates
 			$treeElement = new TreeElement();
 			$treeElement->text       = lang('GLOBAL_TEMPLATES');
-			$treeElement->url        = Html::url(array('action'       =>'main',
-				                                      'callAction'   =>'template',
-				                                      'callSubaction'=>'listing',
-				                                      'templateid'   =>'0' ));
+			$treeElement->url        = Html::url('main','template');
 			$treeElement->description= lang('GLOBAL_TEMPLATES_DESC');
 			$treeElement->icon       = 'tpl_list';
 			$treeElement->target     = 'cms_main';
@@ -207,9 +236,7 @@ class ProjectTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->description= '';
 		$treeElement->text       = lang('GLOBAL_LANGUAGES');
-		$treeElement->url        = Html::url(array('action'       =>'main',
-				                                 'callAction'   =>'language',
-				                                 'callSubaction'=>'listing' ));
+		$treeElement->url        = Html::url('main','language');
 		$treeElement->icon       = 'lang_list';
 		$treeElement->description= lang('GLOBAL_LANGUAGES_DESC');
 		$treeElement->target     = 'cms_main';
@@ -224,9 +251,7 @@ class ProjectTree extends AbstractTree
 
 		$treeElement->description= lang('GLOBAL_MODELS_DESC');
 		$treeElement->text       = lang('GLOBAL_MODELS');
-		$treeElement->url        = Html::url(array('action'       =>'main',
-				                                 'callAction'   =>'model',
-				                                 'callSubaction'=>'listing'));
+		$treeElement->url        = Html::url('main','model');
 		$treeElement->icon       = 'model_list';
 		$treeElement->target     = 'cms_main';
 		$this->addTreeElement( $treeElement );
@@ -303,9 +328,7 @@ class ProjectTree extends AbstractTree
 			$t = new Template( $id );
 			$t->load();
 			$treeElement->text        = $t->name;
-			$treeElement->url         = Html::url(array('action'       =>'main',
-	                                                      'callAction'   =>'template',
-	                                                      'templateid'    =>$id       ));
+			$treeElement->url         = Html::url('main','template',$id);
 			$treeElement->icon        = 'tpl';
 			$treeElement->target      = 'cms_main';
 			$treeElement->internalId  = $id;
@@ -335,11 +358,7 @@ class ProjectTree extends AbstractTree
 
 			$treeElement = new TreeElement();
 			$treeElement->text        = $e->name;
-			$treeElement->url         = Html::url(array('action'       =>'main',
-                                                        'callAction'   =>'element',
-                                                        'callSubaction'=>'edit',
-                                                        'templateid'   =>$id,
-                                                        'elementid'    =>$elementid       ));
+			$treeElement->url         = Html::url('main','element',$elementid);
 			$treeElement->icon        = 'el_'.$e->type;
 			
 			if	( $e->desc == '' )
@@ -369,10 +388,7 @@ class ProjectTree extends AbstractTree
 
 			$treeElement = new TreeElement();
 			$treeElement->text         = $name;
-			$treeElement->url          = Html::url(array('action'       =>'main',
-			                                             'callAction'   =>'language',
-			                                             'callSubaction' =>$subAction,
-			                                             'languageid'    =>$languageid       ));
+			$treeElement->url          = Html::url('main','language',$languageid);
 			$treeElement->icon         = 'lang';
 			$treeElement->description  = '';
 			$treeElement->target       = 'cms_main';
@@ -397,10 +413,7 @@ class ProjectTree extends AbstractTree
 		{
 			$treeElement = new TreeElement();
 			$treeElement->text        = $name;
-			$treeElement->url         = Html::url(array('action'       =>'main',
-			                                            'callAction'   =>'model',
-			                                            'callSubaction'=>$subAction,
-			                                            'modelid'      =>$id       ));
+			$treeElement->url         = Html::url('main','model',$id);
 			$treeElement->icon        = 'model';
 			$treeElement->description = '';
 			$treeElement->target      = 'cms_main';
@@ -416,8 +429,7 @@ class ProjectTree extends AbstractTree
 			$treeElement = new TreeElement();
 			$treeElement->text        = lang('GLOBAL_FILE_TRANSFER');
 			$treeElement->description = lang('GLOBAL_FILE_TRANSFER_DESC');
-			$treeElement->url         = Html::url(array('action'       =>'main',
-			                                            'callAction'   =>'transfer'));
+			$treeElement->url         = Html::url('main','transfer');
 			$treeElement->icon        = 'transfer';
 			$treeElement->target      = 'cms_main';
 			$this->addTreeElement( $treeElement );
@@ -425,8 +437,7 @@ class ProjectTree extends AbstractTree
 
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_SEARCH');
-		$treeElement->url         = Html::url(array('action'       =>'main',
-		                                            'callAction'   =>'search' ));
+		$treeElement->url         = Html::url('main','search');
 		$treeElement->icon        = 'search';
 		$treeElement->description = lang('GLOBAL_SEARCH_DESC');
 		$treeElement->target      = 'cms_main';

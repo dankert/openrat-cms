@@ -49,10 +49,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_PROJECTS');
 		$treeElement->description = lang('GLOBAL_PROJECTS');
-		$treeElement->url         = Html::url(array('action'       =>'main',
-		                                            'callSubaction'=>'listing',
-		                                            'callAction'   =>'project',
-		                                            'projectid'    =>'0'));
+		$treeElement->url         = Html::url('main','project');
 		$treeElement->icon        = 'project_list';
 		$treeElement->type        = 'projects';
 		$treeElement->target      = 'cms_main';
@@ -95,10 +92,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_USER');
 		$treeElement->description = lang('GLOBAL_USER');
-		$treeElement->url         = Html::url(array('action'       =>'main',
-		                                            'callSubaction'=>'listing',
-		                                            'callAction'   =>'user',
-		                                            'userid'    =>'0'));
+		$treeElement->url         = Html::url('main','user');
 		$treeElement->icon        = 'user';
 		$treeElement->target      = 'cms_main';
 		$treeElement->type        = 'users';
@@ -108,10 +102,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_GROUPS');
 		$treeElement->description = lang('GLOBAL_GROUPS');
-		$treeElement->url         = Html::url(array('action'       =>'main',
-		                                            'callSubaction'=>'listing',
-		                                            'callAction'   =>'group',
-		                                            'groupid'      =>'0'));
+		$treeElement->url         = Html::url('main','group');
 		$treeElement->icon        = 'group';
 		$treeElement->target      = 'cms_main';
 		$treeElement->type        = 'groups';
@@ -129,10 +120,7 @@ class AdministrationTree extends AbstractTree
 			
 			$treeElement->internalId   = $id;
 			$treeElement->text         = $name;
-			$treeElement->url          = Html::url(array('action'=>'main',
-		                                                            'callAction'   =>'project',
-		                                                            'callSubaction'=>'edit',
-		                                                            'projectid'    =>$id       ));
+			$treeElement->url          = Html::url('main','project',$id);
 			$treeElement->icon         = 'project';
 			$treeElement->description  = '';
 			$treeElement->target       = 'cms_main';
@@ -152,10 +140,7 @@ class AdministrationTree extends AbstractTree
 			$u->load();
 			$treeElement->internalId  = $id;
 			$treeElement->text        = $u->name;
-			$treeElement->url         = Html::url(array('action'       =>'main',
-		                                                 'callAction'   =>'user',
-		                                                 'callSubaction'=>'edit',
-		                                                 'userid'       =>$id ));
+			$treeElement->url         = Html::url('main','user',$id);
 			$treeElement->icon        = 'user';
 			
 			$desc =  $u->fullname;
@@ -187,9 +172,7 @@ class AdministrationTree extends AbstractTree
 
 			$treeElement->internalId  = $id;
 			$treeElement->text        = $g->name;
-			$treeElement->url         = Html::url(array('action'       =>'main',
-		                                                                 'callAction'   =>'group',
-		                                                                 'groupid'    =>$id       ));
+			$treeElement->url         = Html::url('main','group',$id);
 			$treeElement->icon        = 'group';
 	     	$treeElement->description = lang('GLOBAL_GROUP').' '.$g->name.': '.implode(', ',$g->getUsers());
 			$treeElement->target      = 'cms_main';
@@ -211,9 +194,7 @@ class AdministrationTree extends AbstractTree
 			$u = new User( $id );
 			$u->load();
 			$treeElement->text        = $u->name;
-			$treeElement->url         = Html::url(array('action'       =>'main',
-	                                                                 'callAction'   =>'user',
-	                                                                 'userid'    =>$id       ));
+			$treeElement->url         = Html::url('main','user',$id);
 			$treeElement->icon        = 'user';
 			$treeElement->description = $u->fullname;
 			$treeElement->target      = 'cms_main';
