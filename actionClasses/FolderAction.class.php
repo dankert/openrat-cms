@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:14:52  dankert
+// Revision 1.2  2004-04-24 16:57:13  dankert
+// Korrektur: pub()
+//
+// Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
@@ -349,7 +352,7 @@ class FolderAction extends Action
 			}
 			$this->setTemplateVar('filenames',$list);
 
-			$this->forward('all_publish');
+			$this->forward('publish');
 		}
 		else
 		{
