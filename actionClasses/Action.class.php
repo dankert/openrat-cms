@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2005-01-23 11:55:52  dankert
+// Revision 1.16  2005-02-17 19:20:32  dankert
+// Beruecksichtigung von Konfiguration: interface-override_title
+//
+// Revision 1.15  2005/01/23 11:55:52  dankert
 // Setzen Eigenschaft, ob Readonly-Mode
 //
 // Revision 1.14  2005/01/14 21:41:09  dankert
@@ -215,7 +218,11 @@ class Action
 		$self = $HTTP_SERVER_VARS['PHP_SELF'];
 	
 		$tplFileName = str_replace( '_','/',$tplFileName );
-		$cms_title = OR_TITLE.' '.OR_VERSION;
+
+		if	( !empty($conf['interface']['override_title']) )
+			$cms_title = $conf['interface']['override_title'];
+		else
+			$cms_title = OR_TITLE.' '.OR_VERSION;
 
 		$showDuration = $conf['interface']['show_duration'];
 
