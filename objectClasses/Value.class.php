@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-05-03 20:21:49  dankert
+// Revision 1.8  2004-05-03 21:15:30  dankert
+// Umstellung auf dezimale ASCII-Werte
+//
+// Revision 1.7  2004/05/03 20:21:49  dankert
 // setzen von ObjectId bei Code-Elementen
 //
 // Revision 1.6  2004/05/02 14:41:31  dankert
@@ -410,7 +413,7 @@ class Value
 		$ini_chars = parse_ini_file( $conf_languagedir.'/specialchars.ini.'.$conf_php );
 		foreach( $ini_chars  as $key=>$val)
 		{
-			$text = str_replace( $key,$val,$text );
+			$text = str_replace( chr($key),$val,$text );
 		}
 		return $text;
 	}
