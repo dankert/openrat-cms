@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2004-11-29 23:24:36  dankert
+// Revision 1.15  2004-11-29 23:34:59  dankert
+// Beim Speichern von Seiteninhalten den Zeitstempel setzen
+//
+// Revision 1.14  2004/11/29 23:24:36  dankert
 // Korrektur Veroeffentlichung
 //
 // Revision 1.13  2004/11/27 09:55:54  dankert
@@ -161,6 +164,7 @@ class PageAction extends ObjectAction
 				}
 			}
 		}
+		$this->page->setTimestamp();
 	
 		$this->callSubAction( 'form');
 	}
@@ -347,6 +351,8 @@ class PageAction extends ObjectAction
 				$list[$id]['value'] = Text::maxLaenge( 50,$value->value );
 			}
 		}
+
+		$this->page->setTimestamp();
 	
 		$this->setTemplateVar('el',$list);
 		$this->forward('page_element');
