@@ -56,7 +56,7 @@ class Transformer
 		$this->parse();
 		$this->render();
 		
-		$this->text = implode( '',$this->renderedText );
+		$this->text = implode( "\n",$this->renderedText );
 	}
 
 
@@ -102,34 +102,6 @@ class Transformer
 
 			//$this->replaceRegexp( '([^\-\;]?)"',"\\1''" );
 			$this->replace( '"',"''" );
-	
-			// Text->... umsetzen nach "Text"->... (Anfuehrungszeichen ergaenzen)
-			$this->replaceRegexp( '([A-Za-z0-9._????????-]+)-'.$pf, '\'\'\\1\'\'-'.$pf  );
-	
-			// ...->Link umsetzen nach ...->"Link" (Anfuehrungszeichen ergaenzen)
-			$this->replaceRegexp( '-'.$pf.'([A-Za-z0-9.:_\/\,\?\=\&-]+)', '-'.$pf.'\'\'\\1\'\''  );
-	
-			# Links ...->"nnn" ersetzen mit ...->"object:nnn"
-			$this->replaceRegexp( '-'.$pf.'\'\'([0-9]+)\'\'', '-'.$pf.'\'\'object\\1\'\'' );
-
-			$this->replaceRegexp( '-'.$pf.'\'\'([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)\'\'', '-'.$pf.'\'\'mailto:\\1\'\'' );
-	
-	
-			# Links "mit->..."
-			$this->replaceRegexp(  '\'\'([^\']+)\'\'-'.$pf.'\'\'([^\']+)\'\'', '{link:"\\2","\\1"}' );
-	
-			// alleinstehende externe Links
-			$this->replaceRegexp( '([^"])((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))', '\\1{link:"\\2","\\4"}' );
-			$this->replaceRegexp( '^((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))'     , '{link:"\\1","\\3"}'    );
-
-			# mailto:...-Links
-			$this->replaceRegexp( '([^[A-Za-z0-9._:-])([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)', '\\1{link:"mailto:\\2","\\2"}' );
-			$this->replaceRegexp( '^([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)'                  , '{link:"mailto:\\1","\\1"}' );
-			
-			// Einbinden von Bildern
-			$this->replaceRegexp( '(ima?ge?):\/?\/?(([0-9]+))(\{.*\})?', '{image:"object\\2"}' );
-			$this->replaceRegexp( '\{([0-9]+),?\}'                     , '{image:"object\\1"}' );
-			$this->replaceRegexp( '\{([0-9]+),([^\}]+)\}'              , '{image:"object\\1","\\2"}' );
 	
 
 			
@@ -330,6 +302,34 @@ class Transformer
 			// Textauszeichnungen fett,kursiv,fest		
 			if   ( !$pre && !$nowiki )  // nicht bei praeformatiertem Text
 			{
+				// Text->... umsetzen nach "Text"->... (Anfuehrungszeichen ergaenzen)
+				$this->replaceRegexp( '([A-Za-z0-9._????????-]+)-'.$pf, '\'\'\\1\'\'-'.$pf  );
+		
+				// ...->Link umsetzen nach ...->"Link" (Anfuehrungszeichen ergaenzen)
+				$this->replaceRegexp( '-'.$pf.'([A-Za-z0-9.:_\/\,\?\=\&-]+)', '-'.$pf.'\'\'\\1\'\''  );
+		
+				# Links ...->"nnn" ersetzen mit ...->"object:nnn"
+				$this->replaceRegexp( '-'.$pf.'\'\'([0-9]+)\'\'', '-'.$pf.'\'\'object\\1\'\'' );
+	
+				$this->replaceRegexp( '-'.$pf.'\'\'([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)\'\'', '-'.$pf.'\'\'mailto:\\1\'\'' );
+		
+		
+				# Links "mit->..."
+				$this->replaceRegexp(  '\'\'([^\']+)\'\'-'.$pf.'\'\'([^\']+)\'\'', '{link:"\\2","\\1"}' );
+		
+				// alleinstehende externe Links
+				$this->replaceRegexp( '([^"])((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))', '\\1{link:"\\2","\\4"}' );
+				$this->replaceRegexp( '^((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))'     , '{link:"\\1","\\3"}'    );
+	
+				# mailto:...-Links
+				$this->replaceRegexp( '([^[A-Za-z0-9._:-])([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)', '\\1{link:"mailto:\\2","\\2"}' );
+				$this->replaceRegexp( '^([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)'                  , '{link:"mailto:\\1","\\1"}' );
+				
+				// Einbinden von Bildern
+				$this->replaceRegexp( '(ima?ge?):\/?\/?(([0-9]+))(\{.*\})?', '{image:"object\\2"}' );
+				$this->replaceRegexp( '\{([0-9]+),?\}'                     , '{image:"object\\1"}' );
+				$this->replaceRegexp( '\{([0-9]+),([^\}]+)\}'              , '{image:"object\\1","\\2"}' );
+		
 
 				$this->replaceRegexp( '\*([^\*]+[^\\])\*', '{strong-open}\\1{strong-close}'     );
 				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
