@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-28 18:26:15  dankert
+// Revision 1.6  2004-12-15 23:23:27  dankert
+// div. neue Methoden
+//
+// Revision 1.5  2004/11/28 18:26:15  dankert
 // Anpassen an neue Sprachdatei-Konventionen
 //
 // Revision 1.4  2004/11/15 21:34:05  dankert
@@ -52,18 +55,40 @@ class IndexAction extends Action
 	var $defaultSubAction = 'show';
 
 
+	function setDb( $dbid )
+	{
+		global $conf;
+
+		if	( !isset($conf['databases'][$dbid] ))
+			die( 'unknown DB-Id: '.$dbid );
+
+		$db = new DB( $conf['databases'][$dbid] );
+		$db->id = $dbid;
+		Session::setDatabase( $db );
+	}
+
+
+
 	function checkForDb()
 	{
 		global $conf;
 		$dbid = $this->getRequestVar('dbid'); 
 
 		if	( $dbid != '' )
-		{
-			$db = new DB( $conf['database_'.$dbid] );
-			$db->id = $dbid;
-			$db->setFetchMode( DB_FETCHMODE_ASSOC );
-			Session::setDatabase( $db );
-		}
+			$this->setDb( $dbid );
+	}
+
+
+
+	function setDefaultDb()
+	{
+		global $conf;
+
+		if	( !isset($conf['database']['default']) )
+			die('default-database not set');
+
+		$dbid = $conf['database']['default'];
+		$this->setDb( $dbid );
 	}
 
 
@@ -114,22 +139,17 @@ class IndexAction extends Action
 	{
 		global $conf;
 
-
-		$databases = explode(',',$conf['database']['databases']);
-		$dbids = array();
-		
-		foreach( $databases as $db )
+		foreach( $conf['databases'] as $dbname=>$dbconf )
 		{
-			if   ( !isset($conf['database_'.$db]) )
-				$this->message( '',"configuration for 'database_$db' not defined in config.ini.php");
-		
-			$dbids[$db] = $conf['database_'.$db]['comment'];
+			$dbids[$dbname] = $dbconf['comment'];
 		}
 
 		$this->setTemplateVar( 'dbids',$dbids );
 		
-		if	( $this->getSessionVar('dbid') != '' )
-			$this->setTemplateVar('actdbid',$this->getSessionVar('dbid'));
+		$db = Session::getDatabase();
+		if	( is_object($db) )
+			$this->setTemplateVar('actdbid',$db->id);
+		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
 		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
@@ -153,7 +173,7 @@ class IndexAction extends Action
 		foreach( $projects as $id=>$name )
 		{
 			$list[$id]         = array();
-			$list[$id]['url' ] = Html::url(array('action'=>'index','subaction'=>'show','projectid'=>$id));
+			$list[$id]['url' ] = Html::url('index','project',$id);
 			$list[$id]['name'] = $name;
 		}
 		$this->setTemplateVar('el',$list);
@@ -188,9 +208,133 @@ class IndexAction extends Action
 	}
 
 
+	function project()
+	{
+		$user = Session::getUser();
+		if   ( ! is_object($user) )
+		{
+			$this->callSubAction('show');
+		}
+
+		if	( $this->getRequestId() != 0 )
+			$project = new Project( $this->getRequestId() );
+		else
+			$project = new Project( $this->getRequestVar('projectid') );
+		
+		if	( $project->projectid != PROJECTID_ADMIN )
+		{
+			$project->load();
+	
+			Session::setProject( $project );
+			
+			$language = new Language( $project->getDefaultLanguageId() );
+			$language->load();
+			Session::setProjectLanguage( $language );
+	
+			$model = new Model( $project->getDefaultModelId() );
+			$model->load();
+			Session::setProjectModel( $model );
+	
+			$object = new Object( $project->getRootObjectId() );
+			$object->objectLoadRaw();
+			Session::setObject( $object );
+	
+			$user->loadRights( $project->projectid,$language->languageid );
+			Session::setUser( $user );
+		}
+		else
+		{
+			Session::setProject( $project );
+		}
+		
+		$this->callSubAction('show');
+	}
+
+
+	function object()
+	{
+		$user = Session::getUser();
+		if   ( ! is_object($user) )
+		{
+			$this->callSubAction('show');
+		}
+
+		$objectid = new Object( $this->getRequestId() );
+		$object->objectLoadRaw();
+		Session::setObject( $object );
+
+		$project = new Project( $object->projectid );
+		$project->load();
+		Session::setProject( $project );
+		
+		$language = new Language( $project->getDefaultLanguageId() );
+		$language->load();
+		Session::setProjectLanguage( $language );
+
+		$model = new Model( $project->getDefaultModelId() );
+		$model->load();
+		Session::setProjectModel( $model );
+		
+		$user->loadRights( $project->projectid,$language->languageid );
+		Session::setUser( $user );
+		
+		$this->callSubAction('show');
+	}
+
+
+	function language()
+	{
+		$language = new Language( $this->getRequestId() );
+		$language->load();
+		Session::setProjectLanguage( $language );
+
+		$project = new Project( $language->projectid );
+		$project->load();
+		Session::setProject( $project );
+
+		$model = new Model( $project->getDefaultModelId() );
+		$model->load();
+		Session::setProjectModel( $model );
+
+		$object = new Object( $project->getRootObjectId() );
+		$object->objectLoadRaw();
+		Session::setObject( $object );
+
+		$user->loadRights( $project->projectid,$language->languageid );
+		Session::setUser( $user );
+		$this->callSubAction('show');
+	}
+
+
+	function model()
+	{
+		$language = new Language( $languageid );
+		$language->load();
+		Session::setProjectLanguage( $language );
+
+		$project = new Project( $language->projectid );
+		$project->load();
+		Session::setProject( $project );
+
+		$model = new Model( $project->getDefaultModelId() );
+		$model->load();
+		Session::setProjectModel( $model );
+
+		$object = new Object( $project->getRootObjectId() );
+		$object->objectLoadRaw();
+		Session::setObject( $object );
+
+		$user->loadRights( $project->projectid,$language->languageid );
+		Session::setUser( $user );
+		$this->callSubAction('show');
+	}
+
+
 	function show()
 	{
 		global $conf;
+		global $PHP_AUTH_USER;
+		global $PHP_AUTH_PW;
 
 		if   ( Session::getLanguage() === '' )
 			language_read();
@@ -202,94 +346,41 @@ class IndexAction extends Action
 			//
 			if   ( $conf['auth']['type'] == 'http' )
 			{
-			    if	( isset($PHP_AUTH_USER) )
+				$ok = false;
+	
+			    if	( isset($_SERVER['PHP_AUTH_USER']) )
 			    {
-					$this->checkLogin( $PHP_AUTH_USER,$PHP_AUTH_PW );
-			   	}
-			   	else
-				{				
+			    	$this->setDefaultDb();
+					$ok = $this->checkLogin( $_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'] );
+			    }
+			    
+				if	( ! $ok )
+				{
 					header( 'WWW-Authenticate: Basic realm="OpenRat Content Management System - Login"' );
 					header( 'HTTP/1.0 401 Unauthorized' );
 					echo 'Authorization Required!';
 					exit;
 				}
 			}
-
-			// Benutzer ist nicht angemeldet
-			$this->callSubAction( 'showlogin' ); // Anzeigen der Login-Maske
+			elseif	( $conf['auth']['type'] == 'form' )
+			{
+				// Benutzer ist nicht angemeldet
+				$this->callSubAction( 'showlogin' ); // Anzeigen der Login-Maske
+			}
+			else
+			{
+				die('unknown auth-type: '.$conf['auth']['type'] );
+			}
 		}
 
-		$title = $conf['global']['title'].' '.$conf['global']['version'];
+		$title = OR_TITLE.' '.OR_VERSION;
 
 
 		$projectid  = intval( $this->getRequestVar('projectid' ) );
 		$languageid = intval( $this->getRequestVar('languageid') );
 		$objectid   = intval( $this->getRequestVar('objectid'  ) );
 
-		if	( $objectid > 0 )
-		{
-			$objectid = new Object( $objectid );
-			$object->objectLoadRaw();
-			Session::setObject( $object );
-
-			$project = new Project( $object->projectid );
-			$project->load();
-			Session::setProject( $project );
-			
-			$language = new Language( $project->getDefaultLanguageId() );
-			$language->load();
-			Session::setProjectLanguage( $language );
-
-			$model = new Model( $project->getDefaultModelId() );
-			$model->load();
-			Session::setProjectModel( $model );
-			
-			$user->loadRights( $project->projectid,$language->languageid );
-			Session::setUser( $user );
-		}
-		elseif	( $languageid > 0 )
-		{
-			$language = new Language( $languageid );
-			$language->load();
-			Session::setProjectLanguage( $language );
-
-			$project = new Project( $language->projectid );
-			$project->load();
-			Session::setProject( $project );
-
-			$model = new Model( $project->getDefaultModelId() );
-			$model->load();
-			Session::setProjectModel( $model );
-
-			$object = new Object( $project->getRootObjectId() );
-			$object->objectLoadRaw();
-			Session::setObject( $object );
-
-			$user->loadRights( $project->projectid,$language->languageid );
-			Session::setUser( $user );
-		}
-		elseif	( $projectid > 0 )
-		{
-			$project = new Project( $projectid );
-			$project->load();
-			Session::setProject( $project );
-			
-			$language = new Language( $project->getDefaultLanguageId() );
-			$language->load();
-			Session::setProjectLanguage( $language );
-
-			$model = new Model( $project->getDefaultModelId() );
-			$model->load();
-			Session::setProjectModel( $model );
-
-			$object = new Object( $project->getRootObjectId() );
-			$object->objectLoadRaw();
-			Session::setObject( $object );
-
-			$user->loadRights( $project->projectid,$language->languageid );
-			Session::setUser( $user );
-		}
-		elseif ( $projectid == PROJECTID_ADMIN )
+		if ( $projectid == PROJECTID_ADMIN )
 		{
 			$project = new Project( $projectid );
 			$project->projectid = PROJECTID_ADMIN;
@@ -309,30 +400,22 @@ class IndexAction extends Action
 
 		if	( is_object($object) )
 		{
-			$this->setTemplateVar( 'frame_src_main'    ,Html::url( array('action'    =>'main',
-			                                                             'callAction'=>$object->getType() )) );
+			$this->setTemplateVar( 'frame_src_main',Html::url('main',$object->getType(),$object->objectid) );
 		}
-		elseif	( is_object($project) )
+		elseif	( is_object($project) && $project->projectid == PROJECTID_ADMIN )
 		{
-			if	( $project->projectid != PROJECTID_ADMIN )
-				$this->setTemplateVar( 'frame_src_main'    ,Html::url( array('action'=>'main',
-				                                                         'callAction'=>'folder' )) );
-			else
-				$this->setTemplateVar( 'frame_src_main'    ,Html::url( array('action'=>'main',
-				                                                         'callAction'=>'project',
-				                                                      'callSubaction'=>'listing' )) );
+			$this->setTemplateVar( 'frame_src_main',Html::url('main','project') );
 		}
 		else
 		{
 			$this->callSubAction( 'showmenu' );
 		}
 		
-		$this->setTemplateVar( 'frame_src_title'   ,Html::url( array('action'=>'title'   )) );
-		$this->setTemplateVar( 'frame_src_treemenu',Html::url( array('action'=>'treemenu')) );
-		$this->setTemplateVar( 'frame_src_tree'    ,Html::url( array('action'=>'tree',
-		                                                             'subaction'=>'load')) );
+		$this->setTemplateVar( 'frame_src_title'   ,Html::url( 'title'          ) );
+		$this->setTemplateVar( 'frame_src_treemenu',Html::url( 'treemenu'       ) );
+		$this->setTemplateVar( 'frame_src_tree'    ,Html::url( 'tree'    ,'load') );
 
-		$this->setTemplateVar( 'tree_width',$conf['global']['tree_width'] );
+		$this->setTemplateVar( 'tree_width',$conf['interface']['tree_width'] );
 		
 		$this->forward( 'frameset' );
 	}
