@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-27 13:07:34  dankert
+// Revision 1.6  2004-11-28 16:54:56  dankert
+// Abfrage der Berechtigungen bei Menueaufbau
+//
+// Revision 1.5  2004/11/27 13:07:34  dankert
 // Korrektur in page()
 //
 // Revision 1.4  2004/11/10 22:37:46  dankert
@@ -47,6 +50,9 @@
 class MainmenuAction extends Action
 {
 	var $defaultSubAction = 'login';
+
+	var $subActionList = array();
+	var $obj;
 	
 
 //	function start()
@@ -63,6 +69,13 @@ class MainmenuAction extends Action
 	{
 		$this->subActionName = 'template';
 		$this->callSubAction('template');
+	}
+
+
+	function addSubAction( $name,$aclbit=0 )
+	{
+		if   ( $this->obj->hasRight($aclbit) )
+			$this->subActionList[ $name ] = lang( 'MENU_'.strtoupper($name) );
 	}
 
 
@@ -125,32 +138,18 @@ class MainmenuAction extends Action
 	
 		$this->setTemplateVar('id','o'.$page->objectid);
 	
-		$list = array();
-		$list['show'] = lang('SHOW');
+		$this->obj = &$page;
+		$this->addSubAction('show'  ,ACL_READ    );
+		$this->addSubAction('edit'  ,ACL_WRITE   );
+		$this->addSubAction('el'    ,ACL_WRITE   );
+		$this->addSubAction('form'  ,ACL_WRITE   );
 
-		if   ( $page->hasRight('write') )
-		{
-			$list['edit'] = lang('EDIT');
-			$list['el'  ] = lang('ELEMENTS');
-			$list['form'] = lang('FORM');
-		}
-		if   ( $page->hasRight('publish') )
-		{
-			$list['pub' ] = lang('PUBLISH');
-		}
+		$this->addSubAction('pub'   ,ACL_PUBLISH );
+		$this->addSubAction('prop'  ,ACL_PROP    );
+		$this->addSubAction('src'   ,ACL_PROP    );
+		$this->addSubAction('rights',ACL_GRANT   );
 
-		if   ( $page->hasRight('prop') )
-		{
-			$list['prop'] = lang('PROP');
-		}
-				
-		$user = $this->getSessionVar('user');
-		if   ( $user['is_admin'] )
-			$list['src' ] = lang('SOURCECODE');
-
-		if   ( $user['is_admin'] == '1' )
-			$list['rights'] = lang('RIGHTS');
-		$this->setTemplateVar('subaction',$list);
+		$this->setTemplateVar('subaction',$this->subActionList);
 		$this->setTemplateVar('param','objectid');
 
 		$this->callSubAction('show');
@@ -200,11 +199,6 @@ class MainmenuAction extends Action
 
 	function file()
 	{
-		// Ermitteln Sprache
-		$language = new Language( $this->getSessionVar('languageid') );
-		$language->load();
-		$this->setTemplateVar('language_name',$language->name);
-
 		$file = new File( $this->getSessionVar('objectid') );
 		$file->load();
 		
@@ -219,23 +213,18 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('id','o'.$file->objectid);
 	
-		$list = array();
-		$list['show'] = lang('SHOW');
+		$this->obj = &$file;
+		$this->addSubAction('show',ACL_READ    );
 
-		if   ( substr($file->mimeType(),0,5) == 'text/' )
-			$list['src'] = lang('EDIT');
-			
-		if   ( $file->hasRight('prop') )
-			$list['prop'] = lang('PROP');
+		if   ( substr($file->mimeType(),0,5) == 'text/'  )
+			$this->addSubAction('edit',ACL_WRITE   );
 
-		if   ( $file->hasRight('publish') )
-			$list['pub' ] = lang('PUBLISH');
+		$this->addSubAction('pub' ,ACL_PUBLISH );
+		$this->addSubAction('prop',ACL_PROP    );
+		$this->addSubAction('rights' ,ACL_GRANT);
 
-		$user = $this->getSessionVar('user');
-		if   ( $user['is_admin'] == '1' )
-			$list['rights'] = lang('RIGHTS');
+		$this->setTemplateVar('subaction',$this->subActionList);
 
-		$this->setTemplateVar('subaction',$list);
 		$this->setTemplateVar('param','objectid');
 
 		$this->callSubAction('show');
@@ -255,22 +244,16 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
 
-		$language = new Language( $this->getSessionVar('languageid') );
-		$language->load();
-		$this->setTemplateVar('language_name',$language->name);
-		
 		$this->setTemplateVar('folder',$folder->parentObjectNames(true,true));
 		$this->setTemplateVar('text'  ,$link->name);
 
 		$this->setTemplateVar('id','o'.$link->objectid);
 
-		$list = array();	
-		if   ( $link->hasRight('prop') )
-			$list['prop'] = lang('PROP');
+		$this->obj = &$link;
+		$this->addSubAction('prop'  ,ACL_PROP );
+		$this->addSubAction('rights',ACL_GRANT);
 
-		if   ( $this->userIsAdmin() )
-			$list['rights'] = lang('RIGHTS');
-		$this->setTemplateVar('subaction',$list);
+		$this->setTemplateVar('subaction',$this->subActionList);
 		$this->setTemplateVar('param','objectid');
 
 		$this->callSubAction('show');
@@ -281,16 +264,9 @@ class MainmenuAction extends Action
 	function folder()
 	{
 
-		// Ermitteln Sprache
-		$language = Session::getLanguage();
-		$this->setTemplateVar('language_name',$language->name);
-		$this->setTemplateVar('language_url' ,Html::url( array('action'=>'language','languageid'=>intval($language->languageid))));
-
 		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
 		if   ( !is_numeric($this->getSessionVar('objectid')) )
-		{
 			$SESS['objectid'] = Folder::getRootObjectId();
-		}
 
 		$folder = new Folder( $this->getSessionVar('objectid') );
 		$folder->filenames = false;
@@ -302,27 +278,22 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('id','o'.$folder->objectid);
 	
-		$list = array();
-		$list['show'] = lang('SHOW');
+		$this->obj = &$folder;
 		
-		if   ( $this->getSessionVar('objectid') != '' && !$folder->isRoot )
-			if   ( $folder->hasRight('prop') )
-				$list['prop'] = lang('PROP');
+		$this->addSubAction('show',ACL_READ    );
 
-		if   ( $this->getSessionVar('objectid') != '' )
-			if   (    $folder->hasRight('create_folder')
-			       || $folder->hasRight('create_file'  )
-			       || $folder->hasRight('create_link'  )
-			       || $folder->hasRight('create_page'  ) )
-				$list['create'] = lang('NEW');
-	
-		$user = $this->getSessionVar('user');
-		if   ( $user['is_admin'] == '1' )
-			$list['rights'] = lang('RIGHTS');
+		if   ( !$folder->isRoot )
+			$this->addSubAction('prop',ACL_PROP    );
 
-		if   ( $folder->hasRight('publish') )
-			$list['pub' ] = lang('PUBLISH');
-		$this->setTemplateVar('subaction',$list);
+		$this->addSubAction('create',ACL_CREATE_FOLDER );
+		$this->addSubAction('create',ACL_CREATE_FILE   );
+		$this->addSubAction('create',ACL_CREATE_PAGE   );
+		$this->addSubAction('create',ACL_CREATE_LINK   );
+
+		$this->addSubAction('pub'   ,ACL_PUBLISH );
+		$this->addSubAction('rights',ACL_GRANT);
+
+		$this->setTemplateVar('subaction',$this->subActionList);
 		$this->setTemplateVar('param','objectid');
 
 		$this->callSubAction('show');
