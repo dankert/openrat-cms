@@ -20,11 +20,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-05-07 21:41:14  dankert
-// Url über Html::url erzeugen
+// Revision 1.6  2004-07-07 20:47:22  dankert
+// Korrektur f. Verkn?pfungen
+//
+// Revision 1.5  2004/05/07 21:41:14  dankert
+// Url ?ber Html::url erzeugen
 //
 // Revision 1.4  2004/05/02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.3  2004/05/02 11:40:00  dankert
 // Freigabestatus der Seiteninhalte verarbeiten
@@ -229,14 +232,14 @@ class Page extends Object
 						switch( $linkedObject->getType() )
 						{
 							case 'file':
-								$f = new File( $linkedObjectId );
+								$f = new File( $link->linkedObjectId );
 								$f->load();
 								$inhalt  = $this->up_path();
 								$inhalt .= $f->full_filename();
 							break;
 			
 							case 'page':
-								$p = new Page( $linkedObjectId );
+								$p = new Page( $link->linkedObjectId );
 								$p->languageid = $this->languageid;
 								$p->load();
 								$inhalt  = $this->up_path();
@@ -298,7 +301,7 @@ class Page extends Object
 
 
 	/**
-	  * Erzeugt Präfix für eine relative Pfadangabe
+	  * Erzeugt Pr?fix f?r eine relative Pfadangabe
 	  * Beispiel: Seite liegt in Ordner /pfad/pfad dann '../../'
 	  *
 	  * @return String Pfadangabe
@@ -331,7 +334,7 @@ class Page extends Object
 
 
 	/**
-	  * getter-Methode für den Dateinamen
+	  * getter-Methode f?r den Dateinamen
 	  *
 	  * @return String Dateiname
 	  */
@@ -348,7 +351,7 @@ class Page extends Object
 	{
 		$db = db_connection();
 
-		$this->objectAdd(); // Hinzufügen von Objekt (dabei wird Objekt-ID ermittelt)
+		$this->objectAdd(); // Hinzuf?gen von Objekt (dabei wird Objekt-ID ermittelt)
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_page}');
 		$this->pageid = intval($db->getOne($sql->query))+1;
@@ -577,12 +580,12 @@ class Page extends Object
 		$this->cut_index           = $this->publish->cut_index;
 		$this->public              = true;
 
-		// Schleife über alle Sprachvarianten
+		// Schleife ?ber alle Sprachvarianten
 		foreach( Language::getAll() as $languageid=>$x )
 		{
 			$this->languageid = $languageid;
 
-			// Schleife über alle Projektvarianten
+			// Schleife ?ber alle Projektvarianten
 			foreach( Model::getAll() as $projectmodelid )
 			{
 				$this->projectmodelid = $projectmodelid;
@@ -604,7 +607,7 @@ class Page extends Object
 			$this->languageid = Language::getDefaultId();
 			$this->default_language = true;
 
-			// Schleife über alle Projektvarianten
+			// Schleife ?ber alle Projektvarianten
 			foreach( Model::getAll() as $projectmodelid )
 			{
 				$this->projectmodelid = $projectmodelid;
