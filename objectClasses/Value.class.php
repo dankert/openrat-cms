@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2004-11-10 22:49:10  dankert
+// Revision 1.15  2004-11-27 10:21:32  dankert
+// Wenn Generierungstyp "simple", dann nur notwendige Elemente generieren
+//
+// Revision 1.14  2004/11/10 22:49:10  dankert
 // Einsatz der Api-Klasse ge?ndert
 //
 // Revision 1.13  2004/10/14 21:13:49  dankert
@@ -586,6 +589,26 @@ class Value
 
 
 	/**
+	 * Die Anzahl der Versionen des aktuellen Inhaltes wird ermittelt
+	 * @return Array
+	 */
+	function getCountVersions()
+	{
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT COUNT(*) FROM {t_value}'.
+		                '  WHERE elementid ={elementid}'.
+		                '    AND pageid    ={pageid}'.
+		                '    AND languageid={languageid}' );
+		$sql->setInt( 'elementid' ,$this->element->elementid );
+		$sql->setInt( 'pageid'    ,$this->pageid    );
+		$sql->setInt( 'languageid',$this->languageid);
+
+		return $db->getOne( $sql->query );
+	}
+
+
+	/**
 	 * Inhalt freigeben
 	 */
 	function release()
@@ -882,6 +905,9 @@ class Value
 			// Programmcode (PHP)
 			case 'code':
 
+				if   ( $this->page->simple )
+					break;
+
 				$this->page->load();
 
 				$api = new Api();
@@ -898,6 +924,9 @@ class Value
 
 			// Programmcode (PHP)
 			case 'dynamic':
+
+				if   ( $this->page->simple )
+					break;
 
 				$this->page->load();
 				$className = $this->element->subtype;
@@ -955,6 +984,9 @@ class Value
 
 			// Info-Feld als Datum
 			case 'infodate':
+
+				if   ( $this->page->simple )
+					break;
 				
 				switch( $this->element->subtype )
 				{
@@ -979,6 +1011,9 @@ class Value
 
 			// Info-Feld
 			case 'info':
+
+				if   ( $this->page->simple )
+					break;
 
 				switch( $this->element->subtype )
 				{
