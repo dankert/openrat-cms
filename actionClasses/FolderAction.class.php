@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.27  2005-01-14 21:40:57  dankert
+// Revision 1.28  2005-01-27 22:21:30  dankert
+// Nach Generierung Systembefehl mit exec() ausf?hren
+//
+// Revision 1.27  2005/01/14 21:40:57  dankert
 // Aufruf von lastModified() fuer Conditional-GET
 //
 // Revision 1.26  2004/12/30 23:11:03  dankert
@@ -692,6 +695,7 @@ class FolderAction extends ObjectAction
 		
 		$this->folder->publish = &$publish;
 		$this->folder->publish( $pages,$files,$subdirs );
+		$this->folder->publish->close();
 
 		foreach( $publish->publishedObjects as $o )
 		{

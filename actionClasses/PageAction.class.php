@@ -666,6 +666,7 @@ class PageAction extends ObjectAction
 			die( 'no right for publish' );
 
 		$this->page->publish();
+		$this->page->publish->close();
 
 		foreach( $this->page->publish->publishedObjects as $o )
 		{

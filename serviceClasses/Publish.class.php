@@ -120,6 +120,9 @@ class Publish
 		{
 			$this->ftp->close();
 		}
+		
+		if	( !empty($this->cmd_after_publish) )
+			exec( $this->cmd_after_publish );
 	}
 	
 	

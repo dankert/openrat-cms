@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2005-01-14 21:41:23  dankert
+// Revision 1.15  2005-01-27 22:21:29  dankert
+// Nach Generierung Systembefehl mit exec() ausf?hren
+//
+// Revision 1.14  2005/01/14 21:41:23  dankert
 // Aufruf von lastModified() fuer Conditional-GET
 //
 // Revision 1.13  2004/12/20 22:43:12  dankert
@@ -299,6 +302,7 @@ class FileAction extends ObjectAction
 	function pubnow()
 	{
 		$this->file->publish();
+		$this->file->publish->close();
 
 		foreach( $this->file->publish->publishedObjects as $o )
 		{
