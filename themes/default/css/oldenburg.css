@@ -1,0 +1,274 @@
+/* $Id$ */
+
+a:link,
+a:visited
+{
+	color:#000080;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+a:active,
+a:hover
+{
+	color:#000080;
+	font-weight:normal;
+	text-decoration:underline;
+}
+
+
+a.el_include:link,
+a.el_include:active,
+a.el_include:visited,
+a.el_include:hover,
+a.el_list:link,
+a.el_list:active,
+a.el_list:visited,
+a.el_list:hover
+{
+	background-color: blue;
+}
+
+a.el_longtext:link,
+a.el_longtext:active,
+a.el_longtext:visited,
+a.el_longtext:hover,
+a.el_text:link,
+a.el_text:active,
+a.el_text:visited,
+a.el_text:hover
+{
+	background-color: lime;
+}
+
+
+a.el_infodate:link,
+a.el_infodate:active,
+a.el_infodate:visited,
+a.el_infodate:hover,
+a.el_info:link,
+a.el_info:active,
+a.el_info:visited,
+a.el_info:hover
+{
+	background-color: white;
+}
+
+a.el_date:link,
+a.el_date:active,
+a.el_date:visited,
+a.el_date:hover
+{
+	background-color: aqua;
+}
+
+a.el_link:link,
+a.el_link:active,
+a.el_link:visited,
+a.el_link:hover
+{
+	background-color: fuchsia;
+}
+
+a.el_number:link,
+a.el_number:active,
+a.el_number:visited,
+a.el_number:hover
+{
+	background-color: lime;
+}
+
+a.el_code:link,
+a.el_code:active,
+a.el_code:visited,
+a.el_code:hover
+{
+	background-color: gray;
+}
+
+a.el_icon:link,
+a.el_icon:active,
+a.el_icon:visited,
+a.el_icon:hover
+{
+	background-color: yellow;
+}
+
+		            
+a.mainmenu:link,
+a.mainmenu:visited
+{
+	color:#CCCCCC;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+a.mainmenu:active,
+a.mainmenu:hover
+{
+	color:#CCCCCC; font-weight:bold; text-decoration:underline;
+}
+
+
+/* Allgemeine Body-Angaben */
+body
+{
+	color:#000000;
+	font-family:Arial;
+	font-size:12px;
+	background-color:white;
+}
+
+
+body, textarea
+{
+	scrollbar-face-color: #eeeeee;
+	scrollbar-shadow-color: #000000;
+	scrollbar-highlight-color: #000000;
+	scrollbar-3dlight-color: #eeeeee;
+	scrollbar-darkshadow-color: #eeeeee;
+	scrollbar-track-color: #eeeeee;
+	scrollbar-arrow-color: #000000;
+}
+
+body.title
+{
+	margin:0px;
+	background-color:white;
+	color:black;
+}
+
+
+pre
+{
+	font-family:Courier;
+	font-size:13px;
+}
+
+small
+{
+	color:grey;
+}
+
+/* Tabellen */
+th
+{
+	background-color:#000080;
+	color:white;
+	font-family:Arial;
+	font-size:13px;
+	vertical-align:top;
+	font-weight:bold;
+	border-bottom:1px solid grey;
+}
+
+td
+{	color:#000000;
+	font-family:Arial;
+	font-size:13px;
+	vertical-align:top;
+}
+
+td.diff_equal
+{
+}
+td.diff_old
+{
+	background-color:red;
+}
+td.diff_new
+{
+	background-color:green;
+}
+td.diff_notequal
+{
+	background-color:yellow;
+}
+
+td.help
+{
+	color:black;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+}
+
+td.title
+{
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+}
+
+/* Hauptmenue */
+td.menu
+{
+	background-color:#000080;
+	vertical-align:middle;
+}
+
+/* Submenue */
+td.submenu
+{
+	border-bottom:solid 1px black;
+	background-color:#DFDFDF;
+}
+
+td.f1,
+td.f2
+{
+	background-color:#CCCCCC;
+	padding:5px;
+	border-top:5px solid #DFDFDF;
+	border-left:3px solid #DFDFDF;
+	border-bottom:1px solid #DFDFDF;
+	border-right:3px solid #DFDFDF;
+}
+
+td.act
+{
+	background-color:#DFDFDF;
+	padding:15px;
+	border-top:0px solid grey;
+}
+
+.mainmenu_headline{color:#CCCCCC; font-size:13px; color:black; font-weight:bold; }
+.mainmenu_name{color:white; font-weight:bold; font-size:24px; }
+.mainmenu_val{color:#CCCCCC; font-weight:normal; }
+.mainmenu_title{color:#CCCCCC;vertical-align:middle;font-weight:bold; font-size:24px; }
+
+p.copyright
+{
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	text-align:center;
+}
+
+table.main { border:1px solid black; margin-top:30px; }
+
+input.submit { color:#FFFFFF; background-color:#808080; }
+input.reset  { color:#black; background-color:##000080; text-align:right; }
+textarea.desc { font-family:Arial;font-size:13px; }
+textarea.longtext { font-family:Arial;font-size:13px; width:100%; height:300; }
+
+input,
+select,
+textarea
+{
+	color:#000000;
+	background-color:#DFDFDF;
+}
+
+input.name
+{
+	font-weight:bold;
+}
+
+.filename
+{
+	font-family:Courier;font-size:13px;
+}
+
+input.ansidate
+{
+	font-family:Courier;
+	font-size:13px;
+}
