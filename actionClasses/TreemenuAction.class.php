@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-11-10 22:41:36  dankert
+// Revision 1.6  2004-11-27 13:09:17  dankert
+// Ermitteln und Anzeige von Sprache,Modell
+//
+// Revision 1.5  2004/11/10 22:41:36  dankert
 // Neue Ermittlung der Projekte, Entfernen des Punktes "Bitte auswaehlen"
 //
 // Revision 1.4  2004/10/13 22:13:24  dankert
@@ -65,6 +68,17 @@ class TreemenuAction extends Action
 		$project = Session::getProject();
 		if	( is_object( $project ) )
 			$this->setTemplateVar( 'act_projectid',$project->projectid );
+
+		// Ermitteln Sprache
+		$language = Session::getProjectLanguage();
+		$this->setTemplateVar('language_name',$language->name);
+		$this->setTemplateVar('language_url' ,Html::url( array('action'=>'main','callAction'=>'language','callSubaction'=>'listing') ));
+
+		// Ermitteln Projektmodell
+		$model = Session::getProjectModel();
+		$this->setTemplateVar('projectmodel_name',$model->name);
+		$this->setTemplateVar('projectmodel_url' ,Html::url( array('action'=>'main','callAction'=>'model','callSubaction'=>'listing')));
+
 
 		// Ausgabe des Templates
 		$this->forward('tree_menu');
