@@ -10,7 +10,7 @@
 	      { ?>
       <?php if (count($projects)>1)
             { ?>
-      <form style="margin:0px;" action="<?php echo $self ?>" method="get" target="_parent">
+      <?php echo Html::form( array('action'=>'index','subaction'=>'show','target'=>'_parent','method'=>'get','name'=>'') ) ?>
       <table>
       <tr>
       <td>
@@ -39,7 +39,10 @@
     </td>
   </tr>
   <tr>
-    <td class="submenu" height="20">&nbsp;</td>
+    <td class="submenu" height="20">
+      <?php echo lang('LANGUAGE') ?>:&nbsp;<a href="<?php echo $language_url     ?>" target="cms_main"><?php echo $language_name     ?></a> | 
+      <?php echo lang('MODEL')    ?>:&nbsp;<a href="<?php echo $projectmodel_url ?>" target="cms_main"><?php echo $projectmodel_name ?></a>
+    </td>
   </tr>
 </table>
 
