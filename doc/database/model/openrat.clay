@@ -1,0 +1,1407 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<clay-model clay-version="1.0.2">
+<database-model name="openrat" alias="" remarks="" author="" version="1.0" sql-dialect-id="jp.azzurri.clay.model.physical.dialect.Postgre_7_2_Dialect" begin-script="-- OpenRat Content Management System&#10;-- SQL-Dump&#10;--&#10;-- (c) Jan Dankert&#10;-- Licensed under the GNU General Public Licence&#10;&#10;" end-script="&#10;-- Insert 1 Admin-User&#10;&#10;INSERT INTO or_user&#10;   (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin)&#10;   VALUES( 1,'admin','21232f297a57a5a743894a0e4a801fc3','','Administrator','','','The Admin User','default',1 )">
+<database-model-description/>
+<schema-list>
+<schema name="PUBLIC" alias="" remarks="">
+<schema-description/>
+<domain-list/>
+<table-list>
+<table name="or_acl" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="1165" y="95" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="userid" alias="" remarks="" mandatory="false" column-size="11" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="groupid" alias="" remarks="" mandatory="false" column-size="11" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="objectid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="languageid" alias="" remarks="" mandatory="false" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_write" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_prop" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_create_folder" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_create_file" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_create_link" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_create_page" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_delete" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_publish" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_grant" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_transmit" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="fk_acl_groupid" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_group" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="groupid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="fk_acl_userid" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_user" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="userid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="fk_acl_objectid" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="objectid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_or_acl_languageid" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_language" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="languageid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="idx_acl_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="idx_acl_userid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="userid" sort="ASC"/>
+</index>
+<index name="idx_acl_groupid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="groupid" sort="ASC"/>
+</index>
+<index name="idx_acl_languageid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="languageid" sort="ASC"/>
+</index>
+<index name="idx_acl_objectid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="objectid" sort="ASC"/>
+</index>
+<index name="idx_acl_transmit" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="is_transmit" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_element" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="1261" y="1104" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="templateid" alias="" remarks="Template fuer das dieses Element gilt" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="Name des Elementes" mandatory="true" column-size="50" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="descr" alias="" remarks="Beschreibung fuer den Redakteur" mandatory="true" column-size="255" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="type" alias="" remarks="interner Typ des Elementes" mandatory="true" column-size="20" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="subtype" alias="" remarks="Untertyp, fuer bestimmte Typen notwendig" mandatory="false" column-size="20" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="with_icon" alias="" remarks="ja/nein ob Editier-Ikon vor Element erscheint" mandatory="true" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="dateformat" alias="" remarks="Datumsformat (nur bei Datums-Elementen)" mandatory="false" column-size="100" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="wiki" alias="" remarks="ja/nein ob Text-Schnellauszeichnung erfolgen soll (nur bei Textelementen)" mandatory="false" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="html" alias="" remarks="ja/nein ob HTML im Text erlaubt ist (nur bei Textelementen)" mandatory="false" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="all_languages" alias="" remarks="ja/nein ob Inhalt fuer alle Sprachen gilt" mandatory="true" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="writable" alias="" remarks="ja/nein ob Inhalt vom Redakteur veraenderbar" mandatory="true" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="decimals" alias="" remarks="Anzahl Nachkommastellen (bei Typ Zahl)" mandatory="false" column-size="4" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="dec_point" alias="" remarks="Dezimalstelle (bei Typ Zahl)" mandatory="false" column-size="5" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="thousand_sep" alias="" remarks="Tausenderpunkt (bei Typ Zahl)" mandatory="false" column-size="1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="code" alias="" remarks="PHP-Code fuer dynamische Inhalte" mandatory="false" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="default_text" alias="" remarks="Standard-Inhalt wenn kein Inhalt vorhanden ist" mandatory="false" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="folderobjectid" alias="" remarks="Verweis auf Ordner" mandatory="false" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="default_objectid" alias="" remarks="verlinktes Objekt, wenn kein anderer Inhalt verfuegbar ist." mandatory="false" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_or_element_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="default_objectid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_or_element_2" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="folderobjectid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_or_element_3" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_template" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="templateid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="element_id" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="element_templateid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="templateid" sort="ASC"/>
+</index>
+<index name="IX_or_element_3" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="templateid" sort="ASC"/>
+<index-column name="name" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_file" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="798" y="94" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="objectid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="extension" alias="" remarks="" mandatory="true" column-size="10" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="size" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="value" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_file_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="NO ACTION" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="objectid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="file_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="file_objectid" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="objectid" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_folder" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="994" y="97" width="115" height="103"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="objectid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_folder_objectid" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="objectid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="folder_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="folder_objectid" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="objectid" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_group" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="1368" y="105" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="" mandatory="true" column-size="100" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list>
+<unique-key name="UQ_or_group_1" alias="" remarks="">
+<unique-key-description/>
+<unique-key-column name="name"/>
+</unique-key>
+</unique-key-list>
+<foreign-key-list/>
+<index-list>
+<index name="group_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_language" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="403" y="755" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="projectid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="isocode" alias="" remarks="" mandatory="true" column-size="10" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="" mandatory="true" column-size="50" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="is_default" alias="" remarks="" mandatory="true" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_language_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_project" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="projectid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="language_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="IX_or_language_2" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="projectid" sort="ASC"/>
+<index-column name="isocode" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_link" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="585" y="93" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="objectid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="link_objectid" alias="" remarks="" mandatory="false" column-size="11" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="url" alias="" remarks="" mandatory="false" column-size="255" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_link_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="objectid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_link_2" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="link_objectid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="link_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="link_objectid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="objectid" sort="ASC"/>
+</index>
+<index name="link_linkobjectid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="link_objectid" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_name" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="384" y="488" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="objectid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="" mandatory="true" column-size="128" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="descr" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="languageid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_name_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="NO ACTION" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="objectid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_name_2" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_language" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="languageid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="name_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="name_objectid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="objectid" sort="ASC"/>
+</index>
+<index name="name_languageid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="languageid" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_object" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="902" y="393" width="216" height="244"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="parentid" alias="" remarks="" mandatory="false" column-size="10" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="projectid" alias="" remarks="" mandatory="true" column-size="10" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="filename" alias="" remarks="" mandatory="true" column-size="256" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="orderid" alias="" remarks="" mandatory="true" column-size="10" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="create_date" alias="" remarks="" mandatory="true" column-size="10" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="create_userid" alias="" remarks="" mandatory="false" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="lastchange_date" alias="" remarks="" mandatory="true" column-size="10" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="lastchange_userid" alias="" remarks="" mandatory="false" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_folder" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_file" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_page" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="is_link" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_object_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_project" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="projectid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_object_2" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_user" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="lastchange_userid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_object_3" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_user" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="create_userid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="object_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="parentid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="parentid" sort="ASC"/>
+</index>
+<index name="object_projectid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="projectid" sort="ASC"/>
+</index>
+<index name="is_folder" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="is_folder" sort="ASC"/>
+</index>
+<index name="is_file" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="is_file" sort="ASC"/>
+</index>
+<index name="is_page" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="is_page" sort="ASC"/>
+</index>
+<index name="is_link" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="is_link" sort="ASC"/>
+</index>
+<index name="orderid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="orderid" sort="ASC"/>
+</index>
+<index name="object_create_userid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="create_userid" sort="ASC"/>
+</index>
+<index name="object_lastchange_userid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="lastchange_userid" sort="ASC"/>
+</index>
+<index name="IX_or_object_11" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="parentid" sort="ASC"/>
+<index-column name="filename" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_page" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="653" y="424" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="objectid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="templateid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_page_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_template" referenced-key="PRIMARY" on-update="NO ACTION" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="templateid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_page_2" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="NO ACTION" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="objectid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="page_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="objectid" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="objectid" sort="ASC"/>
+</index>
+<index name="page_templateid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="templateid" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_project" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="447" y="999" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="" mandatory="true" column-size="128" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="target_dir" alias="" remarks="" mandatory="true" column-size="255" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="ftp_url" alias="" remarks="" mandatory="true" column-size="255" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="ftp_passive" alias="" remarks="" mandatory="true" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="254"/>
+</data-type>
+</column>
+<column name="cmd_after_publish" alias="" remarks="" mandatory="true" column-size="255" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="content_negotiation" alias="" remarks="" mandatory="true" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="254"/>
+</data-type>
+</column>
+<column name="cut_index" alias="" remarks="" mandatory="true" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="254"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list/>
+<index-list>
+<index name="project_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="projectname" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="name" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_projectmodel" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="1340" y="889" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="projectid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="" mandatory="true" column-size="50" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="extension" alias="" remarks="" mandatory="true" column-size="10" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="is_default" alias="" remarks="" mandatory="true" column-size="1" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_projectmodel_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_project" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="projectid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="projectmodel_id" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="projectmodel_projectid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="projectid" sort="ASC"/>
+</index>
+<index name="IX_or_projectmodel_3" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="projectid" sort="ASC"/>
+<index-column name="extension" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_template" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="1082" y="678" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="auto_increment" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="projectid" alias="" remarks="" mandatory="false" column-size="11" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="" mandatory="true" column-size="50" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_template_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_project" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="projectid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="PRIMARYINDEX" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="projectid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="projectid" sort="ASC"/>
+</index>
+<index name="templatename" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="name" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_templatemodel" alias="" remarks="">
+<table-description>Inhalt des Templates abhaengig vom Projektmodell</table-description>
+<table-figure-bounds x="1313" y="697" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="templateid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="projectmodelid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="extension" alias="" remarks="" mandatory="false" column-size="10" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="text" alias="" remarks="" mandatory="true" column-size="2147483647" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list>
+<unique-key name="UQ_or_templatemodel_1" alias="" remarks="">
+<unique-key-description/>
+<unique-key-column name="templateid"/>
+<unique-key-column name="extension"/>
+</unique-key>
+</unique-key-list>
+<foreign-key-list>
+<foreign-key name="FK_templatemodel_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_template" referenced-key="PRIMARY" on-update="NO ACTION" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="templateid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_templatemodel_2" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_projectmodel" referenced-key="PRIMARY" on-update="NO ACTION" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="projectmodelid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="templatemodel_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="templateid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="templateid" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_user" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="1313" y="416" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="" mandatory="true" column-size="128" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="password" alias="" remarks="" mandatory="true" column-size="50" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="ldap_dn" alias="" remarks="" mandatory="true" column-size="255" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="fullname" alias="" remarks="" mandatory="true" column-size="128" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="tel" alias="" remarks="" mandatory="true" column-size="128" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="mail" alias="" remarks="" mandatory="true" column-size="255" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="descr" alias="" remarks="" mandatory="true" column-size="255" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="style" alias="" remarks="" mandatory="true" column-size="64" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="is_admin" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list/>
+<index-list>
+<index name="user_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="name" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="name" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_usergroup" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="1389" y="243" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="userid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="groupid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_usergroup_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_group" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="groupid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_usergroup_2" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_user" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="userid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="usergroup_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+<index name="groupid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="groupid" sort="ASC"/>
+</index>
+<index name="userid" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="userid" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="or_value" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="950" y="1028" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="true">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="pageid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="languageid" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="elementid" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="linkobjectid" alias="" remarks="" mandatory="false" column-size="11" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="text" alias="" remarks="" mandatory="false" column-size="2147483647" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="number" alias="" remarks="" mandatory="false" column-size="11" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="date" alias="" remarks="" mandatory="false" column-size="11" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="active" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="lastchange_date" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+<column name="lastchange_userid" alias="" remarks="" mandatory="false" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PRIMARY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_value_1" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_page" referenced-key="PRIMARY" on-update="NO ACTION" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="pageid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_value_2" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_element" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="elementid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_value_3" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_language" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="languageid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_value_4" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_user" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="lastchange_userid" referenced-key-column-name="id"/>
+</foreign-key>
+<foreign-key name="FK_value_5" alias="" remarks="" referenced-table-schema="PUBLIC" referenced-table="or_object" referenced-key="PRIMARY" on-update="RESTRICT" on-delete="RESTRICT">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="linkobjectid" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list>
+<index name="value_primary" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+</index-list>
+</table>
+</table-list>
+</schema>
+</schema-list>
+</database-model>
+</clay-model>
