@@ -3,9 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="action"    value="template">
-<input type="hidden" name="subaction" value="add">
+<?php echo Html::form('template','add') ?>
 
 <table class="main" width="50%" cellspacing="0" cellpadding="4">
 
