@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-12-15 23:23:11  dankert
+// Revision 1.6  2004-12-20 22:04:25  dankert
+// kein Lesen der Benutzer
+//
+// Revision 1.5  2004/12/15 23:23:11  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.4  2004/11/24 21:28:36  dankert
@@ -116,6 +119,8 @@ class LinkAction extends ObjectAction
 				}
 				
 				$this->link->save();
+				$this->link->setTimestamp();
+				Session::setObject( $this->link );
 			}
 		}
 
@@ -128,34 +133,6 @@ class LinkAction extends ObjectAction
 	function prop()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
-
-		if	( is_numeric($this->link->lastchange_userid) )
-		{
-			$user = new User( $this->link->lastchange_userid );
-			$user->load();
-			$this->setTemplateVar('lastchange_user',array('name'=>$user->name,
-			                                              'url' =>Html::url(array('action'=>'user',
-			                                                                      'userid'=>$user->userid))));
-		}
-		else
-		{
-			$this->setTemplateVar('lastchange_user',array('name'=>lang('UNKNOWN')));
-		}
-	
-		if	( is_numeric($this->link->create_userid) )
-		{
-			$user = new User( $this->link->create_userid );
-			$user->load();
-			$this->setTemplateVar('create_user',array('name'=>$user->name,
-			                                          'url' =>Html::url(array('action'=>'user',
-			                                                                  'userid'=>$user->userid))));
-		}
-		else
-		{
-			$this->setTemplateVar('create_user',array('name'=>lang('UNKNOWN')));
-		}
-
-
 
 		// Typ der Verkn?pfung
 		$this->setTemplateVar('type'            ,$this->link->getType()     );
@@ -176,9 +153,9 @@ class LinkAction extends ObjectAction
 				$folder = new Folder( $o->parentid );
 				$folder->linknames = false;
 				$folder->load();
-				$list[$oid]  = lang( $o->getType() );
-				$list[$oid] .= implode(' &raquo; ',$folder->parentObjectNames( false,true ) );
-				$list[$oid] .= ' &raquo; '.$o->name;
+				$list[$oid]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+				$list[$oid] .= implode( FILE_SEP,$folder->parentObjectNames( false,true ) );
+				$list[$oid] .= FILE_SEP.$o->name;
 			}
 		}
 		asort( $list );
