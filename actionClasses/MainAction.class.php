@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-12-15 23:23:47  dankert
+// Revision 1.5  2004-12-19 14:55:50  dankert
+// Bestimmte Paramer weiterleiten
+//
+// Revision 1.4  2004/12/15 23:23:47  dankert
 // Html::url()-Parameter angepasst
 //
 // Revision 1.3  2004/11/27 13:07:05  dankert
@@ -48,15 +51,20 @@ class MainAction extends Action
 	
 	function show()
 	{
-		if	( $this->getRequestVar('callSubaction')!='')
+		// Bestimmte Paramer weiterleiten
+		$params = array(); 
+		
+		foreach( array('elementid') as $p )
 		{
-			$this->setSessionVar( $this->getRequestVar('callAction').'action',$this->getRequestVar('callSubaction') );
+			if	( $this->getRequestVar( $p ) != '' )
+				$params[ $p ] = $this->getRequestVar( $p );
 		}
 
-		$this->setTemplateVar('frame_src_main_menu',Html::url( 'mainmenu'                       ,$this->getRequestVar('subaction'),$this->getRequestId() ) );
-		$this->setTemplateVar('frame_src_main_main',Html::url( $this->getRequestVar('subaction'),'',$this->getRequestId() ));
+		// Variablen fuellen
+		$this->setTemplateVar('frame_src_main_menu',Html::url( 'mainmenu'                       ,$this->getRequestVar('subaction'),$this->getRequestId(),$params ) );
+		$this->setTemplateVar('frame_src_main_main',Html::url( $this->getRequestVar('subaction'),''                               ,$this->getRequestId(),$params ) );
 		
-		$this->forward('frameset_main');
+		$this->forward('frameset_main'); // Forward auf View
 	}
 
 }
