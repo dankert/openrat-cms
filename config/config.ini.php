@@ -24,7 +24,7 @@ ascii    = html,htm,php  ; file extensions to use FTP ascii mode for
 
 
 [publish]
-filename = id            ; filename-mode 'ss','crc32','md5','edit' or 'id'
+filename = edit            ; filename-mode 'ss','crc32','md5','edit' or 'id'
 
 
 [log]
