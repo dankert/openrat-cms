@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-11-28 16:53:51  dankert
+// Revision 1.12  2004-11-28 21:27:07  dankert
+// Ausgabe von "notices"
+//
+// Revision 1.11  2004/11/28 16:53:51  dankert
 // Korrektur create()
 //
 // Revision 1.10  2004/11/27 13:06:26  dankert
@@ -94,6 +97,7 @@ class FolderAction extends ObjectAction
 					$f->parentid = $this->folder->objectid; 
 
 					$f->add();
+					$this->addNotice('folder',$f->name,'ADDED','ok');
 				}
 
 				break;
@@ -108,6 +112,7 @@ class FolderAction extends ObjectAction
 					$page->templateid = $this->getRequestVar('templateid');
 					$page->parentid   = $this->folder->objectid;
 
+					$this->addNotice('page',$page->name,'ADDED','ok');
 					$page->add();
 				}
 
@@ -127,6 +132,7 @@ class FolderAction extends ObjectAction
 				$file->value     = $upload->value;
 		
 				$file->add(); // Datei hinzufuegen
+				$this->addNotice('file',$file->name,'ADDED','ok');
 				break;
 			
 			case 'link':
@@ -138,6 +144,7 @@ class FolderAction extends ObjectAction
 					$link->parentid       = $this->folder->objectid; 
 					$link->isLinkToObject = false;
 					$link->url            = $this->getRequestVar('linkname');;
+					$this->addNotice('link',$link->name,'ADDED','ok');
 					$link->add();
 				}
 				break;
@@ -160,6 +167,7 @@ class FolderAction extends ObjectAction
 		{
 			// Ordner l?schen
 			$this->folder->delete();
+			$this->addNotice($this->folder->getType(),$this->folder->name,lang('DELETED'),'ok');
 		}
 		else
 		{
@@ -171,9 +179,9 @@ class FolderAction extends ObjectAction
 			$this->folder->filename = $this->getRequestVar('filename');
 			$this->folder->desc     = $this->getRequestVar('desc');
 			$this->folder->save();
+			$this->addNotice($this->folder->getType(),$this->folder->name,lang('PROP_SAVED'),'ok');
 		}
 	
-		$this->addNotice($this->folder->getType(),$this->folder->name,lang('PROP_SAVED'),'ok');
 		$this->setTemplateVar('tree_refresh',true);
 		$this->callSubAction('show');
 	}
@@ -200,6 +208,8 @@ class FolderAction extends ObjectAction
 			unset( $o ); // Selfmade Garbage Collection :-)
 		}
 		
+		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
+
 		// Ordner anzeigen
 		$this->callSubAction('show');
 		
@@ -242,18 +252,18 @@ class FolderAction extends ObjectAction
 						// dann verschieben
 						if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
 						{
-							$this->addNotice($o->getType(),$o->objectid,lang('MOVED'),'ok');
+							$this->addNotice($o->getType(),$o->objectid,'MOVED','ok');
 							//$o->setParentId( $targetObjectId );
 						}
 						else
 						{
-							$this->addNotice($o->getType(),$o->objectid,lang('MOVED'),'error');
+							$this->addNotice($o->getType(),'# '.$o->objectid,'ERROR','error');
 						}
 					}
 					else
 					{
 						$o->setParentId( $targetObjectId );
-						$this->addNotice($o->getType(),$o->objectid,lang('MOVED'),'ok');
+						$this->addNotice($o->getType(),'# '.$o->objectid,'MOVED','ok');
 					}
 					break;
 	
@@ -263,7 +273,7 @@ class FolderAction extends ObjectAction
 						case 'folder':
 							// Ordner zur Zeit nicht kopieren
 							// Funktion waere zu verwirrend
-							$this->addNotice($o->getType(),$o->objectid,lang('CANNOT_COPY_FOLDER'),'error');
+							$this->addNotice($o->getType(),'# '.$o->objectid,'CANNOT_COPY_FOLDER','error');
 							break;
 						
 						case 'file':
@@ -274,7 +284,7 @@ class FolderAction extends ObjectAction
 							$f->parentid = $targetObjectId;
 							$f->add();
 							$f->copyValueFromFile( $id );
-							$this->addNotice($o->getType(),$o->objectid,lang('COPIED'),'ok');
+							$this->addNotice($o->getType(),'# '.$o->objectid,'COPIED','ok');
 							break;
 						
 						case 'page':
@@ -285,7 +295,7 @@ class FolderAction extends ObjectAction
 							$p->parentid = $targetObjectId;
 							$p->add();
 							$p->copyValuesFromPage( $id );
-							$this->addNotice($o->getType(),$o->objectid,lang('COPIED'),'ok');
+							$this->addNotice($o->getType(),'# '.$o->objectid,'COPIED','ok');
 							break;
 						
 						case 'link':
@@ -295,7 +305,7 @@ class FolderAction extends ObjectAction
 							$l->name     = lang('COPY_OF').' '.$l->name;
 							$l->parentid = $targetObjectId;
 							$l->add();
-							$this->addNotice($o->getType(),$o->objectid,lang('COPIED'),'ok');
+							$this->addNotice($o->getType(),'# '.$o->objectid,'COPIED','ok');
 							break;
 						
 						default:
@@ -316,11 +326,11 @@ class FolderAction extends ObjectAction
 						$link->isLinkToObject = true;
 						$link->name           = lang('GLOBAL_LINK_TO').' '.$o->name;
 						$link->add();
-						$this->addNotice($o->getType(),$o->objectid,lang('WAS_LINKED'),'ok');
+						$this->addNotice($o->getType(),'# '.$o->objectid,'LINKED','ok');
 					}
 					else
 					{
-						$this->addNotice($o->getType(),$o->objectid,lang('WAS_LINKED'),'error');
+						$this->addNotice($o->getType(),'# '.$o->objectid,'ERROR','error');
 					}
 					break;
 	
@@ -351,7 +361,7 @@ class FolderAction extends ObjectAction
 						default:
 							die('fatal: what type to delete?');
 					}
-					$this->addNotice($o->getType(),$o->objectid,lang('DELETED'),'ok');
+					$this->addNotice($o->getType(),'# '.$o->objectid,'DELETED','ok');
 					break;
 			}
 
@@ -402,6 +412,7 @@ class FolderAction extends ObjectAction
 	
 			unset( $o );
 		}
+		$this->addNotice($this->folder->getType(),$this->folder->name,lang('SEQUENCE_CHANGED'),'ok');
 		
 		// Ordner anzeigen
 		$this->callSubAction('show');
