@@ -72,6 +72,7 @@
       { ?>
   <input type="hidden" name="dbid" value="<?php echo key($dbids) ?>" />
 <?php } ?>
+  <input type="hidden" name="screenwidth" value="9999" />
   <input type="submit" class="submit" value="<?php echo lang('GLOBAL_LOGIN') ?>" />
   </td>
 </tr>
@@ -80,6 +81,12 @@
 </table>
 
 </form>
+
+<script name="javascript1.2" type="text/javascript">
+<!--
+document.forms[0].screenwidth.value=window.innerWidth;
+//-->
+</script>
 
 <!-- The GPL licence requires this text, so NEVER remove nor change it. -->
 
