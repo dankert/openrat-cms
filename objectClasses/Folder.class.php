@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-12-15 23:18:36  dankert
+// Revision 1.7  2004-12-19 15:22:17  dankert
+// Anpassung Session-Funktionen
+//
+// Revision 1.6  2004/12/15 23:18:36  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.5  2004/11/29 21:10:29  dankert
@@ -329,7 +332,8 @@ class Folder extends Object
 		$sql = new Sql('SELECT id FROM {t_object}'.
 		               '  WHERE projectid={projectid}'.
 		               '  ORDER BY orderid ASC' );
-		$sql->setInt('projectid',$SESS['projectid']);
+		$project = Session::getProject();
+		$sql->setInt('projectid',$project->projectid);
 		
 		return( $db->getCol( $sql->query ) );
 	}
@@ -378,7 +382,10 @@ class Folder extends Object
 		               '    AND projectid={projectid}' );
 		               
 		if	( !isset($this->projectid) )
-			$sql->setInt( 'projectid',$SESS['projectid'] );
+		{
+			$project = Session::getProject();
+			$sql->setInt('projectid',$project->projectid);
+		}
 		else	$sql->setInt( 'projectid',$this->projectid   );
 		
 		return( $db->getCol( $sql->query ) );
