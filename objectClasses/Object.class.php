@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2004-12-20 22:42:03  dankert
+// Revision 1.17  2004-12-20 23:04:15  dankert
+// Korrektur Timestamp setzen
+//
+// Revision 1.16  2004/12/20 22:42:03  dankert
 // Kl. Korrekturen
 //
 // Revision 1.15  2004/12/20 22:03:45  dankert
@@ -590,9 +593,13 @@ class Object
 
 		$sql->setInt   ('objectid', $this->objectid);
 		$sql->setString('filename', $this->filename);
-		$sql->setInt   ('time'    , time());
+
 		$user = Session::getUser();
-		$sql->setInt   ('userid'  , $user->userid  );
+		$this->lastchangeUser = $user;
+		$this->lastchangeDate = time();
+
+		$sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
+		$sql->setInt   ('time'    ,$this->lastchangeDate          );
 
 		$db->query($sql->query);
 
@@ -621,11 +628,15 @@ class Object
 		               ' WHERE id={objectid}');
 
 		$user = Session::getUser();
-		$sql->setInt   ('userid'  ,$user->userid  );
-		$sql->setInt   ('objectid',$this->objectid);
-		$sql->setInt   ('time'    ,time()         );
+		$this->lastchangeUser = $user;
+		$this->lastchangeDate = time();
+
+		$sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
+		$sql->setInt   ('objectid',$this->objectid                );
+		$sql->setInt   ('time'    ,$this->lastchangeDate          );
 
 		$db->query( $sql->query );
+		
 	}
 
 
