@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-24 15:17:19  dankert
+// Revision 1.3  2004-05-02 18:40:46  dankert
+// Konfiguration aus /etc lesen (wenn vorhanden)
+//
+// Revision 1.2  2004/04/24 15:17:19  dankert
 // div. Erweiterungen
 //
 // Revision 1.1  2004/04/16 22:58:06  dankert
@@ -31,12 +34,25 @@ session_start();
 
 require_once( "functions/request.inc.php" );
 
+// Wenn Konfiguration noch nicht in Session vorhanden, dann
+// aus Datei lesen.
 if	( !isset( $SESS['conf'] ))
 {
-	$conf = parse_ini_file( 'config.ini.php',true );
+	// Falls Konfigurationsdatei unter /etc
+	// vorhanden ist, diese benutzen.
+	if	( is_file('/etc/openrat/config.ini.php') )
+		$conf_filename = '/etc/openrat/config.ini.php';
+	else	$conf_filename = './config.ini.php';
+
+	// Datei lesen, parsen und in Session schreiben
+	$conf = parse_ini_file( $conf_filename,true );
 	$SESS['conf'] = $conf;
 }
-else $conf = $SESS['conf'];
+else
+{
+	// bereits gelesene und in Session vorhandene Konfiguration benutzen
+	$conf = $SESS['conf'];
+}
 
 require_once( "db/db.class.php" );
 require_once( "functions/config.inc.php" );
@@ -66,29 +82,17 @@ require_once( "functions/language.inc.$conf_php" );
 require_once( "functions/theme.inc.$conf_php" );
 require_once( "functions/db.inc.$conf_php" );
 
-request_into_session('action');
-request_into_session('subaction');
-request_into_session('folderaction');
-request_into_session('objectid');
-request_into_session('action');
-request_into_session('tplaction');
+// Request-Variablen in Session speichern
+request_into_session('action'    );
+request_into_session('subaction' );
+request_into_session('objectid'  );
 request_into_session('templateid');
-request_into_session('elementaction');
-request_into_session('elementid');
-request_into_session('folderaction');
-request_into_session('fileaction');
-request_into_session('pageaction');
-request_into_session('projectaction');
-request_into_session('projectid');
-request_into_session('modelaction');
-request_into_session('modelid');
-request_into_session('useraction');
-request_into_session('userid');
-request_into_session('groupaction');
-request_into_session('groupid');
-request_into_session('languageaction');
+request_into_session('elementid' );
+request_into_session('projectid' );
+request_into_session('modelid'   );
+request_into_session('userid'    );
+request_into_session('groupid'   );
 request_into_session('languageid');
-request_into_session('searchaction');
 
 // Verbindung zur Datenbank
 //
