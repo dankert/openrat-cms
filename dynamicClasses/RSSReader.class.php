@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-10-14 21:15:13  dankert
+// Revision 1.2  2004-12-19 15:18:50  dankert
+// Speichern des RSS-Feeds in Session (Performance)
+//
+// Revision 1.1  2004/10/14 21:15:13  dankert
 // Lesen eines RSS-Feeds und erzeugen eines HTML-Abschnittes dafuer
 //
 // ---------------------------------------------------------------------------
@@ -30,46 +33,68 @@
 /**
  * @author Jan Dankert
  */
-class RSSReader /*extends DynamicElement*/
+class RSSReader extends Dynamic
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $parameters  = Array(
-		'url'=>'The Url of the RSS-Feed to read. Default: <em>http://www.heise.de/newsticker/heise.rdf</em>'
+		'url'=>'URL from which the RSS is fetched'
 		);
-
-
-	var $url = 'http://www.heise.de/newsticker/heise.rdf';
 
 	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $description = 'Reads a RSS-Feed and displays its content as a html list';
-	var $api;
 
-	// Erstellen des Hauptmenues
+	var $url       = 'http://www.heise.de/newsticker/heise.rdf';
+
+
+
 	function execute()
 	{
-		// Lesen des Root-Ordners
-		$rss = $this->parse( implode('',file($this->url)) );
+		// Sessionvariable mit CRC verschluesseln, falls es mehrere RSS-Feeds im Projekt gibt
+		$sessVar = 'RSSReader_'.crc32($this->url);
+		$cache = $this->getSessionVar( $sessVar );
 		
-		$this->api->output('<ul>');
+		if	( !empty($cache) )
+		{
+			// Wenn Cache vorhanden, dann diesen ausgeben
+			$this->output( $cache );
+		}
+		else
+		{
+			// Wenn Cache leer, dann RSS erzeugen und in Session speichern
+			$this->create();
+			$this->setSessionVar( $sessVar,$this->getOutput() );
+		} 
+	}
 
-		// Schleife ueber alle Inhalte des Root-Ordners
+
+
+	// Erzeugt den Text des RSS-Feeds
+	function create()
+	{
+		$rss = $this->parse( implode('',file($this->url)) );
+		$out = array();
+		
+		$this->output('<ul>');
+
+		// Schleife ueber alle Inhalte des RSS-Feeds
 		foreach( $rss['items'] as $item )
 		{
-			$this->api->output('<li>');
-			$this->api->output('<a href="'.$item['link'].'">'.$item['title'].'</a><br/>'.$item['description']);
-			$this->api->output('</li>');
+			$this->output('<li>');
+			$this->output('<a href="'.$item['link'].'">'.$item['title'].'</a><br/>'.$item['description']);
+			$this->output('</li>');
 		}
 
-		$this->api->output('</ul>');
+		$this->output('</ul>');
 	}
-	
-	
+
+
+
 	function parse( $feed )
 	{
 		// Parses the RSS feed into the array
