@@ -2,13 +2,11 @@
 ; <?php exit('direct access denied') ?>
 
 [database]
+databases = TEST,CMSPROD,CMSLEER
+;databases = TEST
 
-count = 2
 
-
-[database_1]
-
-name = FSTEST
+[database_TEST]
 comment = "Testdatenbank MySQL"
 type = mysql
 user = cms
@@ -18,16 +16,24 @@ database = cms
 prefix = 
 persistent = yes
 
+[database_CMSLEER]
+comment = "Basis-DB MySQL"
+type = mysql
+user = cms
+password = horst
+host = :/var/run/mysqld/mysqld.sock
+database = cmsleer
+prefix = 
+persistent = no
 
-[database_2]
 
-name = FSTESTXXX
-comment = "Testdatenbank MySQL persistent"
+[database_CMSPROD]
+comment = "Demo MySQL persistent"
 type = mysql
 user = cms
 password = horst
 host = 127.0.0.1
-database = cms
+database = cmsprod
 prefix = 
 persistent = yes
 
@@ -45,16 +51,14 @@ debug = true
 
 
 
-
-
 [ldap]
 
 ; LDAP server hostname for password checking with this server
-; If you want to use this method, you MUST set a LDAP-rdn for each user
+; If you want to use this method, you simply set a LDAP-dn for that user
 ; Default: '' (blank)
-; UNDER DEVELOPMENT!
 
-host = "192.168.10.19"
+host = "172.19.12.19"
+port = "389";
 
 
 
@@ -69,14 +73,21 @@ dsn    = "mysql://cms:horst@127.0.0.1/cms"
 db_sql = "select * from tablexy where user={user} and password={pw}"
 
 
+[ftp]
+asciimode = html,htm,php
 
 [global]
+
+; needs the 2-letter ISO-Countrycode
+default_language = de
 
 ; ---------------------------------------------------------------------
 ; The title displayed in the title bar of your browser.
 ; Maybe you like to change it to something more friendly :-)
 
-title = "Content Management System DaCMS'03"
+
+
+title = "OpenRat"
 version = "0.1 cvs"
 ; ---------------------------------------------------------------------
 
@@ -88,13 +99,6 @@ version = "0.1 cvs"
 ext = php
 ; ---------------------------------------------------------------------
 
-; ---------------------------------------------------------------------
-; Authorization method
-; Can be one of "url", "cookie" or "http"
-; at the moment, only "url" is supported
-; ---------------------------------------------------------------------
-auth = url
-; ---------------------------------------------------------------------
 
 
 ; ---------------------------------------------------------------------
