@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-12-26 20:21:04  dankert
+// Revision 1.14  2004-12-28 22:59:41  dankert
+// Schalter fuer HTML und WIKI
+//
+// Revision 1.13  2004/12/26 20:21:04  dankert
 // *** empty log message ***
 //
 // Revision 1.12  2004/12/26 01:08:55  dankert
@@ -206,7 +209,9 @@ class PageelementAction extends Action
 
 			case 'longtext':
 			case 'text':
-				$this->setTemplateVar('text',$this->value->text);
+				$this->setTemplateVar( 'html',$this->value->element->html );
+				$this->setTemplateVar( 'wiki',$this->value->element->wiki );
+				$this->setTemplateVar( 'text',$this->value->text          );
 				break;
 
 		
@@ -282,10 +287,8 @@ class PageelementAction extends Action
 		$this->value->page->languageid = $this->value->languageid;
 		$this->value->page->load();
 
-		if	( $this->value->page->hasRight(ACL_RELEASE) )
-			$this->setTemplateVar( 'release',true  );
-		else
-			$this->setTemplateVar( 'release',false );
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
 
 		$this->forward('pageelement_edit_'.$this->value->element->type);
 	}
