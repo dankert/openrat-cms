@@ -3,6 +3,7 @@
 <!-- $Id$ -->
 <head>
 <title><?php echo $title ?></title>
+<link rel="shortcut icon" href="<?php echo $favicon_url ?>">
 </head>
 
 <frameset rows="20,*" border="0" frameborder="5" framespacing="0" bordercolor="#000000">
