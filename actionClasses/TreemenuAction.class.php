@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-10-13 22:13:24  dankert
+// Revision 1.5  2004-11-10 22:41:36  dankert
+// Neue Ermittlung der Projekte, Entfernen des Punktes "Bitte auswaehlen"
+//
+// Revision 1.4  2004/10/13 22:13:24  dankert
 // Auswerten der Berechtigungen
 //
 // Revision 1.3  2004/05/02 14:49:37  dankert
@@ -45,35 +48,24 @@ class TreemenuAction extends Action
 {
 	var $defaultSubAction = 'show';
 
-
 	function show()
 	{
-		global $SESS;
 		$this->setTemplateVar('css_body_class','menu');
 		
-		$projects = array();
+		$user     = Session::getUser();
+		$projects = $user->projects;
 
-		$user = $this->getUserFromSession();
-		
-		if	( isset($user) )
-		{
-			// Lesen aller Projekte, fuer die der Benutzer berechtigt ist.
-			$projects = $user->getReadableProjects();
+		// Administrator sieht Administrationsbereich
+		if   ( $user->isAdmin )
+			$projects = array("-1"=>lang('ADMINISTRATION')) + $projects;
 
-			$projects[0] = lang('SELECT');
-		
-			// Unterscheidung Administrator/Benutzer
-			if   ( $user->isAdmin )
-			{
-				// Administrator sieht Administrationsbereich
-				$projects[-1] = lang('ADMINISTRATION');
-			}
-			ksort( $projects );
-
-			$this->setTemplateVar( 'act_projectid',intval($this->getSessionVar('projectid')) );
-		}
 		$this->setTemplateVar('projects',$projects);
-		
+
+		// Das aktuelle Projekt voreinstellen		
+		$project = Session::getProject();
+		if	( is_object( $project ) )
+			$this->setTemplateVar( 'act_projectid',$project->projectid );
+
 		// Ausgabe des Templates
 		$this->forward('tree_menu');
 	}
