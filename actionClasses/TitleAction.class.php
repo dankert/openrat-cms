@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2005-02-17 20:08:51  dankert
+// Revision 1.8  2005-03-13 16:39:58  dankert
+// Last-Modified vorerst nicht setzen, da letzte Aenderung der Baumeinstellung sonst nicht beruecksichtigt wird
+//
+// Revision 1.7  2005/02/17 20:08:51  dankert
 // Einbau von Baum offen/zu
 //
 // Revision 1.6  2005/01/14 21:41:23  dankert
@@ -65,8 +68,8 @@ class TitleAction extends Action
 	function show()
 	{
 		$user = Session::getUser();
-		if	( is_object($user) && isset($user->loginDate) )
-			$this->lastModified( $user->loginDate );
+//		if	( is_object($user) && isset($user->loginDate) )
+//			$this->lastModified( $user->loginDate );
 
 		$this->setTemplateVar('css_body_class','title');
 
