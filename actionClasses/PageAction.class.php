@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-10-13 22:12:57  dankert
+// Revision 1.12  2004-11-10 22:39:24  dankert
+// Entfernen der Methode move()
+//
+// Revision 1.11  2004/10/13 22:12:57  dankert
 // Neue Seitenfunktion zum gleichzeitigen Bearbeiten aller Seiteninhalte
 //
 // Revision 1.10  2004/10/05 10:00:49  dankert
@@ -75,18 +78,6 @@ class PageAction extends Action
 		else	$this->page = new Page( $this->getSessionVar('objectid') );
 
 		$this->page->load();
-	}
-
-
-	/**
-	 * Verschieben der Seite
-	 */
-	function move()
-	{
-		$this->objectMove();
-		$this->page->load();
-
-		$this->callSubAction('prop');
 	}
 
 
