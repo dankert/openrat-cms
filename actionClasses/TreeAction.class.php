@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-09-07 21:12:30  dankert
+// Revision 1.6  2004-09-30 20:28:30  dankert
+// Titel bei ?ffnen/Schlie?en von Baumzweigen
+//
+// Revision 1.5  2004/09/07 21:12:30  dankert
 // F?llen des Navigationsbaumes mit neuen Klassen
 //
 // Revision 1.4  2004/05/02 14:49:37  dankert
@@ -171,7 +174,8 @@ class TreeAction extends Action
 	                    $zeile['image'] = 'plus_end';
 	               else $zeile['image'] = 'plus';
 
-	               $zeile['image_url'] = Html::url(array('action'=>'tree','subaction'=>'open','open'=>$elId));
+	               $zeile['image_url'     ] = Html::url(array('action'=>'tree','subaction'=>'open','open'=>$elId));
+	               $zeile['image_url_desc'] = lang('TREE_OPEN_ELEMENT');
 	          }
 	          else
 	          {
@@ -179,7 +183,8 @@ class TreeAction extends Action
 	                    $zeile['image'] = 'minus_end';
 	               else $zeile['image'] = 'minus';
 
-	               $zeile['image_url'] = Html::url(array('action'=>'tree','subaction'=>'close','close'=>$elId));
+	               $zeile['image_url'     ] = Html::url(array('action'=>'tree','subaction'=>'close','close'=>$elId));
+	               $zeile['image_url_desc'] = lang('TREE_CLOSE_ELEMENT');
 	          }
 	     }
 	     else
