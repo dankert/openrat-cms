@@ -11,14 +11,14 @@
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 <tr>
-  <th colspan="2"><?php echo lang('PASSWORD') ?></th>
+  <th colspan="2"><?php echo lang('USER_PASSWORD') ?></th>
 </tr>
 <tr>
-<td width="50%" class="f1"><?php echo lang('new_password') ?></a></td>
+<td width="50%" class="f1"><?php echo lang('USER_new_password') ?></a></td>
 <td width="50%" class="f1"><input type="password" name="password1"></td>
 </tr>
 <tr>
-<td width="50%" class="f2"><?php echo lang('new_password_repeat') ?></a></td>
+<td width="50%" class="f2"><?php echo lang('USER_new_password_repeat') ?></a></td>
 <td width="50%" class="f2"><input type="password" name="password2"></td>
 </tr>
 <tr>
@@ -26,7 +26,7 @@
 <td width="50%" class="f2"><?php echo Html::checkBox('mail',false,true) ?></td>
 </tr>
 <tr>
-<td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
+<td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
 </tr>
 </table>
 
