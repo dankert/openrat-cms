@@ -3,11 +3,14 @@
 <!-- $Id$ -->
 <center>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
+<?php $table_title_text    = lang('FOLDER');
+      $table_title_colspan = 5;
+      include( $tpl_dir.'table_open.tpl.php');
+?>
 <tr>
-  <th colspan="5"><?php echo lang('FOLDER') ?></th>
+<td colspan="5" class="help"><?php echo lang('HELP_FOLDER') ?></td>
 </tr>
+
 
 <?php if  ( isset($up_url) )
       { ?>
@@ -21,9 +24,9 @@
       {
       ?>
 <tr>
-<td width="40%" class="help"            ><?php echo lang('name'      )                  ?></a></td>
-<td width="20%" class="help"            ><?php echo lang('lastchange')                  ?></a></td>
-<td width="10%" class="help" colspan="2"><?php if (count( $object)>1) echo lang('move') ?></a></td>
+<td width="40%" class="help"            ><?php echo lang('name'      )                  ?></td>
+<td width="20%" class="help"            ><?php echo lang('lastchange')                  ?></td>
+<td width="10%" class="help" colspan="2"><?php if (count( $object)>1) echo lang('move') ?></td>
 <td width="10%" class="help"            >&nbsp;</a></td>
 </tr>
 

@@ -79,6 +79,13 @@
   <tr>
     <td class="help"><?php echo lang('HELP_FILE_DELETE') ?></td>
   </tr>
+<?php }
+      else
+      {
+      	 ?>
+  <tr>
+    <td class="help" colspan="2"><?php echo lang('FILE_NO_DELETE_BECAUSE_LINKED') ?></td>
+  </tr>
 <?php } ?>
 <tr>
 <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
@@ -101,13 +108,16 @@
 <tr>
   <th colspan="2"><?php echo lang('RESIZE') ?></th>
 </tr>
+<tr>
+  <td colspan="2" class="help"><?php echo lang('HELP_FILE_RESIZE') ?></td>
+</tr>
 
 <tr>
-<td width="50%" class="f2"><?php echo lang('WIDTH') ?></td>
+<td width="50%" class="f2"><?php echo lang('NEW_WIDTH') ?></td>
 <td width="50%" class="f2"><input type="text" name="width" value=""></td>
 </tr>
 <tr>
-<td width="50%" class="f2"><?php echo lang('HEIGHT') ?></td>
+<td width="50%" class="f2"><?php echo lang('NEW_HEIGHT') ?></td>
 <td width="50%" class="f2"><input type="text" name="height" value=""></td>
 </tr>
 
@@ -133,6 +143,9 @@
 
 <tr>
   <th colspan="2"><?php echo lang('MOVE') ?></th>
+</tr>
+<tr>
+  <td colspan="2" class="help"><?php echo lang('HELP_FILE_MOVE') ?></td>
 </tr>
 
 <tr>
@@ -161,6 +174,9 @@
 <tr>
   <th colspan="2"><?php echo lang('REPLACE') ?></th>
 </tr>
+<tr>
+  <td colspan="2" class="help"><?php echo lang('HELP_FILE_REPLACE') ?></td>
+</tr>
 
 <tr>
 <td colspan="2" class="act">
@@ -182,6 +198,9 @@
 
 <tr>
   <th colspan="2"><?php echo lang('PAGES') ?></th>
+</tr>
+<tr>
+  <td colspan="2" class="help"><?php echo lang('HELP_FILE_PAGES') ?></td>
 </tr>
 
 <?php $f1=true;
