@@ -22,7 +22,7 @@
 		      }
           ?>
           </td>
-          <td><span class="mainmenu_name">&nbsp;<img src="<?php echo $image_dir.'icon_'.$type.'.png' ?>" align="middle" title="<?php echo $type ?>" alt="" />&nbsp;<?php if (isset($text)) echo $text ?></span>
+          <td><span class="mainmenu_name">&nbsp;<?php if (isset($text)) { ?><img src="<?php echo $image_dir.'icon_'.$type.'.png' ?>" align="middle" title="<?php echo $type ?>" alt="" />&nbsp;<?php echo $text ?><?php } ?></span>
           </td>
 
           <?php if(isset($nr)) { ?>
