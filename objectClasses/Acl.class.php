@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-04-24 15:15:12  dankert
+// Revision 1.2  2004-04-30 20:36:25  dankert
+// Neu: Freigabe
+//
+// Revision 1.1  2004/04/24 15:15:12  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
@@ -110,6 +113,12 @@ class Acl
 	var $delete        = false;
 
 	/**
+	  * Objektinhalt freigeben
+	  * @type Boolean
+	  */
+	var $release       = false;
+
+	/**
 	  * Objekt veröffentlichen
 	  * @type Boolean
 	  */
@@ -184,6 +193,7 @@ class Acl
 		$this->write         = ( $row['is_write'        ] == '1' );
 		$this->prop          = ( $row['is_prop'         ] == '1' );
 		$this->delete        = ( $row['is_delete'       ] == '1' );
+		$this->release       = ( $row['is_release'      ] == '1' );
 		$this->publish       = ( $row['is_publish'      ] == '1' );
 		$this->create_folder = ( $row['is_create_folder'] == '1' );
 		$this->create_file   = ( $row['is_create_file'  ] == '1' );
@@ -204,63 +214,6 @@ class Acl
 	}
 
 
-	function save()
-	{
-		if	( $this->delete )
-			$this->prop = true;
-
-		$db = db_connection();
-		
-		$sql = new Sql( 'UPDATE {t_acl} '.
-		                ' SET userid          ={userid},'.
-		                '     groupid         ={groupid},'.
-		                '     objectid        ={objectid},'.
-		                '     is_write        ={write},'.
-		                '     is_prop         ={prop},'.
-		                '     is_create_folder={create_folder},'.
-		                '     is_create_file  ={create_file},'.
-		                '     is_create_link  ={create_link},'.
-		                '     is_create_page  ={create_page},'.
-		                '     is_grant        ={grant},'.
-		                '     is_transmit     ={transmit},'.
-		                '     delete          ={delete},'.
-		                '     publish         ={publish},'.
-		                '     languageid      ={languageid}'.
-		                '  WHERE aclid={aclid}' );
-
-		$sql->setInt('aclid'   ,$this->aclid   );
-		$sql->setInt('objectid',$this->objectid);
-		
-		if	( intval($this->groupid) == 0 )
-		{
-			$sql->setInt ('userid',$this->userid);
-			$sql->setNull('groupid');
-		}
-		else
-		{
-			$sql->setNull('userid');
-			$sql->setInt ('groupid',$this->groupid);
-		}
-
-		$sql->setBoolean('is_default'   ,$this->isDefault     );
-		$sql->setBoolean('prop'         ,$this->prop          );
-		$sql->setBoolean('write'        ,$this->write         );
-		$sql->setBoolean('delete'       ,$this->delete        );
-		$sql->setBoolean('publish'      ,$this->publish       );
-		$sql->setBoolean('grant'        ,$this->grant         );
-		$sql->setBoolean('transmit'     ,$this->transmit      );
-		$sql->setBoolean('create_folder',$this->create_folder );
-		$sql->setBoolean('create_file'  ,$this->create_file   );
-		$sql->setBoolean('create_link'  ,$this->create_link   );
-		$sql->setBoolean('create_page'  ,$this->create_page   );
-
-		$sql->setInt('languageid',$this->languageid);
-
-		$db->query( $sql->query );
-	}
-
-
-
 	function getProperties()
 	{
 		return Array( 'write'        => $this->write,
@@ -270,6 +223,7 @@ class Acl
 		              'create_link'  => $this->create_link,
 		              'create_page'  => $this->create_page,
 		              'delete'       => $this->delete,
+		              'release'      => $this->release,
 		              'publish'      => $this->publish,
 		              'grant'        => $this->grant,
 		              'transmit'     => $this->transmit,
@@ -311,8 +265,8 @@ class Acl
 		$this->aclid = intval($db->getOne($sql->query))+1;
 		
 		$sql = new Sql( 'INSERT INTO {t_acl} '.
-		                ' (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_publish,is_grant,is_transmit,languageid)'.
-		                ' VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{publish},{grant},{transmit},{languageid} )' );
+		                ' (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)'.
+		                ' VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )' );
 
 		$sql->setInt('aclid'   ,$this->aclid   );
 		$sql->setInt('objectid',$this->objectid);
@@ -332,6 +286,7 @@ class Acl
 		$sql->setBoolean('prop'         ,$this->prop          );
 		$sql->setBoolean('write'        ,$this->write         );
 		$sql->setBoolean('delete'       ,$this->delete        );
+		$sql->setBoolean('release'      ,$this->release       );
 		$sql->setBoolean('publish'      ,$this->publish       );
 		$sql->setBoolean('grant'        ,$this->grant         );
 		$sql->setBoolean('transmit'     ,$this->transmit      );
@@ -348,61 +303,26 @@ class Acl
 	}
 
 
-//	function getAccessACLsFromObject( $objectid=0 )
+//	function getACLsFromUserId( $userid )
 //	{
 //		$db = db_connection();
 //		
 //		$sql = new Sql( 'SELECT id FROM {t_acl} '.
-//		                '  WHERE objectid={objectid}'.
-//		                '    AND is_default=0'.
-//		                '  ORDER BY userid,groupid ASC' );
-//
-//		if	( $objectid == 0 )
-//			$sql->setInt('objectid',$this->objectid);
-//		else	$sql->setInt('objectid',$objectid      );
+//		                '  WHERE userid={userid}');
+//		$sql->setInt('userid',$userid);
 //
 //		return $db->getCol( $sql->query );
 //	}
 //
 //
-//	function getDefaultACLsFromObject( $objectid=0 )
+//	function getACLsFromGroupId( $groupid )
 //	{
 //		$db = db_connection();
 //		
 //		$sql = new Sql( 'SELECT id FROM {t_acl} '.
-//		                '  WHERE objectid={objectid}'.
-//		                '    AND is_default=1'.
-//		                '  ORDER BY userid,groupid ASC' );
+//		                '  WHERE groupid={groupid}' );
+//		$sql->setInt('groupid',$groupid);
 //
-//		if	( $objectid == 0 )
-//			$sql->setInt('objectid',$this->objectid);
-//		else	$sql->setInt('objectid',$objectid      );
-//
-////		echo "<pre>".$sql->query."</pre>";
 //		return $db->getCol( $sql->query );
 //	}
-
-
-	function getACLsFromUserId( $userid )
-	{
-		$db = db_connection();
-		
-		$sql = new Sql( 'SELECT id FROM {t_acl} '.
-		                '  WHERE userid={userid}');
-		$sql->setInt('userid',$userid);
-
-		return $db->getCol( $sql->query );
-	}
-
-
-	function getACLsFromGroupId( $groupid )
-	{
-		$db = db_connection();
-		
-		$sql = new Sql( 'SELECT id FROM {t_acl} '.
-		                '  WHERE groupid={groupid}' );
-		$sql->setInt('groupid',$groupid);
-
-		return $db->getCol( $sql->query );
-	}
 }
