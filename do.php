@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-02 18:40:46  dankert
+// Revision 1.4  2004-09-07 21:10:18  dankert
+// Klassendefinitionsdateien vor dem Start der Session einbinden
+//
+// Revision 1.3  2004/05/02 18:40:46  dankert
 // Konfiguration aus /etc lesen (wenn vorhanden)
 //
 // Revision 1.2  2004/04/24 15:17:19  dankert
@@ -29,6 +32,35 @@
 // Revision 1.1  2004/04/16 22:58:06  dankert
 // Controller
 // ---------------------------------------------------------------------------
+
+$conf_php = 'php';
+
+require_once( "serviceClasses/GlobalFunctions.class.$conf_php" );
+require_once( "serviceClasses/Html.class.$conf_php" );
+require_once( "serviceClasses/Upload.class.$conf_php" );
+require_once( "serviceClasses/Ftp.class.$conf_php" );
+require_once( "serviceClasses/Text.class.$conf_php" );
+require_once( "serviceClasses/Publish.class.$conf_php" );
+require_once( "serviceClasses/Api.class.$conf_php" );
+require_once( "serviceClasses/Logger.class.$conf_php" );
+require_once( "serviceClasses/TreeElement.class.$conf_php" );
+require_once( "serviceClasses/AbstractTree.class.$conf_php" );
+require_once( "serviceClasses/AdministrationTree.class.$conf_php" );
+require_once( "serviceClasses/ProjectTree.class.$conf_php" );
+require_once( "objectClasses/Value.class.$conf_php" );
+require_once( "objectClasses/Acl.class.$conf_php" );
+require_once( "objectClasses/Template.class.$conf_php" );
+require_once( "objectClasses/Object.class.$conf_php" );
+require_once( "objectClasses/Folder.class.$conf_php" );
+require_once( "objectClasses/Link.class.$conf_php" );
+require_once( "objectClasses/File.class.$conf_php" );
+require_once( "objectClasses/User.class.$conf_php" );
+require_once( "objectClasses/Group.class.$conf_php" );
+require_once( "objectClasses/Project.class.$conf_php" );
+require_once( "objectClasses/Page.class.$conf_php" );
+require_once( "objectClasses/Language.class.$conf_php" );
+require_once( "objectClasses/Model.class.$conf_php" );
+require_once( "objectClasses/Element.class.$conf_php" );
 
 session_start();
 
@@ -56,28 +88,6 @@ else
 
 require_once( "db/db.class.php" );
 require_once( "functions/config.inc.php" );
-require_once( "serviceClasses/GlobalFunctions.class.$conf_php" );
-require_once( "serviceClasses/Html.class.$conf_php" );
-require_once( "serviceClasses/Upload.class.$conf_php" );
-require_once( "serviceClasses/Ftp.class.$conf_php" );
-require_once( "serviceClasses/Text.class.$conf_php" );
-require_once( "serviceClasses/Publish.class.$conf_php" );
-require_once( "serviceClasses/Api.class.$conf_php" );
-require_once( "serviceClasses/Logger.class.$conf_php" );
-require_once( "objectClasses/Value.class.$conf_php" );
-require_once( "objectClasses/Acl.class.$conf_php" );
-require_once( "objectClasses/Template.class.$conf_php" );
-require_once( "objectClasses/Object.class.$conf_php" );
-require_once( "objectClasses/Folder.class.$conf_php" );
-require_once( "objectClasses/Link.class.$conf_php" );
-require_once( "objectClasses/File.class.$conf_php" );
-require_once( "objectClasses/User.class.$conf_php" );
-require_once( "objectClasses/Group.class.$conf_php" );
-require_once( "objectClasses/Project.class.$conf_php" );
-require_once( "objectClasses/Page.class.$conf_php" );
-require_once( "objectClasses/Language.class.$conf_php" );
-require_once( "objectClasses/Model.class.$conf_php" );
-require_once( "objectClasses/Element.class.$conf_php" );
 require_once( "functions/language.inc.$conf_php" );
 require_once( "functions/theme.inc.$conf_php" );
 require_once( "functions/db.inc.$conf_php" );
