@@ -40,7 +40,7 @@ class Html
 			$src .= ' disabled="disabled"';
 
 		if	( $value )
-			$src .= ' checked="checked"';
+			$src .= ' value="1" checked="checked"';
 
 		$src .= ' />';
 
