@@ -231,4 +231,23 @@ extension = jpeg,jpg,png
 ; -------------------------------------------------------------------
 
 
+
+; ===================================================================
+; Interface
+; ===================================================================
+
+[interface]
+
+; -------------------------------------------------------------------
+; File separator is an character, which seperates directory and
+; file names, f.e. " / " or " &raquo; ";
+; - debug: Show all messages
+; - info:  Show informational messages
+; - warn:  Show warnings
+; - error: Show only errors
+; -------------------------------------------------------------------
+file_separator = " &raquo; "
+; -------------------------------------------------------------------
+
+
 ; END OF DOCUMENT
