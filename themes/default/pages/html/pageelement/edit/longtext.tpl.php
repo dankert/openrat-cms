@@ -3,11 +3,10 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $form_action ?>" method="post" target="_self">
-<input type="hidden" name="<?php echo session_name() ?>" value="<?php echo session_id() ?>">
-<input type="hidden" name="pageaction" value="elsave">
+<form action="<?php echo $self ?>" method="post" target="_self">
+<input type="hidden" name="action" value="page">
+<input type="hidden" name="subaction" value="elsave">
 <input type="hidden" name="old_pageaction" value="<?php echo $old_pageaction ?>">
-<input type="hidden" name="valueid" value="<?php echo $valueid ?>">
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -15,23 +14,28 @@
   <th><?php echo $name ?></th>
 </tr>
 <tr>
-  <td class="help"><?php echo $desc ?><br><br><?php echo lang('HELP_LONGTEXT_WIKI') ?><br></td>
+  <td class="help"><?php echo $desc ?><br><!--<br><?php echo lang('HELP_LONGTEXT_WIKI') ?><br>--></td>
 </tr>
 
 <tr>
 <td class="f1"><br><textarea class="longtext" name="text"><?php echo $text ?></textarea></td>
 </tr>
 
+<?php if	( $release )
+      { ?>
+<tr>
+<td class="f2"><?php echo Html::checkBox('release',true,true) ?> <?php echo lang('RELEASE') ?></td>
+</tr>
+<?php } ?>
+
 <tr>
 <td class="act"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
 </tr>
 
-<!--
 <tr>
-<td class="help"><?php echo lang('HELP_LONGTEXT_WIKI') ?>
+<td class="help"><br><?php echo lang('HELP_LONGTEXT_WIKI') ?><br>
 </td>
 </tr>
--->
 
 </table>
 
