@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-12-19 14:54:31  dankert
+// Revision 1.9  2004-12-19 21:57:02  dankert
+// Korrektur bei direktem Objektaufruf in object()
+//
+// Revision 1.8  2004/12/19 14:54:31  dankert
 // language() und model() korrigiert
 //
 // Revision 1.7  2004/12/18 00:16:26  dankert
@@ -265,7 +268,7 @@ class IndexAction extends Action
 			$this->callSubAction('show');
 		}
 
-		$objectid = new Object( $this->getRequestId() );
+		$object = new Object( $this->getRequestId() );
 		$object->objectLoadRaw();
 		Session::setObject( $object );
 
