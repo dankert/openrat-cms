@@ -21,7 +21,7 @@
 <?php if  ( isset($up_url) )
       { ?>
 <tr>
-<td width="50%" colspan="8" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $up_url ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_folder.png' ?>" align="left" border="0"><strong>..</strong></a></td>
+<td width="50%" colspan="8" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $up_url ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_folder'.IMG_EXT ?>" align="left" border="0"><strong>..</strong></a></td>
 </tr>
 <?php }
 
@@ -43,12 +43,12 @@
       	?>
 <tr>
 <td width="5%"  class="<?php echo $fx; ?>"><?php if($writable) { ?><input type="checkbox" name="obj<?php echo $id ?>" value="1" /><?php } ?></td>
-<td width="40%" class="<?php echo $fx; ?>"><a href="<?php echo $z['url'] ?>" target="cms_main" title="<?php echo $z['desc'] ?>"><img src="<?php echo $image_dir.'icon_'.$z['icon'].'.png' ?>" align="left" border="0"><?php echo $z['name'] ?></a>&nbsp;</td>
+<td width="40%" class="<?php echo $fx; ?>"><a href="<?php echo $z['url'] ?>" target="cms_main" title="<?php echo $z['desc'] ?>"><img src="<?php echo $image_dir.'icon_'.$z['icon'].IMG_EXT ?>" align="left" border="0"><?php echo $z['name'] ?></a>&nbsp;</td>
 <td width="18%" class="<?php echo $fx; ?>"><span title="<?php echo lang('USER').': '.$z['user'] ?>"><?php echo $z['date'] ?></span></td>
-<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['upurl'    ])) { ?><a href="<?php echo $z['upurl'    ]  ?>"><img src="<?php echo $image_dir ?>up.gif"     title="<?php echo lang('UP'    ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
-<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['topurl'   ])) { ?><a href="<?php echo $z['topurl'   ]  ?>"><img src="<?php echo $image_dir ?>top.gif"    title="<?php echo lang('TOP'   ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
-<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['bottomurl'])) { ?><a href="<?php echo $z['bottomurl']  ?>"><img src="<?php echo $image_dir ?>bottom.gif" title="<?php echo lang('BOTTOM') ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
-<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['downurl'  ])) { ?><a href="<?php echo $z['downurl'  ]  ?>"><img src="<?php echo $image_dir ?>down.gif"   title="<?php echo lang('DOWN'  ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
+<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['upurl'    ])) { ?><a href="<?php echo $z['upurl'    ]  ?>"><img src="<?php echo $image_dir ?>arrow_up<?php echo IMG_EXT ?>"     title="<?php echo lang('UP'    ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
+<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['topurl'   ])) { ?><a href="<?php echo $z['topurl'   ]  ?>"><img src="<?php echo $image_dir ?>arrow_top<?php echo IMG_EXT ?>"    title="<?php echo lang('TOP'   ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
+<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['bottomurl'])) { ?><a href="<?php echo $z['bottomurl']  ?>"><img src="<?php echo $image_dir ?>arrow_bottom<?php echo IMG_EXT ?>" title="<?php echo lang('BOTTOM') ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
+<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['downurl'  ])) { ?><a href="<?php echo $z['downurl'  ]  ?>"><img src="<?php echo $image_dir ?>arrow_down<?php echo IMG_EXT ?>"   title="<?php echo lang('DOWN'  ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
 </tr>
 <?php   } ?>
 

@@ -15,14 +15,14 @@
       			foreach( $folder as $id=>$ftext )
       			{
       				echo '<a href="'.Html::url(array('action'=>'main','callAction'=>'folder','objectid'=>$id,'callSubaction'=>'show')).'" target="cms_main" class="mainmenu">';
-      				echo '<img src="'.$image_dir.'icon_folder.png'.'" align="middle" alt="" border="0" />';
+      				echo '<img src="'.$image_dir.'icon_folder'.IMG_EXT.'" align="middle" alt="" border="0" />';
       				echo $ftext;
       				echo '</a><strong>'.FILE_SEP.'</strong>&nbsp;';
       			}
 		      }
           ?>
           </td>
-          <td><span class="mainmenu_name">&nbsp;<?php if (isset($text)) { ?><img src="<?php echo $image_dir.'icon_'.$type.'.png' ?>" align="middle" title="<?php echo $type ?>" alt="" />&nbsp;<?php echo $text ?><?php } ?></span>
+          <td><span class="mainmenu_name">&nbsp;<?php if (isset($text)) { ?><img src="<?php echo $image_dir.'icon_'.$type.IMG_EXT ?>" align="middle" title="<?php echo $type ?>" alt="" />&nbsp;<?php echo $text ?><?php } ?></span>
           </td>
 
           <?php if(isset($nr)) { ?>

@@ -28,8 +28,8 @@
 
   <?php foreach( $notices as $notice ) { ?>
   <tr>
-    <td class="f1"><img src="<?php echo $image_dir.'icon_'.$notice['type'] ?>.png" align="left" /><?php echo $notice['name'] ?></td>
-    <td class="f1"><img src="<?php echo $image_dir.$notice['status'].'.gif' ?>" align="left" />
+    <td class="f1"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_EXT ?>" align="left" /><?php echo $notice['name'] ?></td>
+    <td class="f1"><img src="<?php echo $image_dir.$notice['status'].IMG_EXT ?>" align="left" />
                    <strong><?php echo $notice['text'] ?></strong></td>
   </tr>
   <?php } ?>
