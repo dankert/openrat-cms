@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-12-19 21:57:02  dankert
+// Revision 1.10  2004-12-25 22:11:20  dankert
+// Logo-Bild ueber Parameter
+//
+// Revision 1.9  2004/12/19 21:57:02  dankert
 // Korrektur bei direktem Objektaufruf in object()
 //
 // Revision 1.8  2004/12/19 14:54:31  dankert
@@ -160,6 +163,8 @@ class IndexAction extends Action
 			$this->setTemplateVar('actdbid',$db->id);
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
+
+		$this->setTemplateVar('logo',$conf['login']['logo']);
 
 		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
 		$this->setSessionVar('loginmessage','');
