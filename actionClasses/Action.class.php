@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2004-11-29 21:08:13  dankert
+// Revision 1.10  2004-12-15 23:22:26  dankert
+// Konstanten, getRequestid()
+//
+// Revision 1.9  2004/11/29 21:08:13  dankert
 // neue Methode hasRequestVar()
 //
 // Revision 1.8  2004/11/28 21:27:52  dankert
@@ -106,11 +109,9 @@ class Action
 	}
 
 
-	function hasRequestVar( $varName )
+	function getRequestId()
 	{
-		global $REQ;
-
-		return( isset($REQ[$varName]) );
+		return intval( $this->getRequestVar('id') );
 	}
 
 
@@ -163,18 +164,12 @@ class Action
 	 */
 	function forward( $tplName )
 	{
-		global $title,
-		       $cms_name,
-		       $cms_version,
-		       $PHP_SELF,
-		       $SESS,
-		       $HTTP_SERVER_VARS,
-		       $cms_title,
-		       $conf_php,
-		       $conf_themedir;
+		global $conf;
+		global $PHP_SELF;
+		global $HTTP_SERVER_VARS;
 		       
-//		$tpl .= $this->actionName-'_'.$this->subActionName.'.tpl.'.$conf_php;
-		$tplFileName = $tplName.'.tpl.'.$conf_php;
+		$tplFileName = $tplName.'.tpl.'.PHP_EXT;
+		$conf_php = PHP_EXT;
 	
 		// ?bertragen der Array-Variablen in den aktuellen Kontext
 		//
@@ -182,16 +177,19 @@ class Action
 	
 		// Setzen einiger Standard-Variablen
 		//
-		$tpl_dir    = $conf_themedir.'/templates/';
-		$image_dir  = $conf_themedir.'/images/';
+		$tpl_dir    = OR_THEMES_DIR.$conf['interface']['theme'].'/templates/';
+		$image_dir  = OR_THEMES_DIR.$conf['interface']['theme'].'/images/';
 	
-		if   ( !isset($SESS['user']) || $SESS['user']['style']=='')
-			 $stylesheet = $conf_themedir.'/css/default.css';
-		else $stylesheet = $conf_themedir.'/css/'.$SESS['user']['style'].'.css';
+		$user = Session::getUser();
+		if	( !is_object($user) )
+			$stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/default.css';
+		else $stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$user->style.'.css';
 		
 		$self = $HTTP_SERVER_VARS['PHP_SELF'];
 	
 		$tplFileName = str_replace( '_','/',$tplFileName );
+		$cms_title = OR_TITLE.' '.OR_VERSION;
+
 		// Einbinden des Templates
 		//
 		require( 'themes/default/templates/'.$tplFileName );
