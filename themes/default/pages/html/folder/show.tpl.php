@@ -3,6 +3,10 @@
 <!-- $Id$ -->
 <center>
 
+<form action="<?php echo $self ?>" method="post" target="_self">
+<input type="hidden" name="action"    value="folder"   />
+<input type="hidden" name="subaction" value="multiple" />
+
 <?php $table_title_text    = lang('FOLDER');
       $table_title_colspan = 7;
       include( $tpl_dir.'table_open.tpl.php');
@@ -15,7 +19,7 @@
 <?php if  ( isset($up_url) )
       { ?>
 <tr>
-<td width="50%" colspan="7" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $up_url ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_folder.png' ?>" align="left" border="0"><strong>..</strong></a></td>
+<td width="50%" colspan="8" class="<?php if($f1==true) {echo'f1';          } else{echo'f2';         }?>"><a href="<?php echo $up_url ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_folder.png' ?>" align="left" border="0"><strong>..</strong></a></td>
 <!--<td width="50%" colspan="3" class="<?php if($f1==true) {echo'f1';$f1=false;} else{echo'f2';$f1=true;}?>">&nbsp;</td>-->
 </tr>
 <?php }
@@ -24,10 +28,10 @@
       {
       ?>
 <tr>
-<td width="40%" class="help"            ><?php echo lang('name'      )                  ?></td>
-<td width="20%" class="help"            ><?php echo lang('lastchange')                  ?></td>
-<td width="10%" class="help" colspan="4"><?php if (count( $object)>1) echo lang('move') ?></td>
-<td width="10%" class="help"            >&nbsp;</a></td>
+<td width="5%"  class="help"            >&nbsp;</td>
+<td width="60%" class="help"            ><a href="<?php echo $orderbytype_url       ?>" title="<?php echo lang('FOLDER_ORDERBYTYPE'      ) ?>"><?php echo lang('GLOBAL_TYPE') ?></a> / <a href="<?php echo $orderbyname_url ?>" title="<?php echo lang('FOLDER_ORDERBYNAME') ?>"><?php echo lang('GLOBAL_NAME') ?></a></td>
+<td width="20%" class="help"            ><a href="<?php echo $orderbylastchange_url ?>" title="<?php echo lang('FOLDER_ORDERBYLASTCHANGE') ?>"><?php echo lang('LASTCHANGE' ) ?></td>
+<td width="30%" class="help" colspan="4"><?php if (count( $object)>1) ?><a href="<?php echo $flip_url ?>" title="<?php echo lang('FOLDER_FLIP') ?>"><?php echo lang('FOLDER_ORDER') ?></a></td>
 </tr>
 
 <?php   $f1=true;
@@ -36,16 +40,50 @@
           $fx = fx($f1);
       	?>
 <tr>
+<td width="5%"  class="<?php echo $fx; ?>"><input type="checkbox" name="obj<?php echo $id ?>" value="1" /></td>
 <td width="40%" class="<?php echo $fx; ?>"><a href="<?php echo $z['url'] ?>" target="cms_main" title="<?php echo $z['desc'] ?>"><img src="<?php echo $image_dir.'icon_'.$z['icon'].'.png' ?>" align="left" border="0"><?php echo $z['name'] ?></a>&nbsp;</td>
 <td width="18%" class="<?php echo $fx; ?>"><span title="<?php echo lang('USER').': '.$z['user'] ?>"><?php echo $z['date'] ?></span></td>
 <td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['upurl'    ])) { ?><a href="<?php echo $z['upurl'    ]  ?>"><img src="<?php echo $image_dir ?>up.gif"     title="<?php echo lang('UP'    ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
-<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['downurl'  ])) { ?><a href="<?php echo $z['downurl'  ]  ?>"><img src="<?php echo $image_dir ?>down.gif"   title="<?php echo lang('DOWN'  ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
 <td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['topurl'   ])) { ?><a href="<?php echo $z['topurl'   ]  ?>"><img src="<?php echo $image_dir ?>top.gif"    title="<?php echo lang('TOP'   ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
 <td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['bottomurl'])) { ?><a href="<?php echo $z['bottomurl']  ?>"><img src="<?php echo $image_dir ?>bottom.gif" title="<?php echo lang('BOTTOM') ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
-<td width="10%" class="<?php echo $fx; ?>"><a  target="cms_main" href="<?php echo $z['propurl']  ?>"><?php echo lang('PROP') ?></a></td>
+<td width="3%"  class="<?php echo $fx; ?>"><?php if (isset($z['downurl'  ])) { ?><a href="<?php echo $z['downurl'  ]  ?>"><img src="<?php echo $image_dir ?>down.gif"   title="<?php echo lang('DOWN'  ) ?>" border="0"></a><?php } else echo '&nbsp;' ?></td>
 </tr>
-<?php   }
-      }
+<?php   } ?>
+
+<tr>
+<td colspan="7" class="<?php echo $fx; ?>">
+  <img src="<?php echo $image_dir ?>tree_none_end.gif" align="left" />&nbsp;
+  <a href="javascript:mark();"><?php echo lang('FOLDER_MARK_ALL') ?></a> | <a href="javascript:unmark();"><?php echo lang('FOLDER_UNMARK_ALL') ?></a> | <a href="javascript:flip();"><?php echo lang('FOLDER_FLIP_MARK') ?></a>
+</td>
+</tr>
+<tr>
+<td></td>
+<td colspan="1" class="<?php echo $fx; ?>">
+  <table>
+  <tr>
+  <td>
+  <input type="radio" name="type" value="move" />
+  <?php echo lang('GLOBAL_MOVE') ?> <?php echo lang('GLOBAL_TO') ?>
+  <br/>
+  <input type="radio" name="type" value="copy" />
+  <?php echo lang('GLOBAL_COPY') ?> <?php echo lang('GLOBAL_TO') ?>
+  <br/>
+  <input type="radio" name="type" value="link" />
+  <?php echo lang('GLOBAL_LINK') ?> <?php echo lang('GLOBAL_TO') ?>
+  <br/>
+  <input type="radio" name="type" value="delete" />
+  <?php echo lang('DELETE') ?>
+  </td><td>
+  <?php echo Html::selectBox('targetobjectid',$folder,$act_objectid) ?>
+  </td><td>
+  </td></tr>
+  </table> 
+</td>
+<td class="act" colspan="5">
+  <input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" />
+</td>
+</tr>
+<?php }
       else
       { ?>
 <tr>
@@ -54,7 +92,32 @@
 <?php } ?>
 
 </table>
+</form>
 
 </center>
 
+<script name="JavaScript">
+<!--
+function mark()
+{
+<?php foreach( $object as $id=>$z ) { ?>
+document.forms[0].obj<?php echo $id ?>.checked=true;
+<?php } ?>
+}
+function unmark()
+{
+<?php foreach( $object as $id=>$z ) { ?>
+document.forms[0].obj<?php echo $id ?>.checked=false;
+<?php } ?>
+}
+function flip()
+{
+<?php foreach( $object as $id=>$z ) { ?>
+if	(document.forms[0].obj<?php echo $id ?>.checked==false)
+ document.forms[0].obj<?php echo $id ?>.checked=true;
+else document.forms[0].obj<?php echo $id ?>.checked=false;
+<?php } ?>
+}
+//-->
+</script>
 <?php include( $tpl_dir.'footer.tpl.php') ?>
