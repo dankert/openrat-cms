@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.4  2004-11-10 22:42:10  dankert
+// *** empty log message ***
+//
+// Revision 1.3  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.2  2004/05/02 14:30:27  dankert
 // E-Mail versenden wenn neues Kennwort gesetzt
@@ -99,7 +102,7 @@ class UserAction extends Action
 		$this->user->style    = $this->getRequestVar('style'   );
 		$this->user->save();
 
-		$this->user->setCurrent();
+//		$this->user->setCurrent();
 
 		$this->callSubAction('profile');
 	}
@@ -245,7 +248,7 @@ class UserAction extends Action
 	function groups()
 	{
 
-		// Alle hinzufügbaren Gruppen ermitteln
+		// Alle hinzuf?gbaren Gruppen ermitteln
 		$this->setTemplateVar('groups',$this->user->getOtherGroups());
 	
 		// Mitgliedschaften
@@ -256,7 +259,7 @@ class UserAction extends Action
 
 
 	/**
-	 * Ändern des Kennwortes
+	 * ?ndern des Kennwortes
 	 */
 	function pw()
 	{
@@ -281,7 +284,7 @@ class UserAction extends Action
 
 
 	/**
-	 * Ermitteln aller zur Verfügung stehenden Stylesheets
+	 * Ermitteln aller zur Verf?gung stehenden Stylesheets
 	 */
 	function getStyles()
 	{
