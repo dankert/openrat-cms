@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-12-26 01:06:31  dankert
+// Revision 1.12  2004-12-26 01:08:55  dankert
+// Korrektur Sprachausgabe
+//
+// Revision 1.11  2004/12/26 01:06:31  dankert
 // Perfomanceverbesserung Seite/Elemente
 //
 // Revision 1.10  2004/12/19 15:15:37  dankert
@@ -153,7 +156,7 @@ class PageelementAction extends Action
 						$f = new Folder( $o->parentid );
 						$f->load();
 						
-						$objects[ $id ]  = lang( $o->getType() ).': '; 
+						$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
 						$objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) ); 
 						$objects[ $id ] .= ' &raquo; '.$o->name;
 					} 
@@ -174,7 +177,7 @@ class PageelementAction extends Action
 					$f = new Folder( $id );
 					$f->load();
 					
-					$objects[ $id ]  = lang( $f->getType() ).': '; 
+					$objects[ $id ]  = lang( 'GLOBAL_'.$f->getType() ).': '; 
 					$objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) ); 
 				}
 		
