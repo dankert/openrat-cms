@@ -20,14 +20,17 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-05-19 21:11:04  dankert
+// korrektur bei delete()
+//
+// Revision 1.2  2004/05/02 14:41:31  dankert
+// Einf?gen package-name (@package)
 //
 // ---------------------------------------------------------------------------
 
 
 /**
- * Darstellen einer Benutzergruppe. Eine Gruppe enthält beliebig viele Benutzer
+ * Darstellen einer Benutzergruppe. Eine Gruppe enthaelt beliebig viele Benutzer
  *
  * @version $Revision$
  * @author $Author$
@@ -122,7 +125,7 @@ class Group
 		$sql = new Sql('SELECT MAX(id) FROM {t_group}');
 		$this->groupid = intval($db->getOne($sql->query))+1;
 		
-		// Gruppe hinzufügen
+		// Gruppe hinzuf?gen
 		$sql = new Sql( 'INSERT INTO {t_group} '.
 		                '(id,name) VALUES( {groupid},{name} )');
 		$sql->setInt   ('groupid',$this->groupid );
@@ -138,20 +141,20 @@ class Group
 	{
 		$db = db_connection();
 
-		// Berechtigungen zu dieser Gruppe löschen
-		foreach( Acl::getACLsFromGroupId($this->groupid) as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->delete();
-		}
+		// Berechtigungen zu dieser Gruppe loeschen
+		$sql = new Sql( 'DELETE FROM {t_acl} '.
+		                'WHERE group={groupid}' );
+		$sql->setInt   ('groupid',$this->groupid );
+		$db->query( $sql->query );
 
-		// Alle Gruppenzugehörigkeiten zu dieser Gruppe löschen
+
+		// Alle Gruppenzugehoerigkeiten zu dieser Gruppe loeschen
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
 		                'WHERE groupid={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
 		$res = $db->query($sql->query);
 
-		// Gruppe löschen
+		// Gruppe loeschen
 		$sql = new Sql( 'DELETE FROM {t_group} '.
 		                'WHERE id={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
@@ -300,7 +303,7 @@ class Group
 		$sql->setInt ('delete' ,$data['delete' ]);
 		$sql->setInt ('publish',$data['publish']);
 	
-		// Datenbankabfrage ausführen
+		// Datenbankabfrage ausf?hren
 		$db->query( $sql->query );
 	}
 
@@ -311,7 +314,7 @@ class Group
 		$sql = new SQL('DELETE FROM {t_acl} WHERE id={aclid}');
 		$sql->setInt( 'aclid',$aclid );
 	
-		// Datenbankabfrage ausführen
+		// Datenbankabfrage ausf?hren
 		$db->query( $sql->query );
 	}
 }
