@@ -66,7 +66,7 @@ class Value
 	 * Datum als Unix-Timestamp
 	 * @type Integer
 	 */
-	var $date;
+	var $date=0;
 	
 	/**
 	 * Element-Objekt
@@ -743,7 +743,7 @@ class Value
 	
 		$inhalt = '';
 
-		Logger::debug('Generating Element '.$this->element->name.', type='.$this->element->type );
+//		Logger::debug('Generating Element '.$this->element->name.', type='.$this->element->type );
 		switch( $this->element->type )
 		{
 			case 'list':
@@ -958,13 +958,9 @@ class Value
 
 						if	( method_exists( $dynEl,'execute' ) )
 						{
-							$dynEl->api = new Api();
-							$dynEl->api->delOutput('');
-							$dynEl->api->objectid = $this->page->objectid;
-							$dynEl->api->page = &$this->page;
-
-
-							$parameters = explode( "\n",$this->element->code );
+							$dynEl->delOutput();
+							$dynEl->objectid = $this->page->objectid;
+							$dynEl->page    = &$this->page;
 
 							foreach( $this->element->getDynamicParameters() as $param_name=>$param_value )
 							{
@@ -976,21 +972,9 @@ class Value
 							}
 
 							$dynEl->execute();
-							$inhalt = $dynEl->api->getOutput();
-						}
-						else
-						{
-							Logger::warn("WARNING: Class $className has no execute()-Method" );
+							$inhalt = $dynEl->getOutput();
 						}
 					}
-					else
-					{
-						Logger::warn("WARNING: Class $className not found" );
-					}
-				}
-				else
-				{
-					Logger::warn("WARNING: File $fileName not found" );
 				}
 
 				break;
@@ -1017,7 +1001,7 @@ class Value
 						break;
 
 					default:  
-						$inhalt = 'please select subtype. unknown: '.$this->element->subtype;
+						//$inhalt = 'please select subtype. unknown: '.$this->element->subtype;
 				}
 				
 				break;
@@ -1163,7 +1147,7 @@ class Value
 						$inhalt = $user->tel;
 						break;
 					default:
-						$inhalt = 'please select subtype. unknown: '.$this->element->subtype;
+						//$inhalt = 'please select subtype. unknown: '.$this->element->subtype;
 				}
 				break;
 		}
