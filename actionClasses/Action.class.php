@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2004-12-26 21:57:16  dankert
+// Revision 1.13  2004-12-30 21:44:03  dankert
+// Subaction-Wechsel speichern
+//
+// Revision 1.12  2004/12/26 21:57:16  dankert
 // Feststellen, ob Request-Dauer ausgegeben werden soll
 //
 // Revision 1.11  2004/12/19 14:40:18  dankert
@@ -216,14 +219,12 @@ class Action
 	
 	function callSubAction( $subActionName )
 	{
-		//global $conf;
-		//if	( strtoupper($conf['log']['level']) == 'TRACE' )
-		
+		if	( in_array($this->actionName,array('page','file','link','folder')) )
+			Session::setSubaction( $subActionName );		
+
 		Logger::trace("next subaction is '$subActionName'");
 		
 		global $SESS;
-		
-		$SESS[ $this->actionName.'action' ] = $subActionName;
 
 		$this->$subActionName();
 	}
