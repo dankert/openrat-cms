@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-07-09 20:57:14  dankert
+// Revision 1.8  2004-10-05 10:01:56  dankert
+// Austauschen einer Vorlage
+//
+// Revision 1.7  2004/07/09 20:57:14  dankert
 // Dynamische Bereiche (IFEMPTY...)
 //
 // Revision 1.6  2004/07/07 20:47:22  dankert
@@ -423,6 +426,59 @@ class Page extends Object
 
 
 	
+	function replaceTemplate( $newTemplateId,$replaceElementMap )
+	{
+		$oldTemplateId = $this->templateid;
+
+		Logger::debug( 'replacing template of page '.$this->pageid. ' ('.$oldTemplateId.'->'.$newTemplateId.')' );
+		$db = db_connection();
+
+		// Template-id dieser Seite aendern
+		$this->templateid = $newTemplateId;
+
+		$sql = new Sql('UPDATE {t_page}'.
+		               '  SET templateid ={templateid}'.
+		               '  WHERE objectid={objectid}' );
+		$sql->setInt('templateid' ,$this->templateid);
+		$sql->setInt('objectid'   ,$this->objectid  );
+		$db->query( $sql->query );
+
+
+		// Inhalte umschluesseln, d.h. die Element-Ids aendern
+		$template = new Template( $oldTemplateId );
+		foreach( $template->getElementIds() as $oldElementId )
+		{
+			if	( !isset($replaceElementMap[$oldElementId])  ||
+			      intval($replaceElementMap[$oldElementId]) < 1 )
+			{
+				Logger::debug( 'deleting value of elementid '.$oldElementId );
+				$sql = new Sql('DELETE FROM {t_value}'.
+				               '  WHERE pageid={pageid}'.
+				               '    AND elementid={elementid}' );
+				$sql->setInt('pageid'   ,$this->pageid);
+				$sql->setInt('elementid',$oldElementId      );
+				
+				$db->query( $sql->query );
+			}
+			else
+			{
+				$newElementId = intval($replaceElementMap[$oldElementId]);
+
+				Logger::debug( 'updating elementid '.$oldElementId.' -> '.$newElementId );
+				$sql = new Sql('UPDATE {t_value}'.
+				               '  SET elementid ={newelementid}'.
+				               '  WHERE pageid   ={pageid}'.
+				               '    AND elementid={oldelementid}' );
+				$sql->setInt('pageid'      ,$this->pageid);
+				$sql->setInt('oldelementid',$oldElementId      );
+				$sql->setInt('newelementid',$newElementId      );
+				$db->query( $sql->query );
+			}
+		}
+	}
+
+
+	
 	/**
 	  * Ermitteln des Dateinamens dieser Seite
 	  *
@@ -554,7 +610,7 @@ class Page extends Object
 			}
 			else
 			{
-				// Wenn Feld gefüllt
+				// Wenn Feld gef?llt
 				$src = str_replace( '{{IFNOTEMPTY:'.$id.':BEGIN}}','',$src );
 				$src = str_replace( '{{IFNOTEMPTY:'.$id.':END}}'  ,'',$src );
 

@@ -68,6 +68,33 @@
 </form>
 
 
+<!-- Vorlage tauschen -->
+<form action="<?php echo $self ?>" method="post" target="_self">
+
+<input type="hidden" name="action"    value="page" />
+<input type="hidden" name="subaction" value="replaceTemplateSelectElements" />
+
+<table class="main" width="90%" cellspacing="0" cellpadding="4">
+
+  <tr>
+    <th colspan="2"><?php echo lang('PAGE_REPLACE_TEMPLATE') ?></th>
+  </tr>
+
+  <tr>
+    <td width="50%" class="f1"><?php echo lang('TEMPLATES') ?></a></td>
+    <td width="50%" class="f1"><?php echo Html::selectBox('templateid',$templates) ?></td>
+  </tr>
+
+  <tr>
+    <td class="act" colspan="2"><input type="submit"  class="submit" value="<?php echo lang('GLOBAL_REPLACE') ?>"></td>
+  </tr>
+
+</table>
+
+</form>
+
+
+<!-- Verschieben -->
 <form action="<?php echo $self ?>" method="post" target="_self">
 
 <input type="hidden" name="action"    value="page" />
