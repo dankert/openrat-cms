@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-10-05 10:01:56  dankert
+// Revision 1.9  2004-10-14 21:10:57  dankert
+// neue Methode getElementIds()
+//
+// Revision 1.8  2004/10/05 10:01:56  dankert
 // Austauschen einer Vorlage
 //
 // Revision 1.7  2004/07/09 20:57:14  dankert
@@ -534,7 +537,22 @@ class Page extends Object
 			return strtolower( $isocode );
 		}		
 	}
-	
+
+
+	/**
+	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
+	  * wird von generate() aufgerufen
+	  *
+	  * @access private 
+	  */
+	function getElementIds()
+	{
+		$t = new Template( $this->templateid );
+		
+		return $t->getElementIds();
+	}
+
+
 
 	/**
 	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
@@ -548,7 +566,7 @@ class Page extends Object
 
 		$t = new Template( $this->templateid );
 		
-		foreach( $t->getElementIds() as $elementid )
+		foreach( $this->getElementIds() as $elementid )
 		{
 			// neues Elementobjekt erzeugen
 			$val = new Value();
