@@ -6,7 +6,7 @@
   <tr>
     <td class="menu">
 
-      <?php echo Html::form( array('action'=>'index','subaction'=>'project','target'=>'_parent','method'=>'get','name'=>'') ) ?>
+      <?php echo Html::form( 'index','project','-',array('target'=>'_parent','method'=>'get') ) ?>
       <table>
       <tr>
       <td>

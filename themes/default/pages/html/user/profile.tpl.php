@@ -4,8 +4,7 @@
 
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="subaction" value="saveprofile">
+<?php echo Html::form('user','saveprofile',$userid) ?>
 
 <?php
 	$table_title_text    = lang('GLOBAL_USER');
