@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.18  2005-01-27 00:03:57  dankert
+// Revision 1.19  2005-02-17 19:21:00  dankert
+// Titelanzeige geaendert
+//
+// Revision 1.18  2005/01/27 00:03:57  dankert
 // Variable "nopublish" an das Template liefern
 //
 // Revision 1.17  2005/01/23 11:13:54  dankert
@@ -210,6 +213,7 @@ class IndexAction extends Action
 
 	function showmenu()
 	{
+		global $conf;
 		$user     = Session::getUser();
 		$projects = $user->projects;
 
@@ -229,7 +233,7 @@ class IndexAction extends Action
 			$list[$id]['name'] = $name;
 		}
 		$this->setTemplateVar('el',$list);
-	
+
 		$this->forward('project_select');
 	}
 
@@ -454,7 +458,7 @@ class IndexAction extends Action
 		}
 
 		$db      = Session::getDatabase();
-		$this->setTemplateVar( 'title',$user->name.'@'.$project->name.' ('.$db->conf['comment'].') - '.OR_TITLE.' '.OR_VERSION );
+		$this->setTemplateVar( 'title',$user->name.'@'.$project->name.' ('.$db->conf['comment'].')' );
 
 		$object  = Session::getObject();
 
