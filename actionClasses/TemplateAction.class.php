@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-12-27 23:34:51  dankert
+// Revision 1.9  2005-01-05 23:11:14  dankert
+// Nach hinzuf?gen von Elementen nicht speichern
+//
+// Revision 1.8  2004/12/27 23:34:51  dankert
 // Aenderung Konstruktor
 //
 // Revision 1.7  2004/12/19 15:17:11  dankert
@@ -89,21 +92,21 @@ class TemplateAction extends Action
 		$text = $this->getRequestVar('src');
 		
 		// Falls dieses Element hinzugef?gt werden soll
-		if   ( $this->getRequestVar('addelement') != '' )
+		if   ( $this->hasRequestVar('addelement') )
 		{
 			$text .= "\n".'{{'.$this->getRequestVar('elementid').'}}';
 		}
 
-		if   ( $this->getRequestVar('addicon') != '' )
+		if   ( $this->hasRequestVar('addicon') )
 		{
 			$text .= "\n".'{{->'.$this->getRequestVar('iconid').'}}';
 		}
 
-		if   ( $this->getRequestVar('addifempty') != '' )
+		if   ( $this->hasRequestVar('addifempty') )
 		{
 			$text .= "\n".'{{IFEMPTY:'.$this->getRequestVar('ifemptyid').':BEGIN}}  {{IFEMPTY:'.$this->getRequestVar('ifemptyid').':END}}';
 		}
-		if   ( $this->getRequestVar('addifnotempty') != '' )
+		if   ( $this->hasRequestVar('addifnotempty') )
 		{
 			$text .= "\n".'{{IFNOTEMPTY:'.$this->getRequestVar('ifnotemptyid').':BEGIN}}  {{IFNOTEMPTY:'.$this->getRequestVar('ifnotemptyid').':END}}';
 		}
@@ -119,21 +122,21 @@ class TemplateAction extends Action
 		}
 	
 		$this->template->src = $text;
-		$this->template->save();
-		$this->template->load();
 
 		// Wenn Element hinzugef?gt wurde, dann bleibt es beim Quelltext-Modus.
 		// Sonst wird zur Anzeige umgeschaltet
 	
-		if   ( $this->getRequestVar('addelement'   ) != '' ||
-		       $this->getRequestVar('addicon'      ) != '' ||
-		       $this->getRequestVar('addifempty'   ) != '' ||
-		       $this->getRequestVar('addifnotempty') != ''    )
+		if   ( $this->hasRequestVar('addelement'   ) ||
+		       $this->hasRequestVar('addicon'      ) ||
+		       $this->hasRequestVar('addifempty'   ) ||
+		       $this->hasRequestVar('addifnotempty')    )
 		{
 			$this->callSubAction('src');
 		}
 		else
 		{
+			$this->template->save();
+			$this->template->load();
 			$this->callSubAction('show');
 		}
 	}
@@ -204,11 +207,11 @@ class TemplateAction extends Action
 	 */
 	function elementrename()
 	{
-		if   ($this->getRequestVar('delete') != '')
+		if   ( $this->hasRequestVar('delete') )
 		{
 			$this->element->delete();
 		}
-		elseif ($this->getRequestVar('deletevalues') != '')
+		elseif ( $this->hasRequestVar('deletevalues') )
 		{
 			$this->element->deleteValues();
 		}
@@ -334,10 +337,8 @@ class TemplateAction extends Action
 	 */
 	function show()
 	{
-		global $conf_php;
-
 		$text = htmlentities( $this->template->src );
-		$text = str_replace("\n",'<br>',$text);
+		$text = str_replace("\n",'<br/>',$text);
 	
 		foreach( $this->template->getElementIds() as $elid )
 		{
