@@ -79,7 +79,7 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
   <tr>
-    <th colspan="2"><?php echo lang('PREFS') ?></th>
+    <th colspan="2"><?php echo lang('GLOBAL_PREFS') ?></th>
   </tr>
 
 
