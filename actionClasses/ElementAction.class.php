@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-12-26 20:20:40  dankert
+// Revision 1.9  2004-12-30 23:31:27  dankert
+// Korrektur userIsAdmin()
+//
+// Revision 1.8  2004/12/26 20:20:40  dankert
 // Konstante FILE_SEP benutzen
 //
 // Revision 1.7  2004/12/19 14:53:11  dankert
@@ -84,7 +87,7 @@ class ElementAction extends Action
 	 */
 	function changetype()
 	{
-		if	( !$this->userIsAdmin && $this->getRequestVar('type') == 'code' )
+		if	( !$this->userIsAdmin() && $this->getRequestVar('type') == 'code' )
 		{
 			// Code-Elemente fuer Nicht-Administratoren nicht benutzbar
 		}
@@ -118,7 +121,7 @@ class ElementAction extends Action
 		}
 
 		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
-		if	( !$this->userIsAdmin )
+		if	( !$this->userIsAdmin() )
 			unset( $types['code'] );
 		
 		$this->setTemplateVar('type',$types);
