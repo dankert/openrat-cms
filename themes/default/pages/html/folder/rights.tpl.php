@@ -118,6 +118,7 @@
     <td class="help"><span title="<?php echo lang('ACL_WRITE'        ) ?>"><strong>W</strong></span></td>
     <td class="help"><span title="<?php echo lang('ACL_PROP'         ) ?>"><strong>P</strong></span></td>
     <td class="help"><span title="<?php echo lang('ACL_DELETE'       ) ?>"><strong>E</strong></span></td>
+    <td class="help"><span title="<?php echo lang('ACL_RELEASE'      ) ?>"><strong>RE</strong></span></td>
     <td class="help"><span title="<?php echo lang('ACL_PUBLISH'      ) ?>"><strong>W</strong></span></td>
     <td class="help"><span title="<?php echo lang('ACL_CREATE_FOLDER') ?>"><strong>CD</strong></span></td>
     <td class="help"><span title="<?php echo lang('ACL_CREATE_FILE'  ) ?>"><strong>CF</strong></span></td>
@@ -148,6 +149,7 @@
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('',$z['write'        ],false) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('',$z['prop'         ],false) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('',$z['delete'       ],false) ?></td>
+<td class="<?php echo $fx ?>"><?php echo Html::checkBox('',$z['release'      ],false) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('',$z['publish'      ],false) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('',$z['create_folder'],false) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('',$z['create_file'  ],false) ?></td>
@@ -181,6 +183,7 @@
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('write'        ,false,true,array('title'=>lang('ACL_WRITE'        )) ) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('prop'         ,false,true,array('title'=>lang('ACL_PROP'         )) ) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('delete'       ,false,true,array('title'=>lang('ACL_DELETE'       )) ) ?></td>
+<td class="<?php echo $fx ?>"><?php echo Html::checkBox('release'      ,false,true,array('title'=>lang('ACL_RELEASE'      )) ) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('publish'      ,false,true,array('title'=>lang('ACL_PUBLISH'      )) ) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('create_folder',false,true,array('title'=>lang('ACL_CREATE_FOLDER')) ) ?></td>
 <td class="<?php echo $fx ?>"><?php echo Html::checkBox('create_file'  ,false,true,array('title'=>lang('ACL_CREATE_FILE'  )) ) ?></td>
