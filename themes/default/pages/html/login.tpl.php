@@ -19,6 +19,18 @@
 </tr>
 <?php } ?>
 
+<?php if ( $motd != '' ) { ?>
+<tr>
+  <td colspan="2" class="f1"><strong><?php echo $motd ?></strong></td>
+</tr>
+<?php } ?>
+
+<?php if ( $readonly ) { ?>
+<tr>
+  <td colspan="2" class="help"><?php echo lang('GLOBAL_READONLY_DESC') ?></td>
+</tr>
+<?php } ?>
+
 <?php if ($loginmessage!='')
       { ?>
 <tr>
