@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-11-10 22:37:23  dankert
+// Korrektur Auswahl-Url
+//
+// Revision 1.2  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -30,7 +33,7 @@
 
 
 /**
- * Action-Klasse für die Bearbeitung einer Sprache
+ * Action-Klasse f?r die Bearbeitung einer Sprache
  * @version $Id$
  * @author  $Author$
  * @package openrat.actions
@@ -55,12 +58,12 @@ class LanguageAction extends Action
 
 
 	/**
-	 * Sprache hinzufügen
+	 * Sprache hinzuf?gen
 	 */
 	function add()
 	{
 
-		// Hinzufügen einer Sprache	
+		// Hinzuf?gen einer Sprache	
 		$this->language->add( $this->getRequestVar('isocode') );
 		$this->setSessionVar('languageid',$this->language->languageid);
 		
@@ -70,7 +73,7 @@ class LanguageAction extends Action
 
 	/**
 	 * Setzen der Sprache als Standardsprache.
-	 * Diese Sprache wird benutzt beim Auswählen des Projektes sowie
+	 * Diese Sprache wird benutzt beim Ausw?hlen des Projektes sowie
 	 * als Default-Sprache bei mehrsprachigen Webseiten ("content-negotiation") 
 	 */
 	function setDefault()
@@ -110,7 +113,7 @@ class LanguageAction extends Action
 
 
 
-	// Auswählen einer Sprache
+	// Ausw?hlen einer Sprache
 	function select()
 	{
 		$this->setSessionVar('languageid',$this->language->languageid);
@@ -139,7 +142,9 @@ class LanguageAction extends Action
 			
 			if	( $this->userIsAdmin() )
 			{
-				$list[$id]['url' ] = 'do.'.$conf_php.'?languageaction=edit&languageid='.$id;
+				$list[$id]['url' ] = Html::url( array('action'        =>'language',
+				                                      'subaction'     =>'edit',
+				                                      'languageid'    =>$id    ) );
 			
 				if	( ! $l->isDefault )
 					$list[$id]['default_url'] = 'languageaction=setDefault&languageid='.$id;
