@@ -10,7 +10,7 @@
 <table class="main" width="50%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="2"><?php echo lang('TEMPLATES') ?></th>
+  <th colspan="2"><?php echo lang('GLOBAL_TEMPLATES') ?></th>
 </tr>
 
 <?php $f1=true;

@@ -9,7 +9,7 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th><?php echo lang('SOURCE') ?></th>
+  <th><?php echo lang('TEMPLATE_SOURCE') ?></th>
 </tr>
 
 <tr>
@@ -20,7 +20,7 @@
       { ?>
 <tr>
 <td class="f2"><input type="checkbox" name="addelement" value="1">
-               <?php echo lang('ADD') ?>
+               <?php echo lang('GLOBAL_ADD') ?>:
                <?php echo Html::selectBox('elementid',$elements) ?></td>
 </tr>
 <?php } ?>
@@ -29,7 +29,7 @@
       { ?>
 <tr>
 <td class="f2"><input type="checkbox" name="addicon" value="1">
-               <?php echo lang('ADD') ?>
+               <?php echo lang('GLOBAL_ADD') ?>:
                <?php echo Html::selectBox('iconid',$icon_elements) ?></td>
 </tr>
 
@@ -39,7 +39,7 @@
       { ?>
 <tr>
 <td class="f2"><input type="checkbox" name="addifempty" value="1">
-               <?php echo lang('ADD') ?>
+               <?php echo lang('GLOBAL_ADD') ?>:
                <?php echo Html::selectBox('ifemptyid',$ifempty_elements) ?></td>
 </tr>
 <?php } ?>
@@ -48,13 +48,13 @@
       { ?>
 <tr>
 <td class="f2"><input type="checkbox" name="addifnotempty" value="1">
-               <?php echo lang('ADD') ?>
+               <?php echo lang('GLOBAL_ADD') ?>:
                <?php echo Html::selectBox('ifnotemptyid',$ifnotempty_elements) ?></td>
 </tr>
 <?php } ?>
 
 <tr>
-<td class="act"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
+<td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
 </tr>
 
 </table>

@@ -10,7 +10,7 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="2"><?php echo lang('ELEMENTS') ?></th>
+  <th colspan="2"><?php echo lang('TEMPLATE_ELEMENTS') ?></th>
 </tr>
 
 <?php
@@ -25,13 +25,13 @@
       else
       { $fx = fx($fx); ?>
 <tr>
-<td colspan="2" class="<?php echo $fx ?>"><?php echo lang('NOT_FOUND') ?></td>
+<td colspan="2" class="<?php echo $fx ?>"><?php echo lang('GLOBAL_NOT_FOUND') ?></td>
 </tr>
 <?php } ?>
 
 
 <tr>
-<td class="act" colspan="2"><input type="text" name="name" value=""> <input type="submit" class="submit" value="<?php echo lang('ADD') ?>"></td>
+<td class="act" colspan="2"><input type="text" name="name" value=""> <input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>"></td>
 </tr>
 
 </table>

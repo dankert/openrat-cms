@@ -6,7 +6,7 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th><?php echo lang('SHOW') ?></th>
+  <th><?php echo lang('TEMPLATE_SHOW') ?></th>
 </tr>
 
 <tr>
