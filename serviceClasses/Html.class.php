@@ -50,16 +50,77 @@ class Html
 
 	function url( $params )
 	{
-		$url = '';
-		foreach( $params as $var=>$value )
+		global $conf;
+
+		$fake_urls = $conf['interface']['fake_urls'];
+		
+		if	( isset($params['callAction']) )
 		{
-			if	( $url == '' )
-				$url = '?';
-			else	$url .= '&amp;';
-			
-			$url .= urlencode($var).'='.urlencode($value);
+			$params['subaction'] = $params['callAction']; 
+			unset( $params['callAction'] );
+			unset( $params['callSubaction'] );
 		}
-		return 'do.'.CONF_PHP.$url;
+
+		if	( isset($params['objectid']) && !isset($params['id']) )
+			$params['id'] = $params['objectid']; 
+
+
+		if	( $fake_urls )
+		{		
+			if	( !isset($params['action'   ])) $params['action'   ] = '';
+			if	( !isset($params['subaction'])) $params['subaction'] = '';
+			if	( !isset($params['id'       ])) $params['id'       ] = '';
+			$action    = $params['action'   ];
+			$subaction = $params['subaction'];
+			$id        = $params['id'       ];
+			unset( $params['action'   ] );
+			unset( $params['subaction'] );
+			unset( $params['id'       ] );
+
+			if	( $id != '' )
+				$id = '.'.$id;
+		}
+
+		if	( count($params) > 0 )
+		{		
+			$urlParameterList = array();
+			foreach( $params as $var=>$value )
+			{
+				$urlParameterList[] = urlencode($var).'='.urlencode($value);
+			}
+			$urlParameter = '?'.implode('&amp;',$urlParameterList);
+		}
+		else
+		{
+			$urlParameter = '';
+		}
+		
+		if	( $fake_urls )
+			return $action.','.$subaction.$id.$urlParameter;
+		else
+			return 'do.php'.$urlParameter;
+	}
+
+
+	function form( $params )
+	{
+		if	( !isset($params['target'   ])) $params['target'   ] = '_self';
+		if	( !isset($params['action'   ])) $params['action'   ] = '';
+		if	( !isset($params['subaction'])) $params['subaction'] = '';
+		if	( !isset($params['id'       ])) $params['id'       ] = '';
+
+		$text = '<form name="'.$params['name'].'" target="'.$params['target'].'" action="'.Html::url($params).'" method="post" />'."\n";
+		$text.= '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
+
+		return $text;
+	}
+
+
+	function focusField( $name )
+	{
+		echo '<script name="JavaScript" type="text/javascript"><!--'."\n";
+		echo 'document.forms[0].'.$name.'.focus();'."\n";
+		echo '//--></script>'."\n";
 	}
 }
 ?>
