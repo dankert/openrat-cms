@@ -20,8 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Revision 1.3  2004-12-15 23:25:22  dankert
+// *** empty log message ***
+//
+// Revision 1.2  2004/05/02 14:49:37  dankert
+// Einf?gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
 // Initiale Version
@@ -61,15 +64,9 @@ class LoginAction extends Action
 		global $conf;
 
 
-		$databases = explode(',',$conf['database']['databases']);
-		$dbids = array();
-		
-		foreach( $databases as $db )
+		foreach( $conf['databases'] as $dbname=>$dbconf )
 		{
-			if   ( !isset($conf['database_'.$db]) )
-				$this->message( '',"configuration for 'database_$db' not defined in config.ini.php");
-		
-			$dbids[$db] = $conf['database_'.$db]['comment'];
+			$dbids[$dbname] = $dbconf['comment'];
 		}
 
 		$this->setTemplateVar( 'dbids',$dbids );
