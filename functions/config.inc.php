@@ -20,27 +20,17 @@
 // $Id$
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2004-05-02 19:27:22  dankert
+// Revision 1.2  2004-12-15 23:20:04  dankert
+// aufgeraeumt
+//
+// Revision 1.1  2004/05/02 19:27:22  dankert
 // Initiale Version
 //
 // ---------------------------------------------------------------------------
 
-//$conf = parse_ini_file( 'config.ini.php',true );
-
-$conf_php         = $conf['global']['ext'];
-define('CONF_PHP',$conf['global']['ext']);
-//define('CONF_ADDSLASHES',$conf['global']['addslashes']);
-
-//$conf_db          = $conf['database_1'];
-$conf_incldir     = $conf['directories']['incldir'];
-$conf_datadir     = $conf['directories']['datadir'];
-$conf_themedir    = $conf['directories']['themedir'];
-$conf_languagedir = $conf['directories']['languagedir'];
-define('CONF_LANGUAGEDIR',$conf['directories']['languagedir']);
-$conf_plugindir   = $conf['directories']['languagedir'];
-$conf_tmpdir      = $conf['directories']['tmpdir'];
 
 $conf_logfile     = $conf['log']['file'];
 $conf_loglevel    = $conf['log']['level'];
+$conf_themedir    = OR_THEMES_DIR.$conf['interface']['theme'];
 
 ?>

@@ -22,7 +22,7 @@
 
 /**
  * Diese Funktion stellt ein Wort in der eingestellten
- * Sprache zur Verf?gung.
+ * Sprache zur Verfuegung.
  * @package openrat.functions
  */
 function lang( $text )
@@ -53,38 +53,36 @@ function hasLang( $text )
 
 
 
-# Spracheinstellungen laden
 
-function language_from_http()
+
+
+function language_read()
 {
-	global $SESS,
-	       $HTTP_SERVER_VARS,
-	       $conf_php,
-	       $conf;
+	global $conf;
 
-	$languages = $HTTP_SERVER_VARS['HTTP_ACCEPT_LANGUAGE'];
-	$languages = explode(',',$languages);
+	if	( $conf['interface']['use_browser_language'] )
+		// Die vom Browser angeforderten Sprachen ermitteln     
+		$languages = Http::getLanguages();
+	else
+		// Nur Default-Sprache erlauben
+		$languages = array();
+
+	// Default-Sprache hinzufuegen.
+	// Wird verwendet, wenn die vom Browser angeforderten Sprachen
+	// nicht vorhanden sind
+	$languages[] = $conf['interface']['language'];
+
 	foreach( $languages as $l )
 	{
 		$l = substr($l,0,2);
-		if   ( file_exists("./language/$l.ini.$conf_php") )
-			return( $l );
+
+		// Pruefen, ob Sprache vorhanden ist.
+		if   ( file_exists( OR_LANGUAGE_DIR.$l.'.ini.'.PHP_EXT) )
+			break;
 	}
 
-	// Keine passende Sprache im HTTP-Header gefunden 			
-	return $conf['global']['default_language'];
-}
-
-
-function language_read( $l='' )
-{
-	global $SESS,
-	       $HTTP_SERVER_VARS,
-	       $conf_php;
-     
-	$l = language_from_http();
 	Logger::debug( 'reading language file: '.$l );
-	Session::setLanguage( parse_ini_file( "./language/$l.ini.$conf_php" ) );
+	Session::setLanguage( parse_ini_file( OR_LANGUAGE_DIR.$l.'.ini.'.PHP_EXT ) );
 }
 
 ?>
