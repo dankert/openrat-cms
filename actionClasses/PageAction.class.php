@@ -20,11 +20,14 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-05-03 20:22:58  dankert
+// Revision 1.9  2004-09-07 21:12:08  dankert
+// Seiten laden bei elsave()
+//
+// Revision 1.8  2004/05/03 20:22:58  dankert
 // move() korrigiert
 //
 // Revision 1.7  2004/05/02 14:49:37  dankert
-// Einfügen package-name (@package)
+// Einf?gen package-name (@package)
 //
 // Revision 1.6  2004/05/02 12:00:44  dankert
 // Initialisieren von $value->publish
@@ -130,6 +133,7 @@ class PageAction extends Action
 		$value->text = $this->getRequestVar('text');
 
 		$value->page = new Page( $value->objectid );
+		$value->page->load();
 		
 		// Ermitteln, ob Inhalt sofort freigegeben werden kann und soll
 		if	( $value->page->hasRight('release') && $this->getRequestVar('release')!='' )
@@ -139,7 +143,7 @@ class PageAction extends Action
 		// Inhalt speichern
 		
 		// Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
-		// für jede Sprache einzeln gespeichert.
+		// f?r jede Sprache einzeln gespeichert.
 		if	( $value->element->allLanguages )
 		{
 			$p = new Project();
@@ -151,7 +155,7 @@ class PageAction extends Action
 		}
 		else
 		{
-			// sonst nur 1x speichern (für die aktuelle Sprache)
+			// sonst nur 1x speichern (f?r die aktuelle Sprache)
 			$value->save();
 		}
 	
