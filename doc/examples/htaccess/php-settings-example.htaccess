@@ -16,6 +16,11 @@ php_flag register_globals off
 # Change this to anything you like. Must be a valid URL variable name
 php_value session.name openratid
 
+# Parameter separator
+php_value arg_separator.output ";"
+#php_value arg_separator.output "&amp;"
+php_value arg_separator.input "&;"
+
 # Let this be off
 php_flag session.auto_start off
 
