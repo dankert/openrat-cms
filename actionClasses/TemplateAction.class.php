@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-12-15 23:25:13  dankert
+// Revision 1.7  2004-12-19 15:17:11  dankert
+// div. Korrekturen
+//
+// Revision 1.6  2004/12/15 23:25:13  dankert
 // Sprachvariablen korrigiert
 //
 // Revision 1.5  2004/09/30 20:31:19  dankert
@@ -56,13 +59,18 @@ class TemplateAction extends Action
 
 	function TemplateAction()
 	{
-		$this->template = new Template( $this->getSessionVar('templateid') );
-		$this->template->load();
+		if	( $this->getRequestId() == 0 )
+			die('no template-id available');
 
-		if	( $this->getSessionVar('elementid') != '' )
+		$this->template = new Template( $this->getRequestId() );
+		$this->template->load();
+		$this->setTemplateVar( 'templateid',$this->template->templateid );
+
+		if	( intval($this->getRequestVar('elementid')) != 0 )
 		{
-			$this->element = new Element( $this->getSessionVar('elementid') );
+			$this->element = new Element( $this->getRequestVar('elementid') );
 			$this->element->load();
+			$this->setTemplateVar( 'elementid',$this->element->elementid );
 		}
 	}
 
@@ -217,7 +225,8 @@ class TemplateAction extends Action
 	 */
 	function elementsave()
 	{
-		$ini_date_format = parse_ini_file( CONF_LANGUAGEDIR.'/dateformat.ini.'.CONF_PHP );
+		global $conf;
+		$ini_date_format = $conf['date_formats'];
 	
 		foreach( $this->element->getRelatedProperties() as $propertyName )
 		{
@@ -286,9 +295,13 @@ class TemplateAction extends Action
 	}
 
 
+
+	/**
+	 * Eigenschaften einer Vorlage anzeigen
+	 */
 	function prop()
 	{
-		$this->setTemplateVar('extension',$this->template->extension); 
+		$this->setTemplateVar('extension',$this->template->extension);
 		$this->setTemplateVar('name'     ,$this->template->name     );
 		 
 		// von diesem Template abh?ngige Seiten ermitteln
@@ -300,7 +313,7 @@ class TemplateAction extends Action
 			$page->load();
 			$list[$oid]         = array();
 			$list[$oid]['name'] = $page->name;
-			$list[$oid]['url' ] = Html::url(array('action'=>'main','callAction'=>'page','objectid'=>$oid));
+			$list[$oid]['url' ] = Html::url( 'main','page',$oid );
 		}
 		$this->setTemplateVar('pages',$list );
 
@@ -308,8 +321,10 @@ class TemplateAction extends Action
 	}
 
 
-	// Bearbeiten
-	//
+
+	/**
+	 * Anzeigen einer Vorlage
+	 */
 	function show()
 	{
 		global $conf_php;
@@ -321,7 +336,7 @@ class TemplateAction extends Action
 		{
 			$element = new Element( $elid );
 			$element->load();
-			$url = Html::url(array('action'=>'element','subaction'=>'edit','elementid'=>$elid));
+			$url = Html::url( 'element','edit',$this->template->templateid,array('elementid'=>$elid));
 			
 			$text = str_replace('{{'.$elid.'}}',
 			                    '<a href="'.$url.'" class="el_'.
@@ -374,7 +389,7 @@ class TemplateAction extends Action
 			$element->load();
 
 			$list[$elid]         = array();
-			$list[$elid]['url' ] = Html::url(array('action'=>'element','subaction'=>'edit','elementid'=>$elid));
+			$list[$elid]['url' ] = Html::url('element','edit',$this->template->templateid,array('elementid'=>$elid));
 			$list[$elid]['name'] = $element->name;
 			$list[$elid]['desc'] = $element->desc;
 			$list[$elid]['type'] = $element->type;
@@ -391,8 +406,10 @@ class TemplateAction extends Action
 	  */
 	function src()
 	{
-		$elements      = array();
-		$icon_elements = array();
+		$elements            = array();
+		$icon_elements       = array();
+		$ifempty_elements    = array();
+		$ifnotempty_elements = array();
 		$text = $this->template->src;
 	
 		foreach( $this->template->getElementIds() as $elid )
@@ -454,7 +471,7 @@ class TemplateAction extends Action
 		{
 			$list[$id] = array();
 			$list[$id]['name'] = $name;
-			$list[$id]['url']  = Html::url(array('action'=>'main','callAction'=>'template','templateid'=>$id));
+			$list[$id]['url']  = Html::url('main','template',$id);
 		}
 		
 //		$var['templatemodelid'] = htmlentities( $id   );
