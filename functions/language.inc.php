@@ -23,11 +23,14 @@
 /**
  * Diese Funktion stellt ein Wort in der eingestellten
  * Sprache zur Verfuegung.
+ *
  * @package openrat.functions
  */
 function lang( $text )
 {
-	$lang = &Session::getLanguage();
+	global $conf;
+	$lang = $conf['language'];
+
 	$text = strtoupper($text);
 
      if   ( isset( $lang[$text] ) )
@@ -40,49 +43,17 @@ function lang( $text )
 
 /**
  * Diese Funktion prueft, ob ein Sprachelement vorhanden ist
+ *
  * @package openrat.functions
  */
 function hasLang( $text )
 {
 	$text = strtoupper($text);
-	$lang = &Session::getLanguage();
+
+	global $conf;
+	$lang = $conf['language'];
 	return isset( $lang[$text] );
 }
 
-
-
-
-
-
-
-
-function language_read()
-{
-	global $conf;
-
-	if	( $conf['interface']['use_browser_language'] )
-		// Die vom Browser angeforderten Sprachen ermitteln     
-		$languages = Http::getLanguages();
-	else
-		// Nur Default-Sprache erlauben
-		$languages = array();
-
-	// Default-Sprache hinzufuegen.
-	// Wird verwendet, wenn die vom Browser angeforderten Sprachen
-	// nicht vorhanden sind
-	$languages[] = $conf['interface']['language'];
-
-	foreach( $languages as $l )
-	{
-		$l = substr($l,0,2);
-
-		// Pruefen, ob Sprache vorhanden ist.
-		if   ( file_exists( OR_LANGUAGE_DIR.$l.'.ini.'.PHP_EXT) )
-			break;
-	}
-
-	Logger::debug( 'reading language file: '.$l );
-	Session::setLanguage( parse_ini_file( OR_LANGUAGE_DIR.$l.'.ini.'.PHP_EXT ) );
-}
 
 ?>
