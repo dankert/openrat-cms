@@ -33,6 +33,7 @@ class AbstractTree
 	var $elements     = array();
 	
 	var $tempElements = array();
+	var $userIsAdmin  = false;
 	
 	/**
 	 * Hoechste Element-Id
@@ -43,6 +44,11 @@ class AbstractTree
 	// Konstruktor
 	function AbstractTree()
 	{
+		// Feststellen, ob der angemeldete Benutzer ein Administrator ist
+		global $SESS;
+		$user = $SESS['user'];
+		$this->userIsAdmin = ($user['isAdmin'] == '1');
+
 		// Wurzel-Element laden
 		$this->root();
 		$this->elements[0]  = $this->tempElements[0];
@@ -62,7 +68,7 @@ class AbstractTree
 		$funcName = $this->elements[$elementId]->type;
 		$this->$funcName( $this->elements[$elementId]->internalId );
 
-		// Wenn keine Unterelemente gefunden, dann die Öffnen-Funktion deaktivieren
+		// Wenn keine Unterelemente gefunden, dann die ?ffnen-Funktion deaktivieren
 		if	( count( $this->tempElements ) == 0 )
 			$this->elements[$elementId]->type = '';
 
