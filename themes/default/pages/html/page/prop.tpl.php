@@ -5,7 +5,8 @@
 
 <form action="<?php echo $self ?>" method="post" target="_self">
 
-<input type="hidden" name="subaction" value="propsave">
+<input type="hidden" name="action"    value="page"    />
+<input type="hidden" name="subaction" value="propsave"/>
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
@@ -69,7 +70,8 @@
 
 <form action="<?php echo $self ?>" method="post" target="_self">
 
-<input type="hidden" name="subaction" value="move">
+<input type="hidden" name="action"    value="page" />
+<input type="hidden" name="subaction" value="move" />
 
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
