@@ -1112,13 +1112,15 @@ class Value
 						$inhalt = '';
 						break;
 					case 'edit_url':
-						$inhalt = Html::url('index','object',$this->page->objectid,array('dbid'=>$db->dbid));
+						$db = Session::getDatabase();
+						$inhalt = Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id));
 						break;
 					case 'edit_fullurl':
 						$inhalt = 'http://';
 						$inhalt .= getenv('SERVER_NAME');
 						$inhalt .= dirname(getenv('SCRIPT_NAME'));
-						$inhalt .= '/'.Html::url('index','object',$this->page->objectid,array('dbid'=>$db->dbid));;
+						$db = Session::getDatabase();
+						$inhalt .= '/'.Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id));
 						break;
 					case 'lastch_user_username':
 						$user = new User($this->page->lastchange_userid);
