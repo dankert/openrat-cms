@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-11-28 23:55:49  dankert
+// Revision 1.4  2004-12-20 20:27:13  dankert
+// Aktuelle Userid setzen
+//
+// Revision 1.3  2004/11/28 23:55:49  dankert
 // Ausgabe performanter
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
@@ -148,7 +151,7 @@ class SearchAction extends Action
 			$o = new Object( $objectid );
 			$o->load();
 			$resultList[$objectid] = array();
-			$resultList[$objectid]['url']  = Html::url(array('action'=>'main','subaction'=>$o->getType(),'objectid'=>$objectid));
+			$resultList[$objectid]['url']  = Html::url('main',$o->getType(),$objectid);
 			$resultList[$objectid]['type'] = $o->getType();
 			$resultList[$objectid]['name'] = $o->name;
 
@@ -163,7 +166,7 @@ class SearchAction extends Action
 			$t = new Template( $templateid );
 			$t->load();
 			$resultList['t'.$templateid] = array();
-			$resultList['t'.$templateid]['url' ]  = Html::url(array('action'=>'main','subaction'=>'template','templateid'=>$templateid));
+			$resultList['t'.$templateid]['url' ]  = Html::url('main','template',$templateid);
 			$resultList['t'.$templateid]['type'] = 'tpl';
 			$resultList['t'.$templateid]['name'] = $t->name;
 			$resultList['t'.$templateid]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
@@ -177,17 +180,21 @@ class SearchAction extends Action
 	
 	function prop()
 	{
-		$this->setTemplateVar( 'users',User::listAll() );
+		$user = Session::getUser();
+		$this->setTemplateVar( 'users'     ,User::listAll() );
+		$this->setTemplateVar( 'act_userid',$user->userid   );
+
 		$this->forward( 'search_prop' );
 	}
+
+
 	function content()
 	{
-		$this->setTemplateVar( 'users',User::listAll() );
+		$user = Session::getUser();
+		$this->setTemplateVar( 'users'     ,User::listAll() );
+		$this->setTemplateVar( 'act_userid',$user->userid   );
+
 		$this->forward( 'search_content' );
-	}
-	function template()
-	{
-		$this->forward( 'search_template' );
 	}
 }
 
