@@ -3,9 +3,7 @@
 <!-- $Id$ -->
 <center>
 
-<form action="<?php echo $self ?>" method="post" target="_self">
-<input type="hidden" name="action"    value="folder"   />
-<input type="hidden" name="subaction" value="multiple" />
+<?php echo Html::form('folder','multiple') ?>
 
 <?php $table_title_text    = lang('GLOBAL_FOLDER');
       $table_title_colspan = 7;
