@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-15 21:34:44  dankert
+// Revision 1.5  2004-11-24 22:06:24  dankert
+// Neu: setDatabaseRow() zur Performancesteigerung
+//
+// Revision 1.4  2004/11/15 21:34:44  dankert
 // Aenderung methode hasRight()
 //
 // Revision 1.3  2004/11/10 22:46:52  dankert
@@ -96,6 +99,11 @@ class Object
 	 */
 	var $create_userid;
 
+	/** Name des Benutzers, welcher dieses Objekt erstellt hat.
+	 * @type Integer
+	 */
+	var $create_username;
+
 	/** Zeitpunkt der letzten Aenderung. Die Variable beinhaltet den Unix-Timestamp.
 	 * @type Integer
 	 */
@@ -105,6 +113,11 @@ class Object
 	 * @type Integer
 	 */
 	var $lastchange_userid;
+
+	/** Name des Benutzers, welcher dieses Objekt zuletzt geaendert hat.
+	 * @type Integer
+	 */
+	var $lastchange_username;
 
 	/**
 	 * Kennzeichen, ob Objekt ein Ordner ist
@@ -332,50 +345,13 @@ class Object
 		$sql = new Sql('SELECT {t_object}.*,{t_name}.name,{t_name}.descr'.' FROM {t_object}'.' LEFT JOIN {t_name} ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.' WHERE {t_object}.id={objectid}');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
+
 		$row = $db->getRow($sql->query);
+		$this->setDatabaseRow( $row );
 
 		if (count($row) == 0)
 			die('fatal: objectid not found: '.$this->objectid);
 
-		$this->parentid = $row['parentid'];
-		
-		if	( intval($this->parentid) == 0 )
-			$this->isRoot = true;
-		else	$this->isroot = false;
-
-		// Falls leer, id<objectnr> als Dateinamen verwenden
-		if ($this->filename == '')
-			$this->filename = $this->objectid;
-
-		$this->create_date       = $row['create_date'];
-		$this->create_userid     = $row['create_userid'];
-		$this->lastchange_date   = $row['lastchange_date'];
-		$this->lastchange_userid = $row['lastchange_userid'];
-
-		$this->projectid = $row['projectid'];
-
-		$this->isFolder = ( $row['is_folder'] == '1' );
-		$this->isFile   = ( $row['is_file'  ] == '1' );
-		$this->isPage   = ( $row['is_page'  ] == '1' );
-		$this->isLink   = ( $row['is_link'  ] == '1' );
-
-		if	( $this->isRoot )
-		{
-			$project = new Project( $this->projectid );
-			$project->load();
-			$this->name = $project->name;
-			$this->desc = '';
-		}
-		else
-		{
-			$this->name = $row['name' ];
-			$this->desc = $row['descr'];
-		}
-
-
-		// Falls leer, id<objectnr> als Dateinamen verwenden
-		if ($this->name == '')
-			$this->name = $this->filename;
 	}
 
 
@@ -405,6 +381,7 @@ class Object
 			$this->isRoot = false;
 
 		$this->checkFilename();
+		$this->name = 'n/a';
 
 		$this->create_date       = $row['create_date'];
 		$this->create_userid     = $row['create_userid'];
@@ -418,6 +395,50 @@ class Object
 		$this->isPage   = ( $row['is_page'  ] == '1' );
 		$this->isLink   = ( $row['is_link'  ] == '1' );
 	}
+
+
+	/**
+	 * Setzt die Eigenschaften des Objektes mit einer Datenbank-Ergebniszeile
+	 *
+	 * @param row Ergebniszeile aus Datenbanktabelle
+	 */
+	function setDatabaseRow( $row )
+	{
+		$this->parentid = $row['parentid'];
+		
+		if	( intval($this->parentid) == 0 )
+			$this->isRoot = true;
+		else	$this->isroot = false;
+
+		$this->create_date       = $row['create_date'      ];
+		$this->create_userid     = $row['create_userid'    ];
+		$this->lastchange_date   = $row['lastchange_date'  ];
+		$this->lastchange_userid = $row['lastchange_userid'];
+
+		$this->projectid = $row['projectid'];
+
+		$this->isFolder = ( $row['is_folder'] == '1' );
+		$this->isFile   = ( $row['is_file'  ] == '1' );
+		$this->isPage   = ( $row['is_page'  ] == '1' );
+		$this->isLink   = ( $row['is_link'  ] == '1' );
+
+		if	( $this->isRoot )
+		{
+			$project = new Project( $this->projectid );
+			$project->load();
+			$this->name = $project->name;
+			$this->desc = '';
+		}
+		else
+		{
+			$this->name = $row['name' ];
+			$this->desc = $row['descr'];
+		}
+
+		$this->checkFilename();
+		$this->checkName();
+	}
+
 
 
 	/**
@@ -618,6 +639,9 @@ class Object
 	}
 
 
+	/**
+	 * Pruefung auf Gueltigkeit des Dateinamens
+	 */
 	function checkFilename()
 	{
 		if	( $this->filename == '' )
@@ -643,6 +667,19 @@ class Object
 			if	( $pf->hasFilename( $this->filename ) )
 				$this->filename = md5(microtime());
 		}
+	}
+
+
+	/**
+	 * Pruefung auf Gueltigkeit des logischen Namens
+	 */
+	function checkName()
+	{
+		if	( $this->name == '' )
+			$this->name = $this->filename;
+
+		if	( $this->name == '' )
+			$this->name = $this->objectid;
 	}
 
 
@@ -733,6 +770,38 @@ class Object
 		return $acls;
 	}
 
+
+	/**
+	 * Ermitteln aller Berechtigungsstufen, die fuer diesen Objekttyp wichtig sind
+	 */
+	function getRelatedAclTypes()
+	{
+		if	( $this->isFolder )
+			return( array('read','write','delete','prop','release','publish','create_folder','create_file','create_page','create_link','grant','transmit') );
+		if	( $this->isFile )
+			return( array('read','write','delete','prop','release','publish','grant') );
+		if	( $this->isPage )
+			return( array('read','write','delete','prop','release','publish','grant') );
+		if	( $this->isLink )
+			return( array('read','write','delete','prop','grant') );
+	}
+
+
+	/**
+	 * Ermitteln aller Berechtigungsstufen, die fuer diesen Objekttyp wichtig sind
+	 */
+	function getAssocRelatedAclTypes()
+	{
+		$rights = array('read','write','delete','prop','release','publish','create_folder','create_file','create_page','create_link','grant','transmit');
+		$types  = array();
+		foreach( $rights as $r )
+			$types[$r] = false;
+
+		foreach( $this->getRelatedAclTypes() as $t )
+			$types[$t] = true;
+
+		return $types;
+	}
 
 	/**
 	 * Entfernen aller ACLs zu diesem Objekt
