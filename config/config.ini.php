@@ -43,6 +43,7 @@ truecolor            = true         ; 'true' if GD2 is available, otherwise 'fal
 tree_width           = "25%"        ; width of navigation frame (tree)
 file_separator       = " &raquo; "  ; chars between directory names
 nice_urls            = false        ; if 'true' you need special rewrite rules in a .htaccess file!
+url_sessionid        = false        ; only needed if cookies and transid not available 
 theme                = default      ;
 language             = en           ; default language
 use_browser_language = true         ; use the HTTP_ACCEPT_LANGUAGE header to determine language
