@@ -18,63 +18,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.18  2004-12-15 23:23:11  dankert
-// Anpassung an Session-Funktionen
 //
-// Revision 1.17  2004/11/29 23:52:33  dankert
-// Korrektur Vorversion
-//
-// Revision 1.16  2004/11/29 23:48:00  dankert
-// Korrektur Vorversion
-//
-// Revision 1.15  2004/11/29 23:34:59  dankert
-// Beim Speichern von Seiteninhalten den Zeitstempel setzen
-//
-// Revision 1.14  2004/11/29 23:24:36  dankert
-// Korrektur Veroeffentlichung
-//
-// Revision 1.13  2004/11/27 09:55:54  dankert
-// Rechte-Funktionen entfernt, Anzahl Versionen in Elementliste
-//
-// Revision 1.12  2004/11/10 22:39:24  dankert
-// Entfernen der Methode move()
-//
-// Revision 1.11  2004/10/13 22:12:57  dankert
-// Neue Seitenfunktion zum gleichzeitigen Bearbeiten aller Seiteninhalte
-//
-// Revision 1.10  2004/10/05 10:00:49  dankert
-// Neue Funktionalit?t: Austauschen einer Vorlage
-//
-// Revision 1.9  2004/09/07 21:12:08  dankert
-// Seiten laden bei elsave()
-//
-// Revision 1.8  2004/05/03 20:22:58  dankert
-// move() korrigiert
-//
-// Revision 1.7  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.6  2004/05/02 12:00:44  dankert
-// Initialisieren von $value->publish
-//
-// Revision 1.5  2004/04/30 21:07:32  dankert
-// Auswerten von Schalter $release
-//
-// Revision 1.4  2004/04/30 20:31:47  dankert
-// Berechtigungen anzeigen
-//
-// Revision 1.3  2004/04/25 19:01:02  dankert
-// Speichern von Elementen, die in allen Sprachen gleich sind
-//
-// Revision 1.2  2004/04/24 16:55:27  dankert
-// Korrektur: pub()
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 /**
  * Action-Klasse zum Bearbeiten einer Seite
@@ -91,8 +35,6 @@ class PageAction extends ObjectAction
 
 	function PageAction()
 	{
-		$this->page = Session::getObject();
-		
 		if	( $this->getRequestId() != 0  )
 		{
 			$this->page = new Page( $this->getRequestId() );
@@ -180,41 +122,53 @@ class PageAction extends ObjectAction
 				}
 			}
 		}
-		$this->page->setTimestamp();
+		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
 	
-		$this->callSubAction( 'form');
+		$this->callSubAction( 'el' );
 	}
 
 
+	/**
+	 * Element speichern
+	 *
+	 * Der Inhalt eines Elementes wird abgespeichert
+	 */
 	function elsave()
 	{
 		$value = new Value();
-		$value->languageid = $this->getSessionVar('languageid');
-		$value->objectid   = $this->getSessionVar('objectid');
-		$value->pageid     = Page::getPageIdFromObjectId( $this->getSessionVar('objectid') );
-		$value->element = new Element( $this->getSessionVar('elementid') );
+		$language = Session::getProjectLanguage();
+		$value->languageid = $language->languageid;
+		$value->objectid   = $this->page->objectid;
+		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+
+		if	( $this->hasRequestVar('elementid') )
+			$value->element = new Element( $this->getRequestVar('elementid') );
+		else
+			$value->element = Session::getElement();
+
 		$value->element->load();
 		$value->publish = false;
 		$value->load();
 
-		$value->number = $this->getRequestVar('number') * pow(10,$value->element->decimals);
-
+		$value->number         = $this->getRequestVar('number') * pow(10,$value->element->decimals);
 		$value->linkToObjectId = intval($this->getRequestVar('linkobjectid'));
-	
 		$value->text           = $this->getRequestVar('text');
 
-		if   ( $this->getRequestVar('year') != '' )
+		if   ( $this->hasRequestVar('year') )
 		{
+			// Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
 			if   ( $this->getRequestVar('ansidate') != $this->getRequestVar('ansidate_orig') )
 				$value->date = strtotime($this->getRequestVar('ansidate') );
-			else	$value->date = mktime( $this->getRequestVar('hour'),
-					                  $this->getRequestVar('minute'),
-					                  $this->getRequestVar('second'),
-					                  $this->getRequestVar('month'),
-					                  $this->getRequestVar('day'),
-					                  $this->getRequestVar('year')    );
+			else
+				// Sonst die Zeitwerte einzeln zu einem Datum zusammensetzen
+				$value->date = mktime( $this->getRequestVar('hour'  ),
+				                       $this->getRequestVar('minute'),
+				 	                   $this->getRequestVar('second'),
+				 	                   $this->getRequestVar('month' ),
+					                   $this->getRequestVar('day'   ),
+					                   $this->getRequestVar('year'  ) );
 		}
-		else $value->date = 0;
+		else $value->date = 0; // Datum nicht gesetzt.
 	
 		$value->text = $this->getRequestVar('text');
 
@@ -232,8 +186,8 @@ class PageAction extends ObjectAction
 		// fuer jede Sprache einzeln gespeichert.
 		if	( $value->element->allLanguages )
 		{
-			$p = new Project();
-			foreach( $p->getLanguageIds() as $languageid )
+			$project = Session::getProject();
+			foreach( $project->getLanguageIds() as $languageid )
 			{
 				$value->languageid = $languageid;
 				$value->save();
@@ -244,11 +198,17 @@ class PageAction extends ObjectAction
 			// sonst nur 1x speichern (fuer die aktuelle Sprache)
 			$value->save();
 		}
-		$this->page->setTimestamp();
-		$this->callSubAction( $this->getRequestVar('old_pageaction') );
+
+		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
+		$this->callSubAction( 'el' );
+		//$this->callSubAction( $this->getRequestVar('old_pageaction') );
 	}
 
 
+
+	/**
+	 * Eigenschaften der Seite speichern
+	 */
 	function propsave()
 	{
 		if   ( $this->getRequestVar('name')!='' )
@@ -258,14 +218,21 @@ class PageAction extends ObjectAction
 			$this->page->desc        = $this->getRequestVar('desc'    );
 
 			$this->page->save();
-			$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
+			$this->addNotice($this->page->getType(),$this->page->name,'PROP_SAVED','ok');
 		}
 		
 		$this->callSubAction('prop');
 	}
 
 
-	function ReplaceTemplateSelectElements()
+
+	/**
+	 * Austauschen der Vorlage vorbereiten
+	 *
+	 * Es wird ein Formualr erzeugt, in dem der Benutzer auswaehlen kann, welche Elemente
+	 * in welches Element uebernommen werden sollen
+	 */
+	function replacetemplateselectelements()
 	{
 		$newTemplateId = intval($this->getRequestVar('templateid'));
 
@@ -313,6 +280,12 @@ class PageAction extends ObjectAction
 	}
 
 
+
+	/**
+	 * Die Vorlage der Seite austauschen
+	 *
+	 * Die Vorlage wird ausgetauscht, die Inhalte werden gemaess der Benutzereingaben kopiert
+	 */
 	function replaceTemplate()
 	{
 		$newTemplateId = intval($this->getRequestVar('newTemplateId'));
@@ -326,7 +299,6 @@ class PageAction extends ObjectAction
 		
 		if   ($newTemplateId != 0  )
 		{
-			print_r( $replaceElementMap );
 			$this->page->replaceTemplate( $newTemplateId,$replaceElementMap );
 		}
 
@@ -334,6 +306,11 @@ class PageAction extends ObjectAction
 	}
 
 
+
+
+	/**
+	 * Alle Elemente der Seite anzeigen
+	 */
 	function el()
 	{
 		global $conf_php;
@@ -344,8 +321,10 @@ class PageAction extends ObjectAction
 		
 		$list = array();
 	
+		// Schleife ueber alle Inhalte der Seite
 		foreach( $this->page->values as $id=>$value )
 		{
+			// Element wird nur angezeigt, wenn es editierbar ist
 			if   ( $value->element->isWritable() )
 			{
 				$list[$id] = array();
@@ -360,8 +339,8 @@ class PageAction extends ObjectAction
 
 				$list[$id]['date'         ] = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
 				$list[$id]['archive_count'] = $value->getCountVersions();
-				$list[$id]['archive_url'  ] = Html::url(array('action'=>'pageelement','elementid'=>$id,'subaction'=>'archive'));
-				$list[$id]['url'          ] = Html::url(array('action'=>'pageelement','elementid'=>$id,'subaction'=>'edit'   ));
+				$list[$id]['archive_url'  ] = Html::url( 'pageelement','archive','0',array('elementid'=>$id) );
+				$list[$id]['url'          ] = Html::url( 'pageelement','edit'   ,'0',array('elementid'=>$id) );
 				
 				// Maximal 50 Stellen des Inhaltes anzeigen
 				$list[$id]['value'] = Text::maxLaenge( 50,$value->value );
@@ -468,6 +447,10 @@ class PageAction extends ObjectAction
 	}
 
 
+
+	/**
+	 * Seite anzeigen
+	 */
 	function show()
 	{
 		// Seite definieren
@@ -481,6 +464,12 @@ class PageAction extends ObjectAction
 	}
 
 
+
+	/**
+	 * Die Seite im Bearbeitungsmodus anzeigen
+	 *
+	 * Bei editierbaren Feldern wird ein Editor-Ikon vorangestellt.
+	 */
 	function edit()
 	{
 		// Editier-Icons anzeigen
@@ -494,6 +483,12 @@ class PageAction extends ObjectAction
 	}
 
 
+
+	/**
+	 * Den Quellcode der Seite anzeigen
+	 *
+	 * Alle HTML-Sonderzeichen werden maskiert
+	 */
 	function src()
 	{
 		$this->page->public = true;
@@ -511,6 +506,10 @@ class PageAction extends ObjectAction
 	}
 
 
+
+	/**
+	 * Die Eigenschaften der Seite anzeigen
+	 */
 	function prop()
 	{
 		global $SESS;
@@ -525,7 +524,7 @@ class PageAction extends ObjectAction
 	
 		if   ( $SESS['user']['is_admin'] == '1' )
 		{
-			$this->setTemplateVar('template_url',Html::url(array('action'=>'main','callAction'=>'template','templateid'=>$this->page->templateid,'tplaction'=>'show')));
+			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
 		}
 	
 		$template = new Template( $this->page->templateid );
@@ -559,13 +558,26 @@ class PageAction extends ObjectAction
 	}
 
 
+
+	/**
+	 * Seite veroeffentlichen
+	 *
+	 * Es wird ein Formular angzeigt, mit dem die Seite veroeffentlicht
+	 * werden kann 
+	 */
 	function pub()
 	{
 		$this->forward('page_pub');
 	}
 
 
-	function pub2()
+
+	/**
+	 * Seite veroeffentlichen
+	 *
+	 * Die Seite wird generiert.
+	 */
+	function pubnow()
 	{
 		$this->page->publish();
 
