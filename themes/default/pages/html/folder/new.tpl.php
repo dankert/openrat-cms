@@ -10,7 +10,7 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
   <tr>
-    <th colspan="4"><?php echo lang('NEW') ?></th>
+    <th colspan="4"><?php echo lang('GLOBAL_NEW') ?></th>
   </tr>
 
   <?php $nr = 0 ?>
@@ -22,7 +22,7 @@
           { ?>
   <tr>
     <td class="f1">
-      <input type="radio" name="type" value="page" onClick="document.forms[0].pagename.focus();"><?php echo lang('PAGE') ?>
+      <input type="radio" name="type" value="page" onClick="document.forms[0].pagename.focus();"><?php echo lang('GLOBAL_PAGE') ?>
     </td>
     <td class="f1">
       <?php echo Html::selectBox('templateid',$templates) ?>
@@ -42,7 +42,7 @@
         { ?>
   <tr>
     <td class="f1">
-      <input type="radio" name="type" value="file" onClick="document.forms[0].file.focus();"><?php echo lang('FILE') ?>
+      <input type="radio" name="type" value="file" onClick="document.forms[0].file.focus();"><?php echo lang('GLOBAL_FILE') ?>
     </td>
     <td class="f1">
       <input type="file" name="file" onFocus="document.forms[0].type[<?php echo $nr++ ?>].checked=true;" tabindex="<?php echo $tab++ ?>">
@@ -54,7 +54,7 @@
         { ?>
   <tr>
     <td class="f1">
-      <input type="radio" name="type" value="folder" onClick="document.forms[0].foldername.focus();"><?php echo lang('FOLDER') ?>
+      <input type="radio" name="type" value="folder" onClick="document.forms[0].foldername.focus();"><?php echo lang('GLOBAL_FOLDER') ?>
     </td>
     <td class="f1">
       <input type="text" name="foldername" size="20" value="" onFocus="document.forms[0].type[<?php echo $nr++ ?>].checked=true;" tabindex="<?php echo $tab++ ?>">
@@ -66,7 +66,7 @@
         { ?>
   <tr>
     <td class="f1">
-      <input type="radio" name="type" value="link" onClick="document.forms[0].linkname.focus();"><?php echo lang('link') ?>
+      <input type="radio" name="type" value="link" onClick="document.forms[0].linkname.focus();"><?php echo lang('GLOBAL_LINK') ?>
     </td>
     <td class="f1">
       <input type="text" name="linkname" size="20" value="" onFocus="document.forms[0].type[<?php echo $nr++ ?>].checked=true;" tabindex="<?php echo $tab++ ?>">
@@ -76,7 +76,7 @@
 
   <tr>
     <td colspan="5" class="act">
-      <input type="submit" class="submit" value="<?php echo lang('NEW') ?>">
+      <input type="submit" class="submit" value="<?php echo lang('GLOBAL_NEW') ?>">
 
     </td>
   </tr>

@@ -7,14 +7,14 @@
 <input type="hidden" name="action"    value="folder"   />
 <input type="hidden" name="subaction" value="multiple" />
 
-<?php $table_title_text    = lang('FOLDER');
+<?php $table_title_text    = lang('GLOBAL_FOLDER');
       $table_title_colspan = 7;
       include( $tpl_dir.'table_open.tpl.php');
       
       $writable = isset($folder);
 ?>
 <tr>
-<td colspan="7" class="help"><?php echo lang('HELP_FOLDER') ?></td>
+<td colspan="7" class="help"><?php echo lang('GLOBAL_FOLDER_DESC') ?></td>
 </tr>
 
 
@@ -31,9 +31,9 @@
       ?>
 <tr>
 <td width="5%"  class="help"            >&nbsp;</td>
-<td width="60%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbytype_url       ?>" title="<?php echo lang('FOLDER_ORDERBYTYPE'      ) ?>"><?php } ?><?php echo lang('GLOBAL_TYPE')  ?><?php if ($sortable) { ?></a><?php } ?> / <?php if ($sortable) { ?><a href="<?php echo $orderbyname_url ?>" title="<?php echo lang('FOLDER_ORDERBYNAME') ?>"><?php } ?><?php echo lang('GLOBAL_NAME') ?><?php if ($sortable) { ?></a><?php } ?></td>
-<td width="20%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbylastchange_url ?>" title="<?php echo lang('FOLDER_ORDERBYLASTCHANGE') ?>"><?php } ?><?php echo lang('LASTCHANGE' )  ?><?php if ($sortable) { ?></a><?php } ?></td>
-<td width="30%" class="help" colspan="4"><?php if ($sortable) { ?><a href="<?php echo $flip_url              ?>" title="<?php echo lang('FOLDER_FLIP')              ?>"><?php } ?><?php echo lang('FOLDER_ORDER') ?><?php if ($sortable) { ?></a><?php } ?></td>
+<td width="60%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbytype_url       ?>" title="<?php echo lang('FOLDER_ORDERBYTYPE'      ) ?>"><?php } ?><?php echo lang('GLOBAL_TYPE'      )  ?><?php if ($sortable) { ?></a><?php } ?> / <?php if ($sortable) { ?><a href="<?php echo $orderbyname_url ?>" title="<?php echo lang('FOLDER_ORDERBYNAME') ?>"><?php } ?><?php echo lang('GLOBAL_NAME') ?><?php if ($sortable) { ?></a><?php } ?></td>
+<td width="20%" class="help"            ><?php if ($sortable) { ?><a href="<?php echo $orderbylastchange_url ?>" title="<?php echo lang('FOLDER_ORDERBYLASTCHANGE') ?>"><?php } ?><?php echo lang('GLOBAL_LASTCHANGE')  ?><?php if ($sortable) { ?></a><?php } ?></td>
+<td width="30%" class="help" colspan="4"><?php if ($sortable) { ?><a href="<?php echo $flip_url              ?>" title="<?php echo lang('FOLDER_FLIP')              ?>"><?php } ?><?php echo lang('FOLDER_ORDER'     ) ?><?php if ($sortable) { ?></a><?php } ?></td>
 </tr>
 
 <?php   $f1=true;
@@ -75,7 +75,7 @@
   <?php echo lang('GLOBAL_LINK') ?> <?php echo lang('GLOBAL_TO') ?>
   <br/>
   <input type="radio" name="type" value="delete" />
-  <?php echo lang('DELETE') ?>
+  <?php echo lang('GLOBAL_DELETE') ?>
   </td><td>
   <?php echo Html::selectBox('targetobjectid',$folder,$act_objectid) ?>
   </td><td>
