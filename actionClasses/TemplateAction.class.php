@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-12-19 15:17:11  dankert
+// Revision 1.8  2004-12-27 23:34:51  dankert
+// Aenderung Konstruktor
+//
+// Revision 1.7  2004/12/19 15:17:11  dankert
 // div. Korrekturen
 //
 // Revision 1.6  2004/12/15 23:25:13  dankert
@@ -59,12 +62,16 @@ class TemplateAction extends Action
 
 	function TemplateAction()
 	{
-		if	( $this->getRequestId() == 0 )
-			die('no template-id available');
-
-		$this->template = new Template( $this->getRequestId() );
-		$this->template->load();
-		$this->setTemplateVar( 'templateid',$this->template->templateid );
+		if	( $this->getRequestId() != 0 )
+		{
+			$this->template = new Template( $this->getRequestId() );
+			$this->template->load();
+			$this->setTemplateVar( 'templateid',$this->template->templateid );
+		}
+		else
+		{
+			$this->defaultSubAction = 'listing';
+		}
 
 		if	( intval($this->getRequestVar('elementid')) != 0 )
 		{
