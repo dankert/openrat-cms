@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2004-11-28 22:59:48  dankert
+// Revision 1.14  2004-11-29 21:09:51  dankert
+// neue Methode pub2()
+//
+// Revision 1.13  2004/11/28 22:59:48  dankert
 // Ausgabe von "notices"
 //
 // Revision 1.12  2004/11/28 21:27:07  dankert
@@ -638,30 +641,26 @@ class FolderAction extends ObjectAction
 
 	function pub()
 	{
-		if	( $this->getRequestVar('go') == '1' )
+		$this->forward('folder_pub');
+	}
+
+
+	function pub2()
+	{
+		$subdirs = ( $this->hasRequestVar('subdirs') );
+		$pages   = ( $this->hasRequestVar('pages'  ) );
+		$files   = ( $this->hasRequestVar('files'  ) );
+
+		$publish = new Publish();
+		
+		$this->folder->publish = &$publish;
+		$this->folder->publish( $pages,$files,$subdirs );
+
+		foreach( $publish->publishedObjects as $o )
 		{
-			if	( $this->getRequestVar('subdirs') == '1' )
-				$subdirs = true;
-			else	$subdirs = false;
-
-			$publish = new Publish();
-			
-			$this->folder->publish = &$publish;
-			$this->folder->publish( $subdirs );
-
-			$list = array();
-
-			foreach( $publish->publishedObjects as $o )
-			{
-				$list[] = $o['filename'];
-			}
-			$this->setTemplateVar('filenames',$list);
-
-			$this->forward('publish');
+			$this->addNotice('',$o['filename'],'PUBLISHED','ok');
 		}
-		else
-		{
-			$this->forward('folder_pub');
-		}
+
+		$this->callSubaction( 'pub' );
 	}
 }
