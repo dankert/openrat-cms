@@ -162,13 +162,48 @@ class PageAction extends ObjectAction
 		$value->text           = $this->getRequestVar('text');
 
 		// Vorschau anzeigen
-		if	( $value->element->type=='longtext' && $this->hasRequestVar('preview') )
+		if	( $value->element->type=='longtext' && ($this->hasRequestVar('preview')||$this->hasRequestVar('addmarkup')) )
 		{
-			$value->page             = $this->page;
-			$value->simple           = false;
-			$value->page->languageid = $value->languageid;
-			$value->page->load();
-			$value->generate();
+			if	( $this->hasRequestVar('preview') )
+			{
+				$value->page             = $this->page;
+				$value->simple           = false;
+				$value->page->languageid = $value->languageid;
+				$value->page->load();
+				$value->generate();
+				$this->setTemplateVar('preview_text',$value->value );
+			}
+
+			if	( $this->hasRequestVar('addmarkup') )
+			{
+				$addText = $this->getRequestVar('addtext');
+
+				if	( !empty($addText) ) // Nur, wenn ein Text eingegeben wurde
+				{
+					$addText = $this->getRequestVar('addtext');
+
+					if	( $this->hasRequestVar('strong') )
+						$value->text .= '*'.$addText.'*';
+
+					if	( $this->hasRequestVar('emphatic') )
+						$value->text .= '_'.$addText.'_';
+
+					if	( $this->hasRequestVar('link') )
+						$value->text .= '"'.$addText.'"->"'.$this->getRequestVar('objectid').'"';
+				}
+
+				if	( $this->hasRequestVar('table') )
+					$value->text .= "|$addText  |  |\n|$addText  |  |\n|$addText  |  |\n";
+
+				if	( $this->hasRequestVar('list') )
+					$value->text .= "\n- ".$addText."\n".'- '.$addText."\n".'- '.$addText."\n";
+
+				if	( $this->hasRequestVar('numlist') )
+					$value->text .= "\n# ".$addText."\n".'# '.$addText."\n".'# '.$addText."\n";
+
+				if	( $this->hasRequestVar('image') )
+					$value->text .= '{'.$this->getRequestVar('objectid').'}';
+			}
 
 			// Ermitteln aller verlinkbaren Objekte (fuer Editor)
 			$objects = array();
@@ -186,6 +221,7 @@ class PageAction extends ObjectAction
 					$objects[ $id ] .= FILE_SEP.$o->name;
 				} 
 			}
+			asort($objects);
 			$this->setTemplateVar( 'objects',$objects );
 	
 			$this->setTemplateVar( 'release',$this->page->hasRight(ACL_RELEASE) );
@@ -195,7 +231,6 @@ class PageAction extends ObjectAction
 			$this->setTemplateVar( 'text'   ,$value->text          );
 			$this->setTemplateVar( 'name'   ,$value->element->name );
 			$this->setTemplateVar( 'desc'   ,$value->element->desc );
-			$this->setTemplateVar('preview_text',$value->value );
 			$this->forward( 'pageelement_edit_longtext' );
 		}
 
