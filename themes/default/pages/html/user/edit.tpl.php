@@ -10,7 +10,7 @@
 <table class="main" width="90%" cellspacing="0" cellpadding="4">
 
 <tr>
-  <th colspan="2"><?php echo lang('USER') ?></th>
+  <th colspan="2"><?php echo lang('GLOBAL_USER') ?></th>
 </tr>
 
 <tr>
@@ -29,29 +29,29 @@
 <td width="50%" class="f1"><input type="text" name="mail" size="50" value="<?php echo $mail ?>"><?php if ($mail!='' && !eregi('^[a-zA-Z0-9_.-]+\@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$',$mail)) echo '<strong>'.lang('USER_MAIL_INVALID').'</strong>' ?></td>
 </tr>
 <tr>
-<td width="50%" class="f1"><?php echo lang('user_desc') ?></a></td>
+<td width="50%" class="f1"><?php echo lang('USER_DESC') ?></a></td>
 <td width="50%" class="f1"><input type="text" name="desc" size="50" value="<?php echo $desc ?>"></td>
 </tr>
 <tr>
-<td width="50%" class="f1"><?php echo lang('user_tel') ?></a></td>
+<td width="50%" class="f1"><?php echo lang('USER_TEL') ?></a></td>
 <td width="50%" class="f1"><input type="text" name="tel" size="50" value="<?php echo $tel ?>"></td>
 </tr>
 <tr>
-<td width="50%" class="f1" rowspan="2"><?php echo lang('user_ldapdn') ?></a></td>
+<td width="50%" class="f1" rowspan="2"><?php echo lang('USER_LDAPDN') ?></a></td>
 <td width="50%" class="f1"><input type="text" name="ldap_dn" size="50" value="<?php echo $ldap_dn ?>"></td>
 </tr>
   <tr>
     <td class="help"><?php echo lang('USER_LDAPDN_DESC') ?></td>
   </tr>
 <tr>
-<td width="50%" class="f1" rowspan="2"><?php echo lang('style') ?></a></td>
+<td width="50%" class="f1" rowspan="2"><?php echo lang('USER_STYLE') ?></a></td>
 <td width="50%" class="f1"><?php echo Html::selectBox('style',$allstyles,$style) ?></td>
 </tr>
   <tr>
     <td class="help"><?php echo lang('USER_STYLE_DESC') ?></td>
   </tr>
 <tr>
-<td width="50%" class="f1" rowspan="2"><?php echo lang('admin') ?></a></td>
+<td width="50%" class="f1" rowspan="2"><?php echo lang('USER_ADMIN') ?></a></td>
 <td width="50%" class="f1"><input type="checkbox" name="is_admin" value="1"<?php if ($is_admin==1) echo ' checked="checked"' ?>></td>
 </tr>
   <tr>
@@ -59,7 +59,7 @@
   </tr>
 
   <tr>
-    <td class="f1" rowspan="2"><?php echo lang('DELETE') ?></a></td>
+    <td class="f1" rowspan="2"><?php echo lang('GLOBAL_DELETE') ?></a></td>
     <td class="f1"><input type="checkbox" name="delete" value="1"></td>
   </tr>
   <tr>
@@ -67,8 +67,8 @@
   </tr>
 
   <tr>
-    <td class="act"><input type="submit" class="submit" value="<?php echo lang('SAVE') ?>"></td>
-    <td class="act"><input type="reset"  class="reset"  value="<?php echo lang('UNDO') ?>" onClick="document.forms[0].name.focus();"></td>
+    <td class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
+    <td class="act"><input type="reset"  class="reset"  value="<?php echo lang('GLOBAL_UNDO') ?>" onClick="document.forms[0].name.focus();"></td>
   </tr>
 
 </table>
