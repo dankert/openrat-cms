@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-10 22:37:46  dankert
+// Revision 1.5  2004-11-27 13:07:34  dankert
+// Korrektur in page()
+//
+// Revision 1.4  2004/11/10 22:37:46  dankert
 // Verlinken von Sprach/Modell-Angabe
 //
 // Revision 1.3  2004/10/13 21:20:11  dankert
@@ -108,16 +111,6 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
 	
-		// Ermitteln Sprache
-		$language = Session::getProjectLanguage();
-		$this->setTemplateVar('language_name',$language->name);
-		$this->setTemplateVar('language_url' ,Html::url( array('action'=>'main','callAction'=>'language','callSubaction'=>'listing') ));
-
-		// Ermitteln Projektmodell
-		$model = Session::getProjectModel();
-		$this->setTemplateVar('projectmodel_name',$model->name);
-		$this->setTemplateVar('projectmodel_url' ,Html::url( array('action'=>'main','callAction'=>'model','callSubaction'=>'listing')));
-
 		$page = new Page($this->getSessionVar('objectid'));
 		$page->load();
 		
