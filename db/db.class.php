@@ -32,6 +32,8 @@ define('DB_FETCHMODE_ASSOC'  , 2);
 // Column data as object properties
 define('DB_FETCHMODE_OBJECT' , 3);
 
+define('DB_FETCHMODE_DEFAULT', DB_FETCHMODE_ASSOC);
+
 
 
 /**
@@ -46,6 +48,8 @@ class DB
 	var $error   = '';
 	var $dbh;
 	var $fetchmode = DB_FETCHMODE_ORDERED;
+	var $conf;
+	var $id;
 
 
 	function DB( $conf = array() )
@@ -60,16 +64,18 @@ class DB
 	}
 	
 	
-	function connect( $conf )
+	function connect( $conf = array() )
 	{
-		$type = $conf['type'];
-		require_once('./db/'.$type.'.class.php' );
+		if	( count($conf)>0 )
+			$this->conf = $conf;
+//			print_r($this->conf);
 
+		$type = $this->conf['type'];
 		$classname = 'db_'.$type;
 		
 		$this->dbh = & new $classname;
 
-		$this->dbh->connect( $conf );
+		$this->dbh->connect( $this->conf );
 
 		if ( $this->dbh->isError )
 			return false;
