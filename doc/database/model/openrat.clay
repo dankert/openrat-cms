@@ -83,6 +83,12 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
+<column name="is_release" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
 <column name="is_publish" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
 <column-description/>
 <data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
@@ -95,10 +101,10 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column name="is_transmit" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column name="is_transmit" alias="" remarks="" mandatory="true" column-size="10" decimal-digits="0" default-value="" auto-increment="false">
 <column-description/>
-<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
-<variant type-name-pattern="INT"/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
 </data-type>
 </column>
 </column-list>
@@ -1366,16 +1372,22 @@
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
+<column name="public" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
+<variant type-name-pattern="INT"/>
+</data-type>
+</column>
 <column name="lastchange_date" alias="" remarks="" mandatory="true" column-size="11" decimal-digits="0" default-value="0" auto-increment="false">
 <column-description/>
 <data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
 <variant type-name-pattern="INT"/>
 </data-type>
 </column>
-<column name="lastchange_userid" alias="" remarks="" mandatory="false" column-size="0" decimal-digits="0" default-value="0" auto-increment="false">
+<column name="lastchange_userid" alias="" remarks="" mandatory="false" column-size="10" decimal-digits="0" default-value="0" auto-increment="false">
 <column-description/>
-<data-type name="INT" jdbc-type="4" selected-variant-pattern="INT">
-<variant type-name-pattern="INT"/>
+<data-type name="CHAR" jdbc-type="1" selected-variant-pattern="CHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="CHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
 </data-type>
 </column>
 </column-list>
@@ -1449,6 +1461,10 @@
 <index name="idx_value_06" alias="" remarks="" unique="false">
 <index-description/>
 <index-column name="elementid" sort="ASC"/>
+</index>
+<index name="idx_value_07" alias="" remarks="" unique="false">
+<index-description/>
+<index-column name="public" sort="ASC"/>
 </index>
 </index-list>
 </table>
