@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2004-12-15 23:18:09  dankert
+// Revision 1.13  2004-12-19 15:23:56  dankert
+// Anpassung Session-Funktionen
+//
+// Revision 1.12  2004/12/15 23:18:09  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.11  2004/11/29 23:54:36  dankert
@@ -234,9 +237,15 @@ class Object
 		global $SESS;
 		$db = db_connection();
 
-		if	( !isset($this->projectid) )
-			$projectid = $SESS['projectid'];
-		else	$projectid = $this->projectid;
+		if	( ! isset($this->projectid) )
+		{
+			$project = Session::getProject();
+			$projectid = $project->projectid;
+		}
+		else
+		{
+			$projectid = $this->projectid;
+		}
 
 		$sql = new Sql('SELECT id from {t_object} '.
 		               '  WHERE projectid={projectid}');
@@ -592,8 +601,8 @@ class Object
 		$db = db_connection();
 
 		$sql = new Sql('SELECT COUNT(*) FROM {t_name} '.' WHERE objectid  ={objectid}'.'   AND languageid={languageid}');
-		$sql->setInt('objectid'  , $this->objectid    );
-		$sql->setInt('languageid', $SESS['languageid']);
+		$sql->setInt( 'objectid'  , $this->objectid   );
+		$sql->setInt( 'languageid', $this->languageid );
 		$count = $db->getOne($sql->query);
 
 		if ($count > 0)

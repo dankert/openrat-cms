@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-12-15 23:16:58  dankert
+// Revision 1.7  2004-12-19 15:23:56  dankert
+// Anpassung Session-Funktionen
+//
+// Revision 1.6  2004/12/15 23:16:58  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.5  2004/11/10 22:47:57  dankert
@@ -97,7 +100,8 @@ class Project
 		$db = db_connection();
 
 		$sql = new Sql( 'SELECT id FROM {t_language}'.
-		                '  WHERE projectid={projectid} ' );
+		                '  WHERE projectid={projectid} '.
+		                '  ORDER BY name' );
 		$sql->setInt   ('projectid',$this->projectid);
 
 		return $db->getCol( $sql->query );
@@ -109,7 +113,8 @@ class Project
 		$db = db_connection();
 
 		$sql = new Sql( 'SELECT id FROM {t_projectmodel}'.
-		                '  WHERE projectid= {projectid} ' );
+		                '  WHERE projectid= {projectid} '.
+		                '  ORDER BY name' );
 		$sql->setInt   ('projectid',$this->projectid);
 
 		return $db->getCol( $sql->query );
@@ -225,6 +230,12 @@ class Project
 		$sql->setInt   ('projectid',$this->projectid );
 
 		$db->query( $sql->query );
+
+		// Modell anlegen
+		$model = new Model();
+		$model->projectid = $this->projectid;
+		$model->name = 'html';
+		$model->add();
 		
 		// Sprache anlegen
 		$language = new Language();
@@ -243,11 +254,26 @@ class Project
 		$folder->isRoot     = true;
 		$folder->add();
 
-		// Modell anlegen
-		$model = new Model();
-		$model->projectid = $this->projectid;
-		$model->name = 'html';
-		$model->add();
+		// Template anlegen
+		$template = new Template();
+		$template->projectid  = $this->projectid;
+		$template->name       = '';
+		$template->modelid    = $model->modelid;
+		$template->languageid = $language->languageid;
+		$template->extension  = 'html';
+		$template->src        = '<html><body>...</body></html>';
+		$template->add();
+		$template->save();
+
+		// Beispiel-Seite anlegen
+		$page = new Page();
+		$page->parentid   = $folder->objectid;
+		$page->projectid  = $this->projectid;
+		$page->languageid = $language->languageid;
+		$page->templateid = $template->templateid;
+		$page->filename   = '';
+		$page->name       = 'OpenRat';
+		$page->add();
 	}
 
 

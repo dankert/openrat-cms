@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-12-18 00:37:50  dankert
+// Revision 1.7  2004-12-19 15:23:56  dankert
+// Anpassung Session-Funktionen
+//
+// Revision 1.6  2004/12/18 00:37:50  dankert
 // Projekt aus Session lesen
 //
 // Revision 1.5  2004/12/15 23:16:26  dankert
@@ -78,13 +81,13 @@ class Template
 	 * Dateierweiterung dieses Templates (abh?ngig von der Projektvariante)
 	 * @type String
 	 */
-	var $extension;
+	var $extension='';
 
 	/**
 	 * Inhalt des Templates (abh?ngig von der Projektvariante)
 	 * @type String
 	 */
-	var $src;
+	var $src='';
 	
 	// Konstruktor
 	function Template( $templateid='' )
@@ -146,8 +149,12 @@ class Template
 		$sql->setInt( 'modelid'   ,$this->modelid    );
 		$row = $db->getRow( $sql->query );
 
-		$this->extension = $row['extension'];
-		$this->src       = $row['text'];
+		if	( isset($row['extension']) )
+		{
+			$this->extension = $row['extension'];
+			$this->src       = $row['text'];
+		}
+		
 	}
 
 
@@ -157,7 +164,7 @@ class Template
 	function save()
 	{
 		if	( $this->name == "" )
-			$this->name = lang('TEMPLATE').' #'.$this->templateid;
+			$this->name = lang('GLOBAL_TEMPLATE').' #'.$this->templateid;
 
 		$db = db_connection();
 
@@ -166,7 +173,7 @@ class Template
 		                '  WHERE id={templateid}' );
 		$sql->setString( 'name'      ,$this->name       );
 		$sql->setInt   ( 'templateid',$this->templateid );
-		$row = $db->getRow( $sql->query );
+		$db->query( $sql->query );
 
 		$sql = new Sql( 'SELECT COUNT(*) FROM {t_templatemodel}'.
 		                ' WHERE templateid={templateid}'.
@@ -195,7 +202,7 @@ class Template
 		$sql->setString( 'extension'     ,$this->extension      );
 		$sql->setString( 'src'           ,$this->src            );
 		$sql->setInt   ( 'templateid'    ,$this->templateid     );
-		$sql->setInt   ( 'modelid'       ,$this->modelid );
+		$sql->setInt   ( 'modelid'       ,$this->modelid        );
 		
 		$db->query( $sql->query );
 	}
@@ -234,7 +241,6 @@ class Template
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
-
 		return $db->getCol( $sql->query );
 	}
 
@@ -275,12 +281,14 @@ class Template
 
 
 	/**
- 	 * Hinzuf?gen eines Templates
- 	 * @param String Name des Templates
+ 	 * Hinzufuegen eines Templates
+ 	 * @param String Name des Templates (optional)
  	 */
-	function add( $name )
+	function add( $name='' )
 	{
-		global $SESS;
+		if	( !empty($name) )
+			$this->name = $name;
+
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_template}');
@@ -291,7 +299,7 @@ class Template
 		                ' VALUES({templateid},{name},{projectid})' );
 		$sql->setInt   ('templateid',$this->templateid );
 		$sql->setString('name'      ,$name             );
-		$sql->setInt   ('projectid' ,$SESS['projectid']);
+		$sql->setInt   ('projectid' ,$this->projectid  );
 		$db->query( $sql->query );
 	}
 
