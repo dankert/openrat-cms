@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-10-13 21:20:11  dankert
+// Revision 1.4  2004-11-10 22:37:46  dankert
+// Verlinken von Sprach/Modell-Angabe
+//
+// Revision 1.3  2004/10/13 21:20:11  dankert
 // Neue Seitenfunktion zum gleichzeitigen Bearbeiten aller Seiteninhalte
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
@@ -43,16 +46,14 @@ class MainmenuAction extends Action
 	var $defaultSubAction = 'login';
 	
 
-	function login()
-	{
-		$this->setTemplateVar('folder',array()      );
-		$this->setTemplateVar('action','login'      );
-		$this->setTemplateVar('name'  ,'loginaction');
-		$this->setTemplateVar('param' ,'objectid'   );
-		$this->setTemplateVar('subaction',array('login'=>lang('LOGIN')) );
-
-		$this->callSubAction('show');
-	}
+//	function start()
+//	{
+//		$this->setTemplateVar('folder',array()      );
+////		$this->setTemplateVar('subaction',array('select' =>lang('PROJECT'),
+////		                                        'profile'=>lang('PROFILE') ));
+//		$this->setTemplateVar('subaction',array('select' =>lang('SELECT')));
+//		$this->callSubAction('show');
+//	}
 
 
 	function element()
@@ -108,14 +109,14 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
 	
 		// Ermitteln Sprache
-		$language = new Language( $this->getSessionVar('languageid') );
-		$language->load();
+		$language = Session::getProjectLanguage();
 		$this->setTemplateVar('language_name',$language->name);
-	
-		// Ermitteln Projectmodell
-		$model = new Model( $this->getSessionVar('modelid') );
-		$model->load();
+		$this->setTemplateVar('language_url' ,Html::url( array('action'=>'main','callAction'=>'language','callSubaction'=>'listing') ));
+
+		// Ermitteln Projektmodell
+		$model = Session::getProjectModel();
 		$this->setTemplateVar('projectmodel_name',$model->name);
+		$this->setTemplateVar('projectmodel_url' ,Html::url( array('action'=>'main','callAction'=>'model','callSubaction'=>'listing')));
 
 		$page = new Page($this->getSessionVar('objectid'));
 		$page->load();
@@ -288,9 +289,9 @@ class MainmenuAction extends Action
 	{
 
 		// Ermitteln Sprache
-		$language = new Language( $this->getSessionVar('languageid') );
-		$language->load();
+		$language = Session::getLanguage();
 		$this->setTemplateVar('language_name',$language->name);
+		$this->setTemplateVar('language_url' ,Html::url( array('action'=>'language','languageid'=>intval($language->languageid))));
 
 		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
 		if   ( !is_numeric($this->getSessionVar('objectid')) )
