@@ -1,9 +1,19 @@
 /* $Id$ */
 
-a:link{color:#022A50; font-weight:normal; text-decoration:none }
-a:active{color:#022A50; font-weight:normal; text-decoration:underline }
-a:visited{color:#022A50; font-weight:normal; text-decoration:none }
-a:hover{color:#022A50; font-weight:normal; text-decoration:underline }
+a:link,
+a:visited
+{
+	color:#022A50;
+	font-weight:normal;
+	text-decoration:none;
+}
+a:active,
+a:hover
+{
+	color:#022A50;
+	font-weight:normal;
+	text-decoration:underline;
+}
 
 
 a.el_include:link,
@@ -106,10 +116,17 @@ body
 	font-size:13px;
 	background-color:#dad2b6;
 }
-body.title { margin:0px; }
+
+body.title {
+	margin:0px;
+	background-color:#cac2a6;
+}
 
 pre{ font-family:Courier;font-size:13px; }
-small {color:grey; }
+small
+{
+	color:grey;
+}
 
 th
 {
@@ -147,7 +164,7 @@ td.diff_notequal
 
 td.help    { color:black; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.message { padding:10px; font-weight:bold; }
-td.title   { background-color:#cac2a6; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
+td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.menu    { background-color:#7B9CBD;vertical-align:middle; }
 td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
 
@@ -164,8 +181,9 @@ td.f2
 
 td.act {background-color:#eae2c6; padding:15px; border-top:0px solid grey;  }
 .mainmenu_headline{color:#CCCCCC; font-size:13px; color:black; font-weight:bold; }
-.mainmenu_name{color:white; font-weight:bold; }
+.mainmenu_name{color:white; font-weight:bold; font-size:24px; }
 .mainmenu_val{color:#CCCCCC; font-weight:normal; }
+.mainmenu_title{color:#CCCCCC;vertical-align:middle;font-weight:bold; font-size:24px; }
 p.copyright { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; text-align:center; }
 
 table.main { border:1px solid black; margin-top:30px; }
