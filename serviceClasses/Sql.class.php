@@ -120,7 +120,7 @@ class Sql
 	}
 
 
-	function getQuery()
+	function &getQuery()
 	{
 		return $this->query;
 	}
