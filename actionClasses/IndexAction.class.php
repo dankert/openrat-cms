@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-12-26 18:49:58  dankert
+// Revision 1.12  2004-12-26 20:20:17  dankert
+// Bei Logout entfernen aller Session-Variablen
+//
+// Revision 1.11  2004/12/26 18:49:58  dankert
 // Projektname im Seiten-Titel
 //
 // Revision 1.10  2004/12/25 22:11:20  dankert
@@ -215,12 +218,14 @@ class IndexAction extends Action
 	}
 
 
+	// Benutzer meldet sich ab
 	function logout()
 	{
-		global $SESS;
-		unset( $SESS['user'] );
-		Session::setUser('');
-		
+//		Session::setUser('');
+
+		// Aus Sicherheitsgruenden die komplette Session deaktvieren
+		session_unset();
+
 		$this->callSubAction('show');
 	}
 
