@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-11-28 19:46:45  dankert
+// Revision 1.9  2004-11-28 22:33:14  dankert
+// Benutzer/Gruppen Menue
+//
+// Revision 1.8  2004/11/28 19:46:45  dankert
 // Bei Dateien immer Menuepunkt "Bearbeiten"
 //
 // Revision 1.7  2004/11/28 18:39:18  dankert
@@ -172,13 +175,19 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('text',$user->name);
 	
 		if	( intval($this->getSessionVar('userid') == 0 ))
-			$this->setTemplateVar('subaction',array('listing'  =>lang('LISTING')));
-		else	$this->setTemplateVar('subaction',array('listing'  =>lang('LISTING'),
-		                                             'edit'  =>lang('EDIT'),
-		                                             'groups'=>lang('MEMBERSHIPS'),
-		                                             'pw'    =>lang('PASSWORD')   ));
+			$this->addSubaction('listing');
+		else
+		{
+			$this->addSubaction('listing');
+			$this->addSubaction('edit'   );
+			$this->addSubaction('groups' );
+			$this->addSubaction('pw'     );
+			$this->addSubaction('rights' );
+		}
+		
+		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('param'    ,'userid'            );
 
-		$this->setTemplateVar('param','userid');
 		$this->callSubAction('show');
 	}
 
@@ -193,12 +202,16 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('text',$group->name);
 
 		if	( intval($this->getSessionVar('groupid') == 0 ))
-			$this->setTemplateVar('subaction',array('listing'=>lang('LISTING') ));
-		else	$this->setTemplateVar('subaction',array('listing'=>lang('LISTING'),
-		                                             'edit'   =>lang('EDIT'),
-		                                             'users'  =>lang('MEMBERSHIPS') ));
+			$this->addSubaction('listing');
+		else
+		{
+			$this->addSubaction('listing');
+			$this->addSubaction('edit'   );
+			$this->addSubaction('users'  );
+		}
+		$this->setTemplateVar('subaction',$this->subActionList);
 
-		$this->setTemplateVar('param','groupid');
+		$this->setTemplateVar('param'    ,'groupid'           );
 		$this->callSubAction('show');
 	}
 
