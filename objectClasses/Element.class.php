@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-10-06 10:38:21  dankert
+// Revision 1.6  2004-10-14 21:10:29  dankert
+// Parameter/Listeninhalte aus $this->code separiert (als Array) zurueckgeben
+//
+// Revision 1.5  2004/10/06 10:38:21  dankert
 // Elementtyp dynamic ist nie beschreibbar
 //
 // Revision 1.4  2004/10/06 09:54:19  dankert
@@ -360,6 +363,55 @@ class Element
 		             'infodate');
 	}
 
+
+	function getSelectItems()
+	{
+		$parameters = explode( "\n",$this->code );
+		$items      = array();
+	
+		foreach( $parameters as $it )
+		{
+			$paar        = explode( ":",$it,2 );
+			$param_name  = trim($paar[0]);
+
+			if	( count($paar) > 1 )
+				$param_value = trim($paar[1]);
+			else
+				$param_value = trim($paar[0]);
+
+			// Wenn Inhalt mit "'" beginnt und mit "'" aufhoert, dann diese Zeichen abschneiden
+			if	( substr($param_value,0,1) == "'" && substr($param_value,strlen($param_value)-1,1) == "'" ) 
+				$param_value = substr($param_value,1,strlen($param_value)-2); 
+			
+			$items[$param_name] = $param_value;
+		}
+		return $items;
+	}
+	
+
+	function getDynamicParameters()
+	{
+		$parameters = explode( "\n",$this->code );
+		$items      = array();
+	
+		foreach( $parameters as $it )
+		{
+			$paar = explode( ":",$it,2 );
+			if	( count($paar) > 1 )
+			{
+				$param_name  = trim($paar[0]);
+				$param_value = trim($paar[1]);
+
+				// Wenn Inhalt mit "'" beginnt und mit "'" aufhoert, dann diese Zeichen abschneiden
+				if	( substr($param_value,0,1) == "'" && substr($param_value,strlen($param_value)-1,1) == "'" ) 
+					$param_value = substr($param_value,1,strlen($param_value)-2); 
+				
+				$items[$param_name] = $param_value;
+			}
+		}
+		return $items;
+	}
+	
 
 	/**
 	 * Ermittelt, ob das Element beschreibbar ist.
