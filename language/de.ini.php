@@ -286,6 +286,7 @@ NOTICE_PROP_SAVED = "Eigenschaften wurden gespeichert"
 GLOBAL_PUBLIC = "&ouml;ffentlich"
 GLOBAL_PUBLISH = "Ver&ouml;ffentlichen"
 GLOBAL_PUBLISH_WITH_SUBDIRS = "auch Unterverzeichnisse ver&ouml;ffentlichen"
+GLOBAL_CLEAN_AFTER_PUBLISH = "Zielverzeichnis anschlie&szlig;end aufr&auml;men und alte Dateien entfernen."
 GLOBAL_REFRESH = Aktualisieren
 GLOBAL_RELEASE = "Inhalt zur Ver&ouml;ffentlichung freigeben"
 GLOBAL_REMOVE = entfernen
@@ -332,7 +333,7 @@ GLOBAL_FOLDER_DESC="Ein Ordner kann Seiten, Dateien, Verkn&uuml;pfungen und weit
 TRANSFER_IMPORT_DESC = "Mit dem Import k&ouml;nnen Sie Dateien aus einem lokalen Dateiordner des Servers in einen Projektordner kopieren"
 MENU_IMPORT_DESC="Dateien aus lokalem Dateiordner des Servers in einen Projektordner kopieren"
 HELP_LANGUAGE_DELETE = "L&ouml;schen dieser Sprache, <strong>Achtung</strong>, alle Seiteninhalte in dieser Sprache werden unwiederbringlich gel&ouml;scht!"
-HELP_LONGTEXT_WIKI = "In diesem Textelement k&ouml;nnen Sie die von <em>Wikis</em> bekannte Schnellformatierung verwenden:<ul><li>Text in Sternchen erscheint *<strong>fettgedruckt</strong>*</li><li>Text zwischen Unterstrichen erscheint _<em>kursiv</em>_</li><li>|Tabellenspalte|Tabellenspalte|</li><li>=<code>Vorformatierter Text</code>= steht zwischen '='</li><li>Verweise (Links) werden durch einen <a>Pfeil</a>-&gt;http://... markiert</li><li>E-Mail Adressen sowie URLs werden automatisch verlinkt, z.B. <a>http://www.seite.test</a></li></ul>"
+PAGE_LONGTEXT_WIKI_DESC = "<ul><li>*<strong>wichtig</strong>*</li><li>_<em>kursiv</em>_</li><li>=<tt>feste Zeichenbreite</tt>=</li><li>Link->123 <em>oder</em> Link->http://...</li></ul>"
 GLOBAL_NAME_DESC = "Logischer Name des Objektes. Kann beliebige Zeichen enthalten (max. 255 Zeichen)"
 PAGE_DELETE_DESC = "L&ouml;schen der Seite, <strong>Achtung</strong> alle Inhalte dieser Seite werden unwiederbringlich gel&ouml;scht!"
 PROJECTMODEL_DELETE_DESC = "L&ouml;schen des Projektmodells, alle Templates mit diesem Modell werden gel&ouml;scht!"
@@ -462,3 +463,4 @@ NOTICE_MOVED="wurde verschoben"
 NOTICE_CANNOT_COPY_FOLDER="Ordner k&ouml;nnen nicht kopiert werden (nicht implementiert)"
 NOTICE_LINKED="Verkn&uuml;pfung angelegt"
 MENU_IMPORT=Import
+PAGE_PUBLISH_AFTER_SAVE="Nach dem Speichern die Seite ver&ouml;ffentlichen"
