@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-11-27 13:09:17  dankert
+// Revision 1.7  2004-11-28 18:23:55  dankert
+// Anpassen an neue Sprachdatei-Konventionen
+//
+// Revision 1.6  2004/11/27 13:09:17  dankert
 // Ermitteln und Anzeige von Sprache,Modell
 //
 // Revision 1.5  2004/11/10 22:41:36  dankert
@@ -60,7 +63,7 @@ class TreemenuAction extends Action
 
 		// Administrator sieht Administrationsbereich
 		if   ( $user->isAdmin )
-			$projects = array("-1"=>lang('ADMINISTRATION')) + $projects;
+			$projects = array("-1"=>lang('GLOBAL_ADMINISTRATION')) + $projects;
 
 		$this->setTemplateVar('projects',$projects);
 
