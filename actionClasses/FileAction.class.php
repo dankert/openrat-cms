@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-04-24 16:55:27  dankert
+// Revision 1.3  2004-04-24 17:02:47  dankert
+// Korrektur: Link auf Seite
+//
+// Revision 1.2  2004/04/24 16:55:27  dankert
 // Korrektur: pub()
 //
 // Revision 1.1  2004/04/24 15:14:52  dankert
@@ -217,7 +220,7 @@ class FileAction extends Action
 			$o = new Object( $id );
 			$o->load();
 			$list[$id] = array();
-			$list[$id]['url' ] = 'main.'.$conf_php.'?action=page&objectid='.$id;
+			$list[$id]['url' ] = Html::url(array('action'=>'main','callAction'=>'page','objectid'=>$id));
 			$list[$id]['name'] = $o->name;
 		}
 		asort( $list );
