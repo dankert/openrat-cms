@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-11-10 22:45:24  dankert
+// Revision 1.4  2004-11-28 21:28:05  dankert
+// Bildbearbeitung erweitert
+//
+// Revision 1.3  2004/11/10 22:45:24  dankert
 // *** empty log message ***
 //
 // Revision 1.2  2004/05/02 14:41:31  dankert
@@ -178,7 +181,7 @@ class File extends Object
 	}
 
 
-	function imageResize( $newWidth,$newHeight )
+	function imageResize( $newWidth,$newHeight,$format,$jpegquality )
 	{
 		global $conf;
 
@@ -195,6 +198,18 @@ class File extends Object
 		$oldHeight = $size[1];
 		$aspectRatio = $oldHeight / $oldWidth; // Seitenverhaeltnis
 
+		// Wenn Breite und Hoehe fehlen, dann Bildgroesse beibehalten
+		if	( $newWidth == 0 && $newHeight == 0)
+		{
+			$newWidth  = $oldWidth; 
+			$newHeight = $oldHeight;
+			$resizing = false;
+		}
+		else
+		{
+			$resizing = true;
+		}
+
 		// Wenn nur Breite oder Hoehe angegeben ist, dann
 		// das Seitenverhaeltnis beibehalten
 		if	( $newWidth == 0 )
@@ -203,24 +218,58 @@ class File extends Object
 		if	( $newHeight == 0 )
 			$newHeight = $newWidth * $aspectRatio; 
 
-		switch( $size[2] )
+
+		switch( strtolower($this->extension) )
 		{
-			case '1': // GIF
+			case 'gif': // GIF
 
 				$oldImage = ImageCreateFromGIF( $this->tmpfile ); 
-				$newImage = ImageCreate($newWidth,$newHeight); 
-				ImageCopyResized($newImage,$oldImage,0,0,0,0,$newWidth,
-					$newHeight,$oldWidth,$oldHeight); 
-				ImageGIF($newImage, $this->tmpfile() ); 
+				break;
+
+			case 'jpg':
+			case 'jpeg': // JPEG
+
+				$oldImage = ImageCreateFromJPEG($this->tmpfile);
+				break;
+
+			case 'png': // PNG
+
+				$oldImage = imagecreatefrompng($this->tmpfile);
+				break;
+
+			default:
+				die('unsupported image format "'.$this->extension.'", cannot load image. resize failed');
+		}
+
+
+		switch( $format )
+		{
+			case 'gif': // GIF
+
+				if	( $resizing )
+				{
+					$newImage = ImageCreate($newWidth,$newHeight); 
+					ImageCopyResized($newImage,$oldImage,0,0,0,0,$newWidth,
+						$newHeight,$oldWidth,$oldHeight); 
+				}
+				else
+				{
+					$newImage = $oldImage;
+				} 
+
+				ImageGIF($newImage, $this->tmpfile() );
 				$this->extension = 'gif';
 
 				break;
 
-			case '2': // JPEG
+			case 'jpg':
+			case 'jpeg': // JPEG
 
-				$oldImage = ImageCreateFromJPEG($this->tmpfile);
-	
-				if   ( $gd2 )
+				if	( !$resizing )
+				{
+					$newImage = $oldImage;
+				} 
+				elseif   ( $gd2 )
 				{
 					// Verwende TrueColor
 					$newImage = imageCreateTrueColor( $newWidth,$newHeight );
@@ -230,22 +279,25 @@ class File extends Object
 				}
 				else
 				{
-					// GD Version 1.x unterst?tzt kein TrueColor
+					// GD Version 1.x unterstuetzt kein TrueColor
 					$newImage = ImageCreate($newWidth,$newHeight);
 	
 					ImageCopyResized($newImage,$oldImage,0,0,0,0,$newWidth,
 					$newHeight,$oldWidth,$oldHeight);
 				}
 	
-				ImageJPEG($newImage, $this->tmpfile ); 
+				ImageJPEG($newImage, $this->tmpfile,$jpegquality ); 
 				$this->extension = 'jpeg';
 
 				break;
 
-			case '3': // PNG
+			case 'png': // PNG
 
-				$oldImage = imagecreatefrompng($this->tmpfile);
-				if   ( $gd2 )
+				if	( !$resizing )
+				{
+					$newImage = $oldImage;
+				} 
+				elseif   ( $gd2 )
 				{
 					// Verwende TrueColor
 					$newImage = imageCreateTrueColor( $newWidth,$newHeight );
@@ -255,7 +307,7 @@ class File extends Object
 				}
 				else
 				{
-					// GD Version 1.x unterst?tzt kein TrueColor
+					// GD Version 1.x unterstuetzt kein TrueColor
 					$newImage = ImageCreate($newWidth,$newHeight);
 		
 					ImageCopyResized($newImage,$oldImage,0,0,0,0,$newWidth,
@@ -268,7 +320,7 @@ class File extends Object
 				break;
 				
 			default:
-				die('unsupported type for resizing');
+				die('unsupported image format "'.$format.'", cannot resize');
 		} 
 
 		$f = fopen( $this->tmpfile(), "r" );
@@ -316,7 +368,8 @@ class File extends Object
 	 */
 	function isImage()
 	{
-		return eregi('jpe?g|png|gif',$this->extension);
+		//return eregi('jpe?g|png|gif',$this->extension);
+		return substring($this->mimeType(),0,6)=='image/';
 	}
 
 

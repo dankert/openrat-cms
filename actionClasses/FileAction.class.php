@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-11-27 13:05:59  dankert
+// Revision 1.8  2004-11-28 21:27:21  dankert
+// Bildbearbeitung erweitert
+//
+// Revision 1.7  2004/11/27 13:05:59  dankert
 // Einzelne Funktionen verlagert
 //
 // Revision 1.6  2004/09/26 12:12:31  dankert
@@ -81,8 +84,9 @@ class FileAction extends ObjectAction
 		$this->file->saveValue();
 
 		//$setTemplateVar('tree_refresh',true);
+		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
 
-		$this->callSubAction('show');
+		$this->callSubAction('edit');
 	}
 
 
@@ -91,7 +95,8 @@ class FileAction extends ObjectAction
 		$this->file->value = $this->getRequestVar('value');
 		$this->file->saveValue();
 	
-		$this->callSubAction('show');
+		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
+		$this->callSubAction('edit');
 	}
 
 
@@ -99,12 +104,13 @@ class FileAction extends ObjectAction
 	{
 		global $SESS;
 
-		// Wenn Dateiname gef?llt, dann Datenbank-Update
+		// Wenn Dateiname gefuellt, dann Datenbank-Update
 		if   ( $this->getRequestVar('delete') != '' )
 		{
-			// Datei l?schen
+			// Datei loeschen
 			$this->file->delete();
 
+			$this->addNotice($this->file->getType(),$this->file->name,'DELETED','ok');
 			unset( $SESS['objectid'] );
 		}
 		else
@@ -115,11 +121,12 @@ class FileAction extends ObjectAction
 			$this->file->extension = $this->getRequestVar('extension');
 			$this->file->desc      = $this->getRequestVar('desc'     );
 			
+			$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
 			$this->file->save();
 		}
 
 		$this->setTemplateVar('tree_refresh',true);
-		$this->callSubAction('show');
+		$this->callSubAction('prop');
 	}
 
 
@@ -156,29 +163,27 @@ class FileAction extends ObjectAction
 	 */
 	function resize()
 	{
-		$width  = $this->getRequestVar('width' );
-		$height = $this->getRequestVar('height');
+		$width           = intval($this->getRequestVar('width'           ));
+		$height          = intval($this->getRequestVar('height'          ));
+		$jpegcompression =        $this->getRequestVar('jpeg_compression') ;
+		$format          =        $this->getRequestVar('format'          ) ;
 		
-		if	( $width != '' || $height != '' )
-
-		$this->file->imageResize( intval($width),intval($height) );
+		$this->file->imageResize( intval($width),intval($height),$format,$jpegcompression );
 		$this->file->save();
 		$this->file->saveValue();
 
-		$this->callSubAction('show');
+		$this->addNotice($this->file->getType(),$this->file->name,'IMAGE_RESIZED','ok');
+		$this->callSubAction('edit');
 	}
 
 
 	function prop()
 	{
-		// MIME-Types aus Datei lesen
+		// Eigenschaften der Datei uebertragen
 		$this->setTemplateVars( $this->file->getProperties() );
 
 		$this->setTemplateVar('full_filename',$this->file->full_filename());
 
-		if   ( substr($this->file->mimetype(),0,5) == 'text/' )
-			$var['src_url'] = Html::url(array('fileaction'=>'src'));
-	
 		if	( is_numeric($this->file->lastchange_userid) )
 		{
 			$user = new User( $this->file->lastchange_userid );
@@ -205,23 +210,6 @@ class FileAction extends ObjectAction
 			$this->setTemplateVar('create_user',array('name'=>lang('UNKNOWN')));
 		}
 		
-		// Alle Ordner ermitteln
-		$this->setTemplateVar('act_folderobjectid',$this->file->parentid);
-		$list = array();
-		
-		$f = new Folder( $this->file->parentid );
-
-		foreach( $f->getOtherFolders() as $oid )
-		{
-			$folder = new Folder( $oid );
-			$folder->load();
-			$list[$oid] = implode(' &raquo; ',$folder->parentObjectNames(true,true) );
-		}
-		asort( $list );
-		$this->setTemplateVar('folderobject',$list);
-	
-	
-	
 		// Alle Seiten mit dieser Datei ermitteln
 		$pages = $this->file->getDependentObjectIds();
 			
@@ -239,16 +227,22 @@ class FileAction extends ObjectAction
 	
 		$this->forward( 'file_prop' );
 	}
-		
+
 
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function src()
+	function edit()
 	{
+		global $conf;
+		// MIME-Types aus Datei lesen
+		$this->setTemplateVars( $this->file->getProperties() );
 		$this->setTemplateVar('value',$this->file->loadValue());
-		
-		$this->forward('file_src');
+		$formats = array();
+		foreach( explode(',',$conf['gd']['extension']) as $f )
+			$formats[$f] = $f;
+		$this->setTemplateVar('formats',$formats);
+		$this->forward('file_edit');
 	}
 
 
