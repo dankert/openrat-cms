@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-05-19 21:11:04  dankert
+// Revision 1.4  2004-05-19 21:11:35  dankert
+// subaction verwenden
+//
+// Revision 1.3  2004/05/19 21:11:04  dankert
 // korrektur bei delete()
 //
 // Revision 1.2  2004/05/02 14:41:31  dankert
@@ -143,7 +146,7 @@ class Group
 
 		// Berechtigungen zu dieser Gruppe loeschen
 		$sql = new Sql( 'DELETE FROM {t_acl} '.
-		                'WHERE group={groupid}' );
+		                'WHERE groupid={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
 		$db->query( $sql->query );
 
