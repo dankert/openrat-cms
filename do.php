@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-11-27 13:12:26  dankert
+// Revision 1.9  2004-12-13 22:55:41  dankert
+// Neue Konstanten, Lesen der DB-Config aus mehreren Dateien
+//
+// Revision 1.8  2004/11/27 13:12:26  dankert
 // Erzeugen object-Objekt wenn Parameter "objectid" vorhanden
 //
 // Revision 1.7  2004/11/24 21:31:44  dankert
@@ -45,76 +48,118 @@
 // Controller
 // ---------------------------------------------------------------------------
 
-$conf_php = 'php';
+define('PHP_EXT'         ,'php'    );
+define('IMG_EXT'         ,'.gif'   );
+define('MAX_FOLDER_DEPTH',5        );
+define('OR_CONFIG_DIR'   ,'config' );
+define('OR_VERSION'      ,'0.3'    );
+define('OR_TITLE'        ,'OpenRat');
 
-require_once( "serviceClasses/GlobalFunctions.class.$conf_php" );
-require_once( "serviceClasses/Html.class.$conf_php" );
-require_once( "serviceClasses/Upload.class.$conf_php" );
-require_once( "serviceClasses/Ftp.class.$conf_php" );
-require_once( "serviceClasses/Text.class.$conf_php" );
-require_once( "serviceClasses/Publish.class.$conf_php" );
-require_once( "serviceClasses/Api.class.$conf_php" );
-require_once( "serviceClasses/TreeElement.class.$conf_php" );
-require_once( "serviceClasses/AbstractTree.class.$conf_php" );
-require_once( "serviceClasses/AdministrationTree.class.$conf_php" );
-require_once( "serviceClasses/ProjectTree.class.$conf_php" );
-require_once( "objectClasses/Value.class.$conf_php" );
-require_once( "objectClasses/Acl.class.$conf_php" );
-require_once( "objectClasses/Template.class.$conf_php" );
-require_once( "objectClasses/Object.class.$conf_php" );
-require_once( "objectClasses/Folder.class.$conf_php" );
-require_once( "objectClasses/Link.class.$conf_php" );
-require_once( "objectClasses/File.class.$conf_php" );
-require_once( "objectClasses/User.class.$conf_php" );
-require_once( "objectClasses/Group.class.$conf_php" );
-require_once( "objectClasses/Project.class.$conf_php" );
-require_once( "objectClasses/Page.class.$conf_php" );
-require_once( "objectClasses/Language.class.$conf_php" );
-require_once( "objectClasses/Model.class.$conf_php" );
-require_once( "objectClasses/Element.class.$conf_php" );
-require_once( "db/db.class.php" );
-require_once( "db/postgresql.class.php" );
-require_once( "db/mysql.class.php" );
+define('OR_TYPE_PAGE'  ,'page'  );
+define('OR_TYPE_FILE'  ,'file'  );
+define('OR_TYPE_LINK'  ,'link'  );
+define('OR_TYPE_FOLDER','folder');
+
+define('OR_ACTIONCLASSES_DIR' ,'./actionClasses/' );
+define('OR_OBJECTCLASSES_DIR' ,'./objectClasses/' );
+define('OR_SERVICECLASSES_DIR','./serviceClasses/');
+define('OR_DBCLASSES_DIR'     ,'./db/'            );
+define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/');
+define('OR_THEMES_DIR'        ,'./themes/'        );
+define('OR_TMP_DIR'           ,'./tmp/'           );
+
+require_once( OR_SERVICECLASSES_DIR."GlobalFunctions.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Html.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Upload.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Ftp.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Text.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Publish.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Api.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."TreeElement.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."AbstractTree.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."AdministrationTree.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."ProjectTree.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Value.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Acl.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Template.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Object.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Folder.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Link.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."File.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."User.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Group.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Project.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Page.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Language.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Model.class.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR."Element.class.".PHP_EXT );
+require_once( OR_DBCLASSES_DIR."db.class.php" );
+require_once( OR_DBCLASSES_DIR."postgresql.class.php" );
+require_once( OR_DBCLASSES_DIR."mysql.class.php" );
 
 session_start();
 
 require_once( "functions/request.inc.php" );
 
+require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
+
+$conf = Session::getConfig();
+ 
 // Wenn Konfiguration noch nicht in Session vorhanden, dann
 // aus Datei lesen.
-if	( !isset( $SESS['conf'] ))
+if	( !is_array( $conf ) )
 {
-	// Falls Konfigurationsdatei unter /etc
-	// vorhanden ist, diese benutzen.
-	if	( is_file('/etc/openrat/config.ini.php') )
-		$conf_filename = '/etc/openrat/config.ini.php';
-	else	$conf_filename = './config.ini.php';
+	$conf_filename = OR_CONFIG_DIR.'/config.ini.php';
+
+	if	( !is_file( $conf_filename ) )
+		die( $conf_file.': file not found' );
 
 	// Datei lesen, parsen und in Session schreiben
 	$conf = parse_ini_file( $conf_filename,true );
-	$SESS['conf'] = $conf;
-}
-else
-{
-	// bereits gelesene und in Session vorhandene Konfiguration benutzen
-	$conf = $SESS['conf'];
+
+	$db_files = Array();
+	$handle = opendir ( $conf['database']['dir'] );
+	$prefix = $conf['database']['prefix'];
+	$suffix = $conf['database']['suffix'];
+	$conf['databases'] = array();
+
+	while ( $file = readdir($handle) )
+	{
+		if	( substr($file,0,strlen($prefix))==$prefix &&
+			  substr($file,strlen($file)-strlen($suffix),strlen($suffix))==$suffix  )
+		{
+			$name = substr($file,strlen($prefix),strlen($file)-strlen($suffix)-strlen($prefix));
+			$dbnames[] = $name;
+			$dbconf = parse_ini_file($conf['database']['dir'].'/'.$file);
+			
+			if	( $dbconf['enabled'] )
+				$conf['databases'][$name] = $dbconf;
+		}
+	}
+	closedir($handle);
+
+	Session::setConfig( $conf );
 }
 
-define('PHP_EXT' ,$conf_php );
+
 define('FILE_SEP',$conf['interface']['file_separator']);
 
-define('REQ_PARAM_ACTION'       ,'action');
-define('REQ_PARAM_SUBACTION'    ,'subaction');
-define('REQ_PARAM_CALLACTION'   ,'callAction');
+define('REQ_PARAM_ACTION'       ,'action'       );
+define('REQ_PARAM_SUBACTION'    ,'subaction'    );
+define('REQ_PARAM_CALLACTION'   ,'callAction'   );
 define('REQ_PARAM_CALLSUBACTION','callSubaction');
 
+define('TEMPLATE_DIR',OR_THEMES_DIR.$conf['interface']['theme'].'/templates');
+define('CSS_DIR'     ,OR_THEMES_DIR.$conf['interface']['theme'].'/css'      );
+define('IMAGE_DIR'   ,OR_THEMES_DIR.$conf['interface']['theme'].'/images'   );
 
-require_once( "serviceClasses/Logger.class.$conf_php" );
-require_once( "serviceClasses/Session.class.$conf_php" );
+require_once( OR_SERVICECLASSES_DIR."Logger.class.".PHP_EXT );
 require_once( "functions/config.inc.php" );
-require_once( "functions/language.inc.$conf_php" );
-require_once( "functions/theme.inc.$conf_php" );
-require_once( "functions/db.inc.$conf_php" );
+require_once( "functions/language.inc.".PHP_EXT );
+require_once( "functions/theme.inc.".PHP_EXT );
+require_once( "functions/db.inc.".PHP_EXT );
 
 // Request-Variablen in Session speichern
 request_into_session('action'    );
@@ -128,7 +173,7 @@ request_into_session('userid'    );
 request_into_session('groupid'   );
 request_into_session('languageid');
 
-if   (isset($REQ['objectid']))
+if	( isset($REQ['objectid']) )
 {
 	$o = new Object( $REQ['objectid'] );
 	Session::setObject($o);
@@ -143,9 +188,6 @@ if	( is_object( $db ) )
 	Session::setDatabase( $db );
 }
 	
-//if	( isset($SESS['dbid']))
-//	$db = db_connection();
-
 if	( isset( $SESS['action'] ) )
 	$action = $SESS['action'];
 else	$action = 'index';
@@ -159,9 +201,9 @@ else $subaction = '';
 
 $actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
 
-require( 'actionClasses/Action.class.php' );
-require( 'actionClasses/ObjectAction.class.php' );
-require( 'actionClasses/'.$actionClassName.'.class.php' );
+require( OR_ACTIONCLASSES_DIR.'/Action.class.php' );
+require( OR_ACTIONCLASSES_DIR.'/ObjectAction.class.php' );
+require( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
 $do = new $actionClassName;
 $do->actionName = $action;
