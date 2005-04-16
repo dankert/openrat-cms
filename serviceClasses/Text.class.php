@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2005-02-17 21:22:22  dankert
+// Revision 1.4  2005-04-16 22:26:15  dankert
+// Erweiterung Methode maxLength()
+//
+// Revision 1.3  2005/02/17 21:22:22  dankert
 // Weitere Funktionen f?r HTML und BB-Code
 //
 // Revision 1.2  2004/05/02 15:04:16  dankert
@@ -61,10 +64,15 @@ class Text
 	 * @param Integer maximale Laenge des Textes (optional)
 	 * @param Text, der an gekuerzten Text angehangen wird (optional)
 	 */
-	function maxLength( $text,$laenge=20,$append='...' )
+	function maxLength( $text,$laenge=20,$append='...',$where=STR_PAD_RIGHT )
 	{
 		if	( strlen($text) > $laenge )
-			$text = substr($text,0,$laenge).$append;
+		{
+			if	( $where == STR_PAD_RIGHT )
+				$text = substr($text,0,$laenge).$append;
+			elseif	( $where == STR_PAD_BOTH )
+				$text = substr($text,0,$laenge/2).$append.substr($text,strlen($text)-($laenge/2));
+		}
 
 		return $text;
 	}
