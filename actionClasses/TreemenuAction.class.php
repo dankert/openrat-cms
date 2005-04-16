@@ -35,6 +35,9 @@ class TreemenuAction extends Action
 		
 		$user     = Session::getUser();
 		$projects = $user->projects;
+		
+		foreach($projects as $pid=>$p)
+			$projects[$pid]=Text::maxLength($p,17,'..',STR_PAD_BOTH);
 
 		// Administrator sieht Administrationsbereich
 		if   ( $user->isAdmin )
