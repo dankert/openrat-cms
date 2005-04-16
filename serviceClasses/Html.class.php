@@ -65,6 +65,16 @@ class Html
 	}
 
 
+	function error( $field )
+	{
+		global $inputErrors;
+
+		if	( isset($inputErrors[$field]) )
+			return '<span class="error">'.lang($inputErrors[$field]).'</span';
+	}
+	
+	
+
 	/**
 	 * Erzeugt eine relative Url innerhalb von Openrat
 	 *
