@@ -98,6 +98,14 @@ class MainmenuAction extends Action
 		$folder->load();
 
 		$this->setTemplateVar('folder',$folder->parentObjectNames(true,true));
+
+		$others = $folder->getObjects();
+		$o2 = array();
+		foreach( $others as $o )
+			if	( $o->isPage )
+				$o2[$o->objectid] = Text::maxLength($o->name,25);
+			
+		$this->setTemplateVar('otherObjects',$o2);
 	
 		// Ermitteln Namen der Seite
 		$this->setTemplateVar('text',$page->name);
