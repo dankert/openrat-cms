@@ -24,25 +24,44 @@
  * Diese Funktion stellt ein Wort in der eingestellten
  * Sprache zur Verfuegung.
  *
+ * @var String Name der Sprachvariablen
+ * @var Array Liste (Assoziatives Array) von Variablen
+ *
  * @package openrat.functions
  */
-function lang( $text )
+function lang( $textVar,$vars = array() )
 {
 	global $conf;
 	$lang = $conf['language'];
 
-	$text = strtoupper($text);
+	$text = strtoupper($textVar);
 
-     if   ( isset( $lang[$text] ) )
-          return $lang[$text];
-     else
-          return( '?'.$text.'?' );
+	// Abfrage, ob Textvariable vorhanden ist
+	if   ( isset( $lang[$text] ) )
+	{
+		$text = $lang[$text];
+     	
+		// Fuellen der Variablen im Text
+		foreach( $vars as $var=>$value )
+			$text = str_replace('{'.$var.'}',$value,$text);
+
+		str_replace("''",'"',$text);
+			
+		return $text;
+	}
+	
+	// Wenn Textvariable nicht vorhanden ist, dann als letzten Ausweg nur den Variablennamen zurueckgeben
+	
+	//return( '?'.$text.'?' );
+	return( $textVar );
 }
 
 
 
 /**
  * Diese Funktion prueft, ob ein Sprachelement vorhanden ist
+ *
+ * @var String Name der Sprachvariablen
  *
  * @package openrat.functions
  */
@@ -52,6 +71,7 @@ function hasLang( $text )
 
 	global $conf;
 	$lang = $conf['language'];
+	
 	return isset( $lang[$text] );
 }
 
