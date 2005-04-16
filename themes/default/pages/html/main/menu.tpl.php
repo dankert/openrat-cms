@@ -6,32 +6,28 @@
     <td class="menu">
       <table cellpadding="0" cellspacing="0" width="100%">
         <tr>
-          <td width="2%"><span class="mainmenu_title"><?php echo lang('GLOBAL_'.$type) ?>&nbsp;&nbsp;</span>
           </td>
-          <td width="2%" nowrap>
             <?php
       		if   ( isset($folder) && is_array($folder) )
       		{
       			foreach( $folder as $id=>$ftext )
       			{
+          			echo '<td width="2%" nowrap>';
       				echo '<a href="'.Html::url('main','folder',$id).'" target="cms_main" class="mainmenu">';
-      				echo '<img src="'.$image_dir.'icon_folder'.IMG_EXT.'" align="middle" alt="" border="0" />';
-      				echo $ftext;
+      				echo '<img src="'.$image_dir.'icon_folder'.IMG_EXT.'" align="left" alt="" border="0" />';
+      				echo Text::maxLength($ftext,20,'..',STR_PAD_BOTH);
       				echo '</a><strong>'.FILE_SEP.'</strong>&nbsp;';
+          			echo '</td>';
       			}
 		      }
           ?>
-          </td>
-          <td><span class="mainmenu_name">&nbsp;<?php if (isset($text)) { ?><img src="<?php echo $image_dir.'icon_'.$type.IMG_EXT ?>" align="middle" title="<?php echo $type ?>" alt="" />&nbsp;<?php echo $text ?><?php } ?></span>
-          </td>
-
-          <?php if(isset($nr)) { ?>
-          <td class="mainmenu_headline" width="20"><?php echo lang('GLOBAL_ID') ?>:&nbsp;
+          <td><span class="mainmenu_name">&nbsp;<?php if (isset($text)) { ?><img src="<?php echo $image_dir.'icon_'.$type.IMG_EXT ?>" align="left" title="<?php echo $type ?>" alt="" /><?php echo Text::maxLength($text,30) ?><?php } ?></span>
           </td>
 
-          <td class="mainmenu_val"      width="50"><strong><?php echo $nr ?></strong>
-          </td>          
-          <?php } ?>
+		  <?php if (isset($otherObjects) && count($otherObjects)>1 ) { ?>
+          <td align="right"><!--<img src="<?php echo $image_dir.'icon_'.$type.IMG_EXT ?>" align="left" title="<?php echo $type ?>" alt="" />--><form><?php echo Html::selectBox('objectid',$otherObjects,$nr,array('onclick'=>'submit();')) ?></form>
+          </td>
+          <?php } ?>          
         </tr>
       </table>
     </td>
