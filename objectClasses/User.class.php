@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2005-01-24 21:41:25  dankert
+// Revision 1.13  2005-04-16 22:25:06  dankert
+// Verbindung zum LDAP-Server schlie?en
+//
+// Revision 1.12  2005/01/24 21:41:25  dankert
 // Abfrage auf Readonly-Mode
 //
 // Revision 1.11  2004/12/20 23:29:51  dankert
@@ -435,12 +438,17 @@ class User
 	}
 
 
-	// Ueberpruefen des Kennwortes
-	// entweder ueber Datenbank oder ueber LDAP-Verzeichnisdienst
+	/**
+	 * Ueberpruefen des Kennwortes.
+	 *
+	 * Das Kennwort wird ueber Datenbank oder ueber LDAP-Verzeichnisdienst geprueft.
+	 * Wenn
+	 * - ein LDAP-Dn ("distinghished-name") vorhanden ist, dann Pruefung ueber den LDAP-Server,
+	 * - sonst ueber die Benutzertabelle in der Datenbank.
+	 */
 	function checkPassword( $password )
 	{
 		global $conf;
-		$this->error = '';
 
 		$db = db_connection();
 
@@ -465,29 +473,39 @@ class User
 				// Verbindung zum LDAP-Server herstellen
 				$ldap_conn = @ldap_connect( $ldapHost,$ldapPort );
 				
+				// siehe http://bugs.php.net/bug.php?id=15637
+				// Unter bestimmten Bedingungen wird trotz nicht erreichbarem LDAP-Server eine PHP-Resource
+				// zurueck gegeben. Dann erscheint zwar keine Fehlermeldung, aber zumindestens misslingt
+				// der nachfolgende Bind-Befehl.
 				if	( !$ldap_conn )
 				{
 					Logger::error( "connect to ldap server '$ldapHost:$ldapPort' failed" );
-					$this->error = 'cannot connect to LDAP server';
-					return false;
+					
+					// Abbruch, wenn LDAP-Server nicht erreichbar
+					die( "Cannot connect to directory server $ldapHost:$ldapPort, please contact your administrator." );
 				}
 
 				// LDAP-Login versuchen
 				if   ( @ldap_bind( $ldap_conn,$row_user['ldap_dn'],$password) )
 				{
+					// Verbindung zum LDAP-Server brav beenden
+					@ldap_close( $ldap_conn );
+					
 					// Login erfolgreich
-					$SESS['user'] = $row_user;
 					return true;
 				}
+				
+				// Verbindung zum LDAP-Server brav beenden
+				@ldap_close( $ldap_conn );
 			}
 			else
 			{
-				Logger::debug( 'checking md5-password '.md5($password).' against database' );
+//				Logger::debug( 'checking md5-password '.md5($password).' against database' );
 
-				// Pr?fen ob Kennwort mit Datenbank ?bereinstimmt
+				// Pruefen ob Kennwort mit Datenbank uebereinstimmt
 				if   ( $row_user['password'] == md5( $password ) )
 				{
-					// Login erfolgreich
+					// Juchuu, Login ist erfolgreich
 					return true;
 				}
 			}
