@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2005-02-17 19:20:32  dankert
+// Revision 1.17  2005-04-16 21:33:13  dankert
+// Erweiterter Funktionsaufruf fuer Notizen/Meldungen
+//
+// Revision 1.16  2005/02/17 19:20:32  dankert
 // Beruecksichtigung von Konfiguration: interface-override_title
 //
 // Revision 1.15  2005/01/23 11:55:52  dankert
@@ -151,14 +154,14 @@ class Action
 	}
 
 
-	function addNotice( $type,$name,$text,$status='ok' )
+	function addNotice( $type,$name,$text,$status='ok',$vars=array() )
 	{
 		if	( !isset($this->templateVars['notices']) )
 			$this->templateVars['notices'] = array();
 
 		$this->templateVars['notices'][] = array('type'=>$type,
                                                  'name'=>$name,
-		                                         'text'=>lang('NOTICE_'.$text),
+		                                         'text'=>lang('NOTICE_'.$text,$vars),
 		                                       'status'=>$status);
 	}
 
@@ -196,6 +199,7 @@ class Action
 		global $conf;
 		global $PHP_SELF;
 		global $HTTP_SERVER_VARS;
+		global $image_dir;
 		       
 		$tplFileName = $tplName.'.tpl.'.PHP_EXT;
 		$conf_php = PHP_EXT;

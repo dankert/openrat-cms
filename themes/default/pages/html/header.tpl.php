@@ -14,25 +14,17 @@
 
 <?php if (isset($notices) && count($notices)>0 )
       { ?>
-<!-- $Id$ -->
-<center>
-
-<table class="main" width="99%" cellspacing="0" cellpadding="4">
-
-  <tr>
-    <th colspan="3"><?php echo lang('GLOBAL_NOTICES') ?></th>
-  </tr>
+      	
+      	<?php windowOpen('GLOBAL_NOTICES',3) ?>
 
   <?php foreach( $notices as $notice ) { ?>
   <tr>
-    <td class="f1"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_EXT ?>" align="left" /><?php echo $notice['name'] ?></td>
-    <td class="f1"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_EXT ?>" align="left" />
-                   <strong><?php echo $notice['text'] ?></strong></td>
+    
+    <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_EXT ?>" style="padding:10px" /></td>
+    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
   </tr>
   <?php } ?>
 
-</table>
-
-</center>
+   	<?php windowClose() ?>
 
 <?php } ?>
