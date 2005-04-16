@@ -1,13 +1,8 @@
 <?php include( $tpl_dir.'header.tpl.php') ?>
 
 <!-- $Id$ -->
-<center>
 
-<table class="main" width="50%" cellspacing="0" cellpadding="4">
-
-<tr>
-	<th><?php echo lang('GLOBAL_PROJECTS') ?></th>
-</tr>
+<?php windowOpen('GLOBAL_PROJECTS',1,'',array('width'=>'55%')) ?>
 
 <?php $f1=true;
       foreach( $el as $id=>$e )
@@ -18,7 +13,6 @@
 <?php } ?>
 
 
-</table>
+<?php windowClose() ?>
 
-</center>
 <?php include( $tpl_dir.'footer.tpl.php') ?>

@@ -5,11 +5,7 @@
 
 <?php echo Html::form('project','save',$projectid ) ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-  <tr>
-    <th colspan="2"><?php echo lang('GLOBAL_PROJECT') ?></th>
-  </tr>
+<?php windowOpen('GLOBAL_PROJECT',2,'project') ?>
 
   <tr>
     <td width="50%" class="f1"><?php echo lang('PROJECT_NAME') ?></a></td>
@@ -76,7 +72,7 @@
     <td class="act"><input type="reset"  class="submit" value="<?php echo lang('GLOBAL_UNDO') ?>" /></td>
   </tr>
 
-</table>
+<?php windowClose() ?>
 
 </form>
 

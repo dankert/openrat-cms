@@ -5,11 +5,7 @@
 
 <?php echo Html::form('link','save') ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('GLOBAL_PROP') ?></th>
-</tr>
+<?php windowOpen( 'GLOBAL_PROP',2,'link') ?>
 
 <?php $tabnr=0 ?>
   <tr>
@@ -44,13 +40,11 @@
     <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" /></td>
   </tr>
 
-</table>
+<?php windowClose() ?>
 
 </form>
 
 
-
-</center>
 
 <?php Html::focusField('name') ?>
 

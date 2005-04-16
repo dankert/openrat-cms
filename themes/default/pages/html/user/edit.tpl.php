@@ -6,11 +6,7 @@
 
 <?php echo Html::form('user','save',$userid) ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('GLOBAL_USER') ?></th>
-</tr>
+<?php windowOpen( 'GLOBAL_USER' ) ?>
 
 <tr>
 <td width="50%" class="f1" rowspan="2"><?php echo lang('user_username') ?></a></td>
@@ -70,7 +66,7 @@
     <td class="act"><input type="reset"  class="reset"  value="<?php echo lang('GLOBAL_UNDO') ?>" onClick="document.forms[0].name.focus();"></td>
   </tr>
 
-</table>
+<?php windowClose() ?>
 
 </form>
 

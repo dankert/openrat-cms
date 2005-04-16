@@ -4,11 +4,7 @@
 
 <?php echo Html::form('file','pubnow','-' ) ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('GLOBAL_PUBLISH') ?></th>
-</tr>
+<?php windowOpen( 'GLOBAL_PUBLISH',2,'folder') ?>
 
 <tr>
   <td width="50%" class="f1">&nbsp;</td>
@@ -19,12 +15,10 @@
   <td class="act" colspan="2"><input type="submit"  class="submit" value="<?php echo lang('GLOBAL_PUBLISH') ?>"></td>
 </tr>
 
-</table>
-
+<?php windowClose() ?>
 </form>
 
 
-</center>
 
 
 <?php include( $tpl_dir.'footer.tpl.php') ?>

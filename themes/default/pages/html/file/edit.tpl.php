@@ -1,13 +1,8 @@
 <?php include( $tpl_dir.'header.tpl.php') ?>
 
 <!-- $Id$ -->
-<center>
+<?php windowOpen( 'FILE_REPLACE',2,'file') ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('FILE_REPLACE') ?></th>
-</tr>
 <tr>
   <td colspan="2" class="help"><?php echo lang('FILE_REPLACE_DESC') ?></td>
 </tr>
@@ -22,17 +17,14 @@
 </td>
 </tr>
 
-</table>
+<?php windowClose() ?>
 
 <?php if ( count($formats) > 0 )
       { ?>
 <?php echo Html::form( 'file','resize',$id ) ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
+<?php windowOpen( 'FILE_IMAGE_RESIZE',2,'file') ?>
 
-<tr>
-  <th colspan="2"><?php echo lang('FILE_IMAGE_RESIZE') ?></th>
-</tr>
 <tr>
   <td colspan="2" class="help"><?php echo lang('FILE_IMAGE_RESIZE_DESC') ?></td>
 </tr>
@@ -63,7 +55,7 @@
 <td class="act" colspan="2"><input type="submit"  class="submit" value="<?php echo lang('FILE_IMAGE_RESIZE') ?>"></td>
 </tr>
 
-</table>
+<?php windowClose() ?>
 
 </form>
 <?php } ?>
@@ -77,11 +69,7 @@
 
 <?php echo Html::form( 'file','savevalue',$id ) ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('GLOBAL_VALUE') ?></th>
-</tr>
+<?php windowOpen( 'GLOBAL_VALUE',2,'file') ?>
 
 <tr>
 <td class="f2"><?php echo lang('GLOBAL_VALUE') ?></a></td>
@@ -91,7 +79,7 @@
 <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
 </tr>
 
-</table>
+<?php windowClose() ?>
 
 </form>
 <?php } ?>

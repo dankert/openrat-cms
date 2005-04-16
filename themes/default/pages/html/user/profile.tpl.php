@@ -6,11 +6,7 @@
 
 <?php echo Html::form('profile','saveprofile',$userid) ?>
 
-<?php
-	$table_title_text    = lang('GLOBAL_USER');
-	$table_title_colspan = 2;
-	include( $tpl_dir.'table_open.tpl.php');
-?>
+<?php windowOpen( 'GLOBAL_USER' ) ?>
 
 <tr>
 <td width="50%" class="f1"><?php echo lang('user_username') ?></a></td>
@@ -39,7 +35,7 @@
   </tr>
 <?php } ?>
 
-<?php include( $tpl_dir.'table_close.tpl.php'); ?>
+<?php windowClose() ?>
 
 </form>
 
@@ -47,11 +43,7 @@
 <?php if ( empty($ldap_dn) ) { ?>
 <?php echo Html::form('profile','pwchange',$userid) ?>
 
-<?php
-	$table_title_text    = lang('USER_PASSWORD');
-	$table_title_colspan = 2;
-	include( $tpl_dir.'table_open.tpl.php');
-?>
+<?php windowOpen( 'USER_PASSWORD') ?>
 
 <tr>
 <td width="50%" class="f2"><?php echo lang('user_password') ?></a></td>
@@ -69,7 +61,7 @@
   <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
 </tr>
 
-<?php include( $tpl_dir.'table_close.tpl.php') ?>
+<?php windowClose() ?>
 
 </form>
 

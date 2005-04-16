@@ -5,11 +5,7 @@
 
 <?php echo Html::form('file','save') ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('GLOBAL_PROP') ?></th>
-</tr>
+<?php windowOpen( 'GLOBAL_PROP',2,'file') ?>
 
 <?php if (isset($message))
       { ?>
@@ -64,8 +60,7 @@
   <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>" /></td>
 </tr>
 
-</table>
-
+<?php windowClose() ?>
 </form>
 
 
@@ -74,11 +69,8 @@
 
 
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
+<?php windowOpen( 'FILE_PAGES',2) ?>
 
-<tr>
-  <th colspan="2"><?php echo lang('FILE_PAGES') ?></th>
-</tr>
 <tr>
   <td colspan="2" class="help"><?php echo lang('FILE_PAGES_DESC') ?></td>
 </tr>
@@ -98,7 +90,7 @@
 <?php } ?>
   
 
-</table>
+<?php windowClose() ?>
 
 </center>
 

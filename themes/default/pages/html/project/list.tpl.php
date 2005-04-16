@@ -8,11 +8,7 @@
 <input type="hidden" name="action"    value="project" />
 <input type="hidden" name="subaction" value="add"     />
 
-<table class="main" width="50%" cellspacing="0" cellpadding="4">
-
-<tr>
-	<th colspan="2"><?php echo lang('GLOBAL_PROJECTS') ?></th>
-</tr>
+<?php windowOpen('GLOBAL_PROJECTS',2,'project') ?>
 
 <?php $f1=true;
       foreach( $el as $id=>$e )
@@ -29,7 +25,7 @@
   </td>
 </tr>
 
-</table>
+<?php windowClose() ?>
 
 </form>
 

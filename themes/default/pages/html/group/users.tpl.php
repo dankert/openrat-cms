@@ -6,10 +6,8 @@
 
 <?php echo Html::form('group','adduser',$groupid) ?>
 
-<table class="main" width="60%" cellspacing="0" cellpadding="4">
-<tr>
-  <th colspan="2"><?php echo lang('GROUP_MEMBERSHIPS') ?></th>
-</tr>
+<?php windowOpen( 'GROUP_MEMBERSHIPS') ?>
+
 <?php $f1=true;
       foreach( $memberships as $id=>$name )
       { ?>
@@ -32,7 +30,7 @@
 </tr>
 <?php } ?>
 
-</table>
+<?php windowClose() ?>
 
 </form>
 

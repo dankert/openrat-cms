@@ -5,11 +5,8 @@
 
 <?php foreach($projects as $projectid=>$projectname) { ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
+<?php windowOpen( lang('GLOBAL_PROJECT').': '.$projectname,15) ?>
 
-  <tr>
-    <th colspan="15"><?php echo lang('GLOBAL_PROJECT') ?>: <?php echo $projectname ?></th>
-  </tr>
   <tr>
     <td class="help"><?php echo lang('GLOBAL_FILENAME')     ?></td>
     <td class="help"><?php echo lang('GLOBAL_LANGUAGE')     ?></td>
@@ -50,7 +47,7 @@
 <?php } ?>
 
 
-</table>
+<?php windowClose() ?>
 
 <?php } ?>
 

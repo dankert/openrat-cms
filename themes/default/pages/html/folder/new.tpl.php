@@ -5,11 +5,7 @@
 
 <?php echo Html::form( 'folder','createnew',$objectid,array('enctype'=>'multipart/form-data') ) ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-  <tr>
-    <th colspan="4"><?php echo lang('GLOBAL_NEW') ?></th>
-  </tr>
+<?php windowOpen('GLOBAL_NEW',4,'folder') ?></th>
 
   <?php $nr = 0 ?>
   <?php $tab = 0 ?>
@@ -79,10 +75,9 @@
     </td>
   </tr>
 
-</table>
+<?php windowClose() ?>
 
 </form>
-</center>
 
 <?php
 	if		($new_page)   Html::focusField('pagename'  );

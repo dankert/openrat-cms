@@ -6,10 +6,8 @@
 
 <?php echo Html::form('user','pwchange',$userid) ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-<tr>
-  <th colspan="2"><?php echo lang('USER_PASSWORD') ?></th>
-</tr>
+<?php windowOpen( 'USER_PASSWORD') ?>
+
 <tr>
 <td width="50%" class="f1"><?php echo lang('USER_new_password') ?></a></td>
 <td width="50%" class="f1"><input type="password" name="password1"></td>
@@ -31,8 +29,7 @@
 <tr>
 <td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
 </tr>
-</table>
-
+<?php windowClose() ?>
 </form>
 
 </center>

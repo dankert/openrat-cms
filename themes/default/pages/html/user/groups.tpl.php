@@ -6,11 +6,8 @@
 
 <?php echo Html::form('user','addgroup',$userid) ?>
 
-<table class="main" width="60%" cellspacing="0" cellpadding="4">
+<?php windowOpen( 'USER_MEMBERSHIPS') ?>
 
-<tr>
-  <th colspan="2"><?php echo lang('USER_MEMBERSHIPS') ?></th>
-</tr>
 <?php $f1=true;
       foreach( $memberships as $id=>$name )
       { ?>
@@ -34,7 +31,7 @@
   <td width="70%" class="act"><?php echo Html::selectBox('groupid',$groups) ?></a></td>
   <td width="30%" class="act"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>"></td>
 </tr>
-</table>
+<?php windowClose() ?>
 
 </form>
 

@@ -5,12 +5,12 @@
 
 <?php echo Html::form('folder','multiple') ?>
 
-<?php $table_title_text    = lang('GLOBAL_FOLDER');
-      $table_title_colspan = 7;
-      include( $tpl_dir.'table_open.tpl.php');
-      
+<?php       
       $writable = isset($folder);
 ?>
+
+<?php windowOpen( 'GLOBAL_FOLDER',7,'folder' ) ?>
+
 <tr>
 <td colspan="7" class="help"><?php echo lang('GLOBAL_FOLDER_DESC') ?></td>
 </tr>
@@ -93,10 +93,10 @@
 </tr>
 <?php } ?>
 
-</table>
+<?php windowClose() ?>
+
 </form>
 
-</center>
 
 <script name="JavaScript">
 <!--

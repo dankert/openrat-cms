@@ -7,11 +7,8 @@
 
 <?php echo Html::form( 'index','login','',array('target'=>'_top') ) ?>
 
-<table class="main" width="400" cellspacing="0" cellpadding="4">
+<?php windowOpen( 'GLOBAL_LOGIN',2,'',array('width'=>'55%') ) ?>
 
-<tr>
-  <th colspan="2"><?php echo lang('GLOBAL_LOGIN') ?></th>
-</tr>
 
 <?php if ( $logo != '' ) { ?>
 <tr>
@@ -41,21 +38,22 @@
 </tr>
 <?php } ?>
 
+
 <?php if ($loginmessage!='')
       { ?>
-<tr>
+<!--<tr>
 <td colspan="2" class="f1"><strong><?php echo $loginmessage ?></strong></td>
-</tr>
+</tr>-->
 <?php } ?>
 
 <?php if ( !$nologin ) { ?>
 
 <tr>
   <td class="f1" width="50%"><?php echo lang('USER_USERNAME') ?></td>
-  <td class="f1" width="50%"><input name="login_name"     type="text"     value="" width="25" /></td>
+  <td class="f1" width="50%"><input name="login_name"     type="text"     value="" width="25" /><?php echo Html::error('login_name') ?></td>
 <tr>
   <td class="f2" width="50%"><?php echo lang('USER_PASSWORD') ?></td>
-  <td class="f2" width="50%"><input name="login_password" type="password" value="" width="25" /></td>
+  <td class="f2" width="50%"><input name="login_password" type="password" value="" width="25" /><?php echo Html::error('login_password') ?></td>
 <tr>
 
 <?php if (count($dbids)>1)
@@ -67,18 +65,31 @@
 <?php } ?>
 
 <tr>
-  <td class="act" colspan="2">
+  <td class="act">
 <?php if (count($dbids)==1)
       { ?>
   <input type="hidden" name="dbid" value="<?php echo key($dbids) ?>" />
 <?php } ?>
   <input type="hidden" name="screenwidth" value="9999" />
-  <input type="submit" class="submit" value="<?php echo lang('GLOBAL_LOGIN') ?>" />
+  <input type="submit" name="submit" class="submit" value="<?php echo lang('GLOBAL_LOGIN') ?>" />
   </td>
+<!--
+  <td class="act">
+
+<?php if ($register)
+      { ?>
+  <input type="submit" name="register" class="submit" value="<?php echo lang('GLOBAL_REGISTER') ?>" title="<?php echo lang('GLOBAL_REGISTER_DESC') ?>"/>
+<?php } ?>
+<?php if ($send_password)
+      { ?>
+  <input type="submit" name="send_password" class="submit" value="<?php echo lang('GLOBAL_SEND_PASSWORD') ?>" title="<?php echo lang('GLOBAL_SEND_PASSWORD_DESC') ?>"/>
+<?php } ?>
+  </td>
+-->
 </tr>
 <?php } ?>
 
-</table>
+<?php windowClose() ?>
 
 </form>
 

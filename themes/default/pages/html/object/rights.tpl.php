@@ -6,11 +6,8 @@
 <?php if ( count($acls) > 0 )
       { ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
+<?php windowOpen( 'ACL',count($show)+3 ) ?>
 
-<tr>
-  <th colspan="<?php echo count($show)+3 ?>"><?php echo lang('ACL') ?></th>
-</tr>
   <tr>
     <td class="help"><?php echo lang('GLOBAL_NAME')     ?></td>
     <td class="help"><?php echo lang('GLOBAL_LANGUAGE') ?></td>
@@ -59,7 +56,7 @@
 <?php }
       ?>
 
-</table>
+<?php windowClose() ?>
 
 <br/><br/><br/>
 <?php }
@@ -69,10 +66,8 @@
 
 <?php echo Html::form( $action,'addacl',$objectid ) ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-<tr>
-  <th colspan="3"><?php echo lang('GLOBAL_ADD') ?></th>
-</tr>
+<?php windowOpen( 'GLOBAL_ADD',3 ) ?>
+
 <tr>
 <td class="<?php echo $fx ?>" colspan="2"><?php echo lang('GLOBAL_ALL') ?></td>
 <td class="<?php echo $fx ?>"><input type="radio" name="type" value="all" checked="checked" /></td>
@@ -112,8 +107,7 @@
 <td class="act" colspan="3"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_ADD') ?>"></td>
 </tr>
 
-</table>
-
+<?php windowClose() ?>
 </form>
 
 

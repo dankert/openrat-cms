@@ -4,11 +4,7 @@
 
 <?php echo Html::form('folder','save') ?>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('GLOBAL_PROP') ?></th>
-</tr>
+<?php windowOpen('GLOBAL_PROP',2,'folder') ?>
 
 <tr>
 <td width="50%" rowspan="2" class="f1"><?php echo lang('GLOBAL_name') ?></a></td>
@@ -41,7 +37,7 @@
 <td class="act"><input type="reset"  class="reset"  value="<?php echo lang('GLOBAL_UNDO') ?>" onClick="document.forms[0].name.focus();" /></td>
 </tr>
 
-</table>
+<?php windowClose() ?>
 
 </form>
 
