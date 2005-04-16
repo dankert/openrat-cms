@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.20  2005-03-13 16:39:00  dankert
+// Revision 1.21  2005-04-16 21:35:23  dankert
+// Uebergabe von Loginfehlern als normale Hinweismeldung
+//
+// Revision 1.20  2005/03/13 16:39:00  dankert
 // Neue Methoden, um Baum ein- und auszublenden
 //
 // Revision 1.19  2005/02/17 19:21:00  dankert
@@ -171,7 +174,7 @@ class IndexAction extends Action
 		else
 		{
 			Logger::info( "login for user $name failed" );
-			$SESS['loginmessage'] = lang('USER_LOGIN_FAILED');
+			//$SESS['loginmessage'] = lang('USER_LOGIN_FAILED');
 
 			return false;
 		}
@@ -202,12 +205,14 @@ class IndexAction extends Action
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
-		$this->setTemplateVar('logo'        ,$conf['login'   ]['logo'    ] );
-		$this->setTemplateVar('logo_url'    ,$conf['login'   ]['logo_url'] );
-		$this->setTemplateVar('motd'        ,$conf['login'   ]['motd'    ] );
-		$this->setTemplateVar('readonly'    ,$conf['security']['readonly'] );
-		$this->setTemplateVar('nologin'     ,$conf['login'   ]['nologin' ] );
-		$this->setTemplateVar('nopublish'   ,$conf['security']['nopublish']);
+		$this->setTemplateVar('logo'         ,$conf['login'   ]['logo'    ] );
+		$this->setTemplateVar('logo_url'     ,$conf['login'   ]['logo_url'] );
+		$this->setTemplateVar('motd'         ,$conf['login'   ]['motd'    ] );
+		$this->setTemplateVar('readonly'     ,$conf['security']['readonly'] );
+		$this->setTemplateVar('nologin'      ,$conf['login'   ]['nologin' ] );
+		$this->setTemplateVar('nopublish'    ,$conf['security']['nopublish']);
+		$this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
+		$this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
 		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
 		$this->setSessionVar('loginmessage','');
 
@@ -245,6 +250,12 @@ class IndexAction extends Action
 	{
 		global $conf;
 
+//		$loginForm = new LoginForm();
+//		$loginForm->validate();
+//		$this->setTemplateVar('errors',$loginForm->getErrors() );
+//		if	( $loginForm->hasErrors() )
+//			$this->callSubAction('show');
+
 		$this->checkForDb();
 		Session::setUser('');
 		
@@ -255,8 +266,11 @@ class IndexAction extends Action
 		// Ist die Breite zu klein, dann wird der Baum nicht angezeigt
 		Session::set('showtree',intval($this->getRequestVar('screenwidth')) > $conf['interface']['min_width'] );
 		
-		$this->checkLogin( $this->getRequestVar('login_name'    ),
-		                   $this->getRequestVar('login_password')  );
+		$loginOk = $this->checkLogin( $this->getRequestVar('login_name'    ),
+		                              $this->getRequestVar('login_password')  );
+		                   
+		if	( !$loginOk )
+			$this->addNotice('','','LOGIN_FAILED','error',array('name'=>$this->getRequestVar('login_name')) );
 		
 		$this->callSubAction('show');
 	}
