@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2005-01-27 00:07:10  dankert
+// Revision 1.17  2005-04-16 22:28:05  dankert
+// Erweiterung fuer Formularklassen (Test)
+//
+// Revision 1.16  2005/01/27 00:07:10  dankert
 // Einbinden von transformer.class
 //
 // Revision 1.15  2004/12/30 21:44:37  dankert
@@ -82,6 +85,7 @@ define('OR_TYPE_LINK'  ,'link'  );
 define('OR_TYPE_FOLDER','folder');
 
 define('OR_ACTIONCLASSES_DIR' ,'./actionClasses/'  );
+define('OR_FORMCLASSES_DIR'   ,'./formClasses/'    );
 define('OR_OBJECTCLASSES_DIR' ,'./objectClasses/'  );
 define('OR_SERVICECLASSES_DIR','./serviceClasses/' );
 define('OR_LANGUAGE_DIR'      ,'./config/language/');
@@ -106,6 +110,9 @@ require_once( OR_SERVICECLASSES_DIR."ProjectTree.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Transformer.class.".PHP_EXT );
+
+require_once( OR_FORMCLASSES_DIR."AbstractForm.class.".PHP_EXT );
+require_once( OR_FORMCLASSES_DIR."LoginForm.class.".PHP_EXT );
 
 require_once( OR_OBJECTCLASSES_DIR."Value.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Acl.class.".PHP_EXT );
