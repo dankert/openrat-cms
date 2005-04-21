@@ -462,3 +462,5 @@ LOGIN_NOLOGIN_DESC="Login is disabled at the moment."
 
 GLOBAL_NOPUBLISH="Publishing not available"
 GLOBAL_NOPUBLISH_DESC="All publishing functions are deactivated at the moment."
+GLOBAL_SHOWTREE="Show tree"
+GLOBAL_HIDETREE="Hide tree"
