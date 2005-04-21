@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2005-01-03 19:37:15  dankert
+// Revision 1.11  2005-04-21 19:08:44  dankert
+// Vorbelegung fuer "list"-Element
+//
+// Revision 1.10  2005/01/03 19:37:15  dankert
 // Bei dynamic-Elementen einfaches Array erzeugen
 //
 // Revision 1.9  2004/12/30 23:31:27  dankert
@@ -362,21 +365,38 @@ class ElementAction extends Action
 
 					$objects = array();
 	
-					// Ermitteln aller verf?gbaren Objekt-IDs
+					// Ermitteln aller verfuegbaren Objekt-IDs
 					foreach( Folder::getAllObjectIds() as $id )
 					{
 						$o = new Object( $id );
 						$o->load();
 						
-						if	( $o->getType() != 'folder' )
-						{ 
+						switch( $this->element->type )
+						{
+							case 'list':
+								if	( !$o->isFolder )
+									continue 2;
+								break;
+
+							case 'link':
+								if	( !$o->isPage && !$o->isFile )
+									continue 2;
+								break;
+							
+							default:
+								continue 2;
+						}
+
+						$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+						
+						if	( !$o->isRoot )
+						{
 							$f = new Folder( $o->parentid );
 							$f->load();
-							
-							$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
 							$objects[ $id ] .= implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
-							$objects[ $id ] .= FILE_SEP.$o->name;
-						} 
+						}
+						
+						$objects[ $id ] .= FILE_SEP.$o->name;
 					}
 			
 					asort( $objects ); // Sortieren
