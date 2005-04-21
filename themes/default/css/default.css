@@ -193,12 +193,12 @@ td.f2
 
 td.act {background-color:#eae2c6; padding:15px; border-top:0px solid grey;  }
 .mainmenu_headline{color:#CCCCCC; font-size:13px; color:black; font-weight:bold; }
-.mainmenu_name{color:white; font-weight:bold; font-size:24px; }
+.mainmenu_name{color:white; font-weight:bold; font-size:13px; }
 .mainmenu_val{color:#CCCCCC; font-weight:normal; }
-.mainmenu_title{color:#CCCCCC;vertical-align:middle;font-weight:bold; font-size:24px; }
+.mainmenu_title{color:#CCCCCC;vertical-align:middle;font-weight:bold; font-size:13px; }
 p.copyright { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; text-align:center; }
 
-table.main { border:1px solid black; margin-top:30px; }
+table.main { border:1px solid black; }
 
 input.submit { color:#FFFFFF; background-color:#7B9CBD; }
 input.reset  { color:#black; background-color:#cac2a6; text-align:right; }
@@ -234,4 +234,9 @@ body, textarea
 
 	scrollbar-highlight-color:#eae2c6;
 	scrollbar-shadow-color:#cac2a6;
+}
+
+select.treemenu
+{
+	font-weight:bold;
 }

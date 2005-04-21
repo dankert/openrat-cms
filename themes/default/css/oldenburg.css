@@ -247,7 +247,7 @@ p.copyright
 	text-align:center;
 }
 
-table.main { border:1px solid black; margin-top:30px; }
+table.main { border:1px solid black; }
 
 input.submit { color:#FFFFFF; background-color:#808080; }
 input.reset  { color:#black; background-color:##000080; text-align:right; }
