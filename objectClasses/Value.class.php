@@ -567,6 +567,13 @@ class Value
 			//
 			// wird im entsprechenden Format angezeigt.
 			case 'number':
+
+				if   ( $this->number == 0 )
+				{
+					// Zahl ist gleich 0, dann Default-Text
+					$inhalt = $this->element->defaultText;
+					break;
+				}
 	
 				$number = $this->number / pow(10,$this->element->decimals);
 				$inhalt = number_format( $number,$this->element->decimals,$this->element->decPoint,$this->element->thousandSep );
@@ -582,7 +589,7 @@ class Value
 				if   ( intval($date) == 0 )
 				{
 					// Datum wurde noch nicht eingegeben
-					$date = $this->element->defaultText;
+					$inhalt = $this->element->defaultText;
 					break;
 				}
 
