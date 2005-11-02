@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2005-04-16 22:28:05  dankert
+// Revision 1.18  2005-11-02 21:16:23  dankert
+// Aenderungen fuer Textauszeichnungen
+//
+// Revision 1.17  2005/04/16 22:28:05  dankert
 // Erweiterung fuer Formularklassen (Test)
 //
 // Revision 1.16  2005/01/27 00:07:10  dankert
@@ -91,6 +94,7 @@ define('OR_SERVICECLASSES_DIR','./serviceClasses/' );
 define('OR_LANGUAGE_DIR'      ,'./config/language/');
 define('OR_DBCLASSES_DIR'     ,'./db/'             );
 define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/' );
+define('OR_TEXTCLASSES_DIR'   ,'./textClasses/' );
 define('OR_THEMES_DIR'        ,'./themes/'         );
 define('OR_TMP_DIR'           ,'./tmp/'            );
 define('START_TIME'           ,time()              );
@@ -110,6 +114,8 @@ require_once( OR_SERVICECLASSES_DIR."ProjectTree.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Transformer.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Line.class.".PHP_EXT );
+
 
 require_once( OR_FORMCLASSES_DIR."AbstractForm.class.".PHP_EXT );
 require_once( OR_FORMCLASSES_DIR."LoginForm.class.".PHP_EXT );
@@ -128,6 +134,8 @@ require_once( OR_OBJECTCLASSES_DIR."Page.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Language.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Model.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Element.class.".PHP_EXT );
+
+require_once( OR_TEXTCLASSES_DIR."include.inc.".PHP_EXT );
 
 require_once( OR_DBCLASSES_DIR."db.class.php" );
 require_once( OR_DBCLASSES_DIR."postgresql.class.php" );
