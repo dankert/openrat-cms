@@ -21,10 +21,15 @@
 <tr>
   <td width="50%" class="help"><?php echo lang('GLOBAL_NAME_DESC') ?></td>
 </tr>
+
+<?php if($edit_filename)
+      { ?>
 <tr>
   <td width="50%" class="f1" rowspan="2"><?php echo lang('GLOBAL_FILENAME') ?></a></td>
   <td width="50%" class="f1"><input class="filename" type="text" name="filename" size="40" value="<?php echo $filename ?>"></td>
 </tr>
+<?php } ?>
+
 <tr>
   <td width="50%" class="help"><?php echo lang('GLOBAL_FILENAME_DESC') ?></td>
 </tr>
