@@ -346,7 +346,10 @@ class DocumentElement extends AbstractElement
 
 	function parseLinks( $text )
 	{
-		$posM = strpos($text,'"->"');
+		$conf = Session::getConfig();
+		$text_markup = $conf['text-markup']; 
+
+		$posM = strpos($text,'"'.$text_markup['linkto'].'"');
 
 		if	( $posM === false )
 			return false;
@@ -410,33 +413,23 @@ class DocumentElement extends AbstractElement
 	
 	
 		
-	function parseSimpleParts( $text,$seperator )
+	function parseSimpleParts( $text,$sepLinks,$sepRechts )
 	{
-		if	( strlen($seperator)>=2 )
-		{
-			$sepLinks  = substr($seperator,0,1);
-			$sepRechts = substr($seperator,1,1);
-		}
-		else
-		{
-			$sepLinks  = $seperator;
-			$sepRechts = $seperator;
-		}
 
 		$posL = strpos($text,$sepLinks);
 
 		if	( $posL === false )
 			return false;
 
-		$posR = strpos($text,$sepRechts,$posL+1);
+		$posR = strpos($text,$sepRechts,$posL+strlen($sepLinks));
 
 		if	( $posR === false )
 			return false;
 
 		$parts = array();			
 		$parts[] = substr($text,0      ,$posL        );
-		$parts[] = substr($text,$posL+1,$posR-$posL-1);
-		$parts[] = substr($text,$posR+1              );
+		$parts[] = substr($text,$posL+strlen($sepLinks),$posR-$posL-strlen($sepLinks));
+		$parts[] = substr($text,$posR+strlen($sepRechts)                             );
 
 //		echo "Parse $seperator ergibt ";
 //		print_r($parts);
@@ -447,9 +440,9 @@ class DocumentElement extends AbstractElement
 	
 	
 	
-	function parseSimpleElement( $text,$seperator,$className )
+	function parseSimpleElement( $text,$sepL,$sepR,$className )
 	{
-		$erg = $this->parseSimpleParts( $text,$seperator );
+		$erg = $this->parseSimpleParts( $text,$sepL,$sepR );
 		if	( is_array($erg) )
 		{
 			$idx   = -1;
@@ -498,6 +491,9 @@ class DocumentElement extends AbstractElement
 			
 	function parseSimple( $text )
 	{
+		$conf = Session::getConfig();
+		$text_markup = $conf['text-markup'];
+		
 		$text = $this->fixLinks($text);
 //		echo "parseSimple($text)";
 		$elements = array();
@@ -531,7 +527,7 @@ class DocumentElement extends AbstractElement
 		}
 
 
-		$erg = $this->parseSimpleParts( $text,'{}' );
+		$erg = $this->parseSimpleParts( $text,$text_markup['image-begin'],$text_markup['image-end'] );
 		if	( is_array($erg) )
 		{
 			$idx   = -1;
@@ -558,27 +554,27 @@ class DocumentElement extends AbstractElement
 		}
 
 
-		$erg = $this->parseSimpleElement( $text,'*','StrongElement' );
+		$erg = $this->parseSimpleElement( $text,$text_markup['strong-begin'],$text_markup['strong-end'],'StrongElement' );
 		if	( is_array($erg) )
 			return $erg;
 
-		$erg = $this->parseSimpleElement( $text,'_','EmphaticElement' );
+		$erg = $this->parseSimpleElement( $text,$text_markup['emphatic-begin'],$text_markup['emphatic-end'],'EmphaticElement' );
 		if	( is_array($erg) )
 			return $erg;
 
-		$erg = $this->parseSimpleElement( $text,'=','TeletypeElement' );
+		$erg = $this->parseSimpleElement( $text,$text_markup['code-begin'],$text_markup['code-end'],'TeletypeElement' );
 		if	( is_array($erg) )
 			return $erg;
 
-		$erg = $this->parseSimpleElement( $text,'++','InsertedElement' );
+		$erg = $this->parseSimpleElement( $text,$text_markup['insert-begin'],$text_markup['insert-end'],'InsertedElement' );
 		if	( is_array($erg) )
 			return $erg;
 
-		$erg = $this->parseSimpleElement( $text,'--','RemovedElement' );
+		$erg = $this->parseSimpleElement( $text,$text_markup['remove-begin'],$text_markup['remove-end'],'RemovedElement' );
 		if	( is_array($erg) )
 			return $erg;
 
-		$erg = $this->parseSimpleElement( $text,'"','SpeechElement' );
+		$erg = $this->parseSimpleElement( $text,$text_markup['speech-begin'],$text_markup['speech-end'],'SpeechElement' );
 		if	( is_array($erg) )
 			return $erg;
 
