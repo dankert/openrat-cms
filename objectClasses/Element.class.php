@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2005-04-21 19:08:44  dankert
+// Revision 1.12  2005-11-07 22:34:01  dankert
+// Neue Methode "getDefaultValue()"
+//
+// Revision 1.11  2005/04/21 19:08:44  dankert
 // Vorbelegung fuer "list"-Element
 //
 // Revision 1.10  2005/01/04 19:58:22  dankert
@@ -361,6 +364,25 @@ class Element
 		return $typeprop[ $this->type ];
 	}
 
+
+
+	function getDefaultValue()
+	{
+		switch(  $this->type )
+		{
+			case 'text':
+			case 'longtext':
+				return $this->defaultText;
+				
+			case 'number';
+				return '0';
+		
+			default:
+		}
+		
+		return lang('EL_TYPE_'.$this->type);
+		
+	}
 
 	/**
 	 * Ermitteln aller benutzbaren Elementtypen
