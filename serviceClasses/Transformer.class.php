@@ -16,10 +16,13 @@ class Transformer
 	var $types = array('html','wml','text');
 	var $rules = array('strong','emphatic');
 	var $parsedText   = array();
-	var $renderedText = array();
+	var $renderedText = '';
 	var $toc = array();
 	var $render = true;
+	var $doc;
 
+	var $parseRules = array( 'ListElement'=>array('char'=>'-'),
+	                         'NumberedListElement' );
 
 	function anchorName( $text )
 	{
@@ -53,15 +56,223 @@ class Transformer
 
 	function transform()
 	{
-		$this->parse();
-		$this->render();
+		$this->parseDocument();
+		$this->renderDocument();
 		
-		$this->text = implode( "\n",$this->renderedText );
+		$this->text = $this->renderedText;
+		
+//		echo "<h2>Rendered text:</h2><pre>".htmlentities($this->text)."</pre>";
 	}
 
 
 
-	function parse()
+	function parseElement( $text,&$element )
+	{
+		
+	}
+
+
+
+	function parseMultiLine( $text )
+	{
+		$elements = array();
+		
+		foreach( $text as $zeile )
+		{
+			if	( substr(ltrim($zeile),0,3)=='+++' )
+			{
+				$headline = new HeadlineElement(1);
+				$headline->children = $this->parseSimple(substr(ltrim($zeile),3));
+				$elements[] = $headline;
+				continue;
+			}
+			if	( substr(ltrim($zeile),0,2)=='++' )
+			{
+				$headline = new HeadlineElement(2);
+				$headline->children = $this->parseSimple(substr(ltrim($zeile),2));
+				$elements[] = $headline;
+				continue;
+			}
+			if	( substr(ltrim($zeile),0,1)=='+' )
+			{
+				$headline = new HeadlineElement(3);
+				$headline->children = $this->parseSimple(substr(ltrim($zeile),1));
+				$elements[] = $headline;
+				continue;
+			}
+			
+			$isList         = false;
+			$isNumberedList = false;
+			$isCode         = false;
+			$isTable        = false;
+			$isQuote        = false;
+			
+			if	( substr($zeile,0,1)=='-' )
+				$isList = true;
+			elseif	( substr($zeile,0,1)=='#' )
+				$isNumberedList = true;
+			elseif	( substr($zeile,0,1)=='>' )
+				$isQuote = true;
+			elseif	( substr($zeile,0,1)=='|' )
+				$isTable = true;
+			elseif	( substr($zeile,0,1)=='=' )
+				$isCode = true;
+			
+			
+			$para = new ParagraphElement();
+			$para->children = $this->parseSimple( $zeile );
+			$elements[] = $para;
+		}
+		
+		return $elements;
+	}	
+	
+	
+	
+	function parseSimple( $text )
+	{
+//		echo "parseSimple($text)";
+		$elements = array();
+
+
+		// Fett
+		$teile = preg_split('/\*([^\*]+)\*/',$text,-1,PREG_SPLIT_DELIM_CAPTURE);
+//		echo "<pre>";
+//		print_r($teile);
+//		echo "</pre>";
+		if	( count($teile) > 1 )
+		{
+			foreach( $teile as $nr=>$teil )
+			{
+				if	( ($nr+1)%2 == 0 ) // Ungerade Indexe
+				{
+					$strong = new StrongElement();
+					$strong->children = $this->parseSimple($teil); 
+					$elements[] = $strong;
+				}
+				else
+				{
+					$t = new TextElement();
+					$t->children = $this->parseSimple($teil); 
+					$elements[] = $t;
+				}
+			}
+			return $elements;
+		}
+
+
+
+		// Verknuepfungen
+//						$this->replaceRegexp(  '\'\'([^\']+)\'\'-'.$pf.'\'\'([^\']+)\'\'', '{link:"\\2","\\1"}' );
+		
+				// alleinstehende externe Links
+//				$this->replaceRegexp( '([^"])((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))', '\\1{link:"\\2","\\4"}' );
+//				$this->replaceRegexp( '^((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))'     , '{link:"\\1","\\3"}'    );
+		
+		$teile = preg_split('/\"([^\""]+)\"-\>\"([^\""]+)\"/',$text,-1,PREG_SPLIT_DELIM_CAPTURE);
+//		echo "<pre>";
+//		print_r($teile);
+//		echo "</pre>";
+		if	( count($teile) > 1 )
+		{
+			foreach( $teile as $nr=>$teil )
+			{
+				if	( ($nr+2)%3 == 0 ) // Ungerade Indexe
+				{
+					$link = new LinkElement();
+					$link->target = $teile[$nr+1];
+					$link->children = $this->parseSimple($teile[$nr]);
+					
+					$elements[] = $link;
+				}
+				elseif	( ($nr+1)%3 == 0 )
+				{
+				}
+				else
+				{
+					$t = new TextElement();
+					$t->children = $this->parseSimple($teil); 
+					$elements[] = $t;
+				}
+			}
+			return $elements;
+		}
+		
+		
+		$t = new TextElement();
+		$t->text = $text;
+		
+		return array( $t );
+		
+		
+		//Text->... umsetzen nach "Text"->... (Anfuehrungszeichen ergaenzen)
+			$this->replaceRegexp( '([A-Za-z0-9._????????-]+)-'.$pf, '\'\'\\1\'\'-'.$pf  );
+	
+		// ...->Link umsetzen nach ...->"Link" (Anfuehrungszeichen ergaenzen)
+		$this->replaceRegexp( '-'.$pf.'([A-Za-z0-9.:_\/\,\?\=\&-]+)', '-'.$pf.'\'\'\\1\'\''  );
+
+		# Links ...->"nnn" ersetzen mit ...->"object:nnn"
+		$this->replaceRegexp( '-'.$pf.'\'\'([0-9]+)\'\'', '-'.$pf.'\'\'object\\1\'\'' );
+
+		$this->replaceRegexp( '-'.$pf.'\'\'([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)\'\'', '-'.$pf.'\'\'mailto:\\1\'\'' );
+
+		# Links "mit->..."
+		$this->replaceRegexp(  '\'\'([^\']+)\'\'-'.$pf.'\'\'([^\']+)\'\'', '{link:"\\2","\\1"}' );
+
+		// alleinstehende externe Links
+		$this->replaceRegexp( '([^"])((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))', '\\1{link:"\\2","\\4"}' );
+		$this->replaceRegexp( '^((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))'     , '{link:"\\1","\\3"}'    );
+
+		# mailto:...-Links
+		$this->replaceRegexp( '([^[A-Za-z0-9._:-])([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)', '\\1{link:"mailto:\\2","\\2"}' );
+		$this->replaceRegexp( '^([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)'                  , '{link:"mailto:\\1","\\1"}' );
+		
+		// Einbinden von Bildern
+		$this->replaceRegexp( '(ima?ge?):\/?\/?(([0-9]+))(\{.*\})?', '{image:"object\\2"}' );
+		$this->replaceRegexp( '\{([0-9]+),?\}'                     , '{image:"object\\1"}' );
+		$this->replaceRegexp( '\{([0-9]+),([^\}]+)\}'              , '{image:"object\\1","\\2"}' );
+
+
+		$this->replaceRegexp( '\*([^\*]+[^\\])\*', '{strong-open}\\1{strong-close}'     );
+		$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
+
+//				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
+//				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
+
+		// "Wortliche Rede"
+		if	( !$this->html )
+			$this->replaceRegexp( '\'\'([^\']+[^\\])\'\'', '{speech-open}\\1{speech-close}' );
+
+		// =feste Breite=
+		$this->replaceRegexp( '=([^=]+[^\\])=', '{teletype-open}\\1{teletype-close}' );
+
+		$this->zeile = ereg_replace( '([^\\\\])\\\\','\\1', $this->zeile );
+
+	}
+	
+	
+	
+	function parseDocument()
+	{
+		$zeilen = explode("\n",$this->text);
+		$this->doc = new DocumentElement();
+		$this->doc->parse($zeilen);
+		
+//		$this->doc->children = $this->parseMultiLine( $zeilen );
+		
+//		echo "<h2>Dokument:</h2>";
+//		echo "<pre>";
+//		print_r($this->doc);
+//		echo "</pre>";
+
+		return; 
+	}
+
+
+
+
+
+	function parseOld()
 	{
 		$tocid = 0;
 	
@@ -79,6 +290,7 @@ class Transformer
 		// Links
 		$pf = '>';
 
+		// 2-zeilige Ueberschriften in 1-zeilige uebersetzen
 		$this->text = preg_replace( '/([^\n]*)\r\n[\=]{3,}/','+ \\1',$this->text );
 		$this->text = preg_replace( '/([^\n]*)\r\n[\-]{3,}/','++ \\1',$this->text );
 		$this->text = preg_replace( '/([^\n]*)\r\n[\.]{3,}/','+++ \\1',$this->text );
@@ -156,7 +368,7 @@ class Transformer
 			}
 		
 
-			// ?berschriften
+			// Ueberschriften
 			if	( preg_match('/^([+]{1,}) ?(.*)/',$this->zeile,$match) && !$nowiki && !$pre && !$quote )
 			{
 				if	( $p )
@@ -171,7 +383,7 @@ class Transformer
 				$this->zeile = '{heading:"'.$hlev.'","'.$this->anchorName($match[2]).'","'.$match[2].'"}';
 			}
 
-			// Bei pr?formatierem Text keine weiteren Formatierungen durchf?hren	
+			// Bei praeformatierem Text keine weiteren Formatierungen durchfuehren	
 			if   ( !$pre )
 			{
 				// Tabellen
@@ -214,7 +426,7 @@ class Transformer
 					}
 				}
 
-				// Aufz?hlungen		
+				// Aufzaehlungen, Listen		
 				if	( preg_match('/^( *)([\*#-]) (.*)/',$this->zeile,$match) && !$nowiki )
 				{
 					if	( $p )
@@ -256,9 +468,12 @@ class Transformer
 				}
 				else
 				{
+					// Aufzaehlung/Liste ist vorbei.
 					while( $level > 0 )
 					{
-						if	( $lis[$level]=='#')
+						$this->parsedText[] = '{entry-close}';
+						
+						if	( $lis[$level]=='#' )
 							$this->parsedText[] = '{numbered-list-close}';
 						else
 							$this->parsedText[] = '{list-close}';
@@ -267,7 +482,7 @@ class Transformer
 				}
 			}
 	
-			// Abs?tze einrichten
+			// Absaetze einrichten
 			if   (!$pre && !$ol && !$ul && !$table && substr($this->zeile,0,1)!='{' )
 			{
 				if   ( $this->zeile != '' && $p )
@@ -354,9 +569,115 @@ class Transformer
 	
 	
 	
+	function renderHtmlElement( $tag,$value,$attr=array() )
+	{
+		if	( $tag == '' )
+			return $value;
+			
+		$val = '<'.$tag;
+		foreach( $attr as $attrName=>$attrInhalt )
+		{
+			$val .= ' '.$attrName.'="'.$attrInhalt.'"';
+		}
+		
+		if	( $value == '' )
+		{
+			// Inhalt ist leer, also Kurzform verwenden.
+			$val .= ' />';
+			return $val;	
+		}
+		
+		$val .= '>'.$value.'</'.$tag.'>';
+		return $val;
+	}
 	
 	
-	function render()
+	
+	function renderElement( $child )
+	{
+		//echo "renderElement(".get_class($child).")/".$this->type."<br/>";
+		//echo "<pre>";
+		//print_r($child);
+		//echo "</pre>";
+		switch( $this->type )
+		{
+			case 'html':
+			
+				$attr = array();
+				$val  = '';
+				switch( strtolower(get_class($child)) )
+				{
+					case 'textelement':
+						$tag = '';
+						$val = $child->text;
+						break;
+
+					case 'paragraphelement':
+						$tag = 'p';
+						break;
+
+					case 'linkelement':
+						$tag = 'a';
+						$attr['href'] = $child->target;
+						break;
+
+					case 'strongelement':
+						$tag = 'strong';
+						break;
+
+					case 'headlineelement':
+						$tag = 'h'.$child->level;
+						break;
+
+					default:
+						
+						$tag = 'unknown-element';
+						$attr['class'] = strtolower(get_class($child));
+						break;
+				}				
+
+				foreach( $child->children as $c )
+				{
+					$val .= $this->renderElement( $c );
+				}
+//				echo "text:$val";
+				return $this->renderHtmlElement($tag,$val,$attr);
+				
+			default:
+		}
+		
+	}
+	
+	function renderDocument()
+	{
+		if	( ! is_object($this->page->template) )
+			$this->page->template = new Template( $this->page->templateid );
+
+		$this->page->template->load();
+		$type = $this->page->template->extension;
+			
+//		print_r($this->page->template);
+		$text = $this->doc->render( $type );
+		
+		// Links object:nnn ersetzen
+		foreach( $this->doc->linkedObjectIds as $objectId )
+		{
+			$targetPath = $this->page->path_to_object( $objectId );
+			$text = str_replace( 'object:'  .$objectId, $targetPath, $text );
+			$text = str_replace( 'object://'.$objectId, $targetPath, $text );
+		}
+		
+		$this->renderedText = $text;
+		
+//		echo "Hier isses:".$this->renderedText;
+		
+//		foreach( $this->doc->children as $child )
+//			$this->renderedText .= $this->renderElement( $child ); 
+	}
+	
+	
+	
+	function renderOld()
 	{
 		foreach( $this->parsedText as $zeile )
 		{
@@ -444,6 +765,7 @@ class Transformer
 				break;
 
 			case 'text':
+			default:
 				$this->replaceRegexp( '\{image:([^}]+)\}' ,''  );
 
 				$this->replace( '{strong-open}' ,''  );
@@ -476,8 +798,6 @@ class Transformer
 				$this->replace( '{line-break}' ,"\n" );
 				$this->replaceRegexp( '\{[^}]+)\}','' );
 				break;
-
-			default:
 		}
 
 		// Links object:nnn ersetzen
