@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.18  2004-12-27 23:19:47  dankert
+// Revision 1.19  2005-11-07 22:36:40  dankert
+// Flexibere Ermittlung des Dateinamen anhand neuer Konfigurationseigenschaften.
+//
+// Revision 1.18  2004/12/27 23:19:47  dankert
 // ungueltige Zeichen im Dateinamen mit Punkt ersetzen
 //
 // Revision 1.17  2004/12/20 23:04:15  dankert
@@ -349,6 +352,21 @@ class Object
 	}
 
 
+
+	/**
+	 * Ueberpruft einen Dateinamen auf Gueltigkeit. 
+	 */
+	function goodFilename( $filename )
+	{
+		// Dateiname muss gueltig sein,
+		// ungueltige Zeichen werden entfernt
+		$gueltig = 'abcdefghijklmnopqrstuvwxyz0123456789.-_';
+		$tmp = strtr($filename, $gueltig, str_repeat('#', strlen($gueltig)));
+		return( str_replace('-','',strtr($this->filename, $tmp, str_repeat('-', strlen($tmp)))) );
+	}
+
+
+
 	/**
 	 * Ermitteln des Dateinamens und Rueckgabe desselben
 	 * @return String Dateiname
@@ -358,29 +376,68 @@ class Object
 
 		global $conf;
 
-		switch( $conf['publish']['filename'] )
+		if	( $conf['filename']['edit'] && $this->filename != '' && $this->filename != $this->objectid )
 		{
-		 	case 'crc32':
-				$this->filename = crc32($this->objectid);
-				break;
-			case 'md5':
-				$this->filename = md5($this->objectid);
-				break;
-			case  'ss':
-				$this->filename = '0,'.abs(crc32($this->objectid)).','.abs(crc32($this->objectid+1)).',00';
-				break;
-			case 'id':
-				$this->filename = $this->objectid;
-				break;
+			$this->filename = $this->goodFilename(trim(strtolower($this->name)));
+			return $this->filename;
 		}
 
-		if	( $this->filename != '' )
-			return $this->filename;
+		if	( $this->type == OR_TYPE_FOLDER )
+		{
+			$this->filename = $this->objectid;
+		}
+		elseif	( $this->orderid == 1              &&
+			  !empty($conf['filename']['default']) &&
+			  !$conf['filename']['edit']              )
+		{
+			$this->filename = $conf['filename']['default'];
+		}
+		else
+		{
+			switch( $conf['filename']['style'] )
+			{
+			 	case 'longid':
+			 		// Eine etwas laengere ID als Dateinamen benutzen
+					$this->filename = base_convert(str_pad($this->objectid,6,'a'),11,10);
+					break;
 
-		$this->load();
+				case 'id':
+					// Einfach die Objekt-Id als Dateinamen verwenden.
+					$this->filename = $this->objectid;
+					break;
+
+				case 'short':
+					// So kurz wie moeglich: Erhoehen der Basis vom 10 auf 36.
+					// Beispiele:
+					// 1  -> 1
+					// 10 -> a
+					$this->filename = base_convert($this->objectid,10,36);
+					break;
+
+//					case 'md5':
+//						$this->filename = md5(md5($this->objectid));
+//						break;
+				case  'ss':
+					// Imitieren von "StoryServer" URLs. Wers braucht.
+					$this->filename = '0,'.
+					                  base_convert(str_pad($this->parentid,3,'a'),11,10).
+					                  ','.
+					                  base_convert(str_pad($this->objectid,7,'a'),11,10).
+					                  ',00';
+					break;
+//					case  'title':
+//						$this->filename = $this->goodFilename(trim(strtolower($this->name)));
+//						break;
+
+				default:
+					die('Unknown filename style: '.$conf['filename']['style'] );
+			}
+		}
 
 		return $this->filename;
 	}
+
+
 
 	/**
 	 * Lesen der Eigenschaften aus der Datenbank
@@ -481,6 +538,7 @@ class Object
 		$this->parentid  = $row['parentid' ];
 		$this->projectid = $row['projectid'];
 		$this->filename  = $row['filename' ];
+		$this->orderid   = $row['orderid'  ];
 		
 		if	( intval($this->parentid) == 0 )
 			$this->isRoot = true;
@@ -778,21 +836,17 @@ class Object
 
 		$this->filename = trim(strtolower($this->filename));
 
-		// Dateiname muss gueltig sein,
-		// ungueltige Zeichen werden entfernt
-		$gueltig = 'abcdefghijklmnopqrstuvwxyz0123456789-_';
-		$tmp = strtr($this->filename, $gueltig, str_repeat('#', strlen($gueltig)));
-		$this->filename = strtr($this->filename, $tmp, str_repeat('-', strlen($tmp)));
+		$this->filename = $this->goodFilename( $this->filename);
 
 		if	( $this->isRoot )
 			return;
 
 		if	( !$this->filenameIsUnique( $this->filename ) )
 		{
-			$this->filename = $this->objectid;
-
-			if	( !$this->filenameIsUnique( $this->filename ) )
-				$this->filename = md5(microtime());
+//			$this->filename = $this->objectid;
+//
+//			if	( !$this->filenameIsUnique( $this->filename ) )
+				$this->filename = $this->filename.'.'.md5(microtime());
 		}
 	}
 
