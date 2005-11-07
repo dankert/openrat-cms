@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2005-01-05 23:11:14  dankert
+// Revision 1.10  2005-11-07 22:32:20  dankert
+// Neue Methode "edit()"
+//
+// Revision 1.9  2005/01/05 23:11:14  dankert
 // Nach hinzuf?gen von Elementen nicht speichern
 //
 // Revision 1.8  2004/12/27 23:34:51  dankert
@@ -333,9 +336,46 @@ class TemplateAction extends Action
 
 
 	/**
-	 * Anzeigen einer Vorlage
+	 * Voransicht einer Vorlage
 	 */
 	function show()
+	{
+		$text = $this->template->src;
+	
+		foreach( $this->template->getElementIds() as $elid )
+		{
+			$element = new Element( $elid );
+			$element->load();
+			$url = Html::url( 'element','edit',$this->template->templateid,array('elementid'=>$elid));
+			
+			$text = str_replace('{{'.$elid.'}}',$element->name,
+			                    $text );
+			$text = str_replace('{{->'.$elid.'}}','',
+			                    $text );
+
+			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}','',
+			                    $text );
+			$text = str_replace('{{IFEMPTY:'.$elid.':END}}','',
+			                    $text );
+
+			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}','',
+			                    $text );
+			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}','',
+			                    $text );
+			                    
+			unset( $element );
+		}
+	
+		echo $text;
+		
+		exit();
+	}
+
+
+	/**
+	 * Bearbeiten einer Vorlage
+	 */
+	function edit()
 	{
 		$text = htmlentities( $this->template->src );
 		$text = str_replace("\n",'<br/>',$text);
