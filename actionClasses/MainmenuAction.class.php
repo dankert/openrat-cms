@@ -59,6 +59,7 @@ class MainmenuAction extends Action
 			$this->setTemplateVar('text',$template->name );
 			
 			$this->addSubaction('show' );
+			$this->addSubaction('edit' );
 			$this->addSubaction('el'   );
 			if	( $this->writable )
 				$this->addSubaction('src'  );
