@@ -547,8 +547,8 @@ class Value
 					$transformer = new Transformer();
 					$transformer->text = $inhalt;
 					$transformer->page = $this->page;
-					$transformer->html = $this->element->html;
-					$transformer->type = 'html';
+					$transformer->type = $this->page->template->extension;
+
 					$transformer->transform();
 					$inhalt = $transformer->text;
 				}
