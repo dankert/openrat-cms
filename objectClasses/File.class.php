@@ -443,10 +443,13 @@ class File extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = new Sql('UPDATE {t_file} SET '.
-		               '  size      = {size},'.
-		               '  extension = {extension}'.
-		               ' WHERE objectid={objectid}' );
+		$sql = new Sql( <<<EOF
+UPDATE {t_file} SET
+  size      = {size},
+  extension = {extension}
+  WHERE objectid={objectid}
+EOF
+);
 		$sql->setString('size'     ,$this->size      );
 		$sql->setString('extension',$this->extension );
 		$sql->setString('objectid' ,$this->objectid  );

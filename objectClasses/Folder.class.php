@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2005-01-04 19:58:56  dankert
+// Revision 1.9  2005-11-07 22:34:51  dankert
+// Einen Sql-Befehl in ein "here-document" ausgelagert.
+//
+// Revision 1.8  2005/01/04 19:58:56  dankert
 // neue Methoden getFirst/LastPageOrLink()
 //
 // Revision 1.7  2004/12/19 15:22:17  dankert
@@ -675,25 +678,28 @@ class Folder extends Object
 	{
 		$db = Session::getDatabase();
 
-		$sql = new Sql('SELECT F0.id       AS f0id,'.
-		               '       F0.filename AS f0filename,'.
-		               '       F1.id       AS f1id,'.
-		               '       F1.filename AS f1filename,'.
-		               '       F2.id       AS f2id,'.
-		               '       F2.filename AS f2filename,'.
-		               '       F3.id       AS f3id,'.
-		               '       F3.filename AS f3filename,'.
-		               '       F4.id       AS f4id,'.
-		               '       F4.filename AS f4filename,'.
-		               '       F5.id       AS f5id, '.
-		               '       F5.filename AS f5filename'.
-		               '  FROM {t_object} AS F0'.
-		               ' LEFT JOIN {t_object} AS F1 on F0.parentid=F1.id '.
-		               ' LEFT JOIN {t_object} AS F2 on F1.parentid=F2.id '.
-		               ' LEFT JOIN {t_object} AS F3 on F2.parentid=F3.id '.
-		               ' LEFT JOIN {t_object} AS F4 on F3.parentid=F4.id '.
-		               ' LEFT JOIN {t_object} AS F5 on F4.parentid=F5.id '.
-		               ' WHERE F0.id={objectid}');
+		$sql = new Sql( <<<EOF
+SELECT F0.id       AS f0id,
+      F0.filename AS f0filename,
+      F1.id       AS f1id,
+      F1.filename AS f1filename,
+      F2.id       AS f2id,
+      F2.filename AS f2filename,
+      F3.id       AS f3id,
+      F3.filename AS f3filename,
+      F4.id       AS f4id,
+      F4.filename AS f4filename,
+      F5.id       AS f5id,
+      F5.filename AS f5filename
+ FROM {t_object} AS F0
+LEFT JOIN {t_object} AS F1 on F0.parentid=F1.id 
+LEFT JOIN {t_object} AS F2 on F1.parentid=F2.id 
+LEFT JOIN {t_object} AS F3 on F2.parentid=F3.id 
+LEFT JOIN {t_object} AS F4 on F3.parentid=F4.id 
+LEFT JOIN {t_object} AS F5 on F4.parentid=F5.id 
+WHERE F0.id={objectid}
+EOF
+ );
 
 		$sql->setInt('objectid'  ,$this->objectid  );
 		$sql->setInt('languageid',$this->languageid);
