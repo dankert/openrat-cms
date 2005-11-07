@@ -603,6 +603,10 @@ class PageAction extends ObjectAction
 		$this->page->public = true;
 		$this->page->load();
 		$this->page->full_filename();
+
+		if	( $this->page->filename == $this->page->objectid )
+			$this->page->filename = '';
+
 		$this->setTemplateVars( $this->page->getProperties() );
 		
 		if   ( $this->userIsAdmin() )

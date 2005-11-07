@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2005-01-27 22:21:29  dankert
+// Revision 1.16  2005-11-07 22:31:08  dankert
+// Wenn Dateiname=Objekt-Id, dann Dateinamen auf leer setzen.
+//
+// Revision 1.15  2005/01/27 22:21:29  dankert
 // Nach Generierung Systembefehl mit exec() ausf?hren
 //
 // Revision 1.14  2005/01/14 21:41:23  dankert
@@ -239,6 +242,11 @@ class FileAction extends ObjectAction
 
 	function prop()
 	{
+		global $conf;
+		
+		if	( $this->file->filename == $this->file->objectid )
+			$this->file->filename = '';
+
 		// Eigenschaften der Datei uebertragen
 		$this->setTemplateVars( $this->file->getProperties() );
 
@@ -258,7 +266,7 @@ class FileAction extends ObjectAction
 		}
 		asort( $list );
 		$this->setTemplateVar('pages',$list);
-	
+		$this->setTemplateVar('edit_filename',$conf['filename']['edit']);	
 		$this->forward( 'file_prop' );
 	}
 

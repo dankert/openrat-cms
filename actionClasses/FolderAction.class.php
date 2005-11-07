@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.29  2005-01-28 23:05:39  dankert
+// Revision 1.30  2005-11-07 22:31:38  dankert
+// Wenn Dateiname=Objekt-Id, dann Dateinamen auf leer setzen.
+//
+// Revision 1.29  2005/01/28 23:05:39  dankert
 // Bei Aenderungen des Verzeichnis-Inhaltes den Timestamp des Verzeichnisses aktualisieren
 //
 // Revision 1.28  2005/01/27 22:21:30  dankert
@@ -655,6 +658,10 @@ class FolderAction extends ObjectAction
 	{
 		if	( $this->folder->isRoot )
 			$this->callSubAction('show');
+
+		if	( $this->folder->filename == $this->folder->objectid )
+			$this->folder->filename = '';
+
 
 		$this->setTemplateVars( $this->folder->getProperties() );
 	
