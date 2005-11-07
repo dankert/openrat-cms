@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.18  2004-12-29 20:21:42  dankert
+// Revision 1.19  2005-11-07 22:36:10  dankert
+// Beruecksichtigen von absoluten Pfadangaben
+//
+// Revision 1.18  2004/12/29 20:21:42  dankert
 // Korrektur Bearbeiten-Funktion, Parameter zu Html::url()
 //
 // Revision 1.17  2004/12/28 22:55:51  dankert
@@ -346,6 +349,14 @@ class Page extends Object
 	  */ 
 	function up_path()
 	{
+		global $conf;
+
+		if	( $conf['filename']['url'] == 'absolute' )
+		{
+			$this->up_path = '/';
+			return $this->up_path;
+		}
+			
 		if	( $this->up_path != '' )
 			return $this->up_path;
 
