@@ -9,10 +9,10 @@
 dir      = ./config/db/  ; directory which contains database configuration
 prefix   = config-db-    ; praefix of database configuration files
 suffix   = .ini.php      ; suffix  of database configuration files
-default  = db1           ; preselected database (used for http-auth)
+default  = db1           ; preselected database (used, if http-auth is wanted)
 
 [auth]
-type     = form          ; 'http' or 'form'  (must 'form' for more than 1 database connection)
+type     = form          ; (http|form) 'form' is a good choice. if 'http' max. 1 database connection available.
 
 [ldap]
 host     =               ; host of ldap server ( blank if not used )  
@@ -54,7 +54,7 @@ use_browser_language = true         ; use HTTP_ACCEPT_LANGUAGE header to determi
 show_duration        = false        ; Show duration on every page
 timeout              =              ; Request timeout in seconds (blank=system default)
 override_title       =              ; Replace the default title (Program name+version) with this text
-min_width            = 950          ; Minimal Width of the browser window. If smaller, denn tree is disabled.
+min_width            = 950          ; Minimal Width of the browser window. If smaller, then tree is initally disabled.
 
 
 [login]
@@ -64,6 +64,21 @@ motd=""                                  ; Message of the day, shown in login ma
 nologin=false                            ; Disable Login (for maintanance jobs)
 
 
+
+[filename]
+edit    = true           ; Allow editing of filenames (true|false)
+default = index          ; filename of index file. Default: 'index'.
+
+;style  = ss             ; poor imitation of story server urls
+;style  = id             ; simply use the object id for the url
+;style  = longid         ; use a more longer id in the url
+style   = short          ; use a url which is as short as possible
+; hint: If edit=true, then the stored filename will be used.
+;       If no filename stored, or if edit=false, then the defined style is used. 
+
+url=relative             ; how the target url is referenced (relative|absolute), 'relative' is always a good choice.
+
+
 [mail]
 enabled=true                        ; Enable sending E-Mails
 from="OpenRat <user@example.com>"   ; Sender Adress
@@ -71,24 +86,59 @@ signature="http://www.openrat.de"   ; Signature (blank if unused)
 
 
 [security]
-random_password_length=8            ; length of automatic generated password
-min_password_length=4               ; minimum passwort length
-readonly=false                      ; All is readonly (for maintanance jobs)
-nopublish=false                     ; Disable publishing
+random_password_length = 8          ; length of automatic generated password
+min_password_length    = 4          ; minimum passwort length
+readonly  = false                   ; All is readonly (for maintanance jobs)
+nopublish = false                   ; Disable publishing
+
+
+[text-markup]
+strong-begin = *
+strong-end   = *
+
+emphatic-begin = _
+emphatic-end   = _
+
+image-begin = "{"
+image-end   = "}"
+
+speech-begin = "\""
+speech-end   = "\""
+
+code-begin = "="
+code-end   = "="
+
+pre-begin = "="
+pre-end   = "="
+
+insert-begin = ++
+insert-end   = ++
+
+remove-begin = --
+remove-end   = --
+
+definition-sep = ":"
+headline       = "+"
+
+list-unnumbered = "-"
+list-numbered   = "#"
+
+linkto="->"
+table-cell-sep="|"
+
+style-begin = "'"
+style-end   = "'"
+
 
 
 [html]
-tag_teletype_open    = "<tt>"       ; HTML-tag begin of teletype text
-tag_teletype_close   = "</tt>"      ; HTML-tag end   of teletype text
+tag_teletype = tt
+tag_emphatic = em
+tag_strong   = strong
+tag_speech   = cite
+speech_open  = "&bdquo;"
+speech_close = "&rdquo;"
 
-tag_emphatic_open    = "<em>"       ; HTML-tag begin of emphatic text
-tag_emphatic_close   = "</em>"      ; HTML-tag end   of emphatic text
-
-tag_strong_open      = "<strong>"   ; HTML-tag begin of strong text
-tag_strong_close     = "</strong>"  ; HTML-tag end   of strong text
-
-tag_speech_open      = "&bdquo;"    ; HTML-tag begin of speech
-tag_speech_close     = "&rdquo;"    ; HTML-tag end   of speech
 
 
 [wiki]
