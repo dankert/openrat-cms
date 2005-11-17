@@ -520,7 +520,6 @@ class PageAction extends ObjectAction
 						$this->setTemplateVar('value',$this->value->linkToObjectId);
 		
 						break;
-						break;
 				}
 			}
 		}
