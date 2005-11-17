@@ -350,7 +350,7 @@ class File extends Object
 				break;
 				
 			default:
-				die('unsupported image format "'.$format.'", cannot resize');
+				die('unsupported image format "'.$newformat.'", cannot resize');
 		} 
 
 		$f = fopen( $this->tmpfile(), "r" );
@@ -405,7 +405,7 @@ class File extends Object
 	function isImage()
 	{
 		//return eregi('jpe?g|png|gif',$this->extension);
-		return substring($this->mimeType(),0,6)=='image/';
+		return substr($this->mimeType(),0,6)=='image/';
 	}
 
 
