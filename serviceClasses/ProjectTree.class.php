@@ -69,6 +69,54 @@ class ProjectTree extends AbstractTree
 				else
 					$treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 				$treeElement->target      = 'cms_main';
+
+				if	( in_array($element->type,array('link') ) )
+				{
+					$treeElement->type = 'value';
+					$value = new Value();
+					$value->pageid  = $id;
+					$value->element = $element;
+					$value->load();
+					$treeElement->internalId = $value->valueid;
+				}
+
+				$this->addTreeElement( $treeElement );
+			}
+		}
+	}
+
+
+	function value( $id )
+	{
+		if	( $id != 0 )
+		{
+			$value = new Value();
+			$value->loadWithId( $id );
+		
+			$objectid = intval($value->linkToObjectId);
+			
+			if	( $objectid != 0 )
+			{
+				$object = new Object( $objectid );
+				$object->load();
+		
+				$treeElement = new TreeElement();
+				$treeElement->text       = $object->name;
+				if	( in_array($object->getType(),array('page','folder')))
+				{
+					$treeElement->type       = $object->getType();
+					$treeElement->internalId = $object->objectid;
+				}
+				$treeElement->url  = Html::url('main',$object->getType(),$objectid);
+				$treeElement->icon = $object->getType();
+	
+				$treeElement->description = lang('GLOBAL_'.$object->getType());
+				if	( $object->desc != '' )
+					$treeElement->description .= ' - '.Text::maxLaenge( 25,$object->desc );
+				else
+					$treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+				$treeElement->target      = 'cms_main';
+	
 				$this->addTreeElement( $treeElement );
 			}
 		}
