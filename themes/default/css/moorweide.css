@@ -14,81 +14,6 @@ a:active,a:hover
 	text-decoration:underline
 }
 
-a.el_include:link,
-a.el_include:active,
-a.el_include:visited,
-a.el_include:hover,
-a.el_list:link,
-a.el_list:active,
-a.el_list:visited,
-a.el_list:hover
-{
-	background-color: blue;
-}
-
-a.el_longtext:link,
-a.el_longtext:active,
-a.el_longtext:visited,
-a.el_longtext:hover,
-a.el_text:link,
-a.el_text:active,
-a.el_text:visited,
-a.el_text:hover
-{
-	background-color: lime;
-}
-
-a.el_infodate:link,
-a.el_infodate:active,
-a.el_infodate:visited,
-a.el_infodate:hover,
-a.el_info:link,
-a.el_info:active,
-a.el_info:visited,
-a.el_info:hover
-{
-	background-color: white;
-}
-
-a.el_date:link,
-a.el_date:active,
-a.el_date:visited,
-a.el_date:hover
-{
-	background-color: aqua;
-}
-
-a.el_link:link,
-a.el_link:active,
-a.el_link:visited,
-a.el_link:hover
-{
-	background-color: fuchsia;
-}
-
-a.el_number:link,
-a.el_number:active,
-a.el_number:visited,
-a.el_number:hover
-{
-	background-color: lime;
-}
-
-a.el_code:link,
-a.el_code:active,
-a.el_code:visited,
-a.el_code:hover
-{
-	background-color: gray;
-}
-
-a.el_icon:link,
-a.el_icon:active,
-a.el_icon:visited,
-a.el_icon:hover
-{
-	background-color: yellow;
-}
 
 a.mainmenu:link,
 a.mainmenu:visited
@@ -175,12 +100,6 @@ td.help
 	font-family:Verdana,Arial,Helvetica,sans-serif;
 	font-size:11px;
 	padding-bottom:10px;
-}
-
-td.message
-{
-	padding:20px;
-	font-weight:normal;
 }
 
 td.title   { background-color:#DDFFDD; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
