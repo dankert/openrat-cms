@@ -460,7 +460,11 @@ PAGE_EDITOR_ADD_IMAGE="Insert selected image"
 PAGE_EDITOR_ADD_LINK="link with selected page or file"
 LOGIN_NOLOGIN_DESC="Login is disabled at the moment."
 
+GLOBAL_SHOW=Show
 GLOBAL_NOPUBLISH="Publishing not available"
 GLOBAL_NOPUBLISH_DESC="All publishing functions are deactivated at the moment."
 GLOBAL_SHOWTREE="Show tree"
 GLOBAL_HIDETREE="Hide tree"
+BUTTON_OK=Ok
+BUTTON_CANCEL=Cancel
+BUTTON_UNDO=Undo

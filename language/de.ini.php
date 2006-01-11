@@ -5,6 +5,20 @@
 ; Please send new translations to cmstrl@jandankert.de thanks.
 ;
 
+GLOBAL_SECOND = Sekunde
+GLOBAL_MINUTE = Minute
+GLOBAL_HOUR = Stunde
+GLOBAL_DAY = Tag
+GLOBAL_MONTH = Monat
+GLOBAL_YEAR = Jahr
+PREFERENCES = Einstellungen
+GLOBAL_SECONDS = Sekunden
+GLOBAL_MINUTES = Minuten
+GLOBAL_HOURS = Stunden
+GLOBAL_DAYS = Tage
+GLOBAL_MONTHS = Monate
+GLOBAL_YEARS = Jahre
+GLOBAL_CLIPBOARD = Ablage
 ACL = "Berechtigungen"
 ACL_CREATE_FILE = "Datei hochladen"
 ACL_CREATE_FILE_ABBREV = "DAT"
@@ -196,6 +210,8 @@ FOLDER_FLIP_MARK  = "Markierung umdrehen"
 FOLDER_MARK_ALL   = "Alle markieren"
 FOLDER_NEW_FOLDER = "Neuer Ordner"
 FOLDER_NEW_PAGE = "Neue Seite"
+FOLDER_NEW_LINK = "Neue Verkn&uuml;pfung"
+FOLDER_NEW_FILE = "Neue Datei"
 FOLDER_ORDER = "Reihenfolge"
 FOLDER_ORDERBYLASTCHANGE = "Eintr&auml;ge nach dem Datum der letzten &Auml;nderung aufsteigend sortieren"
 FOLDER_ORDERBYNAME       = "Eintr&auml;ge nach dem Namen aufsteigend sortieren"
