@@ -18,42 +18,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.3  2004-12-19 15:26:56  dankert
-// get/setLanguage entfernt, neu get(), set()
-//
-// Revision 1.2  2004/12/15 23:14:48  dankert
-// speichern/lesen Konfiguration
-//
-// Revision 1.1  2004/11/10 22:51:30  dankert
-// Bereitstellen von Methoden, zum Lesen/Schreiben von Variablen von/nach HTTP-Session
-//
-// Revision 1.8  2004/10/14 22:57:44  dankert
-// Neue Verknuepfungen mit dem Linknamen als Url vorbelegen
-//
-// Revision 1.7  2004/10/13 21:18:50  dankert
-// Neue Links zum Verschieben nach ganz oben/unten
-//
-// Revision 1.6  2004/05/07 21:30:59  dankert
-// Korrektur up_url
-//
-// Revision 1.5  2004/05/07 21:29:16  dankert
-// Url ?ber Html::url erzeugen
-//
-// Revision 1.4  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.3  2004/04/28 20:01:52  dankert
-// Ordner l?schen erm?glichen
-//
-// Revision 1.2  2004/04/24 16:57:13  dankert
-// Korrektur: pub()
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 // PHP-Versionsunabhaengiges Array fuer die Session-Variablen ermitteln
@@ -288,10 +252,27 @@ class Session
 	}
 	
 	
+	function getClipboard()
+	{
+		global $SESS;
+		if	( isset($SESS['clipboard']) )
+			return $SESS['clipboard'];
+		else
+			return '';
+	}
+
+	function setClipboard( $var )
+	{
+		global $SESS;
+		$SESS['clipboard'] = $var;
+	}
+	
+	
 	/**
 	 * Schliesst die aktuelle Session
+	 * 
 	 * Diese Funktion sollte so schnell wie moeglich aufgerufen werden, da vorher
-	 * keine andere Seite geladen werden kann
+	 * keine andere Seite (im Frameset!) geladen werden kann
 	 * Nach Aufruf dieser Methode sind keine Session-Zugriffe ueber diese Klasse mehr
 	 * moeglich.
 	 */
