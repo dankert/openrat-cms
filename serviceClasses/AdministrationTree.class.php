@@ -30,6 +30,7 @@ class AdministrationTree extends AbstractTree
 	 * Alle Elemente des Baumes
 	 */
 	var $elements;
+	var $confCache = array();
 	
 	function root()
 	{
@@ -62,6 +63,14 @@ class AdministrationTree extends AbstractTree
 		$treeElement->description = lang('USER_AND_GROUPS');
 		$treeElement->icon        = 'group';
 		$treeElement->type        = 'userandgroups';
+		
+		$this->addTreeElement( $treeElement );
+
+		$treeElement = new TreeElement();
+		$treeElement->text        = lang('PREFERENCES');
+		$treeElement->description = lang('PREFERENCES');
+		$treeElement->icon        = 'folder';
+		$treeElement->type        = 'prefs';
 		
 		$this->addTreeElement( $treeElement );
 
@@ -130,6 +139,58 @@ class AdministrationTree extends AbstractTree
 	}
 	
 	
+	function prefs( $id )
+	{
+		global $conf;
+		
+		if	( $id == 0 )
+		{
+			$tmpConf = $conf;
+		}
+		else
+			$tmpConf = $this->confCache[$id];
+		
+		foreach( $tmpConf as $key=>$value )
+		{
+			if	( is_array($value) )
+			{
+				$this->confCache[crc32($key)] = $value;
+
+				$treeElement = new TreeElement();
+				
+				$treeElement->internalId  = crc32($key);
+				$treeElement->text        = $key;
+//				$treeElement->url         = Html::url('main','prefs',0,array('conf'=>$key));
+				$treeElement->icon        = 'folder';
+				
+				$treeElement->description = '';
+				$treeElement->target      = 'cms_main';
+				$treeElement->type        = 'prefs';
+				$this->addTreeElement( $treeElement );
+			}
+			else
+			{
+				$this->confCache[crc32($key)] = $value;
+
+				$treeElement = new TreeElement();
+				
+				$treeElement->text        = $key.':';
+				if	( $key != 'password')
+					$treeElement->text .= Text::maxLength($value,30);
+				else
+					$treeElement->text .= '*';
+					
+				$treeElement->icon        = 'el_text';
+				
+				if	( $key != 'password')
+					$treeElement->description = $value;
+					
+				$this->addTreeElement( $treeElement );
+			}
+		}
+	}
+
+
 	function users( $id )
 	{	
 		foreach( User::getAllUsers() as $user )
