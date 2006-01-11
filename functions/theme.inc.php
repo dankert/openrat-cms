@@ -14,7 +14,7 @@ function fx( $fx )
 function nice_date( $time )
 {
 	if	( $time==0)
-		return ang('GLOBAL_UNKNOWN');
+		return lang('GLOBAL_UNKNOWN');
 
 	$sekunden = time()-$time;
 	$minuten = intval($sekunden/60);
@@ -59,33 +59,58 @@ function nice_date( $time )
 }
 
 
-function windowOpen( $title,$colSpan=2,$icon='',$attr=array() )
+function windowOpen( $title,$objectName='',$icon='',$attr=array() )
 {
 	global $image_dir;
+	global $windowMenu;
+	global $actionName;
 	if	( !isset($attr['width'])) $attr['width']='90%';
-	echo '<center>';
-	echo '<table style="margin:20px;" cellspacing="0" cellpadding="0"';
+	echo '<br/><br/><br/><center>';
+	echo '<table class="main" cellspacing="0" cellpadding="4" ';
 	foreach( $attr as $aName=>$aValue )
 		echo " $aName=\"$aValue\"";
 	echo '>';
-	echo '<tr><td colspan="2" rowspan="2">';
-	echo '<table class="main" cellspacing="0" width="100%" cellpadding="4">';
-	echo '<tr><th colspan="'.intval($colSpan).'">';
+	echo '<tr><th>';
 	if	( !empty($icon) )
 		echo '<img src="'.$image_dir.'icon_'.$icon.IMG_EXT.'" align="left" border="0">';
-	echo lang( $title ).'</th></tr>';
+	echo $objectName.': ';
+	echo lang( $title );
+	echo <<<EOF
+    </th>
+  </tr>
+EOF
+;
+?>
+  <tr><td class="subaction">
+    <?php foreach( $windowMenu as $action )
+          {
+          	?><a href="<?php echo Html::url($actionName,$action['subaction']) ?>"><?php echo lang('global_'.$action['text']) ?></a> <?php
+          }
+          	?></td>
+  </tr>
+<?php
+
+	echo <<<EOF
+	  <tr>
+    <td>
+      <table class="n" cellspacing="0" width="100%" cellpadding="4">
+EOF
+;
+	echo '';
 }
+
 
 function windowClose()
 {
-	echo '<tr><td>&nbsp;</td></tr>';
-	echo '</table>';
-	echo '</td><td style="width:5px;height:5px;"></td></tr>';	
-	echo '<tr><td rowspan="2" style="background-color:grey; width:5px;"></td></tr>';
-	echo '<tr><td style="width:5px;height:5px;"></td><td style="background-color:grey; height:5px;"></td></tr>';
-	echo '</table>';
+	echo <<<EOF
+      </table>
+	</td>
+  </tr>
+</table>
 
-	echo '</center>';
+</center>
+EOF
+;
 }
 
 ?>
