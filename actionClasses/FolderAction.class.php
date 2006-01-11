@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.30  2005-11-07 22:31:38  dankert
+// Revision 1.31  2006-01-11 22:50:00  dankert
+// Neue Methode order()
+//
+// Revision 1.30  2005/11/07 22:31:38  dankert
 // Wenn Dateiname=Objekt-Id, dann Dateinamen auf leer setzen.
 //
 // Revision 1.29  2005/01/28 23:05:39  dankert
@@ -275,7 +278,7 @@ class FolderAction extends ObjectAction
 		$this->folder->setTimestamp();
 
 		// Ordner anzeigen
-		$this->callSubAction('show');
+		$this->callSubAction('order');
 		
 	}
 
@@ -487,7 +490,7 @@ class FolderAction extends ObjectAction
 		$this->folder->setTimestamp();
 		
 		// Ordner anzeigen
-		$this->callSubAction('show');
+		$this->callSubAction('order');
 	}
 
 
@@ -553,16 +556,55 @@ class FolderAction extends ObjectAction
 
 	function create()
 	{
-		$this->setTemplateVar('templates' ,Template::getAll()      );
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
-		$this->setTemplateVar('new_folder',$this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectIds(true,true)) < MAX_FOLDER_DEPTH );
-		$this->setTemplateVar('new_file'  ,$this->folder->hasRight(ACL_CREATE_FILE  ));
-		$this->setTemplateVar('new_link'  ,$this->folder->hasRight(ACL_CREATE_LINK  ));
-		$this->setTemplateVar('new_page'  ,$this->folder->hasRight(ACL_CREATE_PAGE  ));
+		
+		$this->setWindowMenu('new');
 		
 		$this->forward('folder_new');
 	}
 
+
+
+	function createfolder()
+	{
+		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
+
+		$this->setWindowMenu('new');
+		
+		$this->forward('folder_new_folder');
+	}
+
+
+
+	function createfile()
+	{
+		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
+
+		$this->setWindowMenu('new');
+			
+		$this->forward('folder_new_file');
+	}
+
+
+	function createlink()
+	{
+		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
+
+		$this->setWindowMenu('new');
+			
+		$this->forward('folder_new_link');
+	}
+
+
+	function createpage()
+	{
+		$this->setTemplateVar('templates' ,Template::getAll()      );
+		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
+
+		$this->setWindowMenu('new');
+
+		$this->forward('folder_new_page');
+	}
 
 
 	function show()
@@ -571,9 +613,10 @@ class FolderAction extends ObjectAction
 
 		if   ( ! $this->folder->isRoot )
 			$this->setTemplateVar('up_url',Html::url('main','folder',$this->folder->parentid));
+
+		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
 		
 		$list = array();
-		$last_objectid = 0;
 
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
@@ -608,20 +651,6 @@ class FolderAction extends ObjectAction
 				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
 				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
 				$list[$id]['user'] = $o->lastchangeUser;
-
-				if   ( $last_objectid != 0 && $o->hasRight(ACL_WRITE) )
-				{
-					$list[$id           ]['upurl'    ] = Html::url('folder','changesequence',0,array(
-					                                                     'objectid1'=>$id,
-					                                                     'objectid2'=>$last_objectid));
-					$list[$last_objectid]['downurl'  ] = $list[$id]['upurl'];
-					$list[$last_objectid]['bottomurl'] = Html::url('folder','setbottom',0,array(
-					                                                     'objectid1'=>$last_objectid));
-					$list[$id           ]['topurl'   ] = Html::url('folder','settop',0,array(
-					                                                     'objectid1'=>$id));
-				}
-
-				$last_objectid = $id;
 			}
 		}
 
@@ -640,19 +669,85 @@ class FolderAction extends ObjectAction
 			$this->setTemplateVar('folder',$otherfolder);
 	
 			// URLs zum Umsortieren der Eintraege
-			$this->setTemplateVar('orderbytype_url'      ,Html::url('folder','reorder',0,array('type'=>'type'      )) );
-			$this->setTemplateVar('orderbyname_url'      ,Html::url('folder','reorder',0,array('type'=>'name'      )) );
-			$this->setTemplateVar('orderbylastchange_url',Html::url('folder','reorder',0,array('type'=>'lastchange')) );
+			$this->setTemplateVar('order_url'      ,Html::url('folder','order',$this->folder->id) );
 		}	
 
-		$this->setTemplateVar('flip_url'             ,Html::url('folder','reorder',0,array('type'=>'flip'      )) );
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
 
+		$this->setWindowMenu( 'show' );
 		$this->forward('folder_show');
 		
 	}
 
+
+
+	function order()
+	{
+		global $conf_php;
+
+		$list = array();
+		$last_objectid = 0;
+
+		// Schleife ueber alle Objekte in diesem Ordner
+		foreach( $this->folder->getObjects() as $o )
+		{
+			$id = $o->objectid;
+
+			if   ( $o->hasRight(ACL_READ) )
+			{
+				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
+				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
+				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
+				if	( $list[$id]['desc'] == '' )
+					$list[$id]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
+
+				$list[$id]['type'] = $o->getType();
+				
+				$list[$id]['icon'] = $o->getType();
+
+				if	( $o->getType() == 'file' )
+				{
+					$file = new File( $id );
+					$file->load();
+					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
+
+					if	( $file->isImage() )
+						$list[$id]['icon'] = 'image';
+				}
+
+				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
+				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
+				$list[$id]['user'] = $o->lastchangeUser;
+
+				if   ( $last_objectid != 0 && $o->hasRight(ACL_WRITE) )
+				{
+					$list[$id           ]['upurl'    ] = Html::url('folder','changesequence',0,array(
+					                                                     'objectid1'=>$id,
+					                                                     'objectid2'=>$last_objectid));
+					$list[$last_objectid]['downurl'  ] = $list[$id]['upurl'];
+					$list[$last_objectid]['bottomurl'] = Html::url('folder','setbottom',0,array(
+					                                                     'objectid1'=>$last_objectid));
+					$list[$id           ]['topurl'   ] = Html::url('folder','settop',0,array(
+					                                                     'objectid1'=>$id));
+				}
+
+				$last_objectid = $id;
+			}
+		}
+
+		$this->setTemplateVar('flip_url'             ,Html::url('folder','reorder',0,array('type'=>'flip'      )) );
+		$this->setTemplateVar('orderbyname_url'      ,Html::url('folder','reorder',0,array('type'=>'name'      )) );
+		$this->setTemplateVar('orderbytype_url'      ,Html::url('folder','reorder',0,array('type'=>'url'       )) );
+		$this->setTemplateVar('orderbylastchange_url',Html::url('folder','reorder',0,array('type'=>'lastchange')) );
+		$this->setTemplateVar('object'      ,$list            );
+		$this->setTemplateVar('act_objectid',$this->folder->id);
+		$this->setWindowMenu( 'show' );
+
+		$this->forward('folder_order');
+		
+	}
 
 	function prop()
 	{
@@ -726,4 +821,45 @@ class FolderAction extends ObjectAction
 
 		$this->callSubaction( 'pub' );
 	}
+	
+	
+	
+	function setWindowMenu( $type ) {
+		
+		global $conf;
+		
+		switch( $type)
+		{
+			case 'new':
+				$menu = array();
+				if	($this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectIds(true,true)) < MAX_FOLDER_DEPTH )
+					$menu[] = array('subaction'=>'createfolder','text'=>'folder_new_folder');
+		
+				if	($this->folder->hasRight(ACL_CREATE_FILE))
+					$menu[] = array('subaction'=>'createfile','text'=>'folder_new_file');
+		
+				if	($this->folder->hasRight(ACL_CREATE_LINK))
+					$menu[] = array('subaction'=>'createlink','text'=>'folder_new_link');
+		
+				if	($this->folder->hasRight(ACL_CREATE_PAGE))
+					$menu[] = array('subaction'=>'createpage','text'=>'folder_new_page');
+
+				$this->setTemplateVar('windowMenu',$menu);
+				break;
+
+			case 'acl':
+				$menu = array( array('subaction'=>'rights' ,'text'=>'show'),
+		                       array('subaction'=>'aclform','text'=>'add' ) );
+				$this->setTemplateVar('windowMenu',$menu);
+				break;
+
+			case 'show':
+				$menu = array( array('subaction'=>'show' ,'text'=>'show'),
+		                       array('subaction'=>'order','text'=>'order' ) );
+				$this->setTemplateVar('windowMenu',$menu);
+				break;
+
+		}
+	}
+	
 }
