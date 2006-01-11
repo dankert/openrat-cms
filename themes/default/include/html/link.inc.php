@@ -1,0 +1,1 @@
+<a href="<?php echo $$attr_url ?>" target="<?php echo $attr_target ?>" title="<?php echo lang($$attr_title) ?>">

@@ -1,0 +1,1 @@
+<?php $$attr_var = $attr_value ?>

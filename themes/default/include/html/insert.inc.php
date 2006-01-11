@@ -1,0 +1,1 @@
+<?php include( $tpl_dir.$attr_file.'.tpl.php') ?>

@@ -1,0 +1,1 @@
+<input <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?> value="<?php echo $$attr_name ?>" />

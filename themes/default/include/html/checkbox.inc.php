@@ -1,0 +1,1 @@
+<input type="checkbox" name="<?php echo $attr_prefix.$$attr_name ?>" <?php if ($attr_readonly=='true') echo ' disabled="disabled"' ?> value="1" <?php if( $attr_default=='true' ) echo 'checked="checked"' ?> />
