@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2005-01-14 21:41:23  dankert
+// Revision 1.7  2006-01-11 22:52:24  dankert
+// URLs f?r neue Frames setzen
+//
+// Revision 1.6  2005/01/14 21:41:23  dankert
 // Aufruf von lastModified() fuer Conditional-GET
 //
 // Revision 1.5  2004/12/19 14:55:50  dankert
@@ -70,6 +73,8 @@ class MainAction extends Action
 		// Variablen fuellen
 		$this->setTemplateVar('frame_src_main_menu',Html::url( 'mainmenu'                       ,$this->getRequestVar('subaction'),$this->getRequestId(),$params ) );
 		$this->setTemplateVar('frame_src_main_main',Html::url( $this->getRequestVar('subaction'),''                               ,$this->getRequestId(),$params ) );
+		$this->setTemplateVar( 'frame_src_border'    ,Html::url( 'border'         ) );
+		$this->setTemplateVar( 'frame_src_background',Html::url( 'background'     ) );
 		
 		$this->forward('frameset_main'); // Forward auf View
 	}
