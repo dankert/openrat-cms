@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2005-04-16 21:33:13  dankert
+// Revision 1.18  2006-01-11 22:38:10  dankert
+// ?nderungen bei Aufruf Template-Engine
+//
+// Revision 1.17  2005/04/16 21:33:13  dankert
 // Erweiterter Funktionsaufruf fuer Notizen/Meldungen
 //
 // Revision 1.16  2005/02/17 19:20:32  dankert
@@ -201,6 +204,8 @@ class Action
 		global $HTTP_SERVER_VARS;
 		global $image_dir;
 		       
+		$tplName = str_replace( '_','/',$tplName );
+		
 		$tplFileName = $tplName.'.tpl.'.PHP_EXT;
 		$conf_php = PHP_EXT;
 	
@@ -230,9 +235,25 @@ class Action
 
 		$showDuration = $conf['interface']['show_duration'];
 
+		$view = new Html(); // HTML ist der Standard-Renderer
+	
+		$subActionName = $this->subActionName;
+		$actionName    = $this->actionName;
+		$requestId     = $this->getRequestId();
+		
+		
+		if	( $conf['theme']['compiler']['enable'] )
+		{
+			$te = new TemplateEngine();
+			$te->compile( $tplName );
+			unset($te);
+		}
+
 		// Einbinden des Templates
 		//
-		require( 'themes/default/templates/'.$tplFileName );
+//		$tplFilename = 'themes/default/templates/'.$tplFileName;
+		
+		require( 'themes/default/pages/html/'.$tplName.'.tpl.'.PHP_EXT );
 		
 		exit;
 	}
@@ -241,7 +262,9 @@ class Action
 	function callSubAction( $subActionName )
 	{
 		if	( in_array($this->actionName,array('page','file','link','folder')) )
-			Session::setSubaction( $subActionName );		
+			Session::setSubaction( $subActionName );
+
+//		$this->subActionName = $subActionName;		
 
 		Logger::trace("next subaction is '$subActionName'");
 		
