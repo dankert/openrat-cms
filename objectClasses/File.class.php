@@ -188,7 +188,7 @@ class File extends Object
 			return $this->mime_type;
 
 		global $conf;
-		$mime_types = $conf['mime_types'];
+		$mime_types = $conf['mime-types'];
 
 		if	( !empty($mime_types[ strtolower($this->extension) ]) )
 			$this->mime_type = $mime_types[ strtolower($this->extension) ];
