@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-12-15 23:25:22  dankert
+// Revision 1.4  2006-01-11 22:51:51  dankert
+// Funktion login() deaktiviert
+//
+// Revision 1.3  2004/12/15 23:25:22  dankert
 // *** empty log message ***
 //
 // Revision 1.2  2004/05/02 14:49:37  dankert
@@ -59,25 +62,26 @@ class LoginAction extends Action
 	}
 
 
-	function login()
-	{
-		global $conf;
-
-
-		foreach( $conf['databases'] as $dbname=>$dbconf )
-		{
-			$dbids[$dbname] = $dbconf['comment'];
-		}
-
-		$this->setTemplateVar( 'dbids',$dbids );
-		
-		if	( $this->getSessionVar('dbid') != '' )
-			$this->setTemplateVar('actdbid',$this->getSessionVar('dbid'));
-			$this->setTemplateVar('actdbid',$conf['database']['default']);
-
-		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
-		$this->setSessionVar('loginmessage','');
-
-		$this->forward('login');
-	}
+//	function login()
+//	{
+//		global $conf;
+//
+//
+//		foreach( $conf['database'] as $dbname=>$dbconf )
+//		{
+//			if	( $dbconf['enabled'] )
+//				$dbids[$dbname] = $dbconf['comment'];
+//		}
+//
+//		$this->setTemplateVar( 'dbids',$dbids );
+//		
+//		if	( $this->getSessionVar('dbid') != '' )
+//			$this->setTemplateVar('actdbid',$this->getSessionVar('dbid'));
+//			$this->setTemplateVar('actdbid',$conf['database']['default']);
+//
+//		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
+//		$this->setSessionVar('loginmessage','');
+//
+//		$this->forward('login');
+//	}
 }
