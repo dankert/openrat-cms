@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.18  2005-11-02 21:16:23  dankert
+// Revision 1.19  2006-01-11 22:25:24  dankert
+// Einzelne include-Anweisungen pro Verzeichnis, Konfiguration als Baum einlesen
+//
+// Revision 1.18  2005/11/02 21:16:23  dankert
 // Aenderungen fuer Textauszeichnungen
 //
 // Revision 1.17  2005/04/16 22:28:05  dankert
@@ -94,47 +97,15 @@ define('OR_SERVICECLASSES_DIR','./serviceClasses/' );
 define('OR_LANGUAGE_DIR'      ,'./config/language/');
 define('OR_DBCLASSES_DIR'     ,'./db/'             );
 define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/' );
-define('OR_TEXTCLASSES_DIR'   ,'./textClasses/' );
+define('OR_TEXTCLASSES_DIR'   ,'./textClasses/'    );
+define('OR_PREFERENCES_DIR'   ,'./config/openrat-cms/');
 define('OR_THEMES_DIR'        ,'./themes/'         );
 define('OR_TMP_DIR'           ,'./tmp/'            );
 define('START_TIME'           ,time()              );
 
-require_once( OR_SERVICECLASSES_DIR."GlobalFunctions.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Http.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Html.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Upload.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Ftp.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Text.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Publish.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Api.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."TreeElement.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."AbstractTree.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."AdministrationTree.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."ProjectTree.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Transformer.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Line.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
 
-
-require_once( OR_FORMCLASSES_DIR."AbstractForm.class.".PHP_EXT );
-require_once( OR_FORMCLASSES_DIR."LoginForm.class.".PHP_EXT );
-
-require_once( OR_OBJECTCLASSES_DIR."Value.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Acl.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Template.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Object.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Folder.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Link.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."File.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."User.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Group.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Project.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Page.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Language.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Model.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Element.class.".PHP_EXT );
-
+require_once( OR_OBJECTCLASSES_DIR."include.inc.".PHP_EXT );
 require_once( OR_TEXTCLASSES_DIR."include.inc.".PHP_EXT );
 
 require_once( OR_DBCLASSES_DIR."db.class.php" );
@@ -153,50 +124,12 @@ $conf = Session::getConfig();
 // aus Datei lesen.
 if	( !is_array( $conf ) )
 {
-	$conf_filename = OR_CONFIG_DIR.'/config.ini.'.PHP_EXT;
-
-	if	( !is_file( $conf_filename ) )
-		die( $conf_filename.': file not found' );
-
-	// Datei lesen, parsen und in Session schreiben
-	$conf = parse_ini_file( $conf_filename,true );
-
-	$db_files = Array();
-	$handle = opendir ( $conf['database']['dir'] );
-	$prefix = $conf['database']['prefix'];
-	$suffix = $conf['database']['suffix'];
-	$conf['databases'] = array();
-
-	while ( $file = readdir($handle) )
-	{
-		if	( substr($file,0,strlen($prefix))==$prefix &&
-			  substr($file,strlen($file)-strlen($suffix),strlen($suffix))==$suffix  )
-		{
-			$name = substr($file,strlen($prefix),strlen($file)-strlen($suffix)-strlen($prefix));
-			$dbnames[] = $name;
-			$dbconf = parse_ini_file($conf['database']['dir'].'/'.$file);
-			
-			if	( $dbconf['enabled'] )
-				$conf['databases'][$name] = $dbconf;
-		}
-	}
-	closedir($handle);
-
-	// Mime-Types aus eigener Datei lesen und zur Konfiguration hinzufuegen 
-	$conf['mime_types']   = parse_ini_file( OR_CONFIG_DIR.'/mime-types.ini.'.PHP_EXT );
-
-	// Laender aus eigener Datei lesen und zur Konfiguration hinzufuegen 
-	$conf['countries']    = parse_ini_file( OR_CONFIG_DIR.'/countries.ini.'.PHP_EXT );
-
-	// Datum-Formate aus eigener Datei lesen und zur Konfiguration hinzufuegen 
-	$conf['date_formats'] = parse_ini_file( OR_CONFIG_DIR.'/date-formats.ini.'.PHP_EXT );
-
-	// Ersetze-mit-Angaben aus eigener Datei lesen und zur Konfiguration hinzufuegen 
-	$conf['replace']      = parse_ini_file( OR_CONFIG_DIR.'/replace.ini.'.PHP_EXT );
-
+	$prefs = new Preferences();
+	$conf = $prefs->load();
+	
 	// Sprache lesen und zur Konfiguration hinzufuegen
 
-	if	( $conf['interface']['use_browser_language'] )
+	if	( $conf['i18n']['use_http'] )
 		// Die vom Browser angeforderten Sprachen ermitteln     
 		$languages = Http::getLanguages();
 	else
@@ -204,24 +137,30 @@ if	( !is_array( $conf ) )
 		$languages = array();
 
 	// Default-Sprache hinzufuegen.
-	// Wird verwendet, wenn die vom Browser angeforderten Sprachen
+	// Wird dann verwendet, wenn die vom Browser angeforderten Sprachen
 	// nicht vorhanden sind
-	$languages[] = $conf['interface']['language'];
+	$languages[] = $conf['i18n']['default'];
 
 	foreach( $languages as $l )
 	{
-		$l = substr($l,0,2);
+//		$l = substr($l,0,2);
 
 		// Pruefen, ob Sprache vorhanden ist.
 		$langFile = OR_LANGUAGE_DIR.$l.'.ini.'.PHP_EXT;
 
 		if	( file_exists( $langFile ) )
 		{
-//			Logger::debug( 'reading language file: '.$l );
 			$conf['language'] = parse_ini_file( $langFile );
 			break;
 		}
 	}
+	
+	$langDefaultFile = OR_LANGUAGE_DIR.$conf['i18n']['complete_from'].'.ini.'.PHP_EXT;
+	if	( file_exists( $langDefaultFile ) )
+	{
+		$conf['language'] = array_merge( parse_ini_file( $langDefaultFile ),$conf['language']);
+	}
+	
 
 	if	( !isset($conf['language']) )
 		die( 'no language found! (languages='.implode(',',$languages).')' );
