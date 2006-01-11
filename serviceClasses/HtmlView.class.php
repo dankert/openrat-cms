@@ -7,7 +7,7 @@
  * @version $Revision$
  * @package openrat.services
  */
-class Html
+class HtmlView
 {
 	var $tableHasRows = false;
 	var $rowHasCells  = false;
@@ -16,8 +16,11 @@ class Html
 	
 	function insert( $attr )
 	{
+		$end = false;
 		extract($attr);
-		return "<?php include( $$tpl_dir.'.$file.tpl.php') ?>";
+		if	( $end ) return '';
+
+		return "<?php include( ".'$'."tpl_dir.'$file.tpl.php') ?>";
 	}
 	
 	
@@ -29,8 +32,12 @@ class Html
 	 * @param Vorbelegter Inhalt
 	 * @param Weitere Parameter
 	 */
-	function selectBox( $name,$values,$default='',$params=Array() )
+	function selectBox( $attr )
 	{
+		$end = false;
+		extract($attr);
+		if	( $end ) return '';
+		
 		$src = '<select size="1" name="'.$name.'"';
 		foreach( $params as $name=>$value )
 			$src .= " $name=\"$value\"";
@@ -45,27 +52,14 @@ class Html
 		}
 		$src .= '</select>';
 
+//		if	( isset($this) ) // sind wir statisch oder instanziiert?
+//			echo $src;
+			
 		return $src;
 	}
 
 
-	function closeTag( $name )
-	{
-		if	( count($this->openTags) == 0 )
-			return;
-			
-		for( $n=count($this->openTags); $n>=0; $n--)
-		{
-			$tagName = $this->openTags[$n];
-			echo '</'.$tagName.'>';
-			unset($this->openTags[$n]);
-			
-			if	( $tagName == $name )
-				break;
-		}
-	}
-	
-	
+
 	/**
 	 * Erzeugt ein HTML-Eingabefeld
 	 *
@@ -73,13 +67,20 @@ class Html
 	 * @param Vorbelegter Inhalt
 	 * @param Weitere Parameter
 	 */
-	function inputText( $name,$default='',$params=Array() )
+	function inputText( $attr )
 	{
-		$src = '<input type="text" name="'.$name.'" value="'.$default.'"';
+		$end = false;
+		extract($attr);
+		if	( $end ) return '';
+		
+		$src = '<input type="text" name="'.$name.'" value="'.$value.'"';
 		foreach( $params as $name=>$value )
 			$src .= " $name=\"$value\"";
 		$src .= '>';
 
+		if	( isset($this) ) // sind wir statisch oder instanziiert?
+			echo $src;
+			
 
 		return $src;
 	}
@@ -103,6 +104,9 @@ class Html
 		$src .= $default;
 		$src .= '</textarea>';
 
+		if	( isset($this) ) // sind wir statisch oder instanziiert?
+			echo $src;
+			
 		return $src;
 	}
 
@@ -131,6 +135,9 @@ class Html
 
 		$src .= ' />';
 
+		if	( isset($this) ) // sind wir statisch oder instanziiert?
+			echo $src;
+		
 		return $src;
 	}
 
@@ -224,6 +231,9 @@ class Html
 		else
 			$src = './'.'do.php'.$urlParameter;
 
+//		if	( isset($this) ) // sind wir statisch oder instanziiert?
+//			echo $src;
+
 		return $src;
 	}
 
@@ -234,33 +244,40 @@ class Html
 	  *
 	  * @param Parameter
 	  */
-	function form( $action,$subaction='',$id='-',$params=array())
+	function form( $attr )
 	{
 		global $conf;
-		extract( $params );
+		$action='';
+		$subaction = '';
+		$id=0;
+		$end = false;
+		extract($attr);
+		if	( $end ) return '';
 
 		if	( !isset($target  ) )  $target  = '_self';
 		if	( !isset($method  ) )  $method  = 'post';
 		if	( !isset($name    ) )  $name    = '';
 		if	( !isset($enctype ) )  $enctype = '';
 
-		unset( $params['name'     ]);
-		unset( $params['method'   ]);
-		unset( $params['target'   ]);
-		unset( $params['enctype'  ]);
-
 		$url = Html::url( $action,$subaction,$id );
-
-		$text = '<form name="'.$name.'" target="'.$target.'" action="'.$url.'" method="'.$method.'" enctype="'.$enctype.'" >'."\n";
-
-		$text.= '<input type="hidden" name="'.REQ_PARAM_ACTION.'" value="'.$action.'" />'."\n";
-		$text.= '<input type="hidden" name="'.REQ_PARAM_SUBACTION.'" value="'.$subaction.'" />'."\n";
-		$text.= '<input type="hidden" name="'.REQ_PARAM_ID.'" value="'.$id.'" />'."\n";
-
+		
+		$reqParamAction    = REQ_PARAM_ACTION;
+		$reqParamSubAction = REQ_PARAM_SUBACTION;
+		$reqParamId        = REQ_PARAM_ID;
+		$text = <<<EOF
+<form name="$name" target="$target" action="$url" method="$method" enctype="$enctype">
+<input type="hidden" name="$reqParamAction" value="$action" />
+<input type="hidden" name="$reqParamAction" value="$subaction" />
+<input type="hidden" name="$reqParamAction" value="$id" />
+EOF;
 		if	( $conf['interface']['url_sessionid'] )
 			$text.= '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
 
-		foreach( $params as $paramName=>$paramValue )
+		unset($attr['target' ]);
+		unset($attr['method' ]);
+		unset($attr['name'   ]);
+		unset($attr['enctype']);
+		foreach( $attr as $paramName=>$paramValue )
 			$text.= '<input type="hidden" name="'.$paramName.'" value="'.$paramValue.'" />'."\n";
 
 		return $text;
@@ -273,105 +290,156 @@ class Html
 	 *
 	 * @param Name des Feldes
 	 */ 
-	function focusField( $name )
+	function focus( $attr )
 	{
-		echo '<script name="JavaScript" type="text/javascript"><!--'."\n";
-		echo 'document.forms[0].'.$name.'.focus();'."\n";
-		echo '//--></script>'."\n";
+		$end = false;
+		extract($attr);
+		if	( $end ) return '';
+		$text = <<<EOF
+<script name="JavaScript" type="text/javascript"><!--
+document.forms[0].$field.focus();
+//--></script>
+EOF;
+		return $text;
 	}
 	
 	
-	function printUser( $user )
+	function printUser( $attr )
 	{
-		if	( empty($user->name) )
-			$user->name = lang('GLOBAL_UNKNOWN');
-		if	( empty($user->fullname) )
-			$user->fullname = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+		$end = false;
+		extract($attr);
+		if	( $end ) return '';
+		$text = <<<EOF
+		<php
+		if	( empty(\$user->name) )
+			\$user->name = lang('GLOBAL_UNKNOWN');
+		if	( empty(\$user->fullname) )
+			\$user->fullname = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
-		if	( !empty($user->mail) )
-			echo '<a href="mailto:'.$user->mail.'" title="'.$user->fullname.'">'.$user->name.'</a>';
+		if	( !empty(\$user->mail) )
+			echo '<a href="mailto:'.\$user->mail.'" title="'.\$user->fullname.'">'.\$user->name.'</a>';
 		else
-			echo '<span title="'.$user->fullname.'">'.$user->name.'</span>';
+			echo '<span title="'.\$user->fullname.'">'.\$user->name.'</span>';
+		>
+EOF;
+		return $text;
 	}
 	
 	
-	function row()
+	function row( $attr )
 	{
-		$this->closeTag('tr');
+		$end = false;
+		extract($attr);
+		if	( $end )
+			return '</tr>';
 		
-		echo '<tr>';
-		$this->tableHasRows = true;
+		return '<tr>';
 	}
 
 
-	function cell()
+	function cell( $attr )
 	{
-		$this->closeTag('td');
+		$end = false;
+		extract($attr);
+		if	( $end )
+			return '</td>';
+		return '<td>';
+	}
+
+
+	function text(  $attr  )
+	{
+		$text = 'need attribute text';
+		$end = false;
+		extract($attr);
+		if	( $end ) return '';
 		
-		echo '<td>';
-		$this->rowHasCells = true;
-	}
-
-
-	function text( $text )
-	{
-		echo lang($text);
+		if	( isset($raw) )
+			return str_replace('_',' ',$raw);
+			
+		return lang($text);
 	}
 	
 	
-	function formatDate( $time )
+	function formatDate( $attr )
 	{
-		if	( $time==0)
+		$end = false;
+		extract($attr);
+		if	( $end ) return '';
+		$text = <<<EOF
+		<?php
+		\$time = \$$value;
+		if	( \$time==0)
 		{
 			echo lang('GLOBAL_UNKNOWN');
 			return;
 		}
 	
-		$sekunden = time()-$time;
-		$minuten = intval($sekunden/60);
-		$stunden = intval($minuten /60);
-		$tage    = intval($stunden /24);
-		$monate  = intval($tage    /30);
-		$jahre   = intval($monate  /12);
+		\$sekunden = time()-\$time;
+		\$minuten = intval(\$sekunden/60);
+		\$stunden = intval(\$minuten /60);
+		\$tage    = intval(\$stunden /24);
+		\$monate  = intval(\$tage    /30);
+		\$jahre   = intval(\$monate  /12);
 		
-		if	( $sekunden == 1 )
-			$text = $sekunden.' '.lang('GLOBAL_SECOND');
-		elseif	( $sekunden < 60 )
-			$text = $sekunden.' '.lang('GLOBAL_SECONDS');
+		if	( \$sekunden == 1 )
+			\$text = \$sekunden.' '.lang('GLOBAL_SECOND');
+		elseif	( \$sekunden < 60 )
+			\$text = \$sekunden.' '.lang('GLOBAL_SECONDS');
 	
-		elseif	( $minuten == 1 )
-			$text = $minuten.' '.lang('GLOBAL_MINUTE');
-		elseif	( $minuten < 60 )
-			$text = $minuten.' '.lang('GLOBAL_MINUTES');
+		elseif	( \$minuten == 1 )
+			\$text = \$minuten.' '.lang('GLOBAL_MINUTE');
+		elseif	( \$minuten < 60 )
+			\$text = \$minuten.' '.lang('GLOBAL_MINUTES');
 	
-		elseif	( $stunden == 1 )
-			$text = $stunden.' '.lang('GLOBAL_HOUR');
-		elseif	( $stunden < 60 )
-			$text = $stunden.' '.lang('GLOBAL_HOURS');
+		elseif	( \$stunden == 1 )
+			\$text = \$stunden.' '.lang('GLOBAL_HOUR');
+		elseif	( \$stunden < 60 )
+			\$text = \$stunden.' '.lang('GLOBAL_HOURS');
 	
-		elseif	( $tage == 1 )
-			$text = $tage.' '.lang('GLOBAL_DAY');
-		elseif	( $tage < 60 )
-			$text = $tage.' '.lang('GLOBAL_DAYS');
+		elseif	( \$tage == 1 )
+			\$text = \$tage.' '.lang('GLOBAL_DAY');
+		elseif	( \$tage < 60 )
+			\$text = \$tage.' '.lang('GLOBAL_DAYS');
 	
-		elseif	( $monate == 1 )
-			$text = $monate.' '.lang('GLOBAL_MONTH');
-		elseif	( $monate < 12 )
-			$text = $monate.' '.lang('GLOBAL_MONTHS');
+		elseif	( \$monate == 1 )
+			\$text = \$monate.' '.lang('GLOBAL_MONTH');
+		elseif	( \$monate < 12 )
+			\$text = \$monate.' '.lang('GLOBAL_MONTHS');
 	
-		elseif	( $jahre == 1 )
-			$text = $jahre.' '.lang('GLOBAL_YEAR');
+		elseif	( \$jahre == 1 )
+			\$text = \$jahre.' '.lang('GLOBAL_YEAR');
 		else
-			$text = $jahre.' '.lang('GLOBAL_YEARS');
-		echo '<span title="'.date(lang('DATE_FORMAT'),$time).'"">';
-		echo $text;
+			\$text = \$jahre.' '.lang('GLOBAL_YEARS');
+		echo '<span title="'.date(lang('DATE_FORMAT'),\$time).'"">';
+		echo \$text;
 		echo '</span>';
-	//	return date(lang('DATE_FORMAT'),$time);
+	//	return date(lang('DATE_FORMAT'),\$time);
+	?>
+EOF;
+		return $text;
+
 	}
 
 
 	function window( $title,$objectName='',$icon='',$attr=array() )
 	{
+		$end = false;
+		extract($attr);
+		if	( $end )
+		{
+				$end = false;
+			return <<<EOF
+      </table>
+	</td>
+  </tr>
+</table>
+
+</center>
+EOF;
+		
+		}
+		
 		global $image_dir;
 		if	( !isset($attr['width'])) $attr['width']='90%';
 		echo '<br/><br/><br/><center>';
@@ -395,19 +463,6 @@ EOF
 		echo '';
 	}
 	
-	
-	function windowClose()
-	{
-		echo <<<EOF
-      </table>
-	</td>
-  </tr>
-</table>
-
-</center>
-EOF
-;
-}
 
 }
 ?>
