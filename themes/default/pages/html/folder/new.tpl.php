@@ -1,89 +1,90 @@
-<?php include( $tpl_dir.'header.tpl.php') ?>
-
+<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Wed, 11 Jan 2006 22:14:14 +0100 */ ?><?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
 <!-- $Id$ -->
-<center>
+<head>
+  <title><?php echo $cms_title ?></title>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <meta name="MSSmartTagsPreventParsing" content="true" />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
+<?php if($stylesheet!='default') { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php } ?>
+</head>
 
-<?php echo Html::form( 'folder','createnew',$objectid,array('enctype'=>'multipart/form-data') ) ?>
+<body<?php if( !empty($attr_class) )echo ' class="'.$class.'"' ?>>
 
-<?php windowOpen('GLOBAL_NEW',4,'folder') ?></th>
 
-  <?php $nr = 0 ?>
-  <?php $tab = 0 ?>
-
-  <?php if ($new_page)
-        { ?>
-  <?php   if (count($templates)>0) // Nur, wenn Vorlagen vorhanden
-          { ?>
-  <tr>
-    <td class="f1">
-      <input type="radio" name="type" value="page" onClick="document.forms[0].pagename.focus();"><?php echo lang('GLOBAL_PAGE') ?>
-    </td>
-    <td class="f1">
-      <?php echo Html::selectBox('templateid',$templates) ?>
-      <input type="text" name="pagename" size="20" value="" onFocus="document.forms[0].type[<?php echo $nr++ ?>].checked=true;" tabindex="<?php echo $tab++ ?>">
-    </td>
+<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/window.inc.php - compile time: Wed, 11 Jan 2006 22:14:14 +0100 */ ?><?php $attr = array('title'=>'GLOBAL_NEW','name'=>'global_new','widths'=>'','width'=>'') ?><?php $attr_title='GLOBAL_NEW' ?><?php $attr_name='global_new' ?><?php $attr_widths='' ?><?php $attr_width='' ?><?php
+	$coloumn_widths=array();
+	if	(!empty($attr_widths))
+	{
+		$column_widths = explode(',',$attr_widths);
+		unset($attr['widths']);
+	}
+		global $image_dir;
+		if	( !isset($attr_width)) $attr['width']='90%';
+		echo '<br/><br/><br/><center>';
+		echo '<table class="main" cellspacing="0" cellpadding="4" ';
+		foreach( $attr as $aName=>$aValue )
+			echo " $aName=\"$aValue\"";
+		echo '>';
+		echo '<tr><th>';
+		if	( !empty($attr_icon) )
+			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_EXT.'" align="left" border="0">';
+		if	( !isset($$attr_name)) $$attr_name='';
+		echo $$attr_name.': ';
+		echo lang( $attr_title );
+		?>
+    </th>
   </tr>
-  <?php   }
-          else
-          { ?>
-  <tr>
-    <td class="help" colspan="2"><?php echo lang('GLOBAL_NO_TEMPLATES_AVAILABLE_DESC') ?></td>
+  <tr><td class="subaction">
+    <?php foreach( $windowMenu as $menu )
+          {
+          	?><a href="<?php echo Html::url($actionName,$menu['subaction']) ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
+          }
+          	?></td>
   </tr>
-  <?php   } ?>
-  <?php } ?>
 
-  <?php if ($new_file)
-        { ?>
-  <tr>
-    <td class="f1">
-      <input type="radio" name="type" value="file" onClick="document.forms[0].file.focus();"><?php echo lang('GLOBAL_FILE') ?>
-    </td>
-    <td class="f1">
-      <input type="file" name="file" onFocus="document.forms[0].type[<?php echo $nr++ ?>].checked=true;" tabindex="<?php echo $tab++ ?>">
-    </td>
-  </tr>
-  <?php } ?>
+<?php if (isset($notices) && count($notices)>0 )
+      { ?>
 
-  <?php if ($new_folder)
-        { ?>
   <tr>
-    <td class="f1">
-      <input type="radio" name="type" value="folder" onClick="document.forms[0].foldername.focus();"><?php echo lang('GLOBAL_FOLDER') ?>
-    </td>
-    <td class="f1">
-      <input type="text" name="foldername" size="20" value="" onFocus="document.forms[0].type[<?php echo $nr++ ?>].checked=true;" tabindex="<?php echo $tab++ ?>">
-    </td>
-  </tr>
-  <?php } ?>
+    <td><table>
 
-  <?php if ($new_link)
-        { ?>
-  <tr>
-    <td class="f1">
-      <input type="radio" name="type" value="link" onClick="document.forms[0].linkname.focus();"><?php echo lang('GLOBAL_LINK') ?>
-    </td>
-    <td class="f1">
-      <input type="text" name="linkname" size="20" value="" onFocus="document.forms[0].type[<?php echo $nr++ ?>].checked=true;" tabindex="<?php echo $tab++ ?>">
-    </td>
+  <?php foreach( $notices as $notice ) { ?>
+
+    <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_EXT ?>" style="padding:10px" /></td>
+    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
   </tr>
   <?php } ?>
 
-  <tr>
-    <td colspan="5" class="act">
-      <input type="submit" class="submit" value="<?php echo lang('GLOBAL_NEW') ?>">
-
-    </td>
+    </table></td>
   </tr>
 
-<?php windowClose() ?>
+<?php } ?>
 
-</form>
 
-<?php
-	if		($new_page)   Html::focusField('pagename'  );
-	elseif	($new_folder) Html::focusField('foldername');
-	elseif	($new_file)   Html::focusField('filename'  );
-	elseif	($new_link)   Html::focusField('linkname'  );
-?>
 
-<?php include( $tpl_dir.'footer.tpl.php') ?>
+  <tr>
+    <td>
+      <table class="n" cellspacing="0" width="100%" cellpadding="4">
+<?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php /* source: ./themes/default/include/html/window-end.inc.php - compile time: Wed, 11 Jan 2006 22:14:14 +0100 */ ?><?php $attr = array() ?>      </table>
+	</td>
+  </tr>
+</table>
+
+</center>
+<?php unset($attr) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Wed, 11 Jan 2006 22:14:14 +0100 */ ?><?php $attr = array() ?>
+<!-- $Id$ -->
+
+<?php if ($showDuration) { ?>
+<br/>
+<small>&nbsp;
+<?php $dur = time()-START_TIME;
+      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
+<?php } ?>
+
+</body>
+</html>
+<?php unset($attr) ?>
