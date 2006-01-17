@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2005-04-21 19:08:44  dankert
+// Revision 1.12  2006-01-17 22:43:02  dankert
+// Der Einstellungsknoten hei?t nun "date-formats" statt "date_formats"
+//
+// Revision 1.11  2005/04/21 19:08:44  dankert
 // Vorbelegung fuer "list"-Element
 //
 // Revision 1.10  2005/01/03 19:37:15  dankert
@@ -242,7 +245,7 @@ class ElementAction extends Action
 	
 				case 'dateformat':
 
-					$ini_date_format = $conf['date_formats'];
+					$ini_date_format = $conf['date-formats'];
 					$dateformat = array();
 
 					$this->setTemplateVar('act_dateformat','');
