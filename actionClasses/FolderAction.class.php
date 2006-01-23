@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.31  2006-01-11 22:50:00  dankert
+// Revision 1.32  2006-01-23 23:08:52  dankert
+// Kl. ?nderungen beim Anlegen von Objekten
+//
+// Revision 1.31  2006/01/11 22:50:00  dankert
 // Neue Methode order()
 //
 // Revision 1.30  2005/11/07 22:31:38  dankert
@@ -149,6 +152,11 @@ class FolderAction extends ObjectAction
 
 	function createnew()
 	{
+		$type        = $this->getRequestVar('type'       );
+		$name        = $this->getRequestVar('name'       );
+		$filename    = $this->getRequestVar('filename'   );
+		$description = $this->getRequestVar('description');
+		
 		// Neues Objekt in diesem Ordner anlegen
 		switch( $this->getRequestVar('type') )
 		{
@@ -188,8 +196,9 @@ class FolderAction extends ObjectAction
 				$file   = new File();
 				$upload = new Upload();
 		
+				$file->desc      = !empty($description)?$name:$upload->filename;
 				$file->filename  = $upload->filename;
-				$file->name      = $upload->filename;
+				$file->name      = !empty($name)?$name:$upload->filename;
 				$file->extension = $upload->extension;		
 				$file->size      = $upload->size;
 				$file->parentid  = $this->folder->objectid;
@@ -214,7 +223,7 @@ class FolderAction extends ObjectAction
 				}
 				break;
 			
-			default: die();
+			default: die('unknown type for creating');
 		}
 		$this->folder->setTimestamp();
 
@@ -519,7 +528,7 @@ class FolderAction extends ObjectAction
 		$this->folder->setTimestamp();
 		
 		// Ordner anzeigen
-		$this->callSubAction('show');
+		$this->callSubAction('order');
 	}
 
 
@@ -549,7 +558,7 @@ class FolderAction extends ObjectAction
 		$this->folder->setTimestamp();
 		
 		// Ordner anzeigen
-		$this->callSubAction('show');
+		$this->callSubAction('order');
 		
 	}
 
