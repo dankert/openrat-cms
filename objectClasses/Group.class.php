@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-05-19 21:11:35  dankert
+// Revision 1.5  2006-01-23 22:59:43  dankert
+// Leere Gruppennamen ?bersteuern
+//
+// Revision 1.4  2004/05/19 21:11:35  dankert
 // subaction verwenden
 //
 // Revision 1.3  2004/05/19 21:11:04  dankert
@@ -92,6 +95,9 @@ class Group
 	// Speichern Benutzer in der Datenbank
 	function save()
 	{
+		if	( empty($this->name) )
+			$this->name = lang('GLOBAL_GROUP').' '.$this->groupid;
+			
 		$db = db_connection();
 
 		// Gruppe speichern		
