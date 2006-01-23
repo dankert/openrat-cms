@@ -70,7 +70,7 @@ class TemplateEngine
 
 			if	( empty($line) )  // Leerzeilen in Vorlage
 			{
-				fwrite( $outFile,"\n" );
+//				fwrite( $outFile,"\n" );
 				continue;
 			}
 			
@@ -151,7 +151,7 @@ class TemplateEngine
 	function copyFileContents( $infile,$outFileHandler,$attr )
 	{
 		global $conf;
-		Logger::debug("Inserting template command: ".$infile);
+//		Logger::debug("Inserting template command: ".$infile);
 		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
 		if	( !is_file($inFileName) )
 			if	( count($attr)==0 )
@@ -174,7 +174,8 @@ class TemplateEngine
 		$file = file( $inFileName );
 		foreach( $file as $line )
 		{
-			fwrite( $outFileHandler,rtrim($line)."\n" );
+			//fwrite( $outFileHandler,rtrim($line)."\n" );
+			fwrite( $outFileHandler,$line );
 		}
 		fwrite( $outFileHandler,'<?php unset($attr) ?>');
 		foreach( $attr as $attrName=>$attrValue )
