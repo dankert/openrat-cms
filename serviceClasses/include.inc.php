@@ -21,6 +21,9 @@ require_once( OR_SERVICECLASSES_DIR."Transformer.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Line.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."TemplateEngine.class.".PHP_EXT );
 
+require_once( OR_SERVICECLASSES_DIR."ArchiveTar.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."ArchiveUnzip.class.".PHP_EXT );
+
 //require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
 //require_once( OR_SERVICECLASSES_DIR."Sql.class.".PHP_EXT );
 
