@@ -6,8 +6,10 @@
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
+<?php if($stylesheet!='default') { ?>
   <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
-</head>
+<?php } ?></head>
 
 <body<?php if( isset($css_body_class) )echo ' class="'.$css_body_class.'"' ?>>
 
