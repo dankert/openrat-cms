@@ -51,11 +51,16 @@ class ProfileAction extends Action
 		$this->user->save();
 
 		$this->addNotice('user',$this->user->name,'SAVED','ok');
-		$this->callSubAction('edit');
 	}
 
 
 	function pwchange()
+	{
+	}
+	
+	
+	
+	function savepw()
 	{
 		if	( $this->getRequestVar('password1') != '' &&
 			  $this->getRequestVar('password1') == $this->getRequestVar('password2') )
@@ -84,7 +89,6 @@ class ProfileAction extends Action
 			}
 		}
 
-		$this->callSubAction('edit');
 	}
 
 
@@ -94,7 +98,5 @@ class ProfileAction extends Action
 		$this->setTemplateVars( $this->user->getProperties() );
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
-
-		$this->forward( 'user_profile' );
 	}
 }

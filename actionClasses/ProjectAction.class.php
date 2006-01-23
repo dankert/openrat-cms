@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-12-26 20:24:16  dankert
+// Revision 1.8  2006-01-23 23:10:46  dankert
+// *** empty log message ***
+//
+// Revision 1.7  2004/12/26 20:24:16  dankert
 // Korrektur Abfrage Berechtigungen
 //
 // Revision 1.6  2004/12/19 15:16:02  dankert
@@ -71,31 +74,25 @@ class ProjectAction extends Action
 
 	function save()
 	{
-		if   ( $this->getRequestVar('delete') != '' )
-		{
-			// Gesamtes Projekt l?schen
-			$this->project->delete();
+		$this->project->name                = $this->getRequestVar('name'               );
+		$this->project->target_dir          = $this->getRequestVar('target_dir'         );
+		$this->project->ftp_url             = $this->getRequestVar('ftp_url'            );
+		$this->project->ftp_passive         = $this->getRequestVar('ftp_passive'        );
+		$this->project->cmd_after_publish   = $this->getRequestVar('cmd_after_publish'  );
+		$this->project->content_negotiation = $this->getRequestVar('content_negotiation');
+		$this->project->cut_index           = $this->getRequestVar('cut_index'          );
 
-			$this->setTemplateVar('tree_refresh',true);
-		}
-		else
-		{
-			$this->project->name                = $this->getRequestVar('name'               );
-			$this->project->target_dir          = $this->getRequestVar('target_dir'         );
-			$this->project->ftp_url             = $this->getRequestVar('ftp_url'            );
-			$this->project->ftp_passive         = $this->getRequestVar('ftp_passive'        );
-			$this->project->cmd_after_publish   = $this->getRequestVar('cmd_after_publish'  );
-			$this->project->content_negotiation = $this->getRequestVar('content_negotiation');
-			$this->project->cut_index           = $this->getRequestVar('cut_index'          );
-
-			$this->project->save(); // speichern
-		}
-		
-		$this->callSubAction('listing');
+		$this->project->save(); // speichern
 	}
 
 
+
 	function add()
+	{
+	}
+	
+	
+	function addproject()
 	{
 		// Projekt hinzufuegen
 		if	( $this->getRequestVar('name') != '' )
@@ -160,5 +157,22 @@ class ProjectAction extends Action
 
 		$this->forward('project_edit');
 
+	}
+	
+	
+	function remove()
+	{
+	}
+	
+	
+	function delete()
+	{
+		if   ( $this->getRequestVar('delete') != '' )
+		{
+			// Gesamtes Projekt loeschen
+			$this->project->delete();
+
+			$this->setTemplateVar('tree_refresh',true);
+		}
 	}
 }

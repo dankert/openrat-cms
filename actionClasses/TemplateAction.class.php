@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2005-11-07 22:32:20  dankert
+// Revision 1.11  2006-01-23 23:10:46  dankert
+// *** empty log message ***
+//
+// Revision 1.10  2005/11/07 22:32:20  dankert
 // Neue Methode "edit()"
 //
 // Revision 1.9  2005/01/05 23:11:14  dankert
@@ -525,9 +528,6 @@ class TemplateAction extends Action
 //		$var['templatemodelid'] = htmlentities( $id   );
 //		$var['text']            = htmlentities( $text );
 		$this->setTemplateVar('templates',$list);
-	
-		$this->forward('template_list');
-		
 	}
 
 }

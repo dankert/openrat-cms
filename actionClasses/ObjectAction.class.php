@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-12-19 14:56:33  dankert
+// Revision 1.5  2006-01-23 23:10:46  dankert
+// *** empty log message ***
+//
+// Revision 1.4  2004/12/19 14:56:33  dankert
 // Abfrage von Rechten
 //
 // Revision 1.3  2004/11/28 19:25:38  dankert
@@ -85,11 +88,14 @@ class ObjectAction extends Action
 
 		$acl->objectid = $this->getRequestId();
 		
+		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
+		// diesem Objekt die ACLs zu aendern.
 		$o = new Object( $acl->objectid );
 
 		if	( !$o->hasRight( ACL_GRANT ) )
-			die('uh?');
+			die('uh?'); // Scheiss Hacker.
 		
+		// Handelt es sich um eine Benutzer- oder Gruppen ACL?
 		switch( $this->getRequestVar('type') )
 		{
 			case 'user':
@@ -103,17 +109,17 @@ class ObjectAction extends Action
 
 		$acl->languageid    = $this->getRequestVar('languageid');
 
-		$acl->write         = ( $this->getRequestVar('write'        ) != '' );
-		$acl->prop          = ( $this->getRequestVar('prop'         ) != '' );
-		$acl->delete        = ( $this->getRequestVar('delete'       ) != '' );
-		$acl->release       = ( $this->getRequestVar('release'      ) != '' );
-		$acl->publish       = ( $this->getRequestVar('publish'      ) != '' );
-		$acl->create_folder = ( $this->getRequestVar('create_folder') != '' );
-		$acl->create_file   = ( $this->getRequestVar('create_file'  ) != '' );
-		$acl->create_link   = ( $this->getRequestVar('create_link'  ) != '' );
-		$acl->create_page   = ( $this->getRequestVar('create_page'  ) != '' );
-		$acl->grant         = ( $this->getRequestVar('grant'        ) != '' );
-		$acl->transmit      = ( $this->getRequestVar('transmit'     ) != '' );
+		$acl->write         = ( $this->hasRequestVar('write'        ) );
+		$acl->prop          = ( $this->hasRequestVar('prop'         ) );
+		$acl->delete        = ( $this->hasRequestVar('delete'       ) );
+		$acl->release       = ( $this->hasRequestVar('release'      ) );
+		$acl->publish       = ( $this->hasRequestVar('publish'      ) );
+		$acl->create_folder = ( $this->hasRequestVar('create_folder') );
+		$acl->create_file   = ( $this->hasRequestVar('create_file'  ) );
+		$acl->create_link   = ( $this->hasRequestVar('create_link'  ) );
+		$acl->create_page   = ( $this->hasRequestVar('create_page'  ) );
+		$acl->grant         = ( $this->hasRequestVar('grant'        ) );
+		$acl->transmit      = ( $this->hasRequestVar('transmit'     ) );
 
 		$acl->add();
 		
@@ -127,8 +133,10 @@ class ObjectAction extends Action
 	 */
 	function rights()
 	{
+		$this->actionName = 'object';
 		$o = Session::getObject();
 		$o->objectLoadRaw();
+		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
 
 		$acllist = array();	
 		foreach( $o->getAllInheritedAclIds() as $aclid )
@@ -152,6 +160,23 @@ class ObjectAction extends Action
 		$this->setTemplateVar('acls',$acllist );
 
 		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
+		
+		$this->setWindowMenu( 'acl' );
+
+		$this->forward('object_rights');
+	}
+
+
+
+	/**
+	 * Formular anzeigen, um Rechte hinzufuegen
+	 */
+	function aclform()
+	{
+		$o = Session::getObject();
+		$o->objectLoadRaw();
+
+		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
 		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
 
 		$this->setTemplateVar('users'    ,User::listAll()   );
@@ -163,13 +188,16 @@ class ObjectAction extends Action
 		$this->setTemplateVar('objectid' ,$o->objectid     );
 		$this->setTemplateVar('action'   ,$this->actionName);
 
-		$this->forward('object_rights');
+		$this->setWindowMenu( 'acl' );
+
+		$this->forward('object_aclform');
 	}
 
 
 
 	/**
 	 * Entfernen einer ACL
+	 * 
 	 * @access protected
 	 */
 	function delacl()
@@ -177,14 +205,29 @@ class ObjectAction extends Action
 		$acl = new Acl($this->getRequestVar('aclid'));
 		$acl->objectid = $this->getRequestId();
 
+		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
+		// diesem Objekt die ACLs zu aendern.
 		$o = new Object( $this->getRequestId() );
 
 		if	( !$o->hasRight( ACL_GRANT ) )
-			die('ehm?');
+			die('ehm?'); // Da wollte uns wohl einer vereimern.
 
-		$acl->delete();
+		$acl->delete(); // Weg mit der ACL
 
 		$this->callSubAction('rights');
+	}
+
+
+
+	function setWindowMenu( $type ) {
+		switch( $type)
+		{
+			case 'acl':
+				$menu = array( array('subaction'=>'rights' ,'text'=>'show'),
+		                       array('subaction'=>'aclform','text'=>'add' ) );
+				$this->setTemplateVar('windowMenu',$menu);
+				break;
+		}
 	}
 
 }

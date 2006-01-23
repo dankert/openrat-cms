@@ -430,6 +430,8 @@ class PageAction extends ObjectAction
 			}
 		}
 
+		$this->setWindowMenu( 'elements' );
+
 		$this->setTemplateVar('el',$list);
 		$this->forward('page_element');
 
@@ -527,6 +529,7 @@ class PageAction extends ObjectAction
 		$this->setTemplateVar( 'release',$this->page->hasRight(ACL_RELEASE) );
 		$this->setTemplateVar( 'publish',$this->page->hasRight(ACL_PUBLISH) );
 
+		$this->setWindowMenu( 'elements' );
 		$this->setTemplateVar('el',$list);
 		$this->forward('page_form');
 	}
@@ -677,6 +680,24 @@ class PageAction extends ObjectAction
 		}
 
 		$this->callSubaction('pub');
+	}
+	
+	
+	function setWindowMenu( $type ) {
+		switch( $type)
+		{
+			case 'elements':
+				$menu = array( array('subaction'=>'el'  ,'text'=>'all'),
+				               array('subaction'=>'form','text'=>'change'    )  );
+				$this->setTemplateVar('windowMenu',$menu);
+				break;
+			case 'acl':
+				$menu = array( array('subaction'=>'rights' ,'text'=>'show'),
+		                       array('subaction'=>'aclform','text'=>'add' ) );
+				$this->setTemplateVar('windowMenu',$menu);
+				break;
+
+		}
 	}
 }
 

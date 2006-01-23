@@ -30,6 +30,7 @@ class MainmenuAction extends Action
 	var $defaultSubAction = 'login';
 
 	var $subActionList = array();
+	var $path          = array();
 	var $obj;
 
 	
@@ -43,7 +44,18 @@ class MainmenuAction extends Action
 	function addSubAction( $name,$aclbit=0 )
 	{
 		if   ( $aclbit==0 || $this->obj->hasRight($aclbit) )
-			$this->subActionList[ $name ] = lang( 'MENU_'.strtoupper($name) );
+			$this->subActionList[ $name ] = array( 'text' =>lang('MENU_'.strtoupper($name) ),
+			                                       'title'=>lang('MENU_'.strtoupper($name).'_DESC' ),
+			                                       'url'  =>Html::url($this->subActionName,$name,$this->getRequestId() ) );
+	}
+	
+	
+	function addPath( $name,$title,$url,$type )
+	{
+		$this->path[$name] = array('name' =>$name ,
+		                           'title'=>$title,
+		                           'url'  =>$url  ,
+		                           'type' =>$type  ); 
 	}
 
 
@@ -67,7 +79,7 @@ class MainmenuAction extends Action
 		}
 
 		$this->setTemplateVar('param' ,'templateid');
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 
 		$this->callSubAction('show');
 	}
@@ -98,7 +110,8 @@ class MainmenuAction extends Action
 		$folder->filenames = false;
 		$folder->load();
 
-		$this->setTemplateVar('folder',$folder->parentObjectNames(true,true));
+		foreach( $folder->parentObjectNames(true,true) as $id=>$name )
+			$this->addPath($name,$name,Html::url('main','folder',$id),'folder');
 
 		$others = $folder->getObjects();
 		$o2 = array();
@@ -115,14 +128,14 @@ class MainmenuAction extends Action
 		$this->addSubAction('show'  ,ACL_READ    );
 		$this->addSubAction('edit'  ,ACL_WRITE   );
 		$this->addSubAction('el'    ,ACL_WRITE   );
-		$this->addSubAction('form'  ,ACL_WRITE   );
+//		$this->addSubAction('form'  ,ACL_WRITE   );
 
 		$this->addSubAction('pub'   ,ACL_PUBLISH );
 		$this->addSubAction('prop'  ,ACL_PROP    );
 		$this->addSubAction('src'   ,ACL_PROP    );
 		$this->addSubAction('rights',ACL_GRANT   );
 
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 
 		$this->callSubAction('show');
 	}
@@ -131,7 +144,7 @@ class MainmenuAction extends Action
 
 	function user()
 	{
-		$this->setTemplateVar('folder',array() );
+		$this->setTemplateVar('path',array() );
 		$user = new User( $this->getRequestId() );
 		$user->load();
 			
@@ -151,7 +164,7 @@ class MainmenuAction extends Action
 			$this->addSubaction('rights' );
 		}
 		
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param'    ,'userid'            );
 
 		$this->callSubAction('show');
@@ -161,7 +174,7 @@ class MainmenuAction extends Action
 
 	function group()
 	{
-		$this->setTemplateVar('folder',array() );
+		$this->setTemplateVar('path',array() );
 
 		$group = new Group( $this->getRequestId() );
 		$group->load();
@@ -174,7 +187,7 @@ class MainmenuAction extends Action
 			$this->addSubaction('edit'   );
 			$this->addSubaction('users'  );
 		}
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 
 		$this->setTemplateVar('param'    ,'groupid'           );
 		$this->callSubAction('show');
@@ -193,7 +206,9 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
 
-		$this->setTemplateVar('folder',$folder->parentObjectNames(true,true));
+		foreach( $folder->parentObjectNames(true,true) as $id=>$name )
+			$this->addPath($name,$name,Html::url('main','folder',$id),'folder');
+
 		$this->setTemplateVar('text'  ,$file->name);
 
 		$this->setTemplateVar('id','o'.$file->objectid);
@@ -207,7 +222,7 @@ class MainmenuAction extends Action
 		$this->addSubAction('prop'  ,ACL_PROP    );
 		$this->addSubAction('rights',ACL_GRANT   );
 
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 
 		$this->setTemplateVar('param','objectid');
 
@@ -216,6 +231,18 @@ class MainmenuAction extends Action
 
 
 
+	function prefs()
+	{
+		$this->addSubaction('show');
+
+		$this->setTemplateVar('windowMenu',$this->subActionList);
+		$this->setTemplateVar('param','conf');
+		
+		$this->callSubAction('show');
+	}
+	
+	
+	
 	function link()
 	{
 		// Ermitteln Sprache
@@ -228,16 +255,19 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
 
-		$this->setTemplateVar('folder',$folder->parentObjectNames(true,true));
+		foreach( $folder->parentObjectNames(true,true) as $id=>$name )
+			$this->addPath($name,$name,Html::url('main','folder',$id),'folder');
+
 		$this->setTemplateVar('text'  ,$link->name);
 
 		$this->setTemplateVar('id','o'.$link->objectid);
 
 		$this->obj = &$link;
+		$this->addSubAction('target',ACL_WRITE);
 		$this->addSubAction('prop'  ,ACL_PROP );
 		$this->addSubAction('rights',ACL_GRANT);
 
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','objectid');
 
 		$this->callSubAction('show');
@@ -260,14 +290,12 @@ class MainmenuAction extends Action
 
 		$folder->load();
 
-		$this->setTemplateVar('folder',$folder->parentObjectNames(true,false));
+		foreach( $folder->parentObjectNames(true,false) as $id=>$name )
+			$this->addPath($name,$name,Html::url('main','folder',$id),'folder');
 		
 		$this->setTemplateVar('text',$folder->name);
 	
 		$this->addSubAction('show',ACL_READ    );
-
-		if   ( !$folder->isRoot )
-			$this->addSubAction('prop',ACL_PROP    );
 
 		$this->addSubAction('create',ACL_CREATE_FOLDER );
 		$this->addSubAction('create',ACL_CREATE_FILE   );
@@ -275,9 +303,13 @@ class MainmenuAction extends Action
 		$this->addSubAction('create',ACL_CREATE_LINK   );
 
 		$this->addSubAction('pub'   ,ACL_PUBLISH );
+
+		if   ( !$folder->isRoot )
+			$this->addSubAction('prop',ACL_PROP    );
+
 		$this->addSubAction('rights',ACL_GRANT);
 
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','objectid');
 
 		$this->callSubAction('show');
@@ -286,7 +318,7 @@ class MainmenuAction extends Action
 
 	function project()
 	{
-		$this->setTemplateVar('folder',array() );
+		$this->setTemplateVar('path',array() );
 
 		$this->addSubaction('listing');
 
@@ -303,7 +335,7 @@ class MainmenuAction extends Action
 			$this->setTemplateVar('text','' );
 		}
 
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','projectid');
 
 		$this->callSubAction('show');
@@ -314,7 +346,7 @@ class MainmenuAction extends Action
 	{
 		$this->addSubaction('listing');
 
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','languageid');
 
 		$this->callSubAction('show');
@@ -325,7 +357,7 @@ class MainmenuAction extends Action
 	function model()
 	{
 		$this->addSubaction('listing');
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','modelid');
 
 		$this->callSubAction('show');
@@ -334,7 +366,7 @@ class MainmenuAction extends Action
 
 	function search()
 	{
-		$this->setTemplateVar('subaction',array('prop'   =>lang('SEARCH_PROP'    ),
+		$this->setTemplateVar('windowMenu',array('prop'   =>lang('SEARCH_PROP'    ),
 		                                        'content'=>lang('SEARCH_CONTENT' ) ));
 		$this->setTemplateVar('param','objectid');
 
@@ -345,7 +377,7 @@ class MainmenuAction extends Action
 	function transfer()
 	{
 		$this->addSubaction('import');
-		$this->setTemplateVar('subaction',$this->subActionList);
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 
 		$this->callSubAction('show');
 	}
@@ -362,9 +394,10 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('name'          ,$this->subActionName);
 		$this->setTemplateVar('css_body_class','menu'              );
 		
-		$this->setTemplateVar('type'          ,$this->subActionName);
+		$this->setTemplateVar('type'          ,$this->getRequestVar( 'subaction') );
+		$this->setTemplateVar('path'          ,$this->path         );
 
-		$this->forward( 'main_menu' );
+		$this->forward( 'menu' );
 	}
 }
 

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2006-01-11 22:52:24  dankert
+// Revision 1.8  2006-01-23 23:10:46  dankert
+// *** empty log message ***
+//
+// Revision 1.7  2006/01/11 22:52:24  dankert
 // URLs f?r neue Frames setzen
 //
 // Revision 1.6  2005/01/14 21:41:23  dankert
@@ -55,6 +58,68 @@ class MainAction extends Action
 {
 	var $defaultSubAction = 'show';
 	
+	var $doActionName = "";
+
+
+	function element()
+	{
+		$this->doActionName = 'element';
+	}
+	function folder()
+	{
+		$this->doActionName = 'folder';
+	}
+	function file()
+	{
+		$this->doActionName = 'file';
+	}
+	function group()
+	{
+		$this->doActionName = 'group';
+	}
+	function language()
+	{
+		$this->doActionName = 'language';
+	}
+	function link()
+	{
+		$this->doActionName = 'link';
+	}
+	function model()
+	{
+		$this->doActionName = 'model';
+	}
+	function page()
+	{
+		$this->doActionName = 'page';
+	}
+	function pagelement()
+	{
+		$this->doActionName = 'pagelement';
+	}
+	function project()
+	{
+		$this->doActionName = 'project';
+	}
+	function search()
+	{
+		$this->doActionName = 'search';
+	}
+	function template()
+	{
+		$this->doActionName = 'template';
+	}
+	function transfer()
+	{
+		$this->doActionName = 'transfer';
+	}
+	function user()
+	{
+		$this->doActionName = 'user';
+	}
+	
+	
+	
 	function show()
 	{
 		$user = Session::getUser();
@@ -71,12 +136,10 @@ class MainAction extends Action
 		}
 
 		// Variablen fuellen
-		$this->setTemplateVar('frame_src_main_menu',Html::url( 'mainmenu'                       ,$this->getRequestVar('subaction'),$this->getRequestId(),$params ) );
-		$this->setTemplateVar('frame_src_main_main',Html::url( $this->getRequestVar('subaction'),''                               ,$this->getRequestId(),$params ) );
-		$this->setTemplateVar( 'frame_src_border'    ,Html::url( 'border'         ) );
-		$this->setTemplateVar( 'frame_src_background',Html::url( 'background'     ) );
-		
-		$this->forward('frameset_main'); // Forward auf View
+		$this->setTemplateVar('frame_src_main_menu' ,Html::url( 'mainmenu'         ,$this->doActionName,$this->getRequestId(),$params ) );
+		$this->setTemplateVar('frame_src_main_main' ,Html::url( $this->doActionName,''                 ,$this->getRequestId(),$params ) );
+		$this->setTemplateVar('frame_src_border'    ,Html::url( 'border'         ) );
+		$this->setTemplateVar('frame_src_background',Html::url( 'background'     ) );
 	}
 
 }

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2004-12-20 22:04:25  dankert
+// Revision 1.7  2006-01-23 23:10:45  dankert
+// *** empty log message ***
+//
+// Revision 1.6  2004/12/20 22:04:25  dankert
 // kein Lesen der Benutzer
 //
 // Revision 1.5  2004/12/15 23:23:11  dankert
@@ -70,58 +73,41 @@ class LinkAction extends ObjectAction
 	}
 
 
-	/**
-	 * Verschieben der Verkn?pfung
-	 */
-	function move()
-	{
-		$this->objectMove();
-		$this->link->load();
-
-		$this->callSubAction('prop');
-	}
-
-
 
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
 	function save()
 	{
-		// Wenn Name gef?llt, dann Datenbank-Update
+		// Wenn Name gefuellt, dann Datenbank-Update
 		if   ( $this->getRequestVar('name') != '' )
 		{
-			if   ( $this->getRequestVar('delete') != '' )
-			{
-				// Verknuepfung l?schen
-				$this->link->delete();
+			// Eigenschaften speichern
+			$this->link->name      = $this->getRequestVar('name');
+			$this->link->desc      = $this->getRequestVar('desc');
 
-				$this->getRequestVar('tree_refresh',true);
-				$this->forward('blank');
+			$this->link->save();
+			$this->link->setTimestamp();
+			Session::setObject( $this->link );
+		}
+		elseif( $this->getRequestVar('type') != '' )
+		{
+			if	( $this->getRequestVar('type') == 'link' )
+			{
+				$this->link->isLinkToObject = true;
+				$this->link->isLinkToUrl    = false;
+				$this->link->linkedObjectId = $this->getRequestVar('linkobjectid');
 			}
 			else
 			{
-				// Eigenschaften speichern
-				$this->link->name      = $this->getRequestVar('name');
-				$this->link->desc      = $this->getRequestVar('desc');
-				
-				if	( $this->getRequestVar('type') == 'link' )
-				{
-					$this->link->isLinkToObject = true;
-					$this->link->isLinkToUrl    = false;
-					$this->link->linkedObjectId = $this->getRequestVar('linkobjectid');
-				}
-				else
-				{
-					$this->link->isLinkToObject = false;
-					$this->link->isLinkToUrl    = true;
-					$this->link->url            = $this->getRequestVar('url');
-				}
-				
-				$this->link->save();
-				$this->link->setTimestamp();
-				Session::setObject( $this->link );
+				$this->link->isLinkToObject = false;
+				$this->link->isLinkToUrl    = true;
+				$this->link->url            = $this->getRequestVar('url');
 			}
+			
+			$this->link->save();
+			$this->link->setTimestamp();
+			Session::setObject( $this->link );
 		}
 
 		$this->getRequestVar('tree_refresh',true);
@@ -130,7 +116,33 @@ class LinkAction extends ObjectAction
 	}
 
 
+	function target()
+	{
+//		$this->setTemplateVars( $this->link->getProperties() );
+
+		// Typ der Verkn?pfung
+		$this->setTemplateVar('type'            ,$this->link->getType()     );
+		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
+		$this->setTemplateVar('url'             ,$this->link->url           );
+
+		$this->setTemplateVar('edittarget_url',Html::url('link','edittarget',$this->link->objectid));		
+
+		$this->forward('link_target');
+	}
+
+
+
 	function prop()
+	{
+		$this->setTemplateVars( $this->link->getProperties() );
+		$this->setTemplateVar('editprop_url'  ,Html::url('link','editprop',$this->link->objectid));		
+
+		$this->forward('link_prop');
+	}
+
+
+
+	function edittarget()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
 
@@ -161,6 +173,17 @@ class LinkAction extends ObjectAction
 		asort( $list );
 		$this->setTemplateVar('objects',$list);		
 
-		$this->forward('link_prop');
+		$this->forward('link_edittarget');
+	}
+
+
+
+	function editprop()
+	{
+		$this->setTemplateVars( $this->link->getProperties() );
+
+		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
+
+		$this->forward('link_editprop');
 	}
 }
