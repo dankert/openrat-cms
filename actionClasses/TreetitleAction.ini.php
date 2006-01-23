@@ -1,0 +1,5 @@
+
+[default]
+goto=show
+
+[show]
