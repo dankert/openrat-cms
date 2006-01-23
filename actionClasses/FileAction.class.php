@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2005-11-07 22:31:08  dankert
+// Revision 1.17  2006-01-23 23:08:15  dankert
+// Auspacken von TAR-Archiven implementiert
+//
+// Revision 1.16  2005/11/07 22:31:08  dankert
 // Wenn Dateiname=Objekt-Id, dann Dateinamen auf leer setzen.
 //
 // Revision 1.15  2005/01/27 22:21:29  dankert
@@ -276,10 +279,45 @@ class FileAction extends ObjectAction
 	 */
 	function edit()
 	{
+		$this->callSubAction('upload');
+	}
+
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function upload()
+	{
+		global $conf;
+		// MIME-Types aus Datei lesen
+		$this->setTemplateVars( $this->file->getProperties() );
+		
+		$this->setWindowMenu('edit');
+		$this->forward('file_replace');
+	}
+
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function editvalue()
+	{
 		global $conf;
 		// MIME-Types aus Datei lesen
 		$this->setTemplateVars( $this->file->getProperties() );
 		$this->setTemplateVar('value',$this->file->loadValue());
+		
+		$this->setWindowMenu('edit');
+		$this->forward('file_editvalue');
+	}
+
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function size()
+	{
+		$this->setTemplateVars( $this->file->getProperties() );
 		
 		$imageFormat = $this->imageFormat();
 
@@ -291,7 +329,208 @@ class FileAction extends ObjectAction
 		$this->setTemplateVar('formats'       ,$formats    );
 		$this->setTemplateVar('default_format',$imageFormat);
 
-		$this->forward('file_edit');
+		$this->setWindowMenu('edit');
+		$this->forward('file_resize');
+	}
+
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function extract()
+	{
+		$this->setTemplateVars( $this->file->getProperties() );
+		
+		$imageFormat = $this->imageFormat();
+
+		$this->setWindowMenu('edit');
+		$this->forward('file_extract');
+	}
+
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function uncompress()
+	{
+		$this->setWindowMenu('edit');
+		$this->forward('file_uncompress');
+	}
+
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function compress()
+	{
+		$formats = array();
+		foreach( $this->getCompressionTypes() as $t )
+			$formats[$t] = lang('compression_'.$t);
+
+		$this->setTemplateVar('formats'       ,$formats    );
+
+		$this->setWindowMenu('edit');
+		$this->forward('file_compress');
+	}
+
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function douncompress()
+	{
+		switch( $this->file->extension )
+		{
+			case 'gz':
+				if	( $this->getRequestVar('replace') )
+				{
+					$this->file->value = gzinflate( substr($this->file->loadValue(),10));
+					$this->file->parse_filename( $this->file->filename );
+					$this->file->save();
+					$this->file->saveValue();
+				}
+				else
+				{
+					$newFile = new File();
+					$newFile->name     = $this->file->name;
+					$newFile->parentid = $this->file->parentid;
+					$newFile->value    = gzinflate( substr($this->file->loadValue(),10));
+					$newFile->parse_filename( $this->file->filename );
+					$newFile->add();
+				}
+				
+				break;
+
+			case 'bz2':
+				if	( $this->getRequestVar('replace') )
+				{
+					$this->file->value = bzdecompress($this->file->loadValue());
+					$this->file->parse_filename( $this->file->filename );
+					$this->file->save();
+					$this->file->saveValue();
+				}
+				else
+				{
+					$newFile = new File();
+					$newFile->name     = $this->file->name;
+					$newFile->parentid = $this->file->parentid;
+					$newFile->value    = bzdecompress( $this->file->loadValue() );
+					$newFile->parse_filename( $this->file->filename );
+					$newFile->add();
+				}
+				
+				break;
+
+			default:
+				die( 'cannot extract file with extension: '.$this->file->extension );
+		}
+		$this->callSubAction('edit');
+	}
+
+
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function doextract()
+	{
+		switch( $this->file->extension )
+		{
+			case 'tar':
+				$folder = new Folder();
+				$folder->parentid = $this->file->parentid;
+				$folder->name     = $this->file->name;
+				$folder->filename = $this->file->filename;
+				$folder->add();
+				
+				$tar = new ArchiveTar();
+				$tar->openTAR( $this->file->loadValue() );
+				
+				foreach( $tar->files as $file )
+				{
+					$newFile = new File();
+					$newFile->name     = $file['name'];
+					$newFile->parentid = $folder->objectid;
+					$newFile->value    = $file['file'];
+					$newFile->parse_filename( $file['name'] );
+					$newFile->lastchangeDate = $file['time'];
+					$newFile->add();
+					
+					$this->addNotice('file',$newFile->name,'ADDED');
+				}
+				
+				unset($tar);
+				
+				break;
+
+			case 'zip':
+				die('zip extraction not implemented');
+				
+				break;
+
+			default:
+				die( 'cannot extract file with extension: '.$this->file->extension );
+		}
+		$this->callSubAction('edit');
+	}
+
+
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function docompress()
+	{
+		$format = $this->getRequestVar('format');
+		
+		switch( $format )
+		{
+			case 'gz':
+				if	( $this->getRequestVar('replace') )
+				{
+					$this->file->value = gzencode( $this->file->loadValue() );
+					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz' );
+					$this->file->save();
+					$this->file->saveValue();
+					
+				}
+				else
+				{
+					$newFile = new File();
+					$newFile->name     = $this->file->name;
+					$newFile->parentid = $this->file->parentid;
+					$newFile->value    = gzencode( $this->file->loadValue() );
+					$newFile->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz' );
+					$newFile->add();
+				}
+				
+				break;
+
+			case 'bzip2':
+				if	( $this->getRequestVar('replace') )
+				{
+					$this->file->value = bzcompress( $this->file->loadValue() );
+					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.bz2' );
+					$this->file->save();
+					$this->file->saveValue();
+					
+				}
+				else
+				{
+					$newFile = new File();
+					$newFile->name     = $this->file->name;
+					$newFile->parentid = $this->file->parentid;
+					$newFile->value    = bzcompress( $this->file->loadValue() );
+					$newFile->parse_filename( $this->file->filename.'.'.$this->file->extension.'.bz2' );
+					$newFile->add();
+				}
+				
+				break;
+			default:
+				die( 'unknown extract type: '.$format );
+		}
+		
+		$this->callSubAction('edit');
 	}
 
 
@@ -318,6 +557,61 @@ class FileAction extends ObjectAction
 		}
 
 		$this->callSubaction('pub');
+	}
+
+
+
+	function getCompressionTypes()
+	{
+		$compressionTypes = array();
+		if	( function_exists('gzencode'    ) ) $compressionTypes[] = 'gz';
+		if	( function_exists('gzencode'    ) ) $compressionTypes[] = 'zip';
+		if	( function_exists('bzipcompress') ) $compressionTypes[] = 'bz2';
+		return $compressionTypes;
+	}
+
+	function getArchiveTypes()
+	{
+		$archiveTypes = array();
+		$archiveTypes[] = 'tar';
+		$archiveTypes[] = 'zip';
+		return $archiveTypes;
+	}
+
+	function setWindowMenu( $type ) {
+		
+		global $conf;
+		
+		switch( $type)
+		{
+			case 'edit':
+				$menu = array();
+				$compressionTypes = $this->getCompressionTypes();
+				$archiveTypes     = $this->getArchiveTypes();
+
+				$menu[] = array('subaction'=>'upload','text'=>'file_replace');
+		
+				if	($this->file->isImage() )
+					$menu[] = array('subaction'=>'size','text'=>'file_resize');
+		
+				if	( in_array($this->file->extension,$compressionTypes) )
+					$menu[] = array('subaction'=>'uncompress','text'=>'file_uncompress');
+
+				if	( !in_array($this->file->extension,$compressionTypes) )
+					$menu[] = array('subaction'=>'compress','text'=>'file_compress');
+		
+				if	( in_array($this->file->extension,$archiveTypes) )
+					$menu[] = array('subaction'=>'extract','text'=>'file_extract');
+
+				if	( !in_array($this->file->extension,$compressionTypes) )
+					$menu[] = array('subaction'=>'compress','text'=>'file_compress');
+		
+				if	( substr($this->file->mimeType(),0,5)=='text/' )
+					$menu[] = array('subaction'=>'editvalue','text'=>'file_editvalue');
+		
+				$this->setTemplateVar('windowMenu',$menu);
+				break;
+		}
 	}
 }
 
