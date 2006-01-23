@@ -1,0 +1,1 @@
+<input type="file" name="<?php echo $attr_name ?>" class="<?php echo $attr_class ?>" />
