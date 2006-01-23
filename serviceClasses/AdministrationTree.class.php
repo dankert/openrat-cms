@@ -69,7 +69,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('PREFERENCES');
 		$treeElement->description = lang('PREFERENCES');
-		$treeElement->icon        = 'folder';
+		$treeElement->icon        = 'config_folder';
 		$treeElement->type        = 'prefs';
 		
 		$this->addTreeElement( $treeElement );
@@ -161,7 +161,7 @@ class AdministrationTree extends AbstractTree
 				$treeElement->internalId  = crc32($key);
 				$treeElement->text        = $key;
 //				$treeElement->url         = Html::url('main','prefs',0,array('conf'=>$key));
-				$treeElement->icon        = 'folder';
+				$treeElement->icon        = 'config_folder';
 				
 				$treeElement->description = '';
 				$treeElement->target      = 'cms_main';
@@ -180,7 +180,7 @@ class AdministrationTree extends AbstractTree
 				else
 					$treeElement->text .= '*';
 					
-				$treeElement->icon        = 'el_text';
+				$treeElement->icon        = 'config_property';
 				
 				if	( $key != 'password')
 					$treeElement->description = $value;
