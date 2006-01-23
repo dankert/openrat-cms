@@ -23,17 +23,19 @@ class Preferences
 				while( ($file = readdir($dh)) !== false )
 				{
 					$file = basename($file);
-					if	( substr($file,0,1) != '.' && is_dir($dir.$file) )
+//					if	( substr($file,0,1) != '.' && $file != 'CVS' && is_dir($dir.$file) && is_file($dir.$file.'/prefs.ini.php') )
+					if	( substr($file,0,1) != '.' && is_file($dir.$file.'/prefs.ini.php') )
 					{
 						$values[$file] = $this->load($dir.$file.'/');
 					}
 		        }
 		        closedir($dh);
 		    }
-		    
-		    if	( is_file($dir.'prefs.ini.php') )
-				$values = $values + parse_ini_file( $dir.'prefs.ini.php' );
-				
+
+		    if	( !is_file($dir.'prefs.ini.php') )
+				die( 'file not found: '.$dir.'prefs.ini.php');
+
+		    $values = $values + parse_ini_file( $dir.'prefs.ini.php' );
 			ksort($values);
 			
 			return $values;
