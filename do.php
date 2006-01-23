@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.19  2006-01-11 22:25:24  dankert
+// Revision 1.20  2006-01-23 23:03:21  dankert
+// Auswerten von ini-Dateien pro Aktionsklasse
+//
+// Revision 1.19  2006/01/11 22:25:24  dankert
 // Einzelne include-Anweisungen pro Verzeichnis, Konfiguration als Baum einlesen
 //
 // Revision 1.18  2005/11/02 21:16:23  dankert
@@ -80,6 +83,7 @@
 
 define('PHP_EXT'         ,'php'    );
 define('IMG_EXT'         ,'.gif'   );
+define('IMG_ICON_EXT'    ,'.png'   );
 define('MAX_FOLDER_DEPTH',5        );
 define('OR_CONFIG_DIR'   ,'config' );
 define('OR_VERSION'      ,'0.4'    );
@@ -230,13 +234,16 @@ require( OR_ACTIONCLASSES_DIR.'/ObjectAction.class.php' );
 require( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
 $do = new $actionClassName;
-$do->actionName = $action;
+$do->actionClassName = $actionClassName; 
+$do->actionName      = $action;
+
+$do->actionConfig = parse_ini_file( OR_ACTIONCLASSES_DIR.$actionClassName.'.ini.php',true);
 
 if	( $subaction == '' )
-	$subaction = $do->defaultSubAction;
+	$subaction = $do->actionConfig['default']['goto'];
 
-if	( !method_exists($do,$subaction) )
-	$subaction = $do->defaultSubAction;
+if	( !isset($do->actionConfig[$subaction]) )
+	die( "Action $action has no configured method named $subaction");
 	
 Logger::trace("controller is calling subaction '$subaction'");
 
@@ -245,5 +252,16 @@ if	( in_array($action,array('page','file','link','folder')) )
 
 $do->subActionName = $subaction;
 $do->$subaction();
+
+if	( isset($do->actionConfig[$do->subActionName]['goto']) )
+{
+	$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
+	$do->subActionName = $subActionName;
+	Logger::trace("controller is calling next subaction '$subActionName'");
+	$do->$subActionName();
+}
+
+$do->setMenu();
+$do->forward();
 
 ?>
