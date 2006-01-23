@@ -25,31 +25,51 @@
  * @package openrat.actions
  */
 
-class TreemenuAction extends Action
+define('PROJECTID_ADMIN',-1);
+
+class TreetitleAction extends Action
 {
 	var $defaultSubAction = 'show';
 
 	function show()
 	{
-		$user     = Session::getUser();
-		$projects = $user->projects;
+		$windowMenu = array();
 		
-		foreach($projects as $pid=>$p)
-			$projects[$pid]=Text::maxLength($p,17,'..',STR_PAD_BOTH);
-
-		// Administrator sieht Administrationsbereich
-		if   ( $user->isAdmin )
-			$projects = array("-1"=>lang('GLOBAL_ADMINISTRATION')) + $projects;
-
-		$this->setTemplateVar('projects',$projects);
-
 		// Das aktuelle Projekt voreinstellen		
 		$project = Session::getProject();
-		if	( is_object( $project ) )
-			$this->setTemplateVar( 'act_projectid',$project->projectid );
+		
+		if	( $project->projectid == PROJECTID_ADMIN )
+		{
+			$this->setTemplateVar( 'text',lang('GLOBAL_ADMINISTRATION') );
+			$this->setTemplateVar( 'type','administration' );
 
+			$windowMenu[] = array( 'text'=>'',
+			                       'url' =>'' );
+		}
+		else
+		{
+			$this->setTemplateVar( 'text',$project->name );
+			$this->setTemplateVar( 'type','project' );
+			
+			// Ermitteln Sprache
+			$language = Session::getProjectLanguage();
+			
+			$windowMenu[] = array( 'text'=>lang('GLOBAL_LANGUAGE').' ('.$language->name.')',
+			                       'url' =>Html::url('main','language'),
+			                       'target'=>'cms_main' );
+	
+			// Ermitteln Projektmodell
+			$model = Session::getProjectModel();
+	
+			$windowMenu[] = array( 'text'=>lang('GLOBAL_MODEL').' ('.$model->name.')',
+			                       'url' =>Html::url('main','model'),
+			                       'target'=>'cms_main' );
+		}
+
+		$this->setTemplateVar('windowMenu',$windowMenu);
+		
 		// Ausgabe des Templates
-		$this->forward('tree_menu');
+		$this->forward('menu');
 	}
 }
 
