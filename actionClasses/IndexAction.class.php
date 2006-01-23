@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.21  2005-04-16 21:35:23  dankert
+// Revision 1.22  2006-01-23 23:10:16  dankert
+// Steuerung der Aktionsklassen ?ber .ini-Dateien
+//
+// Revision 1.21  2005/04/16 21:35:23  dankert
 // Uebergabe von Loginfehlern als normale Hinweismeldung
 //
 // Revision 1.20  2005/03/13 16:39:00  dankert
@@ -97,17 +100,14 @@ define('PROJECTID_ADMIN',-1);
 
 class IndexAction extends Action
 {
-	var $defaultSubAction = 'show';
-
-
 	function setDb( $dbid )
 	{
 		global $conf;
 
-		if	( !isset($conf['databases'][$dbid] ))
+		if	( !isset($conf['database'][$dbid] ))
 			die( 'unknown DB-Id: '.$dbid );
 
-		$db = new DB( $conf['databases'][$dbid] );
+		$db = new DB( $conf['database'][$dbid] );
 		$db->id = $dbid;
 		Session::setDatabase( $db );
 	}
@@ -192,9 +192,10 @@ class IndexAction extends Action
 	{
 		global $conf;
 
-		foreach( $conf['databases'] as $dbname=>$dbconf )
+		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
-			$dbids[$dbname] = $dbconf['comment'];
+			if	( is_array($dbconf) && $dbconf['enabled'] )
+				$dbids[$dbname] = $dbconf['comment'];
 		}
 
 		$this->setTemplateVar( 'dbids',$dbids );
@@ -215,21 +216,18 @@ class IndexAction extends Action
 		$this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
 		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
 		$this->setSessionVar('loginmessage','');
-
-		$this->forward('login');
 	}
 
-	function showmenu()
+	function projectmenu()
 	{
-		global $conf;
 		$user     = Session::getUser();
 		$projects = $user->projects;
 
 		$this->lastModified( $user->loginDate );
 
 		// Administrator sieht Administrationsbereich
-		if   ( $user->isAdmin )
-			$projects = array("-1"=>lang('GLOBAL_ADMINISTRATION')) +  $projects;
+//		if   ( $user->isAdmin )
+//			$projects = array("-1"=>lang('GLOBAL_ADMINISTRATION')) +  $projects;
 
 		// Projekte ermitteln
 
@@ -241,8 +239,6 @@ class IndexAction extends Action
 			$list[$id]['name'] = $name;
 		}
 		$this->setTemplateVar('el',$list);
-
-		$this->forward('project_select');
 	}
 
 
@@ -271,8 +267,6 @@ class IndexAction extends Action
 		                   
 		if	( !$loginOk )
 			$this->addNotice('','','LOGIN_FAILED','error',array('name'=>$this->getRequestVar('login_name')) );
-		
-		$this->callSubAction('show');
 	}
 
 
@@ -283,11 +277,19 @@ class IndexAction extends Action
 
 		// Aus Sicherheitsgruenden die komplette Session deaktvieren
 		session_unset();
-
-		$this->callSubAction('show');
 	}
 
 
+	function administration()
+	{
+		if	( !$this->userIsAdmin() )
+			die(':P');
+			
+		Session::setProject( new Project(-1) );
+	}
+	
+	
+	
 	function project()
 	{
 		$user = Session::getUser();
@@ -326,8 +328,6 @@ class IndexAction extends Action
 		{
 			Session::setProject( $project );
 		}
-		
-		$this->callSubAction('show');
 	}
 
 
@@ -357,8 +357,6 @@ class IndexAction extends Action
 		
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
-		
-		$this->callSubAction('show');
 	}
 
 
@@ -387,7 +385,6 @@ class IndexAction extends Action
 		$user = Session::getUser();
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
-		$this->callSubAction('show');
 	}
 
 
@@ -416,21 +413,18 @@ class IndexAction extends Action
 		$user = Session::getUser();
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
-		$this->callSubAction('show');
 	}
 
 
 	function showtree()
 	{
 		Session::set('showtree',true );
-		$this->callSubAction('show');
 	}
 		
 
 	function hidetree()
 	{
 		Session::set('showtree',false );
-		$this->callSubAction('show');
 	}
 		
 
@@ -508,20 +502,45 @@ class IndexAction extends Action
 		}
 		else
 		{
-			$this->callSubAction( 'showmenu' );
+			$this->callSubAction( 'projectmenu' );
 		}
 		
 		$this->setTemplateVar( 'frame_src_title'   ,Html::url( 'title'          ) );
 
 		$this->setTemplateVar( 'show_tree',(Session::get('showtree')==true) );
 
-		$this->setTemplateVar( 'frame_src_treemenu',Html::url( 'treemenu'       ) );
-		$this->setTemplateVar( 'frame_src_tree'    ,Html::url( 'tree'    ,'load') );
+		$this->setTemplateVar( 'frame_src_tree_menu' ,Html::url( 'treemenu'       ) );
+		$this->setTemplateVar( 'frame_src_tree_title',Html::url( 'treetitle'      ) );
+		$this->setTemplateVar( 'frame_src_tree'      ,Html::url( 'tree'    ,'load') );
+		$this->setTemplateVar( 'frame_src_clipboard' ,Html::url( 'clipboard'      ) );
+		$this->setTemplateVar( 'frame_src_border'    ,Html::url( 'border'         ) );
+		$this->setTemplateVar( 'frame_src_background',Html::url( 'background'     ) );
 
 		$this->setTemplateVar( 'tree_width',$conf['interface']['tree_width'] );
+	}
+
+
+
+	function checkMenu( $name )
+	{
+		global $conf;
 		
-		$this->forward( 'frameset' );
+		switch( $name )
+		{
+			case 'register':
+				return $conf['login']['register'];
+
+			case 'send_password':
+				$conf['login']['send_password'];
+				
+			case 'administration':
+				return $this->userIsAdmin();
+				
+			default:
+				return true;
+		}	
 	}
 }
+
 
 ?>

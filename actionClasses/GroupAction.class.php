@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-12-19 19:23:05  dankert
+// Revision 1.5  2006-01-23 23:10:16  dankert
+// Steuerung der Aktionsklassen ?ber .ini-Dateien
+//
+// Revision 1.4  2004/12/19 19:23:05  dankert
 // Ausgeben von "Notices"
 //
 // Revision 1.3  2004/12/15 23:23:11  dankert
@@ -62,26 +65,46 @@ class GroupAction extends Action
 	}
 
 
-	function save()
+
+	function delete()
 	{
 		if   ( $this->hasRequestVar('delete') )
 		{
 			$this->group->delete();
-
+	
 			$this->addNotice('group',$this->group->name,'DELETED','ok');
 		}
 		else
 		{
-			$this->group->name = $this->getRequestVar('name');
-			$this->group->save();
-
-			$this->addNotice('group',$this->group->name,'SAVED','ok');
+			$this->addNotice('group',$this->group->name,'NOT_DELETED','ok');
 		}
-		$this->callSubAction('listing');
+	}
+	
+	
+	
+	function remove()
+	{
+		$this->setTemplateVars( $this->group->getProperties() );
+	}
+	
+	
+	
+	function save()
+	{
+		$this->group->name = $this->getRequestVar('name');
+		
+		$this->group->save();
+
+		$this->addNotice('group',$this->group->name,'SAVED','ok');
 	}
 
 
 	function add()
+	{
+	}
+	
+	
+	function addgroup()
 	{
 		$this->group = new Group();
 		$this->group->name = $this->getRequestVar('name');
@@ -145,16 +168,12 @@ class GroupAction extends Action
 		}
 
 		$this->setTemplateVar('el',	$list);
-	
-		$this->forward('group_list');
 	}
 
 
 	function edit()
 	{
 		$this->setTemplateVars( $this->group->getProperties() );
-
-		$this->forward('group_edit');
 	}
 
 
@@ -168,17 +187,12 @@ class GroupAction extends Action
 		// Alle hinzuf?gbaren Benutzer ermitteln
 		//
 		$this->setTemplateVar('users',$this->group->getOtherUsers());
-
-		$this->forward('group_users');
-		
 	}
 
 
 	function rights()
 	{
 		$this->setTemplateVar('projects',$this->group->getRights());
-		
-		$this->forward('group_rights');
 		
 	}
 }

@@ -49,47 +49,65 @@ class UserAction extends Action
 
 	function save()
 	{
+		// Benutzer speichern
+		$this->user->name     = $this->getRequestVar('name'    );
+		$this->user->fullname = $this->getRequestVar('fullname');
+		$this->user->isAdmin  = $this->hasRequestVar('is_admin');
+		$this->user->ldap_dn  = $this->getRequestVar('ldap_dn' );
+		$this->user->tel      = $this->getRequestVar('tel'     );
+		$this->user->desc     = $this->getRequestVar('desc'    );
+		$this->user->mail     = $this->getRequestVar('mail'    );
+		$this->user->style    = $this->getRequestVar('style'   );
+
+		$this->user->save();
+		$this->addNotice('user',$this->user->name,'SAVED','ok');
+	}
+
+
+
+	function remove()
+	{
+		$this->setTemplateVars( $this->user->getProperties() );
+	}
+	
+	
+	
+	function delete()
+	{
 		if   ( $this->hasRequestVar('delete') )
 		{
 			$this->user->delete();
 			$this->addNotice('user',$this->user->name,'DELETED','ok');
 		}
-		else
-		{
-			// Benutzer speichern
-			$this->user->name     = $this->getRequestVar('name'    );
-			$this->user->fullname = $this->getRequestVar('fullname');
-			$this->user->isAdmin  = $this->hasRequestVar('is_admin');
-			$this->user->ldap_dn  = $this->getRequestVar('ldap_dn' );
-			$this->user->tel      = $this->getRequestVar('tel'     );
-			$this->user->desc     = $this->getRequestVar('desc'    );
-			$this->user->mail     = $this->getRequestVar('mail'    );
-			$this->user->style    = $this->getRequestVar('style'   );
-
-			$this->user->save();
-			$this->addNotice('user',$this->user->name,'SAVED','ok');
-		}
-
-		$this->callSubAction('listing');
 	}
 
 
 	function add()
 	{
+	}
+	
+	
+	
+	function adduser()
+	{
 		$this->user = new User();
 		$this->user->add( $this->getRequestVar('name') );
 		$this->addNotice('user',$this->user->name,'ADDED','ok');
+	}
+
+
+	function addgrouptouser()
+	{
+		$this->user->addGroup( $this->getRequestVar('groupid') );
 	
-		$this->callSubAction('listing');
+		$this->addNotice('user',$this->user->name,'ADDED','ok');
 	}
 
 
 	function addgroup()
 	{
-		$this->user->addGroup( $this->getRequestVar('groupid') );
-	
-		$this->addNotice('user',$this->user->name,'ADDED','ok');
-		$this->callSubAction('groups');
+		// Alle hinzufuegbaren Gruppen ermitteln
+		$this->setTemplateVar('groups',$this->user->getOtherGroups());
 	}
 
 
@@ -98,7 +116,6 @@ class UserAction extends Action
 		$this->user->delGroup( $this->getRequestVar('groupid') );
 
 		$this->addNotice('user',$this->user->name,'DELETED','ok');
-		$this->callSubAction('groups');
 	}
 
 
@@ -153,14 +170,14 @@ class UserAction extends Action
 		// Zufaelliges Kennwort erzeugen
 		if	( $this->hasRequestVar('random') && $this->hasRequestVar('mail') )
 		{
-			$pw1 = substr( md5(microtime().session_id()),0,intval($conf['security']['random_password_length']) );
+			$pw1 = substr( md5(microtime().session_id()),0,intval($conf['security']['password']['random_length']) );
 			$pw2 = $pw1;
 		}
 
 
 		// Wenn Kennwoerter identisch und lang genug
 		if	( $pw1 == $pw2 &&
-			  strlen($pw1)>=intval($conf['security']['min_password_length'])  )
+			  strlen($pw1)>=intval($conf['security']['password']['min_length'])  )
 		{
 			$this->user->setPassword($pw1); // Kennwort setzen
 			
@@ -173,7 +190,6 @@ class UserAction extends Action
 			$this->addNotice('user',$this->user->name,'SAVED','ok');
 		}
 
-		$this->callSubAction('edit');
 	}
 
 
@@ -188,8 +204,6 @@ class UserAction extends Action
 			$list[$user->userid]['url' ] = Html::url('main','user',$user->userid);
 		}
 		$this->setTemplateVar('el',$list);
-
-		$this->forward('user_list');
 	}	
 		
 
@@ -201,20 +215,22 @@ class UserAction extends Action
 		$this->setTemplateVars( $this->user->getProperties() );
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
-
-		$this->forward( 'user_edit' );
 	}
 
 
 	function groups()
 	{
-		// Alle hinzufuegbaren Gruppen ermitteln
-		$this->setTemplateVar('groups',$this->user->getOtherGroups());
-	
 		// Mitgliedschaften
 		$this->setTemplateVar('memberships',$this->user->getGroups());
 		
-		$this->forward('user_groups');
+		$gruppenListe = array();
+		
+		foreach( $this->user->getGroups() as $id=>$name )
+		{
+			$gruppenListe[$id] = array('name'       =>$name,
+			                           'delgroupurl'=>Html::url($this->actionName,'delgroup',$this->getRequestId(),array('groupid'=>$id)) );
+		}
+		$this->setTemplateVar('memberships',$gruppenListe);
 	}
 
 
@@ -223,9 +239,7 @@ class UserAction extends Action
 	 */
 	function pw()
 	{
-		$this->setTemplateVar('mail',$this->user->mail);
-		
-		$this->forward('user_pw');
+		$this->setTemplateVars( $this->user->getProperties() );
 	}
 
 
@@ -257,7 +271,20 @@ class UserAction extends Action
 		$this->setTemplateVar('rights'  ,$rightList                         );
 		$this->setTemplateVar('objects' ,$objectList                        );
 		$this->setTemplateVar('show'    ,$show                              );
+	}
+	
+	
+	function checkMenu( $menu )
+	{
+		switch( $menu )
+		{
+			case 'addgroup':
+				return count($this->user->getOtherGroups()) > 0;
 
-		$this->forward('user_rights');
+			case 'groups':
+				return count($this->user->getGroups()) > 0;
+		}
+		
+		return true;
 	}
 }
