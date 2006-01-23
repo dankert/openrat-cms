@@ -1,4 +1,12 @@
-<form name="<?php echo $attr_name ?>"
+<?php
+	if	(empty($attr_action))
+		$attr_action = $actionName;
+	if	(empty($attr_subaction))
+		$attr_subaction = $targetSubActionName;
+	if	(empty($attr_id))
+		$attr_id = $this->getRequestId();
+		
+?><form name="<?php echo $attr_name ?>"
       target="<?php echo $attr_target ?>"
       action="<?php echo Html::url( $attr_action,$attr_subaction,$attr_id ) ?>"
       method="<?php echo $attr_method ?>"

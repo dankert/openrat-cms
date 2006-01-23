@@ -1,26 +1,26 @@
 <?php
 	if(empty($attr_title)) $attr_title = $attr_text;
 ?><span class="<?php echo $attr_class ?>"><?php
-	if (!empty($attr_url))
-		echo "<a href=\"".$$attr_url."\" title=\"$attr_title\">";
 	if (!empty($attr_array))
 	{
 		//geht nicht:
 		//echo $$attr_array[$attr_var].'%';
 		$tmpArray = $$attr_array;
 		if (!empty($attr_var))
-			echo $tmpArray[$attr_var];
+			$tmp_text = $tmpArray[$attr_var];
 		else
-			echo lang($tmpArray[$attr_text]);
+			$tmp_text = lang($tmpArray[$attr_text]);
 	}
 	elseif (!empty($attr_text))
-		echo lang($attr_text);
+		$tmp_text = lang($attr_text);
 	elseif (!empty($attr_var))
-		echo $$attr_var;	
+		$tmp_text = $$attr_var;	
 	elseif (!empty($attr_raw))
-		echo str_replace('_',' ',$attr_raw);
+		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
 	else echo 'text error';
 	
-	if (!empty($attr_url))
-		echo '</a';
+	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
+		
+	echo $tmp_text;
 ?></span>

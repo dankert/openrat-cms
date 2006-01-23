@@ -1,10 +1,10 @@
-<select size="1" name="<?php echo $attr_name ?>" <?php
+<select size="1" name="<?php echo $attr_name ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
 if (count($$attr_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr_list as $box_key=>$box_value )
 		{
-			echo '<option value="'.$box_key.'"';
-			if ($box_key == $$attr_default)
+			echo '<option class="'.$attr_class.'" value="'.$box_key.'"';
+			if (isset($$attr_name)&&$box_key==$$attr_name || isset($$attr_default)&&$box_key == $$attr_default)
 				echo ' selected="selected"';
 			echo '>'.$box_value.'</option>';
 		}

@@ -6,25 +6,25 @@
 		unset($attr['widths']);
 	}
 		global $image_dir;
-		if	( !isset($attr_width)) $attr['width']='90%';
 		echo '<br/><br/><br/><center>';
-		echo '<table class="main" cellspacing="0" cellpadding="4" ';
-		foreach( $attr as $aName=>$aValue )
-			echo " $aName=\"$aValue\"";
-		echo '>';
-		echo '<tr><th>';
+		echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr_width.'">';
+		echo '<tr><td class="menu">';
 		if	( !empty($attr_icon) )
-			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_EXT.'" align="left" border="0">';
-		if	( !isset($$attr_name)) $$attr_name='';
-		echo $$attr_name.': ';
-		echo lang( $attr_title );
+			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		foreach( $path as $pathElement)
+		{
+			extract($pathElement);
+			echo '<a href="'.$url.'" class="path">'.lang($name).'</a>';
+			echo '&nbsp;&raquo;&nbsp;';
+		}
+		echo '<span class="title">'.lang($attr_name).'</span>';
 		?>
     </th>
   </tr>
   <tr><td class="subaction">
     <?php foreach( $windowMenu as $menu )
           {
-          	?><a href="<?php echo Html::url($actionName,$menu['subaction']) ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
           	?></td>
   </tr>
@@ -37,8 +37,8 @@
     
   <?php foreach( $notices as $notice ) { ?>
     
-    <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_EXT ?>" style="padding:10px" /></td>
-    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
+    <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
+    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
   </tr>
   <?php } ?>
   

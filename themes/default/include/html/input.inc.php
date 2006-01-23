@@ -1,1 +1,1 @@
-<input <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?> value="<?php echo $$attr_name ?>" />
+<input name="<?php echo $attr_name ?>" size="<?php echo $attr_size ?>" maxlength="<?php echo $attr_maxlength ?>" class="<?php echo $attr_class ?>" value="<?php echo isset($$attr_name)?$$attr_name:$attr_default ?>" />
