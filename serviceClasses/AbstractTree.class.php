@@ -55,7 +55,8 @@ class AbstractTree
 		$this->tempElements = array();
 		$this->maxId = 0;
 		
-		$this->open( 0 );
+		$this->open(0);
+		$this->open(1);
 	}
 
 	/**
