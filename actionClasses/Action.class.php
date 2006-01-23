@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.18  2006-01-11 22:38:10  dankert
+// Revision 1.19  2006-01-23 23:07:44  dankert
+// ?nderung forward(), Neu: setMenu()
+//
+// Revision 1.18  2006/01/11 22:38:10  dankert
 // ?nderungen bei Aufruf Template-Engine
 //
 // Revision 1.17  2005/04/16 21:33:13  dankert
@@ -95,9 +98,11 @@ class Action
 	var $templateVars = Array();
 	var $actionName;
 	var $subActionName;
+	var $actionClassName;
 
 	var $writable;
 	var $publishing;
+	var $actionConfig;
 
 
 	function Action()
@@ -197,8 +202,15 @@ class Action
 	 *
 	 * @param String Dateiname des Templates
 	 */
-	function forward( $tplName )
+	function forward( $tplName="" )
 	{
+		$this->setMenu();
+//		if	( $tplName=="" )
+			$tplName = $this->actionName.'/'.$this->subActionName;
+
+		if	(isset($this->actionConfig[$this->subActionName]['target']))
+			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
+
 		global $conf;
 		global $PHP_SELF;
 		global $HTTP_SERVER_VARS;
@@ -215,7 +227,7 @@ class Action
 	
 		// Setzen einiger Standard-Variablen
 		//
-		$tpl_dir    = OR_THEMES_DIR.$conf['interface']['theme'].'/templates/';
+		$tpl_dir    = OR_THEMES_DIR.$conf['interface']['theme'].'/pages/html/';
 		$image_dir  = OR_THEMES_DIR.$conf['interface']['theme'].'/images/';
 	
 		$user = Session::getUser();
@@ -264,13 +276,14 @@ class Action
 		if	( in_array($this->actionName,array('page','file','link','folder')) )
 			Session::setSubaction( $subActionName );
 
-//		$this->subActionName = $subActionName;		
+		$this->subActionName = $subActionName;		
 
 		Logger::trace("next subaction is '$subActionName'");
 		
 		global $SESS;
 
 		$this->$subActionName();
+		$this->forward();
 	}
 
 
@@ -415,6 +428,33 @@ class Action
 		// Der entfernte Browser bzw. Proxy holt die Seite nun aus seinem Cache 
 		header('HTTP/1.0 304 Not Modified');
 		exit;  // Sofortiges Skript-Ende
+	}
+	
+	
+	
+	
+	function setMenu()
+	{
+		if	(!isset($this->actionConfig[$this->subActionName]['menu']))
+			return;
+		$windowMenu = array();
+		$name       = $this->actionConfig[$this->subActionName]['menu'];
+		$menuList   = explode(',',$this->actionConfig['menu'][$name]);
+		
+		foreach( $menuList as $menuName )
+		{
+			Logger::trace("testing menu $menuName");
+			if	( $this->checkMenu($menuName) )
+				$windowMenu[] = array('subaction'=>$menuName,'text'=>'menu_'.$this->actionName.'_'.$menuName);
+		}
+		$this->setTemplateVar('windowMenu',$windowMenu);
+	}
+	
+	
+	
+	function checkMenu( $name )
+	{
+		return true;
 	}
 }
 
