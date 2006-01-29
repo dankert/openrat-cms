@@ -521,3 +521,168 @@ MENU_PROJECT_LISTING=Alle anzeigen
 MENU_PROJECT_LISTING_DESC=Alle Projekte anzeigen
 MENU_PROJECT_ADD=Neu
 MENU_PROJECT_ADD_DESC=Neues Projekt anlegen
+MENU_FOLDER_NEW=Neues Objekt anlegen
+MENU_FOLDER_CREATEFOLDER=Neuer Unterordner
+MENU_FOLDER_CREATEFOLDER_DESC=Einen neuen Unterordner in diesem Ordner anlegen
+MENU_FOLDER_CREATEFILE=Neue Datei
+MENU_FOLDER_CREATEFILE_DESC=Neue Datei auf den Server laden
+MENU_FOLDER_CREATEPAGE=Neue Seite
+MENU_FOLDER_CREATEPAGE_DESC=Neue Seite in diesem Ordner anlegen
+MENU_FOLDER_CREATELINK=Neue Verknüpfung
+MENU_FOLDER_CREATELINK_DESC=Neue Verknüpfung in diesem Ordner anlegen
+MENU_FOLDER_PROP=Eigenschaften
+MENU_FOLDER_PROP_DESC=Eigenschaften bearbeiten
+MENU_FOLDER_SHOWPROP=Anzeigen
+MENU_FOLDER_SHOWPROP_DESC=Eigenschaften anzeigen
+MENU_FOLDER_REMOVE=Entfernen
+MENU_FOLDER_REMOVE_DESC=Diesen Ordner entfernen
+MENU_PROFILE_EDIT=Profile bearbeiten
+MENU_PROFILE_EDIT_DESC=Ihre Benutereinstellungen bearbeiten
+MENU_PROFILE_PWCHANGE=Kennwort ändern
+MENU_PROFILE_PWCHANGE_DESC=Ändern Sie Ihr Kennwort
+MENU_FOLDER_RIGHTS=Rechte
+MENU_FOLDER_RIGHTS_DESC=Rechte ansehen
+MENU_FOLDER_ACLFORM=Recht hinzufügen
+MENU_FOLDER_ACLFORM_DESC=Ein Recht zu diesem Ordner hinzufügen
+MENU_INDEX_MENU=Projekt auswählen
+
+MENU_FILE_RIGHTS=Rechte
+MENU_FILE_RIGHTS_DESC=Rechte dieser Datei ansehen
+MENU_FILE_ACLFORM=Recht hinzufügen
+MENU_FILE_ACLFORM_DESC=Ein Recht zu dieser Datei hinzufügen
+
+MENU_PAGE_RIGHTS=Rechte
+MENU_PAGE_RIGHTS_DESC=Rechte dieser Seite ansehen
+MENU_PAGE_ACLFORM=Recht hinzufügen
+MENU_PAGE_ACLFORM_DESC=Ein Recht zu dieser Seite hinzufügen
+
+MENU_LINK_RIGHTS=Rechte
+MENU_LINK_RIGHTS_DESC=Rechte dieser Verknüpfung ansehen
+MENU_LINK_ACLFORM=Recht hinzufügen
+MENU_LINK_ACLFORM_DESC=Ein Recht zu dieser Verknüpfung hinzufügen
+
+MENU_PAGEELEMENT_EDITDATE=Einfach bearbeiten
+MENU_PAGEELEMENT_EDITDATE_DESC=Das Datum bearbeiten
+MENU_PAGEELEMENT_EDITDATECALENDAR=Kalender
+MENU_PAGEELEMENT_EDITDATECALENDAR_DESC=Datum aus Kalender auswählen
+MENU_PAGEELEMENT_EDITDATEFORM=Auswahl
+MENU_PAGEELEMENT_EDITDATEFORM_DESC=Datum aus Liste auswählen 
+
+MENU_PAGEELEMENT_EDITTEXT=Bearbeiten
+MENU_PAGEELEMENT_EDITTEXT_DESC=Den Text bearbeiten
+
+MENU_PAGEELEMENT_EDITLINK=Bearbeiten
+MENU_PAGEELEMENT_EDITLINK_DESC=Den Text bearbeiten
+
+MENU_PAGEELEMENT_EDITLONGTEXT=Bearbeiten
+MENU_PAGEELEMENT_EDITLONGTEXT_DESC=Bearbeiten
+
+MENU_PAGEELEMENT_EDITLIST=Bearbeiten
+MENU_PAGEELEMENT_EDITLIST_DESC=Bearbeiten
+
+MENU_PAGEELEMENT_EDITSELECT=Bearbeiten
+MENU_PAGEELEMENT_EDITSELECT_DESC=Bearbeiten
+
+MENU_PAGEELEMENT_EDITNUMBER=Bearbeiten
+MENU_PAGEELEMENT_EDITNUMBER_DESC=Bearbeiten
+
+MENU_PAGEELEMENT_ARCHIVE=Archiv
+MENU_PAGEELEMENT_ARCHIVE_DESC=Archivansicht zu diesem Seiteninhalt
+
+MENU_PAGE_ELEMENTS=Elemente der Seite
+
+MENU_PAGE_EL=Liste
+MENU_PAGE_EL_DESC=Alle Elemente dieser Seite anzeigen
+
+MENU_PAGE_PROP=Eigenschaften
+MENU_PAGE_PROP_DESC=Eigenschaften der Seite bearbeiten
+
+MENU_PAGE_SHOWPROP=Anzeigen
+MENU_PAGE_SHOWPROP_DESC=Eigenschaften der Seite anzeigen
+
+MENU_PAGE_CHANGETEMPLATE=Vorlage wechseln
+MENU_PAGE_CHANGETEMPLATE_DESC=Austausch der Seitenvorlage
+
+MENU_PAGE_EL=Alle bearbeiten
+MENU_PAGE_EL_DESC=Alle Elemente dieser Seite in einem Formular bearbeiten
+
+MENU_FILE_SHOWPROP=Anzeigen
+MENU_FILE_SHOWPROP_DESC=Eigenschaften dieser Datei anzeigen
+
+MENU_FILE_PROP=Eigenschaften bearbeiten
+MENU_FILE_PROP_DESC=Eigenschaften dieser Datei editieren
+
+MENU_FILE_SIZE=Bildgröße
+MENU_FILE_SIZE_DESC=Bildgröße ändern
+
+MENU_FILE_UPLOAD=Upload
+MENU_FILE_UPLOAD_DESC=Bestehende Datei ersetzen
+
+MENU_FILE_REMOVE=Löschen
+MENU_FILE_REMOVE=Datei löschen
+
+MENU_FILE_COMPRESS=Komprimieren
+MENU_FILE_COMPRESS_DESC=Die Datei komprimieren
+
+MENU_FILE_DECOMPRESS=Dekomprimieren
+MENU_FILE_DECOMPRESS_DESC=Die komprimierte Datei dekomprimieren
+
+MENU_FILE_EXTRACT=Auspacken
+MENU_FILE_EXTRACT_DESC=Archiv auspacken
+
+MENU_FILE_EDITVALUE=Inhalt bearbeiten
+MENU_FILE_EDITVALUE_DESC=Inhalt bearbeiten
+
+MENU_TEMPLATE_EDIT=Bearbeiten
+MENU_TEMPLATE_EDIT_DESC=Bearbeiten
+
+MENU_TEMPLATE_SRC=Quellcode
+MENU_TEMPLATE_SRC_DESC=Quellcode bearbeiten
+
+MENU_TEMPLATE_SRCELEMENT=Element hinzufügen
+MENU_TEMPLATE_SRCELEMENT_DESC=Ein Element hinzufügen
+
+MENU_TEMPLATE_PROP=Eigenschaften bearbeiten
+
+MENU_TEMPLATE_NAME=Name
+MENU_TEMPLATE_NAME_DESC=Den Namen der Vorlage bearbeiten
+
+MENU_TEMPLATE_REMOVE=Löschen
+MENU_TEMPLATE_REMOVE_DESC=Template löschen
+
+MENU_TEMPLATE_EL=Elemente
+MENU_TEMPLATE_EL_DESC=Alle Elemente der Vorlage
+
+MENU_TEMPLATE_ADDEL=Hinzufügen
+MENU_TEMPLATE_ADDEL_DESC=Ein Element hinzufügen
+
+MENU_TEMPLATE_LISTING=Alle Vorlagen
+MENU_TEMPLATE_LISTING_DESC=Anzeige aller Vorlagen
+
+MENU_TEMPLATE_ADD=Hinzufügen
+MENU_TEMPLATE_ADD_DESC=Eine neue Vorlage hinzufügen
+
+MENU_TEMPLATE_EXTENSION=Erweiterung
+MENU_TEMPLATE_EXTENSION_DESC=Die Erweiterung bearbeiten
+
+MENU_ELEMENT_NAME=Name
+MENU_ELEMENT_NAME_DESC=Den Elementnamen bearbeiten
+
+MENU_ELEMENT_TYPE=Typ
+MENU_ELEMENT_TYPE_DESC=Den Element-Typ ändern
+
+MENU_ELEMENT_PROPERTIES=Eigenschaften
+MENU_ELEMENT_PROPERTIES_DESC=Eigenschaften des Elementes bearbeiten
+
+MENU_ELEMENT_REMOVE=Entfernen
+MENU_ELEMENT_REMOVE_DESC=Das Element löschen
+
+ELEMENT_NAME=Element-Name
+ELEMENT_TYPE=Element-Typ
+
+
+
+
+TEMPLATE_NAME=Vorlagen-Name
+
+MENU_INDEX_LOGIN=Anmeldung
