@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2004-12-19 14:55:27  dankert
+// Revision 1.6  2006-01-29 17:18:58  dankert
+// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
+//
+// Revision 1.5  2004/12/19 14:55:27  dankert
 // Anpassung von urls
 //
 // Revision 1.4  2004/12/13 22:17:51  dankert
@@ -64,39 +67,57 @@ class ModelAction extends Action
 
 	function add()
 	{
+	}
+
+
+	function addmodel()
+	{
 		$model = new Model();
 		$model->projectid = $this->project->projectid;
 		$model->name      = $this->getRequestVar('name');
 		$model->add();
-	
-		$this->callSubAction('listing');
+		
+		// Wenn kein Namen eingegeben, dann einen setzen.
+		if	( empty($model->name) )
+		{
+			// Name ist "Variante <id>"
+			$model->name = lang('GLOBAL_MODEL').' '.$model->modelid;
+			$model->save();
+		}
 	}
 
 
+	function remove()
+	{
+	}
+	
+	
+	function delete() 
+	{
+		if   ( $this->getRequestVar('delete') != '' )
+		{
+			$this->model->delete();
+		}
+	}
+	
+	
+	
 	// Speichern eines Modells
 	function save()
 	{
 		if   ( $this->getRequestVar('name') != '' )
 		{
-			if   ( $this->getRequestVar('delete') != '' )
-			{
-				$this->model->delete();
-
-				$this->callSubAction('listing');
-			}
-			else
-			{
-				$this->model->name = $this->getRequestVar('name');
-				$this->model->save();
-				
-				$this->callSubAction('listing');
-			}
+			$this->model->name = $this->getRequestVar('name');
+			$this->model->save();
+			$this->addNotice('model',$this->model->name,'SAVED','ok');
+		}
+		else
+		{
+			$this->addNotice('model',$this->model->name,'NOT_SAVED','error');
 		}
 	
 		// Baum aktualisieren
-		$this->setTemplateVar('tree_refresh',true);
-
-		$this->callSubAction('listing');
+//		$this->setTemplateVar('tree_refresh',true);
 	}
 
 

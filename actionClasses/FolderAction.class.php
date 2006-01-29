@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.32  2006-01-23 23:08:52  dankert
+// Revision 1.33  2006-01-29 17:18:58  dankert
+// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
+//
+// Revision 1.32  2006/01/23 23:08:52  dankert
 // Kl. ?nderungen beim Anlegen von Objekten
 //
 // Revision 1.31  2006/01/11 22:50:00  dankert
@@ -150,81 +153,53 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function createnew()
+
+	function createnewfolder()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
 		$filename    = $this->getRequestVar('filename'   );
 		$description = $this->getRequestVar('description');
 		
-		// Neues Objekt in diesem Ordner anlegen
-		switch( $this->getRequestVar('type') )
+		if   ( !empty($name) )
 		{
-			case 'folder':
+			$f = new Folder();
+			$f->name     = $name;
+			$f->filename = $name;
+			$f->desc     = $description;
+			$f->parentid = $this->folder->objectid; 
 
-				if   ( $this->getRequestVar('foldername') != '' )
-				{
-					$f = new Folder();
-					$f->name     = $this->getRequestVar('foldername');
-					$f->filename = $this->getRequestVar('foldername');
-					$f->parentid = $this->folder->objectid; 
-
-					$f->add();
-					$this->addNotice('folder',$f->name,'ADDED','ok');
-				}
-
-				break;
-			
-			case 'page':
-
-				if   ( $this->getRequestVar('pagename') != '' )
-				{
-					$page = new Page();
-					$page->name       = $this->getRequestVar('pagename'  );
-					$page->filename   = $this->getRequestVar('pagename'  );
-					$page->templateid = $this->getRequestVar('templateid');
-					$page->parentid   = $this->folder->objectid;
-
-					$this->addNotice('page',$page->name,'ADDED','ok');
-					$page->add();
-				}
-
-				break;
-			
-			case 'file':
-
-				$file   = new File();
-				$upload = new Upload();
-		
-				$file->desc      = !empty($description)?$name:$upload->filename;
-				$file->filename  = $upload->filename;
-				$file->name      = !empty($name)?$name:$upload->filename;
-				$file->extension = $upload->extension;		
-				$file->size      = $upload->size;
-				$file->parentid  = $this->folder->objectid;
-		
-				$file->value     = $upload->value;
-		
-				$file->add(); // Datei hinzufuegen
-				$this->addNotice('file',$file->name,'ADDED','ok');
-				break;
-			
-			case 'link':
-
-				if   ( $this->getRequestVar('linkname') != '' )
-				{
-					$link = new Link();
-					$link->name           = $this->getRequestVar('linkname');
-					$link->parentid       = $this->folder->objectid; 
-					$link->isLinkToObject = false;
-					$link->url            = $this->getRequestVar('linkname');;
-					$this->addNotice('link',$link->name,'ADDED','ok');
-					$link->add();
-				}
-				break;
-			
-			default: die('unknown type for creating');
+			$f->add();
+			$this->addNotice('folder',$f->name,'ADDED','ok');
 		}
+
+		$this->folder->setTimestamp();
+	}	
+
+
+
+	function createnewfile()
+	{
+		$type        = $this->getRequestVar('type'       );
+		$name        = $this->getRequestVar('name'       );
+		$filename    = $this->getRequestVar('filename'   );
+		$description = $this->getRequestVar('description');
+		
+		$file   = new File();
+		$upload = new Upload();
+
+		$file->desc      = !empty($description)?$name:$upload->filename;
+		$file->filename  = $upload->filename;
+		$file->name      = !empty($name)?$name:$upload->filename;
+		$file->extension = $upload->extension;		
+		$file->size      = $upload->size;
+		$file->parentid  = $this->folder->objectid;
+
+		$file->value     = $upload->value;
+
+		$file->add(); // Datei hinzufuegen
+		$this->addNotice('file',$file->name,'ADDED','ok');
+
 		$this->folder->setTimestamp();
 
 		$this->setTemplateVar('tree_refresh',true);
@@ -232,11 +207,82 @@ class FolderAction extends ObjectAction
 	}	
 
 
+
+	function createnewlink()
+	{
+		$type        = $this->getRequestVar('type'       );
+		$name        = $this->getRequestVar('name'       );
+		$filename    = $this->getRequestVar('filename'   );
+		$description = $this->getRequestVar('description');
+		
+		if   ( !empty($name) )
+		{
+			$link = new Link();
+			$link->name           = $name;
+			$link->desc           = $description;
+			$link->parentid       = $this->folder->objectid;
+
+			$link->isLinkToObject = false;
+			$link->url            = $this->getRequestVar('name');
+
+			$this->addNotice('link',$link->name,'ADDED','ok');
+
+			$link->add();
+		}
+			
+		$this->folder->setTimestamp();
+	}	
+
+
+
+	function createnewpage()
+	{
+		$type        = $this->getRequestVar('type'       );
+		$name        = $this->getRequestVar('name'       );
+		$filename    = $this->getRequestVar('filename'   );
+		$description = $this->getRequestVar('description');
+		
+		if   ( $this->getRequestVar('name') != '' )
+		{
+			$page = new Page();
+			$page->name       = $name;
+			$page->desc       = $description;
+			$page->filename   = $filename;
+			$page->templateid = $this->getRequestVar('templateid');
+			$page->parentid   = $this->folder->objectid;
+
+			$this->addNotice('page',$page->name,'ADDED','ok');
+			$page->add();
+		}
+
+		$this->folder->setTimestamp();
+	}	
+
+
+
 	/**
 	 * Abspeichern der Ordner-Eigenschaften. Ist der Schalter "delete" gesetzt, wird
 	 * der Ordner stattdessen gel?scht.
 	 */
-	function save()
+	function saveprop()
+	{
+		// Ordnereigenschaften speichern
+		if   ( $this->getRequestVar('name') != '' )
+			$this->folder->name     = $this->getRequestVar('name'    );
+		else	$this->folder->name     = $this->getRequestVar('filename');
+
+		$this->folder->filename = $this->getRequestVar('filename');
+		$this->folder->desc     = $this->getRequestVar('desc');
+		$this->folder->save();
+		$this->addNotice($this->folder->getType(),$this->folder->name,'PROP_SAVED','ok');
+	}
+
+
+	/**
+	 * Abspeichern der Ordner-Eigenschaften. Ist der Schalter "delete" gesetzt, wird
+	 * der Ordner stattdessen gel?scht.
+	 */
+	function delete()
 	{
 		if   ( $this->getRequestVar('delete') != '' )
 		{
@@ -244,21 +290,6 @@ class FolderAction extends ObjectAction
 			$this->folder->delete();
 			$this->addNotice($this->folder->getType(),$this->folder->name,lang('DELETED'),'ok');
 		}
-		else
-		{
-			// Ordnereigenschaften speichern
-			if   ( $this->getRequestVar('name') != '' )
-				$this->folder->name     = $this->getRequestVar('name'    );
-			else	$this->folder->name     = $this->getRequestVar('filename');
-
-			$this->folder->filename = $this->getRequestVar('filename');
-			$this->folder->desc     = $this->getRequestVar('desc');
-			$this->folder->save();
-			$this->addNotice($this->folder->getType(),$this->folder->name,'PROP_SAVED','ok');
-		}
-	
-		$this->setTemplateVar('tree_refresh',true);
-		$this->callSubAction('prop');
 	}
 
 
@@ -566,10 +597,6 @@ class FolderAction extends ObjectAction
 	function create()
 	{
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
-		
-		$this->setWindowMenu('new');
-		
-		$this->forward('folder_new');
 	}
 
 
@@ -577,10 +604,6 @@ class FolderAction extends ObjectAction
 	function createfolder()
 	{
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
-
-		$this->setWindowMenu('new');
-		
-		$this->forward('folder_new_folder');
 	}
 
 
@@ -588,20 +611,12 @@ class FolderAction extends ObjectAction
 	function createfile()
 	{
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
-
-		$this->setWindowMenu('new');
-			
-		$this->forward('folder_new_file');
 	}
 
 
 	function createlink()
 	{
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
-
-		$this->setWindowMenu('new');
-			
-		$this->forward('folder_new_link');
 	}
 
 
@@ -609,10 +624,6 @@ class FolderAction extends ObjectAction
 	{
 		$this->setTemplateVar('templates' ,Template::getAll()      );
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
-
-		$this->setWindowMenu('new');
-
-		$this->forward('folder_new_page');
 	}
 
 
@@ -683,10 +694,6 @@ class FolderAction extends ObjectAction
 
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
-
-		$this->setWindowMenu( 'show' );
-		$this->forward('folder_show');
-		
 	}
 
 
@@ -752,44 +759,25 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('orderbylastchange_url',Html::url('folder','reorder',0,array('type'=>'lastchange')) );
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
-		$this->setWindowMenu( 'show' );
-
-		$this->forward('folder_order');
-		
 	}
 
+
+	function showprop()
+	{
+		$this->setTemplateVars( $this->folder->getProperties() );
+	}
+	
+	
+	
 	function prop()
 	{
-		if	( $this->folder->isRoot )
-			$this->callSubAction('show');
-
-		if	( $this->folder->filename == $this->folder->objectid )
-			$this->folder->filename = '';
-
-
 		$this->setTemplateVars( $this->folder->getProperties() );
-	
-		// Alle Ordner ermitteln
-		$this->setTemplateVar('act_objectid',$this->folder->objectid);
-		
-		$list = array();
-		$allsubfolders = $this->folder->getAllSubFolderIds();
-		
-		foreach( $this->folder->getOtherFolders() as $id )
-		{
-			$f = new Folder( $id );
-			if   ( ! in_array($id,$allsubfolders) )
-				$list[$id] = implode( ' &raquo; ',$f->parentObjectNames(true,true) );
-		}
-		asort( $list );
-		$this->setTemplateVar('folder',$list);
-		
-		// Wenn Ordner leer ist, dann L?schen erm?glichen
-		if	( count($this->folder->getObjectIds()) == 0 )
-			$this->setTemplateVar('delete',true );
-		else	$this->setTemplateVar('delete',false);
-	
-		$this->forward('folder_prop');
+	}
+
+
+	function remove()
+	{
+		$this->setTemplateVars( $this->folder->getProperties() );
 	}
 
 
@@ -833,42 +821,27 @@ class FolderAction extends ObjectAction
 	
 	
 	
-	function setWindowMenu( $type ) {
-		
-		global $conf;
-		
-		switch( $type)
+	function checkMenu( $name )
+	{
+		switch( $name)
 		{
-			case 'new':
-				$menu = array();
-				if	($this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectIds(true,true)) < MAX_FOLDER_DEPTH )
-					$menu[] = array('subaction'=>'createfolder','text'=>'folder_new_folder');
-		
-				if	($this->folder->hasRight(ACL_CREATE_FILE))
-					$menu[] = array('subaction'=>'createfile','text'=>'folder_new_file');
-		
-				if	($this->folder->hasRight(ACL_CREATE_LINK))
-					$menu[] = array('subaction'=>'createlink','text'=>'folder_new_link');
-		
-				if	($this->folder->hasRight(ACL_CREATE_PAGE))
-					$menu[] = array('subaction'=>'createpage','text'=>'folder_new_page');
+			case 'createfolder':
+				return $this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectIds(true,true)) < MAX_FOLDER_DEPTH;
 
-				$this->setTemplateVar('windowMenu',$menu);
-				break;
+			case 'createfile':
+				return $this->folder->hasRight(ACL_CREATE_FILE);
 
-			case 'acl':
-				$menu = array( array('subaction'=>'rights' ,'text'=>'show'),
-		                       array('subaction'=>'aclform','text'=>'add' ) );
-				$this->setTemplateVar('windowMenu',$menu);
-				break;
+			case 'createlink':
+				return $this->folder->hasRight(ACL_CREATE_LINK);
 
-			case 'show':
-				$menu = array( array('subaction'=>'show' ,'text'=>'show'),
-		                       array('subaction'=>'order','text'=>'order' ) );
-				$this->setTemplateVar('windowMenu',$menu);
-				break;
+			case 'createpage':
+				return $this->folder->hasRight(ACL_CREATE_PAGE);
 
+			case 'remove':
+				return count($this->folder->getObjectIds()) == 0;
+
+			default:
+				return true;
 		}
 	}
-	
 }

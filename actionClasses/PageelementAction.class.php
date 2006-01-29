@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.18  2005-01-27 00:02:47  dankert
+// Revision 1.19  2006-01-29 17:18:59  dankert
+// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
+//
+// Revision 1.18  2005/01/27 00:02:47  dankert
 // Immer Objektid an das Template liefern
 //
 // Revision 1.17  2005/01/23 00:09:25  dankert
@@ -134,12 +137,13 @@ class PageelementAction extends Action
 	}
 
 
+
 	/**
 	 * Ein Element der Seite bearbeiten
 	 *
 	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
 	 */
-	function edit()
+	function initedit()
 	{
 		$language = Session::getProjectLanguage();
 		$this->value->languageid = $language->languageid;
@@ -156,7 +160,165 @@ class PageelementAction extends Action
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
 		$this->setTemplateVar('elementid',$this->value->element->elementid);
+	}
+	
+	
+	
+	function editdate()
+	{
+		$this->initedit();
+		
+		$date =  $this->value->date;
 
+		// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
+		if	( $date == 0 )
+			$date = intval(time()/60)*60;
+
+		$this->setTemplateVar('ansidate',date( 'Y-m-d H:i:s',$date ) );
+		$this->setTemplateVar('date'    ,$date);
+
+
+
+
+
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+
+		$this->forward('pageelement_edit_'.$this->value->element->type);		
+	}
+	
+	
+	
+	function editdatecalendar()
+	{
+		$this->initedit();
+		
+		$date =  $this->value->date;
+
+		// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
+		if	( $date == 0 )
+			$date = time();
+
+		if   ( $this->getRequestVar('year') != '' )
+		{
+			$date = mktime( $this->getRequestVar('hour'),
+			                $this->getRequestVar('minute'),
+			                $this->getRequestVar('second'),
+			                $this->getRequestVar('month'),
+			                $this->getRequestVar('day'),
+			                $this->getRequestVar('year')    );
+		}
+		$this->setTemplateVar('year'  ,date('Y',$date) );
+		$this->setTemplateVar('month' ,date('n',$date) );
+		$this->setTemplateVar('day'   ,date('j',$date) );
+		$this->setTemplateVar('hour'  ,date('G',$date) );
+		$this->setTemplateVar('minute',date('i',$date) );
+		$this->setTemplateVar('second',date('s',$date) );
+
+		$this->setTemplateVar('days'  ,date('t',$date) );
+
+		$this->setTemplateVar('title' ,lang('DATE_MONTH'.date('n',$date)).' '.date('Y',$date) );
+		
+		// Wochentag des 1. des Monats ermitteln
+		$wday1 = date( 'w',$date );
+		$wday1 -= date('j',$date)-1;
+		while( $wday1 < 0 ) $wday1+=7;
+		$this->setTemplateVar('first_weekday',$wday1);
+		
+		$this->setTemplateVar('actdate' ,date( lang('DATE_FORMAT'),$date ) );
+		$this->setTemplateVar('todayurl','?year='.date('Y').'&month='.date('m').'&day='.date('d').'&hour='.date('H').'&minute='.date('i').'&second='.date('s') );
+		$this->setTemplateVar('ansidate',date( 'Y-m-d H:i:s',$date ) );
+		$this->setTemplateVar('date'    ,$date);
+
+
+
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+
+		$this->forward('pageelement_edit_'.$this->value->element->type);		
+	}
+	
+	
+	
+	function editdateform()
+	{
+		$this->initedit();
+		
+		$date =  $this->value->date;
+
+		// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
+		if	( $date == 0 )
+			$date = intval(time()/60)*60;
+
+		$this->setTemplateVar('date'    ,$date);
+
+		$this->setTemplateVar('year'  ,date('Y',$date) );
+		$this->setTemplateVar('month' ,date('n',$date) );
+		$this->setTemplateVar('day'   ,date('j',$date) );
+		$this->setTemplateVar('hour'  ,date('G',$date) );
+		$this->setTemplateVar('minute',date('i',$date) );
+		$this->setTemplateVar('second',date('s',$date) );
+
+		$all_years   = array();
+		$all_months  = array();
+		$all_days    = array();
+		$all_hours   = array();
+		$all_minutes = array();
+		for( $i=1850; $i<=2100;$i++ ) $all_years  [$i] = $i; 
+		for( $i=1;    $i<=12;  $i++ ) $all_months [$i] = lang('DATE_MONTH'.$i); 
+		for( $i=1;    $i<=31;  $i++ ) $all_days   [$i] = str_pad($i,2,'0',STR_PAD_LEFT); 
+		for( $i=0;    $i<=23;  $i++ ) $all_hours  [$i] = str_pad($i,2,'0',STR_PAD_LEFT); 
+		for( $i=0;    $i<=59;  $i++ ) $all_minutes[$i] = str_pad($i,2,'0',STR_PAD_LEFT);
+	
+		$this->setTemplateVar('all_years'  ,$all_years  );
+		$this->setTemplateVar('all_months' ,$all_months );
+		$this->setTemplateVar('all_days'   ,$all_days   );
+		$this->setTemplateVar('all_hours'  ,$all_hours  );
+		$this->setTemplateVar('all_minutes',$all_minutes);
+		$this->setTemplateVar('all_seconds',$all_minutes);
+
+
+
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+
+		$this->forward('pageelement_edit_'.$this->value->element->type);		
+	}
+	
+	
+	
+	function asdfasdf()
+	{
 		// Auswahl ueber alle Elementtypen
 		switch( $this->value->element->type )
 		{
@@ -331,6 +493,216 @@ class PageelementAction extends Action
 
 
 
+	function editlink()
+	{
+		$this->initedit();
+
+		$objects = array();
+
+		foreach( Folder::getAllObjectIds() as $id )
+		{
+			$o = new Object( $id );
+			$o->load();
+			
+			if	( $o->getType() != 'folder' )
+			{ 
+				$f = new Folder( $o->parentid );
+//						$f->load();
+				
+				$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
+				$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
+				$objects[ $id ] .= FILE_SEP.$o->name;
+			} 
+		}
+
+		asort( $objects ); // Sortieren
+
+		$this->setTemplateVar('objects'         ,$objects);
+		$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
+
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+
+		$this->forward('pageelement_edit_'.$this->value->element->type);
+	}
+
+
+
+	function editselect()
+	{
+		$this->initedit();
+
+		$this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
+		$this->setTemplateVar( 'text' ,$this->value->text                      );
+
+	
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+
+		$this->forward('pageelement_edit_'.$this->value->element->type);
+	}
+
+
+
+	function editlist()
+	{
+		$this->initedit();
+		// Auswahl ueber alle Elementtypen
+		$objects = array();
+		foreach( Folder::getAllFolders() as $id )
+		{
+			$f = new Folder( $id );
+			$f->load();
+			
+			$objects[ $id ]  = lang( 'GLOBAL_'.$f->getType() ).': '; 
+			$objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) ); 
+		}
+
+		asort( $objects ); // Sortieren
+
+		$this->setTemplateVar('objects'         ,$objects);
+		$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
+
+	
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+
+		$this->forward('pageelement_edit_'.$this->value->element->type);
+	}
+
+
+
+	function editnumber()
+	{
+		$this->initedit();
+
+		$this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
+
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+
+		$this->forward('pageelement_edit_'.$this->value->element->type);
+	}
+
+
+
+	/**
+	 * Ein Element der Seite bearbeiten
+	 *
+	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
+	 */
+	function editlongtext()
+	{
+		$this->initedit();
+
+		// Ermitteln aller verlinkbaren Objekte (fuer Editor)
+		$objects = array();
+
+		foreach( Folder::getAllObjectIds() as $id )
+		{
+			$o = new Object( $id );
+			$o->load();
+			
+			if	( $o->getType() != 'folder' )
+			{ 
+				$f = new Folder( $o->parentid );
+				$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
+				$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
+				$objects[ $id ] .= FILE_SEP.$o->name;
+			} 
+		}
+		asort( $objects ); // Sortieren
+
+		$this->setTemplateVar( 'objects',$objects );
+		$this->setTemplateVar( 'images' ,$objects );
+
+		$this->setTemplateVar( 'html',$this->value->element->html );
+		$this->setTemplateVar( 'wiki',$this->value->element->wiki );
+		$this->setTemplateVar( 'text',$this->value->text          );
+	
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+	}
+
+
+
+	/**
+	 * Ein Element der Seite bearbeiten
+	 *
+	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
+	 */
+	function edittext()
+	{
+		$this->initedit();
+
+		$this->setTemplateVar( 'text',$this->value->text          );
+	
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+	}
+
+
+
 	/**
 	 * Benutzen eines alten Inhaltes
 	 */
@@ -440,8 +812,8 @@ class PageelementAction extends Action
 	 */
 	function diff()
 	{
-		$value1id = $this->getRequestVar('value1id');
-		$value2id = $this->getRequestVar('value2id');
+		$value1id = $this->getRequestVar('compareid');
+		$value2id = $this->getRequestVar('withid'   );
 
 		// Wenn Value1-Id groesser als Value2-Id, dann Variablen tauschen
 		if	( $value1id > $value2id )
@@ -654,6 +1026,336 @@ class PageelementAction extends Action
 		
 		return( array($from_out,$to_out) );
 	}
+
+
+
+	/**
+	 * Element speichern
+	 *
+	 * Der Inhalt eines Elementes wird abgespeichert
+	 */
+	function savetext()
+	{
+		$value = new Value();
+		$language = Session::getProjectLanguage();
+		$value->languageid = $language->languageid;
+		$value->objectid   = $this->page->objectid;
+		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+
+		if	( $this->hasRequestVar('elementid') )
+			$value->element = new Element( $this->getRequestVar('elementid') );
+		else
+			$value->element = Session::getElement();
+
+		$value->element->load();
+		$value->publish = false;
+		$value->load();
+
+		$value->text           = $this->getRequestVar('text');
+
+		$this->afterSave($value);
+	}
+
+
+
+	function afterSave( $value )
+	{
+		$value->page = new Page( $value->objectid );
+		$value->page->load();
+		
+		// Inhalt sofort freigegeben, wenn
+		// - Recht vorhanden
+		// - Freigabe gewuenscht
+		if	( $value->page->hasRight( ACL_RELEASE ) && $this->getRequestVar('release')!='' )
+			$value->publish = true;
+		else
+			$value->publish = false;
+
+		// Inhalt speichern
+		
+		// Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
+		// fuer jede Sprache einzeln gespeichert.
+		if	( $value->element->allLanguages )
+		{
+			$project = Session::getProject();
+			foreach( $project->getLanguageIds() as $languageid )
+			{
+				$value->languageid = $languageid;
+				$value->save();
+			}
+		}
+		else
+		{
+			// sonst nur 1x speichern (fuer die aktuelle Sprache)
+			$value->save();
+		}
+
+		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
+
+//		// Falls ausgewaehlt die Seite sofort veroeffentlichen
+//		if	( $this->hasRequestVar('publish') )
+//			$this->callSubAction( 'pubnow' ); // Weiter zum veroeffentlichen
+//		else
+//			$this->callSubAction( 'el' ); // Element-Liste anzeigen
+	}
+
+
+	/**
+	 * Element speichern
+	 *
+	 * Der Inhalt eines Elementes wird abgespeichert
+	 */
+	function savelongtext()
+	{
+		$value = new Value();
+		$language = Session::getProjectLanguage();
+		$value->languageid = $language->languageid;
+		$value->objectid   = $this->page->objectid;
+		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+
+		if	( $this->hasRequestVar('elementid') )
+			$value->element = new Element( $this->getRequestVar('elementid') );
+		else
+			$value->element = Session::getElement();
+
+		$value->element->load();
+		$value->publish = false;
+		$value->load();
+
+		$value->text           = $this->getRequestVar('text');
+
+		// Vorschau anzeigen
+		if	( $value->element->type=='longtext' && ($this->hasRequestVar('preview')||$this->hasRequestVar('addmarkup')) )
+		{
+			if	( $this->hasRequestVar('preview') )
+			{
+				$value->page             = $this->page;
+				$value->simple           = false;
+				$value->page->languageid = $value->languageid;
+				$value->page->load();
+				$value->generate();
+				$this->setTemplateVar('preview_text',$value->value );
+			}
+
+			if	( $this->hasRequestVar('addmarkup') )
+			{
+				$addText = $this->getRequestVar('addtext');
+
+				if	( !empty($addText) ) // Nur, wenn ein Text eingegeben wurde
+				{
+					$addText = $this->getRequestVar('addtext');
+
+					if	( $this->hasRequestVar('strong') )
+						$value->text .= '*'.$addText.'*';
+
+					if	( $this->hasRequestVar('emphatic') )
+						$value->text .= '_'.$addText.'_';
+
+					if	( $this->hasRequestVar('link') )
+						$value->text .= '"'.$addText.'"->"'.$this->getRequestVar('objectid').'"';
+				}
+
+				if	( $this->hasRequestVar('table') )
+					$value->text .= "|$addText  |  |\n|$addText  |  |\n|$addText  |  |\n";
+
+				if	( $this->hasRequestVar('list') )
+					$value->text .= "\n- ".$addText."\n".'- '.$addText."\n".'- '.$addText."\n";
+
+				if	( $this->hasRequestVar('numlist') )
+					$value->text .= "\n# ".$addText."\n".'# '.$addText."\n".'# '.$addText."\n";
+
+				if	( $this->hasRequestVar('image') )
+					$value->text .= '{'.$this->getRequestVar('objectid').'}';
+			}
+
+			// Ermitteln aller verlinkbaren Objekte (fuer Editor)
+			$objects = array();
+	
+			foreach( Folder::getAllObjectIds() as $id )
+			{
+				$o = new Object( $id );
+				$o->load();
+				
+				if	( $o->getType() != 'folder' )
+				{ 
+					$f = new Folder( $o->parentid );
+					$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
+					$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
+					$objects[ $id ] .= FILE_SEP.$o->name;
+				} 
+			}
+			asort($objects);
+			$this->setTemplateVar( 'objects' ,$objects );
+	
+			$this->setTemplateVar( 'release' ,$this->page->hasRight(ACL_RELEASE) );
+			$this->setTemplateVar( 'publish' ,$this->page->hasRight(ACL_PUBLISH) );
+			$this->setTemplateVar( 'html'    ,$value->element->html );
+			$this->setTemplateVar( 'wiki'    ,$value->element->wiki );
+			$this->setTemplateVar( 'text'    ,$value->text          );
+			$this->setTemplateVar( 'name'    ,$value->element->name );
+			$this->setTemplateVar( 'desc'    ,$value->element->desc );
+			$this->setTemplateVar( 'objectid',$this->page->objectid );
+			$this->forward( 'pageelement_edit_longtext' );
+		}
+	
+		$this->afterSave($value);
+	}
+
+
+	/**
+	 * Element speichern
+	 *
+	 * Der Inhalt eines Elementes wird abgespeichert
+	 */
+	function savedate()
+	{
+		$value = new Value();
+		$language = Session::getProjectLanguage();
+		$value->languageid = $language->languageid;
+		$value->objectid   = $this->page->objectid;
+		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+
+		if	( $this->hasRequestVar('elementid') )
+			$value->element = new Element( $this->getRequestVar('elementid') );
+		else
+			$value->element = Session::getElement();
+
+		$value->element->load();
+		$value->publish = false;
+		$value->load();
+
+		// Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
+		if   ( $this->getRequestVar('ansidate') != $this->getRequestVar('ansidate_orig') )
+			$value->date = strtotime($this->getRequestVar('ansidate') );
+		else
+			// Sonst die Zeitwerte einzeln zu einem Datum zusammensetzen
+			$value->date = mktime( $this->getRequestVar('hour'  ),
+			                       $this->getRequestVar('minute'),
+			 	                   $this->getRequestVar('second'),
+			 	                   $this->getRequestVar('month' ),
+				                   $this->getRequestVar('day'   ),
+				                   $this->getRequestVar('year'  ) );
+		
+		$this->afterSave($value);
+	}
+
+
+
+	/**
+	 * Element speichern
+	 *
+	 * Der Inhalt eines Elementes wird abgespeichert
+	 */
+	function saveselect()
+	{
+		$value = new Value();
+		$language = Session::getProjectLanguage();
+		$value->languageid = $language->languageid;
+		$value->objectid   = $this->page->objectid;
+		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+
+		if	( $this->hasRequestVar('elementid') )
+			$value->element = new Element( $this->getRequestVar('elementid') );
+		else
+			$value->element = Session::getElement();
+
+		$value->element->load();
+		$value->publish = false;
+		$value->load();
+
+		$value->text           = $this->getRequestVar('text');
+
+		$this->afterSave($value);
+	}
+
+
+
+	/**
+	 * Element speichern
+	 *
+	 * Der Inhalt eines Elementes wird abgespeichert
+	 */
+	function savelink()
+	{
+		$value = new Value();
+		$language = Session::getProjectLanguage();
+		$value->languageid = $language->languageid;
+		$value->objectid   = $this->page->objectid;
+		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+
+		if	( $this->hasRequestVar('elementid') )
+			$value->element = new Element( $this->getRequestVar('elementid') );
+		else
+			$value->element = Session::getElement();
+
+		$value->element->load();
+		$value->publish = false;
+		$value->load();
+
+		$value->linkToObjectId = intval($this->getRequestVar('linkobjectid'));
+
+		$this->afterSave($value);
+	}
+
+
+
+
+	/**
+	 * Element speichern
+	 *
+	 * Der Inhalt eines Elementes wird abgespeichert
+	 */
+	function savelist()
+	{
+		$value = new Value();
+		$language = Session::getProjectLanguage();
+		$value->languageid = $language->languageid;
+		$value->objectid   = $this->page->objectid;
+		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+
+		if	( $this->hasRequestVar('elementid') )
+			$value->element = new Element( $this->getRequestVar('elementid') );
+		else
+			$value->element = Session::getElement();
+
+		$value->element->load();
+		$value->publish = false;
+		$value->load();
+
+		$value->linkToObjectId = intval($this->getRequestVar('linkobjectid'));
+
+		$this->afterSave($value);
+	}
+	
+	
+	
+	/**
+	 * Element speichern
+	 *
+	 * Der Inhalt eines Elementes wird abgespeichert
+	 */
+	function savenumber()
+	{
+		$value = new Value();
+		$language = Session::getProjectLanguage();
+		$value->languageid = $language->languageid;
+		$value->objectid   = $this->page->objectid;
+		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+
+		if	( $this->hasRequestVar('elementid') )
+			$value->element = new Element( $this->getRequestVar('elementid') );
+		else
+			$value->element = Session::getElement();
+
+		$value->element->load();
+		$value->publish = false;
+		$value->load();
+
+		$value->number         = $this->getRequestVar('number') * pow(10,$value->element->decimals);
+		
+		$this->afterSave($value);
+	}
+	
 }
 
 ?>

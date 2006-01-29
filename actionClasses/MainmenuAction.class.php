@@ -37,7 +37,27 @@ class MainmenuAction extends Action
 	function element()
 	{
 		$this->subActionName = 'template';
-		$this->callSubAction('template');
+	
+		$element = new Element( $this->getRequestId() );
+		$element->load();
+
+		global $REQ;
+		$REQ['id'] = $element->templateid;
+		
+		$template = new Template( $element->templateid );
+		$template->load();
+
+		$this->setTemplateVar('text',$template->name );
+		
+		$this->addSubaction('listing');
+		$this->addSubaction('show' );
+		$this->addSubaction('edit' );
+		$this->addSubaction('el'   );
+		if	( $this->writable )
+			$this->addSubaction('src'  );
+		$this->addSubaction('prop' );
+
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 	}
 
 
@@ -73,15 +93,11 @@ class MainmenuAction extends Action
 			$this->addSubaction('show' );
 			$this->addSubaction('edit' );
 			$this->addSubaction('el'   );
-			if	( $this->writable )
-				$this->addSubaction('src'  );
 			$this->addSubaction('prop' );
 		}
 
 		$this->setTemplateVar('param' ,'templateid');
 		$this->setTemplateVar('windowMenu',$this->subActionList);
-
-		$this->callSubAction('show');
 	}
 
 
@@ -91,6 +107,8 @@ class MainmenuAction extends Action
 		$this->subActionName = 'page';
 		$this->callSubAction('page');
 	}
+
+
 
 	function page()
 	{
@@ -136,8 +154,6 @@ class MainmenuAction extends Action
 		$this->addSubAction('rights',ACL_GRANT   );
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
-
-		$this->callSubAction('show');
 	}
 
 
@@ -166,8 +182,6 @@ class MainmenuAction extends Action
 		
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param'    ,'userid'            );
-
-		$this->callSubAction('show');
 	}
 
 
@@ -190,7 +204,6 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 
 		$this->setTemplateVar('param'    ,'groupid'           );
-		$this->callSubAction('show');
 	}
 
 
@@ -225,8 +238,6 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 
 		$this->setTemplateVar('param','objectid');
-
-		$this->callSubAction('show');
 	}
 
 
@@ -237,8 +248,6 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','conf');
-		
-		$this->callSubAction('show');
 	}
 	
 	
@@ -263,14 +272,12 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('id','o'.$link->objectid);
 
 		$this->obj = &$link;
-		$this->addSubAction('target',ACL_WRITE);
+		$this->addSubAction('edit'  ,ACL_WRITE);
 		$this->addSubAction('prop'  ,ACL_PROP );
 		$this->addSubAction('rights',ACL_GRANT);
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','objectid');
-
-		$this->callSubAction('show');
 	}
 
 
@@ -311,8 +318,6 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','objectid');
-
-		$this->callSubAction('show');
 	}
 
 
@@ -337,8 +342,6 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','projectid');
-
-		$this->callSubAction('show');
 	}
 
 
@@ -348,8 +351,6 @@ class MainmenuAction extends Action
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','languageid');
-
-		$this->callSubAction('show');
 	}
 
 
@@ -359,8 +360,6 @@ class MainmenuAction extends Action
 		$this->addSubaction('listing');
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','modelid');
-
-		$this->callSubAction('show');
 	}
 
 
@@ -369,8 +368,6 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('windowMenu',array('prop'   =>lang('SEARCH_PROP'    ),
 		                                        'content'=>lang('SEARCH_CONTENT' ) ));
 		$this->setTemplateVar('param','objectid');
-
-		$this->callSubAction('show');
 	}
 
 
@@ -378,8 +375,6 @@ class MainmenuAction extends Action
 	{
 		$this->addSubaction('import');
 		$this->setTemplateVar('windowMenu',$this->subActionList);
-
-		$this->callSubAction('show');
 	}
 
 
@@ -396,8 +391,6 @@ class MainmenuAction extends Action
 		
 		$this->setTemplateVar('type'          ,$this->getRequestVar( 'subaction') );
 		$this->setTemplateVar('path'          ,$this->path         );
-
-		$this->forward( 'menu' );
 	}
 }
 

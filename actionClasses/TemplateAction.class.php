@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2006-01-23 23:10:46  dankert
+// Revision 1.12  2006-01-29 17:18:59  dankert
+// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
+//
+// Revision 1.11  2006/01/23 23:10:46  dankert
 // *** empty log message ***
 //
 // Revision 1.10  2005/11/07 22:32:20  dankert
@@ -91,12 +94,34 @@ class TemplateAction extends Action
 	}
 
 
-	function srcsave()
+	function savesrc()
 	{
 		// Speichern des Quelltextes
 		//
 		$text = $this->getRequestVar('src');
 		
+		foreach( $this->template->getElementNames() as $elid=>$elname )
+		{
+			$text = str_replace('{{'.$elname.'}}'  ,'{{'.$elid.'}}',$text );
+			$text = str_replace('{{->'.$elname.'}}','{{->'.$elid.'}}',$text );
+			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFEMPTY'   ).':'.$elname.':'.lang('TEMPLATE_SRC_BEGIN').'}}','{{IFEMPTY:'   .$elid.':BEGIN}}',$text );
+			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFEMPTY'   ).':'.$elname.':'.lang('TEMPLATE_SRC_END'  ).'}}','{{IFEMPTY:'   .$elid.':END}}'  ,$text );
+			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$elname.':'.lang('TEMPLATE_SRC_BEGIN').'}}','{{IFNOTEMPTY:'.$elid.':BEGIN}}',$text );
+			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$elname.':'.lang('TEMPLATE_SRC_END'  ).'}}','{{IFNOTEMPTY:'.$elid.':END}}'  ,$text );
+		}
+	
+		$this->template->src = $text;
+		$this->template->save();
+		$this->template->load();
+	}
+
+
+
+
+	function srcaddelement()
+	{
+		$text = $this->template->src;
+	
 		// Falls dieses Element hinzugef?gt werden soll
 		if   ( $this->hasRequestVar('addelement') )
 		{
@@ -117,84 +142,89 @@ class TemplateAction extends Action
 			$text .= "\n".'{{IFNOTEMPTY:'.$this->getRequestVar('ifnotemptyid').':BEGIN}}  {{IFNOTEMPTY:'.$this->getRequestVar('ifnotemptyid').':END}}';
 		}
 		
-		foreach( $this->template->getElementNames() as $elid=>$elname )
-		{
-			$text = str_replace('{{'.$elname.'}}'  ,'{{'.$elid.'}}',$text );
-			$text = str_replace('{{->'.$elname.'}}','{{->'.$elid.'}}',$text );
-			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFEMPTY'   ).':'.$elname.':'.lang('TEMPLATE_SRC_BEGIN').'}}','{{IFEMPTY:'   .$elid.':BEGIN}}',$text );
-			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFEMPTY'   ).':'.$elname.':'.lang('TEMPLATE_SRC_END'  ).'}}','{{IFEMPTY:'   .$elid.':END}}'  ,$text );
-			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$elname.':'.lang('TEMPLATE_SRC_BEGIN').'}}','{{IFNOTEMPTY:'.$elid.':BEGIN}}',$text );
-			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$elname.':'.lang('TEMPLATE_SRC_END'  ).'}}','{{IFNOTEMPTY:'.$elid.':END}}'  ,$text );
-		}
-	
 		$this->template->src = $text;
 
-		// Wenn Element hinzugef?gt wurde, dann bleibt es beim Quelltext-Modus.
-		// Sonst wird zur Anzeige umgeschaltet
-	
-		if   ( $this->hasRequestVar('addelement'   ) ||
-		       $this->hasRequestVar('addicon'      ) ||
-		       $this->hasRequestVar('addifempty'   ) ||
-		       $this->hasRequestVar('addifnotempty')    )
-		{
-			$this->callSubAction('src');
-		}
-		else
-		{
-			$this->template->save();
-			$this->template->load();
-			$this->callSubAction('show');
-		}
+		$this->template->save();
+		$this->template->load();
 	}
 
 
 	// Speichern der Template-Eigenschaftens
 	//
-	function propsave()
+	function savename()
+	{
+		$this->template->name = $this->getRequestVar('name');
+		$this->template->save();
+	}
+
+
+	// Speichern der Template-Eigenschaftens
+	//
+	function delete()
 	{
 		if   ( $this->getRequestVar('delete') != '' )
 		{
 			$this->template->delete();
-
-			$this->callSubAction('listing');
 		}
-		else
-		{
-			$this->template->name        = $this->getRequestVar('name');
-			$this->template->save();
+	}
 
-			$this->callSubAction('show');
-		}
+
+	/**
+	 * Entfernen der Vorlage
+	 */
+	function remove()
+	{
 	}
 
 
 	// Speichern der Dateiendung
 	//
-	function extensionsave()
+	function saveextension()
 	{
 		$this->template->extension = $this->getRequestVar('extension');
 		$this->template->save(); 
-
-		$this->callSubAction('show');
 	}
 
 
+	function addel()
+	{
+		// Die verschiedenen Element-Typen
+		$types = array();
+
+		foreach( Element::getAvailableTypes() as $t )
+		{
+			$types[ $t ] = lang('EL_'.$t);
+		}
+
+		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
+		if	( !$this->userIsAdmin() )
+			unset( $types['code'] );
+		
+		$this->setTemplateVar('types',$types);
+	}
+	
+	
+	
 	// Element hinzuf?gen
 	//
 	function addelement()
 	{
 		if  ( $this->getRequestVar('name') != '' )
 		{
-			$this->template->addElement( $this->getRequestVar('name') );
+			$this->template->addElement( $this->getRequestVar('name'),$this->getRequestVar('description'),$this->getRequestVar('type') );
 		}
 
 		$this->setTemplateVar('tree_refresh',true);
-	
-		$this->callSubAction('el');
 	}
 
 
 	function add()
+	{
+	}
+	
+	
+	
+	function addtemplate()
 	{
 		// Hinzuf?gen eines Templates
 		if   ( $this->getRequestVar('name')  != '' )
@@ -207,117 +237,18 @@ class TemplateAction extends Action
 		$this->callSubAction('listing');
 	}
 
-
-	/**
-	 * Umbenennen des Elementes
-	 */
-	function elementrename()
+	
+	function prop()
 	{
-		if   ( $this->hasRequestVar('delete') )
-		{
-			$this->element->delete();
-		}
-		elseif ( $this->hasRequestVar('deletevalues') )
-		{
-			$this->element->deleteValues();
-		}
-		else
-		{ 
-			$this->element->name = $this->getRequestVar('name');
-			$this->element->desc = $this->getRequestVar('desc');
-	
-			$this->element->save();
-			$this->element->load();
-		}
-	
-		$this->setTemplateVar('tree_refresh',true);
-	
-		$this->callSubAction('el');
 	}
-
-
-	/**
-	 * Speichern der Element-Eigenschaften
-	 */
-	function elementsave()
-	{
-		global $conf;
-		$ini_date_format = $conf['date_formats'];
 	
-		foreach( $this->element->getRelatedProperties() as $propertyName )
-		{
-			switch( $propertyName )
-			{
-				case 'dateformat':
-					$this->element->dateformat   = $ini_date_format[$this->getRequestVar('dateformat')];
-					break;
-
-				case 'subtype':
-					$this->element->subtype      = $this->getRequestVar('subtype');
-					break;
-
-				case 'defaultText':
-					$this->element->defaultText  = $this->getRequestVar('default_text');
-					break;
-
-				case 'wiki':
-					$this->element->wiki         = $this->getRequestVar('wiki') != '';
-					break;
-
-				case 'html':
-					$this->element->html         = $this->getRequestVar('html') != '';
-					break;
-
-				case 'withIcon':
-					$this->element->withIcon     = $this->getRequestVar('with_icon') != '';
-					break;
-
-				case 'allLanguages':
-					$this->element->allLanguages = $this->getRequestVar('all_languages') != '';
-					break;
-
-				case 'writable':
-					$this->element->writable     = $this->getRequestVar('writable') != '';
-					break;
-
-				case 'decimals':
-					$this->element->decimals     = $this->getRequestVar('decimals');
-					break;
-
-				case 'decPoint':
-					$this->element->decPoint     = $this->getRequestVar('dec_point');
-					break;
-
-				case 'thousandSep':
-					$this->element->thousandSep  = $this->getRequestVar('thousand_sep');
-					break;
-
-				case 'folderObjectId':
-					$this->element->folderObjectId  = $this->getRequestVar('folderobjectid'  );
-					break;
-
-				case 'defaultObjectId':
-					$this->element->defaultObjectId = $this->getRequestVar('default_objectid');
-					break;
-
-				case 'code':
-					$this->element->code          = $this->getRequestVar('code'            );
-					break;
-			}
-		}
-		$this->element->save();
-
-		$this->callSubAction('el');
-	}
-
-
-
+	
+	
 	/**
 	 * Eigenschaften einer Vorlage anzeigen
 	 */
-	function prop()
+	function name()
 	{
-		$this->setTemplateVar('extension',$this->template->extension);
 		$this->setTemplateVar('name'     ,$this->template->name     );
 		 
 		// von diesem Template abh?ngige Seiten ermitteln
@@ -332,8 +263,17 @@ class TemplateAction extends Action
 			$list[$oid]['url' ] = Html::url( 'main','page',$oid );
 		}
 		$this->setTemplateVar('pages',$list );
+	}
 
-		$this->forward('template_prop');
+
+
+	/**
+	 * Eigenschaften einer Vorlage anzeigen
+	 */
+	function extension()
+	{
+		$this->setTemplateVar('extension',$this->template->extension);
+		 
 	}
 
 
@@ -440,7 +380,7 @@ class TemplateAction extends Action
 			$element->load();
 
 			$list[$elid]         = array();
-			$list[$elid]['url' ] = Html::url('element','edit',$this->template->templateid,array('elementid'=>$elid));
+			$list[$elid]['url' ] = Html::url('element','name',$elid);
 			$list[$elid]['name'] = $element->name;
 			$list[$elid]['desc'] = $element->desc;
 			$list[$elid]['type'] = $element->type;
@@ -448,20 +388,16 @@ class TemplateAction extends Action
 			unset( $element );
 		}
 		$this->setTemplateVar('el',$list);	
-		$this->forward('template_el');
 	}
 
 
-	/**
-	  * Anzeigen des Template-Quellcodes
-	  */
-	function src()
+
+	function srcelement()
 	{
 		$elements            = array();
 		$icon_elements       = array();
 		$ifempty_elements    = array();
 		$ifnotempty_elements = array();
-		$text = $this->template->src;
 	
 		foreach( $this->template->getElementIds() as $elid )
 		{
@@ -470,16 +406,34 @@ class TemplateAction extends Action
 
 			$elements[$elid] = $element->name;
 
-			$element = new Element( $elid );
-			$element->load();
-
 			if	( $element->isWritable() )
 			{
 				$icon_elements      [$elid] = lang('GLOBAL_icon'      ).' '.$element->name;
 				$ifempty_elements   [$elid] = lang('TEMPLATE_SRC_ifempty'   ).' '.$element->name;
 				$ifnotempty_elements[$elid] = lang('TEMPLATE_SRC_ifnotempty').' '.$element->name;
 			}
-			
+		}
+
+		$this->setTemplateVar('elements'           ,$elements             );
+		$this->setTemplateVar('icon_elements'      ,$icon_elements        );
+		$this->setTemplateVar('ifempty_elements'   ,$ifempty_elements     );
+		$this->setTemplateVar('ifnotempty_elements',$ifnotempty_elements  );
+	}
+	
+	
+	
+	/**
+	  * Anzeigen des Template-Quellcodes
+	  */
+	function src()
+	{
+		$text = $this->template->src;
+	
+		foreach( $this->template->getElementIds() as $elid )
+		{
+			$element = new Element( $elid );
+			$element->load();
+
 			$text = str_replace('{{'.$elid.'}}',
 			                           '{{'.$element->name.'}}',
 			                           $text );
@@ -500,13 +454,7 @@ class TemplateAction extends Action
 			                           $text );
 		}
 
-		$this->setTemplateVar('elements'           ,$elements             );
-		$this->setTemplateVar('icon_elements'      ,$icon_elements        );
-		$this->setTemplateVar('ifempty_elements'   ,$ifempty_elements     );
-		$this->setTemplateVar('ifnotempty_elements',$ifnotempty_elements  );
-		$this->setTemplateVar('text'               ,htmlentities($text)   );
-	
-		$this->forward('template_src');
+		$this->setTemplateVar( 'src',$text );
 	}
 
 

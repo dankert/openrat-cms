@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2006-01-23 23:08:15  dankert
+// Revision 1.18  2006-01-29 17:18:59  dankert
+// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
+//
+// Revision 1.17  2006/01/23 23:08:15  dankert
 // Auspacken von TAR-Archiven implementiert
 //
 // Revision 1.16  2005/11/07 22:31:08  dankert
@@ -119,11 +122,10 @@ class FileAction extends ObjectAction
 		
 		$this->file->value = $upload->value;
 		$this->file->saveValue();
+		$this->file->setTimestamp();
 
 		//$setTemplateVar('tree_refresh',true);
 		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
-
-		$this->callSubAction('edit');
 	}
 
 
@@ -133,24 +135,36 @@ class FileAction extends ObjectAction
 		$this->file->saveValue();
 	
 		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
-		$this->callSubAction('edit');
+		$this->file->setTimestamp();
 	}
 
 
-	function save()
+	function saveprop()
 	{
-		global $SESS;
-
 		// Eigenschaften speichern
-		$this->file->filename  = $this->getRequestVar('filename' );
-		$this->file->name      = $this->getRequestVar('name'     );
-		$this->file->extension = $this->getRequestVar('extension');
-		$this->file->desc      = $this->getRequestVar('desc'     );
+		$this->file->filename  = $this->getRequestVar('filename'   );
+		$this->file->name      = $this->getRequestVar('name'       );
+		$this->file->extension = $this->getRequestVar('extension'  );
+		$this->file->desc      = $this->getRequestVar('description');
 		
-		$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
 		$this->file->save();
+		$this->file->setTimestamp();
+		$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
+	}
 
-		$this->callSubAction('prop');
+
+	function remove()
+	{
+	}
+
+
+	function delete()
+	{
+		if	( $this->hasRequestVar('delete') )
+		{
+			$this->file->delete();
+			$this->addNotice( 'Datei entfernt');
+		}
 	}
 
 
@@ -252,6 +266,18 @@ class FileAction extends ObjectAction
 
 		// Eigenschaften der Datei uebertragen
 		$this->setTemplateVars( $this->file->getProperties() );
+	}
+
+
+	function showprop()
+	{
+		global $conf;
+		
+		if	( $this->file->filename == $this->file->objectid )
+			$this->file->filename = '';
+
+		// Eigenschaften der Datei uebertragen
+		$this->setTemplateVars( $this->file->getProperties() );
 
 		$this->setTemplateVar('full_filename',$this->file->full_filename());
 
@@ -270,7 +296,6 @@ class FileAction extends ObjectAction
 		asort( $list );
 		$this->setTemplateVar('pages',$list);
 		$this->setTemplateVar('edit_filename',$conf['filename']['edit']);	
-		$this->forward( 'file_prop' );
 	}
 
 
@@ -279,7 +304,9 @@ class FileAction extends ObjectAction
 	 */
 	function edit()
 	{
-		$this->callSubAction('upload');
+		global $conf;
+		// MIME-Types aus Datei lesen
+		$this->setTemplateVars( $this->file->getProperties() );
 	}
 
 
@@ -288,12 +315,6 @@ class FileAction extends ObjectAction
 	 */
 	function upload()
 	{
-		global $conf;
-		// MIME-Types aus Datei lesen
-		$this->setTemplateVars( $this->file->getProperties() );
-		
-		$this->setWindowMenu('edit');
-		$this->forward('file_replace');
 	}
 
 
@@ -306,9 +327,6 @@ class FileAction extends ObjectAction
 		// MIME-Types aus Datei lesen
 		$this->setTemplateVars( $this->file->getProperties() );
 		$this->setTemplateVar('value',$this->file->loadValue());
-		
-		$this->setWindowMenu('edit');
-		$this->forward('file_editvalue');
 	}
 
 
@@ -328,9 +346,6 @@ class FileAction extends ObjectAction
 
 		$this->setTemplateVar('formats'       ,$formats    );
 		$this->setTemplateVar('default_format',$imageFormat);
-
-		$this->setWindowMenu('edit');
-		$this->forward('file_resize');
 	}
 
 
@@ -368,9 +383,6 @@ class FileAction extends ObjectAction
 			$formats[$t] = lang('compression_'.$t);
 
 		$this->setTemplateVar('formats'       ,$formats    );
-
-		$this->setWindowMenu('edit');
-		$this->forward('file_compress');
 	}
 
 
@@ -578,39 +590,32 @@ class FileAction extends ObjectAction
 		return $archiveTypes;
 	}
 
-	function setWindowMenu( $type ) {
+
+
+	function checkMenu( $name )
+	{
+		$archiveTypes     = $this->getArchiveTypes();
+		$compressionTypes = $this->getCompressionTypes();
 		
-		global $conf;
-		
-		switch( $type)
+		switch( $name )
 		{
-			case 'edit':
-				$menu = array();
-				$compressionTypes = $this->getCompressionTypes();
-				$archiveTypes     = $this->getArchiveTypes();
+			case 'uncompress':
+				return in_array($this->file->extension,$compressionTypes);
 
-				$menu[] = array('subaction'=>'upload','text'=>'file_replace');
-		
-				if	($this->file->isImage() )
-					$menu[] = array('subaction'=>'size','text'=>'file_resize');
-		
-				if	( in_array($this->file->extension,$compressionTypes) )
-					$menu[] = array('subaction'=>'uncompress','text'=>'file_uncompress');
+			case 'compress':
+				return !in_array($this->file->extension,$compressionTypes);
 
-				if	( !in_array($this->file->extension,$compressionTypes) )
-					$menu[] = array('subaction'=>'compress','text'=>'file_compress');
-		
-				if	( in_array($this->file->extension,$archiveTypes) )
-					$menu[] = array('subaction'=>'extract','text'=>'file_extract');
+			case 'extract':
+				return in_array($this->file->extension,$archiveTypes);
 
-				if	( !in_array($this->file->extension,$compressionTypes) )
-					$menu[] = array('subaction'=>'compress','text'=>'file_compress');
-		
-				if	( substr($this->file->mimeType(),0,5)=='text/' )
-					$menu[] = array('subaction'=>'editvalue','text'=>'file_editvalue');
-		
-				$this->setTemplateVar('windowMenu',$menu);
-				break;
+			case 'size':
+				return $this->file->isImage();
+
+			case 'editvalue':
+				return substr($this->file->mimeType(),0,5)=='text/';
+				
+			default:
+				return true;
 		}
 	}
 }

@@ -297,19 +297,17 @@ class PageAction extends ObjectAction
 	/**
 	 * Eigenschaften der Seite speichern
 	 */
-	function propsave()
+	function saveprop()
 	{
 		if   ( $this->getRequestVar('name')!='' )
 		{
-			$this->page->name        = $this->getRequestVar('name'    );
-			$this->page->filename    = $this->getRequestVar('filename');
-			$this->page->desc        = $this->getRequestVar('desc'    );
+			$this->page->name        = $this->getRequestVar('name'       );
+			$this->page->filename    = $this->getRequestVar('filename'   );
+			$this->page->desc        = $this->getRequestVar('description');
 
 			$this->page->save();
 			$this->addNotice($this->page->getType(),$this->page->name,'PROP_SAVED','ok');
 		}
-		
-		$this->callSubAction('prop');
 	}
 
 
@@ -320,7 +318,7 @@ class PageAction extends ObjectAction
 	 * Es wird ein Formualr erzeugt, in dem der Benutzer auswaehlen kann, welche Elemente
 	 * in welches Element uebernommen werden sollen
 	 */
-	function replacetemplateselectelements()
+	function changetemplateselectelements()
 	{
 		$newTemplateId = intval($this->getRequestVar('templateid'));
 
@@ -374,7 +372,7 @@ class PageAction extends ObjectAction
 	 *
 	 * Die Vorlage wird ausgetauscht, die Inhalte werden gemaess der Benutzereingaben kopiert
 	 */
-	function replaceTemplate()
+	function replacetemplate()
 	{
 		$newTemplateId = intval($this->getRequestVar('newTemplateId'));
 		$replaceElementMap = Array();
@@ -389,8 +387,6 @@ class PageAction extends ObjectAction
 		{
 			$this->page->replaceTemplate( $newTemplateId,$replaceElementMap );
 		}
-
-		$this->callSubAction('prop');
 	}
 
 
@@ -423,18 +419,14 @@ class PageAction extends ObjectAction
 				$list[$id]['date'         ] = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
 				$list[$id]['archive_count'] = $value->getCountVersions();
 				$list[$id]['archive_url'  ] = Html::url( 'pageelement','archive','0',array('elementid'=>$id) );
-				$list[$id]['url'          ] = Html::url( 'pageelement','edit'   ,'0',array('elementid'=>$id) );
+				$list[$id]['url'          ] = Html::url( 'pageelement','edit'.$value->element->type,'0',array('elementid'=>$id) );
 				
 				// Maximal 50 Stellen des Inhaltes anzeigen
 				$list[$id]['value'] = Text::maxLaenge( 50,$value->value );
 			}
 		}
 
-		$this->setWindowMenu( 'elements' );
-
 		$this->setTemplateVar('el',$list);
-		$this->forward('page_element');
-
 	}
 
 
@@ -549,6 +541,9 @@ class PageAction extends ObjectAction
 		require( $this->page->tmpfile );
 
 		unlink( $this->page->tmpfile );
+		
+		// Inhalt ist ausgegeben... Skript beenden.
+		exit;
 	}
 
 
@@ -568,6 +563,8 @@ class PageAction extends ObjectAction
 		$this->page->write();
 		require( $this->page->tmpfile() );
 
+		// Inhalt ist ausgegeben... Skript beenden.
+		exit;
 	}
 
 
@@ -589,8 +586,6 @@ class PageAction extends ObjectAction
 		$src = preg_replace( '|([a-zA-Z]+)="(.+)"|Us' , '<em>$1</em>=<var>"$2"</var>'                   , $src);
 		//$var['src'] = htmlentities($src);
 		$this->setTemplateVar('src',$src);
-	
-		$this->forward('page_src');
 	}
 
 
@@ -647,6 +642,61 @@ class PageAction extends ObjectAction
 	}
 
 
+
+	/**
+	 * Die Eigenschaften der Seite anzeigen
+	 */
+	function showprop()
+	{
+		$this->page->public = true;
+		$this->page->load();
+		$this->page->full_filename();
+
+		$this->setTemplateVars( $this->page->getProperties() );
+		
+		if   ( $this->userIsAdmin() )
+		{
+			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
+		}
+	
+		$template = new Template( $this->page->templateid );
+		$template->load();
+		$this->setTemplateVar('template_name',$template->name);
+	}
+
+
+
+	/**
+	 * Die Eigenschaften der Seite anzeigen
+	 */
+	function changetemplate()
+	{
+		$this->page->public = true;
+		$this->page->load();
+
+		$this->setTemplateVars( $this->page->getProperties() );
+		
+		if   ( $this->userIsAdmin() )
+		{
+			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
+		}
+	
+		$template = new Template( $this->page->templateid );
+		$template->load();
+		$this->setTemplateVar('template_name',$template->name);
+	
+		$templates = Array();
+		foreach( Template::getAll() as $id=>$name )
+		{
+			if	( $id != $this->page->templateid )
+				$templates[$id]=$name;
+		}
+		$this->setTemplateVar('templates',$templates); 
+	}
+
+
+
+	
 
 	/**
 	 * Seite veroeffentlichen

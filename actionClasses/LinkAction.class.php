@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2006-01-23 23:10:45  dankert
+// Revision 1.8  2006-01-29 17:18:58  dankert
+// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
+//
+// Revision 1.7  2006/01/23 23:10:45  dankert
 // *** empty log message ***
 //
 // Revision 1.6  2004/12/20 22:04:25  dankert
@@ -74,23 +77,49 @@ class LinkAction extends ObjectAction
 
 
 
+	function remove()
+	{
+		$this->setTemplateVars( $this->link->getProperties() );
+	}
+	
+
+
+	function delete()
+	{
+		if	( $this->hasRequestVar("delete") )
+		{
+			$this->link->delete();
+			$this->addNotice('link',$this->link->name,'DELETED');
+		}
+	}
+	
+
+
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
-	function save()
+	function saveprop()
 	{
 		// Wenn Name gefuellt, dann Datenbank-Update
 		if   ( $this->getRequestVar('name') != '' )
 		{
 			// Eigenschaften speichern
-			$this->link->name      = $this->getRequestVar('name');
-			$this->link->desc      = $this->getRequestVar('desc');
+			$this->link->name      = $this->getRequestVar('name'       );
+			$this->link->desc      = $this->getRequestVar('description');
 
 			$this->link->save();
 			$this->link->setTimestamp();
 			Session::setObject( $this->link );
 		}
-		elseif( $this->getRequestVar('type') != '' )
+	}
+
+
+	/**
+	 * Abspeichern der Eigenschaften
+	 */
+	function save()
+	{
+		if( $this->getRequestVar('type') != '' )
 		{
 			if	( $this->getRequestVar('type') == 'link' )
 			{
@@ -109,16 +138,12 @@ class LinkAction extends ObjectAction
 			$this->link->setTimestamp();
 			Session::setObject( $this->link );
 		}
-
-		$this->getRequestVar('tree_refresh',true);
-
-		$this->callSubAction('prop');
 	}
 
 
-	function target()
+	function prop2()
 	{
-//		$this->setTemplateVars( $this->link->getProperties() );
+		$this->setTemplateVars( $this->link->getProperties() );
 
 		// Typ der Verkn?pfung
 		$this->setTemplateVar('type'            ,$this->link->getType()     );
@@ -126,23 +151,18 @@ class LinkAction extends ObjectAction
 		$this->setTemplateVar('url'             ,$this->link->url           );
 
 		$this->setTemplateVar('edittarget_url',Html::url('link','edittarget',$this->link->objectid));		
-
-		$this->forward('link_target');
 	}
 
 
 
-	function prop()
+	function showprop()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
-		$this->setTemplateVar('editprop_url'  ,Html::url('link','editprop',$this->link->objectid));		
-
-		$this->forward('link_prop');
 	}
 
 
 
-	function edittarget()
+	function edit()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
 
@@ -178,12 +198,11 @@ class LinkAction extends ObjectAction
 
 
 
-	function editprop()
+	function prop()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
+//		print_r($this->link->getProperties());
 
 		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
-
-		$this->forward('link_editprop');
 	}
 }

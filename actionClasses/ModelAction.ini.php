@@ -1,12 +1,12 @@
 
+[default]
+goto=listing
+
 [setdefault]
 target=listing
 
 [listing]
 menu=listing
-
-[default]
-goto=listing
 
 [edit]
 menu=edit
@@ -25,11 +25,11 @@ goto=listing
 [save]
 goto=edit
 
-[addlanguage]
+[addmodel]
 goto=listing
 
 [add]
-target=addlanguage
+target=addmodel
 
 [menu]
 listing=listing,add

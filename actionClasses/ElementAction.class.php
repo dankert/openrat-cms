@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2006-01-17 22:43:02  dankert
+// Revision 1.13  2006-01-29 17:18:27  dankert
+// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
+//
+// Revision 1.12  2006/01/17 22:43:02  dankert
 // Der Einstellungsknoten hei?t nun "date-formats" statt "date_formats"
 //
 // Revision 1.11  2005/04/21 19:08:44  dankert
@@ -67,7 +70,6 @@
 class ElementAction extends Action
 {
 	var $element;
-	var $defaultSubAction = 'edit';
 
 	/**
 	 * Konstruktor
@@ -75,26 +77,59 @@ class ElementAction extends Action
 	function ElementAction()
 	{
 		if	( $this->getRequestId() == 0 )
-			die('no template-id available');
-
-		if	( $this->getRequestVar('elementid') == 0 )
 			die('no element-id available');
 
-		$this->template = new Template( $this->getRequestId() );
-		$this->template->load();
-
-		$this->element = new Element( $this->getRequestVar('elementid') );
+		$this->element = new Element( $this->getRequestId() );
 		$this->element->load();
 
-		$this->setTemplateVar( 'templateid',$this->template->templateid );
 		$this->setTemplateVar( 'elementid' ,$this->element->elementid   );
 	}
+
+
+
+	/**
+	 * Umbenennen des Elementes
+	 */
+	function savename()
+	{
+		$this->element->name = $this->getRequestVar('name'       );
+		$this->element->desc = $this->getRequestVar('description');
+
+		$this->element->save();
+		$this->element->load();
+	}
+
+
+
+	/**
+	 * Umbenennen des Elementes
+	 */
+	function remove()
+	{
+	}
+	
+	
+	/**
+	 * Umbenennen des Elementes
+	 */
+	function delete()
+	{
+		if ( $this->hasRequestVar('deletevalues') )
+		{
+			$this->element->deleteValues();
+		}
+		elseif ( $this->hasRequestVar('delete') )
+		{
+			$this->element->delete();
+		}
+	}
+
 
 
 	/**
 	 * Aendern des Element-Typs
 	 */
-	function changetype()
+	function savetype()
 	{
 		if	( !$this->userIsAdmin() && $this->getRequestVar('type') == 'code' )
 		{
@@ -105,22 +140,99 @@ class ElementAction extends Action
 			// Neuen Typ setzen und speichern
 			$this->element->setType( $this->getRequestVar('type') );
 		}
+	}
 	
-		$this->callSubAction('edit');
+	
+	
+	/**
+	 * Speichern der Element-Eigenschaften
+	 */
+	function saveproperties()
+	{
+		global $conf;
+		$ini_date_format = $conf['date-formats'];
+	
+		foreach( $this->element->getRelatedProperties() as $propertyName )
+		{
+			switch( $propertyName )
+			{
+				case 'dateformat':
+					$this->element->dateformat   = $ini_date_format[$this->getRequestVar('dateformat')];
+					break;
+
+				case 'subtype':
+					$this->element->subtype      = $this->getRequestVar('subtype');
+					break;
+
+				case 'defaultText':
+					$this->element->defaultText  = $this->getRequestVar('default_text');
+					break;
+
+				case 'wiki':
+					$this->element->wiki         = $this->getRequestVar('wiki') != '';
+					break;
+
+				case 'html':
+					$this->element->html         = $this->getRequestVar('html') != '';
+					break;
+
+				case 'withIcon':
+					$this->element->withIcon     = $this->getRequestVar('with_icon') != '';
+					break;
+
+				case 'allLanguages':
+					$this->element->allLanguages = $this->getRequestVar('all_languages') != '';
+					break;
+
+				case 'writable':
+					$this->element->writable     = $this->getRequestVar('writable') != '';
+					break;
+
+				case 'decimals':
+					$this->element->decimals     = $this->getRequestVar('decimals');
+					break;
+
+				case 'decPoint':
+					$this->element->decPoint     = $this->getRequestVar('dec_point');
+					break;
+
+				case 'thousandSep':
+					$this->element->thousandSep  = $this->getRequestVar('thousand_sep');
+					break;
+
+				case 'folderObjectId':
+					$this->element->folderObjectId  = $this->getRequestVar('folderobjectid'  );
+					break;
+
+				case 'defaultObjectId':
+					$this->element->defaultObjectId = $this->getRequestVar('default_objectid');
+					break;
+
+				case 'code':
+					$this->element->code          = $this->getRequestVar('code'            );
+					break;
+			}
+		}
+		$this->element->save();
 	}
 
 
 	/**
 	 * Anzeigen des Elementes
 	 */
-	function edit()
+	function name()
 	{
-		global $conf;
 
 		// Name und Beschreibung
-		$this->setTemplateVar('name',$this->element->name);
-		$this->setTemplateVar('desc',$this->element->desc);
-		
+		$this->setTemplateVar('name'       ,$this->element->name);
+
+		$this->setTemplateVar('description',$this->element->desc);
+	}
+	
+	
+	
+	function type()
+	{
 		// Die verschiedenen Element-Typen
 		$types = array();
 
@@ -133,10 +245,15 @@ class ElementAction extends Action
 		if	( !$this->userIsAdmin() )
 			unset( $types['code'] );
 		
-		$this->setTemplateVar('type',$types);
+		$this->setTemplateVar('types',$types);
 		
-		$this->setTemplateVar('default_type',$this->element->type);
-
+		$this->setTemplateVar('type',$this->element->type);
+	}
+	
+	
+	function properties()
+	{
+		global $conf;
 		// Abh?ngig vom aktuellen Element-Typ die Eigenschaften anzeigen
 		
 		$properties = $this->element->getRelatedProperties();
@@ -237,8 +354,8 @@ class ElementAction extends Action
 						}
 					}
 	
-					$this->setTemplateVar('subtype'    ,$subtypes              );
-					$this->setTemplateVar('act_subtype',$this->element->subtype);
+					$this->setTemplateVar('subtypes',$subtypes              );
+					$this->setTemplateVar('subtype' ,$this->element->subtype);
 	
 					break;
 	
@@ -248,16 +365,16 @@ class ElementAction extends Action
 					$ini_date_format = $conf['date-formats'];
 					$dateformat = array();
 
-					$this->setTemplateVar('act_dateformat','');
+					$this->setTemplateVar('dateformat','');
 
 					foreach($ini_date_format as $idx=>$d)
 					{
 						$dateformat[$idx] = date($d);
 						if	( $d == $this->element->dateformat )
-							$this->setTemplateVar('act_dateformat',$idx);
+							$this->setTemplateVar('dateformat',$idx);
 					}
 	
-					$this->setTemplateVar('dateformat'    ,$dateformat               );
+					$this->setTemplateVar('dateformats',$dateformat);
 					
 					break;
 			
@@ -406,7 +523,7 @@ class ElementAction extends Action
 	
 					$this->setTemplateVar('objects',$objects);		
 	
-					$this->setTemplateVar('act_default_objectid',$this->element->defaultObjectId);
+					$this->setTemplateVar('default_objectid',$this->element->defaultObjectId);
 	
 					break;
 
@@ -436,7 +553,7 @@ class ElementAction extends Action
 	
 					$this->setTemplateVar('folders',$folders);		
 	
-					$this->setTemplateVar('act_folderobjectid'  ,$this->element->folderObjectId  );
+					$this->setTemplateVar('folderobjectid'  ,$this->element->folderObjectId  );
 	
 					break;
 
@@ -444,8 +561,6 @@ class ElementAction extends Action
 					$this->message('ERROR','not an element property: '.$propertyName );
 			}
 		}
-	
-		$this->forward('element');
 	}
 }
 

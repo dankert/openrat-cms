@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2004-12-25 20:50:13  dankert
+// Revision 1.8  2006-01-29 17:18:59  dankert
+// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
+//
+// Revision 1.7  2004/12/25 20:50:13  dankert
 // Korrektur Sprach-Aenderung
 //
 // Revision 1.6  2004/12/19 14:55:00  dankert
@@ -82,6 +85,11 @@ class LanguageAction extends Action
 	 */
 	function add()
 	{
+	}
+	
+	
+	function addlanguage()
+	{
 		global $conf;
 		$countryList = $conf['countries'];
 		
@@ -92,8 +100,6 @@ class LanguageAction extends Action
 		$language->isoCode   = $iso;
 		$language->name      = $countryList[$iso];
 		$language->add();
-		
-		$this->callSubAction( 'listing' );
 	}
 
 
@@ -105,8 +111,6 @@ class LanguageAction extends Action
 	function setdefault()
 	{
 		$this->language->setDefault();
-
-		$this->callSubAction( 'listing' );
 	}
 
 
