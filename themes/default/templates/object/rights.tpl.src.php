@@ -61,4 +61,3 @@ RAW
 <?php } ?>
 END
 
-insert file:footer
