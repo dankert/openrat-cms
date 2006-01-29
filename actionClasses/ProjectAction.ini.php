@@ -9,11 +9,17 @@ menu=list
 menu=edit
 target=delete
 
+[delete]
+goto=listing
+
 [edit]
 target=save
 menu=edit
 
 [addproject]
+goto=listing
+
+[save]
 goto=listing
 
 [add]
