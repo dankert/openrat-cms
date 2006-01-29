@@ -14,7 +14,7 @@
 	elseif (!empty($attr_text))
 		$tmp_text = lang($attr_text);
 	elseif (!empty($attr_var))
-		$tmp_text = $$attr_var;	
+		$tmp_text = isset($$attr_var)?$$attr_var:'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
 	else echo 'text error';
