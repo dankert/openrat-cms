@@ -1,70 +1,314 @@
-<?php include( $tpl_dir.'header.tpl.php') ?>
-
+<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
 <!-- $Id$ -->
-<center>
+<head>
+  <title><?php echo $cms_title ?></title>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <meta name="MSSmartTagsPreventParsing" content="true" />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
+<?php if($stylesheet!='default') { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php } ?>
+</head>
 
-<table class="main" width="90%" cellspacing="0" cellpadding="4">
-
-<tr>
-  <th colspan="2"><?php echo lang('GLOBAL_COMPARE').' '.$title1 ?></th>
-  <th colspan="2"><?php echo lang('GLOBAL_WITH')   .' '.$title2 ?></th>
-</tr>
+<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
 
 
-<?php $fx = fx('');
-      if (count($text1) > 0)
-      {
-      	$i=0;
-      	while( isset($text1[$i]) || isset($text2[$i]) )
-      	{
-      		$fx = fx($fx);
-      		?>
-      		<tr>
-
-      		<?php
-      		if	( isset($text1[$i]['text']) )
-      		{
-      			?>
-				<td class="<?php echo $fx ?>" width="5%" ><?php echo $text1[$i]['line'] ?></td>
-				<td class="diff_<?php echo $text1[$i]['type'] ?>" width="45%"><?php echo $text1[$i]['text'] ?></td>
-      			<?php
-      		}
-      		else
-      		{
-      			?>
-      			<td colspan="2" class="help" with="50%">&nbsp;</td>
-      			<?php
-      		}
-
-      		if	( isset($text2[$i]['text']) )
-      		{
-      			?>
-				<td class="<?php echo $fx ?>" width="5%" ><?php echo $text2[$i]['line'] ?></td>
-				<td class="diff_<?php echo $text2[$i]['type'] ?>" width="45%"><?php echo $text2[$i]['text'] ?></td>
-      			<?php
-      		}
-      		else
-      		{
-      			?>
-      			<td colspan="2" class="help" with="50%">&nbsp;</td>
-      			<?php
-      		}
-      		?>
-      		</tr>
-      		<?php
-      		$i++;
+<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/window.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('title'=>'','name'=>'','icon'=>'','widths'=>'','width'=>'85%') ?><?php $attr_title='' ?><?php $attr_name='' ?><?php $attr_icon='' ?><?php $attr_widths='' ?><?php $attr_width='85%' ?><?php
+	$coloumn_widths=array();
+	if	(!empty($attr_widths))
+	{
+		$column_widths = explode(',',$attr_widths);
+		unset($attr['widths']);
+	}
+		global $image_dir;
+		echo '<br/><br/><br/><center>';
+		echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr_width.'">';
+		echo '<tr><td class="menu">';
+		if	( !empty($attr_icon) )
+			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		foreach( $path as $pathElement)
+		{
+			extract($pathElement);
+			echo '<a href="'.$url.'" class="path">'.lang($name).'</a>';
+			echo '&nbsp;&raquo;&nbsp;';
 		}
-      }
-      else
+		echo '<span class="title">'.lang($windowTitle).'</span>';
+		?>
+    </th>
+  </tr>
+  <tr><td class="subaction">
+    <?php foreach( $windowMenu as $menu )
+          {
+          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
+          }
+          	?></td>
+  </tr>
+
+<?php if (isset($notices) && count($notices)>0 )
       { ?>
-<tr>
-  <td class="f1" colspan="4"><strong><?php echo lang('GLOBAL_NO_DIFFERENCES_FOUND') ?></strong></td>
-</tr>
+      	
+  <tr>
+    <td><table>
+    
+  <?php foreach( $notices as $notice ) { ?>
+    
+    <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
+    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
+  </tr>
+  <?php } ?>
+  
+    </table></td>
+  </tr>
+
 <?php } ?>
 
+
+
+  <tr>
+    <td>
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php /* source: ./themes/default/include/html/row.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array() ?><?php
+	global $fx;
+	if	( $fx =='f1')
+		$fx='f2';
+	else $fx='f1';
+	
+	global $cell_column_nr;
+	$cell_column_nr=0;
+
+?><tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('width'=>'','style'=>'','class'=>'','colspan'=>'2') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='' ?><?php $attr_colspan='2' ?><?php
+	global $fx;
+	if (!isset($attr_class)) $attr_class='';
+	if ($attr_class=='fx') $attr['class']=$fx;
+	
+	global $cell_column_nr;
+	$cell_column_nr++;
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
+		$attr['width']=$column_widths[$cell_column_nr-1];
+		
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_COMPARE','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_COMPARE' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+	if(empty($attr_title)) $attr_title = $attr_text;
+?><span class="<?php echo $attr_class ?>"><?php
+	if (!empty($attr_array))
+	{
+		//geht nicht:
+		//echo $$attr_array[$attr_var].'%';
+		$tmpArray = $$attr_array;
+		if (!empty($attr_var))
+			$tmp_text = $tmpArray[$attr_var];
+		else
+			$tmp_text = lang($tmpArray[$attr_text]);
+	}
+	elseif (!empty($attr_text))
+		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_var))
+		$tmp_text = $$attr_var;	
+	elseif (!empty($attr_raw))
+		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
+	else echo 'text error';
+	
+	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
+		
+	echo $tmp_text;
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'','raw'=>'_','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='' ?><?php $attr_raw='_' ?><?php $attr_maxlength='' ?><?php
+	if(empty($attr_title)) $attr_title = $attr_text;
+?><span class="<?php echo $attr_class ?>"><?php
+	if (!empty($attr_array))
+	{
+		//geht nicht:
+		//echo $$attr_array[$attr_var].'%';
+		$tmpArray = $$attr_array;
+		if (!empty($attr_var))
+			$tmp_text = $tmpArray[$attr_var];
+		else
+			$tmp_text = lang($tmpArray[$attr_text]);
+	}
+	elseif (!empty($attr_text))
+		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_var))
+		$tmp_text = $$attr_var;	
+	elseif (!empty($attr_raw))
+		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
+	else echo 'text error';
+	
+	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
+		
+	echo $tmp_text;
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'title1','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='title1' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+	if(empty($attr_title)) $attr_title = $attr_text;
+?><span class="<?php echo $attr_class ?>"><?php
+	if (!empty($attr_array))
+	{
+		//geht nicht:
+		//echo $$attr_array[$attr_var].'%';
+		$tmpArray = $$attr_array;
+		if (!empty($attr_var))
+			$tmp_text = $tmpArray[$attr_var];
+		else
+			$tmp_text = lang($tmpArray[$attr_text]);
+	}
+	elseif (!empty($attr_text))
+		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_var))
+		$tmp_text = $$attr_var;	
+	elseif (!empty($attr_raw))
+		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
+	else echo 'text error';
+	
+	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
+		
+	echo $tmp_text;
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php /* source: ./themes/default/include/html/cell-end.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array() ?></td><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('width'=>'','style'=>'','class'=>'','colspan'=>'2') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='' ?><?php $attr_colspan='2' ?><?php
+	global $fx;
+	if (!isset($attr_class)) $attr_class='';
+	if ($attr_class=='fx') $attr['class']=$fx;
+	
+	global $cell_column_nr;
+	$cell_column_nr++;
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
+		$attr['width']=$column_widths[$cell_column_nr-1];
+		
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_WITH','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_WITH' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+	if(empty($attr_title)) $attr_title = $attr_text;
+?><span class="<?php echo $attr_class ?>"><?php
+	if (!empty($attr_array))
+	{
+		//geht nicht:
+		//echo $$attr_array[$attr_var].'%';
+		$tmpArray = $$attr_array;
+		if (!empty($attr_var))
+			$tmp_text = $tmpArray[$attr_var];
+		else
+			$tmp_text = lang($tmpArray[$attr_text]);
+	}
+	elseif (!empty($attr_text))
+		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_var))
+		$tmp_text = $$attr_var;	
+	elseif (!empty($attr_raw))
+		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
+	else echo 'text error';
+	
+	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
+		
+	echo $tmp_text;
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'','raw'=>'_','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='' ?><?php $attr_raw='_' ?><?php $attr_maxlength='' ?><?php
+	if(empty($attr_title)) $attr_title = $attr_text;
+?><span class="<?php echo $attr_class ?>"><?php
+	if (!empty($attr_array))
+	{
+		//geht nicht:
+		//echo $$attr_array[$attr_var].'%';
+		$tmpArray = $$attr_array;
+		if (!empty($attr_var))
+			$tmp_text = $tmpArray[$attr_var];
+		else
+			$tmp_text = lang($tmpArray[$attr_text]);
+	}
+	elseif (!empty($attr_text))
+		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_var))
+		$tmp_text = $$attr_var;	
+	elseif (!empty($attr_raw))
+		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
+	else echo 'text error';
+	
+	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
+		
+	echo $tmp_text;
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'title2','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='title2' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+	if(empty($attr_title)) $attr_title = $attr_text;
+?><span class="<?php echo $attr_class ?>"><?php
+	if (!empty($attr_array))
+	{
+		//geht nicht:
+		//echo $$attr_array[$attr_var].'%';
+		$tmpArray = $$attr_array;
+		if (!empty($attr_var))
+			$tmp_text = $tmpArray[$attr_var];
+		else
+			$tmp_text = lang($tmpArray[$attr_text]);
+	}
+	elseif (!empty($attr_text))
+		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_var))
+		$tmp_text = $$attr_var;	
+	elseif (!empty($attr_raw))
+		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
+	else echo 'text error';
+	
+	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
+		
+	echo $tmp_text;
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $fx = fx('');
+if (count($text1) > 0)
+{
+$i=0;
+while( isset($text1[$i]) || isset($text2[$i]) )
+{
+$fx = fx($fx);
+?>
+<tr>
+<?php
+if	( isset($text1[$i]['text']) )
+{
+?>
+<td class="<?php echo $fx ?>" width="5%" ><?php echo $text1[$i]['line'] ?></td>
+<td class="diff_<?php echo $text1[$i]['type'] ?>" width="45%"><?php echo $text1[$i]['text'] ?></td>
+<?php
+}
+else
+{
+?>
+<td colspan="2" class="help" with="50%">&nbsp;</td>
+<?php
+}
+if	( isset($text2[$i]['text']) )
+{
+?>
+<td class="<?php echo $fx ?>" width="5%" ><?php echo $text2[$i]['line'] ?></td>
+<td class="diff_<?php echo $text2[$i]['type'] ?>" width="45%"><?php echo $text2[$i]['text'] ?></td>
+<?php
+}
+else
+{
+?>
+<td colspan="2" class="help" with="50%">&nbsp;</td>
+<?php
+}
+?>
+</tr>
+<?php
+$i++;
+}
+}
+else
+{ ?>
+<tr>
+<td class="f1" colspan="4"><strong><?php echo lang('GLOBAL_NO_DIFFERENCES_FOUND') ?></strong></td>
+</tr>
+<?php } ?>
+<?php /* source: ./themes/default/include/html/cell-end.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array() ?></td><?php unset($attr) ?><?php /* source: ./themes/default/include/html/row-end.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/window-end.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array() ?>      </table>
+	</td>
+  </tr>
 </table>
 
-</center>
+</center><?php unset($attr) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Sat, 28 Jan 2006 20:29:54 +0100 */ ?><?php $attr = array() ?>
+<!-- $Id$ -->
 
-<br/><br/><br/>
-<?php include( $tpl_dir.'footer.tpl.php') ?>
+<?php if ($showDuration) { ?>
+<br/>
+<small>&nbsp;
+<?php $dur = time()-START_TIME;
+      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
+<?php } ?>
+
+</body>
+</html><?php unset($attr) ?>

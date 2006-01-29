@@ -1,91 +1,141 @@
-<?php include( $tpl_dir.'header.tpl.php') ?>
-
+<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
 <!-- $Id$ -->
-<?php windowOpen( 'FILE_REPLACE',2,'file') ?>
+<head>
+  <title><?php echo $cms_title ?></title>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <meta name="MSSmartTagsPreventParsing" content="true" />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
+<?php if($stylesheet!='default') { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php } ?>
+</head>
 
-<tr>
-  <td colspan="2" class="help"><?php echo lang('FILE_REPLACE_DESC') ?></td>
-</tr>
+<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
 
-<tr>
-<td colspan="2" class="act">
-  <?php echo Html::form( 'file','replace',$id,array('enctype'=>'multipart/form-data') ) ?>
 
-    <input type="file" name="file"> <input type="submit" class="submit" value="<?php echo lang('GLOBAL_UPLOAD') ?>">
-  </form>
+<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/form.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array('action'=>'file','subaction'=>'replace','id'=>'','name'=>'','target'=>'_self','method'=>'post','enctype'=>'multipart/form-data') ?><?php $attr_action='file' ?><?php $attr_subaction='replace' ?><?php $attr_id='' ?><?php $attr_name='' ?><?php $attr_target='_self' ?><?php $attr_method='post' ?><?php $attr_enctype='multipart/form-data' ?><?php
+	if	(empty($attr_action))
+		$attr_action = $actionName;
+	if	(empty($attr_subaction))
+		$attr_subaction = $targetSubActionName;
+	if	(empty($attr_id))
+		$attr_id = $this->getRequestId();
+		
+?><form name="<?php echo $attr_name ?>"
+      target="<?php echo $attr_target ?>"
+      action="<?php echo Html::url( $attr_action,$attr_subaction,$attr_id ) ?>"
+      method="<?php echo $attr_method ?>"
+      enctype="<?php echo $attr_enctype ?>">
+<input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo $attr_action ?>" />
+<input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo $attr_subaction ?>" />
+<input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr_id ?>" /><?php
+		if	( $conf['interface']['url_sessionid'] )
+			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
+?><?php unset($attr) ?><?php unset($attr_action) ?><?php unset($attr_subaction) ?><?php unset($attr_id) ?><?php unset($attr_name) ?><?php unset($attr_target) ?><?php unset($attr_method) ?><?php unset($attr_enctype) ?><?php /* source: ./themes/default/include/html/window.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array('title'=>'asdfdfs','name'=>'asdf','icon'=>'','widths'=>'','width'=>'85%') ?><?php $attr_title='asdfdfs' ?><?php $attr_name='asdf' ?><?php $attr_icon='' ?><?php $attr_widths='' ?><?php $attr_width='85%' ?><?php
+	$coloumn_widths=array();
+	if	(!empty($attr_widths))
+	{
+		$column_widths = explode(',',$attr_widths);
+		unset($attr['widths']);
+	}
+		global $image_dir;
+		echo '<br/><br/><br/><center>';
+		echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr_width.'">';
+		echo '<tr><td class="menu">';
+		if	( !empty($attr_icon) )
+			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		foreach( $path as $pathElement)
+		{
+			extract($pathElement);
+			echo '<a href="'.$url.'" class="path">'.lang($name).'</a>';
+			echo '&nbsp;&raquo;&nbsp;';
+		}
+		echo '<span class="title">'.lang($windowTitle).'</span>';
+		?>
+    </th>
+  </tr>
+  <tr><td class="subaction">
+    <?php foreach( $windowMenu as $menu )
+          {
+          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
+          }
+          	?></td>
+  </tr>
 
-</td>
-</tr>
-
-<?php windowClose() ?>
-
-<?php if ( count($formats) > 0 )
+<?php if (isset($notices) && count($notices)>0 )
       { ?>
-<?php echo Html::form( 'file','resize',$id ) ?>
+      	
+  <tr>
+    <td><table>
+    
+  <?php foreach( $notices as $notice ) { ?>
+    
+    <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
+    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
+  </tr>
+  <?php } ?>
+  
+    </table></td>
+  </tr>
 
-<?php windowOpen( 'FILE_IMAGE_RESIZE',2,'file') ?>
-
-<tr>
-  <td colspan="2" class="help"><?php echo lang('FILE_IMAGE_RESIZE_DESC') ?></td>
-</tr>
-
-<tr>
-<td width="50%" class="f2"><?php echo lang('FILE_IMAGE_NEW_WIDTH') ?></td>
-<td width="50%" class="f2"><input type="text" name="width" value=""></td>
-</tr>
-<tr>
-<td width="50%" class="f2"><?php echo lang('FILE_IMAGE_NEW_HEIGHT') ?></td>
-<td width="50%" class="f2"><input type="text" name="height" value=""></td>
-</tr>
-<tr>
-<td width="50%" class="f2"><?php echo lang('FILE_IMAGE_FORMAT') ?></td>
-<td width="50%" class="f2"><?php echo Html::selectBox('format',$formats,$default_format) ?></td>
-</tr>
-<tr>
-<td width="50%" class="f2"><?php echo lang('FILE_IMAGE_JPEG_COMPRESSION') ?></td>
-<?php
-	$jpeglist = array();
-	for ($i=10; $i<=95; $i+=5)
-		$jpeglist[$i]=$i.'%';
-?>
-<td width="50%" class="f2"><?php echo Html::selectBox('jpeg_compression',$jpeglist,'70') ?></td>
-</tr>
-
-<tr>
-<td class="act" colspan="2"><input type="submit"  class="submit" value="<?php echo lang('FILE_IMAGE_RESIZE') ?>"></td>
-</tr>
-
-<?php windowClose() ?>
-
-</form>
 <?php } ?>
 
 
 
+  <tr>
+    <td>
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php /* source: ./themes/default/include/html/row.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array() ?><?php
+	global $fx;
+	if	( $fx =='f1')
+		$fx='f2';
+	else $fx='f1';
+	
+	global $cell_column_nr;
+	$cell_column_nr=0;
 
-
-<?php if	( substr($mimetype,0,5) == 'text/' )
-      { ?>
-
-<?php echo Html::form( 'file','savevalue',$id ) ?>
-
-<?php windowOpen( 'GLOBAL_VALUE',2,'file') ?>
-
-<tr>
-<td class="f2"><?php echo lang('GLOBAL_VALUE') ?></a></td>
-<td class="f2"><textarea cols="60" rows="35" name="value"><?php echo htmlentities($value) ?></textarea></td>
-</tr>
-<tr>
-<td class="act" colspan="2"><input type="submit" class="submit" value="<?php echo lang('GLOBAL_SAVE') ?>"></td>
-</tr>
-
-<?php windowClose() ?>
-
-</form>
-<?php } ?>
+?><tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array('width'=>'','style'=>'','class'=>'','colspan'=>'') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='' ?><?php $attr_colspan='' ?><?php
+	global $fx;
+	if (!isset($attr_class)) $attr_class='';
+	if ($attr_class=='fx') $attr['class']=$fx;
+	
+	global $cell_column_nr;
+	$cell_column_nr++;
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
+		$attr['width']=$column_widths[$cell_column_nr-1];
+		
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php /* source: ./themes/default/include/html/upload.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array('name'=>'file','class'=>'upload') ?><?php $attr_name='file' ?><?php $attr_class='upload' ?><input type="file" name="<?php echo $attr_name ?>" class="<?php echo $attr_class ?>" /><?php unset($attr) ?><?php unset($attr_name) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/button.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array('type'=>'ok') ?><?php $attr_type='ok' ?><?php
+	if ($attr_type=='ok')
+	{
+		$attr_type  = 'submit';
+		$attr_class = 'ok';
+		$attr_text  = 'BUTTON_OK';
+		$attr_value = 'ok';
+	}
+?><input type="<?php echo $attr_type ?>" name="<?php echo $attr_value ?>" class="<?php echo $attr_class ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr) ?><?php unset($attr_type) ?><?php /* source: ./themes/default/include/html/cell-end.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array() ?></td><?php unset($attr) ?><?php /* source: ./themes/default/include/html/row-end.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/window-end.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array() ?>      </table>
+	</td>
+  </tr>
+</table>
 
 </center>
 
-<?php Html::focusField('name') ?>
+<?php if ($showDuration)
+      { ?>
+<br/>
+<small>&nbsp;
+<?php $dur = time()-START_TIME;
+      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
+<?php } ?>
+<?php unset($attr) ?><?php /* source: ./themes/default/include/html/form-end.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array() ?></form><?php unset($attr) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Sun, 29 Jan 2006 19:43:10 +0100 */ ?><?php $attr = array() ?>
+<!-- $Id$ -->
 
-<?php include( $tpl_dir.'footer.tpl.php') ?>
+<?php if ($showDuration) { ?>
+<br/>
+<small>&nbsp;
+<?php $dur = time()-START_TIME;
+//      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
+<?php } ?>
+
+</body>
+</html><?php unset($attr) ?>

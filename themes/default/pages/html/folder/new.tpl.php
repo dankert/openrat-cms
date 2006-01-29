@@ -1,4 +1,4 @@
-<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Wed, 11 Jan 2006 22:14:14 +0100 */ ?><?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Wed, 18 Jan 2006 23:07:08 +0100 */ ?><?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
@@ -12,10 +12,10 @@
 <?php } ?>
 </head>
 
-<body<?php if( !empty($attr_class) )echo ' class="'.$class.'"' ?>>
+<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
 
 
-<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/window.inc.php - compile time: Wed, 11 Jan 2006 22:14:14 +0100 */ ?><?php $attr = array('title'=>'GLOBAL_NEW','name'=>'global_new','widths'=>'','width'=>'') ?><?php $attr_title='GLOBAL_NEW' ?><?php $attr_name='global_new' ?><?php $attr_widths='' ?><?php $attr_width='' ?><?php
+<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/window.inc.php - compile time: Wed, 18 Jan 2006 23:07:08 +0100 */ ?><?php $attr = array('title'=>'GLOBAL_NEW','name'=>'global_new','widths'=>'','width'=>'') ?><?php $attr_title='GLOBAL_NEW' ?><?php $attr_name='global_new' ?><?php $attr_widths='' ?><?php $attr_width='' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr_widths))
 	{
@@ -23,7 +23,7 @@
 		unset($attr['widths']);
 	}
 		global $image_dir;
-		if	( !isset($attr_width)) $attr['width']='90%';
+		if	( empty($attr_width)) $attr['width']='90%';
 		echo '<br/><br/><br/><center>';
 		echo '<table class="main" cellspacing="0" cellpadding="4" ';
 		foreach( $attr as $aName=>$aValue )
@@ -31,7 +31,7 @@
 		echo '>';
 		echo '<tr><th>';
 		if	( !empty($attr_icon) )
-			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_EXT.'" align="left" border="0">';
+			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
 		if	( !isset($$attr_name)) $$attr_name='';
 		echo $$attr_name.': ';
 		echo lang( $attr_title );
@@ -48,17 +48,17 @@
 
 <?php if (isset($notices) && count($notices)>0 )
       { ?>
-
+      	
   <tr>
     <td><table>
-
+    
   <?php foreach( $notices as $notice ) { ?>
-
-    <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_EXT ?>" style="padding:10px" /></td>
-    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
+    
+    <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
+    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
   </tr>
   <?php } ?>
-
+  
     </table></td>
   </tr>
 
@@ -68,14 +68,12 @@
 
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4">
-<?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php /* source: ./themes/default/include/html/window-end.inc.php - compile time: Wed, 11 Jan 2006 22:14:14 +0100 */ ?><?php $attr = array() ?>      </table>
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php /* source: ./themes/default/include/html/window-end.inc.php - compile time: Wed, 18 Jan 2006 23:07:08 +0100 */ ?><?php $attr = array() ?>      </table>
 	</td>
   </tr>
 </table>
 
-</center>
-<?php unset($attr) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Wed, 11 Jan 2006 22:14:14 +0100 */ ?><?php $attr = array() ?>
+</center><?php unset($attr) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Wed, 18 Jan 2006 23:07:08 +0100 */ ?><?php $attr = array() ?>
 <!-- $Id$ -->
 
 <?php if ($showDuration) { ?>
@@ -86,5 +84,4 @@
 <?php } ?>
 
 </body>
-</html>
-<?php unset($attr) ?>
+</html><?php unset($attr) ?>

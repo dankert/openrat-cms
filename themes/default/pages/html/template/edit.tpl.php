@@ -1,4 +1,4 @@
-<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Sun, 29 Jan 2006 02:26:05 +0100 */ ?><?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Sun, 29 Jan 2006 19:46:59 +0100 */ ?><?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
@@ -15,7 +15,7 @@
 <body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
 
 
-<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/window.inc.php - compile time: Sun, 29 Jan 2006 02:26:05 +0100 */ ?><?php $attr = array('title'=>'','name'=>'TEMPLATE_SHOW','icon'=>'','widths'=>'','width'=>'85%') ?><?php $attr_title='' ?><?php $attr_name='TEMPLATE_SHOW' ?><?php $attr_icon='' ?><?php $attr_widths='' ?><?php $attr_width='85%' ?><?php
+<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/window.inc.php - compile time: Sun, 29 Jan 2006 19:46:59 +0100 */ ?><?php $attr = array('title'=>'','name'=>'TEMPLATE_SHOW','icon'=>'','widths'=>'','width'=>'85%') ?><?php $attr_title='' ?><?php $attr_name='TEMPLATE_SHOW' ?><?php $attr_icon='' ?><?php $attr_widths='' ?><?php $attr_width='85%' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr_widths))
 	{
@@ -68,7 +68,7 @@
 
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php /* source: ./themes/default/include/html/row.inc.php - compile time: Sun, 29 Jan 2006 02:26:05 +0100 */ ?><?php $attr = array() ?><?php
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php /* source: ./themes/default/include/html/row.inc.php - compile time: Sun, 29 Jan 2006 19:46:59 +0100 */ ?><?php $attr = array() ?><?php
 	global $fx;
 	if	( $fx =='f1')
 		$fx='f2';
@@ -77,7 +77,7 @@
 	global $cell_column_nr;
 	$cell_column_nr=0;
 
-?><tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell.inc.php - compile time: Sun, 29 Jan 2006 02:26:05 +0100 */ ?><?php $attr = array('width'=>'','style'=>'','class'=>'fx','colspan'=>'') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='fx' ?><?php $attr_colspan='' ?><?php
+?><tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell.inc.php - compile time: Sun, 29 Jan 2006 19:46:59 +0100 */ ?><?php $attr = array('width'=>'','style'=>'','class'=>'fx','colspan'=>'') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='fx' ?><?php $attr_colspan='' ?><?php
 	global $fx;
 	if (!isset($attr_class)) $attr_class='';
 	if ($attr_class=='fx') $attr['class']=$fx;
@@ -88,7 +88,7 @@
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><code>
-<?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sun, 29 Jan 2006 02:26:05 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'text','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='text' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+<?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sun, 29 Jan 2006 19:46:59 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'text','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='text' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
 	if(empty($attr_title)) $attr_title = $attr_text;
 ?><span class="<?php echo $attr_class ?>"><?php
 	if (!empty($attr_array))
@@ -104,7 +104,7 @@
 	elseif (!empty($attr_text))
 		$tmp_text = lang($attr_text);
 	elseif (!empty($attr_var))
-		$tmp_text = $$attr_var;	
+		$tmp_text = isset($$attr_var)?$$attr_var:'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
 	else echo 'text error';
@@ -114,19 +114,28 @@
 		
 	echo $tmp_text;
 ?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><code>
-<?php /* source: ./themes/default/include/html/cell-end.inc.php - compile time: Sun, 29 Jan 2006 02:26:05 +0100 */ ?><?php $attr = array() ?></td><?php unset($attr) ?><?php /* source: ./themes/default/include/html/row-end.inc.php - compile time: Sun, 29 Jan 2006 02:26:05 +0100 */ ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/window-end.inc.php - compile time: Sun, 29 Jan 2006 02:26:05 +0100 */ ?><?php $attr = array() ?>      </table>
+<?php /* source: ./themes/default/include/html/cell-end.inc.php - compile time: Sun, 29 Jan 2006 19:46:59 +0100 */ ?><?php $attr = array() ?></td><?php unset($attr) ?><?php /* source: ./themes/default/include/html/row-end.inc.php - compile time: Sun, 29 Jan 2006 19:46:59 +0100 */ ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/window-end.inc.php - compile time: Sun, 29 Jan 2006 19:46:59 +0100 */ ?><?php $attr = array() ?>      </table>
 	</td>
   </tr>
 </table>
 
-</center><?php unset($attr) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Sun, 29 Jan 2006 02:26:05 +0100 */ ?><?php $attr = array() ?>
+</center>
+
+<?php if ($showDuration)
+      { ?>
+<br/>
+<small>&nbsp;
+<?php $dur = time()-START_TIME;
+      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
+<?php } ?>
+<?php unset($attr) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Sun, 29 Jan 2006 19:46:59 +0100 */ ?><?php $attr = array() ?>
 <!-- $Id$ -->
 
 <?php if ($showDuration) { ?>
 <br/>
 <small>&nbsp;
 <?php $dur = time()-START_TIME;
-      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
+//      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
 <?php } ?>
 
 </body>
