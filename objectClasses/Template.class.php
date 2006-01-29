@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2004-12-30 23:31:52  dankert
+// Revision 1.12  2006-01-29 17:27:27  dankert
+// Methode addElement() mit 2 weiteren Parametern
+//
+// Revision 1.11  2004/12/30 23:31:52  dankert
 // Werte vorbelegen
 //
 // Revision 1.10  2004/12/30 23:23:21  dankert
@@ -307,11 +310,12 @@ class Template
  	 * Hinzuf?gen eines Elementes
  	 * @param String Name des Elementes
  	 */
-	function addElement( $name )
+	function addElement( $name,$description='',$type='text' )
 	{
 		$element = new Element();
 		$element->name       = $name;
-		$element->type       = 'text';
+		$element->desc       = $description;
+		$element->type       = $type;
 		$element->templateid = $this->templateid;
 		$element->wiki       = true;
 		$element->writable   = true;
