@@ -27,15 +27,15 @@ END
 RAW
 <?php 	if ( $z['username'] != '' )
       	{ ?>
-<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_user'.IMG_ICON_EXT ?>" align="left"><?php echo $z['username'] ?></td>
+<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_user'.IMG_EXT ?>" align="left"><?php echo $z['username'] ?></td>
 <?php 	}
       	elseif ( $z['groupname'] != '' )
       	{ ?>
-<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_group'.IMG_ICON_EXT ?>" align="left"><?php echo $z['groupname'] ?></td>
+<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_group'.IMG_EXT ?>" align="left"><?php echo $z['groupname'] ?></td>
 <?php 	}
       	else
       	{ ?>
-<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_group'.IMG_ICON_EXT ?>" align="left"><?php echo lang('GLOBAL_ALL') ?></td>
+<td width="50%" class="<?php echo $fx ?>"><img src="<?php echo $image_dir.'icon_group'.IMG_EXT ?>" align="left"><?php echo lang('GLOBAL_ALL') ?></td>
 <?php 	} ?>
 END
 				cell

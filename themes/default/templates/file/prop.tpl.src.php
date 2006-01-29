@@ -1,7 +1,7 @@
 page
 
 	form
-		window name:objectName title:global_prop icon:folder widths:50%,50% width:90%
+		window icon:folder widths:50%,50%
 			row
 				cell class:fx
 					text text:global_name
@@ -12,6 +12,11 @@ page
 					text text:global_filename
 				cell class:fx
 					input name:filename
+			row
+				cell class:fx
+					text text:file_extension
+				cell class:fx
+					input name:extension size:10
 			row
 				cell class:fx
 					text text:global_description

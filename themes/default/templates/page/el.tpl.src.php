@@ -17,7 +17,7 @@ window name:x title:TEMPLATE_ELEMENTS widths:30%,50%,20%
 		row
 			cell class:fx
 				link url:url title:desc
-					image type:type align:left
+					image elementtype:type align:left
 					text var:name
 			cell class:fx
 				text var:value

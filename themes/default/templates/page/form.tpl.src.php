@@ -18,7 +18,7 @@ insert file:header
 				list list:el extract:true
 					row
 						cell class:fx
-							image type:type
+							image elementtype:type
 							text var:name
 						cell class:fx
 							checkbox name:id prefix:saveid default:false readonly:false

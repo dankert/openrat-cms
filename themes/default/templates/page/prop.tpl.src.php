@@ -1,7 +1,7 @@
 page
 
 	form
-		window name:objectName title:global_prop icon:folder widths:50%,50% width:90%
+		window icon:page widths:50%,50%
 			row
 				cell class:fx
 					text text:global_name
