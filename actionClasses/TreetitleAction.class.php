@@ -34,7 +34,17 @@ class TreetitleAction extends Action
 	function show()
 	{
 		$windowMenu = array();
-		
+
+		$windowMenu[] = array( 'text'=>lang('GLOBAL_PROJECTS'),
+		                       'url' =>Html::url('index','projectmenu'),
+		                       'target'=>'_top' );
+
+		if   ( $this->userIsAdmin() )
+			$windowMenu[] = array( 'text'=>lang('GLOBAL_ADMINISTRATION'),
+			                       'url' =>Html::url('index','administration'),
+			                       'target'=>'_top' );
+
+				
 		// Das aktuelle Projekt voreinstellen		
 		$project = Session::getProject();
 		
@@ -43,27 +53,27 @@ class TreetitleAction extends Action
 			$this->setTemplateVar( 'text',lang('GLOBAL_ADMINISTRATION') );
 			$this->setTemplateVar( 'type','administration' );
 
-			$windowMenu[] = array( 'text'=>'',
-			                       'url' =>'' );
+//			$windowMenu[] = array( 'text'=>'',
+//			                       'url' =>'' );
 		}
 		else
 		{
 			$this->setTemplateVar( 'text',$project->name );
 			$this->setTemplateVar( 'type','project' );
 			
-			// Ermitteln Sprache
-			$language = Session::getProjectLanguage();
-			
-			$windowMenu[] = array( 'text'=>lang('GLOBAL_LANGUAGE').' ('.$language->name.')',
-			                       'url' =>Html::url('main','language'),
-			                       'target'=>'cms_main' );
-	
-			// Ermitteln Projektmodell
-			$model = Session::getProjectModel();
-	
-			$windowMenu[] = array( 'text'=>lang('GLOBAL_MODEL').' ('.$model->name.')',
-			                       'url' =>Html::url('main','model'),
-			                       'target'=>'cms_main' );
+//			// Ermitteln Sprache
+//			$language = Session::getProjectLanguage();
+//			
+//			$windowMenu[] = array( 'text'=>lang('GLOBAL_LANGUAGE').' ('.$language->name.')',
+//			                       'url' =>Html::url('main','language'),
+//			                       'target'=>'cms_main' );
+//	
+//			// Ermitteln Projektmodell
+//			$model = Session::getProjectModel();
+//	
+//			$windowMenu[] = array( 'text'=>lang('GLOBAL_MODEL').' ('.$model->name.')',
+//			                       'url' =>Html::url('main','model'),
+//			                       'target'=>'cms_main' );
 		}
 
 		$this->setTemplateVar('windowMenu',$windowMenu);
