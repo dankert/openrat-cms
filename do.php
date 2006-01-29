@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.20  2006-01-23 23:03:21  dankert
+// Revision 1.21  2006-01-29 17:33:56  dankert
+// Bugfix: Ermitteln Subaction-Namen
+//
+// Revision 1.20  2006/01/23 23:03:21  dankert
 // Auswerten von ini-Dateien pro Aktionsklasse
 //
 // Revision 1.19  2006/01/11 22:25:24  dankert
@@ -225,7 +228,12 @@ else	$action = 'index';
 if	( !empty( $REQ[REQ_PARAM_SUBACTION] ) )
 	$subaction = $REQ[REQ_PARAM_SUBACTION];
 else
-	$subaction = Session::getSubaction();
+{
+	if	( in_array($action,array('page','file','link','folder')))
+		$subaction = Session::getSubaction();
+	else
+		$subaction = '';
+}
 
 $actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
 
