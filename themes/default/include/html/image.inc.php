@@ -1,6 +1,6 @@
 <?php
-if (!empty($attr_eltype)) {
-?><img src="<?php echo $image_dir.'icon_el_'.$$attr_eltype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
+if (!empty($attr_elementtype)) {
+?><img src="<?php echo $image_dir.'icon_el_'.$$attr_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (!empty($attr_type)) {
 ?><img src="<?php echo $image_dir.'icon_'.$$attr_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (!empty($$attr_url)) {
