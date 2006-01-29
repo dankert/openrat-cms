@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2005-11-07 22:34:01  dankert
+// Revision 1.13  2006-01-29 17:26:28  dankert
+// In Methode add() auch die Beschreibung speichern
+//
+// Revision 1.12  2005/11/07 22:34:01  dankert
 // Neue Methode "getDefaultValue()"
 //
 // Revision 1.11  2005/04/21 19:08:44  dankert
@@ -160,13 +163,14 @@ class Element
 
 		$sql = new Sql( 'INSERT INTO {t_element}'.
 		                ' (id,templateid,name,descr,type,writable) '.
-		                " VALUES ( {elementid},{templateid},{name},'',{type},{writable} ) " );
+		                " VALUES ( {elementid},{templateid},{name},{description},{type},{writable} ) " );
 
-		$sql->setInt    ( 'elementid' ,$this->elementid  );
-		$sql->setString ( 'name'      ,$this->name       );
-		$sql->setString ( 'type'      ,$this->type       );
-		$sql->setInt    ( 'templateid',$this->templateid );
-		$sql->setBoolean( 'writable'  ,$this->writable   );
+		$sql->setInt    ( 'elementid'  ,$this->elementid  );
+		$sql->setString ( 'name'       ,$this->name       );
+		$sql->setString ( 'type'       ,$this->type       );
+		$sql->setInt    ( 'templateid' ,$this->templateid );
+		$sql->setBoolean( 'writable'   ,$this->writable   );
+		$sql->setString ( 'description',$this->desc       );
 
 		$db->query( $sql->query );
 	}
