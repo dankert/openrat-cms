@@ -17,7 +17,7 @@
 			echo '<a href="'.$url.'" class="path">'.lang($name).'</a>';
 			echo '&nbsp;&raquo;&nbsp;';
 		}
-		echo '<span class="title">'.lang($attr_name).'</span>';
+		echo '<span class="title">'.lang($windowTitle).'</span>';
 		?>
     </th>
   </tr>
