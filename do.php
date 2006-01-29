@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.21  2006-01-29 17:33:56  dankert
+// Revision 1.22  2006-01-29 18:59:31  dankert
+// UMASK aus Konfiguration lesen und setzen.
+//
+// Revision 1.21  2006/01/29 17:33:56  dankert
 // Bugfix: Ermitteln Subaction-Namen
 //
 // Revision 1.20  2006/01/23 23:03:21  dankert
@@ -174,6 +177,8 @@ if	( !is_array( $conf ) )
 	
 	Session::setConfig( $conf );
 }
+
+umask( $conf['security']['umask'] );
 
 if	( !empty($conf['interface']['timeout']) )
 	set_time_limit( intval($conf['interface']['timeout']) );
