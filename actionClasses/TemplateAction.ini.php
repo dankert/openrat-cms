@@ -45,9 +45,9 @@ goto=edit
 
 [name]
 menu=prop
-target=saveprop
+target=savename
 
-[saveprop]
+[savename]
 goto=listing
 
 [saveextension]
