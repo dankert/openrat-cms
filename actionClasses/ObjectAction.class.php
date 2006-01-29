@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2006-01-23 23:10:46  dankert
+// Revision 1.6  2006-01-29 17:25:07  dankert
+// Methode setWindowMenu() entfernt
+//
+// Revision 1.5  2006/01/23 23:10:46  dankert
 // *** empty log message ***
 //
 // Revision 1.4  2004/12/19 14:56:33  dankert
@@ -122,8 +125,6 @@ class ObjectAction extends Action
 		$acl->transmit      = ( $this->hasRequestVar('transmit'     ) );
 
 		$acl->add();
-		
-		$this->callSubAction('rights');
 	}
 
 
@@ -133,7 +134,7 @@ class ObjectAction extends Action
 	 */
 	function rights()
 	{
-		$this->actionName = 'object';
+//		$this->actionName = 'object';
 		$o = Session::getObject();
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
@@ -160,10 +161,6 @@ class ObjectAction extends Action
 		$this->setTemplateVar('acls',$acllist );
 
 		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
-		
-		$this->setWindowMenu( 'acl' );
-
-		$this->forward('object_rights');
 	}
 
 
@@ -187,10 +184,6 @@ class ObjectAction extends Action
 		$this->setTemplateVar('languages',$languages       );
 		$this->setTemplateVar('objectid' ,$o->objectid     );
 		$this->setTemplateVar('action'   ,$this->actionName);
-
-		$this->setWindowMenu( 'acl' );
-
-		$this->forward('object_aclform');
 	}
 
 
@@ -213,21 +206,5 @@ class ObjectAction extends Action
 			die('ehm?'); // Da wollte uns wohl einer vereimern.
 
 		$acl->delete(); // Weg mit der ACL
-
-		$this->callSubAction('rights');
 	}
-
-
-
-	function setWindowMenu( $type ) {
-		switch( $type)
-		{
-			case 'acl':
-				$menu = array( array('subaction'=>'rights' ,'text'=>'show'),
-		                       array('subaction'=>'aclform','text'=>'add' ) );
-				$this->setTemplateVar('windowMenu',$menu);
-				break;
-		}
-	}
-
 }
