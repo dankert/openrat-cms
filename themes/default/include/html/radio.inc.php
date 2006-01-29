@@ -1,2 +1,2 @@
 <?php
-?><input type="radio" name="<?php echo $attr_prefix.$attr_name ?><?php if ( $attr_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr_value ?>" <?php if( $attr_default ) echo 'checked="checked"' ?> />
+?><input type="radio" name="<?php echo $attr_prefix.$attr_name ?>"<?php if ( $attr_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $$attr_value ?>" <?php if( $attr_default ) echo 'checked="checked"' ?> />
