@@ -361,7 +361,7 @@ class ProjectTree extends AbstractTree
 
 			$treeElement = new TreeElement();
 			$treeElement->text        = $e->name;
-			$treeElement->url         = Html::url('main','element',$t->templateid,array('elementid'=>$elementid) );
+			$treeElement->url         = Html::url('main','element',$elementid );
 			$treeElement->icon        = 'el_'.$e->type;
 			
 			if	( $e->desc == '' )
@@ -420,16 +420,19 @@ class ProjectTree extends AbstractTree
 
 	function other()
 	{
-		if	( $this->userIsProjectAdmin )
-		{
-			$treeElement = new TreeElement();
-			$treeElement->text        = lang('GLOBAL_FILE_TRANSFER');
-			$treeElement->description = lang('GLOBAL_FILE_TRANSFER_DESC');
-			$treeElement->url         = Html::url('main','transfer');
-			$treeElement->icon        = 'transfer';
-			$treeElement->target      = 'cms_main';
-			$this->addTreeElement( $treeElement );
-		}
+// Deaktiviert, da
+// - Dateien auf den Server laden unverständlich/undurchsichtig erscheint
+// - Möglichkeit zum Entpacken von ZIP/TAR online besteht.
+//		if	( $this->userIsProjectAdmin )
+//		{
+//			$treeElement = new TreeElement();
+//			$treeElement->text        = lang('GLOBAL_FILE_TRANSFER');
+//			$treeElement->description = lang('GLOBAL_FILE_TRANSFER_DESC');
+//			$treeElement->url         = Html::url('main','transfer');
+//			$treeElement->icon        = 'transfer';
+//			$treeElement->target      = 'cms_main';
+//			$this->addTreeElement( $treeElement );
+//		}
 
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_SEARCH');
