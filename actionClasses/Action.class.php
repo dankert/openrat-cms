@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.19  2006-01-23 23:07:44  dankert
+// Revision 1.20  2006-01-29 17:17:49  dankert
+// Fenstertitel aus Konfiguration (Men?namen) ermitteln
+//
+// Revision 1.19  2006/01/23 23:07:44  dankert
 // ?nderung forward(), Neu: setMenu()
 //
 // Revision 1.18  2006/01/11 22:38:10  dankert
@@ -205,11 +208,13 @@ class Action
 	function forward( $tplName="" )
 	{
 		$this->setMenu();
-//		if	( $tplName=="" )
-			$tplName = $this->actionName.'/'.$this->subActionName;
+		$tplName = (method_exists(new ObjectAction(),$this->subActionName)?'object':$this->actionName).'/'.$this->subActionName;
 
 		if	(isset($this->actionConfig[$this->subActionName]['target']))
 			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
+
+		if	( isset($this->actionConfig[$this->subActionName]['menu']))
+			$windowTitle = 'menu_'.$this->actionName.'_'.$this->actionConfig[$this->subActionName]['menu'];
 
 		global $conf;
 		global $PHP_SELF;
