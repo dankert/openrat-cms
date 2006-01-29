@@ -23,6 +23,8 @@
 			$exec = true;
 		elseif	( is_array($$attr_empty) )
 			$exec = (count($$attr_empty)==0);
+		elseif	( is_bool($$attr_empty) )
+			$exec = true;
 		else
 			$exec = empty( $$attr_empty );
 	}
@@ -34,6 +36,10 @@
 			$exec = false;
 		elseif	( is_array($$attr_present) )
 			$exec = (count($$attr_present)>0);
+		elseif	( is_bool($$attr_present) )
+			$exec = true;
+		elseif	( is_numeric($$attr_present) )
+			$exec = $$attr_present>=0;
 		else
 			$exec = !empty( $$attr_present );
 	}
