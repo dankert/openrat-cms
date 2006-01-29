@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.19  2005-11-07 22:36:40  dankert
+// Revision 1.20  2006-01-29 17:26:55  dankert
+// Neben "desc" auch "description" f?llen.
+//
+// Revision 1.19  2005/11/07 22:36:40  dankert
 // Flexibere Ermittlung des Dateinamen anhand neuer Konfigurationseigenschaften.
 //
 // Revision 1.18  2004/12/27 23:19:47  dankert
@@ -129,6 +132,7 @@ class Object
 	 * (wird in Tabelle <code>name</code> abgelegt)
 	 * @type String
 	 */
+	var $description = 'none';
 	var $desc = '';
 
 	/** Zeitpunkt der Erstellung. Die Variable beinhaltet den Unix-Timestamp.
@@ -574,13 +578,15 @@ class Object
 		if	( $this->isRoot )
 		{
 			$project = Session::getProject();
-			$this->name = $project->name;
-			$this->desc = '';
+			$this->name        = $project->name;
+			$this->desc        = '';
+			$this->description = '';
 		}
 		else
 		{
-			$this->name = $row['name' ];
-			$this->desc = $row['descr'];
+			$this->name        = $row['name' ];
+			$this->desc        = $row['descr'];
+			$this->description = $row['descr'];
 		}
 
 		$this->checkName();
