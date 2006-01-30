@@ -137,9 +137,145 @@ class AdministrationTree extends AbstractTree
 			$this->addTreeElement( $treeElement );
 		}
 	}
+
+
+
+	function prefs_system( $id )
+	{
+		$treeElement = new TreeElement();
+		$treeElement->text = 'os='.php_uname('s');
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
+		$treeElement = new TreeElement();
+		$treeElement->text = 'host='.php_uname('n');
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
+		$treeElement = new TreeElement();
+		$treeElement->text = 'release='.php_uname('r');
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
+		$treeElement = new TreeElement();
+		$treeElement->text = 'machine='.php_uname('m');
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+	}
 	
+	
+
+
+	function prefs_php( $id )
+	{
+		$treeElement = new TreeElement();
+		$treeElement->text = 'version='.phpversion();
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
+		$treeElement = new TreeElement();
+		$treeElement->text = 'SAPI='.php_sapi_name();
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
+		$treeElement = new TreeElement();
+		$treeElement->text = 'session-name='.session_name();
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+	}
+		
+
+	
+	function prefs_extensions( $id )
+	{
+		$extensions = get_loaded_extensions();
+		asort( $extensions );
+		 
+		foreach( $extensions as $id=>$extensionName )
+		{
+			$treeElement = new TreeElement();
+			$treeElement->text       = $extensionName;
+			$treeElement->icon       = 'config_property';
+//			$treeElement->icon       = 'config_folder';
+//			$treeElement->type       = 'prefs_extension';
+			$treeElement->internalId = $id;
+			$this->addTreeElement( $treeElement );
+		}
+	}
+	
+		
+	
+	function prefs_extension( $id )
+	{
+		$extensions = get_loaded_extensions();
+		$functions = get_extension_funcs( $extensions[$id] );
+		asort( $functions );
+
+		foreach( $functions as $functionName )
+		{
+			$treeElement = new TreeElement();
+			$treeElement->text = $functionName;
+			$treeElement->icon   = 'config_property';
+			$this->addTreeElement( $treeElement );
+		}
+	}
+	
+		
 	
 	function prefs( $id )
+	{
+		$treeElement = new TreeElement();
+		
+		$treeElement->internalId  = 0;
+		$treeElement->text        = 'OpenRat';
+		$treeElement->icon        = 'config_folder';
+		
+		$treeElement->description = '';
+		$treeElement->target      = 'cms_main';
+		$treeElement->type        = 'prefs_cms';
+		$this->addTreeElement( $treeElement );
+
+
+
+		$treeElement = new TreeElement();
+		
+		$treeElement->internalId  = 0;
+		$treeElement->text        = lang('GLOBAL_SYSTEM');
+		$treeElement->icon        = 'config_folder';
+		
+		$treeElement->description = '';
+		$treeElement->target      = 'cms_main';
+		$treeElement->type        = 'prefs_system';
+		$this->addTreeElement( $treeElement );
+
+
+
+		$treeElement = new TreeElement();
+		
+		$treeElement->internalId  = 0;
+		$treeElement->text        = lang('GLOBAL_PHP');
+		$treeElement->icon        = 'config_folder';
+		
+		$treeElement->description = '';
+		$treeElement->target      = 'cms_main';
+		$treeElement->type        = 'prefs_php';
+		$this->addTreeElement( $treeElement );
+
+
+		$treeElement = new TreeElement();
+		
+		$treeElement->internalId  = 0;
+		$treeElement->text        = lang('GLOBAL_EXTENSIONS');
+		$treeElement->icon        = 'config_folder';
+		
+		$treeElement->description = '';
+		$treeElement->target      = 'cms_main';
+		$treeElement->type        = 'prefs_extensions';
+		$this->addTreeElement( $treeElement );
+	}
+
+
+	function prefs_cms( $id )
 	{
 		global $conf;
 		
@@ -165,7 +301,7 @@ class AdministrationTree extends AbstractTree
 				
 				$treeElement->description = '';
 				$treeElement->target      = 'cms_main';
-				$treeElement->type        = 'prefs';
+				$treeElement->type        = 'prefs_cms';
 				$this->addTreeElement( $treeElement );
 			}
 			else
