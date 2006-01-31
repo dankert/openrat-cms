@@ -182,6 +182,21 @@ class AdministrationTree extends AbstractTree
 		$treeElement->text = 'session-name='.session_name();
 		$treeElement->icon   = 'config_property';
 		$this->addTreeElement( $treeElement );
+
+		foreach( array('upload_max_filesize',
+		               'file_uploads',
+		               'memory_limit',
+		               'max_execution_time',
+		               'post_max_size',
+		               'register_globals'
+		               
+		               ) as $iniName )
+		{
+			$treeElement = new TreeElement();
+			$treeElement->text = $iniName.'='.ini_get( $iniName );
+			$treeElement->icon   = 'config_property';
+			$this->addTreeElement( $treeElement );
+		}
 	}
 		
 
