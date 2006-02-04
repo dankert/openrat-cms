@@ -41,6 +41,8 @@ goto=rights
 goto=rights
 
 [pub]
+menu=pub
+target=pubnow
 
 [create]
 menu=new
@@ -83,6 +85,7 @@ goto=order
 goto=order
 
 [menu]
+pub=pub
 show=show,order
 new=createfolder,createfile,createpage,createlink
 prop=showprop,prop,remove

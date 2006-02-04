@@ -39,7 +39,11 @@ goto=showprop
 goto=showprop
 
 [pub]
-target=...
+target=pubnow
+menu=pub
+
+[pubnow]
+goto=pub
 
 ; Die Aktionen "rights", "aclform", "addacl" und "delacl" sind
 ; für Seiten,Ordner,Links und Dateien identisch.
@@ -70,3 +74,4 @@ menu=edit
 edit=edit,editvalue,compress,uncompress,extract
 prop=showprop,prop,remove,size
 rights=rights,aclform
+pub=pub

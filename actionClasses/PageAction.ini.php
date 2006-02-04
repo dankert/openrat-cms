@@ -18,7 +18,13 @@ menu=elements
 
 [form]
 menu=elements
+
 [pub]
+menu=pub
+target=pubnow
+
+[pubnow]
+goto=pub
 
 [saveprop]
 goto=showprop
@@ -61,6 +67,7 @@ goto=rights
 
 
 [menu]
+pub=pub
 elements=el,form
 rights=rights,aclform
 src=src
