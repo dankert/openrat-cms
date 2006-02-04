@@ -3,12 +3,13 @@ page
 	table padding:5 space:0 width:100%
 		row
 			cell class:title width:40%
-				text class:title title:USER_LOGINAS var:userfullname
+				text title:USER_LOGINAS var:userfullname
 				text raw:_(
 				text title:dbid var:dbname
-				text raw:_|_
-				link url:showtree_url target:_parent
-					text var:showtree_text
+				text raw:)_
+				#text raw:_|_
+				#link url:showtree_url target:_parent
+				#	text var:showtree_text
 			cell class:title width:20% style:text-align:center;
 				text var:cms_title
 			cell class:title width:40% style:text-align:right;
