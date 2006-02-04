@@ -2,7 +2,7 @@ page
 	form
 		window name:GLOBAL_PREFS widths:30%,70%
 			
-			if present:subtype
+			if present:subtypes
 				row
 					cell class:fx
 						text text:ELEMENT_SUBTYPE
@@ -111,7 +111,7 @@ page
 					cell class:fx
 						list list:dynamic_class_parameters key:paramName value:defaultValue
 							text var:paramName
-							text raw:_:_()
+							text raw::_(
 							text text:GLOBAL_DEFAULT
 							text raw:)_=_
 							text var:defaultValue
