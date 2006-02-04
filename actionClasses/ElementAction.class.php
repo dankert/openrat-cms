@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2006-01-29 17:18:27  dankert
+// Revision 1.14  2006-02-04 23:20:37  dankert
+// Ausbau ?berfl?ssiges "echo()"
+//
+// Revision 1.13  2006/01/29 17:18:27  dankert
 // Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
 //
 // Revision 1.12  2006/01/17 22:43:02  dankert
@@ -442,7 +445,6 @@ class ElementAction extends Action
  
 										if	( isset( $dynEl->$paramName ) )
 										{
-											echo "Ja";
 											$paramList[$paramName] = $dynEl->$paramName;
 
 											$parameters .= $paramName.':';
