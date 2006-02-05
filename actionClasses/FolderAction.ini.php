@@ -48,6 +48,9 @@ goto=rights
 menu=pub
 target=pubnow
 
+[pubnow]
+goto=pub
+
 [create]
 menu=new
 
