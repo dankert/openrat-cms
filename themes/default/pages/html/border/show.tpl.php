@@ -1,4 +1,4 @@
-<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Sun, 29 Jan 2006 16:10:28 +0100 */ ?><?php $attr = array('class'=>'css_body_class') ?><?php $attr_class='css_body_class' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php $attr = array('class'=>'css_body_class') ?><?php $attr_class='css_body_class' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
@@ -15,14 +15,14 @@
 <body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
 
 
-<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Sun, 29 Jan 2006 16:10:28 +0100 */ ?><?php $attr = array() ?>
+<?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array() ?>
 <!-- $Id$ -->
 
-<?php if ($showDuration && false) { ?>
+<?php if ($showDuration) { ?>
 <br/>
 <small>&nbsp;
 <?php $dur = time()-START_TIME;
-      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
+//      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
 <?php } ?>
 
 </body>

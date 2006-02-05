@@ -1,4 +1,4 @@
-<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php /* source: ./themes/default/include/html/page.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
@@ -15,7 +15,7 @@
 <body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
 
 
-<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/window.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array('title'=>'','name'=>'GROUP_MEMBERSHIPS','icon'=>'user','widths'=>'','width'=>'85%') ?><?php $attr_title='' ?><?php $attr_name='GROUP_MEMBERSHIPS' ?><?php $attr_icon='user' ?><?php $attr_widths='' ?><?php $attr_width='85%' ?><?php
+<?php unset($attr) ?><?php unset($attr_class) ?><?php /* source: ./themes/default/include/html/window.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array('title'=>'','name'=>'GROUP_MEMBERSHIPS','icon'=>'user','widths'=>'','width'=>'85%') ?><?php $attr_title='' ?><?php $attr_name='GROUP_MEMBERSHIPS' ?><?php $attr_icon='user' ?><?php $attr_widths='' ?><?php $attr_width='85%' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr_widths))
 	{
@@ -68,7 +68,7 @@
 
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php /* source: ./themes/default/include/html/list.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array('list'=>'memberships','extract'=>'true','key'=>'list_key','value'=>'list_value') ?><?php $attr_list='memberships' ?><?php $attr_extract='true' ?><?php $attr_key='list_key' ?><?php $attr_value='list_value' ?><?php
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php /* source: ./themes/default/include/html/list.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array('list'=>'memberships','extract'=>'true','key'=>'list_key','value'=>'list_value') ?><?php $attr_list='memberships' ?><?php $attr_extract='true' ?><?php $attr_key='list_key' ?><?php $attr_value='list_value' ?><?php
 	$list_tmp_key   = $attr_key;
 	$list_tmp_value = $attr_value;
 	$list_extract   = ($attr_extract=='true');
@@ -85,7 +85,7 @@
 			}
 			extract($$list_tmp_value);
 		}
-?><?php unset($attr) ?><?php unset($attr_list) ?><?php unset($attr_extract) ?><?php unset($attr_key) ?><?php unset($attr_value) ?><?php /* source: ./themes/default/include/html/row.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array() ?><?php
+?><?php unset($attr) ?><?php unset($attr_list) ?><?php unset($attr_extract) ?><?php unset($attr_key) ?><?php unset($attr_value) ?><?php /* source: ./themes/default/include/html/row.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array() ?><?php
 	global $fx;
 	if	( $fx =='f1')
 		$fx='f2';
@@ -94,7 +94,7 @@
 	global $cell_column_nr;
 	$cell_column_nr=0;
 
-?><tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array('width'=>'','style'=>'','class'=>'fx','colspan'=>'') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='fx' ?><?php $attr_colspan='' ?><?php
+?><tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array('width'=>'','style'=>'','class'=>'fx','colspan'=>'') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='fx' ?><?php $attr_colspan='' ?><?php
 	global $fx;
 	if (!isset($attr_class)) $attr_class='';
 	if ($attr_class=='fx') $attr['class']=$fx;
@@ -104,7 +104,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php /* source: ./themes/default/include/html/image.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array('file'=>'icon_user','url'=>'','align'=>'left','type'=>'','elementtype'=>'') ?><?php $attr_file='icon_user' ?><?php $attr_url='' ?><?php $attr_align='left' ?><?php $attr_type='' ?><?php $attr_elementtype='' ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php /* source: ./themes/default/include/html/image.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array('file'=>'icon_user','url'=>'','align'=>'left','type'=>'','elementtype'=>'') ?><?php $attr_file='icon_user' ?><?php $attr_url='' ?><?php $attr_align='left' ?><?php $attr_type='' ?><?php $attr_elementtype='' ?><?php
 if (!empty($attr_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$$attr_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (!empty($attr_type)) {
@@ -112,7 +112,7 @@ if (!empty($attr_elementtype)) {
 } elseif (!empty($$attr_url)) {
 ?><img src="<?php echo $$attr_url ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (!empty($attr_file)) {
-?><img src="<?php echo $image_dir.$$attr_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php } ?><?php unset($attr) ?><?php unset($attr_file) ?><?php unset($attr_url) ?><?php unset($attr_align) ?><?php unset($attr_type) ?><?php unset($attr_elementtype) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'name','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='name' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+?><img src="<?php echo $image_dir.$$attr_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php } ?><?php unset($attr) ?><?php unset($attr_file) ?><?php unset($attr_url) ?><?php unset($attr_align) ?><?php unset($attr_type) ?><?php unset($attr_elementtype) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'name','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='name' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
 	if(empty($attr_title)) $attr_title = $attr_text;
 ?><span class="<?php echo $attr_class ?>"><?php
 	if (!empty($attr_array))
@@ -137,7 +137,7 @@ if (!empty($attr_elementtype)) {
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php /* source: ./themes/default/include/html/cell-end.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array() ?></td><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array('width'=>'','style'=>'','class'=>'','colspan'=>'') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='' ?><?php $attr_colspan='' ?><?php
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php /* source: ./themes/default/include/html/cell-end.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array() ?></td><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array('width'=>'','style'=>'','class'=>'','colspan'=>'') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='' ?><?php $attr_colspan='' ?><?php
 	global $fx;
 	if (!isset($attr_class)) $attr_class='';
 	if ($attr_class=='fx') $attr['class']=$fx;
@@ -147,12 +147,12 @@ if (!empty($attr_elementtype)) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php /* source: ./themes/default/include/html/link.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array('title'=>'','target'=>'','url'=>'','class'=>'','action'=>'group','subaction'=>'deluser','id'=>'groupid','var1'=>'','value1'=>'') ?><?php $attr_title='' ?><?php $attr_target='' ?><?php $attr_url='' ?><?php $attr_class='' ?><?php $attr_action='group' ?><?php $attr_subaction='deluser' ?><?php $attr_id='groupid' ?><?php $attr_var1='' ?><?php $attr_value1='' ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php /* source: ./themes/default/include/html/link.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array('title'=>'','target'=>'','url'=>'','class'=>'','action'=>'group','subaction'=>'deluser','id'=>'groupid','var1'=>'','value1'=>'') ?><?php $attr_title='' ?><?php $attr_target='' ?><?php $attr_url='' ?><?php $attr_class='' ?><?php $attr_action='group' ?><?php $attr_subaction='deluser' ?><?php $attr_id='groupid' ?><?php $attr_var1='' ?><?php $attr_value1='' ?><?php
 	if(!empty($attr_url))
 		$tmp_url = $$attr_url;
 	else
 		$tmp_url = Html::url($attr_action,$attr_subaction,!empty($$attr_id)?$$attr_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr_class ?>" target="<?php echo $attr_target ?>" title="<?php echo hasLang($attr_title)?lang($attr_title):lang($$attr_title) ?>"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_target) ?><?php unset($attr_url) ?><?php unset($attr_class) ?><?php unset($attr_action) ?><?php unset($attr_subaction) ?><?php unset($attr_id) ?><?php unset($attr_var1) ?><?php unset($attr_value1) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_DELETE','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_DELETE' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr_class ?>" target="<?php echo $attr_target ?>" title="<?php echo hasLang($attr_title)?lang($attr_title):lang($$attr_title) ?>"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_target) ?><?php unset($attr_url) ?><?php unset($attr_class) ?><?php unset($attr_action) ?><?php unset($attr_subaction) ?><?php unset($attr_id) ?><?php unset($attr_var1) ?><?php unset($attr_value1) ?><?php /* source: ./themes/default/include/html/text.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_DELETE','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_DELETE' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
 	if(empty($attr_title)) $attr_title = $attr_text;
 ?><span class="<?php echo $attr_class ?>"><?php
 	if (!empty($attr_array))
@@ -177,7 +177,7 @@ if (!empty($attr_elementtype)) {
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php /* source: ./themes/default/include/html/link-end.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array() ?></a><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell-end.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array() ?></td><?php unset($attr) ?><?php /* source: ./themes/default/include/html/row-end.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/list-end.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array() ?><?php } ?><?php unset($attr) ?><?php /* source: ./themes/default/include/html/window-end.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array() ?>      </table>
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php /* source: ./themes/default/include/html/link-end.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array() ?></a><?php unset($attr) ?><?php /* source: ./themes/default/include/html/cell-end.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array() ?></td><?php unset($attr) ?><?php /* source: ./themes/default/include/html/row-end.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php /* source: ./themes/default/include/html/list-end.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array() ?><?php } ?><?php unset($attr) ?><?php /* source: ./themes/default/include/html/window-end.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array() ?>      </table>
 	</td>
   </tr>
 </table>
@@ -191,7 +191,7 @@ if (!empty($attr_elementtype)) {
 <?php $dur = time()-START_TIME;
       echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
 <?php } ?>
-<?php unset($attr) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Sun, 29 Jan 2006 19:48:21 +0100 */ ?><?php $attr = array() ?>
+<?php unset($attr) ?><?php /* source: ./themes/default/include/html/page-end.inc.php - compile time: Tue, 31 Jan 2006 00:15:29 +0100 */ ?><?php $attr = array() ?>
 <!-- $Id$ -->
 
 <?php if ($showDuration) { ?>
