@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.33  2006-01-29 17:18:58  dankert
+// Revision 1.34  2006-02-05 11:30:12  dankert
+// Hinzuf?gen: Methode "select()"
+//
+// Revision 1.33  2006/01/29 17:18:58  dankert
 // Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
 //
 // Revision 1.32  2006/01/23 23:08:52  dankert
@@ -674,6 +677,55 @@ class FolderAction extends ObjectAction
 			}
 		}
 
+		$this->setTemplateVar('object'      ,$list            );
+	}
+
+
+
+	function select()
+	{
+		global $conf_php;
+
+		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
+		
+		$list = array();
+
+		// Schleife ueber alle Objekte in diesem Ordner
+		foreach( $this->folder->getObjects() as $o )
+		{
+			$id = $o->objectid;
+
+			if   ( $o->hasRight(ACL_READ) )
+			{
+				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
+				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
+				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
+				if	( $list[$id]['desc'] == '' )
+					$list[$id]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
+
+				$list[$id]['type'] = $o->getType();
+				
+				$list[$id]['icon'] = $o->getType();
+
+				if	( $o->getType() == 'file' )
+				{
+					$file = new File( $id );
+					$file->load();
+					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
+
+					if	( substr($file->mimeType(),0,6) == 'image/' )
+						$list[$id]['icon'] = 'image';
+//					if	( substr($file->mimeType(),0,5) == 'text/' )
+//						$list[$id]['icon'] = 'text';
+				}
+
+				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
+				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
+				$list[$id]['user'] = $o->lastchangeUser;
+			}
+		}
+
 		if   ( $this->folder->hasRight(ACL_WRITE) )
 		{
 			// Alle anderen Ordner ermitteln
@@ -695,6 +747,9 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
 	}
+
+
+
 
 
 

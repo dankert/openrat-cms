@@ -5,6 +5,10 @@ goto=show
 [show]
 menu=show
 
+[select]
+target=multiple
+menu=show
+
 [prop]
 menu=prop
 target=saveprop
@@ -86,7 +90,7 @@ goto=order
 
 [menu]
 pub=pub
-show=show,order
+show=show,select,order
 new=createfolder,createfile,createpage,createlink
 prop=showprop,prop,remove
 rights=rights,aclform
