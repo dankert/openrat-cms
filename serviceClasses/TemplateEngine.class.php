@@ -164,7 +164,7 @@ class TemplateEngine
 		{
 			$values[] = "'".$attrName."'=>'".$attrValue."'";
 		}
-		fwrite( $outFileHandler,'<?php /* source: '.$inFileName.' - compile time: '.date('r').' */ ?>');
+//		fwrite( $outFileHandler,'<?php /* source: '.$inFileName.' - compile time: '.date('r').' */ ?'.'>');
 		fwrite( $outFileHandler,'<?php $attr = array('.implode(',',$values).') ?>');
 		foreach( $attr as $attrName=>$attrValue )
 			fwrite( $outFileHandler,'<?php $attr_'.$attrName."='".$attrValue."' ?>");
