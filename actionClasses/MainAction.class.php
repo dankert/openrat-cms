@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2006-01-23 23:10:46  dankert
+// Revision 1.9  2006-02-27 19:17:50  dankert
+// Parameter "targetSubAction" auswerten.
+//
+// Revision 1.8  2006/01/23 23:10:46  dankert
 // *** empty log message ***
 //
 // Revision 1.7  2006/01/11 22:52:24  dankert
@@ -58,7 +61,8 @@ class MainAction extends Action
 {
 	var $defaultSubAction = 'show';
 	
-	var $doActionName = "";
+	var $doActionName    = "";
+	var $doSubActionName = "";
 
 
 	function element()
@@ -93,9 +97,9 @@ class MainAction extends Action
 	{
 		$this->doActionName = 'page';
 	}
-	function pagelement()
+	function pageelement()
 	{
-		$this->doActionName = 'pagelement';
+		$this->doActionName = 'pageelement';
 	}
 	function project()
 	{
@@ -126,6 +130,8 @@ class MainAction extends Action
 		if	( is_object($user) && isset($user->loginDate) )
 			$this->lastModified( $user->loginDate );
 
+		$this->doSubActionName = $this->getRequestVar('targetSubAction');
+		
 		// Bestimmte Paramer weiterleiten
 		$params = array(); 
 		
@@ -136,8 +142,8 @@ class MainAction extends Action
 		}
 
 		// Variablen fuellen
-		$this->setTemplateVar('frame_src_main_menu' ,Html::url( 'mainmenu'         ,$this->doActionName,$this->getRequestId(),$params ) );
-		$this->setTemplateVar('frame_src_main_main' ,Html::url( $this->doActionName,''                 ,$this->getRequestId(),$params ) );
+		$this->setTemplateVar('frame_src_main_menu' ,Html::url( 'mainmenu'         ,$this->doActionName   ,$this->getRequestId(),$params ) );
+		$this->setTemplateVar('frame_src_main_main' ,Html::url( $this->doActionName,$this->doSubActionName,$this->getRequestId(),$params ) );
 		$this->setTemplateVar('frame_src_border'    ,Html::url( 'border'         ) );
 		$this->setTemplateVar('frame_src_background',Html::url( 'background'     ) );
 	}
