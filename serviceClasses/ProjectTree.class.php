@@ -59,9 +59,12 @@ class ProjectTree extends AbstractTree
 			if	( $element->isWritable() )
 			{
 				$treeElement = new TreeElement();
-				$treeElement->text   = $element->name;
-				$treeElement->url    = Html::url('main','pageelement',$id,array('elementid'=>$elementid));
-				$treeElement->icon   = 'el_'.$element->type;
+				$treeElement->text = $element->name;
+				$treeElement->url  = Html::url('main',
+				                               'pageelement',
+				                               $id,
+				                               array('elementid'=>$elementid,'targetSubAction'=>'edit'.$element->type));
+				$treeElement->icon = 'el_'.$element->type;
 
 				$treeElement->description = lang('EL_'.$element->type);
 				if	( $element->desc != '' )
