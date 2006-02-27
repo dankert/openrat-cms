@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.20  2006-01-29 17:17:49  dankert
+// Revision 1.21  2006-02-27 19:17:04  dankert
+// Aenderung in "callSubAction()": Kein Aufruf von "forward()"
+//
+// Revision 1.20  2006/01/29 17:17:49  dankert
 // Fenstertitel aus Konfiguration (Men?namen) ermitteln
 //
 // Revision 1.19  2006/01/23 23:07:44  dankert
@@ -288,7 +291,7 @@ class Action
 		global $SESS;
 
 		$this->$subActionName();
-		$this->forward();
+//		$this->forward();
 	}
 
 
