@@ -29,7 +29,7 @@
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -41,7 +41,22 @@
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
