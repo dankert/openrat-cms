@@ -35,24 +35,11 @@
 #  You are allowed to redistribute this class, if you keep my name and contact e-mail on it.
 ##############################################################
 
-if(!function_exists('file_put_contents')){
-	// If not PHP5, creates a compatible function
-	Function file_put_contents($file, $data){
-		if($tmp = fopen($file, "w")){
-			fwrite($tmp, $data);
-			fclose($tmp);
-			return true;
-		}
-		echo "<b>file_put_contents:</b> Cannot create file $file<br>";
-		return false;
-	}
-}
-
 class ArchiveUnzip{
-	Function getVersion(){
-		return "2.4";
-	}
+
 	// Public
+	var $files = array();
+	var $value = '';
 	var $fileName;
 	var $compressedList; // You will problably use only this one!
 	var $centralDirList; // Central dir list... It's a kind of 'extra attributes' for a set of files
@@ -66,12 +53,22 @@ class ArchiveUnzip{
 	var $dirSignatureE= "\x50\x4b\x05\x06"; // end of central dir signature
 	
 	// Public
-	Function dUnzip2($fileName){
-		$this->fileName       = $fileName;
+	Function ArchiveUnzip()
+	{
 		$this->compressedList = 
 		$this->centralDirList = 
 		$this->endOfCentral   = Array();
 	}
+
+	function open( $value )
+	{
+		$this->fileName = tempnam('/tmp','unzip');
+//		echo $this->fileName;
+		$fo = fopen( $this->fileName,'w');
+		fwrite($fo,$value);
+		$this->unzipAll();
+	}
+	
 	
 	Function getList($stopOnFile=false){
 		if(sizeof($this->compressedList)){
@@ -313,17 +310,24 @@ class ArchiveUnzip{
 		
 		return $this->compressedList;
 	}
-	Function getExtraInfo($compressedFileName){
+	
+	
+	Function getExtraInfo($compressedFileName)
+	{
 		return
 			isset($this->centralDirList[$compressedFileName])?
 			$this->centralDirList[$compressedFileName]:
 			false;
 	}
-	Function getZipInfo($detail=false){
+	
+	
+	Function getZipInfo($detail=false)
+	{
 		return $detail?
 			$this->endOfCentral[$detail]:
 			$this->endOfCentral;
 	}
+	
 	
 	Function unzip($compressedFileName, $targetFileName=false){
 		$fdetails = &$this->compressedList[$compressedFileName];
@@ -342,19 +346,17 @@ class ArchiveUnzip{
 		}
 		if(!$fdetails['uncompressed_size']){
 			$this->debugMsg(1, "File '<b>$compressedFileName</b>' is empty.");
-			return $targetFileName?
-				file_put_contents($targetFileName, ""):
-				"";
+			return "";
 		}
 		
 		fseek($this->fh, $fdetails['contents-startOffset']);
 		return $this->uncompress(
 				fread($this->fh, $fdetails['compressed_size']),
 				$fdetails['compression_method'],
-				$fdetails['uncompressed_size'],
-				$targetFileName
-			);
+				$fdetails['uncompressed_size']	);
 	}
+	
+	
 	Function unzipAll($targetDir=false, $baseDir="", $maintainStructure=true, $chmod=false){
 		if($targetDir === false)
 			$targetDir = dirname(__FILE__)."/";
@@ -396,18 +398,13 @@ class ArchiveUnzip{
 		if($this->fh)
 			fclose($this->fh);
 	}
-	Function __destroy(){
-		$this->close();
-	}
 	
 	// Private (you should NOT call these methods):
 	Function uncompress($content, $mode, $uncompressedSize, $targetFileName=false){
 		switch($mode){
 			case 0:
 				// Not compressed
-				return $targetFileName?
-					file_put_contents($targetFileName, $content):
-					$content;
+				return $content;
 			case 1:
 				$this->debugMsg(2, "Shrunk mode is not supported... yet?");
 				return false;
@@ -425,9 +422,7 @@ class ArchiveUnzip{
 				return false;
 			case 8:
 				// Deflate
-				return $targetFileName?
-					file_put_contents($targetFileName, gzinflate($content, $uncompressedSize)):
-					gzinflate($content, $uncompressedSize);
+				return gzinflate($content, $uncompressedSize);
 			case 9:
 				$this->debugMsg(2, "Enhanced Deflating is not supported... yet?");
 				return false;
@@ -439,6 +434,8 @@ class ArchiveUnzip{
 				return false;
 		}
 	}
+	
+	
 	Function debugMsg($level, $string){
 		if($this->debug)
 			if($level == 1)
