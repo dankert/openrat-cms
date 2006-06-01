@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-12-29 20:18:20  dankert
+// Revision 1.9  2006-06-01 20:58:11  dankert
+// Projektwartung: Suche nach verlorenen Dateien.
+//
+// Revision 1.8  2004/12/29 20:18:20  dankert
 // Konstruktor geaendert
 //
 // Revision 1.7  2004/12/19 15:23:56  dankert
@@ -345,6 +348,36 @@ class Project
 		$sql->setInt('projectid',$this->projectid );
 		
 		return $db->getOne( $sql->query );
+	}
+	
+	
+	function checkLostFiles()
+	{
+		$db = &Session::getDatabase();
+		
+		$sql = new Sql( <<<EOF
+SELECT thistab.id FROM {t_object} AS thistab
+ LEFT JOIN {t_object} AS parenttab
+        ON parenttab.id = thistab.parentid
+  WHERE thistab.projectid={projectid} AND thistab.parentid IS NOT NULL AND parenttab.id IS NULL
+EOF
+);
+		$sql->setInt('projectid',$this->projectid);
+
+		$lostAndFoundFolder = new Folder();
+		$lostAndFoundFolder->projectid = $this->projectid;
+		$lostAndFoundFolder->languageid = $this->getDefaultLanguageId();
+		$lostAndFoundFolder->filename = "lostandfound";
+		$lostAndFoundFolder->name     = 'Lost+found';
+		$lostAndFoundFolder->parentid = $this->getRootObjectId();
+		$lostAndFoundFolder->add();
+
+		foreach( $db->getCol($sql->query) as $id )
+		{
+			echo 'Lost file! moving '.$id.' to lost+found.';
+			$obj = new Object( $id );
+			$obj->setParentId( $lostAndFoundFolder->objectid );
+		}
 	}
 }
 
