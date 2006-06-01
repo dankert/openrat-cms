@@ -62,7 +62,9 @@ Version History:
 =======================================================================
 */
 
-class ArchiveTar {
+
+class ArchiveTar
+{
 	// Unprocessed Archive Information
 	var $filename;
 	var $isGzipped;
@@ -84,7 +86,8 @@ class ArchiveTar {
 	// Computes the unsigned Checksum of a file's header
 	// to try to ensure valid file
 	// PRIVATE ACCESS FUNCTION
-	function __computeUnsignedChecksum($bytestring) {
+	function __computeUnsignedChecksum($bytestring)
+	{
 		$unsigned_chksum=0;
 		for($i=0; $i<512; $i++)
 			$unsigned_chksum += ord($bytestring[$i]);
@@ -98,7 +101,8 @@ class ArchiveTar {
 
 	// Converts a NULL padded string to a non-NULL padded string
 	// PRIVATE ACCESS FUNCTION
-	function __parseNullPaddedString($string) {
+	function __parseNullPaddedString($string)
+	{
 		$position = strpos($string,chr(0));
 		return substr($string,0,$position);
 	}
@@ -106,7 +110,8 @@ class ArchiveTar {
 
 	// This function parses the current TAR file
 	// PRIVATE ACCESS FUNCTION
-	function __parseTar() {
+	function __parseTar()
+	{
 		// Read Files from archive
 		$this->numFiles=0;
 		$tar_length = strlen($this->tar_file);
@@ -208,7 +213,8 @@ class ArchiveTar {
 
 	// Read a non gzipped tar file in for processing
 	// PRIVATE ACCESS FUNCTION
-	function __readTar($filename='') {
+	function __readTar($filename='')
+	{
 		// Set the filename to load
 		// Read in the TAR file
 
@@ -230,7 +236,8 @@ class ArchiveTar {
 
 	// Generates a TAR file from the processed data
 	// PRIVATE ACCESS FUNCTION
-	function __generateTAR() {
+	function __generateTAR()
+	{
 		// Clear any data currently in $this->tar_file	
 		unset($this->tar_file);
 
@@ -273,8 +280,10 @@ class ArchiveTar {
 		}
 
 		// Generate Records for each file, if we have files (We should...)
-		if($this->numFiles > 0) {
-			foreach($this->files as $key => $information) {
+		if($this->numFiles > 0)
+		{
+			foreach($this->files as $key => $information)
+			{
 				unset($header);
 
 				// Generate the TAR header for this file
@@ -299,7 +308,8 @@ class ArchiveTar {
 
 				// Compute header checksum
 				$checksum = str_pad(decoct($this->__computeUnsignedChecksum($header)),6,"0",STR_PAD_LEFT);
-				for($i=0; $i<6; $i++) {
+				for($i=0; $i<6; $i++)
+				{
 					$header[(148 + $i)] = substr($checksum,$i,1);
 				}
 				$header[154] = chr(0);
@@ -321,7 +331,8 @@ class ArchiveTar {
 
 
 	// Open a TAR file
-	function openTAR($value) {
+	function openTAR($value)
+	{
 		// Clear any values from previous tar archives
 		unset($this->filename);
 		unset($this->isGzipped);
@@ -341,7 +352,8 @@ class ArchiveTar {
 
 
 	// Write the currently loaded tar archive to disk
-	function saveTar() {
+	function saveTar()
+	{
 		if(!$this->filename)
 			return false;
 
@@ -353,7 +365,8 @@ class ArchiveTar {
 
 
 	// Saves tar archive to a different file than the current file
-	function toTar($filename,$useGzip) {
+	function toTar($filename,$useGzip)
+	{
 		if(!$filename)
 			return false;
 
