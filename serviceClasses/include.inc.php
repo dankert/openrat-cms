@@ -15,14 +15,15 @@ require_once( OR_SERVICECLASSES_DIR."AdministrationTree.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."ProjectTree.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Preferences.class.".PHP_EXT );
 
-require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Transformer.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."Line.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT        );
+require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT           );
+require_once( OR_SERVICECLASSES_DIR."Transformer.class.".PHP_EXT    );
+require_once( OR_SERVICECLASSES_DIR."Line.class.".PHP_EXT           );
 require_once( OR_SERVICECLASSES_DIR."TemplateEngine.class.".PHP_EXT );
 
-require_once( OR_SERVICECLASSES_DIR."ArchiveTar.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."ArchiveUnzip.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."ArchiveTar.class.".PHP_EXT     );
+require_once( OR_SERVICECLASSES_DIR."ArchiveUnzip.class.".PHP_EXT   );
+require_once( OR_SERVICECLASSES_DIR."ArchiveZip.class.".PHP_EXT     );
 
 //require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
 //require_once( OR_SERVICECLASSES_DIR."Sql.class.".PHP_EXT );
