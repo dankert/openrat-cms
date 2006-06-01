@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2006-06-01 20:07:01  dankert
+// Revision 1.10  2006-06-01 20:59:27  dankert
+// Projektwartung: Suche nach verlorenen Dateien.
+//
+// Revision 1.9  2006/06/01 20:07:01  dankert
 // Neue Methode "maintenance"
 //
 // Revision 1.8  2006/01/23 23:10:46  dankert
@@ -183,7 +186,6 @@ class ProjectAction extends Action
 	function maintenance()
 	{
 		$this->project->checkLostFiles();
-		$this->project->checkLoops();
 
 		$this->addNotice('project',$this->project->name,'DONE');
 	}
