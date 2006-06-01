@@ -18,63 +18,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.18  2006-01-29 17:18:59  dankert
-// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
-//
-// Revision 1.17  2006/01/23 23:08:15  dankert
-// Auspacken von TAR-Archiven implementiert
-//
-// Revision 1.16  2005/11/07 22:31:08  dankert
-// Wenn Dateiname=Objekt-Id, dann Dateinamen auf leer setzen.
-//
-// Revision 1.15  2005/01/27 22:21:29  dankert
-// Nach Generierung Systembefehl mit exec() ausf?hren
-//
-// Revision 1.14  2005/01/14 21:41:23  dankert
-// Aufruf von lastModified() fuer Conditional-GET
-//
-// Revision 1.13  2004/12/20 22:43:12  dankert
-// Uebertragen des Benutzers geaendert
-//
-// Revision 1.12  2004/12/19 14:53:54  dankert
-// pub2() -> pubnow()
-//
-// Revision 1.11  2004/12/15 23:23:11  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.10  2004/11/30 22:28:20  dankert
-// Automatische Feststellen, ob GD installiert und welche Bildformate unterstuetzt werden
-//
-// Revision 1.9  2004/11/29 23:24:36  dankert
-// Korrektur Veroeffentlichung
-//
-// Revision 1.8  2004/11/28 21:27:21  dankert
-// Bildbearbeitung erweitert
-//
-// Revision 1.7  2004/11/27 13:05:59  dankert
-// Einzelne Funktionen verlagert
-//
-// Revision 1.6  2004/09/26 12:12:31  dankert
-// Erweiterung HTTP-Header bei Anzeige der Bin?rdatei
-//
-// Revision 1.5  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.4  2004/04/28 20:22:32  dankert
-// Rechte hinzuf?gen
-//
-// Revision 1.3  2004/04/24 17:02:47  dankert
-// Korrektur: Link auf Seite
-//
-// Revision 1.2  2004/04/24 16:55:27  dankert
-// Korrektur: pub()
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**
@@ -357,9 +300,6 @@ class FileAction extends ObjectAction
 		$this->setTemplateVars( $this->file->getProperties() );
 		
 		$imageFormat = $this->imageFormat();
-
-		$this->setWindowMenu('edit');
-		$this->forward('file_extract');
 	}
 
 
@@ -368,8 +308,6 @@ class FileAction extends ObjectAction
 	 */
 	function uncompress()
 	{
-		$this->setWindowMenu('edit');
-		$this->forward('file_uncompress');
 	}
 
 
@@ -476,7 +414,37 @@ class FileAction extends ObjectAction
 				break;
 
 			case 'zip':
-				die('zip extraction not implemented');
+			
+				$folder = new Folder();
+				$folder->parentid    = $this->file->parentid;
+				$folder->name        = $this->file->name;
+				$folder->filename    = $this->file->filename;
+				$folder->description = $this->file->fullFilename;
+				$folder->add();
+				
+				$zip = new ArchiveUnzip();
+				$zip->open( $this->file->loadValue() );
+
+				$lista = $zip->getList();
+
+				if(sizeof($lista)) foreach($lista as $fileName=>$trash){
+					
+
+					$newFile = new File();
+					$newFile->name        = basename($fileName);
+					$newFile->description = 'Extracted: '.$this->file->fullFilename.' -> '.$fileName;
+					$newFile->parentid    = $folder->objectid;
+					$newFile->parse_filename( basename($fileName) );
+
+					$newFile->value       = $zip->unzip($fileName);
+					$newFile->add();
+					
+					$this->addNotice('file',$newFile->name,'ADDED');
+					unset($newFile);
+				}
+
+				$zip->close();
+				unset($zip);
 				
 				break;
 

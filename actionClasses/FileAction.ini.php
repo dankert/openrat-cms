@@ -69,6 +69,11 @@ menu=edit
 
 [extract]
 menu=edit
+target=doextract
+
+[doextract]
+menu=edit
+goto=edit
 
 [menu]
 edit=edit,editvalue,compress,uncompress,extract
