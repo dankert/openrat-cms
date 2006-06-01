@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.35  2006-06-01 18:15:30  dankert
+// Revision 1.36  2006-06-01 19:11:46  dankert
+// Abfragen von Rechten.
+//
+// Revision 1.35  2006/06/01 18:15:30  dankert
 // Implementiert: "kopieren, verschieben, l?schen"
 //
 // Revision 1.34  2006/02/05 11:30:12  dankert
@@ -328,37 +331,60 @@ class FolderAction extends ObjectAction
 	}
 
 
-	// Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner
+	/**
+	 * Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner.
+	 * 
+	 * Es werden alle ausgewählten Dateien nochmal angezeigt.
+	 * Abhängig von der ausgewählten Aktion wird eine weitere Auswahl benötigt. 
+	 */
 	function edit()
 	{
-		$type = $this->getRequestVar('type');
-//		$this->setTemplateVar('targetobjectid',intval($this->getRequestVar('targetobjectid')));
-//
-//		if	( $targetObjectId == 0 )
-//			exit('fatal: no target');
-
-		if	( in_array($type,array('move','copy','link')))
+		$type = $this->getRequestVar('type'); // Typ der Aktion, z.B "copy" oder "move"
+		
+		switch( $type )
 		{
-			// Liste von möglichen Zielordnern anzeigen
-
-			$otherfolder = array();
-			foreach( $this->folder->getAllFolders() as $id )
-			{
-				$f = new Folder( $id );
-				if	( $f->hasRight( ACL_WRITE ) )
-					$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
-			}
-			asort( $otherfolder );
+			case 'move':
+			case 'copy':
+			case 'link':
+				// Liste von möglichen Zielordnern anzeigen
 	
-			$this->setTemplateVar('folder',$otherfolder);
-		}
+				$otherfolder = array();
+				foreach( $this->folder->getAllFolders() as $id )
+				{
+					$f = new Folder( $id );
+					
+					// Beim Verknüpfen muss im Zielordner die Berechtigung zum Erstellen
+					// von Verknüpfungen vorhanden sein.
+					//
+					// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
+					// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
+					if	( ( $type=='link' && $f->hasRight( ACL_CREATE_LINK ) ) || 
+						  ( ( $type=='move' || $type == 'copy' ) && 
+						    ( $f->hasRight(ACL_CREATE_FOLDER) || $f->hasRight(ACL_CREATE_FILE) || $f->hasRight(ACL_CREATE_PAGE) ) ) )
+						// Zielordner hinzufügen
+						$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
+				}
+				
+				// Zielordner-Liste alphabetisch sortieren
+				asort( $otherfolder );
+						
+				$this->setTemplateVar('folder',$otherfolder);
+				
+				break;
+				
+			case 'archive':
+				$this->setTemplateVar('ask_filename','');
+				break;
 
-		if	( $type == 'archive' )
-			$this->setTemplateVar('ask_filename','');
-
-		if	( $type == 'delete' )
-			$this->setTemplateVar('ask_commit','');
-
+			case 'delete':
+				$this->setTemplateVar('ask_commit','');
+				break;
+				
+			default:
+				exit("trouble");
+				
+		} // switch
+		
 		$ids        = $this->folder->getObjectIds();
 		$objectList = array();
 
@@ -371,7 +397,13 @@ class FolderAction extends ObjectAction
 			$o = new Object( $id );
 			$o->load();
 			
-			$objectList[ $id ] = $o->getProperties();
+			// Für die gewünschte Aktion müssen pro Objekt die entsprechenden Rechte
+			// vorhanden sein.
+			if	( $type == 'copy'   && $o->hasRight( ACL_READ   ) ||
+				  $type == 'move'   && $o->hasRight( ACL_DELETE ) ||
+				  $type == 'link'   && $o->hasRight( ACL_READ   ) ||
+				  $type == 'delete' && $o->hasRight( ACL_DELETE )    )
+				$objectList[ $id ] = $o->getProperties();
 		}
 		
 		$this->setTemplateVar('type'  ,$type       );
@@ -382,11 +414,14 @@ class FolderAction extends ObjectAction
 	}
 
 
-	// Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner
+
+	/**
+	 * Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner 
+	 */
 	function multiple()
 	{
-		$type = $this->getRequestVar('type');
-		$ids = explode(',',$this->getRequestVar('ids'));
+		$type           = $this->getRequestVar('type');
+		$ids            = explode(',',$this->getRequestVar('ids'));
 		$targetObjectId = $this->getRequestVar('targetobjectid');
 
 		foreach( $ids as $id )
