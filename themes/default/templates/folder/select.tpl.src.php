@@ -1,5 +1,5 @@
 page
-	form action:folder subaction:multiple
+	form action:folder subaction:edit
 		window name:bla title:titelso widths:5%,75%
 			row
 				cell class:help
@@ -13,7 +13,7 @@ page
 				row
 					cell class:fx
 						if true:writable
-							checkbox prefix:obj name:id
+							checkbox name:id
 						if false:writable
 							text raw:_
 
@@ -31,26 +31,12 @@ RAW
 END
 			row
 				cell class:fx colspan:2
-					radio name:type value:move
-					text raw:_
-					text text:GLOBAL_MOVE
-					newline
-					radio name:type value:copy
-					text raw:_
-					text text:GLOBAL_COPY
-					newline
-					radio name:type value:link
-					text raw:_
-					text text:GLOBAL_LINK
-					newline
-					radio name:type value:archive
-					text raw:_
-					text text:GLOBAL_ARCHIVE
-					newline
-					radio name:type value:delete
-					text raw:_
-					text text:GLOBAL_DELETE
-					newline
+				
+					list list:actionlist extract:true
+						radio name:type value:type
+						text raw:_
+						text var:type
+						newline
 			row
 				cell class:act colspan:2
 					button type:ok		
@@ -67,19 +53,19 @@ RAW
 <!--
 function mark()
 {
-<?php foreach( $object as $id=>$z ) { ?>
+<?php foreach( array_keys($object)  as $id ) { ?>
 document.forms[0].obj<?php echo $id ?>.checked=true;
 <?php } ?>
 }
 function unmark()
 {
-<?php foreach( $object as $id=>$z ) { ?>
+<?php foreach( array_keys($object) as $id ) { ?>
 document.forms[0].obj<?php echo $id ?>.checked=false;
 <?php } ?>
 }
 function flip()
 {
-<?php foreach( $object as $id=>$z ) { ?>
+<?php foreach( array_keys($object) as $id ) { ?>
 if	(document.forms[0].obj<?php echo $id ?>.checked==false)
  document.forms[0].obj<?php echo $id ?>.checked=true;
 else document.forms[0].obj<?php echo $id ?>.checked=false;

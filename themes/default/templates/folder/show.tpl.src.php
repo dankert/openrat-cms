@@ -1,4 +1,4 @@
-page
+page class:main
 	window widths:75%,25%
 		row
 			cell colspan:7 class:help
