@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2005-03-13 16:39:58  dankert
+// Revision 1.9  2006-06-01 18:16:03  dankert
+// Aufger?umt.
+//
+// Revision 1.8  2005/03/13 16:39:58  dankert
 // Last-Modified vorerst nicht setzen, da letzte Aenderung der Baumeinstellung sonst nicht beruecksichtigt wird
 //
 // Revision 1.7  2005/02/17 20:08:51  dankert
@@ -85,9 +88,6 @@ class TitleAction extends Action
 		$this->setTemplateVar('profile_url',Html::url( 'profile'         ));
 		$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
 		
-		$this->setTemplateVar('css_body_class','title');
-
-
 		if	( Session::get('showtree') )
 		{
 			$this->setTemplateVar('showtree_url' ,Html::url('index','hidetree') );
