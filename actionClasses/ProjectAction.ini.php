@@ -12,6 +12,9 @@ target=delete
 [delete]
 goto=listing
 
+[maintenance]
+menu=edit
+
 [edit]
 target=save
 menu=edit
@@ -28,4 +31,4 @@ target=addproject
 
 [menu]
 list=listing,add
-edit=edit,remove
+edit=edit,remove,maintenance
