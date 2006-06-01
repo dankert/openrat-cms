@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.34  2006-02-05 11:30:12  dankert
+// Revision 1.35  2006-06-01 18:15:30  dankert
+// Implementiert: "kopieren, verschieben, l?schen"
+//
+// Revision 1.34  2006/02/05 11:30:12  dankert
 // Hinzuf?gen: Methode "select()"
 //
 // Revision 1.33  2006/01/29 17:18:58  dankert
@@ -136,7 +139,6 @@ class FolderAction extends ObjectAction
 {
 	var $defaultSubAction = 'show';
 	var $folder;
-
 
 	function FolderAction()
 	{
@@ -327,23 +329,68 @@ class FolderAction extends ObjectAction
 
 
 	// Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner
-	function multiple()
+	function edit()
 	{
-		$ids  = $this->folder->getObjectIds();
 		$type = $this->getRequestVar('type');
-		$targetObjectId = intval($this->getRequestVar('targetobjectid'));
+//		$this->setTemplateVar('targetobjectid',intval($this->getRequestVar('targetobjectid')));
+//
+//		if	( $targetObjectId == 0 )
+//			exit('fatal: no target');
 
-		if	( $targetObjectId == 0 )
-			exit('fatal: no target');
+		if	( in_array($type,array('move','copy','link')))
+		{
+			// Liste von möglichen Zielordnern anzeigen
 
-		$notices = array();
+			$otherfolder = array();
+			foreach( $this->folder->getAllFolders() as $id )
+			{
+				$f = new Folder( $id );
+				if	( $f->hasRight( ACL_WRITE ) )
+					$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
+			}
+			asort( $otherfolder );
+	
+			$this->setTemplateVar('folder',$otherfolder);
+		}
+
+		if	( $type == 'archive' )
+			$this->setTemplateVar('ask_filename','');
+
+		if	( $type == 'delete' )
+			$this->setTemplateVar('ask_commit','');
+
+		$ids        = $this->folder->getObjectIds();
+		$objectList = array();
 
 		foreach( $ids as $id )
 		{
 			// Nur, wenn Objekt ausgewaehlt wurde
-			if	( $this->getRequestVar('obj'.$id) != '1' )
+			if	( !$this->hasRequestVar('obj'.$id) )
 				continue;
 
+			$o = new Object( $id );
+			$o->load();
+			
+			$objectList[ $id ] = $o->getProperties();
+		}
+		
+		$this->setTemplateVar('type'  ,$type       );
+		$this->setTemplateVar('objectlist',$objectList );
+		
+		// Komma-separierte Liste von ausgewählten Objekt-Ids erzeugen 
+		$this->setTemplateVar('ids',join(array_keys($objectList),',') );
+	}
+
+
+	// Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner
+	function multiple()
+	{
+		$type = $this->getRequestVar('type');
+		$ids = explode(',',$this->getRequestVar('ids'));
+		$targetObjectId = $this->getRequestVar('targetobjectid');
+
+		foreach( $ids as $id )
+		{
 			$o = new Object( $id );
 			$o->load();
 
@@ -446,33 +493,37 @@ class FolderAction extends ObjectAction
 	
 				case 'delete':
 
-					switch( $o->getType() )
+					if	( $this->hasRequestVar('commit') ) 
 					{
-						case 'folder':
-							$f = new Folder( $id );
-							$f->delete();
-							break;
-						
-						case 'file':
-							$f = new File( $id );
-							$f->delete();
-							break;
-						
-						case 'page':
-							$p = new Page( $id );
-							$p->load();
-							$p->delete();
-							break;
-						
-						case 'link':
-							$l = new Link( $id );
-							$l->delete();
-							break;
-						
-						default:
-							die('fatal: what type to delete?');
+						switch( $o->getType() )
+						{
+							case 'folder':
+								$f = new Folder( $id );
+								$f->delete();
+								break;
+							
+							case 'file':
+								$f = new File( $id );
+								$f->delete();
+								break;
+							
+							case 'page':
+								$p = new Page( $id );
+								$p->load();
+								$p->delete();
+								break;
+							
+							case 'link':
+								$l = new Link( $id );
+								$l->delete();
+								break;
+							
+							default:
+								die('fatal: what type to delete?');
+						}
+						$this->addNotice($o->getType(),$o->name,'DELETED','ok');
 					}
-					$this->addNotice($o->getType(),$o->name,'DELETED','ok');
+					
 					break;
 
 				default:
@@ -681,7 +732,6 @@ class FolderAction extends ObjectAction
 	}
 
 
-
 	function select()
 	{
 		global $conf_php;
@@ -697,6 +747,7 @@ class FolderAction extends ObjectAction
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
+				$list[$id]['id']     = 'obj'.$id;
 				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
 				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
@@ -743,6 +794,18 @@ class FolderAction extends ObjectAction
 			// URLs zum Umsortieren der Eintraege
 			$this->setTemplateVar('order_url'      ,Html::url('folder','order',$this->folder->id) );
 		}	
+
+		$actionList = array();
+		$actionList[] = array('type'=>'copy');
+		$actionList[] = array('type'=>'link');
+
+		if	( $this->folder->hasRight('ACL_WRITE') )
+		{
+			$actionList[] = array('type'=>'move');
+			$actionList[] = array('type'=>'delete');
+		}
+		
+		$this->setTemplateVar('actionlist',$actionList );
 
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);

@@ -9,6 +9,12 @@ menu=show
 target=multiple
 menu=show
 
+[edit]
+menu=show
+
+[multiple]
+goto=show
+
 [prop]
 menu=prop
 target=saveprop
