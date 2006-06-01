@@ -12,6 +12,6 @@
 <?php } ?>
 </head>
 
-<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
+<body class="<?php echo $attr_class ?>">
 
 
