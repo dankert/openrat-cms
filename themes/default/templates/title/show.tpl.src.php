@@ -1,4 +1,4 @@
-page
+page class:title
 
 	table padding:5 space:0 width:100%
 		row

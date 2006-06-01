@@ -1,4 +1,4 @@
-page
+page class:tree
 
 RAW
 <!-- $Id$ -->

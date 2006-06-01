@@ -1,1 +1,1 @@
-page class:css_body_class
+page class:border
