@@ -6,7 +6,7 @@
 button   = type:*
 cell     = width,style,class,colspan
 char     = type:*
-checkbox = default:false,var,readonly:false,name:*,prefix
+checkbox = default:false,readonly:false,name:*
 date     = date
 dummy    =
 focus    = field:*
@@ -23,7 +23,7 @@ insert   = file:*
 link     = title,target,url,class,action,subaction,id,var1,value1
 list     = list:*,extract:false,key:list_key,value:list_value
 newline  =
-page     = class
+page     = class:main
 password = name:*,default,class,size:40,maxlength:256
 radio    = readonly,name:*,value,default,prefix,suffix
 row      =
