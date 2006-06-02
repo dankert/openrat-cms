@@ -757,53 +757,53 @@ class Value
 						$inhalt .= '/'.Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id));
 						break;
 					case 'lastch_user_username':
-						$user = new User($this->page->lastchange_userid);
+						$user = $this->page->lastchangeUser;
 						$user->load();
 						$inhalt = $user->name;
 						break;
 					case 'lastch_user_fullname':
-						$user = new User($this->page->lastchange_userid);
+						$user = $this->page->lastchangeUser;
 						$user->load();
 						$inhalt = $user->fullname;
 						break;
 					case 'lastch_user_mail':
-						$user = new User($this->page->lastchange_userid);
+						$user = $this->page->lastchangeUser;
 						$user->load();
 						$inhalt = $user->mail;
 						break;
 					case 'lastch_user_desc':
-						$user = new User($this->page->lastchange_userid);
+						$user = $this->page->lastchangeUser;
 						$user->load();
 						$inhalt = $user->desc;
 						break;
 					case 'lastch_user_tel':
-						$user = new User($this->page->lastchange_userid);
+						$user = $this->page->lastchangeUser;
 						$user->load();
 						$inhalt = $user->tel;
 						break;
 
 					case 'create_user_username':
-						$user = new User($this->page->create_userid);
+						$user = $this->page->createUser;
 						$user->load();
 						$inhalt = $user->name;
 						break;
 					case 'create_user_fullname':
-						$user = new User($this->page->create_userid);
+						$user = $this->page->createUser;
 						$user->load();
 						$inhalt = $user->fullname;
 						break;
 					case 'create_user_mail':
-						$user = new User($this->page->create_userid);
+						$user = $this->page->createUser;
 						$user->load();
 						$inhalt = $user->mail;
 						break;
 					case 'create_user_desc':
-						$user = new User($this->page->create_userid);
+						$user = $this->page->createUser;
 						$user->load();
 						$inhalt = $user->desc;
 						break;
 					case 'create_user_tel':
-						$user = new User($this->page->create_userid);
+						$user = $this->page->createUser;
 						$user->load();
 						$inhalt = $user->tel;
 						break;
