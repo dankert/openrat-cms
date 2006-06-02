@@ -665,3 +665,7 @@ USER_TEL = "Telephone"
 USER_USERNAME = Username
 USER_USERNAME_DESC = "With this name the user is logging in"
 USER_YOURPROFILE = "My settings"
+MENU_PROJECT_MAINTENANCE=Maintenance
+MENU_LINK_EDIT=Edit target
+MENU_LINK_PROP=Properties
+MENU_LINK_SHOWPROP=View

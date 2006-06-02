@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2006-01-29 17:18:58  dankert
+// Revision 1.9  2006-06-02 19:49:06  dankert
+// Bearbeiten von Verkn?pfungen
+//
+// Revision 1.8  2006/01/29 17:18:58  dankert
 // Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
 //
 // Revision 1.7  2006/01/23 23:10:45  dankert
@@ -125,7 +128,7 @@ class LinkAction extends ObjectAction
 			{
 				$this->link->isLinkToObject = true;
 				$this->link->isLinkToUrl    = false;
-				$this->link->linkedObjectId = $this->getRequestVar('linkobjectid');
+				$this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
 			}
 			else
 			{
@@ -168,7 +171,7 @@ class LinkAction extends ObjectAction
 
 		// Typ der Verkn?pfung
 		$this->setTemplateVar('type'            ,$this->link->getType()     );
-		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
+		$this->setTemplateVar('targetobjectid',$this->link->linkedObjectId);
 		$this->setTemplateVar('url'             ,$this->link->url           );
 
 		// Alle verlinkbaren Objekte anzeigen

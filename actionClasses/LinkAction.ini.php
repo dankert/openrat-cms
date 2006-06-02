@@ -42,6 +42,6 @@ goto=rights
 goto=rights
 
 [menu]
-edit=edit,remove
-prop=showprop,prop,remove
+edit=edit
+prop=showprop,prop
 rights=rights,aclform

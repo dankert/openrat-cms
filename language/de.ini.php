@@ -664,3 +664,7 @@ MENU_PAGE_PUB="Veröffentlichen"
 MENU_PAGE_PUB_DESC="Seite veröffentlichen"
 MENU_FOLDER_PUB="Veröffentlichen"
 MENU_FOLDER_PUB_DESC="Ordner veröffentlichen"
+MENU_PROJECT_MAINTENANCE=Wartung
+MENU_LINK_EDIT=Ziel bearbeiten
+MENU_LINK_PROP=Eigenschaften
+MENU_LINK_SHOWPROP=Anzeigen
