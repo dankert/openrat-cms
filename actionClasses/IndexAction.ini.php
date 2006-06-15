@@ -1,6 +1,6 @@
 
 [default]
-goto=show
+goto=showlogin
 
 [logout]
 goto=showlogin
