@@ -1,4 +1,4 @@
-<?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php $attr = array('class'=>'main') ?><?php $attr_class='main' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
@@ -12,7 +12,7 @@
 <?php } ?>
 </head>
 
-<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
+<body class="<?php echo $attr_class ?>">
 
 
 <?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('action'=>'','subaction'=>'','id'=>'','name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr_action='' ?><?php $attr_subaction='' ?><?php $attr_id='' ?><?php $attr_name='' ?><?php $attr_target='_self' ?><?php $attr_method='post' ?><?php $attr_enctype='application/x-www-form-urlencoded' ?><?php
@@ -121,7 +121,7 @@
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -133,7 +133,22 @@
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -245,7 +260,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -257,7 +272,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -357,7 +387,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -369,7 +399,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -469,7 +514,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -481,7 +526,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -581,7 +641,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -593,7 +653,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -693,7 +768,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -705,7 +780,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -805,7 +895,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -817,7 +907,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -929,7 +1034,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -941,7 +1046,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -1041,7 +1161,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -1053,7 +1173,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -1153,7 +1288,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -1165,7 +1300,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -1265,7 +1415,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -1277,7 +1427,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -1377,7 +1542,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -1389,7 +1554,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -1489,7 +1669,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -1501,7 +1681,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -1601,7 +1796,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -1613,7 +1808,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -1713,7 +1923,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -1725,7 +1935,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -1996,7 +2221,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -2008,7 +2233,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -2108,7 +2348,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -2120,7 +2360,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -2232,7 +2487,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -2244,7 +2499,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -2356,7 +2626,7 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -2368,7 +2638,22 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{

@@ -1,4 +1,4 @@
-<?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php $attr = array('class'=>'main') ?><?php $attr_class='main' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
@@ -12,10 +12,10 @@
 <?php } ?>
 </head>
 
-<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
+<body class="<?php echo $attr_class ?>">
 
 
-<?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('action'=>'folder','subaction'=>'multiple','id'=>'','name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr_action='folder' ?><?php $attr_subaction='multiple' ?><?php $attr_id='' ?><?php $attr_name='' ?><?php $attr_target='_self' ?><?php $attr_method='post' ?><?php $attr_enctype='application/x-www-form-urlencoded' ?><?php
+<?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('action'=>'folder','subaction'=>'edit','id'=>'','name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr_action='folder' ?><?php $attr_subaction='edit' ?><?php $attr_id='' ?><?php $attr_name='' ?><?php $attr_target='_self' ?><?php $attr_method='post' ?><?php $attr_enctype='application/x-www-form-urlencoded' ?><?php
 	if	(empty($attr_action))
 		$attr_action = $actionName;
 	if	(empty($attr_subaction))
@@ -286,7 +286,7 @@
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -298,7 +298,22 @@
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -311,7 +326,16 @@
 
 	if	( $exec )
 	{
-?><?php unset($attr) ?><?php unset($attr_var) ?><?php unset($attr_value) ?><?php unset($attr_invert) ?><?php unset($attr_empty) ?><?php unset($attr_present) ?><?php unset($attr_contains) ?><?php unset($attr_true) ?><?php unset($attr_false) ?><?php $attr = array('default'=>'false','var'=>'','readonly'=>'false','name'=>'id','prefix'=>'obj') ?><?php $attr_default='false' ?><?php $attr_var='' ?><?php $attr_readonly='false' ?><?php $attr_name='id' ?><?php $attr_prefix='obj' ?><input type="checkbox" name="<?php echo !empty($$attr_var)?$attr_prefix.$$attr_var:$attr_name ?>" <?php if ($attr_readonly=='true') echo ' disabled="disabled"' ?> value="1" <?php if( ($attr_default=='true')||(isset($$attr_name)&&$$attr_name) ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_var) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_prefix) ?><?php $attr = array() ?><?php
+?><?php unset($attr) ?><?php unset($attr_var) ?><?php unset($attr_value) ?><?php unset($attr_invert) ?><?php unset($attr_empty) ?><?php unset($attr_present) ?><?php unset($attr_contains) ?><?php unset($attr_true) ?><?php unset($attr_false) ?><?php $attr = array('default'=>'false','readonly'=>'false','name'=>'id') ?><?php $attr_default='false' ?><?php $attr_readonly='false' ?><?php $attr_name='id' ?><?php
+	$attr_name    = !empty($$attr_name)?$$attr_name:$attr_name;
+	$attr_readonly = ( $attr_readonly == 'true' );
+	$attr_default  = ( $attr_default  == 'true' );
+	
+	if	( isset($$attr_name) )
+		$checked = isset($$$attr_name)&& $$$attr_name==true;
+	else
+		$checked = $attr_default;
+?><input type="checkbox" name="<?php echo $attr_name  ?>" <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php $attr = array() ?><?php
 	}
 ?><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'','contains'=>'','true'=>'','false'=>'writable') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='writable' ?><?php 
 
@@ -344,7 +368,7 @@
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -356,7 +380,22 @@
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -509,7 +548,24 @@ if (!empty($attr_elementtype)) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('readonly'=>'','name'=>'type','value'=>'move','default'=>'','prefix'=>'','suffix'=>'') ?><?php $attr_readonly='' ?><?php $attr_name='type' ?><?php $attr_value='move' ?><?php $attr_default='' ?><?php $attr_prefix='' ?><?php $attr_suffix='' ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('list'=>'actionlist','extract'=>'true','key'=>'list_key','value'=>'list_value') ?><?php $attr_list='actionlist' ?><?php $attr_extract='true' ?><?php $attr_key='list_key' ?><?php $attr_value='list_value' ?><?php
+	$list_tmp_key   = $attr_key;
+	$list_tmp_value = $attr_value;
+	$list_extract   = ($attr_extract=='true');
+
+	
+	foreach( $$attr_list as $$list_tmp_key => $$list_tmp_value )
+	{
+		if	( $list_extract )
+		{
+			if	( !is_array($$list_tmp_value) )
+			{
+				print_r($$list_tmp_value);
+				die( 'not an array at key: '.$$list_tmp_key );
+			}
+			extract($$list_tmp_value);
+		}
+?><?php unset($attr) ?><?php unset($attr_list) ?><?php unset($attr_extract) ?><?php unset($attr_key) ?><?php unset($attr_value) ?><?php $attr = array('readonly'=>'','name'=>'type','value'=>'type','default'=>'','prefix'=>'','suffix'=>'') ?><?php $attr_readonly='' ?><?php $attr_name='type' ?><?php $attr_value='type' ?><?php $attr_default='' ?><?php $attr_prefix='' ?><?php $attr_suffix='' ?><?php
 ?><input type="radio" name="<?php echo $attr_prefix.$attr_name ?>"<?php if ( $attr_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $$attr_value ?>" <?php if( $attr_default ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_value) ?><?php unset($attr_default) ?><?php unset($attr_prefix) ?><?php unset($attr_suffix) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'','raw'=>'_','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='' ?><?php $attr_raw='_' ?><?php $attr_maxlength='' ?><?php
 	if(empty($attr_title)) $attr_title = $attr_text;
 ?><span class="<?php echo $attr_class ?>"><?php
@@ -535,7 +591,7 @@ if (!empty($attr_elementtype)) {
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_MOVE','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_MOVE' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array('title'=>'','class'=>'','var'=>'type','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='type' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
 	if(empty($attr_title)) $attr_title = $attr_text;
 ?><span class="<?php echo $attr_class ?>"><?php
 	if (!empty($attr_array))
@@ -560,211 +616,7 @@ if (!empty($attr_elementtype)) {
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?><br/><?php unset($attr) ?><?php $attr = array('readonly'=>'','name'=>'type','value'=>'copy','default'=>'','prefix'=>'','suffix'=>'') ?><?php $attr_readonly='' ?><?php $attr_name='type' ?><?php $attr_value='copy' ?><?php $attr_default='' ?><?php $attr_prefix='' ?><?php $attr_suffix='' ?><?php
-?><input type="radio" name="<?php echo $attr_prefix.$attr_name ?>"<?php if ( $attr_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $$attr_value ?>" <?php if( $attr_default ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_value) ?><?php unset($attr_default) ?><?php unset($attr_prefix) ?><?php unset($attr_suffix) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'','raw'=>'_','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='' ?><?php $attr_raw='_' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
-	if (!empty($attr_array))
-	{
-		//geht nicht:
-		//echo $$attr_array[$attr_var].'%';
-		$tmpArray = $$attr_array;
-		if (!empty($attr_var))
-			$tmp_text = $tmpArray[$attr_var];
-		else
-			$tmp_text = lang($tmpArray[$attr_text]);
-	}
-	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
-	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
-	elseif (!empty($attr_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
-	
-	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
-		
-	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_COPY','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_COPY' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
-	if (!empty($attr_array))
-	{
-		//geht nicht:
-		//echo $$attr_array[$attr_var].'%';
-		$tmpArray = $$attr_array;
-		if (!empty($attr_var))
-			$tmp_text = $tmpArray[$attr_var];
-		else
-			$tmp_text = lang($tmpArray[$attr_text]);
-	}
-	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
-	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
-	elseif (!empty($attr_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
-	
-	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
-		
-	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?><br/><?php unset($attr) ?><?php $attr = array('readonly'=>'','name'=>'type','value'=>'link','default'=>'','prefix'=>'','suffix'=>'') ?><?php $attr_readonly='' ?><?php $attr_name='type' ?><?php $attr_value='link' ?><?php $attr_default='' ?><?php $attr_prefix='' ?><?php $attr_suffix='' ?><?php
-?><input type="radio" name="<?php echo $attr_prefix.$attr_name ?>"<?php if ( $attr_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $$attr_value ?>" <?php if( $attr_default ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_value) ?><?php unset($attr_default) ?><?php unset($attr_prefix) ?><?php unset($attr_suffix) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'','raw'=>'_','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='' ?><?php $attr_raw='_' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
-	if (!empty($attr_array))
-	{
-		//geht nicht:
-		//echo $$attr_array[$attr_var].'%';
-		$tmpArray = $$attr_array;
-		if (!empty($attr_var))
-			$tmp_text = $tmpArray[$attr_var];
-		else
-			$tmp_text = lang($tmpArray[$attr_text]);
-	}
-	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
-	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
-	elseif (!empty($attr_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
-	
-	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
-		
-	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_LINK','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_LINK' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
-	if (!empty($attr_array))
-	{
-		//geht nicht:
-		//echo $$attr_array[$attr_var].'%';
-		$tmpArray = $$attr_array;
-		if (!empty($attr_var))
-			$tmp_text = $tmpArray[$attr_var];
-		else
-			$tmp_text = lang($tmpArray[$attr_text]);
-	}
-	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
-	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
-	elseif (!empty($attr_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
-	
-	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
-		
-	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?><br/><?php unset($attr) ?><?php $attr = array('readonly'=>'','name'=>'type','value'=>'archive','default'=>'','prefix'=>'','suffix'=>'') ?><?php $attr_readonly='' ?><?php $attr_name='type' ?><?php $attr_value='archive' ?><?php $attr_default='' ?><?php $attr_prefix='' ?><?php $attr_suffix='' ?><?php
-?><input type="radio" name="<?php echo $attr_prefix.$attr_name ?>"<?php if ( $attr_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $$attr_value ?>" <?php if( $attr_default ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_value) ?><?php unset($attr_default) ?><?php unset($attr_prefix) ?><?php unset($attr_suffix) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'','raw'=>'_','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='' ?><?php $attr_raw='_' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
-	if (!empty($attr_array))
-	{
-		//geht nicht:
-		//echo $$attr_array[$attr_var].'%';
-		$tmpArray = $$attr_array;
-		if (!empty($attr_var))
-			$tmp_text = $tmpArray[$attr_var];
-		else
-			$tmp_text = lang($tmpArray[$attr_text]);
-	}
-	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
-	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
-	elseif (!empty($attr_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
-	
-	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
-		
-	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_ARCHIVE','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_ARCHIVE' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
-	if (!empty($attr_array))
-	{
-		//geht nicht:
-		//echo $$attr_array[$attr_var].'%';
-		$tmpArray = $$attr_array;
-		if (!empty($attr_var))
-			$tmp_text = $tmpArray[$attr_var];
-		else
-			$tmp_text = lang($tmpArray[$attr_text]);
-	}
-	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
-	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
-	elseif (!empty($attr_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
-	
-	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
-		
-	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?><br/><?php unset($attr) ?><?php $attr = array('readonly'=>'','name'=>'type','value'=>'delete','default'=>'','prefix'=>'','suffix'=>'') ?><?php $attr_readonly='' ?><?php $attr_name='type' ?><?php $attr_value='delete' ?><?php $attr_default='' ?><?php $attr_prefix='' ?><?php $attr_suffix='' ?><?php
-?><input type="radio" name="<?php echo $attr_prefix.$attr_name ?>"<?php if ( $attr_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $$attr_value ?>" <?php if( $attr_default ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_value) ?><?php unset($attr_default) ?><?php unset($attr_prefix) ?><?php unset($attr_suffix) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'','raw'=>'_','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='' ?><?php $attr_raw='_' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
-	if (!empty($attr_array))
-	{
-		//geht nicht:
-		//echo $$attr_array[$attr_var].'%';
-		$tmpArray = $$attr_array;
-		if (!empty($attr_var))
-			$tmp_text = $tmpArray[$attr_var];
-		else
-			$tmp_text = lang($tmpArray[$attr_text]);
-	}
-	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
-	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
-	elseif (!empty($attr_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
-	
-	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
-		
-	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_DELETE','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_DELETE' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
-	if (!empty($attr_array))
-	{
-		//geht nicht:
-		//echo $$attr_array[$attr_var].'%';
-		$tmpArray = $$attr_array;
-		if (!empty($attr_var))
-			$tmp_text = $tmpArray[$attr_var];
-		else
-			$tmp_text = lang($tmpArray[$attr_text]);
-	}
-	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
-	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
-	elseif (!empty($attr_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
-	
-	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
-		
-	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?><br/><?php unset($attr) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?><br/><?php unset($attr) ?><?php $attr = array() ?><?php } ?><?php unset($attr) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	global $fx;
 	if	( $fx =='f1')
 		$fx='f2';
@@ -822,7 +674,7 @@ if (!empty($attr_elementtype)) {
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -834,7 +686,22 @@ if (!empty($attr_elementtype)) {
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -911,19 +778,19 @@ if (!empty($attr_elementtype)) {
 <!--
 function mark()
 {
-<?php foreach( $object as $id=>$z ) { ?>
+<?php foreach( array_keys($object)  as $id ) { ?>
 document.forms[0].obj<?php echo $id ?>.checked=true;
 <?php } ?>
 }
 function unmark()
 {
-<?php foreach( $object as $id=>$z ) { ?>
+<?php foreach( array_keys($object) as $id ) { ?>
 document.forms[0].obj<?php echo $id ?>.checked=false;
 <?php } ?>
 }
 function flip()
 {
-<?php foreach( $object as $id=>$z ) { ?>
+<?php foreach( array_keys($object) as $id ) { ?>
 if	(document.forms[0].obj<?php echo $id ?>.checked==false)
 document.forms[0].obj<?php echo $id ?>.checked=true;
 else document.forms[0].obj<?php echo $id ?>.checked=false;
