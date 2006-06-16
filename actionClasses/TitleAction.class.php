@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2006-06-01 18:16:03  dankert
+// Revision 1.10  2006-06-16 21:16:13  dankert
+// LastModified auf Sitzungsbeginn setzen.
+//
+// Revision 1.9  2006/06/01 18:16:03  dankert
 // Aufger?umt.
 //
 // Revision 1.8  2005/03/13 16:39:58  dankert
@@ -70,6 +73,9 @@ class TitleAction extends Action
 	 */
 	function show()
 	{
+		// Seite ändert sich nur 1x pro Session
+		$this->lastModified( $user->loginDate );
+		
 		$user = Session::getUser();
 //		if	( is_object($user) && isset($user->loginDate) )
 //			$this->lastModified( $user->loginDate );
