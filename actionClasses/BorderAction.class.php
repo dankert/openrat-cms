@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2006-01-11 22:38:33  dankert
+// Revision 1.2  2006-06-16 21:26:29  dankert
+// Methode maxAge(), setzen von Expires-Headern im HTTP-Header.
+//
+// Revision 1.1  2006/01/11 22:38:33  dankert
 // Neue Aktionsklassen f?r neue Darstellungsart
 //
 // Revision 1.21  2005/04/16 21:35:23  dankert
@@ -112,6 +115,8 @@ class BorderAction extends Action
 
 		$this->setTemplateVar( 'stylesheet',$user->style );
 		$this->setTemplateVar( 'css_body_class','border' );
+		
+		$this->maxAge( 4*60*60 ); // 1 Stunde Browsercache
 		
 		$this->forward( 'border' );
 	}

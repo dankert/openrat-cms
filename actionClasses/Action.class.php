@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.21  2006-02-27 19:17:04  dankert
+// Revision 1.22  2006-06-16 21:26:29  dankert
+// Methode maxAge(), setzen von Expires-Headern im HTTP-Header.
+//
+// Revision 1.21  2006/02/27 19:17:04  dankert
 // Aenderung in "callSubAction()": Kein Aufruf von "forward()"
 //
 // Revision 1.20  2006/01/29 17:17:49  dankert
@@ -407,7 +410,7 @@ class Action
 		if	( ! $conf['cache']['conditional_get'] )
 			return;
 
-		$lastModified = substr(date('r',$time),0,-5).'GMT';
+		$lastModified = substr(date('r',$time-date('Z')),0,-5).'GMT';
 		$etag         = '"'.md5($lastModified).'"';
 
 		// Header senden
@@ -416,7 +419,7 @@ class Action
 		
 		// Die vom Interpreter sonst automatisch gesetzten
 		// Header uebersteuern
-		header('Cache-Control:');
+		header('Cache-Control: must-revalidate');
 		header('Pragma:'       );
 
 		// See if the client has provided the required headers
@@ -437,7 +440,22 @@ class Action
 		header('HTTP/1.0 304 Not Modified');
 		exit;  // Sofortiges Skript-Ende
 	}
-	
+
+
+
+	/**
+	 * @param max Anzahl der Sekunden, die die Seite im Browsercache bleiben darf
+	 */
+	function maxAge( $max=3600 ) 
+	{
+		// Die Header "Last-Modified" und "ETag" wurden bereits in der
+		// Methode "lastModified()" gesetzt.
+		
+		header("Expires: ".substr(date('r',time()-date('Z')+$max),0,-5).'GMT' );
+//		header("Pragma: public"); // 'Pragma' ist eigentlich Bullshit und
+		                          // wird von den meisten Browsern ignoriert.
+		header("Cache-Control: max-age=".$max.", s-maxage=".$max.", must-revalidate");
+	}	
 	
 	
 	
