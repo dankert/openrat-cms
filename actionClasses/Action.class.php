@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.22  2006-06-16 21:26:29  dankert
+// Revision 1.23  2006-06-16 22:30:58  dankert
+// Kommentare
+//
+// Revision 1.22  2006/06/16 21:26:29  dankert
 // Methode maxAge(), setzen von Expires-Headern im HTTP-Header.
 //
 // Revision 1.21  2006/02/27 19:17:04  dankert
@@ -420,7 +423,7 @@ class Action
 		// Die vom Interpreter sonst automatisch gesetzten
 		// Header uebersteuern
 		header('Cache-Control: must-revalidate');
-		header('Pragma:'       );
+		header('Pragma:');
 
 		// See if the client has provided the required headers
 		$if_modified_since = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']) : false;
@@ -451,10 +454,10 @@ class Action
 		// Die Header "Last-Modified" und "ETag" wurden bereits in der
 		// Methode "lastModified()" gesetzt.
 		
-		header("Expires: ".substr(date('r',time()-date('Z')+$max),0,-5).'GMT' );
-//		header("Pragma: public"); // 'Pragma' ist eigentlich Bullshit und
-		                          // wird von den meisten Browsern ignoriert.
-		header("Cache-Control: max-age=".$max.", s-maxage=".$max.", must-revalidate");
+		header('Expires: '.substr(date('r',time()-date('Z')+$max),0,-5).'GMT' );
+		header('Pragma: '); // 'Pragma' ist Bullshit und
+		                    // wird von den meisten Browsern ignoriert.
+		header('Cache-Control: public, max-age='.$max.", s-maxage=".$max);
 	}	
 	
 	
