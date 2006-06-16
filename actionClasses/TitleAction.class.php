@@ -19,38 +19,6 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.10  2006-06-16 21:16:13  dankert
-// LastModified auf Sitzungsbeginn setzen.
-//
-// Revision 1.9  2006/06/01 18:16:03  dankert
-// Aufger?umt.
-//
-// Revision 1.8  2005/03/13 16:39:58  dankert
-// Last-Modified vorerst nicht setzen, da letzte Aenderung der Baumeinstellung sonst nicht beruecksichtigt wird
-//
-// Revision 1.7  2005/02/17 20:08:51  dankert
-// Einbau von Baum offen/zu
-//
-// Revision 1.6  2005/01/14 21:41:23  dankert
-// Aufruf von lastModified() fuer Conditional-GET
-//
-// Revision 1.5  2004/12/19 19:23:20  dankert
-// Link auf Profil korrigiert
-//
-// Revision 1.4  2004/12/15 23:24:23  dankert
-// Html::url()-Parameter angepasst
-//
-// Revision 1.3  2004/11/10 22:40:32  dankert
-// Benutzen der Session-Klasse
-//
-// Revision 1.2  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**
@@ -74,6 +42,7 @@ class TitleAction extends Action
 	function show()
 	{
 		// Seite ändert sich nur 1x pro Session
+		$user = Session::getUser();
 		$this->lastModified( $user->loginDate );
 		
 		$user = Session::getUser();
