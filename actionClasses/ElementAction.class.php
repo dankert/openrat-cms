@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2006-02-04 23:20:37  dankert
+// Revision 1.15  2006-06-16 19:45:05  dankert
+// Neues Templateelement "Kopie" (intern: "copy")
+//
+// Revision 1.14  2006/02/04 23:20:37  dankert
 // Ausbau ?berfl?ssiges "echo()"
 //
 // Revision 1.13  2006/01/29 17:18:27  dankert
@@ -289,7 +292,7 @@ class ElementAction extends Action
 					switch( $this->element->type )
 					{
 						case 'info':
-							$subtype = Array('db_id',
+							$subtypes = Array('db_id',
 							                 'db_name',
 							                 'project_id',
 							                 'project_name',
@@ -323,7 +326,7 @@ class ElementAction extends Action
 							break;
 
 						case 'infodate':
-							$subtype = Array('date_published',
+							$subtypes = Array('date_published',
 							                 'date_saved',
 							                 'date_created' );
 							$convertToLang = true;
@@ -344,18 +347,26 @@ class ElementAction extends Action
 							$subtypes = $files;
 							break;
 
+						case 'copy':
+							$subtypes = array();
+							break;
+
 						default:
-							$subtype = array();
+							$subtypes = array();
 							break;
 					}
 
 					if	( $convertToLang == true )
 					{
-						foreach( $subtype as $t )
+						foreach( $subtypes as $t )
 						{
 							$subtypes[$t] = lang('EL_'.$this->element->type.'_'.$t);
 						}
 					}
+					
+					// Variable $subtype muss existieren, um Anzeige des Feldes zu erzwingen.
+					if (!isset($this->element->subtype))
+						$this->element->subtype='';
 	
 					$this->setTemplateVar('subtypes',$subtypes              );
 					$this->setTemplateVar('subtype' ,$this->element->subtype);

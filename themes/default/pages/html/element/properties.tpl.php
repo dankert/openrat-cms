@@ -90,7 +90,7 @@
 
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'subtypes','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='subtypes' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'subtype','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='subtype' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
 
 	// Wahr-Vergleich
 	if	( !empty($attr_true) )
@@ -215,7 +215,78 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('list'=>'subtypes','name'=>'subtype','default'=>'','onchange'=>'','title'=>'','class'=>'') ?><?php $attr_list='subtypes' ?><?php $attr_name='subtype' ?><?php $attr_default='' ?><?php $attr_onchange='' ?><?php $attr_title='' ?><?php $attr_class='' ?><select size="1" name="<?php echo $attr_name ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'subtypes','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='subtypes' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
+
+	// Wahr-Vergleich
+	if	( !empty($attr_true) )
+		$exec = $$attr_true == true;
+
+	// Falsch-Vergleich
+	elseif	( !empty($attr_false) )
+		$exec = $$attr_false != true;
+
+	// Inhalt-Vergleich mit Wertliste
+	elseif( !empty($attr_contains) )
+		$exec = in_array($$attr_var,explode(',',$attr_contains));
+				
+	// Inhalt-Vergleich
+	elseif( !empty($attr_var) )
+		$exec = $$attr_var == $attr_value;
+
+	// Vergleich auf leer
+	elseif	( !empty($attr_empty) )
+	{
+		if	( !isset($$attr_empty) )
+			$exec = true;
+		elseif	( is_array($$attr_empty) )
+			$exec = (count($$attr_empty)==0);
+		elseif	( is_bool($$attr_empty) )
+			$exec = true;
+		else
+			$exec = empty( $$attr_empty );
+	}
+
+	// Vergleich auf Vorhandensein
+	elseif	( !empty($attr_present) )
+	{
+		if	( !isset($$attr_present) )
+			$exec = false;
+		elseif	( is_array($$attr_present) )
+			$exec = (count($$attr_present)>0);
+		elseif	( is_bool($$attr_present) )
+			$exec = true;
+		elseif	( is_numeric($$attr_present) )
+			$exec = $$attr_present>=0;
+		else
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
+	}
+	else
+	{
+		die("error in IF");
+	}
+
+	// Ergebnis umdrehen
+	if  ( !empty($attr_invert) )
+		$exec = !$exec;
+
+	if	( $exec )
+	{
+?><?php unset($attr) ?><?php unset($attr_var) ?><?php unset($attr_value) ?><?php unset($attr_invert) ?><?php unset($attr_empty) ?><?php unset($attr_present) ?><?php unset($attr_contains) ?><?php unset($attr_true) ?><?php unset($attr_false) ?><?php $attr = array('list'=>'subtypes','name'=>'subtype','default'=>'','onchange'=>'','title'=>'','class'=>'') ?><?php $attr_list='subtypes' ?><?php $attr_name='subtype' ?><?php $attr_default='' ?><?php $attr_onchange='' ?><?php $attr_title='' ?><?php $attr_class='' ?><select size="1" name="<?php echo $attr_name ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
 if (count($$attr_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr_list as $box_key=>$box_value )
@@ -227,7 +298,82 @@ if (count($$attr_list)==1) echo ' disabled="disabled"'
 		}
 ?></select><?php
 if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" value="'.$box_key.'" />'
-?><?php unset($attr) ?><?php unset($attr_list) ?><?php unset($attr_name) ?><?php unset($attr_default) ?><?php unset($attr_onchange) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?><?php unset($attr) ?><?php unset($attr_list) ?><?php unset($attr_name) ?><?php unset($attr_default) ?><?php unset($attr_onchange) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php $attr = array() ?><?php
+	}
+?><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'true','empty'=>'','present'=>'subtypes','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='true' ?><?php $attr_empty='' ?><?php $attr_present='subtypes' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
+
+	// Wahr-Vergleich
+	if	( !empty($attr_true) )
+		$exec = $$attr_true == true;
+
+	// Falsch-Vergleich
+	elseif	( !empty($attr_false) )
+		$exec = $$attr_false != true;
+
+	// Inhalt-Vergleich mit Wertliste
+	elseif( !empty($attr_contains) )
+		$exec = in_array($$attr_var,explode(',',$attr_contains));
+				
+	// Inhalt-Vergleich
+	elseif( !empty($attr_var) )
+		$exec = $$attr_var == $attr_value;
+
+	// Vergleich auf leer
+	elseif	( !empty($attr_empty) )
+	{
+		if	( !isset($$attr_empty) )
+			$exec = true;
+		elseif	( is_array($$attr_empty) )
+			$exec = (count($$attr_empty)==0);
+		elseif	( is_bool($$attr_empty) )
+			$exec = true;
+		else
+			$exec = empty( $$attr_empty );
+	}
+
+	// Vergleich auf Vorhandensein
+	elseif	( !empty($attr_present) )
+	{
+		if	( !isset($$attr_present) )
+			$exec = false;
+		elseif	( is_array($$attr_present) )
+			$exec = (count($$attr_present)>0);
+		elseif	( is_bool($$attr_present) )
+			$exec = true;
+		elseif	( is_numeric($$attr_present) )
+			$exec = $$attr_present>=0;
+		else
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
+	}
+	else
+	{
+		die("error in IF");
+	}
+
+	// Ergebnis umdrehen
+	if  ( !empty($attr_invert) )
+		$exec = !$exec;
+
+	if	( $exec )
+	{
+?><?php unset($attr) ?><?php unset($attr_var) ?><?php unset($attr_value) ?><?php unset($attr_invert) ?><?php unset($attr_empty) ?><?php unset($attr_present) ?><?php unset($attr_contains) ?><?php unset($attr_true) ?><?php unset($attr_false) ?><?php $attr = array('class'=>'','default'=>'','type'=>'text','index'=>'','name'=>'subtype','prefix'=>'','value'=>'','size'=>'40','maxlength'=>'256','onchange'=>'') ?><?php $attr_class='' ?><?php $attr_default='' ?><?php $attr_type='text' ?><?php $attr_index='' ?><?php $attr_name='subtype' ?><?php $attr_prefix='' ?><?php $attr_value='' ?><?php $attr_size='40' ?><?php $attr_maxlength='256' ?><?php $attr_onchange='' ?><input name="<?php echo $attr_name ?>" size="<?php echo $attr_size ?>" maxlength="<?php echo $attr_maxlength ?>" class="<?php echo $attr_class ?>" value="<?php echo isset($$attr_name)?$$attr_name:$attr_default ?>" /><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_default) ?><?php unset($attr_type) ?><?php unset($attr_index) ?><?php unset($attr_name) ?><?php unset($attr_prefix) ?><?php unset($attr_value) ?><?php unset($attr_size) ?><?php unset($attr_maxlength) ?><?php unset($attr_onchange) ?><?php $attr = array() ?><?php
+	}
+?><?php unset($attr) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	}
 ?><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'with_icon','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='with_icon' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
 
@@ -354,7 +500,16 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','var'=>'','readonly'=>'false','name'=>'with_icon','prefix'=>'') ?><?php $attr_default='false' ?><?php $attr_var='' ?><?php $attr_readonly='false' ?><?php $attr_name='with_icon' ?><?php $attr_prefix='' ?><input type="checkbox" name="<?php echo !empty($$attr_var)?$attr_prefix.$$attr_var:$attr_name ?>" <?php if ($attr_readonly=='true') echo ' disabled="disabled"' ?> value="1" <?php if( ($attr_default=='true')||(isset($$attr_name)&&$$attr_name) ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_var) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_prefix) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','readonly'=>'false','name'=>'with_icon') ?><?php $attr_default='false' ?><?php $attr_readonly='false' ?><?php $attr_name='with_icon' ?><?php
+	$attr_name    = !empty($$attr_name)?$$attr_name:$attr_name;
+	$attr_readonly = ( $attr_readonly == 'true' );
+	$attr_default  = ( $attr_default  == 'true' );
+	
+	if	( isset($$attr_name) )
+		$checked = isset($$$attr_name)&& $$$attr_name==true;
+	else
+		$checked = $attr_default;
+?><input type="checkbox" name="<?php echo $attr_name  ?>" <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	}
 ?><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'all_languages','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='all_languages' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
 
@@ -481,7 +636,16 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','var'=>'','readonly'=>'false','name'=>'all_languages','prefix'=>'') ?><?php $attr_default='false' ?><?php $attr_var='' ?><?php $attr_readonly='false' ?><?php $attr_name='all_languages' ?><?php $attr_prefix='' ?><input type="checkbox" name="<?php echo !empty($$attr_var)?$attr_prefix.$$attr_var:$attr_name ?>" <?php if ($attr_readonly=='true') echo ' disabled="disabled"' ?> value="1" <?php if( ($attr_default=='true')||(isset($$attr_name)&&$$attr_name) ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_var) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_prefix) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','readonly'=>'false','name'=>'all_languages') ?><?php $attr_default='false' ?><?php $attr_readonly='false' ?><?php $attr_name='all_languages' ?><?php
+	$attr_name    = !empty($$attr_name)?$$attr_name:$attr_name;
+	$attr_readonly = ( $attr_readonly == 'true' );
+	$attr_default  = ( $attr_default  == 'true' );
+	
+	if	( isset($$attr_name) )
+		$checked = isset($$$attr_name)&& $$$attr_name==true;
+	else
+		$checked = $attr_default;
+?><input type="checkbox" name="<?php echo $attr_name  ?>" <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	}
 ?><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'writable','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='writable' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
 
@@ -608,7 +772,16 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','var'=>'','readonly'=>'false','name'=>'writable','prefix'=>'') ?><?php $attr_default='false' ?><?php $attr_var='' ?><?php $attr_readonly='false' ?><?php $attr_name='writable' ?><?php $attr_prefix='' ?><input type="checkbox" name="<?php echo !empty($$attr_var)?$attr_prefix.$$attr_var:$attr_name ?>" <?php if ($attr_readonly=='true') echo ' disabled="disabled"' ?> value="1" <?php if( ($attr_default=='true')||(isset($$attr_name)&&$$attr_name) ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_var) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_prefix) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','readonly'=>'false','name'=>'writable') ?><?php $attr_default='false' ?><?php $attr_readonly='false' ?><?php $attr_name='writable' ?><?php
+	$attr_name    = !empty($$attr_name)?$$attr_name:$attr_name;
+	$attr_readonly = ( $attr_readonly == 'true' );
+	$attr_default  = ( $attr_default  == 'true' );
+	
+	if	( isset($$attr_name) )
+		$checked = isset($$$attr_name)&& $$$attr_name==true;
+	else
+		$checked = $attr_default;
+?><input type="checkbox" name="<?php echo $attr_name  ?>" <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	}
 ?><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'width','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='width' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
 
@@ -1128,7 +1301,16 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','var'=>'','readonly'=>'false','name'=>'wiki','prefix'=>'') ?><?php $attr_default='false' ?><?php $attr_var='' ?><?php $attr_readonly='false' ?><?php $attr_name='wiki' ?><?php $attr_prefix='' ?><input type="checkbox" name="<?php echo !empty($$attr_var)?$attr_prefix.$$attr_var:$attr_name ?>" <?php if ($attr_readonly=='true') echo ' disabled="disabled"' ?> value="1" <?php if( ($attr_default=='true')||(isset($$attr_name)&&$$attr_name) ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_var) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_prefix) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','readonly'=>'false','name'=>'wiki') ?><?php $attr_default='false' ?><?php $attr_readonly='false' ?><?php $attr_name='wiki' ?><?php
+	$attr_name    = !empty($$attr_name)?$$attr_name:$attr_name;
+	$attr_readonly = ( $attr_readonly == 'true' );
+	$attr_default  = ( $attr_default  == 'true' );
+	
+	if	( isset($$attr_name) )
+		$checked = isset($$$attr_name)&& $$$attr_name==true;
+	else
+		$checked = $attr_default;
+?><input type="checkbox" name="<?php echo $attr_name  ?>" <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	}
 ?><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'html','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='html' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
 
@@ -1255,7 +1437,16 @@ if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" valu
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','var'=>'','readonly'=>'false','name'=>'html','prefix'=>'') ?><?php $attr_default='false' ?><?php $attr_var='' ?><?php $attr_readonly='false' ?><?php $attr_name='html' ?><?php $attr_prefix='' ?><input type="checkbox" name="<?php echo !empty($$attr_var)?$attr_prefix.$$attr_var:$attr_name ?>" <?php if ($attr_readonly=='true') echo ' disabled="disabled"' ?> value="1" <?php if( ($attr_default=='true')||(isset($$attr_name)&&$$attr_name) ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_var) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_prefix) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','readonly'=>'false','name'=>'html') ?><?php $attr_default='false' ?><?php $attr_readonly='false' ?><?php $attr_name='html' ?><?php
+	$attr_name    = !empty($$attr_name)?$$attr_name:$attr_name;
+	$attr_readonly = ( $attr_readonly == 'true' );
+	$attr_default  = ( $attr_default  == 'true' );
+	
+	if	( isset($$attr_name) )
+		$checked = isset($$$attr_name)&& $$$attr_name==true;
+	else
+		$checked = $attr_default;
+?><input type="checkbox" name="<?php echo $attr_name  ?>" <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	}
 ?><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'decimals','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='decimals' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
 

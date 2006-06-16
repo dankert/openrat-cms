@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2006-01-29 17:26:28  dankert
+// Revision 1.14  2006-06-16 19:45:05  dankert
+// Neues Templateelement "Kopie" (intern: "copy")
+//
+// Revision 1.13  2006/01/29 17:26:28  dankert
 // In Methode add() auch die Beschreibung speichern
 //
 // Revision 1.12  2005/11/07 22:34:01  dankert
@@ -348,7 +351,7 @@ class Element
 
 
 	/**
-	 * Abh?ngig vom Element-Typ werden die zur Darstellung notwendigen Eigenschaften ermittelt
+	 * Abhaengig vom Element-Typ werden die zur Darstellung notwendigen Eigenschaften ermittelt.
 	 * @return Array()
 	 */
 	function getRelatedProperties()
@@ -360,6 +363,7 @@ class Element
 		                  'link'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
 		                  'date'    =>Array('withIcon','allLanguages','writable','dateformat','defaultText'),
 		                  'list'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		                  'copy'    =>Array('subtype'),
 		                  'code'    =>Array('code'),
 		                  'dynamic' =>Array('subtype','code'),
 		                  'info'    =>Array('subtype'),
@@ -401,6 +405,7 @@ class Element
 		             'link',
 		             'date',
 		             'list',
+		             'copy',
 		             'code',
 		             'dynamic',
 		             'info',

@@ -1,13 +1,19 @@
 page
 	form
 		window name:GLOBAL_PREFS widths:30%,70%
-			
-			if present:subtypes
+			if present:subtype
 				row
 					cell class:fx
 						text text:ELEMENT_SUBTYPE
 					cell class:fx
-						selectbox name:subtype list:subtypes
+					
+						# Subtype ist eine Auswahlliste
+						if present:subtypes
+							selectbox name:subtype list:subtypes
+							
+						# Subtype ist ein einfaches Eingabefeld
+						if present:subtypes invert:true
+							input name:subtype
 			
 			if present:with_icon
 				row
