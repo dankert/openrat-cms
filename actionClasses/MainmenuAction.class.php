@@ -295,7 +295,7 @@ class MainmenuAction extends Action
 		$this->obj = &$folder;
 		$this->setTemplateVar('nr',$folder->objectid);
 
-		$folder->load();
+		$this->lastModified( $folder->lastchangeDate );
 
 		foreach( $folder->parentObjectNames(true,false) as $id=>$name )
 			$this->addPath($name,$name,Html::url('main','folder',$id),'folder');
