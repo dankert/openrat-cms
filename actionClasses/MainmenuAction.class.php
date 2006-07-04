@@ -20,7 +20,8 @@
 
 
 /**
- * Action-Klasse fuer die Darstellung des Untermenues
+ * Action-Klasse fuer die Darstellung des Untermenues.
+ * 
  * @author $Author$
  * @version $Revision$
  * @package openrat.actions
@@ -34,10 +35,19 @@ class MainmenuAction extends Action
 	var $obj;
 
 	
+	function MainmenuAction()
+	{
+		$this->Action(); // Elternklasse-Konstruktor
+		
+		$this->setTemplateVar('type',$this->getRequestVar( 'subaction') );
+	}
+	
+	
 	function element()
 	{
 		$this->subActionName = 'template';
-	
+		$this->setTemplateVar('type','template' );
+
 		$element = new Element( $this->getRequestId() );
 		$element->load();
 
@@ -389,7 +399,6 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('name'          ,$this->subActionName);
 		$this->setTemplateVar('css_body_class','menu'              );
 		
-		$this->setTemplateVar('type'          ,$this->getRequestVar( 'subaction') );
 		$this->setTemplateVar('path'          ,$this->path         );
 	}
 }
