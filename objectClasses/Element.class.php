@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2006-06-16 19:45:05  dankert
+// Revision 1.15  2006-07-04 20:48:14  dankert
+// Element "copy" hat nur Eigenschaft "defaultText"
+//
+// Revision 1.14  2006/06/16 19:45:05  dankert
 // Neues Templateelement "Kopie" (intern: "copy")
 //
 // Revision 1.13  2006/01/29 17:26:28  dankert
@@ -356,20 +359,18 @@ class Element
 	 */
 	function getRelatedProperties()
 	{
-		$typeprop = Array('text'    =>Array('withIcon','allLanguages','writable','html','wiki','defaultText'),
-		                  'longtext'=>Array('withIcon','allLanguages','writable','html','wiki','defaultText'),
-		                  'select'  =>Array('withIcon','allLanguages','writable','defaultText','code'),
-		                  'number'  =>Array('withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
-		                  'link'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		                  'date'    =>Array('withIcon','allLanguages','writable','dateformat','defaultText'),
-		                  'list'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		                  'copy'    =>Array('subtype'),
-		                  'code'    =>Array('code'),
-		                  'dynamic' =>Array('subtype','code'),
-		                  'info'    =>Array('subtype'),
-		                  'infodate'=>Array('subtype','dateformat') );
-		                  
-		return $typeprop[ $this->type ];
+		return Array('text'    =>Array('withIcon','allLanguages','writable','html','wiki','defaultText'),
+		             'longtext'=>Array('withIcon','allLanguages','writable','html','wiki','defaultText'),
+		             'select'  =>Array('withIcon','allLanguages','writable','defaultText','code'),
+		             'number'  =>Array('withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
+		             'link'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		             'date'    =>Array('withIcon','allLanguages','writable','dateformat','defaultText'),
+		             'list'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		             'copy'    =>Array('defaultText'),
+		             'code'    =>Array('code'),
+		             'dynamic' =>Array('subtype','code'),
+		             'info'    =>Array('subtype'),
+		             'infodate'=>Array('subtype','dateformat') );
 	}
 
 
