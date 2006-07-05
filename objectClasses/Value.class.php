@@ -519,6 +519,41 @@ class Value
 				break;
 
 
+			case 'copy':
+
+				list( $linkElementName, $targetElementName ) = explode( '%', $this->element->name );
+				
+				$t = new Template( $this->page->templateid );
+				$elementId = array_search( $linkElementName, $t->getElementNames() );
+				
+//				echo "<pre>";print_r($this); echo "</pre>";
+				$linkValue = new Value();
+				$linkValue->elementid = $elementId;
+				$linkValue->element   = new Element($elementId);
+				$linkValue->pageid = $this->pageid;
+				$linkValue->languageid = $this->languageid;
+				$linkValue->load();
+				
+				$linkedPage = new Page( $linkValue->linkToObjectId );
+				$linkedPage->load();
+//				echo "<pre>";print_r($linkValue->linkToObjectId); echo "</pre>";
+
+				$linkedPageTemplate = new Template( $linkedPage->templateid );
+				$targetElementId = array_search( $targetElementName, $linkedPageTemplate->getElementNames() );
+				
+				$targetValue = new Value();
+				$targetValue->elementid = $targetElementId;
+				$targetValue->element = new Element($targetElementId);
+				$targetValue->element->load();
+				$targetValue->pageid = $linkedPage->pageid;
+				$targetValue->generate();
+//				echo "<pre>";print_r($targetValue); echo "</pre>";
+				
+				$inhalt = $targetValue->value; 
+				
+				break;
+
+
 			case 'longtext':
 			case 'text':
 			case 'select':
