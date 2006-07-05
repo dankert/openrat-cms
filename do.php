@@ -44,6 +44,7 @@ define('OR_TEXTCLASSES_DIR'   ,'./textClasses/'    );
 define('OR_PREFERENCES_DIR'   ,'./config/openrat-cms/');
 define('OR_THEMES_DIR'        ,'./themes/'         );
 define('OR_TMP_DIR'           ,'./tmp/'            );
+define('OR_CONTROLLER_FILE'   ,'do'                );
 define('START_TIME'           ,time()              );
 
 require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
