@@ -185,18 +185,19 @@ class Html
 		}
 
 		// Session-Id ergaenzen
-		if	( $conf['interface']['url_sessionid'] )
+		if	( $conf['interface']['url']['add_sessionid'] )
 			$params[ session_name() ] = session_id();
 
-		$fake_urls = $conf['interface']['nice_urls'];
+		$fake_urls  = $conf['interface']['url']['fake_url' ];
+		$url_format = $conf['interface']['url']['url_format'];
 		
 		if	( isset($params['objectid']) && !isset($params['id']) )
 			$params['id'] = $params['objectid']; 
 
 		if	( $fake_urls )
 		{
-			if	( $id != '' )
-				$id = '.'.$id;
+//			if	( $id != '' )
+//				$id = '.'.$id;
 		}
 		else
 		{
@@ -220,9 +221,9 @@ class Html
 		}
 
 		if	( $fake_urls )
-			$src = './'.$action.','.$subaction.$id.$urlParameter;
+			$src = './'.sprintf( $url_format,$action,$subaction,$id ).$urlParameter;
 		else
-			$src = './'.'do.php'.$urlParameter;
+			$src = './'.OR_CONTROLLER_FILE.PHP_EXT.$urlParameter;
 
 		return $src;
 	}
