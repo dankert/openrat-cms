@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2006-07-04 20:48:14  dankert
+// Revision 1.16  2006-07-05 19:15:34  dankert
+// Bugfix getRelatedProperties()
+//
+// Revision 1.15  2006/07/04 20:48:14  dankert
 // Element "copy" hat nur Eigenschaft "defaultText"
 //
 // Revision 1.14  2006/06/16 19:45:05  dankert
@@ -359,18 +362,19 @@ class Element
 	 */
 	function getRelatedProperties()
 	{
-		return Array('text'    =>Array('withIcon','allLanguages','writable','html','wiki','defaultText'),
-		             'longtext'=>Array('withIcon','allLanguages','writable','html','wiki','defaultText'),
-		             'select'  =>Array('withIcon','allLanguages','writable','defaultText','code'),
-		             'number'  =>Array('withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
-		             'link'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		             'date'    =>Array('withIcon','allLanguages','writable','dateformat','defaultText'),
-		             'list'    =>Array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		             'copy'    =>Array('defaultText'),
-		             'code'    =>Array('code'),
-		             'dynamic' =>Array('subtype','code'),
-		             'info'    =>Array('subtype'),
-		             'infodate'=>Array('subtype','dateformat') );
+		$prp = array('text'    =>array('withIcon','allLanguages','writable','html','wiki','defaultText'),
+		             'longtext'=>array('withIcon','allLanguages','writable','html','wiki','defaultText'),
+		             'select'  =>array('withIcon','allLanguages','writable','defaultText','code'),
+		             'number'  =>array('withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
+		             'link'    =>array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		             'date'    =>array('withIcon','allLanguages','writable','dateformat','defaultText'),
+		             'list'    =>array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		             'copy'    =>array('defaultText'),
+		             'code'    =>array('code'),
+		             'dynamic' =>array('subtype','code'),
+		             'info'    =>array('subtype'),
+		             'infodate'=>array('subtype','dateformat') );
+		return $prp[ $this->type ];
 	}
 
 
@@ -472,7 +476,7 @@ class Element
 	function isWritable()
 	{
 		// Bei bestimmten Feldern immer false zurueckgeben
-		if	( in_array($this->type,Array('info','infodate','code','dynamic')) )
+		if	( in_array($this->type,Array('copy','info','infodate','code','dynamic')) )
 			return false;
 
 		return $this->writable;
