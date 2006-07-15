@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.23  2006-06-16 22:30:58  dankert
+// Revision 1.24  2006-07-15 22:18:08  dankert
+// Attribut "alias" auswerten.
+//
+// Revision 1.23  2006/06/16 22:30:58  dankert
 // Kommentare
 //
 // Revision 1.22  2006/06/16 21:26:29  dankert
@@ -216,9 +219,13 @@ class Action
 	 */
 	function forward( $tplName="" )
 	{
+
 		$this->setMenu();
 		$tplName = (method_exists(new ObjectAction(),$this->subActionName)?'object':$this->actionName).'/'.$this->subActionName;
 
+		if	(isset($this->actionConfig[$this->subActionName]['alias']))
+			$tplName = (method_exists(new ObjectAction(),$this->subActionName)?'object':$this->actionName).'/'.$this->actionConfig[$this->subActionName]['alias'];
+			
 		if	(isset($this->actionConfig[$this->subActionName]['target']))
 			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
 
@@ -472,9 +479,14 @@ class Action
 		
 		foreach( $menuList as $menuName )
 		{
+			if	( isset($this->actionConfig[$menuName]['alias']) )
+				$menuText = 'menu_'.$this->actionName.'_'.$this->actionConfig[$menuName]['alias'];
+			else
+				$menuText = 'menu_'.$this->actionName.'_'.$menuName;
+				
 			Logger::trace("testing menu $menuName");
 			if	( $this->checkMenu($menuName) )
-				$windowMenu[] = array('subaction'=>$menuName,'text'=>'menu_'.$this->actionName.'_'.$menuName);
+				$windowMenu[] = array('subaction'=>$menuName,'text'=>$menuText);
 		}
 		$this->setTemplateVar('windowMenu',$windowMenu);
 	}

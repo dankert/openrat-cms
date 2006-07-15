@@ -198,6 +198,13 @@ if	( in_array($action,array('page','file','link','folder')) )
 	Session::setSubaction( $subaction );
 
 $do->subActionName = $subaction;
+
+if	( isset($do->actionConfig[$do->subActionName]['alias']) )
+{
+	$subaction = $do->actionConfig[$do->subActionName]['alias'];
+//    $do->subActionName = $subaction;
+}
+
 $do->$subaction();
 
 if	( isset($do->actionConfig[$do->subActionName]['goto']) )
