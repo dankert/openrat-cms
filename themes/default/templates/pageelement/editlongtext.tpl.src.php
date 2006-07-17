@@ -96,7 +96,7 @@ END
 
 			row
 				cell colspan:2 class:fx
-					inputarea class:longtext name:text
+					inputarea class:longtext name:text rows:25 cols:70
 			
 RAW			
 <tr>
