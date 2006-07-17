@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.19  2006-01-29 17:18:59  dankert
+// Revision 1.20  2006-07-17 18:13:25  dankert
+// Neue Funktion "show()"
+//
+// Revision 1.19  2006/01/29 17:18:59  dankert
 // Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
 //
 // Revision 1.18  2005/01/27 00:02:47  dankert
@@ -110,6 +113,8 @@ class PageelementAction extends Action
 	 */
 	function PageelementAction()
 	{
+		$this->Action(); // Super-Konstruktor
+		
 		$this->value = new Value();
 
 		$this->page = Session::getObject();
@@ -136,6 +141,14 @@ class PageelementAction extends Action
 		}
 	}
 
+
+
+	function show()
+	{
+		$this->initedit();
+		$this->value->generate();
+		$this->setTemplateVar('value',$this->value->value);
+	}
 
 
 	/**
@@ -1063,6 +1076,7 @@ class PageelementAction extends Action
 		$value->page = new Page( $value->objectid );
 		$value->page->load();
 		
+
 		// Inhalt sofort freigegeben, wenn
 		// - Recht vorhanden
 		// - Freigabe gewuenscht
@@ -1090,6 +1104,7 @@ class PageelementAction extends Action
 			$value->save();
 		}
 
+		$this->addNotice('pageelement',$value->element->name,'SAVED','ok');
 		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
 //		// Falls ausgewaehlt die Seite sofort veroeffentlichen
@@ -1355,7 +1370,6 @@ class PageelementAction extends Action
 		
 		$this->afterSave($value);
 	}
-	
 }
 
 ?>
