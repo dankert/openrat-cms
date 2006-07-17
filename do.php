@@ -211,8 +211,15 @@ if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 {
 	$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
 	$do->subActionName = $subActionName;
-	Logger::trace("controller is calling next subaction '$subActionName'");
-	$do->$subActionName();
+	$subaction = $subActionName;
+	
+	if	( isset($do->actionConfig[$do->subActionName]['alias']) )
+	{
+		$subaction = $do->actionConfig[$do->subActionName]['alias'];
+	}
+	
+	Logger::trace("controller is calling next subaction '$subaction'");
+	$do->$subaction();
 }
 
 $do->setMenu();
