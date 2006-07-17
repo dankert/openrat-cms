@@ -34,46 +34,97 @@ menu=date
 target=savedate
 menu=date
 
+[diff]
+
+[diffdate]
+alias=diff
+menu=date
+
+[difftext]
+alias=diff
+menu=text
+
+[difflongtext]
+alias=diff
+menu=longtext
+
+[difflink]
+alias=diff
+menu=link
+
 [editdatecalendar]
 target=savedate
 menu=date
 
 [archive]
 menu=text
-target=diff
 
 [savedate]
 goto=show
 
+[archivedate]
+menu=date
+goto=archive
+target=diffdate
+
 [savetext]
-goto=show
+goto=showtext
 
 [savelongtext]
-goto=show
+goto=showlongtext
 
 [savelink]
-goto=show
+goto=showlink
+
+[showlink]
+alias=show
+menu=link
+
+[shownumber]
+alias=show
+menu=number
+
+[showdate]
+alias=show
+menu=date
+
+[showlongtext]
+alias=show
+menu=longtext
+
+[archivelink]
+menu=link
+alias=archive
+
+[archivelongtext]
+menu=longtext
+alias=archive
+target=difflongtext
+
+[archivedate]
+menu=date
+alias=archive
+target=diffdate
+
+[archivenumber]
+menu=number
+alias=archive
+target=diffnumber
 
 [savelist]
-goto=show
+goto=showlist
 
 [saveselect]
-goto=show
+goto=showselect
 
 [savenumber]
-goto=show
-
-[show]
-menu=text
-
-[diff]
-menu=text
+goto=shownumber
 
 [menu]
-longtext=editlongtext,archive
-text=edittext,archive
-link=editlink,archive
-list=editlist,archive
-select=editselect,archive
-number=editnumber,archive
-date=editdate,editdatecalendar,editdateform,archive
+longtext=showlongtext,editlongtext,archivelongtext
+text=showtext,edittext,archivetext
+link=showlink,editlink,archivelink
+list=showlist,editlist,archivelist
+select=showselect,editselect,archiveselect
+number=shownumber,editnumber,archivenumber
+date=showdate,editdate,editdatecalendar,editdateform,archivedate
