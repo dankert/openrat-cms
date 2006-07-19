@@ -33,16 +33,16 @@ class TreetitleAction extends Action
 
 	function show()
 	{
-		$windowMenu = array();
+//		$windowMenu = array();
+//
+//		$windowMenu[] = array( 'text'=>lang('GLOBAL_PROJECTS'),
+//		                       'url' =>Html::url('index','projectmenu'),
+//		                       'target'=>'_top' );
 
-		$windowMenu[] = array( 'text'=>lang('GLOBAL_PROJECTS'),
-		                       'url' =>Html::url('index','projectmenu'),
-		                       'target'=>'_top' );
-
-		if   ( $this->userIsAdmin() )
-			$windowMenu[] = array( 'text'=>lang('GLOBAL_ADMINISTRATION'),
-			                       'url' =>Html::url('index','administration'),
-			                       'target'=>'_top' );
+//		if   ( $this->userIsAdmin() )
+//			$windowMenu[] = array( 'text'=>lang('GLOBAL_ADMINISTRATION'),
+//			                       'url' =>Html::url('index','administration'),
+//			                       'target'=>'_top' );
 
 				
 		// Das aktuelle Projekt voreinstellen		
@@ -76,10 +76,22 @@ class TreetitleAction extends Action
 //			                       'target'=>'cms_main' );
 		}
 
-		$this->setTemplateVar('windowMenu',$windowMenu);
+//		$this->setTemplateVar('windowMenu',$windowMenu);
 		
 		// Ausgabe des Templates
-		$this->forward('menu');
+//		$this->forward('menu');
+	}
+	
+	
+	function checkMenu( $name )
+	{
+		switch( $name )
+		{
+			case 'administration':
+				return $this->userIsAdmin();
+			default:
+				return true;
+		}
 	}
 }
 
