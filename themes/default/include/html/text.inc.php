@@ -13,6 +13,8 @@
 	}
 	elseif (!empty($attr_text))
 		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_textvar))
+		$tmp_text = lang($$attr_textvar);
 	elseif (!empty($attr_var))
 		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
