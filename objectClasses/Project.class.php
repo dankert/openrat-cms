@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2006-06-01 20:58:11  dankert
+// Revision 1.10  2006-07-19 21:30:32  dankert
+// Beim Speichern auch ?ndern des Root-Folders
+//
+// Revision 1.9  2006/06/01 20:58:11  dankert
 // Projektwartung: Suche nach verlorenen Dateien.
 //
 // Revision 1.8  2004/12/29 20:18:20  dankert
@@ -202,6 +205,11 @@ class Project
 		$sql->setInt   ('projectid'          ,$this->projectid );
 
 		$db->query( $sql->query );
+		
+		$rootFolder = new Folder( $this->getRootObjectId() );
+		$rootFolder->load();
+		$rootFolder->filename = $this->name;
+		$rootFolder->save();
 	}
 
 
