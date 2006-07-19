@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.24  2006-07-15 22:18:08  dankert
+// Revision 1.25  2006-07-19 20:28:40  dankert
+// Attribut "alias" auswerten.
+//
+// Revision 1.24  2006/07/15 22:18:08  dankert
 // Attribut "alias" auswerten.
 //
 // Revision 1.23  2006/06/16 22:30:58  dankert
@@ -476,6 +479,11 @@ class Action
 		$windowMenu = array();
 		$name       = $this->actionConfig[$this->subActionName]['menu'];
 		$menuList   = explode(',',$this->actionConfig['menu'][$name]);
+
+		if	( isset($this->actionConfig[$this->subActionName]['action']))
+			$actionName = $this->actionConfig[$this->subActionName]['action'];
+		else
+			$actionName = $this->subActionName;
 		
 		foreach( $menuList as $menuName )
 		{
@@ -486,7 +494,10 @@ class Action
 				
 			Logger::trace("testing menu $menuName");
 			if	( $this->checkMenu($menuName) )
-				$windowMenu[] = array('subaction'=>$menuName,'text'=>$menuText);
+				$windowMenu[] = array('subaction'=>$menuName,
+                                      'text'     =>$menuText,
+                                      'title'    =>$menuText.'_DESC',
+                                      'url'=>Html::url($actionName,$menuName,$this->getRequestId()) );
 		}
 		$this->setTemplateVar('windowMenu',$windowMenu);
 	}
