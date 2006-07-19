@@ -14,9 +14,15 @@ page
 				text var:text title:text class:title
 		row
 			cell class:subaction
+			
+				# Schleife über alle Menüpunkte
 				list list:windowMenu extract:true
-					link url:url target:cms_main_main
+			
+					# Menüpunkt
+					link url:url target:cms_main_main title:title
 						text var:text
+						
+					# Trenner zwischen Menüpunkten
 					text raw:__
 
 RAW

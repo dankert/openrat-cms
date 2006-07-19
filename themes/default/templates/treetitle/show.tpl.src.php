@@ -13,20 +13,10 @@ page
 
 				text var:text title:text class:title
 		row
+			# Menüleiste
 			cell class:subaction
+				# Schleife über alle Menüpunkte
 				list list:windowMenu extract:true
-					link url:url target:_parent
-						text var:text
+					link url:url title:title target:_parent
+						text textvar:text
 					text raw:__
-
-RAW
-//<?php
-//			if	( hasLang('MENU_'.$act.'_KEY' ) )
-//			{
-//				$attrAccesskey = ' accesskey="'.lang('MENU_'.$act.'_KEY').'"';
-//				$title.=' ('.lang('GLOBAL_KEY').': ALT+'.lang('MENU_'.$act.'_KEY').')';
-//			}
-//			else
-//				$attrAccesskey = '';
-// ?>
-END
