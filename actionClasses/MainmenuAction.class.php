@@ -230,7 +230,11 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('nr',$this->getSessionVar('objectid'));
 
 		foreach( $folder->parentObjectNames(true,true) as $id=>$name )
+		{
+			if	( empty($name) )
+				$name = "($id)";
 			$this->addPath($name,$name,Html::url('main','folder',$id),'folder');
+		}
 
 		$this->setTemplateVar('text'  ,$file->name);
 
