@@ -36,14 +36,19 @@ class TemplateEngine
 	function compile( $tplName )
 	{
 		global $conf;
-		$srcFilename = 'themes/default/templates/'.$tplName.'.tpl.src.'.PHP_EXT;
-	
+		$srcOrmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.'.PHP_EXT;
+		$srcXmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.xml';
+		
+		if	( is_file($srcOrmlFilename) )
+			$srcFilename = $srcOrmlFilename;
+		elseif ( is_file($srcXmlFilename) )
+			$srcFilename = $srcXmlFilename;
+		else
+			// Wenn Vorlage (noch) nicht existiert
+			die( 'Template not found: '.$tplName );
+					
 		$filename = 'themes/default/pages/html/'.$tplName.'.tpl.'.PHP_EXT;
 		
-		// Wenn Vorlage (noch) nicht existiert
-		if	( !is_file($srcFilename) )
-			return;
-
 		// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausführen.		
 		if	( $conf['theme']['compiler']['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
 			return;
@@ -54,7 +59,7 @@ class TemplateEngine
 		Logger::debug("Compile template: ".$srcFilename.' to '.$filename);
 			
 		// Vorlage und Zieldatei oeffnen
-		$file = file( $srcFilename );
+		$document = $this->loadDocument( $srcFilename );
 		$outFile = fopen($filename,'w');
 
 		if	( !is_resource($outFile) )
@@ -63,75 +68,28 @@ class TemplateEngine
 		$raw     = false;
 		$openCmd = array();
 		
-		foreach( $file as $line )
+//		echo "<pre>";
+//		print_r($document);
+//		echo "</pre>";
+		
+		foreach( $document as $line )
 		{
-			$indent = strlen($line)-strlen(ltrim($line));  // Einzugstiefe
-			$line   = trim($line);                         // Inhalt der Zeile ohne Einzug
-
-			if	( empty($line) )  // Leerzeilen in Vorlage
-			{
-//				fwrite( $outFile,"\n" );
-				continue;
-			}
-			
-			// Im RAW-Modus wird die Vorlage einfach unbesehen kopiert.
-			if	( $line == 'RAW' )
-			{
-				$raw = true;
-				continue;
-			} 
-			if	( $line == 'END' )
-			{
-				$raw = false;
-				continue;
-			}
-			
-			// Kommentarzeilen
-			if	( substr($line,0,1)=='#' || substr($line,0,2)=='//')
-				continue;
-
-			if	( $raw )
-			{
-				fwrite($outFile,$line."\n");
-				continue;
-			}
-
-
-			$openCmdCopy = $openCmd;
-			krsort($openCmdCopy);
-			foreach($openCmdCopy as $idx=>$ccmd)
-			{
-				if	( $idx >= $indent )
-				{
-					$this->copyFileContents( $ccmd.'-end',$outFile,array() );
-					unset($openCmd[$idx]);
-				}
-			}
-
-			// Zeile parsen
-			$li = explode(' ',$line);
-			$attr = array();
-			foreach( $li as $nr=>$part )
-			{
-				if	($nr==0)
-					$cmd = $part;
-				else
-				{
-					$el = explode(':',$part,2);
-					if	( count($el) < 2 )
-						die( 'parser error in line: '.$line );
-						
-					list($a,$b) = $el;
-					$attr[$a]=$b;
-				}
+			if	( !isset($line['attributes']) )
+				$line['attributes'] = array();
 				
+			$line['attributes'] = $this->checkAttributes($line['tag'],$line['attributes']);
+				
+			if	( $line['tag'] == 'raw' )
+				fwrite( $outFile,$line['value']."\n");
+			elseif ( $line['type'] == 'open' )
+				$this->copyFileContents( $line['tag'],$outFile,$line['attributes'] );
+			elseif ( $line['type'] == 'complete' )
+			{
+				$this->copyFileContents( $line['tag'],$outFile,$line['attributes'] );
+				$this->copyFileContents( $line['tag'].'-end',$outFile,array() );
 			}
-			// $cmd  => enthaelt das Kommando
-			// $attr => enthaelt die Attribute
-			
-			$openCmd[$indent]=$cmd;
-			
-			$this->copyFileContents( $cmd,$outFile,$this->checkAttributes($cmd,$attr) );
+			elseif ( $line['type'] == 'close' )
+				$this->copyFileContents( $line['tag'].'-end',$outFile,array() );
 		}
 
 		// Am Ende der Datei alle offenen Tags schließen
@@ -222,6 +180,146 @@ class TemplateEngine
 		
 		return $checkedAttr;
 			
+	}
+	
+	
+	
+	function loadDocument( $filename )
+	{
+//		echo $filename.':';
+//		echo strrpos($filename,'.xml');
+//		echo '---';
+//		echo strlen($filename)-4;
+//		if	( strrpos('.xml',$filename) ==  strlen($filename)-3 )
+//			echo" a";
+//		else
+//			echo "b";
+		if	( strrpos($filename,'.xml') == strlen($filename)-4 )
+			return $this->loadXmlDocument( $filename );
+		else
+			return $this->loadOrmlDocument( $filename );
+	}
+
+
+	function loadXmlDocument( $filename )
+	{
+		$index = array();
+		$vals  = array();
+		$p = xml_parser_create();
+		xml_parser_set_option ( $p, XML_OPTION_CASE_FOLDING,false );
+		xml_parser_set_option ( $p, XML_OPTION_SKIP_WHITE,false );
+		xml_parse_into_struct($p, implode('',file($filename)), $vals, $index);
+		xml_parser_free($p);
+		
+		return $vals;
+	}
+
+
+	function loadOrmlDocument( $filename )
+	{
+		$vals  = array();
+
+		$raw     = false;
+		$openCmd = array();
+		
+		foreach( file($filename) as $line )
+		{
+			$indent = strlen($line)-strlen(ltrim($line));  // Einzugstiefe
+			$line   = trim($line);                         // Inhalt der Zeile ohne Einzug
+
+			if	( empty($line) )  // Leerzeilen in Vorlage
+			{
+				continue;
+			}
+			
+			// Im RAW-Modus wird die Vorlage einfach unbesehen kopiert.
+			if	( $line == 'RAW' )
+			{
+				$raw = true;
+				continue;
+			} 
+			if	( $line == 'END' )
+			{
+				$raw = false;
+				continue;
+			}
+			
+			// Kommentarzeilen
+			if	( substr($line,0,1)=='#' || substr($line,0,2)=='//')
+				continue;
+
+			if	( $raw )
+			{
+				$vals[] = array( 'tag'=>'raw',
+				                 'type'=>'close',
+				                 'value'=>$line,
+				                 'attributes'=>array(),
+				                 'level'=>$indent ); 
+				continue;
+			}
+
+
+			$openCmdCopy = $openCmd;
+			krsort($openCmdCopy);
+			foreach($openCmdCopy as $idx=>$ccmd)
+			{
+				if	( $idx >= $indent )
+				{
+					$vals[] = array( 'tag'=>$ccmd,
+					                 'type'=>'close',
+					                 'value'=>'',
+					                 'attributes'=>array(),
+					                 'level'=>$indent ); 
+					unset($openCmd[$idx]);
+				}
+			}
+
+			// Zeile parsen
+			$li = explode(' ',$line);
+			$attr = array();
+			foreach( $li as $nr=>$part )
+			{
+				if	($nr==0)
+					$cmd = $part;
+				else
+				{
+					$el = explode(':',$part,2);
+					if	( count($el) < 2 )
+						die( 'parser error in line: '.$line );
+						
+					list($a,$b) = $el;
+					$attr[$a]=$b;
+				}
+				
+			}
+			// $cmd  => enthaelt das Kommando
+			// $attr => enthaelt die Attribute
+			
+			$openCmd[$indent]=$cmd;
+
+			$vals[] = array( 'tag'=>$cmd,
+			                 'type'=>'open',
+			                 'value'=>'',
+			                 'attributes'=>$attr,
+			                 'level'=>$indent ); 
+		}
+
+		// Am Ende der Datei alle offenen Tags schließen
+		$openCmdCopy = $openCmd;
+		krsort($openCmdCopy);
+		foreach($openCmdCopy as $idx=>$ccmd)
+		{
+			$vals[] = array( 'tag'=>$ccmd,
+			                 'type'=>'close',
+			                 'value'=>'',
+			                 'attributes'=>array(),
+			                 'level'=>$indent ); 
+			
+			unset($openCmd[$idx]);
+		}
+
+		
+		return $vals;
 	}
 }
 
