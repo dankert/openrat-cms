@@ -1,0 +1,24 @@
+/* $Id$ */
+
+a:link,
+a:visited
+{
+	color:#BB0C0C;
+	font-weight:normal;
+	text-decoration:none;
+}
+a:active,
+a:hover
+{
+	color:#BB0C0C;
+	font-weight:normal;
+	text-decoration:underline;
+}
+
+
+td.subaction { background-color:#EED536; }
+
+td.menu
+{
+	background-color:#BB0C0C;
+}
