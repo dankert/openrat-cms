@@ -19,7 +19,13 @@
 		}
 		echo '<span class="title">'.lang($windowTitle).'</span>';
 		?>
-    </th>
+		</td><td class="menu" style="align:right;">
+    <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
+          {
+          	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.lang($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
+          }
+     ?>
+    </td>
   </tr>
   <tr><td class="subaction">
     <?php foreach( $windowMenu as $menu )
