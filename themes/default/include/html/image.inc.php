@@ -1,8 +1,19 @@
 <?php
 if (!empty($attr_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$$attr_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
-} elseif (!empty($attr_type)) {
+} elseif(!empty($attr_config)) {
+		global $conf;
+		$c = $conf;
+		$path = explode('/',$attr_config);
+		foreach($path as $part)
+			$c = $c[$part]; 
+		$tmp_url = $c;
+?><img src="<?php echo $tmp_url ?>" border="0" align="<?php echo $attr_align ?>"><?php
+	}   
+elseif (!empty($attr_type)) {
 ?><img src="<?php echo $image_dir.'icon_'.$$attr_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
+} elseif (!empty($attr_icon)) {
+?><img src="<?php echo $image_dir.'icon_'.$attr_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (!empty($$attr_url)) {
 ?><img src="<?php echo $$attr_url ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (!empty($attr_file)) {
