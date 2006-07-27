@@ -1,13 +1,13 @@
 page
 	form action:index subaction:login target:_top
-		window title:GLOBAL_LOGIN name:login width:400
+		window title:GLOBAL_LOGIN name:login width:400 icon:user
 
 			if present:logo
 				row
 					cell colspan:2
 						if present:logo_url
-							link url:logo_url target:_top
-								image url:logo
+							link config:login/logo_url target:_top
+								image config:login/logo
 						if empty:logo_url
 							image url:logo
 
@@ -18,7 +18,7 @@ page
 
 			if true:nologin
 				row
-					cell class:help colspan:2
+					cell class:help colspan:2 
 						text text:LOGIN_NOLOGIN_DESC
 
 			if true:readonly
@@ -33,6 +33,9 @@ page
 
 			if false:nologin
 				row
+					cell class:logo colspan:2
+						logo name:login
+				row
 					cell class:fx width:50%
 						text text:USER_USERNAME
 					cell class:fx width:50%
@@ -42,7 +45,7 @@ page
 						text text:USER_PASSWORD
 					cell class:fx width:50%
 						password name:login_password default: size:25
-
+	
 				row
 					cell class:fx width:50%
 						text text:GLOBAL_DATABASE
