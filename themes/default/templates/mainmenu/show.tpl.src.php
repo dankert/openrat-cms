@@ -6,20 +6,25 @@ page
 				image type:type
 
 				list list:path extract:true value:xy
-					#image type:icon
+
 					link url:url title:title class:path target:cms_main
 						text var:name maxlength:20
 					char type:filesep
 
 				text var:text title:text class:title
+			cell class:menu style:text-align:right;
+				list list:windowIcons extract:true
+					#text raw:_
+					link var:url target:_top
+						image type:type align:middle
 		row
-			cell class:subaction
+			cell class:subaction colspan:2
 			
 				# Schleife über alle Menüpunkte
 				list list:windowMenu extract:true
 			
 					# Menüpunkt
-					link url:url target:cms_main_main title:title
+					link var:url target:cms_main_main title:title
 						text var:text
 						
 					# Trenner zwischen Menüpunkten
