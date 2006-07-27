@@ -231,8 +231,6 @@ class MainmenuAction extends Action
 
 		foreach( $folder->parentObjectNames(true,true) as $id=>$name )
 		{
-			if	( empty($name) )
-				$name = "($id)";
 			$this->addPath($name,$name,Html::url('main','folder',$id),'folder');
 		}
 
@@ -394,6 +392,13 @@ class MainmenuAction extends Action
 
 	function show()
 	{
+		$this->setTemplateVar('windowIcons',array( array('url'   =>Html::url('index','projectmenu'),
+		                                                 'target'=>'_top',
+		                                                 'type'  =>'min'),
+		                                           array('url'   =>Html::url('index','logout'),
+		                                                 'target'=>'_top',
+		                                                 'type'  =>'close')
+		                                                                            ) );
 		$this->setTemplateVar('actionid',$this->getRequestId() );
 		$this->setTemplateVar('action'  ,$this->subActionName  );
 
