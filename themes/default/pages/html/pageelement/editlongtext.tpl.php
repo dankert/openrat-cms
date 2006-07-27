@@ -1,4 +1,4 @@
-<?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php $attr = array('class'=>'main') ?><?php $attr_class='main' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
@@ -12,7 +12,7 @@
 <?php } ?>
 </head>
 
-<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
+<body class="<?php echo $attr_class ?>">
 
 
 <?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('action'=>'','subaction'=>'','id'=>'','name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr_action='' ?><?php $attr_subaction='' ?><?php $attr_id='' ?><?php $attr_name='' ?><?php $attr_target='_self' ?><?php $attr_method='post' ?><?php $attr_enctype='application/x-www-form-urlencoded' ?><?php
@@ -168,7 +168,7 @@ insert('text',"\n|","| |\n| | |\n");
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('title'=>'','class'=>'','var'=>'desc','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='desc' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('title'=>'','class'=>'','var'=>'desc','text'=>'','textvar'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='desc' ?><?php $attr_text='' ?><?php $attr_textvar='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
 	if(empty($attr_title)) $attr_title = $attr_text;
 ?><span class="<?php echo $attr_class ?>"><?php
 	if (!empty($attr_array))
@@ -183,6 +183,8 @@ insert('text',"\n|","| |\n| | |\n");
 	}
 	elseif (!empty($attr_text))
 		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_textvar))
+		$tmp_text = lang($$attr_textvar);
 	elseif (!empty($attr_var))
 		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
@@ -193,7 +195,7 @@ insert('text',"\n|","| |\n| | |\n");
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'preview_text','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='preview_text' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_textvar) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'preview_text','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='preview_text' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
 
 	// Wahr-Vergleich
 	if	( !empty($attr_true) )
@@ -224,7 +226,7 @@ insert('text',"\n|","| |\n| | |\n");
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
+	// Vergleich auf Vorhandensein
 	elseif	( !empty($attr_present) )
 	{
 		if	( !isset($$attr_present) )
@@ -236,7 +238,22 @@ insert('text',"\n|","| |\n| | |\n");
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
+	}
+
+	// Vergleich auf nicht-leer
+	elseif	( !empty($attr_notempty) )
+	{
+		if	( !isset($$attr_notempty) )
+			$exec = false;
+		elseif	( is_array($$attr_notempty) )
+			$exec = (count($$attr_notempty)>0);
+		elseif	( is_bool($$attr_notempty) )
+			$exec = true;
+		elseif	( is_numeric($$attr_notempty) )
+			$exec = $$attr_notempty>=0;
+		else
+			$exec = !empty( $$attr_notempty );
 	}
 	else
 	{
@@ -268,7 +285,7 @@ insert('text',"\n|","| |\n| | |\n");
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('title'=>'','class'=>'','var'=>'preview_text','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='preview_text' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('title'=>'','class'=>'','var'=>'preview_text','text'=>'','textvar'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='preview_text' ?><?php $attr_text='' ?><?php $attr_textvar='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
 	if(empty($attr_title)) $attr_title = $attr_text;
 ?><span class="<?php echo $attr_class ?>"><?php
 	if (!empty($attr_array))
@@ -283,6 +300,8 @@ insert('text',"\n|","| |\n| | |\n");
 	}
 	elseif (!empty($attr_text))
 		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_textvar))
+		$tmp_text = lang($$attr_textvar);
 	elseif (!empty($attr_var))
 		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
@@ -293,7 +312,7 @@ insert('text',"\n|","| |\n| | |\n");
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php editBar() ?>
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_textvar) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php editBar() ?>
 <?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	}
 ?><?php unset($attr) ?><?php $attr = array() ?><?php
@@ -315,7 +334,7 @@ insert('text',"\n|","| |\n| | |\n");
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('name'=>'text','rows'=>'10','cols'=>'40','value'=>'','index'=>'','onchange'=>'','prefix'=>'','class'=>'longtext','default'=>'') ?><?php $attr_name='text' ?><?php $attr_rows='10' ?><?php $attr_cols='40' ?><?php $attr_value='' ?><?php $attr_index='' ?><?php $attr_onchange='' ?><?php $attr_prefix='' ?><?php $attr_class='longtext' ?><?php $attr_default='' ?><textarea name="<?php echo $attr_name ?>" rows="<?php echo $attr_rows ?>" cols="<?php echo $attr_cols ?>"><?php echo htmlentities(isset($$attr_name)?$$attr_name:$attr_default) ?></textarea><?php unset($attr) ?><?php unset($attr_name) ?><?php unset($attr_rows) ?><?php unset($attr_cols) ?><?php unset($attr_value) ?><?php unset($attr_index) ?><?php unset($attr_onchange) ?><?php unset($attr_prefix) ?><?php unset($attr_class) ?><?php unset($attr_default) ?><tr>
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('name'=>'text','rows'=>'25','cols'=>'70','value'=>'','index'=>'','onchange'=>'','prefix'=>'','class'=>'longtext','default'=>'') ?><?php $attr_name='text' ?><?php $attr_rows='25' ?><?php $attr_cols='70' ?><?php $attr_value='' ?><?php $attr_index='' ?><?php $attr_onchange='' ?><?php $attr_prefix='' ?><?php $attr_class='longtext' ?><?php $attr_default='' ?><textarea class="<?php echo $attr_class ?>" name="<?php echo $attr_name ?>" rows="<?php echo $attr_rows ?>" cols="<?php echo $attr_cols ?>"><?php echo htmlentities(isset($$attr_name)?$$attr_name:$attr_default) ?></textarea><?php unset($attr) ?><?php unset($attr_name) ?><?php unset($attr_rows) ?><?php unset($attr_cols) ?><?php unset($attr_value) ?><?php unset($attr_index) ?><?php unset($attr_onchange) ?><?php unset($attr_prefix) ?><?php unset($attr_class) ?><?php unset($attr_default) ?><tr>
 <td class="f2"><?php if ( $release ) echo Html::checkBox('release',true).' '.lang('GLOBAL_RELEASE') ?></td>
 <td class="f2"><?php echo Html::checkBox('html',$html,false) ?> <span title="<?php echo lang('EL_PROP_HTML_DESC') ?>"><?php echo lang('EL_PROP_HTML') ?></span></td>
 </tr>

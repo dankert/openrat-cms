@@ -1,4 +1,4 @@
-<?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php $attr = array('class'=>'main') ?><?php $attr_class='main' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
@@ -12,10 +12,10 @@
 <?php } ?>
 </head>
 
-<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
+<body class="<?php echo $attr_class ?>">
 
 
-<?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('title'=>'GLOBAL_PROJECTS','name'=>'login','icon'=>'','widths'=>'','width'=>'400') ?><?php $attr_title='GLOBAL_PROJECTS' ?><?php $attr_name='login' ?><?php $attr_icon='' ?><?php $attr_widths='' ?><?php $attr_width='400' ?><?php
+<?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('title'=>'GLOBAL_PROJECTS','name'=>'login','icon'=>'project','widths'=>'','width'=>'400') ?><?php $attr_title='GLOBAL_PROJECTS' ?><?php $attr_name='login' ?><?php $attr_icon='project' ?><?php $attr_widths='' ?><?php $attr_width='400' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr_widths))
 	{
@@ -72,7 +72,26 @@
 
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php $attr = array('list'=>'el','extract'=>'true','key'=>'list_key','value'=>'list_value') ?><?php $attr_list='el' ?><?php $attr_extract='true' ?><?php $attr_key='list_key' ?><?php $attr_value='list_value' ?><?php
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php $attr = array() ?><?php
+	global $fx;
+	if	( $fx =='f1')
+		$fx='f2';
+	else $fx='f1';
+	
+	global $cell_column_nr;
+	$cell_column_nr=0;
+
+?><tr><?php unset($attr) ?><?php $attr = array('width'=>'','style'=>'','class'=>'logo','colspan'=>'2') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='logo' ?><?php $attr_colspan='2' ?><?php
+	global $fx;
+	if (!isset($attr_class)) $attr_class='';
+	if ($attr_class=='fx') $attr['class']=$fx;
+	
+	global $cell_column_nr;
+	$cell_column_nr++;
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
+		$attr['width']=$column_widths[$cell_column_nr-1];
+		
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('name'=>'projectmenu') ?><?php $attr_name='projectmenu' ?><img src="<?php echo $image_dir.'logo_'.$attr_name.IMG_ICON_EXT ?>" border="0" align="left"><h2 class="logo"><?php echo lang('logo_'.$attr_name) ?></h2><p class="logo"><?php echo lang('logo_'.$attr_name.'_text') ?></p><?php unset($attr) ?><?php unset($attr_name) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array('list'=>'el','extract'=>'true','key'=>'list_key','value'=>'list_value') ?><?php $attr_list='el' ?><?php $attr_extract='true' ?><?php $attr_key='list_key' ?><?php $attr_value='list_value' ?><?php
 	$list_tmp_key   = $attr_key;
 	$list_tmp_value = $attr_value;
 	$list_extract   = ($attr_extract=='true');
@@ -108,20 +127,30 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('title'=>'TREE_CHOOSE_PROJECT','target'=>'','url'=>'url','class'=>'','action'=>'','subaction'=>'','id'=>'','var1'=>'','value1'=>'') ?><?php $attr_title='TREE_CHOOSE_PROJECT' ?><?php $attr_target='' ?><?php $attr_url='url' ?><?php $attr_class='' ?><?php $attr_action='' ?><?php $attr_subaction='' ?><?php $attr_id='' ?><?php $attr_var1='' ?><?php $attr_value1='' ?><?php
-	if(!empty($attr_url))
-		$tmp_url = $$attr_url;
-	else
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('title'=>'TREE_CHOOSE_PROJECT','config'=>'','target'=>'','var'=>'url','url'=>'','class'=>'','action'=>'','subaction'=>'','id'=>'','var1'=>'','value1'=>'') ?><?php $attr_title='TREE_CHOOSE_PROJECT' ?><?php $attr_config='' ?><?php $attr_target='' ?><?php $attr_var='url' ?><?php $attr_url='' ?><?php $attr_class='' ?><?php $attr_action='' ?><?php $attr_subaction='' ?><?php $attr_id='' ?><?php $attr_var1='' ?><?php $attr_value1='' ?><?php
+	if	(!empty($attr_action))
+	{
 		$tmp_url = Html::url($attr_action,$attr_subaction,!empty($$attr_id)?$$attr_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr_class ?>" target="<?php echo $attr_target ?>" title="<?php echo hasLang($attr_title)?lang($attr_title):lang($$attr_title) ?>"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_target) ?><?php unset($attr_url) ?><?php unset($attr_class) ?><?php unset($attr_action) ?><?php unset($attr_subaction) ?><?php unset($attr_id) ?><?php unset($attr_var1) ?><?php unset($attr_value1) ?><?php $attr = array('var'=>'project','value'=>'project') ?><?php $attr_var='project' ?><?php $attr_value='project' ?><?php $$attr_var = $attr_value ?><?php unset($attr) ?><?php unset($attr_var) ?><?php unset($attr_value) ?><?php $attr = array('file'=>'','url'=>'','align'=>'left','type'=>'project','elementtype'=>'') ?><?php $attr_file='' ?><?php $attr_url='' ?><?php $attr_align='left' ?><?php $attr_type='project' ?><?php $attr_elementtype='' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr_class ?>" target="<?php echo $attr_target ?>" title="<?php echo hasLang($attr_title)?lang($attr_title):lang($$attr_title) ?>"><?php } ?><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_config) ?><?php unset($attr_target) ?><?php unset($attr_var) ?><?php unset($attr_url) ?><?php unset($attr_class) ?><?php unset($attr_action) ?><?php unset($attr_subaction) ?><?php unset($attr_id) ?><?php unset($attr_var1) ?><?php unset($attr_value1) ?><a href="<?php echo $url ?>" class="" target="" title="TREE_CHOOSE_PROJECT"><?php $attr = array('var'=>'project','value'=>'project') ?><?php $attr_var='project' ?><?php $attr_value='project' ?><?php $$attr_var = $attr_value ?><?php unset($attr) ?><?php unset($attr_var) ?><?php unset($attr_value) ?><?php $attr = array('config'=>'','file'=>'','url'=>'','icon'=>'','align'=>'left','type'=>'project','elementtype'=>'') ?><?php $attr_config='' ?><?php $attr_file='' ?><?php $attr_url='' ?><?php $attr_icon='' ?><?php $attr_align='left' ?><?php $attr_type='project' ?><?php $attr_elementtype='' ?><?php
 if (!empty($attr_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$$attr_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
-} elseif (!empty($attr_type)) {
+} elseif(!empty($attr_config)) {
+		global $conf;
+		$c = $conf;
+		$path = explode('/',$attr_config);
+		foreach($path as $part)
+			$c = $c[$part]; 
+		$tmp_url = $c;
+?><img src="<?php echo $tmp_url ?>" border="0" align="<?php echo $attr_align ?>"><?php
+	}   
+elseif (!empty($attr_type)) {
 ?><img src="<?php echo $image_dir.'icon_'.$$attr_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
+} elseif (!empty($attr_icon)) {
+?><img src="<?php echo $image_dir.'icon_'.$attr_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (!empty($$attr_url)) {
 ?><img src="<?php echo $$attr_url ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (!empty($attr_file)) {
-?><img src="<?php echo $image_dir.$$attr_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php } ?><?php unset($attr) ?><?php unset($attr_file) ?><?php unset($attr_url) ?><?php unset($attr_align) ?><?php unset($attr_type) ?><?php unset($attr_elementtype) ?><?php $attr = array('title'=>'','class'=>'','var'=>'name','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='name' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
+?><img src="<?php echo $image_dir.$$attr_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php } ?><?php unset($attr) ?><?php unset($attr_config) ?><?php unset($attr_file) ?><?php unset($attr_url) ?><?php unset($attr_icon) ?><?php unset($attr_align) ?><?php unset($attr_type) ?><?php unset($attr_elementtype) ?><?php $attr = array('title'=>'','class'=>'','var'=>'name','text'=>'','textvar'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='name' ?><?php $attr_text='' ?><?php $attr_textvar='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
 	if(empty($attr_title)) $attr_title = $attr_text;
 ?><span class="<?php echo $attr_class ?>"><?php
 	if (!empty($attr_array))
@@ -136,6 +165,8 @@ if (!empty($attr_elementtype)) {
 	}
 	elseif (!empty($attr_text))
 		$tmp_text = lang($attr_text);
+	elseif (!empty($attr_textvar))
+		$tmp_text = lang($$attr_textvar);
 	elseif (!empty($attr_var))
 		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
@@ -146,7 +177,7 @@ if (!empty($attr_elementtype)) {
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?></a><?php unset($attr) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php } ?><?php unset($attr) ?><?php $attr = array() ?>      </table>
+?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_textvar) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?></a><?php unset($attr) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php } ?><?php unset($attr) ?><?php $attr = array() ?>      </table>
 	</td>
   </tr>
 </table>
