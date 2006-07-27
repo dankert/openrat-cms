@@ -68,49 +68,53 @@ class TemplateEngine
 		$raw     = false;
 		$openCmd = array();
 		
-//		echo "<pre>";
-//		print_r($document);
-//		echo "</pre>";
-		
 		foreach( $document as $line )
 		{
-			if	( !isset($line['attributes']) )
-				$line['attributes'] = array();
-				
-			$line['attributes'] = $this->checkAttributes($line['tag'],$line['attributes']);
-				
-			if	( $line['tag'] == 'raw' )
-				fwrite( $outFile,$line['value']."\n");
-			elseif ( $line['type'] == 'open' )
-				$this->copyFileContents( $line['tag'],$outFile,$line['attributes'] );
-			elseif ( $line['type'] == 'complete' )
-			{
-				$this->copyFileContents( $line['tag'],$outFile,$line['attributes'] );
-				$this->copyFileContents( $line['tag'].'-end',$outFile,array() );
-			}
-			elseif ( $line['type'] == 'close' )
-				$this->copyFileContents( $line['tag'].'-end',$outFile,array() );
-		}
+			// Initialisieren der möglichen Element-Inhalte
+			$type       = '';
+			$attributes = array();
+			$value      = '';
+			$tag        = '';
 
-		// Am Ende der Datei alle offenen Tags schließen
-		$openCmdCopy = $openCmd;
-		krsort($openCmdCopy);
-		foreach($openCmdCopy as $idx=>$ccmd)
-		{
-			$this->copyFileContents( $ccmd.'-end',$outFile,array() );
-			unset($openCmd[$idx]);
+
+			// Setzt: $tag, $attributes, $value, $type
+			extract( $line );
+			
+			if	($type == 'complete' || $type == 'open')
+				$attributes = $this->checkAttributes($tag,$attributes);
+				
+			if	( $tag == 'raw' )
+				fwrite( $outFile,$value."\n");
+			elseif ( $type == 'open' )
+				$this->copyFileContents( $tag,$outFile,$attributes );
+			elseif ( $type == 'complete' )
+			{
+				$this->copyFileContents( $tag,$outFile,$attributes );
+				$this->copyFileContents( $tag.'-end',$outFile,array() );
+			}
+			elseif ( $type == 'close' )
+				$this->copyFileContents( $tag.'-end',$outFile,array() );
 		}
 
 		fclose($outFile);
 	}
 	
 	
+
+	function getElementValue( $elFilename,$attributes )
+	{
+		extract($attributes);
+		require($elFilename);
+		return $value;
+	}
 	
+		
 	function copyFileContents( $infile,$outFileHandler,$attr )
 	{
 		global $conf;
 //		Logger::debug("Inserting template command: ".$infile);
 		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
+		$elFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.el.' .PHP_EXT;
 		if	( !is_file($inFileName) )
 			if	( count($attr)==0 )
 				return;
@@ -140,6 +144,11 @@ class TemplateEngine
 			fwrite( $outFileHandler,'<?php unset($attr_'.$attrName.') ?>');
 //		foreach( $attr as $attrName=>$attrValue )
 //			fwrite( $outFileHandler,'<?php unset($'.$attrName.') ? >');
+
+		if	( is_file($elFileName) )
+		{
+			fwrite( $outFileHandler, $this->getElementValue( $elFileName,$attr) );
+		}
 	}
 	
 	
@@ -186,15 +195,7 @@ class TemplateEngine
 	
 	function loadDocument( $filename )
 	{
-//		echo $filename.':';
-//		echo strrpos($filename,'.xml');
-//		echo '---';
-//		echo strlen($filename)-4;
-//		if	( strrpos('.xml',$filename) ==  strlen($filename)-3 )
-//			echo" a";
-//		else
-//			echo "b";
-		if	( strrpos($filename,'.xml') == strlen($filename)-4 )
+		if	( substr($filename,-4)=='.xml')
 			return $this->loadXmlDocument( $filename );
 		else
 			return $this->loadOrmlDocument( $filename );
