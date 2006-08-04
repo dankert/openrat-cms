@@ -7,6 +7,10 @@ goto=show
 [edit]
 menu=edit
 
+[replace]
+menu=edit
+goto=edit
+
 [editvalue]
 menu=edit
 target=savevalue
