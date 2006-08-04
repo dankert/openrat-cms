@@ -171,6 +171,7 @@ class TemplateEngine
 				continue;
 				
 			list($a,$default) = explode(':',$al.':');
+			$default = str_replace('COMMA',',',$default);
 			if	( isset($attr[$a]))
 				$checkedAttr[$a]=$attr[$a];
 			else
