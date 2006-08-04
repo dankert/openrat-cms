@@ -5,11 +5,16 @@
 		$column_widths = explode(',',$attr_widths);
 		unset($attr['widths']);
 	}
-	if	(!empty($attr_classes))
+	if	(!empty($attr_rowclasses))
 	{
-		$row_classes   = explode(',',$attr_classes);
+		$row_classes   = explode(',',$attr_rowclasses);
 		$row_class_idx = 999;
-		unset($attr['classes']);
+		unset($attr['rowclasses']);
+	}
+	if	(!empty($attr_columnclasses))
+	{
+		$column_classes = explode(',',$attr_columnclasses);
+		unset($attr['columnclasses']);
 	}
 		global $image_dir;
 		echo '<br/><br/><br/><center>';

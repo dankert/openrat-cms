@@ -7,8 +7,15 @@
 	}
 	if	(!empty($attr_classes))
 	{
-		$row_classes   = explode(',',$attr_classes);
+		$row_classes   = explode(',',$attr_rowclasses);
 		$row_class_idx = 999;
-		unset($attr['classes']);
+		unset($attr['rowclasses']);
 	}
+	if	(!empty($attr_columnclasses))
+	{
+		$column_classes   = explode(',',$attr_columnclasses);
+
+		unset($attr['columnclasses']);
+	}
+	
 ?><table class="<?php echo $attr_class ?>" cellspacing="<?php echo $attr_space ?>" width="<?php echo $attr_width ?>" cellpadding="<?php echo $attr_padding ?>">
