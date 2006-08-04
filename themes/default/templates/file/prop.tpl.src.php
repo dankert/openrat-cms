@@ -1,27 +1,26 @@
 page
-
 	form
-		window icon:folder widths:50%,50%
+		window icon:folder widths:50%,50% classes:f1,f2
 			row
-				cell class:fx
+				cell
 					text text:global_name
-				cell class:fx
-					input name:name size:50
+				cell
+					input name:name size:50 class:name
 			row
-				cell class:fx
+				cell
 					text text:global_filename
-				cell class:fx
-					input name:filename
+				cell
+					input name:filename class:filename
 			row
-				cell class:fx
+				cell
 					text text:file_extension
-				cell class:fx
-					input name:extension size:10
+				cell
+					input name:extension size:10 class:extension
 			row
-				cell class:fx
+				cell
 					text text:global_description
-				cell class:fx
-					inputarea name:description
+				cell
+					inputarea name:description class:description
 			row
 				cell colspan:2
 					button type:ok

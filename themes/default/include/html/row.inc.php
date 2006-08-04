@@ -1,9 +1,9 @@
 <?php
-	global $fx;
-	if	( $fx =='f1')
-		$fx='f2';
-	else $fx='f1';
-	
+	$row_class_idx++;
+	if ($row_class_idx > count($row_classes))
+		$row_class_idx=1;
+	$row_class=$row_classes[$row_class_idx-1];
+
 	global $cell_column_nr;
 	$cell_column_nr=0;
 

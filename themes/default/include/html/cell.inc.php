@@ -1,7 +1,6 @@
 <?php
-	global $fx;
-	if (!isset($attr_class)) $attr_class='';
-	if ($attr_class=='fx') $attr['class']=$fx;
+	if (empty($attr_class))
+		$attr['class']=$row_class;
 	
 	global $cell_column_nr;
 	$cell_column_nr++;

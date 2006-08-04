@@ -5,6 +5,12 @@
 		$column_widths = explode(',',$attr_widths);
 		unset($attr['widths']);
 	}
+	if	(!empty($attr_classes))
+	{
+		$row_classes   = explode(',',$attr_classes);
+		$row_class_idx = 999;
+		unset($attr['classes']);
+	}
 		global $image_dir;
 		echo '<br/><br/><br/><center>';
 		echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr_width.'">';
