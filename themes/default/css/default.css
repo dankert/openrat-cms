@@ -257,9 +257,16 @@ td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
 td.subaction { background-color:#cac2a6; }
 
-td.f1
+tr.f1
 {
 	background-color:#cac2a6;
+}
+tr.f2
+{
+	background-color:#c1bba0;
+}
+td.f1
+{
 	padding:5px;
 	border-top:5px solid #dad2b6;
 	border-left:3px solid #dad2b6;
@@ -268,7 +275,6 @@ td.f1
 }
 td.f2
 {
-	background-color:#c1bba0;
 	padding:5px;
 	border-top:5px solid #dad2b6;
 	border-left:3px solid #dad2b6;
@@ -287,6 +293,33 @@ table.main
 {
 	border:3px solid gray;
 	background-color:white;
+}
+
+
+input,
+textarea
+{
+	border:2px solid gray;
+	padding:5px;
+}
+
+input:hover,
+textarea:hover
+{
+	border:2px solid black;
+}
+
+input:focus,
+textarea:focus
+{
+	background-color:#7B9CBD;
+	border:2px solid red;
+}
+
+tr.f1:hover,
+tr.f2:hover
+{
+	xbackground-color:#FF0000;
 }
 
 input.submit,
