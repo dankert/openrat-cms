@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.22  2006-01-23 23:10:16  dankert
+// Revision 1.23  2006-08-04 19:05:55  dankert
+// Aktivieren von Registrierung und Kennwort-vergessen
+//
+// Revision 1.22  2006/01/23 23:10:16  dankert
 // Steuerung der Aktionsklassen ?ber .ini-Dateien
 //
 // Revision 1.21  2005/04/16 21:35:23  dankert
@@ -540,6 +543,19 @@ class IndexAction extends Action
 				return true;
 		}	
 	}
+	
+	
+	
+	function register()
+	{
+	}
+	
+	
+	
+	function password()
+	{
+	}
+	
 }
 
 

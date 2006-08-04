@@ -11,6 +11,12 @@ goto=show
 [project]
 goto=show
 
+[register]
+menu=login
+
+[password]
+menu=login
+
 [showlogin]
 menu=login
 
