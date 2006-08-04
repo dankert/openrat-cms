@@ -150,30 +150,35 @@ a.menu_active:hover
 
 body
 {
+	background-color:#CCCCCC;
 	color:#000000;
 	font-family:Arial;
 	font-size:13px;
-/*	background-color:#dad2b6;*/
-	background-color:#DDDDFF;
+	xbackground-color:#dad2b6;
+	xbackground-color:#DDDDFF;
 }
 
 body.main
 {
+	background-color:#CCCCCC;
 	color:#000000;
 	font-family:Arial;
 	font-size:13px;
 /*	background-color:#dad2b6;*/
-	background-color:#DDDDFF;
+	xbackground-color:#DDDDFF;
+/*	border:3px solid gray;*/
 }
 
 body.title {
 	margin:0px;
-	background-color:#DDDDFF;
+	background-color:#EEEEEE;
 }
 
 body.tree {
-	margin:10px;
-	background-color:white;
+	background-color:#CCCCCC;
+	padding:5px;
+	xbackground-color:white;
+/*	border:3px solid gray;*/
 }
 
 
@@ -184,7 +189,7 @@ body.border {
 
 body.background {
 	margin:0px;
-	background-color:#DDDDFF;
+	background-color:#EEEEEE;
 }
 
 
@@ -252,10 +257,18 @@ td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
 td.subaction { background-color:#cac2a6; }
 
-td.f1,
-td.f2
+td.f1
 {
 	background-color:#cac2a6;
+	padding:5px;
+	border-top:5px solid #dad2b6;
+	border-left:3px solid #dad2b6;
+	border-bottom:1px solid gray;
+	border-right:3px solid #dad2b6;
+}
+td.f2
+{
+	background-color:#c1bba0;
 	padding:5px;
 	border-top:5px solid #dad2b6;
 	border-left:3px solid #dad2b6;
@@ -276,12 +289,35 @@ table.main
 	background-color:white;
 }
 
-input.submit,input.ok { color:#FFFFFF; background-color:#7B9CBD; width:110px; }
-input.reset  { color:black; background-color:#cac2a6; text-align:right; }
-textarea.desc { font-family:Arial;font-size:13px; }
-textarea.longtext { font-family:Arial;font-size:13px; width:100%; height:300px; }
+input.submit,
+input.ok
+{
+	color:#FFFFFF;
+	background-color:#7B9CBD;
+	width:110px;
+}
 
-input, select, textarea
+input.reset  { color:black; background-color:#cac2a6; text-align:right; }
+
+textarea.desc,
+textarea.description
+{
+	font-family:Arial;
+	font-size:13px;
+}
+
+textarea.longtext
+{
+	font-family:Arial;
+	font-size:13px;
+	width:100%;
+	height:300px;
+	border:1px solid black;
+}
+
+input,
+select,
+textarea
 {
 	color:#000000;
 	background-color:#dad2b6;
@@ -292,22 +328,20 @@ input.name
 	font-weight:bold;
 }
 
-.filename
-{
-	font-family:Courier;font-size:13px;
-}
-
+input.filename,
+input.extension,
 input.ansidate
 {
 	font-family:Courier;
 	font-size:13px;
 }
 
-body, textarea
+
+body,
+textarea
 {
 	scrollbar-base-color:#7B9CBD;
 	scrollbar-arrow-color:white;
-
 	scrollbar-highlight-color:#eae2c6;
 	scrollbar-shadow-color:#cac2a6;
 }
@@ -329,3 +363,25 @@ option.treemenu
 	border-bottom:1px solid dotted;
 }
 */
+
+td.logo
+{
+	background-color:#eae2c6;
+	padding:10px;
+	margin:0px;
+}
+
+h2.logo
+{
+	font-family:Verdana;
+	font-weight:normal;
+	font-size:24px;
+	margin-left:110px;
+}
+
+p.logo
+{
+	margin-left:110px;
+	font-family:Verdana;
+	font-size:13px;
+}
