@@ -680,3 +680,11 @@ LOGO_LOGIN=Anmeldung
 LOGO_LOGIN_TEXT=Zur Anmeldung benötigen Sie Benutzernamen und Kennwort. Beachten Sie bei der Eingabe Groß- und Kleinschreibung. 
 LOGO_PROJECTMENU=Projekt auswählen
 LOGO_PROJECTMENU_TEXT=Bitte wählen Sie ein Projekt zur Bearbeitung aus.
+FILETYPE_PLAINTEXT=Einfacher Text
+FILETYPE_ODF=OpenDocument Format
+MENU_PAGEELEMENT_IMPORTLONGTEXT=Import
+MENU_PAGEELEMENT_IMPORTLONGTEXT_DESC=Inhalt aus lokaler Datei einfügen
+MENU_PAGEELEMENT_EXPORTLONGTEXT=Export
+MENU_PAGEELEMENT_EXPORTLONGTEXT_DESC=Inhalt in lokale Datei exportieren
+MENU_PAGEELEMENT_SHOWLONGTEXT_DESC=Textinhalt ansehen
+
