@@ -1,5 +1,5 @@
 page
-	table padding:5 space:0 width:100%
+	table padding:5 space:0 width:100% rowclasses:a,b columnclasses:a,b
 	
 		row
 			cell class:menu
@@ -23,9 +23,12 @@ page
 				# Schleife über alle Menüpunkte
 				list list:windowMenu extract:true
 			
+					if empty:url invert:true
 					# Menüpunkt
-					link var:url target:cms_main_main title:title
-						text var:text
+						link var:url target:cms_main_main title:title
+							text var:text
+					if empty:url
+							text var:text class:inactive
 						
 					# Trenner zwischen Menüpunkten
 					text raw:__

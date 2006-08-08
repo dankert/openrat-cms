@@ -40,6 +40,29 @@ class MainmenuAction extends Action
 		$this->Action(); // Elternklasse-Konstruktor
 		
 		$this->setTemplateVar('type',$this->getRequestVar( 'subaction') );
+		
+//		if	( in_array($this->subActionName,array('file','folder','page','link')) )
+//		{
+//			// Alle Menüpunkte anzeigen, vorerst ohne URL und damit deaktiv.
+//			foreach( array('listing','create','show','edit','el','pub','prop','src','rights') as $menuePunkt ) 
+//				$this->addSubAction( $menuePunkt,0,false );
+//		}
+	}
+	
+	
+	function addSubAction( $name,$aclbit=0 )
+	{
+		// Wenn $aclbit nicht vorhanden oder die entsprechende Berechtigung vorhanden ist,
+		// dann Menüpunkt ergänzen.
+		if   ( $aclbit==-1 )
+			$url = '';
+		elseif   ( $aclbit==0 || $this->obj->hasRight($aclbit) )
+			$url = Html::url($this->subActionName,$name,$this->getRequestId() );
+		else
+			$url = '';
+		$this->subActionList[ $name ] = array( 'text' =>lang('MENU_'.strtoupper($name) ),
+		                                       'title'=>lang('MENU_'.strtoupper($name).'_DESC' ),
+		                                       $url );
 	}
 	
 	
@@ -71,15 +94,6 @@ class MainmenuAction extends Action
 	}
 
 
-	function addSubAction( $name,$aclbit=0 )
-	{
-		if   ( $aclbit==0 || $this->obj->hasRight($aclbit) )
-			$this->subActionList[ $name ] = array( 'text' =>lang('MENU_'.strtoupper($name) ),
-			                                       'title'=>lang('MENU_'.strtoupper($name).'_DESC' ),
-			                                       'url'  =>Html::url($this->subActionName,$name,$this->getRequestId() ) );
-	}
-	
-	
 	function addPath( $name,$title,$url,$type )
 	{
 		$this->path[$name] = array('name' =>$name ,
