@@ -26,6 +26,14 @@ menu=list
 target=savelongtext
 menu=longtext
 
+[importlongtext]
+target=doimportlongtext
+menu=longtext
+
+[exportlongtext]
+target=doexpportlongtext
+menu=longtext
+
 [editdate]
 target=savedate
 menu=date
@@ -121,7 +129,7 @@ goto=showselect
 goto=shownumber
 
 [menu]
-longtext=showlongtext,editlongtext,archivelongtext
+longtext=showlongtext,editlongtext,importlongtext,exportlongtext,archivelongtext
 text=showtext,edittext,archivetext
 link=showlink,editlink,archivelink
 list=showlist,editlist,archivelist

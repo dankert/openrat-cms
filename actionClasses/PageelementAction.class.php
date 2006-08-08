@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.20  2006-07-17 18:13:25  dankert
+// Revision 1.21  2006-08-08 20:10:23  dankert
+// Neue Funktionen f?r Im- und Export
+//
+// Revision 1.20  2006/07/17 18:13:25  dankert
 // Neue Funktion "show()"
 //
 // Revision 1.19  2006/01/29 17:18:59  dankert
@@ -1370,6 +1373,31 @@ class PageelementAction extends Action
 		
 		$this->afterSave($value);
 	}
+	
+	
+	function exportlongtext()
+	{
+		$types = array();
+		
+		foreach( array('odf','plaintext') as $type )
+		{
+			$types[$type] = lang('FILETYPE_'.$type);
+		}
+		
+		$this->setTemplateVar('types',$types);
+	}	
+
+
+	function importlongtext()
+	{
+		$types = array();
+		
+		foreach( array('odf','plaintext') as $type )
+		{
+			$types[$type] = lang('FILETYPE_'.$type);
+		}
+		$this->setTemplateVar('types',$types);
+	}	
 }
 
 ?>
