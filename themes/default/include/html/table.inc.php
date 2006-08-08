@@ -11,6 +11,12 @@
 		$row_class_idx = 999;
 		unset($attr['rowclasses']);
 	}
+	if	(!empty($attr_rowclasses))
+	{
+		$row_classes   = explode(',',$attr_rowclasses);
+		$row_class_idx = 999;
+		unset($attr['rowclasses']);
+	}
 	if	(!empty($attr_columnclasses))
 	{
 		$column_classes   = explode(',',$attr_columnclasses);
