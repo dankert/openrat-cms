@@ -215,6 +215,10 @@ span.title
 	font-size:13px;
 	font-weight:bold;
 }
+span.inactive
+{
+	color:gray;
+}
 
 th
 {
