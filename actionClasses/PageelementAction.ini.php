@@ -31,8 +31,12 @@ target=doimportlongtext
 menu=longtext
 
 [exportlongtext]
-target=doexpportlongtext
+target=doexportlongtext
 menu=longtext
+
+[doimportlongtext]
+
+[doexportlongtext]
 
 [editdate]
 target=savedate

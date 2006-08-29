@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.21  2006-08-08 20:10:23  dankert
+// Revision 1.22  2006-08-29 19:40:43  dankert
+// Vorbereitungen f?r Im- und Export von/nach ODF.
+//
+// Revision 1.21  2006/08/08 20:10:23  dankert
 // Neue Funktionen f?r Im- und Export
 //
 // Revision 1.20  2006/07/17 18:13:25  dankert
@@ -1398,6 +1401,43 @@ class PageelementAction extends Action
 		}
 		$this->setTemplateVar('types',$types);
 	}	
+	
+	
+	function doexportlongtext()
+	{
+		$type = $this->getRequestVar('type');
+		switch($type)
+		{
+			case 'odf':
+			
+				// Angabe Content-Type
+//				header('Content-Type: '.$this->file->mimeType());
+//				header('X-File-Id: '.$this->file->fileid);
+		
+//				header('Content-Disposition: inline; filename='.$this->id.'.odt');
+				header('Content-Transfer-Encoding: binary');
+//				header('Content-Description: '.$this->file->name);
+		
+				echo $this->createOdfDocument();
+				
+				exit;
+				
+			default:
+		}
+
+		exit;		
+	}
+	
+	
+	function createOdfDocument()
+	{
+		$this->initedit();
+		$transformer = new Transformer();
+		$transformer->text = $this->value->text;
+		$transformer->type = 'odf';
+		$transformer->transform();
+		return $transformer->text;
+	}
 }
 
 ?>
