@@ -209,6 +209,15 @@ $do->$subaction();
 
 if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 {
+	if	( $conf['interface']['redirect'] )
+	{
+		$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
+		header( 'HTTP/1.0 303 See other');
+		// Absoluten Pfad kann auch der Client ergänzen.
+		header( 'Location: '.Html::url($action,$do->actionConfig[$do->subActionName]['goto'],$do->getRequestId()) );
+		exit;
+	}
+	
 	$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
 	$do->subActionName = $subActionName;
 	$subaction = $subActionName;
