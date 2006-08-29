@@ -7,7 +7,7 @@ page
 
 				list list:path extract:true value:xy
 
-					link url:url title:title class:path target:cms_main
+					link var:url title:title class:path target:cms_main
 						text var:name maxlength:20
 					char type:filesep
 
@@ -21,7 +21,7 @@ page
 			cell class:subaction colspan:2
 			
 				# Schleife über alle Menüpunkte
-				list list:windowMenu extract:true
+				list list:windowMenu extract:true value:xy
 			
 					if empty:url invert:true
 					# Menüpunkt
