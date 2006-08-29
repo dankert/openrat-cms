@@ -9,3 +9,5 @@ show_duration        = false        ; Show duration on every page
 timeout              =              ; Request timeout in seconds (blank=system default)
 override_title       =              ; Replace the default title (Program name+version) with this text
 min_width            = 950          ; Minimal Width of the browser window. If smaller, then tree is initally disabled.
+
+redirect             = false        ; use redirects before going to view
