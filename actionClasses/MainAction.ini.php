@@ -36,7 +36,6 @@ goto=show
 goto=show
 
 [show]
-goto=show
 
 [template]
 goto=show
