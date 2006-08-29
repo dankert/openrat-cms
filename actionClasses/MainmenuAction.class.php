@@ -41,12 +41,43 @@ class MainmenuAction extends Action
 		
 		$this->setTemplateVar('type',$this->getRequestVar( 'subaction') );
 		
-//		if	( in_array($this->subActionName,array('file','folder','page','link')) )
-//		{
-//			// Alle Menüpunkte anzeigen, vorerst ohne URL und damit deaktiv.
-//			foreach( array('listing','create','show','edit','el','pub','prop','src','rights') as $menuePunkt ) 
-//				$this->addSubAction( $menuePunkt,0,false );
-//		}
+		
+		switch( $this->getRequestVar( 'subaction') )
+		{
+			case 'page':
+			case 'file':
+			case 'link':
+			case 'folder':
+				$this->addSubAction( 'show'  ,-1 );
+				$this->addSubAction( 'create',-1 );
+				$this->addSubAction( 'edit'  ,-1 );
+				$this->addSubAction( 'el'    ,-1 );
+				$this->addSubAction( 'pub'   ,-1 );
+				$this->addSubAction( 'prop'  ,-1 );
+				$this->addSubAction( 'src'   ,-1 );
+				$this->addSubAction( 'rights',-1 );
+				break;
+
+			case 'user':
+			case 'group':
+				$this->addSubAction( 'listing'  ,-1 );
+				$this->addSubAction( 'edit'  ,-1 );
+				$this->addSubAction( 'groups'  ,-1 );
+				$this->addSubAction( 'pw'  ,-1 );
+				$this->addSubAction( 'rights',-1 );
+				break;
+
+			case 'template':
+				$this->addSubAction( 'listing'  ,-1 );
+				$this->addSubAction( 'show'  ,-1 );
+				$this->addSubAction( 'edit'  ,-1 );
+				$this->addSubAction( 'el'    ,-1 );
+				$this->addSubAction( 'src'   ,-1 );
+				$this->addSubAction( 'prop'  ,-1 );
+				break;
+
+			default:
+		}
 	}
 	
 	
@@ -62,7 +93,7 @@ class MainmenuAction extends Action
 			$url = '';
 		$this->subActionList[ $name ] = array( 'text' =>lang('MENU_'.strtoupper($name) ),
 		                                       'title'=>lang('MENU_'.strtoupper($name).'_DESC' ),
-		                                       $url );
+		                                       'url'  =>$url );
 	}
 	
 	
@@ -334,6 +365,7 @@ class MainmenuAction extends Action
 		$this->addSubAction('create',ACL_CREATE_FILE   );
 		$this->addSubAction('create',ACL_CREATE_PAGE   );
 		$this->addSubAction('create',ACL_CREATE_LINK   );
+		$this->addSubaction('el',-1 );
 
 		$this->addSubAction('pub'   ,ACL_PUBLISH );
 
