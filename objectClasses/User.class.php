@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.13  2005-04-16 22:25:06  dankert
+// Revision 1.14  2006-08-30 19:15:26  dankert
+// Erzeugen Kennwort und Laden ?ber Benutzername.
+//
+// Revision 1.13  2005/04/16 22:25:06  dankert
 // Verbindung zum LDAP-Server schlie?en
 //
 // Revision 1.12  2005/01/24 21:41:25  dankert
@@ -246,6 +249,29 @@ class User
 	}
 
 
+	/**
+	 * Benutzerobjekt über Benutzernamen ermitteln.
+	 * 
+	 * @param name Benutzername
+	 */
+	function loadWithName( $name )
+	{
+		$db = db_connection();
+
+		// Benutzer über Namen suchen
+		$sql = new Sql( 'SELECT id FROM {t_user}'.
+		                ' WHERE name={name}' );
+		$sql->setInt( 'name',$name );
+		$userId = $db->getOne( $sql->query );
+
+		// Benutzer über Id instanziieren
+		$neuerUser = new User( $userId );
+		$neuerUser->load();
+		
+		return $neuerUser;
+	}
+	
+	
 
 	// Lesen Benutzer aus der Datenbank
 	function setDatabaseRow( $row )
@@ -835,6 +861,32 @@ class User
 
 		return $allstyles;	
 	}
+	
+	
+	/**
+	 * Erzeugt ein aussprechbares Kennwort.
+	 * 
+	 * Inspired by http://www.phpbuilder.com/annotate/message.php3?id=1014451
+	 */
+	function createPassword()
+	{
+		$pw = '';
+		$c  = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
+		$v  = 'aeiou';              //vowels
+		$a  = $c.$v;                //both
+		 
+		//use two syllables...
+		for ( $i=0; $i < 2; $i++ )
+		{
+			$pw .= $c[rand(0, strlen($c)-1)];
+			$pw .= $v[rand(0, strlen($v)-1)];
+			$pw .= $a[rand(0, strlen($a)-1)];
+		}
+		//... and add a nice number
+		$pw .= rand(10,99);
+		 
+		return $pw;
+}
 }
 
 ?>
