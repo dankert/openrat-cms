@@ -126,34 +126,13 @@ class UserAction extends Action
 	 */
 	function mailPw( $pw )
 	{
-		global $conf;
-		
-		$nl = "\r\n";
+		$to   = $this->user->fullname.' <'.$this->user->mail.'>';
+		$mail = new Mail($to,'USER_MAIL');
 
-		// Header der E-Mail ermitteln
-		$header = 'X-Mailer: '.OR_TITLE.' '.OR_VERSION;
-		if	( !empty($conf['mail']['from']) )
-			$header .= $nl.'From: '.$conf['mail']['from'];
+		$mail->setVar('username',$this->user->name);
+		$mail->setVar('password',$pw              );
 
-		$to      = $this->user->fullname.' <'.$this->user->mail.'>';
-		$subject = lang('USER_MAIL_SUBJECT');
-
-		// Text der E-Mail zusammenfuegen
-		$text  = $nl;
-		$text .= wordwrap(str_replace(';',$nl,lang('USER_MAIL_TEXT_PREFIX')),70,$nl).$nl.$nl;
-		$text .= lang('USER_USERNAME').': '.$this->user->name.$nl;
-		$text .= lang('USER_PASSWORD').': '.$pw.$nl.$nl;
-		$text .= wordwrap(str_replace(';',$nl,lang('USER_MAIL_TEXT_SUFFIX')),70,$nl);
-
-		// Signatur anhaengen (sofern konfiguriert)
-		if	( !empty($conf['mail']['signature']) )
-		{
-			$text .= $nl.$nl.'-- '.$nl;
-			$text .= str_replace(';',$nl,$conf['mail']['signature']);
-		}
-
-		// Mail versenden
-		mail($to,$subject,$text,$header);
+		$mail->send();
 	}
 
 
@@ -168,26 +147,29 @@ class UserAction extends Action
 		$pw2 = $this->getRequestVar('password2');
 
 		// Zufaelliges Kennwort erzeugen
-		if	( $this->hasRequestVar('random') && $this->hasRequestVar('mail') )
+		if	( $this->hasRequestVar('random') && $this->hasRequestVar('email') )
 		{
-			$pw1 = substr( md5(microtime().session_id()),0,intval($conf['security']['password']['random_length']) );
+			$pw1 = $this->user->createPassword();
 			$pw2 = $pw1;
 		}
-
 
 		// Wenn Kennwoerter identisch und lang genug
 		if	( $pw1 == $pw2 &&
 			  strlen($pw1)>=intval($conf['security']['password']['min_length'])  )
 		{
-			$this->user->setPassword($pw1); // Kennwort setzen
+			$this->user->setPassword($pw1,!$this->hasRequestVar('timeout') ); // Kennwort setzen
 			
 			// E-Mail mit dem neuen Kennwort an Benutzer senden
-			if	( $this->hasRequestVar('mail') && !empty($this->user->mail) && $conf['mail']['enabled'] )
+			if	( $this->hasRequestVar('email') && !empty($this->user->mail) && $conf['mail']['enabled'] )
 			{
 				$this->mailPw( $pw1 );
 			}
 
 			$this->addNotice('user',$this->user->name,'SAVED','ok');
+		}
+		else
+		{
+			$this->addNotice('user',$this->user->name,'NOT_SAVED','error');
 		}
 
 	}
