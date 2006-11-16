@@ -1,6 +1,6 @@
 page
 	form
-		window name:USER_PASSWORD
+		window name:USER_PASSWORD columnclasses:fx rowclasses:rx
 			row
 				cell class:fx
 					text text:user_username
@@ -21,12 +21,17 @@ page
 					cell class:fx
 						text text:user_mail_new_password
 					cell class:fx
-						checkbox name:mail
+						checkbox name:email
+				row
+					cell class:fx
+						text text:user_random_password
+					cell class:fx
+						checkbox name:random
 			row
 				cell class:fx
-					text text:user_random_password
+					text text:user_password_timeout
 				cell class:fx
-					checkbox name:random
+					checkbox name:timeout
 					
 			row
 				cell colspan:2 class:act
