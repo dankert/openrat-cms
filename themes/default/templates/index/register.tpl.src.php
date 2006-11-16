@@ -1,28 +1,19 @@
 page
-	form action:index subaction:login target:_top
-		window title:GLOBAL_REGISTER name:login width:400 icon:user
+	form target:_top
+		window title:GLOBAL_REGISTER name:login width:400 icon:user columnclasses:x
 
 			row
 				cell class:logo colspan:2
 					logo name:register
 				row
 					cell class:fx width:50%
-						text text:USER_USERNAME
+						text text:USER_MAIL
 					cell class:fx width:50%
-						input type:text name:login_name value: size:25
-				row
-					cell class:fx width:50%
-						text text:USER_PASSWORD
-					cell class:fx width:50%
-						password name:login_password default: size:25
-				row
-					cell class:fx width:50%
-						text text:USER_EMAIL
-					cell class:fx width:50%
-						password name:login_password default: size:25
-	
+						input name:register_mail default: size:25
+
+
 				row
 					cell colspan:2 class:act
 						button type:ok
 
-	focus field:login_name
+	focus field:register_mail
