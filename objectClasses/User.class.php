@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.14  2006-08-30 19:15:26  dankert
+// Revision 1.15  2006-11-16 19:58:57  dankert
+// Pflicht zu Kennwort?nderung ermitteln.
+//
+// Revision 1.14  2006/08/30 19:15:26  dankert
 // Erzeugen Kennwort und Laden ?ber Benutzername.
 //
 // Revision 1.13  2005/04/16 22:25:06  dankert
@@ -83,6 +86,8 @@ class User
 	var $isAdmin;
 	var $projects;
 	var $rights;
+	
+	var $mustChangePassword = false;
 
 
 	// Konstruktor
@@ -256,12 +261,13 @@ class User
 	 */
 	function loadWithName( $name )
 	{
+		global $conf;
 		$db = db_connection();
 
 		// Benutzer über Namen suchen
 		$sql = new Sql( 'SELECT id FROM {t_user}'.
 		                ' WHERE name={name}' );
-		$sql->setInt( 'name',$name );
+		$sql->setString( 'name',$name );
 		$userId = $db->getOne( $sql->query );
 
 		// Benutzer über Id instanziieren
@@ -385,6 +391,7 @@ class User
 		$sql->setString ( 'mail'    ,$this->mail    );
 		$sql->setString ( 'style'   ,$this->style   );
 		$sql->setBoolean( 'isAdmin' ,$this->isAdmin );
+		
 		// Datenbankabfrage ausfuehren
 		$db->query( $sql->query );
 	}
@@ -526,10 +533,15 @@ class User
 			}
 			else
 			{
-//				Logger::debug( 'checking md5-password '.md5($password).' against database' );
-
 				// Pruefen ob Kennwort mit Datenbank uebereinstimmt
-				if   ( $row_user['password'] == md5( $password ) )
+				if   ( $row_user['password'] == $password )
+				{
+					$this->mustChangePassword = true;
+					
+					// Juchuu, Login ist erfolgreich
+					return true;
+				}
+				elseif   ( $row_user['password'] == md5( $password ) )
 				{
 					// Juchuu, Login ist erfolgreich
 					return true;
@@ -542,14 +554,24 @@ class User
 	}
 	
 	
-	// Neues Kennwort fuer diesen Benutzer setzen
-	function setPassword( $password )
+	/**
+	 * Setzt ein neues Kennwort für diesen Benutzer.
+	 * 
+	 * @param password Kennwortt
+	 * @param always true, wenn Kennwort dauerhaft.
+	 */
+	function setPassword( $password, $always=true )
 	{
 		$db = db_connection();
 
 		$sql = new Sql( 'UPDATE {t_user} SET password={password}'.
 		                'WHERE id={userid}' );
-		$sql->setString('password',md5($password) );
+		                
+		if	( $always )
+			$sql->setString('password',md5($password) );
+		else
+			$sql->setString('password',$password      );
+			
 		$sql->setInt   ('userid'  ,$this->userid  );
 
 		$db->query( $sql->query );
@@ -867,16 +889,20 @@ class User
 	 * Erzeugt ein aussprechbares Kennwort.
 	 * 
 	 * Inspired by http://www.phpbuilder.com/annotate/message.php3?id=1014451
+	 * 
+	 * @return String Zufälliges Kennwort
 	 */
 	function createPassword()
 	{
+		global $conf;
+		
 		$pw = '';
 		$c  = 'bcdfghjklmnprstvwz'; //consonants except hard to speak ones
 		$v  = 'aeiou';              //vowels
 		$a  = $c.$v;                //both
 		 
 		//use two syllables...
-		for ( $i=0; $i < 2; $i++ )
+		for ( $i=0; $i < intval($conf['security']['password']['min_length'])/3; $i++ )
 		{
 			$pw .= $c[rand(0, strlen($c)-1)];
 			$pw .= $v[rand(0, strlen($v)-1)];
