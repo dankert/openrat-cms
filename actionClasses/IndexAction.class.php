@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.23  2006-08-04 19:05:55  dankert
+// Revision 1.24  2006-11-16 19:56:52  dankert
+// Methoden f?r Registrierung und Kennwortzusendung
+//
+// Revision 1.23  2006/08/04 19:05:55  dankert
 // Aktivieren von Registrierung und Kennwort-vergessen
 //
 // Revision 1.22  2006/01/23 23:10:16  dankert
@@ -184,6 +187,7 @@ class IndexAction extends Action
 	}
 
 
+
 	/**
 	 * Anzeigen der Loginmaske.
 	 *
@@ -224,6 +228,14 @@ class IndexAction extends Action
 	function projectmenu()
 	{
 		$user     = Session::getUser();
+		
+		if	( $user->mustChangePassword ) 
+		{
+			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
+			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ändern.
+		}
+		
+		
 		$projects = $user->projects;
 
 		$this->lastModified( $user->loginDate );
@@ -261,15 +273,18 @@ class IndexAction extends Action
 		if	( $conf['login']['nologin'] )
 			die('login disabled');
 
+		$loginName     = $this->getRequestVar('login_name'    );
+		$loginPassword = $this->getRequestVar('login_password');
+		
 		// Ermitteln, ob der Baum angezeigt werden soll
 		// Ist die Breite zu klein, dann wird der Baum nicht angezeigt
 		Session::set('showtree',intval($this->getRequestVar('screenwidth')) > $conf['interface']['min_width'] );
 		
-		$loginOk = $this->checkLogin( $this->getRequestVar('login_name'    ),
-		                              $this->getRequestVar('login_password')  );
+		$loginOk = $this->checkLogin( $loginName,
+		                              $loginPassword );
 		                   
 		if	( !$loginOk )
-			$this->addNotice('','','LOGIN_FAILED','error',array('name'=>$this->getRequestVar('login_name')) );
+			$this->addNotice('user',$loginName,'LOGIN_FAILED','error',array('name'=>$this->getRequestVar('login_name')) );
 	}
 
 
@@ -470,6 +485,12 @@ class IndexAction extends Action
 				die('unknown auth-type: '.$conf['auth']['type'] );
 			}
 		}
+		
+		if	( $user->mustChangePassword ) 
+		{
+			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
+			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ändern.
+		}
 
 		// Seite ändert sich nur 1x pro Session
 		$this->lastModified( $user->loginDate );
@@ -545,15 +566,210 @@ class IndexAction extends Action
 	}
 	
 	
-	
+	/**
+	 * Maske anzeigen, um Benutzer zu registrieren.
+	 */
 	function register()
+	{
+		
+	}
+
+	
+	/**
+	 * Registriercode erzeugen und per E-Mail dem Benutzer mitteilen.
+	 * Maske anzeigen, damit Benuter Registriercode anzeigen kann.
+	 */
+	function registercode()
+	{
+		global $conf;
+
+		srand ((double)microtime()*1000003);
+		$registerCode = rand();
+		
+		Session::set('registerCode',$registerCode                         );
+		Session::set('registerMail',$this->getRequestVar('register_mail') );
+					
+		$mail = new Mail($this->getRequestVar('register_mail'),
+		                 'register_commit_code','register_commit_code');
+		$mail->setVar('code',$registerCode);
+		$mail->send();
+
+
+		// TODO: Attribut "Password" abfragen
+		foreach( $conf['database'] as $dbname=>$dbconf )
+		{
+			if	( is_array($dbconf) && $dbconf['enabled'] )
+				$dbids[$dbname] = $dbconf['comment'];
+		}
+
+		$this->setTemplateVar( 'dbids',$dbids );
+		
+		$db = Session::getDatabase();
+		if	( is_object($db) )
+			$this->setTemplateVar('actdbid',$db->id);
+		else
+			$this->setTemplateVar('actdbid',$conf['database']['default']);
+	}
+
+	
+	/**
+	 * Benutzerregistierung.
+	 * Benutzer hat Bestätigungscode erhalten und eingegeben.
+	 */
+	function registercommit()
+	{
+		$this->checkForDb();
+
+		$origRegisterCode  = Session::get('registerCode');
+		$inputRegisterCode = $this->getRequestVar('register_code');
+		
+		if	( $origRegisterCode == $inputRegisterCode )
+		{
+			// Bestätigungscode stimmt überein.
+			// Neuen Benutzer anlegen.	
+			$newUser = new User();
+			$newUser->name = $this->getRequestVar('register_name');
+			$newUser->add();
+			
+			$newUser->mail     = Session::get('registerMail');
+			$newUser->save();
+			
+			$newUser->setPassword( $this->getRequestVar('register_password'),false );
+			
+			$this->addNotice('user',$newUser->name,'user_added','ok');
+		}
+		else
+		{
+			// Bestätigungscode stimmt nicht.
+			$this->addNotice('user',$newUser->name,'regcode_not_match','error');
+		}
+	}
+
+
+
+	/**
+	 * Vergessenes Kennwort zusenden lassen.
+	 */
+	function password()
+	{
+		global $conf;
+		
+		// TODO: Attribut "Password" abfragen
+		foreach( $conf['database'] as $dbname=>$dbconf )
+		{
+			if	( is_array($dbconf) && $dbconf['enabled'] )
+				$dbids[$dbname] = $dbconf['comment'];
+		}
+
+		$this->setTemplateVar( 'dbids',$dbids );
+		
+		
+		$db = Session::getDatabase();
+		
+		if	( is_object($db) )
+			$this->setTemplateVar('actdbid',$db->id);
+		else
+			$this->setTemplateVar('actdbid',$conf['database']['default']);
+		
+	}	
+	
+	
+	function changepassword()
 	{
 	}
 	
 	
 	
-	function password()
+	function setnewpassword()
 	{
+		$oldPw  = $this->getRequestVar('password_old'  );
+		$newPw1 = $this->getRequestVar('password_new_1');
+		$newPw2 = $this->getRequestVar('password_new_2');
+		
+		if	( $newPw1 == $newPw2 )
+		{
+			// Aktuellen Benutzer aus der Sitzung ermitteln
+			$user = $this->getUserFromSession();
+			
+			// Altes Kennwort prüfen.
+			$ok = $user->checkPassword( $oldPw );
+			
+			if	( $ok )  // Altes Kennwort ist ok.
+			{
+				$user->setPassword( $newPw1 ); // Setze neues Kennwort
+				$user->mustChangePassword = false;
+				Session::setUser($user);
+				$this->addNotice('user',$user->name,'password_set','ok');
+			}
+			else
+			{
+				// Altes Kennwort falsch.
+				$this->addNotice('user',$user->name,'password_error','error');
+			}
+		}
+		else
+		{
+			// Beide neuen Kennwörter stimmen nicht überein
+			$this->addNotice('user',$user->name,'passwords_not_match','error');
+		}
+	}
+	
+	
+	
+	function passwordcode()
+	{
+		$this->checkForDb();
+
+		$user = User::loadWithName( $this->getRequestVar("password_name") );
+		
+		if	( $user->userid != 0 )
+		{
+			srand ((double)microtime()*1000003);
+			$code = rand();
+			$this->setSessionVar("password_commit_code",$code);
+			
+			$eMail = new Mail( $user->mail,'password_commit_code','password_commit_code' );
+			$eMail->setVar('code',$code);
+			$eMail->send();
+			
+			$this->addNotice('','user','mail_sent');
+		}
+		else
+		{
+			$this->addNotice('','user','username_not_found');
+		}
+		
+		$this->setSessionVar("password_commit_name",$user->name);
+	}
+	
+	function passwordcommit()
+	{
+		$ok = $this->getSessionVar("password_commit_code") == $this->getRequestVar("code");
+		
+		if	( $ok )
+		{
+			$user = User::loadWithName( $this->getSessionVar("password_commit_name") );
+			
+			$newPw = User::createPassword();
+			
+			if	( intval($user->userid)!=0 )
+			{
+				$eMail = new Mail( $user->mail,'password_new','password_new' );
+				$eMail->setVar('password',$newPw);
+				$eMail->send();
+				
+				$user->setPassword( $newPw, false );
+				$this->addNotice('user','user','mail_sent','ok');
+			}
+			else
+			{
+				$this->addNotice('user','user','username_not_found','error');
+			}
+		}
+		else
+		{
+			$this->addNotice('user','user','password_code_failure','error');
+		}
 	}
 	
 }

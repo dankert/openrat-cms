@@ -13,9 +13,27 @@ goto=show
 
 [register]
 menu=login
+target=registercode
+
+[registercode]
+menu=login
+target=registercommit
+
+[registercommit]
+menu=login
+goto=showlogin
 
 [password]
 menu=login
+target=passwordcode
+
+[passwordcode]
+menu=login
+target=passwordcommit
+
+[passwordcommit]
+menu=login
+goto=showlogin
 
 [showlogin]
 menu=login
@@ -29,8 +47,16 @@ goto=show
 [projectmenu]
 menu=menu
 
+[changepassword]
+menu=menu
+target=setnewpassword
+
+[setnewpassword]
+menu=menu
+goto=projectmenu
+
 [show]
 
 [menu]
 login=showlogin,register,password
-menu=projectmenu,administration,logout
+menu=projectmenu,administration,changepassword,logout
