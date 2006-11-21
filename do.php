@@ -25,8 +25,9 @@ define('IMG_EXT'         ,'.gif'   );
 define('IMG_ICON_EXT'    ,'.png'   );
 define('MAX_FOLDER_DEPTH',5        );
 define('OR_CONFIG_DIR'   ,'config' );
-define('OR_VERSION'      ,'0.4'    );
-define('OR_TITLE'        ,'OpenRat');
+
+define('OR_VERSION'      ,'0.6-beta1'  );
+define('OR_TITLE'        ,'OpenRat CMS');
 
 define('OR_TYPE_PAGE'  ,'page'  );
 define('OR_TYPE_FILE'  ,'file'  );
