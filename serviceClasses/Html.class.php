@@ -223,7 +223,7 @@ class Html
 		if	( $fake_urls )
 			$src = './'.sprintf( $url_format,$action,$subaction,$id ).$urlParameter;
 		else
-			$src = './'.OR_CONTROLLER_FILE.PHP_EXT.$urlParameter;
+			$src = './'.OR_CONTROLLER_FILE.'.'.PHP_EXT.$urlParameter;
 
 		return $src;
 	}
