@@ -11,7 +11,7 @@ default=db1
 ; Database configuration for connection 'db1
 
 enabled    = true
-comment    = "OpenRat DB"          ; comment of this database 
+comment    = "OpenRat Example DB"  ; comment of this database 
 
 type       = mysql                 ; 'mysql' or 'postgresql' 
 user       = dbuser                ; database user
