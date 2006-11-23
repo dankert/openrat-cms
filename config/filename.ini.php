@@ -1,3 +1,4 @@
+; <?php die('no access'); ?>
 
 edit    = true           ; Allow editing of filenames (true|false)
 default = index          ; filename of index file. Default: 'index'.

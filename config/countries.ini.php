@@ -1,5 +1,7 @@
 ; <?php exit('direct access denied') ?>
 
+; These countries are used while inserting a new language model into a project.
+
 ; ISO 639: 2-letter codes
 ; see http://www.w3.org/WAI/ER/IG/ert/iso639.htm
 ;

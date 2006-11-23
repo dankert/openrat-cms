@@ -9,7 +9,9 @@
  */
 class Preferences
 {
-	function load( $dir='' )
+	/*
+
+	function loadOLDxxxxxxxxxxxxxxx( $dir='' )
 	{
 		$values = array();
 		
@@ -41,6 +43,60 @@ class Preferences
 			return $values;
 		}
 		else die('not a folder: '.$dir);
+	}
+	
+	*/
+	
+	
+	
+	function load( $dir='' )
+	{
+//		echo "x:$dir<br>";
+		$values = array();
+		
+		// Bei erstem (nicht-rekursiven) Aufruf der Methoden das Konfigurationsverzeichnis voreinstellen 
+		if	( empty($dir) )
+			$dir = OR_PREFERENCES_DIR;
+			
+		if	( !is_dir($dir) )
+			die('not a directory: '.$dir);
+		
+		if	( $dh = opendir($dir) )
+		{
+			while( ($verzEintrag = readdir($dh)) !== false )
+			{
+				$filename = $dir.$verzEintrag;
+				
+//				echo "....-$filename-....<br>";
+//				if	( is_dir($filename) && substr($verzEintrag,0,1)!='.' && substr($verzEintrag,0,3)!='CVS' )
+//				{
+////					echo " ist ein DIR<br>";
+//					if	( !isset($values[$verzEintrag]) )
+//						$values[$verzEintrag] = array();
+//					$values[$verzEintrag] += $this->load($filename.'/');
+//				}
+//else
+				if	( is_file($filename) && eregi('\.(ini.*|conf)$',$verzEintrag) )
+				{
+//					echo " ist ein FILE<br>";
+					$nameBestandteile = explode('.',$verzEintrag);
+//					if	( !isset($values[$nameBestandteile[0]]) )
+//						$values[$nameBestandteile[0]] = array();
+					
+				    $values[$nameBestandteile[0]] = parse_ini_file( $filename,true );
+				}
+//				else
+//					echo " ist GARNIX<br>";
+	        }
+	        closedir($dh);
+	    }
+
+		ksort($values);
+
+//echo"<pre>";
+//print_r($values);		
+//echo"</pre>";
+		return $values;
 	}
 }
 ?>

@@ -1,7 +1,9 @@
 ; <?php exit('direct access denied') ?>
 
+; *** available in a future version of OpenRat. ***
+
 ; Enable online help
-enabled=true
+enabled=false
 
 ; URL to the documents 
 url=doc/online/html/
