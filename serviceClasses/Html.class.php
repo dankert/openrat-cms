@@ -144,6 +144,18 @@ class Html
 	}
 	
 	
+	
+	/**
+	 * Ausgabe eines Variablenwertes.<br>
+	 */
+	function debug( $wert, $text='' )
+	{
+		echo "<strong>DEBUG: $text (".gettype($wert).")</strong><br/>";
+		echo "<pre>";
+		print_r($wert);
+		echo "</pre>";		
+	}
+	
 
 	/**
 	 * Erzeugt eine relative Url innerhalb von Openrat
