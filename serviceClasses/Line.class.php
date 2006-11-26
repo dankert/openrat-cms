@@ -1,90 +1,108 @@
 <?php
 
 /**
- * @author $Author$
+ * Darstellung einer Zeile in einem Freitext.<br>
+ * <br>
+ * Im Konstruktor wird die Zeile analysiert und es wird festgestellt, was
+ * die Zeile für einen Inhalt hat (z.B. ein Listenelement, eine Überschrift, usw.)<br>
+ * 
+ * @author Jan Dankert
  * @version $Revision$
  * @package openrat.services
  */
 class Line
 {
-	var $source;
-	var $value;
+	var $source;                       // Der ursprüngliche Inhalt
+	var $value;                        // Der textuelle Inhalt (sofern vorhanden)
 	
-	var $isList         = false;
-	var $isNumberedList = false;
-	var $indent         = 0;
+	var $isList         = false;       // nicht-numerierte Liste
+	var $isNumberedList = false;       // numerierte Liste
+	var $indent         = 0;           // Einschubtiefe der Liste
 	
-	var $isHeadline          = false;
-	var $isHeadlineUnderline = false;
-	var $headlineLevel       = 0;
+	var $isHeadline          = false;  // Überschrift
+	var $isHeadlineUnderline = false;  // unterstrichene Überschrift
+	var $headlineLevel       = 0;      // Grad der Überschrift (1,2,3...)
 	
 	
-	var $isTableOfContent = false;
-	var $isTable        = false;
-	var $isCode         = false;
-	var $isQuote        = false;
-	var $isQuotePraefix = false;
+	var $isTableOfContent = false;     // Inhaltsverzeichnis
+	var $isTable        = false;       // Tabelle
+	var $isCode         = false;       // Code
+	var $isQuote        = false;       // Zitat
+	var $isQuotePraefix = false;       // Zitatbeginn/-ende
 	
 	var $isUnparsed     = false;
 	
-	var $isEmpty        = false;
+	var $isEmpty        = false;       // Zeile ist leer
 
 	
 	
+	/**
+	 * Erzeugt einen Zeilenobjekt, der Text im Parameter wird dabei geparst.
+	 */
 	function Line( $s )
 	{
+		global $conf;
+		$text_markup = $conf['editor']['text-markup']; 
+		
+		$list_numbered   = $text_markup['list-numbered'  ];
+		$list_unnumbered = $text_markup['list-unnumbered'];
+		$headline        = $text_markup['headline'       ];
+		
 		$this->source = $s;
 		$this->value  = $s;
 		
-		$this->isList         = substr(ltrim($s),0,1) == '-';
-		$this->isNumberedList = substr(ltrim($s),0,1) == '#';
-		$this->indent         = strlen($s)-strlen(ltrim($s))+1;
+		$this->isList         = $this->isAnErsterStelle(ltrim($s),$list_unnumbered);
+		$this->isNumberedList = $this->isAnErsterStelle(ltrim($s),$list_numbered  );
+		$this->indent         = strlen($s) - strlen(ltrim($s)) + 1;
 
 		if	( $this->isList || $this->isNumberedList )
 			$this->value = ltrim(substr($s,$this->indent));
 
-		$this->level      = strspn( $s,'+' );
+		$this->level      = strspn( $s,$headline );
 		$this->isHeadline = $this->level >= 1;
 
 		if	( $this->isHeadline )
 			$this->value = ltrim(substr($s,$this->level));
 
 
-		$hl = array(1=>'=',2=>'-',3=>'.');
+		$hl = array( 1 => $text_markup['headline_level1_underline'],
+		             2 => $text_markup['headline_level2_underline'],
+		             3 => $text_markup['headline_level3_underline'] );
+		             
 		foreach($hl as $lev=>$char )
 		{
-			if	( substr($s,0,3)==str_repeat($char,3) )
+			if	( substr($s,0,3*strlen($char))==str_repeat($char,3*strlen($char)) )
 			{
 				$this->isHeadlineUnderline = true;
 				$this->level               = intval($lev);
 			}
 		}
 		
-		if	( substr($s,0,7)=='##TOC##' )
+		if	( $this->isAnErsterStelle($s,$text_markup['table-of-content']) )
 		{
 			$this->isTableOfContent  = true;
 			$this->value             = '';
 		}
-		elseif	( substr($s,0,1)=='|' )
+		elseif	( $this->isAnErsterStelle($s,$text_markup['table-cell-sep']) )
 		{
 			$this->isTable           = true;
 			$this->value             = '';
 		}
-		elseif	( substr($s,0,1)=='=' && !$this->isHeadlineUnderline )
+		elseif	( $this->isAnErsterStelle($s,$text_markup['pre-begin']) && !$this->isHeadlineUnderline )
 		{
 			$this->isCode            = true;
 			$this->value             = '';
 		}
-		elseif	( trim($s)=='>' )
+		elseif	( trim($s)==$text_markup['quote-line-begin'] )
 		{
 			$this->isQuote           = true;
 		}
-		elseif	( substr($s,0,1)=='>' && strlen(trim($s)>1) )
+		elseif	( $this->isAnErsterStelle($s,$text_markup['quote']) && strlen(trim($s)>1) )
 		{
 			$this->isQuotePraefix    = true;
-			$this->level         = strspn( str_replace(' ','',$s),'>' );
+			$this->level         = strspn( str_replace(' ','',$s),$text_markup['quote'] );
 		}
-		elseif	( substr($s,0,1)== '`' )
+		elseif	( $this->isAnErsterStelle($s,'`') )
 		{
 			$this->isUnparsed = true;
 			$this->value      = substr($this->value,1);
@@ -93,6 +111,15 @@ class Line
 		{
 			$this->isEmpty           = true;
 		}
+	}
+
+
+	/**
+	 * Stellt fest, ob $wort am Anfang von $text steht.
+	 */	
+	function isAnErsterStelle( $text,$wort )
+	{
+		return substr($text,0,strlen($wort))==$wort;
 	}
 }
 
