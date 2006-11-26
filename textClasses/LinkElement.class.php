@@ -21,15 +21,10 @@ class LinkElement extends AbstractElement
 	
 	function setTarget( $target )
 	{
-//		$target = urlencode($target);
 		$this->target = $target;
 		
 		$url = parse_url( $target );
 
-//		echo "<pre>url:";
-//		print_r($url);
-//		echo "</pre>";
-		
 		$this->protocol = @$url['scheme'];
 		$this->user     = @$url['user'  ];
 		$this->password = @$url['pass'  ];
@@ -48,7 +43,7 @@ class LinkElement extends AbstractElement
 			if	( strpos($target,'@') !== false )
 			{
 				$this->protocol = 'mailto';
-				$this->mail     = $this->target;
+				$this->path     = $this->target;
 			}
 			
 			// "..."->"123"
@@ -58,17 +53,16 @@ class LinkElement extends AbstractElement
 				$this->objectId = intval($url['path']);
 			}
 		}
-		
-//		echo "<pre>";
-//		print_r($this);
-//		echo "</pre>";		
 	}
 	
 
 	function getUrl()
 	{
-		$url = '';
-		$url .= $this->protocol.'://';
+		$url = $this->protocol.':';
+		
+		if	( $this->protocol != 'mailto' )
+			$url.='//';
+			
 		if	( $this->user != '' )
 		{
 			$url .= $this->user;
