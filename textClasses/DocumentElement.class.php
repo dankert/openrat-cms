@@ -1,7 +1,12 @@
 <?php
 
 /**
- * @author $Author$
+ * Dokument-Objekt.<br>
+ * Diese Objekt verkörpert das Root-Objekt in einem DOM-Baum.<br>
+ * <br>
+ * Dieses Objekt kann Text parsen und seine Unterobjekte selbst erzeugen.<br>
+ * 
+ * @author Jan Dankert, $Author$
  * @version $Revision$
  * @package openrat.text
  */
@@ -11,37 +16,55 @@ class DocumentElement extends AbstractElement
 
 
 
+	/**
+	 * Ein Text wird geparst.<br>
+	 * <br>
+	 * Zerlegt den Text zeilenweise und erzeugt die Unterobjekte.<br>
+	 * 
+	 * @param Ein- oder mehrzeiliger roher Text
+	 */
 	function parse( $text )
 	{
 		
 		$zeilen = array();
 		$nr     = 0;
+		
 		foreach( $text as $t )
 		{
 //			$t = $this->fixLinks( $t );  // Verweise vervollstaendigen.
 			$zeilen[++$nr] = new Line( $t );
 		}
 
-//		echo "<pre>";
-//		print_r($zeilen);
-//		echo "</pre>";
+		// $zeilen enthält eine Liste von Zeilenobjekten.
+		// Der Index ist die Zeilennr. und beginnt bei 1.
 		
 		$this->children = $this->parseMultiLineText( $zeilen );
 	}
 
 
 
+	/**
+	 * Erzeugt aus einer Liste von Zeilenobjekten ein DOM in Form eines Objektbaumes.
+	 * 
+	 * @param zeilen Liste von Zeilenobjekten. Array beginnt bei 1.
+	 * @return Liste von Textobjekten
+	 */
 	function parseMultiLineText( $zeilen )
 	{
-		$children     = array();
-		$anzahlZeilen = count( $zeilen );
+		$children     = array();           // Initiales Anlegen der Unterobjektliste.
+		$anzahlZeilen = count( $zeilen );  // Anzahl Zeilen
+		
+		// Erzwingt am Anfang und Ende eine leere Zeile, damit
+		// nächste und vorige Zeile in der folgenden Schleife immer gefüllt ist.
 		$zeilen[0]               = new Line('');
 		$zeilen[$anzahlZeilen+1] = new Line(''); 
+		
 		for	( $zeileNr=1; $zeileNr<=$anzahlZeilen; $zeileNr++ )
 		{
 			$letzteZeile   = $zeilen[$zeileNr-1];
 			$dieseZeile    = $zeilen[$zeileNr  ];
 			$naechsteZeile = $zeilen[$zeileNr+1];
+			
 			// Leerzeilen ignorieren
 			if	( $dieseZeile->isEmpty )
 			{
@@ -49,6 +72,7 @@ class DocumentElement extends AbstractElement
 			}
 			
 			
+			// Inhaltsverzeichnis
 			// Text nicht parsen
 			if	( $dieseZeile->isTableOfContent )
 			{
@@ -57,6 +81,7 @@ class DocumentElement extends AbstractElement
 			}
 
 
+			// Parser deaktiviert für diese Zeile
 			// Text nicht parsen
 			if	( $dieseZeile->isUnparsed )
 			{
@@ -65,7 +90,7 @@ class DocumentElement extends AbstractElement
 			}
 
 
-			// Ueberschriften
+			// Ueberschriften Teil 1
 			// Markierung in der Folgezeile mit "...", "---" oder "==="			
 			if	( $naechsteZeile->isHeadlineUnderline )
 			{
@@ -77,7 +102,7 @@ class DocumentElement extends AbstractElement
 			}
 
 
-			// Ueberschriften
+			// Ueberschriften Teil 2
 			// Markierung mit "+++..." am Zeilenbeginn.			
 			if	( $dieseZeile->isHeadline )
 			{
@@ -87,7 +112,8 @@ class DocumentElement extends AbstractElement
 				continue; // Naechste Zeile
 			}
 			
-			// Zitate
+			// Zitate Teil 1
+			// Markierung am Zeilenanfang
 			if	( $dieseZeile->isQuote )
 			{
 				$bisZeileNr = $zeileNr+1;
@@ -112,7 +138,8 @@ class DocumentElement extends AbstractElement
 			
 
 			
-			// Zitate			
+			// Zitate Teil 2
+			// Zitat ist in separater Zeile angekündigt			
 			if	( $dieseZeile->isQuotePraefix )
 			{
 				$bisZeileNr = $zeileNr+1;
@@ -193,7 +220,6 @@ class DocumentElement extends AbstractElement
 				else
 					$liste = new NumberedListElement();
 					
-//				echo "von Zeile $zeileNr bis $bisZeileNr";
 				$zeilenAuszug = array();
 				$nr=0;
 
@@ -240,8 +266,10 @@ class DocumentElement extends AbstractElement
 				if	( $zn < $bisZeileNr )
 					$para->children[] = new LineBreakElement();
 			}
+			
 			$zeileNr = $bisZeileNr;
 			$children[] = $para;
+			
 			continue;
 		}
 		
@@ -250,6 +278,9 @@ class DocumentElement extends AbstractElement
 
 
 
+	/**
+	 * Parsen einer mehrzeiligen Liste 
+	 */
 	function parseList( $zeilen,$tiefe )
 	{
 		$children = array();
@@ -299,6 +330,10 @@ class DocumentElement extends AbstractElement
 		return $children;
 	}
 
+
+	/**
+	 * Parsen einer Tabelle.
+	 */
 	function parseTable( $zeilen )
 	{
 		$children = array();
@@ -347,7 +382,7 @@ class DocumentElement extends AbstractElement
 	function parseLinks( $text )
 	{
 		$conf = Session::getConfig();
-		$text_markup = $conf['text-markup']; 
+		$text_markup = $conf['editor']['text-markup']; 
 
 		$posM = strpos($text,'"'.$text_markup['linkto'].'"');
 
@@ -369,17 +404,14 @@ class DocumentElement extends AbstractElement
 		$parts[] = substr($text,$posL+1,$posM-$posL-1);  // Linktext
 		$parts[] = substr($text,$posM+4,$posR-$posM-4);  // Verweisziel
 		$parts[] = substr($text,$posR+1              );  // Rest
-		
-//		echo "<pre>";
-//		echo "Link:$text";
-//		echo "janjan:";
-//		print_r($parts);
-//		echo "</pre>";
+
 		return $parts;
 	}
 	
 	
-		
+	/**
+	 * Erzeugt ein Bildobjekt
+	 */
 	function parseImages( $text )
 	{
 		$posM = strpos($text,'image:');
@@ -403,11 +435,6 @@ class DocumentElement extends AbstractElement
 		$parts[] = substr($text,$posM+4,$posR-$posM-4);  // Verweisziel
 		$parts[] = substr($text,$posR+1              );  // Rest
 		
-//		echo "<pre>";
-//		echo "Link:$text";
-//		echo "janjan:";
-//		print_r($parts);
-//		echo "</pre>";
 		return $parts;
 	}
 	
@@ -431,9 +458,6 @@ class DocumentElement extends AbstractElement
 		$parts[] = substr($text,$posL+strlen($sepLinks),$posR-$posL-strlen($sepLinks));
 		$parts[] = substr($text,$posR+strlen($sepRechts)                             );
 
-//		echo "Parse $seperator ergibt ";
-//		print_r($parts);
-				
 		return $parts;
 	}
 	
@@ -476,10 +500,11 @@ class DocumentElement extends AbstractElement
 		$text = ereg_replace( '\->([A-Za-z0-9\.\:\_\/\,\?\=\&-]+)','->"\\1"',$text );
 
 		// alleinstehende externe Links
-//		$text = ereg_replace( '((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))([^"])','"\\1"->"\\1"\\2',$text );
+		// Funktioniert nicht richtig, erstmal deaktiviert.
+//		$text = ereg_replace( '((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]+))([^"])','"\\1"->"\\1"\\2',$text );
 
 		// alleinstehende E-Mail Adressen
-		$text = ereg_replace( '([A-Za-z0-9._-]+@[A-Za-z0-9\.\_\-]+)([^"])','"\\1"->"\\1"\\2',$text );
+		$text = ereg_replace( '([A-Za-z0-9._-]+@[A-Za-z0-9\.\_\-]+)([^A-Za-z0-9\.\_\-\"])','"\\1"->"mailto:\\1"\\2',$text );
 
 		// Bilder
 		$text = ereg_replace( 'image:\/?\/?([A-Za-z0-9\.\:\_\/\,\?\=\&-]+)','{\\1}',$text );
@@ -492,10 +517,9 @@ class DocumentElement extends AbstractElement
 	function parseSimple( $text )
 	{
 		$conf = Session::getConfig();
-		$text_markup = $conf['text-markup'];
+		$text_markup = $conf['editor']['text-markup'];
 		
 		$text = $this->fixLinks($text);
-//		echo "parseSimple($text)";
 		$elements = array();
 		
 		if	( trim($text) == '' )
@@ -504,7 +528,6 @@ class DocumentElement extends AbstractElement
 		$erg = $this->parseLinks( $text );
 		if	( is_array($erg) )
 		{
-//			print_r($erg);
 			$idx   = -1;
 			
 			$davor = $this->parseSimple($erg[++$idx]);
