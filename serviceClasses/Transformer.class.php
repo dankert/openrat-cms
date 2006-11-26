@@ -128,7 +128,11 @@ class Transformer
 	}	
 	
 	
-	
+	/**
+	 * Parst einen einfachen Text (ohne Zeilenumbrüche).
+	 * 
+	 * @return Liste von Textobjekten
+	 */
 	function parseSimple( $text )
 	{
 //		echo "parseSimple($text)";
@@ -203,51 +207,6 @@ class Transformer
 		$t->text = $text;
 		
 		return array( $t );
-		
-		
-		//Text->... umsetzen nach "Text"->... (Anfuehrungszeichen ergaenzen)
-			$this->replaceRegexp( '([A-Za-z0-9._????????-]+)-'.$pf, '\'\'\\1\'\'-'.$pf  );
-	
-		// ...->Link umsetzen nach ...->"Link" (Anfuehrungszeichen ergaenzen)
-		$this->replaceRegexp( '-'.$pf.'([A-Za-z0-9.:_\/\,\?\=\&-]+)', '-'.$pf.'\'\'\\1\'\''  );
-
-		# Links ...->"nnn" ersetzen mit ...->"object:nnn"
-		$this->replaceRegexp( '-'.$pf.'\'\'([0-9]+)\'\'', '-'.$pf.'\'\'object\\1\'\'' );
-
-		$this->replaceRegexp( '-'.$pf.'\'\'([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)\'\'', '-'.$pf.'\'\'mailto:\\1\'\'' );
-
-		# Links "mit->..."
-		$this->replaceRegexp(  '\'\'([^\']+)\'\'-'.$pf.'\'\'([^\']+)\'\'', '{link:"\\2","\\1"}' );
-
-		// alleinstehende externe Links
-		$this->replaceRegexp( '([^"])((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))', '\\1{link:"\\2","\\4"}' );
-		$this->replaceRegexp( '^((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]*))'     , '{link:"\\1","\\3"}'    );
-
-		# mailto:...-Links
-		$this->replaceRegexp( '([^[A-Za-z0-9._:-])([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)', '\\1{link:"mailto:\\2","\\2"}' );
-		$this->replaceRegexp( '^([A-Za-z0-9._-]+@[A-Za-z0-9._-]+)'                  , '{link:"mailto:\\1","\\1"}' );
-		
-		// Einbinden von Bildern
-		$this->replaceRegexp( '(ima?ge?):\/?\/?(([0-9]+))(\{.*\})?', '{image:"object\\2"}' );
-		$this->replaceRegexp( '\{([0-9]+),?\}'                     , '{image:"object\\1"}' );
-		$this->replaceRegexp( '\{([0-9]+),([^\}]+)\}'              , '{image:"object\\1","\\2"}' );
-
-
-		$this->replaceRegexp( '\*([^\*]+[^\\])\*', '{strong-open}\\1{strong-close}'     );
-		$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
-
-//				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
-//				$this->replaceRegexp( '_([^_]+[^\\])_'   , '{emphatic-open}\\1{emphatic-close}' );
-
-		// "Wortliche Rede"
-		if	( !$this->html )
-			$this->replaceRegexp( '\'\'([^\']+[^\\])\'\'', '{speech-open}\\1{speech-close}' );
-
-		// =feste Breite=
-		$this->replaceRegexp( '=([^=]+[^\\])=', '{teletype-open}\\1{teletype-close}' );
-
-		$this->zeile = ereg_replace( '([^\\\\])\\\\','\\1', $this->zeile );
-
 	}
 	
 	
@@ -258,13 +217,7 @@ class Transformer
 		$this->doc = new DocumentElement();
 		$this->doc->parse($zeilen);
 		
-//		$this->doc->children = $this->parseMultiLine( $zeilen );
-		
-//		echo "<h2>Dokument:</h2>";
-//		echo "<pre>";
-//		print_r($this->doc);
-//		echo "</pre>";
-
+//		Html::debug($this->doc);
 		return; 
 	}
 
