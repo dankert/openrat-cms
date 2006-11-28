@@ -350,10 +350,12 @@ class Value
 		$sql = new Sql('SELECT MAX(id) FROM {t_value}');
 		$this->valueid = intval($db->getOne($sql->query))+1;
 
-		$sql->setQuery( 'INSERT INTO {t_value}'.
-		                '        (id,linkobjectid,text,number,date,elementid,pageid,languageid,active,publish,lastchange_date,lastchange_userid)'.
-		                ' VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{pageid},{languageid},1,{publish},{lastchange_date},{lastchange_userid})' );
-
+		$sql = new Sql( <<<SQL
+INSERT INTO {t_value}
+            (id       ,linkobjectid  ,text  ,number  ,date  ,elementid  ,pageid  ,languageid  ,active,publish  ,lastchange_date  ,lastchange_userid  )
+     VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{pageid},{languageid},1     ,{publish},{lastchange_date},{lastchange_userid})
+SQL
+		);
 		$sql->setInt( 'valueid'   ,$this->valueid            );
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid             );
@@ -384,7 +386,7 @@ class Value
 
 
 	/**
-	 * Diesen Inhalt l?schen
+	 * Diesen Inhalt loeschen
 	 */
 	function delete()
 	{
@@ -401,7 +403,7 @@ class Value
 
 
 	/**
-	 * Diese Methode erzeugt fuer alle Elementtypen den Inhalt
+	 * Diese Methode erzeugt fuer alle Elementtypen den Inhalt.
 	 */
 	function generate()
 	{
