@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.15  2006-11-16 19:58:57  dankert
+// Revision 1.16  2006-11-28 21:05:00  dankert
+// Wenn Klartextkennwort (kein MD5), dann Benutzer nicht anmelden.
+//
+// Revision 1.15  2006/11/16 19:58:57  dankert
 // Pflicht zu Kennwort?nderung ermitteln.
 //
 // Revision 1.14  2006/08/30 19:15:26  dankert
@@ -536,10 +539,11 @@ class User
 				// Pruefen ob Kennwort mit Datenbank uebereinstimmt
 				if   ( $row_user['password'] == $password )
 				{
+					// Kennwort stimmt mit Datenbank überein, aber nur im Klartext. Das Kennwort muss geändert werden
 					$this->mustChangePassword = true;
 					
-					// Juchuu, Login ist erfolgreich
-					return true;
+					// Login nicht erfolgreich
+					return false;
 				}
 				elseif   ( $row_user['password'] == md5( $password ) )
 				{
