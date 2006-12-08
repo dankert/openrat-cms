@@ -42,7 +42,8 @@ class Line
 	function Line( $s )
 	{
 		global $conf;
-		$text_markup = $conf['editor']['text-markup']; 
+		$text_markup = $conf['editor']['text-markup'];
+//		Html::debug($text_markup); 
 		
 		$list_numbered   = $text_markup['list-numbered'  ];
 		$list_unnumbered = $text_markup['list-unnumbered'];
@@ -97,10 +98,10 @@ class Line
 		{
 			$this->isQuote           = true;
 		}
-		elseif	( $this->isAnErsterStelle($s,$text_markup['quote']) && strlen(trim($s)>1) )
+		elseif	( $this->isAnErsterStelle($s,$text_markup['quote']) && strlen(trim($s))>1 )
 		{
-			$this->isQuotePraefix    = true;
-			$this->level         = strspn( str_replace(' ','',$s),$text_markup['quote'] );
+			$this->isQuotePraefix = true;
+			$this->level          = strspn( str_replace(' ','',$s),$text_markup['quote'] );
 		}
 		elseif	( $this->isAnErsterStelle($s,'`') )
 		{
@@ -119,6 +120,9 @@ class Line
 	 */	
 	function isAnErsterStelle( $text,$wort )
 	{
+//		Html::debug($text,"Text");
+//		Html::debug($wort,"Wort");
+//		Html::debug(substr($text,0,strlen($wort))==$wort,'Ergebnis');
 		return substr($text,0,strlen($wort))==$wort;
 	}
 }
