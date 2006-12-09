@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2005-04-16 22:26:15  dankert
+// Revision 1.5  2006-12-09 16:56:40  dankert
+// Methode "encodeHtml()" ersetzt nun auch Umlaute gem. Konfiguration.
+//
+// Revision 1.4  2005/04/16 22:26:15  dankert
 // Erweiterung Methode maxLength()
 //
 // Revision 1.3  2005/02/17 21:22:22  dankert
@@ -127,6 +130,8 @@ class Text
 		$inhalt = str_replace('<','&lt;' ,$inhalt);
 		$inhalt = str_replace('>','&gt;' ,$inhalt);
 
+		$inhalt = DocumentElement::replaceHtmlChars( $inhalt );
+		
 		return $inhalt;
 	}
 
