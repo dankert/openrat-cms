@@ -19,6 +19,8 @@ class LinkElement extends AbstractElement
 	var $fragment = '';
 	var $path     = '';
 	
+	var $name;
+	
 	function setTarget( $target )
 	{
 		$this->target = $target;
@@ -58,10 +60,15 @@ class LinkElement extends AbstractElement
 
 	function getUrl()
 	{
-		$url = $this->protocol.':';
+		$url = '';
 		
-		if	( $this->protocol != 'mailto' )
-			$url.='//';
+		if	( $this->protocol != '')
+		{
+			$url .= $this->protocol.':';
+		
+			if	( $this->protocol != 'mailto' )
+				$url.='//';
+		}
 			
 		if	( $this->user != '' )
 		{
@@ -74,18 +81,39 @@ class LinkElement extends AbstractElement
 		}
 		
 		$url .= $this->host;
+		
 		if	( $this->port != '' )
-			$url .= ':'.$this->host;
+			$url .= ':'.$this->port;
 			
-		$url .= $this->path;
+		$url .= $this->url_encode($this->path);
 
 		if	( $this->query != '' )
-			$url .= '?'.$this->query;
+			$url .= '?'.urlencode($this->query);
 
 		if	( $this->fragment != '' )
 			$url .= '#'.$this->fragment;
 
 		return $url;
+	}
+	
+	
+	
+	function int2hex($intega)
+	{
+	   	$Ziffer = "0123456789ABCDEF";
+		return $Ziffer[($intega%256)/16].$Ziffer[$intega%16];
+	}
+	
+	
+	function url_encode( $text )
+	{
+		for($i=129;$i<255;$i++)
+		{
+			$in   = chr($i);
+			$out  = "%C3%".$this->int2hex($i-64);
+			$text = str_replace($in,$out,$text);
+		}
+		return $text;
 	}
 }
 
