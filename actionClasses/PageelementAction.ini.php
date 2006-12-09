@@ -6,6 +6,9 @@ goto=show
 target=savetext
 menu=text
 
+[usevalue]
+menu=text
+
 [editlink]
 target=savelink
 menu=link

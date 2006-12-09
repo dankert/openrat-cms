@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.22  2006-08-29 19:40:43  dankert
+// Revision 1.23  2006-12-09 16:58:35  dankert
+// Notd?rftiges Aktivieren von Methode "useValue()". Hier ist noch Nacharbeit notwendig!
+//
+// Revision 1.22  2006/08/29 19:40:43  dankert
 // Vorbereitungen f?r Im- und Export von/nach ODF.
 //
 // Revision 1.21  2006/08/08 20:10:23  dankert
@@ -730,7 +733,7 @@ class PageelementAction extends Action
 		$this->value->valueid = $this->getRequestVar('valueid');
 		
 		// Das ausgew?hlte Element f?r die Bearbeitung verwenden
-		$this->callSubAction('edit');
+		$this->callSubAction('editlongtext');
 	}
 
 
