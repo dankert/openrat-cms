@@ -9,9 +9,9 @@
  */
 class Preferences
 {
-	
 	function load( $dir='' )
 	{
+		define('QUOTE','"');
 		
 		$values = array();
 		
@@ -40,7 +40,6 @@ class Preferences
 
 		ksort($values);
 
-//		Html::debug($values,"Konfiguration");
 		return $values;
 	}
 }
