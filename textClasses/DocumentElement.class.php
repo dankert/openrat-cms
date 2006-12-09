@@ -25,18 +25,19 @@ class DocumentElement extends AbstractElement
 	 */
 	function parse( $text )
 	{
-		
+//		set_time_limit(1);
 		$zeilen = array();
 		$nr     = 0;
 		
 		foreach( $text as $t )
 		{
 //			$t = $this->fixLinks( $t );  // Verweise vervollstaendigen.
-			$zeilen[++$nr] = new Line( $t );
+			$zeilen[++$nr] = new Line( rtrim($t) );
 		}
 
 		// $zeilen enthält eine Liste von Zeilenobjekten.
 		// Der Index ist die Zeilennr. und beginnt bei 1.
+//		Html::debug($zeilen,"Zeilen");
 		
 		$this->children = $this->parseMultiLineText( $zeilen );
 	}
@@ -51,6 +52,8 @@ class DocumentElement extends AbstractElement
 	 */
 	function parseMultiLineText( $zeilen )
 	{
+		global $conf;
+		
 		$children     = array();           // Initiales Anlegen der Unterobjektliste.
 		$anzahlZeilen = count( $zeilen );  // Anzahl Zeilen
 		
@@ -61,16 +64,18 @@ class DocumentElement extends AbstractElement
 		
 		for	( $zeileNr=1; $zeileNr<=$anzahlZeilen; $zeileNr++ )
 		{
+
 			$letzteZeile   = $zeilen[$zeileNr-1];
 			$dieseZeile    = $zeilen[$zeileNr  ];
 			$naechsteZeile = $zeilen[$zeileNr+1];
+
+//			Html::debug($dieseZeile,"Zeile");
 			
 			// Leerzeilen ignorieren
 			if	( $dieseZeile->isEmpty )
 			{
 				continue;
 			}
-			
 			
 			// Inhaltsverzeichnis
 			// Text nicht parsen
@@ -113,7 +118,7 @@ class DocumentElement extends AbstractElement
 			}
 			
 			// Zitate Teil 1
-			// Markierung am Zeilenanfang
+			// Zitat ist in separater Zeile angekündigt			
 			if	( $dieseZeile->isQuote )
 			{
 				$bisZeileNr = $zeileNr+1;
@@ -139,26 +144,53 @@ class DocumentElement extends AbstractElement
 
 			
 			// Zitate Teil 2
-			// Zitat ist in separater Zeile angekündigt			
+			// Markierung am Zeilenanfang
 			if	( $dieseZeile->isQuotePraefix )
 			{
-				$bisZeileNr = $zeileNr+1;
-				do
-				{
+				$bisZeileNr = $zeileNr;
+				while( $bisZeileNr<=$anzahlZeilen && $zeilen[$bisZeileNr]->isQuotePraefix  )
 					$bisZeileNr++;
-				}
-				while( !$zeilen[$bisZeileNr]->isQuote && !$zeilen[$bisZeileNr]->isQuotePraefix && $bisZeileNr<=$anzahlZeilen );
-				
+				$bisZeileNr--;
+//				Html::debug($bisZeileNr,"Bis-Zeile-Nr.");
 				$quote = new QuoteElement();
-				$zeilenAuszug = array();
-				$nr=0;
-				for( $zn=$zeileNr+1;$zn<$bisZeileNr;$zn++)
-				{
-					$zeilenAuszug[++$nr] = $zeilen[$zn];
-				}
+				
+				$zeilenAuszug = $this->getListenAuszug( $zeilen,$zeileNr,$bisZeileNr);
+//				Html::debug($zeilenAuszug,"Auszug");
+//				die();
 				$quote->children = $this->parseMultiLineText($zeilenAuszug);
-				$zeileNr = $bisZeileNr+1;
+				$zeileNr = $bisZeileNr;
 				$children[] = $quote;
+				continue;
+			}
+			
+
+			
+			// Definitionsliste
+			// Markierung am Zeilenanfang
+			if	( $dieseZeile->isDefinition )
+			{
+				$bisZeileNr = $zeileNr;
+				while( $bisZeileNr<=$anzahlZeilen && $zeilen[$bisZeileNr]->isDefinition )
+					$bisZeileNr++;
+				$bisZeileNr--;
+
+				$defList = new DefinitionListElement();
+				
+				$zeilenAuszug = $this->getListenAuszug( $zeilen,$zeileNr,$bisZeileNr);
+//				Html::debug($zeilenAuszug,"Auszug");
+//				die();
+				foreach( $zeilenAuszug as $zeile )
+				{
+					$sep = $conf['editor']['text-markup']['definition-sep'];
+					list($defKey, $defValue) = explode($sep, $zeile->value);
+					
+					$defEntry = new DefinitionItemElement();
+					$defEntry->key       = $defKey;
+					$defEntry->children  = $this->parseSimple($defValue);
+					$defList->children[] = $defEntry;
+				}
+				$zeileNr = $bisZeileNr;
+				$children[] = $defList;
 				continue;
 			}
 			
@@ -236,41 +268,45 @@ class DocumentElement extends AbstractElement
 
 
 
-			// Textabsaetze
-			$bisZeileNr = $zeileNr+1;
-			while( $bisZeileNr < $anzahlZeilen &&
-			       !$zeilen[$bisZeileNr  ]->isTable &&
-			       !$zeilen[$bisZeileNr  ]->isCode  &&
-			       !$zeilen[$bisZeileNr  ]->isList  &&
-			       !$zeilen[$bisZeileNr  ]->isNumberedList &&
-			       !$zeilen[$bisZeileNr  ]->isHeadline &&
-			       !$zeilen[$bisZeileNr+1]->isHeadlineUnderline &&
-			       !$zeilen[$bisZeileNr  ]->isEmpty)
+			if	( $dieseZeile->isNormal )
 			{
-				$bisZeileNr++;
-			}
-			$bisZeileNr--;
-			
-			$para = new ParagraphElement();
-			for( $zn=$zeileNr;$zn<=$bisZeileNr;$zn++)
-			{
-				if	( $zeilen[$zn]->isEmpty )
-					continue;
-
-				if	( $zeilen[$zn]->isUnparsed )
-					$para->children[] = new TextElement( $zeilen[$zn]->source );
-					
-				foreach( $this->parseSimple($zeilen[$zn]->value) as $e )
-					$para->children[] = $e;
+//				Html::debug($dieseZeile,"normale Zeile");
+				// Textabsaetze
+				$bisZeileNr = $zeileNr;
+				while( $bisZeileNr <= $anzahlZeilen      &&
+				       $zeilen[$bisZeileNr  ]->isNormal     )
+				{
+					$bisZeileNr++;
+				}
+				$bisZeileNr--;
+//				Html::debug($zeileNr,"Zeile");
+//				Html::debug($bisZeileNr,"bisZeile-P");
+//				die();	
 				
-				if	( $zn < $bisZeileNr )
-					$para->children[] = new LineBreakElement();
+				$para = new ParagraphElement();
+				for( $zn=$zeileNr;$zn<=$bisZeileNr;$zn++)
+				{
+					if	( !$zeilen[$zn]->isNormal )
+						continue;
+	
+					if	( $zeilen[$zn]->isUnparsed )
+						$para->children[] = new TextElement( $zeilen[$zn]->source );
+						
+					foreach( $this->parseSimple($zeilen[$zn]->value) as $e )
+						$para->children[] = $e;
+					
+					if	( $zn < $bisZeileNr )
+						$para->children[] = new LineBreakElement();
+				}
+				
+				$zeileNr = $bisZeileNr;
+				$children[] = $para;
+				
+				continue;
 			}
 			
-			$zeileNr = $bisZeileNr;
-			$children[] = $para;
-			
-			continue;
+			Html::debug($dieseZeile,"Unbekannte Zeile");
+			die( 'unknown line: '.$dieseZeile );
 		}
 		
 		return $children;
@@ -278,6 +314,20 @@ class DocumentElement extends AbstractElement
 
 
 
+	function getListenAuszug( $liste, $von, $bis )
+	{
+		$auszug = array();
+		$idx    = 0;
+		
+		for( $j=$von;$j<=$bis;$j++)
+		{
+			$auszug[++$idx] = new Line($liste[$j]->value);
+		}
+		
+		return $auszug;
+	}
+	
+	
 	/**
 	 * Parsen einer mehrzeiligen Liste 
 	 */
@@ -442,7 +492,6 @@ class DocumentElement extends AbstractElement
 		
 	function parseSimpleParts( $text,$sepLinks,$sepRechts )
 	{
-
 		$posL = strpos($text,$sepLinks);
 
 		if	( $posL === false )
@@ -457,6 +506,26 @@ class DocumentElement extends AbstractElement
 		$parts[] = substr($text,0      ,$posL        );
 		$parts[] = substr($text,$posL+strlen($sepLinks),$posR-$posL-strlen($sepLinks));
 		$parts[] = substr($text,$posR+strlen($sepRechts)                             );
+
+		return $parts;
+	}
+	
+	
+	
+	/**
+	 * 
+	 */
+	function parseEscapes( $text )
+	{
+		$posL = strpos($text,'\\');
+
+		if	( $posL === false )
+			return false;
+
+		$parts = array();			
+		$parts[] = substr($text,0         ,$posL );
+		$parts[] = substr($text,$posL+1,1 );
+		$parts[] = substr($text,$posL+2   );
 
 		return $parts;
 	}
@@ -513,7 +582,10 @@ class DocumentElement extends AbstractElement
 	}
 	
 	
-			
+	
+	/**
+	 * Diese Methode parst einen einfachen, einzeiligen Text und zerlegt diesen in seine Bestandteile.
+	 */		
 	function parseSimple( $text )
 	{
 		$conf = Session::getConfig();
@@ -576,6 +648,24 @@ class DocumentElement extends AbstractElement
 			return $elements;
 		}
 
+		$erg = $this->parseEscapes( $text );
+		if	( is_array($erg) )
+		{
+			$idx   = -1;
+			
+			$davor = $this->parseSimple($erg[++$idx]);
+			foreach( $davor as $davorEl )
+				$elements[] = $davorEl;
+
+			$t = new TextElement($erg[++$idx]);
+			$elements[] = $t;
+
+			$danach = $this->parseSimple($erg[++$idx]);
+			foreach( $danach as $danachEl )
+				$elements[] = $danachEl;
+
+			return $elements;
+		}
 
 		$erg = $this->parseSimpleElement( $text,$text_markup['strong-begin'],$text_markup['strong-end'],'StrongElement' );
 		if	( is_array($erg) )
@@ -612,6 +702,8 @@ class DocumentElement extends AbstractElement
 	
 	function renderElement( $child )
 	{
+		global $conf;
+		
 		switch( $this->type )
 		{
 			case 'html':
@@ -620,6 +712,7 @@ class DocumentElement extends AbstractElement
 				$val  = '';
 				$praefix = '';
 				$suffix  = '';
+				$empty   = false;
 
 				if	( count($child->children) > 0 )
 				{
@@ -637,10 +730,28 @@ class DocumentElement extends AbstractElement
 				
 				switch( strtolower(get_class($child)) )
 				{
+					case 'tableofcontentelement':
+						$tag = 'p';
+						foreach( $this->children as $h)
+						{
+							if	( strtolower(get_class($h))=='headlineelement' )
+							{
+								$child->children[] = new TextElement(str_repeat('&nbsp;&nbsp;',$h->level));
+								$t = new TextElement( $h->getText() );
+								$l = new LinkElement();
+								$l->fragment=$h->getName();
+								$l->children[] = $t;
+								$child->children[] = $l;
+								$child->children[] = new LineBreakElement();
+							}
+						}
+						break;
+
 					case 'textelement':
 						$tag = '';
 //						$tag = 'span';
-						$val = $child->text;
+						$val = $this->replaceHtmlChars( $child->text );
+
 						break;
 
 					case 'codeelement':
@@ -656,26 +767,50 @@ class DocumentElement extends AbstractElement
 						$tag = 'p';
 						break;
 
-					case 'paragraphelement':
-						$tag = 'p';
-						break;
-
 					case 'speechelement':
 						$tag     = 'cite';
-						$praefix = '&bdquo;';
-						$suffix  = '&ldquo;';
+						
+						// Danke an: http://www.apostroph.de/tueddelchen.php
+						//TODO: Abhängigkeit von Spracheinstellung implementieren.
+						$language = 'de';
+						switch( $language )
+						{
+							case 'de': // deutsche Notation
+								$praefix = '&bdquo;';
+								$suffix  = '&ldquo;';
+								break;
+							case 'fr':
+								$praefix = '&laquo;';
+								$suffix  = '&raquo;';
+								break;
+							default: // englische Notation
+								$praefix = '&ldquo;';
+								$suffix  = '&rdquo;';
+						}
+						
+						if	( $conf['editor']['html']['override_speech'] )
+						{
+							$praefix = $conf['editor']['html']['override_speech_open' ];
+							$suffix  = $conf['editor']['html']['override_speech_close'];
+						}
 						break;
 
 					case 'linebreakelement':
-						$tag = 'br';
+						$tag   = 'br';
+						$empty = true;
 						break;
 
 					case 'linkelement':
 						$tag = 'a';
-						$attr['href'] = htmlspecialchars($child->getUrl());
+						if	( !empty($child->name) )
+							$attr['name'] = $child->name;
+						else
+							$attr['href'] = htmlspecialchars($child->getUrl());
+							
 						break;
 
 					case 'imageelement':
+						$empty       = true;
 						$attr['alt'] = '';
 
 						if	( empty($attr['title']) )
@@ -722,6 +857,11 @@ class DocumentElement extends AbstractElement
 
 					case 'headlineelement':
 						$tag = 'h'.$child->level;
+						
+						$l = new LinkElement();
+						$l->name = $child->getName();
+						$child->children[] = $l;
+						
 						break;
 
 					case 'tableelement':
@@ -733,15 +873,31 @@ class DocumentElement extends AbstractElement
 						break;
 
 					case 'definitionlistelement':
+						$items = $child->children;
+						$newChildren = array();
+						foreach( $items as $item )
+						{
+							$def = new DefinitionItemElement();
+							$def->key = $item->key;
+							$item->key = ''; 
+							$newChildren[] = $def;
+							$newChildren[] = $item;
+						}
+//						Html::debug($newChildren,'Children-neu');
+						$child->children = $newChildren;
 						$tag = 'dl';
 						break;
 
-					case 'definitionlistitemelement':
-						$tag = 'dt';
-						break;
-
-					case 'definitionlistentryelement':
-						$tag = 'dd';
+					case 'definitionitemelement':
+						if	( !empty($child->key) )
+						{
+							$tag = 'dt';
+							$val = $child->key;
+						}
+						else
+						{
+							$tag = 'dd';
+						}
 						break;
 
 					case 'tablecellelement':
@@ -785,7 +941,7 @@ class DocumentElement extends AbstractElement
 
 				$val .= $suffix;
 //				echo "text:$val";
-				return $this->renderHtmlElement($tag,$val,$attr);
+				return $this->renderHtmlElement($tag,$val,$empty,$attr);
 				
 			case 'text':
 				$className = strtolower(get_class($child));
@@ -805,6 +961,24 @@ class DocumentElement extends AbstractElement
 				die( 'unknown document type: '.$this->type );
 		}
 		
+	}
+
+
+
+	/**
+	 * 
+	 */
+	function replaceHtmlChars( $text )
+	{
+		global $conf;
+		
+		foreach( explode(' ',$conf['editor']['html']['replace']) as $repl )
+		{
+			list( $ersetze, $mit ) = explode(':',$repl);
+			$text = str_replace($ersetze, $mit, $text);
+		}
+		
+		return $text;
 	}
 
 
@@ -834,8 +1008,9 @@ class DocumentElement extends AbstractElement
 	
 	
 	
-	function renderHtmlElement( $tag,$value,$attr=array() )
+	function renderHtmlElement( $tag,$value,$empty,$attr=array() )
 	{
+		global $conf;
 		if	( $tag == '' )
 			return $value;
 			
@@ -845,11 +1020,22 @@ class DocumentElement extends AbstractElement
 			$val .= ' '.$attrName.'="'.$attrInhalt.'"';
 		}
 		
-		if	( $value == '' )
+		if	( $value == '' && $empty )
 		{
 			// Inhalt ist leer, also Kurzform verwenden.
-			$val .= ' />';
-			return $val;	
+			// Die Kurzform ist abhängig vom Rendermode.
+			// SGML=<tag>
+			// XML=<tag />
+			if	( $conf['editor']['html']['rendermode'] == 'xml' )
+			{
+				$val .= ' />';
+				return $val;
+			}
+			else	
+			{
+				$val .= '>';
+				return $val;
+			}	
 		}
 		
 		$val .= '>'.$value.'</'.$tag.'>';

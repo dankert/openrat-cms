@@ -22,8 +22,7 @@ require_once( OR_TEXTCLASSES_DIR."TableCellElement.class.".PHP_EXT );
 require_once( OR_TEXTCLASSES_DIR."TableOfContentElement.class.".PHP_EXT );
 require_once( OR_TEXTCLASSES_DIR."TextElement.class.".PHP_EXT );
 require_once( OR_TEXTCLASSES_DIR."DefinitionListElement.class.".PHP_EXT );
-require_once( OR_TEXTCLASSES_DIR."DefinitionListItemElement.class.".PHP_EXT );
-require_once( OR_TEXTCLASSES_DIR."DefinitionListEntryElement.class.".PHP_EXT );
+require_once( OR_TEXTCLASSES_DIR."DefinitionItemElement.class.".PHP_EXT );
 require_once( OR_TEXTCLASSES_DIR."InsertedElement.class.".PHP_EXT );
 require_once( OR_TEXTCLASSES_DIR."RemovedElement.class.".PHP_EXT );
 
