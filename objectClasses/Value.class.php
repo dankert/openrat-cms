@@ -873,8 +873,11 @@ SQL
 					default:
 						//$inhalt = 'please select subtype. unknown: '.$this->element->subtype;
 				}
+				
+				$inhalt = Text::encodeHtml( $inhalt );
 				break;
 		}
+		
 		
 		if   ( $this->page->icons && $this->element->withIcon )
 			$inhalt = '<a href="'.Html::url('pageelement','edit',$this->page->objectid,array('elementid'=>$this->element->elementid)).'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_EXT.'" border="0" align="left"></a>'.$inhalt;
