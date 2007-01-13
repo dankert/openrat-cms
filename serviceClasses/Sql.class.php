@@ -100,6 +100,18 @@ class Sql
 	 */
 	function Sql( $query = '' )
 	{
+		$this->parseSourceQuery( $query );
+		
+		$this->data  = array();
+	}
+
+
+
+	/**
+	 * Die SQL-Anfrage wird auf Parameter untersucht.
+	 */
+	function parseSourceQuery( $query )
+	{
 		$this->src   = $query; // Wir merken uns die Ur-Abfrage, evtl. für Fehlermeldungen interessant.
 		
 		while( true )  // Schleife wird solange durchlaufen, solange Parameter gefunden werden.
@@ -120,7 +132,6 @@ class Sql
 			$query = substr($query,0,$posKlLinks).substr($query,$posKlRechts+1);
 		}
 		
-		$this->data  = array();
 		$this->query = $query;
 
 		// Tabellennamen in die Platzhalter setzen.
@@ -141,13 +152,9 @@ class Sql
 	 */
 	function setQuery( $query = '' )
 	{
-		$this->query = $query;
-		
-		foreach( table_names() as $t=>$name )
-		{
-			$this->query = str_replace( '{'.$t.'}',$name,$this->query );
-		}
-		
+		$this->parseSourceQuery( $query );
+
+		// Bereits vorhande Parameter setzen.		
 		foreach( $this->data as $name=>$data )
 		{
 			if	( $data['type']=='string' ) $this->setString($name,$data['value'] );
