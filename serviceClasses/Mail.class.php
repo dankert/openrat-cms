@@ -29,15 +29,16 @@ class Mail
 		$this->subject  = lang( 'mail_subject_'.$text );
 		$this->to       = $to;
 		
-		$this->text = wordwrap(lang('mail_text_'.$text),70,$this->nl);
+		$this->text = $this->nl.wordwrap(str_replace(';',$this->nl,lang('mail_text_'.$text)),70,$this->nl).$this->nl;
 
 		// Signatur anhaengen (sofern konfiguriert)
 		if	( !empty($conf['mail']['signature']) )
 		{
-			$this->text .= $this->nl.$this->nl.'-- '.$this->nl;
+			$this->text .= $this->nl.'-- '.$this->nl;
 			$this->text .= str_replace(';',$this->nl,$conf['mail']['signature']);
+			$this->text .= $this->nl;
 		}
-
+		
 		// Kopie-Empfänger
 		if	( !empty($conf['mail']['cc']) )
 			$this->bcc = $conf['mail']['cc'];
