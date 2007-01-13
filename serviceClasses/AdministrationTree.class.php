@@ -327,7 +327,7 @@ class AdministrationTree extends AbstractTree
 				
 				$treeElement->text        = $key.':';
 				if	( $key != 'password')
-					$treeElement->text .= Text::maxLength($value,30);
+					$treeElement->text .= htmlentities(Text::maxLength($value,30));
 				else
 					$treeElement->text .= '*';
 					
