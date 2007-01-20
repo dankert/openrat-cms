@@ -108,7 +108,43 @@ class TemplateEngine
 		return $value;
 	}
 	
-		
+	
+	
+	function attributeValue( $value )
+	{
+		$parts = explode( ':', $value );
+		if	( count($parts) >= 2 )
+		{
+			list( $type,$value ) = $parts;
+			switch( $type )
+			{
+				case 'var':
+					return '$'.$value;
+				case 'method':
+					return '$this->'.$value.'()';
+				case 'property':
+					return '$this->'.$value;
+				case 'message':
+					return 'lang('."'".$value."'".')';
+				case 'config':
+					$config_parts = explode('/',$value);
+					return '$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
+					
+				default:
+					die('unknown type in attribute value: '.$type);
+			}
+		}
+		else
+		{
+			return "'".$value."'";
+		}
+	}
+	
+	
+	
+	/**
+	 * Ein Baustein wird in die neue Vorlagedatei kopiert. 
+	 */
 	function copyFileContents( $infile,$outFileHandler,$attr )
 	{
 		global $conf;
@@ -119,17 +155,20 @@ class TemplateEngine
 			if	( count($attr)==0 )
 				return;
 			else
+				// Baustein nicht vorhanden, Abbbruch.
 				die( 'compile failed, file not found: '.$inFileName );
 
 		$values = array();
 		foreach( $attr as $attrName=>$attrValue )
 		{
-			$values[] = "'".$attrName."'=>'".$attrValue."'";
+			$values[] = "'".$attrName."'=>".$this->attributeValue($attrValue);
 		}
 //		fwrite( $outFileHandler,'<?php /* source: '.$inFileName.' - compile time: '.date('r').' */ ?'.'>');
 		fwrite( $outFileHandler,'<?php $attr = array('.implode(',',$values).') ?>');
+		
 		foreach( $attr as $attrName=>$attrValue )
-			fwrite( $outFileHandler,'<?php $attr_'.$attrName."='".$attrValue."' ?>");
+			
+			fwrite( $outFileHandler,'<?php $attr_'.$attrName."=".$this->attributeValue($attrValue)." ?>");
 //		foreach( $attr as $attrName=>$attrValue )
 //			fwrite( $outFileHandler,'<?php $'.$attrName."='".$attrValue."' ? >");
 
@@ -153,7 +192,12 @@ class TemplateEngine
 	
 	
 	
-	
+	/**
+	 * Diese Funktion prüft, ob die Attribute zu einem Element gültig sind.<br>
+	 * Falls ein ungültiges Attribut oder ein ungültiger Wert entdeckt wird,
+	 * so wird das Skript abgebrochen.
+	 * @return Überprüfte und mit Default-Werten angereicherte Attribute
+	 */
 	function checkAttributes( $cmd,$attr )
 	{
 		global $conf;
@@ -170,7 +214,7 @@ class TemplateEngine
 			if	( $al=='')
 				continue;
 				
-			list($a,$default) = explode(':',$al.':');
+			list($a,$default) = explode(':',$al.':NONE');
 			$default = str_replace('COMMA',',',$default);
 			if	( isset($attr[$a]))
 				$checkedAttr[$a]=$attr[$a];
@@ -178,7 +222,8 @@ class TemplateEngine
 				if	( $default=='*')
 					die( 'required attribute not found, element= '.$cmd.', attribute='.$a );
 				else
-					$checkedAttr[$a]=$default;
+					if	( $default != 'NONE' )
+						$checkedAttr[$a]=$default;
 			unset( $attr[$a] );
 		}
 		
@@ -193,7 +238,9 @@ class TemplateEngine
 	}
 	
 	
-	
+	/**
+	 * Diese Funktion lädt die passende Vorlagedatei.
+	 */
 	function loadDocument( $filename )
 	{
 		if	( substr($filename,-4)=='.xml')
@@ -203,6 +250,9 @@ class TemplateEngine
 	}
 
 
+	/**
+	 * Laden und Parsen eines XML-Dokumentes.
+	 */
 	function loadXmlDocument( $filename )
 	{
 		$index = array();
@@ -217,6 +267,10 @@ class TemplateEngine
 	}
 
 
+	/**
+	 * Laden und Parsen eines Dokumentes im Openrat-eigenem Format.<br>
+	 * ("ORML"=Openrat Meta Language)
+	 */
 	function loadOrmlDocument( $filename )
 	{
 		$vals  = array();
@@ -247,10 +301,11 @@ class TemplateEngine
 			}
 			
 			// Kommentarzeilen
-			if	( substr($line,0,1)=='#' || substr($line,0,2)=='//')
-				continue;
-
-			if	( $raw )
+			if	( !$raw)
+				if	( substr($line,0,1)=='#' || substr($line,0,2)=='//')
+					continue;
+					
+			if	( $raw)
 			{
 				$vals[] = array( 'tag'=>'raw',
 				                 'type'=>'close',
