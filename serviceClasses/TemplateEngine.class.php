@@ -225,6 +225,17 @@ class TemplateEngine
 					if	( $default != 'NONE' )
 						$checkedAttr[$a]=$default;
 			unset( $attr[$a] );
+			
+			// Sonderfälle für die Attributwerte "true" und "false".
+			// Hinweis: Die Zeichenkette "false" entspricht in PHP true.
+			// Siehe http://de.php.net/manual/de/language.types.boolean.php
+			if	( isset($checkedAttr[$a]))
+			{
+				if	( $checkedAttr[$a] == 'true')
+					$checkedAttr[$a] = true;
+				elseif	( $checkedAttr[$a] == 'false')
+					$checkedAttr[$a] = false;
+			}
 		}
 		
 		if	( count($attr) > 0 )
