@@ -7,8 +7,7 @@
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// as published by the Free Software Foundation; version 2.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,52 +17,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.15  2006-06-16 19:45:05  dankert
-// Neues Templateelement "Kopie" (intern: "copy")
-//
-// Revision 1.14  2006/02/04 23:20:37  dankert
-// Ausbau ?berfl?ssiges "echo()"
-//
-// Revision 1.13  2006/01/29 17:18:27  dankert
-// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
-//
-// Revision 1.12  2006/01/17 22:43:02  dankert
-// Der Einstellungsknoten hei?t nun "date-formats" statt "date_formats"
-//
-// Revision 1.11  2005/04/21 19:08:44  dankert
-// Vorbelegung fuer "list"-Element
-//
-// Revision 1.10  2005/01/03 19:37:15  dankert
-// Bei dynamic-Elementen einfaches Array erzeugen
-//
-// Revision 1.9  2004/12/30 23:31:27  dankert
-// Korrektur userIsAdmin()
-//
-// Revision 1.8  2004/12/26 20:20:40  dankert
-// Konstante FILE_SEP benutzen
-//
-// Revision 1.7  2004/12/19 14:53:11  dankert
-// Verwenden von getRequestId()
-//
-// Revision 1.6  2004/12/15 23:22:37  dankert
-// *** empty log message ***
-//
-// Revision 1.5  2004/10/06 09:54:43  dankert
-// Neuer Elementtyp: dynamic
-//
-// Revision 1.4  2004/07/07 20:43:57  dankert
-// Neuer Elementtyp: select
-//
-// Revision 1.3  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.2  2004/04/24 17:41:51  dankert
-// Subtypes von Info geaendert
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
 //
 // ---------------------------------------------------------------------------
 
@@ -147,80 +100,6 @@ class ElementAction extends Action
 			$this->element->setType( $this->getRequestVar('type') );
 		}
 	}
-	
-	
-	
-	/**
-	 * Speichern der Element-Eigenschaften
-	 */
-	function saveproperties()
-	{
-		global $conf;
-		$ini_date_format = $conf['date-formats'];
-	
-		foreach( $this->element->getRelatedProperties() as $propertyName )
-		{
-			switch( $propertyName )
-			{
-				case 'dateformat':
-					$this->element->dateformat   = $ini_date_format[$this->getRequestVar('dateformat')];
-					break;
-
-				case 'subtype':
-					$this->element->subtype      = $this->getRequestVar('subtype');
-					break;
-
-				case 'defaultText':
-					$this->element->defaultText  = $this->getRequestVar('default_text');
-					break;
-
-				case 'wiki':
-					$this->element->wiki         = $this->getRequestVar('wiki') != '';
-					break;
-
-				case 'html':
-					$this->element->html         = $this->getRequestVar('html') != '';
-					break;
-
-				case 'withIcon':
-					$this->element->withIcon     = $this->getRequestVar('with_icon') != '';
-					break;
-
-				case 'allLanguages':
-					$this->element->allLanguages = $this->getRequestVar('all_languages') != '';
-					break;
-
-				case 'writable':
-					$this->element->writable     = $this->getRequestVar('writable') != '';
-					break;
-
-				case 'decimals':
-					$this->element->decimals     = $this->getRequestVar('decimals');
-					break;
-
-				case 'decPoint':
-					$this->element->decPoint     = $this->getRequestVar('dec_point');
-					break;
-
-				case 'thousandSep':
-					$this->element->thousandSep  = $this->getRequestVar('thousand_sep');
-					break;
-
-				case 'folderObjectId':
-					$this->element->folderObjectId  = $this->getRequestVar('folderobjectid'  );
-					break;
-
-				case 'defaultObjectId':
-					$this->element->defaultObjectId = $this->getRequestVar('default_objectid');
-					break;
-
-				case 'code':
-					$this->element->code          = $this->getRequestVar('code'            );
-					break;
-			}
-		}
-		$this->element->save();
-	}
 
 
 	/**
@@ -243,16 +122,16 @@ class ElementAction extends Action
 		$types = array();
 
 		foreach( $this->element->getAvailableTypes() as $t )
-		{
 			$types[ $t ] = lang('EL_'.$t);
-		}
 
 		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
 		if	( !$this->userIsAdmin() )
 			unset( $types['code'] );
 		
+		// Liste aller Elementtypen
 		$this->setTemplateVar('types',$types);
 		
+		// Aktueller Typ
 		$this->setTemplateVar('type',$this->element->type);
 	}
 	
@@ -260,31 +139,27 @@ class ElementAction extends Action
 	function properties()
 	{
 		global $conf;
-		// Abh?ngig vom aktuellen Element-Typ die Eigenschaften anzeigen
 		
+//		Html::debug($this->element);
+
+		// Abhaengig vom aktuellen Element-Typ die Eigenschaften anzeigen
 		$properties = $this->element->getRelatedProperties();
 
-		// Eigenschaften Info-Datum
 		foreach( $this->element->getRelatedProperties() as $propertyName )
 		{
 			switch( $propertyName )
 			{
 				case 'withIcon':
-
 					$this->setTemplateVar('with_icon'    ,$this->element->withIcon    );
 					break;
 
 				case 'allLanguages':
-
 					$this->setTemplateVar('all_languages',$this->element->allLanguages);
 					break;
 
-
 				case 'writable':
-
 					$this->setTemplateVar('writable'     ,$this->element->writable    );
 					break;
-					
 
 				case 'subtype':
 
@@ -412,6 +287,7 @@ class ElementAction extends Action
 				
 				case 'wiki':
 					$this->setTemplateVar('wiki',$this->element->wiki        );
+					//Html::debug($this->templateVars);
 					break;
 				
 				
@@ -574,6 +450,43 @@ class ElementAction extends Action
 					$this->message('ERROR','not an element property: '.$propertyName );
 			}
 		}
+	}
+
+
+	
+	/**
+	 * Speichern der Element-Eigenschaften
+	 */
+	function saveproperties()
+	{
+		global $conf;
+		$ini_date_format = $conf['date-formats'];
+	
+		if	( $this->hasRequestVar('dateformat'))
+			$this->element->dateformat  = $ini_date_format[$this->getRequestVar('dateformat')];
+		$this->element->subtype         = $this->getRequestVar('subtype');
+		
+		if	( $this->hasRequestVar('default_longtext'))
+			$this->element->defaultText     = $this->getRequestVar('default_longtext');
+		else
+			$this->element->defaultText     = $this->getRequestVar('default_text');
+		$this->element->wiki            = $this->getRequestVar('wiki') != '';
+		$this->element->html            = $this->getRequestVar('html') != '';
+		$this->element->withIcon        = $this->getRequestVar('with_icon') != '';
+		$this->element->allLanguages    = $this->getRequestVar('all_languages') != '';
+		$this->element->writable        = $this->getRequestVar('writable') != '';
+		$this->element->decimals        = $this->getRequestVar('decimals');
+		$this->element->decPoint        = $this->getRequestVar('dec_point');
+		$this->element->thousandSep     = $this->getRequestVar('thousand_sep');
+		$this->element->folderObjectId  = $this->getRequestVar('folderobjectid'  );
+		$this->element->defaultObjectId = $this->getRequestVar('default_objectid');
+		$this->element->code            = $this->getRequestVar('code'            );
+
+		$this->addNotice('element',$this->element->name,'SAVED');
+		$this->element->save();
+		
+		Html::debug($this->element);
+		
 	}
 }
 
