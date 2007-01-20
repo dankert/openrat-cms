@@ -11,7 +11,7 @@ target=savepw
 menu=edit
 
 [savepw]
-goto:edit
+goto=edit
 
 [saveprofile]
 goto=edit
