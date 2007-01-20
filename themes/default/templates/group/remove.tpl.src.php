@@ -11,7 +11,7 @@ page
 				cell
 					text text:GLOBAL_DELETE
 				cell
-					checkbox name:delete
+					checkbox name:confirm
 			row
 				cell colspan:2 class:help
 					text text:GROUP_DELETE_DESC

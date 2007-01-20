@@ -6,6 +6,9 @@ page
 					text text:user_password
 				cell
 					password name:act_password
+					newline
+					newline
+					newline
 			row
 				cell
 					text text:user_new_password

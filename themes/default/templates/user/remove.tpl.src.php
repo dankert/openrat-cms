@@ -10,7 +10,7 @@ page
 				cell class:fx
 					text text:user_delete
 				cell class:fx
-					checkbox name:delete
+					checkbox name:confirm
 			row
 				cell colspan:2 class:act
 					button type:ok
