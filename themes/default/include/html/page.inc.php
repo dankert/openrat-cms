@@ -2,7 +2,7 @@
 <html>
 <!-- $Id$ -->
 <head>
-  <title><?php echo $cms_title ?></title>
+  <title><?php echo $attr_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
@@ -13,5 +13,4 @@
 </head>
 
 <body class="<?php echo $attr_class ?>">
-
 
