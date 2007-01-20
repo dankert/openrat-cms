@@ -9,11 +9,11 @@ page
 					cell class:fx width:50%
 						text text:USER_MAIL
 					cell class:fx width:50%
-						input name:register_mail default: size:25
+						input name:mail default: size:25
 
 
 				row
 					cell colspan:2 class:act
 						button type:ok
 
-	focus field:register_mail
+	focus field:mail

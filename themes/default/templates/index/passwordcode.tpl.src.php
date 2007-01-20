@@ -15,4 +15,4 @@ page
 					cell colspan:2 class:act
 						button type:ok
 
-	focus field:password_code
+	focus field:code

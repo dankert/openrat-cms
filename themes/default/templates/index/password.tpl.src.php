@@ -9,7 +9,7 @@ page
 					cell width:50%
 						text text:USER_USERNAME
 					cell width:50%
-						input type:text name:password_name value: size:30
+						input type:text name:username value: size:30
 
 				row
 					cell class:fx width:50%
@@ -21,4 +21,4 @@ page
 					cell colspan:2 class:act
 						button type:ok
 
-	focus field:password_name
+	focus field:username
