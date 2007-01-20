@@ -44,7 +44,7 @@
 	elseif	( isset($attr_present) )
 	{
 		if	( !isset($$attr_present) )
-			$exec = !empty($attr_present);
+			$exec = false;
 		elseif	( is_array($$attr_present) )
 			$exec = (count($$attr_present)>0);
 		elseif	( is_bool($$attr_present) )
@@ -55,20 +55,6 @@
 			$exec = true;
 	}
 
-	// Vergleich auf nicht-leer
-	elseif	( isset($attr_notempty) )
-	{
-		if	( !isset($$attr_notempty) )
-			$exec = !empty($attr_notempty);
-		elseif	( is_array($$attr_notempty) )
-			$exec = (count($$attr_notempty)>0);
-		elseif	( is_bool($$attr_notempty) )
-			$exec = true;
-		elseif	( is_numeric($$attr_notempty) )
-			$exec = $$attr_notempty>=0;
-		else
-			$exec = !empty( $$attr_notempty );
-	}
 	else
 	{
 		Html::debug( $attr );
@@ -79,6 +65,10 @@
 
 	// Ergebnis umdrehen
 	if  ( !empty($attr_invert) )
+		$exec = !$exec;
+
+	// Ergebnis umdrehen
+	if  ( !empty($attr_not) )
 		$exec = !$exec;
 
 	if	( $exec )
