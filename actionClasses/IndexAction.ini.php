@@ -59,4 +59,4 @@ goto=projectmenu
 
 [menu]
 login=showlogin,register,password
-menu=projectmenu,administration,changepassword,logout
+menu=projectmenu,administration,logout
