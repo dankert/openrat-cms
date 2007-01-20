@@ -117,7 +117,7 @@ page
 					cell class:fx
 						list list:dynamic_class_parameters key:paramName value:defaultValue
 							text var:paramName
-							text raw::_(
+							text raw:_(
 							text text:GLOBAL_DEFAULT
 							text raw:)_=_
 							text var:defaultValue
