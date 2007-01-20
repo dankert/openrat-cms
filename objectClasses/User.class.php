@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2006-11-28 21:05:00  dankert
+// Revision 1.17  2007-01-20 15:20:31  dankert
+// Neue Methode "getName()"
+//
+// Revision 1.16  2006/11/28 21:05:00  dankert
 // Wenn Klartextkennwort (kein MD5), dann Benutzer nicht anmelden.
 //
 // Revision 1.15  2006/11/16 19:58:57  dankert
@@ -353,6 +356,20 @@ class User
 
 
 
+	/**
+	 * Namen ermitteln.<br>
+	 * Wenn "fullname" gefuellt, dann diesen benutzen, sonst den Benutzernamen.
+	 */
+	function getName()
+	{
+		if	( empty($this->fullname))
+			return $this->name;
+		else
+			return $this->fullname;
+	}
+	
+	
+	
 	// Lesen Benutzername
 	function getUserName( $userid )
 	{
@@ -487,7 +504,8 @@ class User
 		global $conf;
 
 		$db = db_connection();
-
+		$this->mustChangePassword = false;
+		
 		// Lesen des Benutzers aus der DB-Tabelle
 		$sql = new Sql( 'SELECT * FROM {t_user} WHERE name={name}' );
 		$sql->setString('name',$this->name);
