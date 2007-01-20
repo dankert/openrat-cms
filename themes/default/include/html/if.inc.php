@@ -1,26 +1,37 @@
 <?php 
 
 	// Wahr-Vergleich
-	if	( !empty($attr_true) )
-		$exec = $$attr_true == true;
+//	Html::debug($attr);
+	
+	if	( isset($attr_true) )
+	{
+		if	(gettype($attr_true) === '' && gettype($attr_true) === '1')
+			$exec = $$attr_true == true;
+		else
+			$exec = $attr_true == true;
+	}
 
 	// Falsch-Vergleich
-	elseif	( !empty($attr_false) )
-		$exec = $$attr_false != true;
-
+	elseif	( isset($attr_false) )
+	{
+		if	(gettype($attr_false) === '' && gettype($attr_false) === '1')
+			$exec = $$attr_false == false;
+		else
+			$exec = $attr_false == false;
+	}
 	// Inhalt-Vergleich mit Wertliste
-	elseif( !empty($attr_contains) )
+	elseif( isset($attr_contains) )
 		$exec = in_array($$attr_var,explode(',',$attr_contains));
 				
 	// Inhalt-Vergleich
-	elseif( !empty($attr_var) )
+	elseif( isset($attr_var) )
 		$exec = $$attr_var == $attr_value;
 
 	// Vergleich auf leer
-	elseif	( !empty($attr_empty) )
+	elseif	( isset($attr_empty) )
 	{
 		if	( !isset($$attr_empty) )
-			$exec = true;
+			$exec = empty($attr_empty);
 		elseif	( is_array($$attr_empty) )
 			$exec = (count($$attr_empty)==0);
 		elseif	( is_bool($$attr_empty) )
@@ -30,10 +41,10 @@
 	}
 
 	// Vergleich auf Vorhandensein
-	elseif	( !empty($attr_present) )
+	elseif	( isset($attr_present) )
 	{
 		if	( !isset($$attr_present) )
-			$exec = false;
+			$exec = !empty($attr_present);
 		elseif	( is_array($$attr_present) )
 			$exec = (count($$attr_present)>0);
 		elseif	( is_bool($$attr_present) )
@@ -45,10 +56,10 @@
 	}
 
 	// Vergleich auf nicht-leer
-	elseif	( !empty($attr_notempty) )
+	elseif	( isset($attr_notempty) )
 	{
 		if	( !isset($$attr_notempty) )
-			$exec = false;
+			$exec = !empty($attr_notempty);
 		elseif	( is_array($$attr_notempty) )
 			$exec = (count($$attr_notempty)>0);
 		elseif	( is_bool($$attr_notempty) )
@@ -60,7 +71,10 @@
 	}
 	else
 	{
-		die("error in IF");
+		Html::debug( $attr );
+		echo("error in IF line ".__LINE__);
+		echo("assume: FALSE");
+		$exec = false;
 	}
 
 	// Ergebnis umdrehen
