@@ -4,7 +4,7 @@ if (count($$attr_list)==1) echo ' disabled="disabled"'
 		foreach( $$attr_list as $box_key=>$box_value )
 		{
 			echo '<option class="'.$attr_class.'" value="'.$box_key.'"';
-			if (isset($$attr_name)&&$box_key==$$attr_name || isset($$attr_default)&&$box_key == $$attr_default)
+			if (isset($$attr_name)&&$box_key==$$attr_name || isset($attr_default)&&$box_key == $attr_default)
 				echo ' selected="selected"';
 			echo '>'.$box_value.'</option>';
 		}
