@@ -576,7 +576,7 @@ class DocumentElement extends AbstractElement
 		$text = ereg_replace( '([A-Za-z0-9._-]+@[A-Za-z0-9\.\_\-]+)([^A-Za-z0-9\.\_\-\"])','"\\1"->"mailto:\\1"\\2',$text );
 
 		// Bilder
-		$text = ereg_replace( 'image:\/?\/?([A-Za-z0-9\.\:\_\/\,\?\=\&-]+)','{\\1}',$text );
+		$text = ereg_replace( 'ima?ge?:\/?\/?([A-Za-z0-9\.\:\_\/\,\?\=\&-]+)','{\\1}',$text );
 		
 		return $text;
 	}
