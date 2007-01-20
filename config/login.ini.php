@@ -6,3 +6,6 @@ motd=""                                  ; Message of the day, shown in login ma
 nologin=false                            ; Disable Login (for maintanance jobs)
 register=false
 send_password=false
+
+[gpl]
+url="http://www.gnu.org/copyleft/gpl.html"
