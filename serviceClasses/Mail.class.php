@@ -41,7 +41,7 @@ class Mail
 		
 		// Kopie-Empfänger
 		if	( !empty($conf['mail']['cc']) )
-			$this->bcc = $conf['mail']['cc'];
+			$this->cc = $conf['mail']['cc'];
 
 		// Blindkopie-Empfänger
 		if	( !empty($conf['mail']['bcc']) )
