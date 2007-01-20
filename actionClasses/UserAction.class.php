@@ -74,7 +74,7 @@ class UserAction extends Action
 	
 	function delete()
 	{
-		if   ( $this->hasRequestVar('delete') )
+		if   ( $this->hasRequestVar('confirm') )
 		{
 			$this->user->delete();
 			$this->addNotice('user',$this->user->name,'DELETED','ok');
@@ -131,6 +131,7 @@ class UserAction extends Action
 
 		$mail->setVar('username',$this->user->name);
 		$mail->setVar('password',$pw              );
+		$mail->setVar('name'    ,$user->getName() );
 
 		$mail->send();
 	}

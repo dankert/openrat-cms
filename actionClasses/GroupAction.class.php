@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2006-01-23 23:10:16  dankert
+// Revision 1.6  2007-01-20 15:21:54  dankert
+// Eingabefeld f?r L?schbest?tigung umbenannt.
+//
+// Revision 1.5  2006/01/23 23:10:16  dankert
 // Steuerung der Aktionsklassen ?ber .ini-Dateien
 //
 // Revision 1.4  2004/12/19 19:23:05  dankert
@@ -68,7 +71,7 @@ class GroupAction extends Action
 
 	function delete()
 	{
-		if   ( $this->hasRequestVar('delete') )
+		if   ( $this->hasRequestVar('confirm') )
 		{
 			$this->group->delete();
 	
