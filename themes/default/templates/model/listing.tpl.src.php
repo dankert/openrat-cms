@@ -3,14 +3,14 @@ page
 		list list:el extract:true
 			row
 				cell class:fx
-					link url:url target:cms_main
+					link url:var:url target:cms_main
 						image file:icon_model
 						text var:name
 				cell class:fx
-					link url:default_url target:cms_main
+					link url:var:default_url target:cms_main
 						image file:icon_model
 						text text:GLOBAL_make_default
 				cell class:fx
-					link url:select_url target:cms_main
+					link url:var:select_url target:config:interface/frame/top
 						image file:icon_model
 						text text:GLOBAL_selected

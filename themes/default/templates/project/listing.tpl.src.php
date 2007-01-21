@@ -2,10 +2,10 @@ page
 	window icon:project name:GLOBAL_PROJECTS
 		list list:el extract:true
 			row
-				cell class:fx
-					link url:url target:cms_main
+				cell
+					link url:var:url target:cms_main
 						image file:icon_project
-						text var:name
-				cell class:fx
-					link url:use_url target:_top
-						text text:GLOBAL_SELECT
+						text value:var:name
+				cell
+					link url:var:use_url target:config:interface/frames/top
+						text value:message:GLOBAL_SELECT

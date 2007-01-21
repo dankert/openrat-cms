@@ -3,12 +3,12 @@ page
 		list list:el extract:true
 			row
 				cell class:fx
-					link url:url target:cms_main title:desc
-						image type:icon_user
+					link url:var:url target:cms_main title:desc
+						image type:user
 						text var:name
 				cell class:fx
-					text var:fullname
-					if true:isAdmin
+					text value:var:fullname
+					if true:var:isAdmin
 						text raw:_(
-						text text:USER_ADMIN
+						text key:USER_ADMIN
 						text raw:)

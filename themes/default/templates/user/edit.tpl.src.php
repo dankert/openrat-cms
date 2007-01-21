@@ -28,7 +28,7 @@ page
 					input name:tel size:
 			row
 				cell class:fx
-					text text:user_ldap_dn
+					text text:user_ldapdn
 				cell class:fx
 					input name:ldap_dn size:
 			row
