@@ -418,34 +418,36 @@ class IndexAction extends Action
 		$user = Session::getUser();
 		if   ( ! is_object($user) )
 		{
-			// Authorization ueber HTTP
-			//
-			if   ( $conf['auth']['type'] == 'http' )
+			switch( $conf['security']['login']['type'] )
 			{
-				$ok = false;
-	
-			    if	( isset($_SERVER['PHP_AUTH_USER']) )
-			    {
-			    	$this->setDefaultDb();
-					$ok = $this->checkLogin( $_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'] );
-			    }
-			    
-				if	( ! $ok )
-				{
-					header( 'WWW-Authenticate: Basic realm="OpenRat Content Management System - Login"' );
-					header( 'HTTP/1.0 401 Unauthorized' );
-					echo 'Authorization Required!';
-					exit;
-				}
-			}
-			elseif	( $conf['auth']['type'] == 'form' )
-			{
-				// Benutzer ist nicht angemeldet
-				$this->callSubAction( 'showlogin' ); // Anzeigen der Login-Maske
-			}
-			else
-			{
-				die('unknown auth-type: '.$conf['auth']['type'] );
+					
+				// Authorization ueber HTTP
+				//
+				case 'http':
+					$ok = false;
+		
+				    if	( isset($_SERVER['PHP_AUTH_USER']) )
+				    {
+				    	$this->setDefaultDb();
+						$ok = $this->checkLogin( $_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'] );
+				    }
+				    
+					if	( ! $ok )
+					{
+						header( 'WWW-Authenticate: Basic realm="OpenRat Content Management System - Login"' );
+						header( 'HTTP/1.0 401 Unauthorized' );
+						echo 'Authorization Required!';
+						exit;
+					}
+					break;
+					
+				case 'form':
+					// Benutzer ist nicht angemeldet
+					$this->callSubAction( 'showlogin' ); // Anzeigen der Login-Maske
+					break;
+					
+				default:
+					die('unknown auth-type: '.$conf['security']['login']['type'] );
 			}
 		}
 		
