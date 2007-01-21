@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2006-06-01 20:59:27  dankert
+// Revision 1.11  2007-01-21 15:00:03  dankert
+// Parameter TARGETSUBACTION verwenden.
+//
+// Revision 1.10  2006/06/01 20:59:27  dankert
 // Projektwartung: Suche nach verlorenen Dateien.
 //
 // Revision 1.9  2006/06/01 20:07:01  dankert
@@ -122,7 +125,7 @@ class ProjectAction extends Action
 		foreach( Project::getAll() as $id=>$name )
 		{
 			$list[$id]             = array();
-			$list[$id]['url'     ] = Html::url('main' ,'project',$id);
+			$list[$id]['url'     ] = Html::url('main' ,'project',$id,array(REQ_PARAM_TARGETSUBACTION=>'edit'));
 			$list[$id]['use_url' ] = Html::url('index','project',$id);
 			$list[$id]['name'    ] = $name;
 		}
