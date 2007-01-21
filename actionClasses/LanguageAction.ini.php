@@ -14,6 +14,7 @@ target=save
 
 [add]
 menu=listing
+target=addlanguage
 
 [remove]
 menu=edit

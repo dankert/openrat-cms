@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2006-01-29 17:18:59  dankert
+// Revision 1.9  2007-01-21 22:26:45  dankert
+// Korreketur beim Hinzuf?gen/Entfernen von Sprachen.
+//
+// Revision 1.8  2006/01/29 17:18:59  dankert
 // Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
 //
 // Revision 1.7  2004/12/25 20:50:13  dankert
@@ -114,6 +117,25 @@ class LanguageAction extends Action
 	}
 
 
+
+	/**
+	 * Anzeigen der Löschbestätigungs-Maske.
+	 */
+	function remove()
+	{
+	}
+	
+	
+	/**
+	 * Löschen der Sprache.
+	 */
+	function delete() 
+	{
+		if   ( $this->getRequestVar('confirm') == '1' )
+			$this->language->delete();
+	}
+	
+
 	/**
 	 * Speichern der Sprache
 	 */
@@ -122,20 +144,11 @@ class LanguageAction extends Action
 		global $conf;
 		$countryList = $conf['countries'];
 
-		if   ( $this->hasRequestVar('delete') )
-		{
-			$this->language->delete();
-			$this->callSubAction( 'listing' );
-		}
-		else
-		{
-			$iso = $this->getRequestVar('isocode');
-			$this->language->isoCode = strtolower( $iso );
-			$this->language->name    = $countryList[$iso];
-			$this->language->save();
+		$iso = $this->getRequestVar('isocode');
+		$this->language->isoCode = strtolower( $iso );
+		$this->language->name    = $countryList[$iso];
+		$this->language->save();
 	
-		}
-
 		$this->callSubAction( 'listing' );
 	}
 
@@ -163,7 +176,8 @@ class LanguageAction extends Action
 			
 			if	( $this->userIsAdmin() )
 			{
-				$list[$id]['url' ] = Html::url('language','edit',$id);
+				$list[$id]['url' ] = Html::url('main','language',$id,
+				                               array(REQ_PARAM_TARGETSUBACTION=>'edit') );
 			
 				if	( ! $l->isDefault )
 					$list[$id]['default_url'] = Html::url( 'language','setdefault',$id );
@@ -173,11 +187,11 @@ class LanguageAction extends Action
 				$list[$id]['select_url']  = Html::url( 'index','language',$id );
 		}
 		
-		if	( $this->userIsAdmin() )
-		{
-			asort($countryList);
-			$this->setTemplateVar('isocodes',$countryList);
-		}
+//		if	( $this->userIsAdmin() )
+//		{
+//			asort($countryList);
+//			$this->setTemplateVar('isocodes',$countryList);
+//		}
 
 		$this->setTemplateVar('el',$list);
 
