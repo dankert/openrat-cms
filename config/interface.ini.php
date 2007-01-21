@@ -13,6 +13,12 @@ min_width            = 950          ; Minimal Width of the browser window. If sm
 redirect             = false        ; use redirects before going to view (actually in testing)
 
 
+[frames]
+
+; Logical name of top-frame. Change this, if you want Openrat running in another parent frameset
+top=_top
+
+
 [url]
 
 ; faking urls
