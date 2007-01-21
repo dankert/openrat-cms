@@ -12,7 +12,7 @@ page
 							selectbox name:subtype list:subtypes
 							
 						# Subtype ist ein einfaches Eingabefeld
-						if present:subtypes invert:true
+						if not:true present:subtypes
 							input name:subtype
 			
 			if present:with_icon
