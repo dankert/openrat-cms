@@ -7,8 +7,7 @@
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// as published by the Free Software Foundation; version 2.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -120,9 +119,10 @@ if	( !empty($conf['interface']['timeout']) )
 
 define('FILE_SEP',$conf['interface']['file_separator']);
 
-define('REQ_PARAM_ACTION'       ,'action'       );
-define('REQ_PARAM_SUBACTION'    ,'subaction'    );
-define('REQ_PARAM_ID'           ,'id'           );
+define('REQ_PARAM_ACTION'         ,'action'         );
+define('REQ_PARAM_SUBACTION'      ,'subaction'      );
+define('REQ_PARAM_TARGETSUBACTION','targetSubAction');
+define('REQ_PARAM_ID'             ,'id'             );
 
 define('TEMPLATE_DIR',OR_THEMES_DIR.$conf['interface']['theme'].'/templates');
 define('CSS_DIR'     ,OR_THEMES_DIR.$conf['interface']['theme'].'/css'      );
