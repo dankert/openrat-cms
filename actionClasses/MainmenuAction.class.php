@@ -58,22 +58,29 @@ class MainmenuAction extends Action
 				$this->addSubAction( 'rights',-1 );
 				break;
 
+			case 'language':
+			case 'model':
+			case 'project':
+				$this->addSubAction( 'listing',-1 );
+				$this->addSubAction( 'edit'   ,-1 );
+				break;
+
 			case 'user':
 			case 'group':
-				$this->addSubAction( 'listing'  ,-1 );
-				$this->addSubAction( 'edit'  ,-1 );
-				$this->addSubAction( 'groups'  ,-1 );
-				$this->addSubAction( 'pw'  ,-1 );
-				$this->addSubAction( 'rights',-1 );
+				$this->addSubAction( 'listing',-1 );
+				$this->addSubAction( 'edit'   ,-1 );
+				$this->addSubAction( 'groups' ,-1 );
+				$this->addSubAction( 'pw'     ,-1 );
+				$this->addSubAction( 'rights' ,-1 );
 				break;
 
 			case 'template':
-				$this->addSubAction( 'listing'  ,-1 );
-				$this->addSubAction( 'show'  ,-1 );
-				$this->addSubAction( 'edit'  ,-1 );
-				$this->addSubAction( 'el'    ,-1 );
-				$this->addSubAction( 'src'   ,-1 );
-				$this->addSubAction( 'prop'  ,-1 );
+				$this->addSubAction( 'listing',-1 );
+				$this->addSubAction( 'show'   ,-1 );
+				$this->addSubAction( 'edit'   ,-1 );
+				$this->addSubAction( 'el'     ,-1 );
+				$this->addSubAction( 'src'    ,-1 );
+				$this->addSubAction( 'prop'   ,-1 );
 				break;
 
 			default:
@@ -407,8 +414,12 @@ class MainmenuAction extends Action
 	{
 		$this->addSubaction('listing');
 
+		if	( $this->userIsAdmin() && $this->getRequestId()>0 )
+			$this->addSubaction('edit');
+
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','languageid');
+		$this->setTemplateVar('text',lang('GLOBAL_LANGUAGE'));
 	}
 
 
@@ -416,15 +427,22 @@ class MainmenuAction extends Action
 	function model()
 	{
 		$this->addSubaction('listing');
+
+		if	( $this->userIsAdmin() && $this->getRequestId()>0 )
+			$this->addSubaction('edit');
+			
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','modelid');
+		$this->setTemplateVar('text',lang('GLOBAL_MODEL'));
 	}
 
 
 	function search()
 	{
-		$this->setTemplateVar('windowMenu',array('prop'   =>lang('SEARCH_PROP'    ),
-		                                        'content'=>lang('SEARCH_CONTENT' ) ));
+		$this->addSubaction('prop'   );
+		$this->addSubaction('content');
+		$this->setTemplateVar('text',lang('GLOBAL_SEARCH'));
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','objectid');
 	}
 
