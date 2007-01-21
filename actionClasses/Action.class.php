@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.25  2006-07-19 20:28:40  dankert
+// Revision 1.26  2007-01-21 15:35:01  dankert
+// ?nderung in "lastModified()"
+//
+// Revision 1.25  2006/07/19 20:28:40  dankert
 // Attribut "alias" auswerten.
 //
 // Revision 1.24  2006/07/15 22:18:08  dankert
@@ -169,7 +172,7 @@ class Action
 
 	function getRequestId()
 	{
-		return intval( $this->getRequestVar('id') );
+		return intval( $this->getRequestVar( REQ_PARAM_ID ) );
 	}
 
 
@@ -418,6 +421,15 @@ class Action
 	 */
 	function lastModified( $time )
 	{
+		$user = Session::getUser();
+		if	( $user->loginDate > $time )
+			// Falls Benutzer-Login nach letzter Änderung.
+			// Zweck: Nach einem Login sollte mind. 1x jede Seite neu geladen werden, dies
+			// Ist z.B. nach einer Style-Änderung durch den Benutzer notwendig.
+			// Falls aus Versehen doch einmal zuviel gecacht wurde, kann man das durch ein
+			// Neu-Login beheben. 
+			$time = $user->loginDate;
+
 		// Conditional-Get eingeschaltet?
 		global $conf;
 		if	( ! $conf['cache']['conditional_get'] )
@@ -445,6 +457,7 @@ class Action
 		// At least one of the headers is there - check them
 		if	( $if_none_match && $if_none_match != $etag )
 			return; // etag is there but doesn't match
+
 
 		if	( $if_modified_since && $if_modified_since != $lastModified )
 			return; // if-modified-since is there but doesn't match
