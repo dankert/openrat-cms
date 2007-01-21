@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2006-01-29 17:18:58  dankert
+// Revision 1.7  2007-01-21 22:27:49  dankert
+// Direkt Punkt "Bearbeiten" ?ffnen.
+//
+// Revision 1.6  2006/01/29 17:18:58  dankert
 // Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
 //
 // Revision 1.5  2004/12/19 14:55:27  dankert
@@ -94,7 +97,7 @@ class ModelAction extends Action
 	
 	function delete() 
 	{
-		if   ( $this->getRequestVar('delete') != '' )
+		if   ( $this->getRequestVar('confirm') == '1' )
 		{
 			$this->model->delete();
 		}
@@ -147,7 +150,8 @@ class ModelAction extends Action
 			$list[$id]['name'] = $m->name;
 			
 			if	( $this->userIsAdmin() )
-				$list[$id]['url' ] = Html::url('model','edit',$id);
+				$list[$id]['url' ] = Html::url('index','model',$id,
+				                               array(REQ_PARAM_TARGETSUBACTION=>'edit') );
 
 			if	( ! $m->isDefault && $this->userIsAdmin() )
 				$list[$id]['default_url'] = Html::url('model','setdefault',$id);

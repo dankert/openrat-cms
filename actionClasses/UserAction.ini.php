@@ -10,6 +10,7 @@ menu=listing
 target=adduser
 
 [adduser]
+goto=listing
 
 [edit]
 menu=edit

@@ -184,7 +184,8 @@ class UserAction extends Action
 		foreach( User::getAllUsers() as $user )
 		{
 			$list[$user->userid]         = $user->getProperties();
-			$list[$user->userid]['url' ] = Html::url('main','user',$user->userid);
+			$list[$user->userid]['url' ] = Html::url('main','user',$user->userid,
+			                                         array(REQ_PARAM_TARGETSUBACTION=>'edit') );
 		}
 		$this->setTemplateVar('el',$list);
 	}	
