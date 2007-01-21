@@ -15,6 +15,7 @@ require_once( OR_SERVICECLASSES_DIR."AdministrationTree.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."ProjectTree.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Preferences.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Mail.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Ldap.class.".PHP_EXT );
 
 require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT        );
 require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT           );
