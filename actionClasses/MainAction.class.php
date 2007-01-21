@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2006-02-27 19:17:50  dankert
+// Revision 1.10  2007-01-21 15:35:44  dankert
+// Requestparameter-Namen aus Konstanten lesen.
+//
+// Revision 1.9  2006/02/27 19:17:50  dankert
 // Parameter "targetSubAction" auswerten.
 //
 // Revision 1.8  2006/01/23 23:10:46  dankert
@@ -130,7 +133,7 @@ class MainAction extends Action
 		if	( is_object($user) && isset($user->loginDate) )
 			$this->lastModified( $user->loginDate );
 
-		$this->doSubActionName = $this->getRequestVar('targetSubAction');
+		$this->doSubActionName = $this->getRequestVar( REQ_PARAM_TARGETSUBACTION );
 		
 		// Bestimmte Paramer weiterleiten
 		$params = array(); 
