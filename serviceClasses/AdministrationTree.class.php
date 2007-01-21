@@ -122,14 +122,15 @@ class AdministrationTree extends AbstractTree
 
 	function projects( $id )
 	{
-		// Schleife ?ber alle Projekte
+		// Schleife ueber alle Projekte
 		foreach( Project::getAll() as $id=>$name )
 		{
 			$treeElement = new TreeElement();
 			
 			$treeElement->internalId   = $id;
 			$treeElement->text         = $name;
-			$treeElement->url          = Html::url('main','project',$id);
+			$treeElement->url          = Html::url('main','project',$id,
+			                                       array(REQ_PARAM_TARGETSUBACTION=>'edit') );
 			$treeElement->icon         = 'project';
 			$treeElement->description  = '';
 			$treeElement->target       = 'cms_main';
@@ -350,7 +351,8 @@ class AdministrationTree extends AbstractTree
 			
 			$treeElement->internalId  = $user->userid;
 			$treeElement->text        = $user->name;
-			$treeElement->url         = Html::url('main','user',$user->userid);
+			$treeElement->url         = Html::url('main','user',
+			                                      $user->userid,array(REQ_PARAM_TARGETSUBACTION=>'edit') );
 			$treeElement->icon        = 'user';
 			
 			$desc =  $user->fullname;
@@ -382,7 +384,8 @@ class AdministrationTree extends AbstractTree
 
 			$treeElement->internalId  = $id;
 			$treeElement->text        = $g->name;
-			$treeElement->url         = Html::url('main','group',$id);
+			$treeElement->url         = Html::url('main','group',$id,
+			                                      array(REQ_PARAM_TARGETSUBACTION=>'edit') );
 			$treeElement->icon        = 'group';
 	     	$treeElement->description = lang('GLOBAL_GROUP').' '.$g->name.': '.implode(', ',$g->getUsers());
 			$treeElement->target      = 'cms_main';

@@ -29,7 +29,6 @@ class ProjectTree extends AbstractTree
 	var $projectId;
 	var $userIsProjectAdmin = false;
 
-
 	function root()
 	{
 		$treeElement = new TreeElement();
@@ -40,7 +39,6 @@ class ProjectTree extends AbstractTree
 
 		$this->addTreeElement( $treeElement );
 	}
-
 
 
 
@@ -63,7 +61,8 @@ class ProjectTree extends AbstractTree
 				$treeElement->url  = Html::url('main',
 				                               'pageelement',
 				                               $id,
-				                               array('elementid'=>$elementid,'targetSubAction'=>'edit'.$element->type));
+				                               array('elementid'=>$elementid,
+				                                     REQ_PARAM_TARGETSUBACTION=>'edit'.$element->type));
 				$treeElement->icon = 'el_'.$element->type;
 
 				$treeElement->description = lang('EL_'.$element->type);
@@ -392,7 +391,8 @@ class ProjectTree extends AbstractTree
 		{
 			$treeElement = new TreeElement();
 			$treeElement->text         = $name;
-			$treeElement->url          = Html::url('main','language',$languageid);
+			$treeElement->url          = Html::url('main','language',$languageid,
+			                                       array(REQ_PARAM_TARGETSUBACTION=>'edit') );
 			$treeElement->icon         = 'lang';
 			$treeElement->description  = '';
 			$treeElement->target       = 'cms_main';
@@ -412,7 +412,8 @@ class ProjectTree extends AbstractTree
 		{
 			$treeElement = new TreeElement();
 			$treeElement->text        = $name;
-			$treeElement->url         = Html::url('main','model',$id);
+			$treeElement->url         = Html::url('main','model',$id,
+			                                      array(REQ_PARAM_TARGETSUBACTION=>'edit'));
 			$treeElement->icon        = 'model';
 			$treeElement->description = '';
 			$treeElement->target      = 'cms_main';

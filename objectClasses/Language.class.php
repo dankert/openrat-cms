@@ -19,20 +19,6 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.5  2004-12-19 15:23:56  dankert
-// Anpassung Session-Funktionen
-//
-// Revision 1.4  2004/12/15 23:18:36  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.3  2004/11/10 22:46:18  dankert
-// *** empty log message ***
-//
-// Revision 1.2  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// ---------------------------------------------------------------------------
 
 
 /**
