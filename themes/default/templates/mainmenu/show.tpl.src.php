@@ -3,29 +3,29 @@ page
 	
 		row
 			cell class:menu
-				image type:type
+				image type:var:type
 
 				list list:path extract:true value:xy
 
-					link var:url title:title class:path target:cms_main
-						text var:name maxlength:20
+					link url:var:url title:var:title class:path target:cms_main
+						text value:var:name maxlength:20
 					char type:filesep
 
-				text var:text title:text class:title
-			cell class:menu style:text-align:right;
+				text value:var:text title:var:text class:title
+			cell class:menu style::text-align:right;
 				list list:windowIcons extract:true
-					#text raw:_
-					link var:url target:_top
-						image type:type align:middle
+					link url:var:url target:_top
+						image type:var:type align:middle
+						
 		row
 			cell class:subaction colspan:2
 			
 				# Schleife über alle Menüpunkte
 				list list:windowMenu extract:true value:xy
 			
-					if empty:url invert:true
+					if not:true empty:url
 					# Menüpunkt
-						link var:url target:cms_main_main title:title
+						link url:var:url target:cms_main_main title:title
 							text var:text
 					if empty:url
 							text var:text class:inactive
@@ -34,6 +34,7 @@ page
 					text raw:__
 
 RAW
+<!--
 //<?php
 //			if	( hasLang('MENU_'.$act.'_KEY' ) )
 //			{
@@ -43,4 +44,5 @@ RAW
 //			else
 //				$attrAccesskey = '';
 // ?>
+-->
 END

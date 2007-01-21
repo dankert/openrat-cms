@@ -112,14 +112,16 @@ class TemplateEngine
 	
 	function attributeValue( $value )
 	{
-		$parts = explode( ':', $value );
-		if	( count($parts) >= 2 )
+		$parts = explode( ':', $value, 2 );
+		if	( count($parts) == 2 )
 		{
 			list( $type,$value ) = $parts;
 			switch( $type )
 			{
 				case 'var':
 					return '$'.$value;
+				case '':
+					return "'".$value."'";
 				case 'method':
 					return '$this->'.$value.'()';
 				case 'property':
