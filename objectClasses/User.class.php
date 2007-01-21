@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.17  2007-01-20 15:20:31  dankert
+// Revision 1.18  2007-01-21 22:20:12  dankert
+// Erweiterungen bei LDAP-Zugriff, Auslagerung von LDAP-Befehlen in eigene Klasse.
+//
+// Revision 1.17  2007/01/20 15:20:31  dankert
 // Neue Methode "getName()"
 //
 // Revision 1.16  2006/11/28 21:05:00  dankert
@@ -92,6 +95,7 @@ class User
 	var $isAdmin;
 	var $projects;
 	var $rights;
+	var $loginDate = 0;
 	
 	var $mustChangePassword = false;
 
@@ -507,57 +511,91 @@ class User
 		$this->mustChangePassword = false;
 		
 		// Lesen des Benutzers aus der DB-Tabelle
-		$sql = new Sql( 'SELECT * FROM {t_user} WHERE name={name}' );
+		$sql = new Sql( <<<SQL
+SELECT * FROM {t_user}
+ WHERE name={name}
+SQL
+		);
 		$sql->setString('name',$this->name);
 	
 		$res_user = $db->query( $sql->query );
 
+		$check = false;
+		$authType = $conf['security']['auth']['type']; // Entweder 'ldap' oder 'database'
+		$autoAdd  = $conf['ldap']['search']['add'];    // Einstellung, ob automatisches Hinzufügen.
+		
 		if	( $res_user->numRows() == 1 )
 		{
+			// Benutzername ist bereits in der Datenbank.
 			$row_user = $res_user->fetchRow();
-			$this->userid = $row_user['id'];
+			$this->userid  = $row_user['id'];
+			$this->ldap_dn = $row_user['ldap_dn'];
+			$check   = true;
+			$autoAdd = false; // Darf nicht hinzugefügt werden, da schon vorhanden.
+		}
+		elseif( $res_user->numRows() == 0 && $authType == 'ldap' && $autoAdd )
+		{
+			// Benutzer noch nicht in der Datenbank vorhanden.
+			// Falls ein LDAP-Account gefunden wird, wird dieser übernommen.
+			$check = true;
+		}
 
-			// Falls LDAP-dn vorhanden wird Benutzer per LDAP authentifiziert
-			if   ( $row_user['ldap_dn'] != '' )
+		if	( $check )
+		{
+			// Falls benutzerspezifischer LDAP-dn vorhanden wird Benutzer per LDAP authentifiziert
+			if	( $conf['security']['auth']['userdn'] && !empty($this->ldap_dn ) )
 			{
 				Logger::debug( 'checking login via ldap' );
-				$ldapHost = $conf['ldap']['host'];
-				$ldapPort = $conf['ldap']['port'];
-
-				// Verbindung zum LDAP-Server herstellen
-				$ldap_conn = @ldap_connect( $ldapHost,$ldapPort );
+				$ldap = new Ldap();
+				$ldap->connect();
 				
-				// siehe http://bugs.php.net/bug.php?id=15637
-				// Unter bestimmten Bedingungen wird trotz nicht erreichbarem LDAP-Server eine PHP-Resource
-				// zurueck gegeben. Dann erscheint zwar keine Fehlermeldung, aber zumindestens misslingt
-				// der nachfolgende Bind-Befehl.
-				if	( !$ldap_conn )
-				{
-					Logger::error( "connect to ldap server '$ldapHost:$ldapPort' failed" );
-					
-					// Abbruch, wenn LDAP-Server nicht erreichbar
-					die( "Cannot connect to directory server $ldapHost:$ldapPort, please contact your administrator." );
-				}
-
-				// LDAP-Login versuchen
-				if   ( @ldap_bind( $ldap_conn,$row_user['ldap_dn'],$password) )
-				{
-					// Verbindung zum LDAP-Server brav beenden
-					@ldap_close( $ldap_conn );
-					
-					// Login erfolgreich
-					return true;
-				}
+				// Benutzer ist bereits in Datenbank
+				// LDAP-Login mit dem bereits vorhandenen DN versuchen
+				$ok = $ldap->bind( $this->ldap_dn, $password );
 				
 				// Verbindung zum LDAP-Server brav beenden
-				@ldap_close( $ldap_conn );
+				$ldap->close();
+
+				return $ok;
 			}
-			else
+			elseif( $authType == 'ldap' )
+			{
+				Logger::debug( 'checking login via ldap' );
+				$ldap = new Ldap();
+				$ldap->connect();
+				
+				// Der Benutzername wird im LDAP-Verzeichnis gesucht.
+				// Falls gefunden, wird der DN (=der eindeutige Schlüssel im Verzeichnis) ermittelt.
+				$dn = $ldap->search( $this->name );
+				
+				if	 ( empty($dn) )
+					return false; // Kein LDAP-Account gefunden.
+					
+				// LDAP-Login versuchen
+				$ok = $ldap->bind( $dn, $password );
+				
+				// Verbindung zum LDAP-Server brav beenden
+				$ldap->close();
+
+				if	( $ok && $autoAdd )
+				{
+					// Falls die Authentifizierung geklappt hat, wird der
+					// LDAP-Account in die Datenbank übernommen.
+					$this->ldap_dn  = $dn;
+					$this->fullname = $this->name;
+					$this->add();
+					$this->save();
+				}
+				
+				return $ok;
+			}
+			elseif( $authType == 'database' )
 			{
 				// Pruefen ob Kennwort mit Datenbank uebereinstimmt
 				if   ( $row_user['password'] == $password )
 				{
-					// Kennwort stimmt mit Datenbank überein, aber nur im Klartext. Das Kennwort muss geändert werden
+					// Kennwort stimmt mit Datenbank überein, aber nur im Klartext.
+					// Das Kennwort muss geändert werden
 					$this->mustChangePassword = true;
 					
 					// Login nicht erfolgreich
@@ -565,13 +603,23 @@ class User
 				}
 				elseif   ( $row_user['password'] == md5( $password ) )
 				{
-					// Juchuu, Login ist erfolgreich
+					// Die Kennwort-Prüfsumme stimmt mit dem aus der Datenbank überein.
+					// Juchuu, Login ist erfolgreich.
 					return true;
 				}
+				else
+				{
+					// Kennwort stimmt garnicht überein.
+					return false;
+				}
+			}
+			else
+			{
+				die( 'unknown auth-type: '.$authType );
 			}
 		}
 
-		// Benutzername nicht in Datenbank oder Kennwort falsch
+		// Benutzername nicht in Datenbank.
 		return false;
 	}
 	
