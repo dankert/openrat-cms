@@ -716,3 +716,13 @@ USER_USERNAME_DESC = "Mit diesem Namen meldet sich der Benutzer am System an"
 USER_YOURPROFILE = "Pers&ouml;nliche Einstellungen"
 PASSWORD_CODE=Code für Kennwortanforderung
 PASSWORD_CODE_HELP=Sie haben per E-Mail einen Zahlencode erhalten. Diesen tragen Sie bitte jetzt in das Eingabefeld ein.
+MENU_LANGUAGE_LISTING=Liste
+MENU_LANGUAGE_ADD=Hinzuf&uuml;gen
+MENU_LANGUAGE_EDIT=Bearbeiten
+MENU_LANGUAGE_REMOVE=Entfernen
+MENU_MODEL_LISTING=Liste
+MENU_MODEL_ADD=Hinzuf&uuml;gen
+MENU_MODEL_EDIT=Bearbeiten
+MENU_MODEL_REMOVE=Entfernen
+MENU_CONTENT=Inhalt
+
