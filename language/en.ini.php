@@ -4,6 +4,7 @@
 ; English language file
 ; Please send new translations to cmstrl@jandankert.de thanks.
 ;
+CHARSET="ISO-8851-1"
 ACL = "Rights"
 ACL_CREATE_FILE = "Upload File"
 ACL_CREATE_FILE_ABBREV = "FIL"
