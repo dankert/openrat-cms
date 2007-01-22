@@ -129,9 +129,9 @@ class UserAction extends Action
 		$to   = $this->user->fullname.' <'.$this->user->mail.'>';
 		$mail = new Mail($to,'USER_MAIL');
 
-		$mail->setVar('username',$this->user->name);
-		$mail->setVar('password',$pw              );
-		$mail->setVar('name'    ,$user->getName() );
+		$mail->setVar('username',$this->user->name      );
+		$mail->setVar('password',$pw                    );
+		$mail->setVar('name'    ,$this->user->getName() );
 
 		$mail->send();
 	}
