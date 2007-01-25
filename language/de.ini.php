@@ -5,7 +5,7 @@
 ; Please send new translations to cmstrl@jandankert.de thanks.
 ;
 
-CHARSET="ISO-8851-1"
+CHARSET="ISO-8859-1"
 ACL = "Berechtigungen"
 ACL_CREATE_FILE = "Datei hochladen"
 ACL_CREATE_FILE_ABBREV = "DAT"

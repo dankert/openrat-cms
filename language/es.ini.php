@@ -1,3 +1,9 @@
+; $Id$
+; <?php die( 'no access' ) ?>
+; Please send new translations to cmstrl@jandankert.de thanks.
+;
+
+CHARSET="ISO-8859-1"
 ACL = "Las derechas "
 ACL_CREATE_FILE = " Archivo del Upload "
 ACL_CREATE_FILE_ABBREV = " FIL "
@@ -632,7 +638,7 @@ PAGE_EDITOR_ADD_TABLE = " la tabla (en negrilla) fuerte del relleno "
 PAGE_ELEMENTS_DESC = " elige un elemento para corregir "
 PAGE_ELEMENT_NAME = " el nombre del contenido del elemento "
 PAGE_ELEMENT_VALUE = " "
-PAGE_LONGTEXT_WIKI_DESC = "" <ul><li>*<strong>important</strong>*</li><li>_<em>italic</em>_</li><li>=<tt>Hard Width</tt>=</li><li>Link->123 <em>or</em> Link->. la inspección previo de los elementos de la página del elemento de la página de </li></ul> ""
+PAGE_LONGTEXT_WIKI_DESC = " <ul><li>*<strong>important</strong>*</li><li>_<em>italic</em>_</li><li>=<tt>Hard Width</tt>=</li><li>Link->123 <em>or</em> Link->. la inspección previo de los elementos de la página del elemento de la página de </li></ul> "
 PAGE_PAGEELEMENT = " "
 PAGE_PAGEELEMENTS = " "
 PAGE_PREVIEW = " (no ahorrar) "
@@ -696,7 +702,7 @@ USER_DESC = " Los administradores del nombre completo de la descripción "
 USER_FULLNAME = " "
 USER_ISADMIN_DESC = " tienen todas las derechas a todos los proyectos. "
 USER_LDAPDN = " LDAP abajo "
-USER_LDAPDN_DESC = "" <em>distinguished name</em> de este usuario en el LDAP-diretory.<br/><br/>Example: El <tt>cn=Eddi Murphy, ou=Finance, organización o=My, c=DE</tt><br/><br/>If inseguro, deja este espacio en blanco. ""
+USER_LDAPDN_DESC = " <em>distinguished name</em> de este usuario en el LDAP-diretory.<br/><br/>Example: El <tt>cn=Eddi Murphy, ou=Finance, organización o=My, c=DE</tt><br/><br/>If inseguro, deja este espacio en blanco. "
 USER_LOGINAS = " Entrado como "
 USER_LOGIN_FAILED = " conexión no posible. Username incorrecto o contraseña incorrecta. "
 USER_LOGOUT = " Registro de estado de la máquina del registro de estado de la máquina "
