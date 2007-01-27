@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.18  2007-01-21 22:20:12  dankert
+// Revision 1.19  2007-01-27 00:16:36  dankert
+// Neuer Loginmechanismus: "authdb"
+//
+// Revision 1.18  2007/01/21 22:20:12  dankert
 // Erweiterungen bei LDAP-Zugriff, Auslagerung von LDAP-Befehlen in eigene Klasse.
 //
 // Revision 1.17  2007/01/20 15:20:31  dankert
@@ -521,8 +524,7 @@ SQL
 		$res_user = $db->query( $sql->query );
 
 		$check = false;
-		$authType = $conf['security']['auth']['type']; // Entweder 'ldap' oder 'database'
-		$autoAdd  = $conf['ldap']['search']['add'];    // Einstellung, ob automatisches Hinzufügen.
+		$authType = $conf['security']['auth']['type']; // Entweder 'ldap', 'authdb' oder 'database'
 		
 		if	( $res_user->numRows() == 1 )
 		{
@@ -533,11 +535,17 @@ SQL
 			$check   = true;
 			$autoAdd = false; // Darf nicht hinzugefügt werden, da schon vorhanden.
 		}
-		elseif( $res_user->numRows() == 0 && $authType == 'ldap' && $autoAdd )
+		elseif( $res_user->numRows() == 0 && $authType == 'ldap' && $conf['ldap']['search']['add'] )
 		{
 			// Benutzer noch nicht in der Datenbank vorhanden.
 			// Falls ein LDAP-Account gefunden wird, wird dieser übernommen.
+			$check   = true;
+			$autoAdd = true;
+		}
+		elseif( $res_user->numRows() == 0 && $authType == 'authdb' && $conf['security']['authdb']['add'] )
+		{
 			$check = true;
+			$autoAdd = true;
 		}
 
 		if	( $check )
@@ -612,6 +620,27 @@ SQL
 					// Kennwort stimmt garnicht überein.
 					return false;
 				}
+			}
+			elseif( $authType == 'authdb' )
+			{
+				$authdb = new DB( $conf['security']['authdb'] );
+				$sql = new Sql( $conf['security']['authdb']['sql'] );
+				$sql->setString('username',$this->name);
+				$sql->setString('password',$password);
+				$res = $authdb->query($sql->query);
+				$ok = ($res->numRows() >= 1);
+
+				if	( $ok && $autoAdd )
+				{
+					// Falls die Authentifizierung geklappt hat, wird der
+					// Benutzername in der eigenen Datenbank eingetragen.
+					$this->fullname = $this->name;
+					$this->add();
+					$this->save();
+				}
+				// noch nicht implementiert: $authdb->close();
+				
+				return $ok;
 			}
 			else
 			{
