@@ -75,7 +75,7 @@ class Ldap
 	 */
 	function bind( $user,$pw )
 	{
-		return ldap_bind( $this->connection,$user,$pw);
+		return @ldap_bind( $this->connection,$user,$pw);
 	}
 	
 	
@@ -85,7 +85,7 @@ class Ldap
 	 */
 	function bindAnonymous()
 	{
-		return ldap_bind( $this->connection );
+		return @ldap_bind( $this->connection );
 	}
 	
 	
