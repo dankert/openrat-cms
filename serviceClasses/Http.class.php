@@ -30,9 +30,11 @@ class Http
 			$languages[] = trim($parts[0]);
 			// aus "xx_yy" das "xx" extrahieren.
 			$languages[] = current(explode('_',trim($parts[0])));
+			$languages[] = current(explode('-',trim($parts[0])));
+			
 		}
 		
-		return $languages;
+		return array_unique( $languages );
 	}
 }
 
