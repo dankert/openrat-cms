@@ -84,16 +84,17 @@ if	( !is_array( $conf ) )
 	// Wird dann verwendet, wenn die vom Browser angeforderten Sprachen
 	// nicht vorhanden sind
 	$languages[] = $conf['i18n']['default'];
+	
+//	Html::debug($languages);
 
 	foreach( $languages as $l )
 	{
-//		$l = substr($l,0,2);
-
 		// Pruefen, ob Sprache vorhanden ist.
 		$langFile = OR_LANGUAGE_DIR.$l.'.ini.'.PHP_EXT;
 
 		if	( file_exists( $langFile ) )
 		{
+//			Html::debug($langFile);
 			$conf['language'] = parse_ini_file( $langFile );
 			break;
 		}
@@ -133,6 +134,8 @@ require_once( "functions/config.inc.php" );
 require_once( "functions/language.inc.".PHP_EXT );
 require_once( "functions/theme.inc.".PHP_EXT );
 require_once( "functions/db.inc.".PHP_EXT );
+
+header( 'Content-Type: text/html; charset='.lang('CHARSET') );
 
 // Request-Variablen in Session speichern
 //request_into_session('action'    );
