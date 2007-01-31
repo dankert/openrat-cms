@@ -1,4 +1,4 @@
-<select size="1" name="<?php echo $attr_name ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
+<select size="1" id="id<?php echo $attr_name ?>"  name="<?php echo $attr_name ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
 if (count($$attr_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr_list as $box_key=>$box_value )
