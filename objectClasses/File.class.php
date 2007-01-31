@@ -208,12 +208,12 @@ class File extends Object
 	 *
 	 * @param Neue Breite
 	 * @param Neue Hoehe
+	 * @param Bildgrößenfaktor
 	 * @param Altes Format als Integer-Konstante IMG_xxx
 	 * @param Neues Format als Integer-Konstante IMG_xxx
 	 * @param Jpeg-Qualitaet (sofern neues Format = Jpeg)
 	 */
-	function imageResize( $newWidth,$newHeight,$oldformat,$newformat,$jpegquality )
-
+	function imageResize( $newWidth,$newHeight,$factor,$oldformat,$newformat,$jpegquality )
 	{
 		global $conf;
 
@@ -230,9 +230,18 @@ class File extends Object
 		// Wenn Breite und Hoehe fehlen, dann Bildgroesse beibehalten
 		if	( $newWidth == 0 && $newHeight == 0)
 		{
-			$newWidth  = $oldWidth; 
-			$newHeight = $oldHeight;
-			$resizing = false;
+			if	( $factor != 0 && $factor != 1 )
+			{
+				$newWidth  = $oldWidth  * $factor; 
+				$newHeight = $oldHeight * $factor;
+				$resizing = true;
+			}
+			else
+			{
+				$newWidth  = $oldWidth; 
+				$newHeight = $oldHeight;
+				$resizing = false;
+			}
 		}
 		else
 		{

@@ -162,6 +162,21 @@ class FileAction extends ObjectAction
 
 
 
+	function imageExt()
+	{
+		switch( $this->imageFormat() )
+		{
+			case IMG_GIF:
+				return 'GIF';
+			case IMG_JPG:
+				return 'JPEG';
+			case IMG_PNG:
+				return 'PNG';
+		}
+	}
+
+
+
 	function imageFormats()
 	{
 		if	( ! function_exists( 'imagetypes' ) )
@@ -190,8 +205,9 @@ class FileAction extends ObjectAction
 		$height          = intval($this->getRequestVar('height'          ));
 		$jpegcompression =        $this->getRequestVar('jpeg_compression') ;
 		$format          =        $this->getRequestVar('format'          ) ;
+		$factor          =        $this->getRequestVar('factor'          ) ;
 		
-		$this->file->imageResize( intval($width),intval($height),$this->imageFormat(),$format,$jpegcompression );
+		$this->file->imageResize( intval($width),intval($height),$factor,$this->imageFormat(),$format,$jpegcompression );
 		$this->file->save();      // Um z.B. Groesse abzuspeichern
 		$this->file->saveValue();
 
@@ -280,15 +296,28 @@ class FileAction extends ObjectAction
 	{
 		$this->setTemplateVars( $this->file->getProperties() );
 		
-		$imageFormat = $this->imageFormat();
+		$format = $this->imageFormat();
 
-		if	( $imageFormat != 0 )
+		if	( $format != 0 )
 			$formats = $this->imageFormats();
 		else
 			$formats = array();
 
+		$sizes = array();
+		foreach( array(10,25,50,75) as $s )
+			$sizes[strval($s/100)] = $s.'%';
+		$sizes[1] = '-';
+		foreach( array(125,150,175,200,250,300,350,400,500,600,800) as $s )
+			$sizes[strval($s/100)] = $s.'%';
+			
+		$jpeglist = array();
+		for ($i=10; $i<=95; $i+=5)
+			$jpeglist[$i]=$i.'%';
+
+		$this->setTemplateVar('factors'       ,$sizes      );
+		$this->setTemplateVar('jpeglist'      ,$jpeglist   );
 		$this->setTemplateVar('formats'       ,$formats    );
-		$this->setTemplateVar('default_format',$imageFormat);
+		$this->setTemplateVar('format'        ,$format     );
 	}
 
 
