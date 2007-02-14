@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.20  2006-01-29 17:26:55  dankert
+// Revision 1.21  2007-02-14 22:10:57  dankert
+// TODO f?r tmpfile-Erzeugung
+//
+// Revision 1.20  2006/01/29 17:26:55  dankert
 // Neben "desc" auch "description" f?llen.
 //
 // Revision 1.19  2005/11/07 22:36:40  dankert
@@ -1027,6 +1030,7 @@ class Object
 		if	( isset($this->tmpfile) && $this->tmpfile != '' )
 			return $this->tmpfile;
 
+		//TODO: tmpdir besser ermitteln.
 		$this->tmpfile = tempnam( 0,'openrat_tmp' );
 		Logger::debug( 'creating temporary file: '.$this->tmpfile );
 
