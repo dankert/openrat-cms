@@ -45,9 +45,8 @@ class AbstractTree
 	function AbstractTree()
 	{
 		// Feststellen, ob der angemeldete Benutzer ein Administrator ist
-		global $SESS;
-		$user = $SESS['user'];
-		$this->userIsAdmin = ($user['isAdmin'] == '1');
+		$user = Session::getUser();
+		$this->userIsAdmin = $user->isAdmin;
 
 		// Wurzel-Element laden
 		$this->root();
