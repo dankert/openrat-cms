@@ -40,7 +40,11 @@ page
 					cell class:fx width:50%
 						text key:USER_USERNAME
 					cell class:fx width:50%
-						input type:text name:login_name value: size:25
+						if not:true present:force_username
+							input type:text name:login_name value: size:25
+						else
+							input type:hidden name:login_name value:var:force_username
+							text value:var:force_username
 				row
 					cell class:fx width:50%
 						text key:USER_PASSWORD
@@ -85,4 +89,7 @@ END
 	link url:config:login/gpl/url target:_top
 		text value:message:GLOBAL_GPL
 
-	focus field:login_name
+	if present:force_username
+		focus field:login_password
+	else
+		focus field:login_name
