@@ -304,7 +304,7 @@ input,
 textarea
 {
 	border:2px solid gray;
-	padding:5px;
+	padding:2px;
 }
 
 input:hover,
@@ -318,6 +318,7 @@ textarea:focus
 {
 	background-color:#7B9CBD;
 	border:2px solid red;
+	font-weight:bold;
 }
 
 tr.f1:hover,
