@@ -113,11 +113,11 @@ class IndexAction extends Action
 		{
 			// Login war erfolgreich!
 			$user->load();
-			$user->loadProjects();
+//			$user->loadProjects();
 			//$user->loadRights();
 			$user->setCurrent();
-			$user->loginDate = time();
-			Session::setUser( $user );
+//			$user->loginDate = time();
+//			Session::setUser( $user );
 			Logger::info( 'login successful' );
 
 			return true;
@@ -143,6 +143,112 @@ class IndexAction extends Action
 	function showlogin()
 	{
 		global $conf;
+		$sso = $conf['security']['sso'];
+		$ssl = $conf['security']['ssl'];
+		
+		$ssl_trust    = false;
+		$ssl_user_var = '';
+		extract( $ssl, EXTR_PREFIX_ALL, 'ssl' );
+		
+		if	( $sso['enable'] )
+		{
+			$authid = $this->getRequestVar( $sso['auth_param_name']);
+			
+			if	( empty( $authid) )
+				die( 'no authorization data (no auth-id)');
+				
+			if	( $sso['auth_param_serialized'] )
+				$authid = unserialize( $authid );
+			
+			$purl = parse_url($sso['url']);
+			// Verbindung zu URL herstellen.
+			$errno=0; $errstr='';
+			$fp = fsockopen ($purl['host'],80, $errno, $errstr, 30);
+			if	( !$fp )
+			{
+				echo "Connection failed: $errstr ($errno)";
+			}
+			else
+			{
+				$http_get = $purl['path'];
+				if	( !empty($purl['query']) ) 
+					$http_get .= '?'.$purl['query'];
+
+				$header = array();
+					
+				$header[] = "GET $http_get HTTP/1.0";
+				$header[]  ="Host: ".$purl['host'];
+				$header[] = "User-Agent: Mozilla/5.0 (OpenRat CMS Single Sign-on Check)";
+				$header[] = "Connection: Close";
+				
+				if	( $sso['cookie'] )
+				{
+					$cookie = 'Cookie: ';
+					if	( is_array($authid))
+						foreach( $authid as $cookiename=>$cookievalue)
+							$cookie .= $cookiename.'='.$cookievalue."; ";
+					else
+						$cookie .= $sso['cookie_name'].'='.$authid;
+						
+					$header[] = $cookie;
+				}
+				
+//				Html::debug($header);
+				fputs ($fp, implode("\r\n",$header)."\r\n\r\n");
+				
+				$inhalt=array();
+				while (!feof($fp)) {
+					$inhalt[] = fgets($fp,128);
+				}
+				fclose($fp);
+				
+				$html = implode('',$inhalt);
+//				Html::debug($html);
+				if	( !preg_match($sso['expect_regexp'],$html) )
+					die('auth failed');
+				$treffer=0;
+				if	( !preg_match($sso['username_regexp'],$html,$treffer) )
+					die('auth failed');
+				if	( !isset($treffer[1]) )
+					die('auth failed');
+					
+				$username = $treffer[1];
+				
+//				Html::debug( $treffer );
+				$this->setDefaultDb();
+
+				$user = User::loadWithName( $username );
+				
+				if	( ! $user->isValid( ))
+					die('auth failed: user not found: '.$username);
+					
+				$user->setCurrent();
+
+				$this->callSubAction('show');
+			}
+		}
+
+		elseif	( $ssl_trust )
+		{
+			if	( empty($ssl_user_var) )
+				die( 'please set environment variable name in ssl-configuration.' );
+
+			$username = getenv( $ssl_user_var );
+
+			if	( empty($username) )
+				die( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
+			
+			$this->setDefaultDb();
+
+			$user = User::loadWithName( $username );
+
+			if	( !$user->isValid() )
+				die( 'unknown username: '.$username );
+
+			$user->setCurrent();
+
+			$this->callSubAction('show');
+		}
 
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
@@ -158,17 +264,24 @@ class IndexAction extends Action
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
-//		$this->setTemplateVar('logo'         ,$conf['login'   ]['logo'    ] );
-//		$this->setTemplateVar('logo_url'     ,$conf['login'   ]['logo_url'] );
-//		$this->setTemplateVar('motd'         ,$conf['login'   ]['motd'    ] );
-//		$this->setTemplateVar('readonly'     ,$conf['security']['readonly'] );
-//		$this->setTemplateVar('nologin'      ,$conf['login'   ]['nologin' ] );
-//		$this->setTemplateVar('nopublish'    ,$conf['security']['nopublish']);
+		$ssl_user_var = $conf['security']['ssl']['user_var'];
+		if	( !empty($ssl_user_var) )
+		{
+			$username = getenv( $ssl_user_var );
+
+			if	( empty($username) )
+				die( 'no username in client certificate ('.$ssl_user_var.'). (or maybe there is no client certificate?)' );
+//			Html::debug($username);
+			$this->setTemplateVar('force_username',$username);
+		}
+
 		$this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
 		$this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
 		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
 		$this->setSessionVar('loginmessage','');
 	}
+
+
 
 	function projectmenu()
 	{
@@ -226,7 +339,7 @@ class IndexAction extends Action
 		// Ermitteln, ob der Baum angezeigt werden soll
 		// Ist die Breite zu klein, dann wird der Baum nicht angezeigt
 		Session::set('showtree',intval($this->getRequestVar('screenwidth')) > $conf['interface']['min_width'] );
-		
+
 		$loginOk = $this->checkLogin( $loginName,
 		                              $loginPassword,
 		                              $newPassword1,
