@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.19  2007-01-27 00:16:36  dankert
+// Revision 1.20  2007-02-15 22:12:02  dankert
+// Neue Methode "isValid()"
+//
+// Revision 1.19  2007/01/27 00:16:36  dankert
 // Neuer Loginmechanismus: "authdb"
 //
 // Revision 1.18  2007/01/21 22:20:12  dankert
@@ -152,10 +155,14 @@ class User
 	  */
 	function setCurrent()
 	{
+		$this->loadProjects();
+		$this->loginDate = time();
 		global $SESS;
 
-		$SESS['user'] = $this->getProperties();
-		$SESS['userobject'] = $this;
+//		$SESS['user'] = $this->getProperties();
+//		$SESS['userobject'] = $this;
+		
+		Session::setUser( $this );
 	}
 
 
@@ -291,6 +298,16 @@ class User
 	}
 	
 	
+	
+	/**
+	 * Stellt fest, ob der Benutzer korrekt geladen ist.
+	 */
+	function isValid()
+	{
+		return intval($this->userid) > 0;
+	}
+
+
 
 	// Lesen Benutzer aus der Datenbank
 	function setDatabaseRow( $row )
