@@ -48,7 +48,7 @@
 		elseif	( is_array($$attr_present) )
 			$exec = (count($$attr_present)>0);
 		elseif	( is_bool($$attr_present) )
-			$exec = true;
+			$exec = $$attr_present;
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
@@ -82,6 +82,8 @@
 	unset($attr_value);
 	unset($attr_var);
 
+	$last_exec = $exec;
+	
 	if	( $exec )
 	{
 ?>
