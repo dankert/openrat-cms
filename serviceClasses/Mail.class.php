@@ -25,7 +25,12 @@ class Mail
 		if	( !empty($conf['mail']['from']) )
 			$this->from = $conf['mail']['from'];
 
+		// Priorität definieren (sofern konfiguriert)
+		if	( !empty($conf['mail']['priority']) )
+			$this->header[] = 'X-Priority: '.$conf['mail']['priority'];
+			
 		$this->header[] = 'X-Mailer: '.OR_TITLE.' '.OR_VERSION;
+		$this->header[] = 'Content-Type: text/plain; charset='.lang( 'CHARSET' );
 		$this->subject  = lang( 'mail_subject_'.$text );
 		$this->to       = $to;
 		
