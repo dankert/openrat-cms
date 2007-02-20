@@ -22,6 +22,8 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		if	( !is_array($path) )
+			$path = array();
 		foreach( $path as $pathElement)
 		{
 			extract($pathElement);
