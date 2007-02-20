@@ -13,13 +13,13 @@ page
 				row
 					cell class:fx
 						if true:writable
-							checkbox name:id
+							checkbox name:var:id
 						if false:writable
 							text raw:_
 
 					cell class:fx
-						link url:url target:cms_main title:desc
-							image type:icon
+						link url:var:url target:cms_main title:desc
+							image type:var:icon
 							text var:name
 							text raw:_
 
@@ -33,9 +33,9 @@ END
 				cell class:fx colspan:2
 				
 					list list:actionlist extract:true
-						radio name:type value:type
+						radio name:var:type value:var:type
 						text raw:_
-						text var:type
+						text text:var:type
 						newline
 			row
 				cell class:act colspan:2

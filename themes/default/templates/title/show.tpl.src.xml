@@ -3,7 +3,7 @@
 		<row>
 			<cell class="title" width="30%">
 				<image icon="database" align="left"/>
-				<text title="dbid" var="dbname"></text>
+				<text title="dbid" text="var:dbname"></text>
 			</cell>
 			<cell class="title" width="40%" style="text-align:center;">
 				<text var="cms_title"/>

@@ -11,7 +11,7 @@ page
 						text value:var:name maxlength:20
 					char type:filesep
 
-				text value:var:text title:var:text class:title
+				text text:var:text title:var:text class:title
 			cell class:menu style::text-align:right;
 				list list:windowIcons extract:true
 					link url:var:url target:_top

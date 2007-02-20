@@ -20,9 +20,9 @@ page class:main
 		list list:object extract:true
 			row
 				cell class:fx
-					link url:url target:cms_main title:desc
-						image type:icon
-						text var:name
+					link url:var:url target:cms_main title:desc
+						image type:var:icon
+						text text:var:name
 						text raw:_
 				cell class:fx
 					text var:date
