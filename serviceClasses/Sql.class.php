@@ -176,39 +176,41 @@ class Sql
 	 */
 	function setParam( $name,$value,$dieIfUnknown=true)
 	{
-//		Html::debug($this->src);
-//		Html::debug($this->param,'vor setParam() ('.$name.'='.$value.')');
 
-//   Nett gemeint, führt aber aktuell zu Fehlern, weil an vielen Stellen zu viele Parameter gefüllt werden.
-//   Daher erstmal deaktiviert.
-//		if	( !isset($this->param[$name]) )
-//		{
-//			if	( $dieIfUnknown )
-//				die("parameter '$name' unknown. SQL=".$this->src);
-//			else
-//				return;
-//		}
+		//   Nett gemeint, führt aber aktuell zu Fehlern, weil an vielen Stellen zu viele Parameter gefüllt werden.
+		//   Daher erstmal deaktiviert.
+		//		if	( !isset($this->param[$name]) )
+		//		{
+		//			if	( $dieIfUnknown )
+		//				die("parameter '$name' unknown. SQL=".$this->src);
+		//			else
+		//				return;
+		//		}
 
-		foreach( $this->param[$name] as $idx=>$xyz )
+		if	( !isset($this->param[$name]) )
+			return; // Parameter nicht vorhanden.
+
+		if	( is_array($this->param[$name]) )
 		{
-			$pos = $this->param[$name][$idx];
-			
-			$this->query = substr( $this->query,0,$pos ).$value.substr( $this->query,$pos );
-		
-			foreach( $this->param as $pn=>$par)
+			foreach( $this->param[$name] as $idx=>$xyz )
 			{
-				foreach( $par as $i=>$p )
-				{
-					if	( $p > $pos )
-						$this->param[$pn][$i]=$p+strlen($value);
-				}
-			}
+				$pos = $this->param[$name][$idx];
+				
+				$this->query = substr( $this->query,0,$pos ).$value.substr( $this->query,$pos );
 			
+				foreach( $this->param as $pn=>$par)
+				{
+					foreach( $par as $i=>$p )
+					{
+						if	( $p > $pos )
+							$this->param[$pn][$i]=$p+strlen($value);
+					}
+				}
+				
+			}
 		}
 		
 		unset( $this->param[$name] );
-		
-//		Html::debug($this->param,'nach setParam()');
 	}
 	
 
