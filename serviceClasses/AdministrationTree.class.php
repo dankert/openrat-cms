@@ -38,7 +38,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->text        = lang('GLOBAL_ADMINISTRATION');
 		$treeElement->description = lang('GLOBAL_ADMINISTRATION');
 		$treeElement->type        = 'administration';
-		$treeElement->icon        = 'project_list';
+		$treeElement->icon        = 'administration';
 		
 		$this->addTreeElement( $treeElement );
 	}
@@ -51,7 +51,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->text        = lang('GLOBAL_PROJECTS');
 		$treeElement->description = lang('GLOBAL_PROJECTS');
 		$treeElement->url         = Html::url('main','project');
-		$treeElement->icon        = 'project_list';
+		$treeElement->icon        = 'project';
 		$treeElement->type        = 'projects';
 		$treeElement->target      = 'cms_main';
 		
