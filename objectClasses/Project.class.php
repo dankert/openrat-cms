@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2006-07-19 21:30:32  dankert
+// Revision 1.11  2007-02-26 22:05:08  dankert
+// Neue Methode "loadByName()"
+//
+// Revision 1.10  2006/07/19 21:30:32  dankert
 // Beim Speichern auch ?ndern des Root-Folders
 //
 // Revision 1.9  2006/06/01 20:58:11  dankert
@@ -171,6 +174,27 @@ class Project
 		$row = $db->getRow( $sql->query );
 
 		$this->name                = $row['name'               ];
+		$this->target_dir          = $row['target_dir'         ];
+		$this->ftp_url             = $row['ftp_url'            ];
+		$this->ftp_passive         = $row['ftp_passive'        ];
+		$this->cmd_after_publish   = $row['cmd_after_publish'  ];
+		$this->content_negotiation = $row['content_negotiation'];
+		$this->cut_index           = $row['cut_index'          ];
+	}
+
+
+	// Laden
+	function loadByName()
+	{
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT * FROM {t_project} '.
+		                '   WHERE name={projectname}' );
+		$sql->setString( 'projectname',$this->name );
+
+		$row = $db->getRow( $sql->query );
+
+		$this->projectid           = $row['id'                 ];
 		$this->target_dir          = $row['target_dir'         ];
 		$this->ftp_url             = $row['ftp_url'            ];
 		$this->ftp_passive         = $row['ftp_passive'        ];
