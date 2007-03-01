@@ -21,11 +21,11 @@
 	}
 	// Inhalt-Vergleich mit Wertliste
 	elseif( isset($attr_contains) )
-		$exec = in_array($$attr_var,explode(',',$attr_contains));
+		$exec = in_array($attr_value,explode(',',$attr_contains));
 				
 	// Inhalt-Vergleich
-	elseif( isset($attr_var) )
-		$exec = $$attr_var == $attr_value;
+	elseif( isset($attr_equals)&& isset($attr_value) )
+		$exec = $attr_equals == $attr_value;
 
 	// Vergleich auf leer
 	elseif	( isset($attr_empty) )
@@ -80,7 +80,7 @@
 	unset($attr_invert);
 	unset($attr_not);
 	unset($attr_value);
-	unset($attr_var);
+	unset($attr_equals);
 
 	$last_exec = $exec;
 	
