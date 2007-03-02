@@ -67,6 +67,7 @@ class TemplateEngine
 
 		$raw     = false;
 		$openCmd = array();
+		$depth   = 0;
 		
 		foreach( $document as $line )
 		{
@@ -86,14 +87,14 @@ class TemplateEngine
 			if	( $tag == 'raw' )
 				fwrite( $outFile,$value."\n");
 			elseif ( $type == 'open' )
-				$this->copyFileContents( $tag,$outFile,$attributes );
+				$this->copyFileContents( $tag,$outFile,$attributes,++$depth );
 			elseif ( $type == 'complete' )
 			{
-				$this->copyFileContents( $tag,$outFile,$attributes );
-				$this->copyFileContents( $tag.'-end',$outFile,array() );
+				$this->copyFileContents( $tag       ,$outFile,$attributes,$depth+1 );
+				$this->copyFileContents( $tag.'-end',$outFile,array()    ,$depth+1 );
 			}
 			elseif ( $type == 'close' )
-				$this->copyFileContents( $tag.'-end',$outFile,array() );
+				$this->copyFileContents( $tag.'-end',$outFile,array(),--$depth );
 		}
 
 		fclose($outFile);
@@ -147,8 +148,10 @@ class TemplateEngine
 	/**
 	 * Ein Baustein wird in die neue Vorlagedatei kopiert. 
 	 */
-	function copyFileContents( $infile,$outFileHandler,$attr )
+	function copyFileContents( $infile,$outFileHandler,$attr,$depth )
 	{
+		//		$hash = crc32($depth);
+		$hash = $depth;
 		global $conf;
 //		Logger::debug("Inserting template command: ".$infile);
 		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
@@ -166,23 +169,28 @@ class TemplateEngine
 			$values[] = "'".$attrName."'=>".$this->attributeValue($attrValue);
 		}
 //		fwrite( $outFileHandler,'<?php /* source: '.$inFileName.' - compile time: '.date('r').' */ ?'.'>');
-		fwrite( $outFileHandler,'<?php $attr = array('.implode(',',$values).') ?>');
+		fwrite( $outFileHandler,'<?php $attr'.$hash.' = array('.implode(',',$values).') ?>');
 		
 		foreach( $attr as $attrName=>$attrValue )
 			
-			fwrite( $outFileHandler,'<?php $attr_'.$attrName."=".$this->attributeValue($attrValue)." ?>");
+			fwrite( $outFileHandler,'<?php $attr'.$hash.'_'.$attrName."=".$this->attributeValue($attrValue)." ?>");
 //		foreach( $attr as $attrName=>$attrValue )
 //			fwrite( $outFileHandler,'<?php $'.$attrName."='".$attrValue."' ? >");
 
 		$file = file( $inFileName );
 		foreach( $file as $line )
 		{
+//			echo $attr.$hash;
+			$line = str_replace('$attr','$attr'.$hash,$line);
+//			echo '<pre>';
+//			echo htmlentities($line);
+//			echo '</pre>';
 			//fwrite( $outFileHandler,rtrim($line)."\n" );
 			fwrite( $outFileHandler,$line );
 		}
-		fwrite( $outFileHandler,'<?php unset($attr) ?>');
+		fwrite( $outFileHandler,'<?php unset($attr'.$hash.') ?>');
 		foreach( $attr as $attrName=>$attrValue )
-			fwrite( $outFileHandler,'<?php unset($attr_'.$attrName.') ?>');
+			fwrite( $outFileHandler,'<?php unset($attr'.$hash.'_'.$attrName.') ?>');
 //		foreach( $attr as $attrName=>$attrValue )
 //			fwrite( $outFileHandler,'<?php unset($'.$attrName.') ? >');
 
@@ -216,15 +224,15 @@ class TemplateEngine
 			if	( $al=='')
 				continue;
 				
-			list($a,$default) = explode(':',$al.':NONE');
-			$default = str_replace('COMMA',',',$default);
+			list($a,$default) = explode(':',$al,2);
+			$default = str_replace('COMMA',',',$default); // Komma in Default-Werten ersetzen.
 			if	( isset($attr[$a]))
 				$checkedAttr[$a]=$attr[$a];
 			else
 				if	( $default=='*')
 					die( 'required attribute not found, element= '.$cmd.', attribute='.$a );
 				else
-					if	( $default != 'NONE' )
+					if	( !empty($default) )
 						$checkedAttr[$a]=$default;
 			unset( $attr[$a] );
 			
