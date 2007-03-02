@@ -33,7 +33,9 @@
 	elseif (!empty($attr_value))
 		$tmp_text = $attr_value;
 	else
-	{ Html::debug($attr);echo 'text error';
+	{
+	  $tmp_text = '&nbsp;';
+	  //Html::debug($attr);echo 'text error';
 	}
 	
 	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
