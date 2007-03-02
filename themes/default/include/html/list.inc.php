@@ -1,18 +1,22 @@
 <?php
-	$list_tmp_key   = $attr_key;
-	$list_tmp_value = $attr_value;
-	$list_extract   = ($attr_extract==true);
+	$attr_list_tmp_key   = $attr_key;
+	$attr_list_tmp_value = $attr_value;
+	$attr_list_extract   = ($attr_extract==true);
 
+	if	( !is_array($$attr_list) )
+		$$attr_list = array();
+//		die('not an array in list,var='.$attr_list);
+//		Html::debug($$attr_list);
 	
-	foreach( $$attr_list as $$list_tmp_key => $$list_tmp_value )
+	foreach( $$attr_list as $$attr_list_tmp_key => $$attr_list_tmp_value )
 	{
-		if	( $list_extract )
+		if	( $attr_list_extract )
 		{
-			if	( !is_array($$list_tmp_value) )
+			if	( !is_array($$attr_list_tmp_value) )
 			{
-				print_r($$list_tmp_value);
-				die( 'not an array at key: '.$$list_tmp_key );
+				print_r($$attr_list_tmp_value);
+				die( 'not an array at key: '.$$attr_list_tmp_key );
 			}
-			extract($$list_tmp_value);
+			extract($$attr_list_tmp_value);
 		}
 ?>
