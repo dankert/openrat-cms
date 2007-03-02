@@ -104,3 +104,12 @@ rendermode=sgml
 
 convert_html=true
 convert_bbcode=true
+
+
+; Calendar settings
+[calendar]
+
+; Weekday-Offset: Ho many days a week begins after Sunday. 
+; 0 = Week begins with Sunday (America, Australia, Islam)
+; 1 = Week begins with Monday (ISO-8601, Europe)
+weekday_offset=1
