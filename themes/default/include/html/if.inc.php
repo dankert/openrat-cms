@@ -43,16 +43,17 @@
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr_present) )
 	{
-		if	( !isset($$attr_present) )
-			$exec = false;
-		elseif	( is_array($$attr_present) )
-			$exec = (count($$attr_present)>0);
-		elseif	( is_bool($$attr_present) )
-			$exec = $$attr_present;
-		elseif	( is_numeric($$attr_present) )
-			$exec = $$attr_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr_present);
+//		if	( !isset($$attr_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr_present) )
+//			$exec = (count($$attr_present)>0);
+//		elseif	( is_bool($$attr_present) )
+//			$exec = $$attr_present;
+//		elseif	( is_numeric($$attr_present) )
+//			$exec = $$attr_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -64,6 +65,7 @@
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr_invert) )
 		$exec = !$exec;
 
