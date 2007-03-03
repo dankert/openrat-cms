@@ -62,7 +62,7 @@ class ProjectTree extends AbstractTree
 				                               'pageelement',
 				                               $id,
 				                               array('elementid'=>$elementid,
-				                                     REQ_PARAM_TARGETSUBACTION=>'edit'.$element->type));
+				                                     REQ_PARAM_TARGETSUBACTION=>'edit'));
 				$treeElement->icon = 'el_'.$element->type;
 
 				$treeElement->description = lang('EL_'.$element->type);

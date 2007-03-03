@@ -19,77 +19,6 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.23  2006-12-09 16:58:35  dankert
-// Notd?rftiges Aktivieren von Methode "useValue()". Hier ist noch Nacharbeit notwendig!
-//
-// Revision 1.22  2006/08/29 19:40:43  dankert
-// Vorbereitungen f?r Im- und Export von/nach ODF.
-//
-// Revision 1.21  2006/08/08 20:10:23  dankert
-// Neue Funktionen f?r Im- und Export
-//
-// Revision 1.20  2006/07/17 18:13:25  dankert
-// Neue Funktion "show()"
-//
-// Revision 1.19  2006/01/29 17:18:59  dankert
-// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
-//
-// Revision 1.18  2005/01/27 00:02:47  dankert
-// Immer Objektid an das Template liefern
-//
-// Revision 1.17  2005/01/23 00:09:25  dankert
-// Sortieren Link-Liste
-//
-// Revision 1.16  2005/01/14 23:47:42  dankert
-// Bei Longtext-Elementen auch Laden der Objektliste
-//
-// Revision 1.15  2004/12/29 20:18:50  dankert
-// Freigabe (release-Funktion) korrigiert
-//
-// Revision 1.14  2004/12/28 22:59:41  dankert
-// Schalter fuer HTML und WIKI
-//
-// Revision 1.13  2004/12/26 20:21:04  dankert
-// *** empty log message ***
-//
-// Revision 1.12  2004/12/26 01:08:55  dankert
-// Korrektur Sprachausgabe
-//
-// Revision 1.11  2004/12/26 01:06:31  dankert
-// Perfomanceverbesserung Seite/Elemente
-//
-// Revision 1.10  2004/12/19 15:15:37  dankert
-// Konstruktor erweitert
-//
-// Revision 1.9  2004/10/14 21:08:32  dankert
-// Vergleichen von Versionen
-//
-// Revision 1.8  2004/10/13 21:19:50  dankert
-// Lesen der Selectitem-Liste ueber Element-Objekt
-//
-// Revision 1.7  2004/07/07 20:43:48  dankert
-// Neuer Elementtyp: select
-//
-// Revision 1.6  2004/05/30 21:55:21  dankert
-// Korrektur Kasten "Freigabe"
-//
-// Revision 1.5  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.4  2004/05/02 12:00:26  dankert
-// Funktion release() zum freigeben von Inhalten
-//
-// Revision 1.3  2004/05/02 11:40:00  dankert
-// Freigabestatus der Seiteninhalte verarbeiten
-//
-// Revision 1.2  2004/04/30 20:52:11  dankert
-// Schalter $release setzen
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**
@@ -139,7 +68,7 @@ class PageelementAction extends Action
 			$this->page = Session::getObject();
 		}
 
-		if	( $this->hasRequestVar('elementid') != ''  )
+		if	( $this->hasRequestVar('elementid') )
 		{
 			$this->element = new Element( $this->getRequestVar('elementid') );
 			Session::setElement( $this->element );
@@ -154,7 +83,6 @@ class PageelementAction extends Action
 
 	function show()
 	{
-		$this->initedit();
 		$this->value->generate();
 		$this->setTemplateVar('value',$this->value->value);
 	}
@@ -165,7 +93,7 @@ class PageelementAction extends Action
 	 *
 	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
 	 */
-	function initedit()
+	function advanced()
 	{
 		$language = Session::getProjectLanguage();
 		$this->value->languageid = $language->languageid;
@@ -182,14 +110,46 @@ class PageelementAction extends Action
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
 		$this->setTemplateVar('elementid',$this->value->element->elementid);
+		$this->setTemplateVar('type'     ,$this->value->element->type     );
+		
+		$funktionName = 'advanced'.$this->value->element->type;
+		$this->$funktionName();
+	}
+	
+	
+	
+	/**
+	 * Ein Element der Seite bearbeiten
+	 *
+	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
+	 */
+	function edit()
+	{
+		$language = Session::getProjectLanguage();
+		$this->value->languageid = $language->languageid;
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->element = &$this->element;
+		$this->value->element->load();
+		$this->value->publish = false;
+
+		if	( intval($this->value->valueid)!=0 )
+			$this->value->loadWithId();
+		else	$this->value->load();
+
+		$this->setTemplateVar('name'     ,$this->value->element->name     );
+		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
+		$this->setTemplateVar('elementid',$this->value->element->elementid);
+		$this->setTemplateVar('type'     ,$this->value->element->type     );
+		
+		$funktionName = 'edit'.$this->value->element->type;
+		$this->$funktionName();
 	}
 	
 	
 	
 	function editdate()
 	{
-		$this->initedit();
-		
 		$date =  $this->value->date;
 
 		// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
@@ -198,10 +158,6 @@ class PageelementAction extends Action
 
 		$this->setTemplateVar('ansidate',date( 'Y-m-d H:i:s',$date ) );
 		$this->setTemplateVar('date'    ,$date);
-
-
-
-
 
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
@@ -221,17 +177,16 @@ class PageelementAction extends Action
 	
 	
 	
-	function editdatecalendar()
+	function advanceddate()
 	{
-		$this->initedit();
-		
-		$date =  $this->value->date;
+		global $conf;
+		$date = $this->value->date;
 
 		// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
 		if	( $date == 0 )
 			$date = time();
 
-		if   ( $this->getRequestVar('year') != '' )
+		if   ( $this->hasRequestVar('year') )
 		{
 			$date = mktime( $this->getRequestVar('hour'),
 			                $this->getRequestVar('minute'),
@@ -240,27 +195,135 @@ class PageelementAction extends Action
 			                $this->getRequestVar('day'),
 			                $this->getRequestVar('year')    );
 		}
-		$this->setTemplateVar('year'  ,date('Y',$date) );
-		$this->setTemplateVar('month' ,date('n',$date) );
-		$this->setTemplateVar('day'   ,date('j',$date) );
-		$this->setTemplateVar('hour'  ,date('G',$date) );
-		$this->setTemplateVar('minute',date('i',$date) );
-		$this->setTemplateVar('second',date('s',$date) );
+		$year   = date('Y',$date);
+		$month  = date('n',$date);
+		$day    = date('j',$date);
+		$hour   = date('G',$date);
+		$minute = date('i',$date);
+		$second = date('s',$date);
+		$this->setTemplateVar('year'  ,$year   );
+		$this->setTemplateVar('month' ,$month  );
+		$this->setTemplateVar('day'   ,$day    );
+		$this->setTemplateVar('hour'  ,$hour   );
+		$this->setTemplateVar('minute',$minute );
+		$this->setTemplateVar('second',$second );
 
-		$this->setTemplateVar('days'  ,date('t',$date) );
+		$this->setTemplateVar('monthname',lang('DATE_MONTH'.date('n',$date)) );
+		$this->setTemplateVar('yearname' ,date('Y',$date) );
 
-		$this->setTemplateVar('title' ,lang('DATE_MONTH'.date('n',$date)).' '.date('Y',$date) );
+
+		// Zwischenberechnungen		
+		$heuteTag         = intval(date('j'));
+		$monatLetzterTag  = intval(date('t',$date));
+		$monatErsterDatum = $date-(($day-1)*86400);
+		$wocheNr          = date( 'W',$monatErsterDatum );
+		$wochentagErster  = date( 'w',$monatErsterDatum );
+
+
+		$weekdayOffset = intval($conf['editor']['calendar']['weekday_offset']);
 		
-		// Wochentag des 1. des Monats ermitteln
-		$wday1 = date( 'w',$date );
-		$wday1 -= date('j',$date)-1;
-		while( $wday1 < 0 ) $wday1+=7;
-		$this->setTemplateVar('first_weekday',$wday1);
+		// Alle Wochentage
+		$weekdays = array();
+		for  ( $i=0; $i<=6; $i++ )
+		{
+			$wday = ($i+$weekdayOffset)%7;
+			$weekdays[$wday] = lang('DATE_WEEKDAY'.$wday);
+		}
+			
+		$this->setTemplateVar('weekdays',$weekdays);
+		
+
+		$monat = array();
+		$d = 0;
+		$begin = false;
+		do
+		{
+			$woche = array(); // Neue Woche
+			
+			for  ( $i=0; $i<=6; $i++ ) // Alle Wochentage der Woche
+			{
+				$wday = ($i+$weekdayOffset)%7;
+				$tag = array(); // Neuer Tag
+				
+				if   (!$begin && $wday == $wochentagErster)
+					$begin = true;
+				
+				if   ( $begin && $d < $monatLetzterTag )
+				{
+					$d++;
+					$tag['nr']    = $d;
+					$tag['today'] = ($year==date('Y') && $month==date('n') && $d==$heuteTag);
+					if   ($d != $day)
+						$tag['url'] = Html::url( 'pageelement','advanced','',
+						                         array('elementid'=>$this->element->elementid,
+						                               'year'  =>$year  ,
+						                               'month' =>$month ,
+						                               'day'   =>$d     ,
+						                               'hour'  =>$hour  ,
+						                               'minute'=>$minute,
+						                               'second'=>$second  ) );
+					else
+						$tag['url'] = '';
+				}
+				else
+				{
+					$tag['nr'    ]='';
+					$tag['today' ]=false;
+					$tag['url'   ]='';
+				}
+				$woche[] = $tag;
+				
+			}
+			$monat[$wocheNr] = $woche;
+			$wocheNr++;
+		}
+		while( $d < $monatLetzterTag-1 );
+//		Html::debug($monat);
+		$this->setTemplateVar('weeklist',$monat);
 		
 		$this->setTemplateVar('actdate' ,date( lang('DATE_FORMAT'),$date ) );
-		$this->setTemplateVar('todayurl','?year='.date('Y').'&month='.date('m').'&day='.date('d').'&hour='.date('H').'&minute='.date('i').'&second='.date('s') );
-		$this->setTemplateVar('ansidate',date( 'Y-m-d H:i:s',$date ) );
-		$this->setTemplateVar('date'    ,$date);
+		$this->setTemplateVar('todayurl',Html::url( 'pageelement','advanced','',
+						                         array('elementid'=>$this->element->elementid,
+						                               'year'  =>date('Y'),
+						                               'month' =>date('n'),
+						                               'day'   =>date('j'),
+						                               'hour'  =>date('G'),
+						                               'minute'=>date('i'),
+						                               'second'=>date('s') ) ) );
+		$this->setTemplateVar('lastyearurl',Html::url( 'pageelement','advanced','',
+						                         array('elementid'=>$this->element->elementid,
+						                               'year'  =>$year-1,
+						                               'month' =>$month ,
+						                               'day'   =>$day   ,
+						                               'hour'  =>$hour  ,
+						                               'minute'=>$minute,
+						                               'second'=>$second  ) ) );
+		$this->setTemplateVar('nextyearurl',Html::url( 'pageelement','advanced','',
+						                         array('elementid'=>$this->element->elementid,
+						                               'year'  =>$year+1 ,
+						                               'month' =>$month ,
+						                               'day'   =>$day   ,
+						                               'hour'  =>$hour  ,
+						                               'minute'=>$minute,
+						                               'second'=>$second  ) ) );
+		$this->setTemplateVar('lastmonthurl',Html::url( 'pageelement','advanced','',
+						                         array('elementid'=>$this->element->elementid,
+						                               'year'  =>$year  ,
+						                               'month' =>$month-1,
+						                               'day'   =>$day   ,
+						                               'hour'  =>$hour  ,
+						                               'minute'=>$minute,
+						                               'second'=>$second  ) ) );
+		$this->setTemplateVar('nextmonthurl',Html::url( 'pageelement','advanced','',
+						                         array('elementid'=>$this->element->elementid,
+						                               'year'  =>$year  ,
+						                               'month' =>$month+1,
+						                               'day'   =>$day   ,
+						                               'hour'  =>$hour  ,
+						                               'minute'=>$minute,
+						                               'second'=>$second  ) ) );
+						                               
+//		$this->setTemplateVar('date'    ,$date);
 
 
 
@@ -277,36 +340,14 @@ class PageelementAction extends Action
 
 		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 
-		$this->forward('pageelement_edit_'.$this->value->element->type);		
-	}
-	
-	
-	
-	function editdateform()
-	{
-		$this->initedit();
-		
-		$date =  $this->value->date;
 
-		// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
-		if	( $date == 0 )
-			$date = intval(time()/60)*60;
-
-		$this->setTemplateVar('date'    ,$date);
-
-		$this->setTemplateVar('year'  ,date('Y',$date) );
-		$this->setTemplateVar('month' ,date('n',$date) );
-		$this->setTemplateVar('day'   ,date('j',$date) );
-		$this->setTemplateVar('hour'  ,date('G',$date) );
-		$this->setTemplateVar('minute',date('i',$date) );
-		$this->setTemplateVar('second',date('s',$date) );
 
 		$all_years   = array();
 		$all_months  = array();
 		$all_days    = array();
 		$all_hours   = array();
 		$all_minutes = array();
-		for( $i=1850; $i<=2100;$i++ ) $all_years  [$i] = $i; 
+		for( $i=$year-100; $i<=$year+100;$i++ ) $all_years  [$i] = $i; 
 		for( $i=1;    $i<=12;  $i++ ) $all_months [$i] = lang('DATE_MONTH'.$i); 
 		for( $i=1;    $i<=31;  $i++ ) $all_days   [$i] = str_pad($i,2,'0',STR_PAD_LEFT); 
 		for( $i=0;    $i<=23;  $i++ ) $all_hours  [$i] = str_pad($i,2,'0',STR_PAD_LEFT); 
@@ -318,23 +359,6 @@ class PageelementAction extends Action
 		$this->setTemplateVar('all_hours'  ,$all_hours  );
 		$this->setTemplateVar('all_minutes',$all_minutes);
 		$this->setTemplateVar('all_seconds',$all_minutes);
-
-
-
-		if	( $this->getSessionVar('pageaction') != '' )
-			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-		else	$this->setTemplateVar('old_pageaction','show'                            );
-
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
-
-		$this->forward('pageelement_edit_'.$this->value->element->type);		
 	}
 	
 	
@@ -517,8 +541,6 @@ class PageelementAction extends Action
 
 	function editlink()
 	{
-		$this->initedit();
-
 		$objects = array();
 
 		foreach( Folder::getAllObjectIds() as $id )
@@ -562,8 +584,6 @@ class PageelementAction extends Action
 
 	function editselect()
 	{
-		$this->initedit();
-
 		$this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
 		$this->setTemplateVar( 'text' ,$this->value->text                      );
 
@@ -588,7 +608,6 @@ class PageelementAction extends Action
 
 	function editlist()
 	{
-		$this->initedit();
 		// Auswahl ueber alle Elementtypen
 		$objects = array();
 		foreach( Folder::getAllFolders() as $id )
@@ -626,8 +645,6 @@ class PageelementAction extends Action
 
 	function editnumber()
 	{
-		$this->initedit();
-
 		$this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
 
 		if	( $this->getSessionVar('pageaction') != '' )
@@ -648,6 +665,13 @@ class PageelementAction extends Action
 
 
 
+	function advancedlongtext() 
+	{
+		$this->editlongtext();
+	}
+	
+	
+	
 	/**
 	 * Ein Element der Seite bearbeiten
 	 *
@@ -655,8 +679,6 @@ class PageelementAction extends Action
 	 */
 	function editlongtext()
 	{
-		$this->initedit();
-
 		// Ermitteln aller verlinkbaren Objekte (fuer Editor)
 		$objects = array();
 
@@ -705,8 +727,6 @@ class PageelementAction extends Action
 	 */
 	function edittext()
 	{
-		$this->initedit();
-
 		$this->setTemplateVar( 'text',$this->value->text          );
 	
 		if	( $this->getSessionVar('pageaction') != '' )
@@ -1051,6 +1071,22 @@ class PageelementAction extends Action
 
 
 
+	/**
+	 * Ein Element der Seite speichern.
+	 */
+	function save()
+	{
+		$this->element->load();
+		$type = $this->element->type;
+		if	( empty($type))
+			die('Error: No element type available.');
+		$funktionName = 'save'.$type;
+		Logger::debug('save: '.$this->element->type);
+		$this->$funktionName();
+	}
+	
+	
+	
 	/**
 	 * Element speichern
 	 *
@@ -1434,13 +1470,33 @@ class PageelementAction extends Action
 	
 	function createOdfDocument()
 	{
-		$this->initedit();
 		$transformer = new Transformer();
 		$transformer->text = $this->value->text;
 		$transformer->type = 'odf';
 		$transformer->transform();
 		return $transformer->text;
 	}
+	
+	
+	function checkMenu( $name )
+	{
+		$type = $this->value->element->type;
+		
+		switch( $name )
+		{
+			case 'show':
+			case 'edit':
+			case 'archive':
+				return true;
+
+			case 'advanced':
+				return in_array($type,array('date','longtext','number'));
+
+			default:
+				return false;
+		}
+	}
+	
 }
 
 ?>

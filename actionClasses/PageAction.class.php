@@ -418,8 +418,8 @@ class PageAction extends ObjectAction
 	
 				$list[$id]['date'         ] = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
 				$list[$id]['archive_count'] = $value->getCountVersions();
-				$list[$id]['archive_url'  ] = Html::url( 'pageelement','archive','0',array('elementid'=>$id) );
-				$list[$id]['url'          ] = Html::url( 'pageelement','edit'.$value->element->type,'0',array('elementid'=>$id) );
+				$list[$id]['archive_url'  ] = Html::url( 'pageelement','archive',$this->page->id,array('elementid'=>$id) );
+				$list[$id]['url'          ] = Html::url( 'pageelement','edit'   ,$this->page->id,array('elementid'=>$id) );
 				
 				// Maximal 50 Stellen des Inhaltes anzeigen
 				$list[$id]['value'] = Text::maxLaenge( 50,$value->value );

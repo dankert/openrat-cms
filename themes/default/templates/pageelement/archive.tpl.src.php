@@ -25,29 +25,29 @@ page
 			list list:el extract:true
 				row
 					cell class:fx
-						text var:lfd_nr
+						text text:var:lfd_nr
 					cell class:fx
-						radio name:compareid value:lfd_nr
+						radio name:compareid value:var:lfd_nr
 					cell class:fx
-						radio name:withid value:lfd_nr
+						radio name:withid value:var:lfd_nr
 					cell class:fx
 						text var:date
 					cell class:fx
-						text var:user
+						text text:user
 					cell class:fx
-						text var:value
+						text text:var:value
 					cell class:fx
-						if true:public
-							text text:GLOBAL_PUBLIC
-						if present:releaseUrl
-							link url:releaseUrl
-								text text:GLOBAL_RELEASE
+						if true:var:public
+							text text:message:GLOBAL_PUBLIC
+						else
+							link url:var:releaseUrl
+								text text:message:GLOBAL_RELEASE
 					cell class:fx
-						if true:active
-							text text:GLOBAL_ACTIVE
-						if present:useUrl
-							link url:useUrl
-								text text:GLOBAL_USE
+						if true:var:active
+							text text:message:GLOBAL_ACTIVE
+						else
+							link url:var:useUrl
+								text text:message:GLOBAL_USE
 
 			row
 				cell colspan:8 class:act

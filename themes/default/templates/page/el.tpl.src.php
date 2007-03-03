@@ -16,17 +16,17 @@ page
 		list list:el extract:true
 			row
 				cell class:fx
-					link url:url title:desc
-						image elementtype:type align:left
+					link url:var:url title:desc
+						image elementtype:var:type align:left
 						text var:name
 				cell class:fx
 					text var:value
 					text raw:_
 				cell class:fx
-					link url:archive_url
+					link url:var:archive_url
 						text text:GLOBAL_ARCHIVE
 					text raw:_(
-					text var:archive_count
+					text text:var:archive_count
 					text raw:)
 		row
 			cell class:help colspan:3
