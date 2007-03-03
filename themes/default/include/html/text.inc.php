@@ -7,6 +7,11 @@
 
 ?><span class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
 	$attr_title = '';
+	if	( isset($attr_prefix)&& isset($attr_key))
+		$attr_key = $attr_prefix.$attr_key;
+	if	( isset($attr_suffix)&& isset($attr_key))
+		$attr_key = $attr_key.$attr_suffix;
+		
 	if (!empty($attr_array))
 	{
 		//geht nicht:
