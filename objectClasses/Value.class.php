@@ -377,9 +377,10 @@ SQL
 			$sql->setNull  ( 'date' );
 		else	$sql->setInt   ( 'date',$this->date );
 
-		$sql->setBoolean( 'publish'          ,$this->publish          );
-		$sql->setInt    ( 'lastchange_date'  ,time()                  );
-		$sql->setInt    ( 'lastchange_userid',$SESS['user']['userid'] );
+		$sql->setBoolean( 'publish'          ,$this->publish );
+		$sql->setInt    ( 'lastchange_date'  ,time()         );
+		$user = Session::getUser();
+		$sql->setInt    ( 'lastchange_userid',$user->userid  );
 
 		$db->query( $sql->query );
 	}
