@@ -3,13 +3,13 @@ page
 		list list:el extract:true
 			row
 				cell class:fx
-					link url:url title:desc
-						image type:type
-						text var:name
+					link url:var:url title:var:desc
+						image elementtype:var:type
+						text text:var:name
 				cell class:fx
-					text text:type
+					text key:var:type prefix:EL_
 
 		if empty:el
 			row
 				cell colspan:2 class:fx
-					text text:GLOBAL_NOT_FOUND
+					text text:message:GLOBAL_NOT_FOUND
