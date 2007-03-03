@@ -161,16 +161,17 @@
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -182,6 +183,7 @@
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -242,6 +244,11 @@
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -337,16 +344,17 @@
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr7_present) )
 	{
-		if	( !isset($$attr7_present) )
-			$exec = false;
-		elseif	( is_array($$attr7_present) )
-			$exec = (count($$attr7_present)>0);
-		elseif	( is_bool($$attr7_present) )
-			$exec = $$attr7_present;
-		elseif	( is_numeric($$attr7_present) )
-			$exec = $$attr7_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr7_present);
+//		if	( !isset($$attr7_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr7_present) )
+//			$exec = (count($$attr7_present)>0);
+//		elseif	( is_bool($$attr7_present) )
+//			$exec = $$attr7_present;
+//		elseif	( is_numeric($$attr7_present) )
+//			$exec = $$attr7_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -358,6 +366,7 @@
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr7_invert) )
 		$exec = !$exec;
 
@@ -440,16 +449,17 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr7_present) )
 	{
-		if	( !isset($$attr7_present) )
-			$exec = false;
-		elseif	( is_array($$attr7_present) )
-			$exec = (count($$attr7_present)>0);
-		elseif	( is_bool($$attr7_present) )
-			$exec = $$attr7_present;
-		elseif	( is_numeric($$attr7_present) )
-			$exec = $$attr7_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr7_present);
+//		if	( !isset($$attr7_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr7_present) )
+//			$exec = (count($$attr7_present)>0);
+//		elseif	( is_bool($$attr7_present) )
+//			$exec = $$attr7_present;
+//		elseif	( is_numeric($$attr7_present) )
+//			$exec = $$attr7_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -461,6 +471,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr7_invert) )
 		$exec = !$exec;
 
@@ -534,16 +545,17 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -555,6 +567,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -615,6 +628,11 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -721,16 +739,17 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -742,6 +761,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -802,6 +822,11 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -908,16 +933,17 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -929,6 +955,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -989,6 +1016,11 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -1095,16 +1127,17 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -1116,6 +1149,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -1176,6 +1210,11 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -1274,16 +1313,17 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -1295,6 +1335,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -1355,6 +1396,11 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -1453,16 +1499,17 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -1474,6 +1521,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -1534,6 +1582,11 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -1644,16 +1697,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -1665,6 +1719,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -1725,6 +1780,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -1831,16 +1891,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -1852,6 +1913,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -1912,6 +1974,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -2018,16 +2085,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -2039,6 +2107,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -2099,6 +2168,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -2197,16 +2271,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -2218,6 +2293,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -2278,6 +2354,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -2376,16 +2457,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -2397,6 +2479,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -2457,6 +2540,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -2555,16 +2643,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -2576,6 +2665,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -2636,6 +2726,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -2734,16 +2829,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -2755,6 +2851,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -2815,6 +2912,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -2913,16 +3015,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -2934,6 +3037,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -2994,6 +3098,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -3118,6 +3227,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 	$attr8_title = '';
+	if	( isset($attr8_prefix)&& isset($attr8_key))
+		$attr8_key = $attr8_prefix.$attr8_key;
+	if	( isset($attr8_suffix)&& isset($attr8_key))
+		$attr8_key = $attr8_key.$attr8_suffix;
+		
 	if (!empty($attr8_array))
 	{
 		//geht nicht:
@@ -3162,6 +3276,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 	$attr8_title = '';
+	if	( isset($attr8_prefix)&& isset($attr8_key))
+		$attr8_key = $attr8_prefix.$attr8_key;
+	if	( isset($attr8_suffix)&& isset($attr8_key))
+		$attr8_key = $attr8_key.$attr8_suffix;
+		
 	if (!empty($attr8_array))
 	{
 		//geht nicht:
@@ -3206,6 +3325,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 	$attr8_title = '';
+	if	( isset($attr8_prefix)&& isset($attr8_key))
+		$attr8_key = $attr8_prefix.$attr8_key;
+	if	( isset($attr8_suffix)&& isset($attr8_key))
+		$attr8_key = $attr8_key.$attr8_suffix;
+		
 	if (!empty($attr8_array))
 	{
 		//geht nicht:
@@ -3250,6 +3374,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 	$attr8_title = '';
+	if	( isset($attr8_prefix)&& isset($attr8_key))
+		$attr8_key = $attr8_prefix.$attr8_key;
+	if	( isset($attr8_suffix)&& isset($attr8_key))
+		$attr8_key = $attr8_key.$attr8_suffix;
+		
 	if (!empty($attr8_array))
 	{
 		//geht nicht:
@@ -3294,6 +3423,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 	$attr8_title = '';
+	if	( isset($attr8_prefix)&& isset($attr8_key))
+		$attr8_key = $attr8_prefix.$attr8_key;
+	if	( isset($attr8_suffix)&& isset($attr8_key))
+		$attr8_key = $attr8_key.$attr8_suffix;
+		
 	if (!empty($attr8_array))
 	{
 		//geht nicht:
@@ -3377,16 +3511,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -3398,6 +3533,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -3458,6 +3594,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -3556,16 +3697,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -3577,6 +3719,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -3637,6 +3780,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -3747,16 +3895,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -3768,6 +3917,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -3828,6 +3978,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -3938,16 +4093,17 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -3959,6 +4115,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -4019,6 +4176,11 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
