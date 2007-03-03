@@ -1,9 +1,10 @@
-<?php $attr = array('class'=>'main title') ?><?php $attr_class='main title' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php $attr = array('class'=>'main','title'=>'var') ?><?php $attr_class='main' ?><?php $attr_title='var' ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
   <title><?php echo $attr_title ?></title>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
@@ -14,7 +15,7 @@
 
 <body class="<?php echo $attr_class ?>">
 
-<?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('name'=>'GLOBAL_PROJECTS','icon'=>'project','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr_name='GLOBAL_PROJECTS' ?><?php $attr_icon='project' ?><?php $attr_width='93%' ?><?php $attr_rowclasses='odd,even' ?><?php $attr_columnclasses='1,2,3' ?><?php
+<?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_title) ?><?php $attr = array('name'=>'GLOBAL_PROJECTS','icon'=>'project','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr_name='GLOBAL_PROJECTS' ?><?php $attr_icon='project' ?><?php $attr_width='93%' ?><?php $attr_rowclasses='odd,even' ?><?php $attr_columnclasses='1,2,3' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr_widths))
 	{
@@ -38,6 +39,8 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		if	( !is_array($path) )
+			$path = array();
 		foreach( $path as $pathElement)
 		{
 			extract($pathElement);
@@ -141,9 +144,9 @@
 		$tmp_url = Html::url($attr_action,$attr_subaction,!empty($$attr_id)?$$attr_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
 ?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr_class ?>" target="<?php echo $attr_target ?>" title="<?php echo $attr_title ?>"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_target) ?><?php unset($attr_url) ?><?php unset($attr_class) ?><?php $attr = array('file'=>'icon_project','align'=>'left') ?><?php $attr_file='icon_project' ?><?php $attr_align='left' ?><?php
 if (isset($attr_elementtype)) {
-?><img src="<?php echo $image_dir.'icon_el_'.$$attr_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
+?><img src="<?php echo $image_dir.'icon_el_'.$attr_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (isset($attr_type)) {
-?><img src="<?php echo $image_dir.'icon_'.$$attr_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
+?><img src="<?php echo $image_dir.'icon_'.$attr_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (isset($attr_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (isset($attr_url)) {

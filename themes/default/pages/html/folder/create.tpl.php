@@ -1,9 +1,10 @@
-<?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php $attr = array('class'=>'main','title'=>'var') ?><?php $attr_class='main' ?><?php $attr_title='var' ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
-  <title><?php echo $cms_title ?></title>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title><?php echo $attr_title ?></title>
+  <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
@@ -12,15 +13,25 @@
 <?php } ?>
 </head>
 
-<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
+<body class="<?php echo $attr_class ?>">
 
-
-<?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('title'=>'GLOBAL_NEW','name'=>'global_new','icon'=>'','widths'=>'','width'=>'85%') ?><?php $attr_title='GLOBAL_NEW' ?><?php $attr_name='global_new' ?><?php $attr_icon='' ?><?php $attr_widths='' ?><?php $attr_width='85%' ?><?php
+<?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_title) ?><?php $attr = array('title'=>'GLOBAL_NEW','name'=>'global_new','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr_title='GLOBAL_NEW' ?><?php $attr_name='global_new' ?><?php $attr_width='93%' ?><?php $attr_rowclasses='odd,even' ?><?php $attr_columnclasses='1,2,3' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr_widths))
 	{
 		$column_widths = explode(',',$attr_widths);
 		unset($attr['widths']);
+	}
+	if	(!empty($attr_rowclasses))
+	{
+		$row_classes   = explode(',',$attr_rowclasses);
+		$row_class_idx = 999;
+		unset($attr['rowclasses']);
+	}
+	if	(!empty($attr_columnclasses))
+	{
+		$column_classes = explode(',',$attr_columnclasses);
+		unset($attr['columnclasses']);
 	}
 		global $image_dir;
 		echo '<br/><br/><br/><center>';
@@ -28,6 +39,8 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		if	( !is_array($path) )
+			$path = array();
 		foreach( $path as $pathElement)
 		{
 			extract($pathElement);
@@ -36,7 +49,13 @@
 		}
 		echo '<span class="title">'.lang($windowTitle).'</span>';
 		?>
-    </th>
+		</td><td class="menu" style="align:right;">
+    <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
+          {
+          	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.lang($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
+          }
+     ?>
+    </td>
   </tr>
   <tr><td class="subaction">
     <?php foreach( $windowMenu as $menu )
@@ -72,7 +91,7 @@
 
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php $attr = array() ?>      </table>
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_width) ?><?php unset($attr_rowclasses) ?><?php unset($attr_columnclasses) ?><?php $attr = array() ?>      </table>
 	</td>
   </tr>
 </table>

@@ -1,9 +1,10 @@
-<?php $attr = array('class'=>'main') ?><?php $attr_class='main' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php $attr = array('class'=>'main','title'=>'var') ?><?php $attr_class='main' ?><?php $attr_title='var' ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
-  <title><?php echo $cms_title ?></title>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title><?php echo $attr_title ?></title>
+  <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
@@ -14,8 +15,7 @@
 
 <body class="<?php echo $attr_class ?>">
 
-
-<?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('name'=>'','target'=>'_top','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr_name='' ?><?php $attr_target='_top' ?><?php $attr_method='post' ?><?php $attr_enctype='application/x-www-form-urlencoded' ?><?php
+<?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_title) ?><?php $attr = array('name'=>'','target'=>'_top','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr_name='' ?><?php $attr_target='_top' ?><?php $attr_method='post' ?><?php $attr_enctype='application/x-www-form-urlencoded' ?><?php
 	if	(empty($attr_action))
 		$attr_action = $actionName;
 	if	(empty($attr_subaction))
@@ -57,6 +57,8 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		if	( !is_array($path) )
+			$path = array();
 		foreach( $path as $pathElement)
 		{
 			extract($pathElement);
@@ -222,7 +224,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php $attr = array('class'=>'','default'=>'','type'=>'text','name'=>'username','value'=>'','size'=>'30','maxlength'=>'256','onchange'=>'') ?><?php $attr_class='' ?><?php $attr_default='' ?><?php $attr_type='text' ?><?php $attr_name='username' ?><?php $attr_value='' ?><?php $attr_size='30' ?><?php $attr_maxlength='256' ?><?php $attr_onchange='' ?><input name="<?php echo $attr_name ?>" size="<?php echo $attr_size ?>" maxlength="<?php echo $attr_maxlength ?>" class="<?php echo $attr_class ?>" value="<?php echo isset($$attr_name)?$$attr_name:$attr_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_default) ?><?php unset($attr_type) ?><?php unset($attr_name) ?><?php unset($attr_value) ?><?php unset($attr_size) ?><?php unset($attr_maxlength) ?><?php unset($attr_onchange) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php $attr = array('class'=>'','default'=>'','type'=>'text','name'=>'username','value'=>'','size'=>'30','maxlength'=>'256','onchange'=>'') ?><?php $attr_class='' ?><?php $attr_default='' ?><?php $attr_type='text' ?><?php $attr_name='username' ?><?php $attr_value='' ?><?php $attr_size='30' ?><?php $attr_maxlength='256' ?><?php $attr_onchange='' ?><input id="id<?php echo $attr_name ?>" name="<?php echo $attr_name ?>" type="<?php echo $attr_type ?>" size="<?php echo $attr_size ?>" maxlength="<?php echo $attr_maxlength ?>" class="<?php echo $attr_class ?>" value="<?php echo isset($$attr_name)?$$attr_name:$attr_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_default) ?><?php unset($attr_type) ?><?php unset($attr_name) ?><?php unset($attr_value) ?><?php unset($attr_size) ?><?php unset($attr_maxlength) ?><?php unset($attr_onchange) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -308,19 +310,19 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_class) ?><?php $attr = array('list'=>'dbids','name'=>'dbid','default'=>'actdbid','onchange'=>'','class'=>'') ?><?php $attr_list='dbids' ?><?php $attr_name='dbid' ?><?php $attr_default='actdbid' ?><?php $attr_onchange='' ?><?php $attr_class='' ?><select size="1" name="<?php echo $attr_name ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_class) ?><?php $attr = array('list'=>'dbids','name'=>'dbid','default'=>'actdbid','onchange'=>'','title'=>'','class'=>'') ?><?php $attr_list='dbids' ?><?php $attr_name='dbid' ?><?php $attr_default='actdbid' ?><?php $attr_onchange='' ?><?php $attr_title='' ?><?php $attr_class='' ?><select size="1" id="id<?php echo $attr_name ?>"  name="<?php echo $attr_name ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
 if (count($$attr_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr_list as $box_key=>$box_value )
 		{
 			echo '<option class="'.$attr_class.'" value="'.$box_key.'"';
-			if (isset($$attr_name)&&$box_key==$$attr_name || isset($$attr_default)&&$box_key == $$attr_default)
+			if (isset($$attr_name)&&$box_key==$$attr_name || isset($attr_default)&&$box_key == $attr_default)
 				echo ' selected="selected"';
 			echo '>'.$box_value.'</option>';
 		}
 ?></select><?php
 if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" value="'.$box_key.'" />'
-?><?php unset($attr) ?><?php unset($attr_list) ?><?php unset($attr_name) ?><?php unset($attr_default) ?><?php unset($attr_onchange) ?><?php unset($attr_class) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?><?php unset($attr) ?><?php unset($attr_list) ?><?php unset($attr_name) ?><?php unset($attr_default) ?><?php unset($attr_onchange) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;

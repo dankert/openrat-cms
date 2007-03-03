@@ -1,21 +1,28 @@
-<?php $attr = array('class'=>'') ?><?php $attr_class='' ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<?php $attr = array('class'=>'main','title'=>'var') ?><?php $attr_class='main' ?><?php $attr_title='var' ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <!-- $Id$ -->
 <head>
-  <title><?php echo $cms_title ?></title>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title><?php echo $attr_title ?></title>
+  <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
+<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+      {
+       	?>
+  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+<?php
+      }
+?>
   <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
 <?php if($stylesheet!='default') { ?>
   <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
 <?php } ?>
 </head>
 
-<body<?php echo !empty($$attr_class)?' class="'.$$attr_class.'"':' class="'.$attr_class.'"' ?>>
+<body class="<?php echo $attr_class ?>">
 
-
-<?php unset($attr) ?><?php unset($attr_class) ?><?php $attr = array('action'=>'','subaction'=>'','id'=>'','name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr_action='' ?><?php $attr_subaction='' ?><?php $attr_id='' ?><?php $attr_name='' ?><?php $attr_target='_self' ?><?php $attr_method='post' ?><?php $attr_enctype='application/x-www-form-urlencoded' ?><?php
+<?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_title) ?><?php $attr = array('name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr_name='' ?><?php $attr_target='_self' ?><?php $attr_method='post' ?><?php $attr_enctype='application/x-www-form-urlencoded' ?><?php
 	if	(empty($attr_action))
 		$attr_action = $actionName;
 	if	(empty($attr_subaction))
@@ -33,12 +40,23 @@
 <input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr_id ?>" /><?php
 		if	( $conf['interface']['url_sessionid'] )
 			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
-?><?php unset($attr) ?><?php unset($attr_action) ?><?php unset($attr_subaction) ?><?php unset($attr_id) ?><?php unset($attr_name) ?><?php unset($attr_target) ?><?php unset($attr_method) ?><?php unset($attr_enctype) ?><?php $attr = array('title'=>'','name'=>'element','icon'=>'','widths'=>'','width'=>'85%') ?><?php $attr_title='' ?><?php $attr_name='element' ?><?php $attr_icon='' ?><?php $attr_widths='' ?><?php $attr_width='85%' ?><?php
+?><?php unset($attr) ?><?php unset($attr_name) ?><?php unset($attr_target) ?><?php unset($attr_method) ?><?php unset($attr_enctype) ?><?php $attr = array('name'=>'element','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr_name='element' ?><?php $attr_width='93%' ?><?php $attr_rowclasses='odd,even' ?><?php $attr_columnclasses='1,2,3' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr_widths))
 	{
 		$column_widths = explode(',',$attr_widths);
 		unset($attr['widths']);
+	}
+	if	(!empty($attr_rowclasses))
+	{
+		$row_classes   = explode(',',$attr_rowclasses);
+		$row_class_idx = 999;
+		unset($attr['rowclasses']);
+	}
+	if	(!empty($attr_columnclasses))
+	{
+		$column_classes = explode(',',$attr_columnclasses);
+		unset($attr['columnclasses']);
 	}
 		global $image_dir;
 		echo '<br/><br/><br/><center>';
@@ -46,6 +64,8 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		if	( !is_array($path) )
+			$path = array();
 		foreach( $path as $pathElement)
 		{
 			extract($pathElement);
@@ -54,7 +74,13 @@
 		}
 		echo '<span class="title">'.lang($windowTitle).'</span>';
 		?>
-    </th>
+		</td><td class="menu" style="align:right;">
+    <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
+          {
+          	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.lang($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
+          }
+     ?>
+    </td>
   </tr>
   <tr><td class="subaction">
     <?php foreach( $windowMenu as $menu )
@@ -90,28 +116,44 @@
 
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_icon) ?><?php unset($attr_widths) ?><?php unset($attr_width) ?><?php $attr = array() ?><?php
-	global $fx;
-	if	( $fx =='f1')
-		$fx='f2';
-	else $fx='f1';
-	
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_name) ?><?php unset($attr_width) ?><?php unset($attr_rowclasses) ?><?php unset($attr_columnclasses) ?><?php $attr = array() ?><?php
+	$row_class_idx++;
+	if ($row_class_idx > count($row_classes))
+		$row_class_idx=1;
+	$row_class=$row_classes[$row_class_idx-1];
+
+	if (empty($attr_class))
+		$attr_class=$row_class;
+		
 	global $cell_column_nr;
 	$cell_column_nr=0;
+	
+	$column_class_idx = 999;
 
-?><tr><?php unset($attr) ?><?php $attr = array('width'=>'','style'=>'','class'=>'help','colspan'=>'2') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='help' ?><?php $attr_colspan='2' ?><?php
-	global $fx;
-	if (!isset($attr_class)) $attr_class='';
-	if ($attr_class=='fx') $attr['class']=$fx;
+?><tr class="<?php echo $attr_class ?>"><?php unset($attr) ?><?php $attr = array('class'=>'help','colspan'=>'2') ?><?php $attr_class='help' ?><?php $attr_colspan='2' ?><?php
+//	if (empty($attr_class))
+//		$attr['class']=$row_class;
+	$column_class_idx++;
+	if ($column_class_idx > count($column_classes))
+		$column_class_idx=1;
+	$column_class=$column_classes[$column_class_idx-1];
+	if (empty($attr_class))
+		$attr['class']=$column_class;
 	
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('title'=>'','class'=>'','var'=>'desc','text'=>'','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='desc' ?><?php $attr_text='' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('class'=>'text','var'=>'desc') ?><?php $attr_class='text' ?><?php $attr_var='desc' ?><?php
+	if(empty($attr_title))
+		if (!empty($attr_key))
+			$attr_title = lang($attr_key).'_HELP';
+		else
+			$attr_title = '';
+
+?><span class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
+	$attr_title = '';
 	if (!empty($attr_array))
 	{
 		//geht nicht:
@@ -123,18 +165,29 @@
 			$tmp_text = lang($tmpArray[$attr_text]);
 	}
 	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
+		if	( isset($$attr_text))
+			$tmp_text = lang($$attr_text);
+		else
+			$tmp_text = lang($attr_text);
+	elseif (!empty($attr_textvar))
+		$tmp_text = lang($$attr_textvar);
+	elseif (!empty($attr_key))
+		$tmp_text = lang($attr_key);
 	elseif (!empty($attr_var))
 		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
+	elseif (!empty($attr_value))
+		$tmp_text = $attr_value;
+	else
+	{ Html::debug($attr);echo 'text error';
+	}
 	
 	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><tr>
+?></span><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><tr>
 <th colspan="7"><?php echo $name ?> (<?php echo $title ?>)</th>
 </tr>
 <?php
@@ -185,6 +238,7 @@ $lastyear--;
 $lastmonth = 12;
 }
 echo '&nbsp;&nbsp;<a href="'.Html::url('pageelement','edit','-',array('year'=>$lastyear,'month'=>$lastmonth,'day'=>$day,'hour'=>$hour,'minute'=>$minute,'second'=>$second)).'">'.lang('DATE_LAST_MONTH').'</a>&nbsp;&laquo;&nbsp;</td>';
+// Link auf heutiges Datum
 echo '<td style="text-align:center"><a href="'.$todayurl.'">'.lang('DATE_TODAY').'</a></td>';
 $nextyear  = $year;
 $nextmonth = $month + 1;
@@ -198,29 +252,40 @@ $nextyear  = $year+1;
 echo '&nbsp;&nbsp;&raquo;&nbsp;<a href="'.Html::url('pageelement','edit','-',array('year'=>$nextyear,'month'=>$month,'day'=>$day,'hour'=>$hour,'minute'=>$minute,'second'=>$second)).'">'.lang('DATE_NEXT_YEAR').'</a></td>';
 ?>
 </tr>
-<?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'release','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='release' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
+<?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array('present'=>'release') ?><?php $attr_present='release' ?><?php 
 
 	// Wahr-Vergleich
-	if	( !empty($attr_true) )
-		$exec = $$attr_true == true;
+//	Html::debug($attr);
+	
+	if	( isset($attr_true) )
+	{
+		if	(gettype($attr_true) === '' && gettype($attr_true) === '1')
+			$exec = $$attr_true == true;
+		else
+			$exec = $attr_true == true;
+	}
 
 	// Falsch-Vergleich
-	elseif	( !empty($attr_false) )
-		$exec = $$attr_false != true;
-
+	elseif	( isset($attr_false) )
+	{
+		if	(gettype($attr_false) === '' && gettype($attr_false) === '1')
+			$exec = $$attr_false == false;
+		else
+			$exec = $attr_false == false;
+	}
 	// Inhalt-Vergleich mit Wertliste
-	elseif( !empty($attr_contains) )
+	elseif( isset($attr_contains) )
 		$exec = in_array($$attr_var,explode(',',$attr_contains));
 				
 	// Inhalt-Vergleich
-	elseif( !empty($attr_var) )
+	elseif( isset($attr_var) )
 		$exec = $$attr_var == $attr_value;
 
 	// Vergleich auf leer
-	elseif	( !empty($attr_empty) )
+	elseif	( isset($attr_empty) )
 	{
 		if	( !isset($$attr_empty) )
-			$exec = true;
+			$exec = empty($attr_empty);
 		elseif	( is_array($$attr_empty) )
 			$exec = (count($$attr_empty)==0);
 		elseif	( is_bool($$attr_empty) )
@@ -229,53 +294,98 @@ echo '&nbsp;&nbsp;&raquo;&nbsp;<a href="'.Html::url('pageelement','edit','-',arr
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
-	elseif	( !empty($attr_present) )
+	// Vergleich auf Vorhandensein
+	elseif	( isset($attr_present) )
 	{
 		if	( !isset($$attr_present) )
 			$exec = false;
 		elseif	( is_array($$attr_present) )
 			$exec = (count($$attr_present)>0);
 		elseif	( is_bool($$attr_present) )
-			$exec = true;
+			$exec = $$attr_present;
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
 	}
+
 	else
 	{
-		die("error in IF");
+		Html::debug( $attr );
+		echo("error in IF line ".__LINE__);
+		echo("assume: FALSE");
+		$exec = false;
 	}
 
 	// Ergebnis umdrehen
 	if  ( !empty($attr_invert) )
 		$exec = !$exec;
 
+	// Ergebnis umdrehen
+	if  ( !empty($attr_not) )
+		$exec = !$exec;
+
+	unset($attr_true);
+	unset($attr_false);
+	unset($attr_notempty);
+	unset($attr_empty);
+	unset($attr_contains);
+	unset($attr_present);
+	unset($attr_invert);
+	unset($attr_not);
+	unset($attr_value);
+	unset($attr_var);
+
+	$last_exec = $exec;
+	
 	if	( $exec )
 	{
-?><?php unset($attr) ?><?php unset($attr_var) ?><?php unset($attr_value) ?><?php unset($attr_invert) ?><?php unset($attr_empty) ?><?php unset($attr_present) ?><?php unset($attr_contains) ?><?php unset($attr_true) ?><?php unset($attr_false) ?><?php $attr = array() ?><?php
-	global $fx;
-	if	( $fx =='f1')
-		$fx='f2';
-	else $fx='f1';
-	
+?><?php unset($attr) ?><?php unset($attr_present) ?><?php $attr = array() ?><?php
+	$row_class_idx++;
+	if ($row_class_idx > count($row_classes))
+		$row_class_idx=1;
+	$row_class=$row_classes[$row_class_idx-1];
+
+	if (empty($attr_class))
+		$attr_class=$row_class;
+		
 	global $cell_column_nr;
 	$cell_column_nr=0;
+	
+	$column_class_idx = 999;
 
-?><tr><?php unset($attr) ?><?php $attr = array('width'=>'','style'=>'','class'=>'fx','colspan'=>'2') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='fx' ?><?php $attr_colspan='2' ?><?php
-	global $fx;
-	if (!isset($attr_class)) $attr_class='';
-	if ($attr_class=='fx') $attr['class']=$fx;
+?><tr class="<?php echo $attr_class ?>"><?php unset($attr) ?><?php $attr = array('class'=>'fx','colspan'=>'2') ?><?php $attr_class='fx' ?><?php $attr_colspan='2' ?><?php
+//	if (empty($attr_class))
+//		$attr['class']=$row_class;
+	$column_class_idx++;
+	if ($column_class_idx > count($column_classes))
+		$column_class_idx=1;
+	$column_class=$column_classes[$column_class_idx-1];
+	if (empty($attr_class))
+		$attr['class']=$column_class;
 	
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','var'=>'','readonly'=>'false','name'=>'release','prefix'=>'') ?><?php $attr_default='false' ?><?php $attr_var='' ?><?php $attr_readonly='false' ?><?php $attr_name='release' ?><?php $attr_prefix='' ?><input type="checkbox" name="<?php echo !empty($$attr_var)?$attr_prefix.$$attr_var:$attr_name ?>" <?php if ($attr_readonly=='true') echo ' disabled="disabled"' ?> value="1" <?php if( ($attr_default=='true')||(isset($$attr_name)&&$$attr_name) ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_var) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_prefix) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'','raw'=>'_','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='' ?><?php $attr_raw='_' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'','readonly'=>'','name'=>'release') ?><?php $attr_default='' ?><?php $attr_readonly='' ?><?php $attr_name='release' ?><?php
+	$attr_default  = ( $attr_default  == true );
+	
+	if	( isset($$attr_name) )
+		$checked = $$attr_name == true;
+//		$checked = isset($$$attr_name)&& $$$attr_name==true;
+	else
+		$checked = $attr_default == true;
+?><input type="checkbox" name="<?php echo $attr_name  ?>" <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr_name); unset($attr_readonly); unset($attr_default); ?><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php $attr = array('class'=>'text','raw'=>'_') ?><?php $attr_class='text' ?><?php $attr_raw='_' ?><?php
+	if(empty($attr_title))
+		if (!empty($attr_key))
+			$attr_title = lang($attr_key).'_HELP';
+		else
+			$attr_title = '';
+
+?><span class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
+	$attr_title = '';
 	if (!empty($attr_array))
 	{
 		//geht nicht:
@@ -287,20 +397,37 @@ echo '&nbsp;&nbsp;&raquo;&nbsp;<a href="'.Html::url('pageelement','edit','-',arr
 			$tmp_text = lang($tmpArray[$attr_text]);
 	}
 	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
+		if	( isset($$attr_text))
+			$tmp_text = lang($$attr_text);
+		else
+			$tmp_text = lang($attr_text);
+	elseif (!empty($attr_textvar))
+		$tmp_text = lang($$attr_textvar);
+	elseif (!empty($attr_key))
+		$tmp_text = lang($attr_key);
 	elseif (!empty($attr_var))
 		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
+	elseif (!empty($attr_value))
+		$tmp_text = $attr_value;
+	else
+	{ Html::debug($attr);echo 'text error';
+	}
 	
 	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'GLOBAL_RELEASE','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='GLOBAL_RELEASE' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
+?></span><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_raw) ?><?php $attr = array('class'=>'text','text'=>'GLOBAL_RELEASE') ?><?php $attr_class='text' ?><?php $attr_text='GLOBAL_RELEASE' ?><?php
+	if(empty($attr_title))
+		if (!empty($attr_key))
+			$attr_title = lang($attr_key).'_HELP';
+		else
+			$attr_title = '';
+
+?><span class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
+	$attr_title = '';
 	if (!empty($attr_array))
 	{
 		//geht nicht:
@@ -312,42 +439,65 @@ echo '&nbsp;&nbsp;&raquo;&nbsp;<a href="'.Html::url('pageelement','edit','-',arr
 			$tmp_text = lang($tmpArray[$attr_text]);
 	}
 	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
+		if	( isset($$attr_text))
+			$tmp_text = lang($$attr_text);
+		else
+			$tmp_text = lang($attr_text);
+	elseif (!empty($attr_textvar))
+		$tmp_text = lang($$attr_textvar);
+	elseif (!empty($attr_key))
+		$tmp_text = lang($attr_key);
 	elseif (!empty($attr_var))
 		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
+	elseif (!empty($attr_value))
+		$tmp_text = $attr_value;
+	else
+	{ Html::debug($attr);echo 'text error';
+	}
 	
 	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?></span><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_text) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	}
-?><?php unset($attr) ?><?php $attr = array('var'=>'','value'=>'','invert'=>'','empty'=>'','present'=>'publish','contains'=>'','true'=>'','false'=>'') ?><?php $attr_var='' ?><?php $attr_value='' ?><?php $attr_invert='' ?><?php $attr_empty='' ?><?php $attr_present='publish' ?><?php $attr_contains='' ?><?php $attr_true='' ?><?php $attr_false='' ?><?php 
+	
+?><?php unset($attr) ?><?php $attr = array('present'=>'publish') ?><?php $attr_present='publish' ?><?php 
 
 	// Wahr-Vergleich
-	if	( !empty($attr_true) )
-		$exec = $$attr_true == true;
+//	Html::debug($attr);
+	
+	if	( isset($attr_true) )
+	{
+		if	(gettype($attr_true) === '' && gettype($attr_true) === '1')
+			$exec = $$attr_true == true;
+		else
+			$exec = $attr_true == true;
+	}
 
 	// Falsch-Vergleich
-	elseif	( !empty($attr_false) )
-		$exec = $$attr_false != true;
-
+	elseif	( isset($attr_false) )
+	{
+		if	(gettype($attr_false) === '' && gettype($attr_false) === '1')
+			$exec = $$attr_false == false;
+		else
+			$exec = $attr_false == false;
+	}
 	// Inhalt-Vergleich mit Wertliste
-	elseif( !empty($attr_contains) )
+	elseif( isset($attr_contains) )
 		$exec = in_array($$attr_var,explode(',',$attr_contains));
 				
 	// Inhalt-Vergleich
-	elseif( !empty($attr_var) )
+	elseif( isset($attr_var) )
 		$exec = $$attr_var == $attr_value;
 
 	// Vergleich auf leer
-	elseif	( !empty($attr_empty) )
+	elseif	( isset($attr_empty) )
 	{
 		if	( !isset($$attr_empty) )
-			$exec = true;
+			$exec = empty($attr_empty);
 		elseif	( is_array($$attr_empty) )
 			$exec = (count($$attr_empty)==0);
 		elseif	( is_bool($$attr_empty) )
@@ -356,53 +506,98 @@ echo '&nbsp;&nbsp;&raquo;&nbsp;<a href="'.Html::url('pageelement','edit','-',arr
 			$exec = empty( $$attr_empty );
 	}
 
-	// Vergleich auf nicht-leer
-	elseif	( !empty($attr_present) )
+	// Vergleich auf Vorhandensein
+	elseif	( isset($attr_present) )
 	{
 		if	( !isset($$attr_present) )
 			$exec = false;
 		elseif	( is_array($$attr_present) )
 			$exec = (count($$attr_present)>0);
 		elseif	( is_bool($$attr_present) )
-			$exec = true;
+			$exec = $$attr_present;
 		elseif	( is_numeric($$attr_present) )
 			$exec = $$attr_present>=0;
 		else
-			$exec = !empty( $$attr_present );
+			$exec = true;
 	}
+
 	else
 	{
-		die("error in IF");
+		Html::debug( $attr );
+		echo("error in IF line ".__LINE__);
+		echo("assume: FALSE");
+		$exec = false;
 	}
 
 	// Ergebnis umdrehen
 	if  ( !empty($attr_invert) )
 		$exec = !$exec;
 
+	// Ergebnis umdrehen
+	if  ( !empty($attr_not) )
+		$exec = !$exec;
+
+	unset($attr_true);
+	unset($attr_false);
+	unset($attr_notempty);
+	unset($attr_empty);
+	unset($attr_contains);
+	unset($attr_present);
+	unset($attr_invert);
+	unset($attr_not);
+	unset($attr_value);
+	unset($attr_var);
+
+	$last_exec = $exec;
+	
 	if	( $exec )
 	{
-?><?php unset($attr) ?><?php unset($attr_var) ?><?php unset($attr_value) ?><?php unset($attr_invert) ?><?php unset($attr_empty) ?><?php unset($attr_present) ?><?php unset($attr_contains) ?><?php unset($attr_true) ?><?php unset($attr_false) ?><?php $attr = array() ?><?php
-	global $fx;
-	if	( $fx =='f1')
-		$fx='f2';
-	else $fx='f1';
-	
+?><?php unset($attr) ?><?php unset($attr_present) ?><?php $attr = array() ?><?php
+	$row_class_idx++;
+	if ($row_class_idx > count($row_classes))
+		$row_class_idx=1;
+	$row_class=$row_classes[$row_class_idx-1];
+
+	if (empty($attr_class))
+		$attr_class=$row_class;
+		
 	global $cell_column_nr;
 	$cell_column_nr=0;
+	
+	$column_class_idx = 999;
 
-?><tr><?php unset($attr) ?><?php $attr = array('width'=>'','style'=>'','class'=>'fx','colspan'=>'2') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='fx' ?><?php $attr_colspan='2' ?><?php
-	global $fx;
-	if (!isset($attr_class)) $attr_class='';
-	if ($attr_class=='fx') $attr['class']=$fx;
+?><tr class="<?php echo $attr_class ?>"><?php unset($attr) ?><?php $attr = array('class'=>'fx','colspan'=>'2') ?><?php $attr_class='fx' ?><?php $attr_colspan='2' ?><?php
+//	if (empty($attr_class))
+//		$attr['class']=$row_class;
+	$column_class_idx++;
+	if ($column_class_idx > count($column_classes))
+		$column_class_idx=1;
+	$column_class=$column_classes[$column_class_idx-1];
+	if (empty($attr_class))
+		$attr['class']=$column_class;
 	
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'false','var'=>'','readonly'=>'false','name'=>'publish','prefix'=>'') ?><?php $attr_default='false' ?><?php $attr_var='' ?><?php $attr_readonly='false' ?><?php $attr_name='publish' ?><?php $attr_prefix='' ?><input type="checkbox" name="<?php echo !empty($$attr_var)?$attr_prefix.$$attr_var:$attr_name ?>" <?php if ($attr_readonly=='true') echo ' disabled="disabled"' ?> value="1" <?php if( ($attr_default=='true')||(isset($$attr_name)&&$$attr_name) ) echo 'checked="checked"' ?> /><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_var) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php unset($attr_prefix) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'','raw'=>'_','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='' ?><?php $attr_raw='_' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('default'=>'','readonly'=>'','name'=>'publish') ?><?php $attr_default='' ?><?php $attr_readonly='' ?><?php $attr_name='publish' ?><?php
+	$attr_default  = ( $attr_default  == true );
+	
+	if	( isset($$attr_name) )
+		$checked = $$attr_name == true;
+//		$checked = isset($$$attr_name)&& $$$attr_name==true;
+	else
+		$checked = $attr_default == true;
+?><input type="checkbox" name="<?php echo $attr_name  ?>" <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr_name); unset($attr_readonly); unset($attr_default); ?><?php unset($attr) ?><?php unset($attr_default) ?><?php unset($attr_readonly) ?><?php unset($attr_name) ?><?php $attr = array('class'=>'text','raw'=>'_') ?><?php $attr_class='text' ?><?php $attr_raw='_' ?><?php
+	if(empty($attr_title))
+		if (!empty($attr_key))
+			$attr_title = lang($attr_key).'_HELP';
+		else
+			$attr_title = '';
+
+?><span class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
+	$attr_title = '';
 	if (!empty($attr_array))
 	{
 		//geht nicht:
@@ -414,20 +609,37 @@ echo '&nbsp;&nbsp;&raquo;&nbsp;<a href="'.Html::url('pageelement','edit','-',arr
 			$tmp_text = lang($tmpArray[$attr_text]);
 	}
 	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
+		if	( isset($$attr_text))
+			$tmp_text = lang($$attr_text);
+		else
+			$tmp_text = lang($attr_text);
+	elseif (!empty($attr_textvar))
+		$tmp_text = lang($$attr_textvar);
+	elseif (!empty($attr_key))
+		$tmp_text = lang($attr_key);
 	elseif (!empty($attr_var))
 		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
+	elseif (!empty($attr_value))
+		$tmp_text = $attr_value;
+	else
+	{ Html::debug($attr);echo 'text error';
+	}
 	
 	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array('title'=>'','class'=>'','var'=>'','text'=>'PAGE_PUBLISH_AFTER_SAVE','raw'=>'','maxlength'=>'') ?><?php $attr_title='' ?><?php $attr_class='' ?><?php $attr_var='' ?><?php $attr_text='PAGE_PUBLISH_AFTER_SAVE' ?><?php $attr_raw='' ?><?php $attr_maxlength='' ?><?php
-	if(empty($attr_title)) $attr_title = $attr_text;
-?><span class="<?php echo $attr_class ?>"><?php
+?></span><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_raw) ?><?php $attr = array('class'=>'text','text'=>'PAGE_PUBLISH_AFTER_SAVE') ?><?php $attr_class='text' ?><?php $attr_text='PAGE_PUBLISH_AFTER_SAVE' ?><?php
+	if(empty($attr_title))
+		if (!empty($attr_key))
+			$attr_title = lang($attr_key).'_HELP';
+		else
+			$attr_title = '';
+
+?><span class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
+	$attr_title = '';
 	if (!empty($attr_array))
 	{
 		//geht nicht:
@@ -439,47 +651,69 @@ echo '&nbsp;&nbsp;&raquo;&nbsp;<a href="'.Html::url('pageelement','edit','-',arr
 			$tmp_text = lang($tmpArray[$attr_text]);
 	}
 	elseif (!empty($attr_text))
-		$tmp_text = lang($attr_text);
+		if	( isset($$attr_text))
+			$tmp_text = lang($$attr_text);
+		else
+			$tmp_text = lang($attr_text);
+	elseif (!empty($attr_textvar))
+		$tmp_text = lang($$attr_textvar);
+	elseif (!empty($attr_key))
+		$tmp_text = lang($attr_key);
 	elseif (!empty($attr_var))
 		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
-	else echo 'text error';
+	elseif (!empty($attr_value))
+		$tmp_text = $attr_value;
+	else
+	{ Html::debug($attr);echo 'text error';
+	}
 	
 	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_class) ?><?php unset($attr_var) ?><?php unset($attr_text) ?><?php unset($attr_raw) ?><?php unset($attr_maxlength) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
+?></span><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_text) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?><?php
 	}
+	
 ?><?php unset($attr) ?><?php $attr = array() ?><?php
-	global $fx;
-	if	( $fx =='f1')
-		$fx='f2';
-	else $fx='f1';
-	
+	$row_class_idx++;
+	if ($row_class_idx > count($row_classes))
+		$row_class_idx=1;
+	$row_class=$row_classes[$row_class_idx-1];
+
+	if (empty($attr_class))
+		$attr_class=$row_class;
+		
 	global $cell_column_nr;
 	$cell_column_nr=0;
+	
+	$column_class_idx = 999;
 
-?><tr><?php unset($attr) ?><?php $attr = array('width'=>'','style'=>'','class'=>'act','colspan'=>'2') ?><?php $attr_width='' ?><?php $attr_style='' ?><?php $attr_class='act' ?><?php $attr_colspan='2' ?><?php
-	global $fx;
-	if (!isset($attr_class)) $attr_class='';
-	if ($attr_class=='fx') $attr['class']=$fx;
+?><tr class="<?php echo $attr_class ?>"><?php unset($attr) ?><?php $attr = array('class'=>'act','colspan'=>'2') ?><?php $attr_class='act' ?><?php $attr_colspan='2' ?><?php
+//	if (empty($attr_class))
+//		$attr['class']=$row_class;
+	$column_class_idx++;
+	if ($column_class_idx > count($column_classes))
+		$column_class_idx=1;
+	$column_class=$column_classes[$column_class_idx-1];
+	if (empty($attr_class))
+		$attr['class']=$column_class;
 	
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_width) ?><?php unset($attr_style) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('type'=>'ok') ?><?php $attr_type='ok' ?><?php
+?><td <?php foreach( $attr as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_colspan) ?><?php $attr = array('type'=>'ok','class'=>'ok','value'=>'ok','text'=>'button_ok') ?><?php $attr_type='ok' ?><?php $attr_class='ok' ?><?php $attr_value='ok' ?><?php $attr_text='button_ok' ?><?php
 	if ($attr_type=='ok')
 	{
 		$attr_type  = 'submit';
-		$attr_class = 'ok';
-		$attr_text  = 'BUTTON_OK';
-		$attr_value = 'ok';
+//		$attr_class = 'ok';
+//		$attr_text  = 'BUTTON_OK';
+//		$attr_value = 'ok';
 	}
-?><input type="<?php echo $attr_type ?>" name="<?php echo $attr_value ?>" class="<?php echo $attr_class ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr) ?><?php unset($attr_type) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?>      </table>
+?><input type="<?php echo $attr_type ?>" name="<?php echo $attr_value ?>" class="<?php echo $attr_class ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr) ?><?php unset($attr_type) ?><?php unset($attr_class) ?><?php unset($attr_value) ?><?php unset($attr_text) ?><?php $attr = array() ?></td><?php unset($attr) ?><?php $attr = array() ?></tr><?php unset($attr) ?><?php $attr = array() ?>      </table>
 	</td>
   </tr>
 </table>
@@ -493,10 +727,15 @@ echo '&nbsp;&nbsp;&raquo;&nbsp;<a href="'.Html::url('pageelement','edit','-',arr
 <?php $dur = time()-START_TIME;
       echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
 <?php } ?>
-<?php unset($attr) ?><?php $attr = array() ?></form><?php unset($attr) ?><?php $attr = array('field'=>'text') ?><?php $attr_field='text' ?><script name="JavaScript" type="text/javascript"><!--
+<?php unset($attr) ?><?php $attr = array() ?></form>
+
+<?php unset($attr) ?><?php $attr = array('field'=>'text') ?><?php $attr_field='text' ?>
+<script name="JavaScript" type="text/javascript">
+<!--
 document.forms[0].<?php echo $attr_field ?>.focus();
 document.forms[0].<?php echo $attr_field ?>.select();
-//--></script>
+// -->
+</script>
 <?php unset($attr) ?><?php unset($attr_field) ?><?php $attr = array() ?>
 <!-- $Id$ -->
 
