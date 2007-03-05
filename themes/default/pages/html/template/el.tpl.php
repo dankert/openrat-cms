@@ -162,6 +162,8 @@ if (isset($attr7_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr7_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php
 } elseif (isset($attr7_url)) {
 ?><img src="<?php echo $attr7_url ?>" border="0" align="<?php echo $attr7_align ?>"><?php
+} elseif (isset($attr7_fileext)) {
+?><img src="<?php echo $image_dir.$attr7_file ?>" border="0" align="<?php echo $attr7_align ?>"><?php
 } elseif (isset($attr7_file)) {
 ?><img src="<?php echo $image_dir.$attr7_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php } ?><?php unset($attr7) ?><?php unset($attr7_align) ?><?php unset($attr7_elementtype) ?><?php $attr7 = array('class'=>'text','text'=>$name) ?><?php $attr7_class='text' ?><?php $attr7_text=$name ?><?php
 	if(empty($attr7_title))

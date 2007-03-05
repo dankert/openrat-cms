@@ -146,14 +146,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_NR') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_NR' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -205,14 +211,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_colspan) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_COMPARE') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_COMPARE' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -264,14 +276,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'DATE') ?><?php $attr6_class='text' ?><?php $attr6_text='DATE' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -323,14 +341,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_USER') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_USER' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -382,14 +406,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_VALUE') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_VALUE' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -441,14 +471,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','raw'=>'_') ?><?php $attr6_class='text' ?><?php $attr6_raw='_' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -500,14 +536,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','raw'=>'_') ?><?php $attr6_class='text' ?><?php $attr6_raw='_' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -588,16 +630,17 @@
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr4_present) )
 	{
-		if	( !isset($$attr4_present) )
-			$exec = false;
-		elseif	( is_array($$attr4_present) )
-			$exec = (count($$attr4_present)>0);
-		elseif	( is_bool($$attr4_present) )
-			$exec = $$attr4_present;
-		elseif	( is_numeric($$attr4_present) )
-			$exec = $$attr4_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr4_present);
+//		if	( !isset($$attr4_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr4_present) )
+//			$exec = (count($$attr4_present)>0);
+//		elseif	( is_bool($$attr4_present) )
+//			$exec = $$attr4_present;
+//		elseif	( is_numeric($$attr4_present) )
+//			$exec = $$attr4_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -609,6 +652,7 @@
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr4_invert) )
 		$exec = !$exec;
 
@@ -661,14 +705,20 @@
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_colspan) ?><?php $attr7 = array('class'=>'text','text'=>'GLOBAL_NOT_FOUND') ?><?php $attr7_class='text' ?><?php $attr7_text='GLOBAL_NOT_FOUND' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -758,14 +808,20 @@
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'text','text'=>$lfd_nr) ?><?php $attr7_class='text' ?><?php $attr7_text=$lfd_nr ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -816,8 +872,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'compareid','value'=>$lfd_nr) ?><?php $attr7_name='compareid' ?><?php $attr7_value=$lfd_nr ?><?php
-?><input type="radio" name="<?php echo $attr7_prefix.$attr7_name ?>"<?php if ( $attr7_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr7_value ?>" <?php if( $attr7_value == $$attr7_name ) echo 'checked="checked"' ?> /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_value) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6 = array('class'=>'fx') ?><?php $attr6_class='fx' ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'compareid','value'=>$lfd_nr) ?><?php $attr7_name='compareid' ?><?php $attr7_value=$lfd_nr ?><input type="radio" id="id_<?php echo $attr7_name.'_'.$attr7_value ?>"  name="<?php echo $attr7_prefix.$attr7_name ?>"<?php if ( $attr7_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr7_value ?>" <?php if($attr7_value==$default) echo 'checked="checked"' ?> /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_value) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6 = array('class'=>'fx') ?><?php $attr6_class='fx' ?><?php
 //	if (empty($attr6_class))
 //		$attr6['class']=$row_class;
 	$column_class_idx++;
@@ -832,8 +887,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'withid','value'=>$lfd_nr) ?><?php $attr7_name='withid' ?><?php $attr7_value=$lfd_nr ?><?php
-?><input type="radio" name="<?php echo $attr7_prefix.$attr7_name ?>"<?php if ( $attr7_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr7_value ?>" <?php if( $attr7_value == $$attr7_name ) echo 'checked="checked"' ?> /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_value) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6 = array('class'=>'fx') ?><?php $attr6_class='fx' ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'withid','value'=>$lfd_nr) ?><?php $attr7_name='withid' ?><?php $attr7_value=$lfd_nr ?><input type="radio" id="id_<?php echo $attr7_name.'_'.$attr7_value ?>"  name="<?php echo $attr7_prefix.$attr7_name ?>"<?php if ( $attr7_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr7_value ?>" <?php if($attr7_value==$default) echo 'checked="checked"' ?> /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_value) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6 = array('class'=>'fx') ?><?php $attr6_class='fx' ?><?php
 //	if (empty($attr6_class))
 //		$attr6['class']=$row_class;
 	$column_class_idx++;
@@ -849,14 +903,20 @@
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'text','var'=>'date') ?><?php $attr7_class='text' ?><?php $attr7_var='date' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -908,14 +968,20 @@
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'text','text'=>'user') ?><?php $attr7_class='text' ?><?php $attr7_text='user' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -967,14 +1033,20 @@
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'text','text'=>$value) ?><?php $attr7_class='text' ?><?php $attr7_text=$value ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -1070,16 +1142,17 @@
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr7_present) )
 	{
-		if	( !isset($$attr7_present) )
-			$exec = false;
-		elseif	( is_array($$attr7_present) )
-			$exec = (count($$attr7_present)>0);
-		elseif	( is_bool($$attr7_present) )
-			$exec = $$attr7_present;
-		elseif	( is_numeric($$attr7_present) )
-			$exec = $$attr7_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr7_present);
+//		if	( !isset($$attr7_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr7_present) )
+//			$exec = (count($$attr7_present)>0);
+//		elseif	( is_bool($$attr7_present) )
+//			$exec = $$attr7_present;
+//		elseif	( is_numeric($$attr7_present) )
+//			$exec = $$attr7_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -1091,6 +1164,7 @@
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr7_invert) )
 		$exec = !$exec;
 
@@ -1114,14 +1188,20 @@
 	if	( $exec )
 	{
 ?><?php unset($attr7) ?><?php unset($attr7_true) ?><?php $attr8 = array('class'=>'text','text'=>lang('GLOBAL_PUBLIC')) ?><?php $attr8_class='text' ?><?php $attr8_text=lang('GLOBAL_PUBLIC') ?><?php
+	if	( isset($attr8_prefix)&& isset($attr8_key))
+		$attr8_key = $attr8_prefix.$attr8_key;
+	if	( isset($attr8_suffix)&& isset($attr8_key))
+		$attr8_key = $attr8_key.$attr8_suffix;
+		
 	if(empty($attr8_title))
 		if (!empty($attr8_key))
-			$attr8_title = lang($attr8_key).'_HELP';
+			$attr8_title = lang($attr8_key.'_HELP');
 		else
 			$attr8_title = '';
 
 ?><span class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 	$attr8_title = '';
+
 	if (!empty($attr8_array))
 	{
 		//geht nicht:
@@ -1169,14 +1249,20 @@
 	else
 		$tmp_url = Html::url($attr8_action,$attr8_subaction,!empty($$attr8_id)?$$attr8_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
 ?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>" title="<?php echo $attr8_title ?>"><?php unset($attr8) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php $attr9 = array('class'=>'text','text'=>lang('GLOBAL_RELEASE')) ?><?php $attr9_class='text' ?><?php $attr9_text=lang('GLOBAL_RELEASE') ?><?php
+	if	( isset($attr9_prefix)&& isset($attr9_key))
+		$attr9_key = $attr9_prefix.$attr9_key;
+	if	( isset($attr9_suffix)&& isset($attr9_key))
+		$attr9_key = $attr9_key.$attr9_suffix;
+		
 	if(empty($attr9_title))
 		if (!empty($attr9_key))
-			$attr9_title = lang($attr9_key).'_HELP';
+			$attr9_title = lang($attr9_key.'_HELP');
 		else
 			$attr9_title = '';
 
 ?><span class="<?php echo $attr9_class ?>" title="<?php echo $attr9_title ?>"><?php
 	$attr9_title = '';
+
 	if (!empty($attr9_array))
 	{
 		//geht nicht:
@@ -1274,16 +1360,17 @@
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr7_present) )
 	{
-		if	( !isset($$attr7_present) )
-			$exec = false;
-		elseif	( is_array($$attr7_present) )
-			$exec = (count($$attr7_present)>0);
-		elseif	( is_bool($$attr7_present) )
-			$exec = $$attr7_present;
-		elseif	( is_numeric($$attr7_present) )
-			$exec = $$attr7_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr7_present);
+//		if	( !isset($$attr7_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr7_present) )
+//			$exec = (count($$attr7_present)>0);
+//		elseif	( is_bool($$attr7_present) )
+//			$exec = $$attr7_present;
+//		elseif	( is_numeric($$attr7_present) )
+//			$exec = $$attr7_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -1295,6 +1382,7 @@
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr7_invert) )
 		$exec = !$exec;
 
@@ -1318,14 +1406,20 @@
 	if	( $exec )
 	{
 ?><?php unset($attr7) ?><?php unset($attr7_true) ?><?php $attr8 = array('class'=>'text','text'=>lang('GLOBAL_ACTIVE')) ?><?php $attr8_class='text' ?><?php $attr8_text=lang('GLOBAL_ACTIVE') ?><?php
+	if	( isset($attr8_prefix)&& isset($attr8_key))
+		$attr8_key = $attr8_prefix.$attr8_key;
+	if	( isset($attr8_suffix)&& isset($attr8_key))
+		$attr8_key = $attr8_key.$attr8_suffix;
+		
 	if(empty($attr8_title))
 		if (!empty($attr8_key))
-			$attr8_title = lang($attr8_key).'_HELP';
+			$attr8_title = lang($attr8_key.'_HELP');
 		else
 			$attr8_title = '';
 
 ?><span class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 	$attr8_title = '';
+
 	if (!empty($attr8_array))
 	{
 		//geht nicht:
@@ -1373,14 +1467,20 @@
 	else
 		$tmp_url = Html::url($attr8_action,$attr8_subaction,!empty($$attr8_id)?$$attr8_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
 ?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>" title="<?php echo $attr8_title ?>"><?php unset($attr8) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php $attr9 = array('class'=>'text','text'=>lang('GLOBAL_USE')) ?><?php $attr9_class='text' ?><?php $attr9_text=lang('GLOBAL_USE') ?><?php
+	if	( isset($attr9_prefix)&& isset($attr9_key))
+		$attr9_key = $attr9_prefix.$attr9_key;
+	if	( isset($attr9_suffix)&& isset($attr9_key))
+		$attr9_key = $attr9_key.$attr9_suffix;
+		
 	if(empty($attr9_title))
 		if (!empty($attr9_key))
-			$attr9_title = lang($attr9_key).'_HELP';
+			$attr9_title = lang($attr9_key.'_HELP');
 		else
 			$attr9_title = '';
 
 ?><span class="<?php echo $attr9_class ?>" title="<?php echo $attr9_title ?>"><?php
 	$attr9_title = '';
+
 	if (!empty($attr9_array))
 	{
 		//geht nicht:
