@@ -485,8 +485,7 @@ class ElementAction extends Action
 		$this->addNotice('element',$this->element->name,'SAVED');
 		$this->element->save();
 		
-		Html::debug($this->element);
-		
+//		Html::debug($this->element);
 	}
 }
 
