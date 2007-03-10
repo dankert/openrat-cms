@@ -90,8 +90,8 @@ tag_speech_="cite"
 
 ; OpenRat tries to use a good speech tag. You may override this. 
 override_speech=false
-override_speech_open=&laquo;
-override_speech_close=&raquo;
+override_speech_open="&laquo;"
+override_speech_close="&raquo;"
 
 ; HTML-Rendermode
 ; explains how to handle emtpy elements.
