@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.12  2006-01-29 17:18:59  dankert
+// Revision 1.13  2007-03-11 00:27:12  dankert
+// Beim Ausw?hlen einer Vorlage aus der Liste diese sofort anzeigen.
+//
+// Revision 1.12  2006/01/29 17:18:59  dankert
 // Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
 //
 // Revision 1.11  2006/01/23 23:10:46  dankert
@@ -470,7 +473,7 @@ class TemplateAction extends Action
 		{
 			$list[$id] = array();
 			$list[$id]['name'] = $name;
-			$list[$id]['url']  = Html::url('main','template',$id);
+			$list[$id]['url' ] = Html::url('main','template',$id,array(REQ_PARAM_TARGETSUBACTION=>'show'));
 		}
 		
 //		$var['templatemodelid'] = htmlentities( $id   );
