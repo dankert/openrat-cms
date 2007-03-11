@@ -15,6 +15,7 @@ frame    = file,name,scrolling
 frameset = rows,columns
 frameset-page=menu
 hidden   = name:*,default
+editor   = name:*,type:*
 else     =
 if       = equals,value,invert,not,empty,present,contains,true,false
 image    = config,file,url,icon,align:left,type,elementtype,fileext
