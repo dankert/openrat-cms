@@ -1,7 +1,6 @@
 <?php header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<!-- $Id$ -->
 <head>
   <title><?php echo $attr_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
