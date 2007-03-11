@@ -4,7 +4,7 @@ page
 		list list:templates extract:true
 			row
 				cell class:fx
-					link url:url target:cms_main
+					link url:var:url target:cms_main
 						text var:name
 
 		if empty:templates
