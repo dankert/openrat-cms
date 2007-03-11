@@ -700,8 +700,13 @@ class PageelementAction extends Action
 		$this->setTemplateVar( 'objects',$objects );
 		$this->setTemplateVar( 'images' ,$objects );
 
-		$this->setTemplateVar( 'html',$this->value->element->html );
-		$this->setTemplateVar( 'wiki',$this->value->element->wiki );
+		if	($this->value->element->html)
+			$this->setTemplateVar( 'editor','html' );
+		elseif	($this->value->element->wiki)
+			$this->setTemplateVar( 'editor','wiki' );
+		else
+			$this->setTemplateVar( 'editor','text' );
+
 		$this->setTemplateVar( 'text',$this->value->text          );
 	
 		if	( $this->getSessionVar('pageaction') != '' )
