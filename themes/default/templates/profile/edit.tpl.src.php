@@ -20,11 +20,6 @@ page
 					input name:tel size:40 maxlength:128
 			row
 				cell
-					text text:user_mail
-				cell class:fx
-					input name:mail size:40 maxlength:128
-			row
-				cell
 					text text:user_desc
 				cell class:fx
 					input name:desc size:40 maxlength:128

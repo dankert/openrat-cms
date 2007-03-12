@@ -10,6 +10,17 @@ menu=edit
 target=savepw
 menu=edit
 
+[mail]
+target=confirmmail
+menu=edit
+
+[confirmmail]
+target=savemail
+menu=edit
+
+[savemail]
+goto=edit
+
 [savepw]
 goto=edit
 
@@ -17,4 +28,4 @@ goto=edit
 goto=edit
 
 [menu]
-edit=edit,pwchange
+edit=edit,pwchange,mail

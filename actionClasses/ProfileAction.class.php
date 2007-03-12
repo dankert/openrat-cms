@@ -60,6 +60,56 @@ class ProfileAction extends Action
 	
 	
 	
+	function mail()
+	{
+	}
+	
+	
+	
+	function confirmmail()
+	{
+		srand ((double)microtime()*1000003);
+		$code = rand();
+		$newMail = $this->getRequestVar('mail');
+		Session::set('mailChangeCode',$code   );
+		Session::set('mailChangeMail',$newMail);
+		
+		// E-Mail an die neue Adresse senden.
+		$mail = new Mail( $newMail,'mail_change_code' );
+		$mail->setVar('code',$code                 );
+		$mail->setVar('name',$this->user->getName());
+		$mail->send();
+		
+		$this->addNotice('user',$newUser->name,'mail_sent','ok'); // Meldung
+	}
+	
+	
+	
+	function savemail()
+	{
+		$sessionCode       = Session::get('mailChangeCode');
+		$newMail           = Session::get('mailChangeMail');
+		$inputRegisterCode = $this->getRequestVar('code');
+		
+		if	( $sessionCode == $inputRegisterCode )
+		{
+			// Bestätigungscode stimmt überein.
+			// E-Mail-Adresse ändern.	
+			$this->user->mail = $newMail;
+			$this->user->save();
+			
+			$this->addNotice('user',$newUser->name,'user_saved','ok');
+		}
+		else
+		{
+			// Bestätigungscode stimmt nicht.
+			$this->addNotice('user',$newUser->name,'mailcode_not_match','error');
+		}		
+		
+	}
+	
+	
+	
 	function savepw()
 	{
 		if	( $this->getRequestVar('password1') != '' &&
