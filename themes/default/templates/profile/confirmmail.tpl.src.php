@@ -4,15 +4,15 @@ page
 
 			row
 				cell class:logo colspan:2
-					logo name:password
-				row
-					cell
-						text text:password_code
-					cell
-						input type:text name:code size:30
-	
-				row
-					cell colspan:2 class:act
-						button type:ok
+					logo name:changemail
+			row
+				cell
+					text text:password_code
+				cell
+					input type:text name:code size:30
+
+			row
+				cell colspan:2 class:act
+					button type:ok
 
 	focus field:code
