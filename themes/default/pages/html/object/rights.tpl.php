@@ -1,7 +1,6 @@
 <?php $attr1 = array('class'=>'main','title'=>$cms_title) ?><?php $attr1_class='main' ?><?php $attr1_title=$cms_title ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<!-- $Id$ -->
 <head>
   <title><?php echo $attr1_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
@@ -143,16 +142,17 @@
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr3_present) )
 	{
-		if	( !isset($$attr3_present) )
-			$exec = false;
-		elseif	( is_array($$attr3_present) )
-			$exec = (count($$attr3_present)>0);
-		elseif	( is_bool($$attr3_present) )
-			$exec = $$attr3_present;
-		elseif	( is_numeric($$attr3_present) )
-			$exec = $$attr3_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr3_present);
+//		if	( !isset($$attr3_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr3_present) )
+//			$exec = (count($$attr3_present)>0);
+//		elseif	( is_bool($$attr3_present) )
+//			$exec = $$attr3_present;
+//		elseif	( is_numeric($$attr3_present) )
+//			$exec = $$attr3_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -164,6 +164,7 @@
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr3_invert) )
 		$exec = !$exec;
 
@@ -216,14 +217,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_NOT_FOUND') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_NOT_FOUND' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -307,16 +314,17 @@
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr3_present) )
 	{
-		if	( !isset($$attr3_present) )
-			$exec = false;
-		elseif	( is_array($$attr3_present) )
-			$exec = (count($$attr3_present)>0);
-		elseif	( is_bool($$attr3_present) )
-			$exec = $$attr3_present;
-		elseif	( is_numeric($$attr3_present) )
-			$exec = $$attr3_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr3_present);
+//		if	( !isset($$attr3_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr3_present) )
+//			$exec = (count($$attr3_present)>0);
+//		elseif	( is_bool($$attr3_present) )
+//			$exec = $$attr3_present;
+//		elseif	( is_numeric($$attr3_present) )
+//			$exec = $$attr3_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -328,6 +336,7 @@
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr3_invert) )
 		$exec = !$exec;
 
@@ -380,14 +389,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_NAME') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_NAME' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -439,14 +454,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_LANGUAGE') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_LANGUAGE' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -501,14 +522,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'global_delete') ?><?php $attr6_class='text' ?><?php $attr6_text='global_delete' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -610,14 +637,20 @@ else
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php $attr6 = array('class'=>'text','var'=>'languagename') ?><?php $attr6_class='text' ?><?php $attr6_var='languagename' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:

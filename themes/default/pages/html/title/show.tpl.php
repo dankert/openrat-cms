@@ -1,7 +1,6 @@
 <?php $attr1 = array('class'=>'title','title'=>$cms_title) ?><?php $attr1_class='title' ?><?php $attr1_title=$cms_title ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<!-- $Id$ -->
 <head>
   <title><?php echo $attr1_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />

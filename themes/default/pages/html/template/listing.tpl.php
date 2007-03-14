@@ -148,25 +148,26 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('target'=>'cms_main','url'=>'url') ?><?php $attr6_target='cms_main' ?><?php $attr6_url='url' ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('target'=>'cms_main','url'=>$url) ?><?php $attr6_target='cms_main' ?><?php $attr6_url=$url ?><?php
 	if(!empty($attr6_url))
 		$tmp_url = $attr6_url;
 	else
 		$tmp_url = Html::url($attr6_action,$attr6_subaction,!empty($$attr6_id)?$$attr6_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
 ?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>" title="<?php echo $attr6_title ?>"><?php unset($attr6) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php $attr7 = array('class'=>'text','var'=>'name') ?><?php $attr7_class='text' ?><?php $attr7_var='name' ?><?php
-	if(empty($attr7_title))
-		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
-		else
-			$attr7_title = '';
-
-?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
 	if	( isset($attr7_prefix)&& isset($attr7_key))
 		$attr7_key = $attr7_prefix.$attr7_key;
 	if	( isset($attr7_suffix)&& isset($attr7_key))
 		$attr7_key = $attr7_key.$attr7_suffix;
 		
+	if(empty($attr7_title))
+		if (!empty($attr7_key))
+			$attr7_title = lang($attr7_key.'_HELP');
+		else
+			$attr7_title = '';
+
+?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
+	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -322,19 +323,20 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_NO_TEMPLATES_AVAILABLE_DESC') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_NO_TEMPLATES_AVAILABLE_DESC' ?><?php
-	if(empty($attr6_title))
-		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
-		else
-			$attr6_title = '';
-
-?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
-	$attr6_title = '';
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
 		$attr6_key = $attr6_key.$attr6_suffix;
 		
+	if(empty($attr6_title))
+		if (!empty($attr6_key))
+			$attr6_title = lang($attr6_key.'_HELP');
+		else
+			$attr6_title = '';
+
+?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
+	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:

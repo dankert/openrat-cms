@@ -1,7 +1,6 @@
 <?php $attr1 = array('class'=>'main','title'=>$cms_title) ?><?php $attr1_class='main' ?><?php $attr1_title=$cms_title ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<!-- $Id$ -->
 <head>
   <title><?php echo $attr1_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
@@ -145,15 +144,21 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'factor') ?><?php $attr6_for='factor' ?><label for="id<?php echo $attr6_for ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_SIZE_FACTOR') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_SIZE_FACTOR' ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'factor') ?><?php $attr6_for='factor' ?><label for="id_<?php echo $attr6_for ?><?php if (!empty($attr6_value)) echo '_' ?><?php echo $attr6_value ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_SIZE_FACTOR') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_SIZE_FACTOR' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -204,7 +209,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('var'=>'factor','value'=>'1') ?><?php $attr6_var='factor' ?><?php $attr6_value='1' ?><?php $$attr6_var = $attr6_value ?><?php unset($attr6) ?><?php unset($attr6_var) ?><?php unset($attr6_value) ?><?php $attr6 = array('list'=>'factors','name'=>'factor') ?><?php $attr6_list='factors' ?><?php $attr6_name='factor' ?><select size="1" id="id<?php echo $attr6_name ?>"  name="<?php echo $attr6_name ?>" onchange="<?php echo $attr6_onchange ?>" title="<?php echo $attr6_title ?>" class="<?php echo $attr6_class ?>"<?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('var'=>'factor','value'=>'1') ?><?php $attr6_var='factor' ?><?php $attr6_value='1' ?><?php $$attr6_var = $attr6_value ?><?php unset($attr6) ?><?php unset($attr6_var) ?><?php unset($attr6_value) ?><?php $attr6 = array('list'=>'factors','name'=>'factor') ?><?php $attr6_list='factors' ?><?php $attr6_name='factor' ?><select size="1" id="id_<?php echo $attr6_name ?>"  name="<?php echo $attr6_name ?>" onchange="<?php echo $attr6_onchange ?>" title="<?php echo $attr6_title ?>" class="<?php echo $attr6_class ?>"<?php
 if (count($$attr6_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr6_list as $box_key=>$box_value )
@@ -245,15 +250,21 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'width') ?><?php $attr6_for='width' ?><label for="id<?php echo $attr6_for ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_NEW_WIDTH') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_NEW_WIDTH' ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'width') ?><?php $attr6_for='width' ?><label for="id_<?php echo $attr6_for ?><?php if (!empty($attr6_value)) echo '_' ?><?php echo $attr6_value ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_NEW_WIDTH') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_NEW_WIDTH' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -304,7 +315,7 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('type'=>'text','name'=>'width','size'=>'40','maxlength'=>'256') ?><?php $attr6_type='text' ?><?php $attr6_name='width' ?><?php $attr6_size='40' ?><?php $attr6_maxlength='256' ?><input id="id<?php echo $attr6_name ?>" name="<?php echo $attr6_name ?>" type="<?php echo $attr6_type ?>" size="<?php echo $attr6_size ?>" maxlength="<?php echo $attr6_maxlength ?>" class="<?php echo $attr6_class ?>" value="<?php echo isset($$attr6_name)?$$attr6_name:$attr6_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr6) ?><?php unset($attr6_type) ?><?php unset($attr6_name) ?><?php unset($attr6_size) ?><?php unset($attr6_maxlength) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4 = array() ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('type'=>'text','name'=>'width','size'=>'40','maxlength'=>'256') ?><?php $attr6_type='text' ?><?php $attr6_name='width' ?><?php $attr6_size='40' ?><?php $attr6_maxlength='256' ?><input id="id_<?php echo $attr6_name ?>" name="<?php echo $attr6_name ?>" type="<?php echo $attr6_type ?>" size="<?php echo $attr6_size ?>" maxlength="<?php echo $attr6_maxlength ?>" class="<?php echo $attr6_class ?>" value="<?php echo isset($$attr6_name)?$$attr6_name:$attr6_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr6) ?><?php unset($attr6_type) ?><?php unset($attr6_name) ?><?php unset($attr6_size) ?><?php unset($attr6_maxlength) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -333,15 +344,21 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'height') ?><?php $attr6_for='height' ?><label for="id<?php echo $attr6_for ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_NEW_HEIGHT') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_NEW_HEIGHT' ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'height') ?><?php $attr6_for='height' ?><label for="id_<?php echo $attr6_for ?><?php if (!empty($attr6_value)) echo '_' ?><?php echo $attr6_value ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_NEW_HEIGHT') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_NEW_HEIGHT' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -392,7 +409,7 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('type'=>'text','name'=>'height','size'=>'40','maxlength'=>'256') ?><?php $attr6_type='text' ?><?php $attr6_name='height' ?><?php $attr6_size='40' ?><?php $attr6_maxlength='256' ?><input id="id<?php echo $attr6_name ?>" name="<?php echo $attr6_name ?>" type="<?php echo $attr6_type ?>" size="<?php echo $attr6_size ?>" maxlength="<?php echo $attr6_maxlength ?>" class="<?php echo $attr6_class ?>" value="<?php echo isset($$attr6_name)?$$attr6_name:$attr6_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr6) ?><?php unset($attr6_type) ?><?php unset($attr6_name) ?><?php unset($attr6_size) ?><?php unset($attr6_maxlength) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4 = array() ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('type'=>'text','name'=>'height','size'=>'40','maxlength'=>'256') ?><?php $attr6_type='text' ?><?php $attr6_name='height' ?><?php $attr6_size='40' ?><?php $attr6_maxlength='256' ?><input id="id_<?php echo $attr6_name ?>" name="<?php echo $attr6_name ?>" type="<?php echo $attr6_type ?>" size="<?php echo $attr6_size ?>" maxlength="<?php echo $attr6_maxlength ?>" class="<?php echo $attr6_class ?>" value="<?php echo isset($$attr6_name)?$$attr6_name:$attr6_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr6) ?><?php unset($attr6_type) ?><?php unset($attr6_name) ?><?php unset($attr6_size) ?><?php unset($attr6_maxlength) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -421,15 +438,21 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'format') ?><?php $attr6_for='format' ?><label for="id<?php echo $attr6_for ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_FORMAT') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_FORMAT' ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'format') ?><?php $attr6_for='format' ?><label for="id_<?php echo $attr6_for ?><?php if (!empty($attr6_value)) echo '_' ?><?php echo $attr6_value ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_FORMAT') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_FORMAT' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -480,7 +503,7 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('list'=>'formats','name'=>'format') ?><?php $attr6_list='formats' ?><?php $attr6_name='format' ?><select size="1" id="id<?php echo $attr6_name ?>"  name="<?php echo $attr6_name ?>" onchange="<?php echo $attr6_onchange ?>" title="<?php echo $attr6_title ?>" class="<?php echo $attr6_class ?>"<?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('list'=>'formats','name'=>'format') ?><?php $attr6_list='formats' ?><?php $attr6_name='format' ?><select size="1" id="id_<?php echo $attr6_name ?>"  name="<?php echo $attr6_name ?>" onchange="<?php echo $attr6_onchange ?>" title="<?php echo $attr6_title ?>" class="<?php echo $attr6_class ?>"<?php
 if (count($$attr6_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr6_list as $box_key=>$box_value )
@@ -521,15 +544,21 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'jpeglist_compression') ?><?php $attr6_for='jpeglist_compression' ?><label for="id<?php echo $attr6_for ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_JPEG_COMPRESSION') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_JPEG_COMPRESSION' ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('for'=>'jpeglist_compression') ?><?php $attr6_for='jpeglist_compression' ?><label for="id_<?php echo $attr6_for ?><?php if (!empty($attr6_value)) echo '_' ?><?php echo $attr6_value ?>"><?php unset($attr6) ?><?php unset($attr6_for) ?><?php $attr7 = array('class'=>'text','text'=>'FILE_IMAGE_JPEG_COMPRESSION') ?><?php $attr7_class='text' ?><?php $attr7_text='FILE_IMAGE_JPEG_COMPRESSION' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -580,7 +609,7 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('var'=>'jpeg_compression','value'=>'70') ?><?php $attr6_var='jpeg_compression' ?><?php $attr6_value='70' ?><?php $$attr6_var = $attr6_value ?><?php unset($attr6) ?><?php unset($attr6_var) ?><?php unset($attr6_value) ?><?php $attr6 = array('list'=>'jpeglist','name'=>'jpeg_compression') ?><?php $attr6_list='jpeglist' ?><?php $attr6_name='jpeg_compression' ?><select size="1" id="id<?php echo $attr6_name ?>"  name="<?php echo $attr6_name ?>" onchange="<?php echo $attr6_onchange ?>" title="<?php echo $attr6_title ?>" class="<?php echo $attr6_class ?>"<?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('var'=>'jpeg_compression','value'=>'70') ?><?php $attr6_var='jpeg_compression' ?><?php $attr6_value='70' ?><?php $$attr6_var = $attr6_value ?><?php unset($attr6) ?><?php unset($attr6_var) ?><?php unset($attr6_value) ?><?php $attr6 = array('list'=>'jpeglist','name'=>'jpeg_compression') ?><?php $attr6_list='jpeglist' ?><?php $attr6_name='jpeg_compression' ?><select size="1" id="id_<?php echo $attr6_name ?>"  name="<?php echo $attr6_name ?>" onchange="<?php echo $attr6_onchange ?>" title="<?php echo $attr6_title ?>" class="<?php echo $attr6_class ?>"<?php
 if (count($$attr6_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr6_list as $box_key=>$box_value )

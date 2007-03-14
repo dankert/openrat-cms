@@ -129,19 +129,20 @@
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><code>
 <?php $attr5 = array('class'=>'text','var'=>'text') ?><?php $attr5_class='text' ?><?php $attr5_var='text' ?><?php
-	if(empty($attr5_title))
-		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
-		else
-			$attr5_title = '';
-
-?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
-	$attr5_title = '';
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
 		$attr5_key = $attr5_key.$attr5_suffix;
 		
+	if(empty($attr5_title))
+		if (!empty($attr5_key))
+			$attr5_title = lang($attr5_key.'_HELP');
+		else
+			$attr5_title = '';
+
+?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
+	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
