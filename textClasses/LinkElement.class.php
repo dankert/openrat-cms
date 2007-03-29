@@ -88,7 +88,8 @@ class LinkElement extends AbstractElement
 		$url .= $this->url_encode($this->path);
 
 		if	( $this->query != '' )
-			$url .= '?'.urlencode($this->query);
+			$url .= '?'.$this->url_encode($this->query);
+//			$url .= '?'.urlencode($this->query);
 
 		if	( $this->fragment != '' )
 			$url .= '#'.$this->fragment;
