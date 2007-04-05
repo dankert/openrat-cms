@@ -194,7 +194,10 @@ if	( $subaction == '' )
 	$subaction = $do->actionConfig['default']['goto'];
 
 if	( !isset($do->actionConfig[$subaction]) )
+{
+	Logger::warn( "Action $action has no configured method named $subaction");
 	die( "Action $action has no configured method named $subaction");
+}
 	
 Logger::trace("controller is calling subaction '$subaction'");
 
