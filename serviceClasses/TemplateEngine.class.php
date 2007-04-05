@@ -224,7 +224,7 @@ class TemplateEngine
 			if	( $al=='')
 				continue;
 				
-			list($a,$default) = explode(':',$al,2);
+			list($a,$default) = explode(':',$al,2) + array('','');
 			$default = str_replace('COMMA',',',$default); // Komma in Default-Werten ersetzen.
 			if	( isset($attr[$a]))
 				$checkedAttr[$a]=$attr[$a];
