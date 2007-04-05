@@ -1,1 +1,2 @@
-<input id="id_<?php echo $attr_name ?>" name="<?php echo $attr_name ?>" type="<?php echo $attr_type ?>" size="<?php echo $attr_size ?>" maxlength="<?php echo $attr_maxlength ?>" class="<?php echo $attr_class ?>" value="<?php echo isset($$attr_name)?$$attr_name:$attr_default ?>" onxxxMouseOver="this.focus();"  />
+<?php if(!isset($attr_default)) $attr_default='';
+?><input id="id_<?php echo $attr_name ?>" name="<?php echo $attr_name ?>" type="<?php echo $attr_type ?>" size="<?php echo $attr_size ?>" maxlength="<?php echo $attr_maxlength ?>" class="<?php echo $attr_class ?>" value="<?php echo isset($$attr_name)?$$attr_name:$attr_default ?>" onxxxMouseOver="this.focus();"  />
