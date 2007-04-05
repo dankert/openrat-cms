@@ -3,6 +3,9 @@
 	$row_classes   = array('');
 	$column_classes= array('');
 
+	if(empty($attr_class))
+		$attr_class='';
+
 	if	(!empty($attr_widths))
 	{
 		$column_widths = explode(',',$attr_widths);

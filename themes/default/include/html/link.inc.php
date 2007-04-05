@@ -1,4 +1,9 @@
 <?php
+	if(empty($attr_class))
+		$attr_class='';
+	if(empty($attr_title))
+		$attr_title = '';
+		
 	if(!empty($attr_url))
 		$tmp_url = $attr_url;
 	else
