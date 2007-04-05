@@ -189,9 +189,24 @@ class File extends Object
 
 		global $conf;
 		$mime_types = $conf['mime-types'];
+		
+		if	( !empty($this->extension))
+		{
+			$ext = $this->extension;
+		}
+		else
+		{
+			$pos = strrpos($this->filename,'.');
+			if	( $pos === false )
+				$ext = '';
+			else
+				$ext = substr($this->filename,$pos+1);
+		}
+		
+		$ext = strtolower($ext);
 
-		if	( !empty($mime_types[ strtolower($this->extension) ]) )
-			$this->mime_type = $mime_types[ strtolower($this->extension) ];
+		if	( !empty($mime_types[$ext]) )
+			$this->mime_type = $mime_types[$ext];
 		else
 			// Wenn kein Mime-Type gefunden, dann Standartwert setzen
 			$this->mime_type = OR_FILE_DEFAULT_MIMETYPE;
