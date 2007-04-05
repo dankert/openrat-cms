@@ -42,7 +42,7 @@
   </tr>
   <tr><td class="subaction">
   
-    <?php if	( !isset($windowMenu) || is_array($windowMenu) )
+    <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
 			$windowMenu = array();
     foreach( $windowMenu as $menu )
           {
