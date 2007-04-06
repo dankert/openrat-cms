@@ -6,10 +6,10 @@
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
-<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+<?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
        	?>
-  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
 <?php
       }
 ?>
@@ -45,7 +45,7 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr2_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr2_icon.IMG_ICON_EXT.'" align="left" border="0">';
-		if	( !is_array($path) )
+		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
@@ -64,7 +64,10 @@
     </td>
   </tr>
   <tr><td class="subaction">
-    <?php foreach( $windowMenu as $menu )
+  
+    <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
+			$windowMenu = array();
+    foreach( $windowMenu as $menu )
           {
           	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
@@ -131,7 +134,7 @@
 	$attr3_list_tmp_value = $attr3_value;
 	$attr3_list_extract   = ($attr3_extract==true);
 
-	if	( !is_array($$attr3_list) )
+	if	( !isset($$attr3_list) || !is_array($$attr3_list) )
 		$$attr3_list = array();
 //		die('not an array in list,var='.$attr3_list);
 //		Html::debug($$attr3_list);
@@ -177,6 +180,11 @@
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php $attr6 = array('title'=>'TREE_CHOOSE_PROJECT','target'=>'_self','url'=>$url) ?><?php $attr6_title='TREE_CHOOSE_PROJECT' ?><?php $attr6_target='_self' ?><?php $attr6_url=$url ?><?php
+	if(empty($attr6_class))
+		$attr6_class='';
+	if(empty($attr6_title))
+		$attr6_title = '';
+		
 	if(!empty($attr6_url))
 		$tmp_url = $attr6_url;
 	else

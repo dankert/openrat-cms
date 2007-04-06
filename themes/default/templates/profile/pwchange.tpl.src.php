@@ -2,6 +2,9 @@ page
 	form method:post
 		window icon:user name:user_profile
 			row
+				cell class:logo colspan:2
+					logo name:changepassword
+			row
 				cell
 					text text:user_password
 				cell

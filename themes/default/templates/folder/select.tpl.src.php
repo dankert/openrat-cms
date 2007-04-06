@@ -18,28 +18,36 @@ page
 							text raw:_
 
 					cell class:fx
-						link url:var:url target:cms_main title:desc
+#						link url:var:url target:cms_main title:desc
+						label for:var:id
 							image type:var:icon
 							text var:name
 							text raw:_
 
 			row
 				cell colspan:2 class:fx			
-RAW			
-    <img src="<?php echo $image_dir ?>tree_none_end.gif" align="left" />&nbsp;
-    <a href="javascript:mark();"><?php echo lang('FOLDER_MARK_ALL') ?></a> | <a href="javascript:unmark();"><?php echo lang('FOLDER_UNMARK_ALL') ?></a> | <a href="javascript:flip();"><?php echo lang('FOLDER_FLIP_MARK') ?></a>
-END
+					image fileext:tree_none_end.gif align:left
+					text raw:_
+					link url::javascript:mark();
+						text text:message:FOLDER_MARK_ALL
+					text raw:_|_
+					link url::javascript:unmark();
+						text text:message:FOLDER_UNMARK_ALL
+					text raw:_|_
+					link url::javascript:flip();
+						text text:message:FOLDER_FLIP_MARK
 			row
 				cell class:fx colspan:2
 				
 					list list:actionlist extract:true
-						radio name:var:type value:var:type
-						text raw:_
-						text text:var:type
+						radio name:type value:var:type
+						label for:type value:var:type
+							text raw:_
+							text key:var:type prefix:FOLDER_SELECT_
 						newline
 			row
 				cell class:act colspan:2
-					button type:ok		
+					button type:ok text:button_next
 			if empty:object
 			
 				row
@@ -48,8 +56,7 @@ END
 	dummy
 			
 RAW
-
-<script name="JavaScript">
+<script name="JavaScript" type="text/javascript">
 <!--
 function mark()
 {

@@ -1,7 +1,6 @@
 <?php $attr1 = array('class'=>'main','title'=>$cms_title) ?><?php $attr1_class='main' ?><?php $attr1_title=$cms_title ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<!-- $Id$ -->
 <head>
   <title><?php echo $attr1_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
@@ -128,14 +127,20 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php unset($attr4_colspan) ?><?php $attr5 = array('class'=>'text','var'=>'value') ?><?php $attr5_class='text' ?><?php $attr5_var='value' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:

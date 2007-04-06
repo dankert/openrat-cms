@@ -6,10 +6,10 @@
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
-<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+<?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
        	?>
-  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
 <?php
       }
 ?>
@@ -23,6 +23,12 @@
 
 <?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2 = array('width'=>'100%','space'=>'0','padding'=>'5','rowclasses'=>'odd,even') ?><?php $attr2_width='100%' ?><?php $attr2_space='0' ?><?php $attr2_padding='5' ?><?php $attr2_rowclasses='odd,even' ?><?php
 	$coloumn_widths=array();
+	$row_classes   = array('');
+	$column_classes= array('');
+
+	if(empty($attr2_class))
+		$attr2_class='';
+
 	if	(!empty($attr2_widths))
 	{
 		$column_widths = explode(',',$attr2_widths);
@@ -43,7 +49,6 @@
 	if	(!empty($attr2_columnclasses))
 	{
 		$column_classes   = explode(',',$attr2_columnclasses);
-
 		unset($attr2['columnclasses']);
 	}
 	
@@ -93,7 +98,7 @@ if (isset($attr5_elementtype)) {
 	$attr5_list_tmp_value = $attr5_value;
 	$attr5_list_extract   = ($attr5_extract==true);
 
-	if	( !is_array($$attr5_list) )
+	if	( !isset($$attr5_list) || !is_array($$attr5_list) )
 		$$attr5_list = array();
 //		die('not an array in list,var='.$attr5_list);
 //		Html::debug($$attr5_list);
@@ -110,6 +115,11 @@ if (isset($attr5_elementtype)) {
 			extract($$attr5_list_tmp_value);
 		}
 ?><?php unset($attr5) ?><?php unset($attr5_list) ?><?php unset($attr5_extract) ?><?php unset($attr5_key) ?><?php unset($attr5_value) ?><?php $attr6 = array('title'=>'title','target'=>'cms_main','url'=>$url,'class'=>'path') ?><?php $attr6_title='title' ?><?php $attr6_target='cms_main' ?><?php $attr6_url=$url ?><?php $attr6_class='path' ?><?php
+	if(empty($attr6_class))
+		$attr6_class='';
+	if(empty($attr6_title))
+		$attr6_title = '';
+		
 	if(!empty($attr6_url))
 		$tmp_url = $attr6_url;
 	else
@@ -253,7 +263,7 @@ if (isset($attr5_elementtype)) {
 	$attr5_list_tmp_value = $attr5_value;
 	$attr5_list_extract   = ($attr5_extract==true);
 
-	if	( !is_array($$attr5_list) )
+	if	( !isset($$attr5_list) || !is_array($$attr5_list) )
 		$$attr5_list = array();
 //		die('not an array in list,var='.$attr5_list);
 //		Html::debug($$attr5_list);
@@ -270,6 +280,11 @@ if (isset($attr5_elementtype)) {
 			extract($$attr5_list_tmp_value);
 		}
 ?><?php unset($attr5) ?><?php unset($attr5_list) ?><?php unset($attr5_extract) ?><?php unset($attr5_key) ?><?php unset($attr5_value) ?><?php $attr6 = array('title'=>$title,'target'=>'_parent','url'=>$url) ?><?php $attr6_title=$title ?><?php $attr6_target='_parent' ?><?php $attr6_url=$url ?><?php
+	if(empty($attr6_class))
+		$attr6_class='';
+	if(empty($attr6_title))
+		$attr6_title = '';
+		
 	if(!empty($attr6_url))
 		$tmp_url = $attr6_url;
 	else

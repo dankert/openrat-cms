@@ -6,10 +6,10 @@
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
-<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+<?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
        	?>
-  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
 <?php
       }
 ?>
@@ -23,6 +23,12 @@
 
 <?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2 = array('width'=>'100%','space'=>'0','padding'=>'5','rowclasses'=>'odd,even') ?><?php $attr2_width='100%' ?><?php $attr2_space='0' ?><?php $attr2_padding='5' ?><?php $attr2_rowclasses='odd,even' ?><?php
 	$coloumn_widths=array();
+	$row_classes   = array('');
+	$column_classes= array('');
+
+	if(empty($attr2_class))
+		$attr2_class='';
+
 	if	(!empty($attr2_widths))
 	{
 		$column_widths = explode(',',$attr2_widths);
@@ -43,7 +49,6 @@
 	if	(!empty($attr2_columnclasses))
 	{
 		$column_classes   = explode(',',$attr2_columnclasses);
-
 		unset($attr2['columnclasses']);
 	}
 	
@@ -231,6 +236,11 @@ if (isset($attr5_elementtype)) {
 ?><img src="<?php echo $image_dir.$attr5_fileext ?>" border="0" align="<?php echo $attr5_align ?>"><?php
 } elseif (isset($attr5_file)) {
 ?><img src="<?php echo $image_dir.$attr5_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php } ?><?php unset($attr5) ?><?php unset($attr5_icon) ?><?php unset($attr5_align) ?><?php $attr5 = array('title'=>'USER_LOGOUT_DESC','target'=>'_top','url'=>$logout_url) ?><?php $attr5_title='USER_LOGOUT_DESC' ?><?php $attr5_target='_top' ?><?php $attr5_url=$logout_url ?><?php
+	if(empty($attr5_class))
+		$attr5_class='';
+	if(empty($attr5_title))
+		$attr5_title = '';
+		
 	if(!empty($attr5_url))
 		$tmp_url = $attr5_url;
 	else
@@ -336,6 +346,11 @@ if (isset($attr5_elementtype)) {
 		
 	echo $tmp_text;
 ?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('title'=>'USER_PROFILE_DESC','target'=>'cms_main_main','url'=>$profile_url) ?><?php $attr5_title='USER_PROFILE_DESC' ?><?php $attr5_target='cms_main_main' ?><?php $attr5_url=$profile_url ?><?php
+	if(empty($attr5_class))
+		$attr5_class='';
+	if(empty($attr5_title))
+		$attr5_title = '';
+		
 	if(!empty($attr5_url))
 		$tmp_url = $attr5_url;
 	else

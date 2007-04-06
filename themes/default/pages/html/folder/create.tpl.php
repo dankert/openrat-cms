@@ -1,44 +1,50 @@
-<?php $attr = array('class'=>'main','title'=>'var') ?><?php $attr_class='main' ?><?php $attr_title='var' ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
+<?php $attr1 = array('class'=>'main','title'=>$cms_title) ?><?php $attr1_class='main' ?><?php $attr1_title=$cms_title ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<!-- $Id$ -->
 <head>
-  <title><?php echo $attr_title ?></title>
+  <title><?php echo $attr1_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
+<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+      {
+       	?>
+  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+<?php
+      }
+?>
   <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
 <?php if($stylesheet!='default') { ?>
   <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
 <?php } ?>
 </head>
 
-<body class="<?php echo $attr_class ?>">
+<body class="<?php echo $attr1_class ?>">
 
-<?php unset($attr) ?><?php unset($attr_class) ?><?php unset($attr_title) ?><?php $attr = array('title'=>'GLOBAL_NEW','name'=>'global_new','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr_title='GLOBAL_NEW' ?><?php $attr_name='global_new' ?><?php $attr_width='93%' ?><?php $attr_rowclasses='odd,even' ?><?php $attr_columnclasses='1,2,3' ?><?php
+<?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2 = array('title'=>'GLOBAL_NEW','name'=>'global_new','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr2_title='GLOBAL_NEW' ?><?php $attr2_name='global_new' ?><?php $attr2_width='93%' ?><?php $attr2_rowclasses='odd,even' ?><?php $attr2_columnclasses='1,2,3' ?><?php
 	$coloumn_widths=array();
-	if	(!empty($attr_widths))
+	if	(!empty($attr2_widths))
 	{
-		$column_widths = explode(',',$attr_widths);
-		unset($attr['widths']);
+		$column_widths = explode(',',$attr2_widths);
+		unset($attr2['widths']);
 	}
-	if	(!empty($attr_rowclasses))
+	if	(!empty($attr2_rowclasses))
 	{
-		$row_classes   = explode(',',$attr_rowclasses);
+		$row_classes   = explode(',',$attr2_rowclasses);
 		$row_class_idx = 999;
-		unset($attr['rowclasses']);
+		unset($attr2['rowclasses']);
 	}
-	if	(!empty($attr_columnclasses))
+	if	(!empty($attr2_columnclasses))
 	{
-		$column_classes = explode(',',$attr_columnclasses);
-		unset($attr['columnclasses']);
+		$column_classes = explode(',',$attr2_columnclasses);
+		unset($attr2['columnclasses']);
 	}
 		global $image_dir;
 		echo '<br/><br/><br/><center>';
-		echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr_width.'">';
+		echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr2_width.'">';
 		echo '<tr><td class="menu">';
-		if	( !empty($attr_icon) )
-			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		if	( !empty($attr2_icon) )
+			echo '<img src="'.$image_dir.'icon_'.$attr2_icon.IMG_ICON_EXT.'" align="left" border="0">';
 		if	( !is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
@@ -91,7 +97,7 @@
 
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr) ?><?php unset($attr_title) ?><?php unset($attr_name) ?><?php unset($attr_width) ?><?php unset($attr_rowclasses) ?><?php unset($attr_columnclasses) ?><?php $attr = array() ?>      </table>
+      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr2) ?><?php unset($attr2_title) ?><?php unset($attr2_name) ?><?php unset($attr2_width) ?><?php unset($attr2_rowclasses) ?><?php unset($attr2_columnclasses) ?><?php $attr1 = array() ?>      </table>
 	</td>
   </tr>
 </table>
@@ -105,7 +111,7 @@
 <?php $dur = time()-START_TIME;
       echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
 <?php } ?>
-<?php unset($attr) ?><?php $attr = array() ?>
+<?php unset($attr1) ?><?php $attr0 = array() ?>
 <!-- $Id$ -->
 
 <?php if ($showDuration) { ?>
@@ -116,4 +122,4 @@
 <?php } ?>
 
 </body>
-</html><?php unset($attr) ?>
+</html><?php unset($attr0) ?>

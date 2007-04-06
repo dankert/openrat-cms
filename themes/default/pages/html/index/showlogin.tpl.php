@@ -6,10 +6,10 @@
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
-<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+<?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
        	?>
-  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
 <?php
       }
 ?>
@@ -63,7 +63,7 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr3_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr3_icon.IMG_ICON_EXT.'" align="left" border="0">';
-		if	( !is_array($path) )
+		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
@@ -82,7 +82,10 @@
     </td>
   </tr>
   <tr><td class="subaction">
-    <?php foreach( $windowMenu as $menu )
+  
+    <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
+			$windowMenu = array();
+    foreach( $windowMenu as $menu )
           {
           	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
@@ -415,6 +418,11 @@
 	if	( $exec )
 	{
 ?><?php unset($attr8) ?><?php unset($attr8_present) ?><?php $attr9 = array('target'=>'_top','url'=>$conf['login']['logo']['url']) ?><?php $attr9_target='_top' ?><?php $attr9_url=$conf['login']['logo']['url'] ?><?php
+	if(empty($attr9_class))
+		$attr9_class='';
+	if(empty($attr9_title))
+		$attr9_title = '';
+		
 	if(!empty($attr9_url))
 		$tmp_url = $attr9_url;
 	else
@@ -1536,13 +1544,15 @@ if (isset($attr9_elementtype)) {
 	
 	if	( $exec )
 	{
-?><?php unset($attr7) ?><?php unset($attr7_not) ?><?php unset($attr7_present) ?><?php $attr8 = array('type'=>'text','name'=>'login_name','value'=>'','size'=>'25','maxlength'=>'256') ?><?php $attr8_type='text' ?><?php $attr8_name='login_name' ?><?php $attr8_value='' ?><?php $attr8_size='25' ?><?php $attr8_maxlength='256' ?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr6 = array() ?><?php
+?><?php unset($attr7) ?><?php unset($attr7_not) ?><?php unset($attr7_present) ?><?php $attr8 = array('type'=>'text','name'=>'login_name','value'=>'','size'=>'25','maxlength'=>'256') ?><?php $attr8_type='text' ?><?php $attr8_name='login_name' ?><?php $attr8_value='' ?><?php $attr8_size='25' ?><?php $attr8_maxlength='256' ?><?php if(!isset($attr8_default)) $attr8_default='';
+?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr6 = array() ?><?php
 	}
 	
 ?><?php unset($attr6) ?><?php $attr7 = array() ?><?php
 	if	( !$last_exec )
 	{
-?><?php unset($attr7) ?><?php $attr8 = array('type'=>'hidden','name'=>'login_name','value'=>$force_username,'size'=>'40','maxlength'=>'256') ?><?php $attr8_type='hidden' ?><?php $attr8_name='login_name' ?><?php $attr8_value=$force_username ?><?php $attr8_size='40' ?><?php $attr8_maxlength='256' ?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr8 = array('class'=>'text','value'=>$force_username) ?><?php $attr8_class='text' ?><?php $attr8_value=$force_username ?><?php
+?><?php unset($attr7) ?><?php $attr8 = array('type'=>'hidden','name'=>'login_name','value'=>$force_username,'size'=>'40','maxlength'=>'256') ?><?php $attr8_type='hidden' ?><?php $attr8_name='login_name' ?><?php $attr8_value=$force_username ?><?php $attr8_size='40' ?><?php $attr8_maxlength='256' ?><?php if(!isset($attr8_default)) $attr8_default='';
+?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr8 = array('class'=>'text','value'=>$force_username) ?><?php $attr8_class='text' ?><?php $attr8_value=$force_username ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -2137,6 +2147,11 @@ document.forms[0].screenwidth.value=window.innerWidth;
 <?php unset($attr2) ?><?php $attr1 = array() ?></form>
 
 <?php unset($attr1) ?><?php $attr2 = array() ?><br/><?php unset($attr2) ?><?php $attr2 = array() ?><br/><?php unset($attr2) ?><?php $attr2 = array('target'=>'_top','url'=>$conf['login']['gpl']['url']) ?><?php $attr2_target='_top' ?><?php $attr2_url=$conf['login']['gpl']['url'] ?><?php
+	if(empty($attr2_class))
+		$attr2_class='';
+	if(empty($attr2_title))
+		$attr2_title = '';
+		
 	if(!empty($attr2_url))
 		$tmp_url = $attr2_url;
 	else
