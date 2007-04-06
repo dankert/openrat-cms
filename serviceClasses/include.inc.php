@@ -3,7 +3,6 @@
 require_once( OR_SERVICECLASSES_DIR."GlobalFunctions.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Http.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Html.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."HtmlView.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Upload.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Ftp.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Text.class.".PHP_EXT );
@@ -26,8 +25,5 @@ require_once( OR_SERVICECLASSES_DIR."TemplateEngine.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."ArchiveTar.class.".PHP_EXT     );
 require_once( OR_SERVICECLASSES_DIR."ArchiveUnzip.class.".PHP_EXT   );
 require_once( OR_SERVICECLASSES_DIR."ArchiveZip.class.".PHP_EXT     );
-
-//require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
-//require_once( OR_SERVICECLASSES_DIR."Sql.class.".PHP_EXT );
 
 ?>
