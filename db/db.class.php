@@ -103,7 +103,8 @@ class DB
 		else
 		{
 			$res->free();
-			return array();
+			$leer = array();
+			return $leer;
 		}
 	}
 
