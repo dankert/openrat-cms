@@ -1,8 +1,10 @@
 
 [default]
-goto=get
+goto=none
 
 [get]
+
+[head]
 
 [put]
 
@@ -19,3 +21,7 @@ goto=get
 [propfind]
 
 [proppatch]
+
+[lock]
+
+[unlock]
