@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.21  2007-02-14 22:10:57  dankert
+// Revision 1.22  2007-04-06 01:38:52  dankert
+// Namen nicht speichern, wenn leer.
+//
+// Revision 1.21  2007/02/14 22:10:57  dankert
 // TODO f?r tmpfile-Erzeugung
 //
 // Revision 1.20  2006/01/29 17:26:55  dankert
@@ -643,7 +646,7 @@ class Object
 	/**
 	 * Eigenschaften des Objektes in Datenbank speichern
 	 */
-	function objectSave()
+	function objectSave( $withName = true )
 	{
 		global $SESS;
 		$db = db_connection();
@@ -674,7 +677,7 @@ class Object
 		$db->query($sql->query);
 
 		// Nur wenn nicht Wurzelordner
-		if	( !$this->isRoot )
+		if	( !$this->isRoot && $withName )
 		{
 			if	( $this->name == '' )
 				$this->name = $this->filename;
@@ -831,7 +834,8 @@ class Object
 
 		$db->query($sql->query);
 
-		$this->objectSaveName();
+		if	( !empty($this->name) )
+			$this->objectSaveName();
 	}
 
 
@@ -843,9 +847,9 @@ class Object
 		if	( empty($this->filename) )
 			$this->filename = $this->objectid;
 
-		$this->filename = trim(strtolower($this->filename));
+//		$this->filename = trim(strtolower($this->filename));
 
-		$this->filename = $this->goodFilename( $this->filename);
+//		$this->filename = $this->goodFilename( $this->filename);
 
 		if	( $this->isRoot )
 			return;
