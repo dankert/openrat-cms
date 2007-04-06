@@ -8,7 +8,7 @@ enable=false
 ; Creation of new folders, files.
 create=true
 
-; Maximum Filesize for new files.
+; Maximum filesize for uploaded files (in kB)
 max_file_size=1000
 
 ; Readonly-Access.
