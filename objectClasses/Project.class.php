@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2007-02-26 22:05:08  dankert
+// Revision 1.12  2007-04-06 01:37:49  dankert
+// Verhindern einer Warnung bei modernen PHP-Versionen.
+//
+// Revision 1.11  2007/02/26 22:05:08  dankert
 // Neue Methode "loadByName()"
 //
 // Revision 1.10  2006/07/19 21:30:32  dankert
@@ -354,7 +357,7 @@ class Project
 	
 	function getDefaultLanguageId()
 	{
-		$db = &Session::getDatabase();
+		$db = Session::getDatabase();
 
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
@@ -370,7 +373,7 @@ class Project
 
 	function getDefaultModelId()
 	{
-		$db = &Session::getDatabase();
+		$db = Session::getDatabase();
 
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird

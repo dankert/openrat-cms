@@ -490,7 +490,7 @@ EOF
 	function copyValueFromFile( $otherfileid )
 	{
 		$of = new File( $otherfileid );
-		$this->value = &$of->loadValue();
+		$this->value = $of->loadValue();
 		$this->saveValue();
 	}
 
