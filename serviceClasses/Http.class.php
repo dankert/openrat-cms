@@ -23,7 +23,7 @@ class Http
 		       $conf;
 	
 		$languages = array();
-		$http_languages = $HTTP_SERVER_VARS['HTTP_ACCEPT_LANGUAGE'];
+		$http_languages = @$HTTP_SERVER_VARS['HTTP_ACCEPT_LANGUAGE'];
 		foreach( explode(',',$http_languages) as $l )
 		{
 			$parts = explode(';',$l);
