@@ -1,5 +1,13 @@
 <?php	
-		$time = $attr_date;
+    global $conf;
+	$time = $attr_date;
+
+	if	( $time==0)
+		echo lang('GLOBAL_UNKNOWN');
+	elseif ( !$conf['interface']['human_date_format'] )
+		echo date(lang('DATE_FORMAT'),$time);
+	else
+	{
 	
 		$sekunden = time()-$time;
 		$minuten = intval($sekunden/60);
@@ -9,9 +17,11 @@
 		$jahre   = intval($monate  /12);
 
 		echo '<span title="'.date(lang('DATE_FORMAT'),$time).'"">';
-		
+
 		if	( $time==0)
 			echo lang('GLOBAL_UNKNOWN');
+		elseif ( !$conf['interface']['human_date_format'] )
+			echo date(lang('DATE_FORMAT'),$time);
 		elseif	( $sekunden == 1 )
 			echo $sekunden.' '.lang('GLOBAL_SECOND');
 		elseif	( $sekunden < 60 )
@@ -43,4 +53,5 @@
 			echo $jahre.' '.lang('GLOBAL_YEARS');
 			
 		echo '</span>';
+	}
 ?>
