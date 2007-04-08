@@ -235,7 +235,7 @@ if (isset($attr5_elementtype)) {
 } elseif (isset($attr5_fileext)) {
 ?><img src="<?php echo $image_dir.$attr5_fileext ?>" border="0" align="<?php echo $attr5_align ?>"><?php
 } elseif (isset($attr5_file)) {
-?><img src="<?php echo $image_dir.$attr5_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php } ?><?php unset($attr5) ?><?php unset($attr5_icon) ?><?php unset($attr5_align) ?><?php $attr5 = array('title'=>'USER_LOGOUT_DESC','target'=>'_top','url'=>$logout_url) ?><?php $attr5_title='USER_LOGOUT_DESC' ?><?php $attr5_target='_top' ?><?php $attr5_url=$logout_url ?><?php
+?><img src="<?php echo $image_dir.$attr5_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php } ?><?php unset($attr5) ?><?php unset($attr5_icon) ?><?php unset($attr5_align) ?><?php $attr5 = array('title'=>'USER_LOGOUT_DESC','target'=>'_top','url'=>$logout_url,'class'=>'') ?><?php $attr5_title='USER_LOGOUT_DESC' ?><?php $attr5_target='_top' ?><?php $attr5_url=$logout_url ?><?php $attr5_class='' ?><?php
 	if(empty($attr5_class))
 		$attr5_class='';
 	if(empty($attr5_title))
@@ -245,7 +245,7 @@ if (isset($attr5_elementtype)) {
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($$attr5_id)?$$attr5_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php $attr6 = array('class'=>'text','text'=>'USER_LOGOUT') ?><?php $attr6_class='text' ?><?php $attr6_text='USER_LOGOUT' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'USER_LOGOUT') ?><?php $attr6_class='text' ?><?php $attr6_text='USER_LOGOUT' ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
@@ -345,7 +345,7 @@ if (isset($attr5_elementtype)) {
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr5_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('title'=>'USER_PROFILE_DESC','target'=>'cms_main_main','url'=>$profile_url) ?><?php $attr5_title='USER_PROFILE_DESC' ?><?php $attr5_target='cms_main_main' ?><?php $attr5_url=$profile_url ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('title'=>'USER_PROFILE_DESC','target'=>'cms_main_main','url'=>$profile_url,'class'=>'') ?><?php $attr5_title='USER_PROFILE_DESC' ?><?php $attr5_target='cms_main_main' ?><?php $attr5_url=$profile_url ?><?php $attr5_class='' ?><?php
 	if(empty($attr5_class))
 		$attr5_class='';
 	if(empty($attr5_title))
@@ -355,7 +355,7 @@ if (isset($attr5_elementtype)) {
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($$attr5_id)?$$attr5_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php $attr6 = array('class'=>'text','text'=>'userfullname') ?><?php $attr6_class='text' ?><?php $attr6_text='userfullname' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'userfullname') ?><?php $attr6_class='text' ?><?php $attr6_text='userfullname' ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))

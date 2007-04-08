@@ -6,10 +6,10 @@
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
-<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+<?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
        	?>
-  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
 <?php
       }
 ?>
@@ -45,7 +45,7 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr2_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr2_icon.IMG_ICON_EXT.'" align="left" border="0">';
-		if	( !is_array($path) )
+		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
@@ -64,7 +64,10 @@
     </td>
   </tr>
   <tr><td class="subaction">
-    <?php foreach( $windowMenu as $menu )
+  
+    <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
+			$windowMenu = array();
+    foreach( $windowMenu as $menu )
           {
           	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
@@ -205,12 +208,17 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('title'=>'FOLDER_ORDERBYTYPE','target'=>'_self','url'=>$orderbytype_url) ?><?php $attr5_title='FOLDER_ORDERBYTYPE' ?><?php $attr5_target='_self' ?><?php $attr5_url=$orderbytype_url ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('title'=>'FOLDER_ORDERBYTYPE','target'=>'_self','url'=>$orderbytype_url,'class'=>'') ?><?php $attr5_title='FOLDER_ORDERBYTYPE' ?><?php $attr5_target='_self' ?><?php $attr5_url=$orderbytype_url ?><?php $attr5_class='' ?><?php
+	if(empty($attr5_class))
+		$attr5_class='';
+	if(empty($attr5_title))
+		$attr5_title = '';
+		
 	if(!empty($attr5_url))
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($$attr5_id)?$$attr5_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_TYPE') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_TYPE' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_TYPE') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_TYPE' ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
@@ -310,12 +318,17 @@
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr5_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('title'=>'FOLDER_ORDERBYNAME','target'=>'_self','url'=>$orderbyname_url) ?><?php $attr5_title='FOLDER_ORDERBYNAME' ?><?php $attr5_target='_self' ?><?php $attr5_url=$orderbyname_url ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('title'=>'FOLDER_ORDERBYNAME','target'=>'_self','url'=>$orderbyname_url,'class'=>'') ?><?php $attr5_title='FOLDER_ORDERBYNAME' ?><?php $attr5_target='_self' ?><?php $attr5_url=$orderbyname_url ?><?php $attr5_class='' ?><?php
+	if(empty($attr5_class))
+		$attr5_class='';
+	if(empty($attr5_title))
+		$attr5_title = '';
+		
 	if(!empty($attr5_url))
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($$attr5_id)?$$attr5_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_NAME') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_NAME' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_NAME') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_NAME' ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
@@ -380,12 +393,17 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('title'=>'FOLDER_ORDERBYLASTCHANGE','target'=>'_self','url'=>$orderbylastchange_url) ?><?php $attr5_title='FOLDER_ORDERBYLASTCHANGE' ?><?php $attr5_target='_self' ?><?php $attr5_url=$orderbylastchange_url ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('title'=>'FOLDER_ORDERBYLASTCHANGE','target'=>'_self','url'=>$orderbylastchange_url,'class'=>'') ?><?php $attr5_title='FOLDER_ORDERBYLASTCHANGE' ?><?php $attr5_target='_self' ?><?php $attr5_url=$orderbylastchange_url ?><?php $attr5_class='' ?><?php
+	if(empty($attr5_class))
+		$attr5_class='';
+	if(empty($attr5_title))
+		$attr5_title = '';
+		
 	if(!empty($attr5_url))
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($$attr5_id)?$$attr5_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_LASTCHANGE') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_LASTCHANGE' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_LASTCHANGE') ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_LASTCHANGE' ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
@@ -450,12 +468,17 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php unset($attr4_colspan) ?><?php $attr5 = array('title'=>'FOLDER_FLIP','target'=>'_self','url'=>$flip_url) ?><?php $attr5_title='FOLDER_FLIP' ?><?php $attr5_target='_self' ?><?php $attr5_url=$flip_url ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php unset($attr4_colspan) ?><?php $attr5 = array('title'=>'FOLDER_FLIP','target'=>'_self','url'=>$flip_url,'class'=>'') ?><?php $attr5_title='FOLDER_FLIP' ?><?php $attr5_target='_self' ?><?php $attr5_url=$flip_url ?><?php $attr5_class='' ?><?php
+	if(empty($attr5_class))
+		$attr5_class='';
+	if(empty($attr5_title))
+		$attr5_title = '';
+		
 	if(!empty($attr5_url))
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($$attr5_id)?$$attr5_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php $attr6 = array('class'=>'text','text'=>'FOLDER_ORDER') ?><?php $attr6_class='text' ?><?php $attr6_text='FOLDER_ORDER' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'FOLDER_ORDER') ?><?php $attr6_class='text' ?><?php $attr6_text='FOLDER_ORDER' ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
@@ -505,15 +528,13 @@
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_text) ?><?php $attr4 = array() ?></a><?php unset($attr4) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array('list'=>'object','extract'=>'1','key'=>'list_key','value'=>'list_value') ?><?php $attr3_list='object' ?><?php $attr3_extract='1' ?><?php $attr3_key='list_key' ?><?php $attr3_value='list_value' ?><?php
+?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_text) ?><?php $attr4 = array() ?></a><?php unset($attr4) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array('list'=>'object','extract'=>true,'key'=>'list_key','value'=>'list_value') ?><?php $attr3_list='object' ?><?php $attr3_extract=true ?><?php $attr3_key='list_key' ?><?php $attr3_value='list_value' ?><?php
 	$attr3_list_tmp_key   = $attr3_key;
 	$attr3_list_tmp_value = $attr3_value;
-	$attr3_list_extract   = ($attr3_extract==true);
+	$attr3_list_extract   = $attr3_extract;
 
-	if	( !is_array($$attr3_list) )
+	if	( !isset($$attr3_list) || !is_array($$attr3_list) )
 		$$attr3_list = array();
-//		die('not an array in list,var='.$attr3_list);
-//		Html::debug($$attr3_list);
 	
 	foreach( $$attr3_list as $$attr3_list_tmp_key => $$attr3_list_tmp_value )
 	{
@@ -787,12 +808,17 @@ if (isset($attr6_elementtype)) {
 	
 	if	( $exec )
 	{
-?><?php unset($attr6) ?><?php unset($attr6_present) ?><?php $attr7 = array('title'=>'GLOBAL_UP','target'=>'_self','url'=>$upurl) ?><?php $attr7_title='GLOBAL_UP' ?><?php $attr7_target='_self' ?><?php $attr7_url=$upurl ?><?php
+?><?php unset($attr6) ?><?php unset($attr6_present) ?><?php $attr7 = array('title'=>'GLOBAL_UP','target'=>'_self','url'=>$upurl,'class'=>'') ?><?php $attr7_title='GLOBAL_UP' ?><?php $attr7_target='_self' ?><?php $attr7_url=$upurl ?><?php $attr7_class='' ?><?php
+	if(empty($attr7_class))
+		$attr7_class='';
+	if(empty($attr7_title))
+		$attr7_title = '';
+		
 	if(!empty($attr7_url))
 		$tmp_url = $attr7_url;
 	else
 		$tmp_url = Html::url($attr7_action,$attr7_subaction,!empty($$attr7_id)?$$attr7_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>" title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php $attr8 = array('var'=>'bild','value'=>'arrow_up') ?><?php $attr8_var='bild' ?><?php $attr8_value='arrow_up' ?><?php $$attr8_var = $attr8_value ?><?php unset($attr8) ?><?php unset($attr8_var) ?><?php unset($attr8_value) ?><?php $attr8 = array('file'=>$bild,'align'=>'left') ?><?php $attr8_file=$bild ?><?php $attr8_align='left' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>" title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php unset($attr7_class) ?><?php $attr8 = array('var'=>'bild','value'=>'arrow_up') ?><?php $attr8_var='bild' ?><?php $attr8_value='arrow_up' ?><?php $$attr8_var = $attr8_value ?><?php unset($attr8) ?><?php unset($attr8_var) ?><?php unset($attr8_value) ?><?php $attr8 = array('file'=>$bild,'align'=>'left') ?><?php $attr8_file=$bild ?><?php $attr8_align='left' ?><?php
 if (isset($attr8_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr8_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_type)) {
@@ -1055,12 +1081,17 @@ if (isset($attr8_elementtype)) {
 	
 	if	( $exec )
 	{
-?><?php unset($attr6) ?><?php unset($attr6_present) ?><?php $attr7 = array('title'=>'GLOBAL_TOP','target'=>'_self','url'=>$topurl) ?><?php $attr7_title='GLOBAL_TOP' ?><?php $attr7_target='_self' ?><?php $attr7_url=$topurl ?><?php
+?><?php unset($attr6) ?><?php unset($attr6_present) ?><?php $attr7 = array('title'=>'GLOBAL_TOP','target'=>'_self','url'=>$topurl,'class'=>'') ?><?php $attr7_title='GLOBAL_TOP' ?><?php $attr7_target='_self' ?><?php $attr7_url=$topurl ?><?php $attr7_class='' ?><?php
+	if(empty($attr7_class))
+		$attr7_class='';
+	if(empty($attr7_title))
+		$attr7_title = '';
+		
 	if(!empty($attr7_url))
 		$tmp_url = $attr7_url;
 	else
 		$tmp_url = Html::url($attr7_action,$attr7_subaction,!empty($$attr7_id)?$$attr7_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>" title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php $attr8 = array('var'=>'bild','value'=>'arrow_top') ?><?php $attr8_var='bild' ?><?php $attr8_value='arrow_top' ?><?php $$attr8_var = $attr8_value ?><?php unset($attr8) ?><?php unset($attr8_var) ?><?php unset($attr8_value) ?><?php $attr8 = array('file'=>$bild,'align'=>'left') ?><?php $attr8_file=$bild ?><?php $attr8_align='left' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>" title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php unset($attr7_class) ?><?php $attr8 = array('var'=>'bild','value'=>'arrow_top') ?><?php $attr8_var='bild' ?><?php $attr8_value='arrow_top' ?><?php $$attr8_var = $attr8_value ?><?php unset($attr8) ?><?php unset($attr8_var) ?><?php unset($attr8_value) ?><?php $attr8 = array('file'=>$bild,'align'=>'left') ?><?php $attr8_file=$bild ?><?php $attr8_align='left' ?><?php
 if (isset($attr8_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr8_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_type)) {
@@ -1323,12 +1354,17 @@ if (isset($attr8_elementtype)) {
 	
 	if	( $exec )
 	{
-?><?php unset($attr6) ?><?php unset($attr6_present) ?><?php $attr7 = array('title'=>'GLOBAL_BOTTOM','target'=>'_self','url'=>$bottomurl) ?><?php $attr7_title='GLOBAL_BOTTOM' ?><?php $attr7_target='_self' ?><?php $attr7_url=$bottomurl ?><?php
+?><?php unset($attr6) ?><?php unset($attr6_present) ?><?php $attr7 = array('title'=>'GLOBAL_BOTTOM','target'=>'_self','url'=>$bottomurl,'class'=>'') ?><?php $attr7_title='GLOBAL_BOTTOM' ?><?php $attr7_target='_self' ?><?php $attr7_url=$bottomurl ?><?php $attr7_class='' ?><?php
+	if(empty($attr7_class))
+		$attr7_class='';
+	if(empty($attr7_title))
+		$attr7_title = '';
+		
 	if(!empty($attr7_url))
 		$tmp_url = $attr7_url;
 	else
 		$tmp_url = Html::url($attr7_action,$attr7_subaction,!empty($$attr7_id)?$$attr7_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>" title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php $attr8 = array('var'=>'bild','value'=>'arrow_bottom') ?><?php $attr8_var='bild' ?><?php $attr8_value='arrow_bottom' ?><?php $$attr8_var = $attr8_value ?><?php unset($attr8) ?><?php unset($attr8_var) ?><?php unset($attr8_value) ?><?php $attr8 = array('file'=>$bild,'align'=>'left') ?><?php $attr8_file=$bild ?><?php $attr8_align='left' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>" title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php unset($attr7_class) ?><?php $attr8 = array('var'=>'bild','value'=>'arrow_bottom') ?><?php $attr8_var='bild' ?><?php $attr8_value='arrow_bottom' ?><?php $$attr8_var = $attr8_value ?><?php unset($attr8) ?><?php unset($attr8_var) ?><?php unset($attr8_value) ?><?php $attr8 = array('file'=>$bild,'align'=>'left') ?><?php $attr8_file=$bild ?><?php $attr8_align='left' ?><?php
 if (isset($attr8_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr8_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_type)) {
@@ -1591,12 +1627,17 @@ if (isset($attr8_elementtype)) {
 	
 	if	( $exec )
 	{
-?><?php unset($attr6) ?><?php unset($attr6_present) ?><?php $attr7 = array('title'=>'GLOBAL_DOWN','target'=>'_self','url'=>$downurl) ?><?php $attr7_title='GLOBAL_DOWN' ?><?php $attr7_target='_self' ?><?php $attr7_url=$downurl ?><?php
+?><?php unset($attr6) ?><?php unset($attr6_present) ?><?php $attr7 = array('title'=>'GLOBAL_DOWN','target'=>'_self','url'=>$downurl,'class'=>'') ?><?php $attr7_title='GLOBAL_DOWN' ?><?php $attr7_target='_self' ?><?php $attr7_url=$downurl ?><?php $attr7_class='' ?><?php
+	if(empty($attr7_class))
+		$attr7_class='';
+	if(empty($attr7_title))
+		$attr7_title = '';
+		
 	if(!empty($attr7_url))
 		$tmp_url = $attr7_url;
 	else
 		$tmp_url = Html::url($attr7_action,$attr7_subaction,!empty($$attr7_id)?$$attr7_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>" title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php $attr8 = array('var'=>'bild','value'=>'arrow_down') ?><?php $attr8_var='bild' ?><?php $attr8_value='arrow_down' ?><?php $$attr8_var = $attr8_value ?><?php unset($attr8) ?><?php unset($attr8_var) ?><?php unset($attr8_value) ?><?php $attr8 = array('file'=>$bild,'align'=>'left') ?><?php $attr8_file=$bild ?><?php $attr8_align='left' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>" title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php unset($attr7_class) ?><?php $attr8 = array('var'=>'bild','value'=>'arrow_down') ?><?php $attr8_var='bild' ?><?php $attr8_value='arrow_down' ?><?php $$attr8_var = $attr8_value ?><?php unset($attr8) ?><?php unset($attr8_var) ?><?php unset($attr8_value) ?><?php $attr8 = array('file'=>$bild,'align'=>'left') ?><?php $attr8_file=$bild ?><?php $attr8_align='left' ?><?php
 if (isset($attr8_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr8_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_type)) {

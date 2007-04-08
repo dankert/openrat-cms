@@ -298,7 +298,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_width) ?><?php unset($attr5_class) ?><?php unset($attr5_colspan) ?><?php $attr6 = array('title'=>'','target'=>'cms_main','url'=>'up_url','class'=>'') ?><?php $attr6_title='' ?><?php $attr6_target='cms_main' ?><?php $attr6_url='up_url' ?><?php $attr6_class='' ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_width) ?><?php unset($attr5_class) ?><?php unset($attr5_colspan) ?><?php $attr6 = array('title'=>'','target'=>'cms_main','url'=>$up_url,'class'=>'') ?><?php $attr6_title='' ?><?php $attr6_target='cms_main' ?><?php $attr6_url=$up_url ?><?php $attr6_class='' ?><?php
 	if(empty($attr6_class))
 		$attr6_class='';
 	if(empty($attr6_title))
@@ -802,57 +802,63 @@ if (isset($attr7_elementtype)) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','var'=>'date') ?><?php $attr6_class='text' ?><?php $attr6_var='date' ?><?php
-	if	( isset($attr6_prefix)&& isset($attr6_key))
-		$attr6_key = $attr6_prefix.$attr6_key;
-	if	( isset($attr6_suffix)&& isset($attr6_key))
-		$attr6_key = $attr6_key.$attr6_suffix;
-		
-	if(empty($attr6_title))
-		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key.'_HELP');
-		else
-			$attr6_title = '';
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('date'=>$date) ?><?php $attr6_date=$date ?><?php	
+    global $conf;
+	$time = $attr6_date;
 
-?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
-	$attr6_title = '';
-
-	if (!empty($attr6_array))
-	{
-		//geht nicht:
-		//echo $$attr6_array[$attr6_var].'%';
-		$tmpArray = $$attr6_array;
-		if (!empty($attr6_var))
-			$tmp_text = $tmpArray[$attr6_var];
-		else
-			$tmp_text = lang($tmpArray[$attr6_text]);
-	}
-	elseif (!empty($attr6_text))
-		if	( isset($$attr6_text))
-			$tmp_text = lang($$attr6_text);
-		else
-			$tmp_text = lang($attr6_text);
-	elseif (!empty($attr6_textvar))
-		$tmp_text = lang($$attr6_textvar);
-	elseif (!empty($attr6_key))
-		$tmp_text = lang($attr6_key);
-	elseif (!empty($attr6_var))
-		$tmp_text = isset($$attr6_var)?htmlentities($$attr6_var):'error: variable '.$attr6_var.' not present';	
-	elseif (!empty($attr6_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
-	elseif (!empty($attr6_value))
-		$tmp_text = $attr6_value;
+	if	( $time==0)
+		echo lang('GLOBAL_UNKNOWN');
+	elseif ( !$conf['interface']['human_date_format'] )
+		echo date(lang('DATE_FORMAT'),$time);
 	else
 	{
-	  $tmp_text = '&nbsp;';
-	  //Html::debug($attr6);echo 'text error';
-	}
 	
-	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
-		
-	echo $tmp_text;
-?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_var) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr2 = array() ?><?php } ?><?php unset($attr2) ?><?php $attr3 = array('empty'=>'object') ?><?php $attr3_empty='object' ?><?php 
+		$sekunden = time()-$time;
+		$minuten = intval($sekunden/60);
+		$stunden = intval($minuten /60);
+		$tage    = intval($stunden /24);
+		$monate  = intval($tage    /30);
+		$jahre   = intval($monate  /12);
+
+		echo '<span title="'.date(lang('DATE_FORMAT'),$time).'"">';
+
+		if	( $time==0)
+			echo lang('GLOBAL_UNKNOWN');
+		elseif ( !$conf['interface']['human_date_format'] )
+			echo date(lang('DATE_FORMAT'),$time);
+		elseif	( $sekunden == 1 )
+			echo $sekunden.' '.lang('GLOBAL_SECOND');
+		elseif	( $sekunden < 60 )
+			echo $sekunden.' '.lang('GLOBAL_SECONDS');
+	
+		elseif	( $minuten == 1 )
+			echo $minuten.' '.lang('GLOBAL_MINUTE');
+		elseif	( $minuten < 60 )
+			echo $minuten.' '.lang('GLOBAL_MINUTES');
+	
+		elseif	( $stunden == 1 )
+			echo $stunden.' '.lang('GLOBAL_HOUR');
+		elseif	( $stunden < 60 )
+			echo $stunden.' '.lang('GLOBAL_HOURS');
+	
+		elseif	( $tage == 1 )
+			echo $tage.' '.lang('GLOBAL_DAY');
+		elseif	( $tage < 60 )
+			echo $tage.' '.lang('GLOBAL_DAYS');
+	
+		elseif	( $monate == 1 )
+			echo $monate.' '.lang('GLOBAL_MONTH');
+		elseif	( $monate < 12 )
+			echo $monate.' '.lang('GLOBAL_MONTHS');
+	
+		elseif	( $jahre == 1 )
+			echo $jahre.' '.lang('GLOBAL_YEAR');
+		else
+			echo $jahre.' '.lang('GLOBAL_YEARS');
+			
+		echo '</span>';
+	}
+?><?php unset($attr6) ?><?php unset($attr6_date) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr2 = array() ?><?php } ?><?php unset($attr2) ?><?php $attr3 = array('empty'=>'object') ?><?php $attr3_empty='object' ?><?php 
 
 	// Wahr-Vergleich
 //	Html::debug($attr3);

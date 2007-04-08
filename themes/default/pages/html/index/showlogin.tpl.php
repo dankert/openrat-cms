@@ -21,7 +21,7 @@
 
 <body class="<?php echo $attr1_class ?>">
 
-<?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2 = array('action'=>'index','subaction'=>'login','target'=>'_top','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr2_action='index' ?><?php $attr2_subaction='login' ?><?php $attr2_target='_top' ?><?php $attr2_method='post' ?><?php $attr2_enctype='application/x-www-form-urlencoded' ?><?php
+<?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2 = array('action'=>'index','subaction'=>'login','name'=>'','target'=>'_top','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr2_action='index' ?><?php $attr2_subaction='login' ?><?php $attr2_name='' ?><?php $attr2_target='_top' ?><?php $attr2_method='post' ?><?php $attr2_enctype='application/x-www-form-urlencoded' ?><?php
 	if	(empty($attr2_action))
 		$attr2_action = $actionName;
 	if	(empty($attr2_subaction))
@@ -39,7 +39,7 @@
 <input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr2_id ?>" /><?php
 		if	( $conf['interface']['url_sessionid'] )
 			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
-?><?php unset($attr2) ?><?php unset($attr2_action) ?><?php unset($attr2_subaction) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3 = array('title'=>'GLOBAL_LOGIN','name'=>'login','icon'=>'user','width'=>'400','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_title='GLOBAL_LOGIN' ?><?php $attr3_name='login' ?><?php $attr3_icon='user' ?><?php $attr3_width='400' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
+?><?php unset($attr2) ?><?php unset($attr2_action) ?><?php unset($attr2_subaction) ?><?php unset($attr2_name) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3 = array('title'=>'GLOBAL_LOGIN','name'=>'login','icon'=>'user','width'=>'400','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_title='GLOBAL_LOGIN' ?><?php $attr3_name='login' ?><?php $attr3_icon='user' ?><?php $attr3_width='400' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr3_widths))
 	{
@@ -417,7 +417,7 @@
 	
 	if	( $exec )
 	{
-?><?php unset($attr8) ?><?php unset($attr8_present) ?><?php $attr9 = array('target'=>'_top','url'=>$conf['login']['logo']['url']) ?><?php $attr9_target='_top' ?><?php $attr9_url=$conf['login']['logo']['url'] ?><?php
+?><?php unset($attr8) ?><?php unset($attr8_present) ?><?php $attr9 = array('title'=>'','target'=>'_top','url'=>$conf['login']['logo']['url'],'class'=>'') ?><?php $attr9_title='' ?><?php $attr9_target='_top' ?><?php $attr9_url=$conf['login']['logo']['url'] ?><?php $attr9_class='' ?><?php
 	if(empty($attr9_class))
 		$attr9_class='';
 	if(empty($attr9_title))
@@ -427,7 +427,7 @@
 		$tmp_url = $attr9_url;
 	else
 		$tmp_url = Html::url($attr9_action,$attr9_subaction,!empty($$attr9_id)?$$attr9_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr9_class ?>" target="<?php echo $attr9_target ?>" title="<?php echo $attr9_title ?>"><?php unset($attr9) ?><?php unset($attr9_target) ?><?php unset($attr9_url) ?><?php $attr10 = array('url'=>$conf['login']['logo']['file'],'align'=>'left') ?><?php $attr10_url=$conf['login']['logo']['file'] ?><?php $attr10_align='left' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr9_class ?>" target="<?php echo $attr9_target ?>" title="<?php echo $attr9_title ?>"><?php unset($attr9) ?><?php unset($attr9_title) ?><?php unset($attr9_target) ?><?php unset($attr9_url) ?><?php unset($attr9_class) ?><?php $attr10 = array('url'=>$conf['login']['logo']['file'],'align'=>'left') ?><?php $attr10_url=$conf['login']['logo']['file'] ?><?php $attr10_align='left' ?><?php
 if (isset($attr10_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr10_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr10_align ?>"><?php
 } elseif (isset($attr10_type)) {
@@ -1454,7 +1454,7 @@ if (isset($attr9_elementtype)) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_width) ?><?php unset($attr6_class) ?><?php $attr7 = array('not'=>'1','present'=>'force_username') ?><?php $attr7_not='1' ?><?php $attr7_present='force_username' ?><?php 
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_width) ?><?php unset($attr6_class) ?><?php $attr7 = array('not'=>true,'present'=>'force_username') ?><?php $attr7_not=true ?><?php $attr7_present='force_username' ?><?php 
 
 	// Wahr-Vergleich
 //	Html::debug($attr7);
@@ -1544,15 +1544,15 @@ if (isset($attr9_elementtype)) {
 	
 	if	( $exec )
 	{
-?><?php unset($attr7) ?><?php unset($attr7_not) ?><?php unset($attr7_present) ?><?php $attr8 = array('type'=>'text','name'=>'login_name','value'=>'','size'=>'25','maxlength'=>'256') ?><?php $attr8_type='text' ?><?php $attr8_name='login_name' ?><?php $attr8_value='' ?><?php $attr8_size='25' ?><?php $attr8_maxlength='256' ?><?php if(!isset($attr8_default)) $attr8_default='';
-?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr6 = array() ?><?php
+?><?php unset($attr7) ?><?php unset($attr7_not) ?><?php unset($attr7_present) ?><?php $attr8 = array('class'=>'','default'=>'','type'=>'text','name'=>'login_name','value'=>'','size'=>'25','maxlength'=>'256','onchange'=>'') ?><?php $attr8_class='' ?><?php $attr8_default='' ?><?php $attr8_type='text' ?><?php $attr8_name='login_name' ?><?php $attr8_value='' ?><?php $attr8_size='25' ?><?php $attr8_maxlength='256' ?><?php $attr8_onchange='' ?><?php if(!isset($attr8_default)) $attr8_default='';
+?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_default) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php unset($attr8_onchange) ?><?php $attr6 = array() ?><?php
 	}
 	
 ?><?php unset($attr6) ?><?php $attr7 = array() ?><?php
 	if	( !$last_exec )
 	{
-?><?php unset($attr7) ?><?php $attr8 = array('type'=>'hidden','name'=>'login_name','value'=>$force_username,'size'=>'40','maxlength'=>'256') ?><?php $attr8_type='hidden' ?><?php $attr8_name='login_name' ?><?php $attr8_value=$force_username ?><?php $attr8_size='40' ?><?php $attr8_maxlength='256' ?><?php if(!isset($attr8_default)) $attr8_default='';
-?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr8 = array('class'=>'text','value'=>$force_username) ?><?php $attr8_class='text' ?><?php $attr8_value=$force_username ?><?php
+?><?php unset($attr7) ?><?php $attr8 = array('class'=>'','default'=>'','type'=>'hidden','name'=>'login_name','value'=>$force_username,'size'=>'40','maxlength'=>'256','onchange'=>'') ?><?php $attr8_class='' ?><?php $attr8_default='' ?><?php $attr8_type='hidden' ?><?php $attr8_name='login_name' ?><?php $attr8_value=$force_username ?><?php $attr8_size='40' ?><?php $attr8_maxlength='256' ?><?php $attr8_onchange='' ?><?php if(!isset($attr8_default)) $attr8_default='';
+?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_default) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php unset($attr8_onchange) ?><?php $attr8 = array('class'=>'text','value'=>$force_username) ?><?php $attr8_class='text' ?><?php $attr8_value=$force_username ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -1698,7 +1698,7 @@ if (isset($attr9_elementtype)) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_width) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'login_password','default'=>'','size'=>'25','maxlength'=>'256') ?><?php $attr7_name='login_password' ?><?php $attr7_default='' ?><?php $attr7_size='25' ?><?php $attr7_maxlength='256' ?><input type="password" name="<?php echo $attr7_name ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr5 = array('true'=>$this->mustChangePassword) ?><?php $attr5_true=$this->mustChangePassword ?><?php 
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_width) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'login_password','default'=>'','class'=>'','size'=>'25','maxlength'=>'256') ?><?php $attr7_name='login_password' ?><?php $attr7_default='' ?><?php $attr7_class='' ?><?php $attr7_size='25' ?><?php $attr7_maxlength='256' ?><input type="password" name="<?php echo $attr7_name ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php unset($attr7_class) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr5 = array('true'=>$this->mustChangePassword) ?><?php $attr5_true=$this->mustChangePassword ?><?php 
 
 	// Wahr-Vergleich
 //	Html::debug($attr5);
@@ -1882,7 +1882,7 @@ if (isset($attr9_elementtype)) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr7_rowspan) )
 		$attr7['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_width) ?><?php unset($attr7_class) ?><?php $attr8 = array('name'=>'password1','default'=>'','size'=>'25','maxlength'=>'256') ?><?php $attr8_name='password1' ?><?php $attr8_default='' ?><?php $attr8_size='25' ?><?php $attr8_maxlength='256' ?><input type="password" name="<?php echo $attr8_name ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" /><?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr6 = array() ?><?php
+?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_width) ?><?php unset($attr7_class) ?><?php $attr8 = array('name'=>'password1','default'=>'','class'=>'','size'=>'25','maxlength'=>'256') ?><?php $attr8_name='password1' ?><?php $attr8_default='' ?><?php $attr8_class='' ?><?php $attr8_size='25' ?><?php $attr8_maxlength='256' ?><input type="password" name="<?php echo $attr8_name ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" /><?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php unset($attr8_class) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr6 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -1976,7 +1976,7 @@ if (isset($attr9_elementtype)) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr7_rowspan) )
 		$attr7['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_width) ?><?php unset($attr7_class) ?><?php $attr8 = array('name'=>'password2','default'=>'','size'=>'25','maxlength'=>'256') ?><?php $attr8_name='password2' ?><?php $attr8_default='' ?><?php $attr8_size='25' ?><?php $attr8_maxlength='256' ?><input type="password" name="<?php echo $attr8_name ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" /><?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr4 = array() ?><?php
+?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_width) ?><?php unset($attr7_class) ?><?php $attr8 = array('name'=>'password2','default'=>'','class'=>'','size'=>'25','maxlength'=>'256') ?><?php $attr8_name='password2' ?><?php $attr8_default='' ?><?php $attr8_class='' ?><?php $attr8_size='25' ?><?php $attr8_maxlength='256' ?><input type="password" name="<?php echo $attr8_name ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" /><?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php unset($attr8_class) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr4 = array() ?><?php
 	}
 	
 ?><?php unset($attr4) ?><?php $attr5 = array() ?><?php
@@ -2073,7 +2073,7 @@ if (isset($attr9_elementtype)) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_width) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'dbids','name'=>'dbid','default'=>'actdbid') ?><?php $attr7_list='dbids' ?><?php $attr7_name='dbid' ?><?php $attr7_default='actdbid' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_width) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'dbids','name'=>'dbid','default'=>'actdbid','onchange'=>'','title'=>'','class'=>'') ?><?php $attr7_list='dbids' ?><?php $attr7_name='dbid' ?><?php $attr7_default='actdbid' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
 if (count($$attr7_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr7_list as $box_key=>$box_value )
@@ -2085,7 +2085,7 @@ if (count($$attr7_list)==1) echo ' disabled="disabled"'
 		}
 ?></select><?php
 if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />'
-?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php $attr7 = array('name'=>'screenwidth','default'=>'9999') ?><?php $attr7_name='screenwidth' ?><?php $attr7_default='9999' ?><input type="hidden" name="<?php echo $attr7_name ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr5 = array() ?><?php
+?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php unset($attr7_onchange) ?><?php unset($attr7_title) ?><?php unset($attr7_class) ?><?php $attr7 = array('name'=>'screenwidth','default'=>'9999') ?><?php $attr7_name='screenwidth' ?><?php $attr7_default='9999' ?><input type="hidden" name="<?php echo $attr7_name ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr5 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -2146,7 +2146,7 @@ document.forms[0].screenwidth.value=window.innerWidth;
 <?php } ?>
 <?php unset($attr2) ?><?php $attr1 = array() ?></form>
 
-<?php unset($attr1) ?><?php $attr2 = array() ?><br/><?php unset($attr2) ?><?php $attr2 = array() ?><br/><?php unset($attr2) ?><?php $attr2 = array('target'=>'_top','url'=>$conf['login']['gpl']['url']) ?><?php $attr2_target='_top' ?><?php $attr2_url=$conf['login']['gpl']['url'] ?><?php
+<?php unset($attr1) ?><?php $attr2 = array() ?><br/><?php unset($attr2) ?><?php $attr2 = array() ?><br/><?php unset($attr2) ?><?php $attr2 = array('title'=>'','target'=>'_top','url'=>$conf['login']['gpl']['url'],'class'=>'') ?><?php $attr2_title='' ?><?php $attr2_target='_top' ?><?php $attr2_url=$conf['login']['gpl']['url'] ?><?php $attr2_class='' ?><?php
 	if(empty($attr2_class))
 		$attr2_class='';
 	if(empty($attr2_title))
@@ -2156,7 +2156,7 @@ document.forms[0].screenwidth.value=window.innerWidth;
 		$tmp_url = $attr2_url;
 	else
 		$tmp_url = Html::url($attr2_action,$attr2_subaction,!empty($$attr2_id)?$$attr2_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr2_class ?>" target="<?php echo $attr2_target ?>" title="<?php echo $attr2_title ?>"><?php unset($attr2) ?><?php unset($attr2_target) ?><?php unset($attr2_url) ?><?php $attr3 = array('class'=>'text','value'=>lang('GLOBAL_GPL')) ?><?php $attr3_class='text' ?><?php $attr3_value=lang('GLOBAL_GPL') ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr2_class ?>" target="<?php echo $attr2_target ?>" title="<?php echo $attr2_title ?>"><?php unset($attr2) ?><?php unset($attr2_title) ?><?php unset($attr2_target) ?><?php unset($attr2_url) ?><?php unset($attr2_class) ?><?php $attr3 = array('class'=>'text','value'=>lang('GLOBAL_GPL')) ?><?php $attr3_class='text' ?><?php $attr3_value=lang('GLOBAL_GPL') ?><?php
 	if	( isset($attr3_prefix)&& isset($attr3_key))
 		$attr3_key = $attr3_prefix.$attr3_key;
 	if	( isset($attr3_suffix)&& isset($attr3_key))
