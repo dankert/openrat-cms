@@ -8,7 +8,7 @@ page
 		list list:el extract:true
 			row
 				cell
-					link url:var:url title:TREE_CHOOSE_PROJECT
+					link url:var:url title:message:TREE_CHOOSE_PROJECT
 						set var:project value:project
 						image type:project
 						text var:name
