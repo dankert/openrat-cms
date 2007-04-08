@@ -12,6 +12,9 @@ min_width            = 950          ; Minimal Width of the browser window. If sm
 
 redirect             = false        ; use redirects before going to view (actually in testing)
 
+; Use of human date format
+; looks like "3 years ago", or "7 months ago"
+human_date_format    = false
 
 [frames]
 
