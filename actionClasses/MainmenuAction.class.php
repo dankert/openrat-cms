@@ -157,6 +157,10 @@ class MainmenuAction extends Action
 			$this->addSubaction('el'   );
 			$this->addSubaction('prop' );
 		}
+		else
+		{
+			$this->setTemplateVar('text',lang('global_templates') );
+		}
 
 		$this->setTemplateVar('param' ,'templateid');
 		$this->setTemplateVar('windowMenu',$this->subActionList);
