@@ -261,7 +261,8 @@ class MainmenuAction extends Action
 		if	( $this->getRequestId() != 0 )
 		{
 			$this->addSubaction('edit'   );
-			$this->addSubaction('users'  );
+			
+//			Deaktiviert, da nicht funktionsfähig $this->addSubaction('users'  );
 		}
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 
