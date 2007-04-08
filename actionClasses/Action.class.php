@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.26  2007-01-21 15:35:01  dankert
+// Revision 1.27  2007-04-08 21:09:34  dankert
+// Anderes Spracheelement f?r Fenstertitel
+//
+// Revision 1.26  2007/01/21 15:35:01  dankert
 // ?nderung in "lastModified()"
 //
 // Revision 1.25  2006/07/19 20:28:40  dankert
@@ -236,7 +239,7 @@ class Action
 			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
 
 		if	( isset($this->actionConfig[$this->subActionName]['menu']))
-			$windowTitle = 'menu_'.$this->actionName.'_'.$this->actionConfig[$this->subActionName]['menu'];
+			$windowTitle = 'menu_title_'.$this->actionName.'_'.$this->actionConfig[$this->subActionName]['menu'];
 
 		global $conf;
 		global $PHP_SELF;
@@ -505,7 +508,7 @@ class Action
 			else
 				$menuText = 'menu_'.$this->actionName.'_'.$menuName;
 				
-			Logger::trace("testing menu $menuName");
+//			Logger::trace("testing menu $menuName");
 			if	( $this->checkMenu($menuName) )
 				$windowMenu[] = array('subaction'=>$menuName,
                                       'text'     =>$menuText,
