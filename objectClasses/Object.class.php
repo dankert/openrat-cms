@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.23  2007-04-08 15:25:35  dankert
+// Eigenschaft "type" erg?nzt.
+//
 // Revision 1.22  2007-04-06 01:38:52  dankert
 // Namen nicht speichern, wenn leer.
 //
@@ -184,6 +187,14 @@ class Object
 	 * @type Boolean
 	 */
 	var $isLink = false;
+
+	/**
+	 * Kennzeichnet den Typ dieses Objektes.
+	 * Muss den Inhalt OR_FILE, OR_FOLDER, OR_PAGE oder OR_LINK haben.
+	 * Vorbelegung mit <code>null</code>.
+	 * @type Integer
+	 */
+	var $type = null;
 	
 	/** Kennzeichen ob Objekt den Wurzelordner des Projektes darstellt (parentid ist dann NULL)
 	 * @type Boolean
