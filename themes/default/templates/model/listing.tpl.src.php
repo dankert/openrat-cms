@@ -7,10 +7,12 @@ page
 						image file:icon_model
 						text var:name
 				cell class:fx
-					link url:var:default_url target:cms_main
-						image file:icon_model
-						text text:GLOBAL_make_default
+					if present:default_url
+						link url:var:default_url target:cms_main
+							text text:GLOBAL_make_default
 				cell class:fx
-					link url:var:select_url target:config:interface/frame/top
-						image file:icon_model
+					if present:select_url
+						link url:var:select_url target:config:interface/frames/top
+							text text:GLOBAL_select
+					else
 						text text:GLOBAL_selected
