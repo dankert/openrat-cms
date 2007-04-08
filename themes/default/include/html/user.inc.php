@@ -1,5 +1,9 @@
 <?php
-		$user = $$attr_user;
+		if	( is_object($attr_user) )
+			$user = $attr_user;
+		else
+			$user = $$attr_user;
+			
 		if	( empty($user->name) )
 			$user->name = lang('GLOBAL_UNKNOWN');
 		if	( empty($user->fullname) )

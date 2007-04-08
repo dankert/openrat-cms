@@ -20,14 +20,14 @@ page
 			cell class:fx
 				text text:global_created
 			cell class:fx
-				date var:create_date
+				date date:var:create_date
 				text raw:,_
-				#user user:create_user
+				user user:var:create_user
 		row
 			cell class:fx
 				text text:global_lastchange
 			cell class:fx
-				date var:lastchange_date
+				date date:var:lastchange_date
 				text raw:,_
-				#user user:lastchange_user
+				user user:var:lastchange_user
 

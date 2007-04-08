@@ -25,7 +25,7 @@ page class:main
 						text text:var:name
 						text raw:_
 				cell class:fx
-					text var:date
+					text date:var:date
 
 		if empty:object
 		

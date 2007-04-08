@@ -1,5 +1,5 @@
 <?php	
-		$time = $$attr_date;
+		$time = $attr_date;
 	
 		$sekunden = time()-$time;
 		$minuten = intval($sekunden/60);
