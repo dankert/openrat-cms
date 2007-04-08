@@ -792,7 +792,7 @@ SQL
 						$inhalt .= getenv('SERVER_NAME');
 						$inhalt .= dirname(getenv('SCRIPT_NAME'));
 						$db = Session::getDatabase();
-						$inhalt .= '/'.Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id));
+						$inhalt .= '/'.basename(Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id)));
 						break;
 					case 'lastch_user_username':
 						$user = $this->page->lastchangeUser;
