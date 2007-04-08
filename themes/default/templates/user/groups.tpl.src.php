@@ -6,5 +6,5 @@ page
 					image file:icon_group
 					text var:name
 				cell class:fx
-					link url:delgroupurl
+					link url:var:delgroupurl
 						text text:GLOBAL_DELETE
