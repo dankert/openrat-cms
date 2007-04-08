@@ -25,7 +25,7 @@ page
 			
 					if not:true empty:url
 					# Menüpunkt
-						link url:var:url target:cms_main_main title:title
+						link url:var:url target:cms_main_main title:var:title
 							text var:text
 					if empty:url
 							text var:text class:inactive
