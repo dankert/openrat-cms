@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.7  2007-01-21 22:27:49  dankert
+// Revision 1.8  2007-04-08 21:18:16  dankert
+// Korrektur URL in listing()
+//
+// Revision 1.7  2007/01/21 22:27:49  dankert
 // Direkt Punkt "Bearbeiten" ?ffnen.
 //
 // Revision 1.6  2006/01/29 17:18:58  dankert
@@ -150,7 +153,7 @@ class ModelAction extends Action
 			$list[$id]['name'] = $m->name;
 			
 			if	( $this->userIsAdmin() )
-				$list[$id]['url' ] = Html::url('index','model',$id,
+				$list[$id]['url' ] = Html::url('main','model',$id,
 				                               array(REQ_PARAM_TARGETSUBACTION=>'edit') );
 
 			if	( ! $m->isDefault && $this->userIsAdmin() )
