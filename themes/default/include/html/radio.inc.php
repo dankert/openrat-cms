@@ -1,1 +1,1 @@
-<input type="radio" id="id_<?php echo $attr_name.'_'.$attr_value ?>"  name="<?php echo $attr_prefix.$attr_name ?>"<?php if ( $attr_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr_value ?>" <?php if($attr_value==$default) echo 'checked="checked"' ?> />
+<input type="radio" id="id_<?php echo $attr_name.'_'.$attr_value ?>"  name="<?php echo $attr_prefix.$attr_name ?>"<?php if ( $attr_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr_value ?>" <?php if($attr_value==$attr_default) echo 'checked="checked"' ?> />

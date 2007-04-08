@@ -139,7 +139,13 @@ class TemplateEngine
 		}
 		else
 		{
-			return "'".$value."'";
+			// Sonderfälle für die Attributwerte "true" und "false".
+			// Hinweis: Die Zeichenkette "false" entspricht in PHP true.
+			// Siehe http://de.php.net/manual/de/language.types.boolean.php
+			if	( $value == 'true' || $value == 'false' )
+				return $value;
+			else
+				return "'".$value."'";
 		}
 	}
 	
@@ -210,6 +216,7 @@ class TemplateEngine
 	 */
 	function checkAttributes( $cmd,$attr )
 	{
+//		Html::debug($cmd,'cmd');
 		global $conf;
 		$elements = parse_ini_file( OR_THEMES_DIR.$conf['interface']['theme'].'/include/elements.ini.'.PHP_EXT);
 
@@ -217,41 +224,39 @@ class TemplateEngine
 			die( 'parser error: unknown element: '.$cmd );
 			
 		$checkedAttr = array();
-		
+
+		// Schleife über alle Attribute.		
 		foreach( explode(',',$elements[$cmd]) as $al )
 		{
 			$al=trim($al);
 			if	( $al=='')
-				continue;
-				
-			list($a,$default) = explode(':',$al,2) + array('','');
-			$default = str_replace('COMMA',',',$default); // Komma in Default-Werten ersetzen.
-			if	( isset($attr[$a]))
-				$checkedAttr[$a]=$attr[$a];
-			else
-				if	( $default=='*')
-					die( 'required attribute not found, element= '.$cmd.', attribute='.$a );
-				else
-					if	( !empty($default) )
-						$checkedAttr[$a]=$default;
-			unset( $attr[$a] );
+				continue; // Leeres Attribut... nicht zu gebrauchen.
 			
-			// Sonderfälle für die Attributwerte "true" und "false".
-			// Hinweis: Die Zeichenkette "false" entspricht in PHP true.
-			// Siehe http://de.php.net/manual/de/language.types.boolean.php
-			if	( isset($checkedAttr[$a]))
-			{
-				if	( $checkedAttr[$a] == 'true')
-					$checkedAttr[$a] = true;
-				elseif	( $checkedAttr[$a] == 'false')
-					$checkedAttr[$a] = false;
-			}
+				
+			$pair = explode(':',$al,2);
+			if	( count($pair) == 1 ) $pair[] = null;
+			list($a,$default) = $pair;
+			
+			if	( is_string($default))
+				$default = str_replace('COMMA',',',$default); // Komma in Default-Werten ersetzen.
+
+			if	( isset($attr[$a]))
+				$checkedAttr[$a]=$attr[$a]; // Attribut ist bereits vorhanden, alles ok.
+			elseif	( $default=='*') // Pflichtfeld!
+				die( 'required attribute not found, element= '.$cmd.', attribute='.$a );
+			elseif	( !is_null($default) )
+					$checkedAttr[$a]=$default;
+			else
+				;
+
+			unset( $attr[$a] ); // Damit am Ende das Urprungsarray leer wird.
 		}
+//		Html::debug($checkedAttr,'cattr');
 		
 		if	( count($attr) > 0 )
 		{
 			foreach($attr as $name=>$value)
-				die( 'unknown attribute, element= '.$cmd.', attribute='.$name.', known attributes='.$elements[$cmd] );
+				die( 'unknown attribute, element= '.$cmd.', attribute='.$name.', known attributes='.$elements[$cmd]."\n" );
 		}
 		
 		return $checkedAttr;

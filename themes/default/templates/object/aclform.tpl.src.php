@@ -8,16 +8,14 @@ page
 				cell class:fx
 					text text:GLOBAL_ALL
 				cell class:fx
-					set var:type value:all
-					radio name:type value:type default:true
+					radio name:type value:all default:true
 				cell class:fx
 					text raw:_
 			row
 				cell class:fx
 					text text:GLOBAL_USER
 				cell class:fx
-					set var:type value:user
-					radio name:type value:type
+					radio name:type value:user
 				cell class:fx
 					selectbox name:userid list:users
 			if present:groups
@@ -25,8 +23,7 @@ page
 					cell class:fx
 						text text:GLOBAL_GROUP
 					cell class:fx
-						set var:type value:group
-						radio name:type value:type
+						radio name:type value:group
 					cell class:fx
 						selectbox name:groupid list:groups
 			row
@@ -43,13 +40,19 @@ page
 				cell colspan:3 class:help
 					text raw:_
 	
-			list list:show value:t
+			list list:show value:t key:k
 				row
-RAW
-<td class="<?php echo $fx ?>"><?php echo lang('ACL_'.strtoupper($t)) ?></td>
-<td class="<?php echo $fx ?>" width="20"><?php echo lang('ACL_'.strtoupper($t).'_ABBREV') ?></td>
-<td class="<?php echo $fx ?>"><?php echo Html::checkBox($t,($t=='read'),($t!='read'),array('title'=>lang('ACL_'.strtoupper($t) )) ) ?></td>
-END
+					cell
+						text key:var:t prefix:acl_
+					cell width:20px
+						text key:var:t prefix:acl_ suffix:_abbrev
+					cell
+						if value:var:t equals:read
+							set var:var:t value:true
+							checkbox name:var:t readonly:true
+						else
+							set var:var:t value:false
+							checkbox name:var:t readonly:false 
 			row
 				cell colspan:3 class:act
 					button type:ok
