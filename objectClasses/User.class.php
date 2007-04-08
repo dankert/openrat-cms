@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.20  2007-02-15 22:12:02  dankert
+// Revision 1.21  2007-04-08 21:51:55  dankert
+// Korrektur Benutzer l?schen, wenn noch Referenzen in der Datenbank vorhanden sind.
+//
+// Revision 1.20  2007/02/15 22:12:02  dankert
 // Neue Methode "isValid()"
 //
 // Revision 1.19  2007/01/27 00:16:36  dankert
@@ -463,15 +466,32 @@ class User
 	}
 
 
-	// Benutzer entfernen
+	/**
+	 * Benutzer entfernen.
+	 * Vor dem Entfernen werden alle Referenzen af diesen Benutzer entfernt.
+	 */
 	function delete()
 	{
 		$db = db_connection();
 
-		// Alle Archivdaten in Dateien mit diesem Benutzer entfernen
+		// "Erzeugt von" für diesen Benutzer entfernen.
 		$sql = new Sql( 'UPDATE {t_object} '.
 		                'SET create_userid=null '.
 		                'WHERE create_userid={userid}' );
+		$sql->setInt   ('userid',$this->userid );
+		$db->query( $sql->query );
+
+		// "Letzte Änderung von" für diesen Benutzer entfernen
+		$sql = new Sql( 'UPDATE {t_object} '.
+		                'SET lastchange_userid=null '.
+		                'WHERE lastchange_userid={userid}' );
+		$sql->setInt   ('userid',$this->userid );
+		$db->query( $sql->query );
+
+		// Alle Archivdaten in Dateien mit diesem Benutzer entfernen
+		$sql = new Sql( 'UPDATE {t_value} '.
+		                'SET lastchange_userid=null '.
+		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql->query );
 
@@ -481,13 +501,13 @@ class User
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql->query );
 
-		// Alle Gruppenzugeh?rigkeiten dieses Benutzers l?schen
+		// Alle Gruppenzugehoerigkeiten dieses Benutzers l?schen
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql->query );
 
-		// Benutzer l?schen
+		// Benutzer loeschen
 		$sql = new Sql( 'DELETE FROM {t_user} '.
 		                'WHERE id={userid}' );
 		$sql->setInt   ('userid',$this->userid );
