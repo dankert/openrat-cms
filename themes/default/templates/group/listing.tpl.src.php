@@ -3,6 +3,6 @@ page
 		list list:el extract:true
 			row
 				cell class:fx
-					link url:url target:cms_main
+					link url:var:url target:cms_main
 						image file:icon_group
 						text var:name
