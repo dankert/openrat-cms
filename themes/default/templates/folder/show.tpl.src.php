@@ -6,7 +6,7 @@ page class:main
 		if present:up_url
 			row
 				cell width:50% colspan:8 class:fx
-					link url:up_url target:cms_main
+					link url:var:up_url target:cms_main
 						image type:folder
 						text raw:_...
 		row
@@ -25,7 +25,7 @@ page class:main
 						text text:var:name
 						text raw:_
 				cell class:fx
-					text date:var:date
+					date date:var:date
 
 		if empty:object
 		
