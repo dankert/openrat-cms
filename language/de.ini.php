@@ -569,6 +569,7 @@ MENU_PROJECT_ADD_DESC =Neues Projekt anlegen
 MENU_PROJECT_EDIT =Bearbeiten
 MENU_PROJECT_EDIT_DESC =Die Projekteinstellungen bearbeiten
 MENU_PROJECT_LIST =Alle Projekte
+MENU_TITLE_PROJECT_LIST = Projektübersicht
 MENU_PROJECT_LISTING =Projekte
 MENU_PROJECT_LISTING_DESC =Alle Projekte anzeigen
 MENU_PROJECT_MAINTENANCE =Wartung

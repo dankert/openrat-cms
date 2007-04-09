@@ -407,7 +407,7 @@ class MainmenuAction extends Action
 		}
 		else
 		{
-			$this->setTemplateVar('text','' );
+			$this->setTemplateVar('text',lang('GLOBAL_PROJECTS') );
 		}
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
