@@ -220,6 +220,11 @@ span.inactive
 	color:gray;
 }
 
+span.accesskey
+{
+	text-decoration:underline;
+}
+
 th
 {
 	background-color:#7B9CBD;

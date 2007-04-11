@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.28  2007-04-11 21:43:01  dankert
+// Erg?nzung von "Accesskeys".
+//
 // Revision 1.27  2007-04-08 21:09:34  dankert
 // Anderes Spracheelement f?r Fenstertitel
 //
@@ -507,12 +510,16 @@ class Action
 				$menuText = 'menu_'.$this->actionName.'_'.$this->actionConfig[$menuName]['alias'];
 			else
 				$menuText = 'menu_'.$this->actionName.'_'.$menuName;
-				
+			
+			
+			$menuKey = 'accesskey_window_'.$menuName;
+			
 //			Logger::trace("testing menu $menuName");
 			if	( $this->checkMenu($menuName) )
 				$windowMenu[] = array('subaction'=>$menuName,
                                       'text'     =>$menuText,
                                       'title'    =>$menuText.'_DESC',
+                                      'key'      =>$menuKey,
                                       'url'=>Html::url($actionName,$menuName,$this->getRequestId()) );
 		}
 		$this->setTemplateVar('windowMenu',$windowMenu);

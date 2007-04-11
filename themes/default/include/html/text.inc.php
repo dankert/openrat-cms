@@ -46,6 +46,13 @@
 	
 	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
-		
+
+	if	(isset($attr_accesskey))
+	{
+		$pos = strpos(strtolower($tmp_text),strtolower($attr_accesskey));
+		if	( $pos !== false )
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
+	}
+			
 	echo $tmp_text;
 ?></span>

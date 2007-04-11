@@ -100,6 +100,7 @@ class MainmenuAction extends Action
 			$url = '';
 		$this->subActionList[ $name ] = array( 'text' =>lang('MENU_'.strtoupper($name) ),
 		                                       'title'=>lang('MENU_'.strtoupper($name).'_DESC' ),
+		                                       'key'  =>strtoupper(lang('ACCESSKEY_MAIN_'.strtoupper($name))),
 		                                       'url'  =>$url );
 	}
 	

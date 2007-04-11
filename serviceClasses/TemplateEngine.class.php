@@ -129,6 +129,8 @@ class TemplateEngine
 					return '$this->'.$value;
 				case 'message':
 					return 'lang('."'".$value."'".')';
+				case 'messagevar':
+					return 'lang($'.$value.')';
 				case 'config':
 					$config_parts = explode('/',$value);
 					return '$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
