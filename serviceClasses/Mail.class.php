@@ -25,6 +25,7 @@ class Mail
 	{
 		global $conf;
 		
+		// Zeilenumbruch CR/LF gem. RFC 822.
 		$this->nl = chr(13).chr(10);
 		
 		if	( !empty($conf['mail']['from']) )
