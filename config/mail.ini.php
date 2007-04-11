@@ -24,3 +24,11 @@ signature="http://www.openrat.de"
 ; 1=Highest, 2=High, 3=Normal, 4=Low, 5=Lowest
 ; Hint: Most MUAs ignore this header.
 priority=3
+
+
+; Non-7-bit-chars are not allowed in Mailheaders (see RFC 822, 2045, 2047)
+; and must be encoded. Openrat supports 3 types of encoding:
+; 'Quoted-printable' (default),
+; 'Base64'
+; '' (blank) no encoding.
+header_encoding="Quoted-printable"
