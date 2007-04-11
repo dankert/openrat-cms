@@ -6,10 +6,10 @@
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
-<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+<?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
        	?>
-  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
 <?php
       }
 ?>
@@ -21,7 +21,7 @@
 
 <body class="<?php echo $attr1_class ?>">
 
-<?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2 = array('action'=>'folder','subaction'=>'multiple','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr2_action='folder' ?><?php $attr2_subaction='multiple' ?><?php $attr2_target='_self' ?><?php $attr2_method='post' ?><?php $attr2_enctype='application/x-www-form-urlencoded' ?><?php
+<?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2 = array('action'=>'folder','subaction'=>'multiple','name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr2_action='folder' ?><?php $attr2_subaction='multiple' ?><?php $attr2_name='' ?><?php $attr2_target='_self' ?><?php $attr2_method='post' ?><?php $attr2_enctype='application/x-www-form-urlencoded' ?><?php
 	if	(empty($attr2_action))
 		$attr2_action = $actionName;
 	if	(empty($attr2_subaction))
@@ -39,7 +39,7 @@
 <input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr2_id ?>" /><?php
 		if	( $conf['interface']['url_sessionid'] )
 			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
-?><?php unset($attr2) ?><?php unset($attr2_action) ?><?php unset($attr2_subaction) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3 = array('name'=>'ids') ?><?php $attr3_name='ids' ?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo isset($$attr3_name)?$$attr3_name:$attr3_default ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3 = array('name'=>'type') ?><?php $attr3_name='type' ?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo isset($$attr3_name)?$$attr3_name:$attr3_default ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3 = array('title'=>'titelso','name'=>'bla','widths'=>'5%,75%','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_title='titelso' ?><?php $attr3_name='bla' ?><?php $attr3_widths='5%,75%' ?><?php $attr3_width='93%' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
+?><?php unset($attr2) ?><?php unset($attr2_action) ?><?php unset($attr2_subaction) ?><?php unset($attr2_name) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3 = array('name'=>'ids') ?><?php $attr3_name='ids' ?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo isset($$attr3_name)?$$attr3_name:$attr3_default ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3 = array('name'=>'type') ?><?php $attr3_name='type' ?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo isset($$attr3_name)?$$attr3_name:$attr3_default ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3 = array('title'=>'titelso','name'=>'bla','widths'=>'5%,75%','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_title='titelso' ?><?php $attr3_name='bla' ?><?php $attr3_widths='5%,75%' ?><?php $attr3_width='93%' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr3_widths))
 	{
@@ -63,7 +63,7 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr3_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr3_icon.IMG_ICON_EXT.'" align="left" border="0">';
-		if	( !is_array($path) )
+		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
@@ -82,7 +82,10 @@
     </td>
   </tr>
   <tr><td class="subaction">
-    <?php foreach( $windowMenu as $menu )
+  
+    <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
+			$windowMenu = array();
+    foreach( $windowMenu as $menu )
           {
           	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
@@ -259,15 +262,13 @@
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_text) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4 = array('list'=>'objectlist','extract'=>'1','key'=>'list_key','value'=>'list_value') ?><?php $attr4_list='objectlist' ?><?php $attr4_extract='1' ?><?php $attr4_key='list_key' ?><?php $attr4_value='list_value' ?><?php
+?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_text) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4 = array('list'=>'objectlist','extract'=>true,'key'=>'list_key','value'=>'list_value') ?><?php $attr4_list='objectlist' ?><?php $attr4_extract=true ?><?php $attr4_key='list_key' ?><?php $attr4_value='list_value' ?><?php
 	$attr4_list_tmp_key   = $attr4_key;
 	$attr4_list_tmp_value = $attr4_value;
-	$attr4_list_extract   = ($attr4_extract==true);
+	$attr4_list_extract   = $attr4_extract;
 
-	if	( !is_array($$attr4_list) )
+	if	( !isset($$attr4_list) || !is_array($$attr4_list) )
 		$$attr4_list = array();
-//		die('not an array in list,var='.$attr4_list);
-//		Html::debug($$attr4_list);
 	
 	foreach( $$attr4_list as $$attr4_list_tmp_key => $$attr4_list_tmp_value )
 	{
@@ -655,7 +656,7 @@ if (isset($attr7_elementtype)) {
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
 		
 	echo $tmp_text;
-?></span><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_raw) ?><?php $attr7 = array('list'=>'folder','name'=>'targetobjectid') ?><?php $attr7_list='folder' ?><?php $attr7_name='targetobjectid' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
+?></span><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_raw) ?><?php $attr7 = array('list'=>'folder','name'=>'targetobjectid','default'=>'','onchange'=>'','title'=>'','class'=>'') ?><?php $attr7_list='folder' ?><?php $attr7_name='targetobjectid' ?><?php $attr7_default='' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
 if (count($$attr7_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr7_list as $box_key=>$box_value )
@@ -667,7 +668,7 @@ if (count($$attr7_list)==1) echo ' disabled="disabled"'
 		}
 ?></select><?php
 if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />'
-?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php unset($attr7_onchange) ?><?php unset($attr7_title) ?><?php unset($attr7_class) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'ask_filename') ?><?php $attr4_present='ask_filename' ?><?php 
@@ -789,7 +790,8 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_colspan) ?><?php $attr7 = array('type'=>'text','name'=>'filename','size'=>'40','maxlength'=>'256') ?><?php $attr7_type='text' ?><?php $attr7_name='filename' ?><?php $attr7_size='40' ?><?php $attr7_maxlength='256' ?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_colspan) ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'filename','size'=>'40','maxlength'=>'256','onchange'=>'') ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='filename' ?><?php $attr7_size='40' ?><?php $attr7_maxlength='256' ?><?php $attr7_onchange='' ?><?php if(!isset($attr7_default)) $attr7_default='';
+?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php unset($attr7_onchange) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'ask_commit') ?><?php $attr4_present='ask_commit' ?><?php 
@@ -911,15 +913,12 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_colspan) ?><?php $attr7 = array('default'=>'','readonly'=>'','name'=>'commit') ?><?php $attr7_default='' ?><?php $attr7_readonly='' ?><?php $attr7_name='commit' ?><?php
-	$attr7_default  = ( $attr7_default  == true );
-	
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_colspan) ?><?php $attr7 = array('default'=>false,'readonly'=>false,'name'=>'commit') ?><?php $attr7_default=false ?><?php $attr7_readonly=false ?><?php $attr7_name='commit' ?><?php
 	if	( isset($$attr7_name) )
-		$checked = $$attr7_name == true;
-//		$checked = isset($$$attr7_name)&& $$$attr7_name==true;
+		$checked = $$attr7_name;
 	else
-		$checked = $attr7_default == true;
-?><input type="checkbox" id="id_<?php echo $attr7_name  ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr7 = array('for'=>'commit') ?><?php $attr7_for='commit' ?><label for="id_<?php echo $attr7_for ?><?php if (!empty($attr7_value)) echo '_' ?><?php echo $attr7_value ?>"><?php unset($attr7) ?><?php unset($attr7_for) ?><?php $attr8 = array('class'=>'text','raw'=>'_') ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php
+		$checked = $attr7_default;
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr7 = array('for'=>'commit') ?><?php $attr7_for='commit' ?><label for="id_<?php echo $attr7_for ?><?php if (!empty($attr7_value)) echo '_' ?><?php echo $attr7_value ?>"><?php unset($attr7) ?><?php unset($attr7_for) ?><?php $attr8 = array('class'=>'text','raw'=>'_') ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))

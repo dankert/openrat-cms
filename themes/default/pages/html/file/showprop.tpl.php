@@ -771,7 +771,15 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('date'=>'create_date') ?><?php $attr5_date='create_date' ?><?php	
-		$time = $$attr5_date;
+    global $conf;
+	$time = $attr5_date;
+
+	if	( $time==0)
+		echo lang('GLOBAL_UNKNOWN');
+	elseif ( !$conf['interface']['human_date_format'] )
+		echo date(lang('DATE_FORMAT'),$time);
+	else
+	{
 	
 		$sekunden = time()-$time;
 		$minuten = intval($sekunden/60);
@@ -781,9 +789,11 @@
 		$jahre   = intval($monate  /12);
 
 		echo '<span title="'.date(lang('DATE_FORMAT'),$time).'"">';
-		
+
 		if	( $time==0)
 			echo lang('GLOBAL_UNKNOWN');
+		elseif ( !$conf['interface']['human_date_format'] )
+			echo date(lang('DATE_FORMAT'),$time);
 		elseif	( $sekunden == 1 )
 			echo $sekunden.' '.lang('GLOBAL_SECOND');
 		elseif	( $sekunden < 60 )
@@ -815,6 +825,7 @@
 			echo $jahre.' '.lang('GLOBAL_YEARS');
 			
 		echo '</span>';
+	}
 ?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr5 = array('class'=>'text','raw'=>',_') ?><?php $attr5_class='text' ?><?php $attr5_raw=',_' ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
@@ -866,7 +877,11 @@
 		
 	echo $tmp_text;
 ?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('user'=>'create_user') ?><?php $attr5_user='create_user' ?><?php
-		$user = $$attr5_user;
+		if	( is_object($attr5_user) )
+			$user = $attr5_user;
+		else
+			$user = $$attr5_user;
+			
 		if	( empty($user->name) )
 			$user->name = lang('GLOBAL_UNKNOWN');
 		if	( empty($user->fullname) )
@@ -971,7 +986,15 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('date'=>'lastchange_date') ?><?php $attr5_date='lastchange_date' ?><?php	
-		$time = $$attr5_date;
+    global $conf;
+	$time = $attr5_date;
+
+	if	( $time==0)
+		echo lang('GLOBAL_UNKNOWN');
+	elseif ( !$conf['interface']['human_date_format'] )
+		echo date(lang('DATE_FORMAT'),$time);
+	else
+	{
 	
 		$sekunden = time()-$time;
 		$minuten = intval($sekunden/60);
@@ -981,9 +1004,11 @@
 		$jahre   = intval($monate  /12);
 
 		echo '<span title="'.date(lang('DATE_FORMAT'),$time).'"">';
-		
+
 		if	( $time==0)
 			echo lang('GLOBAL_UNKNOWN');
+		elseif ( !$conf['interface']['human_date_format'] )
+			echo date(lang('DATE_FORMAT'),$time);
 		elseif	( $sekunden == 1 )
 			echo $sekunden.' '.lang('GLOBAL_SECOND');
 		elseif	( $sekunden < 60 )
@@ -1015,6 +1040,7 @@
 			echo $jahre.' '.lang('GLOBAL_YEARS');
 			
 		echo '</span>';
+	}
 ?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr5 = array('class'=>'text','raw'=>',_') ?><?php $attr5_class='text' ?><?php $attr5_raw=',_' ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
@@ -1066,7 +1092,11 @@
 		
 	echo $tmp_text;
 ?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('user'=>'lastchange_user') ?><?php $attr5_user='lastchange_user' ?><?php
-		$user = $$attr5_user;
+		if	( is_object($attr5_user) )
+			$user = $attr5_user;
+		else
+			$user = $$attr5_user;
+			
 		if	( empty($user->name) )
 			$user->name = lang('GLOBAL_UNKNOWN');
 		if	( empty($user->fullname) )
@@ -1409,15 +1439,13 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('list'=>'pages','extract'=>'1','key'=>'list_key','value'=>'list_value') ?><?php $attr5_list='pages' ?><?php $attr5_extract='1' ?><?php $attr5_key='list_key' ?><?php $attr5_value='list_value' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('list'=>'pages','extract'=>true,'key'=>'list_key','value'=>'list_value') ?><?php $attr5_list='pages' ?><?php $attr5_extract=true ?><?php $attr5_key='list_key' ?><?php $attr5_value='list_value' ?><?php
 	$attr5_list_tmp_key   = $attr5_key;
 	$attr5_list_tmp_value = $attr5_value;
-	$attr5_list_extract   = ($attr5_extract==true);
+	$attr5_list_extract   = $attr5_extract;
 
 	if	( !isset($$attr5_list) || !is_array($$attr5_list) )
 		$$attr5_list = array();
-//		die('not an array in list,var='.$attr5_list);
-//		Html::debug($$attr5_list);
 	
 	foreach( $$attr5_list as $$attr5_list_tmp_key => $$attr5_list_tmp_value )
 	{
@@ -1430,7 +1458,7 @@
 			}
 			extract($$attr5_list_tmp_value);
 		}
-?><?php unset($attr5) ?><?php unset($attr5_list) ?><?php unset($attr5_extract) ?><?php unset($attr5_key) ?><?php unset($attr5_value) ?><?php $attr6 = array('target'=>'cms_main','url'=>'url') ?><?php $attr6_target='cms_main' ?><?php $attr6_url='url' ?><?php
+?><?php unset($attr5) ?><?php unset($attr5_list) ?><?php unset($attr5_extract) ?><?php unset($attr5_key) ?><?php unset($attr5_value) ?><?php $attr6 = array('title'=>'','target'=>'cms_main','url'=>'url','class'=>'') ?><?php $attr6_title='' ?><?php $attr6_target='cms_main' ?><?php $attr6_url='url' ?><?php $attr6_class='' ?><?php
 	if(empty($attr6_class))
 		$attr6_class='';
 	if(empty($attr6_title))
@@ -1440,7 +1468,7 @@
 		$tmp_url = $attr6_url;
 	else
 		$tmp_url = Html::url($attr6_action,$attr6_subaction,!empty($$attr6_id)?$$attr6_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>" title="<?php echo $attr6_title ?>"><?php unset($attr6) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php $attr7 = array('align'=>'left','type'=>'page') ?><?php $attr7_align='left' ?><?php $attr7_type='page' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>" title="<?php echo $attr6_title ?>"><?php unset($attr6) ?><?php unset($attr6_title) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php unset($attr6_class) ?><?php $attr7 = array('align'=>'left','type'=>'page') ?><?php $attr7_align='left' ?><?php $attr7_type='page' ?><?php
 if (isset($attr7_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr7_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php
 } elseif (isset($attr7_type)) {

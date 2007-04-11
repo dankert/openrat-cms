@@ -141,7 +141,14 @@ if (isset($attr5_elementtype)) {
 	
 	if	( !empty($attr5_maxlength) && intval($attr5_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr5_maxlength) );
-		
+
+	if	(isset($attr5_accesskey))
+	{
+		$pos = strpos(strtolower($tmp_text),strtolower($attr5_accesskey));
+		if	( $pos !== false )
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
+	}
+			
 	echo $tmp_text;
 ?></span><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('width'=>'20%','style'=>'text-align:center;','class'=>'title') ?><?php $attr4_width='20%' ?><?php $attr4_style='text-align:center;' ?><?php $attr4_class='title' ?><?php
 //	if (empty($attr4_class))
@@ -206,7 +213,14 @@ if (isset($attr5_elementtype)) {
 	
 	if	( !empty($attr5_maxlength) && intval($attr5_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr5_maxlength) );
-		
+
+	if	(isset($attr5_accesskey))
+	{
+		$pos = strpos(strtolower($tmp_text),strtolower($attr5_accesskey));
+		if	( $pos !== false )
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
+	}
+			
 	echo $tmp_text;
 ?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('width'=>'40%','style'=>'text-align:right;','class'=>'title') ?><?php $attr4_width='40%' ?><?php $attr4_style='text-align:right;' ?><?php $attr4_class='title' ?><?php
 //	if (empty($attr4_class))
@@ -240,12 +254,11 @@ if (isset($attr5_elementtype)) {
 		$attr5_class='';
 	if(empty($attr5_title))
 		$attr5_title = '';
-		
 	if(!empty($attr5_url))
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($$attr5_id)?$$attr5_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'USER_LOGOUT') ?><?php $attr6_class='text' ?><?php $attr6_text='USER_LOGOUT' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>"<?php if (isset($attr5_accesskey)) echo ' accesskey="'.$attr5_accesskey.'"' ?>  title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'USER_LOGOUT') ?><?php $attr6_class='text' ?><?php $attr6_text='USER_LOGOUT' ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
@@ -293,7 +306,14 @@ if (isset($attr5_elementtype)) {
 	
 	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
-		
+
+	if	(isset($attr6_accesskey))
+	{
+		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
+		if	( $pos !== false )
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
+	}
+			
 	echo $tmp_text;
 ?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_text) ?><?php $attr4 = array() ?></a><?php unset($attr4) ?><?php $attr5 = array('class'=>'text','raw'=>'_(') ?><?php $attr5_class='text' ?><?php $attr5_raw='_(' ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
@@ -343,19 +363,25 @@ if (isset($attr5_elementtype)) {
 	
 	if	( !empty($attr5_maxlength) && intval($attr5_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr5_maxlength) );
-		
+
+	if	(isset($attr5_accesskey))
+	{
+		$pos = strpos(strtolower($tmp_text),strtolower($attr5_accesskey));
+		if	( $pos !== false )
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
+	}
+			
 	echo $tmp_text;
 ?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('title'=>'USER_PROFILE_DESC','target'=>'cms_main_main','url'=>$profile_url,'class'=>'') ?><?php $attr5_title='USER_PROFILE_DESC' ?><?php $attr5_target='cms_main_main' ?><?php $attr5_url=$profile_url ?><?php $attr5_class='' ?><?php
 	if(empty($attr5_class))
 		$attr5_class='';
 	if(empty($attr5_title))
 		$attr5_title = '';
-		
 	if(!empty($attr5_url))
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($$attr5_id)?$$attr5_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>" title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'userfullname') ?><?php $attr6_class='text' ?><?php $attr6_text='userfullname' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>"<?php if (isset($attr5_accesskey)) echo ' accesskey="'.$attr5_accesskey.'"' ?>  title="<?php echo $attr5_title ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6 = array('class'=>'text','text'=>'userfullname') ?><?php $attr6_class='text' ?><?php $attr6_text='userfullname' ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
@@ -403,7 +429,14 @@ if (isset($attr5_elementtype)) {
 	
 	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
-		
+
+	if	(isset($attr6_accesskey))
+	{
+		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
+		if	( $pos !== false )
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
+	}
+			
 	echo $tmp_text;
 ?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_text) ?><?php $attr6 = array('class'=>'text','raw'=>')') ?><?php $attr6_class='text' ?><?php $attr6_raw=')' ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
@@ -453,7 +486,14 @@ if (isset($attr5_elementtype)) {
 	
 	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
-		
+
+	if	(isset($attr6_accesskey))
+	{
+		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
+		if	( $pos !== false )
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
+	}
+			
 	echo $tmp_text;
 ?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_raw) ?><?php $attr4 = array() ?></a><?php unset($attr4) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr1 = array() ?></table><?php unset($attr1) ?><?php $attr0 = array() ?>
 <!-- $Id$ -->

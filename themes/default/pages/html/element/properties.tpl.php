@@ -6,10 +6,10 @@
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
-<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+<?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
        	?>
-  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
 <?php
       }
 ?>
@@ -21,7 +21,7 @@
 
 <body class="<?php echo $attr1_class ?>">
 
-<?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2 = array('target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr2_target='_self' ?><?php $attr2_method='post' ?><?php $attr2_enctype='application/x-www-form-urlencoded' ?><?php
+<?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2 = array('name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr2_name='' ?><?php $attr2_target='_self' ?><?php $attr2_method='post' ?><?php $attr2_enctype='application/x-www-form-urlencoded' ?><?php
 	if	(empty($attr2_action))
 		$attr2_action = $actionName;
 	if	(empty($attr2_subaction))
@@ -39,7 +39,7 @@
 <input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr2_id ?>" /><?php
 		if	( $conf['interface']['url_sessionid'] )
 			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
-?><?php unset($attr2) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3 = array('name'=>'GLOBAL_PREFS','widths'=>'30%,70%','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_name='GLOBAL_PREFS' ?><?php $attr3_widths='30%,70%' ?><?php $attr3_width='93%' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
+?><?php unset($attr2) ?><?php unset($attr2_name) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3 = array('name'=>'GLOBAL_PREFS','widths'=>'30%,70%','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_name='GLOBAL_PREFS' ?><?php $attr3_widths='30%,70%' ?><?php $attr3_width='93%' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr3_widths))
 	{
@@ -63,7 +63,7 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr3_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr3_icon.IMG_ICON_EXT.'" align="left" border="0">';
-		if	( !is_array($path) )
+		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
@@ -82,7 +82,10 @@
     </td>
   </tr>
   <tr><td class="subaction">
-    <?php foreach( $windowMenu as $menu )
+  
+    <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
+			$windowMenu = array();
+    foreach( $windowMenu as $menu )
           {
           	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
@@ -389,7 +392,7 @@
 	
 	if	( $exec )
 	{
-?><?php unset($attr7) ?><?php unset($attr7_present) ?><?php $attr8 = array('list'=>'subtypes','name'=>'subtype') ?><?php $attr8_list='subtypes' ?><?php $attr8_name='subtype' ?><select size="1" id="id_<?php echo $attr8_name ?>"  name="<?php echo $attr8_name ?>" onchange="<?php echo $attr8_onchange ?>" title="<?php echo $attr8_title ?>" class="<?php echo $attr8_class ?>"<?php
+?><?php unset($attr7) ?><?php unset($attr7_present) ?><?php $attr8 = array('list'=>'subtypes','name'=>'subtype','default'=>'','onchange'=>'','title'=>'','class'=>'') ?><?php $attr8_list='subtypes' ?><?php $attr8_name='subtype' ?><?php $attr8_default='' ?><?php $attr8_onchange='' ?><?php $attr8_title='' ?><?php $attr8_class='' ?><select size="1" id="id_<?php echo $attr8_name ?>"  name="<?php echo $attr8_name ?>" onchange="<?php echo $attr8_onchange ?>" title="<?php echo $attr8_title ?>" class="<?php echo $attr8_class ?>"<?php
 if (count($$attr8_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr8_list as $box_key=>$box_value )
@@ -401,10 +404,10 @@ if (count($$attr8_list)==1) echo ' disabled="disabled"'
 		}
 ?></select><?php
 if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" value="'.$box_key.'" />'
-?><?php unset($attr8) ?><?php unset($attr8_list) ?><?php unset($attr8_name) ?><?php $attr6 = array() ?><?php
+?><?php unset($attr8) ?><?php unset($attr8_list) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php unset($attr8_onchange) ?><?php unset($attr8_title) ?><?php unset($attr8_class) ?><?php $attr6 = array() ?><?php
 	}
 	
-?><?php unset($attr6) ?><?php $attr7 = array('not'=>'1','present'=>'subtypes') ?><?php $attr7_not='1' ?><?php $attr7_present='subtypes' ?><?php 
+?><?php unset($attr6) ?><?php $attr7 = array('not'=>true,'present'=>'subtypes') ?><?php $attr7_not=true ?><?php $attr7_present='subtypes' ?><?php 
 
 	// Wahr-Vergleich
 //	Html::debug($attr7);
@@ -494,7 +497,8 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	
 	if	( $exec )
 	{
-?><?php unset($attr7) ?><?php unset($attr7_not) ?><?php unset($attr7_present) ?><?php $attr8 = array('type'=>'text','name'=>'subtype','size'=>'40','maxlength'=>'256') ?><?php $attr8_type='text' ?><?php $attr8_name='subtype' ?><?php $attr8_size='40' ?><?php $attr8_maxlength='256' ?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php $attr6 = array() ?><?php
+?><?php unset($attr7) ?><?php unset($attr7_not) ?><?php unset($attr7_present) ?><?php $attr8 = array('class'=>'','default'=>'','type'=>'text','name'=>'subtype','size'=>'40','maxlength'=>'256','onchange'=>'') ?><?php $attr8_class='' ?><?php $attr8_default='' ?><?php $attr8_type='text' ?><?php $attr8_name='subtype' ?><?php $attr8_size='40' ?><?php $attr8_maxlength='256' ?><?php $attr8_onchange='' ?><?php if(!isset($attr8_default)) $attr8_default='';
+?><input id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_default) ?><?php unset($attr8_type) ?><?php unset($attr8_name) ?><?php unset($attr8_size) ?><?php unset($attr8_maxlength) ?><?php unset($attr8_onchange) ?><?php $attr6 = array() ?><?php
 	}
 	
 ?><?php unset($attr6) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
@@ -684,15 +688,12 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>'','readonly'=>'','name'=>'with_icon') ?><?php $attr7_default='' ?><?php $attr7_readonly='' ?><?php $attr7_name='with_icon' ?><?php
-	$attr7_default  = ( $attr7_default  == true );
-	
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>false,'readonly'=>false,'name'=>'with_icon') ?><?php $attr7_default=false ?><?php $attr7_readonly=false ?><?php $attr7_name='with_icon' ?><?php
 	if	( isset($$attr7_name) )
-		$checked = $$attr7_name == true;
-//		$checked = isset($$$attr7_name)&& $$$attr7_name==true;
+		$checked = $$attr7_name;
 	else
-		$checked = $attr7_default == true;
-?><input type="checkbox" id="id_<?php echo $attr7_name  ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+		$checked = $attr7_default;
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'all_languages') ?><?php $attr4_present='all_languages' ?><?php 
@@ -879,15 +880,12 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>'','readonly'=>'','name'=>'all_languages') ?><?php $attr7_default='' ?><?php $attr7_readonly='' ?><?php $attr7_name='all_languages' ?><?php
-	$attr7_default  = ( $attr7_default  == true );
-	
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>false,'readonly'=>false,'name'=>'all_languages') ?><?php $attr7_default=false ?><?php $attr7_readonly=false ?><?php $attr7_name='all_languages' ?><?php
 	if	( isset($$attr7_name) )
-		$checked = $$attr7_name == true;
-//		$checked = isset($$$attr7_name)&& $$$attr7_name==true;
+		$checked = $$attr7_name;
 	else
-		$checked = $attr7_default == true;
-?><input type="checkbox" id="id_<?php echo $attr7_name  ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+		$checked = $attr7_default;
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'writable') ?><?php $attr4_present='writable' ?><?php 
@@ -1074,15 +1072,12 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>'','readonly'=>'','name'=>'writable') ?><?php $attr7_default='' ?><?php $attr7_readonly='' ?><?php $attr7_name='writable' ?><?php
-	$attr7_default  = ( $attr7_default  == true );
-	
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>false,'readonly'=>false,'name'=>'writable') ?><?php $attr7_default=false ?><?php $attr7_readonly=false ?><?php $attr7_name='writable' ?><?php
 	if	( isset($$attr7_name) )
-		$checked = $$attr7_name == true;
-//		$checked = isset($$$attr7_name)&& $$$attr7_name==true;
+		$checked = $$attr7_name;
 	else
-		$checked = $attr7_default == true;
-?><input type="checkbox" id="id_<?php echo $attr7_name  ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+		$checked = $attr7_default;
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'width') ?><?php $attr4_present='width' ?><?php 
@@ -1269,7 +1264,8 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('type'=>'text','name'=>'width','size'=>'10','maxlength'=>'256') ?><?php $attr7_type='text' ?><?php $attr7_name='width' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='256' ?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'width','size'=>'10','maxlength'=>'256','onchange'=>'') ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='width' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='256' ?><?php $attr7_onchange='' ?><?php if(!isset($attr7_default)) $attr7_default='';
+?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php unset($attr7_onchange) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'height') ?><?php $attr4_present='height' ?><?php 
@@ -1456,7 +1452,8 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('type'=>'text','name'=>'height','size'=>'10','maxlength'=>'256') ?><?php $attr7_type='text' ?><?php $attr7_name='height' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='256' ?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'height','size'=>'10','maxlength'=>'256','onchange'=>'') ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='height' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='256' ?><?php $attr7_onchange='' ?><?php if(!isset($attr7_default)) $attr7_default='';
+?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php unset($attr7_onchange) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'dateformat') ?><?php $attr4_present='dateformat' ?><?php 
@@ -1643,7 +1640,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'dateformats','name'=>'dateformat') ?><?php $attr7_list='dateformats' ?><?php $attr7_name='dateformat' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'dateformats','name'=>'dateformat','default'=>'','onchange'=>'','title'=>'','class'=>'') ?><?php $attr7_list='dateformats' ?><?php $attr7_name='dateformat' ?><?php $attr7_default='' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
 if (count($$attr7_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr7_list as $box_key=>$box_value )
@@ -1655,7 +1652,7 @@ if (count($$attr7_list)==1) echo ' disabled="disabled"'
 		}
 ?></select><?php
 if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />'
-?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php unset($attr7_onchange) ?><?php unset($attr7_title) ?><?php unset($attr7_class) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'wiki') ?><?php $attr4_present='wiki' ?><?php 
@@ -1842,15 +1839,12 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>'','readonly'=>'','name'=>'wiki') ?><?php $attr7_default='' ?><?php $attr7_readonly='' ?><?php $attr7_name='wiki' ?><?php
-	$attr7_default  = ( $attr7_default  == true );
-	
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>false,'readonly'=>false,'name'=>'wiki') ?><?php $attr7_default=false ?><?php $attr7_readonly=false ?><?php $attr7_name='wiki' ?><?php
 	if	( isset($$attr7_name) )
-		$checked = $$attr7_name == true;
-//		$checked = isset($$$attr7_name)&& $$$attr7_name==true;
+		$checked = $$attr7_name;
 	else
-		$checked = $attr7_default == true;
-?><input type="checkbox" id="id_<?php echo $attr7_name  ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+		$checked = $attr7_default;
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'html') ?><?php $attr4_present='html' ?><?php 
@@ -2037,15 +2031,12 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>'','readonly'=>'','name'=>'html') ?><?php $attr7_default='' ?><?php $attr7_readonly='' ?><?php $attr7_name='html' ?><?php
-	$attr7_default  = ( $attr7_default  == true );
-	
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('default'=>false,'readonly'=>false,'name'=>'html') ?><?php $attr7_default=false ?><?php $attr7_readonly=false ?><?php $attr7_name='html' ?><?php
 	if	( isset($$attr7_name) )
-		$checked = $$attr7_name == true;
-//		$checked = isset($$$attr7_name)&& $$$attr7_name==true;
+		$checked = $$attr7_name;
 	else
-		$checked = $attr7_default == true;
-?><input type="checkbox" id="id_<?php echo $attr7_name  ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+		$checked = $attr7_default;
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'decimals') ?><?php $attr4_present='decimals' ?><?php 
@@ -2232,7 +2223,8 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('type'=>'text','name'=>'decimals','size'=>'10','maxlength'=>'2') ?><?php $attr7_type='text' ?><?php $attr7_name='decimals' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='2' ?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'decimals','size'=>'10','maxlength'=>'2','onchange'=>'') ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='decimals' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='2' ?><?php $attr7_onchange='' ?><?php if(!isset($attr7_default)) $attr7_default='';
+?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php unset($attr7_onchange) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'dec_point') ?><?php $attr4_present='dec_point' ?><?php 
@@ -2419,7 +2411,8 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('type'=>'text','name'=>'dec_point','size'=>'10','maxlength'=>'5') ?><?php $attr7_type='text' ?><?php $attr7_name='dec_point' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='5' ?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'dec_point','size'=>'10','maxlength'=>'5','onchange'=>'') ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='dec_point' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='5' ?><?php $attr7_onchange='' ?><?php if(!isset($attr7_default)) $attr7_default='';
+?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php unset($attr7_onchange) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'thousand_sep') ?><?php $attr4_present='thousand_sep' ?><?php 
@@ -2606,7 +2599,8 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('type'=>'text','name'=>'thousand_sep','size'=>'10','maxlength'=>'1') ?><?php $attr7_type='text' ?><?php $attr7_name='thousand_sep' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='1' ?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'thousand_sep','size'=>'10','maxlength'=>'1','onchange'=>'') ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='thousand_sep' ?><?php $attr7_size='10' ?><?php $attr7_maxlength='1' ?><?php $attr7_onchange='' ?><?php if(!isset($attr7_default)) $attr7_default='';
+?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php unset($attr7_onchange) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'default_text') ?><?php $attr4_present='default_text' ?><?php 
@@ -2793,7 +2787,8 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('type'=>'text','name'=>'default_text','size'=>'40','maxlength'=>'255') ?><?php $attr7_type='text' ?><?php $attr7_name='default_text' ?><?php $attr7_size='40' ?><?php $attr7_maxlength='255' ?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'default_text','size'=>'40','maxlength'=>'255','onchange'=>'') ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='default_text' ?><?php $attr7_size='40' ?><?php $attr7_maxlength='255' ?><?php $attr7_onchange='' ?><?php if(!isset($attr7_default)) $attr7_default='';
+?><input id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php unset($attr7_type) ?><?php unset($attr7_name) ?><?php unset($attr7_size) ?><?php unset($attr7_maxlength) ?><?php unset($attr7_onchange) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'default_longtext') ?><?php $attr4_present='default_longtext' ?><?php 
@@ -2980,7 +2975,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'default_longtext','rows'=>'10','cols'=>'40') ?><?php $attr7_name='default_longtext' ?><?php $attr7_rows='10' ?><?php $attr7_cols='40' ?><textarea class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_rows) ?><?php unset($attr7_cols) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'default_longtext','rows'=>'10','cols'=>'40','class'=>'','default'=>'') ?><?php $attr7_name='default_longtext' ?><?php $attr7_rows='10' ?><?php $attr7_cols='40' ?><?php $attr7_class='' ?><?php $attr7_default='' ?><textarea class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_rows) ?><?php unset($attr7_cols) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'parameters') ?><?php $attr4_present='parameters' ?><?php 
@@ -3167,7 +3162,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'parameters','rows'=>'15','cols'=>'40') ?><?php $attr7_name='parameters' ?><?php $attr7_rows='15' ?><?php $attr7_cols='40' ?><textarea class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_rows) ?><?php unset($attr7_cols) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr5 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'parameters','rows'=>'15','cols'=>'40','class'=>'','default'=>'') ?><?php $attr7_name='parameters' ?><?php $attr7_rows='15' ?><?php $attr7_cols='40' ?><?php $attr7_class='' ?><?php $attr7_default='' ?><textarea class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_rows) ?><?php unset($attr7_cols) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr5 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -3211,15 +3206,13 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'dynamic_class_parameters','extract'=>'','key'=>'paramName','value'=>'defaultValue') ?><?php $attr7_list='dynamic_class_parameters' ?><?php $attr7_extract='' ?><?php $attr7_key='paramName' ?><?php $attr7_value='defaultValue' ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'dynamic_class_parameters','extract'=>false,'key'=>'paramName','value'=>'defaultValue') ?><?php $attr7_list='dynamic_class_parameters' ?><?php $attr7_extract=false ?><?php $attr7_key='paramName' ?><?php $attr7_value='defaultValue' ?><?php
 	$attr7_list_tmp_key   = $attr7_key;
 	$attr7_list_tmp_value = $attr7_value;
-	$attr7_list_extract   = ($attr7_extract==true);
+	$attr7_list_extract   = $attr7_extract;
 
-	if	( !is_array($$attr7_list) )
+	if	( !isset($$attr7_list) || !is_array($$attr7_list) )
 		$$attr7_list = array();
-//		die('not an array in list,var='.$attr7_list);
-//		Html::debug($$attr7_list);
 	
 	foreach( $$attr7_list as $$attr7_list_tmp_key => $$attr7_list_tmp_value )
 	{
@@ -3669,7 +3662,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'select_items','rows'=>'15','cols'=>'40') ?><?php $attr7_name='select_items' ?><?php $attr7_rows='15' ?><?php $attr7_cols='40' ?><textarea class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_rows) ?><?php unset($attr7_cols) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'select_items','rows'=>'15','cols'=>'40','class'=>'','default'=>'') ?><?php $attr7_name='select_items' ?><?php $attr7_rows='15' ?><?php $attr7_cols='40' ?><?php $attr7_class='' ?><?php $attr7_default='' ?><textarea class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_rows) ?><?php unset($attr7_cols) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'folderobjectid') ?><?php $attr4_present='folderobjectid' ?><?php 
@@ -3856,7 +3849,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'folders','name'=>'folderobjectid') ?><?php $attr7_list='folders' ?><?php $attr7_name='folderobjectid' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'folders','name'=>'folderobjectid','default'=>'','onchange'=>'','title'=>'','class'=>'') ?><?php $attr7_list='folders' ?><?php $attr7_name='folderobjectid' ?><?php $attr7_default='' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
 if (count($$attr7_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr7_list as $box_key=>$box_value )
@@ -3868,7 +3861,7 @@ if (count($$attr7_list)==1) echo ' disabled="disabled"'
 		}
 ?></select><?php
 if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />'
-?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php unset($attr7_onchange) ?><?php unset($attr7_title) ?><?php unset($attr7_class) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'default_objectid') ?><?php $attr4_present='default_objectid' ?><?php 
@@ -4055,7 +4048,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'objects','name'=>'default_objectid') ?><?php $attr7_list='objects' ?><?php $attr7_name='default_objectid' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'objects','name'=>'default_objectid','default'=>'','onchange'=>'','title'=>'','class'=>'') ?><?php $attr7_list='objects' ?><?php $attr7_name='default_objectid' ?><?php $attr7_default='' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
 if (count($$attr7_list)==1) echo ' disabled="disabled"'
 ?>><?php
 		foreach( $$attr7_list as $box_key=>$box_value )
@@ -4067,7 +4060,7 @@ if (count($$attr7_list)==1) echo ' disabled="disabled"'
 		}
 ?></select><?php
 if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />'
-?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php unset($attr7_onchange) ?><?php unset($attr7_title) ?><?php unset($attr7_class) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array('present'=>'code') ?><?php $attr4_present='code' ?><?php 
@@ -4254,7 +4247,7 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'code','rows'=>'35','cols'=>'60') ?><?php $attr7_name='code' ?><?php $attr7_rows='35' ?><?php $attr7_cols='60' ?><textarea class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_rows) ?><?php unset($attr7_cols) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7 = array('name'=>'code','rows'=>'35','cols'=>'60','class'=>'','default'=>'') ?><?php $attr7_name='code' ?><?php $attr7_rows='35' ?><?php $attr7_cols='60' ?><?php $attr7_class='' ?><?php $attr7_default='' ?><textarea class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_rows) ?><?php unset($attr7_cols) ?><?php unset($attr7_class) ?><?php unset($attr7_default) ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3 = array() ?><?php
 	}
 	
 ?><?php unset($attr3) ?><?php $attr4 = array() ?><?php

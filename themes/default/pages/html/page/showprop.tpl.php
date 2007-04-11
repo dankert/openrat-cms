@@ -1,16 +1,15 @@
 <?php $attr1 = array('class'=>'main','title'=>$cms_title) ?><?php $attr1_class='main' ?><?php $attr1_title=$cms_title ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<!-- $Id$ -->
 <head>
   <title><?php echo $attr1_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
-<?php if (is_array($windowMenu)) foreach( $windowMenu as $menu )
+<?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
        	?>
-  <link rel="section" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
 <?php
       }
 ?>
@@ -46,7 +45,7 @@
 		echo '<tr><td class="menu">';
 		if	( !empty($attr2_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr2_icon.IMG_ICON_EXT.'" align="left" border="0">';
-		if	( !is_array($path) )
+		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
@@ -65,7 +64,10 @@
     </td>
   </tr>
   <tr><td class="subaction">
-    <?php foreach( $windowMenu as $menu )
+  
+    <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
+			$windowMenu = array();
+    foreach( $windowMenu as $menu )
           {
           	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo lang($menu['text']) ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
@@ -128,14 +130,20 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_name') ?><?php $attr5_class='text' ?><?php $attr5_text='global_name' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -187,14 +195,20 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'name') ?><?php $attr5_class='text' ?><?php $attr5_var='name' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -260,14 +274,20 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_filename') ?><?php $attr5_class='text' ?><?php $attr5_text='global_filename' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -319,14 +339,20 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'filename') ?><?php $attr5_class='text' ?><?php $attr5_var='filename' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -392,14 +418,20 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_description') ?><?php $attr5_class='text' ?><?php $attr5_text='global_description' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -451,14 +483,20 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'description') ?><?php $attr5_class='text' ?><?php $attr5_var='description' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -524,14 +562,20 @@
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'page_template') ?><?php $attr5_class='text' ?><?php $attr5_text='page_template' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -627,16 +671,17 @@
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr5_present) )
 	{
-		if	( !isset($$attr5_present) )
-			$exec = false;
-		elseif	( is_array($$attr5_present) )
-			$exec = (count($$attr5_present)>0);
-		elseif	( is_bool($$attr5_present) )
-			$exec = $$attr5_present;
-		elseif	( is_numeric($$attr5_present) )
-			$exec = $$attr5_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr5_present);
+//		if	( !isset($$attr5_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr5_present) )
+//			$exec = (count($$attr5_present)>0);
+//		elseif	( is_bool($$attr5_present) )
+//			$exec = $$attr5_present;
+//		elseif	( is_numeric($$attr5_present) )
+//			$exec = $$attr5_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -648,6 +693,7 @@
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr5_invert) )
 		$exec = !$exec;
 
@@ -670,12 +716,17 @@
 	
 	if	( $exec )
 	{
-?><?php unset($attr5) ?><?php unset($attr5_present) ?><?php $attr6 = array('target'=>'_self','url'=>'template_url') ?><?php $attr6_target='_self' ?><?php $attr6_url='template_url' ?><?php
+?><?php unset($attr5) ?><?php unset($attr5_present) ?><?php $attr6 = array('title'=>'','target'=>'_self','url'=>'template_url','class'=>'') ?><?php $attr6_title='' ?><?php $attr6_target='_self' ?><?php $attr6_url='template_url' ?><?php $attr6_class='' ?><?php
+	if(empty($attr6_class))
+		$attr6_class='';
+	if(empty($attr6_title))
+		$attr6_title = '';
+		
 	if(!empty($attr6_url))
 		$tmp_url = $attr6_url;
 	else
 		$tmp_url = Html::url($attr6_action,$attr6_subaction,!empty($$attr6_id)?$$attr6_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>" title="<?php echo $attr6_title ?>"><?php unset($attr6) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php $attr7 = array('file'=>'icon_template','align'=>'left') ?><?php $attr7_file='icon_template' ?><?php $attr7_align='left' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>" title="<?php echo $attr6_title ?>"><?php unset($attr6) ?><?php unset($attr6_title) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php unset($attr6_class) ?><?php $attr7 = array('file'=>'icon_template','align'=>'left') ?><?php $attr7_file='icon_template' ?><?php $attr7_align='left' ?><?php
 if (isset($attr7_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr7_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php
 } elseif (isset($attr7_type)) {
@@ -684,16 +735,24 @@ if (isset($attr7_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr7_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php
 } elseif (isset($attr7_url)) {
 ?><img src="<?php echo $attr7_url ?>" border="0" align="<?php echo $attr7_align ?>"><?php
+} elseif (isset($attr7_fileext)) {
+?><img src="<?php echo $image_dir.$attr7_fileext ?>" border="0" align="<?php echo $attr7_align ?>"><?php
 } elseif (isset($attr7_file)) {
 ?><img src="<?php echo $image_dir.$attr7_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php } ?><?php unset($attr7) ?><?php unset($attr7_file) ?><?php unset($attr7_align) ?><?php $attr7 = array('class'=>'text','var'=>'template_name') ?><?php $attr7_class='text' ?><?php $attr7_var='template_name' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
 	if(empty($attr7_title))
 		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key).'_HELP';
+			$attr7_title = lang($attr7_key.'_HELP');
 		else
 			$attr7_title = '';
 
 ?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+
 	if (!empty($attr7_array))
 	{
 		//geht nicht:
@@ -777,16 +836,17 @@ if (isset($attr7_elementtype)) {
 	// Vergleich auf Vorhandensein
 	elseif	( isset($attr5_present) )
 	{
-		if	( !isset($$attr5_present) )
-			$exec = false;
-		elseif	( is_array($$attr5_present) )
-			$exec = (count($$attr5_present)>0);
-		elseif	( is_bool($$attr5_present) )
-			$exec = $$attr5_present;
-		elseif	( is_numeric($$attr5_present) )
-			$exec = $$attr5_present>=0;
-		else
-			$exec = true;
+		$exec = isset($$attr5_present);
+//		if	( !isset($$attr5_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr5_present) )
+//			$exec = (count($$attr5_present)>0);
+//		elseif	( is_bool($$attr5_present) )
+//			$exec = $$attr5_present;
+//		elseif	( is_numeric($$attr5_present) )
+//			$exec = $$attr5_present>=0;
+//		else
+//			$exec = true;
 	}
 
 	else
@@ -798,6 +858,7 @@ if (isset($attr7_elementtype)) {
 	}
 
 	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr5_invert) )
 		$exec = !$exec;
 
@@ -829,16 +890,24 @@ if (isset($attr6_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr6_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr6_align ?>"><?php
 } elseif (isset($attr6_url)) {
 ?><img src="<?php echo $attr6_url ?>" border="0" align="<?php echo $attr6_align ?>"><?php
+} elseif (isset($attr6_fileext)) {
+?><img src="<?php echo $image_dir.$attr6_fileext ?>" border="0" align="<?php echo $attr6_align ?>"><?php
 } elseif (isset($attr6_file)) {
 ?><img src="<?php echo $image_dir.$attr6_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr6_align ?>"><?php } ?><?php unset($attr6) ?><?php unset($attr6_file) ?><?php unset($attr6_align) ?><?php $attr6 = array('class'=>'text','var'=>'template_name') ?><?php $attr6_class='text' ?><?php $attr6_var='template_name' ?><?php
+	if	( isset($attr6_prefix)&& isset($attr6_key))
+		$attr6_key = $attr6_prefix.$attr6_key;
+	if	( isset($attr6_suffix)&& isset($attr6_key))
+		$attr6_key = $attr6_key.$attr6_suffix;
+		
 	if(empty($attr6_title))
 		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key).'_HELP';
+			$attr6_title = lang($attr6_key.'_HELP');
 		else
 			$attr6_title = '';
 
 ?><span class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+
 	if (!empty($attr6_array))
 	{
 		//geht nicht:
@@ -907,14 +976,20 @@ if (isset($attr6_elementtype)) {
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_full_filename') ?><?php $attr5_class='text' ?><?php $attr5_text='global_full_filename' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -966,14 +1041,20 @@ if (isset($attr6_elementtype)) {
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'full_filename') ?><?php $attr5_class='text' ?><?php $attr5_var='full_filename' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -1039,14 +1120,20 @@ if (isset($attr6_elementtype)) {
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_created') ?><?php $attr5_class='text' ?><?php $attr5_text='global_created' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -1098,7 +1185,15 @@ if (isset($attr6_elementtype)) {
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('date'=>'create_date') ?><?php $attr5_date='create_date' ?><?php	
-		$time = $$attr5_date;
+    global $conf;
+	$time = $attr5_date;
+
+	if	( $time==0)
+		echo lang('GLOBAL_UNKNOWN');
+	elseif ( !$conf['interface']['human_date_format'] )
+		echo date(lang('DATE_FORMAT'),$time);
+	else
+	{
 	
 		$sekunden = time()-$time;
 		$minuten = intval($sekunden/60);
@@ -1108,9 +1203,11 @@ if (isset($attr6_elementtype)) {
 		$jahre   = intval($monate  /12);
 
 		echo '<span title="'.date(lang('DATE_FORMAT'),$time).'"">';
-		
+
 		if	( $time==0)
 			echo lang('GLOBAL_UNKNOWN');
+		elseif ( !$conf['interface']['human_date_format'] )
+			echo date(lang('DATE_FORMAT'),$time);
 		elseif	( $sekunden == 1 )
 			echo $sekunden.' '.lang('GLOBAL_SECOND');
 		elseif	( $sekunden < 60 )
@@ -1142,15 +1239,22 @@ if (isset($attr6_elementtype)) {
 			echo $jahre.' '.lang('GLOBAL_YEARS');
 			
 		echo '</span>';
+	}
 ?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr5 = array('class'=>'text','raw'=>',_') ?><?php $attr5_class='text' ?><?php $attr5_raw=',_' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -1187,7 +1291,11 @@ if (isset($attr6_elementtype)) {
 		
 	echo $tmp_text;
 ?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('user'=>'create_user') ?><?php $attr5_user='create_user' ?><?php
-		$user = $$attr5_user;
+		if	( is_object($attr5_user) )
+			$user = $attr5_user;
+		else
+			$user = $$attr5_user;
+			
 		if	( empty($user->name) )
 			$user->name = lang('GLOBAL_UNKNOWN');
 		if	( empty($user->fullname) )
@@ -1227,14 +1335,20 @@ if (isset($attr6_elementtype)) {
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_lastchange') ?><?php $attr5_class='text' ?><?php $attr5_text='global_lastchange' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -1286,7 +1400,15 @@ if (isset($attr6_elementtype)) {
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
 ?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('date'=>'lastchange_date') ?><?php $attr5_date='lastchange_date' ?><?php	
-		$time = $$attr5_date;
+    global $conf;
+	$time = $attr5_date;
+
+	if	( $time==0)
+		echo lang('GLOBAL_UNKNOWN');
+	elseif ( !$conf['interface']['human_date_format'] )
+		echo date(lang('DATE_FORMAT'),$time);
+	else
+	{
 	
 		$sekunden = time()-$time;
 		$minuten = intval($sekunden/60);
@@ -1296,9 +1418,11 @@ if (isset($attr6_elementtype)) {
 		$jahre   = intval($monate  /12);
 
 		echo '<span title="'.date(lang('DATE_FORMAT'),$time).'"">';
-		
+
 		if	( $time==0)
 			echo lang('GLOBAL_UNKNOWN');
+		elseif ( !$conf['interface']['human_date_format'] )
+			echo date(lang('DATE_FORMAT'),$time);
 		elseif	( $sekunden == 1 )
 			echo $sekunden.' '.lang('GLOBAL_SECOND');
 		elseif	( $sekunden < 60 )
@@ -1330,15 +1454,22 @@ if (isset($attr6_elementtype)) {
 			echo $jahre.' '.lang('GLOBAL_YEARS');
 			
 		echo '</span>';
+	}
 ?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr5 = array('class'=>'text','raw'=>',_') ?><?php $attr5_class='text' ?><?php $attr5_raw=',_' ?><?php
+	if	( isset($attr5_prefix)&& isset($attr5_key))
+		$attr5_key = $attr5_prefix.$attr5_key;
+	if	( isset($attr5_suffix)&& isset($attr5_key))
+		$attr5_key = $attr5_key.$attr5_suffix;
+		
 	if(empty($attr5_title))
 		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key).'_HELP';
+			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
 
 ?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+
 	if (!empty($attr5_array))
 	{
 		//geht nicht:
@@ -1375,7 +1506,11 @@ if (isset($attr6_elementtype)) {
 		
 	echo $tmp_text;
 ?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('user'=>'lastchange_user') ?><?php $attr5_user='lastchange_user' ?><?php
-		$user = $$attr5_user;
+		if	( is_object($attr5_user) )
+			$user = $attr5_user;
+		else
+			$user = $$attr5_user;
+			
 		if	( empty($user->name) )
 			$user->name = lang('GLOBAL_UNKNOWN');
 		if	( empty($user->fullname) )
