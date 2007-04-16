@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.11  2007-01-21 15:00:03  dankert
+// Revision 1.12  2007-04-16 21:25:41  dankert
+// Neuer Men?punkt im Projektmen?: Import.
+//
+// Revision 1.11  2007/01/21 15:00:03  dankert
 // Parameter TARGETSUBACTION verwenden.
 //
 // Revision 1.10  2006/06/01 20:59:27  dankert
@@ -186,10 +189,26 @@ class ProjectAction extends Action
 	}
 	
 	
+
 	function maintenance()
 	{
-		$this->project->checkLostFiles();
+		if	( $this->hasRequestVar('ok') )
+		{
+			$this->project->checkLostFiles();
+			$this->addNotice('project',$this->project->name,'DONE');
+			$this->setTemplateVar('done',true);
+		}
+	}
 
-		$this->addNotice('project',$this->project->name,'DONE');
+
+
+	function import()
+	{
+		if	( $this->hasRequestVar('ok') )
+		{
+			$this->project->import();
+			$this->addNotice('project',$this->project->name,'DONE');
+			$this->setTemplateVar('done',true);
+		}
 	}
 }
