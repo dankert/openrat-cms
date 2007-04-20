@@ -1,0 +1,436 @@
+/* $Id$ */
+
+a:link,
+a:visited
+{
+	color:Highlight;
+	font-weight:normal;
+	text-decoration:none;
+}
+a:active,
+a:hover
+{
+	color:Highlight;
+	font-weight:normal;
+	text-decoration:underline;
+}
+
+
+a.el_include:link,
+a.el_include:active,
+a.el_include:visited,
+a.el_include:hover,
+a.el_list:link,
+a.el_list:active,
+a.el_list:visited,
+a.el_list:hover
+{
+	background-color: blue;
+}
+
+a.el_longtext:link,
+a.el_longtext:active,
+a.el_longtext:visited,
+a.el_longtext:hover,
+a.el_text:link,
+a.el_text:active,
+a.el_text:visited,
+a.el_text:hover
+{
+	background-color: lime;
+}
+
+
+a.el_infodate:link,
+a.el_infodate:active,
+a.el_infodate:visited,
+a.el_infodate:hover,
+a.el_info:link,
+a.el_info:active,
+a.el_info:visited,
+a.el_info:hover
+{
+	background-color: white;
+}
+
+a.el_date:link,
+a.el_date:active,
+a.el_date:visited,
+a.el_date:hover
+{
+	background-color: aqua;
+}
+
+a.el_link:link,
+a.el_link:active,
+a.el_link:visited,
+a.el_link:hover
+{
+	background-color: fuchsia;
+}
+
+a.el_number:link,
+a.el_number:active,
+a.el_number:visited,
+a.el_number:hover
+{
+	background-color: lime;
+}
+
+a.el_code:link,
+a.el_code:active,
+a.el_code:visited,
+a.el_code:hover,
+a.el_dynamic:link,
+a.el_dynamic:active,
+a.el_dynamic:visited,
+a.el_dynamic:hover
+{
+	background-color: gray;
+}
+
+a.el_icon:link,
+a.el_icon:active,
+a.el_icon:visited,
+a.el_icon:hover
+{
+	background-color: yellow;
+}
+
+		            
+a.path:link,
+a.path:visited
+{
+	color:#CCCCCC;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+a.path:active,
+a.path:hover
+{
+	color:#CCCCCC; font-weight:bold; text-decoration:underline;
+}
+
+a.menu:link,
+a.menu:visited
+{
+	color:ButtonText;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+
+a.menu:active,
+a.menu:hover
+{
+	color:ButtonText;
+	font-weight:normal;
+	text-decoration:underline;
+}
+
+
+a.menu_highlight:link,
+a.menu_highlight:visited
+{
+	color:ButtonText;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+
+a.menu_highlight:active,
+a.menu_highlight:hover
+{
+	color:ButtonText;
+	font-weight:bold;
+	text-decoration:underline;
+}
+
+
+body
+{
+	background-color:Background;
+	color:MenuText;
+	font-family:Arial;
+	font-size:13px;
+	xbackground-color:#dad2b6;
+	xbackground-color:#DDDDFF;
+}
+
+body.main
+{
+	background-color:Background;
+	color:MenuText;
+	font-family:Arial;
+	font-size:13px;
+/*	background-color:#dad2b6;*/
+	xbackground-color:#DDDDFF;
+/*	border:3px solid gray;*/
+}
+
+body.title {
+	margin:0px;
+	background-color:#EEEEEE;
+}
+
+body.tree {
+	background-color:Background;
+	padding:5px;
+	xbackground-color:white;
+/*	border:3px solid gray;*/
+}
+
+
+body.border {
+	margin:0px;
+	background-color:gray;
+}
+
+body.background {
+	margin:0px;
+	background-color:#EEEEEE;
+}
+
+
+form
+{
+	margin:0px;
+	padding:0px;
+
+}
+
+
+pre{ font-family:Courier;font-size:13px; }
+small
+{
+	color:gray;
+}
+
+
+span.title
+{
+	color:white;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+}
+span.inactive,
+span.menu_disabled
+{
+	color:gray;
+}
+
+span.accesskey
+{
+	text-decoration:underline;
+}
+
+th
+{
+	background-color:#7B9CBD;
+	color:white;
+	font-family:Arial;
+	font-size:13px;
+	vertical-align:top;
+	font-weight:bold;
+	border-bottom:1px solid gray;
+}
+
+td
+{	color:MenuText;
+	font-family:Arial;
+	font-size:13px;
+	vertical-align:top;
+}
+
+td.diff_equal
+{
+}
+td.diff_old
+{
+	background-color:red;
+}
+td.diff_new
+{
+	background-color:green;
+}
+td.diff_notequal
+{
+	background-color:yellow;
+}
+
+td.menu    { background-color:InactiveCaptionText;vertical-align:middle; height:30px;}
+td.help    { color:black; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
+td.message { padding:10px; font-weight:bold; }
+td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
+td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
+td.subaction { background-color:ButtonFace; color:ButtonText; }
+
+tr.f1
+{
+	background-color:#cac2a6;
+}
+tr.f2
+{
+	background-color:#c1bba0;
+}
+td.f1
+{
+	padding:5px;
+	border-top:5px solid #dad2b6;
+	border-left:3px solid #dad2b6;
+	border-bottom:1px solid gray;
+	border-right:3px solid #dad2b6;
+}
+td.f2
+{
+	padding:5px;
+	border-top:5px solid #dad2b6;
+	border-left:3px solid #dad2b6;
+	border-bottom:1px solid gray;
+	border-right:3px solid #dad2b6;
+}
+
+td.act {background-color:AppWorkspace; padding:15px; border-top:0px solid gray;  }
+.mainmenu_headline{color:Background; font-size:13px; color:black; font-weight:bold; }
+.mainmenu_name{color:white; font-weight:bold; font-size:13px; }
+.mainmenu_val{color:Background; font-weight:normal; }
+.mainmenu_title{color:Background;vertical-align:middle;font-weight:bold; font-size:13px; }
+p.copyright { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; text-align:center; }
+
+table.main
+{
+	border:3px solid gray;
+	background-color:white;
+}
+
+
+input,
+textarea
+{
+	border:2px solid gray;
+	padding:2px;
+}
+
+input:hover,
+textarea:hover
+{
+	border:2px solid black;
+}
+
+input:focus,
+textarea:focus
+{
+	background-color:InfoBackground;
+	border:2px solid red;
+	font-weight:bold;
+}
+
+tr.f1:hover,
+tr.f2:hover
+{
+	xbackground-color:#FF0000;
+}
+
+input.submit,
+input.ok
+{
+	color:#FFFFFF;
+	background-color:ThreeDDarkShadow;
+	width:110px;
+}
+
+input.reset  { color:black; background-color:#cac2a6; text-align:right; }
+
+textarea.desc,
+textarea.description
+{
+	font-family:Arial;
+	font-size:13px;
+}
+
+textarea.longtext
+{
+	font-family:Arial;
+	font-size:13px;
+	width:100%;
+	height:300px;
+	border:1px solid black;
+}
+
+input,
+select,
+textarea
+{
+	color:MenuText;
+	background-color:InfoBackground;
+}
+
+input.name
+{
+	font-weight:bold;
+}
+
+input.filename,
+input.extension,
+input.ansidate
+{
+	font-family:Courier;
+	font-size:13px;
+}
+
+
+body,
+textarea
+{
+	scrollbar-base-color:#7B9CBD;
+	scrollbar-arrow-color:white;
+	scrollbar-highlight-color:#eae2c6;
+	scrollbar-shadow-color:#cac2a6;
+}
+
+/*
+select.treemenu
+{
+	color:Highlight;
+	background-color:white;
+	font-weight:bold;
+	width:90%;
+	border:3px solid white;
+	margin:0px;
+}
+
+option.treemenu
+{
+	margin:2px;
+	border-bottom:1px solid dotted;
+}
+*/
+
+td.logo
+{
+	background-color:InfoBackground;
+	padding:10px;
+	margin:0px;
+}
+
+h2.logo
+{
+	font-family:Verdana;
+	font-weight:normal;
+	font-size:24px;
+	margin-left:110px;
+}
+
+p.logo
+{
+	margin-left:110px;
+	font-family:Verdana;
+	font-size:13px;
+}
+
+.text
+{
+	/*color: ButtonText;*/
+}
