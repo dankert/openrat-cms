@@ -16,6 +16,25 @@ redirect             = false        ; use redirects before going to view (actual
 ; looks like "3 years ago", or "7 months ago"
 human_date_format    = false
 
+
+
+; Settings for colors and fonts.
+[style]
+
+; The 'root' stylesheet which is extended by the user-defined styles.
+; - '' disables extending.
+; - 'xyz' the name of the style (without the trailing ".css" (default is 'default')
+; - 'http://.../style.css' full url to your own CSS file.
+extend=default
+
+; The default style which is used, when no user is logged in.
+; 'default' is the classic Openrat style.
+default=default
+
+; 'system' uses system colors from the client (nice choice)
+;default=system
+
+
 [frames]
 
 ; Logical name of top-frame. Change this, if you want Openrat running in another parent frameset
