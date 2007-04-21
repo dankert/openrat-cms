@@ -35,12 +35,37 @@ default=default
 ;default=system
 
 
+
+; Settings for preferences (under "Administration")
+[config]
+
+; If you have an online editor for editing the .ini-files you can put the URL here.
+; Security belongs to the 3rd-party editor! Openrat only creates a link to this url!
+; Set to '' (blank) for disabling this.
+file_manager_url=""
+
+; Enable "preferences"-menu
+enable=true
+
+; show system settings (operating system, system time, ...)
+show_system=true
+
+; show PHP settings
+show_interpreter=true
+
+; show a list of PHP extensions (without any details)
+show_extensions=true
+
+
+
+; Frameset settings
 [frames]
 
 ; Logical name of top-frame. Change this, if you want Openrat running in another parent frameset
 top=_top
 
 
+; Manipulating the URL of Openrat.
 [url]
 
 ; faking urls
