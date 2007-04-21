@@ -46,7 +46,6 @@ class ProfileAction extends Action
 		$this->user->fullname = $this->getRequestVar('fullname');
 		$this->user->tel      = $this->getRequestVar('tel'     );
 		$this->user->desc     = $this->getRequestVar('desc'    );
-		$this->user->mail     = $this->getRequestVar('mail'    );
 		$this->user->style    = $this->getRequestVar('style'   );
 		$this->user->save();
 
