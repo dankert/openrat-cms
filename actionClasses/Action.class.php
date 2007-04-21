@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.30  2007-04-21 11:49:40  dankert
+// Keine Variable "style" verwenden (?berschreibt andere Variablen!)
+//
 // Revision 1.29  2007-04-21 00:01:53  dankert
 // Unterscheiden zwischen Root-, Default- und Benutzer-Stylesheet.
 //
@@ -267,15 +270,14 @@ class Action
 		$image_dir  = OR_THEMES_DIR.$conf['interface']['theme'].'/images/';
 	
 		$user = Session::getUser();
-		$style = $conf['interface']['style'];
 		
-		if	( strpos($style['extend'],'/')===false )
-			$root_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$style['extend'].'.css';
+		if	( strpos($conf['interface']['style']['extend'],'/')===false )
+			$root_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['extend'].'.css';
 		else
 			$root_stylesheet = $style['extend'];
 			
 		if	( !is_object($user) )
-			$user_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$style['default'].'.css';
+			$user_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['default'].'.css';
 		else
 			$user_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$user->style.'.css';
 		
