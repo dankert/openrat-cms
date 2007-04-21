@@ -1,5 +1,11 @@
 /* $Id$ */
 
+/*
+
+Stylesheet for user switching from a CMS called ...... ouh, find out yourself ... :) 
+
+*/
+
 a:link,
 a:visited
 {
@@ -240,13 +246,6 @@ td.act
 .mainmenu_val{color:#CCCCCC; font-weight:normal; }
 .mainmenu_title{color:#CCCCCC;vertical-align:middle;font-weight:bold; font-size:24px; }
 
-p.copyright
-{
-	font-family:Verdana,Arial,Helvetica,sans-serif;
-	font-size:11px;
-	text-align:center;
-}
-
 table.main { border:1px solid black; }
 
 input.submit { color:#FFFFFF; background-color:#808080; }
@@ -260,20 +259,4 @@ textarea
 {
 	color:#000000;
 	background-color:#DFDFDF;
-}
-
-input.name
-{
-	font-weight:bold;
-}
-
-.filename
-{
-	font-family:Courier;font-size:13px;
-}
-
-input.ansidate
-{
-	font-family:Courier;
-	font-size:13px;
 }

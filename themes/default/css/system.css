@@ -1,5 +1,11 @@
 /* $Id$ */
 
+/*
+
+This stylesheet makes use of the colors selected by the operating system on the client.
+
+*/
+
 a:link,
 a:visited
 {
