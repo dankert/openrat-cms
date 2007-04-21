@@ -25,10 +25,10 @@ page
 			
 					if not:true empty:url
 					# Menüpunkt
-						link url:var:url target:cms_main_main title:var:title accesskey:var:key
+						link url:var:url target:cms_main_main title:var:title accesskey:var:key class:menu
 							text var:text accesskey:var:key
 					if empty:url
-							text var:text class:inactive
+							text var:text class:menu_disabled
 						
 					# Trenner zwischen Menüpunkten
 					text raw:__
