@@ -94,14 +94,17 @@ class Sql
 	var $param    = array();
 	
 	
+	var $dbid     = '';
+	
 	
 	/**
 	 * Erzeugt ein SQL-Objekt und analysiert die SQL-Anfrage.
 	 */
-	function Sql( $query = '' )
+	function Sql( $query = '', $dbid='' )
 	{
+		$this->dbid  = $dbid;
 		$this->parseSourceQuery( $query );
-		
+
 		$this->data  = array();
 	}
 
@@ -136,7 +139,7 @@ class Sql
 
 		// Tabellennamen in die Platzhalter setzen.
 		// Dies ist noch OpenRat-spezifisch und sollte bei einer sauberen Abstraktion woanders gemacht werden. Aber wo?
-		foreach( table_names() as $t=>$name )
+		foreach( table_names($this->dbid) as $t=>$name )
 		{
 			$this->setParam($t,$name,false );
 		}

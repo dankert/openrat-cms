@@ -23,16 +23,24 @@
 //
 require( 'serviceClasses/Sql.class.php');
 
-function table_names()
+function table_names( $dbid )
 {
 	$t = array();
 	global $conf;
 	global $SESS;
 
-	$db = Session::getDatabase();
-	if	( is_object( $db ) )
-		$conf_db_prefix = $db->conf['prefix'];
-	else $conf_db_prefix = '';
+	if	( empty($dbid) )
+	{
+		$db = Session::getDatabase();
+		if	( is_object( $db ) )
+			$conf_db_prefix = $db->conf['prefix'];
+		else
+			$conf_db_prefix = '';
+	}
+	else
+	{
+		$conf_db_prefix = $conf['database'][$dbid]['prefix'];
+	}
 
 	$t['t_include']         = $conf_db_prefix.'include';
 	$t['t_element']         = $conf_db_prefix.'element';
