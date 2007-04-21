@@ -1,1 +1,1 @@
-<label for="id_<?php echo $attr_for ?><?php if (!empty($attr_value)) echo '_' ?><?php echo $attr_value ?>">
+<label for="id_<?php echo $attr_for ?><?php if (!empty($attr_value)) echo '_'.$attr_value ?>">
