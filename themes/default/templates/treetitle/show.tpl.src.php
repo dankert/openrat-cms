@@ -17,6 +17,6 @@ page
 			cell class:subaction
 				# Schleife über alle Menüpunkte
 				list list:windowMenu extract:true
-					link url:var:url title:var:title target:_parent accesskey:messagevar:key
+					link url:var:url title:var:title target:_parent accesskey:messagevar:key class:menu
 						text text:var:text accesskey:messagevar:key
 					text raw:__
