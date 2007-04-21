@@ -28,7 +28,7 @@ page
 				cell
 					text text:user_style
 				cell class:fx
-					selectbox name:style list:allstyles default:style
+					selectbox name:style list:allstyles default:config:interface/style/default
 			
 			row
 				cell colspan:2 class:act

@@ -35,7 +35,7 @@ page
 				cell class:fx
 					text text:user_style
 				cell class:fx
-					selectbox list:allstyles name:style
+					selectbox list:allstyles name:style default:config:interface/style/default
 			row
 				cell class:fx
 					text text:user_admin
