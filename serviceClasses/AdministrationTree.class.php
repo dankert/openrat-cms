@@ -47,6 +47,9 @@ class AdministrationTree extends AbstractTree
 
 	function administration()
 	{
+		global $conf;
+		$conf_config = $conf['interface']['config'];
+
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_PROJECTS');
 		$treeElement->description = lang('GLOBAL_PROJECTS');
@@ -66,14 +69,16 @@ class AdministrationTree extends AbstractTree
 		
 		$this->addTreeElement( $treeElement );
 
-		$treeElement = new TreeElement();
-		$treeElement->text        = lang('PREFERENCES');
-		$treeElement->description = lang('PREFERENCES');
-		$treeElement->icon        = 'config_folder';
-		$treeElement->type        = 'prefs';
-		
-		$this->addTreeElement( $treeElement );
-
+		if	( $conf_config['enable'] )
+		{
+			$treeElement = new TreeElement();
+			$treeElement->text        = lang('PREFERENCES');
+			$treeElement->description = lang('PREFERENCES');
+			$treeElement->icon        = 'config_folder';
+			$treeElement->type        = 'prefs';
+			
+			$this->addTreeElement( $treeElement );
+		}
 
 		// Wechseln zu: Projekte...
 		/*
@@ -143,6 +148,19 @@ class AdministrationTree extends AbstractTree
 
 	function prefs_system( $id )
 	{
+//		if	( function_exists('apache_get_version') )
+//		{
+//			$treeElement = new TreeElement();
+//			$treeElement->text = 'apache='.apache_get_version();
+//			$treeElement->icon   = 'config_property';
+//			$this->addTreeElement( $treeElement );
+//		}
+
+		$treeElement = new TreeElement();
+		$treeElement->text = date('r');
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
 		$treeElement = new TreeElement();
 		$treeElement->text = 'os='.php_uname('s');
 		$treeElement->icon   = 'config_property';
@@ -162,6 +180,24 @@ class AdministrationTree extends AbstractTree
 		$treeElement->text = 'machine='.php_uname('m');
 		$treeElement->icon   = 'config_property';
 		$this->addTreeElement( $treeElement );
+
+		$treeElement = new TreeElement();
+		$treeElement->text = 'owner='.get_current_user();
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
+		$treeElement = new TreeElement();
+		$treeElement->text = 'pid='.getmypid();
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
+		foreach( getrusage() as $name=>$value );
+		{
+			$treeElement = new TreeElement();
+			$treeElement->text = $name.':'.$value;
+			$treeElement->icon   = 'config_property';
+			$this->addTreeElement( $treeElement );
+		}
 	}
 	
 	
@@ -240,54 +276,68 @@ class AdministrationTree extends AbstractTree
 	
 	function prefs( $id )
 	{
+		global $conf;
+		$conf_config = $conf['interface']['config'];
+
+
 		$treeElement = new TreeElement();
 		
 		$treeElement->internalId  = 0;
 		$treeElement->text        = 'OpenRat';
 		$treeElement->icon        = 'config_folder';
-		
+
+		if	( !empty($conf_config['file_manager_url']) )
+			$treeElement->url         = $conf_config['file_manager_url'];
+		$treeElement->target      = '_blank';
 		$treeElement->description = '';
-		$treeElement->target      = 'cms_main';
 		$treeElement->type        = 'prefs_cms';
 		$this->addTreeElement( $treeElement );
 
 
 
-		$treeElement = new TreeElement();
-		
-		$treeElement->internalId  = 0;
-		$treeElement->text        = lang('GLOBAL_SYSTEM');
-		$treeElement->icon        = 'config_folder';
-		
-		$treeElement->description = '';
-		$treeElement->target      = 'cms_main';
-		$treeElement->type        = 'prefs_system';
-		$this->addTreeElement( $treeElement );
+		if	( !empty($conf_config['show_system']) )
+		{
+			$treeElement = new TreeElement();
+			
+			$treeElement->internalId  = 0;
+			$treeElement->text        = lang('GLOBAL_SYSTEM');
+			$treeElement->icon        = 'config_folder';
+			
+			$treeElement->description = '';
+			$treeElement->target      = 'cms_main';
+			$treeElement->type        = 'prefs_system';
+			$this->addTreeElement( $treeElement );
+		}
 
 
+		if	( !empty($conf_config['show_interpreter']) )
+		{
+			$treeElement = new TreeElement();
+			
+			$treeElement->internalId  = 0;
+			$treeElement->text        = lang('GLOBAL_PHP');
+			$treeElement->icon        = 'config_folder';
+			
+			$treeElement->description = '';
+			$treeElement->target      = 'cms_main';
+			$treeElement->type        = 'prefs_php';
+			$this->addTreeElement( $treeElement );
+		}
 
-		$treeElement = new TreeElement();
-		
-		$treeElement->internalId  = 0;
-		$treeElement->text        = lang('GLOBAL_PHP');
-		$treeElement->icon        = 'config_folder';
-		
-		$treeElement->description = '';
-		$treeElement->target      = 'cms_main';
-		$treeElement->type        = 'prefs_php';
-		$this->addTreeElement( $treeElement );
 
-
-		$treeElement = new TreeElement();
-		
-		$treeElement->internalId  = 0;
-		$treeElement->text        = lang('GLOBAL_EXTENSIONS');
-		$treeElement->icon        = 'config_folder';
-		
-		$treeElement->description = '';
-		$treeElement->target      = 'cms_main';
-		$treeElement->type        = 'prefs_extensions';
-		$this->addTreeElement( $treeElement );
+		if	( !empty($conf_config['show_extensions']) )
+		{
+			$treeElement = new TreeElement();
+			
+			$treeElement->internalId  = 0;
+			$treeElement->text        = lang('GLOBAL_EXTENSIONS');
+			$treeElement->icon        = 'config_folder';
+			
+			$treeElement->description = '';
+			$treeElement->target      = 'cms_main';
+			$treeElement->type        = 'prefs_extensions';
+			$this->addTreeElement( $treeElement );
+		}
 	}
 
 
@@ -312,7 +362,8 @@ class AdministrationTree extends AbstractTree
 				
 				$treeElement->internalId  = crc32($key);
 				$treeElement->text        = $key;
-//				$treeElement->url         = Html::url('main','prefs',0,array('conf'=>$key));
+//				if	( $id == 0 )
+//					$treeElement->url         = Html::url('main','prefs',0,array('conf'=>$key));
 				$treeElement->icon        = 'config_folder';
 				
 				$treeElement->description = '';
