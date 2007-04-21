@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.13  2007-04-21 11:53:09  dankert
+// Neue Methode "export()" - in Arbeit, TODO!
+//
 // Revision 1.12  2007-04-06 01:37:49  dankert
 // Verhindern einer Warnung bei modernen PHP-Versionen.
 //
@@ -413,6 +416,116 @@ EOF
 			$obj = new Object( $id );
 			$obj->setParentId( $lostAndFoundFolder->objectid );
 		}
+	}
+	
+	
+	/**
+	 * Kopiert ein Projekt von einer Datenbank zu einer anderen.<br>
+	 * <br>
+	 * Alle Projektinhalte werden kopiert, die Fremdschlüsselbeziehungen werden entsprechend angepasst.<br>
+	 * <br>
+	 * Alle Beziehungen zu Benutzern, z.B. "Zuletzt geändert von", "angelegt von" sowie<br>
+	 * alle Berechtigungsinformationen gehen verloren!<br>
+	 */
+	function export( $dbid_destination )
+	{
+		global $conf;
+		$db_src  = db_connection();
+		$db_dest = new DB( $conf['database'][$dbid_destination] );
+		
+		$aa = 5000; // Bisher nicht erreichte ID in der Zieldatenbank
+
+		// -------------------------------------------------------
+		$prefix = 'a24_';
+		$mapping = array();
+		$ids = array('project.id'=>array('object.projectid','projectmodel.projectid','template.projectid','language.projectid'),
+		             'object.id' =>array('object.parentid','name.objectid','link.objectid','file.objectid','folder.objectid','page.objectid','element.default_objectid','element.folderobjectid','value.linkobjectid'),
+		             'language.id'=>array('value.languageid','name.languageid'),
+		             'projectmodel.id'=>array('templatemodel.projectmodelid'),
+		             'template.id'=>array('templatemodel.templateid','page.templateid','element.templateid'),
+		             'templatemodel.id'=>array(),
+		             'element.id'=>array('value.elementid'),
+		             'name.id'=>array(),
+		             'page.id'=>array('value.pageid'),
+		             'value.id'=>array(),
+		             'link.id'=>array(),
+		             'folder.id'=>array(),
+		             'file.id'=>array()
+		             
+		);
+		foreach( $ids as $id=>$fields )
+		{
+			list($tabelle,$idcolumn) = explode('.',$id);
+
+			$sql = new Sql( 'SELECT MAX(id) FROM {t_'.$tabelle.'}');
+			$nextid = intval($db_dest->getOne($sql->query));
+
+			$sql = new Sql( 'SELECT '.$idcolumn.' FROM {t_'.$tabelle.'} WHERE id={projectid}');
+			$sql->setInt('projectid',$this->projectid);
+
+			foreach( $db_src->getRow($sql->query) as $id )
+			{
+				$mapping[$tabelle] = array();
+				$mapping[$tabelle][$id] = ++$nextid;
+				
+				$sql = new Sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
+				$sql->setInt('id',$id);
+				$row = $db_src->getRow( $sql->query );
+				$row[$idcolumn] = $mapping[$tabelle][$mapping[$tabelle][$id]];
+
+				$sql = new Sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES('.join($row,',').')');
+				$sql->setInt('id',$id);
+				$row = $db_src->getRow( $sql->query );
+			}
+			
+			
+			continue;
+		
+			$x_id = explode('.',$id);
+			$x_id[0] = $prefix.$x_id[0];
+			$sql = 'SELECT '.$x_id[1].' FROM '.$x_id[0];
+			echo "$sql<br>";
+			$res = mysql_query( $sql );
+			if	( mysql_errno()!=0) die( mysql_error() );
+			echo mysql_error();
+		
+			while( $row = mysql_fetch_assoc($res) )
+			{
+				$oldid = $row[ $x_id[1] ];
+				$newid = $oldid+$aa;
+				$sql = 'UPDATE '.$x_id[0].' SET '.$x_id[1]."=$newid where ".$x_id[1]."=$oldid";
+				echo "$sql<br>";
+				mysql_query( $sql );
+				if	( mysql_errno()!=0) die( mysql_error() );
+				
+				foreach( $fields as $field )
+				{
+					$x_field = explode('.',$field);
+					$x_field[0] = $prefix.$x_field[0];
+					$sql = "UPDATE ".$x_field[0]." SET ".$x_field[1]."=$newid WHERE ".$x_field[1]."=$oldid";
+					echo "$sql<br>";
+					mysql_query( $sql );
+					if	( mysql_errno()!=0) die( mysql_error() );
+				}
+			}
+			
+		}
+		
+		return;
+		
+		
+		$sql = 'UPDATE '.$prefix.'object SET create_userid = NULL';
+		echo "$sql<br>";
+		mysql_query( $sql );
+		
+		$sql = 'UPDATE '.$prefix.'object SET lastchange_userid = NULL';
+		echo "$sql<br>";
+		mysql_query( $sql );
+		
+		$sql = 'UPDATE '.$prefix.'value SET lastchange_userid = NULL';
+		echo "$sql<br>";
+		mysql_query( $sql );
+
 	}
 }
 
