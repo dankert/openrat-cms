@@ -52,7 +52,7 @@
 			if	( $pos !== false )
 				$text = substr($text,0,max($pos,0)).'<span class="accesskey">'. substr($text,$pos,1).'</span>'.substr($text,$pos+1);
           	
-          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo $text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $text ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
           	if ($conf['help']['enabled'] )
           	{
