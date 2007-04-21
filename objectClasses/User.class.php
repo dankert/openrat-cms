@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.22  2007-04-21 11:52:24  dankert
+// Default-Style ist konfigurierbar.
+//
 // Revision 1.21  2007-04-08 21:51:55  dankert
 // Korrektur Benutzer l?schen, wenn noch Referenzen in der Datenbank vorhanden sind.
 //
@@ -315,6 +318,8 @@ class User
 	// Lesen Benutzer aus der Datenbank
 	function setDatabaseRow( $row )
 	{
+		global $conf;
+		
 		if	( count($row) > 1 )
 		{
 			$this->userid   = $row['id'      ];
@@ -331,13 +336,13 @@ class User
 				$this->fullname = $this->name;
 				
 			if	( $this->style == '' )
-				$this->style = 'default';
+				$this->style = $conf['interface']['style']['default'];
 		}
 		else
 		{
 			$this->userid   = -99;
 			$this->name     = lang('UNKNOWN');
-			$this->style    = 'default';
+			$this->style    = $conf['interface']['style']['default'];
 			$this->isAdmin  = false;
 			$this->ldap_dn  = '';
 			$this->fullname = lang('UNKNOWN');
@@ -1004,6 +1009,7 @@ SQL
 	function getAvailableStyles()
 	{
 		global $conf_themedir;
+		
 		$allstyles = array();
 		$handle=opendir( $conf_themedir.'/css' ); 
 
@@ -1017,6 +1023,7 @@ SQL
 		}
 		closedir($handle);
 
+		asort($allstyles);	
 		return $allstyles;	
 	}
 	
