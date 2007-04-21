@@ -16,9 +16,9 @@ goto=listing
 menu=edit
 target=maintenance
 
-[import]
+[export]
 menu=edit
-target=import
+target=export
 
 [edit]
 target=save
@@ -36,4 +36,4 @@ target=addproject
 
 [menu]
 list=listing,add
-edit=edit,remove,import,maintenance
+edit=edit,remove,export,maintenance

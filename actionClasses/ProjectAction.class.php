@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.13  2007-04-21 11:50:50  dankert
+// Umbenennung von Im- in Export.
+//
 // Revision 1.12  2007-04-16 21:25:41  dankert
 // Neuer Men?punkt im Projektmen?: Import.
 //
@@ -202,11 +205,25 @@ class ProjectAction extends Action
 
 
 
-	function import()
+	/**
+	 * Projekt exportieren.
+	 */
+	function export()
 	{
+		global $conf;
+		$dbids = array();
+		
+		foreach( $conf['database'] as $dbname=>$dbconf )
+		{
+			if	( is_array($dbconf) )
+				$dbids[$dbname] = $dbconf['comment'];
+		}
+		$this->setTemplateVar( 'dbids',$dbids );
+		
 		if	( $this->hasRequestVar('ok') )
 		{
-			$this->project->import();
+			$this->project->export( $this->getRequestVar('dbid') );
+			
 			$this->addNotice('project',$this->project->name,'DONE');
 			$this->setTemplateVar('done',true);
 		}
