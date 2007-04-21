@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.29  2007-04-21 00:01:53  dankert
+// Unterscheiden zwischen Root-, Default- und Benutzer-Stylesheet.
+//
 // Revision 1.28  2007-04-11 21:43:01  dankert
 // Erg?nzung von "Accesskeys".
 //
@@ -264,10 +267,17 @@ class Action
 		$image_dir  = OR_THEMES_DIR.$conf['interface']['theme'].'/images/';
 	
 		$user = Session::getUser();
-		if	( !is_object($user) )
-			$stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/default.css';
+		$style = $conf['interface']['style'];
+		
+		if	( strpos($style['extend'],'/')===false )
+			$root_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$style['extend'].'.css';
 		else
-			$stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$user->style.'.css';
+			$root_stylesheet = $style['extend'];
+			
+		if	( !is_object($user) )
+			$user_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$style['default'].'.css';
+		else
+			$user_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$user->style.'.css';
 		
 		$self = $HTTP_SERVER_VARS['PHP_SELF'];
 	
