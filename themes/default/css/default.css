@@ -1,5 +1,14 @@
 /* $Id$ */
 
+/*
+
+Standard Font- and Colorsettings for Openrat.
+
+Created for a smooth and useful user interface.
+ 
+*/
+
+
 a:link,
 a:visited
 {
@@ -130,8 +139,8 @@ a.menu:hover
 }
 
 
-a.menu_active:link,
-a.menu_active:visited
+a.menu_highlight:link,
+a.menu_highlight:visited
 {
 	color:#022A50;
 	font-weight:bold;
@@ -139,8 +148,8 @@ a.menu_active:visited
 }
 
 
-a.menu_active:active,
-a.menu_active:hover
+a.menu_highlight:active,
+a.menu_highlight:hover
 {
 	color:#022A50;
 	font-weight:bold;
@@ -215,7 +224,8 @@ span.title
 	font-size:13px;
 	font-weight:bold;
 }
-span.inactive
+span.inactive,
+span.menu_disabled
 {
 	color:gray;
 }
