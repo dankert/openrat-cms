@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.19  2005-11-07 22:36:10  dankert
+// Revision 1.20  2007-04-22 00:16:44  dankert
+// Fehlermeldung vermeiden, wenn eine Objekt-Id nicht in der Datenbank vorhanden ist.
+//
+// Revision 1.19  2005/11/07 22:36:10  dankert
 // Beruecksichtigen von absoluten Pfadangaben
 //
 // Revision 1.18  2004/12/29 20:21:42  dankert
@@ -226,6 +229,10 @@ class Page extends Object
 		global $conf_php,
 		       $SESS;
 		$inhalt = '';
+		
+		if	( ! Object::available( $objectid) )
+			return '';
+			
 		$object = new Object( $objectid );
 		$object->objectLoad();
 		

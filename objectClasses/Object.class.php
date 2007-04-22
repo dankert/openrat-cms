@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.24  2007-04-22 00:16:44  dankert
+// Fehlermeldung vermeiden, wenn eine Objekt-Id nicht in der Datenbank vorhanden ist.
+//
 // Revision 1.23  2007-04-08 15:25:35  dankert
 // Eigenschaft "type" erg?nzt.
 //
@@ -461,6 +464,21 @@ class Object
 
 
 	/**
+	 * Stellt fest, ob das Objekt mit der angegebenen Id existiert.
+	 */
+	function available( $objectid )
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT 1 FROM {t_object} '.
+		               ' WHERE id={objectid}');
+		$sql->setInt('objectid'  , $objectid  );
+
+		return intval($db->getOne($sql->query)) == 1;
+	}
+	
+	
+	/**
 	 * Lesen der Eigenschaften aus der Datenbank
 	 * Es werden
 	 * - die sprachunabh?ngigen Daten wie Dateiname, Typ sowie Erstellungs- und ?nderungsdatum geladen 
@@ -499,7 +517,7 @@ class Object
 		$this->setDatabaseRow( $row );
 
 		if (count($row) == 0)
-			die('fatal: objectid not found: '.$this->objectid);
+			die('fatal: Object::objectLoad(): objectid not found: '.$this->objectid.', SQL='.$sql->query );
 
 	}
 
@@ -520,7 +538,7 @@ class Object
 		$row = $db->getRow($sql->query);
 
 		if (count($row) == 0)
-			die('fatal: objectid not found: '.$this->objectid);
+			die('fatal: Object::objectLoadRaw(): objectid not found: '.$this->objectid.', SQL='.$sql->query);
 
 		$this->parentid  = $row['parentid' ];
 		$this->filename  = $row['filename' ];

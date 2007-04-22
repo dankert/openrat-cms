@@ -508,6 +508,10 @@ SQL
 					// Link noch nicht gefuellt
 					$inhalt = '';
 				}
+				elseif	 ( ! Object::available($objectid) )
+				{
+					$inhalt = $this->simple?'-':'';
+				}
 				elseif   ( $this->simple )
 				{
 					$o = new Object( $objectid );
