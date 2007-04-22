@@ -3,14 +3,14 @@ page
 		window
 			row
 				cell class:fx
-					text text:page_template
+					text text:page_template_old
 				cell class:fx
 					link url:template_url
 						image type:template
 						text var:template_name
 			row
 				cell
-					text text:page_template
+					text text:page_template_new
 				cell
 					selectbox name:templateid list:templates
 			row
