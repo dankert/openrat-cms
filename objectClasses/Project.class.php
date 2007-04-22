@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.14  2007-04-22 00:17:30  dankert
+// Neue Methode "export()" - fertiggestellt :)
+//
 // Revision 1.13  2007-04-21 11:53:09  dankert
 // Neue Methode "export()" - in Arbeit, TODO!
 //
@@ -430,102 +433,187 @@ EOF
 	function export( $dbid_destination )
 	{
 		global $conf;
+		$zeit = date('Y-m-d\TH:i:sO');
+		
 		$db_src  = db_connection();
 		$db_dest = new DB( $conf['database'][$dbid_destination] );
 		
-		$aa = 5000; // Bisher nicht erreichte ID in der Zieldatenbank
+//		$aa = 5000; // Bisher nicht erreichte ID in der Zieldatenbank
 
 		// -------------------------------------------------------
-		$prefix = 'a24_';
+//		$prefix = 'a24_';
 		$mapping = array();
-		$ids = array('project.id'=>array('object.projectid','projectmodel.projectid','template.projectid','language.projectid'),
-		             'object.id' =>array('object.parentid','name.objectid','link.objectid','file.objectid','folder.objectid','page.objectid','element.default_objectid','element.folderobjectid','value.linkobjectid'),
-		             'language.id'=>array('value.languageid','name.languageid'),
-		             'projectmodel.id'=>array('templatemodel.projectmodelid'),
-		             'template.id'=>array('templatemodel.templateid','page.templateid','element.templateid'),
-		             'templatemodel.id'=>array(),
-		             'element.id'=>array('value.elementid'),
-		             'name.id'=>array(),
-		             'page.id'=>array('value.pageid'),
-		             'value.id'=>array(),
-		             'link.id'=>array(),
-		             'folder.id'=>array(),
-		             'file.id'=>array()
+		$ids = array('project'      => array('foreign_keys'=>array(),
+		                                     'primary_key' =>'id',
+		                                     'unique_idx'  =>'name',
+		                                     'erase'       =>array()
+		                                    ),
+		             'language'     => array('foreign_keys'=>array('projectid'=>'project'),
+		                                     'primary_key' =>'id'
+		                                    ),
+		             'projectmodel' => array('foreign_keys'=>array('projectid'=>'project'),
+		                                     'primary_key' =>'id'
+		                                    ),
+		             'template'     => array('foreign_keys'=>array('projectid'=>'project'),
+		                                     'primary_key' =>'id'
+		                                     ),
+		             'object'       => array('foreign_keys'=>array('projectid'  =>'project' ),
+		                                     'self_key'    =>'parentid',
+		                                     'primary_key' =>'id',
+		                                     'erase'       =>array('create_userid','lastchange_userid')
+		                                     ),
+		             'element'      => array('foreign_keys'=>array('templateid'      =>'template',
+			                                                       'folderobjectid'  =>'object',
+		                                                           'default_objectid'=>'object'   ),
+		                                     'primary_key' =>'id'
+		                                     ),
+		             'templatemodel'=> array('foreign_keys'=>array('projectmodelid'=>'projectmodel',
+		                                                           'templateid'    =>'template'     ),
+		                                     'primary_key' =>'id',
+		                                     'replace'     =>array('text'=>'element')
+		                                     ),
+		             'name'         => array('foreign_keys'=>array('objectid'  =>'object',
+		                                                           'languageid'=>'language'   ),
+		                                     'primary_key' =>'id'
+		                                     ),
+		             'page'         => array('foreign_keys'=>array('objectid'  =>'object',
+		                                                           'templateid'=>'template' ),
+		                                     'primary_key' =>'id'
+		                                     ),
+		             'value'         => array('foreign_keys'=>array('pageid'   =>'page',
+		                                                           'languageid'=>'language',
+		                                                           'elementid'=>'element',
+		                                                           'linkobjectid'=>'object'  ),
+		                                     'erase'       =>array('lastchange_userid'),
+		                                     'replace'     =>array('text'=>'object'),
+		                                     'primary_key' =>'id'
+		                                     ),
+		             'link'         => array('foreign_keys'=>array('objectid'     =>'object',
+		                                                           'link_objectid'=>'object'   ),
+		                                     'primary_key' =>'id'
+		                                     ),
+		             'folder'         => array('foreign_keys'=>array('objectid'  =>'object' ),
+		                                     'primary_key' =>'id'
+		                                     ),
+		             'file'         => array('foreign_keys'=>array('objectid'  =>'object'   ),
+		                                     'primary_key' =>'id',
+		                                     'binary'      =>'value'
+		                                     ),
 		             
 		);
-		foreach( $ids as $id=>$fields )
+		foreach( $ids as $tabelle=>$data )
 		{
-			list($tabelle,$idcolumn) = explode('.',$id);
+//			Html::debug($tabelle,"Tabelle");
+			
+			$mapping[$tabelle] = array();
+			$idcolumn = $data['primary_key'];
 
-			$sql = new Sql( 'SELECT MAX(id) FROM {t_'.$tabelle.'}');
-			$nextid = intval($db_dest->getOne($sql->query));
+			// Nächste freie Id in der Zieltabelle ermitteln.
+			$sql = new Sql( 'SELECT MAX('.$idcolumn.') FROM {t_'.$tabelle.'}',$dbid_destination);
+			$maxid = intval($db_dest->getOne($sql->query));
+			$nextid = $maxid;
 
-			$sql = new Sql( 'SELECT '.$idcolumn.' FROM {t_'.$tabelle.'} WHERE id={projectid}');
-			$sql->setInt('projectid',$this->projectid);
-
-			foreach( $db_src->getRow($sql->query) as $id )
+			// Zu übertragende IDs ermitteln.
+			if	( count($data['foreign_keys'])==0 )
 			{
-				$mapping[$tabelle] = array();
-				$mapping[$tabelle][$id] = ++$nextid;
-				
-				$sql = new Sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
-				$sql->setInt('id',$id);
-				$row = $db_src->getRow( $sql->query );
-				$row[$idcolumn] = $mapping[$tabelle][$mapping[$tabelle][$id]];
-
-				$sql = new Sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES('.join($row,',').')');
-				$sql->setInt('id',$id);
-				$row = $db_src->getRow( $sql->query );
+				$where = ' WHERE id='.$this->projectid;
 			}
-			
-			
-			continue;
-		
-			$x_id = explode('.',$id);
-			$x_id[0] = $prefix.$x_id[0];
-			$sql = 'SELECT '.$x_id[1].' FROM '.$x_id[0];
-			echo "$sql<br>";
-			$res = mysql_query( $sql );
-			if	( mysql_errno()!=0) die( mysql_error() );
-			echo mysql_error();
-		
-			while( $row = mysql_fetch_assoc($res) )
+			else
 			{
-				$oldid = $row[ $x_id[1] ];
-				$newid = $oldid+$aa;
-				$sql = 'UPDATE '.$x_id[0].' SET '.$x_id[1]."=$newid where ".$x_id[1]."=$oldid";
-				echo "$sql<br>";
-				mysql_query( $sql );
-				if	( mysql_errno()!=0) die( mysql_error() );
-				
-				foreach( $fields as $field )
+				foreach( $data['foreign_keys'] as $fkey_column=>$target_tabelle )
 				{
-					$x_field = explode('.',$field);
-					$x_field[0] = $prefix.$x_field[0];
-					$sql = "UPDATE ".$x_field[0]." SET ".$x_field[1]."=$newid WHERE ".$x_field[1]."=$oldid";
-					echo "$sql<br>";
-					mysql_query( $sql );
-					if	( mysql_errno()!=0) die( mysql_error() );
+					$where = ' WHERE '.$fkey_column.' IN ('.join(array_keys($mapping[$target_tabelle]),',').')';
+					break;
 				}
 			}
-			
-		}
-		
-		return;
-		
-		
-		$sql = 'UPDATE '.$prefix.'object SET create_userid = NULL';
-		echo "$sql<br>";
-		mysql_query( $sql );
-		
-		$sql = 'UPDATE '.$prefix.'object SET lastchange_userid = NULL';
-		echo "$sql<br>";
-		mysql_query( $sql );
-		
-		$sql = 'UPDATE '.$prefix.'value SET lastchange_userid = NULL';
-		echo "$sql<br>";
-		mysql_query( $sql );
+			$sql = new Sql( 'SELECT '.$idcolumn.' FROM {t_'.$tabelle.'} '.$where);
 
+			foreach( $db_src->getCol($sql->query) as $srcid )
+			{
+				$mapping[$tabelle][$srcid] = ++$nextid;
+
+//				Html::debug($mapping,"Mapping");
+				
+				$sql = new Sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
+				$sql->setInt('id',$srcid);
+				$row = $db_src->getRow( $sql->query );
+
+				// Wert des Primärschlüssels ändern.
+				$row[$idcolumn] = $mapping[$tabelle][$srcid];
+
+				// Fremdschlüsselbeziehungen auf neue IDn korrigieren.
+				foreach( $data['foreign_keys'] as $fkey_column=>$target_tabelle)
+				{
+					if	( intval($row[$fkey_column]) != 0 )
+						$row[$fkey_column] = $mapping[$target_tabelle][$row[$fkey_column]];
+//					if	( !isset($mapping[$target_tabelle][$row[$fkey_column]]))
+//						Html::debug('Fehler: T='.$target_tabelle.', Column='.$fkey_column);
+						
+				}
+				
+				foreach( array_keys($row) as $key )
+				{
+					if	( isset($data['unique_idx']) && $key == $data['unique_idx'] )
+					{
+						// Nachschauen, ob es einen UNIQUE-Key in der Zieltabelle schon gibt.
+						$sql = new Sql( 'SELECT 1 FROM {t_'.$tabelle.'} WHERE '.$key."='".$row[$key]."'",$dbid_destination);
+//						Html::debug($sql->query);
+						
+						if	( intval($db_dest->getOne( $sql->query )) == 1 )
+							$row[$key] = $row[$key].$zeit;
+
+					}
+
+					if	( isset($data['erase']) && in_array($key,$data['erase']) )
+						$row[$key] = null;
+
+					if	( isset($data['self_key']) && $key == $data['self_key'] && intval($row[$key]) > 0 )
+						$row[$key] = $row[$key]+$maxid;
+				}
+				
+				if	( isset($data['replace']) )
+				{
+					foreach( $data['replace'] as $repl_column=>$repl_tabelle)
+						foreach( $mapping[$repl_tabelle] as $oldid=>$newid)
+						{
+							$row[$repl_column] = str_replace('{'.$oldid.'}','{'.$newid.'}'  ,$row[$repl_column]);
+							$row[$repl_column] = str_replace('"'.$oldid.'"','"'.$newid.'"'  ,$row[$repl_column]);
+							$row[$repl_column] = str_replace('->'.$oldid   ,'->"'.$newid.'"',$row[$repl_column]);
+						}
+				}
+				
+				if	( isset($data['binary']) )
+				{
+					if	( !$db_src->conf['base64'] && $db_dest->conf['base64'] )
+						$row[$data['binary']] = base64_encode($row[$data['binary']]);
+					elseif	( $db_src->conf['base64'] && !$db_dest->conf['base64'] )
+						$row[$data['binary']] = base64_decode($row[$data['binary']]);
+				}
+				
+//				Html::debug($row,'Zeile');
+				
+				// Daten in Zieltabelle einfügen.
+				$sql = new Sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES({'.join(array_keys($row),'},{').'})',$dbid_destination);
+				foreach( $row as $key=>$value )
+				{
+					if	( isset($data['erase']) && in_array($key,$data['erase']) )
+						$sql->setNull($key);
+					else
+						$sql->setVar($key,$value);
+				}
+				//$sql = new Sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES('.join($row,',').')',$dbid_destination);
+				$db_dest->query( $sql->query );
+			}
+
+			if	( isset($data['self_key']) )
+			{
+				foreach( $mapping[$tabelle] as $oldid=>$newid )
+				{
+					$sql = new Sql( 'UPDATE {t_'.$tabelle.'} SET '.$data['self_key'].'='.$newid.' WHERE '.$data['self_key'].'='.($oldid+$maxid),$dbid_destination );
+					$db_dest->query( $sql->query );
+				}
+			}
+		}
 	}
 }
 
