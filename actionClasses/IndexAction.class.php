@@ -547,7 +547,7 @@ class IndexAction extends Action
 				    
 					if	( ! $ok )
 					{
-						header( 'WWW-Authenticate: Basic realm="OpenRat Content Management System - Login"' );
+						header( 'WWW-Authenticate: Basic realm="'.OR_TITLE.' - '.lang('HTTP_REALM').'"' );
 						header( 'HTTP/1.0 401 Unauthorized' );
 						echo 'Authorization Required!';
 						exit;
