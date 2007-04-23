@@ -31,7 +31,7 @@ type=form
 ; 'database' uses the internal database table as password store.  
 ; 'authdb'   uses an external database table as password store, see section [authdb] which has to exist.  
 ; 'ldap'     uses an external LDAP directory for password checking.  
-; 'http'     uses an HTTP-Auth Server for password checking (TODO)  
+; 'http'     uses an HTTP-Auth Server for password checking 
 type=database
 
 ; per-user setting of the LDAP DN.
@@ -49,6 +49,15 @@ random_length=8
 
 ; minimum passwort length
 min_length=5
+
+
+
+; this section is needed if the setting "auth/type" is 'http'.
+; passwords are checked against another HTTP-Server with Basic Authorization.
+[http]
+
+; The URL where an HTTP basic authorization ist required.
+url = "http://example.net/restricted-area"
 
 
 

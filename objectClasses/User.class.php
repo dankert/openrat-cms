@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.23  2007-04-23 21:48:01  dankert
+// Authentisierung gegen einen externen Server mit HTTP-Basic-Auth erm?glichen.
+//
 // Revision 1.22  2007-04-21 11:52:24  dankert
 // Default-Style ist konfigurierbar.
 //
@@ -566,7 +569,7 @@ SQL
 		$res_user = $db->query( $sql->query );
 
 		$check = false;
-		$authType = $conf['security']['auth']['type']; // Entweder 'ldap', 'authdb' oder 'database'
+		$authType = $conf['security']['auth']['type']; // Entweder 'ldap', 'authdb', 'http', oder 'database'
 		
 		if	( $res_user->numRows() == 1 )
 		{
@@ -585,6 +588,11 @@ SQL
 			$autoAdd = true;
 		}
 		elseif( $res_user->numRows() == 0 && $authType == 'authdb' && $conf['security']['authdb']['add'] )
+		{
+			$check = true;
+			$autoAdd = true;
+		}
+		elseif( $res_user->numRows() == 0 && $authType == 'http' && $conf['security']['http']['add'] )
 		{
 			$check = true;
 			$autoAdd = true;
@@ -683,6 +691,16 @@ SQL
 				// noch nicht implementiert: $authdb->close();
 				
 				return $ok;
+			}
+			elseif( $authType == 'http' )
+			{
+				$http = new Http( $conf['security']['http']['url'] );
+				$http->method = 'HEAD';
+				$http->setBasicAuthentication( $this->name, $password );
+				
+				$ok = $http->request();
+				
+				return $ok; 
 			}
 			else
 			{
