@@ -41,6 +41,17 @@ userdn=false
 
 
 
+[authorize]
+; A user belongs to certain groups. This information can be stored in 2 ways.
+; 'database' uses the internal database for the user-group-relation. (default)
+; 'ldap' reads the user-group-relations in a LDAP-Directory
+;        (in this case, /security/auth/type has to be set to "ldap", too!)
+;        (see /ldap/authorize!)
+type=database
+;type=ldap
+
+
+
 ; password settings
 [password]
 

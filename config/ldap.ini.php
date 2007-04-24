@@ -1,11 +1,23 @@
 ; <?php exit('direct access denied') ?>
 
 ; Openrat is able to check passwords against a LDAP-based directory.
+; see file "security.ini.php" for relating infos.
 
-host="localhost"      ; host of ldap server  
-port="389"            ; port of ldap server
-protocol="2"          ; protocol version ('2' or '3')
+; Hostname of your LDAP server.
+host="localhost"
 
+; TCP-Port of your LDAP server.  
+port="389"
+
+; Protocol-Version
+; Set this to '2' or '3'.
+protocol="2"
+
+; The format of the DN
+; If blank, the DN is automatically searched in the LDAP tree (see section "search").
+; for using LDAP authentication, /security/auth/type has to be set to "ldap"!
+;dn = "uid={user},ou=users,dc=example,dc=com" 
+dn = ""; 
 
 ; Settings for authentication against a LDAP directory
 ; This is only activated, if the setting '/security/auth/type' is 'ldap'.
@@ -39,3 +51,18 @@ timeout   = 30
 ; 'false' login will be rejected, all users must exist in the internal database.
 add       = true
 
+
+
+; The user-group-relation can be read out of the LDAP tree.
+; For using this, /security/authorize/type must be "ldap".
+[authorize]
+
+; Search filter for reading the groups a user belongs to.
+group_filter="(memberUid={dn})"
+
+; LDAP attribute name of the name of the group
+group_name="cn"
+
+; Add groups found in LDAP (but not known in the internal database) automatically into database?
+; If 'false', the LDAP groups cannot be used!
+auto_add = true
