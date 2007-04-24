@@ -160,9 +160,11 @@ class Sql
 		// Bereits vorhande Parameter setzen.		
 		foreach( $this->data as $name=>$data )
 		{
-			if	( $data['type']=='string' ) $this->setString($name,$data['value'] );
-			if	( $data['type']=='int'    ) $this->setInt   ($name,$data['value'] );
-			if	( $data['type']=='null'   ) $this->setNull  ($name                );
+			if	( $data['type']=='string'     ) $this->setString    ($name,$data['value'] );
+			if	( $data['type']=='stringlist' ) $this->setStringList($name,$data['value'] );
+			if	( $data['type']=='int'        ) $this->setInt       ($name,$data['value'] );
+			if	( $data['type']=='intlist'    ) $this->setIntList   ($name,$data['value'] );
+			if	( $data['type']=='null'       ) $this->setNull      ($name                );
 		}
 	}
 
@@ -256,6 +258,23 @@ class Sql
 
 
 	/**
+	 * Setzt eine Ganzzahl-Liste als Parameter.<br>
+	 * 
+	 * @param name Name des Parameters
+	 * @param values Inhalte
+	 */
+	function setIntList( $name,$values )
+	{
+		$this->data[ $name ] = array( 'type'=>'intlist','value'=>$values );
+		
+		$values  = array_map('intval',$values);
+		$this->setParam($name,implode(',',$values) );
+//		$this->query = str_replace( '{'.$name.'}',intval($value),$this->query );
+	}
+
+
+
+	/**
 	 * Setzt eine Zeichenkette als Parameter.<br>
 	 * 
 	 * @param name Name des Parameters
@@ -273,6 +292,25 @@ class Sql
 
 		$this->setParam($name,$value);
 //		$this->query = str_replace( '{'.$name.'}',$value,$this->query );
+	}
+
+
+
+	/**
+	 * Setzt eine Zeichenketten-Liste als Parameter.<br>
+	 * 
+	 * @param name Name des Parameters
+	 * @param values Inhalte
+	 */
+	function setStringList( $name,$values )
+	{
+		$this->data[ $name ] = array( 'type'=>'stringlist','value'=>$values );
+
+		$values  = array_map('addslashes',$values);
+		
+		$value = "'".implode("','",$values)."'";
+
+		$this->setParam($name,$value);
 	}
 
 
