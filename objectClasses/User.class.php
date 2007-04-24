@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.24  2007-04-24 20:55:22  dankert
+// Autorisierung ?ber LDAP.
+//
 // Revision 1.23  2007-04-23 21:48:01  dankert
 // Authentisierung gegen einen externen Server mit HTTP-Basic-Auth erm?glichen.
 //
@@ -113,7 +116,7 @@ class User
 	var $loginDate = 0;
 	
 	var $mustChangePassword = false;
-
+	var $groups = null;
 
 	// Konstruktor
 	function User( $userid='' )
@@ -622,15 +625,58 @@ SQL
 				$ldap = new Ldap();
 				$ldap->connect();
 				
-				// Der Benutzername wird im LDAP-Verzeichnis gesucht.
-				// Falls gefunden, wird der DN (=der eindeutige Schlüssel im Verzeichnis) ermittelt.
-				$dn = $ldap->search( $this->name );
-				
-				if	 ( empty($dn) )
-					return false; // Kein LDAP-Account gefunden.
+				if	( empty($conf['ldap']['dn']) )
+				{
+					// Der Benutzername wird im LDAP-Verzeichnis gesucht.
+					// Falls gefunden, wird der DN (=der eindeutige Schlüssel im Verzeichnis) ermittelt.
+					$dn = $ldap->searchUser( $this->name );
+					
+					if	 ( empty($dn) )
+						return false; // Kein LDAP-Account gefunden.
+				}
+				else
+				{
+					$dn = str_replace( '{user}',$this->name,$conf['ldap']['dn'] );
+				}
 					
 				// LDAP-Login versuchen
 				$ok = $ldap->bind( $dn, $password );
+				
+				if	( $ok && $conf['security']['authorize']['type'] == 'ldap' )
+				{
+					$sucheAttribut = $conf['ldap']['authorize']['group_name'];
+					$sucheFilter   = str_replace('{dn}',$dn,$conf['ldap']['authorize']['group_filter']);
+					
+					$ldap_groups = $ldap->searchAttribute( $sucheFilter, $sucheAttribut );
+					
+//					Html::debug($groups,'Gruppen des Benutzers');
+					$sql = new Sql( <<<SQL
+SELECT id,name FROM {t_group}
+ WHERE name IN({name_list})
+ ORDER BY name ASC
+SQL
+					);
+					$sql->setStringList('name_list',$ldap_groups);
+				
+					$this->groups = $db->getAssoc( $sql->query );
+					
+					// Prüfen, ob Gruppen fehlen. Diese dann ggf. in der OpenRat-Datenbank hinzufügen.
+					if	( $conf['ldap']['authorize']['auto_add'] )
+					{
+						foreach( $ldap_groups as $group )
+						{
+							if	( !in_array($group,$this->groups) ) // Gruppe schon da?
+							{
+								$g = new Group();
+								$g->name = $group;
+								$g->add(); // Gruppe hinzufügen
+								
+								$this->groups[$g->groupid] = $group;
+							}
+						}
+					}
+//					Html::debug($this->groups,'Gruppen/Ids des Benutzers');
+				}
 				
 				// Verbindung zum LDAP-Server brav beenden
 				$ldap->close();
@@ -740,20 +786,27 @@ SQL
 	// Gruppen ermitteln, in denen der Benutzer Mitglied ist
 	function getGroups()
 	{
-		$db = db_connection();
-
-		$sql = new Sql( 'SELECT {t_group}.id,{t_group}.name FROM {t_group} '.
-		                'LEFT JOIN {t_usergroup} ON {t_usergroup}.groupid={t_group}.id '.
-		                'WHERE {t_usergroup}.userid={userid}' );
-		$sql->setInt('userid',$this->userid );
-
-		return $db->getAssoc( $sql->query );
+		if	( !is_array($this->groups) )
+		{
+			$db = db_connection();
+	
+			$sql = new Sql( 'SELECT {t_group}.id,{t_group}.name FROM {t_group} '.
+			                'LEFT JOIN {t_usergroup} ON {t_usergroup}.groupid={t_group}.id '.
+			                'WHERE {t_usergroup}.userid={userid}' );
+			$sql->setInt('userid',$this->userid );
+			$this->groups = $db->getAssoc( $sql->query );
+		}
+		
+		return $this->groups;
 	}
 	
 
 	// Gruppen ermitteln, in denen der Benutzer Mitglied ist
 	function getGroupIds()
 	{
+		return array_keys( $this->getGroups() );
+
+		/*
 		$db = db_connection();
 
 		$sql = new Sql( 'SELECT groupid FROM {t_usergroup} '.
@@ -761,6 +814,7 @@ SQL
 		$sql->setInt('userid',$this->userid );
 
 		return $db->getCol( $sql->query );
+		*/
 	}
 	
 

@@ -27,6 +27,8 @@
 class Ldap
 {
 	var $connection;
+	var $timeout;
+	var $aliases;
 	
 	
 	/**
@@ -34,6 +36,14 @@ class Ldap
 	 */
 	function Ldap()
 	{
+		global $conf;
+		
+		$this->timeout = intval($conf['ldap']['search']['timeout']);
+
+		if	( $conf['ldap']['search']['aliases'] )
+			$this->aliases = LDAP_DEREF_ALWAYS;
+		else
+			$this->aliases = LDAP_DEREF_NEVER;
 	}
 	
 	
@@ -101,9 +111,9 @@ class Ldap
 	
 	
 	/**
-	 * Ein Binding auf den LDAP-Server durchführen.
+	 * Eine Suche auf den LDAP-Server durchführen.
 	 */
-	function search( $username )
+	function searchUser( $username )
 	{
 		global $conf;
 		
@@ -118,6 +128,23 @@ class Ldap
 		$dn      = $conf['ldap']['search']['basedn'];
 		$filter  = $conf['ldap']['search']['filter'];
 		$filter  = str_replace('{user}', $username, $filter);
+			
+		
+		$s = ldap_search( $this->connection,$dn,$filter,array(),0,1,$this->timeout,$this->aliases );
+		$dn = ldap_get_dn($this->connection, ldap_first_entry($this->connection,$s) );
+		
+		return $dn;
+	}
+
+
+
+	/**
+	 * Ein Binding auf den LDAP-Server durchführen.
+	 */
+	function searchAttribute( $filter,$attr )
+	{
+		global $conf;
+		
 		$timeout = intval($conf['ldap']['search']['timeout']);
 
 		if	( $conf['ldap']['search']['aliases'] )
@@ -126,10 +153,16 @@ class Ldap
 			$aliases = LDAP_DEREF_NEVER;
 			
 		
-		$s = ldap_search( $this->connection,$dn,$filter,array(),0,1,$timeout,$aliases );
-		$dn = ldap_get_dn($this->connection, ldap_first_entry($this->connection,$s) );
+		$base_dn = $conf['ldap']['search']['basedn'];
+		$s = ldap_search( $this->connection,$base_dn,$filter,array(),0,0,$this->timeout,$this->aliases );
+		$ergebnisse = ldap_get_entries($this->connection,$s);
 		
-		return $dn;
+		$liste = array();
+//		Html::debug($ergebnisse);
+		for( $i=0; $i<=$ergebnisse['count']-1; $i++ )
+			$liste[] = $ergebnisse[$i][$attr][0];
+
+		return $liste;
 	}
 	
 	
