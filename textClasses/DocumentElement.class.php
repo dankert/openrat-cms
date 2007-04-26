@@ -818,6 +818,18 @@ class DocumentElement extends AbstractElement
 							$tag = 'img';
 							$attr['src']    = $child->getUrl();
 							$attr['border'] = '0';
+							
+							// Breite/Höhe des Bildes bestimmen.
+							$image = new File( $child->objectId );
+							
+							$image->load();
+							$attr['alt'   ]    = $image->name;
+							$attr['title' ]    = $image->description;
+							
+							$image->getImageSize();
+							$attr['width' ]    = $image->width;
+							$attr['height']    = $image->height;
+							unset($image);
 						}
 						else
 						{

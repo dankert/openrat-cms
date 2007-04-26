@@ -42,6 +42,8 @@ class File extends Object
 	var $fullFilename  = '';
 	var $publish       = null;
 	var $mime_type     = '';
+	var $width         = null;
+	var $height        = null;
 
 
 
@@ -90,9 +92,9 @@ class File extends Object
 		$this->fullFilename = $filename;
 		return $filename;
 	}
-
-
-
+	
+	
+	
 	/**
 	  * Ermitteln des Dateinamens dieser Datei (ohne Pfadangabe)
 	  *
@@ -212,6 +214,27 @@ class File extends Object
 			$this->mime_type = OR_FILE_DEFAULT_MIMETYPE;
 			
 		return( $this->mime_type );
+	}
+
+
+
+	/**
+	 * Ermittelt Breite und Höhe des Bildes.<br>
+	 * Die Werte lassen sich anschließend über die Eigenschaften "width" und "height" ermitteln.
+	 */
+	function getImageSize()
+	{
+		if	( is_null($this->width) )
+		{
+			$this->write(); // Datei schreiben
+			
+			// Bildinformationen ermitteln
+			$size = getimagesize( $this->tmpfile() );
+	
+			// Breite und Hoehe des aktuellen Bildes	 
+			$this->width  = $size[0]; 
+			$this->height = $size[1];
+		}
 	}
 
 
