@@ -806,7 +806,14 @@ class DocumentElement extends AbstractElement
 							$attr['name'] = $child->name;
 						else
 							$attr['href'] = htmlspecialchars($child->getUrl());
-							
+
+						if	( Object::available( $child->objectId ) )
+						{
+							$file = new File( $child->objectId );
+							$file->load();
+							$attr['title'] = $file->description;
+							unset( $file );
+						}
 						break;
 
 					case 'imageelement':
