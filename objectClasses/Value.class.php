@@ -528,22 +528,30 @@ SQL
 
 			case 'copy':
 
-				list( $linkElementName, $targetElementName ) = explode( '%', $this->element->name );
+				list($linkElementName,$targetElementName) = explode('%',$this->element->name);
+
+				if	( is_null($targetElementName) )
+					break;
+
+				$element = new Element();
+				$element->name = $linkElementName;
+				$element->load();
 				
-				$t = new Template( $this->page->templateid );
-				$elementId = array_search( $linkElementName, $t->getElementNames() );
+				if	( intval($element->elementid)==0 )
+					break;
 				
-//				echo "<pre>";print_r($this); echo "</pre>";
 				$linkValue = new Value();
-				$linkValue->elementid = $elementId;
-				$linkValue->element   = new Element($elementId);
+				$linkValue->elementid = $element->elementid;
+				$linkValue->element   = $element;
 				$linkValue->pageid = $this->pageid;
 				$linkValue->languageid = $this->languageid;
 				$linkValue->load();
 				
+				if	( !Object::available( $linkValue->linkToObjectId ) )
+					break;
+
 				$linkedPage = new Page( $linkValue->linkToObjectId );
 				$linkedPage->load();
-//				echo "<pre>";print_r($linkValue->linkToObjectId); echo "</pre>";
 
 				$linkedPageTemplate = new Template( $linkedPage->templateid );
 				$targetElementId = array_search( $targetElementName, $linkedPageTemplate->getElementNames() );
@@ -554,9 +562,65 @@ SQL
 				$targetValue->element->load();
 				$targetValue->pageid = $linkedPage->pageid;
 				$targetValue->generate();
-//				echo "<pre>";print_r($targetValue); echo "</pre>";
 				
 				$inhalt = $targetValue->value; 
+				
+				break;
+
+
+			case 'linkinfo':
+
+				list( $linkElementName, $name ) = explode('%',$this->element->name);
+				if	( is_null($name) )
+					break;
+					
+				$element = new Element();
+				$element->name = $linkElementName;
+				$element->load();
+				
+				$linkValue = new Value();
+				$linkValue->elementid = $element->elementid;
+				$linkValue->element   = $element;
+				$linkValue->pageid = $this->pageid;
+				$linkValue->languageid = $this->languageid;
+				$linkValue->load();
+				
+				//Html::debug( $linkValue );
+				
+				if	( !Object::available( $linkValue->linkToObjectId ) )
+					break;
+					
+				$linkedObject = new Object( $linkValue->linkToObjectId );
+				$linkedObject->load();
+				
+				switch( $this->element->subtype )
+				{
+					case 'width':
+						$f = new File( $linkValue->linkToObjectId );
+						$f->load();
+						if	( $f->isImage() )
+						{
+							$f->getImageSize();
+							$inhalt = $f->width;
+						}
+						unset($f);
+					break;
+					
+					case 'height':
+						$f = new File( $linkValue->linkToObjectId );
+						$f->load();
+						if	( $f->isImage() )
+						{
+							$f->getImageSize();
+							$inhalt = $f->height;
+						}
+						unset($f);
+					break;
+					
+					default:
+//						$inhalt = ''; 
+						$inhalt = '?subtype for linkinfo not implemented: '.$this->element->subtype.'?'; 
+				}			
 				
 				break;
 
