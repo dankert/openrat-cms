@@ -706,7 +706,7 @@ class DocumentElement extends AbstractElement
 		
 		switch( $this->type )
 		{
-			case 'html':
+			case 'text/html':
 			
 				$attr = array();
 				$val  = '';
@@ -962,7 +962,8 @@ class DocumentElement extends AbstractElement
 //				echo "text:$val";
 				return $this->renderHtmlElement($tag,$val,$empty,$attr);
 				
-			case 'text':
+			case 'text/plain':
+			default:
 				$className = strtolower(get_class($child));
 				$val = '';
 
@@ -976,8 +977,7 @@ class DocumentElement extends AbstractElement
 
 				return $val;
 			
-			default:
-				die( 'unknown document type: '.$this->type );
+//				die( 'unknown document type: '.$this->type );
 		}
 		
 	}
@@ -1002,21 +1002,15 @@ class DocumentElement extends AbstractElement
 
 
 	
-	function render( $type='txt' )
+	function render( $extension='txt' )
 	{
-		if	( $type == 'text' ||
-			  $type == 'txt'  ||
-			  $type == 'ascii' )
-			$type = 'text';
+		global $conf;
+		
+		if	( isset($conf['mime-types'][$extension]))
+			$this->type = $conf['mime-types'][$extension];
+		else
+			$this->type = 'text/html';
 			
-		if	( $type == 'xhtml' ||
-			  $type == 'html'  ||
-			  $type == ''      ||
-			  $type == 'htm'   ||
-			  $type == 'xml' )
-			$type = 'html';
-			
-		$this->type         = $type;
 		$this->renderedText = '';
 		
 		foreach( $this->children as $child )
