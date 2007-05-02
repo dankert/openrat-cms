@@ -257,7 +257,8 @@ class ProjectTree extends AbstractTree
 		if   ( $folder->hasRight( ACL_READ ) )
 		{
 			$treeElement = new TreeElement();
-			$treeElement->text        = $folder->name;
+//			$treeElement->text        = $folder->name;
+			$treeElement->text        = lang('FOLDER_ROOT');
 			$treeElement->description = lang('FOLDER_ROOT_DESC');
 			$treeElement->icon        = 'folder';
 			$treeElement->url         = Html::url( 'main','folder',$folder->objectid );
