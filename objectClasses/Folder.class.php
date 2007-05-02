@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2006-07-19 21:30:12  dankert
+// Revision 1.11  2007-05-02 21:28:47  dankert
+// Beim Lesen aller Objekte bereits in der Datenbank nach Typ filtern.
+//
+// Revision 1.10  2006/07/19 21:30:12  dankert
 // Verbesserung "getParentObjectNames()"
 //
 // Revision 1.9  2005/11/07 22:34:51  dankert
@@ -333,16 +336,25 @@ class Folder extends Object
 	}
 
 
-	function getAllObjectIds()
+	function getAllObjectIds( $types=array('folder','page','link','file') )
 	{
+//		Html::debug($types,'Typen');
 		global $SESS;
 		$db = db_connection();
 		
 		$sql = new Sql('SELECT id FROM {t_object}'.
 		               '  WHERE projectid={projectid}'.
+		               '    AND (    is_folder={is_folder}' .
+		               '          OR is_file  ={is_file}' .
+		               '          OR is_page  ={is_page}' .
+		               '          OR is_link  ={is_link} )' .
 		               '  ORDER BY orderid ASC' );
 		$project = Session::getProject();
 		$sql->setInt('projectid',$project->projectid);
+		$sql->setInt('is_folder',in_array('folder',$types)?1:2);
+		$sql->setInt('is_file'  ,in_array('file'  ,$types)?1:2);
+		$sql->setInt('is_page'  ,in_array('page'  ,$types)?1:2);
+		$sql->setInt('is_link'  ,in_array('link'  ,$types)?1:2);
 		
 		return( $db->getCol( $sql->query ) );
 	}

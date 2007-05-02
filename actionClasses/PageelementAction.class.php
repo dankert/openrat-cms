@@ -546,24 +546,26 @@ class PageelementAction extends Action
 		if	( empty($this->value->element->subtype) )
 			$types = array('page','file','link'); // Fallback: Alle erlauben :)
 		else
-			$types = explode(',',empty($this->value->element->subtype) );
+			$types = explode(',',$this->value->element->subtype );
 
+//		Html::debug($this->value->element,'Element');
+//		Html::debug($types,'Typen1');
 		$objects = array();
 
-		foreach( Folder::getAllObjectIds() as $id )
+		foreach( Folder::getAllObjectIds($types) as $id )
 		{
 			$o = new Object( $id );
 			$o->load();
 			
-			if	( in_array( $o->getType(),$types ))
-			{ 
+//			if	( in_array( $o->getType(),$types ))
+//			{ 
 				$f = new Folder( $o->parentid );
 //					$f->load();
 				
 				$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
 				$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
 				$objects[ $id ] .= FILE_SEP.$o->name;
-			} 
+//			} 
 		}
 
 		asort( $objects ); // Sortieren
