@@ -99,12 +99,13 @@ if	( !is_array( $conf ) )
 			break;
 		}
 	}
-	
-	$langDefaultFile = OR_LANGUAGE_DIR.$conf['i18n']['complete_from'].'.ini.'.PHP_EXT;
-	if	( file_exists( $langDefaultFile ) )
-	{
-		$conf['language'] = array_merge( parse_ini_file( $langDefaultFile ),$conf['language']);
-	}
+
+// Deaktiviert, da alle Sprachdateien vollstaendig sein sollen.	
+//	$langDefaultFile = OR_LANGUAGE_DIR.$conf['i18n']['complete_from'].'.ini.'.PHP_EXT;
+//	if	( file_exists( $langDefaultFile ) )
+//	{
+//		$conf['language'] = array_merge( parse_ini_file( $langDefaultFile ),$conf['language']);
+//	}
 	
 
 	if	( !isset($conf['language']) )
@@ -172,8 +173,9 @@ if	( !empty( $REQ[REQ_PARAM_SUBACTION] ) )
 	$subaction = $REQ[REQ_PARAM_SUBACTION];
 else
 {
-	if	( in_array($action,array('page','file','link','folder')))
-		$subaction = Session::getSubaction();
+	$sl = Session::getSubaction();
+	if	( is_array($sl) && isset($sl[$action]) )
+		$subaction = $sl[$action];
 	else
 		$subaction = '';
 }
@@ -201,8 +203,15 @@ if	( !isset($do->actionConfig[$subaction]) )
 	
 Logger::trace("controller is calling subaction '$subaction'");
 
-if	( in_array($action,array('page','file','link','folder')) )
-	Session::setSubaction( $subaction );
+if	( isset($do->actionConfig[$subaction]['menu']) )
+{
+	$sl = Session::getSubaction();
+//	Html::debug($sl,'SL');
+	if	( !is_array($sl))
+		$sl = array();
+	$sl[$action] = $subaction;
+	Session::setSubaction( $sl );
+}
 
 $do->subActionName = $subaction;
 
