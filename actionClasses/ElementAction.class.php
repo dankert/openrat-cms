@@ -207,6 +207,36 @@ class ElementAction extends Action
 							$convertToLang = true;
 							break;
 
+						case 'link':
+							$subtypes = Array('file,page,link',
+							                  'file',
+							                  'page',
+							                  'link' );
+							$convertToLang = true;
+							break;
+
+						case 'linkinfo':
+							$subtypes = Array('width',
+							                  'height',
+							                  'id',
+							                  'name',
+							                  'description',
+							                  'mime-type',
+							                 'lastch_user_username',
+							                 'lastch_user_fullname',
+							                 'lastch_user_mail',
+							                 'lastch_user_desc',
+							                 'lastch_user_tel',
+							                 'create_user_username',
+							                 'create_user_fullname',
+							                 'create_user_mail',
+							                 'create_user_desc',
+							                 'create_user_tel',
+							                  'filename',
+							                  'full_filename' );
+							$convertToLang = true;
+							break;
+
 						case 'dynamic':
 							
 							$files = Array();
@@ -222,20 +252,17 @@ class ElementAction extends Action
 							$subtypes = $files;
 							break;
 
-						case 'copy':
-							$subtypes = array();
-							break;
-
 						default:
 							$subtypes = array();
 							break;
 					}
 
-					if	( $convertToLang == true )
+					if	( $convertToLang )
 					{
-						foreach( $subtypes as $t )
+						foreach( $subtypes as $t=>$v )
 						{
-							$subtypes[$t] = lang('EL_'.$this->element->type.'_'.$t);
+							unset($subtypes[$t]);
+							$subtypes[$v] = lang('EL_'.$this->element->type.'_'.$v);
 						}
 					}
 					
@@ -285,25 +312,83 @@ class ElementAction extends Action
 					break;
 				
 				
-				case 'wiki':
-					$this->setTemplateVar('wiki',$this->element->wiki        );
+				case 'htmlwiki':
+					if	( !$this->element->wiki && !$this->element->html )
+						$format = 'none';
+					elseif	( $this->element->wiki && !$this->element->html )
+						$format = 'wiki';
+					elseif	( !$this->element->wiki && $this->element->html )
+						$format = 'html';
+					elseif	( $this->element->wiki && $this->element->html )
+						$format = 'wiki,html';
+						
+					$this->setTemplateVar('format', $format );
+					$formatlist = array('none'=>'raw','html'=>'html','wiki'=>'wiki','wiki,html'=>'wikihtml');
+
+					foreach( $formatlist as $t=>$v )
+						$formatlist[$t] = lang('EL_PROP_'.$v);
+					
+					$this->setTemplateVar('formatlist', $formatlist );
 					//Html::debug($this->templateVars);
 					break;
 				
-				
-				case 'html':
-					$this->setTemplateVar('html',$this->element->html        );
+				case 'linktype':
+					$this->setTemplateVar('linktype', $this->element->wiki );
+					$this->setTemplateVar('linktypelist', array('page','file','link') );
+					//Html::debug($this->templateVars);
 					break;
-			
-			
+				
+				case 'prefix':
+					$t = new Template( $this->element->templateid );
+					
+					foreach( $t->getElements() as $element )
+					{
+						if	( $element->type == 'link' )
+							$elements[$element->name] = $element->name;
+					}
+					unset($t);
+					
+					$this->setTemplateVar('linkelements',$elements );
+
+					@list($linkElementName,$targetElementName) = explode('%',$this->element->name);
+					$this->setTemplateVar('linkelement',$linkElementName );
+					
+					break;
+
+				case 'name':
+				
+					$names = array();
+										
+					foreach( Template::getAll() as $tid=>$name )
+					{
+						$t = new Template( $tid );
+						$t->load();
+						
+						foreach( $t->getElements() as $element )
+						{
+							if	( !in_array($element->type,array('copy','linkinfo','link')) )
+								$names[$element->name] = $t->name.' - '.$element->name.' ('.lang('EL_'.$element->type).')';
+						}
+						unset($t);
+					}
+					
+					
+					$this->setTemplateVar('names',$names );
+
+					list($linkElementName,$targetElementName) = explode('%',$this->element->name);
+					$this->setTemplateVar('name',$targetElementName );
+					break;
+
 				// Eigenschaften PHP-Code
 				case 'code':
 
 					switch( $this->element->type )
 					{
+
 						case 'select':
 							$this->setTemplateVar('select_items',$this->element->code );
 							break;
+
 						case 'dynamic':
 
 							$className = $this->element->subtype;
@@ -470,8 +555,8 @@ class ElementAction extends Action
 			$this->element->defaultText     = $this->getRequestVar('default_longtext');
 		else
 			$this->element->defaultText     = $this->getRequestVar('default_text');
-		$this->element->wiki            = $this->getRequestVar('wiki') != '';
-		$this->element->html            = $this->getRequestVar('html') != '';
+		$this->element->wiki            = in_array('wiki',explode(',',$this->getRequestVar('format')));
+		$this->element->html            = in_array('html',explode(',',$this->getRequestVar('format')));
 		$this->element->withIcon        = $this->getRequestVar('with_icon') != '';
 		$this->element->allLanguages    = $this->getRequestVar('all_languages') != '';
 		$this->element->writable        = $this->getRequestVar('writable') != '';
@@ -482,6 +567,15 @@ class ElementAction extends Action
 		$this->element->defaultObjectId = $this->getRequestVar('default_objectid');
 		$this->element->code            = $this->getRequestVar('code'            );
 
+		if	( $this->hasRequestVar('name') )
+			$this->element->name = $this->getRequestVar('name');
+
+		if	( $this->hasRequestVar('linkelement') )
+			$this->element->setPrefix( $this->getRequestVar('linkelement') );
+		
+//		if	( $this->hasRequestVar('elementid'))
+//			$this->element->code = $this->getRequestVar('elementid');
+		
 		$this->addNotice('element',$this->element->name,'SAVED');
 		$this->element->save();
 		

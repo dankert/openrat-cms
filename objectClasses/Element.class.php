@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.16  2006-07-05 19:15:34  dankert
+// Revision 1.17  2007-05-02 20:58:45  dankert
+// Ausw?hlen von Einstellungen f?r Elemente "linkinfo" und "copy".
+//
+// Revision 1.16  2006/07/05 19:15:34  dankert
 // Bugfix getRelatedProperties()
 //
 // Revision 1.15  2006/07/04 20:48:14  dankert
@@ -203,10 +206,19 @@ class Element
 	function load()
 	{
 		$db = db_connection();
-		
-		$sql = new Sql( 'SELECT * FROM {t_element}'.
-		                ' WHERE id={elementid}'      );
-		$sql->setInt( 'elementid',$this->elementid );
+
+		if	( intval($this->elementid) != 0 )
+		{		
+			$sql = new Sql( 'SELECT * FROM {t_element}'.
+			                ' WHERE id={elementid}'      );
+			$sql->setInt( 'elementid',$this->elementid );
+		}
+		else
+		{
+			$sql = new Sql( 'SELECT * FROM {t_element}'.
+			                ' WHERE name={name}'      );
+			$sql->setString( 'name',$this->name );
+		}
 
 		$this->setDatabaseRow( $db->getRow( $sql->query ) );
 	}
@@ -214,6 +226,7 @@ class Element
 
 	function setDatabaseRow( $prop )
 	{
+		$this->elementid      = $prop['id'        ];
 		$this->templateid     = $prop['templateid'];
 		$this->name           = $prop['name'      ];
 		$this->desc           = $prop['descr'     ];
@@ -301,7 +314,8 @@ class Element
 
 
 	/**
-	 * Setzt den Typ des Elementes
+	 * Setzt den Typ des Elementes und schreibt diesen sofort in die Datenbank.
+	 * 
 	 * @param String Der neue Typ, siehe getAvailableTypes() f?r m?gliche Typen
 	 * @see #type
 	 */
@@ -322,7 +336,22 @@ class Element
 
 
 	/**
-	 * L?schen des Elementes und aller Inhalte
+	 * Setzt ein Prefix vor den Elementnamen.
+	 * @param String Prefix
+	 */
+	function setPrefix( $prefix )
+	{
+		@list( $oldprefix,$name ) = explode('%',$this->name);
+		
+		if	( is_null($name) )
+			$name = $oldprefix;
+		
+		$this->name = $prefix.'%'.$name;
+	}
+
+
+	/**
+	 * Loeschen des Elementes und aller Inhalte
 	 */
 	function delete()
 	{
@@ -362,14 +391,15 @@ class Element
 	 */
 	function getRelatedProperties()
 	{
-		$prp = array('text'    =>array('withIcon','allLanguages','writable','html','wiki','defaultText'),
-		             'longtext'=>array('withIcon','allLanguages','writable','html','wiki','defaultText'),
+		$prp = array('text'    =>array('withIcon','allLanguages','writable','htmlwiki','defaultText'),
+		             'longtext'=>array('withIcon','allLanguages','writable','htmlwiki','defaultText'),
 		             'select'  =>array('withIcon','allLanguages','writable','defaultText','code'),
 		             'number'  =>array('withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
-		             'link'    =>array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		             'link'    =>array('subtype','withIcon','allLanguages','writable','linktype','folderObjectId','defaultObjectId'),
 		             'date'    =>array('withIcon','allLanguages','writable','dateformat','defaultText'),
-		             'list'    =>array('withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		             'copy'    =>array('defaultText'),
+		             'list'    =>array('subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		             'copy'    =>array('prefix','name','defaultText'),
+		             'linkinfo'=>array('prefix','subtype','defaultText'),
 		             'code'    =>array('code'),
 		             'dynamic' =>array('subtype','code'),
 		             'info'    =>array('subtype'),
@@ -411,10 +441,43 @@ class Element
 		             'date',
 		             'list',
 		             'copy',
+		             'linkinfo',
 		             'code',
 		             'dynamic',
 		             'info',
 		             'infodate');
+	}
+
+
+	/**
+	 * Ermittelt die Klasse des Element-Typs.<br>
+	 * Entweder "info", "text" oder "dynamic".
+	 * 
+	 * @return Array
+	 */
+	function getTypeClass()
+	{
+		switch( $this->type )
+		{
+			case 'text':
+			case 'longtext':
+			case 'select':
+			case 'number':
+			case 'link':
+			case 'date':
+			case 'list':
+				return 'text';
+
+			case 'code':
+			case 'dynamic':
+				return 'dynamic';
+
+			case 'copy':
+			case 'info':
+			case 'infodate':
+			case 'linkinfo':
+				return 'info';
+		}
 	}
 
 
@@ -476,7 +539,7 @@ class Element
 	function isWritable()
 	{
 		// Bei bestimmten Feldern immer false zurueckgeben
-		if	( in_array($this->type,Array('copy','info','infodate','code','dynamic')) )
+		if	( in_array($this->type,Array('copy','linkinfo','info','infodate','code','dynamic')) )
 			return false;
 
 		return $this->writable;

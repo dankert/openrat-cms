@@ -57,19 +57,12 @@ page
 					cell class:fx
 						selectbox name:dateformat list:dateformats
 			
-			if present:wiki
+			if present:format
 				row
 					cell class:fx
-						text text:EL_PROP_wiki
+						text text:EL_PROP_FORMAT
 					cell class:fx
-						checkbox name:wiki
-
-			if present:html
-				row
-					cell class:fx
-						text text:EL_PROP_html
-					cell class:fx
-						checkbox name:html
+						radiobox name:format list:formatlist
 
 			if present:decimals
 				row
@@ -129,6 +122,20 @@ page
 						text text:EL_PROP_select_items
 					cell class:fx
 						inputarea rows:15 cols:40 name:select_items
+
+			if present:linkelement
+				row
+					cell class:fx
+						text text:EL_LINK
+					cell class:fx
+						selectbox name:linkelement list:linkelements
+
+			if present:name
+				row
+					cell class:fx
+						text text:ELEMENT_NAME
+					cell class:fx
+						selectbox name:name list:names
 
 			if present:folderobjectid
 				row
