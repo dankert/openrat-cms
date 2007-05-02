@@ -541,6 +541,13 @@ class PageelementAction extends Action
 
 	function editlink()
 	{
+
+		// Ermitteln, welche Objekttypen verlinkt werden dürfen.
+		if	( empty($this->value->element->subtype) )
+			$types = array('page','file','link'); // Fallback: Alle erlauben :)
+		else
+			$types = explode(',',empty($this->value->element->subtype) );
+
 		$objects = array();
 
 		foreach( Folder::getAllObjectIds() as $id )
@@ -548,10 +555,10 @@ class PageelementAction extends Action
 			$o = new Object( $id );
 			$o->load();
 			
-			if	( $o->getType() != 'folder' )
+			if	( in_array( $o->getType(),$types ))
 			{ 
 				$f = new Folder( $o->parentid );
-//						$f->load();
+//					$f->load();
 				
 				$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
 				$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
