@@ -446,6 +446,24 @@ class ProjectTree extends AbstractTree
 		$treeElement->description = lang('GLOBAL_SEARCH_DESC');
 		$treeElement->target      = 'cms_main';
 		$this->addTreeElement( $treeElement );
+
+
+		$treeElement = new TreeElement();
+		$treeElement->text        = lang('USER_YOURPROFILE');
+		$treeElement->url         = Html::url('profile','edit');
+		$treeElement->icon        = 'user';
+		$treeElement->description = lang('USER_PROFILE_DESC');
+		$treeElement->target      = 'cms_main_main';
+		$this->addTreeElement( $treeElement );
+
+
+		$treeElement = new TreeElement();
+		$treeElement->text        = lang('GLOBAL_PROJECTS');
+		$treeElement->url         = Html::url('index','projectmenu');
+		$treeElement->icon        = 'project';
+		$treeElement->description = lang('GLOBAL_PROJECTS');
+		$treeElement->target      = 'parent';
+		$this->addTreeElement( $treeElement );
 	}
 }
 
