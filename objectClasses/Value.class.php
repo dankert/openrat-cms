@@ -44,6 +44,12 @@ class Value
 	var $page;
 	
 	/**
+	 * Kennzeichen, ob der Inhalt mit dem Inhalt einer anderern Seite verknüpft wird.
+	 * @type Object
+	 */
+	var $isLink = false;
+	
+	/**
 	 * Objekt-ID, auf die verlinkt wird
 	 * @type Integer
 	 */
@@ -155,7 +161,8 @@ class Value
 			                '    AND pageid    ={pageid}'.
 			                '    AND languageid={languageid}'.
 			                '    AND publish=1' );
-		else	$sql = new Sql( 'SELECT * FROM {t_value}'.
+		else
+			$sql = new Sql( 'SELECT * FROM {t_value}'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
 			                '    AND languageid={languageid}'.
@@ -404,7 +411,8 @@ SQL
 
 
 	/**
-	 * Diese Methode erzeugt fuer alle Elementtypen den Inhalt.
+	 * Hier findet die eigentliche Bereitstellung des Inhaltes statt, zu
+	 * jedem Elementtyp wird ein Inhalt ermittelt.
 	 */
 	function generate()
 	{
@@ -416,6 +424,24 @@ SQL
 		$inhalt = '';
 
 //		Logger::debug('Generating Element '.$this->element->name.', type='.$this->element->type );
+
+		// Inhalt ist mit anderer Seite verknüpft.
+		if	( in_array($this->element->type,array('text','longtext','date','number')) && intval($this->linkToObjectId) != 0 && !$this->isLink )
+		{
+			$p = new Page( $this->linkToObjectId );
+			$p->load();
+			
+			$v = new Value();
+			$v->isLink     = true;
+			$v->pageid     = $p->pageid;
+			$v->element    = $this->element;
+			$v->languageid = $this->languageid;
+			$v->load();
+			$v->generate();
+			$this->value = $v->value;
+			return;
+		}
+		
 		switch( $this->element->type )
 		{
 			case 'list':

@@ -83,6 +83,23 @@ class PageelementAction extends Action
 
 	function show()
 	{
+		$language = Session::getProjectLanguage();
+		$this->value->languageid = $language->languageid;
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->element = &$this->element;
+		$this->value->element->load();
+		$this->value->publish = false;
+		$this->value->load();
+
+		$this->setTemplateVar('name'     ,$this->value->element->name     );
+		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
+		$this->setTemplateVar('elementid',$this->value->element->elementid);
+		$this->setTemplateVar('type'     ,$this->value->element->type     );
+
+
+
+
 		$this->value->generate();
 		$this->setTemplateVar('value',$this->value->value);
 	}
@@ -571,6 +588,69 @@ class PageelementAction extends Action
 		asort( $objects ); // Sortieren
 
 		$this->setTemplateVar('objects'         ,$objects);
+		$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
+
+		if	( $this->getSessionVar('pageaction') != '' )
+			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else	$this->setTemplateVar('old_pageaction','show'                            );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
+		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+
+		$this->forward('pageelement_edit_'.$this->value->element->type);
+	}
+
+
+
+	function link()
+	{
+		$language = Session::getProjectLanguage();
+		$this->value->languageid = $language->languageid;
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->element = &$this->element;
+		$this->value->element->load();
+		$this->value->publish = false;
+		$this->value->load();
+
+		// Ermitteln, welche Objekttypen verlinkt werden dürfen.
+		if	( empty($this->value->element->subtype) )
+			$types = array('page','file','link'); // Fallback: Alle erlauben :)
+		else
+			$types = explode(',',$this->value->element->subtype );
+
+//		Html::debug($this->value->element,'Element');
+//		Html::debug($types,'Typen1');
+		$objects = array();
+
+		$t = new Template( $this->page->templateid );
+		
+		foreach( $t->getDependentObjectIds() as $id )
+		{
+			$o = new Object( $id );
+			$o->load();
+			
+//			if	( in_array( $o->getType(),$types ))
+//			{ 
+				$f = new Folder( $o->parentid );
+//					$f->load();
+				
+				$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
+				$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
+				$objects[ $id ] .= FILE_SEP.$o->name;
+//			} 
+		}
+
+		asort( $objects ); // Sortieren
+
+		$this->setTemplateVar('objects'         ,$objects);
+//		Html::debug($this->value,'Value');
 		$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
 
 		if	( $this->getSessionVar('pageaction') != '' )
@@ -1123,13 +1203,25 @@ class PageelementAction extends Action
 		$value->publish = false;
 		$value->load();
 
-		$value->text           = $this->getRequestVar('text');
+		if   ( $this->hasRequestVar('linkobjectid') )
+			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
+		else
+			$value->text           = $this->getRequestVar('text');
 
 		$this->afterSave($value);
 	}
 
 
 
+	/**
+	 * Nach dem Speichern weitere Dinge ausfuehren.<br>
+	 * - Inhalt freigeben<br>
+	 * - Seite veroeffentlichen<br>
+	 * - Inhalt fuer andere Sprachen speichern<br>
+	 * - Hinweis ueber erfolgtes Speichern ausgeben<br>
+	 * <br>
+	 * Nicht zu verwechseln mit <i>Aftershave</i> :)
+	 */
 	function afterSave( $value )
 	{
 		$value->page = new Page( $value->objectid );
@@ -1196,7 +1288,11 @@ class PageelementAction extends Action
 		$value->publish = false;
 		$value->load();
 
-		$value->text           = $this->getRequestVar('text');
+
+		if   ( $this->hasRequestVar('linkobjectid') )
+			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
+		else
+			$value->text           = $this->getRequestVar('text');
 
 		// Vorschau anzeigen
 		if	( $value->element->type=='longtext' && ($this->hasRequestVar('preview')||$this->hasRequestVar('addmarkup')) )
@@ -1298,8 +1394,10 @@ class PageelementAction extends Action
 		$value->publish = false;
 		$value->load();
 
-		// Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
-		if   ( $this->getRequestVar('ansidate') != $this->getRequestVar('ansidate_orig') )
+		if   ( $this->hasRequestVar('linkobjectid') )
+			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
+		elseif   ( $this->getRequestVar('ansidate') != $this->getRequestVar('ansidate_orig') )
+			// Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
 			$value->date = strtotime($this->getRequestVar('ansidate') );
 		else
 			// Sonst die Zeitwerte einzeln zu einem Datum zusammensetzen
@@ -1425,7 +1523,10 @@ class PageelementAction extends Action
 		$value->publish = false;
 		$value->load();
 
-		$value->number         = $this->getRequestVar('number') * pow(10,$value->element->decimals);
+		if   ( $this->hasRequestVar('linkobjectid') )
+			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
+		else
+			$value->number         = $this->getRequestVar('number') * pow(10,$value->element->decimals);
 		
 		$this->afterSave($value);
 	}
@@ -1502,6 +1603,9 @@ class PageelementAction extends Action
 			case 'edit':
 			case 'archive':
 				return true;
+
+			case 'link':
+				return in_array($type,array('date','text','longtext','number'));
 
 			case 'advanced':
 				return in_array($type,array('date','longtext','number'));

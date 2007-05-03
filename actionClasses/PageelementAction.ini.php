@@ -12,6 +12,10 @@ menu=edit
 [import]
 menu=edit
 
+[link]
+menu=edit
+target=save
+
 [export]
 menu=edit
 
@@ -36,4 +40,4 @@ target=save
 goto=show
 
 [menu]
-edit=show,edit,advanced,import,export,archive
+edit=show,edit,advanced,link,import,export,archive
