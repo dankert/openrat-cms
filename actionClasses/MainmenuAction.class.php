@@ -45,6 +45,7 @@ class MainmenuAction extends Action
 		switch( $this->getRequestVar( 'subaction') )
 		{
 			case 'page':
+			case 'pageelement':
 			case 'file':
 			case 'link':
 			case 'folder':
