@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.31  2007-05-03 21:18:14  dankert
+// Nicht aktive Men?punkte als inaktiv anzeigen.
+//
 // Revision 1.30  2007-04-21 11:49:40  dankert
 // Keine Variable "style" verwenden (?berschreibt andere Variablen!)
 //
@@ -527,12 +530,15 @@ class Action
 			$menuKey = 'accesskey_window_'.$menuName;
 			
 //			Logger::trace("testing menu $menuName");
+			$menuEntry = array('subaction'=>$menuName,
+                               'text'     =>$menuText,
+                               'title'    =>$menuText.'_DESC',
+                               'key'      =>$menuKey );
+                               
 			if	( $this->checkMenu($menuName) )
-				$windowMenu[] = array('subaction'=>$menuName,
-                                      'text'     =>$menuText,
-                                      'title'    =>$menuText.'_DESC',
-                                      'key'      =>$menuKey,
-                                      'url'=>Html::url($actionName,$menuName,$this->getRequestId()) );
+				$menuEntry['url'] = Html::url($actionName,$menuName,$this->getRequestId());
+				
+			$windowMenu[] = $menuEntry;
 		}
 		$this->setTemplateVar('windowMenu',$windowMenu);
 	}
