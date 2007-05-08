@@ -4,7 +4,7 @@ if (count($$attr_list)==1) echo ' disabled="disabled"'
 		$attr_tmp_list = $$attr_list;
 		if	( isset($$attr_name) && isset($attr_tmp_list[$$attr_name]) )
 			$attr_tmp_default = $$attr_name;
-		elseif ( isset($$attr_default) )
+		elseif ( isset($attr_default) )
 			$attr_tmp_default = $attr_default;
 		else
 			$attr_tmp_default = '';
