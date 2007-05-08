@@ -332,8 +332,8 @@ input:focus,
 textarea:focus
 {
 	background-color:#7B9CBD;
-	border:2px solid red;
-	font-weight:bold;
+	border:2px solid yellow;
+/*	font-weight:bold;*/
 }
 
 tr.f1:hover,
@@ -437,4 +437,21 @@ p.logo
 	margin-left:110px;
 	font-family:Verdana;
 	font-size:13px;
+}
+
+input.search
+{
+	margin:0px;
+	padding:0px;
+	font-size:10px;
+	border:2px solid black;
+}
+input.searchbutton
+{
+	margin:0px;
+	margin-left:5px;
+	border:0px;
+	padding:0px;
+	font-size:4px;
+max-height:20px;
 }

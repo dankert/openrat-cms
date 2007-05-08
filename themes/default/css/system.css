@@ -315,22 +315,22 @@ table.main
 input,
 textarea
 {
-	border:2px solid gray;
+	border:2px solid InactiveBorder;
 	padding:2px;
 }
 
 input:hover,
 textarea:hover
 {
-	border:2px solid black;
+	border:2px solid ActiveBorder;
 }
 
 input:focus,
 textarea:focus
 {
 	background-color:InfoBackground;
-	border:2px solid red;
-	font-weight:bold;
+	border:2px solid ActiveBorder;
+	/*font-weight:bold;*/
 }
 
 tr.f1:hover,
