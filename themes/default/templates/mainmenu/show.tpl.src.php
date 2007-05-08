@@ -13,9 +13,14 @@ page
 
 				text text:var:text title:var:text class:title
 			cell class:menu style::text-align:right;
-				list list:windowIcons extract:true
-					link url:var:url target:_top
-						image type:var:type align:middle
+				form action:search subaction:quicksearch target:cms_main_main
+					input class:search name:search size:15
+//					button class:searchbutton type:ok src:search
+					if true:config:search/quicksearch/show_button
+						button class:searchbutton type:ok text:search
+//				list list:windowIcons extract:true
+//					link url:var:url target:_top
+//						image type:var:type align:middle
 						
 		row
 			cell class:subaction colspan:2
