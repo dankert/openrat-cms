@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-12-20 20:27:13  dankert
+// Revision 1.5  2007-05-08 19:21:58  dankert
+// Erweiterung der Suche um die Schnellsuche.
+//
+// Revision 1.4  2004/12/20 20:27:13  dankert
 // Aktuelle Userid setzen
 //
 // Revision 1.3  2004/11/28 23:55:49  dankert
@@ -62,88 +65,41 @@ class SearchAction extends Action
 	 * Durchf?hren der Suche
 	 * und Anzeige der Ergebnisse
 	 */
-	function search()
+	function searchcontent()
 	{
 		global $conf_php;
 
 		$listObjectIds   = array();
 		$listTemplateIds = array();
 		
-		switch( $this->getRequestVar('searchtype') )
+		switch( $this->getRequestVar('type') )
 		{
-			case 'prop':
-			
-				switch( $this->getRequestVar('type') )
-				{
-					case 'id':
-						$o = new Object();
-						if	( $o->isObjectId($this->getRequestVar('id')) )
-							$listObjectIds[] = $this->getRequestVar('id');
-						break;
+			case 'value':
+				$e = new Value();
+				$listObjectIds = $e->getObjectIdsByValue( $this->getRequestVar('text') );
 
-					case 'filename':
-						$o = new Object();
-						$listObjectIds = $o->getObjectIdsByFilename( $this->getRequestVar('filename') );
-						break;
-
-					case 'name':
-						$o = new Object();
-						$listObjectIds = $o->getObjectIdsByName( $this->getRequestVar('name') );
-						break;
-
-					case 'desc':
-						$o = new Object();
-						$listObjectIds = $o->getObjectIdsByDescription( $this->getRequestVar('desc') );
-						break;
-
-					case 'create_user':
-						$o = new Object();
-						$listObjectIds = $o->getObjectIdsByCreateUserId( $this->getRequestVar('create_userid') );
-						break;
-
-					case 'lastchange_user':
-						$o = new Object();
-						$listObjectIds = $o->getObjectIdsByLastChangeUserId( $this->getRequestVar('lastchange_userid') );
-						break;
-
-					case 'extension':
-						$f = new File();
-						$listObjectIds = $f->getObjectIdsByExtension( $this->getRequestVar('extension') );
-						break;
-				}
-	
+				$template = new Template();
+				$listTemplateIds = $template->getTemplateIdsByValue( $this->getRequestVar('text') );
 				break;
 
-
-			case 'content':
-
-				switch( $this->getRequestVar('type') )
-				{
-					case 'value':
-						$e = new Value();
-						$listObjectIds = $e->getObjectIdsByValue( $this->getRequestVar('text') );
-
-						$template = new Template();
-						$listTemplateIds = $template->getTemplateIdsByValue( $this->getRequestVar('text') );
-						break;
-
-					case 'lastchange_user':
-						$e = new Value();
-						$listObjectIds = $e->getObjectIdsByLastChangeUserId( $this->getRequestVar('lastchange_userid') );
-						break;
-				}
+			case 'lastchange_user':
+				$e = new Value();
+				$listObjectIds = $e->getObjectIdsByLastChangeUserId( $this->getRequestVar('lastchange_userid') );
 				break;
-
-
-			default:
-				// Fallback:
-				// Dialog "Suche nach Eigenschaft" anzeigen.
-				$this->callSubAction( 'prop' );
-				exit;
 		}
 
 
+		$this->explainResult( $listObjectIds, $listTemplateIds );
 
+	}
+	
+	
+	
+	/**
+	 * 
+	 */
+	function explainResult( $listObjectIds, $listTemplateIds )
+	{
 		$resultList = array();
 
 		foreach( $listObjectIds as $objectid )
@@ -167,14 +123,119 @@ class SearchAction extends Action
 			$t->load();
 			$resultList['t'.$templateid] = array();
 			$resultList['t'.$templateid]['url' ]  = Html::url('main','template',$templateid);
-			$resultList['t'.$templateid]['type'] = 'tpl';
+			$resultList['t'.$templateid]['type'] = 'template';
 			$resultList['t'.$templateid]['name'] = $t->name;
 			$resultList['t'.$templateid]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 		}
 
 		$this->setTemplateVar( 'result',$resultList );
+	}
+	
+	
+	/**
+	 * Durchf?hren der Suche
+	 * und Anzeige der Ergebnisse
+	 */
+	function searchprop()
+	{
+		global $conf_php;
 
-		$this->forward( 'search_result' );
+		$listObjectIds   = array();
+		$listTemplateIds = array();
+		
+			switch( $this->getRequestVar('type') )
+			{
+				case 'id':
+					$o = new Object();
+					if	( $o->isObjectId($this->getRequestVar('text')) )
+						$listObjectIds[] = $this->getRequestVar('text');
+					break;
+
+				case 'filename':
+					$o = new Object();
+					$listObjectIds = $o->getObjectIdsByFilename( $this->getRequestVar('text') );
+
+					$f = new File();
+					$listObjectIds += $f->getObjectIdsByExtension( $this->getRequestVar('text') );
+					break;
+
+				case 'name':
+					$o = new Object();
+					$listObjectIds = $o->getObjectIdsByName( $this->getRequestVar('text') );
+					break;
+
+				case 'description':
+					$o = new Object();
+					$listObjectIds = $o->getObjectIdsByDescription( $this->getRequestVar('text') );
+					break;
+
+				case 'create_user':
+					$o = new Object();
+					$listObjectIds = $o->getObjectIdsByCreateUserId( $this->getRequestVar('userid') );
+					break;
+
+				case 'lastchange_user':
+					$o = new Object();
+					$listObjectIds = $o->getObjectIdsByLastChangeUserId( $this->getRequestVar('userid') );
+					break;
+
+				default:
+					die('search method unknown: '.$this->getRequestVar('type') );
+			}
+
+		$this->explainResult( $listObjectIds, $listTemplateIds );
+	}
+	
+	
+	/**
+	 * Durchf?hren der Suche
+	 * und Anzeige der Ergebnisse
+	 */
+	function quicksearch()
+	{
+		global $conf;
+
+		$listObjectIds   = array();
+		$listTemplateIds = array();
+		
+		$text = $this->getRequestVar('search');
+		
+		$o = new Object();
+		if	( $o->isObjectId($this->getRequestVar( $text )) )
+			$listObjectIds[] = $this->getRequestVar( $text );
+			
+		if	( $conf['search']['quicksearch']['search_name'] )
+		{
+			$o = new Object();
+			$listObjectIds += $o->getObjectIdsByName( $text );
+		}
+
+		if	( $conf['search']['quicksearch']['search_description'] )
+		{
+			$o = new Object();
+			$listObjectIds += $o->getObjectIdsByDescription( $text );
+		}
+
+		if	( $conf['search']['quicksearch']['search_filename'] )
+		{
+			$o = new Object();
+			$listObjectIds += $o->getObjectIdsByFilename( $text );
+	
+			$f = new File();
+			$listObjectIds += $f->getObjectIdsByExtension( $text );
+		}
+		
+		// Inhalte durchsuchen
+		if	( $conf['search']['quicksearch']['search_content'] )
+		{
+			$e = new Value();
+			$listObjectIds += $e->getObjectIdsByValue( $text );
+	
+			$template = new Template();
+			$listTemplateIds += $template->getTemplateIdsByValue( $text );
+		}
+
+		$this->explainResult( $listObjectIds, $listTemplateIds );
 	}
 	
 	
@@ -183,8 +244,6 @@ class SearchAction extends Action
 		$user = Session::getUser();
 		$this->setTemplateVar( 'users'     ,User::listAll() );
 		$this->setTemplateVar( 'act_userid',$user->userid   );
-
-		$this->forward( 'search_prop' );
 	}
 
 
@@ -193,8 +252,10 @@ class SearchAction extends Action
 		$user = Session::getUser();
 		$this->setTemplateVar( 'users'     ,User::listAll() );
 		$this->setTemplateVar( 'act_userid',$user->userid   );
-
-		$this->forward( 'search_content' );
+	}
+	
+	function result()
+	{
 	}
 }
 
