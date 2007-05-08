@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.9  2007-05-08 20:21:03  dankert
+// ?berschreiben der Methode "checkmenu()"
+//
 // Revision 1.8  2007-04-08 21:18:16  dankert
 // Korrektur URL in listing()
 //
@@ -93,8 +96,16 @@ class ModelAction extends Action
 	}
 
 
+
+	/**
+	 * Entfernen der Variante.<br>
+	 * Es wird ein Bestätigungsdialog angezeigt.
+	 */
 	function remove()
 	{
+		$this->model->load();
+
+		$this->setTemplateVar( 'name',$this->model->name );
 	}
 	
 	
@@ -169,16 +180,27 @@ class ModelAction extends Action
 	}
 
 
+	/**
+	 * Bearbeiten der Variante.
+	 * Ermitteln aller Eigenschaften der Variante.
+	 */
 	function edit()
 	{
-		if   ( count( $this->model->getAll() ) >= 2 )
-			$this->setTemplateVar('delete',true );
-		else	$this->setTemplateVar('delete',false);
-
 		$this->model->load();
 	
 		$this->setTemplateVars( $this->model->getProperties() );
-	
-		$this->forward('model_edit');
+	}
+
+
+	function checkmenu( $menu )
+	{
+		switch( $menu )
+		{
+			case 'remove':
+				return count( $this->model->getAll() ) >= 2;
+				
+			default:
+				return true;
+		}
 	}
 }

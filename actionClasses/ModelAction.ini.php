@@ -12,9 +12,6 @@ menu=listing
 menu=edit
 target=save
 
-[add]
-menu=listing
-
 [remove]
 menu=edit
 target=delete
@@ -29,6 +26,7 @@ goto=edit
 goto=listing
 
 [add]
+menu=listing
 target=addmodel
 
 [menu]
