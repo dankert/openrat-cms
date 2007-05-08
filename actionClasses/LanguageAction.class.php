@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2007-01-21 22:26:45  dankert
+// Revision 1.10  2007-05-08 21:16:20  dankert
+// Korrektur und Erweiterung von Hinzuf?gen/Bearbeiten von Sprachen.
+//
+// Revision 1.9  2007/01/21 22:26:45  dankert
 // Korreketur beim Hinzuf?gen/Entfernen von Sprachen.
 //
 // Revision 1.8  2006/01/29 17:18:59  dankert
@@ -88,6 +91,22 @@ class LanguageAction extends Action
 	 */
 	function add()
 	{
+		global $conf;
+		$countryList = $conf['countries'];
+
+		foreach( $this->project->getLanguageIds() as $id )
+		{
+			if	( $id == $this->language->languageid )
+				continue;		
+
+			$l = new Language( $id );
+			$l->load();
+
+			unset( $countryList[$l->isoCode] );
+		}
+
+		asort( $countryList );		
+		$this->setTemplateVar('isocodes'  ,$countryList );
 	}
 	
 	
@@ -123,6 +142,7 @@ class LanguageAction extends Action
 	 */
 	function remove()
 	{
+		$this->setTemplateVar('name'   ,$this->language->name   );
 	}
 	
 	
@@ -142,14 +162,21 @@ class LanguageAction extends Action
 	function save()
 	{
 		global $conf;
-		$countryList = $conf['countries'];
 
-		$iso = $this->getRequestVar('isocode');
-		$this->language->isoCode = strtolower( $iso );
-		$this->language->name    = $countryList[$iso];
+		if	( $this->hasRequestVar('name') )
+		{
+			$this->language->name    = $this->getRequestVar('name'   );
+			$this->language->isoCode = $this->getRequestVar('isocode');
+		}
+		else
+		{
+			$countryList = $conf['countries'];
+			$iso = $this->getRequestVar('isocode');
+			$this->language->name    = $countryList[$iso];
+			$this->language->isoCode = strtolower( $iso );
+		}
+		
 		$this->language->save();
-	
-		$this->callSubAction( 'listing' );
 	}
 
 
@@ -172,7 +199,8 @@ class LanguageAction extends Action
 			unset( $countryList[strtoupper($l->isoCode)] );
 			
 			$list[$id] = array();
-			$list[$id]['name'] = $l->name;
+			$list[$id]['name'   ] = $l->name;
+			$list[$id]['isocode'] = $l->isoCode;
 			
 			if	( $this->userIsAdmin() )
 			{
@@ -205,11 +233,6 @@ class LanguageAction extends Action
 		global $conf;
 		$countryList = $conf['countries'];
 
-		if   ( count($this->language->getAll()) >= 2 )
-			$this->setTemplateVar('delete',true );
-		else
-			$this->setTemplateVar('delete',false);
-
 		foreach( $this->project->getLanguageIds() as $id )
 		{
 			if	( $id == $this->language->languageid )
@@ -222,10 +245,40 @@ class LanguageAction extends Action
 		}
 
 		asort( $countryList );		
-		$this->setTemplateVar('isocodes'   ,$countryList               );
-		$this->setTemplateVar('languageid' ,$this->language->languageid);
-		$this->setTemplateVar('act_isocode',$this->language->isoCode   );
+		$this->setTemplateVar('isocodes'  ,$countryList               );
+		$this->setTemplateVar('isocode'   ,strtoupper($this->language->isoCode) );
+	}
+	
 
-		$this->forward('language_edit');
+
+	function advanced()
+	{
+		$this->setTemplateVar('isocode',$this->language->isoCode);
+		$this->setTemplateVar('name'   ,$this->language->name   );
+	}
+	
+	
+	
+	
+
+	function checkmenu( $menu )
+	{
+		switch( $menu )
+		{
+			case 'remove':
+				$actLanguage = Session::getProjectLanguage();
+				return
+					$this->userIsAdmin()                 &&
+					count( $this->language->getAll() ) >= 2 &&
+					isset($this->language) &&
+					$actLanguage->languageid != $this->language->languageid;
+				
+			case 'add':
+				return
+					$this->userIsAdmin();
+			
+			default:
+				return true;
+		}
 	}
 }

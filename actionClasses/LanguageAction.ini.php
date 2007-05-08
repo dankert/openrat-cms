@@ -1,14 +1,15 @@
 
 [setdefault]
-target=listing
+goto=listing
 
 [listing]
 menu=listing
 
-[default]
-goto=listing
-
 [edit]
+menu=edit
+target=save
+
+[advanced]
 menu=edit
 target=save
 
@@ -24,14 +25,11 @@ target=delete
 goto=listing
 
 [save]
-goto=edit
+goto=listing
 
 [addlanguage]
 goto=listing
 
-[add]
-target=addlanguage
-
 [menu]
 listing=listing,add
-edit=edit,remove
+edit=edit,advanced,remove

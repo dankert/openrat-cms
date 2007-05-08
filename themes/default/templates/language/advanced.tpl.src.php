@@ -4,9 +4,14 @@ page
 		window icon:group name:GLOBAL_GROUPS
 			row
 				cell
-					text text:GLOBAL_LANGUAGE
+					text text:GLOBAL_NAME
 				cell class:fx
-					selectbox list:isocodes name:isocode
+					input name:name
+			row
+				cell
+					text text:LANGUAGE_ISOCODE
+				cell class:fx
+					input name:isocode
 			row
 				cell colspan:2
 					button type:ok
