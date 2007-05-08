@@ -288,7 +288,7 @@ class ProjectTree extends AbstractTree
 		$treeElement->description= '';
 		$treeElement->text       = lang('GLOBAL_LANGUAGES');
 		$treeElement->url        = Html::url('main','language');
-		$treeElement->icon       = 'lang_list';
+		$treeElement->icon       = 'language_list';
 		$treeElement->description= lang('GLOBAL_LANGUAGES_DESC');
 		$treeElement->target     = 'cms_main';
 
@@ -394,7 +394,7 @@ class ProjectTree extends AbstractTree
 			$treeElement->text         = $name;
 			$treeElement->url          = Html::url('main','language',$languageid,
 			                                       array(REQ_PARAM_TARGETSUBACTION=>'edit') );
-			$treeElement->icon         = 'lang';
+			$treeElement->icon         = 'language';
 			$treeElement->description  = '';
 			$treeElement->target       = 'cms_main';
 			$this->addTreeElement( $treeElement );
