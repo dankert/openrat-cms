@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.10  2007-05-08 20:25:58  dankert
+// Erweiterung der Methode "checkmenu()"
+//
 // Revision 1.9  2007-05-08 20:21:03  dankert
 // ?berschreiben der Methode "checkmenu()"
 //
@@ -197,8 +200,16 @@ class ModelAction extends Action
 		switch( $menu )
 		{
 			case 'remove':
-				return count( $this->model->getAll() ) >= 2;
+				$actModel = Session::getProjectModel();
+				return
+					$this->userIsAdmin()                 &&
+					count( $this->model->getAll() ) >= 2 &&
+					$actModel->modelid != $this->model->modelid;
 				
+			case 'add':
+				return
+					$this->userIsAdmin();
+			
 			default:
 				return true;
 		}
