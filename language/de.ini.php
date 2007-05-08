@@ -293,6 +293,7 @@ GLOBAL_DEFAULT_TEXT = "Text Vorbelegung"
 GLOBAL_DELETE = "Löschen"
 GLOBAL_DELETED = "Objekt wurde gelöscht"
 GLOBAL_DESCRIPTION = Beschreibung
+DESCRIPTION = Beschreibung
 GLOBAL_DIFFERENCES ="Unterschiede"
 GLOBAL_DIFFERENCES_DESC ="Sie können sich die Unterschiede zwischen 2 Versionen anzeigen lassen"
 GLOBAL_DOWN = runter
@@ -300,6 +301,8 @@ GLOBAL_EXTENSIONS =Erweiterungen
 GLOBAL_FILE = Datei
 GLOBAL_FILENAME = Dateiname
 GLOBAL_FILENAME_DESC = "Dateiname, welcher für die Generierung verwendet wird. Wird automatisch gemäß RFC 2396 angepasst. Max. 255 Zeichen"
+FILENAME = Dateiname
+FILENAME_DESC = "Dateiname, welcher für die Generierung verwendet wird. Wird automatisch gemäß RFC 2396 angepasst. Max. 255 Zeichen"
 GLOBAL_FILES = Dateien
 GLOBAL_FILE_TRANSFER = "Dateitransfer"
 GLOBAL_FILE_TRANSFER_DESC = "Mit dieser Funktion können Sie viele Dateien in einem Schritt in die Datenbank importieren"
@@ -401,6 +404,7 @@ GLOBAL_USE =Benutzen
 GLOBAL_USER = Benutzer
 GLOBAL_USERS = Benutzer
 GLOBAL_VALUE = Inhalt
+VALUE = Inhalt
 GLOBAL_WITH ="mit"
 GLOBAL_YEAR = Jahr
 GLOBAL_YEARS = Jahre
@@ -834,6 +838,9 @@ HTTP_REALM="Bitte anmelden"
 
 
 
+CREATE_USER = "Erstellungsautor"
+LASTCHANGE_USER = "Letzter Änderungsautor"
+
 EL_LINKINFO_CREATE_USER_DESC = "Erstellungsautor: Beschreibung"
 EL_LINKINFO_CREATE_USER_FULLNAME = "Erstellungsautor: Voller Name"
 EL_LINKINFO_CREATE_USER_MAIL = "Erstellungsautor: E-Mail"
@@ -857,3 +864,9 @@ MENU_TITLE_FOLDER_NEW="Neue Ordner, Seiten, Verknüpfungen anlegen"
 MENU_PAGEELEMENT_LINK="Verknüpfen"
 MENU_PAGEELEMENT_LINK_DESC="Den Inhalt aus einer anderen Seite verknüpfen"
  
+SEARCH="Suche"
+SEARCH_DESC="Im Projekt wird nach dem Suchbegriff gesucht"
+MENU_TITLE_SEARCH_PROP="Suche nach Eigenschaften"
+MENU_SEARCH_PROP="Eigenschaft"
+MENU_SEARCH_CONTENT="Inhalt"
+MENU_TITLE_SEARCH_CONTENT="Suche nach Inhalt"
