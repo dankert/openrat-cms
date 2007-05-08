@@ -3,7 +3,7 @@
 ; default-value could be nothing (blank), a string or "*" for required attributes
 
 
-button   = type:submit,class:ok,value:ok,text:button_ok
+button   = type:submit,src,class:ok,value:ok,text:button_ok
 cell     = width,style,class,colspan
 char     = type:*
 checkbox = default:false,readonly:false,name:*

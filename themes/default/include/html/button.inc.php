@@ -1,9 +1,8 @@
 <?php
 	if ($attr_type=='ok')
-	{
 		$attr_type  = 'submit';
-//		$attr_class = 'ok';
-//		$attr_text  = 'BUTTON_OK';
-//		$attr_value = 'ok';
-	}
-?><input type="<?php echo $attr_type ?>" name="<?php echo $attr_value ?>" class="<?php echo $attr_class ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" />
+	if (isset($attr_src))
+		$attr_type  = 'image';
+	else
+		$attr_src  = '';
+?><input type="<?php echo $attr_type ?>"<?php if(isset($attr_src)) { ?> src="<?php echo $image_dir.'icon_'.$attr_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $attr_value ?>" class="<?php echo $attr_class ?>" title="<?php echo lang($attr_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" />
