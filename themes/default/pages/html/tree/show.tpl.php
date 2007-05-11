@@ -13,9 +13,11 @@
 <?php
       }
 ?>
-  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
-<?php if($stylesheet!='default') { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php if(!empty($root_stylesheet)) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
+<?php } ?>
+<?php if($root_stylesheet!=$user_stylesheet) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
 

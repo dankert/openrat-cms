@@ -13,9 +13,11 @@
 <?php
       }
 ?>
-  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
-<?php if($stylesheet!='default') { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php if(!empty($root_stylesheet)) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
+<?php } ?>
+<?php if($root_stylesheet!=$user_stylesheet) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
 
@@ -69,13 +71,20 @@
 			$windowMenu = array();
     foreach( $windowMenu as $menu )
           {
-          	$text = lang($menu['text']);
-          	$key  = strtoupper(lang($menu['key' ]));
-			$pos = strpos(strtolower($text),strtolower($key));
-			if	( $pos !== false )
-				$text = substr($text,0,max($pos,0)).'<span class="accesskey">'. substr($text,$pos,1).'</span>'.substr($text,$pos+1);
+          	$tmp_text = lang($menu['text']);
+          	$tmp_key  = strtoupper(lang($menu['key' ]));
+			$tmp_pos = strpos(strtolower($tmp_text),strtolower($tmp_key));
+			if	( $tmp_pos !== false )
+				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
           	
-          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo $text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	if	( isset($menu['url']) )
+          	{
+          		?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	}
+          	else
+          	{
+          		?><span class="menu_disabled" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu_disabled"><?php echo $tmp_text ?></span>&nbsp;&nbsp;&nbsp;<?php
+          	}
           }
           	if ($conf['help']['enabled'] )
           	{
@@ -192,7 +201,14 @@
 		$tmp_url = $attr6_url;
 	else
 		$tmp_url = Html::url($attr6_action,$attr6_subaction,!empty($$attr6_id)?$$attr6_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>"<?php if (isset($attr6_accesskey)) echo ' accesskey="'.$attr6_accesskey.'"' ?>  title="<?php echo $attr6_title ?>"><?php unset($attr6) ?><?php unset($attr6_title) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php unset($attr6_class) ?><?php $attr7 = array('var'=>'project','value'=>'project') ?><?php $attr7_var='project' ?><?php $attr7_value='project' ?><?php $$attr7_var = $attr7_value ?><?php unset($attr7) ?><?php unset($attr7_var) ?><?php unset($attr7_value) ?><?php $attr7 = array('align'=>'left','type'=>'project') ?><?php $attr7_align='left' ?><?php $attr7_type='project' ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>"<?php if (isset($attr6_accesskey)) echo ' accesskey="'.$attr6_accesskey.'"' ?>  title="<?php echo $attr6_title ?>"><?php unset($attr6) ?><?php unset($attr6_title) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php unset($attr6_class) ?><?php $attr7 = array('var'=>'project','value'=>'project') ?><?php $attr7_var='project' ?><?php $attr7_value='project' ?><?php
+	if (!isset($attr7_value))
+		unset($$attr7_var);
+	elseif (isset($attr7_key))
+		$$attr7_var = $attr7_value[$attr7_key];
+	else
+		$$attr7_var = $attr7_value;
+?><?php unset($attr7) ?><?php unset($attr7_var) ?><?php unset($attr7_value) ?><?php $attr7 = array('align'=>'left','type'=>'project') ?><?php $attr7_align='left' ?><?php $attr7_type='project' ?><?php
 if (isset($attr7_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr7_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php
 } elseif (isset($attr7_type)) {

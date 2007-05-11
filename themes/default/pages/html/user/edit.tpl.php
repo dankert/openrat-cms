@@ -13,9 +13,11 @@
 <?php
       }
 ?>
-  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
-<?php if($stylesheet!='default') { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php if(!empty($root_stylesheet)) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
+<?php } ?>
+<?php if($root_stylesheet!=$user_stylesheet) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
 
@@ -91,9 +93,9 @@
           	$key  = strtoupper(lang($menu['key' ]));
 			$pos = strpos(strtolower($text),strtolower($key));
 			if	( $pos !== false )
-				$text = substr($text,0,max($pos-1,0)).'<span class="accesskey">'.$key.'</span>'.substr($text,$pos+1);
+				$text = substr($text,0,max($pos,0)).'<span class="accesskey">'. substr($text,$pos,1).'</span>'.substr($text,$pos+1);
           	
-          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo $text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $text ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
           	if ($conf['help']['enabled'] )
           	{
@@ -206,7 +208,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -308,7 +310,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -410,7 +412,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -512,7 +514,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -614,7 +616,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -716,7 +718,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -818,7 +820,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -837,13 +839,21 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('list'=>'allstyles','name'=>'style','default'=>'','onchange'=>'','title'=>'','class'=>'') ?><?php $attr6_list='allstyles' ?><?php $attr6_name='style' ?><?php $attr6_default='' ?><?php $attr6_onchange='' ?><?php $attr6_title='' ?><?php $attr6_class='' ?><select size="1" id="id_<?php echo $attr6_name ?>"  name="<?php echo $attr6_name ?>" onchange="<?php echo $attr6_onchange ?>" title="<?php echo $attr6_title ?>" class="<?php echo $attr6_class ?>"<?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6 = array('list'=>'allstyles','name'=>'style','default'=>$conf['interface']['style']['default'],'onchange'=>'','title'=>'','class'=>'') ?><?php $attr6_list='allstyles' ?><?php $attr6_name='style' ?><?php $attr6_default=$conf['interface']['style']['default'] ?><?php $attr6_onchange='' ?><?php $attr6_title='' ?><?php $attr6_class='' ?><select size="1" id="id_<?php echo $attr6_name ?>"  name="<?php echo $attr6_name ?>" onchange="<?php echo $attr6_onchange ?>" title="<?php echo $attr6_title ?>" class="<?php echo $attr6_class ?>"<?php
 if (count($$attr6_list)==1) echo ' disabled="disabled"'
 ?>><?php
-		foreach( $$attr6_list as $box_key=>$box_value )
+		$attr6_tmp_list = $$attr6_list;
+		if	( isset($$attr6_name) && isset($attr6_tmp_list[$$attr6_name]) )
+			$attr6_tmp_default = $$attr6_name;
+		elseif ( isset($$attr6_default) )
+			$attr6_tmp_default = $attr6_default;
+		else
+			$attr6_tmp_default = '';
+		
+		foreach( $attr6_tmp_list as $box_key=>$box_value )
 		{
 			echo '<option class="'.$attr6_class.'" value="'.$box_key.'"';
-			if (isset($$attr6_name)&&$box_key==$$attr6_name || isset($attr6_default)&&$box_key == $attr6_default)
+			if ($box_key==$attr6_tmp_default)
 				echo ' selected="selected"';
 			echo '>'.$box_value.'</option>';
 		}
@@ -931,7 +941,7 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;

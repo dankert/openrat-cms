@@ -13,9 +13,11 @@
 <?php
       }
 ?>
-  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
-<?php if($stylesheet!='default') { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php if(!empty($root_stylesheet)) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
+<?php } ?>
+<?php if($root_stylesheet!=$user_stylesheet) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
 
@@ -87,13 +89,20 @@
 			$windowMenu = array();
     foreach( $windowMenu as $menu )
           {
-          	$text = lang($menu['text']);
-          	$key  = strtoupper(lang($menu['key' ]));
-			$pos = strpos(strtolower($text),strtolower($key));
-			if	( $pos !== false )
-				$text = substr($text,0,max($pos,0)).'<span class="accesskey">'. substr($text,$pos,1).'</span>'.substr($text,$pos+1);
+          	$tmp_text = lang($menu['text']);
+          	$tmp_key  = strtoupper(lang($menu['key' ]));
+			$tmp_pos = strpos(strtolower($tmp_text),strtolower($tmp_key));
+			if	( $tmp_pos !== false )
+				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
           	
-          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo $text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	if	( isset($menu['url']) )
+          	{
+          		?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	}
+          	else
+          	{
+          		?><span class="menu_disabled" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu_disabled"><?php echo $tmp_text ?></span>&nbsp;&nbsp;&nbsp;<?php
+          	}
           }
           	if ($conf['help']['enabled'] )
           	{
@@ -2151,10 +2160,18 @@ if (isset($attr9_elementtype)) {
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_width) ?><?php unset($attr6_class) ?><?php $attr7 = array('list'=>'dbids','name'=>'dbid','default'=>'actdbid','onchange'=>'','title'=>'','class'=>'') ?><?php $attr7_list='dbids' ?><?php $attr7_name='dbid' ?><?php $attr7_default='actdbid' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><select size="1" id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
 if (count($$attr7_list)==1) echo ' disabled="disabled"'
 ?>><?php
-		foreach( $$attr7_list as $box_key=>$box_value )
+		$attr7_tmp_list = $$attr7_list;
+		if	( isset($$attr7_name) && isset($attr7_tmp_list[$$attr7_name]) )
+			$attr7_tmp_default = $$attr7_name;
+		elseif ( isset($attr7_default) )
+			$attr7_tmp_default = $attr7_default;
+		else
+			$attr7_tmp_default = '';
+		
+		foreach( $attr7_tmp_list as $box_key=>$box_value )
 		{
 			echo '<option class="'.$attr7_class.'" value="'.$box_key.'"';
-			if (isset($$attr7_name)&&$box_key==$$attr7_name || isset($attr7_default)&&$box_key == $attr7_default)
+			if ($box_key==$attr7_tmp_default)
 				echo ' selected="selected"';
 			echo '>'.$box_value.'</option>';
 		}
@@ -2191,13 +2208,12 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 		
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_colspan) ?><?php $attr7 = array('type'=>'ok','class'=>'ok','value'=>'ok','text'=>'button_ok') ?><?php $attr7_type='ok' ?><?php $attr7_class='ok' ?><?php $attr7_value='ok' ?><?php $attr7_text='button_ok' ?><?php
 	if ($attr7_type=='ok')
-	{
 		$attr7_type  = 'submit';
-//		$attr7_class = 'ok';
-//		$attr7_text  = 'BUTTON_OK';
-//		$attr7_value = 'ok';
-	}
-?><input type="<?php echo $attr7_type ?>" name="<?php echo $attr7_value ?>" class="<?php echo $attr7_class ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr7_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_class) ?><?php unset($attr7_value) ?><?php unset($attr7_text) ?><script name="javascript1.2" type="text/javascript">
+	if (isset($attr7_src))
+		$attr7_type  = 'image';
+	else
+		$attr7_src  = '';
+?><input type="<?php echo $attr7_type ?>"<?php if(isset($attr7_src)) { ?> src="<?php echo $image_dir.'icon_'.$attr7_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $attr7_value ?>" class="<?php echo $attr7_class ?>" title="<?php echo lang($attr7_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr7_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_class) ?><?php unset($attr7_value) ?><?php unset($attr7_text) ?><script name="javascript1.2" type="text/javascript">
 <!--
 document.forms[0].screenwidth.value=window.innerWidth;
 //	-->

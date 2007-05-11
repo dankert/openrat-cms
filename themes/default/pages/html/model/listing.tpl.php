@@ -13,9 +13,11 @@
 <?php
       }
 ?>
-  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
-<?php if($stylesheet!='default') { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php if(!empty($root_stylesheet)) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
+<?php } ?>
+<?php if($root_stylesheet!=$user_stylesheet) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
 
@@ -69,13 +71,20 @@
 			$windowMenu = array();
     foreach( $windowMenu as $menu )
           {
-          	$text = lang($menu['text']);
-          	$key  = strtoupper(lang($menu['key' ]));
-			$pos = strpos(strtolower($text),strtolower($key));
-			if	( $pos !== false )
-				$text = substr($text,0,max($pos,0)).'<span class="accesskey">'. substr($text,$pos,1).'</span>'.substr($text,$pos+1);
+          	$tmp_text = lang($menu['text']);
+          	$tmp_key  = strtoupper(lang($menu['key' ]));
+			$tmp_pos = strpos(strtolower($tmp_text),strtolower($tmp_key));
+			if	( $tmp_pos !== false )
+				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
           	
-          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo $text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	if	( isset($menu['url']) )
+          	{
+          		?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	}
+          	else
+          	{
+          		?><span class="menu_disabled" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu_disabled"><?php echo $tmp_text ?></span>&nbsp;&nbsp;&nbsp;<?php
+          	}
           }
           	if ($conf['help']['enabled'] )
           	{
@@ -406,6 +415,68 @@ if (isset($attr7_elementtype)) {
 ?></span><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_text) ?><?php $attr6 = array() ?></a><?php unset($attr6) ?><?php $attr5 = array() ?><?php
 	}
 	
+?><?php unset($attr5) ?><?php $attr6 = array() ?><?php
+	if	( !$last_exec )
+	{
+?><?php unset($attr6) ?><?php $attr7 = array('class'=>'text','text'=>'GLOBAL_is_default') ?><?php $attr7_class='text' ?><?php $attr7_text='GLOBAL_is_default' ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+		
+	if(empty($attr7_title))
+		if (!empty($attr7_key))
+			$attr7_title = lang($attr7_key.'_HELP');
+		else
+			$attr7_title = '';
+
+?><span class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
+	$attr7_title = '';
+
+	if (!empty($attr7_array))
+	{
+		//geht nicht:
+		//echo $$attr7_array[$attr7_var].'%';
+		$tmpArray = $$attr7_array;
+		if (!empty($attr7_var))
+			$tmp_text = $tmpArray[$attr7_var];
+		else
+			$tmp_text = lang($tmpArray[$attr7_text]);
+	}
+	elseif (!empty($attr7_text))
+		if	( isset($$attr7_text))
+			$tmp_text = lang($$attr7_text);
+		else
+			$tmp_text = lang($attr7_text);
+	elseif (!empty($attr7_textvar))
+		$tmp_text = lang($$attr7_textvar);
+	elseif (!empty($attr7_key))
+		$tmp_text = lang($attr7_key);
+	elseif (!empty($attr7_var))
+		$tmp_text = isset($$attr7_var)?htmlentities($$attr7_var):'error: variable '.$attr7_var.' not present';	
+	elseif (!empty($attr7_raw))
+		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
+	elseif (!empty($attr7_value))
+		$tmp_text = $attr7_value;
+	else
+	{
+	  $tmp_text = '&nbsp;';
+	  //Html::debug($attr7);echo 'text error';
+	}
+	
+	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
+
+	if	(isset($attr7_accesskey))
+	{
+		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
+		if	( $pos !== false )
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
+	}
+			
+	echo $tmp_text;
+?></span><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_text) ?><?php $attr5 = array() ?><?php
+	}
 ?><?php unset($attr5) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr5 = array('class'=>'fx') ?><?php $attr5_class='fx' ?><?php
 //	if (empty($attr5_class))
 //		$attr5['class']=$row_class;
@@ -642,7 +713,21 @@ if (isset($attr7_elementtype)) {
 	echo $tmp_text;
 ?></span><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_text) ?><?php $attr5 = array() ?><?php
 	}
-?><?php unset($attr5) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr2 = array() ?><?php } ?><?php unset($attr2) ?><?php $attr1 = array() ?>      </table>
+?><?php unset($attr5) ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4 = array('var'=>'select_url') ?><?php $attr4_var='select_url' ?><?php
+	if (!isset($attr4_value))
+		unset($$attr4_var);
+	elseif (isset($attr4_key))
+		$$attr4_var = $attr4_value[$attr4_key];
+	else
+		$$attr4_var = $attr4_value;
+?><?php unset($attr4) ?><?php unset($attr4_var) ?><?php $attr4 = array('var'=>'default_url') ?><?php $attr4_var='default_url' ?><?php
+	if (!isset($attr4_value))
+		unset($$attr4_var);
+	elseif (isset($attr4_key))
+		$$attr4_var = $attr4_value[$attr4_key];
+	else
+		$$attr4_var = $attr4_value;
+?><?php unset($attr4) ?><?php unset($attr4_var) ?><?php $attr2 = array() ?><?php } ?><?php unset($attr2) ?><?php $attr1 = array() ?>      </table>
 	</td>
   </tr>
 </table>

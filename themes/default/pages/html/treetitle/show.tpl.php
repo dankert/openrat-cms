@@ -13,9 +13,11 @@
 <?php
       }
 ?>
-  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
-<?php if($stylesheet!='default') { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php if(!empty($root_stylesheet)) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
+<?php } ?>
+<?php if($root_stylesheet!=$user_stylesheet) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
 
@@ -288,7 +290,7 @@ if (isset($attr5_elementtype)) {
 			}
 			extract($$attr5_list_tmp_value);
 		}
-?><?php unset($attr5) ?><?php unset($attr5_list) ?><?php unset($attr5_extract) ?><?php unset($attr5_key) ?><?php unset($attr5_value) ?><?php $attr6 = array('title'=>$title,'target'=>'_parent','url'=>$url,'class'=>'','accesskey'=>lang($key)) ?><?php $attr6_title=$title ?><?php $attr6_target='_parent' ?><?php $attr6_url=$url ?><?php $attr6_class='' ?><?php $attr6_accesskey=lang($key) ?><?php
+?><?php unset($attr5) ?><?php unset($attr5_list) ?><?php unset($attr5_extract) ?><?php unset($attr5_key) ?><?php unset($attr5_value) ?><?php $attr6 = array('title'=>$title,'target'=>'_parent','url'=>$url,'class'=>'menu','accesskey'=>lang($key)) ?><?php $attr6_title=$title ?><?php $attr6_target='_parent' ?><?php $attr6_url=$url ?><?php $attr6_class='menu' ?><?php $attr6_accesskey=lang($key) ?><?php
 	if(empty($attr6_class))
 		$attr6_class='';
 	if(empty($attr6_title))

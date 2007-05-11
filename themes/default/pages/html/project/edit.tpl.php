@@ -13,9 +13,11 @@
 <?php
       }
 ?>
-  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
-<?php if($stylesheet!='default') { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php if(!empty($root_stylesheet)) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
+<?php } ?>
+<?php if($root_stylesheet!=$user_stylesheet) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
 
@@ -87,13 +89,13 @@
 			$windowMenu = array();
     foreach( $windowMenu as $menu )
           {
-          	$text = lang($menu['text']);
-          	$key  = strtoupper(lang($menu['key' ]));
-			$pos = strpos(strtolower($text),strtolower($key));
-			if	( $pos !== false )
-				$text = substr($text,0,max($pos-1,0)).'<span class="accesskey">'.$key.'</span>'.substr($text,$pos+1);
+          	$tmp_text = lang($menu['text']);
+          	$tmp_key  = strtoupper(lang($menu['key' ]));
+			$tmp_pos = strpos(strtolower($tmp_text),strtolower($tmp_key));
+			if	( $tmp_pos !== false )
+				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
           	
-          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php if($this->subActionName==$menu['subaction']) echo '_active' ?>"><?php echo $text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
           }
           	if ($conf['help']['enabled'] )
           	{
@@ -206,7 +208,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -308,7 +310,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -410,7 +412,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -512,7 +514,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -618,7 +620,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -720,7 +722,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;
@@ -826,7 +828,7 @@
 	{
 		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
 		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos-1,0)).'<span class="accesskey">'.strtoupper($attr6_accesskey).'</span>'.substr($tmp_text,$pos+1);
+			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 			
 	echo $tmp_text;

@@ -13,9 +13,11 @@
 <?php
       }
 ?>
-  <link rel="stylesheet" type="text/css" href="./themes/default/css/default.css" />
-<?php if($stylesheet!='default') { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet ?>" />
+<?php if(!empty($root_stylesheet)) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
+<?php } ?>
+<?php if($root_stylesheet!=$user_stylesheet) { ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
 
@@ -255,47 +257,128 @@ if (isset($attr5_elementtype)) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_style) ?><?php unset($attr4_class) ?><?php $attr5 = array('list'=>'windowIcons','extract'=>true,'key'=>'list_key','value'=>'list_value') ?><?php $attr5_list='windowIcons' ?><?php $attr5_extract=true ?><?php $attr5_key='list_key' ?><?php $attr5_value='list_value' ?><?php
-	$attr5_list_tmp_key   = $attr5_key;
-	$attr5_list_tmp_value = $attr5_value;
-	$attr5_list_extract   = $attr5_extract;
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_style) ?><?php unset($attr4_class) ?><?php $attr5 = array('action'=>'search','subaction'=>'quicksearch','name'=>'','target'=>'cms_main_main','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr5_action='search' ?><?php $attr5_subaction='quicksearch' ?><?php $attr5_name='' ?><?php $attr5_target='cms_main_main' ?><?php $attr5_method='post' ?><?php $attr5_enctype='application/x-www-form-urlencoded' ?><?php
+	if	(empty($attr5_action))
+		$attr5_action = $actionName;
+	if	(empty($attr5_subaction))
+		$attr5_subaction = $targetSubActionName;
+	if	(empty($attr5_id))
+		$attr5_id = $this->getRequestId();
+		
+?><form name="<?php echo $attr5_name ?>"
+      target="<?php echo $attr5_target ?>"
+      action="<?php echo Html::url( $attr5_action,$attr5_subaction,$attr5_id ) ?>"
+      method="<?php echo $attr5_method ?>"
+      enctype="<?php echo $attr5_enctype ?>">
+<input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo $attr5_action ?>" />
+<input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo $attr5_subaction ?>" />
+<input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr5_id ?>" /><?php
+		if	( $conf['interface']['url_sessionid'] )
+			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
+?><?php unset($attr5) ?><?php unset($attr5_action) ?><?php unset($attr5_subaction) ?><?php unset($attr5_name) ?><?php unset($attr5_target) ?><?php unset($attr5_method) ?><?php unset($attr5_enctype) ?><?php $attr6 = array('class'=>'search','default'=>'','type'=>'text','name'=>'search','size'=>'15','maxlength'=>'256','onchange'=>'') ?><?php $attr6_class='search' ?><?php $attr6_default='' ?><?php $attr6_type='text' ?><?php $attr6_name='search' ?><?php $attr6_size='15' ?><?php $attr6_maxlength='256' ?><?php $attr6_onchange='' ?><?php if(!isset($attr6_default)) $attr6_default='';
+?><input id="id_<?php echo $attr6_name ?>" name="<?php echo $attr6_name ?>" type="<?php echo $attr6_type ?>" size="<?php echo $attr6_size ?>" maxlength="<?php echo $attr6_maxlength ?>" class="<?php echo $attr6_class ?>" value="<?php echo isset($$attr6_name)?$$attr6_name:$attr6_default ?>" onxxxMouseOver="this.focus();"  /><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_default) ?><?php unset($attr6_type) ?><?php unset($attr6_name) ?><?php unset($attr6_size) ?><?php unset($attr6_maxlength) ?><?php unset($attr6_onchange) ?><?php $attr6 = array('true'=>$conf['search']['quicksearch']['show_button']) ?><?php $attr6_true=$conf['search']['quicksearch']['show_button'] ?><?php 
 
-	if	( !isset($$attr5_list) || !is_array($$attr5_list) )
-		$$attr5_list = array();
+	// Wahr-Vergleich
+//	Html::debug($attr6);
 	
-	foreach( $$attr5_list as $$attr5_list_tmp_key => $$attr5_list_tmp_value )
+	if	( isset($attr6_true) )
 	{
-		if	( $attr5_list_extract )
-		{
-			if	( !is_array($$attr5_list_tmp_value) )
-			{
-				print_r($$attr5_list_tmp_value);
-				die( 'not an array at key: '.$$attr5_list_tmp_key );
-			}
-			extract($$attr5_list_tmp_value);
-		}
-?><?php unset($attr5) ?><?php unset($attr5_list) ?><?php unset($attr5_extract) ?><?php unset($attr5_key) ?><?php unset($attr5_value) ?><?php $attr6 = array('title'=>'','target'=>'_top','url'=>$url,'class'=>'') ?><?php $attr6_title='' ?><?php $attr6_target='_top' ?><?php $attr6_url=$url ?><?php $attr6_class='' ?><?php
-	if(empty($attr6_class))
-		$attr6_class='';
-	if(empty($attr6_title))
-		$attr6_title = '';
-	if(!empty($attr6_url))
-		$tmp_url = $attr6_url;
+		if	(gettype($attr6_true) === '' && gettype($attr6_true) === '1')
+			$exec = $$attr6_true == true;
+		else
+			$exec = $attr6_true == true;
+	}
+
+	// Falsch-Vergleich
+	elseif	( isset($attr6_false) )
+	{
+		if	(gettype($attr6_false) === '' && gettype($attr6_false) === '1')
+			$exec = $$attr6_false == false;
+		else
+			$exec = $attr6_false == false;
+	}
+	// Inhalt-Vergleich mit Wertliste
+	elseif( isset($attr6_contains) )
+		$exec = in_array($attr6_value,explode(',',$attr6_contains));
+				
+	// Inhalt-Vergleich
+	elseif( isset($attr6_equals)&& isset($attr6_value) )
+		$exec = $attr6_equals == $attr6_value;
+
+	// Vergleich auf leer
+	elseif	( isset($attr6_empty) )
+	{
+		if	( !isset($$attr6_empty) )
+			$exec = empty($attr6_empty);
+		elseif	( is_array($$attr6_empty) )
+			$exec = (count($$attr6_empty)==0);
+		elseif	( is_bool($$attr6_empty) )
+			$exec = true;
+		else
+			$exec = empty( $$attr6_empty );
+	}
+
+	// Vergleich auf Vorhandensein
+	elseif	( isset($attr6_present) )
+	{
+		$exec = isset($$attr6_present);
+//		if	( !isset($$attr6_present) )
+//			$exec = false;
+//		elseif	( is_array($$attr6_present) )
+//			$exec = (count($$attr6_present)>0);
+//		elseif	( is_bool($$attr6_present) )
+//			$exec = $$attr6_present;
+//		elseif	( is_numeric($$attr6_present) )
+//			$exec = $$attr6_present>=0;
+//		else
+//			$exec = true;
+	}
+
 	else
-		$tmp_url = Html::url($attr6_action,$attr6_subaction,!empty($$attr6_id)?$$attr6_id:$this->getRequestId(),array(!empty($var1)?$var1:'asdf'=>!empty($value1)?$$value1:''));
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>"<?php if (isset($attr6_accesskey)) echo ' accesskey="'.$attr6_accesskey.'"' ?>  title="<?php echo $attr6_title ?>"><?php unset($attr6) ?><?php unset($attr6_title) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php unset($attr6_class) ?><?php $attr7 = array('align'=>'middle','type'=>$type) ?><?php $attr7_align='middle' ?><?php $attr7_type=$type ?><?php
-if (isset($attr7_elementtype)) {
-?><img src="<?php echo $image_dir.'icon_el_'.$attr7_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php
-} elseif (isset($attr7_type)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr7_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php
-} elseif (isset($attr7_icon)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr7_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php
-} elseif (isset($attr7_url)) {
-?><img src="<?php echo $attr7_url ?>" border="0" align="<?php echo $attr7_align ?>"><?php
-} elseif (isset($attr7_fileext)) {
-?><img src="<?php echo $image_dir.$attr7_fileext ?>" border="0" align="<?php echo $attr7_align ?>"><?php
-} elseif (isset($attr7_file)) {
-?><img src="<?php echo $image_dir.$attr7_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php } ?><?php unset($attr7) ?><?php unset($attr7_align) ?><?php unset($attr7_type) ?><?php $attr5 = array() ?></a><?php unset($attr5) ?><?php $attr4 = array() ?><?php } ?><?php unset($attr4) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array() ?><?php
+	{
+		Html::debug( $attr6 );
+		echo("error in IF line ".__LINE__);
+		echo("assume: FALSE");
+		$exec = false;
+	}
+
+	// Ergebnis umdrehen
+	// TODO: Bald ausbauen, stattdessen "not" verwenden.
+	if  ( !empty($attr6_invert) )
+		$exec = !$exec;
+
+	// Ergebnis umdrehen
+	if  ( !empty($attr6_not) )
+		$exec = !$exec;
+
+	unset($attr6_true);
+	unset($attr6_false);
+	unset($attr6_notempty);
+	unset($attr6_empty);
+	unset($attr6_contains);
+	unset($attr6_present);
+	unset($attr6_invert);
+	unset($attr6_not);
+	unset($attr6_value);
+	unset($attr6_equals);
+
+	$last_exec = $exec;
+	
+	if	( $exec )
+	{
+?><?php unset($attr6) ?><?php unset($attr6_true) ?><?php $attr7 = array('type'=>'ok','class'=>'searchbutton','value'=>'ok','text'=>'search') ?><?php $attr7_type='ok' ?><?php $attr7_class='searchbutton' ?><?php $attr7_value='ok' ?><?php $attr7_text='search' ?><?php
+	if ($attr7_type=='ok')
+		$attr7_type  = 'submit';
+	if (isset($attr7_src))
+		$attr7_type  = 'image';
+	else
+		$attr7_src  = '';
+?><input type="<?php echo $attr7_type ?>"<?php if(isset($attr7_src)) { ?> src="<?php echo $image_dir.'icon_'.$attr7_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $attr7_value ?>" class="<?php echo $attr7_class ?>" title="<?php echo lang($attr7_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr7_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_class) ?><?php unset($attr7_value) ?><?php unset($attr7_text) ?><?php $attr5 = array() ?><?php
+	}
+	
+?><?php unset($attr5) ?><?php $attr4 = array() ?></form>
+
+<?php unset($attr4) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -433,7 +516,7 @@ if (isset($attr7_elementtype)) {
 	
 	if	( $exec )
 	{
-?><?php unset($attr6) ?><?php unset($attr6_not) ?><?php unset($attr6_empty) ?><?php $attr7 = array('title'=>$title,'target'=>'cms_main_main','url'=>$url,'class'=>'','accesskey'=>$key) ?><?php $attr7_title=$title ?><?php $attr7_target='cms_main_main' ?><?php $attr7_url=$url ?><?php $attr7_class='' ?><?php $attr7_accesskey=$key ?><?php
+?><?php unset($attr6) ?><?php unset($attr6_not) ?><?php unset($attr6_empty) ?><?php $attr7 = array('title'=>$title,'target'=>'cms_main_main','url'=>$url,'class'=>'menu','accesskey'=>$key) ?><?php $attr7_title=$title ?><?php $attr7_target='cms_main_main' ?><?php $attr7_url=$url ?><?php $attr7_class='menu' ?><?php $attr7_accesskey=$key ?><?php
 	if(empty($attr7_class))
 		$attr7_class='';
 	if(empty($attr7_title))
@@ -592,7 +675,7 @@ if (isset($attr7_elementtype)) {
 	
 	if	( $exec )
 	{
-?><?php unset($attr6) ?><?php unset($attr6_empty) ?><?php $attr7 = array('class'=>'inactive','var'=>'text') ?><?php $attr7_class='inactive' ?><?php $attr7_var='text' ?><?php
+?><?php unset($attr6) ?><?php unset($attr6_empty) ?><?php $attr7 = array('class'=>'menu_disabled','var'=>'text') ?><?php $attr7_class='menu_disabled' ?><?php $attr7_var='text' ?><?php
 	if	( isset($attr7_prefix)&& isset($attr7_key))
 		$attr7_key = $attr7_prefix.$attr7_key;
 	if	( isset($attr7_suffix)&& isset($attr7_key))
