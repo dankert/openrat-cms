@@ -220,11 +220,22 @@ class AdministrationTree extends AbstractTree
 		$treeElement->icon   = 'config_property';
 		$this->addTreeElement( $treeElement );
 
+		$treeElement = new TreeElement();
+		$treeElement->text = 'magic_quotes_gpc='.get_magic_quotes_gpc();
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
+		$treeElement = new TreeElement();
+		$treeElement->text = 'magic_quotes_runtime='.get_magic_quotes_runtime();
+		$treeElement->icon   = 'config_property';
+		$this->addTreeElement( $treeElement );
+
 		foreach( array('upload_max_filesize',
 		               'file_uploads',
 		               'memory_limit',
 		               'max_execution_time',
 		               'post_max_size',
+		               'display_errors',
 		               'register_globals'
 		               
 		               ) as $iniName )
