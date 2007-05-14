@@ -17,7 +17,12 @@ class Preferences
 		
 		// Bei erstem (nicht-rekursiven) Aufruf der Methoden das Konfigurationsverzeichnis voreinstellen 
 		if	( empty($dir) )
-			$dir = OR_PREFERENCES_DIR;
+		{
+			if	( isset($_GET['config']) )
+				$dir = basename( $_GET['config'] ).'/';
+			else
+				$dir = OR_PREFERENCES_DIR;
+		}
 			
 		if	( !is_dir($dir) )
 			die('not a directory: '.$dir);
@@ -36,6 +41,10 @@ class Preferences
 				}
 	        }
 	        closedir($dh);
+	    }
+	    else
+	    {
+			die('unable to open directory: '.$dir);
 	    }
 
 		ksort($values);
