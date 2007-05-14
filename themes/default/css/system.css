@@ -157,7 +157,7 @@ a.menu_highlight:hover
 body
 {
 	background-color:Background;
-	color:MenuText;
+	color:WindowText;
 	font-family:Arial;
 	font-size:13px;
 	xbackground-color:#dad2b6;
@@ -167,7 +167,7 @@ body
 body.main
 {
 	background-color:Background;
-	color:MenuText;
+	color:WindowText;
 	font-family:Arial;
 	font-size:13px;
 /*	background-color:#dad2b6;*/
@@ -244,7 +244,7 @@ th
 }
 
 td
-{	color:MenuText;
+{	color:WindowText;
 	font-family:Arial;
 	font-size:13px;
 	vertical-align:top;
@@ -266,7 +266,7 @@ td.diff_notequal
 	background-color:yellow;
 }
 
-td.menu    { background-color:InactiveCaptionText;vertical-align:middle; height:30px;}
+td.menu    { background-color:Highlight; color:HighlightText; vertical-align:middle; height:30px;}
 td.help    { color:black; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.message { padding:10px; font-weight:bold; }
 td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
@@ -342,8 +342,8 @@ tr.f2:hover
 input.submit,
 input.ok
 {
-	color:#FFFFFF;
-	background-color:ThreeDDarkShadow;
+	color:HighlightText;
+	background-color:Highlight;
 	width:110px;
 }
 
@@ -369,7 +369,7 @@ input,
 select,
 textarea
 {
-	color:MenuText;
+	color:WindowText;
 	background-color:InfoBackground;
 }
 
