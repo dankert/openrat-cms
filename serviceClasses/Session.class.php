@@ -54,8 +54,8 @@ class Session
 	function get( $var )
 	{
 		global $SESS;
-		if	( isset($SESS[$var]) )
-			return $SESS[$var];
+		if	( isset($SESS['ors_'.$var]) )
+			return $SESS['ors_'.$var];
 		else
 			return '';
 	}
@@ -63,208 +63,148 @@ class Session
 	function set( $var,$value )
 	{
 		global $SESS;
-		$SESS[ $var ] = $value;
+		$SESS[ 'ors_'.$var ] = $value;
 	}	
 
 
 
 	function getConfig()
 	{
-		global $SESS;
-		if	( isset($SESS['config']) )
-			return $SESS['config'];
-		else
-			return '';
+		return Session::get('config');
 	}
 	
 	function setConfig( $var )
 	{
-		global $SESS;
-		$SESS['config'] = $var;
+		Session::set('config',$var);
 	}	
 
 
 
 	function getProjectModel()
 	{
-		global $SESS;
-		if	( isset($SESS['project_model']) )
-			return $SESS['project_model'];
-		else
-			return '';
+		return Session::get('project_model');
 	}
 	
 	function setProjectModel( $var )
 	{
-		global $SESS;
-		$SESS['project_model'] = $var;
+		Session::set('project_model',$var);
 	}	
 
 
 
 	function getProjectLanguage()
 	{
-		global $SESS;
-		if	( isset($SESS['project_language']) )
-			return $SESS['project_language'];
-		else
-			return '';
+		return Session::get('project_language');
 	}
 	
 	function setProjectLanguage( $var )
 	{
-		global $SESS;
-		$SESS['project_language'] = $var;
+		Session::set('project_language',$var);
 	}	
 
 
 
 	function getObject()
 	{
-		global $SESS;
-		if	( isset($SESS['object']) )
-			return $SESS['object'];
-		else
-			return '';
+		return Session::get('object');
 	}
 	
 	function setObject( $var )
 	{
-		global $SESS;
-		$SESS['object'] = $var;
+		Session::set('object',$var);
 	}	
 
 
 
 	function getFolder()
 	{
-		global $SESS;
-		if	( isset($SESS['folder']) )
-			return $SESS['folder'];
-		else
-			return '';
+		return Session::get('folder');
 	}
 	
 	function setFolder( $var )
 	{
-		global $SESS;
-		$SESS['folder'] = $var;
+		Session::set('folder',$var);
 	}	
 
 
 
 	function getTree()
 	{
-		global $SESS;
-		if	( isset($SESS['tree']) )
-			return $SESS['tree'];
-		else
-			return '';
+		return Session::get('tree');
 	}
 	
 	function setTree( $var )
 	{
-		global $SESS;
-		$SESS['tree'] = $var;
+		Session::set('tree',$var);
 	}	
 
 
 
 	function getElement()
 	{
-		global $SESS;
-		if	( isset($SESS['element']) )
-			return $SESS['element'];
-		else
-			return '';
+		return Session::get('element');
 	}
 	
 	function setElement( $var )
 	{
-		global $SESS;
-		$SESS['element'] = $var;
+		Session::set('element',$var);
 	}	
 
 
 
 	function getProject()
 	{
-		global $SESS;
-		if	( isset($SESS['project']) )
-			return $SESS['project'];
-		else
-			return '';
+		return Session::get('project');
 	}
 	
 	function setProject( $var )
 	{
-		global $SESS;
-		$SESS['project'] = $var;
+		Session::set('project',$var);
 	}	
 
 
 
 	function getUser()
 	{
-		global $SESS;
-		if	( isset($SESS['userObject']) )
-			return $SESS['userObject'];
-		else
-			return '';
+		return Session::get('userObject');
 	}
 
 	function setUser( $var )
 	{
-		global $SESS;
-		$SESS['userObject'] = $var;
+		Session::set('userObject',$var);
 	}
 	
 	
 	function getDatabase()
 	{
-		global $SESS;
-		if	( isset($SESS['database']) )
-			return $SESS['database'];
-		else
-			return '';
+		return Session::get('database');
 	}
 
 	function setDatabase( $var )
 	{
-		global $SESS;
-		$SESS['database'] = $var;
+		Session::set('database',$var);
 	}
 	
 	
 	function getSubaction()
 	{
-		global $SESS;
-		if	( isset($SESS['subaction']) )
-			return $SESS['subaction'];
-		else
-			return '';
+		return Session::get('subaction');
 	}
 
 	function setSubaction( $var )
 	{
-		global $SESS;
-		$SESS['subaction'] = $var;
+		Session::set('subaction',$var);
 	}
 	
 	
 	function getClipboard()
 	{
-		global $SESS;
-		if	( isset($SESS['clipboard']) )
-			return $SESS['clipboard'];
-		else
-			return '';
+		return Session::get('clipboard');
 	}
 
 	function setClipboard( $var )
 	{
-		global $SESS;
-		$SESS['clipboard'] = $var;
+		Session::set('clipboard',$var);
 	}
 	
 	
