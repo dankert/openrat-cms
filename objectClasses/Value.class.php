@@ -554,7 +554,7 @@ SQL
 
 			case 'copy':
 
-				list($linkElementName,$targetElementName) = explode('%',$this->element->name);
+				@list($linkElementName,$targetElementName) = explode('%',$this->element->name);
 
 				if	( is_null($targetElementName) )
 					break;
@@ -596,7 +596,7 @@ SQL
 
 			case 'linkinfo':
 
-				list( $linkElementName, $name ) = explode('%',$this->element->name);
+				@list( $linkElementName, $name ) = explode('%',$this->element->name);
 				if	( is_null($name) )
 					break;
 					
