@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.18  2007-05-21 20:04:10  dankert
+// Korrektur f?r Anzeige des Vorlagen-Quelltextes.
+//
 // Revision 1.17  2007-05-02 20:58:45  dankert
 // Ausw?hlen von Einstellungen f?r Elemente "linkinfo" und "copy".
 //
@@ -453,7 +456,7 @@ class Element
 	 * Ermittelt die Klasse des Element-Typs.<br>
 	 * Entweder "info", "text" oder "dynamic".
 	 * 
-	 * @return Array
+	 * @return String
 	 */
 	function getTypeClass()
 	{

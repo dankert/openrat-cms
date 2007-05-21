@@ -33,7 +33,7 @@
 	elseif (!empty($attr_key))
 		$tmp_text = lang($attr_key);
 	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?htmlentities($$attr_var):'error: variable '.$attr_var.' not present';	
+		$tmp_text = isset($$attr_var)?($attr_escape?htmlentities($$attr_var):$$attr_var):'?'.$attr_var.'?';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
 	elseif (!empty($attr_value))

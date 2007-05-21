@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.15  2007-05-21 20:04:10  dankert
+// Korrektur f?r Anzeige des Vorlagen-Quelltextes.
+//
 // Revision 1.14  2007-04-08 21:33:42  dankert
 // Bei Ausw?hlen einer Vorlage die Elementliste starten.
 //
@@ -333,34 +336,34 @@ class TemplateAction extends Action
 		{
 			$element = new Element( $elid );
 			$element->load();
-			$url = Html::url( 'element','edit',$this->template->templateid,array('elementid'=>$elid));
+			$url = Html::url( 'element','name',$elid );
 			
 			$text = str_replace('{{'.$elid.'}}',
 			                    '<a href="'.$url.'" class="el_'.
-			                    $element->type.'" target="cms_main_main" title="'.$element->desc.'">{{'.
+			                    $element->getTypeClass().'" target="cms_main_main" title="'.$element->desc.'">{{'.
 			                    $element->name.'}}</a>',
 			                    $text );
 			$text = str_replace('{{-&gt;'.$elid.'}}',
 			                    '<a href="'.$url.'" class="el_'.
-			                    $element->type.'" target="cms_main_main" title="'.$element->desc.'">{{-&gt;'.
+			                    $element->getTypeClass().'" target="cms_main_main" title="'.$element->desc.'">{{-&gt;'.
 			                    $element->name.'}}</a>',
 			                    $text );
 
 			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
+			                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
 			                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
 			                    $text );
 			$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
+			                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
 			                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
 			                    $text );
 
 			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
+			                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
 			                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
 			                    $text );
 			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-			                    '<a href="'.$url.'" class="el_'.$element->type.'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
+			                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
 			                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
 			                    $text );
 			                    
