@@ -1,6 +1,6 @@
 page
 	form
-		window icon:folder widths:50%,50% rowclasses:f1,f2 columnclasses:f1,f2 
+		window icon:folder widths:50%,50% 
 			row 
 				cell
 					text text:global_name
