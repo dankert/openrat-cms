@@ -5,7 +5,7 @@ page
 RAW
 <code>
 END
-				text var:text
+				text var:text escape:false
 RAW
 <code>
 END
