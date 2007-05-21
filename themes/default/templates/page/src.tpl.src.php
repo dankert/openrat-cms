@@ -5,7 +5,7 @@ page
 RAW
 <pre>
 END
-				text var:src
+				text var:src escape:false
 RAW
 </pre>
 END
