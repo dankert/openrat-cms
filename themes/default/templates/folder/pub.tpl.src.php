@@ -6,26 +6,30 @@ page
 					if present:pages
 						if present:subdirs
 							checkbox name:pages
-							text raw:_
-							text text:global_pages
+							label for:pages
+								text raw:_
+								text text:global_pages
 							newline
 					if present:files
 						if true:subdirs
 							checkbox name:files
-							text raw:_
-							text text:global_files
+							label for:files
+								text raw:_
+								text text:global_files
 							newline
 			row
 				cell class:fx
 					if present:subdirs
 						checkbox name:subdirs
-						text raw:_
-						text text:GLOBAL_PUBLISH_WITH_SUBDIRS
+						label for:subdirs
+							text raw:_
+							text text:GLOBAL_PUBLISH_WITH_SUBDIRS
 						newline
 					if present:clean
 						checkbox name:clean
-						text raw:_
-						text text:global_CLEAN_AFTER_PUBLISH
+						label for:clean
+							text raw:_
+							text text:global_CLEAN_AFTER_PUBLISH
 						newline
 			row
 				cell class:help
