@@ -2,6 +2,27 @@
 
 /*
 
+OpenRat Content Management System
+Copyright (C) 2002-2007 Jan Dankert, cms@jandankert.de
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+/*
+
 Standard Font- and Colorsettings for Openrat.
 
 Created for a smooth and useful user interface.
@@ -25,22 +46,6 @@ a:hover
 }
 
 
-a.el_include:link,
-a.el_include:active,
-a.el_include:visited,
-a.el_include:hover,
-a.el_list:link,
-a.el_list:active,
-a.el_list:visited,
-a.el_list:hover
-{
-	background-color: blue;
-}
-
-a.el_longtext:link,
-a.el_longtext:active,
-a.el_longtext:visited,
-a.el_longtext:hover,
 a.el_text:link,
 a.el_text:active,
 a.el_text:visited,
@@ -50,10 +55,6 @@ a.el_text:hover
 }
 
 
-a.el_infodate:link,
-a.el_infodate:active,
-a.el_infodate:visited,
-a.el_infodate:hover,
 a.el_info:link,
 a.el_info:active,
 a.el_info:visited,
@@ -62,34 +63,6 @@ a.el_info:hover
 	background-color: white;
 }
 
-a.el_date:link,
-a.el_date:active,
-a.el_date:visited,
-a.el_date:hover
-{
-	background-color: aqua;
-}
-
-a.el_link:link,
-a.el_link:active,
-a.el_link:visited,
-a.el_link:hover
-{
-	background-color: fuchsia;
-}
-
-a.el_number:link,
-a.el_number:active,
-a.el_number:visited,
-a.el_number:hover
-{
-	background-color: lime;
-}
-
-a.el_code:link,
-a.el_code:active,
-a.el_code:visited,
-a.el_code:hover,
 a.el_dynamic:link,
 a.el_dynamic:active,
 a.el_dynamic:visited,
@@ -163,8 +136,6 @@ body
 	color:#000000;
 	font-family:Arial;
 	font-size:13px;
-	xbackground-color:#dad2b6;
-	xbackground-color:#DDDDFF;
 }
 
 body.main
@@ -173,9 +144,6 @@ body.main
 	color:#000000;
 	font-family:Arial;
 	font-size:13px;
-/*	background-color:#dad2b6;*/
-	xbackground-color:#DDDDFF;
-/*	border:3px solid gray;*/
 }
 
 body.title {
@@ -186,8 +154,6 @@ body.title {
 body.tree {
 	background-color:#CCCCCC;
 	padding:5px;
-	xbackground-color:white;
-/*	border:3px solid gray;*/
 }
 
 
@@ -453,5 +419,5 @@ input.searchbutton
 	border:0px;
 	padding:0px;
 	font-size:4px;
-max-height:20px;
+	max-height:20px;
 }
