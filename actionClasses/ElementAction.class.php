@@ -433,8 +433,8 @@ class ElementAction extends Action
 									}
 									
 									$this->setTemplateVar('dynamic_class_description',$dynEl->description );
-									$this->setTemplateVar('dynamic_class_parameters' ,$paramList );
-									$this->setTemplateVar('parameters',htmlentities($parameters) );
+									$this->setTemplateVar('dynamic_class_parameters' ,$paramList          );
+									$this->setTemplateVar('parameters'               ,$parameters         );
 								}
 							}
 							
@@ -579,6 +579,9 @@ class ElementAction extends Action
 		if	( $this->hasRequestVar('linkelement') )
 			$this->element->setPrefix( $this->getRequestVar('linkelement') );
 		
+		if	( $this->hasRequestVar('parameters'))
+			$this->element->code = $this->getRequestVar('parameters');
+			
 //		if	( $this->hasRequestVar('elementid'))
 //			$this->element->code = $this->getRequestVar('elementid');
 		
