@@ -444,7 +444,8 @@ SQL
 		
 		switch( $this->element->type )
 		{
-			case 'list':
+			case 'list'  : // nur wg. Rückwärtskompabilität.
+			case 'insert':
 
 				$objectid = $this->linkToObjectId;
 				$this->page->up_path();

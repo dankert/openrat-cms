@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.19  2007-05-22 20:12:28  dankert
+// Elementtyp "list" hei?t intern nun "insert".
+//
 // Revision 1.18  2007-05-21 20:04:10  dankert
 // Korrektur f?r Anzeige des Vorlagen-Quelltextes.
 //
@@ -110,7 +113,7 @@ class Element
 	 * <li>number</li>
 	 * <li>link</li>
 	 * <li>date</li>
-	 * <li>list</li>
+	 * <li>insert</li>
 	 * <li>code</li>
 	 * <li>info</li>
 	 * <li>infodate</li>
@@ -401,6 +404,7 @@ class Element
 		             'link'    =>array('subtype','withIcon','allLanguages','writable','linktype','folderObjectId','defaultObjectId'),
 		             'date'    =>array('withIcon','allLanguages','writable','dateformat','defaultText'),
 		             'list'    =>array('subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		             'insert'  =>array('subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
 		             'copy'    =>array('prefix','name','defaultText'),
 		             'linkinfo'=>array('prefix','subtype','defaultText'),
 		             'code'    =>array('code'),
@@ -442,7 +446,7 @@ class Element
 		             'number',
 		             'link',
 		             'date',
-		             'list',
+		             'insert',
 		             'copy',
 		             'linkinfo',
 		             'code',
@@ -469,6 +473,7 @@ class Element
 			case 'link':
 			case 'date':
 			case 'list':
+			case 'insert':
 				return 'text';
 
 			case 'code':
