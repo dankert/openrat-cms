@@ -237,6 +237,12 @@ class ElementAction extends Action
 							$convertToLang = true;
 							break;
 
+						case 'insert':
+							$subtypes = Array('inline',
+							                  'ssi'     );
+							$convertToLang = true;
+							break;
+
 						case 'dynamic':
 							
 							$files = Array();

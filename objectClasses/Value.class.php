@@ -448,69 +448,133 @@ SQL
 			case 'insert':
 
 				$objectid = $this->linkToObjectId;
-				$this->page->up_path();
-				
+
 				if   ( intval($objectid) == 0 )
 					$objectid = $this->element->defaultObjectId;
-	
-				if   ( $this->simple )
+				
+				if	( ! Object::available( $objectid) )
+					return;
+					
+				$object = new Object( $objectid );
+				$object->objectLoadRaw();
+				
+				if	( $object->isFolder )
 				{
-					$f = new Folder( $objectid );
-					$f->load();
-					$inhalt = $f->name;
-					unset( $f );
-				}
-				else
-				{
-					if	( $objectid != $this->page->objectid ) // Rekursion vermeiden
+					$this->page->up_path();
+					
+		
+					if   ( $this->simple )
 					{
 						$f = new Folder( $objectid );
-						foreach( $f->getObjectIds() as $oid )
-						{
-							if	( $oid != $this->page->objectid )  // Rekursion vermeiden
-							{
-								$o = new Object( $oid );
-								$o->load();
-								switch( $o->getType() )
-								{
-									case OR_TYPE_PAGE:
-										$p = new Page( $oid );
-										$p->public         = $this->page->public;
-										$p->up_path        = $this->page->up_path();
-										$p->projectmodelid = $this->page->projectmodelid;
-										$p->languageid     = $this->languageid;
-										$p->load();
-										$p->generate();
-										$inhalt .= $p->value;
-										unset( $p );
-										break;
-									case OR_TYPE_LINK:
-										$l = new Link( $oid );
-										$l->load();
-										if	( $l->isLinkToObject )
-										{
-											$op = new Object( $l->linkedObjectId );
-											$op->load();
-											if	( $op->isPage )
-											{
-												$p = new Page( $l->linkedObjectId );
-												$p->public         = $this->page->public;
-												$p->up_path        = $this->page->up_path();
-												$p->projectmodelid = $this->page->projectmodelid;
-												$p->languageid     = $this->languageid;
-												$p->load();
-												$p->generate();
-												$inhalt .= $p->value;
-												unset( $p );
-											}
-										}
-										break;
-								}
-							}
-							else die('FATAL: recursion detected');
-						}
+						$f->load();
+						$inhalt = $f->name;
+						unset( $f );
 					}
-					else die('FATAL: recursion detected');
+					else
+					{
+						if	( $objectid != $this->page->objectid ) // Rekursion vermeiden
+						{
+							$f = new Folder( $objectid );
+							foreach( $f->getObjectIds() as $oid )
+							{
+								if	( $oid != $this->page->objectid )  // Rekursion vermeiden
+								{
+									switch( $this->element->subtype )
+									{
+										case '':
+										case 'inline':
+											$o = new Object( $oid );
+											$o->load();
+											switch( $o->getType() )
+											{
+												case OR_TYPE_PAGE:
+													$p = new Page( $oid );
+													$p->public         = $this->page->public;
+													$p->up_path        = $this->page->up_path();
+													$p->projectmodelid = $this->page->projectmodelid;
+													$p->languageid     = $this->languageid;
+													$p->load();
+													$p->generate();
+													$inhalt .= $p->value;
+													unset( $p );
+													break;
+												case OR_TYPE_LINK:
+													$l = new Link( $oid );
+													$l->load();
+													if	( $l->isLinkToObject )
+													{
+														$op = new Object( $l->linkedObjectId );
+														$op->load();
+														if	( $op->isPage )
+														{
+															$p = new Page( $l->linkedObjectId );
+															$p->public         = $this->page->public;
+															$p->up_path        = $this->page->up_path();
+															$p->projectmodelid = $this->page->projectmodelid;
+															$p->languageid     = $this->languageid;
+															$p->load();
+															$p->generate();
+															$inhalt .= $p->value;
+															unset( $p );
+														}
+													}
+													break;
+											}
+											break;
+
+										case 'ssi':
+											$inhalt .= '<!--#include virtual="'.$this->page->path_to_object($oid).'" -->'; 
+											break;
+
+										default:
+											$inhalt = '?'.$this->element->subtype.'?';
+									}
+								}
+								else die('FATAL: recursion detected');
+							}
+						}
+						else die('FATAL: recursion detected');
+					}
+				}
+				elseif	( $object->isPage )
+				{
+					if   ( $this->simple )
+					{
+						$p = new Page( $objectid );
+						$p->load();
+						$inhalt = $p->name;
+						unset( $p );
+					}
+					else
+					{
+						if	( $objectid != $this->page->objectid ) // Rekursion vermeiden
+						{
+							switch( $this->element->subtype )
+							{
+								case '':
+								case 'inline':
+									$p = new Page( $objectid );
+									$p->public         = $this->page->public;
+									$p->up_path        = $this->page->up_path();
+									$p->projectmodelid = $this->page->projectmodelid;
+									$p->languageid     = $this->languageid;
+									$p->load();
+									$p->generate();
+									$inhalt = $p->value;
+									unset( $p );
+									break;
+									
+								case 'ssi':
+									$inhalt = '<!--#include virtual="'.$this->page->path_to_object($objectid).'" -->'; 
+									break;
+									
+								default:
+									$inhalt = '?'.$this->element->subtype.'?';
+									break;
+							}
+						}
+						else die('FATAL: recursion detected');
+					}
 				}
 
 				if	( $this->simple )
