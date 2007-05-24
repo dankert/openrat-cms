@@ -244,7 +244,17 @@ td.f2
 	border-right:3px solid #dad2b6;
 }
 
-td.act {background-color:AppWorkspace; padding:15px; border-top:0px solid gray;  }
+fieldset
+{
+	border-top:1px solid ButtonFace;
+}
+
+td.act
+{
+	border-top:1px solid ButtonFace;
+	background-color:AppWorkspace;
+}
+
 .mainmenu_headline{color:Window; font-size:13px; color:black; font-weight:bold; }
 .mainmenu_name{color:white; font-weight:bold; font-size:13px; }
 .mainmenu_val{color:Window; font-weight:normal; }
@@ -280,7 +290,7 @@ textarea
 input,
 textarea
 {
-	border:2px solid InactiveBorder;
+	border:1px solid ButtonFace;
 	padding:5px;
 	background-color:Window;
 }
@@ -289,7 +299,7 @@ textarea
 input:hover,
 textarea:hover
 {
-	border:2px solid ActiveBorder;
+	border-color:Highlight;
 	background-color:Window;
 }
 
@@ -297,8 +307,8 @@ textarea:hover
 input:focus,
 textarea:focus
 {
+	border-color:Highlight;
 	background-color:Window;
-	border:2px solid ActiveBorder;
 }
 
 /* Knöpfe */

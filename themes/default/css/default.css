@@ -267,7 +267,14 @@ td.f2
 	border-right:3px solid #dad2b6;
 }
 
-td.act {background-color:#eae2c6; padding:15px; border-top:0px solid gray;  }
+td.act
+{
+	background-color:#eae2c6;
+	padding:15px;
+	margin-top:10px;
+	border-top:1px solid gray;
+}
+
 .mainmenu_headline{color:#CCCCCC; font-size:13px; color:black; font-weight:bold; }
 .mainmenu_name{color:white; font-weight:bold; font-size:13px; }
 .mainmenu_val{color:#CCCCCC; font-weight:normal; }
@@ -291,14 +298,14 @@ textarea
 input:hover,
 textarea:hover
 {
-	border:2px solid black;
+	border-color:black;
 }
 
 input:focus,
 textarea:focus
 {
 	background-color:#7B9CBD;
-	border:2px solid yellow;
+	border-color:yellow;
 /*	font-weight:bold;*/
 }
 
@@ -420,4 +427,22 @@ input.searchbutton
 	padding:0px;
 	font-size:4px;
 	max-height:20px;
+}
+
+fieldset
+{
+	border-top:1px solid black;
+	border-bottom:0px;
+	border-left:0px;
+	border-right:0px;
+	margin-top:5px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
+	padding:0px;
+}
+
+legend
+{
+	font-weight:bold;
 }
