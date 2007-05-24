@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.15  2007-05-24 19:47:48  dankert
+// Direktes Ausw?hlen von Sprache/Modell in der Projektauswahlliste.
+//
 // Revision 1.14  2007-04-22 00:17:30  dankert
 // Neue Methode "export()" - fertiggestellt :)
 //
@@ -115,29 +118,41 @@ class Project
 	}
 
 
-	function getLanguageIds()
+	function getLanguages()
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id FROM {t_language}'.
+		$sql = new Sql( 'SELECT id,name FROM {t_language}'.
 		                '  WHERE projectid={projectid} '.
 		                '  ORDER BY name' );
 		$sql->setInt   ('projectid',$this->projectid);
 
-		return $db->getCol( $sql->query );
+		return $db->getAssoc( $sql->query );
+	}
+
+
+	function getLanguageIds()
+	{
+		return array_keys( $this->getLanguages() );
+	}
+
+
+	function getModels()
+	{
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT id,name FROM {t_projectmodel}'.
+		                '  WHERE projectid= {projectid} '.
+		                '  ORDER BY name' );
+		$sql->setInt   ('projectid',$this->projectid);
+
+		return $db->getAssoc( $sql->query );
 	}
 
 
 	function getModelIds()
 	{
-		$db = db_connection();
-
-		$sql = new Sql( 'SELECT id FROM {t_projectmodel}'.
-		                '  WHERE projectid= {projectid} '.
-		                '  ORDER BY name' );
-		$sql->setInt   ('projectid',$this->projectid);
-
-		return $db->getCol( $sql->query );
+		return array_keys( $this->getModels() );
 	}
 
 

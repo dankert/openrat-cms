@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.11  2007-05-24 19:47:48  dankert
+// Direktes Ausw?hlen von Sprache/Modell in der Projektauswahlliste.
+//
 // Revision 1.10  2007-05-08 21:16:20  dankert
 // Korrektur und Erweiterung von Hinzuf?gen/Bearbeiten von Sprachen.
 //
@@ -211,7 +214,7 @@ class LanguageAction extends Action
 					$list[$id]['default_url'] = Html::url( 'language','setdefault',$id );
 			}
 				
-			if	( $this->getSessionVar('languageid') != $l->languageid )
+			if	( $actLanguage->languageid != $l->languageid )
 				$list[$id]['select_url']  = Html::url( 'index','language',$id );
 		}
 		

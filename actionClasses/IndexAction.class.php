@@ -283,9 +283,12 @@ class IndexAction extends Action
 
 
 
+	/**
+	 * Erzeugt ein Projekt-Auswahlmenue.
+	 */
 	function projectmenu()
 	{
-		$user     = Session::getUser();
+		$user = Session::getUser();
 		
 		if	( $user->mustChangePassword ) 
 		{
@@ -293,25 +296,29 @@ class IndexAction extends Action
 			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ändern.
 		}
 		
-		
-		$projects = $user->projects;
 
+		// Diese Seite gilt pro Sitzung. 
 		$this->lastModified( $user->loginDate );
 
-		// Administrator sieht Administrationsbereich
-//		if   ( $user->isAdmin )
-//			$projects = array("-1"=>lang('GLOBAL_ADMINISTRATION')) +  $projects;
-
 		// Projekte ermitteln
+		$projects = $user->projects;
 
 		$list = array();
 		foreach( $projects as $id=>$name )
 		{
-			$list[$id]         = array();
-			$list[$id]['url' ] = Html::url('index','project',$id);
-			$list[$id]['name'] = $name;
+			$p = array();
+			$p['url' ] = Html::url('index','project',$id);
+			$p['name'] = $name;
+			$p['id'  ] = $id;
+
+			$tmpProject = new Project( $id );
+			$p['models'   ] = $tmpProject->getModels();
+			$p['languages'] = $tmpProject->getLanguages();
+			
+			$list[] = $p;
 		}
-		$this->setTemplateVar('el',$list);
+
+		$this->setTemplateVar('projects',$list);
 	}
 
 
@@ -403,11 +410,11 @@ class IndexAction extends Action
 	
 			Session::setProject( $project );
 			
-			$language = new Language( $project->getDefaultLanguageId() );
+			$language = new Language( $this->hasRequestVar('languageid')?$this->getRequestVar('languageid'):$project->getDefaultLanguageId() );
 			$language->load();
 			Session::setProjectLanguage( $language );
 	
-			$model = new Model( $project->getDefaultModelId() );
+			$model = new Model( $this->hasRequestVar('modelid')?$this->getRequestVar('modelid'):$project->getDefaultModelId() );
 			$model->load();
 			Session::setProjectModel( $model );
 	
@@ -441,11 +448,11 @@ class IndexAction extends Action
 		$project->load();
 		Session::setProject( $project );
 		
-		$language = new Language( $project->getDefaultLanguageId() );
+		$language = new Language( $this->hasRequestVar('languageid')?$this->getRequestVar('languageid'):$project->getDefaultLanguageId() );
 		$language->load();
 		Session::setProjectLanguage( $language );
 
-		$model = new Model( $project->getDefaultModelId() );
+		$model = new Model( $this->hasRequestVar('modelid')?$this->getRequestVar('modelid'):$project->getDefaultModelId() );
 		$model->load();
 		Session::setProjectModel( $model );
 		
