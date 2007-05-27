@@ -316,12 +316,22 @@ class ProjectTree extends AbstractTree
 
 
 		// Sonstiges
+//		$treeElement = new TreeElement();
+//		$treeElement->text       = lang('GLOBAL_OTHER');
+//		$treeElement->description= lang('GLOBAL_OTHER_DESC');
+//		$treeElement->icon       = 'other';
+//		$treeElement->type       = 'other';
+//		$this->addTreeElement( $treeElement );
+		
+		// Suche
 		$treeElement = new TreeElement();
-		$treeElement->text       = lang('GLOBAL_OTHER');
-		$treeElement->description= lang('GLOBAL_OTHER_DESC');
-		$treeElement->icon       = 'other';
-		$treeElement->type       = 'other';
+		$treeElement->text        = lang('GLOBAL_SEARCH');
+		$treeElement->url         = Html::url('main','search');
+		$treeElement->icon        = 'search';
+		$treeElement->description = lang('GLOBAL_SEARCH_DESC');
+		$treeElement->target      = 'cms_main';
 		$this->addTreeElement( $treeElement );
+		
 	}
 
 
@@ -334,7 +344,7 @@ class ProjectTree extends AbstractTree
 			$t = new Template( $id );
 			$t->load();
 			$treeElement->text        = $t->name;
-			$treeElement->url         = Html::url('main','template',$id);
+			$treeElement->url         = Html::url('main','template',$id,array(REQ_PARAM_TARGETSUBACTION=>'edit'));
 			$treeElement->icon        = 'template';
 			$treeElement->target      = 'cms_main';
 			$treeElement->internalId  = $id;
