@@ -312,6 +312,8 @@ class IndexAction extends Action
 			$p['id'  ] = $id;
 
 			$tmpProject = new Project( $id );
+			$p['defaultmodelid'   ] = $tmpProject->getDefaultModelId();
+			$p['defaultlanguageid'] = $tmpProject->getDefaultLanguageId();
 			$p['models'   ] = $tmpProject->getModels();
 			$p['languages'] = $tmpProject->getLanguages();
 			
