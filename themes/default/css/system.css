@@ -321,38 +321,6 @@ input.ok
 	width:110px;
 }
 
-/* Eingabefeld für Beschreibung */
-textarea.desc,
-textarea.description
-{
-	font-family:Arial;
-	font-size:13px;
-}
-
-/* Eingabefeld für Textabsatz */
-textarea.longtext
-{
-	font-family:Arial;
-	font-size:13px;
-	width:100%;
-	height:300px;
-	border:1px solid black;
-}
-
-/* Eingabfeld für Namen */
-input.name
-{
-	font-weight:bold;
-}
-
-/* Eingabfeld für Dateiname */
-input.filename,
-input.extension,
-input.ansidate
-{
-	font-family:Courier;
-	font-size:13px;
-}
 
 
 

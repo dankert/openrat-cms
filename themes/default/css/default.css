@@ -273,6 +273,7 @@ td.act
 	padding:15px;
 	margin-top:10px;
 	border-top:1px solid gray;
+	text-align:right;
 }
 
 .mainmenu_headline{color:#CCCCCC; font-size:13px; color:black; font-weight:bold; }
@@ -325,6 +326,16 @@ input.ok
 
 input.reset  { color:black; background-color:#cac2a6; text-align:right; }
 
+input,
+select,
+textarea
+{
+	color:#000000;
+	background-color:#dad2b6;
+}
+
+
+/* Eingabefeld für Beschreibung */
 textarea.desc,
 textarea.description
 {
@@ -332,6 +343,7 @@ textarea.description
 	font-size:13px;
 }
 
+/* Eingabefeld für Textabsatz */
 textarea.longtext
 {
 	font-family:Arial;
@@ -341,19 +353,13 @@ textarea.longtext
 	border:1px solid black;
 }
 
-input,
-select,
-textarea
-{
-	color:#000000;
-	background-color:#dad2b6;
-}
-
+/* Eingabfeld für Namen */
 input.name
 {
 	font-weight:bold;
 }
 
+/* Eingabfeld für Dateiname */
 input.filename,
 input.extension,
 input.ansidate
@@ -361,6 +367,8 @@ input.ansidate
 	font-family:Courier;
 	font-size:13px;
 }
+
+
 
 
 body,
