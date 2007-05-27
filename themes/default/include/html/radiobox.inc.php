@@ -1,11 +1,11 @@
-<?php $attr_tmp_disabled = count($$attr_list)==1;
-		$attr_tmp_list = $$attr_list;
+<?php $attr_tmp_list = $$attr_list;
 		if	( isset($$attr_name) && isset($attr_tmp_list[$$attr_name]) )
 			$attr_tmp_default = $$attr_name;
-		elseif ( isset($$attr_default) )
+		elseif ( isset($attr_default) )
 			$attr_tmp_default = $attr_default;
 		else
 			$attr_tmp_default = '';
+//			Html::debug($attr_tmp_default);
 		
 		foreach( $attr_tmp_list as $box_key=>$box_value )
 		{
