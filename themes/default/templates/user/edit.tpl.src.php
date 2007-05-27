@@ -2,45 +2,53 @@ page
 	form
 		window name:GLOBAL_USER widths:50%,50%
 			row
-				cell class:fx
+				cell
 					text text:user_username
-				cell class:fx
-					input name:name size:20
+				cell
+					input name:name size:20 class:name
 			row
-				cell class:fx
+				cell colspan:2
+					fieldset title:message:ADDITIONAL_INFO
+			row
+				cell
 					text text:user_fullname
-				cell class:fx
-					input name:fullname size:
+				cell
+					input name:fullname
 			row
-				cell class:fx
+				cell
 					text text:user_mail
-				cell class:fx
-					input name:mail size:
+				cell
+					input name:mail
 			row
-				cell class:fx
+				cell
 					text text:user_desc
-				cell class:fx
-					input name:desc size:
+				cell
+					input name:desc
 			row
-				cell class:fx
+				cell
 					text text:user_tel
-				cell class:fx
-					input name:tel size:
+				cell
+					input name:tel
 			row
-				cell class:fx
-					text text:user_ldapdn
-				cell class:fx
-					input name:ldap_dn size:
+				cell colspan:2
+					fieldset title:message:options
 			row
-				cell class:fx
-					text text:user_style
-				cell class:fx
-					selectbox list:allstyles name:style default:config:interface/style/default
-			row
-				cell class:fx
-					text text:user_admin
-				cell class:fx
+//				cell colspan:2
+				cell
+				cell
 					checkbox name:is_admin
+					label for:is_admin
+						text text:user_admin
+			row
+				cell
+					text text:user_ldapdn
+				cell
+					input name:ldap_dn size:50
+			row
+				cell
+					text text:user_style
+				cell
+					selectbox list:allstyles name:style default:config:interface/style/default
 			row
 				cell colspan:2 class:act
 					button type:ok

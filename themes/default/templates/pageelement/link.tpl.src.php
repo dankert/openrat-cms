@@ -10,6 +10,12 @@ page
 					selectbox list:objects name:linkobjectid
 
 			if present:release
+				if present:publish
+					row
+						cell colspan:2
+							fieldset title:options
+							
+			if present:release
 				row
 					cell colspan:2 class:fx
 						checkbox name:release

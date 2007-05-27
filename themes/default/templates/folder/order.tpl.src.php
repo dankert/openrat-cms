@@ -5,6 +5,9 @@ page
 				text text:GLOBAL_FOLDER_DESC
 
 		row
+			cell class:help colspan:4
+				link url:var:flip_url title:FOLDER_FLIP
+					text text:FOLDER_ORDER
 			cell class:help
 				link url:var:orderbytype_url title:FOLDER_ORDERBYTYPE
 					text text:GLOBAL_TYPE
@@ -14,17 +17,9 @@ page
 			cell class:help
 				link url:var:orderbylastchange_url title:FOLDER_ORDERBYLASTCHANGE
 					text text:GLOBAL_LASTCHANGE
-			cell class:help colspan:4
-				link url:var:flip_url title:FOLDER_FLIP
-					text text:FOLDER_ORDER
 		
 		list list:object extract:true
 			row
-				cell width:40% class:fx
-					image type:var:icon
-					text var:name
-				cell width:18% class:fx
-					text var:date
 				cell width:3% class:fx
 					if present:upurl
 						link url:var:upurl title:GLOBAL_UP
@@ -53,3 +48,9 @@ page
 							image file:var:bild
 					if empty:downurl
 						text raw:_	
+				cell width:40% class:fx
+					image type:var:icon
+					text var:name
+				cell width:18% class:fx
+					text var:date
+						

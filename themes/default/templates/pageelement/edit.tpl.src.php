@@ -50,6 +50,12 @@ page
 						focus field:text
 
 			if present:release
+				if present:publish
+					row
+						cell colspan:2
+							fieldset title:message:options
+
+			if present:release
 				row
 					cell colspan:2 class:fx
 						checkbox name:release

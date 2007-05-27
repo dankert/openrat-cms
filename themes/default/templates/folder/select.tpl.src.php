@@ -29,13 +29,13 @@ page
 					image fileext:tree_none_end.gif align:left
 					text raw:_
 					link url::javascript:mark();
-						text text:message:FOLDER_MARK_ALL
+						text key:FOLDER_MARK_ALL
 					text raw:_|_
 					link url::javascript:unmark();
-						text text:message:FOLDER_UNMARK_ALL
+						text key:FOLDER_UNMARK_ALL
 					text raw:_|_
 					link url::javascript:flip();
-						text text:message:FOLDER_FLIP_MARK
+						text key:FOLDER_FLIP_MARK
 			row
 				cell class:fx colspan:2
 				

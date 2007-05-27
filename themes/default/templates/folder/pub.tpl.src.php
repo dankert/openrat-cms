@@ -2,7 +2,7 @@ page
 	form
 		window
 			row
-				cell class:fx
+				cell
 					if present:pages
 						if present:subdirs
 							checkbox name:pages
@@ -18,7 +18,10 @@ page
 								text text:global_files
 							newline
 			row
-				cell class:fx
+				cell
+					fieldset title:message:options
+			row
+				cell
 					if present:subdirs
 						checkbox name:subdirs
 						label for:subdirs

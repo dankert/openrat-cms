@@ -37,37 +37,43 @@ page
 					cell class:logo colspan:2
 						logo name:login
 				row
-					cell class:fx width:50%
+					cell
 						text key:USER_USERNAME
-					cell class:fx width:50%
+					cell
 						if not:true present:force_username
-							input type:text name:login_name value: size:25
+							input type:text name:login_name class:name value: size:20
 						else
 							input type:hidden name:login_name value:var:force_username
 							text value:var:force_username
 				row
-					cell class:fx width:50%
+					cell
 						text key:USER_PASSWORD
-					cell class:fx width:50%
-						password name:login_password default: size:25
+					cell
+						password name:login_password class:name default: size:20
 	
 				if true:property:mustChangePassword
 					row
-						cell class:fx width:50%
+						cell colspan:2
+							fieldset title:message:USER_NEW_PASSWORD
+					row
+						cell
 							text key:USER_NEW_PASSWORD
-						cell class:fx width:50%
+						cell
 							password name:password1 default: size:25
 
 					row
-						cell class:fx width:50%
+						cell
 							text key:USER_NEW_PASSWORD_REPEAT
-						cell class:fx width:50%
+						cell
 							password name:password2 default: size:25
 	
 				row
-					cell class:fx width:50%
-						text key:GLOBAL_DATABASE
-					cell class:fx width:50%
+					row
+						cell colspan:2
+							fieldset title:message:DATABASE
+					cell
+						text key:DATABASE
+					cell
 						selectbox name:dbid list:dbids default:actdbid
 						hidden name:screenwidth default:9999
 						#script 

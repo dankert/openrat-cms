@@ -3,39 +3,45 @@ page
 		window
 
 			row
-				cell class:fx
+				cell colspan:2
+					fieldset title:message:IMAGE_NEW_SIZE					
+			row
+				cell
 					label for:factor
 						text text:FILE_IMAGE_SIZE_FACTOR
-				cell class:fx
+				cell
 					set var:factor value:1
 					selectbox name:factor list:factors
 					
 			row
-				cell class:fx
+				cell
 					label for:width
 						text text:FILE_IMAGE_NEW_WIDTH
-				cell class:fx
+				cell
 					input name:width
 					
 			row
-				cell class:fx
+				cell
 					label for:height
 						text text:FILE_IMAGE_NEW_HEIGHT
-				cell class:fx
+				cell
 					input name:height
-					
+
 			row
-				cell class:fx
+				cell colspan:2
+					fieldset title:message:options					
+			row
+				cell
 					label for:format
 						text text:FILE_IMAGE_FORMAT
-				cell class:fx
+				cell
 					selectbox name:format list:formats
 					
 			row
-				cell class:fx
+				cell
 					label for:jpeglist_compression 
 						text text:FILE_IMAGE_JPEG_COMPRESSION
-				cell class:fx
+				cell
 					set var:jpeg_compression value:70
 					selectbox list:jpeglist name:jpeg_compression
 			row

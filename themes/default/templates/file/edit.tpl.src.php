@@ -4,4 +4,6 @@ page
 			row
 				cell
 					upload name:file
+			row
+				cell class:act
 					button type:ok

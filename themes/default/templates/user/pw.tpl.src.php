@@ -2,35 +2,41 @@ page
 	form
 		window name:USER_PASSWORD columnclasses:fx rowclasses:rx
 			row
-				cell class:fx
+				cell
 					text text:user_username
-				cell class:fx
+				cell
 					text var:name
 			row
-				cell class:fx
+				cell colspan:2
+					fieldset title:message:USER_new_password
+			row
+				cell
 					text text:USER_new_password
-				cell class:fx
+				cell
 					password name:password1
 			row
-				cell class:fx
+				cell
 					text text:USER_new_password_repeat
-				cell class:fx
+				cell
 					password name:password2
+			row
+				cell colspan:2
+					fieldset title:message:options
 			if present:mail
 				row
-					cell class:fx
+					cell
 						text text:user_mail_new_password
-					cell class:fx
+					cell
 						checkbox name:email
 				row
-					cell class:fx
+					cell
 						text text:user_random_password
-					cell class:fx
+					cell
 						checkbox name:random
 			row
-				cell class:fx
+				cell
 					text text:user_password_timeout
-				cell class:fx
+				cell
 					checkbox name:timeout
 					
 			row

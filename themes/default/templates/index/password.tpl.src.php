@@ -19,6 +19,6 @@ page
 	
 				row
 					cell colspan:2 class:act
-						button type:ok
+						button type:ok text:button_next
 
 	focus field:username

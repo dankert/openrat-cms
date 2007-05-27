@@ -1,6 +1,9 @@
 page
 	form
 		window icon:search 
+			row
+				cell colspan:2
+					fieldset title:message:global_user
 			row 
 				cell
 					radio name:type value:create_user
@@ -12,6 +15,9 @@ page
 						text key:lastchange_user
 				cell
 					selectbox list:users name:userid default:var:act_userid
+			row
+				cell colspan:2
+					fieldset title:message:MENU_SEARCH_PROP
 			row 
 				cell
 					radio name:type value:id
@@ -33,6 +39,6 @@ page
 				cell
 					input name:text
 			row class:
-				cell colspan:2
+				cell colspan:2 class:act
 					button type:ok
 	focus field:name

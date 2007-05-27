@@ -4,44 +4,53 @@ page
 			row
 				cell
 					text text:PROJECT_NAME
-				cell class:fx
-					input name:name size:50
+				cell
+					input name:name size:30 class:name
 					
 			row
 				cell
 					text text:PROJECT_TARGET_DIR
-				cell class:fx
-					input class:filename name:target_dir size:50
-			
-			row
 				cell
-					text text:PROJECT_FTP_URL
-				cell class:fx
-					input name:ftp_url
-					
-			row
-				cell
-					text text:PROJECT_FTP_PASSIVE
-				cell class:fx
-					checkbox name:ftp_passive
+					input class:filename name:target_dir size:50 class:filename
 	
 			row
 				cell
 					text text:PROJECT_CMD_AFTER_PUBLISH
-				cell class:fx
-					input name:cmd_after_publish
+				cell
+					input name:cmd_after_publish class:filename size:50 
+
+			row
+				cell colspan:2
+					fieldset title:message:project_FTP			
+			row
+				cell
+					text text:PROJECT_FTP_URL
+				cell
+					input name:ftp_url class:filename size:50 
 					
 			row
 				cell
-					text text:PROJECT_CONTENT_NEGOTIATION
-				cell class:fx
-					checkbox name:content_negotiation
-			
-			row
 				cell
-					text text:PROJECT_CUT_INDEX
-				cell class:fx
-					checkbox name:cut_index
+					checkbox name:ftp_passive
+					label for:ftp_passive
+						text text:PROJECT_FTP_PASSIVE
+					
 			row
 				cell colspan:2
+					fieldset title:message:options			
+			row
+//				cell
+				cell colspan:2
+					checkbox name:content_negotiation
+					label for:content_negotiation
+						text text:PROJECT_CONTENT_NEGOTIATION
+			
+			row
+//				cell
+				cell colspan:2
+					checkbox name:cut_index
+					label for:cut_index
+						text text:PROJECT_CUT_INDEX
+			row
+				cell colspan:2 class:act
 					button type:ok

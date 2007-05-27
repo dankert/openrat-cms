@@ -22,7 +22,7 @@ page class:main
 				cell class:fx
 					link url:var:url target:cms_main title:desc
 						image type:var:icon
-						text text:var:name
+						text var:name
 						text raw:_
 				cell class:fx
 					date date:var:date
