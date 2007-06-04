@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.6  2007-06-04 19:34:16  dankert
+// Voreingestellt ist die Suche nach Eigenschaften.
+//
 // Revision 1.5  2007-05-08 19:21:58  dankert
 // Erweiterung der Suche um die Schnellsuche.
 //
@@ -46,13 +49,6 @@
 
 class SearchAction extends Action
 {
-	/**
-	 * Falls keine Unteraktion ausgew?hlt wurde wird diese genommen
-	 * @type String
-	 */
-	var $defaultSubAction = 'prop';
-
-
 	/**
 	 * leerer Kontruktor
 	 */
@@ -110,6 +106,7 @@ class SearchAction extends Action
 			$resultList[$objectid]['url']  = Html::url('main',$o->getType(),$objectid);
 			$resultList[$objectid]['type'] = $o->getType();
 			$resultList[$objectid]['name'] = $o->name;
+			$resultList[$objectid]['lastchange_date'] = $o->lastchangeDate;
 
 			if	( $o->desc != '' )
 				$resultList[$objectid]['desc'] = $o->desc;
@@ -126,6 +123,7 @@ class SearchAction extends Action
 			$resultList['t'.$templateid]['type'] = 'template';
 			$resultList['t'.$templateid]['name'] = $t->name;
 			$resultList['t'.$templateid]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+			$resultList['t'.$templateid]['lastchange_date'] = 0;
 		}
 
 		$this->setTemplateVar( 'result',$resultList );

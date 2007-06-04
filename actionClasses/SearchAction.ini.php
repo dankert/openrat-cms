@@ -1,6 +1,6 @@
 
 [default]
-goto=show
+goto=prop
 
 [quicksearch]
 menu=prop
