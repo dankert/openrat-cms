@@ -6,3 +6,6 @@ page
 					link url:var:url target:cms_main
 						image type:var:type
 						text text:var:name title:var:desc
+				cell
+					date date:var:lastchange_date
+						

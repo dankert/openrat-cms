@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.7  2007-06-04 22:18:22  dankert
+// Korrektur Suche nach letzter ?nderungsautor.
+//
 // Revision 1.6  2007-06-04 19:34:16  dankert
 // Voreingestellt ist die Suche nach Eigenschaften.
 //
@@ -72,6 +75,9 @@ class SearchAction extends Action
 		{
 			case 'value':
 				$e = new Value();
+				$language = Session::getProjectLanguage();
+				$e->languageid = $language->languageid;
+
 				$listObjectIds = $e->getObjectIdsByValue( $this->getRequestVar('text') );
 
 				$template = new Template();
@@ -80,7 +86,11 @@ class SearchAction extends Action
 
 			case 'lastchange_user':
 				$e = new Value();
-				$listObjectIds = $e->getObjectIdsByLastChangeUserId( $this->getRequestVar('lastchange_userid') );
+				
+				$language = Session::getProjectLanguage();
+				$e->languageid = $language->languageid;
+				
+				$listObjectIds = $e->getObjectIdsByLastChangeUserId( $this->getRequestVar('userid') );
 				break;
 		}
 
