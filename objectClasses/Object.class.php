@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.25  2007-06-04 22:17:51  dankert
+// Suchergebnisse absteigend nach ?nderungsdatum sortieren.
+//
 // Revision 1.24  2007-04-22 00:16:44  dankert
 // Fehlermeldung vermeiden, wenn eine Objekt-Id nicht in der Datenbank vorhanden ist.
 //
@@ -1132,7 +1135,8 @@ class Object
 		
 		$sql = new Sql( 'SELECT id FROM {t_object} '.
 		                ' WHERE filename LIKE {filename}'.
-		                '   AND projectid={projectid}' );
+		                '   AND projectid={projectid}'.
+		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setString( 'filename','%'.$text.'%' );
 		
@@ -1154,7 +1158,8 @@ class Object
 		                '   ON {t_object}.id={t_name}.objectid'.
 		                ' WHERE {t_name}.name LIKE {name}'.
 		                '   AND {t_name}.languageid={languageid}'.
-		                '   AND {t_object}.projectid={projectid}' );
+		                '   AND {t_object}.projectid={projectid}'.
+		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid' ,$this->projectid );
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'name'      ,'%'.$text.'%' );
@@ -1177,7 +1182,8 @@ class Object
 		                '   ON {t_object}.id={t_name}.objectid'.
 		                ' WHERE {t_name}.descr LIKE {desc}'.
 		                '   AND {t_name}.languageid={languageid}'.
-		                '   AND {t_object}.projectid={projectid}' );
+		                '   AND {t_object}.projectid={projectid}'.
+		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid' ,$this->projectid );
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'desc'      ,'%'.$text.'%' );
@@ -1197,7 +1203,8 @@ class Object
 		
 		$sql = new Sql( 'SELECT id FROM {t_object} '.
 		                ' WHERE create_userid={userid}'.
-		                '   AND projectid={projectid}' );
+		                '   AND projectid={projectid}'.
+		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setInt   ( 'userid'   ,$userid          );
 		
@@ -1216,7 +1223,8 @@ class Object
 		
 		$sql = new Sql( 'SELECT id FROM {t_object} '.
 		                ' WHERE lastchange_userid={userid}'.
-		                '   AND projectid={projectid}' );
+		                '   AND projectid={projectid}'.
+		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setInt   ( 'userid'   ,$userid          );
 		

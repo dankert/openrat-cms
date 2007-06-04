@@ -1049,7 +1049,7 @@ SQL
 
 
 	/**
-	  * Es werden Objekte mit einem Inhalt
+	  * Es werden Objekte mit einem Inhalt gesucht.
 	  * @param String Suchbegriff
 	  * @return Array Liste der gefundenen Objekt-IDs
 	  */
@@ -1063,10 +1063,11 @@ SQL
 		                ' LEFT JOIN {t_object} '.
 		                '   ON {t_object}.id={t_page}.objectid '.
 		                ' WHERE {t_value}.text LIKE {text}'.
-		                '   AND {t_value}.languageid={languageid}' );
+		                '   AND {t_value}.languageid={languageid}'.
+		                '  ORDER BY {t_object}.lastchange_date DESC' );
+		                
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'text'      ,'%'.$text.'%'     );
-		
 		return $db->getCol( $sql->query );
 	}
 
@@ -1087,7 +1088,8 @@ SQL
 		                ' LEFT JOIN {t_object} '.
 		                '   ON {t_object}.id={t_page}.objectid '.
 		                ' WHERE {t_value}.lastchange_userid={userid}'.
-		                '   AND {t_value}.languageid={languageid}' );
+		                '   AND {t_value}.languageid={languageid}'.
+		                '  ORDER BY {t_object}.lastchange_date DESC' );
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setInt   ( 'userid'    ,$userid           );
 
