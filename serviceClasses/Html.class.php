@@ -106,10 +106,15 @@ class Html
 			$urlParameter = '';
 		}
 
+		if	( @$conf['interface']['url']['index'] )
+			$controller_file_name = '';
+		else
+			$controller_file_name = OR_CONTROLLER_FILE.'.'.PHP_EXT;
+			
 		if	( $fake_urls )
 			$src = sprintf( $url_format,$action,$subaction,$id,session_id() ).$urlParameter;
 		else
-			$src = './'.OR_CONTROLLER_FILE.'.'.PHP_EXT.$urlParameter;
+			$src = './'.$controller_file_name.$urlParameter;
 
 		return $src;
 	}

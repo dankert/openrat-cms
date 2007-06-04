@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.32  2007-06-04 20:58:35  dankert
+// M?glichkeit f?r Virtual Hosts mit eigener Konfiguration.
+//
 // Revision 1.31  2007-05-03 21:18:14  dankert
 // Nicht aktive Men?punkte als inaktiv anzeigen.
 //
@@ -270,19 +273,19 @@ class Action
 		// Setzen einiger Standard-Variablen
 		//
 		$tpl_dir    = OR_THEMES_DIR.$conf['interface']['theme'].'/pages/html/';
-		$image_dir  = OR_THEMES_DIR.$conf['interface']['theme'].'/images/';
+		$image_dir  = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/';
 	
 		$user = Session::getUser();
 		
 		if	( strpos($conf['interface']['style']['extend'],'/')===false )
-			$root_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['extend'].'.css';
+			$root_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['extend'].'.css';
 		else
 			$root_stylesheet = $style['extend'];
 			
 		if	( !is_object($user) )
-			$user_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['default'].'.css';
+			$user_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['default'].'.css';
 		else
-			$user_stylesheet = OR_THEMES_DIR.$conf['interface']['theme'].'/css/'.$user->style.'.css';
+			$user_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.$user->style.'.css';
 		
 		$self = $HTTP_SERVER_VARS['PHP_SELF'];
 	
@@ -295,12 +298,9 @@ class Action
 
 		$showDuration = $conf['interface']['show_duration'];
 
-		$view = new Html(); // HTML ist der Standard-Renderer
-	
 		$subActionName = $this->subActionName;
 		$actionName    = $this->actionName;
 		$requestId     = $this->getRequestId();
-		
 		
 		if	( $conf['theme']['compiler']['enable'] )
 		{
@@ -310,10 +310,7 @@ class Action
 		}
 
 		// Einbinden des Templates
-		//
-//		$tplFilename = 'themes/default/templates/'.$tplFileName;
-		
-		require( 'themes/default/pages/html/'.$tplName.'.tpl.'.PHP_EXT );
+		require( $tpl_dir.$tplFileName );
 		
 		exit;
 	}

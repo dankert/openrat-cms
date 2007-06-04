@@ -23,7 +23,6 @@ define('PHP_EXT'         ,'php'    );
 define('IMG_EXT'         ,'.gif'   );
 define('IMG_ICON_EXT'    ,'.png'   );
 define('MAX_FOLDER_DEPTH',5        );
-define('OR_CONFIG_DIR'   ,'config' );
 
 define('OR_VERSION'      ,'0.7-beta1'  );
 define('OR_TITLE'        ,'OpenRat CMS');
@@ -41,10 +40,12 @@ define('OR_LANGUAGE_DIR'      ,'./language/'       );
 define('OR_DBCLASSES_DIR'     ,'./db/'             );
 define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/' );
 define('OR_TEXTCLASSES_DIR'   ,'./textClasses/'    );
-define('OR_PREFERENCES_DIR'   ,'./config/'         );
+define('OR_PREFERENCES_DIR'   ,defined('OR_EXT_CONFIG_DIR')?OR_EXT_CONFIG_DIR:'./config/');
+define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
 define('OR_THEMES_DIR'        ,'./themes/'         );
+define('OR_THEMES_EXT_DIR'    ,defined('OR_BASE_URL')?OR_BASE_URL.'/themes/':OR_THEMES_DIR);
 define('OR_TMP_DIR'           ,'./tmp/'            );
-define('OR_CONTROLLER_FILE'   ,'do'                );
+define('OR_CONTROLLER_FILE'   ,defined('OR_EXT_CONTROLLER_FILE')?OR_EXT_CONTROLLER_FILE:'do');
 define('START_TIME'           ,time()              );
 
 require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
