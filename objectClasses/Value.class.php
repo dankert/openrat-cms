@@ -871,15 +871,17 @@ SQL
 				switch( $this->element->subtype )
 				{
 					case 'date_published':
-						$inhalt = date( $this->element->dateformat );
+						// START_TIME wird zu Beginn im Controller gesetzt.
+						// So erhält jede Datei das gleiche Veröffentlichungsdatum.
+						$inhalt = date( $this->element->dateformat,START_TIME );
 						break;
 						
 					case 'date_saved':
-						$inhalt = date( $this->element->dateformat,$this->page->lastchange_date );
+						$inhalt = date( $this->element->dateformat,$this->page->lastchangeDate );
 						break;
 
 					case 'date_created':
-						$inhalt = date( $this->element->dateformat,$this->page->create_date );
+						$inhalt = date( $this->element->dateformat,$this->page->createDate );
 						break;
 
 					default:  
