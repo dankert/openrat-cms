@@ -73,6 +73,12 @@ top=_top
 ; If unsure, set to "false"
 fake_url = false
 
+; If the entry filename is the index file of the directory, set this to true.
+; This enables urls like "path/to/openrat/?a=1&b=2" and hides PHP.
+; only useful, if fake_url=false
+; if unsure, set to 'false' (default)
+index = false
+
 ; abc,xyz.1
 ;url_format= "%s,%s.%i"
 
