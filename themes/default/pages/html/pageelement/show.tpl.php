@@ -57,13 +57,13 @@
 		}
 		echo '<span class="title">'.lang($windowTitle).'</span>';
 		?>
-		</td><td class="menu" style="align:right;">
+		</td><!--<td class="menu" style="align:right;">
     <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
           {
           	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.lang($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
           }
      ?>
-    </td>
+    </td>-->
   </tr>
   <tr><td class="subaction">
   
@@ -101,6 +101,7 @@
     
   <?php foreach( $notices as $notice ) { ?>
     
+  <tr>
     <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
   </tr>
@@ -144,7 +145,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php unset($attr4_colspan) ?><?php $attr5 = array('class'=>'text','var'=>'value') ?><?php $attr5_class='text' ?><?php $attr5_var='value' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php unset($attr4_colspan) ?><?php $attr5 = array('class'=>'text','var'=>'value','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_var='value' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -179,7 +180,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -201,7 +202,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr1 = array() ?>      </table>
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr1 = array() ?>      </table>
 	</td>
   </tr>
 </table>

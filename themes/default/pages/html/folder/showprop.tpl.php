@@ -57,13 +57,13 @@
 		}
 		echo '<span class="title">'.lang($windowTitle).'</span>';
 		?>
-		</td><td class="menu" style="align:right;">
+		</td><!--<td class="menu" style="align:right;">
     <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
           {
           	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.lang($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
           }
      ?>
-    </td>
+    </td>-->
   </tr>
   <tr><td class="subaction">
   
@@ -77,7 +77,14 @@
 			if	( $tmp_pos !== false )
 				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
           	
-          	?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	if	( isset($menu['url']) )
+          	{
+          		?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          	}
+          	else
+          	{
+          		?><span class="menu_disabled" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu_disabled"><?php echo $tmp_text ?></span>&nbsp;&nbsp;&nbsp;<?php
+          	}
           }
           	if ($conf['help']['enabled'] )
           	{
@@ -94,6 +101,7 @@
     
   <?php foreach( $notices as $notice ) { ?>
     
+  <tr>
     <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
   </tr>
@@ -137,7 +145,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_name') ?><?php $attr5_class='text' ?><?php $attr5_text='global_name' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_name','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_text='global_name' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -172,7 +180,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -194,7 +202,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php unset($attr5_escape) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
 //	if (empty($attr4_class))
 //		$attr4['class']=$row_class;
 	$column_class_idx++;
@@ -209,7 +217,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'name') ?><?php $attr5_class='text' ?><?php $attr5_var='name' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'name','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_var='name' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -244,7 +252,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -266,7 +274,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array() ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -295,7 +303,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_filename') ?><?php $attr5_class='text' ?><?php $attr5_text='global_filename' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_filename','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_text='global_filename' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -330,7 +338,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -352,7 +360,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php unset($attr5_escape) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
 //	if (empty($attr4_class))
 //		$attr4['class']=$row_class;
 	$column_class_idx++;
@@ -367,7 +375,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'filename') ?><?php $attr5_class='text' ?><?php $attr5_var='filename' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'filename','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_var='filename' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -402,7 +410,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -424,7 +432,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array() ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -453,7 +461,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_description') ?><?php $attr5_class='text' ?><?php $attr5_text='global_description' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_description','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_text='global_description' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -488,7 +496,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -510,7 +518,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php unset($attr5_escape) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
 //	if (empty($attr4_class))
 //		$attr4['class']=$row_class;
 	$column_class_idx++;
@@ -525,7 +533,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'description') ?><?php $attr5_class='text' ?><?php $attr5_var='description' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','var'=>'description','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_var='description' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -560,7 +568,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -582,7 +590,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array() ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -611,7 +619,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_created') ?><?php $attr5_class='text' ?><?php $attr5_text='global_created' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_created','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_text='global_created' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -646,7 +654,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -668,7 +676,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php unset($attr5_escape) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
 //	if (empty($attr4_class))
 //		$attr4['class']=$row_class;
 	$column_class_idx++;
@@ -739,7 +747,7 @@
 			
 		echo '</span>';
 	}
-?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr5 = array('class'=>'text','raw'=>',_') ?><?php $attr5_class='text' ?><?php $attr5_raw=',_' ?><?php
+?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr5 = array('class'=>'text','raw'=>',_','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_raw=',_' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -774,7 +782,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -796,7 +804,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('user'=>$create_user) ?><?php $attr5_user=$create_user ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php unset($attr5_escape) ?><?php $attr5 = array('user'=>$create_user) ?><?php $attr5_user=$create_user ?><?php
 		if	( is_object($attr5_user) )
 			$user = $attr5_user;
 		else
@@ -840,7 +848,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
 		
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_lastchange') ?><?php $attr5_class='text' ?><?php $attr5_text='global_lastchange' ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php $attr5 = array('class'=>'text','text'=>'global_lastchange','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_text='global_lastchange' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -875,7 +883,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -897,7 +905,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php unset($attr5_escape) ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4 = array('class'=>'fx') ?><?php $attr4_class='fx' ?><?php
 //	if (empty($attr4_class))
 //		$attr4['class']=$row_class;
 	$column_class_idx++;
@@ -968,7 +976,7 @@
 			
 		echo '</span>';
 	}
-?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr5 = array('class'=>'text','raw'=>',_') ?><?php $attr5_class='text' ?><?php $attr5_raw=',_' ?><?php
+?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr5 = array('class'=>'text','raw'=>',_','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_raw=',_' ?><?php $attr5_escape=true ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -1003,7 +1011,7 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?htmlentities($$attr5_var):'error: variable '.$attr5_var.' not present';	
+		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
@@ -1025,7 +1033,7 @@
 	}
 			
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php $attr5 = array('user'=>$lastchange_user) ?><?php $attr5_user=$lastchange_user ?><?php
+?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_raw) ?><?php unset($attr5_escape) ?><?php $attr5 = array('user'=>$lastchange_user) ?><?php $attr5_user=$lastchange_user ?><?php
 		if	( is_object($attr5_user) )
 			$user = $attr5_user;
 		else
