@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.26  2007-06-08 23:05:44  dankert
+// Als tempor?res Verzeichnis das "upload_tmp_dir" aus der PHP-Konfiguration verwenden.
+//
 // Revision 1.25  2007-06-04 22:17:51  dankert
 // Suchergebnisse absteigend nach ?nderungsdatum sortieren.
 //
@@ -1066,8 +1069,8 @@ class Object
 		if	( isset($this->tmpfile) && $this->tmpfile != '' )
 			return $this->tmpfile;
 
-		//TODO: tmpdir besser ermitteln.
-		$this->tmpfile = tempnam( 0,'openrat_tmp' );
+		$tmpdir = ini_get('upload_tmp_dir');
+		$this->tmpfile = tempnam( $tmpdir,'openrat_tmp' );
 		Logger::debug( 'creating temporary file: '.$this->tmpfile );
 
 		return $this->tmpfile;
