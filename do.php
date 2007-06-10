@@ -115,7 +115,8 @@ if	( !is_array( $conf ) )
 	Session::setConfig( $conf );
 }
 
-umask( $conf['security']['umask'] );
+if	( !empty($conf['security']['umask']) )
+	umask( octdec($conf['security']['umask']) );
 
 if	( !empty($conf['interface']['timeout']) )
 	set_time_limit( intval($conf['interface']['timeout']) );

@@ -70,6 +70,7 @@ class Publish
 
 	function copy( $tmp_filename,$dest_filename )
 	{	
+		global $conf;
 		$source = $tmp_filename;
 
 		if   ( $this->with_local )
@@ -85,6 +86,10 @@ class Publish
 					die('failed writing file: '.$dest);
 				}
 			}
+			
+			
+			if	(!empty($conf['security']['chmod']))
+				chmod($dest,octdec($conf['security']['chmod']));
 		}
 		
 		if   ( $this->with_ftp )

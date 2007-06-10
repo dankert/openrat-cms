@@ -7,9 +7,17 @@ readonly=false
 ; Disable publishing
 nopublish=false
 
-; Unix-UMask for saved files
-; Default: 0002
-umask=0002
+; Unix-UMask for all created files
+; Default: none (uses system default)
+; Example: '0022' (means 'rw-r--r--')
+; Example: '0002' (means 'rw-rw-r--')
+umask=
+
+; CHMOD for published files
+; Default: none
+; Example: '0644' (means 'rw-r--r--')
+; Example: '0755' (means 'rwxr-xr-x')
+chmod=
 
 
 
