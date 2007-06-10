@@ -156,6 +156,7 @@ class MainmenuAction extends Action
 			
 			$this->addSubaction('show' );
 			$this->addSubaction('edit' );
+			$this->addSubaction('src'  );
 			$this->addSubaction('el'   );
 			$this->addSubaction('prop' );
 		}
