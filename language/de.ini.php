@@ -224,6 +224,7 @@ ERROR_NOT_A_FOLDER = "Ausgewähltes Objekt ist kein Ordner"
 ERROR_NO_PROJECT = "kein Projekt verfügbar/ausgewählt."
 ERROR_USER_PW = "Kennwortänderung fehlgeschlagen"
 ERROR_USER_PW_DESC = "Das Kennwort konnte nicht geändert werden, beachten Sie:<ul><li>Das Kennwort darf nicht leer sein</li><li>Das neue Kennwort muss zweimal identisch eingegeben werden</li></ul>Versuchen Sie es noch einmal."
+ERROR_LOGIN_BROKEN_SSL_CERT = "Die Anmeldung kann nicht durchgeführt werden, da Ihr SSL Client-Zertifikat ungültig ist."
 EXPORT = "Export"
 EXPORT_DESC = "Mit dem Export können Sie Dateien aus einem Projektordner in das lokale Dateisystem des Servers kopieren"
 FILETYPE_ODF =OpenDocument Format

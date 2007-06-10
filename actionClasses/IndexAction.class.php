@@ -273,7 +273,12 @@ class IndexAction extends Action
 			$username = getenv( $ssl_user_var );
 
 			if	( empty($username) )
-				die( 'no username in client certificate ('.$ssl_user_var.'). (or maybe there is no client certificate?)' );
+			{
+				echo lang('ERROR_LOGIN_BROKEN_SSL_CERT');
+				Logger::warn( 'no username in SSL client certificate (var='.$ssl_user_var.').' );
+				exit;
+			}
+			
 //			Html::debug($username);
 			$this->setTemplateVar('force_username',$username);
 		}
