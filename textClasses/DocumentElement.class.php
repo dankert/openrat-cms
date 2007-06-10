@@ -819,8 +819,12 @@ class DocumentElement extends AbstractElement
 					case 'imageelement':
 						$empty       = true;
 						$attr['alt'] = '';
-
-						if	( empty($attr['title']) )
+						
+						if	( ! Object::available( $child->objectId ) )
+						{
+							$tag = '';
+						}
+						elseif	( empty($attr['title']) )
 						{
 							$tag = 'img';
 							$attr['src']    = $child->getUrl();
