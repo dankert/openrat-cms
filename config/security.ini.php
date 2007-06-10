@@ -21,6 +21,18 @@ chmod=
 
 
 
+; Default Login
+; These values are used for the login form.
+[default]
+
+; default: ''
+username=
+
+; default: ''
+password=
+
+
+
 [login]
 ; Type of authorization.
 ; 'http' uses the HTTP Basic Authrization.

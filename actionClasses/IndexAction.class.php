@@ -256,6 +256,9 @@ class IndexAction extends Action
 				$dbids[$dbname] = $dbconf['comment'];
 		}
 
+		$this->setTemplateVar('login_name'    ,$conf['security']['default']['username']);
+		$this->setTemplateVar('login_password',$conf['security']['default']['password']);
+
 		$this->setTemplateVar( 'dbids',$dbids );
 		
 		$db = Session::getDatabase();
@@ -375,6 +378,9 @@ class IndexAction extends Action
 	 */
 	function logout()
 	{
+		$user = Session::getUser();
+		$this->setTemplateVar('login_username',$user->name);
+		
 		// Aus Sicherheitsgruenden die komplette Session deaktvieren
 		session_unset();
 	}
