@@ -87,6 +87,8 @@ class PageelementAction extends Action
 		$this->value->languageid = $language->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
+		$this->value->page       = $this->page;
+		$this->value->simple = false;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
 		$this->value->publish = false;
