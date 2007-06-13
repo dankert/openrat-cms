@@ -48,6 +48,13 @@ define('OR_TMP_DIR'           ,'./tmp/'            );
 define('OR_CONTROLLER_FILE'   ,defined('OR_EXT_CONTROLLER_FILE')?OR_EXT_CONTROLLER_FILE:'do');
 define('START_TIME'           ,time()              );
 
+define('REQ_PARAM_ACTION'         ,'action'         );
+define('REQ_PARAM_SUBACTION'      ,'subaction'      );
+define('REQ_PARAM_TARGETSUBACTION','targetSubAction');
+define('REQ_PARAM_ID'             ,'id'             );
+
+require_once( "functions/request.inc.php" );
+
 require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
 
 require_once( OR_OBJECTCLASSES_DIR."include.inc.".PHP_EXT );
@@ -59,7 +66,6 @@ require_once( OR_DBCLASSES_DIR."mysql.class.php" );
 
 session_start();
 
-require_once( "functions/request.inc.php" );
 
 require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
 
@@ -122,11 +128,6 @@ if	( !empty($conf['interface']['timeout']) )
 	set_time_limit( intval($conf['interface']['timeout']) );
 
 define('FILE_SEP',$conf['interface']['file_separator']);
-
-define('REQ_PARAM_ACTION'         ,'action'         );
-define('REQ_PARAM_SUBACTION'      ,'subaction'      );
-define('REQ_PARAM_TARGETSUBACTION','targetSubAction');
-define('REQ_PARAM_ID'             ,'id'             );
 
 define('TEMPLATE_DIR',OR_THEMES_DIR.$conf['interface']['theme'].'/templates');
 define('CSS_DIR'     ,OR_THEMES_DIR.$conf['interface']['theme'].'/css'      );
