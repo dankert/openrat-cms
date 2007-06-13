@@ -54,7 +54,7 @@ class TemplateEngine
 			return;
 			
 		if	( is_file($filename) && !is_writable($filename) )
-			die( 'could not open file for writing: '.$filename);
+			die( 'file is read-only: '.$filename);
 
 		Logger::debug("Compile template: ".$srcFilename.' to '.$filename);
 			
@@ -63,7 +63,7 @@ class TemplateEngine
 		$outFile = fopen($filename,'w');
 
 		if	( !is_resource($outFile) )
-			die( 'could not open file for writing: '.$filename);
+			die( 'unable to open file for writing: '.$filename);
 
 		$raw     = false;
 		$openCmd = array();
