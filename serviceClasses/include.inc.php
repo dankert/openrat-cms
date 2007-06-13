@@ -17,12 +17,16 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('tr
 	require_once( OR_SERVICECLASSES_DIR."ProjectTree.class.".PHP_EXT );
 }
 
+// Veroeffentlichung
+if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','page','folder')) )
+{
+	require_once( OR_SERVICECLASSES_DIR."Publish.class.".PHP_EXT );
+	require_once( OR_SERVICECLASSES_DIR."Ftp.class.".PHP_EXT );
+}
 
 // Nur bei der Erzeugung von Seiten notwendig.
 if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pageelement','page','folder')) )
 {
-	require_once( OR_SERVICECLASSES_DIR."Ftp.class.".PHP_EXT );
-	require_once( OR_SERVICECLASSES_DIR."Publish.class.".PHP_EXT );
 	require_once( OR_SERVICECLASSES_DIR."Api.class.".PHP_EXT );
 	require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT        );
 	require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT           );
