@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.21  2007-06-13 22:01:22  dankert
+// Korrektur: Dateiname Icon zum Bearbeiten.
+//
 // Revision 1.20  2007-04-22 00:16:44  dankert
 // Fehlermeldung vermeiden, wenn eine Objekt-Id nicht in der Datenbank vorhanden ist.
 //
@@ -732,7 +735,7 @@ class Page extends Object
 			}
 			
 			if   ( $this->icons )
-				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url('pageelement','edit',$this->objectid,array('elementid'=>$id)).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_EXT.'" border="0"></a>',$src );
+				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url('pageelement','edit',$this->objectid,array('elementid'=>$id)).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_ICON_EXT.'" border="0"></a>',$src );
 			else
 				$src = str_replace( '{{->'.$id.'}}','',$src );
 		}
