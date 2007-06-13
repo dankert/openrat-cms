@@ -633,7 +633,7 @@ class DocumentElement extends AbstractElement
 
 			$image = new ImageElement();
 			$t = new TextElement($erg[++$idx]);
-			$image->setTarget( $t->text );
+			$image->setTarget( intval($t->text) );
 			$t->text = '';
 			$image->children[] = $t;
 			 
