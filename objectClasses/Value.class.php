@@ -423,8 +423,6 @@ SQL
 	
 		$inhalt = '';
 
-//		Logger::debug('Generating Element '.$this->element->name.', type='.$this->element->type );
-
 		// Inhalt ist mit anderer Seite verknüpft.
 		if	( in_array($this->element->type,array('text','longtext','date','number')) && intval($this->linkToObjectId) != 0 && !$this->isLink )
 		{
@@ -676,8 +674,6 @@ SQL
 				$linkValue->languageid = $this->languageid;
 				$linkValue->load();
 				
-				//Html::debug( $linkValue );
-				
 				if	( !Object::available( $linkValue->linkToObjectId ) )
 					break;
 					
@@ -709,8 +705,8 @@ SQL
 					break;
 					
 					default:
-//						$inhalt = ''; 
-						$inhalt = '?subtype for linkinfo not implemented: '.$this->element->subtype.'?'; 
+						$inhalt = ''; 
+						Logger::error('subtype for linkinfo not implemented:'.$this->element->subtype);
 				}			
 				
 				break;
@@ -856,7 +852,22 @@ SQL
 							$dynEl->execute();
 							$inhalt = $dynEl->getOutput();
 						}
+						else
+						{
+							Logger::warn('element:'.$this->element->name.', '.
+							             'class:'.$className.', no method: execute()');
+						}
 					}
+					else
+					{
+						Logger::warn('element:'.$this->element->name.', '.
+						             'class not found:'.$className);
+					}
+				}
+				else
+				{
+					Logger::warn('element:'.$this->element->name.', '.
+					             'file not found:'.$fileName);
 				}
 
 				break;
@@ -885,7 +896,9 @@ SQL
 						break;
 
 					default:  
-						//$inhalt = 'please select subtype. unknown: '.$this->element->subtype;
+						Logger::warn('element:'.$this->element->name.', '.
+						             'type:'.$this->element->type.', '.
+						             'unknown subtype:'.$this->element->subtype);
 				}
 				
 				break;
@@ -1033,16 +1046,25 @@ SQL
 						$inhalt = $user->tel;
 						break;
 					default:
-						//$inhalt = 'please select subtype. unknown: '.$this->element->subtype;
+						Logger::warn('element:'.$this->element->name.', '.
+						             'type:'.$this->element->type.', '.
+						             'unknown subtype:'.$this->element->subtype);
+						// Keine Fehlermeldung in erzeugte Seite schreiben. 
 				}
 				
 				$inhalt = Text::encodeHtml( $inhalt );
 				break;
+				
+			default:
+				// Unbekannte Elementtypen darf es nicht geben, daher ERROR loggen.
+				Logger::error('element:'.$this->element->name.', '.
+				              'unknown type:'.$this->element->type);
+				
 		}
 		
 		
 		if   ( $this->page->icons && $this->element->withIcon )
-			$inhalt = '<a href="'.Html::url('pageelement','edit',$this->page->objectid,array('elementid'=>$this->element->elementid)).'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_EXT.'" border="0" align="left"></a>'.$inhalt;
+			$inhalt = '<a href="'.Html::url('pageelement','edit',$this->page->objectid,array('elementid'=>$this->element->elementid)).'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>'.$inhalt;
 		
 		$this->value = $inhalt;
 	}
