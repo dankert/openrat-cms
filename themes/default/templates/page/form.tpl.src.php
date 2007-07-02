@@ -1,5 +1,5 @@
-insert file:header
-	form action:page subaction:saveform
+page
+	form
 		window title:TEMPLATE_ELEMENTS name:TEMPLATE_ELEMENTS widths:30%,5%,65%
 
 			if empty:el
@@ -18,37 +18,42 @@ insert file:header
 				list list:el extract:true
 					row
 						cell class:fx
-							image elementtype:type
+							image elementtype:var:type
 							text var:name
 						cell class:fx
-							checkbox name:id prefix:saveid default:false readonly:false
+							checkbox name:var:saveid default:false readonly:false
 						cell class:fx
-							if var:type contains:text,date,number
-								input index:true type:text name:id prefix:id value:value size:40 maxlength:255 onchange:onchange
-							if var:type value:longtext
-								inputarea index:true name:id prefix:id rows:7 cols:50 onchange:onchange value:value
-							if var:type contains:select,link,list
-								selectbox name:id list:list default:value
+							if value:var:type contains:text,date,number
+								input index:true type:text name:var:id default:var:value size:40 maxlength:255 onchange:onchange
+							if value:var:type equals:longtext
+								inputarea index:true name:var:id rows:7 cols:50 onchange:onchange default:var:value
+							if value:var:type contains:select,link,list
+								selectbox name:var:id list:list default:var:value
 
-				if true:release
+
+				if present:release
+					if present:publish
+						row
+							cell colspan:3
+								fieldset title:message:options
+	
+				if present:release
 					row
-						cell class:fx
-							text raw:_
-						cell class:fx colspan:2
-							checkbox name:release default:true
-							text raw:_
-							text text:GLOBAL_RELEASE
-				if true:publish
+						cell colspan:3 class:fx
+							checkbox name:release
+							label for:release
+								text raw:_
+								text text:GLOBAL_RELEASE
+	
+				if present:publish
 					row
-						cell class:fx
-							text raw:_
-						cell class:fx colspan:2
-							checkbox name:publish default:false
-							text raw:_
-							text text:PAGE_PUBLISH_AFTER_SAVE
+						cell colspan:3 class:fx
+							checkbox name:publish
+							label for:publish
+								text raw:_
+								text text:PAGE_PUBLISH_AFTER_SAVE
 	
 				row
-					cell class:act colspan:4
+					cell colspan:3 class:act
 						button type:ok
 						
-insert file:footer
