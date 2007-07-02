@@ -17,6 +17,7 @@ target=prop
 menu=elements
 
 [form]
+target=saveform
 menu=elements
 
 [pub]
@@ -28,6 +29,9 @@ goto=pub
 
 [saveprop]
 goto=showprop
+
+[saveform]
+goto=el
 
 [showprop]
 menu=prop

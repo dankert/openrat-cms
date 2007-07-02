@@ -59,23 +59,23 @@ class PageAction extends ObjectAction
 	{
 		$this->page->public = true;
 		$this->page->simple = true;
-		$this->page->generate_elements();
 
-		foreach( $this->page->values as $id=>$value )
+		foreach( $this->page->getElements() as $elementid=>$name )
 		{
-			if   ( $value->element->isWritable() && $this->getRequestVar('saveid'.$value->element->elementid)=='1' )
+			if   ( $this->hasRequestVar('saveid'.$elementid) )
 			{
 				$value = new Value();
 				$value->objectid   = $this->page->objectid;
 				$value->pageid     = Page::getPageIdFromObjectId( $value->objectid );
-				$value->element = new Element( $id );
+				$value->element = new Element( $elementid );
 				$value->element->load();
 				$value->publish = false;
 				$value->load();
 		
-				$varname = 'id'.$value->element->elementid;
-				$inhalt  = $this->getRequestVar($varname);
-		
+				// Eingegebenen Inhalt aus dem Request lesen
+				$inhalt  = $this->getRequestVar( 'id'.$elementid );
+				
+				// Den Inhalt speichern.
 				switch( $value->element->type )
 				{
 					case 'number':
@@ -94,6 +94,7 @@ class PageAction extends ObjectAction
 
 					case 'link':
 					case 'list':
+					case 'insert':
 						$value->linkToObjectId = intval($inhalt);
 						break;
 				}
@@ -106,11 +107,14 @@ class PageAction extends ObjectAction
 				else
 					$value->publish = false;
 		
-				// Inhalt speichern
-				// Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
-				// fuer jede Sprache einzeln gespeichert.
+//				Html::debug($inhalt,'Eingabe');
+//				Html::debug($value,'Inhalt');
+		
+				// Inhalt speichern.
+				// Inhalt in allen Sprachen gleich?
 				if	( $value->element->allLanguages )
 				{
+					// Inhalt fuer jede Sprache einzeln speichern.
 					$p = new Project();
 					foreach( $p->getLanguageIds() as $languageid )
 					{
@@ -397,11 +401,10 @@ class PageAction extends ObjectAction
 	 */
 	function el()
 	{
-		global $conf_php;
-
 		$this->page->public = true;
 		$this->page->simple = true;
 		$this->page->generate_elements();
+//		Html::debug($this->page,'Seite');
 		
 		$list = array();
 	
@@ -451,6 +454,8 @@ class PageAction extends ObjectAction
 				$list[$id]['name']        = $value->element->name;
 				$list[$id]['desc']        = $value->element->desc;
 				$list[$id]['type']        = $value->element->type;
+				$list[$id]['id'  ]        = 'id'.$value->element->elementid;
+				$list[$id]['saveid']      = 'saveid'.$value->element->elementid;
 
 				switch( $value->element->type )
 				{
