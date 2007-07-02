@@ -44,6 +44,12 @@ class Value
 	var $page;
 	
 	/**
+	 * Seiten-Id der uebergeordneten Seite
+	 * @type Integer
+	 */
+	var $pageid;
+	
+	/**
 	 * Kennzeichen, ob der Inhalt mit dem Inhalt einer anderern Seite verknüpft wird.
 	 * @type Object
 	 */
@@ -416,10 +422,10 @@ SQL
 	 */
 	function generate()
 	{
+		global $conf;
+
 		if	( intval($this->valueid)==0 )
 			$this->load();
-		$db = db_connection();
-		global $conf;
 	
 		$inhalt = '';
 
@@ -440,6 +446,7 @@ SQL
 			return;
 		}
 		
+//		Html::debug( $this->element->type );	
 		switch( $this->element->type )
 		{
 			case 'list'  : // nur wg. Rückwärtskompabilität.
@@ -645,6 +652,9 @@ SQL
 				$linkedPageTemplate = new Template( $linkedPage->templateid );
 				$targetElementId = array_search( $targetElementName, $linkedPageTemplate->getElementNames() );
 				
+				if	( intval($targetElementId)==0 )
+					break;
+
 				$targetValue = new Value();
 				$targetValue->elementid = $targetElementId;
 				$targetValue->element = new Element($targetElementId);
