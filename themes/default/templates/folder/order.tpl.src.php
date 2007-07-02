@@ -52,5 +52,5 @@ page
 					image type:var:icon
 					text var:name
 				cell width:18% class:fx
-					text var:date
+					date date:var:date
 						

@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.36  2006-06-01 19:11:46  dankert
+// Revision 1.37  2007-07-02 19:02:08  dankert
+// Korrektur: Anzeige der letzten ?nderung.
+//
+// Revision 1.36  2006/06/01 19:11:46  dankert
 // Abfragen von Rechten.
 //
 // Revision 1.35  2006/06/01 18:15:30  dankert
@@ -758,7 +761,7 @@ class FolderAction extends ObjectAction
 				}
 
 				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
-				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
+				$list[$id]['date'] = $o->lastchangeDate;
 				$list[$id]['user'] = $o->lastchangeUser;
 			}
 		}
@@ -887,7 +890,7 @@ class FolderAction extends ObjectAction
 				}
 
 				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
-				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
+				$list[$id]['date'] = $o->lastchangeDate;
 				$list[$id]['user'] = $o->lastchangeUser;
 
 				if   ( $last_objectid != 0 && $o->hasRight(ACL_WRITE) )
