@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.38  2007-07-02 20:14:07  dankert
+// Ordnerinhalte rekursiv l?schen (also samt Unterordnern)
+//
 // Revision 1.37  2007-07-02 19:02:08  dankert
 // Korrektur: Anzeige der letzten ?nderung.
 //
@@ -537,7 +540,7 @@ class FolderAction extends ObjectAction
 						{
 							case 'folder':
 								$f = new Folder( $id );
-								$f->delete();
+								$f->deleteAll();
 								break;
 							
 							case 'file':
