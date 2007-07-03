@@ -828,3 +828,6 @@ USER_TEL = "Telephone"
 USER_USERNAME = Username
 USER_USERNAME_DESC = "With this name the user is logging in"
 USER_YOURPROFILE = "My settings"
+
+MENU_INDEX_APPLICATIONS="Applications"
+MENU_INDEX_APPLICATIONS_DESC="Start other Applications"

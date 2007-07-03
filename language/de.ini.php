@@ -881,3 +881,6 @@ MENU_TITLE_SEARCH_CONTENT="Suche nach Inhalt"
 OPTIONS="Optionen"
 FILE_IMAGE_NEW_SIZE="Neue Bildgröße"
 FILE_IMAGE_SIZE_FACTOR="Neue Größe in Verhältnis"
+
+MENU_INDEX_APPLICATIONS="Anwendungen"
+MENU_INDEX_APPLICATIONS_DESC="Weitere Anwendungen starten"
