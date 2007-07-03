@@ -848,8 +848,8 @@ class PageelementAction extends Action
 	{
 		$this->value->valueid = $this->getRequestVar('valueid');
 		
-		// Das ausgew?hlte Element f?r die Bearbeitung verwenden
-		$this->callSubAction('editlongtext');
+		// Das ausgew?hlte Element fuer die Bearbeitung verwenden
+		$this->callSubAction('edit');
 	}
 
 
@@ -896,7 +896,7 @@ class PageelementAction extends Action
 		$this->value->element->load();
 
 		$list         = array();
-		$version_list = array();
+//		$version_list = array();
 		$lfd_nr       = 0;
 
 		foreach( $this->value->getVersionList() as $value )
@@ -906,42 +906,45 @@ class PageelementAction extends Action
 			$value->page    = &$this->page;
 			$value->simple  = true;
 			$value->generate();
-
-			$date = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
 			
-			if	( in_array(	$this->element->type,array('text','longtext') ) )
-				$version_list[ $value->valueid ] = '('.$lfd_nr.') '.$date;
 
-			if	( ! $value->active )
-				$useUrl = Html::url('pageelement','usevalue',$this->page->objectid,array('valueid'  =>$value->valueid));
-			else	$useUrl = '';
+//			$date = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
+			
+//			if	( in_array(	$this->element->type,array('text','longtext') ) )
+//				$version_list[ $value->valueid ] = '('.$lfd_nr.') '.$date;
 
-			if	( ! $value->publish && $value->active )
-				$releaseUrl = Html::url('pageelement','release',$this->page->objectid,array('valueid'  =>$value->valueid ));
-			else	$releaseUrl = '';
-
-			if	( $value->publish )
-				$public = true;
-			else $public = false;
-
-			if	( $value->active )
-				$active = true;
-			else $active = false;
-
-			$list[] = array( 'value'     => Text::maxLaenge( 50,$value->value),
-			                 'date'      => $date,	
+			$zeile = array(  'value'     => Text::maxLaenge( 50,$value->value),
+			                 'date'      => $value->lastchangeTimeStamp,	
 			                 'lfd_nr'    => $lfd_nr,	
-			                 'user'      => $value->lastchangeUserName,
-			                 'useUrl'    => $useUrl,
-			                 'public'    => $public,  
-			                 'active'    => $active,  
-			                 'releaseUrl'=> $releaseUrl );
+			                 'id'        => $value->valueid,	
+			                 'user'      => $value->lastchangeUserName );
+
+			// Nicht aktive Inhalte können direkt bearbeitet werden und sind
+			// nach dem Speichern dann wieder aktiv (natürlich als nächster/neuer Inhalt) 
+			if	( ! $value->active )
+				$zeile['useUrl'] = Html::url('pageelement','usevalue',$this->page->objectid,array('valueid'  =>$value->valueid));
+
+			// Freigeben des Inhaltes.
+			// Nur das aktive Inhaltselement kann freigegeben werden. Natürlich auch nur,
+			// wenn es nicht schon freigegeben ist.
+			if	( ! $value->publish && $value->active )
+				$zeile['releaseUrl'] = Html::url('pageelement','release',$this->page->objectid,array('valueid'  =>$value->valueid ));
+
+			$zeile['public'] = $value->publish;
+			$zeile['active'] = $value->active;
+
+			$list[$lfd_nr] = $zeile;
+			             
 		}
 
-		$this->setTemplateVar('name'        ,$value->element->name);
-		$this->setTemplateVar('el'          ,$list);
-		$this->setTemplateVar('version_list',$version_list);
-		$this->forward('pageelement_archive');
+		
+		$this->setTemplateVar('compareid',$list[$lfd_nr-1]['id']);
+		$this->setTemplateVar('withid'   ,$list[$lfd_nr  ]['id']);
+		$this->setTemplateVar('name'     ,$value->element->name);
+		$this->setTemplateVar('el'       ,$list);
+		
+//		Html::debug( $this->templateVars);
+//		$this->setTemplateVar('version_list',$version_list);
 	}
 
 
@@ -965,8 +968,9 @@ class PageelementAction extends Action
 		
 		$value1->loadWithId();
 		$value2->loadWithId();
+//		Html::debug($value1,'Inhalt-1');
 
-		Logger::debug( 'comparing value '.$value1id.' with '.$value2id );
+//		Logger::debug( 'comparing value '.$value1id.' with '.$value2id );
 
 		$date1 = date( lang('DATE_FORMAT'),$value1->lastchangeTimeStamp);
 		$this->setTemplateVar('title1',$date1);
@@ -978,15 +982,12 @@ class PageelementAction extends Action
 		$text2 = explode("\n",$value2->text);
 
 		$res_diff = $this->textdiff($text1,$text2);
-		#echo "<pre>";
-		#print_r($res_diff);
-		#echo "</pre>";
+//		Html::debug($res_diff,'Diff');
+
 		list( $text1,$text2 ) = $res_diff;
 
 		$this->setTemplateVar('text1',$text1 );
 		$this->setTemplateVar('text2',$text2 );
-
-		$this->forward('pageelement_diff');
 	}
 
 
