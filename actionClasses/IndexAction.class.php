@@ -332,6 +332,39 @@ class IndexAction extends Action
 	}
 
 
+
+	/**
+	 * Erzeugt eine Anwendungsliste.
+	 */
+	function applications()
+	{
+		global $conf;
+		
+		// Diese Seite gilt pro Sitzung. 
+		$user = Session::getUser();
+		$this->lastModified( $user->loginDate );
+
+		// Projekte ermitteln
+		$list = array();
+		foreach( $conf['applications'] as $id=>$app )
+		{
+			if	( !is_array($app) )
+				continue;
+				
+			
+			$p = array();
+			$p['url']  = $app['url'];
+			$p['url'] .= strpos($p['url'],'?')!==false?'&':'?';
+			$p['url'] .= $app['param'].'='.session_id();
+			$p['name'] = $app['name'];
+			
+			$list[] = $p;
+		}
+
+		$this->setTemplateVar('applications',$list);
+	}
+
+
 	function login()
 	{
 		global $conf;
@@ -402,6 +435,51 @@ class IndexAction extends Action
 		Session::setProject( new Project(-1) );
 	}
 	
+	
+	
+	/**
+	 * Ausgeben von maschinenlesbaren Benutzerinformationen.
+	 * 
+	 * Diese Funktion dient dem Single-Signon für fremde Anwendungen, welche
+	 * die Benutzerinformationen des angemeldeten Benutzers aus dieser
+	 * Anwendung auslesen können.
+	 */
+	function userinfo()
+	{
+		$user = Session::getUser();
+		$info = array('username'   => $user->name,
+		              'fullname'   => $user->fullname,
+		              'mail'       => $user->mail,
+		              'telephone'  => $user->tel,
+		              'style'      => $user->style,
+		              'admin'      => $user->isAdmin?'true':'false',
+		              'ldap'       => $user->ldap_dn,
+		              'groups'     => implode(',',$user->getGroups()),
+		              'description'=> $user->desc
+		             );
+		        
+		// Wenn der HTTP-Parameter "xml" vorhanden ist, dann geben wir die
+		// Informationen per XML aus.     
+		if	( $this->hasRequestVar('xml') )
+		{
+			header('Content-Type: text/xml');
+			echo '<userinfo>';
+			foreach( $info as $n=>$i )
+				echo '<'.$n.'>'.$i.'</'.$n.'>'."\n";
+			echo '</userinfo>';
+			
+		}
+		
+		// Sonst normale Textausgabe im INI-Datei-Format.
+		else
+		{
+			header('Content-Type: text/plain');
+			foreach( $info as $n=>$i )
+				echo $n.'="'.$i."\"\n";
+		}
+		
+		exit; // Fertig.
+	}
 	
 	
 	function project()
@@ -649,6 +727,11 @@ class IndexAction extends Action
 		
 		switch( $name )
 		{
+			// Menüpunkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
+			// konfiguriert sind.
+			case 'applications':
+				return count($conf['applications']) > 0;
+
 			case 'register':
 				return $conf['login']['register'];
 

@@ -8,6 +8,11 @@ goto=showlogin
 [object]
 goto=show
 
+[applications]
+menu=menu
+
+[userinfo]
+
 [project]
 goto=show
 
@@ -59,4 +64,4 @@ goto=projectmenu
 
 [menu]
 login=showlogin,register,password
-menu=projectmenu,administration,logout
+menu=applications,projectmenu,administration,logout
