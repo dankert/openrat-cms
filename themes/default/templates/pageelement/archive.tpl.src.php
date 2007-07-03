@@ -27,11 +27,11 @@ page
 					cell class:fx
 						text text:var:lfd_nr
 					cell class:fx
-						radio name:compareid value:var:lfd_nr
+						radio name:compareid value:var:id
 					cell class:fx
-						radio name:withid value:var:lfd_nr
+						radio name:withid value:var:id
 					cell class:fx
-						text var:date
+						date date:var:date
 					cell class:fx
 						text text:user
 					cell class:fx
@@ -40,14 +40,16 @@ page
 						if true:var:public
 							text text:message:GLOBAL_PUBLIC
 						else
-							link url:var:releaseUrl
-								text text:message:GLOBAL_RELEASE
+							if present:releaseUrl 
+								link url:var:releaseUrl
+									text text:message:GLOBAL_RELEASE
 					cell class:fx
 						if true:var:active
 							text text:message:GLOBAL_ACTIVE
 						else
-							link url:var:useUrl
-								text text:message:GLOBAL_USE
+							if present:useUrl
+								link url:var:useUrl
+									text text:message:GLOBAL_USE
 
 			row
 				cell colspan:8 class:act
