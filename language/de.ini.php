@@ -884,3 +884,6 @@ FILE_IMAGE_SIZE_FACTOR="Neue Größe in Verhältnis"
 
 MENU_INDEX_APPLICATIONS="Anwendungen"
 MENU_INDEX_APPLICATIONS_DESC="Weitere Anwendungen starten"
+
+MENU_HELP=Hilfe
+MENU_HELP_DESC=Onlinehilfe
