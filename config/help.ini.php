@@ -11,3 +11,6 @@ url=doc/online/html/
 
 ; file extension of the help documents
 suffix=.html
+
+; show only a question mark instead of "help"
+only_question_mark=true
