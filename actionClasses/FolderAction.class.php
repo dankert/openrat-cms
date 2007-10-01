@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.39  2007-10-01 21:43:42  dankert
+// Ermitteln der maximalen Dateigroesse bei Uploads.
+//
 // Revision 1.38  2007-07-02 20:14:07  dankert
 // Ordnerinhalte rekursiv l?schen (also samt Unterordnern)
 //
@@ -703,11 +706,74 @@ class FolderAction extends ObjectAction
 
 
 
-	function createfile()
+	/**
+	 * Ermittelt die maximale Größe einer hochzuladenden Datei.<br>
+	 * Der Wert wird aus der PHP-Konfiguration ermittelt.
+	 *
+	 * @return Integer maximale Dateigroesse in Kilobytes
+	 */
+	function maxFileSize()
 	{
-		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
+		// When querying memory size values:
+		// Many ini memory size values, such as upload_max_filesize,
+		// are stored in the php.ini file in shorthand notation.
+		// ini_get() will return the exact string stored in the php.ini file
+		// and NOT its integer equivalent.
+		$sizes = array();
+		foreach( array('upload_max_filesize','post_max_size','memory_limit') as $var )
+		{
+			$v = $this->stringToBytes(ini_get($var));
+			
+			if	($v > 0 )
+				$sizes[] = $v;
+		}
+		
+		return min($sizes);
 	}
 
+	
+	/**
+	 * Hochladen einer Datei.
+	 *
+	 */
+	function createfile()
+	{
+		// Maximale Dateigroesse.
+		$this->setTemplateVar('max_size',($this->maxFileSize()/1024).' KB' );
+		
+		$this->setTemplateVar('objectid',$this->folder->objectid );
+	}
+
+	
+	/**
+	 * Umwandlung von abgekürzten Bytewerten ("Shorthand Notation") wie
+	 * "4M" oder "500K" in eine ganzzahlige Byteanzahl.<br>
+	 * <br>
+	 * Quelle: http://de.php.net/manual/de/function.ini-get.php
+	 *
+	 * @param String Abgekürzter Bytewert
+	 * @return Integer Byteanzahl
+	 */
+	function stringToBytes($val)
+	{
+		$val  = trim($val);
+		$last = strtolower($val{strlen($val)-1});
+		// Achtung: Der Trick ist das "Fallthrough", kein "break" vorhanden!
+		switch($last)
+		{
+			// The 'G' modifier is available since PHP 5.1.0
+			case 'g':
+				$val *= 1024;
+			case 'm':
+				$val *= 1024;
+			case 'k':
+				$val *= 1024;
+		}
+		
+     	return intval($val);
+	}
+ 
+	
 
 	function createlink()
 	{
