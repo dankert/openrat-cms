@@ -29,12 +29,35 @@
  */
 class TemplateEngine
 {
+	var $actualTagName   = '';
+	
+	/**
+	 * Name Template.
+	 *
+	 * @var String
+	 */
+	var $tplName;
+
+	/**
+	 * Erzeugt einen Templateparser.
+	 *
+	 * @param String $tplName Name des Templates, das umgewandelt werden soll.
+	 */
+	function TemplateEngine( $tplName='' )
+	{
+		$this->tplName = $tplName;
+	}
+
+	
 	/**
 	 * Wandelt eine Vorlage um
 	 * @param filename Dateiname der Datei, die erstellt werden soll.
 	 */
-	function compile( $tplName )
+	function compile( $tplName = '')
 	{
+		if	( empty($tplName) )
+			$tplName = $this->tplName;
+		
 		global $conf;
 		$srcOrmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.'.PHP_EXT;
 		$srcXmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.xml';
@@ -45,7 +68,7 @@ class TemplateEngine
 			$srcFilename = $srcXmlFilename;
 		else
 			// Wenn Vorlage (noch) nicht existiert
-			die( 'Template not found: '.$tplName );
+			die( get_class($this).': Template not found: "'.$tplName.'"' );
 					
 		$filename = 'themes/default/pages/html/'.$tplName.'.tpl.'.PHP_EXT;
 		
@@ -54,7 +77,7 @@ class TemplateEngine
 			return;
 			
 		if	( is_file($filename) && !is_writable($filename) )
-			die( 'file is read-only: '.$filename);
+			die( get_class($this).': File is read-only: '.$filename);
 
 		Logger::debug("Compile template: ".$srcFilename.' to '.$filename);
 			
@@ -63,7 +86,7 @@ class TemplateEngine
 		$outFile = fopen($filename,'w');
 
 		if	( !is_resource($outFile) )
-			die( 'unable to open file for writing: '.$filename);
+			die( get_class($this).': Unable to open file for writing: '.$filename);
 
 		$raw     = false;
 		$openCmd = array();
@@ -80,6 +103,8 @@ class TemplateEngine
 
 			// Setzt: $tag, $attributes, $value, $type
 			extract( $line );
+
+			$this->actualTagName   = $tag;
 			
 			if	($type == 'complete' || $type == 'open')
 				$attributes = $this->checkAttributes($tag,$attributes);
@@ -136,7 +161,7 @@ class TemplateEngine
 					return '$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
 					
 				default:
-					die('unknown type in attribute value: '.$type);
+					die( get_class($this).': Unknown type "'.$type.'" in attribute. Allowed: var|method|property|message|messagevar|config or none');
 			}
 		}
 		else
@@ -169,7 +194,7 @@ class TemplateEngine
 				return;
 			else
 				// Baustein nicht vorhanden, Abbbruch.
-				die( 'compile failed, file not found: '.$inFileName );
+				die( get_class($this).': Compile failed, file not found: '.$inFileName );
 
 		$values = array();
 		foreach( $attr as $attrName=>$attrValue )
@@ -223,7 +248,7 @@ class TemplateEngine
 		$elements = parse_ini_file( OR_THEMES_DIR.$conf['interface']['theme'].'/include/elements.ini.'.PHP_EXT);
 
 		if	( !isset($elements[$cmd]) )
-			die( 'parser error: unknown element: '.$cmd );
+			die( get_class($this).': Parser error, unknown element "'.$cmd.'". Allowed: '.implode(',',array_keys($elements)) );
 			
 		$checkedAttr = array();
 
@@ -245,7 +270,7 @@ class TemplateEngine
 			if	( isset($attr[$a]))
 				$checkedAttr[$a]=$attr[$a]; // Attribut ist bereits vorhanden, alles ok.
 			elseif	( $default=='*') // Pflichtfeld!
-				die( 'required attribute not found, element= '.$cmd.', attribute='.$a );
+				die( get_class($this).': Element "'.$cmd.'" needs the required attribute "'.$a.'"' );
 			elseif	( !is_null($default) )
 					$checkedAttr[$a]=$default;
 			else
@@ -258,7 +283,7 @@ class TemplateEngine
 		if	( count($attr) > 0 )
 		{
 			foreach($attr as $name=>$value)
-				die( 'unknown attribute, element= '.$cmd.', attribute='.$name.', known attributes='.$elements[$cmd]."\n" );
+				die( get_class($this).': Unknown attribute "'.$name.'" in element "'.$cmd.'". Allowed: '.$elements[$cmd]."\n" );
 		}
 		
 		return $checkedAttr;
@@ -335,11 +360,11 @@ class TemplateEngine
 					
 			if	( $raw)
 			{
-				$vals[] = array( 'tag'=>'raw',
-				                 'type'=>'close',
-				                 'value'=>$line,
-				                 'attributes'=>array(),
-				                 'level'=>$indent ); 
+				$vals[] = array( 'tag'        => 'raw',
+				                 'type'       => 'close',
+				                 'value'      => $line,
+				                 'attributes' => array(),
+				                 'level'      => $indent ); 
 				continue;
 			}
 
@@ -350,11 +375,11 @@ class TemplateEngine
 			{
 				if	( $idx >= $indent )
 				{
-					$vals[] = array( 'tag'=>$ccmd,
-					                 'type'=>'close',
-					                 'value'=>'',
-					                 'attributes'=>array(),
-					                 'level'=>$indent ); 
+					$vals[] = array( 'tag'        =>$ccmd,
+					                 'type'       =>'close',
+					                 'value'      =>'',
+					                 'attributes' => array(),
+					                 'level'      => $indent ); 
 					unset($openCmd[$idx]);
 				}
 			}
