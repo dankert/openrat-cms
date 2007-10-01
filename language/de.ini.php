@@ -246,6 +246,7 @@ FILE_REPLACE = Ersetzen
 FILE_REPLACE_DESC ="Sie können diese Datei mit einer Datei von Ihrer lokalen Festplatte ersetzen. Wählen Sie dazu die gewünschte Datei aus, um diese auf den Server zu laden.<br/><em>Hinweis:</em>Alle Verweise auf diese Datei bleiben erhalten."
 FILE_SIZE = "Größe"
 FILE_UPLOAD_DESC =""
+FILE_MAX_SIZE = "Maximale Dateigröße"
 FOLDER_FLIP = "Reihenfolge umdrehen"
 FOLDER_FLIP_MARK  = "Markierung umdrehen"
 FOLDER_MARK_ALL   = "Alle markieren"

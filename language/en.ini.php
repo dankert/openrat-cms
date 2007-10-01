@@ -831,3 +831,4 @@ USER_YOURPROFILE = "My settings"
 
 MENU_INDEX_APPLICATIONS="Applications"
 MENU_INDEX_APPLICATIONS_DESC="Start other Applications"
+FILE_MAX_SIZE="Maximum file size"
