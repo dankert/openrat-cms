@@ -1,6 +1,13 @@
 ; <?php exit('direct access denied') ?>
 
 
+[file]
+
+; Maximum file size for uploads in KB
+; 0,-1 = not restricted
+max_file_size=1500
+
+
 
 [revision-limit]
 
