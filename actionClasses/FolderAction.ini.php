@@ -58,6 +58,7 @@ target=pubnow
 goto=pub
 
 [create]
+target=createnew
 menu=new
 
 [createfolder]
@@ -88,6 +89,9 @@ goto=show
 [createnewlink]
 goto=show
 
+[createnew]
+goto=show
+
 [changesequence]
 goto=order
 
@@ -100,6 +104,6 @@ goto=order
 [menu]
 pub=pub
 show=show,select,order
-new=createfolder,createfile,createpage,createlink
+new=create,createfolder,createfile,createpage,createlink
 prop=showprop,prop,remove
 rights=rights,aclform

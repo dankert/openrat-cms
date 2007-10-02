@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-05-02 15:04:16  dankert
+// Revision 1.3  2007-10-02 21:13:44  dankert
+// Men?punkt "Neu" mit direktem Hinzuf?gen von Objekten.
+//
+// Revision 1.2  2004/05/02 15:04:16  dankert
 // Einfügen package-name (@package)
 //
 // Revision 1.1  2004/04/24 17:03:28  dankert
@@ -45,13 +48,24 @@ class Upload
 	var $value;
 	var $size;
 
+	/**
+	 * Bearbeitet den Upload einer Datei.<br>
+	 * Bei der Objekterzeugung wird die Datei bereits geladen.<br>
+	 *
+	 * @return Upload
+	 */
 	function Upload() // Konstruktor
 	{
 		global $FILES;
 
 		$this->size = filesize($FILES['file']['tmp_name']);
+		
+		if	( $this->size == 0 )
+			exit;
 
 		$fh    = fopen( $FILES['file']['tmp_name'],'r' );
+		
+		
 		$this->value = fread($fh,$this->size);
 		fclose( $fh );
 	

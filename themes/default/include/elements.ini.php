@@ -38,6 +38,6 @@ radiobox = list:*,name:*,default,onchange:,title:,class:
 set      = var:*,value,key
 table    = class,width:100%,space:0px,padding:0px,widths,rowclasses:oddCOMMAeven,columnclasses
 text     = title,class:text,var,text,key,textvar,raw,maxlength,value,suffix,prefix,accesskey,escape:true
-upload   = name:*,class:upload
+upload   = name:*,class:upload,maxlength,size:40
 user     = user
 window   = title,name,icon,widths,width:93%,rowclasses:oddCOMMAeven,columnclasses:1COMMA2COMMA3

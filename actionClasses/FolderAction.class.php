@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.40  2007-10-02 21:13:44  dankert
+// Men?punkt "Neu" mit direktem Hinzuf?gen von Objekten.
+//
 // Revision 1.39  2007-10-01 21:43:42  dankert
 // Ermitteln der maximalen Dateigroesse bei Uploads.
 //
@@ -171,6 +174,100 @@ class FolderAction extends ObjectAction
 
 
 
+	/**
+	 * Neues Objekt anlegen.<br>
+	 * Dies kann ein(e) Verzeichnis, Seite, Verknüpfung oder Datei sein.<br>
+	 */
+	function createnew()
+	{
+		global $conf;
+		$type = $this->getRequestVar('type'       );
+		
+		switch( $type )
+		{
+			case 'folder':
+				$name = $this->getRequestVar('folder_name');
+
+				if   ( !empty($name) )
+				{
+					$f = new Folder();
+					$f->name     = $name;
+					$f->parentid = $this->folder->objectid; 
+					$f->add();
+					$this->folder->setTimestamp();
+					$this->addNotice('folder',$f->name,'ADDED','ok');
+				}
+				break;
+
+			case 'file':
+				$upload = new Upload();
+				
+				// Prüfen der maximal erlaubten Dateigröße.
+				if	( $upload->size > $this->maxFileSize() )
+				{
+					// Maximale Dateigröße ist überschritten
+					$this->addNotice('file',$file->name,'MAX_FILE_SIZE_EXCEEDED','failed');
+				}
+				elseif( $upload->size > 0 )
+				{
+					$file   = new File();
+					$file->desc      = '';
+					$file->filename  = $upload->filename;
+					$file->name      = $upload->filename;
+					$file->extension = $upload->extension;		
+					$file->size      = $upload->size;
+					$file->parentid  = $this->folder->objectid;
+			
+					$file->value     = $upload->value;
+			
+					$file->add(); // Datei hinzufuegen
+					$this->folder->setTimestamp();
+					$this->addNotice('file',$file->name,'ADDED','ok');
+				}
+				
+				break;
+
+			case 'page':
+
+				$name = $this->getRequestVar('page_name');
+				if   ( !empty($name) )
+				{
+					$page = new Page();
+					$page->name       = $name;
+					$page->templateid = $this->getRequestVar('page_templateid');
+					$page->parentid   = $this->folder->objectid;
+					$page->add();
+					$this->folder->setTimestamp();
+		
+					$this->addNotice('page',$page->name,'ADDED','ok');
+				}
+				break;
+				
+			case 'link':
+
+				$name = $this->getRequestVar('link_name');
+				if   ( !empty($name) )
+				{
+					$link = new Link();
+					$link->name           = $name;
+					$link->parentid       = $this->folder->objectid;
+		
+					$link->isLinkToObject = false;
+					$link->url            = $name;
+		
+					$link->add();
+					$this->folder->setTimestamp();
+
+					$this->addNotice('link',$link->name,'ADDED','ok');
+				}
+				
+				break;
+		}
+						
+	}	
+
+	
+	
 	function createnewfolder()
 	{
 		$type        = $this->getRequestVar('type'       );
@@ -694,6 +791,13 @@ class FolderAction extends ObjectAction
 
 	function create()
 	{
+		// Maximale Dateigroesse.
+		$maxSizeBytes = $this->maxFileSize();
+		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );
+		$this->setTemplateVar('maxlength',$maxSizeBytes );
+		
+		$this->setTemplateVar('templates' ,Template::getAll()      );
+		
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 	}
 
@@ -708,18 +812,21 @@ class FolderAction extends ObjectAction
 
 	/**
 	 * Ermittelt die maximale Größe einer hochzuladenden Datei.<br>
-	 * Der Wert wird aus der PHP-Konfiguration ermittelt.
-	 *
-	 * @return Integer maximale Dateigroesse in Kilobytes
+	 * Der Wert wird aus der PHP- und OpenRat-Konfiguration ermittelt.<br>
+	 * 
+	 * @return Integer maximale Dateigroesse in Bytes
 	 */
 	function maxFileSize()
 	{
+		global $conf;
+		
 		// When querying memory size values:
 		// Many ini memory size values, such as upload_max_filesize,
 		// are stored in the php.ini file in shorthand notation.
 		// ini_get() will return the exact string stored in the php.ini file
 		// and NOT its integer equivalent.
-		$sizes = array();
+		$sizes = array(10*1024*1024*1024); // Init with 10GB enough? :)
+		
 		foreach( array('upload_max_filesize','post_max_size','memory_limit') as $var )
 		{
 			$v = $this->stringToBytes(ini_get($var));
@@ -727,6 +834,10 @@ class FolderAction extends ObjectAction
 			if	($v > 0 )
 				$sizes[] = $v;
 		}
+		
+		$confMaxSize = intval($conf['content']['file']['max_file_size'])*1024; 
+		if	( $confMaxSize > 0 )
+			$sizes[] = $confMaxSize;
 		
 		return min($sizes);
 	}
@@ -739,7 +850,9 @@ class FolderAction extends ObjectAction
 	function createfile()
 	{
 		// Maximale Dateigroesse.
-		$this->setTemplateVar('max_size',($this->maxFileSize()/1024).' KB' );
+		$maxSizeBytes = $this->maxFileSize();
+		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );
+		$this->setTemplateVar('maxlength',$maxSizeBytes );
 		
 		$this->setTemplateVar('objectid',$this->folder->objectid );
 	}

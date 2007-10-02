@@ -888,3 +888,5 @@ MENU_INDEX_APPLICATIONS_DESC="Weitere Anwendungen starten"
 
 MENU_HELP=Hilfe
 MENU_HELP_DESC=Onlinehilfe
+MENU_FOLDER_CREATE=Neu
+MENU_FOLDER_CREATE_DESC=Hinzufügen von Verzeichnis, Seite, Datei oder Verknüpfung

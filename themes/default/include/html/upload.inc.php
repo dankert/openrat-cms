@@ -1,1 +1,1 @@
-<input type="file" name="<?php echo $attr_name ?>" class="<?php echo $attr_class ?>" />
+<input size="<?php echo $attr_size ?>" id="id_<?php echo $attr_name ?>" type="file" <?php if (isset($attr_maxlength))echo ' maxlength="'.$attr_maxlength.'"' ?> name="<?php echo $attr_name ?>" class="<?php echo $attr_class ?>" />
