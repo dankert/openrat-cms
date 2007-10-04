@@ -11,13 +11,13 @@ page
 				cell
 					text text:PROJECT_TARGET_DIR
 				cell
-					input class:filename name:target_dir size:50 class:filename
+					input name:target_dir size:50 class:filename
 	
 			row
 				cell
 					text text:PROJECT_CMD_AFTER_PUBLISH
 				cell
-					input name:cmd_after_publish class:filename size:50 
+					input name:cmd_after_publish class:filename size:50 readonly:!config:publish/project/override_system_command 
 
 			row
 				cell colspan:2
@@ -26,12 +26,12 @@ page
 				cell
 					text text:PROJECT_FTP_URL
 				cell
-					input name:ftp_url class:filename size:50 
+					input name:ftp_url class:filename size:50 readonly:!config:publish/ftp/enable
 					
 			row
 				cell
 				cell
-					checkbox name:ftp_passive
+					checkbox name:ftp_passive readonly:!config:publish/ftp/enable
 					label for:ftp_passive
 						text text:PROJECT_FTP_PASSIVE
 					
