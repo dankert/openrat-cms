@@ -142,23 +142,31 @@ class TemplateEngine
 		if	( count($parts) == 2 )
 		{
 			list( $type,$value ) = $parts;
+			
+			$invert = '';
+			if	( $type{0}=='!' )
+			{
+				$type = substr($type,1);
+				$invert = '! ';
+			}
+			
 			switch( $type )
 			{
 				case 'var':
-					return '$'.$value;
+					return $invert.'$'.$value;
 				case '':
 					return "'".$value."'";
 				case 'method':
-					return '$this->'.$value.'()';
+					return $invert.'$this->'.$value.'()';
 				case 'property':
-					return '$this->'.$value;
+					return $invert.'$this->'.$value;
 				case 'message':
 					return 'lang('."'".$value."'".')';
 				case 'messagevar':
 					return 'lang($'.$value.')';
 				case 'config':
 					$config_parts = explode('/',$value);
-					return '$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
+					return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
 					
 				default:
 					die( get_class($this).': Unknown type "'.$type.'" in attribute. Allowed: var|method|property|message|messagevar|config or none');
