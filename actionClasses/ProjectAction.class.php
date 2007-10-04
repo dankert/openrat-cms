@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.14  2007-10-04 21:50:37  dankert
+// Notiz, wenn Projekt gespeichert.
+//
 // Revision 1.13  2007-04-21 11:50:50  dankert
 // Umbenennung von Im- in Export.
 //
@@ -97,6 +100,7 @@ class ProjectAction extends Action
 		$this->project->content_negotiation = $this->getRequestVar('content_negotiation');
 		$this->project->cut_index           = $this->getRequestVar('cut_index'          );
 
+		$this->addNotice('project',$this->project->name,'SAVED','ok');
 		$this->project->save(); // speichern
 	}
 
