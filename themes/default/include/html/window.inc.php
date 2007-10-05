@@ -72,13 +72,15 @@
       { ?>
       	
   <tr>
-    <td><table>
+    <td style="text-align:center;padding:20px;"><table style="border:1px solid black;">
     
   <?php foreach( $notices as $notice ) { ?>
     
-  <tr>
+  <tr style="border-bottom:1px solid grey;">
     <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
-    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
+    <td><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo implode("\n",$notice['log']) ?></pre><?php } ?>
+    </td>
   </tr>
   <?php } ?>
   
