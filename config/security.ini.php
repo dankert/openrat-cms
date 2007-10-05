@@ -9,15 +9,21 @@ nopublish=false
 
 ; Unix-UMask for all created files
 ; Default: none (uses system default)
-; Example: '0022' (means 'rw-r--r--')
-; Example: '0002' (means 'rw-rw-r--')
+; Example: '0022' (means '-rw-r--r--')
+; Example: '0002' (means '-rw-rw-r--')
 umask=
 
-; CHMOD for published files
+; CHMOD for created files
 ; Default: none
-; Example: '0644' (means 'rw-r--r--')
-; Example: '0755' (means 'rwxr-xr-x')
+; Example: '0644' (means '-rw-r--r--')
+; Example: '0755' (means '-rwxr-xr-x')
 chmod=
+
+; CHMOD for created directories
+; Default: none
+; Example: '0755' (means 'drwxr-xr-x')
+; Example: '0770' (means 'drwxrwx---')
+chmod_dir=
 
 
 
