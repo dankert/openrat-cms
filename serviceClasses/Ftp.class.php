@@ -31,9 +31,11 @@ class Ftp
 {
 	var $verb;
 	var $url;
-	var $log = '';
+	var $log = array();
 	var $mode=FTP_ASCII;
 	var $passive = false;
+	
+	var $ok    = true;
 	
 
 	// Konstruktor
@@ -48,62 +50,59 @@ class Ftp
 	{
 		$this->url = $url;
 		
-		global $db,
-		       $SESS,
-		       $t_project;
+		global $conf;
 	
+		$conf_ftp = $conf['publish']['ftp'];
 		$ftp = parse_url( $this->url );
 		
-		// Wenn kein Port vorgegeben, dann Port 21 verwenden
-		if   ( empty($ftp['port']) )
-			$ftp['port'] = '21';
+		// Die projektspezifischen Werte gewinnen bei ‹berschneidungen mit den Default-Werten
+		$ftp = array_merge($conf_ftp,$ftp);
 	
 		// Nur FTP und FTPS (seit PHP 4.3) erlaubt
 		if   ( !ereg('^ftps?$',$ftp['scheme']) )
-			die( 'unknown scheme in FTP Url: '.$ftp['scheme'] );
+		{
+			$this->log[] = 'Unknown scheme in FTP Url: '.$ftp['scheme'];
+			$this->log[] = 'Only FTP (and FTPS, if compiled in) are supported';
+			$this->ok  = false;
+			return;
+		}
 		
-		$this->verb = ftp_connect( $ftp['host'],$ftp['port'] );
+		if	( function_exists('ftp_ssl_connect') && $ftp['scheme'] == 'ftps' )
+			$this->verb = ftp_ssl_connect( $ftp['host'],$ftp['port'] );
+		else
+			$this->verb = ftp_connect( $ftp['host'],$ftp['port'] );
 
 		if   ( !$this->verb )
 		{
-			error('ERROR_FTP','ERROR_FTP_CANNOT_CONNECT_TO_SERVER','Cannot connect to '.$ftp['host'].':'.$ftp['port']);
-		}
-
-		$this->log .= 'connecting ...'."\n";
-		$this->log .= 'host: '.$ftp['host']."\n";
-		$this->log .= 'port: '.$ftp['port']."\n";
-		
-		$erg = ftp_login( $this->verb,$ftp['user'],$ftp['pass'] );
-
-		if   ( !$erg )
-		{
-			error('ERROR_FTP','ERROR_FTP_CANNOT_LOGIN','cannot login user: '.$ftp['user']);
-		}
-		
-		$this->log .= 'ok'."\n";
-		$this->log .= 'login  ...'."\n";
-		$this->log .= 'user: '.$ftp['user']."\n";
-		$this->log .= 'ok'."\n";
-
-		if   ( !empty($ftp['fragment']) && $ftp['fragment'] == 'passive' )
-		{
-			$this->log .= 'entering passive mode'."\n";
-			$erg = ftp_pasv( $this->verb,true  );
-
-			if   ( !$erg )
-			{
-				error('ERROR_FTP','ERROR_FTP_CANNOT_PASV_ON');
-			}
-		}
-		else
-		{
-			$this->log .= 'no passive mode'."\n";
-			$erg = ftp_pasv( $this->verb,false );
+			$this->log[] = 'Cannot connect to '.$ftp['scheme'].'-server '.$ftp['host'].':'.$ftp['port'];
+			$this->ok = false;
 			
-			if   ( !$erg )
-			{
-				error('ERROR_FTP','ERROR_FTP_CANNOT_PASV_OFF');
-			}
+			Logger::error('Cannot connect to '.$ftp['host'].':'.$ftp['port']);
+			return;
+		}
+
+		$this->log[] = 'Connected to FTP server '.$ftp['host'].':'.$ftp['port'];
+		
+		if	( empty($ftp['user']) )
+			$ftp['user'] = 'anonymous';
+			
+		if	( ! ftp_login( $this->verb,$ftp['user'],$ftp['pass'] ) )
+		{
+			$this->log[] = 'Unable to login as user '.$ftp['user'];
+			$this->ok = false;
+			return;
+		}
+		
+		$this->log[] = 'Logged in as user '.$ftp['user'];
+
+		$pasv = (!empty($ftp['fragment']) && $ftp['fragment'] == 'passive' );
+		
+		$this->log[] = 'entering passive mode '.($pasv?'on':'off');
+		if	( ! ftp_pasv($this->verb,true) )
+		{
+			$this->log[] = 'cannot switch PASV mode';
+			$this->ok = false;
+			return;
 		}
 		
 		if   ( !empty($ftp['query']) )
@@ -115,54 +114,63 @@ class Ftp
 				$site_commands = explode( ',',$ftp_var['site'] );
 				foreach( $site_commands as $cmd )
 				{
-					$this->log .= 'exec SITE command: '.$cmd."\n";
-					ftp_site( $this->verb,$cmd );
+					$this->log .= 'executing SITE command: '.$cmd;
+
+					if	( ! @ftp_site( $this->verb,$cmd ) )
+					{
+						$this->log[] = 'unable to do SITE command: '.$cmd;
+						$this->ok = false;
+						return;
+					}
 				}
 			}
 		}
 
 		$this->path = ereg_replace( '\/$','',$ftp['path']);
 		
-		$this->log .= 'Change directory to '.$this->path.'...'."\n";
-		$erg = ftp_chdir( $this->verb,$this->path );
-
-				
-		if   ( !$erg )
-		{
-			error('ERROR_FTP','ERROR_FTP_UNABLE_TO_CHDIR','could not CHDIR to '.$this->path );
-		}
-		$this->log .= 'ok'."\n";
-
+		$this->log[] = 'Changing directory to '.$this->path;
 		
-		//echo "pwd ist".ftp_pwd( $this->verb );
+		if	( ! @ftp_chdir( $this->verb,$this->path ) )
+		{
+			$this->log[] = 'unable CHDIR to directory: '.$this->path;
+			$this->ok = false;
+			return;
+		}
 	}
 	
 
+	/**
+	 * Kopieren einer Datei vom lokalen System auf den FTP-Server.
+	 *
+	 * @param String Quelle
+	 * @param String Ziel
+	 * @param int FTP-Mode (BINARY oder ASCII)
+	 */
 	function put( $source,$dest,$mode=FTP_BINARY )
 	{
+		if	( ! $this->ok )
+			return;
+			
 		$ftp = parse_url( $this->url );
 
 		$dest = $this->path.'/'.$dest;
 		
 		$this->log .= "Copying file: $source -&gt; $dest ...\n";
+
 		if   ( !@ftp_put( $this->verb,$dest,$source,$this->mode ) )
 		{
-			$this->log .= "Copying FAILED, checking path: ".dirname($dest)."\n";
-
-			$erg = $this->mkdirs( dirname($dest) );
-
-			if   ( !$erg )
-			{
-				error('ERROR_FTP','ERROR_FTP_UNABLE_TO_MKDIR','cannot create directoriy '.$ftp['path'].'/'.dirname($dest) );
-			}
+			if	( !$this->mkdirs( dirname($dest) ) )
+				return; // Fehler.
 
 			ftp_chdir( $this->verb,$this->path );
 
-			$erg = ftp_put( $this->verb,$dest,$source,$mode );
-			
-			if   ( !$erg )
+			if	( ! @ftp_put( $this->verb,$dest,$source,$mode ) )
 			{
-				error('ERROR_FTP','ERROR_FTP_UNABLE_TO_COPY','put failed from '.$source.' to '.$dest );
+				$this->ok = false;
+				$this->log[] = 'FTP PUT failed...';
+				$this->log[] = 'source     : '.$source;
+				$this->log[] = 'destination: '.$dest;
+				return;
 			}
 			
 		}
@@ -170,26 +178,50 @@ class Ftp
 
 
 
-	// Rekursives Anlagen von Verzeichnisse
+	/**
+	 * Private Methode zum rekursiven Anlegen von Verzeichnissen.
+	 *
+	 * @param String Pfad
+	 * @return boolean true, wenn ok
+	 */
 	function mkdirs( $strPath )
 	{
-		echo $strPath.'<br>';
 		if	( @ftp_chdir($this->verb,$strPath) )
-			return true;
+			return true; // Verzeichnis existiert schon :)
 	 
 		$pStrPath = dirname($strPath);
+		
 		if	( !$this->mkdirs($pStrPath) )
 			return false;
 		
-		$this->log .= "Creating directory: $strPath ...\n";
-		//echo "lege an $strPath ...<br>";
-		return ftp_mkdir($this->verb,$strPath);
+		if	( ! @ftp_mkdir($this->verb,$strPath) )
+		{
+			$this->ok = false;
+			$this->log[] = "failed to create remote directory: $strPath";
+		}
+		
+		return $this->ok;
 	}
 	
 	
+	
+	/**
+	 * Schlieﬂen der FTP-Verbindung.<br>
+	 * Sollte unbedingt aufgerufen werden, damit keine unnˆtigen Sockets aufbleiben.
+	 */
 	function close()
 	{
-		ftp_quit( $this->verb );
+		if	( !$this->ok ) // Noch alles ok?
+			return;
+			
+		if	( ! @ftp_quit( $this->verb ) )
+		{
+			// Das Schlieﬂen der Verbindung hat nicht funktioniert.
+			// Eigentlich kˆnnten wir das ignorieren, aber wir sind anst‰ndig und melden eine Fehler.
+			$this->log[] = 'failed to close connection';
+			$this->ok = false;
+			return;
+		}
 	}
 }
 
