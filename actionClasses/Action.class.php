@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.33  2007-10-05 23:32:16  dankert
+// Notizmeldungen k?nnen auch ein mehrzeiliges Log anzeigen.
+//
 // Revision 1.32  2007-06-04 20:58:35  dankert
 // M?glichkeit f?r Virtual Hosts mit eigener Konfiguration.
 //
@@ -119,6 +122,10 @@
 // ---------------------------------------------------------------------------
 
 
+define('OR_NOTICE_OK'   ,'ok'     );
+define('OR_NOTICE_WARN' ,'warning');
+define('OR_NOTICE_ERROR','error'  );
+
 /**
  * Eltern-Klasse fuer alle Actions.
  *
@@ -201,7 +208,7 @@ class Action
 	}
 
 
-	function addNotice( $type,$name,$text,$status='ok',$vars=array() )
+	function addNotice( $type,$name,$text,$status=OR_NOTICE_OK,$vars=array(),$log=array() )
 	{
 		if	( !isset($this->templateVars['notices']) )
 			$this->templateVars['notices'] = array();
@@ -209,7 +216,8 @@ class Action
 		$this->templateVars['notices'][] = array('type'=>$type,
                                                  'name'=>$name,
 		                                         'text'=>lang('NOTICE_'.$text,$vars),
-		                                       'status'=>$status);
+		                                         'log'=>$log,
+		                                         'status'=>$status);
 	}
 
 
