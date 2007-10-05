@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.41  2007-10-05 23:32:40  dankert
+// Nach dem Ver?ffentlichen auf Fehler abfragen.
+//
 // Revision 1.40  2007-10-02 21:13:44  dankert
 // Men?punkt "Neu" mit direktem Hinzuf?gen von Objekten.
 //
@@ -1145,11 +1148,15 @@ class FolderAction extends ObjectAction
 		$this->folder->publish( $pages,$files,$subdirs );
 		$this->folder->publish->close();
 
+		$list = array();
 		foreach( $publish->publishedObjects as $o )
-		{
-			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
-		}
+			$list[] = $o['full_filename'];
 		
+		if	( !$publish->ok )
+			$this->addNotice('folder',$this->folder->name,'ERROR',OR_NOTICE_ERROR,array(),$publish->log);
+		else
+			$this->addNotice('folder',$this->folder->name,'PUBLISHED',OR_NOTICE_OK,array(),$list);
+				
 		// Wenn gewuenscht, das Zielverzeichnis aufraeumen
 		if	( $this->hasRequestVar('clean')      )
 			$publish->clean();

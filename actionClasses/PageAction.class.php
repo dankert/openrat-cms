@@ -734,6 +734,8 @@ class PageAction extends ObjectAction
 			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
 		}
 
+		$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok',array(),$this->page->publish->log);
+
 		$this->callSubaction('pub');
 	}
 	
