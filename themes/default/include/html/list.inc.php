@@ -1,4 +1,5 @@
 <?php
+//--
 	$attr_list_tmp_key   = $attr_key;
 	$attr_list_tmp_value = $attr_value;
 	$attr_list_extract   = $attr_extract;
@@ -17,4 +18,6 @@
 			}
 			extract($$attr_list_tmp_value);
 		}
+		
+	/* Diese Zeile wird ignoriert */ }
 ?>

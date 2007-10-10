@@ -1,4 +1,2 @@
-<?php
-	if	( !$last_exec )
-	{
-?>
+<?php if (!$last_exec) { ?>
+/* Ignore: */ <?php } ?>
