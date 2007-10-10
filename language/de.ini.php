@@ -893,4 +893,6 @@ MENU_FOLDER_CREATE=Neu
 MENU_FOLDER_CREATE_DESC=Hinzufügen von Verzeichnis, Seite, Datei oder Verknüpfung
 MENU_PROFILE_GROUPS=Gruppen
 MENU_PROFILE_GROUPS_DESC=Mitgliedschaft in Gruppen
+MENU_TEMPLATE_PAGES=Seiten
+MENU_TEMPLATE_PAGES_DESC=Abhängige Seiten
 LIST_ENTRY_EMPTY="Nicht ausgewählt"

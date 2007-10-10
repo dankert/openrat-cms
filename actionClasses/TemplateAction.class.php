@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.17  2007-10-10 19:49:20  dankert
+// Anzeige von abh?ngigen Seiten in den Template-Eigenschaften.
+//
 // Revision 1.16  2007-10-10 19:08:55  dankert
 // Beim Hinzuf?gen von Vorlagen das Kopieren einer anderen Vorlage erlauben. Korrektur beim L?schen von Vorlagen.
 //
@@ -177,6 +180,7 @@ class TemplateAction extends Action
 		if   ( $this->getRequestVar('delete') != '' )
 		{
 			$this->template->delete();
+			$this->addNotice('template',$this->template->name,'DELETED',OR_NOTICE_OK);
 		}
 		else
 		{
@@ -191,6 +195,26 @@ class TemplateAction extends Action
 	function remove()
 	{
 		$this->setTemplateVar('name',$this->template->name);
+	}
+
+
+	/**
+	 * Anzeigen aller Seiten der Vorlage.
+	 */
+	function pages()
+	{
+		$pages = array();
+		$pageids = $this->template->getDependentObjectIds();
+		
+		foreach( $pageids as $pageid )
+		{
+			$page = new Page($pageid);
+			$page->load();
+			
+			$pages[$pageid] = $page->name;
+		}
+		
+		$this->setTemplateVar('pages',$pages);
 	}
 
 
@@ -519,4 +543,21 @@ class TemplateAction extends Action
 		$this->setTemplateVar('templates',$list);
 	}
 
+	
+	function checkMenu( $menu ) {
+
+		switch( $menu)
+		{
+			case 'remove':
+				return (count($this->template->getDependentObjectIds()) == 0);
+
+			case 'pages':
+				return (count($this->template->getDependentObjectIds()) > 0);
+				
+			default:
+				return true;
+
+		}
+	}
+	
 }

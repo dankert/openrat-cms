@@ -64,8 +64,11 @@ target=delete
 [delete]
 goto=listing
 
+[pages]
+menu=prop
+
 [menu]
 listing=listing,add
-prop=name,extension,remove
+prop=name,extension,pages,remove
 el=el,addel
 edit=edit,src,srcelement
