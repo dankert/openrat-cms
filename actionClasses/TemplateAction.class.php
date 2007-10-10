@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.16  2007-10-10 19:08:55  dankert
+// Beim Hinzuf?gen von Vorlagen das Kopieren einer anderen Vorlage erlauben. Korrektur beim L?schen von Vorlagen.
+//
 // Revision 1.15  2007-05-21 20:04:10  dankert
 // Korrektur f?r Anzeige des Vorlagen-Quelltextes.
 //
@@ -175,6 +178,10 @@ class TemplateAction extends Action
 		{
 			$this->template->delete();
 		}
+		else
+		{
+			$this->addNotice('template',$this->template->name,'CANCELED',OR_NOTICE_WARN);
+		}
 	}
 
 
@@ -183,6 +190,7 @@ class TemplateAction extends Action
 	 */
 	function remove()
 	{
+		$this->setTemplateVar('name',$this->template->name);
 	}
 
 
@@ -192,6 +200,7 @@ class TemplateAction extends Action
 	{
 		$this->template->extension = $this->getRequestVar('extension');
 		$this->template->save(); 
+		$this->addNotice('template',$this->template->name,'SAVED','ok');
 	}
 
 
@@ -224,26 +233,49 @@ class TemplateAction extends Action
 		}
 
 		$this->setTemplateVar('tree_refresh',true);
+		$this->addNotice('template',$this->template->name,'SAVED','ok');
 	}
 
 
+	/**
+	 * Vorlage hinzufügen.
+	 */
 	function add()
 	{
+		$this->setTemplateVar( 'templates',Template::getAll() );
 	}
 	
 	
 	
 	function addtemplate()
 	{
-		// Hinzuf?gen eines Templates
+		// Hinzufuegen eines Templates
 		if   ( $this->getRequestVar('name')  != '' )
 		{
-			Template::add( $this->getRequestVar('name') );
+
+			$template = new Template();
+			$template->add( $this->getRequestVar('name') );
+			$this->addNotice('template',$template->name,'ADDED','ok');
+
+			$copy_templateid = intval($this->getRequestVar('templateid') );
+			
+			if	( $copy_templateid > 0 )
+			{
+				$copy_template = new Template( $copy_templateid );
+				$copy_template->load();
+				foreach( $copy_template->getElements() as $element )
+				{
+					$element->load();
+					$element->templateid = $template->templateid;
+					$element->add();
+					$element->save();
+				}
+				
+				$this->addNotice('template',$copy_template->name,'COPIED','ok');
+			}
 		}
 
 		$this->setTemplateVar('tree_refresh',true);
-	
-		$this->callSubAction('listing');
 	}
 
 	

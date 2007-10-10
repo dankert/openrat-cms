@@ -62,7 +62,7 @@ menu=prop
 target=delete
 
 [delete]
-goto=name
+goto=listing
 
 [menu]
 listing=listing,add

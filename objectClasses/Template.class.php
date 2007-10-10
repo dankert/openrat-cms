@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.13  2007-10-10 19:08:55  dankert
+// Beim Hinzuf?gen von Vorlagen das Kopieren einer anderen Vorlage erlauben. Korrektur beim L?schen von Vorlagen.
+//
 // Revision 1.12  2006-01-29 17:27:27  dankert
 // Methode addElement() mit 2 weiteren Parametern
 //
@@ -118,8 +121,8 @@ class Template
 
 
 	/**
- 	 * Ermitteln aller Templates in dem aktuellen Projekt
- 	 * @return Array
+ 	 * Ermitteln aller Templates in dem aktuellen Projekt.
+ 	 * @return Array mit Id:Name
  	 */
 	function getAll()
 	{

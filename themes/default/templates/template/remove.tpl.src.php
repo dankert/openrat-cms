@@ -8,13 +8,12 @@ page
 				cell class:fx
 					text var:name
 			row
-				cell
-					text text:GLOBAL_DELETE
-				cell
-					checkbox name:delete
-
-			row
 				cell colspan:2
+					checkbox name:delete
+					label for:delete
+						text text:GLOBAL_DELETE
+			row
+				cell colspan:2 class:act
 					button type:ok
 
 	focus field:delete			
