@@ -890,3 +890,5 @@ MENU_HELP=Hilfe
 MENU_HELP_DESC=Onlinehilfe
 MENU_FOLDER_CREATE=Neu
 MENU_FOLDER_CREATE_DESC=Hinzufügen von Verzeichnis, Seite, Datei oder Verknüpfung
+MENU_PROFILE_GROUPS=Gruppen
+MENU_PROFILE_GROUPS_DESC=Mitgliedschaft in Gruppen

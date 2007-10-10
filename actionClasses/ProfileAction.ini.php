@@ -6,6 +6,9 @@ goto=edit
 target=saveprofile
 menu=edit
 
+[groups]
+menu=edit
+
 [pwchange]
 target=savepw
 menu=edit
@@ -28,4 +31,4 @@ goto=edit
 goto=edit
 
 [menu]
-edit=edit,pwchange,mail
+edit=edit,pwchange,mail,groups

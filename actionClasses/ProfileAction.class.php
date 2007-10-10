@@ -148,4 +148,15 @@ class ProfileAction extends Action
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
 	}
+
+	
+	
+	/**
+	 * Anzeige aller Gruppen des angemeldeten Benutzers.
+	 *
+	 */
+	function groups()
+	{
+		$this->setTemplateVar( 'groups',$this->user->getGroups() );
+	}
 }

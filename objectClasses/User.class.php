@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.25  2007-10-10 18:23:38  dankert
+// Anzeigen der Gruppen-Mitgliedschaften im Profil.
+//
 // Revision 1.24  2007-04-24 20:55:22  dankert
 // Autorisierung ?ber LDAP.
 //
@@ -649,7 +652,6 @@ SQL
 					
 					$ldap_groups = $ldap->searchAttribute( $sucheFilter, $sucheAttribut );
 					
-//					Html::debug($groups,'Gruppen des Benutzers');
 					$sql = new Sql( <<<SQL
 SELECT id,name FROM {t_group}
  WHERE name IN({name_list})
@@ -783,7 +785,11 @@ SQL
 	}
 
 
-	// Gruppen ermitteln, in denen der Benutzer Mitglied ist
+	/**
+	 * Gruppen ermitteln, in denen der Benutzer Mitglied ist.
+	 *
+	 * @return Array mit Id:Name
+	 */
 	function getGroups()
 	{
 		if	( !is_array($this->groups) )
@@ -1090,7 +1096,7 @@ SQL
 			if ( eregi('\.css$',$file) )
 			{ 
 				$file = eregi_replace('\.css$','',$file);
-				$allstyles[$file] = $file;
+				$allstyles[$file] = ucwords($file);
 			}
 		}
 		closedir($handle);
