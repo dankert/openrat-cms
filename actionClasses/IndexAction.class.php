@@ -365,6 +365,155 @@ class IndexAction extends Action
 	}
 
 
+
+	/**
+	 * Login mit Open-Id.<br>
+	 * Im 2. Schritt erfolgt ein Redirect vom Open-Id Provider an OpenRat zurück.<br>
+	 * Es muss noch beim Provider die Bestätigung eingeholt werden, danach ist der
+	 * Benutzer angemeldet.<br>
+	 */
+	function openid()
+	{
+		global $REQ,
+		       $conf;
+		       
+		$openid_user     = Session::get('openid_user'    );
+		$openid_server   = Session::get('openid_server'  );
+		$openid_delegate = Session::get('openid_delegate');
+		$openid_handle   = Session::get('openid_handle'  );
+		
+//		global $REQ;
+//		print_r($REQ);
+
+		if	( $this->getRequestVar('openid_invalidate_handle') != $openid_handle )
+		{
+			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array('Association-Handle mismatch.') );
+			$this->callSubAction('showlogin');
+			return;
+		}
+
+//		if	( $this->getRequestVar('openid_identity') != $openid_delegate )
+//		{
+//			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array('Open-Id: Identity mismatch. Wrong identity:'.$this->getRequestVar('openid_identity')) );
+//			$this->callSubAction('showlogin');
+//			return;
+//		}
+		
+		$server = parse_url($openid_server);
+//		$socket = fsockopen($server['host'],80);
+		$socket = fsockopen($server['host'],443);
+		
+		if	( $socket===FALSE )
+		{
+			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$this->getRequestVar('login_name')),array('Connection failed: '.$openid_server.':80') );
+			$this->callSubAction('showlogin');
+			return;
+		}
+
+		$params = array();
+		
+		foreach( $REQ as $request_key=>$request_value )
+		{
+			if	( substr($request_key,0,12)=='openid_sreg_' )
+				$params['openid.sreg.'.substr($request_key,12) ] = $request_value;			
+			elseif	( substr($request_key,0,7)=='openid_' )
+				$params['openid.'.substr($request_key,7) ] = $request_value;			
+		}
+		$params['openid.mode'] = 'check_authentication';
+//		Html::debug($params);
+		$param_string = '';
+
+		foreach( $params as $p_name=>$p_value)
+		{
+			$param_string .= '&'.$p_name.'='.urlencode($p_value);
+		}
+		$param_string = substr($param_string,1);
+		
+//		$nl = "\r\n";
+//		$http_post_cmd = 'POST '.$server['path']." HTTP/1.0".$nl.
+//			"Connection: Close".$nl.
+//			"User-Agent: OpenRat CMS".$nl.
+//			"Host: ".$server['host'].$nl.
+//			$nl.
+//			$param_string;
+//		echo "<pre>".$http_post_cmd."</pre>";
+//		
+//		fputs($socket,$http_post_cmd);
+//		
+//		$body = '';
+//		do
+//		{
+//			$body .= fgets($socket,128);
+//		} while (!feof($socket));
+//		$response = explode("\n",$body);
+//		
+//		fclose($socket);
+//		die('Open-Id Response: '.htmlentities($response));
+		
+		$url = $openid_server.'?'.$param_string;
+		$response = file($url);
+
+		$valid = null;
+		foreach( $response as $line )
+		{
+			$pair = explode(':',trim($line));
+			if	(count($pair)==2 && strtolower($pair[0])=='is_valid')
+				$valid = (strtolower($pair[1])=='true');
+		}
+		
+//		die('URL: '.$url.' / Response: '.htmlentities($response));
+//		Html::debug($url);
+//		Html::debug($response);
+		
+		if	( is_null($valid) )
+		{
+			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array_merge(array('Undefined Open-Id response: '),$response) );
+			$this->callSubAction('showlogin');
+			return;
+		}
+		elseif	( $valid )
+		{
+			$openid_sreg_email    = $this->getRequestVar('openid_sreg_email'   );
+			$openid_sreg_fullname = $this->getRequestVar('openid_sreg_fullname');
+			$openid_sreg_nickname = $this->getRequestVar('openid_sreg_nickname');
+			
+			$user = new User();
+			$user->loadWithName( $openid_user );
+			
+			if	( $user->userid <=0)
+			{
+				if	( $conf['security']['openid']['add'])
+				{
+					$user->name     = $openid_user;
+					$user->mail     = $openid_sreg_email;
+					$user->fullname = $openid_sreg_fullname;
+					$user->add();
+				}
+				else
+				{
+					$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user) );
+					$this->callSubAction('showlogin');
+					return;
+				}
+			}
+
+			$user->setCurrent();
+	
+			return;
+		}
+		else
+		{
+			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user) );
+			$this->callSubAction('showlogin');
+			return;
+		}
+	}
+	
+
+	/**
+	 * Login.
+	 *
+	 */
 	function login()
 	{
 		global $conf;
@@ -381,10 +530,52 @@ class IndexAction extends Action
 		if	( $conf['login']['nologin'] )
 			die('login disabled');
 
+		$openid_user   = $this->getRequestVar('openid_url'    );
 		$loginName     = $this->getRequestVar('login_name'    );
 		$loginPassword = $this->getRequestVar('login_password');
-		$newPassword1  = $this->getRequestVar('password1');
-		$newPassword2  = $this->getRequestVar('password2');
+		$newPassword1  = $this->getRequestVar('password1'     );
+		$newPassword2  = $this->getRequestVar('password2'     );
+		
+		if	( !empty($openid_user) )
+		{
+			$seite = implode('',file('http://'.$openid_user));
+			
+			$treffer = array();
+			preg_match('/rel="openid.server"\s+href="(\S+)"/',$seite,$treffer);
+			if	( count($treffer) >= 1 )
+				$openid_server   = $treffer[1];
+//			Html::debug($treffer);
+
+			$treffer = array();
+			preg_match('/rel="openid.delegate"\s+href="(\S+)"/',$seite,$treffer);
+			if	( count($treffer) >= 1 )
+				$openid_delegate = $treffer[1];
+				
+			if	( empty($openid_server) || empty($openid_delegate) )
+			{
+				$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array('Unable to locate OpenId-Server and OpenId-Delegate') );
+				$this->callSubAction('showlogin');
+			}
+				
+			$openid_handle = md5(microtime().session_id());
+			Session::set('openid_user'    ,$openid_user    );
+			Session::set('openid_server'  ,$openid_server  );
+			Session::set('openid_delegate',$openid_delegate);
+			Session::set('openid_handle'  ,$openid_handle  );
+			
+			$redirect_url = $openid_server.'?openid.mode=checkid_setup';
+//			$redirect_url .= '&openid.identity='.$openid_delegate;
+			$redirect_url .= '&openid.identity=https://'.$openid_user;
+			$redirect_url .= '&openid.sreg.optional=email,nickname,fullname';
+			$redirect_url .= '&openid.trust_root=http://'.getenv('SERVER_NAME').dirname(getenv('REQUEST_URI')).'/';;
+			$redirect_url .= '&openid.return_to=http://'.getenv('SERVER_NAME').dirname(getenv('REQUEST_URI')).'/openid.'.PHP_EXT;
+			$redirect_url .= '&openid.assoc_handle='.$openid_handle;
+			
+//			die('Location: '.$redirect_url);
+			header('Location: '.$redirect_url);
+			exit;
+		}
+		
 
 		// Ermitteln, ob der Baum angezeigt werden soll
 		// Ist die Breite zu klein, dann wird der Baum nicht angezeigt

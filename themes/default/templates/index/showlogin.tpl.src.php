@@ -67,6 +67,17 @@ page
 						cell
 							password name:password2 default: size:25
 	
+				if true:config:security/openid/enable
+					row
+						cell colspan:2
+							fieldset title:message:OPENID
+					row
+						cell
+							if not:true empty:config:security/openid/logo_url
+								image url:config:security/openid/logo_url
+							text key:openid_user
+						cell
+							input name:openid_url class:name size:20
 				row
 					row
 						cell colspan:2

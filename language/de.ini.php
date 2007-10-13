@@ -726,7 +726,7 @@ NOTICE_CANCELED = "Vorgang wurde abgebrochen"
 NOTICE_IMAGE_RESIZED = "Das Bild wurde geändert"
 NOTICE_IMPORTED ="Datei wurde importiert"
 NOTICE_LINKED ="Verknüpfung angelegt"
-NOTICE_LOGIN_FAILED = "Anmeldung nicht möglich.<br/>Der Benutzername ''<em>{name}</em>'' ist nicht vorhanden oder das eingegebene Kennwort ist falsch."
+NOTICE_LOGIN_FAILED = "Anmeldung nicht möglich. Der Benutzername ''{name}'' ist nicht vorhanden oder das eingegebene Kennwort ist falsch."
 NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD = "Die Anmeldung ist nicht möglich, da Ihr Kennwort abgelaufen ist. Bitte geben Sie nochmals Ihre Anmeldedaten zusammen mit einem neuen Kennwort ein."
 NOTICE_MAIL_SENT = "Die E-Mail wurde gesendet"
 NOTICE_MOVED = "wurde verschoben"
@@ -896,3 +896,7 @@ MENU_PROFILE_GROUPS_DESC=Mitgliedschaft in Gruppen
 MENU_TEMPLATE_PAGES=Seiten
 MENU_TEMPLATE_PAGES_DESC=Abhängige Seiten
 LIST_ENTRY_EMPTY="Nicht ausgewählt"
+
+OPENID="Open-ID"
+OPENID_USER="Open-ID Benutzername"
+NOTICE_LOGIN_OPENID_FAILED="Die Anmeldung für {name} am Open-ID-Server ist fehlgeschlagen."

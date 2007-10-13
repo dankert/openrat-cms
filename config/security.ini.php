@@ -142,6 +142,22 @@ trust=false
 
 
 
+; Open-ID
+; see http://openid.net/ for specifications and more informationen.
+[openid]
+
+; Enable Open-ID
+enable=true
+
+; New Users are added to the internal database.
+add=true
+
+; Open-Id Logo
+;logo_url=
+logo_url="http://openid.net/login-bg.gif"
+
+
+
 ; Single Sign-on
 ; These settings are an example for checking login against "PhpMyAdmin".
 ; PhpMyAdmin must include a link to Openrat with the authid which includes the serialized cookies.

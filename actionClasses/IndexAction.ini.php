@@ -49,6 +49,9 @@ goto=show
 [login]
 goto=show
 
+[openid]
+goto=show
+
 [projectmenu]
 menu=menu
 
