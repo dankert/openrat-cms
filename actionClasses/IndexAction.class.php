@@ -477,8 +477,7 @@ class IndexAction extends Action
 			$openid_sreg_fullname = $this->getRequestVar('openid_sreg_fullname');
 			$openid_sreg_nickname = $this->getRequestVar('openid_sreg_nickname');
 			
-			$user = new User();
-			$user->loadWithName( $openid_user );
+			$user = User::loadWithName( $openid_user );
 			
 			if	( $user->userid <=0)
 			{
