@@ -221,8 +221,9 @@ class TemplateEngine
 		$file = file( $inFileName );
 		foreach( $file as $line )
 		{
-			if	( substr(ltrim($line),0,2)=='//' ||
-			      substr(ltrim($line),0,2)=='/*'   )
+			if	( strlen(trim($line)) == 0)
+				continue;
+			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) )
 				continue;
 //			echo $attr.$hash;
 			$line = str_replace('$attr','$attr'.$hash,$line);
