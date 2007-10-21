@@ -157,6 +157,13 @@ add=true
 logo_url="http://openid.net/login-bg.gif"
 
 
+; Trust-Root
+; URL-Prefix in which your OpenRat installations are running.
+; default=<empty>
+;trust_root=http://your.server.example/openrat/
+trust_root=
+
+
 
 ; Single Sign-on
 ; These settings are an example for checking login against "PhpMyAdmin".
