@@ -17,6 +17,12 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('tr
 	require_once( OR_SERVICECLASSES_DIR."ProjectTree.class.".PHP_EXT );
 }
 
+// Login
+if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('index')) )
+{
+	require_once( OR_SERVICECLASSES_DIR."OpenId.class.".PHP_EXT );
+}
+
 // Veroeffentlichung
 if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','page','folder')) )
 {

@@ -517,58 +517,17 @@ class IndexAction extends Action
 		// Login mit Open-Id.
 		if	( !empty($openid_user) )
 		{
-			$http = new Http();
-			$http->url['host'] = $openid_user;
+			$openId = new OpenId($openid_user);
 			
-			if	( ! $http->request() )
+			if	( ! $openId->login() )
 			{
-				$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array('Unable to get delegate information',$http->error) );
+				$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array($openId->error) );
 				$this->callSubAction('showlogin');
 				return;
 			}
-			$seite = $http->body;
 			
-			$treffer = array();
-			preg_match('/rel="openid.server"\s+href="(\S+)"/',$seite,$treffer);
-			if	( count($treffer) >= 1 )
-				$openid_server   = $treffer[1];
-
-			$treffer = array();
-			preg_match('/rel="openid.delegate"\s+href="(\S+)"/',$seite,$treffer);
-			if	( count($treffer) >= 1 )
-				$openid_delegate = $treffer[1];
-			else
-				$openid_delegate = 'http://'.$openid_user;
-				
-			if	( empty($openid_server) )
-			{
-				$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array('Unable to locate a OpenId-Server in URL') );
-				$this->callSubAction('showlogin');
-				return;
-			}
-				
-			$openid_handle = md5(microtime().session_id());
-			Session::set('openid_user'    ,$openid_user    );
-			Session::set('openid_server'  ,$openid_server  );
-			Session::set('openid_delegate',$openid_delegate);
-			Session::set('openid_handle'  ,$openid_handle  );
-			
-			$redirHttp = new Http($openid_server);
-			$redirHttp->requestParameter['openid.mode'         ] = 'checkid_setup';
-			$redirHttp->requestParameter['openid.identity'     ] = $openid_delegate; // Richtig.
-//			$redirHttp->requestParameter['openid.identity'     ] = 'https://'.$openid_user; // Das ist falsch.
-			
-			$redirHttp->requestParameter['openid.sreg.optional'] = 'email,nickname,fullname';
-			$trustRoot = @$conf['security']['openid']['trust_root'];
-			$server = Http::getServer();
-			if	( empty($trustRoot) )
-				$trustRoot = $server.'/';
-			$redirHttp->requestParameter['openid.trust_root'   ] = $trustRoot;
-			$redirHttp->requestParameter['openid.return_to'    ] = $server.'/openid.'.PHP_EXT;
-			$redirHttp->requestParameter['openid.assoc_handle' ] = $openid_handle;
-
-			$redirHttp->sendRedirect();
-			exit;
+			$openId->redirect();
+			die('Unreachable Code.');
 		}
 		
 
