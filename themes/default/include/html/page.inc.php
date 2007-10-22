@@ -1,4 +1,4 @@
-<?php header('Content-Type: text/html; charset='.lang('CHARSET'))
+<?php if (!headers_sent()) header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
