@@ -106,7 +106,7 @@
           }
           	if ($conf['help']['enabled'] )
           	{
-             ?><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.$conf['help']['suffix'] ?> " target="_new" title="<?php echo lang('GLOBAL_HELP') ?>" class="menu">?</a><?php
+             ?><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.$conf['help']['suffix'] ?> " target="_new" title="<?php echo lang('MENU_HELP_DESC') ?>" class="menu" style="cursor:help;"><?php echo $conf['help']['only_question_mark']?'?':lang('MENU_HELP') ?></a><?php
           	}
           	?></td>
   </tr>
@@ -115,13 +115,15 @@
       { ?>
       	
   <tr>
-    <td><table>
+    <td style="text-align:center;"><table style="padding:20px;border:1px solid black;">
     
   <?php foreach( $notices as $notice ) { ?>
     
   <tr>
     <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
-    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
+    <td><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
+    <pre><?php echo implode("\n",$notice['log']) ?></pre>
+    </td>
   </tr>
   <?php } ?>
   
@@ -168,7 +170,13 @@
 		$checked = $$attr6_name;
 	else
 		$checked = $attr6_default;
-?><input type="checkbox" id="id_<?php echo $attr6_name ?>" name="<?php echo $attr6_name  ?>"  <?php if ($attr6_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr6_name); unset($attr6_readonly); unset($attr6_default); ?><?php unset($attr6) ?><?php unset($attr6_default) ?><?php unset($attr6_readonly) ?><?php unset($attr6_name) ?><?php $attr6 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr6_class='text' ?><?php $attr6_raw='_' ?><?php $attr6_escape=true ?><?php
+?><input type="checkbox" id="id_<?php echo $attr6_name ?>" name="<?php echo $attr6_name  ?>"  <?php if ($attr6_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+
+if ( $attr6_readonly && $checked )
+{ 
+?><input type="hidden" name="<?php echo $attr6_name ?>" value="1" /><?php
+}
+?><?php unset($attr6_name); unset($attr6_readonly); unset($attr6_default); ?><?php unset($attr6) ?><?php unset($attr6_default) ?><?php unset($attr6_readonly) ?><?php unset($attr6_name) ?><?php $attr6 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr6_class='text' ?><?php $attr6_raw='_' ?><?php $attr6_escape=true ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))

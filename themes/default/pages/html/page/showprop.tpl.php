@@ -781,7 +781,7 @@
 	
 	if	( $exec )
 	{
-?><?php unset($attr5) ?><?php unset($attr5_present) ?><?php $attr6 = array('title'=>'','target'=>'_self','url'=>'template_url','class'=>'') ?><?php $attr6_title='' ?><?php $attr6_target='_self' ?><?php $attr6_url='template_url' ?><?php $attr6_class='' ?><?php
+?><?php unset($attr5) ?><?php unset($attr5_present) ?><?php $attr6 = array('title'=>'','target'=>'cms_main','url'=>$template_url,'class'=>'') ?><?php $attr6_title='' ?><?php $attr6_target='cms_main' ?><?php $attr6_url=$template_url ?><?php $attr6_class='' ?><?php
 	$params = array();
 	if (!empty($attr6_var1) && isset($attr6_value1))
 		$params[$attr6_var1]=$attr6_value1;
