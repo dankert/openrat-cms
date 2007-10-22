@@ -144,7 +144,7 @@ class TemplateEngine
 			list( $type,$value ) = $parts;
 			
 			$invert = '';
-			if	( $type{0}=='!' )
+			if	( substr($type,0,1)=='!' )
 			{
 				$type = substr($type,1);
 				$invert = '! ';
@@ -210,7 +210,8 @@ class TemplateEngine
 			$values[] = "'".$attrName."'=>".$this->attributeValue($attrValue);
 		}
 //		fwrite( $outFileHandler,'<?php /* source: '.$inFileName.' - compile time: '.date('r').' */ ?'.'>');
-		fwrite( $outFileHandler,'<?php $attr'.$hash.' = array('.implode(',',$values).') ?>');
+		fwrite( $outFileHandler,'<?php $attr'.$hash.'_debug_info = \''.serialize($attr).'\' ?'.'>');
+		fwrite( $outFileHandler,'<?php $attr'.$hash.' = array('.implode(',',$values).') ?'.'>');
 		
 		foreach( $attr as $attrName=>$attrValue )
 			
