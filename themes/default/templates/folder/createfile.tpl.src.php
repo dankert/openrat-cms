@@ -10,7 +10,7 @@ page
 				cell class:fx
 					text text:global_FILE
 				cell class:fx
-					upload name:file
+					upload name:file maxlength:var:maxlength
 			row
 				cell colspan:2
 					text class:help text:message:file_max_size
