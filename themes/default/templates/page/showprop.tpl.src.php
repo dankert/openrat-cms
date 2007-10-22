@@ -21,7 +21,7 @@ page
 				text text:page_template
 			cell class:fx
 				if present:template_url
-					link url:template_url
+					link url:var:template_url target:cms_main
 						image file:icon_template
 						text var:template_name
 				if empty:template_url
