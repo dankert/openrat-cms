@@ -106,7 +106,7 @@
           }
           	if ($conf['help']['enabled'] )
           	{
-             ?><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.$conf['help']['suffix'] ?> " target="_new" title="<?php echo lang('GLOBAL_HELP') ?>" class="menu">?</a><?php
+             ?><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.$conf['help']['suffix'] ?> " target="_new" title="<?php echo lang('MENU_HELP_DESC') ?>" class="menu" style="cursor:help;"><?php echo $conf['help']['only_question_mark']?'?':lang('MENU_HELP') ?></a><?php
           	}
           	?></td>
   </tr>
@@ -115,13 +115,15 @@
       { ?>
       	
   <tr>
-    <td><table>
+    <td style="text-align:center;padding:20px;"><table style="border:1px solid black;">
     
   <?php foreach( $notices as $notice ) { ?>
     
-  <tr>
+  <tr style="border-bottom:1px solid grey;">
     <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
-    <td class="f1"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?></td>
+    <td><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo implode("\n",$notice['log']) ?></pre><?php } ?>
+    </td>
   </tr>
   <?php } ?>
   
@@ -348,7 +350,13 @@
 		$checked = $$attr8_name;
 	else
 		$checked = $attr8_default;
-?><input type="checkbox" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name  ?>"  <?php if ($attr8_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr8_name); unset($attr8_readonly); unset($attr8_default); ?><?php unset($attr8) ?><?php unset($attr8_default) ?><?php unset($attr8_readonly) ?><?php unset($attr8_name) ?><?php $attr8 = array('for'=>'pages') ?><?php $attr8_for='pages' ?><label for="id_<?php echo $attr8_for ?><?php if (!empty($attr8_value)) echo '_'.$attr8_value ?>"><?php unset($attr8) ?><?php unset($attr8_for) ?><?php $attr9 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr9_class='text' ?><?php $attr9_raw='_' ?><?php $attr9_escape=true ?><?php
+?><input type="checkbox" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name  ?>"  <?php if ($attr8_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+
+if ( $attr8_readonly && $checked )
+{ 
+?><input type="hidden" name="<?php echo $attr8_name ?>" value="1" /><?php
+}
+?><?php unset($attr8_name); unset($attr8_readonly); unset($attr8_default); ?><?php unset($attr8) ?><?php unset($attr8_default) ?><?php unset($attr8_readonly) ?><?php unset($attr8_name) ?><?php $attr8 = array('for'=>'pages') ?><?php $attr8_for='pages' ?><label for="id_<?php echo $attr8_for ?><?php if (!empty($attr8_value)) echo '_'.$attr8_value ?>"><?php unset($attr8) ?><?php unset($attr8_for) ?><?php $attr9 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr9_class='text' ?><?php $attr9_raw='_' ?><?php $attr9_escape=true ?><?php
 	if	( isset($attr9_prefix)&& isset($attr9_key))
 		$attr9_key = $attr9_prefix.$attr9_key;
 	if	( isset($attr9_suffix)&& isset($attr9_key))
@@ -653,7 +661,13 @@
 		$checked = $$attr8_name;
 	else
 		$checked = $attr8_default;
-?><input type="checkbox" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name  ?>"  <?php if ($attr8_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr8_name); unset($attr8_readonly); unset($attr8_default); ?><?php unset($attr8) ?><?php unset($attr8_default) ?><?php unset($attr8_readonly) ?><?php unset($attr8_name) ?><?php $attr8 = array('for'=>'files') ?><?php $attr8_for='files' ?><label for="id_<?php echo $attr8_for ?><?php if (!empty($attr8_value)) echo '_'.$attr8_value ?>"><?php unset($attr8) ?><?php unset($attr8_for) ?><?php $attr9 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr9_class='text' ?><?php $attr9_raw='_' ?><?php $attr9_escape=true ?><?php
+?><input type="checkbox" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name  ?>"  <?php if ($attr8_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+
+if ( $attr8_readonly && $checked )
+{ 
+?><input type="hidden" name="<?php echo $attr8_name ?>" value="1" /><?php
+}
+?><?php unset($attr8_name); unset($attr8_readonly); unset($attr8_default); ?><?php unset($attr8) ?><?php unset($attr8_default) ?><?php unset($attr8_readonly) ?><?php unset($attr8_name) ?><?php $attr8 = array('for'=>'files') ?><?php $attr8_for='files' ?><label for="id_<?php echo $attr8_for ?><?php if (!empty($attr8_value)) echo '_'.$attr8_value ?>"><?php unset($attr8) ?><?php unset($attr8_for) ?><?php $attr9 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr9_class='text' ?><?php $attr9_raw='_' ?><?php $attr9_escape=true ?><?php
 	if	( isset($attr9_prefix)&& isset($attr9_key))
 		$attr9_key = $attr9_prefix.$attr9_key;
 	if	( isset($attr9_suffix)&& isset($attr9_key))
@@ -926,7 +940,13 @@
 		$checked = $$attr7_name;
 	else
 		$checked = $attr7_default;
-?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr7 = array('for'=>'subdirs') ?><?php $attr7_for='subdirs' ?><label for="id_<?php echo $attr7_for ?><?php if (!empty($attr7_value)) echo '_'.$attr7_value ?>"><?php unset($attr7) ?><?php unset($attr7_for) ?><?php $attr8 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php $attr8_escape=true ?><?php
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+
+if ( $attr7_readonly && $checked )
+{ 
+?><input type="hidden" name="<?php echo $attr7_name ?>" value="1" /><?php
+}
+?><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr7 = array('for'=>'subdirs') ?><?php $attr7_for='subdirs' ?><label for="id_<?php echo $attr7_for ?><?php if (!empty($attr7_value)) echo '_'.$attr7_value ?>"><?php unset($attr7) ?><?php unset($attr7_for) ?><?php $attr8 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -1138,7 +1158,13 @@
 		$checked = $$attr7_name;
 	else
 		$checked = $attr7_default;
-?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr7 = array('for'=>'clean') ?><?php $attr7_for='clean' ?><label for="id_<?php echo $attr7_for ?><?php if (!empty($attr7_value)) echo '_'.$attr7_value ?>"><?php unset($attr7) ?><?php unset($attr7_for) ?><?php $attr8 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php $attr8_escape=true ?><?php
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+
+if ( $attr7_readonly && $checked )
+{ 
+?><input type="hidden" name="<?php echo $attr7_name ?>" value="1" /><?php
+}
+?><?php unset($attr7_name); unset($attr7_readonly); unset($attr7_default); ?><?php unset($attr7) ?><?php unset($attr7_default) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php $attr7 = array('for'=>'clean') ?><?php $attr7_for='clean' ?><label for="id_<?php echo $attr7_for ?><?php if (!empty($attr7_value)) echo '_'.$attr7_value ?>"><?php unset($attr7) ?><?php unset($attr7_for) ?><?php $attr8 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))

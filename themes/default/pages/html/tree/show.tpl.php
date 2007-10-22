@@ -1,4 +1,4 @@
-<?php $attr1 = array('class'=>'tree','title'=>$cms_title) ?><?php $attr1_class='tree' ?><?php $attr1_title=$cms_title ?><?php header('Content-Type: text/html; charset='.lang('CHARSET'))
+<?php $attr1_debug_info = 'a:2:{s:5:"class";s:4:"tree";s:5:"title";s:13:"var:cms_title";}' ?><?php $attr1 = array('class'=>'tree','title'=>$cms_title) ?><?php $attr1_class='tree' ?><?php $attr1_title=$cms_title ?><?php if (!headers_sent()) header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
@@ -20,9 +20,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
-
 <body class="<?php echo $attr1_class ?>">
-
 <?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><!-- $Id$ -->
 <table cellpadding="0" cellspacing="0" border="0">
 <?php foreach( $zeilen as $z )
@@ -45,15 +43,5 @@
 </tr>
 <?php } ?>
 </table>
-<?php $attr0 = array() ?>
-<!-- $Id$ -->
-
-<?php if ($showDuration) { ?>
-<br/>
-<small>&nbsp;
-<?php $dur = time()-START_TIME;
-//      echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small>
-<?php } ?>
-
-</body>
+<?php $attr0_debug_info = 'a:0:{}' ?><?php $attr0 = array() ?></body>
 </html><?php unset($attr0) ?>
