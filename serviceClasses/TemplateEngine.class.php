@@ -126,7 +126,8 @@ class TemplateEngine
 
 		// CHMOD ausführen.
 		if	( !empty($conf['theme']['compiler']['chmod']))
-			chmod($dest,octdec($conf['theme']['compiler']['chmod']));
+			if	( !@chmod($filename,octdec($conf['theme']['compiler']['chmod'])) )
+				die( "CHMOD failed on file ".$filename );
 	}
 	
 	
