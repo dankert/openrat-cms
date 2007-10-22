@@ -123,6 +123,10 @@ class TemplateEngine
 		}
 
 		fclose($outFile);
+
+		// CHMOD ausführen.
+		if	( !empty($conf['theme']['compiler']['chmod']))
+			chmod($dest,octdec($conf['theme']['compiler']['chmod']));
 	}
 	
 	
