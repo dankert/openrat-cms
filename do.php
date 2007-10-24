@@ -19,12 +19,15 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 
+
 define('PHP_EXT'         ,'php'    );
+require_once( "functions/common.inc.".PHP_EXT );
+
 define('IMG_EXT'         ,'.gif'   );
 define('IMG_ICON_EXT'    ,'.png'   );
 define('MAX_FOLDER_DEPTH',5        );
 
-define('OR_VERSION'      ,'0.8-beta1'  );
+define('OR_VERSION'      ,'0.8-beta2'  );
 define('OR_TITLE'        ,'OpenRat CMS');
 
 define('OR_TYPE_PAGE'  ,'page'  );
@@ -43,7 +46,7 @@ define('OR_TEXTCLASSES_DIR'   ,'./textClasses/'    );
 define('OR_PREFERENCES_DIR'   ,defined('OR_EXT_CONFIG_DIR')?OR_EXT_CONFIG_DIR:'./config/');
 define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
 define('OR_THEMES_DIR'        ,'./themes/'         );
-define('OR_THEMES_EXT_DIR'    ,defined('OR_BASE_URL')?OR_BASE_URL.'/themes/':OR_THEMES_DIR);
+define('OR_THEMES_EXT_DIR'    ,defined('OR_BASE_URL')?slashify(OR_BASE_URL).'themes/':OR_THEMES_DIR);
 define('OR_TMP_DIR'           ,'./tmp/'            );
 define('OR_CONTROLLER_FILE'   ,defined('OR_EXT_CONTROLLER_FILE')?OR_EXT_CONTROLLER_FILE:'do');
 define('START_TIME'           ,time()              );
@@ -138,7 +141,6 @@ require_once( "functions/config.inc.php" );
 require_once( "functions/language.inc.".PHP_EXT );
 require_once( "functions/theme.inc.".PHP_EXT );
 require_once( "functions/db.inc.".PHP_EXT );
-require_once( "functions/common.inc.".PHP_EXT );
 
 header( 'Content-Type: text/html; charset='.lang('CHARSET') );
 

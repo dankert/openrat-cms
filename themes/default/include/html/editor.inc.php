@@ -4,7 +4,7 @@ if	($attr_type=='fckeditor' || $attr_type=='html')
 {
 	include('./editor/fckeditor.php');
 	$editor = new FCKeditor( $attr_name ) ;
-	$editor->BasePath	= './editor/';
+	$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
 	$editor->Value = $$attr_name;
 	$editor->Height = '290';
 	$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
