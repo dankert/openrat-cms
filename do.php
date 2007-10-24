@@ -138,6 +138,7 @@ require_once( "functions/config.inc.php" );
 require_once( "functions/language.inc.".PHP_EXT );
 require_once( "functions/theme.inc.".PHP_EXT );
 require_once( "functions/db.inc.".PHP_EXT );
+require_once( "functions/common.inc.".PHP_EXT );
 
 header( 'Content-Type: text/html; charset='.lang('CHARSET') );
 
