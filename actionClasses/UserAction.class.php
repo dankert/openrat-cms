@@ -202,6 +202,15 @@ class UserAction extends Action
 	}
 
 
+	/**
+	 * Eigenschaften des Benutzers anzeigen
+	 */
+	function show()
+	{
+		$this->setTemplateVars( $this->user->getProperties() );
+	}
+
+
 	function groups()
 	{
 		// Mitgliedschaften
