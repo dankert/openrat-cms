@@ -19,7 +19,7 @@ page
 					fieldset
 			row
 				cell
-					text text:user_fullname
+					text text:user_fullname class:name
 				cell
 					input name:fullname size:40 maxlength:128
 				
