@@ -8,9 +8,10 @@ page
 					text var:name
 			row
 				cell class:fx
-					text text:user_delete
 				cell class:fx
 					checkbox name:confirm
+					label for:confirm
+						text text:delete
 			row
 				cell colspan:2 class:act
 					button type:ok
