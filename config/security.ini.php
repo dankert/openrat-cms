@@ -156,18 +156,20 @@ add=true
 ;logo_url=
 logo_url="http://openid.net/login-bg.gif"
 
-
 ; Trust-Root
 ; URL-Prefix in which your OpenRat installations are running.
 ; default=<empty>
 ;trust_root=http://your.server.example/openrat/
 trust_root=
 
-
 ; Trustful servers
 ; Default='' (all)
 ;trusted_server=openid1.example.com,openid2.example.com
 trusted_server=
+
+; Should Users fullname and e-mail updated from the OpenId-Server?
+update_user=true
+
 
 
 ; Single Sign-on
