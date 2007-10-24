@@ -164,6 +164,11 @@ logo_url="http://openid.net/login-bg.gif"
 trust_root=
 
 
+; Trustful servers
+; Default='' (all)
+;trusted_server=openid1.example.com,openid2.example.com
+trusted_server=
+
 
 ; Single Sign-on
 ; These settings are an example for checking login against "PhpMyAdmin".
