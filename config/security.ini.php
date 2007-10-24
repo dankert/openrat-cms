@@ -202,3 +202,10 @@ expect_regexp="/running on/"
 ; regular expression for find out the username
 ; this example is used for "PhpMyAdmin"
 username_regexp="/running on localhost as ([a-z]+)@localhost/"
+
+
+; Settings for a new user
+[newuser]
+
+; These groups are automatically added while a new user is inserted.
+groups=YourGroup,AnotherGroup

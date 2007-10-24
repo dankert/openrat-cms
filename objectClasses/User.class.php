@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.26  2007-10-24 18:53:21  dankert
+// Automatisches Hinzuf?gen von Gruppen zu neuen Benutzern.
+//
 // Revision 1.25  2007-10-10 18:23:38  dankert
 // Anzeigen der Gruppen-Mitgliedschaften im Profil.
 //
@@ -458,7 +461,11 @@ class User
 	}
 
 
-	// Benutzer hinzufuegen
+	/**
+	 * Benutzer hinzufügen
+	 *
+	 * @param String $name Benutzername
+	 */
 	function add( $name = '' )
 	{
 		if	( $name != '' )
@@ -477,12 +484,48 @@ class User
 
 		// Datenbankbefehl ausfuehren
 		$db->query( $sql->query );
+		
+		$this->addNewUserGroups(); // Neue Gruppen hinzufügen.
+	}
+
+	
+
+	/**
+	 * Zu einem neuen Benutzer automatisch Gruppen hinzufügen
+	 */
+	function addNewUserGroups()
+	{
+		global $conf;
+		$groupNames = explode(',',@$conf['security']['newuser']['groups']);
+		
+		if	( count($groupNames) == 0 )
+			return; // Nichts zu tun.
+			
+		$db = db_connection();
+
+		$sql = new Sql('SELECT id FROM {t_group} WHERE name IN({names})');
+		$sql->setStringList('names',$groupNames);
+		$groupIds = array_unique( $db->getCol($sql->query) );
+		
+		// Wir brauchen hier nicht weiter prüfen, ob der Benutzer eine Gruppe schon hat, denn
+		// - passiert dies nur bei der Neuanlage eines Benutzers
+		// - Enthält die Group-Id-Liste eine ID nur 1x.
+
+		// Gruppen diesem Benutzer zuordnen.
+		foreach( $groupIds as $groupId )
+			$this->addGroup( $groupId );
 	}
 
 
 	/**
-	 * Benutzer entfernen.
-	 * Vor dem Entfernen werden alle Referenzen af diesen Benutzer entfernt.
+	 * Benutzer entfernen.<br>
+	 * Vor dem Entfernen werden alle Referenzen auf diesen Benutzer entfernt:<br>
+	 * - "Erzeugt von" für diesen Benutzer entfernen.<br>
+	 * - "Letzte Änderung von" für diesen Benutzer entfernen<br>
+	 * - Alle Archivdaten in Dateien mit diesem Benutzer entfernen<br>
+	 * - Alle Berechtigungen dieses Benutzers l?schen<br>
+	 * - Alle Gruppenzugehoerigkeiten dieses Benutzers l?schen<br>
+	 * - Benutzer loeschen<br>
 	 */
 	function delete()
 	{
