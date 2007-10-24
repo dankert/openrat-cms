@@ -358,7 +358,7 @@ class Http
 	
 	
 	/**
-	 * Ermittelt die aktuelle URL des Requests.
+	 * Ermittelt die aktuelle URL des Requests (ohne Datei).
 	 *
 	 * @static
 	 * @return String URL
