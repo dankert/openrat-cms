@@ -33,18 +33,6 @@ class TreetitleAction extends Action
 
 	function show()
 	{
-//		$windowMenu = array();
-//
-//		$windowMenu[] = array( 'text'=>lang('GLOBAL_PROJECTS'),
-//		                       'url' =>Html::url('index','projectmenu'),
-//		                       'target'=>'_top' );
-
-//		if   ( $this->userIsAdmin() )
-//			$windowMenu[] = array( 'text'=>lang('GLOBAL_ADMINISTRATION'),
-//			                       'url' =>Html::url('index','administration'),
-//			                       'target'=>'_top' );
-
-				
 		// Das aktuelle Projekt voreinstellen		
 		$project = Session::getProject();
 		
@@ -52,9 +40,6 @@ class TreetitleAction extends Action
 		{
 			$this->setTemplateVar( 'text',lang('GLOBAL_ADMINISTRATION') );
 			$this->setTemplateVar( 'type','administration' );
-
-//			$windowMenu[] = array( 'text'=>'',
-//			                       'url' =>'' );
 		}
 		else
 		{
@@ -75,11 +60,6 @@ class TreetitleAction extends Action
 //			                       'url' =>Html::url('main','model'),
 //			                       'target'=>'cms_main' );
 		}
-
-//		$this->setTemplateVar('windowMenu',$windowMenu);
-		
-		// Ausgabe des Templates
-//		$this->forward('menu');
 	}
 	
 	
