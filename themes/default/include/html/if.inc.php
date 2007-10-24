@@ -1,8 +1,6 @@
 <?php 
 
 	// Wahr-Vergleich
-//	Html::debug($attr);
-	
 	if	( isset($attr_true) )
 	{
 		if	(gettype($attr_true) === '' && gettype($attr_true) === '1')
@@ -58,9 +56,7 @@
 
 	else
 	{
-		Html::debug( $attr );
-		echo("error in IF line ".__LINE__);
-		echo("assume: FALSE");
+		trigger_error("error in IF, assume: FALSE");
 		$exec = false;
 	}
 
