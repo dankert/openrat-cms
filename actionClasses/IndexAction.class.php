@@ -256,8 +256,8 @@ class IndexAction extends Action
 				$dbids[$dbname] = $dbconf['comment'];
 		}
 
-		$this->setTemplateVar('login_name'    ,$conf['security']['default']['username']);
-		$this->setTemplateVar('login_password',$conf['security']['default']['password']);
+		$this->setTemplateVar('login_name'    ,@$conf['security']['default']['username']);
+		$this->setTemplateVar('login_password',@$conf['security']['default']['password']);
 
 		$this->setTemplateVar( 'dbids',$dbids );
 		
@@ -875,13 +875,13 @@ class IndexAction extends Action
 			// Menüpunkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
 			// konfiguriert sind.
 			case 'applications':
-				return count($conf['applications']) > 0;
+				return count(@$conf['applications']) > 0;
 
 			case 'register':
-				return $conf['login']['register'];
+				return @$conf['login']['register'];
 
 			case 'send_password':
-				$conf['login']['send_password'];
+				@$conf['login']['send_password'];
 				
 			case 'administration':
 				return $this->userIsAdmin();
