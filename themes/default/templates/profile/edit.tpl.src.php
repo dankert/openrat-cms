@@ -5,23 +5,33 @@ page
 				cell
 					text text:user_username
 				cell class:fx
-					text var:name
+					text var:name class:name
+
+			row
+				cell
+					text text:user_mail
+				cell
+					#link action:profile subaction:mail title:message:menu_mail_desc
+					text var:mail class:filename
 					
+			row
+				cell colspan:2
+					fieldset
 			row
 				cell
 					text text:user_fullname
-				cell class:fx
+				cell
 					input name:fullname size:40 maxlength:128
 				
 			row
 				cell
 					text text:user_tel
-				cell class:fx
+				cell
 					input name:tel size:40 maxlength:128
 			row
 				cell
 					text text:user_desc
-				cell class:fx
+				cell
 					input name:desc size:40 maxlength:128
 
 			row
