@@ -379,112 +379,54 @@ class IndexAction extends Action
 	 */
 	function openid()
 	{
-		global $REQ,
-		       $conf;
-		       
-		$openid_user     = Session::get('openid_user'    );
-		$openid_server   = Session::get('openid_server'  );
-		$openid_delegate = Session::get('openid_delegate');
-		$openid_handle   = Session::get('openid_handle'  );
-		
-		if	( $this->getRequestVar('openid_invalidate_handle') != $openid_handle )
+		global $conf;
+		$openId = new OpenId();
+
+		if	( !$openId->checkAuthentication() )
 		{
-			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array('Association-Handle mismatch.') );
+			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED','error',array('name'=>$openId->user),array($openId->error) );
 			$this->callSubAction('showlogin');
 			return;
 		}
-
-//		if	( $this->getRequestVar('openid_identity') != $openid_delegate )
-//		{
-//			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array('Open-Id: Identity mismatch. Wrong identity:'.$this->getRequestVar('openid_identity')) );
-//			$this->callSubAction('showlogin');
-//			return;
-//		}
-
-
-		$params = array();
 		
-		foreach( $REQ as $request_key=>$request_value )
-		{
-			if	( substr($request_key,0,12)=='openid_sreg_' )
-				$params['openid.sreg.'.substr($request_key,12) ] = $request_value;			
-			elseif	( substr($request_key,0,7)=='openid_' )
-				$params['openid.'.substr($request_key,7) ] = $request_value;			
-		}
-		$params['openid.mode'] = 'check_authentication';
+		// Anmeldung wurde mit "is_valid:true" bestätigt.
+		// Der Benutzer ist jetzt eingeloggt.
+		$username = $openId->getUserFromIdentiy();
 		
-		$checkRequest = new Http($openid_server);
-		
-		$checkRequest->method = 'POST'; // Spezifikation verlangt POST, auch wenn GET meistens trotzdem funktioniert.
-		$checkRequest->requestParameter = $params;
-		
-		if	( ! $checkRequest->request() )
-		{
-			// Der HTTP-Request ging in die Hose.
-			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$this->getRequestVar('login_name')),array($checkRequest->error) );
-			$this->callSubAction('showlogin');
-			return;
-		}
-
-		// Analyse der HTTP-Antwort, Parsen des BODYs.
-		// Die Anmeldung ist bestätigt, wenn im BODY die Zeile "is_valid:true" vorhanden ist.
-		// Siehe Spezifikation Kapitel 4.4.2
-		$valid = null;
-		foreach( explode("\n",$checkRequest->body) as $line )
-		{
-			$pair = explode(':',trim($line));
-			if	(count($pair)==2 && strtolower($pair[0])=='is_valid')
-				$valid = (strtolower($pair[1])=='true');
-		}
-		
-		if	( is_null($valid) )
-		{
-			// Zeile nicht gefunden.
-			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array_merge(array('Undefined Open-Id response: '),$response) );
-			$this->callSubAction('showlogin');
-			return;
-		}
-		elseif	( $valid )
-		{
-			// Anmeldung wurde mit "is_valid:true" bestätigt.
-			// Der Benutzer ist jetzt eingeloggt.
-			$openid_sreg_email    = $this->getRequestVar('openid_sreg_email'   );
-			$openid_sreg_fullname = $this->getRequestVar('openid_sreg_fullname');
-			$openid_sreg_nickname = $this->getRequestVar('openid_sreg_nickname');
+		$user = User::loadWithName( $username );
 			
-			$user = User::loadWithName( $openid_user );
-			
-			if	( $user->userid <=0)
+		if	( $user->userid <=0)
+		{
+			// Benutzer ist (noch) nicht vorhanden.
+			if	( $conf['security']['openid']['add'])  // Anlegen?
 			{
-				// Benutzer ist (noch) nicht vorhanden.
-				if	( $conf['security']['openid']['add'])  // Anlegen?
-				{
-					$user->name     = $openid_user;
-					$user->mail     = $openid_sreg_email;
-					$user->fullname = $openid_sreg_fullname;
-					$user->add();
-					$user->save();  // Um E-Mail zu speichern (wird bei add() nicht gemacht)
-				}
-				else
-				{
-					// Benutzer ist nicht in Benutzertabelle vorhanden (und angelegt werden soll er auch nicht).
-					$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user) );
-					$this->callSubAction('showlogin');
-					return;
-				}
-			}
+				$user->name     = $username;
+				$user->add();
 
-			$user->setCurrent();  // Benutzer ist jetzt in der Sitzung.
-	
-			return;
+				$user->mail     = $openId->info['email'];
+				$user->fullname = $openId->info['fullname'];
+				$user->save();  // Um E-Mail zu speichern (wird bei add() nicht gemacht)
+			}
+			else
+			{
+				// Benutzer ist nicht in Benutzertabelle vorhanden (und angelegt werden soll er auch nicht).
+				$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
+				$this->callSubAction('showlogin');
+				return;
+			}
 		}
 		else
 		{
-			// Bestätigung wurde durch den OpenId-Provider abgelehnt.
-			$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user) );
-			$this->callSubAction('showlogin');
-			return;
+			// Benutzer ist bereits vorhanden.
+			if	( @$conf['security']['openid']['update_user'])
+			{
+				$user->fullname = $openId->info['fullname'];
+				$user->mail     = $openId->info['email'];
+				$user->save();
+			}
 		}
+
+		$user->setCurrent();  // Benutzer ist jetzt in der Sitzung.
 	}
 	
 
