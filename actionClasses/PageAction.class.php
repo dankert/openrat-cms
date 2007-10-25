@@ -330,7 +330,7 @@ class PageAction extends ObjectAction
 		{
 			$this->setTemplateVar('newTemplateId',$newTemplateId );
 
-			$oldElements = Array();
+			$oldElements = array();
 			$oldTemplate = new Template( $this->page->templateid );
 			$newTemplate = new Template( $newTemplateId );
 			
@@ -342,7 +342,9 @@ class PageAction extends ObjectAction
 				if	( !$e->isWritable() )
 					continue;
 
-				$oldElements[$elementid] = $e->name.' - '.lang('EL_'.$e->type );
+				$oldElement = array();
+				$oldElement['name'] = $e->name.' - '.lang('EL_'.$e->type );
+				$oldElement['id'  ] = $e->elementid;
 
 				$newElements = Array();
 				$newElements[0] = lang('ELEMENT_DELETE_VALUES');
@@ -354,14 +356,13 @@ class PageAction extends ObjectAction
 					
 					// Nur neue Elemente anbieten, deren Typ identisch ist
 					if	( $ne->type == $e->type )
-						$newElements[$newelementid] = lang('ELEMENT').': '.$e->name.' - '.lang('EL_'.$e->type );
+						$newElements[$newelementid] = lang('ELEMENT').': '.$ne->name.' - '.lang('EL_'.$e->type );
 				}
-				$this->setTemplateVar('newTemplateElementsOf'.$elementid,$newElements );
+				$oldElement['newElementsName'] = 'from'.$e->elementid;
+				$oldElement['newElementsList'] = $newElements;
+				$oldElements[$elementid] = $oldElement;
 			}
-			$this->setTemplateVar('oldTemplateElements',$oldElements );
-
-
-			$this->forward('page_replacetemplate');
+			$this->setTemplateVar('elements',$oldElements );
 		}
 		else
 		{
@@ -383,14 +384,15 @@ class PageAction extends ObjectAction
 		
 		$oldTemplate = new Template( $this->page->templateid );
 		foreach( $oldTemplate->getElementIds() as $elementid )
-		{
 			$replaceElementMap[$elementid] = $this->getRequestVar('from'.$elementid);
-		}
 		
-		if   ($newTemplateId != 0  )
+		if	( $newTemplateId != 0  )
 		{
 			$this->page->replaceTemplate( $newTemplateId,$replaceElementMap );
+			$this->addNotice('page',$this->page->name,'SAVED',OR_NOTICE_OK);
 		}
+		else
+			$this->addNotice('page',$this->page->name,'NOT_SAVED',OR_NOTICE_WARN);
 	}
 
 
