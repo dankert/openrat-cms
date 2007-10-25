@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.12  2007-10-25 22:29:11  dankert
+// Neue Methoden f?r Filemanager.
+//
 // Revision 1.11  2007-05-02 21:28:47  dankert
 // Beim Lesen aller Objekte bereits in der Datenbank nach Typ filtern.
 //
@@ -105,20 +108,23 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new SQL('SELECT id FROM {t_folder}'.
+		$sql = new SQL('SELECT id FROM {t_object}'.
 		               '  WHERE parentid IS NULL'.
+		               '    AND is_folder=1'.
 		               '    AND projectid={projectid}' );
 
 		// Wenn Methode statisch aufgerufen wird, ist $this nicht vorhanden
-		if	( isset($this) )
+		if	( isset($this) && isset($this->projectid) )
+		{
 			$sql->setInt('projectid',$this->projectid );
+		}
 		else
 		{
 			$project = Session::getProject();
 			$sql->setInt('projectid',$project->projectid );
 		}
 		
-		// Datenbankabfrage ausf?hren
+		// Datenbankabfrage ausfuehren
 		return $db->getOne( $sql->query );
 	}
 
@@ -480,6 +486,25 @@ class Folder extends Object
 		return $db->getCol( $sql->query );
 	}
 
+
+	
+	/**
+	 * Liefert eine Liste von allen Dateien in diesem Ordner.
+	 *
+	 * @return Array Schlüssel=Objekt-Id, Wert=Dateiname
+	 */
+	function getFileFilenames()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT id,filename FROM {t_object} '.
+		               '  WHERE parentid={objectid} AND is_file=1'.
+		               '  ORDER BY orderid ASC' );
+		$sql->setInt( 'objectid' ,$this->objectid  );
+
+		return $db->getAssoc( $sql->query );
+	}
+
 	
 	function getLinks()
 	{
@@ -809,6 +834,20 @@ EOF
 		$this->subfolders = $db->getCol( $sql->query );
 
 		return $this->subfolders;
+	}
+
+	
+	
+	function getSubfolderFilenames()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT id,filename FROM {t_object} '.
+		               '  WHERE parentid={objectid} AND is_folder=1'.
+		               '  ORDER BY orderid ASC' );
+		$sql->setInt( 'objectid' ,$this->objectid  );
+
+		return $db->getAssoc( $sql->query );
 	}
 	
 	
