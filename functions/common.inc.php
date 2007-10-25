@@ -15,4 +15,9 @@ function slashify($pfad)
 		return $pfad.'/';
 }
 
+function convertToXmlAttribute( $value )
+{
+	return utf8_encode( htmlspecialchars( $value ) ) ;
+}
+
 ?>
