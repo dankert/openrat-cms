@@ -503,11 +503,21 @@ class IndexAction extends Action
 	 */
 	function logout()
 	{
+		global $conf;
 		$user = Session::getUser();
 		$this->setTemplateVar('login_username',$user->name);
 		
-		// Aus Sicherheitsgruenden die komplette Session deaktvieren
+		// Aus Sicherheitsgruenden die komplette Session deaktvieren.
 		session_unset();
+		
+		// Umleiten auf eine definierte URL.s
+		$redirect_url = @$conf['security']['logout']['redirect_url'];
+//		Html::debug($redirect_url);
+		if	( !empty($redirect_url) )
+		{
+			header('Location: '.$redirect_url);
+			exit;
+		}
 	}
 
 

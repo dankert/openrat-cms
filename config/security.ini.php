@@ -216,3 +216,16 @@ username_regexp="/running on localhost as ([a-z]+)@localhost/"
 
 ; These groups are automatically added while a new user is inserted.
 groups=YourGroup,AnotherGroup
+
+
+
+; Logout settings
+[logout]
+
+; Redirect to this URL after logout
+; <blank>= Show Login.
+; Default: ""
+;redirect_url="http://your.intranet.example/"
+redirect_url=
+
+
