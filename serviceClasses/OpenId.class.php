@@ -221,7 +221,7 @@ class OpenId
 		$treffer = array();
 		preg_match('/rel="openid.server"\s+href="(\S+)"/',$seite,$treffer);
 		if	( count($treffer) >= 1 )
-			$this->identity = $treffer[1];
+			$this->server = $treffer[1];
 
 		$treffer = array();
 		preg_match('/rel="openid.delegate"\s+href="(\S+)"/',$seite,$treffer);
