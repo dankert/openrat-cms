@@ -354,8 +354,11 @@ class IndexAction extends Action
 			
 			$p = array();
 			$p['url']  = $app['url'];
-			$p['url'] .= strpos($p['url'],'?')!==false?'&':'?';
-			$p['url'] .= $app['param'].'='.session_id();
+			if	( isset($app['param']) )
+			{
+				$p['url'] .= strpos($p['url'],'?')!==false?'&':'?';
+				$p['url'] .= $app['param'].'='.session_id();
+			}
 			$p['name'] = $app['name'];
 			
 			$list[] = $p;
