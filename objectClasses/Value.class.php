@@ -624,9 +624,9 @@ SQL
 
 			case 'copy':
 
-				@list($linkElementName,$targetElementName) = explode('%',$this->element->name);
+				list($linkElementName,$targetElementName) = explode('%',$this->element->name.'%');
 
-				if	( is_null($targetElementName) )
+				if	( empty($targetElementName) )
 					break;
 
 				$element = new Element();
@@ -972,11 +972,14 @@ SQL
 						$inhalt = Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id));
 						break;
 					case 'edit_fullurl':
-						$inhalt = 'http://';
-						$inhalt .= getenv('SERVER_NAME');
-						$inhalt .= dirname(getenv('SCRIPT_NAME'));
+						$inhalt = Http::getServer();
 						$db = Session::getDatabase();
-						$inhalt .= '/'.basename(Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id)));
+						$params = array('dbid'      =>$db->id,
+						                'objectid'  =>$this->page->objectid,
+						                'modelid'   =>$this->page->modelid,
+						                'languageid'=>$this->page->languageid,
+						                'elementid' =>$this->element->elementid );
+						$inhalt .= '/'.basename(Html::url('index','object',$this->page->objectid,$params));
 						break;
 					case 'lastch_user_username':
 						$user = $this->page->lastchangeUser;
