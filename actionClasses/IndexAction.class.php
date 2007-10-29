@@ -590,36 +590,13 @@ class IndexAction extends Action
 			$this->callSubAction('show');
 		}
 
-		if	( $this->getRequestId() != 0 )
-			$project = new Project( $this->getRequestId() );
-		else
-			$project = new Project( $this->getRequestVar('projectid') );
+		$this->evaluateRequestVars( array('projectid'=>$this->getRequestId()) );
+
+		$project  = Session::getProject();
+		$language = Session::getProjectLanguage();
 		
-		if	( $project->projectid != PROJECTID_ADMIN )
-		{
-			$project->load();
-	
-			Session::setProject( $project );
-			
-			$language = new Language( $this->hasRequestVar('languageid')?$this->getRequestVar('languageid'):$project->getDefaultLanguageId() );
-			$language->load();
-			Session::setProjectLanguage( $language );
-	
-			$model = new Model( $this->hasRequestVar('modelid')?$this->getRequestVar('modelid'):$project->getDefaultModelId() );
-			$model->load();
-			Session::setProjectModel( $model );
-	
-			$object = new Object( $project->getRootObjectId() );
-			$object->objectLoadRaw();
-			Session::setObject( $object );
-	
-			$user->loadRights( $project->projectid,$language->languageid );
-			Session::setUser( $user );
-		}
-		else
-		{
-			Session::setProject( $project );
-		}
+		$user->loadRights( $project->projectid,$language->languageid );
+		Session::setUser( $user );
 	}
 
 
@@ -631,22 +608,9 @@ class IndexAction extends Action
 			$this->callSubAction('show');
 		}
 
-		$object = new Object( $this->getRequestId() );
-		$object->objectLoadRaw();
-		Session::setObject( $object );
+		$this->evaluateRequestVars( array('objectid'=>$this->getRequestId()) );
+		$this->evaluateRequestVars( array('objectid'=>$this->getRequestId()) );
 
-		$project = new Project( $object->projectid );
-		$project->load();
-		Session::setProject( $project );
-		
-		$language = new Language( $this->hasRequestVar('languageid')?$this->getRequestVar('languageid'):$project->getDefaultLanguageId() );
-		$language->load();
-		Session::setProjectLanguage( $language );
-
-		$model = new Model( $this->hasRequestVar('modelid')?$this->getRequestVar('modelid'):$project->getDefaultModelId() );
-		$model->load();
-		Session::setProjectModel( $model );
-		
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
 	}
@@ -654,25 +618,7 @@ class IndexAction extends Action
 
 	function language()
 	{
-		$language = new Language( $this->getRequestId() );
-		$language->load();
-		Session::setProjectLanguage( $language );
-
-		$project = new Project( $language->projectid );
-		$project->load();
-		Session::setProject( $project );
-
-		$model = Session::getProjectModel();
-		if	( !is_object($model) )
-		{
-			$model = new Model( $project->getDefaultModelId() );
-			$model->load();
-			Session::setProjectModel( $model );
-		}
-
-		$object = new Object( $project->getRootObjectId() );
-		$object->objectLoadRaw();
-		Session::setObject( $object );
+		$this->evaluateRequestVars( array('languageid'=>$this->getRequestId()) );
 
 		$user = Session::getUser();
 		$user->loadRights( $project->projectid,$language->languageid );
@@ -682,29 +628,114 @@ class IndexAction extends Action
 
 	function model()
 	{
-		$model = new Model( $this->getRequestId() );
-		$model->load();
-		Session::setProjectModel( $model );
-
-		$project = new Project( $model->projectid );
-		$project->load();
-		Session::setProject( $project );
-
-		$language = Session::getProjectLanguage();
-		if	( !is_object($language) || $language->projectid != $project->projectid )
-		{
-			$language = new Language( $project->getDefaultLanguageId() );
-			$language->load();
-			Session::setProjectLanguage( $language );
-		}
-
-		$object = new Object( $project->getRootObjectId() );
-		$object->objectLoadRaw();
-		Session::setObject( $object );
+		$this->evaluateRequestVars( array('modelid'=>$this->getRequestId()) );
 
 		$user = Session::getUser();
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
+	}
+	
+
+	/**
+	 * Auswerten der Request-Variablen.
+	 *
+	 * @param Array $add
+	 */
+	function evaluateRequestVars( $add = array() )
+	{
+		global $REQ;
+		$vars = $REQ + $add;
+
+		if	( isset($vars['objectid']) )
+		{
+			$object = new Object( $this->getRequestId() );
+			$object->objectLoadRaw();
+			Session::setObject( $object );
+	
+			$project = new Project( $object->projectid );
+			$project->load();
+			Session::setProject( $project );
+			
+			$language = new Language( isset($vars['languageid'])?$vars['languageid']:$project->getDefaultLanguageId() );
+			$language->load();
+			Session::setProjectLanguage( $language );
+	
+			$model = new Model( isset($vars['modelid'])?$vars['modelid']:$project->getDefaultModelId() );
+			$model->load();
+			Session::setProjectModel( $model );
+		}
+		elseif	( isset($vars['languageid']) )
+		{
+			$language = new Language( $vars['languageid'] );
+			$language->load();
+			Session::setProjectLanguage( $language );
+	
+			$project = new Project( $language->projectid );
+			$project->load();
+			Session::setProject( $project );
+	
+			$model = Session::getProjectModel();
+			if	( !is_object($model) )
+			{
+				$model = new Model( $project->getDefaultModelId() );
+				$model->load();
+				Session::setProjectModel( $model );
+			}
+	
+			$object = new Object( $project->getRootObjectId() );
+			$object->objectLoadRaw();
+			Session::setObject( $object );
+	
+			$user = Session::getUser();
+			$user->loadRights( $project->projectid,$language->languageid );
+			Session::setUser( $user );
+
+		}
+		elseif	( isset($vars['modelid']) )
+		{
+			$model = new Model( $vars['modelid'] );
+			$model->load();
+			Session::setProjectModel( $model );
+	
+			$project = new Project( $model->projectid );
+			$project->load();
+			Session::setProject( $project );
+	
+			$language = Session::getProjectLanguage();
+			if	( !is_object($language) || $language->projectid != $project->projectid )
+			{
+				$language = new Language( $project->getDefaultLanguageId() );
+				$language->load();
+				Session::setProjectLanguage( $language );
+			}
+	
+			$object = new Object( $project->getRootObjectId() );
+			$object->objectLoadRaw();
+			Session::setObject( $object );
+	
+			$user = Session::getUser();
+			$user->loadRights( $project->projectid,$language->languageid );
+			Session::setUser( $user );
+		}
+		elseif	( isset($vars['projectid']) )
+		{
+			$project = new Project( $vars['projectid'] );
+			$project->load();
+	
+			Session::setProject( $project );
+			
+			$language = new Language( isset($vars['languageid'])?$vars['languageid']:$project->getDefaultLanguageId() );
+			$language->load();
+			Session::setProjectLanguage( $language );
+	
+			$model = new Model( isset($vars['modelid'])?$vars['modelid']:$project->getDefaultModelId() );
+			$model->load();
+			Session::setProjectModel( $model );
+	
+			$object = new Object( $project->getRootObjectId() );
+			$object->objectLoadRaw();
+			Session::setObject( $object );
+		}
 	}
 
 
@@ -773,8 +804,36 @@ class IndexAction extends Action
 
 		$projectid  = intval( $this->getRequestVar('projectid' ) );
 		$languageid = intval( $this->getRequestVar('languageid') );
+		$modelid    = intval( $this->getRequestVar('modelid'   ) );
 		$objectid   = intval( $this->getRequestVar('objectid'  ) );
+		$elementid  = intval( $this->getRequestVar('elementid' ) );
 
+		if	( $projectid != 0 )
+		{
+			$project = new Project( $projectid );
+			Session::setProject($project);
+		}
+		elseif	( $languageid != 0 )
+		{
+			$language = new Language( $languageid );
+			Session::setProjectLanguage($language);
+		}
+		elseif	( $modelid != 0 )
+		{
+			$model = new Model( $modelid );
+			Session::setProjectModel($model);
+		}
+		elseif	( $objectid != 0 )
+		{
+			$object = new Object( $objectid );
+			Session::setObject($object);
+		}
+		if	( $elementid != 0 )
+		{
+			$element = new Element( $elementid );
+			Session::setElement($element);
+		}
+		
 		$project = Session::getProject();
 
 		if ( $project->projectid == PROJECTID_ADMIN )
