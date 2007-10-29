@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.20  2007-10-29 22:16:19  dankert
+// Korrektur Auswahl-Eigenschaften f?r Kopie-Element
+//
 // Revision 1.19  2007-05-22 20:12:28  dankert
 // Elementtyp "list" hei?t intern nun "insert".
 //
@@ -232,6 +235,9 @@ class Element
 
 	function setDatabaseRow( $prop )
 	{
+		if	( count($prop) <= 0 )
+			return;
+
 		$this->elementid      = $prop['id'        ];
 		$this->templateid     = $prop['templateid'];
 		$this->name           = $prop['name'      ];
@@ -347,10 +353,7 @@ class Element
 	 */
 	function setPrefix( $prefix )
 	{
-		@list( $oldprefix,$name ) = explode('%',$this->name);
-		
-		if	( is_null($name) )
-			$name = $oldprefix;
+		list( $oldprefix,$name ) = explode('%',$this->name.'%');
 		
 		$this->name = $prefix.'%'.$name;
 	}

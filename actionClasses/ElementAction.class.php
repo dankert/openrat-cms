@@ -137,12 +137,14 @@ class ElementAction extends Action
 	}
 	
 	
+	/**
+	 * Auswahlmaske für weitere Einstellungen zum Template-Element.
+	 *
+	 */
 	function properties()
 	{
 		global $conf;
 		
-//		Html::debug($this->element);
-
 		// Abhaengig vom aktuellen Element-Typ die Eigenschaften anzeigen
 		$properties = $this->element->getRelatedProperties();
 
@@ -347,7 +349,8 @@ class ElementAction extends Action
 				
 				case 'prefix':
 					$t = new Template( $this->element->templateid );
-					
+
+					$elements = array();
 					foreach( $t->getElements() as $element )
 					{
 						if	( $element->type == 'link' )
@@ -357,7 +360,7 @@ class ElementAction extends Action
 					
 					$this->setTemplateVar('linkelements',$elements );
 
-					@list($linkElementName,$targetElementName) = explode('%',$this->element->name);
+					list($linkElementName,$targetElementName) = explode('%',$this->element->name.'%');
 					$this->setTemplateVar('linkelement',$linkElementName );
 					
 					break;
@@ -382,7 +385,7 @@ class ElementAction extends Action
 					
 					$this->setTemplateVar('names',$names );
 
-					list($linkElementName,$targetElementName) = explode('%',$this->element->name);
+					list($linkElementName,$targetElementName) = explode('%',$this->element->name.'%');
 					$this->setTemplateVar('name',$targetElementName );
 					break;
 
@@ -582,14 +585,11 @@ class ElementAction extends Action
 		
 		if	( $this->hasRequestVar('parameters'))
 			$this->element->code = $this->getRequestVar('parameters');
-			
-//		if	( $this->hasRequestVar('elementid'))
-//			$this->element->code = $this->getRequestVar('elementid');
 		
-		$this->addNotice('element',$this->element->name,'SAVED');
+		Html::debug($this->element);
 		$this->element->save();
+		$this->addNotice('element',$this->element->name,'SAVED');
 		
-//		Html::debug($this->element);
 	}
 }
 
