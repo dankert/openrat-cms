@@ -65,6 +65,7 @@ class ElementAction extends Action
 	 */
 	function remove()
 	{
+		$this->setTemplateVar( 'name' ,$this->element->name );
 	}
 	
 	

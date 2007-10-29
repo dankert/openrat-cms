@@ -8,15 +8,18 @@ page
 				cell class:fx
 					text var:name
 			row
-				cell
-					text text:GLOBAL_DELETE
-				cell
-					checkbox name:delete
+				cell colspan:2
+					fieldset title:message:options
 			row
-				cell
-					text text:ELEMENT_DELETE_VALUES
-				cell
+				cell colspan:2
+					checkbox name:delete
+					label for:delete
+						text text:GLOBAL_DELETE
+			row
+				cell colspan:2
 					checkbox name:deletevalues
+					label for:deletevalues
+						text text:ELEMENT_DELETE_VALUES
 
 			row
 				cell colspan:2
