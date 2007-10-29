@@ -426,7 +426,7 @@ class MainmenuAction extends Action
 			$this->addSubaction('edit');
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
-		$this->setTemplateVar('param','languageid');
+		$this->setTemplateVar('param',REQ_PARAM_LANGUAGE_ID);
 		$this->setTemplateVar('text',lang('GLOBAL_LANGUAGE'));
 	}
 

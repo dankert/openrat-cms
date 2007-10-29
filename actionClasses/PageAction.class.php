@@ -125,7 +125,7 @@ class PageAction extends ObjectAction
 				else
 				{
 					// sonst nur 1x speichern (fuer die aktuelle Sprache)
-					$value->languageid = $this->getSessionVar('languageid');
+					$value->languageid = $this->getSessionVar(REQ_PARAM_LANGUAGE_ID);
 					$value->save();
 				}
 			}

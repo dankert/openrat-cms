@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2004-12-18 00:16:15  dankert
+// Revision 1.11  2007-10-29 23:29:17  dankert
+// Konstanten f?r Request-Variablen.
+//
+// Revision 1.10  2004/12/18 00:16:15  dankert
 // language_read() entfernt
 //
 // Revision 1.9  2004/12/15 23:24:58  dankert
@@ -124,7 +127,7 @@ class TreeAction extends Action
 			$this->tree = new ProjectTree();
 			$this->tree->projectId = $projectid;
 
-			$SESS['languageid'] = Language::getDefaultId();
+			$SESS[REQ_PARAM_LANGUAGE_ID] = Language::getDefaultId();
 			$SESS['modelid'   ] = Model::getDefaultId();
 		}
 

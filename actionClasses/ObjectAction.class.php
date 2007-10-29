@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2006-01-29 17:25:07  dankert
+// Revision 1.7  2007-10-29 23:29:17  dankert
+// Konstanten f?r Request-Variablen.
+//
+// Revision 1.6  2006/01/29 17:25:07  dankert
 // Methode setWindowMenu() entfernt
 //
 // Revision 1.5  2006/01/23 23:10:46  dankert
@@ -110,7 +113,7 @@ class ObjectAction extends Action
 			default:
 		}
 
-		$acl->languageid    = $this->getRequestVar('languageid');
+		$acl->languageid    = $this->getRequestVar(REQ_PARAM_LANGUAGE_ID);
 
 		$acl->write         = ( $this->hasRequestVar('write'        ) );
 		$acl->prop          = ( $this->hasRequestVar('prop'         ) );

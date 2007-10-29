@@ -618,7 +618,7 @@ class IndexAction extends Action
 
 	function language()
 	{
-		$this->evaluateRequestVars( array('languageid'=>$this->getRequestId()) );
+		$this->evaluateRequestVars( array(REQ_PARAM_LANGUAGE_ID=>$this->getRequestId()) );
 
 		$user = Session::getUser();
 		$user->loadRights( $project->projectid,$language->languageid );
@@ -656,7 +656,7 @@ class IndexAction extends Action
 			$project->load();
 			Session::setProject( $project );
 			
-			$language = new Language( isset($vars['languageid'])?$vars['languageid']:$project->getDefaultLanguageId() );
+			$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
 			$language->load();
 			Session::setProjectLanguage( $language );
 	
@@ -664,9 +664,9 @@ class IndexAction extends Action
 			$model->load();
 			Session::setProjectModel( $model );
 		}
-		elseif	( isset($vars['languageid']) )
+		elseif	( isset($vars[REQ_PARAM_LANGUAGE_ID]) )
 		{
-			$language = new Language( $vars['languageid'] );
+			$language = new Language( $vars[REQ_PARAM_LANGUAGE_ID] );
 			$language->load();
 			Session::setProjectLanguage( $language );
 	
@@ -724,7 +724,7 @@ class IndexAction extends Action
 	
 			Session::setProject( $project );
 			
-			$language = new Language( isset($vars['languageid'])?$vars['languageid']:$project->getDefaultLanguageId() );
+			$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
 			$language->load();
 			Session::setProjectLanguage( $language );
 	
