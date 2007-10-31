@@ -66,6 +66,9 @@ class AbstractTree
 	function open( $elementId )
 	{
 		$funcName = $this->elements[$elementId]->type;
+		if	( empty($funcName) )
+			return;
+			
 		$this->$funcName( $this->elements[$elementId]->internalId );
 
 		// Wenn keine Unterelemente gefunden, dann die ?ffnen-Funktion deaktivieren
@@ -77,8 +80,15 @@ class AbstractTree
 			$this->maxId++;
 			$this->elements[$elementId]->subElementIds[] = $this->maxId;
 			$this->elements[$this->maxId] = $treeElement;
-			$this->tempElements = array();
 		}
+		
+		if	( count($this->tempElements)==1 )
+		{
+			$this->tempElements = array();
+			$this->open($this->maxId);
+		}
+
+		$this->tempElements = array();
 	}
 
 
