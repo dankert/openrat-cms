@@ -2,13 +2,15 @@
 
 
 // Ausgabe CSS-Klasse pro Zeile
+
+/*
 function fx( $fx )
 {
 	if   ( $fx == 'f1' )
 		return 'f2';
 	else return 'f1';
 }
-
+*/
 
 
 function nice_date( $time )
@@ -58,59 +60,5 @@ function nice_date( $time )
 //	return date(lang('DATE_FORMAT'),$time);
 }
 
-
-function windowOpen( $title,$objectName='',$icon='',$attr=array() )
-{
-	global $image_dir;
-	global $windowMenu;
-	global $actionName;
-	if	( !isset($attr['width'])) $attr['width']='90%';
-	echo '<br/><br/><br/><center>';
-	echo '<table class="main" cellspacing="0" cellpadding="4" ';
-	foreach( $attr as $aName=>$aValue )
-		echo " $aName=\"$aValue\"";
-	echo '>';
-	echo '<tr><th>';
-	if	( !empty($icon) )
-		echo '<img src="'.$image_dir.'icon_'.$icon.IMG_EXT.'" align="left" border="0">';
-	echo $objectName.': ';
-	echo lang( $title );
-	echo <<<EOF
-    </th>
-  </tr>
-EOF
-;
-?>
-  <tr><td class="subaction">
-    <?php foreach( $windowMenu as $action )
-          {
-          	?><a href="<?php echo Html::url($actionName,$action['subaction']) ?>"><?php echo lang('global_'.$action['text']) ?></a> <?php
-          }
-          	?></td>
-  </tr>
-<?php
-
-	echo <<<EOF
-	  <tr>
-    <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4">
-EOF
-;
-	echo '';
-}
-
-
-function windowClose()
-{
-	echo <<<EOF
-      </table>
-	</td>
-  </tr>
-</table>
-
-</center>
-EOF
-;
-}
 
 ?>
