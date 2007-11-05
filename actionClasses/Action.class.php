@@ -18,108 +18,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.33  2007-10-05 23:32:16  dankert
-// Notizmeldungen k?nnen auch ein mehrzeiliges Log anzeigen.
-//
-// Revision 1.32  2007-06-04 20:58:35  dankert
-// M?glichkeit f?r Virtual Hosts mit eigener Konfiguration.
-//
-// Revision 1.31  2007-05-03 21:18:14  dankert
-// Nicht aktive Men?punkte als inaktiv anzeigen.
-//
-// Revision 1.30  2007-04-21 11:49:40  dankert
-// Keine Variable "style" verwenden (?berschreibt andere Variablen!)
-//
-// Revision 1.29  2007-04-21 00:01:53  dankert
-// Unterscheiden zwischen Root-, Default- und Benutzer-Stylesheet.
-//
-// Revision 1.28  2007-04-11 21:43:01  dankert
-// Erg?nzung von "Accesskeys".
-//
-// Revision 1.27  2007-04-08 21:09:34  dankert
-// Anderes Spracheelement f?r Fenstertitel
-//
-// Revision 1.26  2007/01/21 15:35:01  dankert
-// ?nderung in "lastModified()"
-//
-// Revision 1.25  2006/07/19 20:28:40  dankert
-// Attribut "alias" auswerten.
-//
-// Revision 1.24  2006/07/15 22:18:08  dankert
-// Attribut "alias" auswerten.
-//
-// Revision 1.23  2006/06/16 22:30:58  dankert
-// Kommentare
-//
-// Revision 1.22  2006/06/16 21:26:29  dankert
-// Methode maxAge(), setzen von Expires-Headern im HTTP-Header.
-//
-// Revision 1.21  2006/02/27 19:17:04  dankert
-// Aenderung in "callSubAction()": Kein Aufruf von "forward()"
-//
-// Revision 1.20  2006/01/29 17:17:49  dankert
-// Fenstertitel aus Konfiguration (Men?namen) ermitteln
-//
-// Revision 1.19  2006/01/23 23:07:44  dankert
-// ?nderung forward(), Neu: setMenu()
-//
-// Revision 1.18  2006/01/11 22:38:10  dankert
-// ?nderungen bei Aufruf Template-Engine
-//
-// Revision 1.17  2005/04/16 21:33:13  dankert
-// Erweiterter Funktionsaufruf fuer Notizen/Meldungen
-//
-// Revision 1.16  2005/02/17 19:20:32  dankert
-// Beruecksichtigung von Konfiguration: interface-override_title
-//
-// Revision 1.15  2005/01/23 11:55:52  dankert
-// Setzen Eigenschaft, ob Readonly-Mode
-//
-// Revision 1.14  2005/01/14 21:41:09  dankert
-// Neue Methode lastModified()
-//
-// Revision 1.13  2004/12/30 21:44:03  dankert
-// Subaction-Wechsel speichern
-//
-// Revision 1.12  2004/12/26 21:57:16  dankert
-// Feststellen, ob Request-Dauer ausgegeben werden soll
-//
-// Revision 1.11  2004/12/19 14:40:18  dankert
-// neue Methode hasRequestVar()
-//
-// Revision 1.10  2004/12/15 23:22:26  dankert
-// Konstanten, getRequestid()
-//
-// Revision 1.9  2004/11/29 21:08:13  dankert
-// neue Methode hasRequestVar()
-//
-// Revision 1.8  2004/11/28 21:27:52  dankert
-// addNotice()
-//
-// Revision 1.7  2004/11/27 13:05:37  dankert
-// Einzelne Funktionen verlagert
-//
-// Revision 1.6  2004/11/10 22:35:23  dankert
-// Unbenennen einzelner Methoden
-//
-// Revision 1.5  2004/10/10 17:42:52  dankert
-// Neue Methode: getUserFromSession()
-//
-// Revision 1.4  2004/10/04 19:58:05  dankert
-// Logging hinzugef?gt
-//
-// Revision 1.3  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.2  2004/04/30 20:31:57  dankert
-// Berechtigung: freigeben
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 define('OR_NOTICE_OK'   ,'ok'     );
@@ -131,12 +29,13 @@ define('OR_NOTICE_ERROR','error'  );
  *
  * Diese Klasse stellt grundlegende action-uebergreifende Methoden
  * bereit.
- * Dienst als Ueberklasse fuer alle abgeleiteten Action-Klassen in
+ * Dient als Ueberklasse fuer alle abgeleiteten Action-Klassen in
  * diesem Package bzw. Verzeichnis.
  *
- * @author $Author$
+ * @author Jan Dankert
  * @version $Revision$
  * @package openrat.actions
+ * @abstract 
  */
 class Action
 {
@@ -149,16 +48,39 @@ class Action
 	var $writable;
 	var $publishing;
 	var $actionConfig;
+	
+	/**
+	 * Aktuell angemeldeter Benutzer.<br>
+	 * Wird ind er Funktion "init()" gesetzt.
+	 *
+	 * @var Object Benutzer
+	 */
+	var $currentUser;
 
 
-	function Action()
+	/**
+	 * Wird durch das Controller-Skript (do.php) nach der Kontruierung des Objektes aufgerufen.
+	 * So koennen Unterklassen ihren eigenen Kontruktor besitzen, ohne den Superkontruktor
+	 * (=diese Funktion) aufrufen zu müssen.
+	 */
+	function init()
 	{
 		global $conf;
-		$this->writable   = !$conf['security']['readonly' ];
-		$this->publishing = !$conf['security']['nopublish'];
+		$this->writable    = !$conf['security']['readonly' ];
+		$this->publishing  = !$conf['security']['nopublish'];
+		$this->currentUser = Session::getUser();
+		
+		$this->templateVars['errors' ] = array();
+		$this->templateVars['notices'] = array();
 	}
 
 
+	/**
+	 * Liest eine Session-Variable
+	 *
+	 * @param String $varName Schlüssel
+	 * @return mixed
+	 */
 	function getSessionVar( $varName )
 	{
 		global $SESS;
@@ -169,6 +91,13 @@ class Action
 	}
 
 
+	/**
+	 * Setzt eine Session-Variable
+	 *
+	 * @param Sring $varName Schlüssel
+	 * @param mixed $value Inhalt
+	 * @return mixed
+	 */
 	function setSessionVar( $varName,$value )
 	{
 		global $SESS;
@@ -177,6 +106,13 @@ class Action
 	}
 
 
+	/**
+	 * Ermittelt den Inhalt der gewünschten Request-Variablen.
+	 * Falls nicht vorhanden, wird "" zurückgegeben.
+	 *
+	 * @param String $varName Schlüssel
+	 * @return String Inhalt
+	 */
 	function getRequestVar( $varName )
 	{
 		global $REQ;
@@ -187,6 +123,13 @@ class Action
 	}
 
 
+	/**
+	 * Ermittelt, ob der aktuelle Request eine Variable mit dem
+	 * angegebenen Namen enthält.
+	 *
+	 * @param String $varName Schlüssel
+	 * @return boolean true, falls vorhanden.
+	 */
 	function hasRequestVar( $varName )
 	{
 		global $REQ;
@@ -195,6 +138,12 @@ class Action
 	}
 
 
+	/**
+	 * Ermittelt die aktuelle Id aus dem Request.<br>
+	 * Um welche ID es sich handelt, ist abhängig von der Action.
+	 *
+	 * @return Integer
+	 */
 	function getRequestId()
 	{
 		return intval( $this->getRequestVar( REQ_PARAM_ID ) );
@@ -202,25 +151,23 @@ class Action
 
 
 
+	/**
+	 * Setzt eine Variable für die Oberfläche.
+	 *
+	 * @param String $varName Schlüssel
+	 * @param Mixed $value
+	 */
 	function setTemplateVar( $varName,$value )
 	{
 		$this->templateVars[ $varName ] = $value;
 	}
 
 
-	function addNotice( $type,$name,$text,$status=OR_NOTICE_OK,$vars=array(),$log=array() )
-	{
-		if	( !isset($this->templateVars['notices']) )
-			$this->templateVars['notices'] = array();
-
-		$this->templateVars['notices'][] = array('type'=>$type,
-                                                 'name'=>$name,
-		                                         'text'=>lang('NOTICE_'.$text,$vars),
-		                                         'log'=>$log,
-		                                         'status'=>$status);
-	}
-
-
+	/**
+	 * Setzt eine Liste von Variablen für die Oberfläche.
+	 *
+	 * @param Array $varList Assoziatives Array
+	 */
 	function setTemplateVars( $varList )
 	{
 		foreach( $varList as $name=>$value )
@@ -230,6 +177,53 @@ class Action
 	}
 
 
+	/**
+	 * Fügt einen Validierungsfehler hinzu.
+	 *
+	 * @param String $name Name des validierten Eingabefeldes
+	 * @param String Textschlüssel der Fehlermeldung (optional)
+	 */
+	function addValidationError( $name,$message="COMMON_VALIDATION_EROR" )
+	{
+		if	( !empty($message) )
+			$this->addNotice('','',$message,OR_NOTICE_ERROR);
+
+		$this->templateVars['errors'][] = $name;
+	}
+
+	
+	/**
+	 * Fügt ein Meldung hinzu.
+	 *
+	 * @param String $type Typ des Objektes, zu dem diese Meldung gehört.
+	 * @param String $name Name des Objektes, zu dem diese Meldung gehört.
+	 * @param String $text Textschlüssel der Fehlermeldung (optional)
+	 * @param String $status Einer der Werte OR_NOTICE_(OK|WARN|ERROR)
+	 * @param Array  $vars Variablen für den Textschlüssel
+	 * @param Array $log Weitere Hinweistexte für diese Meldung.
+	 */
+	function addNotice( $type,$name,$text,$status=OR_NOTICE_OK,$vars=array(),$log=array() )
+	{
+		if	( !is_array($log))
+			$log = array($log);
+
+		if	( !is_array($vars))
+			$vars = array($vars);
+
+		$this->templateVars['notices'][] = array('type'=>$type,
+                                                 'name'=>$name,
+		                                         'text'=>lang('NOTICE_'.$text,$vars),
+		                                         'log'=>$log,
+		                                         'status'=>$status);
+	}
+
+
+	
+	/**
+	 * @deprecated siehe #addNotice
+	 * @param unknown_type $title
+	 * @param unknown_type $add_info
+	 */
 	function message( $title='ERROR',$add_info='' )
 	{
 		Logger::warn( 'creating error message, info='.$add_info );
@@ -242,18 +236,20 @@ class Action
 	}
 
 
-	/** Ausgabe des Templates
+	/**
+	 * Ausgabe des Templates.<br>
+	 * <br>
+	 * Erst hier soll die Ausgabe auf die Standardausgabe, also die
+	 * Ausgabe für den Browser, starten.<br>
+	 * <br>
 	 *
-	 * Es wird das gew?nschte Template auf die Standardausgabe
-	 * ausgegeben.
-	 *
-	 * @param String Dateiname des Templates
+	 * @param String Relativer Dateiname des Templates im Format "<action>/<subaction>".
 	 */
 	function forward( $tplName="" )
 	{
 
 		$this->setMenu();
-		$tplName = (method_exists(new ObjectAction(),$this->subActionName)?'object':$this->actionName).'/'.$this->subActionName;
+		$tplName = (method_exists(new ObjectAction(),$this->subActionName)&&$this->actionName != 'user'?'object':$this->actionName).'/'.$this->subActionName;
 
 		if	(isset($this->actionConfig[$this->subActionName]['alias']))
 			$tplName = (method_exists(new ObjectAction(),$this->subActionName)?'object':$this->actionName).'/'.$this->actionConfig[$this->subActionName]['alias'];
@@ -265,6 +261,7 @@ class Action
 			$windowTitle = 'menu_title_'.$this->actionName.'_'.$this->actionConfig[$this->subActionName]['menu'];
 
 		global $conf;
+		global $REQ;
 		global $PHP_SELF;
 		global $HTTP_SERVER_VARS;
 		global $image_dir;
@@ -277,6 +274,12 @@ class Action
 		// ?bertragen der Array-Variablen in den aktuellen Kontext
 		//
 		extract( $this->templateVars );
+
+		// ?bertragen der Array-Variablen in den aktuellen Kontext
+		//
+		
+		if	( count($errors)>0 )
+			extract( $REQ );
 	
 		// Setzen einiger Standard-Variablen
 		//
@@ -324,6 +327,11 @@ class Action
 	}
 	
 	
+	/**
+	 * Ruft eine weitere Subaction auf.
+	 *
+	 * @param String $subActionName Name der nächsten Subaction. Es muss eine Methode mit diesem Namen geben.
+	 */
 	function callSubAction( $subActionName )
 	{
 		if	( in_array($this->actionName,array('page','file','link','folder')) )
@@ -333,77 +341,13 @@ class Action
 
 		Logger::trace("next subaction is '$subActionName'");
 		
-		global $SESS;
-
 		$this->$subActionName();
-//		$this->forward();
 	}
 
 
 	/**
-	 * Verschieben eines Objektes
-	 * @access protected
-	 */
-//	function move()
-//	{
-//		if   ( $this->getRequestVar('targetobjectid') != '' )
-//		{
-//			$o = new Object( $this->getSessionVar('objectid') );
-//			
-//			if	( $o->hasRight('prop') )
-//				$o->setParentId( $this->getRequestVar('targetobjectid') );
-//		}
-//
-//		$this->callSubAction('prop');
-//	}
-
-
-	/**
-	 * Kopieren eines Objektes
-	 * @access protected
-	 */
-//	function copy()
-//	{
-//		if   ( $this->getRequestVar('targetobjectid') != '' )
-//		{
-//			$o = new Object( $this->getSessionVar('objectid') );
-//			
-//			if	( $o->hasRight('prop') )
-//				$o->setParentId( $this->getRequestVar('movetoobjectid') );
-//
-//			$o->name = lang('GLOBAL_COPY_OF').' '.$o->name;
-//			$o->add();
-//		}
-//
-//		$this->callSubAction('prop');
-//	}
-
-
-	/**
-	 * Erzeugen einer Verknuepfung auf das aktuelle Objekt
-	 * @access protected
-	 */
-//	function link()
-//	{
-//		$link = new Link();
-//		$link->parentid       = $this->getRequestVar('targetobjectid');
-//
-//		$o = new Object( $this->getSessionVar('objectid') );
-//		$o->load();
-//		$link->linkedObjectId = $o->objectid;
-//		$link->isLinkToObject = true;
-//		$link->name           = lang('GLOBAL_LINK_TO').' '.$o->name;
-//		$link->add();
-//
-//		$this->callSubAction('prop');
-//	}
-
-
-
-
-	/**
 	 * Ermitteln, ob Benutzer Administratorrechte besitzt
-	 * @return Boolean
+	 * @return Boolean TRUE, falls der Benutzer ein Administrator ist.
 	 */
 	function userIsAdmin()
 	{
@@ -550,8 +494,19 @@ class Action
 	
 	
 	
+	/**
+	 * Ermittelt, ob der Menüpunkt aktiv ist.
+	 * Ob ein Menüpunkt als aktiv angezeigt werden soll, steht meist erst zur Laufzeit fest.
+	 * <br>
+	 * Diese Methode kann von den Unterklassen überschrieben werden.
+	 * Falls diese Methode nicht überschrieben wird, sind alle Menüpunkte aktiv.
+	 *
+	 * @param String $name Logischer Name des Menüpunktes
+	 * @return boolean TRUE, wenn Menüpunkt aktiv ist.
+	 */
 	function checkMenu( $name )
 	{
+		// Standard: Alle Menüpunkt sind aktiv.
 		return true;
 	}
 }
