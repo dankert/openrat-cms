@@ -312,6 +312,11 @@ class PageAction extends ObjectAction
 			$this->page->save();
 			$this->addNotice($this->page->getType(),$this->page->name,'PROP_SAVED','ok');
 		}
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('prop');
+		}
 	}
 
 

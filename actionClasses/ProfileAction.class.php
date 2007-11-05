@@ -47,9 +47,17 @@ class ProfileAction extends Action
 		$this->user->tel      = $this->getRequestVar('tel'     );
 		$this->user->desc     = $this->getRequestVar('desc'    );
 		$this->user->style    = $this->getRequestVar('style'   );
-		$this->user->save();
-
-		$this->addNotice('user',$this->user->name,'SAVED','ok');
+		
+		if	( !empty($this->user->fullname) )
+		{
+			$this->user->save();
+			$this->addNotice('user',$this->user->name,'SAVED','ok');
+		}
+		else
+		{
+			$this->addValidationError('fullname');
+			$this->callSubAction('edit');
+		}
 	}
 
 
@@ -70,16 +78,26 @@ class ProfileAction extends Action
 		srand ((double)microtime()*1000003);
 		$code = rand();
 		$newMail = $this->getRequestVar('mail');
-		Session::set('mailChangeCode',$code   );
-		Session::set('mailChangeMail',$newMail);
-		
-		// E-Mail an die neue Adresse senden.
-		$mail = new Mail( $newMail,'mail_change_code' );
-		$mail->setVar('code',$code                 );
-		$mail->setVar('name',$this->user->getName());
-		$mail->send();
-		
-		$this->addNotice('user',$newUser->name,'mail_sent','ok'); // Meldung
+
+		if	( empty($newMail) )
+		{
+			// Bestätigungscode stimmt nicht.
+			$this->addValidationError('mail');
+			$this->callSubAction('mail');
+		}
+		else
+		{
+			Session::set('mailChangeCode',$code   );
+			Session::set('mailChangeMail',$newMail);
+			
+			// E-Mail an die neue Adresse senden.
+			$mail = new Mail( $newMail,'mail_change_code' );
+			$mail->setVar('code',$code                 );
+			$mail->setVar('name',$this->user->getName());
+			$mail->send();
+			
+			$this->addNotice('user',$newUser->name,'mail_sent','ok'); // Meldung
+		}
 	}
 	
 	
@@ -102,8 +120,9 @@ class ProfileAction extends Action
 		else
 		{
 			// Bestätigungscode stimmt nicht.
-			$this->addNotice('user',$newUser->name,'mailcode_not_match','error');
-		}		
+			$this->addValidationError('code','mailcode_not_match');
+			$this->callSubAction('confirmmail');
+		}
 		
 	}
 	
@@ -111,31 +130,25 @@ class ProfileAction extends Action
 	
 	function savepw()
 	{
-		if	( $this->getRequestVar('password1') != '' &&
-			  $this->getRequestVar('password1') == $this->getRequestVar('password2') )
+		if	( ! $this->user->checkPassword( $this->getRequestVar('act_password') ) )
 		{
-			$ok = $this->user->checkPassword( $this->getRequestVar('act_password') );
-
-			if	( !$ok )
-			{
-				$this->addNotice('user',$this->user->name,'ERROR','error');
-			}
-			else
-			{
-				$this->user->setPassword( $this->getRequestVar('password1') );
-				
-				// E-Mail mit dem neuen Kennwort an Benutzer senden
-				if	( $this->hasRequestVar('mail') && !empty($this->user->mail) )
-				{
-					// Text der E-Mail zusammenfuegen
-					$text = wordwrap(lang('USER_MAIL_PREFIX'),70,"\n")."\n\n".$this->getRequestVar('password1')."\n\n".wordwrap(lang('USER_MAIL_SUFFFIX'),70,"\n");
-
-					// Mail versenden
-					mail($this->user->mail,lang('USER_MAIL_SUBJECT'),$text);
-				}
-
-				$this->addNotice('user',$this->user->name,'SAVED','ok');
-			}
+			$this->addValidationError('act_password');
+			$this->callSubAction('pwchange');
+		}
+		elseif	( $this->getRequestVar('password1') == '' )
+		{
+			$this->addValidationError('password1');
+			$this->callSubAction('pwchange');
+		}
+		elseif ( $this->getRequestVar('password1') != $this->getRequestVar('password2') )
+		{
+			$this->addValidationError('password2');
+			$this->callSubAction('pwchange');
+		}
+		else
+		{
+			$this->user->setPassword( $this->getRequestVar('password1') );
+			$this->addNotice('user',$this->user->name,'SAVED','ok');
 		}
 
 	}

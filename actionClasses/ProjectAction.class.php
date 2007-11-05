@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.15  2007-11-05 20:51:03  dankert
+// Aufruf von "addValidationError(...)" bei Eingabefehlern.
+//
 // Revision 1.14  2007-10-04 21:50:37  dankert
 // Notiz, wenn Projekt gespeichert.
 //
@@ -79,29 +82,36 @@ class ProjectAction extends Action
 
 	function ProjectAction()
 	{
-		if	( !$this->userIsAdmin() )
-			die('n/a');
-
 		if	( $this->getRequestId()!=0 )
 		{
 			$this->project = new Project( $this->getRequestId() );
 			$this->project->load();
 		}
+		
+		
 	}
 
 
 	function save()
 	{
-		$this->project->name                = $this->getRequestVar('name'               );
-		$this->project->target_dir          = $this->getRequestVar('target_dir'         );
-		$this->project->ftp_url             = $this->getRequestVar('ftp_url'            );
-		$this->project->ftp_passive         = $this->getRequestVar('ftp_passive'        );
-		$this->project->cmd_after_publish   = $this->getRequestVar('cmd_after_publish'  );
-		$this->project->content_negotiation = $this->getRequestVar('content_negotiation');
-		$this->project->cut_index           = $this->getRequestVar('cut_index'          );
-
-		$this->addNotice('project',$this->project->name,'SAVED','ok');
-		$this->project->save(); // speichern
+		if	( $this->getRequestVar('name') != '')
+		{
+			$this->project->name                = $this->getRequestVar('name'               );
+			$this->project->target_dir          = $this->getRequestVar('target_dir'         );
+			$this->project->ftp_url             = $this->getRequestVar('ftp_url'            );
+			$this->project->ftp_passive         = $this->getRequestVar('ftp_passive'        );
+			$this->project->cmd_after_publish   = $this->getRequestVar('cmd_after_publish'  );
+			$this->project->content_negotiation = $this->getRequestVar('content_negotiation');
+			$this->project->cut_index           = $this->getRequestVar('cut_index'          );
+	
+			$this->addNotice('project',$this->project->name,'SAVED','ok');
+			$this->project->save(); // speichern
+		}
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('edit');
+		}
 	}
 
 
@@ -119,6 +129,11 @@ class ProjectAction extends Action
 			$this->project = new Project();
 			$this->project->name = $this->getRequestVar('name');
 			$this->project->add();
+		}
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('add');
 		}
 
 		$this->callSubAction('listing');
@@ -192,6 +207,11 @@ class ProjectAction extends Action
 			$this->project->delete();
 
 			$this->setTemplateVar('tree_refresh',true);
+		}
+		else
+		{
+			$this->addValidationError('delete');
+			$this->callSubAction('remove');
 		}
 	}
 	

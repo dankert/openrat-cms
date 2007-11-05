@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.18  2007-11-05 20:51:03  dankert
+// Aufruf von "addValidationError(...)" bei Eingabefehlern.
+//
 // Revision 1.17  2007-10-10 19:49:20  dankert
 // Anzeige von abh?ngigen Seiten in den Template-Eigenschaften.
 //
@@ -254,10 +257,15 @@ class TemplateAction extends Action
 		if  ( $this->getRequestVar('name') != '' )
 		{
 			$this->template->addElement( $this->getRequestVar('name'),$this->getRequestVar('description'),$this->getRequestVar('type') );
+			$this->setTemplateVar('tree_refresh',true);
+			$this->addNotice('template',$this->template->name,'SAVED','ok');
+		}
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('addel');
 		}
 
-		$this->setTemplateVar('tree_refresh',true);
-		$this->addNotice('template',$this->template->name,'SAVED','ok');
 	}
 
 
@@ -297,6 +305,11 @@ class TemplateAction extends Action
 				
 				$this->addNotice('template',$copy_template->name,'COPIED','ok');
 			}
+		}
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('add');
 		}
 
 		$this->setTemplateVar('tree_refresh',true);
