@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.6  2007-01-20 15:21:54  dankert
+// Revision 1.7  2007-11-05 20:48:31  dankert
+// Erweiterung um Hinzuf?gen/Entfernen von Benutzern; Aufruf der Funktion "addValidationError(...)" bei Eingabefehlern.
+//
+// Revision 1.6  2007/01/20 15:21:54  dankert
 // Eingabefeld f?r L?schbest?tigung umbenannt.
 //
 // Revision 1.5  2006/01/23 23:10:16  dankert
@@ -94,11 +97,19 @@ class GroupAction extends Action
 	
 	function save()
 	{
-		$this->group->name = $this->getRequestVar('name');
-		
-		$this->group->save();
-
-		$this->addNotice('group',$this->group->name,'SAVED','ok');
+		if	( $this->getRequestVar('name') != '' )
+		{
+			$this->group->name = $this->getRequestVar('name');
+			
+			$this->group->save();
+	
+			$this->addNotice('group',$this->group->name,'SAVED','ok');
+		}
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('edit');
+		}
 	}
 
 
@@ -109,23 +120,45 @@ class GroupAction extends Action
 	
 	function addgroup()
 	{
-		$this->group = new Group();
-		$this->group->name = $this->getRequestVar('name');
-		$this->group->add();
-	
-		$this->addNotice('group',$this->group->name,'ADDED','ok');
-		$this->callSubAction('listing');
+		if	( $this->getRequestVar('name') != '')
+		{
+			$this->group = new Group();
+			$this->group->name = $this->getRequestVar('name');
+			$this->group->add();
+			$this->addNotice('group',$this->group->name,'ADDED','ok');
+			$this->callSubAction('listing');
+		}
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('add');
+		}
 	}
 
 
 	function adduser()
 	{
-		// Benutzer der Gruppe hinzuf?gen
-		$this->group->addUser( $this->getRequestVar('userid') );
+		$this->setTemplateVar('users',$this->group->getOtherUsers());
+	}
 
-		$this->addNotice('group',$this->group->name,'SAVED','ok');
-	
-		$this->callSubAction('users');
+
+	function addusertogroup()
+	{
+		// Benutzer der Gruppe hinzuf?gen
+		$userid = $this->getRequestVar('userid');
+		if	( is_array($userid))
+		{
+			foreach( $userid as $uid )
+			{
+				$this->group->addUser( $uid );
+				$this->addNotice('group',$this->group->name,'SAVED','ok');
+			}
+		}
+		elseif( intval($userid) > 0 )
+		{
+			$this->group->addUser( intval($userid) );
+			$this->addNotice('group',$this->group->name,'SAVED','ok');
+		}
 	}
 
 
@@ -134,7 +167,6 @@ class GroupAction extends Action
 		$this->group->delUser( intval($this->getRequestVar('userid')) );
 	
 		$this->addNotice('group',$this->group->name,'DELETED','ok');
-		$this->callSubAction('users');
 	}
 
 
@@ -180,22 +212,41 @@ class GroupAction extends Action
 	}
 
 
+	function memberships()
+	{
+	}
+	
+	
+	
 	function users()
 	{
 		// Mitgliedschaften ermitteln
 		//
-		$this->setTemplateVar('memberships',$this->group->getUsers());
+		$userliste = array();
+		
+		foreach( $this->group->getUsers() as $userid=>$name )
+		{
+			$userliste[$userid] = array('name'       => $name,
+			                            'delete_url' => Html::url('group','deluser',$this->getRequestId(),array('userid'=>$userid)));
+		}
+		$this->setTemplateVar('memberships',$userliste);
 
 
 		// Alle hinzuf?gbaren Benutzer ermitteln
 		//
-		$this->setTemplateVar('users',$this->group->getOtherUsers());
+		//		$this->setTemplateVar('users',$this->group->getOtherUsers());
 	}
-
-
-	function rights()
+	
+	function checkMenu( $menu )
 	{
-		$this->setTemplateVar('projects',$this->group->getRights());
-		
+		switch( $menu )
+		{
+			case 'users':
+				return count($this->group->getUsers()) > 0;
+			case 'adduser':
+				return count($this->group->getOtherUsers()) > 0;
+			default:
+				return true;
+		}
 	}
 }

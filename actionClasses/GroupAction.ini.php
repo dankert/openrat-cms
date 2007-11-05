@@ -1,3 +1,6 @@
+
+admin=true
+
 [default]
 goto=listing
 
@@ -24,12 +27,18 @@ target=save
 [save]
 goto=listing
 
+[deluser]
+goto=users
+
+[memberships]
+goto=users
+
 [users]
-menu=users
+menu=memberships
 
 [adduser]
 target=addusertogroup
-menu=users
+menu=memberships
 
 [addusertogroup]
 goto=users
@@ -38,3 +47,4 @@ goto=users
 listing=listing,add
 users=users,adduser
 edit=edit,remove
+memberships=users,adduser
