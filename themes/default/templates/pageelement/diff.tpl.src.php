@@ -11,13 +11,13 @@ page
 				text var:title2
 				
 RAW
-<?php $fx = fx('');
+<?php $fx = '';
       if (count($text1) > 0)
       {
       	$i=0;
       	while( isset($text1[$i]) || isset($text2[$i]) )
       	{
-      		$fx = fx($fx);
+      		$fx = '';
       		?>
       		<tr>
 
