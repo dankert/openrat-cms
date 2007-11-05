@@ -4,7 +4,7 @@ page
 			row
 				cell class:fx
 					image file:icon_user
-					text var:name
+					text text:var:name
 				cell
-					link action:group subaction:deluser id:groupid
-						text text:GLOBAL_DELETE
+					link url:var:delete_url
+						text text:message:GLOBAL_DELETE

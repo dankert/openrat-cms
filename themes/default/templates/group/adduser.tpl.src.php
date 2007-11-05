@@ -4,7 +4,7 @@ page
 		window icon:project name:GLOBAL_GROUPS
 			row
 				cell class:fx
-					selectbox name:userid list:users
+					selectbox name:userid list:users multiple:true size:15
 			row
 				cell class:act
 					button type:ok
