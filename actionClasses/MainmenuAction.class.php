@@ -37,8 +37,6 @@ class MainmenuAction extends Action
 	
 	function MainmenuAction()
 	{
-		$this->Action(); // Elternklasse-Konstruktor
-		
 		$this->setTemplateVar('type',$this->getRequestVar( 'subaction') );
 		
 		
@@ -61,18 +59,18 @@ class MainmenuAction extends Action
 
 			case 'language':
 			case 'model':
-			case 'project':
 				$this->addSubAction( 'listing',-1 );
 				$this->addSubAction( 'edit'   ,-1 );
 				break;
 
+			case 'project':
 			case 'user':
 			case 'group':
-				$this->addSubAction( 'listing',-1 );
-				$this->addSubAction( 'edit'   ,-1 );
-				$this->addSubAction( 'groups' ,-1 );
-				$this->addSubAction( 'pw'     ,-1 );
-				$this->addSubAction( 'rights' ,-1 );
+				$this->addSubAction( 'listing'    ,-1 );
+				$this->addSubAction( 'edit'       ,-1 );
+				$this->addSubAction( 'memberships',-1 );
+				$this->addSubAction( 'pw'         ,-1 );
+				$this->addSubAction( 'rights'     ,-1 );
 				break;
 
 			case 'template':
@@ -240,7 +238,7 @@ class MainmenuAction extends Action
 		if	( $this->getRequestId() != 0 )
 		{
 			$this->addSubaction('edit'   );
-			$this->addSubaction('groups' );
+			$this->addSubaction('memberships' );
 			
 			// Kennwortaenderung ist nur sinnvoll, wenn kein LDAP verwendet wird
 			if	( empty($user->ldap_dn) )
@@ -263,7 +261,8 @@ class MainmenuAction extends Action
 		$group->load();
 		$this->setTemplateVar('text',$group->name);
 
-		$this->addSubaction('listing');
+		$this->addSubaction('listing'    );
+		$this->addSubaction('memberships');
 
 		if	( $this->getRequestId() != 0 )
 		{
