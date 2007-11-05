@@ -980,7 +980,9 @@ class IndexAction extends Action
 		}
 
 		$db      = Session::getDatabase();
-		$this->setTemplateVar( 'title',$user->name.'@'.$project->name.' ('.$db->conf['comment'].')' );
+//		$this->setTemplateVar( 'title',$user->name.'@'.$project->name.' ('.$db->conf['comment'].')' );
+//		$this->setTemplateVar( 'title',$project->name.' ('.$db->conf['comment'].')' );
+		$this->setTemplateVar( 'title',$project->name );
 
 		$object  = Session::getObject();
 
