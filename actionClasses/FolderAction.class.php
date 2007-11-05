@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.42  2007-11-05 20:47:39  dankert
+// Aufruf von "addValidationError(...)" bei Eingabefehlern.
+//
 // Revision 1.41  2007-10-05 23:32:40  dankert
 // Nach dem Ver?ffentlichen auf Fehler abfragen.
 //
@@ -200,6 +203,11 @@ class FolderAction extends ObjectAction
 					$this->folder->setTimestamp();
 					$this->addNotice('folder',$f->name,'ADDED','ok');
 				}
+				else
+				{
+					$this->addValidationError('folder_name');
+					$this->callSubAction('create');
+				}
 				break;
 
 			case 'file':
@@ -244,6 +252,11 @@ class FolderAction extends ObjectAction
 		
 					$this->addNotice('page',$page->name,'ADDED','ok');
 				}
+				else
+				{
+					$this->addValidationError('page_name');
+					$this->callSubAction('create');
+				}
 				break;
 				
 			case 'link':
@@ -263,8 +276,18 @@ class FolderAction extends ObjectAction
 
 					$this->addNotice('link',$link->name,'ADDED','ok');
 				}
+				else
+				{
+					$this->addValidationError('link_name');
+					$this->callSubAction('create');
+				}
 				
 				break;
+				
+			default:
+				$this->addValidationError('type');
+				$this->callSubAction('create');
+				
 		}
 						
 	}	
@@ -289,7 +312,12 @@ class FolderAction extends ObjectAction
 			$f->add();
 			$this->addNotice('folder',$f->name,'ADDED','ok');
 		}
-
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('createfolder');
+		}
+		
 		$this->folder->setTimestamp();
 	}	
 
@@ -346,7 +374,13 @@ class FolderAction extends ObjectAction
 
 			$link->add();
 		}
-			
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('createlink');
+			return;
+		}
+		
 		$this->folder->setTimestamp();
 	}	
 
@@ -371,7 +405,13 @@ class FolderAction extends ObjectAction
 			$this->addNotice('page',$page->name,'ADDED','ok');
 			$page->add();
 		}
-
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('createpage');
+			return;
+		}
+		
 		$this->folder->setTimestamp();
 	}	
 
@@ -386,8 +426,16 @@ class FolderAction extends ObjectAction
 		// Ordnereigenschaften speichern
 		if   ( $this->getRequestVar('name') != '' )
 			$this->folder->name     = $this->getRequestVar('name'    );
-		else	$this->folder->name     = $this->getRequestVar('filename');
-
+		elseif ($this->getRequestVar('filename') != '' )
+		 	$this->folder->name     = $this->getRequestVar('filename');
+		else
+		{
+			$this->addValidationError('name');
+			$this->addValidationError('filename');
+			$this->callSubAction('prop');
+			return;
+		}
+		
 		$this->folder->filename = $this->getRequestVar('filename');
 		$this->folder->desc     = $this->getRequestVar('desc');
 		$this->folder->save();
