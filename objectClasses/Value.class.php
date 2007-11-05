@@ -920,6 +920,7 @@ SQL
 				if   ( $this->page->simple )
 					break;
 
+				$raw = false;
 				switch( $this->element->subtype )
 				{
 					case 'db_id':
@@ -968,10 +969,12 @@ SQL
 						$inhalt = '';
 						break;
 					case 'edit_url':
+						$raw = true;
 						$db = Session::getDatabase();
 						$inhalt = Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id));
 						break;
 					case 'edit_fullurl':
+						$raw = true;
 						$inhalt = Http::getServer();
 						$db = Session::getDatabase();
 						$params = array('dbid'      =>$db->id,
@@ -1064,8 +1067,10 @@ SQL
 						             'unknown subtype:'.$this->element->subtype);
 						// Keine Fehlermeldung in erzeugte Seite schreiben. 
 				}
-				
-				$inhalt = Text::encodeHtml( $inhalt );
+
+				if	( !$raw )
+					$inhalt = Text::encodeHtml( $inhalt );
+					
 				break;
 				
 			default:
