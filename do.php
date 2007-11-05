@@ -82,10 +82,11 @@ $conf = Session::getConfig();
  
 // Wenn Konfiguration noch nicht in Session vorhanden, dann
 // aus Datei lesen.
-if	( !is_array( $conf ) )
+if	( !is_array( $conf ) || isset($REQ['reload']) )
 {
 	$prefs = new Preferences();
 	$conf = $prefs->load();
+	$conf['action'] = $prefs->load(OR_ACTIONCLASSES_DIR);
 	
 	// Sprache lesen und zur Konfiguration hinzufuegen
 
@@ -101,8 +102,6 @@ if	( !is_array( $conf ) )
 	// nicht vorhanden sind
 	$languages[] = $conf['i18n']['default'];
 	
-//	Html::debug($languages);
-
 	foreach( $languages as $l )
 	{
 		// Pruefen, ob Sprache vorhanden ist.
@@ -110,7 +109,6 @@ if	( !is_array( $conf ) )
 
 		if	( file_exists( $langFile ) )
 		{
-//			Html::debug($langFile);
 			$conf['language'] = parse_ini_file( $langFile );
 			break;
 		}
@@ -125,8 +123,10 @@ if	( !is_array( $conf ) )
 	
 
 	if	( !isset($conf['language']) )
-		die( 'no language found! (languages='.implode(',',$languages).')' );
+		Http::sendStatus(501,'Internal Server Error','no language found! (languages='.implode(',',$languages).')' );
 	
+	// Schreibt die Konfiguration in die Sitzung. Diese wird anschliessend nicht
+	// mehr veraendert.
 	Session::setConfig( $conf );
 }
 
@@ -194,15 +194,21 @@ else
 
 $actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
 
+if	( !isset($conf['action'][$actionClassName]) )
+	Http::serverError("Action '$action' is undefined.");
+
 require( OR_ACTIONCLASSES_DIR.'/Action.class.php' );
 require( OR_ACTIONCLASSES_DIR.'/ObjectAction.class.php' );
 require( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
+// Erzeugen der Action-Klasse
 $do = new $actionClassName;
+$do->init();
 $do->actionClassName = $actionClassName; 
 $do->actionName      = $action;
 
-$do->actionConfig = parse_ini_file( OR_ACTIONCLASSES_DIR.$actionClassName.'.ini.php',true);
+	
+$do->actionConfig = $conf['action'][$actionClassName];
 
 if	( $subaction == '' )
 	$subaction = $do->actionConfig['default']['goto'];
@@ -210,15 +216,34 @@ if	( $subaction == '' )
 if	( !isset($do->actionConfig[$subaction]) )
 {
 	Logger::warn( "Action $action has no configured method named $subaction");
-	die( "Action $action has no configured method named $subaction");
+	Http::serverError("Action '$action' has no accessable method '$subaction'.");
+	exit;
 }
 	
-Logger::trace("controller is calling subaction '$subaction'");
+$subactionConfig = $do->actionConfig[$subaction];
+//Logger::trace("controller is calling subaction '$subaction'");
 
+// Eine Subaktion ohne "guest=true" verlangt einen angemeldeten Benutzer.
+if	( !isset($subactionConfig['guest']) || !$subactionConfig['guest'] )
+	if	( !is_object($do->currentUser) )
+	{
+		Http::notAuthorized( lang('SESSION_EXPIRED') );
+		exit;
+	}
+
+// Eine Aktion mit "admin=true" verlangt einen Administrator als Benutzer.
+if	( isset($do->actionConfig['admin']) && $do->actionConfig['admin'] )
+	if	( !$do->currentUser->isAdmin )
+	{
+		Http::notAuthorized( lang('SESSION_EXPIRED') );
+		exit;
+	}
+
+
+// Aktuelle Subaction in Sitzung merken
 if	( isset($do->actionConfig[$subaction]['menu']) )
 {
 	$sl = Session::getSubaction();
-//	Html::debug($sl,'SL');
 	if	( !is_array($sl))
 		$sl = array();
 	$sl[$action] = $subaction;
@@ -227,14 +252,18 @@ if	( isset($do->actionConfig[$subaction]['menu']) )
 
 $do->subActionName = $subaction;
 
+// Alias-Methode aufrufen.
 if	( isset($do->actionConfig[$do->subActionName]['alias']) )
 {
 	$subaction = $do->actionConfig[$do->subActionName]['alias'];
 //    $do->subActionName = $subaction;
 }
 
+
+// Aufruf der Subaction
 $do->$subaction();
 
+// Aufruf der nächsten Subaction (falls vorhanden)
 if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 {
 	if	( $conf['interface']['redirect'] )
@@ -249,7 +278,8 @@ if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 	$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
 	$do->subActionName = $subActionName;
 	$subaction = $subActionName;
-	
+
+	// Auf Alias prüfen.
 	if	( isset($do->actionConfig[$do->subActionName]['alias']) )
 	{
 		$subaction = $do->actionConfig[$do->subActionName]['alias'];
@@ -259,7 +289,8 @@ if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 	$do->$subaction();
 }
 
-$do->setMenu();
-$do->forward();
+$do->setMenu(); // Menü erzeugen
+$do->forward(); // Anzeige rendern
 
+// fertig :)
 ?>
