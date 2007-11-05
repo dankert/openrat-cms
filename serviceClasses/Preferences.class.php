@@ -11,7 +11,8 @@ class Preferences
 {
 	function load( $dir='' )
 	{
-		define('QUOTE','"');
+		if	( !defined('QUOTE') )
+			define('QUOTE','"');
 		
 		$values = array();
 		
@@ -25,7 +26,10 @@ class Preferences
 		}
 			
 		if	( !is_dir($dir) )
-			die('not a directory: '.$dir);
+		{
+			Http::sendStatus(501,'Internal Server Error','not a directory: '.$dir);
+			exit;
+		}
 		
 		if	( $dh = opendir($dir) )
 		{
