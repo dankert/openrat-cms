@@ -51,8 +51,6 @@ class PageelementAction extends Action
 	 */
 	function PageelementAction()
 	{
-		$this->Action(); // Super-Konstruktor
-		
 		$this->value = new Value();
 
 		$this->page = Session::getObject();
