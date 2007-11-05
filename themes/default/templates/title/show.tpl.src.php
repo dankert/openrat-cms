@@ -12,6 +12,7 @@ page class:title
 				if present:projectname
 //					image icon:project align:left
 					text title:message:project text:var:projectname
+				if present:modelname
 					text raw:_(
 					text title:message:model text:var:modelname
 					text raw:,
