@@ -72,19 +72,27 @@
       { ?>
       	
   <tr>
-    <td style="text-align:center;padding:20px;"><table style="border:1px solid black;">
+  <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center" style="margin-top:10px; margin-bottom:10px;padding:5px; text-align:center;"><table style="" border="0" width="100%">
     
   <?php foreach( $notices as $notice ) { ?>
     
   <tr style="border-bottom:1px solid grey;">
-    <td><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
-    <td><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo implode("\n",$notice['log']) ?></pre><?php } ?>
+    <td style="padding:0px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
+    <td style="padding-top:10px;"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?>
+    </td>
+    <td style="padding:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
   <?php } ?>
   
     </table></td>
+  </tr>
+  <tr>
+  <td colspan="2"><fieldset></fieldset></td>
   </tr>
 
 <?php } ?>
