@@ -376,6 +376,65 @@ class Http
 		
 		return $server;
 	}
+	
+
+	
+	/**
+	 * Erzeugt einen "HTTP 501 Internal Server Error".
+	 *
+	 * @param String $message Eigener Hinweistext
+	 */
+	function serverError($message)
+	{
+
+		Http::sendStatus(501,'Internal Server Error',$message);
+	}
+	
+	
+	
+	/**
+	 * Erzeugt einen "HTTP 501 Internal Server Error".
+	 *
+	 * @param String $message Eigener Hinweistext
+	 */
+	function notAuthorized($message)
+	{
+
+		Http::sendStatus(403,'Not Authorized',$message);
+	}
+	
+	
+	
+	/**
+	 * Schickt einen HTTP-Status zum Client und beendet das Skript.
+	 *
+	 * @param Integer $status HTTP-Status
+	 * @param String $text HTTP-Meldung
+	 * @param String $message Eigener Hinweistext
+	 */
+	function sendStatus( $status=501,$text='Internal Server Error',$message='' )
+	{
+		if	( headers_sent() )
+		{
+			echo "$status $text\n$message";
+			exit;
+		}
+		header('HTTP/1.0 '.intval($status).' '.$text);
+		header('Content-Type: text/html');
+		$signature = OR_TITLE.' '.OR_VERSION.' '.getenv('SERVER_SOFTWARE');
+		echo <<<HTML
+<html>
+<head><title>$status $text - OpenRat</title></head>
+<body>
+<h1>$text</h1>
+<p>$message</p>
+<hr>
+<address>$signature</adddress>
+</body>
+</html>
+HTML;
+		exit;
+	}
 }
 
 ?>
