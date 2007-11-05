@@ -32,3 +32,52 @@ priority=3
 ; 'Base64'
 ; '' (blank) no encoding.
 header_encoding="Quoted-printable"
+
+
+; Which SMTP client you want to use.
+; 'php' : Internal PHP function mail().
+; 'smtp': OpenRat internal SMTP-client
+; If unsure, use the builtin PHP function. 
+;client=smtp
+client=php
+
+
+
+; Settings for the internal SMTP client.
+; If client='php', you have no need to change anything in this section.
+[smtp]
+
+; Relay host
+; It is useful, to have your own relay host, as servers doing greylisting
+; *will* deny our smtp try.
+; If this is blank, the mail is delivered directly to the destination MX host.
+; I repeat, it is better to always use a relay host!
+;host="mail.yourdomain.example"
+host="locahost"
+
+; SMTP-Port is '25' in most environments
+port="25"
+
+; SMTP Authentication
+; (only needed if using a relay host)
+; (FYI: The client makes use of the SMTP "AUTH LOGIN" method.
+auth_username="your.user@something.example"
+auth_password="notsecret"
+
+; Timeout in seconds
+timeout="45"
+
+; Your fully-qualified hostname (FQDN)
+; if empty, Openrat will use your simple hostname
+localhost=
+;localhost="your.fully.qualified.hostname.example"
+
+; Use TLS
+; The client will send a "STARTTLS" command after HELO.
+; TLS is not tested, use at your own risk!
+tls=false
+
+; Use SSL
+; The client will connection using the SSL-protocol.
+; This is not tested, use at your own risk!
+ssl=false
