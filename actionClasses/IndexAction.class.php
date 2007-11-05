@@ -311,7 +311,8 @@ class IndexAction extends Action
 		// Projekte ermitteln
 		$projects = $user->projects;
 
-		$list = array();
+		$list     = array();
+		
 		foreach( $projects as $id=>$name )
 		{
 			$p = array();
@@ -322,13 +323,15 @@ class IndexAction extends Action
 			$tmpProject = new Project( $id );
 			$p['defaultmodelid'   ] = $tmpProject->getDefaultModelId();
 			$p['defaultlanguageid'] = $tmpProject->getDefaultLanguageId();
-			$p['models'   ] = $tmpProject->getModels();
-			$p['languages'] = $tmpProject->getLanguages();
+			$p['models'           ] = $tmpProject->getModels();
+			$p['languages'        ] = $tmpProject->getLanguages();
 			
 			$list[] = $p;
 		}
 
-		$this->setTemplateVar('projects',$list);
+		$this->setTemplateVar('projects',$list    );
+		
+		$this->metaValues();
 	}
 
 
@@ -344,7 +347,7 @@ class IndexAction extends Action
 		$user = Session::getUser();
 		$this->lastModified( $user->loginDate );
 
-		// Projekte ermitteln
+		// Applikationen ermitteln
 		$list = array();
 		foreach( $conf['applications'] as $id=>$app )
 		{
@@ -364,10 +367,101 @@ class IndexAction extends Action
 			$list[] = $p;
 		}
 
+
+		$this->metaValues();
 		$this->setTemplateVar('applications',$list);
 	}
 
+	
+	
+	/**
+	 * Ermittelt Meta-Angaben für den HTML-Kopf.
+	 */
+	function metaValues()
+	{
+		global $conf;
+		$metaList = array();
 
+		$user = Session::getUser();
+		if	( is_object($user) )
+		{
+			// Projekte ermitteln
+			$projects = $user->projects;
+			foreach( $projects as $id=>$name )
+			{
+				$metaList[] = array('name' => 'chapter',
+				                    'url'  => Html::url('index','project',$id),
+				                    'title'=> $name       );
+			}
+	
+			if	( $this->userIsAdmin() )
+			{
+				$metaList[] = array('name' => 'appendix',
+				                              'url'  => Html::url('index','projectmenu',0 ),
+				                              'title'=> lang('MENU_TREETITLE_ADMINISTRATION' ) );
+				
+				$metaList[] = array('name' => 'chapter',
+				                    'url'  => Html::url('index','administration',0),
+				                    'title'=> lang('administration')                );
+			}
+			
+			// Applikationen ermitteln
+			foreach( $conf['applications'] as $id=>$app )
+			{
+				if	( !is_array($app) )
+					continue;
+				$appUrl = $app['url'];
+				if	( isset($app['param']) )
+				{
+					$appUrl .= strpos($appUrl,'?')!==false?'&':'?';
+					$appUrl .= $app['param'].'='.session_id();
+				}
+				
+				$metaList[] = array('name' => 'bookmark',
+				                    'url'  => $appUrl  ,
+				                    'title'=> $app['name'] );
+			}
+		}
+		
+		$project = Session::getProject();
+		if	( is_object($project) && $project->projectid > 0 )
+		{
+			$languages =$project->getLanguages();
+			
+			foreach( $project->getModels() as $modelid=>$modelname )
+			{
+				foreach( $languages as $languageid=>$languagename )
+				{
+					
+					$metaList[] = array('name' => 'subsection',
+					                    'url'  => Html::url('index',
+					                                        'project',
+					                                        $project->projectid,
+					                                        array('languageid'=>$languageid,
+					                                              'modelid'   =>$modelid)     ),
+					                    'title'=> $modelname.' - '.$languagename
+					                   );
+				}
+			}
+		}
+
+		$metaList[] = array('name' => 'author',
+		                              'url'  => $conf['login']['logo']['url'],
+		                              'title'=> $conf['login']['logo']['url'] );
+
+		$metaList[] = array('name' => 'top',
+		                              'url'  => Html::url('index','logout',0 ),
+		                              'title'=> 'Start' );
+		
+		$metaList[] = array('name' => 'contents',
+		                              'url'  => Html::url('index','projectmenu',0 ),
+		                              'title'=> lang('MENU_TREETITLE_PROJECTMENU' ) );
+
+		
+		$this->setTemplateVar('metaList',$metaList);
+	}
+
+	
 
 	/**
 	 * Open-Id Login, Überprüfen der Anmeldung.<br>
@@ -540,9 +634,6 @@ class IndexAction extends Action
 	 */
 	function administration()
 	{
-		if	( !$this->userIsAdmin() )
-			die(':P');
-			
 		Session::setProject( new Project(-1) );
 	}
 	
@@ -793,7 +884,7 @@ class IndexAction extends Action
 					$user->setCurrent();
 				else
 				{
-					trigger_error("Guest login failed; User '$username' not found.",E_USER_NOTICE);
+					$this->addNotice('user',$username,'LOGIN_FAILED',OR_NOTICE_WARN,array('name'=>$username) );
 					$user = null;
 				}
 			}
@@ -918,6 +1009,8 @@ class IndexAction extends Action
 		$this->setTemplateVar( 'frame_src_background',Html::url( 'background'     ) );
 
 		$this->setTemplateVar( 'tree_width',$conf['interface']['tree_width'] );
+		
+		$this->metaValues();
 	}
 
 
