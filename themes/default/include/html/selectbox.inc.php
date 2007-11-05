@@ -1,7 +1,9 @@
 <?php
 if ($attr_addempty) $$attr_list = array(''=>lang('LIST_ENTRY_EMPTY'))+$$attr_list;
-?><select size="1" id="id_<?php echo $attr_name ?>"  name="<?php echo $attr_name ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
-if (count($$attr_list)<=1) echo ' disabled="disabled"'
+?><select id="id_<?php echo $attr_name ?>"  name="<?php echo $attr_name; if ($attr_multiple) echo '[]'; ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
+if (count($$attr_list)<=1) echo ' disabled="disabled"';
+if	($attr_multiple) echo ' multiple="multiple"';
+echo ' size="'.intval($attr_size).'"';
 ?>><?php
 		$attr_tmp_list = $$attr_list;
 		if	( isset($$attr_name) && isset($attr_tmp_list[$$attr_name]) )
