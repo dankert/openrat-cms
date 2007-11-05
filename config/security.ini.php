@@ -39,6 +39,18 @@ password=
 
 
 
+; Guest Login
+; if enabled, a named guest user is automatically logged in.
+[guest]
+
+; enable auto-login for a guest user.
+enable=false
+
+; Name of the guest user, who is automatically logged in.
+user=guest
+
+
+
 [login]
 ; Type of authorization.
 ; 'http' uses the HTTP Basic Authrization.
