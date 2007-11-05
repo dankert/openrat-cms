@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.8  2004-12-19 15:20:27  dankert
+// Revision 1.9  2007-11-05 20:45:03  dankert
+// Neue Methode "getAvailableRights()"
+//
+// Revision 1.8  2004/12/19 15:20:27  dankert
 // Korrektur delete()
 //
 // Revision 1.7  2004/11/28 19:25:51  dankert
@@ -102,6 +105,12 @@ class Acl
 	  * @type Integer
 	  */
 	var $languageid = 0;
+
+	/**
+	  * Name der Sprache
+	  * @type String
+	  */
+	var $languagename = '';
 
 	/**
 	  * Es handelt sich um eine Standard-Berechtigung
@@ -302,6 +311,24 @@ class Acl
 		              'languageid'   => $this->languageid,
 		              'languagename' => $this->languagename,
 		              'objectid'     => $this->objectid );
+
+	}
+
+
+	function getAvailableRights()
+	{
+		return array( 'read',
+		              'write',
+		              'prop',
+		              'create_folder',
+		              'create_file',
+		              'create_link',
+		              'create_page',
+		              'delete',
+		              'release',
+		              'publish',
+		              'grant',
+		              'transmit' );
 
 	}
 
