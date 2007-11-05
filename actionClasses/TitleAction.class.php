@@ -52,12 +52,25 @@ class TitleAction extends Action
 		$this->setTemplateVar('css_body_class','title');
 
 		$db = Session::getDatabase();
-		$this->setTemplateVar('dbid'  ,$db->id              ); 
+//		$this->setTemplateVar('dbid'  ,$db->id              ); 
 		$this->setTemplateVar('dbname',$db->conf['comment'] );
+//		$this->setTemplateVar('dbdescription',$db->conf['comment'] );
 
 		$user = Session::getUser();		
 		$this->setTemplateVar('username'    ,$user->name    );
 		$this->setTemplateVar('userfullname',$user->fullname);
+
+		$project = Session::getProject();
+		if	( is_object($project) )		
+			$this->setTemplateVar('projectname',$project->name);
+		
+		$language = Session::getProjectLanguage();
+		if	( is_object($language) )		
+			$this->setTemplateVar('languagename',$language->name);
+		
+		$model = Session::getProjectModel();
+		if	( is_object($model) )		
+			$this->setTemplateVar('modelname',$model->name);
 		
 		// Urls zum Benutzerprofil und zum Abmelden
 		$this->setTemplateVar('profile_url',Html::url( 'profile'         ));
