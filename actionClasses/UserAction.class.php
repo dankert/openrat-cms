@@ -43,24 +43,31 @@ class UserAction extends Action
 			$this->user->load();
 			$this->setTemplateVar('userid',$this->user->userid);
 		}
-
 	}
 
 
 	function save()
 	{
-		// Benutzer speichern
-		$this->user->name     = $this->getRequestVar('name'    );
-		$this->user->fullname = $this->getRequestVar('fullname');
-		$this->user->isAdmin  = $this->hasRequestVar('is_admin');
-		$this->user->ldap_dn  = $this->getRequestVar('ldap_dn' );
-		$this->user->tel      = $this->getRequestVar('tel'     );
-		$this->user->desc     = $this->getRequestVar('desc'    );
-		$this->user->mail     = $this->getRequestVar('mail'    );
-		$this->user->style    = $this->getRequestVar('style'   );
-
-		$this->user->save();
-		$this->addNotice('user',$this->user->name,'SAVED','ok');
+		if	( $this->getRequestVar('name') != '' )
+		{
+			// Benutzer speichern
+			$this->user->name     = $this->getRequestVar('name'    );
+			$this->user->fullname = $this->getRequestVar('fullname');
+			$this->user->isAdmin  = $this->hasRequestVar('is_admin');
+			$this->user->ldap_dn  = $this->getRequestVar('ldap_dn' );
+			$this->user->tel      = $this->getRequestVar('tel'     );
+			$this->user->desc     = $this->getRequestVar('desc'    );
+			$this->user->mail     = $this->getRequestVar('mail'    );
+			$this->user->style    = $this->getRequestVar('style'   );
+	
+			$this->user->save();
+			$this->addNotice('user',$this->user->name,'SAVED','ok');
+		}
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('edit');
+		}
 	}
 
 
@@ -79,6 +86,11 @@ class UserAction extends Action
 			$this->user->delete();
 			$this->addNotice('user',$this->user->name,'DELETED','ok');
 		}
+		else
+		{
+			$this->addValidationError('confirm');
+			$this->callSubAction('remove');
+		}
 	}
 
 
@@ -90,9 +102,17 @@ class UserAction extends Action
 	
 	function adduser()
 	{
-		$this->user = new User();
-		$this->user->add( $this->getRequestVar('name') );
-		$this->addNotice('user',$this->user->name,'ADDED','ok');
+		if	( $this->getRequestVar('name') != '' )
+		{
+			$this->user = new User();
+			$this->user->add( $this->getRequestVar('name') );
+			$this->addNotice('user',$this->user->name,'ADDED','ok');
+		}
+		else
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('add');
+		}
 	}
 
 
@@ -154,23 +174,29 @@ class UserAction extends Action
 			$pw2 = $pw1;
 		}
 
-		// Wenn Kennwoerter identisch und lang genug
-		if	( $pw1 == $pw2 &&
-			  strlen($pw1)>=intval($conf['security']['password']['min_length'])  )
+		if ( strlen($pw1)<intval($conf['security']['password']['min_length']) )
 		{
+			$this->addValidationError('password1');
+			$this->callSubAction('pw');
+		}
+		elseif	( $pw1 != $pw2 )
+		{
+			$this->addValidationError('password2');
+			$this->callSubAction('pw');
+		}
+		else
+		{
+			// Kennwoerter identisch und lang genug
 			$this->user->setPassword($pw1,!$this->hasRequestVar('timeout') ); // Kennwort setzen
 			
 			// E-Mail mit dem neuen Kennwort an Benutzer senden
 			if	( $this->hasRequestVar('email') && !empty($this->user->mail) && $conf['mail']['enabled'] )
 			{
 				$this->mailPw( $pw1 );
+				$this->addNotice('user',$this->user->name,'MAIL_SENT','ok');
 			}
 
 			$this->addNotice('user',$this->user->name,'SAVED','ok');
-		}
-		else
-		{
-			$this->addNotice('user',$this->user->name,'NOT_SAVED','error');
 		}
 
 	}
@@ -211,10 +237,16 @@ class UserAction extends Action
 	}
 
 
+	function memberships()
+	{
+		
+	}
+
+	
 	function groups()
 	{
 		// Mitgliedschaften
-		$this->setTemplateVar('memberships',$this->user->getGroups());
+//		$this->setTemplateVar('memberships',$this->user->getGroups());
 		
 		$gruppenListe = array();
 		
@@ -243,27 +275,72 @@ class UserAction extends Action
 	{
 		$rights = $this->user->getAllAcls();
 
-		$rightList  = array();
-		$objectList = array();
+		$projects = array();
 		
 		foreach( $rights as $acl )
 		{
-			if	( !isset($rightList[$acl->projectid]) )
-				$rightList[$acl->projectid]=array();
-			$rightList[$acl->projectid][$acl->objectid] = $acl->getProperties();
+			if	( !isset($projects[$acl->projectid]))
+			{
+				$projects[$acl->projectid] = array();
+				$p = new Project($acl->projectid);
+				$p->load();
+				$projects[$acl->projectid]['projectname'] = $p->name;
+				$projects[$acl->projectid]['rights'     ] = array();
+			}
+
+			$right = array();
+			
+			if	( $acl->languageid > 0 )
+			{
+				$language = new Language($acl->languageid);
+				$language->load();
+				$right['languagename'] = $language->name;
+			}
+			else
+			{
+				$right['languagename'] = lang('ALL_LANGUAGES');
+			}
+			
 			
 			$o = new Object($acl->objectid);
-			$o->objectLoadRaw();
-			$objectList[$o->objectid] = $o->getProperties();
+			$o->objectLoad();
+			$right['objectname'] = $o->name;
+			$right['objectid'  ] = $o->objectid;
+			$right['objecttype'] = $o->getType();
+			
+			if	( $acl->userid > 0 )
+			{
+				$user = new User($acl->userid);
+				$user->load();
+				$right['username'] = $user->name;
+			}
+			elseif	( $acl->groupid > 0 )
+			{
+				$group = new Group($acl->groupid);
+				$group->load();
+				$right['groupname'] = $group->name;
+			}
+			else
+			{
+				// Berechtigung für "alle".
+			}
+
+//			$show = array();
+//			foreach( $acl->getProperties() as $p=>$set)
+//				$show[$p] = $set;
+//				
+//			$right['show'] = $show;
+			$right['bits'] = $acl->getProperties();
+			
+			$projects[$acl->projectid]['rights'][] = $right;
 		}
-		$o = new Object();
-		$o->isFolder = true;
-		$show = $o->getRelatedAclTypes();
 		
-		$this->setTemplateVar('projects',$this->user->getReadableProjects() );
-		$this->setTemplateVar('rights'  ,$rightList                         );
-		$this->setTemplateVar('objects' ,$objectList                        );
-		$this->setTemplateVar('show'    ,$show                              );
+		$this->setTemplateVar('projects'    ,$projects );
+		
+		$this->setTemplateVar('show',Acl::getAvailableRights() );
+		
+		if	( $this->user->isAdmin )
+			$this->addNotice('user',$this->user->name,'ADMIN_NEEDS_NO_RIGHTS',OR_NOTICE_WARN);
 	}
 	
 	

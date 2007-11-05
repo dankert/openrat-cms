@@ -1,4 +1,6 @@
 
+admin=true
+
 [default]
 goto=listing
 
@@ -29,11 +31,14 @@ target=delete
 [delete]
 goto=listing
 
+[memberships]
+goto=groups
+
 [groups]
-menu=groups
+menu=memberships
 
 [addgroup]
-menu=groups
+menu=memberships
 target=addgrouptouser
 
 [delgroup]
@@ -47,6 +52,7 @@ menu=pw
 target=pwchange
 
 [rights]
+menu=rights
 
 [pwchange]
 goto=pw
@@ -54,6 +60,7 @@ goto=pw
 [menu]
 listing=listing,add
 edit=edit,remove
-groups=groups,addgroup
+memberships=groups,addgroup
 pw=pw
 info=show,mail
+rights=rights
