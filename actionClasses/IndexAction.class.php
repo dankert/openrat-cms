@@ -249,7 +249,7 @@ class IndexAction extends Action
 
 			$this->callSubAction('show');
 		}
-
+		
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
@@ -388,6 +388,7 @@ class IndexAction extends Action
 		if	( !$openId->checkAuthentication() )
 		{
 			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED','error',array('name'=>$openId->user),array($openId->error) );
+			$this->addValidationError('openid_url','');
 			$this->callSubAction('showlogin');
 			return;
 		}
@@ -414,6 +415,7 @@ class IndexAction extends Action
 			{
 				// Benutzer ist nicht in Benutzertabelle vorhanden (und angelegt werden soll er auch nicht).
 				$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
+				$this->addValidationError('openid_url','');
 				$this->callSubAction('showlogin');
 				return;
 			}
@@ -467,6 +469,7 @@ class IndexAction extends Action
 			if	( ! $openId->login() )
 			{
 				$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array($openId->error) );
+				$this->addValidationError('openid_url','');
 				$this->callSubAction('showlogin');
 				return;
 			}
@@ -490,11 +493,19 @@ class IndexAction extends Action
 			sleep(3);
 			
 			if	( $this->mustChangePassword )
+			{
 				// Anmeldung gescheitert, Benutzer muss Kennwort ändern.
 				$this->addNotice('user',$loginName,'LOGIN_FAILED_MUSTCHANGEPASSWORD','error' );
+				$this->addValidationError('password1','');
+				$this->addValidationError('password2','');
+			}
 			else
+			{
 				// Anmeldung gescheitert.
 				$this->addNotice('user',$loginName,'LOGIN_FAILED','error',array('name'=>$this->getRequestVar('login_name')) );
+				$this->addValidationError('login_name'    ,'');
+				$this->addValidationError('login_password','');
+			}
 				
 			$this->callSubAction('showlogin');
 		}
@@ -602,14 +613,15 @@ class IndexAction extends Action
 
 	function object()
 	{
+		$this->evaluateRequestVars( array('objectid'=>$this->getRequestId()) );
+
 		$user = Session::getUser();
+
 		if   ( ! is_object($user) )
 		{
 			$this->callSubAction('show');
+			return;
 		}
-
-		$this->evaluateRequestVars( array('objectid'=>$this->getRequestId()) );
-		$this->evaluateRequestVars( array('objectid'=>$this->getRequestId()) );
 
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
@@ -645,6 +657,16 @@ class IndexAction extends Action
 	{
 		global $REQ;
 		$vars = $REQ + $add;
+		
+		$db = db_connection();
+		if	( !is_object($db) )
+		{
+			if	( isset($vars[REQ_PARAM_DATABASE_ID]) )
+				$this->setDb($vars[REQ_PARAM_DATABASE_ID]);
+			else
+				die('no database available.');
+		}
+		
 
 		if	( isset($vars['objectid']) )
 		{
@@ -758,6 +780,25 @@ class IndexAction extends Action
 		global $PHP_AUTH_PW;
 
 		$user = Session::getUser();
+		
+		// Gast-Login
+		if   ( ! is_object($user) )
+		{
+			if	( $conf['security']['guest']['enable'] )
+			{
+				$this->setDefaultDb();
+				$username = $conf['security']['guest']['user'];
+				$user = User::loadWithName($username);
+				if	( $user->userid > 0 )
+					$user->setCurrent();
+				else
+				{
+					trigger_error("Guest login failed; User '$username' not found.",E_USER_NOTICE);
+					$user = null;
+				}
+			}
+		}
+		
 		if   ( ! is_object($user) )
 		{
 			switch( $conf['security']['login']['type'] )
@@ -786,6 +827,7 @@ class IndexAction extends Action
 				case 'form':
 					// Benutzer ist nicht angemeldet
 					$this->callSubAction( 'showlogin' ); // Anzeigen der Login-Maske
+					return;
 					break;
 					
 				default:
@@ -921,12 +963,19 @@ class IndexAction extends Action
 	 */
 	function registercode()
 	{
+		if	( !$this->hasRequestVar('mail') )
+		{
+			$this->addValidationError('mail');
+			$this->callSubAction('register');
+			return;
+		}
+		
 		global $conf;
 
 		srand ((double)microtime()*1000003);
 		$registerCode = rand();
 		
-		Session::set('registerCode',$registerCode                         );
+		Session::set('registerCode',$registerCode                );
 		Session::set('registerMail',$this->getRequestVar('mail') );
 					
 		$mail = new Mail($this->getRequestVar('mail'),
@@ -982,6 +1031,9 @@ class IndexAction extends Action
 		{
 			// Bestätigungscode stimmt nicht.
 			$this->addNotice('user',$newUser->name,'regcode_not_match','error');
+//			$this->addValidationError('code');
+			$this->callSubAction('register');
+			return;
 		}
 	}
 
@@ -1063,6 +1115,13 @@ class IndexAction extends Action
 	 */
 	function passwordcode()
 	{
+		if	( !$this->hasRequestVar('username') )
+		{
+			$this->addValidationError('username');
+			$this->callSubAction('password');
+			return;
+		}
+		
 		$this->checkForDb();
 
 		$user = User::loadWithName( $this->getRequestVar("username") );
@@ -1076,9 +1135,11 @@ class IndexAction extends Action
 			$eMail = new Mail( $user->mail,'password_commit_code','password_commit_code' );
 			$eMail->setVar('name',$user->getName());
 			$eMail->setVar('code',$code);
-			$eMail->send();
+			if	( $eMail->send() )
+				$this->addNotice('','user','mail_sent',OR_NOTICE_OK);
+			else
+				$this->addNotice('','user','error',OR_NOTICE_ERROR,array(),$eMail->error);
 			
-			$this->addNotice('','user','mail_sent');
 		}
 		else
 		{
