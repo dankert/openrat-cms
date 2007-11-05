@@ -1,4 +1,6 @@
 
+admin=true
+
 [default]
 goto=listing
 
