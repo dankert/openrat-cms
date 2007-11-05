@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.27  2007-11-05 20:45:36  dankert
+// *** empty log message ***
+//
 // Revision 1.26  2007-10-24 18:53:21  dankert
 // Automatisches Hinzuf?gen von Gruppen zu neuen Benutzern.
 //
@@ -177,9 +180,6 @@ class User
 		$this->loginDate = time();
 		global $SESS;
 
-//		$SESS['user'] = $this->getProperties();
-//		$SESS['userobject'] = $this;
-		
 		Session::setUser( $this );
 	}
 
@@ -293,8 +293,10 @@ class User
 
 
 	/**
-	 * Benutzerobjekt über Benutzernamen ermitteln.
+	 * Benutzerobjekt über Benutzernamen ermitteln.<br>
+	 * Liefert ein neues Benutzerobjekt zurück.
 	 * 
+	 * @static 
 	 * @param name Benutzername
 	 */
 	function loadWithName( $name )
