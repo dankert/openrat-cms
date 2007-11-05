@@ -3,7 +3,7 @@
 		$checked = $$attr_name;
 	else
 		$checked = $attr_default;
-?><input type="checkbox" id="id_<?php echo $attr_name ?>" name="<?php echo $attr_name  ?>"  <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+?><input type="checkbox" id="id_<?php echo $attr_name ?>" name="<?php echo $attr_name  ?>"  <?php if ($attr_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?><?php if (in_array($attr_name,$errors)) echo ' style="background-color:red;"' ?> /><?php
 
 if ( $attr_readonly && $checked )
 { 
