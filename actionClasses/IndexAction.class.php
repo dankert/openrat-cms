@@ -481,7 +481,7 @@ class IndexAction extends Action
 
 		if	( !$openId->checkAuthentication() )
 		{
-			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED','error',array('name'=>$openId->user),array($openId->error) );
+			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',OR_NOTICE_ERROR,array('name'=>$openId->user),array($openId->error) );
 			$this->addValidationError('openid_url','');
 			$this->callSubAction('showlogin');
 			return;
@@ -563,6 +563,8 @@ class IndexAction extends Action
 			if	( ! $openId->login() )
 			{
 				$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array($openId->error) );
+//			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',OR_NOTICE_WARN ,array('name'=>$openId->user),array($openId->error) );
+//			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',OR_NOTICE_OK,array('name'=>$openId->user),array($openId->error) );
 				$this->addValidationError('openid_url','');
 				$this->callSubAction('showlogin');
 				return;
@@ -986,9 +988,25 @@ class IndexAction extends Action
 
 		$object  = Session::getObject();
 
+		$elementid = 0;
+		
 		if	( is_object($object) )
 		{
-			$this->setTemplateVar( 'frame_src_main',Html::url('main',$object->getType(),$object->objectid) );
+			$type = $object->getType();
+			
+			if	( $type == 'page' )
+			{
+				$page        = new Page($object->objectid);
+				$page->load();
+				$elementList = $page->getWritableElements();
+				if	( count($elementList) == 1 )
+					$elementid = current(array_keys($elementList));
+			}
+
+			if	( $elementid > 0 )
+				$this->setTemplateVar( 'frame_src_main',Html::url('main','pageelement',$object->objectid,array('elementid'=>$elementid,'targetSubAction'=>'advanced')) );
+			else
+				$this->setTemplateVar( 'frame_src_main',Html::url('main',$type,$object->objectid) );
 		}
 		elseif	( is_object($project) && $project->projectid == PROJECTID_ADMIN )
 		{

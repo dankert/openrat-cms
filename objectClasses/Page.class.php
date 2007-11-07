@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.22  2007-11-07 23:29:05  dankert
+// Wenn Seite direkt aufgerufen wird, dann sofort Seitenelement anzeigen.
+//
 // Revision 1.21  2007-06-13 22:01:22  dankert
 // Korrektur: Dateiname Icon zum Bearbeiten.
 //
@@ -661,11 +664,32 @@ class Page extends Object
 	  *
 	  * @access private 
 	  */
+	function getWritableElements()
+	{
+		if	( !isset($this->template) )
+			$this->template = new Template( $this->templateid );
+		
+		return $this->template->getWritableElements();
+	}
+
+
+
+	/**
+	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
+	  * wird von generate() aufgerufen
+	  *
+	  * @access private 
+	  */
 	function generate_elements()
 	{
 		$this->values = array();
 		
-		foreach( $this->getElements() as $elementid=>$element )
+		if	( $this->simple )
+			$elements = $this->getWritableElements();
+		else
+			$elements = $this->getElements();
+			
+		foreach( $elements as $elementid=>$element )
 		{
 			// neues Elementobjekt erzeugen
 			$val = new Value();

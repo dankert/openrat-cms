@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.21  2007-11-07 23:29:05  dankert
+// Wenn Seite direkt aufgerufen wird, dann sofort Seitenelement anzeigen.
+//
 // Revision 1.20  2007-10-29 22:16:19  dankert
 // Korrektur Auswahl-Eigenschaften f?r Kopie-Element
 //
@@ -159,7 +162,9 @@ class Element
 	 */
 	var $allLanguages;
 
-
+	var $readonlyElementNames = array('copy','linkinfo','info','infodate','code','dynamic');
+	
+	
 	/**
 	 * Im Konstruktor wird die Element-Id gesetzt
 	 * @param Integer Element-Id
@@ -550,7 +555,7 @@ class Element
 	function isWritable()
 	{
 		// Bei bestimmten Feldern immer false zurueckgeben
-		if	( in_array($this->type,Array('copy','linkinfo','info','infodate','code','dynamic')) )
+		if	( in_array($this->type,$this->readonlyElementNames) )
 			return false;
 
 		return $this->writable;

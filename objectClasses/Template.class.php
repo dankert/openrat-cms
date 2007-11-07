@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.14  2007-11-07 23:29:05  dankert
+// Wenn Seite direkt aufgerufen wird, dann sofort Seitenelement anzeigen.
+//
 // Revision 1.13  2007-10-10 19:08:55  dankert
 // Beim Hinzuf?gen von Vorlagen das Kopieren einer anderen Vorlage erlauben. Korrektur beim L?schen von Vorlagen.
 //
@@ -278,6 +281,40 @@ class Template
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
+		foreach( $db->getAll( $sql->query ) as $row )
+		{
+			$e = new Element( $row['id'] );
+			$e->setDatabaseRow( $row );
+			
+			$list[$e->elementid] = $e;
+			unset($e);
+		}
+		return $list;
+	}
+
+
+
+	/**
+ 	 * Ermitteln aller Elemente zu diesem Template
+ 	 * Es wird eine Liste mit den kompletten Elementen ermittelt und zurueckgegeben
+ 	 * @return Array
+ 	 */
+	function getWritableElements()
+	{
+		$list = array();
+		$db = db_connection();
+
+		$sql = new Sql( <<<SQL
+SELECT * FROM {t_element}
+  WHERE templateid={templateid}
+    AND writable=1
+    AND type NOT IN ({readonlyList})
+  ORDER BY name ASC
+SQL
+);
+		$sql->setInt       ( 'templateid'  ,$this->templateid        );
+		$e = new Element();
+		$sql->setStringList( 'readonlyList',$e->readonlyElementNames );
 		foreach( $db->getAll( $sql->query ) as $row )
 		{
 			$e = new Element( $row['id'] );
