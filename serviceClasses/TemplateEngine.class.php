@@ -144,49 +144,46 @@ class TemplateEngine
 	function attributeValue( $value )
 	{
 		$parts = explode( ':', $value, 2 );
-		if	( count($parts) == 2 )
+
+		if	( count($parts) < 2 )
+		$parts = array('',$value);
+		
+		list( $type,$value ) = $parts;
+		
+		$invert = '';
+		if	( substr($type,0,1)=='!' )
 		{
-			list( $type,$value ) = $parts;
-			
-			$invert = '';
-			if	( substr($type,0,1)=='!' )
-			{
-				$type = substr($type,1);
-				$invert = '! ';
-			}
-			
-			switch( $type )
-			{
-				case 'var':
-					return $invert.'$'.$value;
-				case '':
-					return "'".$value."'";
-				case 'method':
-					return $invert.'$this->'.$value.'()';
-				case 'property':
-					return $invert.'$this->'.$value;
-				case 'message':
-					return 'lang('."'".$value."'".')';
-				case 'messagevar':
-					return 'lang($'.$value.')';
-				case 'config':
-					$config_parts = explode('/',$value);
-					return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
-					
-				default:
-					die( get_class($this).': Unknown type "'.$type.'" in attribute. Allowed: var|method|property|message|messagevar|config or none');
-			}
+			$type = substr($type,1);
+			$invert = '! ';
 		}
-		else
+		
+		switch( $type )
 		{
-			// Sonderfälle für die Attributwerte "true" und "false".
-			// Hinweis: Die Zeichenkette "false" entspricht in PHP true.
-			// Siehe http://de.php.net/manual/de/language.types.boolean.php
-			if	( $value == 'true' || $value == 'false' )
-				return $value;
-			else
-				return "'".$value."'";
-		}
+			case 'var':
+				return $invert.'$'.$value;
+			case '':
+				// Sonderfälle für die Attributwerte "true" und "false".
+				// Hinweis: Die Zeichenkette "false" entspricht in PHP true.
+				// Siehe http://de.php.net/manual/de/language.types.boolean.php
+				if	( $value == 'true' || $value == 'false' )
+					return $value;
+				else
+					return "'".preg_replace('/{(\w+)\}/','\'.$\\1.\'',$value)."'";
+			case 'method':
+				return $invert.'$this->'.$value.'()';
+			case 'property':
+				return $invert.'$this->'.$value;
+			case 'message':
+				return 'lang('."'".$value."'".')';
+			case 'messagevar':
+				return 'lang($'.$value.')';
+			case 'config':
+				$config_parts = explode('/',$value);
+				return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
+				
+			default:
+				die( get_class($this).': Unknown type "'.$type.'" in attribute. Allowed: var|method|property|message|messagevar|config or none');
+			}
 	}
 	
 	
