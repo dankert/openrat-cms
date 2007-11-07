@@ -3,6 +3,8 @@
 	$attr_list_tmp_key   = $attr_key;
 	$attr_list_tmp_value = $attr_value;
 	$attr_list_extract   = $attr_extract;
+	unset($attr_key);
+	unset($attr_value);
 
 	if	( !isset($$attr_list) || !is_array($$attr_list) )
 		$$attr_list = array();
