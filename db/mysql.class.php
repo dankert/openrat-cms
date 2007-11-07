@@ -53,7 +53,7 @@ class DB_mysql
 		if    ( $db != '' )
 		{
 			if	( !mysql_select_db( $db,$this->connection ) )
-				die( "cannot select database '$db'. Check rights." );
+				Http::serverError("Database error while connecting to $host, database '$db' is not available." );
 		}
 
 		return true;
@@ -75,7 +75,7 @@ class DB_mysql
 		$result = mysql_query($query, $this->connection);
 
 		if	( ! $result )
-			die( '<pre>'.$query."\n".'<span style="color:red;">'.mysql_error().'</span></pre>' );
+			Http::serverError( 'Database Error<pre>'.$query."\n".'<span style="color:red;">'.mysql_error().'</span></pre>' );
 
 		return $result;;
 	}

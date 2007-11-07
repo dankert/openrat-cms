@@ -69,7 +69,7 @@ class DB_postgresql
 		$result = @pg_exec( $this->connection,$query );
 
 		if	( ! $result )
-			die( '<pre>'.$query."\n".'<span style="color:red;">'.pg_errormessage().'</span></pre>' );
+			Http::serverError('Database Error'.'<pre>'.$query."\n".'<span style="color:red;">'.pg_errormessage().'</span></pre>' );
 
 		return $result;;
 	}
