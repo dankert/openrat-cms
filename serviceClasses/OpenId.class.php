@@ -108,7 +108,8 @@ class OpenId
 		// Falls immer noch kein Servername gefunden wurde, dann Abbruch.
 		if	( empty($this->server) )
 		{
-			$this->error = $this->error.'Unable to locate OpenId-Server in URL';
+			if	( empty($this->error) )
+				$this->error = 'Unable to locate OpenId-Server in URL';
 			return false;
 		}
 		
