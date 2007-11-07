@@ -1,17 +1,18 @@
 page
 	table padding:5 space:0 width:100%
+
+		if true:!config:interface/application_mode	
+			row
+				cell class:menu
+					image type:var:type
 	
-		row
-			cell class:menu
-				image type:var:type
-
-				list list:path extract:true value:xy
-					#image type:icon
-					link url:var:url title:title class:path target:cms_main
-						text var:name maxlength:20
-					char type:filesep
-
-				text text:var:text title:var:text class:title
+					list list:path extract:true value:xy
+						#image type:icon
+						link url:var:url title:title class:path target:cms_main
+							text var:name maxlength:20
+						char type:filesep
+	
+					text text:var:text title:var:text class:title
 		row
 			# Menüleiste
 			cell class:subaction

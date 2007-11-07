@@ -1,5 +1,12 @@
 ; <?php exit('direct access denied') ?>
 
+; In Application-Mode all window-borders and window-titles are disabled.
+; This is useful, if you are using something like "Mozilla Prism" and
+; want OpenRat to look more like a native application.
+;  
+; Default=false 
+application_mode=false
+
 tree_width           = "25%"        ; width of navigation frame (tree)  (actually outdated!)
 file_separator       = " &raquo; "  ; chars between directory names
 nice_urls            = false        ; be aware: if 'true' you need special rewrite rules in a .htaccess file!
@@ -7,7 +14,11 @@ url_sessionid        = false        ; only needed if cookies and transid not ava
 theme                = default      ;
 show_duration        = false        ; Show duration on every page. Only useful for developers.
 timeout              =              ; Request timeout in seconds (blank=system default)
-override_title       =              ; Replace the default title (Program name+version) with this text
+
+; Replace the default title (Program name+version) with this text
+; If blank, the default is "OpenRat {Version}".
+override_title =
+
 min_width            = 950          ; Minimal Width of the browser window. If smaller, then tree is initally disabled.
 
 redirect             = false        ; use redirects before going to view (actually in testing)

@@ -27,5 +27,5 @@
 <?php } ?>
 </head>
 
-<body class="<?php echo $attr_class ?>">
+<body class="<?php echo $attr_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
 
