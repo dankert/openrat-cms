@@ -189,6 +189,7 @@ span.title
 	font-family:Arial;
 	font-size:13px;
 	font-weight:bold;
+	text-shadow:#cac2a6 2px 1px 3px;
 }
 span.inactive,
 span.menu_disabled
@@ -453,4 +454,26 @@ fieldset
 legend
 {
 	font-weight:bold;
+}
+
+tr.notice_error
+{
+	background-color:tomato;
+}
+tr.notice_warning
+{
+	background-color:orange;
+	margin:0px;
+	padding:0px;
+}
+tr.notice_ok
+{
+	background-color:greenyellow;
+}
+
+
+table.notice
+{
+	border:1px solid black;
+	border-spacing:0px;
 }

@@ -70,26 +70,28 @@
 
 <?php if (isset($notices) && count($notices)>0 )
       { ?>
-      	
+
   <tr>
-  <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="center" style="margin-top:10px; margin-bottom:10px;padding:5px; text-align:center;"><table style="" border="0" width="100%">
+    <td align="center" style="margin-top:10px; margin-bottom:10px;padding:5px; text-align:center;">
+
+  <?php foreach( $notices as $notice_idx=>$notice ) { ?>
+    	<br><table class="notice" width="100%">
     
-  <?php foreach( $notices as $notice ) { ?>
-    
-  <tr style="border-bottom:1px solid grey;">
-    <td style="padding:0px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
-    <td style="padding-top:10px;"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?>
-    </td>
-    <td style="padding:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
+
+  <tr>    
+    <td colspan="2" class="subaction" style="padding:2px; white-space:nowrap; border-bottom:1px solid black;"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?><?php } ?>
     </td>
   </tr>
-  <?php } ?>
+  <tr class="notice_<?php echo $notice['status'] ?>">
+    <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
+    <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo nl2br(htmlentities(implode("\nasdf",$notice['log']))) ?></pre><?php } ?>
+    </td>
+  </tr>
   
-    </table></td>
+    </table>
+  <?php } ?>
+    </td>
   </tr>
   <tr>
   <td colspan="2"><fieldset></fieldset></td>
