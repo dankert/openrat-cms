@@ -3,29 +3,59 @@
 ; In Application-Mode all window-borders and window-titles are disabled.
 ; This is useful, if you are using something like "Mozilla Prism" and
 ; want OpenRat to look more like a native application.
-;  
 ; Default=false 
 application_mode=false
 
-tree_width           = "25%"        ; width of navigation frame (tree)  (actually outdated!)
-file_separator       = " &raquo; "  ; chars between directory names
-nice_urls            = false        ; be aware: if 'true' you need special rewrite rules in a .htaccess file!
-url_sessionid        = false        ; only needed if cookies and transid not available 
-theme                = default      ;
-show_duration        = false        ; Show duration on every page. Only useful for developers.
-timeout              =              ; Request timeout in seconds (blank=system default)
+
+; width of navigation frame (tree)
+; (actually outdated!)
+tree_width = "25%" 
+
+
+; The seperator char between directory names
+file_separator = " &raquo; " 
+
+
+; be aware: if 'true' you need special rewrite rules in a .htaccess file!
+; If unsure, say "false" here.
+nice_urls = false        
+
+
+; In most environments this setting is "false"
+url_sessionid        = false
+
+
+; Theme
+; At the moment, der is only "default" available.
+theme = "default"
+
+
+; Show request duration on every page. Only useful for developers.
+show_duration = false
+
+
+; Request timeout in seconds (blank=system default)
+; This sets the PHP time limit for an Request.
+timeout =              
+
 
 ; Replace the default title (Program name+version) with this text
 ; If blank, the default is "OpenRat {Version}".
 override_title =
 
-min_width            = 950          ; Minimal Width of the browser window. If smaller, then tree is initally disabled.
 
-redirect             = false        ; use redirects before going to view (actually in testing)
+; Minimal Width of the browser window. If smaller, then tree is initally disabled.
+min_width            = 950
+
+
+; Use redirects before going to view (actually in testing)
+; If unsure, say "false" here.
+redirect = false        
+
 
 ; Use of human date format
 ; looks like "3 years ago", or "7 months ago"
-human_date_format    = false
+human_date_format = false
 
 
 
