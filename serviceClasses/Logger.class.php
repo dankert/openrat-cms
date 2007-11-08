@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-11-10 22:50:37  dankert
+// Revision 1.5  2007-11-08 21:32:06  dankert
+// Aktion-Name mitloggen.
+//
+// Revision 1.4  2004/11/10 22:50:37  dankert
 // Benutzen von Konstanten zur Performancesteigerung
 //
 // Revision 1.3  2004/10/04 19:57:17  dankert
@@ -149,26 +152,32 @@ class Logger
 			return;
 
 		if	( ! is_writable($filename) )
-			die( "logfile $filename is not writable by the server" );
+			Http::serverError( "logfile $filename is not writable by the server" );
 
 		$thisLevel = strtoupper($facility);
 		
 		$user = Session::getUser();
 		if	( is_object($user) )
 			$username = $user->name;
-		else	$username = 'unknown';
+		else
+			$username = '-';
 	
 		$text = $conf['log']['format']; // Format der Logdatei lesen
 
 		// Ersetzen von Variablen
 		if   ( $conf['log']['dns_lookup'] )
 			$text = str_replace( '%host',gethostbyaddr(getenv('REMOTE_ADDR')),$text );
-		else	$text = str_replace( '%host',getenv('REMOTE_ADDR'),$text );
-		
-		if	( isset( $SESS['action'] ) )
-			$action = $SESS['action'];
 		else
-			$action = 'n/a';
+			$text = str_replace( '%host',getenv('REMOTE_ADDR'),$text );
+		
+		$action = Session::get('action');
+		if	( empty($action) )
+			$action = '-';
+
+		$action = Session::get('action');
+		if	( empty($action) )
+			$action = '-';
+			
 		$text = str_replace( '%user'  ,str_pad($username ,8),$text );
 		$text = str_replace( '%level' ,str_pad($thisLevel,5),$text );
 		$text = str_replace( '%agent' ,getenv('HTTP_USER_AGENT'),$text );
