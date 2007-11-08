@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.12  2007-11-08 23:11:58  dankert
+// SubAction "load()" reaktiviert.
+//
 // Revision 1.11  2007-10-29 23:29:17  dankert
 // Konstanten f?r Request-Variablen.
 //
@@ -134,8 +137,6 @@ class TreeAction extends Action
 		Session::setTree( $this->tree );
 
 		// Weiter mit show()
-		//
-		$this->callSubAction('show');
 	}
 
 

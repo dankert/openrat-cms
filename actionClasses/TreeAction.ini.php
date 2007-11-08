@@ -4,7 +4,8 @@ goto=show
 
 [show]
 
-;[load]
+[load]
+goto=show
 
 [open]
 goto=show
