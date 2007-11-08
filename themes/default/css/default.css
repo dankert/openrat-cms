@@ -458,17 +458,17 @@ legend
 
 tr.notice_error
 {
-	background-color:tomato;
+	background-color:#FF6347;
 }
 tr.notice_warning
 {
-	background-color:orange;
+	background-color:#FFA500;
 	margin:0px;
 	padding:0px;
 }
 tr.notice_ok
 {
-	background-color:greenyellow;
+	background-color:#98FB98;
 }
 
 
