@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.43  2007-11-08 20:37:59  dankert
+// Warnmeldung, wenn beim L?schen nicht best?tigt wird.
+//
 // Revision 1.42  2007-11-05 20:47:39  dankert
 // Aufruf von "addValidationError(...)" bei Eingabefehlern.
 //
@@ -711,9 +714,13 @@ class FolderAction extends ObjectAction
 								break;
 							
 							default:
-								die('fatal: what type to delete?');
+								Http::serverError('Internal Error while deleting: What type to delete?');
 						}
-						$this->addNotice($o->getType(),$o->name,'DELETED','ok');
+						$this->addNotice($o->getType(),$o->name,'DELETED',OR_NOTICE_OK);
+					}
+					else
+					{
+						$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',OR_NOTICE_WARN);
 					}
 					
 					break;
