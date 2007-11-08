@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.28  2007-11-08 23:03:41  dankert
+// Kommentare erg?nzt.
+//
 // Revision 1.27  2007-11-05 20:45:36  dankert
 // *** empty log message ***
 //
@@ -172,18 +175,23 @@ class User
 
 
 	/**
-	  * Benutzer als aktiven Benutzer in die Session schreiben
+	  * Benutzer als aktiven Benutzer in die Session schreiben.
 	  */
 	function setCurrent()
 	{
 		$this->loadProjects();
 		$this->loginDate = time();
-		global $SESS;
 
 		Session::setUser( $this );
 	}
 
 
+	/**
+	 * Erzeugt eine WHERE-Bedingung zur Verwendung in einer SQL-Anfrage.<br>
+	 * Es wird eine Oder-Liste mit allen Gruppen-Ids erzeugt.
+	 *
+	 * @return String SQL-WHERE-Bedingung
+	 */
 	function getGroupClause()
 	{
 		$groupIds = $this->getGroupIds();
@@ -493,7 +501,8 @@ class User
 	
 
 	/**
-	 * Zu einem neuen Benutzer automatisch Gruppen hinzufügen
+	 * Zu einem neuen Benutzer automatisch Gruppen hinzufügen.
+	 * Diese Methode wird automatisch in "add()" aufgerufen.
 	 */
 	function addNewUserGroups()
 	{
@@ -574,10 +583,11 @@ class User
 	}
 
 
-	/** Ermitteln der Eigenschaften zu diesem Benutzer
-	  *
-	  * @return Array Liste der Eigenschaften als assoziatives Array
-	  */
+	/**
+	 * Ermitteln der Eigenschaften zu diesem Benutzer
+	 *
+	 * @return Array Liste der Eigenschaften als assoziatives Array
+	 */
 	function getProperties()
 	{
 		return Array( 'userid'  => $this->userid,
@@ -917,32 +927,38 @@ SQL
 	}
 	
 
+	/**
+	 * Ermitteln aller Rechte des Benutzers im aktuellen Projekt.
+	 *
+	 * @param Integer $projectid  Projekt-Id
+	 * @param Integer $languageid Sprache-Id
+	 */
 	function loadRights( $projectid,$languageid )
 	{
-		Logger::debug( 'Lade Berechtigungen' );
+		$start = time();    // Zeit merken (zum Loggen).
+		$this->delRights(); // Alte Rechte löschen.
 
-		$this->delRights();
-
-		global $SESS,$conf_php;
 		$db = db_connection();
 
 		$group_clause = $this->getGroupClause();
 
-		$sql = new Sql( 'SELECT {t_acl}.* FROM {t_acl}'.
-		                '  LEFT JOIN {t_object} '.
-		                '         ON {t_object}.id={t_acl}.objectid '.
-		                '  WHERE projectid={projectid}'.
-		                '    AND ( languageid={languageid} OR languageid IS NULL )'.
-		                '    AND ( {t_acl}.userid={userid} OR '.$group_clause.
-		                                                 ' OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )' );
-		$sql->setInt  ( 'languageid',$languageid    );
-		$sql->setInt  ( 'projectid' ,$projectid     );
-		$sql->setInt  ( 'userid'    ,$this->userid );
-		Logger::debug( 'sql='.$sql->query );
+		$sql = new Sql( <<<SQL
+SELECT {t_acl}.* FROM {t_acl}
+                 LEFT JOIN {t_object}
+                        ON {t_object}.id={t_acl}.objectid
+                 WHERE projectid={projectid}
+                   AND ( languageid={languageid} OR languageid IS NULL )
+                   AND ( {t_acl}.userid={userid} OR {group_clause}
+		                                                  OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )
+SQL
+);
+		$sql->setInt  ( 'languageid'  ,$languageid             );
+		$sql->setInt  ( 'projectid'   ,$projectid              );
+		$sql->setInt  ( 'userid'      ,$this->userid           );
+		$sql->setParam( 'group_clause',$this->getGroupClause() );
+
 		foreach( $db->getAll( $sql->query ) as $row )
 		{
-			Logger::debug( 'lese aclid '.$row['id'] );
-			
 			$acl = new Acl();
 			$acl->setDatabaseRow( $row );
 
@@ -955,8 +971,7 @@ SQL
 			if	( $acl->transmit )
 			{
 				$f = new Folder( $o->objectid );
-				Logger::debug( 'vererbung!' );
-			
+
 				foreach( $f->getAllSubfolderIds() as $sfid )
 					$this->addRight($sfid,$acl->getMask() );
 			}
@@ -970,16 +985,23 @@ SQL
 					$this->addRight($oid,ACL_READ);
 			}
 		}
+
+		// Zeit ausgeben.
+		Logger::debug( 'Loaded all rights in '.(time()-$start).' seconds' );
 	}
 
 
+	/**
+	 * Ermitteln aller Berechtigungen des Benutzers.<br>
+	 * Diese Daten werden auf der Benutzerseite in der Administration angezeigt.
+	 *
+	 * @return unknown
+	 */
 	function getAllAcls()
 	{
-		Logger::debug( 'Lade Berechtigungen' );
 
 		$this->delRights();
 
-		global $SESS,$conf_php;
 		$db = db_connection();
 
 		$group_clause = $this->getGroupClause();
@@ -1012,64 +1034,71 @@ SQL
 	}
 
 
-	// Alle Berechtigungen ermitteln
+	/**
+	 * Ermitteln aller Berechtigungen.
+	 * @return Array Berechtigungen
+	 */
 	function getRights()
 	{
-		global $SESS,$conf_php;
-		$db = db_connection();
-		$var = array();
-
-		// Alle Projekte lesen
-		$sql = new Sql( 'SELECT id,name FROM {t_project}' );
-		$projects = $db->getAssoc( $sql->query );	
-
-		foreach( $projects as $projectid=>$projectname )
-		{
-			$var[$projectid] = array();
-			$var[$projectid]['name'] = $projectname;
-			$var[$projectid]['folders'] = array();
-			$var[$projectid]['rights'] = array();
-
-			$sql = new Sql( 'SELECT {t_acl}.* FROM {t_acl}'.
-			                '  LEFT JOIN {t_folder} ON {t_acl}.folderid = {t_folder}.id'.
-			                '  WHERE {t_folder}.projectid={projectid}'.
-			                '    AND {t_acl}.userid={userid}' );
-			$sql->setInt('projectid',$projectid    );
-			$sql->setInt('userid'   ,$this->userid );
-			
-			$acls = $db->getAll( $sql->query );
-
-			foreach( $acls as $acl )
-			{
-				$aclid = $acl['id'];
-				$folder = new Folder( $acl['folderid'] );
-				$folder->load();
-				$var[$projectid]['rights'][$aclid] = $acl;
-				$var[$projectid]['rights'][$aclid]['foldername'] = implode(' &raquo; ',$folder->parentfolder( false,true ));
-				$var[$projectid]['rights'][$aclid]['delete_url'] = Html::url(array('action'=>'user','subaction'=>'delright','aclid'=>$aclid));
-			}
-			
-			$sql = new Sql( 'SELECT id FROM {t_folder}'.
-			                '  WHERE projectid={projectid}' );
-			$sql->setInt('projectid',$projectid);
-			$folders = $db->getCol( $sql->query );
-
-			$var[$projectid]['folders'] = array();
-
-			foreach( $folders as $folderid )
-			{
-				$folder = new Folder( $folderid );
-				$folder->load();
-				$var[$projectid]['folders'][$folderid] = implode(' &raquo; ',$folder->parentfolder( false,true ));
-			}
-
-			asort( $var[$projectid]['folders'] );
-		}
+		die('User.class::getRights()');
 		
-		return $var;
+//		$db = db_connection();
+//		$var = array();
+//
+//		// Alle Projekte lesen
+//		$sql = new Sql( 'SELECT id,name FROM {t_project}' );
+//		$projects = $db->getAssoc( $sql->query );	
+//
+//		foreach( $projects as $projectid=>$projectname )
+//		{
+//			$var[$projectid] = array();
+//			$var[$projectid]['name'] = $projectname;
+//			$var[$projectid]['folders'] = array();
+//			$var[$projectid]['rights'] = array();
+//
+//			$sql = new Sql( 'SELECT {t_acl}.* FROM {t_acl}'.
+//			                '  LEFT JOIN {t_folder} ON {t_acl}.folderid = {t_folder}.id'.
+//			                '  WHERE {t_folder}.projectid={projectid}'.
+//			                '    AND {t_acl}.userid={userid}' );
+//			$sql->setInt('projectid',$projectid    );
+//			$sql->setInt('userid'   ,$this->userid );
+//			
+//			$acls = $db->getAll( $sql->query );
+//
+//			foreach( $acls as $acl )
+//			{
+//				$aclid = $acl['id'];
+//				$folder = new Folder( $acl['folderid'] );
+//				$folder->load();
+//				$var[$projectid]['rights'][$aclid] = $acl;
+//				$var[$projectid]['rights'][$aclid]['foldername'] = implode(' &raquo; ',$folder->parentfolder( false,true ));
+//				$var[$projectid]['rights'][$aclid]['delete_url'] = Html::url(array('action'=>'user','subaction'=>'delright','aclid'=>$aclid));
+//			}
+//			
+//			$sql = new Sql( 'SELECT id FROM {t_folder}'.
+//			                '  WHERE projectid={projectid}' );
+//			$sql->setInt('projectid',$projectid);
+//			$folders = $db->getCol( $sql->query );
+//
+//			$var[$projectid]['folders'] = array();
+//
+//			foreach( $folders as $folderid )
+//			{
+//				$folder = new Folder( $folderid );
+//				$folder->load();
+//				$var[$projectid]['folders'][$folderid] = implode(' &raquo; ',$folder->parentfolder( false,true ));
+//			}
+//
+//			asort( $var[$projectid]['folders'] );
+//		}
+//		
+//		return $var;
 	}
 
 
+	/**
+	 * Entfernt alle Rechte aus diesem Benutzerobjekt.
+	 */
 	function delRights()
 	{
 		$this->rights = array();
@@ -1079,8 +1108,8 @@ SQL
 	/**
 	 * Ueberpruft, ob der Benutzer ein bestimmtes Recht hat
 	 *
-	 * @param objectid Objekt-Id zu dem Objekt, dessen Rechte untersucht werden sollen
-	 * @param type Typ des Rechts (Lesen,Schreiben,...)
+	 * @param $objectid Objekt-Id zu dem Objekt, dessen Rechte untersucht werden sollen
+	 * @param $type Typ des Rechts (Lesen,Schreiben,...) als Konstante ACL_*
 	 */ 
 	function hasRight( $objectid,$type )
 	{
@@ -1099,7 +1128,8 @@ SQL
 
 
 	/**
-	 * Berechtigung dem Benutzer hinzufuegen
+	 * Berechtigung dem Benutzer hinzufuegen.
+	 * 
 	 * @param objectid Objekt-Id, zu dem eine Berechtigung hinzugefuegt werden soll
 	 * @param Art des Rechtes, welches hinzugefuegt werden soll
 	 */
@@ -1121,8 +1151,6 @@ SQL
 			$this->rights[$objectid] = 0;
 
 		$this->rights[$objectid] = $this->rights[$objectid] | $type;
-			
-		Logger::trace( 'Objekt '.$objectid.' erhaelt Recht '.$type );
 	}
 
 
@@ -1134,8 +1162,14 @@ SQL
 		global $conf_themedir;
 		
 		$allstyles = array();
-		$handle=opendir( $conf_themedir.'/css' ); 
+		
+		// Theme-Verzeichnis nach "*.css"-Dateien durchsuchen.
+		$dir = $conf_themedir.'/css';
+		$handle = @opendir( $dir ); 
 
+		if	( !is_resource($handle) )
+			Http::serverError('Cannot open CSS dir: '.$dir);
+			
 		while ($file = readdir ($handle))
 		{ 
 			if ( eregi('\.css$',$file) )
@@ -1146,7 +1180,7 @@ SQL
 		}
 		closedir($handle);
 
-		asort($allstyles);	
+		asort($allstyles); // Alphabetisch sortieren.	
 		return $allstyles;	
 	}
 	
@@ -1178,7 +1212,7 @@ SQL
 		$pw .= rand(10,99);
 		 
 		return $pw;
-}
+	}
 }
 
 ?>
