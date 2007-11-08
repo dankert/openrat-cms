@@ -605,6 +605,11 @@ class IndexAction extends Action
 				
 			$this->callSubAction('showlogin');
 		}
+		else
+		{
+			$user = Session::getUser();
+			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
+		}
 	}
 
 
@@ -620,9 +625,24 @@ class IndexAction extends Action
 		// Aus Sicherheitsgruenden die komplette Session deaktvieren.
 		session_unset();
 		
+		if	( @$conf['theme']['compiler']['compile_at_logout'])
+		{
+			foreach( $conf['action'] as $actionName => $actionConfig )
+			{
+				foreach( $actionConfig as $subActionName=>$subaction )
+				{
+					if	( is_array($subaction) && !isset($subaction['goto']) && !isset($subaction['direct']) && !isset($subaction['action']) && $subActionName!='menu'  )
+					{
+						$engine = new TemplateEngine();
+						$engine->compile( strtolower(str_replace('Action','',$actionName)).'/'.$subActionName);
+					}
+				}
+			}
+		}
+		
 		// Umleiten auf eine definierte URL.s
 		$redirect_url = @$conf['security']['logout']['redirect_url'];
-//		Html::debug($redirect_url);
+
 		if	( !empty($redirect_url) )
 		{
 			header('Location: '.$redirect_url);
@@ -886,6 +906,7 @@ class IndexAction extends Action
 					$user->setCurrent();
 				else
 				{
+					Logger::warn('Guest login failed, user not found: '.$username);
 					$this->addNotice('user',$username,'LOGIN_FAILED',OR_NOTICE_WARN,array('name'=>$username) );
 					$user = null;
 				}
