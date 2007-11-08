@@ -247,9 +247,16 @@ class Action
 	 */
 	function forward( $tplName="" )
 	{
+		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
+			exit;
 
 		$this->setMenu();
-		$tplName = (method_exists(new ObjectAction(),$this->subActionName)&&$this->actionName != 'user'?'object':$this->actionName).'/'.$this->subActionName;
+		
+		$tplName = $this->actionName.'/'.$this->subActionName;
+
+			
+		if	( isset($this->actionConfig[$this->subActionName]['action']) )
+			$tplName = $this->actionConfig[$this->subActionName]['action'].'/'.$this->subActionName;
 
 		if	(isset($this->actionConfig[$this->subActionName]['alias']))
 			$tplName = (method_exists(new ObjectAction(),$this->subActionName)?'object':$this->actionName).'/'.$this->actionConfig[$this->subActionName]['alias'];
