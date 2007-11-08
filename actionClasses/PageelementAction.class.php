@@ -847,7 +847,7 @@ class PageelementAction extends Action
 		$this->value->valueid = $this->getRequestVar('valueid');
 		
 		// Das ausgew?hlte Element fuer die Bearbeitung verwenden
-		$this->callSubAction('edit');
+		//$this->callSubAction('edit');
 	}
 
 
