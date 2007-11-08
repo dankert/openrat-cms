@@ -31,7 +31,7 @@
 
 	// Inhalt-Vergleich
 	elseif( isset($attr_greaterthan)&& isset($attr_value) )
-		$exec = intval($attr_greaterthan) > intval($attr_value);
+		$exec = intval($attr_greaterthan) < intval($attr_value);
 
 	// Vergleich auf leer
 	elseif	( isset($attr_empty) )
