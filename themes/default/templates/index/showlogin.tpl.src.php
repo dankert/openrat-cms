@@ -78,16 +78,19 @@ page
 							text key:openid_user
 						cell
 							input name:openid_url class:name size:20
-				row
+							if value:size:dbids lessthan:2
+								hidden name:dbid default:var:actdbid
+				if value:size:dbids greaterthan:1
 					row
-						cell colspan:2
-							fieldset title:message:DATABASE
-					cell
-						text key:DATABASE
-					cell
-						selectbox name:dbid list:dbids default:actdbid
-						hidden name:screenwidth default:9999
-						#script 
+						row
+							cell colspan:2
+								fieldset title:message:DATABASE
+						cell
+							text key:DATABASE
+						cell
+							selectbox name:dbid list:dbids default:var:actdbid
+							hidden name:screenwidth default:9999
+							#script 
 				row
 					cell colspan:2 class:act
 						button type:ok
