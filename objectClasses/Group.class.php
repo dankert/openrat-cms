@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2006-01-23 22:59:43  dankert
+// Revision 1.6  2007-11-08 22:21:59  dankert
+// Abfangen, wenn Gruppe nicht in Datenbank gefunden wird.
+//
+// Revision 1.5  2006/01/23 22:59:43  dankert
 // Leere Gruppennamen ?bersteuern
 //
 // Revision 1.4  2004/05/19 21:11:35  dankert
@@ -87,8 +90,10 @@ class Group
 		$sql->setInt( 'groupid',$this->groupid );
 
 		$row = $db->getRow( $sql->query );
-
-		$this->name     = $row['name'    ];
+		if	( count($row) > 0 )
+			$this->name = $row['name'    ];
+		else
+			$this->name = '';
 	}
 
 
