@@ -24,20 +24,20 @@ page
 					fieldset title:message:options
 			if present:mail
 				row
-					cell
-						text text:user_mail_new_password
-					cell
+					cell colspan:2
 						checkbox name:email
+						label for:email
+							text text:user_mail_new_password
 				row
-					cell
-						text text:user_random_password
-					cell
+					cell colspan:2
 						checkbox name:random
+						label for:random
+							text text:user_random_password
 			row
-				cell
-					text text:user_password_timeout
-				cell
+				cell colspan:2
 					checkbox name:timeout
+					label for:timeout
+						text text:user_password_timeout
 					
 			row
 				cell colspan:2 class:act
