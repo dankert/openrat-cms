@@ -19,33 +19,11 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.7  2007-11-05 20:48:31  dankert
-// Erweiterung um Hinzuf?gen/Entfernen von Benutzern; Aufruf der Funktion "addValidationError(...)" bei Eingabefehlern.
-//
-// Revision 1.6  2007/01/20 15:21:54  dankert
-// Eingabefeld f?r L?schbest?tigung umbenannt.
-//
-// Revision 1.5  2006/01/23 23:10:16  dankert
-// Steuerung der Aktionsklassen ?ber .ini-Dateien
-//
-// Revision 1.4  2004/12/19 19:23:05  dankert
-// Ausgeben von "Notices"
-//
-// Revision 1.3  2004/12/15 23:23:11  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.2  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**
- * Action-Klasse zum Bearbeiten einer Benutzergruppe
+ * Action-Klasse zum Bearbeiten einer Benutzergruppe.
+ * 
  * @author $Author$
  * @version $Revision$
  * @package openrat.actions
@@ -142,55 +120,53 @@ class GroupAction extends Action
 	}
 
 
+	/**
+	 * Benutzer zur Gruppe hinzufügen.<br>
+	 * Es kann eine Liste oder eine einzelne Person zur Gruppe hinzugefügt werden.
+	 */
 	function addusertogroup()
 	{
-		// Benutzer der Gruppe hinzuf?gen
 		$userid = $this->getRequestVar('userid');
+
 		if	( is_array($userid))
 		{
+			// Im Request steht eine Liste von User-Ids.
 			foreach( $userid as $uid )
 			{
 				$this->group->addUser( $uid );
-				$this->addNotice('group',$this->group->name,'SAVED','ok');
 			}
+			$this->addNotice('group',$this->group->name,'USER_ADDED_TO_GROUP',OR_NOTICE_OK,array('count'=>count($userid)));
 		}
 		elseif( intval($userid) > 0 )
 		{
+			// Nur 1 Benutzer hinzufügen.
 			$this->group->addUser( intval($userid) );
-			$this->addNotice('group',$this->group->name,'SAVED','ok');
+			$this->addNotice('group',$this->group->name,'USER_ADDED_TO_GROUP',OK_NOTICE_OK,array('count'=>'1'));
+		}
+		else
+		{
+			// Es wurde kein Benutzer ausgewählt.
+			$this->addNotice('group',$this->group->name,'NOTHING_DONE',OR_NOTICE_WARN);
 		}
 	}
 
 
+	
+	/**
+	 * Einen Benutzer aus der Gruppe entfernen.
+	 */
 	function deluser()
 	{
 		$this->group->delUser( intval($this->getRequestVar('userid')) );
 	
-		$this->addNotice('group',$this->group->name,'DELETED','ok');
+		$this->addNotice('group',$this->group->name,'DELETED',OR_NOTICE_OK);
 	}
 
 
-//	function delright()
-//	{
-//
-//		$this->group->addRight( $REQ['aclid'] );
-//
-//		// Berechtigungen anzeigen
-//		$SESS['groupaction'] = 'rights';
-//
-//	}
-//
-//
-//	function addright()
-//	{
-//		$this->group->addRight( $REQ );
-//	
-//		// Berechtigungen anzeigen
-//		$SESS['groupaction'] = 'rights';
-//	}
-//
-//
 
+	/**
+	 * Liste aller Gruppen.
+	 */
 	function listing()
 	{
 		$list = array();
@@ -212,12 +188,20 @@ class GroupAction extends Action
 	}
 
 
+	
+	/**
+	 * Dummy-Funktion.
+	 */
 	function memberships()
 	{
 	}
 	
 	
 	
+	/**
+	 * Liste aller Benutzer in dieser Gruppe.
+	 *
+	 */
 	function users()
 	{
 		// Mitgliedschaften ermitteln
@@ -230,20 +214,26 @@ class GroupAction extends Action
 			                            'delete_url' => Html::url('group','deluser',$this->getRequestId(),array('userid'=>$userid)));
 		}
 		$this->setTemplateVar('memberships',$userliste);
-
-
-		// Alle hinzuf?gbaren Benutzer ermitteln
-		//
-		//		$this->setTemplateVar('users',$this->group->getOtherUsers());
 	}
+
 	
+	
+	/**
+	 * Menü.
+	 *
+	 * @param String $menu Menüeintrag.
+	 * @return boolean TRUE, wenn Menüeintrag aktiv ist.
+	 */
 	function checkMenu( $menu )
 	{
 		switch( $menu )
 		{
 			case 'users':
+				// Benutzerliste nur anzeigen, wenn welche vorhanden.
 				return count($this->group->getUsers()) > 0;
 			case 'adduser':
+				// Benutzer können nur hinzugefügt werden, wenn noch nicht alle
+				// in der Gruppe sind.
 				return count($this->group->getOtherUsers()) > 0;
 			default:
 				return true;
