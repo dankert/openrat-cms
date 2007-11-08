@@ -379,6 +379,8 @@
 	$attr4_list_tmp_key   = $attr4_key;
 	$attr4_list_tmp_value = $attr4_value;
 	$attr4_list_extract   = $attr4_extract;
+	unset($attr4_key);
+	unset($attr4_value);
 	if	( !isset($$attr4_list) || !is_array($$attr4_list) )
 		$$attr4_list = array();
 	foreach( $$attr4_list as $$attr4_list_tmp_key => $$attr4_list_tmp_value )
@@ -432,6 +434,10 @@
 		$exec = in_array($attr7_value,explode(',',$attr7_contains));
 	elseif( isset($attr7_equals)&& isset($attr7_value) )
 		$exec = $attr7_equals == $attr7_value;
+	elseif( isset($attr7_lessthan)&& isset($attr7_value) )
+		$exec = intval($attr7_lessthan) > intval($attr7_value);
+	elseif( isset($attr7_greaterthan)&& isset($attr7_value) )
+		$exec = intval($attr7_greaterthan) < intval($attr7_value);
 	elseif	( isset($attr7_empty) )
 	{
 		if	( !isset($$attr7_empty) )
@@ -499,6 +505,10 @@ if ( $attr8_readonly && $checked )
 		$exec = in_array($attr7_value,explode(',',$attr7_contains));
 	elseif( isset($attr7_equals)&& isset($attr7_value) )
 		$exec = $attr7_equals == $attr7_value;
+	elseif( isset($attr7_lessthan)&& isset($attr7_value) )
+		$exec = intval($attr7_lessthan) > intval($attr7_value);
+	elseif( isset($attr7_greaterthan)&& isset($attr7_value) )
+		$exec = intval($attr7_greaterthan) < intval($attr7_value);
 	elseif	( isset($attr7_empty) )
 	{
 		if	( !isset($$attr7_empty) )
@@ -1110,6 +1120,8 @@ if (isset($attr6_elementtype)) {
 	$attr6_list_tmp_key   = $attr6_key;
 	$attr6_list_tmp_value = $attr6_value;
 	$attr6_list_extract   = $attr6_extract;
+	unset($attr6_key);
+	unset($attr6_value);
 	if	( !isset($$attr6_list) || !is_array($$attr6_list) )
 		$$attr6_list = array();
 	foreach( $$attr6_list as $$attr6_list_tmp_key => $$attr6_list_tmp_value )
@@ -1273,6 +1285,10 @@ if (isset($attr6_elementtype)) {
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )

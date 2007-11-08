@@ -35,6 +35,10 @@
 		$exec = in_array($attr2_value,explode(',',$attr2_contains));
 	elseif( isset($attr2_equals)&& isset($attr2_value) )
 		$exec = $attr2_equals == $attr2_value;
+	elseif( isset($attr2_lessthan)&& isset($attr2_value) )
+		$exec = intval($attr2_lessthan) > intval($attr2_value);
+	elseif( isset($attr2_greaterthan)&& isset($attr2_value) )
+		$exec = intval($attr2_greaterthan) < intval($attr2_value);
 	elseif	( isset($attr2_empty) )
 	{
 		if	( !isset($$attr2_empty) )

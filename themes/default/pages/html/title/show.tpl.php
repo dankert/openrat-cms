@@ -261,6 +261,10 @@ if (isset($attr5_elementtype)) {
 		$exec = in_array($attr5_value,explode(',',$attr5_contains));
 	elseif( isset($attr5_equals)&& isset($attr5_value) )
 		$exec = $attr5_equals == $attr5_value;
+	elseif( isset($attr5_lessthan)&& isset($attr5_value) )
+		$exec = intval($attr5_lessthan) > intval($attr5_value);
+	elseif( isset($attr5_greaterthan)&& isset($attr5_value) )
+		$exec = intval($attr5_greaterthan) < intval($attr5_value);
 	elseif	( isset($attr5_empty) )
 	{
 		if	( !isset($$attr5_empty) )
@@ -366,6 +370,10 @@ if (isset($attr5_elementtype)) {
 		$exec = in_array($attr5_value,explode(',',$attr5_contains));
 	elseif( isset($attr5_equals)&& isset($attr5_value) )
 		$exec = $attr5_equals == $attr5_value;
+	elseif( isset($attr5_lessthan)&& isset($attr5_value) )
+		$exec = intval($attr5_lessthan) > intval($attr5_value);
+	elseif( isset($attr5_greaterthan)&& isset($attr5_value) )
+		$exec = intval($attr5_greaterthan) < intval($attr5_value);
 	elseif	( isset($attr5_empty) )
 	{
 		if	( !isset($$attr5_empty) )

@@ -1313,6 +1313,8 @@
 	$attr5_list_tmp_key   = $attr5_key;
 	$attr5_list_tmp_value = $attr5_value;
 	$attr5_list_extract   = $attr5_extract;
+	unset($attr5_key);
+	unset($attr5_value);
 	if	( !isset($$attr5_list) || !is_array($$attr5_list) )
 		$$attr5_list = array();
 	foreach( $$attr5_list as $$attr5_list_tmp_key => $$attr5_list_tmp_value )
@@ -1425,6 +1427,10 @@ if (isset($attr7_elementtype)) {
 		$exec = in_array($attr5_value,explode(',',$attr5_contains));
 	elseif( isset($attr5_equals)&& isset($attr5_value) )
 		$exec = $attr5_equals == $attr5_value;
+	elseif( isset($attr5_lessthan)&& isset($attr5_value) )
+		$exec = intval($attr5_lessthan) > intval($attr5_value);
+	elseif( isset($attr5_greaterthan)&& isset($attr5_value) )
+		$exec = intval($attr5_greaterthan) < intval($attr5_value);
 	elseif	( isset($attr5_empty) )
 	{
 		if	( !isset($$attr5_empty) )

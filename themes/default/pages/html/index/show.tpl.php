@@ -35,6 +35,10 @@
 		$exec = in_array($attr2_value,explode(',',$attr2_contains));
 	elseif( isset($attr2_equals)&& isset($attr2_value) )
 		$exec = $attr2_equals == $attr2_value;
+	elseif( isset($attr2_lessthan)&& isset($attr2_value) )
+		$exec = intval($attr2_lessthan) > intval($attr2_value);
+	elseif( isset($attr2_greaterthan)&& isset($attr2_value) )
+		$exec = intval($attr2_greaterthan) < intval($attr2_value);
 	elseif	( isset($attr2_empty) )
 	{
 		if	( !isset($$attr2_empty) )
@@ -107,6 +111,10 @@
 		$exec = in_array($attr2_value,explode(',',$attr2_contains));
 	elseif( isset($attr2_equals)&& isset($attr2_value) )
 		$exec = $attr2_equals == $attr2_value;
+	elseif( isset($attr2_lessthan)&& isset($attr2_value) )
+		$exec = intval($attr2_lessthan) > intval($attr2_value);
+	elseif( isset($attr2_greaterthan)&& isset($attr2_value) )
+		$exec = intval($attr2_greaterthan) < intval($attr2_value);
 	elseif	( isset($attr2_empty) )
 	{
 		if	( !isset($$attr2_empty) )
@@ -185,6 +193,10 @@
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )

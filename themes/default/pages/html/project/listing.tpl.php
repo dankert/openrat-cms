@@ -138,6 +138,8 @@
 	$attr3_list_tmp_key   = $attr3_key;
 	$attr3_list_tmp_value = $attr3_value;
 	$attr3_list_extract   = $attr3_extract;
+	unset($attr3_key);
+	unset($attr3_value);
 	if	( !isset($$attr3_list) || !is_array($$attr3_list) )
 		$$attr3_list = array();
 	foreach( $$attr3_list as $$attr3_list_tmp_key => $$attr3_list_tmp_value )

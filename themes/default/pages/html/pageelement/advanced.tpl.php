@@ -239,6 +239,10 @@
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )
@@ -1074,6 +1078,10 @@ if (isset($attr9_elementtype)) {
 		$exec = in_array($attr10_value,explode(',',$attr10_contains));
 	elseif( isset($attr10_equals)&& isset($attr10_value) )
 		$exec = $attr10_equals == $attr10_value;
+	elseif( isset($attr10_lessthan)&& isset($attr10_value) )
+		$exec = intval($attr10_lessthan) > intval($attr10_value);
+	elseif( isset($attr10_greaterthan)&& isset($attr10_value) )
+		$exec = intval($attr10_greaterthan) < intval($attr10_value);
 	elseif	( isset($attr10_empty) )
 	{
 		if	( !isset($$attr10_empty) )
@@ -1275,6 +1283,10 @@ if (isset($attr9_elementtype)) {
 		$exec = in_array($attr10_value,explode(',',$attr10_contains));
 	elseif( isset($attr10_equals)&& isset($attr10_value) )
 		$exec = $attr10_equals == $attr10_value;
+	elseif( isset($attr10_lessthan)&& isset($attr10_value) )
+		$exec = intval($attr10_lessthan) > intval($attr10_value);
+	elseif( isset($attr10_greaterthan)&& isset($attr10_value) )
+		$exec = intval($attr10_greaterthan) < intval($attr10_value);
 	elseif	( isset($attr10_empty) )
 	{
 		if	( !isset($$attr10_empty) )
@@ -1496,6 +1508,10 @@ if (isset($attr9_elementtype)) {
 		$exec = in_array($attr10_value,explode(',',$attr10_contains));
 	elseif( isset($attr10_equals)&& isset($attr10_value) )
 		$exec = $attr10_equals == $attr10_value;
+	elseif( isset($attr10_lessthan)&& isset($attr10_value) )
+		$exec = intval($attr10_lessthan) > intval($attr10_value);
+	elseif( isset($attr10_greaterthan)&& isset($attr10_value) )
+		$exec = intval($attr10_greaterthan) < intval($attr10_value);
 	elseif	( isset($attr10_empty) )
 	{
 		if	( !isset($$attr10_empty) )
@@ -2097,6 +2113,10 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )
@@ -2185,6 +2205,10 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )
@@ -2263,6 +2287,10 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 		$exec = in_array($attr7_value,explode(',',$attr7_contains));
 	elseif( isset($attr7_equals)&& isset($attr7_value) )
 		$exec = $attr7_equals == $attr7_value;
+	elseif( isset($attr7_lessthan)&& isset($attr7_value) )
+		$exec = intval($attr7_lessthan) > intval($attr7_value);
+	elseif( isset($attr7_greaterthan)&& isset($attr7_value) )
+		$exec = intval($attr7_greaterthan) < intval($attr7_value);
 	elseif	( isset($attr7_empty) )
 	{
 		if	( !isset($$attr7_empty) )
@@ -2401,6 +2429,10 @@ else
 		$exec = in_array($attr7_value,explode(',',$attr7_contains));
 	elseif( isset($attr7_equals)&& isset($attr7_value) )
 		$exec = $attr7_equals == $attr7_value;
+	elseif( isset($attr7_lessthan)&& isset($attr7_value) )
+		$exec = intval($attr7_lessthan) > intval($attr7_value);
+	elseif( isset($attr7_greaterthan)&& isset($attr7_value) )
+		$exec = intval($attr7_greaterthan) < intval($attr7_value);
 	elseif	( isset($attr7_empty) )
 	{
 		if	( !isset($$attr7_empty) )
@@ -2458,6 +2490,10 @@ else
 		$exec = in_array($attr8_value,explode(',',$attr8_contains));
 	elseif( isset($attr8_equals)&& isset($attr8_value) )
 		$exec = $attr8_equals == $attr8_value;
+	elseif( isset($attr8_lessthan)&& isset($attr8_value) )
+		$exec = intval($attr8_lessthan) > intval($attr8_value);
+	elseif( isset($attr8_greaterthan)&& isset($attr8_value) )
+		$exec = intval($attr8_greaterthan) < intval($attr8_value);
 	elseif	( isset($attr8_empty) )
 	{
 		if	( !isset($$attr8_empty) )
@@ -2644,6 +2680,10 @@ else
 		$exec = in_array($attr7_value,explode(',',$attr7_contains));
 	elseif( isset($attr7_equals)&& isset($attr7_value) )
 		$exec = $attr7_equals == $attr7_value;
+	elseif( isset($attr7_lessthan)&& isset($attr7_value) )
+		$exec = intval($attr7_lessthan) > intval($attr7_value);
+	elseif( isset($attr7_greaterthan)&& isset($attr7_value) )
+		$exec = intval($attr7_greaterthan) < intval($attr7_value);
 	elseif	( isset($attr7_empty) )
 	{
 		if	( !isset($$attr7_empty) )
@@ -2707,6 +2747,10 @@ document.forms[0].<?php echo $attr8_field ?>.select();
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )
@@ -2815,6 +2859,10 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )
@@ -2923,6 +2971,10 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )
@@ -3011,6 +3063,10 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )
@@ -3119,6 +3175,10 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )
@@ -3176,6 +3236,10 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 		$exec = in_array($attr5_value,explode(',',$attr5_contains));
 	elseif( isset($attr5_equals)&& isset($attr5_value) )
 		$exec = $attr5_equals == $attr5_value;
+	elseif( isset($attr5_lessthan)&& isset($attr5_value) )
+		$exec = intval($attr5_lessthan) > intval($attr5_value);
+	elseif( isset($attr5_greaterthan)&& isset($attr5_value) )
+		$exec = intval($attr5_greaterthan) < intval($attr5_value);
 	elseif	( isset($attr5_empty) )
 	{
 		if	( !isset($$attr5_empty) )
@@ -3254,6 +3318,10 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )
@@ -3438,6 +3506,10 @@ if ( $attr7_readonly && $checked )
 		$exec = in_array($attr4_value,explode(',',$attr4_contains));
 	elseif( isset($attr4_equals)&& isset($attr4_value) )
 		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
 	elseif	( isset($attr4_empty) )
 	{
 		if	( !isset($$attr4_empty) )

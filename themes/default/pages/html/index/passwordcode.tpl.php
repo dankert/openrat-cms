@@ -25,7 +25,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
-<body class="<?php echo $attr1_class ?>">
+<body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
 <?php unset($attr1) ?><?php unset($attr1_class) ?><?php $attr2_debug_info = 'a:4:{s:4:"name";s:0:"";s:6:"target";s:4:"_top";s:6:"method";s:4:"post";s:7:"enctype";s:33:"application/x-www-form-urlencoded";}' ?><?php $attr2 = array('name'=>'','target'=>'_top','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr2_name='' ?><?php $attr2_target='_top' ?><?php $attr2_method='post' ?><?php $attr2_enctype='application/x-www-form-urlencoded' ?><?php
 	if	(empty($attr2_action))
 		$attr2_action = $actionName;
@@ -37,7 +37,7 @@
       target="<?php echo $attr2_target ?>"
       action="<?php echo Html::url( $attr2_action,$attr2_subaction,$attr2_id ) ?>"
       method="<?php echo $attr2_method ?>"
-      enctype="<?php echo $attr2_enctype ?>">
+      enctype="<?php echo $attr2_enctype ?>" style="margin:0px;padding:0px;">
 <input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo $attr2_action ?>" />
 <input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo $attr2_subaction ?>" />
 <input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr2_id ?>" /><?php
@@ -62,8 +62,17 @@
 		unset($attr3['columnclasses']);
 	}
 		global $image_dir;
-		echo '<br/><br/><br/><center>';
-		echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr3_width.'">';
+		if (@$conf['interface']['application_mode'] )
+		{
+			echo '<table class="main" cellspacing="0" cellpadding="4" width="100%" style="margin:0px;border:0px; padding:0px;" height_oo="100%">';
+		}
+		else
+		{
+			echo '<br/><br/><br/><center>';
+			echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr3_width.'">';
+		}
+		if (!@$conf['interface']['application_mode'] )
+		{
 		echo '<tr><td class="menu">';
 		if	( !empty($attr3_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr3_icon.IMG_ICON_EXT.'" align="left" border="0">';
@@ -77,7 +86,11 @@
 		}
 		echo '<span class="title">'.lang($windowTitle).'</span>';
 		?>
-		</td><!--<td class="menu" style="align:right;">
+		</td>
+		<?php
+		}
+		?>
+<?php ?>		<!--<td class="menu" style="align:right;">
     <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
           {
           	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.lang($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
@@ -115,11 +128,13 @@
   <tr>
     <td align="center" style="margin-top:10px; margin-bottom:10px;padding:5px; text-align:center;">
   <?php foreach( $notices as $notice_idx=>$notice ) { ?>
-    	<br><table style="" class="notice" width="90%">
-  <tr>    
-    <td colspan="2" class="subaction" style="padding:2px; white-space:nowrap; border-bottom:1px solid black;"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?><?php } ?>
+    	<br><table class="notice" width="100%">
+  <?php if ($notice['name']!='') { ?>
+  <tr>
+    <td colspan="2" class="subaction" style="padding:2px; white-space:nowrap; border-bottom:1px solid black;"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
     </td>
   </tr>
+<?php } ?>
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>

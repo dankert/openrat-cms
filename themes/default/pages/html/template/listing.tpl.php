@@ -138,6 +138,8 @@
 	$attr3_list_tmp_key   = $attr3_key;
 	$attr3_list_tmp_value = $attr3_value;
 	$attr3_list_extract   = $attr3_extract;
+	unset($attr3_key);
+	unset($attr3_value);
 	if	( !isset($$attr3_list) || !is_array($$attr3_list) )
 		$$attr3_list = array();
 	foreach( $$attr3_list as $$attr3_list_tmp_key => $$attr3_list_tmp_value )
@@ -259,6 +261,10 @@
 		$exec = in_array($attr3_value,explode(',',$attr3_contains));
 	elseif( isset($attr3_equals)&& isset($attr3_value) )
 		$exec = $attr3_equals == $attr3_value;
+	elseif( isset($attr3_lessthan)&& isset($attr3_value) )
+		$exec = intval($attr3_lessthan) > intval($attr3_value);
+	elseif( isset($attr3_greaterthan)&& isset($attr3_value) )
+		$exec = intval($attr3_greaterthan) < intval($attr3_value);
 	elseif	( isset($attr3_empty) )
 	{
 		if	( !isset($$attr3_empty) )

@@ -231,7 +231,7 @@
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:8:"var:name";s:6:"escape";s:4:"true";}' ?><?php $attr6 = array('class'=>'text','text'=>$name,'escape'=>true) ?><?php $attr6_class='text' ?><?php $attr6_text=$name ?><?php $attr6_escape=true ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php $attr6_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:4:"name";s:6:"escape";s:4:"true";}' ?><?php $attr6 = array('class'=>'text','var'=>'name','escape'=>true) ?><?php $attr6_class='text' ?><?php $attr6_var='name' ?><?php $attr6_escape=true ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
@@ -279,7 +279,7 @@
 			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 	echo $tmp_text;
-?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_text) ?><?php unset($attr6_escape) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?></span><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_var) ?><?php unset($attr6_escape) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -359,7 +359,7 @@
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php $attr6_debug_info = 'a:3:{s:7:"default";s:5:"false";s:8:"readonly";s:5:"false";s:4:"name";s:7:"confirm";}' ?><?php $attr6 = array('default'=>false,'readonly'=>false,'name'=>'confirm') ?><?php $attr6_default=false ?><?php $attr6_readonly=false ?><?php $attr6_name='confirm' ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php $attr6_debug_info = 'a:3:{s:7:"default";s:5:"false";s:8:"readonly";s:5:"false";s:4:"name";s:6:"delete";}' ?><?php $attr6 = array('default'=>false,'readonly'=>false,'name'=>'delete') ?><?php $attr6_default=false ?><?php $attr6_readonly=false ?><?php $attr6_name='delete' ?><?php
 	if	( isset($$attr6_name) )
 		$checked = $$attr6_name;
 	else

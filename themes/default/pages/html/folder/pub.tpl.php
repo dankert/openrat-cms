@@ -1,8 +1,8 @@
-<?php $attr1_debug_info = 'a:2:{s:5:"class";s:4:"main";s:5:"title";s:13:"var:cms_title";}' ?><?php $attr1 = array('class'=>'main','title'=>$cms_title) ?><?php $attr1_class='main' ?><?php $attr1_title=$cms_title ?><?php if (!headers_sent()) header('Content-Type: text/html; charset='.lang('CHARSET'))
+<?php $attr1_debug_info = 'a:1:{s:5:"class";s:4:"main";}' ?><?php $attr1 = array('class'=>'main') ?><?php $attr1_class='main' ?><?php if (!headers_sent()) header('Content-Type: text/html; charset='.lang('CHARSET'))
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title><?php echo $attr1_title ?></title>
+  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?lang($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
@@ -12,6 +12,11 @@
   <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
 <?php
       }
+?><?php if (isset($metaList) && is_array($metaList)) foreach( $metaList as $meta )
+      {
+       	?>
+  <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo lang($meta['title']) ?>" /><?php
+      }
 ?>
 <?php if(!empty($root_stylesheet)) { ?>
   <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
@@ -20,8 +25,8 @@
   <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
 <?php } ?>
 </head>
-<body class="<?php echo $attr1_class ?>">
-<?php unset($attr1) ?><?php unset($attr1_class) ?><?php unset($attr1_title) ?><?php $attr2_debug_info = 'a:4:{s:4:"name";s:0:"";s:6:"target";s:5:"_self";s:6:"method";s:4:"post";s:7:"enctype";s:33:"application/x-www-form-urlencoded";}' ?><?php $attr2 = array('name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr2_name='' ?><?php $attr2_target='_self' ?><?php $attr2_method='post' ?><?php $attr2_enctype='application/x-www-form-urlencoded' ?><?php
+<body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
+<?php unset($attr1) ?><?php unset($attr1_class) ?><?php $attr2_debug_info = 'a:4:{s:4:"name";s:0:"";s:6:"target";s:5:"_self";s:6:"method";s:4:"post";s:7:"enctype";s:33:"application/x-www-form-urlencoded";}' ?><?php $attr2 = array('name'=>'','target'=>'_self','method'=>'post','enctype'=>'application/x-www-form-urlencoded') ?><?php $attr2_name='' ?><?php $attr2_target='_self' ?><?php $attr2_method='post' ?><?php $attr2_enctype='application/x-www-form-urlencoded' ?><?php
 	if	(empty($attr2_action))
 		$attr2_action = $actionName;
 	if	(empty($attr2_subaction))
@@ -32,7 +37,7 @@
       target="<?php echo $attr2_target ?>"
       action="<?php echo Html::url( $attr2_action,$attr2_subaction,$attr2_id ) ?>"
       method="<?php echo $attr2_method ?>"
-      enctype="<?php echo $attr2_enctype ?>">
+      enctype="<?php echo $attr2_enctype ?>" style="margin:0px;padding:0px;">
 <input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo $attr2_action ?>" />
 <input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo $attr2_subaction ?>" />
 <input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr2_id ?>" /><?php
@@ -57,8 +62,17 @@
 		unset($attr3['columnclasses']);
 	}
 		global $image_dir;
-		echo '<br/><br/><br/><center>';
-		echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr3_width.'">';
+		if (@$conf['interface']['application_mode'] )
+		{
+			echo '<table class="main" cellspacing="0" cellpadding="4" width="100%" style="margin:0px;border:0px; padding:0px;" height_oo="100%">';
+		}
+		else
+		{
+			echo '<br/><br/><br/><center>';
+			echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr3_width.'">';
+		}
+		if (!@$conf['interface']['application_mode'] )
+		{
 		echo '<tr><td class="menu">';
 		if	( !empty($attr3_icon) )
 			echo '<img src="'.$image_dir.'icon_'.$attr3_icon.IMG_ICON_EXT.'" align="left" border="0">';
@@ -72,7 +86,11 @@
 		}
 		echo '<span class="title">'.lang($windowTitle).'</span>';
 		?>
-		</td><!--<td class="menu" style="align:right;">
+		</td>
+		<?php
+		}
+		?>
+<?php ?>		<!--<td class="menu" style="align:right;">
     <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
           {
           	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.lang($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
@@ -108,19 +126,24 @@
 <?php if (isset($notices) && count($notices)>0 )
       { ?>
   <tr>
-  <td>&nbsp;</td>
-  </tr>
+    <td align="center" style="margin-top:10px; margin-bottom:10px;padding:5px; text-align:center;">
+  <?php foreach( $notices as $notice_idx=>$notice ) { ?>
+    	<br><table class="notice" width="100%">
+  <?php if ($notice['name']!='') { ?>
   <tr>
-    <td align="center" style="margin-top:10px; margin-bottom:10px;padding:5px; text-align:center;"><table style="" border="0" width="75%">
-  <?php foreach( $notices as $notice ) { ?>
-  <tr style="border-bottom:1px solid grey;">
-    <td style="padding:0px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
-    <td style="padding:10px;"><?php if ($notice['name']!='') { ?><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>: <?php } ?><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo implode("\n",$notice['log']) ?></pre><?php } ?>
+    <td colspan="2" class="subaction" style="padding:2px; white-space:nowrap; border-bottom:1px solid black;"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
     </td>
   </tr>
+<?php } ?>
+  <tr class="notice_<?php echo $notice['status'] ?>">
+    <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
+    <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo nl2br(htmlentities(implode("\nasdf",$notice['log']))) ?></pre><?php } ?>
+    </td>
+  </tr>
+    </table>
   <?php } ?>
-    </table></td>
+    </td>
   </tr>
   <tr>
   <td colspan="2"><fieldset></fieldset></td>
@@ -168,6 +191,10 @@
 		$exec = in_array($attr6_value,explode(',',$attr6_contains));
 	elseif( isset($attr6_equals)&& isset($attr6_value) )
 		$exec = $attr6_equals == $attr6_value;
+	elseif( isset($attr6_lessthan)&& isset($attr6_value) )
+		$exec = intval($attr6_lessthan) > intval($attr6_value);
+	elseif( isset($attr6_greaterthan)&& isset($attr6_value) )
+		$exec = intval($attr6_greaterthan) < intval($attr6_value);
 	elseif	( isset($attr6_empty) )
 	{
 		if	( !isset($$attr6_empty) )
@@ -225,6 +252,10 @@
 		$exec = in_array($attr7_value,explode(',',$attr7_contains));
 	elseif( isset($attr7_equals)&& isset($attr7_value) )
 		$exec = $attr7_equals == $attr7_value;
+	elseif( isset($attr7_lessthan)&& isset($attr7_value) )
+		$exec = intval($attr7_lessthan) > intval($attr7_value);
+	elseif( isset($attr7_greaterthan)&& isset($attr7_value) )
+		$exec = intval($attr7_greaterthan) < intval($attr7_value);
 	elseif	( isset($attr7_empty) )
 	{
 		if	( !isset($$attr7_empty) )
@@ -268,7 +299,7 @@
 		$checked = $$attr8_name;
 	else
 		$checked = $attr8_default;
-?><input type="checkbox" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name  ?>"  <?php if ($attr8_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+?><input type="checkbox" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name  ?>"  <?php if ($attr8_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?><?php if (in_array($attr8_name,$errors)) echo ' style="background-color:red;"' ?> /><?php
 if ( $attr8_readonly && $checked )
 { 
 ?><input type="hidden" name="<?php echo $attr8_name ?>" value="1" /><?php
@@ -388,6 +419,10 @@ if ( $attr8_readonly && $checked )
 		$exec = in_array($attr6_value,explode(',',$attr6_contains));
 	elseif( isset($attr6_equals)&& isset($attr6_value) )
 		$exec = $attr6_equals == $attr6_value;
+	elseif( isset($attr6_lessthan)&& isset($attr6_value) )
+		$exec = intval($attr6_lessthan) > intval($attr6_value);
+	elseif( isset($attr6_greaterthan)&& isset($attr6_value) )
+		$exec = intval($attr6_greaterthan) < intval($attr6_value);
 	elseif	( isset($attr6_empty) )
 	{
 		if	( !isset($$attr6_empty) )
@@ -445,6 +480,10 @@ if ( $attr8_readonly && $checked )
 		$exec = in_array($attr7_value,explode(',',$attr7_contains));
 	elseif( isset($attr7_equals)&& isset($attr7_value) )
 		$exec = $attr7_equals == $attr7_value;
+	elseif( isset($attr7_lessthan)&& isset($attr7_value) )
+		$exec = intval($attr7_lessthan) > intval($attr7_value);
+	elseif( isset($attr7_greaterthan)&& isset($attr7_value) )
+		$exec = intval($attr7_greaterthan) < intval($attr7_value);
 	elseif	( isset($attr7_empty) )
 	{
 		if	( !isset($$attr7_empty) )
@@ -488,7 +527,7 @@ if ( $attr8_readonly && $checked )
 		$checked = $$attr8_name;
 	else
 		$checked = $attr8_default;
-?><input type="checkbox" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name  ?>"  <?php if ($attr8_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+?><input type="checkbox" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name  ?>"  <?php if ($attr8_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?><?php if (in_array($attr8_name,$errors)) echo ' style="background-color:red;"' ?> /><?php
 if ( $attr8_readonly && $checked )
 { 
 ?><input type="hidden" name="<?php echo $attr8_name ?>" value="1" /><?php
@@ -650,6 +689,10 @@ if ( $attr8_readonly && $checked )
 		$exec = in_array($attr6_value,explode(',',$attr6_contains));
 	elseif( isset($attr6_equals)&& isset($attr6_value) )
 		$exec = $attr6_equals == $attr6_value;
+	elseif( isset($attr6_lessthan)&& isset($attr6_value) )
+		$exec = intval($attr6_lessthan) > intval($attr6_value);
+	elseif( isset($attr6_greaterthan)&& isset($attr6_value) )
+		$exec = intval($attr6_greaterthan) < intval($attr6_value);
 	elseif	( isset($attr6_empty) )
 	{
 		if	( !isset($$attr6_empty) )
@@ -693,7 +736,7 @@ if ( $attr8_readonly && $checked )
 		$checked = $$attr7_name;
 	else
 		$checked = $attr7_default;
-?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?><?php if (in_array($attr7_name,$errors)) echo ' style="background-color:red;"' ?> /><?php
 if ( $attr7_readonly && $checked )
 { 
 ?><input type="hidden" name="<?php echo $attr7_name ?>" value="1" /><?php
@@ -813,6 +856,10 @@ if ( $attr7_readonly && $checked )
 		$exec = in_array($attr6_value,explode(',',$attr6_contains));
 	elseif( isset($attr6_equals)&& isset($attr6_value) )
 		$exec = $attr6_equals == $attr6_value;
+	elseif( isset($attr6_lessthan)&& isset($attr6_value) )
+		$exec = intval($attr6_lessthan) > intval($attr6_value);
+	elseif( isset($attr6_greaterthan)&& isset($attr6_value) )
+		$exec = intval($attr6_greaterthan) < intval($attr6_value);
 	elseif	( isset($attr6_empty) )
 	{
 		if	( !isset($$attr6_empty) )
@@ -856,7 +903,7 @@ if ( $attr7_readonly && $checked )
 		$checked = $$attr7_name;
 	else
 		$checked = $attr7_default;
-?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+?><input type="checkbox" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name  ?>"  <?php if ($attr7_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?><?php if (in_array($attr7_name,$errors)) echo ' style="background-color:red;"' ?> /><?php
 if ( $attr7_readonly && $checked )
 { 
 ?><input type="hidden" name="<?php echo $attr7_name ?>" value="1" /><?php
