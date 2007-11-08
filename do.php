@@ -181,6 +181,8 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) )
 	$action = $REQ[REQ_PARAM_ACTION];
 else	$action = 'index';
 
+Session::set('action',$action);
+
 if	( !empty( $REQ[REQ_PARAM_SUBACTION] ) )
 	$subaction = $REQ[REQ_PARAM_SUBACTION];
 else
