@@ -3,6 +3,7 @@
 goto=show
 
 [show]
+direct=true
 
 [edit]
 menu=edit
@@ -53,10 +54,12 @@ goto=pub
 ; für Seiten,Ordner,Links und Dateien identisch.
 [rights]
 menu=rights
+action=object
 
 [aclform]
 menu=rights
 target=addacl
+action=object
 
 [addacl]
 goto=rights

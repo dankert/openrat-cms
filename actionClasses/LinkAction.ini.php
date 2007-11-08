@@ -30,10 +30,12 @@ target=delete
 
 [rights]
 menu=rights
+action=object
 
 [aclform]
 menu=rights
 target=addacl
+action=object
 
 [addacl]
 goto=rights

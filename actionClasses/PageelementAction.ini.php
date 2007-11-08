@@ -4,10 +4,13 @@ goto=show
 
 [usevalue]
 menu=edit
+goto=edit
 
 [doimport]
+goto=edit
 
 [doexport]
+direct=true
 
 [import]
 menu=edit

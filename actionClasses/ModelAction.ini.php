@@ -3,7 +3,7 @@
 goto=listing
 
 [setdefault]
-target=listing
+goto=listing
 
 [listing]
 menu=listing

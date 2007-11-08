@@ -4,8 +4,10 @@ goto=show
 
 [show]
 
-[load]
+;[load]
 
 [open]
+goto=show
 
 [close]
+goto=show

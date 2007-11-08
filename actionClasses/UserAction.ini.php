@@ -18,8 +18,8 @@ goto=listing
 menu=edit
 target=save
 
-[show]
-menu=info
+;[show]
+;menu=info
 
 [save]
 goto=listing
@@ -62,5 +62,5 @@ listing=listing,add
 edit=edit,remove
 memberships=groups,addgroup
 pw=pw
-info=show,mail
+;info=show,mail
 rights=rights

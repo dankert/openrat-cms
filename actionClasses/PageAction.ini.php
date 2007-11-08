@@ -2,16 +2,18 @@
 [default]
 goto=show
 
-[remove]
-menu=prop
-target=delete
+;[remove]
+;menu=prop
+;target=delete
 
-[delete]
-target=prop
+;[delete]
+;target=prop
 
 [show]
+direct=true
 
 [edit]
+direct=true
 
 [el]
 menu=elements
@@ -58,10 +60,12 @@ menu=src
 ; für Seiten,Ordner,Links und Dateien identisch.
 [rights]
 menu=rights
+action=object
 
 [aclform]
 menu=rights
 target=addacl
+action=object
 
 [addacl]
 goto=rights

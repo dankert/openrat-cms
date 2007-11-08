@@ -9,6 +9,7 @@ menu=listing
 target=addgroup
 
 [addgroup]
+goto=listing
 
 [listing]
 menu=listing

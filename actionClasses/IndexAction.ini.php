@@ -22,7 +22,8 @@ guest=true
 [applications]
 menu=menu
 
-[userinfo]
+;[userinfo]
+;
 
 [project]
 goto=show

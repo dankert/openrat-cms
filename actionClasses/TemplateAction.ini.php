@@ -15,6 +15,7 @@ goto=listing
 menu=edit
 
 [show]
+direct=true
 
 [prop]
 goto=name

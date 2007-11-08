@@ -3,3 +3,4 @@
 goto=show
 
 [show]
+direct=true
