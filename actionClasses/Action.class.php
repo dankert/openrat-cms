@@ -72,6 +72,8 @@ class Action
 		
 		$this->templateVars['errors' ] = array();
 		$this->templateVars['notices'] = array();
+		
+		header('Content-Language: '.$conf['language']['language_code']);
 	}
 
 
