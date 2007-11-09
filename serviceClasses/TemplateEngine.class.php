@@ -161,6 +161,7 @@ class TemplateEngine
 		{
 			case 'var':
 				return $invert.'$'.$value;
+			case 'text':
 			case '':
 				// Sonderfälle für die Attributwerte "true" und "false".
 				// Hinweis: Die Zeichenkette "false" entspricht in PHP true.
@@ -179,6 +180,9 @@ class TemplateEngine
 				return 'lang('."'".$value."'".')';
 			case 'messagevar':
 				return 'lang($'.$value.')';
+			case 'arrayvar':
+				list($arr,$key) = explode(':',$value.':none');
+				return $invert.'@$'.$arr.'['.$key.']';
 			case 'config':
 				$config_parts = explode('/',$value);
 				return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
