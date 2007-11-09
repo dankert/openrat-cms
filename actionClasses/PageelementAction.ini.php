@@ -29,6 +29,9 @@ menu=edit
 menu=edit
 target=diff
 
+[release]
+goto=archive
+
 [show]
 menu=edit
 
