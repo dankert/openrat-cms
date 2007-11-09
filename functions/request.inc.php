@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.5  2007-11-09 00:01:44  dankert
+// Bugfix: Request-Variablen k?nnen Arrays sein.
+//
 // Revision 1.4  2007-05-14 23:29:06  dankert
 // Falls REGISTER_GLOBALS aktiviert ist, dann alle REQUEST-Variablen aus dem globalen G?ltigkeitsraum entfernen.
 //
@@ -50,7 +53,8 @@ if	( ini_get('register_globals') )
 if	( get_magic_quotes_gpc() == 1 )
 {
 	foreach( $REQ as $p=>$v )
-		$REQ[$p] = stripslashes($v);
+		if	( !is_array($v) )
+			$REQ[$p] = stripslashes($v);
 }
 
 function request_into_session( $name )
