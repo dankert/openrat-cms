@@ -73,6 +73,7 @@ CREATE_USER = "Creationuser"
 DATE = "Date"
 DATE_ANSI = "Date ANSI notation"
 DATE_FORMAT = "m/d Y, H:i:s"
+DATE_FORMAT_LONG = "m/d Y, H:i"
 DATE_LAST_MONTH = "Last month"
 DATE_LAST_YEAR = "Last year"
 DATE_MONTH1 = January
