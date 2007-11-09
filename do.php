@@ -101,29 +101,27 @@ if	( !is_array( $conf ) || isset($REQ['reload']) )
 	// Wird dann verwendet, wenn die vom Browser angeforderten Sprachen
 	// nicht vorhanden sind
 	$languages[] = $conf['i18n']['default'];
-	
+	$available = explode(',',$conf['i18n']['available']);
+
 	foreach( $languages as $l )
 	{
+		if	( !in_array($l,$available) )
+			continue;
+
 		// Pruefen, ob Sprache vorhanden ist.
 		$langFile = OR_LANGUAGE_DIR.$l.'.ini.'.PHP_EXT;
 
-		if	( file_exists( $langFile ) )
-		{
-			$conf['language'] = parse_ini_file( $langFile );
-			break;
-		}
+		if	( !file_exists( $langFile ) )
+			Http::serverError("File does not exist: ".$langFile);
+
+		$conf['language'] = parse_ini_file( $langFile );
+		$conf['language']['language_code'] = $l;
+		break;
 	}
 
-// Deaktiviert, da alle Sprachdateien vollstaendig sein sollen.	
-//	$langDefaultFile = OR_LANGUAGE_DIR.$conf['i18n']['complete_from'].'.ini.'.PHP_EXT;
-//	if	( file_exists( $langDefaultFile ) )
-//	{
-//		$conf['language'] = array_merge( parse_ini_file( $langDefaultFile ),$conf['language']);
-//	}
-	
 
 	if	( !isset($conf['language']) )
-		Http::sendStatus(501,'Internal Server Error','no language found! (languages='.implode(',',$languages).')' );
+		Http::serverError('no language found! (languages='.implode(',',$languages).')' );
 	
 	// Schreibt die Konfiguration in die Sitzung. Diese wird anschliessend nicht
 	// mehr veraendert.
