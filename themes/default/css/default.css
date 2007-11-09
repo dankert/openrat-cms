@@ -220,21 +220,32 @@ td
 	vertical-align:top;
 }
 
-td.diff_equal
+
+
+/* Styles für Text-Unterschiede */
+
+tr.diff td.line
+{
+	background-color:white;
+	text-align:right;
+}
+tr.diff td.equal
 {
 }
-td.diff_old
+tr.diff td.old
 {
 	background-color:red;
 }
-td.diff_new
+tr.diff td.new
 {
 	background-color:green;
 }
-td.diff_notequal
+tr.diff td.notequal
 {
 	background-color:yellow;
 }
+
+
 
 td.menu    { background-color:#7B9CBD;vertical-align:middle; height:30px;}
 td.help    { color:black; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
