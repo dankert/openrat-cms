@@ -9,8 +9,28 @@
 			$attr_title = lang($attr_key.'_HELP');
 		else
 			$attr_title = '';
+	if	(empty($attr_type))
+		$tmp_tag = 'span';
+	else
+		switch( $attr_type )
+		{
+			case 'emphatic':
+			case 'italic':
+				$tmp_tag = 'em';
+				break;
+			case 'strong':
+			case 'bold':
+				$tmp_tag = 'strong';
+				break;
+			case 'tt':
+			case 'teletype':
+				$tmp_tag = 'tt';
+				break;
+			default:
+				$tmp_tag = 'span';
+		}
 
-?><span class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
+?><<?php echo $tmp_tag ?> class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
 	$attr_title = '';
 
 	if (!empty($attr_array))
@@ -33,17 +53,17 @@
 	elseif (!empty($attr_key))
 		$tmp_text = lang($attr_key);
 	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?($attr_escape?htmlentities($$attr_var):$$attr_var):'?'.$attr_var.'?';	
+		$tmp_text = isset($$attr_var)?$$attr_var:'?'.$attr_var.'?';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
 	elseif (!empty($attr_value))
 		$tmp_text = $attr_value;
 	else
-	{
 	  $tmp_text = '&nbsp;';
-	  //Html::debug($attr);echo 'text error';
-	}
 	
+	if	( $attr_escape && empty($attr_raw) && $tmp_text!='&nbsp;' )
+		$tmp_text = htmlentities($tmp_text);
+		
 	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
 
@@ -55,4 +75,6 @@
 	}
 			
 	echo $tmp_text;
-?></span>
+	
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>>

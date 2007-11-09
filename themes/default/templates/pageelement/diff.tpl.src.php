@@ -1,65 +1,36 @@
 page
 	window
 		row
-			cell colspan:2
-				text text:GLOBAL_COMPARE
+			cell
+			cell
+				text type:emphatic text:GLOBAL_COMPARE
 				text raw:_
-				text var:title1
-			cell colspan:2
-				text text:GLOBAL_WITH
+				text type:strong var:title_left
+			cell
+			cell
+//			cell colspan:2
+				text type:emphatic text:GLOBAL_WITH
 				text raw:_
-				text var:title2
-				
-RAW
-<?php $fx = '';
-      if (count($text1) > 0)
-      {
-      	$i=0;
-      	while( isset($text1[$i]) || isset($text2[$i]) )
-      	{
-      		$fx = '';
-      		?>
-      		<tr>
+				text type:strong var:title_right
+	
+		list list:diff extract:true
+			row class:diff
+				if present:left
+					cell width:5% class:line 
+						text text:arrayvar:left:line type:tt
+					cell width:45% class:arrayvar:left:type
+						text text:arrayvar:left:text
+				else
+					cell colspan:2 class:help width:50%
+						text raw:_
+				if present:right
+					cell width:5% class:line
+						text text:arrayvar:right:line type:tt
+					cell width:45% class:arrayvar:right:type
+						text text:arrayvar:right:text
+				else
+					cell colspan:2 class:help width:50%
+						text raw:_
 
-      		<?php
-      		if	( isset($text1[$i]['text']) )
-      		{
-      			?>
-				<td class="<?php echo $fx ?>" width="5%" ><?php echo $text1[$i]['line'] ?></td>
-				<td class="diff_<?php echo $text1[$i]['type'] ?>" width="45%"><?php echo $text1[$i]['text'] ?></td>
-      			<?php
-      		}
-      		else
-      		{
-      			?>
-      			<td colspan="2" class="help" with="50%">&nbsp;</td>
-      			<?php
-      		}
-
-      		if	( isset($text2[$i]['text']) )
-      		{
-      			?>
-				<td class="<?php echo $fx ?>" width="5%" ><?php echo $text2[$i]['line'] ?></td>
-				<td class="diff_<?php echo $text2[$i]['type'] ?>" width="45%"><?php echo $text2[$i]['text'] ?></td>
-      			<?php
-      		}
-      		else
-      		{
-      			?>
-      			<td colspan="2" class="help" with="50%">&nbsp;</td>
-      			<?php
-      		}
-      		?>
-      		</tr>
-      		<?php
-      		$i++;
-		}
-      }
-      else
-      { ?>
-<tr>
-  <td class="f1" colspan="4"><strong><?php echo lang('GLOBAL_NO_DIFFERENCES_FOUND') ?></strong></td>
-</tr>
-<?php } ?>
-END
-
+			set var:left
+			set var:right

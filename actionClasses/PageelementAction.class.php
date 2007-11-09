@@ -971,21 +971,34 @@ class PageelementAction extends Action
 //		Logger::debug( 'comparing value '.$value1id.' with '.$value2id );
 
 		$date1 = date( lang('DATE_FORMAT'),$value1->lastchangeTimeStamp);
-		$this->setTemplateVar('title1',$date1);
+		$this->setTemplateVar('title_left',$date1);
 
 		$date2 = date( lang('DATE_FORMAT'),$value2->lastchangeTimeStamp);
-		$this->setTemplateVar('title2',$date2);
+		$this->setTemplateVar('title_right',$date2);
 		
 		$text1 = explode("\n",$value1->text);
 		$text2 = explode("\n",$value2->text);
 
 		$res_diff = $this->textdiff($text1,$text2);
-//		Html::debug($res_diff,'Diff');
 
 		list( $text1,$text2 ) = $res_diff;
 
-		$this->setTemplateVar('text1',$text1 );
-		$this->setTemplateVar('text2',$text2 );
+		$diff = array();
+		$i = 0;
+      	while( isset($text1[$i]) || isset($text2[$i]) )
+      	{
+      		$line = array();
+
+      		if	( isset($text1[$i]['text']) )
+      			$line['left'] = $text1[$i];
+
+      		if	( isset($text2[$i]['text']) )
+      			$line['right'] = $text2[$i];
+
+      		$i++;
+      		$diff[] = $line;
+		}
+		$this->setTemplateVar('diff',$diff );
 	}
 
 
