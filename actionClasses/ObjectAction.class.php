@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.8  2007-11-09 20:41:51  dankert
+// Hinweismeldungen setzen.
+//
 // Revision 1.7  2007-10-29 23:29:17  dankert
 // Konstanten f?r Request-Variablen.
 //
@@ -106,11 +109,31 @@ class ObjectAction extends Action
 		{
 			case 'user':
 				$acl->userid  = $this->getRequestVar('userid' );
+				
+				if	( $acl->userid <= 0 )
+				{
+					$this->addValidationError('type'     );
+					$this->addValidationError('userid','');
+					$this->callSubAction('aclform');
+					return;
+				}
 				break;
 			case 'group':
 				$acl->groupid = $this->getRequestVar('groupid');
+				if	( $acl->groupid <= 0 )
+				{
+					$this->addValidationError('type'      );
+					$this->addValidationError('groupid','');
+					$this->callSubAction('aclform');
+					return;
+				}
+				break;
+			case 'all':
 				break;
 			default:
+				$this->addValidationError('type');
+				$this->callSubAction('aclform');
+				return;
 		}
 
 		$acl->languageid    = $this->getRequestVar(REQ_PARAM_LANGUAGE_ID);
@@ -128,6 +151,8 @@ class ObjectAction extends Action
 		$acl->transmit      = ( $this->hasRequestVar('transmit'     ) );
 
 		$acl->add();
+		
+		$this->addNotice('','','ADDED',OR_NOTICE_OK);
 	}
 
 
@@ -209,5 +234,7 @@ class ObjectAction extends Action
 			die('ehm?'); // Da wollte uns wohl einer vereimern.
 
 		$acl->delete(); // Weg mit der ACL
+		
+		$this->addNotice('','','DELETED',OR_NOTICE_OK);
 	}
 }
