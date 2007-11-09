@@ -4,7 +4,7 @@ goto=show
 
 [show]
 menu=project
-;action=index
+menuaction=index
 
 [menu]
 project=projectmenu,administration

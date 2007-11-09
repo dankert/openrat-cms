@@ -470,8 +470,8 @@ class Action
 		$name       = $this->actionConfig[$this->subActionName]['menu'];
 		$menuList   = explode(',',$this->actionConfig['menu'][$name]);
 
-		if	( isset($this->actionConfig[$this->subActionName]['action']))
-			$actionName = $this->actionConfig[$this->subActionName]['action'];
+		if	( isset($this->actionConfig[$this->subActionName]['menuaction']))
+			$actionName = $this->actionConfig[$this->subActionName]['menuaction'];
 		else
 			$actionName = $this->subActionName;
 		
