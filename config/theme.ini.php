@@ -16,3 +16,8 @@ cache=true
 ; Do a CHMOD on a written file.
 ; default=
 chmod=
+
+; Compile ALL templates at logout
+; (only useful while developing)
+; default=false
+compile_at_logout=false
