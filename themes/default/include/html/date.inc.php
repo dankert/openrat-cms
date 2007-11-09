@@ -5,7 +5,18 @@
 	if	( $time==0)
 		echo lang('GLOBAL_UNKNOWN');
 	elseif ( !$conf['interface']['human_date_format'] )
+	{
+		echo '<span title="';
+		$dl = date(lang('DATE_FORMAT_LONG'),$time);
+		$dl = str_replace('{weekday}',lang('DATE_WEEKDAY'.strval(date('w',$time))),$dl);
+		$dl = str_replace('{month}'  ,lang('DATE_MONTH'  .strval(date('n',$time))),$dl);
+//		$dl = str_replace(' ','&nbsp;',$dl);
+		echo $dl;
+		unset($dl);
+		echo '">';
 		echo date(lang('DATE_FORMAT'),$time);
+		echo '</span>';
+	}
 	else
 	{
 	
