@@ -550,7 +550,12 @@ class PageAction extends ObjectAction
 		$this->page->generate();
 		$this->page->write();
 
+		// HTTP-Header mit Sprachinformation setzen.
+		$language = Session::getProjectLanguage();
+		header('Content-Language: '.$language->isoCode);
+
 		require( $this->page->tmpfile );
+		
 
 		unlink( $this->page->tmpfile );
 		
