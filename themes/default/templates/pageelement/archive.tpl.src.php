@@ -13,9 +13,9 @@ page
 				cell class:help
 					text text:GLOBAL_VALUE
 				cell class:help
-					text raw:_
+					text text:GLOBAL_STATE
 				cell class:help
-					text raw:_
+					text text:GLOBAL_ACTION
 
 			if empty:el
 				row
@@ -38,17 +38,20 @@ page
 						text text:var:value
 					cell class:fx
 						if true:var:public
-							text text:message:GLOBAL_PUBLIC
+							text text:message:GLOBAL_PUBLIC type:strong
 						else
 							if present:releaseUrl 
-								link url:var:releaseUrl
-									text text:message:GLOBAL_RELEASE
+								link url:var:releaseUrl title:message:GLOBAL_RELEASE_DESC
+									text text:message:GLOBAL_RELEASE type:strong
+							else
+								text text:message:GLOBAL_INACTIVE type:emphatic
+							
 					cell class:fx
 						if true:var:active
-							text text:message:GLOBAL_ACTIVE
+							text text:message:GLOBAL_ACTIVE type:emphatic
 						else
 							if present:useUrl
-								link url:var:useUrl
+								link url:var:useUrl title:message:GLOBAL_USE_DESC
 									text text:message:GLOBAL_USE
 
 			row
