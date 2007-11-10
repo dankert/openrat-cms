@@ -134,6 +134,12 @@ class DB
 	}
 
 
+	/**
+	 * Ausführen einer Datenbankanfrage.
+	 *
+	 * @param String $query
+	 * @return Object (Result)
+	 */
 	function query( $query )
 	{
 		Logger::trace('DB query: '.substr($query,0,45).'...');
@@ -146,11 +152,11 @@ class DB
 			
 			if	( true )
 			{
+				Logger::warn('Database error: '.$this->error);
 				die('Database Error:<pre style="color:red">'.$this->error.'</pre>');
 			}
 		}
 			
-
 		return new DB_result( $this->client,$result );
 	}
 
