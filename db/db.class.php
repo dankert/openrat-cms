@@ -32,61 +32,125 @@
  */
 class DB
 {
-	var $dbh;
-	var $conf;
+	/**
+	 * Datenbank-Id.
+	 *
+	 * @var String
+	 */
 	var $id;
+	
+	/**
+	 * Konfiguration der Datenbank-Verbindung
+	 *
+	 * @var Array
+	 */
+	var $conf;
+	
+	/**
+	 * Kennzeichen, ob die Datenbank verfügbar ist.
+	 *
+	 * @var Boolean
+	 */
+	var $available;
+	
+	/**
+	 * Enthält eine Fehlermeldung (sofern verfügbar).
+	 *
+	 * @var String
+	 */
+	var $error;
 
+	/**
+	 * Client.
+	 *
+	 * @var Object
+	 */
+	var $client;
+	
 
-	function DB( $conf = array() )
+	/**
+	 * Kontruktor.
+	 * Erwartet die Datenbank-Konfiguration als Parameter.
+	 *
+	 * @param Array $conf
+	 * @return Status
+	 */
+	function DB( $conf )
 	{
-		$this->connect( $conf );
+		$this->available = false;
+		$this->conf      = $conf;
+		
+		$this->available = $this->connect();
+		
+		return $this->available;
 	}
 	
-	
-	function connect( $conf = array() )
-	{
-		if	( count($conf)>0 )
-			$this->conf = $conf;
-//			print_r($this->conf);
 
+	/**
+	 * Verbindung zur Datenbank aufbauen.
+	 *
+	 * @return Status
+	 */
+	function connect()
+	{
 		$type = $this->conf['type'];
 		$classname = 'db_'.$type;
 		
-		$this->dbh = & new $classname;
+		$this->client = & new $classname;
 
-		$this->dbh->connect( $this->conf );
+		$ok = $this->client->connect( $this->conf );
+		
+		if	( ! $ok )
+		{
+			$this->error = $this->client->error;
+			
+			if	( empty($this->error) )
+				$this->error = 'Error while connecting to database.';
+		}
 
-		return true;
-	}
-
-
-	function isError( $value )
-	{
-		return $this->isError;
-	}
-
-
-	function nextId( $sequenceName )
-	{
-		return $this->dbh->nextId( $sequenceName );
+		return $ok;
 	}
 
 
 	function query( $query )
 	{
-		Logger::trace('DB query: '.substr($query,0,45));
-		$result = $this->dbh->simpleQuery($query);
+		Logger::trace('DB query: '.substr($query,0,45).'...');
 
-		return new DB_result( $this->dbh,$result );
+		$result = $this->client->query($query);
+		
+		if	( $result === FALSE )
+		{
+			$this->error = $this->client->error;
+			
+			if	( true )
+			{
+				die('Database Error:<pre style="color:red">'.$this->error.'</pre>');
+			}
+		}
+			
+
+		return new DB_result( $this->client,$result );
 	}
 
 
+	/**
+	 * Ermittelt die Anzahl der betroffenen Zeilen nach einer Datebank-Anfrage.
+	 *
+	 * @return unknown
+	 */
 	function affectedRows()
 	{
-		return $this->dbh->affectedRows( $query );
+		return $this->client->affectedRows( $query );
 	}
 
 
+	/**
+	 * Ermittelt genau 1 Datenbankergebnis aus einer SQL-Anfrage.
+	 * Falls es mehrere Treffer gibt, wird die 1. Spalte aus der 1. Zeile genommen.
+	 *
+	 * @param String $query
+	 * @return String
+	 */
 	function &getOne( $query )
 	{
 		$res = $this->query($query);
@@ -103,12 +167,18 @@ class DB
 		else
 		{
 			$res->free();
-			$leer = array();
+			$leer = '';
 			return $leer;
 		}
 	}
 
 
+	/**
+	 * Ermittelt eine Zeile aus der Datenbank.
+	 *
+	 * @param String $query
+	 * @return Array
+	 */
 	function &getRow( $query )
 	{
 		$res = $this->query($query);
@@ -124,6 +194,12 @@ class DB
 	}
 
 
+	/**
+	 * Ermittelt eine (die 1.) Spalte aus dem Datenbankergebnis.
+	 *
+	 * @param String $query
+	 * @return Array
+	 */
 	function &getCol( $query )
 	{
 		$res = $this->query( $query );
@@ -146,6 +222,13 @@ class DB
 	}
 
 
+	/**
+	 * Ermittelt ein assoziatives Array aus der Datenbank.
+	 *
+	 * @param String $query
+	 * @param Boolean $force_array
+	 * @return Array
+	 */
 	function &getAssoc( $query, $force_array = false )
 	{
 		$res = $this->query($query);
@@ -188,6 +271,12 @@ class DB
 	}
 
 
+	/**
+	 * Ermittelt alle Datenbankergebniszeilen.
+	 *
+	 * @param String $query
+	 * @return Array
+	 */
 	function &getAll( $query )
 	{
 		$res = $this->query( $query );
@@ -211,28 +300,29 @@ class DB
 
 
 /**
- * Darstellung eines Datenbank-Ergebnisses
- * @author $Author$
+ * Darstellung eines Datenbank-Ergebnisses.
+ * 
+ * @author Jan Dankert
  * @version $Revision$
  * @package openrat.database
  */
 
 class DB_result
 {
-	var $dbh;
+	var $client;
 	var $result;
 
 
-	function DB_result( $dbh, $result )
+	function DB_result( $client, $result )
 	{
-		$this->dbh    = $dbh;
+		$this->client    = $client;
 		$this->result = $result;
 	}
 
 
 	function fetchRow( $rownum = 0 )
 	{
-		$arr = $this->dbh->fetchRow( $this->result, $rownum );
+		$arr = $this->client->fetchRow( $this->result, $rownum );
 
 		return $arr;
 	}
@@ -240,19 +330,19 @@ class DB_result
 
 	function numCols()
 	{
-		return $this->dbh->numCols($this->result);
+		return $this->client->numCols($this->result);
 	}
 
 
 	function numRows()
 	{
-		return $this->dbh->numRows( $this->result );
+		return $this->client->numRows( $this->result );
 	}
 
 
 	function free()
 	{
-		$err = $this->dbh->freeResult($this->result);
+		$err = $this->client->freeResult($this->result);
 		return true;
 	}
 }

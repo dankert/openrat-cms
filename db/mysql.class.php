@@ -27,7 +27,19 @@
  */
 class DB_mysql
 {
+	/**
+	 * Die MySql-Verbindung.
+	 *
+	 * @var Resource
+	 */
 	var $connection;
+	
+	/**
+	 * Datenbank-Fehler.
+	 *
+	 * @var String
+	 */
+	var $error;
 
 
 	function connect( $conf )
@@ -36,24 +48,37 @@ class DB_mysql
 		$user   = $conf['user'];
 		$pw     = $conf['password'];
 		$db     = $conf['database'];
+		
+		if	( isset($conf['port']) )
+			$host .= ':'.$conf['port'];
 
 		if   ( $conf['persistent'] )
 			$connect_function = 'mysql_pconnect';
-		else $connect_function = 'mysql_connect';
+		else
+			$connect_function = 'mysql_connect';
 
 		if    ( $pw != '' )
-			$this->connection = $connect_function( $host,$user,$pw );
+			$this->connection = @$connect_function( $host,$user,$pw );
 		elseif ( $user != '' ) 
-			$this->connection = $connect_function( $host,$user );
+			$this->connection = @$connect_function( $host,$user );
 		elseif ( $host != '' ) 
-			$this->connection = $connect_function( $host );
+			$this->connection = @$connect_function( $host );
 		else 
-			$this->connection = $connect_function();
+			$this->connection = @$connect_function();
 
+		if	( !is_resource($this->connection) )
+		{
+			$this->error = "Could not connect to database on host $host.";
+			return false;
+		}
+				
 		if    ( $db != '' )
 		{
-			if	( !mysql_select_db( $db,$this->connection ) )
-				Http::serverError("Database error while connecting to $host, database '$db' is not available." );
+			if	( !@mysql_select_db( $db,$this->connection ) )
+			{
+				$this->error = "Could not select database '$db' on host $host.";
+				return false;
+			}
 		}
 
 		return true;
@@ -70,14 +95,17 @@ class DB_mysql
 
 
 
-	function simpleQuery($query)
+	function query($query)
 	{
 		$result = mysql_query($query, $this->connection);
 
 		if	( ! $result )
-			Http::serverError( 'Database Error<pre>'.$query."\n".'<span style="color:red;">'.mysql_error().'</span></pre>' );
+		{
+			$this->error = 'Database error: '.mysql_error();
+			return FALSE;
+		}
 
-		return $result;;
+		return $result;
 	}
 
 

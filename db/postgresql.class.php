@@ -30,6 +30,12 @@ class DB_postgresql
 	var $connection;
 
 
+	/**
+	 * Verbinden zum POSTGRES-Server.
+	 *
+	 * @param Array $conf
+	 * @return boolean
+	 */
 	function connect( $conf )
 	{
 		$host   = $conf['host'];
@@ -37,24 +43,39 @@ class DB_postgresql
 		$pw     = $conf['password'];
 		$db     = $conf['database'];
 
+		if	( isset($conf['port']) )
+			$host .= ':'.$conf['port'];
+		
 		if   ( $conf['persistent'] )
 			$connect_function = 'pg_pconnect';
-		else $connect_function = 'pg_connect';
+		else
+			$connect_function = 'pg_connect';
 
 		if    ( $pw != '' )
-			$this->connection = $connect_function( "host=$host dbname=$db user=$user password=$pw" );
+			$this->connection = @$connect_function( "host=$host dbname=$db user=$user password=$pw" );
 		elseif ( $user != '' ) 
-			$this->connection = $connect_function( "host=$host dbname=$db user=$user" );
+			$this->connection = @$connect_function( "host=$host dbname=$db user=$user" );
 		elseif ( $host != '' ) 
-			$this->connection = $connect_function( "host=$host dbname=$db" );
+			$this->connection = @$connect_function( "host=$host dbname=$db" );
 		else 
-			$this->connection = $connect_function( "dbname=$db");
+			$this->connection = @$connect_function( "dbname=$db");
+			
+		if	( ! is_resource($this->connection) )
+		{
+			$this->error = 'could not connect to database on host '.$host;
+			return false;
+		}
 
 		return true;
     }
 
 
 
+    /**
+     * Verbindung schließen.
+     *
+     * @return unknown
+     */
 	function disconnect()
 	{
 		$ret = pg_close( $this->connection );
@@ -64,12 +85,16 @@ class DB_postgresql
 
 
 
-	function simpleQuery($query)
+	function query($query)
 	{
 		$result = @pg_exec( $this->connection,$query );
 
 		if	( ! $result )
-			Http::serverError('Database Error'.'<pre>'.$query."\n".'<span style="color:red;">'.pg_errormessage().'</span></pre>' );
+		{
+			if	( empty($this->error) )
+				$this->error = 'PostgreSQL says: '.@pg_errormessage();
+			return FALSE;
+		}
 
 		return $result;;
 	}
