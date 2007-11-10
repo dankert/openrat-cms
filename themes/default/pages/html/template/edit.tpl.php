@@ -166,7 +166,27 @@
 			$attr5_title = lang($attr5_key.'_HELP');
 		else
 			$attr5_title = '';
-?><span class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
+	if	(empty($attr5_type))
+		$tmp_tag = 'span';
+	else
+		switch( $attr5_type )
+		{
+			case 'emphatic':
+			case 'italic':
+				$tmp_tag = 'em';
+				break;
+			case 'strong':
+			case 'bold':
+				$tmp_tag = 'strong';
+				break;
+			case 'tt':
+			case 'teletype':
+				$tmp_tag = 'tt';
+				break;
+			default:
+				$tmp_tag = 'span';
+		}
+?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
 	if (!empty($attr5_array))
 	{
@@ -186,15 +206,15 @@
 	elseif (!empty($attr5_key))
 		$tmp_text = lang($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?($attr5_escape?htmlentities($$attr5_var):$$attr5_var):'?'.$attr5_var.'?';	
+		$tmp_text = isset($$attr5_var)?$$attr5_var:'?'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
 		$tmp_text = $attr5_value;
 	else
-	{
 	  $tmp_text = '&nbsp;';
-	}
+	if	( $attr5_escape && empty($attr5_raw) && $tmp_text!='&nbsp;' )
+		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr5_maxlength) && intval($attr5_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr5_maxlength) );
 	if	(isset($attr5_accesskey))
@@ -204,7 +224,8 @@
 			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 	echo $tmp_text;
-?></span><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><code>
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><code>
 <?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr1_debug_info = 'a:0:{}' ?><?php $attr1 = array() ?>      </table>
 	</td>
   </tr>
