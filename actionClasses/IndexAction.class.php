@@ -83,6 +83,13 @@ class IndexAction extends Action
 		
 		$db = db_connection();
 		
+		if	( !$db->available )
+		{
+			$this->addNotice('database',$db->conf['comment'],'DATABASE_CONNECTION_ERROR',OR_NOTICE_ERROR,array(),array('Database Error: '.$db->error));
+			$this->callSubAction('showlogin');
+			return false;
+		}
+		
 		$ip = getenv("REMOTE_ADDR");
 	
 		$user = new User();
