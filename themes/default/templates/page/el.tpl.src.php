@@ -15,19 +15,23 @@ page
 					text text:GLOBAL_NOT_FOUND
 		list list:el extract:true
 			row
-				cell class:fx
-					link url:var:url title:desc
+				cell
+					link url:var:url title:var:desc
 						image elementtype:var:type align:left
 						text var:name
-				cell class:fx
+				cell
 					text var:value
 					text raw:_
-				cell class:fx
-					link url:var:archive_url
-						text text:GLOBAL_ARCHIVE
-					text raw:_(
-					text text:var:archive_count
-					text raw:)
+				cell
+					if present:archive_url
+						link url:var:archive_url title:message:GLOBAL_ARCHIVE_DESC
+							text text:GLOBAL_ARCHIVE
+						text raw:_(_
+						text text:var:archive_count
+						text raw:_)
+					else
+						text text:GLOBAL_NO_ARCHIVE type:emphatic title:message:GLOBAL_NO_ARCHIVE_DESC
+					set var:archive_url
 		row
 			cell class:help colspan:3
 				text text:PAGE_ELEMENTS_DESC

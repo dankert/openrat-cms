@@ -24,6 +24,7 @@ menu=edit
 
 [diff]
 menu=edit
+target=archive
 
 [archive]
 menu=edit

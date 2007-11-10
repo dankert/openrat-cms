@@ -411,7 +411,6 @@ class PageAction extends ObjectAction
 		$this->page->public = true;
 		$this->page->simple = true;
 		$this->page->generate_elements();
-//		Html::debug($this->page,'Seite');
 		
 		$list = array();
 	
@@ -423,13 +422,13 @@ class PageAction extends ObjectAction
 			{
 				$list[$id] = array();
 				$list[$id]['name']       = $value->element->name;
+				$list[$id]['url' ]       = Html::url( 'pageelement','edit'   ,$this->page->id,array('elementid'=>$id) );
 				$list[$id]['desc']       = $value->element->desc;
 				$list[$id]['type']       = $value->element->type;
 	
-				$list[$id]['date'         ] = date( lang('DATE_FORMAT'),$value->lastchangeTimeStamp);
-				$list[$id]['archive_count'] = $value->getCountVersions();
-				$list[$id]['archive_url'  ] = Html::url( 'pageelement','archive',$this->page->id,array('elementid'=>$id) );
-				$list[$id]['url'          ] = Html::url( 'pageelement','edit'   ,$this->page->id,array('elementid'=>$id) );
+				$list[$id]['archive_count'] = intval($value->getCountVersions());
+				if	( $list[$id]['archive_count'] > 0 )
+					$list[$id]['archive_url'] = Html::url( 'pageelement','archive',$this->page->id,array('elementid'=>$id) );
 				
 				// Maximal 50 Stellen des Inhaltes anzeigen
 				$list[$id]['value'] = Text::maxLaenge( 50,$value->value );
