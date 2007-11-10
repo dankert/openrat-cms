@@ -43,6 +43,14 @@ class PageelementAction extends Action
 	 * @type Object
 	 */
 	var $element;
+	
+	
+	/**
+	 * Enthält den Inhalt
+	 *
+	 * @var Object
+	 */
+	var $value;
 
 
 
@@ -1618,8 +1626,13 @@ class PageelementAction extends Action
 		{
 			case 'show':
 			case 'edit':
-			case 'archive':
 				return true;
+				
+			case 'archive':
+				if	( is_object($this->value) )
+					return $this->value->getCountVersions() > 0;
+				else
+					return true;
 
 			case 'link':
 				return in_array($type,array('date','text','longtext','number'));
