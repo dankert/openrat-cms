@@ -11,7 +11,7 @@ default=db1
 ; Database configuration for connection 'db1
 
 enabled    = true
-comment    = "OpenRat Example DB"  ; comment of this database 
+comment    = "OpenRat Example"  ; comment of this database 
 
 type       = mysql                 ; 'mysql' or 'postgresql' 
 user       = dbuser                ; database user
@@ -23,6 +23,14 @@ database   = cms                   ; database name
 base64     = false                 ; store binary as BASE64 (in postgresql=true)
 prefix     = or_                   ; table praefix
 persistent = yes                   ; use persistent connections (try this, it's faster)
+
+; System command for executing before connecting to the database.
+; Maybe for installing an SSH-Tunnel.
+; For background programs, you have to redirect stdin and stdout! (maybe to /dev/null) 
+; Example: "sudo -u u123 /usr/local/bin/sshtunnel-example.sh"
+; Default: blank.
+cmd = ""
+
 
 
 ; Add here more sections with other database connections.

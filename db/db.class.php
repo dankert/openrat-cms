@@ -80,7 +80,7 @@ class DB
 		$this->available = false;
 		$this->conf      = $conf;
 		
-		$this->available = $this->connect();
+		$this->connect();
 		
 		return $this->available;
 	}
@@ -93,6 +93,26 @@ class DB
 	 */
 	function connect()
 	{
+		// Ausführen des Systemkommandos.
+		if	( !empty($this->conf['cmd']))
+		{
+			$ausgabe = array();
+			$rc      = false;
+
+			Logger::debug("Database command executing: ".$this->conf['cmd']);
+			exec( $this->conf['cmd'],$ausgabe,$rc );
+			
+			foreach( $ausgabe as $zeile )
+				Logger::debug("Database command output: ".$zeile);
+			
+			if	( $rc != 0 )
+			{
+				$this->error     = 'Command failed: '.implode("",$ausgabe);
+				$this->available = false; 
+				return false;
+			}
+		}
+		
 		$type = $this->conf['type'];
 		$classname = 'db_'.$type;
 		
@@ -102,13 +122,15 @@ class DB
 		
 		if	( ! $ok )
 		{
-			$this->error = $this->client->error;
-			
-			if	( empty($this->error) )
-				$this->error = 'Error while connecting to database.';
+			$this->error     = $this->client->error;
+			$this->available = false;
+			return false; 
+//			if	( empty($this->error) )
+//				$this->error = 'Error while connecting to database.';
 		}
 
-		return $ok;
+		$this->available = true;
+		return true;
 	}
 
 
