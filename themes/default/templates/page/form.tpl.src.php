@@ -18,8 +18,9 @@ page
 				list list:el extract:true
 					row
 						cell class:fx
-							image elementtype:var:type
-							text var:name
+							label for:var:saveid
+								image elementtype:var:type
+								text var:name
 						cell class:fx
 							checkbox name:var:saveid default:false readonly:false
 						cell class:fx
