@@ -171,7 +171,10 @@ header( 'Content-Type: text/html; charset='.lang('CHARSET') );
 $db = Session::getDatabase();
 if	( is_object( $db ) )
 {
-	$db->connect();
+	$ok = $db->connect();
+	if	( !$ok )
+		Http::sendStatus('503','Service Unavailable','Database is not available: '.$db->error);
+
 	Session::setDatabase( $db );
 }
 	
