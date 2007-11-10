@@ -26,13 +26,13 @@ var _QuickUploadLanguage	= 'php' ;	// asp | aspx | cfm | lasso | php
 var _FileBrowserExtension = _FileBrowserLanguage == 'perl' ? 'cgi' : _FileBrowserLanguage ;
 
 FCKConfig.LinkBrowser = true;
-FCKConfig.LinkBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=../../../../../do.php?action=filemanager';
+FCKConfig.LinkBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=../../../../do.php?action=filemanager';
 
 FCKConfig.ImageBrowser = true ;
-FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=../../../../../do.php?action=filemanager';
+FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=../../../../do.php?action=filemanager';
 
 FCKConfig.FlashBrowser = true ;
-FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Flash&Connector=../../../../../do.php?action=filemanager';
+FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Flash&Connector=../../../../do.php?action=filemanager';
 
 FCKConfig.LinkUpload = true;
 FCKConfig.ImageUpload = true;
