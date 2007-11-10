@@ -955,6 +955,15 @@ class PageelementAction extends Action
 		$value2id = $this->getRequestVar('withid'   );
 
 		// Wenn Value1-Id groesser als Value2-Id, dann Variablen tauschen
+		if	( $value1id == $value2id )
+		{
+			$this->addValidationError('compareid'   );
+			$this->addValidationError('withid'   ,'');
+			$this->callSubAction('archive');
+			return;
+		}
+
+		// Wenn Value1-Id groesser als Value2-Id, dann Variablen tauschen
 		if	( $value1id > $value2id )
 			list($value1id,$value2id) = array( $value2id,$value1id );
 
@@ -966,15 +975,9 @@ class PageelementAction extends Action
 		
 		$value1->loadWithId();
 		$value2->loadWithId();
-//		Html::debug($value1,'Inhalt-1');
 
-//		Logger::debug( 'comparing value '.$value1id.' with '.$value2id );
-
-		$date1 = date( lang('DATE_FORMAT'),$value1->lastchangeTimeStamp);
-		$this->setTemplateVar('title_left',$date1);
-
-		$date2 = date( lang('DATE_FORMAT'),$value2->lastchangeTimeStamp);
-		$this->setTemplateVar('title_right',$date2);
+		$this->setTemplateVar('date_left' ,$value1->lastchangeTimeStamp);
+		$this->setTemplateVar('date_right',$value2->lastchangeTimeStamp);
 		
 		$text1 = explode("\n",$value1->text);
 		$text2 = explode("\n",$value2->text);

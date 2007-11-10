@@ -5,13 +5,13 @@ page
 			cell
 				text type:emphatic text:GLOBAL_COMPARE
 				text raw:_
-				text type:strong var:title_left
+				date date:var:date_left
 			cell
 			cell
 //			cell colspan:2
 				text type:emphatic text:GLOBAL_WITH
 				text raw:_
-				text type:strong var:title_right
+				date date:var:date_right
 	
 		list list:diff extract:true
 			row class:diff
