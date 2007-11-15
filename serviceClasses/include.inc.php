@@ -24,7 +24,7 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('in
 }
 
 // Veroeffentlichung
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','page','folder')) )
+if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','page','pageelement','folder')) )
 {
 	require_once( OR_SERVICECLASSES_DIR."Publish.class.".PHP_EXT );
 	require_once( OR_SERVICECLASSES_DIR."Ftp.class.".PHP_EXT );
