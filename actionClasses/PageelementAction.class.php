@@ -1280,14 +1280,15 @@ class PageelementAction extends Action
 			$value->save();
 		}
 
-		$this->addNotice('pageelement',$value->element->name,'SAVED','ok');
+		$this->addNotice('pageelement',$value->element->name,'SAVED',OR_NOTICE_OK);
 		$this->page->setTimestamp(); // "Letzte Aenderung" setzen
 
-//		// Falls ausgewaehlt die Seite sofort veroeffentlichen
-//		if	( $this->hasRequestVar('publish') )
-//			$this->callSubAction( 'pubnow' ); // Weiter zum veroeffentlichen
-//		else
-//			$this->callSubAction( 'el' ); // Element-Liste anzeigen
+		// Falls ausgewaehlt die Seite sofort veroeffentlichen
+		if	( $value->page->hasRight( ACL_PUBLISH ) && $this->hasRequestVar('publish') )
+		{
+			$this->page->publish();
+			$this->addNotice('pageelement',$value->element->name,'PUBLISHED',OR_NOTICE_OK);
+		}
 	}
 
 
