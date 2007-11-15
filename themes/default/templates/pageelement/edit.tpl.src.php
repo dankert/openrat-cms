@@ -59,15 +59,15 @@ page
 				row
 					cell colspan:2 class:fx
 						checkbox name:release
-						text raw:_
-						text text:GLOBAL_RELEASE
+						label for:release
+							text text:GLOBAL_RELEASE
 
 			if present:publish
 				row
 					cell colspan:2 class:fx
 						checkbox name:publish
-						text raw:_
-						text text:PAGE_PUBLISH_AFTER_SAVE
+						label for:publish
+							text text:PAGE_PUBLISH_AFTER_SAVE
 
 			row
 				cell colspan:2 class:act
