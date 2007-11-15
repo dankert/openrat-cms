@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.44  2007-11-15 21:41:59  dankert
+// Warnmeldung, wenn es keine Seitenvorlagen gibt.
+//
 // Revision 1.43  2007-11-08 20:37:59  dankert
 // Warnmeldung, wenn beim L?schen nicht best?tigt wird.
 //
@@ -854,7 +857,11 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );
 		$this->setTemplateVar('maxlength',$maxSizeBytes );
 		
-		$this->setTemplateVar('templates' ,Template::getAll()      );
+		$all_templates = Template::getAll();
+		$this->setTemplateVar('templates' ,$all_templates );
+		
+		if	( count($all_templates) == 0 )
+			$this->addNotice('folder',$this->folder->name,'NO_TEMPLATES_AVAILABLE',OR_NOTICE_WARN);
 		
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 	}
@@ -954,8 +961,12 @@ class FolderAction extends ObjectAction
 
 	function createpage()
 	{
-		$this->setTemplateVar('templates' ,Template::getAll()      );
+		$all_templates = Template::getAll();
+		$this->setTemplateVar('templates' ,$all_templates          );
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
+
+		if	( count($all_templates) == 0 )
+			$this->addNotice('folder',$this->folder->name,'NO_TEMPLATES_AVAILABLE',OR_NOTICE_WARN);
 	}
 
 
@@ -1184,7 +1195,8 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('pages'  ,count($this->folder->getPages()) > 0 );
 		$this->setTemplateVar('subdirs',count($this->folder->getSubFolderIds()) > 0 );
 		$this->setTemplateVar('clean'  ,$this->folder->isRoot );
-		$this->forward('folder_pub');
+		
+//		$this->addNotice('folder',$this->folder->name,'MUCH_TIME',OR_NOTICE_WARN);
 	}
 
 
