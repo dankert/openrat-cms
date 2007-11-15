@@ -586,7 +586,7 @@ class ElementAction extends Action
 		if	( $this->hasRequestVar('parameters'))
 			$this->element->code = $this->getRequestVar('parameters');
 		
-		Html::debug($this->element);
+//		Html::debug($this->element);
 		$this->element->save();
 		$this->addNotice('element',$this->element->name,'SAVED');
 		
