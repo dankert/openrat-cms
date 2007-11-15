@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.22  2007-11-15 21:43:34  dankert
+// Fehlende Attribute der Klasse erg?nzt.
+//
 // Revision 1.21  2007-11-07 23:29:05  dankert
 // Wenn Seite direkt aufgerufen wird, dann sofort Seitenelement anzeigen.
 //
@@ -148,7 +151,13 @@ class Element
 	 * k?nnen zu verlinkende Objekte ausgew?hlt werden 
 	 * @type Integer
 	 */
-	var $folderobjectid = 0;
+	var $folderObjectId = 0;
+	
+	/**
+	 * Vorausgewähltes Objekt. 
+	 * @type Integer
+	 */
+	var $defaultObjectId = 0;
 	
 	/**
 	 * Schalter ob dieses Element von Redakteuren bearbeiten werden kann
@@ -163,6 +172,22 @@ class Element
 	var $allLanguages;
 
 	var $readonlyElementNames = array('copy','linkinfo','info','infodate','code','dynamic');
+	
+	/**
+	 * Untertyp.
+	 *
+	 * @var String
+	 */
+	var $subtype = '';
+	var $withIcon = false;
+	var $dateformat = 'r';
+	var $wiki = false;
+	var $html = false;
+	var $decimals = 0;
+	var $decPoint = '.';
+	var $thousandSep = '';
+	var $code = '';
+	var $defaultText = '';
 	
 	
 	/**
