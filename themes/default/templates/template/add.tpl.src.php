@@ -1,19 +1,39 @@
 page
 	form
-		window name:GLOBAL_TEMPLATES
+		window name:GLOBAL_TEMPLATES widths:10px,40px
 	
 			row
-				cell
+				cell colspan:2
 					text text:message:name
 				cell
 					input name:name
 			row
-				cell
-					text text:message:copy
-				cell
-					selectbox name:templateid list:templates addempty:true 
+				cell colspan:3
+					fieldset title:message:options
 			row
-				cell colspan:2 class:act
+				cell
+					radio name:type value:empty
+				cell
+					label for:type_empty
+						text text:message:empty
+			row
+				cell
+					radio name:type value:copy
+				cell
+					label for:type_copy
+						text text:message:copy
+				cell
+					selectbox name:templateid list:templates
+			row
+				cell
+					radio name:type value:example
+				cell
+					label for:type_example
+						text text:message:example
+				cell
+					selectbox name:example list:examples
+			row
+				cell colspan:3 class:act
 					button type:ok
 	
 	focus field:name

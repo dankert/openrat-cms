@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.19  2007-11-15 21:42:46  dankert
+// Beim Anlegen von Seitenvorlagen Beispiel-Vorlagen anbieten.
+//
 // Revision 1.18  2007-11-05 20:51:03  dankert
 // Aufruf von "addValidationError(...)" bei Eingabefehlern.
 //
@@ -275,6 +278,18 @@ class TemplateAction extends Action
 	function add()
 	{
 		$this->setTemplateVar( 'templates',Template::getAll() );
+
+		$examples = array();
+		$dir = opendir( 'examples/templates');
+		while( $file = readdir($dir) )
+		{
+			if	( substr($file,0,1) != '.')
+			{
+				$examples[$file] = $file;
+			}
+		}
+		
+		$this->setTemplateVar( 'examples',$examples );
 	}
 	
 	
@@ -282,17 +297,38 @@ class TemplateAction extends Action
 	function addtemplate()
 	{
 		// Hinzufuegen eines Templates
-		if   ( $this->getRequestVar('name')  != '' )
+		if   ( $this->getRequestVar('name') == '' )
 		{
+			$this->addValidationError('name');
+			$this->callSubAction('add');
+			return;
+		}
 
-			$template = new Template();
-			$template->add( $this->getRequestVar('name') );
-			$this->addNotice('template',$template->name,'ADDED','ok');
+		// Hinzufuegen eines Templates
+		switch( $this->getRequestVar('type') )
+		{
+			case 'empty':
 
-			$copy_templateid = intval($this->getRequestVar('templateid') );
-			
-			if	( $copy_templateid > 0 )
-			{
+				$template = new Template();
+				$template->add( $this->getRequestVar('name') );
+				$this->addNotice('template',$template->name,'ADDED','ok');
+				break;
+				
+			case 'copy':
+				
+				$copy_templateid = intval($this->getRequestVar('templateid') );
+				
+				if	( $copy_templateid == 0 )
+				{
+					$this->addValidationError('templateid');
+					$this->callSubAction('add');
+					return;
+				}
+				
+				$template = new Template();
+				$template->add( $this->getRequestVar('name') );
+				$this->addNotice('template',$template->name,'ADDED','ok');
+
 				$copy_template = new Template( $copy_templateid );
 				$copy_template->load();
 				foreach( $copy_template->getElements() as $element )
@@ -304,13 +340,62 @@ class TemplateAction extends Action
 				}
 				
 				$this->addNotice('template',$copy_template->name,'COPIED','ok');
-			}
+
+				break;
+
+			case 'example':
+
+				$template = new Template();
+
+				$model = Session::getProjectModel();
+				$template->modelid = $model->modelid;
+				
+				$template->add( $this->getRequestVar('name') );
+
+				$example = parse_ini_file('examples/templates/'.$this->getRequestVar('example'),true);
+
+				foreach( $example as $exampleKey=>$exampleElement )
+				{
+					if	( !is_array($exampleElement) )
+					{
+						$template->$exampleKey = $exampleElement;
+					}
+					else
+					{
+						$element = new Element();
+						$element->templateid = $template->templateid;
+						$element->name       = $exampleKey;
+						$element->writable   = true;
+						$element->add();
+
+						foreach( $exampleElement as $ePropName=>$ePropValue)
+							$element->$ePropName = $ePropValue;
+						
+						$element->defaultText = str_replace(';',"\n",$element->defaultText);
+						$element->save();
+//						Html::debug($element,"Element");
+					}
+				}
+//				Html::debug($template,"Template");
+				$template->name = $this->getRequestVar('name');
+				$template->src = str_replace(';',"\n",$template->src);
+				
+				foreach( $template->getElementNames() as $elid=>$elname )
+				{
+					$template->src = str_replace('{{'.$elname.'}}'  ,'{{'.$elid.'}}'  ,$template->src );
+					$template->src = str_replace('{{->'.$elname.'}}','{{->'.$elid.'}}',$template->src );
+				}
+				
+				$template->save();
+				$this->addNotice('template',$template->name,'ADDED','ok');
+
+				break;
+			default:
+				$this->addValidationError('type');
+				$this->callSubAction('add');
+				return;
 		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('add');
-		}
+
 
 		$this->setTemplateVar('tree_refresh',true);
 	}
