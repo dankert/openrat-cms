@@ -54,7 +54,7 @@ enable=true
 ; Default: '21'
 port=21
 
-; Default ostname
+; Default hostname
 ;host="ftp.example.com"
 
 ; Default path
