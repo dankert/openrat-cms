@@ -11,8 +11,7 @@ page
 					label for:type_folder
 						text text:global_folder
 				cell class:fx
-					label for:type_folder
-						input name:folder_name size:30 maxlength:250 default: class:name
+					input name:folder_name size:30 maxlength:250 default: class:name
 
 			row
 				cell colspan:3
@@ -24,12 +23,11 @@ page
 					label for:type_file
 						text text:global_FILE
 				cell class:fx
-					label for:type_file
-						upload name:file size:30 maxlength:var:maxlength
-						newline
-						text class:help text:message:file_max_size
-						text raw:_
-						text text:var:max_size
+					upload name:file size:30 maxlength:var:maxlength
+					newline
+					text class:help text:message:file_max_size
+					text raw:_
+					text text:var:max_size
 
 			row
 				cell colspan:3
@@ -41,16 +39,14 @@ page
 					label for:type_page
 						text text:global_TEMPLATE
 				cell class:fx
-					label for:type_page
-						selectbox name:page_templateid list:templates
+					selectbox name:page_templateid list:templates
 			row
 				cell
 				cell class:fx
 					label for:type_page
 						text text:global_NAME
 				cell class:fx
-					label for:type_page
-						input name:page_name size:30 maxlength:250 class:name
+					input name:page_name size:30 maxlength:250 class:name
 
 			row
 				cell colspan:3
@@ -62,11 +58,6 @@ page
 					label for:type_link
 						text text:global_NAME
 				cell class:fx
-					label for:type_link
-						input name:link_name size:30 maxlength:250 default: class:name
-						newline
-						newline
-						newline
 
 			row
 				cell class:act colspan:3
