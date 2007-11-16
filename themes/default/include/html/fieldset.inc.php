@@ -1,1 +1,1 @@
-<fieldset><legend><?php echo $attr_title ?></legend>
+<fieldset><?php if(isset($attr_title)) { ?><legend><?php echo $attr_title ?></legend><?php } ?>
