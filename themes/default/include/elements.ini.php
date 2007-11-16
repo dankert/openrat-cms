@@ -4,7 +4,7 @@
 
 
 button   = type:submit,src,class:ok,value:ok,text:button_ok
-cell     = width,style,class,colspan
+cell     = width,style,class,colspan,rowspan
 char     = type:*
 checkbox = default:false,readonly:false,name:*
 date     = date
