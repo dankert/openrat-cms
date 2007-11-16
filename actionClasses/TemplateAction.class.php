@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.20  2007-11-16 22:56:19  dankert
+// Dialog-Verbesserung f?r Hinzuf?gen von Element im Template-Quellcode.
+//
 // Revision 1.19  2007-11-15 21:42:46  dankert
 // Beim Anlegen von Seitenvorlagen Beispiel-Vorlagen anbieten.
 //
@@ -142,31 +145,37 @@ class TemplateAction extends Action
 	function srcaddelement()
 	{
 		$text = $this->template->src;
-	
-		// Falls dieses Element hinzugef?gt werden soll
-		if   ( $this->hasRequestVar('addelement') )
-		{
-			$text .= "\n".'{{'.$this->getRequestVar('elementid').'}}';
-		}
 
-		if   ( $this->hasRequestVar('addicon') )
+		switch( $this->getRequestVar('type') )
 		{
-			$text .= "\n".'{{->'.$this->getRequestVar('iconid').'}}';
-		}
+			case 'addelement':
+				$text .= "\n".'{{'.$this->getRequestVar('elementid').'}}';
+				break;
+		
+			case 'addicon':
+				$text .= "\n".'{{->'.$this->getRequestVar('writable_elementid').'}}';
+				break;
 
-		if   ( $this->hasRequestVar('addifempty') )
-		{
-			$text .= "\n".'{{IFEMPTY:'.$this->getRequestVar('ifemptyid').':BEGIN}}  {{IFEMPTY:'.$this->getRequestVar('ifemptyid').':END}}';
-		}
-		if   ( $this->hasRequestVar('addifnotempty') )
-		{
-			$text .= "\n".'{{IFNOTEMPTY:'.$this->getRequestVar('ifnotemptyid').':BEGIN}}  {{IFNOTEMPTY:'.$this->getRequestVar('ifnotemptyid').':END}}';
+			case 'addifempty':
+				$text .= "\n".'{{IFEMPTY:'.$this->getRequestVar('writable_elementid').':BEGIN}}  {{IFEMPTY:'.$this->getRequestVar('writable_elementid').':END}}';
+				break;
+
+			case 'addifnotempty':
+				$text .= "\n".'{{IFNOTEMPTY:'.$this->getRequestVar('writable_elementid').':BEGIN}}  {{IFNOTEMPTY:'.$this->getRequestVar('writable_elementid').':END}}';
+				break;
+		
+			default:
+				$this->addValidationError('type');
+				$this->callSubAction('srcelement');
+				return;
 		}
 		
 		$this->template->src = $text;
 
 		$this->template->save();
 		$this->template->load();
+
+		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
 	}
 
 
@@ -557,10 +566,8 @@ class TemplateAction extends Action
 
 	function srcelement()
 	{
-		$elements            = array();
-		$icon_elements       = array();
-		$ifempty_elements    = array();
-		$ifnotempty_elements = array();
+		$elements           = array();
+		$writable_elements = array();
 	
 		foreach( $this->template->getElementIds() as $elid )
 		{
@@ -570,17 +577,11 @@ class TemplateAction extends Action
 			$elements[$elid] = $element->name;
 
 			if	( $element->isWritable() )
-			{
-				$icon_elements      [$elid] = lang('GLOBAL_icon'      ).' '.$element->name;
-				$ifempty_elements   [$elid] = lang('TEMPLATE_SRC_ifempty'   ).' '.$element->name;
-				$ifnotempty_elements[$elid] = lang('TEMPLATE_SRC_ifnotempty').' '.$element->name;
-			}
+				$writable_elements[$elid] = $element->name;
 		}
 
-		$this->setTemplateVar('elements'           ,$elements             );
-		$this->setTemplateVar('icon_elements'      ,$icon_elements        );
-		$this->setTemplateVar('ifempty_elements'   ,$ifempty_elements     );
-		$this->setTemplateVar('ifnotempty_elements',$ifnotempty_elements  );
+		$this->setTemplateVar('elements'         ,$elements         );
+		$this->setTemplateVar('writable_elements',$writable_elements);
 	}
 	
 	

@@ -1,35 +1,42 @@
 page
 
 	form
-		window
+		window widths:10px,150px
 			if present:elements
 				row
-					cell class:fx
-						checkbox name:addelement
-					cell class:fx
+					cell
+						radio name:type value:addelement
+					cell
+						label for:type_addelement
+							text key:value
+					cell
 						selectbox name:elementid list:elements
 						
-			if present:icon_elements
+			if present:writable_elements
 				row
-					cell class:fx
-						checkbox name:addicon
-					cell class:fx
-						selectbox name:iconid list:icon_elements
-						
-			if present:ifempty_elements
+					cell colspan:3
+						fieldset
 				row
-					cell class:fx
-						checkbox name:addifempty
-					cell class:fx
-						selectbox name:ifemptyid list:ifempty_elements
-						
-			if present:ifnotempty_elements
+					cell
+						radio name:type value:addicon
+					cell
+						label for:type_addicon
+							text key:GLOBAL_ICON
+					cell rowspan:3
+						selectbox name:writable_elementid list:writable_elements
 				row
-					cell class:fx
-						checkbox name:addifnotempty
-					cell class:fx
-						selectbox name:ifnotemptyid list:ifnotempty_elements
+					cell
+						radio name:type value:addifempty
+					cell
+						label for:type_addifempty
+							text key:TEMPLATE_SRC_IFEMPTY
+				row
+					cell
+						radio name:type value:addifnotempty
+					cell
+						label for:type_addifnotempty
+							text key:TEMPLATE_SRC_IFEMPTY
 			
 			row
-				cell colspan:2 class:act
+				cell colspan:3 class:act
 					button type:ok
