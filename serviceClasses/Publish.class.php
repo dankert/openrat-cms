@@ -19,8 +19,14 @@
 #
 
 /**
- * Diese Klasse stellt stellt einige Eigenschaften des Projektes dar, welche fuer
- * das Veroeffentlichen von Objekten nuetzlich sind
+ * Diese Klasse kapselt das Veröffentlichen von Dateien.<br>
+ * <br>
+ * Hier werden<br>
+ * - Dateien in das Zielverzeichnis kopiert<br>
+ * - Dateien per FTP veröffentlicht<br>
+ * - Zielverzeichnisse aufgeräumt<br>
+ * - Systembefehle ausgeführt.
+ * 
  * @author $Author$
  * @version $Revision$
  * @package openrat.services
@@ -37,8 +43,14 @@ class Publish
 	var $publishedObjects    = array();
 	var $log                 = array();
 	var $ok                  = true;
-	
-	// Konstruktor
+
+	/**
+	 * Konstruktor.<br>
+	 * <br>
+	 * Öffnet ggf. Verbindungen.
+	 *
+	 * @return Publish
+	 */
 	function Publish()
 	{
 		global $conf;
@@ -46,16 +58,20 @@ class Publish
 		
 		$project = Session::getProject();
 
-		if   ( !empty($project->ftp_url) || isset($conf['publish']['ftp']['host']) )
+		// Feststellen, ob FTP benutzt wird.
+		// Dazu muss FTP aktiviert sein (enable=true) und eine URL vorhanden sein.
+		if   ( @$conf['publish']['ftp']['enable'] && 
+			   ( !empty($project->ftp_url) ||
+			     isset($conf['publish']['ftp']['host']) ) )
 		{
 			$this->with_ftp = true;
-			$this->ftp = new Ftp( $project->ftp_url );
+			$this->ftp = new Ftp( $project->ftp_url ); // Aufbauen einer FTP-Verbindung
 			
-			if	( ! $this->ftp->ok )
+			if	( ! $this->ftp->ok ) // FTP-Verbindung ok?
 			{
 				$this->ok = false;
 				$this->log = $this->ftp->log;
-				return;
+				return; // Ende. Ohne FTP brauchen wir nicht weitermachen.
 			}
 
 			$this->ftp->passive = ( $project->ftp_passive == '1' );
@@ -86,10 +102,11 @@ class Publish
 		}
 		
 		$this->content_negotiation = ( $project->content_negotiation == '1' );
-		$this->cut_index           = ( $project->cut_index == '1' );
+		$this->cut_index           = ( $project->cut_index           == '1' );
 
 		$this->cmd_after_publish   = $project->cmd_after_publish;
-		// Variablen ersetzen
+		
+		// Im Systemkommando Variablen ersetzen
 		str_replace('{name}'   ,$project->name                ,$this->cmd_after_publish);
 		str_replace('{dir}'    ,$this->local_destdir          ,$this->cmd_after_publish);
 		str_replace('{dirbase}',basename($this->local_destdir),$this->cmd_after_publish);
@@ -131,9 +148,9 @@ class Publish
 				}
 			}
 			
-			// CHMOD auf der Datei ausgeführen.
 			if	(!empty($conf['security']['chmod']))
 			{
+				// CHMOD auf der Datei ausgeführen.
 				if	( ! @chmod($dest,octdec($conf['security']['chmod'])) )
 				{
 					$this->ok = false;
@@ -221,7 +238,7 @@ class Publish
 			$rc      = false;
 			exec( $this->cmd_after_publish,$ausgabe,$rc );
 			
-			if	( $rc != 0 )
+			if	( $rc != 0 ) // Wenn Returncode ungleich 0, dann Ausgabe ins Log schreiben und Fehler melden.
 			{
 				$this->log = $ausgabe; 
 				$this->ok = false;
@@ -270,11 +287,6 @@ class Publish
 					  is_writable($fullpath) &&
 					  filemtime($fullpath) < START_TIME  )
 					unlink($fullpath);
-
-				if	( is_file($fullpath)     &&
-					  is_writable($fullpath) &&
-					  filemtime($fullpath) < START_TIME  )
-					  echo( $fullpath ).'<br/>';
 
 				// Bei Ordnern rekursiv absteigen				
 				if	( is_dir( $fullpath) )
