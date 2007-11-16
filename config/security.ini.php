@@ -155,22 +155,25 @@ trust=false
 
 
 ; Open-ID
-; see http://openid.net/ for specifications and more informationen.
+; see http://openid.net/ for specifications and more informations.
 [openid]
 
 ; Enable Open-ID
-enable=true
+; default=false
+enable=false
 
-; New Users are added to the internal database.
-add=true
+; Should authenticated users, which are not in your user database, automatically be added?
+; default=false
+add=false
 
 ; Open-Id Logo
+; The specification recommends the original Open-Id logo. 
 ;logo_url=
 logo_url="http://openid.net/login-bg.gif"
 
 ; Trust-Root
 ; URL-Prefix in which your OpenRat installations are running.
-; default=<empty>
+; default=<empty> (OpenRat tries to use its own server name) 
 ;trust_root=http://your.server.example/openrat/
 trust_root=
 
