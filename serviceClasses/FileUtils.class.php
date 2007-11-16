@@ -28,7 +28,7 @@ class FileUtils
 	 */
 	function getTempDir()
 	{
-		return ini_get('upload_tmp_dir');
+		return FileUtils::slashify(ini_get('upload_tmp_dir'));
 	}
 }
 
