@@ -140,13 +140,13 @@ class PageelementAction extends Action
 		if	( ! method_exists($this,$funktionName) )
 			die( 'Fatal: Method does not exist in PageElementAction: '.$funktionName );
 			
-		$this->$funktionName();
+		$this->$funktionName(); // Aufruf der Funktion "advanced<Elementtyp>()".
 	}
 	
 	
 	
 	/**
-	 * Ein Element der Seite bearbeiten
+	 * Normaler Editiermodus.
 	 *
 	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
 	 */
@@ -176,18 +176,25 @@ class PageelementAction extends Action
 
 		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 
-		
 		if	( $this->value->page->hasRight(ACL_RELEASE) )
 			$this->setTemplateVar( 'release',true  );
 		if	( $this->value->page->hasRight(ACL_PUBLISH) )
 			$this->setTemplateVar( 'publish',false );
 		
 		$funktionName = 'edit'.$this->value->element->type;
-		$this->$funktionName();
+
+		if	( ! method_exists($this,$funktionName) )
+			die( 'Fatal: Method does not exist in PageElementAction: '.$funktionName );
+			
+		$this->$funktionName(); // Aufruf der Funktion "edit<Elementtyp>()".
 	}
 	
 	
-	
+
+	/**
+	 * Datum bearbeiten.
+	 *
+	 */
 	function editdate()
 	{
 		$date =  $this->value->date;
@@ -207,7 +214,11 @@ class PageelementAction extends Action
 	}
 	
 	
-	
+
+	/**
+	 * Erweiterte Bearbeitung eines Datums mit Hilfe einer Kalenderauswahl.
+	 *
+	 */
 	function advanceddate()
 	{
 		global $conf;
@@ -383,183 +394,11 @@ class PageelementAction extends Action
 	}
 	
 	
-	
-	function asdfasdf()
-	{
-		// Auswahl ueber alle Elementtypen
-		switch( $this->value->element->type )
-		{
-			case 'link':
 
-				$objects = array();
-		
-				foreach( Folder::getAllObjectIds() as $id )
-				{
-					$o = new Object( $id );
-					$o->load();
-					
-					if	( $o->getType() != 'folder' )
-					{ 
-						$f = new Folder( $o->parentid );
-//						$f->load();
-						
-						$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
-						$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
-						$objects[ $id ] .= FILE_SEP.$o->name;
-					} 
-				}
-
-				asort( $objects ); // Sortieren
-		
-				$this->setTemplateVar('objects'         ,$objects);
-				$this->setTemplateVar('act_linkobjectid',$this->value->linkToObjectId);
-
-				break;
-		
-			case 'list':
-
-				$objects = array();
-				foreach( Folder::getAllFolders() as $id )
-				{
-					$f = new Folder( $id );
-					$f->load();
-					
-					$objects[ $id ]  = lang( 'GLOBAL_'.$f->getType() ).': '; 
-					$objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) ); 
-				}
-		
-				asort( $objects ); // Sortieren
-		
-				$this->setTemplateVar('objects'         ,$objects);
-				$this->setTemplateVar('act_linkobjectid',$this->value->linkToObjectId);
-
-				break;
-		
-
-			case 'select':
-				$this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
-				$this->setTemplateVar( 'text' ,$this->value->text                      );
-
-				break;
-		
-
-			case 'number':
-				$this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
-				break;
-
-
-			case 'longtext':
-
-				// Ermitteln aller verlinkbaren Objekte (fuer Editor)
-				$objects = array();
-		
-				foreach( Folder::getAllObjectIds() as $id )
-				{
-					$o = new Object( $id );
-					$o->load();
-					
-					if	( $o->getType() != 'folder' )
-					{ 
-						$f = new Folder( $o->parentid );
-						$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
-						$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
-						$objects[ $id ] .= FILE_SEP.$o->name;
-					} 
-				}
-				asort( $objects ); // Sortieren
-
-				$this->setTemplateVar( 'objects',$objects );
-				$this->setTemplateVar( 'images' ,$objects );
-
-			case 'text':
-				$this->setTemplateVar( 'html',$this->value->element->html );
-				$this->setTemplateVar( 'wiki',$this->value->element->wiki );
-				$this->setTemplateVar( 'text',$this->value->text          );
-				break;
-
-		
-			case 'date':
-
-				$date =  $this->value->date;
-
-				// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
-				if	( $date == 0 )
-					$date = time();
-	
-				if   ( $this->getRequestVar('year') != '' )
-				{
-					$date = mktime( $this->getRequestVar('hour'),
-					                $this->getRequestVar('minute'),
-					                $this->getRequestVar('second'),
-					                $this->getRequestVar('month'),
-					                $this->getRequestVar('day'),
-					                $this->getRequestVar('year')    );
-				}
-				$this->setTemplateVar('year'  ,date('Y',$date) );
-				$this->setTemplateVar('month' ,date('n',$date) );
-				$this->setTemplateVar('day'   ,date('j',$date) );
-				$this->setTemplateVar('hour'  ,date('G',$date) );
-				$this->setTemplateVar('minute',date('i',$date) );
-				$this->setTemplateVar('second',date('s',$date) );
-		
-				$this->setTemplateVar('days'  ,date('t',$date) );
-		
-				$this->setTemplateVar('title' ,lang('DATE_MONTH'.date('n',$date)).' '.date('Y',$date) );
-				
-				// Wochentag des 1. des Monats ermitteln
-				$wday1 = date( 'w',$date );
-				$wday1 -= date('j',$date)-1;
-				while( $wday1 < 0 ) $wday1+=7;
-				$this->setTemplateVar('first_weekday',$wday1);
-				
-				$this->setTemplateVar('actdate' ,date( lang('DATE_FORMAT'),$date ) );
-				$this->setTemplateVar('todayurl','?year='.date('Y').'&month='.date('m').'&day='.date('d').'&hour='.date('H').'&minute='.date('i').'&second='.date('s') );
-				$this->setTemplateVar('ansidate',date( 'Y-m-d H:i:s',$date ) );
-				$this->setTemplateVar('date'    ,$date);
-
-				$all_years   = array();
-				$all_months  = array();
-				$all_days    = array();
-				$all_hours   = array();
-				$all_minutes = array();
-				for( $i=1850; $i<=2100;$i++ ) $all_years  [$i] = $i; 
-				for( $i=1;    $i<=12;  $i++ ) $all_months [$i] = lang('DATE_MONTH'.$i); 
-				for( $i=1;    $i<=31;  $i++ ) $all_days   [$i] = str_pad($i,2,'0',STR_PAD_LEFT); 
-				for( $i=0;    $i<=23;  $i++ ) $all_hours  [$i] = str_pad($i,2,'0',STR_PAD_LEFT); 
-				for( $i=0;    $i<=59;  $i++ ) $all_minutes[$i] = str_pad($i,2,'0',STR_PAD_LEFT);
-			
-				$this->setTemplateVar('all_years'  ,$all_years  );
-				$this->setTemplateVar('all_months' ,$all_months );
-				$this->setTemplateVar('all_days'   ,$all_days   );
-				$this->setTemplateVar('all_hours'  ,$all_hours  );
-				$this->setTemplateVar('all_minutes',$all_minutes);
-				$this->setTemplateVar('all_seconds',$all_minutes);
-				
-				break;
-				
-			default:
-				// Unbekannter Typ, Abbruch
-				die( 'unknown element type: '.$this->value->element->type );
-		}
-	
-		if	( $this->getSessionVar('pageaction') != '' )
-			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-		else	$this->setTemplateVar('old_pageaction','show'                            );
-
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
-
-		$this->forward('pageelement_edit_'.$this->value->element->type);
-	}
-
-
-
+	/**
+	 * Verknüpfung bearbeiten.
+	 *
+	 */
 	function editlink()
 	{
 
@@ -618,8 +457,6 @@ class PageelementAction extends Action
 		else
 			$types = explode(',',$this->value->element->subtype );
 
-//		Html::debug($this->value->element,'Element');
-//		Html::debug($types,'Typen1');
 		$objects = array();
 
 		$t = new Template( $this->page->templateid );
@@ -643,7 +480,6 @@ class PageelementAction extends Action
 		asort( $objects ); // Sortieren
 
 		$this->setTemplateVar('objects'         ,$objects);
-//		Html::debug($this->value,'Value');
 		$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
 
 		if	( $this->getSessionVar('pageaction') != '' )
@@ -664,6 +500,10 @@ class PageelementAction extends Action
 
 
 
+	/**
+	 * Auswahlbox.
+	 *
+	 */
 	function editselect()
 	{
 		$this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
@@ -679,6 +519,10 @@ class PageelementAction extends Action
 
 
 
+	/**
+	 * Einfügen-Element.
+	 *
+	 */
 	function editlist()
 	{
 		// Auswahl ueber alle Elementtypen
@@ -707,6 +551,10 @@ class PageelementAction extends Action
 
 
 
+	/**
+	 * Zahl bearbeiten.
+	 *
+	 */
 	function editnumber()
 	{
 		$this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
@@ -878,9 +726,11 @@ class PageelementAction extends Action
 			             
 		}
 
-		
-		$this->setTemplateVar('compareid',$list[$lfd_nr-1]['id']);
-		$this->setTemplateVar('withid'   ,$list[$lfd_nr  ]['id']);
+		if	( $lfd_nr >= 2 )
+		{
+			$this->setTemplateVar('compareid',$list[$lfd_nr-1]['id']);
+			$this->setTemplateVar('withid'   ,$list[$lfd_nr  ]['id']);
+		}
 		$this->setTemplateVar('name'     ,$value->element->name);
 		$this->setTemplateVar('el'       ,$list);
 	}
@@ -960,7 +810,7 @@ class PageelementAction extends Action
 			
 		$funktionName = 'save'.$type;
 		
-		$this->$funktionName();
+		$this->$funktionName(); // Aufruf Methode "save<ElementTyp>()"
 	}
 	
 	
