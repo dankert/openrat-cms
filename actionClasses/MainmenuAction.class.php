@@ -241,8 +241,10 @@ class MainmenuAction extends Action
 			$this->addSubaction('memberships' );
 			
 			// Kennwortaenderung ist nur sinnvoll, wenn kein LDAP verwendet wird
-			if	( empty($user->ldap_dn) )
-				$this->addSubaction('pw'     );
+			if	( @$conf['security']['auth']['type'] == 'database' && 
+				     ( empty($user->ldap_dn) ||
+				       !@$conf['security']['auth']['userdn'])  )
+			$this->addSubaction('pw'     );
 
 			$this->addSubaction('rights' );
 		}
