@@ -73,7 +73,7 @@ class ProfileAction extends Action
 	
 	
 	
-	function confirmmail()
+	function mailcode()
 	{
 		srand ((double)microtime()*1000003);
 		$code = rand();
@@ -83,7 +83,7 @@ class ProfileAction extends Action
 		{
 			// Bestätigungscode stimmt nicht.
 			$this->addValidationError('mail');
-			$this->callSubAction('mail');
+			return;
 		}
 		else
 		{
@@ -94,10 +94,24 @@ class ProfileAction extends Action
 			$mail = new Mail( $newMail,'mail_change_code' );
 			$mail->setVar('code',$code                 );
 			$mail->setVar('name',$this->user->getName());
-			$mail->send();
 			
-			$this->addNotice('user',$newUser->name,'mail_sent','ok'); // Meldung
+			if	( $mail->send() )
+			{
+				$this->addNotice('user',$this->user->name,'mail_sent',OR_NOTICE_OK); // Meldung
+			}
+			else
+			{
+				$this->addNotice('user',$this->user->name,'mail_not_sent',OR_NOTICE_ERROR,array(),$mail->error); // Meldung
+				$this->callSubAction('mail');
+				return;
+			}
 		}
+	}
+
+	
+	
+	function confirmmail()
+	{
 	}
 	
 	
@@ -115,12 +129,12 @@ class ProfileAction extends Action
 			$this->user->mail = $newMail;
 			$this->user->save();
 			
-			$this->addNotice('user',$newUser->name,'user_saved','ok');
+			$this->addNotice('user',$this->user->name,'SAVED',OR_NOTICE_OK);
 		}
 		else
 		{
 			// Bestätigungscode stimmt nicht.
-			$this->addValidationError('code','mailcode_not_match');
+			$this->addValidationError('code','code_not_match');
 			$this->callSubAction('confirmmail');
 		}
 		
@@ -171,4 +185,26 @@ class ProfileAction extends Action
 	{
 		$this->setTemplateVar( 'groups',$this->user->getGroups() );
 	}
+	
+	
+	
+	/**
+	 * @param String $name Menüpunkt
+	 * @return boolean
+	 */
+	function checkMenu( $name )
+	{
+		global $conf;
+		
+		switch( $name )
+		{
+			case 'pwchange':
+				return     @$conf['security']['auth']['type'] == 'database'
+				       && !@$conf['security']['auth']['userdn'];
+				
+			default:
+				return true;
+		}	
+	}
+	
 }

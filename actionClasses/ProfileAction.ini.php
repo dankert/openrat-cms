@@ -14,8 +14,11 @@ target=savepw
 menu=edit
 
 [mail]
-target=confirmmail
+target=mailcode
 menu=edit
+
+[mailcode]
+goto=confirmmail
 
 [confirmmail]
 target=savemail
