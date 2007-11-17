@@ -169,6 +169,7 @@ class TemplateEngine
 				if	( $value == 'true' || $value == 'false' )
 					return $value;
 				else
+					// macht aus "text1{var}text2" => "text1".$var."text2"
 					return "'".preg_replace('/{(\w+)\}/','\'.$\\1.\'',$value)."'";
 			case 'method':
 				return $invert.'$this->'.$value.'()';
@@ -177,7 +178,9 @@ class TemplateEngine
 			case 'property':
 				return $invert.'$this->'.$value;
 			case 'message':
-				return 'lang('."'".$value."'".')';
+//				return 'lang('."'".$value."'".')';
+					// macht aus "text1{var}text2" => "text1".$var."text2"
+				return 'lang('."'".preg_replace('/{(\w+)\}/','\'.$\\1.\'',$value)."'".')';
 			case 'messagevar':
 				return 'lang($'.$value.')';
 			case 'arrayvar':

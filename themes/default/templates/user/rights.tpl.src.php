@@ -22,7 +22,7 @@ page
 						
 					list list:show value:t
 						cell class:help
-							text key:var:t prefix:acl_ suffix:_abbrev
+							text key:var:t prefix:acl_ suffix:_abbrev title:message:acl_{t}
 	
 			list list:rights key:aclid value:acl extract:true
 				row
