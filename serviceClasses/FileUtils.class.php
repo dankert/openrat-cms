@@ -28,7 +28,9 @@ class FileUtils
 	 */
 	function getTempDir()
 	{
-		return FileUtils::slashify(ini_get('upload_tmp_dir'));
+		$tmpFilename = tempnam(ini_get('upload_tmp_dir'),"bla");
+		@unlink($tmpFilename);
+		return FileUtils::slashify( dirname($tmpFilename) );
 	}
 }
 
