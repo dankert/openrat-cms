@@ -87,6 +87,9 @@ class PageelementAction extends Action
 
 
 
+	/**
+	 * Anzeigen des Element-Inhaltes.
+	 */
 	function show()
 	{
 		$language = Session::getProjectLanguage();
@@ -105,18 +108,13 @@ class PageelementAction extends Action
 		$this->setTemplateVar('elementid',$this->value->element->elementid);
 		$this->setTemplateVar('type'     ,$this->value->element->type     );
 
-
-
-
-		$this->value->generate();
+		$this->value->generate(); // Inhalt erzeugen.
 		$this->setTemplateVar('value',$this->value->value);
 	}
 
 
 	/**
-	 * Ein Element der Seite bearbeiten
-	 *
-	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
+	 * Erweiterter Editormodus.
 	 */
 	function advanced()
 	{
@@ -138,6 +136,10 @@ class PageelementAction extends Action
 		$this->setTemplateVar('type'     ,$this->value->element->type     );
 		
 		$funktionName = 'advanced'.$this->value->element->type;
+		
+		if	( ! method_exists($this,$funktionName) )
+			die( 'Fatal: Method does not exist in PageElementAction: '.$funktionName );
+			
 		$this->$funktionName();
 	}
 	
@@ -166,6 +168,19 @@ class PageelementAction extends Action
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
 		$this->setTemplateVar('elementid',$this->value->element->elementid);
 		$this->setTemplateVar('type'     ,$this->value->element->type     );
+
+		
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
+
+		
+		if	( $this->value->page->hasRight(ACL_RELEASE) )
+			$this->setTemplateVar( 'release',true  );
+		if	( $this->value->page->hasRight(ACL_PUBLISH) )
+			$this->setTemplateVar( 'publish',false );
 		
 		$funktionName = 'edit'.$this->value->element->type;
 		$this->$funktionName();
@@ -187,15 +202,6 @@ class PageelementAction extends Action
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
-
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 
 		$this->forward('pageelement_edit_'.$this->value->element->type);		
 	}
@@ -355,16 +361,6 @@ class PageelementAction extends Action
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
-
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
-
 
 
 		$all_years   = array();
@@ -573,8 +569,6 @@ class PageelementAction extends Action
 		else
 			$types = explode(',',$this->value->element->subtype );
 
-//		Html::debug($this->value->element,'Element');
-//		Html::debug($types,'Typen1');
 		$objects = array();
 
 		foreach( Folder::getAllObjectIds($types) as $id )
@@ -601,15 +595,6 @@ class PageelementAction extends Action
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
-
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 
 		$this->forward('pageelement_edit_'.$this->value->element->type);
 	}
@@ -689,15 +674,6 @@ class PageelementAction extends Action
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
 
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
-
 		$this->forward('pageelement_edit_'.$this->value->element->type);
 	}
 
@@ -726,15 +702,6 @@ class PageelementAction extends Action
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
 
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
-
 		$this->forward('pageelement_edit_'.$this->value->element->type);
 	}
 
@@ -747,15 +714,6 @@ class PageelementAction extends Action
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
-
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 
 		$this->forward('pageelement_edit_'.$this->value->element->type);
 	}
@@ -810,14 +768,6 @@ class PageelementAction extends Action
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
 
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 	}
 
 
@@ -834,15 +784,6 @@ class PageelementAction extends Action
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
-
-		$this->value->page             = new Page( $this->page->objectid );
-		$this->value->page->languageid = $this->value->languageid;
-		$this->value->page->load();
-
-		$this->setTemplateVar( 'release',$this->value->page->hasRight(ACL_RELEASE) );
-		$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
-
-		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 	}
 
 
@@ -853,9 +794,6 @@ class PageelementAction extends Action
 	function usevalue()
 	{
 		$this->value->valueid = $this->getRequestVar('valueid');
-		
-		// Das ausgew?hlte Element fuer die Bearbeitung verwenden
-		//$this->callSubAction('edit');
 	}
 
 
@@ -877,9 +815,6 @@ class PageelementAction extends Action
 		
 		// Inhalt freigeben
 		$this->value->release();
-		
-		// Versionen anzeigen
-		$this->callSubAction('archive');
 	}
 
 
@@ -948,9 +883,6 @@ class PageelementAction extends Action
 		$this->setTemplateVar('withid'   ,$list[$lfd_nr  ]['id']);
 		$this->setTemplateVar('name'     ,$value->element->name);
 		$this->setTemplateVar('el'       ,$list);
-		
-//		Html::debug( $this->templateVars);
-//		$this->setTemplateVar('version_list',$version_list);
 	}
 
 
@@ -990,7 +922,8 @@ class PageelementAction extends Action
 		$text1 = explode("\n",$value1->text);
 		$text2 = explode("\n",$value2->text);
 
-		$res_diff = $this->textdiff($text1,$text2);
+		// Unterschiede feststellen.
+		$res_diff = Text::diff($text1,$text2);
 
 		list( $text1,$text2 ) = $res_diff;
 
@@ -1013,183 +946,7 @@ class PageelementAction extends Action
 	}
 
 
-	/**
-	 * Vergleicht 2 Text-Arrays und ermittelt eine Darstellung der Unterschiede
-	 *
-	 */
-	function textdiff( $from_text,$to_text )
-	{
-		// Zaehler pro Textarray
-		$pos_from = -1;
-		$pos_to   = -1;
-
-		// Ergebnis-Arrays
-		$from_out = array();
-		$to_out   = array();
-
-		while( true )
-		{
-			$pos_from++;
-			$pos_to  ++;
-
-			if	( !isset($from_text[$pos_from]) &&
-				  !isset($to_text  [$pos_to  ]) )
-			{
-				// Text in ist 'neu' und 'alt' zuende. Ende der Schleife.
-				break;
-			}
-			elseif
-				(  isset($from_text[$pos_from]) &&
-				  !isset($to_text  [$pos_to]) )
-			{
-				// Text in 'neu' ist zuende, die Restzeilen von 'alt' werden ausgegeben
-				while( isset($from_text[$pos_from]) )
-				{
-					$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>'old');  
-					$to_out  [] = array();
-					$pos_from++;
-				}
-				break;  
-			}
-			elseif
-				( !isset($from_text[$pos_from]) &&
-				   isset($to_text  [$pos_to]) )
-			{
-				// Umgekehrter Fall: Text in 'alt' ist zuende, Restzeilen aus 'neu' werden ausgegeben
-				while( isset($to_text[$pos_to]) )
-				{
-					$from_out[] = array();  
-					$to_out  [] = array('text'=>$to_text[$pos_to],'line'=>$pos_to+1,'type'=>'new');  
-					$pos_to++;
-				}
-				break;  
-			}
-			elseif
-				( rtrim($from_text[$pos_from]) != rtrim($to_text[$pos_to]) )
-			{
-				// Zeilen sind vorhanden, aber ungleich
-				// Wir suchen jetzt die naechsten beiden Zeilen, die gleich sind.
-				$max_entf = min(count($from_text)-$pos_from-1,count($to_text)-$pos_to-1);
-
-				#echo "suche start, max_entf=$max_entf, pos_from=$pos_from, pos_to=$pos_to<br/>";
-				
-				for ( $a=0; $a<=$max_entf; $a++ )
-				{
-					#echo "a ist $a<br/>";
-					for	( $b=0; $b<=$max_entf; $b++ )
-					{
-						#echo "b ist $b<br/>";
-						if	( trim($from_text[$pos_from+$b]) != '' &&
-							  $from_text[$pos_from+$b] == $to_text[$pos_to+$a] )
-						{
-							$pos_gef_from = $pos_from+$b;
-							$pos_gef_to   = $pos_to  +$a;
-							break;
-						}
-
-						if	( trim($from_text[$pos_from+$a]) != ''  &&
-							  $from_text[$pos_from+$a] == $to_text[$pos_to+$b] )
-						{
-							$pos_gef_from = $pos_from+$a;
-							$pos_gef_to   = $pos_to  +$b;
-							break;
-						}
-					}
-
-					if	( $b <=$max_entf)
-					{
-						break;
-					}
-				}
-
-				if	( $a<=$max_entf )
-				{
-					// Gleiche Zeile gefunden
-					#echo "gefunden, pos_gef_from=$pos_gef_from, pos_gef_to=$pos_gef_to<br/>";
-					
-					if	( $pos_gef_from - $pos_from == 0 )
-						$type = 'new';
-					elseif
-						( $pos_gef_to - $pos_to == 0 )
-						$type = 'old';
-					else
-						$type = 'notequal';
-
-					while( $pos_gef_from - $pos_from > 0 &&
-					       $pos_gef_to   - $pos_to   > 0    )
-					{
-						$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>$type);
-						$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>$type);
-						
-						$pos_from++;
-						$pos_to++;
-					}
-
-					while( $pos_gef_from - $pos_from > 0 )
-					{
-						$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>$type);
-						$to_out  [] = array();
-						$pos_from++;
-					}
-
-					while( $pos_gef_to - $pos_to   > 0 )
-					{
-						$from_out[] = array();
-						$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>$type);
-						$pos_to++;
-					}
-					$pos_from--;
-					$pos_to--;
-				}
-				else
-				{
-					// Keine gleichen Zeilen gefunden
-					#echo "nicht gefunden, i=$i, j=$j, pos_from war $pos_from, pos_to war $pos_to<br/>";
-
-					while( true )
-					{
-						if	( !isset($from_text[$pos_from]) &&
-						      !isset($to_text  [$pos_to  ]) )
-						{
-							break;
-						}
-						elseif
-							(  isset($from_text[$pos_from]) &&
-							  !isset($to_text  [$pos_to  ]) )
-						{
-							$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>'notequal');  
-							$to_out  [] = array();
-						}
-						elseif
-							( !isset($from_text[$pos_from]) &&
-							   isset($to_text  [$pos_to  ]) )
-						{
-							$from_out[] = array();  
-							$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>'notequal');
-						}
-						else
-						{
-							$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>'notequal');  
-							$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>'notequal');
-						}
-						$pos_from++;  
-						$pos_to++;
-					}
-				}
-			}
-			else
-			{
-				// Zeilen sind gleich
-				$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>'equal');  
-				$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>'equal');  
-			}
-		}
-		
-		return( array($from_out,$to_out) );
-	}
-
-
-
+	
 	/**
 	 * Ein Element der Seite speichern.
 	 */
@@ -1197,10 +954,12 @@ class PageelementAction extends Action
 	{
 		$this->element->load();
 		$type = $this->element->type;
+		
 		if	( empty($type))
 			die('Error: No element type available.');
+			
 		$funktionName = 'save'.$type;
-		Logger::debug('save: '.$this->element->type);
+		
 		$this->$funktionName();
 	}
 	
@@ -1609,8 +1368,15 @@ class PageelementAction extends Action
 	}
 	
 	
+	/**
+	 * ODF erzeugen.<br>
+	 * vorerst ZURUECKGESTELLT!
+	 *
+	 * @return unknown
+	 */
 	function createOdfDocument()
 	{
+		// TODO: ODF ist nicht ganz ohne.
 		$transformer = new Transformer();
 		$transformer->text = $this->value->text;
 		$transformer->type = 'odf';
@@ -1619,6 +1385,13 @@ class PageelementAction extends Action
 	}
 	
 	
+	
+	/**
+	 * Menüeinträge aktivieren/deaktivieren.
+	 *
+	 * @param String $name
+	 * @return boolean
+	 */
 	function checkMenu( $name )
 	{
 		$type = $this->value->element->type;
@@ -1630,15 +1403,20 @@ class PageelementAction extends Action
 				return true;
 				
 			case 'archive':
+				// Archiv ist nur verfügbar, wenn es mind. 1 Version des Inhaltes gibt.
 				if	( is_object($this->value) )
 					return $this->value->getCountVersions() > 0;
 				else
 					return true;
 
 			case 'link':
+				// Verknüpfung zu anderen Seiten ist nur möglich für:
+				// Datum, Text, Textabsatz, Ganzzahl.
 				return in_array($type,array('date','text','longtext','number'));
 
 			case 'advanced':
+				// Erweiterten Editormodus gibt es nur für:
+				// Datum, Textabsatz, Ganzzahl.
 				return in_array($type,array('date','longtext','number'));
 
 			default:

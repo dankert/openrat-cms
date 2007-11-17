@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.5  2006-12-09 16:56:40  dankert
+// Revision 1.6  2007-11-17 13:36:06  dankert
+// Methode "textdiff()" in Text-Klasse verschoben.
+//
+// Revision 1.5  2006/12/09 16:56:40  dankert
 // Methode "encodeHtml()" ersetzt nun auch Umlaute gem. Konfiguration.
 //
 // Revision 1.4  2005/04/16 22:26:15  dankert
@@ -135,6 +138,182 @@ class Text
 		return $inhalt;
 	}
 
+	
+	
+	/**
+	 * Vergleicht 2 Text-Arrays und ermittelt eine Darstellung der Unterschiede
+	 *
+	 */
+	function diff( $from_text,$to_text )
+	{
+		// Zaehler pro Textarray
+		$pos_from = -1;
+		$pos_to   = -1;
+
+		// Ergebnis-Arrays
+		$from_out = array();
+		$to_out   = array();
+
+		while( true )
+		{
+			$pos_from++;
+			$pos_to  ++;
+
+			if	( !isset($from_text[$pos_from]) &&
+				  !isset($to_text  [$pos_to  ]) )
+			{
+				// Text in ist 'neu' und 'alt' zuende. Ende der Schleife.
+				break;
+			}
+			elseif
+				(  isset($from_text[$pos_from]) &&
+				  !isset($to_text  [$pos_to]) )
+			{
+				// Text in 'neu' ist zuende, die Restzeilen von 'alt' werden ausgegeben
+				while( isset($from_text[$pos_from]) )
+				{
+					$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>'old');  
+					$to_out  [] = array();
+					$pos_from++;
+				}
+				break;  
+			}
+			elseif
+				( !isset($from_text[$pos_from]) &&
+				   isset($to_text  [$pos_to]) )
+			{
+				// Umgekehrter Fall: Text in 'alt' ist zuende, Restzeilen aus 'neu' werden ausgegeben
+				while( isset($to_text[$pos_to]) )
+				{
+					$from_out[] = array();  
+					$to_out  [] = array('text'=>$to_text[$pos_to],'line'=>$pos_to+1,'type'=>'new');  
+					$pos_to++;
+				}
+				break;  
+			}
+			elseif
+				( rtrim($from_text[$pos_from]) != rtrim($to_text[$pos_to]) )
+			{
+				// Zeilen sind vorhanden, aber ungleich
+				// Wir suchen jetzt die naechsten beiden Zeilen, die gleich sind.
+				$max_entf = min(count($from_text)-$pos_from-1,count($to_text)-$pos_to-1);
+
+				#echo "suche start, max_entf=$max_entf, pos_from=$pos_from, pos_to=$pos_to<br/>";
+				
+				for ( $a=0; $a<=$max_entf; $a++ )
+				{
+					#echo "a ist $a<br/>";
+					for	( $b=0; $b<=$max_entf; $b++ )
+					{
+						#echo "b ist $b<br/>";
+						if	( trim($from_text[$pos_from+$b]) != '' &&
+							  $from_text[$pos_from+$b] == $to_text[$pos_to+$a] )
+						{
+							$pos_gef_from = $pos_from+$b;
+							$pos_gef_to   = $pos_to  +$a;
+							break;
+						}
+
+						if	( trim($from_text[$pos_from+$a]) != ''  &&
+							  $from_text[$pos_from+$a] == $to_text[$pos_to+$b] )
+						{
+							$pos_gef_from = $pos_from+$a;
+							$pos_gef_to   = $pos_to  +$b;
+							break;
+						}
+					}
+
+					if	( $b <=$max_entf)
+					{
+						break;
+					}
+				}
+
+				if	( $a<=$max_entf )
+				{
+					// Gleiche Zeile gefunden
+					#echo "gefunden, pos_gef_from=$pos_gef_from, pos_gef_to=$pos_gef_to<br/>";
+					
+					if	( $pos_gef_from - $pos_from == 0 )
+						$type = 'new';
+					elseif
+						( $pos_gef_to - $pos_to == 0 )
+						$type = 'old';
+					else
+						$type = 'notequal';
+
+					while( $pos_gef_from - $pos_from > 0 &&
+					       $pos_gef_to   - $pos_to   > 0    )
+					{
+						$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>$type);
+						$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>$type);
+						
+						$pos_from++;
+						$pos_to++;
+					}
+
+					while( $pos_gef_from - $pos_from > 0 )
+					{
+						$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>$type);
+						$to_out  [] = array();
+						$pos_from++;
+					}
+
+					while( $pos_gef_to - $pos_to   > 0 )
+					{
+						$from_out[] = array();
+						$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>$type);
+						$pos_to++;
+					}
+					$pos_from--;
+					$pos_to--;
+				}
+				else
+				{
+					// Keine gleichen Zeilen gefunden
+					#echo "nicht gefunden, i=$i, j=$j, pos_from war $pos_from, pos_to war $pos_to<br/>";
+
+					while( true )
+					{
+						if	( !isset($from_text[$pos_from]) &&
+						      !isset($to_text  [$pos_to  ]) )
+						{
+							break;
+						}
+						elseif
+							(  isset($from_text[$pos_from]) &&
+							  !isset($to_text  [$pos_to  ]) )
+						{
+							$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>'notequal');  
+							$to_out  [] = array();
+						}
+						elseif
+							( !isset($from_text[$pos_from]) &&
+							   isset($to_text  [$pos_to  ]) )
+						{
+							$from_out[] = array();  
+							$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>'notequal');
+						}
+						else
+						{
+							$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>'notequal');  
+							$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>'notequal');
+						}
+						$pos_from++;  
+						$pos_to++;
+					}
+				}
+			}
+			else
+			{
+				// Zeilen sind gleich
+				$from_out[] = array('text'=>$from_text[$pos_from],'line'=>$pos_from+1,'type'=>'equal');  
+				$to_out  [] = array('text'=>$to_text  [$pos_to  ],'line'=>$pos_to+1  ,'type'=>'equal');  
+			}
+		}
+		
+		return( array($from_out,$to_out) );
+	}
 }
 
  
