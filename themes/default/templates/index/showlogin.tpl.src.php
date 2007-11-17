@@ -1,6 +1,6 @@
 page
 	form action:index subaction:login target:_top
-		window title:GLOBAL_LOGIN name:login width:400 icon:user
+		window title:GLOBAL_LOGIN name:login width:400px icon:user
 	
 			if present:config:login/logo/file
 				if false:property:mustChangePassword
