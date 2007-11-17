@@ -1,6 +1,6 @@
 page
 	form target:_top
-		window name:password icon:user widths:50%,50%
+		window name:password icon:user width:400px widths:50%,50%
 
 			row
 				cell class:logo colspan:2
