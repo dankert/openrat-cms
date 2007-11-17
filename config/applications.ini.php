@@ -17,3 +17,11 @@
 ; Name of the HTTP-Parameter for the Ticket-Id.
 ; OpenRat puts the session-id into this parameter.
 ;param="ticketidforopenrat"
+
+; Groups
+; Only User, who are in this group, may see the application
+; (optional)
+;group=
+
+; A brief description of this application.
+description="Your database administration"
