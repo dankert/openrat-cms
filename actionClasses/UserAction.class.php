@@ -344,8 +344,14 @@ class UserAction extends Action
 	}
 	
 	
+	/**
+	 * @param String $name Menüpunkt
+	 * @return boolean
+	 */
 	function checkMenu( $menu )
 	{
+		global $conf;
+
 		switch( $menu )
 		{
 			case 'addgroup':
@@ -353,8 +359,14 @@ class UserAction extends Action
 
 			case 'groups':
 				return count($this->user->getGroups()) > 0;
+	
+			case 'pw':
+				return     @$conf['security']['auth']['type'] == 'database'
+				       && !@$conf['security']['auth']['userdn'];
 		}
 		
 		return true;
 	}
+	
+				
 }
