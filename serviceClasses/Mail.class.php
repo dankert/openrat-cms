@@ -73,7 +73,7 @@ class Mail
 	 * @param String unbenutzt.
 	 * @return Mail
 	 */
-	function Mail( $to='',$text='common',$xy='' )
+	function Mail( $to,$text,$xy='' )
 	{
 		global $conf;
 		
@@ -174,7 +174,7 @@ class Mail
 				// Die E-Mail wurde nicht akzeptiert.
 				// Genauer geht es leider nicht, da mail() nur einen boolean-Wert
 				// zurück liefert.
-				$error = 'Mail was NOT accepted.';
+				$this->error[] = 'Mail was NOT accepted by mail()';
 				
 			return false;
 		}
@@ -185,12 +185,20 @@ class Mail
 			
 			if	( !empty($smtpConf['host']))
 			{
+				// Eigenen Relay-Host verwenden.
 				$mxHost = $smtpConf['host'];
 				$mxPort = intval($smtpConf['port']);
 			}
 			else
 			{
+				// Mail direkt zustellen.
 				$mxHost = $this->getMxHost($this->to);
+				
+				if	( empty($mxHost) )
+				{
+					$this->error[] = "No MX-Entry found. Mail could not be sent.";
+					return false;
+				}
 				
 				if	($smtpConf['ssl'])
 					$mxPort = 465;
@@ -461,9 +469,15 @@ class Mail
 	 */
 	function getMxHost( $to )
 	{
-		$part = explode('@',$to);
-		$part = explode('>',$part[1]);
-		$host = $part[0];
+		list($user,$host) = explode('@',$to.'@');
+		
+		if	( empty($host) )
+		{
+			$this->error[] = 'Illegal mail address - No hostname found.';
+			return "";
+		}
+			
+		list($host) = explode('>',$host);
 				
 		$mxHostsName = array();
 		$mxHostsPrio = array();
