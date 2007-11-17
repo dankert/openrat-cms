@@ -1,13 +1,13 @@
 page
 	form
-		window title:GLOBAL_password name:login width:400 icon:user columnclasses:x,y rowclasses:fx1,fx2 widths:50%,50%
+		window title:GLOBAL_password name:login icon:user widths:50%,50%
 
 			row
 				cell class:logo colspan:2
 					logo name:changemail
 			row
 				cell
-					text text:password_code
+					text text:mail_code
 				cell
 					input type:text name:code size:30
 
