@@ -185,10 +185,10 @@ class Action
 	 * @param String $name Name des validierten Eingabefeldes
 	 * @param String Textschlüssel der Fehlermeldung (optional)
 	 */
-	function addValidationError( $name,$message="COMMON_VALIDATION_EROR" )
+	function addValidationError( $name,$message="COMMON_VALIDATION_EROR",$vars=array() )
 	{
 		if	( !empty($message) )
-			$this->addNotice('','',$message,OR_NOTICE_ERROR);
+			$this->addNotice('','',$message,OR_NOTICE_ERROR,$vars);
 
 		$this->templateVars['errors'][] = $name;
 	}
@@ -245,12 +245,12 @@ class Action
 	 * Ausgabe für den Browser, starten.<br>
 	 * <br>
 	 *
-	 * @param String Relativer Dateiname des Templates im Format "<action>/<subaction>".
+	 * @param String Wird nicht benutzt!
 	 */
-	function forward( $tplName="" )
+	function forward( $unbenutzterParameter = "" )
 	{
 		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
-			exit;
+			exit; // Die Ausgabe ist bereits erfolgt (z.B. Binärdateien o. WebDAV)
 
 		$this->setMenu();
 		
