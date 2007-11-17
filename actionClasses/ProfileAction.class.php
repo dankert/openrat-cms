@@ -142,7 +142,7 @@ class ProfileAction extends Action
 		}
 		elseif ( $this->getRequestVar('password1') != $this->getRequestVar('password2') )
 		{
-			$this->addValidationError('password2');
+			$this->addValidationError('password2','PASSWORDS_DO_NOT_MATCH');
 			$this->callSubAction('pwchange');
 		}
 		else
@@ -150,7 +150,6 @@ class ProfileAction extends Action
 			$this->user->setPassword( $this->getRequestVar('password1') );
 			$this->addNotice('user',$this->user->name,'SAVED','ok');
 		}
-
 	}
 
 
