@@ -103,7 +103,20 @@ class IndexAction extends Action
 		{
 			// Der Benutzer hat zwar ein richtiges Kennwort eingegeben, aber dieses ist abgelaufen.
 			// Wir versuchen hier, das neue zu setzen (sofern eingegeben).
-			if	( $pw1 == $pw2 && strlen($pw2) >= $conf['security']['password']['min_length'] )
+			if	( empty($pw1) )
+			{
+			}
+			elseif	( $pw1 != $pw2 )
+			{
+				$this->addValidationError('password1','PASSWORDS_DO_NOT_MATCH');
+				$this->addValidationError('password2','');
+			}
+			elseif	( strlen($pw2) < $conf['security']['password']['min_length'] )
+			{
+				$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=>$conf['security']['password']['min_length']));
+				$this->addValidationError('password2','');
+			}
+			else
 			{
 				// Kennwörter identisch und lang genug.
 				$user->setPassword( $pw1,true );
@@ -351,7 +364,8 @@ class IndexAction extends Action
 		global $conf;
 		
 		// Diese Seite gilt pro Sitzung. 
-		$user = Session::getUser();
+		$user       = Session::getUser();
+		$userGroups = $user->getGroups();
 		$this->lastModified( $user->loginDate );
 
 		// Applikationen ermitteln
@@ -361,9 +375,13 @@ class IndexAction extends Action
 			if	( !is_array($app) )
 				continue;
 				
-			
+			if	( isset($app['group']) )
+				if	( !in_array($app['group'],$userGroups) )
+					continue; // Keine Berechtigung, da Benutzer nicht in Gruppe vorhanden.
+					
 			$p = array();
-			$p['url']  = $app['url'];
+			$p['url']         = $app['url'];
+			$p['description'] = @$app['description'];
 			if	( isset($app['param']) )
 			{
 				$p['url'] .= strpos($p['url'],'?')!==false?'&':'?';
@@ -538,17 +556,10 @@ class IndexAction extends Action
 
 	/**
 	 * Login.
-	 *
 	 */
 	function login()
 	{
 		global $conf;
-
-//		$loginForm = new LoginForm();
-//		$loginForm->validate();
-//		$this->setTemplateVar('errors',$loginForm->getErrors() );
-//		if	( $loginForm->hasErrors() )
-//			$this->callSubAction('show');
 
 		$this->checkForDb();
 		Session::setUser('');
@@ -570,8 +581,6 @@ class IndexAction extends Action
 			if	( ! $openId->login() )
 			{
 				$this->addNotice('user',$openid_user,'LOGIN_OPENID_FAILED','error',array('name'=>$openid_user),array($openId->error) );
-//			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',OR_NOTICE_WARN ,array('name'=>$openId->user),array($openId->error) );
-//			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',OR_NOTICE_OK,array('name'=>$openId->user),array($openId->error) );
 				$this->addValidationError('openid_url','');
 				$this->callSubAction('showlogin');
 				return;
@@ -611,6 +620,7 @@ class IndexAction extends Action
 			}
 				
 			$this->callSubAction('showlogin');
+			return;
 		}
 		else
 		{
@@ -1069,22 +1079,36 @@ class IndexAction extends Action
 		
 		switch( $name )
 		{
-			// Menüpunkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
-			// konfiguriert sind.
 			case 'applications':
+				// Menüpunkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
+				// konfiguriert sind.
 				return count(@$conf['applications']) > 0;
 
-			case 'register':
-				return @$conf['login']['register'];
+			case 'register': // Registrierung
+				// Nur, wenn aktiviert und gegen eigene Datenbank authentisiert wird.
+				return @$conf['login']['register'] && @$conf['security']['auth']['type'] == 'database';
 
-			case 'send_password':
-				@$conf['login']['send_password'];
+			case 'password': // Kennwort vergessen
+				// Nur, wenn aktiviert und gegen eigene Datenbank authentisiert wird.
+				// Deaktiviert, falls LDAP-Lookup aktiviert ist.
+				return @$conf['login']['send_password'] && @$conf['security']['auth']['type'] == 'database'
+				                                        && !@$conf['security']['auth']['userdn'];
 				
 			case 'administration':
+				// "Administration" natürlich nur für Administratoren.
 				return $this->userIsAdmin();
+
+			case 'showlogin':
+				return !@$conf['login']['nologin'];
+				
+			case 'logout':
+				return true;
+				
+			case 'projectmenu':
+				return true;
 				
 			default:
-				return true;
+				return false;
 		}	
 	}
 	
@@ -1111,20 +1135,34 @@ class IndexAction extends Action
 			return;
 		}
 		
-		global $conf;
-
 		srand ((double)microtime()*1000003);
 		$registerCode = rand();
 		
 		Session::set('registerCode',$registerCode                );
-		Session::set('registerMail',$this->getRequestVar('mail') );
 					
 		$mail = new Mail($this->getRequestVar('mail'),
 		                 'register_commit_code','register_commit_code');
 		$mail->setVar('code',$registerCode);
-		$mail->send();
+		
+		if	( $mail->send() )
+		{
+			$this->addNotice('','','mail_sent',OR_NOTICE_OK);
+		}
+		else
+		{
+			$this->addNotice('','','mail_not_sent',OR_NOTICE_ERROR,array(),$mail->error);
+			$this->callSubAction('register');
+			return;
+		}
+	}
 
+	
+	
+	function registeruserdata()
+	{
+		global $conf;
 
+		Session::set('registerMail',$this->getRequestVar('mail') );
 		// TODO: Attribut "Password" abfragen
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
@@ -1148,34 +1186,55 @@ class IndexAction extends Action
 	 */
 	function registercommit()
 	{
+		global $conf;
 		$this->checkForDb();
 
 		$origRegisterCode  = Session::get('registerCode');
 		$inputRegisterCode = $this->getRequestVar('code');
 		
-		if	( $origRegisterCode == $inputRegisterCode )
-		{
-			// Bestätigungscode stimmt überein.
-			// Neuen Benutzer anlegen.	
-			$newUser = new User();
-			$newUser->name = $this->getRequestVar('username');
-			$newUser->add();
-			
-			$newUser->mail     = Session::get('registerMail');
-			$newUser->save();
-			
-			$newUser->setPassword( $this->getRequestVar('password'),true );
-			
-			$this->addNotice('user',$newUser->name,'user_added','ok');
-		}
-		else
+		if	( $origRegisterCode != $inputRegisterCode )
 		{
 			// Bestätigungscode stimmt nicht.
-			$this->addNotice('user',$newUser->name,'regcode_not_match','error');
-//			$this->addValidationError('code');
-			$this->callSubAction('register');
+			$this->addValidationError('code','code_not_match');
+			$this->callSubAction('registeruserdata');
 			return;
 		}
+
+		// Bestätigungscode stimmt überein.
+		// Neuen Benutzer anlegen.
+			
+		if	( !$this->hasRequestVar('username') )
+		{
+			$this->addValidationError('username');
+			$this->callSubAction('registeruserdata');
+			return;
+		}
+		
+		$user = User::loadWithName( $this->getRequestVar('username') );
+		if	( $user->isValid() )
+		{
+			$this->addValidationError('username','USER_ALREADY_IN_DATABASE');
+			$this->callSubAction('registeruserdata');
+			return;
+		}
+		
+		if	( strlen($this->getRequestVar('password')) < $conf['security']['password']['min_length'] )
+		{
+			$this->addValidationError('password','password_minlength',array('minlength'=>$conf['security']['password']['min_length']));
+			$this->callSubAction('registeruserdata');
+			return;
+		}
+		
+		$newUser = new User();
+		$newUser->name = $this->getRequestVar('username');
+		$newUser->add();
+			
+		$newUser->mail     = Session::get('registerMail');
+		$newUser->save();
+			
+		$newUser->setPassword( $this->getRequestVar('password'),true );
+			
+		$this->addNotice('user',$newUser->name,'user_added','ok');
 	}
 
 
@@ -1267,19 +1326,19 @@ class IndexAction extends Action
 
 		$user = User::loadWithName( $this->getRequestVar("username") );
 		//		Html::debug($user);
-		if	( $user->userid > 0 )
+		if	( $user->isValid() )
 		{
 			srand ((double)microtime()*1000003);
 			$code = rand();
 			$this->setSessionVar("password_commit_code",$code);
 			
-			$eMail = new Mail( $user->mail,'password_commit_code','password_commit_code' );
+			$eMail = new Mail( $user->mail,'password_commit_code' );
 			$eMail->setVar('name',$user->getName());
 			$eMail->setVar('code',$code);
 			if	( $eMail->send() )
-				$this->addNotice('','user','mail_sent',OR_NOTICE_OK);
+				$this->addNotice('user',$user->getName(),'mail_sent',OR_NOTICE_OK);
 			else
-				$this->addNotice('','user','error',OR_NOTICE_ERROR,array(),$eMail->error);
+				$this->addNotice('user',$user->getName(),'mail_not_sent',OR_NOTICE_ERROR,array(),$eMail->error);
 			
 		}
 		else
@@ -1288,13 +1347,23 @@ class IndexAction extends Action
 			// Trotzdem vortäuschen, eine E-Mail zu senden, damit die Gültigkeit
 			// eines Benutzernamens nicht von außen geprüft werden kann.
 			// 
-			$this->addNotice('','user','mail_sent');
+			$this->addNotice('user',$this->getRequestVar("username"),'mail_sent');
 			sleep(5);
 		}
 		
 		$this->setSessionVar("password_commit_name",$user->name);
 	}
+
 	
+	
+	/**
+	 * Anzeige Formular zum Eingeben des Kennwort-Codes.
+	 *
+	 */
+	function passwordinputcode()
+	{
+		
+	}
 	
 	
 	/**
@@ -1302,34 +1371,46 @@ class IndexAction extends Action
 	 */
 	function passwordcommit()
 	{
-		$ok = $this->getSessionVar("password_commit_code") == $this->getRequestVar("code");
-		
-		if	( $ok )
+		$username = $this->getSessionVar("password_commit_name");
+
+		if	( $this->getRequestVar("code")=='' ||
+			  $this->getSessionVar("password_commit_code") != $this->getRequestVar("code") )
 		{
-			$user = User::loadWithName( $this->getSessionVar("password_commit_name") );
+			$this->addValidationError('code','PASSWORDCODE_NOT_MATCH');
+			$this->callSubAction('passwordinputcode');
+		  	return;
+		}
+		
+		$user  = User::loadWithName( $username );
 			
-			$newPw = User::createPassword();
-			
-			if	( intval($user->userid)!=0 )
-			{
-				$eMail = new Mail( $user->mail,'password_new','password_new' );
-				$eMail->setVar('password',$newPw);
-				$eMail->setVar('name',$user->getName());
-				$eMail->send();
-				
-				$user->setPassword( $newPw, false );
-				$this->addNotice('user','user','mail_sent','ok');
-			}
-			else
-			{
-				$this->addNotice('user','user','username_not_found','error');
-			}
+		if	( !$user->isValid() )
+		{
+			// Benutzer konnte nicht geladen werden.
+			$this->addNotice('user',$username,'error',OR_NOTICE_ERROR);
+			return;
+		}
+		
+		$newPw = User::createPassword(); // Neues Kennwort erzeugen.
+		
+		$eMail = new Mail( $user->mail,'password_new' );
+		$eMail->setVar('name'    ,$user->getName());
+		$eMail->setVar('password',$newPw          );
+
+		if	( $eMail->send() )
+		{
+			$user->setPassword( $newPw, false ); // Kennwort muss beim nä. Login geändert werden.
+			$this->addNotice('user',$username,'mail_sent',OR_NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('user','user','password_code_failure','error');
+			// Sollte eigentlich nicht vorkommen, da der Benutzer ja auch schon den
+			// Code per E-Mail erhalten hat.
+			$this->addNotice('user',$username,'error',OR_NOTICE_ERROR,array(),$eMail->error);
 		}
 	}
+	
+	
+	
 	
 }
 

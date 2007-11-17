@@ -34,6 +34,10 @@ target=registercode
 guest=true
 
 [registercode]
+goto=registeruserdata
+guest=true
+
+[registeruserdata]
 menu=login
 target=registercommit
 guest=true
@@ -49,6 +53,10 @@ target=passwordcode
 guest=true
 
 [passwordcode]
+guest=true
+goto=passwordinputcode
+
+[passwordinputcode]
 menu=login
 target=passwordcommit
 guest=true
