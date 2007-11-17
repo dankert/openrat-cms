@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.16  2007-11-17 20:55:41  dankert
+// Fehlerhandling verbessert wenn Projektname nicht eingegeben.
+//
 // Revision 1.15  2007-11-05 20:51:03  dankert
 // Aufruf von "addValidationError(...)" bei Eingabefehlern.
 //
@@ -134,9 +137,8 @@ class ProjectAction extends Action
 		{
 			$this->addValidationError('name');
 			$this->callSubAction('add');
+			return;
 		}
-
-		$this->callSubAction('listing');
 	}
 
 
