@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-12-28 22:57:56  dankert
+// Revision 1.3  2007-11-17 02:19:29  dankert
+// Erg?nzung der Version (Default: 0.91), Korrektur, Anpassung an neue API.
+//
+// Revision 1.2  2004/12/28 22:57:56  dankert
 // Korrektur Vererbung, "api" ausgebaut
 //
 // Revision 1.1  2004/10/14 21:14:52  dankert
@@ -58,6 +61,7 @@ class RSSCreate extends Dynamic
 	var $description      = 'Creates an RSS-Feed of pages in a folder';
 	var $api;
 
+	var $feed_version     = '0.91';
 	var $feed_url         = '';
 	var $feed_title       = '';
 	var $feed_description = '';
@@ -69,7 +73,7 @@ class RSSCreate extends Dynamic
 
 		// Lesen des Root-Ordners
 		if	( intval($this->folderid) == 0 )
-			$folder = new Folder( $this->api->getRootObjectId() );
+			$folder = new Folder( $this->getRootObjectId() );
 		else
 			$folder = new Folder( intval($this->folderid) );
 
@@ -89,10 +93,12 @@ class RSSCreate extends Dynamic
 		// Schleife ueber alle Inhalte des Root-Ordners
 		foreach( $folder->getObjectIds() as $id )
 		{
+			if	( $id == $this->getObjectId() )
+				continue;
 			$o = new Object( $id );
 			$o->languageid = $this->page->languageid;
 			$o->load();
-			if ( $o->isPage ) // Nur wenn Ordner
+			if ( $o->isPage ) // Nur wenn Seite
 			{
 				$p = new Page( $id );
 				$p->load();
@@ -101,6 +107,11 @@ class RSSCreate extends Dynamic
 				$item['title'      ] = $p->name;
 				$item['description'] = $p->desc;
 				$item['pubDate'    ] = $p->lastchangeDate;
+				$item['link'       ] = $this->pathToObject($id);
+				if	( empty($this->feed_url) )
+					$item['link'       ] = $this->pathToObject($id);
+				else
+					$item['link'       ] = FileUtils::slashify($this->feed_url).$p->full_filename();
 				
 				$feed['items'][] = $item;
 			}
@@ -129,7 +140,7 @@ class RSSCreate extends Dynamic
 		$rss .= (!empty($stylesheet))?"\n".'<?xml-stylesheet type="text/xsl" href="'.$stylesheet.'"?>':"";
 		$rss .= <<<__RSS__
 		
-		<rss version="2.0">
+		<rss version="{$this->feed_version}">
 		<channel>
 		<title>{$input["title"]}</title>
 		<description>{$input["description"]}</description>
