@@ -431,7 +431,7 @@ if (isset($attr6_elementtype)) {
 	if	( $exec )
 	{
 ?>
-<?php unset($attr6) ?><?php unset($attr6_not) ?><?php unset($attr6_empty) ?><?php $attr7_debug_info = 'a:5:{s:5:"title";s:9:"var:title";s:6:"target";s:7:"_parent";s:3:"url";s:7:"var:url";s:5:"class";s:4:"menu";s:9:"accesskey";s:14:"messagevar:key";}' ?><?php $attr7 = array('title'=>$title,'target'=>'_parent','url'=>$url,'class'=>'menu','accesskey'=>lang($key)) ?><?php $attr7_title=$title ?><?php $attr7_target='_parent' ?><?php $attr7_url=$url ?><?php $attr7_class='menu' ?><?php $attr7_accesskey=lang($key) ?><?php
+<?php unset($attr6) ?><?php unset($attr6_not) ?><?php unset($attr6_empty) ?><?php $attr7_debug_info = 'a:5:{s:5:"title";s:16:"messagevar:title";s:6:"target";s:7:"_parent";s:3:"url";s:7:"var:url";s:5:"class";s:4:"menu";s:9:"accesskey";s:14:"messagevar:key";}' ?><?php $attr7 = array('title'=>lang($title),'target'=>'_parent','url'=>$url,'class'=>'menu','accesskey'=>lang($key)) ?><?php $attr7_title=lang($title) ?><?php $attr7_target='_parent' ?><?php $attr7_url=$url ?><?php $attr7_class='menu' ?><?php $attr7_accesskey=lang($key) ?><?php
 	$params = array();
 	if (!empty($attr7_var1) && isset($attr7_value1))
 		$params[$attr7_var1]=$attr7_value1;
