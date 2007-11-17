@@ -4,8 +4,8 @@
 enabled=true
 
 ; URL to the documents 
-;url=doc/online/html/
-url=http://help.openrat.de/
+url=help/html/
+;url=http://help.openrat.de/
 
 ; file extension of the help documents
 suffix=.html
