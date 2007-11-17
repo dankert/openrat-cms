@@ -78,8 +78,6 @@ page
 							text key:openid_user
 						cell
 							input name:openid_url class:name size:20
-							if value:size:dbids lessthan:2
-								hidden name:dbid default:var:actdbid
 				if value:size:dbids greaterthan:1
 					row
 						row
@@ -101,6 +99,8 @@ document.forms[0].screenwidth.value=window.innerWidth;
 //	-->
 </script>
 END
+		if value:size:dbids lessthan:2
+			hidden name:dbid default:var:actdbid
 
 	# The GPL licence requires this text, so NEVER remove nor change it.
 
