@@ -2,7 +2,7 @@ page title:message:MENU_INDEX_APPLICATIONS
 	window width:600 icon:project
 
 		row
-			cell 
+			cell colspan:2 
 				link action:index subaction:projectmenu
 					text text:OpenRat
 
@@ -12,5 +12,7 @@ page title:message:MENU_INDEX_APPLICATIONS
 				cell 
 					link url:var:url
 						text text:var:name
+				cell 
+					text text:var:description
 
 									
