@@ -227,6 +227,7 @@ class MainmenuAction extends Action
 
 	function user()
 	{
+		global $conf;
 		$this->setTemplateVar('path',array() );
 		$user = new User( $this->getRequestId() );
 		$user->load();
