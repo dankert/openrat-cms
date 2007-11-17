@@ -529,13 +529,16 @@ EOF
 		$sql->setInt( 'objectid',$this->objectid );
 		$row = $db->getRow( $sql->query );
 		
-		$this->value = $row['value'];
-		$this->size  = $row['size' ];
+		if	( count($row) != 0 )
+		{
+			$this->value = $row['value'];
+			$this->size  = $row['size' ];
+		}
 
 		if	( $this->storeValueAsBase64 )
 			$this->value = base64_decode( $this->value );
 		
-		return( $this->value );
+		return $this->value;
 	}
 
 
