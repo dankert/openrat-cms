@@ -944,3 +944,5 @@ USER_STYLE_DESC = "Стиль" содержит настройки для цвета и шрифтов. Каждый Пользов
 USER_USERNAME_DESC = "Имя пользователя с таким именем пользователь рубок я н"
 USER_YOURPROFILE = "Мои настройки Содержимое"
 DATE_FORMAT_LONG = "m/d Y, H:i"
+NOTICE_NO_PROJECTS_AVAILABLE ="There is no project available."
+NOTICE_ADMIN_NO_PROJECTS_AVAILABLE ="There is no project available, please add a project in the administration-modus."

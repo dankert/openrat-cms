@@ -349,7 +349,18 @@ class IndexAction extends Action
 			$list[] = $p;
 		}
 
-		$this->setTemplateVar('projects',$list    );
+		$this->setTemplateVar('projects',$list);
+		
+		if	( empty($list) )
+		{
+			// Kein Projekt vorhanden. Eine Hinweismeldung ausgeben.
+			if	( $this->userIsAdmin() )
+				// Administratoren bekommen bescheid, dass sie ein Projekt anlegen sollen
+				$this->addNotice('','','ADMIN_NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
+			else
+				// Normale Benutzer erhalten eine Meldung, dass kein Projekt zur Verfügung steht
+				$this->addNotice('','','NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
+		}
 		
 		$this->metaValues();
 	}
@@ -400,7 +411,9 @@ class IndexAction extends Action
 	
 	
 	/**
-	 * Ermittelt Meta-Angaben für den HTML-Kopf.
+	 * Ermittelt Meta-Angaben für den HTML-Kopf.<br>
+	 * Falls der Browser die Meta-Angaben entsprechend auswertet, können über feste Browser-Menüs 
+	 die Projekt direkt ausgewählt werden.
 	 */
 	function metaValues()
 	{

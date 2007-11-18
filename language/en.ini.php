@@ -946,4 +946,5 @@ USER_USERNAME = Username
 USER_USERNAME_DESC = "With this name the user is logging in"
 USER_YOURPROFILE = "My settings"
 EXAMPLE=Example
-
+NOTICE_NO_PROJECTS_AVAILABLE ="There is no project available."
+NOTICE_ADMIN_NO_PROJECTS_AVAILABLE ="There is no project available, please add a project in the administration-modus."
