@@ -1,5 +1,11 @@
 #!/bin/sh
 #
+# This is for developers only.
+# Do not run this script, until you know what you are doing :)
+#
+# This script
+# - orders the language files
+# - analyses the missing keys (first german->english, then english->es,fr,it,ru)
 #
 pgmdir=../doc/examples/maintenance
 
