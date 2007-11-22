@@ -483,7 +483,7 @@ class ElementAction extends Action
 								break;
 
 							case 'link':
-								if	( !$o->isPage && !$o->isFile )
+								if	( !$o->isPage && !$o->isFile && !$o->isLink )
 									continue 2;
 								break;
 							
