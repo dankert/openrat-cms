@@ -185,10 +185,10 @@ class Action
 	 * @param String $name Name des validierten Eingabefeldes
 	 * @param String Textschlüssel der Fehlermeldung (optional)
 	 */
-	function addValidationError( $name,$message="COMMON_VALIDATION_ERROR",$vars=array() )
+	function addValidationError( $name,$message="COMMON_VALIDATION_ERROR",$vars=array(),$log=array() )
 	{
 		if	( !empty($message) )
-			$this->addNotice('','',$message,OR_NOTICE_ERROR,$vars);
+			$this->addNotice('','',$message,OR_NOTICE_ERROR,$vars,$log);
 
 		$this->templateVars['errors'][] = $name;
 	}
