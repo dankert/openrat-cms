@@ -7,7 +7,7 @@
  */
 class CodeElement extends AbstractElement
 {
-
+	var $language;
 }
 
 ?>

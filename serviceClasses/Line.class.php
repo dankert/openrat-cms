@@ -105,7 +105,7 @@ class Line
 		elseif	( $this->isAnErsterStelle($s,$text_markup['pre-begin']) && !$this->isHeadlineUnderline )
 		{
 			$this->isCode            = true;
-			$this->value             = '';
+			$this->value             = substr($s,strlen($text_markup['pre-begin']));
 		}
 		elseif	( strpos($s, $text_markup['definition-sep'])!== false )
 		{

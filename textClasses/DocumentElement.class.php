@@ -204,6 +204,8 @@ class DocumentElement extends AbstractElement
 					$bisZeileNr++;
 				
 				$code = new CodeElement();
+				$code->language = trim($dieseZeile->value);
+				
 				for( $zn=$zeileNr+1;$zn<$bisZeileNr;$zn++)
 				{
 					$code->children[] = new TextElement( $zeilen[$zn]->source );
@@ -755,7 +757,23 @@ class DocumentElement extends AbstractElement
 						break;
 
 					case 'codeelement':
-						$tag = 'pre';
+						
+						if	( empty($child->language) )
+							// Wenn keine Sprache verfügbar, dann ein einfaches PRE-Element erzeugen.
+							$tag = 'pre';
+						else
+						{
+							// Wenn Sprache verfügbar, dann den GESHI-Parser bemühen.
+							$tag    = '';
+							$source = '';
+							foreach( $child->children as $c )
+								if	( strtolower(get_class($c)) == 'textelement')
+									$source .= $c->text."\n";
+							$child->children = array();
+							require_once('./geshi/geshi.php');
+							$geshi = new Geshi($source,$child->language);
+							$val = $geshi->parse_code(); 
+						}
 						break;
 
 					case 'quoteelement':
