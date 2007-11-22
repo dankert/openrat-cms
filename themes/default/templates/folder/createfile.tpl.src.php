@@ -3,9 +3,9 @@ page
 		hidden name:type default:file
 
 		window title: name:
-			row
-				cell colspan:2
-					fieldset title:message:file
+			#row
+			#	cell colspan:2
+			#		fieldset title:message:file
 			row
 				cell class:fx
 					text text:global_FILE
@@ -18,6 +18,11 @@ page
 					text text:var:max_size
 					newline
 					newline
+			row
+				cell class:fx
+					text text:global_URL
+				cell class:fx
+					input name:url size:50
 			row
 				cell colspan:2
 					fieldset title:message:description

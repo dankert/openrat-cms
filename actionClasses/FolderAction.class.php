@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.45  2007-11-22 21:21:45  dankert
+// Dateien auch per HTTP-Link anlegen.
+//
 // Revision 1.44  2007-11-15 21:41:59  dankert
 // Warnmeldung, wenn es keine Seitenvorlagen gibt.
 //
@@ -218,12 +221,20 @@ class FolderAction extends ObjectAction
 
 			case 'file':
 				$upload = new Upload();
-				
+
+				if	( !$upload->isValid() )
+				{
+					$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
+					$this->callSubAction('createfile');
+					return;
+				}
 				// Prüfen der maximal erlaubten Dateigröße.
-				if	( $upload->size > $this->maxFileSize() )
+				elseif	( $upload->size > $this->maxFileSize() )
 				{
 					// Maximale Dateigröße ist überschritten
-					$this->addNotice('file',$file->name,'MAX_FILE_SIZE_EXCEEDED','failed');
+					$this->addValidationError('file','MAX_FILE_SIZE_EXCEEDED');
+					$this->callSubAction('createfile');
+					return;
 				}
 				elseif( $upload->size > 0 )
 				{
@@ -337,16 +348,49 @@ class FolderAction extends ObjectAction
 		$description = $this->getRequestVar('description');
 		
 		$file   = new File();
-		$upload = new Upload();
-
-		$file->desc      = !empty($description)?$name:$upload->filename;
-		$file->filename  = $upload->filename;
-		$file->name      = !empty($name)?$name:$upload->filename;
-		$file->extension = $upload->extension;		
-		$file->size      = $upload->size;
-		$file->parentid  = $this->folder->objectid;
-
-		$file->value     = $upload->value;
+		
+		if	( $this->hasRequestVar('url') )
+		{
+			$url = $this->getRequestVar('url');
+			$http = new Http();
+			$http->setUrl( $url );
+		
+			$ok = $http->request();
+			
+			if	( !$ok )
+			{
+				$this->addValidationError('url','COMMON_VALIDATION_ERROR',array(),$http->error);
+				$this->callSubAction('createfile');
+				return;
+			}
+			
+			$file->desc      = $description;
+			$file->filename  = basename($url);
+			$file->name      = !empty($name)?$name:basename($url);
+			$file->size      = strlen($http->body);
+			$file->value     = $http->body;
+			$file->parentid  = $this->folder->objectid;
+		}
+		else
+		{
+			$upload = new Upload();
+			
+			if	( !$upload->isValid() )
+			{
+				$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
+				$this->callSubAction('createfile');
+				return;
+			}
+	
+			$file->desc      = $description;
+			$file->filename  = $upload->filename;
+			$file->name      = !empty($name)?$name:$upload->filename;
+			$file->extension = $upload->extension;		
+			$file->size      = $upload->size;
+			$file->parentid  = $this->folder->objectid;
+	
+			$file->value     = $upload->value;
+		}
 
 		$file->add(); // Datei hinzufuegen
 		$this->addNotice('file',$file->name,'ADDED','ok');
