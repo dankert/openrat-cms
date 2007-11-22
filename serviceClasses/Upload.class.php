@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.5  2007-11-22 21:20:21  dankert
+// Fehlerhandling, wenn Upload misslingt.
+//
 // Revision 1.4  2007-10-25 22:28:18  dankert
 // Filemanager f?r den FCK-Editor mit Zugriff auf OpenRat-Verzeichnis.
 //
@@ -50,7 +53,21 @@ class Upload
 	var $extension;
 	var $value;
 	var $size;
+	var $error  = '';
 
+	
+	/**
+	 * Stellt fest, ob der Upload geklappt hat.
+	 *
+	 * @return boolean
+	 */
+	function isValid()
+	{
+		return empty($this->error);
+	}
+	
+	
+	
 	/**
 	 * Bearbeitet den Upload einer Datei.<br>
 	 * Bei der Objekterzeugung wird die Datei bereits geladen.<br>
@@ -61,11 +78,16 @@ class Upload
 	{
 		global $FILES;
 
+		if	( !isset($FILES[$name])              || 
+			  !isset($FILES[$name]['tmp_name'])  ||
+			  !is_file($FILES[$name]['tmp_name'])   )
+		{
+			$this->error = 'No file received.';
+			return;
+		}
+			
 		$this->size = filesize($FILES[$name]['tmp_name']);
 		
-		if	( $this->size == 0 )
-			exit;
-
 		$fh    = fopen( $FILES[$name]['tmp_name'],'r' );
 		
 		$this->value = fread($fh,$this->size);
