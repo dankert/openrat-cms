@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.24  2007-11-24 14:18:12  dankert
+// MimeType in Template ermitteln.
+//
 // Revision 1.23  2007-11-24 12:16:32  dankert
 // Neue Methode mimeType()
 //
@@ -848,13 +851,7 @@ class Page extends Object
 			$this->template = new Template( $this->templateid );
 
 		$this->template->load();
-		$extension = strtolower($this->template->extension);
-
-		if	( !empty($mime_types[$extension]) )
-			$this->mime_type = $mime_types[$extension];
-		else
-			// Wenn kein Mime-Type gefunden, dann Standartwert setzen
-			$this->mime_type = 'application/octet-stream';
+		$this->mime_type = $this->template->mimeType();
 			
 		return( $this->mime_type );
 	}
