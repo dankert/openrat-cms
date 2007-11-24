@@ -549,6 +549,8 @@ class PageAction extends ObjectAction
 		$this->page->generate();
 		$this->page->write();
 
+		header('Content-Type: '.$this->page->mimeType() );
+
 		// HTTP-Header mit Sprachinformation setzen.
 		$language = Session::getProjectLanguage();
 		header('Content-Language: '.$language->isoCode);
@@ -577,6 +579,14 @@ class PageAction extends ObjectAction
 		$this->page->load();
 		$this->page->generate();
 		$this->page->write();
+		
+		header('Content-Type: '.$this->page->mimeType() );
+
+		// HTTP-Header mit Sprachinformation setzen.
+		$language = Session::getProjectLanguage();
+		header('Content-Language: '.$language->isoCode);
+
+		
 		require( $this->page->tmpfile() );
 
 		// Inhalt ist ausgegeben... Skript beenden.
