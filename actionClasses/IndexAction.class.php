@@ -276,14 +276,19 @@ class IndexAction extends Action
 				$dbids[$dbname] = $dbconf['comment'];
 		}
 
-		$this->setTemplateVar('login_name'    ,@$conf['security']['default']['username']);
-		$this->setTemplateVar('login_password',@$conf['security']['default']['password']);
+		if	( !isset($this->templateVars['login_name']) )
+			$this->setTemplateVar('login_name',@$conf['security']['default']['username']);
+
+		if	( $this->templateVars['login_name']== @$conf['security']['default']['username'])
+			$this->setTemplateVar('login_password',@$conf['security']['default']['password']);
 
 		$this->setTemplateVar( 'dbids',$dbids );
 		
 		$db = Session::getDatabase();
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
+		elseif( isset($this->templateVars['actid']) )
+			;
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
@@ -639,6 +644,8 @@ class IndexAction extends Action
 		{
 			$user = Session::getUser();
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
+			
+			$this->evaluateRequestVars();
 		}
 	}
 
@@ -652,6 +659,23 @@ class IndexAction extends Action
 		$user = Session::getUser();
 		$this->setTemplateVar('login_username',$user->name);
 		
+		// Ausgewählte Objekte merken, um nach dem nä. Login wieder sofort auszuwählen.
+		$o = Session::getObject();
+		if	( is_object($o) )
+			$this->setTemplateVar('objectid',$o->objectid);
+		$p = Session::getProject();
+		if	( is_object($p) )
+			$this->setTemplateVar('projectid',$p->projectid);
+		$l = Session::getProjectLanguage();
+		if	( is_object($l) )
+			$this->setTemplateVar('languageid',$l->languageid);
+		$m = Session::getProjectModel();
+		if	( is_object($m) )
+			$this->setTemplateVar('modelid',$m->modelid);
+		$db = db_connection();
+		if	( is_object($db) )
+			$this->setTemplateVar('dbid',$db->id);
+		
 		// Aus Sicherheitsgruenden die komplette Session deaktvieren.
 		session_unset();
 		
@@ -661,7 +685,10 @@ class IndexAction extends Action
 			{
 				foreach( $actionConfig as $subActionName=>$subaction )
 				{
-					if	( is_array($subaction) && !isset($subaction['goto']) && !isset($subaction['direct']) && !isset($subaction['action']) && $subActionName!='menu'  )
+					if	( is_array($subaction) && !isset($subaction['goto']) && 
+						  !isset($subaction['direct']) &&
+						  !isset($subaction['action']) &&
+						  $subActionName != 'menu'            )
 					{
 						$engine = new TemplateEngine();
 						$engine->compile( strtolower(str_replace('Action','',$actionName)).'/'.$subActionName);
@@ -783,9 +810,11 @@ class IndexAction extends Action
 
 	function model()
 	{
-		$this->evaluateRequestVars( array('modelid'=>$this->getRequestId()) );
+		$this->evaluateRequestVars( array(REQ_PARAM_MODEL_ID=>$this->getRequestId()) );
 
-		$user = Session::getUser();
+		$user     = Session::getUser();
+		$project  = Session::getProject();
+		$language = Session::getProjectLanguage();
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
 	}
@@ -811,9 +840,9 @@ class IndexAction extends Action
 		}
 		
 
-		if	( isset($vars['objectid']) )
+		if	( isset($vars[REQ_PARAM_OBJECT_ID]) && Object::available($vars[REQ_PARAM_OBJECT_ID]) )
 		{
-			$object = new Object( $this->getRequestId() );
+			$object = new Object( $this->getRequestVar(REQ_PARAM_OBJECT_ID) );
 			$object->objectLoadRaw();
 			Session::setObject( $object );
 	
@@ -821,15 +850,15 @@ class IndexAction extends Action
 			$project->load();
 			Session::setProject( $project );
 			
-			$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
+			$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])&&Language::available($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
 			$language->load();
 			Session::setProjectLanguage( $language );
 	
-			$model = new Model( isset($vars['modelid'])?$vars['modelid']:$project->getDefaultModelId() );
+			$model = new Model( isset($vars[REQ_PARAM_MODEL_ID])&&Model::available($vars[REQ_PARAM_MODEL_ID])?$vars[REQ_PARAM_MODEL_ID]:$project->getDefaultModelId() );
 			$model->load();
 			Session::setProjectModel( $model );
 		}
-		elseif	( isset($vars[REQ_PARAM_LANGUAGE_ID]) )
+		elseif	( isset($vars[REQ_PARAM_LANGUAGE_ID]) && Language::available($vars[REQ_PARAM_LANGUAGE_ID]) )
 		{
 			$language = new Language( $vars[REQ_PARAM_LANGUAGE_ID] );
 			$language->load();
@@ -847,18 +876,15 @@ class IndexAction extends Action
 				Session::setProjectModel( $model );
 			}
 	
-			$object = new Object( $project->getRootObjectId() );
+			$object = Session::getObject();
+			if	( !is_object($object) || $object->projectid != $project->projectid)
+				$object = new Object( $project->getRootObjectId() );
 			$object->objectLoadRaw();
 			Session::setObject( $object );
-	
-			$user = Session::getUser();
-			$user->loadRights( $project->projectid,$language->languageid );
-			Session::setUser( $user );
-
 		}
-		elseif	( isset($vars['modelid']) )
+		elseif	( isset($vars[REQ_PARAM_MODEL_ID]) && Model::available($vars[REQ_PARAM_MODEL_ID]) )
 		{
-			$model = new Model( $vars['modelid'] );
+			$model = new Model( $vars[REQ_PARAM_MODEL_ID] );
 			$model->load();
 			Session::setProjectModel( $model );
 	
@@ -874,30 +900,30 @@ class IndexAction extends Action
 				Session::setProjectLanguage( $language );
 			}
 	
-			$object = new Object( $project->getRootObjectId() );
+			$object = Session::getObject();
+			if	( !is_object($object) || $object->projectid != $project->projectid)
+				$object = new Object( $project->getRootObjectId() );
 			$object->objectLoadRaw();
 			Session::setObject( $object );
-	
-			$user = Session::getUser();
-			$user->loadRights( $project->projectid,$language->languageid );
-			Session::setUser( $user );
 		}
-		elseif	( isset($vars['projectid']) )
+		elseif	( isset($vars[REQ_PARAM_PROJECT_ID])&&Project::available($vars[REQ_PARAM_PROJECT_ID]) )
 		{
-			$project = new Project( $vars['projectid'] );
+			$project = new Project( $vars[REQ_PARAM_PROJECT_ID] );
 			$project->load();
 	
 			Session::setProject( $project );
 			
-			$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
+			$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])&& Language::available($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
 			$language->load();
 			Session::setProjectLanguage( $language );
 	
-			$model = new Model( isset($vars['modelid'])?$vars['modelid']:$project->getDefaultModelId() );
+			$model = new Model( isset($vars[REQ_PARAM_MODEL_ID])&& Model::available($vars[REQ_PARAM_MODEL_ID])?$vars[REQ_PARAM_MODEL_ID]:$project->getDefaultModelId() );
 			$model->load();
 			Session::setProjectModel( $model );
 	
-			$object = new Object( $project->getRootObjectId() );
+			$object = Session::getObject();
+			if	( !is_object($object) || $object->projectid != $project->projectid)
+				$object = new Object( $project->getRootObjectId() );
 			$object->objectLoadRaw();
 			Session::setObject( $object );
 		}
