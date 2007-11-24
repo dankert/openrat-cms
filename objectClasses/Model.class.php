@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.4  2004-12-15 23:18:36  dankert
+// Revision 1.5  2007-11-24 12:16:15  dankert
+// Methoden "available()" zum Pr?fen auf die Existenz der Id.
+//
+// Revision 1.4  2004/12/15 23:18:36  dankert
 // Anpassung an Session-Funktionen
 //
 // Revision 1.3  2004/11/10 22:46:27  dankert
@@ -60,6 +63,23 @@ class Model
 			$this->modelid = $modelid;
 	}
 
+	
+	/**
+	 * Stellt fest, ob die angegebene Id existiert.
+	 */
+	function available( $id )
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT 1 FROM {t_model} '.
+		               ' WHERE id={id}');
+		$sql->setInt('id' ,$id  );
+
+		return intval($db->getOne($sql->query)) == 1;
+	}
+	
+
+	
 
 	/**
 	 * Lesen aller Projektmodelle aus der Datenbank

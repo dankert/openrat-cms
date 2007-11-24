@@ -50,6 +50,23 @@ class Language
 //		$this->projectid = $SESS['projectid'];
 	}
 
+	
+	
+	/**
+	 * Stellt fest, ob die angegebene Id existiert.
+	 */
+	function available( $id )
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT 1 FROM {t_language} '.
+		               ' WHERE id={id}');
+		$sql->setInt('id' ,$id  );
+
+		return intval($db->getOne($sql->query)) == 1;
+	}
+
+	
 
 	// Lesen aller Sprachen aus der Datenbank
 	function getAll()

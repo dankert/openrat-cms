@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.16  2007-11-24 12:16:15  dankert
+// Methoden "available()" zum Pr?fen auf die Existenz der Id.
+//
 // Revision 1.15  2007-05-24 19:47:48  dankert
 // Direktes Ausw?hlen von Sprache/Modell in der Projektauswahlliste.
 //
@@ -88,6 +91,21 @@ class Project
 			$this->projectid = $projectid;
 	}
 
+	
+	/**
+	 * Stellt fest, ob die angegebene Id existiert.
+	 */
+	function available( $id )
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT 1 FROM {t_project} '.
+		               ' WHERE id={id}');
+		$sql->setInt('id' ,$id  );
+
+		return intval($db->getOne($sql->query)) == 1;
+	}
+	
 
 	// Liefert alle verf?gbaren Projekte
 	function getAll()
