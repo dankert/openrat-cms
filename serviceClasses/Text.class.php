@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.7  2007-11-24 13:22:04  dankert
+// Neue Methode "encodeHtmlSpecialChars()"
+//
 // Revision 1.6  2007-11-17 13:36:06  dankert
 // Methode "textdiff()" in Text-Klasse verschoben.
 //
@@ -133,6 +136,19 @@ class Text
 		$inhalt = str_replace('<','&lt;' ,$inhalt);
 		$inhalt = str_replace('>','&gt;' ,$inhalt);
 
+		return $inhalt;
+	}
+
+	
+	
+	/**
+	 * HTML-Entitaeten fuer HTML-Tags verwenden
+	 *
+	 * @param String Text, in dem HTML-Tags umgewandelt werden sollen
+	 * @return String Ausgabe
+	 */
+	function encodeHtmlSpecialChars( $inhalt )
+	{
 		$inhalt = DocumentElement::replaceHtmlChars( $inhalt );
 		
 		return $inhalt;
