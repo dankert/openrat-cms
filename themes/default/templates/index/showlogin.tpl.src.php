@@ -101,6 +101,10 @@ document.forms[0].screenwidth.value=window.innerWidth;
 END
 		if value:size:dbids lessthan:2
 			hidden name:dbid default:var:actdbid
+		hidden name:objectid
+		hidden name:modelid
+		hidden name:projectid
+		hidden name:languageid
 
 	# The GPL licence requires this text, so NEVER remove nor change it.
 
