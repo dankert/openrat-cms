@@ -19,6 +19,7 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pa
 	require_once( OR_TEXTCLASSES_DIR."ListEntryElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."NumberedListElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."ParagraphElement.class.".PHP_EXT );
+	require_once( OR_TEXTCLASSES_DIR."RawElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."StrongElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."TableElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."TableLineElement.class.".PHP_EXT );
