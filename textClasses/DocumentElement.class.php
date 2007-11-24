@@ -13,6 +13,13 @@
 class DocumentElement extends AbstractElement
 {
 	var $linkedObjectIds = array();
+	
+	/**
+	 * Fußnoten.
+	 *
+	 * @var Array
+	 */
+	var $footnotes       = array();
 
 
 
@@ -669,6 +676,10 @@ class DocumentElement extends AbstractElement
 			return $elements;
 		}
 
+		$erg = $this->parseSimpleElement( $text,$text_markup['footnote-begin'],$text_markup['footnote-end'],'FootnoteElement' );
+		if	( is_array($erg) )
+			return $erg;
+
 		$erg = $this->parseSimpleElement( $text,$text_markup['strong-begin'],$text_markup['strong-end'],'StrongElement' );
 		if	( is_array($erg) )
 			return $erg;
@@ -753,6 +764,40 @@ class DocumentElement extends AbstractElement
 						$tag = '';
 //						$tag = 'span';
 						$val = $this->replaceHtmlChars( $child->text );
+
+						break;
+
+					case 'footnoteelement':
+						$tag = 'a';
+						$attr['href'] = '#footnote';
+						
+						$title = '';
+						foreach( $child->children as $c )
+							$title .= $this->renderElement($c);
+						$attr['title'] = strip_tags($title);
+						 
+						$nr = 1;
+						foreach( $this->footnotes as $fn )
+							if ( strtolower(get_class($fn))=='linebreakelement')
+								$nr++;
+								
+						$val = '<sup><small>'.$nr.'</small></sup>';
+
+						if	( $nr == 1 )
+						{
+							$this->footnotes[] = new TextElement('&mdash;');
+							$le = new LinkElement();
+							$le->name = "footnote";
+							$this->footnotes[] = $le;
+							$this->footnotes[] = new TextElement('&mdash;');
+						}
+						$this->footnotes[] = new LineBreakElement();
+						$this->footnotes[] = new TextElement($val);
+						$this->footnotes[] = new TextElement(' ');
+						foreach( $child->children as $c )
+							$this->footnotes[] = $c;
+						
+						$child->children = array();
 
 						break;
 
@@ -1034,8 +1079,12 @@ class DocumentElement extends AbstractElement
 			$this->type = 'text/html';
 			
 		$this->renderedText = '';
+		$this->footnotes    = array();
 		
 		foreach( $this->children as $child )
+			$this->renderedText .= $this->renderElement( $child );
+
+		foreach( $this->footnotes as $child )
 			$this->renderedText .= $this->renderElement( $child );
 			
 		return $this->renderedText;
