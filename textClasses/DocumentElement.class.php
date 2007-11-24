@@ -498,7 +498,15 @@ class DocumentElement extends AbstractElement
 	}
 	
 	
-		
+
+	/**
+	 * Zerlegt einen einfachen Text in ein Array.
+	 *
+	 * @param String $text Eingabe-Test
+	 * @param String $sepLinks Linke Begrenzung
+	 * @param String $sepRechts Rechte Begrenzung
+	 * @return Array
+	 */
 	function parseSimpleParts( $text,$sepLinks,$sepRechts )
 	{
 		$posL = strpos($text,$sepLinks);
@@ -541,7 +549,15 @@ class DocumentElement extends AbstractElement
 	
 	
 	
-	
+	/**
+	 * Parst einen einzeiligen Text und erzeugt daraus Elemente.
+	 *
+	 * @param String $text Zu parsender Text
+	 * @param String $sepL Linke Begrenzung des Elementes
+	 * @param String $sepR Rechte Begrenzung des Elementes
+	 * @param String $className Klassenname des Elementes, welches es zu erzeugen gilt.
+	 * @return Array
+	 */
 	function parseSimpleElement( $text,$sepL,$sepR,$className )
 	{
 		$erg = $this->parseSimpleParts( $text,$sepL,$sepR );
@@ -569,6 +585,12 @@ class DocumentElement extends AbstractElement
 	
 	
 
+	/**
+	 * Korrigiert kurze Links.
+	 *
+	 * @param String $text
+	 * @return String
+	 */
 	function fixLinks( $text )
 	{
 		// Text->... umsetzen nach "Text"->... (Anfuehrungszeichen ergaenzen)
@@ -594,6 +616,9 @@ class DocumentElement extends AbstractElement
 	
 	/**
 	 * Diese Methode parst einen einfachen, einzeiligen Text und zerlegt diesen in seine Bestandteile.
+	 * 
+	 * @param String $text
+	 * @return Array
 	 */		
 	function parseSimple( $text )
 	{
@@ -713,6 +738,12 @@ class DocumentElement extends AbstractElement
 
 
 	
+	/**
+	 * Rendert ein Dokument-Element.
+	 *
+	 * @param Object $child Element
+	 * @return String
+	 */
 	function renderElement( $child )
 	{
 		global $conf;
@@ -749,7 +780,7 @@ class DocumentElement extends AbstractElement
 						{
 							if	( strtolower(get_class($h))=='headlineelement' )
 							{
-								$child->children[] = new TextElement(str_repeat('&nbsp;&nbsp;',$h->level));
+								$child->children[] = new RawElement(str_repeat('&nbsp;&nbsp;',$h->level));
 								$t = new TextElement( $h->getText() );
 								$l = new LinkElement();
 								$l->fragment=$h->getName();
@@ -760,10 +791,19 @@ class DocumentElement extends AbstractElement
 						}
 						break;
 
+					case 'rawelement':
+						$tag = '';
+						$val = $child->src;
+						
+						break;
+
 					case 'textelement':
 						$tag = '';
 //						$tag = 'span';
+
 						$val = $this->replaceHtmlChars( $child->text );
+						if	( ! $this->element->html )
+							$val = Text::encodeHtml( $child->text );
 
 						break;
 
@@ -781,19 +821,24 @@ class DocumentElement extends AbstractElement
 							if ( strtolower(get_class($fn))=='linebreakelement')
 								$nr++;
 								
-						$val = '<sup><small>'.$nr.'</small></sup>';
+						$val = $nr;
+						if	( @$conf['editor']['footnote']['bracket'])
+							$val = '('.$nr.')';
+						if	( @$conf['editor']['footnote']['sup'])
+							$val = '<sup><small>'.$nr.'</small></sup>';
+								
 
 						if	( $nr == 1 )
 						{
-							$this->footnotes[] = new TextElement('&mdash;');
+							$this->footnotes[] = new RawElement('&mdash;');
 							$le = new LinkElement();
 							$le->name = "footnote";
 							$this->footnotes[] = $le;
-							$this->footnotes[] = new TextElement('&mdash;');
+							$this->footnotes[] = new RawElement('&mdash;');
 						}
 						$this->footnotes[] = new LineBreakElement();
-						$this->footnotes[] = new TextElement($val);
-						$this->footnotes[] = new TextElement(' ');
+						$this->footnotes[] = new RawElement($val);
+						$this->footnotes[] = new RawElement(' ');
 						foreach( $child->children as $c )
 							$this->footnotes[] = $c;
 						
@@ -1034,8 +1079,67 @@ class DocumentElement extends AbstractElement
 				$className = strtolower(get_class($child));
 				$val = '';
 
-				if	( $className == 'textelement' )
-					$val .= $child->text;
+				$length = @$conf['editor']['text']['linelength'];
+				if	( intval($length) == 0 )
+					$length = 70;
+
+				switch( $className )
+				{
+					case 'footnoteelement':
+						
+						$nr = 1;
+						foreach( $this->footnotes as $fn )
+							if ( strtolower(get_class($fn))=='linebreakelement')
+								$nr++;
+								
+						$val = $nr;
+						if	( @$conf['editor']['footnote']['bracket'])
+							$val = '('.$nr.')';
+
+						if	( $nr == 1 )
+						{
+							$this->footnotes[] = new RawElement("\n\n---\n");
+						}
+						$this->footnotes[] = new LineBreakElement();
+						$this->footnotes[] = new RawElement($val);
+						$this->footnotes[] = new RawElement(' ');
+						foreach( $child->children as $c )
+							$this->footnotes[] = $c;
+						
+						$child->children = array();
+
+						break;
+
+					case 'headlineelement':
+						$val = "\n".wordwrap($child->text,$length);
+						$val .= str_repeat('-',min($length,strlen($val)));
+						break;
+
+					case 'paragraphelement':
+						$val = "\n\n";
+
+					case 'strongelement':
+						
+						foreach( $child->children as $c )
+							$val .= $this->renderElement($c);
+						$val = strtoupper($val);
+
+						$child->children = array();
+
+						break;
+						
+					case 'textelement':
+						$length = @$conf['editor']['text']['linelength'];
+						if	( intval($length) == 0 )
+							$length = 70;
+						$val .= wordwrap($child->text,$length);
+						break;
+
+					case 'linebreakelement':
+						$val .= "\n";
+						break;
+					default:
+				}
 				
 				foreach( $child->children as $c )
 				{
@@ -1052,7 +1156,8 @@ class DocumentElement extends AbstractElement
 
 
 	/**
-	 * 
+	 * Ersetzt Sonderzeichen durch HTML-Äquivalente.<br>
+	 * Z.B. Ersetzt "(c)" durch "&copy;".
 	 */
 	function replaceHtmlChars( $text )
 	{
@@ -1069,14 +1174,18 @@ class DocumentElement extends AbstractElement
 
 
 	
-	function render( $extension='txt' )
+
+	/**
+	 * Rendering des Dokumentes.<br>
+	 * Die Art und Weise des Renderns ist in Abhängigkeit zum
+	 * übergebenen Mime-Type.
+	 *
+	 * @param String $mimeType Mime-Type, z.B. "text/html"
+	 * @return String
+	 */
+	function render( $mimeType )
 	{
-		global $conf;
-		
-		if	( isset($conf['mime-types'][$extension]))
-			$this->type = $conf['mime-types'][$extension];
-		else
-			$this->type = 'text/html';
+		$this->type = $mimeType;
 			
 		$this->renderedText = '';
 		$this->footnotes    = array();
@@ -1092,6 +1201,15 @@ class DocumentElement extends AbstractElement
 	
 	
 	
+	/**
+	 * Erzeugt ein HTML-Element.
+	 *
+	 * @param String $tag Name des Tags
+	 * @param String $value Inhalt
+	 * @param boolean $empty abkürzen, wenn Inhalt leer ("<... />")
+	 * @param Array $attr Attribute als Array<String,String>
+	 * @return String
+	 */
 	function renderHtmlElement( $tag,$value,$empty,$attr=array() )
 	{
 		global $conf;
