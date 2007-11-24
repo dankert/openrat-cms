@@ -33,6 +33,11 @@ page
 			cell class:fx
 				text var:full_filename
 		row
+			cell
+				text key:FILE_MIMETYPE
+			cell
+				text var:mime_type
+		row
 			cell class:fx
 				text text:global_created
 			cell class:fx
