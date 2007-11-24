@@ -438,6 +438,8 @@ SQL
 			$v = new Value();
 			$v->isLink     = true;
 			$v->pageid     = $p->pageid;
+			$v->page       = $p;
+			$v->simple     = $this->simple;
 			$v->element    = $this->element;
 			$v->languageid = $this->languageid;
 			$v->load();
@@ -498,6 +500,7 @@ SQL
 													$p->up_path        = $this->page->up_path();
 													$p->projectmodelid = $this->page->projectmodelid;
 													$p->languageid     = $this->languageid;
+													$p->mime_type      = $this->page->mimeType();
 													$p->load();
 													$p->generate();
 													$inhalt .= $p->value;
@@ -563,6 +566,7 @@ SQL
 									$p->up_path        = $this->page->up_path();
 									$p->projectmodelid = $this->page->projectmodelid;
 									$p->languageid     = $this->languageid;
+									$p->mime_type      = $this->page->mimeType();
 									$p->load();
 									$p->generate();
 									$inhalt = $p->value;
@@ -640,6 +644,8 @@ SQL
 				$linkValue->elementid = $element->elementid;
 				$linkValue->element   = $element;
 				$linkValue->pageid = $this->pageid;
+				$linkValue->page   = $this->page;
+				$linkValue->simple = $this->simple;
 				$linkValue->languageid = $this->languageid;
 				$linkValue->load();
 				
@@ -660,6 +666,8 @@ SQL
 				$targetValue->element = new Element($targetElementId);
 				$targetValue->element->load();
 				$targetValue->pageid = $linkedPage->pageid;
+				$targetValue->page   = $linkedPage;
+				$targetValue->simple = $this->simple;
 				$targetValue->generate();
 				
 				$inhalt = $targetValue->value; 
@@ -733,7 +741,7 @@ SQL
 					$inhalt = $this->element->defaultText;
 
 				// Wenn HTML nicht erlaubt und Wiki-Formatierung aktiv, dann einfache HTML-Tags in Wiki umwandeln
-				if   ( !$this->element->html && $this->element->wiki && $conf['wiki']['convert_html'] )
+				if   ( !$this->element->html && $this->element->wiki && $conf['wiki']['convert_html'] && $this->page->mimeType()=='text/html' )
 					$inhalt = Text::html2Wiki( $inhalt );
 
 				// Wenn Wiki-Formatierung aktiv, dann BB-Code umwandeln
@@ -741,16 +749,21 @@ SQL
 					$inhalt = Text::bbCode2Wiki( $inhalt );
 
 				// Wenn HTML nicht erlaubt ist, dann die HTML-Tags ersetzen
-				if   ( !$this->element->html && !$this->element->wiki )
+				if   ( !$this->element->html && !$this->element->wiki && $this->page->mimeType()=='text/html')
 					$inhalt = Text::encodeHtml( $inhalt );
+
+				// Wenn HTML nicht erlaubt ist, dann die HTML-Tags ersetzen
+				if   ( !$this->element->wiki && !$this->element->wiki && $this->page->mimeType()=='text/html' )
+					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
 
 				// Schnellformatierung ('Wiki') durchfuehren
 				if   ( $this->element->wiki )
 				{
 					$transformer = new Transformer();
-					$transformer->text = $inhalt;
-					$transformer->page = $this->page;
-					$transformer->type = $this->page->template->extension;
+					$transformer->text    = $inhalt;
+					$transformer->page    = $this->page;
+					$transformer->element = $this->element;
+					$transformer->type    = $this->page->template->extension;
 
 					$transformer->transform();
 					$inhalt = $transformer->text;
