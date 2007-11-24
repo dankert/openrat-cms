@@ -55,6 +55,7 @@ define('REQ_PARAM_ACTION'         ,'action'         );
 define('REQ_PARAM_SUBACTION'      ,'subaction'      );
 define('REQ_PARAM_TARGETSUBACTION','targetSubAction');
 define('REQ_PARAM_ID'             ,'id'             );
+define('REQ_PARAM_OBJECT_ID'      ,'objectid'       );
 define('REQ_PARAM_LANGUAGE_ID'    ,'languageid'     );
 define('REQ_PARAM_MODEL_ID'       ,'modelid'        );
 define('REQ_PARAM_PROJECT_ID'     ,'projectid'      );
