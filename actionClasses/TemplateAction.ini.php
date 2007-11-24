@@ -49,10 +49,10 @@ menu=prop
 target=savename
 
 [savename]
-goto=listing
+goto=name
 
 [saveextension]
-goto=listing
+goto=name
 
 [extension]
 menu=prop

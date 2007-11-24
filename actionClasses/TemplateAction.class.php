@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.21  2007-11-24 14:17:42  dankert
+// MimeType in Template ermitteln. Auswahl der Erweiterung ?ber Auswahl-Box.
+//
 // Revision 1.20  2007-11-16 22:56:19  dankert
 // Dialog-Verbesserung f?r Hinzuf?gen von Element im Template-Quellcode.
 //
@@ -183,8 +186,19 @@ class TemplateAction extends Action
 	//
 	function savename()
 	{
-		$this->template->name = $this->getRequestVar('name');
-		$this->template->save();
+		
+		if	($this->getRequestVar('name') == "")
+		{
+			$this->addValidationError('name');
+			$this->callSubAction('name');
+			return;
+		}
+		else
+		{
+			$this->template->name = $this->getRequestVar('name');
+			$this->template->save();
+			$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
+		}
 	}
 
 
@@ -237,7 +251,11 @@ class TemplateAction extends Action
 	//
 	function saveextension()
 	{
-		$this->template->extension = $this->getRequestVar('extension');
+		if	( $this->getRequestVar('type') == "list" )
+			$this->template->extension = $this->getRequestVar('extension');
+		else
+			$this->template->extension = $this->getRequestVar('extensiontext');
+		
 		$this->template->save(); 
 		$this->addNotice('template',$this->template->name,'SAVED','ok');
 	}
@@ -421,20 +439,9 @@ class TemplateAction extends Action
 	 */
 	function name()
 	{
-		$this->setTemplateVar('name'     ,$this->template->name     );
-		 
-		// von diesem Template abh?ngige Seiten ermitteln
-		//
-		$list = array();
-		foreach( $this->template->getDependentObjectIds() as $oid )
-		{
-			$page = new Page( $oid );
-			$page->load();
-			$list[$oid]         = array();
-			$list[$oid]['name'] = $page->name;
-			$list[$oid]['url' ] = Html::url( 'main','page',$oid );
-		}
-		$this->setTemplateVar('pages',$list );
+		$this->setTemplateVar('name'     ,$this->template->name       );
+		$this->setTemplateVar('extension',$this->template->extension  );
+		$this->setTemplateVar('mime_type',$this->template->mimeType() );
 	}
 
 
@@ -444,8 +451,21 @@ class TemplateAction extends Action
 	 */
 	function extension()
 	{
-		$this->setTemplateVar('extension',$this->template->extension);
-		 
+
+		global $conf;
+		$mime_types = array();
+		foreach( $conf['mime-types'] as $ext=>$type )
+			$mime_types[$ext] = $ext.' - '.$type;
+
+		$this->setTemplateVar('mime_types',$mime_types);
+
+		$this->setTemplateVar('extension'    ,$this->template->extension);
+		$this->setTemplateVar('extensiontext',$this->template->extension);
+		
+		if	( isset($mime_types[$this->template->extension]) )
+			$this->setTemplateVar('type','list');
+		else
+			$this->setTemplateVar('type','text');
 	}
 
 

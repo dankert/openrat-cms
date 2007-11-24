@@ -2,40 +2,27 @@ page
 	form
 		window name:GLOBAL_PROP
 			row
-				cell class:fx
+				cell
 					text text:TEMPLATE_NAME
-				cell class:fx
+				cell
 					input name:name
 			row
 				cell colspan:2
+					fieldset
+			row
+				cell
+					text text:message:file_extension
+				cell
+					link action:template subaction:extension
+						text text:var:extension
+			row
+				cell
+					text text:message:file_mimetype
+				cell
+					link action:template subaction:extension
+						text text:var:mime_type
+			row
+				cell colspan:2 class:act
 					button type:ok
-
-RAW
-<!--
-<tr>
-  <th colspan="2"><?php echo lang('GLOBAL_PAGES') ?></th>
-</tr>
-
-<?php $f1=true;
-      foreach( $pages as $id=>$p )
-      { ?>
-<tr>
-<td class="f1"><a href="<?php echo $p['url'] ?>" target="cms_main"><img src="<?php echo $image_dir.'icon_page'.IMG_EXT ?>" border="0" align="left"><?php echo $p['name'] ?></a></td>
-</tr>
-<?php }
-      if ( count($pages)==0)
-      { ?>
-<tr>
-<td class="f1"><?php echo lang('GLOBAL_NOT_FOUND') ?></td>
-</tr>
-<?php } ?>
-  
-
-</table>
-
-
-</center>
--->
-END
 
 	focus field:name
