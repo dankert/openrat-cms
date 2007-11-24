@@ -8,6 +8,7 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pa
 	require_once( OR_TEXTCLASSES_DIR."CodeElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."DocumentElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."EmphaticElement.class.".PHP_EXT );
+	require_once( OR_TEXTCLASSES_DIR."FootnoteElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."HeadlineElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."LineBreakElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."LinkElement.class.".PHP_EXT );

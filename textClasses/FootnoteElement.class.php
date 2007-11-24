@@ -5,7 +5,7 @@
  * @version $Revision$
  * @package openrat.text
  */
-class DefinitionListElement extends AbstractElement
+class FootnoteElement extends AbstractElement
 {
 
 }
