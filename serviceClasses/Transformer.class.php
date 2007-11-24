@@ -13,6 +13,7 @@ class Transformer
 	var $text = '';
 	var $doc;
 	var $page;
+	var $element;
 
 	function transform()
 	{
@@ -36,8 +37,9 @@ class Transformer
 		$zeilen = explode("\n",$this->text);
 		
 		// Dokument erzeugen und den Text parsen.
-		$this->doc = new DocumentElement();
-		$this->doc->parse($zeilen);
+		$this->doc          = new DocumentElement();
+		$this->doc->element = $this->element;
+		$this->doc->parse( $zeilen );
 	}
 
 
@@ -48,13 +50,7 @@ class Transformer
 	 */	
 	function renderDocument()
 	{
-		if	( ! is_object($this->page->template) )
-			$this->page->template = new Template( $this->page->templateid );
-
-		$this->page->template->load();
-		$type = $this->page->template->extension;
-			
-		$text = $this->doc->render( $type );
+		$text = $this->doc->render( $this->page->mimeType() );
 
 		// Liste der verlinkten Objekt-Ids.
 		// Die Objekt-Ids werden absteigend sortiert, damit z.B. '33' vor '3' ersetzt wird.		
