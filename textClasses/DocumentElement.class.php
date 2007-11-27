@@ -801,10 +801,10 @@ class DocumentElement extends AbstractElement
 						$tag = '';
 //						$tag = 'span';
 
-						$val = $this->replaceHtmlChars( $child->text );
+						$val = $child->text;
 						if	( ! $this->element->html )
-							$val = Text::encodeHtml( $child->text );
-
+							$val = Text::encodeHtml( $val );
+						$val = Text::replaceHtmlChars( $val );
 						break;
 
 					case 'footnoteelement':
@@ -1154,26 +1154,6 @@ class DocumentElement extends AbstractElement
 	}
 
 
-
-	/**
-	 * Ersetzt Sonderzeichen durch HTML-Äquivalente.<br>
-	 * Z.B. Ersetzt "(c)" durch "&copy;".
-	 */
-	function replaceHtmlChars( $text )
-	{
-		global $conf;
-		
-		foreach( explode(' ',$conf['editor']['html']['replace']) as $repl )
-		{
-			list( $ersetze, $mit ) = explode(':',$repl);
-			$text = str_replace($ersetze, $mit, $text);
-		}
-		
-		return $text;
-	}
-
-
-	
 
 	/**
 	 * Rendering des Dokumentes.<br>

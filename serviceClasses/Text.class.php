@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.8  2007-11-27 21:10:35  dankert
+// Verschieben von "replaceHtmlChars()" nach Klasse Text.
+//
 // Revision 1.7  2007-11-24 13:22:04  dankert
 // Neue Methode "encodeHtmlSpecialChars()"
 //
@@ -139,6 +142,25 @@ class Text
 		return $inhalt;
 	}
 
+	
+	
+	/**
+	 * Ersetzt Sonderzeichen durch HTML-Äquivalente.<br>
+	 * Z.B. Ersetzt "(c)" durch "&copy;".
+	 */
+	function replaceHtmlChars( $text )
+	{
+		global $conf;
+		
+		foreach( explode(' ',$conf['editor']['html']['replace']) as $repl )
+		{
+			list( $ersetze, $mit ) = explode(':',$repl.':');
+			$text = str_replace($ersetze, $mit, $text);
+		}
+		
+		return $text;
+	}
+	
 	
 	
 	/**
