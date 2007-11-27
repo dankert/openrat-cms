@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.9  2007-11-27 21:16:33  dankert
+// Bugfix in "encodeHtmlSpecialChars()"
+//
 // Revision 1.8  2007-11-27 21:10:35  dankert
 // Verschieben von "replaceHtmlChars()" nach Klasse Text.
 //
@@ -171,9 +174,7 @@ class Text
 	 */
 	function encodeHtmlSpecialChars( $inhalt )
 	{
-		$inhalt = DocumentElement::replaceHtmlChars( $inhalt );
-		
-		return $inhalt;
+		return Text::replaceHtmlChars( $inhalt );
 	}
 
 	
