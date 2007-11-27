@@ -752,7 +752,7 @@ SQL
 				if   ( !$this->element->html && !$this->element->wiki && $this->page->mimeType()=='text/html')
 					$inhalt = Text::encodeHtml( $inhalt );
 
-				// Wenn HTML nicht erlaubt ist, dann die HTML-Tags ersetzen
+				// Wenn HTML nicht erlaubt ist, dann Sonderzeichen in HTML übersetzen
 				if   ( !$this->element->wiki && !$this->element->wiki && $this->page->mimeType()=='text/html' )
 					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
 
@@ -893,6 +893,10 @@ SQL
 					             'file not found:'.$fileName);
 				}
 
+				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML übersetzen
+				if   ( $this->page->mimeType()=='text/html' )
+					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
+				
 				break;
 
 
@@ -1081,8 +1085,12 @@ SQL
 						// Keine Fehlermeldung in erzeugte Seite schreiben. 
 				}
 
-				if	( !$raw )
+				if	( !$raw && $this->page->mimeType()=='text/html' )
 					$inhalt = Text::encodeHtml( $inhalt );
+
+				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML übersetzen
+				if   ( $this->page->mimeType()=='text/html' )
+					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
 					
 				break;
 				
