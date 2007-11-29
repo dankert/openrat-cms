@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2005-01-04 21:01:24  dankert
+// Revision 1.3  2007-11-29 22:09:06  dankert
+// Das Men? in der Sprache der zu ver?ffentlichenden Seite erzeugen.
+//
+// Revision 1.2  2005/01/04 21:01:24  dankert
 // Benutzen von CSS-Klassen
 //
 // Revision 1.1  2005/01/04 19:59:55  dankert
@@ -80,6 +83,9 @@ class ClassicMenu extends Dynamic
 		// Schleife ueber alle Objekte im aktuellen Ordner
 		foreach( $f->getObjects() as $o )
 		{
+			$o->languageid = $this->page->languageid;
+			$o->load();
+			
 			// Ordner anzeigen
 			if ($o->isFolder )
 			{
