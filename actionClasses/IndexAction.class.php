@@ -803,6 +803,8 @@ class IndexAction extends Action
 		$this->evaluateRequestVars( array(REQ_PARAM_LANGUAGE_ID=>$this->getRequestId()) );
 
 		$user = Session::getUser();
+		$project  = Session::getProject();
+		$language = Session::getProjectLanguage();
 		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
 	}
@@ -901,9 +903,9 @@ class IndexAction extends Action
 			}
 	
 			$object = Session::getObject();
+			$object->objectLoadRaw();
 			if	( !is_object($object) || $object->projectid != $project->projectid)
 				$object = new Object( $project->getRootObjectId() );
-			$object->objectLoadRaw();
 			Session::setObject( $object );
 		}
 		elseif	( isset($vars[REQ_PARAM_PROJECT_ID])&&Project::available($vars[REQ_PARAM_PROJECT_ID]) )
