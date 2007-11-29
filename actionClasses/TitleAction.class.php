@@ -43,7 +43,7 @@ class TitleAction extends Action
 	{
 		// Seite ändert sich nur 1x pro Session
 		$user = Session::getUser();
-		$this->lastModified( $user->loginDate );
+//		$this->lastModified( $user->loginDate );
 		
 		$user = Session::getUser();
 //		if	( is_object($user) && isset($user->loginDate) )
