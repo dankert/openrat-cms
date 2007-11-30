@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2005-01-04 19:59:55  dankert
+// Revision 1.3  2007-11-30 23:25:25  dankert
+// Das Men? in der Sprache der zu ver?ffentlichenden Seite erzeugen.
+//
+// Revision 1.2  2005/01/04 19:59:55  dankert
 // Allgemeine Korrekturen, Erben von "Dynamic"-klasse
 //
 // Revision 1.1  2004/11/10 22:43:35  dankert
@@ -59,7 +62,7 @@ class BreadCrumb extends Dynamic
 	var $api;
 
 	/**
-	 * Erstellen einer Sitemap
+	 * Erstellen einer BreadCrumb-Navigation.
 	 */
 	function execute()
 	{
@@ -73,6 +76,7 @@ class BreadCrumb extends Dynamic
 		foreach( $parentIds as $oid )
 		{
 			$of = new Folder($oid);
+			$of->languageid = $this->page->languageid;
 			$of->load();
 			$pl = $of->getFirstPageOrLink();
 			
