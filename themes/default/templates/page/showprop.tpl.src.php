@@ -18,7 +18,7 @@ page
 				text var:description
 		row
 			cell class:fx
-				text text:page_template
+				text text:global_template
 			cell class:fx
 				if present:template_url
 					link url:var:template_url target:cms_main
