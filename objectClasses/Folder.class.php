@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.13  2007-11-30 23:38:41  dankert
+// nur ein Kommentar erg?nzt
+//
 // Revision 1.12  2007-10-25 22:29:11  dankert
 // Neue Methoden f?r Filemanager.
 //
@@ -432,6 +435,11 @@ class Folder extends Object
 	}
 
 	
+	/**
+	 * Ermittelt die erste Seite oder Verknüpfung in diesem Ordner.
+	 *
+	 * @return Object Objekt
+	 */
 	function getFirstPageOrLink()
 	{
 		$db = db_connection();
