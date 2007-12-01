@@ -1156,4 +1156,27 @@ SQL
 
 		return $db->getCol( $sql->query );
 	}
+
+	
+
+	/**
+	  * Es wird das Objekt ermittelt, welches der Benutzer zuletzt geändert hat.
+	  * 
+	  * @return Integer Objekt-Id
+	  */
+	function getLastChangedObjectByUserId( $userid )
+	{
+		$db = db_connection();
+		
+		$sql = new Sql( 'SELECT {t_object}.id FROM {t_value} '.
+		                ' LEFT JOIN {t_page} '.
+		                '   ON {t_page}.id={t_value}.pageid '.
+		                ' LEFT JOIN {t_object} '.
+		                '   ON {t_object}.id={t_page}.objectid '.
+		                ' WHERE {t_value}.lastchange_userid={userid}'.
+		                '  ORDER BY {t_object}.lastchange_date DESC' );
+		$sql->setInt   ( 'userid'    ,$userid           );
+
+		return $db->getOne( $sql->query );
+	}
 }
