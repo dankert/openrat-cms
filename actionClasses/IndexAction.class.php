@@ -646,6 +646,31 @@ class IndexAction extends Action
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
 			
 			$this->evaluateRequestVars();
+
+			$object = Session::getObject();
+			// Falls noch kein Objekt ausgewählt, dann das zuletzt geänderte benutzen.
+			if	( !is_object($object) )
+			{
+				$objectid = Value::getLastChangedObjectByUserId($user->userid);
+				if	( Object::available($objectid))
+				{
+					$object = new Object($objectid);
+					$object->load();
+					Session::setObject($object); 
+				}
+				
+				$project = new Project( $object->projectid );
+				$project->load();
+				Session::setProject( $project );
+				
+				$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])&&Language::available($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
+				$language->load();
+				Session::setProjectLanguage( $language );
+		
+				$model = new Model( isset($vars[REQ_PARAM_MODEL_ID])&&Model::available($vars[REQ_PARAM_MODEL_ID])?$vars[REQ_PARAM_MODEL_ID]:$project->getDefaultModelId() );
+				$model->load();
+				Session::setProjectModel( $model );
+			}
 		}
 	}
 
@@ -1066,7 +1091,7 @@ class IndexAction extends Action
 		$this->setTemplateVar( 'title',$project->name );
 
 		$object  = Session::getObject();
-
+		
 		$elementid = 0;
 		
 		if	( is_object($object) )
