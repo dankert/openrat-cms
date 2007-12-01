@@ -649,7 +649,7 @@ class IndexAction extends Action
 
 			$object = Session::getObject();
 			// Falls noch kein Objekt ausgewählt, dann das zuletzt geänderte benutzen.
-			if	( !is_object($object) )
+			if	( !is_object($object) && @$conf['login']['start']['start_lastchanged_object'] )
 			{
 				$objectid = Value::getLastChangedObjectByUserId($user->userid);
 				if	( Object::available($objectid))
