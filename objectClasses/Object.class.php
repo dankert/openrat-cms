@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.27  2007-12-01 17:49:37  dankert
+// Methode "available()" ergibt sofort "false", wenn Objekt-Id ung?ltig (Performance)
+//
 // Revision 1.26  2007-06-08 23:05:44  dankert
 // Als tempor?res Verzeichnis das "upload_tmp_dir" aus der PHP-Konfiguration verwenden.
 //
@@ -476,6 +479,10 @@ class Object
 	{
 		$db = db_connection();
 
+		// Vielleicht können wir uns den DB-Zugriff auch ganz sparen.
+		if	( !is_numeric($objectid) || $objectid <= 0 )
+			return false; // Objekt-Id ungültig.
+			
 		$sql = new Sql('SELECT 1 FROM {t_object} '.
 		               ' WHERE id={objectid}');
 		$sql->setInt('objectid'  , $objectid  );
