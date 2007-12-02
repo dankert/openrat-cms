@@ -18,15 +18,3 @@ page
 					link url:url target:cms_main_main
 						text var:text
 					text raw:__
-
-RAW
-//<?php
-//			if	( hasLang('MENU_'.$act.'_KEY' ) )
-//			{
-//				$attrAccesskey = ' accesskey="'.lang('MENU_'.$act.'_KEY').'"';
-//				$title.=' ('.lang('GLOBAL_KEY').': ALT+'.lang('MENU_'.$act.'_KEY').')';
-//			}
-//			else
-//				$attrAccesskey = '';
-// ?>
-END
