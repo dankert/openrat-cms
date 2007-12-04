@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.17  2007-12-04 22:57:20  dankert
+// Beispiel-Vorlage mit "Hello, World".
+//
 // Revision 1.16  2007-11-24 12:16:15  dankert
 // Methoden "available()" zum Pr?fen auf die Existenz der Id.
 //
@@ -340,7 +343,7 @@ class Project
 		$template->modelid    = $model->modelid;
 		$template->languageid = $language->languageid;
 		$template->extension  = 'html';
-		$template->src        = '<html><body>...</body></html>';
+		$template->src        = '<html><body><h1>Hello world</h1><hr><p>Hello, World.</p></body></html>';
 		$template->add();
 		$template->save();
 
