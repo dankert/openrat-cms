@@ -60,7 +60,10 @@ class FilemanagerAction extends ObjectAction
 
 		// Check if it is an allowed type.
 		if ( !in_array( $this->resourceType, array('File','Image','Flash','Media') ) )
-			$this->sendError(101,'unknown resource type');
+		{
+			$this->sendErrorDocument(1,'unknown resource type');
+			exit;
+		}
 	
 		// Check the current folder syntax (must begin and end with a slash).
 		if ( ! ereg( '/$', $this->currentFolder ) ) $this->currentFolder .= '/' ;
@@ -88,12 +91,12 @@ class FilemanagerAction extends ObjectAction
 			$oid = $this->folder->getObjectIdByFileName($part);
 			
 			if	( !$this->folder->available($oid) )
-				$this->sendError(102,"currentFolder is invalid (no folder inside): "+$this->currentFolder);
+				$this->sendErrorDocument(102,"currentFolder is invalid (no folder inside): "+$this->currentFolder);
 			
 			$this->folder = new Folder($oid);
 
 			if	( ! $this->folder->isFolder )
-				$this->sendError(102,"currentFolder is invalid (not a folder): "+$this->currentFolder);
+				$this->sendErrorDocument(102,"currentFolder is invalid (not a folder): "+$this->currentFolder);
 		}
 	}
 
@@ -105,7 +108,7 @@ class FilemanagerAction extends ObjectAction
 	 */
 	function show()
 	{
-		Logger::debug(getenv('REQUEST_URI'));
+		Logger::debug('Filemanager: '.getenv('REQUEST_URI'));
 		Logger::debug($this->command);
 		Logger::debug($this->resourceType);
 		Logger::debug($this->currentFolder);
@@ -140,7 +143,7 @@ class FilemanagerAction extends ObjectAction
 			default:
 				Logger::warn('Unknown Filemanager-Command: '.$this->command);
 				trigger_error('Unknown Command: '.$this->command);
-				$this->sendError( 102,"unknown command: ".$this->command ) ;
+				$this->sendError( 1,"unknown command: ".$this->command ) ;
 		}
 		Logger::debug("ok");
 
@@ -163,7 +166,6 @@ class FilemanagerAction extends ObjectAction
 
 		// HTTP/1.0
 		header('Pragma: no-cache') ;
-	
 	}
 
 
@@ -194,7 +196,7 @@ class FilemanagerAction extends ObjectAction
 
 	
 	/**
-	 * Sendet eine Fehlermeldung zum Client und beendet den Request.
+	 * Sendet eine Fehlermeldung zum Client.
 	 *
 	 * @param Integer $number FehlerNr.
 	 * @param String $text Fehlermeldung
@@ -202,6 +204,20 @@ class FilemanagerAction extends ObjectAction
 	function sendError( $number, $text )
 	{
 		echo '<Error number="' . $number . '" text="' . htmlspecialchars( $text ) . '" />' ;
+	}
+	
+	
+	/**
+	 * Sendet eine Fehlermeldung zum Client und beendet den Request.
+	 *
+	 * @param Integer $number FehlerNr.
+	 * @param String $text Fehlermeldung
+	 */
+	function sendErrorDocument( $number, $text )
+	{
+		$this->createXmlHeader();
+		$this->sendError( $number, $text );
+		$this->createXmlFooter();
 		exit ;
 	}
 	
@@ -236,8 +252,7 @@ class FilemanagerAction extends ObjectAction
 		echo '<Files>' ;
 
 		foreach( $this->folder->getFileFilenames() as $id=>$name )
-//			echo '<File name="' . convertToXmlAttribute( $name ).'" url="'.convertToXmlAttribute('do.php?action=file&subaction=show&id=').$id.'" size="' . '1' . '" />' ;
-			echo '<File name="' . convertToXmlAttribute( $name ).'" url="'.convertToXmlAttribute( Html::url('file','show',$id) ).'" size="' . '1' . '" />' ;
+			echo '<File name="' . convertToXmlAttribute( $name ).'" url="'.convertToXmlAttribute( '../../'.Html::url('file','show',$id) ).'" size="' . '1' . '" />' ;
 	
 		echo '</Files>' ;
 	}
@@ -248,23 +263,39 @@ class FilemanagerAction extends ObjectAction
 	 *
 	 */
 	function createFolder()
-	{
-		if ( $this->hasRequestVar('NewFolderName') )
+	{	
+		// Possible Error Numbers are: 
+		//   0 : No Errors Found. The folder has been created. 
+		// 101 : Folder already exists. 
+		// 102 : Invalid folder name. 
+		// 103 : You have no permissions to create the folder. 
+		// 110 : Unknown error creating folder.
+		
+		$filename = $this->getRequestVar('NewFolderName');
+		
+		if ( empty($filename) )
+		{
+			$this->sendError(102,'missing name for new folder.');
+		}
+		elseif( !$this->folder->hasRight(ACL_CREATE_FOLDER) )
+		{
+			$this->sendError(103,'You have no permissions to create the folder.');
+		}
+		elseif( $this->folder->hasFilename( $filename ) )
+		{
+			$this->sendError(101,'Folder already exists.');
+		}
+		else
 		{
 			$newFolder = new Folder();
 			$newFolder->parentid = $this->folder->objectid;
-			$newFolder->filename = $this->getRequestVar('NewFolderName');
-			$newFolder->name     = $this->getRequestVar('NewFolderName');
+			$newFolder->filename = $filename;
+			$newFolder->name     = $filename;
 			
 			$newFolder->add();
 			
 			$this->sendError(0,"OK");
 		}
-		else
-			$this->sendError(102,'missing name for new folder');
-	
-		// Create the "Error" node.
-		//		echo '<Error number="' . $sErrorNumber . '" originalDescription="' . ConvertToXmlAttribute( $sErrorMsg ) . '" />' ;
 	}
 	
 	
@@ -275,27 +306,34 @@ class FilemanagerAction extends ObjectAction
 	 */
 	function fileUpload()
 	{
-		Logger::debug("Upload beginnt");
 		$upload = new Upload('NewFile');
 		
-		Logger::debug("Upload ok");
-		
-		$file = new File();
-		$file->parentid = $this->folder->objectid;
-		$file->filename = $upload->filename;
-//		if	( !empty($upload->extension) )
-//			$file->filename .= '.'.$upload->extension;
-			
-		$file->filename = $upload->filename;
-		$file->value = $upload->value;
-		$file->add();
-		Logger::debug("Upload added :)");
+		// From FCK-Editor-Doc:
+		// The "OnUploadCompleted" is a JavaScript function that is called to expose the upload result. The possible values are: 
+		// OnUploadCompleted( 0 ) : no errors found on the upload process. 
+		// OnUploadCompleted( 1, , , 'Reason' ) : the upload filed because of "Reason". 
+		// OnUploadCompleted( 201, ,'FileName(1).ext' ) : the file has been uploaded successfully, but its name has been changed to "FileName(1).ext". 
+		// OnUploadCompleted( 202 ) : invalid file.
+		if	( !$upload->isValid() )
+		{
+			$errorNr   = 202;
+			$errorText = 'Upload failed, reason: '.$upload->error; 
+		}
+		else
+		{
+			$file = new File();
+			$file->parentid = $this->folder->objectid;
+			$file->filename = $upload->filename;
+			$file->value    = $upload->value;
+			$file->add();
+
+			$errorNr   = 0;
+			$errorText = $file->filename; 
+		}
 	
 		echo '<script type="text/javascript">' ;
-		echo 'window.parent.frames["frmUpload"].OnUploadCompleted(' .'0'.',"' . str_replace( '"', '\\"', $file->filename ) . '") ;' ;
+		echo 'window.parent.frames["frmUpload"].OnUploadCompleted(' .$errorNr.',"' . str_replace( '"', '\\"', $errorText ) . '") ;' ;
 		echo '</script>' ;
-	
-		exit ;
 	}
 	
 }
