@@ -2239,7 +2239,14 @@ echo ' size="'.intval($attr8_size).'"';
 ?></select><?php
 if (count($$attr8_list)==0) echo '<input type="hidden" name="'.$attr8_name.'" value="" />';
 if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" value="'.$box_key.'" />'
-?><?php unset($attr8) ?><?php unset($attr8_list) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php unset($attr8_onchange) ?><?php unset($attr8_title) ?><?php unset($attr8_class) ?><?php unset($attr8_addempty) ?><?php unset($attr8_multiple) ?><?php unset($attr8_size) ?><?php $attr8_debug_info = 'a:2:{s:4:"name";s:11:"screenwidth";s:7:"default";s:4:"9999";}' ?><?php $attr8 = array('name'=>'screenwidth','default'=>'9999') ?><?php $attr8_name='screenwidth' ?><?php $attr8_default='9999' ?><input type="hidden" name="<?php echo $attr8_name ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" /><?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php } ?><?php unset($attr4) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?><?php
+?><?php unset($attr8) ?><?php unset($attr8_list) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php unset($attr8_onchange) ?><?php unset($attr8_title) ?><?php unset($attr8_class) ?><?php unset($attr8_addempty) ?><?php unset($attr8_multiple) ?><?php unset($attr8_size) ?><?php $attr8_debug_info = 'a:2:{s:4:"name";s:11:"screenwidth";s:7:"default";s:4:"9999";}' ?><?php $attr8 = array('name'=>'screenwidth','default'=>'9999') ?><?php $attr8_name='screenwidth' ?><?php $attr8_default='9999' ?><?php
+if (isset($$attr8_name))
+	$attr8_tmp_value = $$attr8_name;
+elseif ( isset($attr8_default) )
+	$attr8_tmp_value = $attr8_default;
+else
+	$attr8_tmp_value = "";
+?><input type="hidden" name="<?php echo $attr8_name ?>" value="<?php echo $attr8_tmp_value ?>" /><?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php } ?><?php unset($attr4) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -2345,7 +2352,42 @@ document.forms[0].screenwidth.value=window.innerWidth;
 	if	( $exec )
 	{
 ?>
-<?php unset($attr3) ?><?php unset($attr3_value) ?><?php unset($attr3_lessthan) ?><?php $attr4_debug_info = 'a:2:{s:4:"name";s:4:"dbid";s:7:"default";s:11:"var:actdbid";}' ?><?php $attr4 = array('name'=>'dbid','default'=>$actdbid) ?><?php $attr4_name='dbid' ?><?php $attr4_default=$actdbid ?><input type="hidden" name="<?php echo $attr4_name ?>" value="<?php echo isset($$attr4_name)?$$attr4_name:$attr4_default ?>" /><?php unset($attr4) ?><?php unset($attr4_name) ?><?php unset($attr4_default) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?><?php } ?><?php unset($attr2) ?><?php $attr1_debug_info = 'a:0:{}' ?><?php $attr1 = array() ?></form>
+<?php unset($attr3) ?><?php unset($attr3_value) ?><?php unset($attr3_lessthan) ?><?php $attr4_debug_info = 'a:2:{s:4:"name";s:4:"dbid";s:7:"default";s:11:"var:actdbid";}' ?><?php $attr4 = array('name'=>'dbid','default'=>$actdbid) ?><?php $attr4_name='dbid' ?><?php $attr4_default=$actdbid ?><?php
+if (isset($$attr4_name))
+	$attr4_tmp_value = $$attr4_name;
+elseif ( isset($attr4_default) )
+	$attr4_tmp_value = $attr4_default;
+else
+	$attr4_tmp_value = "";
+?><input type="hidden" name="<?php echo $attr4_name ?>" value="<?php echo $attr4_tmp_value ?>" /><?php unset($attr4) ?><?php unset($attr4_name) ?><?php unset($attr4_default) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?><?php } ?><?php unset($attr2) ?><?php $attr3_debug_info = 'a:1:{s:4:"name";s:8:"objectid";}' ?><?php $attr3 = array('name'=>'objectid') ?><?php $attr3_name='objectid' ?><?php
+if (isset($$attr3_name))
+	$attr3_tmp_value = $$attr3_name;
+elseif ( isset($attr3_default) )
+	$attr3_tmp_value = $attr3_default;
+else
+	$attr3_tmp_value = "";
+?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo $attr3_tmp_value ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3_debug_info = 'a:1:{s:4:"name";s:7:"modelid";}' ?><?php $attr3 = array('name'=>'modelid') ?><?php $attr3_name='modelid' ?><?php
+if (isset($$attr3_name))
+	$attr3_tmp_value = $$attr3_name;
+elseif ( isset($attr3_default) )
+	$attr3_tmp_value = $attr3_default;
+else
+	$attr3_tmp_value = "";
+?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo $attr3_tmp_value ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3_debug_info = 'a:1:{s:4:"name";s:9:"projectid";}' ?><?php $attr3 = array('name'=>'projectid') ?><?php $attr3_name='projectid' ?><?php
+if (isset($$attr3_name))
+	$attr3_tmp_value = $$attr3_name;
+elseif ( isset($attr3_default) )
+	$attr3_tmp_value = $attr3_default;
+else
+	$attr3_tmp_value = "";
+?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo $attr3_tmp_value ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3_debug_info = 'a:1:{s:4:"name";s:10:"languageid";}' ?><?php $attr3 = array('name'=>'languageid') ?><?php $attr3_name='languageid' ?><?php
+if (isset($$attr3_name))
+	$attr3_tmp_value = $$attr3_name;
+elseif ( isset($attr3_default) )
+	$attr3_tmp_value = $attr3_default;
+else
+	$attr3_tmp_value = "";
+?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo $attr3_tmp_value ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr1_debug_info = 'a:0:{}' ?><?php $attr1 = array() ?></form>
 <?php unset($attr1) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?><br/><?php unset($attr2) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?><br/><?php unset($attr2) ?><?php $attr2_debug_info = 'a:4:{s:5:"title";s:0:"";s:6:"target";s:4:"_top";s:3:"url";s:20:"config:login/gpl/url";s:5:"class";s:0:"";}' ?><?php $attr2 = array('title'=>'','target'=>'_top','url'=>@$conf['login']['gpl']['url'],'class'=>'') ?><?php $attr2_title='' ?><?php $attr2_target='_top' ?><?php $attr2_url=@$conf['login']['gpl']['url'] ?><?php $attr2_class='' ?><?php
 	$params = array();
 	if (!empty($attr2_var1) && isset($attr2_value1))

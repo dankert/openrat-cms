@@ -43,7 +43,7 @@
 <input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr2_id ?>" /><?php
 		if	( $conf['interface']['url_sessionid'] )
 			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
-?><?php unset($attr2) ?><?php unset($attr2_name) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3_debug_info = 'a:6:{s:4:"name";s:8:"password";s:4:"icon";s:4:"user";s:6:"widths";s:7:"50%,50%";s:5:"width";s:3:"93%";s:10:"rowclasses";s:8:"odd,even";s:13:"columnclasses";s:5:"1,2,3";}' ?><?php $attr3 = array('name'=>'password','icon'=>'user','widths'=>'50%,50%','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_name='password' ?><?php $attr3_icon='user' ?><?php $attr3_widths='50%,50%' ?><?php $attr3_width='93%' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
+?><?php unset($attr2) ?><?php unset($attr2_name) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3_debug_info = 'a:6:{s:4:"name";s:8:"password";s:4:"icon";s:4:"user";s:6:"widths";s:7:"50%,50%";s:5:"width";s:5:"400px";s:10:"rowclasses";s:8:"odd,even";s:13:"columnclasses";s:5:"1,2,3";}' ?><?php $attr3 = array('name'=>'password','icon'=>'user','widths'=>'50%,50%','width'=>'400px','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_name='password' ?><?php $attr3_icon='user' ?><?php $attr3_widths='50%,50%' ?><?php $attr3_width='400px' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr3_widths))
 	{
@@ -138,7 +138,7 @@
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo nl2br(htmlentities(implode("\n",$notice['log']))) ?></pre><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
     </table>

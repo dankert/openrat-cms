@@ -138,7 +138,7 @@
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo nl2br(htmlentities(implode("\n",$notice['log']))) ?></pre><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
     </table>
@@ -218,7 +218,7 @@ if (count($$attr6_list)==1) echo '<input type="hidden" name="'.$attr6_name.'" va
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php $attr6_debug_info = 'a:3:{s:4:"name";s:4:"file";s:5:"class";s:6:"upload";s:4:"size";s:2:"40";}' ?><?php $attr6 = array('name'=>'file','class'=>'upload','size'=>'40') ?><?php $attr6_name='file' ?><?php $attr6_class='upload' ?><?php $attr6_size='40' ?><input size="<?php echo $attr6_size ?>" id="id_<?php echo $attr6_name ?>" type="file" <?php if (isset($attr6_maxlength))echo ' maxlength="'.$attr6_maxlength.'"' ?> name="<?php echo $attr6_name ?>" class="<?php echo $attr6_class ?>" /><?php unset($attr6) ?><?php unset($attr6_name) ?><?php unset($attr6_class) ?><?php unset($attr6_size) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php $attr6_debug_info = 'a:3:{s:4:"name";s:4:"file";s:5:"class";s:6:"upload";s:4:"size";s:2:"40";}' ?><?php $attr6 = array('name'=>'file','class'=>'upload','size'=>'40') ?><?php $attr6_name='file' ?><?php $attr6_class='upload' ?><?php $attr6_size='40' ?><input size="<?php echo $attr6_size ?>" id="id_<?php echo $attr6_name ?>" type="file" <?php if (isset($attr6_maxlength))echo ' maxlength="'.$attr6_maxlength.'"' ?> name="<?php echo $attr6_name ?>" class="<?php echo $attr6_class ?>" <?php if (in_array($attr6_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php unset($attr6) ?><?php unset($attr6_name) ?><?php unset($attr6_class) ?><?php unset($attr6_size) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;

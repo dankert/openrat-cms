@@ -138,7 +138,7 @@
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo nl2br(htmlentities(implode("\n",$notice['log']))) ?></pre><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
     </table>
@@ -252,20 +252,81 @@
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_colspan) ?><?php $attr6_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:14:"GLOBAL_COMPARE";s:6:"escape";s:4:"true";}' ?><?php $attr6 = array('class'=>'text','text'=>'GLOBAL_COMPARE','escape'=>true) ?><?php $attr6_class='text' ?><?php $attr6_text='GLOBAL_COMPARE' ?><?php $attr6_escape=true ?><?php
-	if	( isset($attr6_prefix)&& isset($attr6_key))
-		$attr6_key = $attr6_prefix.$attr6_key;
-	if	( isset($attr6_suffix)&& isset($attr6_key))
-		$attr6_key = $attr6_key.$attr6_suffix;
-	if(empty($attr6_title))
-		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key.'_HELP');
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_colspan) ?><?php $attr6_debug_info = 'a:1:{s:7:"present";s:9:"compareid";}' ?><?php $attr6 = array('present'=>'compareid') ?><?php $attr6_present='compareid' ?><?php 
+	if	( isset($attr6_true) )
+	{
+		if	(gettype($attr6_true) === '' && gettype($attr6_true) === '1')
+			$exec = $$attr6_true == true;
 		else
-			$attr6_title = '';
-	if	(empty($attr6_type))
+			$exec = $attr6_true == true;
+	}
+	elseif	( isset($attr6_false) )
+	{
+		if	(gettype($attr6_false) === '' && gettype($attr6_false) === '1')
+			$exec = $$attr6_false == false;
+		else
+			$exec = $attr6_false == false;
+	}
+	elseif( isset($attr6_contains) )
+		$exec = in_array($attr6_value,explode(',',$attr6_contains));
+	elseif( isset($attr6_equals)&& isset($attr6_value) )
+		$exec = $attr6_equals == $attr6_value;
+	elseif( isset($attr6_lessthan)&& isset($attr6_value) )
+		$exec = intval($attr6_lessthan) > intval($attr6_value);
+	elseif( isset($attr6_greaterthan)&& isset($attr6_value) )
+		$exec = intval($attr6_greaterthan) < intval($attr6_value);
+	elseif	( isset($attr6_empty) )
+	{
+		if	( !isset($$attr6_empty) )
+			$exec = empty($attr6_empty);
+		elseif	( is_array($$attr6_empty) )
+			$exec = (count($$attr6_empty)==0);
+		elseif	( is_bool($$attr6_empty) )
+			$exec = true;
+		else
+			$exec = empty( $$attr6_empty );
+	}
+	elseif	( isset($attr6_present) )
+	{
+		$exec = isset($$attr6_present);
+	}
+	else
+	{
+		trigger_error("error in IF, assume: FALSE");
+		$exec = false;
+	}
+	if  ( !empty($attr6_invert) )
+		$exec = !$exec;
+	if  ( !empty($attr6_not) )
+		$exec = !$exec;
+	unset($attr6_true);
+	unset($attr6_false);
+	unset($attr6_notempty);
+	unset($attr6_empty);
+	unset($attr6_contains);
+	unset($attr6_present);
+	unset($attr6_invert);
+	unset($attr6_not);
+	unset($attr6_value);
+	unset($attr6_equals);
+	$last_exec = $exec;
+	if	( $exec )
+	{
+?>
+<?php unset($attr6) ?><?php unset($attr6_present) ?><?php $attr7_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:14:"GLOBAL_COMPARE";s:6:"escape";s:4:"true";}' ?><?php $attr7 = array('class'=>'text','text'=>'GLOBAL_COMPARE','escape'=>true) ?><?php $attr7_class='text' ?><?php $attr7_text='GLOBAL_COMPARE' ?><?php $attr7_escape=true ?><?php
+	if	( isset($attr7_prefix)&& isset($attr7_key))
+		$attr7_key = $attr7_prefix.$attr7_key;
+	if	( isset($attr7_suffix)&& isset($attr7_key))
+		$attr7_key = $attr7_key.$attr7_suffix;
+	if(empty($attr7_title))
+		if (!empty($attr7_key))
+			$attr7_title = lang($attr7_key.'_HELP');
+		else
+			$attr7_title = '';
+	if	(empty($attr7_type))
 		$tmp_tag = 'span';
 	else
-		switch( $attr6_type )
+		switch( $attr7_type )
 		{
 			case 'emphatic':
 			case 'italic':
@@ -282,46 +343,46 @@
 			default:
 				$tmp_tag = 'span';
 		}
-?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
-	$attr6_title = '';
-	if (!empty($attr6_array))
+?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
+	$attr7_title = '';
+	if (!empty($attr7_array))
 	{
-		$tmpArray = $$attr6_array;
-		if (!empty($attr6_var))
-			$tmp_text = $tmpArray[$attr6_var];
+		$tmpArray = $$attr7_array;
+		if (!empty($attr7_var))
+			$tmp_text = $tmpArray[$attr7_var];
 		else
-			$tmp_text = lang($tmpArray[$attr6_text]);
+			$tmp_text = lang($tmpArray[$attr7_text]);
 	}
-	elseif (!empty($attr6_text))
-		if	( isset($$attr6_text))
-			$tmp_text = lang($$attr6_text);
+	elseif (!empty($attr7_text))
+		if	( isset($$attr7_text))
+			$tmp_text = lang($$attr7_text);
 		else
-			$tmp_text = lang($attr6_text);
-	elseif (!empty($attr6_textvar))
-		$tmp_text = lang($$attr6_textvar);
-	elseif (!empty($attr6_key))
-		$tmp_text = lang($attr6_key);
-	elseif (!empty($attr6_var))
-		$tmp_text = isset($$attr6_var)?$$attr6_var:'?'.$attr6_var.'?';	
-	elseif (!empty($attr6_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
-	elseif (!empty($attr6_value))
-		$tmp_text = $attr6_value;
+			$tmp_text = lang($attr7_text);
+	elseif (!empty($attr7_textvar))
+		$tmp_text = lang($$attr7_textvar);
+	elseif (!empty($attr7_key))
+		$tmp_text = lang($attr7_key);
+	elseif (!empty($attr7_var))
+		$tmp_text = isset($$attr7_var)?$$attr7_var:'?'.$attr7_var.'?';	
+	elseif (!empty($attr7_raw))
+		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
+	elseif (!empty($attr7_value))
+		$tmp_text = $attr7_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr6_escape && empty($attr6_raw) && $tmp_text!='&nbsp;' )
+	if	( $attr7_escape && empty($attr7_raw) && $tmp_text!='&nbsp;' )
 		$tmp_text = htmlentities($tmp_text);
-	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
-	if	(isset($attr6_accesskey))
+	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
+	if	(isset($attr7_accesskey))
 	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr6_accesskey));
+		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
 		if	( $pos !== false )
 			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_text) ?><?php unset($attr6_escape) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr5_debug_info = 'a:1:{s:5:"class";s:4:"help";}' ?><?php $attr5 = array('class'=>'help') ?><?php $attr5_class='help' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_text) ?><?php unset($attr7_escape) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?><?php } ?><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr5_debug_info = 'a:1:{s:5:"class";s:4:"help";}' ?><?php $attr5 = array('class'=>'help') ?><?php $attr5_class='help' ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -992,14 +1053,75 @@
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7_debug_info = 'a:8:{s:8:"readonly";s:5:"false";s:4:"name";s:9:"compareid";s:5:"value";s:6:"var:id";s:7:"default";s:5:"false";s:6:"prefix";s:0:"";s:6:"suffix";s:0:"";s:5:"class";s:0:"";s:8:"onchange";s:0:"";}' ?><?php $attr7 = array('readonly'=>false,'name'=>'compareid','value'=>$id,'default'=>false,'prefix'=>'','suffix'=>'','class'=>'','onchange'=>'') ?><?php $attr7_readonly=false ?><?php $attr7_name='compareid' ?><?php $attr7_value=$id ?><?php $attr7_default=false ?><?php $attr7_prefix='' ?><?php $attr7_suffix='' ?><?php $attr7_class='' ?><?php $attr7_onchange='' ?><?php
-		if	( isset($$attr7_name)  )
-			$attr7_tmp_default = $$attr7_name;
-		elseif ( isset($attr7_default) )
-			$attr7_tmp_default = $attr7_default;
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7_debug_info = 'a:1:{s:7:"present";s:9:"compareid";}' ?><?php $attr7 = array('present'=>'compareid') ?><?php $attr7_present='compareid' ?><?php 
+	if	( isset($attr7_true) )
+	{
+		if	(gettype($attr7_true) === '' && gettype($attr7_true) === '1')
+			$exec = $$attr7_true == true;
 		else
-			$attr7_tmp_default = '';
- ?><input type="radio" id="id_<?php echo $attr7_name.'_'.$attr7_value ?>"  name="<?php echo $attr7_prefix.$attr7_name ?>"<?php if ( $attr7_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr7_value ?>" <?php if($attr7_value==$attr7_tmp_default) echo 'checked="checked"' ?><?php if (in_array($attr7_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> /><?php unset($attr7) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php unset($attr7_value) ?><?php unset($attr7_default) ?><?php unset($attr7_prefix) ?><?php unset($attr7_suffix) ?><?php unset($attr7_class) ?><?php unset($attr7_onchange) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6_debug_info = 'a:1:{s:5:"class";s:2:"fx";}' ?><?php $attr6 = array('class'=>'fx') ?><?php $attr6_class='fx' ?><?php
+			$exec = $attr7_true == true;
+	}
+	elseif	( isset($attr7_false) )
+	{
+		if	(gettype($attr7_false) === '' && gettype($attr7_false) === '1')
+			$exec = $$attr7_false == false;
+		else
+			$exec = $attr7_false == false;
+	}
+	elseif( isset($attr7_contains) )
+		$exec = in_array($attr7_value,explode(',',$attr7_contains));
+	elseif( isset($attr7_equals)&& isset($attr7_value) )
+		$exec = $attr7_equals == $attr7_value;
+	elseif( isset($attr7_lessthan)&& isset($attr7_value) )
+		$exec = intval($attr7_lessthan) > intval($attr7_value);
+	elseif( isset($attr7_greaterthan)&& isset($attr7_value) )
+		$exec = intval($attr7_greaterthan) < intval($attr7_value);
+	elseif	( isset($attr7_empty) )
+	{
+		if	( !isset($$attr7_empty) )
+			$exec = empty($attr7_empty);
+		elseif	( is_array($$attr7_empty) )
+			$exec = (count($$attr7_empty)==0);
+		elseif	( is_bool($$attr7_empty) )
+			$exec = true;
+		else
+			$exec = empty( $$attr7_empty );
+	}
+	elseif	( isset($attr7_present) )
+	{
+		$exec = isset($$attr7_present);
+	}
+	else
+	{
+		trigger_error("error in IF, assume: FALSE");
+		$exec = false;
+	}
+	if  ( !empty($attr7_invert) )
+		$exec = !$exec;
+	if  ( !empty($attr7_not) )
+		$exec = !$exec;
+	unset($attr7_true);
+	unset($attr7_false);
+	unset($attr7_notempty);
+	unset($attr7_empty);
+	unset($attr7_contains);
+	unset($attr7_present);
+	unset($attr7_invert);
+	unset($attr7_not);
+	unset($attr7_value);
+	unset($attr7_equals);
+	$last_exec = $exec;
+	if	( $exec )
+	{
+?>
+<?php unset($attr7) ?><?php unset($attr7_present) ?><?php $attr8_debug_info = 'a:8:{s:8:"readonly";s:5:"false";s:4:"name";s:9:"compareid";s:5:"value";s:6:"var:id";s:7:"default";s:5:"false";s:6:"prefix";s:0:"";s:6:"suffix";s:0:"";s:5:"class";s:0:"";s:8:"onchange";s:0:"";}' ?><?php $attr8 = array('readonly'=>false,'name'=>'compareid','value'=>$id,'default'=>false,'prefix'=>'','suffix'=>'','class'=>'','onchange'=>'') ?><?php $attr8_readonly=false ?><?php $attr8_name='compareid' ?><?php $attr8_value=$id ?><?php $attr8_default=false ?><?php $attr8_prefix='' ?><?php $attr8_suffix='' ?><?php $attr8_class='' ?><?php $attr8_onchange='' ?><?php
+		if	( isset($$attr8_name)  )
+			$attr8_tmp_default = $$attr8_name;
+		elseif ( isset($attr8_default) )
+			$attr8_tmp_default = $attr8_default;
+		else
+			$attr8_tmp_default = '';
+ ?><input type="radio" id="id_<?php echo $attr8_name.'_'.$attr8_value ?>"  name="<?php echo $attr8_prefix.$attr8_name ?>"<?php if ( $attr8_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr8_value ?>" <?php if($attr8_value==$attr8_tmp_default) echo 'checked="checked"' ?><?php if (in_array($attr8_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> /><?php unset($attr8) ?><?php unset($attr8_readonly) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_default) ?><?php unset($attr8_prefix) ?><?php unset($attr8_suffix) ?><?php unset($attr8_class) ?><?php unset($attr8_onchange) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6_debug_info = 'a:1:{s:5:"class";s:2:"fx";}' ?><?php $attr6 = array('class'=>'fx') ?><?php $attr6_class='fx' ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -1010,14 +1132,75 @@
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7_debug_info = 'a:8:{s:8:"readonly";s:5:"false";s:4:"name";s:6:"withid";s:5:"value";s:6:"var:id";s:7:"default";s:5:"false";s:6:"prefix";s:0:"";s:6:"suffix";s:0:"";s:5:"class";s:0:"";s:8:"onchange";s:0:"";}' ?><?php $attr7 = array('readonly'=>false,'name'=>'withid','value'=>$id,'default'=>false,'prefix'=>'','suffix'=>'','class'=>'','onchange'=>'') ?><?php $attr7_readonly=false ?><?php $attr7_name='withid' ?><?php $attr7_value=$id ?><?php $attr7_default=false ?><?php $attr7_prefix='' ?><?php $attr7_suffix='' ?><?php $attr7_class='' ?><?php $attr7_onchange='' ?><?php
-		if	( isset($$attr7_name)  )
-			$attr7_tmp_default = $$attr7_name;
-		elseif ( isset($attr7_default) )
-			$attr7_tmp_default = $attr7_default;
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php $attr7_debug_info = 'a:1:{s:7:"present";s:9:"compareid";}' ?><?php $attr7 = array('present'=>'compareid') ?><?php $attr7_present='compareid' ?><?php 
+	if	( isset($attr7_true) )
+	{
+		if	(gettype($attr7_true) === '' && gettype($attr7_true) === '1')
+			$exec = $$attr7_true == true;
 		else
-			$attr7_tmp_default = '';
- ?><input type="radio" id="id_<?php echo $attr7_name.'_'.$attr7_value ?>"  name="<?php echo $attr7_prefix.$attr7_name ?>"<?php if ( $attr7_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr7_value ?>" <?php if($attr7_value==$attr7_tmp_default) echo 'checked="checked"' ?><?php if (in_array($attr7_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> /><?php unset($attr7) ?><?php unset($attr7_readonly) ?><?php unset($attr7_name) ?><?php unset($attr7_value) ?><?php unset($attr7_default) ?><?php unset($attr7_prefix) ?><?php unset($attr7_suffix) ?><?php unset($attr7_class) ?><?php unset($attr7_onchange) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6_debug_info = 'a:1:{s:5:"class";s:2:"fx";}' ?><?php $attr6 = array('class'=>'fx') ?><?php $attr6_class='fx' ?><?php
+			$exec = $attr7_true == true;
+	}
+	elseif	( isset($attr7_false) )
+	{
+		if	(gettype($attr7_false) === '' && gettype($attr7_false) === '1')
+			$exec = $$attr7_false == false;
+		else
+			$exec = $attr7_false == false;
+	}
+	elseif( isset($attr7_contains) )
+		$exec = in_array($attr7_value,explode(',',$attr7_contains));
+	elseif( isset($attr7_equals)&& isset($attr7_value) )
+		$exec = $attr7_equals == $attr7_value;
+	elseif( isset($attr7_lessthan)&& isset($attr7_value) )
+		$exec = intval($attr7_lessthan) > intval($attr7_value);
+	elseif( isset($attr7_greaterthan)&& isset($attr7_value) )
+		$exec = intval($attr7_greaterthan) < intval($attr7_value);
+	elseif	( isset($attr7_empty) )
+	{
+		if	( !isset($$attr7_empty) )
+			$exec = empty($attr7_empty);
+		elseif	( is_array($$attr7_empty) )
+			$exec = (count($$attr7_empty)==0);
+		elseif	( is_bool($$attr7_empty) )
+			$exec = true;
+		else
+			$exec = empty( $$attr7_empty );
+	}
+	elseif	( isset($attr7_present) )
+	{
+		$exec = isset($$attr7_present);
+	}
+	else
+	{
+		trigger_error("error in IF, assume: FALSE");
+		$exec = false;
+	}
+	if  ( !empty($attr7_invert) )
+		$exec = !$exec;
+	if  ( !empty($attr7_not) )
+		$exec = !$exec;
+	unset($attr7_true);
+	unset($attr7_false);
+	unset($attr7_notempty);
+	unset($attr7_empty);
+	unset($attr7_contains);
+	unset($attr7_present);
+	unset($attr7_invert);
+	unset($attr7_not);
+	unset($attr7_value);
+	unset($attr7_equals);
+	$last_exec = $exec;
+	if	( $exec )
+	{
+?>
+<?php unset($attr7) ?><?php unset($attr7_present) ?><?php $attr8_debug_info = 'a:8:{s:8:"readonly";s:5:"false";s:4:"name";s:6:"withid";s:5:"value";s:6:"var:id";s:7:"default";s:5:"false";s:6:"prefix";s:0:"";s:6:"suffix";s:0:"";s:5:"class";s:0:"";s:8:"onchange";s:0:"";}' ?><?php $attr8 = array('readonly'=>false,'name'=>'withid','value'=>$id,'default'=>false,'prefix'=>'','suffix'=>'','class'=>'','onchange'=>'') ?><?php $attr8_readonly=false ?><?php $attr8_name='withid' ?><?php $attr8_value=$id ?><?php $attr8_default=false ?><?php $attr8_prefix='' ?><?php $attr8_suffix='' ?><?php $attr8_class='' ?><?php $attr8_onchange='' ?><?php
+		if	( isset($$attr8_name)  )
+			$attr8_tmp_default = $$attr8_name;
+		elseif ( isset($attr8_default) )
+			$attr8_tmp_default = $attr8_default;
+		else
+			$attr8_tmp_default = '';
+ ?><input type="radio" id="id_<?php echo $attr8_name.'_'.$attr8_value ?>"  name="<?php echo $attr8_prefix.$attr8_name ?>"<?php if ( $attr8_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr8_value ?>" <?php if($attr8_value==$attr8_tmp_default) echo 'checked="checked"' ?><?php if (in_array($attr8_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> /><?php unset($attr8) ?><?php unset($attr8_readonly) ?><?php unset($attr8_name) ?><?php unset($attr8_value) ?><?php unset($attr8_default) ?><?php unset($attr8_prefix) ?><?php unset($attr8_suffix) ?><?php unset($attr8_class) ?><?php unset($attr8_onchange) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6_debug_info = 'a:1:{s:5:"class";s:2:"fx";}' ?><?php $attr6 = array('class'=>'fx') ?><?php $attr6_class='fx' ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -1898,35 +2081,96 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr10) ?><?php unset($attr10_class) ?><?php unset($attr10_text) ?><?php unset($attr10_escape) ?><?php $attr8_debug_info = 'a:0:{}' ?><?php $attr8 = array() ?></a><?php unset($attr8) ?><?php $attr7_debug_info = 'a:0:{}' ?><?php $attr7 = array() ?><?php } ?><?php unset($attr7) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr10) ?><?php unset($attr10_class) ?><?php unset($attr10_text) ?><?php unset($attr10_escape) ?><?php $attr8_debug_info = 'a:0:{}' ?><?php $attr8 = array() ?></a><?php unset($attr8) ?><?php $attr7_debug_info = 'a:0:{}' ?><?php $attr7 = array() ?><?php } ?><?php unset($attr7) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:7:"present";s:9:"compareid";}' ?><?php $attr4 = array('present'=>'compareid') ?><?php $attr4_present='compareid' ?><?php 
+	if	( isset($attr4_true) )
+	{
+		if	(gettype($attr4_true) === '' && gettype($attr4_true) === '1')
+			$exec = $$attr4_true == true;
+		else
+			$exec = $attr4_true == true;
+	}
+	elseif	( isset($attr4_false) )
+	{
+		if	(gettype($attr4_false) === '' && gettype($attr4_false) === '1')
+			$exec = $$attr4_false == false;
+		else
+			$exec = $attr4_false == false;
+	}
+	elseif( isset($attr4_contains) )
+		$exec = in_array($attr4_value,explode(',',$attr4_contains));
+	elseif( isset($attr4_equals)&& isset($attr4_value) )
+		$exec = $attr4_equals == $attr4_value;
+	elseif( isset($attr4_lessthan)&& isset($attr4_value) )
+		$exec = intval($attr4_lessthan) > intval($attr4_value);
+	elseif( isset($attr4_greaterthan)&& isset($attr4_value) )
+		$exec = intval($attr4_greaterthan) < intval($attr4_value);
+	elseif	( isset($attr4_empty) )
+	{
+		if	( !isset($$attr4_empty) )
+			$exec = empty($attr4_empty);
+		elseif	( is_array($$attr4_empty) )
+			$exec = (count($$attr4_empty)==0);
+		elseif	( is_bool($$attr4_empty) )
+			$exec = true;
+		else
+			$exec = empty( $$attr4_empty );
+	}
+	elseif	( isset($attr4_present) )
+	{
+		$exec = isset($$attr4_present);
+	}
+	else
+	{
+		trigger_error("error in IF, assume: FALSE");
+		$exec = false;
+	}
+	if  ( !empty($attr4_invert) )
+		$exec = !$exec;
+	if  ( !empty($attr4_not) )
+		$exec = !$exec;
+	unset($attr4_true);
+	unset($attr4_false);
+	unset($attr4_notempty);
+	unset($attr4_empty);
+	unset($attr4_contains);
+	unset($attr4_present);
+	unset($attr4_invert);
+	unset($attr4_not);
+	unset($attr4_value);
+	unset($attr4_equals);
+	$last_exec = $exec;
+	if	( $exec )
+	{
+?>
+<?php unset($attr4) ?><?php unset($attr4_present) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
 	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr4_class))
-		$attr4_class=$row_class;
+	if (empty($attr5_class))
+		$attr5_class=$row_class;
 	global $cell_column_nr;
 	$cell_column_nr=0;
 	$column_class_idx = 999;
-?><tr class="<?php echo $attr4_class ?>"><?php unset($attr4) ?><?php $attr5_debug_info = 'a:2:{s:5:"class";s:3:"act";s:7:"colspan";s:1:"8";}' ?><?php $attr5 = array('class'=>'act','colspan'=>'8') ?><?php $attr5_class='act' ?><?php $attr5_colspan='8' ?><?php
+?><tr class="<?php echo $attr5_class ?>"><?php unset($attr5) ?><?php $attr6_debug_info = 'a:2:{s:5:"class";s:3:"act";s:7:"colspan";s:1:"8";}' ?><?php $attr6 = array('class'=>'act','colspan'=>'8') ?><?php $attr6_class='act' ?><?php $attr6_colspan='8' ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
-	if (empty($attr5_class))
-		$attr5['class']=$column_class;
+	if (empty($attr6_class))
+		$attr6['class']=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
-		$attr5['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_colspan) ?><?php $attr6_debug_info = 'a:4:{s:4:"type";s:2:"ok";s:5:"class";s:2:"ok";s:5:"value";s:2:"ok";s:4:"text";s:9:"button_ok";}' ?><?php $attr6 = array('type'=>'ok','class'=>'ok','value'=>'ok','text'=>'button_ok') ?><?php $attr6_type='ok' ?><?php $attr6_class='ok' ?><?php $attr6_value='ok' ?><?php $attr6_text='button_ok' ?><?php
-	if ($attr6_type=='ok')
-		$attr6_type  = 'submit';
-	if (isset($attr6_src))
-		$attr6_type  = 'image';
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
+		$attr6['width']=$column_widths[$cell_column_nr-1];
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_colspan) ?><?php $attr7_debug_info = 'a:4:{s:4:"type";s:2:"ok";s:5:"class";s:2:"ok";s:5:"value";s:2:"ok";s:4:"text";s:9:"button_ok";}' ?><?php $attr7 = array('type'=>'ok','class'=>'ok','value'=>'ok','text'=>'button_ok') ?><?php $attr7_type='ok' ?><?php $attr7_class='ok' ?><?php $attr7_value='ok' ?><?php $attr7_text='button_ok' ?><?php
+	if ($attr7_type=='ok')
+		$attr7_type  = 'submit';
+	if (isset($attr7_src))
+		$attr7_type  = 'image';
 	else
-		$attr6_src  = '';
-?><input type="<?php echo $attr6_type ?>"<?php if(isset($attr6_src)) { ?> src="<?php echo $image_dir.'icon_'.$attr6_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $attr6_value ?>" class="<?php echo $attr6_class ?>" title="<?php echo lang($attr6_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr6_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr6_src) ?><?php unset($attr6) ?><?php unset($attr6_type) ?><?php unset($attr6_class) ?><?php unset($attr6_value) ?><?php unset($attr6_text) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></td><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></tr><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?>      </table>
+		$attr7_src  = '';
+?><input type="<?php echo $attr7_type ?>"<?php if(isset($attr7_src)) { ?> src="<?php echo $image_dir.'icon_'.$attr7_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $attr7_value ?>" class="<?php echo $attr7_class ?>" title="<?php echo lang($attr7_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo lang($attr7_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr7_src) ?><?php unset($attr7) ?><?php unset($attr7_type) ?><?php unset($attr7_class) ?><?php unset($attr7_value) ?><?php unset($attr7_text) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?>      </table>
 	</td>
   </tr>
 </table>

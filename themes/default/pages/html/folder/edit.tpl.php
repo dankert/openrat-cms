@@ -43,7 +43,21 @@
 <input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr2_id ?>" /><?php
 		if	( $conf['interface']['url_sessionid'] )
 			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
-?><?php unset($attr2) ?><?php unset($attr2_action) ?><?php unset($attr2_subaction) ?><?php unset($attr2_name) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3_debug_info = 'a:1:{s:4:"name";s:3:"ids";}' ?><?php $attr3 = array('name'=>'ids') ?><?php $attr3_name='ids' ?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo isset($$attr3_name)?$$attr3_name:$attr3_default ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3_debug_info = 'a:1:{s:4:"name";s:4:"type";}' ?><?php $attr3 = array('name'=>'type') ?><?php $attr3_name='type' ?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo isset($$attr3_name)?$$attr3_name:$attr3_default ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3_debug_info = 'a:6:{s:5:"title";s:7:"titelso";s:4:"name";s:3:"bla";s:6:"widths";s:6:"5%,75%";s:5:"width";s:3:"93%";s:10:"rowclasses";s:8:"odd,even";s:13:"columnclasses";s:5:"1,2,3";}' ?><?php $attr3 = array('title'=>'titelso','name'=>'bla','widths'=>'5%,75%','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_title='titelso' ?><?php $attr3_name='bla' ?><?php $attr3_widths='5%,75%' ?><?php $attr3_width='93%' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
+?><?php unset($attr2) ?><?php unset($attr2_action) ?><?php unset($attr2_subaction) ?><?php unset($attr2_name) ?><?php unset($attr2_target) ?><?php unset($attr2_method) ?><?php unset($attr2_enctype) ?><?php $attr3_debug_info = 'a:1:{s:4:"name";s:3:"ids";}' ?><?php $attr3 = array('name'=>'ids') ?><?php $attr3_name='ids' ?><?php
+if (isset($$attr3_name))
+	$attr3_tmp_value = $$attr3_name;
+elseif ( isset($attr3_default) )
+	$attr3_tmp_value = $attr3_default;
+else
+	$attr3_tmp_value = "";
+?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo $attr3_tmp_value ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3_debug_info = 'a:1:{s:4:"name";s:4:"type";}' ?><?php $attr3 = array('name'=>'type') ?><?php $attr3_name='type' ?><?php
+if (isset($$attr3_name))
+	$attr3_tmp_value = $$attr3_name;
+elseif ( isset($attr3_default) )
+	$attr3_tmp_value = $attr3_default;
+else
+	$attr3_tmp_value = "";
+?><input type="hidden" name="<?php echo $attr3_name ?>" value="<?php echo $attr3_tmp_value ?>" /><?php unset($attr3) ?><?php unset($attr3_name) ?><?php $attr3_debug_info = 'a:6:{s:5:"title";s:7:"titelso";s:4:"name";s:3:"bla";s:6:"widths";s:6:"5%,75%";s:5:"width";s:3:"93%";s:10:"rowclasses";s:8:"odd,even";s:13:"columnclasses";s:5:"1,2,3";}' ?><?php $attr3 = array('title'=>'titelso','name'=>'bla','widths'=>'5%,75%','width'=>'93%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr3_title='titelso' ?><?php $attr3_name='bla' ?><?php $attr3_widths='5%,75%' ?><?php $attr3_width='93%' ?><?php $attr3_rowclasses='odd,even' ?><?php $attr3_columnclasses='1,2,3' ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr3_widths))
 	{
@@ -138,7 +152,7 @@
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo nl2br(htmlentities(implode("\n",$notice['log']))) ?></pre><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
     </table>

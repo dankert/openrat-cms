@@ -121,7 +121,7 @@
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo nl2br(htmlentities(implode("\n",$notice['log']))) ?></pre><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
     </table>
@@ -174,7 +174,19 @@
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php $attr6_debug_info = 'a:6:{s:5:"title";s:0:"";s:6:"target";s:8:"cms_main";s:5:"class";s:0:"";s:6:"action";s:4:"main";s:9:"subaction";s:4:"page";s:2:"id";s:10:"var:pageid";}' ?><?php $attr6 = array('title'=>'','target'=>'cms_main','class'=>'','action'=>'main','subaction'=>'page','id'=>$pageid) ?><?php $attr6_title='' ?><?php $attr6_target='cms_main' ?><?php $attr6_class='' ?><?php $attr6_action='main' ?><?php $attr6_subaction='page' ?><?php $attr6_id=$pageid ?><?php
+?><td <?php foreach( $attr5 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr5) ?><?php $attr6_debug_info = 'a:2:{s:4:"icon";s:4:"page";s:5:"align";s:4:"left";}' ?><?php $attr6 = array('icon'=>'page','align'=>'left') ?><?php $attr6_icon='page' ?><?php $attr6_align='left' ?><?php
+if (isset($attr6_elementtype)) {
+?><img src="<?php echo $image_dir.'icon_el_'.$attr6_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr6_align ?>"><?php
+} elseif (isset($attr6_type)) {
+?><img src="<?php echo $image_dir.'icon_'.$attr6_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr6_align ?>"><?php
+} elseif (isset($attr6_icon)) {
+?><img src="<?php echo $image_dir.'icon_'.$attr6_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr6_align ?>"><?php
+} elseif (isset($attr6_url)) {
+?><img src="<?php echo $attr6_url ?>" border="0" align="<?php echo $attr6_align ?>"><?php
+} elseif (isset($attr6_fileext)) {
+?><img src="<?php echo $image_dir.$attr6_fileext ?>" border="0" align="<?php echo $attr6_align ?>"><?php
+} elseif (isset($attr6_file)) {
+?><img src="<?php echo $image_dir.$attr6_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr6_align ?>"><?php } ?><?php unset($attr6) ?><?php unset($attr6_icon) ?><?php unset($attr6_align) ?><?php $attr6_debug_info = 'a:6:{s:5:"title";s:0:"";s:6:"target";s:8:"cms_main";s:5:"class";s:0:"";s:6:"action";s:4:"main";s:9:"subaction";s:4:"page";s:2:"id";s:10:"var:pageid";}' ?><?php $attr6 = array('title'=>'','target'=>'cms_main','class'=>'','action'=>'main','subaction'=>'page','id'=>$pageid) ?><?php $attr6_title='' ?><?php $attr6_target='cms_main' ?><?php $attr6_class='' ?><?php $attr6_action='main' ?><?php $attr6_subaction='page' ?><?php $attr6_id=$pageid ?><?php
 	$params = array();
 	if (!empty($attr6_var1) && isset($attr6_value1))
 		$params[$attr6_var1]=$attr6_value1;

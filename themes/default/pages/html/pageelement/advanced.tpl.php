@@ -138,7 +138,7 @@
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo nl2br(htmlentities(implode("\n",$notice['log']))) ?></pre><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
     </table>
@@ -2840,87 +2840,157 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 	{
 ?>
 <?php unset($attr7) ?><?php unset($attr7_equals) ?><?php unset($attr7_value) ?><?php $attr8_debug_info = 'a:2:{s:4:"name";s:4:"text";s:4:"type";s:4:"html";}' ?><?php $attr8 = array('name'=>'text','type'=>'html') ?><?php $attr8_name='text' ?><?php $attr8_type='html' ?><?php
-if	($attr8_type=='fckeditor' || $attr8_type=='html')
+	function checkbox( $name,$value=false,$writable=true,$params=Array() )
+	{
+		$src = '<input type="checkbox" name="'.$name.'"';
+		foreach( $params as $name=>$val )
+			$src .= " $name=\"$val\"";
+		if	( !$writable )
+			$src .= ' disabled="disabled"';
+		if	( $value )
+			$src .= ' value="1" checked="checked"';
+		$src .= ' />';
+		return $src;
+	}
+	function selectBox( $name,$values,$default='',$params=Array() )
+	{
+		if	( ! is_array($values) )
+			$values = array($values);
+		$src = '<select size="1" name="'.$name.'"';
+		foreach( $params as $name=>$value )
+			$src .= " $name=\"$value\"";
+		$src .= '>';
+		foreach( $values as $key=>$value )
+		{
+			$src .= '<option value="'.$key.'"';
+			if ($key == $default)
+				$src .= ' selected="selected"';
+			$src .= '>'.$value.'</option>';
+		}
+		$src .= '</select>';
+		return $src;
+	}
+ ?><?php
+switch( $attr8_type )
 {
-	include('./editor/fckeditor.php');
-	$editor = new FCKeditor( $attr8_name ) ;
-	$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
-	$editor->Value = $$attr8_name;
-	$editor->Height = '290';
-	$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
-	$editor->Create();
-}
-elseif	($attr8_type=='wiki')
-{
-	?>
-<script name="Javascript" type="text/javascript" src="<?php echo $tpl_dir ?>../js/editor.js"></script>
+	case 'fckeditor':
+	case 'html':
+		include('./editor/fckeditor.php');
+		$editor = new FCKeditor( $attr8_name ) ;
+		$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
+		$editor->Value = $$attr8_name;
+		$editor->Height = '290';
+		$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
+		$editor->Create();
+		break;
+	case 'wiki':
+		$conf_tags = $conf['editor']['text-markup'];
+		?>
+<script name="Javascript" type="text/javascript" src="<?php echo $tpl_dir ?>../../js/editor.js"></script>
 <script name="JavaScript" type="text/javascript">
 function strong()
 {
-	insert('text','*','*');
+	insert('<?php echo $attr8_name ?>','<?php echo $conf_tags['strong-begin'] ?>','<?php echo $conf_tags['strong-end'] ?>');
 }
 function emphatic()
 {
-	insert('text','_','_');
+	insert('<?php echo $attr8_name ?>','<?php echo $conf_tags['emphatic-begin'] ?>','<?php echo $conf_tags['emphatic-end'] ?>');
 }
 function link()
 {
-	insert('text','"','"->"'+document.forms[0].objectid.value+'"');
+	objectid = document.forms[0].objectid.value;
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		objectid = window.prompt("Id","");
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		return;
+	insert('<?php echo $attr8_name ?>','"','"<?php echo $conf_tags['linkto'] ?>"'+objectid+'"');
 }
 function image()
 {
-	insert('text','','{"'+document.forms[0].objectid.value+'"}');
+	objectid = document.forms[0].objectid.value;
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		objectid = window.prompt("Id","");
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		return;
+	insert('<?php echo $attr8_name ?>','','<?php echo $conf_tags['image-begin'] ?>"'+objectid+'"<?php echo $conf_tags['image-end'] ?>');
 }
 function list()
 {
-	insert('text',"\n\n- ","\n- \n- \n");
+ 	insert('<?php echo $attr8_name ?>',"","\n");
+	while( true )
+	{
+		t = window.prompt('<?php echo lang('EDITOR_PROMPT_LIST_ENTRY') ?>','');
+		if	( t != '' && t != null )
+		 	insert('<?php echo $attr8_name ?>',"<?php echo $conf_tags['list-unnumbered'] ?> "+t+"\n","");
+		else
+			break;
+	}
 }
 function numlist()
 {
-	insert('text',"\n\n# ","\n# \n# \n");
+	insert('<?php echo $attr8_name ?>',"\n\n<?php echo $conf_tags['list-numbered'] ?> ","\n<?php echo $conf_tags['list-numbered'] ?> \n<?php echo $conf_tags['list-numbered'] ?> \n");
 }
 function table()
 {
-	insert('text',"\n|","| |\n| | |\n");
+	column=1;
+	while( true )
+	{
+		if	( column==1 )
+			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN') ?>';
+		else
+			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL') ?>';
+		t = window.prompt(text,'');
+		if	( t != '' && t != null )
+		{
+		 	insert('<?php echo $attr8_name ?>',"<?php echo $conf_tags['table-cell-sep'] ?>"+t,"");
+		 	column++;
+		}
+		else
+		{
+			if (column==1)
+			{
+				break;
+			}
+			else
+			{
+			 	insert('text',"\n","");
+			 	column=1;
+			 }
+		}
+	}
 }
 -->
 </script>
 	<?php
-		global $image_dir,$objects;
 		?>
-<tr>
-  <td colspan="2" class="f1">
     <table>
       <tr>
         <noscript><input type="text" name="addtext" size="10" /></noscript>
-        <td><noscript><?php echo Html::Checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
-        <td><noscript><?php echo Html::Checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
+        <td><noscript><?php echo checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo Html::Checkbox('table') ?></noscript><a href="javascript:table();" title="<?php echo lang('PAGE_EDITOR_ADD_TABLE') ?>"><img src="<?php echo $image_dir ?>/editor/table.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('table') ?></noscript><a href="javascript:table();" title="<?php echo lang('PAGE_EDITOR_ADD_TABLE') ?>"><img src="<?php echo $image_dir ?>/editor/table.png" border"0" /></a></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo Html::Checkbox('list') ?></noscript><a href="javascript:list();" title="<?php echo lang('PAGE_EDITOR_ADD_LIST') ?>"><img src="<?php echo $image_dir ?>/editor/list.png" border"0" /></a></td>
-        <td><noscript><?php echo Html::Checkbox('numlist') ?></noscript><a href="javascript:numlist();" title="<?php echo lang('PAGE_EDITOR_ADD_NUMLIST') ?>"><img src="<?php echo $image_dir ?>/editor/numlist.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('list') ?></noscript><a href="javascript:list();" title="<?php echo lang('PAGE_EDITOR_ADD_LIST') ?>"><img src="<?php echo $image_dir ?>/editor/list.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('numlist') ?></noscript><a href="javascript:numlist();" title="<?php echo lang('PAGE_EDITOR_ADD_NUMLIST') ?>"><img src="<?php echo $image_dir ?>/editor/numlist.png" border"0" /></a></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo Html::Checkbox('image') ?></noscript><a href="javascript:image();" title="<?php echo lang('PAGE_EDITOR_ADD_IMAGE') ?>"><img src="<?php echo $image_dir ?>/editor/image.png" border"0" /></a></td>
-        <td><noscript><?php echo Html::Checkbox('link') ?></noscript><a href="javascript:link();" title="<?php echo lang('PAGE_EDITOR_ADD_LINK') ?>"><img src="<?php echo $image_dir ?>/editor/link.png" border"0" /></a></td>
-        <td><?php echo Html::selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
+        <td><noscript><?php echo checkbox('image') ?></noscript><a href="javascript:image();" title="<?php echo lang('PAGE_EDITOR_ADD_IMAGE') ?>"><img src="<?php echo $image_dir ?>/editor/image.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('link') ?></noscript><a href="javascript:link();" title="<?php echo lang('PAGE_EDITOR_ADD_LINK') ?>"><img src="<?php echo $image_dir ?>/editor/link.png" border"0" /></a></td>
+        <td><?php echo selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
       </tr>
     </table>
-  </td>
-</tr>
+    <fieldset></fieldset><br>
 <?php
-	echo '<textarea name="'.$attr8_name.'" class="editor">'.$$attr8_name.'</textarea>';
+		echo '<textarea name="'.$attr8_name.'" class="editor" style="width:100%;height:300px;">'.$$attr8_name.'</textarea>';
+		break;
+	case 'text':
+	case 'raw':
+		echo '<textarea name="'.$attr8_name.'" class="editor" style="width:100%;height:300px;">'.$$attr8_name.'</textarea>';
+		break;
+	default:
+		echo "Unknown editor type: ".$attr8_type;
 }
-elseif	($attr8_type=='text' || $attr8_type=='raw')
-{
-	echo '<textarea name="'.$attr8_name.'" class="editor">'.$$attr8_name.'</textarea>';
-}
-else
-{
-	echo "Unknown editor type: ".$attr8_type;
-}
-?>
-<?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_type) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr7_debug_info = 'a:2:{s:6:"equals";s:4:"wiki";s:5:"value";s:10:"var:editor";}' ?><?php $attr7 = array('equals'=>'wiki','value'=>$editor) ?><?php $attr7_equals='wiki' ?><?php $attr7_value=$editor ?><?php 
+?><?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_type) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr7_debug_info = 'a:2:{s:6:"equals";s:4:"wiki";s:5:"value";s:10:"var:editor";}' ?><?php $attr7 = array('equals'=>'wiki','value'=>$editor) ?><?php $attr7_equals='wiki' ?><?php $attr7_value=$editor ?><?php 
 	if	( isset($attr7_true) )
 	{
 		if	(gettype($attr7_true) === '' && gettype($attr7_true) === '1')
@@ -3112,87 +3182,157 @@ else
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr9) ?><?php unset($attr9_class) ?><?php unset($attr9_var) ?><?php unset($attr9_escape) ?><?php $attr9_debug_info = 'a:0:{}' ?><?php $attr9 = array() ?><br/><?php unset($attr9) ?><?php $attr7_debug_info = 'a:0:{}' ?><?php $attr7 = array() ?><?php } ?><?php unset($attr7) ?><?php $attr8_debug_info = 'a:2:{s:4:"name";s:4:"text";s:4:"type";s:4:"wiki";}' ?><?php $attr8 = array('name'=>'text','type'=>'wiki') ?><?php $attr8_name='text' ?><?php $attr8_type='wiki' ?><?php
-if	($attr8_type=='fckeditor' || $attr8_type=='html')
+	function checkbox( $name,$value=false,$writable=true,$params=Array() )
+	{
+		$src = '<input type="checkbox" name="'.$name.'"';
+		foreach( $params as $name=>$val )
+			$src .= " $name=\"$val\"";
+		if	( !$writable )
+			$src .= ' disabled="disabled"';
+		if	( $value )
+			$src .= ' value="1" checked="checked"';
+		$src .= ' />';
+		return $src;
+	}
+	function selectBox( $name,$values,$default='',$params=Array() )
+	{
+		if	( ! is_array($values) )
+			$values = array($values);
+		$src = '<select size="1" name="'.$name.'"';
+		foreach( $params as $name=>$value )
+			$src .= " $name=\"$value\"";
+		$src .= '>';
+		foreach( $values as $key=>$value )
+		{
+			$src .= '<option value="'.$key.'"';
+			if ($key == $default)
+				$src .= ' selected="selected"';
+			$src .= '>'.$value.'</option>';
+		}
+		$src .= '</select>';
+		return $src;
+	}
+ ?><?php
+switch( $attr8_type )
 {
-	include('./editor/fckeditor.php');
-	$editor = new FCKeditor( $attr8_name ) ;
-	$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
-	$editor->Value = $$attr8_name;
-	$editor->Height = '290';
-	$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
-	$editor->Create();
-}
-elseif	($attr8_type=='wiki')
-{
-	?>
-<script name="Javascript" type="text/javascript" src="<?php echo $tpl_dir ?>../js/editor.js"></script>
+	case 'fckeditor':
+	case 'html':
+		include('./editor/fckeditor.php');
+		$editor = new FCKeditor( $attr8_name ) ;
+		$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
+		$editor->Value = $$attr8_name;
+		$editor->Height = '290';
+		$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
+		$editor->Create();
+		break;
+	case 'wiki':
+		$conf_tags = $conf['editor']['text-markup'];
+		?>
+<script name="Javascript" type="text/javascript" src="<?php echo $tpl_dir ?>../../js/editor.js"></script>
 <script name="JavaScript" type="text/javascript">
 function strong()
 {
-	insert('text','*','*');
+	insert('<?php echo $attr8_name ?>','<?php echo $conf_tags['strong-begin'] ?>','<?php echo $conf_tags['strong-end'] ?>');
 }
 function emphatic()
 {
-	insert('text','_','_');
+	insert('<?php echo $attr8_name ?>','<?php echo $conf_tags['emphatic-begin'] ?>','<?php echo $conf_tags['emphatic-end'] ?>');
 }
 function link()
 {
-	insert('text','"','"->"'+document.forms[0].objectid.value+'"');
+	objectid = document.forms[0].objectid.value;
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		objectid = window.prompt("Id","");
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		return;
+	insert('<?php echo $attr8_name ?>','"','"<?php echo $conf_tags['linkto'] ?>"'+objectid+'"');
 }
 function image()
 {
-	insert('text','','{"'+document.forms[0].objectid.value+'"}');
+	objectid = document.forms[0].objectid.value;
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		objectid = window.prompt("Id","");
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		return;
+	insert('<?php echo $attr8_name ?>','','<?php echo $conf_tags['image-begin'] ?>"'+objectid+'"<?php echo $conf_tags['image-end'] ?>');
 }
 function list()
 {
-	insert('text',"\n\n- ","\n- \n- \n");
+ 	insert('<?php echo $attr8_name ?>',"","\n");
+	while( true )
+	{
+		t = window.prompt('<?php echo lang('EDITOR_PROMPT_LIST_ENTRY') ?>','');
+		if	( t != '' && t != null )
+		 	insert('<?php echo $attr8_name ?>',"<?php echo $conf_tags['list-unnumbered'] ?> "+t+"\n","");
+		else
+			break;
+	}
 }
 function numlist()
 {
-	insert('text',"\n\n# ","\n# \n# \n");
+	insert('<?php echo $attr8_name ?>',"\n\n<?php echo $conf_tags['list-numbered'] ?> ","\n<?php echo $conf_tags['list-numbered'] ?> \n<?php echo $conf_tags['list-numbered'] ?> \n");
 }
 function table()
 {
-	insert('text',"\n|","| |\n| | |\n");
+	column=1;
+	while( true )
+	{
+		if	( column==1 )
+			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN') ?>';
+		else
+			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL') ?>';
+		t = window.prompt(text,'');
+		if	( t != '' && t != null )
+		{
+		 	insert('<?php echo $attr8_name ?>',"<?php echo $conf_tags['table-cell-sep'] ?>"+t,"");
+		 	column++;
+		}
+		else
+		{
+			if (column==1)
+			{
+				break;
+			}
+			else
+			{
+			 	insert('text',"\n","");
+			 	column=1;
+			 }
+		}
+	}
 }
 -->
 </script>
 	<?php
-		global $image_dir,$objects;
 		?>
-<tr>
-  <td colspan="2" class="f1">
     <table>
       <tr>
         <noscript><input type="text" name="addtext" size="10" /></noscript>
-        <td><noscript><?php echo Html::Checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
-        <td><noscript><?php echo Html::Checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
+        <td><noscript><?php echo checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo Html::Checkbox('table') ?></noscript><a href="javascript:table();" title="<?php echo lang('PAGE_EDITOR_ADD_TABLE') ?>"><img src="<?php echo $image_dir ?>/editor/table.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('table') ?></noscript><a href="javascript:table();" title="<?php echo lang('PAGE_EDITOR_ADD_TABLE') ?>"><img src="<?php echo $image_dir ?>/editor/table.png" border"0" /></a></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo Html::Checkbox('list') ?></noscript><a href="javascript:list();" title="<?php echo lang('PAGE_EDITOR_ADD_LIST') ?>"><img src="<?php echo $image_dir ?>/editor/list.png" border"0" /></a></td>
-        <td><noscript><?php echo Html::Checkbox('numlist') ?></noscript><a href="javascript:numlist();" title="<?php echo lang('PAGE_EDITOR_ADD_NUMLIST') ?>"><img src="<?php echo $image_dir ?>/editor/numlist.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('list') ?></noscript><a href="javascript:list();" title="<?php echo lang('PAGE_EDITOR_ADD_LIST') ?>"><img src="<?php echo $image_dir ?>/editor/list.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('numlist') ?></noscript><a href="javascript:numlist();" title="<?php echo lang('PAGE_EDITOR_ADD_NUMLIST') ?>"><img src="<?php echo $image_dir ?>/editor/numlist.png" border"0" /></a></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo Html::Checkbox('image') ?></noscript><a href="javascript:image();" title="<?php echo lang('PAGE_EDITOR_ADD_IMAGE') ?>"><img src="<?php echo $image_dir ?>/editor/image.png" border"0" /></a></td>
-        <td><noscript><?php echo Html::Checkbox('link') ?></noscript><a href="javascript:link();" title="<?php echo lang('PAGE_EDITOR_ADD_LINK') ?>"><img src="<?php echo $image_dir ?>/editor/link.png" border"0" /></a></td>
-        <td><?php echo Html::selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
+        <td><noscript><?php echo checkbox('image') ?></noscript><a href="javascript:image();" title="<?php echo lang('PAGE_EDITOR_ADD_IMAGE') ?>"><img src="<?php echo $image_dir ?>/editor/image.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('link') ?></noscript><a href="javascript:link();" title="<?php echo lang('PAGE_EDITOR_ADD_LINK') ?>"><img src="<?php echo $image_dir ?>/editor/link.png" border"0" /></a></td>
+        <td><?php echo selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
       </tr>
     </table>
-  </td>
-</tr>
+    <fieldset></fieldset><br>
 <?php
-	echo '<textarea name="'.$attr8_name.'" class="editor">'.$$attr8_name.'</textarea>';
+		echo '<textarea name="'.$attr8_name.'" class="editor" style="width:100%;height:300px;">'.$$attr8_name.'</textarea>';
+		break;
+	case 'text':
+	case 'raw':
+		echo '<textarea name="'.$attr8_name.'" class="editor" style="width:100%;height:300px;">'.$$attr8_name.'</textarea>';
+		break;
+	default:
+		echo "Unknown editor type: ".$attr8_type;
 }
-elseif	($attr8_type=='text' || $attr8_type=='raw')
-{
-	echo '<textarea name="'.$attr8_name.'" class="editor">'.$$attr8_name.'</textarea>';
-}
-else
-{
-	echo "Unknown editor type: ".$attr8_type;
-}
-?>
-<?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_type) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr7_debug_info = 'a:2:{s:6:"equals";s:4:"text";s:5:"value";s:10:"var:editor";}' ?><?php $attr7 = array('equals'=>'text','value'=>$editor) ?><?php $attr7_equals='text' ?><?php $attr7_value=$editor ?><?php 
+?><?php unset($attr8) ?><?php unset($attr8_name) ?><?php unset($attr8_type) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr7_debug_info = 'a:2:{s:6:"equals";s:4:"text";s:5:"value";s:10:"var:editor";}' ?><?php $attr7 = array('equals'=>'text','value'=>$editor) ?><?php $attr7_equals='text' ?><?php $attr7_value=$editor ?><?php 
 	if	( isset($attr7_true) )
 	{
 		if	(gettype($attr7_true) === '' && gettype($attr7_true) === '1')
@@ -3567,7 +3707,14 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_colspan) ?><?php $attr7_debug_info = 'a:2:{s:4:"name";s:8:"decimals";s:7:"default";s:8:"decimals";}' ?><?php $attr7 = array('name'=>'decimals','default'=>'decimals') ?><?php $attr7_name='decimals' ?><?php $attr7_default='decimals' ?><input type="hidden" name="<?php echo $attr7_name ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php $attr7_debug_info = 'a:8:{s:5:"class";s:0:"";s:7:"default";s:0:"";s:4:"type";s:4:"text";s:4:"name";s:6:"number";s:4:"size";s:2:"15";s:9:"maxlength";s:2:"20";s:8:"onchange";s:0:"";s:8:"readonly";s:5:"false";}' ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'number','size'=>'15','maxlength'=>'20','onchange'=>'','readonly'=>false) ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='number' ?><?php $attr7_size='15' ?><?php $attr7_maxlength='20' ?><?php $attr7_onchange='' ?><?php $attr7_readonly=false ?><?php if(!isset($attr7_default)) $attr7_default='';
+?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_colspan) ?><?php $attr7_debug_info = 'a:2:{s:4:"name";s:8:"decimals";s:7:"default";s:8:"decimals";}' ?><?php $attr7 = array('name'=>'decimals','default'=>'decimals') ?><?php $attr7_name='decimals' ?><?php $attr7_default='decimals' ?><?php
+if (isset($$attr7_name))
+	$attr7_tmp_value = $$attr7_name;
+elseif ( isset($attr7_default) )
+	$attr7_tmp_value = $attr7_default;
+else
+	$attr7_tmp_value = "";
+?><input type="hidden" name="<?php echo $attr7_name ?>" value="<?php echo $attr7_tmp_value ?>" /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php $attr7_debug_info = 'a:8:{s:5:"class";s:0:"";s:7:"default";s:0:"";s:4:"type";s:4:"text";s:4:"name";s:6:"number";s:4:"size";s:2:"15";s:9:"maxlength";s:2:"20";s:8:"onchange";s:0:"";s:8:"readonly";s:5:"false";}' ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'number','size'=>'15','maxlength'=>'20','onchange'=>'','readonly'=>false) ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='number' ?><?php $attr7_size='15' ?><?php $attr7_maxlength='20' ?><?php $attr7_onchange='' ?><?php $attr7_readonly=false ?><?php if(!isset($attr7_default)) $attr7_default='';
 ?><input<?php if ($attr7_readonly) echo ' disabled="true"' ?> id="id_<?php echo $attr7_name ?><?php if ($attr7_readonly) echo '_disabled' ?>" name="<?php echo $attr7_name ?><?php if ($attr7_readonly) echo '_disabled' ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" <?php if (in_array($attr7_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
 if	($attr7_readonly) {
 ?><input type="hidden" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" /><?php

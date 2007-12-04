@@ -121,7 +121,7 @@
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
-    <?php if (!empty($notice['log'])) { ?><pre><?php echo nl2br(htmlentities(implode("\n",$notice['log']))) ?></pre><?php } ?>
+    <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
     </table>
@@ -666,7 +666,7 @@
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr7_rowspan) )
 		$attr7['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php $attr8_debug_info = 'a:5:{s:5:"class";s:4:"text";s:3:"key";s:5:"var:t";s:6:"suffix";s:7:"_abbrev";s:6:"prefix";s:4:"acl_";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','key'=>$t,'suffix'=>'_abbrev','prefix'=>'acl_','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_key=$t ?><?php $attr8_suffix='_abbrev' ?><?php $attr8_prefix='acl_' ?><?php $attr8_escape=true ?><?php
+?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php $attr8_debug_info = 'a:6:{s:5:"title";s:15:"message:acl_{t}";s:5:"class";s:4:"text";s:3:"key";s:5:"var:t";s:6:"suffix";s:7:"_abbrev";s:6:"prefix";s:4:"acl_";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('title'=>lang('acl_'.$t.''),'class'=>'text','key'=>$t,'suffix'=>'_abbrev','prefix'=>'acl_','escape'=>true) ?><?php $attr8_title=lang('acl_'.$t.'') ?><?php $attr8_class='text' ?><?php $attr8_key=$t ?><?php $attr8_suffix='_abbrev' ?><?php $attr8_prefix='acl_' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -735,7 +735,7 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_key) ?><?php unset($attr8_suffix) ?><?php unset($attr8_prefix) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?><?php } ?><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr4_debug_info = 'a:4:{s:4:"list";s:6:"rights";s:7:"extract";s:4:"true";s:3:"key";s:5:"aclid";s:5:"value";s:3:"acl";}' ?><?php $attr4 = array('list'=>'rights','extract'=>true,'key'=>'aclid','value'=>'acl') ?><?php $attr4_list='rights' ?><?php $attr4_extract=true ?><?php $attr4_key='aclid' ?><?php $attr4_value='acl' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_class) ?><?php unset($attr8_key) ?><?php unset($attr8_suffix) ?><?php unset($attr8_prefix) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?><?php } ?><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr4_debug_info = 'a:4:{s:4:"list";s:6:"rights";s:7:"extract";s:4:"true";s:3:"key";s:5:"aclid";s:5:"value";s:3:"acl";}' ?><?php $attr4 = array('list'=>'rights','extract'=>true,'key'=>'aclid','value'=>'acl') ?><?php $attr4_list='rights' ?><?php $attr4_extract=true ?><?php $attr4_key='aclid' ?><?php $attr4_value='acl' ?><?php
 	$attr4_list_tmp_key   = $attr4_key;
 	$attr4_list_tmp_value = $attr4_value;
 	$attr4_list_extract   = $attr4_extract;
@@ -1319,7 +1319,7 @@ if (isset($attr7_elementtype)) {
 		$tmp_url = $attr7_url;
 	else
 		$tmp_url = Html::url($attr7_action,$attr7_subaction,!empty($attr7_id)?$attr7_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>"<?php if (isset($attr7_accesskey)) echo ' accesskey="'.$attr7_accesskey.'"' ?>  title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_class) ?><?php unset($attr7_action) ?><?php unset($attr7_subaction) ?><?php unset($attr7_id) ?><?php $attr8_debug_info = 'a:4:{s:5:"class";s:4:"text";s:3:"var";s:10:"objectname";s:9:"maxlength";s:2:"20";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','var'=>'objectname','maxlength'=>'20','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_var='objectname' ?><?php $attr8_maxlength='20' ?><?php $attr8_escape=true ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>"<?php if (isset($attr7_accesskey)) echo ' accesskey="'.$attr7_accesskey.'"' ?>  title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_class) ?><?php unset($attr7_action) ?><?php unset($attr7_subaction) ?><?php unset($attr7_id) ?><?php $attr8_debug_info = 'a:5:{s:5:"title";s:14:"message:select";s:5:"class";s:4:"text";s:3:"var";s:10:"objectname";s:9:"maxlength";s:2:"20";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('title'=>lang('select'),'class'=>'text','var'=>'objectname','maxlength'=>'20','escape'=>true) ?><?php $attr8_title=lang('select') ?><?php $attr8_class='text' ?><?php $attr8_var='objectname' ?><?php $attr8_maxlength='20' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -1388,7 +1388,7 @@ if (isset($attr7_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_var) ?><?php unset($attr8_maxlength) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></a><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_class) ?><?php unset($attr8_var) ?><?php unset($attr8_maxlength) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></a><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
