@@ -1,28 +1,24 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
- * 
+ *
  * == BEGIN LICENSE ==
- * 
+ *
  * Licensed under the terms of any of the following licenses at your
  * choice:
- * 
+ *
  *  - GNU General Public License Version 2 or later (the "GPL")
  *    http://www.gnu.org/licenses/gpl.html
- * 
+ *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
  *    http://www.gnu.org/licenses/lgpl.html
- * 
+ *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
  *    http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * == END LICENSE ==
- * 
- * File Name: mn.js
- * 	Mongolian language file.
- * 
- * File Authors:
- * 		Lkamtseren ODONBAATAR (odonbaatarl@yahoo.com)
+ *
+ * Mongolian language file.
  */
 
 var FCKLang =
@@ -49,6 +45,7 @@ InsertLinkLbl		: "Линк",
 InsertLink			: "Линк Оруулах/Засварлах",
 RemoveLink			: "Линк авч хаях",
 Anchor				: "Insert/Edit Anchor",	//MISSING
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Зураг",
 InsertImage			: "Зураг Оруулах/Засварлах",
 InsertFlashLbl		: "Flash",	//MISSING
@@ -74,6 +71,7 @@ RightJustify		: "Баруун талд байрлуулах",
 BlockJustify		: "Блок хэлбэрээр байрлуулах",
 DecreaseIndent		: "Догол мөр нэмэх",
 IncreaseIndent		: "Догол мөр хасах",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "Хүчингүй болгох",
 Redo				: "Өмнөх үйлдлээ сэргээх",
 NumberedListLbl		: "Дугаарлагдсан жагсаалт",
@@ -107,20 +105,27 @@ SelectionField	: "Selection Field",	//MISSING
 ImageButton		: "Image Button",	//MISSING
 
 FitWindow		: "Maximize the editor size",	//MISSING
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "Холбоос засварлах",
 CellCM				: "Cell",	//MISSING
 RowCM				: "Row",	//MISSING
 ColumnCM			: "Column",	//MISSING
-InsertRow			: "Мөр оруулах",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "Мөр устгах",
-InsertColumn		: "Багана оруулах",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "Багана устгах",
-InsertCell			: "Нүх оруулах",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "Нүх устгах",
 MergeCells			: "Нүх нэгтэх",
-SplitCell			: "Нүх тусгайрлах",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "Delete Table",	//MISSING
 CellProperties		: "Хоосон зайн шинж чанар",
 TableProperties		: "Хүснэгт",
@@ -138,7 +143,7 @@ SelectionFieldProp	: "Selection Field Properties",	//MISSING
 TextareaProp		: "Textarea Properties",	//MISSING
 FormProp			: "Form Properties",	//MISSING
 
-FontFormats			: "Хэвийн;Formatted;Хаяг;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6;Paragraph (DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Хэвийн;Formatted;Хаяг;Heading 1;Heading 2;Heading 3;Heading 4;Heading 5;Heading 6;Paragraph (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "XHTML үйл явц явагдаж байна. Хүлээнэ үү...",
@@ -233,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Холбоос сонгох",
 DlgLnkAnchorByName	: "Холбоосын нэрээр",
 DlgLnkAnchorById	: "Элемэнт Id-гаар",
-DlgLnkNoAnchors		: "<Баримт бичиг холбоосгүй байна>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(Баримт бичиг холбоосгүй байна)",
 DlgLnkEMail			: "E-Mail Хаяг",
 DlgLnkEMailSubject	: "Message Subject",
 DlgLnkEMailBody		: "Message-ийн агуулга",
@@ -326,6 +331,9 @@ DlgCellBackColor	: "Фонны өнгө",
 DlgCellBorderColor	: "Хүрээний өнгө",
 DlgCellBtnSelect	: "Сонго...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+
 // Find Dialog
 DlgFindTitle		: "Хайх",
 DlgFindFindBtn		: "Хайх",
@@ -341,7 +349,6 @@ DlgReplaceReplAllBtn	: "Бүгдийг нь Солих",
 DlgReplaceWordChk		: "Тэнцэх бүтэн үг",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "Таны browser-ын хамгаалалтын тохиргоо editor-д автоматаар буулгах үйлдэлийг зөвшөөрөхгүй байна. (Ctrl+V) товчны хослолыг ашиглана уу.",
 PasteErrorCut	: "Таны browser-ын хамгаалалтын тохиргоо editor-д автоматаар хайчлах үйлдэлийг зөвшөөрөхгүй байна. (Ctrl+X) товчны хослолыг ашиглана уу.",
 PasteErrorCopy	: "Таны browser-ын хамгаалалтын тохиргоо editor-д автоматаар хуулах үйлдэлийг зөвшөөрөхгүй байна. (Ctrl+C) товчны хослолыг ашиглана уу.",
 
@@ -349,6 +356,7 @@ PasteAsText		: "Plain Text-ээс буулгах",
 PasteFromWord	: "Word-оос буулгах",
 
 DlgPasteMsg2	: "Please paste inside the following box using the keyboard (<strong>Ctrl+V</strong>) and hit <strong>OK</strong>.",	//MISSING
+DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
 DlgPasteIgnoreFont		: "Ignore Font Face definitions",	//MISSING
 DlgPasteRemoveStyles	: "Remove Styles definitions",	//MISSING
 DlgPasteCleanBox		: "Clean Up Box",	//MISSING

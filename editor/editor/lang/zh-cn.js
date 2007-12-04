@@ -1,28 +1,24 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
- * 
+ *
  * == BEGIN LICENSE ==
- * 
+ *
  * Licensed under the terms of any of the following licenses at your
  * choice:
- * 
+ *
  *  - GNU General Public License Version 2 or later (the "GPL")
  *    http://www.gnu.org/licenses/gpl.html
- * 
+ *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
  *    http://www.gnu.org/licenses/lgpl.html
- * 
+ *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
  *    http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * == END LICENSE ==
- * 
- * File Name: zh-cn.js
- * 	Chinese Simplified language file.
- * 
- * File Authors:
- * 		NetRube (netrube@gmail.com)
+ *
+ * Chinese Simplified language file.
  */
 
 var FCKLang =
@@ -49,6 +45,7 @@ InsertLinkLbl		: "超链接",
 InsertLink			: "插入/编辑超链接",
 RemoveLink			: "取消超链接",
 Anchor				: "插入/编辑锚点链接",
+AnchorDelete		: "清除锚点链接",
 InsertImageLbl		: "图象",
 InsertImage			: "插入/编辑图象",
 InsertFlashLbl		: "Flash",
@@ -74,6 +71,7 @@ RightJustify		: "右对齐",
 BlockJustify		: "两端对齐",
 DecreaseIndent		: "减少缩进量",
 IncreaseIndent		: "增加缩进量",
+Blockquote			: "引用文字",
 Undo				: "撤消",
 Redo				: "重做",
 NumberedListLbl		: "编号列表",
@@ -107,20 +105,27 @@ SelectionField	: "列表/菜单",
 ImageButton		: "图像域",
 
 FitWindow		: "全屏编辑",
+ShowBlocks		: "显示区块",
 
 // Context Menu
 EditLink			: "编辑超链接",
 CellCM				: "单元格",
 RowCM				: "行",
 ColumnCM			: "列",
-InsertRow			: "插入行",
+InsertRowAfter		: "下插入行",
+InsertRowBefore		: "上插入行",
 DeleteRows			: "删除行",
-InsertColumn		: "插入列",
+InsertColumnAfter	: "右插入列",
+InsertColumnBefore	: "左插入列",
 DeleteColumns		: "删除列",
-InsertCell			: "插入单元格",
+InsertCellAfter		: "右插入单元格",
+InsertCellBefore	: "左插入单元格",
 DeleteCells			: "删除单元格",
 MergeCells			: "合并单元格",
-SplitCell			: "拆分单元格",
+MergeRight			: "右合并单元格",
+MergeDown			: "下合并单元格",
+HorizontalSplitCell	: "橫拆分单元格",
+VerticalSplitCell	: "縱拆分单元格",
 TableDelete			: "删除表格",
 CellProperties		: "单元格属性",
 TableProperties		: "表格属性",
@@ -138,7 +143,7 @@ SelectionFieldProp	: "菜单/列表属性",
 TextareaProp		: "多行文本属性",
 FormProp			: "表单属性",
 
-FontFormats			: "普通;已编排格式;地址;标题 1;标题 2;标题 3;标题 4;标题 5;标题 6;段落(DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "普通;已编排格式;地址;标题 1;标题 2;标题 3;标题 4;标题 5;标题 6;段落(DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "正在处理 XHTML，请稍等...",
@@ -233,7 +238,7 @@ DlgLnkURL			: "地址",
 DlgLnkAnchorSel		: "选择一个锚点",
 DlgLnkAnchorByName	: "按锚点名称",
 DlgLnkAnchorById	: "按锚点 ID",
-DlgLnkNoAnchors		: "<此文档没有可用的锚点>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(此文档没有可用的锚点)",
 DlgLnkEMail			: "地址",
 DlgLnkEMailSubject	: "主题",
 DlgLnkEMailBody		: "内容",
@@ -326,6 +331,9 @@ DlgCellBackColor	: "背景颜色",
 DlgCellBorderColor	: "边框颜色",
 DlgCellBtnSelect	: "选择...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "查找和替换",
+
 // Find Dialog
 DlgFindTitle		: "查找",
 DlgFindFindBtn		: "查找",
@@ -341,7 +349,6 @@ DlgReplaceReplAllBtn	: "全部替换",
 DlgReplaceWordChk		: "全字匹配",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "您的浏览器安全设置不允许编辑器自动执行粘贴操作，请使用键盘快捷键(Ctrl+V)来完成。",
 PasteErrorCut	: "您的浏览器安全设置不允许编辑器自动执行剪切操作，请使用键盘快捷键(Ctrl+X)来完成。",
 PasteErrorCopy	: "您的浏览器安全设置不允许编辑器自动执行复制操作，请使用键盘快捷键(Ctrl+C)来完成。",
 
@@ -349,6 +356,7 @@ PasteAsText		: "粘贴为无格式文本",
 PasteFromWord	: "从 MS Word 粘贴",
 
 DlgPasteMsg2	: "请使用键盘快捷键(<STRONG>Ctrl+V</STRONG>)把内容粘贴到下面的方框里，再按 <STRONG>确定</STRONG>。",
+DlgPasteSec		: "因为你的浏览器的安全设置原因，本编辑器不能直接访问你的剪贴板内容，你需要在本窗口重新粘贴一次。",
 DlgPasteIgnoreFont		: "忽略 Font 标签",
 DlgPasteRemoveStyles	: "清理 CSS 样式",
 DlgPasteCleanBox		: "清空上面内容",

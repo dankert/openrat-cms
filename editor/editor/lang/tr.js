@@ -1,29 +1,24 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
- * 
+ *
  * == BEGIN LICENSE ==
- * 
+ *
  * Licensed under the terms of any of the following licenses at your
  * choice:
- * 
+ *
  *  - GNU General Public License Version 2 or later (the "GPL")
  *    http://www.gnu.org/licenses/gpl.html
- * 
+ *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
  *    http://www.gnu.org/licenses/lgpl.html
- * 
+ *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
  *    http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * == END LICENSE ==
- * 
- * File Name: tr.js
- * 	Turkish language file.
- * 
- * File Authors:
- * 		Bogac Guven (bogacmx@yahoo.com)
- * 		Burak Gürsoy (burak@cpan.org)
+ *
+ * Turkish language file.
  */
 
 var FCKLang =
@@ -50,6 +45,7 @@ InsertLinkLbl		: "Köprü",
 InsertLink			: "Köprü Ekle/Düzenle",
 RemoveLink			: "Köprü Kaldır",
 Anchor				: "Çapa Ekle/Düzenle",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Resim",
 InsertImage			: "Resim Ekle/Düzenle",
 InsertFlashLbl		: "Flash",
@@ -75,6 +71,7 @@ RightJustify		: "Sağa Dayalı",
 BlockJustify		: "İki Kenara Yaslanmış",
 DecreaseIndent		: "Sekme Azalt",
 IncreaseIndent		: "Sekme Arttır",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "Geri Al",
 Redo				: "Tekrarla",
 NumberedListLbl		: "Numaralı Liste",
@@ -108,20 +105,27 @@ SelectionField	: "Seçim Menüsü",
 ImageButton		: "Resimli Düğme",
 
 FitWindow		: "Düzenleyici boyutunu büyüt",
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "Köprü Düzenle",
 CellCM				: "Hücre",
 RowCM				: "Satır",
 ColumnCM			: "Sütun",
-InsertRow			: "Satır Ekle",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "Satır Sil",
-InsertColumn		: "Sütun Ekle",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "Sütun Sil",
-InsertCell			: "Hücre Ekle",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "Hücre Sil",
 MergeCells			: "Hücreleri Birleştir",
-SplitCell			: "Hücre Böl",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "Tabloyu Sil",
 CellProperties		: "Hücre Özellikleri",
 TableProperties		: "Tablo Özellikleri",
@@ -139,7 +143,7 @@ SelectionFieldProp	: "Seçim Menüsü Özellikleri",
 TextareaProp		: "Çok Satırlı Metin Özellikleri",
 FormProp			: "Form Özellikleri",
 
-FontFormats			: "Normal;Biçimli;Adres;Başlık 1;Başlık 2;Başlık 3;Başlık 4;Başlık 5;Başlık 6;Paragraf (DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Normal;Biçimli;Adres;Başlık 1;Başlık 2;Başlık 3;Başlık 4;Başlık 5;Başlık 6;Paragraf (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "XHTML işleniyor. Lütfen bekleyin...",
@@ -234,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Çapa Seç",
 DlgLnkAnchorByName	: "Çapa Adı ile",
 DlgLnkAnchorById	: "Eleman Kimlik Numarası ile",
-DlgLnkNoAnchors		: "<Bu belgede hiç çapa yok>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(Bu belgede hiç çapa yok)",
 DlgLnkEMail			: "E-Posta Adresi",
 DlgLnkEMailSubject	: "İleti Konusu",
 DlgLnkEMailBody		: "İleti Gövdesi",
@@ -327,6 +331,9 @@ DlgCellBackColor	: "Arka Plan Rengi",
 DlgCellBorderColor	: "Kenar Rengi",
 DlgCellBtnSelect	: "Seç...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+
 // Find Dialog
 DlgFindTitle		: "Bul",
 DlgFindFindBtn		: "Bul",
@@ -342,7 +349,6 @@ DlgReplaceReplAllBtn	: "Tümünü Değiştir",
 DlgReplaceWordChk		: "Kelimenin tamamı uysun",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "Gezgin yazılımınızın güvenlik ayarları düzenleyicinin otomatik yapıştırma işlemine izin vermiyor. İşlem için (Ctrl+V) tuşlarını kullanın.",
 PasteErrorCut	: "Gezgin yazılımınızın güvenlik ayarları düzenleyicinin otomatik kesme işlemine izin vermiyor. İşlem için (Ctrl+X) tuşlarını kullanın.",
 PasteErrorCopy	: "Gezgin yazılımınızın güvenlik ayarları düzenleyicinin otomatik kopyalama işlemine izin vermiyor. İşlem için (Ctrl+C) tuşlarını kullanın.",
 
@@ -350,6 +356,7 @@ PasteAsText		: "Düz Metin Olarak Yapıştır",
 PasteFromWord	: "Word'den yapıştır",
 
 DlgPasteMsg2	: "Lütfen aşağıdaki kutunun içine yapıştırın. (<STRONG>Ctrl+V</STRONG>) ve <STRONG>Tamam</STRONG> butonunu tıklayın.",
+DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
 DlgPasteIgnoreFont		: "Yazı Tipi tanımlarını yoksay",
 DlgPasteRemoveStyles	: "Biçem Tanımlarını çıkar",
 DlgPasteCleanBox		: "Temizlik Kutusu",

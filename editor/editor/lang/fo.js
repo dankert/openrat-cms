@@ -1,28 +1,24 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
- * 
+ *
  * == BEGIN LICENSE ==
- * 
+ *
  * Licensed under the terms of any of the following licenses at your
  * choice:
- * 
+ *
  *  - GNU General Public License Version 2 or later (the "GPL")
  *    http://www.gnu.org/licenses/gpl.html
- * 
+ *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
  *    http://www.gnu.org/licenses/lgpl.html
- * 
+ *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
  *    http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * == END LICENSE ==
- * 
- * File Name: fo.js
- * 	Faroese language file.
- * 
- * File Authors:
- * 		Jón Jallur Gaasedal (jon@faroenet.fo)
+ *
+ * Faroese language file.
  */
 
 var FCKLang =
@@ -49,6 +45,7 @@ InsertLinkLbl		: "Tilknýti",
 InsertLink			: "Ger/broyt tilknýti",
 RemoveLink			: "Strika tilknýti",
 Anchor				: "Ger/broyt marknastein",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Myndir",
 InsertImage			: "Set inn/broyt mynd",
 InsertFlashLbl		: "Flash",
@@ -74,6 +71,7 @@ RightJustify		: "Høgrasett",
 BlockJustify		: "Javnir tekstkantar",
 DecreaseIndent		: "Minka reglubrotarinntriv",
 IncreaseIndent		: "Økja reglubrotarinntriv",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "Angra",
 Redo				: "Vend aftur",
 NumberedListLbl		: "Talmerktur listi",
@@ -107,20 +105,27 @@ SelectionField	: "Valskrá",
 ImageButton		: "Myndaknøttur",
 
 FitWindow		: "Set tekstviðgera til fulla stødd",
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "Broyt tilknýti",
 CellCM				: "Meski",
 RowCM				: "Rað",
 ColumnCM			: "Kolonna",
-InsertRow			: "Nýtt rað",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "Strika røðir",
-InsertColumn		: "Nýggj kolonna",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "Strika kolonnur",
-InsertCell			: "Nýggjur meski",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "Strika meskar",
 MergeCells			: "Flætta meskar",
-SplitCell			: "Být sundur meskar",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "Strika tabell",
 CellProperties		: "Meskueginleikar",
 TableProperties		: "Tabelleginleikar",
@@ -138,7 +143,7 @@ SelectionFieldProp	: "Eginleikar fyri valskrá",
 TextareaProp		: "Eginleikar fyri tekstumráði",
 FormProp			: "Eginleikar fyri Form",
 
-FontFormats			: "Vanligt;Sniðgivið;Adressa;Yvirskrift 1;Yvirskrift 2;Yvirskrift 3;Yvirskrift 4;Yvirskrift 5;Yvirskrift 6",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Vanligt;Sniðgivið;Adressa;Yvirskrift 1;Yvirskrift 2;Yvirskrift 3;Yvirskrift 4;Yvirskrift 5;Yvirskrift 6",
 
 // Alerts and Messages
 ProcessingXHTML		: "XHTML verður viðgjørt. Bíða við...",
@@ -233,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Vel ein marknastein",
 DlgLnkAnchorByName	: "Eftir navni á marknasteini",
 DlgLnkAnchorById	: "Eftir element Id",
-DlgLnkNoAnchors		: "(Eingir marknasteinar eru í hesum dokumentið)",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(Eingir marknasteinar eru í hesum dokumentið)",
 DlgLnkEMail			: "Teldupost-adressa",
 DlgLnkEMailSubject	: "Evni",
 DlgLnkEMailBody		: "Breyðtekstur",
@@ -326,6 +331,9 @@ DlgCellBackColor	: "Bakgrundslitur",
 DlgCellBorderColor	: "Litur á borda",
 DlgCellBtnSelect	: "Vel...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+
 // Find Dialog
 DlgFindTitle		: "Finn",
 DlgFindFindBtn		: "Finn",
@@ -341,7 +349,6 @@ DlgReplaceReplAllBtn	: "Yvirskriva alt",
 DlgReplaceWordChk		: "Bert heil orð",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "Trygdaruppseting alnótskagans forðar tekstviðgeranum í at seta tekstin inn. Vinarliga nýt knappaborðið til at seta tekstin inn (CTRL+V).",
 PasteErrorCut	: "Trygdaruppseting alnótskagans forðar tekstviðgeranum í at kvetta tekstin. vinarliga nýt knappaborðið til at kvetta tekstin (CTRL+X).",
 PasteErrorCopy	: "Trygdaruppseting alnótskagans forðar tekstviðgeranum í at avrita tekstin. Vinarliga nýt knappaborðið til at avrita tekstin (CTRL+C).",
 
@@ -349,6 +356,7 @@ PasteAsText		: "Innrita som reinan tekst",
 PasteFromWord	: "Innrita fra Word",
 
 DlgPasteMsg2	: "Vinarliga koyr tekstin í hendan rútin við knappaborðinum (<strong>CTRL+V</strong>) og klikk á <strong>Góðtak</strong>.",
+DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
 DlgPasteIgnoreFont		: "Forfjóna Font definitiónirnar",
 DlgPasteRemoveStyles	: "Strika Styles definitiónir",
 DlgPasteCleanBox		: "Reinskanarkassi",

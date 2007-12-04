@@ -1,28 +1,24 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
- * 
+ *
  * == BEGIN LICENSE ==
- * 
+ *
  * Licensed under the terms of any of the following licenses at your
  * choice:
- * 
+ *
  *  - GNU General Public License Version 2 or later (the "GPL")
  *    http://www.gnu.org/licenses/gpl.html
- * 
+ *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
  *    http://www.gnu.org/licenses/lgpl.html
- * 
+ *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
  *    http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * == END LICENSE ==
- * 
- * File Name: uk.js
- * 	Ukrainian language file.
- * 
- * File Authors:
- * 		Alexander Pervak (pervak@gmail.com)
+ *
+ * Ukrainian language file.
  */
 
 var FCKLang =
@@ -49,6 +45,7 @@ InsertLinkLbl		: "Посилання",
 InsertLink			: "Вставити/Редагувати посилання",
 RemoveLink			: "Знищити посилання",
 Anchor				: "Вставити/Редагувати якір",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Зображення",
 InsertImage			: "Вставити/Редагувати зображення",
 InsertFlashLbl		: "Flash",
@@ -74,6 +71,7 @@ RightJustify		: "По правому краю",
 BlockJustify		: "По ширині",
 DecreaseIndent		: "Зменшити відступ",
 IncreaseIndent		: "Збільшити відступ",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "Повернути",
 Redo				: "Повторити",
 NumberedListLbl		: "Нумерований список",
@@ -107,20 +105,27 @@ SelectionField	: "Список",
 ImageButton		: "Кнопка із зображенням",
 
 FitWindow		: "Розвернути вікно редактора",
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "Вставити посилання",
 CellCM				: "Осередок",
 RowCM				: "Рядок",
 ColumnCM			: "Колонка",
-InsertRow			: "Вставити строку",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "Видалити строки",
-InsertColumn		: "Вставити колонку",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "Видалити колонки",
-InsertCell			: "Вставити комірку",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "Видалити комірки",
 MergeCells			: "Об'єднати комірки",
-SplitCell			: "Роз'єднати комірку",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "Видалити таблицю",
 CellProperties		: "Властивості комірки",
 TableProperties		: "Властивості таблиці",
@@ -138,7 +143,7 @@ SelectionFieldProp	: "Властивості списку",
 TextareaProp		: "Властивості текстової області",
 FormProp			: "Властивості форми",
 
-FontFormats			: "Нормальний;Форматований;Адреса;Заголовок 1;Заголовок 2;Заголовок 3;Заголовок 4;Заголовок 5;Заголовок 6",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Нормальний;Форматований;Адреса;Заголовок 1;Заголовок 2;Заголовок 3;Заголовок 4;Заголовок 5;Заголовок 6;Нормальний (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "Обробка XHTML. Зачекайте, будь ласка...",
@@ -233,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Оберіть якір",
 DlgLnkAnchorByName	: "За ім'ям якоря",
 DlgLnkAnchorById	: "За ідентифікатором елемента",
-DlgLnkNoAnchors		: "<Немає якорів доступних в цьому документі>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(Немає якорів доступних в цьому документі)",
 DlgLnkEMail			: "Адреса ел. пошти",
 DlgLnkEMailSubject	: "Тема листа",
 DlgLnkEMailBody		: "Тіло повідомлення",
@@ -326,6 +331,9 @@ DlgCellBackColor	: "Колір фона",
 DlgCellBorderColor	: "Колір бордюра",
 DlgCellBtnSelect	: "Оберіть...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+
 // Find Dialog
 DlgFindTitle		: "Пошук",
 DlgFindFindBtn		: "Пошук",
@@ -341,7 +349,6 @@ DlgReplaceReplAllBtn	: "Замінити все",
 DlgReplaceWordChk		: "Збіг цілих слів",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "Настройки безпеки вашого браузера не дозволяють редактору автоматично виконувати операції вставки. Будь ласка, використовуйте клавіатуру для цього (Ctrl+V).",
 PasteErrorCut	: "Настройки безпеки вашого браузера не дозволяють редактору автоматично виконувати операції вирізування. Будь ласка, використовуйте клавіатуру для цього (Ctrl+X).",
 PasteErrorCopy	: "Настройки безпеки вашого браузера не дозволяють редактору автоматично виконувати операції копіювання. Будь ласка, використовуйте клавіатуру для цього (Ctrl+C).",
 
@@ -349,6 +356,7 @@ PasteAsText		: "Вставити тільки текст",
 PasteFromWord	: "Вставити з Word",
 
 DlgPasteMsg2	: "Будь-ласка, вставте з буфера обміну в цю область, користуючись комбінацією клавіш (<STRONG>Ctrl+V</STRONG>) та натисніть <STRONG>OK</STRONG>.",
+DlgPasteSec		: "Редактор не може отримати прямий доступ до буферу обміну у зв'язку з налаштуваннями вашого браузера. Вам потрібно вставити інформацію повторно в це вікно.",
 DlgPasteIgnoreFont		: "Ігнорувати налаштування шрифтів",
 DlgPasteRemoveStyles	: "Видалити налаштування стилів",
 DlgPasteCleanBox		: "Очистити область",

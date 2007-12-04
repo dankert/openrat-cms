@@ -1,28 +1,24 @@
 ﻿/*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
- * 
+ *
  * == BEGIN LICENSE ==
- * 
+ *
  * Licensed under the terms of any of the following licenses at your
  * choice:
- * 
+ *
  *  - GNU General Public License Version 2 or later (the "GPL")
  *    http://www.gnu.org/licenses/gpl.html
- * 
+ *
  *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
  *    http://www.gnu.org/licenses/lgpl.html
- * 
+ *
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
  *    http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * == END LICENSE ==
- * 
- * File Name: ru.js
- * 	Russian language file.
- * 
- * File Authors:
- * 		Andrey Grebnev (andrey.grebnev@blandware.com)
+ *
+ * Russian language file.
  */
 
 var FCKLang =
@@ -49,6 +45,7 @@ InsertLinkLbl		: "Ссылка",
 InsertLink			: "Вставить/Редактировать ссылку",
 RemoveLink			: "Убрать ссылку",
 Anchor				: "Вставить/Редактировать якорь",
+AnchorDelete		: "Remove Anchor",	//MISSING
 InsertImageLbl		: "Изображение",
 InsertImage			: "Вставить/Редактировать изображение",
 InsertFlashLbl		: "Flash",
@@ -74,6 +71,7 @@ RightJustify		: "По правому краю",
 BlockJustify		: "По ширине",
 DecreaseIndent		: "Уменьшить отступ",
 IncreaseIndent		: "Увеличить отступ",
+Blockquote			: "Blockquote",	//MISSING
 Undo				: "Отменить",
 Redo				: "Повторить",
 NumberedListLbl		: "Нумерованный список",
@@ -107,20 +105,27 @@ SelectionField	: "Список",
 ImageButton		: "Кнопка с изображением",
 
 FitWindow		: "Развернуть окно редактора",
+ShowBlocks		: "Show Blocks",	//MISSING
 
 // Context Menu
 EditLink			: "Вставить ссылку",
 CellCM				: "Ячейка",
 RowCM				: "Строка",
 ColumnCM			: "Колонка",
-InsertRow			: "Вставить строку",
+InsertRowAfter		: "Insert Row After",	//MISSING
+InsertRowBefore		: "Insert Row Before",	//MISSING
 DeleteRows			: "Удалить строки",
-InsertColumn		: "Вставить колонку",
+InsertColumnAfter	: "Insert Column After",	//MISSING
+InsertColumnBefore	: "Insert Column Before",	//MISSING
 DeleteColumns		: "Удалить колонки",
-InsertCell			: "Вставить ячейку",
+InsertCellAfter		: "Insert Cell After",	//MISSING
+InsertCellBefore	: "Insert Cell Before",	//MISSING
 DeleteCells			: "Удалить ячейки",
 MergeCells			: "Соединить ячейки",
-SplitCell			: "Разбить ячейку",
+MergeRight			: "Merge Right",	//MISSING
+MergeDown			: "Merge Down",	//MISSING
+HorizontalSplitCell	: "Split Cell Horizontally",	//MISSING
+VerticalSplitCell	: "Split Cell Vertically",	//MISSING
 TableDelete			: "Удалить таблицу",
 CellProperties		: "Свойства ячейки",
 TableProperties		: "Свойства таблицы",
@@ -138,7 +143,7 @@ SelectionFieldProp	: "Свойства списка",
 TextareaProp		: "Свойства текстовой области",
 FormProp			: "Свойства формы",
 
-FontFormats			: "Нормальный;Форматированный;Адрес;Заголовок 1;Заголовок 2;Заголовок 3;Заголовок 4;Заголовок 5;Заголовок 6;Нормальный (DIV)",		//REVIEW : Check _getfontformat.html
+FontFormats			: "Нормальный;Форматированный;Адрес;Заголовок 1;Заголовок 2;Заголовок 3;Заголовок 4;Заголовок 5;Заголовок 6;Нормальный (DIV)",
 
 // Alerts and Messages
 ProcessingXHTML		: "Обработка XHTML. Пожалуйста подождите...",
@@ -233,7 +238,7 @@ DlgLnkURL			: "URL",
 DlgLnkAnchorSel		: "Выберите якорь",
 DlgLnkAnchorByName	: "По имени якоря",
 DlgLnkAnchorById	: "По идентификатору элемента",
-DlgLnkNoAnchors		: "<Нет якорей доступных в этом документе>",		//REVIEW : Change < and > with ( and )
+DlgLnkNoAnchors		: "(Нет якорей доступных в этом документе)",
 DlgLnkEMail			: "Адрес эл. почты",
 DlgLnkEMailSubject	: "Заголовок сообщения",
 DlgLnkEMailBody		: "Тело сообщения",
@@ -326,6 +331,9 @@ DlgCellBackColor	: "Цвет фона",
 DlgCellBorderColor	: "Цвет бордюра",
 DlgCellBtnSelect	: "Выберите...",
 
+// Find and Replace Dialog
+DlgFindAndReplaceTitle	: "Find and Replace",	//MISSING
+
 // Find Dialog
 DlgFindTitle		: "Найти",
 DlgFindFindBtn		: "Найти",
@@ -341,7 +349,6 @@ DlgReplaceReplAllBtn	: "Заменить все",
 DlgReplaceWordChk		: "Совпадение целых слов",
 
 // Paste Operations / Dialog
-PasteErrorPaste	: "Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции вставки. Пожалуйста используйте клавиатуру для этого (Ctrl+V).",
 PasteErrorCut	: "Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции вырезания. Пожалуйста используйте клавиатуру для этого (Ctrl+X).",
 PasteErrorCopy	: "Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции копирования. Пожалуйста используйте клавиатуру для этого (Ctrl+C).",
 
@@ -349,6 +356,7 @@ PasteAsText		: "Вставить только текст",
 PasteFromWord	: "Вставить из Word",
 
 DlgPasteMsg2	: "Пожалуйста вставьте текст в прямоугольник используя сочетание клавиш (<STRONG>Ctrl+V</STRONG>) и нажмите <STRONG>OK</STRONG>.",
+DlgPasteSec		: "Because of your browser security settings, the editor is not able to access your clipboard data directly. You are required to paste it again in this window.",	//MISSING
 DlgPasteIgnoreFont		: "Игнорировать определения гарнитуры",
 DlgPasteRemoveStyles	: "Убрать определения стилей",
 DlgPasteCleanBox		: "Очистить",
