@@ -8,6 +8,7 @@ function insert(tagName, aTag, eTag)
   /* IE */
   if(typeof document.selection != 'undefined') {
     /* Einfuegen des Formatierungscodes */
+//    alert('IE');
     var range = document.selection.createRange();
     var insText = range.text;
     range.text = aTag + insText + eTag;
@@ -23,6 +24,7 @@ function insert(tagName, aTag, eTag)
   /* Gecko */
   else if(typeof input.selectionStart != 'undefined')
   {
+//    alert('Gecko');
     /* Einfuegen des Formatierungscodes */
     var start = input.selectionStart;
     var end = input.selectionEnd;
@@ -42,6 +44,8 @@ function insert(tagName, aTag, eTag)
   else
   {
     /* Abfrage der Einfuegeposition */
+    
+    /*
     var pos;
     var re = new RegExp('^[0-9]{0,3}$');
     while(!re.test(pos)) {
@@ -50,8 +54,11 @@ function insert(tagName, aTag, eTag)
     if(pos > input.value.length) {
       pos = input.value.length;
     }
+	*/
+    pos = input.value.length;
+    
     /* Einfuegen des Formatierungscodes */
-    var insText = prompt("Text:");
+    var insText = prompt("Text");
     input.value = input.value.substr(0, pos) + aTag + insText + eTag + input.value.substr(pos);
   }
 }
