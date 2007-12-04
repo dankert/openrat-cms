@@ -22,6 +22,9 @@
 	
 	function selectBox( $name,$values,$default='',$params=Array() )
 	{
+		if	( ! is_array($values) )
+			$values = array($values);
+			
 		$src = '<select size="1" name="'.$name.'"';
 		foreach( $params as $name=>$value )
 			$src .= " $name=\"$value\"";
@@ -43,63 +46,109 @@
 	
  ?><?php
 
+switch( $attr_type )
+{
+	case 'fckeditor':
+	case 'html':
+		include('./editor/fckeditor.php');
+		$editor = new FCKeditor( $attr_name ) ;
+		$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
+		$editor->Value = $$attr_name;
+		$editor->Height = '290';
+		$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
+		$editor->Create();
 
-if	($attr_type=='fckeditor' || $attr_type=='html')
-{
-	include('./editor/fckeditor.php');
-	$editor = new FCKeditor( $attr_name ) ;
-	$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
-	$editor->Value = $$attr_name;
-	$editor->Height = '290';
-	$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
-	$editor->Create();
-}
-elseif	($attr_type=='wiki')
-{
-	?>
-<script name="Javascript" type="text/javascript" src="<?php echo $tpl_dir ?>../js/editor.js"></script>
+		break;
+	
+	case 'wiki':
+		$conf_tags = $conf['editor']['text-markup'];
+		?>
+<script name="Javascript" type="text/javascript" src="<?php echo $tpl_dir ?>../../js/editor.js"></script>
 <script name="JavaScript" type="text/javascript">
 <!--
 
 function strong()
 {
-	insert('text','*','*');
+	insert('<?php echo $attr_name ?>','<?php echo $conf_tags['strong-begin'] ?>','<?php echo $conf_tags['strong-end'] ?>');
 }
 
 
 function emphatic()
 {
-	insert('text','_','_');
+	insert('<?php echo $attr_name ?>','<?php echo $conf_tags['emphatic-begin'] ?>','<?php echo $conf_tags['emphatic-end'] ?>');
 }
 
 
 function link()
 {
-	insert('text','"','"->"'+document.forms[0].objectid.value+'"');
+	objectid = document.forms[0].objectid.value;
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		objectid = window.prompt("Id","");
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		return;
+	insert('<?php echo $attr_name ?>','"','"<?php echo $conf_tags['linkto'] ?>"'+objectid+'"');
 }
 
 
 function image()
 {
-	insert('text','','{"'+document.forms[0].objectid.value+'"}');
+	objectid = document.forms[0].objectid.value;
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		objectid = window.prompt("Id","");
+	if	(objectid=="" ||objectid=="0"||objectid==null)
+		return;
+	insert('<?php echo $attr_name ?>','','<?php echo $conf_tags['image-begin'] ?>"'+objectid+'"<?php echo $conf_tags['image-end'] ?>');
 }
 
 
 function list()
 {
-	insert('text',"\n\n- ","\n- \n- \n");
+ 	insert('<?php echo $attr_name ?>',"","\n");
+	while( true )
+	{
+		t = window.prompt('<?php echo lang('EDITOR_PROMPT_LIST_ENTRY') ?>','');
+		if	( t != '' && t != null )
+		 	insert('<?php echo $attr_name ?>',"<?php echo $conf_tags['list-unnumbered'] ?> "+t+"\n","");
+		else
+			break;
+	}
 }
 
 
 function numlist()
 {
-	insert('text',"\n\n# ","\n# \n# \n");
+	insert('<?php echo $attr_name ?>',"\n\n<?php echo $conf_tags['list-numbered'] ?> ","\n<?php echo $conf_tags['list-numbered'] ?> \n<?php echo $conf_tags['list-numbered'] ?> \n");
 }
 
 
 function table()
 {
-	insert('text',"\n|","| |\n| | |\n");
+	column=1;
+	while( true )
+	{
+		if	( column==1 )
+			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN') ?>';
+		else
+			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL') ?>';
+		t = window.prompt(text,'');
+		if	( t != '' && t != null )
+		{
+		 	insert('<?php echo $attr_name ?>',"<?php echo $conf_tags['table-cell-sep'] ?>"+t,"");
+		 	column++;
+		}
+		else
+		{
+			if (column==1)
+			{
+				break;
+			}
+			else
+			{
+			 	insert('text',"\n","");
+			 	column=1;
+			 }
+		}
+	}
 }
 
 
@@ -107,10 +156,8 @@ function table()
 -->
 </script>
 	<?php
-		global $image_dir,$objects;
+//		global $image_dir,$objects;
 		?>
-<tr>
-  <td colspan="2" class="f1">
     <table>
       <tr>
         <noscript><input type="text" name="addtext" size="10" /></noscript>
@@ -127,17 +174,17 @@ function table()
         <td><?php echo selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
       </tr>
     </table>
-  </td>
-</tr>
+    <fieldset></fieldset><br>
 <?php
-	echo '<textarea name="'.$attr_name.'" class="editor">'.$$attr_name.'</textarea>';
-}
-elseif	($attr_type=='text' || $attr_type=='raw')
-{
-	echo '<textarea name="'.$attr_name.'" class="editor">'.$$attr_name.'</textarea>';
-}
-else
-{
-	echo "Unknown editor type: ".$attr_type;
+		echo '<textarea name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
+		break;
+		
+	case 'text':
+	case 'raw':
+		echo '<textarea name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
+		break;
+		
+	default:
+		echo "Unknown editor type: ".$attr_type;
 }
 ?>
