@@ -570,6 +570,31 @@ class PageelementAction extends Action
 
 	function advancedlongtext() 
 	{
+		if	( $this->element->wiki )
+		{
+			// Ermitteln aller verlinkbaren Objekte (fuer Editor)
+			$objects = array();
+	
+			foreach( Folder::getAllObjectIds() as $id )
+			{
+				$o = new Object( $id );
+				$o->load();
+				
+				if	( $o->getType() != 'folder' )
+				{ 
+					$f = new Folder( $o->parentid );
+					$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
+					$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
+					$objects[ $id ] .= FILE_SEP.$o->name;
+				} 
+			}
+			asort( $objects ); // Sortieren
+	
+			$this->setTemplateVar( 'objects',$objects );
+			$this->setTemplateVar( 'images' ,$objects );
+		}
+
+		
 		$this->editlongtext();
 	}
 	
@@ -582,27 +607,6 @@ class PageelementAction extends Action
 	 */
 	function editlongtext()
 	{
-		// Ermitteln aller verlinkbaren Objekte (fuer Editor)
-		$objects = array();
-
-		foreach( Folder::getAllObjectIds() as $id )
-		{
-			$o = new Object( $id );
-			$o->load();
-			
-			if	( $o->getType() != 'folder' )
-			{ 
-				$f = new Folder( $o->parentid );
-				$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
-				$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
-				$objects[ $id ] .= FILE_SEP.$o->name;
-			} 
-		}
-		asort( $objects ); // Sortieren
-
-		$this->setTemplateVar( 'objects',$objects );
-		$this->setTemplateVar( 'images' ,$objects );
-
 		if	($this->value->element->html)
 			$this->setTemplateVar( 'editor','html' );
 		elseif	($this->value->element->wiki)
