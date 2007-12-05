@@ -5,7 +5,7 @@ page
 				cell
 					text text:ELEMENT_TYPE
 				cell
-					selectbox name:type list:types
+					selectbox name:type list:types lang:true
 			row
 				cell colspan:2 class:act
 					button type:ok

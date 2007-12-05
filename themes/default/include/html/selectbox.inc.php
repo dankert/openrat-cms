@@ -17,9 +17,16 @@ echo ' size="'.intval($attr_size).'"';
 		foreach( $attr_tmp_list as $box_key=>$box_value )
 		{
 			echo '<option class="'.$attr_class.'" value="'.$box_key.'"';
+			if	( $attr_lang )
+				echo ' title="'.lang($box_value.'_DESC').'"';
+				
 			if ($box_key==$attr_tmp_default)
 				echo ' selected="selected"';
-			echo '>'.$box_value.'</option>';
+
+			if	( $attr_lang )
+				echo '>'.lang($box_value).'</option>';
+			else
+				echo '>'.$box_value.'</option>';
 		}
 ?></select><?php
 if (count($$attr_list)==0) echo '<input type="hidden" name="'.$attr_name.'" value="" />';
