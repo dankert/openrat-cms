@@ -273,7 +273,9 @@ class IndexAction extends Action
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
-				$dbids[$dbname] = $dbconf['comment'];
+				$dbids[$dbname] = array('key'  =>$dbname,
+				                        'value'=>Text::maxLength($dbconf['comment']),
+				                        'title'=>$dbconf['comment'].' ('.$dbconf['host'].')' );
 		}
 
 		if	( !isset($this->templateVars['login_name']) )
