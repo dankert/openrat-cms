@@ -419,10 +419,32 @@ class Http
 			echo "$status $text\n$message";
 			exit;
 		}
+		
 		header('HTTP/1.0 '.intval($status).' '.$text);
-		header('Content-Type: text/html');
-		$signature = OR_TITLE.' '.OR_VERSION.' '.getenv('SERVER_SOFTWARE');
-		echo <<<HTML
+		
+		
+		$types = Http::getAccept();
+		
+		if	( sizeof($types)==1 && in_array('application/json',$types) )
+		{
+			header('Content-Type: application/json');
+			require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
+			$json = new JSON();
+			echo $json->encode( array('status'=>$status,'error'=>$text,'description'=>$message) );
+		}
+		elseif	( sizeof($types)==1 && in_array('application/xml',$types) )
+		{
+			header('Content-Type: application/xml');
+			require_once( OR_SERVICECLASSES_DIR."XML.class.".PHP_EXT );
+			$xml = new XML();
+			$xml->root='error';
+			echo $xml->encode( array('status'=>$status,'error'=>$text,'description'=>$message) );
+		}
+		else
+		{
+			header('Content-Type: text/html');
+			$signature = OR_TITLE.' '.OR_VERSION.' '.getenv('SERVER_SOFTWARE');
+			echo <<<HTML
 <html>
 <head><title>$status $text - OpenRat</title></head>
 <body>
@@ -433,7 +455,19 @@ class Http
 </body>
 </html>
 HTML;
+		}
 		exit;
+	}
+	
+	
+	/**
+	 * 
+	 * @return Array Mime-Typen, welche vom User-Agent akzeptiert werden.
+	 */
+	function getAccept()
+	{
+		$httpAccept = getenv('HTTP_ACCEPT');
+		return $types = explode(',',$httpAccept);
 	}
 }
 
