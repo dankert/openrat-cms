@@ -251,6 +251,27 @@ class Action
 	{
 		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
 			exit; // Die Ausgabe ist bereits erfolgt (z.B. Binärdateien o. WebDAV)
+			
+		$httpAccept = getenv('HTTP_ACCEPT');
+		$types = explode(',',$httpAccept);
+		
+		if	( sizeof($types)==1 && in_array('application/json',$types) )
+		{
+			require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
+			$json = new JSON();
+			header('Content-Type: application/json');
+			echo $json->encode( $this->templateVars );
+			exit;
+		}
+
+		if	( sizeof($types)==1 && in_array('application/xml',$types) )
+		{
+			require_once( OR_SERVICECLASSES_DIR."XML.class.".PHP_EXT );
+			$xml = new XML();
+			header('Content-Type: application/xml');
+			echo $xml->encode( $this->templateVars );
+			exit;
+		}
 
 		$this->setMenu();
 		
