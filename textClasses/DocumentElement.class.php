@@ -1117,6 +1117,7 @@ class DocumentElement extends AbstractElement
 
 					case 'paragraphelement':
 						$val = "\n\n";
+						break;
 
 					case 'strongelement':
 						
