@@ -555,13 +555,7 @@ class PageAction extends ObjectAction
 		$language = Session::getProjectLanguage();
 		header('Content-Language: '.$language->isoCode);
 
-		require( $this->page->tmpfile );
-		
-
-		unlink( $this->page->tmpfile );
-		
-		// Inhalt ist ausgegeben... Skript beenden.
-		exit;
+		require( $this->page->tmpfile() );
 	}
 
 
@@ -750,12 +744,12 @@ class PageAction extends ObjectAction
 		$this->page->publish();
 		$this->page->publish->close();
 
-		foreach( $this->page->publish->publishedObjects as $o )
-		{
-			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
-		}
+//		foreach( $this->page->publish->publishedObjects as $o )
+//		{
+//			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
+//		}
 
-		$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok',array(),$this->page->publish->log);
+		$this->addNotice('page',$this->page->fullFilename,'PUBLISHED',$this->page->publish->ok?OR_NOTICE_OK:OR_NOTICE_ERROR,array(),$this->page->publish->log);
 
 		$this->callSubaction('pub');
 	}

@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.28  2007-12-11 00:22:31  dankert
+// Cache von Dateien und Seiten zur Performancesteigerung beim Ver?ffentlichen.
+//
 // Revision 1.27  2007-12-01 17:49:37  dankert
 // Methode "available()" ergibt sofort "false", wenn Objekt-Id ung?ltig (Performance)
 //
@@ -1071,16 +1074,63 @@ class Object
 	/**
 	 * Dateinamen der temporaeren Datei bestimmen
 	 */
-	function tmpfile()
+	function tmpfileYYYYYY()
 	{
 		if	( isset($this->tmpfile) && $this->tmpfile != '' )
-			return $this->tmpfile;
+			return $this->tmpfile; // Temporärer Dateiname bereits vorhanden.
 
-		$tmpdir = ini_get('upload_tmp_dir');
-		$this->tmpfile = tempnam( $tmpdir,'openrat_tmp' );
+		global $conf;
+		
+		// 1. Versuch: Temp-Dir aus Konfiguration.
+		$tmpdir = @$conf['cache']['tmp_dir'];
+		if	( $this->tmpfile === FALSE )
+			$this->tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
+
+		// 2. Versuch: Temp-Dir aus "upload_tmp_dir".
+		if	( $this->tmpfile === FALSE )
+		{
+			Html::debug($this->tmpfile,"nochmal");
+			$tmpdir = ini_get('upload_tmp_dir');
+			$this->tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
+		}
+		
+		elseif	( $this->tmpfile === FALSE )
+		{
+		Html::debug($this->tmpfile,"nochmal");
+			$this->tmpfile = @tempnam( '','openrat_tmp' );
+		}
+			
+		Html::debug($this->tmpfile,"tmpfile in objekt");
 		Logger::debug( 'creating temporary file: '.$this->tmpfile );
 
 		return $this->tmpfile;
+	}
+
+
+	/**
+	 * Dateinamen der temporaeren Datei bestimmen
+	 */
+	function getTempDir()
+	{
+		$tmpdir = @$conf['cache']['tmp_dir'];
+		$tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
+
+		// 2. Versuch: Temp-Dir aus "upload_tmp_dir".
+		if	( $tmpfile === FALSE )
+		{
+			$tmpdir = ini_get('upload_tmp_dir');
+			$tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
+		}
+		
+		elseif	( $tmpfile === FALSE )
+		{
+			$tmpfile = @tempnam( '','openrat_tmp' );
+		}
+		
+		$tmpdir = dirname($tmpfile);
+		@unlink($tmpfile);
+			
+		return $tmpdir;
 	}
 
 

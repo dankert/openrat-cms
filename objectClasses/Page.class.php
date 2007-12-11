@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.25  2007-12-11 00:22:31  dankert
+// Cache von Dateien und Seiten zur Performancesteigerung beim Ver?ffentlichen.
+//
 // Revision 1.24  2007-11-24 14:18:12  dankert
 // MimeType in Template ermitteln.
 //
@@ -722,7 +725,12 @@ class Page extends Object
 	  */
 	function generate()
 	{
-		
+		if	( is_file($this->tmpfile() ))
+		{
+			$this->value = implode('',file($this->tmpfile()));
+			return $this->value;
+		}
+
 		global $conf,
 		       $conf_php,
 		       $db,
@@ -772,7 +780,12 @@ class Page extends Object
 		}
 
 		$this->value = &$src;
-				
+
+		// Store in cache.
+		$f = fopen( $this->tmpfile(),'w' );
+		fwrite( $f,$this->value );
+		fclose( $f );
+		
 		return $this->value;
 	}
 
@@ -782,12 +795,8 @@ class Page extends Object
 	  */
 	function write()
 	{
-		// Schreiben der Cache-Datei
-		//
-
-		$f = fopen( $this->tmpfile(),'a' );
-		fwrite( $f,$this->value );
-		fclose( $f );
+		if	( !is_file($this->tmpfile()))
+			$this->generate();
 	}
 
 
@@ -854,6 +863,27 @@ class Page extends Object
 		$this->mime_type = $this->template->mimeType();
 			
 		return( $this->mime_type );
+	}
+
+	
+	
+	/**
+	 * Ermittelt einen temporären Dateinamen für diese Seite. 
+	 */
+	function tmpfile()
+	{
+		$db = db_connection();
+		$filename = $this->getTempDir().'/openrat_db'.$db->id.'_o'.$this->objectid.'_l'.$this->languageid.'_m'.$this->modelid.'.tmp';
+		return $filename;
+	}
+	
+	
+	
+	function setTimestamp()
+	{
+		unlink( $this->tmpfile() );
+		
+		$parent->setTimestamp();
 	}
 	
 }

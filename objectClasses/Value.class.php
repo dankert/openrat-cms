@@ -429,6 +429,12 @@ SQL
 	
 		$inhalt = '';
 
+		if	( is_file( $this->tmpfile() ))
+		{
+			$this->value = implode('',file($this->tmpfile() )); // from cache.
+			return;
+		}
+
 		// Inhalt ist mit anderer Seite verknüpft.
 		if	( in_array($this->element->type,array('text','longtext','date','number')) && intval($this->linkToObjectId) != 0 && !$this->isLink )
 		{
@@ -1106,6 +1112,12 @@ SQL
 			$inhalt = '<a href="'.Html::url('pageelement','edit',$this->page->objectid,array('elementid'=>$this->element->elementid)).'" title="'.$this->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>'.$inhalt;
 		
 		$this->value = $inhalt;
+
+		
+		// Store in cache.
+		$f = fopen( $this->tmpfile(),'w' );
+		fwrite( $f,$this->value );
+		fclose( $f );
 	}
 
 
@@ -1168,15 +1180,33 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT {t_object}.id FROM {t_value} '.
-		                ' LEFT JOIN {t_page} '.
-		                '   ON {t_page}.id={t_value}.pageid '.
-		                ' LEFT JOIN {t_object} '.
-		                '   ON {t_object}.id={t_page}.objectid '.
-		                ' WHERE {t_value}.lastchange_userid={userid}'.
-		                '  ORDER BY {t_object}.lastchange_date DESC' );
+		$sql = new Sql( <<<SQL
+SELECT {t_object}.id
+  FROM {t_value} 
+  LEFT JOIN {t_page} 
+    ON {t_page}.id={t_value}.pageid 
+  LEFT JOIN {t_object} 
+    ON {t_object}.id={t_page}.objectid 
+ WHERE {t_value}.lastchange_userid={userid}
+ ORDER BY {t_value}.lastchange_date DESC
+SQL
+);
 		$sql->setInt   ( 'userid'    ,$userid           );
-
 		return $db->getOne( $sql->query );
 	}
+	
+	
+	/**
+	 * Ermittelt einen temporären Dateinamen für diesen Inhalt. 
+	 */
+	function tmpfile()
+	{
+		$db = db_connection();
+		$filename = Object::getTempDir().'/openrat_db'.$db->id.'_p'.$this->pageid.'_v'.$this->valueid.'_e'.$this->element->elementid.'_l'.$this->languageid.'_s'.intval($this->simple).'.tmp';
+		return $filename;
+	}
+	
+	
+	
+	
 }

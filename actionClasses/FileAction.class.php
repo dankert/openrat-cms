@@ -128,13 +128,15 @@ class FileAction extends ObjectAction
 		header('Content-Transfer-Encoding: binary' );
 		header('Content-Description: '.$this->file->name );
 
-		$this->file->loadValue(); // Bild aus Datenbank laden
+		$this->file->write(); // Bild aus Datenbank laden
 
 		// Groesse des Bildes in Bytes
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
-		header('Content-Length: '.strlen($this->file->value) );
-
-		echo $this->file->value;
+		header('Content-Length: '.filesize($this->file->tmpfile()) );
+		
+		
+		
+		readfile( $this->file->tmpfile() );
 		exit;
 	}
 
@@ -560,11 +562,8 @@ class FileAction extends ObjectAction
 		$this->file->publish();
 		$this->file->publish->close();
 
-		foreach( $this->file->publish->publishedObjects as $o )
-		{
-			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
-		}
-
+		$this->addNotice('file',$this->file->fullFilename,'PUBLISHED',$this->file->publish->ok?OR_NOTICE_OK:OR_NOTICE_ERROR,array(),$this->file->publish->log);
+		
 		$this->callSubaction('pub');
 	}
 

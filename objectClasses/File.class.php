@@ -518,9 +518,14 @@ EOF
 	}
 
 
-	// Lesen der Datei aus der Datenbank
+	/**
+	 * Lesen der Datei aus der Datenbank.
+	 */
 	function loadValue()
 	{
+		if	( is_file($this->tmpfile()))
+			return implode('',file($this->tmpfile())); // From cache
+			
 		$db = db_connection();
 
 		$sql = new Sql( 'SELECT size,value'.
@@ -537,12 +542,19 @@ EOF
 
 		if	( $this->storeValueAsBase64 )
 			$this->value = base64_decode( $this->value );
-		
+
+		// Store in cache.
+		$f = fopen( $this->tmpfile(),'w' );
+		fwrite( $f,$this->value );
+		fclose( $f );
+			
 		return $this->value;
 	}
 
 
-	// Lesen der Datei aus der Datenbank
+	/**
+	 * Speichert den Inhalt in der Datenbank.
+	 */
 	function saveValue( $value = '' )
 	{
 		$db = db_connection();
@@ -555,19 +567,21 @@ EOF
 		$sql->setInt   ( 'size'     ,strlen($this->value) );
 		
 		if	( $this->storeValueAsBase64 )
-			$sql->setString( 'value'    ,base64_encode($this->value) );
-		else $sql->setString( 'value'    ,$this->value );
+			$sql->setString( 'value',base64_encode($this->value) );
+		else
+			$sql->setString( 'value',$this->value );
 
 		$db->query( $sql->query );
 	}
 
 
-	// Lesen der Datei aus der Datenbank und schreiben in temporaere Datei
+	/**
+	 * Lesen der Datei aus der Datenbank und schreiben in temporaere Datei
+	 */
 	function write()
 	{
-		$f = fopen( $this->tmpfile(),'w' );
-		fwrite( $f,$this->loadValue() );
-		fclose( $f );
+		if	( !is_file($this->tmpfile()) )
+			$this->loadValue();
 	}
 
 
@@ -600,10 +614,29 @@ EOF
 
 		$this->write();
 		$this->publish->copy( $this->tmpfile(),$this->full_filename() );
-		unlink( $this->tmpfile );
 		
 		$this->publish->publishedObjects[] = $this->getProperties();
 	}
+	
+
+	/**
+	 * Ermittelt einen temporären Dateinamen für diese Datei.
+	 */
+	function tmpfile()
+	{
+		$db = db_connection();
+		$filename = $this->getTempDir().'/openrat_db'.$db->id.'_'.$this->objectid.'.tmp';
+		return $filename;
+	}
+	
+	
+	function setTimestamp()
+	{
+		unlink( $this->tmpfile() );
+		
+		$parent->setTimestamp();
+	}
+	
 }
 
 ?>
