@@ -123,7 +123,7 @@ class ElementAction extends Action
 		$types = array();
 
 		foreach( $this->element->getAvailableTypes() as $t )
-			$types[ $t ] = lang('EL_'.$t);
+			$types[ $t ] = 'EL_'.$t;
 
 		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
 		if	( !$this->userIsAdmin() )
