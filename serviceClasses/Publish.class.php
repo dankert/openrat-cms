@@ -132,6 +132,13 @@ class Publish
 		if   ( $this->with_local )
 		{
 			$dest   = $this->local_destdir.'/'.$dest_filename;
+			
+			// Nicht kopieren, wenn
+			// - Quell- und Zieldatei gleich groﬂ und
+			// - Quelldatei nicht neuer als die Zieldatei
+			if	( filesize($source)  == filesize($dest) &&
+				  filemtime($source) <= filemtime($dest)   )
+				  return;
 			 
 			if   (!@copy( $source,$dest ));
 			{
@@ -240,7 +247,8 @@ class Publish
 			
 			if	( $rc != 0 ) // Wenn Returncode ungleich 0, dann Ausgabe ins Log schreiben und Fehler melden.
 			{
-				$this->log = $ausgabe; 
+				$this->log   = $ausgabe; 
+				$this->log[] = 'OpenRat: System command failed - returncode is '.$rc; 
 				$this->ok = false;
 			}
 		}
