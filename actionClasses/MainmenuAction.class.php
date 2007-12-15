@@ -67,6 +67,7 @@ class MainmenuAction extends Action
 			case 'user':
 			case 'group':
 				$this->addSubAction( 'listing'    ,-1 );
+				$this->addSubAction( 'add'        ,-1 );
 				$this->addSubAction( 'edit'       ,-1 );
 				$this->addSubAction( 'memberships',-1 );
 				$this->addSubAction( 'pw'         ,-1 );
@@ -235,6 +236,7 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('text',$user->name);
 	
 		$this->addSubaction('listing');
+		$this->addSubaction('add'    );
 
 		if	( $this->getRequestId() != 0 )
 		{
@@ -265,6 +267,7 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('text',$group->name);
 
 		$this->addSubaction('listing'    );
+		$this->addSubaction('add'        );
 		$this->addSubaction('memberships');
 
 		if	( $this->getRequestId() != 0 )
@@ -401,7 +404,8 @@ class MainmenuAction extends Action
 		$this->setTemplateVar('path',array() );
 
 		$this->addSubaction('listing');
-
+		$this->addSubaction('add'    );
+		
 		if   ( $this->getRequestId() > 0 )
 		{
 			$this->addSubaction('edit');
