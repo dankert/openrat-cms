@@ -268,13 +268,11 @@ class MainmenuAction extends Action
 
 		$this->addSubaction('listing'    );
 		$this->addSubaction('add'        );
-		$this->addSubaction('memberships');
 
 		if	( $this->getRequestId() != 0 )
 		{
+			$this->addSubaction('memberships');
 			$this->addSubaction('edit'   );
-			
-//			Deaktiviert, da nicht funktionsfähig $this->addSubaction('users'  );
 		}
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 
