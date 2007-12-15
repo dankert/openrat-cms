@@ -1,5 +1,5 @@
 page
-	window icon:project name:GLOBAL_PROJECTS
+	window icon:project name:GLOBAL_PROJECTS width:70%
 		list list:el extract:true
 			row
 				cell

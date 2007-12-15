@@ -1,7 +1,7 @@
 page
 	form method:post
 
-		window icon:group name:GLOBAL_PROJECT
+		window icon:group name:GLOBAL_PROJECT widths:20%,80%
 			row
 				cell
 					text text:GLOBAL_NAME
@@ -9,7 +9,7 @@ page
 					text var:name
 			row
 				cell
-					text text:GLOBAL_DELETE
+					text text:CONFIRM_DELETE
 				cell
 					checkbox name:delete
 			row

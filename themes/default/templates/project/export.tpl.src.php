@@ -1,6 +1,6 @@
 page
 	form
-		window icon:project name:GLOBAL_PROJECT
+		window icon:project name:GLOBAL_PROJECT widths:30%,70%
 			row
 				cell class:fx width:50%
 					text key:GLOBAL_DATABASE
