@@ -1,6 +1,6 @@
 page
 	form
-		window name:USER_MEMBERSHIPS
+		window name:USER_MEMBERSHIPS width:70%
 			row
 				cell class:fx
 					image icon:group

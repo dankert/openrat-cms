@@ -1,5 +1,5 @@
 page
-	window name:USER_MEMBERSHIPS widths:70%,30%
+	window name:USER_MEMBERSHIPS widths:70%,30% width:70%
 		list list:memberships extract:true
 			row
 				cell class:fx
