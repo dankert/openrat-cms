@@ -1,10 +1,13 @@
 page
 	form method:post
 
-		window icon:project name:GLOBAL_USERS
+		window icon:user name:GLOBAL_USERS width:70%
 			row
-				cell class:fx
+				cell
+					text text:user_username
+				cell
 					input name:name
 			row
-				cell class:act
+				cell colspan:2 class:act
 					button type:ok
+	focus field:name

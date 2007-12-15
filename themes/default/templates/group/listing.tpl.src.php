@@ -1,5 +1,5 @@
 page
-	window icon:group name:GLOBAL_GROUPS
+	window icon:group name:GLOBAL_GROUPS width:70%
 		list list:el extract:true
 			row
 				cell class:fx

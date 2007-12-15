@@ -1,12 +1,14 @@
 page
 	form method:post
 
-		window icon:group name:GLOBAL_GROUPS
+		window icon:group name:GLOBAL_GROUPS width:70%
 			row
-				cell class:fx
+				cell
+					text text:name
+				cell
 					input name:name
 			row
-				cell class:act
+				cell colspan:2 class:act
 					button type:ok
 					
 	focus field:name

@@ -1,5 +1,5 @@
 page
-	window icon:user name:GLOBAL_USERS
+	window icon:user name:GLOBAL_USERS width:70%
 		list list:el extract:true
 			row
 				cell class:fx
