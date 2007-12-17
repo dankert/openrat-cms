@@ -174,7 +174,7 @@ class TemplateEngine
 			case 'method':
 				return $invert.'$this->'.$value.'()';
 			case 'size':
-				return 'count($'.$value.')';
+				return '@count($'.$value.')';
 			case 'property':
 				return $invert.'$this->'.$value;
 			case 'message':
