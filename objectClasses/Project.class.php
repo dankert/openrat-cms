@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.18  2007-12-21 23:27:23  dankert
+// Neue Methode "getTemplates"
+//
 // Revision 1.17  2007-12-04 22:57:20  dankert
 // Beispiel-Vorlage mit "Hello, World".
 //
@@ -186,6 +189,18 @@ class Project
 		$sql->setInt   ('projectid',$this->projectid);
 
 		return $db->getCol( $sql->query );
+	}
+
+
+	function getTemplates()
+	{
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT id,name FROM {t_template}'.
+		                '  WHERE projectid= {projectid} ' );
+		$sql->setInt   ('projectid',$this->projectid);
+
+		return $db->getAssoc( $sql->query );
 	}
 
 
