@@ -35,6 +35,8 @@ class AbstractTree
 	var $tempElements = array();
 	var $userIsAdmin  = false;
 	
+	var $autoOpen     = array(0,1);
+	
 	/**
 	 * Hoechste Element-Id
 	 * @type Integer
@@ -54,8 +56,8 @@ class AbstractTree
 		$this->tempElements = array();
 		$this->maxId = 0;
 		
-		$this->open(0);
-		$this->open(1);
+		foreach( $this->autoOpen as $openId )
+			$this->open($openId);
 	}
 
 	/**

@@ -41,6 +41,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->icon        = 'administration';
 		
 		$this->addTreeElement( $treeElement );
+		$this->autoOpen[] = 2;
 	}
 
 
@@ -68,6 +69,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->type        = 'userandgroups';
 		
 		$this->addTreeElement( $treeElement );
+//		$this->userandgroups(0);;
 
 		if	( $conf_config['enable'] )
 		{
