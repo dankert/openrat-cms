@@ -154,6 +154,26 @@ body.border {
 	background-color:gray;
 }
 
+body.status {
+	margin:0px;
+	background-color:AppWorkspace;
+	color:ButtonText;
+	font-size:0.7em;
+}
+body.status table tr td,
+body.status table tr td form select,
+body.status table tr td form select:disabled,
+body.status table tr td form input {
+	margin:0px;
+	background-color:AppWorkspace;
+	color:ButtonText;
+	font-size:0.9em;
+	width:auto;
+	border:0px;
+	margin:0px;
+	padding:0px;
+}
+
 body.background {
 	margin:0px;
 	background-color:#EEEEEE;
