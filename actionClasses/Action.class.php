@@ -148,7 +148,10 @@ class Action
 	 */
 	function getRequestId()
 	{
-		return intval( $this->getRequestVar( REQ_PARAM_ID ) );
+		if	( $this->hasRequestVar('idvar') )
+			return intval( $this->getRequestVar( $this->getRequestVar('idvar') ) );
+		else
+			return intval( $this->getRequestVar( REQ_PARAM_ID ) );
 	}
 
 
