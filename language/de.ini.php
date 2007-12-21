@@ -306,6 +306,7 @@ FOLDER_SELECT_TARGET_FOLDER =Zielverzeichnis
 FOLDER_SELECT_TARGET_FOLDER_HELP =Das Zielverzeichnis
 FOLDER_SUBFOLDER = Unterordner
 FOLDER_UNMARK_ALL = "Markierung entfernen"
+CONFIRM_DELETE = "Löschen bestätigen"
 GLOBAL_ACTION = Aktion
 GLOBAL_ACTIVE = "aktuell"
 GLOBAL_ADD = "Hinzufügen"
@@ -484,6 +485,7 @@ MAIL_TEXT_PASSWORD_NEW ="Guten Tag {name},;;Ihr neues Kennwort lautet: {password
 MAIL_TEXT_REGISTER_COMMIT_CODE ="Guten Tag,;;Sie oder jemand anderes möchte sich für die Nutzung des OpenRat-CMS registrieren, hiermit erhalten Sie den notwendigen Registrierungscode.;;Ihr Registrierungs-Code: {code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.;;Falls Sie diese Registrierung nicht durchgeführt haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank für Ihr Interesse."
 MAIL_TEXT_USER_MAIL = "Guten Tag {name},;;Ihre Zugangsdaten lauten wie folgt:;;Login: {username};Kennwort: {password};;Notieren Sie sich das Kennwort gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank."
 MENU_CONTENT =Inhalt
+MENU_ADD = Neu
 MENU_CREATE = Neu
 MENU_CREATE_DESC = "In diesem Ordner ein neues Objekt anlegen"
 MENU_CREATE_KEY = N  
@@ -783,6 +785,7 @@ NOTICE_CANCELED = "Vorgang wurde abgebrochen."
 NOTICE_CANNOT_COPY_FOLDER ="Ordner können nicht kopiert werden (nicht implementiert)."
 NOTICE_CODE_NOT_MATCH = "Der Bestätigungs-Code ist ungültig."
 NOTICE_COMMON_VALIDATION_EROR="Bitte korrigieren Sie Ihre Eingabefehler."
+NOTICE_COMMON_VALIDATION_ERROR="Bitte korrigieren Sie Ihre Eingabefehler."
 NOTICE_COPIED = "wurde kopiert."
 NOTICE_DATABASE_CONNECTION_ERROR="Es konnte keine Verbindung zur Datenbank hergestellt werden."
 NOTICE_DELETED ="wurde gelöscht."
@@ -813,7 +816,7 @@ NOTICE_PUBLISHED ="Wurde veröffentlicht."
 NOTICE_SAVED = "Wurde gespeichert."
 NOTICE_SEQUENCE_CHANGED = "Die Reihenfolge wurde geändert."
 NOTICE_USER_ADDED = "Der Benutzer wurde hinzugefügt."
-NOTICE_USER_ADDED_TO_GROUP = "Die Mitgliedschaften in der Gruppe wurden aktualisiert, {count} Benutzer hinzufgefügt."
+NOTICE_USER_ADDED_TO_GROUP = "Die Mitgliedschaften in der Gruppe wurden aktualisiert, {count} Benutzer hinzugefügt."
 NOTICE_USER_ALREADY_IN_DATABASE = "Der Benutzer ist bereits vorhanden. Bitte wählen Sie einen anderen Benutzernamen."
 NOTICE_VALUE_SAVED = "Inhalt wurde gespeichert."
 OPENID="Open-ID"
@@ -927,3 +930,8 @@ USER_USERNAME = Benutzername
 USER_USERNAME_DESC = "Mit diesem Namen meldet sich der Benutzer am System an"
 USER_YOURPROFILE = "Persönliche Einstellungen"
 VALUE = Inhalt
+HTTP_URL = "HTTP-Url"
+
+EDITOR_PROMPT_TABLE_CELL = "Bitte geben Sie einen Text für die Tabellenspalte ein. Leer=Weiter zur nächsten Tabellenzeile."
+EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN = "Bitte geben Sie einen Text für die erste Tabellenzelle ein. Leer=Ende der Tabelle."
+EDITOR_PROMPT_LIST_ENTRY = "Bitte geben Sie einen Text für den Listeneintrag ein. Leer=Ende der Liste."
