@@ -1,47 +1,47 @@
 
-[default]
-goto=show
-
 [element]
-goto=show
+alias=show
 
 [file]
-goto=show
+alias=show
+
+[empty]
+alias=show
 
 [folder]
-goto=show
+alias=show
 
 [group]
-goto=show
+alias=show
 
 [language]
-goto=show
+alias=show
 
 [link]
-goto=show
+alias=show
 
 [model]
-goto=show
+alias=show
 
 [page]
-goto=show
+alias=show
 
 [pageelement]
-goto=show
+alias=show
 
 [project]
-goto=show
+alias=show
 
 [search]
-goto=show
+alias=show
 
 [show]
 
 [template]
-goto=show
+alias=show
 
 [transfer]
-goto=show
+alias=show
 
 [user]
-goto=show
+alias=show

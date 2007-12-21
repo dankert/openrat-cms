@@ -2,6 +2,9 @@
 [default]
 goto=show
 
+[empty]
+alias=show
+
 [element]
 goto=show
 

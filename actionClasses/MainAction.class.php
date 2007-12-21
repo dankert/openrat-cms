@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.10  2007-01-21 15:35:44  dankert
+// Revision 1.11  2007-12-21 23:21:40  dankert
+// Beim Aufruf von "Administration" oder "Projekt" mit leerer Seite starten.
+//
+// Revision 1.10  2007/01/21 15:35:44  dankert
 // Requestparameter-Namen aus Konstanten lesen.
 //
 // Revision 1.9  2006/02/27 19:17:50  dankert
@@ -62,80 +65,17 @@
 
 class MainAction extends Action
 {
-	var $defaultSubAction = 'show';
-	
-	var $doActionName    = "";
-	var $doSubActionName = "";
-
-
-	function element()
-	{
-		$this->doActionName = 'element';
-	}
-	function folder()
-	{
-		$this->doActionName = 'folder';
-	}
-	function file()
-	{
-		$this->doActionName = 'file';
-	}
-	function group()
-	{
-		$this->doActionName = 'group';
-	}
-	function language()
-	{
-		$this->doActionName = 'language';
-	}
-	function link()
-	{
-		$this->doActionName = 'link';
-	}
-	function model()
-	{
-		$this->doActionName = 'model';
-	}
-	function page()
-	{
-		$this->doActionName = 'page';
-	}
-	function pageelement()
-	{
-		$this->doActionName = 'pageelement';
-	}
-	function project()
-	{
-		$this->doActionName = 'project';
-	}
-	function search()
-	{
-		$this->doActionName = 'search';
-	}
-	function template()
-	{
-		$this->doActionName = 'template';
-	}
-	function transfer()
-	{
-		$this->doActionName = 'transfer';
-	}
-	function user()
-	{
-		$this->doActionName = 'user';
-	}
-	
-	
-	
 	function show()
 	{
+		$doActionName = $this->subActionName;
+		
 		$user = Session::getUser();
 		if	( is_object($user) && isset($user->loginDate) )
 			$this->lastModified( $user->loginDate );
 
-		$this->doSubActionName = $this->getRequestVar( REQ_PARAM_TARGETSUBACTION );
+		$doSubActionName = $this->getRequestVar( REQ_PARAM_TARGETSUBACTION );
 		
-		// Bestimmte Paramer weiterleiten
+		// Bestimmte Parameter weiterleiten
 		$params = array(); 
 		
 		foreach( array('elementid') as $p )
@@ -145,8 +85,8 @@ class MainAction extends Action
 		}
 
 		// Variablen fuellen
-		$this->setTemplateVar('frame_src_main_menu' ,Html::url( 'mainmenu'         ,$this->doActionName   ,$this->getRequestId(),$params ) );
-		$this->setTemplateVar('frame_src_main_main' ,Html::url( $this->doActionName,$this->doSubActionName,$this->getRequestId(),$params ) );
+		$this->setTemplateVar('frame_src_main_menu' ,Html::url( 'mainmenu'   ,$doActionName   ,$this->getRequestId(),$params ) );
+		$this->setTemplateVar('frame_src_main_main' ,Html::url( $doActionName,$doSubActionName,$this->getRequestId(),$params ) );
 		$this->setTemplateVar('frame_src_border'    ,Html::url( 'border'         ) );
 		$this->setTemplateVar('frame_src_background',Html::url( 'background'     ) );
 	}

@@ -4,7 +4,8 @@ page
 		if true:!config:interface/application_mode	
 			row
 				cell class:menu
-					image type:var:type
+					if not:true value:var:type equals:empty
+						image type:var:type
 	
 					list list:path extract:true value:xy
 	
@@ -14,14 +15,15 @@ page
 	
 					text text:var:text title:var:text class:title
 				cell class:menu style::text-align:right;
-					form action:search subaction:quicksearch target:cms_main_main
-						input class:search name:search size:15
-	//					button class:searchbutton type:ok src:search
-						if true:config:search/quicksearch/show_button
-							button class:searchbutton type:ok text:search
-	//				list list:windowIcons extract:true
-	//					link url:var:url target:_top
-	//						image type:var:type align:middle
+					if true:property:search
+						form action:search subaction:quicksearch target:cms_main_main
+							input class:search name:search size:15
+		//					button class:searchbutton type:ok src:search
+							if true:config:search/quicksearch/show_button
+								button class:searchbutton type:ok text:search
+		//				list list:windowIcons extract:true
+		//					link url:var:url target:_top
+		//						image type:var:type align:middle
 						
 		row
 			cell class:subaction colspan:2
@@ -38,3 +40,4 @@ page
 						
 					# Trenner zwischen Menüpunkten
 					text raw:__
+				text raw:_

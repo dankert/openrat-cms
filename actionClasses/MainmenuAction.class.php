@@ -32,6 +32,7 @@ class MainmenuAction extends Action
 
 	var $subActionList = array();
 	var $path          = array();
+	var $search        = false;
 	var $obj;
 
 	
@@ -55,12 +56,14 @@ class MainmenuAction extends Action
 				$this->addSubAction( 'prop'  ,-1 );
 				$this->addSubAction( 'src'   ,-1 );
 				$this->addSubAction( 'rights',-1 );
+				$this->search = true;
 				break;
 
 			case 'language':
 			case 'model':
 				$this->addSubAction( 'listing',-1 );
 				$this->addSubAction( 'edit'   ,-1 );
+				$this->search = true;
 				break;
 
 			case 'project':
@@ -81,9 +84,13 @@ class MainmenuAction extends Action
 				$this->addSubAction( 'el'     ,-1 );
 				$this->addSubAction( 'src'    ,-1 );
 				$this->addSubAction( 'prop'   ,-1 );
+				$this->search = true;
 				break;
 
+			case 'blank':
 			default:
+				$this->setTemplateVar('windowMenu',array() );
+				$this->setTemplateVar('text'      ,''      );
 		}
 	}
 	
@@ -476,15 +483,22 @@ class MainmenuAction extends Action
 		                                                 'type'  =>'close')
 		                                                                            ) );
 		$this->setTemplateVar('actionid',$this->getRequestId() );
-		$this->setTemplateVar('action'  ,$this->subActionName  );
 
 		if	( $this->subActionName == 'pageelement')
 			$this->setTemplateVar('action','page');
+		else
+			$this->setTemplateVar('action',$this->subActionName  );
 		
 		$this->setTemplateVar('name'          ,$this->subActionName);
 		$this->setTemplateVar('css_body_class','menu'              );
 		
 		$this->setTemplateVar('path'          ,$this->path         );
+	}
+	
+	
+	
+	function blank()
+	{
 	}
 }
 

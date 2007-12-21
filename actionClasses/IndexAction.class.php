@@ -906,10 +906,15 @@ class IndexAction extends Action
 			}
 	
 			$object = Session::getObject();
-			if	( !is_object($object) || $object->projectid != $project->projectid)
-				$object = new Object( $project->getRootObjectId() );
-			$object->objectLoadRaw();
-			Session::setObject( $object );
+			if	( is_object($object) && $object->projectid == $project->projectid )
+			{
+				$object->objectLoadRaw();
+				Session::setObject( $object );
+			}
+			else
+			{
+				Session::setObject( '' );
+			}
 		}
 		elseif	( isset($vars[REQ_PARAM_MODEL_ID]) && Model::available($vars[REQ_PARAM_MODEL_ID]) )
 		{
@@ -931,9 +936,15 @@ class IndexAction extends Action
 	
 			$object = Session::getObject();
 			$object->objectLoadRaw();
-			if	( !is_object($object) || $object->projectid != $project->projectid)
-				$object = new Object( $project->getRootObjectId() );
-			Session::setObject( $object );
+			if	( is_object($object) && $object->projectid == $project->projectid )
+			{
+				$object->objectLoadRaw();
+				Session::setObject( $object );
+			}
+			else
+			{
+				Session::setObject( '' );
+			}
 		}
 		elseif	( isset($vars[REQ_PARAM_PROJECT_ID])&&Project::available($vars[REQ_PARAM_PROJECT_ID]) )
 		{
@@ -951,10 +962,15 @@ class IndexAction extends Action
 			Session::setProjectModel( $model );
 	
 			$object = Session::getObject();
-			if	( !is_object($object) || $object->projectid != $project->projectid)
-				$object = new Object( $project->getRootObjectId() );
-			$object->objectLoadRaw();
-			Session::setObject( $object );
+			if	( is_object($object) && $object->projectid == $project->projectid )
+			{
+				$object->objectLoadRaw();
+				Session::setObject( $object );
+			}
+			else
+			{
+				Session::setObject( '' );
+			}
 		}
 	}
 
@@ -1096,43 +1112,58 @@ class IndexAction extends Action
 		
 		$elementid = 0;
 		
-		if	( is_object($object) )
+		if	( is_object($project) )
 		{
-			$type = $object->getType();
-			
-			if	( $type == 'page' )
+			if	( is_object($object) )
 			{
-				$page        = new Page($object->objectid);
-				$page->load();
-				$elementList = $page->getWritableElements();
-				if	( count($elementList) == 1 )
-					$elementid = current(array_keys($elementList));
+				$type = $object->getType();
+				
+				if	( $type == 'page' )
+				{
+					$page        = new Page($object->objectid);
+					$page->load();
+					$elementList = $page->getWritableElements();
+					if	( count($elementList) == 1 )
+						$elementid = current(array_keys($elementList));
+				}
+	
+				if	( $elementid > 0 )
+					$this->setTemplateVar( 'frame_src_main',Html::url('main','pageelement',$object->objectid,array('elementid'=>$elementid,'targetSubAction'=>'advanced')) );
+				else
+					$this->setTemplateVar( 'frame_src_main',Html::url('main',$type,$object->objectid) );
 			}
-
-			if	( $elementid > 0 )
-				$this->setTemplateVar( 'frame_src_main',Html::url('main','pageelement',$object->objectid,array('elementid'=>$elementid,'targetSubAction'=>'advanced')) );
 			else
-				$this->setTemplateVar( 'frame_src_main',Html::url('main',$type,$object->objectid) );
+			{
+				$this->setTemplateVar( 'frame_src_main',Html::url('main','empty',0,array(REQ_PARAM_TARGETSUBACTION=>'blank')) );
+			}
 		}
 		elseif	( is_object($project) && $project->projectid == PROJECTID_ADMIN )
 		{
-			$this->setTemplateVar( 'frame_src_main',Html::url('main','project') );
+			if	( $this->hasRequestVar('projectid') )
+				$this->setTemplateVar( 'frame_src_main',Html::url('main','project',$this->getRequestVar('projectid')) );
+			elseif	( $this->hasRequestVar('groupid') )
+				$this->setTemplateVar( 'frame_src_main',Html::url('main','group'  ,$this->getRequestVar('groupid'  )) );
+			elseif	( $this->hasRequestVar('userid') )
+				$this->setTemplateVar( 'frame_src_main',Html::url('main','user'   ,$this->getRequestVar('userid'   )) );
+			else
+				$this->setTemplateVar( 'frame_src_main',Html::url('main','empty',0,array(REQ_PARAM_TARGETSUBACTION=>'blank')) );
 		}
 		else
 		{
 			$this->callSubAction( 'projectmenu' );
 		}
 		
-		$this->setTemplateVar( 'frame_src_title'   ,Html::url( 'title'          ) );
 
 		$this->setTemplateVar( 'show_tree',(Session::get('showtree')==true) );
 
-		$this->setTemplateVar( 'frame_src_tree_menu' ,Html::url( 'treemenu'       ) );
-		$this->setTemplateVar( 'frame_src_tree_title',Html::url( 'treetitle'      ) );
-		$this->setTemplateVar( 'frame_src_tree'      ,Html::url( 'tree'    ,'load') );
-		$this->setTemplateVar( 'frame_src_clipboard' ,Html::url( 'clipboard'      ) );
-		$this->setTemplateVar( 'frame_src_border'    ,Html::url( 'border'         ) );
-		$this->setTemplateVar( 'frame_src_background',Html::url( 'background'     ) );
+		$this->setTemplateVar( 'frame_src_title'     ,Html::url( 'title'                ) );
+		$this->setTemplateVar( 'frame_src_tree_menu' ,Html::url( 'treemenu'             ) );
+		$this->setTemplateVar( 'frame_src_tree_title',Html::url( 'treetitle'            ) );
+		$this->setTemplateVar( 'frame_src_tree'      ,Html::url( 'tree'    ,'load'      ) );
+		$this->setTemplateVar( 'frame_src_clipboard' ,Html::url( 'clipboard'            ) );
+		$this->setTemplateVar( 'frame_src_border'    ,Html::url( 'empty'   ,'border'    ) );
+		$this->setTemplateVar( 'frame_src_background',Html::url( 'empty'   ,'background') );
+		$this->setTemplateVar( 'frame_src_status'    ,Html::url( 'status'               ) );
 
 		$this->setTemplateVar( 'tree_width',$conf['interface']['tree_width'] );
 		
