@@ -1,5 +1,11 @@
 <?php
-if ($attr_addempty) $$attr_list = array(''=>lang('LIST_ENTRY_EMPTY'))+$$attr_list;
+if ( isset($attr_addempty) )
+{
+	if ($attr_addempty===TRUE)
+		$$attr_list = array(''=>lang('LIST_ENTRY_EMPTY'))+$$attr_list;
+	else
+		$$attr_list = array(''=>'- '.lang($attr_addempty).' -')+$$attr_list;
+}
 ?><select id="id_<?php echo $attr_name ?>"  name="<?php echo $attr_name; if ($attr_multiple) echo '[]'; ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
 if (count($$attr_list)<=1) echo ' disabled="disabled"';
 if	($attr_multiple) echo ' multiple="multiple"';
