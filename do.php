@@ -245,7 +245,7 @@ if	( isset($do->actionConfig['admin']) && $do->actionConfig['admin'] )
 
 
 // Aktuelle Subaction in Sitzung merken
-if	( isset($do->actionConfig[$subaction]['menu']) )
+if	( isset($do->actionConfig[$subaction]['menu']) || isset($do->actionConfig[$subaction]['direct']) )
 {
 	$sl = Session::getSubaction();
 	if	( !is_array($sl))
