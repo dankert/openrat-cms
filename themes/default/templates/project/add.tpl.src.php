@@ -25,14 +25,6 @@ page
 				cell
 					selectbox name:projectid list:projects
 			row
-				cell
-					radio name:type value:example
-				cell
-					label for:type_example
-						text text:message:example
-				cell
-					selectbox name:example list:examples
-			row
 				cell class:act colspan:3
 					button type:ok
 	focus field:name

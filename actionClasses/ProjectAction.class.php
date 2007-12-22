@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.18  2007-12-22 00:21:41  dankert
+// Funktion f?r Projektbeispiel entfernt.
+//
 // Revision 1.17  2007-12-21 23:27:53  dankert
 // Felder mit Namen versehen. Beim Anlegen von Projekten Beispiel-Projekte ausw?hlen.
 //
@@ -125,18 +128,6 @@ class ProjectAction extends Action
 	function add()
 	{
 		$this->setTemplateVar( 'projects',Project::getAll() );
-
-		$examples = array();
-		$dir = opendir( 'examples/projects');
-		while( $file = readdir($dir) )
-		{
-			if	( substr($file,0,1) != '.' && ereg('.ini',$file) )
-			{
-				$examples[$file] = $file;
-			}
-		}
-		
-		$this->setTemplateVar( 'examples',$examples );
 	}
 	
 
@@ -146,21 +137,23 @@ class ProjectAction extends Action
 	 */
 	function addproject()
 	{
-		if	( !$this->hasRequestVar('name') )
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('add');
-		}
-		elseif	( !$this->hasRequestVar('type') )
+		if	( !$this->hasRequestVar('type') )
 		{
 			$this->addValidationError('type');
 			$this->callSubAction('add');
+			return;
 		}
 		else
 		{
 			switch( $this->getRequestVar('type') )
 			{
 				case 'empty':
+					if	( !$this->hasRequestVar('name') )
+					{
+						$this->addValidationError('name');
+						$this->callSubAction('add');
+						return;
+					}
 					$this->project = new Project();
 					$this->project->name = $this->getRequestVar('name');
 					$this->project->add();
@@ -170,14 +163,6 @@ class ProjectAction extends Action
 					$project = new Project($this->getRequestVar('projectid'));
 					$project->load();
 					$project->export($db->id);
-					break;
-				case 'example':
-					$this->project = new Project();
-					$this->project->name = $this->getRequestVar('name');
-					$this->project->add();
-
-					$example = parse_ini_file('examples/projects/'.$this->getRequestVar('example'),true);
-					
 					break;
 				default:
 					Http::serverError('Unknown type while adding project '.$this->getRequestVar('type') );
