@@ -19,32 +19,10 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.7  2007-06-04 22:18:22  dankert
-// Korrektur Suche nach letzter ?nderungsautor.
-//
-// Revision 1.6  2007-06-04 19:34:16  dankert
-// Voreingestellt ist die Suche nach Eigenschaften.
-//
-// Revision 1.5  2007-05-08 19:21:58  dankert
-// Erweiterung der Suche um die Schnellsuche.
-//
-// Revision 1.4  2004/12/20 20:27:13  dankert
-// Aktuelle Userid setzen
-//
-// Revision 1.3  2004/11/28 23:55:49  dankert
-// Ausgabe performanter
-//
-// Revision 1.2  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 /**
- * Action-Klasse fuer die Suchfunktion
+ * Action-Klasse fuer die Suchfunktion.
+ * 
  * @author $Author$
  * @version $Revision$
  * @package openrat.actions
@@ -209,8 +187,8 @@ class SearchAction extends Action
 		$text = $this->getRequestVar('search');
 		
 		$o = new Object();
-		if	( $o->isObjectId($this->getRequestVar( $text )) )
-			$listObjectIds[] = $this->getRequestVar( $text );
+		if	( Object::available( intval($text) ) )
+			$listObjectIds[] = intval( $text );
 			
 		if	( $conf['search']['quicksearch']['search_name'] )
 		{
