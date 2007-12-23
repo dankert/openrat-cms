@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.46  2007-12-23 16:05:00  dankert
+// Anzeigen der Ordner-Eigenschaften verbessert.
+//
 // Revision 1.45  2007-11-22 21:21:45  dankert
 // Dateien auch per HTTP-Link anlegen.
 //
@@ -486,8 +489,8 @@ class FolderAction extends ObjectAction
 			return;
 		}
 		
-		$this->folder->filename = $this->getRequestVar('filename');
-		$this->folder->desc     = $this->getRequestVar('desc');
+		$this->folder->filename = $this->getRequestVar('filename'   );
+		$this->folder->desc     = $this->getRequestVar('description');
 		$this->folder->save();
 		$this->addNotice($this->folder->getType(),$this->folder->name,'PROP_SAVED','ok');
 	}
@@ -1216,6 +1219,7 @@ class FolderAction extends ObjectAction
 	function showprop()
 	{
 		$this->setTemplateVars( $this->folder->getProperties() );
+		$this->setTemplateVar( 'full_filename',$this->folder->full_filename() );
 	}
 	
 	

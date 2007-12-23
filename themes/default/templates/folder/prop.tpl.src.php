@@ -1,11 +1,11 @@
 page
 
 	form
-		window name:objectName title:global_prop icon:folder widths:50%,50% width:90%
+		window name:objectName title:global_prop icon:folder widths:35%,65% width:70%
 			row
 				cell
 					text text:global_name
-				cell
+				cell class:name
 					input name:name size:50 class:name
 			row
 				cell
@@ -18,6 +18,6 @@ page
 				cell
 					inputarea name:description class:description
 			row
-				cell colspan:2
+				cell colspan:2 class:act
 					button type:ok
 	focus field:name

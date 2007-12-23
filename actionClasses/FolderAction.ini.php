@@ -107,5 +107,5 @@ goto=order
 pub=pub
 show=show,select,order
 new=create,createfolder,createfile,createpage,createlink
-prop=showprop,prop,remove
+prop=showprop,prop
 rights=rights,aclform
