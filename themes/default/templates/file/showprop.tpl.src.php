@@ -59,6 +59,18 @@ page
 
 		row
 			cell
+				text text:CACHE_FILENAME
+			cell class:filename
+				if present:cache_filename
+					text var:cache_filename
+		if present:cache_filename
+			row
+				cell
+				cell
+					image icon:el_date
+					date date:var:cache_filemtime
+		row
+			cell
 				text text:FILE_PAGES
 			cell
 				list list:pages extract:true
