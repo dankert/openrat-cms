@@ -44,6 +44,8 @@ class File extends Object
 	var $mime_type     = '';
 	var $width         = null;
 	var $height        = null;
+	
+	var $tmpfile;
 
 
 
@@ -350,7 +352,6 @@ class File extends Object
 				{
 					// Verwende TrueColor (GD2)
 					$newImage = imageCreateTrueColor( $newWidth,$newHeight );
-	
 					ImageCopyResampled($newImage,$oldImage,0,0,0,0,$newWidth,
 					$newHeight,$oldWidth,$oldHeight);
 				}
@@ -624,9 +625,12 @@ EOF
 	 */
 	function tmpfile()
 	{
-		$db = db_connection();
-		$filename = $this->getTempDir().'/openrat_db'.$db->id.'_'.$this->objectid.'.tmp';
-		return $filename;
+		if	( $this->tmpfile == '' )
+		{
+			$db = db_connection();
+			$this->tmpfile = $this->getTempDir().'/openrat_db'.$db->id.'_'.$this->objectid.'.tmp';
+		}
+		return $this->tmpfile;
 	}
 	
 	
@@ -634,7 +638,7 @@ EOF
 	{
 		@unlink( $this->tmpfile() );
 		
-		$this->setTimestamp();
+		parent::setTimestamp();
 	}
 	
 }
