@@ -15,6 +15,6 @@ page
 					selectbox name:templateid list:templates
 			row
 				cell colspan:2 class:act
-					button type:ok
+					button type:ok text:message:button_next
 
 	focus field:templateid
