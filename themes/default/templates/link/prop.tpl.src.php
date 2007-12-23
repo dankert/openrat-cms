@@ -1,6 +1,6 @@
 page
 	form
-		window name:GLOBAL_PROP title:global_link icon:link width:90% widths:40%,60%
+		window name:GLOBAL_PROP title:global_link icon:link width:70% widths:40%,60%
 	
 			row
 				cell

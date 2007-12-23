@@ -1,30 +1,40 @@
 page
-	window icon:link width:90% widths:40%,60%
+	window icon:link width:70% widths:40%,60%
 	
 		row
-			cell class:fx
+			cell
 				text text:GLOBAL_name
-			cell class:fx
+			cell class:name
 				text var:name
 		row
-			cell class:fx
+			cell
 				text text:GLOBAL_description
-			cell class:fx
+			cell
 				text var:desc
 		row
-			cell colspan:2 class:help
-				text raw:_	
+			cell colspan:2
+				fieldset title:message:additional_info
 		row
-			cell class:fx
+			cell
 				text text:global_created
-			cell class:fx
-				date date:create_date
-				text raw:,_
-				user user:create_user
+			cell
+				table
+					row
+						cell
+							image icon:el_date
+							date date:var:create_date
+						cell
+							image icon:user
+							user user:var:create_user
 		row
-			cell class:fx
+			cell
 				text text:global_lastchange
-			cell class:fx
-				date date:lastchange_date
-				text raw:,_
-				user user:lastchange_user
+			cell
+				table
+					row
+						cell
+							image icon:el_date
+							date date:var:lastchange_date
+						cell
+							image icon:user
+							user user:var:lastchange_user
