@@ -18,6 +18,48 @@ page
 				text var:full_filename
 		row
 			cell colspan:2
+				fieldset title:message:additional_info
+		row
+			cell
+				text text:FILE_SIZE
+			cell
+				text var:size
+		row
+			cell
+				text text:FILE_mimetype
+			cell class:filename
+				text var:mimetype
+
+		row
+			cell
+				text text:message:id
+			cell
+				text text:var:objectid
+		row
+			cell
+				text text:CACHE_FILENAME
+			cell class:filename
+				if present:cache_filename
+					text var:cache_filename
+		if present:cache_filename
+			row
+				cell
+				cell
+					image icon:el_date
+					date date:var:cache_filemtime
+		row
+			cell
+				text text:FILE_PAGES
+			cell
+				list list:pages extract:true
+					link url:url target:cms_main
+						image type:page
+						text var:name
+					newline
+				if empty:pages
+					text text:GLOBAL_NOT_FOUND
+		row
+			cell colspan:2
 				fieldset title:message:prop_userinfo
 		row
 			cell
@@ -43,40 +85,4 @@ page
 						cell
 							image icon:user
 							user user:var:lastchange_user
-		row
-			cell colspan:2
-				fieldset title:message:additional_info
-		row
-			cell
-				text text:FILE_SIZE
-			cell
-				text var:size
-		row
-			cell
-				text text:FILE_mimetype
-			cell class:filename
-				text var:mimetype
-
-		row
-			cell
-				text text:CACHE_FILENAME
-			cell class:filename
-				if present:cache_filename
-					text var:cache_filename
-		if present:cache_filename
-			row
-				cell
-				cell
-					image icon:el_date
-					date date:var:cache_filemtime
-		row
-			cell
-				text text:FILE_PAGES
-			cell
-				list list:pages extract:true
-					link url:url target:cms_main
-						image type:page
-						text var:name
-					newline
-				if empty:pages
-					text text:GLOBAL_NOT_FOUND
+					

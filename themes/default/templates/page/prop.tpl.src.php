@@ -1,7 +1,7 @@
 page
 
 	form
-		window icon:page widths:50%,50%
+		window icon:page widths:40%,60%
 			row
 				cell
 					text text:global_name
@@ -18,6 +18,6 @@ page
 				cell
 					inputarea name:description class:description
 			row
-				cell colspan:2
+				cell colspan:2 class:act
 					button type:ok
 	focus field:name

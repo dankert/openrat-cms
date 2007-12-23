@@ -17,6 +17,14 @@ page
 			cell colspan:2 class:filename
 				text var:full_filename
 		row
+			cell colspan:2
+				fieldset title:message:additional_info
+		row
+			cell
+				text key:id
+			cell
+				text var:objectid
+		row
 			cell colspan:3
 				fieldset title:message:PROP_USERINFO
 		row

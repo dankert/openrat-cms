@@ -10,10 +10,18 @@ page
 			cell
 				text text:GLOBAL_description
 			cell
-				text var:desc
+				text var:description
 		row
 			cell colspan:2
 				fieldset title:message:additional_info
+		row
+			cell
+				text key:id
+			cell
+				text var:objectid
+		row
+			cell colspan:2
+				fieldset title:message:prop_userinfo
 		row
 			cell
 				text text:global_created
