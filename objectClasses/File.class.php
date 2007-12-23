@@ -632,9 +632,9 @@ EOF
 	
 	function setTimestamp()
 	{
-		unlink( $this->tmpfile() );
+		@unlink( $this->tmpfile() );
 		
-		$parent->setTimestamp();
+		$this->setTimestamp();
 	}
 	
 }

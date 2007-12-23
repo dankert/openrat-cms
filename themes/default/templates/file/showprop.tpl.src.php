@@ -1,59 +1,66 @@
 page
 
-	window icon:folder widths:50%,50%
+	window icon:folder widths:40%,60% width:70%
 		row
-			cell class:fx
+			cell
 				text text:global_name
-			cell class:fx
+			cell class:name
 				text var:name
 		row
-			cell class:fx
-				text text:global_filename
-			cell class:fx
-				text var:filename
-		row
-			cell class:fx
-				text text:file_extension
-			cell class:fx
-				text var:extension
-		row
-			cell class:fx
+			cell
 				text text:global_description
-			cell class:fx
+			cell
 				text var:description
 		row
-			cell class:fx
+			cell
+				text text:global_full_filename
+			cell class:filename
+				text var:full_filename
+		row
+			cell colspan:2
+				fieldset title:message:prop_userinfo
+		row
+			cell
 				text text:global_created
-			cell class:fx
-				date date:create_date
-				text raw:,_
-				user user:create_user
+			cell
+				table
+					row
+						cell
+							image icon:el_date
+							date date:var:create_date
+						cell
+							image icon:user
+							user user:var:create_user
 		row
-			cell class:fx
+			cell
 				text text:global_lastchange
-			cell class:fx
-				date date:lastchange_date
-				text raw:,_
-				user user:lastchange_user
-
+			cell
+				table
+					row
+						cell
+							image icon:el_date
+							date date:var:lastchange_date
+						cell
+							image icon:user
+							user user:var:lastchange_user
 		row
-			cell class:fx
+			cell colspan:2
+				fieldset title:message:additional_info
+		row
+			cell
 				text text:FILE_SIZE
-			cell class:fx
-RAW
-<?php echo number_format($size/1000,0,',','.') ?> kB
-END
-
+			cell
+				text var:size
 		row
-			cell class:fx
+			cell
 				text text:FILE_mimetype
-			cell class:fx
+			cell class:filename
 				text var:mimetype
 
 		row
-			cell class:fx
+			cell
 				text text:FILE_PAGES
-			cell class:fx
+			cell
 				list list:pages extract:true
 					link url:url target:cms_main
 						image type:page

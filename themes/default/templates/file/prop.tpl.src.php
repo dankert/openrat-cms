@@ -1,6 +1,6 @@
 page
 	form
-		window icon:folder widths:50%,50% 
+		window icon:folder widths:40%,60% width:70%
 			row 
 				cell
 					text text:global_name
@@ -21,7 +21,7 @@ page
 					text text:global_description
 				cell
 					inputarea name:description class:description
-			row class:
-				cell colspan:2
+			row
+				cell colspan:2 class:act
 					button type:ok
 	focus field:name

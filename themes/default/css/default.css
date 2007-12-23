@@ -366,7 +366,8 @@ textarea.longtext
 }
 
 /* Eingabfeld für Namen */
-input.name
+input.name,
+td.name
 {
 	font-weight:bold;
 }
@@ -374,7 +375,8 @@ input.name
 /* Eingabfeld für Dateiname */
 input.filename,
 input.extension,
-input.ansidate
+input.ansidate,
+td.filename
 {
 	font-family:Courier;
 	font-size:13px;

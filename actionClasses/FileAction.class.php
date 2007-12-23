@@ -209,12 +209,31 @@ class FileAction extends ObjectAction
 		$format          =        $this->getRequestVar('format'          ) ;
 		$factor          =        $this->getRequestVar('factor'          ) ;
 		
+		if	( $this->getRequestVar('factor') == '1' &&
+			  ! $this->hasRequestVar('width' )      &&
+			  ! $this->hasRequestVar('height') )
+		{
+			$this->addValidationError('factor','INPUT_NEW_IMAGE_SIZE');
+			$this->addValidationError('width','' );
+			$this->addValidationError('height','');
+			$this->callSubAction('size');
+			return;
+		}
+		
+		if	( $this->hasRequestVar('copy') )
+		{
+			// Datei neu anlegen.
+			$this->file->name     = lang('copy_of').' '.$this->file->name;
+			$this->file->filename = $this->file->filename.'_resized_'.time();
+			$this->file->add();
+			Session::setObject( $this->file );
+		}
+		
 		$this->file->imageResize( intval($width),intval($height),$factor,$this->imageFormat(),$format,$jpegcompression );
 		$this->file->save();      // Um z.B. Groesse abzuspeichern
 		$this->file->saveValue();
 
 		$this->addNotice($this->file->getType(),$this->file->name,'IMAGE_RESIZED','ok');
-		$this->callSubAction('edit');
 	}
 
 
@@ -240,6 +259,7 @@ class FileAction extends ObjectAction
 		// Eigenschaften der Datei uebertragen
 		$this->setTemplateVars( $this->file->getProperties() );
 
+		$this->setTemplateVar('size',number_format($this->file->size/1000,0,',','.').' kB' );
 		$this->setTemplateVar('full_filename',$this->file->full_filename());
 
 		// Alle Seiten mit dieser Datei ermitteln
@@ -306,10 +326,7 @@ class FileAction extends ObjectAction
 			$formats = array();
 
 		$sizes = array();
-		foreach( array(10,25,50,75) as $s )
-			$sizes[strval($s/100)] = $s.'%';
-		$sizes[1] = '-';
-		foreach( array(125,150,175,200,250,300,350,400,500,600,800) as $s )
+		foreach( array(10,25,50,75,100,125,150,175,200,250,300,350,400,500,600,800) as $s )
 			$sizes[strval($s/100)] = $s.'%';
 			
 		$jpeglist = array();
@@ -320,6 +337,12 @@ class FileAction extends ObjectAction
 		$this->setTemplateVar('jpeglist'      ,$jpeglist   );
 		$this->setTemplateVar('formats'       ,$formats    );
 		$this->setTemplateVar('format'        ,$format     );
+		$this->setTemplateVar('factor'        ,1           );
+		
+		$this->file->getImageSize();
+		$this->setTemplateVar('width' ,$this->file->width  );
+		$this->setTemplateVar('height',$this->file->height );
+		$this->setTemplateVar('type'  ,'input'             );
 	}
 
 

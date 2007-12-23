@@ -84,6 +84,6 @@ goto=edit
 
 [menu]
 edit=edit,editvalue,compress,uncompress,extract
-prop=showprop,prop,remove,size
+prop=showprop,prop,size
 rights=rights,aclform
 pub=pub
