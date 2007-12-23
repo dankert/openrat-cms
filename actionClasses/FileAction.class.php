@@ -82,6 +82,10 @@ class FileAction extends ObjectAction
 	}
 
 
+	/**
+	 * Abspeichern der Eigenschaften zu dieser Datei.
+	 *
+	 */
 	function saveprop()
 	{
 		// Eigenschaften speichern
@@ -93,21 +97,6 @@ class FileAction extends ObjectAction
 		$this->file->save();
 		$this->file->setTimestamp();
 		$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
-	}
-
-
-	function remove()
-	{
-	}
-
-
-	function delete()
-	{
-		if	( $this->hasRequestVar('delete') )
-		{
-			$this->file->delete();
-			$this->addNotice( 'Datei entfernt');
-		}
 	}
 
 
@@ -133,7 +122,6 @@ class FileAction extends ObjectAction
 		// Groesse des Bildes in Bytes
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
 		header('Content-Length: '.filesize($this->file->tmpfile()) );
-		
 		
 		
 		readfile( $this->file->tmpfile() );
@@ -209,12 +197,11 @@ class FileAction extends ObjectAction
 		$format          =        $this->getRequestVar('format'          ) ;
 		$factor          =        $this->getRequestVar('factor'          ) ;
 		
-		if	( $this->getRequestVar('factor') == '1' &&
+		if	( $this->getRequestVar('type') == 'input' &&
 			  ! $this->hasRequestVar('width' )      &&
 			  ! $this->hasRequestVar('height') )
 		{
-			$this->addValidationError('factor','INPUT_NEW_IMAGE_SIZE');
-			$this->addValidationError('width','' );
+			$this->addValidationError('width','INPUT_NEW_IMAGE_SIZE' );
 			$this->addValidationError('height','');
 			$this->callSubAction('size');
 			return;
@@ -223,17 +210,37 @@ class FileAction extends ObjectAction
 		if	( $this->hasRequestVar('copy') )
 		{
 			// Datei neu anlegen.
-			$this->file->name     = lang('copy_of').' '.$this->file->name;
-			$this->file->filename = $this->file->filename.'_resized_'.time();
-			$this->file->add();
-			Session::setObject( $this->file );
+			$imageFile = new File($this->file->objectid);
+			$imageFile->load();
+			$imageFile->name       = lang('copy_of').' '.$imageFile->name;
+			$imageFile->desription = lang('copy_of').' '.$imageFile->description;
+			$imageFile->filename   = $imageFile->filename.'_resized_'.time();
+			$imageFile->add();
+			$imageFile->copyValueFromFile( $this->file->objectid );
+		}
+		else
+		{
+			$imageFile = $this->file;
 		}
 		
-		$this->file->imageResize( intval($width),intval($height),$factor,$this->imageFormat(),$format,$jpegcompression );
-		$this->file->save();      // Um z.B. Groesse abzuspeichern
-		$this->file->saveValue();
+		if	( $this->getRequestVar('type') == 'factor')
+		{
+			$width  = 0;
+			$height = 0;
+		}
+		else
+		{
+			$factor = 1;
+		}
 
-		$this->addNotice($this->file->getType(),$this->file->name,'IMAGE_RESIZED','ok');
+		$imageFile->write();
+		
+		$imageFile->imageResize( intval($width),intval($height),$factor,$this->imageFormat(),$format,$jpegcompression );
+		$imageFile->setTimestamp();
+		$imageFile->save();      // Um z.B. Groesse abzuspeichern
+		$imageFile->saveValue();
+
+		$this->addNotice($imageFile->getType(),$imageFile->name,'IMAGE_RESIZED','ok');
 	}
 
 
@@ -261,6 +268,12 @@ class FileAction extends ObjectAction
 
 		$this->setTemplateVar('size',number_format($this->file->size/1000,0,',','.').' kB' );
 		$this->setTemplateVar('full_filename',$this->file->full_filename());
+		
+		if	( is_file($this->file->tmpfile()))
+		{
+			$this->setTemplateVar('cache_filename' ,$this->file->tmpfile());
+			$this->setTemplateVar('cache_filemtime',@filemtime($this->file->tmpfile()));
+		}
 
 		// Alle Seiten mit dieser Datei ermitteln
 		$pages = $this->file->getDependentObjectIds();
