@@ -1,5 +1,5 @@
 <?php
-if ( isset($attr_addempty) )
+if ( $attr_addempty!==FALSE  )
 {
 	if ($attr_addempty===TRUE)
 		$$attr_list = array(''=>lang('LIST_ENTRY_EMPTY'))+$$attr_list;
