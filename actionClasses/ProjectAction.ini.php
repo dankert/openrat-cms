@@ -1,6 +1,9 @@
 
 admin=true
 
+[phpinfo]
+direct=true
+
 [default]
 goto=listing
 

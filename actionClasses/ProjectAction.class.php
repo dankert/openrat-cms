@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.19  2008-03-06 21:10:21  dankert
+// Ausgabe von PHPINFO erm?glichen (es wird phpinfo(); aufgerufen).
+//
 // Revision 1.18  2007-12-22 00:21:41  dankert
 // Funktion f?r Projektbeispiel entfernt.
 //
@@ -294,5 +297,16 @@ class ProjectAction extends Action
 			$this->addNotice('project',$this->project->name,'DONE');
 			$this->setTemplateVar('done',true);
 		}
+	}
+	
+	
+	
+	/**
+	 * Ausgabe PHPINFO.
+	 *
+	 */
+	function phpinfo()
+	{
+		phpinfo();
 	}
 }

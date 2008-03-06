@@ -75,6 +75,7 @@ class MainmenuAction extends Action
 				$this->addSubAction( 'memberships',-1 );
 				$this->addSubAction( 'pw'         ,-1 );
 				$this->addSubAction( 'rights'     ,-1 );
+				$this->addSubAction( 'phpinfo'    ,-1 );
 				break;
 
 			case 'template':
@@ -410,6 +411,7 @@ class MainmenuAction extends Action
 
 		$this->addSubaction('listing');
 		$this->addSubaction('add'    );
+		$this->addSubaction('phpinfo');
 		
 		if   ( $this->getRequestId() > 0 )
 		{
