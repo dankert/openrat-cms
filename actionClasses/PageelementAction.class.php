@@ -134,12 +134,24 @@ class PageelementAction extends Action
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
 		$this->setTemplateVar('elementid',$this->value->element->elementid);
 		$this->setTemplateVar('type'     ,$this->value->element->type     );
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->setTemplateVar( 'objectid',$this->value->page->objectid );
 		
+		
+		if	( $this->value->page->hasRight(ACL_RELEASE) )
+			$this->setTemplateVar( 'release',true  );
+		if	( $this->value->page->hasRight(ACL_PUBLISH) )
+			$this->setTemplateVar( 'publish',false );
+			
 		$funktionName = 'advanced'.$this->value->element->type;
 		
 		if	( ! method_exists($this,$funktionName) )
 			die( 'Fatal: Method does not exist in PageElementAction: '.$funktionName );
-			
+
 		$this->$funktionName(); // Aufruf der Funktion "advanced<Elementtyp>()".
 	}
 	
@@ -590,6 +602,13 @@ class PageelementAction extends Action
 			}
 			asort( $objects ); // Sortieren
 	
+			
+			$transformer = new Transformer();
+			$transformer->text = $this->value->text;
+			$transformer->parseDocument();
+			$this->setTemplateVar( 'document',$transformer->doc );
+			
+			$this->setTemplateVar( 'text',$this->value->text          );
 			$this->setTemplateVar( 'objects',$objects );
 			$this->setTemplateVar( 'images' ,$objects );
 		}
