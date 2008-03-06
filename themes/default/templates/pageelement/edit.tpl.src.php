@@ -21,8 +21,58 @@ page
 			if value:var:type equals:longtext
 				row
 					cell colspan:2 class:fx
+						//focus field:text
+
+						//if value:var:editor equals:wiki
+//						if present:preview_text
+//							text var:preview_text
+//							newline
+						
+//						editor type:wiki name:text
 						inputarea class:longtext name:text rows:25 cols:70
-						focus field:text
+						fieldset title:message:help
+						table
+							cell
+								text text:config:editor/text-markup/strong-begin
+								text text:message:text_markup_strong
+								text text:config:editor/text-markup/strong-end
+								newline
+								text text:config:editor/text-markup/emphatic-begin
+								text text:message:text_markup_emphatic
+								text text:config:editor/text-markup/emphatic-end
+							cell
+								text text:config:editor/text-markup/list-numbered
+								text text:message:text_markup_numbered_list
+								newline
+								text text:config:editor/text-markup/list-numbered
+								text text::...
+								newline
+							cell
+								text text:config:editor/text-markup/list-unnumbered
+								text text:message:text_markup_unnumbered_list
+								newline
+								text text:config:editor/text-markup/list-unnumbered
+								text text::...
+								newline
+							cell
+								text text:config:editor/text-markup/table-cell-sep
+								text text:message:text_markup_table
+								text text:config:editor/text-markup/table-cell-sep
+								text text::...
+								text text:config:editor/text-markup/table-cell-sep
+								text text::...
+								text text:config:editor/text-markup/table-cell-sep
+								newline
+								text text:config:editor/text-markup/table-cell-sep
+								text text::...
+								text text:config:editor/text-markup/table-cell-sep
+								text text::...
+								text text:config:editor/text-markup/table-cell-sep
+								text text::...
+								text text:config:editor/text-markup/table-cell-sep
+								newline
+								
+
 
 			if value:var:type equals:link
 				row
