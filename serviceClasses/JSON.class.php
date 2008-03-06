@@ -1,6 +1,4 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
 /**
  * Converts to and from JSON format.
  *
@@ -50,6 +48,7 @@
  * @author      Michal Migurski <mike-json@teczno.com>
  * @author      Matt Knapp <mdknapp[at]gmail[dot]com>
  * @author      Brett Stimmerman <brettstimmerman[at]gmail[dot]com>
+ * @author      Jan Dankert
  * @copyright   2005 Michal Migurski
  * @version     CVS: $Id$
  * @license     http://www.opensource.org/licenses/bsd-license.php
