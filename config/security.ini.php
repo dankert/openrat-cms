@@ -1,5 +1,9 @@
 ; <?php exit('direct access denied') ?>
 
+; Security settings for Openrat - be careful :)
+
+
+
 ; All is readonly (for maintanance jobs)
 ; true|false, default:false
 readonly=false
@@ -47,6 +51,7 @@ password=
 enable=false
 
 ; Name of the guest user, who is automatically logged in.
+; This user must exist in your user database.
 user=guest
 
 
