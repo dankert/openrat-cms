@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.29  2008-03-06 21:19:15  dankert
+// Nur Logging-Ausgabe verbessert.
+//
 // Revision 1.28  2007-11-08 23:03:41  dankert
 // Kommentare erg?nzt.
 //
@@ -690,7 +693,12 @@ SQL
 					$dn = $ldap->searchUser( $this->name );
 					
 					if	 ( empty($dn) )
+					{
+						Logger::debug( 'User not found in LDAP directory' );
 						return false; // Kein LDAP-Account gefunden.
+					}
+
+					Logger::debug( 'User found: '.$dn );
 				}
 				else
 				{
@@ -699,6 +707,8 @@ SQL
 					
 				// LDAP-Login versuchen
 				$ok = $ldap->bind( $dn, $password );
+				
+				Logger::debug( 'LDAP bind: '.($ok?'success':'failed') );
 				
 				if	( $ok && $conf['security']['authorize']['type'] == 'ldap' )
 				{
@@ -807,7 +817,7 @@ SQL
 			}
 			else
 			{
-				die( 'unknown auth-type: '.$authType );
+				die( 'unknown authentication-type in configuration: '.$authType );
 			}
 		}
 
