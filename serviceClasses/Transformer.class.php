@@ -37,6 +37,7 @@ class Transformer
 		$zeilen = explode("\n",$this->text);
 		
 		// Dokument erzeugen und den Text parsen.
+		$parser = new WikiParser();
 		$this->doc          = new DocumentElement();
 		$this->doc->element = $this->element;
 		$this->doc->parse( $zeilen );
@@ -50,6 +51,8 @@ class Transformer
 	 */	
 	function renderDocument()
 	{
+		$this->doc->encodeHtml = !$this->element->html;
+		
 		$text = $this->doc->render( $this->page->mimeType() );
 
 		// Liste der verlinkten Objekt-Ids.
