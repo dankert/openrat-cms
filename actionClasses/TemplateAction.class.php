@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.22  2008-09-11 19:06:14  dankert
+// in src() Abfrage auf Modus.
+//
 // Revision 1.21  2007-11-24 14:17:42  dankert
 // MimeType in Template ermitteln. Auswahl der Erweiterung ?ber Auswahl-Box.
 //
@@ -611,34 +614,83 @@ class TemplateAction extends Action
 	  */
 	function src()
 	{
-		$text = $this->template->src;
-	
-		foreach( $this->template->getElementIds() as $elid )
+		if	( $this->isEditMode() )
 		{
-			$element = new Element( $elid );
-			$element->load();
-
-			$text = str_replace('{{'.$elid.'}}',
-			                           '{{'.$element->name.'}}',
-			                           $text );
-			$text = str_replace('{{->'.$elid.'}}',
-			                           '{{->'.$element->name.'}}',
-			                           $text );
-			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-			                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
-			                           $text );
-			$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-			                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
-			                           $text );
-			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-			                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
-			                           $text );
-			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-			                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
-			                           $text );
+			$text = $this->template->src;
+		
+			foreach( $this->template->getElementIds() as $elid )
+			{
+				$element = new Element( $elid );
+				$element->load();
+	
+				$text = str_replace('{{'.$elid.'}}',
+				                           '{{'.$element->name.'}}',
+				                           $text );
+				$text = str_replace('{{->'.$elid.'}}',
+				                           '{{->'.$element->name.'}}',
+				                           $text );
+				$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
+				                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+				                           $text );
+				$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
+				                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+				                           $text );
+				$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
+				                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+				                           $text );
+				$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
+				                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+				                           $text );
+			}
+	
+			$this->setTemplateVar( 'src',$text );
 		}
-
-		$this->setTemplateVar( 'src',$text );
+		else
+		{
+			$text = htmlentities( $this->template->src );
+			$text = str_replace("\n",'<br/>',$text);
+		
+			foreach( $this->template->getElementIds() as $elid )
+			{
+				$element = new Element( $elid );
+				$element->load();
+				$url = Html::url( 'element','name',$elid );
+				
+				$text = str_replace('{{'.$elid.'}}',
+				                    '<a href="'.$url.'" class="el_'.
+				                    $element->getTypeClass().'" target="cms_main_main" title="'.$element->desc.'">{{'.
+				                    $element->name.'}}</a>',
+				                    $text );
+				$text = str_replace('{{-&gt;'.$elid.'}}',
+				                    '<a href="'.$url.'" class="el_'.
+				                    $element->getTypeClass().'" target="cms_main_main" title="'.$element->desc.'">{{-&gt;'.
+				                    $element->name.'}}</a>',
+				                    $text );
+	
+				$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
+				                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
+				                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
+				                    $text );
+				$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
+				                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
+				                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
+				                    $text );
+	
+				$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
+				                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
+				                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
+				                    $text );
+				$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
+				                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
+				                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
+				                    $text );
+				                    
+				unset( $element );
+			}
+		
+			$this->setTemplateVar('src',$text);
+		}
+		
 	}
 
 
