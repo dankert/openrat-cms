@@ -214,6 +214,11 @@ class Action
 
 		if	( !is_array($vars))
 			$vars = array($vars);
+			
+		if	( $status === true )
+			$status = OR_NOTICE_OK;
+		elseif	( $status === false )
+			$status = OR_NOTICE_ERROR;
 
 		$this->templateVars['notices'][] = array('type'=>$type,
                                                  'name'=>$name,
@@ -254,6 +259,13 @@ class Action
 	{
 		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
 			exit; // Die Ausgabe ist bereits erfolgt (z.B. Binärdateien o. WebDAV)
+
+		// Pruefen, ob HTTP-Header gesendet wurden. Dies deutet stark darauf hin, dass eine
+		// PHP-Fehlermeldung ausgegeben wurde. In diesem Fall wird hier abgebrochen.
+		// Weitere Ausgabe wuerde keinen Sinn machen, da wir nicht wissen, was
+		// passiert ist.
+		if	( headers_sent() )
+			Http::serverError("Some server error messages occured - see above - CMS canceled.");
 			
 		$httpAccept = getenv('HTTP_ACCEPT');
 		$types = explode(',',$httpAccept);
@@ -340,6 +352,8 @@ class Action
 		else
 			$cms_title = OR_TITLE.' '.OR_VERSION;
 
+		$charset = $this->getCharset();
+			
 		$showDuration = $conf['interface']['show_duration'];
 
 		$subActionName = $this->subActionName;
@@ -541,6 +555,45 @@ class Action
 	{
 		// Standard: Alle Menüpunkt sind aktiv.
 		return true;
+	}
+	
+	
+	
+	/**
+	 * Ermitelt den Zeichensatz für die Ausgabe.
+	 *
+	 * @return String Zeichensatz
+	 */
+	function getCharset()
+	{
+		$db = db_connection();
+		
+		if	( $db->conf['utf8'] )
+			return 'UTF-8';
+		else
+			return lang('CHARSET');
+	}
+	
+	
+	/**
+	 * Stellt fest, ob die Anzeige dieser Aktion editierbar ist.
+	 *
+	 * @return boolean
+	 */
+	function isEditable()
+	{
+		return isset($this->actionConfig[$this->subActionName]['editable']) && $this->actionConfig[$this->subActionName]['editable']; 
+	}
+
+	
+	/**
+	 * Stellt fest, ob sich die Anzeige im Editier-Modus befindet.
+	 *
+	 * @return boolean
+	 */
+	function isEditMode()
+	{
+		return !$this->isEditable() || $this->getRequestVar('mode')=='edit'; 
 	}
 }
 
