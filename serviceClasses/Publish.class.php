@@ -104,12 +104,15 @@ class Publish
 		$this->content_negotiation = ( $project->content_negotiation == '1' );
 		$this->cut_index           = ( $project->cut_index           == '1' );
 
-		$this->cmd_after_publish   = $project->cmd_after_publish;
+		if	( $conf_project['override_system_command'] && !empty($project->cmd_after_publish) )
+			$this->cmd_after_publish   = $project->cmd_after_publish;
+		else
+			$this->cmd_after_publish   = $conf_project['system_command'];
 		
 		// Im Systemkommando Variablen ersetzen
-		str_replace('{name}'   ,$project->name                ,$this->cmd_after_publish);
-		str_replace('{dir}'    ,$this->local_destdir          ,$this->cmd_after_publish);
-		str_replace('{dirbase}',basename($this->local_destdir),$this->cmd_after_publish);
+		$this->cmd_after_publish = str_replace('{name}'   ,$project->name                ,$this->cmd_after_publish);
+		$this->cmd_after_publish = str_replace('{dir}'    ,$this->local_destdir          ,$this->cmd_after_publish);
+		$this->cmd_after_publish = str_replace('{dirbase}',basename($this->local_destdir),$this->cmd_after_publish);
 	}
 
 	
@@ -134,9 +137,8 @@ class Publish
 			$dest   = $this->local_destdir.'/'.$dest_filename;
 			
 			// Nicht kopieren, wenn
-			// - Quell- und Zieldatei gleich groﬂ und
 			// - Quelldatei nicht neuer als die Zieldatei
-			if	( filesize($source)  == filesize($dest) &&
+			if	( is_file($dest) &&
 				  filemtime($source) <= filemtime($dest)   )
 				  return;
 			 
