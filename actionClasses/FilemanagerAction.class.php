@@ -51,7 +51,7 @@ class FilemanagerAction extends ObjectAction
 	function FilemanagerAction()
 	{
 		// PHP-Fehler ins Log schreiben, damit die Ausgabe nicht zerstört wird.
-		set_error_handler('filemanagerErrorHandler');
+		set_error_handler('filemanagerErrorHandler',E_ALL & ~E_NOTICE);
 
 		// Get the main request information.
 		$this->command		 = $this->getRequestVar('Command'      );
@@ -79,8 +79,9 @@ class FilemanagerAction extends ObjectAction
 	 */
 	function investigateCurrentFolder()
 	{
-		$folderid = Folder::getRootFolderId();
-		$this->folder = new Folder( Folder::getRootFolderId() );
+		$project = Session::getProject();
+		$folderid = $project->getRootObjectId();
+		$this->folder = new Folder( $folderid );
 		$parts = explode('/',$this->currentFolder);
 
 		foreach( $parts as $part )
@@ -349,7 +350,7 @@ function filemanagerErrorHandler($errno, $errstr, $errfile, $errline)
 	Logger::warn('FCKEDITOR FILEMANAGER ERROR: '.$errno.'/'.$errstr.'/file:'.$errfile.'/line:'.$errline);
 
 	// Wir teilen dem Client mit, dass auf dem Server was schief gelaufen ist.	
-	WebdavAction::httpStatus('500 Internal Server Error');
+	Http::serverError('Filemanager failed with: '.$errno.'/'.$errstr.'/file:'.$errfile.'/line:'.$errline);
 }
 
 ?>
