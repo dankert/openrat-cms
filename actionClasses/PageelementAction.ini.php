@@ -39,13 +39,15 @@ menu=edit
 [edit]
 menu=edit
 target=save
+editable=true
 
 [advanced]
 menu=edit
 target=save
+editable=true
 
 [save]
-goto=show
+goto=edit
 
 [menu]
 edit=show,edit,advanced,link,import,export,archive

@@ -33,6 +33,7 @@ goto=el
 [src]
 menu=edit
 target=savesrc
+editable=true
 
 [srcelement]
 menu=edit

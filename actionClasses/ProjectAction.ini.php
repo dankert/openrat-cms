@@ -28,6 +28,7 @@ target=export
 [edit]
 target=save
 menu=edit
+editable=true
 
 [addproject]
 goto=listing

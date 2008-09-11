@@ -25,6 +25,7 @@ menu=prop
 [prop]
 menu=prop
 target=saveprop
+editable=true
 
 [saveprop]
 goto=showprop
@@ -32,6 +33,7 @@ goto=showprop
 [size]
 menu=prop
 target=resize
+editable=true
 
 [remove]
 menu=prop

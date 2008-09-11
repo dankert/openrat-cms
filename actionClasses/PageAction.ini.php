@@ -41,6 +41,7 @@ menu=prop
 [prop]
 menu=prop
 target=saveprop
+editable=true
 
 [changetemplate]
 menu=prop
