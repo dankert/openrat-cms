@@ -46,6 +46,17 @@
 			echo '&nbsp;&raquo;&nbsp;';
 		}
 		echo '<span class="title">'.lang($windowTitle).'</span>';
+		
+		if ($this->isEditable()) { ?>
+  <?php if ($this->getRequestVar('mode')=='edit') { ?>
+  &nbsp;&nbsp;(<a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo lang('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><?php echo lang('MODE_EDIT_CANCEL') ?></a>)
+  <?php } else { ?>
+  <!--  "Bearbeiten..:" -->
+  <?php } ?>
+  <?php }
+		
+		
+		
 		?>
 		</td>
 		<?php
@@ -111,6 +122,7 @@
   
     </table>
   <?php } ?>
+  
     </td>
   </tr>
   <tr>
@@ -124,3 +136,6 @@
   <tr>
     <td>
       <table class="n" cellspacing="0" width="100%" cellpadding="4">
+      
+
+      
