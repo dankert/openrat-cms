@@ -183,6 +183,8 @@ class TemplateEngine
 				return 'lang('."'".preg_replace('/{(\w+)\}/','\'.$\\1.\'',$value)."'".')';
 			case 'messagevar':
 				return 'lang($'.$value.')';
+			case 'mode':
+				return $invert.'$this->getRequestVar("mode")=="'.$value.'"';
 			case 'arrayvar':
 				list($arr,$key) = explode(':',$value.':none');
 				return $invert.'@$'.$arr.'['.$key.']';
