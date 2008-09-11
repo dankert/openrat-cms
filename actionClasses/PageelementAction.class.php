@@ -634,7 +634,13 @@ class PageelementAction extends Action
 			$this->setTemplateVar( 'editor','text' );
 
 		$this->setTemplateVar( 'text',$this->value->text          );
-	
+
+		if	(! $this->isEditMode() ) 
+		{
+			$this->value->generate(); // Inhalt erzeugen.
+			$this->setTemplateVar('text',$this->value->value);
+		}
+		
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
@@ -734,7 +740,7 @@ class PageelementAction extends Action
 			// Nicht aktive Inhalte können direkt bearbeitet werden und sind
 			// nach dem Speichern dann wieder aktiv (natürlich als nächster/neuer Inhalt) 
 			if	( ! $value->active )
-				$zeile['useUrl'] = Html::url('pageelement','usevalue',$this->page->objectid,array('valueid'  =>$value->valueid));
+				$zeile['useUrl'] = Html::url('pageelement','usevalue',$this->page->objectid,array('valueid'  =>$value->valueid,'mode'=>'edit'));
 
 			// Freigeben des Inhaltes.
 			// Nur das aktive Inhaltselement kann freigegeben werden. Natürlich auch nur,
