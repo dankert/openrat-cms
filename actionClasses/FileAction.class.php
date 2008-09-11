@@ -597,8 +597,7 @@ class FileAction extends ObjectAction
 	{
 		$this->file->publish();
 		$this->file->publish->close();
-
-		$this->addNotice('file',$this->file->fullFilename,'PUBLISHED',$this->file->publish->ok?OR_NOTICE_OK:OR_NOTICE_ERROR,array(),$this->file->publish->log);
+		$this->addNotice('file',$this->file->fullFilename,'PUBLISHED'.($this->file->publish->ok?'':'_ERROR'),$this->file->publish->ok,array(),$this->file->publish->log);
 		
 		$this->callSubaction('pub');
 	}

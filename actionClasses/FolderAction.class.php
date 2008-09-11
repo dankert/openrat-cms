@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.47  2008-09-11 19:04:39  dankert
+// Korrektur Rueckmeldung.
+//
 // Revision 1.46  2007-12-23 16:05:00  dankert
 // Anzeigen der Ordner-Eigenschaften verbessert.
 //
@@ -1268,7 +1271,7 @@ class FolderAction extends ObjectAction
 			$list[] = $o['full_filename'];
 		
 		if	( !$publish->ok )
-			$this->addNotice('folder',$this->folder->name,'ERROR',OR_NOTICE_ERROR,array(),$publish->log);
+			$this->addNotice('folder',$this->folder->name,'PUBLISHED_ERROR',OR_NOTICE_ERROR,array(),$publish->log);
 		else
 			$this->addNotice('folder',$this->folder->name,'PUBLISHED',OR_NOTICE_OK,array(),$list);
 				
