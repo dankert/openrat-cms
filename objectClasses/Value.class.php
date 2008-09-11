@@ -429,7 +429,9 @@ SQL
 	
 		$inhalt = '';
 
-		if	( is_file( $this->tmpfile() ))
+		global $conf;
+//		Html::debug($conf);
+		if	( $conf['cache']['enable_cache'] && is_file( $this->tmpfile() ))
 		{
 			$this->value = implode('',file($this->tmpfile() )); // from cache.
 			return;

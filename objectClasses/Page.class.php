@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.26  2008-09-11 19:01:16  dankert
+// Korrektur fuer Veroeffentlichen (nur deaktiveren, wenn keine Dateiendung vorliegt.)
+//
 // Revision 1.25  2007-12-11 00:22:31  dankert
 // Cache von Dateien und Seiten zur Performancesteigerung beim Ver?ffentlichen.
 //
@@ -725,7 +728,9 @@ class Page extends Object
 	  */
 	function generate()
 	{
-		if	( is_file($this->tmpfile() ))
+		global $conf;
+//		Html::debug($conf);
+		if	( $conf['cache']['enable_cache'] && is_file($this->tmpfile() ))
 		{
 			$this->value = implode('',file($this->tmpfile()));
 			return $this->value;
@@ -829,12 +834,17 @@ class Page extends Object
 				$this->load();
 				$this->generate();
 				$this->write();
+
+				// Vorlage ermitteln.
+				$t = new Template( $this->templateid );
+				$t->projectmodelid = $this->modelid;
+				$t->load();
 				
 				// Nur wenn eine Datei-Endung vorliegt wird die Seite veroeffentlicht
-				if	( !empty($this->template->extension) )
+				if	( !empty($t->extension) )
 				{ 	
 					$this->publish->copy( $this->tmpfile(),$this->full_filename() );
-					unlink( $this->tmpfile );
+					unlink( $this->tmpfile() );
 					$this->publish->publishedObjects[] = $this->getProperties();
 				}
 			}
