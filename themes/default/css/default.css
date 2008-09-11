@@ -130,6 +130,24 @@ a.menu_highlight:hover
 }
 
 
+a.editorlink:active,
+a.editorlink:hover
+{
+	color:black;
+	font-weight:normal;
+	text-decoration:none;
+	background-color:white;
+}
+
+a.editorlink:link,
+a.editorlink:visited
+{
+	color:black;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+
 body
 {
 	background-color:#CCCCCC;
