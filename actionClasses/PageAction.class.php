@@ -549,7 +549,7 @@ class PageAction extends ObjectAction
 		$this->page->generate();
 		$this->page->write();
 
-		header('Content-Type: '.$this->page->mimeType() );
+		header('Content-Type: '.$this->page->mimeType().'; charset='.$this->getCharset() );
 
 		// HTTP-Header mit Sprachinformation setzen.
 		$language = Session::getProjectLanguage();
@@ -574,8 +574,8 @@ class PageAction extends ObjectAction
 		$this->page->generate();
 		$this->page->write();
 		
-		header('Content-Type: '.$this->page->mimeType() );
-
+		header('Content-Type: '.$this->page->mimeType().'; charset='.$this->getCharset() );
+		
 		// HTTP-Header mit Sprachinformation setzen.
 		$language = Session::getProjectLanguage();
 		header('Content-Language: '.$language->isoCode);
@@ -749,7 +749,7 @@ class PageAction extends ObjectAction
 //			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
 //		}
 
-		$this->addNotice('page',$this->page->fullFilename,'PUBLISHED',$this->page->publish->ok?OR_NOTICE_OK:OR_NOTICE_ERROR,array(),$this->page->publish->log);
+		$this->addNotice('page',$this->page->fullFilename,'PUBLISHED'.($this->page->publish->ok?'':'_ERROR'),$this->page->publish->ok,array(),$this->page->publish->log);
 
 		$this->callSubaction('pub');
 	}
