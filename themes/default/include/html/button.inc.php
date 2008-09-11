@@ -1,5 +1,11 @@
 <?php
 	if ($attr_type=='ok')
+	{
+		if ($this->isEditable() && $this->getRequestVar('mode')!='edit')
+		$attr_text = lang('MODE_EDIT');
+	}
+
+	if ($attr_type=='ok')
 		$attr_type  = 'submit';
 	if (isset($attr_src))
 		$attr_type  = 'image';
