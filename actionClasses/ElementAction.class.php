@@ -51,11 +51,13 @@ class ElementAction extends Action
 	 */
 	function savename()
 	{
-		$this->element->name = $this->getRequestVar('name'       );
-		$this->element->desc = $this->getRequestVar('description');
+		$this->element->name = $this->getRequestVar('name'       ,'abc');
+		$this->element->desc = $this->getRequestVar('description','all');
 
 		$this->element->save();
 		$this->element->load();
+		
+		$this->addNotice('element',$this->template->name,'SAVED',OR_NOTICE_OK);
 	}
 
 
@@ -70,17 +72,23 @@ class ElementAction extends Action
 	
 	
 	/**
-	 * Umbenennen des Elementes
+	 * Entfernen des Elementes
 	 */
 	function delete()
 	{
 		if ( $this->hasRequestVar('deletevalues') )
 		{
 			$this->element->deleteValues();
+			$this->addNotice('element',$this->template->name,'DELETED',OR_NOTICE_OK);
 		}
 		elseif ( $this->hasRequestVar('delete') )
 		{
 			$this->element->delete();
+			$this->addNotice('element',$this->template->name,'DELETED',OR_NOTICE_OK);
+		}
+		else
+		{
+			$this->addNotice('element',$this->template->name,'CANCELED',OR_NOTICE_WARN);
 		}
 	}
 
@@ -94,11 +102,13 @@ class ElementAction extends Action
 		if	( !$this->userIsAdmin() && $this->getRequestVar('type') == 'code' )
 		{
 			// Code-Elemente fuer Nicht-Administratoren nicht benutzbar
+			$this->addNotice('element',$this->template->name,'CANCELED',OR_NOTICE_ERROR);
 		}
 		else
 		{
 			// Neuen Typ setzen und speichern
 			$this->element->setType( $this->getRequestVar('type') );
+			$this->addNotice('element',$this->template->name,'SAVED',OR_NOTICE_OK);
 		}
 	}
 
