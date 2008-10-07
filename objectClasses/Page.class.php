@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.27  2008-10-07 20:03:54  dankert
+// URLs ggf. mit Parameter "oid" aufbauen, um absolute URL zu erzwingen.
+//
 // Revision 1.26  2008-09-11 19:01:16  dankert
 // Korrektur fuer Veroeffentlichen (nur deaktiveren, wenn keine Dateiendung vorliegt.)
 //
@@ -252,6 +255,8 @@ class Page extends Object
 		if	( ! Object::available( $objectid) )
 			return '';
 			
+		$param = array('oid'=>'__OID__'.$objectid.'__'); 
+			
 		$object = new Object( $objectid );
 		$object->objectLoad();
 		
@@ -326,11 +331,11 @@ class Page extends Object
 			switch( $object->getType() )
 			{
 				case 'file':
-					$inhalt = Html::url('file','show',$objectid);
+					$inhalt = Html::url('file','show',$objectid,$param);
 					break;
 
 				case 'page':
-					$inhalt = Html::url('page','show',$objectid);
+					$inhalt = Html::url('page','show',$objectid,$param);
 					break;
 
 				case 'link':
@@ -345,11 +350,11 @@ class Page extends Object
 						switch( $linkedObject->getType() )
 						{
 							case 'file':
-								$inhalt = Html::url('file','show',$link->linkedObjectId);
+								$inhalt = Html::url('file','show',$link->linkedObjectId,$param);
 							break;
 			
 							case 'page':
-								$inhalt = Html::url('page','show',$link->linkedObjectId);
+								$inhalt = Html::url('page','show',$link->linkedObjectId,$param);
 							break;
 						}
 					}
