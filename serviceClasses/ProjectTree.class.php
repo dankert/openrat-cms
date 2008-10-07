@@ -344,7 +344,7 @@ class ProjectTree extends AbstractTree
 			$t = new Template( $id );
 			$t->load();
 			$treeElement->text        = $t->name;
-			$treeElement->url         = Html::url('main','template',$id,array(REQ_PARAM_TARGETSUBACTION=>'edit'));
+			$treeElement->url         = Html::url('main','template',$id,array(REQ_PARAM_TARGETSUBACTION=>'src'));
 			$treeElement->icon        = 'template';
 			$treeElement->target      = 'cms_main';
 			$treeElement->internalId  = $id;
