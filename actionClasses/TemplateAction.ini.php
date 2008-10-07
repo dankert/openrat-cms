@@ -11,9 +11,6 @@ target=addtemplate
 [addtemplate]
 goto=listing
 
-[edit]
-menu=edit
-
 [show]
 direct=true
 
@@ -40,10 +37,10 @@ menu=edit
 target=srcaddelement
 
 [srcaddelement]
-goto=edit
+goto=src
 
 [savesrc]
-goto=edit
+goto=src
 
 [name]
 menu=prop
@@ -73,4 +70,4 @@ menu=prop
 listing=listing,add
 prop=name,extension,pages,remove
 el=el,addel
-edit=edit,src,srcelement
+edit=src,srcelement

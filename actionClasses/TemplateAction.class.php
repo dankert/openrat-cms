@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.23  2008-10-07 20:00:32  dankert
+// Entfernen Methode "edit".
+//
 // Revision 1.22  2008-09-11 19:06:14  dankert
 // in src() Abfrage auf Modus.
 //
@@ -143,6 +146,8 @@ class TemplateAction extends Action
 		$this->template->src = $text;
 		$this->template->save();
 		$this->template->load();
+		
+		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
 	}
 
 
