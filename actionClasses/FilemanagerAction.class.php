@@ -253,7 +253,7 @@ class FilemanagerAction extends ObjectAction
 		echo '<Files>' ;
 
 		foreach( $this->folder->getFileFilenames() as $id=>$name )
-			echo '<File name="' . convertToXmlAttribute( $name ).'" url="'.convertToXmlAttribute( '../../'.Html::url('file','show',$id) ).'" size="' . '1' . '" />' ;
+			echo '<File name="' . convertToXmlAttribute( $name ).'" url="'.convertToXmlAttribute( Html::url('file','show',$id,array('oid'=>'__OID__'.$id.'__') ) ).'" size="' . '1' . '" />' ;
 	
 		echo '</Files>' ;
 	}
