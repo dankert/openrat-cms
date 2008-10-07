@@ -115,13 +115,29 @@ class Action
 	 * @param String $varName Schlüssel
 	 * @return String Inhalt
 	 */
-	function getRequestVar( $varName )
+	function getRequestVar( $varName,$transcode='' )
 	{
 		global $REQ;
 
 		if	( !isset($REQ[ $varName ]) )
 			return '';
-		else	return $REQ[ $varName ];
+			
+		
+		switch( $transcode )
+		{
+			case 'abc':
+				$value  = strip_tags( strtolower($REQ[ $varName ] ) );
+				$my_set = 'abcdefghijklmnopqrstuvwxyz._-';
+				$first  = strtr( $value, $my_set, str_repeat('#', strlen($my_set)) );
+				$second = strtr( $value, $first , str_repeat('_', strlen($first )) );
+				return $second;
+
+			case 'all':
+				return strip_tags( $REQ[ $varName ] );
+				
+			default:
+				return $REQ[ $varName ];
+		}
 	}
 
 
