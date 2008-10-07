@@ -81,7 +81,7 @@ class MainmenuAction extends Action
 			case 'template':
 				$this->addSubAction( 'listing',-1 );
 				$this->addSubAction( 'show'   ,-1 );
-				$this->addSubAction( 'edit'   ,-1 );
+//				$this->addSubAction( 'edit'   ,-1 );
 				$this->addSubAction( 'el'     ,-1 );
 				$this->addSubAction( 'src'    ,-1 );
 				$this->addSubAction( 'prop'   ,-1 );
@@ -131,7 +131,7 @@ class MainmenuAction extends Action
 		
 		$this->addSubaction('listing');
 		$this->addSubaction('show' );
-		$this->addSubaction('edit' );
+//		$this->addSubaction('edit' );
 		$this->addSubaction('el'   );
 		if	( $this->writable )
 			$this->addSubaction('src'  );
@@ -162,7 +162,7 @@ class MainmenuAction extends Action
 			$this->setTemplateVar('text',$template->name );
 			
 			$this->addSubaction('show' );
-			$this->addSubaction('edit' );
+//			$this->addSubaction('edit' );
 			$this->addSubaction('src'  );
 			$this->addSubaction('el'   );
 			$this->addSubaction('prop' );
