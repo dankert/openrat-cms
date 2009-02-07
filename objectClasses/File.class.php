@@ -221,8 +221,8 @@ class File extends Object
 
 
 	/**
-	 * Ermittelt Breite und Höhe des Bildes.<br>
-	 * Die Werte lassen sich anschließend über die Eigenschaften "width" und "height" ermitteln.
+	 * Ermittelt Breite und Hï¿½he des Bildes.<br>
+	 * Die Werte lassen sich anschlieï¿½end ï¿½ber die Eigenschaften "width" und "height" ermitteln.
 	 */
 	function getImageSize()
 	{
@@ -248,7 +248,7 @@ class File extends Object
 	 *
 	 * @param Neue Breite
 	 * @param Neue Hoehe
-	 * @param Bildgrößenfaktor
+	 * @param Bildgrï¿½ï¿½enfaktor
 	 * @param Altes Format als Integer-Konstante IMG_xxx
 	 * @param Neues Format als Integer-Konstante IMG_xxx
 	 * @param Jpeg-Qualitaet (sofern neues Format = Jpeg)
@@ -452,7 +452,6 @@ class File extends Object
 	 */
 	function isImage()
 	{
-		//return eregi('jpe?g|png|gif',$this->extension);
 		return substr($this->mimeType(),0,6)=='image/';
 	}
 
@@ -621,7 +620,7 @@ EOF
 	
 
 	/**
-	 * Ermittelt einen temporären Dateinamen für diese Datei.
+	 * Ermittelt einen temporï¿½ren Dateinamen fï¿½r diese Datei.
 	 */
 	function tmpfile()
 	{
