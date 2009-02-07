@@ -4,3 +4,69 @@ body
 {
 	background-color:black;
 }
+
+body
+{
+	background-color:black;
+}
+
+body.title
+{ 
+	background-image: url('../images/bg-title.png');
+	/*background-repeat: repeat;*/
+	/*background-attachment: fixed;*/
+}
+ 
+
+body.menu
+{ 
+	background-image: url('../images/bg-menu.png');
+	/*background-repeat: repeat;*/
+	/*background-attachment: fixed;*/
+}
+
+td.menu
+{ 
+	background-image: url('../images/bg-menu.png');
+	color: white;
+	/*background-repeat: repeat;*/
+	/*background-attachment: fixed;*/
+}
+td.subaction
+{ 
+	background-image: url('../images/bg-title.png');
+	/*color: white;*/
+	/*background-repeat: repeat;*/
+	/*background-attachment: fixed;*/
+}
+
+input
+{
+	background-image: url('../images/bg-title.png');
+	color:black;
+	border-color:gray;
+}
+textarea
+{
+	color:black;
+	border-color:gray;
+}
+
+input:hover,
+textarea:hover
+{
+	border-color:black;
+}
+
+input:focus,
+textarea:focus
+{
+	background-color:white;
+	border-color:black;
+}
+
+input.submit,
+input.ok
+{
+	color:black;
+}
