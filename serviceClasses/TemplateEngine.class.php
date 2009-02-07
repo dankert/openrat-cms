@@ -72,7 +72,7 @@ class TemplateEngine
 					
 		$filename = 'themes/default/pages/html/'.$tplName.'.tpl.'.PHP_EXT;
 		
-		// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausführen.		
+		// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausfï¿½hren.		
 		if	( $conf['theme']['compiler']['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
 			return;
 			
@@ -94,7 +94,7 @@ class TemplateEngine
 		
 		foreach( $document as $line )
 		{
-			// Initialisieren der möglichen Element-Inhalte
+			// Initialisieren der mï¿½glichen Element-Inhalte
 			$type       = '';
 			$attributes = array();
 			$value      = '';
@@ -124,7 +124,7 @@ class TemplateEngine
 
 		fclose($outFile);
 
-		// CHMOD ausführen.
+		// CHMOD ausfï¿½hren.
 		if	( !empty($conf['theme']['compiler']['chmod']))
 			if	( !@chmod($filename,octdec($conf['theme']['compiler']['chmod'])) )
 				die( "CHMOD failed on file ".$filename );
@@ -163,7 +163,7 @@ class TemplateEngine
 				return $invert.'$'.$value;
 			case 'text':
 			case '':
-				// Sonderfälle für die Attributwerte "true" und "false".
+				// Sonderfï¿½lle fï¿½r die Attributwerte "true" und "false".
 				// Hinweis: Die Zeichenkette "false" entspricht in PHP true.
 				// Siehe http://de.php.net/manual/de/language.types.boolean.php
 				if	( $value == 'true' || $value == 'false' )
@@ -204,12 +204,12 @@ class TemplateEngine
 	 */
 	function copyFileContents( $infile,$outFileHandler,$attr,$depth )
 	{
-		//		$hash = crc32($depth);
 		$hash = $depth;
 		global $conf;
-//		Logger::debug("Inserting template command: ".$infile);
+		
 		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
 		$elFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.el.' .PHP_EXT;
+		
 		if	( !is_file($inFileName) )
 			if	( count($attr)==0 )
 				return;
@@ -223,20 +223,20 @@ class TemplateEngine
 			$values[] = "'".$attrName."'=>".$this->attributeValue($attrValue);
 		}
 //		fwrite( $outFileHandler,'<?php /* source: '.$inFileName.' - compile time: '.date('r').' */ ?'.'>');
-		fwrite( $outFileHandler,'<?php $attr'.$hash.'_debug_info = \''.serialize($attr).'\' ?'.'>');
+//		fwrite( $outFileHandler,'<?php $attr'.$hash.'_debug_info = \''.serialize($attr).'\' ?'.'>');
 		fwrite( $outFileHandler,'<?php $attr'.$hash.' = array('.implode(',',$values).') ?'.'>');
 		
 		foreach( $attr as $attrName=>$attrValue )
-			
 			fwrite( $outFileHandler,'<?php $attr'.$hash.'_'.$attrName."=".$this->attributeValue($attrValue)." ?>");
-//		foreach( $attr as $attrName=>$attrValue )
-//			fwrite( $outFileHandler,'<?php $'.$attrName."='".$attrValue."' ? >");
 
 		$file = file( $inFileName );
 		foreach( $file as $line )
 		{
+			// Leerzeichen unterdrï¿½cken.
 			if	( strlen(trim($line)) == 0)
 				continue;
+				
+			// Zeilen, die mit einem Kommentar beginnen, unterdrï¿½cken. 
 			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) )
 				continue;
 //			echo $attr.$hash;
@@ -245,13 +245,17 @@ class TemplateEngine
 //			echo htmlentities($line);
 //			echo '</pre>';
 			//fwrite( $outFileHandler,rtrim($line)."\n" );
-			fwrite( $outFileHandler,$line );
+			$indent = str_repeat(' ',2*$depth);
+			fwrite( $outFileHandler,$indent.$line );
 		}
+		
+		// Die Variablen "$attr" mÃ¼ssen pro Ebene eindeutig sein, daher wird an den
+		// Variablennamen die Tiefe angehangen.
 		fwrite( $outFileHandler,'<?php unset($attr'.$hash.') ?>');
+		
+		// Variablen "$attr" entfernen.
 		foreach( $attr as $attrName=>$attrValue )
 			fwrite( $outFileHandler,'<?php unset($attr'.$hash.'_'.$attrName.') ?>');
-//		foreach( $attr as $attrName=>$attrValue )
-//			fwrite( $outFileHandler,'<?php unset($'.$attrName.') ? >');
 
 		if	( is_file($elFileName) )
 		{
@@ -262,10 +266,10 @@ class TemplateEngine
 	
 	
 	/**
-	 * Diese Funktion prüft, ob die Attribute zu einem Element gültig sind.<br>
-	 * Falls ein ungültiges Attribut oder ein ungültiger Wert entdeckt wird,
+	 * Diese Funktion prï¿½ft, ob die Attribute zu einem Element gï¿½ltig sind.<br>
+	 * Falls ein ungï¿½ltiges Attribut oder ein ungï¿½ltiger Wert entdeckt wird,
 	 * so wird das Skript abgebrochen.
-	 * @return Überprüfte und mit Default-Werten angereicherte Attribute
+	 * @return ï¿½berprï¿½fte und mit Default-Werten angereicherte Attribute
 	 */
 	function checkAttributes( $cmd,$attr )
 	{
@@ -278,7 +282,7 @@ class TemplateEngine
 			
 		$checkedAttr = array();
 
-		// Schleife über alle Attribute.		
+		// Schleife ï¿½ber alle Attribute.		
 		foreach( explode(',',$elements[$cmd]) as $al )
 		{
 			$al=trim($al);
@@ -318,7 +322,7 @@ class TemplateEngine
 	
 	
 	/**
-	 * Diese Funktion lädt die passende Vorlagedatei.
+	 * Diese Funktion lï¿½dt die passende Vorlagedatei.
 	 */
 	function loadDocument( $filename )
 	{
@@ -440,7 +444,7 @@ class TemplateEngine
 			                 'level'=>$indent ); 
 		}
 
-		// Am Ende der Datei alle offenen Tags schließen
+		// Am Ende der Datei alle offenen Tags schlieï¿½en
 		$openCmdCopy = $openCmd;
 		krsort($openCmdCopy);
 		foreach($openCmdCopy as $idx=>$ccmd)
