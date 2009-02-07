@@ -17,6 +17,7 @@ goto=listing
 [edit]
 menu=edit
 target=save
+editable=true
 
 ;[show]
 ;menu=info
@@ -34,23 +35,15 @@ goto=listing
 [memberships]
 goto=groups
 
+; Anzeige der Gruppenzugehörigkeiten
 [groups]
 menu=memberships
 editable=true
 target=savegroups
 
+; Speichern der Gruppenzugehörigkeiten
 [savegroups]
 menu=memberships
-goto=groups
-
-[addgroup]
-menu=memberships
-target=addgrouptouser
-
-[delgroup]
-goto=groups
-
-[addgrouptouser]
 goto=groups
 
 [pw]
@@ -66,7 +59,7 @@ goto=pw
 [menu]
 listing=listing,add
 edit=edit,remove
-memberships=groups,addgroup
+memberships=groups
 pw=pw
 ;info=show,mail
 rights=rights
