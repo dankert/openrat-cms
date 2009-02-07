@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.48  2009-02-07 02:41:37  dankert
+// CSS-Klasse fÃ¼r Ordner-Inhalte ermitteln.
+//
 // Revision 1.47  2008-09-11 19:04:39  dankert
 // Korrektur Rueckmeldung.
 //
@@ -197,7 +200,7 @@ class FolderAction extends ObjectAction
 
 	/**
 	 * Neues Objekt anlegen.<br>
-	 * Dies kann ein(e) Verzeichnis, Seite, Verknüpfung oder Datei sein.<br>
+	 * Dies kann ein(e) Verzeichnis, Seite, Verknï¿½pfung oder Datei sein.<br>
 	 */
 	function createnew()
 	{
@@ -234,10 +237,10 @@ class FolderAction extends ObjectAction
 					$this->callSubAction('createfile');
 					return;
 				}
-				// Prüfen der maximal erlaubten Dateigröße.
+				// Prï¿½fen der maximal erlaubten Dateigrï¿½ï¿½e.
 				elseif	( $upload->size > $this->maxFileSize() )
 				{
-					// Maximale Dateigröße ist überschritten
+					// Maximale Dateigrï¿½ï¿½e ist ï¿½berschritten
 					$this->addValidationError('file','MAX_FILE_SIZE_EXCEEDED');
 					$this->callSubAction('createfile');
 					return;
@@ -547,8 +550,8 @@ class FolderAction extends ObjectAction
 	/**
 	 * Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner.
 	 * 
-	 * Es werden alle ausgewählten Dateien nochmal angezeigt.
-	 * Abhängig von der ausgewählten Aktion wird eine weitere Auswahl benötigt. 
+	 * Es werden alle ausgewï¿½hlten Dateien nochmal angezeigt.
+	 * Abhï¿½ngig von der ausgewï¿½hlten Aktion wird eine weitere Auswahl benï¿½tigt. 
 	 */
 	function edit()
 	{
@@ -559,22 +562,22 @@ class FolderAction extends ObjectAction
 			case 'move':
 			case 'copy':
 			case 'link':
-				// Liste von möglichen Zielordnern anzeigen
+				// Liste von mï¿½glichen Zielordnern anzeigen
 	
 				$otherfolder = array();
 				foreach( $this->folder->getAllFolders() as $id )
 				{
 					$f = new Folder( $id );
 					
-					// Beim Verknüpfen muss im Zielordner die Berechtigung zum Erstellen
-					// von Verknüpfungen vorhanden sein.
+					// Beim Verknï¿½pfen muss im Zielordner die Berechtigung zum Erstellen
+					// von Verknï¿½pfungen vorhanden sein.
 					//
 					// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
 					// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
 					if	( ( $type=='link' && $f->hasRight( ACL_CREATE_LINK ) ) || 
 						  ( ( $type=='move' || $type == 'copy' ) && 
 						    ( $f->hasRight(ACL_CREATE_FOLDER) || $f->hasRight(ACL_CREATE_FILE) || $f->hasRight(ACL_CREATE_PAGE) ) ) )
-						// Zielordner hinzufügen
+						// Zielordner hinzufï¿½gen
 						$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
 				}
 				
@@ -610,7 +613,7 @@ class FolderAction extends ObjectAction
 			$o = new Object( $id );
 			$o->load();
 			
-			// Für die gewünschte Aktion müssen pro Objekt die entsprechenden Rechte
+			// Fï¿½r die gewï¿½nschte Aktion mï¿½ssen pro Objekt die entsprechenden Rechte
 			// vorhanden sein.
 			if	( $type == 'copy'   && $o->hasRight( ACL_READ   ) ||
 				  $type == 'move'   && $o->hasRight( ACL_DELETE ) ||
@@ -622,7 +625,7 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('type'  ,$type       );
 		$this->setTemplateVar('objectlist',$objectList );
 		
-		// Komma-separierte Liste von ausgewählten Objekt-Ids erzeugen 
+		// Komma-separierte Liste von ausgewï¿½hlten Objekt-Ids erzeugen 
 		$this->setTemplateVar('ids',join(array_keys($objectList),',') );
 	}
 
@@ -926,7 +929,7 @@ class FolderAction extends ObjectAction
 
 
 	/**
-	 * Ermittelt die maximale Größe einer hochzuladenden Datei.<br>
+	 * Ermittelt die maximale Grï¿½ï¿½e einer hochzuladenden Datei.<br>
 	 * Der Wert wird aus der PHP- und OpenRat-Konfiguration ermittelt.<br>
 	 * 
 	 * @return Integer maximale Dateigroesse in Bytes
@@ -974,12 +977,12 @@ class FolderAction extends ObjectAction
 
 	
 	/**
-	 * Umwandlung von abgekürzten Bytewerten ("Shorthand Notation") wie
+	 * Umwandlung von abgekï¿½rzten Bytewerten ("Shorthand Notation") wie
 	 * "4M" oder "500K" in eine ganzzahlige Byteanzahl.<br>
 	 * <br>
 	 * Quelle: http://de.php.net/manual/de/function.ini-get.php
 	 *
-	 * @param String Abgekürzter Bytewert
+	 * @param String Abgekï¿½rzter Bytewert
 	 * @return Integer Byteanzahl
 	 */
 	function stringToBytes($val)
@@ -1020,6 +1023,10 @@ class FolderAction extends ObjectAction
 	}
 
 
+	/**
+	 * Anzeige aller Objekte in diesem Ordner.
+	 * @return unknown_type
+	 */
 	function show()
 	{
 		global $conf_php;
@@ -1043,25 +1050,29 @@ class FolderAction extends ObjectAction
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
+				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('GLOBAL_IMAGE').' '.$id; 
 
 				$list[$id]['type'] = $o->getType();
 				
-				$list[$id]['icon'] = $o->getType();
-
+				$list[$id]['icon' ] = $o->getType();
+				$list[$id]['class'] = $o->getType();
+				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
+				
 				if	( $o->getType() == 'file' )
 				{
 					$file = new File( $id );
 					$file->load();
 					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
 
-					if	( substr($file->mimeType(),0,6) == 'image/' )
-						$list[$id]['icon'] = 'image';
+					if	( $file->isImage() )
+					{
+						$list[$id]['icon' ] = 'image';
+						$list[$id]['class'] = 'image';
+						$list[$id]['url' ] = Html::url('file','show',$id);					}
 //					if	( substr($file->mimeType(),0,5) == 'text/' )
 //						$list[$id]['icon'] = 'text';
 				}
 
-				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
 				$list[$id]['date'] = $o->lastchangeDate;
 				$list[$id]['user'] = $o->lastchangeUser;
 			}
