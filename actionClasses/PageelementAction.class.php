@@ -633,12 +633,12 @@ class PageelementAction extends Action
 		else
 			$this->setTemplateVar( 'editor','text' );
 
-		$this->setTemplateVar( 'text',$this->value->text          );
+		$this->setTemplateVar( 'text',$this->convertOIDs( $this->value->text ) );
 
 		if	(! $this->isEditMode() ) 
 		{
 			$this->value->generate(); // Inhalt erzeugen.
-			$this->setTemplateVar('text',$this->value->value);
+			$this->setTemplateVar('text',$this->convertOIDs( $this->value->value ));
 		}
 		
 		if	( $this->getSessionVar('pageaction') != '' )
@@ -656,7 +656,7 @@ class PageelementAction extends Action
 	 */
 	function edittext()
 	{
-		$this->setTemplateVar( 'text',$this->value->text          );
+		$this->setTemplateVar( 'text',$this->value->text );
 	
 		if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
@@ -956,7 +956,7 @@ class PageelementAction extends Action
 		if   ( $this->hasRequestVar('linkobjectid') )
 			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
 		else
-			$value->text           = $this->getRequestVar('text');
+			$value->text           = $this->convertOIDs( $this->getRequestVar('text') );
 
 		// Vorschau anzeigen
 		if	( $value->element->type=='longtext' && ($this->hasRequestVar('preview')||$this->hasRequestVar('addmarkup')) )
@@ -1303,6 +1303,24 @@ class PageelementAction extends Action
 		}
 	}
 	
+	
+	function convertOIDs( $text )
+	{
+		$treffer = array();
+		preg_match_all('/\"([^\"]*)__OID__([0-9]+)__([^\"]*)\"/', $text, $treffer,PREG_SET_ORDER);
+//		preg_match_all('(.*)__OID__([0-9]+)__', $text, $treffer);
+//		Html::debug($treffer);
+		foreach( $treffer as $t )
+		{
+			$oid = $t[2];
+//			Html::debug($oid);
+			$url = $this->page->path_to_object($oid);
+			$text = str_replace($t[0],'"'.$url.'"',$text);
+		}
+		
+//		Html::debug($text);	
+		return $text;
+	}
 }
 
 ?>
