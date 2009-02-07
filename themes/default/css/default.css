@@ -240,7 +240,7 @@ td
 
 
 
-/* Styles für Text-Unterschiede */
+/* Styles fï¿½r Text-Unterschiede */
 
 tr.diff td.line
 {
@@ -365,7 +365,7 @@ textarea
 }
 
 
-/* Eingabefeld für Beschreibung */
+/* Eingabefeld fï¿½r Beschreibung */
 textarea.desc,
 textarea.description
 {
@@ -373,7 +373,7 @@ textarea.description
 	font-size:13px;
 }
 
-/* Eingabefeld für Textabsatz */
+/* Eingabefeld fï¿½r Textabsatz */
 textarea.longtext
 {
 	font-family:Arial;
@@ -383,14 +383,14 @@ textarea.longtext
 	border:1px solid black;
 }
 
-/* Eingabfeld für Namen */
+/* Eingabfeld fï¿½r Namen */
 input.name,
 td.name
 {
 	font-weight:bold;
 }
 
-/* Eingabfeld für Dateiname */
+/* Eingabfeld fï¿½r Dateiname */
 input.filename,
 input.extension,
 input.ansidate,
@@ -507,4 +507,14 @@ table.notice
 {
 	border:1px solid black;
 	border-spacing:0px;
+}
+
+
+
+td.notice
+{
+	margin-top:10px;
+	margin-bottom:10px;
+	padding:20%;
+	text-align:center;
 }
