@@ -55,7 +55,7 @@ class XML
 	 *
 	 * @var String
 	 */
-	var $root = 'xml';
+	var $root = 'server';
 
 	/*
 	 * Char to indent with.
