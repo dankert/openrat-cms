@@ -1,4 +1,4 @@
-page
+page class:menu
 	table padding:5 space:0 width:100% rowclasses:a,b columnclasses:a,b
 
 		if true:!config:interface/application_mode	
@@ -28,16 +28,16 @@ page
 		row
 			cell class:subaction colspan:2
 			
-				# Schleife über alle Menüpunkte
+				# Schleife ï¿½ber alle Menï¿½punkte
 				list list:windowMenu extract:true value:xy
 			
 					if not:true empty:url
-					# Menüpunkt
+					# Menï¿½punkt
 						link url:var:url target:cms_main_main title:var:title accesskey:var:key class:menu
 							text var:text accesskey:var:key
 					if empty:url
 							text var:text class:menu_disabled
 						
-					# Trenner zwischen Menüpunkten
+					# Trenner zwischen Menï¿½punkten
 					text raw:__
 				text raw:_

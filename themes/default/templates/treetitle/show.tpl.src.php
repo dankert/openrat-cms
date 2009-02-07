@@ -1,4 +1,4 @@
-page
+page class:menu
 	table padding:5 space:0 width:100%
 
 		if true:!config:interface/application_mode	
@@ -14,9 +14,9 @@ page
 	
 					text text:var:text title:var:text class:title
 		row
-			# Menüleiste
+			# Menï¿½leiste
 			cell class:subaction
-				# Schleife über alle Menüpunkte
+				# Schleife ï¿½ber alle Menï¿½punkte
 				list list:windowMenu extract:true
 					if not:true empty:url
 						link url:var:url title:messagevar:title target:_parent accesskey:messagevar:key class:menu
