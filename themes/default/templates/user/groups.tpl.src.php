@@ -1,10 +1,14 @@
 page
-	window name:USER_MEMBERSHIPS widths:70%,30% width:70%
-		list list:memberships extract:true
+	form
+		window name:USER_MEMBERSHIPS widths:5%,95% width:70%
+			list list:memberships extract:true
+				row
+					cell
+						checkbox name:var:var
+					cell
+						label for:var:var
+							image file:icon_group
+							text var:name
 			row
-				cell class:fx
-					image file:icon_group
-					text var:name
-				cell class:fx
-					link url:var:delgroupurl
-						text text:GLOBAL_DELETE
+				cell colspan:2 class:act
+					button type:ok 

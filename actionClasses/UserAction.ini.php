@@ -36,6 +36,12 @@ goto=groups
 
 [groups]
 menu=memberships
+editable=true
+target=savegroups
+
+[savegroups]
+menu=memberships
+goto=groups
 
 [addgroup]
 menu=memberships

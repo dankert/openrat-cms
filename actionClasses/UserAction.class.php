@@ -250,12 +250,46 @@ class UserAction extends Action
 		
 		$gruppenListe = array();
 		
-		foreach( $this->user->getGroups() as $id=>$name )
+		$allGroups  = Group::getAll();
+		$userGroups = $this->user->getGroups();
+		
+		foreach( $allGroups as $id=>$name )
 		{
+			
+			$hasGroup = array_key_exists($id,$userGroups);
+			$varName  = 'group'.$id;
 			$gruppenListe[$id] = array('name'       =>$name,
-			                           'delgroupurl'=>Html::url($this->actionName,'delgroup',$this->getRequestId(),array('groupid'=>$id)) );
+			                           'id'         =>$id,
+			                           'var'        =>$varName,
+			                           'member'     =>$hasGroup
+			                          );
+			$this->setTemplateVar($varName,$hasGroup);
 		}
 		$this->setTemplateVar('memberships',$gruppenListe);
+	}
+
+
+	function savegroups()
+	{
+		$allGroups  = Group::getAll();
+		$userGroups = $this->user->getGroups();
+		
+		foreach( $allGroups as $id=>$name )
+		{
+			$hasGroup = array_key_exists($id,$userGroups);
+			
+			if	( !$hasGroup && $this->hasRequestVar('group'.$id) )
+			{
+				$this->user->addGroup($id);
+				$this->addNotice('group',$name,'ADDED');
+			}
+
+			if	( $hasGroup && !$this->hasRequestVar('group'.$id) )
+			{
+				$this->user->delGroup($id);
+				$this->addNotice('group',$name,'DELETED');
+			}
+		}
 	}
 
 
@@ -322,7 +356,7 @@ class UserAction extends Action
 			}
 			else
 			{
-				// Berechtigung für "alle".
+				// Berechtigung fï¿½r "alle".
 			}
 
 //			$show = array();
@@ -345,7 +379,7 @@ class UserAction extends Action
 	
 	
 	/**
-	 * @param String $name Menüpunkt
+	 * @param String $name Menï¿½punkt
 	 * @return boolean
 	 */
 	function checkMenu( $menu )
