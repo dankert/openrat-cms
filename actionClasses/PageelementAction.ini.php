@@ -1,6 +1,6 @@
 
 [default]
-goto=show
+goto=edit
 
 [usevalue]
 menu=edit
@@ -33,9 +33,6 @@ target=diff
 [release]
 goto=archive
 
-[show]
-menu=edit
-
 [edit]
 menu=edit
 target=save
@@ -44,10 +41,9 @@ editable=true
 [advanced]
 menu=edit
 target=save
-editable=true
 
 [save]
 goto=edit
 
 [menu]
-edit=show,edit,advanced,link,import,export,archive
+edit=edit,advanced,link,import,export,archive
