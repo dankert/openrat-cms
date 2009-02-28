@@ -4,15 +4,15 @@ page title:message:MENU_INDEX_APPLICATIONS
 		row
 			cell colspan:2 
 				link action:index subaction:projectmenu
-					text text:OpenRat
+					text raw:OpenRat
 
 		list list:applications extract:true
 
 			row
 				cell 
 					link url:var:url
-						text text:var:name
+						text var:name
 				cell 
-					text text:var:description
+					text var:description
 
 									
