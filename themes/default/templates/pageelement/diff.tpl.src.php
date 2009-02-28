@@ -21,17 +21,17 @@ page
 				row class:diff
 					if present:left
 						cell width:5% class:line 
-							text text:arrayvar:left:line type:tt
+							text value:arrayvar:left:line type:tt
 						cell width:45% class:arrayvar:left:type
-							text text:arrayvar:left:text
+							text value:arrayvar:left:text
 					else
 						cell colspan:2 class:help width:50%
 							text raw:_
 					if present:right
 						cell width:5% class:line
-							text text:arrayvar:right:line type:tt
+							text value:arrayvar:right:line type:tt
 						cell width:45% class:arrayvar:right:type
-							text text:arrayvar:right:text
+							text value:arrayvar:right:text
 					else
 						cell colspan:2 class:help width:50%
 							text raw:_
