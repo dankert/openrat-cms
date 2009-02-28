@@ -27,7 +27,7 @@ page
 						link url:var:archive_url title:message:GLOBAL_ARCHIVE_DESC
 							text text:GLOBAL_ARCHIVE
 						text raw:_(_
-						text text:var:archive_count
+						text var:archive_count
 						text raw:_)
 					else
 						text text:GLOBAL_NO_ARCHIVE type:emphatic title:message:GLOBAL_NO_ARCHIVE_DESC
