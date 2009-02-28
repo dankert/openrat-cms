@@ -25,10 +25,10 @@ page
 				cell
 					if present:username
 						image type:user
-						text text:var:username
+						text var:username
 					if present:groupname
 						image type:group
-						text text:var:groupname
+						text var:groupname
 					if not:true present:username
 						if not:true present:groupname
 							image type:group
