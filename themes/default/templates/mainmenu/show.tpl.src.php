@@ -10,10 +10,10 @@ page class:menu
 					list list:path extract:true value:xy
 	
 						link url:var:url title:var:title class:path target:cms_main
-							text value:var:name maxlength:20
+							text var:name maxlength:20
 						char type:filesep
 	
-					text text:var:text title:var:text class:title
+					text var:text title:var:text class:title
 				cell class:menu style::text-align:right;
 					if true:property:search
 						form action:search subaction:quicksearch target:cms_main_main
@@ -34,9 +34,9 @@ page class:menu
 					if not:true empty:url
 					# Men�punkt
 						link url:var:url target:cms_main_main title:var:title accesskey:var:key class:menu
-							text var:text accesskey:var:key
+							text textvar:text accesskey:var:key
 					if empty:url
-							text var:text class:menu_disabled
+							text textvar:text class:menu_disabled
 						
 					# Trenner zwischen Men�punkten
 					text raw:__
