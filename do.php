@@ -2,8 +2,8 @@
 // ---------------------------------------------------------------------------
 // $Id$
 // ---------------------------------------------------------------------------
-// DaCMS Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// OpenRat Content Management System
+// Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,6 +18,13 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
+
+// "Single Entry Point"
+// Diese Datei dient als "Dispatcher" und startet den zum Request passenden Controller ("*Action")..
+// Jeder Request in der Anwendung lÃ¤uft durch dieses Skript.
+//
+// Statische Resourcen (CSS,JS,Bilder,...) gehen nicht Ã¼ber diesen Dispatcher, sondern werden
+// direkt geladen.
 
 
 define('PHP_EXT'         ,'php'    );
@@ -65,20 +72,22 @@ define('REQ_PARAM_DATABASE_ID'    ,'dbid'           );
 
 require_once( "functions/request.inc.php" );
 
+// Werkzeugklassen einbinden.
 require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
+require_once( OR_OBJECTCLASSES_DIR ."include.inc.".PHP_EXT );
+require_once( OR_TEXTCLASSES_DIR   ."include.inc.".PHP_EXT );
 
-require_once( OR_OBJECTCLASSES_DIR."include.inc.".PHP_EXT );
-require_once( OR_TEXTCLASSES_DIR."include.inc.".PHP_EXT );
-
+// Datenbank-Funktionen einbinden.
 require_once( OR_DBCLASSES_DIR."db.class.php" );
 require_once( OR_DBCLASSES_DIR."postgresql.class.php" );
 require_once( OR_DBCLASSES_DIR."mysql.class.php" );
 
+// Jetzt erst die Sitzung starten (nachdem alle Klassen zur VerfÃ¼gung stehen).
 session_start();
-
-
 require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
 
+
+// Vorhandene Konfiguration aus der Sitzung lesen.
 $conf = Session::getConfig();
  
 // Wenn Konfiguration noch nicht in Session vorhanden, dann
@@ -267,14 +276,14 @@ if	( isset($do->actionConfig[$do->subActionName]['alias']) )
 // Aufruf der Subaction
 $do->$subaction();
 
-// Aufruf der nächsten Subaction (falls vorhanden)
+// Aufruf der nï¿½chsten Subaction (falls vorhanden)
 if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 {
 	if	( $conf['interface']['redirect'] )
 	{
 		$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
 		header( 'HTTP/1.0 303 See other');
-		// Absoluten Pfad kann auch der Client ergänzen.
+		// Absoluten Pfad kann auch der Client ergï¿½nzen.
 		header( 'Location: '.Html::url($action,$do->actionConfig[$do->subActionName]['goto'],$do->getRequestId()) );
 		exit;
 	}
@@ -283,7 +292,7 @@ if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 	$do->subActionName = $subActionName;
 	$subaction = $subActionName;
 
-	// Auf Alias prüfen.
+	// Auf Alias prï¿½fen.
 	if	( isset($do->actionConfig[$do->subActionName]['alias']) )
 	{
 		$subaction = $do->actionConfig[$do->subActionName]['alias'];
@@ -293,7 +302,7 @@ if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 	$do->$subaction();
 }
 
-$do->setMenu(); // Menü erzeugen
+$do->setMenu(); // Menue erzeugen
 $do->forward(); // Anzeige rendern
 
 // fertig :)
