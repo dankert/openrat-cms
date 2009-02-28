@@ -29,7 +29,7 @@ page
 					cell
 						if present:groupname
 							image type:group
-							text text:var:groupname maxlength:20
+							text var:groupname maxlength:20
 						if not:true present:username
 							if not:true present:groupname
 								image type:group
