@@ -8,4 +8,4 @@ page
 						text value:var:name
 				cell
 					link url:var:use_url target:config:interface/frames/top
-						text value:message:GLOBAL_SELECT
+						text key:GLOBAL_SELECT

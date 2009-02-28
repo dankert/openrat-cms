@@ -15,13 +15,13 @@ page
 					radio name:type value:empty
 				cell
 					label for:type_empty
-						text text:message:empty
+						text key:empty
 			row
 				cell
 					radio name:type value:copy
 				cell
 					label for:type_copy
-						text text:message:copy
+						text key:copy
 				cell
 					selectbox name:projectid list:projects
 			row
