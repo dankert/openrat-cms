@@ -44,7 +44,7 @@ page
 						link action:index subaction:object id:var:objectid target:_top
 							text var:objectname maxlength:20 title:message:select
 					cell
-						text text:var:languagename maxlength:20
+						text var:languagename maxlength:20
 	
 					list list:show
 						cell
