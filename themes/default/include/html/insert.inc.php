@@ -1,1 +1,1 @@
-<?php include( $tpl_dir.$attr_file.'.tpl.php') ?>
+<?php include( $tpl_dir.basename($attr_file).'.tpl.php') ?>
