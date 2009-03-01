@@ -1,9 +1,10 @@
-<?php $attr1_debug_info = 'a:1:{s:5:"class";s:4:"main";}' ?><?php $attr1 = array('class'=>'main') ?><?php $attr1_class='main' ?><?php if (!headers_sent()) header('Content-Type: text/html; charset='.lang('CHARSET'))
+<?php $attr1_debug_info = 'a:1:{s:5:"class";s:4:"main";}' ?><?php $attr1 = array('class'=>'main') ?><?php $attr1_class='main' ?><?php
+ if (!headers_sent()) header('Content-Type: text/html; charset='.$charset)
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
   <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?lang($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
-  <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
+  <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
 <?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
@@ -17,7 +18,14 @@
        	?>
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo lang($meta['title']) ?>" /><?php
       }
-?>
+?><script type="text/javascript" src="themes/default/js/jquery.js"></script>
+    <script type="text/javascript" src="themes/default/js/jquery-lightbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="themes/default/js/lightbox/css/jquery-lightbox.css" media="screen" />
+    <script type="text/javascript">
+    $(function() {
+        $('a.image').lightBox();
+    });
+    </script>
 <?php if(!empty($root_stylesheet)) { ?>
   <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
 <?php } ?>
@@ -57,8 +65,13 @@
 		if (!@$conf['interface']['application_mode'] )
 		{
 		echo '<tr><td class="menu">';
-		if	( !empty($attr2_icon) )
-			echo '<img src="'.$image_dir.'icon_'.$attr2_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
+		if ($this->isEditable()) { ?>
+  <?php if ($this->getRequestVar('mode')=='edit') { 
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo lang('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo lang('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
+  ?><?php }
+		echo '<span class="path">'.lang('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
@@ -109,9 +122,9 @@
 <?php if (isset($notices) && count($notices)>0 )
       { ?>
   <tr>
-    <td align="center" style="margin-top:10px; margin-bottom:10px;padding:5px; text-align:center;">
+    <td align="center" class="notice">
   <?php foreach( $notices as $notice_idx=>$notice ) { ?>
-    	<br><table class="notice" width="100%">
+    	<br><table class="notice" width="80%">
   <?php if ($notice['name']!='') { ?>
   <tr>
     <td colspan="2" class="subaction" style="padding:2px; white-space:nowrap; border-bottom:1px solid black;"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
@@ -134,7 +147,8 @@
 <?php } ?>
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr2) ?><?php unset($attr2_width) ?><?php unset($attr2_rowclasses) ?><?php unset($attr2_columnclasses) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
+      <table class="n" cellspacing="0" width="100%" cellpadding="4">
+<?php unset($attr2) ?><?php unset($attr2_width) ?><?php unset($attr2_rowclasses) ?><?php unset($attr2_columnclasses) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;

@@ -169,7 +169,7 @@
 <?php unset($attr5) ?><?php unset($attr5_file) ?><?php unset($attr5_name) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></frameset>
 <?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></frameset>
 <?php unset($attr2) ?><?php $attr1_debug_info = 'a:0:{}' ?><?php $attr1 = array() ?><?php } ?><?php unset($attr1) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?><?php if (!$last_exec) { ?>
-<?php unset($attr2) ?><?php $attr3_debug_info = 'a:1:{s:4:"rows";s:10:"23,3,*,3,5";}' ?><?php $attr3 = array('rows'=>'23,3,*,3,5') ?><?php $attr3_rows='23,3,*,3,5' ?><frameset
+<?php unset($attr2) ?><?php $attr3_debug_info = 'a:1:{s:4:"rows";s:6:"23,3,*";}' ?><?php $attr3 = array('rows'=>'23,3,*') ?><?php $attr3_rows='23,3,*' ?><frameset
 <?php echo !empty($attr3_rows)   ?' rows="'.$attr3_rows.'"':'' ?>
 <?php echo !empty($attr3_columns)?' cols="'.$attr3_columns.'"':'' ?>
  border="0" frameborder="5" framespacing="0" bordercolor="#000000"><?php unset($attr3) ?><?php unset($attr3_rows) ?><?php $attr4_debug_info = 'a:2:{s:4:"file";s:19:"var:frame_src_title";s:4:"name";s:9:"cms_title";}' ?><?php $attr4 = array('file'=>$frame_src_title,'name'=>'cms_title') ?><?php $attr4_file=$frame_src_title ?><?php $attr4_name='cms_title' ?><frame src="<?php echo $attr4_file ?>" name="<?php echo empty($attr4_name)?'':$attr4_name ?>" marginheight="0" marginwidth="0" scrolling="<?php echo empty($attr4_scrolling)?'no':$attr4_scrolling ?>">
@@ -261,7 +261,5 @@
 <?php unset($attr6) ?><?php unset($attr6_file) ?><?php unset($attr6_name) ?><?php unset($attr6_scrolling) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></frameset>
 <?php unset($attr4) ?><?php $attr5_debug_info = 'a:2:{s:4:"file";s:18:"var:frame_src_main";s:4:"name";s:8:"cms_main";}' ?><?php $attr5 = array('file'=>$frame_src_main,'name'=>'cms_main') ?><?php $attr5_file=$frame_src_main ?><?php $attr5_name='cms_main' ?><frame src="<?php echo $attr5_file ?>" name="<?php echo empty($attr5_name)?'':$attr5_name ?>" marginheight="0" marginwidth="0" scrolling="<?php echo empty($attr5_scrolling)?'no':$attr5_scrolling ?>">
 <?php unset($attr5) ?><?php unset($attr5_file) ?><?php unset($attr5_name) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></frameset>
-<?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:4:"file";s:20:"var:frame_src_border";}' ?><?php $attr4 = array('file'=>$frame_src_border) ?><?php $attr4_file=$frame_src_border ?><frame src="<?php echo $attr4_file ?>" name="<?php echo empty($attr4_name)?'':$attr4_name ?>" marginheight="0" marginwidth="0" scrolling="<?php echo empty($attr4_scrolling)?'no':$attr4_scrolling ?>">
-<?php unset($attr4) ?><?php unset($attr4_file) ?><?php $attr4_debug_info = 'a:1:{s:4:"file";s:24:"var:frame_src_background";}' ?><?php $attr4 = array('file'=>$frame_src_background) ?><?php $attr4_file=$frame_src_background ?><frame src="<?php echo $attr4_file ?>" name="<?php echo empty($attr4_name)?'':$attr4_name ?>" marginheight="0" marginwidth="0" scrolling="<?php echo empty($attr4_scrolling)?'no':$attr4_scrolling ?>">
-<?php unset($attr4) ?><?php unset($attr4_file) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></frameset>
+<?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></frameset>
 <?php unset($attr2) ?><?php $attr1_debug_info = 'a:0:{}' ?><?php $attr1 = array() ?><?php } ?><?php unset($attr1) ?><?php $attr0_debug_info = 'a:0:{}' ?><?php $attr0 = array() ?></html><?php unset($attr0) ?>

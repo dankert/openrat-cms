@@ -1,9 +1,10 @@
-<?php $attr1_debug_info = 'a:1:{s:5:"class";s:4:"main";}' ?><?php $attr1 = array('class'=>'main') ?><?php $attr1_class='main' ?><?php if (!headers_sent()) header('Content-Type: text/html; charset='.lang('CHARSET'))
+<?php $attr1_debug_info = 'a:1:{s:5:"class";s:4:"main";}' ?><?php $attr1 = array('class'=>'main') ?><?php $attr1_class='main' ?><?php
+ if (!headers_sent()) header('Content-Type: text/html; charset='.$charset)
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
   <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?lang($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
-  <meta http-equiv="content-type" content="text/html; charset=<?php echo lang('CHARSET') ?>" />
+  <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" />
   <meta name="MSSmartTagsPreventParsing" content="true" />
   <meta name="robots" content="noindex,nofollow" />
 <?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
@@ -17,7 +18,14 @@
        	?>
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo lang($meta['title']) ?>" /><?php
       }
-?>
+?><script type="text/javascript" src="themes/default/js/jquery.js"></script>
+    <script type="text/javascript" src="themes/default/js/jquery-lightbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="themes/default/js/lightbox/css/jquery-lightbox.css" media="screen" />
+    <script type="text/javascript">
+    $(function() {
+        $('a.image').lightBox();
+    });
+    </script>
 <?php if(!empty($root_stylesheet)) { ?>
   <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
 <?php } ?>
@@ -57,17 +65,22 @@
 		if (!@$conf['interface']['application_mode'] )
 		{
 		echo '<tr><td class="menu">';
-		if	( !empty($attr2_icon) )
-			echo '<img src="'.$image_dir.'icon_'.$attr2_icon.IMG_ICON_EXT.'" align="left" border="0">';
+		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
+		if ($this->isEditable()) { ?>
+  <?php if ($this->getRequestVar('mode')=='edit') { 
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
+  ?><?php }
+		echo '<span class="path">'.langHtml('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
 			extract($pathElement);
-			echo '<a href="'.$url.'" class="path">'.lang($name).'</a>';
+			echo '<a href="'.$url.'" class="path">'.langHtml($name).'</a>';
 			echo '&nbsp;&raquo;&nbsp;';
 		}
-		echo '<span class="title">'.lang($windowTitle).'</span>';
+		echo '<span class="title">'.langHtml($windowTitle).'</span>';
 		?>
 		</td>
 		<?php
@@ -76,7 +89,7 @@
 <?php ?>		<!--<td class="menu" style="align:right;">
     <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
           {
-          	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.lang($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
+          	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.langHtml($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
           }
      ?>
     </td>-->
@@ -86,32 +99,32 @@
 			$windowMenu = array();
     foreach( $windowMenu as $menu )
           {
-          	$tmp_text = lang($menu['text']);
-          	$tmp_key  = strtoupper(lang($menu['key' ]));
+          	$tmp_text = langHtml($menu['text']);
+          	$tmp_key  = strtoupper(langHtml($menu['key' ]));
 			$tmp_pos = strpos(strtolower($tmp_text),strtolower($tmp_key));
 			if	( $tmp_pos !== false )
 				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
           	if	( isset($menu['url']) )
           	{
-          		?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          		?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
           	}
           	else
           	{
-          		?><span class="menu_disabled" title="<?php echo lang($menu['text'].'_DESC') ?>" class="menu_disabled"><?php echo $tmp_text ?></span>&nbsp;&nbsp;&nbsp;<?php
+          		?><span class="menu_disabled" title="<?php echo langHtml($menu['text'].'_DESC') ?>" class="menu_disabled"><?php echo $tmp_text ?></span>&nbsp;&nbsp;&nbsp;<?php
           	}
           }
           	if (@$conf['help']['enabled'] )
           	{
-             ?><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo lang('MENU_HELP_DESC') ?>" class="menu" style="cursor:help;"><?php echo @$conf['help']['only_question_mark']?'?':lang('MENU_HELP') ?></a><?php
+             ?><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>" class="menu" style="cursor:help;"><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
           	}
           	?></td>
   </tr>
 <?php if (isset($notices) && count($notices)>0 )
       { ?>
   <tr>
-    <td align="center" style="margin-top:10px; margin-bottom:10px;padding:5px; text-align:center;">
+    <td align="center" class="notice">
   <?php foreach( $notices as $notice_idx=>$notice ) { ?>
-    	<br><table class="notice" width="100%">
+    	<br><table class="notice" width="80%">
   <?php if ($notice['name']!='') { ?>
   <tr>
     <td colspan="2" class="subaction" style="padding:2px; white-space:nowrap; border-bottom:1px solid black;"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
@@ -120,7 +133,7 @@
 <?php } ?>
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
-    <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
+    <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo langHtml($notice['key'],$notice['vars']) ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
     <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
@@ -134,7 +147,8 @@
 <?php } ?>
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4"><?php unset($attr2) ?><?php unset($attr2_title) ?><?php unset($attr2_name) ?><?php unset($attr2_widths) ?><?php unset($attr2_width) ?><?php unset($attr2_rowclasses) ?><?php unset($attr2_columnclasses) ?><?php $attr3_debug_info = 'a:2:{s:6:"invert";s:4:"true";s:5:"empty";s:2:"el";}' ?><?php $attr3 = array('invert'=>true,'empty'=>'el') ?><?php $attr3_invert=true ?><?php $attr3_empty='el' ?><?php 
+      <table class="n" cellspacing="0" width="100%" cellpadding="4">
+<?php unset($attr2) ?><?php unset($attr2_title) ?><?php unset($attr2_name) ?><?php unset($attr2_widths) ?><?php unset($attr2_width) ?><?php unset($attr2_rowclasses) ?><?php unset($attr2_columnclasses) ?><?php $attr3_debug_info = 'a:2:{s:6:"invert";s:4:"true";s:5:"empty";s:2:"el";}' ?><?php $attr3 = array('invert'=>true,'empty'=>'el') ?><?php $attr3_invert=true ?><?php $attr3_empty='el' ?><?php 
 	if	( isset($attr3_true) )
 	{
 		if	(gettype($attr3_true) === '' && gettype($attr3_true) === '1')
@@ -222,9 +236,6 @@
 	if	( isset($attr6_suffix)&& isset($attr6_key))
 		$attr6_key = $attr6_key.$attr6_suffix;
 	if(empty($attr6_title))
-		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key.'_HELP');
-		else
 			$attr6_title = '';
 	if	(empty($attr6_type))
 		$tmp_tag = 'span';
@@ -248,33 +259,32 @@
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+	if	( $attr6_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr6_array))
 	{
 		$tmpArray = $$attr6_array;
 		if (!empty($attr6_var))
 			$tmp_text = $tmpArray[$attr6_var];
 		else
-			$tmp_text = lang($tmpArray[$attr6_text]);
+			$tmp_text = $langF($tmpArray[$attr6_text]);
 	}
 	elseif (!empty($attr6_text))
-		if	( isset($$attr6_text))
-			$tmp_text = lang($$attr6_text);
-		else
-			$tmp_text = lang($attr6_text);
+		$tmp_text = $langF($attr6_text);
 	elseif (!empty($attr6_textvar))
-		$tmp_text = lang($$attr6_textvar);
+		$tmp_text = $langF($$attr6_textvar);
 	elseif (!empty($attr6_key))
-		$tmp_text = lang($attr6_key);
+		$tmp_text = $langF($attr6_key);
 	elseif (!empty($attr6_var))
-		$tmp_text = isset($$attr6_var)?$$attr6_var:'?'.$attr6_var.'?';	
+		$tmp_text = isset($$attr6_var)?$$attr6_var:'?unset:'.$attr6_var.'?';	
 	elseif (!empty($attr6_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
 	elseif (!empty($attr6_value))
 		$tmp_text = $attr6_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr6_escape && empty($attr6_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
 	if	(isset($attr6_accesskey))
@@ -302,9 +312,6 @@
 	if	( isset($attr6_suffix)&& isset($attr6_key))
 		$attr6_key = $attr6_key.$attr6_suffix;
 	if(empty($attr6_title))
-		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key.'_HELP');
-		else
 			$attr6_title = '';
 	if	(empty($attr6_type))
 		$tmp_tag = 'span';
@@ -328,33 +335,32 @@
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+	if	( $attr6_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr6_array))
 	{
 		$tmpArray = $$attr6_array;
 		if (!empty($attr6_var))
 			$tmp_text = $tmpArray[$attr6_var];
 		else
-			$tmp_text = lang($tmpArray[$attr6_text]);
+			$tmp_text = $langF($tmpArray[$attr6_text]);
 	}
 	elseif (!empty($attr6_text))
-		if	( isset($$attr6_text))
-			$tmp_text = lang($$attr6_text);
-		else
-			$tmp_text = lang($attr6_text);
+		$tmp_text = $langF($attr6_text);
 	elseif (!empty($attr6_textvar))
-		$tmp_text = lang($$attr6_textvar);
+		$tmp_text = $langF($$attr6_textvar);
 	elseif (!empty($attr6_key))
-		$tmp_text = lang($attr6_key);
+		$tmp_text = $langF($attr6_key);
 	elseif (!empty($attr6_var))
-		$tmp_text = isset($$attr6_var)?$$attr6_var:'?'.$attr6_var.'?';	
+		$tmp_text = isset($$attr6_var)?$$attr6_var:'?unset:'.$attr6_var.'?';	
 	elseif (!empty($attr6_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
 	elseif (!empty($attr6_value))
 		$tmp_text = $attr6_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr6_escape && empty($attr6_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
 	if	(isset($attr6_accesskey))
@@ -382,9 +388,6 @@
 	if	( isset($attr6_suffix)&& isset($attr6_key))
 		$attr6_key = $attr6_key.$attr6_suffix;
 	if(empty($attr6_title))
-		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key.'_HELP');
-		else
 			$attr6_title = '';
 	if	(empty($attr6_type))
 		$tmp_tag = 'span';
@@ -408,33 +411,32 @@
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+	if	( $attr6_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr6_array))
 	{
 		$tmpArray = $$attr6_array;
 		if (!empty($attr6_var))
 			$tmp_text = $tmpArray[$attr6_var];
 		else
-			$tmp_text = lang($tmpArray[$attr6_text]);
+			$tmp_text = $langF($tmpArray[$attr6_text]);
 	}
 	elseif (!empty($attr6_text))
-		if	( isset($$attr6_text))
-			$tmp_text = lang($$attr6_text);
-		else
-			$tmp_text = lang($attr6_text);
+		$tmp_text = $langF($attr6_text);
 	elseif (!empty($attr6_textvar))
-		$tmp_text = lang($$attr6_textvar);
+		$tmp_text = $langF($$attr6_textvar);
 	elseif (!empty($attr6_key))
-		$tmp_text = lang($attr6_key);
+		$tmp_text = $langF($attr6_key);
 	elseif (!empty($attr6_var))
-		$tmp_text = isset($$attr6_var)?$$attr6_var:'?'.$attr6_var.'?';	
+		$tmp_text = isset($$attr6_var)?$$attr6_var:'?unset:'.$attr6_var.'?';	
 	elseif (!empty($attr6_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
 	elseif (!empty($attr6_value))
 		$tmp_text = $attr6_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr6_escape && empty($attr6_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
 	if	(isset($attr6_accesskey))
@@ -533,9 +535,6 @@
 	if	( isset($attr6_suffix)&& isset($attr6_key))
 		$attr6_key = $attr6_key.$attr6_suffix;
 	if(empty($attr6_title))
-		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key.'_HELP');
-		else
 			$attr6_title = '';
 	if	(empty($attr6_type))
 		$tmp_tag = 'span';
@@ -559,33 +558,32 @@
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+	if	( $attr6_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr6_array))
 	{
 		$tmpArray = $$attr6_array;
 		if (!empty($attr6_var))
 			$tmp_text = $tmpArray[$attr6_var];
 		else
-			$tmp_text = lang($tmpArray[$attr6_text]);
+			$tmp_text = $langF($tmpArray[$attr6_text]);
 	}
 	elseif (!empty($attr6_text))
-		if	( isset($$attr6_text))
-			$tmp_text = lang($$attr6_text);
-		else
-			$tmp_text = lang($attr6_text);
+		$tmp_text = $langF($attr6_text);
 	elseif (!empty($attr6_textvar))
-		$tmp_text = lang($$attr6_textvar);
+		$tmp_text = $langF($$attr6_textvar);
 	elseif (!empty($attr6_key))
-		$tmp_text = lang($attr6_key);
+		$tmp_text = $langF($attr6_key);
 	elseif (!empty($attr6_var))
-		$tmp_text = isset($$attr6_var)?$$attr6_var:'?'.$attr6_var.'?';	
+		$tmp_text = isset($$attr6_var)?$$attr6_var:'?unset:'.$attr6_var.'?';	
 	elseif (!empty($attr6_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
 	elseif (!empty($attr6_value))
 		$tmp_text = $attr6_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr6_escape && empty($attr6_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
 	if	(isset($attr6_accesskey))
@@ -656,7 +654,7 @@
 		$tmp_url = $attr6_url;
 	else
 		$tmp_url = Html::url($attr6_action,$attr6_subaction,!empty($attr6_id)?$attr6_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>"<?php if (isset($attr6_accesskey)) echo ' accesskey="'.$attr6_accesskey.'"' ?>  title="<?php echo $attr6_title ?>"><?php unset($attr6) ?><?php unset($attr6_title) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php unset($attr6_class) ?><?php $attr7_debug_info = 'a:2:{s:5:"align";s:4:"left";s:11:"elementtype";s:8:"var:type";}' ?><?php $attr7 = array('align'=>'left','elementtype'=>$type) ?><?php $attr7_align='left' ?><?php $attr7_elementtype=$type ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr6_class ?>" target="<?php echo $attr6_target ?>"<?php if (isset($attr6_accesskey)) echo ' accesskey="'.$attr6_accesskey.'"' ?>  title="<?php echo encodeHtml($attr6_title) ?>"><?php unset($attr6) ?><?php unset($attr6_title) ?><?php unset($attr6_target) ?><?php unset($attr6_url) ?><?php unset($attr6_class) ?><?php $attr7_debug_info = 'a:2:{s:5:"align";s:4:"left";s:11:"elementtype";s:8:"var:type";}' ?><?php $attr7 = array('align'=>'left','elementtype'=>$type) ?><?php $attr7_align='left' ?><?php $attr7_elementtype=$type ?><?php
 if (isset($attr7_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr7_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr7_align ?>"><?php
 } elseif (isset($attr7_type)) {
@@ -674,9 +672,6 @@ if (isset($attr7_elementtype)) {
 	if	( isset($attr7_suffix)&& isset($attr7_key))
 		$attr7_key = $attr7_key.$attr7_suffix;
 	if(empty($attr7_title))
-		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key.'_HELP');
-		else
 			$attr7_title = '';
 	if	(empty($attr7_type))
 		$tmp_tag = 'span';
@@ -700,33 +695,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( $attr7_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr7_array))
 	{
 		$tmpArray = $$attr7_array;
 		if (!empty($attr7_var))
 			$tmp_text = $tmpArray[$attr7_var];
 		else
-			$tmp_text = lang($tmpArray[$attr7_text]);
+			$tmp_text = $langF($tmpArray[$attr7_text]);
 	}
 	elseif (!empty($attr7_text))
-		if	( isset($$attr7_text))
-			$tmp_text = lang($$attr7_text);
-		else
-			$tmp_text = lang($attr7_text);
+		$tmp_text = $langF($attr7_text);
 	elseif (!empty($attr7_textvar))
-		$tmp_text = lang($$attr7_textvar);
+		$tmp_text = $langF($$attr7_textvar);
 	elseif (!empty($attr7_key))
-		$tmp_text = lang($attr7_key);
+		$tmp_text = $langF($attr7_key);
 	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?'.$attr7_var.'?';	
+		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
 	elseif (!empty($attr7_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
 	elseif (!empty($attr7_value))
 		$tmp_text = $attr7_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr7_escape && empty($attr7_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
 	if	(isset($attr7_accesskey))
@@ -754,9 +748,6 @@ if (isset($attr7_elementtype)) {
 	if	( isset($attr6_suffix)&& isset($attr6_key))
 		$attr6_key = $attr6_key.$attr6_suffix;
 	if(empty($attr6_title))
-		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key.'_HELP');
-		else
 			$attr6_title = '';
 	if	(empty($attr6_type))
 		$tmp_tag = 'span';
@@ -780,33 +771,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+	if	( $attr6_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr6_array))
 	{
 		$tmpArray = $$attr6_array;
 		if (!empty($attr6_var))
 			$tmp_text = $tmpArray[$attr6_var];
 		else
-			$tmp_text = lang($tmpArray[$attr6_text]);
+			$tmp_text = $langF($tmpArray[$attr6_text]);
 	}
 	elseif (!empty($attr6_text))
-		if	( isset($$attr6_text))
-			$tmp_text = lang($$attr6_text);
-		else
-			$tmp_text = lang($attr6_text);
+		$tmp_text = $langF($attr6_text);
 	elseif (!empty($attr6_textvar))
-		$tmp_text = lang($$attr6_textvar);
+		$tmp_text = $langF($$attr6_textvar);
 	elseif (!empty($attr6_key))
-		$tmp_text = lang($attr6_key);
+		$tmp_text = $langF($attr6_key);
 	elseif (!empty($attr6_var))
-		$tmp_text = isset($$attr6_var)?$$attr6_var:'?'.$attr6_var.'?';	
+		$tmp_text = isset($$attr6_var)?$$attr6_var:'?unset:'.$attr6_var.'?';	
 	elseif (!empty($attr6_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
 	elseif (!empty($attr6_value))
 		$tmp_text = $attr6_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr6_escape && empty($attr6_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
 	if	(isset($attr6_accesskey))
@@ -823,9 +813,6 @@ if (isset($attr7_elementtype)) {
 	if	( isset($attr6_suffix)&& isset($attr6_key))
 		$attr6_key = $attr6_key.$attr6_suffix;
 	if(empty($attr6_title))
-		if (!empty($attr6_key))
-			$attr6_title = lang($attr6_key.'_HELP');
-		else
 			$attr6_title = '';
 	if	(empty($attr6_type))
 		$tmp_tag = 'span';
@@ -849,33 +836,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 	$attr6_title = '';
+	if	( $attr6_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr6_array))
 	{
 		$tmpArray = $$attr6_array;
 		if (!empty($attr6_var))
 			$tmp_text = $tmpArray[$attr6_var];
 		else
-			$tmp_text = lang($tmpArray[$attr6_text]);
+			$tmp_text = $langF($tmpArray[$attr6_text]);
 	}
 	elseif (!empty($attr6_text))
-		if	( isset($$attr6_text))
-			$tmp_text = lang($$attr6_text);
-		else
-			$tmp_text = lang($attr6_text);
+		$tmp_text = $langF($attr6_text);
 	elseif (!empty($attr6_textvar))
-		$tmp_text = lang($$attr6_textvar);
+		$tmp_text = $langF($$attr6_textvar);
 	elseif (!empty($attr6_key))
-		$tmp_text = lang($attr6_key);
+		$tmp_text = $langF($attr6_key);
 	elseif (!empty($attr6_var))
-		$tmp_text = isset($$attr6_var)?$$attr6_var:'?'.$attr6_var.'?';	
+		$tmp_text = isset($$attr6_var)?$$attr6_var:'?unset:'.$attr6_var.'?';	
 	elseif (!empty($attr6_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
 	elseif (!empty($attr6_value))
 		$tmp_text = $attr6_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr6_escape && empty($attr6_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr6_maxlength) && intval($attr6_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr6_maxlength) );
 	if	(isset($attr6_accesskey))
@@ -978,15 +964,12 @@ if (isset($attr7_elementtype)) {
 		$tmp_url = $attr7_url;
 	else
 		$tmp_url = Html::url($attr7_action,$attr7_subaction,!empty($attr7_id)?$attr7_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>"<?php if (isset($attr7_accesskey)) echo ' accesskey="'.$attr7_accesskey.'"' ?>  title="<?php echo $attr7_title ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php unset($attr7_class) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:14:"GLOBAL_ARCHIVE";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','text'=>'GLOBAL_ARCHIVE','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_text='GLOBAL_ARCHIVE' ?><?php $attr8_escape=true ?><?php
+?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>"<?php if (isset($attr7_accesskey)) echo ' accesskey="'.$attr7_accesskey.'"' ?>  title="<?php echo encodeHtml($attr7_title) ?>"><?php unset($attr7) ?><?php unset($attr7_title) ?><?php unset($attr7_target) ?><?php unset($attr7_url) ?><?php unset($attr7_class) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:14:"GLOBAL_ARCHIVE";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','text'=>'GLOBAL_ARCHIVE','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_text='GLOBAL_ARCHIVE' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
 		$attr8_key = $attr8_key.$attr8_suffix;
 	if(empty($attr8_title))
-		if (!empty($attr8_key))
-			$attr8_title = lang($attr8_key.'_HELP');
-		else
 			$attr8_title = '';
 	if	(empty($attr8_type))
 		$tmp_tag = 'span';
@@ -1010,33 +993,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 	$attr8_title = '';
+	if	( $attr8_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr8_array))
 	{
 		$tmpArray = $$attr8_array;
 		if (!empty($attr8_var))
 			$tmp_text = $tmpArray[$attr8_var];
 		else
-			$tmp_text = lang($tmpArray[$attr8_text]);
+			$tmp_text = $langF($tmpArray[$attr8_text]);
 	}
 	elseif (!empty($attr8_text))
-		if	( isset($$attr8_text))
-			$tmp_text = lang($$attr8_text);
-		else
-			$tmp_text = lang($attr8_text);
+		$tmp_text = $langF($attr8_text);
 	elseif (!empty($attr8_textvar))
-		$tmp_text = lang($$attr8_textvar);
+		$tmp_text = $langF($$attr8_textvar);
 	elseif (!empty($attr8_key))
-		$tmp_text = lang($attr8_key);
+		$tmp_text = $langF($attr8_key);
 	elseif (!empty($attr8_var))
-		$tmp_text = isset($$attr8_var)?$$attr8_var:'?'.$attr8_var.'?';	
+		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';	
 	elseif (!empty($attr8_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
 	elseif (!empty($attr8_value))
 		$tmp_text = $attr8_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr8_escape && empty($attr8_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr8_maxlength) && intval($attr8_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr8_maxlength) );
 	if	(isset($attr8_accesskey))
@@ -1053,9 +1035,6 @@ if (isset($attr7_elementtype)) {
 	if	( isset($attr7_suffix)&& isset($attr7_key))
 		$attr7_key = $attr7_key.$attr7_suffix;
 	if(empty($attr7_title))
-		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key.'_HELP');
-		else
 			$attr7_title = '';
 	if	(empty($attr7_type))
 		$tmp_tag = 'span';
@@ -1079,33 +1058,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( $attr7_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr7_array))
 	{
 		$tmpArray = $$attr7_array;
 		if (!empty($attr7_var))
 			$tmp_text = $tmpArray[$attr7_var];
 		else
-			$tmp_text = lang($tmpArray[$attr7_text]);
+			$tmp_text = $langF($tmpArray[$attr7_text]);
 	}
 	elseif (!empty($attr7_text))
-		if	( isset($$attr7_text))
-			$tmp_text = lang($$attr7_text);
-		else
-			$tmp_text = lang($attr7_text);
+		$tmp_text = $langF($attr7_text);
 	elseif (!empty($attr7_textvar))
-		$tmp_text = lang($$attr7_textvar);
+		$tmp_text = $langF($$attr7_textvar);
 	elseif (!empty($attr7_key))
-		$tmp_text = lang($attr7_key);
+		$tmp_text = $langF($attr7_key);
 	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?'.$attr7_var.'?';	
+		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
 	elseif (!empty($attr7_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
 	elseif (!empty($attr7_value))
 		$tmp_text = $attr7_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr7_escape && empty($attr7_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
 	if	(isset($attr7_accesskey))
@@ -1116,15 +1094,12 @@ if (isset($attr7_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_raw) ?><?php unset($attr7_escape) ?><?php $attr7_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:17:"var:archive_count";s:6:"escape";s:4:"true";}' ?><?php $attr7 = array('class'=>'text','text'=>$archive_count,'escape'=>true) ?><?php $attr7_class='text' ?><?php $attr7_text=$archive_count ?><?php $attr7_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_raw) ?><?php unset($attr7_escape) ?><?php $attr7_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:13:"archive_count";s:6:"escape";s:4:"true";}' ?><?php $attr7 = array('class'=>'text','var'=>'archive_count','escape'=>true) ?><?php $attr7_class='text' ?><?php $attr7_var='archive_count' ?><?php $attr7_escape=true ?><?php
 	if	( isset($attr7_prefix)&& isset($attr7_key))
 		$attr7_key = $attr7_prefix.$attr7_key;
 	if	( isset($attr7_suffix)&& isset($attr7_key))
 		$attr7_key = $attr7_key.$attr7_suffix;
 	if(empty($attr7_title))
-		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key.'_HELP');
-		else
 			$attr7_title = '';
 	if	(empty($attr7_type))
 		$tmp_tag = 'span';
@@ -1148,33 +1123,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( $attr7_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr7_array))
 	{
 		$tmpArray = $$attr7_array;
 		if (!empty($attr7_var))
 			$tmp_text = $tmpArray[$attr7_var];
 		else
-			$tmp_text = lang($tmpArray[$attr7_text]);
+			$tmp_text = $langF($tmpArray[$attr7_text]);
 	}
 	elseif (!empty($attr7_text))
-		if	( isset($$attr7_text))
-			$tmp_text = lang($$attr7_text);
-		else
-			$tmp_text = lang($attr7_text);
+		$tmp_text = $langF($attr7_text);
 	elseif (!empty($attr7_textvar))
-		$tmp_text = lang($$attr7_textvar);
+		$tmp_text = $langF($$attr7_textvar);
 	elseif (!empty($attr7_key))
-		$tmp_text = lang($attr7_key);
+		$tmp_text = $langF($attr7_key);
 	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?'.$attr7_var.'?';	
+		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
 	elseif (!empty($attr7_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
 	elseif (!empty($attr7_value))
 		$tmp_text = $attr7_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr7_escape && empty($attr7_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
 	if	(isset($attr7_accesskey))
@@ -1185,15 +1159,12 @@ if (isset($attr7_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_text) ?><?php unset($attr7_escape) ?><?php $attr7_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:2:"_)";s:6:"escape";s:4:"true";}' ?><?php $attr7 = array('class'=>'text','raw'=>'_)','escape'=>true) ?><?php $attr7_class='text' ?><?php $attr7_raw='_)' ?><?php $attr7_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_var) ?><?php unset($attr7_escape) ?><?php $attr7_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:2:"_)";s:6:"escape";s:4:"true";}' ?><?php $attr7 = array('class'=>'text','raw'=>'_)','escape'=>true) ?><?php $attr7_class='text' ?><?php $attr7_raw='_)' ?><?php $attr7_escape=true ?><?php
 	if	( isset($attr7_prefix)&& isset($attr7_key))
 		$attr7_key = $attr7_prefix.$attr7_key;
 	if	( isset($attr7_suffix)&& isset($attr7_key))
 		$attr7_key = $attr7_key.$attr7_suffix;
 	if(empty($attr7_title))
-		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key.'_HELP');
-		else
 			$attr7_title = '';
 	if	(empty($attr7_type))
 		$tmp_tag = 'span';
@@ -1217,33 +1188,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( $attr7_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr7_array))
 	{
 		$tmpArray = $$attr7_array;
 		if (!empty($attr7_var))
 			$tmp_text = $tmpArray[$attr7_var];
 		else
-			$tmp_text = lang($tmpArray[$attr7_text]);
+			$tmp_text = $langF($tmpArray[$attr7_text]);
 	}
 	elseif (!empty($attr7_text))
-		if	( isset($$attr7_text))
-			$tmp_text = lang($$attr7_text);
-		else
-			$tmp_text = lang($attr7_text);
+		$tmp_text = $langF($attr7_text);
 	elseif (!empty($attr7_textvar))
-		$tmp_text = lang($$attr7_textvar);
+		$tmp_text = $langF($$attr7_textvar);
 	elseif (!empty($attr7_key))
-		$tmp_text = lang($attr7_key);
+		$tmp_text = $langF($attr7_key);
 	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?'.$attr7_var.'?';	
+		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
 	elseif (!empty($attr7_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
 	elseif (!empty($attr7_value))
 		$tmp_text = $attr7_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr7_escape && empty($attr7_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
 	if	(isset($attr7_accesskey))
@@ -1261,9 +1231,6 @@ if (isset($attr7_elementtype)) {
 	if	( isset($attr7_suffix)&& isset($attr7_key))
 		$attr7_key = $attr7_key.$attr7_suffix;
 	if(empty($attr7_title))
-		if (!empty($attr7_key))
-			$attr7_title = lang($attr7_key.'_HELP');
-		else
 			$attr7_title = '';
 	if	(empty($attr7_type))
 		$tmp_tag = 'span';
@@ -1287,33 +1254,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 	$attr7_title = '';
+	if	( $attr7_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr7_array))
 	{
 		$tmpArray = $$attr7_array;
 		if (!empty($attr7_var))
 			$tmp_text = $tmpArray[$attr7_var];
 		else
-			$tmp_text = lang($tmpArray[$attr7_text]);
+			$tmp_text = $langF($tmpArray[$attr7_text]);
 	}
 	elseif (!empty($attr7_text))
-		if	( isset($$attr7_text))
-			$tmp_text = lang($$attr7_text);
-		else
-			$tmp_text = lang($attr7_text);
+		$tmp_text = $langF($attr7_text);
 	elseif (!empty($attr7_textvar))
-		$tmp_text = lang($$attr7_textvar);
+		$tmp_text = $langF($$attr7_textvar);
 	elseif (!empty($attr7_key))
-		$tmp_text = lang($attr7_key);
+		$tmp_text = $langF($attr7_key);
 	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?'.$attr7_var.'?';	
+		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
 	elseif (!empty($attr7_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
 	elseif (!empty($attr7_value))
 		$tmp_text = $attr7_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr7_escape && empty($attr7_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
 	if	(isset($attr7_accesskey))
@@ -1358,9 +1324,6 @@ if (isset($attr7_elementtype)) {
 	if	( isset($attr5_suffix)&& isset($attr5_key))
 		$attr5_key = $attr5_key.$attr5_suffix;
 	if(empty($attr5_title))
-		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key.'_HELP');
-		else
 			$attr5_title = '';
 	if	(empty($attr5_type))
 		$tmp_tag = 'span';
@@ -1384,33 +1347,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+	if	( $attr5_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr5_array))
 	{
 		$tmpArray = $$attr5_array;
 		if (!empty($attr5_var))
 			$tmp_text = $tmpArray[$attr5_var];
 		else
-			$tmp_text = lang($tmpArray[$attr5_text]);
+			$tmp_text = $langF($tmpArray[$attr5_text]);
 	}
 	elseif (!empty($attr5_text))
-		if	( isset($$attr5_text))
-			$tmp_text = lang($$attr5_text);
-		else
-			$tmp_text = lang($attr5_text);
+		$tmp_text = $langF($attr5_text);
 	elseif (!empty($attr5_textvar))
-		$tmp_text = lang($$attr5_textvar);
+		$tmp_text = $langF($$attr5_textvar);
 	elseif (!empty($attr5_key))
-		$tmp_text = lang($attr5_key);
+		$tmp_text = $langF($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?$$attr5_var:'?'.$attr5_var.'?';	
+		$tmp_text = isset($$attr5_var)?$$attr5_var:'?unset:'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
 		$tmp_text = $attr5_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr5_escape && empty($attr5_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr5_maxlength) && intval($attr5_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr5_maxlength) );
 	if	(isset($attr5_accesskey))
@@ -1448,9 +1410,6 @@ if (isset($attr7_elementtype)) {
 	if	( isset($attr5_suffix)&& isset($attr5_key))
 		$attr5_key = $attr5_key.$attr5_suffix;
 	if(empty($attr5_title))
-		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key.'_HELP');
-		else
 			$attr5_title = '';
 	if	(empty($attr5_type))
 		$tmp_tag = 'span';
@@ -1474,33 +1433,32 @@ if (isset($attr7_elementtype)) {
 		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 	$attr5_title = '';
+	if	( $attr5_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
 	if (!empty($attr5_array))
 	{
 		$tmpArray = $$attr5_array;
 		if (!empty($attr5_var))
 			$tmp_text = $tmpArray[$attr5_var];
 		else
-			$tmp_text = lang($tmpArray[$attr5_text]);
+			$tmp_text = $langF($tmpArray[$attr5_text]);
 	}
 	elseif (!empty($attr5_text))
-		if	( isset($$attr5_text))
-			$tmp_text = lang($$attr5_text);
-		else
-			$tmp_text = lang($attr5_text);
+		$tmp_text = $langF($attr5_text);
 	elseif (!empty($attr5_textvar))
-		$tmp_text = lang($$attr5_textvar);
+		$tmp_text = $langF($$attr5_textvar);
 	elseif (!empty($attr5_key))
-		$tmp_text = lang($attr5_key);
+		$tmp_text = $langF($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?$$attr5_var:'?'.$attr5_var.'?';	
+		$tmp_text = isset($$attr5_var)?$$attr5_var:'?unset:'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))
 		$tmp_text = $attr5_value;
 	else
 	  $tmp_text = '&nbsp;';
-	if	( $attr5_escape && empty($attr5_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
 	if	( !empty($attr5_maxlength) && intval($attr5_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr5_maxlength) );
 	if	(isset($attr5_accesskey))

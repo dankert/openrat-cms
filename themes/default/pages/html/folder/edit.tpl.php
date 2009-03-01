@@ -756,8 +756,14 @@ if (isset($attr7_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_raw) ?><?php unset($attr7_escape) ?><?php $attr7_debug_info = 'a:8:{s:4:"list";s:6:"folder";s:4:"name";s:14:"targetobjectid";s:8:"onchange";s:0:"";s:5:"title";s:0:"";s:5:"class";s:0:"";s:8:"addempty";s:5:"false";s:8:"multiple";s:5:"false";s:4:"size";s:1:"1";}' ?><?php $attr7 = array('list'=>'folder','name'=>'targetobjectid','onchange'=>'','title'=>'','class'=>'','addempty'=>false,'multiple'=>false,'size'=>'1') ?><?php $attr7_list='folder' ?><?php $attr7_name='targetobjectid' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><?php $attr7_addempty=false ?><?php $attr7_multiple=false ?><?php $attr7_size='1' ?><?php
-if ($attr7_addempty) $$attr7_list = array(''=>lang('LIST_ENTRY_EMPTY'))+$$attr7_list;
+?></<?php echo $tmp_tag ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_raw) ?><?php unset($attr7_escape) ?><?php $attr7_debug_info = 'a:9:{s:4:"list";s:6:"folder";s:4:"name";s:14:"targetobjectid";s:8:"onchange";s:0:"";s:5:"title";s:0:"";s:5:"class";s:0:"";s:8:"addempty";s:5:"false";s:8:"multiple";s:5:"false";s:4:"size";s:1:"1";s:4:"lang";s:5:"false";}' ?><?php $attr7 = array('list'=>'folder','name'=>'targetobjectid','onchange'=>'','title'=>'','class'=>'','addempty'=>false,'multiple'=>false,'size'=>'1','lang'=>false) ?><?php $attr7_list='folder' ?><?php $attr7_name='targetobjectid' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><?php $attr7_addempty=false ?><?php $attr7_multiple=false ?><?php $attr7_size='1' ?><?php $attr7_lang=false ?><?php
+if ( $attr7_addempty!==FALSE  )
+{
+	if ($attr7_addempty===TRUE)
+		$$attr7_list = array(''=>lang('LIST_ENTRY_EMPTY'))+$$attr7_list;
+	else
+		$$attr7_list = array(''=>'- '.lang($attr7_addempty).' -')+$$attr7_list;
+}
 ?><select id="id_<?php echo $attr7_name ?>"  name="<?php echo $attr7_name; if ($attr7_multiple) echo '[]'; ?>" onchange="<?php echo $attr7_onchange ?>" title="<?php echo $attr7_title ?>" class="<?php echo $attr7_class ?>"<?php
 if (count($$attr7_list)<=1) echo ' disabled="disabled"';
 if	($attr7_multiple) echo ' multiple="multiple"';
@@ -773,7 +779,22 @@ echo ' size="'.intval($attr7_size).'"';
 			$attr7_tmp_default = '';
 		foreach( $attr7_tmp_list as $box_key=>$box_value )
 		{
-			echo '<option class="'.$attr7_class.'" value="'.$box_key.'"';
+			if	( is_array($box_value) )
+			{
+				$box_key   = $box_value['key'  ];
+				$box_title = $box_value['title'];
+				$box_value = $box_value['value'];
+			}
+			elseif( $attr7_lang )
+			{
+				$box_title = lang( $box_value.'_DESC');
+				$box_value = lang( $box_value        );
+			}
+			else
+			{
+				$box_title = '';
+			}
+			echo '<option class="'.$attr7_class.'" value="'.$box_key.'" title="'.$box_title.'"';
 			if ($box_key==$attr7_tmp_default)
 				echo ' selected="selected"';
 			echo '>'.$box_value.'</option>';
@@ -781,7 +802,7 @@ echo ' size="'.intval($attr7_size).'"';
 ?></select><?php
 if (count($$attr7_list)==0) echo '<input type="hidden" name="'.$attr7_name.'" value="" />';
 if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />'
-?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_onchange) ?><?php unset($attr7_title) ?><?php unset($attr7_class) ?><?php unset($attr7_addempty) ?><?php unset($attr7_multiple) ?><?php unset($attr7_size) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:7:"present";s:12:"ask_filename";}' ?><?php $attr4 = array('present'=>'ask_filename') ?><?php $attr4_present='ask_filename' ?><?php 
+?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_onchange) ?><?php unset($attr7_title) ?><?php unset($attr7_class) ?><?php unset($attr7_addempty) ?><?php unset($attr7_multiple) ?><?php unset($attr7_size) ?><?php unset($attr7_lang) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:7:"present";s:12:"ask_filename";}' ?><?php $attr4 = array('present'=>'ask_filename') ?><?php $attr4_present='ask_filename' ?><?php 
 	if	( isset($attr4_true) )
 	{
 		if	(gettype($attr4_true) === '' && gettype($attr4_true) === '1')
