@@ -60,10 +60,58 @@ function lang( $textVar,$vars = array() )
 	
 	// Wenn Textvariable nicht vorhanden ist, dann als letzten Ausweg nur den Variablennamen zurueckgeben
 	
-//	return( '?'.$text.'?' );
-	return( $textVar );
+//return( '?'.$text.'?' );
+	return( '?unknown-lang-key:'.$textVar.'?' );
+	//return( $textVar );
 }
 
+
+
+
+/**
+ * Diese Funktion stellt ein Wort in der eingestellten
+ * Sprache zur Verfuegung. Sonderzeichen werden als HTML maskiert.
+ *
+ * @var String Name der Sprachvariablen
+ * @var Array Liste (Assoziatives Array) von Variablen
+ *
+ * @package openrat.functions
+ * @param $key
+ * @return unknown_type
+ */
+function langHtml( $key,$vars = array() ) {
+
+	return encodeHtml( lang($key,$vars) );
+}
+
+/**
+ * Ersetzt alle Zeichen mit dem Ordinalwert > 127 mit einer HTML-Maskierung.
+ *
+ * @return String
+ */
+function encodeHtml($text)
+{
+	$charset = lang('CHARSET');
+	if	( in_array( $charset, array('ISO-8859-1','ISO-8859-15','UTF-8')) )
+	{
+		return htmlentities($text,ENT_QUOTES,$charset );
+	}
+	else
+	{
+		$t2 = '';
+		
+		for	( $i=0;$i<strlen($tmp_text);$i++)
+		{
+			$o = ord($tmp_text[$i]);
+			if	( $o <= 127 )
+				$t2 .= $tmp_text[$i];
+			else
+				$t2 .= '&#'.$o.';';
+		}
+		
+		return $t2;
+	}
+}
 
 
 /**
