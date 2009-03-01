@@ -61,7 +61,7 @@ class Action
 	/**
 	 * Wird durch das Controller-Skript (do.php) nach der Kontruierung des Objektes aufgerufen.
 	 * So koennen Unterklassen ihren eigenen Kontruktor besitzen, ohne den Superkontruktor
-	 * (=diese Funktion) aufrufen zu müssen.
+	 * (=diese Funktion) aufrufen zu mï¿½ssen.
 	 */
 	function init()
 	{
@@ -80,7 +80,7 @@ class Action
 	/**
 	 * Liest eine Session-Variable
 	 *
-	 * @param String $varName Schlüssel
+	 * @param String $varName Schlï¿½ssel
 	 * @return mixed
 	 */
 	function getSessionVar( $varName )
@@ -96,7 +96,7 @@ class Action
 	/**
 	 * Setzt eine Session-Variable
 	 *
-	 * @param Sring $varName Schlüssel
+	 * @param Sring $varName Schlï¿½ssel
 	 * @param mixed $value Inhalt
 	 * @return mixed
 	 */
@@ -109,10 +109,10 @@ class Action
 
 
 	/**
-	 * Ermittelt den Inhalt der gewünschten Request-Variablen.
-	 * Falls nicht vorhanden, wird "" zurückgegeben.
+	 * Ermittelt den Inhalt der gewï¿½nschten Request-Variablen.
+	 * Falls nicht vorhanden, wird "" zurï¿½ckgegeben.
 	 *
-	 * @param String $varName Schlüssel
+	 * @param String $varName Schlï¿½ssel
 	 * @return String Inhalt
 	 */
 	function getRequestVar( $varName,$transcode='' )
@@ -143,9 +143,9 @@ class Action
 
 	/**
 	 * Ermittelt, ob der aktuelle Request eine Variable mit dem
-	 * angegebenen Namen enthält.
+	 * angegebenen Namen enthï¿½lt.
 	 *
-	 * @param String $varName Schlüssel
+	 * @param String $varName Schlï¿½ssel
 	 * @return boolean true, falls vorhanden.
 	 */
 	function hasRequestVar( $varName )
@@ -158,7 +158,7 @@ class Action
 
 	/**
 	 * Ermittelt die aktuelle Id aus dem Request.<br>
-	 * Um welche ID es sich handelt, ist abhängig von der Action.
+	 * Um welche ID es sich handelt, ist abhï¿½ngig von der Action.
 	 *
 	 * @return Integer
 	 */
@@ -173,9 +173,9 @@ class Action
 
 
 	/**
-	 * Setzt eine Variable für die Oberfläche.
+	 * Setzt eine Variable fï¿½r die Oberflï¿½che.
 	 *
-	 * @param String $varName Schlüssel
+	 * @param String $varName Schlï¿½ssel
 	 * @param Mixed $value
 	 */
 	function setTemplateVar( $varName,$value )
@@ -185,7 +185,7 @@ class Action
 
 
 	/**
-	 * Setzt eine Liste von Variablen für die Oberfläche.
+	 * Setzt eine Liste von Variablen fï¿½r die Oberflï¿½che.
 	 *
 	 * @param Array $varList Assoziatives Array
 	 */
@@ -199,10 +199,10 @@ class Action
 
 
 	/**
-	 * Fügt einen Validierungsfehler hinzu.
+	 * Fï¿½gt einen Validierungsfehler hinzu.
 	 *
 	 * @param String $name Name des validierten Eingabefeldes
-	 * @param String Textschlüssel der Fehlermeldung (optional)
+	 * @param String Textschlï¿½ssel der Fehlermeldung (optional)
 	 */
 	function addValidationError( $name,$message="COMMON_VALIDATION_ERROR",$vars=array(),$log=array() )
 	{
@@ -214,14 +214,14 @@ class Action
 
 	
 	/**
-	 * Fügt ein Meldung hinzu.
+	 * Fï¿½gt ein Meldung hinzu.
 	 *
-	 * @param String $type Typ des Objektes, zu dem diese Meldung gehört.
-	 * @param String $name Name des Objektes, zu dem diese Meldung gehört.
-	 * @param String $text Textschlüssel der Fehlermeldung (optional)
+	 * @param String $type Typ des Objektes, zu dem diese Meldung gehï¿½rt.
+	 * @param String $name Name des Objektes, zu dem diese Meldung gehï¿½rt.
+	 * @param String $text Textschlï¿½ssel der Fehlermeldung (optional)
 	 * @param String $status Einer der Werte OR_NOTICE_(OK|WARN|ERROR)
-	 * @param Array  $vars Variablen für den Textschlüssel
-	 * @param Array $log Weitere Hinweistexte für diese Meldung.
+	 * @param Array  $vars Variablen fï¿½r den Textschlï¿½ssel
+	 * @param Array $log Weitere Hinweistexte fï¿½r diese Meldung.
 	 */
 	function addNotice( $type,$name,$text,$status=OR_NOTICE_OK,$vars=array(),$log=array() )
 	{
@@ -238,6 +238,8 @@ class Action
 
 		$this->templateVars['notices'][] = array('type'=>$type,
                                                  'name'=>$name,
+		                                         'key'=>'NOTICE_'.$text,
+		                                         'vars'=>$vars,
 		                                         'text'=>lang('NOTICE_'.$text,$vars),
 		                                         'log'=>$log,
 		                                         'status'=>$status);
@@ -266,7 +268,7 @@ class Action
 	 * Ausgabe des Templates.<br>
 	 * <br>
 	 * Erst hier soll die Ausgabe auf die Standardausgabe, also die
-	 * Ausgabe für den Browser, starten.<br>
+	 * Ausgabe fï¿½r den Browser, starten.<br>
 	 * <br>
 	 *
 	 * @param String Wird nicht benutzt!
@@ -274,7 +276,7 @@ class Action
 	function forward( $unbenutzterParameter = "" )
 	{
 		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
-			exit; // Die Ausgabe ist bereits erfolgt (z.B. Binärdateien o. WebDAV)
+			exit; // Die Ausgabe ist bereits erfolgt (z.B. Binï¿½rdateien o. WebDAV)
 
 		// Pruefen, ob HTTP-Header gesendet wurden. Dies deutet stark darauf hin, dass eine
 		// PHP-Fehlermeldung ausgegeben wurde. In diesem Fall wird hier abgebrochen.
@@ -393,7 +395,7 @@ class Action
 	/**
 	 * Ruft eine weitere Subaction auf.
 	 *
-	 * @param String $subActionName Name der nächsten Subaction. Es muss eine Methode mit diesem Namen geben.
+	 * @param String $subActionName Name der nï¿½chsten Subaction. Es muss eine Methode mit diesem Namen geben.
 	 */
 	function callSubAction( $subActionName )
 	{
@@ -440,8 +442,8 @@ class Action
 	 * ("304 not modified") gesetzt.
 	 * Der Rest der Seite muss dann nicht mehr erzeugt werden,
 	 * wodurch die Performance stark erhoeht werden kann.
-	 * Ggf. kann das Benutzen dieses Mechanismus zu unerwünschten
-	 * Effekten führen, dann muss "conditional GET" in der
+	 * Ggf. kann das Benutzen dieses Mechanismus zu unerwï¿½nschten
+	 * Effekten fï¿½hren, dann muss "conditional GET" in der
 	 * Konfiguration deaktiviert werden.
 	 *
 	 * Credits: Danke an Charles Miller
@@ -456,9 +458,9 @@ class Action
 	{
 		$user = Session::getUser();
 		if	( $user->loginDate > $time )
-			// Falls Benutzer-Login nach letzter Änderung.
+			// Falls Benutzer-Login nach letzter ï¿½nderung.
 			// Zweck: Nach einem Login sollte mind. 1x jede Seite neu geladen werden, dies
-			// Ist z.B. nach einer Style-Änderung durch den Benutzer notwendig.
+			// Ist z.B. nach einer Style-ï¿½nderung durch den Benutzer notwendig.
 			// Falls aus Versehen doch einmal zuviel gecacht wurde, kann man das durch ein
 			// Neu-Login beheben. 
 			$time = $user->loginDate;
@@ -558,25 +560,25 @@ class Action
 	
 	
 	/**
-	 * Ermittelt, ob der Menüpunkt aktiv ist.
-	 * Ob ein Menüpunkt als aktiv angezeigt werden soll, steht meist erst zur Laufzeit fest.
+	 * Ermittelt, ob der Menï¿½punkt aktiv ist.
+	 * Ob ein Menï¿½punkt als aktiv angezeigt werden soll, steht meist erst zur Laufzeit fest.
 	 * <br>
-	 * Diese Methode kann von den Unterklassen überschrieben werden.
-	 * Falls diese Methode nicht überschrieben wird, sind alle Menüpunkte aktiv.
+	 * Diese Methode kann von den Unterklassen ï¿½berschrieben werden.
+	 * Falls diese Methode nicht ï¿½berschrieben wird, sind alle Menï¿½punkte aktiv.
 	 *
-	 * @param String $name Logischer Name des Menüpunktes
-	 * @return boolean TRUE, wenn Menüpunkt aktiv ist.
+	 * @param String $name Logischer Name des Menï¿½punktes
+	 * @return boolean TRUE, wenn Menï¿½punkt aktiv ist.
 	 */
 	function checkMenu( $name )
 	{
-		// Standard: Alle Menüpunkt sind aktiv.
+		// Standard: Alle Menï¿½punkt sind aktiv.
 		return true;
 	}
 	
 	
 	
 	/**
-	 * Ermitelt den Zeichensatz für die Ausgabe.
+	 * Ermitelt den Zeichensatz fï¿½r die Ausgabe.
 	 *
 	 * @return String Zeichensatz
 	 */
@@ -584,8 +586,8 @@ class Action
 	{
 		$db = db_connection();
 		
-		if	( $db->conf['utf8'] )
-			return 'UTF-8';
+		if	( isset($db->conf['charset']) )
+			return $db->conf['charset'];
 		else
 			return lang('CHARSET');
 	}
