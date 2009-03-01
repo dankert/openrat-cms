@@ -196,8 +196,10 @@ function table()
 			$text = explode("\n",$text);
 		$doc->parse($text);
 //		echo '<pre>';print_r($doc);echo '</pre>';
-//		echo $doc->render('application/html-editor');
 		echo $doc->render('application/html-dom');
+		echo '<hr />';
+		echo $doc->render('application/html-editor');
+//		echo $doc->render('application/html-dom');
 		break;
 		
 	case 'text':
