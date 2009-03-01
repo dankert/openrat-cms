@@ -48,6 +48,10 @@ class MainmenuAction extends Action
 			case 'file':
 			case 'link':
 			case 'folder':
+			case 'language':
+			case 'model':
+			case 'template':
+			case 'element':
 				$this->addSubAction( 'show'  ,-1 );
 				$this->addSubAction( 'create',-1 );
 				$this->addSubAction( 'edit'  ,-1 );
@@ -56,13 +60,6 @@ class MainmenuAction extends Action
 				$this->addSubAction( 'prop'  ,-1 );
 				$this->addSubAction( 'src'   ,-1 );
 				$this->addSubAction( 'rights',-1 );
-				$this->search = true;
-				break;
-
-			case 'language':
-			case 'model':
-				$this->addSubAction( 'listing',-1 );
-				$this->addSubAction( 'edit'   ,-1 );
 				$this->search = true;
 				break;
 
@@ -76,16 +73,6 @@ class MainmenuAction extends Action
 				$this->addSubAction( 'pw'         ,-1 );
 				$this->addSubAction( 'rights'     ,-1 );
 				$this->addSubAction( 'phpinfo'    ,-1 );
-				break;
-
-			case 'template':
-				$this->addSubAction( 'listing',-1 );
-				$this->addSubAction( 'show'   ,-1 );
-//				$this->addSubAction( 'edit'   ,-1 );
-				$this->addSubAction( 'el'     ,-1 );
-				$this->addSubAction( 'src'    ,-1 );
-				$this->addSubAction( 'prop'   ,-1 );
-				$this->search = true;
 				break;
 
 			case 'blank':
@@ -115,27 +102,29 @@ class MainmenuAction extends Action
 	
 	function element()
 	{
-		$this->subActionName = 'template';
-		$this->setTemplateVar('type','template' );
+		$this->subActionName = 'element';
+		$this->setTemplateVar('type','element' );
 
 		$element = new Element( $this->getRequestId() );
 		$element->load();
 
-		global $REQ;
-		$REQ['id'] = $element->templateid;
+		//global $REQ;
+		//$REQ['id'] = $element->templateid;
 		
 		$template = new Template( $element->templateid );
 		$template->load();
 
-		$this->setTemplateVar('text',$template->name );
+		$this->addPath( lang('templates'),lang('templates'),Html::url('main','template',0,array(REQ_PARAM_TARGETSUBACTION=>'listing')),'');
+		$this->addPath( $template->name,lang('TEMPLATE'),Html::url('main','template',$template->templateid),'');
+		$this->setTemplateVar('text',$element->name );
 		
-		$this->addSubaction('listing');
-		$this->addSubaction('show' );
-//		$this->addSubaction('edit' );
-		$this->addSubaction('el'   );
-		if	( $this->writable )
-			$this->addSubaction('src'  );
-		$this->addSubaction('prop' );
+		//$this->addSubaction('listing');
+		//$this->addSubaction('show' );
+		//$this->addSubaction('edit' );
+		//$this->addSubaction('el'   );
+		//if	( $this->writable )
+		//	$this->addSubaction('src'  );
+		//$this->addSubaction('prop' );
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 	}
@@ -152,14 +141,14 @@ class MainmenuAction extends Action
 
 	function template()
 	{
-		$this->setTemplateVar('folder',array() );
-		$this->addSubaction('listing');
+		//$this->addSubaction('listing');
 	
 		if   ( $this->getRequestId() != 0 )
 		{
 			$template = new Template( $this->getRequestId() );
 			$template->load();
 			$this->setTemplateVar('text',$template->name );
+			$this->addPath( lang('templates'),lang('templates'),Html::url('main','template',0,array(REQ_PARAM_TARGETSUBACTION=>'listing')),'');
 			
 			$this->addSubaction('show' );
 //			$this->addSubaction('edit' );
@@ -169,7 +158,7 @@ class MainmenuAction extends Action
 		}
 		else
 		{
-			$this->setTemplateVar('text',lang('global_templates') );
+			$this->setTemplateVar('text',lang('templates') );
 		}
 
 		$this->setTemplateVar('param' ,'templateid');
@@ -180,8 +169,44 @@ class MainmenuAction extends Action
 
 	function pageelement()
 	{
-		$this->subActionName = 'page';
-		$this->callSubAction('page');
+		//$this->subActionName = 'page';
+		//$this->callSubAction('page');
+		
+		
+		$page = Session::getObject();
+		if	( $page->objectid != $this->getRequestId() )
+		{
+			$page = new Page( $this->getRequestId() );
+			Session::setObject( $page );
+			$page->load();
+		}
+		
+		$folder = new Folder( $page->parentid );
+		$folder->filenames = false;
+		$folder->load();
+
+		foreach( $folder->parentObjectNames(true,true) as $id=>$name )
+			$this->addPath($name,$name,Html::url('main','folder',$id),'folder');
+
+		$this->addPath($page->name,$page->name,Html::url('main','page',$page->id),'page');
+		
+		// Ermitteln Namen des Elementes
+		$element = new Element( $this->getRequestVar('elementid'));
+		$element->load();
+		$this->setTemplateVar('text',$element->name);
+	
+//		$this->obj = &$page;
+//		$this->addSubAction('show'  ,ACL_READ    );
+//		$this->addSubAction('edit'  ,ACL_WRITE   );
+//		$this->addSubAction('el'    ,ACL_WRITE   );
+//		$this->addSubAction('form'  ,ACL_WRITE   );
+
+//		$this->addSubAction('pub'   ,ACL_PUBLISH );
+//		$this->addSubAction('prop'  ,ACL_PROP    );
+//		$this->addSubAction('src'   ,ACL_PROP    );
+//		$this->addSubAction('rights',ACL_GRANT   );
+
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 	}
 
 
@@ -207,13 +232,13 @@ class MainmenuAction extends Action
 		foreach( $folder->parentObjectNames(true,true) as $id=>$name )
 			$this->addPath($name,$name,Html::url('main','folder',$id),'folder');
 
-		$others = $folder->getObjects();
-		$o2 = array();
-		foreach( $others as $o )
-			if	( $o->isPage )
-				$o2[$o->objectid] = Text::maxLength($o->name,25);
-			
-		$this->setTemplateVar('otherObjects',$o2);
+//		$others = $folder->getObjects();
+//		$o2 = array();
+//		foreach( $others as $o )
+//			if	( $o->isPage )
+//				$o2[$o->objectid] = Text::maxLength($o->name,25);
+//			
+//		$this->setTemplateVar('otherObjects',$o2);
 	
 		// Ermitteln Namen der Seite
 		$this->setTemplateVar('text',$page->name);
@@ -237,17 +262,18 @@ class MainmenuAction extends Action
 	function user()
 	{
 		global $conf;
-		$this->setTemplateVar('path',array() );
-		$user = new User( $this->getRequestId() );
-		$user->load();
-			
-		$this->setTemplateVar('text',$user->name);
-	
-		$this->addSubaction('listing');
+		
+		//$this->addSubaction('listing');
 		$this->addSubaction('add'    );
 
 		if	( $this->getRequestId() != 0 )
 		{
+			$this->addPath( lang('USER'),lang('USER'),Html::url('main','user',0,array(REQ_PARAM_TARGETSUBACTION=>'listing')),'user');
+			$user = new User( $this->getRequestId() );
+			$user->load();
+				
+			$this->setTemplateVar('text',$user->name);
+		
 			$this->addSubaction('edit'   );
 			$this->addSubaction('memberships' );
 			
@@ -259,6 +285,10 @@ class MainmenuAction extends Action
 
 			$this->addSubaction('rights' );
 		}
+		else
+		{
+			$this->setTemplateVar('text',lang('USERS'));			
+		}
 		
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param'    ,'userid'            );
@@ -268,21 +298,26 @@ class MainmenuAction extends Action
 
 	function group()
 	{
-		$this->setTemplateVar('path',array() );
-
-		$group = new Group( $this->getRequestId() );
-		$group->load();
-		$this->setTemplateVar('text',$group->name);
 
 		$this->addSubaction('listing'    );
 		$this->addSubaction('add'        );
 
 		if	( $this->getRequestId() != 0 )
 		{
+			$group = new Group( $this->getRequestId() );
+			$group->load();
+			$this->setTemplateVar('text',$group->name);
+			
+			$this->addPath( lang('GROUPS'),lang('GROUPS'),Html::url('main','group',0,array(REQ_PARAM_TARGETSUBACTION=>'listing')),'group');
 			$this->addSubaction('memberships');
 			$this->addSubaction('edit'   );
 			$this->addSubaction('rights' );
 		}
+		else
+		{
+			$this->setTemplateVar('text',lang('GROUPS'));			
+		}
+		
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 
 		$this->setTemplateVar('param'    ,'groupid'           );
@@ -410,7 +445,7 @@ class MainmenuAction extends Action
 	{
 		$this->setTemplateVar('path',array() );
 
-		$this->addSubaction('listing');
+		//$this->addSubaction('listing');
 		$this->addSubaction('add'    );
 		$this->addSubaction('phpinfo');
 		
@@ -421,6 +456,7 @@ class MainmenuAction extends Action
 			$project = new Project( $this->getRequestId() );
 			$project->load();
 			$this->setTemplateVar('text',$project->name );
+			$this->addPath( lang('PROJECTS'),lang('PROJECTS'),Html::url('main','project',0,array(REQ_PARAM_TARGETSUBACTION=>'listing')),'user');
 		}
 		else
 		{
@@ -434,28 +470,42 @@ class MainmenuAction extends Action
 
 	function language()
 	{
-		$this->addSubaction('listing');
+		//$this->addSubaction('listing');
 
 		if	( $this->userIsAdmin() && $this->getRequestId()>0 )
+		{
+			$language = new Language($this->getRequestId());
+			$language->load();
+			$this->addPath( lang('LANGUAGES'),lang('LANGUAGES'),Html::url('main','language',0,array(REQ_PARAM_TARGETSUBACTION=>'listing')),'');
 			$this->addSubaction('edit');
+			$this->setTemplateVar('text',$language->name);
+		}
+		else
+		{
+			$this->setTemplateVar('text',lang('LANGUAGES'));
+		}
 
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param',REQ_PARAM_LANGUAGE_ID);
-		$this->setTemplateVar('text',lang('GLOBAL_LANGUAGE'));
 	}
 
 
 
 	function model()
 	{
-		$this->addSubaction('listing');
+		//$this->addSubaction('listing');
 
 		if	( $this->userIsAdmin() && $this->getRequestId()>0 )
+		{
+			$model = new Model( $this->getRequestId() );
+			$model->load();
+			$this->addPath( lang('MODELS'),lang('MODELS'),Html::url('main','model',0,array(REQ_PARAM_TARGETSUBACTION=>'listing')),'');
 			$this->addSubaction('edit');
+			$this->setTemplateVar('text',$model->name);		}
 			
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','modelid');
-		$this->setTemplateVar('text',lang('GLOBAL_MODEL'));
+		$this->setTemplateVar('text',lang('MODELS'));
 	}
 
 
