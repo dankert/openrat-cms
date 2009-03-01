@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.7  2009-03-01 01:39:58  dankert
+// Neue Methode "getAllAcls()" zum Lesen der Berechtigungen.
+//
 // Revision 1.6  2007-11-08 22:21:59  dankert
 // Abfangen, wenn Gruppe nicht in Datenbank gefunden wird.
 //
@@ -320,6 +323,44 @@ class Group
 		// Datenbankabfrage ausf?hren
 		$db->query( $sql->query );
 	}
+
+	
+	
+	/**
+	 * Ermitteln aller Berechtigungen dieser Gruppe.<br>
+	 * Diese Daten werden auf der Gruppenseite in der Administration angezeigt.
+	 *
+	 * @return unknown
+	 */
+	function getAllAcls()
+	{
+		$db = db_connection();
+		$sql = new Sql( 'SELECT {t_acl}.*,{t_object}.projectid,{t_language}.name AS languagename FROM {t_acl}'.
+		                '  LEFT JOIN {t_object} '.
+		                '         ON {t_object}.id={t_acl}.objectid '.
+		                '  LEFT JOIN {t_language} '.
+		                '         ON {t_language}.id={t_acl}.languageid '.
+		                '  WHERE ( {t_acl}.groupid={groupid} OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )'.
+		                '  ORDER BY {t_object}.projectid,{t_acl}.languageid' );
+		$sql->setInt  ( 'groupid'    ,$this->groupid );
+
+		$aclList = array();
+
+		foreach( $db->getAll( $sql->query ) as $row )
+		{
+			$acl = new Acl();
+			$acl->setDatabaseRow( $row );
+			$acl->projectid    = $row['projectid'   ];
+			if	( intval($acl->languageid) == 0 )
+				$acl->languagename = lang('GLOBAL_ALL_LANGUAGES');
+			else
+				$acl->languagename = $row['languagename'];
+			$aclList[] = $acl;
+		}
+		
+		return $aclList;
+	}
+	
 
 
 	// Berechtigung entfernen
