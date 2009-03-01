@@ -13,14 +13,14 @@ page
 					upload name:file maxlength:var:maxlength
 			row
 				cell colspan:2
-					text class:help text:message:file_max_size
+					text class:help key:file_max_size
 					text raw:_
-					text text:var:max_size
+					text var:max_size
 					newline
 					newline
 			row
 				cell class:fx
-					text text:global_URL
+					text key:HTTP_URL
 				cell class:fx
 					input name:url size:50
 			row
