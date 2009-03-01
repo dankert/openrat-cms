@@ -347,7 +347,8 @@ tr.f2:hover
 }
 
 input.submit,
-input.ok
+input.ok,
+div.cancel
 {
 	color:#FFFFFF;
 	background-color:#7B9CBD;
@@ -515,6 +516,7 @@ td.notice
 {
 	margin-top:10px;
 	margin-bottom:10px;
-	padding:20%;
+	padding:10%;
 	text-align:center;
 }
+

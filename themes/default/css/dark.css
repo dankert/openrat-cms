@@ -40,7 +40,8 @@ td.subaction
 	/*background-attachment: fixed;*/
 }
 
-input
+input,
+div.cancel
 {
 	background-image: url('../images/bg-title.png');
 	color:black;
@@ -66,7 +67,8 @@ textarea:focus
 }
 
 input.submit,
-input.ok
+input.ok,
+div.cancel
 {
 	color:black;
 }
