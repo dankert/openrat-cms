@@ -72,11 +72,11 @@ class ProjectTree extends AbstractTree
 					$treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 				$treeElement->target      = 'cms_main';
 
-				if	( in_array($element->type,array('link') ) )
+				if	( in_array($element->type,array('link','list','include') ) )
 				{
 					$treeElement->type = 'value';
 					$value = new Value();
-					$value->pageid  = $id;
+					$value->pageid  = $page->pageid;
 					$value->element = $element;
 					$value->load();
 					$treeElement->internalId = $value->valueid;
@@ -90,13 +90,13 @@ class ProjectTree extends AbstractTree
 
 	function value( $id )
 	{
+				//echo "id: $id";
 		if	( $id != 0 )
 		{
 			$value = new Value();
 			$value->loadWithId( $id );
 		
 			$objectid = intval($value->linkToObjectId);
-			
 			if	( $objectid != 0 )
 			{
 				$object = new Object( $objectid );
@@ -436,8 +436,8 @@ class ProjectTree extends AbstractTree
 	function other()
 	{
 // Deaktiviert, da
-// - Dateien auf den Server laden unverständlich/undurchsichtig erscheint
-// - Möglichkeit zum Entpacken von ZIP/TAR online besteht.
+// - Dateien auf den Server laden unverstï¿½ndlich/undurchsichtig erscheint
+// - Mï¿½glichkeit zum Entpacken von ZIP/TAR online besteht.
 //		if	( $this->userIsProjectAdmin )
 //		{
 //			$treeElement = new TreeElement();
