@@ -22,11 +22,13 @@ fi
 
 cat $1|egrep "^;" -v|while read line
 do
-  #echo "Zeile:"
-  anfline=`echo $line|sed s/=.*/=/`
-  #echo "$anfline"   # Output the line itself.
-  #echo Hat `cat $2|grep "$anfline"`
-  if [ "`cat $2|grep \"$anfline\"`" == "" ]; then
+  #echo "Zeile: $line"
+  anfline=`echo $line|cut --delimiter== -f 1`
+  #echo "Key: $anfline"   # Output the line itself.
+  #echo Hat `cat $2|egrep "$anfline\\s?="`
+  count=`cat $2|egrep "^$anfline\\\\s?="|wc -l`
+  #echo "Count=$count"
+  if [ $count -eq "0" ]; then
     echo $line
     #echo ";not in $2: $anfline"
   fi
