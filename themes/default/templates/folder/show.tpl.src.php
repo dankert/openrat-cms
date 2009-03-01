@@ -17,7 +17,7 @@ page class:main
 		list list:object extract:true
 			row
 				cell class:fx
-					link url:var:url target:cms_main title:desc
+					link url:var:url target:cms_main title:var:desc class:var:class
 						image type:var:icon
 						text var:name
 						text raw:_

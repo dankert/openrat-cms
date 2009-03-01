@@ -11,16 +11,16 @@ page
 					fieldset
 			row
 				cell
-					text text:message:file_extension
+					text key:file_extension
 				cell
 					link action:template subaction:extension
-						text text:var:extension
+						text var:extension
 			row
 				cell
-					text text:message:file_mimetype
+					text key:file_mimetype
 				cell
 					link action:template subaction:extension
-						text text:var:mime_type
+						text var:mime_type
 			row
 				cell colspan:2 class:act
 					button type:ok

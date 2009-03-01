@@ -5,11 +5,11 @@ page
 				cell class:fx
 					link url:var:url title:var:desc
 						image elementtype:var:type
-						text text:var:name
+						text var:name
 				cell class:fx
 					text key:var:type prefix:EL_
 
 		if empty:el
 			row
 				cell colspan:2 class:fx
-					text text:message:GLOBAL_NOT_FOUND
+					text key:GLOBAL_NOT_FOUND
