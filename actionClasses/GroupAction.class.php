@@ -121,8 +121,8 @@ class GroupAction extends Action
 
 
 	/**
-	 * Benutzer zur Gruppe hinzufügen.<br>
-	 * Es kann eine Liste oder eine einzelne Person zur Gruppe hinzugefügt werden.
+	 * Benutzer zur Gruppe hinzufï¿½gen.<br>
+	 * Es kann eine Liste oder eine einzelne Person zur Gruppe hinzugefï¿½gt werden.
 	 */
 	function addusertogroup()
 	{
@@ -139,13 +139,13 @@ class GroupAction extends Action
 		}
 		elseif( intval($userid) > 0 )
 		{
-			// Nur 1 Benutzer hinzufügen.
+			// Nur 1 Benutzer hinzufï¿½gen.
 			$this->group->addUser( intval($userid) );
 			$this->addNotice('group',$this->group->name,'USER_ADDED_TO_GROUP',OK_NOTICE_OK,array('count'=>'1'));
 		}
 		else
 		{
-			// Es wurde kein Benutzer ausgewählt.
+			// Es wurde kein Benutzer ausgewï¿½hlt.
 			$this->addNotice('group',$this->group->name,'NOTHING_DONE',OR_NOTICE_WARN);
 		}
 	}
@@ -218,11 +218,76 @@ class GroupAction extends Action
 
 	
 	
+	
+
 	/**
-	 * Menü.
+	 * Anzeigen der Benutzerrechte
+	 */
+	function rights()
+	{
+		$rights = $this->group->getAllAcls();
+
+		$projects = array();
+		
+		foreach( $rights as $acl )
+		{
+			if	( !isset($projects[$acl->projectid]))
+			{
+				$projects[$acl->projectid] = array();
+				$p = new Project($acl->projectid);
+				$p->load();
+				$projects[$acl->projectid]['projectname'] = $p->name;
+				$projects[$acl->projectid]['rights'     ] = array();
+			}
+
+			$right = array();
+			
+			if	( $acl->languageid > 0 )
+			{
+				$language = new Language($acl->languageid);
+				$language->load();
+				$right['languagename'] = $language->name;
+			}
+			else
+			{
+				$right['languagename'] = lang('ALL_LANGUAGES');
+			}
+			
+			
+			$o = new Object($acl->objectid);
+			$o->objectLoad();
+			$right['objectname'] = $o->name;
+			$right['objectid'  ] = $o->objectid;
+			$right['objecttype'] = $o->getType();
+			
+			if	( $acl->groupid > 0 )
+			{
+				$group = new Group($acl->groupid);
+				$group->load();
+				$right['groupname'] = $group->name;
+			}
+			else
+			{
+				// Berechtigung fï¿½r "alle".
+			}
+
+			$right['bits'] = $acl->getProperties();
+			
+			$projects[$acl->projectid]['rights'][] = $right;
+		}
+		
+		$this->setTemplateVar('projects'    ,$projects );
+		
+		$this->setTemplateVar('show',Acl::getAvailableRights() );
+	}
+	
+	
+	
+	/**
+	 * Menï¿½.
 	 *
-	 * @param String $menu Menüeintrag.
-	 * @return boolean TRUE, wenn Menüeintrag aktiv ist.
+	 * @param String $menu Menï¿½eintrag.
+	 * @return boolean TRUE, wenn Menï¿½eintrag aktiv ist.
 	 */
 	function checkMenu( $menu )
 	{
@@ -232,7 +297,7 @@ class GroupAction extends Action
 				// Benutzerliste nur anzeigen, wenn welche vorhanden.
 				return count($this->group->getUsers()) > 0;
 			case 'adduser':
-				// Benutzer können nur hinzugefügt werden, wenn noch nicht alle
+				// Benutzer kï¿½nnen nur hinzugefï¿½gt werden, wenn noch nicht alle
 				// in der Gruppe sind.
 				return count($this->group->getOtherUsers()) > 0;
 			default:

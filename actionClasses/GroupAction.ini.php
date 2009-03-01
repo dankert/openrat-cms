@@ -44,8 +44,12 @@ menu=memberships
 [addusertogroup]
 goto=users
 
+[rights]
+menu=rights
+
 [menu]
 listing=listing,add
 users=users,adduser
 edit=edit,remove
 memberships=users,adduser
+rights=rights
