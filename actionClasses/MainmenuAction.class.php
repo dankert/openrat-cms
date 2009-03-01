@@ -99,15 +99,15 @@ class MainmenuAction extends Action
 	function addSubAction( $name,$aclbit=0 )
 	{
 		// Wenn $aclbit nicht vorhanden oder die entsprechende Berechtigung vorhanden ist,
-		// dann Menüpunkt ergänzen.
+		// dann Menï¿½punkt ergï¿½nzen.
 		if   ( $aclbit==-1 )
 			$url = '';
 		elseif   ( $aclbit==0 || $this->obj->hasRight($aclbit) )
 			$url = Html::url($this->subActionName,$name,$this->getRequestId() );
 		else
 			$url = '';
-		$this->subActionList[ $name ] = array( 'text' =>lang('MENU_'.strtoupper($name) ),
-		                                       'title'=>lang('MENU_'.strtoupper($name).'_DESC' ),
+		$this->subActionList[ $name ] = array( 'text' =>'MENU_'.strtoupper($name),
+		                                       'title'=>'MENU_'.strtoupper($name).'_DESC',
 		                                       'key'  =>strtoupper(lang('ACCESSKEY_MAIN_'.strtoupper($name))),
 		                                       'url'  =>$url );
 	}
@@ -281,6 +281,7 @@ class MainmenuAction extends Action
 		{
 			$this->addSubaction('memberships');
 			$this->addSubaction('edit'   );
+			$this->addSubaction('rights' );
 		}
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 
