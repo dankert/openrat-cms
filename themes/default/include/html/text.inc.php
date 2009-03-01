@@ -5,9 +5,9 @@
 		$attr_key = $attr_key.$attr_suffix;
 		
 	if(empty($attr_title))
-		if (!empty($attr_key))
-			$attr_title = lang($attr_key.'_HELP');
-		else
+//		if (!empty($attr_key))
+//			$attr_title = lang($attr_key.'_HELP');
+//		else
 			$attr_title = '';
 	if	(empty($attr_type))
 		$tmp_tag = 'span';
@@ -32,7 +32,11 @@
 
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
 	$attr_title = '';
-
+	if	( $attr_escape )
+		$langF = 'langHtml';
+	else
+		$langF = 'lang';
+	
 	if (!empty($attr_array))
 	{
 		//geht nicht:
@@ -41,19 +45,16 @@
 		if (!empty($attr_var))
 			$tmp_text = $tmpArray[$attr_var];
 		else
-			$tmp_text = lang($tmpArray[$attr_text]);
+			$tmp_text = $langF($tmpArray[$attr_text]);
 	}
 	elseif (!empty($attr_text))
-		if	( isset($$attr_text))
-			$tmp_text = lang($$attr_text);
-		else
-			$tmp_text = lang($attr_text);
+		$tmp_text = $langF($attr_text);
 	elseif (!empty($attr_textvar))
-		$tmp_text = lang($$attr_textvar);
+		$tmp_text = $langF($$attr_textvar);
 	elseif (!empty($attr_key))
-		$tmp_text = lang($attr_key);
+		$tmp_text = $langF($attr_key);
 	elseif (!empty($attr_var))
-		$tmp_text = isset($$attr_var)?$$attr_var:'?'.$attr_var.'?';	
+		$tmp_text = isset($$attr_var)?$$attr_var:'?unset:'.$attr_var.'?';	
 	elseif (!empty($attr_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr_raw);
 	elseif (!empty($attr_value))
@@ -61,8 +62,10 @@
 	else
 	  $tmp_text = '&nbsp;';
 	
-	if	( $attr_escape && empty($attr_raw) && $tmp_text!='&nbsp;' )
-		$tmp_text = htmlentities($tmp_text);
+//	if	( $attr_escape && empty($attr_raw) && $tmp_text!='&nbsp;' )
+//	{
+//		$tmp_text = htmlentities($tmp_text,ENT_QUOTES,lang('CHARSET') );
+//	}
 		
 	if	( !empty($attr_maxlength) && intval($attr_maxlength)!=0  )
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength) );
