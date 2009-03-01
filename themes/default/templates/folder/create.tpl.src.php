@@ -25,9 +25,9 @@ page
 				cell class:fx
 					upload name:file size:30 maxlength:var:maxlength
 					newline
-					text class:help text:message:file_max_size
+					text class:help key:file_max_size
 					text raw:_
-					text text:var:max_size
+					text var:max_size
 
 			row
 				cell colspan:3
