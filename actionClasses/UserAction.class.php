@@ -57,7 +57,10 @@ class UserAction extends Action
 			$this->user->ldap_dn  = $this->getRequestVar('ldap_dn' );
 			$this->user->tel      = $this->getRequestVar('tel'     );
 			$this->user->desc     = $this->getRequestVar('desc'    );
-			$this->user->mail     = $this->getRequestVar('mail'    );
+			
+			if	( @$conf['security']['user']['show_mail'] )
+				$this->user->mail = $this->getRequestVar('mail'    );
+				
 			$this->user->style    = $this->getRequestVar('style'   );
 	
 			$this->user->save();
@@ -225,15 +228,6 @@ class UserAction extends Action
 		$this->setTemplateVars( $this->user->getProperties() );
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
-	}
-
-
-	/**
-	 * Eigenschaften des Benutzers anzeigen
-	 */
-	function show()
-	{
-		$this->setTemplateVars( $this->user->getProperties() );
 	}
 
 

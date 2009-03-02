@@ -19,9 +19,6 @@ menu=edit
 target=save
 editable=true
 
-;[show]
-;menu=info
-
 [save]
 goto=listing
 
