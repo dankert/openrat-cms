@@ -48,7 +48,6 @@ class TextElement extends AbstractElement
 		if	( $char1 == "'" )
 		{
 			$pos2 = strpos($this->text,"'",2);
-			echo "aklsjflaskjd:$pos2";
 			if	( $pos2 !== false )
 			{
 				$this->title = substr($this->text,1,$pos2-1);
