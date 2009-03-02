@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.28  2009-03-02 22:41:45  dankert
+// Bugfix in setTimestamp()
+//
 // Revision 1.27  2008-10-07 20:03:54  dankert
 // URLs ggf. mit Parameter "oid" aufbauen, um absolute URL zu erzwingen.
 //
@@ -395,9 +398,6 @@ class Page extends Object
 		$folder->load();
 		$folder->parentObjectIds(false,true);
 		$f = count( $folder->parentfolders );
-		
-		//echo $this->parentid;
-		//print_r( $folder->parentfolders );
 		
 		if   ( $f == 0 )
 		{
@@ -883,7 +883,7 @@ class Page extends Object
 	
 	
 	/**
-	 * Ermittelt einen temporären Dateinamen für diese Seite. 
+	 * Ermittelt einen temporï¿½ren Dateinamen fï¿½r diese Seite. 
 	 */
 	function tmpfile()
 	{
@@ -896,9 +896,12 @@ class Page extends Object
 	
 	function setTimestamp()
 	{
-		unlink( $this->tmpfile() );
+		$tmpFilename = $this->tmpfile();
 		
-		$parent->setTimestamp();
+		if	( is_file($tmpFilename) )
+			unlink( $tmpFilename);
+		
+		parent::setTimestamp();
 	}
 	
 }
