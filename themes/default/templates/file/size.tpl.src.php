@@ -6,9 +6,9 @@ page
 				cell colspan:2
 					text text:IMAGE_OLD_SIZE
 				cell
-					text text:var:width
+					text var:width
 					text raw:_*_
-					text text:var:height
+					text var:height
 			if true:mode:edit
 				row
 					cell colspan:3
@@ -57,7 +57,7 @@ page
 					cell
 						checkbox name:copy
 						label for:copy 
-							text text:message:copy
+							text key:copy
 			row
 				cell class:act colspan:3
 					button type:ok
