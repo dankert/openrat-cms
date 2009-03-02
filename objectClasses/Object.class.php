@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.29  2009-03-02 21:20:02  dankert
+// Korrektur in "getTempDir()"
+//
 // Revision 1.28  2007-12-11 00:22:31  dankert
 // Cache von Dateien und Seiten zur Performancesteigerung beim Ver?ffentlichen.
 //
@@ -482,9 +485,9 @@ class Object
 	{
 		$db = db_connection();
 
-		// Vielleicht können wir uns den DB-Zugriff auch ganz sparen.
+		// Vielleicht kï¿½nnen wir uns den DB-Zugriff auch ganz sparen.
 		if	( !is_numeric($objectid) || $objectid <= 0 )
-			return false; // Objekt-Id ungültig.
+			return false; // Objekt-Id ungï¿½ltig.
 			
 		$sql = new Sql('SELECT 1 FROM {t_object} '.
 		               ' WHERE id={objectid}');
@@ -1077,7 +1080,7 @@ class Object
 	function tmpfileYYYYYY()
 	{
 		if	( isset($this->tmpfile) && $this->tmpfile != '' )
-			return $this->tmpfile; // Temporärer Dateiname bereits vorhanden.
+			return $this->tmpfile; // Temporï¿½rer Dateiname bereits vorhanden.
 
 		global $conf;
 		
@@ -1112,6 +1115,7 @@ class Object
 	 */
 	function getTempDir()
 	{
+		global $conf;
 		$tmpdir = @$conf['cache']['tmp_dir'];
 		$tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
 
