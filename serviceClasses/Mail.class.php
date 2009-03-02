@@ -20,17 +20,17 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 /**
  * Erzeugen und Versender einer E-Mail gemaess RFC 822.<br>
  * <br>
- * Die E-Mail kann entweder über
+ * Die E-Mail kann entweder ï¿½ber
  * - die interne PHP-Funktion "mail()" versendet werden oder
  * - direkt per SMTP-Protokoll an einen SMTP-Server.<br>
- * Welcher Weg gewählt wird, kann konfiguriert werden.<br>
+ * Welcher Weg gewï¿½hlt wird, kann konfiguriert werden.<br>
  * <br>
  * Prinzipiell spricht nichts gegen die interne PHP-Funktion mail(), wenn diese
- * aber nicht zu Verfügung steht oder PHP ungeeignet konfiguriert ist, so kann
- * SMTP direkt verwendet werden. Hierbei sollte wenn möglich ein Relay-Host
+ * aber nicht zu Verfï¿½gung steht oder PHP ungeeignet konfiguriert ist, so kann
+ * SMTP direkt verwendet werden. Hierbei sollte wenn mï¿½glich ein Relay-Host
  * eingesetzt werden. Die Mail kann zwar auch direkt an Mail-Exchanger (MX) des
- * Empfängers geschickt werden, falls dieser aber Greylisting einsetzt ist eine
- * Zustellung nicht möglich.<br>
+ * Empfï¿½ngers geschickt werden, falls dieser aber Greylisting einsetzt ist eine
+ * Zustellung nicht mï¿½glich.<br>
  * <br>  
  * 
  * @author Jan Dankert
@@ -68,8 +68,8 @@ class Mail
 	/**
 	 * Konstruktor.
 	 * Es werden folgende Parameter erwartet
-	 * @param String $to Empfänger
-	 * @param String der Textschlüssel
+	 * @param String $to Empfï¿½nger
+	 * @param String der Textschlï¿½ssel
 	 * @param String unbenutzt.
 	 * @return Mail
 	 */
@@ -83,7 +83,7 @@ class Mail
 		if	( !empty($conf['mail']['from']) )
 			$this->from = $this->header_encode($conf['mail']['from']);
 
-		// Priorität definieren (sofern konfiguriert)
+		// Prioritï¿½t definieren (sofern konfiguriert)
 		if	( !empty($conf['mail']['priority']) )
 			$this->header[] = 'X-Priority: '.$conf['mail']['priority'];
 			
@@ -102,11 +102,11 @@ class Mail
 			$this->text .= $this->nl;
 		}
 		
-		// Kopie-Empfänger
+		// Kopie-Empfï¿½nger
 		if	( !empty($conf['mail']['cc']) )
 			$this->cc = $this->header_encode($conf['mail']['cc']);
 
-		// Blindkopie-Empfänger
+		// Blindkopie-Empfï¿½nger
 		if	( !empty($conf['mail']['bcc']) )
 			$this->bcc = $this->header_encode($conf['mail']['bcc']);
 	}
@@ -152,7 +152,7 @@ class Mail
 	{
 		global $conf;
 		
-		// Header um Adressangaben ergänzen.
+		// Header um Adressangaben ergï¿½nzen.
 		if	( !empty($this->from ) )
 			$this->header[] = 'From: '.$this->from;
 		
@@ -166,17 +166,19 @@ class Mail
 		if	( strtolower(@$conf['mail']['client']) == 'php' )
 		{
 			// PHP-interne Mailfunktion verwenden.
-			$result = @mail( $this->to,                 // Empfänger
-			                 lang($this->subject),      // Betreff
+			$result = @mail( $this->to,                 // Empfï¿½nger
+			                 $this->subject,            // Betreff
 			                 $this->text,               // Inhalt
-			                 implode($this->nl,$this->header)  );
+			                 // Lt. RFC822 mÃ¼ssen Header mit CRLF enden. 
+			                 // ABER: Der Parameter "additional headers" verlangt offenbar \n am Zeilenende.
+			                 implode("\n",$this->header)  );
 			if	( !$result )
 				// Die E-Mail wurde nicht akzeptiert.
 				// Genauer geht es leider nicht, da mail() nur einen boolean-Wert
-				// zurück liefert.
+				// zurï¿½ck liefert.
 				$this->error[] = 'Mail was NOT accepted by mail()';
 				
-			return false;
+			return $result;
 		}
 		else
 		{
@@ -375,7 +377,7 @@ class Mail
 		{
 			// Die Verbindung ist geschlossen. Dies kann bei dieser
 			// Implementierung eigentlich nur dann passieren, wenn
-			// der Server die Verbindung schließt.
+			// der Server die Verbindung schlieï¿½t.
 			// Dieser Client trennt die Verbindung nur nach einem "QUIT".
 			$this->error[] = "Connection lost";
 			return;
@@ -392,7 +394,7 @@ class Mail
 	
 	/**
 	 * Sendet ein QUIT zum SMTP-Server, wartet die Antwort ab und
-	 * schließt danach die Verbindung.
+	 * schlieï¿½t danach die Verbindung.
 	 *
 	 * @param Resource Socket
 	 */
@@ -422,7 +424,7 @@ class Mail
 	
 	/**
 	 * Umwandlung von 8-bit-Zeichen in MIME-Header gemaess RFC 2047.<br>
-	 * Header dürfen nur 7-bit-Zeichen enthalten. 8-bit-Zeichen müssen kodiert werden.
+	 * Header dï¿½rfen nur 7-bit-Zeichen enthalten. 8-bit-Zeichen mï¿½ssen kodiert werden.
 	 * 
 	 * @param String $text
 	 * @return String
@@ -462,9 +464,9 @@ class Mail
 
 	/**
 	 * Ermittelt den MX-Eintrag zu einer E-Mail-Adresse.<br>
-	 * Es wird der Eintrag mit der höchsten Priorität ermittelt.
+	 * Es wird der Eintrag mit der hï¿½chsten Prioritï¿½t ermittelt.
 	 *
-	 * @param String E-Mail-Adresse des Empfängers.
+	 * @param String E-Mail-Adresse des Empfï¿½ngers.
 	 * @return MX-Eintrag
 	 */
 	function getMxHost( $to )
