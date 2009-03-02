@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.49  2009-03-02 23:07:11  dankert
+// Bugfix: Sortieren nach Typ
+//
 // Revision 1.48  2009-02-07 02:41:37  dankert
 // CSS-Klasse für Ordner-Inhalte ermitteln.
 //
@@ -820,7 +823,7 @@ class FolderAction extends ObjectAction
 				break;
 
 			default:
-				die('fatal: unknown reordertype');
+				Http::sendStatus(400,'Bad request','Unknown reordertype: '.$type );
 		}
 
 		// Und jetzt die neu ermittelte Reihenfolge speichern
@@ -1223,7 +1226,7 @@ class FolderAction extends ObjectAction
 
 		$this->setTemplateVar('flip_url'             ,Html::url('folder','reorder',0,array('type'=>'flip'      )) );
 		$this->setTemplateVar('orderbyname_url'      ,Html::url('folder','reorder',0,array('type'=>'name'      )) );
-		$this->setTemplateVar('orderbytype_url'      ,Html::url('folder','reorder',0,array('type'=>'url'       )) );
+		$this->setTemplateVar('orderbytype_url'      ,Html::url('folder','reorder',0,array('type'=>'type'      )) );
 		$this->setTemplateVar('orderbylastchange_url',Html::url('folder','reorder',0,array('type'=>'lastchange')) );
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
