@@ -520,3 +520,14 @@ td.notice
 	text-align:center;
 }
 
+table.tree td.treevalue
+{
+	vertical-align:middle;
+	white-space:nowrap;
+}
+
+table.tree td.treecol,
+table.tree td.treeimage
+{
+	width:1px;
+}
