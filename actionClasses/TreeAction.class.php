@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.13  2009-03-03 21:08:09  dankert
+// Umstellung der Baumanzeige auf Template-System (Ausbau RAW-Template).
+//
 // Revision 1.12  2007-11-08 23:11:58  dankert
 // SubAction "load()" reaktiviert.
 //
@@ -135,8 +138,6 @@ class TreeAction extends Action
 		}
 
 		Session::setTree( $this->tree );
-
-		// Weiter mit show()
 	}
 
 
@@ -156,7 +157,8 @@ class TreeAction extends Action
 		{
 			if   ( $isLast[$i] )
 				$zeile['cols'][] = 'blank';
-			else $zeile['cols'][] = 'line';
+			else
+				$zeile['cols'][] = 'line';
 		}
 
 		if	( $tiefe == 0 )
@@ -205,7 +207,8 @@ class TreeAction extends Action
 		if   ( $treeElement->target != "" )
 			$zeile['target'] = $treeElement->target;
 		else $zeile['target'] = 'cms_main';
-
+		
+		$zeile['colspan'] = 20 - count( $zeile['cols'] );
 
 		$zeilen[] = $zeile;
 		// Rekursiv alle Unter-Elemente lesen
@@ -235,20 +238,10 @@ class TreeAction extends Action
 			$tree_last,
 			$var;
 
-		$var['zeilen']=array();
-
-//		echo '<pre>';
-//		print_r($tree);
-//		echo '</pre>';
-
+		$var['zeilen'] = array();
 		$var['zeilen'] = $this->outputElement( 0,0,array() );
 
-//		echo '<pre>';
-//		print_r($var['zeilen']);
-//		echo '</pre>';
-
 		$this->setTemplateVars( $var );
-		$this->forward('tree');
 	}
 }
 

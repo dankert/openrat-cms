@@ -5,6 +5,8 @@ if (isset($attr_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (isset($attr_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
+} elseif (isset($attr_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr_tree.IMG_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (isset($attr_url)) {
 ?><img src="<?php echo $attr_url ?>" border="0" align="<?php echo $attr_align ?>"><?php
 } elseif (isset($attr_fileext)) {
