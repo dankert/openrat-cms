@@ -22,3 +22,5 @@ page class:tree
 					else
 						image icon:var:icon
 						text var:text
+				set var:url
+				set var:image
