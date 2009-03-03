@@ -150,48 +150,21 @@ class AdministrationTree extends AbstractTree
 
 	function prefs_system( $id )
 	{
-//		if	( function_exists('apache_get_version') )
-//		{
-//			$treeElement = new TreeElement();
-//			$treeElement->text = 'apache='.apache_get_version();
-//			$treeElement->icon   = 'config_property';
-//			$this->addTreeElement( $treeElement );
-//		}
-
-		$treeElement = new TreeElement();
-		$treeElement->text = date('r');
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'os='.php_uname('s');
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'host='.php_uname('n');
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'release='.php_uname('r');
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'machine='.php_uname('m');
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'owner='.get_current_user();
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'pid='.getmypid();
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
+		$system = array( 'time'   => date('r'),
+		                 'os'     => php_uname('s'),
+		                 'host'   => php_uname('n'),
+		                 'release'=> php_uname('r'),
+		                 'machine'=> php_uname('m'),
+		                 'owner'  => get_current_user(),
+		                 'pid'    => getmypid()          );
+		
+		foreach( $system as $key=>$value )
+		{
+			$treeElement = new TreeElement();
+			$treeElement->text = $key.'='.$value;
+			$treeElement->icon   = 'config_property';
+			$this->addTreeElement( $treeElement );
+		}
 
 		foreach( getrusage() as $name=>$value );
 		{
@@ -207,30 +180,11 @@ class AdministrationTree extends AbstractTree
 
 	function prefs_php( $id )
 	{
-		$treeElement = new TreeElement();
-		$treeElement->text = 'version='.phpversion();
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'SAPI='.php_sapi_name();
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'session-name='.session_name();
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'magic_quotes_gpc='.get_magic_quotes_gpc();
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
-
-		$treeElement = new TreeElement();
-		$treeElement->text = 'magic_quotes_runtime='.get_magic_quotes_runtime();
-		$treeElement->icon   = 'config_property';
-		$this->addTreeElement( $treeElement );
+		$php_prefs = array( 'version'             => phpversion(),
+		                    'SAPI'                => php_sapi_name(),
+		                    'session-name'        => session_name(),
+		                    'magic_quotes_gpc'    => get_magic_quotes_gpc(),
+		                    'magic_quotes_runtime'=> get_magic_quotes_runtime() );
 
 		foreach( array('upload_max_filesize',
 		               'file_uploads',
@@ -239,11 +193,13 @@ class AdministrationTree extends AbstractTree
 		               'post_max_size',
 		               'display_errors',
 		               'register_globals'
-		               
 		               ) as $iniName )
+			$php_prefs[ $iniName ] = ini_get( $iniName );
+			
+		foreach( $php_prefs as $key=>$value )
 		{
 			$treeElement = new TreeElement();
-			$treeElement->text = $iniName.'='.ini_get( $iniName );
+			$treeElement->text = $key.'='.$value;
 			$treeElement->icon   = 'config_property';
 			$this->addTreeElement( $treeElement );
 		}
@@ -261,8 +217,6 @@ class AdministrationTree extends AbstractTree
 			$treeElement = new TreeElement();
 			$treeElement->text       = $extensionName;
 			$treeElement->icon       = 'config_property';
-//			$treeElement->icon       = 'config_folder';
-//			$treeElement->type       = 'prefs_extension';
 			$treeElement->internalId = $id;
 			$this->addTreeElement( $treeElement );
 		}
@@ -379,27 +333,35 @@ class AdministrationTree extends AbstractTree
 //					$treeElement->url         = Html::url('main','prefs',0,array('conf'=>$key));
 				$treeElement->icon        = 'config_folder';
 				
-				$treeElement->description = '';
+				$treeElement->description = count($value).' '.lang('SETTINGS');
 				$treeElement->target      = 'cms_main';
 				$treeElement->type        = 'prefs_cms';
 				$this->addTreeElement( $treeElement );
 			}
 			else
 			{
+				if	( is_bool($value))
+					$value = $value ? lang('YES') : lang('NO');
+				elseif	( is_numeric($value))
+					$value = ($value>0?'':'').$value;
+				else
+					$value = $conf['html']['speech_open'].htmlentities(Text::maxLength($value,30)).$conf['html']['speech_close'];
+					
 				$this->confCache[crc32($key)] = $value;
 
 				$treeElement = new TreeElement();
 				
-				$treeElement->text        = $key.':';
+				$treeElement->text        = $key.'=';
 				if	( $key != 'password')
-					$treeElement->text .= htmlentities(Text::maxLength($value,30));
+					$treeElement->text .= $value;
 				else
 					$treeElement->text .= '*';
 					
 				$treeElement->icon        = 'config_property';
 				
-				if	( $key != 'password')
-					$treeElement->description = $value;
+//				if	( $key != 'password')
+//					$treeElement->description = $value;
+				$treeElement->description = lang('SETTING').' '.$key;
 					
 				$this->addTreeElement( $treeElement );
 			}
