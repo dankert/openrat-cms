@@ -58,6 +58,7 @@ class UserAction extends Action
 			$this->user->tel      = $this->getRequestVar('tel'     );
 			$this->user->desc     = $this->getRequestVar('desc'    );
 			
+			global $conf;
 			if	( @$conf['security']['user']['show_mail'] )
 				$this->user->mail = $this->getRequestVar('mail'    );
 				
