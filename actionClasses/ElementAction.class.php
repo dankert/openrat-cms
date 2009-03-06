@@ -148,7 +148,7 @@ class ElementAction extends Action
 	
 	
 	/**
-	 * Auswahlmaske für weitere Einstellungen zum Template-Element.
+	 * Auswahlmaske fï¿½r weitere Einstellungen zum Template-Element.
 	 *
 	 */
 	function properties()
@@ -585,7 +585,10 @@ class ElementAction extends Action
 		$this->element->thousandSep     = $this->getRequestVar('thousand_sep');
 		$this->element->folderObjectId  = $this->getRequestVar('folderobjectid'  );
 		$this->element->defaultObjectId = $this->getRequestVar('default_objectid');
-		$this->element->code            = $this->getRequestVar('code'            );
+		if	( $this->hasRequestVar('select_items'))
+			$this->element->code         = $this->getRequestVar('select_items');
+		else
+			$this->element->code         = $this->getRequestVar('code'            );
 
 		if	( $this->hasRequestVar('name') )
 			$this->element->name = $this->getRequestVar('name');
