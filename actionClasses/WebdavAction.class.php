@@ -38,9 +38,9 @@ class WebdavAction extends Action
 	function WebdavAction()
 	{
 		// Nicht notwendig, da wir den Error-Handler umbiegen:
-		// error_reporting(0); // PHP-Fehlermeldungen zerstören XML-Dokument, daher ausschalten.
+		// error_reporting(0); // PHP-Fehlermeldungen zerstï¿½ren XML-Dokument, daher ausschalten.
 		
-		// PHP-Fehler ins Log schreiben, damit die Ausgabe nicht zerstört wird.
+		// PHP-Fehler ins Log schreiben, damit die Ausgabe nicht zerstï¿½rt wird.
 		set_error_handler('webdavErrorHandler');
 
 		global $conf;
@@ -68,7 +68,7 @@ class WebdavAction extends Action
 		$this->readonly    = $this->webdav_conf['readonly'];
 		$this->maxFileSize = $this->webdav_conf['max_file_size'];
 		
-		Logger::debug( 'WEBDAV: Method '.$_GET['subaction'] );
+		Logger::debug( 'WEBDAV: Method '.$_GET[REQ_PARAM_SUBACTION] );
 		
 		$this->headers = getallheaders();
 		
@@ -85,13 +85,13 @@ class WebdavAction extends Action
 		if	( isset($this->headers['Destination']) )
 			$this->destination = $this->headers['Destination'];
 
-		// Prüfen, ob Benutzer angemeldet ist.
+		// Prï¿½fen, ob Benutzer angemeldet ist.
 		$user = $this->getUserFromSession();
 
 		// Authentisierung erzwingen.
         // for the motivation for not checking OPTIONS requests see 
         // http://pear.php.net/bugs/bug.php?id=5363
-		if	( !is_object($user) && $_GET['subaction'] != 'options' )
+		if	( !is_object($user) && $_GET[REQ_PARAM_SUBACTION] != 'options' )
 		{
 			if	( !is_object(Session::getDatabase()) )
 				$this->setDefaultDb();
@@ -118,7 +118,7 @@ class WebdavAction extends Action
 				exit;
 			}
 		}
-		elseif	( !is_object($user) && $_GET['subaction'] == 'options' )
+		elseif	( !is_object($user) && $_GET[REQ_PARAM_SUBACTION] == 'options' )
 		{
 			$this->setDefaultDb();
 		}
@@ -148,7 +148,7 @@ class WebdavAction extends Action
 			$this->fullSkriptName .= '/';	
 
 		/*
-		 * Verzeichnisse müssen mit einem '/' enden. Falls nicht, Redirect aussführen.
+		 * Verzeichnisse mï¿½ssen mit einem '/' enden. Falls nicht, Redirect aussfï¿½hren.
 		 * 
 		 * RFC 2518, 5.2 Collection Resources, Page 11:
 		 * "For example, if a client invokes a
@@ -158,7 +158,7 @@ class WebdavAction extends Action
 		 * http://foo.bar/blah/ in it.  In general clients SHOULD use the "/"
 		 * form of collection names."
 		 */
-		if	( $this->obj->isFolder &&  $_GET['subaction']=='get' && substr($_SERVER['REQUEST_URI'],strlen($_SERVER['REQUEST_URI'])-1 ) != '/' )
+		if	( $this->obj->isFolder &&  $_GET[REQ_PARAM_SUBACTION]=='get' && substr($_SERVER['REQUEST_URI'],strlen($_SERVER['REQUEST_URI'])-1 ) != '/' )
 		{
 			Logger::debug( 'WEBDAV: Umleitung auf Verzeichnis mit ".../"' );
 			
@@ -219,7 +219,7 @@ class WebdavAction extends Action
 	/**
 	 * HTTP-Methode OPTIONS.<br>
 	 * <br>
-	 * Es werden die verfügbaren Methoden ermittelt und ausgegeben.
+	 * Es werden die verfï¿½gbaren Methoden ermittelt und ausgegeben.
 	 */
 	function options()
 	{
@@ -240,7 +240,7 @@ class WebdavAction extends Action
 	/**
 	 * Setzt einen HTTP-Status.<br>
 	 * <br>
-	 * Es wird ein HTTP-Status gesetzt, zusätzlich wird der Status in den Header "X-WebDAV-Status" geschrieben.<br>
+	 * Es wird ein HTTP-Status gesetzt, zusï¿½tzlich wird der Status in den Header "X-WebDAV-Status" geschrieben.<br>
 	 * Ist der Status nicht 200 oder 207 (hier folgt ein BODY), wird das Skript beendet.
 	 */	
 	function httpStatus( $status = true )
@@ -292,7 +292,7 @@ class WebdavAction extends Action
 	
 	/**
 	 * WebDav-GET-Methode.
-	 * Die gewünschte Datei wird geladen und im HTTP-Body mitgeliefert.
+	 * Die gewï¿½nschte Datei wird geladen und im HTTP-Body mitgeliefert.
 	 */	
 	function get()
 	{
@@ -361,7 +361,7 @@ class WebdavAction extends Action
 	
 	
 	/**
-	 * Erzeugt ein Unix-ähnliche Ausgabe des Verzeichnisses als HTML.
+	 * Erzeugt ein Unix-ï¿½hnliche Ausgabe des Verzeichnisses als HTML.
 	 */
 	function getDirectory()
 	{
@@ -500,7 +500,7 @@ class WebdavAction extends Action
 
 		
 	/**
-	 * Objekt löschen.
+	 * Objekt lï¿½schen.
 	 */		
 	function delete()
 	{
@@ -548,7 +548,7 @@ class WebdavAction extends Action
 	/**
 	 * Kopieren eines Objektes.<br>
 	 * Momentan ist nur das Kopieren einer Datei implementiert.<br>
-	 * Das Kopieren von Ordnern, Verknüpfungen und Seiten ist nicht moeglich.
+	 * Das Kopieren von Ordnern, Verknï¿½pfungen und Seiten ist nicht moeglich.
 	 */		
 	function copy()
 	{
@@ -632,7 +632,7 @@ class WebdavAction extends Action
 	/**
 	 * Verschieben eines Objektes.<br>
 	 * <br>
-	 * Folgende Operationen sind möglich:<br>
+	 * Folgende Operationen sind mï¿½glich:<br>
 	 * - Unbenennen eines Objektes (alle Typen)<br> 
 	 * - Verschieben eines Objektes (alle Typen) in einen anderen Ordner.<br>
 	 */		
@@ -716,15 +716,15 @@ class WebdavAction extends Action
 
 		
 	/**
-	 * Anlegen oder Überschreiben Dateien über PUT.<br>
-	 * Dateien können neu angelegt und überschrieben werden.<br>
+	 * Anlegen oder ï¿½berschreiben Dateien ï¿½ber PUT.<br>
+	 * Dateien kï¿½nnen neu angelegt und ï¿½berschrieben werden.<br>
 	 * <br>
-	 * Seiten können nicht überschrieben werden. Wird versucht,
-	 * eine Seite mit PUT zu überschreiben, wird der Status "405 Not Allowed" gemeldet.<br>
+	 * Seiten kï¿½nnen nicht ï¿½berschrieben werden. Wird versucht,
+	 * eine Seite mit PUT zu ï¿½berschreiben, wird der Status "405 Not Allowed" gemeldet.<br>
 	 */		
 	function put()
 	{
-		// TODO: 409 (Conflict) wenn übergeordneter Ordner nicht da.
+		// TODO: 409 (Conflict) wenn ï¿½bergeordneter Ordner nicht da.
 
 		if	( $this->webdav_conf['readonly'] )
 		{
@@ -765,7 +765,7 @@ class WebdavAction extends Action
 		}
 		else
 		{
-			// Für andere Objekttypen (Verzeichnisse, Links, Seiten) ist kein PUT moeglich.
+			// Fï¿½r andere Objekttypen (Verzeichnisse, Links, Seiten) ist kein PUT moeglich.
 			$this->httpStatus('405 Not Allowed' );
 		}
 		exit;
@@ -1005,7 +1005,7 @@ class WebdavAction extends Action
 	 */
 	function parseURI( $uri )
 	{
-		// Ergebnis initialisieren (damit alle Schlüssel vorhanden sind)
+		// Ergebnis initialisieren (damit alle Schlï¿½ssel vorhanden sind)
 		$ergebnis = array('type'    => null,
 		                  'project' => null,
 		                  'path'    => array(),
@@ -1092,7 +1092,7 @@ class WebdavAction extends Action
 
 
 /**
- * Fehler-Handler für WEBDAV.<br>
+ * Fehler-Handler fï¿½r WEBDAV.<br>
  * Bei einem Laufzeitfehler ist eine Ausgabe des Fehlers auf der Standardausgabe sinnlos.
  * Daher wird der Fehler nur geloggt.
  */

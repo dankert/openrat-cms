@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.9  2009-03-06 13:00:40  dankert
+// Zeichenketten 'action' und 'subaction' durch Konstanten ersetzt.
+//
 // Revision 1.8  2007-11-09 20:41:51  dankert
 // Hinweismeldungen setzen.
 //
@@ -182,7 +185,7 @@ class ObjectAction extends Action
 			$acl->load();
 			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
 			$acllist[$key] = $acl->getProperties();
-			$acllist[$key]['delete_url'] = Html::url(array('action'=>$this->actionName,'subaction'=>'delacl','id'=>$o->objectid,'aclid'=>$aclid));
+			$acllist[$key]['delete_url'] = Html::url($this->actionName,'delacl',$o->objectid,array('aclid'=>$aclid));
 		}
 		ksort( $acllist );
 

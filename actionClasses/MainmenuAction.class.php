@@ -38,10 +38,10 @@ class MainmenuAction extends Action
 	
 	function MainmenuAction()
 	{
-		$this->setTemplateVar('type',$this->getRequestVar( 'subaction') );
+		$this->setTemplateVar('type',$this->getRequestVar(REQ_PARAM_SUBACTION) );
 		
 		
-		switch( $this->getRequestVar( 'subaction') )
+		switch( $this->getRequestVar( REQ_PARAM_SUBACTION) )
 		{
 			case 'page':
 			case 'pageelement':
