@@ -5,6 +5,7 @@ admin=false
 goto=show
 
 [logout]
+guest=true
 goto=showlogin
 
 [object]

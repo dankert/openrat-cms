@@ -118,7 +118,7 @@ class IndexAction extends Action
 			}
 			else
 			{
-				// Kennwörter identisch und lang genug.
+				// Kennwï¿½rter identisch und lang genug.
 				$user->setPassword( $pw1,true );
 				
 				// Das neue Kennwort ist gesetzt, die Anmeldung ist also doch noch gelungen. 
@@ -328,7 +328,7 @@ class IndexAction extends Action
 		if	( $user->mustChangePassword ) 
 		{
 			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
-			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ändern.
+			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ï¿½ndern.
 		}
 		
 
@@ -365,7 +365,7 @@ class IndexAction extends Action
 				// Administratoren bekommen bescheid, dass sie ein Projekt anlegen sollen
 				$this->addNotice('','','ADMIN_NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
 			else
-				// Normale Benutzer erhalten eine Meldung, dass kein Projekt zur Verfügung steht
+				// Normale Benutzer erhalten eine Meldung, dass kein Projekt zur Verfï¿½gung steht
 				$this->addNotice('','','NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
 		}
 		
@@ -418,9 +418,9 @@ class IndexAction extends Action
 	
 	
 	/**
-	 * Ermittelt Meta-Angaben für den HTML-Kopf.<br>
-	 * Falls der Browser die Meta-Angaben entsprechend auswertet, können über feste Browser-Menüs 
-	 die Projekt direkt ausgewählt werden.
+	 * Ermittelt Meta-Angaben fï¿½r den HTML-Kopf.<br>
+	 * Falls der Browser die Meta-Angaben entsprechend auswertet, kï¿½nnen ï¿½ber feste Browser-Menï¿½s 
+	 die Projekt direkt ausgewï¿½hlt werden.
 	 */
 	function metaValues()
 	{
@@ -509,14 +509,14 @@ class IndexAction extends Action
 	
 
 	/**
-	 * Open-Id Login, Überprüfen der Anmeldung.<br>
+	 * Open-Id Login, ï¿½berprï¿½fen der Anmeldung.<br>
 	 * Spezifikation: http://openid.net/specs/openid-authentication-1_1.html<br>
 	 * Kapitel "4.4. check_authentication"<br>
 	 * <br>
-	 * Im 2. Schritt (Mode "id_res") erfolgte ein Redirect vom Open-Id Provider an OpenRat zurück.<br>
+	 * Im 2. Schritt (Mode "id_res") erfolgte ein Redirect vom Open-Id Provider an OpenRat zurï¿½ck.<br>
 	 * Wir befinden uns nun im darauf folgenden Request des Browsers.<br>
 	 * <br>
-	 * Es muss noch beim OpenId-Provider die Bestätigung eingeholt werden, danach ist der
+	 * Es muss noch beim OpenId-Provider die Bestï¿½tigung eingeholt werden, danach ist der
 	 * Benutzer angemeldet.<br>
 	 */
 	function openid()
@@ -532,7 +532,7 @@ class IndexAction extends Action
 			return;
 		}
 		
-		// Anmeldung wurde mit "is_valid:true" bestätigt.
+		// Anmeldung wurde mit "is_valid:true" bestï¿½tigt.
 		// Der Benutzer ist jetzt eingeloggt.
 		$username = $openId->getUserFromIdentiy();
 		
@@ -626,7 +626,7 @@ class IndexAction extends Action
 			
 			if	( $this->mustChangePassword )
 			{
-				// Anmeldung gescheitert, Benutzer muss Kennwort ändern.
+				// Anmeldung gescheitert, Benutzer muss Kennwort ï¿½ndern.
 				$this->addNotice('user',$loginName,'LOGIN_FAILED_MUSTCHANGEPASSWORD','error' );
 				$this->addValidationError('password1','');
 				$this->addValidationError('password2','');
@@ -650,7 +650,7 @@ class IndexAction extends Action
 			$this->evaluateRequestVars();
 
 			$object = Session::getObject();
-			// Falls noch kein Objekt ausgewählt, dann das zuletzt geänderte benutzen.
+			// Falls noch kein Objekt ausgewï¿½hlt, dann das zuletzt geï¿½nderte benutzen.
 			if	( !is_object($object) && @$conf['login']['start']['start_lastchanged_object'] )
 			{
 				$objectid = Value::getLastChangedObjectByUserId($user->userid);
@@ -683,10 +683,12 @@ class IndexAction extends Action
 	function logout()
 	{
 		global $conf;
-		$user = Session::getUser();
-		$this->setTemplateVar('login_username',$user->name);
 		
-		// Ausgewählte Objekte merken, um nach dem nä. Login wieder sofort auszuwählen.
+		$user = Session::getUser();
+		if	( is_object($user) )
+			$this->setTemplateVar('login_username',$user->name);
+		
+		// Ausgewï¿½hlte Objekte merken, um nach dem nï¿½. Login wieder sofort auszuwï¿½hlen.
 		$o = Session::getObject();
 		if	( is_object($o) )
 			$this->setTemplateVar('objectid',$o->objectid);
@@ -736,7 +738,7 @@ class IndexAction extends Action
 
 
 	/**
-	 * Auswählen der Administration.
+	 * Auswï¿½hlen der Administration.
 	 */
 	function administration()
 	{
@@ -748,9 +750,9 @@ class IndexAction extends Action
 	/**
 	 * Ausgeben von maschinenlesbaren Benutzerinformationen.
 	 * 
-	 * Diese Funktion dient dem Single-Signon für fremde Anwendungen, welche
+	 * Diese Funktion dient dem Single-Signon fï¿½r fremde Anwendungen, welche
 	 * die Benutzerinformationen des angemeldeten Benutzers aus dieser
-	 * Anwendung auslesen können.
+	 * Anwendung auslesen kï¿½nnen.
 	 */
 	function userinfo()
 	{
@@ -1053,10 +1055,10 @@ class IndexAction extends Action
 		if	( $user->mustChangePassword ) 
 		{
 			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
-			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ändern.
+			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ï¿½ndern.
 		}
 
-		// Seite ändert sich nur 1x pro Session
+		// Seite ï¿½ndert sich nur 1x pro Session
 		$this->lastModified( $user->loginDate );
 
 		$projectid  = intval( $this->getRequestVar('projectid' ) );
@@ -1179,7 +1181,7 @@ class IndexAction extends Action
 		switch( $name )
 		{
 			case 'applications':
-				// Menüpunkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
+				// Menï¿½punkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
 				// konfiguriert sind.
 				return count(@$conf['applications']) > 0;
 
@@ -1194,7 +1196,7 @@ class IndexAction extends Action
 				                                        && !@$conf['security']['auth']['userdn'];
 				
 			case 'administration':
-				// "Administration" natürlich nur für Administratoren.
+				// "Administration" natï¿½rlich nur fï¿½r Administratoren.
 				return $this->userIsAdmin();
 
 			case 'showlogin':
@@ -1281,7 +1283,7 @@ class IndexAction extends Action
 	
 	/**
 	 * Benutzerregistierung.
-	 * Benutzer hat Bestätigungscode erhalten und eingegeben.
+	 * Benutzer hat Bestï¿½tigungscode erhalten und eingegeben.
 	 */
 	function registercommit()
 	{
@@ -1293,13 +1295,13 @@ class IndexAction extends Action
 		
 		if	( $origRegisterCode != $inputRegisterCode )
 		{
-			// Bestätigungscode stimmt nicht.
+			// Bestï¿½tigungscode stimmt nicht.
 			$this->addValidationError('code','code_not_match');
 			$this->callSubAction('registeruserdata');
 			return;
 		}
 
-		// Bestätigungscode stimmt überein.
+		// Bestï¿½tigungscode stimmt ï¿½berein.
 		// Neuen Benutzer anlegen.
 			
 		if	( !$this->hasRequestVar('username') )
@@ -1384,7 +1386,7 @@ class IndexAction extends Action
 			// Aktuellen Benutzer aus der Sitzung ermitteln
 			$user = $this->getUserFromSession();
 			
-			// Altes Kennwort prüfen.
+			// Altes Kennwort prï¿½fen.
 			$ok = $user->checkPassword( $oldPw );
 			
 			if	( $ok )  // Altes Kennwort ist ok.
@@ -1402,7 +1404,7 @@ class IndexAction extends Action
 		}
 		else
 		{
-			// Beide neuen Kennwörter stimmen nicht überein
+			// Beide neuen Kennwï¿½rter stimmen nicht ï¿½berein
 			$this->addNotice('user',$user->name,'passwords_not_match','error');
 		}
 	}
@@ -1443,8 +1445,8 @@ class IndexAction extends Action
 		else
 		{
 			//$this->addNotice('','user','username_not_found');
-			// Trotzdem vortäuschen, eine E-Mail zu senden, damit die Gültigkeit
-			// eines Benutzernamens nicht von außen geprüft werden kann.
+			// Trotzdem vortï¿½uschen, eine E-Mail zu senden, damit die Gï¿½ltigkeit
+			// eines Benutzernamens nicht von auï¿½en geprï¿½ft werden kann.
 			// 
 			$this->addNotice('user',$this->getRequestVar("username"),'mail_sent');
 			sleep(5);
@@ -1497,7 +1499,7 @@ class IndexAction extends Action
 
 		if	( $eMail->send() )
 		{
-			$user->setPassword( $newPw, false ); // Kennwort muss beim nä. Login geändert werden.
+			$user->setPassword( $newPw, false ); // Kennwort muss beim nï¿½. Login geï¿½ndert werden.
 			$this->addNotice('user',$username,'mail_sent',OR_NOTICE_OK);
 		}
 		else
