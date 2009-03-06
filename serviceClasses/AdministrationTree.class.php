@@ -166,12 +166,15 @@ class AdministrationTree extends AbstractTree
 			$this->addTreeElement( $treeElement );
 		}
 
-		foreach( getrusage() as $name=>$value );
+		if	( function_exists('getrusage') ) // Funktion existiert auf WIN32 nicht.
 		{
-			$treeElement = new TreeElement();
-			$treeElement->text = $name.':'.$value;
-			$treeElement->icon   = 'config_property';
-			$this->addTreeElement( $treeElement );
+			foreach( getrusage() as $name=>$value );
+			{
+				$treeElement = new TreeElement();
+				$treeElement->text = $name.':'.$value;
+				$treeElement->icon   = 'config_property';
+				$this->addTreeElement( $treeElement );
+			}
 		}
 	}
 	
@@ -341,7 +344,7 @@ class AdministrationTree extends AbstractTree
 			else
 			{
 				if	( is_bool($value))
-					$value = $value ? lang('YES') : lang('NO');
+					$value = $value ? lang('IS_YES') : lang('IS_NO');
 				elseif	( is_numeric($value))
 					$value = ($value>0?'':'').$value;
 				else
