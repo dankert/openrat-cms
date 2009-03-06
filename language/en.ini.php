@@ -1015,3 +1015,5 @@ USER_USERNAME_DESC = "With this name the user is logging in"
 USER_USERNAME = Username
 USER_YOURPROFILE = "My settings"
 VALUE = Content
+IS_YES="Yes"
+IS_NO="No"
