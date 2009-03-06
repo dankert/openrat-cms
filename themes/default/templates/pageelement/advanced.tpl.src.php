@@ -15,7 +15,7 @@ page
 							link url:var:lastmonthurl
 								image file:left align:middle
 							text raw:_
-							text text:var:monthname
+							text var:monthname
 							text raw:_
 							link url:var:nextmonthurl
 								image file:right align:middle
@@ -23,31 +23,31 @@ page
 							link url:var:lastyearurl
 								image file:left align:middle
 							text raw:_
-							text text:var:yearname
+							text var:yearname
 							text raw:_
 							link url:var:nextyearurl
 								image file:right align:middle
 					row
 						cell
-							text text:message:global_nr
+							text key:global_nr
 						list list:weekdays value:weekday
 							cell
-								text text:var:weekday
+								text var:weekday
 
 					list list:weeklist key:weeknr value:week
 						row
 							cell width:12%
-								text text:var:weeknr
+								text var:weeknr
 							list list:week extract:true
 								cell width:12%
 									if empty:url
 										text raw:__
-										text text:var:nr
+										text var:nr
 										text raw:__
 									if not:true empty:url
 										link url:var:url
 											text raw:__
-											text text:var:nr
+											text var:nr
 											text raw:__
 									if true:var:today
 										text raw:*
@@ -55,7 +55,7 @@ page
 
 					row
 						cell class:fx colspan:2
-							text text:message:date
+							text key:date
 						cell class:fx colspan:5
 							selectbox name:year list:all_years
 							text raw:_-_
@@ -65,7 +65,7 @@ page
 							
 					row
 						cell class:fx colspan:2
-							text text:message:date_time
+							text key:date_time
 						cell class:fx colspan:5
 							selectbox name:hour list:all_hours
 							text raw:_-_
