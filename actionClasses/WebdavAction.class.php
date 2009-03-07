@@ -40,26 +40,15 @@ class WebdavAction extends Action
 			define('E_STRICT', 2048);
 
 		// Nicht notwendig, da wir den Error-Handler umbiegen:
-<<<<<<< WebdavAction.class.php
-		// error_reporting(0); // PHP-Fehlermeldungen zerstoeren XML-Dokument, daher ausschalten.
-		error_reporting(E_ALL ^ E_STRICT);
-		error_reporting(0);
-		error_reporting(E_ERROR | E_WARNING | E_NOTICE);
-		error_reporting(E_ERROR);
-		//echo "error-rep:".error_reporting(0);
-		//echo "error-rep:".error_reporting(0);
-		error_reporting(0);
+		error_reporting(0); // PHP-Fehlermeldungen zerstoeren XML-Dokument, daher ausschalten.
 		
 		// PHP-Fehler ins Log schreiben, damit die Ausgabe nicht zerstoert wird.
 		//set_error_handler('webdavErrorHandler');
 		// PHP5-only?
-		set_error_handler('webdavErrorHandler',E_ERROR | E_WARNING | E_NOTICE);
-=======
-		// error_reporting(0); // PHP-Fehlermeldungen zerst�ren XML-Dokument, daher ausschalten.
-		
-		// PHP-Fehler ins Log schreiben, damit die Ausgabe nicht zerst�rt wird.
-		set_error_handler('webdavErrorHandler');
->>>>>>> 1.4
+		if (version_compare(PHP_VERSION, '5.0.0', '>'))
+			set_error_handler('webdavErrorHandler',E_ERROR | E_WARNING | E_NOTICE);
+		else
+			set_error_handler('webdavErrorHandler');
 
 		global $conf;
 		$this->webdav_conf = $conf['webdav'];
@@ -88,11 +77,7 @@ class WebdavAction extends Action
 		$this->readonly    = $this->webdav_conf['readonly'];
 		$this->maxFileSize = $this->webdav_conf['max_file_size'];
 		
-<<<<<<< WebdavAction.class.php
 		Logger::debug( 'method '.$_GET['subaction'] );
-=======
-		Logger::debug( 'WEBDAV: Method '.$_GET[REQ_PARAM_SUBACTION] );
->>>>>>> 1.4
 		
 		$this->headers = getallheaders();
 		/* DAV compliant servers MUST support the "0", "1" and
@@ -185,11 +170,7 @@ class WebdavAction extends Action
 		 * http://foo.bar/blah/ in it.  In general clients SHOULD use the "/"
 		 * form of collection names."
 		 */
-<<<<<<< WebdavAction.class.php
 		if	( is_object($this->obj) && $this->obj->isFolder &&  $_GET['subaction']=='get' && substr($_SERVER['REQUEST_URI'],strlen($_SERVER['REQUEST_URI'])-1 ) != '/' )
-=======
-		if	( $this->obj->isFolder &&  $_GET[REQ_PARAM_SUBACTION]=='get' && substr($_SERVER['REQUEST_URI'],strlen($_SERVER['REQUEST_URI'])-1 ) != '/' )
->>>>>>> 1.4
 		{
 			Logger::debug( 'WEBDAV: Umleitung auf Verzeichnis mit ".../"' );
 			
