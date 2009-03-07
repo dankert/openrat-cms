@@ -46,7 +46,7 @@ class PageelementAction extends Action
 	
 	
 	/**
-	 * Enthält den Inhalt
+	 * Enthï¿½lt den Inhalt
 	 *
 	 * @var Object
 	 */
@@ -196,7 +196,7 @@ class PageelementAction extends Action
 		$funktionName = 'edit'.$this->value->element->type;
 
 		if	( ! method_exists($this,$funktionName) )
-			die( 'Fatal: Method does not exist in PageElementAction: '.$funktionName );
+			Http::serverError('Method does not exist: PageElementAction#'.$funktionName );
 			
 		$this->$funktionName(); // Aufruf der Funktion "edit<Elementtyp>()".
 	}
@@ -408,13 +408,13 @@ class PageelementAction extends Action
 	
 
 	/**
-	 * Verknüpfung bearbeiten.
+	 * Verknï¿½pfung bearbeiten.
 	 *
 	 */
 	function editlink()
 	{
 
-		// Ermitteln, welche Objekttypen verlinkt werden dürfen.
+		// Ermitteln, welche Objekttypen verlinkt werden dï¿½rfen.
 		if	( empty($this->value->element->subtype) )
 			$types = array('page','file','link'); // Fallback: Alle erlauben :)
 		else
@@ -463,7 +463,7 @@ class PageelementAction extends Action
 		$this->value->publish = false;
 		$this->value->load();
 
-		// Ermitteln, welche Objekttypen verlinkt werden dürfen.
+		// Ermitteln, welche Objekttypen verlinkt werden dï¿½rfen.
 		if	( empty($this->value->element->subtype) )
 			$types = array('page','file','link'); // Fallback: Alle erlauben :)
 		else
@@ -532,7 +532,7 @@ class PageelementAction extends Action
 
 
 	/**
-	 * Einfügen-Element.
+	 * Einfï¿½gen-Element.
 	 *
 	 */
 	function editlist()
@@ -737,13 +737,13 @@ class PageelementAction extends Action
 			                 'id'        => $value->valueid,	
 			                 'user'      => $value->lastchangeUserName );
 
-			// Nicht aktive Inhalte können direkt bearbeitet werden und sind
-			// nach dem Speichern dann wieder aktiv (natürlich als nächster/neuer Inhalt) 
+			// Nicht aktive Inhalte kï¿½nnen direkt bearbeitet werden und sind
+			// nach dem Speichern dann wieder aktiv (natï¿½rlich als nï¿½chster/neuer Inhalt) 
 			if	( ! $value->active )
 				$zeile['useUrl'] = Html::url('pageelement','usevalue',$this->page->objectid,array('valueid'  =>$value->valueid,'mode'=>'edit'));
 
 			// Freigeben des Inhaltes.
-			// Nur das aktive Inhaltselement kann freigegeben werden. Natürlich auch nur,
+			// Nur das aktive Inhaltselement kann freigegeben werden. Natï¿½rlich auch nur,
 			// wenn es nicht schon freigegeben ist.
 			if	( ! $value->publish && $value->active )
 				$zeile['releaseUrl'] = Html::url('pageelement','release',$this->page->objectid,array('valueid'  =>$value->valueid ));
@@ -755,13 +755,14 @@ class PageelementAction extends Action
 			             
 		}
 
-		if	( $lfd_nr >= 2 )
+		if	( in_array( $this->value->element->type, array('longtext') ) && $lfd_nr >= 2 )
 		{
 			$this->setTemplateVar('compareid',$list[$lfd_nr-1]['id']);
 			$this->setTemplateVar('withid'   ,$list[$lfd_nr  ]['id']);
 		}
+		
 		$this->setTemplateVar('name'     ,$value->element->name);
-		$this->setTemplateVar('el'       ,$list);
+		$this->setTemplateVar('el'       ,$list                );
 	}
 
 
@@ -1266,7 +1267,7 @@ class PageelementAction extends Action
 	
 	
 	/**
-	 * Menüeinträge aktivieren/deaktivieren.
+	 * Menï¿½eintrï¿½ge aktivieren/deaktivieren.
 	 *
 	 * @param String $name
 	 * @return boolean
@@ -1282,19 +1283,19 @@ class PageelementAction extends Action
 				return true;
 				
 			case 'archive':
-				// Archiv ist nur verfügbar, wenn es mind. 1 Version des Inhaltes gibt.
+				// Archiv ist nur verfï¿½gbar, wenn es mind. 1 Version des Inhaltes gibt.
 				if	( is_object($this->value) )
 					return $this->value->getCountVersions() > 0;
 				else
 					return true;
 
 			case 'link':
-				// Verknüpfung zu anderen Seiten ist nur möglich für:
+				// Verknï¿½pfung zu anderen Seiten ist nur mï¿½glich fï¿½r:
 				// Datum, Text, Textabsatz, Ganzzahl.
 				return in_array($type,array('date','text','longtext','number'));
 
 			case 'advanced':
-				// Erweiterten Editormodus gibt es nur für:
+				// Erweiterten Editormodus gibt es nur fï¿½r:
 				// Datum, Textabsatz, Ganzzahl.
 				return in_array($type,array('date','longtext','number'));
 
