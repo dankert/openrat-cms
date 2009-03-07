@@ -46,4 +46,4 @@ target=save
 goto=edit
 
 [menu]
-edit=edit,advanced,link,import,export,archive
+edit=edit,link,import,export,archive
