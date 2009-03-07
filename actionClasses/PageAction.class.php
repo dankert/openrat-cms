@@ -422,7 +422,7 @@ class PageAction extends ObjectAction
 			{
 				$list[$id] = array();
 				$list[$id]['name']       = $value->element->name;
-				$list[$id]['url' ]       = Html::url( 'pageelement','edit'   ,$this->page->id,array('elementid'=>$id) );
+				$list[$id]['url' ]       = Html::url( 'pageelement','edit'   ,$this->page->id,array('elementid'=>$id,'mode'=>'edit') );
 				$list[$id]['desc']       = $value->element->desc;
 				$list[$id]['type']       = $value->element->type;
 	
