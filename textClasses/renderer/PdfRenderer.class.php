@@ -10,6 +10,9 @@
  * @version $Revision$
  * @package openrat.text
  */
+
+require('textClasses/renderer/fpdf.php');
+
 class PdfRenderer
 {
 	var $linkedObjectIds = array();
