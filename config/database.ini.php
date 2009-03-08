@@ -23,6 +23,7 @@ database   = cms                   ; database name
 base64     = false                 ; store binary as BASE64 (in postgresql=true)
 prefix     = or_                   ; table praefix
 persistent = yes                   ; use persistent connections (try this, it's faster)
+;charset = UTF-8
 
 ; System command for executing before connecting to the database.
 ; Maybe for installing an SSH-Tunnel.
