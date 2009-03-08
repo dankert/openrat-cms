@@ -249,3 +249,14 @@ groups=YourGroup,AnotherGroup
 redirect_url=
 
 
+
+[user]
+
+; Show E-Mail-Adress in Administration-Interface.
+; Default=true. If admin users should not know the mail adresses, set this to false.
+; Useful for Demo-Installations where a lot of users have adminitration right. 
+show_mail=true
+
+; Users are able to send mesages to another users via e-mail
+; (not yet implemented)
+send_message=true
