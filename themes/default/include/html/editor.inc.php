@@ -50,18 +50,29 @@ switch( $attr_type )
 {
 	case 'fckeditor':
 	case 'html':
-		include('./editor/fckeditor.php');
-		$editor = new FCKeditor( $attr_name ) ;
-		$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
-		$editor->Value = $$attr_name;
-		$editor->Height = '290';
-		$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
-		$editor->Create();
+		
+		if	( $this->isEditMode() )
+		{
+			include('./editor/fckeditor.php');
+			$editor = new FCKeditor( $attr_name ) ;
+			$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
+			$editor->Value = $$attr_name;
+			$editor->Height = '290';
+			$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
+			$editor->Create();
+		}
+		else
+		{
+			echo ($$attr_name);
+		}
 
 		break;
 	
 	case 'wiki':
 		$conf_tags = $conf['editor']['text-markup'];
+		if	( $this->isEditMode() )
+		{
+		
 		?>
 <script name="Javascript" type="text/javascript" src="<?php echo $tpl_dir ?>../../js/editor.js"></script>
 <script name="JavaScript" type="text/javascript">
@@ -151,60 +162,61 @@ function table()
 	}
 }
 
-
 //-->
--->
 </script>
-	<?php
-//		global $image_dir,$objects;
-//		<!-- 
-//    <table>
-//      <tr>
-//        <noscript><input type="text" name="addtext" size="10" /></noscript>
-//        <td><noscript><?php echo checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
-//        <td><noscript><?php echo checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
-//        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-//        <td><noscript><?php echo checkbox('table') ?></noscript><a href="javascript:table();" title="<?php echo lang('PAGE_EDITOR_ADD_TABLE') ?>"><img src="<?php echo $image_dir ?>/editor/table.png" border"0" /></a></td>
-//        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-//        <td><noscript><?php echo checkbox('list') ?></noscript><a href="javascript:list();" title="<?php echo lang('PAGE_EDITOR_ADD_LIST') ?>"><img src="<?php echo $image_dir ?>/editor/list.png" border"0" /></a></td>
-//        <td><noscript><?php echo checkbox('numlist') ?></noscript><a href="javascript:numlist();" title="<?php echo lang('PAGE_EDITOR_ADD_NUMLIST') ?>"><img src="<?php echo $image_dir ?>/editor/numlist.png" border"0" /></a></td>
-//        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-//        <td><noscript><?php echo checkbox('image') ?></noscript><a href="javascript:image();" title="<?php echo lang('PAGE_EDITOR_ADD_IMAGE') ?>"><img src="<?php echo $image_dir ?>/editor/image.png" border"0" /></a></td>
-//        <td><noscript><?php echo checkbox('link') ?></noscript><a href="javascript:link();" title="<?php echo lang('PAGE_EDITOR_ADD_LINK') ?>"><img src="<?php echo $image_dir ?>/editor/link.png" border"0" /></a></td>
-//        <td><?php echo selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
-//      </tr>
-//    </table>
-//    -->
-		?>
+    <table>
+      <tr>
+        <noscript><input type="text" name="addtext" size="10" /></noscript>
+        <td><noscript><?php echo checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
+        <td><noscript><?php echo checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><noscript><?php echo checkbox('table') ?></noscript><a href="javascript:table();" title="<?php echo lang('PAGE_EDITOR_ADD_TABLE') ?>"><img src="<?php echo $image_dir ?>/editor/table.png" border"0" /></a></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><noscript><?php echo checkbox('list') ?></noscript><a href="javascript:list();" title="<?php echo lang('PAGE_EDITOR_ADD_LIST') ?>"><img src="<?php echo $image_dir ?>/editor/list.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('numlist') ?></noscript><a href="javascript:numlist();" title="<?php echo lang('PAGE_EDITOR_ADD_NUMLIST') ?>"><img src="<?php echo $image_dir ?>/editor/numlist.png" border"0" /></a></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td><noscript><?php echo checkbox('image') ?></noscript><a href="javascript:image();" title="<?php echo lang('PAGE_EDITOR_ADD_IMAGE') ?>"><img src="<?php echo $image_dir ?>/editor/image.png" border"0" /></a></td>
+        <td><noscript><?php echo checkbox('link') ?></noscript><a href="javascript:link();" title="<?php echo lang('PAGE_EDITOR_ADD_LINK') ?>"><img src="<?php echo $image_dir ?>/editor/link.png" border"0" /></a></td>
+        <td><?php echo selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
+      </tr>
+    </table>
+	<?php ?>
     
-    <?php
-//    echo "<pre>";
-//    print_r($document);
-//    echo "</pre>";
-    
-    
-//    <!-- 
-//     <fieldset></fieldset><br>
-//     -->
-    ?>
 <?php
-		//echo '<textarea name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
 		
-		$doc = new DocumentElement();
-		$text = $$attr_name;
-		if	( !is_array($text))
-			$text = explode("\n",$text);
-		$doc->parse($text);
-//		echo '<pre>';print_r($doc);echo '</pre>';
-		echo $doc->render('application/html-dom');
-		echo '<hr />';
-		echo $doc->render('application/html-editor');
-//		echo $doc->render('application/html-dom');
+			//echo $attr_tmp_doc->render('application/html-editor');
+			echo '<textarea name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
+		}
+		else
+		{
+			$attr_tmp_doc = new DocumentElement();
+			$attr_tmp_text = $$attr_name;
+			if	( !is_array($attr_tmp_text))
+				$attr_tmp_text = explode("\n",$attr_tmp_text);
+			$attr_tmp_doc->parse($attr_tmp_text);
+			echo $attr_tmp_doc->render('application/html');
+		}
 		break;
 		
 	case 'text':
 	case 'raw':
-		echo '<textarea name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
+		if	( $this->isEditMode() )
+			echo '<textarea name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
+		else
+			echo nl2br($$attr_name);
+		break;
+
+
+	case 'dom':
+	case 'tree':
+		
+		$attr_tmp_doc = new DocumentElement();
+		$attr_tmp_text = $$attr_name;
+		if	( !is_array($attr_tmp_text))
+			$attr_tmp_text = explode("\n",$attr_tmp_text);
+			
+		$attr_tmp_doc->parse($attr_tmp_text);
+		echo $attr_tmp_doc->render('application/html-dom');
 		break;
 		
 	default:
