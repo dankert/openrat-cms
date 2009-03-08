@@ -1,5 +1,11 @@
 <?php
-if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr_readonly=true;
+$attr_tmp_list = $$attr_list;
+if ($this->isEditable() && $this->getRequestVar('mode')!='edit')
+{
+	echo empty($$attr_name)?'- '.lang('EMPTY').' -':$attr_tmp_list[$$attr_name];
+}
+else
+{
 if ( $attr_addempty!==FALSE  )
 {
 	if ($attr_addempty===TRUE)
@@ -13,7 +19,6 @@ if	($attr_multiple) echo ' multiple="multiple"';
 if (in_array($attr_name,$errors)) echo ' style="background-color:red; border:2px dashed red;"';
 echo ' size="'.intval($attr_size).'"';
 ?>><?php
-		$attr_tmp_list = $$attr_list;
 		if	( isset($$attr_name) && isset($attr_tmp_list[$$attr_name]) )
 			$attr_tmp_default = $$attr_name;
 		elseif ( isset($attr_default) )
@@ -47,5 +52,6 @@ echo ' size="'.intval($attr_size).'"';
 		}
 ?></select><?php
 if (count($$attr_list)==0) echo '<input type="hidden" name="'.$attr_name.'" value="" />';
-if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" value="'.$box_key.'" />'
+if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" value="'.$box_key.'" />';
+}
 ?>
