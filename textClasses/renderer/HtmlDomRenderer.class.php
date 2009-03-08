@@ -2,7 +2,7 @@
 
 /**
  * Dokument-Objekt.<br>
- * Diese Objekt verkörpert das Root-Objekt in einem DOM-Baum.<br>
+ * Diese Objekt verkï¿½rpert das Root-Objekt in einem DOM-Baum.<br>
  * <br>
  * Dieses Objekt kann Text parsen und seine Unterobjekte selbst erzeugen.<br>
  * 
@@ -15,7 +15,7 @@ class HtmlDomRenderer
 	var $linkedObjectIds = array();
 	
 	/**
-	 * Fußnoten.
+	 * Fuï¿½noten.
 	 *
 	 * @var Array
 	 */
@@ -46,11 +46,12 @@ class HtmlDomRenderer
 		
 		$this->path[] = $child;
 		
-		$val  = '<br/>';
-		foreach( $this->path as $p )
-			$val .= '&nbsp;&nbsp;&nbsp;&nbsp;';
+		$val  = '';
+//		$val  = '<br/>';
+//		foreach( $this->path as $p )
+//			$val .= '&nbsp;&nbsp;&nbsp;&nbsp;';
 
-		$val .= '<a href="#'.$this->getPathAsString().'">_</a>';
+//		$val .= '<a href="#'.$this->getPathAsString().'">_</a>';
 			
 				$attr = array();
 				$praefix = '';
@@ -70,26 +71,11 @@ class HtmlDomRenderer
 					if	( !empty($subChild1->title) )
 						$attr['title'] = $subChild1->title;
 				}
+
+				$praefix .= lang('TEXT_MARKUP_'.strtoupper(substr(get_class($child),0,-7)));
 				
 				switch( strtolower(get_class($child)) )
 				{
-					case 'tableofcontentelement':
-						$tag = 'p';
-						foreach( $this->children as $h)
-						{
-							if	( strtolower(get_class($h))=='headlineelement' )
-							{
-								$child->children[] = new RawElement(str_repeat('&nbsp;&nbsp;',$h->level));
-								$t = new TextElement( $h->getText() );
-								$l = new LinkElement();
-								$l->fragment=$h->getName();
-								$l->children[] = $t;
-								$child->children[] = $l;
-								$child->children[] = new LineBreakElement();
-							}
-						}
-						break;
-
 					case 'rawelement':
 						$tag = '';
 						$val = $child->src;
@@ -101,144 +87,25 @@ class HtmlDomRenderer
 
 						$val .= $child->text;
 						
-						if	( $this->getPathAsString() == $this->domId )
-						{
-							$val = '<form><textarea name="" rows="5" cols="50">'.$val.'</textarea><input type="submit" /></form>';
-						}
-						else
-						{
-//							if	( $this->encodeHtml )
-//								$val = Text::encodeHtml( $val );
-//							$val = Text::replaceHtmlChars( $val );
-							#$val .= '<a href="?domid='.$this->getPathAsString().'"><img src="./editor/editor/filemanager/browser/default/images/icons/txt.gif"></a>';
-						}
 						break;
 
-					case 'footnoteelement':
-						$tag = 'a';
-						$attr['href'] = '#footnote';
-						
-						$title = '';
-						foreach( $child->children as $c )
-							$title .= $this->renderElement($c);
-						$attr['title'] = strip_tags($title);
-						 
-						$nr = 1;
-						foreach( $this->footnotes as $fn )
-							if ( strtolower(get_class($fn))=='linebreakelement')
-								$nr++;
-								
-						$val = $nr;
-						if	( @$conf['editor']['footnote']['bracket'])
-							$val = '('.$nr.')';
-						if	( @$conf['editor']['footnote']['sup'])
-							$val = '<sup><small>'.$nr.'</small></sup>';
-								
-
-						if	( $nr == 1 )
-						{
-							$this->footnotes[] = new RawElement('&mdash;');
-							$le = new LinkElement();
-							$le->name = "footnote";
-							$this->footnotes[] = $le;
-							$this->footnotes[] = new RawElement('&mdash;');
-						}
-						$this->footnotes[] = new LineBreakElement();
-						$this->footnotes[] = new RawElement($val);
-						$this->footnotes[] = new RawElement(' ');
-						foreach( $child->children as $c )
-							$this->footnotes[] = $c;
-						
-						$child->children = array();
-
-						break;
-
-					case 'codeelement':
-						
-						if	( empty($child->language) )
-							// Wenn keine Sprache verfügbar, dann ein einfaches PRE-Element erzeugen.
-							$tag = 'pre';
-						else
-						{
-							// Wenn Sprache verfügbar, dann den GESHI-Parser bemühen.
-							$tag    = '';
-							$source = '';
-							foreach( $child->children as $c )
-								if	( strtolower(get_class($c)) == 'textelement')
-									$source .= $c->text."\n";
-							$child->children = array();
-							require_once('./geshi/geshi.php');
-							$geshi = new Geshi($source,$child->language);
-							$val = $geshi->parse_code(); 
-						}
-						break;
-
-					case 'quoteelement':
-						$tag = 'blockquote';
-						break;
-
-
-					case 'paragraphelement':
-						$tag = 'p';
-						break;
-
-					case 'speechelement':
-						$tag     = 'cite';
-						
-						// Danke an: http://www.apostroph.de/tueddelchen.php
-						//TODO: Abhängigkeit von Spracheinstellung implementieren.
-						$language = 'de';
-						switch( $language )
-						{
-							case 'de': // deutsche Notation
-								$praefix = '&bdquo;';
-								$suffix  = '&ldquo;';
-								break;
-							case 'fr':
-								$praefix = '&laquo;';
-								$suffix  = '&raquo;';
-								break;
-							default: // englische Notation
-								$praefix = '&ldquo;';
-								$suffix  = '&rdquo;';
-						}
-						
-						if	( $conf['editor']['html']['override_speech'] )
-						{
-							$praefix = $conf['editor']['html']['override_speech_open' ];
-							$suffix  = $conf['editor']['html']['override_speech_close'];
-						}
-						break;
-
-					case 'linebreakelement':
-						$tag   = 'br';
-						$empty = true;
-						break;
 
 					case 'linkelement':
 						
-						if	( $this->getPathAsString() == $this->domId )
-						{
-							$tag = '';
-							$val = '<form><input type="text" name="" size="15" value="'.$child->getUrl().'" /><input type="text" name="" size="5" value="'.$child->objectId.'" /><input type="submit" /></form>';
-						}
+						$tag = 'a';
+						if	( !empty($child->name) )
+							$attr['name'] = $child->name;
 						else
+							$attr['href'] = htmlspecialchars($child->getUrl());
+
+						if	( Object::available( $child->objectId ) )
 						{
-							$tag = 'a';
-							if	( !empty($child->name) )
-								$attr['name'] = $child->name;
-							else
-								$attr['href'] = htmlspecialchars($child->getUrl());
-	
-							if	( Object::available( $child->objectId ) )
-							{
-								$file = new File( $child->objectId );
-								$file->load();
-								$attr['title'] = $file->description;
-								unset( $file );
-							}
-							$suffix = '<a href="?domid='.$this->getPathAsString().'"><img src="./themes/default/images/editor/link.png"></a>';
+							$file = new File( $child->objectId );
+							$file->load();
+							$attr['title'] = $file->description;
+							unset( $file );
 						}
+
 						break;
 
 					case 'imageelement':
@@ -255,7 +122,7 @@ class HtmlDomRenderer
 							$attr['src']    = $child->getUrl();
 							$attr['border'] = '0';
 							
-							// Breite/Höhe des Bildes bestimmen.
+							// Breite/Hï¿½he des Bildes bestimmen.
 							$image = new File( $child->objectId );
 							
 							$image->load();
@@ -285,7 +152,7 @@ class HtmlDomRenderer
 							$dd->children[] = new TextElement($attr['title']);
 							$child->children[] = $dd;
 						}
-						$suffix = '<a href="#"><img src="./themes/default/images/editor/image.png"></a>';
+						$suffix = '<img src="./themes/default/images/editor/image.png">';
 						break;
 
 					case 'strongelement':
@@ -377,47 +244,38 @@ class HtmlDomRenderer
 
 					default:
 						
-						$tag = 'unknown-element';
-						$attr['class'] = strtolower(get_class($child));
-						break;
 				}				
 
-				$val = $this->renderHtmlElement($tag,$val,$empty,$attr);
-				$val .= $praefix;
-				$val .= $suffix;
+				$val = $this->renderValue($val);
+				$val = $praefix.$val.$suffix;
 				
-				foreach( $child->children as $c )
+				if	( count($child->children)>0 )
 				{
-					$val .= $this->renderElement( $c );
+					$val .= '<ul>';
+					foreach( $child->children as $c )
+					{
+						$val .= $this->renderElement( $c );
+					}
+					$val .= '</ul>';
 				}
 
 //				echo "text:$val";
 
 				unset( $this->path[ count($this->path)-1 ] );
-				return $val;
+				return '<li>'.$val.'</li>';
 	}
 
 
 
 	/**
-	 * Erzeugt ein HTML-Element.
+	 * Rendert einen Inhalt.
 	 *
-	 * @param String $tag Name des Tags
 	 * @param String $value Inhalt
-	 * @param boolean $empty abkürzen, wenn Inhalt leer ("<... />")
-	 * @param Array $attr Attribute als Array<String,String>
 	 * @return String
 	 */
-	function renderHtmlElement( $tag,$value,$empty,$attr=array() )
+	function renderValue( $value )
 	{
-		$val = 'Tag='.$tag;
-		foreach( $attr as $attrName=>$attrInhalt )
-		{
-			$val .= ' '.$attrName.'="'.$attrInhalt.'"';
-		}
-		
-		
-		$val .= ' value='.$value.'';
+		$val = '&nbsp;<em>'.$value.'</em>';
 		return $val;
 	}
 
@@ -434,10 +292,10 @@ class HtmlDomRenderer
 		$this->footnotes    = array();
 		
 		foreach( $this->children as $child )
-			$this->renderedText .= $this->renderElement( $child );
+			$this->renderedText .= '<ul>'.$this->renderElement( $child ).'</ul>';
 
 		foreach( $this->footnotes as $child )
-			$this->renderedText .= $this->renderElement( $child );
+			$this->renderedText .= '<ul>'.$this->renderElement( $child ).'</ul>';
 			
 		return $this->renderedText;
 	}
