@@ -38,12 +38,11 @@ menu=edit
 target=save
 editable=true
 
-[advanced]
+[prop]
 menu=edit
-target=save
 
 [save]
 goto=edit
 
 [menu]
-edit=edit,link,import,export,archive
+edit=edit,prop,link,import,export,archive
