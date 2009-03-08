@@ -1017,3 +1017,6 @@ USER_YOURPROFILE = "My settings"
 VALUE = Content
 IS_YES="Yes"
 IS_NO="No"
+MENU_PAGEELEMENT_PROP="Properties"
+WEEK="Week"
+DOCUMENT_TREE = "Document tree"
