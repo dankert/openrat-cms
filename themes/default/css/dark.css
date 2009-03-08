@@ -41,6 +41,7 @@ td.subaction
 }
 
 input,
+select,
 div.cancel
 {
 	background-image: url('../images/bg-title.png');

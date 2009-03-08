@@ -531,3 +531,21 @@ table.tree td.treeimage
 {
 	width:1px;
 }
+
+table.calendar
+{
+	#border-style: solid;
+	table-layout:fixed;
+	border-collapse:collapse;
+	text-align: center;
+	#size:inherit;
+	#width: 80%;
+	#background-color: gray;
+}
+
+table.calendar td
+{
+	border: 1px dotted;
+	#background-color:grey;
+	#border-bottom: 1px solid black;
+}
