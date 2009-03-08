@@ -90,8 +90,8 @@
 		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->getRequestVar('mode')=='edit') { 
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
 		echo '<span class="path">'.langHtml('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 		if	( !isset($path) || is_array($path) )
@@ -394,13 +394,15 @@
 		$tmp_url = $attr9_url;
 	else
 		$tmp_url = Html::url($attr9_action,$attr9_subaction,!empty($attr9_id)?$attr9_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr9_class ?>" target="<?php echo $attr9_target ?>"<?php if (isset($attr9_accesskey)) echo ' accesskey="'.$attr9_accesskey.'"' ?>  title="<?php echo encodeHtml($attr9_title) ?>"><?php unset($attr9) ?><?php unset($attr9_title) ?><?php unset($attr9_target) ?><?php unset($attr9_url) ?><?php unset($attr9_class) ?><?php $attr10_debug_info = 'a:2:{s:3:"url";s:22:"config:login/logo/file";s:5:"align";s:4:"left";}' ?><?php $attr10 = array('url'=>@$conf['login']['logo']['file'],'align'=>'left') ?><?php $attr10_url=@$conf['login']['logo']['file'] ?><?php $attr10_align='left' ?><?php
+?><a<?php if (isset($attr9_name)) echo ' name="'.$attr9_name.'"'; else echo ' href="'.$tmp_url.($attr9_anchor?'#'.$attr9_anchor:'').'"' ?> class="<?php echo $attr9_class ?>" target="<?php echo $attr9_target ?>"<?php if (isset($attr9_accesskey)) echo ' accesskey="'.$attr9_accesskey.'"' ?>  title="<?php echo encodeHtml($attr9_title) ?>"><?php unset($attr9) ?><?php unset($attr9_title) ?><?php unset($attr9_target) ?><?php unset($attr9_url) ?><?php unset($attr9_class) ?><?php $attr10_debug_info = 'a:2:{s:3:"url";s:22:"config:login/logo/file";s:5:"align";s:4:"left";}' ?><?php $attr10 = array('url'=>@$conf['login']['logo']['file'],'align'=>'left') ?><?php $attr10_url=@$conf['login']['logo']['file'] ?><?php $attr10_align='left' ?><?php
 if (isset($attr10_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr10_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr10_align ?>"><?php
 } elseif (isset($attr10_type)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr10_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr10_align ?>"><?php
 } elseif (isset($attr10_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr10_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr10_align ?>"><?php
+} elseif (isset($attr10_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr10_tree.IMG_EXT ?>" border="0" align="<?php echo $attr10_align ?>"><?php
 } elseif (isset($attr10_url)) {
 ?><img src="<?php echo $attr10_url ?>" border="0" align="<?php echo $attr10_align ?>"><?php
 } elseif (isset($attr10_fileext)) {
@@ -474,6 +476,8 @@ if (isset($attr9_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
+} elseif (isset($attr9_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr9_tree.IMG_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_url)) {
 ?><img src="<?php echo $attr9_url ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_fileext)) {
@@ -1310,7 +1314,7 @@ if (isset($attr9_elementtype)) {
 <?php unset($attr7) ?><?php unset($attr7_not) ?><?php unset($attr7_present) ?><?php $attr8_debug_info = 'a:9:{s:5:"class";s:4:"name";s:7:"default";s:0:"";s:4:"type";s:4:"text";s:4:"name";s:10:"login_name";s:5:"value";s:0:"";s:4:"size";s:2:"20";s:9:"maxlength";s:3:"256";s:8:"onchange";s:0:"";s:8:"readonly";s:5:"false";}' ?><?php $attr8 = array('class'=>'name','default'=>'','type'=>'text','name'=>'login_name','value'=>'','size'=>'20','maxlength'=>'256','onchange'=>'','readonly'=>false) ?><?php $attr8_class='name' ?><?php $attr8_default='' ?><?php $attr8_type='text' ?><?php $attr8_name='login_name' ?><?php $attr8_value='' ?><?php $attr8_size='20' ?><?php $attr8_maxlength='256' ?><?php $attr8_onchange='' ?><?php $attr8_readonly=false ?><?php if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr8_readonly=true;
 	  if ($attr8_readonly && empty($$attr8_name)) $$attr8_name = '- '.lang('EMPTY').' -';
       if(!isset($attr8_default)) $attr8_default='';
-?><?php if (!$attr8_readonly) {
+?><?php if (!$attr8_readonly || $attr8_type=='hidden') {
 ?><input<?php if ($attr8_readonly) echo ' disabled="true"' ?> id="id_<?php echo $attr8_name ?><?php if ($attr8_readonly) echo '_disabled' ?>" name="<?php echo $attr8_name ?><?php if ($attr8_readonly) echo '_disabled' ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" <?php if (in_array($attr8_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
 if	($attr8_readonly) {
 ?><input type="hidden" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" /><?php
@@ -1318,7 +1322,7 @@ if	($attr8_readonly) {
 <?php unset($attr7) ?><?php $attr8_debug_info = 'a:9:{s:5:"class";s:0:"";s:7:"default";s:0:"";s:4:"type";s:6:"hidden";s:4:"name";s:10:"login_name";s:5:"value";s:18:"var:force_username";s:4:"size";s:2:"40";s:9:"maxlength";s:3:"256";s:8:"onchange";s:0:"";s:8:"readonly";s:5:"false";}' ?><?php $attr8 = array('class'=>'','default'=>'','type'=>'hidden','name'=>'login_name','value'=>$force_username,'size'=>'40','maxlength'=>'256','onchange'=>'','readonly'=>false) ?><?php $attr8_class='' ?><?php $attr8_default='' ?><?php $attr8_type='hidden' ?><?php $attr8_name='login_name' ?><?php $attr8_value=$force_username ?><?php $attr8_size='40' ?><?php $attr8_maxlength='256' ?><?php $attr8_onchange='' ?><?php $attr8_readonly=false ?><?php if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr8_readonly=true;
 	  if ($attr8_readonly && empty($$attr8_name)) $$attr8_name = '- '.lang('EMPTY').' -';
       if(!isset($attr8_default)) $attr8_default='';
-?><?php if (!$attr8_readonly) {
+?><?php if (!$attr8_readonly || $attr8_type=='hidden') {
 ?><input<?php if ($attr8_readonly) echo ' disabled="true"' ?> id="id_<?php echo $attr8_name ?><?php if ($attr8_readonly) echo '_disabled' ?>" name="<?php echo $attr8_name ?><?php if ($attr8_readonly) echo '_disabled' ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" <?php if (in_array($attr8_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
 if	($attr8_readonly) {
 ?><input type="hidden" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" /><?php
@@ -1931,6 +1935,8 @@ if (isset($attr9_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
+} elseif (isset($attr9_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr9_tree.IMG_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_url)) {
 ?><img src="<?php echo $attr9_url ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_fileext)) {
@@ -2015,7 +2021,7 @@ if (isset($attr9_elementtype)) {
 ?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php $attr8_debug_info = 'a:8:{s:5:"class";s:4:"name";s:7:"default";s:0:"";s:4:"type";s:4:"text";s:4:"name";s:10:"openid_url";s:4:"size";s:2:"20";s:9:"maxlength";s:3:"256";s:8:"onchange";s:0:"";s:8:"readonly";s:5:"false";}' ?><?php $attr8 = array('class'=>'name','default'=>'','type'=>'text','name'=>'openid_url','size'=>'20','maxlength'=>'256','onchange'=>'','readonly'=>false) ?><?php $attr8_class='name' ?><?php $attr8_default='' ?><?php $attr8_type='text' ?><?php $attr8_name='openid_url' ?><?php $attr8_size='20' ?><?php $attr8_maxlength='256' ?><?php $attr8_onchange='' ?><?php $attr8_readonly=false ?><?php if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr8_readonly=true;
 	  if ($attr8_readonly && empty($$attr8_name)) $$attr8_name = '- '.lang('EMPTY').' -';
       if(!isset($attr8_default)) $attr8_default='';
-?><?php if (!$attr8_readonly) {
+?><?php if (!$attr8_readonly || $attr8_type=='hidden') {
 ?><input<?php if ($attr8_readonly) echo ' disabled="true"' ?> id="id_<?php echo $attr8_name ?><?php if ($attr8_readonly) echo '_disabled' ?>" name="<?php echo $attr8_name ?><?php if ($attr8_readonly) echo '_disabled' ?>" type="<?php echo $attr8_type ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" <?php if (in_array($attr8_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
 if	($attr8_readonly) {
 ?><input type="hidden" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" /><?php
@@ -2199,7 +2205,13 @@ if	($attr8_readonly) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr7_rowspan) )
 		$attr7['width']=$column_widths[$cell_column_nr-1];
 ?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php $attr8_debug_info = 'a:10:{s:4:"list";s:5:"dbids";s:4:"name";s:4:"dbid";s:7:"default";s:11:"var:actdbid";s:8:"onchange";s:0:"";s:5:"title";s:0:"";s:5:"class";s:0:"";s:8:"addempty";s:5:"false";s:8:"multiple";s:5:"false";s:4:"size";s:1:"1";s:4:"lang";s:5:"false";}' ?><?php $attr8 = array('list'=>'dbids','name'=>'dbid','default'=>$actdbid,'onchange'=>'','title'=>'','class'=>'','addempty'=>false,'multiple'=>false,'size'=>'1','lang'=>false) ?><?php $attr8_list='dbids' ?><?php $attr8_name='dbid' ?><?php $attr8_default=$actdbid ?><?php $attr8_onchange='' ?><?php $attr8_title='' ?><?php $attr8_class='' ?><?php $attr8_addempty=false ?><?php $attr8_multiple=false ?><?php $attr8_size='1' ?><?php $attr8_lang=false ?><?php
-if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr8_readonly=true;
+$attr8_tmp_list = $$attr8_list;
+if ($this->isEditable() && $this->getRequestVar('mode')!='edit')
+{
+	echo empty($$attr8_name)?'- '.lang('EMPTY').' -':$attr8_tmp_list[$$attr8_name];
+}
+else
+{
 if ( $attr8_addempty!==FALSE  )
 {
 	if ($attr8_addempty===TRUE)
@@ -2213,7 +2225,6 @@ if	($attr8_multiple) echo ' multiple="multiple"';
 if (in_array($attr8_name,$errors)) echo ' style="background-color:red; border:2px dashed red;"';
 echo ' size="'.intval($attr8_size).'"';
 ?>><?php
-		$attr8_tmp_list = $$attr8_list;
 		if	( isset($$attr8_name) && isset($attr8_tmp_list[$$attr8_name]) )
 			$attr8_tmp_default = $$attr8_name;
 		elseif ( isset($attr8_default) )
@@ -2244,7 +2255,8 @@ echo ' size="'.intval($attr8_size).'"';
 		}
 ?></select><?php
 if (count($$attr8_list)==0) echo '<input type="hidden" name="'.$attr8_name.'" value="" />';
-if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" value="'.$box_key.'" />'
+if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" value="'.$box_key.'" />';
+}
 ?><?php unset($attr8) ?><?php unset($attr8_list) ?><?php unset($attr8_name) ?><?php unset($attr8_default) ?><?php unset($attr8_onchange) ?><?php unset($attr8_title) ?><?php unset($attr8_class) ?><?php unset($attr8_addempty) ?><?php unset($attr8_multiple) ?><?php unset($attr8_size) ?><?php unset($attr8_lang) ?><?php $attr8_debug_info = 'a:2:{s:4:"name";s:11:"screenwidth";s:7:"default";s:4:"9999";}' ?><?php $attr8 = array('name'=>'screenwidth','default'=>'9999') ?><?php $attr8_name='screenwidth' ?><?php $attr8_default='9999' ?><?php
 if (isset($$attr8_name))
 	$attr8_tmp_value = $$attr8_name;
@@ -2420,7 +2432,7 @@ else
 		$tmp_url = $attr2_url;
 	else
 		$tmp_url = Html::url($attr2_action,$attr2_subaction,!empty($attr2_id)?$attr2_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr2_class ?>" target="<?php echo $attr2_target ?>"<?php if (isset($attr2_accesskey)) echo ' accesskey="'.$attr2_accesskey.'"' ?>  title="<?php echo encodeHtml($attr2_title) ?>"><?php unset($attr2) ?><?php unset($attr2_title) ?><?php unset($attr2_target) ?><?php unset($attr2_url) ?><?php unset($attr2_class) ?><?php $attr3_debug_info = 'a:3:{s:5:"class";s:4:"text";s:5:"value";s:18:"message:GLOBAL_GPL";s:6:"escape";s:4:"true";}' ?><?php $attr3 = array('class'=>'text','value'=>lang('GLOBAL_GPL'),'escape'=>true) ?><?php $attr3_class='text' ?><?php $attr3_value=lang('GLOBAL_GPL') ?><?php $attr3_escape=true ?><?php
+?><a<?php if (isset($attr2_name)) echo ' name="'.$attr2_name.'"'; else echo ' href="'.$tmp_url.($attr2_anchor?'#'.$attr2_anchor:'').'"' ?> class="<?php echo $attr2_class ?>" target="<?php echo $attr2_target ?>"<?php if (isset($attr2_accesskey)) echo ' accesskey="'.$attr2_accesskey.'"' ?>  title="<?php echo encodeHtml($attr2_title) ?>"><?php unset($attr2) ?><?php unset($attr2_title) ?><?php unset($attr2_target) ?><?php unset($attr2_url) ?><?php unset($attr2_class) ?><?php $attr3_debug_info = 'a:3:{s:5:"class";s:4:"text";s:5:"value";s:18:"message:GLOBAL_GPL";s:6:"escape";s:4:"true";}' ?><?php $attr3 = array('class'=>'text','value'=>lang('GLOBAL_GPL'),'escape'=>true) ?><?php $attr3_class='text' ?><?php $attr3_value=lang('GLOBAL_GPL') ?><?php $attr3_escape=true ?><?php
 	if	( isset($attr3_prefix)&& isset($attr3_key))
 		$attr3_key = $attr3_prefix.$attr3_key;
 	if	( isset($attr3_suffix)&& isset($attr3_key))

@@ -90,8 +90,8 @@
 		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->getRequestVar('mode')=='edit') { 
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
 		echo '<span class="path">'.langHtml('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 		if	( !isset($path) || is_array($path) )
@@ -348,7 +348,13 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php $attr7_debug_info = 'a:9:{s:4:"list";s:8:"elements";s:4:"name";s:9:"elementid";s:8:"onchange";s:0:"";s:5:"title";s:0:"";s:5:"class";s:0:"";s:8:"addempty";s:5:"false";s:8:"multiple";s:5:"false";s:4:"size";s:1:"1";s:4:"lang";s:5:"false";}' ?><?php $attr7 = array('list'=>'elements','name'=>'elementid','onchange'=>'','title'=>'','class'=>'','addempty'=>false,'multiple'=>false,'size'=>'1','lang'=>false) ?><?php $attr7_list='elements' ?><?php $attr7_name='elementid' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><?php $attr7_addempty=false ?><?php $attr7_multiple=false ?><?php $attr7_size='1' ?><?php $attr7_lang=false ?><?php
-if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr7_readonly=true;
+$attr7_tmp_list = $$attr7_list;
+if ($this->isEditable() && $this->getRequestVar('mode')!='edit')
+{
+	echo empty($$attr7_name)?'- '.lang('EMPTY').' -':$attr7_tmp_list[$$attr7_name];
+}
+else
+{
 if ( $attr7_addempty!==FALSE  )
 {
 	if ($attr7_addempty===TRUE)
@@ -362,7 +368,6 @@ if	($attr7_multiple) echo ' multiple="multiple"';
 if (in_array($attr7_name,$errors)) echo ' style="background-color:red; border:2px dashed red;"';
 echo ' size="'.intval($attr7_size).'"';
 ?>><?php
-		$attr7_tmp_list = $$attr7_list;
 		if	( isset($$attr7_name) && isset($attr7_tmp_list[$$attr7_name]) )
 			$attr7_tmp_default = $$attr7_name;
 		elseif ( isset($attr7_default) )
@@ -393,7 +398,8 @@ echo ' size="'.intval($attr7_size).'"';
 		}
 ?></select><?php
 if (count($$attr7_list)==0) echo '<input type="hidden" name="'.$attr7_name.'" value="" />';
-if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />'
+if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />';
+}
 ?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_onchange) ?><?php unset($attr7_title) ?><?php unset($attr7_class) ?><?php unset($attr7_addempty) ?><?php unset($attr7_multiple) ?><?php unset($attr7_size) ?><?php unset($attr7_lang) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:7:"present";s:17:"writable_elements";}' ?><?php $attr4 = array('present'=>'writable_elements') ?><?php $attr4_present='writable_elements' ?><?php 
 	if	( isset($attr4_true) )
 	{
@@ -593,7 +599,13 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6['width']=$column_widths[$cell_column_nr-1];
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_rowspan) ?><?php $attr7_debug_info = 'a:9:{s:4:"list";s:17:"writable_elements";s:4:"name";s:18:"writable_elementid";s:8:"onchange";s:0:"";s:5:"title";s:0:"";s:5:"class";s:0:"";s:8:"addempty";s:5:"false";s:8:"multiple";s:5:"false";s:4:"size";s:1:"1";s:4:"lang";s:5:"false";}' ?><?php $attr7 = array('list'=>'writable_elements','name'=>'writable_elementid','onchange'=>'','title'=>'','class'=>'','addempty'=>false,'multiple'=>false,'size'=>'1','lang'=>false) ?><?php $attr7_list='writable_elements' ?><?php $attr7_name='writable_elementid' ?><?php $attr7_onchange='' ?><?php $attr7_title='' ?><?php $attr7_class='' ?><?php $attr7_addempty=false ?><?php $attr7_multiple=false ?><?php $attr7_size='1' ?><?php $attr7_lang=false ?><?php
-if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr7_readonly=true;
+$attr7_tmp_list = $$attr7_list;
+if ($this->isEditable() && $this->getRequestVar('mode')!='edit')
+{
+	echo empty($$attr7_name)?'- '.lang('EMPTY').' -':$attr7_tmp_list[$$attr7_name];
+}
+else
+{
 if ( $attr7_addempty!==FALSE  )
 {
 	if ($attr7_addempty===TRUE)
@@ -607,7 +619,6 @@ if	($attr7_multiple) echo ' multiple="multiple"';
 if (in_array($attr7_name,$errors)) echo ' style="background-color:red; border:2px dashed red;"';
 echo ' size="'.intval($attr7_size).'"';
 ?>><?php
-		$attr7_tmp_list = $$attr7_list;
 		if	( isset($$attr7_name) && isset($attr7_tmp_list[$$attr7_name]) )
 			$attr7_tmp_default = $$attr7_name;
 		elseif ( isset($attr7_default) )
@@ -638,7 +649,8 @@ echo ' size="'.intval($attr7_size).'"';
 		}
 ?></select><?php
 if (count($$attr7_list)==0) echo '<input type="hidden" name="'.$attr7_name.'" value="" />';
-if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />'
+if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" value="'.$box_key.'" />';
+}
 ?><?php unset($attr7) ?><?php unset($attr7_list) ?><?php unset($attr7_name) ?><?php unset($attr7_onchange) ?><?php unset($attr7_title) ?><?php unset($attr7_class) ?><?php unset($attr7_addempty) ?><?php unset($attr7_multiple) ?><?php unset($attr7_size) ?><?php unset($attr7_lang) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></td><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></tr><?php unset($attr4) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))

@@ -68,8 +68,8 @@
 		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->getRequestVar('mode')=='edit') { 
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
 		echo '<span class="path">'.langHtml('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 		if	( !isset($path) || is_array($path) )
@@ -133,7 +133,7 @@
 <?php } ?>
   <tr class="notice_<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
-    <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo $notice['text'] ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
+    <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo langHtml($notice['key'],$notice['vars']) ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
     <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
   </tr>
@@ -175,9 +175,6 @@
 	if	( isset($attr5_suffix)&& isset($attr5_key))
 		$attr5_key = $attr5_key.$attr5_suffix;
 	if(empty($attr5_title))
-		if (!empty($attr5_key))
-			$attr5_title = lang($attr5_key.'_HELP');
-		else
 			$attr5_title = '';
 	if	(empty($attr5_type))
 		$tmp_tag = 'span';
@@ -214,16 +211,13 @@
 			$tmp_text = $langF($tmpArray[$attr5_text]);
 	}
 	elseif (!empty($attr5_text))
-		if	( isset($$attr5_text))
-			$tmp_text = $langF($$attr5_text);
-		else
-			$tmp_text = $langF($attr5_text);
+		$tmp_text = $langF($attr5_text);
 	elseif (!empty($attr5_textvar))
 		$tmp_text = $langF($$attr5_textvar);
 	elseif (!empty($attr5_key))
 		$tmp_text = $langF($attr5_key);
 	elseif (!empty($attr5_var))
-		$tmp_text = isset($$attr5_var)?$$attr5_var:'?'.$attr5_var.'?';	
+		$tmp_text = isset($$attr5_var)?$$attr5_var:'?unset:'.$attr5_var.'?';	
 	elseif (!empty($attr5_raw))
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
 	elseif (!empty($attr5_value))

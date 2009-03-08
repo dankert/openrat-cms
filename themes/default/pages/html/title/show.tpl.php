@@ -90,6 +90,8 @@ if (isset($attr5_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr5_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
 } elseif (isset($attr5_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
+} elseif (isset($attr5_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr5_tree.IMG_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
 } elseif (isset($attr5_url)) {
 ?><img src="<?php echo $attr5_url ?>" border="0" align="<?php echo $attr5_align ?>"><?php
 } elseif (isset($attr5_fileext)) {
@@ -831,6 +833,8 @@ if (isset($attr5_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr5_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
 } elseif (isset($attr5_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
+} elseif (isset($attr5_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr5_tree.IMG_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
 } elseif (isset($attr5_url)) {
 ?><img src="<?php echo $attr5_url ?>" border="0" align="<?php echo $attr5_align ?>"><?php
 } elseif (isset($attr5_fileext)) {
@@ -856,7 +860,7 @@ if (isset($attr5_elementtype)) {
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($attr5_id)?$attr5_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>"<?php if (isset($attr5_accesskey)) echo ' accesskey="'.$attr5_accesskey.'"' ?>  title="<?php echo encodeHtml($attr5_title) ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"key";s:11:"USER_LOGOUT";s:6:"escape";s:4:"true";}' ?><?php $attr6 = array('class'=>'text','key'=>'USER_LOGOUT','escape'=>true) ?><?php $attr6_class='text' ?><?php $attr6_key='USER_LOGOUT' ?><?php $attr6_escape=true ?><?php
+?><a<?php if (isset($attr5_name)) echo ' name="'.$attr5_name.'"'; else echo ' href="'.$tmp_url.($attr5_anchor?'#'.$attr5_anchor:'').'"' ?> class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>"<?php if (isset($attr5_accesskey)) echo ' accesskey="'.$attr5_accesskey.'"' ?>  title="<?php echo encodeHtml($attr5_title) ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"key";s:11:"USER_LOGOUT";s:6:"escape";s:4:"true";}' ?><?php $attr6 = array('class'=>'text','key'=>'USER_LOGOUT','escape'=>true) ?><?php $attr6_class='text' ?><?php $attr6_key='USER_LOGOUT' ?><?php $attr6_escape=true ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))
@@ -1006,7 +1010,7 @@ if (isset($attr5_elementtype)) {
 		$tmp_url = $attr5_url;
 	else
 		$tmp_url = Html::url($attr5_action,$attr5_subaction,!empty($attr5_id)?$attr5_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>"<?php if (isset($attr5_accesskey)) echo ' accesskey="'.$attr5_accesskey.'"' ?>  title="<?php echo encodeHtml($attr5_title) ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:12:"userfullname";s:6:"escape";s:4:"true";}' ?><?php $attr6 = array('class'=>'text','var'=>'userfullname','escape'=>true) ?><?php $attr6_class='text' ?><?php $attr6_var='userfullname' ?><?php $attr6_escape=true ?><?php
+?><a<?php if (isset($attr5_name)) echo ' name="'.$attr5_name.'"'; else echo ' href="'.$tmp_url.($attr5_anchor?'#'.$attr5_anchor:'').'"' ?> class="<?php echo $attr5_class ?>" target="<?php echo $attr5_target ?>"<?php if (isset($attr5_accesskey)) echo ' accesskey="'.$attr5_accesskey.'"' ?>  title="<?php echo encodeHtml($attr5_title) ?>"><?php unset($attr5) ?><?php unset($attr5_title) ?><?php unset($attr5_target) ?><?php unset($attr5_url) ?><?php unset($attr5_class) ?><?php $attr6_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:12:"userfullname";s:6:"escape";s:4:"true";}' ?><?php $attr6 = array('class'=>'text','var'=>'userfullname','escape'=>true) ?><?php $attr6_class='text' ?><?php $attr6_var='userfullname' ?><?php $attr6_escape=true ?><?php
 	if	( isset($attr6_prefix)&& isset($attr6_key))
 		$attr6_key = $attr6_prefix.$attr6_key;
 	if	( isset($attr6_suffix)&& isset($attr6_key))

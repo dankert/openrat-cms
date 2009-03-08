@@ -68,8 +68,8 @@
 		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->getRequestVar('mode')=='edit') { 
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
 		echo '<span class="path">'.langHtml('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 		if	( !isset($path) || is_array($path) )
@@ -493,7 +493,7 @@
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_colspan) ?><?php $attr5_debug_info = 'a:1:{s:5:"title";s:23:"message:additional_info";}' ?><?php $attr5 = array('title'=>lang('additional_info')) ?><?php $attr5_title=lang('additional_info') ?><fieldset><?php if(isset($attr5_title)) { ?><legend><?php echo $attr5_title ?></legend><?php } ?><?php unset($attr5) ?><?php unset($attr5_title) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></fieldset><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_colspan) ?><?php $attr5_debug_info = 'a:1:{s:5:"title";s:23:"message:additional_info";}' ?><?php $attr5 = array('title'=>lang('additional_info')) ?><?php $attr5_title=lang('additional_info') ?><fieldset><?php if(isset($attr5_title)) { ?><legend><?php echo encodeHtml($attr5_title) ?></legend><?php } ?><?php unset($attr5) ?><?php unset($attr5_title) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></fieldset><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -676,7 +676,7 @@
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
 		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_colspan) ?><?php $attr5_debug_info = 'a:1:{s:5:"title";s:21:"message:prop_userinfo";}' ?><?php $attr5 = array('title'=>lang('prop_userinfo')) ?><?php $attr5_title=lang('prop_userinfo') ?><fieldset><?php if(isset($attr5_title)) { ?><legend><?php echo $attr5_title ?></legend><?php } ?><?php unset($attr5) ?><?php unset($attr5_title) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></fieldset><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
+?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_colspan) ?><?php $attr5_debug_info = 'a:1:{s:5:"title";s:21:"message:prop_userinfo";}' ?><?php $attr5 = array('title'=>lang('prop_userinfo')) ?><?php $attr5_title=lang('prop_userinfo') ?><fieldset><?php if(isset($attr5_title)) { ?><legend><?php echo encodeHtml($attr5_title) ?></legend><?php } ?><?php unset($attr5) ?><?php unset($attr5_title) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></fieldset><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
 	$row_class_idx++;
 	if ($row_class_idx > count($row_classes))
 		$row_class_idx=1;
@@ -829,6 +829,8 @@ if (isset($attr8_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr8_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr8_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
+} elseif (isset($attr8_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr8_tree.IMG_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_url)) {
 ?><img src="<?php echo $attr8_url ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_fileext)) {
@@ -908,6 +910,8 @@ if (isset($attr8_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr8_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr8_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
+} elseif (isset($attr8_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr8_tree.IMG_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_url)) {
 ?><img src="<?php echo $attr8_url ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_fileext)) {
@@ -922,7 +926,7 @@ if (isset($attr8_elementtype)) {
 			$user->name = lang('GLOBAL_UNKNOWN');
 		if	( empty($user->fullname) )
 			$user->fullname = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-		if	( !empty($user->mail) )
+		if	( !empty($user->mail) && $conf['security']['user']['show_mail'] )
 			echo '<a href="mailto:'.$user->mail.'" title="'.$user->fullname.'">'.$user->name.'</a>';
 		else
 			echo '<span title="'.$user->fullname.'">'.$user->name.'</span>';
@@ -1079,6 +1083,8 @@ if (isset($attr8_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr8_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr8_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
+} elseif (isset($attr8_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr8_tree.IMG_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_url)) {
 ?><img src="<?php echo $attr8_url ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_fileext)) {
@@ -1158,6 +1164,8 @@ if (isset($attr8_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr8_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr8_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
+} elseif (isset($attr8_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr8_tree.IMG_EXT ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_url)) {
 ?><img src="<?php echo $attr8_url ?>" border="0" align="<?php echo $attr8_align ?>"><?php
 } elseif (isset($attr8_fileext)) {
@@ -1172,7 +1180,7 @@ if (isset($attr8_elementtype)) {
 			$user->name = lang('GLOBAL_UNKNOWN');
 		if	( empty($user->fullname) )
 			$user->fullname = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-		if	( !empty($user->mail) )
+		if	( !empty($user->mail) && $conf['security']['user']['show_mail'] )
 			echo '<a href="mailto:'.$user->mail.'" title="'.$user->fullname.'">'.$user->name.'</a>';
 		else
 			echo '<span title="'.$user->fullname.'">'.$user->name.'</span>';

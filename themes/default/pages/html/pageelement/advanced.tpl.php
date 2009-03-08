@@ -90,8 +90,8 @@
 		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->getRequestVar('mode')=='edit') { 
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
-  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="themes/default/images/readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
+  ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
 		echo '<span class="path">'.langHtml('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 		if	( !isset($path) || is_array($path) )
@@ -386,13 +386,15 @@
 		$tmp_url = $attr8_url;
 	else
 		$tmp_url = Html::url($attr8_action,$attr8_subaction,!empty($attr8_id)?$attr8_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>"<?php if (isset($attr8_accesskey)) echo ' accesskey="'.$attr8_accesskey.'"' ?>  title="<?php echo encodeHtml($attr8_title) ?>"><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php unset($attr8_class) ?><?php $attr9_debug_info = 'a:2:{s:4:"file";s:4:"left";s:5:"align";s:6:"middle";}' ?><?php $attr9 = array('file'=>'left','align'=>'middle') ?><?php $attr9_file='left' ?><?php $attr9_align='middle' ?><?php
+?><a<?php if (isset($attr8_name)) echo ' name="'.$attr8_name.'"'; else echo ' href="'.$tmp_url.($attr8_anchor?'#'.$attr8_anchor:'').'"' ?> class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>"<?php if (isset($attr8_accesskey)) echo ' accesskey="'.$attr8_accesskey.'"' ?>  title="<?php echo encodeHtml($attr8_title) ?>"><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php unset($attr8_class) ?><?php $attr9_debug_info = 'a:2:{s:4:"file";s:4:"left";s:5:"align";s:6:"middle";}' ?><?php $attr9 = array('file'=>'left','align'=>'middle') ?><?php $attr9_file='left' ?><?php $attr9_align='middle' ?><?php
 if (isset($attr9_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr9_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_type)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
+} elseif (isset($attr9_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr9_tree.IMG_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_url)) {
 ?><img src="<?php echo $attr9_url ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_fileext)) {
@@ -463,7 +465,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_raw) ?><?php unset($attr8_escape) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:13:"var:monthname";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','text'=>$monthname,'escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_text=$monthname ?><?php $attr8_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_raw) ?><?php unset($attr8_escape) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:9:"monthname";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','var'=>'monthname','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_var='monthname' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -528,7 +530,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_text) ?><?php unset($attr8_escape) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:1:"_";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php $attr8_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_var) ?><?php unset($attr8_escape) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:1:"_";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -613,13 +615,15 @@ if (isset($attr9_elementtype)) {
 		$tmp_url = $attr8_url;
 	else
 		$tmp_url = Html::url($attr8_action,$attr8_subaction,!empty($attr8_id)?$attr8_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>"<?php if (isset($attr8_accesskey)) echo ' accesskey="'.$attr8_accesskey.'"' ?>  title="<?php echo encodeHtml($attr8_title) ?>"><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php unset($attr8_class) ?><?php $attr9_debug_info = 'a:2:{s:4:"file";s:5:"right";s:5:"align";s:6:"middle";}' ?><?php $attr9 = array('file'=>'right','align'=>'middle') ?><?php $attr9_file='right' ?><?php $attr9_align='middle' ?><?php
+?><a<?php if (isset($attr8_name)) echo ' name="'.$attr8_name.'"'; else echo ' href="'.$tmp_url.($attr8_anchor?'#'.$attr8_anchor:'').'"' ?> class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>"<?php if (isset($attr8_accesskey)) echo ' accesskey="'.$attr8_accesskey.'"' ?>  title="<?php echo encodeHtml($attr8_title) ?>"><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php unset($attr8_class) ?><?php $attr9_debug_info = 'a:2:{s:4:"file";s:5:"right";s:5:"align";s:6:"middle";}' ?><?php $attr9 = array('file'=>'right','align'=>'middle') ?><?php $attr9_file='right' ?><?php $attr9_align='middle' ?><?php
 if (isset($attr9_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr9_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_type)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
+} elseif (isset($attr9_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr9_tree.IMG_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_url)) {
 ?><img src="<?php echo $attr9_url ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_fileext)) {
@@ -710,13 +714,15 @@ if (isset($attr9_elementtype)) {
 		$tmp_url = $attr8_url;
 	else
 		$tmp_url = Html::url($attr8_action,$attr8_subaction,!empty($attr8_id)?$attr8_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>"<?php if (isset($attr8_accesskey)) echo ' accesskey="'.$attr8_accesskey.'"' ?>  title="<?php echo encodeHtml($attr8_title) ?>"><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php unset($attr8_class) ?><?php $attr9_debug_info = 'a:2:{s:4:"file";s:4:"left";s:5:"align";s:6:"middle";}' ?><?php $attr9 = array('file'=>'left','align'=>'middle') ?><?php $attr9_file='left' ?><?php $attr9_align='middle' ?><?php
+?><a<?php if (isset($attr8_name)) echo ' name="'.$attr8_name.'"'; else echo ' href="'.$tmp_url.($attr8_anchor?'#'.$attr8_anchor:'').'"' ?> class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>"<?php if (isset($attr8_accesskey)) echo ' accesskey="'.$attr8_accesskey.'"' ?>  title="<?php echo encodeHtml($attr8_title) ?>"><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php unset($attr8_class) ?><?php $attr9_debug_info = 'a:2:{s:4:"file";s:4:"left";s:5:"align";s:6:"middle";}' ?><?php $attr9 = array('file'=>'left','align'=>'middle') ?><?php $attr9_file='left' ?><?php $attr9_align='middle' ?><?php
 if (isset($attr9_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr9_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_type)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
+} elseif (isset($attr9_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr9_tree.IMG_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_url)) {
 ?><img src="<?php echo $attr9_url ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_fileext)) {
@@ -787,7 +793,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_raw) ?><?php unset($attr8_escape) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:12:"var:yearname";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','text'=>$yearname,'escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_text=$yearname ?><?php $attr8_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_raw) ?><?php unset($attr8_escape) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:8:"yearname";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','var'=>'yearname','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_var='yearname' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -852,7 +858,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_text) ?><?php unset($attr8_escape) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:1:"_";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php $attr8_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_var) ?><?php unset($attr8_escape) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:1:"_";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','raw'=>'_','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_raw='_' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -937,13 +943,15 @@ if (isset($attr9_elementtype)) {
 		$tmp_url = $attr8_url;
 	else
 		$tmp_url = Html::url($attr8_action,$attr8_subaction,!empty($attr8_id)?$attr8_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>"<?php if (isset($attr8_accesskey)) echo ' accesskey="'.$attr8_accesskey.'"' ?>  title="<?php echo encodeHtml($attr8_title) ?>"><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php unset($attr8_class) ?><?php $attr9_debug_info = 'a:2:{s:4:"file";s:5:"right";s:5:"align";s:6:"middle";}' ?><?php $attr9 = array('file'=>'right','align'=>'middle') ?><?php $attr9_file='right' ?><?php $attr9_align='middle' ?><?php
+?><a<?php if (isset($attr8_name)) echo ' name="'.$attr8_name.'"'; else echo ' href="'.$tmp_url.($attr8_anchor?'#'.$attr8_anchor:'').'"' ?> class="<?php echo $attr8_class ?>" target="<?php echo $attr8_target ?>"<?php if (isset($attr8_accesskey)) echo ' accesskey="'.$attr8_accesskey.'"' ?>  title="<?php echo encodeHtml($attr8_title) ?>"><?php unset($attr8) ?><?php unset($attr8_title) ?><?php unset($attr8_target) ?><?php unset($attr8_url) ?><?php unset($attr8_class) ?><?php $attr9_debug_info = 'a:2:{s:4:"file";s:5:"right";s:5:"align";s:6:"middle";}' ?><?php $attr9 = array('file'=>'right','align'=>'middle') ?><?php $attr9_file='right' ?><?php $attr9_align='middle' ?><?php
 if (isset($attr9_elementtype)) {
 ?><img src="<?php echo $image_dir.'icon_el_'.$attr9_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_type)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_icon)) {
 ?><img src="<?php echo $image_dir.'icon_'.$attr9_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
+} elseif (isset($attr9_tree)) {
+?><img src="<?php echo $image_dir.'tree_'.$attr9_tree.IMG_EXT ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_url)) {
 ?><img src="<?php echo $attr9_url ?>" border="0" align="<?php echo $attr9_align ?>"><?php
 } elseif (isset($attr9_fileext)) {
@@ -970,7 +978,7 @@ if (isset($attr9_elementtype)) {
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr7_rowspan) )
 		$attr7['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:17:"message:global_nr";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','text'=>lang('global_nr'),'escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_text=lang('global_nr') ?><?php $attr8_escape=true ?><?php
+?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"key";s:9:"global_nr";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','key'=>'global_nr','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_key='global_nr' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -1035,7 +1043,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_text) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr7_debug_info = 'a:4:{s:4:"list";s:8:"weekdays";s:7:"extract";s:5:"false";s:3:"key";s:8:"list_key";s:5:"value";s:7:"weekday";}' ?><?php $attr7 = array('list'=>'weekdays','extract'=>false,'key'=>'list_key','value'=>'weekday') ?><?php $attr7_list='weekdays' ?><?php $attr7_extract=false ?><?php $attr7_key='list_key' ?><?php $attr7_value='weekday' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_key) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr7_debug_info = 'a:4:{s:4:"list";s:8:"weekdays";s:7:"extract";s:5:"false";s:3:"key";s:8:"list_key";s:5:"value";s:7:"weekday";}' ?><?php $attr7 = array('list'=>'weekdays','extract'=>false,'key'=>'list_key','value'=>'weekday') ?><?php $attr7_list='weekdays' ?><?php $attr7_extract=false ?><?php $attr7_key='list_key' ?><?php $attr7_value='weekday' ?><?php
 	$attr7_list_tmp_key   = $attr7_key;
 	$attr7_list_tmp_value = $attr7_value;
 	$attr7_list_extract   = $attr7_extract;
@@ -1065,7 +1073,7 @@ if (isset($attr9_elementtype)) {
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr8_rowspan) )
 		$attr8['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr8 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr8) ?><?php $attr9_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:11:"var:weekday";s:6:"escape";s:4:"true";}' ?><?php $attr9 = array('class'=>'text','text'=>$weekday,'escape'=>true) ?><?php $attr9_class='text' ?><?php $attr9_text=$weekday ?><?php $attr9_escape=true ?><?php
+?><td <?php foreach( $attr8 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr8) ?><?php $attr9_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:7:"weekday";s:6:"escape";s:4:"true";}' ?><?php $attr9 = array('class'=>'text','var'=>'weekday','escape'=>true) ?><?php $attr9_class='text' ?><?php $attr9_var='weekday' ?><?php $attr9_escape=true ?><?php
 	if	( isset($attr9_prefix)&& isset($attr9_key))
 		$attr9_key = $attr9_prefix.$attr9_key;
 	if	( isset($attr9_suffix)&& isset($attr9_key))
@@ -1130,7 +1138,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr9) ?><?php unset($attr9_class) ?><?php unset($attr9_text) ?><?php unset($attr9_escape) ?><?php $attr7_debug_info = 'a:0:{}' ?><?php $attr7 = array() ?></td><?php unset($attr7) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr6_debug_info = 'a:4:{s:4:"list";s:8:"weeklist";s:7:"extract";s:5:"false";s:3:"key";s:6:"weeknr";s:5:"value";s:4:"week";}' ?><?php $attr6 = array('list'=>'weeklist','extract'=>false,'key'=>'weeknr','value'=>'week') ?><?php $attr6_list='weeklist' ?><?php $attr6_extract=false ?><?php $attr6_key='weeknr' ?><?php $attr6_value='week' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr9) ?><?php unset($attr9_class) ?><?php unset($attr9_var) ?><?php unset($attr9_escape) ?><?php $attr7_debug_info = 'a:0:{}' ?><?php $attr7 = array() ?></td><?php unset($attr7) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?><?php } ?><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr6_debug_info = 'a:4:{s:4:"list";s:8:"weeklist";s:7:"extract";s:5:"false";s:3:"key";s:6:"weeknr";s:5:"value";s:4:"week";}' ?><?php $attr6 = array('list'=>'weeklist','extract'=>false,'key'=>'weeknr','value'=>'week') ?><?php $attr6_list='weeklist' ?><?php $attr6_extract=false ?><?php $attr6_key='weeknr' ?><?php $attr6_value='week' ?><?php
 	$attr6_list_tmp_key   = $attr6_key;
 	$attr6_list_tmp_value = $attr6_value;
 	$attr6_list_extract   = $attr6_extract;
@@ -1170,7 +1178,7 @@ if (isset($attr9_elementtype)) {
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr8_rowspan) )
 		$attr8['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr8 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr8) ?><?php unset($attr8_width) ?><?php $attr9_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:10:"var:weeknr";s:6:"escape";s:4:"true";}' ?><?php $attr9 = array('class'=>'text','text'=>$weeknr,'escape'=>true) ?><?php $attr9_class='text' ?><?php $attr9_text=$weeknr ?><?php $attr9_escape=true ?><?php
+?><td <?php foreach( $attr8 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr8) ?><?php unset($attr8_width) ?><?php $attr9_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:6:"weeknr";s:6:"escape";s:4:"true";}' ?><?php $attr9 = array('class'=>'text','var'=>'weeknr','escape'=>true) ?><?php $attr9_class='text' ?><?php $attr9_var='weeknr' ?><?php $attr9_escape=true ?><?php
 	if	( isset($attr9_prefix)&& isset($attr9_key))
 		$attr9_key = $attr9_prefix.$attr9_key;
 	if	( isset($attr9_suffix)&& isset($attr9_key))
@@ -1235,7 +1243,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr9) ?><?php unset($attr9_class) ?><?php unset($attr9_text) ?><?php unset($attr9_escape) ?><?php $attr7_debug_info = 'a:0:{}' ?><?php $attr7 = array() ?></td><?php unset($attr7) ?><?php $attr8_debug_info = 'a:4:{s:4:"list";s:4:"week";s:7:"extract";s:4:"true";s:3:"key";s:8:"list_key";s:5:"value";s:10:"list_value";}' ?><?php $attr8 = array('list'=>'week','extract'=>true,'key'=>'list_key','value'=>'list_value') ?><?php $attr8_list='week' ?><?php $attr8_extract=true ?><?php $attr8_key='list_key' ?><?php $attr8_value='list_value' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr9) ?><?php unset($attr9_class) ?><?php unset($attr9_var) ?><?php unset($attr9_escape) ?><?php $attr7_debug_info = 'a:0:{}' ?><?php $attr7 = array() ?></td><?php unset($attr7) ?><?php $attr8_debug_info = 'a:4:{s:4:"list";s:4:"week";s:7:"extract";s:4:"true";s:3:"key";s:8:"list_key";s:5:"value";s:10:"list_value";}' ?><?php $attr8 = array('list'=>'week','extract'=>true,'key'=>'list_key','value'=>'list_value') ?><?php $attr8_list='week' ?><?php $attr8_extract=true ?><?php $attr8_key='list_key' ?><?php $attr8_value='list_value' ?><?php
 	$attr8_list_tmp_key   = $attr8_key;
 	$attr8_list_tmp_value = $attr8_value;
 	$attr8_list_extract   = $attr8_extract;
@@ -1391,7 +1399,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr11) ?><?php unset($attr11_class) ?><?php unset($attr11_raw) ?><?php unset($attr11_escape) ?><?php $attr11_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:6:"var:nr";s:6:"escape";s:4:"true";}' ?><?php $attr11 = array('class'=>'text','text'=>$nr,'escape'=>true) ?><?php $attr11_class='text' ?><?php $attr11_text=$nr ?><?php $attr11_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr11) ?><?php unset($attr11_class) ?><?php unset($attr11_raw) ?><?php unset($attr11_escape) ?><?php $attr11_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:2:"nr";s:6:"escape";s:4:"true";}' ?><?php $attr11 = array('class'=>'text','var'=>'nr','escape'=>true) ?><?php $attr11_class='text' ?><?php $attr11_var='nr' ?><?php $attr11_escape=true ?><?php
 	if	( isset($attr11_prefix)&& isset($attr11_key))
 		$attr11_key = $attr11_prefix.$attr11_key;
 	if	( isset($attr11_suffix)&& isset($attr11_key))
@@ -1456,7 +1464,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr11) ?><?php unset($attr11_class) ?><?php unset($attr11_text) ?><?php unset($attr11_escape) ?><?php $attr11_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:2:"__";s:6:"escape";s:4:"true";}' ?><?php $attr11 = array('class'=>'text','raw'=>'__','escape'=>true) ?><?php $attr11_class='text' ?><?php $attr11_raw='__' ?><?php $attr11_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr11) ?><?php unset($attr11_class) ?><?php unset($attr11_var) ?><?php unset($attr11_escape) ?><?php $attr11_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:2:"__";s:6:"escape";s:4:"true";}' ?><?php $attr11 = array('class'=>'text','raw'=>'__','escape'=>true) ?><?php $attr11_class='text' ?><?php $attr11_raw='__' ?><?php $attr11_escape=true ?><?php
 	if	( isset($attr11_prefix)&& isset($attr11_key))
 		$attr11_key = $attr11_prefix.$attr11_key;
 	if	( isset($attr11_suffix)&& isset($attr11_key))
@@ -1602,7 +1610,7 @@ if (isset($attr9_elementtype)) {
 		$tmp_url = $attr11_url;
 	else
 		$tmp_url = Html::url($attr11_action,$attr11_subaction,!empty($attr11_id)?$attr11_id:$this->getRequestId(),$params);
-?><a href="<?php echo $tmp_url ?>" class="<?php echo $attr11_class ?>" target="<?php echo $attr11_target ?>"<?php if (isset($attr11_accesskey)) echo ' accesskey="'.$attr11_accesskey.'"' ?>  title="<?php echo encodeHtml($attr11_title) ?>"><?php unset($attr11) ?><?php unset($attr11_title) ?><?php unset($attr11_target) ?><?php unset($attr11_url) ?><?php unset($attr11_class) ?><?php $attr12_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:2:"__";s:6:"escape";s:4:"true";}' ?><?php $attr12 = array('class'=>'text','raw'=>'__','escape'=>true) ?><?php $attr12_class='text' ?><?php $attr12_raw='__' ?><?php $attr12_escape=true ?><?php
+?><a<?php if (isset($attr11_name)) echo ' name="'.$attr11_name.'"'; else echo ' href="'.$tmp_url.($attr11_anchor?'#'.$attr11_anchor:'').'"' ?> class="<?php echo $attr11_class ?>" target="<?php echo $attr11_target ?>"<?php if (isset($attr11_accesskey)) echo ' accesskey="'.$attr11_accesskey.'"' ?>  title="<?php echo encodeHtml($attr11_title) ?>"><?php unset($attr11) ?><?php unset($attr11_title) ?><?php unset($attr11_target) ?><?php unset($attr11_url) ?><?php unset($attr11_class) ?><?php $attr12_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:2:"__";s:6:"escape";s:4:"true";}' ?><?php $attr12 = array('class'=>'text','raw'=>'__','escape'=>true) ?><?php $attr12_class='text' ?><?php $attr12_raw='__' ?><?php $attr12_escape=true ?><?php
 	if	( isset($attr12_prefix)&& isset($attr12_key))
 		$attr12_key = $attr12_prefix.$attr12_key;
 	if	( isset($attr12_suffix)&& isset($attr12_key))
@@ -1667,7 +1675,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr12) ?><?php unset($attr12_class) ?><?php unset($attr12_raw) ?><?php unset($attr12_escape) ?><?php $attr12_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:6:"var:nr";s:6:"escape";s:4:"true";}' ?><?php $attr12 = array('class'=>'text','text'=>$nr,'escape'=>true) ?><?php $attr12_class='text' ?><?php $attr12_text=$nr ?><?php $attr12_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr12) ?><?php unset($attr12_class) ?><?php unset($attr12_raw) ?><?php unset($attr12_escape) ?><?php $attr12_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:2:"nr";s:6:"escape";s:4:"true";}' ?><?php $attr12 = array('class'=>'text','var'=>'nr','escape'=>true) ?><?php $attr12_class='text' ?><?php $attr12_var='nr' ?><?php $attr12_escape=true ?><?php
 	if	( isset($attr12_prefix)&& isset($attr12_key))
 		$attr12_key = $attr12_prefix.$attr12_key;
 	if	( isset($attr12_suffix)&& isset($attr12_key))
@@ -1732,7 +1740,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr12) ?><?php unset($attr12_class) ?><?php unset($attr12_text) ?><?php unset($attr12_escape) ?><?php $attr12_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:2:"__";s:6:"escape";s:4:"true";}' ?><?php $attr12 = array('class'=>'text','raw'=>'__','escape'=>true) ?><?php $attr12_class='text' ?><?php $attr12_raw='__' ?><?php $attr12_escape=true ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr12) ?><?php unset($attr12_class) ?><?php unset($attr12_var) ?><?php unset($attr12_escape) ?><?php $attr12_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"raw";s:2:"__";s:6:"escape";s:4:"true";}' ?><?php $attr12 = array('class'=>'text','raw'=>'__','escape'=>true) ?><?php $attr12_class='text' ?><?php $attr12_raw='__' ?><?php $attr12_escape=true ?><?php
 	if	( isset($attr12_prefix)&& isset($attr12_key))
 		$attr12_key = $attr12_prefix.$attr12_key;
 	if	( isset($attr12_suffix)&& isset($attr12_key))
@@ -1944,7 +1952,7 @@ if (isset($attr9_elementtype)) {
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr7_rowspan) )
 		$attr7['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_colspan) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:12:"message:date";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','text'=>lang('date'),'escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_text=lang('date') ?><?php $attr8_escape=true ?><?php
+?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_colspan) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"key";s:4:"date";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','key'=>'date','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_key='date' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -2009,7 +2017,7 @@ if (isset($attr9_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_text) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr7_debug_info = 'a:2:{s:5:"class";s:2:"fx";s:7:"colspan";s:1:"5";}' ?><?php $attr7 = array('class'=>'fx','colspan'=>'5') ?><?php $attr7_class='fx' ?><?php $attr7_colspan='5' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_key) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr7_debug_info = 'a:2:{s:5:"class";s:2:"fx";s:7:"colspan";s:1:"5";}' ?><?php $attr7 = array('class'=>'fx','colspan'=>'5') ?><?php $attr7_class='fx' ?><?php $attr7_colspan='5' ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -2312,7 +2320,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr7_rowspan) )
 		$attr7['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_colspan) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:17:"message:date_time";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','text'=>lang('date_time'),'escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_text=lang('date_time') ?><?php $attr8_escape=true ?><?php
+?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_class) ?><?php unset($attr7_colspan) ?><?php $attr8_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"key";s:9:"date_time";s:6:"escape";s:4:"true";}' ?><?php $attr8 = array('class'=>'text','key'=>'date_time','escape'=>true) ?><?php $attr8_class='text' ?><?php $attr8_key='date_time' ?><?php $attr8_escape=true ?><?php
 	if	( isset($attr8_prefix)&& isset($attr8_key))
 		$attr8_key = $attr8_prefix.$attr8_key;
 	if	( isset($attr8_suffix)&& isset($attr8_key))
@@ -2377,7 +2385,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_text) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr7_debug_info = 'a:2:{s:5:"class";s:2:"fx";s:7:"colspan";s:1:"5";}' ?><?php $attr7 = array('class'=>'fx','colspan'=>'5') ?><?php $attr7_class='fx' ?><?php $attr7_colspan='5' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr8) ?><?php unset($attr8_class) ?><?php unset($attr8_key) ?><?php unset($attr8_escape) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr7_debug_info = 'a:2:{s:5:"class";s:2:"fx";s:7:"colspan";s:1:"5";}' ?><?php $attr7 = array('class'=>'fx','colspan'=>'5') ?><?php $attr7_class='fx' ?><?php $attr7_colspan='5' ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -2744,7 +2752,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 ?><td <?php foreach( $attr6 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr6) ?><?php unset($attr6_class) ?><?php unset($attr6_colspan) ?><?php $attr7_debug_info = 'a:8:{s:5:"class";s:4:"text";s:7:"default";s:0:"";s:4:"type";s:4:"text";s:4:"name";s:4:"text";s:4:"size";s:2:"50";s:9:"maxlength";s:3:"255";s:8:"onchange";s:0:"";s:8:"readonly";s:5:"false";}' ?><?php $attr7 = array('class'=>'text','default'=>'','type'=>'text','name'=>'text','size'=>'50','maxlength'=>'255','onchange'=>'','readonly'=>false) ?><?php $attr7_class='text' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='text' ?><?php $attr7_size='50' ?><?php $attr7_maxlength='255' ?><?php $attr7_onchange='' ?><?php $attr7_readonly=false ?><?php if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr7_readonly=true;
 	  if ($attr7_readonly && empty($$attr7_name)) $$attr7_name = '- '.lang('EMPTY').' -';
       if(!isset($attr7_default)) $attr7_default='';
-?><?php if (!$attr7_readonly) {
+?><?php if (!$attr7_readonly || $attr7_type=='hidden') {
 ?><input<?php if ($attr7_readonly) echo ' disabled="true"' ?> id="id_<?php echo $attr7_name ?><?php if ($attr7_readonly) echo '_disabled' ?>" name="<?php echo $attr7_name ?><?php if ($attr7_readonly) echo '_disabled' ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" <?php if (in_array($attr7_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
 if	($attr7_readonly) {
 ?><input type="hidden" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" /><?php
@@ -3803,7 +3811,7 @@ else
 ?><input type="hidden" name="<?php echo $attr7_name ?>" value="<?php echo $attr7_tmp_value ?>" /><?php unset($attr7) ?><?php unset($attr7_name) ?><?php unset($attr7_default) ?><?php $attr7_debug_info = 'a:8:{s:5:"class";s:0:"";s:7:"default";s:0:"";s:4:"type";s:4:"text";s:4:"name";s:6:"number";s:4:"size";s:2:"15";s:9:"maxlength";s:2:"20";s:8:"onchange";s:0:"";s:8:"readonly";s:5:"false";}' ?><?php $attr7 = array('class'=>'','default'=>'','type'=>'text','name'=>'number','size'=>'15','maxlength'=>'20','onchange'=>'','readonly'=>false) ?><?php $attr7_class='' ?><?php $attr7_default='' ?><?php $attr7_type='text' ?><?php $attr7_name='number' ?><?php $attr7_size='15' ?><?php $attr7_maxlength='20' ?><?php $attr7_onchange='' ?><?php $attr7_readonly=false ?><?php if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr7_readonly=true;
 	  if ($attr7_readonly && empty($$attr7_name)) $$attr7_name = '- '.lang('EMPTY').' -';
       if(!isset($attr7_default)) $attr7_default='';
-?><?php if (!$attr7_readonly) {
+?><?php if (!$attr7_readonly || $attr7_type=='hidden') {
 ?><input<?php if ($attr7_readonly) echo ' disabled="true"' ?> id="id_<?php echo $attr7_name ?><?php if ($attr7_readonly) echo '_disabled' ?>" name="<?php echo $attr7_name ?><?php if ($attr7_readonly) echo '_disabled' ?>" type="<?php echo $attr7_type ?>" size="<?php echo $attr7_size ?>" maxlength="<?php echo $attr7_maxlength ?>" class="<?php echo $attr7_class ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" <?php if (in_array($attr7_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
 if	($attr7_readonly) {
 ?><input type="hidden" id="id_<?php echo $attr7_name ?>" name="<?php echo $attr7_name ?>" value="<?php echo isset($$attr7_name)?$$attr7_name:$attr7_default ?>" /><?php
@@ -4091,7 +4099,7 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr7_rowspan) )
 		$attr7['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_colspan) ?><?php $attr8_debug_info = 'a:1:{s:5:"title";s:15:"message:options";}' ?><?php $attr8 = array('title'=>lang('options')) ?><?php $attr8_title=lang('options') ?><fieldset><?php if(isset($attr8_title)) { ?><legend><?php echo $attr8_title ?></legend><?php } ?><?php unset($attr8) ?><?php unset($attr8_title) ?><?php $attr7_debug_info = 'a:0:{}' ?><?php $attr7 = array() ?></fieldset><?php unset($attr7) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php } ?><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:7:"present";s:7:"release";}' ?><?php $attr4 = array('present'=>'release') ?><?php $attr4_present='release' ?><?php 
+?><td <?php foreach( $attr7 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr7) ?><?php unset($attr7_colspan) ?><?php $attr8_debug_info = 'a:1:{s:5:"title";s:15:"message:options";}' ?><?php $attr8 = array('title'=>lang('options')) ?><?php $attr8_title=lang('options') ?><fieldset><?php if(isset($attr8_title)) { ?><legend><?php echo encodeHtml($attr8_title) ?></legend><?php } ?><?php unset($attr8) ?><?php unset($attr8_title) ?><?php $attr7_debug_info = 'a:0:{}' ?><?php $attr7 = array() ?></fieldset><?php unset($attr7) ?><?php $attr6_debug_info = 'a:0:{}' ?><?php $attr6 = array() ?></td><?php unset($attr6) ?><?php $attr5_debug_info = 'a:0:{}' ?><?php $attr5 = array() ?></tr><?php unset($attr5) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php } ?><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php } ?><?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:7:"present";s:7:"release";}' ?><?php $attr4 = array('present'=>'release') ?><?php $attr4_present='release' ?><?php 
 	if	( isset($attr4_true) )
 	{
 		if	(gettype($attr4_true) === '' && gettype($attr4_true) === '1')
