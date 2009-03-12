@@ -112,7 +112,7 @@ class Html
 			$controller_file_name = OR_CONTROLLER_FILE.'.'.PHP_EXT;
 
 		if	( isset($params['oid']) )
-			$prefix = dirname($_SERVER['SCRIPT_NAME']).'/';
+			$prefix = FileUtils::slashify(dirname($_SERVER['SCRIPT_NAME']));
 		else
 			$prefix = './';
 		
