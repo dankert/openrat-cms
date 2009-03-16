@@ -55,7 +55,7 @@ class Ftp
 		$conf_ftp = $conf['publish']['ftp'];
 		$ftp = parse_url( $this->url );
 		
-		// Die projektspezifischen Werte gewinnen bei Überschneidungen mit den Default-Werten
+		// Die projektspezifischen Werte gewinnen bei ï¿½berschneidungen mit den Default-Werten
 		$ftp = array_merge($conf_ftp,$ftp);
 	
 		// Nur FTP und FTPS (seit PHP 4.3) erlaubt
@@ -68,13 +68,13 @@ class Ftp
 		}
 		
 		if	( function_exists('ftp_ssl_connect') && $ftp['scheme'] == 'ftps' )
-			$this->verb = ftp_ssl_connect( $ftp['host'],$ftp['port'] );
+			$this->verb = @ftp_ssl_connect( $ftp['host'],$ftp['port'] );
 		else
-			$this->verb = ftp_connect( $ftp['host'],$ftp['port'] );
+			$this->verb = @ftp_connect( $ftp['host'],$ftp['port'] );
 
 		if   ( !$this->verb )
 		{
-			$this->log[] = 'Cannot connect to '.$ftp['scheme'].'-server '.$ftp['host'].':'.$ftp['port'];
+			$this->log[] = 'Cannot connect to '.$ftp['scheme'].'-server: '.$ftp['host'].':'.$ftp['port'];
 			$this->ok = false;
 			
 			Logger::error('Cannot connect to '.$ftp['host'].':'.$ftp['port']);
@@ -206,8 +206,8 @@ class Ftp
 	
 	
 	/**
-	 * Schließen der FTP-Verbindung.<br>
-	 * Sollte unbedingt aufgerufen werden, damit keine unnötigen Sockets aufbleiben.
+	 * Schlieï¿½en der FTP-Verbindung.<br>
+	 * Sollte unbedingt aufgerufen werden, damit keine unnï¿½tigen Sockets aufbleiben.
 	 */
 	function close()
 	{
@@ -216,8 +216,8 @@ class Ftp
 			
 		if	( ! @ftp_quit( $this->verb ) )
 		{
-			// Das Schließen der Verbindung hat nicht funktioniert.
-			// Eigentlich könnten wir das ignorieren, aber wir sind anständig und melden eine Fehler.
+			// Das Schlieï¿½en der Verbindung hat nicht funktioniert.
+			// Eigentlich kï¿½nnten wir das ignorieren, aber wir sind anstï¿½ndig und melden eine Fehler.
 			$this->log[] = 'failed to close connection';
 			$this->ok = false;
 			return;
