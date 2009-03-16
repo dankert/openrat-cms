@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.4  2009-03-16 23:30:02  dankert
+// Unnötigen Aufruf von pathToObject entfernt.
+//
 // Revision 1.3  2007-11-17 02:19:29  dankert
 // Erg?nzung der Version (Default: 0.91), Korrektur, Anpassung an neue API.
 //
@@ -107,11 +110,10 @@ class RSSCreate extends Dynamic
 				$item['title'      ] = $p->name;
 				$item['description'] = $p->desc;
 				$item['pubDate'    ] = $p->lastchangeDate;
-				$item['link'       ] = $this->pathToObject($id);
 				if	( empty($this->feed_url) )
 					$item['link'       ] = $this->pathToObject($id);
 				else
-					$item['link'       ] = FileUtils::slashify($this->feed_url).$p->full_filename();
+					$item['link'       ] = $this->feed_url;
 				
 				$feed['items'][] = $item;
 			}
