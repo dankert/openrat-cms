@@ -9,6 +9,13 @@
  */
 class Preferences
 {
+	/**
+	 * Liest die Konfigurationsdateien im angegebenen Ordner.
+	 * 
+	 * @param $dir Verzeichnis, welche gelesen wird. Optional. Falls nicht gesetzt, wird
+	 * das Standard-Konfigurationsverzeichnis verwendet. 
+	 * @return Array
+	 */
 	function load( $dir='' )
 	{
 		if	( !defined('QUOTE') )
@@ -31,26 +38,19 @@ class Preferences
 			exit;
 		}
 		
-		if	( $dh = opendir($dir) )
+		$dateien = FileUtils::readDir($dir);
+		
+		foreach( $dateien as $datei )
 		{
-			while( ($verzEintrag = readdir($dh)) !== false )
+			$filename = $dir.$datei;
+			
+			if	( is_file($filename) && eregi('\.(ini.*|conf)$',$datei) )
 			{
-				$filename = $dir.$verzEintrag;
-				
-				if	( is_file($filename) && eregi('\.(ini.*|conf)$',$verzEintrag) )
-				{
-					$nameBestandteile = explode('.',$verzEintrag);
-					
-				    $values[$nameBestandteile[0]] = parse_ini_file( $filename,true );
-				}
-	        }
-	        closedir($dh);
+				$nameBestandteile = explode('.',$datei);
+			    $values[$nameBestandteile[0]] = parse_ini_file( $filename,true );
+			}
 	    }
-	    else
-	    {
-			die('unable to open directory: '.$dir);
-	    }
-
+	    
 		ksort($values);
 
 		return $values;
