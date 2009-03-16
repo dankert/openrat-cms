@@ -15,13 +15,13 @@ page
 					radio name:type value:empty
 				cell
 					label for:type_empty
-						text text:message:empty
+						text key:empty
 			row
 				cell
 					radio name:type value:copy
 				cell
 					label for:type_copy
-						text text:message:copy
+						text key:copy
 				cell
 					selectbox name:templateid list:templates
 			row
@@ -29,7 +29,7 @@ page
 					radio name:type value:example
 				cell
 					label for:type_example
-						text text:message:example
+						text key:example
 				cell
 					selectbox name:example list:examples
 			row
