@@ -497,6 +497,17 @@ class PageelementAction extends Action
 		 */
 		function editlist()
 		{
+			$this->editinsert();
+		}
+		
+		
+		
+		/**
+		 * Einf�gen-Element.
+		 *
+		 */
+		function editinsert()
+		{
 			// Auswahl ueber alle Elementtypen
 			$objects = array();
 			foreach( Folder::getAllFolders() as $id )
@@ -517,8 +528,6 @@ class PageelementAction extends Action
 			if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 			else	$this->setTemplateVar('old_pageaction','show'                            );
-
-			$this->forward('pageelement_edit_'.$this->value->element->type);
 		}
 
 
@@ -1091,13 +1100,24 @@ class PageelementAction extends Action
 
 
 
-
 		/**
 		 * Element speichern
 		 *
 		 * Der Inhalt eines Elementes wird abgespeichert
 		 */
 		function savelist()
+		{
+			$this->saveinsert();
+		}
+		
+
+		
+		/**
+		 * Element speichern
+		 *
+		 * Der Inhalt eines Elementes wird abgespeichert
+		 */
+		function saveinsert()
 		{
 			$value = new Value();
 			$language = Session::getProjectLanguage();

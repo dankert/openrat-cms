@@ -179,6 +179,12 @@ page
 						selectbox list:objects name:linkobjectid
 						focus field:linkobjectid
 
+			if value:var:type equals:insert
+				row
+					cell colspan:2
+						selectbox list:objects name:linkobjectid
+						focus field:linkobjectid
+
 			if value:var:type equals:number
 				row
 					cell colspan:2
