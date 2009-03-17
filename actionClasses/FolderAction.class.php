@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.50  2009-03-17 01:43:19  dankert
+// Auch Bilder (wieder) im gleichen Frame anzeigen.
+//
 // Revision 1.49  2009-03-02 23:07:11  dankert
 // Bugfix: Sortieren nach Typ
 //
@@ -1071,7 +1074,8 @@ class FolderAction extends ObjectAction
 					{
 						$list[$id]['icon' ] = 'image';
 						$list[$id]['class'] = 'image';
-						$list[$id]['url' ] = Html::url('file','show',$id);					}
+						//$list[$id]['url' ] = Html::url('file','show',$id) nur sinnvoll bei Lightbox-Anzeige
+					}
 //					if	( substr($file->mimeType(),0,5) == 'text/' )
 //						$list[$id]['icon'] = 'text';
 				}
