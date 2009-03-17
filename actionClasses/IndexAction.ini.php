@@ -14,11 +14,9 @@ guest=true
 
 [language]
 goto=show
-guest=true
 
 [model]
 goto=show
-guest=true
 
 [applications]
 menu=menu

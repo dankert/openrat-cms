@@ -1130,7 +1130,7 @@ class IndexAction extends Action
 				}
 	
 				if	( $elementid > 0 )
-					$this->setTemplateVar( 'frame_src_main',Html::url('main','pageelement',$object->objectid,array('elementid'=>$elementid,'targetSubAction'=>'advanced')) );
+					$this->setTemplateVar( 'frame_src_main',Html::url('main','pageelement',$object->objectid,array('elementid'=>$elementid,'targetSubAction'=>'edit')) );
 				else
 					$this->setTemplateVar( 'frame_src_main',Html::url('main',$type,$object->objectid) );
 			}
