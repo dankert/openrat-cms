@@ -8,8 +8,11 @@ conditional_get=true
 
 
 ; Pages and files are cached in a temporary directory.
-; Leave this to "true", as it will improve the performance.
-enable_cache=true
+; 'false' means generate each page again and again
+; 'true'  will cache a page's content. This will improve
+;         the performance, but has some side effects,
+;         f.e. no dynamic content will be updated.
+enable_cache=false
 
 
 
