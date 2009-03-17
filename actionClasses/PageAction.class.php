@@ -602,9 +602,11 @@ class PageAction extends ObjectAction
 		$src = $this->page->generate();
 		
 		// HTML Highlighting
-		$src = preg_replace( '|<(.+)( .+)?>|Us'       , '<strong>&lt;$1</strong>$2<strong>&gt;</strong>', $src);
-		$src = preg_replace( '|([a-zA-Z]+)="(.+)"|Us' , '<em>$1</em>=<var>"$2"</var>'                   , $src);
-		//$var['src'] = htmlentities($src);
+		
+		//$src = preg_replace( '|<(.+)( .+)?'.'>|Us'       , '<strong>&lt;$1</strong>$2<strong>&gt;</strong>', $src);
+		//$src = preg_replace( '|([a-zA-Z]+)="(.+)"|Us' , '<em>$1</em>=<var>"$2"</var>'                   , $src);
+		$src = htmlentities($src);
+		
 		$this->setTemplateVar('src',$src);
 	}
 
@@ -726,7 +728,6 @@ class PageAction extends ObjectAction
 	 */
 	function pub()
 	{
-		$this->forward('page_pub');
 	}
 
 
@@ -741,6 +742,7 @@ class PageAction extends ObjectAction
 		if	( !$this->page->hasRight( ACL_PUBLISH ) )
 			die( 'no right for publish' );
 
+		$this->page->public = true;
 		$this->page->publish();
 		$this->page->publish->close();
 
