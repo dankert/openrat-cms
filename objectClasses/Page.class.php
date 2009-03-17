@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.30  2009-03-17 01:39:43  dankert
+// Funktionsfähigkeit bei enable_cache=false
+//
 // Revision 1.29  2009-03-17 01:27:29  dankert
 // Überarbeitung der temporären Dateinamen.
 //
@@ -737,19 +740,12 @@ class Page extends Object
 	function generate()
 	{
 		global $conf;
-//		Html::debug($conf);
+		
 		if	( $conf['cache']['enable_cache'] && is_file($this->tmpfile() ))
 		{
 			$this->value = implode('',file($this->tmpfile()));
 			return $this->value;
 		}
-
-		global $conf,
-		       $conf_php,
-		       $db,
-			   $conf_tmpdir,
-			   $sess_vars,
-			   $SESS;
 	
 		$this->generate_elements();
 
@@ -761,7 +757,6 @@ class Page extends Object
 		$src = $this->template->src;
 
 		// Ersetzen der Platzhalter durch die Element-Inhalte
-		//
 		
 		foreach( $this->values as $id=>$value )
 		{

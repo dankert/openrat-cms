@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.31  2009-03-17 01:39:43  dankert
+// Funktionsfähigkeit bei enable_cache=false
+//
 // Revision 1.30  2009-03-17 01:27:28  dankert
 // Überarbeitung der temporären Dateinamen.
 //
@@ -1151,22 +1154,22 @@ class Object
 	{
 		global $conf;
 		
-		if	( $conf['cache']['enable_cache'] )
-		{
+//		if	( $conf['cache']['enable_cache'] )
+//		{
 			$filename = Object::getTempDir().'/openrat';
 			foreach( $attr as $a=>$w )
 				$filename .= '_'.$a.$w;
 				
 			$filename .= '.tmp';
 			return $filename;
-		}
-		else
-		{
-			$tmpdir = @$conf['cache']['tmp_dir'];
-			$tmpfile = tempnam( $tmpdir,'openrat_tmp' );
-			
-			return $tmpfile;
-		}
+//		}
+//		else
+//		{
+//			$tmpdir = @$conf['cache']['tmp_dir'];
+//			$tmpfile = tempnam( $tmpdir,'openrat_tmp' );
+//			
+//			return $tmpfile;
+//		}
 	}
 
 

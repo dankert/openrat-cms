@@ -430,7 +430,7 @@ SQL
 		$inhalt = '';
 
 		global $conf;
-//		Html::debug($conf);
+
 		if	( $conf['cache']['enable_cache'] && is_file( $this->tmpfile() ))
 		{
 			$this->value = implode('',file($this->tmpfile() )); // from cache.
@@ -456,7 +456,6 @@ SQL
 			return;
 		}
 		
-//		Html::debug( $this->element->type );	
 		switch( $this->element->type )
 		{
 			case 'list'  : // nur wg. R�ckw�rtskompabilit�t.
