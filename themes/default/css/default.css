@@ -353,6 +353,7 @@ div.cancel
 	color:#FFFFFF;
 	background-color:#7B9CBD;
 	width:110px;
+	font-weight: bold;
 }
 
 input.reset  { color:black; background-color:#cac2a6; text-align:right; }
