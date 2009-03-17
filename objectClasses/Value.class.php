@@ -50,7 +50,7 @@ class Value
 	var $pageid;
 	
 	/**
-	 * Kennzeichen, ob der Inhalt mit dem Inhalt einer anderern Seite verknüpft wird.
+	 * Kennzeichen, ob der Inhalt mit dem Inhalt einer anderern Seite verknï¿½pft wird.
 	 * @type Object
 	 */
 	var $isLink = false;
@@ -437,7 +437,7 @@ SQL
 			return;
 		}
 
-		// Inhalt ist mit anderer Seite verknüpft.
+		// Inhalt ist mit anderer Seite verknï¿½pft.
 		if	( in_array($this->element->type,array('text','longtext','date','number')) && intval($this->linkToObjectId) != 0 && !$this->isLink )
 		{
 			$p = new Page( $this->linkToObjectId );
@@ -459,7 +459,7 @@ SQL
 //		Html::debug( $this->element->type );	
 		switch( $this->element->type )
 		{
-			case 'list'  : // nur wg. Rückwärtskompabilität.
+			case 'list'  : // nur wg. Rï¿½ckwï¿½rtskompabilitï¿½t.
 			case 'insert':
 
 				$objectid = $this->linkToObjectId;
@@ -475,9 +475,6 @@ SQL
 				
 				if	( $object->isFolder )
 				{
-					$this->page->up_path();
-					
-		
 					if   ( $this->simple )
 					{
 						$f = new Folder( $objectid );
@@ -760,7 +757,7 @@ SQL
 				if   ( !$this->element->html && !$this->element->wiki && $this->page->mimeType()=='text/html')
 					$inhalt = Text::encodeHtml( $inhalt );
 
-				// Wenn HTML nicht erlaubt ist, dann Sonderzeichen in HTML übersetzen
+				// Wenn HTML nicht erlaubt ist, dann Sonderzeichen in HTML ï¿½bersetzen
 				if   ( !$this->element->wiki && !$this->element->wiki && $this->page->mimeType()=='text/html' )
 					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
 
@@ -901,7 +898,7 @@ SQL
 					             'file not found:'.$fileName);
 				}
 
-				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML übersetzen
+				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML ï¿½bersetzen
 				if   ( $this->page->mimeType()=='text/html' )
 					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
 				
@@ -918,7 +915,7 @@ SQL
 				{
 					case 'date_published':
 						// START_TIME wird zu Beginn im Controller gesetzt.
-						// So erhält jede Datei das gleiche Veröffentlichungsdatum.
+						// So erhï¿½lt jede Datei das gleiche Verï¿½ffentlichungsdatum.
 						$inhalt = date( $this->element->dateformat,START_TIME );
 						break;
 						
@@ -1096,7 +1093,7 @@ SQL
 				if	( !$raw && $this->page->mimeType()=='text/html' )
 					$inhalt = Text::encodeHtml( $inhalt );
 
-				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML übersetzen
+				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML ï¿½bersetzen
 				if   ( $this->page->mimeType()=='text/html' )
 					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
 					
@@ -1174,7 +1171,7 @@ SQL
 	
 
 	/**
-	  * Es wird das Objekt ermittelt, welches der Benutzer zuletzt geändert hat.
+	  * Es wird das Objekt ermittelt, welches der Benutzer zuletzt geï¿½ndert hat.
 	  * 
 	  * @return Integer Objekt-Id
 	  */
@@ -1199,12 +1196,17 @@ SQL
 	
 	
 	/**
-	 * Ermittelt einen temporären Dateinamen für diesen Inhalt. 
+	 * Ermittelt einen temporï¿½ren Dateinamen fï¿½r diesen Inhalt. 
 	 */
 	function tmpfile()
 	{
 		$db = db_connection();
-		$filename = Object::getTempDir().'/openrat_db'.$db->id.'_p'.$this->pageid.'_v'.$this->valueid.'_e'.$this->element->elementid.'_l'.$this->languageid.'_s'.intval($this->simple).'.tmp';
+		$filename = Object::getTempFileName( array('db'=>$db->id,
+		                                           'va'=>$this->valueid,
+		                                           'el'=>$this->element->elementid,
+		                                           'la'=>$this->languageid,
+		                                           'pu'=>intval($this->publish),
+		                                           'si'=>intval($this->simple)    ) );
 		return $filename;
 	}
 	

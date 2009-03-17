@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.30  2009-03-17 01:27:28  dankert
+// Überarbeitung der temporären Dateinamen.
+//
 // Revision 1.29  2009-03-02 21:20:02  dankert
 // Korrektur in "getTempDir()"
 //
@@ -1111,7 +1114,7 @@ class Object
 
 
 	/**
-	 * Dateinamen der temporaeren Datei bestimmen
+	 * Liefert einen Verzeichnisnamen fuer temporaere Dateien.
 	 */
 	function getTempDir()
 	{
@@ -1136,6 +1139,47 @@ class Object
 			
 		return $tmpdir;
 	}
+
+	
+	
+	/**
+	 * Liefert einen temporären Dateinamen.
+	 * @param $attr Attribute fuer den Dateinamen, um diesen eindeutig zu gestalten.
+	 * @return unknown_type
+	 */
+	function getTempFileName( $attr = array() )
+	{
+		global $conf;
+		
+		if	( $conf['cache']['enable_cache'] )
+		{
+			$filename = Object::getTempDir().'/openrat';
+			foreach( $attr as $a=>$w )
+				$filename .= '_'.$a.$w;
+				
+			$filename .= '.tmp';
+			return $filename;
+		}
+		else
+		{
+			$tmpdir = @$conf['cache']['tmp_dir'];
+			$tmpfile = tempnam( $tmpdir,'openrat_tmp' );
+			
+			return $tmpfile;
+		}
+	}
+
+
+
+	/**
+	 * Gibt ein fertiges Dateihandle fuer eine temporaere Datei zurück.
+	 * @return Resource
+	 */
+	function getTempFile()
+	{
+		return tmpfile();
+	}
+
 
 
 	/**

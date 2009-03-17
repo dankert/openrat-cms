@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.29  2009-03-17 01:27:29  dankert
+// Überarbeitung der temporären Dateinamen.
+//
 // Revision 1.28  2009-03-02 22:41:45  dankert
 // Bugfix in setTimestamp()
 //
@@ -709,7 +712,7 @@ class Page extends Object
 			
 		foreach( $elements as $elementid=>$element )
 		{
-			// neues Elementobjekt erzeugen
+			// neues Inhaltobjekt erzeugen
 			$val = new Value();
 			$val->publish = $this->public;
 			$val->element = $element;
@@ -888,7 +891,12 @@ class Page extends Object
 	function tmpfile()
 	{
 		$db = db_connection();
-		$filename = $this->getTempDir().'/openrat_db'.$db->id.'_o'.$this->objectid.'_l'.$this->languageid.'_m'.$this->modelid.'.tmp';
+		$filename = $this->getTempFileName( array('db'=>$db->id,
+		                                          'o' =>$this->objectid,
+		                                          'l' =>$this->languageid,
+		                                          'm' =>$this->modelid,
+		                                          'p' =>intval($this->public),
+		                                          's' =>intval($this->simple)   ) );
 		return $filename;
 	}
 	
