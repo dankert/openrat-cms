@@ -8,6 +8,7 @@ page class:title
 				text title:message:database var:dbname
 				text raw:_-_
 				text var:cms_title
+					
 
 			// Titel anzeigen				
 			cell class:title width:40% style::text-align:center;
@@ -21,12 +22,16 @@ page class:title
 					text raw:)
 
 			// Benutzer-Funktionen
-			cell class:title width:30% style::text-align:right;
+			cell class:title width:20% style::text-align:right;
 
-				image icon:user align:right
-				link title:message:USER_LOGOUT_DESC url:var:logout_url target:_top
-					text key:USER_LOGOUT
-				text raw:_(
 				link title:message:USER_PROFILE_DESC url:var:profile_url target:cms_main_main
+					image icon:user align:right
 					text var:userfullname
-					text raw:)
+					
+			cell class:title width:10% style::text-align:right;
+
+				link title:message:USER_LOGOUT_DESC url:var:logout_url target:_top
+					image icon:close align:right
+					text key:USER_LOGOUT
+					
+					
