@@ -1,82 +1,70 @@
 <?php 
 
+#IF-ATTR true#
 	// Wahr-Vergleich
-	if	( isset($attr_true) )
-	{
-		if	(gettype($attr_true) === '' && gettype($attr_true) === '1')
-			$exec = $$attr_true == true;
-		else
-			$exec = $attr_true == true;
-	}
-
-	// Falsch-Vergleich
-	elseif	( isset($attr_false) )
-	{
-		if	(gettype($attr_false) === '' && gettype($attr_false) === '1')
-			$exec = $$attr_false == false;
-		else
-			$exec = $attr_false == false;
-	}
-	// Inhalt-Vergleich mit Wertliste
-	elseif( isset($attr_contains) )
-		$exec = in_array($attr_value,explode(',',$attr_contains));
-				
-	// Inhalt-Vergleich
-	elseif( isset($attr_equals)&& isset($attr_value) )
-		$exec = $attr_equals == $attr_value;
-
-	// Inhalt-Vergleich
-	elseif( isset($attr_lessthan)&& isset($attr_value) )
-		$exec = intval($attr_lessthan) > intval($attr_value);
-
-	// Inhalt-Vergleich
-	elseif( isset($attr_greaterthan)&& isset($attr_value) )
-		$exec = intval($attr_greaterthan) < intval($attr_value);
-
-	// Vergleich auf leer
-	elseif	( isset($attr_empty) )
-	{
-		if	( !isset($$attr_empty) )
-			$exec = empty($attr_empty);
-		elseif	( is_array($$attr_empty) )
-			$exec = (count($$attr_empty)==0);
-		elseif	( is_bool($$attr_empty) )
-			$exec = true;
-		else
-			$exec = empty( $$attr_empty );
-	}
-
-	// Vergleich auf Vorhandensein
-	elseif	( isset($attr_present) )
-	{
-		$exec = isset($$attr_present);
-//		if	( !isset($$attr_present) )
-//			$exec = false;
-//		elseif	( is_array($$attr_present) )
-//			$exec = (count($$attr_present)>0);
-//		elseif	( is_bool($$attr_present) )
-//			$exec = $$attr_present;
-//		elseif	( is_numeric($$attr_present) )
-//			$exec = $$attr_present>=0;
-//		else
-//			$exec = true;
-	}
-
+	if	(gettype($attr_true) === '' && gettype($attr_true) === '1')
+		$attr_tmp_exec = $$attr_true == true;
 	else
-	{
-		trigger_error("error in IF, assume: FALSE");
-		$exec = false;
-	}
+		$attr_tmp_exec = $attr_true == true;
+#END-IF#
 
+#IF-ATTR false#
+	if	(gettype($attr_false) === '' && gettype($attr_false) === '1')
+		$attr_tmp_exec = $$attr_false == false;
+	else
+		$attr_tmp_exec = $attr_false == false;
+			
+#END-IF#
+
+#IF-ATTR contains#
+	// Inhalt-Vergleich mit Wertliste
+	$attr_tmp_exec = in_array($attr_value,explode(',',$attr_contains));
+#END-IF#
+
+#IF-ATTR equals#
+	$attr_tmp_exec = $attr_equals == $attr_value;
+#END-IF#
+	
+#IF-ATTR lessthan#
+	// Inhalt-Vergleich
+	$attr_tmp_exec = intval($attr_lessthan) > intval($attr_value);
+#END-IF#
+
+#IF-ATTR greaterthan#
+	$attr_tmp_exec = intval($attr_greaterthan) < intval($attr_value);
+#END-IF#
+
+	
+#IF-ATTR empty#
+	if	( !isset($$attr_empty) )
+		$attr_tmp_exec = empty($attr_empty);
+	elseif	( is_array($$attr_empty) )
+		$attr_tmp_exec = (count($$attr_empty)==0);
+	elseif	( is_bool($$attr_empty) )
+		$attr_tmp_exec = true;
+	else
+		$attr_tmp_exec = empty( $$attr_empty );
+#END-IF#
+
+		
+#IF-ATTR present#
+	$attr_tmp_exec = isset($$attr_present);
+#END-IF#
+
+	
+#IF-ATTR invert#
 	// Ergebnis umdrehen
 	// TODO: Bald ausbauen, stattdessen "not" verwenden.
 	if  ( !empty($attr_invert) )
-		$exec = !$exec;
-
-	// Ergebnis umdrehen
+		$attr_tmp_exec = !$attr_tmp_exec;
+#END-IF#
+		
+#IF-ATTR not#
+		// Ergebnis umdrehen
 	if  ( !empty($attr_not) )
-		$exec = !$exec;
-
+		$attr_tmp_exec = !$attr_tmp_exec;
+#END-IF#
+		
 	unset($attr_true);
 	unset($attr_false);
 	unset($attr_notempty);
@@ -88,9 +76,10 @@
 	unset($attr_value);
 	unset($attr_equals);
 
-	$last_exec = $exec;
+	$last_exec = $attr_tmp_exec;
 	
-	if	( $exec )
+	if	( $attr_tmp_exec )
 	{
 ?>
-/* Ignore: */ <?php } ?>
+
+/* THIS LINE WILL BE IGNORED */ <?php } ?>

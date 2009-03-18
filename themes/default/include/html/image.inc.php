@@ -1,15 +1,35 @@
 <?php
-if (isset($attr_elementtype)) {
-?><img src="<?php echo $image_dir.'icon_el_'.$attr_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
-} elseif (isset($attr_type)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
-} elseif (isset($attr_icon)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
-} elseif (isset($attr_tree)) {
-?><img src="<?php echo $image_dir.'tree_'.$attr_tree.IMG_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php
-} elseif (isset($attr_url)) {
-?><img src="<?php echo $attr_url ?>" border="0" align="<?php echo $attr_align ?>"><?php
-} elseif (isset($attr_fileext)) {
-?><img src="<?php echo $image_dir.$attr_fileext ?>" border="0" align="<?php echo $attr_align ?>"><?php
-} elseif (isset($attr_file)) {
-?><img src="<?php echo $image_dir.$attr_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr_align ?>"><?php } ?>
+
+/* #IF-ATTR elementtype# */
+	$attr_tmp_image_file = $image_dir.'icon_el_'.$attr_elementtype.IMG_ICON_EXT;
+	$attr_size           = '16x16';
+/* #END-IF# */
+
+/* #IF-ATTR type# */		
+	$attr_tmp_image_file = $image_dir.'icon_'.$attr_type.IMG_ICON_EXT;
+	$attr_size = '16x16';
+/* #END-IF# */
+	
+/* #IF-ATTR icon# */		
+	$attr_tmp_image_file = $image_dir.'icon_'.$attr_icon.IMG_ICON_EXT;
+	$attr_size = '16x16';
+/* #END-IF# */
+
+/* #IF-ATTR tree# */		
+	$attr_tmp_image_file = $image_dir.'tree_'.$attr_tree.IMG_EXT;
+	$attr_size = '18x18';
+/* #END-IF# */
+
+/* #IF-ATTR url# */			
+	$attr_tmp_image_file = $attr_url;
+/* #END-IF# */
+	
+/* #IF-ATTR fileext# */		
+	$attr_tmp_image_file = $image_dir.$attr_fileext;
+/* #END-IF# */
+	
+/* #IF-ATTR file# */		
+	$attr_tmp_image_file = $image_dir.$attr_file.IMG_ICON_EXT;
+/* #END-IF# */
+	
+?><img src="<?php echo $attr_tmp_image_file ?>" border="0"<?php if(isset($attr_align)) echo ' align="'.$attr_align.'"' ?><?php if (isset($attr_size)) { list($attr_tmp_width,$attr_tmp_height)=explode('x',$attr_size);echo ' width="'.$attr_tmp_width.'" height="'.$attr_tmp_height.'"';} ?>>
