@@ -204,12 +204,11 @@ class TemplateEngine
 	 */
 	function copyFileContents( $infile,$outFileHandler,$attr,$depth )
 	{
-		$hash = $depth;
 		global $conf;
+		$hash = $depth;
 		
 		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
 		$elFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.el.' .PHP_EXT;
-		
 		if	( !is_file($inFileName) )
 			if	( count($attr)==0 )
 				return;
@@ -222,40 +221,63 @@ class TemplateEngine
 		{
 			$values[] = "'".$attrName."'=>".$this->attributeValue($attrValue);
 		}
-//		fwrite( $outFileHandler,'<?php /* source: '.$inFileName.' - compile time: '.date('r').' */ ?'.'>');
-//		fwrite( $outFileHandler,'<?php $attr'.$hash.'_debug_info = \''.serialize($attr).'\' ?'.'>');
-		fwrite( $outFileHandler,'<?php $attr'.$hash.' = array('.implode(',',$values).') ?'.'>');
 		
+		fwrite( $outFileHandler,'<?php ');
 		foreach( $attr as $attrName=>$attrValue )
-			fwrite( $outFileHandler,'<?php $attr'.$hash.'_'.$attrName."=".$this->attributeValue($attrValue)." ?>");
-
-		$file = file( $inFileName );
+			fwrite( $outFileHandler,' $attr'.$hash.'_'.$attrName."=".$this->attributeValue($attrValue).'; ');
+		fwrite( $outFileHandler,' ?>');
+			
+		$file   = file( $inFileName );
+		$ignore = false;
+		
 		foreach( $file as $line )
 		{
-			// Leerzeichen unterdr�cken.
+			// Ignoriere Zeilen, die fuer ein nicht vorhandenes Attribut gelten.
+			if  ( strpos($line,'#IF-ATTR')!==FALSE )
+			{
+				$found = false;
+				foreach( $attr as $attrName=>$attrValue )
+					if  ( strpos($line,'#IF-ATTR '.$attrName)!==FALSE )
+						$found = true;
+				if	( ! $found )
+					$ignore = true;
+			}
+			// Nach einem IF-Block ertmal alles wieder anzeigen.
+			if  ( strpos($line,'#END-IF')!==FALSE )
+			{
+				$ignore = false;
+			}
+			
+			if  ( strpos($line,'#ELSE')!==FALSE )
+			{
+				$ignore = !$ignore;
+			}
+			
+			// Ignoriere Zeilen, die zu ignorieren sind (logisch).
+			// Dies sind Blöcke, die nur fuer ein Attribut gueltig sind, welches
+			// aber nicht gesetzt ist.
+			if	( $ignore )
+				continue;
+			
+			// Ignoriere Leerzeilen
 			if	( strlen(trim($line)) == 0)
 				continue;
-				
-			// Zeilen, die mit einem Kommentar beginnen, unterdr�cken. 
+			// Ignoriere Kommentarzeilen
 			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) )
 				continue;
-//			echo $attr.$hash;
+
+			// Die Variablen "$attr" müssen pro Ebene eindeutig sein, daher wird an den
+			// Variablennamen die Tiefe angehangen.
 			$line = str_replace('$attr','$attr'.$hash,$line);
-//			echo '<pre>';
-//			echo htmlentities($line);
-//			echo '</pre>';
-			//fwrite( $outFileHandler,rtrim($line)."\n" );
 			$indent = str_repeat(' ',2*$depth);
 			fwrite( $outFileHandler,$indent.$line );
 		}
 		
-		// Die Variablen "$attr" müssen pro Ebene eindeutig sein, daher wird an den
-		// Variablennamen die Tiefe angehangen.
-		fwrite( $outFileHandler,'<?php unset($attr'.$hash.') ?>');
-		
 		// Variablen "$attr" entfernen.
+		fwrite( $outFileHandler,'<?php ');
 		foreach( $attr as $attrName=>$attrValue )
-			fwrite( $outFileHandler,'<?php unset($attr'.$hash.'_'.$attrName.') ?>');
+			fwrite( $outFileHandler,'unset($attr'.$hash.'_'.$attrName.');');
+		fwrite( $outFileHandler,' ?>');
 
 		if	( is_file($elFileName) )
 		{
@@ -273,7 +295,6 @@ class TemplateEngine
 	 */
 	function checkAttributes( $cmd,$attr )
 	{
-//		Html::debug($cmd,'cmd');
 		global $conf;
 		$elements = parse_ini_file( OR_THEMES_DIR.$conf['interface']['theme'].'/include/elements.ini.'.PHP_EXT);
 
@@ -308,7 +329,6 @@ class TemplateEngine
 
 			unset( $attr[$a] ); // Damit am Ende das Urprungsarray leer wird.
 		}
-//		Html::debug($checkedAttr,'cattr');
 		
 		if	( count($attr) > 0 )
 		{
