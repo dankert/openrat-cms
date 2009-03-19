@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.32  2009-03-19 04:36:12  dankert
+// Beim Anlegen eines Objektes sofort Standard-Rechte vergeben.
+//
 // Revision 1.31  2009-03-17 01:39:43  dankert
 // Funktionsfähigkeit bei enable_cache=false
 //
@@ -251,6 +254,7 @@ class Object
 	 */
 	var $tmpfile;
 
+	var $aclMask = null;
 
 	/** <strong>Konstruktor</strong>
 	  * F?llen des neuen Objektes mit Init-Werten
@@ -335,8 +339,65 @@ class Object
 	 */
 	function hasRight( $type )
 	{
-		$user = Session::getUser();
-		return $user->hasRight( $this->objectid,$type ) || (isset($this->parentid)&&$user->hasRight($this->parentid,$type)&&$user->hasRight($this->parentid,ACL_TRANSMIT));
+//		$user = Session::getUser();
+//		return $user->hasRight( $this->objectid,$type ) || (isset($this->parentid)&&$user->hasRight($this->parentid,$type)&&$user->hasRight($this->parentid,ACL_TRANSMIT));
+		
+		if	( is_null($this->aclMask) )
+		{
+			$this->aclMask = 0;
+			
+			$project  = Session::getProject();
+			$language = Session::getProjectLanguage();
+			$user     = Session::getUser();
+			
+			if	( $user->isAdmin && !$conf['security']['readonly'] )
+				$this->aclMask = ACL_READ +
+				                 ACL_WRITE +
+				                 ACL_PROP +
+				                 ACL_DELETE +
+				                 ACL_RELEASE +
+				                 ACL_PUBLISH +
+				                 ACL_CREATE_FOLDER +
+				                 ACL_CREATE_FILE +
+				                 ACL_CREATE_LINK +
+				                 ACL_CREATE_PAGE +
+				                 ACL_GRANT +
+				                 ACL_TRANSMIT;
+
+			if	( $user->isAdmin && $type & ACL_READ )
+				return true;
+	
+			$sql = new Sql( <<<SQL
+SELECT {t_acl}.* FROM {t_acl}
+	                 LEFT JOIN {t_object}
+	                        ON {t_object}.id={t_acl}.objectid
+	                 WHERE objectid={objectid}
+	                   AND ( languageid={languageid} OR languageid IS NULL )
+	                   AND ( {t_acl}.userid={userid} OR {group_clause}
+			                                                  OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )
+SQL
+);
+
+			$sql->setInt  ( 'languageid'  ,$language->languageid   );
+			$sql->setInt  ( 'objectid'    ,$this->objectid         );
+			$sql->setInt  ( 'userid'      ,$user->userid           );
+			$sql->setParam( 'group_clause',$user->getGroupClause() );
+	
+			$db = db_connection();
+			foreach( $db->getAll( $sql->query ) as $row )
+			{
+				$acl = new Acl();
+				$acl->setDatabaseRow( $row );
+				#Html::debug($acl,"ACL");
+				
+				$this->aclMask |= $acl->getMask();
+			}
+		}
+		
+//		Html::debug($type,"Anfrage");
+//		Html::debug($this->aclMask,"Maske fuer Objekt ".$this->objectid);
+//		Html::debug($this->aclMask & $type,"Ergebnis");
+		return $this->aclMask & $type;
 	}
 
 
@@ -890,6 +951,40 @@ class Object
 
 		if	( !empty($this->name) )
 			$this->objectSaveName();
+			
+		$acl = new Acl();
+		$acl->userid = $user->userid;
+		$acl->objectid = $this->objectid;
+		
+		// Standard-Rechte fuer dieses neue Objekt setzen.
+		// Der Benutzer hat Lese- und Schreibrechte auf das Objekt.
+		$acl->read   = true;
+		$acl->write  = true;
+		$acl->prop   = true;
+		$acl->delete = true;
+		$acl->grant = true;
+		if	( $this->isFolder )
+		{
+			$acl->create_file   = true;
+			$acl->create_page   = true;
+			$acl->create_folder = true;
+			$acl->create_link   = true;
+		}
+		$acl->add();
+
+		// Aus dem Eltern-Ordner vererbbare Berechtigungen übernehmen.
+		$folder = new Folder( $this->parentid );
+		foreach( $folder->getAclIds() as $aclid )
+		{
+			$acl = new Acl( $aclid );
+			$acl->load();
+			
+			if	( $acl->transmit ) // ACL is vererbbar, also kopieren.
+			{
+				$acl->objectid = $this->objectid;
+				$acl->add(); // ... und hinzufuegen.
+			}
+		}
 	}
 
 
