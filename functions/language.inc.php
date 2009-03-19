@@ -59,10 +59,7 @@ function lang( $textVar,$vars = array() )
 	}
 	
 	// Wenn Textvariable nicht vorhanden ist, dann als letzten Ausweg nur den Variablennamen zurueckgeben
-	
-//return( '?'.$text.'?' );
-	return( '?unknown-lang-key:'.$textVar.'?' );
-	//return( $textVar );
+	return( '?'.$textVar.'?' );
 }
 
 
