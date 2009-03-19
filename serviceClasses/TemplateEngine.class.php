@@ -184,7 +184,7 @@ class TemplateEngine
 			case 'messagevar':
 				return 'lang($'.$value.')';
 			case 'mode':
-				return $invert.'$this->templateVars["mode"]=="'.$value.'"';
+				return $invert.'$mode=="'.$value.'"';
 			case 'arrayvar':
 				list($arr,$key) = explode(':',$value.':none');
 				return $invert.'@$'.$arr.'['.$key.']';

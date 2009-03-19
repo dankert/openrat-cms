@@ -72,6 +72,7 @@ class Action
 		
 		$this->templateVars['errors' ] = array();
 		$this->templateVars['notices'] = array();
+		$this->templateVars['mode'   ] = $this->getRequestVar('mode');
 		
 		header('Content-Language: '.$conf['language']['language_code']);
 	}
@@ -611,7 +612,7 @@ class Action
 	 */
 	function isEditMode()
 	{
-		return !$this->isEditable() || $this->getRequestVar('mode')=='edit'; 
+		return !$this->isEditable() || $this->getRequestVar('mode')=='edit' || (isset($this->templateVars) && $this->templateVars['mode']=='edit'); 
 	}
 }
 
