@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.11  2009-03-19 04:36:42  dankert
+// Neue Methode "inherit()".
+//
 // Revision 1.10  2009-03-19 02:02:43  dankert
 // Keine ererbten Rechte anzeigen.
 //
@@ -202,6 +205,69 @@ class ObjectAction extends Action
 		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
 	}
 
+	
+	
+	/**
+	 * 
+	 * @return unknown_type
+	 */
+	function inherit()
+	{
+		$log = array();
+		
+		if	( ! $this->hasRequestVar('inherit') )
+		{
+			$this->addNotice('folder',$this->name,'NOTHING_DONE',OR_NOTICE_WARN);
+			return;
+		}
+		
+		
+		$folder = $this->folder;
+		$aclids = $folder->getAllAclIds();
+		
+		$newAclList = array();
+		foreach( $aclids as $aclid )
+		{
+			$acl = new Acl( $aclid );
+			$acl->load();
+			if	( $acl->transmit )
+				$newAclList[] = $acl;
+		}
+		$log[] = 'inheriting '.count($newAclList).' acls';
+		
+		$oids = $folder->getObjectIds();
+		
+		foreach( $folder->getAllSubfolderIds() as $sfid )
+		{
+			$subfolder = new Folder( $sfid );
+			
+			$oids = array_merge($oids,$subfolder->getObjectIds());
+		}
+		
+		foreach( $oids as $oid )
+		{
+			$object = new Object( $oid );
+		
+			// Die alten ACLs des Objektes löschen.
+			foreach( $object->getAllAclIds() as $aclid )
+			{
+				$acl = new Acl( $aclid );
+				$acl->objectid = $oid;
+				$acl->delete();
+				$log[] = 'removing acl '.$aclid.' for object '.$oid;
+			}
+			
+			// Vererbbare ACLs des aktuellen Ordners anwenden.
+			foreach( $newAclList as $newAcl )
+			{
+				$newAcl->objectid = $oid;
+				$newAcl->add();
+				$log[] = 'adding new acl '.$newAcl->aclid.' for object '.$oid;
+			}
+		}
+		
+		$this->addNotice('folder',$this->name,'SAVED',OR_NOTICE_OK,array(),$log);
+	}
 
 
 	/**
