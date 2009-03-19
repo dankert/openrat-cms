@@ -269,8 +269,7 @@ class TemplateEngine
 			// Die Variablen "$attr" müssen pro Ebene eindeutig sein, daher wird an den
 			// Variablennamen die Tiefe angehangen.
 			$line = str_replace('$attr','$attr'.$hash,$line);
-			$indent = str_repeat(' ',2*$depth);
-			fwrite( $outFileHandler,$indent.$line );
+			fwrite( $outFileHandler,$line );
 		}
 		
 		// Variablen "$attr" entfernen.
