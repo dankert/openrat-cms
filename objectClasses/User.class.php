@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.32  2009-03-19 10:05:05  dankert
+// Bugfix bei Ermitteln der zur Verfügung stehenden Projekte: Nur die Root-Objekte der Projekte berücksichtigen.
+//
 // Revision 1.31  2009-03-19 04:29:39  dankert
 // Bei LDAP-Login Gruppenzugehörigkeiten synchronisieren.
 //
@@ -235,6 +238,7 @@ class User
 	/**
 	 * Lesen aller Projekte, fuer die der Benutzer berechtigt ist.
 	 *
+	 * @return Array [Projekt-Id] = Projekt-Name
 	 */
 	function getReadableProjects()
 	{
@@ -242,51 +246,48 @@ class User
 
 		if	( $this->isAdmin )
 		{
+			// Administratoren haben Rechte auf alle Projekte.
 			return Project::getAllProjects();
 		}
 		else
 		{
-			$sql = new Sql( 'SELECT {t_project}.id,{t_project}.name'.
-			                '  FROM {t_acl}'.
-			                '  LEFT JOIN {t_object}  ON ({t_object}.id ={t_acl}.objectid AND {t_object}.parentid IS NULL) '.
-			                '  LEFT JOIN {t_project} ON {t_project}.id={t_object}.projectid '.
-			                '  WHERE userid={userid} OR'.
-			                '        '.$this->getGroupClause().' OR '.
-			                '        ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) '.
-			                '  ORDER BY {t_project}.name' );
-			$sql->setInt   ( 'userid',$this->userid );
+			$groupClause = $this->getGroupClause();
+			$sql = new Sql(<<<SQL
+SELECT DISTINCT {t_project}.id,{t_project}.name
+  FROM {t_object}
+  LEFT JOIN {t_acl}     ON {t_object}.id  = {t_acl}.objectid 
+  LEFT JOIN {t_project} ON {t_project}.id = {t_object}.projectid 
+ WHERE {t_object}.parentid IS NULL     AND
+       {t_acl}.id          IS NOT NULL AND
+       (  {t_acl}.userid={userid} OR
+       $groupClause OR 
+       ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL)) 
+ ORDER BY {t_project}.name
+SQL
+);
+		$sql->setInt   ( 'userid',$this->userid );
 
 			return $db->getAssoc( $sql->query );
 		}
+		
 	}
 
 
 
-	// Prueft, ob der Benutzer fuer ein Projekt berechtigt ist
+	/**
+	 * Ermittelt alls Projekte, fuer die der Benutzer berechtigt ist.
+	 * @return Array [0..n] = Projekt-Id
+	 */
 	function getReadableProjectIds()
 	{
-		$db = db_connection();
-
-		if	( $this->isAdmin )
-		{
-			return Project::getAllProjectIds();
-		}
-		else
-		{
-			$sql = new Sql( 'SELECT DISTINCT {t_object}.projectid'.
-			                '  FROM {t_acl}'.
-			                '  LEFT JOIN {t_object} ON ({t_object}.id={t_acl}.objectid AND {t_object}.parentid IS NULL) '.
-			                '  WHERE userid={userid} OR'.
-			                '        '.$this->getGroupClause().' OR '.
-			                '        ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) '.
-			                '  ORDER BY {t_project}.name' );
-			$sql->setInt   ( 'userid',$this->userid );
-
-			return $db->getCol( $sql->query );
-		}
+		return array_keys( $this->getReadableProjects() );
 	}
 
 
+	/**
+	 * Lädt die Liste alle Projekte, fuer die der Benutzer berechtigt ist und
+	 * speichert diese in diesem Benutzerobjekt.
+	 */
 	function loadProjects()
 	{
 		$this->projects = $this->getReadableProjects();
@@ -294,7 +295,9 @@ class User
 
 
 
-	// Lesen Benutzer aus der Datenbank
+	/**
+	 * Lesen Benutzer aus der Datenbank.
+	 */ 
 	function load()
 	{
 		global $conf;
@@ -433,7 +436,12 @@ class User
 	
 	
 	
-	// Lesen Benutzername
+	/**
+	 * Liest einen Benutzernamen aus der Datenbank.
+	 * 
+	 * @param int Benutzer-Id
+	 * @return String Benutzername
+	 */
 	function getUserName( $userid )
 	{
 		$db = db_connection();
@@ -450,7 +458,9 @@ class User
 	}
 
 
-	// Speichern Benutzer in der Datenbank
+	/**
+	 * Speichern Benutzer in der Datenbank.
+	 */
 	function save()
 	{
 		$db = db_connection();
