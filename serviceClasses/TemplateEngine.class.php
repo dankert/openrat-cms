@@ -184,7 +184,7 @@ class TemplateEngine
 			case 'messagevar':
 				return 'lang($'.$value.')';
 			case 'mode':
-				return $invert.'$this->getRequestVar("mode")=="'.$value.'"';
+				return $invert.'$this->templateVars["mode"]=="'.$value.'"';
 			case 'arrayvar':
 				list($arr,$key) = explode(':',$value.':none');
 				return $invert.'@$'.$arr.'['.$key.']';
@@ -263,7 +263,7 @@ class TemplateEngine
 			if	( strlen(trim($line)) == 0)
 				continue;
 			// Ignoriere Kommentarzeilen
-			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) )
+			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) || substr(ltrim($line),0,1) == '#')
 				continue;
 
 			// Die Variablen "$attr" müssen pro Ebene eindeutig sein, daher wird an den
