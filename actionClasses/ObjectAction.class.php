@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.10  2009-03-19 02:02:43  dankert
+// Keine ererbten Rechte anzeigen.
+//
 // Revision 1.9  2009-03-06 13:00:40  dankert
 // Zeichenketten 'action' und 'subaction' durch Konstanten ersetzt.
 //
@@ -156,6 +159,8 @@ class ObjectAction extends Action
 		$acl->add();
 		
 		$this->addNotice('','','ADDED',OR_NOTICE_OK);
+		
+		$o->setTimestamp();
 	}
 
 
@@ -170,7 +175,9 @@ class ObjectAction extends Action
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
 
-		$acllist = array();	
+		$acllist = array();
+
+		/*
 		foreach( $o->getAllInheritedAclIds() as $aclid )
 		{
 			$acl = new Acl( $aclid );
@@ -178,6 +185,7 @@ class ObjectAction extends Action
 			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
 			$acllist[$key] = $acl->getProperties();
 		}
+		*/
 
 		foreach( $o->getAllAclIds() as $aclid )
 		{
