@@ -11,9 +11,9 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr_rowspan) )
 		$attr_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr_width  )) { ?> width="<?php echo $attr_width ?>" <?php }
-if	( isset($attr_style  )) { ?> style="<?php echo $attr_style?>" <?php }
-if	( isset($attr_class  )) { ?> class="<?php echo $attr_class ?>"  <?php }
-if	( isset($attr_colspan)) { ?> colspan="<?php echo $attr_colspan ?>"  <?php }
+if	( isset($attr_width  )) { ?> width="<?php   echo $attr_width   ?>" <?php }
+if	( isset($attr_style  )) { ?> style="<?php   echo $attr_style   ?>" <?php }
+if	( isset($attr_class  )) { ?> class="<?php   echo $attr_class   ?>" <?php }
+if	( isset($attr_colspan)) { ?> colspan="<?php echo $attr_colspan ?>" <?php }
 if	( isset($attr_rowspan)) { ?> rowspan="<?php echo $attr_rowspan ?>" <?php }
 ?>>
