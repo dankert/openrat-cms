@@ -261,6 +261,10 @@ class UserAction extends Action
 			$this->setTemplateVar($varName,$hasGroup);
 		}
 		$this->setTemplateVar('memberships',$gruppenListe);
+		
+		global $conf;
+		if	($conf['security']['authorize']['type']=='ldap')
+			$this->addNotice('user',$this->user->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',OR_NOTICE_WARN);
 	}
 
 
