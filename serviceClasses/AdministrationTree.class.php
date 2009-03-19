@@ -34,6 +34,9 @@ class AdministrationTree extends AbstractTree
 	
 	function root()
 	{
+		if	( !$this->userIsAdmin )
+			Http::notAuthorized('Administration-Tree is only visible for admins.');
+			
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_ADMINISTRATION');
 		$treeElement->description = lang('GLOBAL_ADMINISTRATION');
