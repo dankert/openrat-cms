@@ -42,7 +42,9 @@ menu=show
 ; f�r Seiten,Ordner,Links und Dateien identisch.
 [rights]
 menu=rights
+editable=true
 action=object
+target=inherit
 
 [aclform]
 menu=rights
@@ -54,6 +56,10 @@ goto=rights
 
 [delacl]
 goto=rights
+
+[inherit]
+goto=rights
+
 
 [pub]
 menu=pub
