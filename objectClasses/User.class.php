@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.31  2009-03-19 04:29:39  dankert
+// Bei LDAP-Login Gruppenzugehörigkeiten synchronisieren.
+//
 // Revision 1.30  2009-03-19 02:01:07  dankert
 // Für die Liste der lesbaren Projekte müssen nur die Root-Ordner herangezogen werden.
 //
@@ -201,7 +204,7 @@ class User
 	function getGroupClause()
 	{
 		$groupIds = $this->getGroupIds();
-
+		
 		if	( count($groupIds) > 0 )
 			$groupclause = ' groupid='.implode(' OR groupid=',$groupIds );
 		else
@@ -727,8 +730,20 @@ SELECT id,name FROM {t_group}
 SQL
 					);
 					$sql->setStringList('name_list',$ldap_groups);
-				
+					$oldGroups = $this->getGroupIds();
 					$this->groups = $db->getAssoc( $sql->query );
+					
+					foreach( $this->groups as $groupid=>$groupname)
+					{
+						if	( ! in_array($groupid,$oldGroups))
+							$this->addGroup($groupid);
+					}
+					foreach( $oldGroups as $groupid)
+					{
+						if	( !isset($this->groups[$groupid]) )
+							$this->delGroup($groupid);
+					}
+					
 					
 					// Pr�fen, ob Gruppen fehlen. Diese dann ggf. in der OpenRat-Datenbank hinzuf�gen.
 					if	( $conf['ldap']['authorize']['auto_add'] )
