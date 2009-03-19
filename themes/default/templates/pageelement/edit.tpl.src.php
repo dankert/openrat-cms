@@ -106,8 +106,13 @@ page
 
 						if value:var:editor equals:wiki
 						
+							if present:preview
+								fieldset title:message:page_preview
+									text var:preview escape:false
+								newline
+								newline
+								
 							editor type:wiki name:text
-							#inputarea class:longtext name:text rows:25 cols:70
 							
 							if true:mode:edit
 								fieldset title:message:help
