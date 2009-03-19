@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.30  2009-03-19 02:01:07  dankert
+// FÃ¼r die Liste der lesbaren Projekte mÃ¼ssen nur die Root-Ordner herangezogen werden.
+//
 // Revision 1.29  2008-03-06 21:19:15  dankert
 // Nur Logging-Ausgabe verbessert.
 //
@@ -242,7 +245,7 @@ class User
 		{
 			$sql = new Sql( 'SELECT {t_project}.id,{t_project}.name'.
 			                '  FROM {t_acl}'.
-			                '  LEFT JOIN {t_object}  ON {t_object}.id ={t_acl}.objectid '.
+			                '  LEFT JOIN {t_object}  ON ({t_object}.id ={t_acl}.objectid AND {t_object}.parentid IS NULL) '.
 			                '  LEFT JOIN {t_project} ON {t_project}.id={t_object}.projectid '.
 			                '  WHERE userid={userid} OR'.
 			                '        '.$this->getGroupClause().' OR '.
@@ -269,7 +272,7 @@ class User
 		{
 			$sql = new Sql( 'SELECT DISTINCT {t_object}.projectid'.
 			                '  FROM {t_acl}'.
-			                '  LEFT JOIN {t_object} ON {t_object}.id={t_acl}.objectid '.
+			                '  LEFT JOIN {t_object} ON ({t_object}.id={t_acl}.objectid AND {t_object}.parentid IS NULL) '.
 			                '  WHERE userid={userid} OR'.
 			                '        '.$this->getGroupClause().' OR '.
 			                '        ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) '.
@@ -304,8 +307,8 @@ class User
 
 
 	/**
-	 * Benutzerobjekt über Benutzernamen ermitteln.<br>
-	 * Liefert ein neues Benutzerobjekt zurück.
+	 * Benutzerobjekt ï¿½ber Benutzernamen ermitteln.<br>
+	 * Liefert ein neues Benutzerobjekt zurï¿½ck.
 	 * 
 	 * @static 
 	 * @param name Benutzername
@@ -315,13 +318,13 @@ class User
 		global $conf;
 		$db = db_connection();
 
-		// Benutzer über Namen suchen
+		// Benutzer ï¿½ber Namen suchen
 		$sql = new Sql( 'SELECT id FROM {t_user}'.
 		                ' WHERE name={name}' );
 		$sql->setString( 'name',$name );
 		$userId = $db->getOne( $sql->query );
 
-		// Benutzer über Id instanziieren
+		// Benutzer ï¿½ber Id instanziieren
 		$neuerUser = new User( $userId );
 		$neuerUser->load();
 		
@@ -475,7 +478,7 @@ class User
 
 
 	/**
-	 * Benutzer hinzufügen
+	 * Benutzer hinzufï¿½gen
 	 *
 	 * @param String $name Benutzername
 	 */
@@ -498,13 +501,13 @@ class User
 		// Datenbankbefehl ausfuehren
 		$db->query( $sql->query );
 		
-		$this->addNewUserGroups(); // Neue Gruppen hinzufügen.
+		$this->addNewUserGroups(); // Neue Gruppen hinzufï¿½gen.
 	}
 
 	
 
 	/**
-	 * Zu einem neuen Benutzer automatisch Gruppen hinzufügen.
+	 * Zu einem neuen Benutzer automatisch Gruppen hinzufï¿½gen.
 	 * Diese Methode wird automatisch in "add()" aufgerufen.
 	 */
 	function addNewUserGroups()
@@ -521,9 +524,9 @@ class User
 		$sql->setStringList('names',$groupNames);
 		$groupIds = array_unique( $db->getCol($sql->query) );
 		
-		// Wir brauchen hier nicht weiter prüfen, ob der Benutzer eine Gruppe schon hat, denn
+		// Wir brauchen hier nicht weiter prï¿½fen, ob der Benutzer eine Gruppe schon hat, denn
 		// - passiert dies nur bei der Neuanlage eines Benutzers
-		// - Enthält die Group-Id-Liste eine ID nur 1x.
+		// - Enthï¿½lt die Group-Id-Liste eine ID nur 1x.
 
 		// Gruppen diesem Benutzer zuordnen.
 		foreach( $groupIds as $groupId )
@@ -534,8 +537,8 @@ class User
 	/**
 	 * Benutzer entfernen.<br>
 	 * Vor dem Entfernen werden alle Referenzen auf diesen Benutzer entfernt:<br>
-	 * - "Erzeugt von" für diesen Benutzer entfernen.<br>
-	 * - "Letzte Änderung von" für diesen Benutzer entfernen<br>
+	 * - "Erzeugt von" fï¿½r diesen Benutzer entfernen.<br>
+	 * - "Letzte ï¿½nderung von" fï¿½r diesen Benutzer entfernen<br>
 	 * - Alle Archivdaten in Dateien mit diesem Benutzer entfernen<br>
 	 * - Alle Berechtigungen dieses Benutzers l?schen<br>
 	 * - Alle Gruppenzugehoerigkeiten dieses Benutzers l?schen<br>
@@ -545,14 +548,14 @@ class User
 	{
 		$db = db_connection();
 
-		// "Erzeugt von" für diesen Benutzer entfernen.
+		// "Erzeugt von" fï¿½r diesen Benutzer entfernen.
 		$sql = new Sql( 'UPDATE {t_object} '.
 		                'SET create_userid=null '.
 		                'WHERE create_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql->query );
 
-		// "Letzte Änderung von" für diesen Benutzer entfernen
+		// "Letzte ï¿½nderung von" fï¿½r diesen Benutzer entfernen
 		$sql = new Sql( 'UPDATE {t_object} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
@@ -642,12 +645,12 @@ SQL
 			$this->userid  = $row_user['id'];
 			$this->ldap_dn = $row_user['ldap_dn'];
 			$check   = true;
-			$autoAdd = false; // Darf nicht hinzugefügt werden, da schon vorhanden.
+			$autoAdd = false; // Darf nicht hinzugefï¿½gt werden, da schon vorhanden.
 		}
 		elseif( $res_user->numRows() == 0 && $authType == 'ldap' && $conf['ldap']['search']['add'] )
 		{
 			// Benutzer noch nicht in der Datenbank vorhanden.
-			// Falls ein LDAP-Account gefunden wird, wird dieser übernommen.
+			// Falls ein LDAP-Account gefunden wird, wird dieser ï¿½bernommen.
 			$check   = true;
 			$autoAdd = true;
 		}
@@ -689,7 +692,7 @@ SQL
 				if	( empty($conf['ldap']['dn']) )
 				{
 					// Der Benutzername wird im LDAP-Verzeichnis gesucht.
-					// Falls gefunden, wird der DN (=der eindeutige Schlüssel im Verzeichnis) ermittelt.
+					// Falls gefunden, wird der DN (=der eindeutige Schlï¿½ssel im Verzeichnis) ermittelt.
 					$dn = $ldap->searchUser( $this->name );
 					
 					if	 ( empty($dn) )
@@ -727,7 +730,7 @@ SQL
 				
 					$this->groups = $db->getAssoc( $sql->query );
 					
-					// Prüfen, ob Gruppen fehlen. Diese dann ggf. in der OpenRat-Datenbank hinzufügen.
+					// Prï¿½fen, ob Gruppen fehlen. Diese dann ggf. in der OpenRat-Datenbank hinzufï¿½gen.
 					if	( $conf['ldap']['authorize']['auto_add'] )
 					{
 						foreach( $ldap_groups as $group )
@@ -736,7 +739,7 @@ SQL
 							{
 								$g = new Group();
 								$g->name = $group;
-								$g->add(); // Gruppe hinzufügen
+								$g->add(); // Gruppe hinzufï¿½gen
 								
 								$this->groups[$g->groupid] = $group;
 							}
@@ -751,7 +754,7 @@ SQL
 				if	( $ok && $autoAdd )
 				{
 					// Falls die Authentifizierung geklappt hat, wird der
-					// LDAP-Account in die Datenbank übernommen.
+					// LDAP-Account in die Datenbank ï¿½bernommen.
 					$this->ldap_dn  = $dn;
 					$this->fullname = $this->name;
 					$this->add();
@@ -765,8 +768,8 @@ SQL
 				// Pruefen ob Kennwort mit Datenbank uebereinstimmt
 				if   ( $row_user['password'] == $password )
 				{
-					// Kennwort stimmt mit Datenbank überein, aber nur im Klartext.
-					// Das Kennwort muss geändert werden
+					// Kennwort stimmt mit Datenbank ï¿½berein, aber nur im Klartext.
+					// Das Kennwort muss geï¿½ndert werden
 					$this->mustChangePassword = true;
 					
 					// Login nicht erfolgreich
@@ -774,13 +777,13 @@ SQL
 				}
 				elseif   ( $row_user['password'] == md5( $password ) )
 				{
-					// Die Kennwort-Prüfsumme stimmt mit dem aus der Datenbank überein.
+					// Die Kennwort-Prï¿½fsumme stimmt mit dem aus der Datenbank ï¿½berein.
 					// Juchuu, Login ist erfolgreich.
 					return true;
 				}
 				else
 				{
-					// Kennwort stimmt garnicht überein.
+					// Kennwort stimmt garnicht ï¿½berein.
 					return false;
 				}
 			}
@@ -827,7 +830,7 @@ SQL
 	
 	
 	/**
-	 * Setzt ein neues Kennwort für diesen Benutzer.
+	 * Setzt ein neues Kennwort fï¿½r diesen Benutzer.
 	 * 
 	 * @param password Kennwortt
 	 * @param always true, wenn Kennwort dauerhaft.
@@ -946,7 +949,7 @@ SQL
 	function loadRights( $projectid,$languageid )
 	{
 		$start = time();    // Zeit merken (zum Loggen).
-		$this->delRights(); // Alte Rechte löschen.
+		$this->delRights(); // Alte Rechte lï¿½schen.
 
 		$db = db_connection();
 
@@ -1200,7 +1203,7 @@ SQL
 	 * 
 	 * Inspired by http://www.phpbuilder.com/annotate/message.php3?id=1014451
 	 * 
-	 * @return String Zufälliges Kennwort
+	 * @return String Zufï¿½lliges Kennwort
 	 */
 	function createPassword()
 	{
