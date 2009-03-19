@@ -6,7 +6,7 @@
 	if	(empty($attr_id))
 		$attr_id = $this->getRequestId();
 
-	if ($this->isEditable() && $this->getRequestVar('mode')!='edit')
+	if ($this->isEditable() && !$this->isEditMode())
 		$attr_subaction = $subActionName;
 		
 ?><form name="<?php echo $attr_name ?>"
@@ -15,7 +15,7 @@
       method="<?php echo $attr_method ?>"
       enctype="<?php echo $attr_enctype ?>" style="margin:0px;padding:0px;">
       
-<?php if ($this->isEditable() && $this->getRequestVar('mode')!='edit') { ?>
+<?php if ($this->isEditable() && !$this->isEditMode()) { ?>
 <input type="hidden" name="mode" value="edit" />
 <?php } ?>
 	

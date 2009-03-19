@@ -1,5 +1,5 @@
 <?php
-		if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr_readonly=true;
+		if ($this->isEditable() && !$this->isEditMode()) $attr_readonly=true;
 		
 		if	( isset($$attr_name)  )
 			$attr_tmp_default = $$attr_name;

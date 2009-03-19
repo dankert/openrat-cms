@@ -1,6 +1,6 @@
 <?php
 $attr_tmp_list = $$attr_list;
-if ($this->isEditable() && $this->getRequestVar('mode')!='edit')
+if ($this->isEditable() && !$this->isEditMode())
 {
 	echo empty($$attr_name)?'- '.lang('EMPTY').' -':$attr_tmp_list[$$attr_name];
 }

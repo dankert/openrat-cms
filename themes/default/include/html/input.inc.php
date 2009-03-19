@@ -1,4 +1,4 @@
-<?php if ($this->isEditable() && $this->getRequestVar('mode')!='edit') $attr_readonly=true;
+<?php if ($this->isEditable() && !$this->isEditMode()) $attr_readonly=true;
 	  if ($attr_readonly && empty($$attr_name)) $$attr_name = '- '.lang('EMPTY').' -';
       if(!isset($attr_default)) $attr_default='';
       
