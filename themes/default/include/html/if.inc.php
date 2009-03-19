@@ -64,19 +64,9 @@
 	if  ( !empty($attr_not) )
 		$attr_tmp_exec = !$attr_tmp_exec;
 #END-IF#
-		
-	unset($attr_true);
-	unset($attr_false);
-	unset($attr_notempty);
-	unset($attr_empty);
-	unset($attr_contains);
-	unset($attr_present);
-	unset($attr_invert);
-	unset($attr_not);
-	unset($attr_value);
-	unset($attr_equals);
 
-	$last_exec = $attr_tmp_exec;
+	// Fuer eine eventuelle ELSE-Bedingung merken wir uns den Status.
+	$attr_tmp_last_exec = $attr_tmp_exec;
 	
 	if	( $attr_tmp_exec )
 	{
