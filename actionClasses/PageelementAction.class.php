@@ -146,8 +146,9 @@ class PageelementAction extends Action
 		$this->value->publish = false;
 
 		if	( intval($this->value->valueid)!=0 )
-		$this->value->loadWithId();
-		else	$this->value->load();
+			$this->value->loadWithId();
+		else
+			$this->value->load();
 
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
@@ -562,7 +563,10 @@ class PageelementAction extends Action
 			else
 				$this->setTemplateVar( 'editor','text' );
 
-			$this->setTemplateVar( 'text',$this->convertOIDs( $this->value->text ) );
+			if ( !isset($this->templateVars['text']))
+				// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
+				// einen Text eingegeben hat (Vorschaufunktion).
+				$this->setTemplateVar( 'text',$this->convertOIDs( $this->value->text ) );
 
 			if	(! $this->isEditMode() )
 			{
@@ -600,8 +604,11 @@ class PageelementAction extends Action
 				$transformer->text = $this->value->text;
 				$transformer->parseDocument();
 				$this->setTemplateVar( 'document',$transformer->doc );
-					
-				$this->setTemplateVar( 'text',$this->value->text          );
+				
+				if ( !isset($this->templateVars['text']))
+					// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
+					// einen Text eingegeben hat (Vorschaufunktion).
+					$this->setTemplateVar( 'text',$this->value->text          );
 				$this->setTemplateVar( 'objects',$objects );
 				$this->setTemplateVar( 'images' ,$objects );
 			}
@@ -899,6 +906,7 @@ class PageelementAction extends Action
 		 */
 		function savelongtext()
 		{
+			global $conf;
 			$value = new Value();
 			$language = Session::getProjectLanguage();
 			$value->languageid = $language->languageid;
@@ -916,13 +924,16 @@ class PageelementAction extends Action
 
 
 			if   ( $this->hasRequestVar('linkobjectid') )
-			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
+				$value->linkToObjectId = $this->getRequestVar('linkobjectid');
 			else
-			$value->text           = $this->convertOIDs( $this->getRequestVar('text') );
+				$value->text           = $this->convertOIDs( $this->getRequestVar('text') );
 
 			// Vorschau anzeigen
-			if	( $value->element->type=='longtext' && ($this->hasRequestVar('preview')||$this->hasRequestVar('addmarkup')) )
+			if	( $this->hasRequestVar('preview'  ) ||
+				  $this->hasRequestVar('addmarkup')    )
 			{
+				$inputText = $this->getRequestVar('text');
+				
 				if	( $this->hasRequestVar('preview') )
 				{
 					$value->page             = $this->page;
@@ -930,38 +941,47 @@ class PageelementAction extends Action
 					$value->page->languageid = $value->languageid;
 					$value->page->load();
 					$value->generate();
-					$this->setTemplateVar('preview_text',$value->value );
+					$this->setTemplateVar('preview',$value->value );
 				}
 
 				if	( $this->hasRequestVar('addmarkup') )
 				{
-					$addText = $this->getRequestVar('addtext');
+					$conf_tags = $conf['editor']['text-markup'];
 
-					if	( !empty($addText) ) // Nur, wenn ein Text eingegeben wurde
+					if	( $this->hasRequestVar('addtext') ) // Nur, wenn ein Text eingegeben wurde
 					{
 						$addText = $this->getRequestVar('addtext');
 
 						if	( $this->hasRequestVar('strong') )
-						$value->text .= '*'.$addText.'*';
+							$inputText .= $conf_tags['strong-begin'].$addText.$conf_tags['strong-end'];
 
 						if	( $this->hasRequestVar('emphatic') )
-						$value->text .= '_'.$addText.'_';
+							$inputText .= $conf_tags['emphatic-begin'].$addText.$conf_tags['emphatic-end'];
 
 						if	( $this->hasRequestVar('link') )
-						$value->text .= '"'.$addText.'"->"'.$this->getRequestVar('objectid').'"';
+							$inputText .= '"'.$addText.'"'.$conf_tags['linkto'].'"'.$this->getRequestVar('objectid').'"';
 					}
 
 					if	( $this->hasRequestVar('table') )
-					$value->text .= "|$addText  |  |\n|$addText  |  |\n|$addText  |  |\n";
+						$inputText .= "\n".
+						              $conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep']."\n".
+						              $conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep']."\n".
+						              $conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep']."\n";
 
 					if	( $this->hasRequestVar('list') )
-					$value->text .= "\n- ".$addText."\n".'- '.$addText."\n".'- '.$addText."\n";
+						$inputText .= "\n".
+						              $conf_tags['list-unnumbered'].' '.$addText."\n".
+						              $conf_tags['list-unnumbered'].' '.$addText."\n".
+						              $conf_tags['list-unnumbered'].' '.$addText."\n";
 
 					if	( $this->hasRequestVar('numlist') )
-					$value->text .= "\n# ".$addText."\n".'# '.$addText."\n".'# '.$addText."\n";
+						$inputText .= "\n".
+						              $conf_tags['list-numbered'].' '.$addText."\n".
+						              $conf_tags['list-numbered'].' '.$addText."\n".
+						              $conf_tags['list-numbered'].' '.$addText."\n";
 
 					if	( $this->hasRequestVar('image') )
-					$value->text .= '{'.$this->getRequestVar('objectid').'}';
+						$inputText .= $conf_tags['image-begin'].$this->getRequestVar('objectid').$conf_tags['image-end'];
 				}
 
 				// Ermitteln aller verlinkbaren Objekte (fuer Editor)
@@ -987,14 +1007,18 @@ class PageelementAction extends Action
 				$this->setTemplateVar( 'publish' ,$this->page->hasRight(ACL_PUBLISH) );
 				$this->setTemplateVar( 'html'    ,$value->element->html );
 				$this->setTemplateVar( 'wiki'    ,$value->element->wiki );
-				$this->setTemplateVar( 'text'    ,$value->text          );
+				$this->setTemplateVar( 'text'    ,$inputText );
 				$this->setTemplateVar( 'name'    ,$value->element->name );
 				$this->setTemplateVar( 'desc'    ,$value->element->desc );
 				$this->setTemplateVar( 'objectid',$this->page->objectid );
-				$this->forward( 'pageelement_edit_longtext' );
+
+				$this->setTemplateVar( 'mode'    ,'edit' );
+			}
+			else
+			{
+				$this->afterSave($value);
 			}
 
-			$this->afterSave($value);
 		}
 
 
