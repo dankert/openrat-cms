@@ -1,0 +1,69 @@
+/* $Id$ */
+
+body,
+body.main,
+body.tree
+{
+	background-color:252525;
+}
+body.title
+{ 
+	background-image: url('../images/bg-title.png');
+}
+ 
+
+body.menu
+{ 
+	background-image: url('../images/bg-menu.png');
+}
+
+td.menu
+{ 
+	background-image: url('../images/bg-menu.png');
+	color: white;
+}
+td.subaction
+{ 
+	background-image: url('../images/bg-title.png');
+}
+
+input,
+select,
+div.cancel
+{
+	background-image: url('../images/bg-title.png');
+	color:white;
+}
+textarea
+{
+	color:black;
+	border-color:gray;
+}
+
+input:hover,
+textarea:hover
+{
+	border-color:black;
+}
+
+input:focus,
+textarea:focus
+{
+	background-color:white;
+	border-color:black;
+}
+
+input.submit,
+input.ok,
+div.cancel
+{
+	color:black;
+}
+
+body.tree a:link,
+body.tree a:visited,
+body.tree a:active,
+body.tree a:hover
+{
+	color:white;
+}
