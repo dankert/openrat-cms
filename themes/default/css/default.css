@@ -536,3 +536,10 @@ table.calendar td
 	#background-color:grey;
 	#border-bottom: 1px solid black;
 }
+
+table.main td.help
+{
+	padding:10px;
+	margin:40px;
+	border: dotted grey 2px;
+}
