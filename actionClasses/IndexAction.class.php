@@ -873,7 +873,7 @@ class IndexAction extends Action
 
 		if	( isset($vars[REQ_PARAM_OBJECT_ID]) && Object::available($vars[REQ_PARAM_OBJECT_ID]) )
 		{
-			$object = new Object( $this->getRequestVar(REQ_PARAM_OBJECT_ID) );
+			$object = new Object( $vars[REQ_PARAM_OBJECT_ID] );
 			$object->objectLoadRaw();
 			Session::setObject( $object );
 	
