@@ -1,7 +1,7 @@
 page
 	window icon:user name:GLOBAL_USERS width:70%
 		list list:el extract:true
-			row
+			row class:data
 				cell class:fx
 					link url:var:url target:cms_main title:desc
 						image type:user

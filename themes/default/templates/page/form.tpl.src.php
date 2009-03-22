@@ -16,7 +16,7 @@ page
 						text text:GLOBAL_VALUE
 						
 				list list:el extract:true
-					row
+					row class:data
 						cell class:fx
 							label for:var:saveid
 								image elementtype:var:type

@@ -25,7 +25,7 @@ page
 							text key:var:t prefix:acl_ suffix:_abbrev title:message:acl_{t}
 	
 			list list:rights key:aclid value:acl extract:true
-				row
+				row class:data
 					cell
 						if present:username
 							image type:user

@@ -2,7 +2,7 @@ page
 	form
 		window name:USER_MEMBERSHIPS widths:5%,95% width:70%
 			list list:memberships extract:true
-				row
+				row class:data
 					cell
 						checkbox name:var:var
 					cell

@@ -1,7 +1,7 @@
 page
 	window name:TEMPLATE_ELEMENTS
 		list list:el extract:true
-			row
+			row class:data
 				cell class:fx
 					link url:var:url title:var:desc
 						image elementtype:var:type

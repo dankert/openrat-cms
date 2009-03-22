@@ -1,7 +1,7 @@
 page
 	window icon:user name:GROUP_MEMBERSHIPS
 		list list:memberships extract:true
-			row
+			row class:data
 				cell class:fx
 					image file:icon_user
 					text var:name

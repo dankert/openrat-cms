@@ -2,7 +2,7 @@ page
 	window name:GLOBAL_TEMPLATES
 
 		list list:templates extract:true
-			row
+			row class:data
 				cell class:fx
 					link url:var:url target:cms_main
 						text var:name

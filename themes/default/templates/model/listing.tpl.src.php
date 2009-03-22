@@ -1,7 +1,7 @@
 page
 	window icon:group name:GLOBAL_MODELS widths:50%,25%,25%
 		list list:el extract:true
-			row
+			row class:data
 				cell class:fx
 					link url:var:url target:cms_main
 						image file:icon_model

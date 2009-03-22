@@ -23,7 +23,7 @@ page
 							text text:global_delete
 	
 			list list:acls key:aclid value:acl extract:true
-				row
+				row class:data
 					cell
 						if present:username
 							image type:user

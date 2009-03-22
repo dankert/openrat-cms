@@ -1,7 +1,7 @@
 page
 	window icon:project name:GLOBAL_PROJECTS width:70%
 		list list:el extract:true
-			row
+			row class:data
 				cell
 					link url:var:url target:cms_main
 						image file:icon_project

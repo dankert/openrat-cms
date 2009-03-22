@@ -14,7 +14,7 @@ page
 				cell 
 					text text:GLOBAL_NOT_FOUND
 		list list:el extract:true
-			row
+			row class:data
 				cell
 					link url:var:url title:var:desc
 						image elementtype:var:type align:left
