@@ -21,7 +21,7 @@ page
 			if present:folder
 				row
 					cell colspan:2
-						text text:message:folder_select_target_folder
+						text key:folder_select_target_folder
 						text raw::_		
 						selectbox name:targetobjectid list:folder
 
@@ -33,10 +33,13 @@ page
 			if present:ask_commit
 				row
 					cell colspan:2
+						fieldset title:message:options
+				row
+					cell colspan:2
 						checkbox name:commit
 						label for:commit
 							text raw:_
-							text text:message:FOLDER_SELECT_DELETE_COMMIT
+							text key:FOLDER_SELECT_DELETE_COMMIT
 
 			row
 				cell class:act colspan:2
