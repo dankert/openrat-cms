@@ -53,32 +53,5 @@ page
 				row
 					cell class:fx colspan:2
 						text text:GLOBAL_NOT_FOUND
-	dummy
+	insert script:mark
 			
-RAW
-<script name="JavaScript" type="text/javascript">
-<!--
-function mark()
-{
-<?php foreach( array_keys($object)  as $id ) { ?>
-document.forms[0].obj<?php echo $id ?>.checked=true;
-<?php } ?>
-}
-function unmark()
-{
-<?php foreach( array_keys($object) as $id ) { ?>
-document.forms[0].obj<?php echo $id ?>.checked=false;
-<?php } ?>
-}
-function flip()
-{
-<?php foreach( array_keys($object) as $id ) { ?>
-if	(document.forms[0].obj<?php echo $id ?>.checked==false)
- document.forms[0].obj<?php echo $id ?>.checked=true;
-else document.forms[0].obj<?php echo $id ?>.checked=false;
-<?php } ?>
-}
-//-->
-</script>
-END
-

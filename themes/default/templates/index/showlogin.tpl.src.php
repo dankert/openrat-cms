@@ -92,13 +92,7 @@ page
 				row
 					cell colspan:2 class:act
 						button type:ok
-RAW
-<script name="javascript1.2" type="text/javascript">
-<!--
-document.forms[0].screenwidth.value=window.innerWidth;
-//	-->
-</script>
-END
+						insert script:screenwidth
 		if value:size:dbids lessthan:2
 			hidden name:dbid default:var:actdbid
 		hidden name:objectid
