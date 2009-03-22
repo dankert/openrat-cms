@@ -58,10 +58,11 @@ goto=showprop
 menu=src
 
 ; Die Aktionen "rights", "aclform", "addacl" und "delacl" sind
-; für Seiten,Ordner,Links und Dateien identisch.
+; fï¿½r Seiten,Ordner,Links und Dateien identisch.
 [rights]
 menu=rights
 action=object
+editable=true
 
 [aclform]
 menu=rights

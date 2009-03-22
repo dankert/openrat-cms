@@ -20,6 +20,7 @@ menu=edit
 target=save
 
 [rights]
+editable=true
 
 [delete]
 goto=showprop

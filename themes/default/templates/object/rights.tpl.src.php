@@ -48,12 +48,13 @@ page
 										text key:GLOBAL_DELETE
 	
 			if true:mode:edit
-				row
-					cell colspan:15
-						set var:inherit value:1
-						input type:checkbox name:inherit
-						label for:inherit
-							text key:inherit_rights
-				row
-					cell class:act colspan:15
-						button type:ok
+				if value:var:type equals:folder
+					row
+						cell colspan:15
+							set var:inherit value:1
+							input type:checkbox name:inherit
+							label for:inherit
+								text key:inherit_rights
+					row
+						cell class:act colspan:15
+							button type:ok

@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.12  2009-03-22 21:13:22  dankert
+// Rechte-Seite auch für Nicht-Ordner editierbar, damit Rechte löschbar sind.
+//
 // Revision 1.11  2009-03-19 04:36:42  dankert
 // Neue Methode "inherit()".
 //
@@ -177,7 +180,8 @@ class ObjectAction extends Action
 		$o = Session::getObject();
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
-
+		$this->setTemplateVar( 'type',$o->getType() );
+		
 		$acllist = array();
 
 		/*
