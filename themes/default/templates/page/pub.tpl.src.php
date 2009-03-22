@@ -2,7 +2,7 @@ page
 	form
 		window
 			row
-				cell class:fx
+				cell
 					checkbox name:files
 					text raw:_
 					text text:global_files

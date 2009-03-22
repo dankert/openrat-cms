@@ -6,19 +6,19 @@ page
 				cell class:logo colspan:2
 					logo name:changepassword
 				row
-					cell class:fx width:50%
+					cell width:50%
 						text text:USER_PASSWORD
-					cell class:fx width:50%
+					cell width:50%
 						password name:password_old default: size:25
 				row
-					cell class:fx width:50%
+					cell width:50%
 						text text:USER_NEW_PASSWORD
-					cell class:fx width:50%
+					cell width:50%
 						password name:password_new_1 default: size:25
 				row
-					cell class:fx width:50%
+					cell width:50%
 						text text:USER_NEW_PASSWORD_REPEAT
-					cell class:fx width:50%
+					cell width:50%
 						password name:password_new_2 default: size:25
 	
 				row

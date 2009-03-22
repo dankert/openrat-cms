@@ -5,7 +5,7 @@ page
 			row
 				cell
 					text text:LANGUAGE_ISOCODE
-				cell class:fx
+				cell
 					selectbox list:isocodes name:isocode
 			row
 				cell class:act colspan:2

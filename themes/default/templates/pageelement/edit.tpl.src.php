@@ -86,19 +86,19 @@ page
 
 #			if value:var:type equals:date
 #				row
-#					cell colspan:2 class:fx
+#					cell colspan:2
 #						input size:25 maxlength:25 class:ansidate name:ansidate
 #						focus field:ansidate
 					
 			if value:var:type equals:text
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						input size:50 maxlength:255 class:text name:text
 						focus field:text
 
 			if value:var:type equals:longtext
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						//focus field:text
 
 						if value:var:editor equals:html
@@ -212,14 +212,14 @@ page
 	
 				if present:release
 					row
-						cell colspan:2 class:fx
+						cell colspan:2
 							checkbox name:release
 							label for:release
 								text text:GLOBAL_RELEASE
 	
 				if present:publish
 					row
-						cell colspan:2 class:fx
+						cell colspan:2
 							checkbox name:publish
 							label for:publish
 								text text:PAGE_PUBLISH_AFTER_SAVE

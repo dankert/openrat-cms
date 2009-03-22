@@ -2,9 +2,9 @@ page
 	form
 		window
 			row
-				cell class:fx
+				cell
 					text text:GLOBAL_VALUE
-				cell class:fx
+				cell
 					inputarea cols:60 rows:35 name:value
 			row
 				cell class:act colspan:2

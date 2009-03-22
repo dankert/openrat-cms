@@ -3,9 +3,9 @@ page
 
 		window icon:project name:GLOBAL_PROJECTS
 			row
-				cell class:fx
+				cell
 					text key:global_name
-				cell class:fx
+				cell
 					input name:name
 			row
 				cell colspan:2 class:act

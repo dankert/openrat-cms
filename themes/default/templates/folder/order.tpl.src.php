@@ -20,37 +20,37 @@ page
 		
 		list list:object extract:true
 			row class:data
-				cell width:3% class:fx
+				cell width:3%
 					if present:upurl
 						link url:var:upurl title:GLOBAL_UP
 							set var:bild value:arrow_up
 							image file:var:bild
 					if empty:upurl
 						text raw:_	
-				cell width:3% class:fx			
+				cell width:3%			
 					if present:topurl
 						link url:var:topurl title:GLOBAL_TOP
 							set var:bild value:arrow_top
 							image file:var:bild
 					if empty:topurl
 						text raw:_	
-				cell width:3% class:fx			
+				cell width:3%			
 					if present:bottomurl
 						link url:var:bottomurl title:GLOBAL_BOTTOM
 							set var:bild value:arrow_bottom
 							image file:var:bild
 					if empty:bottomurl
 						text raw:_	
-				cell width:3% class:fx			
+				cell width:3%			
 					if present:downurl
 						link url:var:downurl title:GLOBAL_DOWN
 							set var:bild value:arrow_down
 							image file:var:bild
 					if empty:downurl
 						text raw:_	
-				cell width:40% class:fx
+				cell width:40%
 					image type:var:icon
 					text var:name
-				cell width:18% class:fx
+				cell width:18%
 					date date:var:date
 						

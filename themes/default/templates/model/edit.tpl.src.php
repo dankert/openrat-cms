@@ -5,7 +5,7 @@ page
 			row
 				cell
 					text text:GLOBAL_NAME
-				cell class:fx
+				cell
 					input name:name
 			row
 				cell colspan:2

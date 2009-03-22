@@ -6,26 +6,26 @@ page
 					text var:desc
 
 			row
-				cell colspan:2 class:fx
+				cell colspan:2
 					hidden name:decimals default:decimals
 					input size:15 maxlength:20 name:number
 
 			row
-				cell class:fx
+				cell
 					text text:global_decimals
-				cell class:fx
+				cell
 					text var:decimals
 
 			if present:release
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						checkbox name:release
 						text raw:_
 						text text:GLOBAL_RELEASE
 
 			if present:publish
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						checkbox name:publish
 						text raw:_
 						text text:PAGE_PUBLISH_AFTER_SAVE

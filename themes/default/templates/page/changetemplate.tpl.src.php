@@ -2,9 +2,9 @@ page
 	form
 		window
 			row
-				cell class:fx
+				cell
 					text text:page_template_old
-				cell class:fx
+				cell
 					link url:template_url
 						image type:template
 						text var:template_name

@@ -2,11 +2,11 @@ page
 	window icon:user name:GLOBAL_USERS width:70%
 		list list:el extract:true
 			row class:data
-				cell class:fx
+				cell
 					link url:var:url target:cms_main title:desc
 						image type:user
 						text var:name
-				cell class:fx
+				cell
 					text value:var:fullname
 					if true:var:isAdmin
 						text raw:_(

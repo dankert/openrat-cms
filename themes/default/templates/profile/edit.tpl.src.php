@@ -4,7 +4,7 @@ page
 			row
 				cell
 					text text:user_username
-				cell class:fx
+				cell
 					text var:name class:name
 
 			row
@@ -37,7 +37,7 @@ page
 			row
 				cell
 					text text:user_style
-				cell class:fx
+				cell
 					selectbox name:style list:allstyles default:config:interface/style/default
 			
 			row

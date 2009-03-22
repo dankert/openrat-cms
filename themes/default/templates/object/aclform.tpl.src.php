@@ -9,29 +9,29 @@ page
 					fieldset title:message:users
 					
 			row
-				cell class:fx width:10px
+				cell width:10px
 					radio name:type value:all
-				cell class:fx
+				cell
 					label for:type value:all
 						text text:GLOBAL_ALL
-				cell class:fx
+				cell
 					text raw:_
 			row
-				cell class:fx width:10px
+				cell width:10px
 					radio name:type value:user
-				cell class:fx
+				cell
 					label for:type value:user
 						text text:GLOBAL_USER
-				cell class:fx
+				cell
 					selectbox name:userid list:users addempty:true
 			if present:groups
 				row
-					cell class:fx width:10px
+					cell width:10px
 						radio name:type value:group
-					cell class:fx
+					cell
 						label for:type value:group
 							text text:GLOBAL_GROUP
-					cell class:fx
+					cell
 						selectbox name:groupid list:groups addempty:true
 
 			row
@@ -40,10 +40,10 @@ page
 			row
 				cell width:10px
 					text raw:_
-				cell class:fx
+				cell
 					label for:languageid
 						text text:GLOBAL_LANGUAGE
-				cell class:fx
+				cell
 					selectbox name:languageid list:languages
 
 			row

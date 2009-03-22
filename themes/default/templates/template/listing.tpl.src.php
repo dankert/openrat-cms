@@ -3,7 +3,7 @@ page
 
 		list list:templates extract:true
 			row class:data
-				cell class:fx
+				cell
 					link url:var:url target:cms_main
 						text var:name
 

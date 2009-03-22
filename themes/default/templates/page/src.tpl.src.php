@@ -1,6 +1,6 @@
 page
 	window icon:page
 		row
-			cell class:fx
+			cell
 				text var:src escape:false type:preformatted
 				

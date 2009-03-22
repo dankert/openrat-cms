@@ -5,12 +5,12 @@ page
 			row
 				cell
 					text text:GLOBAL_NAME
-				cell class:fx
+				cell
 					input name:name
 			row
 				cell
 					text text:LANGUAGE_ISOCODE
-				cell class:fx
+				cell
 					input name:isocode
 			row
 				cell colspan:2

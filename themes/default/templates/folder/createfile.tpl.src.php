@@ -7,9 +7,9 @@ page
 			#	cell colspan:2
 			#		fieldset title:message:file
 			row
-				cell class:fx
+				cell
 					text text:global_FILE
-				cell class:fx
+				cell
 					upload name:file maxlength:var:maxlength
 			row
 				cell colspan:2
@@ -19,22 +19,22 @@ page
 					newline
 					newline
 			row
-				cell class:fx
+				cell
 					text key:HTTP_URL
-				cell class:fx
+				cell
 					input name:url size:50
 			row
 				cell colspan:2
 					fieldset title:message:description
 			row
-				cell class:fx
+				cell
 					text text:global_NAME
-				cell class:fx
+				cell
 					input name:name size:50
 			row
-				cell class:fx
+				cell
 					text text:global_DESCRIPTION
-				cell class:fx
+				cell
 					inputarea rows:5 cols:50 name:description
 					newline
 			row

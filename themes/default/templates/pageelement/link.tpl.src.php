@@ -6,7 +6,7 @@ page
 					text var:desc
 
 			row
-				cell colspan:2 class:fx
+				cell colspan:2
 					selectbox list:objects name:linkobjectid
 
 			if present:release
@@ -17,7 +17,7 @@ page
 							
 			if present:release
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						checkbox name:release
 						label for:release
 							text raw:_
@@ -25,7 +25,7 @@ page
 
 			if present:publish
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						checkbox name:publish
 						label for:publish
 							text raw:_

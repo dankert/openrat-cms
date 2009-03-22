@@ -2,7 +2,7 @@ page
 	window icon:user name:GROUP_MEMBERSHIPS
 		list list:memberships extract:true
 			row class:data
-				cell class:fx
+				cell
 					image file:icon_user
 					text var:name
 				cell

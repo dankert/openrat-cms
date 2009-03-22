@@ -3,19 +3,19 @@ page
 
 		window title: name:
 			row
-				cell class:fx
+				cell
 					text text:global_TEMPLATE
-				cell class:fx
+				cell
 					selectbox name:templateid list:templates
 			row
-				cell class:fx
+				cell
 					text text:global_NAME
-				cell class:fx
+				cell
 					input name:name size:20
 			row
-				cell class:fx
+				cell
 					text text:global_DESCRIPTION
-				cell class:fx
+				cell
 					inputarea rows:5 cols:50 name:description
 			row
 				cell class:act colspan:2

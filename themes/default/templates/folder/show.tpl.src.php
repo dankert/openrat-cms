@@ -2,7 +2,7 @@ page class:main
 	window widths:75%,25%
 		if present:up_url
 			row
-				cell width:50% colspan:8 class:fx
+				cell width:50% colspan:8
 					link url:var:up_url target:cms_main
 						image type:folder
 						text raw:__.._____________
@@ -21,11 +21,11 @@ page class:main
 						image type:var:icon
 						text var:name
 						text raw:_
-				cell class:fx
+				cell
 					date date:var:date
 
 		if empty:object
 		
 			row
-				cell class:fx colspan:2
+				cell colspan:2
 					text text:GLOBAL_NOT_FOUND

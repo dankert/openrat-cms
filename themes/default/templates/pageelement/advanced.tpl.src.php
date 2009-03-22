@@ -54,9 +54,9 @@ page
 
 
 					row
-						cell class:fx colspan:2
+						cell colspan:2
 							text key:date
-						cell class:fx colspan:5
+						cell colspan:5
 							selectbox name:year list:all_years
 							text raw:_-_
 							selectbox name:month list:all_months
@@ -64,9 +64,9 @@ page
 							selectbox name:day list:all_days
 							
 					row
-						cell class:fx colspan:2
+						cell colspan:2
 							text key:date_time
-						cell class:fx colspan:5
+						cell colspan:5
 							selectbox name:hour list:all_hours
 							text raw:_-_
 							selectbox name:minute list:all_minutes
@@ -80,14 +80,14 @@ page
 					
 			if value:var:type equals:text
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						input size:50 maxlength:255 class:text name:text
 						focus field:text
 
 			if value:var:type equals:longtext
 
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						if value:var:editor equals:html
 							editor type:html name:text
 					
@@ -104,26 +104,26 @@ page
 
 			if value:var:type equals:link
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						selectbox list:objects name:linkobjectid
 						focus field:linkobjectid
 
 			if value:var:type equals:list
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						selectbox list:objects name:linkobjectid
 						focus field:linkobjectid
 
 			if value:var:type equals:number
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						hidden name:decimals default:decimals
 						input size:15 maxlength:20 name:number
 						focus field:number
 
 			if value:var:type equals:select
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						selectbox list:items name:text
 						focus field:text
 
@@ -136,14 +136,14 @@ page
 							
 			if present:release
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						checkbox name:release
 						label for:release
 							text text:GLOBAL_RELEASE
 
 			if present:publish
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						checkbox name:publish
 						label for:publish
 							text text:PAGE_PUBLISH_AFTER_SAVE

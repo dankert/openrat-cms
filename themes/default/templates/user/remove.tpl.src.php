@@ -2,13 +2,13 @@ page
 	form
 		window name:GLOBAL_USER
 			row
-				cell class:fx
+				cell
 					text text:user_username
-				cell class:fx
+				cell
 					text var:name
 			row
-				cell class:fx
-				cell class:fx
+				cell
+				cell
 					checkbox name:confirm
 					label for:confirm
 						text text:delete

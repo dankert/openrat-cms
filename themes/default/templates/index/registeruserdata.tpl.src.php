@@ -6,24 +6,24 @@ page
 				cell class:logo colspan:2
 					logo name:register
 				row
-					cell class:fx width:50%
+					cell width:50%
 						text text:USER_REGISTER_CODE
-					cell class:fx width:50%
+					cell width:50%
 						input name:code default: size:25
 				row
-					cell class:fx width:50%
+					cell width:50%
 						text text:USER_USERNAME
-					cell class:fx width:50%
+					cell width:50%
 						input type:text name:username value: size:25
 				row
-					cell class:fx width:50%
+					cell width:50%
 						text text:USER_PASSWORD
-					cell class:fx width:50%
+					cell width:50%
 						password name:password default: size:25
 				row
-					cell class:fx width:50%
+					cell width:50%
 						text text:GLOBAL_DATABASE
-					cell class:fx width:50%
+					cell width:50%
 						selectbox name:dbid list:dbids default:actdbid
 	
 				row

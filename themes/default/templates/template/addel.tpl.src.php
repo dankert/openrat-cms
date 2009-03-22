@@ -3,15 +3,15 @@ page
 		window name:GLOBAL_TEMPLATES
 	
 			row
-				cell class:fx
+				cell
 					text text:global_name
-				cell class:fx
+				cell
 					input name:name
 	
 			row
-				cell class:fx
+				cell
 					text text:element_type
-				cell class:fx
+				cell
 					set var:text value:text
 					selectbox list:types default:text name:type
 	

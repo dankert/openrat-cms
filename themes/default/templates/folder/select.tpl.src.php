@@ -11,13 +11,13 @@ page
 					
 			list list:object extract:true
 				row class:data
-					cell class:fx
+					cell
 						if true:writable
 							checkbox name:var:id
 						if false:writable
 							text raw:_
 
-					cell class:fx
+					cell
 #						link url:var:url target:cms_main title:desc
 						label for:var:id
 							image type:var:icon
@@ -25,7 +25,7 @@ page
 							text raw:_
 
 			row
-				cell colspan:2 class:fx			
+				cell colspan:2			
 					image fileext:tree_none_end.gif align:left
 					text raw:_
 					link url::javascript:mark();
@@ -37,7 +37,7 @@ page
 					link url::javascript:flip();
 						text key:FOLDER_FLIP_MARK
 			row
-				cell class:fx colspan:2
+				cell colspan:2
 				
 					list list:actionlist extract:true
 						radio name:type value:var:type
@@ -51,7 +51,7 @@ page
 			if empty:object
 			
 				row
-					cell class:fx colspan:2
+					cell colspan:2
 						text text:GLOBAL_NOT_FOUND
 	insert script:mark
 			

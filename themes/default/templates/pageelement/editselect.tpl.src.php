@@ -6,19 +6,19 @@ page
 					text var:desc
 
 			row
-				cell colspan:2 class:fx
+				cell colspan:2
 					selectbox list:items name:text
 
 			if present:release
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						checkbox name:release
 						text raw:_
 						text text:GLOBAL_RELEASE
 
 			if present:publish
 				row
-					cell colspan:2 class:fx
+					cell colspan:2
 						checkbox name:publish
 						text raw:_
 						text text:PAGE_PUBLISH_AFTER_SAVE

@@ -4,7 +4,7 @@ page
 
 			if empty:el
 				row
-					cell colspan:4 class:fx
+					cell colspan:4
 						text text:GLOBAL_NOT_FOUND
 			if empty:el invert:true
 				row
@@ -17,13 +17,13 @@ page
 						
 				list list:el extract:true
 					row class:data
-						cell class:fx
+						cell
 							label for:var:saveid
 								image elementtype:var:type
 								text var:name
-						cell class:fx
+						cell
 							checkbox name:var:saveid default:false readonly:false
-						cell class:fx
+						cell
 							if value:var:type contains:text,date,number
 								input index:true type:text name:var:id default:var:value size:40 maxlength:255 onchange:onchange
 							if value:var:type equals:longtext
@@ -40,7 +40,7 @@ page
 	
 				if present:release
 					row
-						cell colspan:3 class:fx
+						cell colspan:3
 							checkbox name:release
 							label for:release
 								text raw:_
@@ -48,7 +48,7 @@ page
 	
 				if present:publish
 					row
-						cell colspan:3 class:fx
+						cell colspan:3
 							checkbox name:publish
 							label for:publish
 								text raw:_

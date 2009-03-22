@@ -2,14 +2,14 @@ page
 	window name:TEMPLATE_ELEMENTS
 		list list:el extract:true
 			row class:data
-				cell class:fx
+				cell
 					link url:var:url title:var:desc
 						image elementtype:var:type
 						text var:name
-				cell class:fx
+				cell
 					text key:var:type prefix:EL_
 
 		if empty:el
 			row
-				cell colspan:2 class:fx
+				cell colspan:2
 					text key:GLOBAL_NOT_FOUND

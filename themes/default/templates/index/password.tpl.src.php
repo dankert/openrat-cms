@@ -12,9 +12,9 @@ page
 						input type:text name:username value: size:30
 
 				row
-					cell class:fx width:50%
+					cell width:50%
 						text text:GLOBAL_DATABASE
-					cell class:fx width:50%
+					cell width:50%
 						selectbox name:dbid list:dbids default:actdbid
 	
 				row

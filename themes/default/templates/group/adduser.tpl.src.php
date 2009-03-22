@@ -3,7 +3,7 @@ page
 
 		window icon:project name:GLOBAL_GROUPS
 			row
-				cell class:fx
+				cell
 					selectbox name:userid list:users multiple:true size:15
 			row
 				cell class:act

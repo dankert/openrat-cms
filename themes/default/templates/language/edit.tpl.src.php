@@ -5,7 +5,7 @@ page
 			row
 				cell
 					text text:GLOBAL_LANGUAGE
-				cell class:fx
+				cell
 					selectbox list:isocodes name:isocode
 			row
 				cell colspan:2

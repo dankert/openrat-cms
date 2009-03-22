@@ -5,7 +5,7 @@ page
 	
 			if empty:acls
 				row
-					cell class:fx
+					cell
 						text text:GLOBAL_NOT_FOUND
 			if not:true empty:acls
 				row

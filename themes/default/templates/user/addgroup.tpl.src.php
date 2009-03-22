@@ -2,7 +2,7 @@ page
 	form
 		window name:USER_MEMBERSHIPS width:70%
 			row
-				cell class:fx
+				cell
 					image icon:group
 					selectbox name:groupid list:groups
 			row

@@ -20,26 +20,26 @@ page
 
 			if empty:el
 				row
-					cell class:fx colspan:8
+					cell colspan:8
 						text text:GLOBAL_NOT_FOUND
 
 			list list:el extract:true
 				row
-					cell class:fx
+					cell
 						text var:lfd_nr
-					cell class:fx
+					cell
 						if present:compareid
 							radio name:compareid value:var:id
-					cell class:fx
+					cell
 						if present:compareid
 							radio name:withid value:var:id
-					cell class:fx
+					cell
 						date date:var:date
-					cell class:fx
+					cell
 						text var:user
-					cell class:fx
+					cell
 						text var:value
-					cell class:fx
+					cell
 						if true:var:public
 							text key:GLOBAL_PUBLIC type:strong
 						else
@@ -49,7 +49,7 @@ page
 							else
 								text key:GLOBAL_INACTIVE type:emphatic
 							
-					cell class:fx
+					cell
 						if true:var:active
 							text key:GLOBAL_ACTIVE type:emphatic
 						else

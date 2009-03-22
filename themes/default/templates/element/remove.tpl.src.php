@@ -5,7 +5,7 @@ page
 			row
 				cell
 					text text:ELEMENT_NAME
-				cell class:fx
+				cell
 					text var:name
 			row
 				cell colspan:2

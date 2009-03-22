@@ -6,9 +6,9 @@ page
 				cell class:logo colspan:2
 					logo name:register
 				row
-					cell class:fx width:50%
+					cell width:50%
 						text text:USER_MAIL
-					cell class:fx width:50%
+					cell width:50%
 						input name:mail default: size:25
 
 
