@@ -1,43 +1,18 @@
 /* $Id$ */
 
-body
-{
-	background-color:black;
-}
-
-body
-{
-	background-color:black;
-}
-
-body.title
+body.title,
+td.subaction,
+table.notice th
 { 
 	background-image: url('../images/bg-title.png');
-	/*background-repeat: repeat;*/
-	/*background-attachment: fixed;*/
 }
  
 
-body.menu
-{ 
-	background-image: url('../images/bg-menu.png');
-	/*background-repeat: repeat;*/
-	/*background-attachment: fixed;*/
-}
-
+body.menu,
 td.menu
 { 
 	background-image: url('../images/bg-menu.png');
 	color: white;
-	/*background-repeat: repeat;*/
-	/*background-attachment: fixed;*/
-}
-td.subaction
-{ 
-	background-image: url('../images/bg-title.png');
-	/*color: white;*/
-	/*background-repeat: repeat;*/
-	/*background-attachment: fixed;*/
 }
 
 input,
@@ -63,8 +38,8 @@ textarea:hover
 input:focus,
 textarea:focus
 {
-	background-color:white;
 	border-color:black;
+	background-color:white;
 }
 
 input.submit,
