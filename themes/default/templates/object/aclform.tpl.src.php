@@ -52,10 +52,6 @@ page
 	
 			list list:show value:t key:k
 				row
-//					cell
-//					cell width:20px
-//						label for:var:t
-//							text key:var:t prefix:acl_ suffix:_abbrev
 					cell width:10px
 						if value:var:t equals:read
 							set var:var:t value:true
@@ -64,7 +60,7 @@ page
 							set var:var:t value:false
 							checkbox name:var:t readonly:false 
 					cell colspan:2
-						label for:var:t
+						label for:var:t value:
 							text key:var:t prefix:acl_
 			row
 				cell colspan:3 class:act
