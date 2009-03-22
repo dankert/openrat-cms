@@ -9,7 +9,7 @@ page class:tree
 				if present:image
 					cell class:treeimage
 						if present:image_url
-							link url:var:image_url class:tree target:_self title:image_url_desc anchor:var:name
+							link url:var:image_url class:tree target:_self title:var:image_url_desc anchor:var:name
 								image tree:var:image
 						else
 							image tree:var:image
