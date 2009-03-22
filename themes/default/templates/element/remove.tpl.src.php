@@ -22,7 +22,7 @@ page
 						text text:ELEMENT_DELETE_VALUES
 
 			row
-				cell colspan:2
+				cell colspan:2 class:act
 					button type:ok
 
 	focus field:delete			

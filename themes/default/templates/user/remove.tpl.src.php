@@ -7,8 +7,10 @@ page
 				cell
 					text var:name
 			row
-				cell
-				cell
+				cell colspan:2
+					fieldset title:message:options
+			row
+				cell colspan:2
 					checkbox name:confirm
 					label for:confirm
 						text text:delete

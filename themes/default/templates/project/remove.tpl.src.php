@@ -6,18 +6,17 @@ page
 				cell
 					text text:GLOBAL_NAME
 				cell
-					text var:name
-			row
-				cell
-					text text:CONFIRM_DELETE
-				cell
-					checkbox name:delete
-			row
-				cell colspan:2 class:help
-					text text:GROUP_DELETE_DESC
-
+					text var:name class:name
 			row
 				cell colspan:2
+					fieldset title:message:options
+			row
+				cell colspan:2
+					checkbox name:delete
+					label for:delete
+						text text:CONFIRM_DELETE
+			row
+				cell colspan:2 class:act
 					button type:ok
 	focus field:delete			
 					
