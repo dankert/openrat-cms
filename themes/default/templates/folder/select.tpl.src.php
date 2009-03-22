@@ -10,7 +10,7 @@ page
 					text text:GLOBAL_NAME
 					
 			list list:object extract:true
-				row
+				row class:data
 					cell class:fx
 						if true:writable
 							checkbox name:var:id

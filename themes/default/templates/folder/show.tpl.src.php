@@ -15,8 +15,8 @@ page class:main
 				text text:GLOBAL_LASTCHANGE
 				
 		list list:object extract:true
-			row
-				cell class:fx
+			row class:data
+				cell
 					link url:var:url target:cms_main title:var:desc class:var:class
 						image type:var:icon
 						text var:name

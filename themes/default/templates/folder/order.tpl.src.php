@@ -19,7 +19,7 @@ page
 					text text:GLOBAL_LASTCHANGE
 		
 		list list:object extract:true
-			row
+			row class:data
 				cell width:3% class:fx
 					if present:upurl
 						link url:var:upurl title:GLOBAL_UP
