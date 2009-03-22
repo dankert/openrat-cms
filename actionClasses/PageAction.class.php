@@ -665,28 +665,6 @@ class PageAction extends ObjectAction
 
 
 
-	/**
-	 * Die Eigenschaften der Seite anzeigen
-	 */
-	function showprop()
-	{
-		$this->page->public = true;
-		$this->page->load();
-		$this->page->full_filename();
-
-		$this->setTemplateVars( $this->page->getProperties() );
-		
-		if   ( $this->userIsAdmin() )
-		{
-			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
-		}
-	
-		$template = new Template( $this->page->templateid );
-		$template->load();
-		$this->setTemplateVar('template_name',$template->name);
-	}
-
-
 
 	/**
 	 * Die Eigenschaften der Seite anzeigen

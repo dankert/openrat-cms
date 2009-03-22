@@ -30,13 +30,10 @@ target=pubnow
 goto=pub
 
 [saveprop]
-goto=showprop
+goto=prop
 
 [saveform]
 goto=el
-
-[showprop]
-menu=prop
 
 [prop]
 menu=prop
@@ -52,7 +49,7 @@ menu=prop
 target=replacetemplate
 
 [replacetemplate]
-goto=showprop
+goto=prop
 
 [src]
 menu=src
@@ -81,4 +78,4 @@ pub=pub
 elements=el,form
 rights=rights,aclform
 src=src
-prop=showprop,prop,changetemplate
+prop=prop,changetemplate
