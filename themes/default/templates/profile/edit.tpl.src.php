@@ -4,7 +4,7 @@ page
 			row
 				cell
 					text text:user_username
-				cell
+				cell class:name
 					text var:name class:name
 
 			row

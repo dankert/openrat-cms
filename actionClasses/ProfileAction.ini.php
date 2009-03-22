@@ -5,6 +5,7 @@ goto=edit
 [edit]
 target=saveprofile
 menu=edit
+editable=true
 
 [groups]
 menu=edit
