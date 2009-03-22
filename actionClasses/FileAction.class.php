@@ -246,19 +246,8 @@ class FileAction extends ObjectAction
 
 	function prop()
 	{
-		global $conf;
 		
-		if	( $this->file->filename == $this->file->objectid )
-			$this->file->filename = '';
-
-		// Eigenschaften der Datei uebertragen
-		$this->setTemplateVars( $this->file->getProperties() );
-	}
-
-
-	function showprop()
-	{
-		global $conf;
+				global $conf;
 		
 		if	( $this->file->filename == $this->file->objectid )
 			$this->file->filename = '';

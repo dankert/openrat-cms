@@ -19,16 +19,13 @@ target=savevalue
 [savevalue]
 goto=show
 
-[showprop]
-menu=prop
-
 [prop]
 menu=prop
 target=saveprop
 editable=true
 
 [saveprop]
-goto=showprop
+goto=prop
 
 [size]
 menu=prop
@@ -40,10 +37,10 @@ menu=prop
 target=delete
 
 [delete]
-goto=showprop
+goto=prop
 
 [resize]
-goto=showprop
+goto=prop
 
 [pub]
 target=pubnow
@@ -87,6 +84,6 @@ goto=edit
 
 [menu]
 edit=edit,editvalue,compress,uncompress,extract
-prop=showprop,prop,size
+prop=prop,size
 rights=rights,aclform
 pub=pub

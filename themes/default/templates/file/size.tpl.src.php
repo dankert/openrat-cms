@@ -52,9 +52,7 @@ page
 						set var:jpeg_compression value:70
 						selectbox list:jpeglist name:jpeg_compression
 				row
-					cell
-					cell
-					cell
+					cell colspan:3
 						checkbox name:copy
 						label for:copy 
 							text key:copy
