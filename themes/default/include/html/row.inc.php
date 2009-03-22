@@ -1,15 +1,20 @@
 <?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-
-	if (empty($attr_class))
-		$attr_class=$row_class;
-		
-	global $cell_column_nr;
-	$cell_column_nr=0;
+	$attr_tmp_class='';
 	
-	$column_class_idx = 999;
-
-?><tr class="<?php echo $attr_class ?>">
+	/* #IF-ATTR classes# */
+	$attr_tmp_class_list = explode(',',$attr_classes);
+	$last_pos = array_search($attr_last_class,$attr_tmp_class_list);
+	if	( $last_pos === FALSE || $last_pos == count($attr_tmp_class_list)-1)
+		$attr_tmp_class = $attr_tmp_class_list[0];
+	else
+		$attr_tmp_class = $attr_tmp_class_list[++$last_pos];
+	/* #END-IF# */
+			
+	/* #IF-ATTR class# */
+	$attr_tmp_class=$attr_class;
+	/* #END-IF# */
+	
+	$attr_last_class = $attr_tmp_class;
+		
+	echo Html::open_tag('tr',array('class'=>$attr_tmp_class));
+?>
