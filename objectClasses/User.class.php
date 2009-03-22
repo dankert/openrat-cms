@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.33  2009-03-22 15:14:41  dankert
+// Keine Aktion mehr in Methode loadRights()
+//
 // Revision 1.32  2009-03-19 10:05:05  dankert
 // Bugfix bei Ermitteln der zur Verfügung stehenden Projekte: Nur die Root-Objekte der Projekte berücksichtigen.
 //
@@ -973,59 +976,6 @@ SQL
 	 */
 	function loadRights( $projectid,$languageid )
 	{
-		$start = time();    // Zeit merken (zum Loggen).
-		$this->delRights(); // Alte Rechte l�schen.
-
-		$db = db_connection();
-
-		$group_clause = $this->getGroupClause();
-
-		$sql = new Sql( <<<SQL
-SELECT {t_acl}.* FROM {t_acl}
-                 LEFT JOIN {t_object}
-                        ON {t_object}.id={t_acl}.objectid
-                 WHERE projectid={projectid}
-                   AND ( languageid={languageid} OR languageid IS NULL )
-                   AND ( {t_acl}.userid={userid} OR {group_clause}
-		                                                  OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )
-SQL
-);
-		$sql->setInt  ( 'languageid'  ,$languageid             );
-		$sql->setInt  ( 'projectid'   ,$projectid              );
-		$sql->setInt  ( 'userid'      ,$this->userid           );
-		$sql->setParam( 'group_clause',$this->getGroupClause() );
-
-		foreach( $db->getAll( $sql->query ) as $row )
-		{
-			$acl = new Acl();
-			$acl->setDatabaseRow( $row );
-
-			$this->addRight($acl->objectid,$acl->getMask() );
-
-			$o = new Object( $acl->objectid );
-			$o->objectLoadRaw();
-
-			// Vererben der Berechtigung an Unterordner
-			if	( $acl->transmit )
-			{
-				$f = new Folder( $o->objectid );
-
-				foreach( $f->getAllSubfolderIds() as $sfid )
-					$this->addRight($sfid,$acl->getMask() );
-			}
-
-			// Uebergeordneten Ordnern das Leserecht geben
-			if	( !$o->isRoot )
-			{
-				$f = new Folder( $o->parentid );
-				$oids = $f->parentObjectIds( true, true );
-				foreach( $oids as $oid )
-					$this->addRight($oid,ACL_READ);
-			}
-		}
-
-		// Zeit ausgeben.
-		Logger::debug( 'Loaded all rights in '.(time()-$start).' seconds' );
 	}
 
 
