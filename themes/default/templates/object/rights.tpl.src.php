@@ -55,6 +55,6 @@ page
 							input type:checkbox name:inherit
 							label for:inherit
 								text key:inherit_rights
-					row
-						cell class:act colspan:15
-							button type:ok
+			row
+				cell class:act colspan:15
+					button type:ok
