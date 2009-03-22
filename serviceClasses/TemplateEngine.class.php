@@ -88,7 +88,6 @@ class TemplateEngine
 		if	( !is_resource($outFile) )
 			die( get_class($this).': Unable to open file for writing: '.$filename);
 
-		$raw     = false;
 		$openCmd = array();
 		$depth   = 0;
 		
@@ -109,9 +108,7 @@ class TemplateEngine
 			if	($type == 'complete' || $type == 'open')
 				$attributes = $this->checkAttributes($tag,$attributes);
 				
-			if	( $tag == 'raw' )
-				fwrite( $outFile,$value."\n");
-			elseif ( $type == 'open' )
+			if ( $type == 'open' )
 				$this->copyFileContents( $tag,$outFile,$attributes,++$depth );
 			elseif ( $type == 'complete' )
 			{
@@ -377,7 +374,6 @@ class TemplateEngine
 	{
 		$vals  = array();
 
-		$raw     = false;
 		$openCmd = array();
 		
 		foreach( file($filename) as $line )
@@ -390,34 +386,9 @@ class TemplateEngine
 				continue;
 			}
 			
-			// Im RAW-Modus wird die Vorlage einfach unbesehen kopiert.
-			if	( $line == 'RAW' )
-			{
-				$raw = true;
+			if	( substr($line,0,1)=='#' || substr($line,0,2)=='//')
 				continue;
-			} 
-			if	( $line == 'END' )
-			{
-				$raw = false;
-				continue;
-			}
-			
-			// Kommentarzeilen
-			if	( !$raw)
-				if	( substr($line,0,1)=='#' || substr($line,0,2)=='//')
-					continue;
 					
-			if	( $raw)
-			{
-				$vals[] = array( 'tag'        => 'raw',
-				                 'type'       => 'close',
-				                 'value'      => $line,
-				                 'attributes' => array(),
-				                 'level'      => $indent ); 
-				continue;
-			}
-
-
 			$openCmdCopy = $openCmd;
 			krsort($openCmdCopy);
 			foreach($openCmdCopy as $idx=>$ccmd)
