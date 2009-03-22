@@ -270,7 +270,6 @@ tr.diff td.notequal
 
 
 td.menu    { background-color:#7B9CBD;vertical-align:middle; height:30px;}
-td.help    { color:black; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.message { padding:10px; font-weight:bold; }
 td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
@@ -539,7 +538,12 @@ table.calendar td
 
 table.main td.help
 {
+	/*
 	padding:10px;
 	margin:40px;
 	border: dotted grey 2px;
+	*/
+	color:black;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
 }
