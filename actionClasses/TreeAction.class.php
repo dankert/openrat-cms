@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.14  2009-03-22 18:47:21  dankert
+// Korrektur Ermittlung des Col-Spans
+//
 // Revision 1.13  2009-03-03 21:08:09  dankert
 // Umstellung der Baumanzeige auf Template-System (Ausbau RAW-Template).
 //
@@ -141,6 +144,16 @@ class TreeAction extends Action
 	}
 
 
+	/**
+	 * Liefert ein Array mit allen Zeilen des Baumes.
+	 * 
+	 * Ruft sich intern rekursiv auf.
+	 * 
+	 * @param $elId
+	 * @param $tiefe
+	 * @param $isLast
+	 * @return unknown_type
+	 */
 	function outputElement( $elId,$tiefe,$isLast )
 	{
 		$treeElement = $this->tree->elements[$elId]; 
@@ -206,9 +219,10 @@ class TreeAction extends Action
 		// HTML-Target setzen
 		if   ( $treeElement->target != "" )
 			$zeile['target'] = $treeElement->target;
-		else $zeile['target'] = 'cms_main';
+		else
+			$zeile['target'] = 'cms_main';
 		
-		$zeile['colspan'] = 20 - count( $zeile['cols'] );
+		$zeile['colspan'] = 20 - count( $zeile['cols'] ) - intval(isset($zeile['image']));
 
 		$zeilen[] = $zeile;
 		// Rekursiv alle Unter-Elemente lesen
@@ -220,6 +234,7 @@ class TreeAction extends Action
 				$isLast[$tiefe+1] = true;
 			else $isLast[$tiefe+1] = false;
 
+			// Rekursiver Aufruf
 			$zeilen = array_merge( $zeilen,$this->outputElement( $subElementId,$tiefe+1,$isLast ) );
 		}
 	          
