@@ -148,6 +148,9 @@ a.editorlink:visited
 }
 
 
+
+/* Allgemeine Seiteneinstellungen */
+
 body
 {
 	background-color:#CCCCCC;
@@ -158,10 +161,6 @@ body
 
 body.main
 {
-	background-color:#CCCCCC;
-	color:#000000;
-	font-family:Arial;
-	font-size:13px;
 }
 
 body.title {
@@ -170,21 +169,8 @@ body.title {
 }
 
 body.tree {
-	background-color:#CCCCCC;
 	padding:5px;
 }
-
-
-body.border {
-	margin:0px;
-	background-color:gray;
-}
-
-body.background {
-	margin:0px;
-	background-color:#EEEEEE;
-}
-
 
 form
 {
@@ -194,14 +180,19 @@ form
 }
 
 
-pre{ font-family:Courier;font-size:13px; }
+pre
+{
+	font-family:Courier;
+	font-size:13px;
+}
+
 small
 {
 	color:gray;
 }
 
 
-span.title
+td.menu span.title
 {
 	color:white;
 	font-family:Arial;
@@ -209,13 +200,12 @@ span.title
 	font-weight:bold;
 	text-shadow:#cac2a6 2px 1px 3px;
 }
-span.inactive,
-span.menu_disabled
+td.subaction span.menu_disabled
 {
 	color:gray;
 }
 
-span.accesskey
+td.subaction span.accesskey
 {
 	text-decoration:underline;
 }
@@ -239,8 +229,22 @@ td
 }
 
 
+/* Datenzeile-Mauseffekt */
+tr.data:hover
+{
+	background-color:silver;
+}
+/* Baum-Mauseffekt */
+/*
+table.tree tr:hover
+{
+	background-color:white;
+}
+*/
 
-/* Styles f�r Text-Unterschiede */
+
+
+/* Anzeige von Text-Unterschieden */
 
 tr.diff td.line
 {
@@ -272,32 +276,7 @@ td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
 td.subaction { background-color:#cac2a6; }
 
-tr.f1
-{
-	background-color:#cac2a6;
-}
-tr.f2
-{
-	background-color:#c1bba0;
-}
-td.f1
-{
-	padding:5px;
-	border-top:5px solid #dad2b6;
-	border-left:3px solid #dad2b6;
-	border-bottom:1px solid gray;
-	border-right:3px solid #dad2b6;
-}
-td.f2
-{
-	padding:5px;
-	border-top:5px solid #dad2b6;
-	border-left:3px solid #dad2b6;
-	border-bottom:1px solid gray;
-	border-right:3px solid #dad2b6;
-}
-
-td.act
+table.main td.act
 {
 	background-color:#eae2c6;
 	padding:15px;
@@ -306,11 +285,12 @@ td.act
 	text-align:right;
 }
 
-.mainmenu_headline{color:#CCCCCC; font-size:13px; color:black; font-weight:bold; }
-.mainmenu_name{color:white; font-weight:bold; font-size:13px; }
-.mainmenu_val{color:#CCCCCC; font-weight:normal; }
-.mainmenu_title{color:#CCCCCC;vertical-align:middle;font-weight:bold; font-size:13px; }
-p.copyright { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; text-align:center; }
+p.copyright
+{
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	text-align:center;
+}
 
 table.main
 {
@@ -319,7 +299,7 @@ table.main
 }
 
 
-input,
+input.text,
 textarea
 {
 	border:2px solid gray;
@@ -337,13 +317,6 @@ textarea:focus
 {
 	background-color:#7B9CBD;
 	border-color:yellow;
-/*	font-weight:bold;*/
-}
-
-tr.f1:hover,
-tr.f2:hover
-{
-	xbackground-color:#FF0000;
 }
 
 input.submit,
@@ -366,6 +339,11 @@ textarea
 	background-color:#dad2b6;
 }
 
+input.checkbox,
+input.radio
+{
+	border:1px solid grey;
+}
 
 /* Eingabefeld f�r Beschreibung */
 textarea.desc,
@@ -396,7 +374,9 @@ td.name
 input.filename,
 input.extension,
 input.ansidate,
-td.filename
+td.filename,
+td.extension,
+td.ansidate,
 {
 	font-family:Courier;
 	font-size:13px;
@@ -414,23 +394,6 @@ textarea
 	scrollbar-shadow-color:#cac2a6;
 }
 
-/*
-select.treemenu
-{
-	color:#022A50;
-	background-color:white;
-	font-weight:bold;
-	width:90%;
-	border:3px solid white;
-	margin:0px;
-}
-
-option.treemenu
-{
-	margin:2px;
-	border-bottom:1px solid dotted;
-}
-*/
 
 td.logo
 {
@@ -471,6 +434,10 @@ input.searchbutton
 	max-height:20px;
 }
 
+
+
+/* Zwischen-Ueberschriften */
+
 fieldset
 {
 	border-top:1px solid black;
@@ -484,34 +451,19 @@ fieldset
 	padding:0px;
 }
 
+
+
+/* Zwischen-Ueberschriften */
+
 legend
 {
 	font-weight:bold;
 }
 
-tr.notice_error
-{
-	background-color:#FF6347;
-}
-tr.notice_warning
-{
-	background-color:#FFA500;
-	margin:0px;
-	padding:0px;
-}
-tr.notice_ok
-{
-	background-color:#98FB98;
-}
 
 
-table.notice
-{
-	border:1px solid black;
-	border-spacing:0px;
-}
 
-
+/* Notizen */
 
 td.notice
 {
@@ -520,19 +472,53 @@ td.notice
 	padding:10%;
 	text-align:center;
 }
+table.notice
+{
+	border:1px solid black;
+	border-spacing:0px;
+}
+table.notice th
+{
+	padding:2px;
+	white-space:nowrap;
+	border-bottom:1px solid black;
+	font-weight:normal;
+	text-align:left;
+}
+table.notice tr.error
+{
+	background-color:#FF6347;
+}
+table.notice tr.warning
+{
+	background-color:#FFA500;
+	margin:0px;
+	padding:0px;
+}
+table.notice tr.ok
+{
+	background-color:#98FB98;
+}
+
+
+
+/* Baum */
 
 table.tree td.treecol,
 table.tree td.treeimage
 {
 	width:1%;
 }
-
 table.tree td.treevalue
 {
 	vertical-align:middle;
 	white-space:nowrap;
 	text-align: left;
 }
+
+
+
+/* Kalender */
 
 table.calendar
 {
@@ -544,7 +530,6 @@ table.calendar
 	#width: 80%;
 	#background-color: gray;
 }
-
 table.calendar td
 {
 	border: 1px dotted;
