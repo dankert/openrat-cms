@@ -525,12 +525,23 @@ table.tree td.treevalue
 {
 	vertical-align:middle;
 	white-space:nowrap;
+	text-align: left;
+	border:1px solid green;
+}
+table.tree td.treelast
+{
+	border:2px solid silver;
 }
 
-table.tree td.treecol,
+table.tree td.treecol
+{
+	width:1%;
+	border:1px solid yellow;
+}
 table.tree td.treeimage
 {
-	width:1px;
+	width:1%;
+	border:1px solid red;
 }
 
 table.calendar
