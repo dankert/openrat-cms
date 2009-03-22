@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.52  2009-03-22 21:54:35  dankert
+// Korrektur: Rechteabfrage für Verschieben/Löschen.
+//
 // Revision 1.51  2009-03-22 21:49:08  dankert
 // Subaction "showprop" entfernt, da in "prop" mit aufgegangen.
 //
@@ -1159,7 +1162,7 @@ class FolderAction extends ObjectAction
 		$actionList[] = array('type'=>'copy');
 		$actionList[] = array('type'=>'link');
 
-		if	( $this->folder->hasRight('ACL_WRITE') )
+		if	( $this->folder->hasRight(ACL_WRITE) )
 		{
 			$actionList[] = array('type'=>'move');
 			$actionList[] = array('type'=>'delete');
