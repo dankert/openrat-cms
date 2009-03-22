@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.51  2009-03-22 21:49:08  dankert
+// Subaction "showprop" entfernt, da in "prop" mit aufgegangen.
+//
 // Revision 1.50  2009-03-17 01:43:19  dankert
 // Auch Bilder (wieder) im gleichen Frame anzeigen.
 //
@@ -1237,17 +1240,11 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function showprop()
-	{
-		$this->setTemplateVars( $this->folder->getProperties() );
-		$this->setTemplateVar( 'full_filename',$this->folder->full_filename() );
-	}
-	
-	
 	
 	function prop()
 	{
 		$this->setTemplateVars( $this->folder->getProperties() );
+		$this->setTemplateVar( 'full_filename',$this->folder->full_filename() );
 	}
 
 

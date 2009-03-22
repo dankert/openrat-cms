@@ -1,19 +1,17 @@
 
 [default]
-goto=showprop
-
-[showprop]
-menu=prop
+goto=prop
 
 [saveprop]
-goto=showprop
+goto=prop
 
 [save]
-goto=showprop
+goto=prop
 
 [prop]
 menu=prop
 target=saveprop
+editable=true
 
 [edit]
 menu=edit
@@ -23,7 +21,7 @@ target=save
 editable=true
 
 [delete]
-goto=showprop
+goto=prop
 
 [remove]
 menu=prop
@@ -46,5 +44,5 @@ goto=rights
 
 [menu]
 edit=edit
-prop=showprop,prop
+prop=prop
 rights=rights,aclform

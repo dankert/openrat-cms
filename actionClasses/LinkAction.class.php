@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.9  2006-06-02 19:49:06  dankert
+// Revision 1.10  2009-03-22 21:49:08  dankert
+// Subaction "showprop" entfernt, da in "prop" mit aufgegangen.
+//
+// Revision 1.9  2006/06/02 19:49:06  dankert
 // Bearbeiten von Verkn?pfungen
 //
 // Revision 1.8  2006/01/29 17:18:58  dankert
@@ -144,20 +147,6 @@ class LinkAction extends ObjectAction
 	}
 
 
-	function prop2()
-	{
-		$this->setTemplateVars( $this->link->getProperties() );
-
-		// Typ der Verkn?pfung
-		$this->setTemplateVar('type'            ,$this->link->getType()     );
-		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
-		$this->setTemplateVar('url'             ,$this->link->url           );
-
-		$this->setTemplateVar('edittarget_url',Html::url('link','edittarget',$this->link->objectid));		
-	}
-
-
-
 	function showprop()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
@@ -204,8 +193,6 @@ class LinkAction extends ObjectAction
 	function prop()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
-//		print_r($this->link->getProperties());
-
 		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
 	}
 }

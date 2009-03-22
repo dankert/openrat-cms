@@ -18,12 +18,10 @@ goto=show
 [prop]
 menu=prop
 target=saveprop
+editable=true
 
 [saveprop]
-goto=showprop
-
-[showprop]
-menu=prop
+goto=prop
 
 [remove]
 menu=prop
@@ -116,5 +114,5 @@ goto=order
 pub=pub
 show=show,select,order
 new=create,createfolder,createfile,createpage,createlink
-prop=showprop,prop
+prop=prop
 rights=rights,aclform
