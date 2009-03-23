@@ -159,17 +159,18 @@
 			}
 			extract($$attr3_list_tmp_value);
 		}
-?><?php unset($attr3_list);unset($attr3_extract);unset($attr3_key);unset($attr3_value); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr4_class))
-		$attr4_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr4_class ?>"><?php  ?><?php  $attr5_class='fx';  ?><?php
+?><?php unset($attr3_list);unset($attr3_extract);unset($attr3_key);unset($attr3_value); ?><?php  $attr4_class='data';  ?><?php
+	$attr4_tmp_class='';
+	$attr4_tmp_class_list = explode(',',$attr4_classes);
+	$last_pos = array_search($attr4_last_class,$attr4_tmp_class_list);
+	if	( $last_pos === FALSE || $last_pos == count($attr4_tmp_class_list)-1)
+		$attr4_tmp_class = $attr4_tmp_class_list[0];
+	else
+		$attr4_tmp_class = $attr4_tmp_class_list[++$last_pos];
+	$attr4_tmp_class=$attr4_class;
+	$attr4_last_class = $attr4_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr4_tmp_class));
+?><?php unset($attr4_class); ?><?php  $attr5_class='fx';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -212,6 +213,12 @@ if	( isset($attr5_rowspan)) { ?> rowspan="<?php echo $attr5_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -314,6 +321,12 @@ if	( isset($attr5_rowspan)) { ?> rowspan="<?php echo $attr5_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';

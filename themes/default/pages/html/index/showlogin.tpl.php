@@ -141,11 +141,11 @@
     	<br><table class="notice" width="80%">
   <?php if ($notice['name']!='') { ?>
   <tr>
-    <td colspan="2" class="subaction" style="padding:2px; white-space:nowrap; border-bottom:1px solid black;"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
-    </td>
+    <th colspan="2"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
+    </th>
   </tr>
 <?php } ?>
-  <tr class="notice_<?php echo $notice['status'] ?>">
+  <tr class="<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo langHtml($notice['key'],$notice['vars']) ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
     <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
@@ -161,7 +161,7 @@
 <?php } ?>
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4">
+      <table cellspacing="0" width="100%" cellpadding="4">
 <?php unset($attr3_title);unset($attr3_name);unset($attr3_icon);unset($attr3_width);unset($attr3_rowclasses);unset($attr3_columnclasses); ?><?php  $attr4_present=@$conf['login']['logo']['file'];  ?><?php 
 	$attr4_tmp_exec = isset($$attr4_present);
 	$attr4_tmp_last_exec = $attr4_tmp_exec;
@@ -178,16 +178,10 @@
 	{
 ?>
 <?php unset($attr5_false); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr6_class))
-		$attr6_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr6_class ?>"><?php  ?><?php  $attr7_colspan='2';  ?><?php
+	$attr6_tmp_class='';
+	$attr6_last_class = $attr6_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr6_tmp_class));
+?><?php  ?><?php  $attr7_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -254,16 +248,10 @@ if	( isset($attr7_rowspan)) { ?> rowspan="<?php echo $attr7_rowspan ?>" <?php }
 	{
 ?>
 <?php unset($attr4_present); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr5_class))
-		$attr5_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr5_class ?>"><?php  ?><?php  $attr6_class='motd';  $attr6_colspan='2';  ?><?php
+	$attr5_tmp_class='';
+	$attr5_last_class = $attr5_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
+?><?php  ?><?php  $attr6_class='motd';  $attr6_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -303,6 +291,12 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -355,16 +349,10 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	{
 ?>
 <?php unset($attr4_true); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr5_class))
-		$attr5_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr5_class ?>"><?php  ?><?php  $attr6_class='help';  $attr6_colspan='2';  ?><?php
+	$attr5_tmp_class='';
+	$attr5_last_class = $attr5_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
+?><?php  ?><?php  $attr6_class='help';  $attr6_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -404,6 +392,12 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -456,16 +450,10 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	{
 ?>
 <?php unset($attr4_true); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr5_class))
-		$attr5_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr5_class ?>"><?php  ?><?php  $attr6_class='help';  $attr6_colspan='2';  ?><?php
+	$attr5_tmp_class='';
+	$attr5_last_class = $attr5_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
+?><?php  ?><?php  $attr6_class='help';  $attr6_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -505,6 +493,12 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -557,16 +551,10 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	{
 ?>
 <?php unset($attr4_true); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr5_class))
-		$attr5_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr5_class ?>"><?php  ?><?php  $attr6_class='help';  $attr6_colspan='2';  ?><?php
+	$attr5_tmp_class='';
+	$attr5_last_class = $attr5_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
+?><?php  ?><?php  $attr6_class='help';  $attr6_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -606,6 +594,12 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -658,16 +652,10 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	{
 ?>
 <?php unset($attr4_false); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr5_class))
-		$attr5_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr5_class ?>"><?php  ?><?php  $attr6_class='logo';  $attr6_colspan='2';  ?><?php
+	$attr5_tmp_class='';
+	$attr5_last_class = $attr5_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
+?><?php  ?><?php  $attr6_class='logo';  $attr6_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -685,16 +673,10 @@ if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
 if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
 if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php unset($attr6_class);unset($attr6_colspan); ?><?php  $attr7_name='login';  ?><img src="<?php echo $image_dir.'logo_'.$attr7_name.IMG_ICON_EXT ?>" border="0" align="left"><h2 class="logo"><?php echo langHtml('logo_'.$attr7_name) ?></h2><p class="logo"><?php echo langHtml('logo_'.$attr7_name.'_text') ?></p><?php unset($attr7_name); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr5_class))
-		$attr5_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr5_class ?>"><?php  ?><?php  ?><?php
+	$attr5_tmp_class='';
+	$attr5_last_class = $attr5_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -734,6 +716,12 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -809,7 +797,7 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 if	($attr8_readonly) {
 ?><input type="hidden" id="id_<?php echo $attr8_name ?>" name="<?php echo $attr8_name ?>" value="<?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" /><?php
  } } else { ?><span class="<?php echo $attr8_class ?>"><?php echo isset($$attr8_name)?$$attr8_name:$attr8_default ?></span><?php } ?><?php unset($attr8_class);unset($attr8_default);unset($attr8_type);unset($attr8_name);unset($attr8_value);unset($attr8_size);unset($attr8_maxlength);unset($attr8_onchange);unset($attr8_readonly); ?><?php  ?><?php } ?><?php  ?><?php  ?><?php if (!$attr7_tmp_last_exec) { ?>
-<?php  ?><?php  $attr8_class='';  $attr8_default='';  $attr8_type='hidden';  $attr8_name='login_name';  $attr8_value=$force_username;  $attr8_size='40';  $attr8_maxlength='256';  $attr8_onchange='';  $attr8_readonly=false;  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr8_readonly=true;
+<?php  ?><?php  $attr8_class='text';  $attr8_default='';  $attr8_type='hidden';  $attr8_name='login_name';  $attr8_value=$force_username;  $attr8_size='40';  $attr8_maxlength='256';  $attr8_onchange='';  $attr8_readonly=false;  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr8_readonly=true;
 	  if ($attr8_readonly && empty($$attr8_name)) $$attr8_name = '- '.lang('EMPTY').' -';
       if(!isset($attr8_default)) $attr8_default='';
 ?><?php if (!$attr8_readonly || $attr8_type=='hidden') {
@@ -839,6 +827,12 @@ if	($attr8_readonly) {
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -883,16 +877,10 @@ if	($attr8_readonly) {
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_value);unset($attr8_escape); ?><?php  ?><?php }
 unset($attr6_tmp_last_exec) ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr5_class))
-		$attr5_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr5_class ?>"><?php  ?><?php  ?><?php
+	$attr5_tmp_class='';
+	$attr5_last_class = $attr5_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -932,6 +920,12 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -1001,16 +995,10 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	{
 ?>
 <?php unset($attr5_true); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr6_class))
-		$attr6_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr6_class ?>"><?php  ?><?php  $attr7_colspan='2';  ?><?php
+	$attr6_tmp_class='';
+	$attr6_last_class = $attr6_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr6_tmp_class));
+?><?php  ?><?php  $attr7_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -1028,16 +1016,10 @@ if	( isset($attr7_class  )) { ?> class="<?php   echo $attr7_class   ?>" <?php }
 if	( isset($attr7_colspan)) { ?> colspan="<?php echo $attr7_colspan ?>" <?php }
 if	( isset($attr7_rowspan)) { ?> rowspan="<?php echo $attr7_rowspan ?>" <?php }
 ?>><?php unset($attr7_colspan); ?><?php  $attr8_title=lang('USER_NEW_PASSWORD');  ?><fieldset><?php if(isset($attr8_title)) { ?><legend><?php echo encodeHtml($attr8_title) ?></legend><?php } ?><?php unset($attr8_title); ?><?php  ?></fieldset><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr6_class))
-		$attr6_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr6_class ?>"><?php  ?><?php  ?><?php
+	$attr6_tmp_class='';
+	$attr6_last_class = $attr6_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr6_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -1077,6 +1059,12 @@ if	( isset($attr7_rowspan)) { ?> rowspan="<?php echo $attr7_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -1137,16 +1125,10 @@ if	( isset($attr7_class  )) { ?> class="<?php   echo $attr7_class   ?>" <?php }
 if	( isset($attr7_colspan)) { ?> colspan="<?php echo $attr7_colspan ?>" <?php }
 if	( isset($attr7_rowspan)) { ?> rowspan="<?php echo $attr7_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr8_name='password1';  $attr8_default='';  $attr8_class='';  $attr8_size='25';  $attr8_maxlength='256';  ?><input type="password" name="<?php echo $attr8_name ?>" size="<?php echo $attr8_size ?>" maxlength="<?php echo $attr8_maxlength ?>" class="<?php echo $attr8_class ?>" value="<?php if (count($errors)==0) echo isset($$attr8_name)?$$attr8_name:$attr8_default ?>" <?php if (in_array($attr8_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php unset($attr8_name);unset($attr8_default);unset($attr8_class);unset($attr8_size);unset($attr8_maxlength); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr6_class))
-		$attr6_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr6_class ?>"><?php  ?><?php  ?><?php
+	$attr6_tmp_class='';
+	$attr6_last_class = $attr6_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr6_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -1186,6 +1168,12 @@ if	( isset($attr7_rowspan)) { ?> rowspan="<?php echo $attr7_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -1255,16 +1243,10 @@ if	( isset($attr7_rowspan)) { ?> rowspan="<?php echo $attr7_rowspan ?>" <?php }
 	{
 ?>
 <?php unset($attr5_true); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr6_class))
-		$attr6_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr6_class ?>"><?php  ?><?php  $attr7_colspan='2';  ?><?php
+	$attr6_tmp_class='';
+	$attr6_last_class = $attr6_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr6_tmp_class));
+?><?php  ?><?php  $attr7_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -1282,16 +1264,10 @@ if	( isset($attr7_class  )) { ?> class="<?php   echo $attr7_class   ?>" <?php }
 if	( isset($attr7_colspan)) { ?> colspan="<?php echo $attr7_colspan ?>" <?php }
 if	( isset($attr7_rowspan)) { ?> rowspan="<?php echo $attr7_rowspan ?>" <?php }
 ?>><?php unset($attr7_colspan); ?><?php  $attr8_title=lang('OPENID');  ?><fieldset><?php if(isset($attr8_title)) { ?><legend><?php echo encodeHtml($attr8_title) ?></legend><?php } ?><?php unset($attr8_title); ?><?php  ?></fieldset><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr6_class))
-		$attr6_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr6_class ?>"><?php  ?><?php  ?><?php
+	$attr6_tmp_class='';
+	$attr6_last_class = $attr6_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr6_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -1348,6 +1324,12 @@ if	( isset($attr7_rowspan)) { ?> rowspan="<?php echo $attr7_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -1421,26 +1403,14 @@ if	($attr8_readonly) {
 	{
 ?>
 <?php unset($attr5_value);unset($attr5_greaterthan); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr6_class))
-		$attr6_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr6_class ?>"><?php  ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr7_class))
-		$attr7_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr7_class ?>"><?php  ?><?php  $attr8_colspan='2';  ?><?php
+	$attr6_tmp_class='';
+	$attr6_last_class = $attr6_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr6_tmp_class));
+?><?php  ?><?php  ?><?php
+	$attr7_tmp_class='';
+	$attr7_last_class = $attr7_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr7_tmp_class));
+?><?php  ?><?php  $attr8_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -1497,6 +1467,12 @@ if	( isset($attr7_rowspan)) { ?> rowspan="<?php echo $attr7_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -1617,16 +1593,10 @@ elseif ( isset($attr8_default) )
 else
 	$attr8_tmp_value = "";
 ?><input type="hidden" name="<?php echo $attr8_name ?>" value="<?php echo $attr8_tmp_value ?>" /><?php unset($attr8_name);unset($attr8_default); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr5_class))
-		$attr5_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr5_class ?>"><?php  ?><?php  $attr6_class='act';  $attr6_colspan='2';  ?><?php
+	$attr5_tmp_class='';
+	$attr5_last_class = $attr5_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
+?><?php  ?><?php  $attr6_class='act';  $attr6_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -1656,12 +1626,8 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	else
 		$attr7_src  = '';
 ?><input type="<?php echo $attr7_type ?>"<?php if(isset($attr7_src)) { ?> src="<?php echo $image_dir.'icon_'.$attr7_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $attr7_value ?>" class="<?php echo $attr7_class ?>" title="<?php echo lang($attr7_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo langHtml($attr7_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr7_src) ?><?php
-?><?php unset($attr7_type);unset($attr7_class);unset($attr7_value);unset($attr7_text); ?><script name="javascript1.2" type="text/javascript">
-<!--
-document.forms[0].screenwidth.value=window.innerWidth;
-//	-->
-</script>
-<?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?>      </table>
+?><?php unset($attr7_type);unset($attr7_class);unset($attr7_value);unset($attr7_text); ?><?php  $attr7_script='screenwidth';  ?><script src="<?php echo OR_THEMES_DIR.$conf['interface']['theme'].'/js/'.basename($attr7_script).'.js' ?>" type="text/javascript"></script>
+<?php unset($attr7_script); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?>      </table>
 	</td>
   </tr>
 </table>
@@ -1758,6 +1724,12 @@ else
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';

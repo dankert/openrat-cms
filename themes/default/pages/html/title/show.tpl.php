@@ -26,7 +26,7 @@
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1_class); ?><?php  $attr2_width='100%';  $attr2_space='0';  $attr2_padding='5';  $attr2_rowclasses='odd,even';  ?><?php
+<?php unset($attr1_class); ?><?php  $attr2_width='100%';  $attr2_space='0';  $attr2_padding='5';  ?><?php
 	$coloumn_widths=array();
 	$row_classes   = array('');
 	$column_classes= array('');
@@ -54,17 +54,11 @@
 		$column_classes   = explode(',',$attr2_columnclasses);
 		unset($attr2['columnclasses']);
 	}
-?><table class="<?php echo $attr2_class ?>" cellspacing="<?php echo $attr2_space ?>" width="<?php echo $attr2_width ?>" cellpadding="<?php echo $attr2_padding ?>"><?php unset($attr2_width);unset($attr2_space);unset($attr2_padding);unset($attr2_rowclasses); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr3_class))
-		$attr3_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr3_class ?>"><?php  ?><?php  $attr4_width='30%';  $attr4_class='title';  ?><?php
+?><table class="<?php echo $attr2_class ?>" cellspacing="<?php echo $attr2_space ?>" width="<?php echo $attr2_width ?>" cellpadding="<?php echo $attr2_padding ?>"><?php unset($attr2_width);unset($attr2_space);unset($attr2_padding); ?><?php  ?><?php
+	$attr3_tmp_class='';
+	$attr3_last_class = $attr3_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
+?><?php  ?><?php  $attr4_width='30%';  $attr4_class='title';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -107,6 +101,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -173,6 +173,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'teletype':
 				$tmp_tag = 'tt';
 				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
+				break;
 			default:
 				$tmp_tag = 'span';
 		}
@@ -237,6 +243,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -326,6 +338,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'teletype':
 				$tmp_tag = 'tt';
 				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
+				break;
 			default:
 				$tmp_tag = 'span';
 		}
@@ -397,6 +415,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'teletype':
 				$tmp_tag = 'tt';
 				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
+				break;
 			default:
 				$tmp_tag = 'span';
 		}
@@ -461,6 +485,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -527,6 +557,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'teletype':
 				$tmp_tag = 'tt';
 				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
+				break;
 			default:
 				$tmp_tag = 'span';
 		}
@@ -592,6 +628,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'teletype':
 				$tmp_tag = 'tt';
 				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
+				break;
 			default:
 				$tmp_tag = 'span';
 		}
@@ -656,6 +698,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -762,6 +810,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'teletype':
 				$tmp_tag = 'tt';
 				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
+				break;
 			default:
 				$tmp_tag = 'span';
 		}
@@ -866,6 +920,12 @@ if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';

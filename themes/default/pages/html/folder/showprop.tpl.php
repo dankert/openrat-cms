@@ -1,4 +1,4 @@
-<?php $attr1_debug_info = 'a:1:{s:5:"class";s:4:"main";}' ?><?php $attr1 = array('class'=>'main') ?><?php $attr1_class='main' ?><?php
+<?php  $attr1_class='main';  ?><?php
  if (!headers_sent()) header('Content-Type: text/html; charset='.$charset)
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
@@ -18,15 +18,7 @@
        	?>
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo lang($meta['title']) ?>" /><?php
       }
-?><script type="text/javascript" src="themes/default/js/jquery.js"></script>
-    <script type="text/javascript" src="themes/default/js/jquery-lightbox.js"></script>
-    <link rel="stylesheet" type="text/css" href="themes/default/js/lightbox/css/jquery-lightbox.css" media="screen" />
-    <script type="text/javascript">
-    $(function() {
-        $('a.image').lightBox();
-    });
-    </script>
-<?php if(!empty($root_stylesheet)) { ?>
+?><?php if(!empty($root_stylesheet)) { ?>
   <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
 <?php } ?>
 <?php if($root_stylesheet!=$user_stylesheet) { ?>
@@ -34,7 +26,7 @@
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1) ?><?php unset($attr1_class) ?><?php $attr2_debug_info = 'a:7:{s:5:"title";s:11:"global_prop";s:4:"name";s:10:"objectName";s:4:"icon";s:6:"folder";s:6:"widths";s:11:"40%,20%,30%";s:5:"width";s:3:"70%";s:10:"rowclasses";s:8:"odd,even";s:13:"columnclasses";s:5:"1,2,3";}' ?><?php $attr2 = array('title'=>'global_prop','name'=>'objectName','icon'=>'folder','widths'=>'40%,20%,30%','width'=>'70%','rowclasses'=>'odd,even','columnclasses'=>'1,2,3') ?><?php $attr2_title='global_prop' ?><?php $attr2_name='objectName' ?><?php $attr2_icon='folder' ?><?php $attr2_widths='40%,20%,30%' ?><?php $attr2_width='70%' ?><?php $attr2_rowclasses='odd,even' ?><?php $attr2_columnclasses='1,2,3' ?><?php
+<?php unset($attr1_class); ?><?php  $attr2_title='global_prop';  $attr2_name='objectName';  $attr2_icon='folder';  $attr2_widths='40%,20%,30%';  $attr2_width='70%';  $attr2_rowclasses='odd,even';  $attr2_columnclasses='1,2,3';  ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr2_widths))
 	{
@@ -67,7 +59,7 @@
 		echo '<tr><td class="menu">';
 		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
-  <?php if ($this->getRequestVar('mode')=='edit') { 
+  <?php if ($this->isEditMode()) { 
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php } else {
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
@@ -127,11 +119,11 @@
     	<br><table class="notice" width="80%">
   <?php if ($notice['name']!='') { ?>
   <tr>
-    <td colspan="2" class="subaction" style="padding:2px; white-space:nowrap; border-bottom:1px solid black;"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
-    </td>
+    <th colspan="2"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
+    </th>
   </tr>
 <?php } ?>
-  <tr class="notice_<?php echo $notice['status'] ?>">
+  <tr class="<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo langHtml($notice['key'],$notice['vars']) ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
     <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
@@ -147,29 +139,29 @@
 <?php } ?>
   <tr>
     <td>
-      <table class="n" cellspacing="0" width="100%" cellpadding="4">
-<?php unset($attr2) ?><?php unset($attr2_title) ?><?php unset($attr2_name) ?><?php unset($attr2_icon) ?><?php unset($attr2_widths) ?><?php unset($attr2_width) ?><?php unset($attr2_rowclasses) ?><?php unset($attr2_columnclasses) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr3_class))
-		$attr3_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr3_class ?>"><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+      <table cellspacing="0" width="100%" cellpadding="4">
+<?php unset($attr2_title);unset($attr2_name);unset($attr2_icon);unset($attr2_widths);unset($attr2_width);unset($attr2_rowclasses);unset($attr2_columnclasses); ?><?php  ?><?php
+	$attr3_tmp_class='';
+	$attr3_last_class = $attr3_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:11:"global_name";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','text'=>'global_name','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_text='global_name' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_class='text';  $attr5_text='global_name';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -192,6 +184,12 @@
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -234,18 +232,24 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4_debug_info = 'a:2:{s:5:"class";s:4:"name";s:7:"colspan";s:1:"2";}' ?><?php $attr4 = array('class'=>'name','colspan'=>'2') ?><?php $attr4_class='name' ?><?php $attr4_colspan='2' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_text);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  $attr4_class='name';  $attr4_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php unset($attr4_colspan) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:4:"name";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','var'=>'name','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_var='name' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php unset($attr4_class);unset($attr4_colspan); ?><?php  $attr5_class='text';  $attr5_var='name';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -268,6 +272,12 @@
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -310,28 +320,28 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr3_class))
-		$attr3_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr3_class ?>"><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_var);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+	$attr3_tmp_class='';
+	$attr3_last_class = $attr3_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:18:"global_description";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','text'=>'global_description','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_text='global_description' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_class='text';  $attr5_text='global_description';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -354,6 +364,12 @@
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -396,18 +412,24 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:7:"colspan";s:1:"2";}' ?><?php $attr4 = array('colspan'=>'2') ?><?php $attr4_colspan='2' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_text);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  $attr4_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_colspan) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:11:"description";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','var'=>'description','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_var='description' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php unset($attr4_colspan); ?><?php  $attr5_class='text';  $attr5_var='description';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -430,6 +452,12 @@
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -472,28 +500,28 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr3_class))
-		$attr3_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr3_class ?>"><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_var);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+	$attr3_tmp_class='';
+	$attr3_last_class = $attr3_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"key";s:13:"FULL_FILENAME";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','key'=>'FULL_FILENAME','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_key='FULL_FILENAME' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_class='text';  $attr5_key='FULL_FILENAME';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -516,6 +544,12 @@
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -558,18 +592,24 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_key) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4_debug_info = 'a:2:{s:5:"class";s:8:"filename";s:7:"colspan";s:1:"2";}' ?><?php $attr4 = array('class'=>'filename','colspan'=>'2') ?><?php $attr4_class='filename' ?><?php $attr4_colspan='2' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_key);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  $attr4_class='filename';  $attr4_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_class) ?><?php unset($attr4_colspan) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:13:"full_filename";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','var'=>'full_filename','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_var='full_filename' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php unset($attr4_class);unset($attr4_colspan); ?><?php  $attr5_class='text';  $attr5_var='full_filename';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -592,6 +632,12 @@
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -634,49 +680,49 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr3_class))
-		$attr3_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr3_class ?>"><?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:7:"colspan";s:1:"2";}' ?><?php $attr4 = array('colspan'=>'2') ?><?php $attr4_colspan='2' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_var);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+	$attr3_tmp_class='';
+	$attr3_last_class = $attr3_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
+?><?php  ?><?php  $attr4_colspan='2';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_colspan) ?><?php $attr5_debug_info = 'a:1:{s:5:"title";s:23:"message:additional_info";}' ?><?php $attr5 = array('title'=>lang('additional_info')) ?><?php $attr5_title=lang('additional_info') ?><fieldset><?php if(isset($attr5_title)) { ?><legend><?php echo encodeHtml($attr5_title) ?></legend><?php } ?><?php unset($attr5) ?><?php unset($attr5_title) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></fieldset><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr3_class))
-		$attr3_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr3_class ?>"><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php unset($attr4_colspan); ?><?php  $attr5_title=lang('additional_info');  ?><fieldset><?php if(isset($attr5_title)) { ?><legend><?php echo encodeHtml($attr5_title) ?></legend><?php } ?><?php unset($attr5_title); ?><?php  ?></fieldset><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+	$attr3_tmp_class='';
+	$attr3_last_class = $attr3_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"key";s:2:"id";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','key'=>'id','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_key='id' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_class='text';  $attr5_key='id';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -699,6 +745,12 @@
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -741,18 +793,24 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_key) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_key);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:3:"var";s:8:"objectid";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','var'=>'objectid','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_var='objectid' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_class='text';  $attr5_var='objectid';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -775,6 +833,12 @@
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -817,49 +881,49 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_var) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr3_class))
-		$attr3_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr3_class ?>"><?php unset($attr3) ?><?php $attr4_debug_info = 'a:1:{s:7:"colspan";s:1:"3";}' ?><?php $attr4 = array('colspan'=>'3') ?><?php $attr4_colspan='3' ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_var);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+	$attr3_tmp_class='';
+	$attr3_last_class = $attr3_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
+?><?php  ?><?php  $attr4_colspan='3';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php unset($attr4_colspan) ?><?php $attr5_debug_info = 'a:1:{s:5:"title";s:21:"message:PROP_USERINFO";}' ?><?php $attr5 = array('title'=>lang('PROP_USERINFO')) ?><?php $attr5_title=lang('PROP_USERINFO') ?><fieldset><?php if(isset($attr5_title)) { ?><legend><?php echo encodeHtml($attr5_title) ?></legend><?php } ?><?php unset($attr5) ?><?php unset($attr5_title) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?></fieldset><?php unset($attr4) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr3_class))
-		$attr3_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr3_class ?>"><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php unset($attr4_colspan); ?><?php  $attr5_title=lang('PROP_USERINFO');  ?><fieldset><?php if(isset($attr5_title)) { ?><legend><?php echo encodeHtml($attr5_title) ?></legend><?php } ?><?php unset($attr5_title); ?><?php  ?></fieldset><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+	$attr3_tmp_class='';
+	$attr3_last_class = $attr3_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:14:"global_created";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','text'=>'global_created','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_text='global_created' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_class='text';  $attr5_text='global_created';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -882,6 +946,12 @@
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -924,32 +994,27 @@
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_text);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:2:{s:4:"icon";s:7:"el_date";s:5:"align";s:4:"left";}' ?><?php $attr5 = array('icon'=>'el_date','align'=>'left') ?><?php $attr5_icon='el_date' ?><?php $attr5_align='left' ?><?php
-if (isset($attr5_elementtype)) {
-?><img src="<?php echo $image_dir.'icon_el_'.$attr5_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_type)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr5_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_icon)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_tree)) {
-?><img src="<?php echo $image_dir.'tree_'.$attr5_tree.IMG_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_url)) {
-?><img src="<?php echo $attr5_url ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_fileext)) {
-?><img src="<?php echo $image_dir.$attr5_fileext ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_file)) {
-?><img src="<?php echo $image_dir.$attr5_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php } ?><?php unset($attr5) ?><?php unset($attr5_icon) ?><?php unset($attr5_align) ?><?php $attr5_debug_info = 'a:1:{s:4:"date";s:15:"var:create_date";}' ?><?php $attr5 = array('date'=>$create_date) ?><?php $attr5_date=$create_date ?><?php	
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_icon='el_date';  $attr5_align='left';  ?><?php
+	$attr5_tmp_image_file = $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT;
+	$attr5_size = '16x16';
+?><img src="<?php echo $attr5_tmp_image_file ?>" border="0"<?php if(isset($attr5_align)) echo ' align="'.$attr5_align.'"' ?><?php if (isset($attr5_size)) { list($attr5_tmp_width,$attr5_tmp_height)=explode('x',$attr5_size);echo ' width="'.$attr5_tmp_width.'" height="'.$attr5_tmp_height.'"';} ?>><?php unset($attr5_icon);unset($attr5_align); ?><?php  $attr5_date=$create_date;  ?><?php	
     global $conf;
 	$time = $attr5_date;
 	if	( $time==0)
@@ -1005,32 +1070,27 @@ if (isset($attr5_elementtype)) {
 			echo $jahre.' '.lang('GLOBAL_YEARS');
 		echo '</span>';
 	}
-?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?><?php unset($attr5_date); ?><?php  ?></td><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:2:{s:4:"icon";s:4:"user";s:5:"align";s:4:"left";}' ?><?php $attr5 = array('icon'=>'user','align'=>'left') ?><?php $attr5_icon='user' ?><?php $attr5_align='left' ?><?php
-if (isset($attr5_elementtype)) {
-?><img src="<?php echo $image_dir.'icon_el_'.$attr5_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_type)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr5_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_icon)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_tree)) {
-?><img src="<?php echo $image_dir.'tree_'.$attr5_tree.IMG_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_url)) {
-?><img src="<?php echo $attr5_url ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_fileext)) {
-?><img src="<?php echo $image_dir.$attr5_fileext ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_file)) {
-?><img src="<?php echo $image_dir.$attr5_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php } ?><?php unset($attr5) ?><?php unset($attr5_icon) ?><?php unset($attr5_align) ?><?php $attr5_debug_info = 'a:1:{s:4:"user";s:15:"var:create_user";}' ?><?php $attr5 = array('user'=>$create_user) ?><?php $attr5_user=$create_user ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_icon='user';  $attr5_align='left';  ?><?php
+	$attr5_tmp_image_file = $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT;
+	$attr5_size = '16x16';
+?><img src="<?php echo $attr5_tmp_image_file ?>" border="0"<?php if(isset($attr5_align)) echo ' align="'.$attr5_align.'"' ?><?php if (isset($attr5_size)) { list($attr5_tmp_width,$attr5_tmp_height)=explode('x',$attr5_size);echo ' width="'.$attr5_tmp_width.'" height="'.$attr5_tmp_height.'"';} ?>><?php unset($attr5_icon);unset($attr5_align); ?><?php  $attr5_user=$create_user;  ?><?php
 		if	( is_object($attr5_user) )
 			$user = $attr5_user;
 		else
@@ -1043,28 +1103,28 @@ if (isset($attr5_elementtype)) {
 			echo '<a href="mailto:'.$user->mail.'" title="'.$user->fullname.'">'.$user->name.'</a>';
 		else
 			echo '<span title="'.$user->fullname.'">'.$user->name.'</span>';
-?><?php unset($attr5) ?><?php unset($attr5_user) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr3_class))
-		$attr3_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr3_class ?>"><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?><?php unset($attr5_user); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+	$attr3_tmp_class='';
+	$attr3_last_class = $attr3_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
+?><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:3:{s:5:"class";s:4:"text";s:4:"text";s:17:"global_lastchange";s:6:"escape";s:4:"true";}' ?><?php $attr5 = array('class'=>'text','text'=>'global_lastchange','escape'=>true) ?><?php $attr5_class='text' ?><?php $attr5_text='global_lastchange' ?><?php $attr5_escape=true ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_class='text';  $attr5_text='global_lastchange';  $attr5_escape=true;  ?><?php
 	if	( isset($attr5_prefix)&& isset($attr5_key))
 		$attr5_key = $attr5_prefix.$attr5_key;
 	if	( isset($attr5_suffix)&& isset($attr5_key))
@@ -1087,6 +1147,12 @@ if (isset($attr5_elementtype)) {
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
@@ -1129,32 +1195,27 @@ if (isset($attr5_elementtype)) {
 	}
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5) ?><?php unset($attr5_class) ?><?php unset($attr5_text) ?><?php unset($attr5_escape) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_text);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:2:{s:4:"icon";s:7:"el_date";s:5:"align";s:4:"left";}' ?><?php $attr5 = array('icon'=>'el_date','align'=>'left') ?><?php $attr5_icon='el_date' ?><?php $attr5_align='left' ?><?php
-if (isset($attr5_elementtype)) {
-?><img src="<?php echo $image_dir.'icon_el_'.$attr5_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_type)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr5_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_icon)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_tree)) {
-?><img src="<?php echo $image_dir.'tree_'.$attr5_tree.IMG_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_url)) {
-?><img src="<?php echo $attr5_url ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_fileext)) {
-?><img src="<?php echo $image_dir.$attr5_fileext ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_file)) {
-?><img src="<?php echo $image_dir.$attr5_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php } ?><?php unset($attr5) ?><?php unset($attr5_icon) ?><?php unset($attr5_align) ?><?php $attr5_debug_info = 'a:1:{s:4:"date";s:19:"var:lastchange_date";}' ?><?php $attr5 = array('date'=>$lastchange_date) ?><?php $attr5_date=$lastchange_date ?><?php	
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_icon='el_date';  $attr5_align='left';  ?><?php
+	$attr5_tmp_image_file = $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT;
+	$attr5_size = '16x16';
+?><img src="<?php echo $attr5_tmp_image_file ?>" border="0"<?php if(isset($attr5_align)) echo ' align="'.$attr5_align.'"' ?><?php if (isset($attr5_size)) { list($attr5_tmp_width,$attr5_tmp_height)=explode('x',$attr5_size);echo ' width="'.$attr5_tmp_width.'" height="'.$attr5_tmp_height.'"';} ?>><?php unset($attr5_icon);unset($attr5_align); ?><?php  $attr5_date=$lastchange_date;  ?><?php	
     global $conf;
 	$time = $attr5_date;
 	if	( $time==0)
@@ -1210,32 +1271,27 @@ if (isset($attr5_elementtype)) {
 			echo $jahre.' '.lang('GLOBAL_YEARS');
 		echo '</span>';
 	}
-?><?php unset($attr5) ?><?php unset($attr5_date) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr4_debug_info = 'a:0:{}' ?><?php $attr4 = array() ?><?php
+?><?php unset($attr5_date); ?><?php  ?></td><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
 	$column_class=$column_classes[$column_class_idx-1];
 	if (empty($attr4_class))
-		$attr4['class']=$column_class;
+		$attr4_class=$column_class;
 	global $cell_column_nr;
 	$cell_column_nr++;
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4['width']=$column_widths[$cell_column_nr-1];
-?><td <?php foreach( $attr4 as $a_name=>$a_value ) echo " $a_name=\"$a_value\"" ?>><?php unset($attr4) ?><?php $attr5_debug_info = 'a:2:{s:4:"icon";s:4:"user";s:5:"align";s:4:"left";}' ?><?php $attr5 = array('icon'=>'user','align'=>'left') ?><?php $attr5_icon='user' ?><?php $attr5_align='left' ?><?php
-if (isset($attr5_elementtype)) {
-?><img src="<?php echo $image_dir.'icon_el_'.$attr5_elementtype.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_type)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr5_type.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_icon)) {
-?><img src="<?php echo $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_tree)) {
-?><img src="<?php echo $image_dir.'tree_'.$attr5_tree.IMG_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_url)) {
-?><img src="<?php echo $attr5_url ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_fileext)) {
-?><img src="<?php echo $image_dir.$attr5_fileext ?>" border="0" align="<?php echo $attr5_align ?>"><?php
-} elseif (isset($attr5_file)) {
-?><img src="<?php echo $image_dir.$attr5_file.IMG_ICON_EXT ?>" border="0" align="<?php echo $attr5_align ?>"><?php } ?><?php unset($attr5) ?><?php unset($attr5_icon) ?><?php unset($attr5_align) ?><?php $attr5_debug_info = 'a:1:{s:4:"user";s:19:"var:lastchange_user";}' ?><?php $attr5 = array('user'=>$lastchange_user) ?><?php $attr5_user=$lastchange_user ?><?php
+		$attr4_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+if	( isset($attr4_width  )) { ?> width="<?php   echo $attr4_width   ?>" <?php }
+if	( isset($attr4_style  )) { ?> style="<?php   echo $attr4_style   ?>" <?php }
+if	( isset($attr4_class  )) { ?> class="<?php   echo $attr4_class   ?>" <?php }
+if	( isset($attr4_colspan)) { ?> colspan="<?php echo $attr4_colspan ?>" <?php }
+if	( isset($attr4_rowspan)) { ?> rowspan="<?php echo $attr4_rowspan ?>" <?php }
+?>><?php  ?><?php  $attr5_icon='user';  $attr5_align='left';  ?><?php
+	$attr5_tmp_image_file = $image_dir.'icon_'.$attr5_icon.IMG_ICON_EXT;
+	$attr5_size = '16x16';
+?><img src="<?php echo $attr5_tmp_image_file ?>" border="0"<?php if(isset($attr5_align)) echo ' align="'.$attr5_align.'"' ?><?php if (isset($attr5_size)) { list($attr5_tmp_width,$attr5_tmp_height)=explode('x',$attr5_size);echo ' width="'.$attr5_tmp_width.'" height="'.$attr5_tmp_height.'"';} ?>><?php unset($attr5_icon);unset($attr5_align); ?><?php  $attr5_user=$lastchange_user;  ?><?php
 		if	( is_object($attr5_user) )
 			$user = $attr5_user;
 		else
@@ -1248,7 +1304,7 @@ if (isset($attr5_elementtype)) {
 			echo '<a href="mailto:'.$user->mail.'" title="'.$user->fullname.'">'.$user->name.'</a>';
 		else
 			echo '<span title="'.$user->fullname.'">'.$user->name.'</span>';
-?><?php unset($attr5) ?><?php unset($attr5_user) ?><?php $attr3_debug_info = 'a:0:{}' ?><?php $attr3 = array() ?></td><?php unset($attr3) ?><?php $attr2_debug_info = 'a:0:{}' ?><?php $attr2 = array() ?></tr><?php unset($attr2) ?><?php $attr1_debug_info = 'a:0:{}' ?><?php $attr1 = array() ?>      </table>
+?><?php unset($attr5_user); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?>      </table>
 	</td>
   </tr>
 </table>
@@ -1260,5 +1316,5 @@ if (isset($attr5_elementtype)) {
 <?php $dur = time()-START_TIME;
       echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small></center>
 <?php } ?>
-<?php unset($attr1) ?><?php $attr0_debug_info = 'a:0:{}' ?><?php $attr0 = array() ?></body>
-</html><?php unset($attr0) ?>
+<?php  ?><?php  ?></body>
+</html><?php  ?>

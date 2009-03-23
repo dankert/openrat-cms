@@ -26,7 +26,7 @@
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1_class); ?><?php  $attr2_class='tree';  $attr2_width='100%';  $attr2_space='0';  $attr2_padding='0';  $attr2_rowclasses='odd,even';  ?><?php
+<?php unset($attr1_class); ?><?php  $attr2_class='tree';  $attr2_width='100%';  $attr2_space='0';  $attr2_padding='0';  ?><?php
 	$coloumn_widths=array();
 	$row_classes   = array('');
 	$column_classes= array('');
@@ -54,7 +54,7 @@
 		$column_classes   = explode(',',$attr2_columnclasses);
 		unset($attr2['columnclasses']);
 	}
-?><table class="<?php echo $attr2_class ?>" cellspacing="<?php echo $attr2_space ?>" width="<?php echo $attr2_width ?>" cellpadding="<?php echo $attr2_padding ?>"><?php unset($attr2_class);unset($attr2_width);unset($attr2_space);unset($attr2_padding);unset($attr2_rowclasses); ?><?php  $attr3_list='zeilen';  $attr3_extract=true;  $attr3_key='list_key';  $attr3_value='list_value';  ?><?php
+?><table class="<?php echo $attr2_class ?>" cellspacing="<?php echo $attr2_space ?>" width="<?php echo $attr2_width ?>" cellpadding="<?php echo $attr2_padding ?>"><?php unset($attr2_class);unset($attr2_width);unset($attr2_space);unset($attr2_padding); ?><?php  $attr3_list='zeilen';  $attr3_extract=true;  $attr3_key='list_key';  $attr3_value='list_value';  ?><?php
 	$attr3_list_tmp_key   = $attr3_key;
 	$attr3_list_tmp_value = $attr3_value;
 	$attr3_list_extract   = $attr3_extract;
@@ -74,16 +74,10 @@
 			extract($$attr3_list_tmp_value);
 		}
 ?><?php unset($attr3_list);unset($attr3_extract);unset($attr3_key);unset($attr3_value); ?><?php  ?><?php
-	$row_class_idx++;
-	if ($row_class_idx > count($row_classes))
-		$row_class_idx=1;
-	$row_class=$row_classes[$row_class_idx-1];
-	if (empty($attr4_class))
-		$attr4_class=$row_class;
-	global $cell_column_nr;
-	$cell_column_nr=0;
-	$column_class_idx = 999;
-?><tr class="<?php echo $attr4_class ?>"><?php  ?><?php  $attr5_list='cols';  $attr5_extract=false;  $attr5_key='list_key';  $attr5_value='i';  ?><?php
+	$attr4_tmp_class='';
+	$attr4_last_class = $attr4_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr4_tmp_class));
+?><?php  ?><?php  $attr5_list='cols';  $attr5_extract=false;  $attr5_key='list_key';  $attr5_value='i';  ?><?php
 	$attr5_list_tmp_key   = $attr5_key;
 	$attr5_list_tmp_value = $attr5_value;
 	$attr5_list_extract   = $attr5_extract;
@@ -151,7 +145,7 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( $attr7_tmp_exec )
 	{
 ?>
-<?php unset($attr7_present); ?><?php  $attr8_title='image_url_desc';  $attr8_target='_self';  $attr8_url=$image_url;  $attr8_class='tree';  $attr8_anchor=$name;  ?><?php
+<?php unset($attr7_present); ?><?php  $attr8_title=$image_url_desc;  $attr8_target='_self';  $attr8_url=$image_url;  $attr8_class='tree';  $attr8_anchor=$name;  ?><?php
 	$params = array();
 	if (!empty($attr8_var1) && isset($attr8_value1))
 		$params[$attr8_var1]=$attr8_value1;
@@ -269,6 +263,12 @@ if	( isset($attr5_rowspan)) { ?> rowspan="<?php echo $attr5_rowspan ?>" <?php }
 			case 'teletype':
 				$tmp_tag = 'tt';
 				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
+				break;
 			default:
 				$tmp_tag = 'span';
 		}
@@ -337,6 +337,12 @@ if	( isset($attr5_rowspan)) { ?> rowspan="<?php echo $attr5_rowspan ?>" <?php }
 			case 'tt':
 			case 'teletype':
 				$tmp_tag = 'tt';
+				break;
+			case 'preformatted';
+				$tmp_tag = 'pre';
+				break;
+			case 'code';
+				$tmp_tag = 'code';
 				break;
 			default:
 				$tmp_tag = 'span';
