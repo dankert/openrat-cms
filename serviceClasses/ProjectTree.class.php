@@ -193,7 +193,7 @@ class ProjectTree extends AbstractTree
 			else
 				$treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
-			$treeElement->url        = Html::url( 'main',$o->getType(),$o->objectid,array('oid'=>'__OID__'.$o->objectid.'__') );
+			$treeElement->url        = Html::url( 'main',$o->getType(),$o->objectid,array('readit'=>'__OID__'.$o->objectid.'__') );
 			$treeElement->icon       = $o->getType();
 			
 			// Besonderheiten fuer bestimmte Objekttypen	
