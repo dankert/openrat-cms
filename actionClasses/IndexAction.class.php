@@ -1070,21 +1070,25 @@ class IndexAction extends Action
 		if	( $projectid != 0 )
 		{
 			$project = new Project( $projectid );
+			$project->load();
 			Session::setProject($project);
 		}
 		elseif	( $languageid != 0 )
 		{
 			$language = new Language( $languageid );
+			$language->load();
 			Session::setProjectLanguage($language);
 		}
 		elseif	( $modelid != 0 )
 		{
 			$model = new Model( $modelid );
+			$model->load();
 			Session::setProjectModel($model);
 		}
 		elseif	( $objectid != 0 )
 		{
 			$object = new Object( $objectid );
+			$object->objectLoad();
 			Session::setObject($object);
 		}
 		if	( $elementid != 0 )
