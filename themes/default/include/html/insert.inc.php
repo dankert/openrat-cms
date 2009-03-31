@@ -5,7 +5,7 @@
 
 /* #IF-ATTR script# */
 <?php
-$attr_tmp_file = OR_THEMES_DIR.$conf['interface']['theme'].'/js/'.basename($attr_script).'.js';
+$attr_tmp_file = $tpl_dir.'../../js/'.basename($attr_script).'.js';
 if	(!$attr_inline)
 {
 	?><script src="<?php echo $attr_tmp_file ?>" type="text/javascript"></script><?php 
