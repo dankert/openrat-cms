@@ -95,13 +95,16 @@ function encodeHtml($text)
 	}
 	else
 	{
+		return $text;
+		// TODO: Was tun mit ISO-8859-5 (kyryllisch)?
+		
 		$t2 = '';
 		
-		for	( $i=0;$i<strlen($tmp_text);$i++)
+		for	( $i=0;$i<strlen($text);$i++)
 		{
-			$o = ord($tmp_text[$i]);
+			$o = ord($text[$i]);
 			if	( $o <= 127 )
-				$t2 .= $tmp_text[$i];
+				$t2 .= $text[$i];
 			else
 				$t2 .= '&#'.$o.';';
 		}
