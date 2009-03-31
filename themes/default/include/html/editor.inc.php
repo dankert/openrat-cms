@@ -190,12 +190,14 @@ function table()
 		}
 		else
 		{
-			$attr_tmp_doc = new DocumentElement();
+			// Anzeige des Inhaltes
 			$attr_tmp_text = $$attr_name;
+//			$attr_tmp_doc = new DocumentElement();
 			if	( !is_array($attr_tmp_text))
 				$attr_tmp_text = explode("\n",$attr_tmp_text);
-			$attr_tmp_doc->parse($attr_tmp_text);
-			echo $attr_tmp_doc->render('application/html');
+//			$attr_tmp_doc->parse($attr_tmp_text);
+//			echo $attr_tmp_doc->render('text/html');
+			echo implode('',$attr_tmp_text);
 		}
 		break;
 		
