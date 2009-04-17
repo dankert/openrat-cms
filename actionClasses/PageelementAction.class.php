@@ -154,7 +154,8 @@ class PageelementAction extends Action
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
 		$this->setTemplateVar('elementid',$this->value->element->elementid);
 		$this->setTemplateVar('type'     ,$this->value->element->type     );
-
+		$this->setTemplateVar('value_time',time() );
+		
 
 		$this->value->page             = new Page( $this->page->objectid );
 		$this->value->page->languageid = $this->value->languageid;
@@ -863,10 +864,17 @@ class PageelementAction extends Action
 			// Inhalt sofort freigegeben, wenn
 			// - Recht vorhanden
 			// - Freigabe gewuenscht
-			if	( $value->page->hasRight( ACL_RELEASE ) && $this->getRequestVar('release')!='' )
-			$value->publish = true;
+			if	( $value->page->hasRight( ACL_RELEASE ) && $this->hasRequestVar('release') )
+				$value->publish = true;
 			else
-			$value->publish = false;
+				$value->publish = false;
+
+			// Up-To-Date-Check
+			$lastChangeTime = $value->getLastChangeTime();
+			if	( $lastChangeTime > $this->getRequestVar('value_time') )
+			{
+				$this->addNotice('pageelement',$value->element->name,'CONCURRENT_VALUE_CHANGE',OR_NOTICE_WARN,array('last_change_time'=>date(lang('DATE_FORMAT'),$lastChangeTime)));
+			}
 
 			// Inhalt speichern
 

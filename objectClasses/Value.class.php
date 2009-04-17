@@ -293,6 +293,28 @@ class Value
 	}
 
 
+	function getLastChangeTime()
+	{
+		$db = db_connection();
+
+		$sql = new Sql( 
+<<<SQL
+	SELECT lastchange_date FROM {t_value}
+		WHERE elementid ={elementid}
+		  AND pageid    ={pageid}
+		  AND languageid={languageid}
+		  ORDER BY id DESC
+SQL
+		);
+		$sql->setInt( 'elementid' ,$this->element->elementid );
+		$sql->setInt( 'pageid'    ,$this->pageid    );
+		$sql->setInt( 'languageid',$this->languageid);
+
+		return $db->getOne( $sql->query );
+	}
+	
+	
+	
 	/**
 	 * Inhalt freigeben
 	 */
@@ -745,11 +767,11 @@ SQL
 					$inhalt = $this->element->defaultText;
 
 				// Wenn HTML nicht erlaubt und Wiki-Formatierung aktiv, dann einfache HTML-Tags in Wiki umwandeln
-				if   ( !$this->element->html && $this->element->wiki && $conf['wiki']['convert_html'] && $this->page->mimeType()=='text/html' )
+				if   ( !$this->element->html && $this->element->wiki && $conf['editor']['wiki']['convert_html'] && $this->page->mimeType()=='text/html' )
 					$inhalt = Text::html2Wiki( $inhalt );
 
 				// Wenn Wiki-Formatierung aktiv, dann BB-Code umwandeln
-				if   ( $this->element->wiki && $conf['wiki']['convert_bbcode'] )
+				if   ( $this->element->wiki && $conf['editor']['wiki']['convert_bbcode'] )
 					$inhalt = Text::bbCode2Wiki( $inhalt );
 
 				// Wenn HTML nicht erlaubt ist, dann die HTML-Tags ersetzen
