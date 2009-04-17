@@ -1,6 +1,7 @@
 page
 	form method:post
 		input type:hidden name:elementid
+		input type:hidden name:value_time
 		window name:element
 			row
 				cell colspan:2 class:help
