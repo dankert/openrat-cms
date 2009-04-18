@@ -6,7 +6,7 @@ page
 					fieldset title:message:folder
 			row
 				cell
-					radio name:type value:folder
+					radio name:type value:folder children:folder_name
 				cell
 					label for:type_folder
 						text text:global_folder
@@ -18,7 +18,7 @@ page
 					fieldset title:message:file
 			row
 				cell
-					radio name:type value:file
+					radio name:type value:file children:file
 				cell
 					label for:type_file
 						text text:global_FILE
@@ -34,7 +34,7 @@ page
 					fieldset title:message:page
 			row
 				cell
-					radio name:type value:page
+					radio name:type value:page children:page_templateid,page_name
 				cell
 					label for:type_page
 						text text:global_TEMPLATE
@@ -53,11 +53,12 @@ page
 					fieldset title:message:link
 			row
 				cell
-					radio name:type value:link
+					radio name:type value:link children:link_name
 				cell
 					label for:type_link
 						text text:global_NAME
 				cell
+					input name:link_name size:30 maxlength:250 class:name
 
 			row
 				cell class:act colspan:3
