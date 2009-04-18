@@ -53,5 +53,5 @@ page
 				row
 					cell colspan:2
 						text text:GLOBAL_NOT_FOUND
-	insert script:mark
+	insert script:mark inline:true
 			
