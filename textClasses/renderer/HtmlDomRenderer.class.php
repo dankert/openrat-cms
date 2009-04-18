@@ -28,12 +28,6 @@ class HtmlDomRenderer
 	var $domId      = '';
 	
 	
-	function HtmlEditorRenderer()
-	{
-		global $REQ;
-		$this->domId = !empty($REQ['domid'])?$REQ['domid']:'';
-	}
-	
 	/**
 	 * Rendert ein Dokument-Element.
 	 *
