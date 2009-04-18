@@ -4,12 +4,12 @@
 [text-markup]
 
 ; Strong/important text (mostly "bold")
-strong-begin = *
-strong-end   = *
+strong-begin = "*"
+strong-end   = "*"
 
 ; Emphatic text (mostly "italic")
-emphatic-begin = _
-emphatic-end   = _
+emphatic-begin = "_"
+emphatic-end   = "_"
 
 ; Image
 image-begin = "{"
@@ -24,20 +24,20 @@ code-begin = "="
 code-end   = "="
 
 ; footnotes
-footnote-begin="["
-footnote-end="]"
+footnote-begin = "["
+footnote-end   = "]"
 
 ; pre-formatted Text
 pre-begin = "="
 pre-end   = "="
 
 ; Inserted Text
-insert-begin = ++
-insert-end   = ++
+insert-begin = "++"
+insert-end   = "++"
 
 ; Removed text
-remove-begin = --
-remove-end   = --
+remove-begin = "--"
+remove-end   = "--"
 
 ; Separator for a definition item
 definition-sep = "::"
@@ -73,29 +73,32 @@ style-begin = "'"
 style-end   = "'"
 
 ; Quote Text
-quote            = >
-quote-line-begin = >
-quote-line-end   = >
+quote            = ">"
+quote-line-begin = ">"
+quote-line-end   = ">"
 
+; Makro
+makro-begin = "$$"
+makro-end   = "$$"
 
 [html]
 
 ; Which HTML-Tag to use for cites
-tag_strong_open="strong""
+tag_strong = "strong"
 
 ; Which HTML-Tag to use for emphatic text
-tag_emphatic=em
+tag_emphatic = "em"
 
 ; Which HTML-Tag to use for teletyped text
-tag_teletype=tt
+tag_teletype = "tt"
 
 ; Which HTML-Tag to use for cites
-tag_speech_="cite"
+tag_speech = "cite"
 
 ; OpenRat tries to use a good speech tag. You may override this. 
-override_speech=false
-override_speech_open="&laquo;"
-override_speech_close="&raquo;"
+override_speech = false
+override_speech_open  = "&laquo;"
+override_speech_close = "&raquo;"
 
 ; HTML-Rendermode
 ; explains how to handle emtpy elements.
@@ -104,7 +107,7 @@ override_speech_close="&raquo;"
 rendermode=sgml
 ;rendermode=xml
 
-replace = "EUR:&euro; Ä:&Auml; ä:&auml; Ö:&Ouml; ö:&ouml; Ü:&Uuml; ü:&uuml; ß:&szlig; (c):&copy; (r):&reg; ^1:&sup1; ^2:&sup2; ^3:&sup3; 1/4:&frac14; 1/2:&frac12; 3/4:&frac34;"
+replace = "EUR:&euro; ï¿½:&Auml; ï¿½:&auml; ï¿½:&Ouml; ï¿½:&ouml; ï¿½:&Uuml; ï¿½:&uuml; ï¿½:&szlig; (c):&copy; (r):&reg; ^1:&sup1; ^2:&sup2; ^3:&sup3; 1/4:&frac14; 1/2:&frac12; 3/4:&frac34;"
 
 
 
