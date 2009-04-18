@@ -5,7 +5,6 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pa
 {
 	require_once( OR_TEXTCLASSES_DIR."parser/WikiParser.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."renderer/HtmlRenderer.class.".PHP_EXT );
-	require_once( OR_TEXTCLASSES_DIR."renderer/HtmlEditorRenderer.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."renderer/HtmlDomRenderer.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."renderer/PdfRenderer.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."renderer/TextRenderer.class.".PHP_EXT );
