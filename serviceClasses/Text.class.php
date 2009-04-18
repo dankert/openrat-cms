@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.10  2009-04-18 00:56:14  dankert
+// Beim Verarbeiten von if-empty-Bereichen der Seitenvorlage keine regulären Ausdrücke mehr verwenden (da Binärausgaben wie PDF-Dokumente dabei beschädigt werden).
+//
 // Revision 1.9  2007-11-27 21:16:33  dankert
 // Bugfix in "encodeHtmlSpecialChars()"
 //
@@ -42,7 +45,7 @@
 // Weitere Funktionen f?r HTML und BB-Code
 //
 // Revision 1.2  2004/05/02 15:04:16  dankert
-// Einf�gen package-name (@package)
+// Einf�gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 17:03:28  dankert
 // Initiale Version
@@ -148,7 +151,7 @@ class Text
 	
 	
 	/**
-	 * Ersetzt Sonderzeichen durch HTML-�quivalente.<br>
+	 * Ersetzt Sonderzeichen durch HTML-�quivalente.<br>
 	 * Z.B. Ersetzt "(c)" durch "&copy;".
 	 */
 	function replaceHtmlChars( $text )
@@ -352,6 +355,16 @@ class Text
 		}
 		
 		return( array($from_out,$to_out) );
+	}
+	
+	
+	function entferneVonBis($text,$von,$bis)
+	{
+		$beg = strpos($text,$von);
+		$end = strpos($text,$bis);
+		if	( $beg!==false && $end !==false )
+			$text = substr($src,0,$beg).substr($src,$end);
+		return $text;
 	}
 }
 

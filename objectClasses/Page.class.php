@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.31  2009-04-18 00:56:14  dankert
+// Beim Verarbeiten von if-empty-Bereichen der Seitenvorlage keine regulären Ausdrücke mehr verwenden (da Binärausgaben wie PDF-Dokumente dabei beschädigt werden).
+//
 // Revision 1.30  2009-03-17 01:39:43  dankert
 // Funktionsfähigkeit bei enable_cache=false
 //
@@ -770,15 +773,15 @@ class Page extends Object
 				$src = str_replace( '{{IFEMPTY:'.$id.':BEGIN}}','',$src );
 				$src = str_replace( '{{IFEMPTY:'.$id.':END}}'  ,'',$src );
 
-				$src = eregi_replace( '{{IFNOTEMPTY:'.$id.':BEGIN}}.*{{IFNOTEMPTY:'.$id.':END}}','',$src );
+				$src = Text::entferneVonBis( $src,'{{IFNOTEMPTY:'.$id.':BEGIN}}','{{IFNOTEMPTY:'.$id.':END}}' );
 			}
 			else
 			{
 				// Wenn Feld gefuellt
 				$src = str_replace( '{{IFNOTEMPTY:'.$id.':BEGIN}}','',$src );
 				$src = str_replace( '{{IFNOTEMPTY:'.$id.':END}}'  ,'',$src );
-
-				$src = eregi_replace( '{{IFEMPTY:'.$id.':BEGIN}}.*{{IFEMPTY:'.$id.':END}}','',$src );
+				
+				$src = Text::entferneVonBis( $src,'{{IFEMPTY:'.$id.':BEGIN}}','{{IFEMPTY:'.$id.':END}}' );
 			}
 			
 			if   ( $this->icons )
@@ -787,6 +790,8 @@ class Page extends Object
 				$src = str_replace( '{{->'.$id.'}}','',$src );
 		}
 
+		#Html::debug(strlen($src),'laenge am ende');
+		
 		$this->value = &$src;
 
 		// Store in cache.
