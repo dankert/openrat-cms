@@ -5,7 +5,6 @@
 			$attr_tmp_default = $attr_default;
 		else
 			$attr_tmp_default = '';
-//			Html::debug($attr_tmp_default);
 		
 		foreach( $attr_tmp_list as $box_key=>$box_value )
 		{

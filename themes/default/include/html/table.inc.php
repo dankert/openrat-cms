@@ -1,32 +1,33 @@
 <?php
-	$coloumn_widths=array();
-	$row_classes   = array('');
-	$column_classes= array('');
+	$coloumn_widths = array();
+	$row_classes    = array();
+	$column_classes = array();
 
-	if(empty($attr_class))
+	#IF-ATTR class#
+	#ELSE
 		$attr_class='';
+	#END-IF
 
-	if	(!empty($attr_widths))
-	{
+	#IF-ATTR widths#
 		$column_widths = explode(',',$attr_widths);
 		unset($attr['widths']);
-	}
-	if	(!empty($attr_classes))
-	{
+	#END-IF
+
+	#IF-ATTR classes#
 		$row_classes   = explode(',',$attr_rowclasses);
 		$row_class_idx = 999;
 		unset($attr['rowclasses']);
-	}
-	if	(!empty($attr_rowclasses))
-	{
+	#END-IF
+		
+	#IF-ATTR rowclasses#
 		$row_classes   = explode(',',$attr_rowclasses);
 		$row_class_idx = 999;
 		unset($attr['rowclasses']);
-	}
-	if	(!empty($attr_columnclasses))
-	{
+	#END-IF
+		
+	#IF-ATTR columnclasses#
 		$column_classes   = explode(',',$attr_columnclasses);
 		unset($attr['columnclasses']);
-	}
-	
+	#END-IF
+		
 ?><table class="<?php echo $attr_class ?>" cellspacing="<?php echo $attr_space ?>" width="<?php echo $attr_width ?>" cellpadding="<?php echo $attr_padding ?>">
