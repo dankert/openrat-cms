@@ -60,14 +60,14 @@
 			$tmp_text = $langF($tmpArray[$attr_text]);
 	#END-IF
 	
-	#IF-ATTR text#
-		$tmp_text = $langF($attr_text);
-	#END-IF
-		
 	#IF-ATTR textvar#
 		$tmp_text = $langF($$attr_textvar);
 	#END-IF
 
+	#IF-ATTR text#
+		$tmp_text = $langF($attr_text);
+	#END-IF
+		
 	#IF-ATTR key#
 		$tmp_text = $langF($attr_key);
 	#END-IF
