@@ -234,8 +234,12 @@ class TemplateEngine
 			{
 				$found = false;
 				foreach( $attr as $attrName=>$attrValue )
+				{
 					if  ( strpos($line,'#IF-ATTR '.$attrName)!==FALSE )
 						$found = true;
+					if  ( strpos($line,'#IF-ATTR-VALUE '.$attrName.':'.$attrValue)!==FALSE )
+						$found = true;
+				}
 				if	( ! $found )
 					$ignore = true;
 			}
