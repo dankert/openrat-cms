@@ -6,7 +6,7 @@ register=false
 send_password=false
 
 [gpl]
-url="http://www.gnu.org/copyleft/gpl.html"
+url="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
 
 [logo]
 file="./themes/default/images/logo.jpg"  ; logo (url to image) in login mask 
