@@ -12,7 +12,7 @@ page
 							if empty:config:login/logo/url
 								image url:config:login/logo/file
 
-			if present:config:login/motd
+			if not: empty:config:login/motd
 				row
 					cell class:motd colspan:2
 						text raw:config:login/motd
@@ -104,8 +104,8 @@ page
 
 	newline
 	newline
-	link url:config:login/gpl/url target:_top
-		text value:message:GLOBAL_GPL
+	link url:config:login/gpl/url target:_top class:copyright
+		text value:message:GPL
 
 	if present:force_username
 		focus field:login_password
