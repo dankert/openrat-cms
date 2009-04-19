@@ -226,6 +226,7 @@ class TemplateEngine
 			
 		$file   = file( $inFileName );
 		$ignore = false;
+		$linebreaks = true;
 		
 		foreach( $file as $line )
 		{
@@ -253,7 +254,15 @@ class TemplateEngine
 			{
 				$ignore = !$ignore;
 			}
-			
+
+			// Zeilenumbrüche nicht setzen.
+			if  ( strpos($line,'#SET-LINEBREAK-OFF')!==FALSE )
+				$linebreaks = false;
+
+			// Zeilenumbrüche setzen.
+			if  ( strpos($line,'#SET-LINEBREAK-OFF')!==FALSE )
+				$linebreaks = true;
+				
 			// Ignoriere Zeilen, die zu ignorieren sind (logisch).
 			// Dies sind BlÃ¶cke, die nur fuer ein Attribut gueltig sind, welches
 			// aber nicht gesetzt ist.
@@ -267,6 +276,9 @@ class TemplateEngine
 			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) || substr(ltrim($line),0,1) == '#')
 				continue;
 
+			if	( !$linebreaks )
+				$line = rtrim($line);
+				
 			// Die Variablen "$attr" mÃ¼ssen pro Ebene eindeutig sein, daher wird an den
 			// Variablennamen die Tiefe angehangen.
 			$line = str_replace('$attr','$attr'.$hash,$line);
