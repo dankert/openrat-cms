@@ -52,17 +52,8 @@
 #END-IF#
 
 	
-#IF-ATTR invert#
-	// Ergebnis umdrehen
-	// TODO: Bald ausbauen, stattdessen "not" verwenden.
-	if  ( !empty($attr_invert) )
-		$attr_tmp_exec = !$attr_tmp_exec;
-#END-IF#
-		
 #IF-ATTR not#
-		// Ergebnis umdrehen
-	if  ( !empty($attr_not) )
-		$attr_tmp_exec = !$attr_tmp_exec;
+	$attr_tmp_exec = !$attr_tmp_exec;
 #END-IF#
 
 	// Fuer eine eventuelle ELSE-Bedingung merken wir uns den Status.
