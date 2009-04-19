@@ -1,24 +1,36 @@
 <?php
 	$params = array();
-	if (!empty($attr_var1) && isset($attr_value1))
+	#IF-ATTR var1#
 		$params[$attr_var1]=$attr_value1;
-	if (!empty($attr_var2) && isset($attr_value2))
+	#END-IF	
+	#IF-ATTR var2#
 		$params[$attr_var2]=$attr_value2;
-	if (!empty($attr_var3) && isset($attr_value3))
+	#END-IF	
+	#IF-ATTR var3#
 		$params[$attr_var3]=$attr_value3;
-	if (!empty($attr_var4) && isset($attr_value4))
+	#END-IF	
+	#IF-ATTR var4#
 		$params[$attr_var4]=$attr_value4;
-	if (!empty($attr_var5) && isset($attr_value5))
+	#END-IF	
+	#IF-ATTR var5#
 		$params[$attr_var5]=$attr_value5;
+	#END-IF
 	
-	if(empty($attr_class))
+	#IF-ATTR class#
+	#ELSE
 		$attr_class='';
-	if(empty($attr_title))
+	#END-IF	
+		
+	#IF-ATTR title
+	#ELSE
 		$attr_title = '';
-	if(!empty($attr_url))
+	#END-IF	
+		
+	#IF-ATTR url
 		$tmp_url = $attr_url;
-	else
+	#ELSE
 		$tmp_url = Html::url($attr_action,$attr_subaction,!empty($attr_id)?$attr_id:$this->getRequestId(),$params);
+	#END-IF
 
 	
 ?><a<?php if (isset($attr_name)) echo ' name="'.$attr_name.'"'; else echo ' href="'.$tmp_url.($attr_anchor?'#'.$attr_anchor:'').'"' ?> class="<?php echo $attr_class ?>" target="<?php echo $attr_target ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
