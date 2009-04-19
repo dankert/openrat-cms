@@ -166,7 +166,9 @@ function table()
 </script>
     <table>
       <tr>
-        <noscript><input type="text" name="addtext" size="10" /></noscript>
+      	<td colspan="14"><noscript><input type="text" name="addtext" size="30" /></noscript></td>
+      </tr>
+      <tr>
         <td><noscript><?php echo checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
         <td><noscript><?php echo checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -181,12 +183,10 @@ function table()
         <td>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="preview" value="<?php echo lang('PAGE_PREVIEW') ?>" style="width:200px;"/></td>
       </tr>
     </table>
-	<?php ?>
-    
+			
+	<textarea name="<?php echo $attr_name ?>" class="editor" style="width:100%;height:300px;"><?php echo $$attr_name ?></textarea>
+			
 <?php
-		
-			//echo $attr_tmp_doc->render('application/html-editor');
-			echo '<textarea name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
 		}
 		else
 		{
