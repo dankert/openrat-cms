@@ -6,7 +6,7 @@ page
 				row
 					cell colspan:4
 						text text:GLOBAL_NOT_FOUND
-			if empty:el invert:true
+			if not: empty:el
 				row
 					cell class:help
 						text text:PAGE_ELEMENT_NAME

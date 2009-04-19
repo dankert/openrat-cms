@@ -1,7 +1,7 @@
 page
 
 	window name:x title:TEMPLATE_ELEMENTS widths:30%,50%,20%
-		if empty:el invert:true
+		if not: empty:el
 			row
 				cell class:help
 					text text:PAGE_ELEMENT_NAME
