@@ -161,6 +161,7 @@ body
 
 body.main
 {
+	text-align:center;
 }
 
 body.title {
@@ -284,11 +285,20 @@ table.main td.act
 	text-align:right;
 }
 
-p.copyright
+a.copyright
 {
 	font-family:Verdana,Arial,Helvetica,sans-serif;
-	font-size:11px;
-	text-align:center;
+	font-size:9px;
+	text-decoration:none;
+}
+
+td.motd
+{
+	border-left: 3px solid red;
+	border-right: 3px solid red;
+	font-weight: bold;
+	padding:10px;
+	margin:10px;
 }
 
 table.main
