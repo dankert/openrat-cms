@@ -1,11 +1,17 @@
 <?php
-	if	(empty($attr_action))
+	#IF-ATTR action#
+	#ELSE
 		$attr_action = $actionName;
-	if	(empty($attr_subaction))
+	#END-IF
+	#IF-ATTR subaction#
+	#ELSE
 		$attr_subaction = $targetSubActionName;
-	if	(empty($attr_id))
+	#END-IF
+	#IF-ATTR id#
+	#ELSE
 		$attr_id = $this->getRequestId();
-
+	#END-IF
+		
 	if ($this->isEditable() && !$this->isEditMode())
 		$attr_subaction = $subActionName;
 		
