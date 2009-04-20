@@ -27,11 +27,8 @@
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
 <?php unset($attr1_class); ?><?php  $attr2_name='';  $attr2_target='_self';  $attr2_method='post';  $attr2_enctype='application/x-www-form-urlencoded';  ?><?php
-	if	(empty($attr2_action))
 		$attr2_action = $actionName;
-	if	(empty($attr2_subaction))
 		$attr2_subaction = $targetSubActionName;
-	if	(empty($attr2_id))
 		$attr2_id = $this->getRequestId();
 	if ($this->isEditable() && !$this->isEditMode())
 		$attr2_subaction = $subActionName;
@@ -178,30 +175,16 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr5_width  )) { ?> width="<?php   echo $attr5_width   ?>" <?php }
-if	( isset($attr5_style  )) { ?> style="<?php   echo $attr5_style   ?>" <?php }
-if	( isset($attr5_class  )) { ?> class="<?php   echo $attr5_class   ?>" <?php }
-if	( isset($attr5_colspan)) { ?> colspan="<?php echo $attr5_colspan ?>" <?php }
-if	( isset($attr5_rowspan)) { ?> rowspan="<?php echo $attr5_rowspan ?>" <?php }
+?> class="<?php   echo $attr5_class   ?>" <?php
+?> colspan="<?php echo $attr5_colspan ?>" <?php
 ?>><?php unset($attr5_class);unset($attr5_colspan); ?><?php  $attr6_not=true;  $attr6_present='done';  ?><?php 
 	$attr6_tmp_exec = isset($$attr6_present);
-	if  ( !empty($attr6_not) )
-		$attr6_tmp_exec = !$attr6_tmp_exec;
+	$attr6_tmp_exec = !$attr6_tmp_exec;
 	$attr6_tmp_last_exec = $attr6_tmp_exec;
 	if	( $attr6_tmp_exec )
 	{
 ?>
 <?php unset($attr6_not);unset($attr6_present); ?><?php  $attr7_type='submit';  $attr7_class='ok';  $attr7_value='ok';  $attr7_text='button_ok';  ?><?php
-	if ($attr7_type=='ok')
-	{
-		if ($this->isEditable() && !$this->isEditMode())
-		$attr7_text = 'MODE_EDIT';
-	}
-	if ($attr7_type=='ok')
-		$attr7_type  = 'submit';
-	if (isset($attr7_src))
-		$attr7_type  = 'image';
-	else
 		$attr7_src  = '';
 ?><input type="<?php echo $attr7_type ?>"<?php if(isset($attr7_src)) { ?> src="<?php echo $image_dir.'icon_'.$attr7_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $attr7_value ?>" class="<?php echo $attr7_class ?>" title="<?php echo lang($attr7_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo langHtml($attr7_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr7_src) ?><?php
 ?><?php unset($attr7_type);unset($attr7_class);unset($attr7_value);unset($attr7_text); ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?>      </table>
