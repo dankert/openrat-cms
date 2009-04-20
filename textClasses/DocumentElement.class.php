@@ -2,7 +2,7 @@
 
 /**
  * Dokument-Objekt.<br>
- * Diese Objekt verkörpert das Root-Objekt in einem DOM-Baum.<br>
+ * Diese Objekt verkï¿½rpert das Root-Objekt in einem DOM-Baum.<br>
  * <br>
  * Dieses Objekt kann Text parsen und seine Unterobjekte selbst erzeugen.<br>
  * 
@@ -15,7 +15,7 @@ class DocumentElement extends AbstractElement
 	var $linkedObjectIds = array();
 	
 	/**
-	 * Fußnoten.
+	 * Fuï¿½noten.
 	 *
 	 * @var Array
 	 */
@@ -46,8 +46,8 @@ class DocumentElement extends AbstractElement
 	
 	/**
 	 * Rendering des Dokumentes.<br>
-	 * Die Art und Weise des Renderns ist in Abhängigkeit zum
-	 * übergebenen Mime-Type.
+	 * Die Art und Weise des Renderns ist in Abhï¿½ngigkeit zum
+	 * ï¿½bergebenen Mime-Type.
 	 *
 	 * @param String $mimeType Mime-Type, z.B. "text/html"
 	 * @return String
@@ -66,11 +66,17 @@ class DocumentElement extends AbstractElement
 			case 'application/pdf':
 				$this->type = 'pdf';
 				break;
-			case 'application/html-editor':
-				$this->type = 'htmlEditor';
-				break;
 			case 'application/html-dom':
 				$this->type = 'htmlDom';
+				break;
+			case 'application/x-latex':
+				$this->type = 'latex';
+				break;
+			case 'text/xhtml':
+				$this->type = 'xhtml';
+				break;
+			case 'application/docbook+xml':
+				$this->type = 'docBook';
 				break;
 			default:
 				$this->type = 'html';
