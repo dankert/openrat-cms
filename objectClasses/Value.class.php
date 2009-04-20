@@ -441,6 +441,8 @@ SQL
 	/**
 	 * Hier findet die eigentliche Bereitstellung des Inhaltes statt, zu
 	 * jedem Elementtyp wird ein Inhalt ermittelt.
+	 * 
+	 * @return void (aber Eigenschaft 'value' wird gesetzt).
 	 */
 	function generate()
 	{
@@ -472,6 +474,7 @@ SQL
 			$v->simple     = $this->simple;
 			$v->element    = $this->element;
 			$v->languageid = $this->languageid;
+			$v->modelid    = $this->modelid;
 			$v->load();
 			$v->generate();
 			$this->value = $v->value;
@@ -524,7 +527,7 @@ SQL
 													$p = new Page( $oid );
 													$p->public         = $this->page->public;
 													$p->up_path        = $this->page->up_path();
-													$p->projectmodelid = $this->page->projectmodelid;
+													$p->modelid        = $this->page->modelid;
 													$p->languageid     = $this->languageid;
 													$p->mime_type      = $this->page->mimeType();
 													$p->load();
@@ -544,7 +547,7 @@ SQL
 															$p = new Page( $l->linkedObjectId );
 															$p->public         = $this->page->public;
 															$p->up_path        = $this->page->up_path();
-															$p->projectmodelid = $this->page->projectmodelid;
+															$p->modelid        = $this->page->modelid;
 															$p->languageid     = $this->languageid;
 															$p->load();
 															$p->generate();
@@ -590,7 +593,7 @@ SQL
 									$p = new Page( $objectid );
 									$p->public         = $this->page->public;
 									$p->up_path        = $this->page->up_path();
-									$p->projectmodelid = $this->page->projectmodelid;
+									$p->modelid        = $this->page->modelid;
 									$p->languageid     = $this->languageid;
 									$p->mime_type      = $this->page->mimeType();
 									$p->load();
@@ -789,7 +792,6 @@ SQL
 					$transformer->text    = $inhalt;
 					$transformer->page    = $this->page;
 					$transformer->element = $this->element;
-					$transformer->type    = $this->page->template->extension;
 
 					$transformer->transform();
 					$inhalt = $transformer->text;
@@ -1226,6 +1228,7 @@ SQL
 		                                           'va'=>$this->valueid,
 		                                           'el'=>$this->element->elementid,
 		                                           'la'=>$this->languageid,
+		                                           'm' =>$this->page->modelid,
 		                                           'pu'=>intval($this->publish),
 		                                           'si'=>intval($this->simple)    ) );
 		return $filename;

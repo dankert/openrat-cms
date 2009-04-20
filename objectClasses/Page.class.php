@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.32  2009-04-20 23:24:58  dankert
+// Korrektur: Veröffentlichen mehrerer Varianten gleichzeitig.
+//
 // Revision 1.31  2009-04-18 00:56:14  dankert
 // Beim Verarbeiten von if-empty-Bereichen der Seitenvorlage keine regulären Ausdrücke mehr verwenden (da Binärausgaben wie PDF-Dokumente dabei beschädigt werden).
 //
@@ -150,7 +153,7 @@ class Page extends Object
 	var $fullFilename = '';
 
 	var $log_filenames       = array();
-	var $projectmodelid = 0;
+	var $modelid = 0;
 	
 	var $publish = null;
 	var $up_path = '';
@@ -536,7 +539,6 @@ class Page extends Object
 	{
 		$oldTemplateId = $this->templateid;
 
-		Logger::debug( 'replacing template of page '.$this->pageid. ' ('.$oldTemplateId.'->'.$newTemplateId.')' );
 		$db = db_connection();
 
 		// Template-id dieser Seite aendern
@@ -611,7 +613,7 @@ class Page extends Object
 				}
 		
 				$t = new Template( $this->templateid );
-				$t->projectmodelid = $this->modelid;
+				$t->modelid = $this->modelid;
 				$t->load();
 				$filename .= '.'.$t->extension;
 		
@@ -750,12 +752,12 @@ class Page extends Object
 			return $this->value;
 		}
 	
-		$this->generate_elements();
-
 		$this->template = new Template( $this->templateid );
+		$this->template->modelid = $this->modelid;
 		$this->template->load();
-
 		$this->ext = $this->template->extension;
+
+		$this->generate_elements();
 		 
 		$src = $this->template->src;
 
@@ -835,9 +837,9 @@ class Page extends Object
 			$this->withLanguage = count($allLanguages) > 1;
 
 			// Schleife ueber alle Projektvarianten
-			foreach( Model::getAll() as $projectmodelid )
+			foreach( Model::getAll() as $projectmodelid=>$x )
 			{
-				$this->projectmodelid = $projectmodelid;
+				$this->modelid = $projectmodelid;
 			
 				$this->load();
 				$this->generate();
@@ -845,9 +847,8 @@ class Page extends Object
 
 				// Vorlage ermitteln.
 				$t = new Template( $this->templateid );
-				$t->projectmodelid = $this->modelid;
+				$t->modelid = $this->modelid;
 				$t->load();
-				
 				// Nur wenn eine Datei-Endung vorliegt wird die Seite veroeffentlicht
 				if	( !empty($t->extension) )
 				{ 	
@@ -868,16 +869,13 @@ class Page extends Object
 	 */
 	function mimeType()
 	{
-		if	( !empty( $this->mime_type ) )
-			return $this->mime_type;
-
-		global $conf;
-		$mime_types = $conf['mime-types'];
-
 		if	( ! is_object($this->template) )
+		{
 			$this->template = new Template( $this->templateid );
+			$this->template->modelid = $this->modelid;
+			$this->template->load();
+		}
 
-		$this->template->load();
 		$this->mime_type = $this->template->mimeType();
 			
 		return( $this->mime_type );
