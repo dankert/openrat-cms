@@ -501,11 +501,15 @@ class MainmenuAction extends Action
 			$model->load();
 			$this->addPath( lang('MODELS'),lang('MODELS'),Html::url('main','model',0,array(REQ_PARAM_TARGETSUBACTION=>'listing')),'');
 			$this->addSubaction('edit');
-			$this->setTemplateVar('text',$model->name);		}
+			$this->setTemplateVar('text',$model->name);
+		}
+		else
+		{
+			$this->setTemplateVar('text',lang('MODELS'));
+		}
 			
-		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','modelid');
-		$this->setTemplateVar('text',lang('MODELS'));
+		$this->setTemplateVar('windowMenu',$this->subActionList);
 	}
 
 
