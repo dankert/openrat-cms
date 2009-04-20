@@ -8,7 +8,7 @@ page
 						text var:name
 				cell
 					if present:default_url
-						link url:var:default_url target:cms_main
+						link url:var:default_url target:cms_main_main
 							text text:GLOBAL_make_default
 					else
 						text text:GLOBAL_is_default
