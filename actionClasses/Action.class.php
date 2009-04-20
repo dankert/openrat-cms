@@ -289,7 +289,11 @@ class Action
 		$httpAccept = getenv('HTTP_ACCEPT');
 		$types = explode(',',$httpAccept);
 		
-		if	( sizeof($types)==1 && in_array('application/json',$types) )
+		// Weitere Variablen anreichern.
+		$this->templateVars['session'] = array('name'=>session_name(),'id'=>session_id());
+		$this->templateVars['version'] = OR_VERSION;
+		
+		if	( sizeof($types)==1 && in_array('application/json',$types) || $this->getRequestVar('output')=='json' )
 		{
 			require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
 			$json = new JSON();
@@ -298,10 +302,11 @@ class Action
 			exit;
 		}
 
-		if	( sizeof($types)==1 && in_array('application/xml',$types) )
+		if	( sizeof($types)==1 && in_array('application/xml',$types) || $this->getRequestVar('output')=='xml' )
 		{
 			require_once( OR_SERVICECLASSES_DIR."XML.class.".PHP_EXT );
 			$xml = new XML();
+			$xml->root = 'server'; // Name des XML-root-Elementes
 			header('Content-Type: application/xml');
 			echo $xml->encode( $this->templateVars );
 			exit;

@@ -8,7 +8,7 @@
  * echo $xml->encode( $yourBigArray );
  * exit;
  *
- * Author: Honor� Vasconcelos, Jan Dankert
+ * Author: Honor� Vasconcelos, Jan Dankert
  *
  * Original from:
  * Clean XML To Array: http://www.phpclasses.org/browse/package/3598.html
@@ -47,7 +47,7 @@ class XML
 	 * @param array $array
 	 * @return String
 	 */
-	var $XMLtext = '';
+	var $xmlText = '';
 
 
 	/**
@@ -55,7 +55,7 @@ class XML
 	 *
 	 * @var String
 	 */
-	var $root = 'server';
+	var $root = 'xml';
 
 	/*
 	 * Char to indent with.
@@ -65,7 +65,12 @@ class XML
 	var $indentChar = "\t";
 
 
-
+	/**
+	 * Newline-Char
+	 * @var String
+	 */
+	var $nl = "\n";
+	
 	/**
 	 * Encode a array to XML.
 	 *
@@ -75,47 +80,89 @@ class XML
 	function encode($array)
 	{
 		//star and end the XML document
-		$this->XMLtext="<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<".$this->root.">\n";
-		$this->array_transform($array);
-		$this->XMLtext .="</".$this->root.">";
-		return $this->XMLtext;
+		$this->xmlText = '<?xml version="1.0" encoding="utf-8"?>'.$this->nl;
+		$this->xmlText .= '<'.$this->root.'>'.$this->nl;
+		$this->array_transform($array,1);
+		$this->xmlText .='</'.$this->root.'>';
+		
+		return $this->xmlText;
 	}
 
 
 	/**
 	 * @access private
 	 */
-	function array_transform($array){
-		static $Depth = 0;
+	function array_transform($array,$depth){
 
 		foreach($array as $key => $value)
 		{
-			if	( ! is_array($value) )
+			$attr = array();
+			if	( is_numeric($key) )
 			{
-				$Tabs = str_repeat($this->indentChar,$Depth+1);
-				if	( is_numeric($key) )
-				$kkey = "n$key";
-				else
-				$kkey = $key;
-				$this->XMLtext .= "$Tabs<$kkey id=\"$key\">$value</$key>\n";
+				// Array-Einträge mit numerischen Index können nicht direkt in ein XML-Element
+				// umgewandelt werden, da nur-numerische Element-Namen nicht erlaubt sind.
+				// Daher verwenden wir dann 'entry' als Elementnamen.
+				$attr['id'] = $key;
+				$key = 'entry';
+			}
+			
+			$indent = str_repeat($this->indentChar,$depth);
+			
+			if	( empty($value) )
+			{
+				$this->xmlText .= $indent.$this->shortTag($key,$attr).$this->nl;
+			}
+			elseif	( is_object($value) )
+			{
+				// Der Inhalt ist ein Array, daher rekursiv verzweigen.
+				$this->xmlText .= $indent.$this->openTag($key,$attr).$this->nl;
+				$prop = get_object_vars($value);
+				$this->array_transform($prop,$depth+1); // Rekursiver Aufruf
+				$this->xmlText .= $indent.$this->closeTag($key).$this->nl;
+			}
+			elseif	( is_array($value) )
+			{
+				// Der Inhalt ist ein Array, daher rekursiv verzweigen.
+				$this->xmlText .= $indent.$this->openTag($key,$attr).$this->nl;
+				$this->array_transform($value,$depth+1); // Rekursiver Aufruf
+				$this->xmlText .= $indent.$this->closeTag($key).$this->nl;
 			}
 			else
 			{
-				$Depth += 1;
-				$Tabs = str_repeat($this->indentChar,$Depth);
-				if	( is_numeric($key) )
-					$keyval = "n$key";
-				else
-					$keyval = $key;
-				$closekey = $keyval;
-				$this->XMLtext.="$Tabs<$keyval>\n";
-				$this->array_transform($value);
-				$this->XMLtext.="$Tabs</$closekey>\n";
-				$Depth -= 1;
-					
+				// Der Inhalt ist ein einfacher Inhalt (kein Array).
+				$this->xmlText .= $indent.$this->openTag($key,$attr);
+				$this->xmlText .= $value;
+				$this->xmlText .= $this->closeTag($key).$this->nl;
 			}
 		}
-		return;
+	}
+	
+	
+	function openTag($key,$attr)
+	{
+		$tag = '<'.$key;
+		foreach( $attr as $attr_name=>$attr_value )
+			$tag .= ' '.$attr_name.'="'.$attr_value.'"';
+		$tag .= '>';
+		return $tag;
+	}
+	
+	
+	
+	function shortTag($key,$attr)
+	{
+		$tag = '<'.$key;
+		foreach( $attr as $attr_name=>$attr_value )
+			$tag .= ' '.$attr_name.'="'.$attr_value.'"';
+		$tag .= ' />';
+		return $tag;
+	}
+	
+	
+	
+	function closeTag($key)
+	{
+		return '</'.$key.'>';
 	}
 }
 
