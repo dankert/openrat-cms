@@ -20,6 +20,9 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.16  2009-04-20 23:24:36  dankert
+// Überflüssiges load() in mimeType() entfernt.
+//
 // Revision 1.15  2007-11-24 14:18:12  dankert
 // MimeType in Template ermitteln.
 //
@@ -449,13 +452,9 @@ SQL
 	 */
 	function mimeType()
 	{
-		if	( !empty( $this->mime_type ) )
-			return $this->mime_type;
-
 		global $conf;
 		$mime_types = $conf['mime-types'];
 
-		$this->load();
 		$extension = strtolower($this->extension);
 
 		if	( !empty($mime_types[$extension]) )
