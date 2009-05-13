@@ -87,19 +87,19 @@ target=createnewpage
 menu=new
 
 [createnewfolder]
-goto=show
+goto=createfolder
 
 [createnewfile]
-goto=show
+goto=createfile
 
 [createnewpage]
-goto=show
+goto=createpage
 
 [createnewlink]
-goto=show
+goto=createlink
 
 [createnew]
-goto=show
+goto=create
 
 [changesequence]
 goto=order

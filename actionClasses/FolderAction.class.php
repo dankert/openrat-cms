@@ -419,7 +419,6 @@ class FolderAction extends ObjectAction
 		$this->folder->setTimestamp();
 
 		$this->setTemplateVar('tree_refresh',true);
-		$this->callSubAction('show');
 	}	
 
 
