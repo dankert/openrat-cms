@@ -3,7 +3,7 @@
 
 	function checkbox( $name,$value=false,$writable=true,$params=Array() )
 	{
-		$src = '<input type="checkbox" name="'.$name.'"';
+		$src = '<input type="checkbox" id="id_'.$name.'" name="'.$name.'"';
 
 		foreach( $params as $name=>$val )
 			$src .= " $name=\"$val\"";
@@ -43,6 +43,12 @@
 	}
 
 
+	function add_control($type,$image)
+	{
+		global $image_dir;
+		echo '<td><noscript>'.checkbox($type).'</noscript><label for="id_'.$type.'"><a href="javascript:'.$type.'();" title="'.lang('PAGE_EDITOR_ADD_'.$type).'"><img src="'.$image_dir.'/editor/'.$image.'" border"0" /></a></label>';
+	}
+	
 	
  ?><?php
 
@@ -164,25 +170,26 @@ function table()
 
 //-->
 </script>
+    <fieldset><legend><?php echo langHtml('EDITOR') ?></legend></fieldset>
     <table>
       <tr>
-      	<td colspan="14"><noscript><input type="text" name="addtext" size="30" /></noscript></td>
-      </tr>
-      <tr>
-        <td><noscript><?php echo checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
-        <td><noscript><?php echo checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo checkbox('table') ?></noscript><a href="javascript:table();" title="<?php echo lang('PAGE_EDITOR_ADD_TABLE') ?>"><img src="<?php echo $image_dir ?>/editor/table.png" border"0" /></a></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo checkbox('list') ?></noscript><a href="javascript:list();" title="<?php echo lang('PAGE_EDITOR_ADD_LIST') ?>"><img src="<?php echo $image_dir ?>/editor/list.png" border"0" /></a></td>
-        <td><noscript><?php echo checkbox('numlist') ?></noscript><a href="javascript:numlist();" title="<?php echo lang('PAGE_EDITOR_ADD_NUMLIST') ?>"><img src="<?php echo $image_dir ?>/editor/numlist.png" border"0" /></a></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo checkbox('image') ?></noscript><a href="javascript:image();" title="<?php echo lang('PAGE_EDITOR_ADD_IMAGE') ?>"><img src="<?php echo $image_dir ?>/editor/image.png" border"0" /></a></td>
-        <td><noscript><?php echo checkbox('link') ?></noscript><a href="javascript:link();" title="<?php echo lang('PAGE_EDITOR_ADD_LINK') ?>"><img src="<?php echo $image_dir ?>/editor/link.png" border"0" /></a></td>
-        <td><?php echo selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
-        <td>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="preview" value="<?php echo lang('PAGE_PREVIEW') ?>" style="width:200px;"/></td>
+      	<td><noscript><input type="text" name="addtext" size="30" /></noscript></td>
+        <td><?php add_control('strong'  ,'bold.png'  )?></td>
+        <td><?php add_control('emphatic','italic.png') ?></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><?php add_control('table','table.png') ?></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><?php add_control('list'   ,'list.png')  ; ?></td>
+        <td><?php add_control('numlist','numlist.png') ?></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><?php add_control('image','image.png') ?></td>
+        <td><?php add_control('link' ,'link.png' ) ?></td>
+        <!-- <td><?php echo selectBox('objectid',$objects) ?></td> -->
+        <td><input name="objectid" size="6" title="<?php echo langHtml('LINK_TO') ?>"></td>
+        <td><noscript>&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('ADD') ?>"/></noscript></td>
       </tr>
     </table>
+    <fieldset><legend><?php echo langHtml('CONTENT') ?></legend></fieldset>
 			
 	<textarea name="<?php echo $attr_name ?>" class="editor" style="width:100%;height:300px;"><?php echo $$attr_name ?></textarea>
 			

@@ -227,4 +227,9 @@ page
 	
 			row
 				cell colspan:2 class:act
+					if true:mode:edit
+						if value:var:type equals:longtext
+							if value:var:editor equals:wiki
+								button type:submit value:preview text:PAGE_PREVIEW
+								text raw:___
 					button type:ok

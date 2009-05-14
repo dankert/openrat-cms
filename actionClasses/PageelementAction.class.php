@@ -966,7 +966,7 @@ class PageelementAction extends Action
 							$inputText .= $conf_tags['emphatic-begin'].$addText.$conf_tags['emphatic-end'];
 
 						if	( $this->hasRequestVar('link') )
-							$inputText .= '"'.$addText.'"'.$conf_tags['linkto'].'"'.$this->getRequestVar('objectid').'"';
+							$inputText .= '"'.$addText.'"'.$conf_tags['linkto'].'"'.$this->parseOID($this->getRequestVar('objectid')).'"';
 					}
 
 					if	( $this->hasRequestVar('table') )
@@ -988,10 +988,11 @@ class PageelementAction extends Action
 						              $conf_tags['list-numbered'].' '.$addText."\n";
 
 					if	( $this->hasRequestVar('image') )
-						$inputText .= $conf_tags['image-begin'].$this->getRequestVar('objectid').$conf_tags['image-end'];
+						$inputText .= $conf_tags['image-begin'].$this->parseOID($this->getRequestVar('objectid')).$conf_tags['image-end'];
 				}
 
 				// Ermitteln aller verlinkbaren Objekte (fuer Editor)
+				/*
 				$objects = array();
 
 				foreach( Folder::getAllObjectIds() as $id )
@@ -1009,6 +1010,7 @@ class PageelementAction extends Action
 				}
 				asort($objects);
 				$this->setTemplateVar( 'objects' ,$objects );
+				*/
 
 				$this->setTemplateVar( 'release' ,$this->page->hasRight(ACL_RELEASE) );
 				$this->setTemplateVar( 'publish' ,$this->page->hasRight(ACL_PUBLISH) );
@@ -1328,7 +1330,12 @@ class PageelementAction extends Action
 			$treffer = array();
 			preg_match_all('/(.*)__OID__([0-9]+)__(.*)/', $text, $treffer,PREG_SET_ORDER);
 
-			return $treffer[0][2];
+			$oid = $treffer[0][2];
+			
+			if	( !empty($oid) )
+				return $oid;
+			else
+				return intval($text);
 		}
 }
 
