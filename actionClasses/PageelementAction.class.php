@@ -187,9 +187,10 @@ class PageelementAction extends Action
 		global $conf;
 		$date =  $this->value->date;
 
-		// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
+		// Wenn Datum nicht vorhanden...
 		if	( $date == 0 )
-		$date = intval(time()/60)*60;
+			// ... dann aktuelles Datum (gerundet auf 1 Minute) verwenden
+			$date = intval(time()/60)*60;
 
 		$this->setTemplateVar('ansidate',date( 'Y-m-d H:i:s',$date ) );
 		$this->setTemplateVar('date'    ,$date);
@@ -198,8 +199,6 @@ class PageelementAction extends Action
 		$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else	$this->setTemplateVar('old_pageaction','show'                            );
 
-
-		$date = $this->value->date;
 
 		// Wenn Datum nicht vorhanden, dann aktuelles Datum verwenden
 		if   ( $this->hasRequestVar('year') )
