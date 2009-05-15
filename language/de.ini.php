@@ -864,6 +864,7 @@ NOTICE_USER_ALREADY_IN_DATABASE = "Der Benutzer ist bereits vorhanden. Bitte wï¿
 NOTICE_VALUE_SAVED = "Inhalt wurde gespeichert."
 NOTICE_CONCURRENT_VALUE_CHANGE="Wï¿½hrend Ihrer Bearbeitung ist dieser Inhalt von einem anderen Benutzer um {last_change_time} geï¿½ndert worden. Ihre ï¿½nderungen wurden gespeichert, prï¿½fen Sie jedoch ï¿½ber das Archiv, ob gemachte ï¿½nderungen von Ihnen ï¿½bernommen werden mï¿½ssen."
 NOTICE_CONCURRENT_VALUE_CHANGE_NOT_SAVED="Wï¿½hrend Ihrer Bearbeitung ist der Inhalt von einem anderen Benutzer um {last_change_time} geï¿½ndert worden. Ihre ï¿½nderung wird nicht gespeichert."
+NOTICE_CODE_DISABLED = "Der dynamische Programmcode wird in der aktuellen Umgebung aus Sicherheitsgrnden nicht ausgefhrt."
 OPENID="Open-ID"
 OPENID_USER="Open-ID Benutzername"
 OPTIONS="Optionen"
