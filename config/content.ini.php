@@ -26,3 +26,10 @@ min-age = 1
 max-revisions = 100
 min-revisions = 3
 
+
+
+[language]
+
+; If a text is empty, try using the default language
+; Default: true
+use_default_language = true

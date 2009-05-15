@@ -764,7 +764,16 @@ SQL
 			case 'select':
 
 				$inhalt = $this->text;
-	
+
+				// Wenn Inhalt leer, dann versuchen, den Inhalt der Default-Sprache zu laden.
+				if   ( $inhalt == '' && $conf['content']['language']['use_default_language'] )
+				{
+					$project = Session::getProject();
+					$this->languageid = $project->getDefaultLanguageId();
+					$this->load();
+					$inhalt = $this->text;
+				}
+				
 				// Wenn Inhalt leer, dann Vorbelegung verwenden
 				if   ( $inhalt == '' )
 					$inhalt = $this->element->defaultText;
