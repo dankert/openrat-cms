@@ -29,6 +29,15 @@ chmod=
 ; Example: '0770' (means 'drwxrwx---')
 chmod_dir=
 
+; You may disable dynamic code.
+; dynamic code ("CODE"-Elements in templates) are dangerous, because they may
+; interact with the file system (and much more!).
+;
+; Hint: only admin users are allowed to save dynamic code.
+; Enable, if admin users are trustful.
+; Disable, if admin users are anonym (f.e. demo-installations).
+; Default: true (for secure default installation).
+disable_dynamic_code = true
 
 
 ; Default Login

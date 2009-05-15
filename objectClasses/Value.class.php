@@ -849,6 +849,9 @@ SQL
 				if   ( $this->page->simple )
 					break;
 
+				if	( $conf['security']['disable_dynamic_code'] )
+					break;
+				
 				$this->page->load();
 
 				$code = new Code();
