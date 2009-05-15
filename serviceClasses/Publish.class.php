@@ -19,13 +19,13 @@
 #
 
 /**
- * Diese Klasse kapselt das Veröffentlichen von Dateien.<br>
+ * Diese Klasse kapselt das Verï¿½ffentlichen von Dateien.<br>
  * <br>
  * Hier werden<br>
  * - Dateien in das Zielverzeichnis kopiert<br>
- * - Dateien per FTP veröffentlicht<br>
- * - Zielverzeichnisse aufgeräumt<br>
- * - Systembefehle ausgeführt.
+ * - Dateien per FTP verï¿½ffentlicht<br>
+ * - Zielverzeichnisse aufgerï¿½umt<br>
+ * - Systembefehle ausgefï¿½hrt.
  * 
  * @author $Author$
  * @version $Revision$
@@ -47,7 +47,7 @@ class Publish
 	/**
 	 * Konstruktor.<br>
 	 * <br>
-	 * Öffnet ggf. Verbindungen.
+	 * ï¿½ffnet ggf. Verbindungen.
 	 *
 	 * @return Publish
 	 */
@@ -55,6 +55,13 @@ class Publish
 	{
 		global $conf;
 		$conf_project = $conf['publish']['project']; 
+		
+		if	( $conf['security']['nopublish'] )
+		{
+			$this->ok = false;
+			$this->log[] = 'publishing is disabled.';
+			return;
+		}
 		
 		$project = Session::getProject();
 
@@ -118,8 +125,8 @@ class Publish
 	
 	
 	/**
-	 * Kopieren einer Datei aus dem temporären Verzeichnis in das Zielverzeichnis.<br>
-	 * Falls notwenig, wird ein Hochladen per FTP ausgeführt.
+	 * Kopieren einer Datei aus dem temporï¿½ren Verzeichnis in das Zielverzeichnis.<br>
+	 * Falls notwenig, wird ein Hochladen per FTP ausgefï¿½hrt.
 	 *
 	 * @param String $tmp_filename
 	 * @param String $dest_filename
@@ -159,7 +166,7 @@ class Publish
 			
 			if	(!empty($conf['security']['chmod']))
 			{
-				// CHMOD auf der Datei ausgeführen.
+				// CHMOD auf der Datei ausgefï¿½hren.
 				if	( ! @chmod($dest,octdec($conf['security']['chmod'])) )
 				{
 					$this->ok = false;
@@ -211,7 +218,7 @@ class Publish
 			return false;
 		}
 
-		// CHMOD auf dem Verzeichnis ausgeführen.
+		// CHMOD auf dem Verzeichnis ausgefï¿½hren.
 		if	(!empty($conf['security']['chmod_dir']))
 		{
 			if	( ! @chmod($strPath,octdec($conf['security']['chmod_dir'])) )
@@ -229,9 +236,9 @@ class Publish
 
 
 	/**
-	 * Beenden des Veröffentlichungs-Vorganges.<br>
+	 * Beenden des Verï¿½ffentlichungs-Vorganges.<br>
 	 * Eine vorhandene FTP-Verbindung wird geschlossen.<br>
-	 * Falls entsprechend konfiguriert, wird ein Systemkommando ausgeführt.
+	 * Falls entsprechend konfiguriert, wird ein Systemkommando ausgefï¿½hrt.
 	 */
 	function close()
 	{
@@ -240,7 +247,7 @@ class Publish
 			$this->ftp->close();
 		}
 
-		// Ausführen des Systemkommandos.
+		// Ausfï¿½hren des Systemkommandos.
 		if	( !empty($this->cmd_after_publish) && $this->ok )
 		{
 			$ausgabe = array();
@@ -259,10 +266,10 @@ class Publish
 	
 	
 	/**
-	 * Aufräumen des Zielverzeichnisses.<br><br>
+	 * Aufrï¿½umen des Zielverzeichnisses.<br><br>
 	 * Es wird der komplette Zielordner samt Unterverzeichnissen durchsucht. Jede
-	 * Datei, die länger existiert als der aktuelle Request alt ist, wird gelöscht.<br>
-	 * Natürlich darf diese Funktion nur nach einem Gesamt-Veröffentlichen ausgeführt werden.
+	 * Datei, die lï¿½nger existiert als der aktuelle Request alt ist, wird gelï¿½scht.<br>
+	 * Natï¿½rlich darf diese Funktion nur nach einem Gesamt-Verï¿½ffentlichen ausgefï¿½hrt werden.
 	 */
 	function clean()
 	{
@@ -276,8 +283,8 @@ class Publish
 	
 
 	/**
-	 * Aufräumen eines Verzeichnisses.<br><br>
-	 * Dateien, die länger existieren als der aktuelle Request alt ist, werden gelöscht.<br>
+	 * Aufrï¿½umen eines Verzeichnisses.<br><br>
+	 * Dateien, die lï¿½nger existieren als der aktuelle Request alt ist, werden gelï¿½scht.<br>
 	 *
 	 * @param String Verzeichnis
 	 */
