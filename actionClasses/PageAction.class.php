@@ -751,6 +751,27 @@ class PageAction extends ObjectAction
 
 		}
 	}
+	
+	
+		/**
+	 * Stellt fest, welche Menüeinträge ggf. ausgeblendet werden.
+	 * 
+	 * @see actionClasses/Action#checkMenu($name)
+	 */
+	function checkMenu( $menu ) {
+
+		switch( $menu)
+		{
+			case 'changetemplate':
+				// Template nur austauschbar, wenn es mind. 2 gibt.
+				return (count($this->page->template->getAll()) > 1);
+
+			default:
+				return true;
+
+		}
+	}
+	
 }
 
 ?>
