@@ -581,36 +581,10 @@ class PageelementAction extends Action
 
 			if	( $this->element->wiki )
 			{
-				// Ermitteln aller verlinkbaren Objekte (fuer Editor)
-				$objects = array();
-
-				foreach( Folder::getAllObjectIds() as $id )
-				{
-					$o = new Object( $id );
-					$o->load();
-
-					if	( $o->getType() != 'folder' )
-					{
-						$f = new Folder( $o->parentid );
-						$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
-						$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
-						$objects[ $id ] .= FILE_SEP.$o->name;
-					}
-				}
-				asort( $objects ); // Sortieren
-
-					
-				$transformer = new Transformer();
-				$transformer->text = $this->value->text;
-				$transformer->parseDocument();
-				$this->setTemplateVar( 'document',$transformer->doc );
-				
 				if ( !isset($this->templateVars['text']))
 					// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
 					// einen Text eingegeben hat (Vorschaufunktion).
 					$this->setTemplateVar( 'text',$this->value->text          );
-				$this->setTemplateVar( 'objects',$objects );
-				$this->setTemplateVar( 'images' ,$objects );
 			}
 
 		}
