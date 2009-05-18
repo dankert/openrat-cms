@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
+// Copyright (C) 2002-2009 Jan Dankert
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,83 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.23  2008-10-07 20:00:32  dankert
-// Entfernen Methode "edit".
-//
-// Revision 1.22  2008-09-11 19:06:14  dankert
-// in src() Abfrage auf Modus.
-//
-// Revision 1.21  2007-11-24 14:17:42  dankert
-// MimeType in Template ermitteln. Auswahl der Erweiterung ?ber Auswahl-Box.
-//
-// Revision 1.20  2007-11-16 22:56:19  dankert
-// Dialog-Verbesserung f?r Hinzuf?gen von Element im Template-Quellcode.
-//
-// Revision 1.19  2007-11-15 21:42:46  dankert
-// Beim Anlegen von Seitenvorlagen Beispiel-Vorlagen anbieten.
-//
-// Revision 1.18  2007-11-05 20:51:03  dankert
-// Aufruf von "addValidationError(...)" bei Eingabefehlern.
-//
-// Revision 1.17  2007-10-10 19:49:20  dankert
-// Anzeige von abh?ngigen Seiten in den Template-Eigenschaften.
-//
-// Revision 1.16  2007-10-10 19:08:55  dankert
-// Beim Hinzuf?gen von Vorlagen das Kopieren einer anderen Vorlage erlauben. Korrektur beim L?schen von Vorlagen.
-//
-// Revision 1.15  2007-05-21 20:04:10  dankert
-// Korrektur f?r Anzeige des Vorlagen-Quelltextes.
-//
-// Revision 1.14  2007-04-08 21:33:42  dankert
-// Bei Ausw?hlen einer Vorlage die Elementliste starten.
-//
-// Revision 1.13  2007/03/11 00:27:12  dankert
-// Beim Ausw?hlen einer Vorlage aus der Liste diese sofort anzeigen.
-//
-// Revision 1.12  2006/01/29 17:18:59  dankert
-// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
-//
-// Revision 1.11  2006/01/23 23:10:46  dankert
-// *** empty log message ***
-//
-// Revision 1.10  2005/11/07 22:32:20  dankert
-// Neue Methode "edit()"
-//
-// Revision 1.9  2005/01/05 23:11:14  dankert
-// Nach hinzuf?gen von Elementen nicht speichern
-//
-// Revision 1.8  2004/12/27 23:34:51  dankert
-// Aenderung Konstruktor
-//
-// Revision 1.7  2004/12/19 15:17:11  dankert
-// div. Korrekturen
-//
-// Revision 1.6  2004/12/15 23:25:13  dankert
-// Sprachvariablen korrigiert
-//
-// Revision 1.5  2004/09/30 20:31:19  dankert
-// Auch leere Extension speichern
-//
-// Revision 1.4  2004/07/09 20:57:29  dankert
-// Dynamische Bereiche (IFEMPTY...)
-//
-// Revision 1.3  2004/05/07 21:34:58  dankert
-// Url ?ber Html::url erzeugen
-//
-// Revision 1.2  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 /**
- * Action-Klasse zum Bearbeiten einer Seitenvorlage
- * @author $Author$
- * @version $Revision$
+ * Action-Klasse zum Bearbeiten einer Seitenvorlage.
+ * 
+ * @author Jan Dankert
  * @package openrat.actions
  */
 
@@ -308,7 +233,7 @@ class TemplateAction extends Action
 
 
 	/**
-	 * Vorlage hinzuf�gen.
+	 * Vorlage hinzuf�gen.
 	 */
 	function add()
 	{
@@ -720,14 +645,25 @@ class TemplateAction extends Action
 	}
 
 	
+	/**
+	 * Stellt fest, welche Menüeinträge ggf. ausgeblendet werden.
+	 * 
+	 * @see actionClasses/Action#checkMenu($name)
+	 */
 	function checkMenu( $menu ) {
 
 		switch( $menu)
 		{
+			case 'srcelement':
+				// Platzhalter nur hinzufuegbar, wenn es welche gibt.
+				return (count($this->template->getElementIds()) > 0);
+
 			case 'remove':
+				// Entfernen von Templates nur dann erlaubt, wenn keine Seiten auf diesem Template basieren.
 				return (count($this->template->getDependentObjectIds()) == 0);
 
 			case 'pages':
+				// Anzeige von Seiten nur dann sinnvoll, wenn es auch Seiten gibt.
 				return (count($this->template->getDependentObjectIds()) > 0);
 				
 			default:
