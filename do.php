@@ -94,6 +94,9 @@ $conf = Session::getConfig();
 // aus Datei lesen.
 if	( !is_array( $conf ) || isset($REQ['reload']) )
 {
+	// Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
+	session_unset();
+	
 	$prefs = new Preferences();
 	$conf = $prefs->load();
 	$conf['action'] = $prefs->load(OR_ACTIONCLASSES_DIR);
