@@ -424,6 +424,9 @@ class PageelementAction extends Action
 			$this->value->publish = false;
 			$this->value->load();
 
+			$this->setTemplateVar('name'     ,$this->value->element->name     );
+			$this->setTemplateVar('desc'     ,$this->value->element->desc     );
+			
 			// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
 			if	( empty($this->value->element->subtype) )
 			$types = array('page','file','link'); // Fallback: Alle erlauben :)

@@ -13,7 +13,7 @@ page
 				if present:publish
 					row
 						cell colspan:2
-							fieldset title:options
+							fieldset title:message:options
 							
 			if present:release
 				row
