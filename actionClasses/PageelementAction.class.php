@@ -589,7 +589,10 @@ class PageelementAction extends Action
 				$languages = $project->getLanguages();
 				
 				if	( count($languages) > 1 )
+				{
+					$languages[$this->value->languageid] = $languages[$this->value->languageid].' *';
 					$this->setTemplateVar('languages',$languages);
+				}
 				
 				if	( $this->hasRequestVar('otherlanguageid') )
 				{
