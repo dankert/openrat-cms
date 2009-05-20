@@ -578,9 +578,30 @@ class PageelementAction extends Action
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 			else	$this->setTemplateVar('old_pageaction','show'                            );
 
+			
 
 			if	( $this->element->wiki )
 			{
+				$project = Session::getProject();
+				$languages = $project->getLanguages();
+				
+				if	( count($languages) > 1 )
+					$this->setTemplateVar('languages',$languages);
+				
+				if	( $this->hasRequestVar('otherlanguageid') )
+				{
+					$lid = $this->getRequestVar('otherlanguageid');
+					$otherValue = new Value();
+					$otherValue->languageid = $lid;
+					$otherValue->pageid     = $this->value->pageid;
+					$otherValue->element    = $this->value->element;
+					$otherValue->publish    = $this->value->publish;
+					$otherValue->load();
+					$this->setTemplateVar('languagetext'   ,wordwrap($otherValue->text,100)  );
+					$this->setTemplateVar('languagename'   ,$languages[$lid]   );
+					$this->setTemplateVar('otherlanguageid',$lid               );
+				}
+				
 				if ( !isset($this->templateVars['text']))
 					// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
 					// einen Text eingegeben hat (Vorschaufunktion).

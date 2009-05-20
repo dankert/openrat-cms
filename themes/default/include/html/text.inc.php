@@ -93,7 +93,7 @@
 		if	( $pos !== false )
 			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
 	#END-IF
-	
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	
 	unset($tmp_text);

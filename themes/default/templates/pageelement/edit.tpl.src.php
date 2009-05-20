@@ -112,6 +112,12 @@ page
 									text var:preview escape:false
 								newline
 								newline
+
+							if present:languagetext
+								fieldset title:var:languagename
+									text var:languagetext
+								newline
+								newline
 								
 							editor type:wiki name:text
 							
@@ -205,6 +211,35 @@ page
 						focus field:text
 
 			if true:mode:edit
+				if value:var:type equals:longtext
+					if value:var:editor equals:wiki
+	
+						if present:languages
+							row
+								cell colspan:2
+									fieldset title:message:editor_show_language
+							row
+								cell colspan:2
+									list list:languages key:languageid value:languagename
+										radio name:otherlanguageid value:var:languageid
+										label for:otherlanguageid_{languageid}
+											text var:languagename
+										newline
+						row
+							cell colspan:2
+								fieldset title:message:PAGE_PREVIEW
+						row
+							cell colspan:2
+								checkbox name:preview 
+								label for:preview
+									text key:PAGE_PREVIEW
+#					row
+#						cell colspan:2
+#							radio name:save 
+#							label for:save
+#								text key:SAVE
+								
+			if true:mode:edit
 				if present:release
 					if present:publish
 						row
@@ -224,12 +259,16 @@ page
 							checkbox name:publish
 							label for:publish
 								text text:PAGE_PUBLISH_AFTER_SAVE
+
 	
 			row
 				cell colspan:2 class:act
-					if true:mode:edit
-						if value:var:type equals:longtext
-							if value:var:editor equals:wiki
-								button type:submit value:preview text:PAGE_PREVIEW
-								text raw:___
+				
+					# Preview jetzt über Checkbox.
+					#if true:mode:edit
+					#	if value:var:type equals:longtext
+					#		if value:var:editor equals:wiki
+					#			button type:submit value:preview text:PAGE_PREVIEW
+					#			text raw:___
+					
 					button type:ok
