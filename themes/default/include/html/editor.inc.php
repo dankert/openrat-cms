@@ -46,7 +46,7 @@
 	function add_control($type,$image)
 	{
 		global $image_dir;
-		echo '<td><noscript>'.checkbox($type).'</noscript><label for="id_'.$type.'"><a href="javascript:'.$type.'();" title="'.lang('PAGE_EDITOR_ADD_'.$type).'"><img src="'.$image_dir.'/editor/'.$image.'" border"0" /></a></label>';
+		echo '<td><noscript>'.checkbox($type).'</noscript><label for="id_'.$type.'"><a href="javascript:'.$type.'();" title="'.langHtml('PAGE_EDITOR_ADD_'.$type).'"><img src="'.$image_dir.'/editor/'.$image.'" border"0" /></a></label>';
 	}
 	
 	
@@ -123,7 +123,7 @@ function list()
  	insert('<?php echo $attr_name ?>',"","\n");
 	while( true )
 	{
-		t = window.prompt('<?php echo lang('EDITOR_PROMPT_LIST_ENTRY') ?>','');
+		t = window.prompt('<?php echo langHtml('EDITOR_PROMPT_LIST_ENTRY') ?>','');
 		if	( t != '' && t != null )
 		 	insert('<?php echo $attr_name ?>',"<?php echo $conf_tags['list-unnumbered'] ?> "+t+"\n","");
 		else
@@ -144,9 +144,9 @@ function table()
 	while( true )
 	{
 		if	( column==1 )
-			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN') ?>';
+			text='<?php echo langHtml('EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN') ?>';
 		else
-			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL') ?>';
+			text='<?php echo langHtml('EDITOR_PROMPT_TABLE_CELL') ?>';
 		t = window.prompt(text,'');
 		if	( t != '' && t != null )
 		{
@@ -186,7 +186,7 @@ function table()
         <td><?php add_control('link' ,'link.png' ) ?></td>
         <!-- <td><?php echo selectBox('objectid',$objects) ?></td> -->
         <td><input name="objectid" size="6" title="<?php echo langHtml('LINK_TO') ?>"></td>
-        <td><noscript>&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('ADD') ?>"/></noscript></td>
+        <td><noscript>&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo langHtml('ADD') ?>"/></noscript></td>
       </tr>
     </table>
     <fieldset><legend><?php echo langHtml('CONTENT') ?></legend></fieldset>
