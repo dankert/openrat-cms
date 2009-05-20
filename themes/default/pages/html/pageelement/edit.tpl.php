@@ -26,7 +26,7 @@
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1_class); ?><?php  $attr2_name='';  $attr2_target='_self';  $attr2_method='post';  $attr2_enctype='application/x-www-form-urlencoded';  ?><?php
+<?php /* Debug-Information */ if ($showDuration) { echo "<!--\n";print_r($this->templateVars);echo "\n-->";} ?><?php unset($attr1_class); ?><?php  $attr2_name='';  $attr2_target='_self';  $attr2_method='post';  $attr2_enctype='application/x-www-form-urlencoded';  ?><?php
 		$attr2_action = $actionName;
 		$attr2_subaction = $targetSubActionName;
 		$attr2_id = $this->getRequestId();
@@ -197,6 +197,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr6_var)?$$attr6_var:'?unset:'.$attr6_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_var);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  $attr4_equals='date';  $attr4_value=$type;  ?><?php 
@@ -287,6 +288,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  ?><?php } ?><?php  ?><?php  $attr10_class='text';  $attr10_var='monthname';  $attr10_escape=true;  ?><?php
@@ -295,6 +297,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
 		$langF = $attr10_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr10_var)?$$attr10_var:'?unset:'.$attr10_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_var);unset($attr10_escape); ?><?php  $attr10_true=$mode=="edit";  ?><?php 
@@ -312,6 +315,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  $attr11_title='';  $attr11_target='_self';  $attr11_url=$nextmonthurl;  $attr11_class='';  ?><?php
@@ -326,6 +330,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
 		$langF = $attr10_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr10_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_raw);unset($attr10_escape); ?><?php  $attr10_true=$mode=="edit";  ?><?php 
@@ -349,6 +354,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  ?><?php } ?><?php  ?><?php  $attr10_class='text';  $attr10_var='yearname';  $attr10_escape=true;  ?><?php
@@ -357,6 +363,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
 		$langF = $attr10_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr10_var)?$$attr10_var:'?unset:'.$attr10_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_var);unset($attr10_escape); ?><?php  $attr10_true=$mode=="edit";  ?><?php 
@@ -374,6 +381,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  $attr11_title='';  $attr11_target='_self';  $attr11_url=$nextyearurl;  $attr11_class='';  ?><?php
@@ -404,6 +412,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
 		$langF = $attr10_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr10_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_key);unset($attr10_escape); ?><?php  ?></td><?php  ?><?php  $attr9_list='weekdays';  $attr9_extract=false;  $attr9_key='list_key';  $attr9_value='weekday';  ?><?php
@@ -443,6 +452,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr11_var)?$$attr11_var:'?unset:'.$attr11_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_var);unset($attr11_escape); ?><?php  ?></td><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></tr><?php  ?><?php  $attr8_list='weeklist';  $attr8_extract=false;  $attr8_key='weeknr';  $attr8_value='week';  ?><?php
@@ -487,6 +497,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr11_var)?$$attr11_var:'?unset:'.$attr11_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_var);unset($attr11_escape); ?><?php  ?></td><?php  ?><?php  $attr10_list='week';  $attr10_extract=true;  $attr10_key='list_key';  $attr10_value='list_value';  ?><?php
@@ -540,6 +551,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr13_class ?>" title="<?php echo $attr13_title ?>"><?php
 		$langF = $attr13_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr13_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr13_class);unset($attr13_raw);unset($attr13_escape); ?><?php  $attr13_class='text';  $attr13_var='nr';  $attr13_escape=true;  ?><?php
@@ -548,6 +560,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr13_class ?>" title="<?php echo $attr13_title ?>"><?php
 		$langF = $attr13_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr13_var)?$$attr13_var:'?unset:'.$attr13_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr13_class);unset($attr13_var);unset($attr13_escape); ?><?php  $attr13_class='text';  $attr13_raw='__';  $attr13_escape=true;  ?><?php
@@ -556,6 +569,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr13_class ?>" title="<?php echo $attr13_title ?>"><?php
 		$langF = $attr13_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr13_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr13_class);unset($attr13_raw);unset($attr13_escape); ?><?php  ?><?php } ?><?php  ?><?php  $attr12_not=true;  $attr12_empty='url';  ?><?php 
@@ -581,6 +595,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr14_class ?>" title="<?php echo $attr14_title ?>"><?php
 		$langF = $attr14_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr14_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr14_class);unset($attr14_raw);unset($attr14_escape); ?><?php  $attr14_class='text';  $attr14_var='nr';  $attr14_escape=true;  ?><?php
@@ -589,6 +604,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr14_class ?>" title="<?php echo $attr14_title ?>"><?php
 		$langF = $attr14_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr14_var)?$$attr14_var:'?unset:'.$attr14_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr14_class);unset($attr14_var);unset($attr14_escape); ?><?php  $attr14_class='text';  $attr14_raw='__';  $attr14_escape=true;  ?><?php
@@ -597,6 +613,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr14_class ?>" title="<?php echo $attr14_title ?>"><?php
 		$langF = $attr14_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr14_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr14_class);unset($attr14_raw);unset($attr14_escape); ?><?php  ?></a><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr12_true=$today;  ?><?php 
@@ -614,6 +631,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr13_class ?>" title="<?php echo $attr13_title ?>"><?php
 		$langF = $attr13_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr13_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr13_class);unset($attr13_raw);unset($attr13_escape); ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></table><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -655,6 +673,7 @@ if	($attr3_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr8_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_key);unset($attr8_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -728,6 +747,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_raw);unset($attr8_escape); ?><?php  $attr8_list='all_months';  $attr8_name='month';  $attr8_onchange='';  $attr8_title='';  $attr8_class='';  $attr8_addempty=false;  $attr8_multiple=false;  $attr8_size='1';  $attr8_lang=false;  ?><?php
@@ -789,6 +809,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_raw);unset($attr8_escape); ?><?php  $attr8_list='all_days';  $attr8_name='day';  $attr8_onchange='';  $attr8_title='';  $attr8_class='';  $attr8_addempty=false;  $attr8_multiple=false;  $attr8_size='1';  $attr8_lang=false;  ?><?php
@@ -866,6 +887,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr8_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_key);unset($attr8_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -939,6 +961,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_raw);unset($attr8_escape); ?><?php  $attr8_list='all_minutes';  $attr8_name='minute';  $attr8_onchange='';  $attr8_title='';  $attr8_class='';  $attr8_addempty=false;  $attr8_multiple=false;  $attr8_size='1';  $attr8_lang=false;  ?><?php
@@ -1000,6 +1023,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_raw);unset($attr8_escape); ?><?php  $attr8_list='all_seconds';  $attr8_name='second';  $attr8_onchange='';  $attr8_title='';  $attr8_class='';  $attr8_addempty=false;  $attr8_multiple=false;  $attr8_size='1';  $attr8_lang=false;  ?><?php
@@ -1123,7 +1147,7 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 <?php unset($attr7_equals);unset($attr7_value); ?><?php  $attr8_name='text';  $attr8_type='html';  ?><?php
 	function checkbox( $name,$value=false,$writable=true,$params=Array() )
 	{
-		$src = '<input type="checkbox" name="'.$name.'"';
+		$src = '<input type="checkbox" id="id_'.$name.'" name="'.$name.'"';
 		foreach( $params as $name=>$val )
 			$src .= " $name=\"$val\"";
 		if	( !$writable )
@@ -1150,6 +1174,11 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 		}
 		$src .= '</select>';
 		return $src;
+	}
+	function add_control($type,$image)
+	{
+		global $image_dir;
+		echo '<td><noscript>'.checkbox($type).'</noscript><label for="id_'.$type.'"><a href="javascript:'.$type.'();" title="'.langHtml('PAGE_EDITOR_ADD_'.$type).'"><img src="'.$image_dir.'/editor/'.$image.'" border"0" /></a></label>';
 	}
  ?><?php
 switch( $attr8_type )
@@ -1209,7 +1238,7 @@ function list()
  	insert('<?php echo $attr8_name ?>',"","\n");
 	while( true )
 	{
-		t = window.prompt('<?php echo lang('EDITOR_PROMPT_LIST_ENTRY') ?>','');
+		t = window.prompt('<?php echo langHtml('EDITOR_PROMPT_LIST_ENTRY') ?>','');
 		if	( t != '' && t != null )
 		 	insert('<?php echo $attr8_name ?>',"<?php echo $conf_tags['list-unnumbered'] ?> "+t+"\n","");
 		else
@@ -1226,9 +1255,9 @@ function table()
 	while( true )
 	{
 		if	( column==1 )
-			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN') ?>';
+			text='<?php echo langHtml('EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN') ?>';
 		else
-			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL') ?>';
+			text='<?php echo langHtml('EDITOR_PROMPT_TABLE_CELL') ?>';
 		t = window.prompt(text,'');
 		if	( t != '' && t != null )
 		{
@@ -1250,25 +1279,25 @@ function table()
 	}
 }
 </script>
+    <fieldset><legend><?php echo langHtml('EDITOR') ?></legend></fieldset>
     <table>
       <tr>
-      	<td colspan="14"><noscript><input type="text" name="addtext" size="30" /></noscript></td>
-      </tr>
-      <tr>
-        <td><noscript><?php echo checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
-        <td><noscript><?php echo checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo checkbox('table') ?></noscript><a href="javascript:table();" title="<?php echo lang('PAGE_EDITOR_ADD_TABLE') ?>"><img src="<?php echo $image_dir ?>/editor/table.png" border"0" /></a></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo checkbox('list') ?></noscript><a href="javascript:list();" title="<?php echo lang('PAGE_EDITOR_ADD_LIST') ?>"><img src="<?php echo $image_dir ?>/editor/list.png" border"0" /></a></td>
-        <td><noscript><?php echo checkbox('numlist') ?></noscript><a href="javascript:numlist();" title="<?php echo lang('PAGE_EDITOR_ADD_NUMLIST') ?>"><img src="<?php echo $image_dir ?>/editor/numlist.png" border"0" /></a></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo checkbox('image') ?></noscript><a href="javascript:image();" title="<?php echo lang('PAGE_EDITOR_ADD_IMAGE') ?>"><img src="<?php echo $image_dir ?>/editor/image.png" border"0" /></a></td>
-        <td><noscript><?php echo checkbox('link') ?></noscript><a href="javascript:link();" title="<?php echo lang('PAGE_EDITOR_ADD_LINK') ?>"><img src="<?php echo $image_dir ?>/editor/link.png" border"0" /></a></td>
-        <td><?php echo selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
-        <td>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="preview" value="<?php echo lang('PAGE_PREVIEW') ?>" style="width:200px;"/></td>
+      	<td><noscript><input type="text" name="addtext" size="30" /></noscript></td>
+        <td><?php add_control('strong'  ,'bold.png'  )?></td>
+        <td><?php add_control('emphatic','italic.png') ?></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><?php add_control('table','table.png') ?></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><?php add_control('list'   ,'list.png')  ; ?></td>
+        <td><?php add_control('numlist','numlist.png') ?></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><?php add_control('image','image.png') ?></td>
+        <td><?php add_control('link' ,'link.png' ) ?></td>
+        <td><input name="objectid" size="6" title="<?php echo langHtml('LINK_TO') ?>"></td>
+        <td><noscript>&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo langHtml('ADD') ?>"/></noscript></td>
       </tr>
     </table>
+    <fieldset><legend><?php echo langHtml('CONTENT') ?></legend></fieldset>
 	<textarea name="<?php echo $attr8_name ?>" class="editor" style="width:100%;height:300px;"><?php echo $$attr8_name ?></textarea>
 <?php
 		}
@@ -1317,12 +1346,28 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
 		$langF = $attr10_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr10_var)?$$attr10_var:'?unset:'.$attr10_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_var);unset($attr10_escape); ?><?php  ?></fieldset><?php  ?><?php  ?><br/><?php  ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr8_title=lang('value');  ?><fieldset><?php if(isset($attr8_title)) { ?><legend><?php echo encodeHtml($attr8_title) ?></legend><?php } ?><?php unset($attr8_title); ?><?php  ?></fieldset><?php  ?><?php  $attr8_name='text';  $attr8_type='wiki';  ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_var);unset($attr10_escape); ?><?php  ?></fieldset><?php  ?><?php  ?><br/><?php  ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr8_present='languagetext';  ?><?php 
+	$attr8_tmp_exec = isset($$attr8_present);
+	$attr8_tmp_last_exec = $attr8_tmp_exec;
+	if	( $attr8_tmp_exec )
+	{
+?>
+<?php unset($attr8_present); ?><?php  $attr9_title=$languagename;  ?><fieldset><?php if(isset($attr9_title)) { ?><legend><?php echo encodeHtml($attr9_title) ?></legend><?php } ?><?php unset($attr9_title); ?><?php  $attr10_class='text';  $attr10_var='languagetext';  $attr10_escape=true;  ?><?php
+		$attr10_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
+		$langF = $attr10_escape?'langHtml':'lang';
+		$tmp_text = isset($$attr10_var)?$$attr10_var:'?unset:'.$attr10_var.'?';
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_var);unset($attr10_escape); ?><?php  ?></fieldset><?php  ?><?php  ?><br/><?php  ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr8_name='text';  $attr8_type='wiki';  ?><?php
 	function checkbox( $name,$value=false,$writable=true,$params=Array() )
 	{
-		$src = '<input type="checkbox" name="'.$name.'"';
+		$src = '<input type="checkbox" id="id_'.$name.'" name="'.$name.'"';
 		foreach( $params as $name=>$val )
 			$src .= " $name=\"$val\"";
 		if	( !$writable )
@@ -1349,6 +1394,11 @@ function table()
 		}
 		$src .= '</select>';
 		return $src;
+	}
+	function add_control($type,$image)
+	{
+		global $image_dir;
+		echo '<td><noscript>'.checkbox($type).'</noscript><label for="id_'.$type.'"><a href="javascript:'.$type.'();" title="'.langHtml('PAGE_EDITOR_ADD_'.$type).'"><img src="'.$image_dir.'/editor/'.$image.'" border"0" /></a></label>';
 	}
  ?><?php
 switch( $attr8_type )
@@ -1408,7 +1458,7 @@ function list()
  	insert('<?php echo $attr8_name ?>',"","\n");
 	while( true )
 	{
-		t = window.prompt('<?php echo lang('EDITOR_PROMPT_LIST_ENTRY') ?>','');
+		t = window.prompt('<?php echo langHtml('EDITOR_PROMPT_LIST_ENTRY') ?>','');
 		if	( t != '' && t != null )
 		 	insert('<?php echo $attr8_name ?>',"<?php echo $conf_tags['list-unnumbered'] ?> "+t+"\n","");
 		else
@@ -1425,9 +1475,9 @@ function table()
 	while( true )
 	{
 		if	( column==1 )
-			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN') ?>';
+			text='<?php echo langHtml('EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN') ?>';
 		else
-			text='<?php echo lang('EDITOR_PROMPT_TABLE_CELL') ?>';
+			text='<?php echo langHtml('EDITOR_PROMPT_TABLE_CELL') ?>';
 		t = window.prompt(text,'');
 		if	( t != '' && t != null )
 		{
@@ -1449,25 +1499,25 @@ function table()
 	}
 }
 </script>
+    <fieldset><legend><?php echo langHtml('EDITOR') ?></legend></fieldset>
     <table>
       <tr>
-      	<td colspan="14"><noscript><input type="text" name="addtext" size="30" /></noscript></td>
-      </tr>
-      <tr>
-        <td><noscript><?php echo checkbox('strong') ?></noscript><a href="javascript:strong();" title="<?php echo lang('PAGE_EDITOR_ADD_STRONG') ?>"><img src="<?php echo $image_dir ?>/editor/bold.png" border"0"   /></a></td>
-        <td><noscript><?php echo checkbox('emphatic') ?></noscript><a href="javascript:emphatic();" title="<?php echo lang('PAGE_EDITOR_ADD_EMPHATIC') ?>"><img src="<?php echo $image_dir ?>/editor/italic.png" border"0" /></a></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo checkbox('table') ?></noscript><a href="javascript:table();" title="<?php echo lang('PAGE_EDITOR_ADD_TABLE') ?>"><img src="<?php echo $image_dir ?>/editor/table.png" border"0" /></a></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo checkbox('list') ?></noscript><a href="javascript:list();" title="<?php echo lang('PAGE_EDITOR_ADD_LIST') ?>"><img src="<?php echo $image_dir ?>/editor/list.png" border"0" /></a></td>
-        <td><noscript><?php echo checkbox('numlist') ?></noscript><a href="javascript:numlist();" title="<?php echo lang('PAGE_EDITOR_ADD_NUMLIST') ?>"><img src="<?php echo $image_dir ?>/editor/numlist.png" border"0" /></a></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><noscript><?php echo checkbox('image') ?></noscript><a href="javascript:image();" title="<?php echo lang('PAGE_EDITOR_ADD_IMAGE') ?>"><img src="<?php echo $image_dir ?>/editor/image.png" border"0" /></a></td>
-        <td><noscript><?php echo checkbox('link') ?></noscript><a href="javascript:link();" title="<?php echo lang('PAGE_EDITOR_ADD_LINK') ?>"><img src="<?php echo $image_dir ?>/editor/link.png" border"0" /></a></td>
-        <td><?php echo selectBox('objectid',$objects) ?><noscript>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo lang('GLOBAL_ADD') ?>"/></noscript></td>
-        <td>&nbsp;&nbsp;&nbsp;<input type="submit" class="submit" name="preview" value="<?php echo lang('PAGE_PREVIEW') ?>" style="width:200px;"/></td>
+      	<td><noscript><input type="text" name="addtext" size="30" /></noscript></td>
+        <td><?php add_control('strong'  ,'bold.png'  )?></td>
+        <td><?php add_control('emphatic','italic.png') ?></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><?php add_control('table','table.png') ?></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><?php add_control('list'   ,'list.png')  ; ?></td>
+        <td><?php add_control('numlist','numlist.png') ?></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td><?php add_control('image','image.png') ?></td>
+        <td><?php add_control('link' ,'link.png' ) ?></td>
+        <td><input name="objectid" size="6" title="<?php echo langHtml('LINK_TO') ?>"></td>
+        <td><noscript>&nbsp;&nbsp;<input type="submit" class="submit" name="addmarkup" value="<?php echo langHtml('ADD') ?>"/></noscript></td>
       </tr>
     </table>
+    <fieldset><legend><?php echo langHtml('CONTENT') ?></legend></fieldset>
 	<textarea name="<?php echo $attr8_name ?>" class="editor" style="width:100%;height:300px;"><?php echo $$attr8_name ?></textarea>
 <?php
 		}
@@ -1532,6 +1582,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_key='text_markup_strong';  $attr11_escape=true;  ?><?php
@@ -1540,6 +1591,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr11_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_key);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['strong-end'];  $attr11_escape=true;  ?><?php
@@ -1548,6 +1600,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  ?><br/><?php  ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['emphatic-begin'];  $attr11_escape=true;  ?><?php
@@ -1556,6 +1609,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_key='text_markup_emphatic';  $attr11_escape=true;  ?><?php
@@ -1564,6 +1618,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr11_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_key);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['emphatic-end'];  $attr11_escape=true;  ?><?php
@@ -1572,6 +1627,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1592,6 +1648,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_key='text_markup_numbered_list';  $attr11_escape=true;  ?><?php
@@ -1600,6 +1657,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr11_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_key);unset($attr11_escape); ?><?php  ?><br/><?php  ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['list-numbered'];  $attr11_escape=true;  ?><?php
@@ -1608,6 +1666,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_raw='...';  $attr11_escape=true;  ?><?php
@@ -1616,6 +1675,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  ?><br/><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1636,6 +1696,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_key='text_markup_unnumbered_list';  $attr11_escape=true;  ?><?php
@@ -1644,6 +1705,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr11_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_key);unset($attr11_escape); ?><?php  ?><br/><?php  ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['list-unnumbered'];  $attr11_escape=true;  ?><?php
@@ -1652,6 +1714,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_raw='...';  $attr11_escape=true;  ?><?php
@@ -1660,6 +1723,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  ?><br/><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1680,6 +1744,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_key='text_markup_table';  $attr11_escape=true;  ?><?php
@@ -1688,6 +1753,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr11_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_key);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['table-cell-sep'];  $attr11_escape=true;  ?><?php
@@ -1696,6 +1762,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_raw='...';  $attr11_escape=true;  ?><?php
@@ -1704,6 +1771,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['table-cell-sep'];  $attr11_escape=true;  ?><?php
@@ -1712,6 +1780,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_raw='...';  $attr11_escape=true;  ?><?php
@@ -1720,6 +1789,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['table-cell-sep'];  $attr11_escape=true;  ?><?php
@@ -1728,6 +1798,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  ?><br/><?php  ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['table-cell-sep'];  $attr11_escape=true;  ?><?php
@@ -1736,6 +1807,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_raw='...';  $attr11_escape=true;  ?><?php
@@ -1744,6 +1816,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['table-cell-sep'];  $attr11_escape=true;  ?><?php
@@ -1752,6 +1825,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_raw='...';  $attr11_escape=true;  ?><?php
@@ -1760,6 +1834,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['table-cell-sep'];  $attr11_escape=true;  ?><?php
@@ -1768,6 +1843,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_raw='...';  $attr11_escape=true;  ?><?php
@@ -1776,6 +1852,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr11_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_raw);unset($attr11_escape); ?><?php  $attr11_class='text';  $attr11_value=@$conf['editor']['text-markup']['table-cell-sep'];  $attr11_escape=true;  ?><?php
@@ -1784,6 +1861,7 @@ function table()
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
 		$langF = $attr11_escape?'langHtml':'lang';
 		$tmp_text = $attr11_value;
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_value);unset($attr11_escape); ?><?php  ?><br/><?php  ?><?php  ?></td><?php  ?><?php  ?></table><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr7_equals='text';  $attr7_value=$editor;  ?><?php 
@@ -1830,6 +1908,7 @@ document.forms[0].<?php echo $attr8_field ?>.select();
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr7_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_key);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1934,6 +2013,7 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr8_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_key);unset($attr8_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -2253,6 +2333,158 @@ document.forms[0].<?php echo $attr7_field ?>.select();
 	if	( $attr4_tmp_exec )
 	{
 ?>
+<?php unset($attr4_true); ?><?php  $attr5_equals='longtext';  $attr5_value=$type;  ?><?php 
+	$attr5_tmp_exec = $attr5_equals == $attr5_value;
+	$attr5_tmp_last_exec = $attr5_tmp_exec;
+	if	( $attr5_tmp_exec )
+	{
+?>
+<?php unset($attr5_equals);unset($attr5_value); ?><?php  $attr6_equals='wiki';  $attr6_value=$editor;  ?><?php 
+	$attr6_tmp_exec = $attr6_equals == $attr6_value;
+	$attr6_tmp_last_exec = $attr6_tmp_exec;
+	if	( $attr6_tmp_exec )
+	{
+?>
+<?php unset($attr6_equals);unset($attr6_value); ?><?php  $attr7_present='languages';  ?><?php 
+	$attr7_tmp_exec = isset($$attr7_present);
+	$attr7_tmp_last_exec = $attr7_tmp_exec;
+	if	( $attr7_tmp_exec )
+	{
+?>
+<?php unset($attr7_present); ?><?php  ?><?php
+	$attr8_tmp_class='';
+	$attr8_last_class = $attr8_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr8_tmp_class));
+?><?php  ?><?php  $attr9_colspan='2';  ?><?php
+	$column_class_idx++;
+	if ($column_class_idx > count($column_classes))
+		$column_class_idx=1;
+	$column_class=$column_classes[$column_class_idx-1];
+	if (empty($attr9_class))
+		$attr9_class=$column_class;
+	global $cell_column_nr;
+	$cell_column_nr++;
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr9_rowspan) )
+		$attr9_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+?> colspan="<?php echo $attr9_colspan ?>" <?php
+?>><?php unset($attr9_colspan); ?><?php  $attr10_title=lang('editor_show_language');  ?><fieldset><?php if(isset($attr10_title)) { ?><legend><?php echo encodeHtml($attr10_title) ?></legend><?php } ?><?php unset($attr10_title); ?><?php  ?></fieldset><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+	$attr8_tmp_class='';
+	$attr8_last_class = $attr8_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr8_tmp_class));
+?><?php  ?><?php  $attr9_colspan='2';  ?><?php
+	$column_class_idx++;
+	if ($column_class_idx > count($column_classes))
+		$column_class_idx=1;
+	$column_class=$column_classes[$column_class_idx-1];
+	if (empty($attr9_class))
+		$attr9_class=$column_class;
+	global $cell_column_nr;
+	$cell_column_nr++;
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr9_rowspan) )
+		$attr9_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+?> colspan="<?php echo $attr9_colspan ?>" <?php
+?>><?php unset($attr9_colspan); ?><?php  $attr10_list='languages';  $attr10_extract=false;  $attr10_key='languageid';  $attr10_value='languagename';  ?><?php
+	$attr10_list_tmp_key   = $attr10_key;
+	$attr10_list_tmp_value = $attr10_value;
+	$attr10_list_extract   = $attr10_extract;
+	unset($attr10_key);
+	unset($attr10_value);
+	if	( !isset($$attr10_list) || !is_array($$attr10_list) )
+		$$attr10_list = array();
+	foreach( $$attr10_list as $$attr10_list_tmp_key => $$attr10_list_tmp_value )
+	{
+		if	( $attr10_list_extract )
+		{
+			if	( !is_array($$attr10_list_tmp_value) )
+			{
+				print_r($$attr10_list_tmp_value);
+				die( 'not an array at key: '.$$attr10_list_tmp_key );
+			}
+			extract($$attr10_list_tmp_value);
+		}
+?><?php unset($attr10_list);unset($attr10_extract);unset($attr10_key);unset($attr10_value); ?><?php  $attr11_readonly=false;  $attr11_name='otherlanguageid';  $attr11_value=$languageid;  $attr11_default=false;  $attr11_prefix='';  $attr11_suffix='';  $attr11_class='';  $attr11_onchange='';  ?><?php
+		if ($this->isEditable() && !$this->isEditMode()) $attr11_readonly=true;
+		if	( isset($$attr11_name)  )
+			$attr11_tmp_default = $$attr11_name;
+		elseif ( isset($attr11_default) )
+			$attr11_tmp_default = $attr11_default;
+		else
+			$attr11_tmp_default = '';
+ ?><input onclick="<?php echo $attr11_name.'_'.$attr11_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $attr11_name.'_'.$attr11_value ?>"  name="<?php echo $attr11_prefix.$attr11_name ?>"<?php if ( $attr11_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr11_value ?>" <?php if($attr11_value==$attr11_tmp_default) echo 'checked="checked"' ?><?php if (in_array($attr11_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+<?php /* #END-IF# */ ?><?php unset($attr11_readonly);unset($attr11_name);unset($attr11_value);unset($attr11_default);unset($attr11_prefix);unset($attr11_suffix);unset($attr11_class);unset($attr11_onchange); ?><?php  $attr11_for='otherlanguageid_'.$languageid.'';  ?><label for="id_<?php echo $attr11_for ?><?php if (!empty($attr11_value)) echo '_'.$attr11_value ?>"><?php unset($attr11_for); ?><?php  $attr12_class='text';  $attr12_var='languagename';  $attr12_escape=true;  ?><?php
+		$attr12_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $attr12_class ?>" title="<?php echo $attr12_title ?>"><?php
+		$langF = $attr12_escape?'langHtml':'lang';
+		$tmp_text = isset($$attr12_var)?$$attr12_var:'?unset:'.$attr12_var.'?';
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($attr12_class);unset($attr12_var);unset($attr12_escape); ?><?php  ?></label><?php  ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php
+	$attr7_tmp_class='';
+	$attr7_last_class = $attr7_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr7_tmp_class));
+?><?php  ?><?php  $attr8_colspan='2';  ?><?php
+	$column_class_idx++;
+	if ($column_class_idx > count($column_classes))
+		$column_class_idx=1;
+	$column_class=$column_classes[$column_class_idx-1];
+	if (empty($attr8_class))
+		$attr8_class=$column_class;
+	global $cell_column_nr;
+	$cell_column_nr++;
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr8_rowspan) )
+		$attr8_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+?> colspan="<?php echo $attr8_colspan ?>" <?php
+?>><?php unset($attr8_colspan); ?><?php  $attr9_title=lang('PAGE_PREVIEW');  ?><fieldset><?php if(isset($attr9_title)) { ?><legend><?php echo encodeHtml($attr9_title) ?></legend><?php } ?><?php unset($attr9_title); ?><?php  ?></fieldset><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+	$attr7_tmp_class='';
+	$attr7_last_class = $attr7_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr7_tmp_class));
+?><?php  ?><?php  $attr8_colspan='2';  ?><?php
+	$column_class_idx++;
+	if ($column_class_idx > count($column_classes))
+		$column_class_idx=1;
+	$column_class=$column_classes[$column_class_idx-1];
+	if (empty($attr8_class))
+		$attr8_class=$column_class;
+	global $cell_column_nr;
+	$cell_column_nr++;
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr8_rowspan) )
+		$attr8_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+?> colspan="<?php echo $attr8_colspan ?>" <?php
+?>><?php unset($attr8_colspan); ?><?php  $attr9_default=false;  $attr9_readonly=false;  $attr9_name='preview';  ?><?php
+	if ($this->isEditable() && !$this->isEditMode()) $attr9_readonly=true;
+	if	( isset($$attr9_name) )
+		$checked = $$attr9_name;
+	else
+		$checked = $attr9_default;
+?><input class="checkbox" type="checkbox" id="id_<?php echo $attr9_name ?>" name="<?php echo $attr9_name  ?>"  <?php if ($attr9_readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?><?php if (in_array($attr9_name,$errors)) echo ' style="background-color:red;"' ?> /><?php
+if ( $attr9_readonly && $checked )
+{ 
+?><input type="hidden" name="<?php echo $attr9_name ?>" value="1" /><?php
+}
+?><?php unset($attr9_name); unset($attr9_readonly); unset($attr9_default); ?><?php unset($attr9_default);unset($attr9_readonly);unset($attr9_name); ?><?php  $attr9_for='preview';  ?><label for="id_<?php echo $attr9_for ?><?php if (!empty($attr9_value)) echo '_'.$attr9_value ?>"><?php unset($attr9_for); ?><?php  $attr10_class='text';  $attr10_key='PAGE_PREVIEW';  $attr10_escape=true;  ?><?php
+		$attr10_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
+		$langF = $attr10_escape?'langHtml':'lang';
+		$tmp_text = $langF($attr10_key);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_key);unset($attr10_escape); ?><?php  ?></label><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr4_true=$mode=="edit";  ?><?php 
+	if	(gettype($attr4_true) === '' && gettype($attr4_true) === '1')
+		$attr4_tmp_exec = $$attr4_true == true;
+	else
+		$attr4_tmp_exec = $attr4_true == true;
+	$attr4_tmp_last_exec = $attr4_tmp_exec;
+	if	( $attr4_tmp_exec )
+	{
+?>
 <?php unset($attr4_true); ?><?php  $attr5_present='release';  ?><?php 
 	$attr5_tmp_exec = isset($$attr5_present);
 	$attr5_tmp_last_exec = $attr5_tmp_exec;
@@ -2323,6 +2555,7 @@ if ( $attr8_readonly && $checked )
 		$langF = $attr9_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr9_textvar);
 		$tmp_text = $langF($attr9_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr9_class);unset($attr9_text);unset($attr9_escape); ?><?php  ?></label><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr5_present='publish';  ?><?php 
@@ -2366,6 +2599,7 @@ if ( $attr8_readonly && $checked )
 		$langF = $attr9_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr9_textvar);
 		$tmp_text = $langF($attr9_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr9_class);unset($attr9_text);unset($attr9_escape); ?><?php  ?></label><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php

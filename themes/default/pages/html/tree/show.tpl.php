@@ -26,7 +26,7 @@
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1_class); ?><?php  $attr2_class='tree';  $attr2_width='100%';  $attr2_space='0';  $attr2_padding='0';  ?><?php
+<?php /* Debug-Information */ if ($showDuration) { echo "<!--\n";print_r($this->templateVars);echo "\n-->";} ?><?php unset($attr1_class); ?><?php  $attr2_class='tree';  $attr2_width='100%';  $attr2_space='0';  $attr2_padding='0';  ?><?php
 	$coloumn_widths = array();
 	$row_classes    = array();
 	$column_classes = array();
@@ -164,6 +164,7 @@ unset($attr6_tmp_last_exec) ?><?php  ?><?php  ?></td><?php  ?><?php  ?><?php } ?
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_var);unset($attr8_escape); ?><?php  ?></a><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php if (!$attr6_tmp_last_exec) { ?>
@@ -176,6 +177,7 @@ unset($attr6_tmp_last_exec) ?><?php  ?><?php  ?></td><?php  ?><?php  ?><?php } ?
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_var);unset($attr7_escape); ?><?php  ?><?php }

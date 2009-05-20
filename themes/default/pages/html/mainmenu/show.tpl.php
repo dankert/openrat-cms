@@ -26,7 +26,7 @@
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1_class); ?><?php  $attr2_width='100%';  $attr2_space='0';  $attr2_padding='5';  $attr2_rowclasses='a,b';  $attr2_columnclasses='a,b';  ?><?php
+<?php /* Debug-Information */ if ($showDuration) { echo "<!--\n";print_r($this->templateVars);echo "\n-->";} ?><?php unset($attr1_class); ?><?php  $attr2_width='100%';  $attr2_space='0';  $attr2_padding='5';  $attr2_rowclasses='a,b';  $attr2_columnclasses='a,b';  ?><?php
 	$coloumn_widths = array();
 	$row_classes    = array();
 	$column_classes = array();
@@ -103,6 +103,7 @@
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';
 		$tmp_text = Text::maxLength( $tmp_text,intval($attr8_maxlength) );
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_var);unset($attr8_maxlength);unset($attr8_escape); ?><?php  ?></a><?php  ?><?php  $attr7_type='filesep';  ?><?php
@@ -115,6 +116,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr6_var)?$$attr6_var:'?unset:'.$attr6_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_title);unset($attr6_class);unset($attr6_var);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  $attr5_style='text-align:right;';  $attr5_class='menu';  ?><?php
@@ -231,7 +233,7 @@ if	($attr8_readonly) {
 	if	( $attr6_tmp_exec )
 	{
 ?>
-<?php unset($attr6_not);unset($attr6_empty); ?><?php  $attr7_title=$title;  $attr7_target='cms_main_main';  $attr7_url=$url;  $attr7_class='menu';  $attr7_accesskey=$key;  ?><?php
+<?php unset($attr6_not);unset($attr6_empty); ?><?php  $attr7_title=lang($title);  $attr7_target='cms_main_main';  $attr7_url=$url;  $attr7_class='menu';  $attr7_accesskey=$key;  ?><?php
 	$params = array();
 		$tmp_url = $attr7_url;
 ?><a<?php if (isset($attr7_name)) echo ' name="'.$attr7_name.'"'; else echo ' href="'.$tmp_url.($attr7_anchor?'#'.$attr7_anchor:'').'"' ?> class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>"<?php if (isset($attr7_accesskey)) echo ' accesskey="'.$attr7_accesskey.'"' ?>  title="<?php echo encodeHtml($attr7_title) ?>"><?php unset($attr7_title);unset($attr7_target);unset($attr7_url);unset($attr7_class);unset($attr7_accesskey); ?><?php  $attr8_class='text';  $attr8_textvar='text';  $attr8_accesskey=$key;  $attr8_escape=true;  ?><?php
@@ -243,6 +245,7 @@ if	($attr8_readonly) {
 		$pos = strpos(strtolower($tmp_text),strtolower($attr8_accesskey));
 		if	( $pos !== false )
 			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_textvar);unset($attr8_accesskey);unset($attr8_escape); ?><?php  ?></a><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr6_empty='url';  ?><?php 
@@ -264,6 +267,7 @@ if	($attr8_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_textvar);unset($attr7_escape); ?><?php  ?><?php } ?><?php  ?><?php  $attr6_class='text';  $attr6_raw='__';  $attr6_escape=true;  ?><?php
@@ -272,6 +276,7 @@ if	($attr8_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_raw);unset($attr6_escape); ?><?php  ?><?php } ?><?php  ?><?php  $attr5_class='text';  $attr5_raw='_';  $attr5_escape=true;  ?><?php
@@ -280,6 +285,7 @@ if	($attr8_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 		$langF = $attr5_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_raw);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?></table><?php  ?><?php  ?></body>

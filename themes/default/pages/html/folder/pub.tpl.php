@@ -26,7 +26,7 @@
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1_class); ?><?php  $attr2_name='';  $attr2_target='_self';  $attr2_method='post';  $attr2_enctype='application/x-www-form-urlencoded';  ?><?php
+<?php /* Debug-Information */ if ($showDuration) { echo "<!--\n";print_r($this->templateVars);echo "\n-->";} ?><?php unset($attr1_class); ?><?php  $attr2_name='';  $attr2_target='_self';  $attr2_method='post';  $attr2_enctype='application/x-www-form-urlencoded';  ?><?php
 		$attr2_action = $actionName;
 		$attr2_subaction = $targetSubActionName;
 		$attr2_id = $this->getRequestId();
@@ -204,6 +204,7 @@ if ( $attr8_readonly && $checked )
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr9_class ?>" title="<?php echo $attr9_title ?>"><?php
 		$langF = $attr9_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr9_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr9_class);unset($attr9_raw);unset($attr9_escape); ?><?php  $attr9_class='text';  $attr9_text='global_pages';  $attr9_escape=true;  ?><?php
@@ -213,6 +214,7 @@ if ( $attr8_readonly && $checked )
 		$langF = $attr9_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr9_textvar);
 		$tmp_text = $langF($attr9_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr9_class);unset($attr9_text);unset($attr9_escape); ?><?php  ?></label><?php  ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr6_present='files';  ?><?php 
@@ -247,6 +249,7 @@ if ( $attr8_readonly && $checked )
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr9_class ?>" title="<?php echo $attr9_title ?>"><?php
 		$langF = $attr9_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr9_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr9_class);unset($attr9_raw);unset($attr9_escape); ?><?php  $attr9_class='text';  $attr9_text='global_files';  $attr9_escape=true;  ?><?php
@@ -256,6 +259,7 @@ if ( $attr8_readonly && $checked )
 		$langF = $attr9_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr9_textvar);
 		$tmp_text = $langF($attr9_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr9_class);unset($attr9_text);unset($attr9_escape); ?><?php  ?></label><?php  ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
@@ -313,6 +317,7 @@ if ( $attr7_readonly && $checked )
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_raw);unset($attr8_escape); ?><?php  $attr8_class='text';  $attr8_text='GLOBAL_PUBLISH_WITH_SUBDIRS';  $attr8_escape=true;  ?><?php
@@ -322,6 +327,7 @@ if ( $attr7_readonly && $checked )
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr8_textvar);
 		$tmp_text = $langF($attr8_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_text);unset($attr8_escape); ?><?php  ?></label><?php  ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr6_present='clean';  ?><?php 
@@ -347,6 +353,7 @@ if ( $attr7_readonly && $checked )
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_raw);unset($attr8_escape); ?><?php  $attr8_class='text';  $attr8_text='global_CLEAN_AFTER_PUBLISH';  $attr8_escape=true;  ?><?php
@@ -356,6 +363,7 @@ if ( $attr7_readonly && $checked )
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr8_textvar);
 		$tmp_text = $langF($attr8_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_text);unset($attr8_escape); ?><?php  ?></label><?php  ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
@@ -382,6 +390,7 @@ if ( $attr7_readonly && $checked )
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr6_textvar);
 		$tmp_text = $langF($attr6_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php

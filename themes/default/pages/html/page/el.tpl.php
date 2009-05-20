@@ -26,7 +26,7 @@
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1_class); ?><?php  $attr2_title='TEMPLATE_ELEMENTS';  $attr2_name='x';  $attr2_widths='30%,50%,20%';  $attr2_width='93%';  $attr2_rowclasses='odd,even';  $attr2_columnclasses='1,2,3';  ?><?php
+<?php /* Debug-Information */ if ($showDuration) { echo "<!--\n";print_r($this->templateVars);echo "\n-->";} ?><?php unset($attr1_class); ?><?php  $attr2_title='TEMPLATE_ELEMENTS';  $attr2_name='x';  $attr2_widths='30%,50%,20%';  $attr2_width='93%';  $attr2_rowclasses='odd,even';  $attr2_columnclasses='1,2,3';  ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr2_widths))
 	{
@@ -178,6 +178,7 @@
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr6_textvar);
 		$tmp_text = $langF($attr6_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  $attr5_class='help';  ?><?php
@@ -200,6 +201,7 @@
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr6_textvar);
 		$tmp_text = $langF($attr6_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  $attr5_class='help';  ?><?php
@@ -222,6 +224,7 @@
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr6_textvar);
 		$tmp_text = $langF($attr6_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr3_empty='el';  ?><?php 
@@ -260,6 +263,7 @@
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr6_textvar);
 		$tmp_text = $langF($attr6_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr3_list='el';  $attr3_extract=true;  $attr3_key='list_key';  $attr3_value='list_value';  ?><?php
@@ -316,6 +320,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_var);unset($attr7_escape); ?><?php  ?></a><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -336,6 +341,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr6_var)?$$attr6_var:'?unset:'.$attr6_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_var);unset($attr6_escape); ?><?php  $attr6_class='text';  $attr6_raw='_';  $attr6_escape=true;  ?><?php
@@ -344,6 +350,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
 		$langF = $attr6_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr6_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_raw);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -374,6 +381,7 @@
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr8_textvar);
 		$tmp_text = $langF($attr8_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_text);unset($attr8_escape); ?><?php  ?></a><?php  ?><?php  $attr7_class='text';  $attr7_raw='_(_';  $attr7_escape=true;  ?><?php
@@ -382,6 +390,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_raw);unset($attr7_escape); ?><?php  $attr7_class='text';  $attr7_var='archive_count';  $attr7_escape=true;  ?><?php
@@ -390,6 +399,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_var);unset($attr7_escape); ?><?php  $attr7_class='text';  $attr7_raw='_)';  $attr7_escape=true;  ?><?php
@@ -398,6 +408,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_raw);unset($attr7_escape); ?><?php  ?><?php } ?><?php  ?><?php  ?><?php if (!$attr6_tmp_last_exec) { ?>
@@ -407,6 +418,7 @@
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
 		$tmp_text = $langF($attr7_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_title);unset($attr7_class);unset($attr7_text);unset($attr7_escape);unset($attr7_type); ?><?php  ?><?php }
@@ -438,6 +450,7 @@ unset($attr5_tmp_last_exec) ?><?php  ?><?php  $attr6_var='archive_url';  ?><?php
 		$langF = $attr5_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr5_textvar);
 		$tmp_text = $langF($attr5_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_text);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
@@ -463,6 +476,7 @@ unset($attr5_tmp_last_exec) ?><?php  ?><?php  $attr6_var='archive_url';  ?><?php
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 		$langF = $attr5_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr5_raw);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_raw);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?>      </table>

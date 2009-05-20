@@ -26,7 +26,7 @@
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1_class); ?><?php  $attr2_name='GLOBAL_MODELS';  $attr2_icon='group';  $attr2_widths='50%,25%,25%';  $attr2_width='93%';  $attr2_rowclasses='odd,even';  $attr2_columnclasses='1,2,3';  ?><?php
+<?php /* Debug-Information */ if ($showDuration) { echo "<!--\n";print_r($this->templateVars);echo "\n-->";} ?><?php unset($attr1_class); ?><?php  $attr2_name='GLOBAL_MODELS';  $attr2_icon='group';  $attr2_widths='50%,25%,25%';  $attr2_width='93%';  $attr2_rowclasses='odd,even';  $attr2_columnclasses='1,2,3';  ?><?php
 	$coloumn_widths=array();
 	if	(!empty($attr2_widths))
 	{
@@ -227,7 +227,7 @@
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_text);unset($attr8_escape); ?><?php  ?></a><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php if (!$attr6_tmp_last_exec) { ?>
-<?php  ?><?php  $attr7_class='name';  $attr7_text='GLOBAL_is_default';  $attr7_escape=true;  ?><?php
+<?php  ?><?php  $attr7_class='text';  $attr7_text='GLOBAL_is_default';  $attr7_escape=true;  ?><?php
 		$attr7_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
@@ -268,7 +268,7 @@ unset($attr5_tmp_last_exec) ?><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_text);unset($attr8_escape); ?><?php  ?></a><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php if (!$attr6_tmp_last_exec) { ?>
-<?php  ?><?php  $attr7_class='name';  $attr7_text='GLOBAL_selected';  $attr7_escape=true;  ?><?php
+<?php  ?><?php  $attr7_class='text';  $attr7_text='GLOBAL_selected';  $attr7_escape=true;  ?><?php
 		$attr7_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php

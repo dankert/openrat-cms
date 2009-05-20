@@ -4,34 +4,31 @@
 <html>
 <head>
   <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?lang($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
-  <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" />
-  <meta name="MSSmartTagsPreventParsing" content="true" />
-  <meta name="robots" content="noindex,nofollow" />
+  <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
+  <meta name="MSSmartTagsPreventParsing" content="true" >
+  <meta name="robots" content="noindex,nofollow" >
 <?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
        	?>
-  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" />
+  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" >
 <?php
       }
 ?><?php if (isset($metaList) && is_array($metaList)) foreach( $metaList as $meta )
       {
        	?>
-  <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo lang($meta['title']) ?>" /><?php
+  <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo lang($meta['title']) ?>" ><?php
       }
 ?><?php if(!empty($root_stylesheet)) { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" >
 <?php } ?>
 <?php if($root_stylesheet!=$user_stylesheet) { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" >
 <?php } ?>
 </head>
 <body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php unset($attr1_class); ?><?php  $attr2_name='';  $attr2_target='_self';  $attr2_method='post';  $attr2_enctype='application/x-www-form-urlencoded';  ?><?php
-	if	(empty($attr2_action))
+<?php /* Debug-Information */ if ($showDuration) { echo "<!--\n";print_r($this->templateVars);echo "\n-->";} ?><?php unset($attr1_class); ?><?php  $attr2_name='';  $attr2_target='_self';  $attr2_method='post';  $attr2_enctype='application/x-www-form-urlencoded';  ?><?php
 		$attr2_action = $actionName;
-	if	(empty($attr2_subaction))
 		$attr2_subaction = $targetSubActionName;
-	if	(empty($attr2_id))
 		$attr2_id = $this->getRequestId();
 	if ($this->isEditable() && !$this->isEditMode())
 		$attr2_subaction = $subActionName;
@@ -184,80 +181,13 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='ELEMENT_SUBTYPE';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -272,11 +202,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_present='subtypes';  ?><?php 
 	$attr7_tmp_exec = isset($$attr7_present);
 	$attr7_tmp_last_exec = $attr7_tmp_exec;
@@ -338,8 +263,7 @@ if (count($$attr8_list)==1) echo '<input type="hidden" name="'.$attr8_name.'" va
 }
 ?><?php unset($attr8_list);unset($attr8_name);unset($attr8_onchange);unset($attr8_title);unset($attr8_class);unset($attr8_addempty);unset($attr8_multiple);unset($attr8_size);unset($attr8_lang); ?><?php  ?><?php } ?><?php  ?><?php  $attr7_not=true;  $attr7_present='subtypes';  ?><?php 
 	$attr7_tmp_exec = isset($$attr7_present);
-	if  ( !empty($attr7_not) )
-		$attr7_tmp_exec = !$attr7_tmp_exec;
+	$attr7_tmp_exec = !$attr7_tmp_exec;
 	$attr7_tmp_last_exec = $attr7_tmp_exec;
 	if	( $attr7_tmp_exec )
 	{
@@ -373,80 +297,13 @@ if	($attr8_readonly) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_WITH_ICON';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -461,11 +318,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_default=false;  $attr7_readonly=false;  $attr7_name='with_icon';  ?><?php
 	if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
 	if	( isset($$attr7_name) )
@@ -499,80 +351,13 @@ if ( $attr7_readonly && $checked )
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_ALL_LANGUAGES';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -587,11 +372,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_default=false;  $attr7_readonly=false;  $attr7_name='all_languages';  ?><?php
 	if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
 	if	( isset($$attr7_name) )
@@ -625,80 +405,13 @@ if ( $attr7_readonly && $checked )
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_writable';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -713,11 +426,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_default=false;  $attr7_readonly=false;  $attr7_name='writable';  ?><?php
 	if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
 	if	( isset($$attr7_name) )
@@ -751,80 +459,13 @@ if ( $attr7_readonly && $checked )
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='width';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -839,11 +480,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_default='';  $attr7_type='text';  $attr7_name='width';  $attr7_size='10';  $attr7_maxlength='256';  $attr7_onchange='';  $attr7_readonly=false;  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
 	  if ($attr7_readonly && empty($$attr7_name)) $$attr7_name = '- '.lang('EMPTY').' -';
       if(!isset($attr7_default)) $attr7_default='';
@@ -873,80 +509,13 @@ if	($attr7_readonly) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='height';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -961,11 +530,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_default='';  $attr7_type='text';  $attr7_name='height';  $attr7_size='10';  $attr7_maxlength='256';  $attr7_onchange='';  $attr7_readonly=false;  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
 	  if ($attr7_readonly && empty($$attr7_name)) $$attr7_name = '- '.lang('EMPTY').' -';
       if(!isset($attr7_default)) $attr7_default='';
@@ -995,80 +559,13 @@ if	($attr7_readonly) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_DATEFORMAT';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1083,11 +580,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_list='dateformats';  $attr7_name='dateformat';  $attr7_onchange='';  $attr7_title='';  $attr7_class='';  $attr7_addempty=false;  $attr7_multiple=false;  $attr7_size='1';  $attr7_lang=false;  ?><?php
 $attr7_tmp_list = $$attr7_list;
 if ($this->isEditable() && !$this->isEditMode())
@@ -1163,80 +655,13 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_FORMAT';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1251,11 +676,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_list='formatlist';  $attr7_name='format';  $attr7_onchange='';  $attr7_title='';  $attr7_class='';  ?><?php $attr7_tmp_list = $$attr7_list;
 		if	( isset($$attr7_name) && isset($attr7_tmp_list[$$attr7_name]) )
 			$attr7_tmp_default = $$attr7_name;
@@ -1293,80 +713,13 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_DECIMALS';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1381,11 +734,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_default='';  $attr7_type='text';  $attr7_name='decimals';  $attr7_size='10';  $attr7_maxlength='2';  $attr7_onchange='';  $attr7_readonly=false;  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
 	  if ($attr7_readonly && empty($$attr7_name)) $$attr7_name = '- '.lang('EMPTY').' -';
       if(!isset($attr7_default)) $attr7_default='';
@@ -1415,80 +763,13 @@ if	($attr7_readonly) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_DEC_POINT';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1503,11 +784,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_default='';  $attr7_type='text';  $attr7_name='dec_point';  $attr7_size='10';  $attr7_maxlength='5';  $attr7_onchange='';  $attr7_readonly=false;  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
 	  if ($attr7_readonly && empty($$attr7_name)) $$attr7_name = '- '.lang('EMPTY').' -';
       if(!isset($attr7_default)) $attr7_default='';
@@ -1537,80 +813,13 @@ if	($attr7_readonly) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_thousand_sep';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1625,11 +834,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_default='';  $attr7_type='text';  $attr7_name='thousand_sep';  $attr7_size='10';  $attr7_maxlength='1';  $attr7_onchange='';  $attr7_readonly=false;  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
 	  if ($attr7_readonly && empty($$attr7_name)) $$attr7_name = '- '.lang('EMPTY').' -';
       if(!isset($attr7_default)) $attr7_default='';
@@ -1659,80 +863,13 @@ if	($attr7_readonly) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_default_text';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1747,11 +884,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_default='';  $attr7_type='text';  $attr7_name='default_text';  $attr7_size='40';  $attr7_maxlength='255';  $attr7_onchange='';  $attr7_readonly=false;  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
 	  if ($attr7_readonly && empty($$attr7_name)) $$attr7_name = '- '.lang('EMPTY').' -';
       if(!isset($attr7_default)) $attr7_default='';
@@ -1781,80 +913,13 @@ if	($attr7_readonly) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_default_longtext';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1869,11 +934,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_name='default_longtext';  $attr7_rows='10';  $attr7_cols='40';  $attr7_class='inputarea';  $attr7_default='';  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
       if ( !$attr7_readonly) {
 ?><textarea <?php if ($attr7_readonly) echo ' disabled="true"' ?> class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php
@@ -1900,80 +960,13 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_DYNAMIC_PARAMETERS';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -1988,11 +981,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_name='parameters';  $attr7_rows='15';  $attr7_cols='40';  $attr7_class='inputarea';  $attr7_default='';  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
       if ( !$attr7_readonly) {
 ?><textarea <?php if ($attr7_readonly) echo ' disabled="true"' ?> class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php
@@ -2013,11 +1001,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
@@ -2030,11 +1013,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_list='dynamic_class_parameters';  $attr7_extract=false;  $attr7_key='paramName';  $attr7_value='defaultValue';  ?><?php
 	$attr7_list_tmp_key   = $attr7_key;
 	$attr7_list_tmp_value = $attr7_value;
@@ -2055,358 +1033,44 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 			extract($$attr7_list_tmp_value);
 		}
 ?><?php unset($attr7_list);unset($attr7_extract);unset($attr7_key);unset($attr7_value); ?><?php  $attr8_class='text';  $attr8_var='paramName';  $attr8_escape=true;  ?><?php
-	if	( isset($attr8_prefix)&& isset($attr8_key))
-		$attr8_key = $attr8_prefix.$attr8_key;
-	if	( isset($attr8_suffix)&& isset($attr8_key))
-		$attr8_key = $attr8_key.$attr8_suffix;
-	if(empty($attr8_title))
-			$attr8_title = '';
-	if	(empty($attr8_type))
+		$attr8_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr8_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
-	$attr8_title = '';
-	if	( $attr8_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr8_array))
-	{
-		$tmpArray = $$attr8_array;
-		if (!empty($attr8_var))
-			$tmp_text = $tmpArray[$attr8_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr8_text]);
-	}
-	elseif (!empty($attr8_text))
-		$tmp_text = $langF($attr8_text);
-	elseif (!empty($attr8_textvar))
-		$tmp_text = $langF($$attr8_textvar);
-	elseif (!empty($attr8_key))
-		$tmp_text = $langF($attr8_key);
-	elseif (!empty($attr8_var))
-		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';	
-	elseif (!empty($attr8_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
-	elseif (!empty($attr8_value))
-		$tmp_text = $attr8_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr8_maxlength) && intval($attr8_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr8_maxlength) );
-	if	(isset($attr8_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr8_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$langF = $attr8_escape?'langHtml':'lang';
+		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_var);unset($attr8_escape); ?><?php  $attr8_class='text';  $attr8_raw='_(';  $attr8_escape=true;  ?><?php
-	if	( isset($attr8_prefix)&& isset($attr8_key))
-		$attr8_key = $attr8_prefix.$attr8_key;
-	if	( isset($attr8_suffix)&& isset($attr8_key))
-		$attr8_key = $attr8_key.$attr8_suffix;
-	if(empty($attr8_title))
-			$attr8_title = '';
-	if	(empty($attr8_type))
+		$attr8_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr8_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
-	$attr8_title = '';
-	if	( $attr8_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr8_array))
-	{
-		$tmpArray = $$attr8_array;
-		if (!empty($attr8_var))
-			$tmp_text = $tmpArray[$attr8_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr8_text]);
-	}
-	elseif (!empty($attr8_text))
-		$tmp_text = $langF($attr8_text);
-	elseif (!empty($attr8_textvar))
-		$tmp_text = $langF($$attr8_textvar);
-	elseif (!empty($attr8_key))
-		$tmp_text = $langF($attr8_key);
-	elseif (!empty($attr8_var))
-		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';	
-	elseif (!empty($attr8_raw))
+		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
-	elseif (!empty($attr8_value))
-		$tmp_text = $attr8_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr8_maxlength) && intval($attr8_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr8_maxlength) );
-	if	(isset($attr8_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr8_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_raw);unset($attr8_escape); ?><?php  $attr8_class='text';  $attr8_text='GLOBAL_DEFAULT';  $attr8_escape=true;  ?><?php
-	if	( isset($attr8_prefix)&& isset($attr8_key))
-		$attr8_key = $attr8_prefix.$attr8_key;
-	if	( isset($attr8_suffix)&& isset($attr8_key))
-		$attr8_key = $attr8_key.$attr8_suffix;
-	if(empty($attr8_title))
-			$attr8_title = '';
-	if	(empty($attr8_type))
+		$attr8_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr8_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
-	$attr8_title = '';
-	if	( $attr8_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr8_array))
-	{
-		$tmpArray = $$attr8_array;
-		if (!empty($attr8_var))
-			$tmp_text = $tmpArray[$attr8_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr8_text]);
-	}
-	elseif (!empty($attr8_text))
-		$tmp_text = $langF($attr8_text);
-	elseif (!empty($attr8_textvar))
+		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr8_textvar);
-	elseif (!empty($attr8_key))
-		$tmp_text = $langF($attr8_key);
-	elseif (!empty($attr8_var))
-		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';	
-	elseif (!empty($attr8_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
-	elseif (!empty($attr8_value))
-		$tmp_text = $attr8_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr8_maxlength) && intval($attr8_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr8_maxlength) );
-	if	(isset($attr8_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr8_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr8_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_text);unset($attr8_escape); ?><?php  $attr8_class='text';  $attr8_raw=')_=_';  $attr8_escape=true;  ?><?php
-	if	( isset($attr8_prefix)&& isset($attr8_key))
-		$attr8_key = $attr8_prefix.$attr8_key;
-	if	( isset($attr8_suffix)&& isset($attr8_key))
-		$attr8_key = $attr8_key.$attr8_suffix;
-	if(empty($attr8_title))
-			$attr8_title = '';
-	if	(empty($attr8_type))
+		$attr8_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr8_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
-	$attr8_title = '';
-	if	( $attr8_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr8_array))
-	{
-		$tmpArray = $$attr8_array;
-		if (!empty($attr8_var))
-			$tmp_text = $tmpArray[$attr8_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr8_text]);
-	}
-	elseif (!empty($attr8_text))
-		$tmp_text = $langF($attr8_text);
-	elseif (!empty($attr8_textvar))
-		$tmp_text = $langF($$attr8_textvar);
-	elseif (!empty($attr8_key))
-		$tmp_text = $langF($attr8_key);
-	elseif (!empty($attr8_var))
-		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';	
-	elseif (!empty($attr8_raw))
+		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
-	elseif (!empty($attr8_value))
-		$tmp_text = $attr8_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr8_maxlength) && intval($attr8_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr8_maxlength) );
-	if	(isset($attr8_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr8_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_raw);unset($attr8_escape); ?><?php  $attr8_class='text';  $attr8_var='defaultValue';  $attr8_escape=true;  ?><?php
-	if	( isset($attr8_prefix)&& isset($attr8_key))
-		$attr8_key = $attr8_prefix.$attr8_key;
-	if	( isset($attr8_suffix)&& isset($attr8_key))
-		$attr8_key = $attr8_key.$attr8_suffix;
-	if(empty($attr8_title))
-			$attr8_title = '';
-	if	(empty($attr8_type))
+		$attr8_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr8_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
-	$attr8_title = '';
-	if	( $attr8_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr8_array))
-	{
-		$tmpArray = $$attr8_array;
-		if (!empty($attr8_var))
-			$tmp_text = $tmpArray[$attr8_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr8_text]);
-	}
-	elseif (!empty($attr8_text))
-		$tmp_text = $langF($attr8_text);
-	elseif (!empty($attr8_textvar))
-		$tmp_text = $langF($$attr8_textvar);
-	elseif (!empty($attr8_key))
-		$tmp_text = $langF($attr8_key);
-	elseif (!empty($attr8_var))
-		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';	
-	elseif (!empty($attr8_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr8_raw);
-	elseif (!empty($attr8_value))
-		$tmp_text = $attr8_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr8_maxlength) && intval($attr8_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr8_maxlength) );
-	if	(isset($attr8_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr8_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$langF = $attr8_escape?'langHtml':'lang';
+		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_var);unset($attr8_escape); ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr4_present='select_items';  ?><?php 
@@ -2431,80 +1095,13 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_select_items';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -2519,11 +1116,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_name='select_items';  $attr7_rows='15';  $attr7_cols='40';  $attr7_class='inputarea';  $attr7_default='';  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
       if ( !$attr7_readonly) {
 ?><textarea <?php if ($attr7_readonly) echo ' disabled="true"' ?> class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php
@@ -2550,80 +1142,13 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_LINK';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -2638,11 +1163,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_list='linkelements';  $attr7_name='linkelement';  $attr7_onchange='';  $attr7_title='';  $attr7_class='';  $attr7_addempty=false;  $attr7_multiple=false;  $attr7_size='1';  $attr7_lang=false;  ?><?php
 $attr7_tmp_list = $$attr7_list;
 if ($this->isEditable() && !$this->isEditMode())
@@ -2718,80 +1238,13 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='ELEMENT_NAME';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -2806,11 +1259,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_list='names';  $attr7_name='name';  $attr7_onchange='';  $attr7_title='';  $attr7_class='';  $attr7_addempty=false;  $attr7_multiple=false;  $attr7_size='1';  $attr7_lang=false;  ?><?php
 $attr7_tmp_list = $$attr7_list;
 if ($this->isEditable() && !$this->isEditMode())
@@ -2886,80 +1334,13 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_DEFAULT_FOLDEROBJECT';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -2974,11 +1355,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_list='folders';  $attr7_name='folderobjectid';  $attr7_onchange='';  $attr7_title='';  $attr7_class='';  $attr7_addempty=false;  $attr7_multiple=false;  $attr7_size='1';  $attr7_lang=false;  ?><?php
 $attr7_tmp_list = $$attr7_list;
 if ($this->isEditable() && !$this->isEditMode())
@@ -3054,80 +1430,13 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_DEFAULT_OBJECT';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -3142,11 +1451,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_list='objects';  $attr7_name='default_objectid';  $attr7_onchange='';  $attr7_title='';  $attr7_class='';  $attr7_addempty=false;  $attr7_multiple=false;  $attr7_size='1';  $attr7_lang=false;  ?><?php
 $attr7_tmp_list = $$attr7_list;
 if ($this->isEditable() && !$this->isEditMode())
@@ -3222,80 +1526,13 @@ if (count($$attr7_list)==1) echo '<input type="hidden" name="'.$attr7_name.'" va
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_class='text';  $attr7_text='EL_PROP_code';  $attr7_escape=true;  ?><?php
-	if	( isset($attr7_prefix)&& isset($attr7_key))
-		$attr7_key = $attr7_prefix.$attr7_key;
-	if	( isset($attr7_suffix)&& isset($attr7_key))
-		$attr7_key = $attr7_key.$attr7_suffix;
-	if(empty($attr7_title))
-			$attr7_title = '';
-	if	(empty($attr7_type))
+		$attr7_title = '';
 		$tmp_tag = 'span';
-	else
-		switch( $attr7_type )
-		{
-			case 'emphatic':
-			case 'italic':
-				$tmp_tag = 'em';
-				break;
-			case 'strong':
-			case 'bold':
-				$tmp_tag = 'strong';
-				break;
-			case 'tt':
-			case 'teletype':
-				$tmp_tag = 'tt';
-				break;
-			case 'preformatted';
-				$tmp_tag = 'pre';
-				break;
-			case 'code';
-				$tmp_tag = 'code';
-				break;
-			default:
-				$tmp_tag = 'span';
-		}
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-	$attr7_title = '';
-	if	( $attr7_escape )
-		$langF = 'langHtml';
-	else
-		$langF = 'lang';
-	if (!empty($attr7_array))
-	{
-		$tmpArray = $$attr7_array;
-		if (!empty($attr7_var))
-			$tmp_text = $tmpArray[$attr7_var];
-		else
-			$tmp_text = $langF($tmpArray[$attr7_text]);
-	}
-	elseif (!empty($attr7_text))
-		$tmp_text = $langF($attr7_text);
-	elseif (!empty($attr7_textvar))
+		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
-	elseif (!empty($attr7_key))
-		$tmp_text = $langF($attr7_key);
-	elseif (!empty($attr7_var))
-		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';	
-	elseif (!empty($attr7_raw))
-		$tmp_text = str_replace('_','&nbsp;',$attr7_raw);
-	elseif (!empty($attr7_value))
-		$tmp_text = $attr7_value;
-	else
-	  $tmp_text = '&nbsp;';
-	if	( !empty($attr7_maxlength) && intval($attr7_maxlength)!=0  )
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr7_maxlength) );
-	if	(isset($attr7_accesskey))
-	{
-		$pos = strpos(strtolower($tmp_text),strtolower($attr7_accesskey));
-		if	( $pos !== false )
-			$tmp_text = substr($tmp_text,0,max($pos,0)).'<span class="accesskey">'.substr($tmp_text,$pos,1).'</span>'.substr($tmp_text,$pos+1);
-	}
+		$tmp_text = $langF($attr7_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -3310,11 +1547,6 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
 		$attr6_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr6_width  )) { ?> width="<?php   echo $attr6_width   ?>" <?php }
-if	( isset($attr6_style  )) { ?> style="<?php   echo $attr6_style   ?>" <?php }
-if	( isset($attr6_class  )) { ?> class="<?php   echo $attr6_class   ?>" <?php }
-if	( isset($attr6_colspan)) { ?> colspan="<?php echo $attr6_colspan ?>" <?php }
-if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 ?>><?php  ?><?php  $attr7_name='code';  $attr7_rows='35';  $attr7_cols='60';  $attr7_class='inputarea';  $attr7_default='';  ?><?php if ($this->isEditable() && !$this->isEditMode()) $attr7_readonly=true;
       if ( !$attr7_readonly) {
 ?><textarea <?php if ($attr7_readonly) echo ' disabled="true"' ?> class="<?php echo $attr7_class ?>" name="<?php echo $attr7_name ?>" rows="<?php echo $attr7_rows ?>" cols="<?php echo $attr7_cols ?>"><?php echo htmlentities(isset($$attr7_name)?$$attr7_name:$attr7_default) ?></textarea><?php
@@ -3335,22 +1567,12 @@ if	( isset($attr6_rowspan)) { ?> rowspan="<?php echo $attr6_rowspan ?>" <?php }
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-if	( isset($attr5_width  )) { ?> width="<?php   echo $attr5_width   ?>" <?php }
-if	( isset($attr5_style  )) { ?> style="<?php   echo $attr5_style   ?>" <?php }
-if	( isset($attr5_class  )) { ?> class="<?php   echo $attr5_class   ?>" <?php }
-if	( isset($attr5_colspan)) { ?> colspan="<?php echo $attr5_colspan ?>" <?php }
-if	( isset($attr5_rowspan)) { ?> rowspan="<?php echo $attr5_rowspan ?>" <?php }
+?> class="<?php   echo $attr5_class   ?>" <?php
+?> colspan="<?php echo $attr5_colspan ?>" <?php
 ?>><?php unset($attr5_class);unset($attr5_colspan); ?><?php  $attr6_type='ok';  $attr6_class='ok';  $attr6_value='ok';  $attr6_text='button_ok';  ?><?php
-	if ($attr6_type=='ok')
-	{
 		if ($this->isEditable() && !$this->isEditMode())
 		$attr6_text = 'MODE_EDIT';
-	}
-	if ($attr6_type=='ok')
-		$attr6_type  = 'submit';
-	if (isset($attr6_src))
-		$attr6_type  = 'image';
-	else
+		$attr6_type = 'submit';
 		$attr6_src  = '';
 ?><input type="<?php echo $attr6_type ?>"<?php if(isset($attr6_src)) { ?> src="<?php echo $image_dir.'icon_'.$attr6_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $attr6_value ?>" class="<?php echo $attr6_class ?>" title="<?php echo lang($attr6_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo langHtml($attr6_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr6_src) ?><?php
 ?><?php unset($attr6_type);unset($attr6_class);unset($attr6_value);unset($attr6_text); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?>      </table>
