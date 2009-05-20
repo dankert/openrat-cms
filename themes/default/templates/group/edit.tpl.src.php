@@ -8,7 +8,7 @@ page
 				cell
 					input name:name
 			row
-				cell colspan:2
+				cell colspan:2 class:act
 					button type:ok
 	focus field:name			
 					
