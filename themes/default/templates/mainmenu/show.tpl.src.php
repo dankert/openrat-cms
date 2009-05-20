@@ -33,7 +33,7 @@ page class:menu
 			
 					if not:true empty:url
 					# Men�punkt
-						link url:var:url target:cms_main_main title:var:title accesskey:var:key class:menu
+						link url:var:url target:cms_main_main title:messagevar:title accesskey:var:key class:menu
 							text textvar:text accesskey:var:key
 					if empty:url
 							text textvar:text class:menu_disabled
