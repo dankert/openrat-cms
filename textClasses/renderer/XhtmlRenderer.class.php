@@ -2,7 +2,7 @@
 
 /**
  * Dokument-Objekt.<br>
- * Diese Objekt verkörpert das Root-Objekt in einem DOM-Baum.<br>
+ * Diese Objekt verkï¿½rpert das Root-Objekt in einem DOM-Baum.<br>
  * <br>
  * Dieses Objekt kann Text parsen und seine Unterobjekte selbst erzeugen.<br>
  * 
@@ -16,7 +16,7 @@ class XhtmlRenderer
 	var $encodeHtml = false;
 	
 	/**
-	 * Fußnoten.
+	 * Fuï¿½noten.
 	 *
 	 * @var Array
 	 */
@@ -130,11 +130,11 @@ class XhtmlRenderer
 					case 'codeelement':
 						
 						if	( empty($child->language) )
-							// Wenn keine Sprache verfügbar, dann ein einfaches PRE-Element erzeugen.
+							// Wenn keine Sprache verfï¿½gbar, dann ein einfaches PRE-Element erzeugen.
 							$tag = 'pre';
 						else
 						{
-							// Wenn Sprache verfügbar, dann den GESHI-Parser bemühen.
+							// Wenn Sprache verfï¿½gbar, dann den GESHI-Parser bemï¿½hen.
 							$tag    = '';
 							$source = '';
 							foreach( $child->children as $c )
@@ -160,7 +160,7 @@ class XhtmlRenderer
 						$tag     = 'cite';
 						
 						// Danke an: http://www.apostroph.de/tueddelchen.php
-						//TODO: Abhängigkeit von Spracheinstellung implementieren.
+						//TODO: Abhï¿½ngigkeit von Spracheinstellung implementieren.
 						$language = 'de';
 						switch( $language )
 						{
@@ -219,7 +219,7 @@ class XhtmlRenderer
 							$attr['src']    = $child->getUrl();
 							$attr['border'] = '0';
 							
-							// Breite/Höhe des Bildes bestimmen.
+							// Breite/Hï¿½he des Bildes bestimmen.
 							$image = new File( $child->objectId );
 							
 							$image->load();
@@ -338,6 +338,60 @@ class XhtmlRenderer
 						$tag = 'li';
 						break;
 
+					case 'macroelement':
+						
+						$className = ucfirst($child->name);
+						$fileName  = './dynamicClasses/'.$className.'.class.php';
+						if	( is_file( $fileName ) )
+						{
+							// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
+							if	( !class_exists($className) )
+								require( $fileName );
+		
+							if	( class_exists($className) )
+							{
+								$dynEl = new $className;
+								$dynEl->page = &$this->page;
+		
+								if	( method_exists( $dynEl,'execute' ) )
+								{
+									$dynEl->objectid = $this->page->objectid;
+									$dynEl->page     = &$this->page;
+		
+									foreach( $child->attributes as $param_name=>$param_value )
+									{
+										if	( isset( $dynEl->$param_name ) )
+											$dynEl->$param_name = $param_value;
+									}
+		
+									$dynEl->execute();
+									$val = $dynEl->getOutput();
+								}
+								else
+								{
+									Logger::warn('element:'.$this->element->name.', '.
+									             'class:'.$className.', no method: execute()');
+								}
+							}
+							else
+							{
+								Logger::warn('element:'.$this->element->name.', '.
+								             'class not found:'.$className);
+							}
+						}
+						else
+						{
+							Logger::warn('element:'.$this->element->name.', '.
+							             'file not found:'.$fileName);
+						}
+		
+						// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML ï¿½bersetzen
+						if   ( $this->page->mimeType()=='text/html' )
+							$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
+						
+						break;
+						
+						
 					default:
 						
 						$tag = 'unknown-element';
@@ -364,7 +418,7 @@ class XhtmlRenderer
 	 *
 	 * @param String $tag Name des Tags
 	 * @param String $value Inhalt
-	 * @param boolean $empty abkürzen, wenn Inhalt leer ("<... />")
+	 * @param boolean $empty abkï¿½rzen, wenn Inhalt leer ("<... />")
 	 * @param Array $attr Attribute als Array<String,String>
 	 * @return String
 	 */
@@ -383,7 +437,7 @@ class XhtmlRenderer
 		if	( $value == '' && $empty )
 		{
 			// Inhalt ist leer, also Kurzform verwenden.
-			// Die Kurzform ist abhängig vom Rendermode.
+			// Die Kurzform ist abhï¿½ngig vom Rendermode.
 			// SGML=<tag>
 			// XML=<tag />
 			if	( $conf['editor']['html']['rendermode'] == 'xml' )

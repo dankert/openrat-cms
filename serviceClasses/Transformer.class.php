@@ -27,7 +27,7 @@ class Transformer
 
 	/**
 	 * Parsen eines Textes.<br>
-	 * Der Text muss in der Eigenschaft 'text' bereits zur Verfügung stehen.<br>
+	 * Der Text muss in der Eigenschaft 'text' bereits zur Verfï¿½gung stehen.<br>
 	 * Der Text wird geparst und als DOM (Document object model) intern gespeichert.
 	 */	
 	
@@ -41,13 +41,14 @@ class Transformer
 		$this->doc          = new DocumentElement();
 		$this->doc->element = $this->element;
 		$this->doc->parse( $zeilen );
+		$this->doc->page = $this->page;
 	}
 
 
 
 	/**
 	 * Das interne Dokumente wird gerendet.<br>
-	 * Die fertige Ausgabe steht anschliessend in der Eigenschaft "renderedText" zur Verfügung.
+	 * Die fertige Ausgabe steht anschliessend in der Eigenschaft "renderedText" zur Verfï¿½gung.
 	 */	
 	function renderDocument()
 	{
@@ -62,7 +63,7 @@ class Transformer
 
 		// Links object:nnn ersetzen
 		//
-		// Das Dokument-Objekt hat keine Information über die aktuelle Seite,
+		// Das Dokument-Objekt hat keine Information ï¿½ber die aktuelle Seite,
 		// daher werden die Links auf Objekte hier gesetzt.
 		foreach( $linkedObjectIds as $objectId )
 		{

@@ -13,6 +13,7 @@
 class DocumentElement extends AbstractElement
 {
 	var $linkedObjectIds = array();
+	var $page;
 	
 	/**
 	 * Fu�noten.
@@ -86,6 +87,7 @@ class DocumentElement extends AbstractElement
 		
 		$renderer = new $rendererClass();
 		$renderer->children        = $this->children;
+		$renderer->page            = $this->page;
 		$renderer->linkedObjectIds = $this->linkedObjectIds;
 		$renderer->encodeHtml      = $this->encodeHtml;
 			

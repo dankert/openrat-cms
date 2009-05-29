@@ -57,7 +57,10 @@ class PdfRenderer
 
 					case 'footnoteelement':
 						break;
-
+						
+					case 'macroelement':
+						break;
+						
 					case 'codeelement':
 						$this->pdf->ln(10);
 						$this->pdf->SetFont('Courier','',12);

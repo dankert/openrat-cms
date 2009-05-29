@@ -132,6 +132,9 @@ class LatexRenderer
 			case 'definitionitemelement':
 				break;
 
+			case 'macroelement':
+				break;
+
 			case 'tablecellelement':
 				$before = '';
 				$after  = ' & ';

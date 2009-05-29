@@ -153,6 +153,12 @@ class HtmlDomRenderer
 						$tag = 'strong';
 						break;
 
+					case 'macroelement':
+						$tag = 'macro';
+						$val = ucfirst($child->name);
+						break;
+
+						
 					case 'emphaticelement':
 						$tag = 'em';
 						break;

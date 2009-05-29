@@ -36,6 +36,9 @@ class DocBookRenderer
 
 		switch( strtolower(get_class($child)) )
 		{
+			case 'macroelement':
+				break;
+				
 			case 'tableofcontentelement':
 				$tag = 'toc';
 				break;

@@ -2,7 +2,7 @@
 
 /**
  * Dokument-Objekt.<br>
- * Diese Objekt verkörpert das Root-Objekt in einem DOM-Baum.<br>
+ * Diese Objekt verkï¿½rpert das Root-Objekt in einem DOM-Baum.<br>
  * <br>
  * Dieses Objekt kann Text parsen und seine Unterobjekte selbst erzeugen.<br>
  * 
@@ -33,7 +33,7 @@ class WikiParser
 			$zeilen[++$nr] = new Line( rtrim($t) );
 		}
 
-		// $zeilen enthält eine Liste von Zeilenobjekten.
+		// $zeilen enthï¿½lt eine Liste von Zeilenobjekten.
 		// Der Index ist die Zeilennr. und beginnt bei 1.
 //		Html::debug($zeilen,"Zeilen");
 		
@@ -56,7 +56,7 @@ class WikiParser
 		$anzahlZeilen = count( $zeilen );  // Anzahl Zeilen
 		
 		// Erzwingt am Anfang und Ende eine leere Zeile, damit
-		// nächste und vorige Zeile in der folgenden Schleife immer gefüllt ist.
+		// nï¿½chste und vorige Zeile in der folgenden Schleife immer gefï¿½llt ist.
 		$zeilen[0]               = new Line('');
 		$zeilen[$anzahlZeilen+1] = new Line(''); 
 		
@@ -84,7 +84,7 @@ class WikiParser
 			}
 
 
-			// Parser deaktiviert für diese Zeile
+			// Parser deaktiviert fï¿½r diese Zeile
 			// Text nicht parsen
 			if	( $dieseZeile->isUnparsed )
 			{
@@ -116,7 +116,7 @@ class WikiParser
 			}
 			
 			// Zitate Teil 1
-			// Zitat ist in separater Zeile angekündigt			
+			// Zitat ist in separater Zeile angekï¿½ndigt			
 			if	( $dieseZeile->isQuote )
 			{
 				$bisZeileNr = $zeileNr+1;
@@ -673,6 +673,36 @@ class WikiParser
 			return $elements;
 		}
 
+		$erg = $this->parseSimpleParts( $text,$text_markup['macro-begin'],$text_markup['macro-end'] );
+		if	( is_array($erg) )
+		{
+			$idx   = -1;
+			
+			$davor = $this->parseSimple($erg[++$idx]);
+			foreach( $davor as $davorEl )
+				$elements[] = $davorEl;
+
+			$macro = new MacroElement();
+			$inh   = explode(' ',$erg[++$idx]);
+			$macro->name = $inh[0];
+			unset($inh[0]);
+			foreach( $inh as $attr )
+			{
+				list($attr_name,$attr_val) = explode($text_markup['macro-attribute-value-seperator'],$attr);
+				$attr_val = trim($attr_val,$text_markup['macro-attribute-quote']);
+				$macro->attributes[$attr_name] = $attr_val;
+			}
+			
+			$elements[] = $macro;
+
+			$danach = $this->parseSimple($erg[++$idx]);
+			foreach( $danach as $danachEl )
+				$elements[] = $danachEl;
+
+			return $elements;
+		}
+		
+		
 		$erg = $this->parseEscapes( $text );
 		if	( is_array($erg) )
 		{
@@ -720,7 +750,6 @@ class WikiParser
 		if	( is_array($erg) )
 			return $erg;
 
-		
 		$t = new TextElement($text);
 		$elements[] = $t;
 		

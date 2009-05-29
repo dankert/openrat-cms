@@ -187,6 +187,59 @@ class HtmlRenderer
 						}
 						break;
 
+					case 'macroelement':
+						
+						$className = ucfirst($child->name);
+						$fileName  = './dynamicClasses/'.$className.'.class.php';
+						if	( is_file( $fileName ) )
+						{
+							// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
+							if	( !class_exists($className) )
+								require( $fileName );
+		
+							if	( class_exists($className) )
+							{
+								$dynEl = new $className;
+								$dynEl->page = &$this->page;
+		
+								if	( method_exists( $dynEl,'execute' ) )
+								{
+									$dynEl->objectid = $this->page->objectid;
+									$dynEl->page     = &$this->page;
+		
+									foreach( $child->attributes as $param_name=>$param_value )
+									{
+										if	( isset( $dynEl->$param_name ) )
+											$dynEl->$param_name = $param_value;
+									}
+		
+									$dynEl->execute();
+									$val = $dynEl->getOutput();
+								}
+								else
+								{
+									Logger::warn('element:'.$this->element->name.', '.
+									             'class:'.$className.', no method: execute()');
+								}
+							}
+							else
+							{
+								Logger::warn('element:'.$this->element->name.', '.
+								             'class not found:'.$className);
+							}
+						}
+						else
+						{
+							Logger::warn('element:'.$this->element->name.', '.
+							             'file not found:'.$fileName);
+						}
+		
+						// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML �bersetzen
+						if   ( $this->page->mimeType()=='text/html' )
+							$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
+						
+						break;
+						
 					case 'linebreakelement':
 						$tag   = 'br';
 						$empty = true;

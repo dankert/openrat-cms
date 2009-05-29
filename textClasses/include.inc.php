@@ -21,6 +21,7 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pa
 	require_once( OR_TEXTCLASSES_DIR."LineBreakElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."LinkElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."ImageElement.class.".PHP_EXT );
+	require_once( OR_TEXTCLASSES_DIR."MacroElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."TeletypeElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."SpeechElement.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."ListElement.class.".PHP_EXT );

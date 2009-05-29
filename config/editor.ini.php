@@ -78,8 +78,10 @@ quote-line-begin = ">"
 quote-line-end   = ">"
 
 ; Makro
-makro-begin = "$$"
-makro-end   = "$$"
+macro-begin = "<<"
+macro-end   = ">>"
+macro-attribute-quote = "'"
+macro-attribute-value-seperator = "="
 
 [html]
 
