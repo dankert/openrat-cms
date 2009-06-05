@@ -904,12 +904,14 @@ SQL
 		$sql->setInt('objectid', $this->objectid);
 		$db->query($sql->query);
 
+		// ACLs loeschen
+		$this->deleteAllACLs();
+
 		// Objekt l?schen
 		$sql = new Sql('DELETE FROM {t_object} WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$db->query($sql->query);
 
-		$this->deleteAllACLs();
 	}
 
 
@@ -1170,6 +1172,7 @@ SQL
 		foreach( $this->getAllAclIds() as $aclid )
 		{
 			$acl = new Acl( $aclid );
+			$acl->load();
 			$acl->delete();
 		}
 	}
