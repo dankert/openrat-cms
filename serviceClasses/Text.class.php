@@ -366,6 +366,24 @@ class Text
 			$text = substr($src,0,$beg).substr($src,$end);
 		return $text;
 	}
+	
+	
+	/**
+	 * Saeubert eine Zeichenkette.
+	 * 
+	 *  Es werden ungueltige Zeichen aus einer Zeichenkette entfernt. Es wird mit einer Whitelist
+	 *  gearbeitet, d.h. die erlaubten Zeichen werden angegeben. 
+	 * 
+	 * @param $eingabe Die Eingabe-Zeichenkette, aus der ungueltige Zeichen entfernt werden sollen.
+	 * @param $erlaubt Die erlaubten Zeichen (eine "White-List")
+	 * @return String die aufgeräumte Zeichenkette
+	 */
+	function clean( $eingabe, $erlaubt )
+	{
+		$first  = strtr( $eingabe, $erlaubt, str_repeat('#', strlen($erlaubt)) );
+		$second = strtr( $eingabe, $first  , str_repeat('_', strlen($first )) );
+		return str_replace('_','',$second);
+	}
 }
 
  

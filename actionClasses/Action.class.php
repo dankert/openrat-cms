@@ -127,16 +127,21 @@ class Action
 		switch( $transcode )
 		{
 			case 'abc':
-				$value  = strip_tags( strtolower($REQ[ $varName ] ) );
-				$my_set = 'abcdefghijklmnopqrstuvwxyz._-';
-				$first  = strtr( $value, $my_set, str_repeat('#', strlen($my_set)) );
-				$second = strtr( $value, $first , str_repeat('_', strlen($first )) );
-				return $second;
-
-			case 'all':
-				return strip_tags( $REQ[ $varName ] );
+			case 'alpha':
+				$value  = $REQ[ $varName ];
+				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
 				
+			case 'alphanum':
 			default:
+				$value  = $REQ[ $varName ];
+				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ,._-/:=');
+				
+			case 'num':
+			case '123':
+				$value  = $REQ[ $varName ];
+				return Text::clean($value,'1234567890.');
+				
+			case 'raw':
 				return $REQ[ $varName ];
 		}
 	}
@@ -348,8 +353,9 @@ class Action
 		//
 		
 		if	( count($errors)>0 )
-			extract( $REQ );
-	
+			foreach( $REQ as $requestVar=>$dummy )
+				$$requestVar = $this->getRequestVar( $requestVar );
+				
 		// Setzen einiger Standard-Variablen
 		//
 		$tpl_dir    = OR_THEMES_DIR.$conf['interface']['theme'].'/pages/html/';
