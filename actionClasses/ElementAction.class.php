@@ -402,9 +402,6 @@ class ElementAction extends Action
 				// Eigenschaften PHP-Code
 				case 'code':
 
-					if	( $conf['security']['disable_dynamic_code'] )
-						$this->addNotice('element',$this->element->name,'CODE_DISABLED',OR_NOTICE_WARN);
-						
 					switch( $this->element->type )
 					{
 
@@ -458,6 +455,9 @@ class ElementAction extends Action
 							break;
 
 						case 'code':
+							if	( $conf['security']['disable_dynamic_code'] )
+								$this->addNotice('element',$this->element->name,'CODE_DISABLED',OR_NOTICE_WARN);
+								
 							$this->setTemplateVar('code',$this->element->code);
 							break;
 					}
