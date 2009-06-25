@@ -56,7 +56,7 @@ class TemplateAction extends Action
 	{
 		// Speichern des Quelltextes
 		//
-		$text = $this->getRequestVar('src');
+		$text = $this->getRequestVar('src','raw');
 		
 		foreach( $this->template->getElementNames() as $elid=>$elname )
 		{
