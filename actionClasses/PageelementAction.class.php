@@ -76,7 +76,7 @@ class PageelementAction extends Action
 
 		if	( $this->hasRequestVar('elementid') )
 		{
-			$this->element = new Element( $this->getRequestVar('elementid') );
+			$this->element = new Element( $this->getRequestVar('elementid','num') );
 			Session::setElement( $this->element );
 		}
 		else
@@ -839,7 +839,7 @@ class PageelementAction extends Action
 			if   ( $this->hasRequestVar('linkobjectid') )
 			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
 			else
-			$value->text           = $this->getRequestVar('text');
+			$value->text           = $this->getRequestVar('text','raw');
 
 			$this->afterSave($value);
 		}
@@ -934,13 +934,13 @@ class PageelementAction extends Action
 			if   ( $this->hasRequestVar('linkobjectid') )
 				$value->linkToObjectId = $this->getRequestVar('linkobjectid');
 			else
-				$value->text           = $this->convertOIDs( $this->getRequestVar('text') );
+				$value->text           = $this->convertOIDs( $this->getRequestVar('text','raw') );
 
 			// Vorschau anzeigen
 			if	( $this->hasRequestVar('preview'  ) ||
 				  $this->hasRequestVar('addmarkup')    )
 			{
-				$inputText = $this->getRequestVar('text');
+				$inputText = $this->getRequestVar('text','raw');
 				
 				if	( $this->hasRequestVar('preview') )
 				{
@@ -958,7 +958,7 @@ class PageelementAction extends Action
 
 					if	( $this->hasRequestVar('addtext') ) // Nur, wenn ein Text eingegeben wurde
 					{
-						$addText = $this->getRequestVar('addtext');
+						$addText = $this->getRequestVar('addtext','raw');
 
 						if	( $this->hasRequestVar('strong') )
 							$inputText .= $conf_tags['strong-begin'].$addText.$conf_tags['strong-end'];
