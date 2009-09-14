@@ -195,6 +195,7 @@
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
 		$tmp_text = $langF($attr7_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr4_not=true;  $attr4_empty='acls';  ?><?php 
@@ -235,6 +236,7 @@
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
 		$tmp_text = $langF($attr7_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  $attr6_class='help';  ?><?php
@@ -257,6 +259,7 @@
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr7_textvar);
 		$tmp_text = $langF($attr7_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  $attr6_list='show';  $attr6_extract=false;  $attr6_key='list_key';  $attr6_value='t';  ?><?php
@@ -299,6 +302,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr8_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_key);unset($attr8_suffix);unset($attr8_prefix);unset($attr8_escape); ?><?php  ?></td><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr6_class='help';  ?><?php
@@ -330,6 +334,7 @@
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = $langF($$attr8_textvar);
 		$tmp_text = $langF($attr8_text);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_text);unset($attr8_escape); ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr4_list='acls';  $attr4_extract=true;  $attr4_key='aclid';  $attr4_value='acl';  ?><?php
@@ -389,6 +394,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_var);unset($attr8_escape); ?><?php  ?><?php } ?><?php  ?><?php  $attr7_present='groupname';  ?><?php 
@@ -406,6 +412,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
 		$langF = $attr8_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_var);unset($attr8_escape); ?><?php  ?><?php } ?><?php  ?><?php  $attr7_not=true;  $attr7_present='username';  ?><?php 
@@ -431,6 +438,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr9_class ?>" title="<?php echo $attr9_title ?>"><?php
 		$langF = $attr9_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr9_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr9_class);unset($attr9_key);unset($attr9_escape); ?><?php  ?><?php } ?><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
@@ -451,6 +459,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
 		$langF = $attr7_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr7_var)?$$attr7_var:'?unset:'.$attr7_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_var);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  $attr6_list='show';  $attr6_extract=false;  $attr6_key='list_key';  $attr6_value='t';  ?><?php
@@ -531,6 +540,7 @@ if ( $attr8_readonly && $checked )
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
 		$langF = $attr10_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr10_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_key);unset($attr10_escape); ?><?php  ?></a><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr4_true=$mode=="edit";  ?><?php 
@@ -583,6 +593,7 @@ if	($attr8_readonly) {
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr9_class ?>" title="<?php echo $attr9_title ?>"><?php
 		$langF = $attr9_escape?'langHtml':'lang';
 		$tmp_text = $langF($attr9_key);
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr9_class);unset($attr9_key);unset($attr9_escape); ?><?php  ?></label><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php

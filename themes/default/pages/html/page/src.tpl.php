@@ -162,6 +162,7 @@
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 		$langF = $attr5_escape?'langHtml':'lang';
 		$tmp_text = isset($$attr5_var)?$$attr5_var:'?unset:'.$attr5_var.'?';
+	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_var);unset($attr5_escape);unset($attr5_type); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?>      </table>
