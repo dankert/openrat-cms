@@ -20,108 +20,105 @@
 //
 
 /**
- * Datenbank-abhaengige Methoden fuer PostgreSQL 
+ * Datenbank-abhaengige Methoden fuer PDO
  * @author $Author: dankert $
  * @version $Revision: 1.5 $
  * @package openrat.database
  */
-class DB_postgresql
+class DB_pdo
 {
-	var $connection;
-
-
 	/**
-	 * Verbinden zum POSTGRES-Server.
+	 * Die PDO-Verbindung.
 	 *
-	 * @param Array $conf
-	 * @return boolean
+	 * @var Resource
 	 */
+	var $connection;
+	
+	/**
+	 * Datenbank-Fehler.
+	 *
+	 * @var String
+	 */
+	var $error;
+
+
 	function connect( $conf )
 	{
-		$host   = $conf['host'];
+		$url    = $conf['dsn'];
 		$user   = $conf['user'];
 		$pw     = $conf['password'];
 		$db     = $conf['database'];
-
+		
 		if	( isset($conf['port']) )
 			$host .= ':'.$conf['port'];
-		
-		if   ( $conf['persistent'] )
-			$connect_function = 'pg_pconnect';
-		else
-			$connect_function = 'pg_connect';
 
-		if    ( $pw != '' )
-			$this->connection = @$connect_function( "host=$host dbname=$db user=$user password=$pw" );
-		elseif ( $user != '' ) 
-			$this->connection = @$connect_function( "host=$host dbname=$db user=$user" );
-		elseif ( $host != '' ) 
-			$this->connection = @$connect_function( "host=$host dbname=$db" );
-		else 
-			$this->connection = @$connect_function( "dbname=$db");
-			
-		if	( ! is_resource($this->connection) )
+		if   ( $conf['persistent'] )
+			$connect_function = 'mysql_pconnect';
+		else
+			$connect_function = 'mysql_connect';
+
+		$options = array();
+		foreach( $conf as $c )
+			if	( substr($c,0,7) == 'option_' )
+				$options[substr($c,8)] = $conf[$c];
+				
+		$this->connection = new PDO($url, $user, $pw, $options);
+		
+		if	( !is_object($this->connection) )
 		{
-			$this->error = 'could not connect to database on host '.$host;
+			$this->error = "Could not connect to database on host $host. ".PDO::errorInfo();
 			return false;
 		}
-
+				
 		return true;
     }
 
 
 
-    /**
-     * Verbindung schließen.
-     *
-     * @return unknown
-     */
 	function disconnect()
 	{
-		$ret = pg_close( $this->connection );
 		$this->connection = null;
-		return $ret;
+		return true;
 	}
 
 
 
 	function query($query)
 	{
-		$result = @pg_exec( $this->connection,$query );
+		$this->result = $this->connection->query($query);
 
-		if	( ! $result )
+		if	( ! $this->result )
 		{
-			if	( empty($this->error) )
-				$this->error = 'PostgreSQL says: '.@pg_errormessage();
+			$this->error = 'Database error: '.PDO::errorInfo();
 			return FALSE;
 		}
 
-		return $result;;
+		return $this->result;
 	}
 
 
 	function fetchRow( $result, $rownum )
 	{
-		return pg_fetch_array( $result,$rownum,PGSQL_ASSOC );
+		return $this->result->fetch( PDO::FETCH_ASSOC );
 	}
 
  
 	function freeResult($result)
 	{
-		return pg_freeresult($result);
+		return true;
 	}
 
 
-	function numCols($result )
+	function numCols($result)
 	{
-		return pg_numfields( $result );
+		die('called NumCols() in PDO');
 	}
 
 
 
 	function numRows( $result )
 	{
-		return pg_numrows($result);
+		die('called NumRows in PDO()');
 	}
 }
 

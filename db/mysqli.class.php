@@ -20,50 +20,69 @@
 //
 
 /**
- * Datenbank-abhaengige Methoden fuer PostgreSQL 
+ * Datenbank-abhaengige Methoden fuer MySQL 
  * @author $Author: dankert $
  * @version $Revision: 1.5 $
  * @package openrat.database
  */
-class DB_postgresql
+class DB_mysqli
 {
-	var $connection;
-
-
 	/**
-	 * Verbinden zum POSTGRES-Server.
+	 * Die MySql-Verbindung.
 	 *
-	 * @param Array $conf
-	 * @return boolean
+	 * @var Resource
 	 */
+	var $connection;
+	
+	/**
+	 * Datenbank-Fehler.
+	 *
+	 * @var String
+	 */
+	var $error;
+
+
 	function connect( $conf )
 	{
 		$host   = $conf['host'];
 		$user   = $conf['user'];
 		$pw     = $conf['password'];
 		$db     = $conf['database'];
-
+		$host = '127.0.0.1';
+		
 		if	( isset($conf['port']) )
 			$host .= ':'.$conf['port'];
+
+		// 5.3.0 - Added the ability of persistent connections. 
+		if   ( $conf['persistent'] && version_compare(PHP_VERSION, '5.3.0', '>') )
+			$host = 'p:'.$host; // Prepending host by p: opens a persistent connection.
 		
-		if   ( $conf['persistent'] )
-			$connect_function = 'pg_pconnect';
-		else
-			$connect_function = 'pg_connect';
+		$connect_function = 'mysqli_connect';
 
 		if    ( $pw != '' )
-			$this->connection = @$connect_function( "host=$host dbname=$db user=$user password=$pw" );
+			$this->connection = $connect_function( $host,$user,$pw );
 		elseif ( $user != '' ) 
-			$this->connection = @$connect_function( "host=$host dbname=$db user=$user" );
+			$this->connection = $connect_function( $host,$user );
 		elseif ( $host != '' ) 
-			$this->connection = @$connect_function( "host=$host dbname=$db" );
+			$this->connection = $connect_function( $host );
 		else 
-			$this->connection = @$connect_function( "dbname=$db");
-			
-		if	( ! is_resource($this->connection) )
+			$this->connection = $connect_function();
+
+		#print_r($this->connection);
+		
+		if	( false && !is_object($this->connection) )
 		{
-			$this->error = 'could not connect to database on host '.$host;
+			$this->error = "Could not connect to mysqli-database on host $host.";
 			return false;
+		}
+				
+		if    ( $db != '' )
+		{
+			if	( !mysqli_select_db( $this->connection,$db ) )
+			{
+				$this->error = "Could not select database '$db' on host $host.";
+				return false;
+			}
 		}
 
 		return true;
@@ -71,14 +90,9 @@ class DB_postgresql
 
 
 
-    /**
-     * Verbindung schließen.
-     *
-     * @return unknown
-     */
 	function disconnect()
 	{
-		$ret = pg_close( $this->connection );
+		$ret = mysqli_close( $this->connection );
 		$this->connection = null;
 		return $ret;
 	}
@@ -87,41 +101,49 @@ class DB_postgresql
 
 	function query($query)
 	{
-		$result = @pg_exec( $this->connection,$query );
+		$result = mysqli_query($this->connection,$query);
 
 		if	( ! $result )
 		{
-			if	( empty($this->error) )
-				$this->error = 'PostgreSQL says: '.@pg_errormessage();
+			$this->error = 'Database error: '.mysql_error();
 			return FALSE;
 		}
 
-		return $result;;
+		return $result;
 	}
 
 
 	function fetchRow( $result, $rownum )
 	{
-		return pg_fetch_array( $result,$rownum,PGSQL_ASSOC );
+		return mysqli_fetch_array( $result,MYSQL_ASSOC );
 	}
 
  
 	function freeResult($result)
 	{
-		return pg_freeresult($result);
+		if	( is_resource($result) )
+			return mysqli_free_result($result);
+		return true;
 	}
 
 
-	function numCols($result )
+	function numCols($result)
 	{
-		return pg_numfields( $result );
+		return mysqli_num_fields( $result );
 	}
 
 
 
 	function numRows( $result )
 	{
-		return pg_numrows($result);
+		return mysqli_num_rows($result);
+	}
+	
+	
+	function prepare( $query,$param)
+	{
+		$stmt = mysqli_prepare($this->connection,$query);
+		// TODO: $stmt als Member merken und bei query() mit bind-vars fï¿½llen.
 	}
 }
 

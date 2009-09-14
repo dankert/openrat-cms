@@ -21,8 +21,8 @@
 
 /**
  * Datenbank-abhaengige Methoden fuer MySQL 
- * @author $Author$
- * @version $Revision$
+ * @author $Author: dankert $
+ * @version $Revision: 1.5 $
  * @package openrat.database
  */
 class DB_mysql
@@ -58,13 +58,13 @@ class DB_mysql
 			$connect_function = 'mysql_connect';
 
 		if    ( $pw != '' )
-			$this->connection = @$connect_function( $host,$user,$pw );
+			$this->connection = $connect_function( $host,$user,$pw );
 		elseif ( $user != '' ) 
-			$this->connection = @$connect_function( $host,$user );
+			$this->connection = $connect_function( $host,$user );
 		elseif ( $host != '' ) 
-			$this->connection = @$connect_function( $host );
+			$this->connection = $connect_function( $host );
 		else 
-			$this->connection = @$connect_function();
+			$this->connection = $connect_function();
 
 		if	( !is_resource($this->connection) )
 		{

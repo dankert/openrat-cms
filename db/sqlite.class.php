@@ -20,65 +20,53 @@
 //
 
 /**
- * Datenbank-abhaengige Methoden fuer PostgreSQL 
+ * Datenbank-abhaengige Methoden fuer SQ-Lite-Datenbanken 
  * @author $Author: dankert $
  * @version $Revision: 1.5 $
  * @package openrat.database
  */
-class DB_postgresql
+class DB_sqlite
 {
-	var $connection;
-
-
 	/**
-	 * Verbinden zum POSTGRES-Server.
+	 * Die SQ-Lite-Verbindung.
 	 *
-	 * @param Array $conf
-	 * @return boolean
+	 * @var Resource
 	 */
+	var $connection;
+	
+	/**
+	 * Datenbank-Fehler.
+	 *
+	 * @var String
+	 */
+	var $error;
+
+
 	function connect( $conf )
 	{
-		$host   = $conf['host'];
-		$user   = $conf['user'];
-		$pw     = $conf['password'];
-		$db     = $conf['database'];
+		$filename = $conf['filename'];
 
-		if	( isset($conf['port']) )
-			$host .= ':'.$conf['port'];
-		
 		if   ( $conf['persistent'] )
-			$connect_function = 'pg_pconnect';
+			$connect_function = 'sqlite_popen';
 		else
-			$connect_function = 'pg_connect';
+			$connect_function = 'sqlite_open';
+		
+		$this->connection = @$connect_function($filename,0666,$error);
 
-		if    ( $pw != '' )
-			$this->connection = @$connect_function( "host=$host dbname=$db user=$user password=$pw" );
-		elseif ( $user != '' ) 
-			$this->connection = @$connect_function( "host=$host dbname=$db user=$user" );
-		elseif ( $host != '' ) 
-			$this->connection = @$connect_function( "host=$host dbname=$db" );
-		else 
-			$this->connection = @$connect_function( "dbname=$db");
-			
-		if	( ! is_resource($this->connection) )
+		if	( !is_resource($this->connection) )
 		{
-			$this->error = 'could not connect to database on host '.$host;
+			$this->error = 'Could not connect to sqlite-database: '.$error;
 			return false;
 		}
-
+				
 		return true;
     }
 
 
 
-    /**
-     * Verbindung schließen.
-     *
-     * @return unknown
-     */
 	function disconnect()
 	{
-		$ret = pg_close( $this->connection );
+		$ret = sqlite_close( $this->connection );
 		$this->connection = null;
 		return $ret;
 	}
@@ -87,41 +75,40 @@ class DB_postgresql
 
 	function query($query)
 	{
-		$result = @pg_exec( $this->connection,$query );
+		$result = sqlite_query($this->connection,$query );
 
 		if	( ! $result )
 		{
-			if	( empty($this->error) )
-				$this->error = 'PostgreSQL says: '.@pg_errormessage();
+			$this->error = 'Database error: '.sqlite_error_string(sqlite_last_error($this->connection));
 			return FALSE;
 		}
 
-		return $result;;
+		return $result;
 	}
 
 
 	function fetchRow( $result, $rownum )
 	{
-		return pg_fetch_array( $result,$rownum,PGSQL_ASSOC );
+		return sqlite_fetch_array( $result,SQLITE_ASSOC );
 	}
 
  
 	function freeResult($result)
 	{
-		return pg_freeresult($result);
+		return true;
 	}
 
 
-	function numCols($result )
+	function numCols($result)
 	{
-		return pg_numfields( $result );
+		return sqlite_num_fields( $result );
 	}
 
 
 
 	function numRows( $result )
 	{
-		return pg_numrows($result);
+		return sqlite_num_rows($result);
 	}
 }
 

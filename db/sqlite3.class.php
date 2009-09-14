@@ -20,108 +20,90 @@
 //
 
 /**
- * Datenbank-abhaengige Methoden fuer PostgreSQL 
+ * Datenbank-abhaengige Methoden fuer SQLITE3
  * @author $Author: dankert $
  * @version $Revision: 1.5 $
  * @package openrat.database
  */
-class DB_postgresql
+class DB_sqlite3
 {
-	var $connection;
-
-
 	/**
-	 * Verbinden zum POSTGRES-Server.
+	 * Das SQLITE3-Verbindungsobjekt.
 	 *
-	 * @param Array $conf
-	 * @return boolean
+	 * @var Resource
 	 */
+	var $connection;
+	
+	/**
+	 * Datenbank-Fehler.
+	 *
+	 * @var String
+	 */
+	var $error;
+
+
 	function connect( $conf )
 	{
-		$host   = $conf['host'];
-		$user   = $conf['user'];
-		$pw     = $conf['password'];
-		$db     = $conf['database'];
-
-		if	( isset($conf['port']) )
-			$host .= ':'.$conf['port'];
+		$filename = $conf['filename'];
 		
-		if   ( $conf['persistent'] )
-			$connect_function = 'pg_pconnect';
-		else
-			$connect_function = 'pg_connect';
+		$this->connection = new SQLite3( $filename );
 
-		if    ( $pw != '' )
-			$this->connection = @$connect_function( "host=$host dbname=$db user=$user password=$pw" );
-		elseif ( $user != '' ) 
-			$this->connection = @$connect_function( "host=$host dbname=$db user=$user" );
-		elseif ( $host != '' ) 
-			$this->connection = @$connect_function( "host=$host dbname=$db" );
-		else 
-			$this->connection = @$connect_function( "dbname=$db");
-			
-		if	( ! is_resource($this->connection) )
+		if	( !is_object($this->connection) )
 		{
-			$this->error = 'could not connect to database on host '.$host;
+			$this->error = "Could not connect to SQLITE3-database: ".SQLite3::lastErrorMsg();
 			return false;
 		}
-
+				
 		return true;
     }
 
 
 
-    /**
-     * Verbindung schließen.
-     *
-     * @return unknown
-     */
 	function disconnect()
 	{
-		$ret = pg_close( $this->connection );
+		$this->connection->close();
 		$this->connection = null;
-		return $ret;
+		return true;
 	}
 
 
 
 	function query($query)
 	{
-		$result = @pg_exec( $this->connection,$query );
+		$this->result = $this->connection->query($query);
 
-		if	( ! $result )
+		if	( !$result )
 		{
-			if	( empty($this->error) )
-				$this->error = 'PostgreSQL says: '.@pg_errormessage();
+			$this->error = 'Database error: '.SQLite3::lastErrorMsg();
 			return FALSE;
 		}
 
-		return $result;;
+		return $this->result;
 	}
 
 
 	function fetchRow( $result, $rownum )
 	{
-		return pg_fetch_array( $result,$rownum,PGSQL_ASSOC );
+		return $this->result->fetchArray( SQLITE3_ASSOC );
 	}
 
  
 	function freeResult($result)
 	{
-		return pg_freeresult($result);
+		return true;
 	}
 
 
-	function numCols($result )
+	function numCols($result)
 	{
-		return pg_numfields( $result );
+		return $this->result->numColumns();
 	}
 
 
 
 	function numRows( $result )
 	{
-		return pg_numrows($result);
+		return $this->result->numRows();
 	}
 }
 

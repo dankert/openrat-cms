@@ -81,6 +81,10 @@ require_once( OR_TEXTCLASSES_DIR   ."include.inc.".PHP_EXT );
 require_once( OR_DBCLASSES_DIR."db.class.php" );
 require_once( OR_DBCLASSES_DIR."postgresql.class.php" );
 require_once( OR_DBCLASSES_DIR."mysql.class.php" );
+require_once( OR_DBCLASSES_DIR."mysqli.class.php" );
+require_once( OR_DBCLASSES_DIR."sqlite.class.php" );
+require_once( OR_DBCLASSES_DIR."sqlite3.class.php" );
+require_once( OR_DBCLASSES_DIR."pdo.class.php" );
 
 // Jetzt erst die Sitzung starten (nachdem alle Klassen zur Verfügung stehen).
 session_start();

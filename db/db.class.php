@@ -26,8 +26,8 @@
 
 /**
  * Grundsaetzliche Darstellung einer Datenbank-Verbindung
- * @author $Author$
- * @version $Revision$
+ * @author $Author: dankert $
+ * @version $Revision: 1.9 $
  * @package openrat.database
  */
 class DB
@@ -322,6 +322,15 @@ class DB
 
 		return $results;
 	}
+	
+	
+	function prepare( $query, $param )
+	{
+		if	( method_exists( $this->client,'prepare' ) )
+		{
+			$this->client->prepare( $query, $param );
+		}
+	}
 }
 
 
@@ -331,7 +340,7 @@ class DB
  * Darstellung eines Datenbank-Ergebnisses.
  * 
  * @author Jan Dankert
- * @version $Revision$
+ * @version $Revision: 1.9 $
  * @package openrat.database
  */
 
