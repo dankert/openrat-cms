@@ -34,5 +34,12 @@ goto=edit
 [saveprofile]
 goto=edit
 
+[settings]
+menu=edit
+target=savesettings
+
+[savesettings]
+goto=settings
+
 [menu]
-edit=edit,pwchange,mail,groups
+edit=edit,settings,pwchange,mail,groups

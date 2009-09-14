@@ -1026,3 +1026,6 @@ NOTICE_GROUPS_MAY_CONFLICT_WITH_LDAP="The user-group-relations my conflict with 
 NOTICE_CONCURRENT_VALUE_CHANGE="While your edit session another user has changed this content at {last_change_time}. Your changes where saved, but you should check the archive if the overwritten content should be merged."
 NOTICE_CONCURRENT_VALUE_CHANGE_NOT_SAVED="While your edit session another user has changed this content at {last_change_time}. Your changes where not saved."
 NOTICE_CODE_DISABLED = "The dynamic code will not be executed in the actual environment."
+MENU_PROFILE_SETTINGS = "Settings"
+MENU_PROFILE_SETTINGS_DESC = "Edit your user settings"
+SETTING_ALWAYS_EDIT = "If possible, open every form in edit mode"

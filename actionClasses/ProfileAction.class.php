@@ -60,7 +60,38 @@ class ProfileAction extends Action
 		}
 	}
 
+	
+	
+	function settings()
+	{
+		foreach( array('always_edit') as $name )
+			$this->setTemplateVar($name,isset($_COOKIE['or_'.$name]));
+	}
 
+	
+	
+	function savesettings()
+	{
+		foreach( array('always_edit') as $name )
+		{
+			if	( $this->hasRequestVar($name))
+			{
+				// Cookie setzen
+				setcookie('or_'.$name,'1');
+				$_COOKIE['or_'.$name] = '1';
+			}
+			else
+			{
+				// Cookie lÃ¶schen
+				setcookie('or_'.$name,'', time()-3600);
+				unset($_COOKIE['or_'.$name]);
+			}
+		}
+		
+		$this->addNotice('user',$this->user->name,'SAVED','ok');
+	}
+	
+	
 	function pwchange()
 	{
 	}
@@ -81,7 +112,7 @@ class ProfileAction extends Action
 
 		if	( empty($newMail) )
 		{
-			// Bestätigungscode stimmt nicht.
+			// Bestï¿½tigungscode stimmt nicht.
 			$this->addValidationError('mail');
 			return;
 		}
@@ -124,8 +155,8 @@ class ProfileAction extends Action
 		
 		if	( $sessionCode == $inputRegisterCode )
 		{
-			// Bestätigungscode stimmt überein.
-			// E-Mail-Adresse ändern.	
+			// Bestï¿½tigungscode stimmt ï¿½berein.
+			// E-Mail-Adresse ï¿½ndern.	
 			$this->user->mail = $newMail;
 			$this->user->save();
 			
@@ -133,7 +164,7 @@ class ProfileAction extends Action
 		}
 		else
 		{
-			// Bestätigungscode stimmt nicht.
+			// Bestï¿½tigungscode stimmt nicht.
 			$this->addValidationError('code','code_not_match');
 			$this->callSubAction('confirmmail');
 		}
@@ -189,7 +220,7 @@ class ProfileAction extends Action
 	
 	
 	/**
-	 * @param String $name Menüpunkt
+	 * @param String $name Menï¿½punkt
 	 * @return boolean
 	 */
 	function checkMenu( $name )
@@ -199,6 +230,8 @@ class ProfileAction extends Action
 		switch( $name )
 		{
 			case 'pwchange':
+				// Die Funktion "Kennwort setzen" ist nur aktiv, wenn als Authentifizierungs-Backend
+				// auch die interne Benutzerdatenbank eingesetzt wird.
 				return     @$conf['security']['auth']['type'] == 'database'
 				       && !@$conf['security']['auth']['userdn'];
 				

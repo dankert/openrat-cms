@@ -1026,3 +1026,6 @@ INHERIT_RIGHTS = "Berechtigungen in allen untergeordneten Objekten zurücksetzen 
 CONTENT = "Inhalt"
 EDITOR = "Editor"
 EDITOR_SHOW_LANGUAGE = "Sprache anzeigen"
+MENU_PROFILE_SETTINGS = "Einstellungen"
+MENU_PROFILE_SETTINGS_DESC = "Verändern Ihrer Benutzereinstellungen"
+SETTING_ALWAYS_EDIT = "Falls möglich, ein Formular sofort zum Bearbeiten öffnen"
