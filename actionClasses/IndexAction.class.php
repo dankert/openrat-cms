@@ -588,7 +588,7 @@ class IndexAction extends Action
 			die('login disabled');
 
 		$openid_user   = $this->getRequestVar('openid_url'    );
-		$loginName     = $this->getRequestVar('login_name'    );
+		$loginName     = $this->getRequestVar('login_name'    ,'alphanum');
 		$loginPassword = $this->getRequestVar('login_password');
 		$newPassword1  = $this->getRequestVar('password1'     );
 		$newPassword2  = $this->getRequestVar('password2'     );
@@ -634,7 +634,7 @@ class IndexAction extends Action
 			else
 			{
 				// Anmeldung gescheitert.
-				$this->addNotice('user',$loginName,'LOGIN_FAILED','error',array('name'=>$this->getRequestVar('login_name')) );
+				$this->addNotice('user',$loginName,'LOGIN_FAILED','error',array('name'=>$loginName) );
 				$this->addValidationError('login_name'    ,'');
 				$this->addValidationError('login_password','');
 			}
