@@ -89,10 +89,10 @@ class FileAction extends ObjectAction
 	function saveprop()
 	{
 		// Eigenschaften speichern
-		$this->file->filename  = $this->getRequestVar('filename'   );
-		$this->file->name      = $this->getRequestVar('name'       );
-		$this->file->extension = $this->getRequestVar('extension'  );
-		$this->file->desc      = $this->getRequestVar('description');
+		$this->file->filename  = $this->getRequestVar('filename'   ,'alphanum');
+		$this->file->name      = $this->getRequestVar('name'       ,'full'    );
+		$this->file->extension = $this->getRequestVar('extension'  ,'alphanum');
+		$this->file->desc      = $this->getRequestVar('description','full'    );
 		
 		$this->file->save();
 		$this->file->setTimestamp();

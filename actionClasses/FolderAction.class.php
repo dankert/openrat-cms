@@ -495,9 +495,9 @@ class FolderAction extends ObjectAction
 	{
 		// Ordnereigenschaften speichern
 		if   ( $this->getRequestVar('name') != '' )
-			$this->folder->name     = $this->getRequestVar('name'    );
+			$this->folder->name     = $this->getRequestVar('name'    ,'full');
 		elseif ($this->getRequestVar('filename') != '' )
-		 	$this->folder->name     = $this->getRequestVar('filename');
+		 	$this->folder->name     = $this->getRequestVar('filename','alphanum');
 		else
 		{
 			$this->addValidationError('name');
@@ -506,8 +506,8 @@ class FolderAction extends ObjectAction
 			return;
 		}
 		
-		$this->folder->filename = $this->getRequestVar('filename'   );
-		$this->folder->desc     = $this->getRequestVar('description');
+		$this->folder->filename = $this->getRequestVar('filename'   ,'alphanum');
+		$this->folder->desc     = $this->getRequestVar('description','full'    );
 		$this->folder->save();
 		$this->addNotice($this->folder->getType(),$this->folder->name,'PROP_SAVED','ok');
 	}

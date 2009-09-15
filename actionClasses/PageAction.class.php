@@ -305,9 +305,9 @@ class PageAction extends ObjectAction
 	{
 		if   ( $this->getRequestVar('name')!='' )
 		{
-			$this->page->name        = $this->getRequestVar('name'       );
-			$this->page->filename    = $this->getRequestVar('filename'   );
-			$this->page->desc        = $this->getRequestVar('description');
+			$this->page->name        = $this->getRequestVar('name'       ,'full'    );
+			$this->page->filename    = $this->getRequestVar('filename'   ,'alphanum');
+			$this->page->desc        = $this->getRequestVar('description','full'    );
 
 			$this->page->save();
 			$this->addNotice($this->page->getType(),$this->page->name,'PROP_SAVED','ok');

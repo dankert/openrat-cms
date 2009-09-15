@@ -132,11 +132,20 @@ class Action
 				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
 				
 			case 'alphanum':
-			default:
 				$value  = $REQ[ $varName ];
-				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ,._-/:=()');
+				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-');
 				
-			case 'num':
+			case 'full':
+			default:
+				$value   = $REQ[ $varName ];
+				$allowed = ' ';
+				for ($i =  40; $i <=  59; $i++) $allowed .= chr($i);  // Zahlen 
+				for ($i =  65; $i <=  93; $i++) $allowed .= chr($i);  // ABC
+				for ($i =  97; $i <= 122; $i++) $allowed .= chr($i);  // abc
+				for ($i = 192; $i <= 255; $i++) $allowed .= chr($i);  // Sonderzeichen
+				return Text::clean($value,$allowed);
+				
+				case 'num':
 			case '123':
 				$value  = $REQ[ $varName ];
 				return Text::clean($value,'1234567890.');

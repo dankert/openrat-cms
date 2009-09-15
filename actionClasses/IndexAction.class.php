@@ -589,9 +589,9 @@ class IndexAction extends Action
 
 		$openid_user   = $this->getRequestVar('openid_url'    );
 		$loginName     = $this->getRequestVar('login_name'    ,'alphanum');
-		$loginPassword = $this->getRequestVar('login_password');
-		$newPassword1  = $this->getRequestVar('password1'     );
-		$newPassword2  = $this->getRequestVar('password2'     );
+		$loginPassword = $this->getRequestVar('login_password','alphanum');
+		$newPassword1  = $this->getRequestVar('password1'     ,'alphanum');
+		$newPassword2  = $this->getRequestVar('password2'     ,'alphanum');
 		
 		// Login mit Open-Id.
 		if	( !empty($openid_user) )

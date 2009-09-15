@@ -110,8 +110,8 @@ class LinkAction extends ObjectAction
 		if   ( $this->getRequestVar('name') != '' )
 		{
 			// Eigenschaften speichern
-			$this->link->name      = $this->getRequestVar('name'       );
-			$this->link->desc      = $this->getRequestVar('description');
+			$this->link->name      = $this->getRequestVar('name'       ,'full');
+			$this->link->desc      = $this->getRequestVar('description','full');
 
 			$this->link->save();
 			$this->link->setTimestamp();
