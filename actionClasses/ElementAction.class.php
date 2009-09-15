@@ -575,9 +575,9 @@ class ElementAction extends Action
 		$this->element->subtype         = $this->getRequestVar('subtype');
 		
 		if	( $this->hasRequestVar('default_longtext'))
-			$this->element->defaultText     = $this->getRequestVar('default_longtext');
+			$this->element->defaultText     = $this->getRequestVar('default_longtext','text');
 		else
-			$this->element->defaultText     = $this->getRequestVar('default_text');
+			$this->element->defaultText     = $this->getRequestVar('default_text','alphanum');
 		$this->element->wiki            = in_array('wiki',explode(',',$this->getRequestVar('format')));
 		$this->element->html            = in_array('html',explode(',',$this->getRequestVar('format')));
 		$this->element->withIcon        = $this->getRequestVar('with_icon') != '';
@@ -591,7 +591,7 @@ class ElementAction extends Action
 		if	( $this->hasRequestVar('select_items'))
 			$this->element->code         = $this->getRequestVar('select_items');
 		else
-			$this->element->code         = $this->getRequestVar('code'            );
+			$this->element->code         = $this->getRequestVar('code'            ,'raw');
 
 		if	( $this->hasRequestVar('name') )
 			$this->element->name = $this->getRequestVar('name');
@@ -600,7 +600,7 @@ class ElementAction extends Action
 			$this->element->setPrefix( $this->getRequestVar('linkelement') );
 		
 		if	( $this->hasRequestVar('parameters'))
-			$this->element->code = $this->getRequestVar('parameters');
+			$this->element->code = $this->getRequestVar('parameters','text');
 		
 //		Html::debug($this->element);
 		$this->element->save();

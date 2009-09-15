@@ -135,8 +135,18 @@ class Action
 				$value  = $REQ[ $varName ];
 				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-');
 				
+			case 'mail':
+				$value  = $REQ[ $varName ];
+				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-@');
+				
+				case 'full':
+					
+			case 'text':
+				$value  = $REQ[ $varName ];
+				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:!"§$%&/()=?._- '.chr(10).chr(13));
+				
 			case 'full':
-			default:
+					default:
 				$value   = $REQ[ $varName ];
 				$allowed = ' ';
 				for ($i =  40; $i <=  59; $i++) $allowed .= chr($i);  // Zahlen 
