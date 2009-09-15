@@ -32,6 +32,10 @@ class ProfileAction extends Action
 	var $user;
 	var $defaultSubAction = 'edit';
 
+	/**
+	 * Konstruktor.
+	 * Setzen der Benutzer-Objektes.
+	 */
 	function ProfileAction()
 	{
 		$this->user = Session::getUser();
@@ -62,18 +66,27 @@ class ProfileAction extends Action
 
 	
 	
+	/**
+	 * Benutzer-Einstellungen anzeigen.
+	 * Diese Einstellungen werden im Cookie gespeichert.
+	 */
 	function settings()
 	{
 		foreach( array('always_edit') as $name )
+		
 			$this->setTemplateVar($name,isset($_COOKIE['or_'.$name]));
 	}
 
 	
-	
+
+	/**
+	 * Speichern der Benutzereinstellungen.
+	 */
 	function savesettings()
 	{
 		foreach( array('always_edit') as $name )
 		{
+			// Prüfen, ob Checkbox aktiviert wurde.
 			if	( $this->hasRequestVar($name))
 			{
 				// Cookie setzen
@@ -92,32 +105,43 @@ class ProfileAction extends Action
 	}
 	
 	
+	
+	/**
+	 * Anzeigen einer Maske zum Ändern des Kennwortes.
+	 */
 	function pwchange()
 	{
 	}
 	
 	
-	
+
+	/**
+	 * Anzeige einer Maske zum Ändern der E-Mail-Adresse
+	 */
 	function mail()
 	{
 	}
 	
 	
 	
+	/*
+	 * Es wird eine E-Mail mit einem Freischaltcode an die eingegebene Adresse geschickt.
+	 */
 	function mailcode()
 	{
 		srand ((double)microtime()*1000003);
-		$code = rand();
+		$code = rand(); // Zufalls-Freischaltcode erzeugen
 		$newMail = $this->getRequestVar('mail');
 
 		if	( empty($newMail) )
 		{
-			// Best�tigungscode stimmt nicht.
+			// Keine E-Mail-Adresse eingegeben.
 			$this->addValidationError('mail');
 			return;
 		}
 		else
 		{
+			// Der Freischaltcode wird in der Sitzung gespeichert.
 			Session::set('mailChangeCode',$code   );
 			Session::set('mailChangeMail',$newMail);
 			
@@ -141,12 +165,19 @@ class ProfileAction extends Action
 
 	
 	
+	/**
+	 * Anzeige einer Maske, in die der Freischaltcode für das
+	 * Ändern der E-Mail-Adresse eingetragen werden muss.
+	 */
 	function confirmmail()
 	{
 	}
 	
 	
-	
+
+	/**
+	 * Abspeichern der neuen E-Mail-Adresse
+	 */
 	function savemail()
 	{
 		$sessionCode       = Session::get('mailChangeCode');
@@ -199,6 +230,9 @@ class ProfileAction extends Action
 
 
 
+	/**
+	 * Anzeige aller Benutzer-Eigenschaften.
+	 */
 	function edit()
 	{
 		$this->setTemplateVars( $this->user->getProperties() );
@@ -220,8 +254,8 @@ class ProfileAction extends Action
 	
 	
 	/**
-	 * @param String $name Men�punkt
-	 * @return boolean
+	 * @param String $name Menüpunkt
+	 * @return boolean true, falls Menüpunkt zugelassen
 	 */
 	function checkMenu( $name )
 	{

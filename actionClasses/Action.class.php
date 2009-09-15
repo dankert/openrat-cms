@@ -623,7 +623,7 @@ class Action
 	 */
 	function isEditMode()
 	{
-		return !$this->isEditable() || $this->getRequestVar('mode')=='edit' || (isset($this->templateVars) && $this->templateVars['mode']=='edit'); 
+		return !$this->isEditable() || $this->getRequestVar('mode')=='edit' || isset($_COOKIE['or_always_edit']) || (isset($this->templateVars) && $this->templateVars['mode']=='edit'); 
 	}
 }
 
