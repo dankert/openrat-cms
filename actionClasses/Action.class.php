@@ -134,7 +134,7 @@ class Action
 			case 'alphanum':
 			default:
 				$value  = $REQ[ $varName ];
-				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ,._-/:=');
+				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ,._-/:=()');
 				
 			case 'num':
 			case '123':
