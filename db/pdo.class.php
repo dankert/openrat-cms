@@ -99,7 +99,7 @@ class DB_pdo
 
 	function fetchRow( $result, $rownum )
 	{
-		return $this->result->fetch( PDO::FETCH_ASSOC );
+		return $this->result->fetch( PDO::FETCH_ASSOC() );
 	}
 
  
