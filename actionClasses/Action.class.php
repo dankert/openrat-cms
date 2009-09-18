@@ -139,8 +139,6 @@ class Action
 				$value  = $REQ[ $varName ];
 				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-@');
 				
-				case 'full':
-					
 			case 'text':
 				$value  = $REQ[ $varName ];
 				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:!"§$%&/()=?._- '.chr(10).chr(13));
