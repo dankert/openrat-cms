@@ -1,3 +1,4 @@
+<!-- This line will be ignored by the template compiler --><?php die() ?>
 
 /* #IF-ATTR file# */
 <?php include( $tpl_dir.basename($attr_file  ).'.tpl.php'); ?>
