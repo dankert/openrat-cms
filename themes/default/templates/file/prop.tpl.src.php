@@ -64,11 +64,13 @@ page
 				cell
 					text text:FILE_PAGES
 				cell
-					list list:pages extract:true
-						link url:url target:cms_main
-							image type:page
-							text var:name
-						newline
+					table
+						list list:pages extract:true
+							row
+								cell
+									link url:var:url target:cms_main
+										image type:page
+										text var:name
 					if empty:pages
 						text text:GLOBAL_NOT_FOUND
 			row
