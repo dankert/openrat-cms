@@ -223,15 +223,17 @@ require( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
 // Erzeugen der Action-Klasse
 $do = new $actionClassName;
-$do->init();
+$do->actionConfig = $conf['action'][$actionClassName];
 $do->actionClassName = $actionClassName; 
 $do->actionName      = $action;
 
-	
-$do->actionConfig = $conf['action'][$actionClassName];
-
 if	( $subaction == '' )
 	$subaction = $do->actionConfig['default']['goto'];
+	
+$do->subActionName   = $subaction;
+
+$do->init();
+
 
 if	( !isset($do->actionConfig[$subaction]) )
 {
@@ -270,7 +272,6 @@ if	( isset($do->actionConfig[$subaction]['menu']) || isset($do->actionConfig[$su
 	Session::setSubaction( $sl );
 }
 
-$do->subActionName = $subaction;
 
 // Alias-Methode aufrufen.
 if	( isset($do->actionConfig[$do->subActionName]['alias']) )
