@@ -278,6 +278,10 @@ class IndexAction extends Action
 				                        'title'=>$dbconf['comment'].' ('.$dbconf['host'].')' );
 		}
 
+		
+		if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
+			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
+		
 		if	( !isset($this->templateVars['login_name']) )
 			$this->setTemplateVar('login_name',@$conf['security']['default']['username']);
 
@@ -592,6 +596,9 @@ class IndexAction extends Action
 		$loginPassword = $this->getRequestVar('login_password','alphanum');
 		$newPassword1  = $this->getRequestVar('password1'     ,'alphanum');
 		$newPassword2  = $this->getRequestVar('password2'     ,'alphanum');
+		
+		// Cookie setzen
+		setcookie('or_username',$loginName,time()+(60*60*24*30*12*2) );
 		
 		// Login mit Open-Id.
 		if	( !empty($openid_user) )
