@@ -90,7 +90,7 @@ class ProfileAction extends Action
 			if	( $this->hasRequestVar($name))
 			{
 				// Cookie setzen
-				setcookie('or_'.$name,'1');
+				setcookie('or_'.$name,'1',time()+(60*60*24*30*12*2));
 				$_COOKIE['or_'.$name] = '1';
 			}
 			else
