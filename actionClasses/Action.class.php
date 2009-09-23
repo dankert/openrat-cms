@@ -72,7 +72,11 @@ class Action
 		
 		$this->templateVars['errors' ] = array();
 		$this->templateVars['notices'] = array();
-		$this->templateVars['mode'   ] = $this->getRequestVar('mode');
+
+		if	( !$this->isEditable() || isset($_COOKIE['or_always_edit']) )
+			$this->templateVars['mode'] = 'edit';
+		else 
+			$this->templateVars['mode'] = $this->getRequestVar('mode');
 		
 		header('Content-Language: '.$conf['language']['language_code']);
 	}
