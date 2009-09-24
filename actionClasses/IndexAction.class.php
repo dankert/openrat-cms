@@ -1240,21 +1240,26 @@ class IndexAction extends Action
 	 */
 	function registercode()
 	{
-		if	( !$this->hasRequestVar('mail') )
+		$email_address = $this->getRequestVar('mail','mail');
+		
+		if	( !ereg("^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$", $email_address) )
 		{
 			$this->addValidationError('mail');
+			$this->setTemplateVar('mail',$email_address);
 			$this->callSubAction('register');
 			return;
 		}
+		
 		
 		srand ((double)microtime()*1000003);
 		$registerCode = rand();
 		
 		Session::set('registerCode',$registerCode                );
 					
-		$mail = new Mail($this->getRequestVar('mail'),
+		// E-Mail and die eingegebene Adresse verschicken
+		$mail = new Mail($email_address,
 		                 'register_commit_code','register_commit_code');
-		$mail->setVar('code',$registerCode);
+		$mail->setVar('code',$registerCode); // Registrierungscode als Text-Variable
 		
 		if	( $mail->send() )
 		{
