@@ -34,7 +34,7 @@ editable=true
 goto=listing
 
 [save]
-goto=listing
+goto=edit
 
 [add]
 menu=list
