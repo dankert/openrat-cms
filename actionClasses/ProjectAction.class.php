@@ -307,6 +307,10 @@ class ProjectAction extends Action
 	 */
 	function phpinfo()
 	{
+		global $conf;
+		if	( !@$conf['security']['show_system_info'] )
+			Http::sendStatus(403,'Forbidden','Display of system information is disabled by configuration');
+			
 		phpinfo();
 	}
 }

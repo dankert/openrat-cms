@@ -40,6 +40,10 @@ chmod_dir=
 disable_dynamic_code = true
 
 
+; Enable or disable the displaying of system information
+show_system_info = false
+
+
 ; Default Login
 ; These values are used for the login form.
 [default]

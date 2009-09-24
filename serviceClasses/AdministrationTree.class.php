@@ -250,6 +250,10 @@ class AdministrationTree extends AbstractTree
 	function prefs( $id )
 	{
 		global $conf;
+		
+		if	( !@$conf['security']['show_system_info'] )
+			return;
+		
 		$conf_config = $conf['interface']['config'];
 
 
