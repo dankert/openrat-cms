@@ -42,6 +42,15 @@ header_encoding="Quoted-printable"
 client=php
 
 
+; Whitelist
+; A comma-seperated list of domains names
+whitelist = ""
+
+; Blacklist
+; A comma-seperated list of domain names
+blacklist = ""
+
+
 
 ; Settings for the internal SMTP client.
 ; If client='php', you have no need to change anything in this section.

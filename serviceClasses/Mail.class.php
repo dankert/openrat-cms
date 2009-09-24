@@ -152,6 +152,38 @@ class Mail
 	{
 		global $conf;
 		
+		$to_domain = array_pop( explode('@',$this->to) );
+
+		// Prüfen gegen die Whitelist
+		$white = explode(',',@$conf['mail']['whitelist']);
+		if	( count($white) > 0 )
+		{
+			$ok = false;
+			foreach( $white as $domain )
+				if	($domain == substr($to_domain,-strlen($domain)))
+				{
+					$ok = true;
+					break;
+				}
+				
+			if	( !$ok)
+			{
+				// Wenn Domain nicht in Whitelist gefunden, dann Mail nicht verschicken.
+				$this->error[] = 'Mail-Domain is not whitelisted';
+				return false;
+			}
+		}
+
+		// Prüfen gegen die Blacklist
+		$black = explode(',',@$conf['mail']['blacklist']);
+		foreach( $black as $domain )
+			if	($domain == substr($to_domain,0,strlen($domain)))
+			{
+				// Wenn Domain in Blacklist gefunden, dann Mail nicht verschicken.
+				$this->error[] = 'Mail-Domain is blacklisted';
+				return false;
+			}
+				
 		// Header um Adressangaben erg�nzen.
 		if	( !empty($this->from ) )
 			$this->header[] = 'From: '.$this->from;
