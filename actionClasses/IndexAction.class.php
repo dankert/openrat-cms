@@ -1242,7 +1242,7 @@ class IndexAction extends Action
 	{
 		$email_address = $this->getRequestVar('mail','mail');
 		
-		if	( !ereg("^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$", $email_address) )
+		if	( ! Mail::checkAddress($email_address) )
 		{
 			$this->addValidationError('mail');
 			$this->setTemplateVar('mail',$email_address);

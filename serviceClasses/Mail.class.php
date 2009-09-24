@@ -525,6 +525,23 @@ class Mail
 		asort($mxList);
 		return key($mxList);
 	}
+	
+
+	
+	/**
+	 * Stellt fest, ob die E-Mail-Adresse eine gueltige Syntax besitzt.
+	 * 
+	 * Es wird nur die Syntax geprüft. Ob die Adresse wirklich existiert, steht dadurch noch lange
+	 * nicht fest. Dazu müsste man die MX-Records auflösen und einen Zustellversuch unternehmen.
+	 * 
+	 * @param $email_address Adresse
+	 * @return true, falls Adresse OK, sonst false
+	 */
+	function checkAddress( $email_address )
+	{
+		// Source: de.php.net/ereg
+		return ereg("^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$", $email_address);
+	}
 }
 
 
