@@ -371,12 +371,12 @@ class Action
 		//
 		extract( $this->templateVars );
 
-		// ?bertragen der Array-Variablen in den aktuellen Kontext
-		//
-		
+		// Falls Eingabefehler, dann Uebertragen der Request-Variablen in den aktuellen Kontext
 		if	( count($errors)>0 )
 			foreach( $REQ as $requestVar=>$dummy )
-				$$requestVar = $this->getRequestVar( $requestVar );
+				if	( !isset($$requestVar) )
+					// Aber achtung, hier geben wir die Request-Variablen einfach so wieder raus!
+					$$requestVar = $this->getRequestVar( $requestVar );
 				
 		// Setzen einiger Standard-Variablen
 		//
