@@ -152,7 +152,8 @@ class Action
 				$value   = $REQ[ $varName ];
 				$allowed = ' ';
 				for ($i =  40; $i <=  59; $i++) $allowed .= chr($i);  // Zahlen 
-				for ($i =  65; $i <=  93; $i++) $allowed .= chr($i);  // ABC
+				                                $allowed .= '@?&=';
+				for ($i =  63; $i <=  93; $i++) $allowed .= chr($i);  // ?@ABC
 				                                $allowed .= chr(95);  // _
 				for ($i =  97; $i <= 122; $i++) $allowed .= chr($i);  // abc
 				for ($i = 192; $i <= 255; $i++) $allowed .= chr($i);  // Sonderzeichen
