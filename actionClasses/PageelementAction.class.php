@@ -434,6 +434,8 @@ class PageelementAction extends Action
 			$types = explode(',',$this->value->element->subtype );
 
 			$objects = array();
+			
+			$objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
 
 			$t = new Template( $this->page->templateid );
 
