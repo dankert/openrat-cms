@@ -141,6 +141,13 @@ class Page extends Object
 
 	var $el = array();
 
+	/**
+	 * Stellt fest, ob die Editier-Icons angezeigt werden sollen. Dies ist
+	 * nur der Fall, wenn die Seite auch zum Bearbeiten generiert wird.
+	 * Wird die Seite zum Veröffentlichen generiert, muss diese Eigenschaft
+	 * natürlich "false" sein.
+	 * @var boolean
+	 */
 	var $icons = false;
 	var $src   = '';
 	var $edit  = false;
@@ -787,7 +794,7 @@ class Page extends Object
 			}
 			
 			if   ( $this->icons )
-				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url('pageelement','edit',$this->objectid,array('elementid'=>$id)).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_ICON_EXT.'" border="0"></a>',$src );
+				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url('pageelement','edit',$this->objectid,array('elementid'=>$id)).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_ICON_EXT.'" border="0"></a>',$src );
 			else
 				$src = str_replace( '{{->'.$id.'}}','',$src );
 		}
