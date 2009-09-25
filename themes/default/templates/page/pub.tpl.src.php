@@ -3,10 +3,14 @@ page
 		window
 			row
 				cell
+					fieldset title:message:options
+			row
+				cell
 					checkbox name:files
-					text raw:_
-					text text:global_files
-					newline
+					label for:files
+						text text:global_files
+						newline
+						newline
 			row
 				cell class:act
 					button type:ok
