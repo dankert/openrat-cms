@@ -155,18 +155,11 @@ class Mail
 		$to_domain = array_pop( explode('@',$this->to) );
 
 		// Prüfen gegen die Whitelist
-		$white = explode(',',@$conf['mail']['whitelist']);
-		if	( count($white) > 0 )
+		$white = @$conf['mail']['whitelist'];
+		
+		if	( !empty($white) )
 		{
-			$ok = false;
-			foreach( $white as $domain )
-				if	($domain == substr($to_domain,-strlen($domain)))
-				{
-					$ok = true;
-					break;
-				}
-				
-			if	( !$ok)
+			if	( ! $this->containsDomain($to_domain,$white) )
 			{
 				// Wenn Domain nicht in Whitelist gefunden, dann Mail nicht verschicken.
 				$this->error[] = 'Mail-Domain is not whitelisted';
@@ -175,14 +168,17 @@ class Mail
 		}
 
 		// Prüfen gegen die Blacklist
-		$black = explode(',',@$conf['mail']['blacklist']);
-		foreach( $black as $domain )
-			if	($domain == substr($to_domain,0,strlen($domain)))
+		$black = @$conf['mail']['blacklist'];
+		
+		if	( !empty($black) )
+		{
+			if	( $this->containsDomain($to_domain,$black) )
 			{
 				// Wenn Domain in Blacklist gefunden, dann Mail nicht verschicken.
 				$this->error[] = 'Mail-Domain is blacklisted';
 				return false;
 			}
+		}
 				
 		// Header um Adressangaben erg�nzen.
 		if	( !empty($this->from ) )
@@ -270,7 +266,7 @@ class Mail
 
 			if	( substr($smtpResponse,0,3) != '220' )
 			{
-				$this->error[] = trim($smtpResponse);
+				$this->error[] = 'No 220: '.trim($smtpResponse);
 				return false;
 			}
 
@@ -541,6 +537,34 @@ class Mail
 	{
 		// Source: de.php.net/ereg
 		return ereg("^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$", $email_address);
+	}
+	
+
+	
+	/**
+	 * Prüft, ob eine Domain in einer List von Domains enthalten ist.
+	 * 
+	 * @param $checkDomain zu prüfende Domain
+	 * @param $domain_list Liste von Domains als kommaseparierte Liste
+	 * @return true, falls vorhanden, sonst false
+	 */
+	function containsDomain($checkDomain, $domain_list)
+	{
+		$domains = explode(',',$domain_list);
+		
+		foreach( $domains as $domain )
+		{
+			$domain = trim($domain);
+			
+			if	(empty($domain))
+				continue;
+
+			if	($domain == substr($checkDomain,-strlen($domain)))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }
 
