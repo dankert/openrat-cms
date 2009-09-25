@@ -517,12 +517,12 @@ class FileAction extends ObjectAction
 	 */
 	function docompress()
 	{
-		$format = $this->getRequestVar('format');
+		$format = $this->getRequestVar('format','alphanum');
 		
 		switch( $format )
 		{
 			case 'gz':
-				if	( $this->getRequestVar('replace') )
+				if	( $this->getRequestVar('replace','num')=='1' )
 				{
 					$this->file->value = gzencode( $this->file->loadValue() );
 					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz' );
@@ -543,7 +543,7 @@ class FileAction extends ObjectAction
 				break;
 
 			case 'bzip2':
-				if	( $this->getRequestVar('replace') )
+				if	( $this->getRequestVar('replace')=='1' )
 				{
 					$this->file->value = bzcompress( $this->file->loadValue() );
 					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.bz2' );
@@ -563,7 +563,7 @@ class FileAction extends ObjectAction
 				
 				break;
 			default:
-				die( 'unknown extract type: '.$format );
+				die( 'unknown compress type: '.$format );
 		}
 		
 		$this->callSubAction('edit');
