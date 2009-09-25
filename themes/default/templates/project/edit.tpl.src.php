@@ -2,11 +2,17 @@ page
 	form
 		window icon:project name:GLOBAL_PROJECT
 			row
+				cell colspan:2
+					fieldset title:message:NAME			
+			row
 				cell
 					text text:PROJECT_NAME
 				cell
 					input name:name size:30 class:name
 					
+			row
+				cell colspan:2
+					fieldset title:message:PUBLISH			
 			row
 				cell
 					text text:PROJECT_TARGET_DIR

@@ -2,6 +2,9 @@ page
 	form
 		window name:GLOBAL_USER widths:50%,50%
 			row
+				cell colspan:2
+					fieldset title:message:NAME	
+			row
 				cell
 					text text:user_username
 				cell

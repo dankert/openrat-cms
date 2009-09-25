@@ -1,11 +1,14 @@
 page
 	form
-		window name:GLOBAL_USER
+		window name:GLOBAL_USER widths:30%,70%
+			row
+				cell colspan:2
+					fieldset title:message:NAME	
 			row
 				cell
 					text text:user_username
 				cell
-					text var:name
+					text var:name class:name
 			row
 				cell colspan:2
 					fieldset title:message:options
