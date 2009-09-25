@@ -5,7 +5,7 @@ page
 				cell
 					radio name:type value:lastchange_user
 					label for:type value:lastchange_user
-						text key:user_lastchange_user
+						text key:lastchange_user
 				cell
 					selectbox list:users name:userid default:var:act_userid
 			row

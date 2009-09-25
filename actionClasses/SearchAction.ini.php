@@ -3,27 +3,25 @@
 goto=prop
 
 [quicksearch]
-menu=prop
+menu=search
 goto=result
 
 [result]
-menu=prop
+menu=search
 
 [prop]
-menu=prop
+menu=search
 target=searchprop
 
 [content]
-menu=content
+menu=search
 target=searchcontent
 
 [searchcontent]
 goto=result
-menu=content
+
 [searchprop]
 goto=result
-menu=prop
 
 [menu]
-prop=prop
-content=content
+search=prop,content
