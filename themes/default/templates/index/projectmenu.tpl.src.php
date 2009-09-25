@@ -31,5 +31,5 @@ page title:message:MENU_INDEX_PROJECTMENU
 								cell
 									radiobox list:languages name:languageid default:var:defaultlanguageid
 								cell
-									button type:ok
+									button type:ok text:message:start
 									

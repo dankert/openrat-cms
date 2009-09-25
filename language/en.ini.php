@@ -1029,3 +1029,4 @@ NOTICE_CODE_DISABLED = "The dynamic code will not be executed in the actual envi
 MENU_PROFILE_SETTINGS = "Settings"
 MENU_PROFILE_SETTINGS_DESC = "Edit your user settings"
 SETTING_ALWAYS_EDIT = "If possible, open every form in edit mode"
+START = "Start"
