@@ -404,6 +404,24 @@ textarea
 }
 
 
+/* Das Hauptfenster für alle Dialoge */
+td.window
+{
+	border: 0px solid black;
+	padding:0px;
+	margin:0px;
+	
+}
+tr td.help
+{
+	font-style: italic;
+}
+tr.headline td.help
+{
+	border-bottom:1px solid black;
+	font-style: normal;
+}
+
 td.logo
 {
 	background-color:#eae2c6;
@@ -546,13 +564,13 @@ table.calendar td
 	#border-bottom: 1px solid black;
 }
 
-table.main td.help
+table.main td.help span
 {
-	/*
+
 	padding:10px;
-	margin:40px;
-	border: dotted grey 2px;
-	*/
+	xmargin:40px;
+	xborder: solid grey 1px;
+	text-align:center;
 	color:black;
 	font-family:Verdana,Arial,Helvetica,sans-serif;
 	font-size:11px;

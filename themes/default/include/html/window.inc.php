@@ -134,7 +134,7 @@
 
 
   <tr>
-    <td>
+    <td class="window">
       <table cellspacing="0" width="100%" cellpadding="4">
       
 

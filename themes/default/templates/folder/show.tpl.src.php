@@ -6,13 +6,13 @@ page class:main
 					link url:var:up_url target:cms_main
 						image type:folder
 						text raw:__.._____________
-		row
+		row class:headline
 			cell class:help
-				text text:GLOBAL_TYPE
+				text key:GLOBAL_TYPE
 				text raw:_/_
-				text text:GLOBAL_NAME
+				text key:GLOBAL_NAME
 			cell class:help
-				text text:GLOBAL_LASTCHANGE
+				text key:GLOBAL_LASTCHANGE
 				
 		list list:object extract:true
 			row class:data

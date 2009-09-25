@@ -4,19 +4,19 @@ page
 			cell colspan:7 class:help
 				text text:GLOBAL_FOLDER_DESC
 
-		row
+		row class:headline
 			cell class:help colspan:4
-				link url:var:flip_url title:FOLDER_FLIP
-					text text:FOLDER_ORDER
+				link url:var:flip_url title:message:FOLDER_FLIP
+					text key:FOLDER_ORDER
 			cell class:help
-				link url:var:orderbytype_url title:FOLDER_ORDERBYTYPE
-					text text:GLOBAL_TYPE
+				link url:var:orderbytype_url title:message:FOLDER_ORDERBYTYPE
+					text key:GLOBAL_TYPE
 				text raw:_/_
-				link url:var:orderbyname_url title:FOLDER_ORDERBYNAME
-					text text:GLOBAL_NAME
+				link url:var:orderbyname_url title:message:FOLDER_ORDERBYNAME
+					text key:GLOBAL_NAME
 			cell class:help
-				link url:var:orderbylastchange_url title:FOLDER_ORDERBYLASTCHANGE
-					text text:GLOBAL_LASTCHANGE
+				link url:var:orderbylastchange_url title:message:FOLDER_ORDERBYLASTCHANGE
+					text key:GLOBAL_LASTCHANGE
 		
 		list list:object extract:true
 			row class:data

@@ -1,13 +1,13 @@
 page
 	form action:folder subaction:edit
 		window name:bla title:titelso widths:5%,75%
-			row
+			row class:headline
 				cell class:help
-					text raw:_
+					text key:SELECT
 				cell class:help
-					text text:GLOBAL_TYPE
+					text key:GLOBAL_TYPE
 					text raw:_/_
-					text text:GLOBAL_NAME
+					text key:GLOBAL_NAME
 					
 			list list:object extract:true
 				row class:data

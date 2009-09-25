@@ -8,11 +8,11 @@ page
 					cell
 						text text:GLOBAL_NOT_FOUND
 			if not:true empty:acls
-				row
+				row class:headline
 					cell class:help
-						text text:GLOBAL_NAME
+						text key:GLOBAL_NAME
 					cell class:help
-						text text:GLOBAL_LANGUAGE
+						text key:GLOBAL_LANGUAGE
 						
 					list list:show value:t
 						cell class:help
@@ -20,7 +20,7 @@ page
 	
 					cell class:help
 						if true:mode:edit
-							text text:global_delete
+							text key:global_delete
 	
 			list list:acls key:aclid value:acl extract:true
 				row class:data
@@ -49,6 +49,9 @@ page
 	
 			if true:mode:edit
 				if value:var:type equals:folder
+					row
+						cell colspan:15
+							fieldset title:message:options
 					row
 						cell colspan:15
 							set var:inherit value:1
