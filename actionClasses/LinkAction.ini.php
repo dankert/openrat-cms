@@ -17,9 +17,6 @@ editable=true
 menu=edit
 target=save
 
-[rights]
-editable=true
-
 [delete]
 goto=prop
 
@@ -30,6 +27,7 @@ target=delete
 [rights]
 menu=rights
 action=object
+editable=true
 
 [aclform]
 menu=rights
