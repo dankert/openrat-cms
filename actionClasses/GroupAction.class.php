@@ -56,11 +56,11 @@ class GroupAction extends Action
 		{
 			$this->group->delete();
 	
-			$this->addNotice('group',$this->group->name,'DELETED','ok');
+			$this->addNotice('group',$this->group->name,'DELETED',OR_NOTICE_OK);
 		}
 		else
 		{
-			$this->addNotice('group',$this->group->name,'NOT_DELETED','ok');
+			$this->addNotice('group',$this->group->name,'NOTHING_DONE',OR_NOTICE_WARN);
 		}
 	}
 	
