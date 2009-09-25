@@ -3,7 +3,11 @@ page
 		window name:asdf title:asdfdfs
 			row
 				cell
+					newline
+					newline
 					upload name:file
+					newline
+					newline
 			row
 				cell class:act
 					button type:ok

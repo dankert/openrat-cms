@@ -8,14 +8,18 @@ page
 					set var:gz value:gz
 					selectbox list:formats name:format default:gz
 			row
-				cell
-				cell
-					set var:field value:replace
-					radio name:field value:true
-					text text:replace
-					newline
-					radio name:field value:false
-					text text:createnew
-			row
 				cell colspan:2
+					fieldset title:message:OPTIONS
+			row
+				cell
+				cell
+					radio name:replace value:1
+					label for:replace value:1
+						text key:replace
+					newline
+					radio name:replace value:nix
+					label for:replace value:nix
+						text key:new
+			row
+				cell colspan:2 class:act
 					button type:ok
