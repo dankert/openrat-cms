@@ -613,7 +613,13 @@ class Action
 	
 	
 	/**
-	 * Ermitelt den Zeichensatz f�r die Ausgabe.
+	 * Ermitelt den Zeichensatz fuer die Ausgabe.
+	 * 
+	 * Falls für die Datenbank-Verbindung ein Zeichensatz angegeben ist, so wird
+	 * dieser genommen und in HTTP-Response-Header sowieso auch im HTML-Kopf verwendet.
+	 * 
+	 * Falls nicht vorhanden, wird der Zeichensatz aus der geladenen Sprachdatei verwendet. Diese
+	 * ergibt sich dann aus der Sprache, die der Browser anfordert. 
 	 *
 	 * @return String Zeichensatz
 	 */
