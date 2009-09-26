@@ -47,14 +47,14 @@ class DB
 	var $conf;
 	
 	/**
-	 * Kennzeichen, ob die Datenbank verfügbar ist.
+	 * Kennzeichen, ob die Datenbank verfï¿½gbar ist.
 	 *
 	 * @var Boolean
 	 */
 	var $available;
 	
 	/**
-	 * Enthält eine Fehlermeldung (sofern verfügbar).
+	 * Enthï¿½lt eine Fehlermeldung (sofern verfï¿½gbar).
 	 *
 	 * @var String
 	 */
@@ -93,7 +93,7 @@ class DB
 	 */
 	function connect()
 	{
-		// Ausführen des Systemkommandos.
+		// Ausfï¿½hren des Systemkommandos.
 		if	( !empty($this->conf['cmd']))
 		{
 			$ausgabe = array();
@@ -129,13 +129,28 @@ class DB
 //				$this->error = 'Error while connecting to database.';
 		}
 
+				
+		// SQL bei Verbindungsaufbau ausfÃ¼hren.
+		$cmd = $this->conf['connection_sql'];
+		if	( ! empty($cmd) )
+		{
+			$ok = $this->client->query($cmd);
+			
+			if	( ! $ok )
+			{
+				$this->error     = $this->client->error;
+				$this->available = false;
+				return false; 
+			}
+		}
+		
 		$this->available = true;
 		return true;
 	}
 
 
 	/**
-	 * Ausführen einer Datenbankanfrage.
+	 * Ausfï¿½hren einer Datenbankanfrage.
 	 *
 	 * @param String $query
 	 * @return Object (Result)
