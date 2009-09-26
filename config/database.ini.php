@@ -25,6 +25,9 @@ prefix     = or_                   ; table praefix
 persistent = yes                   ; use persistent connections (try this, it's faster)
 ;charset = UTF-8
 
+; SQL-Statement which is executed after opening the connection
+;connection_sql = ""
+ 
 ; System command for executing before connecting to the database.
 ; Maybe for installing an SSH-Tunnel.
 ; For background programs, you have to redirect stdin and stdout! (maybe to /dev/null) 
