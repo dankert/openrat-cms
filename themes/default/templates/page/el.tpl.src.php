@@ -2,7 +2,7 @@ page
 
 	window name:x title:TEMPLATE_ELEMENTS widths:30%,50%,20%
 		if not: empty:el
-			row
+			row class:headline
 				cell class:help
 					text text:PAGE_ELEMENT_NAME
 				cell class:help
