@@ -2,20 +2,20 @@
 [default]
 goto=prop
 
-[saveprop]
-goto=prop
+[edit]
+menu=edit
+target=save
 
 [save]
-goto=prop
+goto=edit
 
 [prop]
 menu=prop
 target=saveprop
 editable=true
 
-[edit]
-menu=edit
-target=save
+[saveprop]
+goto=prop
 
 [delete]
 goto=prop
