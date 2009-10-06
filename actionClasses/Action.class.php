@@ -300,6 +300,9 @@ class Action
 		$expires = substr(date('r',time()-date('Z')),0,-5).'GMT';
 		header('Expires: '      .$expires );
 		
+		header('X-Content-Security-Policy: '.'allow *; script-src \'self\'; options \'inline-script\'');
+		
+		
 		$httpAccept = getenv('HTTP_ACCEPT');
 		$types = explode(',',$httpAccept);
 		
