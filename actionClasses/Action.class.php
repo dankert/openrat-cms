@@ -492,7 +492,7 @@ class Action
 	function lastModified( $time )
 	{
 		$user = Session::getUser();
-		if	( $user->loginDate > $time )
+		if	( $user->loginDate > $time && !isset($this->actionConfig[$this->subActionName]['direct']) )
 			// Falls Benutzer-Login nach letzter �nderung.
 			// Zweck: Nach einem Login sollte mind. 1x jede Seite neu geladen werden, dies
 			// Ist z.B. nach einer Style-�nderung durch den Benutzer notwendig.
@@ -505,12 +505,14 @@ class Action
 		if	( ! $conf['cache']['conditional_get'] )
 			return;
 
-		$lastModified = substr(date('r',$time-date('Z')),0,-5).'GMT';
+		$lastModified = substr(date('r',$time -date('Z')),0,-5).'GMT';
+		$expires      = substr(date('r',time()-date('Z')),0,-5).'GMT';
 		$etag         = '"'.md5($lastModified).'"';
 
 		// Header senden
 		header('Last-Modified: '.$lastModified );
-		header('ETag: '         .$etag          );
+		header('Expires: '      .$expires      );
+		header('ETag: '         .$etag         );
 		
 		// Die vom Interpreter sonst automatisch gesetzten
 		// Header uebersteuern
