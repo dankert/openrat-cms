@@ -79,7 +79,7 @@ class Group
 
 		$sql = new Sql( 'SELECT id,name FROM {t_group}' );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -92,7 +92,7 @@ class Group
 		                ' WHERE id={groupid}' );
 		$sql->setInt( 'groupid',$this->groupid );
 
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 		if	( count($row) > 0 )
 			$this->name = $row['name'    ];
 		else
@@ -116,7 +116,7 @@ class Group
 		$sql->setInt   ('groupid',$this->groupid );
 
 		// Datenbankabfrage ausfuehren
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -140,7 +140,7 @@ class Group
 			$this->name = $name;
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_group}');
-		$this->groupid = intval($db->getOne($sql->query))+1;
+		$this->groupid = intval($db->getOne($sql))+1;
 		
 		// Gruppe hinzuf?gen
 		$sql = new Sql( 'INSERT INTO {t_group} '.
@@ -149,7 +149,7 @@ class Group
 		$sql->setString('name'   ,$this->name    );
 
 		// Datenbankbefehl ausfuehren
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -162,20 +162,20 @@ class Group
 		$sql = new Sql( 'DELETE FROM {t_acl} '.
 		                'WHERE groupid={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 
 		// Alle Gruppenzugehoerigkeiten zu dieser Gruppe loeschen
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
 		                'WHERE groupid={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
-		$res = $db->query($sql->query);
+		$res = $db->query($sql);
 
 		// Gruppe loeschen
 		$sql = new Sql( 'DELETE FROM {t_group} '.
 		                'WHERE id={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
-		$res = $db->query($sql->query);
+		$res = $db->query($sql);
 	}
 
 
@@ -189,7 +189,7 @@ class Group
 		                'WHERE {t_usergroup}.groupid={groupid}' );
 		$sql->setInt('groupid',$this->groupid );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 	
 
@@ -203,7 +203,7 @@ class Group
 		                '   WHERE {t_usergroup}.groupid IS NULL' );
 		$sql->setInt('groupid'  ,$this->groupid );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -213,7 +213,7 @@ class Group
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_usergroup}');
-		$usergroupid = intval($db->getOne($sql->query))+1;
+		$usergroupid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql( 'INSERT INTO {t_usergroup} '.
 		                '       (id,userid,groupid) '.
@@ -222,7 +222,7 @@ class Group
 		$sql->setInt('userid'     ,$userid        );
 		$sql->setInt('groupid'    ,$this->groupid );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	
 	}
 
@@ -237,7 +237,7 @@ class Group
 		$sql->setInt   ('userid'  ,$userid        );
 		$sql->setInt   ('groupid' ,$this->groupid );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -250,7 +250,7 @@ class Group
 
 		// Alle Projekte lesen
 		$sql = new Sql( 'SELECT id,name FROM {t_project}' );
-		$projects = $db->getAssoc( $sql->query );	
+		$projects = $db->getAssoc( $sql );	
 
 		foreach( $projects as $projectid=>$projectname )
 		{
@@ -266,7 +266,7 @@ class Group
 			$sql->setInt('projectid',$projectid    );
 			$sql->setInt('groupid'   ,$this->groupid );
 			
-			$acls = $db->getAll( $sql->query );
+			$acls = $db->getAll( $sql );
 
 			foreach( $acls as $acl )
 			{
@@ -281,7 +281,7 @@ class Group
 			$sql = new Sql( 'SELECT id FROM {t_folder}'.
 			                '  WHERE projectid={projectid}' );
 			$sql->setInt('projectid',$projectid);
-			$folders = $db->getCol( $sql->query );
+			$folders = $db->getCol( $sql );
 
 			$var[$projectid]['folders'] = array();
 
@@ -321,7 +321,7 @@ class Group
 		$sql->setInt ('publish',$data['publish']);
 	
 		// Datenbankabfrage ausf?hren
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 	
@@ -346,7 +346,7 @@ class Group
 
 		$aclList = array();
 
-		foreach( $db->getAll( $sql->query ) as $row )
+		foreach( $db->getAll( $sql ) as $row )
 		{
 			$acl = new Acl();
 			$acl->setDatabaseRow( $row );
@@ -370,7 +370,7 @@ class Group
 		$sql->setInt( 'aclid',$aclid );
 	
 		// Datenbankabfrage ausf?hren
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 }
 

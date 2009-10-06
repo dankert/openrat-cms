@@ -231,7 +231,7 @@ class Acl
 
 		$sql->setInt('aclid',$this->aclid);
 		
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 		
 		$this->setDatabaseRow( $row );		
 
@@ -256,7 +256,7 @@ class Acl
 
 		$sql->setInt('aclid',$this->aclid);
 		
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->setDatabaseRow( $row );		
 	}
@@ -386,7 +386,7 @@ class Acl
 		$sql->setInt('aclid'   ,$this->aclid   );
 		$sql->setInt('objectid',$this->objectid);
 		
-		$db->query( $sql->query );
+		$db->query( $sql );
 		
 		$this->aclid = 0;
 	}
@@ -400,7 +400,7 @@ class Acl
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_acl}');
-		$this->aclid = intval($db->getOne($sql->query))+1;
+		$this->aclid = intval($db->getOne($sql))+1;
 		
 		$sql = new Sql( 'INSERT INTO {t_acl} '.
 		                ' (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)'.
@@ -436,7 +436,7 @@ class Acl
 			$sql->setNull('languageid');
 		else	$sql->setInt ('languageid',$this->languageid);
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -448,7 +448,7 @@ class Acl
 //		                '  WHERE userid={userid}');
 //		$sql->setInt('userid',$userid);
 //
-//		return $db->getCol( $sql->query );
+//		return $db->getCol( $sql );
 //	}
 //
 //
@@ -460,6 +460,6 @@ class Acl
 //		                '  WHERE groupid={groupid}' );
 //		$sql->setInt('groupid',$groupid);
 //
-//		return $db->getCol( $sql->query );
+//		return $db->getCol( $sql );
 //	}
 }

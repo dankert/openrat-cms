@@ -308,7 +308,7 @@ class Object
 		               '  WHERE projectid={projectid}');
 		$sql->setInt('projectid', $projectid);
 
-		return $db->getCol($sql->query);
+		return $db->getCol($sql);
 	}
 
 
@@ -384,7 +384,7 @@ SQL
 			$sql->setParam( 'group_clause',$user->getGroupClause() );
 	
 			$db = db_connection();
-			foreach( $db->getAll( $sql->query ) as $row )
+			foreach( $db->getAll( $sql ) as $row )
 			{
 				$acl = new Acl();
 				$acl->setDatabaseRow( $row );
@@ -560,7 +560,7 @@ SQL
 		               ' WHERE id={objectid}');
 		$sql->setInt('objectid'  , $objectid  );
 
-		return intval($db->getOne($sql->query)) == 1;
+		return intval($db->getOne($sql)) == 1;
 	}
 	
 	
@@ -595,7 +595,7 @@ SQL
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
 
-		$row = $db->getRow($sql->query);
+		$row = $db->getRow($sql);
 		
 		if	( count($row)==0 )
 			die('cannot load object '.$this->objectid );
@@ -603,7 +603,7 @@ SQL
 		$this->setDatabaseRow( $row );
 
 		if (count($row) == 0)
-			die('fatal: Object::objectLoad(): objectid not found: '.$this->objectid.', SQL='.$sql->query );
+			die('fatal: Object::objectLoad(): objectid not found: '.$this->objectid.', SQL='.$sql );
 
 	}
 
@@ -621,10 +621,10 @@ SQL
 		$sql = new Sql('SELECT * FROM {t_object}'.
                        ' WHERE {t_object}.id={objectid}');
 		$sql->setInt('objectid'  , $this->objectid  );
-		$row = $db->getRow($sql->query);
+		$row = $db->getRow($sql);
 
 		if (count($row) == 0)
-			die('fatal: Object::objectLoadRaw(): objectid not found: '.$this->objectid.', SQL='.$sql->query);
+			die('fatal: Object::objectLoadRaw(): objectid not found: '.$this->objectid.', SQL='.$sql);
 
 		$this->parentid  = $row['parentid' ];
 		$this->filename  = $row['filename' ];
@@ -739,14 +739,14 @@ SQL
 		$sql = new Sql('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND languageid={languageid}');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
-		$res = $db->query($sql->query);
+		$res = $db->query($sql);
 
 		if ($res->numRows() == 0)
 		{
 			// Wenn Name in dieser Sprache nicht vorhanden, dann irgendeinen Namen lesen
 			$sql->setQuery('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND name != {blank}');
 			$sql->setString('blank', '');
-			$res = $db->query($sql->query);
+			$res = $db->query($sql);
 		}
 		$row = $res->fetchRow();
 
@@ -789,7 +789,7 @@ SQL
 		$sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
 		$sql->setInt   ('time'    ,$this->lastchangeDate          );
 
-		$db->query($sql->query);
+		$db->query($sql);
 
 		// Nur wenn nicht Wurzelordner
 		if	( !$this->isRoot && $withName )
@@ -823,7 +823,7 @@ SQL
 		$sql->setInt   ('objectid',$this->objectid                );
 		$sql->setInt   ('time'    ,$this->lastchangeDate          );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 		
 	}
 
@@ -843,7 +843,7 @@ SQL
 		$sql = new Sql('SELECT COUNT(*) FROM {t_name} '.' WHERE objectid  ={objectid}'.'   AND languageid={languageid}');
 		$sql->setInt( 'objectid'  , $this->objectid   );
 		$sql->setInt( 'languageid', $this->languageid );
-		$count = $db->getOne($sql->query);
+		$count = $db->getOne($sql);
 
 		if ($count > 0)
 		{
@@ -854,12 +854,12 @@ SQL
 			               '   AND languageid={languageid}');
 			$sql->setString('name', $this->name);
 			$sql->setString('desc', $this->desc);
-			$db->query($sql->query);
+			$db->query($sql);
 		}
 		else
 		{
 			$sql = new Sql('SELECT MAX(id) FROM {t_name}');
-			$nameid = intval($db->getOne($sql->query))+1;
+			$nameid = intval($db->getOne($sql))+1;
 
 			$sql->setQuery('INSERT INTO {t_name}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
 			$sql->setInt   ('objectid'  , $this->objectid    );
@@ -867,7 +867,7 @@ SQL
 			$sql->setInt   ('nameid', $nameid    );
 			$sql->setString('name'  , $this->name);
 			$sql->setString('desc'  , $this->desc);
-			$db->query($sql->query);
+			$db->query($sql);
 		}
 	}
 
@@ -884,25 +884,25 @@ SQL
 		                '  SET default_objectid=NULL '.
 		                '  WHERE default_objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		$sql = new Sql( 'UPDATE {t_value} '.
 		                '  SET linkobjectid=NULL '.
 		                '  WHERE linkobjectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		$sql = new Sql( 'UPDATE {t_link} '.
 		                '  SET link_objectid=NULL '.
 		                '  WHERE link_objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 
 		// Objekt-Namen l?schen
 		$sql = new Sql('DELETE FROM {t_name} WHERE objectid={objectid}');
 		$sql->setInt('objectid', $this->objectid);
-		$db->query($sql->query);
+		$db->query($sql);
 
 		// ACLs loeschen
 		$this->deleteAllACLs();
@@ -910,7 +910,7 @@ SQL
 		// Objekt l?schen
 		$sql = new Sql('DELETE FROM {t_object} WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
-		$db->query($sql->query);
+		$db->query($sql);
 
 	}
 
@@ -925,7 +925,7 @@ SQL
 
 		// Neue Objekt-Id bestimmen
 		$sql = new Sql('SELECT MAX(id) FROM {t_object}');
-		$this->objectid = intval($db->getOne($sql->query))+1;
+		$this->objectid = intval($db->getOne($sql))+1;
 
 		$this->checkFilename();
 		$sql = new Sql('INSERT INTO {t_object}'.
@@ -949,7 +949,7 @@ SQL
 		$sql->setBoolean('is_page',  $this->isPage);
 		$sql->setBoolean('is_link',  $this->isLink);
 
-		$db->query($sql->query);
+		$db->query($sql);
 
 		if	( !empty($this->name) )
 			$this->objectSaveName();
@@ -1026,7 +1026,7 @@ SQL
 
 		$sql->setString('filename', $filename      );
 
-		return( intval($db->getOne($sql->query)) == 0 );
+		return( intval($db->getOne($sql)) == 0 );
 	}
 
 
@@ -1055,7 +1055,7 @@ SQL
 		$sql->setInt('languageid',$this->languageid);
 		$sql->setInt('objectid'  ,$this->objectid);
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -1068,7 +1068,7 @@ SQL
 		                '  ORDER BY userid,groupid ASC' );
 		$sql->setInt('objectid'  ,$this->objectid);
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -1096,7 +1096,7 @@ SQL
 			                '  ORDER BY userid,groupid ASC' );
 			$sql->setInt('objectid'  ,$oid);
 			$sql->setInt('languageid',$this->languageid);
-			$acls = array_merge( $acls,$db->getCol( $sql->query ) );
+			$acls = array_merge( $acls,$db->getCol( $sql ) );
 		}
 
 		return $acls;
@@ -1124,7 +1124,7 @@ SQL
 			                '    AND is_transmit = 1'.
 			                '  ORDER BY userid,groupid ASC' );
 			$sql->setInt('objectid'  ,$oid);
-			$acls = array_merge( $acls,$db->getCol( $sql->query ) );
+			$acls = array_merge( $acls,$db->getCol( $sql ) );
 		}
 
 		return $acls;
@@ -1297,7 +1297,7 @@ SQL
 		$sql->setInt('objectid', $this->objectid);
 		$sql->setInt('orderid', $orderid);
 
-		$db->query($sql->query);
+		$db->query($sql);
 	}
 
 
@@ -1315,7 +1315,7 @@ SQL
 		$sql->setInt('objectid', $this->objectid);
 		$sql->setInt('parentid', $parentid);
 
-		$db->query($sql->query);
+		$db->query($sql);
 	}
 
 
@@ -1329,7 +1329,7 @@ SQL
 		                '  WHERE linkobjectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -1349,7 +1349,7 @@ SQL
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setString( 'filename','%'.$text.'%' );
 		
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -1373,7 +1373,7 @@ SQL
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'name'      ,'%'.$text.'%' );
 		
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -1397,7 +1397,7 @@ SQL
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'desc'      ,'%'.$text.'%' );
 		
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -1417,7 +1417,7 @@ SQL
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setInt   ( 'userid'   ,$userid          );
 		
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -1437,7 +1437,7 @@ SQL
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setInt   ( 'userid'   ,$userid          );
 		
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -1456,7 +1456,7 @@ SQL
 		$sql->setInt   ( 'projectid' ,$this->projectid );
 		$sql->setInt   ( 'objectid'  ,$id              );
 
-		return ($db->getOne($sql->query) == intval($id) );
+		return ($db->getOne($sql) == intval($id) );
 	}
 
 

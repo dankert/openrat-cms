@@ -154,7 +154,7 @@ class Element
 	var $folderObjectId = 0;
 	
 	/**
-	 * Vorausgewähltes Objekt. 
+	 * Vorausgewï¿½hltes Objekt. 
 	 * @type Integer
 	 */
 	var $defaultObjectId = 0;
@@ -210,7 +210,7 @@ class Element
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_element}');
-		$this->elementid = intval($db->getOne($sql->query))+1;
+		$this->elementid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql( 'INSERT INTO {t_element}'.
 		                ' (id,templateid,name,descr,type,writable) '.
@@ -223,7 +223,7 @@ class Element
 		$sql->setBoolean( 'writable'   ,$this->writable   );
 		$sql->setString ( 'description',$this->desc       );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -259,7 +259,7 @@ class Element
 			$sql->setString( 'name',$this->name );
 		}
 
-		$this->setDatabaseRow( $db->getRow( $sql->query ) );
+		$this->setDatabaseRow( $db->getRow( $sql ) );
 	}
 
 
@@ -350,7 +350,7 @@ class Element
 			$sql->setNull( 'defaultObjectId' );
 		else	$sql->setInt ( 'defaultObjectId' ,$this->defaultObjectId  );
 		
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -373,7 +373,7 @@ class Element
 		$sql->setInt    ( 'elementid',$this->elementid );
 		$sql->setString ( 'type'     ,$this->type      );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -404,7 +404,7 @@ class Element
 		               '  WHERE id={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -420,7 +420,7 @@ class Element
 		$sql = new Sql('DELETE FROM {t_value} '.
 		               '  WHERE elementid={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 

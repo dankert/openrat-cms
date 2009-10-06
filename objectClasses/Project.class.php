@@ -109,7 +109,7 @@ class Project
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 
-		return intval($db->getOne($sql->query)) == 1;
+		return intval($db->getOne($sql)) == 1;
 	}
 	
 
@@ -127,7 +127,7 @@ class Project
 		$sql = new Sql( 'SELECT id,name FROM {t_project} '.
 		                '   ORDER BY name' );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -138,7 +138,7 @@ class Project
 		$sql = new Sql( 'SELECT id FROM {t_project} '.
 		                '   ORDER BY name' );
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -151,7 +151,7 @@ class Project
 		                '  ORDER BY name' );
 		$sql->setInt   ('projectid',$this->projectid);
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -170,7 +170,7 @@ class Project
 		                '  ORDER BY name' );
 		$sql->setInt   ('projectid',$this->projectid);
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -188,7 +188,7 @@ class Project
 		                '  WHERE projectid= {projectid} ' );
 		$sql->setInt   ('projectid',$this->projectid);
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -200,7 +200,7 @@ class Project
 		                '  WHERE projectid= {projectid} ' );
 		$sql->setInt   ('projectid',$this->projectid);
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -217,7 +217,7 @@ class Project
 
 		$sql->setInt('projectid',$this->projectid);
 		
-		return( $db->getOne( $sql->query ) );
+		return( $db->getOne( $sql ) );
 	}
 
 	
@@ -231,7 +231,7 @@ class Project
 		                '   WHERE id={projectid}' );
 		$sql->setInt( 'projectid',$this->projectid );
 
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->name                = $row['name'               ];
 		$this->target_dir          = $row['target_dir'         ];
@@ -252,7 +252,7 @@ class Project
 		                '   WHERE name={projectname}' );
 		$sql->setString( 'projectname',$this->name );
 
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->projectid           = $row['id'                 ];
 		$this->target_dir          = $row['target_dir'         ];
@@ -288,7 +288,7 @@ class Project
 		$sql->setInt   ('cut_index'          ,$this->cut_index );
 		$sql->setInt   ('projectid'          ,$this->projectid );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 		
 		$rootFolder = new Folder( $this->getRootObjectId() );
 		$rootFolder->load();
@@ -317,7 +317,7 @@ class Project
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_project}');
-		$this->projectid = intval($db->getOne($sql->query))+1;
+		$this->projectid = intval($db->getOne($sql))+1;
 
 
 		// Projekt hinzuf?gen
@@ -326,7 +326,7 @@ class Project
 		$sql->setString('name'     ,$this->name );
 		$sql->setInt   ('projectid',$this->projectid );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		// Modell anlegen
 		$model = new Model();
@@ -409,7 +409,7 @@ class Project
 		$sql = new Sql( 'DELETE FROM {t_project}'.
 		                '  WHERE id= {projectid} ' );
 		$sql->setInt( 'projectid',$this->projectid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 	
 	function getDefaultLanguageId()
@@ -424,7 +424,7 @@ class Project
 
 		$sql->setInt('projectid',$this->projectid );
 		
-		return $db->getOne( $sql->query );
+		return $db->getOne( $sql );
 	}
 
 
@@ -439,7 +439,7 @@ class Project
 		                '   ORDER BY is_default DESC' );
 		$sql->setInt('projectid',$this->projectid );
 		
-		return $db->getOne( $sql->query );
+		return $db->getOne( $sql );
 	}
 	
 	
@@ -464,7 +464,7 @@ EOF
 		$lostAndFoundFolder->parentid = $this->getRootObjectId();
 		$lostAndFoundFolder->add();
 
-		foreach( $db->getCol($sql->query) as $id )
+		foreach( $db->getCol($sql) as $id )
 		{
 			echo 'Lost file! moving '.$id.' to lost+found.';
 			$obj = new Object( $id );
@@ -476,9 +476,9 @@ EOF
 	/**
 	 * Kopiert ein Projekt von einer Datenbank zu einer anderen.<br>
 	 * <br>
-	 * Alle Projektinhalte werden kopiert, die Fremdschlüsselbeziehungen werden entsprechend angepasst.<br>
+	 * Alle Projektinhalte werden kopiert, die Fremdschlï¿½sselbeziehungen werden entsprechend angepasst.<br>
 	 * <br>
-	 * Alle Beziehungen zu Benutzern, z.B. "Zuletzt geändert von", "angelegt von" sowie<br>
+	 * Alle Beziehungen zu Benutzern, z.B. "Zuletzt geï¿½ndert von", "angelegt von" sowie<br>
 	 * alle Berechtigungsinformationen gehen verloren!<br>
 	 */
 	function export( $dbid_destination )
@@ -559,12 +559,12 @@ EOF
 			$mapping[$tabelle] = array();
 			$idcolumn = $data['primary_key'];
 
-			// Nächste freie Id in der Zieltabelle ermitteln.
+			// Nï¿½chste freie Id in der Zieltabelle ermitteln.
 			$sql = new Sql( 'SELECT MAX('.$idcolumn.') FROM {t_'.$tabelle.'}',$dbid_destination);
-			$maxid = intval($db_dest->getOne($sql->query));
+			$maxid = intval($db_dest->getOne($sql));
 			$nextid = $maxid;
 
-			// Zu übertragende IDs ermitteln.
+			// Zu ï¿½bertragende IDs ermitteln.
 			if	( count($data['foreign_keys'])==0 )
 			{
 				$where = ' WHERE id='.$this->projectid;
@@ -579,7 +579,7 @@ EOF
 			}
 			$sql = new Sql( 'SELECT '.$idcolumn.' FROM {t_'.$tabelle.'} '.$where);
 
-			foreach( $db_src->getCol($sql->query) as $srcid )
+			foreach( $db_src->getCol($sql) as $srcid )
 			{
 				$mapping[$tabelle][$srcid] = ++$nextid;
 
@@ -587,12 +587,12 @@ EOF
 				
 				$sql = new Sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
 				$sql->setInt('id',$srcid);
-				$row = $db_src->getRow( $sql->query );
+				$row = $db_src->getRow( $sql );
 
-				// Wert des Primärschlüssels ändern.
+				// Wert des Primï¿½rschlï¿½ssels ï¿½ndern.
 				$row[$idcolumn] = $mapping[$tabelle][$srcid];
 
-				// Fremdschlüsselbeziehungen auf neue IDn korrigieren.
+				// Fremdschlï¿½sselbeziehungen auf neue IDn korrigieren.
 				foreach( $data['foreign_keys'] as $fkey_column=>$target_tabelle)
 				{
 					if	( intval($row[$fkey_column]) != 0 )
@@ -608,9 +608,9 @@ EOF
 					{
 						// Nachschauen, ob es einen UNIQUE-Key in der Zieltabelle schon gibt.
 						$sql = new Sql( 'SELECT 1 FROM {t_'.$tabelle.'} WHERE '.$key."='".$row[$key]."'",$dbid_destination);
-//						Html::debug($sql->query);
+//						Html::debug($sql);
 						
-						if	( intval($db_dest->getOne( $sql->query )) == 1 )
+						if	( intval($db_dest->getOne( $sql )) == 1 )
 							$row[$key] = $row[$key].$zeit;
 
 					}
@@ -643,7 +643,7 @@ EOF
 				
 //				Html::debug($row,'Zeile');
 				
-				// Daten in Zieltabelle einfügen.
+				// Daten in Zieltabelle einfï¿½gen.
 				$sql = new Sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES({'.join(array_keys($row),'},{').'})',$dbid_destination);
 				foreach( $row as $key=>$value )
 				{
@@ -653,7 +653,7 @@ EOF
 						$sql->setVar($key,$value);
 				}
 				//$sql = new Sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES('.join($row,',').')',$dbid_destination);
-				$db_dest->query( $sql->query );
+				$db_dest->query( $sql );
 			}
 
 			if	( isset($data['self_key']) )
@@ -661,7 +661,7 @@ EOF
 				foreach( $mapping[$tabelle] as $oldid=>$newid )
 				{
 					$sql = new Sql( 'UPDATE {t_'.$tabelle.'} SET '.$data['self_key'].'='.$newid.' WHERE '.$data['self_key'].'='.($oldid+$maxid),$dbid_destination );
-					$db_dest->query( $sql->query );
+					$db_dest->query( $sql );
 				}
 			}
 		}

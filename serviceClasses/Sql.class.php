@@ -33,7 +33,7 @@
  * // Neues Objekt erzeugen mit SQL-Anweisung
  * $sql = new Sql('SELECT * FROM xy WHERE id={uid} AND name={name}');
  * 
- * // Parameter füllen
+ * // Parameter fï¿½llen
  * $sql->setInt   ('uid' ,1      );
  * $sql->setString('name','peter');
  * 
@@ -54,18 +54,20 @@
 class Sql
 {
 	/**
-	 * Ursprüngliche SQL-Anweisung.
+	 * Ursprï¿½ngliche SQL-Anweisung.
 	 */
 	var $src      = '';
 	
 	/**
-	 * Auszuführende Abfrage.
+	 * Auszufï¿½hrende Abfrage.
 	 */
 	var $query    = '';
 	
+	var $raw      = '';
+	
 	
 	/**
-	 * Zwischenspeicher für Parameterwerte.
+	 * Zwischenspeicher fï¿½r Parameterwerte.
 	 */
 	var $data     = Array();
 	
@@ -89,7 +91,7 @@ class Sql
 	 * )
 	 * </pre>
 	 * In der ersten Dimension sind die Parameter vorhanden, jeder Parameter hat eine Liste von Positionen, an denen er steht.<br>
-	 * Ein Parameter kann nämlich mehrfach vorkommen!
+	 * Ein Parameter kann nï¿½mlich mehrfach vorkommen!
 	 */
 	var $param    = array();
 	
@@ -115,7 +117,7 @@ class Sql
 	 */
 	function parseSourceQuery( $query )
 	{
-		$this->src   = $query; // Wir merken uns die Ur-Abfrage, evtl. für Fehlermeldungen interessant.
+		$this->src   = $query; // Wir merken uns die Ur-Abfrage, evtl. fï¿½r Fehlermeldungen interessant.
 		
 		while( true )  // Schleife wird solange durchlaufen, solange Parameter gefunden werden.
 		{
@@ -136,15 +138,21 @@ class Sql
 		}
 		
 		$this->query = $query;
-
+//		$merkeParam = $this->param;
+		
 		// Tabellennamen in die Platzhalter setzen.
 		// Dies ist noch OpenRat-spezifisch und sollte bei einer sauberen Abstraktion woanders gemacht werden. Aber wo?
 		foreach( table_names($this->dbid) as $t=>$name )
 		{
 			$this->setParam($t,$name,false );
+			
+			unset( $this->param[$t] );
+			
 		}
 		
-//		Html::debug($this->param);	
+		$this->raw   = $this->query;
+		//$this->param = $merkeParam;
+
 	}
 
 
@@ -182,7 +190,7 @@ class Sql
 	function setParam( $name,$value,$dieIfUnknown=true)
 	{
 
-		//   Nett gemeint, führt aber aktuell zu Fehlern, weil an vielen Stellen zu viele Parameter gefüllt werden.
+		//   Nett gemeint, fï¿½hrt aber aktuell zu Fehlern, weil an vielen Stellen zu viele Parameter gefï¿½llt werden.
 		//   Daher erstmal deaktiviert.
 		//		if	( !isset($this->param[$name]) )
 		//		{
@@ -214,8 +222,8 @@ class Sql
 				
 			}
 		}
-		
-		unset( $this->param[$name] );
+		//Html::debug($this,'bei '.$name);
+		//unset( $this->param[$name] );
 	}
 	
 
@@ -360,7 +368,7 @@ class Sql
 	 */
 	function &getQuery()
 	{
-// Abbruch, wenn es noch nicht gefüllte Parameter gibt.
+// Abbruch, wenn es noch nicht gefï¿½llte Parameter gibt.
 // Da diese Methode eh kaum verwendet wird, erstmal deaktiviert.
 //		if	( count($this->param) > 0 )
 //			die('parameters not bound: '+implode(',',$this->param) );

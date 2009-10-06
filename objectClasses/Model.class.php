@@ -75,7 +75,7 @@ class Model
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 
-		return intval($db->getOne($sql->query)) == 1;
+		return intval($db->getOne($sql)) == 1;
 	}
 	
 
@@ -97,7 +97,7 @@ class Model
 			$sql->setInt('projectid',$this->projectid );
 		else	$sql->setInt('projectid',$SESS['projectid'] );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -112,7 +112,7 @@ class Model
 		                ' WHERE id={modelid}' );
 		$sql->setInt( 'modelid',$this->modelid );
 
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
@@ -139,7 +139,7 @@ class Model
 		$sql->setInt( 'modelid',$this->modelid );
 
 		// Datenbankabfrage ausfuehren
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -170,7 +170,7 @@ class Model
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_model}');
-		$this->modelid = intval($db->getOne($sql->query))+1;
+		$this->modelid = intval($db->getOne($sql))+1;
 
 		// Modell hinzuf?gen
 		$sql = new Sql( 'INSERT INTO {t_model} '.
@@ -181,7 +181,7 @@ class Model
 		$sql->setString('name'     ,$this->name      );
 
 		// Datenbankbefehl ausfuehren
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -201,7 +201,7 @@ class Model
 			$sql->setInt('projectid',$project->projectid);
 		}
 		
-		return $db->getOne( $sql->query );
+		return $db->getOne( $sql );
 	}
 
 
@@ -217,14 +217,14 @@ class Model
 		                '  SET is_default = 0 '.
 		                '  WHERE projectid={projectid}' );
 		$sql->setInt('projectid',$this->projectid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 	
 		// Jetzt die gew?nschte Sprachvariante auf Standard setzen
 		$sql = new Sql( 'UPDATE {t_model} '.
 		                '  SET is_default = 1 '.
 		                '  WHERE id={modelid}' );
 		$sql->setInt('modelid',$this->modelid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -240,16 +240,16 @@ class Model
 		// Modell l?schen
 		$sql = new Sql( 'DELETE FROM {t_model} WHERE id={modelid}' );
 		$sql->setInt( 'modelid',$this->modelid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		// Anderes Modell auf "Default" setzen (sofern vorhanden)
 		$sql = new Sql( 'SELECT id FROM {t_model} WHERE projectid={projectid}' );
 		$sql->setInt( 'projectid',$this->projectid );
-		$new_default_modelid = $db->getOne( $sql->query );
+		$new_default_modelid = $db->getOne( $sql );
 
 		$sql = new Sql( 'UPDATE {t_model} SET is_default=1 WHERE id={modelid}' );
 		$sql->setInt( 'modelid',$new_default_modelid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 }
 

@@ -149,7 +149,7 @@ class Template
 			$sql->setInt( 'projectid',$project->projectid );
 		}
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -164,7 +164,7 @@ class Template
 		$sql = new Sql( 'SELECT * FROM {t_template}'.
 		                ' WHERE id={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
@@ -174,7 +174,7 @@ class Template
 		                '   AND projectmodelid={modelid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 		$sql->setInt( 'modelid'   ,$this->modelid    );
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		if	( isset($row['extension']) )
 		{
@@ -200,7 +200,7 @@ class Template
 		                '  WHERE id={templateid}' );
 		$sql->setString( 'name'      ,$this->name       );
 		$sql->setInt   ( 'templateid',$this->templateid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		$sql = new Sql( 'SELECT COUNT(*) FROM {t_templatemodel}'.
 		                ' WHERE templateid={templateid}'.
@@ -208,7 +208,7 @@ class Template
 		$sql->setInt   ( 'templateid'    ,$this->templateid     );
 		$sql->setInt   ( 'modelid'       ,$this->modelid );
 
-		if	( intval($db->getOne($sql->query)) > 0 )
+		if	( intval($db->getOne($sql)) > 0 )
 		{		
 			$sql = new Sql( 'UPDATE {t_templatemodel}'.
 			                '  SET extension={extension},'.
@@ -219,7 +219,7 @@ class Template
 		else
 		{
 			$sql = new Sql('SELECT MAX(id) FROM {t_templatemodel}');
-			$nextid = intval($db->getOne($sql->query))+1;
+			$nextid = intval($db->getOne($sql))+1;
 			$sql = new Sql( 'INSERT INTO {t_templatemodel}'.
 			                '        (id,templateid,projectmodelid,extension,text) '.
 			                ' VALUES ({id},{templateid},{modelid},{extension},{src}) ');
@@ -231,7 +231,7 @@ class Template
 		$sql->setInt   ( 'templateid'    ,$this->templateid     );
 		$sql->setInt   ( 'modelid'       ,$this->modelid        );
 		
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -251,7 +251,7 @@ class Template
 		$sql->setInt   ( 'modelid',$this->modelid );
 		$sql->setString( 'text'   ,'%'.$text.'%'  );
 		
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -268,7 +268,7 @@ class Template
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -287,7 +287,7 @@ class Template
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
-		foreach( $db->getAll( $sql->query ) as $row )
+		foreach( $db->getAll( $sql ) as $row )
 		{
 			$e = new Element( $row['id'] );
 			$e->setDatabaseRow( $row );
@@ -321,7 +321,7 @@ SQL
 		$sql->setInt       ( 'templateid'  ,$this->templateid        );
 		$e = new Element();
 		$sql->setStringList( 'readonlyList',$e->readonlyElementNames );
-		foreach( $db->getAll( $sql->query ) as $row )
+		foreach( $db->getAll( $sql ) as $row )
 		{
 			$e = new Element( $row['id'] );
 			$e->setDatabaseRow( $row );
@@ -348,7 +348,7 @@ SQL
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -381,7 +381,7 @@ SQL
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_template}');
-		$this->templateid = intval($db->getOne($sql->query))+1;
+		$this->templateid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql( 'INSERT INTO {t_template}'.
 		                ' (id,name,projectid)'.
@@ -398,7 +398,7 @@ SQL
 
 		$sql->setInt   ('projectid' ,$this->projectid );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -414,7 +414,7 @@ SQL
 		                '  WHERE templateid={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -436,12 +436,12 @@ SQL
 		$sql = new Sql( 'DELETE FROM {t_templatemodel}'.
 		                ' WHERE templateid={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		$sql = new Sql( 'DELETE FROM {t_template}'.
 		                ' WHERE id={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 	
 	

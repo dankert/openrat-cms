@@ -163,7 +163,7 @@ class User
 		                '  FROM {t_user}'.
 		                '  ORDER BY name' );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -177,7 +177,7 @@ class User
 		                '  FROM {t_user}'.
 		                '  ORDER BY name' );
 
-		foreach( $db->getAll( $sql->query ) as $row )
+		foreach( $db->getAll( $sql ) as $row )
 		{
 			$user = new User();
 			$user->setDatabaseRow( $row );
@@ -233,7 +233,7 @@ class User
 		                '          '.$this->getGroupClause().'    )' );
 		$sql->setInt   ( 'userid',$this->userid );
 
-		return $db->getOne( $sql->query ) > 0;
+		return $db->getOne( $sql ) > 0;
 	}
 
 
@@ -270,7 +270,7 @@ SQL
 );
 		$sql->setInt   ( 'userid',$this->userid );
 
-			return $db->getAssoc( $sql->query );
+			return $db->getAssoc( $sql );
 		}
 		
 	}
@@ -309,7 +309,7 @@ SQL
 		$sql = new Sql( 'SELECT * FROM {t_user}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->setDatabaseRow( $row );		
 	}
@@ -330,8 +330,9 @@ SQL
 		// Benutzer �ber Namen suchen
 		$sql = new Sql( 'SELECT id FROM {t_user}'.
 		                ' WHERE name={name}' );
+		//Html::debug($sql);
 		$sql->setString( 'name',$name );
-		$userId = $db->getOne( $sql->query );
+		$userId = $db->getOne( $sql );
 
 		// Benutzer �ber Id instanziieren
 		$neuerUser = new User( $userId );
@@ -453,7 +454,7 @@ SQL
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$userid );
 
-		$name = $db->getOne( $sql->query );
+		$name = $db->getOne( $sql );
 		
 		if	( $name == '' )
 			return lang('UNKNOWN');
@@ -489,7 +490,7 @@ SQL
 		$sql->setBoolean( 'isAdmin' ,$this->isAdmin );
 		
 		// Datenbankabfrage ausfuehren
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -506,7 +507,7 @@ SQL
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_user}');
-		$this->userid = intval($db->getOne($sql->query))+1;
+		$this->userid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql('INSERT INTO {t_user}'.
 		               ' (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin)'.
@@ -515,7 +516,7 @@ SQL
 		$sql->setString('name'  ,$this->name  );
 
 		// Datenbankbefehl ausfuehren
-		$db->query( $sql->query );
+		$db->query( $sql );
 		
 		$this->addNewUserGroups(); // Neue Gruppen hinzuf�gen.
 	}
@@ -538,7 +539,7 @@ SQL
 
 		$sql = new Sql('SELECT id FROM {t_group} WHERE name IN({names})');
 		$sql->setStringList('names',$groupNames);
-		$groupIds = array_unique( $db->getCol($sql->query) );
+		$groupIds = array_unique( $db->getCol($sql) );
 		
 		// Wir brauchen hier nicht weiter pr�fen, ob der Benutzer eine Gruppe schon hat, denn
 		// - passiert dies nur bei der Neuanlage eines Benutzers
@@ -569,39 +570,39 @@ SQL
 		                'SET create_userid=null '.
 		                'WHERE create_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		// "Letzte �nderung von" f�r diesen Benutzer entfernen
 		$sql = new Sql( 'UPDATE {t_object} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		// Alle Archivdaten in Dateien mit diesem Benutzer entfernen
 		$sql = new Sql( 'UPDATE {t_value} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		// Alle Berechtigungen dieses Benutzers l?schen
 		$sql = new Sql( 'DELETE FROM {t_acl} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		// Alle Gruppenzugehoerigkeiten dieses Benutzers l?schen
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		// Benutzer loeschen
 		$sql = new Sql( 'DELETE FROM {t_user} '.
 		                'WHERE id={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -649,7 +650,7 @@ SQL
 		);
 		$sql->setString('name',$this->name);
 	
-		$res_user = $db->query( $sql->query );
+		$res_user = $db->query( $sql );
 
 		$check = false;
 		$authType = $conf['security']['auth']['type']; // Entweder 'ldap', 'authdb', 'http', oder 'database'
@@ -744,7 +745,7 @@ SQL
 					);
 					$sql->setStringList('name_list',$ldap_groups);
 					$oldGroups = $this->getGroupIds();
-					$this->groups = $db->getAssoc( $sql->query );
+					$this->groups = $db->getAssoc( $sql );
 					
 					foreach( $this->groups as $groupid=>$groupname)
 					{
@@ -821,7 +822,7 @@ SQL
 				$sql = new Sql( $conf['security']['authdb']['sql'] );
 				$sql->setString('username',$this->name);
 				$sql->setString('password',$password);
-				$res = $authdb->query($sql->query);
+				$res = $authdb->query($sql);
 				$ok = ($res->numRows() >= 1);
 
 				if	( $ok && $autoAdd )
@@ -877,7 +878,7 @@ SQL
 			
 		$sql->setInt   ('userid'  ,$this->userid  );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -896,7 +897,7 @@ SQL
 			                'LEFT JOIN {t_usergroup} ON {t_usergroup}.groupid={t_group}.id '.
 			                'WHERE {t_usergroup}.userid={userid}' );
 			$sql->setInt('userid',$this->userid );
-			$this->groups = $db->getAssoc( $sql->query );
+			$this->groups = $db->getAssoc( $sql );
 		}
 		
 		return $this->groups;
@@ -915,7 +916,7 @@ SQL
 		                'WHERE userid={userid}' );
 		$sql->setInt('userid',$this->userid );
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 		*/
 	}
 	
@@ -930,7 +931,7 @@ SQL
 		                '   WHERE {t_usergroup}.userid IS NULL' );
 		$sql->setInt('userid'  ,$this->userid );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 
@@ -940,7 +941,7 @@ SQL
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_usergroup}');
-		$usergroupid = intval($db->getOne($sql->query))+1;
+		$usergroupid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql( 'INSERT INTO {t_usergroup} '.
 		                '       (id,userid,groupid) '.
@@ -949,7 +950,7 @@ SQL
 		$sql->setInt('userid'     ,$this->userid );
 		$sql->setInt('groupid'    ,$groupid      );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	
 	}
 
@@ -964,7 +965,7 @@ SQL
 		$sql->setInt   ('userid'  ,$this->userid );
 		$sql->setInt   ('groupid' ,$groupid      );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 	
 
@@ -1006,7 +1007,7 @@ SQL
 
 		$aclList = array();
 
-		foreach( $db->getAll( $sql->query ) as $row )
+		foreach( $db->getAll( $sql ) as $row )
 		{
 			$acl = new Acl();
 			$acl->setDatabaseRow( $row );
@@ -1035,7 +1036,7 @@ SQL
 //
 //		// Alle Projekte lesen
 //		$sql = new Sql( 'SELECT id,name FROM {t_project}' );
-//		$projects = $db->getAssoc( $sql->query );	
+//		$projects = $db->getAssoc( $sql );	
 //
 //		foreach( $projects as $projectid=>$projectname )
 //		{
@@ -1051,7 +1052,7 @@ SQL
 //			$sql->setInt('projectid',$projectid    );
 //			$sql->setInt('userid'   ,$this->userid );
 //			
-//			$acls = $db->getAll( $sql->query );
+//			$acls = $db->getAll( $sql );
 //
 //			foreach( $acls as $acl )
 //			{
@@ -1066,7 +1067,7 @@ SQL
 //			$sql = new Sql( 'SELECT id FROM {t_folder}'.
 //			                '  WHERE projectid={projectid}' );
 //			$sql->setInt('projectid',$projectid);
-//			$folders = $db->getCol( $sql->query );
+//			$folders = $db->getCol( $sql );
 //
 //			$var[$projectid]['folders'] = array();
 //

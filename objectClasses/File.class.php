@@ -153,7 +153,7 @@ class File extends Object
 		$sql = new Sql( $sqlquery );
 		$sql->setInt( 'projectid',$SESS['projectid'] );
 		
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -176,7 +176,7 @@ class File extends Object
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setString( 'extension',$extension       );
 		
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -419,7 +419,7 @@ class File extends Object
 		                ' FROM {t_file}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 		
 		if	( count($row)!=0 )
 		{
@@ -441,7 +441,7 @@ class File extends Object
 		$sql = new Sql( 'DELETE FROM {t_file} '.
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$db->query( $sql->query );
+		$db->query( $sql );
 		
 		$this->objectDelete();
 	}
@@ -500,7 +500,7 @@ EOF
 		$sql->setString('size'     ,$this->size      );
 		$sql->setString('extension',$this->extension );
 		$sql->setString('objectid' ,$this->objectid  );
-		$db->query( $sql->query );
+		$db->query( $sql );
 		
 		$this->objectSave();
 	}
@@ -532,7 +532,7 @@ EOF
 		                ' FROM {t_file}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 		
 		if	( count($row) != 0 )
 		{
@@ -571,7 +571,7 @@ EOF
 		else
 			$sql->setString( 'value',$this->value );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -592,7 +592,7 @@ EOF
 		$this->objectAdd();
 		
 		$sql = new Sql('SELECT MAX(id) FROM {t_file}');
-		$this->fileid = intval($db->getOne($sql->query))+1;
+		$this->fileid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql('INSERT INTO {t_file}'.
 		               ' (id,objectid,extension,size,value)'.
@@ -601,7 +601,7 @@ EOF
 		$sql->setInt   ('objectid' ,$this->objectid      );
 		$sql->setString('extension',$this->extension     );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 		
 		$this->saveValue();
 	}	

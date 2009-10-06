@@ -40,6 +40,14 @@ class DB_mysqli
 	 * @var String
 	 */
 	var $error;
+	
+	/**
+	 * SQL-Statement (nur fuer prepared-Statements).
+	 * @var Resource
+	 */
+	var $stmt;
+	
+	var $params = array();
 
 
 	function connect( $conf )
@@ -101,6 +109,29 @@ class DB_mysqli
 
 	function query($query)
 	{
+		if	( is_object($this->stmt) )
+		{
+			foreach($this->params as $name => $data)
+			{
+				switch( $data['type'] )
+				{
+					case 'int':
+						$ar[0] .= 'i';
+						break;
+					case 'string':
+						$ar[0] .= 's';
+						break;
+					default:
+						continue;
+				}
+				
+        		$ar[] = &$data['value'];
+			}
+		
+			call_user_func_array(array($this->stmt, 'bind_param'),$ar);
+			
+		}
+		
 		$result = mysqli_query($this->connection,$query);
 
 		if	( ! $result )
@@ -142,8 +173,21 @@ class DB_mysqli
 	
 	function prepare( $query,$param)
 	{
-		$stmt = mysqli_prepare($this->connection,$query);
-		// TODO: $stmt als Member merken und bei query() mit bind-vars f�llen.
+		foreach( $param as $pos)
+		{
+			foreach( $pos as $pos )
+			{
+				$query = substr($query,0,$pos-1).'?'.substr($query,$pos+1);
+			}
+		}
+
+		$this->stmt = mysqli_prepare($this->connection,$query);
+		
+	}
+	
+	function bind( $param,$value )
+	{
+		$this->params[$param] = $value;
 	}
 }
 

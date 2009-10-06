@@ -29,7 +29,15 @@ class DB_postgresql
 {
 	var $connection;
 
+	/**
+	 * SQL-Statement (nur fuer prepared-Statements).
+	 * @var Resource
+	 */
+	var $prepared;
+	
+	var $params = array();
 
+	
 	/**
 	 * Verbinden zum POSTGRES-Server.
 	 *
@@ -72,7 +80,7 @@ class DB_postgresql
 
 
     /**
-     * Verbindung schließen.
+     * Verbindung schlieï¿½en.
      *
      * @return unknown
      */
@@ -87,16 +95,53 @@ class DB_postgresql
 
 	function query($query)
 	{
+		//Html::debug($query,'query()');
+		if	( $this->prepared )
+		{
+			$ar = array();
+			foreach($this->params as $name => $data)
+			{
+				//Html::debug($data,'data!!!');
+				switch( $data['type'] )
+				{
+					case 'string':
+	        			$ar[] = (String)$data['value'];
+	        			break;
+					case 'int':
+	        			//$ar[] = (String)abs($data['value']);
+	        			$ar[] = (int) $data['value'];
+	        			break;
+					default:
+						die('was ist mit type '.$data['type'].'?');
+				}
+			}
+			//Html::debug($this->params,'Parameter');
+			
+			$result = @pg_execute( $this->connection,$this->stmtid,$ar );
+			
+			if	( $result === false )
+			{
+				if	( empty($this->error) )
+					$this->error = 'PostgreSQL (prepared) says: '.@pg_errormessage();
+				debug_print_backtrace();
+				return FALSE;
+			}
+	
+			return $result;
+		}
+		
+		
+		
 		$result = @pg_exec( $this->connection,$query );
 
 		if	( ! $result )
 		{
 			if	( empty($this->error) )
-				$this->error = 'PostgreSQL says: '.@pg_errormessage();
+				$this->error = 'PostgreSQL (not prepared) says: '.@pg_errormessage();
 			return FALSE;
 		}
 
-		return $result;;
+		return $result;
 	}
 
 
@@ -123,6 +168,38 @@ class DB_postgresql
 	{
 		return pg_numrows($result);
 	}
+	
+	
+	function prepare( $query,$param )
+	{
+		$nr = 1;
+		foreach( $param as $pos)
+		{
+			foreach( $pos as $pos )
+			{
+				$query = substr($query,0,$pos).'$'.($nr++).substr($query,$pos);
+			}
+		}
+
+		$this->stmtid = md5($query).rand();
+		pg_prepare($this->connection,$this->stmtid,$query);
+		$this->prepared = true;
+		//Html::debug($query);
+	}
+	
+	
+	function bind( $param,$value )
+	{
+		$this->params[$param] = $value;
+	}
+	
+	
+	function clear()
+	{
+		$this->prepared = false;
+		$this->params   = array();
+	}
+	
 }
 
 ?>

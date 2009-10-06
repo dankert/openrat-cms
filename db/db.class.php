@@ -157,6 +157,35 @@ class DB
 	 */
 	function query( $query )
 	{
+		if	( is_object($query) && $this->conf['prepare'] )
+		{
+			$this->client->clear();
+			//Html::debug($query);
+			$this->client->prepare( $query->raw,$query->param );
+			
+			foreach( $query->data as $name=>$value)
+			{
+				$this->client->bind($name,$value);
+			}
+			
+			$result = $this->client->query($query);
+			
+			if	( $result === FALSE )
+			{
+				$this->error = $this->client->error;
+				
+				if	( true )
+				{
+					Logger::warn('Database error: '.$this->error);
+					die('Database Error (prepared):<pre style="color:red">'.$this->error.'</pre>');
+				}
+			}
+					
+			return new DB_result( $this->client,$result );
+		}
+		if ( is_object($query) )
+			$query = $query->query;
+		
 		Logger::trace('DB query: '.substr($query,0,45).'...');
 
 		$result = $this->client->query($query);
@@ -167,8 +196,9 @@ class DB
 			
 			if	( true )
 			{
+				debug_print_backtrace();
 				Logger::warn('Database error: '.$this->error);
-				die('Database Error:<pre style="color:red">'.$this->error.'</pre>');
+				die('Database Error (not prepared):<pre style="color:red">'.$this->error.'</pre>');
 			}
 		}
 			
@@ -336,15 +366,6 @@ class DB
 		$res->free();
 
 		return $results;
-	}
-	
-	
-	function prepare( $query, $param )
-	{
-		if	( method_exists( $this->client,'prepare' ) )
-		{
-			$this->client->prepare( $query, $param );
-		}
 	}
 }
 

@@ -21,18 +21,18 @@
 // ---------------------------------------------------------------------------
 // $Log$
 // Revision 1.2  2004-05-02 14:41:31  dankert
-// Einfügen package-name (@package)
+// Einfï¿½gen package-name (@package)
 //
 // Revision 1.1  2004/04/24 15:15:12  dankert
 // Initiale Version
 //
 // Revision 1.1  2003/10/27 23:21:55  dankert
-// Methode(n) hinzugefügt: savevalue(), save()
+// Methode(n) hinzugefï¿½gt: savevalue(), save()
 //
 // ---------------------------------------------------------------------------
 
 /**
- * Darstellen einer Verknüpfung. Eine Verknüpfung kann auf eine Objekt oder auf
+ * Darstellen einer Verknï¿½pfung. Eine Verknï¿½pfung kann auf eine Objekt oder auf
  * eine beliebige Url zeigen
  *
  * @version $Revision$
@@ -55,7 +55,7 @@ class Link extends Object
 	}
 	
 
-	// Lesen der Verknüpfung aus der Datenbank
+	// Lesen der Verknï¿½pfung aus der Datenbank
 	function load()
 	{
 		$db = db_connection();
@@ -64,7 +64,7 @@ class Link extends Object
 		                ' FROM {t_link}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->url            = $row['url'];
 		$this->linkedObjectId = $row['link_objectid'];
@@ -89,12 +89,12 @@ class Link extends Object
 	{
 		$db = db_connection();
 
-		// Verknüpfung löschen
+		// Verknï¿½pfung lï¿½schen
 		$sql = new Sql( 'DELETE FROM {t_link} '.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 		
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		$this->objectDelete();
 	}
@@ -123,7 +123,7 @@ class Link extends Object
 			$sql->setString('url',$this->url );
 		}
 		
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		$this->objectSave();
 	}
@@ -155,7 +155,7 @@ class Link extends Object
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_link}');
-		$this->linkid = intval($db->getOne($sql->query))+1;
+		$this->linkid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql('INSERT INTO {t_link}'.
 		               ' (id,objectid,url,link_objectid)'.
@@ -174,7 +174,7 @@ class Link extends Object
 			$sql->setString('url',$this->url );
 		}
 		
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}	
 }
 

@@ -176,7 +176,7 @@ class Value
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 		
 		if	( count($row) > 0 ) // Wenn Inhalt gefunden
 		{
@@ -210,7 +210,7 @@ class Value
 		                ' LEFT JOIN {t_user} ON {t_user}.id={t_value}.lastchange_userid'.
 		                '  WHERE {t_value}.id={valueid}' );
 		$sql->setInt( 'valueid',$this->valueid);
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 		
 		$this->text           =        $row['text'        ];
 		$this->pageid         = intval($row['pageid'      ]);
@@ -250,7 +250,7 @@ class Value
 		$sql->setInt( 'languageid',$this->languageid);
 
 		$list = array();
-		foreach( $db->getAll( $sql->query ) as $row )
+		foreach( $db->getAll( $sql ) as $row )
 		{
 			$val = new Value();
 			$val->valueid = $row['id'];
@@ -289,7 +289,7 @@ class Value
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		return $db->getOne( $sql->query );
+		return $db->getOne( $sql );
 	}
 
 
@@ -310,7 +310,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		return $db->getOne( $sql->query );
+		return $db->getOne( $sql );
 	}
 	
 	
@@ -331,7 +331,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		$sql = new Sql( 'UPDATE {t_value}'.
 		                '  SET publish=1'.
@@ -343,7 +343,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 	/**
@@ -363,7 +363,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 
 		if	( $this->publish )
 		{
@@ -378,12 +378,12 @@ SQL
 			$sql->setInt( 'pageid'    ,$this->pageid    );
 			$sql->setInt( 'languageid',$this->languageid);
 
-			$db->query( $sql->query );
+			$db->query( $sql );
 		}
 
 		// Naechste ID aus Datenbank besorgen
 		$sql = new Sql('SELECT MAX(id) FROM {t_value}');
-		$this->valueid = intval($db->getOne($sql->query))+1;
+		$this->valueid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql( <<<SQL
 INSERT INTO {t_value}
@@ -417,7 +417,7 @@ SQL
 		$user = Session::getUser();
 		$sql->setInt    ( 'lastchange_userid',$user->userid  );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -434,7 +434,7 @@ SQL
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 	}
 
 
@@ -1175,7 +1175,7 @@ SQL
 		                
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'text'      ,'%'.$text.'%'     );
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -1200,7 +1200,7 @@ SQL
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setInt   ( 'userid'    ,$userid           );
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 	
@@ -1226,7 +1226,7 @@ SELECT {t_object}.id
 SQL
 );
 		$sql->setInt   ( 'userid'    ,$userid           );
-		return $db->getOne( $sql->query );
+		return $db->getOne( $sql );
 	}
 	
 	

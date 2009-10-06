@@ -93,7 +93,7 @@ class Folder extends Object
 		$db = db_connection();
 
 		$sql = new Sql('SELECT MAX(id) FROM {t_folder}');
-		$this->folderid = intval($db->getOne($sql->query))+1;
+		$this->folderid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql('INSERT INTO {t_folder}'.
 		               ' (id,objectid)'.
@@ -101,7 +101,7 @@ class Folder extends Object
 		$sql->setInt   ('folderid'    ,$this->folderid );
 		$sql->setInt   ('objectid'    ,$this->objectid );
 		
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}	
 	
 
@@ -128,7 +128,7 @@ class Folder extends Object
 		}
 		
 		// Datenbankabfrage ausfuehren
-		return $db->getOne( $sql->query );
+		return $db->getOne( $sql );
 	}
 
 
@@ -145,7 +145,7 @@ class Folder extends Object
 
 		$sql->setString('filename', $filename      );
 
-		return( $db->getOne($sql->query) > 0 );
+		return( $db->getOne($sql) > 0 );
 	}
 
 
@@ -156,7 +156,7 @@ class Folder extends Object
 //		$sql = new Sql('SELECT * FROM {t_folder} WHERE objectid={objectid}');
 //		$sql->setInt('objectid',$this->objectid);
 //
-//		$row = $db->getRow( $sql->query );
+//		$row = $db->getRow( $sql );
 //
 		$this->objectLoad();
 		
@@ -182,7 +182,7 @@ class Folder extends Object
 		$sql->setInt('folderid',$this->folderid);
 		$sql->setInt('orderid' ,$orderid       );
 
-		$db->query( $sql->query );
+		$db->query( $sql );
 	}
 
 
@@ -199,7 +199,7 @@ class Folder extends Object
 //		$sql->setInt('folderid' ,$SESS['folderid' ]);
 //		$sql->setInt('projectid',$SESS['projectid']);
 //		
-//		return( $db->getCol( $sql->query ));
+//		return( $db->getCol( $sql ));
 //	}
 
 	
@@ -214,7 +214,7 @@ class Folder extends Object
 		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
-		return( $db->getCol( $sql->query ) );
+		return( $db->getCol( $sql ) );
 	}
 
 
@@ -237,7 +237,7 @@ class Folder extends Object
 		$sql->setInt('objectid'  ,$this->objectid   );
 		
 		$liste = array();
-		$res = $db->getAll( $sql->query );
+		$res = $db->getAll( $sql );
 		foreach( $res as $row )
 		{
 			$o = new Object( $row['id'] );
@@ -260,7 +260,7 @@ class Folder extends Object
 		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
-		return( $db->getCol( $sql->query ) );
+		return( $db->getCol( $sql ) );
 	}
 
 
@@ -275,7 +275,7 @@ class Folder extends Object
                        ' ORDER BY {t_name}.name,{t_object}.filename ASC');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
-		return( $db->getCol( $sql->query ) );
+		return( $db->getCol( $sql ) );
 	}
 
 
@@ -290,7 +290,7 @@ class Folder extends Object
 		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
-		return( $db->getCol( $sql->query ) );
+		return( $db->getCol( $sql ) );
 	}
 
 
@@ -341,7 +341,7 @@ class Folder extends Object
 		$sql->setInt   ('objectid' ,$this->objectid );
 		$sql->setString('filename' ,$filename       );
 		
-		return( intval($db->getOne( $sql->query )) );
+		return( intval($db->getOne( $sql )) );
 	}
 
 
@@ -365,7 +365,7 @@ class Folder extends Object
 		$sql->setInt('is_page'  ,in_array('page'  ,$types)?1:2);
 		$sql->setInt('is_link'  ,in_array('link'  ,$types)?1:2);
 		
-		return( $db->getCol( $sql->query ) );
+		return( $db->getCol( $sql ) );
 	}
 
 	
@@ -382,7 +382,7 @@ class Folder extends Object
 			$sql->setInt('projectid',$this->projectid   );
 		else	$sql->setInt('projectid',$SESS['projectid'] );
 		
-		return( $db->getOne( $sql->query ) );
+		return( $db->getOne( $sql ) );
 	}
 
 	
@@ -398,7 +398,7 @@ class Folder extends Object
 		$sql->setInt( 'projectid',$this->projectid );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 		
-		return( $db->getCol( $sql->query ) );
+		return( $db->getCol( $sql ) );
 	}
 
 	
@@ -418,7 +418,7 @@ class Folder extends Object
 		}
 		else	$sql->setInt( 'projectid',$this->projectid   );
 		
-		return( $db->getCol( $sql->query ) );
+		return( $db->getCol( $sql ) );
 	}
 
 	
@@ -431,12 +431,12 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 	
 	/**
-	 * Ermittelt die erste Seite oder Verknüpfung in diesem Ordner.
+	 * Ermittelt die erste Seite oder Verknï¿½pfung in diesem Ordner.
 	 *
 	 * @return Object Objekt
 	 */
@@ -450,7 +450,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$oid = intval($db->getOne( $sql->query ));
+		$oid = intval($db->getOne( $sql ));
 		
 		if	( $oid != 0 )
 			$o = new Object($oid);
@@ -471,7 +471,7 @@ class Folder extends Object
 		               '  ORDER BY orderid DESC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$oid = intval($db->getOne( $sql->query ));
+		$oid = intval($db->getOne( $sql ));
 		
 		if	( $oid != 0 )
 			$o = new Object($oid);
@@ -491,7 +491,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 
@@ -499,7 +499,7 @@ class Folder extends Object
 	/**
 	 * Liefert eine Liste von allen Dateien in diesem Ordner.
 	 *
-	 * @return Array Schlüssel=Objekt-Id, Wert=Dateiname
+	 * @return Array Schlï¿½ssel=Objekt-Id, Wert=Dateiname
 	 */
 	function getFileFilenames()
 	{
@@ -510,7 +510,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 
 	
@@ -523,7 +523,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getCol( $sql->query );
+		return $db->getCol( $sql );
 	}
 
 	
@@ -594,7 +594,7 @@ class Folder extends Object
 		$sql = new Sql('SELECT parentid FROM {t_folder} WHERE id={folderid}');
 
 		$sql->setInt('folderid',$this->folderid);
-		$parentid = $db->getOne( $sql->query );
+		$parentid = $db->getOne( $sql );
 
 		// Ordner ist bereits h?chster Ordner
 		if   ( !is_numeric($parentid))
@@ -624,7 +624,7 @@ class Folder extends Object
 			$sql = new Sql('SELECT * FROM {t_folder} WHERE id={folderid}');
 			$sql->setInt('folderid',$parentid);
 
-			$row_folder = $db->getRow( $sql->query );
+			$row_folder = $db->getRow( $sql );
 
 			if   (is_numeric($row_folder['parentid']) || $with_root)
 			{
@@ -712,7 +712,7 @@ class Folder extends Object
 
 		$sql->setInt('objectid',$this->objectid);
 
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->parentfolders = array();
 		$this->addParentfolder( $row['f0id'],$row['f0id'] );
@@ -758,7 +758,7 @@ EOF
 		$sql->setInt('objectid'  ,$this->objectid  );
 		$sql->setInt('languageid',$this->languageid);
 
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->addParentfolder( $row['f0id'],$row['f0filename'] );
 		$this->addParentfolder( $row['f1id'],$row['f1filename'] );
@@ -813,7 +813,7 @@ EOF
 		$sql->setInt('objectid'  ,$this->objectid  );
 		$sql->setInt('languageid',$this->languageid);
 
-		$row = $db->getRow( $sql->query );
+		$row = $db->getRow( $sql );
 
 		$this->addParentfolder( $row['f0id'],$row['f0name'],$row['f0filename'] );
 		$this->addParentfolder( $row['f1id'],$row['f1name'],$row['f1filename'] );
@@ -839,7 +839,7 @@ EOF
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$this->subfolders = $db->getCol( $sql->query );
+		$this->subfolders = $db->getCol( $sql );
 
 		return $this->subfolders;
 	}
@@ -855,7 +855,7 @@ EOF
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getAssoc( $sql->query );
+		return $db->getAssoc( $sql );
 	}
 	
 	
@@ -903,12 +903,12 @@ EOF
 			                '  SET folderobjectid=NULL '.
 			                '  WHERE folderobjectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
-			$db->query( $sql->query );
+			$db->query( $sql );
 	
 			$sql = new Sql( 'DELETE FROM {t_folder} '.
 			                '  WHERE objectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
-			$db->query( $sql->query );
+			$db->query( $sql );
 	
 			$this->objectDelete();
 		}
