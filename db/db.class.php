@@ -201,7 +201,11 @@ class DB
 				die('Database Error (not prepared):<pre style="color:red">'.$this->error.'</pre>');
 			}
 		}
-			
+
+		if	( @$this->conf['autocommit'])
+			if	( method_exists($this->client,'commit') )
+				$this->client->commit();
+		
 		return new DB_result( $this->client,$result );
 	}
 
@@ -367,6 +371,39 @@ class DB
 
 		return $results;
 	}
+	
+	
+	/**
+	 * Startet eine Transaktion.
+	 */
+	function start()
+	{
+		if	( @$this->conf['transaction'])
+			if	( method_exists($this->client,'start') )
+				$this->client->start();
+	}
+	
+	
+	/**
+	 * Beendet eine Transaktion.
+	 */
+	function commit()
+	{
+		if	( @$this->conf['transaction'])
+			if	( method_exists($this->client,'commit') )
+				$this->client->commit();
+	}
+	
+	/**
+	 * Beendet eine Transaktion.
+	 */
+	function rollback()
+	{
+		if	( @$this->conf['transaction'])
+			if	( method_exists($this->client,'rollback') )
+				$this->client->rollback();
+	}
+	
 }
 
 

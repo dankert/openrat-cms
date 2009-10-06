@@ -268,16 +268,20 @@ class Project
 	function save()
 	{
 		$db = db_connection();
+		$db->start();
 
-		$sql = new Sql( 'UPDATE {t_project}'.
-		                '  SET name                = {name},'.
-		                '      target_dir          = {target_dir},'.
-		                '      ftp_url             = {ftp_url}, '.
-		                '      ftp_passive         = {ftp_passive}, '.
-		                '      cut_index           = {cut_index}, '.
-		                '      content_negotiation = {content_negotiation}, '.
-		                '      cmd_after_publish   = {cmd_after_publish} '.
-		                'WHERE id= {projectid} ' );
+		$sql = new Sql( <<<SQL
+				UPDATE {t_project}
+                  SET name                = {name},
+                      target_dir          = {target_dir},
+                      ftp_url             = {ftp_url}, 
+                      ftp_passive         = {ftp_passive}, 
+                      cut_index           = {cut_index}, 
+                      content_negotiation = {content_negotiation}, 
+                      cmd_after_publish   = {cmd_after_publish} 
+                WHERE id= {projectid}
+SQL
+);
 
 		$sql->setString('name'               ,$this->name );
 		$sql->setString('target_dir'         ,$this->target_dir );
@@ -289,6 +293,8 @@ class Project
 		$sql->setInt   ('projectid'          ,$this->projectid );
 
 		$db->query( $sql );
+		$db->commit();
+		$db->rollback;
 		
 		$rootFolder = new Folder( $this->getRootObjectId() );
 		$rootFolder->load();

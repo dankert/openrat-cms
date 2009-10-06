@@ -134,6 +134,34 @@ class DB_mysql
 	{
 		return mysql_num_rows($result);
 	}
+	
+	
+	/**
+     * Startet eine Transaktion.
+     */
+	function start()
+	{
+		mysql_query('BEGIN', $this->connection);
+	}
+
+
+	/**
+     * Beendet eine Transaktion.
+     */
+	function commit()
+	{
+		mysql_query('COMMIT', $this->connection);
+	}
+
+
+	/**
+     * Bricht eine Transaktion ab.
+     */
+	function rollback()
+	{
+		mysql_query('ROLLBACK', $this->connection);
+	}
+	
 }
 
 ?>

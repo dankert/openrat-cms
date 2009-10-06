@@ -86,13 +86,41 @@ class DB_postgresql
      */
 	function disconnect()
 	{
-		$ret = pg_close( $this->connection );
+		$ret = pg_query( $this->connection );
 		$this->connection = null;
 		return $ret;
 	}
 
 
 
+    /**
+     * Startet eine Transaktion.
+     */
+	function start()
+	{
+		@pg_exec( $this->connection,"BEGIN WORK" );
+	}
+
+
+	/**
+     * Beendet eine Transaktion.
+     */
+	function commit()
+	{
+		@pg_exec( $this->connection,"COMMIT" );
+	}
+
+
+	/**
+     * Bricht eine Transaktion ab.
+     */
+	function rollback()
+	{
+		@pg_exec( $this->connection,"ROLLBACK" );
+	}
+
+
+	
 	function query($query)
 	{
 		//Html::debug($query,'query()');
