@@ -294,7 +294,6 @@ SQL
 
 		$db->query( $sql );
 		$db->commit();
-		$db->rollback;
 		
 		$rootFolder = new Folder( $this->getRootObjectId() );
 		$rootFolder->load();
