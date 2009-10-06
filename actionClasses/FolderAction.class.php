@@ -205,7 +205,7 @@ class FolderAction extends ObjectAction
 		}
 		
 		// Datum letzte Aenderung an Browser uebertragen
-		$this->lastModified( $this->folder->lastchangeDate );
+		//$this->lastModified( $this->folder->lastchangeDate );
 	}
 
 

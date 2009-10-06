@@ -46,8 +46,6 @@ class FileAction extends ObjectAction
 		{
 			$this->file = Session::getObject();
 		}
-
-		$this->lastModified( $this->file->lastchangeDate );
 	}
 
 
@@ -106,10 +104,13 @@ class FileAction extends ObjectAction
 	 */
 	function show()
 	{
+		$this->lastModified( $this->file->lastchangeDate );
+		
 		// Angabe Content-Type
 		header('Content-Type: '.$this->file->mimeType() );
-		header('X-File-Id: '.$this->file->fileid );
-
+		header('X-File-Id: '   .$this->file->fileid     );
+		header('X-Id: '        .$this->file->id         );
+		
 		// Angabe Content-Disposition
 		// - Bild soll "inline" gezeigt werden
 		// - Dateiname wird benutzt, wenn der Browser das Bild speichern moechte

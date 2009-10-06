@@ -1003,7 +1003,6 @@ class IndexAction extends Action
 		global $PHP_AUTH_PW;
 
 		$user = Session::getUser();
-		
 		// Gast-Login
 		if   ( ! is_object($user) )
 		{

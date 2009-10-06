@@ -46,9 +46,11 @@ class PageAction extends ObjectAction
 			$this->page = Session::getObject();
 		}
 		
-		// Auskommentiert, da Conditional-Get bei
-		// Seiten u.U. nicht sinnvoll ist
-		//$this->lastModified( $this->page->lastchangeDate );
+		// Hier kann leider nicht das Datum der letzten Änderung verwendet werden,
+		// da sich die Seite auch danach ändern kann, z.B. durch Includes anderer
+		// Seiten oder Änderung einer Vorlage oder Änderung des Dateinamens einer
+		// verlinkten Datei. 
+		$this->lastModified( time() );
 	}
 
 
