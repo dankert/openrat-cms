@@ -195,8 +195,6 @@ class ProjectAction extends Action
 			$list[$id]['name'    ] = $name;
 		}
 		$this->setTemplateVar('el',$list);
-	
-		$this->forward('project_list');
 	}
 
 
@@ -219,8 +217,6 @@ class ProjectAction extends Action
 			$list[$id]['name'] = $name;
 		}
 		$this->setTemplateVar('el',$list);
-	
-		$this->forward('project_select');
 	}
 
 
@@ -228,8 +224,6 @@ class ProjectAction extends Action
 	{
 		// Projekt laden
 		$this->setTemplateVars( $this->project->getProperties() );
-
-		$this->forward('project_edit');
 
 	}
 	

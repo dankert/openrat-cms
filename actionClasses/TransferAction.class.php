@@ -109,8 +109,6 @@ class TransferAction extends Action
 	
 		asort( $folders );
 		$this->setTemplateVar( 'folders',$folders );
-		
-		$this->forward( 'transfer_import' );
 	}
 
 

@@ -277,23 +277,6 @@ class Action
 
 	
 	/**
-	 * @deprecated siehe #addNotice
-	 * @param unknown_type $title
-	 * @param unknown_type $add_info
-	 */
-	function message( $title='ERROR',$add_info='' )
-	{
-		Logger::warn( 'creating error message, info='.$add_info );
-
-		$this->setTemplateVar( 'title',lang( $title         ) );
-		$this->setTemplateVar( 'text' ,lang( $title.'_DESC' ) );
-		$this->setTemplateVar( 'info' ,$add_info );
-		
-		$this->forward('message');
-	}
-
-
-	/**
 	 * Ausgabe des Templates.<br>
 	 * <br>
 	 * Erst hier soll die Ausgabe auf die Standardausgabe, also die
@@ -302,11 +285,11 @@ class Action
 	 *
 	 * @param String Wird nicht benutzt!
 	 */
-	function forward( $unbenutzterParameter = "" )
+	function forward()
 	{
 		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
 			exit; // Die Ausgabe ist bereits erfolgt (z.B. Bin�rdateien o. WebDAV)
-
+			
 		// Pruefen, ob HTTP-Header gesendet wurden. Dies deutet stark darauf hin, dass eine
 		// PHP-Fehlermeldung ausgegeben wurde. In diesem Fall wird hier abgebrochen.
 		// Weitere Ausgabe wuerde keinen Sinn machen, da wir nicht wissen, was
@@ -314,6 +297,9 @@ class Action
 		if	( headers_sent() )
 			Http::serverError("Some server error messages occured - see above - CMS canceled.");
 			
+		$expires = substr(date('r',time()-date('Z')),0,-5).'GMT';
+		header('Expires: '      .$expires );
+		
 		$httpAccept = getenv('HTTP_ACCEPT');
 		$types = explode(',',$httpAccept);
 		
@@ -423,7 +409,6 @@ class Action
 		// Einbinden des Templates
 		require( $tpl_dir.$tplFileName );
 		
-		exit;
 	}
 	
 	
@@ -506,12 +491,10 @@ class Action
 			return;
 
 		$lastModified = substr(date('r',$time -date('Z')),0,-5).'GMT';
-		$expires      = substr(date('r',time()-date('Z')),0,-5).'GMT';
 		$etag         = '"'.md5($lastModified).'"';
 
 		// Header senden
 		header('Last-Modified: '.$lastModified );
-		header('Expires: '      .$expires      );
 		header('ETag: '         .$etag         );
 		
 		// Die vom Interpreter sonst automatisch gesetzten

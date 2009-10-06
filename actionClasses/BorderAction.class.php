@@ -110,15 +110,13 @@ class BorderAction extends Action
 
 		$user = Session::getUser();
 
-		// Seite ändert sich nur 1x pro Session
+		// Seite ï¿½ndert sich nur 1x pro Session
 		$this->lastModified( $user->loginDate );
 
 		$this->setTemplateVar( 'stylesheet',$user->style );
 		$this->setTemplateVar( 'css_body_class','border' );
 		
 		$this->maxAge( 4*60*60 ); // 1 Stunde Browsercache
-		
-		$this->forward( 'border' );
 	}
 }
 

@@ -141,7 +141,7 @@ class LanguageAction extends Action
 
 
 	/**
-	 * Anzeigen der Löschbestätigungs-Maske.
+	 * Anzeigen der Lï¿½schbestï¿½tigungs-Maske.
 	 */
 	function remove()
 	{
@@ -150,7 +150,7 @@ class LanguageAction extends Action
 	
 	
 	/**
-	 * Löschen der Sprache.
+	 * Lï¿½schen der Sprache.
 	 */
 	function delete() 
 	{
@@ -225,8 +225,6 @@ class LanguageAction extends Action
 //		}
 
 		$this->setTemplateVar('el',$list);
-
-		$this->forward('language_list');
 	}
 
 

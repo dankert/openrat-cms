@@ -102,7 +102,7 @@ class ModelAction extends Action
 
 	/**
 	 * Entfernen der Variante.<br>
-	 * Es wird ein Bestätigungsdialog angezeigt.
+	 * Es wird ein Bestï¿½tigungsdialog angezeigt.
 	 */
 	function remove()
 	{
@@ -178,8 +178,6 @@ class ModelAction extends Action
 		}
 		$this->setTemplateVar( 'el',$list );
 		$this->setTemplateVar( 'add',$this->userIsAdmin() );
-	
-		$this->forward('model_list');
 	}
 
 

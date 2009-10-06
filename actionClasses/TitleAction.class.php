@@ -41,7 +41,7 @@ class TitleAction extends Action
 	 */
 	function show()
 	{
-		// Seite ändert sich nur 1x pro Session
+		// Seite ï¿½ndert sich nur 1x pro Session
 		$user = Session::getUser();
 //		$this->lastModified( $user->loginDate );
 		
@@ -86,8 +86,6 @@ class TitleAction extends Action
 			$this->setTemplateVar('showtree_url' ,Html::url('index','showtree') );
 			$this->setTemplateVar('showtree_text',lang('GLOBAL_SHOWTREE')       );
 		}
-		
-		$this->forward( 'title' );
 	}
 }
 

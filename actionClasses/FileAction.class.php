@@ -576,7 +576,6 @@ class FileAction extends ObjectAction
 	 */
 	function pub()
 	{
-		$this->forward('file_pub');
 	}
 
 

@@ -407,8 +407,6 @@ class PageelementAction extends Action
 			if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 			else	$this->setTemplateVar('old_pageaction','show'                            );
-
-			$this->forward('pageelement_edit_'.$this->value->element->type);
 		}
 
 
@@ -472,8 +470,6 @@ class PageelementAction extends Action
 			$this->setTemplateVar( 'publish',$this->value->page->hasRight(ACL_PUBLISH) );
 
 			$this->setTemplateVar( 'objectid',$this->value->page->objectid );
-
-			$this->forward('pageelement_edit_'.$this->value->element->type);
 		}
 
 
@@ -491,8 +487,6 @@ class PageelementAction extends Action
 			if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 			else	$this->setTemplateVar('old_pageaction','show'                            );
-
-			$this->forward('pageelement_edit_'.$this->value->element->type);
 		}
 
 
@@ -549,8 +543,6 @@ class PageelementAction extends Action
 			if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 			else	$this->setTemplateVar('old_pageaction','show'                            );
-
-			$this->forward('pageelement_edit_'.$this->value->element->type);
 		}
 
 

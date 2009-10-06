@@ -487,8 +487,6 @@ class TemplateAction extends Action
 		}
 	
 		$this->setTemplateVar('text',$text);
-		
-		$this->forward('template_show');
 	}
 
 

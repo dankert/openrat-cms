@@ -41,8 +41,6 @@ class ClipboardAction extends Action
 			$o->load();
 			$this->setTemplateVar('object',$o);
 		}
-		
-		$this->forward( 'clipboard' );
 	}
 
 

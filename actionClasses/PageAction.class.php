@@ -238,7 +238,7 @@ class PageAction extends ObjectAction
 			$this->setTemplateVar( 'name'    ,$value->element->name );
 			$this->setTemplateVar( 'desc'    ,$value->element->desc );
 			$this->setTemplateVar( 'objectid',$this->page->objectid );
-			$this->forward( 'pageelement_edit_longtext' );
+			return;
 		}
 
 		if	( $this->hasRequestVar('year') ) // Wird ein Datum gespeichert?
@@ -536,7 +536,6 @@ class PageAction extends ObjectAction
 
 		$this->setWindowMenu( 'elements' );
 		$this->setTemplateVar('el',$list);
-		$this->forward('page_form');
 	}
 
 
@@ -660,9 +659,6 @@ class PageAction extends ObjectAction
 				$templates[$id]=$name;
 		}
 		$this->setTemplateVar('templates',$templates); 
-		 
-	
-		$this->forward('page_prop');
 	}
 
 

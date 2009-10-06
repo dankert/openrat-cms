@@ -58,7 +58,6 @@ class LoginAction extends Action
 
 	function blank()
 	{
-		$this->forward('blank');
 	}
 
 

@@ -190,8 +190,6 @@ class LinkAction extends ObjectAction
 		}
 		asort( $list );
 		$this->setTemplateVar('objects',$list);		
-
-		$this->forward('link_edittarget');
 	}
 
 
