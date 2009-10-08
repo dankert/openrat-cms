@@ -279,6 +279,9 @@ class IndexAction extends Action
 		}
 
 		
+		if	( empty($dbids) )
+			$this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
+		
 		if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
 			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
 		
@@ -297,6 +300,7 @@ class IndexAction extends Action
 			;
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
+
 
 		$ssl_user_var = $conf['security']['ssl']['user_var'];
 		if	( !empty($ssl_user_var) )
