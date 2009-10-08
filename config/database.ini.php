@@ -10,8 +10,8 @@ default=db1
 
 ; Database configuration for connection 'db1
 
-enabled    = true
-comment    = "OpenRat Example"  ; comment of this database 
+enabled    = false                 ; set this to 'true' for using this connection
+comment    = "OpenRat Example"     ; comment of this database 
 
 type       = mysql                 ; 'mysql' or 'postgresql' 
 user       = dbuser                ; database user
@@ -35,6 +35,12 @@ persistent = yes                   ; use persistent connections (try this, it's 
 ; Default: blank.
 cmd = ""
 
+; Using prepared statements.
+; This is EXPERIMENTAL, do not use in production environments
+prepare = false
+
+; Using transactions. Set this to true, if your database is supporting transactions
+transaction = false
 
 
 ; Add here more sections with other database connections.
