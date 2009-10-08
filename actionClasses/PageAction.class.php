@@ -324,6 +324,56 @@ class PageAction extends ObjectAction
 
 
 	/**
+	 * Die Eigenschaften der Seite anzeigen
+	 */
+	function propView()
+	{
+		$this->setTemplateVar('id',$this->page->objectid);
+	
+		$this->page->public = true;
+		$this->page->load();
+		$this->page->full_filename();
+
+		if	( $this->page->filename == $this->page->objectid )
+			$this->page->filename = '';
+
+		$this->setTemplateVars( $this->page->getProperties() );
+		
+		if   ( $this->userIsAdmin() )
+		{
+			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
+		}
+	
+		$template = new Template( $this->page->templateid );
+		$template->load();
+		$this->setTemplateVar('template_name',$template->name);
+	
+		// Alle Ordner ermitteln
+//		$this->setTemplateVar('act_folderobjectid',$this->page->parentid);
+//
+//		$folders = array();
+//		$folder = new Folder( $this->page->parentid );
+		
+//		foreach( $folder->getOtherFolders() as $oid )
+//		{
+//			$f = new Folder( $oid );
+//			$folders[$oid] = implode( FILE_SEP,$f->parentObjectNames(true,true) );
+//		}
+//		asort( $folders );
+//		$this->setTemplateVar('folder',$folders); 
+
+		$templates = Array();
+		foreach( Template::getAll() as $id=>$name )
+		{
+			if	( $id != $this->page->templateid )
+				$templates[$id]=$name;
+		}
+		$this->setTemplateVar('templates',$templates); 
+	}
+	
+
+
+	/**
 	 * Austauschen der Vorlage vorbereiten
 	 *
 	 * Es wird ein Formualr erzeugt, in dem der Benutzer auswaehlen kann, welche Elemente
@@ -609,56 +659,6 @@ class PageAction extends ObjectAction
 		$src = htmlentities($src);
 		
 		$this->setTemplateVar('src',$src);
-	}
-
-
-
-	/**
-	 * Die Eigenschaften der Seite anzeigen
-	 */
-	function propView()
-	{
-		$this->setTemplateVar('id',$this->page->objectid);
-	
-		$this->page->public = true;
-		$this->page->load();
-		$this->page->full_filename();
-
-		if	( $this->page->filename == $this->page->objectid )
-			$this->page->filename = '';
-
-		$this->setTemplateVars( $this->page->getProperties() );
-		
-		if   ( $this->userIsAdmin() )
-		{
-			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
-		}
-	
-		$template = new Template( $this->page->templateid );
-		$template->load();
-		$this->setTemplateVar('template_name',$template->name);
-	
-		// Alle Ordner ermitteln
-//		$this->setTemplateVar('act_folderobjectid',$this->page->parentid);
-//
-//		$folders = array();
-//		$folder = new Folder( $this->page->parentid );
-		
-//		foreach( $folder->getOtherFolders() as $oid )
-//		{
-//			$f = new Folder( $oid );
-//			$folders[$oid] = implode( FILE_SEP,$f->parentObjectNames(true,true) );
-//		}
-//		asort( $folders );
-//		$this->setTemplateVar('folder',$folders); 
-
-		$templates = Array();
-		foreach( Template::getAll() as $id=>$name )
-		{
-			if	( $id != $this->page->templateid )
-				$templates[$id]=$name;
-		}
-		$this->setTemplateVar('templates',$templates); 
 	}
 
 
