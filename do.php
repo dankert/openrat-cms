@@ -289,7 +289,21 @@ if	( isset($do->actionConfig[$do->subActionName]['write']) )
 	{
 		$subactionAction = $subaction.'Action';
 		$do->$subactionAction();
+		
+		if	( $conf['interface']['redirect'] )
+		{
+			// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
+			// im nächste Request die Eingabedaten fehlen.
+			if	( empty($do->templateVars['errors']) )
+			{
+				header( 'HTTP/1.0 303 See other');
+				// Absoluten Pfad kann auch der Client erg�nzen.
+				header( 'Location: '.Html::url($action,$subaction,$do->getRequestId()) );
+				exit;
+			}
+		}
 	}
+	
 	$subactionView = $subaction.'View';
 	$do->$subactionView();
 }
@@ -303,6 +317,7 @@ else
 // Aufruf der n�chsten Subaction (falls vorhanden)
 if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 {
+	/* Führt zu Problemen beim Login sowie der Anzeige von Notices.
 	if	( $conf['interface']['redirect'] )
 	{
 		// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
@@ -316,6 +331,7 @@ if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 			exit;
 		}
 	}
+	*/
 	
 	$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
 	$do->subActionName = $subActionName;
