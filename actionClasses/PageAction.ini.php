@@ -29,15 +29,13 @@ target=pubnow
 [pubnow]
 goto=pub
 
-[saveprop]
-goto=prop
-
 [saveform]
 goto=el
 
 [prop]
 menu=prop
-target=saveprop
+write=true
+target=prop
 editable=true
 
 [changetemplate]

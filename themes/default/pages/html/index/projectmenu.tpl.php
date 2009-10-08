@@ -3,7 +3,7 @@
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?lang($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
+  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
   <meta name="MSSmartTagsPreventParsing" content="true" >
   <meta name="robots" content="noindex,nofollow" >
@@ -138,7 +138,7 @@
   </tr>
 <?php } ?>
   <tr>
-    <td>
+    <td class="window">
       <table cellspacing="0" width="100%" cellpadding="4">
 <?php unset($attr2_title);unset($attr2_name);unset($attr2_icon);unset($attr2_width);unset($attr2_rowclasses);unset($attr2_columnclasses); ?><?php  ?><?php
 	$attr3_tmp_class='';
@@ -335,7 +335,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr9_rowspan) )
 		$attr9_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-?>><?php  ?><?php  $attr10_type='ok';  $attr10_class='ok';  $attr10_value='ok';  $attr10_text='button_ok';  ?><?php
+?>><?php  ?><?php  $attr10_type='ok';  $attr10_class='ok';  $attr10_value='ok';  $attr10_text=lang('start');  ?><?php
 		if ($this->isEditable() && !$this->isEditMode())
 		$attr10_text = 'MODE_EDIT';
 		$attr10_type = 'submit';

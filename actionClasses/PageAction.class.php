@@ -303,7 +303,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Eigenschaften der Seite speichern
 	 */
-	function saveprop()
+	function propAction()
 	{
 		if   ( $this->getRequestVar('name')!='' )
 		{
@@ -616,7 +616,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Die Eigenschaften der Seite anzeigen
 	 */
-	function prop()
+	function propView()
 	{
 		$this->setTemplateVar('id',$this->page->objectid);
 	
@@ -762,7 +762,7 @@ class PageAction extends ObjectAction
 		{
 			case 'changetemplate':
 				// Template nur austauschbar, wenn es mind. 2 gibt.
-				return (count($this->page->template->getAll()) > 1);
+				return (count(Template::getAll()) > 1);
 
 			default:
 				return true;

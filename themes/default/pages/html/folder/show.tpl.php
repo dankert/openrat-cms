@@ -3,7 +3,7 @@
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?lang($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
+  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
   <meta name="MSSmartTagsPreventParsing" content="true" >
   <meta name="robots" content="noindex,nofollow" >
@@ -138,7 +138,7 @@
   </tr>
 <?php } ?>
   <tr>
-    <td>
+    <td class="window">
       <table cellspacing="0" width="100%" cellpadding="4">
 <?php unset($attr2_widths);unset($attr2_width);unset($attr2_rowclasses);unset($attr2_columnclasses); ?><?php  $attr3_present='up_url';  ?><?php 
 	$attr3_tmp_exec = isset($$attr3_present);
@@ -179,11 +179,18 @@
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_raw);unset($attr7_escape); ?><?php  ?></a><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_raw);unset($attr7_escape); ?><?php  ?></a><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr3_class='headline';  ?><?php
 	$attr3_tmp_class='';
+	$attr3_tmp_class_list = explode(',',$attr3_classes);
+	$last_pos = array_search($attr3_last_class,$attr3_tmp_class_list);
+	if	( $last_pos === FALSE || $last_pos == count($attr3_tmp_class_list)-1)
+		$attr3_tmp_class = $attr3_tmp_class_list[0];
+	else
+		$attr3_tmp_class = $attr3_tmp_class_list[++$last_pos];
+	$attr3_tmp_class=$attr3_class;
 	$attr3_last_class = $attr3_tmp_class;
 	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
-?><?php  ?><?php  $attr4_class='help';  ?><?php
+?><?php unset($attr3_class); ?><?php  $attr4_class='help';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -196,17 +203,16 @@
 		$attr4_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
 ?> class="<?php   echo $attr4_class   ?>" <?php
-?>><?php unset($attr4_class); ?><?php  $attr5_class='text';  $attr5_text='GLOBAL_TYPE';  $attr5_escape=true;  ?><?php
+?>><?php unset($attr4_class); ?><?php  $attr5_class='text';  $attr5_key='GLOBAL_TYPE';  $attr5_escape=true;  ?><?php
 		$attr5_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 		$langF = $attr5_escape?'langHtml':'lang';
-		$tmp_text = $langF($$attr5_textvar);
-		$tmp_text = $langF($attr5_text);
+		$tmp_text = $langF($attr5_key);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_text);unset($attr5_escape); ?><?php  $attr5_class='text';  $attr5_raw='_/_';  $attr5_escape=true;  ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_key);unset($attr5_escape); ?><?php  $attr5_class='text';  $attr5_raw='_/_';  $attr5_escape=true;  ?><?php
 		$attr5_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
@@ -215,17 +221,16 @@
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_raw);unset($attr5_escape); ?><?php  $attr5_class='text';  $attr5_text='GLOBAL_NAME';  $attr5_escape=true;  ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_raw);unset($attr5_escape); ?><?php  $attr5_class='text';  $attr5_key='GLOBAL_NAME';  $attr5_escape=true;  ?><?php
 		$attr5_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 		$langF = $attr5_escape?'langHtml':'lang';
-		$tmp_text = $langF($$attr5_textvar);
-		$tmp_text = $langF($attr5_text);
+		$tmp_text = $langF($attr5_key);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_text);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  $attr4_class='help';  ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_key);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  $attr4_class='help';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;
@@ -238,17 +243,16 @@
 		$attr4_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
 ?> class="<?php   echo $attr4_class   ?>" <?php
-?>><?php unset($attr4_class); ?><?php  $attr5_class='text';  $attr5_text='GLOBAL_LASTCHANGE';  $attr5_escape=true;  ?><?php
+?>><?php unset($attr4_class); ?><?php  $attr5_class='text';  $attr5_key='GLOBAL_LASTCHANGE';  $attr5_escape=true;  ?><?php
 		$attr5_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
 		$langF = $attr5_escape?'langHtml':'lang';
-		$tmp_text = $langF($$attr5_textvar);
-		$tmp_text = $langF($attr5_text);
+		$tmp_text = $langF($attr5_key);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_text);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  $attr3_list='object';  $attr3_extract=true;  $attr3_key='list_key';  $attr3_value='list_value';  ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_key);unset($attr5_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  $attr3_list='object';  $attr3_extract=true;  $attr3_key='list_key';  $attr3_value='list_value';  ?><?php
 	$attr3_list_tmp_key   = $attr3_key;
 	$attr3_list_tmp_value = $attr3_value;
 	$attr3_list_extract   = $attr3_extract;
