@@ -281,20 +281,57 @@ if	( isset($do->actionConfig[$do->subActionName]['alias']) )
 }
 
 
-// Aufruf der Subaction
-$do->$subaction();
+// Alias-Methode aufrufen.
+if	( isset($do->actionConfig[$do->subActionName]['write']) )
+{
+	//Html::debug($_SERVER);
+	if	( $_SERVER['REQUEST_METHOD'] == 'POST' )
+	{
+		$subactionAction = $subaction.'Action';
+		$do->$subactionAction();
+		
+		if	( $conf['interface']['redirect'] )
+		{
+			// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
+			// im nächste Request die Eingabedaten fehlen.
+			if	( empty($do->templateVars['errors']) )
+			{
+				header( 'HTTP/1.0 303 See other');
+				// Absoluten Pfad kann auch der Client erg�nzen.
+				header( 'Location: '.Html::url($action,$subaction,$do->getRequestId()) );
+				exit;
+			}
+		}
+	}
+	
+	$subactionView = $subaction.'View';
+	$do->$subactionView();
+}
+else
+{
+	// Aufruf der Subaction
+	$do->$subaction();
+}
+
 
 // Aufruf der n�chsten Subaction (falls vorhanden)
 if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 {
+	/* Führt zu Problemen beim Login sowie der Anzeige von Notices.
 	if	( $conf['interface']['redirect'] )
 	{
-		$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
-		header( 'HTTP/1.0 303 See other');
-		// Absoluten Pfad kann auch der Client erg�nzen.
-		header( 'Location: '.Html::url($action,$do->actionConfig[$do->subActionName]['goto'],$do->getRequestId()) );
-		exit;
+		// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
+		// im nächste Request die Eingabedaten fehlen.
+		if	( empty($do->templateVars['errors']) )
+		{
+			$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
+			header( 'HTTP/1.0 303 See other');
+			// Absoluten Pfad kann auch der Client erg�nzen.
+			header( 'Location: '.Html::url($action,$do->actionConfig[$do->subActionName]['goto'],$do->getRequestId()) );
+			exit;
+		}
 	}
+	*/
 	
 	$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
 	$do->subActionName = $subActionName;

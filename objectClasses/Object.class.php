@@ -840,18 +840,26 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql('SELECT COUNT(*) FROM {t_name} '.' WHERE objectid  ={objectid}'.'   AND languageid={languageid}');
+		$sql = new Sql(<<<SQL
+SELECT COUNT(*) FROM {t_name}  WHERE objectid  ={objectid} AND languageid={languageid}
+SQL
+);
 		$sql->setInt( 'objectid'  , $this->objectid   );
 		$sql->setInt( 'languageid', $this->languageid );
 		$count = $db->getOne($sql);
 
 		if ($count > 0)
 		{
-			$sql->setQuery('UPDATE {t_name} SET '.
-			               '  name  = {name},'.
-			               '  descr = {desc} '.
-			               ' WHERE objectid  ={objectid}'.
-			               '   AND languageid={languageid}');
+			$sql = new Sql( <<<SQL
+			UPDATE {t_name} SET 
+			                 name  = {name},
+			                 descr = {desc}
+			                WHERE objectid  ={objectid}
+			                  AND languageid={languageid}
+SQL
+);
+			$sql->setInt( 'objectid'  , $this->objectid   );
+			$sql->setInt( 'languageid', $this->languageid );
 			$sql->setString('name', $this->name);
 			$sql->setString('desc', $this->desc);
 			$db->query($sql);

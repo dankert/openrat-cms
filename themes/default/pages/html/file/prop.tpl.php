@@ -3,7 +3,7 @@
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?lang($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
+  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
   <meta name="MSSmartTagsPreventParsing" content="true" >
   <meta name="robots" content="noindex,nofollow" >
@@ -157,7 +157,7 @@
   </tr>
 <?php } ?>
   <tr>
-    <td>
+    <td class="window">
       <table cellspacing="0" width="100%" cellpadding="4">
 <?php unset($attr3_icon);unset($attr3_widths);unset($attr3_width);unset($attr3_rowclasses);unset($attr3_columnclasses); ?><?php  ?><?php
 	$attr4_tmp_class='';
@@ -740,41 +740,64 @@ if	($attr6_readonly) {
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-?>><?php  ?><?php  $attr6_list='pages';  $attr6_extract=true;  $attr6_key='list_key';  $attr6_value='list_value';  ?><?php
-	$attr6_list_tmp_key   = $attr6_key;
-	$attr6_list_tmp_value = $attr6_value;
-	$attr6_list_extract   = $attr6_extract;
-	unset($attr6_key);
-	unset($attr6_value);
-	if	( !isset($$attr6_list) || !is_array($$attr6_list) )
-		$$attr6_list = array();
-	foreach( $$attr6_list as $$attr6_list_tmp_key => $$attr6_list_tmp_value )
+?>><?php  ?><?php  $attr6_width='100%';  $attr6_space='0px';  $attr6_padding='0px';  ?><?php
+	$coloumn_widths = array();
+	$row_classes    = array();
+	$column_classes = array();
+		$attr6_class='';
+		$column_widths = explode(',',$attr6_widths);
+		unset($attr6['widths']);
+?><table class="<?php echo $attr6_class ?>" cellspacing="<?php echo $attr6_space ?>" width="<?php echo $attr6_width ?>" cellpadding="<?php echo $attr6_padding ?>"><?php unset($attr6_width);unset($attr6_space);unset($attr6_padding); ?><?php  $attr7_list='pages';  $attr7_extract=true;  $attr7_key='list_key';  $attr7_value='list_value';  ?><?php
+	$attr7_list_tmp_key   = $attr7_key;
+	$attr7_list_tmp_value = $attr7_value;
+	$attr7_list_extract   = $attr7_extract;
+	unset($attr7_key);
+	unset($attr7_value);
+	if	( !isset($$attr7_list) || !is_array($$attr7_list) )
+		$$attr7_list = array();
+	foreach( $$attr7_list as $$attr7_list_tmp_key => $$attr7_list_tmp_value )
 	{
-		if	( $attr6_list_extract )
+		if	( $attr7_list_extract )
 		{
-			if	( !is_array($$attr6_list_tmp_value) )
+			if	( !is_array($$attr7_list_tmp_value) )
 			{
-				print_r($$attr6_list_tmp_value);
-				die( 'not an array at key: '.$$attr6_list_tmp_key );
+				print_r($$attr7_list_tmp_value);
+				die( 'not an array at key: '.$$attr7_list_tmp_key );
 			}
-			extract($$attr6_list_tmp_value);
+			extract($$attr7_list_tmp_value);
 		}
-?><?php unset($attr6_list);unset($attr6_extract);unset($attr6_key);unset($attr6_value); ?><?php  $attr7_title='';  $attr7_target='cms_main';  $attr7_url='url';  $attr7_class='';  ?><?php
+?><?php unset($attr7_list);unset($attr7_extract);unset($attr7_key);unset($attr7_value); ?><?php  ?><?php
+	$attr8_tmp_class='';
+	$attr8_last_class = $attr8_tmp_class;
+	echo Html::open_tag('tr',array('class'=>$attr8_tmp_class));
+?><?php  ?><?php  ?><?php
+	$column_class_idx++;
+	if ($column_class_idx > count($column_classes))
+		$column_class_idx=1;
+	$column_class=$column_classes[$column_class_idx-1];
+	if (empty($attr9_class))
+		$attr9_class=$column_class;
+	global $cell_column_nr;
+	$cell_column_nr++;
+	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr9_rowspan) )
+		$attr9_width=$column_widths[$cell_column_nr-1];
+?><td<?php
+?>><?php  ?><?php  $attr10_title='';  $attr10_target='cms_main';  $attr10_url=$url;  $attr10_class='';  ?><?php
 	$params = array();
-		$tmp_url = $attr7_url;
-?><a<?php if (isset($attr7_name)) echo ' name="'.$attr7_name.'"'; else echo ' href="'.$tmp_url.($attr7_anchor?'#'.$attr7_anchor:'').'"' ?> class="<?php echo $attr7_class ?>" target="<?php echo $attr7_target ?>"<?php if (isset($attr7_accesskey)) echo ' accesskey="'.$attr7_accesskey.'"' ?>  title="<?php echo encodeHtml($attr7_title) ?>"><?php unset($attr7_title);unset($attr7_target);unset($attr7_url);unset($attr7_class); ?><?php  $attr8_align='left';  $attr8_type='page';  ?><?php
-	$attr8_tmp_image_file = $image_dir.'icon_'.$attr8_type.IMG_ICON_EXT;
-	$attr8_size = '16x16';
-?><img alt="<?php echo basename($attr8_tmp_image_file); echo ' ('; if (isset($attr8_size)) { list($attr8_tmp_width,$attr8_tmp_height)=explode('x',$attr8_size);echo $attr8_tmp_width.'x'.$attr8_tmp_height; echo')';} ?>" src="<?php echo $attr8_tmp_image_file ?>" border="0"<?php if(isset($attr8_align)) echo ' align="'.$attr8_align.'"' ?><?php if (isset($attr8_size)) { list($attr8_tmp_width,$attr8_tmp_height)=explode('x',$attr8_size);echo ' width="'.$attr8_tmp_width.'" height="'.$attr8_tmp_height.'"';} ?>><?php unset($attr8_align);unset($attr8_type); ?><?php  $attr8_class='text';  $attr8_var='name';  $attr8_escape=true;  ?><?php
-		$attr8_title = '';
+		$tmp_url = $attr10_url;
+?><a<?php if (isset($attr10_name)) echo ' name="'.$attr10_name.'"'; else echo ' href="'.$tmp_url.($attr10_anchor?'#'.$attr10_anchor:'').'"' ?> class="<?php echo $attr10_class ?>" target="<?php echo $attr10_target ?>"<?php if (isset($attr10_accesskey)) echo ' accesskey="'.$attr10_accesskey.'"' ?>  title="<?php echo encodeHtml($attr10_title) ?>"><?php unset($attr10_title);unset($attr10_target);unset($attr10_url);unset($attr10_class); ?><?php  $attr11_align='left';  $attr11_type='page';  ?><?php
+	$attr11_tmp_image_file = $image_dir.'icon_'.$attr11_type.IMG_ICON_EXT;
+	$attr11_size = '16x16';
+?><img alt="<?php echo basename($attr11_tmp_image_file); echo ' ('; if (isset($attr11_size)) { list($attr11_tmp_width,$attr11_tmp_height)=explode('x',$attr11_size);echo $attr11_tmp_width.'x'.$attr11_tmp_height; echo')';} ?>" src="<?php echo $attr11_tmp_image_file ?>" border="0"<?php if(isset($attr11_align)) echo ' align="'.$attr11_align.'"' ?><?php if (isset($attr11_size)) { list($attr11_tmp_width,$attr11_tmp_height)=explode('x',$attr11_size);echo ' width="'.$attr11_tmp_width.'" height="'.$attr11_tmp_height.'"';} ?>><?php unset($attr11_align);unset($attr11_type); ?><?php  $attr11_class='text';  $attr11_var='name';  $attr11_escape=true;  ?><?php
+		$attr11_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
-		$langF = $attr8_escape?'langHtml':'lang';
-		$tmp_text = isset($$attr8_var)?$$attr8_var:'?unset:'.$attr8_var.'?';
+?><<?php echo $tmp_tag ?> class="<?php echo $attr11_class ?>" title="<?php echo $attr11_title ?>"><?php
+		$langF = $attr11_escape?'langHtml':'lang';
+		$tmp_text = isset($$attr11_var)?$$attr11_var:'?unset:'.$attr11_var.'?';
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_var);unset($attr8_escape); ?><?php  ?></a><?php  ?><?php  ?><br/><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr6_empty='pages';  ?><?php 
+?></<?php echo $tmp_tag ?>><?php unset($attr11_class);unset($attr11_var);unset($attr11_escape); ?><?php  ?></a><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?></table><?php  ?><?php  $attr6_empty='pages';  ?><?php 
 	if	( !isset($$attr6_empty) )
 		$attr6_tmp_exec = empty($attr6_empty);
 	elseif	( is_array($$attr6_empty) )

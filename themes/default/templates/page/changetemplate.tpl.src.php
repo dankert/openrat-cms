@@ -5,7 +5,7 @@ page
 				cell
 					text text:page_template_old
 				cell
-					link url:template_url
+					link url:var:template_url target:cms_main
 						image type:template
 						text var:template_name
 			row
@@ -15,6 +15,6 @@ page
 					selectbox name:templateid list:templates
 			row
 				cell colspan:2 class:act
-					button type:ok text:message:button_next
+					button type:ok text:button_next
 
 	focus field:templateid

@@ -3,7 +3,7 @@
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?lang($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
+  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
   <meta name="MSSmartTagsPreventParsing" content="true" >
   <meta name="robots" content="noindex,nofollow" >
@@ -138,7 +138,7 @@
   </tr>
 <?php } ?>
   <tr>
-    <td>
+    <td class="window">
       <table cellspacing="0" width="100%" cellpadding="4">
 <?php unset($attr2_title);unset($attr2_name);unset($attr2_widths);unset($attr2_width);unset($attr2_rowclasses);unset($attr2_columnclasses); ?><?php  $attr3_not='';  $attr3_empty='el';  ?><?php 
 	if	( !isset($$attr3_empty) )
@@ -154,11 +154,18 @@
 	if	( $attr3_tmp_exec )
 	{
 ?>
-<?php unset($attr3_not);unset($attr3_empty); ?><?php  ?><?php
+<?php unset($attr3_not);unset($attr3_empty); ?><?php  $attr4_class='headline';  ?><?php
 	$attr4_tmp_class='';
+	$attr4_tmp_class_list = explode(',',$attr4_classes);
+	$last_pos = array_search($attr4_last_class,$attr4_tmp_class_list);
+	if	( $last_pos === FALSE || $last_pos == count($attr4_tmp_class_list)-1)
+		$attr4_tmp_class = $attr4_tmp_class_list[0];
+	else
+		$attr4_tmp_class = $attr4_tmp_class_list[++$last_pos];
+	$attr4_tmp_class=$attr4_class;
 	$attr4_last_class = $attr4_tmp_class;
 	echo Html::open_tag('tr',array('class'=>$attr4_tmp_class));
-?><?php  ?><?php  $attr5_class='help';  ?><?php
+?><?php unset($attr4_class); ?><?php  $attr5_class='help';  ?><?php
 	$column_class_idx++;
 	if ($column_class_idx > count($column_classes))
 		$column_class_idx=1;

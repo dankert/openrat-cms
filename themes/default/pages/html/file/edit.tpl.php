@@ -3,7 +3,7 @@
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?lang($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
+  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
   <meta name="MSSmartTagsPreventParsing" content="true" >
   <meta name="robots" content="noindex,nofollow" >
@@ -155,7 +155,7 @@
   </tr>
 <?php } ?>
   <tr>
-    <td>
+    <td class="window">
       <table cellspacing="0" width="100%" cellpadding="4">
 <?php unset($attr3_title);unset($attr3_name);unset($attr3_width);unset($attr3_rowclasses);unset($attr3_columnclasses); ?><?php  ?><?php
 	$attr4_tmp_class='';
@@ -173,7 +173,7 @@
 	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
 		$attr5_width=$column_widths[$cell_column_nr-1];
 ?><td<?php
-?>><?php  ?><?php  $attr6_name='file';  $attr6_class='upload';  $attr6_size='40';  ?><input size="<?php echo $attr6_size ?>" id="id_<?php echo $attr6_name ?>" type="file" <?php if (isset($attr6_maxlength))echo ' maxlength="'.$attr6_maxlength.'"' ?> name="<?php echo $attr6_name ?>" class="<?php echo $attr6_class ?>" <?php if (in_array($attr6_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php unset($attr6_name);unset($attr6_class);unset($attr6_size); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
+?>><?php  ?><?php  ?><br/><?php  ?><?php  ?><br/><?php  ?><?php  $attr6_name='file';  $attr6_class='upload';  $attr6_size='40';  ?><input size="<?php echo $attr6_size ?>" id="id_<?php echo $attr6_name ?>" type="file" <?php if (isset($attr6_maxlength))echo ' maxlength="'.$attr6_maxlength.'"' ?> name="<?php echo $attr6_name ?>" class="<?php echo $attr6_class ?>" <?php if (in_array($attr6_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php unset($attr6_name);unset($attr6_class);unset($attr6_size); ?><?php  ?><br/><?php  ?><?php  ?><br/><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php
 	$attr4_tmp_class='';
 	$attr4_last_class = $attr4_tmp_class;
 	echo Html::open_tag('tr',array('class'=>$attr4_tmp_class));
