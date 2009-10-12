@@ -308,4 +308,6 @@ CREATE INDEX idx_acl_05 ON or_acl (is_transmit);
 
 INSERT INTO or_user
    (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin)
-   VALUES( 1,'admin','admin','','Administrator','','','Admin user','default',1 )
+   VALUES( 1,'admin','admin','','Administrator','','','Admin user','default',1 );
+   
+   
