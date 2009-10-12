@@ -1,7 +1,0 @@
-
-$Id$
-
-See the following URLs to learn more about content negotiation:
-
-- http://httpd.apache.org/docs-2.0/content-negotiation.html
-- http://www.apacheweek.com/features/negotiation
