@@ -83,10 +83,19 @@ class TemplateEngine
 			
 		// Vorlage und Zieldatei oeffnen
 		$document = $this->loadDocument( $srcFilename );
-		$outFile = fopen($filename,'w');
+		
+		// PrÃ¼fen, ob Zielverzeichnis existiert, falls nicht: Anlegen.
+		if	( ! is_dir(dirname($filename)) )
+		{
+			$rc = mkdir( dirname($filename) );
+			if	( ! $rc )
+				Http::serverError('Unable to create directory: '.dirname($filename));
+		}
+		
+		$outFile = @fopen($filename,'w');
 
 		if	( !is_resource($outFile) )
-			die( get_class($this).': Unable to open file for writing: '.$filename);
+			Http::serverError( get_class($this).': Unable to open file for writing: '.$filename);
 
 		$openCmd = array();
 		$depth   = 0;
@@ -255,11 +264,11 @@ class TemplateEngine
 				$ignore = !$ignore;
 			}
 
-			// Zeilenumbrüche nicht setzen.
+			// Zeilenumbrï¿½che nicht setzen.
 			if  ( strpos($line,'#SET-LINEBREAK-OFF')!==FALSE )
 				$linebreaks = false;
 
-			// Zeilenumbrüche setzen.
+			// Zeilenumbrï¿½che setzen.
 			if  ( strpos($line,'#SET-LINEBREAK-OFF')!==FALSE )
 				$linebreaks = true;
 				
