@@ -479,15 +479,15 @@ SQL
 		                '     style   ={style}   ,'.
 		                '     is_admin={isAdmin} '.
 		                ' WHERE id={userid}' );
-		$sql->setInt    ( 'userid'  ,$this->userid  );
-		$sql->setString ( 'fullname',$this->fullname);
 		$sql->setString ( 'name'    ,$this->name    );
+		$sql->setString ( 'fullname',$this->fullname);
 		$sql->setString ( 'ldap_dn' ,$this->ldap_dn );
 		$sql->setString ( 'tel'     ,$this->tel     );
 		$sql->setString ( 'desc'    ,$this->desc    );
 		$sql->setString ( 'mail'    ,$this->mail    );
 		$sql->setString ( 'style'   ,$this->style   );
 		$sql->setBoolean( 'isAdmin' ,$this->isAdmin );
+		$sql->setInt    ( 'userid'  ,$this->userid  );
 		
 		// Datenbankabfrage ausfuehren
 		$db->query( $sql );
@@ -537,8 +537,8 @@ SQL
 			
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_group} WHERE name IN({names})');
-		$sql->setStringList('names',$groupNames);
+		$groupNames = "'".implode("','",$groupNames)."'";
+		$sql = new Sql("SELECT id FROM {t_group} WHERE name IN($groupNames})");
 		$groupIds = array_unique( $db->getCol($sql) );
 		
 		// Wir brauchen hier nicht weiter pr�fen, ob der Benutzer eine Gruppe schon hat, denn
@@ -736,14 +736,14 @@ SQL
 					$sucheFilter   = str_replace('{dn}',$dn,$conf['ldap']['authorize']['group_filter']);
 					
 					$ldap_groups = $ldap->searchAttribute( $sucheFilter, $sucheAttribut );
+					$sql_ldap_groups = "'".implode("','",$ldap_groups)."'";
 					
 					$sql = new Sql( <<<SQL
 SELECT id,name FROM {t_group}
- WHERE name IN({name_list})
+ WHERE name IN($sql_ldap_groups)
  ORDER BY name ASC
 SQL
 					);
-					$sql->setStringList('name_list',$ldap_groups);
 					$oldGroups = $this->getGroupIds();
 					$this->groups = $db->getAssoc( $sql );
 					
