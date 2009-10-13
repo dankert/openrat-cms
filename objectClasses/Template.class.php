@@ -308,19 +308,20 @@ class Template
 	function getWritableElements()
 	{
 		$list = array();
+		$e = new Element();
+		$readonlyList = "'".implode("','",$e->readonlyElementNames)."'";
+		
 		$db = db_connection();
 
 		$sql = new Sql( <<<SQL
 SELECT * FROM {t_element}
   WHERE templateid={templateid}
     AND writable=1
-    AND type NOT IN ({readonlyList})
+    AND type NOT IN ($readonlyList)
   ORDER BY name ASC
 SQL
 );
 		$sql->setInt       ( 'templateid'  ,$this->templateid        );
-		$e = new Element();
-		$sql->setStringList( 'readonlyList',$e->readonlyElementNames );
 		foreach( $db->getAll( $sql ) as $row )
 		{
 			$e = new Element( $row['id'] );
