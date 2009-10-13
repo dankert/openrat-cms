@@ -85,6 +85,33 @@ class DB_sqlite
 
 		return $result;
 	}
+	
+	/**
+     * Startet eine Transaktion.
+     */
+	function start()
+	{
+		sqlite_query( $this->connection,'BEGIN TRANSACTION;');
+	}
+
+
+	/**
+     * Beendet eine Transaktion.
+     */
+	function commit()
+	{
+		sqlite_query( $this->connection,'COMMIT;');
+	}
+
+
+	/**
+     * Bricht eine Transaktion ab.
+     */
+	function rollback()
+	{
+		sqlite_query( $this->connection,'ROLLBACK;');
+	}
+	
 
 
 	function fetchRow( $result, $rownum )
