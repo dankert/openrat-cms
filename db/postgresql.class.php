@@ -123,13 +123,11 @@ class DB_postgresql
 	
 	function query($query)
 	{
-		//Html::debug($query,'query()');
 		if	( $this->prepared )
 		{
 			$ar = array();
 			foreach($this->params as $name => $data)
 			{
-				//Html::debug($data,'data!!!');
 				switch( $data['type'] )
 				{
 					case 'string':
@@ -140,7 +138,7 @@ class DB_postgresql
 	        			$ar[] = (int) $data['value'];
 	        			break;
 					default:
-						die('was ist mit type '.$data['type'].'?');
+						die('unknown type "'.$data['type'].'"');
 				}
 			}
 			//Html::debug($this->params,'Parameter');
@@ -201,11 +199,14 @@ class DB_postgresql
 	function prepare( $query,$param )
 	{
 		$nr = 1;
-		foreach( $param as $pos)
+		$offset = 0;
+		foreach( $param as $p)
 		{
-			foreach( $pos as $pos )
+			foreach( $p as $pos )
 			{
-				$query = substr($query,0,$pos).'$'.($nr++).substr($query,$pos);
+				$query = substr($query,0,$pos+$offset).'$'.($nr).substr($query,$pos+$offset);
+				$offset += strlen((string)$nr)+1;
+				$nr++;		
 			}
 		}
 
