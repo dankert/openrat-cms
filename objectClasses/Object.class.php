@@ -367,21 +367,21 @@ class Object
 			if	( $user->isAdmin && $type & ACL_READ )
 				return true;
 	
+			$sqlGroupClause = $user->getGroupClause();
 			$sql = new Sql( <<<SQL
 SELECT {t_acl}.* FROM {t_acl}
 	                 LEFT JOIN {t_object}
 	                        ON {t_object}.id={t_acl}.objectid
 	                 WHERE objectid={objectid}
 	                   AND ( languageid={languageid} OR languageid IS NULL )
-	                   AND ( {t_acl}.userid={userid} OR {group_clause}
-			                                                  OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )
+	                   AND ( {t_acl}.userid={userid} OR $sqlGroupClause
+			                                         OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )
 SQL
 );
 
 			$sql->setInt  ( 'languageid'  ,$language->languageid   );
 			$sql->setInt  ( 'objectid'    ,$this->objectid         );
 			$sql->setInt  ( 'userid'      ,$user->userid           );
-			$sql->setParam( 'group_clause',$user->getGroupClause() );
 	
 			$db = db_connection();
 			foreach( $db->getAll( $sql ) as $row )
@@ -592,8 +592,8 @@ SQL
 		               ' LEFT JOIN {t_user} as createuser '.
 		               '        ON {t_object}.create_userid=createuser.id '.
 		               ' WHERE {t_object}.id={objectid}');
-		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
+		$sql->setInt('objectid'  , $this->objectid  );
 
 		$row = $db->getRow($sql);
 		
@@ -887,6 +887,7 @@ SQL
 	function objectDelete()
 	{
 		$db = db_connection();
+		$db->start();
 
 		$sql = new Sql( 'UPDATE {t_element} '.
 		                '  SET default_objectid=NULL '.
@@ -919,7 +920,8 @@ SQL
 		$sql = new Sql('DELETE FROM {t_object} WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$db->query($sql);
-
+		
+		$db->commit();
 	}
 
 

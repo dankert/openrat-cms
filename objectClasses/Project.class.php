@@ -383,6 +383,7 @@ SQL
 	function delete()
 	{
 		$db = db_connection();
+		$db->start();
 
 		// Root-Ordner rekursiv samt Inhalten loeschen
 		$folder = new Folder( $this->getRootObjectId() );
@@ -415,6 +416,8 @@ SQL
 		                '  WHERE id= {projectid} ' );
 		$sql->setInt( 'projectid',$this->projectid );
 		$db->query( $sql );
+		
+		$db->commit();
 	}
 	
 	function getDefaultLanguageId()
