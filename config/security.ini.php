@@ -41,7 +41,8 @@ disable_dynamic_code = true
 
 
 ; Enable or disable the displaying of system information
-show_system_info = false
+show_system_info = true
+
 
 
 ; Default Login
@@ -86,7 +87,7 @@ type=form
 ; this is the backend where the passwords are checked against.
 ; 'database' uses the internal database table as password store.  
 ; 'authdb'   uses an external database table as password store, see section [authdb] which has to exist.  
-; 'ldap'     uses an external LDAP directory for password checking.  
+; 'ldap'     uses an external LDAP directory for password checking, see file "ldap.ini.php".
 ; 'http'     uses an HTTP-Auth Server for password checking 
 type=database
 
