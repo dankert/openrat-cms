@@ -183,12 +183,15 @@ class DB
 					
 			return new DB_result( $this->client,$result );
 		}
-		if ( is_object($query) )
-			$query = $query->query;
 		
-		Logger::trace('DB query: '.substr($query,0,45).'...');
+		if ( !is_object($query) )
+			die('SQL-Query must be an object');
+			
+		$flatQuery = $query->getQuery();
+		
+		Logger::trace('DB query: '.$query->raw);
 
-		$result = $this->client->query($query);
+		$result = $this->client->query($flatQuery);
 		
 		if	( $result === FALSE )
 		{
