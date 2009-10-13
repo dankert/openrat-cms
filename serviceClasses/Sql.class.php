@@ -169,9 +169,7 @@ class Sql
 		foreach( $this->data as $name=>$data )
 		{
 			if	( $data['type']=='string'     ) $this->setString    ($name,$data['value'] );
-			if	( $data['type']=='stringlist' ) $this->setStringList($name,$data['value'] );
 			if	( $data['type']=='int'        ) $this->setInt       ($name,$data['value'] );
-			if	( $data['type']=='intlist'    ) $this->setIntList   ($name,$data['value'] );
 			if	( $data['type']=='null'       ) $this->setNull      ($name                );
 		}
 	}
@@ -258,26 +256,6 @@ class Sql
 	function setInt( $name,$value )
 	{
 		$this->data[ $name ] = array( 'type'=>'int','value'=>$value );
-		
-		$this->setParam($name,intval($value));
-//		$this->query = str_replace( '{'.$name.'}',intval($value),$this->query );
-	}
-
-
-
-	/**
-	 * Setzt eine Ganzzahl-Liste als Parameter.<br>
-	 * 
-	 * @param name Name des Parameters
-	 * @param values Inhalte
-	 */
-	function setIntList( $name,$values )
-	{
-		$this->data[ $name ] = array( 'type'=>'intlist','value'=>$values );
-		
-		$values  = array_map('intval',$values);
-		$this->setParam($name,implode(',',$values) );
-//		$this->query = str_replace( '{'.$name.'}',intval($value),$this->query );
 	}
 
 
@@ -291,38 +269,10 @@ class Sql
 	function setString( $name,$value )
 	{
 		$this->data[ $name ] = array( 'type'=>'string','value'=>$value );
-
-		//if	( defined('CONF_ADDSLASHES') && CONF_ADDSLASHES )
-		
-		$value = addslashes( $value );
-
-		$value = "'".$value."'";
-
-		$this->setParam($name,$value);
-//		$this->query = str_replace( '{'.$name.'}',$value,$this->query );
 	}
-
-
-
-	/**
-	 * Setzt eine Zeichenketten-Liste als Parameter.<br>
-	 * 
-	 * @param name Name des Parameters
-	 * @param values Inhalte
-	 */
-	function setStringList( $name,$values )
-	{
-		$this->data[ $name ] = array( 'type'=>'stringlist','value'=>$values );
-
-		$values  = array_map('addslashes',$values);
-		
-		$value = "'".implode("','",$values)."'";
-
-		$this->setParam($name,$value);
-	}
-
-
-
+	
+	
+	
 	/**
 	 * Setzt einen bool'schen Wert als Parameter.<br>
 	 * Ist der Parameterwert wahr, dann wird eine 1 gesetzt. Sonst 0.<br>
@@ -347,7 +297,6 @@ class Sql
 	function setNull( $name )
 	{
 		$this->data[ $name ] = array( 'type'=>'null' );
-		$this->setParam($name,'NULL');
 	}
 	
 
@@ -368,11 +317,14 @@ class Sql
 	 */
 	function &getQuery()
 	{
-// Abbruch, wenn es noch nicht gef�llte Parameter gibt.
-// Da diese Methode eh kaum verwendet wird, erstmal deaktiviert.
-//		if	( count($this->param) > 0 )
-//			die('parameters not bound: '+implode(',',$this->param) );
-			
+		// Bereits gesetzte Parameter setzen.		
+		foreach( $this->data as $name=>$data )
+		{
+			if		( $data['type']=='string' ) $this->setParam($name,"'".addslashes($data['value'])."'" );
+			elseif	( $data['type']=='int'    ) $this->setParam($name,(int)$data['value']                );
+			elseif	( $data['type']=='null'   ) $this->setParam($name,'NULL'                             );
+		}
+		
 		return $this->query;
 	}
 }
