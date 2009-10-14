@@ -320,7 +320,8 @@ SQL
 	function add()
 	{
 		$db = db_connection();
-
+		$db->start();
+		
 		$sql = new Sql('SELECT MAX(id) FROM {t_project}');
 		$this->projectid = intval($db->getOne($sql))+1;
 
@@ -376,6 +377,8 @@ SQL
 		$page->filename   = '';
 		$page->name       = 'OpenRat';
 		$page->add();
+		
+		$db->commit();
 	}
 
 
@@ -496,6 +499,7 @@ EOF
 		
 		$db_src  = db_connection();
 		$db_dest = new DB( $conf['database'][$dbid_destination] );
+		$db_dest->start();
 		
 //		$aa = 5000; // Bisher nicht erreichte ID in der Zieldatenbank
 
@@ -673,6 +677,8 @@ EOF
 				}
 			}
 		}
+		
+		$db_dest->commit();
 	}
 }
 
