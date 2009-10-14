@@ -415,8 +415,7 @@ class Page extends Object
 
 		$folder = new Folder( $this->parentid );
 		$folder->load();
-		$folder->parentObjectIds(false,true);
-		$f = count( $folder->parentfolders );
+		$f = count( $folder->parentObjectFileNames(false,true) );
 		
 		if   ( $f == 0 )
 		{

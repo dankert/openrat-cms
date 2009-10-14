@@ -1306,7 +1306,7 @@ class FolderAction extends ObjectAction
 		switch( $name)
 		{
 			case 'createfolder':
-				return $this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectIds(true,true)) < MAX_FOLDER_DEPTH;
+				return $this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectFileNames(true,true)) < MAX_FOLDER_DEPTH;
 
 			case 'createfile':
 				return $this->folder->hasRight(ACL_CREATE_FILE);

@@ -768,26 +768,30 @@ SQL
 
 		$this->checkFilename();
 
-		$sql = new Sql('UPDATE {t_object} SET '.
-		               '  parentid={parentid},'.
-		               '  lastchange_date   = {time}  ,'.
-		               '  lastchange_userid = {userid},'.
-		               '  filename  = {filename}'.
-		               ' WHERE id={objectid}');
+		$sql = new Sql( <<<SQL
+UPDATE {t_object} SET 
+                      parentid          = {parentid},
+		              lastchange_date   = {time}    ,
+		              lastchange_userid = {userid}  ,
+		              filename          = {filename}
+ WHERE id={objectid}
+SQL
+);
+		
 
 		if	( $this->isRoot )
 			$sql->setNull('parentid');
 		else	$sql->setInt ('parentid',$this->parentid );
 
-		$sql->setInt   ('objectid', $this->objectid);
+		$sql->setInt   ('time'    ,$this->lastchangeDate          );
+		$sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
 		$sql->setString('filename', $this->filename);
+		$sql->setInt   ('objectid', $this->objectid);
 
 		$user = Session::getUser();
 		$this->lastchangeUser = $user;
 		$this->lastchangeDate = time();
 
-		$sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
-		$sql->setInt   ('time'    ,$this->lastchangeDate          );
 
 		$db->query($sql);
 
@@ -858,10 +862,10 @@ SQL
 			                  AND languageid={languageid}
 SQL
 );
-			$sql->setInt( 'objectid'  , $this->objectid   );
-			$sql->setInt( 'languageid', $this->languageid );
 			$sql->setString('name', $this->name);
 			$sql->setString('desc', $this->desc);
+			$sql->setInt( 'objectid'  , $this->objectid   );
+			$sql->setInt( 'languageid', $this->languageid );
 			$db->query($sql);
 		}
 		else
@@ -1029,12 +1033,17 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT COUNT(*) FROM {t_object}'.' WHERE parentid={parentid} AND filename={filename} AND NOT id = {objectid}');
+		$sql = new Sql( <<<SQL
+SELECT COUNT(*) FROM {t_object}
+ WHERE parentid={parentid} AND filename={filename}
+   AND NOT id = {objectid}
+SQL
+);
 
 		$sql->setString('parentid', $this->parentid);
+		$sql->setString('filename', $filename      );
 		$sql->setString('objectid', $this->objectid);
 
-		$sql->setString('filename', $filename      );
 
 		return( intval($db->getOne($sql)) == 0 );
 	}
@@ -1096,7 +1105,7 @@ SQL
 		$db = db_connection();
 		$folder = new Folder( $this->parentid );
 		
-		foreach( $folder->parentObjectIds(true,true) as $oid )
+		foreach( $folder->parentObjectFileNames(true,true) as $oid=>$filename )
 		{
 			$sql = new Sql( 'SELECT id FROM {t_acl} '.
 			                '  WHERE objectid={objectid}'.
@@ -1127,7 +1136,7 @@ SQL
 		$db = db_connection();
 		$folder = new Folder( $this->parentid );
 		
-		foreach( $folder->parentObjectIds(true,true) as $oid )
+		foreach( $folder->parentObjectFileNames(true,true) as $oid=>$filename )
 		{
 			$sql = new Sql( 'SELECT id FROM {t_acl} '.
 			                '  WHERE objectid={objectid}'.
