@@ -201,17 +201,26 @@ class DB_postgresql
 	function prepare( $query,$param )
 	{
 		$nr = 1;
-		$offset = 0;
-		foreach( $param as $p)
+		foreach($param as $name=>$unused_a )
 		{
-			foreach( $p as $pos )
+			foreach( $param[$name] as $idx=>$xyz )
 			{
-				$query = substr($query,0,$pos+$offset).'$'.($nr).substr($query,$pos+$offset);
-				$offset += strlen((string)$nr)+1;
+				$pos = $param[$name][$idx];
+				
+				$query = substr( $query,0,$pos ).'$'.$nr.substr( $query,$pos );
+			
+				foreach( $param as $pn=>$par)
+				{
+					foreach( $par as $i=>$p )
+					{
+						if	( $p > $pos )
+							$param[$pn][$i]=$p+strlen((string)$nr)+1;
+					}
+				}
 			}
-			$nr++;		
+			$nr++;
 		}
-
+		//Html::debug($query);
 		$this->stmtid = md5($query);
 		$this->prepared = true;
 
