@@ -160,13 +160,27 @@ class DB
 		if	( is_object($query) && $this->conf['prepare'] )
 		{
 			$this->client->clear();
-			//Html::debug($query);
 			$this->client->prepare( $query->raw,$query->param );
 			
-			foreach( $query->data as $name=>$value)
+			/*
+			foreach ($query->param as $name=>$unused)
+				$data[$name] = array('type'=>'null');
+
+			foreach ($query->data as $name=>$unused)
+				$data[$name] = &$value;
+				
+			foreach( $data as $name=>$value)
 			{
 				$this->client->bind($name,$value);
 			}
+			 */
+			/*
+			Html::debug($query->data,'DATA');
+			foreach ($query->param as $name=>$unused)
+				Html::debug($query->data[$name],$name);
+				*/
+			foreach ($query->param as $name=>$unused)
+				$this->client->bind($name,$query->data[$name]);
 			
 			$result = $this->client->query($query);
 			
