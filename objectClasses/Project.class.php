@@ -283,9 +283,9 @@ class Project
 SQL
 );
 
+		$sql->setString('ftp_url'            ,$this->ftp_url );
 		$sql->setString('name'               ,$this->name );
 		$sql->setString('target_dir'         ,$this->target_dir );
-		$sql->setString('ftp_url'            ,$this->ftp_url );
 		$sql->setInt   ('ftp_passive'        ,$this->ftp_passive );
 		$sql->setString('cmd_after_publish'  ,$this->cmd_after_publish );
 		$sql->setInt   ('content_negotiation',$this->content_negotiation );
@@ -328,8 +328,8 @@ SQL
 		// Projekt hinzuf?gen
 		$sql = new Sql( 'INSERT INTO {t_project} (id,name,target_dir,ftp_url,ftp_passive,cmd_after_publish,content_negotiation,cut_index) '.
 		                "  VALUES( {projectid},{name},'','',0,'',0,0 ) " );
-		$sql->setString('name'     ,$this->name );
 		$sql->setInt   ('projectid',$this->projectid );
+		$sql->setString('name'     ,$this->name      );
 
 		$db->query( $sql );
 

@@ -783,14 +783,14 @@ SQL
 			$sql->setNull('parentid');
 		else	$sql->setInt ('parentid',$this->parentid );
 
-		$sql->setInt   ('time'    ,$this->lastchangeDate          );
-		$sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
-		$sql->setString('filename', $this->filename);
-		$sql->setInt   ('objectid', $this->objectid);
 
 		$user = Session::getUser();
 		$this->lastchangeUser = $user;
 		$this->lastchangeDate = time();
+		$sql->setInt   ('time'    ,$this->lastchangeDate          );
+		$sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
+		$sql->setString('filename', $this->filename);
+		$sql->setInt   ('objectid', $this->objectid);
 
 
 		$db->query($sql);
