@@ -775,53 +775,36 @@ EOF
 	function parentObjectNames( $with_root = false, $with_self = false )
 	{
 		$db = Session::getDatabase();
+		
+		$foid = $this->id;
+		$idCache = array();
+		
+ 		while( intval($foid)!=0 )
+ 		{
+			$sql = new Sql( <<<SQL
+			
+SELECT {t_object}.parentid,{t_object}.id,{t_object}.filename,{t_name}.name FROM {t_object}
+  LEFT JOIN {t_name}
+         ON {t_object}.id = {t_name}.objectid
+        AND {t_name}.languageid = {languageid}  
+ WHERE {t_object}.id={parentid}
 
-		$sql = new Sql( <<<EOF
-SELECT F0.id       AS f0id,
-      F0.filename AS f0filename,
-      F1.filename AS f1filename,
-      F2.filename AS f2filename,
-      F3.filename AS f3filename,
-      F4.filename AS f4filename,
-      F5.filename AS f5filename,
-      	                      F0NAME.name AS f0name,
-		                      F1.id       AS f1id,
-		                      F1NAME.name AS f1name,
-		                      F2.id       AS f2id,
-		                      F2NAME.name AS f2name,
-		                      F3.id       AS f3id,
-		                      F3NAME.name AS f3name,
-		                      F4.id       AS f4id,
-		                      F4NAME.name AS f4name,
-		                      F5.id       AS f5id, 
-		                      F5NAME.name AS f5name
-		                 FROM {t_object} AS F0
-		                LEFT JOIN {t_name}   AS F0NAME ON F0NAME.objectid=F0.id AND F0NAME.languageid={languageid} 
-		                LEFT JOIN {t_object} AS F1 on F0.parentid=F1.id 
-		                LEFT JOIN {t_name}   AS F1NAME ON F1NAME.objectid=F1.id AND F1NAME.languageid={languageid} 
-		                LEFT JOIN {t_object} AS F2 on F1.parentid=F2.id 
-		                LEFT JOIN {t_name}   AS F2NAME ON F2NAME.objectid=F2.id AND F2NAME.languageid={languageid} 
-		                LEFT JOIN {t_object} AS F3 on F2.parentid=F3.id 
-		                LEFT JOIN {t_name}   AS F3NAME ON F3NAME.objectid=F3.id AND F3NAME.languageid={languageid} 
-		                LEFT JOIN {t_object} AS F4 on F3.parentid=F4.id 
-		                LEFT JOIN {t_name}   AS F4NAME ON F4NAME.objectid=F4.id AND F4NAME.languageid={languageid} 
-		                LEFT JOIN {t_object} AS F5 on F4.parentid=F5.id 
-		                LEFT JOIN {t_name}   AS F5NAME ON F5NAME.objectid=F5.id AND F5NAME.languageid={languageid} 
-		                WHERE F0.id={objectid}
-EOF
+SQL
  );
-		$sql->setInt('objectid'  ,$this->objectid  );
-		$sql->setInt('languageid',$this->languageid);
-
-		$row = $db->getRow( $sql );
-
-		$this->addParentfolder( $row['f0id'],$row['f0name'],$row['f0filename'] );
-		$this->addParentfolder( $row['f1id'],$row['f1name'],$row['f1filename'] );
-		$this->addParentfolder( $row['f2id'],$row['f2name'],$row['f2filename'] );
-		$this->addParentfolder( $row['f3id'],$row['f3name'],$row['f3filename'] );
-		$this->addParentfolder( $row['f4id'],$row['f4name'],$row['f4filename'] );
-		$this->addParentfolder( $row['f5id'],$row['f5name'],$row['f5filename'] );
-
+			$sql->setInt('languageid',$this->languageid);
+	 		$sql->setInt('parentid'  ,$foid            );
+	
+			$row = $db->getRow( $sql );
+			
+	 		if	( in_array($row['id'],$idCache))
+	 			Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
+	 		else
+	 			$idCache[] = $row['id'];
+	 			
+	 		$this->addParentfolder( $row['id'],$row['name'],$row['filename'] );
+	 		$foid = $row['parentid'];
+ 		}
+ 	
 		$this->checkParentFolders($with_root,$with_self);
 		
 		return $this->parentfolders;
