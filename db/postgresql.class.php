@@ -134,10 +134,12 @@ class DB_postgresql
 	        			$ar[] = (String)$data['value'];
 	        			break;
 					case 'int':
-	        			//$ar[] = (String)abs($data['value']);
 	        			$ar[] = (int) $data['value'];
 	        			break;
-					default:
+					case 'null':
+	        			$ar[] = null;
+	        			break;
+	        		default:
 						die('unknown type "'.$data['type'].'"');
 				}
 			}
