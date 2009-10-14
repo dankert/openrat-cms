@@ -36,7 +36,7 @@ class DB_postgresql
 	var $prepared;
 	
 	var $params = array();
-
+	
 	
 	/**
 	 * Verbinden zum POSTGRES-Server.
@@ -208,14 +208,19 @@ class DB_postgresql
 			{
 				$query = substr($query,0,$pos+$offset).'$'.($nr).substr($query,$pos+$offset);
 				$offset += strlen((string)$nr)+1;
-				$nr++;		
 			}
+			$nr++;		
 		}
 
-		$this->stmtid = md5($query).rand();
-		pg_prepare($this->connection,$this->stmtid,$query);
+		$this->stmtid = md5($query);
 		$this->prepared = true;
-		//Html::debug($query);
+
+		// Feststellen, ob Statement bereits vorhanden ist
+		$result = pg_query_params($this->connection, 'SELECT name FROM pg_prepared_statements WHERE name = $1', array($this->stmtid));
+		if	(pg_num_rows($result) > 0)
+			return;
+		
+		pg_prepare($this->connection,$this->stmtid,$query);
 	}
 	
 	
