@@ -402,39 +402,43 @@ class Acl
 		$sql = new Sql('SELECT MAX(id) FROM {t_acl}');
 		$this->aclid = intval($db->getOne($sql))+1;
 		
-		$sql = new Sql( 'INSERT INTO {t_acl} '.
-		                ' (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)'.
-		                ' VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )' );
+		$sql = new Sql( <<<SQL
+		INSERT INTO {t_acl} 
+		                 (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
+		                 VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )
+SQL
+);
 
 		$sql->setInt('aclid'   ,$this->aclid   );
-		$sql->setInt('objectid',$this->objectid);
-		
-		if	( intval($this->groupid) == 0 )
-			$sql->setNull('groupid');
-		else
-			$sql->setInt ('groupid',$this->groupid);
 		
 		if	( intval($this->userid) == 0 )
 			$sql->setNull('userid');
 		else
 			$sql->setInt ('userid',$this->userid);
+		
+		if	( intval($this->groupid) == 0 )
+			$sql->setNull('groupid');
+		else
+			$sql->setInt ('groupid',$this->groupid);
 
-		$sql->setBoolean('is_default'   ,$this->isDefault     );
-		$sql->setBoolean('prop'         ,$this->prop          );
+		$sql->setInt('objectid',$this->objectid);
+		//$sql->setBoolean('is_default'   ,$this->isDefault     );
 		$sql->setBoolean('write'        ,$this->write         );
+		$sql->setBoolean('prop'         ,$this->prop          );
+		$sql->setBoolean('create_folder',$this->create_folder );
+		$sql->setBoolean('create_file'  ,$this->create_file   );
+		$sql->setBoolean('create_link'  ,$this->create_link   );
+		$sql->setBoolean('create_page'  ,$this->create_page   );
 		$sql->setBoolean('delete'       ,$this->delete        );
 		$sql->setBoolean('release'      ,$this->release       );
 		$sql->setBoolean('publish'      ,$this->publish       );
 		$sql->setBoolean('grant'        ,$this->grant         );
 		$sql->setBoolean('transmit'     ,$this->transmit      );
-		$sql->setBoolean('create_folder',$this->create_folder );
-		$sql->setBoolean('create_file'  ,$this->create_file   );
-		$sql->setBoolean('create_link'  ,$this->create_link   );
-		$sql->setBoolean('create_page'  ,$this->create_page   );
 
 		if	( intval($this->languageid) == 0 )
 			$sql->setNull('languageid');
-		else	$sql->setInt ('languageid',$this->languageid);
+		else
+			$sql->setInt ('languageid',$this->languageid);
 
 		$db->query( $sql );
 	}
