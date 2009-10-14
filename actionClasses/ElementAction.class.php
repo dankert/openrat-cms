@@ -297,7 +297,7 @@ class ElementAction extends Action
 	
 				case 'dateformat':
 
-					$ini_date_format = $conf['date-formats'];
+					$ini_date_format = $conf['date']['format'];
 					$dateformat = array();
 
 					$this->setTemplateVar('dateformat','');
@@ -568,7 +568,7 @@ class ElementAction extends Action
 	function saveproperties()
 	{
 		global $conf;
-		$ini_date_format = $conf['date-formats'];
+		$ini_date_format = $conf['date']['format'];
 	
 		if	( $this->hasRequestVar('dateformat'))
 			$this->element->dateformat  = $ini_date_format[$this->getRequestVar('dateformat')];
