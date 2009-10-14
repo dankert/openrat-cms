@@ -189,6 +189,35 @@ class DB_mysqli
 	{
 		$this->params[$param] = $value;
 	}
+	
+	
+		/**
+     * Startet eine Transaktion.
+     */
+	function start()
+	{
+		mysqli_query($this->connection,'BEGIN');
+	}
+
+
+	/**
+     * Beendet eine Transaktion.
+     */
+	function commit()
+	{
+		mysqli_query($this->connection,'COMMIT');
+	}
+
+
+	/**
+     * Bricht eine Transaktion ab.
+     */
+	function rollback()
+	{
+		mysqli_query($this->connection,'ROLLBACK');
+	}
+	
+	
 }
 
 ?>

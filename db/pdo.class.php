@@ -120,6 +120,59 @@ class DB_pdo
 	{
 		die('called NumRows in PDO()');
 	}
+	
+	
+		
+	function prepare( $query,$param)
+	{
+		foreach( $param as $pos)
+		{
+			foreach( $pos as $pos )
+			{
+				$query = substr($query,0,$pos-1).'?'.substr($query,$pos+1);
+			}
+		}
+
+		$this->stmt = $this->connection->prepare($query);
+		
+	}
+
+	
+	
+	function bind( $param,$value )
+	{
+		$this->params[$param] = $value;
+	}
+	
+	
+	
+	/**
+     * Startet eine Transaktion.
+     */
+	function start()
+	{
+		$this->connection->beginTransaction();
+	}
+
+	
+	
+	/**
+     * Beendet eine Transaktion.
+     */
+	function commit()
+	{
+		$this->connection->commit();
+	}
+
+
+	/**
+     * Bricht eine Transaktion ab.
+     */
+	function rollback()
+	{
+		$this->connection->rollBack();
+	}
+	
 }
 
 ?>
