@@ -27,4 +27,6 @@ LONG = "F j, Y, g:i a"
 [database]
 
 ; whether to store a timestamp value in UTC (GMT)
-utc = true
+; 'true'  means UTC
+; 'false' means local time (default)
+utc = false
