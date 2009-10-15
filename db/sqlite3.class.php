@@ -105,6 +105,55 @@ class DB_sqlite3
 	{
 		return $this->result->numRows();
 	}
+	
+	
+	
+		/**
+     * Startet eine Transaktion.
+     */
+	function start()
+	{
+		$this->connection->query( 'BEGIN TRANSACTION;');
+	}
+
+
+	/**
+     * Beendet eine Transaktion.
+     */
+	function commit()
+	{
+		$this->connection->query( 'COMMIT;');
+	}
+
+
+	/**
+     * Bricht eine Transaktion ab.
+     */
+	function rollback()
+	{
+		$this->connection->query( 'ROLLBACK;');
+	}
+	
+	
+	function prepare( $query,$param)
+	{
+		foreach( $param as $pos)
+		{
+			foreach( $pos as $pos )
+			{
+				$query = substr($query,0,$pos-1).'?'.substr($query,$pos+1);
+			}
+		}
+
+		$this->stmt = sqlite3_prepare($this->connection,$query);
+		
+	}
+	
+	function bind( $param,$value )
+	{
+		$this->params[$param] = $value;
+	}
+	
 }
 
 ?>
