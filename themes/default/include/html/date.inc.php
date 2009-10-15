@@ -1,6 +1,10 @@
 <?php	
     global $conf;
 	$time = $attr_date;
+	
+	if	( @$conf['date']['database']['utc'] )
+		$time + date('Z');
+
 
 	if	( $time==0)
 		echo lang('GLOBAL_UNKNOWN');
