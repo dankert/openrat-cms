@@ -163,7 +163,6 @@ define('IMAGE_DIR'   ,OR_THEMES_DIR.$conf['interface']['theme'].'/images'   );
 require_once( OR_SERVICECLASSES_DIR."Logger.class.".PHP_EXT );
 require_once( "functions/config.inc.php" );
 require_once( "functions/language.inc.".PHP_EXT );
-require_once( "functions/theme.inc.".PHP_EXT );
 require_once( "functions/db.inc.".PHP_EXT );
 
 header( 'Content-Type: text/html; charset='.lang('CHARSET') );
