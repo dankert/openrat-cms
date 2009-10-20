@@ -297,7 +297,7 @@ class Action
 		if	( headers_sent() )
 			Http::serverError("Some server error messages occured - see above - CMS canceled.");
 			
-		$expires = substr(date('r',time()-date('Z')),0,-5).'GMT';
+		$expires = substr(gmdate('r'),0,-5).'GMT';
 		header('Expires: '      .$expires );
 		
 		header('X-Content-Security-Policy: '.'allow *; script-src \'self\'; options \'inline-script\'');
