@@ -786,7 +786,7 @@ SQL
 
 		$user = Session::getUser();
 		$this->lastchangeUser = $user;
-		$this->lastchangeDate = time();
+		$this->lastchangeDate = now();
 		$sql->setInt   ('time'    ,$this->lastchangeDate          );
 		$sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
 		$sql->setString('filename', $this->filename);
@@ -821,8 +821,8 @@ SQL
 
 		$user = Session::getUser();
 		$this->lastchangeUser = $user;
-		$this->lastchangeDate = time();
-
+		$this->lastchangeDate = now();
+		
 		$sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
 		$sql->setInt   ('objectid',$this->objectid                );
 		$sql->setInt   ('time'    ,$this->lastchangeDate          );
@@ -954,7 +954,7 @@ SQL
 		$sql->setString('filename' , $this->filename );
 		$sql->setString('projectid', $this->projectid);
 		$sql->setInt   ('orderid'  , 99999           );
-		$sql->setInt   ('time'     , time()          );
+		$sql->setInt   ('time'     , now()           );
 		$user = Session::getUser();
 		$sql->setInt   ('userid'   , $user->userid   );
 

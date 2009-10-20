@@ -413,7 +413,7 @@ SQL
 		else	$sql->setInt   ( 'date',$this->date );
 
 		$sql->setBoolean( 'publish'          ,$this->publish );
-		$sql->setInt    ( 'lastchange_date'  ,time()         );
+		$sql->setInt    ( 'lastchange_date'  ,now()         );
 		$user = Session::getUser();
 		$sql->setInt    ( 'lastchange_userid',$user->userid  );
 
