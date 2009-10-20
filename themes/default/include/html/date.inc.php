@@ -1,11 +1,9 @@
 <?php	
     global $conf;
 	$time = $attr_date;
+
+	// TODO: Benutzereinstellung 'Zeitzonen-Offset' auswerten.
 	
-	if	( @$conf['date']['database']['utc'] )
-		$time + date('Z');
-
-
 	if	( $time==0)
 		echo lang('GLOBAL_UNKNOWN');
 	elseif ( !$conf['interface']['human_date_format'] )

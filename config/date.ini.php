@@ -22,11 +22,3 @@ UNIX = "U"
 LONG = "F j, Y, g:i a"
 
 
-
-; database settings for storing timestamps
-[database]
-
-; whether to store a timestamp value in UTC (GMT)
-; 'true'  means UTC
-; 'false' means local time (default)
-utc = false
