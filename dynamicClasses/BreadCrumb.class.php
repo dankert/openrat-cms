@@ -70,10 +70,10 @@ class BreadCrumb extends Dynamic
 		
 		// Ermitteln der aktuellen Seite
 		$f = new Folder($this->page->parentid);
-		$parentIds = $f->parentObjectIds(false,true);
+		$parentIds = $f->parentObjectFileNames(false,true);
 		$lastoid = 0;
 
-		foreach( $parentIds as $oid )
+		foreach( $parentIds as $oid=>$filename )
 		{
 			$of = new Folder($oid);
 			$of->languageid = $this->page->languageid;
