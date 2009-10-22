@@ -36,10 +36,7 @@ goto=edit
 
 [settings]
 menu=edit
-target=savesettings
-
-[savesettings]
-goto=settings
+write=true
 
 [menu]
 edit=edit,settings,pwchange,mail,groups

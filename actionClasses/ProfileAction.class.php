@@ -70,11 +70,20 @@ class ProfileAction extends Action
 	 * Benutzer-Einstellungen anzeigen.
 	 * Diese Einstellungen werden im Cookie gespeichert.
 	 */
-	function settings()
+	function settingsView()
 	{
-		foreach( array('always_edit') as $name )
+		foreach( array('always_edit','timezone_offset') as $name )
+			$this->setTemplateVar($name,(int)($_COOKIE['or_'.$name]));
+			
+		$timezone_list = array();
+		$timezone_list[ date('Z') ] = 'SERVER ('.(date('Z')>=0?'+':'').intval(date('Z')/3600).':00)';
 		
-			$this->setTemplateVar($name,isset($_COOKIE['or_'.$name]));
+		global $conf;
+		$tzlist = $conf['date']['timezone'];
+		foreach ($tzlist as $offset=>$name)
+			$timezone_list[$offset] = $name.' ('.($offset>=0?'+':'').intval($offset/60).':00)'.($offset==date('Z')/60?' *':'');
+			
+		$this->setTemplateVar('timezone_list',$timezone_list);
 	}
 
 	
@@ -82,16 +91,16 @@ class ProfileAction extends Action
 	/**
 	 * Speichern der Benutzereinstellungen.
 	 */
-	function savesettings()
+	function settingsAction()
 	{
-		foreach( array('always_edit') as $name )
+		foreach( array('always_edit','timezone_offset') as $name )
 		{
 			// Prüfen, ob Checkbox aktiviert wurde.
 			if	( $this->hasRequestVar($name))
 			{
 				// Cookie setzen
-				setcookie('or_'.$name,'1',time()+(60*60*24*30*12*2));
-				$_COOKIE['or_'.$name] = '1';
+				setcookie('or_'.$name,$this->getRequestVar($name,'num'),time()+(60*60*24*30*12*2));
+				$_COOKIE['or_'.$name] = $this->getRequestVar($name,'num');
 			}
 			else
 			{

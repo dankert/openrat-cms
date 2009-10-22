@@ -22,3 +22,8 @@ UNIX = "U"
 LONG = "F j, Y, g:i a"
 
 
+[timezone]
+-6="New York"
+0="UTC (GMT)"
+60="MET (Middle European Time)"
+120="MEST (Middle European Summertime)"
