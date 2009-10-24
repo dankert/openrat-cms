@@ -847,8 +847,10 @@ SQL
 				}
 
 				// Datum gemaess Elementeinstellung formatieren
-				$inhalt = date( $this->element->dateformat,$date );
-				
+				if	( strpos($this->element->dateformat,'%')!==FALSE )
+					$inhalt = strftime( $this->element->dateformat,$date );
+				else
+					$inhalt = date    ( $this->element->dateformat,$date );
 				break;
 
 
@@ -951,15 +953,15 @@ SQL
 					case 'date_published':
 						// START_TIME wird zu Beginn im Controller gesetzt.
 						// So erh�lt jede Datei das gleiche Ver�ffentlichungsdatum.
-						$inhalt = date( $this->element->dateformat,START_TIME );
+						$date = START_TIME;
 						break;
 						
 					case 'date_saved':
-						$inhalt = date( $this->element->dateformat,$this->page->lastchangeDate );
+						$date = $this->page->lastchangeDate;
 						break;
 
 					case 'date_created':
-						$inhalt = date( $this->element->dateformat,$this->page->createDate );
+						$date = $this->page->createDate;
 						break;
 
 					default:  
@@ -968,6 +970,11 @@ SQL
 						             'unknown subtype:'.$this->element->subtype);
 				}
 				
+				if	( strpos($this->element->dateformat,'%')!==FALSE )
+					$inhalt = strftime( $this->element->dateformat,$date );
+				else
+					$inhalt = date    ( $this->element->dateformat,$date );				
+
 				break;
 
 
