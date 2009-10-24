@@ -597,13 +597,14 @@ SQL
 
 		$row = $db->getRow($sql);
 		
-		if	( count($row)==0 )
-			die('cannot load object '.$this->objectid );
+		if (count($row) == 0)
+		{
+			debug_print_backtrace();
+			die('fatal: Object::objectLoad(): objectid not found: '.$this->objectid.', SQL='.$sql->raw );
+		}
 
 		$this->setDatabaseRow( $row );
 
-		if (count($row) == 0)
-			die('fatal: Object::objectLoad(): objectid not found: '.$this->objectid.', SQL='.$sql );
 
 	}
 
