@@ -42,7 +42,7 @@ class Code extends Dynamic
 		$tmp = Object::getTempDir().'/openratDynamic';
 		$tmp .= '.code.php.tmp';
 		
-		$f = fopen( $tmp,'a' );
+		$f = fopen( $tmp,'w' );
 		fwrite( $f,$this->code );
 		fclose( $f );
 		
