@@ -55,7 +55,9 @@ class TeaserList extends Dynamic
 	var $title_css_class       = '';
 	var $description_css_class = '';
 	var $link_css_class        = '';
-
+	var $teaserElementId       = '';
+	var $teaserMaxLength       = 100;
+	
 	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
@@ -90,12 +92,20 @@ class TeaserList extends Dynamic
 		{
 			if ( $o->isPage ) // Nur wenn Ordner
 			{
-				$p = new Page( $id );
+				$p = new Page( $o->objectid );
 				$p->load();
+				
+				$desc = $p->desc;
+				if	( !empty($this->teaserElementId) )
+				{
+					$p->generate_elements();
+					$desc = $p->values[$this->teaserElementId]->value;
+					$desc = Text::maxLength(strip_tags($desc),$this->teaserMaxLength);
+				}
 
-				$this->output( '<'.$this->title_html_tag.$this->title_css_class.'>'.$p->name.'</'.$this->title_html_tag.'>' );
-				$this->output( '<p'.$this->description_css_class.'>'.$p->desc.'</p>' );
-				$this->output( '<p><a href="'.$this->pathToObject($o->objectid).'"'.$this->link_css_class.'>'.$this->forward_text.'</a></p>' );
+				$this->output( '<'.$this->title_html_tag.$this->title_css_class.'><a href="'.$this->pathToObject($o->objectid).'">'.$p->name.'</a></'.$this->title_html_tag.'>' );
+				$this->output( '<p'.$this->description_css_class.'><a href="'.$this->pathToObject($o->objectid).'">'.$desc.'</a></p>' );
+				//$this->output( '<p><a href="'.$this->pathToObject($o->objectid).'"'.$this->link_css_class.'>'.$this->forward_text.'</a></p>' );
 			}
 		}
 	}
