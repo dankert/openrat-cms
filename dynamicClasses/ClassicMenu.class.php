@@ -61,6 +61,7 @@ class ClassicMenu extends Dynamic
 	var $beforeEntry = '<li><strong>';
 	var $afterEntry  = '</strong></li>';
 	var $csspraefix  = 'menu';
+	var $onlySameTemplate = true;
 	
 
 	// Erstellen des Hauptmenues
@@ -70,7 +71,7 @@ class ClassicMenu extends Dynamic
 		// Erstellen eines Untermenues
 
 		$f = new Folder( $this->page->parentid );
-		$this->parentFolders = $f->parentObjectIds(false,true);
+		$this->parentFolders = $f->parentObjectFileNames(false,true);
 		
 		$this->showFolder( $rootId,0 );
 	}
@@ -103,7 +104,7 @@ class ClassicMenu extends Dynamic
 						// Link erzeugen
 						$this->outputLn( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.$this->pathToObject($fp->objectid).'">'.$o->name.'</a><br/>' );
 
-					if	( in_array($o->objectid,$this->parentFolders) )
+					if	( in_array($o->objectid,array_keys($this->parentFolders)) )
 					{
 						$this->showFolder($o->objectid,$level+1);
 					}
@@ -112,6 +113,14 @@ class ClassicMenu extends Dynamic
 				}
 			}
 
+			if ($o->isPage)
+			{
+				$page = new Page($o->objectid);
+				$page->load();
+				if	( $page->templateid != $this->page->templateid && $this->onlySameTemplate )
+					continue;
+			}
+			
 			// Seiten und Verknuepfungen anzeigen
 			if ($o->isPage ||  $o->isLink )
 			{
