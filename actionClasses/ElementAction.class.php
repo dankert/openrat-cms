@@ -304,7 +304,10 @@ class ElementAction extends Action
 
 					foreach($ini_date_format as $idx=>$d)
 					{
-						$dateformat[$idx] = date($d);
+						if	( strpos($d,'%')!==FALSE )
+							$dateformat[$idx] = strftime($d);
+						else
+							$dateformat[$idx] = date($d);
 						if	( $d == $this->element->dateformat )
 							$this->setTemplateVar('dateformat',$idx);
 					}
