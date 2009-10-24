@@ -767,6 +767,13 @@ class Page extends Object
 				// nicht korrekt installiert.
 				Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
 		}
+		else
+		{
+			$locale = $locale_conf['default'];
+			$locale_ok = setlocale(LC_ALL,$locale);
+			if	( !$locale_ok )
+				Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
+		}
 		
 		if	( $conf['cache']['enable_cache'] && is_file($this->tmpfile() ))
 		{
