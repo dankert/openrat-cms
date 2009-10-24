@@ -13,3 +13,9 @@ default=de
 ; A comma seperated list with language codes.
 available=de,en,es,fr,it,ru
 
+
+
+; Mappings from the language to installed locales
+[locale]
+de="de_DE.utf8"
+en="en_US.utf8"
