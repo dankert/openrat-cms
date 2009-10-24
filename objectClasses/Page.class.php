@@ -752,6 +752,22 @@ class Page extends Object
 	{
 		global $conf;
 		
+		// Setzen der 'locale', damit sprachabhängige Systemausgaben (wie z.B. die
+		// Ausgabe von strftime()) in der korrekten Sprache dargestellt werden.
+		$language = new Language($this->languageid);
+		$language->load();
+		
+		$locale_conf = $conf['i18n']['locale']; 
+		if	( isset($locale_conf[strtolower($language->isoCode)]) )
+		{
+			$locale = $locale_conf[strtolower($language->isoCode)];
+			$locale_ok = setlocale(LC_ALL,$locale);
+			if	( !$locale_ok )
+				// Hat nicht geklappt. Entweder ist das Mapping falsch oder die locale ist
+				// nicht korrekt installiert.
+				Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
+		}
+		
 		if	( $conf['cache']['enable_cache'] && is_file($this->tmpfile() ))
 		{
 			$this->value = implode('',file($this->tmpfile()));
@@ -797,8 +813,6 @@ class Page extends Object
 			else
 				$src = str_replace( '{{->'.$id.'}}','',$src );
 		}
-
-		#Html::debug(strlen($src),'laenge am ende');
 		
 		$this->value = &$src;
 
