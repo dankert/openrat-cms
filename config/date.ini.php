@@ -20,5 +20,5 @@ GMDATE = "D, d M Y H:i:s \G\M\T"
 RFC822 = "r"
 UNIX = "U"
 LONG = "F j, Y, g:i a"
-
+GER5 = "%A, %e %B %Y, %R"
 
