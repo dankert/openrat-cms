@@ -358,12 +358,21 @@ class Text
 	}
 	
 	
+	/**
+	 * Entfernt einen Text-Bereich aus einer Zeichenkette.<br>
+	 * Es wird angegeben, von wo bis wo entfernt werden soll.
+	 * 
+	 * @param $text Text, aus dem entfernt wird
+	 * @param $von der Text, AB dem entfernt wird
+	 * @param $bis der Text, BIS ZU DEM entfernt wird
+	 * @return String Text
+	 */
 	function entferneVonBis($text,$von,$bis)
 	{
 		$beg = strpos($text,$von);
 		$end = strpos($text,$bis);
 		if	( $beg!==false && $end !==false )
-			$text = substr($src,0,$beg).substr($src,$end);
+			$text = substr($text,0,$beg).substr($text,$end+strlen($bis));
 		return $text;
 	}
 	
