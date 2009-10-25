@@ -201,7 +201,7 @@ class TemplateAction extends Action
 
 		foreach( Element::getAvailableTypes() as $t )
 		{
-			$types[ $t ] = lang('EL_'.$t);
+			$types[ $t ] = 'EL_'.$t;
 		}
 
 		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
@@ -213,22 +213,32 @@ class TemplateAction extends Action
 	
 	
 	
-	// Element hinzuf?gen
-	//
+	/*
+	 * Neues Element hinzufuegen.
+	 */
 	function addelement()
 	{
-		if  ( $this->getRequestVar('name') != '' )
-		{
-			$this->template->addElement( $this->getRequestVar('name'),$this->getRequestVar('description'),$this->getRequestVar('type') );
-			$this->setTemplateVar('tree_refresh',true);
-			$this->addNotice('template',$this->template->name,'SAVED','ok');
-		}
-		else
+
+		$name = $this->getRequestVar('name','alphanum');
+		if  ( empty($name) )
 		{
 			$this->addValidationError('name');
 			$this->callSubAction('addel');
+			return;
+		}
+		
+		$this->template->addElement( $name,$this->getRequestVar('description'),$this->getRequestVar('type') );
+		$this->setTemplateVar('tree_refresh',true);
+		
+		if	( $this->hasRequestVar('addtotemplate') )
+		{
+			$elnames = $this->template->getElementNames();
+			$elid = array_search($name,$elnames);
+			$this->template->src .= "\n".'{{'.$elid.'}}';
+			$this->template->save();
 		}
 
+		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
 	}
 
 
