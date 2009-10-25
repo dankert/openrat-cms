@@ -51,8 +51,8 @@ class ElementAction extends Action
 	 */
 	function savename()
 	{
-		$this->element->name = $this->getRequestVar('name'       ,'abc');
-		$this->element->desc = $this->getRequestVar('description','all');
+		$this->element->name = $this->getRequestVar('name'       ,'alphanum');
+		$this->element->desc = $this->getRequestVar('description','all'     );
 
 		$this->element->save();
 		$this->element->load();
