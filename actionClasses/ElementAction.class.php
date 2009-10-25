@@ -76,19 +76,23 @@ class ElementAction extends Action
 	 */
 	function delete()
 	{
-		if ( $this->hasRequestVar('deletevalues') )
+		if	( !$this->hasRequestVar('confirm') )
+		{
+			$this->addValidationError('confirm');
+			return;
+		}
+		
+		$type = $this->getRequestVar('type','abc');
+		
+		if ( $type == 'value' )
 		{
 			$this->element->deleteValues();
 			$this->addNotice('element',$this->template->name,'DELETED',OR_NOTICE_OK);
 		}
-		elseif ( $this->hasRequestVar('delete') )
+		elseif ( $type == 'all' )
 		{
 			$this->element->delete();
 			$this->addNotice('element',$this->template->name,'DELETED',OR_NOTICE_OK);
-		}
-		else
-		{
-			$this->addNotice('element',$this->template->name,'CANCELED',OR_NOTICE_WARN);
 		}
 	}
 
