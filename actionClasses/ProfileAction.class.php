@@ -81,6 +81,7 @@ class ProfileAction extends Action
 		
 		global $conf;
 		$tzlist = $conf['date']['timezone'];
+		if	( !is_array($tzlist))$tzlist = array();
 		foreach ($tzlist as $offset=>$name)
 			$timezone_list[$offset] = $name.' ('.($offset>=0?'+':'').intval($offset/60).':00)'.($offset==date('Z')/60?' *':'');
 			
