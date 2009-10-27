@@ -9,9 +9,9 @@ else
 if ( $attr_addempty!==FALSE  )
 {
 	if ($attr_addempty===TRUE)
-		$$attr_list = array(''=>lang('LIST_ENTRY_EMPTY'))+$$attr_list;
+		$attr_tmp_list = array(''=>lang('LIST_ENTRY_EMPTY'))+$attr_tmp_list;
 	else
-		$$attr_list = array(''=>'- '.lang($attr_addempty).' -')+$$attr_list;
+		$attr_tmp_list = array(''=>'- '.lang($attr_addempty).' -')+$attr_tmp_list;
 }
 ?><select<?php if ($attr_readonly) echo ' disabled="disabled"' ?> id="id_<?php echo $attr_name ?>"  name="<?php echo $attr_name; if ($attr_multiple) echo '[]'; ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
 if (count($$attr_list)<=1) echo ' disabled="disabled"';
