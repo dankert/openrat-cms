@@ -2,7 +2,12 @@
     global $conf;
 	$time = $attr_date;
 
-	// TODO: Benutzereinstellung 'Zeitzonen-Offset' auswerten.
+	// Benutzereinstellung 'Zeitzonen-Offset' auswerten.
+	if	( isset($_COOKIE['or_timezone_offset']) )
+	{
+		$time -= (int)date('Z');
+		$time += ((int)$_COOKIE['or_timezone_offset']*60);
+	}
 	
 	if	( $time==0)
 		echo lang('GLOBAL_UNKNOWN');

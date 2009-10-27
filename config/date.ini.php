@@ -20,5 +20,10 @@ GMDATE = "D, d M Y H:i:s \G\M\T"
 RFC822 = "r"
 UNIX = "U"
 LONG = "F j, Y, g:i a"
-GER5 = "%A, %e %B %Y, %R"
 
+
+[timezone]
+-6="New York"
+0="UTC (GMT)"
+60="MET (Middle European Time)"
+120="MEST (Middle European Summertime)"
