@@ -45,7 +45,7 @@ echo ' size="'.intval($attr_size).'"';
 			}
 			echo '<option class="'.$attr_class.'" value="'.$box_key.'" title="'.$box_title.'"';
 				
-			if ($box_key==$attr_tmp_default)
+			if ((string)$box_key==$attr_tmp_default)
 				echo ' selected="selected"';
 
 			echo '>'.$box_value.'</option>';
