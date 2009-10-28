@@ -181,7 +181,7 @@ class Action
 	{
 		global $REQ;
 
-		return( !empty($REQ[$varName]) );
+		return( !empty($REQ[$varName]) || $REQ[$varName]=='0' );
 	}
 
 
