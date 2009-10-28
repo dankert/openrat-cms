@@ -83,7 +83,7 @@ class ProfileAction extends Action
 		$tzlist = $conf['date']['timezone'];
 		if	( !is_array($tzlist))$tzlist = array();
 		foreach ($tzlist as $offset=>$name)
-			$timezone_list[$offset] = $name.' ('.($offset>=0?'+':'').intval($offset/60).':00)'.($offset==date('Z')/60?' *':'');
+			$timezone_list[$offset] = $name.' ('.vorzeichen(intval($offset/60)).':00)'.($offset==date('Z')/60?' *':'');
 			
 		$this->setTemplateVar('timezone_list',$timezone_list);
 	}
@@ -97,7 +97,6 @@ class ProfileAction extends Action
 	{
 		foreach( array('always_edit','timezone_offset') as $name )
 		{
-			Html::debug($this->getRequestVar($name),$name);
 			// Prüfen, ob Checkbox aktiviert wurde.
 			if	( $this->hasRequestVar($name))
 			{
