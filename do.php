@@ -117,6 +117,9 @@ if	( !is_array( $conf ) || isset($REQ['reload']) )
 		// Nur Default-Sprache erlauben
 		$languages = array();
 
+	if	( isset($_COOKIE['or_language']) )
+		$languages = array($_COOKIE['or_language']) + $languages;
+		
 	// Default-Sprache hinzufuegen.
 	// Wird dann verwendet, wenn die vom Browser angeforderten Sprachen
 	// nicht vorhanden sind

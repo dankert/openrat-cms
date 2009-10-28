@@ -16,6 +16,12 @@ page
 					fieldset title:message:timezone
 						selectbox name:timezone_offset list:timezone_list addempty:true
 					newline
+			row
+				cell
+					newline
+					fieldset title:message:language
+						selectbox name:language list:language_list addempty:true
+					newline
 
 			row
 				cell colspan:2 class:act

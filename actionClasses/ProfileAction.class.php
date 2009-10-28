@@ -72,8 +72,8 @@ class ProfileAction extends Action
 	 */
 	function settingsView()
 	{
-		foreach( array('always_edit','timezone_offset') as $name )
-			$this->setTemplateVar($name,Text::clean($_COOKIE['or_'.$name],'0123456789 .'));
+		foreach( array('always_edit','timezone_offset','language') as $name )
+			$this->setTemplateVar($name,Text::clean($_COOKIE['or_'.$name],'abcdefghijklmnopqrstuvwxyz0123456789 .'));
 			
 		//Html::debug(Text::clean($_COOKIE['or_'.$name],'0123456789 .'));
 		$timezone_list = array();
@@ -86,6 +86,13 @@ class ProfileAction extends Action
 			$timezone_list[$offset] = $name.' ('.vorzeichen(intval($offset/60)).':00)'.($offset==date('Z')/60?' *':'');
 			
 		$this->setTemplateVar('timezone_list',$timezone_list);
+		$languages = explode(',',$conf['i18n']['available']);
+		foreach($languages as $id=>$name)
+		{
+			unset($languages[$id]);
+			$languages[$name] = $name;
+		}
+		$this->setTemplateVar('language_list',$languages);
 	}
 
 	
@@ -95,18 +102,18 @@ class ProfileAction extends Action
 	 */
 	function settingsAction()
 	{
-		foreach( array('always_edit','timezone_offset') as $name )
+		foreach( array('always_edit','timezone_offset','language') as $name )
 		{
 			// Prüfen, ob Checkbox aktiviert wurde.
 			if	( $this->hasRequestVar($name))
 			{
 				// Cookie setzen
-				setcookie('or_'.$name,$this->getRequestVar($name,'num'),time()+(60*60*24*30*12*2));
-				$_COOKIE['or_'.$name] = $this->getRequestVar($name,'num');
+				setcookie('or_'.$name,$this->getRequestVar($name,'alphanum'),time()+(60*60*24*30*12*2));
+				$_COOKIE['or_'.$name] = $this->getRequestVar($name,'alphanum');
 			}
 			else
 			{
-				// Cookie löschen
+				// Cookie loeschen
 				setcookie('or_'.$name,'', time()-3600);
 				unset($_COOKIE['or_'.$name]);
 			}
