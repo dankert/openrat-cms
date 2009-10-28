@@ -31,4 +31,16 @@ function now()
 {
 	return time();
 }
+
+
+
+/**
+ * Erzeugt für eine Zahl eine Schreibweise mit Vorzeichen.<br>
+ * '-2' bleibt '-2'<br>
+ * '2'  wird zu '+2'<br>
+ */
+function vorzeichen( $nr )
+{
+	return intval($nr)<0 ? $nr : '+'.$nr;
+}
 ?>
