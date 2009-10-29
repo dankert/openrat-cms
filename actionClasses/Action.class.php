@@ -640,6 +640,9 @@ class Action
 	 */
 	function isEditMode()
 	{
+		if	( readonly() )
+			return false;
+			
 		return !$this->isEditable() || $this->getRequestVar('mode')=='edit' || isset($_COOKIE['or_always_edit']) || (isset($this->templateVars) && $this->templateVars['mode']=='edit'); 
 	}
 }
