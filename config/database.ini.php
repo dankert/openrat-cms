@@ -59,6 +59,10 @@ prepare = false
 ; Default: false
 transaction = false
 
+; Readonly tables. Set to 'true' during maintainance activitys.
+; If 'true', OpenRat will disable all writing operations.
+readonly = false
+
 
 
 [sample_db_postgresql]
