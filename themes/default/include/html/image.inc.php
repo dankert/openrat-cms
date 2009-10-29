@@ -15,6 +15,11 @@
 	$attr_size = '16x16';
 /* #END-IF# */
 
+/* #IF-ATTR notice# */		
+	$attr_tmp_image_file = $image_dir.'notice_'.$attr_notice.IMG_ICON_EXT;
+	$attr_size = '16x16';
+/* #END-IF# */
+
 /* #IF-ATTR tree# */		
 	$attr_tmp_image_file = $image_dir.'tree_'.$attr_tree.IMG_EXT;
 	$attr_size = '18x18';
