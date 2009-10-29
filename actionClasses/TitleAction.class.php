@@ -41,20 +41,10 @@ class TitleAction extends Action
 	 */
 	function show()
 	{
-		// Seite �ndert sich nur 1x pro Session
-		$user = Session::getUser();
-//		$this->lastModified( $user->loginDate );
-		
-		$user = Session::getUser();
-//		if	( is_object($user) && isset($user->loginDate) )
-//			$this->lastModified( $user->loginDate );
-
 		$this->setTemplateVar('css_body_class','title');
 
 		$db = Session::getDatabase();
-//		$this->setTemplateVar('dbid'  ,$db->id              ); 
-		$this->setTemplateVar('dbname',$db->conf['comment'] );
-//		$this->setTemplateVar('dbdescription',$db->conf['comment'] );
+		$this->setTemplateVar('dbname',$db->conf['comment'].(readonly()?' ('.lang('readonly').')':''));
 
 		$user = Session::getUser();		
 		$this->setTemplateVar('username'    ,$user->name    );
