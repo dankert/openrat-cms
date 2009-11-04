@@ -387,14 +387,19 @@ class UserAction extends Action
 
 		switch( $menu )
 		{
+			case 'add':
+			case 'remove':
+				return !readonly();
+					
 			case 'addgroup':
-				return count($this->user->getOtherGroups()) > 0;
+				return !readonly() && count($this->user->getOtherGroups()) > 0;
 
 			case 'groups':
-				return count($this->user->getGroups()) > 0;
+				return !readonly() && count($this->user->getGroups()) > 0;
 	
 			case 'pw':
-				return     @$conf['security']['auth']['type'] == 'database'
+				return    !readonly()
+					   && @$conf['security']['auth']['type'] == 'database'
 				       && !@$conf['security']['auth']['userdn'];
 		}
 		

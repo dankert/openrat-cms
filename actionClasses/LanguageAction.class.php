@@ -269,6 +269,7 @@ class LanguageAction extends Action
 			case 'remove':
 				$actLanguage = Session::getProjectLanguage();
 				return
+					!readonly()                          && 
 					$this->userIsAdmin()                 &&
 					count( $this->language->getAll() ) >= 2 &&
 					isset($this->language) &&
@@ -276,8 +277,8 @@ class LanguageAction extends Action
 				
 			case 'add':
 				return
-					$this->userIsAdmin();
-			
+					!readonly() && $this->userIsAdmin();
+					
 			default:
 				return true;
 		}

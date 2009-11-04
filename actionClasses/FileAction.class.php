@@ -620,19 +620,22 @@ class FileAction extends ObjectAction
 		switch( $name )
 		{
 			case 'uncompress':
-				return in_array($this->file->extension,$compressionTypes);
+				return !readonly() && in_array($this->file->extension,$compressionTypes);
 
 			case 'compress':
-				return !in_array($this->file->extension,$compressionTypes);
+				return !readonly() && !in_array($this->file->extension,$compressionTypes);
 
 			case 'extract':
-				return in_array($this->file->extension,$archiveTypes);
+				return !readonly() && in_array($this->file->extension,$archiveTypes);
 
 			case 'size':
-				return $this->file->isImage();
+				return !readonly() && $this->file->isImage();
 
 			case 'editvalue':
-				return substr($this->file->mimeType(),0,5)=='text/';
+				return !readonly() && substr($this->file->mimeType(),0,5)=='text/';
+
+			case 'aclform':
+				return !readonly();
 				
 			default:
 				return true;

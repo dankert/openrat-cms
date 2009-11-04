@@ -293,13 +293,17 @@ class GroupAction extends Action
 	{
 		switch( $menu )
 		{
+			case 'remove':
+			case 'add':
+				return !readonly();
+					
 			case 'users':
 				// Benutzerliste nur anzeigen, wenn welche vorhanden.
-				return count($this->group->getUsers()) > 0;
+				return !readonly() && count($this->group->getUsers()) > 0;
 			case 'adduser':
 				// Benutzer k�nnen nur hinzugef�gt werden, wenn noch nicht alle
 				// in der Gruppe sind.
-				return count($this->group->getOtherUsers()) > 0;
+				return !readonly() && count($this->group->getOtherUsers()) > 0;
 			default:
 				return true;
 		}

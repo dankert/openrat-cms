@@ -1306,20 +1306,25 @@ class FolderAction extends ObjectAction
 		switch( $name)
 		{
 			case 'createfolder':
-				return $this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectFileNames(true,true)) < MAX_FOLDER_DEPTH;
+				return !readonly() && $this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectFileNames(true,true)) < MAX_FOLDER_DEPTH;
 
 			case 'createfile':
-				return $this->folder->hasRight(ACL_CREATE_FILE);
+				return !readonly() && $this->folder->hasRight(ACL_CREATE_FILE);
 
 			case 'createlink':
-				return $this->folder->hasRight(ACL_CREATE_LINK);
+				return !readonly() && $this->folder->hasRight(ACL_CREATE_LINK);
 
 			case 'createpage':
-				return $this->folder->hasRight(ACL_CREATE_PAGE);
+				return !readonly() && $this->folder->hasRight(ACL_CREATE_PAGE);
 
 			case 'remove':
-				return count($this->folder->getObjectIds()) == 0;
+				return !readonly() && count($this->folder->getObjectIds()) == 0;
 
+			case 'select':
+			case 'order':
+			case 'aclform':
+				return !readonly();
+				
 			default:
 				return true;
 		}

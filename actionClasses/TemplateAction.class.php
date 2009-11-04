@@ -673,6 +673,10 @@ class TemplateAction extends Action
 			case 'pages':
 				// Anzeige von Seiten nur dann sinnvoll, wenn es auch Seiten gibt.
 				return (count($this->template->getDependentObjectIds()) > 0);
+
+			case 'add':
+			case 'addel':
+				return !readonly();
 				
 			default:
 				return true;

@@ -762,7 +762,13 @@ class PageAction extends ObjectAction
 		{
 			case 'changetemplate':
 				// Template nur austauschbar, wenn es mind. 2 gibt.
-				return (count(Template::getAll()) > 1);
+				return (!readonly() && count(Template::getAll()) > 1);
+
+			case 'aclform':
+				return !readonly();
+
+			case 'form':
+				return !readonly();
 
 			default:
 				return true;

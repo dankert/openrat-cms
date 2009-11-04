@@ -200,14 +200,15 @@ class ModelAction extends Action
 			case 'remove':
 				$actModel = Session::getProjectModel();
 				return
+					!readonly()                          && 
 					$this->userIsAdmin()                 &&
 					count( $this->model->getAll() ) >= 2 &&
 					$actModel->modelid != $this->model->modelid;
 				
 			case 'add':
 				return
-					$this->userIsAdmin();
-			
+					!readonly() && $this->userIsAdmin();
+					
 			default:
 				return true;
 		}
