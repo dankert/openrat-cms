@@ -4,7 +4,7 @@
 		$attr_text = 'MODE_EDIT';
 		$attr_type = 'submit';
 		
-		if	( readonly() )
+		if	( $this->isEditable() && readonly() )
 			$attr_type = ''; // Knopf nicht anzeigen
 	#END-IF
 
