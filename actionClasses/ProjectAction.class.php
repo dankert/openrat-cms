@@ -307,4 +307,29 @@ class ProjectAction extends Action
 			
 		phpinfo();
 	}
+	
+	
+	
+	
+	
+	/**
+	 * @param String $name Menüpunkt
+	 * @return boolean true, falls Menüpunkt zugelassen
+	 */
+	function checkMenu( $name )
+	{
+		global $conf;
+		
+		switch( $name )
+		{
+			case 'remove':
+				return     !readonly();
+			case 'maintenance':
+				return     !readonly();
+				
+			default:
+				return true;
+		}	
+	}
+	
 }
