@@ -23,6 +23,7 @@ goto=listing
 
 [edit]
 menu=edit
+editable=true
 target=save
 
 [save]
