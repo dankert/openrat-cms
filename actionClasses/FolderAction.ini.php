@@ -61,10 +61,7 @@ goto=rights
 
 [pub]
 menu=pub
-target=pubnow
-
-[pubnow]
-goto=pub
+write=true
 
 [create]
 target=createnew

@@ -43,11 +43,8 @@ goto=prop
 goto=prop
 
 [pub]
-target=pubnow
+write=true
 menu=pub
-
-[pubnow]
-goto=pub
 
 ; Die Aktionen "rights", "aclform", "addacl" und "delacl" sind
 ; f�r Seiten,Ordner,Links und Dateien identisch.

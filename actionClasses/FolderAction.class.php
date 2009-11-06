@@ -1256,19 +1256,17 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function pub()
+	function pubView()
 	{
 		// Schalter nur anzeigen, wenn sinnvoll
 		$this->setTemplateVar('files'  ,count($this->folder->getFiles()) > 0 );
 		$this->setTemplateVar('pages'  ,count($this->folder->getPages()) > 0 );
 		$this->setTemplateVar('subdirs',count($this->folder->getSubFolderIds()) > 0 );
 		$this->setTemplateVar('clean'  ,$this->folder->isRoot );
-		
-//		$this->addNotice('folder',$this->folder->name,'MUCH_TIME',OR_NOTICE_WARN);
 	}
 
 
-	function pubnow()
+	function pubAction()
 	{
 		if	( !$this->folder->hasRight( ACL_PUBLISH ) )
 			die('no rights for publish');
@@ -1295,8 +1293,6 @@ class FolderAction extends ObjectAction
 		// Wenn gewuenscht, das Zielverzeichnis aufraeumen
 		if	( $this->hasRequestVar('clean')      )
 			$publish->clean();
-
-		$this->callSubaction( 'pub' );
 	}
 	
 	
