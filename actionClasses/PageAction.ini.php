@@ -24,10 +24,7 @@ menu=elements
 
 [pub]
 menu=pub
-target=pubnow
-
-[pubnow]
-goto=pub
+write=true
 
 [saveform]
 goto=el

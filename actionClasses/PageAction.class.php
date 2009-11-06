@@ -702,7 +702,7 @@ class PageAction extends ObjectAction
 	 * Es wird ein Formular angzeigt, mit dem die Seite veroeffentlicht
 	 * werden kann 
 	 */
-	function pub()
+	function pubView()
 	{
 	}
 
@@ -713,10 +713,10 @@ class PageAction extends ObjectAction
 	 *
 	 * Die Seite wird generiert.
 	 */
-	function pubnow()
+	function pubAction()
 	{
 		if	( !$this->page->hasRight( ACL_PUBLISH ) )
-			die( 'no right for publish' );
+			Http::notAuthorized( 'no right for publish' );
 
 		$this->page->public = true;
 		$this->page->publish();
@@ -728,8 +728,6 @@ class PageAction extends ObjectAction
 //		}
 
 		$this->addNotice('page',$this->page->fullFilename,'PUBLISHED'.($this->page->publish->ok?'':'_ERROR'),$this->page->publish->ok,array(),$this->page->publish->log);
-
-		$this->callSubaction('pub');
 	}
 	
 	
