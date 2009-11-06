@@ -1,4 +1,5 @@
 
+; Only admins are allowed to change project settings
 admin=true
 
 [phpinfo]
@@ -12,33 +13,24 @@ menu=list
 
 [remove]
 menu=edit
-target=delete
-
-[delete]
-goto=listing
+write=true
 
 [maintenance]
 menu=edit
-target=maintenance
+write=true
 
 [export]
 menu=edit
-target=export
+write=true
 
 [edit]
-target=save
 menu=edit
 editable=true
-
-[addproject]
-goto=listing
-
-[save]
-goto=edit
+write=true
 
 [add]
 menu=list
-target=addproject
+write=true
 
 [menu]
 list=listing,add

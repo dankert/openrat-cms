@@ -104,7 +104,7 @@ class ProjectAction extends Action
 	}
 
 
-	function save()
+	function editAction()
 	{
 		if	( $this->getRequestVar('name') != '')
 		{
@@ -128,7 +128,7 @@ class ProjectAction extends Action
 
 
 
-	function add()
+	function addView()
 	{
 		$this->setTemplateVar( 'projects',Project::getAll() );
 	}
@@ -138,7 +138,7 @@ class ProjectAction extends Action
 	 * Projekt hinzufuegen.
 	 *
 	 */
-	function addproject()
+	function addAction()
 	{
 		if	( !$this->hasRequestVar('type') )
 		{
@@ -198,6 +198,9 @@ class ProjectAction extends Action
 	}
 
 
+	/**
+	 * Auswaehlen und starten eines Projektes.
+	 */
 	function select()
 	{
 		$user     = Session::getUser();
@@ -220,7 +223,10 @@ class ProjectAction extends Action
 	}
 
 
-	function edit()
+	/**
+	 * Anzeige der Eigenschaften des Projektes.
+	 */
+	function editView()
 	{
 		// Projekt laden
 		$this->setTemplateVars( $this->project->getProperties() );
@@ -228,39 +234,53 @@ class ProjectAction extends Action
 	}
 	
 	
-	function remove()
+	function removeView()
 	{
 		$this->setTemplateVar( 'name',$this->project->name );
 	}
 	
 	
-	function delete()
+	function removeAction()
 	{
-		if   ( $this->getRequestVar('delete') != '' )
-		{
-			// Gesamtes Projekt loeschen
-			$this->project->delete();
-
-			$this->setTemplateVar('tree_refresh',true);
-			$this->addNotice('project',$this->project->name,'DELETED'); 
-		}
-		else
+		if   ( !$this->hasRequestVar('delete') )
 		{
 			$this->addValidationError('delete');
-			$this->callSubAction('remove');
+			return;
 		}
+		
+		// Gesamtes Projekt loeschen
+		$this->project->delete();
+
+		$this->setTemplateVar('tree_refresh',true);
+		$this->addNotice('project',$this->project->name,'DELETED'); 
 	}
 	
 	
 
-	function maintenance()
+	/**
+	 * Anzeige View fuer Wartung.
+	 */
+	function maintenanceView()
 	{
-		if	( $this->hasRequestVar('ok') )
+	}
+
+
+
+	/**
+	 * Wartung durchfuehren.
+	 * @return unknown_type
+	 */
+	function maintenanceAction()
+	{
+		if	( !$this->hasRequestVar('ok') )
 		{
-			$this->project->checkLostFiles();
-			$this->addNotice('project',$this->project->name,'DONE');
-			$this->setTemplateVar('done',true);
+			$this->addValidationError('ok');
+			return;
 		}
+		
+		$this->project->checkLostFiles();
+		$this->addNotice('project',$this->project->name,'DONE');
+		$this->setTemplateVar('done',true);
 	}
 
 
@@ -268,7 +288,16 @@ class ProjectAction extends Action
 	/**
 	 * Projekt exportieren.
 	 */
-	function export()
+	function exportView()
+	{
+		
+	}
+	
+	
+	/**
+	 * Projekt exportieren.
+	 */
+	function exportAction()
 	{
 		$db = db_connection();
 		$this->setTemplateVar( 'dbid',$db->id );
