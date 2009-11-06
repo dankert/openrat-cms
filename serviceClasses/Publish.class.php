@@ -19,35 +19,83 @@
 #
 
 /**
- * Diese Klasse kapselt das Verï¿½ffentlichen von Dateien.<br>
+ * Diese Klasse kapselt das Veroeffentlichen von Dateien.<br>
  * <br>
  * Hier werden<br>
  * - Dateien in das Zielverzeichnis kopiert<br>
- * - Dateien per FTP verï¿½ffentlicht<br>
- * - Zielverzeichnisse aufgerï¿½umt<br>
- * - Systembefehle ausgefï¿½hrt.
+ * - Dateien per FTP veroeffentlicht<br>
+ * - Zielverzeichnisse aufgeraeumt<br>
+ * - Systembefehle ausgefuehrt.
  * 
- * @author $Author$
- * @version $Revision$
+ * @author Jan Dankert
  * @package openrat.services
  */
 class Publish
 {
+	/**
+	 * Enthaelt bei Bedarf das FTP-Objekt. Nämlich dann, wenn
+	 * zu einem FTP-Server veroeffentlicht werden soll.
+	 * @var Object
+	 */
 	var $ftp;
+	
+	/**
+	 * Flag, ob in das lokale Dateisystem veroeffentlicht werden soll.
+	 * @var boolean
+	 */
 	var $with_local          = false;
+	
+	/**
+	 * Flag, ob zu einem FTP-Server veröffentlicht werden soll.
+	 * @var boolean
+	 */
 	var $with_ftp            = false;
+	
 	var $local_destdir       = '';
+	
+	/**
+	 * Enthaelt die gleichnamige Einstellung aus dem Projekt.
+	 * @var boolean
+	 */
 	var $content_negotiation = false;
+	
+	/**
+	 * Enthaelt die gleichnamige Einstellung aus dem Projekt.
+	 * @var boolean
+	 */
 	var $cut_index           = false;
+	
+	/**
+	 * Enthaelt die gleichnamige Einstellung aus dem Projekt.
+	 * @var String
+	 */
 	var $cmd_after_publish   = '';
+	
+	/**
+	 * Enthaelt am Ende der Veröffentlichung ein Array mit den veröffentlichten Objekten.
+	 * @var Array
+	 */
 	var $publishedObjects    = array();
+	
+	/**
+	 * Enthaelt im Fehlerfall (wenn 'ok' auf 'false' steht) eine
+	 * Fehlermeldung.
+	 * 
+	 * @var String
+	 */
 	var $log                 = array();
+	
+	/**
+	 * Stellt nach der Veröffentlichung fest, ob der Vorgang erfolgreich ist.
+	 * Falls nicht, enthält die Variable 'log' eine Fehlermeldung. 
+	 * @var boolean
+	 */
 	var $ok                  = true;
 
 	/**
 	 * Konstruktor.<br>
 	 * <br>
-	 * ï¿½ffnet ggf. Verbindungen.
+	 * Oeffnet ggf. Verbindungen.
 	 *
 	 * @return Publish
 	 */
@@ -266,10 +314,10 @@ class Publish
 	
 	
 	/**
-	 * Aufrï¿½umen des Zielverzeichnisses.<br><br>
+	 * Aufraeumen des Zielverzeichnisses.<br><br>
 	 * Es wird der komplette Zielordner samt Unterverzeichnissen durchsucht. Jede
-	 * Datei, die lï¿½nger existiert als der aktuelle Request alt ist, wird gelï¿½scht.<br>
-	 * Natï¿½rlich darf diese Funktion nur nach einem Gesamt-Verï¿½ffentlichen ausgefï¿½hrt werden.
+	 * Datei, die laenger existiert als der aktuelle Request alt ist, wird geloescht.<br>
+	 * Natuerlich darf diese Funktion nur nach einem Gesamt-Veroeffentlichen ausgefuehrt werden.
 	 */
 	function clean()
 	{
