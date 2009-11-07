@@ -9,49 +9,37 @@ menu=listing
 
 [add]
 menu=listing
-target=adduser
-
-[adduser]
-goto=listing
+write=true
 
 [edit]
 menu=edit
-target=save
 editable=true
-
-[save]
-goto=listing
+write=true
 
 [remove]
 menu=edit
-target=delete
-
-[delete]
-goto=listing
+write=true
 
 [memberships]
 goto=groups
 
-; Anzeige der Gruppenzugehörigkeiten
+; Anzeige der Gruppenzugehoerigkeiten
 [groups]
 menu=memberships
 editable=true
 target=savegroups
 
-; Speichern der Gruppenzugehörigkeiten
+; Speichern der Gruppenzugehoerigkeiten
 [savegroups]
 menu=memberships
 goto=groups
 
 [pw]
 menu=pw
-target=pwchange
+write=true
 
 [rights]
 menu=rights
-
-[pwchange]
-goto=pw
 
 [menu]
 listing=listing,add

@@ -46,7 +46,7 @@ class UserAction extends Action
 	}
 
 
-	function save()
+	function editAction()
 	{
 		if	( $this->getRequestVar('name') != '' )
 		{
@@ -76,14 +76,14 @@ class UserAction extends Action
 
 
 
-	function remove()
+	function removeView()
 	{
 		$this->setTemplateVars( $this->user->getProperties() );
 	}
 	
 	
 	
-	function delete()
+	function removeAction()
 	{
 		if   ( $this->hasRequestVar('confirm') )
 		{
@@ -93,18 +93,18 @@ class UserAction extends Action
 		else
 		{
 			$this->addValidationError('confirm');
-			$this->callSubAction('remove');
+			return;
 		}
 	}
 
 
-	function add()
+	function addView()
 	{
 	}
 	
 	
 	
-	function adduser()
+	function addAction()
 	{
 		if	( $this->getRequestVar('name') != '' )
 		{
@@ -164,7 +164,7 @@ class UserAction extends Action
 	/**
 	 * Aendern des Kennwortes
 	 */
-	function pwchange()
+	function pwAction()
 	{
 		global $conf;
 
@@ -181,12 +181,12 @@ class UserAction extends Action
 		if ( strlen($pw1)<intval($conf['security']['password']['min_length']) )
 		{
 			$this->addValidationError('password1');
-			$this->callSubAction('pw');
+			return;
 		}
 		elseif	( $pw1 != $pw2 )
 		{
 			$this->addValidationError('password2');
-			$this->callSubAction('pw');
+			return;
 		}
 		else
 		{
@@ -224,7 +224,7 @@ class UserAction extends Action
 	/**
 	 * Eigenschaften des Benutzers anzeigen
 	 */
-	function edit()
+	function editView()
 	{
 		$this->setTemplateVars( $this->user->getProperties() );
 
@@ -234,7 +234,6 @@ class UserAction extends Action
 
 	function memberships()
 	{
-		
 	}
 
 	
@@ -295,7 +294,7 @@ class UserAction extends Action
 	/**
 	 * Aendern des Kennwortes
 	 */
-	function pw()
+	function pwView()
 	{
 		$this->setTemplateVars( $this->user->getProperties() );
 	}
@@ -395,7 +394,7 @@ class UserAction extends Action
 				return !readonly() && count($this->user->getOtherGroups()) > 0;
 
 			case 'groups':
-				return !readonly() && count($this->user->getGroups()) > 0;
+				return !readonly() && count(Group::getAll()) > 0;
 	
 			case 'pw':
 				return    !readonly()

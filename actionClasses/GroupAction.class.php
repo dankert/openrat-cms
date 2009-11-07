@@ -50,7 +50,7 @@ class GroupAction extends Action
 
 
 
-	function delete()
+	function removeAction()
 	{
 		if   ( $this->hasRequestVar('confirm') )
 		{
@@ -66,14 +66,14 @@ class GroupAction extends Action
 	
 	
 	
-	function remove()
+	function removeView()
 	{
 		$this->setTemplateVars( $this->group->getProperties() );
 	}
 	
 	
 	
-	function save()
+	function editAction()
 	{
 		if	( $this->getRequestVar('name') != '' )
 		{
@@ -91,12 +91,12 @@ class GroupAction extends Action
 	}
 
 
-	function add()
+	function addView()
 	{
 	}
 	
 	
-	function addgroup()
+	function addAction()
 	{
 		if	( $this->getRequestVar('name') != '')
 		{
@@ -182,7 +182,7 @@ class GroupAction extends Action
 	}
 
 
-	function edit()
+	function editView()
 	{
 		$this->setTemplateVars( $this->group->getProperties() );
 	}

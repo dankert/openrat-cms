@@ -6,28 +6,19 @@ goto=listing
 
 [add]
 menu=listing
-target=addgroup
-
-[addgroup]
-goto=listing
+write=true
 
 [listing]
 menu=listing
 
 [remove]
 menu=edit
-target=delete
-
-[delete]
-goto=listing
+write=true
 
 [edit]
 menu=edit
 editable=true
-target=save
-
-[save]
-goto=listing
+write=true
 
 [deluser]
 goto=users
