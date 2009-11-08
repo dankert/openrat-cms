@@ -32,7 +32,7 @@ class Ftp
 	var $verb;
 	var $url;
 	var $log = array();
-	var $mode=FTP_ASCII;
+
 	var $passive = false;
 	
 	var $ok    = true;
@@ -149,7 +149,7 @@ class Ftp
 	 * @param String Ziel
 	 * @param int FTP-Mode (BINARY oder ASCII)
 	 */
-	function put( $source,$dest,$mode=FTP_BINARY )
+	function put( $source,$dest )
 	{
 		if	( ! $this->ok )
 			return;
@@ -159,8 +159,21 @@ class Ftp
 		$dest = $this->path.'/'.$dest;
 		
 		$this->log .= "Copying file: $source -&gt; $dest ...\n";
+		
+		$mode = FTP_BINARY;
+		$p = strrpos( basename($dest),'.' ); // Letzten Punkt suchen
 
-		if   ( !@ftp_put( $this->verb,$dest,$source,$this->mode ) )
+		if   ($p!==false) // Wennn letzten Punkt gefunden, dann dort aufteilen
+		{
+			$extension = substr( basename($dest),$p+1 );
+			$type = config('mime-types',$extension);
+			if	( substr($type,0,5) == 'text/')
+				$mode = FTP_ASCII;
+		}
+		
+		Logger::debug("FTP PUT target:$dest mode:".(($mode==FTP_ASCII)?'ascii':'binary'));
+
+		if   ( !@ftp_put( $this->verb,$dest,$source,$mode ) )
 		{
 			if	( !$this->mkdirs( dirname($dest) ) )
 				return; // Fehler.

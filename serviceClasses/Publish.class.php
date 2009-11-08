@@ -191,16 +191,10 @@ class Publish
 		{
 			$dest   = $this->local_destdir.'/'.$dest_filename;
 			
-			// Nicht kopieren, wenn
-			// - Quelldatei nicht neuer als die Zieldatei
-			if	( is_file($dest) &&
-				  filemtime($source) <= filemtime($dest)   )
-				  return;
-			 
 			if   (!@copy( $source,$dest ));
 			{
 				if	( ! $this->mkdirs( dirname($dest) ) )
-					return;
+					return;  // Fehler bei Verzeichniserstellung, also abbrechen.
 		
 				if   (!@copy( $source,$dest ))
 				{
@@ -208,13 +202,13 @@ class Publish
 					$this->log[] = 'failed copying local file:';
 					$this->log[] = 'source     : '.$source;
 					$this->log[] = 'destination: '.$dest;
-					return;
+					return; // Fehler beim Kopieren, also abbrechen.
 				}
 			}
 			
 			if	(!empty($conf['security']['chmod']))
 			{
-				// CHMOD auf der Datei ausgef�hren.
+				// CHMOD auf der Datei ausfuehren.
 				if	( ! @chmod($dest,octdec($conf['security']['chmod'])) )
 				{
 					$this->ok = false;
@@ -227,7 +221,7 @@ class Publish
 		if   ( $this->with_ftp ) // Falls FTP aktiviert
 		{
 			$dest = $dest_filename;
-			$this->ftp->put( $source,$dest,FTP_ASCII );
+			$this->ftp->put( $source,$dest );
 
 			if	( ! $this->ftp->ok )
 			{
