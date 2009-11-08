@@ -84,7 +84,10 @@ class Ftp
 		$this->log[] = 'Connected to FTP server '.$ftp['host'].':'.$ftp['port'];
 		
 		if	( empty($ftp['user']) )
+		{
 			$ftp['user'] = 'anonymous';
+			$ftp['pass'] = 'openrat@openrat.de';
+		}
 			
 		if	( ! ftp_login( $this->verb,$ftp['user'],$ftp['pass'] ) )
 		{
