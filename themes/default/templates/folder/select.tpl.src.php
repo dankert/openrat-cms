@@ -38,6 +38,9 @@ page
 						text key:FOLDER_FLIP_MARK
 			row
 				cell colspan:2
+					fieldset title:message:options
+			row
+				cell colspan:2
 				
 					list list:actionlist extract:true
 						radio name:type value:var:type
