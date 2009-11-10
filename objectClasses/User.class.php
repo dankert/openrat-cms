@@ -518,13 +518,13 @@ SQL
 		// Datenbankbefehl ausfuehren
 		$db->query( $sql );
 		
-		$this->addNewUserGroups(); // Neue Gruppen hinzuf�gen.
+		$this->addNewUserGroups(); // Neue Gruppen hinzufuegen.
 	}
 
 	
 
 	/**
-	 * Zu einem neuen Benutzer automatisch Gruppen hinzuf�gen.
+	 * Zu einem neuen Benutzer automatisch Gruppen hinzufuegen.
 	 * Diese Methode wird automatisch in "add()" aufgerufen.
 	 */
 	function addNewUserGroups()
@@ -538,7 +538,7 @@ SQL
 		$db = db_connection();
 
 		$groupNames = "'".implode("','",$groupNames)."'";
-		$sql = new Sql("SELECT id FROM {t_group} WHERE name IN($groupNames})");
+		$sql = new Sql("SELECT id FROM {t_group} WHERE name IN($groupNames)");
 		$groupIds = array_unique( $db->getCol($sql) );
 		
 		// Wir brauchen hier nicht weiter pr�fen, ob der Benutzer eine Gruppe schon hat, denn
