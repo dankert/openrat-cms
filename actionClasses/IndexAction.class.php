@@ -60,12 +60,20 @@ class IndexAction extends Action
 
 	function setDefaultDb()
 	{
-		global $conf;
-
-		if	( !isset($conf['database']['default']) )
-			die('default-database not set');
-
-		$dbid = $conf['database']['default'];
+		if	( $this->hasRequestVar(REQ_PARAM_DATABASE_ID) )
+		{
+			$dbid = $this->getRequestVar(REQ_PARAM_DATABASE_ID);
+		}
+		else
+		{
+			global $conf;
+	
+			if	( !isset($conf['database']['default']) )
+				die('default-database not set');
+	
+			$dbid = $conf['database']['default'];
+		}
+		
 		$this->setDb( $dbid );
 	}
 
@@ -133,11 +141,7 @@ class IndexAction extends Action
 		{
 			// Login war erfolgreich!
 			$user->load();
-//			$user->loadProjects();
-			//$user->loadRights();
 			$user->setCurrent();
-//			$user->loginDate = time();
-//			Session::setUser( $user );
 			Logger::info( 'login successful' );
 
 			return true;
@@ -145,7 +149,6 @@ class IndexAction extends Action
 		else
 		{
 			Logger::info( "login for user $name failed" );
-			//$SESS['loginmessage'] = lang('USER_LOGIN_FAILED');
 
 			return false;
 		}
@@ -302,6 +305,7 @@ class IndexAction extends Action
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
 
+		// Den Benutzernamen aus dem Client-Zertifikat lesen und in die Loginmaske eintragen. 
 		$ssl_user_var = $conf['security']['ssl']['user_var'];
 		if	( !empty($ssl_user_var) )
 		{
@@ -314,14 +318,17 @@ class IndexAction extends Action
 				exit;
 			}
 			
-//			Html::debug($username);
+			// Benutzername ist in Eingabemaske unveränderlich
 			$this->setTemplateVar('force_username',$username);
 		}
 
+		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,'num') );
+		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,'num') );
+		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,'num') );
+		$this->setTemplateVar('languageid',$this->getRequestVar('languageid','num') );
+				
 		$this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
 		$this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
-		$this->setTemplateVar('loginmessage',$this->getSessionVar('loginmessage'));
-		$this->setSessionVar('loginmessage','');
 	}
 
 
@@ -809,56 +816,55 @@ class IndexAction extends Action
 		if   ( ! is_object($user) )
 		{
 			$this->callSubAction('show');
+			return;
 		}
 
 		$this->evaluateRequestVars( array('projectid'=>$this->getRequestId()) );
-
-		$project  = Session::getProject();
-		$language = Session::getProjectLanguage();
 		
-		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
 	}
 
 
 	function object()
 	{
-		$this->evaluateRequestVars( array('objectid'=>$this->getRequestId()) );
-
 		$user = Session::getUser();
-
 		if   ( ! is_object($user) )
 		{
 			$this->callSubAction('show');
 			return;
 		}
+		
+		$this->evaluateRequestVars( array('objectid'=>$this->getRequestId()) );
 
-		$user->loadRights( $project->projectid,$language->languageid );
 		Session::setUser( $user );
 	}
 
 
 	function language()
 	{
-		$this->evaluateRequestVars( array(REQ_PARAM_LANGUAGE_ID=>$this->getRequestId()) );
-
 		$user = Session::getUser();
-		$project  = Session::getProject();
-		$language = Session::getProjectLanguage();
-		$user->loadRights( $project->projectid,$language->languageid );
-		Session::setUser( $user );
+		if   ( ! is_object($user) )
+		{
+			$this->callSubAction('show');
+			return;
+		}
+		
+		$this->evaluateRequestVars( array(REQ_PARAM_LANGUAGE_ID=>$this->getRequestId()) );
 	}
 
 
 	function model()
 	{
+		$user = Session::getUser();
+		if   ( ! is_object($user) )
+		{
+			$this->callSubAction('show');
+			return;
+		}
+		
 		$this->evaluateRequestVars( array(REQ_PARAM_MODEL_ID=>$this->getRequestId()) );
 
 		$user     = Session::getUser();
-		$project  = Session::getProject();
-		$language = Session::getProjectLanguage();
-		$user->loadRights( $project->projectid,$language->languageid );
-		Session::setUser( $user );
 	}
 	
 
@@ -879,6 +885,18 @@ class IndexAction extends Action
 				$this->setDb($vars[REQ_PARAM_DATABASE_ID]);
 			else
 				die('no database available.');
+		}
+		else
+		{
+			// Prüft, ob die übergebene Datenbank-Id mit der
+			// aktuellen übereinstimmt.
+			// Falls nicht, muss ein Re-Login erfolgen. 
+			if	( isset($vars[REQ_PARAM_DATABASE_ID]) )
+				if	( $db->id != $vars[REQ_PARAM_DATABASE_ID] )
+				{
+					$this->callSubAction('show');
+					return;
+				}
 		}
 		
 
@@ -1058,7 +1076,7 @@ class IndexAction extends Action
 					break;
 					
 				default:
-					die('unknown auth-type: '.$conf['security']['login']['type'] );
+					Http::serverError('Unknown auth-type: '.$conf['security']['login']['type'].'. Please check the configuration setting /security/login/type' );
 			}
 		}
 		
