@@ -322,23 +322,23 @@ else
 // Aufruf der n�chsten Subaction (falls vorhanden)
 if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 {
-	/* Führt zu Problemen beim Login sowie der Anzeige von Notices.
+	/* Achtung: Redirect fuehrt zu Problemen beim Login sowie der Anzeige von Notices */
 	if	( $conf['interface']['redirect'] )
 	{
 		// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
-		// im nächste Request die Eingabedaten fehlen.
+		// im naechsten Request die Eingabedaten fehlen.
 		if	( empty($do->templateVars['errors']) )
 		{
 			$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
 			header( 'HTTP/1.0 303 See other');
-			// Absoluten Pfad kann auch der Client erg�nzen.
+			// Absoluten Pfad kann auch der Client ergaenzen.
 			header( 'Location: '.Html::url($action,$do->actionConfig[$do->subActionName]['goto'],$do->getRequestId()) );
 			exit;
 		}
 	}
-	*/
 	
 	$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
+
 	$do->subActionName = $subActionName;
 	$subaction = $subActionName;
 
@@ -349,7 +349,16 @@ if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 	}
 	
 	Logger::trace("controller is calling next subaction '$subaction'");
-	$do->$subaction();
+	// Alias-Methode aufrufen.
+	if	( isset($do->actionConfig[$subActionName]['write']) )
+	{
+		$subActionView = $subActionName.'View';
+		$do->$subActionView();
+	}
+	else
+	{
+		$do->$subaction();
+	}
 }
 
 $do->setMenu(); // Menue erzeugen
