@@ -462,7 +462,10 @@ class MainmenuAction extends Action
 		{
 			$this->setTemplateVar('text',lang('GLOBAL_PROJECTS') );
 		}
-
+		
+		if	( count( Project::getAllProjectIds() ) > 0 )
+			$this->addSubAction('listing');
+		
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','projectid');
 	}
