@@ -342,6 +342,9 @@ class Action
 			
 		if	(isset($this->actionConfig[$this->subActionName]['target']))
 			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
+		else
+			$targetSubActionName = $this->subActionName;
+		
 
 		if	( isset($this->actionConfig[$this->subActionName]['menu']))
 			$windowTitle = 'menu_title_'.$this->actionName.'_'.$this->actionConfig[$this->subActionName]['menu'];
