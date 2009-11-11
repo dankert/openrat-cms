@@ -23,16 +23,11 @@ write=true
 [memberships]
 goto=groups
 
-; Anzeige der Gruppenzugehoerigkeiten
+; Gruppenzugehoerigkeiten
 [groups]
 menu=memberships
 editable=true
-target=savegroups
-
-; Speichern der Gruppenzugehoerigkeiten
-[savegroups]
-menu=memberships
-goto=groups
+write=yes
 
 [pw]
 menu=pw

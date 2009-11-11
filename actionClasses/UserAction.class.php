@@ -237,11 +237,8 @@ class UserAction extends Action
 	}
 
 	
-	function groups()
+	function groupsView()
 	{
-		// Mitgliedschaften
-//		$this->setTemplateVar('memberships',$this->user->getGroups());
-		
 		$gruppenListe = array();
 		
 		$allGroups  = Group::getAll();
@@ -267,7 +264,7 @@ class UserAction extends Action
 	}
 
 
-	function savegroups()
+	function groupsAction()
 	{
 		$allGroups  = Group::getAll();
 		$userGroups = $this->user->getGroups();

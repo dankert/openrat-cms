@@ -263,8 +263,10 @@ class MainmenuAction extends Action
 	{
 		global $conf;
 		
-		//$this->addSubaction('listing');
 		$this->addSubaction('add'    );
+		
+		// Liste immer anzeigen, da es ja mind. 1 Benutzer gibt.
+		$this->addSubaction('listing');
 
 		if	( $this->getRequestId() != 0 )
 		{

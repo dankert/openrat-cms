@@ -202,18 +202,56 @@ class GroupAction extends Action
 	 * Liste aller Benutzer in dieser Gruppe.
 	 *
 	 */
-	function users()
+	function usersView()
 	{
 		// Mitgliedschaften ermitteln
 		//
 		$userliste = array();
 		
-		foreach( $this->group->getUsers() as $userid=>$name )
+		$allUsers = User::listAll();
+		
+		$actualGroupUsers = $this->group->getUsers();
+		
+		foreach( $allUsers as $id=>$name )
 		{
-			$userliste[$userid] = array('name'       => $name,
-			                            'delete_url' => Html::url('group','deluser',$this->getRequestId(),array('userid'=>$userid)));
+			$hasUser = array_key_exists($id,$actualGroupUsers);
+			$varName  = 'user'.$id;
+			$userliste[$id] = array('name'       => $name,
+			                        'id'         => $id,
+			                        'var'        => $varName,
+			                        'member'     => $hasUser
+			                        );
+			$this->setTemplateVar($varName,$hasUser);
 		}
 		$this->setTemplateVar('memberships',$userliste);
+
+		global $conf;
+		if	($conf['security']['authorize']['type']=='ldap')
+			$this->addNotice('user',$this->user->name,'GROUPS_MAY_CONFLICT_WITH_LDAP',OR_NOTICE_WARN);
+	}
+	
+	
+	function usersAction()
+	{
+		$allUsers  = User::listAll();
+		$groupUsers = $this->group->getUsers();
+		
+		foreach( $allUsers as $id=>$name )
+		{
+			$hasUser = array_key_exists($id,$groupUsers);
+			
+			if	( !$hasUser && $this->hasRequestVar('user'.$id) )
+			{
+				$this->group->addUser($id);
+				$this->addNotice('user',$name,'ADDED');
+			}
+
+			if	( $hasUser && !$this->hasRequestVar('user'.$id) )
+			{
+				$this->group->delUser($id);
+				$this->addNotice('user',$name,'DELETED');
+			}
+		}
 	}
 
 	
@@ -298,8 +336,7 @@ class GroupAction extends Action
 				return !readonly();
 					
 			case 'users':
-				// Benutzerliste nur anzeigen, wenn welche vorhanden.
-				return !readonly() && count($this->group->getUsers()) > 0;
+				return true;
 			case 'adduser':
 				// Benutzer k�nnen nur hinzugef�gt werden, wenn noch nicht alle
 				// in der Gruppe sind.

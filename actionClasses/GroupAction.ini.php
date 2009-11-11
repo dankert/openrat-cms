@@ -28,13 +28,8 @@ goto=users
 
 [users]
 menu=memberships
-
-[adduser]
-target=addusertogroup
-menu=memberships
-
-[addusertogroup]
-goto=users
+editable=true
+write=true
 
 [rights]
 menu=rights
@@ -43,5 +38,5 @@ menu=rights
 listing=listing,add
 users=users,adduser
 edit=edit,remove
-memberships=users,adduser
+memberships=users
 rights=rights
