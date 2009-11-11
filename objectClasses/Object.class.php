@@ -625,7 +625,7 @@ SQL
 		$row = $db->getRow($sql);
 
 		if (count($row) == 0)
-			die('fatal: Object::objectLoadRaw(): objectid not found: '.$this->objectid.', SQL='.$sql);
+			die('fatal: Object::objectLoadRaw(): objectid not found: '.$this->objectid.', SQL='.$sql->raw);
 
 		$this->parentid  = $row['parentid' ];
 		$this->filename  = $row['filename' ];
