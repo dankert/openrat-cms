@@ -1,7 +1,4 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
 // Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
 //
@@ -18,66 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.19  2008-03-06 21:10:21  dankert
-// Ausgabe von PHPINFO erm?glichen (es wird phpinfo(); aufgerufen).
-//
-// Revision 1.18  2007-12-22 00:21:41  dankert
-// Funktion f?r Projektbeispiel entfernt.
-//
-// Revision 1.17  2007-12-21 23:27:53  dankert
-// Felder mit Namen versehen. Beim Anlegen von Projekten Beispiel-Projekte ausw?hlen.
-//
-// Revision 1.16  2007-11-17 20:55:41  dankert
-// Fehlerhandling verbessert wenn Projektname nicht eingegeben.
-//
-// Revision 1.15  2007-11-05 20:51:03  dankert
-// Aufruf von "addValidationError(...)" bei Eingabefehlern.
-//
-// Revision 1.14  2007-10-04 21:50:37  dankert
-// Notiz, wenn Projekt gespeichert.
-//
-// Revision 1.13  2007-04-21 11:50:50  dankert
-// Umbenennung von Im- in Export.
-//
-// Revision 1.12  2007-04-16 21:25:41  dankert
-// Neuer Men?punkt im Projektmen?: Import.
-//
-// Revision 1.11  2007/01/21 15:00:03  dankert
-// Parameter TARGETSUBACTION verwenden.
-//
-// Revision 1.10  2006/06/01 20:59:27  dankert
-// Projektwartung: Suche nach verlorenen Dateien.
-//
-// Revision 1.9  2006/06/01 20:07:01  dankert
-// Neue Methode "maintenance"
-//
-// Revision 1.8  2006/01/23 23:10:46  dankert
-// *** empty log message ***
-//
-// Revision 1.7  2004/12/26 20:24:16  dankert
-// Korrektur Abfrage Berechtigungen
-//
-// Revision 1.6  2004/12/19 15:16:02  dankert
-// div. Korrekturen
-//
-// Revision 1.5  2004/12/15 23:25:32  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.4  2004/11/10 22:40:14  dankert
-// Neue Funktion zur Projektauswahl nach dem Login
-//
-// Revision 1.3  2004/05/19 21:12:49  dankert
-// Korrektur listing()
-//
-// Revision 1.2  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**
