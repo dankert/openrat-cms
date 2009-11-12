@@ -273,7 +273,14 @@ class ProjectAction extends Action
 			
 		phpinfo();
 	}
+
 	
+	
+	
+	function info()
+	{
+		$this->setTemplateVar( 'info', $this->project->info() );
+	}
 	
 	
 	
