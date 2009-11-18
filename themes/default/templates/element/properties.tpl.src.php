@@ -9,7 +9,7 @@ page
 					
 						# Subtype ist eine Auswahlliste
 						if present:subtypes
-							selectbox name:subtype list:subtypes
+							selectbox name:subtype list:subtypes addempty:true
 							
 						# Subtype ist ein einfaches Eingabefeld
 						if not:true present:subtypes

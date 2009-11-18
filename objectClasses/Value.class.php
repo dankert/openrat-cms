@@ -647,6 +647,12 @@ SQL
 					$o->load();
 					$inhalt = $o->name;
 				}
+				elseif	($this->element->subtype == 'image_data_uri' )
+				{
+					$file = new File($objectid);
+					$file->load();
+					$inhalt = 'data:'.$file->mimeType().';base64,'.base64_encode($file->loadValue());
+				}
 				else
 				{
 					$inhalt = $this->page->path_to_object( $objectid );

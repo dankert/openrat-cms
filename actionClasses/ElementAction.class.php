@@ -225,8 +225,10 @@ class ElementAction extends Action
 							break;
 
 						case 'link':
-							$subtypes = Array('file,page,link',
+							$subtypes = Array(
 							                  'file',
+							                  'image',
+							                  'image_data_uri',
 							                  'page',
 							                  'link' );
 							$convertToLang = true;

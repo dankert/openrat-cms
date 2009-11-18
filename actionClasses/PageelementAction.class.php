@@ -376,10 +376,15 @@ class PageelementAction extends Action
 	{
 
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
-		if	( empty($this->value->element->subtype) )
-		$types = array('page','file','link'); // Fallback: Alle erlauben :)
+		$type = $this->value->element->subtype;
+		
+		if	( substr($type,0,5) == 'image' )
+			$type = 'file';
+			
+		if	( !in_array($type,array('file','page','link')) )
+			$types = array('file','page','link');
 		else
-		$types = explode(',',$this->value->element->subtype );
+			$types = array($type);
 
 		$objects = array();
 
@@ -405,8 +410,9 @@ class PageelementAction extends Action
 			$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
 
 			if	( $this->getSessionVar('pageaction') != '' )
-			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-			else	$this->setTemplateVar('old_pageaction','show'                            );
+				$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+			else
+				$this->setTemplateVar('old_pageaction','show'                            );
 		}
 
 
