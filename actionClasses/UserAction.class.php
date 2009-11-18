@@ -229,6 +229,27 @@ class UserAction extends Action
 		$this->setTemplateVars( $this->user->getProperties() );
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
+
+		$gravatarConfig = config('interface','gravatar');
+		
+		if	( is_array($gravatarConfig) )
+		{
+			extract($gravatarConfig);
+			
+			if	( isset($enable) && $enable && !empty($this->user->mail) )
+			{
+				$url = 'http://www.gravatar.com/avatar/'.md5($this->user->mail).'?';
+				if	( isset($size))
+					$url .= '&s='.$size;
+				if	( isset($default))
+					$url .= '&d='.$default;
+				if	( isset($rating))
+					$url .= '&r='.$rating;
+					
+				$this->setTemplateVar( 'image', $url );
+			}
+		}
+
 	}
 
 
