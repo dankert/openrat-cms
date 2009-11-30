@@ -99,10 +99,10 @@ class ClassicMenu extends Dynamic
 					// Wenn aktuelle Seite, dann markieren, sonst Link
 					if ( $this->page->objectid == $fp->objectid )
 						// aktuelle Seite
-						$this->outputLn( '<li class="'.$this->csspraefix.$level.'"><strong class="'.$this->csspraefix.$level.'">'.$o->name.'</strong><br/>' );
+						$this->outputLn( '<li class="'.$this->csspraefix.$level.'"><strong class="'.$this->csspraefix.$level.'">'.$o->name.'</strong>' );
 					else
 						// Link erzeugen
-						$this->outputLn( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.$this->pathToObject($fp->objectid).'">'.$o->name.'</a><br/>' );
+						$this->outputLn( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.$this->pathToObject($fp->objectid).'">'.$o->name.'</a>' );
 
 					if	( in_array($o->objectid,array_keys($this->parentFolders)) )
 					{
