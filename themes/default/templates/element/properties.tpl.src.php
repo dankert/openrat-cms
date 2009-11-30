@@ -149,7 +149,7 @@ page
 					cell
 						text text:EL_PROP_DEFAULT_OBJECT
 					cell
-						selectbox name:default_objectid list:objects
+						selectbox name:default_objectid list:objects addempty:true
 
 			if present:code
 				row
