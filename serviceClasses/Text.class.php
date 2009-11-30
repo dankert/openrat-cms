@@ -389,7 +389,7 @@ class Text
 	 */
 	function clean( $eingabe, $erlaubt )
 	{
-		$first  = strtr( $eingabe, $erlaubt, str_repeat('#', strlen($erlaubt)) );
+		$first  = strtr( $eingabe, $erlaubt, str_repeat("\x01", strlen($erlaubt)) );
 		$second = strtr( $eingabe, $first  , str_repeat("\x00", strlen($first )) );
 		return str_replace("\x00",'',$second);
 	}
