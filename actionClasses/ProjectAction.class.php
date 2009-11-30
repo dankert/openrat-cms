@@ -209,15 +209,23 @@ class ProjectAction extends Action
 	 */
 	function maintenanceAction()
 	{
-		if	( !$this->hasRequestVar('ok') )
+		if	( !$this->getRequestVar('type')=='check_files' )
 		{
-			$this->addValidationError('ok');
+			$this->project->checkLostFiles();
+			$this->addNotice('project',$this->project->name,'DONE');
+			$this->setTemplateVar('done',true);
+		}
+		elseif	( !$this->getRequestVar('type')=='clean_old_values' )
+		{
+			$this->project->checkLostFiles();
+			$this->addNotice('project',$this->project->name,'DONE');
+			$this->setTemplateVar('done',true);
+		}
+		else
+		{
+			$this->addValidationError('type');
 			return;
 		}
-		
-		$this->project->checkLostFiles();
-		$this->addNotice('project',$this->project->name,'DONE');
-		$this->setTemplateVar('done',true);
 	}
 
 
