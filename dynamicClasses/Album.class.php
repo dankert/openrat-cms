@@ -34,6 +34,7 @@ class Album extends Dynamic
 	 * @type String
 	 */
 	var $parameters  = Array(
+	'folderid'
 		);
 
 	/**
@@ -41,12 +42,19 @@ class Album extends Dynamic
 	 * @type String
 	 */
 	var $description = 'Creates an album.';
+
+	var $folderid = 0;
 	
 	/**
 	 */
 	function execute()
 	{
-		$folderid = $this->page->parentid;
+		if	( intval($this->folderid)!=0 )
+			$folderid = $this->folderid;
+		else
+			$folderid = $this->page->parentid;
+		//Html::debug($folderid);
+		
 		$f      = new Folder($folderid);
 		
 		$files = $f->getFiles();
