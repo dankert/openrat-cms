@@ -1,9 +1,15 @@
 page
 	form
 		window name:GLOBAL_USER widths:50%,50%
+			if not: empty:image
+				row
+					cell
+					cell
+						newline
+						image url:var:image
 			row
 				cell colspan:2
-					fieldset title:message:NAME	
+					fieldset title:message:NAME
 			row
 				cell
 					text text:user_username

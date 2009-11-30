@@ -134,3 +134,14 @@ url_format= "%s,%s,%d.do"
 ; useful, if you do not want cookies and trans_sid is not installed.
 ; if unsure, set to "false"
 add_sessionid = false
+
+
+
+; Use gravatar images
+; see www.gravator.com for details
+[gravatar]
+
+enable=true
+size=80
+;default=404
+;rating=g
