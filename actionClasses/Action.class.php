@@ -145,14 +145,15 @@ class Action
 				
 			case 'text':
 				$value  = $REQ[ $varName ];
-				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:!"§$%&/()=?._- '.chr(10).chr(13));
+				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:!"§$%&/(){}#=?._- '.chr(10).chr(13));
 				
 			case 'full':
 			default:
 				$value   = $REQ[ $varName ];
 				$allowed = ' ';
-				for ($i =  40; $i <=  59; $i++) $allowed .= chr($i);  // Zahlen 
-				                                $allowed .= '@?&=';
+				for ($i =  40; $i <=  59; $i++) $allowed .= chr($i);  // Zahlen
+				                                $allowed .= chr(10).chr(13);
+				                                $allowed .= '@?&={}#"%';
 				for ($i =  63; $i <=  93; $i++) $allowed .= chr($i);  // ?@ABC
 				                                $allowed .= chr(95);  // _
 				for ($i =  97; $i <= 122; $i++) $allowed .= chr($i);  // abc
