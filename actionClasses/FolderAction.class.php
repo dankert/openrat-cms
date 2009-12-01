@@ -1,7 +1,4 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
 // Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
 //
@@ -18,165 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.52  2009-03-22 21:54:35  dankert
-// Korrektur: Rechteabfrage für Verschieben/Löschen.
-//
-// Revision 1.51  2009-03-22 21:49:08  dankert
-// Subaction "showprop" entfernt, da in "prop" mit aufgegangen.
-//
-// Revision 1.50  2009-03-17 01:43:19  dankert
-// Auch Bilder (wieder) im gleichen Frame anzeigen.
-//
-// Revision 1.49  2009-03-02 23:07:11  dankert
-// Bugfix: Sortieren nach Typ
-//
-// Revision 1.48  2009-02-07 02:41:37  dankert
-// CSS-Klasse für Ordner-Inhalte ermitteln.
-//
-// Revision 1.47  2008-09-11 19:04:39  dankert
-// Korrektur Rueckmeldung.
-//
-// Revision 1.46  2007-12-23 16:05:00  dankert
-// Anzeigen der Ordner-Eigenschaften verbessert.
-//
-// Revision 1.45  2007-11-22 21:21:45  dankert
-// Dateien auch per HTTP-Link anlegen.
-//
-// Revision 1.44  2007-11-15 21:41:59  dankert
-// Warnmeldung, wenn es keine Seitenvorlagen gibt.
-//
-// Revision 1.43  2007-11-08 20:37:59  dankert
-// Warnmeldung, wenn beim L?schen nicht best?tigt wird.
-//
-// Revision 1.42  2007-11-05 20:47:39  dankert
-// Aufruf von "addValidationError(...)" bei Eingabefehlern.
-//
-// Revision 1.41  2007-10-05 23:32:40  dankert
-// Nach dem Ver?ffentlichen auf Fehler abfragen.
-//
-// Revision 1.40  2007-10-02 21:13:44  dankert
-// Men?punkt "Neu" mit direktem Hinzuf?gen von Objekten.
-//
-// Revision 1.39  2007-10-01 21:43:42  dankert
-// Ermitteln der maximalen Dateigroesse bei Uploads.
-//
-// Revision 1.38  2007-07-02 20:14:07  dankert
-// Ordnerinhalte rekursiv l?schen (also samt Unterordnern)
-//
-// Revision 1.37  2007-07-02 19:02:08  dankert
-// Korrektur: Anzeige der letzten ?nderung.
-//
-// Revision 1.36  2006/06/01 19:11:46  dankert
-// Abfragen von Rechten.
-//
-// Revision 1.35  2006/06/01 18:15:30  dankert
-// Implementiert: "kopieren, verschieben, l?schen"
-//
-// Revision 1.34  2006/02/05 11:30:12  dankert
-// Hinzuf?gen: Methode "select()"
-//
-// Revision 1.33  2006/01/29 17:18:58  dankert
-// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
-//
-// Revision 1.32  2006/01/23 23:08:52  dankert
-// Kl. ?nderungen beim Anlegen von Objekten
-//
-// Revision 1.31  2006/01/11 22:50:00  dankert
-// Neue Methode order()
-//
-// Revision 1.30  2005/11/07 22:31:38  dankert
-// Wenn Dateiname=Objekt-Id, dann Dateinamen auf leer setzen.
-//
-// Revision 1.29  2005/01/28 23:05:39  dankert
-// Bei Aenderungen des Verzeichnis-Inhaltes den Timestamp des Verzeichnisses aktualisieren
-//
-// Revision 1.28  2005/01/27 22:21:30  dankert
-// Nach Generierung Systembefehl mit exec() ausf?hren
-//
-// Revision 1.27  2005/01/14 21:40:57  dankert
-// Aufruf von lastModified() fuer Conditional-GET
-//
-// Revision 1.26  2004/12/30 23:11:03  dankert
-// Wenn Root-Folder, dann keine Eigenschaften
-//
-// Revision 1.25  2004/12/30 21:44:23  dankert
-// Nach Speichern der Eigenschaften wieder Eigenschaften aufrufen
-//
-// Revision 1.24  2004/12/29 20:43:30  dankert
-// Kontextsensitives Anzeigen der Veroeffentlichungs-Checkboxen
-//
-// Revision 1.23  2004/12/28 22:58:23  dankert
-// Neuer Schalter fuer "Liveserver aufraeumen"
-//
-// Revision 1.22  2004/12/27 23:26:39  dankert
-// Seite vor dem Loeschen laden
-//
-// Revision 1.21  2004/12/27 23:24:50  dankert
-// Korrektur Html::url(...)
-//
-// Revision 1.20  2004/12/26 20:54:29  dankert
-// Sortierfunktion korrigiert
-//
-// Revision 1.19  2004/12/20 22:31:22  dankert
-// Uebertragen des Benutzers geaendert
-//
-// Revision 1.18  2004/12/19 20:40:51  dankert
-// Korrektur URLs
-//
-// Revision 1.17  2004/12/19 14:53:54  dankert
-// pub2() -> pubnow()
-//
-// Revision 1.16  2004/12/15 23:23:11  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.15  2004/11/29 23:24:36  dankert
-// Korrektur Veroeffentlichung
-//
-// Revision 1.14  2004/11/29 21:09:51  dankert
-// neue Methode pub2()
-//
-// Revision 1.13  2004/11/28 22:59:48  dankert
-// Ausgabe von "notices"
-//
-// Revision 1.12  2004/11/28 21:27:07  dankert
-// Ausgabe von "notices"
-//
-// Revision 1.11  2004/11/28 16:53:51  dankert
-// Korrektur create()
-//
-// Revision 1.10  2004/11/27 13:06:26  dankert
-// Ausgabe von Meldungen
-//
-// Revision 1.9  2004/11/10 22:36:16  dankert
-// Dateioperationen, Verschieben/Kopieren/Verknuepfen von mehreren Objekten in einem Arbeitsschritt
-//
-// Revision 1.8  2004/10/14 22:57:44  dankert
-// Neue Verknuepfungen mit dem Linknamen als Url vorbelegen
-//
-// Revision 1.7  2004/10/13 21:18:50  dankert
-// Neue Links zum Verschieben nach ganz oben/unten
-//
-// Revision 1.6  2004/05/07 21:30:59  dankert
-// Korrektur up_url
-//
-// Revision 1.5  2004/05/07 21:29:16  dankert
-// Url ?ber Html::url erzeugen
-//
-// Revision 1.4  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.3  2004/04/28 20:01:52  dankert
-// Ordner l?schen erm?glichen
-//
-// Revision 1.2  2004/04/24 16:57:13  dankert
-// Korrektur: pub()
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**
@@ -1302,7 +1140,7 @@ class FolderAction extends ObjectAction
 		switch( $name)
 		{
 			case 'createfolder':
-				return !readonly() && $this->folder->hasRight(ACL_CREATE_FOLDER) && count($this->folder->parentObjectFileNames(true,true)) < MAX_FOLDER_DEPTH;
+				return !readonly() && $this->folder->hasRight(ACL_CREATE_FOLDER);
 
 			case 'createfile':
 				return !readonly() && $this->folder->hasRight(ACL_CREATE_FILE);
