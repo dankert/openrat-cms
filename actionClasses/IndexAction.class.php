@@ -42,6 +42,7 @@ class IndexAction extends Action
 
 		$db = new DB( $conf['database'][$dbid] );
 		$db->id = $dbid;
+		$db->start();
 		Session::setDatabase( $db );
 	}
 
