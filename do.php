@@ -198,8 +198,10 @@ if	( is_object( $db ) )
 		Http::sendStatus('503','Service Unavailable','Database is not available: '.$db->error);
 
 	Session::setDatabase( $db );
+	$db->start();
 }
-	
+
+
 if	( !empty($REQ[REQ_PARAM_ACTION]) )
 	$action = $REQ[REQ_PARAM_ACTION];
 else	$action = 'index';
@@ -362,6 +364,7 @@ if	( isset($do->actionConfig[$do->subActionName]['goto']) )
 }
 
 $do->setMenu(); // Menue erzeugen
+
 $do->forward(); // Anzeige rendern
 
 // fertig :)
