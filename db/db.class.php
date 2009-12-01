@@ -67,6 +67,12 @@ class DB
 	 */
 	var $client;
 	
+	/**
+	 * Schalter, ob eine Transaktion begonnen wurde.
+	 * @var boolean
+	 */
+	var $transactionInProgress = false;
+	
 
 	/**
 	 * Kontruktor.
@@ -397,7 +403,10 @@ class DB
 	{
 		if	( @$this->conf['transaction'])
 			if	( method_exists($this->client,'start') )
+			{
+				$this->transactionInProgress = true;
 				$this->client->start();
+			}
 	}
 	
 	
@@ -408,7 +417,8 @@ class DB
 	{
 		if	( @$this->conf['transaction'])
 			if	( method_exists($this->client,'commit') )
-				$this->client->commit();
+				if	( $this->transactionInProgress )
+					$this->client->commit();
 	}
 	
 	/**
@@ -418,7 +428,8 @@ class DB
 	{
 		if	( @$this->conf['transaction'])
 			if	( method_exists($this->client,'rollback') )
-				$this->client->rollback();
+				if	( $this->transactionInProgress )
+					$this->client->rollback();
 	}
 	
 }
