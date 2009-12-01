@@ -892,7 +892,6 @@ SQL
 	function objectDelete()
 	{
 		$db = db_connection();
-		$db->start();
 
 		$sql = new Sql( 'UPDATE {t_element} '.
 		                '  SET default_objectid=NULL '.
@@ -925,8 +924,6 @@ SQL
 		$sql = new Sql('DELETE FROM {t_object} WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$db->query($sql);
-		
-		$db->commit();
 	}
 
 

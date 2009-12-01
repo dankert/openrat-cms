@@ -268,7 +268,6 @@ class Project
 	function save()
 	{
 		$db = db_connection();
-		$db->start();
 
 		$sql = new Sql( <<<SQL
 				UPDATE {t_project}
@@ -293,7 +292,6 @@ SQL
 		$sql->setInt   ('projectid'          ,$this->projectid );
 
 		$db->query( $sql );
-		$db->commit();
 		
 		$rootFolder = new Folder( $this->getRootObjectId() );
 		$rootFolder->load();
@@ -320,7 +318,6 @@ SQL
 	function add()
 	{
 		$db = db_connection();
-		$db->start();
 		
 		$sql = new Sql('SELECT MAX(id) FROM {t_project}');
 		$this->projectid = intval($db->getOne($sql))+1;
@@ -377,8 +374,6 @@ SQL
 		$page->filename   = '';
 		$page->name       = 'OpenRat';
 		$page->add();
-		
-		$db->commit();
 	}
 
 
@@ -386,7 +381,6 @@ SQL
 	function delete()
 	{
 		$db = db_connection();
-		$db->start();
 
 		// Root-Ordner rekursiv samt Inhalten loeschen
 		$folder = new Folder( $this->getRootObjectId() );
@@ -419,8 +413,6 @@ SQL
 		                '  WHERE id= {projectid} ' );
 		$sql->setInt( 'projectid',$this->projectid );
 		$db->query( $sql );
-		
-		$db->commit();
 	}
 	
 	function getDefaultLanguageId()
@@ -683,7 +675,9 @@ EOF
 	
 	
 	
-	// Liefert alle verf?gbaren Projekt-Ids
+	/**
+	 * Liefert alle verf?gbaren Projekt-Ids
+	 */
 	function info()
 	{
 		$info = array();
