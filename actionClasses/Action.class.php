@@ -288,16 +288,27 @@ class Action
 	 */
 	function forward()
 	{
+		$db = db_connection();
+
 		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
+		{
+			if	( is_object( $db ) )
+				$db->commit();
 			exit; // Die Ausgabe ist bereits erfolgt (z.B. Bin�rdateien o. WebDAV)
+		}
 			
 		// Pruefen, ob HTTP-Header gesendet wurden. Dies deutet stark darauf hin, dass eine
 		// PHP-Fehlermeldung ausgegeben wurde. In diesem Fall wird hier abgebrochen.
 		// Weitere Ausgabe wuerde keinen Sinn machen, da wir nicht wissen, was
 		// passiert ist.
 		if	( headers_sent() )
+		{
 			Http::serverError("Some server error messages occured - see above - CMS canceled.");
-			
+		}
+		
+		if	( is_object( $db ) )
+			$db->commit();
+		
 		$expires = substr(gmdate('r'),0,-5).'GMT';
 		header('Expires: '      .$expires );
 		
