@@ -4,8 +4,7 @@
  * Kapselung einer HTTP-Anfrage.<br>
  * Unter Berücksichtigung von RFC 1945.<br>
  *
- * @author $Author$
- * @version $Revision$
+ * @author Jan Dankert
  * @package openrat.services
  */
 class Http
@@ -52,9 +51,7 @@ class Http
 	 */
 	function setURL( $url )
 	{
-//		Html::debug($url,"neue url");
 		$this->url = parse_url($url);
-//		Html::debug($this->url,"direkt nach parse_url");
 
 		if	( empty($this->url['host']) && !empty($this->url['path']) )
 		{
@@ -262,15 +259,6 @@ class Http
 						$this->body .= $line;
 					}
 				}
-//				Html::debug($this->url,"URL");
-//				Html::debug($http_request,"REQUEST komplett");
-//				Html::debug($this->responseHeader);
-//				Html::debug($this->body,'BODY');
-//				echo "<pre>";
-//				echo "REQUEST=".nl2br($http_request);
-//				echo "HEADER=".nl2br(htmlentities(implode("\n",$this->responseHeader)));
-//				echo "BODY=".nl2br(htmlentities($this->body));
-//				echo "</pre>";
 				fclose($fp); // Verbindung brav schließen.
 
 
@@ -380,12 +368,18 @@ class Http
 
 	
 	/**
-	 * Erzeugt einen "HTTP 501 Internal Server Error".
+	 * Server-Fehlermeldung anzeigen.<br>
+	 * 
+	 * Erzeugt einen "HTTP 501 Internal Server Error". Zuätzlich
+	 * wird ein 'rollback' auf der Datenbank ausgeführt.
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
 	function serverError($message)
 	{
+		$db = db_connection();
+		if	( is_object( $db ) )
+			$db->rollback();
 
 		Http::sendStatus(501,'Internal Server Error',$message);
 	}
@@ -393,7 +387,9 @@ class Http
 	
 	
 	/**
-	 * Erzeugt einen "HTTP 501 Internal Server Error".
+	 * Der Benutzer ist nicht autorisiert, eine Aktion auszufuehren.
+	 * Diese Funktion erzeugt einen "HTTP 403 Not Authorized" und das
+	 * Skript wird beendet.
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
