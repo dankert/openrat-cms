@@ -6,7 +6,7 @@ page
 					cell
 					cell
 						newline
-						image url:var:image
+						image url:var:image size:80x80 title:var:fullname
 			row
 				cell colspan:2
 					fieldset title:message:NAME

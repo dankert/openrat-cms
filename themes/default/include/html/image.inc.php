@@ -36,5 +36,11 @@
 /* #IF-ATTR file# */		
 	$attr_tmp_image_file = $image_dir.$attr_file.IMG_ICON_EXT;
 /* #END-IF# */
+
+/* #IF-ATTR title# */		
+	$attr_tmp_title = $attr_title;
+/* #ELSE# */		
+	$attr_tmp_title = basename($attr_tmp_image_file);
+/* #END-IF# */
 	
-?><img alt="<?php echo basename($attr_tmp_image_file); echo ' ('; if (isset($attr_size)) { list($attr_tmp_width,$attr_tmp_height)=explode('x',$attr_size);echo $attr_tmp_width.'x'.$attr_tmp_height; echo')';} ?>" src="<?php echo $attr_tmp_image_file ?>" border="0"<?php if(isset($attr_align)) echo ' align="'.$attr_align.'"' ?><?php if (isset($attr_size)) { list($attr_tmp_width,$attr_tmp_height)=explode('x',$attr_size);echo ' width="'.$attr_tmp_width.'" height="'.$attr_tmp_height.'"';} ?>>
+?><img alt="<?php echo $attr_tmp_title; if (isset($attr_size)) { echo ' ('; list($attr_tmp_width,$attr_tmp_height)=explode('x',$attr_size);echo $attr_tmp_width.'x'.$attr_tmp_height; echo')';} ?>" src="<?php echo $attr_tmp_image_file ?>" border="0"<?php if(isset($attr_align)) echo ' align="'.$attr_align.'"' ?><?php if (isset($attr_size)) { list($attr_tmp_width,$attr_tmp_height)=explode('x',$attr_size);echo ' width="'.$attr_tmp_width.'" height="'.$attr_tmp_height.'"';} ?>>
