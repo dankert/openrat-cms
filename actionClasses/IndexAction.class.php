@@ -39,6 +39,12 @@ class IndexAction extends Action
 
 		if	( !isset($conf['database'][$dbid] ))
 			die( 'unknown DB-Id: '.$dbid );
+			
+		$db = db_connection();
+		if	( is_object($db) )
+		{
+			$db->rollback();
+		}
 
 		$db = new DB( $conf['database'][$dbid] );
 		$db->id = $dbid;
