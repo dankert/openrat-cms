@@ -441,16 +441,21 @@ class ElementAction extends Action
 
 									foreach( get_object_vars($dynEl) as $paramName=>$paramDesc )
 									{
-										if	( in_array($paramName,array('objectid','output','parameters','description')) )
-											continue;
- 
 										if	( isset( $dynEl->$paramName ) )
 										{
+											if	( is_object($dynEl->$paramName))
+												continue;
+											if	( is_array($dynEl->$paramName))
+												continue;
+											if	( in_array($paramName,array('output')))
+												continue;
 											$paramList[$paramName] = $dynEl->$paramName;
 
 											$parameters .= $paramName.':';
 											if	( !empty($old[$paramName]) )
 												$parameters .= $old[$paramName];
+											else
+												$parameters .= $dynEl->$paramName;
 											$parameters .= "\n";
 										}
 									}
