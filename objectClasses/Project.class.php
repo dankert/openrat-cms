@@ -90,6 +90,9 @@ class Project
 	var $content_negotiation;
 	var $cut_index;
 	
+	var $log = array();
+	
+	
 	// Konstruktor
 	function Project( $projectid='' )
 	{
@@ -444,10 +447,20 @@ SQL
 		
 		return $db->getOne( $sql );
 	}
+
+	
+	
+	function checkLimit()
+	{
+		// TODO
+	}
+
 	
 	
 	function checkLostFiles()
 	{
+		$this->log = array();
+		
 		$db = &Session::getDatabase();
 		
 		$sql = new Sql( <<<EOF
@@ -459,20 +472,26 @@ EOF
 );
 		$sql->setInt('projectid',$this->projectid);
 
-		$lostAndFoundFolder = new Folder();
-		$lostAndFoundFolder->projectid = $this->projectid;
-		$lostAndFoundFolder->languageid = $this->getDefaultLanguageId();
-		$lostAndFoundFolder->filename = "lostandfound";
-		$lostAndFoundFolder->name     = 'Lost+found';
-		$lostAndFoundFolder->parentid = $this->getRootObjectId();
-		$lostAndFoundFolder->add();
-
-		foreach( $db->getCol($sql) as $id )
+		$idList = $db->getCol($sql);
+		
+		if	( count( $idList ) > 0 )
 		{
-			echo 'Lost file! moving '.$id.' to lost+found.';
-			$obj = new Object( $id );
-			$obj->setParentId( $lostAndFoundFolder->objectid );
+			$lostAndFoundFolder = new Folder();
+			$lostAndFoundFolder->projectid = $this->projectid;
+			$lostAndFoundFolder->languageid = $this->getDefaultLanguageId();
+			$lostAndFoundFolder->filename = "lostandfound";
+			$lostAndFoundFolder->name     = 'Lost+found';
+			$lostAndFoundFolder->parentid = $this->getRootObjectId();
+			$lostAndFoundFolder->add();
+			
+			foreach( $idList as $id )
+			{
+				$this->log[] = 'Lost file! Moving '.$id.' to lost+found.';
+				$obj = new Object( $id );
+				$obj->setParentId( $lostAndFoundFolder->objectid );
+			}
 		}
+
 	}
 	
 	
