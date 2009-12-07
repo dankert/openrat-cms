@@ -199,7 +199,7 @@ class TemplateEngine
 				return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
 				
 			default:
-				die( get_class($this).': Unknown type "'.$type.'" in attribute. Allowed: var|method|property|message|messagevar|config or none');
+				Http::serverError( get_class($this).': Unknown type "'.$type.'" in attribute. Allowed: var|method|property|message|messagevar|config or none');
 			}
 	}
 	
@@ -320,7 +320,7 @@ class TemplateEngine
 		$elements = parse_ini_file( OR_THEMES_DIR.$conf['interface']['theme'].'/include/elements.ini.'.PHP_EXT);
 
 		if	( !isset($elements[$cmd]) )
-			die( get_class($this).': Parser error, unknown element "'.$cmd.'". Allowed: '.implode(',',array_keys($elements)) );
+			Http::serverError( get_class($this).': Parser error, unknown element "'.$cmd.'". Allowed: '.implode(',',array_keys($elements)) );
 			
 		$checkedAttr = array();
 
@@ -354,7 +354,7 @@ class TemplateEngine
 		if	( count($attr) > 0 )
 		{
 			foreach($attr as $name=>$value)
-				die( get_class($this).': Unknown attribute "'.$name.'" in element "'.$cmd.'". Allowed: '.$elements[$cmd]."\n" );
+				Http::serverError( get_class($this).': Unknown attribute "'.$name.'" in element "'.$cmd.'". Allowed: '.$elements[$cmd]."\n" );
 		}
 		
 		return $checkedAttr;
