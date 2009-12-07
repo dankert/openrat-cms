@@ -418,7 +418,10 @@ class DB
 		if	( @$this->conf['transaction'])
 			if	( method_exists($this->client,'commit') )
 				if	( $this->transactionInProgress )
+				{
 					$this->client->commit();
+					$this->transactionInProgress = false;
+				}
 	}
 	
 	/**
@@ -429,7 +432,10 @@ class DB
 		if	( @$this->conf['transaction'])
 			if	( method_exists($this->client,'rollback') )
 				if	( $this->transactionInProgress )
+				{
 					$this->client->rollback();
+					$this->transactionInProgress = false;
+				}
 	}
 	
 }
