@@ -418,9 +418,78 @@ SQL
 		$sql->setInt    ( 'lastchange_userid',$user->userid  );
 
 		$db->query( $sql );
+		
+		$this->checkLimit();
 	}
 
+	
+	/**
+	 * Pruefen, ob maximale Anzahl von Versionen erreicht.
+	 * In diesem Fall die zu alten Versionen löschen.
+	 */
+	function checkLimit()
+	{
+		$limit = config('content','revision-limit');
+		
+		// Nur ausfuehren, wenn in Konfiguration aktiviert.
+		if	( !$limit['enabled'] )
+			return;
 
+		$db = db_connection();
+
+		$sql = new Sql( <<<SQL
+		SELECT valueid FROM {t_value}
+			                  WHERE elementid  = {elementid}
+			                    AND pageid     = {pageid}
+			                    AND languageid = {languageid}
+			                    AND active  = 0
+			                    AND publish = 0
+SQL
+		);
+		$sql->setInt( 'elementid' ,$this->element->elementid );
+		$sql->setInt( 'pageid'    ,$this->pageid             );
+		$sql->setInt( 'languageid',$this->languageid         );
+		$values = $db->getCol( $sql );
+		
+		if	( count($values) > $limit['min-revisions'] )
+		{
+			$sql = new Sql( <<<SQL
+			DELETE FROM {t_value}
+				                  WHERE elementid  = {elementid}
+				                    AND pageid     = {pageid}
+				                    AND languageid = {languageid}
+				                    AND active  = 0
+				                    AND publish = 0
+				                    AND lastchange_date < {min_date}
+				                    AND id              < {min_id}
+SQL
+			);
+			$sql->setInt('min_date',$limit['max-age']);
+			$sql->setInt('min_id'  ,$values[$limit['min-revisions']-1]);
+			$sql->query();
+		}
+		
+		if	( count($values) > $limit['max-revisions'] )
+		{
+			$sql = new Sql( <<<SQL
+			DELETE FROM {t_value}
+				                  WHERE elementid  = {elementid}
+				                    AND pageid     = {pageid}
+				                    AND languageid = {languageid}
+				                    AND active  = 0
+				                    AND publish = 0
+				                    AND lastchange_date < {min_date}
+				                    AND id              < {min_id}
+SQL
+			);
+			$sql->setInt('min_date',$limit['min-age']);
+			$sql->setInt('min_id'  ,$values[$limit['max-revisions']-1]);
+			$sql->query();
+		}
+	}
+
+	
+	
 	/**
 	 * Diesen Inhalt loeschen
 	 */

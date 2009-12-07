@@ -205,26 +205,24 @@ class ProjectAction extends Action
 
 	/**
 	 * Wartung durchfuehren.
-	 * @return unknown_type
 	 */
 	function maintenanceAction()
 	{
-		if	( !$this->getRequestVar('type')=='check_files' )
+		switch( $this->getRequestVar('type') )
 		{
-			$this->project->checkLostFiles();
-			$this->addNotice('project',$this->project->name,'DONE');
-			$this->setTemplateVar('done',true);
-		}
-		elseif	( !$this->getRequestVar('type')=='clean_old_values' )
-		{
-			$this->project->checkLostFiles();
-			$this->addNotice('project',$this->project->name,'DONE');
-			$this->setTemplateVar('done',true);
-		}
-		else
-		{
-			$this->addValidationError('type');
-			return;
+			case 'check_files':
+				$this->project->checkLostFiles();
+				$this->addNotice('project',$this->project->name,'DONE');
+				break;
+				
+			case 'check_limit':
+				$this->project->checkLimit();
+				$this->addNotice('project',$this->project->name,'DONE');
+				break;
+				
+			default:
+				$this->addValidationError('type');
+				return;
 		}
 	}
 

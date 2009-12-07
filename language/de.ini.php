@@ -1040,3 +1040,5 @@ USER_USERNAME_DESC = "Mit diesem Namen meldet sich der Benutzer am System an"
 USER_YOURPROFILE = "Persönliche Einstellungen"
 VALUE = Inhalt
 WEEK="Woche"
+PROJECT_CHECK_FILES="Integritätsprüfung der Ordnerstruktur"
+PROJECT_CHECK_LIMIT="Entfernen von alten Inhalten aus dem Archiv"
