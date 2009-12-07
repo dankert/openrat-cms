@@ -17,6 +17,8 @@ max_file_size=1500
 ; a) max-age and min-revisions are reached OR
 ; b) max-revisions and min-age are reached
 
+enabled = false
+
 ; max age of values (days)
 max-age = 120
 ; min age of values (days)
