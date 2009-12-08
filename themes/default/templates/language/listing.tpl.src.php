@@ -5,7 +5,7 @@ page
 				cell
 					link url:var:url target:cms_main
 						image file:icon_language
-						text var:name
+						text var:name maxlength:25
 
 				cell
 					text var:isocode

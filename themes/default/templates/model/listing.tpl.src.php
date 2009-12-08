@@ -5,7 +5,7 @@ page
 				cell
 					link url:var:url target:cms_main
 						image file:icon_model
-						text var:name
+						text var:name maxlength:25
 				cell
 					if present:default_url
 						link url:var:default_url target:cms_main_main
