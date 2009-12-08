@@ -419,7 +419,10 @@ SQL
 
 		$db->query( $sql );
 		
-		$this->checkLimit();
+		// Nur ausfuehren, wenn in Konfiguration aktiviert.
+		$limit = config('content','revision-limit');
+		if	( $limit['enabled'] )
+			$this->checkLimit();
 	}
 
 	
@@ -430,20 +433,17 @@ SQL
 	function checkLimit()
 	{
 		$limit = config('content','revision-limit');
-		
-		// Nur ausfuehren, wenn in Konfiguration aktiviert.
-		if	( !$limit['enabled'] )
-			return;
 
 		$db = db_connection();
 
 		$sql = new Sql( <<<SQL
-		SELECT valueid FROM {t_value}
+		SELECT id FROM {t_value}
 			                  WHERE elementid  = {elementid}
 			                    AND pageid     = {pageid}
 			                    AND languageid = {languageid}
-			                    AND active  = 0
-			                    AND publish = 0
+			                    AND active     = 0
+			                    AND publish    = 0
+			                   ORDER BY id
 SQL
 		);
 		$sql->setInt( 'elementid' ,$this->element->elementid );
@@ -458,15 +458,18 @@ SQL
 				                  WHERE elementid  = {elementid}
 				                    AND pageid     = {pageid}
 				                    AND languageid = {languageid}
-				                    AND active  = 0
-				                    AND publish = 0
+				                    AND active     = 0
+				                    AND publish    = 0
 				                    AND lastchange_date < {min_date}
 				                    AND id              < {min_id}
 SQL
 			);
-			$sql->setInt('min_date',$limit['max-age']);
-			$sql->setInt('min_id'  ,$values[$limit['min-revisions']-1]);
-			$sql->query();
+			$sql->setInt( 'elementid' ,$this->element->elementid );
+			$sql->setInt( 'pageid'    ,$this->pageid             );
+			$sql->setInt( 'languageid',$this->languageid         );
+			$sql->setInt( 'min_date'  ,$limit['max-age']*24*60*60);
+			$sql->setInt( 'min_id'    ,$values[count($values)-$limit['min-revisions']]);
+			$db->query($sql);
 		}
 		
 		if	( count($values) > $limit['max-revisions'] )
@@ -476,15 +479,18 @@ SQL
 				                  WHERE elementid  = {elementid}
 				                    AND pageid     = {pageid}
 				                    AND languageid = {languageid}
-				                    AND active  = 0
-				                    AND publish = 0
+				                    AND active     = 0
+				                    AND publish    = 0
 				                    AND lastchange_date < {min_date}
 				                    AND id              < {min_id}
 SQL
 			);
-			$sql->setInt('min_date',$limit['min-age']);
-			$sql->setInt('min_id'  ,$values[$limit['max-revisions']-1]);
-			$sql->query();
+			$sql->setInt( 'elementid' ,$this->element->elementid );
+			$sql->setInt( 'pageid'    ,$this->pageid             );
+			$sql->setInt( 'languageid',$this->languageid         );
+			$sql->setInt( 'min_date'  ,$limit['min-age']*24*60*60);
+			$sql->setInt( 'min_id'    ,$values[count($values)-$limit['max-revisions']]);
+			$db->query($sql);
 		}
 	}
 

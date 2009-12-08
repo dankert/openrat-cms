@@ -208,7 +208,12 @@ class Project
 
 
 	/**
-	 * Ermitteln des Root-Ordners zu diesem Projekt
+	 * Ermitteln des Wurzel-Ordners fuer dieses Projekt.
+	 * 
+	 * Der Wurzelordner ist der einzige Ordnerhat in diesem
+	 * Projekt, der kein Elternelement besitzt.
+	 * 
+	 * @return Objekt-Id des Wurzelordners
 	 */
 	function getRootObjectId()
 	{
@@ -450,9 +455,36 @@ SQL
 
 	
 	
+	/**
+	 * Entfernt nicht mehr notwendige Inhalte aus dem Archiv.
+	 */
 	function checkLimit()
 	{
-		// TODO
+		$root = new Folder( $this->getRootObjectId() );
+		$root->projectid = $this->projectid;
+		
+		$pages = $root->getAllObjectIds( array('page') );
+		$languages = $this->getLanguageIds();
+		
+		foreach( $pages as $objectid )
+		{
+			$page = new Page( $objectid );
+			$page->load();
+			foreach( $page->getElementIds() as $eid )
+			{
+				foreach( $languages as $lid )
+				{
+					//Html::debug($lid,'lid');
+					$value = new Value();
+					$value->element    = new Element($eid);
+					$value->pageid     = $page->pageid;
+					$value->languageid = $lid;
+					
+					$value->checkLimit();
+				}
+			}
+		}
+		
 	}
 
 	

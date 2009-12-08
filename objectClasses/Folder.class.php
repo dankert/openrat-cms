@@ -344,6 +344,15 @@ class Folder extends Object
 	}
 
 
+	
+	/**
+	 * Ermittelt alle Objekte vom gewünschten Typ, die sic in
+	 * diesem Projekt befinden.
+	 * 
+	 * @see objectClasses/Object#getAllObjectIds()
+	 * @param types Array
+	 * @return Liste von Object-Ids
+	 */
 	function getAllObjectIds( $types=array('folder','page','link','file') )
 	{
 //		Html::debug($types,'Typen');
@@ -357,8 +366,18 @@ class Folder extends Object
 		               '          OR is_page  ={is_page}' .
 		               '          OR is_link  ={is_link} )' .
 		               '  ORDER BY orderid ASC' );
-		$project = Session::getProject();
-		$sql->setInt('projectid',$project->projectid);
+		
+		if	(isset($this->projectid))
+		{
+			$projectid = $this->projectid;
+		}
+		else
+		{
+			$project = Session::getProject();
+			$projectid = $project->projectid;
+		}
+		
+		$sql->setInt('projectid',$projectid);
 		$sql->setInt('is_folder',in_array('folder',$types)?1:2);
 		$sql->setInt('is_file'  ,in_array('file'  ,$types)?1:2);
 		$sql->setInt('is_page'  ,in_array('page'  ,$types)?1:2);
