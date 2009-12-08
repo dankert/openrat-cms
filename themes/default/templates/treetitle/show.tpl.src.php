@@ -12,7 +12,7 @@ page class:menu
 							text var:name maxlength:20
 						char type:filesep
 	
-					text var:text title:var:text class:title
+					text var:text title:var:text class:title maxlength:20
 		row
 			# Men�leiste
 			cell class:subaction
