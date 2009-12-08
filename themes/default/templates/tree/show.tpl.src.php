@@ -18,7 +18,7 @@ page class:tree
 					if present:url
 						link url:var:url title:var:desc class:tree target:var:target
 							image icon:var:icon
-							text var:text
+							text var:text maxlength:15
 					else
 						image icon:var:icon
 						text var:text
