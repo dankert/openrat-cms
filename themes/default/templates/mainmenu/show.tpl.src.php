@@ -10,10 +10,11 @@ page class:menu
 					list list:path extract:true value:xy
 	
 						link url:var:url title:var:title class:path target:cms_main
-							text var:name maxlength:20
+							text var:name maxlength:15
 						char type:filesep
 	
-					text var:text title:var:text class:title
+					text var:text title:var:text class:title maxlength:20
+					
 				cell class:menu style::text-align:right;
 					if true:property:search
 						form action:search subaction:quicksearch target:cms_main_main
