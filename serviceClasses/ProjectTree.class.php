@@ -138,7 +138,7 @@ class ProjectTree extends AbstractTree
 			$treeElement = new TreeElement();
 			$treeElement->internalId = $o->objectid;
 			$treeElement->target     = 'cms_main';
-			$treeElement->text       = Text::maxLaenge( 25,$o->name );
+			$treeElement->text       = $o->name;
 			$treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$id;
 
 			if	( $o->desc != '' )
@@ -185,7 +185,7 @@ class ProjectTree extends AbstractTree
 			$treeElement = new TreeElement();
 			$treeElement->internalId = $o->objectid;
 			$treeElement->target     = 'cms_main';
-			$treeElement->text       = Text::maxLaenge( 25,$o->name );
+			$treeElement->text       = $o->name;
 			$treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$o->objectid;
 
 			if	( $o->desc != '' )
