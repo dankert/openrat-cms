@@ -862,6 +862,7 @@ NOTICE_CONCURRENT_VALUE_CHANGE="Während Ihrer Bearbeitung ist dieser Inhalt von 
 NOTICE_COPIED = "wurde kopiert."
 NOTICE_DATABASE_CONNECTION_ERROR="Es konnte keine Verbindung zur Datenbank hergestellt werden."
 NOTICE_DELETED ="wurde gelöscht."
+NOTICE_DONE ="Der Vorgang wurde ausgeführt."
 NOTICE_ERROR = "Bei der Aktion trat ein Fehler auf."
 NOTICE_GROUPS_MAY_CONFLICT_WITH_LDAP="Die in der Benutzerverwaltung eingetragenen Gruppenzugehörigkeiten stehen möglicherweise in Konflikt mit den Gruppenzugehörigkeiten aus dem Verzeichnisdienst. Beim Login ueber den Verzeichnisdienst werden die hier eingetragenenen Gruppenzugehörigkeiten überschrieben."
 NOTICE_IMAGE_RESIZED = "Das Bild wurde geändert."

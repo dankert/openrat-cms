@@ -868,6 +868,7 @@ NOTICE_CONCURRENT_VALUE_CHANGE="While your edit session another user has changed
 NOTICE_COPIED = "was copied"
 NOTICE_DATABASE_CONNECTION_ERROR = "The connection to the database could not be established."
 NOTICE_DELETED = "was deleted"
+NOTICE_DONE ="Finished successful"
 NOTICE_ERROR = "An error occured"
 NOTICE_GROUPS_MAY_CONFLICT_WITH_LDAP="The user-group-relations my conflict with the directory service. Memberships were synchronized at login time."
 NOTICE_IMAGE_RESIZED = "The image was changed"
