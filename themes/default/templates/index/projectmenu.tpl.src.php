@@ -14,7 +14,7 @@ page title:message:MENU_INDEX_PROJECTMENU
 					link url:var:url title:message:TREE_CHOOSE_PROJECT
 						set var:project value:project
 						image type:project
-						text var:name
+						text var:name maxlength:30
 				cell
 //					list list:models key:model_id value:model_name
 //						list list:languages key:language_id value:language_name
