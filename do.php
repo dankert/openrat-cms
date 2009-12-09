@@ -256,6 +256,7 @@ $subactionConfig = $do->actionConfig[$subaction];
 if	( !isset($subactionConfig['guest']) || !$subactionConfig['guest'] )
 	if	( !is_object($do->currentUser) )
 	{
+		Logger::debug('No session and no guest action occured, maybe session expired');
 		Http::notAuthorized( lang('SESSION_EXPIRED') );
 		exit;
 	}
@@ -264,6 +265,7 @@ if	( !isset($subactionConfig['guest']) || !$subactionConfig['guest'] )
 if	( isset($do->actionConfig['admin']) && $do->actionConfig['admin'] )
 	if	( !$do->currentUser->isAdmin )
 	{
+		Logger::debug('Admin action, but user '.$do->currentUser->name.' is not an admin');
 		Http::notAuthorized( lang('SESSION_EXPIRED') );
 		exit;
 	}
