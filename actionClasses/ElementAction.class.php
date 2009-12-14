@@ -525,8 +525,8 @@ class ElementAction extends Action
 							$f = new Folder( $o->parentid );
 							$f->load();
 							$names = $f->parentObjectNames(false,true);
-							foreach( $names as $id=>$name )
-								$names[$id] = Text::maxLength($name,15,'..',STR_PAD_BOTH);
+							foreach( $names as $fid=>$name )
+								$names[$fid] = Text::maxLength($name,15,'..',STR_PAD_BOTH);
 							$objects[ $id ] .= implode( FILE_SEP,$names ); 
 						}
 						
@@ -558,8 +558,8 @@ class ElementAction extends Action
 							$f = new Folder( $o->parentid );
 							$f->load();
 							$names = $f->parentObjectNames(true,true);
-							foreach( $names as $id=>$name )
-								$names[$id] = Text::maxLength($name,15,'..',STR_PAD_BOTH);
+							foreach( $names as $fid=>$name )
+								$names[$fid] = Text::maxLength($name,15,'..',STR_PAD_BOTH);
 							$folders[ $id ] = implode( ' &raquo; ',$names );
 							$folders[ $id ] .= ' &raquo; ';
 						} 
