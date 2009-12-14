@@ -176,7 +176,7 @@ page
 					cell
 						text key:link_target
 					cell
-						selectbox list:objects name:linkobjectid
+						selectbox list:objects name:linkobjectid addempty:true
 						focus field:linkobjectid
 				if true:mode:edit
 					row
