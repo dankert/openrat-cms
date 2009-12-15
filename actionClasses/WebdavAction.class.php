@@ -2,19 +2,28 @@
 
 
 /**
- * Action-Klasse fuer WEBDAV.<br>
+ * Action-Klasse fuer WebDAV.<br>
+ * 
+ * Das virtuelle Ordnersystem dieses CMS kann über das WebDAV-Protokoll
+ * dargestellt werden.
+ * 
+ * Diese Klasse nimmt die Anfragen von WebDAV-Clients entgegen, zerlegt die
+ * Anfrage und erzeugt eine Antwort, die im HTTP-Body zurück übertragen
+ * wird.
  * <br>
  * WebDAV ist spezifiziert in der RFC 2518.<br>
  * Siehe <code>http://www.ietf.org/rfc/rfc2518.txt</code><br>
+ * 
  * Implementiert wird DAV-Level 1 (d.h. ohne LOCK).
  * 
- * @author $Author$
- * @version $Revision$
+ * @author Jan Dankert
  * @package openrat.actions
  */
 
 class WebdavAction extends Action
 {
+	// Zahlreiche Instanzvariablen, die im Konstruktor
+	// beim Zerlegen der Anfrag gefüllt werden.
 	var $defaultSubAction = 'show';
 	var $database;
 	var $depth;
@@ -34,6 +43,11 @@ class WebdavAction extends Action
 	var $maxFileSize;
 	var $webdav_conf;
 
+	
+	/**
+	 * Im Kontruktor wird der Request analysiert und ggf. eine Authentifzierung
+	 * durchgefuehrt.
+	 */
 	function WebdavAction()
 	{
 		if (!defined('E_STRICT')) 
@@ -43,10 +57,8 @@ class WebdavAction extends Action
 		error_reporting(0); // PHP-Fehlermeldungen zerstoeren XML-Dokument, daher ausschalten.
 		
 		// PHP-Fehler ins Log schreiben, damit die Ausgabe nicht zerstoert wird.
-		//set_error_handler('webdavErrorHandler');
-		// PHP5-only?
 		if (version_compare(PHP_VERSION, '5.0.0', '>'))
-			set_error_handler('webdavErrorHandler',E_ERROR | E_WARNING | E_NOTICE);
+			set_error_handler('webdavErrorHandler',E_ERROR | E_WARNING);
 		else
 			set_error_handler('webdavErrorHandler');
 
@@ -54,21 +66,16 @@ class WebdavAction extends Action
 		$this->webdav_conf = $conf['webdav'];
 
 		if	( $this->webdav_conf['compliant_to_redmond'] )
-			header('e'           ); // Extrawurst fuer MS-Clients.
+			header('MS-Author-Via: DAV'           ); // Extrawurst fuer MS-Clients.
 			
 		if	( $this->webdav_conf['expose_openrat'] )
 			header('X-Dav-powered-by: OpenRat CMS'); // Bandbreite verschwenden :)
 
-//		foreach(getallheaders() as $k=>$v)
-//			Logger::debug( 'WEBDAV: REQ_HEADER_'.$k.'='.$v);
-
-		#	echo "error-rep:".error_reporting(0);
-		Logger::debug( 'WEBDAV: URI='.$_SERVER['REQUEST_URI']);
-//		Logger::debug( 'WEBDAV: SCRIPT_NAME='.$_SERVER['SCRIPT_NAME']);
+		Logger::trace( 'WEBDAV: URI='.$_SERVER['REQUEST_URI']);
 		
 		if	( !$conf['webdav']['enable'])
 		{
-			Logger::info( 'WEBDAV is disabled' );
+			Logger::warn( 'WEBDAV is disabled by configuration' );
 			$this->httpStatus('403 Forbidden');
 			exit;
 		}
@@ -77,7 +84,7 @@ class WebdavAction extends Action
 		$this->readonly    = $this->webdav_conf['readonly'];
 		$this->maxFileSize = $this->webdav_conf['max_file_size'];
 		
-		Logger::debug( 'method '.$_GET['subaction'] );
+		Logger::debug( 'WEBDAV method is '.$_GET['subaction'] );
 		
 		$this->headers = getallheaders();
 		/* DAV compliant servers MUST support the "0", "1" and
@@ -96,20 +103,19 @@ class WebdavAction extends Action
 		// Prï¿½fen, ob Benutzer angemeldet ist.
 		$user = $this->getUserFromSession();
 
-		// Authentisierung erzwingen.
-        // for the motivation for not checking OPTIONS requests see 
+		// Authentisierung erzwingen (außer bei Methode OPTIONS).
+        // For the motivation for not checking OPTIONS requests see 
         // http://pear.php.net/bugs/bug.php?id=5363
 		if	( !is_object($user) && $_GET[REQ_PARAM_SUBACTION] != 'options' )
 		{
-			Logger::debug( 'WEBDAV: Need Auth!' );
+			Logger::debug( 'Checking Authentication' );
+			
 			if	( !is_object(Session::getDatabase()) )
 				$this->setDefaultDb();
 				
-			Logger::debug( 'WEBDAV: Need Auth! #2' );
 			$ok = false;
 			if	( isset($_SERVER['PHP_AUTH_USER']) )
 			{
-				Logger::debug( 'WEBDAV: Checking Auth!' );
 				$user = new User();
 				$user->name = $_SERVER['PHP_AUTH_USER'];
 				
@@ -124,8 +130,10 @@ class WebdavAction extends Action
 			
 			if	( !$ok )
 			{
-				Logger::debug( 'WEBDAV: Requesting Auth!' );
-				header('WWW-Authenticate: Basic realm="OpenRat"');
+				// Client ist nicht angemeldet, daher wird nun die
+				// Authentisierung angefordert.
+				Logger::debug( 'Requesting Client to authenticate' );
+				header('WWW-Authenticate: Basic realm="'.OR_TITLE.'"');
 				$this->httpStatus('401 Unauthorized');
 				exit;
 			}
@@ -146,7 +154,7 @@ class WebdavAction extends Action
 		// URL parsen.
 		$uri = substr($_SERVER['REQUEST_URI'],strlen($_SERVER['SCRIPT_NAME']) + $sos);
 
-		Logger::debug( 'URI='.$uri );
+		Logger::debug( 'WebDAV: URI="'.$uri.'"' );
 			
 		$uri = $this->parseURI( $uri );
 		$this->requestType = $uri['type'   ];
@@ -160,7 +168,7 @@ class WebdavAction extends Action
 			$this->fullSkriptName .= '/';	
 
 		/*
-		 * Verzeichnisse mï¿½ssen mit einem '/' enden. Falls nicht, Redirect aussfï¿½hren.
+		 * Verzeichnisse muessen mit einem '/' enden. Falls nicht, Redirect aussfuehren.
 		 * 
 		 * RFC 2518, 5.2 Collection Resources, Page 11:
 		 * "For example, if a client invokes a
@@ -172,7 +180,7 @@ class WebdavAction extends Action
 		 */
 		if	( is_object($this->obj) && $this->obj->isFolder &&  $_GET['subaction']=='get' && substr($_SERVER['REQUEST_URI'],strlen($_SERVER['REQUEST_URI'])-1 ) != '/' )
 		{
-			Logger::debug( 'WEBDAV: Umleitung auf Verzeichnis mit ".../"' );
+			Logger::debug( 'WebDAV: Redirect lame client to slashyfied URL' );
 			
 			header('HTTP/1.1 302 Moved Temporarily');
 			header('Location: '.$_SERVER['REQUEST_URI'].'/');
@@ -190,16 +198,17 @@ class WebdavAction extends Action
 			$this->destination = $this->parseURI( $uri );
 		}
 
-
+		// Den Request-BODY aus der Standardeingabe lesen.
 		$this->request = implode('',file('php://input')); 
-//		Logger::debug( 'WEBDAV: REQ_BODY='.$this->request);
-
-		#Logger::debug( 'Uff' );
-
 	}
 	
 	
-	
+
+	/**
+	 * Falls ein WebDAV-Client keine Cookies setzen kann (was HTTP/1.1 eigentlich
+	 * der Fall sein sollte), kann die Session-Id in die URL eingetragen
+	 * werden. Dies muss in der Konfiguration aktiviert werden.
+	 */
 	function redirectWithSessionId()
 	{
 		if	( $this->webdav_conf['session_in_uri'] )
@@ -212,15 +221,21 @@ class WebdavAction extends Action
 	
 	
 	
+	/**
+	 * Da im WebDAV-Request keine Datenbank-Id angegeben werden kann, benutzen
+	 * wir hier die Standard-Datenbank.
+	 */
 	function setDefaultDb()
 	{
 		global $conf;
 		
 		if	( !isset($conf['database']['default']) )
-			die('default-database not set');
+		{
+			Logger::error('No default database in configuration');
+			$this->httpStatus('500 Internal Server Error - no default-database in configuration');
+		}
 
 		$dbid = $conf['database']['default'];
-			Logger::debug( 'db' );
 
 		$db = new DB( $conf['database'][$dbid] );
 		$db->id = $dbid;
@@ -232,16 +247,16 @@ class WebdavAction extends Action
 	/**
 	 * HTTP-Methode OPTIONS.<br>
 	 * <br>
-	 * Es werden die verfï¿½gbaren Methoden ermittelt und ausgegeben.
+	 * Es werden die verfuegbaren Methoden ermittelt und ausgegeben.
 	 */
 	function options()
 	{
-		Logger::debug('WEBDAV: client wants to see our OPTIONS');
 		header('DAV: 1'); // Wir haben DAV-Level 1.
 		
 		if	 ($this->readonly)
 			header('Allow: OPTIONS, HEAD, GET, PROPFIND');  // Readonly-Modus
 		else
+			// PROPPATCH unterstuetzen wir garnicht, aber lt. Spec sollten wir das.
 			header('Allow: OPTIONS, HEAD, GET, PROPFIND, DELETE, PUT, COPY, MOVE, MKCOL, PROPPATCH');
 
 		$this->httpStatus( '200 OK' );
@@ -393,9 +408,6 @@ class WebdavAction extends Action
 
         printf($format, "Size", "Last modified", "Filename");
 
-/*
-
- */
 		if	( $this->requestType == 'projectlist' )
 		{
 			foreach( Project::getAll() as $projectName )
@@ -414,9 +426,6 @@ class WebdavAction extends Action
 
 			foreach( $objects as $object  )
 			{
-//				echo '<a href="'.$this->fullSkriptName.$object->filename.'/">'.$object->filename.'</a>';
-
-//				       number_format($object->size),
 				printf($format, 
 				       number_format(1),
 				       strftime("%Y-%m-%d %H:%M:%S",$object->lastchangeDate ),
@@ -492,6 +501,10 @@ class WebdavAction extends Action
 		{
 			$this->httpStatus('403 Forbidden' ); // Kein Schreibzugriff erlaubt
 		}
+		elseif  ( !$this->folder->hasRight( ACL_CREATE_FOLDER ) )
+		{
+			$this->httpStatus('403 Forbidden' ); // Benutzer darf das nicht
+		}
 		elseif	( $this->obj == null )
 		{
 			// Die URI ist noch nicht vorhanden
@@ -505,6 +518,7 @@ class WebdavAction extends Action
 		else
 		{
 			// MKCOL ist nicht moeglich, wenn die URI schon existiert.
+			Logger::warn('MKCOL-Request to an existing resource');
 			$this->httpStatus('405 Method Not Allowed' );
 		}
 		exit;
@@ -520,7 +534,6 @@ class WebdavAction extends Action
 		if	( $this->readonly )
 		{
 			$this->httpStatus('403 Forbidden' ); // Kein Schreibzugriff erlaubt
-			//$this->httpStatus('405 Not Allowed' );
 		}
 		else
 		{
@@ -528,6 +541,10 @@ class WebdavAction extends Action
 			{
 				// Nicht existente URIs kann man auch nicht loeschen.
 				$this->httpStatus('404 Not Found' );
+			}
+			elseif  ( ! $this->obj->hasRight( ACL_DELETE ) )
+			{
+				$this->httpStatus('403 Forbidden' ); // Benutzer darf die Resource nicht loeschen
 			}
 			elseif	( $this->obj->isFolder )
 			{
@@ -607,6 +624,10 @@ class WebdavAction extends Action
 				Logger::debug('WEBDAV: COPY request denied, Destination exists. Overwriting is not supported');
 				$this->httpStatus('403 Forbidden');
 			}
+			elseif ( is_object($destinationFolder) && ! $destinationFolder->hasRight( ACL_CREATE_FILE ) )
+			{
+				$this->httpStatus('403 Forbidden' ); // Benutzer darf das nicht
+			}
 			elseif ( is_object($destinationObject) && $destinationObject->isFolder)
 			{
 				Logger::debug('WEBDAV: COPY request denied, Folder-Copy not implemented');
@@ -632,7 +653,6 @@ class WebdavAction extends Action
 				$f->add();
 				$f->copyValueFromFile( $this->obj->objectid );
 				
-				#Logger::debug('WEBDAV: COPY request accepted, Destination: '.tinationObject->filename );
 				Logger::debug('WEBDAV: COPY request accepted' );
 				// Objekt wird in anderen Ordner kopiert.
 				$this->httpStatus('201 Created' );
@@ -665,6 +685,12 @@ class WebdavAction extends Action
 			// Was nicht da ist, laesst sich auch nicht verschieben.
 			$this->httpStatus('404 Not Found' );
 		}
+		elseif( is_object($this->obj) && ! $this->obj->hasRight( ACL_WRITE ) )
+		{
+			// Was nicht da ist, laesst sich auch nicht verschieben.
+			Logger::error('Source '.$this->obj->objectid.' is not writable: Forbidden');
+			$this->httpStatus('403 Forbidden' );
+		}
 		elseif ( $this->destination == null )
 		{
 			Logger::error('WEBDAV: MOVE request, but no "Destination:"-Header');
@@ -684,6 +710,12 @@ class WebdavAction extends Action
 				$this->httpStatus('405 Not Allowed');
 				exit;
 			}
+
+			if	( is_object($destinationFolder) && ! $destinationFolder->hasRight( ACL_CREATE_FILE ) )
+			{
+				Logger::error('Source '.$this->obj->objectid.' is not writable: Forbidden');
+				$this->httpStatus('403 Forbidden' );
+			}
 			
 			if	( $destinationObject != null )
 			{
@@ -699,8 +731,6 @@ class WebdavAction extends Action
 				$this->httpStatus('405 Not Allowed');
 				exit;
 			}
-			
-			Logger::debug( "Vergl.".$this->folder->objectid.' mit '.$destinationFolder->objectid );
 			
 			if	( $this->folder->objectid == $destinationFolder->objectid )
 			{
@@ -721,7 +751,8 @@ class WebdavAction extends Action
 				exit;
 			}
 			
-			$this->httpStatus('500 Internal Server Error - move' );
+			Logger::warn('WEBDAV: MOVE request failed' );
+			$this->httpStatus('500 Internal Server Error' );
 		}
 
 		exit;
@@ -755,8 +786,16 @@ class WebdavAction extends Action
 			// Neue Datei anlegen
 			if	( !$this->webdav_conf['create'] )
 			{
+				Logger::warn('WEBDAV: Creation of files not allowed by configuration' );
 				$this->httpStatus('405 Not Allowed' );
 			}
+			
+			if	( ! $this->folder->hasRight( ACL_CREATE_FILE ) )
+			{
+				$this->httpStatus('403 Forbidden');
+				exit;
+			}
+			
 			$file = new File();
 			$file->filename  = basename($this->fullSkriptName);
 			$file->extension = '';		
@@ -770,16 +809,30 @@ class WebdavAction extends Action
 		}
 		elseif	( $this->obj->isFile )
 		{
+			if	( ! $this->obj->hasRight( ACL_WRITE ) )
+			{
+				Logger::debug('PUT failed, parent folder not writable by user' );
+				$this->httpStatus('403 Forbidden');
+				exit;
+			}
+			
 			// Bestehende Datei ueberschreiben.
 			$file = new File( $this->obj->objectid );
 			$file->saveValue( $this->request );
 			$file->setTimestamp();
 			$this->httpStatus('204 No Content');
+			Logger::debug('PUT ok, file is created' );
 			exit;
+		}
+		elseif	( $this->obj->isFolder )
+		{
+			Logger::error('PUT on folder is not supported, use PROPFIND. Lame client?' );
+			$this->httpStatus('405 Not Allowed' );
 		}
 		else
 		{
-			// Fï¿½r andere Objekttypen (Verzeichnisse, Links, Seiten) ist kein PUT moeglich.
+			// Fuer andere Objekttypen (Links, Seiten) ist kein PUT moeglich.
+			Logger::warn('PUT only available for files, pages and links are ignored' );
 			$this->httpStatus('405 Not Allowed' );
 		}
 		exit;
@@ -790,7 +843,12 @@ class WebdavAction extends Action
 	/**
 	 * WebDav-Methode PROPFIND.
 	 * 
-	 * Diese Methode wird beim Ermitteln von Verzeichnisinhalten verwendet.
+	 * Diese Methode wird
+	 * - beim Ermitteln von Verzeichnisinhalten und
+	 * - beim Ermitteln von Metainformationen zu einer Datei
+	 * verwendet.
+	 * 
+	 * Das Ergebnis wird in einer XML-Zeichenkette geliefert.
 	 */	
 	function propfind()
 	{
@@ -832,25 +890,27 @@ class WebdavAction extends Action
 				if	( $this->obj == null )
 				{
 					// Objekt existiert nicht.
-					Logger::debug( 'WEBDAV: PROPFIND of non-existent object');
+					Logger::trace( 'WEBDAV: PROPFIND of non-existent object');
 					$this->httpStatus('404 Not Found');
 					exit;
-					#$this->multiStatus( array() );
 				}
 				elseif	( $this->obj->isFolder )
 				{
-					Logger::debug( 'WEBDAV: PROPFIND of folder');
-
+					if	( ! $this->obj->hasRight( ACL_READ ))
+					{
+						Logger::debug( 'Folder '.$this->obj->objectid.': access denied');
+						$this->httpStatus('403 Forbidden');
+					}
+					
 					$inhalte = array();
 
 					$objektinhalt = array();
 					$objektinhalt['createdate'    ] = $this->obj->createDate;
 					$objektinhalt['lastchangedate'] = $this->obj->lastchangeDate;
-//					$objektinhalt['name'] = substr($this->fullSkriptName,0,strlen($this->fullSkriptName)-1);
-					$objektinhalt['name'] = $this->fullSkriptName;
-					$objektinhalt['displayname'] = basename($this->fullSkriptName);
-					$objektinhalt['type'] = 'folder';
-					$objektinhalt['size'] = 1;
+					$objektinhalt['name'          ] = $this->fullSkriptName;
+					$objektinhalt['displayname'   ] = basename($this->fullSkriptName);
+					$objektinhalt['type'          ] = 'folder';
+					$objektinhalt['size'          ] = 1;
 					$inhalte[] = $objektinhalt;
 					
 					if	( $this->depth > 0 )
@@ -858,6 +918,9 @@ class WebdavAction extends Action
 						$objects = $this->folder->getObjects();
 						foreach( $objects as $object  )
 						{
+							if	( ! $object->hasRight( ACL_READ ))
+								continue;
+							
 							//$object->loadRaw();
 							$objektinhalt = array();
 							$objektinhalt['createdate'    ] = $object->createDate;
@@ -897,20 +960,19 @@ class WebdavAction extends Action
 							}
 						}
 					}
-					Logger::debug( 'WEBDAV: PROPFIND2');
+					Logger::trace( 'WEBDAV: PROPFIND2');
 					
 //					if	( count($inhalte)==0 )
 //						$inhalte[] = array('createdate'=>0,'lastchangedate'=>0,'name'=>'empty','size'=>0,'type'=>'file');
 						
-					Logger::debug('Anzahl Dateien:'.count($inhalte));
+					Logger::trace('Anzahl Dateien:'.count($inhalte));
 					$this->multiStatus( $inhalte );
 				}
 				else
 				{
 					$object = $this->obj;
-					Logger::debug( 'WEBDAV: PROPFIND of file');
+					Logger::trace( 'WEBDAV: PROPFIND of file');
 					$objektinhalt = array();
-					//$object->loadRaw();
 					$objektinhalt = array();
 					$objektinhalt['name']           = $this->fullSkriptName.'/'.$object->filename.'/';
 					$objektinhalt['displayname']    = $object->filename;
@@ -925,7 +987,8 @@ class WebdavAction extends Action
 				break;
 				
 			default:
-				die('???:'.$this->requestType);
+				Logger::warn('Internal Error, unknown request type: '. $this->requestType);
+				$this->httpStatus('500 Internal Server Error');
 		}
 		
 		exit;
@@ -938,14 +1001,15 @@ class WebdavAction extends Action
 	function proppatch()
 	{
 		// TODO: Multistatus erzeugen.
+		// Evtl. ist '409 Conflict' besser?
 		$this->httpStatus('405 Not Allowed');
-//		$this->httpStatus('409 Conflict');
 		exit;
 	}
 	
 	
 	/**
 	 * Erzeugt einen Multi-Status.
+	 * @access private
 	 */
 	function multiStatus( $files )
 	{
@@ -960,7 +1024,7 @@ class WebdavAction extends Action
 			$response .= $this->getResponse( $file['name'],$file );
 		
 		$response .= '</d:multistatus>';
-		Logger::debug('PROPFIND-Ausgabe: '.$response);
+		Logger::trace('PROPFIND: '.$response);
 
 		$response = utf8_encode($response);
 
@@ -980,7 +1044,7 @@ class WebdavAction extends Action
 		$response .= '<d:href>'.$file.'</d:href>';
 		$response .= '<d:propstat>';
 		$response .= '<d:prop>';
-//		$response .= '<d:source></d:source>';
+		//		$response .= '<d:source></d:source>';
 		$response .= '<d:creationdate>'.date('r',$options['createdate']).'</d:creationdate>';
 		$response .= '<d:displayname>'.$options['displayname'].'</d:displayname>';
 		$response .= '<d:getcontentlength>'.$options['size'].'</d:getcontentlength>';
@@ -1050,7 +1114,7 @@ class WebdavAction extends Action
 				
 				$p = new Project();
 				$p->name = $uriPart;
-				Logger::debug("Projektname: ".$p->name);
+				Logger::trace("Projektname: ".$p->name);
 				$p->loadByName();
 				$ergebnis['project'] = $p;
 				// Das Projekt hat weder Sprache noch Variante gesetzt.
@@ -1060,15 +1124,12 @@ class WebdavAction extends Action
 				$oid = $p->getRootObjectId();
 
 				$f = new Folder($oid);
-//				$ergebnis['folder'] = $f;
 				$ergebnis['object'] = $f;
 				$ergebnis['folder'] = $f;
 			
 			}
 			else
 			{
-				// URI='/project/a'
-				// URI='/project/a/'
 				if	( $ergebnis['object'] == null )
 				{
 					$this->httpStatus('409 Conflict');
@@ -1079,12 +1140,12 @@ class WebdavAction extends Action
 
 				if	( $oid == 0 )
 				{
-					Logger::debug( 'WEBDAV: URL-Teil existiert nicht: '.$uriPart);
+					Logger::trace( 'WEBDAV: URL-Part does not exist: '.$uriPart);
 					$ergebnis['object'] = null;
 				}
 				else
 				{
-					Logger::debug( 'Teil '.$uriPart);
+					Logger::trace( 'Teil '.$uriPart);
 					$o = new Object($oid);
 					$o->load();
 					$ergebnis['object'] = $o;
@@ -1098,8 +1159,6 @@ class WebdavAction extends Action
 			}
 		}
 
-		#Logger::debug( 'WEBDAV: Fertig Parsen der URI');
-		
 		return $ergebnis;
 	 }
 }
@@ -1107,16 +1166,18 @@ class WebdavAction extends Action
 
 
 /**
- * Fehler-Handler fï¿½r WEBDAV.<br>
- * Bei einem Laufzeitfehler ist eine Ausgabe des Fehlers auf der Standardausgabe sinnlos.
- * Daher wird der Fehler nur geloggt.
+ * Fehler-Handler fuer WEBDAV.<br>
+ * Bei einem Laufzeitfehler ist eine Ausgabe des Fehlers auf der Standardausgabe sinnlos,
+ * da der WebDAV-Client dies nicht lesen oder erkennen kann.
+ * Daher wird der Fehler-Handler umgebogen, so dass nur ein Logeintrag sowie ein
+ * Server-Fehler erzeugt wird.
  */
 function webdavErrorHandler($errno, $errstr, $errfile, $errline) 
 {
 	Logger::warn('WEBDAV ERROR: '.$errno.'/'.$errstr.'/file:'.$errfile.'/line:'.$errline);
 
 	// Wir teilen dem Client mit, dass auf dem Server was schief gelaufen ist.	
-	WebdavAction::httpStatus('500 Internal Server Error');
+	WebdavAction::httpStatus('500 Internal Server Error, WebDAV-Request failed with "'.$errstr.'"');
 }
 
 ?>
