@@ -375,13 +375,12 @@ class WebdavAction extends Action
 			header('Content-Transfer-Encoding: binary' );
 			header('Content-Description: '.$file->name );
 	
-			$file->loadValue(); // Bild aus Datenbank laden
-	
-			// Groesse der Datei in Bytes
+			$file->write(); // Bild aus Datenbank laden und in temporäre Datei schreiben
+
+			// Groesse des Bildes in Bytes
 			// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
-			header('Content-Length: '.strlen($file->value) );
-	
-			echo $file->value;
+			header('Content-Length: '.filesize($file->tmpfile()) );
+			readfile( $file->tmpfile() );
 		}
 		exit;
 	}
@@ -869,13 +868,18 @@ class WebdavAction extends Action
 
 				$inhalte[] = $objektinhalt;
 				
-				foreach( Project::getAll() as $projectName )
+				foreach( Project::getAll() as $projectid=>$projectName )
 				{
+					$project = new Project( $projectid );
+					$rootObjectId = $project->getRootObjectId();
+					$folder = new Folder( $rootObjectId );
+					$folder->load();
+					
 					$objektinhalt = array();
 					$z = 30*365.25*24*60*60;
 					$objektinhalt['createdate'    ] = $z;
-					$objektinhalt['lastchangedate'] = $z;
-					$objektinhalt['size'          ] = 1;
+					$objektinhalt['lastchangedate'] = $folder->lastchangeDate;
+					$objektinhalt['size'          ] = $project->size();
 					$objektinhalt['name'          ] = $this->fullSkriptName.$projectName.'/';
 					$objektinhalt['displayname'   ] = $projectName;
 					$objektinhalt['type']           = 'folder';
@@ -910,7 +914,7 @@ class WebdavAction extends Action
 					$objektinhalt['name'          ] = $this->fullSkriptName;
 					$objektinhalt['displayname'   ] = basename($this->fullSkriptName);
 					$objektinhalt['type'          ] = 'folder';
-					$objektinhalt['size'          ] = 1;
+					$objektinhalt['size'          ] = 0;
 					$inhalte[] = $objektinhalt;
 					
 					if	( $this->depth > 0 )
@@ -933,13 +937,15 @@ class WebdavAction extends Action
 								case OR_TYPE_FOLDER:
 									$objektinhalt['name'] = $this->fullSkriptName.$object->filename.'/';
 									$objektinhalt['type'] = 'folder';
-									$objektinhalt['size'] = 1;
+									$objektinhalt['size'] = 0;
 									$inhalte[] = $objektinhalt;
 									break;
 								case OR_TYPE_FILE:
 									$objektinhalt['name'] = $this->fullSkriptName.$object->filename;
 									$objektinhalt['type'] = 'file';
-									$objektinhalt['size'] = 1;
+									$file = new File($object->objectid);
+									$file->load();
+									$objektinhalt['size'] = $file->size;
 									$objektinhalt['mime'] = 'application/x-non-readable';
 									$inhalte[] = $objektinhalt;
 									break;
@@ -960,7 +966,7 @@ class WebdavAction extends Action
 							}
 						}
 					}
-					Logger::trace( 'WEBDAV: PROPFIND2');
+					Logger::trace( 'WEBDAV: PROPFIND-2');
 					
 //					if	( count($inhalte)==0 )
 //						$inhalte[] = array('createdate'=>0,'lastchangedate'=>0,'name'=>'empty','size'=>0,'type'=>'file');
@@ -978,7 +984,9 @@ class WebdavAction extends Action
 					$objektinhalt['displayname']    = $object->filename;
 					$objektinhalt['createdate'    ] = $object->createDate;
 					$objektinhalt['lastchangedate'] = $object->lastchangeDate;
-					$objektinhalt['size'          ] = 0;
+					$file = new File( $this->obj->objectid );
+					$file->load();
+					$objektinhalt['size'          ] = $file->size;
 					$objektinhalt['type'          ] = 'file';
 					
 					
@@ -1091,7 +1099,7 @@ class WebdavAction extends Action
 		                  'folder'  => null,
 		                  'object'  => null  );
 		
-		Logger::debug( 'WEBDAV: Parsen der URI '.$uri);
+		Logger::trace( 'WEBDAV: Parsen der URI '.$uri);
 		$uriParts = explode('/',$uri);
 		
 		$nr = 0;
