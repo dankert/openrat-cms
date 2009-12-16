@@ -241,6 +241,18 @@ class WebdavAction extends Action
 		$db->id = $dbid;
 		Session::setDatabase( $db );
 	}
+
+	
+	
+	function allowed_methods()
+	{
+		
+		if	 ($this->readonly)
+			return array('OPTIONS','HEAD','GET','PROPFIND');  // Readonly-Modus
+		else
+			// PROPPATCH unterstuetzen wir garnicht, aber lt. Spec sollten wir das.
+			return array('OPTIONS','HEAD','GET','PROPFIND','DELETE','PUT','COPY','MOVE','MKCOL','PROPPATCH');
+	}
 	
 	
 	
@@ -252,12 +264,7 @@ class WebdavAction extends Action
 	function options()
 	{
 		header('DAV: 1'); // Wir haben DAV-Level 1.
-		
-		if	 ($this->readonly)
-			header('Allow: OPTIONS, HEAD, GET, PROPFIND');  // Readonly-Modus
-		else
-			// PROPPATCH unterstuetzen wir garnicht, aber lt. Spec sollten wir das.
-			header('Allow: OPTIONS, HEAD, GET, PROPFIND, DELETE, PUT, COPY, MOVE, MKCOL, PROPPATCH');
+		header('Allow: '.implode(', ',$this->allowed_methods()) );
 
 		$this->httpStatus( '200 OK' );
 		exit;
@@ -280,7 +287,18 @@ class WebdavAction extends Action
 		
 		header('HTTP/1.1 '.$status);
 		header('X-WebDAV-Status: '.$status,true);
-		
+
+		// RFC 2616 (HTTP/1.1), Section 10.4.6 "405 Method Not Allowed" says:
+		//   "[...] The response MUST include an
+		//    Allow header containing a list of valid methods for the requested
+		//    resource."
+		// 
+		// RFC 2616 (HTTP/1.1), Section 14.7 "Allow" says:
+		//   "[...] An Allow header field MUST be
+		//     present in a 405 (Method Not Allowed) response."
+		if	( substr($status,0,3) == '405' )
+			header('Allow: '.implode(', ',$this->allowed_methods()) );
+			
 		// Bei Status 200 und 207 folgt Inhalt. Sonst nicht und beenden. 
 		if	( !in_array(substr($status,0,3), array('200','207')) )
 			exit;
