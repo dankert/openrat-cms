@@ -723,6 +723,45 @@ EOF
 		
 		$db_dest->commit();
 	}
+
+	
+
+	/**
+	 * Ermittelt die Anzahl aller Objekte in diesem Projekt.
+	 * @return int Anzahl
+	 */
+	function countObjects()
+	{
+		$db = db_connection();
+		$sql = new Sql( 'SELECT COUNT(*) FROM {t_object} '.
+		                '   WHERE projectid = {projectid}' );
+		$sql->setInt( 'projectid', $this->projectid );
+
+		return $db->getOne( $sql );
+		
+	}
+
+	
+	
+	/**
+	 * Ermittelt die Größe aller Dateien in diesem Projekt.
+	 * @return int Summe aller Dateigroessen
+	 */
+	function size()
+	{
+		$db = db_connection();
+		
+		$sql = new Sql( <<<SQL
+		SELECT SUM(size) FROM {t_file}
+		  LEFT JOIN {t_object}
+		         ON {t_file}.objectid = {t_object}.id
+		      WHERE projectid = {projectid}
+SQL
+);
+		$sql->setInt( 'projectid', $this->projectid );
+
+		return $db->getOne( $sql );
+	}
 	
 	
 	
@@ -733,23 +772,8 @@ EOF
 	{
 		$info = array();
 		
-		$db = db_connection();
-		$sql = new Sql( 'SELECT COUNT(*) FROM {t_object} '.
-		                '   WHERE projectid = {projectid}' );
-		$sql->setInt( 'projectid', $this->projectid );
-
-		$info['count_objects'] = $db->getOne( $sql );
-
-		$sql = new Sql( <<<SQL
-		SELECT SUM(size) FROM {t_file}
-		  LEFT JOIN {t_object}
-		         ON {t_file}.objectid = {t_object}.id
-		      WHERE projectid = {projectid}
-SQL
-);
-		$sql->setInt( 'projectid', $this->projectid );
-
-		$info['sum_filesize'] = number_format($db->getOne( $sql )/1000).' kB';
+		$info['count_objects'] = $this->countObjects();
+		$info['sum_filesize' ] = $this->size();
 		
 		
 		return $info;
