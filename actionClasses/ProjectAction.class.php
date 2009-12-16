@@ -55,6 +55,9 @@ class ProjectAction extends Action
 	
 			$this->addNotice('project',$this->project->name,'SAVED','ok');
 			$this->project->save(); // speichern
+			
+			$root = new Folder( $this->project->getRootObjectId() );
+			$root->setTimestamp();
 		}
 		else
 		{
