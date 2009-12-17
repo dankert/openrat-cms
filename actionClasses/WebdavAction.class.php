@@ -162,6 +162,7 @@ class WebdavAction extends Action
 		$this->obj         = $uri['object' ];
 		$this->project     = $uri['project'];
 
+		Logger::debug('Path: '.gettype($uri['path']));
 		$this->fullSkriptName .= implode('/',$uri['path']);
 		
 		if	( is_object($this->obj) && $this->obj->isFolder )	
@@ -178,9 +179,12 @@ class WebdavAction extends Action
 		 * http://foo.bar/blah/ in it.  In general clients SHOULD use the "/"
 		 * form of collection names."
 		 */
-		if	( is_object($this->obj) && $this->obj->isFolder &&  $_GET['subaction']=='get' && substr($_SERVER['REQUEST_URI'],strlen($_SERVER['REQUEST_URI'])-1 ) != '/' )
+		if	( is_object($this->obj)       &&
+			  $this->obj->isFolder        &&
+			  $_GET['subaction'] == 'get' &&
+			  substr($_SERVER['REQUEST_URI'],strlen($_SERVER['REQUEST_URI'])-1 ) != '/' )
 		{
-			Logger::debug( 'WebDAV: Redirect lame client to slashyfied URL' );
+			Logger::debug( 'WebDAV: Redirecting lame client to slashyfied URL' );
 			
 			header('HTTP/1.1 302 Moved Temporarily');
 			header('Location: '.$_SERVER['REQUEST_URI'].'/');
@@ -267,7 +271,6 @@ class WebdavAction extends Action
 		header('Allow: '.implode(', ',$this->allowed_methods()) );
 
 		$this->httpStatus( '200 OK' );
-		exit;
 	}
 	
 	
@@ -298,10 +301,6 @@ class WebdavAction extends Action
 		//     present in a 405 (Method Not Allowed) response."
 		if	( substr($status,0,3) == '405' )
 			header('Allow: '.implode(', ',$this->allowed_methods()) );
-			
-		// Bei Status 200 und 207 folgt Inhalt. Sonst nicht und beenden. 
-		if	( !in_array(substr($status,0,3), array('200','207')) )
-			exit;
 	}
 	
 	
@@ -331,7 +330,6 @@ class WebdavAction extends Action
 		{
 			$this->httpStatus( '200 OK' );
 		}
-		exit;
 	}
 	
 	
@@ -347,7 +345,7 @@ class WebdavAction extends Action
 		elseif( $this->obj->isPage )
 		{
 			$this->httpStatus( '403 Forbidden' );
-			exit;
+			return;
 			$this->httpStatus( '200 OK' );
 			
 			header('Content-Type: text/html');
@@ -363,7 +361,7 @@ class WebdavAction extends Action
 		elseif( $this->obj->isLink )
 		{
 			$this->httpStatus( '403 Forbidden' );
-			exit;
+			return;
 			$this->httpStatus( '200 OK' );
 			
 			header('Content-Type: text/html');
@@ -400,7 +398,6 @@ class WebdavAction extends Action
 			header('Content-Length: '.filesize($file->tmpfile()) );
 			readfile( $file->tmpfile() );
 		}
-		exit;
 	}
 	
 	
@@ -454,8 +451,6 @@ class WebdavAction extends Action
 		echo '</pre>';
 		echo '</body>';
 		echo '</html>';
-		
-		exit;
 	}
 	
 	
@@ -470,7 +465,6 @@ class WebdavAction extends Action
 	{
 		$this->httpStatus('412 Precondition failed');
 		$this->options();
-		exit;
 	}
 
 
@@ -485,7 +479,6 @@ class WebdavAction extends Action
 	{
 		$this->httpStatus('412 Precondition failed');
 		$this->options();
-		exit;
 	}
 
 
@@ -499,7 +492,6 @@ class WebdavAction extends Action
 	{
 		// Die Methode POST ist bei Webdav nicht sinnvoll.
 		$this->httpStatus('405 Method Not Allowed' );
-		exit;
 	}
 	
 	
@@ -538,7 +530,6 @@ class WebdavAction extends Action
 			Logger::warn('MKCOL-Request to an existing resource');
 			$this->httpStatus('405 Method Not Allowed' );
 		}
-		exit;
 	}
 
 
@@ -567,27 +558,29 @@ class WebdavAction extends Action
 			{
 				$f = new Folder( $this->obj->objectid );
 				$f->deleteAll();
+				$this->httpStatus( true ); // OK
+				Logger::debug('Deleted folder with id '.$this->obj->objectid );
 			}
 			elseif	( $this->obj->isFile )
 			{
 				$f = new File( $this->obj->objectid );
 				$f->delete();
+				$this->httpStatus( true ); // OK
 			}
 			elseif	( $this->obj->isPage )
 			{
 				$p = new Page( $this->obj->objectid );
 				$p->delete();
+				$this->httpStatus( true ); // OK
 			}
 			elseif	( $this->obj->isLink )
 			{
 				$l = new Link( $this->obj->objectid );
 				$l->delete();
+				$this->httpStatus( true ); // OK
 			}
 
-			$this->httpStatus( true ); // OK
 		}
-		
-		exit;
 	}
 
 
@@ -603,7 +596,6 @@ class WebdavAction extends Action
 		{
 			Logger::error('WEBDAV: COPY request, but readonly or no creating');
 			$this->httpStatus('405 Not Allowed' );
-			exit;
 		}
 		elseif( $this->obj == null )
 		{
@@ -725,7 +717,7 @@ class WebdavAction extends Action
 			{
 				Logger::debug('WEBDAV: MOVE request, but "Destination:"-Header mismatch');
 				$this->httpStatus('405 Not Allowed');
-				exit;
+				return;
 			}
 
 			if	( is_object($destinationFolder) && ! $destinationFolder->hasRight( ACL_CREATE_FILE ) )
@@ -738,7 +730,7 @@ class WebdavAction extends Action
 			{
 				Logger::debug('WEBDAV: MOVE request denied, destination exists');
 				$this->httpStatus('412 Precondition Failed');
-				exit;
+				return;
 			}
 			
 			if	( $this->project->projectid != $destinationProject->projectid )
@@ -746,7 +738,7 @@ class WebdavAction extends Action
 				// Verschieben in anderes Projekt nicht moeglich.
 				Logger::debug('WEBDAV: MOVE request denied, project does not match');
 				$this->httpStatus('405 Not Allowed');
-				exit;
+				return;
 			}
 			
 			if	( $this->folder->objectid == $destinationFolder->objectid )
@@ -756,7 +748,7 @@ class WebdavAction extends Action
 				$this->obj->filename = basename($_SERVER['HTTP_DESTINATION']);
 				$this->obj->objectSave(false);
 				$this->httpStatus('201 Created' );
-				exit;
+				return;
 			}
 			
 			if	( $destinationFolder->isFolder )
@@ -765,14 +757,12 @@ class WebdavAction extends Action
 				// Objekt wird in anderen Ordner verschoben.
 				$this->obj->setParentId( $destinationFolder->objectid );
 				$this->httpStatus('201 Created' );
-				exit;
+				return;
 			}
 			
 			Logger::warn('WEBDAV: MOVE request failed' );
 			$this->httpStatus('500 Internal Server Error' );
 		}
-
-		exit;
 	}
 
 
@@ -810,7 +800,7 @@ class WebdavAction extends Action
 			if	( ! $this->folder->hasRight( ACL_CREATE_FILE ) )
 			{
 				$this->httpStatus('403 Forbidden');
-				exit;
+				return;
 			}
 			
 			$file = new File();
@@ -822,7 +812,7 @@ class WebdavAction extends Action
 			$file->value     = $this->request;
 			$file->add();
 			$this->httpStatus('201 Created');
-			exit;
+			return;
 		}
 		elseif	( $this->obj->isFile )
 		{
@@ -830,7 +820,7 @@ class WebdavAction extends Action
 			{
 				Logger::debug('PUT failed, parent folder not writable by user' );
 				$this->httpStatus('403 Forbidden');
-				exit;
+				return;
 			}
 			
 			// Bestehende Datei ueberschreiben.
@@ -839,7 +829,7 @@ class WebdavAction extends Action
 			$file->setTimestamp();
 			$this->httpStatus('204 No Content');
 			Logger::debug('PUT ok, file is created' );
-			exit;
+			return;
 		}
 		elseif	( $this->obj->isFolder )
 		{
@@ -852,7 +842,6 @@ class WebdavAction extends Action
 			Logger::warn('PUT only available for files, pages and links are ignored' );
 			$this->httpStatus('405 Not Allowed' );
 		}
-		exit;
 	}
 	
 	
@@ -914,7 +903,7 @@ class WebdavAction extends Action
 					// Objekt existiert nicht.
 					Logger::trace( 'WEBDAV: PROPFIND of non-existent object');
 					$this->httpStatus('404 Not Found');
-					exit;
+					return;
 				}
 				elseif	( $this->obj->isFolder )
 				{
@@ -1016,8 +1005,6 @@ class WebdavAction extends Action
 				Logger::warn('Internal Error, unknown request type: '. $this->requestType);
 				$this->httpStatus('500 Internal Server Error');
 		}
-		
-		exit;
 	}
 	
 	
@@ -1029,7 +1016,6 @@ class WebdavAction extends Action
 		// TODO: Multistatus erzeugen.
 		// Evtl. ist '409 Conflict' besser?
 		$this->httpStatus('405 Not Allowed');
-		exit;
 	}
 	
 	
