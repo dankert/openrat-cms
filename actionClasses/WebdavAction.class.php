@@ -42,7 +42,8 @@ class WebdavAction extends Action
 	var $readonly;
 	var $maxFileSize;
 	var $webdav_conf;
-
+	var $overwrite = false;
+	
 	
 	/**
 	 * Im Kontruktor wird der Request analysiert und ggf. eine Authentifzierung
@@ -100,6 +101,9 @@ class WebdavAction extends Action
 		if	( isset($this->headers['Destination']) )
 			$this->destination = $this->headers['Destination'];
 
+		if	( isset($this->headers['Overwrite']) )
+			$this->overwrite = $this->headers['Overwrite'] == 'T';
+			
 		// Pr�fen, ob Benutzer angemeldet ist.
 		$user = $this->getUserFromSession();
 
