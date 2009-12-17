@@ -122,6 +122,13 @@ class DB
 		$type = $this->conf['type'];
 		$classname = 'db_'.$type;
 		
+		if	( ! class_exists($classname) )
+		{
+			$this->error     = 'Database type "'.$type.'" is not available';
+			$this->available = false;
+			return false;
+		}
+		
 		$this->client = & new $classname;
 
 		$ok = $this->client->connect( $this->conf );
