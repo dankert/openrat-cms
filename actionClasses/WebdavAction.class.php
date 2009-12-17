@@ -166,7 +166,6 @@ class WebdavAction extends Action
 		$this->obj         = $uri['object' ];
 		$this->project     = $uri['project'];
 
-		Logger::debug('Path: '.gettype($uri['path']));
 		$this->fullSkriptName .= implode('/',$uri['path']);
 		
 		if	( is_object($this->obj) && $this->obj->isFolder )	
