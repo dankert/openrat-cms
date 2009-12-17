@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
-// DaCMS Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// OpenRat Content Management System
+// Copyright (C) 2002-2009 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -25,10 +22,9 @@ define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
 
 
 /**
- * Darstellen einer Datei
+ * Datei.
  *
- * @version $Revision$
- * @author $Author$
+ * @author Jan Dankert
  * @package openrat.objects
  */
 class File extends Object
@@ -410,7 +406,12 @@ class File extends Object
 	}
 
 
-	// Lesen der Datei aus der Datenbank
+	/**
+	 * Lesen der Datei aus der Datenbank.
+	 * 
+	 * Es werden nur die Meta-Daten (Erweiterung, Größe) gelesen. Zum Lesen des
+	 * Datei-Inhaltes muss #loadValue() aufgerufen werden.
+	 */
 	function load()
 	{
 		$db = db_connection();
@@ -433,6 +434,9 @@ class File extends Object
 
 
 
+	/**
+	 * Unwiderrufliches Löschen der Datei aus der Datenbank.
+	 */
 	function delete()
 	{
 		$db = db_connection();
@@ -447,6 +451,7 @@ class File extends Object
 	}
 
 
+	
 	/**
 	 * Stellt anhand der Dateiendung fest, ob es sich bei dieser Datei um ein Bild handelt
 	 */
@@ -455,7 +460,13 @@ class File extends Object
 		return substr($this->mimeType(),0,6)=='image/';
 	}
 
+	
 
+	/**
+	 * Ermittelt die Datei-Endung.
+	 * 
+	 * @return String Datei-Endung
+	 */
 	function extension()
 	{
 		if ($this->extension != '')
@@ -466,7 +477,10 @@ class File extends Object
 	}
 
 
-	// Einen Dateinamen in Dateiname und Extension aufteilen
+	/**
+	 * Einen Dateinamen in Dateiname und Extension aufteilen.
+	 * @param filename Dateiname 
+	 */
 	function parse_filename($filename)
 	{
 		$filename = basename($filename);
@@ -485,6 +499,9 @@ class File extends Object
 	}
 
 
+	/**
+	 * Speichert die Datei-Informationen in der Datenbank.
+	 */
 	function save()
 	{
 		global $SESS;
@@ -519,7 +536,9 @@ EOF
 
 
 	/**
-	 * Lesen der Datei aus der Datenbank.
+	 * Lesen des Inhaltes der Datei aus der Datenbank.
+	 * 
+	 * @return String Inhalt der Datei
 	 */
 	function loadValue()
 	{
@@ -585,6 +604,9 @@ EOF
 	}
 
 
+	/**
+	 * Fügt die Datei der Datenbank hinzu.
+	 */
 	function add()
 	{
 		$db = db_connection();
@@ -631,7 +653,13 @@ EOF
 		}
 		return $this->tmpfile;
 	}
+
 	
+	/**
+	 * Setzt den Zeitstempel der Datei auf die aktuelle Zeit.
+	 * 
+	 * @see objectClasses/Object#setTimestamp()
+	 */
 	
 	function setTimestamp()
 	{
