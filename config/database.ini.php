@@ -26,7 +26,7 @@ default=sample_db_mysql
 ; If you want to use it, just fill out the login data and set 'enabled' to 'true'
 
 enabled    = false                 ; set this to 'true' for using this connection
-comment    = "OpenRat-DB MySQL"    ; comment of this database 
+comment    = "DB MySQL"            ; comment of this database 
 
 type       = mysql                 ;  
 user       = dbuser                ; database user
@@ -71,7 +71,7 @@ readonly = false
 ; If you want to use it, just fill out the login data and set 'enabled' to 'true'
 
 enabled    = false                 ; set this to 'true' for using this connection
-comment    = "OpenRat PG-Example"  ; comment of this database 
+comment    = "DB-PostgreSQL"       ; comment of this database 
 
 type       = postgresql            ; 
 user       = dbuser                ; database user
@@ -99,7 +99,7 @@ cmd = ""
 ; This is EXPERIMENTAL, do not use in production environments
 prepare = false
 
-; Using transactions. Set this to true, if your database is supporting transactions
+; Using transactions. Set this to true, if the MySQL table engine supports transactions
 transaction = false
 
 
@@ -110,9 +110,9 @@ transaction = false
 [sample_db_sqlite]
 
 enabled    = false                    ; set this to 'true' for using this connection
-comment    = "OpenRat SQLite-Example" ; comment of this database 
+comment    = "DB-SQLite"              ; comment of this database 
 
-type       = sqlite                ; 
+type       = sqlite                   ; 
 
 ; Filename of your SQlite database
 filename   = "/local/path/to/your/sqlite/openrat.db"
@@ -130,7 +130,7 @@ cmd = ""
 
 prepare = false
 
-; Due to its embedded background SQLite does NOT support transactions.
+; Set this to true, if you want to use transactions.
 transaction = false
 
 
