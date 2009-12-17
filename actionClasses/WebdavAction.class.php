@@ -360,19 +360,14 @@ class WebdavAction extends Action
 		}
 		elseif( $this->obj->isLink )
 		{
-			$this->httpStatus( '403 Forbidden' );
-			return;
 			$this->httpStatus( '200 OK' );
 			
-			header('Content-Type: text/html');
-			echo '<html><head><title>OpenRat WEBDAV Access</title></head>';
-			echo '<body>';
-			echo '<h1>Link</h1>';
-			echo '<pre>';
-			echo 'No Content available';
-			echo '</pre>';
-			echo '</body>';
-			echo '</html>';
+			header('Content-Type: text/plain');
+			
+			$link = new Link( $this->obj->objectid );
+			$link->load();
+			echo 'url: '.$link->url."\n";
+			echo 'target-id: '.$link->linkedObjectId."\n";
 		}
 		elseif( $this->obj->isFile )
 		{
