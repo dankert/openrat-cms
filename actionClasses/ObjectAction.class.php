@@ -163,6 +163,28 @@ class ObjectAction extends Action
 		$acl->transmit      = ( $this->hasRequestVar('transmit'     ) );
 
 		$acl->add();
+
+		// Falls die Berechtigung vererbbar ist, dann diese sofort an
+		// Unterobjekte vererben.
+		if	( $acl->transmit )
+		{
+			$folder = new Folder( $acl->objectid );
+			$oids = $folder->getObjectIds();
+			foreach( $folder->getAllSubfolderIds() as $sfid )
+			{
+				$subfolder = new Folder( $sfid );
+				$oids = array_merge($oids,$subfolder->getObjectIds());
+			}
+			
+			foreach( $oids as $oid )
+			{
+				$acl->objectid = $oid;
+				$acl->add();
+			}
+		}
+		
+		
+		
 		
 		$this->addNotice('','','ADDED',OR_NOTICE_OK);
 		
