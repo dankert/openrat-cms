@@ -20,10 +20,6 @@ goto=prop
 [delete]
 goto=prop
 
-[remove]
-menu=prop
-target=delete
-
 [rights]
 menu=rights
 action=object
