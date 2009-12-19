@@ -73,7 +73,7 @@
 	#END-IF
 		
 	#IF-ATTR var#
-		$tmp_text = isset($$attr_var)?$$attr_var:'?unset:'.$attr_var.'?';
+		$tmp_text = isset($$attr_var)?$$attr_var:$langF('UNKNOWN');
 	#END-IF
 		
 	#IF-ATTR raw#
