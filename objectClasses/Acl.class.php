@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2009 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,37 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.9  2007-11-05 20:45:03  dankert
-// Neue Methode "getAvailableRights()"
-//
-// Revision 1.8  2004/12/19 15:20:27  dankert
-// Korrektur delete()
-//
-// Revision 1.7  2004/11/28 19:25:51  dankert
-// Anpassen an neue Sprachdatei-Konventionen
-//
-// Revision 1.6  2004/11/28 11:22:55  dankert
-// Speichern einer Berechtigung fuer "alle"
-//
-// Revision 1.5  2004/11/15 21:02:32  dankert
-// Erzeugen einer Bitmaske der Berechtigungsbits
-//
-// Revision 1.4  2004/11/10 22:45:06  dankert
-// Neue Methode: getTrueProperties()
-//
-// Revision 1.3  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.2  2004/04/30 20:36:25  dankert
-// Neu: Freigabe
-//
-// Revision 1.1  2004/04/24 15:15:12  dankert
-// Initiale Version
-//
-// --------------------------------------------------------------------------- 
 
+
+
+// Definition der Berechtigungs-Bits
 define('ACL_READ'         ,1   );
 define('ACL_WRITE'        ,2   );
 define('ACL_PROP'         ,4   );
@@ -62,14 +32,15 @@ define('ACL_CREATE_PAGE'  ,512 );
 define('ACL_GRANT'        ,1024);
 define('ACL_TRANSMIT'     ,2048);
 
+
+
 /**
  * Darstellen einer Berechtigung (ACL "Access Control List")
  * Die Berechtigung zu einem Objekt wird mit einer Liste dieser Objekte dargestellt
  *
  * Falls es mehrere ACLs zu einem Objekt gibt, werden die Berechtigung-Flags addiert.
  *
- * @version $Revision$
- * @author $Author$
+ * @author Jan Dankert
  * @package openrat.objects
  */
 class Acl
@@ -180,7 +151,7 @@ class Acl
 	var $create_file   = false;
 
 	/**
-	  * Verkn?pfung anlegen
+	  * Verknuepfung anlegen
 	  * @type Boolean
 	  */
 	var $create_link   = false;
@@ -205,7 +176,8 @@ class Acl
 
 
 	/**
-	 * Konstruktor
+	 * Konstruktor.
+	 * 
 	 * @param Integer Acl-ID
 	 */
 	function Acl( $aclid = 0 )
@@ -216,7 +188,8 @@ class Acl
 
 
 	/**
-	 * Laden einer ACL inklusive Benutzer-, Gruppen- und Sprachbezeichnungen
+	 * Laden einer ACL inklusive Benutzer-, Gruppen- und Sprachbezeichnungen.
+	 * Zum einfachen Laden sollte #loadRaw() benutzt werden.
 	 */
 	function load()
 	{
@@ -244,7 +217,8 @@ class Acl
 
 
 	/**
-	 * Laden einer ACL (ohne verknuepfte Namen)
+	 * Laden einer ACL (ohne verknuepfte Namen).
+	 * Diese Methode ist schneller als #load().
 	 */
 	function loadRaw()
 	{
@@ -263,7 +237,7 @@ class Acl
 
 
 	/**
-	 * Setzt die Eigenschaften des Objektes mit einer Datenbank-Ergebniszeile
+	 * Setzt die Eigenschaften des Objektes mit einer Datenbank-Ergebniszeile.
 	 *
 	 * @param row Ergebniszeile aus ACL-Datenbanktabelle
 	 */
@@ -289,6 +263,12 @@ class Acl
 		$this->groupid      = intval($row['groupid'   ]);
 	}
 
+	
+	/**
+	 * Erzeugt eine Liste aller Berechtigungsbits dieser ACL.
+	 * 
+	 * @return Array (Schluessel=Berechtigungstyp, Wert=boolean)
+	 */
 	function getProperties()
 	{
 		return Array( 'read'         => true,
@@ -315,6 +295,11 @@ class Acl
 	}
 
 
+	/**
+	 * Erzeugt eine Liste aller möglichen Berechtigungstypen.
+	 * 
+	 * @return 0..n-Array
+	 */
 	function getAvailableRights()
 	{
 		return array( 'read',
@@ -334,11 +319,13 @@ class Acl
 
 
 	/**
-	 * Erzeugt eine Bitmaske mit allen Berechtigungen
+	 * Erzeugt eine Bitmaske mit den Berechtigungen dieser ACL.
+	 * 
+	 * @return Integer Bitmaske
 	 */
 	function getMask()
 	{
-		// intval(boolean) erzeugt numerisch 0 oder 1
+		// intval(boolean) erzeugt numerisch 0 oder 1 :)
 		$this->mask =  ACL_READ;   // immer lesen
 		$this->mask += ACL_WRITE         *intval($this->write        );
 		$this->mask += ACL_PROP          *intval($this->prop         );
@@ -351,11 +338,18 @@ class Acl
 		$this->mask += ACL_CREATE_PAGE   *intval($this->create_page  );
 		$this->mask += ACL_GRANT         *intval($this->grant        );
 		$this->mask += ACL_TRANSMIT      *intval($this->transmit     );
-		Logger::trace('mask of acl'.$this->aclid.': '.$this->mask );
+		
+		Logger::trace('mask of acl '.$this->aclid.': '.$this->mask );
 		return $this->mask;
 	}
 
 
+	/**
+	 * Erzeugt eine Liste aller gesetzten Berechtigungstypen.
+	 * Beispiel: Array (0:'read',1:'write',2:'transmit')
+	 * 
+	 * @return 0..n-Array
+	 */
 	function getTrueProperties()
 	{
 		$erg = array('read');
@@ -375,6 +369,10 @@ class Acl
 	}
 
 
+	
+	/**
+	 * ACL unwiderruflich loeschen.
+	 */
 	function delete()
 	{
 		$db = db_connection();
@@ -392,6 +390,9 @@ class Acl
 	}
 
 
+	/**
+	 * ACL der Datenbank hinzufügen.
+	 */
 	function add()
 	{
 		if	( $this->delete )
@@ -422,7 +423,6 @@ SQL
 			$sql->setInt ('groupid',$this->groupid);
 
 		$sql->setInt('objectid',$this->objectid);
-		//$sql->setBoolean('is_default'   ,$this->isDefault     );
 		$sql->setBoolean('write'        ,$this->write         );
 		$sql->setBoolean('prop'         ,$this->prop          );
 		$sql->setBoolean('create_folder',$this->create_folder );
@@ -442,28 +442,4 @@ SQL
 
 		$db->query( $sql );
 	}
-
-
-//	function getACLsFromUserId( $userid )
-//	{
-//		$db = db_connection();
-//		
-//		$sql = new Sql( 'SELECT id FROM {t_acl} '.
-//		                '  WHERE userid={userid}');
-//		$sql->setInt('userid',$userid);
-//
-//		return $db->getCol( $sql );
-//	}
-//
-//
-//	function getACLsFromGroupId( $groupid )
-//	{
-//		$db = db_connection();
-//		
-//		$sql = new Sql( 'SELECT id FROM {t_acl} '.
-//		                '  WHERE groupid={groupid}' );
-//		$sql->setInt('groupid',$groupid);
-//
-//		return $db->getCol( $sql );
-//	}
 }
