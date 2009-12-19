@@ -12,8 +12,18 @@
 		$attr_id = $this->getRequestId();
 	#END-IF
 		
-	if ($this->isEditable() && !$this->isEditMode())
-		$attr_subaction = $subActionName;
+	if ($this->isEditable())
+	{
+		if	($this->isEditMode())
+		{
+			$attr_method    = 'POST';
+		}
+		else
+		{
+			$attr_method    = 'GET';
+			$attr_subaction = $subActionName;
+		}
+	}
 		
 ?><form name="<?php echo $attr_name ?>"
       target="<?php echo $attr_target ?>"
