@@ -739,7 +739,8 @@ class IndexAction extends Action
 			{
 				foreach( $actionConfig as $subActionName=>$subaction )
 				{
-					if	( is_array($subaction) && !isset($subaction['goto']) && 
+					if	( is_array($subaction) &&
+						  !isset($subaction['goto'  ]) && 
 						  !isset($subaction['direct']) &&
 						  !isset($subaction['action']) &&
 						  !isset($subaction['alias' ]) &&
