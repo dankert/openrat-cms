@@ -45,13 +45,13 @@ class ProjectAction extends Action
 	{
 		if	( $this->getRequestVar('name') != '')
 		{
-			$this->project->name                = $this->getRequestVar('name'               );
-			$this->project->target_dir          = $this->getRequestVar('target_dir'         );
-			$this->project->ftp_url             = $this->getRequestVar('ftp_url'            );
-			$this->project->ftp_passive         = $this->getRequestVar('ftp_passive'        );
-			$this->project->cmd_after_publish   = $this->getRequestVar('cmd_after_publish'  );
-			$this->project->content_negotiation = $this->getRequestVar('content_negotiation');
-			$this->project->cut_index           = $this->getRequestVar('cut_index'          );
+			$this->project->name                = $this->getRequestVar('name'               ,OR_FILTER_ALPHANUM);
+			$this->project->target_dir          = $this->getRequestVar('target_dir'         ,OR_FILTER_RAW     );
+			$this->project->ftp_url             = $this->getRequestVar('ftp_url'            ,OR_FILTER_RAW     );
+			$this->project->ftp_passive         = $this->getRequestVar('ftp_passive'        ,OR_FILTER_RAW     );
+			$this->project->cmd_after_publish   = $this->getRequestVar('cmd_after_publish'  ,OR_FILTER_RAW     );
+			$this->project->content_negotiation = $this->getRequestVar('content_negotiation',OR_FILTER_NUMBER  );
+			$this->project->cut_index           = $this->getRequestVar('cut_index'          ,OR_FILTER_NUMBER  );
 	
 			$this->addNotice('project',$this->project->name,'SAVED','ok');
 			$this->project->save(); // speichern

@@ -24,6 +24,14 @@ define('OR_NOTICE_OK'   ,'ok'     );
 define('OR_NOTICE_WARN' ,'warning');
 define('OR_NOTICE_ERROR','error'  );
 
+define('OR_FILTER_ALPHA'   ,'abc'   );
+define('OR_FILTER_ALPHANUM','abc123');
+define('OR_FILTER_MAIL'    ,'mail'  );
+define('OR_FILTER_TEXT'    ,'text'  );
+define('OR_FILTER_FULL'    ,'full'  );
+define('OR_FILTER_NUMBER'  ,'123'   );
+define('OR_FILTER_RAW'     ,'raw'   );
+
 /**
  * Eltern-Klasse fuer alle Actions.
  *
@@ -136,6 +144,7 @@ class Action
 				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
 				
 			case 'alphanum':
+			case 'abc123':
 				$value  = $REQ[ $varName ];
 				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-');
 				
