@@ -145,3 +145,14 @@ enable=true
 size=80
 ;default=404
 ;rating=g
+
+
+
+; Session-related settings
+[session]
+
+; auto-extend the session while the browser is still open.
+; if 'true', the title frame will be refreshed automatically
+; 1 minute before the session times out.
+; Because this is maybe unsecure, the default setting is 'false'. 
+auto_extend=false

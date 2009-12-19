@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2009 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,24 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
 
 
 /**
- * Actionklasse zum Anzeigen der Titelleiste
- * @author $Author$
- * @version $Revision$
+ * Actionklasse zum Anzeigen der Titelleiste.
+ * 
+ * @author Jan Dankert
  * @package openrat.actions
  */
 class TitleAction extends Action
 {
-	/**
-	 * Standard-Subaction
-	 * @type String
-	 */
-	var $defaultSubAction = 'show';
-
-
 	/**
 	 * Fuellen der Variablen und Anzeigen der Titelleiste
 	 */
@@ -75,6 +64,12 @@ class TitleAction extends Action
 		{
 			$this->setTemplateVar('showtree_url' ,Html::url('index','showtree') );
 			$this->setTemplateVar('showtree_text',lang('GLOBAL_SHOWTREE')       );
+		}
+		
+		if	( config('interface','session','auto_extend') )
+		{
+			$this->setTemplateVar('refresh_url'    ,Html::url('title','show')            );			
+			$this->setTemplateVar('refresh_timeout',ini_get('session.gc_maxlifetime')-60 );			
 		}
 	}
 }
