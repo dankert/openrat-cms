@@ -742,6 +742,7 @@ class IndexAction extends Action
 					if	( is_array($subaction) && !isset($subaction['goto']) && 
 						  !isset($subaction['direct']) &&
 						  !isset($subaction['action']) &&
+						  !isset($subaction['alias' ]) &&
 						  $subActionName != 'menu'            )
 					{
 						$engine = new TemplateEngine();
