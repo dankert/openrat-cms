@@ -35,6 +35,7 @@ menu=show
 
 [reorder]
 menu=show
+goto=order
 
 ; Die Aktionen "rights", "aclform", "addacl" und "delacl" sind
 ; f�r Seiten,Ordner,Links und Dateien identisch.

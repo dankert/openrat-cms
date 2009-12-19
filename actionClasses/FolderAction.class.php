@@ -686,9 +686,6 @@ class FolderAction extends ObjectAction
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
 
 		$this->folder->setTimestamp();
-		
-		// Ordner anzeigen
-		$this->callSubAction('order');
 	}
 
 
