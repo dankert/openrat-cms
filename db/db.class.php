@@ -144,9 +144,9 @@ class DB
 
 				
 		// SQL bei Verbindungsaufbau ausführen.
-		$cmd = $this->conf['connection_sql'];
-		if	( ! empty($cmd) )
+		if	( isset($this->conf['connection_sql']) &&  ! empty($this->conf['connection_sql']) )
 		{
+			$cmd = $this->conf['connection_sql'];
 			$ok = $this->client->query($cmd);
 			
 			if	( ! $ok )
@@ -170,7 +170,7 @@ class DB
 	 */
 	function query( $query )
 	{
-		if	( is_object($query) && $this->conf['prepare'] )
+		if	( is_object($query) && isset($this->conf['prepare']) && $this->conf['prepare'] )
 		{
 			$this->client->clear();
 			$this->client->prepare( $query->raw,$query->param );
