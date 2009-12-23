@@ -25,12 +25,14 @@
 	#ELSE
 		$attr_title = '';
 	#END-IF	
-		
-	#IF-ATTR url#
-		$tmp_url = $attr_url;
-	#ELSE
+
+	$tmp_url = '';
+	#IF-ATTR action#
 		$tmp_url = Html::url($attr_action,$attr_subaction,!empty($attr_id)?$attr_id:$this->getRequestId(),$params);
 	#END-IF
-
+	#IF-ATTR url#
+		$tmp_url = $attr_url;
+	#END-IF
+		
 	
 ?><a<?php if (isset($attr_name)) echo ' name="'.$attr_name.'"'; else echo ' href="'.$tmp_url.(isset($attr_anchor)?'#'.$attr_anchor:'').'"' ?> class="<?php echo $attr_class ?>" target="<?php echo $attr_target ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
