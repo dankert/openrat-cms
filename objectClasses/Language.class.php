@@ -100,12 +100,15 @@ class Language
 		$sql->setInt( 'languageid',$this->languageid );
 
 		$row = $db->getRow( $sql );
-
-		$this->name      =         $row['name'     ];
-		$this->isoCode   =         $row['isocode'  ];
-		$this->projectid = intval( $row['projectid'] );
 		
-		$this->isDefault = ( $row['is_default'] == '1' );
+		if	( count($row) > 0 )
+		{
+			$this->name      =         $row['name'     ];
+			$this->isoCode   =         $row['isocode'  ];
+			$this->projectid = intval( $row['projectid'] );
+			
+			$this->isDefault = ( $row['is_default'] == '1' );
+		}
 	}
 
 
