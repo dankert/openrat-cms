@@ -888,7 +888,7 @@ SQL
 					$inhalt = $transformer->text;
 				}
 	
-				if   ( $this->simple )
+				if   ( $this->page->simple )
 				{
 					$inhalt = strip_tags( $inhalt );
 					$inhalt = str_replace( "\n",'',$inhalt );
@@ -1331,7 +1331,7 @@ SQL
 		                                           'la'=>$this->languageid,
 		                                           'm' =>$this->page->modelid,
 		                                           'pu'=>intval($this->publish),
-		                                           'si'=>intval($this->simple)    ) );
+		                                           'si'=>intval($this->page->simple)    ) );
 		return $filename;
 	}
 	
