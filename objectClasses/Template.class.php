@@ -121,8 +121,10 @@ class Template
 	{
 		$model   = Session::getProjectModel();
 		$project = Session::getProject();
-		$this->modelid   = $model->modelid;
-		$this->projectid = $project->projectid;
+		if	( is_object($model) )
+			$this->modelid   = $model->modelid;
+		if	( is_object($project) )
+			$this->projectid = $project->projectid;
 
 		if   ( is_numeric($templateid) )
 			$this->templateid = $templateid;
