@@ -422,7 +422,7 @@ SQL
 		
 		// Nur ausfuehren, wenn in Konfiguration aktiviert.
 		$limit = config('content','revision-limit');
-		if	( $limit['enabled'] )
+		if	( isset($limit['enabled']) && $limit['enabled'] )
 			$this->checkLimit();
 	}
 
