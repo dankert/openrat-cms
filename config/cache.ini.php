@@ -18,4 +18,4 @@ enable_cache=false
 
 ; Directory for temporary files.
 ; Default=blank (OpenRat uses the system temporary dir)
-tmp_dir=
+tmp_dir=""
