@@ -1134,29 +1134,24 @@ class IndexAction extends Action
 			Session::setElement($element);
 		}
 		
-		$project = Session::getProject();
-
-		if ( $project->projectid == PROJECTID_ADMIN )
-		{
-			$project->name = lang('GLOBAL_ADMINISTRATION');
-			Session::setProject( $project );
-
-			Session::setProjectLanguage( '' );
-			Session::setProjectModel   ( '' );
-			Session::setObject         ( '' );
-		}
-
-		$db      = Session::getDatabase();
-//		$this->setTemplateVar( 'title',$user->name.'@'.$project->name.' ('.$db->conf['comment'].')' );
-//		$this->setTemplateVar( 'title',$project->name.' ('.$db->conf['comment'].')' );
-		$this->setTemplateVar( 'title',$project->name );
-
-		$object  = Session::getObject();
-		
+		$project   = Session::getProject();
+		$object    = Session::getObject();
 		$elementid = 0;
 		
 		if	( is_object($project) )
 		{
+			if ( $project->projectid == PROJECTID_ADMIN )
+			{
+				$project->name = lang('GLOBAL_ADMINISTRATION');
+				Session::setProject( $project );
+	
+				Session::setProjectLanguage( '' );
+				Session::setProjectModel   ( '' );
+				Session::setObject         ( '' );
+			}
+			
+			$this->setTemplateVar( 'title',$project->name );
+			
 			if	( is_object($object) )
 			{
 				$type = $object->getType();
