@@ -232,6 +232,7 @@ class UserAction extends Action
 
 		$gravatarConfig = config('interface','gravatar');
 		
+		$this->setTemplateVar( 'image', 'about:blank' );
 		if	( is_array($gravatarConfig) )
 		{
 			extract($gravatarConfig);
