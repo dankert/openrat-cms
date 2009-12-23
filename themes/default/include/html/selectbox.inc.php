@@ -1,4 +1,5 @@
 <?php
+$attr_readonly=false;
 $attr_tmp_list = $$attr_list;
 if ($this->isEditable() && !$this->isEditMode())
 {
