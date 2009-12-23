@@ -1,21 +1,15 @@
 <?php
 	$coloumn_widths=array();
-	if	(!empty($attr_widths))
-	{
-		$column_widths = explode(',',$attr_widths);
-		unset($attr['widths']);
-	}
-	if	(!empty($attr_rowclasses))
-	{
-		$row_classes   = explode(',',$attr_rowclasses);
-		$row_class_idx = 999;
-		unset($attr['rowclasses']);
-	}
-	if	(!empty($attr_columnclasses))
-	{
-		$column_classes = explode(',',$attr_columnclasses);
-		unset($attr['columnclasses']);
-	}
+#IF-ATTR widths#
+	$column_widths = explode(',',$attr_widths);
+#END-IF#
+#IF-ATTR rowclasses#
+	$row_classes   = explode(',',$attr_rowclasses);
+	$row_class_idx = 999;
+#END-IF#
+#IF-ATTR columnclasses#
+	$column_classes = explode(',',$attr_columnclasses);
+#END-IF#
 	
 	
 		global $image_dir;
