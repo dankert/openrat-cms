@@ -138,7 +138,8 @@ class Value
 		$this->lastchangeTimeStamp = 0;
 		
 		$language = Session::getProjectLanguage();
-		$this->languageid = $language->languageid;
+		if	( is_object($language) )
+			$this->languageid = $language->languageid;
 	}
 
 	
@@ -428,7 +429,7 @@ SQL
 	
 	/**
 	 * Pruefen, ob maximale Anzahl von Versionen erreicht.
-	 * In diesem Fall die zu alten Versionen löschen.
+	 * In diesem Fall die zu alten Versionen lï¿½schen.
 	 */
 	function checkLimit()
 	{
