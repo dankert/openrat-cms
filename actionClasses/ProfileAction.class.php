@@ -73,7 +73,7 @@ class ProfileAction extends Action
 	function settingsView()
 	{
 		foreach( array('always_edit','timezone_offset','language') as $name )
-			$this->setTemplateVar($name,Text::clean($_COOKIE['or_'.$name],'abcdefghijklmnopqrstuvwxyz0123456789 .'));
+			$this->setTemplateVar($name,Text::clean(isset($_COOKIE['or_'.$name])?$_COOKIE['or_'.$name]:'','abcdefghijklmnopqrstuvwxyz0123456789 .'));
 			
 		//Html::debug(Text::clean($_COOKIE['or_'.$name],'0123456789 .'));
 		$timezone_list = array();
