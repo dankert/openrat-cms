@@ -2,11 +2,11 @@
 
 	#IF-ATTR prefix#
 		$attr_key = $attr_prefix.$attr_key;
-	#END-IF-ATTR#
+	#END-IF#
 
 	#IF-ATTR suffix#
 		$attr_key = $attr_key.$attr_suffix;
-	#END-IF-ATTR#
+	#END-IF#
 
 	#IF-ATTR title#
 	#ELSE#
@@ -30,7 +30,7 @@
 	#END-IF#
 	#IF-ATTR-VALUE type:bold#
 		$tmp_tag = 'strong';
-	#IF-ATTR-VALUE type:tt
+	#IF-ATTR-VALUE type:tt#
 		$tmp_tag = 'tt';
 	#END-IF#
 	#IF-ATTR-VALUE type:teletype#
