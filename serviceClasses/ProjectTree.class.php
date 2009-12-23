@@ -242,10 +242,7 @@ class ProjectTree extends AbstractTree
 		$this->projectid = $project->projectid;
 
 		// Hoechster Ordner der Projektstruktur
-		$f      = new Folder();
-		$f->projectid = $this->projectid;
 		$folder = new Folder( $project->getRootObjectId() );
-		unset( $f );
 		$folder->load();
 
 		
