@@ -2,10 +2,10 @@
 
 
 /**
- * Fügt einen Slash ("/") an das Ende an, sofern nicht bereits vorhanden.
+ * Fï¿½gt einen Slash ("/") an das Ende an, sofern nicht bereits vorhanden.
  *
  * @param String $pfad
- * @return Pfad mit angehängtem Slash.
+ * @return Pfad mit angehï¿½ngtem Slash.
  */
 function slashify($pfad)
 {
@@ -35,7 +35,7 @@ function now()
 
 
 /**
- * Erzeugt für eine Zahl eine Schreibweise mit Vorzeichen.<br>
+ * Erzeugt fï¿½r eine Zahl eine Schreibweise mit Vorzeichen.<br>
  * '-2' bleibt '-2'<br>
  * '2'  wird zu '+2'<br>
  */
@@ -61,7 +61,7 @@ function readonly()
 		
 	// Aktuelle Datenbankverbindung ist readonly.
 	$db = Session::getDatabase();
-	if	( $db->conf['readonly'] )
+	if	( isset($db->conf['readonly']) && $db->conf['readonly'] )
 		return true;
 		
 	return false;
