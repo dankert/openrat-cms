@@ -350,7 +350,7 @@ class Object
 			$language = Session::getProjectLanguage();
 			$user     = Session::getUser();
 			
-			if	( $user->isAdmin && !$conf['security']['readonly'] )
+			if	( $user->isAdmin && !config('security','readonly') )
 				$this->aclMask = ACL_READ +
 				                 ACL_WRITE +
 				                 ACL_PROP +
