@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
+// Copyright (C) 2002-2009 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,7 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
+
+
 
 // "Single Entry Point"
 // Diese Datei dient als "Dispatcher" und startet den zum Request passenden Controller ("*Action")..
@@ -34,7 +32,7 @@ define('IMG_EXT'         ,'.gif'   );
 define('IMG_ICON_EXT'    ,'.png'   );
 define('MAX_FOLDER_DEPTH',5        );
 
-define('OR_VERSION'      ,'0.9-3'  );
+define('OR_VERSION'      ,'0.9-4'  );
 define('OR_TITLE'        ,'OpenRat CMS');
 
 define('OR_TYPE_PAGE'  ,'page'  );
