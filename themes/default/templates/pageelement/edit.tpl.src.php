@@ -20,7 +20,7 @@ page
 										link url:var:lastmonthurl
 											image file:left align:middle
 										text raw:_
-									text var:monthname
+									text var:monthname type:strong
 									if true:mode:edit
 										text raw:_
 										link url:var:nextmonthurl
@@ -30,7 +30,7 @@ page
 										link url:var:lastyearurl
 											image file:left align:middle
 										text raw:_
-									text var:yearname
+									text var:yearname type:strong
 									if true:mode:edit
 										text raw:_
 										link url:var:nextyearurl
@@ -50,7 +50,7 @@ page
 										cell width:12%
 											if empty:url
 												text raw:__
-												text var:nr
+												text var:nr type:strong
 												text raw:__
 											if not:true empty:url
 												link url:var:url
