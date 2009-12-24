@@ -1,7 +1,7 @@
 <?php
 #
-#  DaCMS Content Management System
-#  Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+#  OpenRat Content Management System
+#  Copyright (C) 2002-2009 Jan Dankert, jandankert@jandankert.de
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -23,8 +23,7 @@
  * 
  * Die Vorlage wird gesparst, Elemente werden geladen und in die Zieldatei kopiert.
  * 
- * @author $Author$
- * @version $Revision$
+ * @author Jan Dankert
  * @package openrat.services
  */
 class TemplateEngine
