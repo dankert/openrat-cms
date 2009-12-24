@@ -210,12 +210,12 @@ class PageelementAction extends Action
 			$this->getRequestVar('day'),
 			$this->getRequestVar('year')    );
 		}
-		$year   = date('Y',$date);
-		$month  = date('n',$date);
-		$day    = date('j',$date);
-		$hour   = date('G',$date);
-		$minute = date('i',$date);
-		$second = date('s',$date);
+		$year   = intval(date('Y',$date));
+		$month  = intval(date('n',$date));
+		$day    = intval(date('j',$date));
+		$hour   = intval(date('G',$date));
+		$minute = intval(date('i',$date));
+		$second = intval(date('s',$date));
 		$this->setTemplateVar('year'  ,$year   );
 		$this->setTemplateVar('month' ,$month  );
 		$this->setTemplateVar('day'   ,$day    );
