@@ -232,7 +232,7 @@ class DB
 			}
 		}
 
-		if	( @$this->conf['autocommit'])
+		if	( isset($this->conf['autocommit']) && @$this->conf['autocommit'])
 			if	( method_exists($this->client,'commit') )
 				$this->client->commit();
 		
