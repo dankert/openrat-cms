@@ -85,7 +85,7 @@
 	#END-IF
 		
 	#IF-ATTR maxlength#
-		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength),'..',STR_PAD_BOTH );
+		$tmp_text = Text::maxLength( $tmp_text,intval($attr_maxlength),'..',constant('STR_PAD_'.strtoupper($attr_cut)) );
 	#END-IF
 		
 	#IF-ATTR accesskey#

@@ -350,28 +350,31 @@ class AdministrationTree extends AbstractTree
 			}
 			else
 			{
-				if	( is_bool($value))
-					$value = $value ? lang('IS_YES') : lang('IS_NO');
-				elseif	( is_numeric($value))
-					$value = ($value>0?'':'').$value;
+				if	( $value=='' )
+					// Anzeige 'Leer'
+					$value = lang('EMPTY');
+				elseif	( $value=='0' )
+					// Anzeige 'Nein'
+					$value = $value.' ('.lang('IS_NO').')';
+				elseif	( $value=='1' )
+					// Anzeige 'Ja'
+					$value = '+'.$value.' ('.lang('IS_YES').')';
+				elseif	( is_numeric($value) )
+					// Anzeige numerische Werte
+					$value = ($value>0?'+':'').$value;
 				else
-					$value = $conf['html']['speech_open'].htmlentities(Text::maxLength($value,30)).$conf['html']['speech_close'];
+					// Anzeige von Zeichenketten
+					$value = $value;
 					
 				$this->confCache[crc32($key)] = $value;
 
+				if	( strpos($key,'pass') !== FALSE )
+					$value = '***'; // Kennwörter nicht anzeigen
+				
 				$treeElement = new TreeElement();
-				
-				$treeElement->text        = $key.'=';
-				if	( $key != 'password')
-					$treeElement->text .= $value;
-				else
-					$treeElement->text .= '*';
-					
+				$treeElement->text        = $key.': '.$value;
 				$treeElement->icon        = 'config_property';
-				
-//				if	( $key != 'password')
-//					$treeElement->description = $value;
-				$treeElement->description = lang('SETTING').' '.$key;
+				$treeElement->description = lang('SETTING')." '".$key."'".(!empty($value)?': '.$value:'');
 					
 				$this->addTreeElement( $treeElement );
 			}
