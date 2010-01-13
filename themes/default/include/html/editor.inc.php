@@ -64,6 +64,7 @@ switch( $attr_type )
 			$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
 			$editor->Value = $$attr_name;
 			$editor->Height = '290';
+			//$editor->Config['CustomConfigurationsPath'] = '../../'.Html::url('filemanager','config');
 			$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
 			$editor->Create();
 		}
