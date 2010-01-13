@@ -50,26 +50,6 @@ class FilemanagerAction extends ObjectAction
 	 */
 	function FilemanagerAction()
 	{
-		// PHP-Fehler ins Log schreiben, damit die Ausgabe nicht zerstört wird.
-		set_error_handler('filemanagerErrorHandler',E_ALL & ~E_NOTICE);
-
-		// Get the main request information.
-		$this->command		 = $this->getRequestVar('Command'      );
-		$this->resourceType	 = $this->getRequestVar('Type'         );
-		$this->currentFolder = $this->getRequestVar('CurrentFolder');
-
-		// Check if it is an allowed type.
-		if ( !in_array( $this->resourceType, array('File','Image','Flash','Media') ) )
-		{
-			$this->sendErrorDocument(1,'unknown resource type');
-			exit;
-		}
-	
-		// Check the current folder syntax (must begin and end with a slash).
-		if ( ! ereg( '/$', $this->currentFolder ) ) $this->currentFolder .= '/' ;
-		if ( strpos( $this->currentFolder, '/' ) !== 0 ) $this->currentFolder = '/' . $this->currentFolder;		
-		
-		$this->investigateCurrentFolder();
 	}
 
 	
@@ -109,12 +89,38 @@ class FilemanagerAction extends ObjectAction
 	 */
 	function show()
 	{
+		// PHP-Fehler ins Log schreiben, damit die Ausgabe nicht zerstï¿½rt wird.
+		if (version_compare(PHP_VERSION, '5.0.0', '>'))
+			set_error_handler('filemanagerErrorHandler',E_ALL & ~E_NOTICE);
+		else
+			set_error_handler('filemanagerErrorHandler');
+		
 		Logger::debug('Filemanager: '.getenv('REQUEST_URI'));
 		Logger::debug($this->command);
 		Logger::debug($this->resourceType);
 		Logger::debug($this->currentFolder);
 		Logger::debug($this->folder->objectid);
 
+		
+		// Get the main request information.
+		$this->command		 = $this->getRequestVar('Command'      );
+		$this->resourceType	 = $this->getRequestVar('Type'         );
+		$this->currentFolder = $this->getRequestVar('CurrentFolder');
+
+		// Check if it is an allowed type.
+		if ( !in_array( $this->resourceType, array('File','Image','Flash','Media') ) )
+		{
+			$this->sendErrorDocument(1,'unknown resource type');
+			exit;
+		}
+	
+		// Check the current folder syntax (must begin and end with a slash).
+		if ( ! ereg( '/$', $this->currentFolder ) ) $this->currentFolder .= '/' ;
+		if ( strpos( $this->currentFolder, '/' ) !== 0 ) $this->currentFolder = '/' . $this->currentFolder;		
+		
+		$this->investigateCurrentFolder();
+		
+		
 		// File Upload doesn't have to Return XML, so it must be intercepted before anything.
 		if ( $this->command == 'FileUpload' )
 		{
@@ -337,11 +343,62 @@ class FilemanagerAction extends ObjectAction
 		echo '</script>' ;
 	}
 	
+	
+	
+	/**
+	 * Erzeugt Javascript mit der Konfiguration fÃ¼r den FCK-Editor.
+	 */
+	function config()
+	{
+		echo <<<EOF
+FCKConfig.ToolbarSets["Default"] = [
+	['Save','NewPage','Preview','Templates','-','Source','DocProps','ShowBlocks'],
+	['Cut','Copy','Paste','PasteText','PasteWord','-','Print','SpellCheck'],
+	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+	['Form','Checkbox','Radio','TextField','Textarea','Select','Button','ImageButton','HiddenField'],
+	'/',
+	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
+	['OrderedList','UnorderedList','-','Outdent','Indent','Blockquote'],
+	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+	['Link','Unlink','Anchor'],
+	['Image','Flash','Table','Rule','SpecialChar','PageBreak'],
+	'/',
+	['Style','FontFormat','FontName','FontSize'],
+	['TextColor','BGColor'],
+	['FitWindow']		// No comma for the last row.
+] ;
+EOF
+;
+
+		if	( $this->hasRequestVar( session_name() ) )
+			$s = '&'.session_name().'='.session_id();
+		else
+			$s = '';
+			
+		echo "var _FileBrowserLanguage	= 'php' ;";
+		echo "var _QuickUploadLanguage	= 'php' ;";
+		echo "var _FileBrowserExtension = _FileBrowserLanguage == 'perl' ? 'cgi' : _FileBrowserLanguage ;";
+	
+		echo "FCKConfig.LinkBrowser = true;";
+		echo "FCKConfig.LinkBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=../../../../../do.php?action=filemanager".$s."';";
+	
+		echo "FCKConfig.ImageBrowser = true ;";
+		echo "FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=../../../../../do.php?action=filemanager".$s."';";
+	
+		echo "FCKConfig.FlashBrowser = true ;";
+		echo "FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Flash&Connector=../../../../../do.php?action=filemanager".$s."';";
+	
+		echo "FCKConfig.LinkUpload = true;";
+		echo "FCKConfig.ImageUpload = true;";
+		echo "FCKConfig.FlashUpload = true;";
+		
+	}
+	
 }
 
 
 /**
- * Fehler-Handler für WEBDAV.<br>
+ * Fehler-Handler fï¿½r WEBDAV.<br>
  * Bei einem Laufzeitfehler ist eine Ausgabe des Fehlers auf der Standardausgabe sinnlos.
  * Daher wird der Fehler nur geloggt.
  */
