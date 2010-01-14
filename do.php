@@ -79,7 +79,8 @@ require_once( OR_TEXTCLASSES_DIR   ."include.inc.".PHP_EXT );
 require_once( OR_DBCLASSES_DIR."db.class.php" );
 require_once( OR_DBCLASSES_DIR."postgresql.class.php" );
 require_once( OR_DBCLASSES_DIR."mysql.class.php" );
-require_once( OR_DBCLASSES_DIR."mysqli.class.php" );
+if (version_compare(PHP_VERSION, '5.0.0', '>'))
+	require_once( OR_DBCLASSES_DIR."mysqli.class.php" );
 if (version_compare(PHP_VERSION, '5.0.0', '>'))
 	require_once( OR_DBCLASSES_DIR."sqlite.class.php" );
 if (version_compare(PHP_VERSION, '5.3.0', '>'))
@@ -231,14 +232,13 @@ $do = new $actionClassName;
 $do->actionConfig = $conf['action'][$actionClassName];
 $do->actionClassName = $actionClassName; 
 $do->actionName      = $action;
-
 if	( $subaction == '' )
 	$subaction = $do->actionConfig['default']['goto'];
 	
 $do->subActionName   = $subaction;
 
-$do->init();
 
+$do->init();
 
 if	( !isset($do->actionConfig[$subaction]) )
 {
