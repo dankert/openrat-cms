@@ -45,14 +45,10 @@ class DB_pdo
 
 	function connect( $conf )
 	{
-		$url    = $conf['dsn'];
-		$user   = $conf['user'];
+		$url    = $conf['dsn'     ];
+		$user   = $conf['user'    ];
 		$pw     = $conf['password'];
-		$db     = $conf['database'];
 		
-		if	( isset($conf['port']) )
-			$host .= ':'.$conf['port'];
-
 		$options = array();
 		foreach( $conf as $c )
 			if	( substr($c,0,7) == 'option_' )
@@ -95,7 +91,7 @@ class DB_pdo
 
 	function fetchRow( $result, $rownum )
 	{
-		return $this->result->fetch( PDO::FETCH_ASSOC() );
+		return $this->result->fetch( PDO::FETCH_ASSOC );
 	}
 
  
@@ -109,9 +105,9 @@ class DB_pdo
 	{
 		foreach( $param as $pos)
 		{
-			foreach( $pos as $pos )
+			foreach( $pos as $posx )
 			{
-				$query = substr($query,0,$pos-1).'?'.substr($query,$pos+1);
+				$query = substr($query,0,$posx-1).'?'.substr($query,$posx+1);
 			}
 		}
 
@@ -154,6 +150,16 @@ class DB_pdo
 	{
 		$this->connection->rollBack();
 	}
+	
+	
+	/**
+	 * Why this? See http://e-mats.org/2008/07/fatal-error-exception-thrown-without-a-stack-frame-in-unknown-on-line-0/
+	 * 
+	 * @return array
+	 */
+	function __sleep() {
+    	return array();
+  }  
 	
 }
 
