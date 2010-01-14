@@ -740,19 +740,31 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND languageid={languageid}');
+		$sql = new Sql( 
+<<<SQL
+SELECT *
+  FROM {t_name}
+ WHERE objectid={objectid}'.'
+   AND languageid={languageid}
+SQL
+		);
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
-		$res = $db->query($sql);
+		$row = $db->getRow( $sql );
 
-		if ($res->numRows() == 0)
+		if ( empty($row) )
 		{
 			// Wenn Name in dieser Sprache nicht vorhanden, dann irgendeinen Namen lesen
-			$sql->setQuery('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND name != {blank}');
+			$sql->setQuery( <<<SQL
+ SELECT *
+   FROM {t_name}
+  WHERE objectid={objectid}
+    AND name != {blank}
+SQL
+			);
 			$sql->setString('blank', '');
-			$res = $db->query($sql);
+			$row = $db->query($sql);
 		}
-		$row = $res->fetchRow();
 
 		$this->name = $row['name'];
 		$this->desc = $row['description'];

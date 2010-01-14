@@ -650,35 +650,34 @@ SQL
 		);
 		$sql->setString('name',$this->name);
 	
-		$res_user = $db->query( $sql );
+		$row_user = $db->getRow( $sql );
 
 		$check = false;
 		$authType = $conf['security']['auth']['type']; // Entweder 'ldap', 'authdb', 'http', oder 'database'
 		
-		if	( $res_user->numRows() == 1 )
+		if	( !empty($row_user) )
 		{
 			// Benutzername ist bereits in der Datenbank.
-			$row_user = $res_user->fetchRow();
 			$this->userid  = $row_user['id'];
 			$this->ldap_dn = $row_user['ldap_dn'];
 			$check   = true;
 			$autoAdd = false; // Darf nicht hinzugef�gt werden, da schon vorhanden.
 		}
-		elseif( $res_user->numRows() == 0 && $authType == 'ldap' && $conf['ldap']['search']['add'] )
+		elseif( $authType == 'ldap' && $conf['ldap']['search']['add'] )
 		{
 			// Benutzer noch nicht in der Datenbank vorhanden.
 			// Falls ein LDAP-Account gefunden wird, wird dieser �bernommen.
 			$check   = true;
 			$autoAdd = true;
 		}
-		elseif( $res_user->numRows() == 0 && $authType == 'authdb' && $conf['security']['authdb']['add'] )
+		elseif( $authType == 'authdb' && $conf['security']['authdb']['add'] )
 		{
-			$check = true;
+			$check   = true;
 			$autoAdd = true;
 		}
-		elseif( $res_user->numRows() == 0 && $authType == 'http' && $conf['security']['http']['add'] )
+		elseif( $authType == 'http' && $conf['security']['http']['add'] )
 		{
-			$check = true;
+			$check   = true;
 			$autoAdd = true;
 		}
 
@@ -822,8 +821,8 @@ SQL
 				$sql = new Sql( $conf['security']['authdb']['sql'] );
 				$sql->setString('username',$this->name);
 				$sql->setString('password',$password);
-				$res = $authdb->query($sql);
-				$ok = ($res->numRows() >= 1);
+				$row = $authdb->getRow( $sql );
+				$ok = !empty($row);
 
 				if	( $ok && $autoAdd )
 				{
