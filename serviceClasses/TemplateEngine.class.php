@@ -228,10 +228,14 @@ class TemplateEngine
 			$values[] = "'".$attrName."'=>".$this->attributeValue($attrValue);
 		}
 		
-		fwrite( $outFileHandler,'<?php ');
-		foreach( $attr as $attrName=>$attrValue )
-			fwrite( $outFileHandler,' $attr'.$hash.'_'.$attrName."=".$this->attributeValue($attrValue).'; ');
-		fwrite( $outFileHandler,' ?>');
+		// Variablen $attr_* setzen
+		if	( count($attr) > 0 )
+		{
+			fwrite( $outFileHandler,'<?php ');
+			foreach( $attr as $attrName=>$attrValue )
+				fwrite( $outFileHandler,'$a'.$hash.'_'.$attrName."=".$this->attributeValue($attrValue).';');
+			fwrite( $outFileHandler,' ?>');
+		}
 			
 		$file   = file( $inFileName );
 		$ignore = false;
@@ -288,17 +292,19 @@ class TemplateEngine
 			if	( !$linebreaks )
 				$line = rtrim($line);
 				
-			// Die Variablen "$attr" müssen pro Ebene eindeutig sein, daher wird an den
+			// Die Variablen "$attr_*" muessen pro Ebene eindeutig sein, daher wird an den
 			// Variablennamen die Tiefe angehangen.
-			$line = str_replace('$attr','$attr'.$hash,$line);
+			$line = str_replace('$attr_','$a'.$hash.'_',$line);
 			fwrite( $outFileHandler,$line );
 		}
 		
-		// Variablen "$attr" entfernen.
-		fwrite( $outFileHandler,'<?php ');
+		// Variablen $attr_* entfernen.
+		$unset_attr = array();
 		foreach( $attr as $attrName=>$attrValue )
-			fwrite( $outFileHandler,'unset($attr'.$hash.'_'.$attrName.');');
-		fwrite( $outFileHandler,' ?>');
+			$unset_attr[] = '$a'.$hash.'_'.$attrName;
+			
+		if	( count($unset_attr) > 0 )
+			fwrite( $outFileHandler,'<?php unset('.implode(',',$unset_attr).') ?>');
 
 		if	( is_file($elFileName) )
 		{
