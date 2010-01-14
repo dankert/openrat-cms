@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2010 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,57 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.18  2007-12-21 23:27:23  dankert
-// Neue Methode "getTemplates"
-//
-// Revision 1.17  2007-12-04 22:57:20  dankert
-// Beispiel-Vorlage mit "Hello, World".
-//
-// Revision 1.16  2007-11-24 12:16:15  dankert
-// Methoden "available()" zum Pr?fen auf die Existenz der Id.
-//
-// Revision 1.15  2007-05-24 19:47:48  dankert
-// Direktes Ausw?hlen von Sprache/Modell in der Projektauswahlliste.
-//
-// Revision 1.14  2007-04-22 00:17:30  dankert
-// Neue Methode "export()" - fertiggestellt :)
-//
-// Revision 1.13  2007-04-21 11:53:09  dankert
-// Neue Methode "export()" - in Arbeit, TODO!
-//
-// Revision 1.12  2007-04-06 01:37:49  dankert
-// Verhindern einer Warnung bei modernen PHP-Versionen.
-//
-// Revision 1.11  2007/02/26 22:05:08  dankert
-// Neue Methode "loadByName()"
-//
-// Revision 1.10  2006/07/19 21:30:32  dankert
-// Beim Speichern auch ?ndern des Root-Folders
-//
-// Revision 1.9  2006/06/01 20:58:11  dankert
-// Projektwartung: Suche nach verlorenen Dateien.
-//
-// Revision 1.8  2004/12/29 20:18:20  dankert
-// Konstruktor geaendert
-//
-// Revision 1.7  2004/12/19 15:23:56  dankert
-// Anpassung Session-Funktionen
-//
-// Revision 1.6  2004/12/15 23:16:58  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.5  2004/11/10 22:47:57  dankert
-// Methoden zum Lesen von Standardmodell, Standardsprache dieses Projektes
-//
-// Revision 1.4  2004/10/14 21:13:56  dankert
-// *** empty log message ***
-//
-// Revision 1.3  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// ---------------------------------------------------------------------------
 
 
 /**

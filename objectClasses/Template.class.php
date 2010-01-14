@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2010 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,57 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.16  2009-04-20 23:24:36  dankert
-// Überflüssiges load() in mimeType() entfernt.
-//
-// Revision 1.15  2007-11-24 14:18:12  dankert
-// MimeType in Template ermitteln.
-//
-// Revision 1.14  2007-11-07 23:29:05  dankert
-// Wenn Seite direkt aufgerufen wird, dann sofort Seitenelement anzeigen.
-//
-// Revision 1.13  2007-10-10 19:08:55  dankert
-// Beim Hinzuf?gen von Vorlagen das Kopieren einer anderen Vorlage erlauben. Korrektur beim L?schen von Vorlagen.
-//
-// Revision 1.12  2006-01-29 17:27:27  dankert
-// Methode addElement() mit 2 weiteren Parametern
-//
-// Revision 1.11  2004/12/30 23:31:52  dankert
-// Werte vorbelegen
-//
-// Revision 1.10  2004/12/30 23:23:21  dankert
-// Werte vorbelegen
-//
-// Revision 1.9  2004/12/27 23:34:20  dankert
-// Korrektur add()
-//
-// Revision 1.8  2004/12/26 01:06:31  dankert
-// Perfomanceverbesserung Seite/Elemente
-//
-// Revision 1.7  2004/12/19 15:23:56  dankert
-// Anpassung Session-Funktionen
-//
-// Revision 1.6  2004/12/18 00:37:50  dankert
-// Projekt aus Session lesen
-//
-// Revision 1.5  2004/12/15 23:16:26  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.4  2004/09/30 20:20:54  dankert
-// Beim Speichern Sicherstellen, dass ein Name vorhanden ist
-//
-// Revision 1.3  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.2  2004/04/25 17:31:46  dankert
-// Bei L?schen auch Elemente entfernen
-//
-// Revision 1.1  2004/04/24 15:15:12  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**

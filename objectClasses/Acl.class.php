@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2009 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,36 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.9  2007-11-05 20:45:03  dankert
-// Neue Methode "getAvailableRights()"
-//
-// Revision 1.8  2004/12/19 15:20:27  dankert
-// Korrektur delete()
-//
-// Revision 1.7  2004/11/28 19:25:51  dankert
-// Anpassen an neue Sprachdatei-Konventionen
-//
-// Revision 1.6  2004/11/28 11:22:55  dankert
-// Speichern einer Berechtigung fuer "alle"
-//
-// Revision 1.5  2004/11/15 21:02:32  dankert
-// Erzeugen einer Bitmaske der Berechtigungsbits
-//
-// Revision 1.4  2004/11/10 22:45:06  dankert
-// Neue Methode: getTrueProperties()
-//
-// Revision 1.3  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.2  2004/04/30 20:36:25  dankert
-// Neu: Freigabe
-//
-// Revision 1.1  2004/04/24 15:15:12  dankert
-// Initiale Version
-//
-// --------------------------------------------------------------------------- 
+
+
 
 define('ACL_READ'         ,1   );
 define('ACL_WRITE'        ,2   );
@@ -62,14 +31,15 @@ define('ACL_CREATE_PAGE'  ,512 );
 define('ACL_GRANT'        ,1024);
 define('ACL_TRANSMIT'     ,2048);
 
+
+
 /**
  * Darstellen einer Berechtigung (ACL "Access Control List")
  * Die Berechtigung zu einem Objekt wird mit einer Liste dieser Objekte dargestellt
  *
  * Falls es mehrere ACLs zu einem Objekt gibt, werden die Berechtigung-Flags addiert.
  *
- * @version $Revision$
- * @author $Author$
+ * @author Jan Dankert
  * @package openrat.objects
  */
 class Acl
@@ -351,7 +321,6 @@ class Acl
 		$this->mask += ACL_CREATE_PAGE   *intval($this->create_page  );
 		$this->mask += ACL_GRANT         *intval($this->grant        );
 		$this->mask += ACL_TRANSMIT      *intval($this->transmit     );
-		Logger::trace('mask of acl'.$this->aclid.': '.$this->mask );
 		return $this->mask;
 	}
 
@@ -399,6 +368,47 @@ class Acl
 
 		$db = db_connection();
 
+		// Prüfen, ob die ACL schon existiert
+		$sql = new Sql( <<<SQL
+		SELECT aclid FROM {t_acl} 
+		                 (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
+		                 VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )
+SQL
+);
+
+		if	( intval($this->userid) == 0 )
+			$sql->setNull('userid');
+		else
+			$sql->setInt ('userid',$this->userid);
+		
+		if	( intval($this->groupid) == 0 )
+			$sql->setNull('groupid');
+		else
+			$sql->setInt ('groupid',$this->groupid);
+
+		$sql->setInt('objectid',$this->objectid);
+		//$sql->setBoolean('is_default'   ,$this->isDefault     );
+		$sql->setBoolean('write'        ,$this->write         );
+		$sql->setBoolean('prop'         ,$this->prop          );
+		$sql->setBoolean('create_folder',$this->create_folder );
+		$sql->setBoolean('create_file'  ,$this->create_file   );
+		$sql->setBoolean('create_link'  ,$this->create_link   );
+		$sql->setBoolean('create_page'  ,$this->create_page   );
+		$sql->setBoolean('delete'       ,$this->delete        );
+		$sql->setBoolean('release'      ,$this->release       );
+		$sql->setBoolean('publish'      ,$this->publish       );
+		$sql->setBoolean('grant'        ,$this->grant         );
+		$sql->setBoolean('transmit'     ,$this->transmit      );
+
+		if	( intval($this->languageid) == 0 )
+			$sql->setNull('languageid');
+		else
+			$sql->setInt ('languageid',$this->languageid);
+		
+		if	( intval($db->getOne($sql)) > 0 )
+			return;
+
+		
 		$sql = new Sql('SELECT MAX(id) FROM {t_acl}');
 		$this->aclid = intval($db->getOne($sql))+1;
 		

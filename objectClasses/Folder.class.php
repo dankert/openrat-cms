@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2010 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,45 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.13  2007-11-30 23:38:41  dankert
-// nur ein Kommentar erg?nzt
-//
-// Revision 1.12  2007-10-25 22:29:11  dankert
-// Neue Methoden f?r Filemanager.
-//
-// Revision 1.11  2007-05-02 21:28:47  dankert
-// Beim Lesen aller Objekte bereits in der Datenbank nach Typ filtern.
-//
-// Revision 1.10  2006/07/19 21:30:12  dankert
-// Verbesserung "getParentObjectNames()"
-//
-// Revision 1.9  2005/11/07 22:34:51  dankert
-// Einen Sql-Befehl in ein "here-document" ausgelagert.
-//
-// Revision 1.8  2005/01/04 19:58:56  dankert
-// neue Methoden getFirst/LastPageOrLink()
-//
-// Revision 1.7  2004/12/19 15:22:17  dankert
-// Anpassung Session-Funktionen
-//
-// Revision 1.6  2004/12/15 23:18:36  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.5  2004/11/29 21:10:29  dankert
-// publish() mit 3 Parametern
-//
-// Revision 1.4  2004/11/24 22:05:45  dankert
-// Korrektur getObjects()
-//
-// Revision 1.3  2004/11/10 22:45:56  dankert
-// *** empty log message ***
-//
-// Revision 1.2  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// ---------------------------------------------------------------------------
 
 
 /**
