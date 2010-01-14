@@ -445,7 +445,7 @@ SQL
 
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
-		$sql = new Sql( 'SELECT id FROM {t_model} '.
+		$sql = new Sql( 'SELECT id FROM {t_projectmodel} '.
 		                '  WHERE projectid={projectid}'.
 		                '   ORDER BY is_default DESC' );
 		$sql->setInt('projectid',$this->projectid );
@@ -744,7 +744,7 @@ EOF
 	
 	
 	/**
-	 * Ermittelt die Größe aller Dateien in diesem Projekt.
+	 * Ermittelt die Grï¿½ï¿½e aller Dateien in diesem Projekt.
 	 * @return int Summe aller Dateigroessen
 	 */
 	function size()
