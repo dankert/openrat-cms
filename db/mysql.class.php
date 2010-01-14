@@ -123,19 +123,6 @@ class DB_mysql
 	}
 
 
-	function numCols($result)
-	{
-		return mysql_num_fields( $result );
-	}
-
-
-
-	function numRows( $result )
-	{
-		return mysql_num_rows($result);
-	}
-	
-	
 	/**
      * Startet eine Transaktion.
      */

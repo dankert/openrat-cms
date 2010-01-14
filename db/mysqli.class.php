@@ -158,19 +158,7 @@ class DB_mysqli
 	}
 
 
-	function numCols($result)
-	{
-		return mysqli_num_fields( $result );
-	}
 
-
-
-	function numRows( $result )
-	{
-		return mysqli_num_rows($result);
-	}
-	
-	
 	function prepare( $query,$param)
 	{
 		foreach( $param as $pos)

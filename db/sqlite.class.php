@@ -124,19 +124,6 @@ class DB_sqlite
 	{
 		return true;
 	}
-
-
-	function numCols($result)
-	{
-		return sqlite_num_fields( $result );
-	}
-
-
-
-	function numRows( $result )
-	{
-		return sqlite_num_rows($result);
-	}
 }
 
 ?>

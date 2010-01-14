@@ -99,7 +99,7 @@ class DB
 	 */
 	function connect()
 	{
-		// Ausf�hren des Systemkommandos.
+		// Ausfuehren des Systemkommandos.
 		if	( !empty($this->conf['cmd']))
 		{
 			$ausgabe = array();
@@ -170,7 +170,10 @@ class DB
 	 */
 	function query( $query )
 	{
-		if	( is_object($query) && isset($this->conf['prepare']) && $this->conf['prepare'] )
+		if ( !is_object($query) )
+			die('SQL-Query must be an object');
+			
+		if	( isset($this->conf['prepare']) && $this->conf['prepare'] )
 		{
 			$this->client->clear();
 			$this->client->prepare( $query->raw,$query->param );
@@ -208,12 +211,9 @@ class DB
 				}
 			}
 					
-			return new DB_result( $this->client,$result );
+			return $result;
 		}
 		
-		if ( !is_object($query) )
-			die('SQL-Query must be an object');
-			
 		$flatQuery = $query->getQuery();
 		
 		Logger::trace('DB query: '.$query->raw);
@@ -236,18 +236,7 @@ class DB
 			if	( method_exists($this->client,'commit') )
 				$this->client->commit();
 		
-		return new DB_result( $this->client,$result );
-	}
-
-
-	/**
-	 * Ermittelt die Anzahl der betroffenen Zeilen nach einer Datebank-Anfrage.
-	 *
-	 * @return unknown
-	 */
-	function affectedRows()
-	{
-		return $this->client->affectedRows( $query );
+		return $result;
 	}
 
 
@@ -260,23 +249,18 @@ class DB
 	 */
 	function &getOne( $query )
 	{
-		$res = $this->query($query);
+		$none = '';
+		$result = $this->query($query);
+		
+		$row = $this->client->fetchRow( $result,0 );
+		$this->client->freeResult($result);
 
-		if	( $res->numRows() > 0 )
-		{
-			$row = $res->fetchRow( 0 );
-			$res->free();
-	
-			$keys = array_keys($row);
-	
-			return $row[ $keys[0] ];
-		}
-		else
-		{
-			$res->free();
-			$leer = '';
-			return $leer;
-		}
+		if	( ! is_array($row) )
+			return $none;
+
+		$keys = array_keys($row);
+		
+		return $row[ $keys[0] ];
 	}
 
 
@@ -288,14 +272,25 @@ class DB
 	 */
 	function &getRow( $query )
 	{
-		$res = $this->query($query);
+		$result = $this->query($query);
+		
+		if	( $result === FALSE )
+		{
+			$this->error = $this->client->error;
+			
+			if	( true )
+			{
+				debug_print_backtrace();
+				Logger::warn('Database error: '.$this->error);
+				die('Database Error (not prepared):<pre style="color:red">'.$this->error.'</pre>');
+			}
+		}
 
-		if	( $res->numRows() > 0 )
-			$row = $res->fetchRow( 0 );
-		else
+		$row = $this->client->fetchRow( $result,0 );
+		$this->client->freeResult($result);
+
+		if	( ! is_array($row) )
 			$row = array();
-
-		$res->free();
 
 		return $row;
 	}
@@ -309,23 +304,22 @@ class DB
 	 */
 	function &getCol( $query )
 	{
-		$res = $this->query( $query );
-		
-		$ret = array();
+		$result = $this->query($query);
 
-		$numRows = $res->numRows();
-		
-		for( $i=0; $i<$numRows; $i++ )
+		$i = 0;
+		$col = array();
+		while( $row = $this->client->fetchRow( $result,$i++ ) )
 		{
-			$row = $res->fetchRow($i);
-			
+			if	( empty($row) )
+				break;
+				
 			$keys = array_keys($row);
-			$ret[] = $row[ $keys[0] ];
+			$col[] = $row[ $keys[0] ];
 		}
-
-		$res->free();
-
-		return $ret;
+			
+		$this->client->freeResult($result);
+		
+		return $col;
 	}
 
 
@@ -338,16 +332,17 @@ class DB
 	 */
 	function &getAssoc( $query, $force_array = false )
 	{
-		$res = $this->query($query);
-
-		$numCols = $res->numCols();
-		$numRows = $res->numRows();
-
 		$results = array();
+		$result = $this->query($query);
 
-		if ( $numCols > 2 || $force_array )
+		$i = 0;
+		
+		while( $row = $this->client->fetchRow( $result,$i++ ) )
 		{
-			for( $i=0; $i<$numRows; $i++ )
+			if	( empty($row) )
+				break;
+				
+			if	( count($row) > 2 || $force_array )
 			{
 				$row = $res->fetchRow($i);
 
@@ -357,13 +352,8 @@ class DB
 				unset( $row[$key1] );
 				$results[ $row[$key1] ] = $row;
 			}
-		}
-		else
-		{
-			for( $i=0; $i<$numRows; $i++ )
+			else
 			{
-				$row = $res->fetchRow($i);
-
 				$keys = array_keys($row);
 				$key1 = $keys[0];
 				$key2 = $keys[1];
@@ -372,7 +362,7 @@ class DB
 			}
 		}
 
-		$res->free();
+		$this->client->freeResult( $result );
 
 		return $results;
 	}
@@ -386,19 +376,18 @@ class DB
 	 */
 	function &getAll( $query )
 	{
-		$res = $this->query( $query );
+		$result = $this->query( $query );
 
 		$results = array();
-		$numRows = $res->numRows();
+		$i = 0;
 
-		for( $i=0; $i<$numRows; $i++ )
+		while( $row = $this->client->fetchRow( $result,$i++ ) )
 		{
-			$row = $res->fetchRow($i);
 			$results[] = $row;
 		}
 
-		$res->free();
-
+		$this->client->freeResult( $result );
+		
 		return $results;
 	}
 	
@@ -445,57 +434,6 @@ class DB
 				}
 	}
 	
-}
-
-
-
-
-/**
- * Darstellung eines Datenbank-Ergebnisses.
- * 
- * @author Jan Dankert
- * @version $Revision: 1.9 $
- * @package openrat.database
- */
-
-class DB_result
-{
-	var $client;
-	var $result;
-
-
-	function DB_result( $client, $result )
-	{
-		$this->client    = $client;
-		$this->result = $result;
-	}
-
-
-	function fetchRow( $rownum = 0 )
-	{
-		$arr = $this->client->fetchRow( $this->result, $rownum );
-
-		return $arr;
-	}
-
-
-	function numCols()
-	{
-		return $this->client->numCols($this->result);
-	}
-
-
-	function numRows()
-	{
-		return $this->client->numRows( $this->result );
-	}
-
-
-	function free()
-	{
-		$err = $this->client->freeResult($this->result);
-		return true;
-	}
 }
 
 

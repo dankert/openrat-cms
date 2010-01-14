@@ -33,34 +33,45 @@ function table_names( $dbid )
 	{
 		$db = Session::getDatabase();
 		if	( is_object( $db ) )
+		{
 			$conf_db_prefix = $db->conf['prefix'];
+			if	( isset($db->conf['suffix']))
+				$conf_db_suffix = $db->conf['suffix'];
+			else
+				$conf_db_suffix = '';
+		}
 		else
+		{
 			$conf_db_prefix = '';
+			$conf_db_suffix = '';
+		}
 	}
 	else
 	{
-		$conf_db_prefix = $conf['database'][$dbid]['prefix'];
+		$conf_db_prefix = $config('database',$dbid,'prefix');
+		$conf_db_suffix = $config('database',$dbid,'suffix');
 	}
 
-	$t['t_include']         = $conf_db_prefix.'include';
-	$t['t_element']         = $conf_db_prefix.'element';
-	$t['t_template']        = $conf_db_prefix.'template';
-	$t['t_templatemodel']   = $conf_db_prefix.'templatemodel';
-	$t['t_projectmodel']    = $conf_db_prefix.'projectmodel';
-	$t['t_model']           = $conf_db_prefix.'projectmodel';
-	$t['t_page']            = $conf_db_prefix.'page';
-	$t['t_language']        = $conf_db_prefix.'language';
-	$t['t_value']           = $conf_db_prefix.'value';
-	$t['t_user']            = $conf_db_prefix.'user';
-	$t['t_usergroup']       = $conf_db_prefix.'usergroup';
-	$t['t_project']         = $conf_db_prefix.'project';
-	$t['t_group']           = $conf_db_prefix.'group';
-	$t['t_folder']          = $conf_db_prefix.'folder';
-	$t['t_file']            = $conf_db_prefix.'file';
-	$t['t_acl']             = $conf_db_prefix.'acl';
-	$t['t_object']          = $conf_db_prefix.'object';
-	$t['t_name']            = $conf_db_prefix.'name';
-	$t['t_link']            = $conf_db_prefix.'link';
+	foreach( array(
+	'element',
+	'template',
+	'templatemodel',
+	'projectmodel',
+	'page',
+	'language',
+	'value',
+	'user',
+	'usergroup',
+	'project',
+	'group',
+	'folder',
+	'file',
+	'acl',
+	'object',
+	'name',
+	'link'
+	) as $tname )
+		$t['t_'.$tname] = $conf_db_prefix.$tname.$conf_db_suffix;
 	
 	return $t;
 }
@@ -72,10 +83,6 @@ function db_connection()
 
 	return Session::getDatabase();
 }
-
-//extract( table_names() );
-
-
 
  
 ?>

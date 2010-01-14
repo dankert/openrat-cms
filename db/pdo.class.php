@@ -20,8 +20,9 @@
 //
 
 /**
- * Datenbank-abhaengige Methoden fuer PDO
- * @author $Author: dankert $
+ * Datenbank-abhaengige Methoden fuer PDO.
+ * 
+ * @author Jan Dankert
  * @version $Revision: 1.5 $
  * @package openrat.database
  */
@@ -51,11 +52,6 @@ class DB_pdo
 		
 		if	( isset($conf['port']) )
 			$host .= ':'.$conf['port'];
-
-		if   ( $conf['persistent'] )
-			$connect_function = 'mysql_pconnect';
-		else
-			$connect_function = 'mysql_connect';
 
 		$options = array();
 		foreach( $conf as $c )
@@ -109,20 +105,6 @@ class DB_pdo
 	}
 
 
-	function numCols($result)
-	{
-		die('called NumCols() in PDO');
-	}
-
-
-
-	function numRows( $result )
-	{
-		die('called NumRows in PDO()');
-	}
-	
-	
-		
 	function prepare( $query,$param)
 	{
 		foreach( $param as $pos)

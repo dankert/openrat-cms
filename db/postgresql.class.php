@@ -143,7 +143,6 @@ class DB_postgresql
 						die('unknown type "'.$data['type'].'"');
 				}
 			}
-			//Html::debug($this->params,'Parameter');
 			
 			$result = @pg_execute( $this->connection,$this->stmtid,$ar );
 			
@@ -151,7 +150,6 @@ class DB_postgresql
 			{
 				if	( empty($this->error) )
 					$this->error = 'PostgreSQL (prepared) says: '.@pg_errormessage();
-				debug_print_backtrace();
 				return FALSE;
 			}
 	
@@ -175,6 +173,9 @@ class DB_postgresql
 
 	function fetchRow( $result, $rownum )
 	{
+		if	( $rownum >= pg_num_rows($result) )
+			return false;
+			 
 		return pg_fetch_array( $result,$rownum,PGSQL_ASSOC );
 	}
 
@@ -185,19 +186,6 @@ class DB_postgresql
 	}
 
 
-	function numCols($result )
-	{
-		return pg_numfields( $result );
-	}
-
-
-
-	function numRows( $result )
-	{
-		return pg_numrows($result);
-	}
-	
-	
 	function prepare( $query,$param )
 	{
 		$nr = 1;

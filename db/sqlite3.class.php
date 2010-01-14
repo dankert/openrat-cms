@@ -94,21 +94,8 @@ class DB_sqlite3
 	}
 
 
-	function numCols($result)
-	{
-		return $this->result->numColumns();
-	}
-
-
-
-	function numRows( $result )
-	{
-		return $this->result->numRows();
-	}
 	
-	
-	
-		/**
+	/**
      * Startet eine Transaktion.
      */
 	function start()
