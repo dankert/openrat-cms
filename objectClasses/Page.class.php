@@ -605,7 +605,7 @@ class Page extends Object
 		if	( !empty($filename) )
 			$filename .= '/';
 
-		if	( !$this->cut_index || $this->filename != 'index' )
+		if	( !$this->cut_index || $this->filename != config('publish','default') )
 		{
 			$filename .= $this->filename();
 			
@@ -854,14 +854,16 @@ class Page extends Object
 
 		// Schleife ueber alle Sprachvarianten
 		$allLanguages = Language::getAll();
+		$allModels    = Model::getAll();
 		
 		foreach( $allLanguages as $languageid=>$x )
 		{
 			$this->languageid   = $languageid;
 			$this->withLanguage = count($allLanguages) > 1;
-
+			$this->withModel    = count($allModels) > 1;
+			
 			// Schleife ueber alle Projektvarianten
-			foreach( Model::getAll() as $projectmodelid=>$x )
+			foreach( $allModels as $projectmodelid=>$x )
 			{
 				$this->modelid = $projectmodelid;
 			
