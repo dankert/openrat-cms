@@ -169,13 +169,13 @@ class Group
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
 		                'WHERE groupid={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
-		$res = $db->query($sql);
+		$db->query($sql);
 
 		// Gruppe loeschen
 		$sql = new Sql( 'DELETE FROM {t_group} '.
 		                'WHERE id={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
-		$res = $db->query($sql);
+		$db->query($sql);
 	}
 
 
