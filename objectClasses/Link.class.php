@@ -1,7 +1,4 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
 // Copyright (C) 2002-2004 Jan Dankert, jandankert@jandankert.de
 //
@@ -18,18 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.2  2004-05-02 14:41:31  dankert
-// Einf�gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:15:12  dankert
-// Initiale Version
-//
-// Revision 1.1  2003/10/27 23:21:55  dankert
-// Methode(n) hinzugef�gt: savevalue(), save()
-//
-// ---------------------------------------------------------------------------
+
+
 
 /**
  * Darstellen einer Verkn�pfung. Eine Verkn�pfung kann auf eine Objekt oder auf

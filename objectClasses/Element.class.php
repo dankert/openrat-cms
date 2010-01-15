@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2010 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,84 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.22  2007-11-15 21:43:34  dankert
-// Fehlende Attribute der Klasse erg?nzt.
-//
-// Revision 1.21  2007-11-07 23:29:05  dankert
-// Wenn Seite direkt aufgerufen wird, dann sofort Seitenelement anzeigen.
-//
-// Revision 1.20  2007-10-29 22:16:19  dankert
-// Korrektur Auswahl-Eigenschaften f?r Kopie-Element
-//
-// Revision 1.19  2007-05-22 20:12:28  dankert
-// Elementtyp "list" hei?t intern nun "insert".
-//
-// Revision 1.18  2007-05-21 20:04:10  dankert
-// Korrektur f?r Anzeige des Vorlagen-Quelltextes.
-//
-// Revision 1.17  2007-05-02 20:58:45  dankert
-// Ausw?hlen von Einstellungen f?r Elemente "linkinfo" und "copy".
-//
-// Revision 1.16  2006/07/05 19:15:34  dankert
-// Bugfix getRelatedProperties()
-//
-// Revision 1.15  2006/07/04 20:48:14  dankert
-// Element "copy" hat nur Eigenschaft "defaultText"
-//
-// Revision 1.14  2006/06/16 19:45:05  dankert
-// Neues Templateelement "Kopie" (intern: "copy")
-//
-// Revision 1.13  2006/01/29 17:26:28  dankert
-// In Methode add() auch die Beschreibung speichern
-//
-// Revision 1.12  2005/11/07 22:34:01  dankert
-// Neue Methode "getDefaultValue()"
-//
-// Revision 1.11  2005/04/21 19:08:44  dankert
-// Vorbelegung fuer "list"-Element
-//
-// Revision 1.10  2005/01/04 19:58:22  dankert
-// Bei Datum auch Default-Text als Eigenschaft
-//
-// Revision 1.9  2004/12/26 20:22:03  dankert
-// Erweiterung bei setType()
-//
-// Revision 1.8  2004/12/26 01:06:31  dankert
-// Perfomanceverbesserung Seite/Elemente
-//
-// Revision 1.7  2004/12/19 15:21:21  dankert
-// Aenderung getDynamicParameters()
-//
-// Revision 1.6  2004/10/14 21:10:29  dankert
-// Parameter/Listeninhalte aus $this->code separiert (als Array) zurueckgeben
-//
-// Revision 1.5  2004/10/06 10:38:21  dankert
-// Elementtyp dynamic ist nie beschreibbar
-//
-// Revision 1.4  2004/10/06 09:54:19  dankert
-// Neuer Elementtyp: dynamic
-//
-// Revision 1.3  2004/07/07 20:45:10  dankert
-// Neuer Elementtyp: select
-//
-// Revision 1.2  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.2  2004/04/30 20:36:25  dankert
-// Neu: Freigabe
-//
-// Revision 1.1  2004/04/24 15:15:12  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
+
+
 
 /**
  * Diese Objektklasse stellt ein Element das.
+ * 
  * Ein Element ist ein Platzhalter in einem Template und kann verschiedenen
  * Typs sein, z.B. Text oder ein Bild.
  *
+ * @author Jan Dankert
  * @package openrat.objects
  */
 class Element

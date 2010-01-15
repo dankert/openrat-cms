@@ -46,7 +46,8 @@ class DB_mysqli
 	 * @var Resource
 	 */
 	var $stmt;
-	
+
+	var $prepared = false;
 	var $params = array();
 
 
@@ -109,7 +110,7 @@ class DB_mysqli
 
 	function query($query)
 	{
-		if	( is_object($this->stmt) )
+		if	( $this->prepared )
 		{
 			foreach($this->params as $name => $data)
 			{
@@ -128,8 +129,10 @@ class DB_mysqli
         		$ar[] = &$data['value'];
 			}
 		
-			call_user_func_array(array($this->stmt, 'bind_param'),$ar);
-			
+			call_user_func_array('bind_param',array($this->stmt,$ar));
+			$this->stmt->execute();
+			$this->stmt->bind_result( $a, $b );
+			return $this->stmt;
 		}
 		
 		$result = mysqli_query($this->connection,$query);
@@ -170,7 +173,7 @@ class DB_mysqli
 		}
 
 		$this->stmt = mysqli_prepare($this->connection,$query);
-		
+		$this->prepared = true;
 	}
 	
 	function bind( $param,$value )
@@ -205,6 +208,15 @@ class DB_mysqli
 		mysqli_query($this->connection,'ROLLBACK');
 	}
 	
+
+	/**
+	 * Setzt die letzte Abfrage zurueck.
+	 */
+	function clear()
+	{
+		$this->prepared = false;
+		$this->params   = array();
+	}
 	
 }
 

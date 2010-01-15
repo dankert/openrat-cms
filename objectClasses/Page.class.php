@@ -1,7 +1,4 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // DaCMS Content Management System
 // Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
 //
@@ -18,115 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.32  2009-04-20 23:24:58  dankert
-// Korrektur: Veröffentlichen mehrerer Varianten gleichzeitig.
-//
-// Revision 1.31  2009-04-18 00:56:14  dankert
-// Beim Verarbeiten von if-empty-Bereichen der Seitenvorlage keine regulären Ausdrücke mehr verwenden (da Binärausgaben wie PDF-Dokumente dabei beschädigt werden).
-//
-// Revision 1.30  2009-03-17 01:39:43  dankert
-// Funktionsfähigkeit bei enable_cache=false
-//
-// Revision 1.29  2009-03-17 01:27:29  dankert
-// Überarbeitung der temporären Dateinamen.
-//
-// Revision 1.28  2009-03-02 22:41:45  dankert
-// Bugfix in setTimestamp()
-//
-// Revision 1.27  2008-10-07 20:03:54  dankert
-// URLs ggf. mit Parameter "oid" aufbauen, um absolute URL zu erzwingen.
-//
-// Revision 1.26  2008-09-11 19:01:16  dankert
-// Korrektur fuer Veroeffentlichen (nur deaktiveren, wenn keine Dateiendung vorliegt.)
-//
-// Revision 1.25  2007-12-11 00:22:31  dankert
-// Cache von Dateien und Seiten zur Performancesteigerung beim Ver?ffentlichen.
-//
-// Revision 1.24  2007-11-24 14:18:12  dankert
-// MimeType in Template ermitteln.
-//
-// Revision 1.23  2007-11-24 12:16:32  dankert
-// Neue Methode mimeType()
-//
-// Revision 1.22  2007-11-07 23:29:05  dankert
-// Wenn Seite direkt aufgerufen wird, dann sofort Seitenelement anzeigen.
-//
-// Revision 1.21  2007-06-13 22:01:22  dankert
-// Korrektur: Dateiname Icon zum Bearbeiten.
-//
-// Revision 1.20  2007-04-22 00:16:44  dankert
-// Fehlermeldung vermeiden, wenn eine Objekt-Id nicht in der Datenbank vorhanden ist.
-//
-// Revision 1.19  2005/11/07 22:36:10  dankert
-// Beruecksichtigen von absoluten Pfadangaben
-//
-// Revision 1.18  2004/12/29 20:21:42  dankert
-// Korrektur Bearbeiten-Funktion, Parameter zu Html::url()
-//
-// Revision 1.17  2004/12/28 22:55:51  dankert
-// Korrektur Dateinamen-Ermittlung
-//
-// Revision 1.16  2004/12/26 01:06:31  dankert
-// Perfomanceverbesserung Seite/Elemente
-//
-// Revision 1.15  2004/12/25 21:05:29  dankert
-// Korrektur Edit-Icons
-//
-// Revision 1.14  2004/12/19 21:48:31  dankert
-// Links auf andere Objekte korrigiert
-//
-// Revision 1.13  2004/12/19 15:23:06  dankert
-// Aussschalten content-negotiation
-//
-// Revision 1.12  2004/12/15 23:17:53  dankert
-// temporaere Dateien vom System
-//
-// Revision 1.11  2004/11/29 23:24:36  dankert
-// Korrektur Veroeffentlichung
-//
-// Revision 1.10  2004/11/10 22:47:17  dankert
-// Methode copyValuesFromPage() zum Kopiern einer Seite
-//
-// Revision 1.9  2004/10/14 21:10:57  dankert
-// neue Methode getElementIds()
-//
-// Revision 1.8  2004/10/05 10:01:56  dankert
-// Austauschen einer Vorlage
-//
-// Revision 1.7  2004/07/09 20:57:14  dankert
-// Dynamische Bereiche (IFEMPTY...)
-//
-// Revision 1.6  2004/07/07 20:47:22  dankert
-// Korrektur f. Verkn?pfungen
-//
-// Revision 1.5  2004/05/07 21:41:14  dankert
-// Url ?ber Html::url erzeugen
-//
-// Revision 1.4  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.3  2004/05/02 11:40:00  dankert
-// Freigabestatus der Seiteninhalte verarbeiten
-//
-// Revision 1.2  2004/04/24 15:28:17  dankert
-// Korrektur: relative Pfad bei Listen
-//
-// Revision 1.1  2004/04/24 15:15:12  dankert
-// Initiale Version
-//
-// Revision 1.1  2004/03/20 14:15:00  dankert
-// Kommentare
-//
-// ---------------------------------------------------------------------------
 
 
 /**
  * Darstellen einer Seite
  *
- * @version $Revision$
- * @author $Author$
+ * @author Jan Dankert
  * @package openrat.objects
  */
 

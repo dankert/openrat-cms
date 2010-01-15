@@ -127,6 +127,7 @@ class WebdavAction extends Action
 				
 				if	( $ok )
 				{
+					$user->load();
 					$user->setCurrent();
 					$this->redirectWithSessionId();
 				}

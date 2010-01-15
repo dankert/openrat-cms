@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2010 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,27 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.7  2009-03-01 01:39:58  dankert
-// Neue Methode "getAllAcls()" zum Lesen der Berechtigungen.
-//
-// Revision 1.6  2007-11-08 22:21:59  dankert
-// Abfangen, wenn Gruppe nicht in Datenbank gefunden wird.
-//
-// Revision 1.5  2006/01/23 22:59:43  dankert
-// Leere Gruppennamen ?bersteuern
-//
-// Revision 1.4  2004/05/19 21:11:35  dankert
-// subaction verwenden
-//
-// Revision 1.3  2004/05/19 21:11:04  dankert
-// korrektur bei delete()
-//
-// Revision 1.2  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// ---------------------------------------------------------------------------
+
 
 
 /**

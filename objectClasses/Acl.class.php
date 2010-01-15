@@ -18,7 +18,6 @@
 
 
 
-// Definition der Berechtigungs-Bits
 define('ACL_READ'         ,1   );
 define('ACL_WRITE'        ,2   );
 define('ACL_PROP'         ,4   );
@@ -151,7 +150,7 @@ class Acl
 	var $create_file   = false;
 
 	/**
-	  * Verknuepfung anlegen
+	  * Verkn?pfung anlegen
 	  * @type Boolean
 	  */
 	var $create_link   = false;
@@ -176,8 +175,7 @@ class Acl
 
 
 	/**
-	 * Konstruktor.
-	 * 
+	 * Konstruktor
 	 * @param Integer Acl-ID
 	 */
 	function Acl( $aclid = 0 )
@@ -188,8 +186,7 @@ class Acl
 
 
 	/**
-	 * Laden einer ACL inklusive Benutzer-, Gruppen- und Sprachbezeichnungen.
-	 * Zum einfachen Laden sollte #loadRaw() benutzt werden.
+	 * Laden einer ACL inklusive Benutzer-, Gruppen- und Sprachbezeichnungen
 	 */
 	function load()
 	{
@@ -217,8 +214,7 @@ class Acl
 
 
 	/**
-	 * Laden einer ACL (ohne verknuepfte Namen).
-	 * Diese Methode ist schneller als #load().
+	 * Laden einer ACL (ohne verknuepfte Namen)
 	 */
 	function loadRaw()
 	{
@@ -237,7 +233,7 @@ class Acl
 
 
 	/**
-	 * Setzt die Eigenschaften des Objektes mit einer Datenbank-Ergebniszeile.
+	 * Setzt die Eigenschaften des Objektes mit einer Datenbank-Ergebniszeile
 	 *
 	 * @param row Ergebniszeile aus ACL-Datenbanktabelle
 	 */
@@ -263,12 +259,6 @@ class Acl
 		$this->groupid      = intval($row['groupid'   ]);
 	}
 
-	
-	/**
-	 * Erzeugt eine Liste aller Berechtigungsbits dieser ACL.
-	 * 
-	 * @return Array (Schluessel=Berechtigungstyp, Wert=boolean)
-	 */
 	function getProperties()
 	{
 		return Array( 'read'         => true,
@@ -295,11 +285,6 @@ class Acl
 	}
 
 
-	/**
-	 * Erzeugt eine Liste aller möglichen Berechtigungstypen.
-	 * 
-	 * @return 0..n-Array
-	 */
 	function getAvailableRights()
 	{
 		return array( 'read',
@@ -319,13 +304,11 @@ class Acl
 
 
 	/**
-	 * Erzeugt eine Bitmaske mit den Berechtigungen dieser ACL.
-	 * 
-	 * @return Integer Bitmaske
+	 * Erzeugt eine Bitmaske mit allen Berechtigungen
 	 */
 	function getMask()
 	{
-		// intval(boolean) erzeugt numerisch 0 oder 1 :)
+		// intval(boolean) erzeugt numerisch 0 oder 1
 		$this->mask =  ACL_READ;   // immer lesen
 		$this->mask += ACL_WRITE         *intval($this->write        );
 		$this->mask += ACL_PROP          *intval($this->prop         );
@@ -338,18 +321,10 @@ class Acl
 		$this->mask += ACL_CREATE_PAGE   *intval($this->create_page  );
 		$this->mask += ACL_GRANT         *intval($this->grant        );
 		$this->mask += ACL_TRANSMIT      *intval($this->transmit     );
-		
-		Logger::trace('mask of acl '.$this->aclid.': '.$this->mask );
 		return $this->mask;
 	}
 
 
-	/**
-	 * Erzeugt eine Liste aller gesetzten Berechtigungstypen.
-	 * Beispiel: Array (0:'read',1:'write',2:'transmit')
-	 * 
-	 * @return 0..n-Array
-	 */
 	function getTrueProperties()
 	{
 		$erg = array('read');
@@ -369,10 +344,6 @@ class Acl
 	}
 
 
-	
-	/**
-	 * ACL unwiderruflich loeschen.
-	 */
 	function delete()
 	{
 		$db = db_connection();
@@ -390,9 +361,6 @@ class Acl
 	}
 
 
-	/**
-	 * ACL der Datenbank hinzufügen.
-	 */
 	function add()
 	{
 		if	( $this->delete )
@@ -400,6 +368,47 @@ class Acl
 
 		$db = db_connection();
 
+		// Pr�fen, ob die ACL schon existiert
+		$sql = new Sql( <<<SQL
+		SELECT aclid FROM {t_acl} 
+		                 (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
+		                 VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )
+SQL
+);
+
+		if	( intval($this->userid) == 0 )
+			$sql->setNull('userid');
+		else
+			$sql->setInt ('userid',$this->userid);
+		
+		if	( intval($this->groupid) == 0 )
+			$sql->setNull('groupid');
+		else
+			$sql->setInt ('groupid',$this->groupid);
+
+		$sql->setInt('objectid',$this->objectid);
+		//$sql->setBoolean('is_default'   ,$this->isDefault     );
+		$sql->setBoolean('write'        ,$this->write         );
+		$sql->setBoolean('prop'         ,$this->prop          );
+		$sql->setBoolean('create_folder',$this->create_folder );
+		$sql->setBoolean('create_file'  ,$this->create_file   );
+		$sql->setBoolean('create_link'  ,$this->create_link   );
+		$sql->setBoolean('create_page'  ,$this->create_page   );
+		$sql->setBoolean('delete'       ,$this->delete        );
+		$sql->setBoolean('release'      ,$this->release       );
+		$sql->setBoolean('publish'      ,$this->publish       );
+		$sql->setBoolean('grant'        ,$this->grant         );
+		$sql->setBoolean('transmit'     ,$this->transmit      );
+
+		if	( intval($this->languageid) == 0 )
+			$sql->setNull('languageid');
+		else
+			$sql->setInt ('languageid',$this->languageid);
+		
+		if	( intval($db->getOne($sql)) > 0 )
+			return;
+
+		
 		$sql = new Sql('SELECT MAX(id) FROM {t_acl}');
 		$this->aclid = intval($db->getOne($sql))+1;
 		
@@ -423,6 +432,7 @@ SQL
 			$sql->setInt ('groupid',$this->groupid);
 
 		$sql->setInt('objectid',$this->objectid);
+		//$sql->setBoolean('is_default'   ,$this->isDefault     );
 		$sql->setBoolean('write'        ,$this->write         );
 		$sql->setBoolean('prop'         ,$this->prop          );
 		$sql->setBoolean('create_folder',$this->create_folder );
@@ -442,4 +452,28 @@ SQL
 
 		$db->query( $sql );
 	}
+
+
+//	function getACLsFromUserId( $userid )
+//	{
+//		$db = db_connection();
+//		
+//		$sql = new Sql( 'SELECT id FROM {t_acl} '.
+//		                '  WHERE userid={userid}');
+//		$sql->setInt('userid',$userid);
+//
+//		return $db->getCol( $sql );
+//	}
+//
+//
+//	function getACLsFromGroupId( $groupid )
+//	{
+//		$db = db_connection();
+//		
+//		$sql = new Sql( 'SELECT id FROM {t_acl} '.
+//		                '  WHERE groupid={groupid}' );
+//		$sql->setInt('groupid',$groupid);
+//
+//		return $db->getCol( $sql );
+//	}
 }

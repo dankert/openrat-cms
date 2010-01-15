@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
-// DaCMS Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// OpenRat Content Management System
+// Copyright (C) 2002-2009 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,118 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.32  2009-03-19 04:36:12  dankert
-// Beim Anlegen eines Objektes sofort Standard-Rechte vergeben.
-//
-// Revision 1.31  2009-03-17 01:39:43  dankert
-// Funktionsfähigkeit bei enable_cache=false
-//
-// Revision 1.30  2009-03-17 01:27:28  dankert
-// Überarbeitung der temporären Dateinamen.
-//
-// Revision 1.29  2009-03-02 21:20:02  dankert
-// Korrektur in "getTempDir()"
-//
-// Revision 1.28  2007-12-11 00:22:31  dankert
-// Cache von Dateien und Seiten zur Performancesteigerung beim Ver?ffentlichen.
-//
-// Revision 1.27  2007-12-01 17:49:37  dankert
-// Methode "available()" ergibt sofort "false", wenn Objekt-Id ung?ltig (Performance)
-//
-// Revision 1.26  2007-06-08 23:05:44  dankert
-// Als tempor?res Verzeichnis das "upload_tmp_dir" aus der PHP-Konfiguration verwenden.
-//
-// Revision 1.25  2007-06-04 22:17:51  dankert
-// Suchergebnisse absteigend nach ?nderungsdatum sortieren.
-//
-// Revision 1.24  2007-04-22 00:16:44  dankert
-// Fehlermeldung vermeiden, wenn eine Objekt-Id nicht in der Datenbank vorhanden ist.
-//
-// Revision 1.23  2007-04-08 15:25:35  dankert
-// Eigenschaft "type" erg?nzt.
-//
-// Revision 1.22  2007-04-06 01:38:52  dankert
-// Namen nicht speichern, wenn leer.
-//
-// Revision 1.21  2007/02/14 22:10:57  dankert
-// TODO f?r tmpfile-Erzeugung
-//
-// Revision 1.20  2006/01/29 17:26:55  dankert
-// Neben "desc" auch "description" f?llen.
-//
-// Revision 1.19  2005/11/07 22:36:40  dankert
-// Flexibere Ermittlung des Dateinamen anhand neuer Konfigurationseigenschaften.
-//
-// Revision 1.18  2004/12/27 23:19:47  dankert
-// ungueltige Zeichen im Dateinamen mit Punkt ersetzen
-//
-// Revision 1.17  2004/12/20 23:04:15  dankert
-// Korrektur Timestamp setzen
-//
-// Revision 1.16  2004/12/20 22:42:03  dankert
-// Kl. Korrekturen
-//
-// Revision 1.15  2004/12/20 22:03:45  dankert
-// Lesen des Benutzers und speichern als Objekt
-//
-// Revision 1.14  2004/12/20 20:01:20  dankert
-// Benutzen von switch() in filename()
-//
-// Revision 1.13  2004/12/19 15:23:56  dankert
-// Anpassung Session-Funktionen
-//
-// Revision 1.12  2004/12/15 23:18:09  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.11  2004/11/29 23:54:36  dankert
-// Korrektur Vorversion
-//
-// Revision 1.10  2004/11/29 23:34:39  dankert
-// neue Methode setTimestamp()
-//
-// Revision 1.9  2004/11/29 23:24:36  dankert
-// Korrektur Veroeffentlichung
-//
-// Revision 1.8  2004/11/29 00:02:41  dankert
-// Bei L?schen von Objekten alle Referenzen in Tabelle or_link entfernen
-//
-// Revision 1.7  2004/11/28 22:32:52  dankert
-// in getProperties() auch den Typ zurueckgeben
-//
-// Revision 1.6  2004/11/28 16:56:04  dankert
-// in hasRight() auch Abfrage des Parent-Ordners
-//
-// Revision 1.5  2004/11/24 22:06:24  dankert
-// Neu: setDatabaseRow() zur Performancesteigerung
-//
-// Revision 1.4  2004/11/15 21:34:44  dankert
-// Aenderung methode hasRight()
-//
-// Revision 1.3  2004/11/10 22:46:52  dankert
-// Neue Methoden checkFilename(), objectLoadRaw()
-//
-// Revision 1.2  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:15:12  dankert
-// Initiale Version
-//
-// Revision 1.2  2004/03/20 14:15:07  dankert
-// Kommentare
-//
-// Revision 1.1  2004/03/20 01:47:33  dankert
-// *** empty log message ***
-//
-// ---------------------------------------------------------------------------
 
 /**
- * Darstellung eines Objektes im Projektbaum.
- * Dieses Objekt stellt eines der 4 Unterobjekte Ordner,Datei,Link oder Seite dar.
+ * Superklasse fuer Objekte im Projektbaum.
+ * 
+ * Dieses Objekt ist die Oberklasse fuer die 4 Klassen Ordner, Datei,
+ * Link oder Seite dar.
  *
- * @version $Revision$
- * @author $Author$
+ * @author Jan Dankert
  * @package openrat.objects
  */
 class Object
@@ -275,16 +168,13 @@ class Object
 
 
 		$language = Session::getProjectLanguage();
-		if	( is_object($language) )
-			$this->languageid = $language->languageid;
+		$this->languageid = $language->languageid;
 
 		$model = Session::getProjectModel();
-		if	( is_object($model) )
-			$this->modelid = $model->modelid;
+		$this->modelid = $model->modelid;
 
 		$project = Session::getProject();
-		if	( is_object($project) )
-			$this->projectid = $project->projectid;
+		$this->projectid = $project->projectid;
 	}
 
 
@@ -338,22 +228,19 @@ class Object
 
 
 	/**
-	 * Pr?fen einer Berechtigung zu diesem Objekt
+	 * Pruefen einer Berechtigung zu diesem Objekt
 	 */
 	function hasRight( $type )
 	{
-//		$user = Session::getUser();
-//		return $user->hasRight( $this->objectid,$type ) || (isset($this->parentid)&&$user->hasRight($this->parentid,$type)&&$user->hasRight($this->parentid,ACL_TRANSMIT));
-		
 		if	( is_null($this->aclMask) )
 		{
-			$this->aclMask = 0;
-			
 			$project  = Session::getProject();
 			$language = Session::getProjectLanguage();
 			$user     = Session::getUser();
 			
-			if	( $user->isAdmin && !config('security','readonly') )
+			if	( $user->isAdmin )
+			{
+				// Administratoren erhalten eine Maske mit allen Rechten
 				$this->aclMask = ACL_READ +
 				                 ACL_WRITE +
 				                 ACL_PROP +
@@ -366,12 +253,13 @@ class Object
 				                 ACL_CREATE_PAGE +
 				                 ACL_GRANT +
 				                 ACL_TRANSMIT;
-
-			if	( $user->isAdmin && $type & ACL_READ )
-				return true;
-	
-			$sqlGroupClause = $user->getGroupClause();
-			$sql = new Sql( <<<SQL
+			}
+			else
+			{
+				$this->aclMask = 0;
+				
+				$sqlGroupClause = $user->getGroupClause();
+				$sql = new Sql( <<<SQL
 SELECT {t_acl}.* FROM {t_acl}
 	                 LEFT JOIN {t_object}
 	                        ON {t_object}.id={t_acl}.objectid
@@ -381,26 +269,28 @@ SELECT {t_acl}.* FROM {t_acl}
 			                                         OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )
 SQL
 );
-
-			$sql->setInt  ( 'languageid'  ,$language->languageid   );
-			$sql->setInt  ( 'objectid'    ,$this->objectid         );
-			$sql->setInt  ( 'userid'      ,$user->userid           );
 	
-			$db = db_connection();
-			foreach( $db->getAll( $sql ) as $row )
-			{
-				$acl = new Acl();
-				$acl->setDatabaseRow( $row );
-				#Html::debug($acl,"ACL");
-				
-				$this->aclMask |= $acl->getMask();
+				$sql->setInt  ( 'languageid'  ,$language->languageid   );
+				$sql->setInt  ( 'objectid'    ,$this->objectid         );
+				$sql->setInt  ( 'userid'      ,$user->userid           );
+		
+				$db = db_connection();
+				foreach( $db->getAll( $sql ) as $row )
+				{
+					$acl = new Acl();
+					$acl->setDatabaseRow( $row );
+					
+					$this->aclMask |= $acl->getMask();
+				}
 			}
 		}
 		
-//		Html::debug($type,"Anfrage");
-//		Html::debug($this->aclMask,"Maske fuer Objekt ".$this->objectid);
-//		Html::debug($this->aclMask & $type,"Ergebnis");
-		return $this->aclMask & $type;
+		if	( readonly() )
+			// System ist im Nur-Lese-Zustand
+			return $type == ACL_READ && $this->aclMask & $type;
+		else
+			// Ermittelte Maske auswerten
+			return $this->aclMask & $type;
 	}
 
 
@@ -603,7 +493,7 @@ SQL
 		if (count($row) == 0)
 		{
 			debug_print_backtrace();
-			Http::serverError('objectid not found: '.$this->objectid.', SQL='.$sql->raw );
+			die('fatal: Object::objectLoad(): objectid not found: '.$this->objectid.', SQL='.$sql->raw );
 		}
 
 		$this->setDatabaseRow( $row );
@@ -740,31 +630,19 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql( 
-<<<SQL
-SELECT *
-  FROM {t_name}
- WHERE objectid={objectid}'.'
-   AND languageid={languageid}
-SQL
-		);
+		$sql = new Sql('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND languageid={languageid}');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
-		$row = $db->getRow( $sql );
+		$res = $db->query($sql);
 
-		if ( empty($row) )
+		if ($res->numRows() == 0)
 		{
 			// Wenn Name in dieser Sprache nicht vorhanden, dann irgendeinen Namen lesen
-			$sql->setQuery( <<<SQL
- SELECT *
-   FROM {t_name}
-  WHERE objectid={objectid}
-    AND name != {blank}
-SQL
-			);
+			$sql->setQuery('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND name != {blank}');
 			$sql->setString('blank', '');
-			$row = $db->query($sql);
+			$res = $db->query($sql);
 		}
+		$row = $res->fetchRow();
 
 		$this->name = $row['name'];
 		$this->desc = $row['description'];
@@ -981,12 +859,13 @@ SQL
 		if	( !empty($this->name) )
 			$this->objectSaveName();
 			
+		// Standard-Rechte fuer dieses neue Objekt setzen.
+		// Der angemeldete Benutzer erhaelt Lese- und Schreibrechte auf
+		// das neue Objekt.
 		$acl = new Acl();
 		$acl->userid = $user->userid;
 		$acl->objectid = $this->objectid;
 		
-		// Standard-Rechte fuer dieses neue Objekt setzen.
-		// Der Benutzer hat Lese- und Schreibrechte auf das Objekt.
 		$acl->read   = true;
 		$acl->write  = true;
 		$acl->prop   = true;
@@ -1001,7 +880,7 @@ SQL
 		}
 		$acl->add();
 
-		// Aus dem Eltern-Ordner vererbbare Berechtigungen übernehmen.
+		// Aus dem Eltern-Ordner vererbbare Berechtigungen uebernehmen.
 		$folder = new Folder( $this->parentid );
 		foreach( $folder->getAclIds() as $aclid )
 		{

@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2010 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,21 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.5  2007-11-24 12:16:15  dankert
-// Methoden "available()" zum Pr?fen auf die Existenz der Id.
-//
-// Revision 1.4  2004/12/15 23:18:36  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.3  2004/11/10 22:46:27  dankert
-// *** empty log message ***
-//
-// Revision 1.2  2004/04/25 12:58:24  dankert
-// Spalte "selflink" entfernt
-//
-// ---------------------------------------------------------------------------
+
+
 
 /**
  * Diese Klasse stellt ein Projektmodell dar. Ein Projektmodell ist eine Darstellungsart

@@ -1,7 +1,4 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // DaCMS Content Management System
 // Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
 //
@@ -18,105 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.33  2009-03-22 15:14:41  dankert
-// Keine Aktion mehr in Methode loadRights()
-//
-// Revision 1.32  2009-03-19 10:05:05  dankert
-// Bugfix bei Ermitteln der zur Verfügung stehenden Projekte: Nur die Root-Objekte der Projekte berücksichtigen.
-//
-// Revision 1.31  2009-03-19 04:29:39  dankert
-// Bei LDAP-Login Gruppenzugehörigkeiten synchronisieren.
-//
-// Revision 1.30  2009-03-19 02:01:07  dankert
-// Für die Liste der lesbaren Projekte müssen nur die Root-Ordner herangezogen werden.
-//
-// Revision 1.29  2008-03-06 21:19:15  dankert
-// Nur Logging-Ausgabe verbessert.
-//
-// Revision 1.28  2007-11-08 23:03:41  dankert
-// Kommentare erg?nzt.
-//
-// Revision 1.27  2007-11-05 20:45:36  dankert
-// *** empty log message ***
-//
-// Revision 1.26  2007-10-24 18:53:21  dankert
-// Automatisches Hinzuf?gen von Gruppen zu neuen Benutzern.
-//
-// Revision 1.25  2007-10-10 18:23:38  dankert
-// Anzeigen der Gruppen-Mitgliedschaften im Profil.
-//
-// Revision 1.24  2007-04-24 20:55:22  dankert
-// Autorisierung ?ber LDAP.
-//
-// Revision 1.23  2007-04-23 21:48:01  dankert
-// Authentisierung gegen einen externen Server mit HTTP-Basic-Auth erm?glichen.
-//
-// Revision 1.22  2007-04-21 11:52:24  dankert
-// Default-Style ist konfigurierbar.
-//
-// Revision 1.21  2007-04-08 21:51:55  dankert
-// Korrektur Benutzer l?schen, wenn noch Referenzen in der Datenbank vorhanden sind.
-//
-// Revision 1.20  2007/02/15 22:12:02  dankert
-// Neue Methode "isValid()"
-//
-// Revision 1.19  2007/01/27 00:16:36  dankert
-// Neuer Loginmechanismus: "authdb"
-//
-// Revision 1.18  2007/01/21 22:20:12  dankert
-// Erweiterungen bei LDAP-Zugriff, Auslagerung von LDAP-Befehlen in eigene Klasse.
-//
-// Revision 1.17  2007/01/20 15:20:31  dankert
-// Neue Methode "getName()"
-//
-// Revision 1.16  2006/11/28 21:05:00  dankert
-// Wenn Klartextkennwort (kein MD5), dann Benutzer nicht anmelden.
-//
-// Revision 1.15  2006/11/16 19:58:57  dankert
-// Pflicht zu Kennwort?nderung ermitteln.
-//
-// Revision 1.14  2006/08/30 19:15:26  dankert
-// Erzeugen Kennwort und Laden ?ber Benutzername.
-//
-// Revision 1.13  2005/04/16 22:25:06  dankert
-// Verbindung zum LDAP-Server schlie?en
-//
-// Revision 1.12  2005/01/24 21:41:25  dankert
-// Abfrage auf Readonly-Mode
-//
-// Revision 1.11  2004/12/20 23:29:51  dankert
-// neue Methode setDatabaseRow()
-//
-// Revision 1.10  2004/12/20 23:19:41  dankert
-// Neue Methode getAllUsers()
-//
-// Revision 1.9  2004/12/19 19:24:27  dankert
-// getAvailableStyles()
-//
-// Revision 1.8  2004/11/28 22:32:33  dankert
-// getAllAcls(): Lesen aller Rechte des Benutzers
-//
-// Revision 1.7  2004/11/28 16:56:38  dankert
-// Beruecksichtigen von Berechtigungen fuer "alle"
-//
-// Revision 1.6  2004/11/15 21:35:39  dankert
-// Berechtigungen mit Bitmasken
-//
-// Revision 1.5  2004/11/10 22:48:25  dankert
-// Neue Methoden zum Einlesen der Berechtigungen
-//
-// Revision 1.4  2004/10/14 21:12:59  dankert
-// Methoden fuer Berechtigungen
-//
-// Revision 1.3  2004/05/07 21:29:16  dankert
-// Url ?ber Html::url erzeugen
-//
-// Revision 1.2  2004/05/02 14:41:31  dankert
-// Einf?gen package-name (@package)
-//
-// ---------------------------------------------------------------------------
+
+
 
 /**
  * Darstellen eines Benutzers
