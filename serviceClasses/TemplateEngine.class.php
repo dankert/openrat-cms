@@ -146,6 +146,23 @@ class TemplateEngine
 	}
 	
 	
+
+	function attributeValueOpenPHP($value)
+	{
+		$erg = $this->attributeValue($value);
+		
+		return '<'.'?php echo '.$erg.' ?>';
+		
+		// TODO: Für statische Texte muesste kein PHP-Abschnitt geoeffnet werden
+		/*
+		if	(substr($value,0,5) == 'text:' || strpos($value,':')===FALSE ) 
+			return $erg;
+		else
+			return '<'.'?php '.$erg.' ?>';
+		*/
+	}
+	
+	
 	
 	function attributeValue( $value )
 	{
@@ -295,6 +312,11 @@ class TemplateEngine
 			// Die Variablen "$attr_*" muessen pro Ebene eindeutig sein, daher wird an den
 			// Variablennamen die Tiefe angehangen.
 			$line = str_replace('$attr_','$a'.$hash.'_',$line);
+			
+			foreach( $attr as $attrName=>$attrValue )
+				$line = str_replace('%'.$attrName.'%',$this->attributeValueOpenPHP($attrValue),$line);
+			
+			
 			fwrite( $outFileHandler,$line );
 		}
 		
