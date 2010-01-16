@@ -135,6 +135,65 @@ transaction = false
 
 
 
+; PDO (means PHP Data Objects) is an abstract database interface 
+[sample_pdo_sqlite]
+
+enabled    = false                    ; set this to 'true' for using this connection
+comment    = "DB-PDO"                 ; comment of this database 
+
+type       = pdo                      ; 
+
+; The DSN-Url for your database
+dsn = ""
+; Examples:
+; MySql
+;dsn = "mysql:dbname=testdb;host=127.0.0.1"
+; PostgreSQL
+;dsn = "pgsql:host=localhost port=5432 dbname=mydb user=dbuser password=dbpass"
+; SQLite
+;dsn = "sqlite:/path/to/mydb.db"
+; JDBC-Url when using OpenRat in Quercus   
+;dsn = "java:comp/env/jdbc/mydb"
+
+; If not part of the DSN this is the right place for username/password
+;user     = "dbuser"
+;password = "dbpass"
+
+base64     = false                 ; store binary as BASE64 (in postgresql=true)
+prefix     = or_                   ; table praefix
+persistent = yes                   ; use persistent connections (try this, it's faster)
+;charset = UTF-8
+
+; SQL-Statement which is executed after opening the connection
+connection_sql = ""
+; Examples:
+; per default SQlite uses table-prefixed column names when using JOINs which MUST BE off. 
+;connection_sql = "pragma short_column_names=true;"
+; set default schema for Oracle 
+;connection_sql = "alter session set current_schema=myschema;"
+ 
+; System command for executing before connecting to the database.
+cmd = ""
+
+prepare = false
+
+; Set this to true, if you want to use transactions.
+transaction = false
+
+readonly = false
+
+
+; The database results MUST contain lowercase column names.
+; if using Oracle, set this to 'true', default is 'false'.
+convert_to_lowercase = false
+
+; PDO driver-specific options
+; key 'option_a' means option 'a'.
+;option_myoption_a
+;option_myoption_b
+
+
+
 ; Add here more sections with other database connections.
 ;[another_db]
 ; type=...
