@@ -62,6 +62,7 @@ class DB
 
 	/**
 	 * Client.
+	 * Enthält ein Objekt der Klasse db_<type>.
 	 *
 	 * @var Object
 	 */
@@ -78,8 +79,8 @@ class DB
 	 * Kontruktor.
 	 * Erwartet die Datenbank-Konfiguration als Parameter.
 	 *
-	 * @param Array $conf
-	 * @return Status
+	 * @param Array Konfiguration der Verbindung
+	 * @return Status 'true' wenn Verbindung erfolgreich aufgebaut.
 	 */
 	function DB( $conf )
 	{
@@ -99,7 +100,7 @@ class DB
 	 */
 	function connect()
 	{
-		// Ausfuehren des Systemkommandos.
+		// Ausfuehren des Systemkommandos vor Verbindungsaufbau
 		if	( !empty($this->conf['cmd']))
 		{
 			$ausgabe = array();
@@ -129,21 +130,20 @@ class DB
 			return false;
 		}
 		
+		// Client instanziieren
 		$this->client = & new $classname;
 
 		$ok = $this->client->connect( $this->conf );
 		
 		if	( ! $ok )
 		{
-			$this->error     = $this->client->error;
+			$this->error     = 'Cannot connect to database: '.$this->client->error;
 			$this->available = false;
 			return false; 
-//			if	( empty($this->error) )
-//				$this->error = 'Error while connecting to database.';
 		}
 
 				
-		// SQL bei Verbindungsaufbau ausfÃ¼hren.
+		// SQL nach Verbindungsaufbau ausfuehren.
 		if	( isset($this->conf['connection_sql']) &&  ! empty($this->conf['connection_sql']) )
 		{
 			$cmd = $this->conf['connection_sql'];
@@ -163,9 +163,9 @@ class DB
 
 
 	/**
-	 * Ausfï¿½hren einer Datenbankanfrage.
+	 * Ausfuehren einer Datenbankanfrage.
 	 *
-	 * @param String $query
+	 * @param SQL-Objekt
 	 * @return Object (Result)
 	 */
 	function query( $query )
@@ -173,31 +173,19 @@ class DB
 		if ( !is_object($query) )
 			die('SQL-Query must be an object');
 			
+		// Vorbereitete Datenbankabfrage ("Prepared Statement")
 		if	( isset($this->conf['prepare']) && $this->conf['prepare'] )
 		{
 			$this->client->clear();
+			
+			// Statement an die Datenbank schicken
 			$this->client->prepare( $query->raw,$query->param );
 			
-			/*
-			foreach ($query->param as $name=>$unused)
-				$data[$name] = array('type'=>'null');
-
-			foreach ($query->data as $name=>$unused)
-				$data[$name] = &$value;
-				
-			foreach( $data as $name=>$value)
-			{
-				$this->client->bind($name,$value);
-			}
-			 */
-			/*
-			Html::debug($query->data,'DATA');
-			foreach ($query->param as $name=>$unused)
-				Html::debug($query->data[$name],$name);
-				*/
+			// Einzelne Parameter an die Anfrage binden
 			foreach ($query->param as $name=>$unused)
 				$this->client->bind($name,$query->data[$name]);
 			
+			// Ausführen...
 			$result = $this->client->query($query);
 			
 			if	( $result === FALSE )
@@ -213,30 +201,33 @@ class DB
 					
 			return $result;
 		}
-		
-		$flatQuery = $query->getQuery();
-		
-		Logger::trace('DB query: '.$query->raw);
-
-		$result = $this->client->query($flatQuery);
-		
-		if	( $result === FALSE )
+		else
 		{
-			$this->error = $this->client->error;
 			
-			if	( true )
+			$flatQuery = $query->getQuery();
+			
+			Logger::trace('DB query: '.$query->raw);
+	
+			$result = $this->client->query($flatQuery);
+			
+			if	( $result === FALSE )
 			{
-				debug_print_backtrace();
-				Logger::warn('Database error: '.$this->error);
-				die('Database Error (not prepared):<pre style="color:red">'.$this->error.'</pre>');
+				$this->error = $this->client->error;
+				
+				if	( true )
+				{
+					debug_print_backtrace();
+					Logger::warn('Database error: '.$this->error);
+					die('Database Error (not prepared):<pre style="color:red">'.$this->error.'</pre>');
+				}
 			}
+	
+			if	( isset($this->conf['autocommit']) && @$this->conf['autocommit'])
+				if	( method_exists($this->client,'commit') )
+					$this->client->commit();
+			
+			return $result;
 		}
-
-		if	( isset($this->conf['autocommit']) && @$this->conf['autocommit'])
-			if	( method_exists($this->client,'commit') )
-				$this->client->commit();
-		
-		return $result;
 	}
 
 
