@@ -42,7 +42,7 @@ class DB_postgresql
 	 * Verbinden zum POSTGRES-Server.
 	 *
 	 * @param Array $conf
-	 * @return boolean
+	 * @return boolean 'true', wenn Verbindung aufgebaut wurde
 	 */
 	function connect( $conf )
 	{
@@ -70,7 +70,7 @@ class DB_postgresql
 			
 		if	( ! is_resource($this->connection) )
 		{
-			$this->error = 'could not connect to database on host '.$host;
+			$this->error = 'Could not connect to postgresql-server '.$host.': '.@pg_errormessage();
 			return false;
 		}
 
@@ -80,7 +80,7 @@ class DB_postgresql
 
 
     /**
-     * Verbindung schlie�en.
+     * Verbindung schliessen.
      *
      * @return unknown
      */
@@ -125,6 +125,7 @@ class DB_postgresql
 	{
 		if	( $this->prepared )
 		{
+			// Prepared Statement
 			$ar = array();
 			foreach($this->params as $name => $data)
 			{
@@ -149,25 +150,26 @@ class DB_postgresql
 			if	( $result === false )
 			{
 				if	( empty($this->error) )
-					$this->error = 'PostgreSQL (prepared) says: '.@pg_errormessage();
+					$this->error = 'PostgreSQL is unable to execute the prepared statement: '.@pg_errormessage();
 				return FALSE;
 			}
 	
 			return $result;
 		}
-		
-		
-		
-		$result = @pg_exec( $this->connection,$query );
-
-		if	( ! $result )
+		else
 		{
-			if	( empty($this->error) )
-				$this->error = 'PostgreSQL (not prepared) says: '.@pg_errormessage();
-			return FALSE;
+			// Flat Query:
+			$result = @pg_exec( $this->connection,$query );
+	
+			if	( ! $result )
+			{
+				if	( empty($this->error) )
+					$this->error = 'PostgreSQL is unable to execute the flat query: '.@pg_errormessage();
+				return FALSE;
+			}
+	
+			return $result;
 		}
-
-		return $result;
 	}
 
 
@@ -208,7 +210,6 @@ class DB_postgresql
 			}
 			$nr++;
 		}
-		//Html::debug($query);
 		$this->stmtid = md5($query);
 		$this->prepared = true;
 
@@ -217,7 +218,17 @@ class DB_postgresql
 		if	(pg_num_rows($result) > 0)
 			return;
 		
-		pg_prepare($this->connection,$this->stmtid,$query);
+		$erg = @pg_prepare($this->connection,$this->stmtid,$query);
+		
+		if	( $erg === FALSE )
+		{
+			$this->error = 'PostgreSQL is unable to prepare the statement: '.@pg_errormessage();
+			return FALSE;
+		}
+		else
+		{
+			return $erg;
+		}
 	}
 	
 	
