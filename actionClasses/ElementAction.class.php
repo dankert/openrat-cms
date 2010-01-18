@@ -57,7 +57,7 @@ class ElementAction extends Action
 		$this->element->save();
 		$this->element->load();
 		
-		$this->addNotice('element',$this->template->name,'SAVED',OR_NOTICE_OK);
+		$this->addNotice('element',$this->element->name,'SAVED',OR_NOTICE_OK);
 	}
 
 
