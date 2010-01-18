@@ -53,7 +53,7 @@ class DB_pdo
 		$user   = $conf['user'    ];
 		$pw     = $conf['password'];
 		
-		if	( $conf['convert_to_lowercase'] )
+		if	( isset($conf['convert_to_lowercase']) && $conf['convert_to_lowercase'] )
 			$this->lowercase = true;
 		
 		$options = array();
