@@ -112,7 +112,7 @@ class ElementAction extends Action
 		{
 			// Neuen Typ setzen und speichern
 			$this->element->setType( $this->getRequestVar('type') );
-			$this->addNotice('element',$this->template->name,'SAVED',OR_NOTICE_OK);
+			$this->addNotice('element',$this->element->name,'SAVED',OR_NOTICE_OK);
 		}
 	}
 
