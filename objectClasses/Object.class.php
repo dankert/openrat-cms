@@ -478,8 +478,7 @@ SQL
 		               '       lastchangeuser.mail     as lastchange_usermail,     '.
 		               '       createuser.name         as create_username,     '.
 		               '       createuser.fullname     as create_userfullname, '.
-		               '       createuser.mail         as create_usermail,     '.
-		               '       {t_name}.name,{t_name}.descr'.
+		               '       createuser.mail         as create_usermail      '.
 		               ' FROM {t_object}'.
 		               ' LEFT JOIN {t_name} '.
 		               '        ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
