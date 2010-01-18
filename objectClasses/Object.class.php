@@ -168,13 +168,16 @@ class Object
 
 
 		$language = Session::getProjectLanguage();
+			if	( is_object($language) )
 		$this->languageid = $language->languageid;
 
 		$model = Session::getProjectModel();
-		$this->modelid = $model->modelid;
+		if	( is_object($model) )
+			$this->modelid = $model->modelid;
 
 		$project = Session::getProject();
-		$this->projectid = $project->projectid;
+		if	( is_object($project) )
+			$this->projectid = $project->projectid;
 	}
 
 
