@@ -41,6 +41,8 @@ class DB_pdo
 	 * @var String
 	 */
 	var $error;
+	
+	var $prepared = false;
 
 
 	function connect( $conf )
@@ -77,21 +79,41 @@ class DB_pdo
 
 	function query($query)
 	{
-		$this->result = $this->connection->query($query);
-
-		if	( ! $this->result )
+		if	( $this->prepared )
 		{
-			$this->error = 'Database error: '.PDO::errorInfo();
-			return FALSE;
-		}
+			$ar     = array();
+				
+			foreach( $query->data as $val )
+				$ar[] = $val['value'];
+			$erg = $this->stmt->execute( $ar );
 
-		return $this->result;
+			if	( $erg === false  )
+			{
+				die( 'Could not execute prepared statement "'.$query->query.'" with values "'.implode(',',$ar).'": '.implode('/',$this->connection->errorInfo()) );
+			}
+			
+			return $this->stmt;
+		}
+		else
+		{
+			$this->result = $this->connection->query($query);
+	
+			if	( ! $this->result )
+			{
+				$this->error = 'Database error: '.implode('/',$this->connection->errorInfo());
+				return FALSE;
+			}
+			return $this->result;
+		}
 	}
 
 
 	function fetchRow( $result, $rownum )
 	{
-		return $this->result->fetch( PDO::FETCH_ASSOC );
+		if	( $this->prepared )
+			return $this->stmt->fetch( PDO::FETCH_ASSOC );
+		else
+			return $this->result->fetch( PDO::FETCH_ASSOC );
 	}
 
  
@@ -103,15 +125,21 @@ class DB_pdo
 
 	function prepare( $query,$param)
 	{
+		$offset = 0;
 		foreach( $param as $pos)
 		{
 			foreach( $pos as $posx )
 			{
-				$query = substr($query,0,$posx-1).'?'.substr($query,$posx+1);
+				$posx += $offset++;
+				$query = substr($query,0,$posx).'?'.substr($query,$posx);
 			}
 		}
 
+		$this->prepared = true;
 		$this->stmt = $this->connection->prepare($query);
+		
+		if	( $this->stmt === false )
+			die( 'Database error: '.implode('/',$this->connection->errorInfo()) );
 		
 	}
 
@@ -152,6 +180,17 @@ class DB_pdo
 	}
 	
 	
+	
+	/**
+	 * Setzt die letzte Abfrage zurueck.
+	 */
+	function clear()
+	{
+		$this->prepared = false;
+		$this->params   = array();
+	}
+
+
 	/**
 	 * Why this? See http://e-mats.org/2008/07/fatal-error-exception-thrown-without-a-stack-frame-in-unknown-on-line-0/
 	 * 
