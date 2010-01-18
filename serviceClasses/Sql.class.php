@@ -255,7 +255,7 @@ class Sql
 	 */
 	function setInt( $name,$value )
 	{
-		$this->data[ $name ] = array( 'type'=>'int','value'=>$value );
+		$this->data[ $name ] = array( 'type'=>'int','value'=>(int)$value );
 	}
 
 

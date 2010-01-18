@@ -168,13 +168,16 @@ class Object
 
 
 		$language = Session::getProjectLanguage();
+			if	( is_object($language) )
 		$this->languageid = $language->languageid;
 
 		$model = Session::getProjectModel();
-		$this->modelid = $model->modelid;
+		if	( is_object($model) )
+			$this->modelid = $model->modelid;
 
 		$project = Session::getProject();
-		$this->projectid = $project->projectid;
+		if	( is_object($project) )
+			$this->projectid = $project->projectid;
 	}
 
 
@@ -475,8 +478,7 @@ SQL
 		               '       lastchangeuser.mail     as lastchange_usermail,     '.
 		               '       createuser.name         as create_username,     '.
 		               '       createuser.fullname     as create_userfullname, '.
-		               '       createuser.mail         as create_usermail,     '.
-		               '       {t_name}.name,{t_name}.descr'.
+		               '       createuser.mail         as create_usermail      '.
 		               ' FROM {t_object}'.
 		               ' LEFT JOIN {t_name} '.
 		               '        ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.

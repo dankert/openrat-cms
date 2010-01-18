@@ -112,6 +112,10 @@ class DB_mysqli
 	{
 		if	( $this->prepared )
 		{
+			$ar     = array();
+			$ar[-1] = $this->stmt;
+			$ar[0]  = '';
+			
 			foreach($this->params as $name => $data)
 			{
 				switch( $data['type'] )
@@ -123,15 +127,14 @@ class DB_mysqli
 						$ar[0] .= 's';
 						break;
 					default:
-						continue;
+						die('mysqli: unknown data type: '.$data['type']);
 				}
 				
         		$ar[] = &$data['value'];
 			}
 		
-			call_user_func_array('bind_param',array($this->stmt,$ar));
+			call_user_func_array('mysqli_stmt_bind_param',$ar);
 			$this->stmt->execute();
-			$this->stmt->bind_result( $a, $b );
 			return $this->stmt;
 		}
 		
@@ -149,7 +152,39 @@ class DB_mysqli
 
 	function fetchRow( $result, $rownum )
 	{
-		return mysqli_fetch_array( $result,MYSQL_ASSOC );
+		if	( $this->prepared )
+		{
+	        $result = $this->stmt->result_metadata();
+	        $fields = array();
+	        while ($field = mysqli_fetch_field($result)) {
+	            $name = $field->name;
+	            $fields[$name] = &$$name;
+	        }
+	        array_unshift($fields, $this->stmt);
+	        call_user_func_array('mysqli_stmt_bind_result', $fields);
+	        
+	        array_shift($fields);
+	        if	( mysqli_stmt_fetch($this->stmt) )
+	        {
+	            $temp = array();
+	            foreach($fields as $key => $val)
+	            	$temp[$key] = $val;
+	            //array_push($results, $temp);
+	            return $temp;
+	        }
+	        else
+	        {
+		        mysqli_stmt_close($this->stmt);
+		        $this->stmt = null; 
+	        	return false;
+	        }
+		}
+		else
+		{
+			// Plain old flat query
+			$row = $result->fetch_assoc();
+			return $row;
+		}
 	}
 
  
@@ -164,15 +199,25 @@ class DB_mysqli
 
 	function prepare( $query,$param)
 	{
+		if	( is_object($this->stmt) )
+		{
+			mysqli_stmt_close($this->stmt);
+			$this->stmt = null;
+		}
+		
+		$offset = 0;
 		foreach( $param as $pos)
 		{
-			foreach( $pos as $pos )
+			foreach( $pos as $posn )
 			{
-				$query = substr($query,0,$pos-1).'?'.substr($query,$pos+1);
+				$posn += $offset++;
+				$query = substr($query,0,$posn).'?'.substr($query,$posn);
 			}
 		}
 
 		$this->stmt = mysqli_prepare($this->connection,$query);
+		if	( $this->stmt === FALSE )
+			die( 'Mysql-I is unable to prepare the statement: '.$query.' : '.mysqli_error($this->connection) );
 		$this->prepared = true;
 	}
 	
