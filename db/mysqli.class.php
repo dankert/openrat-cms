@@ -182,7 +182,7 @@ class DB_mysqli
 		else
 		{
 			// Plain old flat query
-			$row = $this->result->fetch_assoc();
+			$row = $result->fetch_assoc();
 			return $row;
 		}
 	}
