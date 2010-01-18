@@ -43,6 +43,8 @@ class DB_pdo
 	var $error;
 	
 	var $prepared = false;
+	
+	var $lowercase = false;
 
 
 	function connect( $conf )
@@ -50,6 +52,9 @@ class DB_pdo
 		$url    = $conf['dsn'     ];
 		$user   = $conf['user'    ];
 		$pw     = $conf['password'];
+		
+		if	( $conf['convert_to_lowercase'] )
+			$this->lowercase = true;
 		
 		$options = array();
 		foreach( $conf as $c )
@@ -111,9 +116,14 @@ class DB_pdo
 	function fetchRow( $result, $rownum )
 	{
 		if	( $this->prepared )
-			return $this->stmt->fetch( PDO::FETCH_ASSOC );
+			$row = $this->stmt->fetch( PDO::FETCH_ASSOC );
 		else
-			return $this->result->fetch( PDO::FETCH_ASSOC );
+			$row = $this->result->fetch( PDO::FETCH_ASSOC );
+		
+		if	( is_array($row) && $this->lowercase )
+			$row = array_change_key_case($row);
+				
+		return $row;
 	}
 
  
