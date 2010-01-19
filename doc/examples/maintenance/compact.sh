@@ -12,7 +12,8 @@
 # Call 'compact.sh' in the openrat installation directory
 
 minimize_php() {
-	cat $1 | tr -d \\n > $1
+	#cat $1 | sed -e 's/\/\/.*$//g' | tr -d \\t | tr -d \\r | tr -d \\n | sed -e 's/\/\*.*\*\///g' > $1
+	cat $1 | sed -e 's/\/\/.*$//g' | tr -d \\t | tr -d \\r > $1
 }
 
 
@@ -38,7 +39,7 @@ cd compact
 rm -r themes/default/templates
 rm -r themes/default/include
 
-for i in `find -name *.class.php`; do
+for i in `find -name "*.php"`; do
 	minimize_php $i
 done 
 
