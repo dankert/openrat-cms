@@ -24,6 +24,12 @@ close_table()
     echo ")" >> $outfile
 }
 
+
+# param 1: first column 1/0
+# param 2: column name
+# param 3: size
+# param 4: default
+# param 5: nullable j/n
 column()
 {
     if	[ $db_fc -eq 1 ]; then
@@ -32,27 +38,35 @@ column()
 		echo -n "  ," >> $outfile
 	fi
 	if	[ "$type" == "oracle" ]; then
+		# Oracle needs uppercase
 		uc=`echo $1|tr 'a-z' 'A-Z'`
     	echo -n "\"$uc\"" >> $outfile # column name
 	else
     	echo -n "$1" >> $outfile # column name
     fi
     echo -n " $2" >> $outfile # type
-    if [ "$3" != "" ]; then
+    
+    # Column-size
+    if [ "$3" != "" -a "$3" != "-" ]; then
     	echo -n "($3)" >> $outfile
     fi
-    if [ "$4" != "" ]; then
+    
+    # DEFAULT-value
+    if [ "$4" != "" -a "$4" != "-" ]; then
     	echo -n " DEFAULT $4" >> $outfile
     fi
-    if [ "$5" == "0" ]; then
-    	echo -n " NOT NULL" >> $outfile
-    else
+    
+    # Nullable?
+    if [ "$5" == "J" -o "$5" == "1" ]; then
     	echo -n " NULL" >> $outfile
+    else
+    	echo -n " NOT NULL" >> $outfile
     fi
     echo >> $outfile
     db_fc=0
 }
 
+# param 1: column name
 primary_key()
 {
     echo "  ,PRIMARY KEY ($1)" >> $outfile
@@ -73,6 +87,7 @@ constraint()
 {
     echo "  ,CONSTRAINT ${prefix}fk_${table}_$1" >> $outfile
     echo "     FOREIGN KEY ($1) REFERENCES ${prefix}${2} ($3)" >> $outfile
+   	# Oracle doesn't support "ON DELETE RESTRICT"-Statements
     if	[ "$type" != "oracle" ]; then
     	echo "     ON DELETE RESTRICT ON UPDATE RESTRICT" >> $outfile
     fi
@@ -92,141 +107,142 @@ for	db in mysql postgresql oracle sqlite; do
     echo "-- DDL-Script for $db" > $outfile
     
     open_table project
-    column id                  INT      ""  0 1
-    column name                text    128  0 1
-	column target_dir          VARCHAR 255 "" 0
-    column ftp_url             VARCHAR 255 "" 0
-    column ftp_passive         tinyint 1   0 0
-    column cmd_after_publish   VARCHAR 255 "" 0
-    column content_negotiation tinyint 1   0 0
-    column cut_index           tinyint 1   0 0
+    column id                  INT     -   0 N
+    column name                VARCHAR 128 - N
+    column target_dir          VARCHAR 255 - N
+    column ftp_url             VARCHAR 255 - N
+    column ftp_passive         tinyint 1   0 N
+    column cmd_after_publish   VARCHAR 255 - N
+    column content_negotiation tinyint 1   0 N
+    column cut_index           tinyint 1   0 N
     primary_key id
     close_table
     unique_index name
 
 
 	open_table user  
-	column       id INT 0
-	column      name VARCHAR 128  0
-	column      password VARCHAR 50  0
-	column      ldap_dn VARCHAR 255  0
-	column      fullname VARCHAR 128  0
-	column      tel VARCHAR 128  0
-	column      mail VARCHAR 255  0
-	column      descr VARCHAR 255  0
-	column      style VARCHAR 64  0
-	column      is_admin INT 0 0
+	column id       INT     -   - N
+	column name     VARCHAR 128 - N
+	column password VARCHAR 50  - N
+	column ldap_dn  VARCHAR 255 - N
+	column fullname VARCHAR 128 - N
+	column tel      VARCHAR 128 - N
+	column mail     VARCHAR 255 - N
+	column descr    VARCHAR 255 - N
+	column style    VARCHAR 64  - N
+	column is_admin INT     -   0 N
 	primary_key id 
-     close_table
+    close_table
 	unique_index name
 	
+	
 	open_table group  
-	column       id INT 0
-	column      name VARCHAR 100  0
-	primary_key  id 
-     close_table
+	column id   INT     -   - N 
+	column name VARCHAR 100 - N
+	primary_key id 
+    close_table
 	unique_index name
 	
 	open_table object  
-	column       id INT 0
-	column      parentid INT
-	column      projectid INT 0 0
-	column      filename VARCHAR 255  0
-	column      orderid INT 0 0
-	column      create_date INT 0 0
-	column      create_userid INT 0
-	column      lastchange_date INT 0 0
-	column      lastchange_userid INT 0
-	column      is_folder INT 0 0
-	column      is_file INT 0 0
-	column      is_page INT 0 0
-	column      is_link INT 0 0
+	column id                INT
+	column parentid          INT     -   - 1
+	column projectid         INT     -   0 0
+	column filename          VARCHAR 255 -
+	column orderid           INT     -   0
+	column create_date       INT     -   0
+	column create_userid     INT     -   0 J
+	column lastchange_date   INT     -   0
+	column lastchange_userid INT     -   0 J
+	column is_folder         INT     -   0
+	column is_file           INT     -   0 
+	column is_page           INT     -   0
+	column is_link           INT     -   0
 	primary_key  id 
-      constraint projectid project id
-      constraint lastchange_userid                    user  id  
-      constraint create_userid user  id
-     close_table
+    constraint projectid          project id
+    constraint lastchange_userid  user    id
+    constraint create_userid      user    id
+    close_table
  
-	index   parentid 
-	index projectid 
-	index is_folder 
-	index is_file 
-	index is_page 
-	index is_link 
-	index orderid 
-	index create_userid 
-	index lastchange_userid 
-	unique_index parentid filename 
+	index parentid
+	index projectid
+	index is_folder
+	index is_file
+	index is_page
+	index is_link
+	index orderid
+	index create_userid
+	index lastchange_userid
+	unique_index parentid,filename 
 
 	open_table template  
-	column       id INT 0
-	column      projectid INT 0
-	column      name VARCHAR 50  0
-	 primary_key  id 
-	constraint   projectid   project  id  
-     close_table
-	 
+	column id        INT
+	column projectid INT
+	column name      VARCHAR 50
+	primary_key id 
+	constraint projectid project  id
+	close_table
+
 	index projectid 
 	index name 
 	unique_index projectid,name 
-	
+
 	open_table language  
-	column       id INT 0
-	column      projectid INT 0 0
-	column      isocode VARCHAR 10  0
-	column      name VARCHAR 50  0
-	column      is_INT 0 0column
-	primary_key  id 
-	constraint   projectid     project  id  
-     close_table
+	column id         INT
+	column projectid  INT     -  0
+	column isocode    VARCHAR 10
+	column name       VARCHAR 50
+	column is_default INT     -  0
+	primary_key  id
+	constraint projectid project id
+	close_table
 	unique_index projectid,isocode 
 	
-	open_table page  
-	column       id INT 0
-	column      objectid INT 0 0
-	column      templateid INT 0 0
-      primary_key  id 
-      constraint  templateid             template  id  
-      constraint  objectid                   object  id  
-     close_table
+	open_table page
+	column id         INT
+	column objectid   INT - 0
+	column templateid INT - 0
+	primary_key  id 
+	constraint  templateid template id
+	constraint  objectid   object   id  
+	close_table
      
 	unique_index objectid 
 	index templateid 
 	
 	open_table projectmodel  
-	column       id INT 0
-	column      projectid INT 0 0
-	column      name VARCHAR 50  0
-	column      extension VARCHAR 10 
-	column      is_CHAR 10  '0' 0
-      primary_key  id 
-      constraint  projectid  project  id  
-      close_table
+	column id         INT
+	column projectid  INT     -  0
+	column name       VARCHAR 50
+	column extension  VARCHAR 10 - J
+	column is_default INT     -  0
+	primary_key  id 
+	constraint  projectid  project  id  
+	close_table
  
-	index   projectid 
-	unique_index projectid,name 
+	index        projectid
+	unique_index projectid,name
 
 	
-	open_table element  
-	column       id INT 0
-	column      templateid INT 0 0
-	column      name VARCHAR 50  0
-	column      descr VARCHAR 255  0
-	column      type VARCHAR 20  0
-	column      subtype VARCHAR 20 
-	column      with_icon CHAR 1  '0' 0
-	column      dateformat VARCHAR 100 
-	column      wiki CHAR 1  '0'
-	column      html CHAR 1  '0'
-	column      all_languages CHAR 1  '0' 0
-	column      wriopen_table CHAR 1  '0' 0
-	column      decimals INT 0
-	column      dec_point VARCHAR 5 
-	column      thousand_sep CHAR 1 
-	column      code TEXT
-	column      default_text TEXT
-	column      folderobjectid INT
-	column      default_objectid INT
+	open_table element
+	column      id               INT
+	column      templateid       INT     -   0 0
+	column      name             VARCHAR 50
+	column      descr            VARCHAR 255
+	column      type             VARCHAR 20
+	column      subtype          VARCHAR 20  - J
+	column      with_icon        INT     1   0
+	column      dateformat       VARCHAR 100 - J
+	column      wiki             INT     1   0 J
+	column      html             INT     1   0 J
+	column      all_languages    INT     1   0
+	column      writable         INT     1   0
+	column      decimals         INT     -   0
+	column      dec_point        VARCHAR 5   - J 
+	column      thousand_sep     CHAR    1   - J
+	column      code             TEXT    -   - J
+	column      default_text     TEXT    -   - J
+	column      folderobjectid   INT     -   - J
+	column      default_objectid INT     -   - J
       primary_key  id 
       constraint  default_objectid     object  id  
       constraint  folderobjectid   object  id  
@@ -239,52 +255,52 @@ for	db in mysql postgresql oracle sqlite; do
 
 
 	open_table file  
-	column       id INT 0
-	column      objectid INT 0 0
-	column      extension VARCHAR 10  0
-	column      size INT 0 0
-	column      value MEDIUMBLOB 0
-	      primary_key  id 
-	      constraint  objectid   object  id  
-     close_table
+	column      id        INT
+	column      objectid  INT     -  0
+	column      extension VARCHAR 10 
+	column      size      INT     -  0
+	column      value     BLOB
+	primary_key  id 
+	constraint  objectid   object  id  
+    close_table
 	 
 	unique_index objectid 
 
 	
 	open_table folder  
-	column       id INT 0
-	column      objectid INT 0 0
-	      primary_key  id 
-	      constraint object,id  
-     close_table
+	column id       INT
+	column objectid INT - 0
+	primary_key  id 
+	constraint object,id  
+    close_table
  
 	unique_index objectid 
 	
 
 	open_table link  
-	column       id INT 0
-	column      objectid INT 0 0
-	column      link_objectid INT
-	column      url VARCHAR 255 
-      primary_key  id 
-      constraint objectid  object  id  
-      constraint link_objectid object  id  
-     close_table
+	column id            INT     -   - N
+	column objectid      INT     -   0 N
+	column link_objectid INT     -   - J
+	column url           VARCHAR 255 - N
+    primary_key  id 
+    constraint objectid  object  id  
+    constraint link_objectid object  id  
+    close_table
  
 	unique_index objectid 
 	index link_objectid 
 
 	
 	open_table name  
-	column       id INT 0
-	column      objectid INT 0 0
-	column      name VARCHAR 255  0
-	column      descr VARCHAR 255  0
-	column      languageid INT 0 0
-      primary_key  id 
-      constraint objectid   object  id  
-      constraint languageid  language  id  
-     close_table
+	column id         INT
+	column objectid   INT     -   0
+	column name       VARCHAR 255 - N
+	column descr      VARCHAR 255
+	column languageid INT     -   0 N
+    primary_key  id 
+    constraint objectid   object  id  
+    constraint languageid  language  id  
+    close_table
  
 	index objectid 
 	index languageid 
@@ -292,53 +308,53 @@ for	db in mysql postgresql oracle sqlite; do
 
 
 	open_table templatemodel  
-	column       id INT 0
-	column      templateid INT 0 0
-	column      projectmodelid INT 0 0
-	column      extension VARCHAR 10 
-	column      text TEXT 0
-      primary_key  id 
-      unique_index templateid,extension 
-      constraint templateid   template  id  
-      constraint projectmodelid projectmodel  id  
-     close_table
+	column      id             INT     -  - N
+	column      templateid     INT     -  0 N
+	column      projectmodelid INT     -  0 N
+	column      extension      VARCHAR 10 - J 
+	column      text           TEXT
+    primary_key  id 
+    unique_index templateid,extension 
+    constraint templateid   template  id  
+    constraint projectmodelid projectmodel  id  
+    close_table
  
 	index templateid 
 	unique_index templateid,projectmodelid 
 	
 	open_table usergroup  
-	column       id INT 0
-	column      userid INT 0 0
-	column      groupid INT 0 0
-      primary_key  id 
-      constraint   groupid  group  id  
-      constraint   userid  user  id  
-     close_table
+	column      id       INT
+	column      userid   INT - 0
+	column      groupid  INT - 0
+    primary_key id 
+    constraint groupid group id  
+    constraint userid  user  id  
+    close_table
  
 	index  groupid 
 	index userid 
 	unique_index userid,groupid 
 	
 	open_table value  
-	column       id INT 0
-	column      pageid INT 0 0
-	column      languageid INT 0
-	column      elementid INT 0 0
-	column      linkobjectid INT
-	column      text TEXT
-	column      number INT
-	column      date INT
-	column      active INT 0 0
-	column      publish INT 0
-	column      lastchange_date INT 0 0
-	column      lastchange_userid INT 0
-      primary_key  id 
-      constraint pageid     page  id  
-      constraint elementid    element  id  
-      constraint   languageid   language  id  
-      constraint  lastchange_userid user  id  
-      constraint  linkobjectid  object  id  
-     close_table
+	column      id                INT
+	column      pageid            INT  - 0
+	column      languageid        INT
+	column      elementid         INT  - 0
+	column      linkobjectid      INT  - - J
+	column      text              TEXT - - J
+	column      number            INT  - - J
+	column      date              INT  - - J
+	column      active            INT  - 0
+	column      publish           INT  - - N
+	column      lastchange_date   INT  - 0 N
+	column      lastchange_userid INT  - - J
+    primary_key  id 
+    constraint pageid            page     id  
+    constraint elementid         element  id  
+    constraint languageid        language id  
+    constraint lastchange_userid user     id  
+    constraint linkobjectid      object   id  
+    close_table
  
 	index pageid 
 	index languageid 
@@ -349,27 +365,27 @@ for	db in mysql postgresql oracle sqlite; do
 	index publish 
 	
 	open_table acl  
-	column id INT 0
-	column      userid INT
-	column      groupid INT
-	column      objectid INT 0 0
-	column      languageid INT 0
-	column      is_write INT 0 0
-	column      is_prop INT 0 0
-	column      is_create_folder INT 0 0
-	column      is_create_file INT 0 0
-	column      is_create_link INT 0 0
-	column      is_create_page INT 0 0
-	column      is_delete INT 0 0
-	column      is_release INT 0
-	column      is_publish INT 0 0
-	column      is_grant INT 0 0
-	column      is_transmit CHAR 10  0
-      primary_key  id 
-      constraint  groupid     group  id  
-      constraint    userid    user  id  
-      constraint   objectid   object  id  
-      constraint languageid  language  id  
+	column id INT
+	column      userid           INT - - J
+	column      groupid          INT - - J
+	column      objectid         INT - - N
+	column      languageid       INT - 0
+	column      is_write         INT 1 0
+	column      is_prop          INT 1 0
+	column      is_create_folder INT 1 0
+	column      is_create_file   INT 1 0
+	column      is_create_link   INT 1 0
+	column      is_create_page   INT 1 0
+	column      is_delete        INT 1 0
+	column      is_release       INT 1 0
+	column      is_publish       INT 1 0
+	column      is_grant         INT 1 0
+	column      is_transmit      INT 1 0
+    primary_key  id 
+    constraint groupid    group    id  
+    constraint userid     user     id  
+    constraint objectid   object   id  
+    constraint languageid language id  
      close_table
  
 	index userid 
