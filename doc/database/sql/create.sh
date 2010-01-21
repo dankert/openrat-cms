@@ -21,12 +21,25 @@ open_table()
 
 close_table()
 {
-    echo ")" >> $outfile
+    echo -n ")" >> $outfile
+    
+    case "$type" in
+     mysql)
+            echo -n " ENGINE MyISAM" >> $outfile
+            ;;
+     mysql_innodb)
+            echo -n " ENGINE InnoDB" >> $outfile
+            ;;
+     *)
+             ;;
+	esac
+    echo ";" >> $outfile
+    
 }
 
 
-# param 1: first column 1/0
-# param 2: column name
+# param 1: column name
+# param 2: type
 # param 3: size
 # param 4: default
 # param 5: nullable j/n
@@ -44,16 +57,41 @@ column()
 	else
     	echo -n "$1" >> $outfile # column name
     fi
-    echo -n " $2" >> $outfile # type
+    
+    echo -n " " >> $outfile
+    case "$2" in
+     tinyint|INT)
+        echo -n "INTEGER" >> $outfile
+        ;;
+     VARCHAR|CHAR)
+        echo -n "VARCHAR" >> $outfile
+        ;;
+     TEXT)
+     	if	[ "$type" == "oracle" ]; then
+            echo -n "CLOB" >> $outfile
+        elif	[ "$type"=="postgresql" ]; then
+            echo -n "TEXT" >> $outfile
+        else
+            echo -n "TEXT" >> $outfile
+        fi
+            ;;
+     BLOB)
+     	if	[ "$type"=="postgresql" ]; then
+            echo -n "TEXT" >> $outfile
+        else
+            echo -n "BLOB" >> $outfile
+        fi
+            ;;
+     *)
+     	echo "failed: unknown column type $2"
+     	exit 4
+             ;;
+	esac
+    
     
     # Column-size
     if [ "$3" != "" -a "$3" != "-" ]; then
     	echo -n "($3)" >> $outfile
-    fi
-    
-    # DEFAULT-value
-    if [ "$4" != "" -a "$4" != "-" ]; then
-    	echo -n " DEFAULT $4" >> $outfile
     fi
     
     # Nullable?
@@ -62,6 +100,12 @@ column()
     else
     	echo -n " NOT NULL" >> $outfile
     fi
+    
+    # DEFAULT-value
+    if [ "$4" != "" -a "$4" != "-" ]; then
+    	echo -n " DEFAULT $4" >> $outfile
+    fi
+    
     echo >> $outfile
     db_fc=0
 }
@@ -99,6 +143,10 @@ insert()
 {
 	echo "INSERT INTO ${prefix}$1 ($2) VALUES($3)" >> $outfile
 }
+
+
+
+
 
 for	db in mysql postgresql oracle sqlite; do
 
@@ -243,13 +291,13 @@ for	db in mysql postgresql oracle sqlite; do
 	column      default_text     TEXT    -   - J
 	column      folderobjectid   INT     -   - J
 	column      default_objectid INT     -   - J
-      primary_key  id 
-      constraint  default_objectid     object  id  
-      constraint  folderobjectid   object  id  
-      constraint  templateid   template  id  
-     close_table
+    primary_key  id 
+    constraint  default_objectid     object  id  
+    constraint  folderobjectid   object  id  
+    constraint  templateid   template  id  
+    close_table
  
-	index   templateid 
+	index  templateid 
 	index  name 
 	unique_index templateid,name 
 
@@ -271,7 +319,7 @@ for	db in mysql postgresql oracle sqlite; do
 	column id       INT
 	column objectid INT - 0
 	primary_key  id 
-	constraint object,id  
+	constraint objectid object id  
     close_table
  
 	unique_index objectid 
@@ -283,7 +331,7 @@ for	db in mysql postgresql oracle sqlite; do
 	column link_objectid INT     -   - J
 	column url           VARCHAR 255 - N
     primary_key  id 
-    constraint objectid  object  id  
+    constraint objectid      object  id  
     constraint link_objectid object  id  
     close_table
  
@@ -298,8 +346,8 @@ for	db in mysql postgresql oracle sqlite; do
 	column descr      VARCHAR 255
 	column languageid INT     -   0 N
     primary_key  id 
-    constraint objectid   object  id  
-    constraint languageid  language  id  
+    constraint objectid   object   id  
+    constraint languageid language id  
     close_table
  
 	index objectid 
@@ -314,13 +362,14 @@ for	db in mysql postgresql oracle sqlite; do
 	column      extension      VARCHAR 10 - J 
 	column      text           TEXT
     primary_key  id 
-    unique_index templateid,extension 
-    constraint templateid   template  id  
-    constraint projectmodelid projectmodel  id  
+    constraint templateid     template     id  
+    constraint projectmodelid projectmodel id  
     close_table
- 
+    
 	index templateid 
+    unique_index templateid,extension 
 	unique_index templateid,projectmodelid 
+ 
 	
 	open_table usergroup  
 	column      id       INT
@@ -334,6 +383,7 @@ for	db in mysql postgresql oracle sqlite; do
 	index  groupid 
 	index userid 
 	unique_index userid,groupid 
+
 	
 	open_table value  
 	column      id                INT
@@ -359,10 +409,10 @@ for	db in mysql postgresql oracle sqlite; do
 	index pageid 
 	index languageid 
 	index elementid 
-	index  active 
-	index  lastchange_date 
-	index  elementid 
+	index active 
+	index lastchange_date 
 	index publish 
+
 	
 	open_table acl  
 	column id INT
@@ -386,7 +436,7 @@ for	db in mysql postgresql oracle sqlite; do
     constraint userid     user     id  
     constraint objectid   object   id  
     constraint languageid language id  
-     close_table
+    close_table
  
 	index userid 
 	index groupid 
