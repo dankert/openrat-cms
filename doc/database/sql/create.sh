@@ -4,7 +4,12 @@
 
 
 prefix=or_
+suffix=
+
 outfile=tmp.sql
+
+mysql_engine=InnoDB
+
 type=
 db=
 db_fc=0
@@ -14,7 +19,7 @@ open_table()
 {
     echo "" >> $outfile
     echo "-- Table $1" >> $outfile
-    echo "CREATE TABLE ${prefix}$1(" >> $outfile
+    echo "CREATE TABLE ${prefix}${1}${suffix}(" >> $outfile
     db_fc=1
     table=$1
 }
@@ -25,10 +30,7 @@ close_table()
     
     case "$type" in
      mysql)
-            echo -n " ENGINE MyISAM" >> $outfile
-            ;;
-     mysql_innodb)
-            echo -n " ENGINE InnoDB" >> $outfile
+            echo -n " ENGINE $mysql_engine" >> $outfile
             ;;
      *)
              ;;
@@ -61,13 +63,25 @@ column()
     echo -n " " >> $outfile
     case "$2" in
      tinyint|INT)
-        echo -n "INTEGER" >> $outfile
+     	if	[ "$type" == "mysql" ]; then
+     		if	[ "$3" == "1" ]; then
+        		echo -n "TINYINT" >> $outfile
+        	else
+        		echo -n "INT" >> $outfile
+        	fi
+     	elif	[ "$type" == "oracle" ]; then
+        	echo -n "NUMBER" >> $outfile
+     	else
+        	echo -n "INTEGER" >> $outfile
+        fi
         ;;
      VARCHAR|CHAR)
         echo -n "VARCHAR" >> $outfile
         ;;
      TEXT)
-     	if	[ "$type" == "oracle" ]; then
+     	if	[ "$type" == "mysql" ]; then
+            echo -n "MEDIUMTEXT" >> $outfile
+     	elif	[ "$type" == "oracle" ]; then
             echo -n "CLOB" >> $outfile
         elif	[ "$type"=="postgresql" ]; then
             echo -n "TEXT" >> $outfile
@@ -76,7 +90,9 @@ column()
         fi
             ;;
      BLOB)
-     	if	[ "$type"=="postgresql" ]; then
+     	if	[ "$type" == "mysql" ]; then
+            echo -n "MEDIUMBLOB" >> $outfile
+     	elif	[ "$type"=="postgresql" ]; then
             echo -n "TEXT" >> $outfile
         else
             echo -n "BLOB" >> $outfile
@@ -117,20 +133,20 @@ primary_key()
 }
 unique_index()
 {
-    echo "CREATE UNIQUE INDEX ${prefix}uidx_${table}_`echo $1|tr ',' '_'`" >> $outfile
-    echo "                 ON ${prefix}$table ($1);" >> $outfile
+    echo "CREATE UNIQUE INDEX ${prefix}uidx_${table}${suffix}_`echo $1|tr ',' '_'`" >> $outfile
+    echo "                 ON ${prefix}${table}${suffix} ($1);" >> $outfile
 }
 
 index()
 {
-    echo "CREATE INDEX ${prefix}idx_${table}_`echo $1|tr ',' '_'`" >> $outfile
-    echo "          ON ${prefix}$table ($1);" >> $outfile
+    echo "CREATE INDEX ${prefix}idx_${table}${suffix}_`echo $1|tr ',' '_'`" >> $outfile
+    echo "          ON ${prefix}${table}${suffix} ($1);" >> $outfile
 }
 
 constraint()
 {
-    echo "  ,CONSTRAINT ${prefix}fk_${table}_$1" >> $outfile
-    echo "     FOREIGN KEY ($1) REFERENCES ${prefix}${2} ($3)" >> $outfile
+    echo "  ,CONSTRAINT ${prefix}fk_${table}${suffix}_$1" >> $outfile
+    echo "     FOREIGN KEY ($1) REFERENCES ${prefix}${2}${suffix} ($3)" >> $outfile
    	# Oracle doesn't support "ON DELETE RESTRICT"-Statements
     if	[ "$type" != "oracle" ]; then
     	echo "     ON DELETE RESTRICT ON UPDATE RESTRICT" >> $outfile
@@ -141,7 +157,7 @@ constraint()
 
 insert()
 {
-	echo "INSERT INTO ${prefix}$1 ($2) VALUES($3)" >> $outfile
+	echo "INSERT INTO ${prefix}${1}${suffix} ($2) VALUES($3)" >> $outfile
 }
 
 
@@ -155,14 +171,14 @@ for	db in mysql postgresql oracle sqlite; do
     echo "-- DDL-Script for $db" > $outfile
     
     open_table project
-    column id                  INT     -   0 N
+    column id                  INT     -   - N
     column name                VARCHAR 128 - N
     column target_dir          VARCHAR 255 - N
     column ftp_url             VARCHAR 255 - N
-    column ftp_passive         tinyint 1   0 N
+    column ftp_passive         INT     1   0 N
     column cmd_after_publish   VARCHAR 255 - N
-    column content_negotiation tinyint 1   0 N
-    column cut_index           tinyint 1   0 N
+    column content_negotiation INT     1   0 N
+    column cut_index           INT     1   0 N
     primary_key id
     close_table
     unique_index name
@@ -178,7 +194,7 @@ for	db in mysql postgresql oracle sqlite; do
 	column mail     VARCHAR 255 - N
 	column descr    VARCHAR 255 - N
 	column style    VARCHAR 64  - N
-	column is_admin INT     -   0 N
+	column is_admin INT     1   0 N
 	primary_key id 
     close_table
 	unique_index name
@@ -193,7 +209,7 @@ for	db in mysql postgresql oracle sqlite; do
 	
 	open_table object  
 	column id                INT
-	column parentid          INT     -   - 1
+	column parentid          INT     -   - J
 	column projectid         INT     -   0 0
 	column filename          VARCHAR 255 -
 	column orderid           INT     -   0
@@ -201,10 +217,10 @@ for	db in mysql postgresql oracle sqlite; do
 	column create_userid     INT     -   0 J
 	column lastchange_date   INT     -   0
 	column lastchange_userid INT     -   0 J
-	column is_folder         INT     -   0
-	column is_file           INT     -   0 
-	column is_page           INT     -   0
-	column is_link           INT     -   0
+	column is_folder         INT     1   -
+	column is_file           INT     1   - 
+	column is_page           INT     1   -
+	column is_link           INT     1   -
 	primary_key  id 
     constraint projectid          project id
     constraint lastchange_userid  user    id
@@ -239,7 +255,7 @@ for	db in mysql postgresql oracle sqlite; do
 	column projectid  INT     -  0
 	column isocode    VARCHAR 10
 	column name       VARCHAR 50
-	column is_default INT     -  0
+	column is_default INT     1  0
 	primary_key  id
 	constraint projectid project id
 	close_table
@@ -373,8 +389,8 @@ for	db in mysql postgresql oracle sqlite; do
 	
 	open_table usergroup  
 	column      id       INT
-	column      userid   INT - 0
-	column      groupid  INT - 0
+	column      userid   INT - - N
+	column      groupid  INT - - N
     primary_key id 
     constraint groupid group id  
     constraint userid  user  id  
