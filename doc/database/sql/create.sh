@@ -62,7 +62,7 @@ column()
     
     echo -n " " >> $outfile
     case "$2" in
-     tinyint|INT)
+     INT)
      	if	[ "$type" == "mysql" ]; then
      		if	[ "$3" == "1" ]; then
         		echo -n "TINYINT" >> $outfile
@@ -75,7 +75,7 @@ column()
         	echo -n "INTEGER" >> $outfile
         fi
         ;;
-     VARCHAR|CHAR)
+     VARCHAR)
         echo -n "VARCHAR" >> $outfile
         ;;
      TEXT)
@@ -104,23 +104,42 @@ column()
              ;;
 	esac
     
-    
     # Column-size
     if [ "$3" != "" -a "$3" != "-" ]; then
     	echo -n "($3)" >> $outfile
     fi
     
-    # Nullable?
-    if [ "$5" == "J" -o "$5" == "1" ]; then
-    	echo -n " NULL" >> $outfile
+    if	[ "$type" == "oracle" ]; then
+    	# Oracle wants the DEFAULT-command as first
+    
+	    # DEFAULT-value
+	    if [ "$4" != "" -a "$4" != "-" ]; then
+	    	echo -n " DEFAULT $4" >> $outfile
+	    fi
+	    
+	    # Nullable?
+	    if [ "$5" == "J" -o "$5" == "1" ]; then
+	    	echo -n " NULL" >> $outfile
+	    else
+	    	echo -n " NOT NULL" >> $outfile
+    	fi
     else
-    	echo -n " NOT NULL" >> $outfile
+    	# ANSI-SQL: DEFAULT after NULL-command
+    	
+	    # Nullable?
+	    if [ "$5" == "J" -o "$5" == "1" ]; then
+	    	echo -n " NULL" >> $outfile
+	    else
+	    	echo -n " NOT NULL" >> $outfile
+	    fi
+	    
+	    # DEFAULT-value
+	    if [ "$4" != "" -a "$4" != "-" ]; then
+	    	echo -n " DEFAULT $4" >> $outfile
+	    fi
+	    
     fi
     
-    # DEFAULT-value
-    if [ "$4" != "" -a "$4" != "-" ]; then
-    	echo -n " DEFAULT $4" >> $outfile
-    fi
     
     echo >> $outfile
     db_fc=0
@@ -147,7 +166,7 @@ constraint()
 {
     echo "  ,CONSTRAINT ${prefix}fk_${table}${suffix}_$1" >> $outfile
     echo "     FOREIGN KEY ($1) REFERENCES ${prefix}${2}${suffix} ($3)" >> $outfile
-   	# Oracle doesn't support "ON DELETE RESTRICT"-Statements
+   	# Oracle doesn't support "ON DELETE RESTRICT"-Statements, but lucky its the default.
     if	[ "$type" != "oracle" ]; then
     	echo "     ON DELETE RESTRICT ON UPDATE RESTRICT" >> $outfile
     fi
@@ -167,7 +186,7 @@ insert()
 for	db in mysql postgresql oracle sqlite; do
 
     type=$db
-    outfile=${db}_tmp_create.sql
+    outfile=${db}/create.sql
     echo "-- DDL-Script for $db" > $outfile
     
     open_table project
@@ -278,7 +297,7 @@ for	db in mysql postgresql oracle sqlite; do
 	column projectid  INT     -  0
 	column name       VARCHAR 50
 	column extension  VARCHAR 10 - J
-	column is_default INT     -  0
+	column is_default INT     1  0
 	primary_key  id 
 	constraint  projectid  project  id  
 	close_table
@@ -300,9 +319,9 @@ for	db in mysql postgresql oracle sqlite; do
 	column      html             INT     1   0 J
 	column      all_languages    INT     1   0
 	column      writable         INT     1   0
-	column      decimals         INT     -   0
+	column      decimals         INT     -   0 J
 	column      dec_point        VARCHAR 5   - J 
-	column      thousand_sep     CHAR    1   - J
+	column      thousand_sep     VARCHAR 1   - J
 	column      code             TEXT    -   - J
 	column      default_text     TEXT    -   - J
 	column      folderobjectid   INT     -   - J
@@ -345,7 +364,7 @@ for	db in mysql postgresql oracle sqlite; do
 	column id            INT     -   - N
 	column objectid      INT     -   0 N
 	column link_objectid INT     -   - J
-	column url           VARCHAR 255 - N
+	column url           VARCHAR 255 - J
     primary_key  id 
     constraint objectid      object  id  
     constraint link_objectid object  id  
@@ -435,7 +454,7 @@ for	db in mysql postgresql oracle sqlite; do
 	column      userid           INT - - J
 	column      groupid          INT - - J
 	column      objectid         INT - - N
-	column      languageid       INT - 0
+	column      languageid       INT - 0 J
 	column      is_write         INT 1 0
 	column      is_prop          INT 1 0
 	column      is_create_folder INT 1 0
