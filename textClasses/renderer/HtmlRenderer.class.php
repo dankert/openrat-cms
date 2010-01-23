@@ -189,6 +189,7 @@ class HtmlRenderer
 
 					case 'macroelement':
 						
+						$tag = '';
 						$className = ucfirst($child->name);
 						$fileName  = './dynamicClasses/'.$className.'.class.php';
 						if	( is_file( $fileName ) )
@@ -234,10 +235,6 @@ class HtmlRenderer
 							             'file not found:'.$fileName);
 						}
 		
-						// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML �bersetzen
-						if   ( $this->page->mimeType()=='text/html' )
-							$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
-						
 						break;
 						
 					case 'linebreakelement':
