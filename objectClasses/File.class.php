@@ -42,6 +42,8 @@ class File extends Object
 	var $height        = null;
 	
 	var $tmpfile;
+	
+	var $content_negotiation = false;
 
 
 
@@ -84,8 +86,15 @@ class File extends Object
 
 		$filename = parent::full_filename();
 
-		if	( !empty($this->extension) )
-			$filename .= '.'.$this->extension;
+		if	( $this->content_negotiation && config('publish','negotiation','file_negotiate_type' ) )
+		{
+			// Link auf Datei: Extension bleibt aufgrund Content-Negotiation leer 
+		}
+		else
+		{
+			if	( !empty($this->extension) )
+				$filename .= '.'.$this->extension;
+		}
 
 		$this->fullFilename = $filename;
 		return $filename;
@@ -409,7 +418,7 @@ class File extends Object
 	/**
 	 * Lesen der Datei aus der Datenbank.
 	 * 
-	 * Es werden nur die Meta-Daten (Erweiterung, Größe) gelesen. Zum Lesen des
+	 * Es werden nur die Meta-Daten (Erweiterung, Grï¿½ï¿½e) gelesen. Zum Lesen des
 	 * Datei-Inhaltes muss #loadValue() aufgerufen werden.
 	 */
 	function load()
@@ -435,7 +444,7 @@ class File extends Object
 
 
 	/**
-	 * Unwiderrufliches Löschen der Datei aus der Datenbank.
+	 * Unwiderrufliches Lï¿½schen der Datei aus der Datenbank.
 	 */
 	function delete()
 	{
@@ -605,7 +614,7 @@ EOF
 
 
 	/**
-	 * Fügt die Datei der Datenbank hinzu.
+	 * Fï¿½gt die Datei der Datenbank hinzu.
 	 */
 	function add()
 	{

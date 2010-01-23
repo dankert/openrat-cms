@@ -50,6 +50,7 @@ class Page extends Object
 	var $cut_index           = false;
 	var $default_language    = false;
 	var $withLanguage        = false;
+	var $withModel           = false;
 	var $link                = false;
 	var $fullFilename = '';
 
@@ -188,6 +189,7 @@ class Page extends Object
 					$inhalt  = $this->up_path();
 					
 					$f = new File( $objectid );
+					$f->content_negotiation = $content_negotiation;
 					$f->load();
 					$inhalt .= $f->full_filename();
 					break;
@@ -201,6 +203,7 @@ class Page extends Object
 					$p->cut_index           = $cut_index;
 					$p->content_negotiation = $content_negotiation;
 					$p->withLanguage        = $this->withLanguage;
+					$p->withModel           = $this->withModel;
 					$p->load();
 					$inhalt .= $p->full_filename();
 					break;
@@ -499,29 +502,42 @@ class Page extends Object
 		if	( !empty($filename) )
 			$filename .= '/';
 
-		if	( !$this->cut_index || $this->filename != config('publish','default') )
+		if	( $this->cut_index && $this->filename == config('publish','default') )
 		{
-			$filename .= $this->filename();
+			// Link auf Index-Datei, der Dateiname bleibt leer.
+		}
+		else
+		{
+			$format = config('publish','format');
+			$format = str_replace('{filename}',$this->filename(),$format );
 			
-			if	( !$this->content_negotiation )
+			if	( !$this->withLanguage || $this->content_negotiation && config('publish','negotiation','page_negotiate_language' ) )
 			{
-				if	( !$this->default_language && $this->withLanguage )
-				{		
-					$l = new Language( $this->languageid );
-					$l->load();
-					$filename .= '.'.$l->isoCode;
-				}
-		
+				$format = str_replace('{language}'    ,'',$format );
+				$format = str_replace('{language_sep}','',$format );
+			}
+			else
+			{
+				$l = new Language( $this->languageid );
+				$l->load();
+				$format = str_replace('{language}'    ,$l->isoCode                     ,$format );
+				$format = str_replace('{language_sep}',config('publish','language_sep'),$format );
+			}
+
+			if	( !$this->withModel || $this->content_negotiation && config('publish','negotiation','page_negotiate_type' ) )
+			{
+				$format = str_replace('{type}'    ,'',$format );
+				$format = str_replace('{type_sep}','',$format );
+			}
+			else
+			{
 				$t = new Template( $this->templateid );
 				$t->modelid = $this->modelid;
 				$t->load();
-				$filename .= '.'.$t->extension;
-		
-				if	( $this->default_language && $this->withLanguage )
-				{		
-					$filename .= '.'.$t->extension;
-				}
+				$format = str_replace('{type}'    ,$t->extension               ,$format );
+				$format = str_replace('{type_sep}',config('publish','type_sep'),$format );
 			}
+			$filename .= $format;
 		}
 
 		$this->fullFilename = $filename;
@@ -753,8 +769,8 @@ class Page extends Object
 		foreach( $allLanguages as $languageid=>$x )
 		{
 			$this->languageid   = $languageid;
-			$this->withLanguage = count($allLanguages) > 1;
-			$this->withModel    = count($allModels) > 1;
+			$this->withLanguage = count($allLanguages) > 1 || config('publish','filename_language') == 'always';
+			$this->withModel    = count($allModels   ) > 1 || config('publish','filename_type'    ) == 'always';
 			
 			// Schleife ueber alle Projektvarianten
 			foreach( $allModels as $projectmodelid=>$x )
