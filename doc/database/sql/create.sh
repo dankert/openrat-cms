@@ -3,18 +3,23 @@
 #
 
 
+# table name prefix
 prefix=or_
+
+# table name suffix
 suffix=
 
-outfile=tmp.sql
-
+# Standard Storing engine for MySQL
 mysql_engine=InnoDB
 
+outfile=
 type=
 db=
 db_fc=0
 table=
 
+# Creating a new table
+# param 1: table name
 open_table()
 {
     echo "" >> $outfile
@@ -24,6 +29,7 @@ open_table()
     table=$1
 }
 
+# Closing the table
 close_table()
 {
     echo -n ")" >> $outfile
@@ -40,11 +46,12 @@ close_table()
 }
 
 
+# Creating a new column
 # param 1: column name
-# param 2: type
-# param 3: size
-# param 4: default
-# param 5: nullable j/n
+# param 2: type (available are: INT,VARCHAR,TEXT,BLOB)
+# param 3: size (number value)
+# param 4: default (number value)
+# param 5: nullable (available are: J,N)
 column()
 {
     if	[ $db_fc -eq 1 ]; then
@@ -145,23 +152,33 @@ column()
     db_fc=0
 }
 
+# Creating a primary key
 # param 1: column name
 primary_key()
 {
     echo "  ,PRIMARY KEY ($1)" >> $outfile
 }
+
+# Creating a unique key
+# param 1: name of index column. Seperate multiple columns with ','
 unique_index()
 {
     echo "CREATE UNIQUE INDEX ${prefix}uidx_${table}${suffix}_`echo $1|tr ',' '_'`" >> $outfile
     echo "                 ON ${prefix}${table}${suffix} ($1);" >> $outfile
 }
 
+# Creating a non-unique key
+# param 1: name of index column. Seperate multiple columns with ','
 index()
 {
     echo "CREATE INDEX ${prefix}idx_${table}${suffix}_`echo $1|tr ',' '_'`" >> $outfile
     echo "          ON ${prefix}${table}${suffix} ($1);" >> $outfile
 }
 
+# Creating a foreign key
+# param 1: column name
+# param 2: target table name
+# param 3: target column name
 constraint()
 {
     echo "  ,CONSTRAINT ${prefix}fk_${table}${suffix}_$1" >> $outfile
@@ -173,7 +190,10 @@ constraint()
 
 }
 
-
+# Inserting values
+# param 1: table name
+# param 2: name of columns. Seperate multiple columns with ','
+# param 3: values. Seperate multiple values with ','
 insert()
 {
 	echo "INSERT INTO ${prefix}${1}${suffix} ($2) VALUES($3)" >> $outfile
@@ -188,6 +208,16 @@ for	db in mysql postgresql oracle sqlite; do
     type=$db
     outfile=${db}/create.sql
     echo "-- DDL-Script for $db" > $outfile
+    
+
+
+
+
+    
+    # Now beginning the table definitions
+
+
+
     
     open_table project
     column id                  INT     -   - N
@@ -481,6 +511,13 @@ for	db in mysql postgresql oracle sqlite; do
 
 
 	insert user "id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin" "1,'admin','admin','','Administrator','','','Admin user','default',1"
+
+
+
+
+    # end of table definitions
+
+    
 
 done
 
