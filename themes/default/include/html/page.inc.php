@@ -7,7 +7,7 @@
   <title><?php echo isset($attr_title)?$attr_title.' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
 <?php if ( isset($refresh_url) ) { ?>
-  <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url ?>">
+  <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url; if (ini_get('session.use_trans_sid')) echo '&'.session_name().'='.session_id(); ?>">
 <?php } ?>
   <meta name="MSSmartTagsPreventParsing" content="true" >
   <meta name="robots" content="noindex,nofollow" >
