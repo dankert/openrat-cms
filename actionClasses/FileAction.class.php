@@ -327,6 +327,9 @@ class FileAction extends ObjectAction
 			$formats = $this->imageFormats();
 		else
 			$formats = array();
+			
+		if	( empty($formats) )
+			$this->addNotice( 'image','','IMAGE_RESIZING_NOT_AVAILABLE',OR_NOTICE_WARN);
 
 		$sizes = array();
 		foreach( array(10,25,50,75,100,125,150,175,200,250,300,350,400,500,600,800) as $s )

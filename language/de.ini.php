@@ -1043,3 +1043,4 @@ VALUE = Inhalt
 WEEK="Woche"
 PROJECT_CHECK_FILES="Integritätsprüfung der Ordnerstruktur"
 PROJECT_CHECK_LIMIT="Entfernen von alten Inhalten aus dem Archiv"
+NOTICE_IMAGE_RESIZING_NOT_AVAILABLE="Das Verändern der Bildgröße ist momentan nicht möglich. Bitte stellen Sie sicher, dass die GD-Bibliothek installiert ist."
