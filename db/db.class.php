@@ -21,13 +21,15 @@
 // This is the database abstraction layer. This class was inspired by the
 // PHP-Pear-DB package. Thanks to its developers.
 
-
-
-
 /**
- * Grundsaetzliche Darstellung einer Datenbank-Verbindung
- * @author $Author: dankert $
- * @version $Revision: 1.9 $
+ * Darstellung einer Datenbank-Verbindung.
+ * Für die echten DB-Aufrufe werden die entsprechenden
+ * Methoden des passenden Clients aufgerufen.
+ * 
+ * Diese Klasse stammt urspruenglich aus dem PHP-Pear-DB-Projekt und unterliegt
+ * daher auch der PHP-licence.
+ * 
+ * @author Jan Dankert
  * @package openrat.database
  */
 class DB
@@ -192,18 +194,17 @@ class DB
 			{
 				$this->error = $this->client->error;
 				
-				if	( true )
-				{
-					Logger::warn('Database error: '.$this->error);
-					die('Database Error (prepared):<pre style="color:red">'.$this->error.'</pre>');
-				}
+				Logger::warn('Database error: '.$this->error);
+				Http::serverError('Database Error',$this->error);
 			}
 					
 			return $result;
 		}
 		else
 		{
-			
+			// Es handelt sich um eine nicht-vorbereitete Anfrage. Das gesamte
+			// SQL wird durch die SQL-Klasse erzeugt, dort werden auch die Parameter
+			// in die Abfrage gesetzt.
 			$flatQuery = $query->getQuery();
 			
 			Logger::trace('DB query: '.$query->raw);
@@ -216,9 +217,8 @@ class DB
 				
 				if	( true )
 				{
-					debug_print_backtrace();
 					Logger::warn('Database error: '.$this->error);
-					die('Database Error (not prepared):<pre style="color:red">'.$this->error.'</pre>');
+					Http::serverError('Database Error',$this->error);
 				}
 			}
 	
@@ -269,12 +269,8 @@ class DB
 		{
 			$this->error = $this->client->error;
 			
-			if	( true )
-			{
-				debug_print_backtrace();
-				Logger::warn('Database error: '.$this->error);
-				die('Database Error (not prepared):<pre style="color:red">'.$this->error.'</pre>');
-			}
+			Logger::warn('Database error: '.$this->error);
+			Http::serverError('Database Error',$this->error);
 		}
 
 		$row = $this->client->fetchRow( $result,0 );
@@ -398,7 +394,7 @@ class DB
 	
 	
 	/**
-	 * Beendet eine Transaktion.
+	 * Beendet und bestätigt eine Transaktion.
 	 */
 	function commit()
 	{
@@ -412,7 +408,7 @@ class DB
 	}
 	
 	/**
-	 * Beendet eine Transaktion.
+	 * Setzt eine Transaktion zurück.
 	 */
 	function rollback()
 	{

@@ -375,13 +375,13 @@ class Http
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
-	function serverError($message)
+	function serverError($message,$reason='')
 	{
 		$db = db_connection();
 		if	( is_object( $db ) )
 			$db->rollback();
 
-		Http::sendStatus(501,'Internal Server Error',$message);
+		Http::sendStatus(501,'Internal Server Error',$message,$reason);
 	}
 	
 	
@@ -408,7 +408,7 @@ class Http
 	 * @param String $text HTTP-Meldung
 	 * @param String $message Eigener Hinweistext
 	 */
-	function sendStatus( $status=501,$text='Internal Server Error',$message='' )
+	function sendStatus( $status=501,$text='Internal Server Error',$message='',$reason='' )
 	{
 		if	( headers_sent() )
 		{
@@ -446,6 +446,7 @@ class Http
 <body>
 <h1>$text</h1>
 <p>$message</p>
+<pre>$reason</pre>
 <hr>
 <address>$signature</adddress>
 </body>
