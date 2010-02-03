@@ -2,5 +2,9 @@
 	$row_idx++;
 	$column_idx = 0;
 ?>
-<tr class="%class%">
+<tr
+#IF-ATTR class#
+ class="%class%"
+#END-IF#
+>
 /* Ignore: */ </tr>
