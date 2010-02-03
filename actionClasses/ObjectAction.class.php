@@ -292,7 +292,7 @@ class ObjectAction extends Action
 			}
 		}
 		
-		$this->addNotice('folder',$this->name,'SAVED',OR_NOTICE_OK,array(),$log);
+		$this->addNotice('folder',$this->folder->name,'SAVED',OR_NOTICE_OK,array(),$log);
 	}
 
 
