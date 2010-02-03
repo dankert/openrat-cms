@@ -1,12 +1,12 @@
 <?php
+	// Status speichern
+	$last_row_idx    = @$row_idx;
+	$last_column_idx = @$column_idx;
+	$row_idx    = 0;
+	$column_idx = 0;
 	$coloumn_widths = array();
 	$row_classes    = array();
 	$column_classes = array();
-
-	#IF-ATTR class#
-	#ELSE
-		$attr_class='';
-	#END-IF
 
 	#IF-ATTR widths#
 		$column_widths = explode(',',$attr_widths);
@@ -26,4 +26,5 @@
 		$column_classes   = explode(',',$attr_columnclasses);
 	#END-IF
 		
-?><table class="<?php echo $attr_class ?>" cellspacing="<?php echo $attr_space ?>" width="<?php echo $attr_width ?>" cellpadding="<?php echo $attr_padding ?>">
+?><table class="%class%" cellspacing="%space%" width="%width%" cellpadding="%padding%">
+/* ignore */ </table>

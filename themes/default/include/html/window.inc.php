@@ -10,7 +10,8 @@
 #IF-ATTR columnclasses#
 	$column_classes = explode(',',$attr_columnclasses);
 #END-IF#
-	
+	$row_idx    = 0;
+	$column_idx = 0;
 	
 		global $image_dir;
 		if (@$conf['interface']['application_mode'] )
