@@ -150,15 +150,11 @@ class TemplateEngine
 	{
 		$erg = $this->attributeValue($value);
 		
-		return '<'.'?php echo '.$erg.' ?>';
-		
-		// TODO: Für statische Texte muesste kein PHP-Abschnitt geoeffnet werden
-		/*
-		if	(substr($value,0,5) == 'text:' || strpos($value,':')===FALSE ) 
-			return $erg;
+		// FÃ¼r statische Texte muss kein PHP-Abschnitt geoeffnet werden.
+		if	(substr($erg,0,1) == "'" && strpos($erg,'$')===FALSE ) 
+			return substr($erg,1,-1);
 		else
 			return '<'.'?php '.$erg.' ?>';
-		*/
 	}
 	
 	
