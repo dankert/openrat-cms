@@ -221,19 +221,35 @@ class Model
 	{
 		$db = db_connection();
 
-		// Modell l?schen
-		$sql = new Sql( 'DELETE FROM {t_projectmodel} WHERE id={modelid}' );
+		// Vorlagen zu dieseem Modell loeschen
+		$sql = new Sql( <<<SQL
+	DELETE FROM {t_templatemodel}
+	 WHERE projectmodelid = {modelid}
+SQL
+);
+		$sql->setInt( 'modelid',$this->modelid );
+		$db->query( $sql );
+		
+		// Dieses Modell löschen
+		$sql = new Sql( <<<SQL
+	DELETE FROM {t_projectmodel}
+	 WHERE id={modelid}
+SQL
+);
 		$sql->setInt( 'modelid',$this->modelid );
 		$db->query( $sql );
 
 		// Anderes Modell auf "Default" setzen (sofern vorhanden)
-		$sql = new Sql( 'SELECT id FROM {t_projectmodel} WHERE projectid={projectid}' );
-		$sql->setInt( 'projectid',$this->projectid );
-		$new_default_modelid = $db->getOne( $sql );
-
-		$sql = new Sql( 'UPDATE {t_projectmodel} SET is_default=1 WHERE id={modelid}' );
-		$sql->setInt( 'modelid',$new_default_modelid );
-		$db->query( $sql );
+		if	( $this->isDefault )
+		{
+			$sql = new Sql( 'SELECT id FROM {t_projectmodel} WHERE projectid={projectid}' );
+			$sql->setInt( 'projectid',$this->projectid );
+			$new_default_modelid = $db->getOne( $sql );
+	
+			$sql = new Sql( 'UPDATE {t_projectmodel} SET is_default=1 WHERE id={modelid}' );
+			$sql->setInt( 'modelid',$new_default_modelid );
+			$db->query( $sql );
+		}
 	}
 }
 

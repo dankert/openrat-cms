@@ -112,11 +112,19 @@ class ModelAction extends Action
 	}
 	
 	
+	/**
+	 * Löschen des Models.
+	 */
 	function delete() 
 	{
-		if   ( $this->getRequestVar('confirm') == '1' )
+		if   ( $this->hasRequestVar('confirm') )
 		{
 			$this->model->delete();
+			$this->addNotice('model',$this->model->name,'DONE',OR_NOTICE_OK);
+		}
+		else
+		{
+			$this->addNotice('model',$this->model->name,'NOTHING_DONE',OR_NOTICE_WARN);
 		}
 	}
 	
