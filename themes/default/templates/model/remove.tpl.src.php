@@ -1,15 +1,12 @@
 page
 	form method:post
 
-		window icon:group name:GLOBAL_GROUPS
+		window icon:group name:GLOBAL_GROUPS widths:30%,70%
 			row
 				cell
 					text text:GLOBAL_NAME
 				cell
-					text var:name
-			row
-				cell colspan:2 class:help
-					text text:GROUP_DELETE_DESC
+					text var:name type:strong
 			row
 				cell colspan:2
 					fieldset title:message:options
