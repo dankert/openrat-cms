@@ -154,7 +154,7 @@ class TemplateEngine
 		if	(substr($erg,0,1) == "'" && strpos($erg,'$')===FALSE ) 
 			return substr($erg,1,-1);
 		else
-			return '<'.'?php '.$erg.' ?>';
+			return '<'.'?php echo '.$erg.' ?>';
 	}
 	
 	
