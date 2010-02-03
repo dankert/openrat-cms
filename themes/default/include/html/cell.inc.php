@@ -2,7 +2,9 @@
 #IF-ATTR width#
  width="%width%"
 #ELSE#
- width="<?php if (!empty($column_widths)) echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
 #END-IF#
 #IF-ATTR style#
  style="%style%"
@@ -10,7 +12,9 @@
 #IF-ATTR class#
  class="%class%"
 #ELSE#
- class="<?php if (!empty($column_classes)) echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
 #END-IF#
 #IF-ATTR colspan#
  colspan="%colspan%"
