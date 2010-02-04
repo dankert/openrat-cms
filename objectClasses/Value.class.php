@@ -1106,7 +1106,7 @@ SQL
 						$inhalt = $this->page->full_filename();
 						break;
 					case 'page_filename':
-						$inhalt = $this->page->filename;
+						$inhalt = $this->page->filename();
 						break;
 					case 'page_extension':
 						$inhalt = '';
