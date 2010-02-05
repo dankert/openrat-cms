@@ -1,4 +1,4 @@
-page title:message:MENU_INDEX_APPLICATIONS
+page title:MENU_INDEX_APPLICATIONS
 	window width:600 icon:project
 
 		row
