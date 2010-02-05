@@ -24,7 +24,7 @@ page
 						text text:GLOBAL_NOT_FOUND
 
 			list list:el extract:true
-				row
+				row class:data
 					cell
 						text var:lfd_nr
 					cell
