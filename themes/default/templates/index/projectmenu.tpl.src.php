@@ -1,4 +1,4 @@
-page title:message:MENU_INDEX_PROJECTMENU
+page title:MENU_INDEX_PROJECTMENU
 	window title:GLOBAL_PROJECTS name:login width:600 icon:project
 
 		row
