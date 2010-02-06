@@ -408,9 +408,6 @@ class FileAction extends ObjectAction
 			case 'gz':
 				if	( $this->getRequestVar('replace') )
 				{
-					echo "old:".strlen( $this->file->loadValue() );
-					echo "newsize:".strlen(gzinflate( substr($this->file->loadValue(),10)));
-					exit;
 					$this->file->value = gzinflate( substr($this->file->loadValue(),10));
 					$this->file->parse_filename( $this->file->filename );
 					$this->file->save();
@@ -561,8 +558,6 @@ class FileAction extends ObjectAction
 			case 'gz':
 				if	( $this->getRequestVar('replace','num')=='1' )
 				{
-					//echo "old:".strlen( $this->file->loadValue() );
-					//echo "newsize:".strlen(gzencode( $this->file->loadValue(),1 ));
 					$this->file->value = gzencode( $this->file->loadValue(),1 );
 					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz',FORCE_GZIP );
 					$this->file->save();
