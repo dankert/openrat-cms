@@ -408,6 +408,15 @@ class FileAction extends ObjectAction
 			case 'gz':
 				if	( $this->getRequestVar('replace') )
 				{
+					if	( strcmp(substr($this->file->loadValue(),0,2),"\x1f\x8b"))
+					{
+						Http::serverError("Not GZIP format (See RFC 1952)");
+					}
+					$method = ord(substr($this->file->loadValue(),2,1));
+					if	( $method != 8 )
+					{
+						Http::serverError("Unknown GZIP method: $method");
+					}
 					$this->file->value = gzinflate( substr($this->file->loadValue(),10));
 					$this->file->parse_filename( $this->file->filename );
 					$this->file->save();
