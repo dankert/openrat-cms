@@ -585,6 +585,8 @@ EOF
 	 */
 	function saveValue( $value = '' )
 	{
+		@unlink( $this->tmpfile() );
+
 		$db = db_connection();
 
 		$sql = new Sql( 'UPDATE {t_file}'.

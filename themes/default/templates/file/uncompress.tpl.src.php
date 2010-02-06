@@ -1,5 +1,5 @@
 page
-	form action:file subaction:douncompress
+	form
 		window name:asdf title:asdfdfs
 			#row
 			#	cell
@@ -8,14 +8,19 @@ page
 			#		set var:gz value:gz
 			#		selectbox list:formats name:format default:gz
 			row
-				cell
-				cell
-					set var:field value:replace
-					radio name:field value:true
-					text text:replace
-					newline
-					radio name:field value:false
-					text text:createnew
-			row
 				cell colspan:2
+					fieldset title:message:options
+			row
+				cell
+				cell
+					set var:replace value:1
+					radio name:replace value:1
+					label for:replace_1
+						text key:replace
+					newline
+					radio name:replace value:0
+					label for:replace_0
+						text key:new
+			row
+				cell class:act colspan:2
 					button type:ok

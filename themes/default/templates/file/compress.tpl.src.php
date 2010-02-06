@@ -1,5 +1,5 @@
 page
-	form action:file subaction:docompress
+	form
 		window name:asdf title:asdfdfs
 			row
 				cell
@@ -13,12 +13,13 @@ page
 			row
 				cell
 				cell
+					set var:replace value:1
 					radio name:replace value:1
-					label for:replace value:1
+					label for:replace_1
 						text key:replace
 					newline
-					radio name:replace value:nix
-					label for:replace value:nix
+					radio name:replace value:0
+					label for:replace_0
 						text key:new
 			row
 				cell colspan:2 class:act

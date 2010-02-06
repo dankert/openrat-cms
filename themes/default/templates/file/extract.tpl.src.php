@@ -1,12 +1,6 @@
 page
-	form action:file subaction:doextract
+	form
 		window name:asdf title:asdfdfs
-			#row
-			#	cell
-			#		text text:type
-			#	cell
-			#		set var:gz value:gz
-			#		selectbox list:formats name:format default:gz
 			row
-				cell colspan:2
+				cell colspan:2 class:act
 					button type:ok

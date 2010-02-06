@@ -67,17 +67,15 @@ goto=rights
 
 [compress]
 menu=edit
+write=true
 
 [uncompress]
 menu=edit
+write=true
 
 [extract]
 menu=edit
-target=doextract
-
-[doextract]
-menu=edit
-goto=edit
+write=true
 
 [menu]
 edit=edit,editvalue,compress,uncompress,extract

@@ -106,8 +106,35 @@ class FileAction extends ObjectAction
 	{
 		$this->lastModified( $this->file->lastchangeDate );
 		
-		// Angabe Content-Type
-		header('Content-Type: '.$this->file->mimeType() );
+		if	( $this->file->extension == 'gz' )
+		{
+			global $conf;
+			$mime_types = $conf['mime-types'];
+			
+			$pos = strrpos($this->file->filename,'.');
+			if	( $pos === false )
+				$ext = '';
+			else
+				$ext = substr($this->file->filename,$pos+1);
+			
+			$ext = strtolower($ext);
+	
+			if	( !empty($mime_types[$ext]) )
+				$mime_type = $mime_types[$ext];
+			else
+				// Wenn kein Mime-Type gefunden, dann Standartwert setzen
+				$mime_type = OR_FILE_DEFAULT_MIMETYPE;
+				
+			header('Content-Type: '.$mime_type );
+			header('Content-Encoding: gzip' );
+		}
+		else
+		{
+			// Angabe Content-Type
+			header('Content-Type: '.$this->file->mimeType() );
+		}
+		
+		
 		header('X-File-Id: '   .$this->file->fileid     );
 		header('X-Id: '        .$this->file->id         );
 		
@@ -355,7 +382,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function extract()
+	function extractView()
 	{
 		$this->setTemplateVars( $this->file->getProperties() );
 		
@@ -366,7 +393,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function uncompress()
+	function uncompressView()
 	{
 	}
 
@@ -374,26 +401,16 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function compress()
-	{
-		$formats = array();
-		foreach( $this->getCompressionTypes() as $t )
-			$formats[$t] = lang('compression_'.$t);
-
-		$this->setTemplateVar('formats'       ,$formats    );
-	}
-
-
-	/**
-	 * Anzeigen des Inhaltes
-	 */
-	function douncompress()
+	function uncompressAction()
 	{
 		switch( $this->file->extension )
 		{
 			case 'gz':
 				if	( $this->getRequestVar('replace') )
 				{
+					echo "old:".strlen( $this->file->loadValue() );
+					echo "newsize:".strlen(gzinflate( substr($this->file->loadValue(),10)));
+					exit;
 					$this->file->value = gzinflate( substr($this->file->loadValue(),10));
 					$this->file->parse_filename( $this->file->filename );
 					$this->file->save();
@@ -432,8 +449,10 @@ class FileAction extends ObjectAction
 				break;
 
 			default:
-				die( 'cannot extract file with extension: '.$this->file->extension );
+				die( 'cannot uncompress file with extension: '.$this->file->extension );
 		}
+
+		$this->addNotice('file',$this->file->name,'DONE',OR_NOTICE_OK);
 		$this->callSubAction('edit');
 	}
 
@@ -442,7 +461,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function doextract()
+	function extractAction()
 	{
 		switch( $this->file->extension )
 		{
@@ -519,7 +538,21 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function docompress()
+	function compressView()
+	{
+		$formats = array();
+		foreach( $this->getCompressionTypes() as $t )
+			$formats[$t] = lang('compression_'.$t);
+
+		$this->setTemplateVar('formats'       ,$formats    );
+	}
+
+	
+
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function compressAction()
 	{
 		$format = $this->getRequestVar('format','alphanum');
 		
@@ -528,8 +561,10 @@ class FileAction extends ObjectAction
 			case 'gz':
 				if	( $this->getRequestVar('replace','num')=='1' )
 				{
-					$this->file->value = gzencode( $this->file->loadValue() );
-					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz' );
+					//echo "old:".strlen( $this->file->loadValue() );
+					//echo "newsize:".strlen(gzencode( $this->file->loadValue(),1 ));
+					$this->file->value = gzencode( $this->file->loadValue(),1 );
+					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz',FORCE_GZIP );
 					$this->file->save();
 					$this->file->saveValue();
 					
@@ -539,8 +574,8 @@ class FileAction extends ObjectAction
 					$newFile = new File();
 					$newFile->name     = $this->file->name;
 					$newFile->parentid = $this->file->parentid;
-					$newFile->value    = gzencode( $this->file->loadValue() );
-					$newFile->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz' );
+					$newFile->value    = gzencode( $this->file->loadValue(),1 );
+					$newFile->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz',FORCE_GZIP );
 					$newFile->add();
 				}
 				
@@ -569,7 +604,8 @@ class FileAction extends ObjectAction
 			default:
 				die( 'unknown compress type: '.$format );
 		}
-		
+
+		$this->addNotice('file',$this->file->name,'DONE',OR_NOTICE_OK);
 		$this->callSubAction('edit');
 	}
 
@@ -599,7 +635,7 @@ class FileAction extends ObjectAction
 	{
 		$compressionTypes = array();
 		if	( function_exists('gzencode'    ) ) $compressionTypes[] = 'gz';
-		if	( function_exists('gzencode'    ) ) $compressionTypes[] = 'zip';
+		//if	( function_exists('gzencode'    ) ) $compressionTypes[] = 'zip';
 		if	( function_exists('bzipcompress') ) $compressionTypes[] = 'bz2';
 		return $compressionTypes;
 	}
