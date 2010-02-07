@@ -160,7 +160,12 @@ class TreeAction extends Action
 
 		$zeilen = array();
 		$zeile  = array();
-	
+
+		global $class;
+		$zeile['class'] = $class;
+		if	( $this->getRequestId() == $elId )
+			$class ='active';
+		
 		if   ( !isset($tree_last) )
 			$tree_last=array();
 	
@@ -237,7 +242,10 @@ class TreeAction extends Action
 			// Rekursiver Aufruf
 			$zeilen = array_merge( $zeilen,$this->outputElement( $subElementId,$tiefe+1,$isLast ) );
 		}
-	          
+
+		if	( $this->getRequestId() == $elId )
+			$class ='';
+		
 		return $zeilen;
 	}
 	

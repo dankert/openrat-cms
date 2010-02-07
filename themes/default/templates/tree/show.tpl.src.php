@@ -2,7 +2,7 @@ page class:tree
 
 	table space:0 padding:0 class:tree
 		list list:zeilen extract:true
-			row
+			row class:var:class
 				list list:cols value:i
 					cell class:treecol
 						image tree:var:i
