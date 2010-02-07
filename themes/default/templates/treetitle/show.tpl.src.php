@@ -2,8 +2,8 @@ page class:menu
 	table padding:5 space:0 width:100%
 
 		if true:!config:interface/application_mode	
-			row
-				cell class:menu
+			row class:title
+				cell
 					image type:var:type
 	
 					list list:path extract:true value:xy
@@ -13,15 +13,18 @@ page class:menu
 						char type:filesep
 	
 					text var:text title:var:text class:title maxlength:20
-		row
-			# Men�leiste
-			cell class:subaction
-				# Schleife �ber alle Men�punkte
-				list list:windowMenu extract:true
-					if not: empty:url
-						link url:var:url title:messagevar:title target:_parent accesskey:messagevar:key class:menu
-							text key:var:text accesskey:messagevar:key
-					else
-						text key:var:text class:menu_disabled accesskey:messagevar:key
-					text raw:__
-					set var:url value:
+		row class:menu
+			# Menueleiste
+			cell
+				table class:submenu
+					row
+						# Schleife ueber alle Menuepunkte
+						list list:windowMenu extract:true
+							if not: empty:url
+								cell class:action
+									link url:var:url title:messagevar:title target:_parent accesskey:messagevar:key class:menu
+										text key:var:text accesskey:messagevar:key
+							else
+								cell class:noaction
+									text key:var:text accesskey:messagevar:key
+							set var:url value:

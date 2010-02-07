@@ -30,6 +30,16 @@ Created for a smooth and useful user interface.
 */
 
 
+/* reset.css */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+body {line-height:1.5;}
+table {border-collapse:separate;border-spacing:0;}
+caption, th, td {text-align:left;font-weight:normal;}
+table, td, th {vertical-align:middle;}
+blockquote:before, blockquote:after, q:before, q:after {content:"";}
+blockquote, q {quotes:"" "";}
+a img {border:none;}
+
 a:link,
 a:visited
 {
@@ -184,6 +194,42 @@ body.tree tr.active
 }
 */
 
+body.main tr.menu table.menu td.action:hover,
+body.menu tr.menu td table tr td.action:hover
+{
+	background-color:white;
+}
+
+body.menu tr.menu,
+body.main tr.menu
+{ background-color:#cac2a6; vertical-align:middle;}
+
+body.menu tr.menu td table tr td,
+body.main tr.menu td table tr td
+{ padding:4px; padding-right:6px;padding-left:6px; width:30px; white-space:nowrap;}
+
+body.menu tr.menu table { width:50px;}
+
+/* Inaktive Menuepunkte werden ausgegraut */
+body.menu tr.menu td table tr td.noaction,
+body.main tr.menu td table tr td.noaction
+{
+	color:gray;
+}
+
+
+body.menu tr.title span.title,
+body.main tr.title span.title
+{
+	color:white;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	text-shadow:#cac2a6 2px 1px 3px;
+}
+
+
+
 form
 {
 	margin:0px;
@@ -204,18 +250,7 @@ small
 }
 
 
-td.menu span.title
-{
-	color:white;
-	font-family:Arial;
-	font-size:13px;
-	font-weight:bold;
-	text-shadow:#cac2a6 2px 1px 3px;
-}
-td.subaction span.menu_disabled
-{
-	color:gray;
-}
+
 
 td.subaction span.accesskey
 {
@@ -282,12 +317,17 @@ tr.diff td.notequal
 
 
 
-td.menu    { background-color:#7B9CBD;vertical-align:middle; height:30px;}
+
+body.menu tr.title td,
+body.main tr.title td
+{ background-color:#7B9CBD;vertical-align:middle; padding:4px; height:30px;}
+
 td.message { padding:10px; font-weight:bold; }
 td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
-td.subaction { background-color:#cac2a6; }
-
+td.subaction { background-color:#cac2a6; vertical-align:middle; padding:4px;}
+table.main td.window td { padding:2px;}
+table.main td.window td.logo { padding:10px;}
 table.main td.act
 {
 	background-color:#eae2c6;
