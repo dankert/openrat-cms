@@ -1283,7 +1283,7 @@ class PageelementAction extends Action
 		 */
 		function checkMenu( $name )
 		{
-			$type = $this->value->element->type;
+			$type = $this->element->type;
 
 			switch( $name )
 			{
