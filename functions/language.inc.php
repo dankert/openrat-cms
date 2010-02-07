@@ -59,6 +59,7 @@ function lang( $textVar,$vars = array() )
 	}
 	
 	// Wenn Textvariable nicht vorhanden ist, dann als letzten Ausweg nur den Variablennamen zurueckgeben
+	Logger::warn('Message-Key not found: '.$textVar);
 	return( '?'.$textVar.'?' );
 }
 
