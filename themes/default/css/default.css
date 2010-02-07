@@ -173,6 +173,17 @@ body.tree {
 	padding:5px;
 }
 
+body.tree tr.active td.treevalue
+{
+	border-right:2px solid #7B9CBD;
+}
+/*
+body.tree tr.active
+{
+	background-color:white;
+}
+*/
+
 form
 {
 	margin:0px;
@@ -231,7 +242,8 @@ td
 
 
 /* Datenzeile-Mauseffekt */
-tr.data:hover
+tr.data:hover,
+body.tree tr:hover
 {
 	background-color:silver;
 }
