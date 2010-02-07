@@ -12,20 +12,20 @@ body.title
 }
  
 
-body.menu
+body.menu tr.title td,
+body.main tr.title td
+
 { 
 	background-image: url('../images/bg-menu.png');
 }
 
-td.menu
-{ 
-	background-image: url('../images/bg-menu.png');
-	color: white;
-}
-td.subaction
+body.menu tr.menu td,
+body.main tr.menu td
 { 
 	background-image: url('../images/bg-title.png');
+	color: white;
 }
+
 
 input,
 select,

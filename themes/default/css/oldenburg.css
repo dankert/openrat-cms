@@ -1,9 +1,5 @@
-/* $Id$ */
-
 /*
-
 Stylesheet for user switching from a CMS called ...... ouh, find out yourself ... :) 
-
 */
 
 a:link,
@@ -210,28 +206,18 @@ td.title
 }
 
 /* Hauptmenue */
-td.menu
+body.menu tr.title td,
+body.main tr.title td
 {
 	background-color:#000080;
 	vertical-align:middle;
 }
 
 /* Submenue */
-td.submenu
+body.menu tr.menu td,
+body.main tr.menu td
 {
-	border-bottom:solid 1px black;
 	background-color:#DFDFDF;
-}
-
-td.f1,
-td.f2
-{
-	background-color:#CCCCCC;
-	padding:5px;
-	border-top:5px solid #DFDFDF;
-	border-left:3px solid #DFDFDF;
-	border-bottom:1px solid #DFDFDF;
-	border-right:3px solid #DFDFDF;
 }
 
 td.act

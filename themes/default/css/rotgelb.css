@@ -20,9 +20,10 @@ a:hover
 }
 
 
-td.subaction { background-color:#EED536; }
+body.menu tr.title td,
+body.main tr.title td
+{	background-color:#BB0C0C;}
 
-td.menu
-{
-	background-color:#BB0C0C;
-}
+body.menu,tr.menu td,
+body.main tr.menu td
+{ background-color:#EED536; }

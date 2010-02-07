@@ -1,15 +1,15 @@
-/* $Id$ */
 
 body.title,
-td.subaction,
+body.main tr.menu,
+body.menu tr.menu,
 table.notice th
 { 
 	background-image: url('../images/bg-title.png');
 }
  
 
-body.menu,
-td.menu
+body.menu tr.title td,
+body.main tr.title td
 { 
 	background-image: url('../images/bg-menu.png');
 	color: white;
@@ -23,6 +23,7 @@ div.cancel
 	color:black;
 	border-color:gray;
 }
+
 textarea
 {
 	color:black;

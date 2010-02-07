@@ -232,37 +232,19 @@ td
 }
 
 
-td.menu    { background-color:Highlight; color:HighlightText; vertical-align:middle; height:30px;}
+body.menu tr.title td,
+body.main tr.title td
+{ background-color:Highlight; color:HighlightText; vertical-align:middle; height:30px;}
+
 td.help    { color:black; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.message { padding:10px; font-weight:bold; }
 td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
-td.subaction { background-color:ButtonFace; color:ButtonText; }
 
-tr.f1
-{
-	background-color:#cac2a6;
-}
-tr.f2
-{
-	background-color:#c1bba0;
-}
-td.f1
-{
-	padding:5px;
-	border-top:5px solid #dad2b6;
-	border-left:3px solid #dad2b6;
-	border-bottom:1px solid gray;
-	border-right:3px solid #dad2b6;
-}
-td.f2
-{
-	padding:5px;
-	border-top:5px solid #dad2b6;
-	border-left:3px solid #dad2b6;
-	border-bottom:1px solid gray;
-	border-right:3px solid #dad2b6;
-}
+
+body.menu tr.menu td,
+body.main tr.menu td
+{ background-color:ButtonFace; color:ButtonText; }
 
 fieldset
 {
@@ -297,7 +279,7 @@ tr.f2:hover
 
 
 
-/* Farben für Eingabfelder, allgemein */
+/* Farben fï¿½r Eingabfelder, allgemein */
 input,
 select,
 textarea
@@ -306,7 +288,7 @@ textarea
 	background-color:Window;
 }
 
-/* Rahmen für Eingabefelder */
+/* Rahmen fï¿½r Eingabefelder */
 input,
 textarea
 {
@@ -315,7 +297,7 @@ textarea
 	background-color:Window;
 }
 
-/* Eingabefelder, mausüberstrichen */
+/* Eingabefelder, mausï¿½berstrichen */
 input:hover,
 textarea:hover
 {
@@ -331,7 +313,7 @@ textarea:focus
 	background-color:Window;
 }
 
-/* Knöpfe */
+/* Knï¿½pfe */
 input.submit,
 input.reset,
 input.ok

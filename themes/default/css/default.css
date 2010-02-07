@@ -174,8 +174,9 @@ body.main
 	text-align:center;
 }
 
-body.title {
+body.title table tr td {
 	margin:0px;
+	padding:3px;
 	background-color:#EEEEEE;
 }
 
@@ -328,7 +329,7 @@ td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
 td.subaction { background-color:#cac2a6; vertical-align:middle; padding:4px;}
 table.main td.window td { padding:2px;}
 table.main td.window td.logo { padding:10px;}
-table.main td.act
+body.main td.window td.act
 {
 	background-color:#eae2c6;
 	padding:15px;
