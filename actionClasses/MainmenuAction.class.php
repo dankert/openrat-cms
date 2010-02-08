@@ -174,7 +174,7 @@ class MainmenuAction extends Action
 		
 		
 		$page = Session::getObject();
-		if	( $page->objectid != $this->getRequestId() )
+		if	( !is_object($page) || $page->objectid != $this->getRequestId() )
 		{
 			$page = new Page( $this->getRequestId() );
 			Session::setObject( $page );
@@ -406,7 +406,7 @@ class MainmenuAction extends Action
 	function folder()
 	{
 		$folder = Session::getObject();
-		if	( is_object($folder) && $folder->objectid != $this->getRequestId() )
+		if	( !is_object($folder) || $folder->objectid != $this->getRequestId() )
 		{
 			$folder = new Folder( $this->getRequestId() );
 			Session::setObject( $folder );
