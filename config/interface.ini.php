@@ -62,12 +62,6 @@ human_date_format = false
 ; Settings for colors and fonts.
 [style]
 
-; The 'root' stylesheet which is extended by the user-defined styles.
-; - '' disables extending.
-; - 'xyz' the name of the style (without the trailing ".css" (default is 'default')
-; - 'http://.../style.css' full url to your own CSS file.
-extend=default
-
 ; The default style which is used, when no user is logged in.
 ; 'default' is the classic Openrat style.
 default=default

@@ -1060,9 +1060,9 @@ SQL
 			
 		while ($file = readdir ($handle))
 		{ 
-			if ( eregi('\.css$',$file) )
+			if ( substr($file,-4)=='.css' && substr($file,0,4) != 'base' )
 			{ 
-				$file = eregi_replace('\.css$','',$file);
+				$file = substr($file,0,-4);
 				$allstyles[$file] = ucwords($file);
 			}
 		}

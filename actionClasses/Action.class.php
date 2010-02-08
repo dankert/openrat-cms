@@ -399,10 +399,7 @@ class Action
 	
 		$user = Session::getUser();
 		
-		if	( strpos($conf['interface']['style']['extend'],'/')===false )
-			$root_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['extend'].'.css';
-		else
-			$root_stylesheet = $style['extend'];
+		$root_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/base.css';
 			
 		if	( !is_object($user) )
 			$user_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['default'].'.css';

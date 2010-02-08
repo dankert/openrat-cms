@@ -1,0 +1,467 @@
+/*
+OpenRat Content Management System
+Copyright (C) 2002-2010 Jan Dankert
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+
+/*
+Basis-Style for Openrat.
+*/
+
+
+/* reset.css */
+/* Source: http://meyerweb.com/eric/tools/css/reset/ */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+body {line-height:1.5;}
+table {border-collapse:separate;border-spacing:0;}
+caption, th, td {text-align:left;font-weight:normal;}
+table, td, th {vertical-align:middle;}
+blockquote:before, blockquote:after, q:before, q:after {content:"";}
+blockquote, q {quotes:"" "";}
+a img {border:none;}
+
+/* anchor-Behaviour */
+a:link,
+a:visited
+{
+	font-weight:normal;
+	text-decoration:none;
+}
+a:active,
+a:hover
+{
+	font-weight:normal;
+	text-decoration:underline;
+}
+
+
+a.editorlink:active,
+a.editorlink:hover
+{
+	font-weight:normal;
+	text-decoration:none;
+}
+
+a.editorlink:link,
+a.editorlink:visited
+{
+	font-weight:normal;
+	text-decoration:none;
+}
+
+body
+{
+	font-family:Arial;
+	font-size:13px;
+}
+
+body.main
+{
+	text-align:center;
+}
+
+body.title table tr td {
+	margin:0px;
+	padding:3px;
+}
+
+body.tree {
+	padding:5px;
+}
+
+body.tree tr.active td.treevalue
+{
+	border-right:2px solid;
+}
+
+/* Submenu-Entrys */
+body.menu tr.menu td table tr td,
+body.main tr.menu td table tr td
+{ padding:4px; padding-right:6px;padding-left:6px; width:30px; white-space:nowrap;}
+
+/* Submenu-Width */
+body.menu tr.menu table { width:50px;}
+
+
+/* Inaktive Menuepunkte werden ausgegraut */
+body.menu tr.menu td table tr td.noaction,
+body.main tr.menu td table tr td.noaction
+{
+	color:gray;
+}
+
+/* Fenster-Titel */
+body.menu tr.title span.title,
+body.main tr.title span.title
+{
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	text-shadow:#cac2a6 2px 1px 3px;
+}
+
+/* Tree-Icons */
+body.tree td.treevalue img {
+	padding-right:2px;
+	padding-left:2px;
+}
+
+/* Icons */
+img[align=left],
+img[align=right] {padding-right:1px;padding-left:1px;}
+
+
+pre
+{
+	font-family:Courier;
+	font-size:13px;
+}
+
+small
+{
+	color:gray;
+}
+
+
+
+
+body.menu span.accesskey,
+body.main span.accesskey
+{
+	text-decoration:underline;
+}
+
+body th,
+body td
+{
+	font-family:Arial;
+	font-size:13px;
+	vertical-align:top;
+}
+
+
+/* Datenzeile-Mauseffekt */
+tr.data:hover,
+body.tree tr:hover
+{
+	background-color:silver;
+}
+
+
+
+/* Anzeige von Text-Unterschieden */
+
+tr.diff td.line
+{
+	background-color:white;
+	text-align:right;
+}
+tr.diff td.equal
+{
+}
+tr.diff td.old
+{
+	background-color:red;
+}
+tr.diff td.new
+{
+	background-color:green;
+}
+tr.diff td.notequal
+{
+	background-color:yellow;
+}
+
+
+
+/* Menzue-Titel-Zeile */
+body.menu tr.title td,
+body.main tr.title td
+{
+	vertical-align:middle;
+	padding:4px;
+	height:30px;
+}
+
+td.message { padding:10px; font-weight:bold; }
+
+/* Title-Frame */
+body.title td.title
+{
+	font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px;
+}
+
+/* Allgemeine Inhaltszellen */
+body.main table.main td.window td
+{
+	padding:4px;
+}
+
+/* Logo */
+table.main td.window td.logo
+{
+	padding:10px;
+}
+
+/* Action-Button */
+body.main td.window td.act
+{
+	padding:15px;
+	margin-top:20px;
+	border-top:1px solid gray;
+	text-align:right;
+}
+
+a.copyright
+{
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:9px;
+	text-decoration:none;
+}
+
+/* Message of the day */
+td.motd
+{
+	border-left: 3px solid red;
+	border-right: 3px solid red;
+	font-weight: bold;
+	padding:10px;
+	margin:10px;
+}
+
+table.main
+{
+	border:3px solid;
+}
+
+
+/* Eingabefelder */
+input.text,
+textarea
+{
+	border:2px solid;
+	padding:2px;
+}
+
+input.submit,
+input.ok,
+div.cancel
+{
+	width:110px;
+	font-weight: bold;
+}
+
+input.reset
+{
+	text-align:right;
+}
+
+input.checkbox,
+input.radio
+{
+	border:1px solid grey;
+}
+
+/* Eingabefeld fuer Beschreibung */
+textarea.desc,
+textarea.description
+{
+	font-family:Arial;
+	font-size:13px;
+}
+
+/* Eingabefeld fuer Textabsatz */
+textarea.longtext
+{
+	font-family:Arial;
+	font-size:13px;
+	width:100%;
+	height:300px;
+	border:1px solid black;
+}
+
+/* Eingabfeld fuer Namen */
+input.name,
+td.name
+{
+	font-weight:bold;
+}
+
+
+/* Eingabfeld fuer Dateiname */
+input.filename,
+input.extension,
+input.ansidate,
+td.filename,
+td.extension,
+td.ansidate,
+{
+	font-family:Courier;
+	font-size:13px;
+}
+
+
+
+
+
+/* Das Hauptfenster für alle Dialoge */
+td.window
+{
+	border: 0px solid;
+	padding:0px;
+	margin:0px;
+	
+}
+
+
+tr td.help
+{
+	font-style: italic;
+}
+tr.headline td.help
+{
+	border-bottom:1px solid black;
+	font-style: normal;
+}
+
+td.logo
+{
+	padding:10px;
+	margin:0px;
+}
+
+h2.logo
+{
+	font-family:Verdana;
+	font-weight:normal;
+	font-size:24px;
+	margin-left:110px;
+}
+
+p.logo
+{
+	margin-left:110px;
+	font-family:Verdana;
+	font-size:13px;
+}
+
+input.search
+{
+	margin:0px;
+	padding:0px;
+	font-size:10px;
+	border:2px solid black;
+}
+input.searchbutton
+{
+	margin:0px;
+	margin-left:5px;
+	border:0px;
+	padding:0px;
+	font-size:4px;
+	max-height:20px;
+}
+
+
+
+/* Zwischen-Ueberschriften */
+fieldset
+{
+	border-top:1px solid black;
+	border-bottom:0px;
+	border-left:0px;
+	border-right:0px;
+	margin-top:5px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
+	padding:0px;
+}
+
+/* Legende */
+legend
+{
+	font-weight:bold;
+}
+
+
+
+
+/* Notizen */
+td.notice
+{
+	margin-top:10px;
+	margin-bottom:10px;
+	padding:10%;
+	text-align:center;
+}
+table.notice
+{
+	border:1px solid;
+	border-spacing:0px;
+}
+table.notice th
+{
+	padding:2px;
+	white-space:nowrap;
+	border-bottom:1px solid black;
+	font-weight:normal;
+	text-align:left;
+}
+table.notice tr.error
+{
+}
+table.notice tr.warning
+{
+	margin:0px;
+	padding:0px;
+}
+
+
+/* Baum */
+table.tree td.treecol,
+table.tree td.treeimage
+{
+	width:1%;
+}
+table.tree td.treevalue
+{
+	vertical-align:middle;
+	white-space:nowrap;
+	text-align: left;
+}
+
+
+
+/* Kalender */
+table.calendar
+{
+	table-layout:fixed;
+	border-collapse:collapse;
+	text-align: center;
+}
+table.calendar td
+{
+	border: 1px dotted;
+}
+
+table.main td.help span
+{
+	padding:10px;
+	text-align:center;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+}
