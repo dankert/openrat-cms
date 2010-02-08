@@ -1,39 +1,14 @@
-/* $Id$ */
+/* Night - extends the "dark" style */
+
+@import url("dark.css");
 
 body,
 body.main,
 body.tree
 {
-	background-color:252525;
-}
-body.title
-{ 
-	background-image: url('../images/bg-title.png');
-}
- 
-
-body.menu tr.title td,
-body.main tr.title td
-
-{ 
-	background-image: url('../images/bg-menu.png');
+	background-color:#252525;
 }
 
-body.menu tr.menu td,
-body.main tr.menu td
-{ 
-	background-image: url('../images/bg-title.png');
-	color: white;
-}
-
-
-input,
-select,
-div.cancel
-{
-	background-image: url('../images/bg-title.png');
-	color:white;
-}
 textarea
 {
 	color:black;
@@ -43,13 +18,6 @@ textarea
 input:hover,
 textarea:hover
 {
-	border-color:black;
-}
-
-input:focus,
-textarea:focus
-{
-	background-color:white;
 	border-color:black;
 }
 

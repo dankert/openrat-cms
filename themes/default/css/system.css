@@ -80,21 +80,10 @@ a.path:hover
 	color:#CCCCCC; font-weight:bold; text-decoration:underline;
 }
 
-a.menu:link,
-a.menu:visited
+body.main tr.menu td table td a,
+body.menu tr.menu td table td a
 {
 	color:ButtonText;
-	font-weight:normal;
-	text-decoration:none;
-}
-
-
-a.menu:active,
-a.menu:hover
-{
-	color:ButtonText;
-	font-weight:normal;
-	text-decoration:underline;
 }
 
 
@@ -144,8 +133,6 @@ body.title {
 body.tree {
 	background-color:Window;
 	padding:5px;
-	xbackground-color:white;
-/*	border:3px solid gray;*/
 }
 
 
@@ -236,10 +223,15 @@ body.menu tr.title td,
 body.main tr.title td
 { background-color:Highlight; color:HighlightText; vertical-align:middle; height:30px;}
 
+body.main tr.menu td.action:hover,
+body.menu tr.menu td.action:hover
+{
+	background-color:Highlight;
+	color:ButtonText;
+}
+
 td.help    { color:black; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
-td.message { padding:10px; font-weight:bold; }
 td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
-td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
 
 
 body.menu tr.menu td,
@@ -257,10 +249,7 @@ td.act
 	background-color:AppWorkspace;
 }
 
-.mainmenu_headline{color:Window; font-size:13px; color:black; font-weight:bold; }
-.mainmenu_name{color:white; font-weight:bold; font-size:13px; }
-.mainmenu_val{color:Window; font-weight:normal; }
-.mainmenu_title{color:Window;vertical-align:middle;font-weight:bold; font-size:13px; }
+
 p.copyright { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; text-align:center; }
 
 table.main
@@ -292,7 +281,7 @@ textarea
 input,
 textarea
 {
-	border:1px solid ButtonFace;
+	border:1px solid Highlight;
 	padding:5px;
 	background-color:Window;
 }
@@ -301,15 +290,14 @@ textarea
 input:hover,
 textarea:hover
 {
-	border-color:Highlight;
-	background-color:Window;
+	border-color:WindowText;
 }
 
 /* Eingabefelder, aktiv */
 input:focus,
 textarea:focus
 {
-	border-color:Highlight;
+	border-color:WindowText;
 	background-color:Window;
 }
 

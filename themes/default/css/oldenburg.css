@@ -2,96 +2,68 @@
 Stylesheet for user switching from a CMS called ...... ouh, find out yourself ... :) 
 */
 
+
+body.menu tr.title a,
+body.main tr.title
+{
+	color:white;
+}
+
+
+
 a:link,
 a:visited
 {
 	color:#000080;
-	font-weight:normal;
-	text-decoration:none;
 }
 
 a:active,
 a:hover
 {
 	color:#000080;
-	font-weight:normal;
-	text-decoration:underline;
 }
 
 
-a.el_include:link,
-a.el_include:active,
-a.el_include:visited,
-a.el_include:hover,
-a.el_list:link,
-a.el_list:active,
-a.el_list:visited,
-a.el_list:hover
+a.el_include,
+a.el_list
 {
 	background-color: blue;
 }
 
-a.el_longtext:link,
-a.el_longtext:active,
-a.el_longtext:visited,
-a.el_longtext:hover,
-a.el_text:link,
-a.el_text:active,
-a.el_text:visited,
-a.el_text:hover
+a.el_longtext,
+a.el_text
 {
 	background-color: lime;
 }
 
 
-a.el_infodate:link,
-a.el_infodate:active,
-a.el_infodate:visited,
-a.el_infodate:hover,
-a.el_info:link,
-a.el_info:active,
-a.el_info:visited,
-a.el_info:hover
+a.el_infodate,
+a.el_info
 {
 	background-color: white;
 }
 
-a.el_date:link,
-a.el_date:active,
-a.el_date:visited,
-a.el_date:hover
+a.el_date
 {
 	background-color: aqua;
 }
 
-a.el_link:link,
-a.el_link:active,
-a.el_link:visited,
-a.el_link:hover
+a.el_link
 {
 	background-color: fuchsia;
 }
 
-a.el_number:link,
-a.el_number:active,
-a.el_number:visited,
-a.el_number:hover
+a.el_number
 {
 	background-color: lime;
 }
 
-a.el_code:link,
-a.el_code:active,
-a.el_code:visited,
-a.el_code:hover
+a.el_code
 {
 	background-color: gray;
 }
 
-a.el_icon:link,
-a.el_icon:active,
-a.el_icon:visited,
-a.el_icon:hover
+a.el_icon
 {
 	background-color: yellow;
 }
@@ -101,14 +73,12 @@ a.mainmenu:link,
 a.mainmenu:visited
 {
 	color:#CCCCCC;
-	font-weight:bold;
-	text-decoration:none;
 }
 
 a.mainmenu:active,
 a.mainmenu:hover
 {
-	color:#CCCCCC; font-weight:bold; text-decoration:underline;
+	color:#CCCCCC;
 }
 
 
@@ -118,7 +88,18 @@ body
 	color:#000000;
 	font-family:Arial;
 	font-size:12px;
+	background-color:#EEEEEE;
+}
+
+
+body.main table.main,
+{
 	background-color:white;
+}
+body.main tr.menu td.action:hover,
+body.menu tr.menu td.action:hover
+{
+	background-color:silver;
 }
 
 
@@ -135,15 +116,8 @@ body, textarea
 
 body.title
 {
-	margin:0px;
 	background-color:white;
 	color:black;
-}
-
-form
-{
-	margin:0px;
-	padding:0px;
 }
 
 pre
@@ -155,25 +129,6 @@ pre
 small
 {
 	color:grey;
-}
-
-/* Tabellen */
-th
-{
-	background-color:#000080;
-	color:white;
-	font-family:Arial;
-	font-size:13px;
-	vertical-align:top;
-	font-weight:bold;
-	border-bottom:1px solid grey;
-}
-
-td
-{	color:#000000;
-	font-family:Arial;
-	font-size:13px;
-	vertical-align:top;
 }
 
 td.diff_equal
@@ -210,7 +165,6 @@ body.menu tr.title td,
 body.main tr.title td
 {
 	background-color:#000080;
-	vertical-align:middle;
 }
 
 /* Submenue */
@@ -223,14 +177,12 @@ body.main tr.menu td
 td.act
 {
 	background-color:#DFDFDF;
-	padding:15px;
-	border-top:0px solid grey;
 }
 
-.mainmenu_headline{color:#CCCCCC; font-size:13px; color:black; font-weight:bold; }
+.mainmenu_headline{color:#CCCCCC; font-size:13px; color:black;  }
 .mainmenu_name{color:white; font-weight:bold; font-size:24px; }
-.mainmenu_val{color:#CCCCCC; font-weight:normal; }
-.mainmenu_title{color:#CCCCCC;vertical-align:middle;font-weight:bold; font-size:24px; }
+.mainmenu_val{color:#CCCCCC;  }
+.mainmenu_title{color:#CCCCCC;vertical-align:middle;font-size:24px; }
 
 table.main { border:1px solid black; }
 

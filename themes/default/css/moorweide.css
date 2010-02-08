@@ -3,85 +3,32 @@
 a:link,a:visited
 {
 	color:green;
-	font-weight:normal;
-	text-decoration:none;
 }
 
 a:active,a:hover
 {
 	color:green;
-	font-weight:bold;
-	text-decoration:underline
+	/*font-weight:bold;*/
 }
 
 
-a.mainmenu:link,
-a.mainmenu:visited
+body.menu tr.title a
 {
 	color:#CCCCCC;
-	font-weight:bold;
-	text-decoration:none;
-}
-
-a.mainmenu:active,
-a.mainmenu:hover
-{
-	color:#CCCCCC; font-weight:bold; text-decoration:underline;
 }
 
 body
 {
 	color:#000000;
-	font-family:Arial;
-	font-size:13px;
-	background-color:white;
-}
-
-body.title
-{
-	margin:0px;
-}
-
-
-form
-{
-	margin:0px;
-	padding:0px;
-}
-
-pre
-{
-	font-family:Courier;
-	font-size:13px;
-}
-
-small
-{
-	color:grey;
-}
-
-.mark
-{
-	border:1px solid black;
 	background-color:#DDFFDD;
 }
 
-th
+table.main {
+	background-color:white;
+	}
+small
 {
-	background-color:green;
-	color:white;
-	font-family:Arial;
-	font-size:13px;
-	vertical-align:top;
-	font-weight:bold;
-	border-bottom:1px solid grey;
-}
-
-td
-{
-	color:#000000;
-	font-family:Arial;font-size:13px;
-	vertical-align:top;
+	color:grey;
 }
 
 td.line
@@ -104,26 +51,22 @@ td.help
 
 body.menu tr.title td,
 body.main tr.title td
-{ background-color:green;vertical-align:middle; }
+{ background-color:#55AA55; }
 
 body.menu tr.menu td,
 body.main tr.menu td
-{ background-color:#DDFFDD; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
+{ background-color:#CCEECC; font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 
-td.submenu { border-bottom:solid 1px black; background-color:#DDFFDD; }
 
 td.act {background-color:FFFFDD; padding:15px; border-top:0px solid grey;  }
-.mainmenu_headline{color:#CCCCCC; font-size:13px; color:black; font-weight:bold; }
-.mainmenu_name{color:white; font-weight:bold; }
-.mainmenu_val{color:#CCCCCC; font-weight:normal; }
-p.copyright { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; text-align:center; }
+p.copyright { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
 
-table.main { border:1px solid black; margin-top:30px; }
+table.main { border-color:black; }
 
 input.submit { color:white; font-weight:bold; background-color:green; }
-input.reset  { color:white;                   background-color:green; text-align:right; }
+input.reset  { color:white;                   background-color:green; }
 textarea.desc { font-family:Arial;font-size:13px; }
-textarea.longtext { font-family:Arial;font-size:13px; width:100%; height:300; }
+textarea.longtext { font-family:Arial;font-size:13px;  }
 
 input, select, textarea
 {

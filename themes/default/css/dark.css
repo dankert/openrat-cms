@@ -1,4 +1,15 @@
 
+a
+{
+	color:black;
+}
+
+body.menu tr.title a,
+body.main tr.title
+{
+	color:white;
+}
+
 body.title,
 body.main tr.menu,
 body.menu tr.menu,
