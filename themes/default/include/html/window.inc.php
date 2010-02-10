@@ -53,6 +53,11 @@
 		}
 		echo '<span class="title">'.langHtml($windowTitle).'</span>';
 		
+		if	( isset($notice_status))
+		{
+			?><img src="<?php echo $image_dir.'notice_'.$notice_status.IMG_ICON_EXT ?>" align="right" /><?php
+		}
+		
 		
 		?>
 		</td>

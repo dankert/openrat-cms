@@ -264,6 +264,8 @@ class Action
 	 */
 	function addNotice( $type,$name,$text,$status=OR_NOTICE_OK,$vars=array(),$log=array() )
 	{
+		$this->templateVars['notice_status'] = $status;
+		
 		if	( $status == OR_NOTICE_OK && isset($_COOKIE['or_ignore_ok_notices']))
 			return;
 			
