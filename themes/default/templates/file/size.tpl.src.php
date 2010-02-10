@@ -9,7 +9,7 @@ page
 					text var:width
 					text raw:_*_
 					text var:height
-			if not: empty:var:formats
+			if not: empty:formats
 				if true:mode:edit
 					row
 						cell colspan:3
