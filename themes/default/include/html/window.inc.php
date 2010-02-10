@@ -103,7 +103,7 @@
     <td align="center" class="notice">
 
   <?php foreach( $notices as $notice_idx=>$notice ) { ?>
-    	<br><table class="notice" width="80%">
+    	<br><table class="notice">
     
   <?php if ($notice['name']!='') { ?>
   <tr>
