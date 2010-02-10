@@ -12,6 +12,13 @@ page
 
 			row
 				cell
+						checkbox name:ignore_ok_notices
+					#cell
+						label for:ignore_ok_notices
+							text key:setting_ignore_ok_notices
+
+			row
+				cell
 					newline
 					fieldset title:message:timezone
 						selectbox name:timezone_offset list:timezone_list addempty:true
