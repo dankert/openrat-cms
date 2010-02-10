@@ -11,7 +11,7 @@ page
 					text text:GLOBAL_NAME
 					
 			list list:objectlist extract:true
-				row
+				row class:data
 					cell
 						image icon:var:type
 					cell
@@ -19,11 +19,21 @@ page
 						text raw:_
 
 			if present:folder
+				//row
+					//cell colspan:2
+						//text key:folder_select_target_folder
+						//text raw::_		
+						//selectbox name:targetobjectid list:folder
 				row
 					cell colspan:2
-						text key:folder_select_target_folder
-						text raw::_		
-						selectbox name:targetobjectid list:folder
+						fieldset title:message:folder_select_target_folder
+				list list:folder
+					row class:data
+						cell
+							radio name:targetobjectid value:var:list_key
+						cell
+							label for:targetobjectid_{list_key}
+								text var:list_value
 
 			if present:ask_filename
 				row
