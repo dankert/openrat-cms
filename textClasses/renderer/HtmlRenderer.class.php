@@ -190,49 +190,72 @@ class HtmlRenderer
 					case 'macroelement':
 						
 						$tag = '';
-						$className = ucfirst($child->name);
-						$fileName  = './dynamicClasses/'.$className.'.class.php';
-						if	( is_file( $fileName ) )
+						
+						if	( strtolower($child->name) == 'help' )
 						{
-							// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
-							if	( !class_exists($className) )
-								require( $fileName );
-		
-							if	( class_exists($className) )
+							$tag = 'tt';
+							$macros = FileUtils::readDir('./dynamicClasses');
+							$val = 'Available macros: '.implode(',',$macros);
+						}
+						else
+						{
+							$className = ucfirst($child->name);
+							$fileName  = './dynamicClasses/'.$className.'.class.php';
+							if	( is_file( $fileName ) )
 							{
-								$dynEl = new $className;
-								$dynEl->page = &$this->page;
-		
-								if	( method_exists( $dynEl,'execute' ) )
+								// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
+								if	( !class_exists($className) )
+									require( $fileName );
+			
+								if	( class_exists($className) )
 								{
-									$dynEl->objectid = $this->page->objectid;
-									$dynEl->page     = &$this->page;
-		
-									foreach( $child->attributes as $param_name=>$param_value )
+									$dynEl = new $className;
+									$dynEl->page = &$this->page;
+			
+									if	( method_exists( $dynEl,'execute' ) )
 									{
-										if	( isset( $dynEl->$param_name ) )
-											$dynEl->$param_name = $param_value;
+										$dynEl->objectid = $this->page->objectid;
+										$dynEl->page     = &$this->page;
+			
+										foreach( $child->attributes as $param_name=>$param_value )
+										{
+											if	( $param_name == 'help')
+												$val = 'Available macro attributes: '.implode(',',array_keys(get_object_vars($dynEl)));
+											if	( isset( $dynEl->$param_name ) )
+												$dynEl->$param_name = $param_value;
+										}
+			
+										$dynEl->execute();
+										$val .= $dynEl->getOutput();
 									}
-		
-									$dynEl->execute();
-									$val = $dynEl->getOutput();
+									else
+									{
+										Logger::warn('element:'.$this->element->name.', '.
+										             'class:'.$className.', no method: execute()');
+										if	( config('editor','macro','show_errors') )
+											$val = 'Internal Macro error: method execute() not found';
+									}
 								}
 								else
 								{
 									Logger::warn('element:'.$this->element->name.', '.
-									             'class:'.$className.', no method: execute()');
-								}
+									             'class not found:'.$className);
+									if	( config('editor','macro','show_errors') )
+										$val = 'Internal Macro error: class not found';
+																	}
 							}
 							else
 							{
 								Logger::warn('element:'.$this->element->name.', '.
-								             'class not found:'.$className);
+								             'file not found:'.$fileName);
+								
+								if	( config('editor','macro','show_errors') )
+								{
+									$tag           = 'tt';
+									$attr['style'] = 'color:red';
+									$val = 'Unknown Macro: "'.$child->name.'", use macro "help" for a list of available macros';
+								}
 							}
-						}
-						else
-						{
-							Logger::warn('element:'.$this->element->name.', '.
-							             'file not found:'.$fileName);
 						}
 		
 						break;
