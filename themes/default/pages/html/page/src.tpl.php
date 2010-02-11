@@ -1,13 +1,13 @@
-<?php  $attr1_class='main';  ?><?php
+<?php $a1_class='main'; ?><?php
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset='.$charset)
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
+  <title><?php echo isset($a1_title)?langHtml($a1_title).' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
 <?php if ( isset($refresh_url) ) { ?>
-  <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url ?>">
+  <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url; if (ini_get('session.use_trans_sid')) echo '&'.session_name().'='.session_id(); ?>">
 <?php } ?>
   <meta name="MSSmartTagsPreventParsing" content="true" >
   <meta name="robots" content="noindex,nofollow" >
@@ -29,12 +29,14 @@
   <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" >
 <?php } ?>
 </head>
-<body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php /* Debug-Information */ if ($showDuration) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($this->templateVars,true));echo "\n-->";} ?><?php unset($attr1_class); ?><?php  $attr2_icon='page';  $attr2_width='93%';  $attr2_rowclasses='odd,even';  $attr2_columnclasses='1,2,3';  ?><?php
+<body class="main" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
+<?php /* Debug-Information */ if ($showDuration) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($this->templateVars,true));echo "\n-->";} ?><?php unset($a1_class) ?><?php $a2_icon='page';$a2_width='93%';$a2_rowclasses='odd,even';$a2_columnclasses='1,2,3'; ?><?php
 	$coloumn_widths=array();
-	$row_classes   = explode(',',$attr2_rowclasses);
+	$row_classes   = explode(',',$a2_rowclasses);
 	$row_class_idx = 999;
-	$column_classes = explode(',',$attr2_columnclasses);
+	$column_classes = explode(',',$a2_columnclasses);
+	$row_idx    = 0;
+	$column_idx = 0;
 		global $image_dir;
 		if (@$conf['interface']['application_mode'] )
 		{
@@ -43,11 +45,11 @@
 		else
 		{
 			echo '<br/><br/><br/><center>';
-			echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr2_width.'">';
+			echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$a2_width.'">';
 		}
 		if (!@$conf['interface']['application_mode'] )
 		{
-		echo '<tr><td class="menu">';
+		echo '<tr class="title"><td>';
 		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->isEditMode()) { 
@@ -66,6 +68,10 @@
 			echo '&nbsp;&raquo;&nbsp;';
 		}
 		echo '<span class="title">'.langHtml($windowTitle).'</span>';
+		if	( isset($notice_status))
+		{
+			?><img src="<?php echo $image_dir.'notice_'.$notice_status.IMG_ICON_EXT ?>" align="right" /><?php
+		}
 		?>
 		</td>
 		<?php
@@ -79,7 +85,8 @@
      ?>
     </td>-->
   </tr>
-  <tr><td class="subaction">
+  <tr class="menu"><td>
+      <table class="menu"><tr>
     <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
 			$windowMenu = array();
     foreach( $windowMenu as $menu )
@@ -91,25 +98,26 @@
 				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
           	if	( isset($menu['url']) )
           	{
-          		?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          		?><td class="action"><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a></td><?php
           	}
           	else
           	{
-          		?><span class="menu_disabled" title="<?php echo langHtml($menu['text'].'_DESC') ?>" class="menu_disabled"><?php echo $tmp_text ?></span>&nbsp;&nbsp;&nbsp;<?php
+          		?><td class="noaction"><?php echo $tmp_text ?></td><?php
           	}
           }
           	if (@$conf['help']['enabled'] )
           	{
-             ?><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>" class="menu" style="cursor:help;"><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
+             ?><td><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>" class="menu" style="cursor:help;"><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a></td><?php
           	}
-          	?></td>
+          	?>
+          	</tr></table></td>
   </tr>
 <?php if (isset($notices) && count($notices)>0 )
       { ?>
   <tr>
     <td align="center" class="notice">
   <?php foreach( $notices as $notice_idx=>$notice ) { ?>
-    	<br><table class="notice" width="80%">
+    	<br><table class="notice">
   <?php if ($notice['name']!='') { ?>
   <tr>
     <th colspan="2"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
@@ -133,35 +141,29 @@
   <tr>
     <td class="window">
       <table cellspacing="0" width="100%" cellpadding="4">
-<?php unset($attr2_icon);unset($attr2_width);unset($attr2_rowclasses);unset($attr2_columnclasses); ?><?php  ?><?php
-	$attr3_tmp_class='';
-	$attr3_last_class = $attr3_tmp_class;
-	echo Html::open_tag('tr',array('class'=>$attr3_tmp_class));
-?><?php  ?><?php  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr4_class))
-			$attr4_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr4_rowspan) )
-		$attr4_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?>><?php  ?><?php  $attr5_class='text';  $attr5_var='src';  $attr5_escape=false;  $attr5_type='preformatted';  ?><?php
-		$attr5_title = '';
+<?php unset($a2_icon,$a2_width,$a2_rowclasses,$a2_columnclasses) ?><?php
+	$row_idx++;
+	$column_idx = 0;
+?>
+<tr
+>
+<?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a5_class='text';$a5_var='src';$a5_escape=false;$a5_type='preformatted';$a5_cut='both'; ?><?php
+		$a5_title = '';
 		$tmp_tag = 'pre';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr5_class ?>" title="<?php echo $attr5_title ?>"><?php
-		$langF = $attr5_escape?'langHtml':'lang';
-		$tmp_text = isset($$attr5_var)?$$attr5_var:$langF('UNKNOWN');
+?><<?php echo $tmp_tag ?> class="<?php echo $a5_class ?>" title="<?php echo $a5_title ?>"><?php
+		$langF = $a5_escape?'langHtml':'lang';
+		$tmp_text = isset($$a5_var)?$$a5_var:$langF('UNKNOWN');
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr5_class);unset($attr5_var);unset($attr5_escape);unset($attr5_type); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?>      </table>
+?></<?php echo $tmp_tag ?>><?php unset($a5_class,$a5_var,$a5_escape,$a5_type,$a5_cut) ?></td></tr>      </table>
 	</td>
   </tr>
 </table>
@@ -173,5 +175,5 @@
 <?php $dur = time()-START_TIME;
       echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small></center>
 <?php } ?>
-<?php  ?><?php  ?></body>
-</html><?php  ?>
+</body>
+</html>

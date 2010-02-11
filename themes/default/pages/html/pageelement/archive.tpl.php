@@ -1,13 +1,13 @@
-<?php  $attr1_class='main';  ?><?php
+<?php $a1_class='main'; ?><?php
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset='.$charset)
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title><?php echo isset($attr1_title)?$attr1_title.' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
+  <title><?php echo isset($a1_title)?langHtml($a1_title).' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
 <?php if ( isset($refresh_url) ) { ?>
-  <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url ?>">
+  <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url; if (ini_get('session.use_trans_sid')) echo '&'.session_name().'='.session_id(); ?>">
 <?php } ?>
   <meta name="MSSmartTagsPreventParsing" content="true" >
   <meta name="robots" content="noindex,nofollow" >
@@ -29,42 +29,44 @@
   <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" >
 <?php } ?>
 </head>
-<body class="<?php echo $attr1_class ?>" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php /* Debug-Information */ if ($showDuration) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($this->templateVars,true));echo "\n-->";} ?><?php unset($attr1_class); ?><?php  $attr2_name='';  $attr2_target='_self';  $attr2_method='post';  $attr2_enctype='application/x-www-form-urlencoded';  ?><?php
-		$attr2_action = $actionName;
-		$attr2_subaction = $targetSubActionName;
-		$attr2_id = $this->getRequestId();
+<body class="main" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
+<?php /* Debug-Information */ if ($showDuration) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($this->templateVars,true));echo "\n-->";} ?><?php unset($a1_class) ?><?php $a2_name='';$a2_target='_self';$a2_method='post';$a2_enctype='application/x-www-form-urlencoded'; ?><?php
+		$a2_action = $actionName;
+		$a2_subaction = $targetSubActionName;
+		$a2_id = $this->getRequestId();
 	if ($this->isEditable())
 	{
 		if	($this->isEditMode())
 		{
-			$attr2_method    = 'POST';
+			$a2_method    = 'POST';
 		}
 		else
 		{
-			$attr2_method    = 'GET';
-			$attr2_subaction = $subActionName;
+			$a2_method    = 'GET';
+			$a2_subaction = $subActionName;
 		}
 	}
-?><form name="<?php echo $attr2_name ?>"
-      target="<?php echo $attr2_target ?>"
-      action="<?php echo Html::url( $attr2_action,$attr2_subaction,$attr2_id ) ?>"
-      method="<?php echo $attr2_method ?>"
-      enctype="<?php echo $attr2_enctype ?>" style="margin:0px;padding:0px;">
+?><form name="<?php echo $a2_name ?>"
+      target="<?php echo $a2_target ?>"
+      action="<?php echo Html::url( $a2_action,$a2_subaction,$a2_id ) ?>"
+      method="<?php echo $a2_method ?>"
+      enctype="<?php echo $a2_enctype ?>" style="margin:0px;padding:0px;">
 <?php if ($this->isEditable() && !$this->isEditMode()) { ?>
 <input type="hidden" name="mode" value="edit" />
 <?php } ?>
-<input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo $attr2_action ?>" />
-<input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo $attr2_subaction ?>" />
-<input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $attr2_id ?>" /><?php
+<input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo $a2_action ?>" />
+<input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo $a2_subaction ?>" />
+<input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo $a2_id ?>" /><?php
 		if	( $conf['interface']['url_sessionid'] )
 			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
-?><?php unset($attr2_name);unset($attr2_target);unset($attr2_method);unset($attr2_enctype); ?><?php  $attr3_widths='5%,5%,5%,15%,15%,35%,10%,10%';  $attr3_width='93%';  $attr3_rowclasses='odd,even';  $attr3_columnclasses='1,2,3';  ?><?php
+?><?php unset($a2_name,$a2_target,$a2_method,$a2_enctype) ?><?php $a3_widths='5%,5%,5%,15%,15%,35%,10%,10%';$a3_width='93%';$a3_rowclasses='odd,even';$a3_columnclasses='1,2,3'; ?><?php
 	$coloumn_widths=array();
-	$column_widths = explode(',',$attr3_widths);
-	$row_classes   = explode(',',$attr3_rowclasses);
+	$column_widths = explode(',',$a3_widths);
+	$row_classes   = explode(',',$a3_rowclasses);
 	$row_class_idx = 999;
-	$column_classes = explode(',',$attr3_columnclasses);
+	$column_classes = explode(',',$a3_columnclasses);
+	$row_idx    = 0;
+	$column_idx = 0;
 		global $image_dir;
 		if (@$conf['interface']['application_mode'] )
 		{
@@ -73,11 +75,11 @@
 		else
 		{
 			echo '<br/><br/><br/><center>';
-			echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr3_width.'">';
+			echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$a3_width.'">';
 		}
 		if (!@$conf['interface']['application_mode'] )
 		{
-		echo '<tr><td class="menu">';
+		echo '<tr class="title"><td>';
 		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->isEditMode()) { 
@@ -96,6 +98,10 @@
 			echo '&nbsp;&raquo;&nbsp;';
 		}
 		echo '<span class="title">'.langHtml($windowTitle).'</span>';
+		if	( isset($notice_status))
+		{
+			?><img src="<?php echo $image_dir.'notice_'.$notice_status.IMG_ICON_EXT ?>" align="right" /><?php
+		}
 		?>
 		</td>
 		<?php
@@ -109,7 +115,8 @@
      ?>
     </td>-->
   </tr>
-  <tr><td class="subaction">
+  <tr class="menu"><td>
+      <table class="menu"><tr>
     <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
 			$windowMenu = array();
     foreach( $windowMenu as $menu )
@@ -121,25 +128,26 @@
 				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
           	if	( isset($menu['url']) )
           	{
-          		?><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a>&nbsp;&nbsp;&nbsp;<?php
+          		?><td class="action"><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a></td><?php
           	}
           	else
           	{
-          		?><span class="menu_disabled" title="<?php echo langHtml($menu['text'].'_DESC') ?>" class="menu_disabled"><?php echo $tmp_text ?></span>&nbsp;&nbsp;&nbsp;<?php
+          		?><td class="noaction"><?php echo $tmp_text ?></td><?php
           	}
           }
           	if (@$conf['help']['enabled'] )
           	{
-             ?><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>" class="menu" style="cursor:help;"><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
+             ?><td><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>" class="menu" style="cursor:help;"><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a></td><?php
           	}
-          	?></td>
+          	?>
+          	</tr></table></td>
   </tr>
 <?php if (isset($notices) && count($notices)>0 )
       { ?>
   <tr>
     <td align="center" class="notice">
   <?php foreach( $notices as $notice_idx=>$notice ) { ?>
-    	<br><table class="notice" width="80%">
+    	<br><table class="notice">
   <?php if ($notice['name']!='') { ?>
   <tr>
     <th colspan="2"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
@@ -163,359 +171,249 @@
   <tr>
     <td class="window">
       <table cellspacing="0" width="100%" cellpadding="4">
-<?php unset($attr3_widths);unset($attr3_width);unset($attr3_rowclasses);unset($attr3_columnclasses); ?><?php  ?><?php
-	$attr4_tmp_class='';
-	$attr4_last_class = $attr4_tmp_class;
-	echo Html::open_tag('tr',array('class'=>$attr4_tmp_class));
-?><?php  ?><?php  $attr5_class='help';  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr5_class))
-			$attr5_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
-		$attr5_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?> class="<?php   echo $attr5_class   ?>" <?php
-?>><?php unset($attr5_class); ?><?php  $attr6_class='text';  $attr6_text='GLOBAL_NR';  $attr6_escape=true;  ?><?php
-		$attr6_title = '';
+<?php unset($a3_widths,$a3_width,$a3_rowclasses,$a3_columnclasses) ?><?php
+	$row_idx++;
+	$column_idx = 0;
+?>
+<tr
+>
+<?php $a5_class='help'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+ class="help"
+><?php unset($a5_class) ?><?php $a6_class='text';$a6_text='GLOBAL_NR';$a6_escape=true;$a6_cut='both'; ?><?php
+		$a6_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
-		$langF = $attr6_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr6_text);
+?><<?php echo $tmp_tag ?> class="<?php echo $a6_class ?>" title="<?php echo $a6_title ?>"><?php
+		$langF = $a6_escape?'langHtml':'lang';
+		$tmp_text = $langF($a6_text);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  $attr5_class='help';  $attr5_colspan='2';  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr5_class))
-			$attr5_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
-		$attr5_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?> class="<?php   echo $attr5_class   ?>" <?php
-?> colspan="<?php echo $attr5_colspan ?>" <?php
-?>><?php unset($attr5_class);unset($attr5_colspan); ?><?php  $attr6_present='compareid';  ?><?php 
-	$attr6_tmp_exec = isset($$attr6_present);
-	$attr6_tmp_last_exec = $attr6_tmp_exec;
-	if	( $attr6_tmp_exec )
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_text,$a6_escape,$a6_cut) ?></td><?php $a5_class='help';$a5_colspan='2'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+ class="help"
+ colspan="2"
+><?php unset($a5_class,$a5_colspan) ?><?php $a6_present='compareid'; ?><?php 
+	$a6_tmp_exec = isset($$a6_present);
+	$a6_tmp_last_exec = $a6_tmp_exec;
+	if	( $a6_tmp_exec )
 	{
 ?>
-<?php unset($attr6_present); ?><?php  $attr7_class='text';  $attr7_text='GLOBAL_COMPARE';  $attr7_escape=true;  ?><?php
-		$attr7_title = '';
+<?php unset($a6_present) ?><?php $a7_class='text';$a7_text='GLOBAL_COMPARE';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-		$langF = $attr7_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr7_text);
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = $langF($a7_text);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  $attr5_class='help';  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr5_class))
-			$attr5_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
-		$attr5_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?> class="<?php   echo $attr5_class   ?>" <?php
-?>><?php unset($attr5_class); ?><?php  $attr6_class='text';  $attr6_text='DATE';  $attr6_escape=true;  ?><?php
-		$attr6_title = '';
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_text,$a7_escape,$a7_cut) ?><?php } ?></td><?php $a5_class='help'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+ class="help"
+><?php unset($a5_class) ?><?php $a6_class='text';$a6_text='DATE';$a6_escape=true;$a6_cut='both'; ?><?php
+		$a6_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
-		$langF = $attr6_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr6_text);
+?><<?php echo $tmp_tag ?> class="<?php echo $a6_class ?>" title="<?php echo $a6_title ?>"><?php
+		$langF = $a6_escape?'langHtml':'lang';
+		$tmp_text = $langF($a6_text);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  $attr5_class='help';  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr5_class))
-			$attr5_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
-		$attr5_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?> class="<?php   echo $attr5_class   ?>" <?php
-?>><?php unset($attr5_class); ?><?php  $attr6_class='text';  $attr6_text='GLOBAL_USER';  $attr6_escape=true;  ?><?php
-		$attr6_title = '';
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_text,$a6_escape,$a6_cut) ?></td><?php $a5_class='help'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+ class="help"
+><?php unset($a5_class) ?><?php $a6_class='text';$a6_text='GLOBAL_USER';$a6_escape=true;$a6_cut='both'; ?><?php
+		$a6_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
-		$langF = $attr6_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr6_text);
+?><<?php echo $tmp_tag ?> class="<?php echo $a6_class ?>" title="<?php echo $a6_title ?>"><?php
+		$langF = $a6_escape?'langHtml':'lang';
+		$tmp_text = $langF($a6_text);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  $attr5_class='help';  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr5_class))
-			$attr5_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
-		$attr5_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?> class="<?php   echo $attr5_class   ?>" <?php
-?>><?php unset($attr5_class); ?><?php  $attr6_class='text';  $attr6_text='GLOBAL_VALUE';  $attr6_escape=true;  ?><?php
-		$attr6_title = '';
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_text,$a6_escape,$a6_cut) ?></td><?php $a5_class='help'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+ class="help"
+><?php unset($a5_class) ?><?php $a6_class='text';$a6_text='GLOBAL_VALUE';$a6_escape=true;$a6_cut='both'; ?><?php
+		$a6_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
-		$langF = $attr6_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr6_text);
+?><<?php echo $tmp_tag ?> class="<?php echo $a6_class ?>" title="<?php echo $a6_title ?>"><?php
+		$langF = $a6_escape?'langHtml':'lang';
+		$tmp_text = $langF($a6_text);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  $attr5_class='help';  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr5_class))
-			$attr5_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
-		$attr5_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?> class="<?php   echo $attr5_class   ?>" <?php
-?>><?php unset($attr5_class); ?><?php  $attr6_class='text';  $attr6_text='GLOBAL_STATE';  $attr6_escape=true;  ?><?php
-		$attr6_title = '';
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_text,$a6_escape,$a6_cut) ?></td><?php $a5_class='help'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+ class="help"
+><?php unset($a5_class) ?><?php $a6_class='text';$a6_text='GLOBAL_STATE';$a6_escape=true;$a6_cut='both'; ?><?php
+		$a6_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
-		$langF = $attr6_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr6_text);
+?><<?php echo $tmp_tag ?> class="<?php echo $a6_class ?>" title="<?php echo $a6_title ?>"><?php
+		$langF = $a6_escape?'langHtml':'lang';
+		$tmp_text = $langF($a6_text);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  $attr5_class='help';  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr5_class))
-			$attr5_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr5_rowspan) )
-		$attr5_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?> class="<?php   echo $attr5_class   ?>" <?php
-?>><?php unset($attr5_class); ?><?php  $attr6_class='text';  $attr6_text='GLOBAL_ACTION';  $attr6_escape=true;  ?><?php
-		$attr6_title = '';
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_text,$a6_escape,$a6_cut) ?></td><?php $a5_class='help'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+ class="help"
+><?php unset($a5_class) ?><?php $a6_class='text';$a6_text='GLOBAL_ACTION';$a6_escape=true;$a6_cut='both'; ?><?php
+		$a6_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr6_class ?>" title="<?php echo $attr6_title ?>"><?php
-		$langF = $attr6_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr6_text);
+?><<?php echo $tmp_tag ?> class="<?php echo $a6_class ?>" title="<?php echo $a6_title ?>"><?php
+		$langF = $a6_escape?'langHtml':'lang';
+		$tmp_text = $langF($a6_text);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr6_class);unset($attr6_text);unset($attr6_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  $attr4_empty='el';  ?><?php 
-	if	( !isset($$attr4_empty) )
-		$attr4_tmp_exec = empty($attr4_empty);
-	elseif	( is_array($$attr4_empty) )
-		$attr4_tmp_exec = (count($$attr4_empty)==0);
-	elseif	( is_bool($$attr4_empty) )
-		$attr4_tmp_exec = true;
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_text,$a6_escape,$a6_cut) ?></td></tr><?php $a4_empty='el'; ?><?php 
+	if	( !isset($$a4_empty) )
+		$a4_tmp_exec = empty($a4_empty);
+	elseif	( is_array($$a4_empty) )
+		$a4_tmp_exec = (count($$a4_empty)==0);
+	elseif	( is_bool($$a4_empty) )
+		$a4_tmp_exec = true;
 	else
-		$attr4_tmp_exec = empty( $$attr4_empty );
-	$attr4_tmp_last_exec = $attr4_tmp_exec;
-	if	( $attr4_tmp_exec )
+		$a4_tmp_exec = empty( $$a4_empty );
+	$a4_tmp_last_exec = $a4_tmp_exec;
+	if	( $a4_tmp_exec )
 	{
 ?>
-<?php unset($attr4_empty); ?><?php  ?><?php
-	$attr5_tmp_class='';
-	$attr5_last_class = $attr5_tmp_class;
-	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
-?><?php  ?><?php  $attr6_colspan='8';  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?> colspan="<?php echo $attr6_colspan ?>" <?php
-?>><?php unset($attr6_colspan); ?><?php  $attr7_class='text';  $attr7_text='GLOBAL_NOT_FOUND';  $attr7_escape=true;  ?><?php
-		$attr7_title = '';
+<?php unset($a4_empty) ?><?php
+	$row_idx++;
+	$column_idx = 0;
+?>
+<tr
+>
+<?php $a6_colspan='8'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+ colspan="8"
+><?php unset($a6_colspan) ?><?php $a7_class='text';$a7_text='GLOBAL_NOT_FOUND';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-		$langF = $attr7_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr7_text);
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = $langF($a7_text);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_text);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr4_list='el';  $attr4_extract=true;  $attr4_key='list_key';  $attr4_value='list_value';  ?><?php
-	$attr4_list_tmp_key   = $attr4_key;
-	$attr4_list_tmp_value = $attr4_value;
-	$attr4_list_extract   = $attr4_extract;
-	unset($attr4_key);
-	unset($attr4_value);
-	if	( !isset($$attr4_list) || !is_array($$attr4_list) )
-		$$attr4_list = array();
-	foreach( $$attr4_list as $$attr4_list_tmp_key => $$attr4_list_tmp_value )
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_text,$a7_escape,$a7_cut) ?></td></tr><?php } ?><?php $a4_list='el';$a4_extract=true;$a4_key='list_key';$a4_value='list_value'; ?><?php
+	$a4_list_tmp_key   = $a4_key;
+	$a4_list_tmp_value = $a4_value;
+	$a4_list_extract   = $a4_extract;
+	unset($a4_key);
+	unset($a4_value);
+	if	( !isset($$a4_list) || !is_array($$a4_list) )
+		$$a4_list = array();
+	foreach( $$a4_list as $$a4_list_tmp_key => $$a4_list_tmp_value )
 	{
-		if	( $attr4_list_extract )
+		if	( $a4_list_extract )
 		{
-			if	( !is_array($$attr4_list_tmp_value) )
+			if	( !is_array($$a4_list_tmp_value) )
 			{
-				print_r($$attr4_list_tmp_value);
-				die( 'not an array at key: '.$$attr4_list_tmp_key );
+				print_r($$a4_list_tmp_value);
+				die( 'not an array at key: '.$$a4_list_tmp_key );
 			}
-			extract($$attr4_list_tmp_value);
+			extract($$a4_list_tmp_value);
 		}
-?><?php unset($attr4_list);unset($attr4_extract);unset($attr4_key);unset($attr4_value); ?><?php  ?><?php
-	$attr5_tmp_class='';
-	$attr5_last_class = $attr5_tmp_class;
-	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
-?><?php  ?><?php  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?>><?php  ?><?php  $attr7_class='text';  $attr7_var='lfd_nr';  $attr7_escape=true;  ?><?php
-		$attr7_title = '';
+?><?php unset($a4_list,$a4_extract,$a4_key,$a4_value) ?><?php $a5_class='data'; ?><?php
+	$row_idx++;
+	$column_idx = 0;
+?>
+<tr
+ class="data"
+>
+<?php unset($a5_class) ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a7_class='text';$a7_var='lfd_nr';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-		$langF = $attr7_escape?'langHtml':'lang';
-		$tmp_text = isset($$attr7_var)?$$attr7_var:$langF('UNKNOWN');
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = isset($$a7_var)?$$a7_var:$langF('UNKNOWN');
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_var);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?>><?php  ?><?php  $attr7_present='compareid';  ?><?php 
-	$attr7_tmp_exec = isset($$attr7_present);
-	$attr7_tmp_last_exec = $attr7_tmp_exec;
-	if	( $attr7_tmp_exec )
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_var,$a7_escape,$a7_cut) ?></td><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a7_present='compareid'; ?><?php 
+	$a7_tmp_exec = isset($$a7_present);
+	$a7_tmp_last_exec = $a7_tmp_exec;
+	if	( $a7_tmp_exec )
 	{
 ?>
-<?php unset($attr7_present); ?><?php  $attr8_readonly=false;  $attr8_name='compareid';  $attr8_value=$id;  $attr8_default=false;  $attr8_prefix='';  $attr8_suffix='';  $attr8_class='';  $attr8_onchange='';  ?><?php
-		if ($this->isEditable() && !$this->isEditMode()) $attr8_readonly=true;
-		if	( isset($$attr8_name)  )
-			$attr8_tmp_default = $$attr8_name;
-		elseif ( isset($attr8_default) )
-			$attr8_tmp_default = $attr8_default;
+<?php unset($a7_present) ?><?php $a8_readonly=false;$a8_name='compareid';$a8_value=$id;$a8_default=false;$a8_prefix='';$a8_suffix='';$a8_class='';$a8_onchange=''; ?><?php
+		if ($this->isEditable() && !$this->isEditMode()) $a8_readonly=true;
+		if	( isset($$a8_name)  )
+			$a8_tmp_default = $$a8_name;
+		elseif ( isset($a8_default) )
+			$a8_tmp_default = $a8_default;
 		else
-			$attr8_tmp_default = '';
- ?><input onclick="<?php echo $attr8_name.'_'.$attr8_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $attr8_name.'_'.$attr8_value ?>"  name="<?php echo $attr8_prefix.$attr8_name ?>"<?php if ( $attr8_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr8_value ?>" <?php if($attr8_value==$attr8_tmp_default) echo 'checked="checked"' ?><?php if (in_array($attr8_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
-<?php /* #END-IF# */ ?><?php unset($attr8_readonly);unset($attr8_name);unset($attr8_value);unset($attr8_default);unset($attr8_prefix);unset($attr8_suffix);unset($attr8_class);unset($attr8_onchange); ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?>><?php  ?><?php  $attr7_present='compareid';  ?><?php 
-	$attr7_tmp_exec = isset($$attr7_present);
-	$attr7_tmp_last_exec = $attr7_tmp_exec;
-	if	( $attr7_tmp_exec )
+			$a8_tmp_default = '';
+ ?><input onclick="<?php echo $a8_name.'_'.$a8_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $a8_name.'_'.$a8_value ?>"  name="<?php echo $a8_prefix.$a8_name ?>"<?php if ( $a8_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a8_value ?>" <?php if($a8_value==$a8_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a8_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+<?php /* #END-IF# */ ?><?php unset($a8_readonly,$a8_name,$a8_value,$a8_default,$a8_prefix,$a8_suffix,$a8_class,$a8_onchange) ?><?php } ?></td><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a7_present='compareid'; ?><?php 
+	$a7_tmp_exec = isset($$a7_present);
+	$a7_tmp_last_exec = $a7_tmp_exec;
+	if	( $a7_tmp_exec )
 	{
 ?>
-<?php unset($attr7_present); ?><?php  $attr8_readonly=false;  $attr8_name='withid';  $attr8_value=$id;  $attr8_default=false;  $attr8_prefix='';  $attr8_suffix='';  $attr8_class='';  $attr8_onchange='';  ?><?php
-		if ($this->isEditable() && !$this->isEditMode()) $attr8_readonly=true;
-		if	( isset($$attr8_name)  )
-			$attr8_tmp_default = $$attr8_name;
-		elseif ( isset($attr8_default) )
-			$attr8_tmp_default = $attr8_default;
+<?php unset($a7_present) ?><?php $a8_readonly=false;$a8_name='withid';$a8_value=$id;$a8_default=false;$a8_prefix='';$a8_suffix='';$a8_class='';$a8_onchange=''; ?><?php
+		if ($this->isEditable() && !$this->isEditMode()) $a8_readonly=true;
+		if	( isset($$a8_name)  )
+			$a8_tmp_default = $$a8_name;
+		elseif ( isset($a8_default) )
+			$a8_tmp_default = $a8_default;
 		else
-			$attr8_tmp_default = '';
- ?><input onclick="<?php echo $attr8_name.'_'.$attr8_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $attr8_name.'_'.$attr8_value ?>"  name="<?php echo $attr8_prefix.$attr8_name ?>"<?php if ( $attr8_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $attr8_value ?>" <?php if($attr8_value==$attr8_tmp_default) echo 'checked="checked"' ?><?php if (in_array($attr8_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
-<?php /* #END-IF# */ ?><?php unset($attr8_readonly);unset($attr8_name);unset($attr8_value);unset($attr8_default);unset($attr8_prefix);unset($attr8_suffix);unset($attr8_class);unset($attr8_onchange); ?><?php  ?><?php } ?><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?>><?php  ?><?php  $attr7_date=$date;  ?><?php	
+			$a8_tmp_default = '';
+ ?><input onclick="<?php echo $a8_name.'_'.$a8_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $a8_name.'_'.$a8_value ?>"  name="<?php echo $a8_prefix.$a8_name ?>"<?php if ( $a8_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a8_value ?>" <?php if($a8_value==$a8_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a8_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+<?php /* #END-IF# */ ?><?php unset($a8_readonly,$a8_name,$a8_value,$a8_default,$a8_prefix,$a8_suffix,$a8_class,$a8_onchange) ?><?php } ?></td><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a7_date=$date; ?><?php	
     global $conf;
-	$time = $attr7_date;
+	$time = $a7_date;
 	if	( isset($_COOKIE['or_timezone_offset']) )
 	{
 		$time -= (int)date('Z');
@@ -574,211 +472,170 @@
 			echo $jahre.' '.lang('GLOBAL_YEARS');
 		echo '</span>';
 	}
-?><?php unset($attr7_date); ?><?php  ?></td><?php  ?><?php  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?>><?php  ?><?php  $attr7_class='text';  $attr7_var='user';  $attr7_escape=true;  ?><?php
-		$attr7_title = '';
+?><?php unset($a7_date) ?></td><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a7_class='text';$a7_var='user';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-		$langF = $attr7_escape?'langHtml':'lang';
-		$tmp_text = isset($$attr7_var)?$$attr7_var:$langF('UNKNOWN');
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = isset($$a7_var)?$$a7_var:$langF('UNKNOWN');
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_var);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?>><?php  ?><?php  $attr7_class='text';  $attr7_var='value';  $attr7_escape=true;  ?><?php
-		$attr7_title = '';
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_var,$a7_escape,$a7_cut) ?></td><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a7_class='text';$a7_var='value';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr7_class ?>" title="<?php echo $attr7_title ?>"><?php
-		$langF = $attr7_escape?'langHtml':'lang';
-		$tmp_text = isset($$attr7_var)?$$attr7_var:$langF('UNKNOWN');
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = isset($$a7_var)?$$a7_var:$langF('UNKNOWN');
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr7_class);unset($attr7_var);unset($attr7_escape); ?><?php  ?></td><?php  ?><?php  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?>><?php  ?><?php  $attr7_true=$public;  ?><?php 
-	if	(gettype($attr7_true) === '' && gettype($attr7_true) === '1')
-		$attr7_tmp_exec = $$attr7_true == true;
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_var,$a7_escape,$a7_cut) ?></td><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a7_true=$public; ?><?php 
+	if	(gettype($a7_true) === '' && gettype($a7_true) === '1')
+		$a7_tmp_exec = $$a7_true == true;
 	else
-		$attr7_tmp_exec = $attr7_true == true;
-	$attr7_tmp_last_exec = $attr7_tmp_exec;
-	if	( $attr7_tmp_exec )
+		$a7_tmp_exec = $a7_true == true;
+	$a7_tmp_last_exec = $a7_tmp_exec;
+	if	( $a7_tmp_exec )
 	{
 ?>
-<?php unset($attr7_true); ?><?php  $attr8_class='text';  $attr8_key='GLOBAL_PUBLIC';  $attr8_escape=true;  $attr8_type='strong';  ?><?php
-		$attr8_title = '';
+<?php unset($a7_true) ?><?php $a8_class='text';$a8_key='GLOBAL_PUBLIC';$a8_escape=true;$a8_type='strong';$a8_cut='both'; ?><?php
+		$a8_title = '';
 		$tmp_tag = 'strong';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
-		$langF = $attr8_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr8_key);
+?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
+		$langF = $a8_escape?'langHtml':'lang';
+		$tmp_text = $langF($a8_key);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_key);unset($attr8_escape);unset($attr8_type); ?><?php  ?><?php } ?><?php  ?><?php  ?><?php if (!$attr7_tmp_last_exec) { ?>
-<?php  ?><?php  $attr8_present='releaseUrl';  ?><?php 
-	$attr8_tmp_exec = isset($$attr8_present);
-	$attr8_tmp_last_exec = $attr8_tmp_exec;
-	if	( $attr8_tmp_exec )
+?></<?php echo $tmp_tag ?>><?php unset($a8_class,$a8_key,$a8_escape,$a8_type,$a8_cut) ?><?php } ?><?php if (!$a7_tmp_last_exec) { ?>
+<?php $a8_present='releaseUrl'; ?><?php 
+	$a8_tmp_exec = isset($$a8_present);
+	$a8_tmp_last_exec = $a8_tmp_exec;
+	if	( $a8_tmp_exec )
 	{
 ?>
-<?php unset($attr8_present); ?><?php  $attr9_title=lang('GLOBAL_RELEASE_DESC');  $attr9_target='_self';  $attr9_url=$releaseUrl;  $attr9_class='';  ?><?php
+<?php unset($a8_present) ?><?php $a9_title=lang('GLOBAL_RELEASE_DESC');$a9_target='_self';$a9_url=$releaseUrl;$a9_class=''; ?><?php
 	$params = array();
 	$tmp_url = '';
-		$tmp_url = $attr9_url;
-?><a<?php if (isset($attr9_name)) echo ' name="'.$attr9_name.'"'; else echo ' href="'.$tmp_url.(isset($attr9_anchor)?'#'.$attr9_anchor:'').'"' ?> class="<?php echo $attr9_class ?>" target="<?php echo $attr9_target ?>"<?php if (isset($attr9_accesskey)) echo ' accesskey="'.$attr9_accesskey.'"' ?>  title="<?php echo encodeHtml($attr9_title) ?>"><?php unset($attr9_title);unset($attr9_target);unset($attr9_url);unset($attr9_class); ?><?php  $attr10_class='text';  $attr10_key='GLOBAL_RELEASE';  $attr10_escape=true;  $attr10_type='strong';  ?><?php
-		$attr10_title = '';
+		$tmp_url = $a9_url;
+?><a<?php if (isset($a9_name)) echo ' name="'.$a9_name.'"'; else echo ' href="'.$tmp_url.(isset($a9_anchor)?'#'.$a9_anchor:'').'"' ?> class="<?php echo $a9_class ?>" target="<?php echo $a9_target ?>"<?php if (isset($a9_accesskey)) echo ' accesskey="'.$a9_accesskey.'"' ?>  title="<?php echo encodeHtml($a9_title) ?>"><?php unset($a9_title,$a9_target,$a9_url,$a9_class) ?><?php $a10_class='text';$a10_key='GLOBAL_RELEASE';$a10_escape=true;$a10_type='strong';$a10_cut='both'; ?><?php
+		$a10_title = '';
 		$tmp_tag = 'strong';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
-		$langF = $attr10_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr10_key);
+?><<?php echo $tmp_tag ?> class="<?php echo $a10_class ?>" title="<?php echo $a10_title ?>"><?php
+		$langF = $a10_escape?'langHtml':'lang';
+		$tmp_text = $langF($a10_key);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_key);unset($attr10_escape);unset($attr10_type); ?><?php  ?></a><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php if (!$attr8_tmp_last_exec) { ?>
-<?php  ?><?php  $attr9_class='text';  $attr9_key='GLOBAL_INACTIVE';  $attr9_escape=true;  $attr9_type='emphatic';  ?><?php
-		$attr9_title = '';
+?></<?php echo $tmp_tag ?>><?php unset($a10_class,$a10_key,$a10_escape,$a10_type,$a10_cut) ?></a><?php } ?><?php if (!$a8_tmp_last_exec) { ?>
+<?php $a9_class='text';$a9_key='GLOBAL_INACTIVE';$a9_escape=true;$a9_type='emphatic';$a9_cut='both'; ?><?php
+		$a9_title = '';
 		$tmp_tag = 'em';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr9_class ?>" title="<?php echo $attr9_title ?>"><?php
-		$langF = $attr9_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr9_key);
+?><<?php echo $tmp_tag ?> class="<?php echo $a9_class ?>" title="<?php echo $a9_title ?>"><?php
+		$langF = $a9_escape?'langHtml':'lang';
+		$tmp_text = $langF($a9_key);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr9_class);unset($attr9_key);unset($attr9_escape);unset($attr9_type); ?><?php  ?><?php }
-unset($attr7_tmp_last_exec) ?><?php  ?><?php  ?><?php }
-unset($attr6_tmp_last_exec) ?><?php  ?><?php  ?></td><?php  ?><?php  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?>><?php  ?><?php  $attr7_true=$active;  ?><?php 
-	if	(gettype($attr7_true) === '' && gettype($attr7_true) === '1')
-		$attr7_tmp_exec = $$attr7_true == true;
+?></<?php echo $tmp_tag ?>><?php unset($a9_class,$a9_key,$a9_escape,$a9_type,$a9_cut) ?><?php }
+unset($a7_tmp_last_exec) ?><?php }
+unset($a6_tmp_last_exec) ?></td><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a7_true=$active; ?><?php 
+	if	(gettype($a7_true) === '' && gettype($a7_true) === '1')
+		$a7_tmp_exec = $$a7_true == true;
 	else
-		$attr7_tmp_exec = $attr7_true == true;
-	$attr7_tmp_last_exec = $attr7_tmp_exec;
-	if	( $attr7_tmp_exec )
+		$a7_tmp_exec = $a7_true == true;
+	$a7_tmp_last_exec = $a7_tmp_exec;
+	if	( $a7_tmp_exec )
 	{
 ?>
-<?php unset($attr7_true); ?><?php  $attr8_class='text';  $attr8_key='GLOBAL_ACTIVE';  $attr8_escape=true;  $attr8_type='emphatic';  ?><?php
-		$attr8_title = '';
+<?php unset($a7_true) ?><?php $a8_class='text';$a8_key='GLOBAL_ACTIVE';$a8_escape=true;$a8_type='emphatic';$a8_cut='both'; ?><?php
+		$a8_title = '';
 		$tmp_tag = 'em';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr8_class ?>" title="<?php echo $attr8_title ?>"><?php
-		$langF = $attr8_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr8_key);
+?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
+		$langF = $a8_escape?'langHtml':'lang';
+		$tmp_text = $langF($a8_key);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr8_class);unset($attr8_key);unset($attr8_escape);unset($attr8_type); ?><?php  ?><?php } ?><?php  ?><?php  ?><?php if (!$attr7_tmp_last_exec) { ?>
-<?php  ?><?php  $attr8_present='useUrl';  ?><?php 
-	$attr8_tmp_exec = isset($$attr8_present);
-	$attr8_tmp_last_exec = $attr8_tmp_exec;
-	if	( $attr8_tmp_exec )
+?></<?php echo $tmp_tag ?>><?php unset($a8_class,$a8_key,$a8_escape,$a8_type,$a8_cut) ?><?php } ?><?php if (!$a7_tmp_last_exec) { ?>
+<?php $a8_present='useUrl'; ?><?php 
+	$a8_tmp_exec = isset($$a8_present);
+	$a8_tmp_last_exec = $a8_tmp_exec;
+	if	( $a8_tmp_exec )
 	{
 ?>
-<?php unset($attr8_present); ?><?php  $attr9_title=lang('GLOBAL_USE_DESC');  $attr9_target='_self';  $attr9_url=$useUrl;  $attr9_class='';  ?><?php
+<?php unset($a8_present) ?><?php $a9_title=lang('GLOBAL_USE_DESC');$a9_target='_self';$a9_url=$useUrl;$a9_class=''; ?><?php
 	$params = array();
 	$tmp_url = '';
-		$tmp_url = $attr9_url;
-?><a<?php if (isset($attr9_name)) echo ' name="'.$attr9_name.'"'; else echo ' href="'.$tmp_url.(isset($attr9_anchor)?'#'.$attr9_anchor:'').'"' ?> class="<?php echo $attr9_class ?>" target="<?php echo $attr9_target ?>"<?php if (isset($attr9_accesskey)) echo ' accesskey="'.$attr9_accesskey.'"' ?>  title="<?php echo encodeHtml($attr9_title) ?>"><?php unset($attr9_title);unset($attr9_target);unset($attr9_url);unset($attr9_class); ?><?php  $attr10_class='text';  $attr10_key='GLOBAL_USE';  $attr10_escape=true;  ?><?php
-		$attr10_title = '';
+		$tmp_url = $a9_url;
+?><a<?php if (isset($a9_name)) echo ' name="'.$a9_name.'"'; else echo ' href="'.$tmp_url.(isset($a9_anchor)?'#'.$a9_anchor:'').'"' ?> class="<?php echo $a9_class ?>" target="<?php echo $a9_target ?>"<?php if (isset($a9_accesskey)) echo ' accesskey="'.$a9_accesskey.'"' ?>  title="<?php echo encodeHtml($a9_title) ?>"><?php unset($a9_title,$a9_target,$a9_url,$a9_class) ?><?php $a10_class='text';$a10_key='GLOBAL_USE';$a10_escape=true;$a10_cut='both'; ?><?php
+		$a10_title = '';
 		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $attr10_class ?>" title="<?php echo $attr10_title ?>"><?php
-		$langF = $attr10_escape?'langHtml':'lang';
-		$tmp_text = $langF($attr10_key);
+?><<?php echo $tmp_tag ?> class="<?php echo $a10_class ?>" title="<?php echo $a10_title ?>"><?php
+		$langF = $a10_escape?'langHtml':'lang';
+		$tmp_text = $langF($a10_key);
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($attr10_class);unset($attr10_key);unset($attr10_escape); ?><?php  ?></a><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?><?php }
-unset($attr6_tmp_last_exec) ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  $attr4_present='compareid';  ?><?php 
-	$attr4_tmp_exec = isset($$attr4_present);
-	$attr4_tmp_last_exec = $attr4_tmp_exec;
-	if	( $attr4_tmp_exec )
+?></<?php echo $tmp_tag ?>><?php unset($a10_class,$a10_key,$a10_escape,$a10_cut) ?></a><?php } ?><?php }
+unset($a6_tmp_last_exec) ?></td></tr><?php } ?><?php $a4_present='compareid'; ?><?php 
+	$a4_tmp_exec = isset($$a4_present);
+	$a4_tmp_last_exec = $a4_tmp_exec;
+	if	( $a4_tmp_exec )
 	{
 ?>
-<?php unset($attr4_present); ?><?php  ?><?php
-	$attr5_tmp_class='';
-	$attr5_last_class = $attr5_tmp_class;
-	echo Html::open_tag('tr',array('class'=>$attr5_tmp_class));
-?><?php  ?><?php  $attr6_class='act';  $attr6_colspan='8';  ?><?php
-	if( isset($column_class_idx) )
-	{
-	$column_class_idx++;
-	if ($column_class_idx > count($column_classes))
-		$column_class_idx=1;
-		$column_class=$column_classes[$column_class_idx-1];
-		if (empty($attr6_class))
-			$attr6_class=$column_class;
-	}
-	global $cell_column_nr;
-	$cell_column_nr++;
-	if	( isset($column_widths[$cell_column_nr-1]) && !isset($attr6_rowspan) )
-		$attr6_width=$column_widths[$cell_column_nr-1];
-?><td<?php
-?> class="<?php   echo $attr6_class   ?>" <?php
-?> colspan="<?php echo $attr6_colspan ?>" <?php
-?>><?php unset($attr6_class);unset($attr6_colspan); ?><?php  $attr7_type='ok';  $attr7_class='ok';  $attr7_value='ok';  $attr7_text='button_ok';  ?><?php
+<?php unset($a4_present) ?><?php
+	$row_idx++;
+	$column_idx = 0;
+?>
+<tr
+>
+<?php $a6_class='act';$a6_colspan='8'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+ class="act"
+ colspan="8"
+><?php unset($a6_class,$a6_colspan) ?><?php $a7_type='ok';$a7_class='ok';$a7_value='ok';$a7_text='button_ok'; ?><?php
 		if ($this->isEditable() && !$this->isEditMode())
-		$attr7_text = 'MODE_EDIT';
-		$attr7_type = 'submit';
+		$a7_text = 'MODE_EDIT';
+		$a7_type = 'submit';
 		if	( $this->isEditable() && readonly() )
-			$attr7_type = ''; // Knopf nicht anzeigen
-		$attr7_src  = '';
-	if	( !empty($attr7_type) ) {
-?><input type="<?php echo $attr7_type ?>"<?php if(isset($attr7_src)) { ?> src="<?php echo $image_dir.'icon_'.$attr7_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $attr7_value ?>" class="<?php echo $attr7_class ?>" title="<?php echo lang($attr7_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo langHtml($attr7_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr7_src)
+			$a7_type = ''; // Knopf nicht anzeigen
+		$a7_src  = '';
+	if	( !empty($a7_type) ) {
+?><input type="<?php echo $a7_type ?>"<?php if(isset($a7_src)) { ?> src="<?php echo $image_dir.'icon_'.$a7_src.IMG_ICON_EXT ?>"<?php } ?> name="<?php echo $a7_value ?>" class="ok" title="<?php echo lang($a7_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo langHtml($a7_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($a7_src)
 ?><?php } 
-?><?php unset($attr7_type);unset($attr7_class);unset($attr7_value);unset($attr7_text); ?><?php  ?></td><?php  ?><?php  ?></tr><?php  ?><?php  ?><?php } ?><?php  ?><?php  ?>      </table>
+?><?php unset($a7_type,$a7_class,$a7_value,$a7_text) ?></td></tr><?php } ?>      </table>
 	</td>
   </tr>
 </table>
@@ -790,6 +647,6 @@ unset($attr6_tmp_last_exec) ?><?php  ?><?php  ?></td><?php  ?><?php  ?></tr><?ph
 <?php $dur = time()-START_TIME;
       echo floor($dur/60).':'.str_pad($dur%60,2,'0',STR_PAD_LEFT); ?></small></center>
 <?php } ?>
-<?php  ?><?php  ?></form>
-<?php  ?><?php  ?></body>
-</html><?php  ?>
+</form>
+</body>
+</html>
