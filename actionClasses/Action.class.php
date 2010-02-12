@@ -146,7 +146,7 @@ class Action
 			case 'alphanum':
 			case 'abc123':
 				$value  = $REQ[ $varName ];
-				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-');
+				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-!?%&/()');
 				
 			case 'mail':
 				$value  = $REQ[ $varName ];
