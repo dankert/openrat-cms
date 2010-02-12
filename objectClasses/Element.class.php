@@ -312,7 +312,10 @@ class Element
 	 */
 	function setPrefix( $prefix )
 	{
-		list( $oldprefix,$name ) = explode('%',$this->name.'%');
+		if	( strrpos($this->name,'%') === FALSE )
+			$name = $this->name;
+		else
+			list( $oldprefix,$name ) = explode('%',$this->name.'%');
 		
 		$this->name = $prefix.'%'.$name;
 	}
