@@ -6,16 +6,6 @@
 ;
 
 
-
-
-
-
-
-
-
-
-
-
 ACCESSKEY_MAIN_ADMINISTRATION=S
 ACCESSKEY_MAIN_CREATE=N
 ACCESSKEY_MAIN_EDIT=B
@@ -33,22 +23,34 @@ ACCESSKEY_WINDOW_ADDEL=G
 ACCESSKEY_WINDOW_ADD=G
 ACCESSKEY_WINDOW_ADMINISTRATION=A
 ACCESSKEY_WINDOW_ADVANCED=N
+ACCESSKEY_WINDOW_APPLICATIONS=A
+ACCESSKEY_WINDOW_ARCHIVE=A
+ACCESSKEY_WINDOW_CONTENT=I
+ACCESSKEY_WINDOW_CREATEFILE=D
+ACCESSKEY_WINDOW_CREATEFOLDER=O
+ACCESSKEY_WINDOW_CREATELINK=L
+ACCESSKEY_WINDOW_CREATE=N
+ACCESSKEY_WINDOW_CREATEPAGE=P
 ACCESSKEY_WINDOW_EDIT=N
 ACCESSKEY_WINDOW_EL=T
+ACCESSKEY_WINDOW_EXPORT=E
 ACCESSKEY_WINDOW_HELP=H
+ACCESSKEY_WINDOW_IMPORT=I
+ACCESSKEY_WINDOW_LINK=L
 ACCESSKEY_WINDOW_LISTING=G
+ACCESSKEY_WINDOW_LOGOUT=L
 ACCESSKEY_WINDOW_MAINTANANCE=W
 ACCESSKEY_WINDOW_ORDER=R
 ACCESSKEY_WINDOW_PASSWORD=K
 ACCESSKEY_WINDOW_PROJECTMENU=P
+ACCESSKEY_WINDOW_PROP=E
+ACCESSKEY_WINDOW_PUB=Ö
 ACCESSKEY_WINDOW_REGISTER=R
 ACCESSKEY_WINDOW_REMOVE=F
 ACCESSKEY_WINDOW_RIGHTS=H
 ACCESSKEY_WINDOW_SELECT=W
 ACCESSKEY_WINDOW_SHOWLOGIN=A
 ACCESSKEY_WINDOW_SHOW=Z
-ACCESSKEY_WINDOW_PROP=E
-ACCESSKEY_WINDOW_CONTENT=I
 ACL = "Berechtigungen"
 ACL_CREATE_FILE_ABBREV = "DAT"
 ACL_CREATE_FILE = "Datei hochladen"
@@ -195,8 +197,8 @@ EL_INSERT_INLINE="Internes Einfügen bei Veröffentlichung"
 EL_INSERT_SSI="Einfügen per Serverside-Include (SSI)"
 EL_LINK_DESC = "Ein Link ist eine Verknüpfung mit einer Seite oder einer Datei"
 EL_LINK_FILE = "Link auf Dateien"
-EL_LINK_IMAGE = "Link auf Bilder"
 EL_LINK_IMAGE_DATA_URI = "Link auf Bilder mit Data-URI"
+EL_LINK_IMAGE = "Link auf Bilder"
 EL_LINKINFO_CREATE_USER_DESC = "Erstellungsautor: Beschreibung"
 EL_LINKINFO_CREATE_USER_FULLNAME = "Erstellungsautor: Voller Name"
 EL_LINKINFO_CREATE_USER_MAIL = "Erstellungsautor: E-Mail"
@@ -491,6 +493,7 @@ HELP = "Hilfe"
 HELP_LANGUAGE_DELETE = "Löschen dieser Sprache, <strong>Achtung</strong>, alle Seiteninhalte in dieser Sprache werden unwiederbringlich gelöscht!"
 HTTP_REALM="Bitte anmelden"
 HTTP_URL = "HTTP-Url"
+IMAGE = "Bild"
 IMAGE_NEW_SIZE = "Neue Bildgröße"
 IMAGE_OLD_SIZE = "Bisherige Bildgröße"
 INHERIT_RIGHTS = "Berechtigungen in allen untergeordneten Objekten zurücksetzen und die vererbbaren Berechtigungen dieses Ordners dort anwenden."
@@ -527,8 +530,8 @@ MAIL_TEXT_REGISTER_COMMIT_CODE ="Guten Tag,;;Sie oder jemand anderes möchte sich
 MAIL_TEXT_USER_MAIL = "Guten Tag {name},;;Ihre Zugangsdaten lauten wie folgt:;;Login: {username};Kennwort: {password};;Notieren Sie sich das Kennwort gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank."
 MENU_ADD_DESC = "Neu hinzufügen"
 MENU_ADD = Neu
-MENU_CONTENT =Inhalt
 MENU_CONTENT_DESC = "Inhalt"
+MENU_CONTENT =Inhalt
 MENU_CREATE_DESC = "In diesem Ordner ein neues Objekt anlegen"
 MENU_CREATE_KEY = N  
 MENU_CREATE = Neu
@@ -750,10 +753,10 @@ MENU_PW = Kennwort
 MENU_RIGHTS = Berechtigungen  
 MENU_RIGHTS_DESC = "Berechtigungen anzeigen und bearbeiten"  
 MENU_RIGHTS_KEY = X  
-MENU_SEARCH_CONTENT = "Inhalt"
 MENU_SEARCH_CONTENT_DESC = "Nach einem Inhalt suchen"
-MENU_SEARCH_PROP = "Eigenschaft"
+MENU_SEARCH_CONTENT = "Inhalt"
 MENU_SEARCH_PROP_DESC = "Nach einer Eigenschaft suchen"
+MENU_SEARCH_PROP = "Eigenschaft"
 MENU_SHOW_DESC = "Die Vorschau anzeigen"
 MENU_SHOW_KEY = A
 MENU_SHOW = "Vorschau"
@@ -871,6 +874,7 @@ NOTICE_DONE ="Der Vorgang wurde ausgeführt."
 NOTICE_ERROR = "Bei der Aktion trat ein Fehler auf."
 NOTICE_GROUPS_MAY_CONFLICT_WITH_LDAP="Die in der Benutzerverwaltung eingetragenen Gruppenzugehörigkeiten stehen möglicherweise in Konflikt mit den Gruppenzugehörigkeiten aus dem Verzeichnisdienst. Beim Login ueber den Verzeichnisdienst werden die hier eingetragenenen Gruppenzugehörigkeiten überschrieben."
 NOTICE_IMAGE_RESIZED = "Das Bild wurde geändert."
+NOTICE_IMAGE_RESIZING_NOT_AVAILABLE="Das Verändern der Bildgröße ist momentan nicht möglich. Bitte stellen Sie sicher, dass die GD-Bibliothek installiert ist."
 NOTICE_IMPORTED ="Datei wurde importiert."
 NOTICE_INPUT_NEW_IMAGE_SIZE = "Bitte geben Sie die neue Bildgröße an, entweder Größenfaktor oder Breite oder Höhe."
 NOTICE_LINKED ="Verknüpfung angelegt."
@@ -930,6 +934,8 @@ PAGE_TEMPLATE_OLD = "Bisherige Vorlage"
 PASSWORD_CODE =Code für Kennwortanforderung
 PASSWORD_CODE_HELP =Sie haben per E-Mail einen Zahlencode erhalten. Diesen tragen Sie bitte jetzt in das Eingabefeld ein.
 PREFERENCES = Einstellungen
+PROJECT_CHECK_FILES="Integritätsprüfung der Ordnerstruktur"
+PROJECT_CHECK_LIMIT="Entfernen von alten Inhalten aus dem Archiv"
 PROJECT_CMD_AFTER_PUBLISH_DESC = "Dieses Kommando wird auf dem Server nach Beendigung einer Generierung ausgeführt.<br>Dabei wird die PHP-Funktion <tt>exec()</tt>verwendet. Es wird nicht <tt>escapeshellcmd()</tt> aufgerufen!"
 PROJECT_CMD_AFTER_PUBLISH = "Systembefehl nach Generierung"
 PROJECT_CONTENT_NEGOTIATION_DESC = "Mit Content-Negotiation kann ein Webserver die korrekte Sprachversion ausliefern. Die URLs werden um das Sprachkürzel gekürzt.<br/>Ihr Webserver muss das entsprechende Modul geladen haben. Wenn Sie unsicher sind, lassen Sie diese Option deaktiviert." 
@@ -961,8 +967,9 @@ SEARCH="Suche"
 SEARCH_TEMPLATE = "Suche nach Vorlage"
 SESSION_EXPIRED="Ihre Sitzung ist abgelaufen oder Ihnen fehlen Rechte zur Ausfuehrung dieser Aktion. Bitte melden Sie sich erneut an."
 SETTING_ALWAYS_EDIT = "Falls möglich, ein Formular sofort zum Bearbeiten öffnen"
-SETTING_IGNORE_OK_NOTICES = "Erfolgsmeldungen (OK) nicht anzeigen"
 SETTING="Einstellung"
+SETTING_IGNORE_OK_NOTICES = "Erfolgsmeldungen (OK) nicht anzeigen"
+START_DESC="Start"
 START = "Start"
 TEMPLATE_DELETE_DESC = "Löschen der Seitenvorlage incl. Platzhalter"
 TEMPLATE_ELEMENT = Platzhalter
@@ -1047,6 +1054,3 @@ USER_USERNAME_DESC = "Mit diesem Namen meldet sich der Benutzer am System an"
 USER_YOURPROFILE = "Persönliche Einstellungen"
 VALUE = Inhalt
 WEEK="Woche"
-PROJECT_CHECK_FILES="Integritätsprüfung der Ordnerstruktur"
-PROJECT_CHECK_LIMIT="Entfernen von alten Inhalten aus dem Archiv"
-NOTICE_IMAGE_RESIZING_NOT_AVAILABLE="Das Verändern der Bildgröße ist momentan nicht möglich. Bitte stellen Sie sicher, dass die GD-Bibliothek installiert ist."
