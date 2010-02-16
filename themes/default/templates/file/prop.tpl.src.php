@@ -24,6 +24,20 @@ page
 					inputarea name:description class:description
 
 			row
+				cell
+				cell
+					link action:folder subaction:select id:var:parentid var1:obj{objectid} value1:1 var2:type value2:copy
+						text key:COPY
+					text raw:,_
+					link action:folder subaction:select id:var:parentid var1:obj{objectid} value1:1 var2:type value2:move
+						text key:MOVE
+					text raw:,_
+					link action:folder subaction:select id:var:parentid var1:obj{objectid} value1:1 var2:type value2:link
+						text key:LINK
+					text raw:,_
+					link action:folder subaction:select id:var:parentid var1:obj{objectid} value1:1 var2:type value2:delete
+						text key:DELETE
+			row
 				cell colspan:2
 					fieldset title:message:additional_info
 			if false:mode:edit
