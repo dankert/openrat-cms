@@ -332,10 +332,30 @@ class Action
 		$httpAccept = getenv('HTTP_ACCEPT');
 		$types = explode(',',$httpAccept);
 		
+		if	( version_compare(PHP_VERSION, '4.3.0', '>=') ) 
+			Logger::trace('Output'."\n".print_r($this->templateVars,true));
+		
 		// Weitere Variablen anreichern.
 		$this->templateVars['session'] = array('name'=>session_name(),'id'=>session_id());
 		$this->templateVars['version'] = OR_VERSION;
 		
+		if	( sizeof($types)==1 && in_array('application/php-array',$types) || $this->getRequestVar('output')=='php-array' )
+		{
+			if	(version_compare(PHP_VERSION, '4.3.0', '<'))
+				Http::serverError('application/php-array is only available with PHP >= 4.3');
+				
+			header('Content-Type: application/php-array');
+			echo print_r($this->templateVars,true);
+			exit;
+		}
+
+		if	( sizeof($types)==1 && in_array('application/php-serialized',$types) || $this->getRequestVar('output')=='php' )
+		{
+			header('Content-Type: application/php-serialized');
+			serialize($this->templateVars);
+			exit;
+		}
+
 		if	( sizeof($types)==1 && in_array('application/json',$types) || $this->getRequestVar('output')=='json' )
 		{
 			require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
