@@ -58,12 +58,12 @@ class TitleAction extends Action
 		if	( Session::get('showtree') )
 		{
 			$this->setTemplateVar('showtree_url' ,Html::url('index','hidetree') );
-			$this->setTemplateVar('showtree_text',lang('GLOBAL_HIDETREE')       );
+			$this->setTemplateVar('showtree_text',lang('HIDETREE')       );
 		}
 		else
 		{
 			$this->setTemplateVar('showtree_url' ,Html::url('index','showtree') );
-			$this->setTemplateVar('showtree_text',lang('GLOBAL_SHOWTREE')       );
+			$this->setTemplateVar('showtree_text',lang('SHOWTREE')       );
 		}
 		
 		if	( config('interface','session','auto_extend') )

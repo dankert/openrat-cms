@@ -1142,7 +1142,7 @@ class IndexAction extends Action
 		{
 			if ( $project->projectid == PROJECTID_ADMIN )
 			{
-				$project->name = lang('GLOBAL_ADMINISTRATION');
+				$project->name = lang('ADMINISTRATION');
 				Session::setProject( $project );
 	
 				Session::setProjectLanguage( '' );

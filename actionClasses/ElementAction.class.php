@@ -518,7 +518,7 @@ class ElementAction extends Action
 								continue 2;
 						}
 
-						$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+						$objects[ $id ]  = lang( $o->getType() ).': ';
 						
 						if	( !$o->isRoot )
 						{

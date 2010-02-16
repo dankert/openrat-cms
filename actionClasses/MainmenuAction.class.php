@@ -462,7 +462,7 @@ class MainmenuAction extends Action
 		}
 		else
 		{
-			$this->setTemplateVar('text',lang('GLOBAL_PROJECTS') );
+			$this->setTemplateVar('text',lang('PROJECTS') );
 		}
 		
 		if	( count( Project::getAllProjectIds() ) > 0 )
@@ -522,7 +522,7 @@ class MainmenuAction extends Action
 	{
 		$this->addSubaction('prop'   );
 		$this->addSubaction('content');
-		$this->setTemplateVar('text',lang('GLOBAL_SEARCH'));
+		$this->setTemplateVar('text',lang('SEARCH'));
 		$this->setTemplateVar('windowMenu',$this->subActionList);
 		$this->setTemplateVar('param','objectid');
 	}

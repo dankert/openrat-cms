@@ -398,7 +398,7 @@ class PageelementAction extends Action
 			$f = new Folder( $o->parentid );
 			//					$f->load();
 
-			$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+			$objects[ $id ]  = lang( $o->getType() ).': ';
 			$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
 			$objects[ $id ] .= FILE_SEP.$o->name;
 			//			}
@@ -453,7 +453,7 @@ class PageelementAction extends Action
 				$f = new Folder( $o->parentid );
 				//					$f->load();
 
-				$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+				$objects[ $id ]  = lang( $o->getType() ).': ';
 				$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
 				$objects[ $id ] .= FILE_SEP.$o->name;
 				//			}
@@ -521,7 +521,7 @@ class PageelementAction extends Action
 				$f = new Folder( $id );
 				$f->load();
 					
-				$objects[ $id ]  = lang( 'GLOBAL_'.$f->getType() ).': ';
+				$objects[ $id ]  = lang( $f->getType() ).': ';
 				$objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
 			}
 

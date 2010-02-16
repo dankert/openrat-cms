@@ -310,7 +310,7 @@ class ObjectAction extends Action
 		$this->setTemplateVar('users'    ,User::listAll()   );
 		$this->setTemplateVar('groups'   ,Group::getAll()   );
 
-		$languages = array(0=>lang('GLOBAL_ALL_LANGUAGES'));
+		$languages = array(0=>lang('ALL_LANGUAGES'));
 		$languages += Language::getAll();
 		$this->setTemplateVar('languages',$languages       );
 		$this->setTemplateVar('objectid' ,$o->objectid     );

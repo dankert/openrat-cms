@@ -99,7 +99,7 @@ class SearchAction extends Action
 			if	( $o->desc != '' )
 				$resultList[$objectid]['desc'] = $o->desc;
 			else
-				$resultList[$objectid]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+				$resultList[$objectid]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 		}
 
 		foreach( $listTemplateIds as $templateid )
@@ -110,7 +110,7 @@ class SearchAction extends Action
 			$resultList['t'.$templateid]['url' ]  = Html::url('main','template',$templateid);
 			$resultList['t'.$templateid]['type'] = 'template';
 			$resultList['t'.$templateid]['name'] = $t->name;
-			$resultList['t'.$templateid]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+			$resultList['t'.$templateid]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 			$resultList['t'.$templateid]['lastchange_date'] = 0;
 		}
 

@@ -93,7 +93,7 @@ class ModelAction extends Action
 		if	( empty($model->name) )
 		{
 			// Name ist "Variante <id>"
-			$model->name = lang('GLOBAL_MODEL').' '.$model->modelid;
+			$model->name = lang('MODEL').' '.$model->modelid;
 			$model->save();
 		}
 	}

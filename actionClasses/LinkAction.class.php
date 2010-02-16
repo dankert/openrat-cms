@@ -183,7 +183,7 @@ class LinkAction extends ObjectAction
 				$folder = new Folder( $o->parentid );
 				$folder->linknames = false;
 				$folder->load();
-				$list[$oid]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+				$list[$oid]  = lang( $o->getType() ).': ';
 				$list[$oid] .= implode( FILE_SEP,$folder->parentObjectNames( false,true ) );
 				$list[$oid] .= FILE_SEP.$o->name;
 			}
