@@ -184,7 +184,8 @@ class Logger
 		$text = str_replace( '%action',str_pad($action,12),$text );
 		$text = str_replace( '%text'  ,$message,$text );
 		$text = str_replace( '%time'  ,date($conf['log']['date_format']),$text );
-
+		$text = str_replace( "\n"     ,"\n ",$text );
+		
 		// Schreiben in Logdatei
 		error_log( $text."\n",3,$filename );
 	}
