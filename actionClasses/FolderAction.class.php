@@ -446,7 +446,8 @@ class FolderAction extends ObjectAction
 				break;
 				
 			default:
-				exit("trouble");
+				$this->addValidationError('type');
+				return;
 				
 		} // switch
 		
@@ -537,7 +538,7 @@ class FolderAction extends ObjectAction
 							$f = new File( $id );
 							$f->load();
 							$f->filename = '';
-							$f->name     = lang('GLOBAL_COPY_OF').' '.$f->name;
+							$f->name     = lang('COPY_OF').' '.$f->name;
 							$f->parentid = $targetObjectId;
 							$f->add();
 							$f->copyValueFromFile( $id );
@@ -548,7 +549,7 @@ class FolderAction extends ObjectAction
 							$p = new Page( $id );
 							$p->load();
 							$p->filename = '';
-							$p->name     = lang('GLOBAL_COPY_OF').' '.$p->name;
+							$p->name     = lang('COPY_OF').' '.$p->name;
 							$p->parentid = $targetObjectId;
 							$p->add();
 							$p->copyValuesFromPage( $id );
@@ -559,7 +560,7 @@ class FolderAction extends ObjectAction
 							$l = new Link( $id );
 							$l->load();
 							$l->filename = '';
-							$l->name     = lang('GLOBAL_COPY_OF').' '.$l->name;
+							$l->name     = lang('COPY_OF').' '.$l->name;
 							$l->parentid = $targetObjectId;
 							$l->add();
 							$this->addNotice($o->getType(),$o->name,'COPIED','ok');
@@ -581,7 +582,7 @@ class FolderAction extends ObjectAction
 				
 						$link->linkedObjectId = $id;
 						$link->isLinkToObject = true;
-						$link->name           = lang('GLOBAL_LINK_TO').' '.$o->name;
+						$link->name           = lang('LINK_TO').' '.$o->name;
 						$link->add();
 						$this->addNotice($o->getType(),$o->name,'LINKED','ok');
 					}
@@ -895,8 +896,8 @@ class FolderAction extends ObjectAction
 				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
-					$list[$id]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('GLOBAL_IMAGE').' '.$id; 
+					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id; 
 
 				$list[$id]['type'] = $o->getType();
 				
@@ -949,7 +950,7 @@ class FolderAction extends ObjectAction
 				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
-					$list[$id]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
 
 				$list[$id]['type'] = $o->getType();
@@ -971,6 +972,9 @@ class FolderAction extends ObjectAction
 				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
 				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
 				$list[$id]['user'] = $o->lastchangeUser;
+				
+				if	( $this->hasRequestVar("markall") || $this->hasRequestVar('obj'.$id) )
+					$this->setTemplateVar('obj'.$id,'1');
 			}
 		}
 
@@ -993,17 +997,18 @@ class FolderAction extends ObjectAction
 		}	
 
 		$actionList = array();
-		$actionList[] = array('type'=>'copy');
-		$actionList[] = array('type'=>'link');
+		$actionList[] = 'copy';
+		$actionList[] = 'link';
 
 		if	( $this->folder->hasRight(ACL_WRITE) )
 		{
-			$actionList[] = array('type'=>'move');
-			$actionList[] = array('type'=>'delete');
+			$actionList[] = 'move';
+			$actionList[] = 'delete';
 		}
 		
 		$this->setTemplateVar('actionlist',$actionList );
-
+		$this->setTemplateVar('defaulttype',$this->getRequestVar('type','alpha'));
+		
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
 	}
@@ -1031,7 +1036,7 @@ class FolderAction extends ObjectAction
 				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
-					$list[$id]['desc'] = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
 
 				$list[$id]['type'] = $o->getType();

@@ -42,12 +42,14 @@ page
 			row
 				cell colspan:2
 				
-					list list:actionlist extract:true
-						radio name:type value:var:type
-						label for:type value:var:type
+					set var:type value:var:defaulttype
+					list list:actionlist value:actiontype
+						radio name:type value:var:actiontype
+						label for:type value:var:actiontype
 							text raw:_
-							text key:var:type prefix:FOLDER_SELECT_
+							text key:var:actiontype prefix:FOLDER_SELECT_
 						newline
+					text var:type
 			row
 				cell class:act colspan:2
 					button type:ok text:button_next
