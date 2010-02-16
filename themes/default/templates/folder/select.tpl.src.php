@@ -28,7 +28,7 @@ page
 				cell colspan:2			
 					image fileext:tree_none_end.gif align:left
 					text raw:_
-					link url::javascript:mark();
+					link var1:markall value1:1 action:var:actionName subaction:select
 						text key:FOLDER_MARK_ALL
 					text raw:_|_
 					link url::javascript:unmark();
