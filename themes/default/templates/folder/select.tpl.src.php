@@ -49,7 +49,6 @@ page
 							text raw:_
 							text key:var:actiontype prefix:FOLDER_SELECT_
 						newline
-					text var:type
 			row
 				cell class:act colspan:2
 					button type:ok text:button_next
