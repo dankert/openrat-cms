@@ -23,7 +23,7 @@
 
 /**
  * Darstellung einer Datenbank-Verbindung.
- * Für die echten DB-Aufrufe werden die entsprechenden
+ * Fï¿½r die echten DB-Aufrufe werden die entsprechenden
  * Methoden des passenden Clients aufgerufen.
  * 
  * Diese Klasse stammt urspruenglich aus dem PHP-Pear-DB-Projekt und unterliegt
@@ -64,7 +64,7 @@ class DB
 
 	/**
 	 * Client.
-	 * Enthält ein Objekt der Klasse db_<type>.
+	 * Enthï¿½lt ein Objekt der Klasse db_<type>.
 	 *
 	 * @var Object
 	 */
@@ -187,7 +187,7 @@ class DB
 			foreach ($query->param as $name=>$unused)
 				$this->client->bind($name,$query->data[$name]);
 			
-			// Ausführen...
+			// Ausfï¿½hren...
 			$result = $this->client->query($query);
 			
 			if	( $result === FALSE )
@@ -207,7 +207,7 @@ class DB
 			// in die Abfrage gesetzt.
 			$flatQuery = $query->getQuery();
 			
-			Logger::trace('DB query: '.$query->raw);
+			Logger::trace('DB query on DB '.$this->id."\n".$query->raw);
 	
 			$result = $this->client->query($flatQuery);
 			
@@ -394,7 +394,7 @@ class DB
 	
 	
 	/**
-	 * Beendet und bestätigt eine Transaktion.
+	 * Beendet und bestï¿½tigt eine Transaktion.
 	 */
 	function commit()
 	{
@@ -408,7 +408,7 @@ class DB
 	}
 	
 	/**
-	 * Setzt eine Transaktion zurück.
+	 * Setzt eine Transaktion zurï¿½ck.
 	 */
 	function rollback()
 	{
