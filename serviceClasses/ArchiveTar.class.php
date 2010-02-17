@@ -54,7 +54,7 @@ Version History:
 				  installed before running GZIP
 				  compression on TAR
 	2.2	05/07/2002	- Added automatic detection of Gzipped
-				  tar files (Thanks go to Jürgen Falch
+				  tar files (Thanks go to Jï¿½rgen Falch
 				  for the idea)
 				- Changed "private" functions to have
 				  special function names beginning with
@@ -285,6 +285,7 @@ class ArchiveTar
 			foreach($this->files as $key => $information)
 			{
 				unset($header);
+				$header = '';
 
 				// Generate the TAR header for this file
 				// Filename, Permissions, UID, GID, size, Time, checksum, typeflag, linkname, magic, version, user name, group name, devmajor, devminor, prefix, end

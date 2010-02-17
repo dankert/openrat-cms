@@ -465,10 +465,11 @@ class FolderAction extends ObjectAction
 			
 			// F�r die gew�nschte Aktion m�ssen pro Objekt die entsprechenden Rechte
 			// vorhanden sein.
-			if	( $type == 'copy'   && $o->hasRight( ACL_READ   ) ||
-				  $type == 'move'   && $o->hasRight( ACL_DELETE ) ||
-				  $type == 'link'   && $o->hasRight( ACL_READ   ) ||
-				  $type == 'delete' && $o->hasRight( ACL_DELETE )    )
+			if	( $type == 'copy'    && $o->hasRight( ACL_READ   ) ||
+				  $type == 'move'    && $o->hasRight( ACL_DELETE ) ||
+				  $type == 'link'    && $o->hasRight( ACL_READ   ) ||
+				  $type == 'archive' && $o->hasRight( ACL_READ   ) ||
+				  $type == 'delete'  && $o->hasRight( ACL_DELETE )    )
 				$objectList[ $id ] = $o->getProperties();
 		}
 		
@@ -490,151 +491,204 @@ class FolderAction extends ObjectAction
 		$ids            = explode(',',$this->getRequestVar('ids'));
 		$targetObjectId = $this->getRequestVar('targetobjectid');
 
-		foreach( $ids as $id )
+		if	( $type == 'archive' )
 		{
-			$o = new Object( $id );
-			$o->load();
-
-			switch( $type )
+			require_once('serviceClasses/ArchiveTar.class.php');
+			$tar = new ArchiveTar();
+			$tar->files = array();
+			
+			foreach( $ids as $id )
 			{
-				case 'move':
-					if	( $o->isFolder )
-					{
-						$f = new Folder( $id );
-						$allsubfolders = $f->getAllSubFolderIds();
-						
-						// Wenn
-						// - Das Zielverzeichnis sich nicht in einem Unterverzeichnis des zu verschiebenen Ordners liegt
-						// und
-						// - Das Zielverzeichnis nicht der zu verschiebene Ordner ist
-						// dann verschieben
-						if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
+				$o = new Object( $id );
+				$o->load();
+				
+				if	( $o->isFile )
+				{
+					$file = new File($id);
+					$file->load();
+					
+					// Datei dem Archiv hinzufügen.
+					$info = array();
+					$info['name'] = $file->filenameWithExtension();
+					$info['file'] = $file->loadValue();
+					$info['mode'] = 0600;
+					$info['size'] = $file->size;
+					$info['time'] = $file->lastchangeDate;
+					$info['user_id' ] = 1000;
+					$info['group_id'] = 1000;
+					$info['user_name' ] = 'nobody';
+					$info['group_name'] = 'nobody';
+										
+					$tar->numFiles++;
+					$tar->files[]= $info;
+				}
+				else
+				{
+					// Was anderes als Dateien ignorieren.
+					$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',OR_NOTICE_WARN);
+				}
+				
+			}
+
+			// TAR speichern.
+			$tarFile = new File();
+			$tarFile->name     = lang('GLOBAL_ARCHIVE').' '.$this->getRequestVar('filename');
+			$tarFile->filename = $this->getRequestVar('filename');
+			$tarFile->extension = 'tar';
+			$tarFile->parentid = $this->folder->objectid;
+			
+			$tar->__generateTAR();
+			$tarFile->value = $tar->tar_file; 
+			$tarFile->add();
+		}
+		else
+		{
+			foreach( $ids as $id )
+			{
+				$o = new Object( $id );
+				$o->load();
+	
+				switch( $type )
+				{
+					case 'move':
+						if	( $o->isFolder )
 						{
-							$this->addNotice($o->getType(),$o->name,'MOVED','ok');
-							//$o->setParentId( $targetObjectId );
+							$f = new Folder( $id );
+							$allsubfolders = $f->getAllSubFolderIds();
+							
+							// Wenn
+							// - Das Zielverzeichnis sich nicht in einem Unterverzeichnis des zu verschiebenen Ordners liegt
+							// und
+							// - Das Zielverzeichnis nicht der zu verschiebene Ordner ist
+							// dann verschieben
+							if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
+							{
+								$this->addNotice($o->getType(),$o->name,'MOVED','ok');
+								//$o->setParentId( $targetObjectId );
+							}
+							else
+							{
+								$this->addNotice($o->getType(),$o->name,'ERROR','error');
+							}
 						}
 						else
 						{
-							$this->addNotice($o->getType(),$o->name,'ERROR','error');
+							$o->setParentId( $targetObjectId );
+							$this->addNotice($o->getType(),$o->name,'MOVED','ok');
 						}
-					}
-					else
-					{
-						$o->setParentId( $targetObjectId );
-						$this->addNotice($o->getType(),$o->name,'MOVED','ok');
-					}
-					break;
-	
-				case 'copy':
-					switch( $o->getType() )
-					{
-						case 'folder':
-							// Ordner zur Zeit nicht kopieren
-							// Funktion waere zu verwirrend
-							$this->addNotice($o->getType(),$o->name,'CANNOT_COPY_FOLDER','error');
-							break;
-						
-						case 'file':
-							$f = new File( $id );
-							$f->load();
-							$f->filename = '';
-							$f->name     = lang('COPY_OF').' '.$f->name;
-							$f->parentid = $targetObjectId;
-							$f->add();
-							$f->copyValueFromFile( $id );
-							$this->addNotice($o->getType(),$o->name,'COPIED','ok');
-							break;
-						
-						case 'page':
-							$p = new Page( $id );
-							$p->load();
-							$p->filename = '';
-							$p->name     = lang('COPY_OF').' '.$p->name;
-							$p->parentid = $targetObjectId;
-							$p->add();
-							$p->copyValuesFromPage( $id );
-							$this->addNotice($o->getType(),$o->name,'COPIED','ok');
-							break;
-						
-						case 'link':
-							$l = new Link( $id );
-							$l->load();
-							$l->filename = '';
-							$l->name     = lang('COPY_OF').' '.$l->name;
-							$l->parentid = $targetObjectId;
-							$l->add();
-							$this->addNotice($o->getType(),$o->name,'COPIED','ok');
-							break;
-						
-						default:
-							die('fatal: what type to delete?');
-					}
-					$notices[] = lang('COPIED');
-					break;
-	
-				case 'link':
-
-					if	( $o->isFile  ||
-						  $o->isPage  )  // Nur Seiten oder Dateien sind verknuepfbar
-					{
-						$link = new Link();
-						$link->parentid       = $targetObjectId;
-				
-						$link->linkedObjectId = $id;
-						$link->isLinkToObject = true;
-						$link->name           = lang('LINK_TO').' '.$o->name;
-						$link->add();
-						$this->addNotice($o->getType(),$o->name,'LINKED','ok');
-					}
-					else
-					{
-						$this->addNotice($o->getType(),$o->name,'ERROR','error');
-					}
-					break;
-	
-				case 'delete':
-
-					if	( $this->hasRequestVar('commit') ) 
-					{
+						break;
+		
+					case 'copy':
 						switch( $o->getType() )
 						{
 							case 'folder':
-								$f = new Folder( $id );
-								$f->deleteAll();
+								// Ordner zur Zeit nicht kopieren
+								// Funktion waere zu verwirrend
+								$this->addNotice($o->getType(),$o->name,'CANNOT_COPY_FOLDER','error');
 								break;
 							
 							case 'file':
 								$f = new File( $id );
-								$f->delete();
+								$f->load();
+								$f->filename = '';
+								$f->name     = lang('COPY_OF').' '.$f->name;
+								$f->parentid = $targetObjectId;
+								$f->add();
+								$f->copyValueFromFile( $id );
+								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
 								break;
 							
 							case 'page':
 								$p = new Page( $id );
 								$p->load();
-								$p->delete();
+								$p->filename = '';
+								$p->name     = lang('COPY_OF').' '.$p->name;
+								$p->parentid = $targetObjectId;
+								$p->add();
+								$p->copyValuesFromPage( $id );
+								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
 								break;
 							
 							case 'link':
 								$l = new Link( $id );
-								$l->delete();
+								$l->load();
+								$l->filename = '';
+								$l->name     = lang('COPY_OF').' '.$l->name;
+								$l->parentid = $targetObjectId;
+								$l->add();
+								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
 								break;
 							
 							default:
-								Http::serverError('Internal Error while deleting: What type to delete?');
+								die('fatal: what type to delete?');
 						}
-						$this->addNotice($o->getType(),$o->name,'DELETED',OR_NOTICE_OK);
-					}
-					else
-					{
-						$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',OR_NOTICE_WARN);
-					}
+						$notices[] = lang('COPIED');
+						break;
+		
+					case 'link':
+	
+						if	( $o->isFile  ||
+							  $o->isPage  )  // Nur Seiten oder Dateien sind verknuepfbar
+						{
+							$link = new Link();
+							$link->parentid       = $targetObjectId;
 					
-					break;
-
-				default:
-					$this->addNotice($o->getType(),$o->name,'ERROR','error');
+							$link->linkedObjectId = $id;
+							$link->isLinkToObject = true;
+							$link->name           = lang('LINK_TO').' '.$o->name;
+							$link->add();
+							$this->addNotice($o->getType(),$o->name,'LINKED','ok');
+						}
+						else
+						{
+							$this->addNotice($o->getType(),$o->name,'ERROR','error');
+						}
+						break;
+		
+					case 'delete':
+	
+						if	( $this->hasRequestVar('commit') ) 
+						{
+							switch( $o->getType() )
+							{
+								case 'folder':
+									$f = new Folder( $id );
+									$f->deleteAll();
+									break;
+								
+								case 'file':
+									$f = new File( $id );
+									$f->delete();
+									break;
+								
+								case 'page':
+									$p = new Page( $id );
+									$p->load();
+									$p->delete();
+									break;
+								
+								case 'link':
+									$l = new Link( $id );
+									$l->delete();
+									break;
+								
+								default:
+									Http::serverError('Internal Error while deleting: What type to delete?');
+							}
+							$this->addNotice($o->getType(),$o->name,'DELETED',OR_NOTICE_OK);
+						}
+						else
+						{
+							$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',OR_NOTICE_WARN);
+						}
+						
+						break;
+	
+					default:
+						$this->addNotice($o->getType(),$o->name,'ERROR','error');
+				}
+	
 			}
-
 		}
 
 		$this->folder->setTimestamp();
@@ -999,7 +1053,8 @@ class FolderAction extends ObjectAction
 		$actionList = array();
 		$actionList[] = 'copy';
 		$actionList[] = 'link';
-
+		$actionList[] = 'archive';
+		
 		if	( $this->folder->hasRight(ACL_WRITE) )
 		{
 			$actionList[] = 'move';
