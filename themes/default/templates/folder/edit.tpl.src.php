@@ -3,7 +3,7 @@ page
 		hidden name:ids
 		hidden name:type
 		
-		window name:bla title:titelso widths:5%,75%
+		window widths:5%,75%
 			row
 				cell class:help
 					text raw:_
