@@ -139,3 +139,6 @@ weekday_offset=1
 
 [text]
 linelength=70
+
+[macro]
+show_errors=false

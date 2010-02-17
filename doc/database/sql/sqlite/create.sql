@@ -1,4 +1,4 @@
--- DDL-Script for postgresql
+-- DDL-Script for sqlite
 
 -- Table project
 CREATE TABLE or_project(
