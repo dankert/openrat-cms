@@ -1,4 +1,12 @@
 
+body.tree tr.active td.treevalue
+{
+	/*border-right:1px solid red;*/
+	padding-left:2px;
+	margin-left:2px;
+	border-left:1px solid red;
+}
+
 a
 {
 	color:black;

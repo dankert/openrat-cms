@@ -164,6 +164,8 @@ class TreeAction extends Action
 		global $class;
 		$zeile['class'] = $class;
 		if	( $this->getRequestId() == $elId )
+			$zeile['class'] = 'opened';
+		if	( $this->getRequestId() == $elId )
 			$class ='active';
 		
 		if   ( !isset($tree_last) )

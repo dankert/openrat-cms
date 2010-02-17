@@ -82,9 +82,11 @@ body.tree {
 	padding:5px;
 }
 
-body.tree tr.active td.treevalue
+
+body.tree tr.opened td.treevalue a,
+body.tree tr.opened td.treevalue
 {
-	border-right:2px solid;
+	font-weight:bold;
 }
 
 /* Submenu-Entrys */
