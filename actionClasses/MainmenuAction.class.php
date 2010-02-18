@@ -1,6 +1,4 @@
 <?php
-// $Id$
-//
 // OpenRat Content Management System
 // Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
 //
@@ -28,8 +26,6 @@
  */
 class MainmenuAction extends Action
 {
-	var $defaultSubAction = 'login';
-
 	var $subActionList = array();
 	var $path          = array();
 	var $search        = false;
@@ -141,8 +137,6 @@ class MainmenuAction extends Action
 
 	function template()
 	{
-		//$this->addSubaction('listing');
-	
 		if   ( $this->getRequestId() != 0 )
 		{
 			$template = new Template( $this->getRequestId() );
@@ -169,10 +163,6 @@ class MainmenuAction extends Action
 
 	function pageelement()
 	{
-		//$this->subActionName = 'page';
-		//$this->callSubAction('page');
-		
-		
 		$page = Session::getObject();
 		if	( !is_object($page) || $page->objectid != $this->getRequestId() )
 		{
@@ -214,7 +204,7 @@ class MainmenuAction extends Action
 	function page()
 	{
 		$page = Session::getObject();
-		if	( is_object($page) && $page->objectid != $this->getRequestId() )
+		if	( !is_object($page) || $page->objectid != $this->getRequestId() )
 		{
 			$page = new Page( $this->getRequestId() );
 			Session::setObject( $page );
