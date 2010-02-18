@@ -71,7 +71,7 @@ elseif ( isset($a3_default) )
 	$a3_tmp_value = $a3_default;
 else
 	$a3_tmp_value = "";
-?><input type="hidden" name="<?php echo $a3_name ?>" value="<?php echo $a3_tmp_value ?>" /><?php unset($a3_name) ?><?php $a3_title='titelso';$a3_name='bla';$a3_widths='5%,75%';$a3_width='93%';$a3_rowclasses='odd,even';$a3_columnclasses='1,2,3'; ?><?php
+?><input type="hidden" name="<?php echo $a3_name ?>" value="<?php echo $a3_tmp_value ?>" /><?php unset($a3_name) ?><?php $a3_widths='5%,75%';$a3_width='93%';$a3_rowclasses='odd,even';$a3_columnclasses='1,2,3'; ?><?php
 	$coloumn_widths=array();
 	$column_widths = explode(',',$a3_widths);
 	$row_classes   = explode(',',$a3_rowclasses);
@@ -183,7 +183,7 @@ else
   <tr>
     <td class="window">
       <table cellspacing="0" width="100%" cellpadding="4">
-<?php unset($a3_title,$a3_name,$a3_widths,$a3_width,$a3_rowclasses,$a3_columnclasses) ?><?php
+<?php unset($a3_widths,$a3_width,$a3_rowclasses,$a3_columnclasses) ?><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -340,7 +340,7 @@ else
 			$a8_tmp_default = $a8_default;
 		else
 			$a8_tmp_default = '';
- ?><input onclick="<?php echo $a8_name.'_'.$a8_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $a8_name.'_'.$a8_value ?>"  name="<?php echo $a8_prefix.$a8_name ?>"<?php if ( $a8_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a8_value ?>" <?php if($a8_value==$a8_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a8_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+ ?><input onclick="" class="radio" type="radio" id="id_<?php echo $a8_name.'_'.$a8_value ?>"  name="<?php echo $a8_prefix.$a8_name ?>"<?php if ( $a8_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a8_value ?>" <?php if($a8_value==$a8_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a8_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
 <?php /* #END-IF# */ ?><?php unset($a8_readonly,$a8_name,$a8_value,$a8_default,$a8_prefix,$a8_suffix,$a8_class,$a8_onchange) ?></td><?php $column_idx++; ?><td
 <?php if (!empty($column_widths)) { ?>
  width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"

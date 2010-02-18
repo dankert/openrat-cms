@@ -348,11 +348,12 @@ if ( $a8_readonly && $checked )
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_raw,$a6_escape,$a6_cut) ?><?php $a6_title='';$a6_target='_self';$a6_url='javascript:mark();';$a6_class=''; ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_raw,$a6_escape,$a6_cut) ?><?php $a6_title='';$a6_target='_self';$a6_class='';$a6_action=$actionName;$a6_subaction='select';$a6_var1='markall';$a6_value1='1'; ?><?php
 	$params = array();
+		$params[$a6_var1]=$a6_value1;
 	$tmp_url = '';
-		$tmp_url = $a6_url;
-?><a<?php if (isset($a6_name)) echo ' name="'.$a6_name.'"'; else echo ' href="'.$tmp_url.(isset($a6_anchor)?'#'.$a6_anchor:'').'"' ?> class="<?php echo $a6_class ?>" target="<?php echo $a6_target ?>"<?php if (isset($a6_accesskey)) echo ' accesskey="'.$a6_accesskey.'"' ?>  title="<?php echo encodeHtml($a6_title) ?>"><?php unset($a6_title,$a6_target,$a6_url,$a6_class) ?><?php $a7_class='text';$a7_key='FOLDER_MARK_ALL';$a7_escape=true;$a7_cut='both'; ?><?php
+		$tmp_url = Html::url($a6_action,$a6_subaction,!empty($a6_id)?$a6_id:$this->getRequestId(),$params);
+?><a<?php if (isset($a6_name)) echo ' name="'.$a6_name.'"'; else echo ' href="'.$tmp_url.(isset($a6_anchor)?'#'.$a6_anchor:'').'"' ?> class="<?php echo $a6_class ?>" target="<?php echo $a6_target ?>"<?php if (isset($a6_accesskey)) echo ' accesskey="'.$a6_accesskey.'"' ?>  title="<?php echo encodeHtml($a6_title) ?>"><?php unset($a6_title,$a6_target,$a6_class,$a6_action,$a6_subaction,$a6_var1,$a6_value1) ?><?php $a7_class='text';$a7_key='FOLDER_MARK_ALL';$a7_escape=true;$a7_cut='both'; ?><?php
 		$a7_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
@@ -433,7 +434,12 @@ if ( $a8_readonly && $checked )
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a5_colspan) ?><?php $a6_list='actionlist';$a6_extract=true;$a6_key='list_key';$a6_value='list_value'; ?><?php
+><?php unset($a5_colspan) ?><?php $a6_var='type';$a6_value=$defaulttype; ?><?php
+	if (isset($a6_key))
+		$$a6_var = $a6_value[$a6_key];
+	else
+		$$a6_var = $a6_value;
+?><?php unset($a6_var,$a6_value) ?><?php $a6_list='actionlist';$a6_extract=false;$a6_key='list_key';$a6_value='actiontype'; ?><?php
 	$a6_list_tmp_key   = $a6_key;
 	$a6_list_tmp_value = $a6_value;
 	$a6_list_extract   = $a6_extract;
@@ -452,7 +458,7 @@ if ( $a8_readonly && $checked )
 			}
 			extract($$a6_list_tmp_value);
 		}
-?><?php unset($a6_list,$a6_extract,$a6_key,$a6_value) ?><?php $a7_readonly=false;$a7_name='type';$a7_value=$type;$a7_default=false;$a7_prefix='';$a7_suffix='';$a7_class='';$a7_onchange=''; ?><?php
+?><?php unset($a6_list,$a6_extract,$a6_key,$a6_value) ?><?php $a7_readonly=false;$a7_name='type';$a7_value=$actiontype;$a7_default=false;$a7_prefix='';$a7_suffix='';$a7_class='';$a7_onchange=''; ?><?php
 		if ($this->isEditable() && !$this->isEditMode()) $a7_readonly=true;
 		if	( isset($$a7_name)  )
 			$a7_tmp_default = $$a7_name;
@@ -460,8 +466,8 @@ if ( $a8_readonly && $checked )
 			$a7_tmp_default = $a7_default;
 		else
 			$a7_tmp_default = '';
- ?><input onclick="<?php echo $a7_name.'_'.$a7_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $a7_name.'_'.$a7_value ?>"  name="<?php echo $a7_prefix.$a7_name ?>"<?php if ( $a7_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a7_value ?>" <?php if($a7_value==$a7_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a7_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
-<?php /* #END-IF# */ ?><?php unset($a7_readonly,$a7_name,$a7_value,$a7_default,$a7_prefix,$a7_suffix,$a7_class,$a7_onchange) ?><?php $a7_for='type';$a7_value=$type; ?><label for="id_<?php echo $a7_for ?><?php if (!empty($a7_value)) echo '_'.$a7_value ?>"><?php unset($a7_for,$a7_value) ?><?php $a8_class='text';$a8_raw='_';$a8_escape=true;$a8_cut='both'; ?><?php
+ ?><input onclick="" class="radio" type="radio" id="id_<?php echo $a7_name.'_'.$a7_value ?>"  name="<?php echo $a7_prefix.$a7_name ?>"<?php if ( $a7_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a7_value ?>" <?php if($a7_value==$a7_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a7_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+<?php /* #END-IF# */ ?><?php unset($a7_readonly,$a7_name,$a7_value,$a7_default,$a7_prefix,$a7_suffix,$a7_class,$a7_onchange) ?><?php $a7_for='type';$a7_value=$actiontype; ?><label for="id_<?php echo $a7_for ?><?php if (!empty($a7_value)) echo '_'.$a7_value ?>"><?php unset($a7_for,$a7_value) ?><?php $a8_class='text';$a8_raw='_';$a8_escape=true;$a8_cut='both'; ?><?php
 		$a8_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
@@ -470,7 +476,7 @@ if ( $a8_readonly && $checked )
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($a8_class,$a8_raw,$a8_escape,$a8_cut) ?><?php $a8_class='text';$a8_key=$type;$a8_prefix='FOLDER_SELECT_';$a8_escape=true;$a8_cut='both'; ?><?php
+?></<?php echo $tmp_tag ?>><?php unset($a8_class,$a8_raw,$a8_escape,$a8_cut) ?><?php $a8_class='text';$a8_key=$actiontype;$a8_prefix='FOLDER_SELECT_';$a8_escape=true;$a8_cut='both'; ?><?php
 		$a8_key = $a8_prefix.$a8_key;
 		$a8_title = '';
 		$tmp_tag = 'span';

@@ -2328,7 +2328,7 @@ document.forms[0].<?php echo $a7_field ?>.select();
 			$a11_tmp_default = $a11_default;
 		else
 			$a11_tmp_default = '';
- ?><input onclick="<?php echo $a11_name.'_'.$a11_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $a11_name.'_'.$a11_value ?>"  name="<?php echo $a11_prefix.$a11_name ?>"<?php if ( $a11_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a11_value ?>" <?php if($a11_value==$a11_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a11_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+ ?><input onclick="" class="radio" type="radio" id="id_<?php echo $a11_name.'_'.$a11_value ?>"  name="<?php echo $a11_prefix.$a11_name ?>"<?php if ( $a11_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a11_value ?>" <?php if($a11_value==$a11_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a11_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
 <?php /* #END-IF# */ ?><?php unset($a11_readonly,$a11_name,$a11_value,$a11_default,$a11_prefix,$a11_suffix,$a11_class,$a11_onchange) ?><?php $a11_for='otherlanguageid_'.$languageid.''; ?><label for="id_<?php echo $a11_for ?><?php if (!empty($a11_value)) echo '_'.$a11_value ?>"><?php unset($a11_for) ?><?php $a12_class='text';$a12_var='languagename';$a12_escape=true;$a12_cut='both'; ?><?php
 		$a12_title = '';
 		$tmp_tag = 'span';

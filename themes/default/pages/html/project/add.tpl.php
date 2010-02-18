@@ -243,7 +243,7 @@ if	($a6_readonly) {
 			$a6_tmp_default = $a6_default;
 		else
 			$a6_tmp_default = '';
- ?><input onclick="<?php echo $a6_name.'_'.$a6_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $a6_name.'_'.$a6_value ?>"  name="<?php echo $a6_prefix.$a6_name ?>"<?php if ( $a6_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a6_value ?>" <?php if($a6_value==$a6_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a6_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+ ?><input onclick="" class="radio" type="radio" id="id_<?php echo $a6_name.'_'.$a6_value ?>"  name="<?php echo $a6_prefix.$a6_name ?>"<?php if ( $a6_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a6_value ?>" <?php if($a6_value==$a6_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a6_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
 <?php /* #END-IF# */ ?><?php unset($a6_readonly,$a6_name,$a6_value,$a6_default,$a6_prefix,$a6_suffix,$a6_class,$a6_onchange) ?></td><?php $column_idx++; ?><td
 <?php if (!empty($column_widths)) { ?>
  width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
@@ -281,7 +281,7 @@ if	($a6_readonly) {
 			$a6_tmp_default = $a6_default;
 		else
 			$a6_tmp_default = '';
- ?><input onclick="<?php echo $a6_name.'_'.$a6_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $a6_name.'_'.$a6_value ?>"  name="<?php echo $a6_prefix.$a6_name ?>"<?php if ( $a6_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a6_value ?>" <?php if($a6_value==$a6_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a6_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+ ?><input onclick="" class="radio" type="radio" id="id_<?php echo $a6_name.'_'.$a6_value ?>"  name="<?php echo $a6_prefix.$a6_name ?>"<?php if ( $a6_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a6_value ?>" <?php if($a6_value==$a6_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a6_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
 <?php /* #END-IF# */ ?><?php unset($a6_readonly,$a6_name,$a6_value,$a6_default,$a6_prefix,$a6_suffix,$a6_class,$a6_onchange) ?></td><?php $column_idx++; ?><td
 <?php if (!empty($column_widths)) { ?>
  width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"

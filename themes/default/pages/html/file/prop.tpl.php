@@ -311,6 +311,113 @@ if	($a6_readonly) {
 ?>
 <tr
 >
+<?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+></td><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a6_title='';$a6_target='_self';$a6_class='';$a6_action='folder';$a6_subaction='select';$a6_id=$parentid;$a6_var1='obj'.$objectid.'';$a6_value1='1';$a6_var2='type';$a6_value2='copy'; ?><?php
+	$params = array();
+		$params[$a6_var1]=$a6_value1;
+		$params[$a6_var2]=$a6_value2;
+	$tmp_url = '';
+		$tmp_url = Html::url($a6_action,$a6_subaction,!empty($a6_id)?$a6_id:$this->getRequestId(),$params);
+?><a<?php if (isset($a6_name)) echo ' name="'.$a6_name.'"'; else echo ' href="'.$tmp_url.(isset($a6_anchor)?'#'.$a6_anchor:'').'"' ?> class="<?php echo $a6_class ?>" target="<?php echo $a6_target ?>"<?php if (isset($a6_accesskey)) echo ' accesskey="'.$a6_accesskey.'"' ?>  title="<?php echo encodeHtml($a6_title) ?>"><?php unset($a6_title,$a6_target,$a6_class,$a6_action,$a6_subaction,$a6_id,$a6_var1,$a6_value1,$a6_var2,$a6_value2) ?><?php $a7_class='text';$a7_key='COPY';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = $langF($a7_key);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_key,$a7_escape,$a7_cut) ?></a><?php $a6_class='text';$a6_raw=',_';$a6_escape=true;$a6_cut='both'; ?><?php
+		$a6_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a6_class ?>" title="<?php echo $a6_title ?>"><?php
+		$langF = $a6_escape?'langHtml':'lang';
+		$tmp_text = str_replace('_','&nbsp;',$a6_raw);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_raw,$a6_escape,$a6_cut) ?><?php $a6_title='';$a6_target='_self';$a6_class='';$a6_action='folder';$a6_subaction='select';$a6_id=$parentid;$a6_var1='obj'.$objectid.'';$a6_value1='1';$a6_var2='type';$a6_value2='move'; ?><?php
+	$params = array();
+		$params[$a6_var1]=$a6_value1;
+		$params[$a6_var2]=$a6_value2;
+	$tmp_url = '';
+		$tmp_url = Html::url($a6_action,$a6_subaction,!empty($a6_id)?$a6_id:$this->getRequestId(),$params);
+?><a<?php if (isset($a6_name)) echo ' name="'.$a6_name.'"'; else echo ' href="'.$tmp_url.(isset($a6_anchor)?'#'.$a6_anchor:'').'"' ?> class="<?php echo $a6_class ?>" target="<?php echo $a6_target ?>"<?php if (isset($a6_accesskey)) echo ' accesskey="'.$a6_accesskey.'"' ?>  title="<?php echo encodeHtml($a6_title) ?>"><?php unset($a6_title,$a6_target,$a6_class,$a6_action,$a6_subaction,$a6_id,$a6_var1,$a6_value1,$a6_var2,$a6_value2) ?><?php $a7_class='text';$a7_key='MOVE';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = $langF($a7_key);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_key,$a7_escape,$a7_cut) ?></a><?php $a6_class='text';$a6_raw=',_';$a6_escape=true;$a6_cut='both'; ?><?php
+		$a6_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a6_class ?>" title="<?php echo $a6_title ?>"><?php
+		$langF = $a6_escape?'langHtml':'lang';
+		$tmp_text = str_replace('_','&nbsp;',$a6_raw);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_raw,$a6_escape,$a6_cut) ?><?php $a6_title='';$a6_target='_self';$a6_class='';$a6_action='folder';$a6_subaction='select';$a6_id=$parentid;$a6_var1='obj'.$objectid.'';$a6_value1='1';$a6_var2='type';$a6_value2='link'; ?><?php
+	$params = array();
+		$params[$a6_var1]=$a6_value1;
+		$params[$a6_var2]=$a6_value2;
+	$tmp_url = '';
+		$tmp_url = Html::url($a6_action,$a6_subaction,!empty($a6_id)?$a6_id:$this->getRequestId(),$params);
+?><a<?php if (isset($a6_name)) echo ' name="'.$a6_name.'"'; else echo ' href="'.$tmp_url.(isset($a6_anchor)?'#'.$a6_anchor:'').'"' ?> class="<?php echo $a6_class ?>" target="<?php echo $a6_target ?>"<?php if (isset($a6_accesskey)) echo ' accesskey="'.$a6_accesskey.'"' ?>  title="<?php echo encodeHtml($a6_title) ?>"><?php unset($a6_title,$a6_target,$a6_class,$a6_action,$a6_subaction,$a6_id,$a6_var1,$a6_value1,$a6_var2,$a6_value2) ?><?php $a7_class='text';$a7_key='LINK';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = $langF($a7_key);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_key,$a7_escape,$a7_cut) ?></a><?php $a6_class='text';$a6_raw=',_';$a6_escape=true;$a6_cut='both'; ?><?php
+		$a6_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a6_class ?>" title="<?php echo $a6_title ?>"><?php
+		$langF = $a6_escape?'langHtml':'lang';
+		$tmp_text = str_replace('_','&nbsp;',$a6_raw);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a6_class,$a6_raw,$a6_escape,$a6_cut) ?><?php $a6_title='';$a6_target='_self';$a6_class='';$a6_action='folder';$a6_subaction='select';$a6_id=$parentid;$a6_var1='obj'.$objectid.'';$a6_value1='1';$a6_var2='type';$a6_value2='delete'; ?><?php
+	$params = array();
+		$params[$a6_var1]=$a6_value1;
+		$params[$a6_var2]=$a6_value2;
+	$tmp_url = '';
+		$tmp_url = Html::url($a6_action,$a6_subaction,!empty($a6_id)?$a6_id:$this->getRequestId(),$params);
+?><a<?php if (isset($a6_name)) echo ' name="'.$a6_name.'"'; else echo ' href="'.$tmp_url.(isset($a6_anchor)?'#'.$a6_anchor:'').'"' ?> class="<?php echo $a6_class ?>" target="<?php echo $a6_target ?>"<?php if (isset($a6_accesskey)) echo ' accesskey="'.$a6_accesskey.'"' ?>  title="<?php echo encodeHtml($a6_title) ?>"><?php unset($a6_title,$a6_target,$a6_class,$a6_action,$a6_subaction,$a6_id,$a6_var1,$a6_value1,$a6_var2,$a6_value2) ?><?php $a7_class='text';$a7_key='DELETE';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = $langF($a7_key);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_key,$a7_escape,$a7_cut) ?></a></td></tr><?php
+	$row_idx++;
+	$column_idx = 0;
+?>
+<tr
+>
 <?php $a5_colspan='2'; ?><?php $column_idx++; ?><td
 <?php if (!empty($column_widths)) { ?>
  width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"

@@ -217,7 +217,7 @@
 			$a6_tmp_default = $a6_default;
 		else
 			$a6_tmp_default = '';
- ?><input onclick="<?php echo $a6_name.'_'.$a6_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $a6_name.'_'.$a6_value ?>"  name="<?php echo $a6_prefix.$a6_name ?>"<?php if ( $a6_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a6_value ?>" <?php if($a6_value==$a6_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a6_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+ ?><input onclick="" class="radio" type="radio" id="id_<?php echo $a6_name.'_'.$a6_value ?>"  name="<?php echo $a6_prefix.$a6_name ?>"<?php if ( $a6_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a6_value ?>" <?php if($a6_value==$a6_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a6_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
 <?php /* #END-IF# */ ?><?php unset($a6_readonly,$a6_name,$a6_value,$a6_default,$a6_prefix,$a6_suffix,$a6_class,$a6_onchange) ?><?php $a6_for='replace_1'; ?><label for="id_<?php echo $a6_for ?><?php if (!empty($a6_value)) echo '_'.$a6_value ?>"><?php unset($a6_for) ?><?php $a7_class='text';$a7_key='replace';$a7_escape=true;$a7_cut='both'; ?><?php
 		$a7_title = '';
 		$tmp_tag = 'span';
@@ -235,7 +235,7 @@
 			$a6_tmp_default = $a6_default;
 		else
 			$a6_tmp_default = '';
- ?><input onclick="<?php echo $a6_name.'_'.$a6_value ?>_valueChanged(this);" class="radio" type="radio" id="id_<?php echo $a6_name.'_'.$a6_value ?>"  name="<?php echo $a6_prefix.$a6_name ?>"<?php if ( $a6_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a6_value ?>" <?php if($a6_value==$a6_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a6_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+ ?><input onclick="" class="radio" type="radio" id="id_<?php echo $a6_name.'_'.$a6_value ?>"  name="<?php echo $a6_prefix.$a6_name ?>"<?php if ( $a6_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a6_value ?>" <?php if($a6_value==$a6_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a6_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
 <?php /* #END-IF# */ ?><?php unset($a6_readonly,$a6_name,$a6_value,$a6_default,$a6_prefix,$a6_suffix,$a6_class,$a6_onchange) ?><?php $a6_for='replace_0'; ?><label for="id_<?php echo $a6_for ?><?php if (!empty($a6_value)) echo '_'.$a6_value ?>"><?php unset($a6_for) ?><?php $a7_class='text';$a7_key='new';$a7_escape=true;$a7_cut='both'; ?><?php
 		$a7_title = '';
 		$tmp_tag = 'span';
