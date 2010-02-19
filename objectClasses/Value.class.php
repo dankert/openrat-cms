@@ -800,16 +800,21 @@ SQL
 				$linkValue->languageid = $this->languageid;
 				$linkValue->load();
 				
-				if	( !Object::available( $linkValue->linkToObjectId ) )
+				$objectid = $linkValue->linkToObjectId;
+				
+				if   ( intval($objectid) == 0 )
+					$objectid = $linkValue->element->defaultObjectId;
+					
+				if	( !Object::available( $objectid ) )
 					break;
 					
-				$linkedObject = new Object( $linkValue->linkToObjectId );
+				$linkedObject = new Object( $objectid );
 				$linkedObject->load();
 				
 				switch( $this->element->subtype )
 				{
 					case 'width':
-						$f = new File( $linkValue->linkToObjectId );
+						$f = new File( $objectid );
 						$f->load();
 						if	( $f->isImage() )
 						{
@@ -817,10 +822,10 @@ SQL
 							$inhalt = $f->width;
 						}
 						unset($f);
-					break;
+						break;
 					
 					case 'height':
-						$f = new File( $linkValue->linkToObjectId );
+						$f = new File( $objectid );
 						$f->load();
 						if	( $f->isImage() )
 						{
@@ -828,7 +833,91 @@ SQL
 							$inhalt = $f->height;
 						}
 						unset($f);
-					break;
+						break;
+					
+					case 'id':
+						$inhalt = $objectid;
+						break;
+					
+					case 'name':
+						$inhalt = $linkedObject->name;
+						break;
+					
+					case 'desc':
+						$inhalt = $linkedObject->description;
+						break;
+					
+					case 'create_user_desc':
+						$user = $linkedObject->createUser;
+						$user->load();
+						$inhalt = $user->desc;
+						break;
+					
+					case 'create_user_fullname':
+						$user = $linkedObject->createUser;
+						$user->load();
+						$inhalt = $user->fullname;
+						break;
+					
+					case 'create_user_mail':
+						$user = $linkedObject->createUser;
+						$user->load();
+						$inhalt = $user->mail;
+						break;
+					
+					case 'create_user_tel':
+						$user = $linkedObject->createUser;
+						$user->load();
+						$inhalt = $user->tel;
+						break;
+					
+					case 'create_user_username':
+						$user = $linkedObject->createUser;
+						$user->load();
+						$inhalt = $user->name;
+						break;
+					
+					case 'lastch_user_desc':
+						$user = $linkedObject->lastchangeUser;
+						$user->load();
+						$inhalt = $user->desc;
+						break;
+					
+					case 'lastch_user_fullname':
+						$user = $linkedObject->lastchangeUser;
+						$user->load();
+						$inhalt = $user->fullname;
+						break;
+					
+					case 'lastch_user_mail':
+						$user = $linkedObject->lastchangeUser;
+						$user->load();
+						$inhalt = $user->mail;
+						break;
+					
+					case 'lastch_user_tel':
+						$user = $linkedObject->lastchangeUser;
+						$user->load();
+						$inhalt = $user->tel;
+						break;
+					
+					case 'lastch_user_username':
+						$user = $linkedObject->lastchangeUser;
+						$user->load();
+						$inhalt = $user->name;
+						break;
+						
+					case 'mime-type':
+						$inhalt = "";
+						break;
+					
+					case 'filename':
+						$inhalt = "";
+						break;
+					
+					case 'full_filename':
+						$inhalt = "";
+						break;
 					
 					default:
 						$inhalt = ''; 
