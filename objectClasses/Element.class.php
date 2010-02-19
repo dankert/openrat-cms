@@ -52,6 +52,8 @@ class Element
 	 * <li>link</li>
 	 * <li>date</li>
 	 * <li>insert</li>
+	 * <li>linkinfo</li>
+	 * <li>linkdate</li>
 	 * <li>code</li>
 	 * <li>info</li>
 	 * <li>infodate</li>
@@ -100,7 +102,7 @@ class Element
 	 */
 	var $allLanguages;
 
-	var $readonlyElementNames = array('copy','linkinfo','info','infodate','code','dynamic');
+	var $readonlyElementNames = array('copy','linkinfo','linkdate','info','infodate','code','dynamic');
 	
 	/**
 	 * Untertyp.
@@ -180,12 +182,6 @@ class Element
 			$sql = new Sql( 'SELECT * FROM {t_element}'.
 			                ' WHERE id={elementid}'      );
 			$sql->setInt( 'elementid',$this->elementid );
-		}
-		else
-		{
-			$sql = new Sql( 'SELECT * FROM {t_element}'.
-			                ' WHERE name={name}'      );
-			$sql->setString( 'name',$this->name );
 		}
 
 		$this->setDatabaseRow( $db->getRow( $sql ) );
@@ -372,6 +368,7 @@ class Element
 		             'insert'  =>array('subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
 		             'copy'    =>array('prefix','name','defaultText'),
 		             'linkinfo'=>array('prefix','subtype','defaultText'),
+		             'linkdate'=>array('prefix','subtype','dateformat'),
 		             'code'    =>array('code'),
 		             'dynamic' =>array('subtype','code'),
 		             'info'    =>array('subtype'),
@@ -414,6 +411,7 @@ class Element
 		             'insert',
 		             'copy',
 		             'linkinfo',
+		             'linkdate',
 		             'code',
 		             'dynamic',
 		             'info',
@@ -449,6 +447,7 @@ class Element
 			case 'info':
 			case 'infodate':
 			case 'linkinfo':
+			case 'linkdate':
 				return 'info';
 		}
 	}

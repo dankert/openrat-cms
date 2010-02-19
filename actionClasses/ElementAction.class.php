@@ -218,6 +218,7 @@ class ElementAction extends Action
 							break;
 
 						case 'infodate':
+						case 'linkdate':
 							$subtypes = Array('date_published',
 							                 'date_saved',
 							                 'date_created' );

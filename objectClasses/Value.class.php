@@ -788,9 +788,12 @@ SQL
 				@list( $linkElementName, $name ) = explode('%',$this->element->name);
 				if	( is_null($name) )
 					break;
+
+				$template = new Template( $this->page->templateid );
+				$elementId = array_search( $linkElementName, $template->getElementNames() );
+				
 					
-				$element = new Element();
-				$element->name = $linkElementName;
+				$element = new Element($elementId);
 				$element->load();
 				
 				$linkValue = new Value();
@@ -926,7 +929,66 @@ SQL
 				
 				break;
 
+			case 'linkdate':
 
+				@list( $linkElementName, $name ) = explode('%',$this->element->name);
+				if	( is_null($name) )
+					break;
+
+				$template = new Template( $this->page->templateid );
+				$elementId = array_search( $linkElementName, $template->getElementNames() );
+					
+				$element = new Element($elementId);
+				$element->load();
+				
+				$linkValue = new Value();
+				$linkValue->elementid = $element->elementid;
+				$linkValue->element   = $element;
+				$linkValue->pageid = $this->pageid;
+				$linkValue->languageid = $this->languageid;
+				$linkValue->load();
+				
+				$objectid = $linkValue->linkToObjectId;
+				
+				if   ( intval($objectid) == 0 )
+					$objectid = $linkValue->element->defaultObjectId;
+					
+				if	( !Object::available( $objectid ) )
+					break;
+					
+				$linkedObject = new Object( $objectid );
+				$linkedObject->load();
+				
+				
+				switch( $this->element->subtype )
+				{
+					case 'date_published':
+						// START_TIME wird zu Beginn im Controller gesetzt.
+						// So erh�lt jede Datei das gleiche Ver�ffentlichungsdatum.
+						$date = START_TIME;
+						break;
+						
+					case 'date_saved':
+						$date = $linkedObject->lastchangeDate;
+						break;
+
+					case 'date_created':
+						$date = $linkedObject->createDate;
+						break;
+
+					default:  
+						Logger::warn('element:'.$this->element->name.', '.
+						             'type:'.$this->element->type.', '.
+						             'unknown subtype:'.$this->element->subtype);
+						$date = START_TIME;
+				}
+				
+				if	( strpos($this->element->dateformat,'%')!==FALSE )
+					$inhalt = strftime( $this->element->dateformat,$date );
+				else
+					$inhalt = date    ( $this->element->dateformat,$date );				
+				break;
+				
 			case 'longtext':
 			case 'text':
 			case 'select':
