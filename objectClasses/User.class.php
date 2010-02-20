@@ -703,7 +703,7 @@ SQL
 					// Login nicht erfolgreich
 					return false;
 				}
-				elseif   ( $row_user['password'] == md5( $password ) )
+				elseif   ( $row_user['password'] == md5( $this->saltPassword($password) ) )
 				{
 					// Die Kennwort-Pr�fsumme stimmt mit dem aus der Datenbank �berein.
 					// Juchuu, Login ist erfolgreich.
@@ -771,7 +771,7 @@ SQL
 		                'WHERE id={userid}' );
 		                
 		if	( $always )
-			$sql->setString('password',md5($password) );
+			$sql->setString('password',md5($this->saltPassword($password)) );
 		else
 			$sql->setString('password',$password      );
 			
@@ -1100,6 +1100,29 @@ SQL
 		$pw .= rand(10,99);
 		 
 		return $pw;
+	}
+
+	
+	/**
+	 * Das Kennwort "salzen".
+	 * 
+	 * @param Kennwort
+	 * @return Das gesalzene Kennwort
+	 */
+	function saltPassword( $pass )
+	{
+		switch( config('security','password','salt') )
+		{
+			case 'userid':
+				return $this->userid.$pass;
+			case 'username':
+				return $this->name.$pass;
+			case 'custom':
+				return config('security','password','salt_text').$pass;
+			default:
+				return $pass;
+		}
+		
 	}
 }
 

@@ -118,6 +118,15 @@ random_length=8
 ; minimum passwort length
 min_length=5
 
+; Password "salt"
+; ''        : no salt (default)
+; 'id'      : salt the password with userid
+; 'username': salt the password with username
+; 'custom'  : use the 'salt_text'-setting
+salt = ""
+
+salt_text = "somerandomtext"
+
 
 
 ; this section is needed if the setting "auth/type" is 'http'.
@@ -135,7 +144,7 @@ url = "http://example.net/restricted-area"
 ; and so the user must only remember 1 password.
 [authdb]
 
-; 'mysql' or 'postgresql'
+; 'mysql', 'postgresql' or 'sqlite'
 type = postgresql
 
 user = dbuser
