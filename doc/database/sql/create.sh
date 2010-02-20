@@ -17,6 +17,7 @@ type=
 db=
 db_fc=0
 table=
+cnt=0
 
 # Creating a new table
 # param 1: table name
@@ -36,7 +37,8 @@ close_table()
     
     case "$type" in
      mysql)
-            echo -n " ENGINE $mysql_engine" >> $outfile
+            #echo -n " ENGINE=$mysql_engine" >> $outfile
+            echo -n " TYPE=$mysql_engine" >> $outfile
             ;;
      *)
              ;;
@@ -90,7 +92,7 @@ column()
             echo -n "MEDIUMTEXT" >> $outfile
      	elif	[ "$type" == "oracle" ]; then
             echo -n "CLOB" >> $outfile
-        elif	[ "$type"=="postgresql" ]; then
+        elif	[ "$type" == "postgresql" ]; then
             echo -n "TEXT" >> $outfile
         else
             echo -n "TEXT" >> $outfile
@@ -99,7 +101,11 @@ column()
      BLOB)
      	if	[ "$type" == "mysql" ]; then
             echo -n "MEDIUMBLOB" >> $outfile
-     	elif	[ "$type"=="postgresql" ]; then
+     	elif	[ "$type" == "postgresql" ]; then
+            echo -n "TEXT" >> $outfile
+     	elif	[ "$type" == "oracle" ]; then
+            echo -n "CLOB" >> $outfile
+     	elif	[ "$type" == "sqlite" ]; then
             echo -n "TEXT" >> $outfile
         else
             echo -n "BLOB" >> $outfile
@@ -125,7 +131,8 @@ column()
 	    fi
 	    
 	    # Nullable?
-	    if [ "$5" == "J" -o "$5" == "1" ]; then
+	    # TEXT-columns should be nullable in Oracle, because empty strings are treated as NULL :(
+	    if [ "$5" == "J" -o "$5" == "1" -o "$2" == "VARCHAR" -o  "$2" == "TEXT" ]; then
 	    	echo -n " NULL" >> $outfile
 	    else
 	    	echo -n " NOT NULL" >> $outfile
@@ -163,7 +170,12 @@ primary_key()
 # param 1: name of index column. Seperate multiple columns with ','
 unique_index()
 {
-    echo "CREATE UNIQUE INDEX ${prefix}uidx_${table}${suffix}_`echo $1|tr ',' '_'`" >> $outfile
+	if	[ "$type" == "oracle" ]; then
+		cnt=$(($cnt+1))
+    	echo "CREATE UNIQUE INDEX ${prefix}uidx_${cnt}" >> $outfile
+	else
+    	echo "CREATE UNIQUE INDEX ${prefix}uidx_${table}${suffix}_`echo $1|tr ',' '_'`" >> $outfile
+    fi
     echo "                 ON ${prefix}${table}${suffix} ($1);" >> $outfile
 }
 
@@ -171,7 +183,12 @@ unique_index()
 # param 1: name of index column. Seperate multiple columns with ','
 index()
 {
-    echo "CREATE INDEX ${prefix}idx_${table}${suffix}_`echo $1|tr ',' '_'`" >> $outfile
+	if	[ "$type" == "oracle" ]; then
+		cnt=$(($cnt+1))
+		echo "CREATE INDEX ${prefix}idx_${cnt}" >> $outfile
+	else
+    	echo "CREATE INDEX ${prefix}idx_${table}${suffix}_`echo $1|tr ',' '_'`" >> $outfile
+    fi
     echo "          ON ${prefix}${table}${suffix} ($1);" >> $outfile
 }
 
@@ -181,9 +198,15 @@ index()
 # param 3: target column name
 constraint()
 {
-    echo "  ,CONSTRAINT ${prefix}fk_${table}${suffix}_$1" >> $outfile
+	if	[ "$type" == "oracle" ]; then
+		cnt=$(($cnt+1))
+	    echo "  ,CONSTRAINT ${prefix}fk_${cnt}" >> $outfile
+	else
+	    echo "  ,CONSTRAINT ${prefix}fk_${table}${suffix}_$1" >> $outfile
+	fi
+
     echo "     FOREIGN KEY ($1) REFERENCES ${prefix}${2}${suffix} ($3)" >> $outfile
-   	# Oracle doesn't support "ON DELETE RESTRICT"-Statements, but lucky its the default.
+   	# Oracle doesn't support "ON DELETE RESTRICT"-Statements, but its the default.
     if	[ "$type" != "oracle" ]; then
     	echo "     ON DELETE RESTRICT ON UPDATE RESTRICT" >> $outfile
     fi

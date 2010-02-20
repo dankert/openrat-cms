@@ -11,7 +11,7 @@ CREATE TABLE or_project(
   ,content_negotiation TINYINT(1) NOT NULL DEFAULT 0
   ,cut_index TINYINT(1) NOT NULL DEFAULT 0
   ,PRIMARY KEY (id)
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE UNIQUE INDEX or_uidx_project_name
                  ON or_project (name);
 
@@ -28,7 +28,7 @@ CREATE TABLE or_user(
   ,style VARCHAR(64) NOT NULL
   ,is_admin TINYINT(1) NOT NULL DEFAULT 0
   ,PRIMARY KEY (id)
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE UNIQUE INDEX or_uidx_user_name
                  ON or_user (name);
 
@@ -37,7 +37,7 @@ CREATE TABLE or_group(
    id INT NOT NULL
   ,name VARCHAR(100) NOT NULL
   ,PRIMARY KEY (id)
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE UNIQUE INDEX or_uidx_group_name
                  ON or_group (name);
 
@@ -66,7 +66,7 @@ CREATE TABLE or_object(
   ,CONSTRAINT or_fk_object_create_userid
      FOREIGN KEY (create_userid) REFERENCES or_user (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE INDEX or_idx_object_parentid
           ON or_object (parentid);
 CREATE INDEX or_idx_object_projectid
@@ -97,7 +97,7 @@ CREATE TABLE or_template(
   ,CONSTRAINT or_fk_template_projectid
      FOREIGN KEY (projectid) REFERENCES or_project (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE INDEX or_idx_template_projectid
           ON or_template (projectid);
 CREATE INDEX or_idx_template_name
@@ -116,7 +116,7 @@ CREATE TABLE or_language(
   ,CONSTRAINT or_fk_language_projectid
      FOREIGN KEY (projectid) REFERENCES or_project (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE UNIQUE INDEX or_uidx_language_projectid_isocode
                  ON or_language (projectid,isocode);
 
@@ -132,7 +132,7 @@ CREATE TABLE or_page(
   ,CONSTRAINT or_fk_page_objectid
      FOREIGN KEY (objectid) REFERENCES or_object (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE UNIQUE INDEX or_uidx_page_objectid
                  ON or_page (objectid);
 CREATE INDEX or_idx_page_templateid
@@ -149,7 +149,7 @@ CREATE TABLE or_projectmodel(
   ,CONSTRAINT or_fk_projectmodel_projectid
      FOREIGN KEY (projectid) REFERENCES or_project (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE INDEX or_idx_projectmodel_projectid
           ON or_projectmodel (projectid);
 CREATE UNIQUE INDEX or_uidx_projectmodel_projectid_name
@@ -186,7 +186,7 @@ CREATE TABLE or_element(
   ,CONSTRAINT or_fk_element_templateid
      FOREIGN KEY (templateid) REFERENCES or_template (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE INDEX or_idx_element_templateid
           ON or_element (templateid);
 CREATE INDEX or_idx_element_name
@@ -205,7 +205,7 @@ CREATE TABLE or_file(
   ,CONSTRAINT or_fk_file_objectid
      FOREIGN KEY (objectid) REFERENCES or_object (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE UNIQUE INDEX or_uidx_file_objectid
                  ON or_file (objectid);
 
@@ -217,7 +217,7 @@ CREATE TABLE or_folder(
   ,CONSTRAINT or_fk_folder_objectid
      FOREIGN KEY (objectid) REFERENCES or_object (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE UNIQUE INDEX or_uidx_folder_objectid
                  ON or_folder (objectid);
 
@@ -234,7 +234,7 @@ CREATE TABLE or_link(
   ,CONSTRAINT or_fk_link_link_objectid
      FOREIGN KEY (link_objectid) REFERENCES or_object (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE UNIQUE INDEX or_uidx_link_objectid
                  ON or_link (objectid);
 CREATE INDEX or_idx_link_link_objectid
@@ -254,7 +254,7 @@ CREATE TABLE or_name(
   ,CONSTRAINT or_fk_name_languageid
      FOREIGN KEY (languageid) REFERENCES or_language (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE INDEX or_idx_name_objectid
           ON or_name (objectid);
 CREATE INDEX or_idx_name_languageid
@@ -276,7 +276,7 @@ CREATE TABLE or_templatemodel(
   ,CONSTRAINT or_fk_templatemodel_projectmodelid
      FOREIGN KEY (projectmodelid) REFERENCES or_projectmodel (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE INDEX or_idx_templatemodel_templateid
           ON or_templatemodel (templateid);
 CREATE UNIQUE INDEX or_uidx_templatemodel_templateid_extension
@@ -296,7 +296,7 @@ CREATE TABLE or_usergroup(
   ,CONSTRAINT or_fk_usergroup_userid
      FOREIGN KEY (userid) REFERENCES or_user (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE INDEX or_idx_usergroup_groupid
           ON or_usergroup (groupid);
 CREATE INDEX or_idx_usergroup_userid
@@ -334,7 +334,7 @@ CREATE TABLE or_value(
   ,CONSTRAINT or_fk_value_linkobjectid
      FOREIGN KEY (linkobjectid) REFERENCES or_object (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE INDEX or_idx_value_pageid
           ON or_value (pageid);
 CREATE INDEX or_idx_value_languageid
@@ -379,7 +379,7 @@ CREATE TABLE or_acl(
   ,CONSTRAINT or_fk_acl_languageid
      FOREIGN KEY (languageid) REFERENCES or_language (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE InnoDB;
+) TYPE=InnoDB;
 CREATE INDEX or_idx_acl_userid
           ON or_acl (userid);
 CREATE INDEX or_idx_acl_groupid
