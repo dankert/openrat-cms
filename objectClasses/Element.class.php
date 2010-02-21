@@ -175,16 +175,17 @@ class Element
 	 */
 	function load()
 	{
-		$db = db_connection();
-
 		if	( intval($this->elementid) != 0 )
 		{		
-			$sql = new Sql( 'SELECT * FROM {t_element}'.
-			                ' WHERE id={elementid}'      );
+			$db = db_connection();
+			$sql = new Sql( <<<SQL
+SELECT * FROM {t_element}
+ WHERE id={elementid}
+SQL
+);
 			$sql->setInt( 'elementid',$this->elementid );
+			$this->setDatabaseRow( $db->getRow( $sql ) );
 		}
-
-		$this->setDatabaseRow( $db->getRow( $sql ) );
 	}
 
 
