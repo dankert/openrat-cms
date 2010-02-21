@@ -846,7 +846,7 @@ SQL
 						$inhalt = $linkedObject->name;
 						break;
 					
-					case 'desc':
+					case 'description':
 						$inhalt = $linkedObject->description;
 						break;
 					
@@ -911,15 +911,21 @@ SQL
 						break;
 						
 					case 'mime-type':
-						$inhalt = "";
+						if	( $linkedObject->isFile )
+						{
+							$f = new File( $objectid );
+							$f->load();
+								$inhalt = $f->mimeType();
+							unset($f);
+						}
 						break;
 					
 					case 'filename':
-						$inhalt = "";
+						$inhalt = $linkedObject->filename();
 						break;
 					
 					case 'full_filename':
-						$inhalt = "";
+						$inhalt = $linkedObject->full_filename();
 						break;
 					
 					default:
