@@ -53,18 +53,21 @@ class Link extends Object
 		$sql->setInt( 'objectid',$this->objectid );
 		$row = $db->getRow( $sql );
 
-		$this->url            = $row['url'];
-		$this->linkedObjectId = $row['link_objectid'];
-		
-		if	( is_numeric( $this->linkedObjectId ) )
+		if	( count($row ) != 0 )
 		{
-			$this->isLinkToUrl    = false;
-			$this->isLinkToObject = true;
-		}
-		else
-		{
-			$this->isLinkToUrl    = true;
-			$this->isLinkToObject = false;
+			$this->url            = $row['url'];
+			$this->linkedObjectId = $row['link_objectid'];
+			
+			if	( is_numeric( $this->linkedObjectId ) )
+			{
+				$this->isLinkToUrl    = false;
+				$this->isLinkToObject = true;
+			}
+			else
+			{
+				$this->isLinkToUrl    = true;
+				$this->isLinkToObject = false;
+			}
 		}
 		
 		$this->objectLoad();
