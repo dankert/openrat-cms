@@ -63,11 +63,26 @@ class Transformer
 
 		// Links object:nnn ersetzen
 		//
-		// Das Dokument-Objekt hat keine Information �ber die aktuelle Seite,
+		// Das Dokument-Objekt hat keine Information ueber die aktuelle Seite,
 		// daher werden die Links auf Objekte hier gesetzt.
 		foreach( $linkedObjectIds as $objectId )
 		{
 			$targetPath = $this->page->path_to_object( $objectId );
+			
+			// Hack: Sonderzeichen muessen in URLs maskiert werden, aber nur bei URLs die aus Link-Objekten kommen, bei allem
+			// anderen (insbesondere Preview-Links zu andereen Seiten) darf die Umsetzung nicht erfolgen. 
+			// Der Renderer kann dies nicht tun, denn der erzeugt nur "object://..."-URLs.
+			// Beispiel: "...?a=1&b=2" wird zu "...?a=1&amp;b=2"  
+			$o = new Object($objectId);
+			$o->load();
+			if	( $o->isLink )
+			{
+				$l = new Link($objectId);
+				$l->load();
+				if	( $l->isLinkToUrl && $this->page->mimeType() == 'text/html' )
+					$targetPath = htmlspecialchars($targetPath);
+			}
+				
 			$text = str_replace( 'object:'  .$objectId, $targetPath, $text );
 			$text = str_replace( 'object://'.$objectId, $targetPath, $text );
 		}
