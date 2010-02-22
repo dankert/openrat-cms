@@ -494,11 +494,19 @@ SQL
 		
 		if (count($row) == 0)
 		{
-			debug_print_backtrace();
-			die('fatal: Object::objectLoad(): objectid not found: '.$this->objectid.', SQL='.$sql->raw );
+			$this->name = lang('unknown');
+			$this->parentid  = Session::getProject()->getRootObjectId();
+			$this->projectid = Session::getProject()->projectid;
+			$this->filename  = "";
+			$this->orderid   = 0;
+			$this->isRoot = false;
+			$this->createDate     = 0;
+			$this->lastchangeDate = 0;
+			$this->createUser = new User();
+			$this->lastchangeUser = new User();
 		}
-
-		$this->setDatabaseRow( $row );
+		else
+			$this->setDatabaseRow( $row );
 
 
 	}
