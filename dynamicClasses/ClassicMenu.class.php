@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2010 Jan Dankert
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,27 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.3  2007-11-29 22:09:06  dankert
-// Das Men? in der Sprache der zu ver?ffentlichenden Seite erzeugen.
-//
-// Revision 1.2  2005/01/04 21:01:24  dankert
-// Benutzen von CSS-Klassen
-//
-// Revision 1.1  2005/01/04 19:59:55  dankert
-// Allgemeine Korrekturen, Erben von "Dynamic"-klasse
-//
-// Revision 1.3  2004/12/19 22:35:23  dankert
-// Parameter -Angabe
-//
-// Revision 1.2  2004/12/19 15:19:29  dankert
-// Klasse erbt von "Dynamic"
-//
-// Revision 1.1  2004/11/10 22:43:35  dankert
-// Beispiele fuer dynamische Templateelemente
-//
-// ---------------------------------------------------------------------------
 
 
 
@@ -128,6 +104,9 @@ class ClassicMenu extends Dynamic
 				if ( $this->getObjectId() == $o->objectid)
 					// aktuelle Seite
 					$this->output( '<li class="'.$this->csspraefix.$level.'"><strong class="'.$this->csspraefix.$level.'">'.$o->name.'</strong></li>' );
+				elseif	( $o->isLink )
+					// Link mit HTML-Sonderzeichenumwandlung erzeugen
+					$this->output( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.htmlspecialchars($this->pathToObject($o->objectid)).'">'.$o->name.'</a></li>' );
 				else
 					// Link erzeugen
 					$this->output( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.$this->pathToObject($o->objectid).'">'.$o->name.'</a></li>' );
