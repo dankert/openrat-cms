@@ -22,18 +22,18 @@ Basis-Style for Openrat.
 */
 
 
-/* reset.css */
+/* Alle Elemente zuruecksetzen */
 /* Source: http://meyerweb.com/eric/tools/css/reset/ */
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
 body {line-height:1.5;}
 table {border-collapse:separate;border-spacing:0;}
 caption, th, td {text-align:left;font-weight:normal;}
-table, td, th {vertical-align:middle;}
+table, td, th {vertical-align:top;}
 blockquote:before, blockquote:after, q:before, q:after {content:"";}
 blockquote, q {quotes:"" "";}
 a img {border:none;}
 
-/* anchor-Behaviour */
+/* Verweise */
 a:link,
 a:visited
 {
@@ -62,31 +62,40 @@ a.editorlink:visited
 	text-decoration:none;
 }
 
-body
+/* Voreingestellte Schriftart */
+body,
+body th,
+body td
 {
 	font-family:Arial;
 	font-size:13px;
 }
 
+/* Hauptfenster */
 body.main
 {
 	text-align:center;
 }
 
+/* Innenabstand Titel */
 body.title table tr td {
 	margin:0px;
 	padding:3px;
 }
 
+/* Baum-Innenabstand */
 body.tree {
 	padding:5px;
 }
 
 
+/* Gerade aktivierte Baumelemente */
 body.tree tr.opened td.treevalue a,
-body.tree tr.opened td.treevalue
+body.tree tr.opened td.treevalue,
+/* Aktive Menuepunkte */
+body.main table.main table.menu td.action a.menu_highlight
 {
-	font-weight:bold;
+	font-weight:bold; /* fett */
 }
 
 /* Submenu-Entrys */
@@ -121,39 +130,30 @@ body.tree td.treevalue img {
 	padding-left:2px;
 }
 
-/* Icons */
+/* Icon-Innenabstand */
 img[align=left],
 img[align=right] {padding-right:1px;padding-left:1px;}
 
-
+/* Vorformatierter Text */
 pre
 {
 	font-family:Courier;
 	font-size:13px;
 }
 
+/* Kleingedrucktes */
 small
 {
 	color:gray;
 }
 
 
-
-
+/* Kurztasten */
 body.menu span.accesskey,
 body.main span.accesskey
 {
 	text-decoration:underline;
 }
-
-body th,
-body td
-{
-	font-family:Arial;
-	font-size:13px;
-	vertical-align:top;
-}
-
 
 /* Datenzeile-Mauseffekt */
 tr.data:hover,
@@ -163,25 +163,33 @@ body.tree tr:hover
 }
 
 
-
 /* Anzeige von Text-Unterschieden */
 
+/* Zeilen-Nr */
 tr.diff td.line
 {
 	background-color:white;
 	text-align:right;
 }
+
+/* Unveränderter Text */
 tr.diff td.equal
 {
 }
+
+/* Entfernter Text */
 tr.diff td.old
 {
 	background-color:red;
 }
+
+/* Hinzugefuegter Text */
 tr.diff td.new
 {
 	background-color:green;
 }
+
+/* Geaenderter Text */
 tr.diff td.notequal
 {
 	background-color:yellow;
@@ -198,6 +206,7 @@ body.main tr.title td
 	height:30px;
 }
 
+/* Hinweis */
 td.message { padding:10px; font-weight:bold; }
 
 /* Title-Frame */
@@ -227,6 +236,7 @@ body.main table.main td.window td.act
 	text-align:right;
 }
 
+/* Lizenzhinweis  */
 a.copyright
 {
 	font-family:Verdana,Arial,Helvetica,sans-serif;
@@ -244,6 +254,7 @@ td.motd
 	margin:10px;
 }
 
+/* Hauptfenster */
 table.main
 {
 	border:3px solid;
@@ -303,7 +314,7 @@ td.name
 }
 
 
-/* Eingabfeld fuer Dateiname */
+/* Eingabfelder fuer Dateiname */
 input.filename,
 input.extension,
 input.ansidate,
@@ -318,27 +329,19 @@ td.ansidate,
 
 
 
-
-/* Das Hauptfenster für alle Dialoge */
-td.window
-{
-	border: 0px solid;
-	padding:0px;
-	margin:0px;
-	
-}
-
-
+/* Hilfe-Texte */
 tr td.help
 {
 	font-style: italic;
 }
+
 tr.headline td.help
 {
 	border-bottom:1px solid black;
 	font-style: normal;
 }
 
+/* Logo */
 td.logo
 {
 	padding:10px;
@@ -393,13 +396,12 @@ fieldset
 	padding:0px;
 }
 
+
 /* Legende */
 legend
 {
 	font-weight:bold;
 }
-
-
 
 
 /* Notizen */
@@ -423,9 +425,11 @@ table.notice th
 	font-weight:normal;
 	text-align:left;
 }
+
 table.notice tr.error
 {
 }
+
 table.notice tr.warning
 {
 	margin:0px;
