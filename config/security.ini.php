@@ -44,6 +44,18 @@ disable_dynamic_code = true
 show_system_info = true
 
 
+; Useful against CSRF-attacks, this adds a token to all POST request.
+use_post_token=true
+
+; Creates a new Session on login.
+; Useful against session fixation attacks.
+renew_session_login=true
+
+; Creates a new Session on logout.
+; Useful against session fixation attacks. 
+renew_session_logout=true
+
+
 
 ; Default Login
 ; These values are used for the login form.

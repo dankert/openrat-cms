@@ -93,9 +93,6 @@ if (version_compare(PHP_VERSION, '5.1.0', '>'))
 session_start();
 require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
 
-if	( $_SERVER['REQUEST_METHOD'] == 'POST' && $REQ[REQ_PARAM_TOKEN]!=token() )
-	Http::notAuthorized("Token mismatch");
-
 // Vorhandene Konfiguration aus der Sitzung lesen.
 $conf = Session::getConfig();
  
@@ -159,6 +156,9 @@ if	( !empty($conf['security']['umask']) )
 if	( !empty($conf['interface']['timeout']) )
 	set_time_limit( intval($conf['interface']['timeout']) );
 
+if	( config('security','use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && $REQ[REQ_PARAM_TOKEN]!=token() )
+	Http::notAuthorized("Token mismatch");
+	
 define('FILE_SEP',$conf['interface']['file_separator']);
 
 define('TEMPLATE_DIR',OR_THEMES_DIR.$conf['interface']['theme'].'/templates');

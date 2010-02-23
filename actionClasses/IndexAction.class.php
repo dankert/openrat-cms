@@ -671,7 +671,8 @@ class IndexAction extends Action
 		else
 		{
 			// Anmeldung erfolgreich.
-			$this->recreateSession();
+			if	( config('security','renew_session_login') )
+				$this->recreateSession();
 			
 			$user = Session::getUser();
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
@@ -749,7 +750,8 @@ class IndexAction extends Action
 		// Loeschen der Session.
 		session_destroy();
 		*/
-		$this->recreateSession();
+		if	( config('security','renew_session_logout') )
+			$this->recreateSession();
 		
 		if	( @$conf['theme']['compiler']['compile_at_logout'])
 		{
