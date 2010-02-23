@@ -59,7 +59,7 @@ class UserAction extends Action
 			$this->user->desc     = $this->getRequestVar('desc'    );
 			
 			global $conf;
-			if	( @$conf['security']['user']['show_mail'] )
+			if	( @$conf['security']['user']['show_admin_mail'] )
 				$this->user->mail = $this->getRequestVar('mail'    );
 				
 			$this->user->style    = $this->getRequestVar('style'   );

@@ -277,7 +277,11 @@ redirect_url=
 
 ; Show E-Mail-Adress in Administration-Interface.
 ; Default=true. If admin users should not know the mail adresses, set this to false.
-; Useful for Demo-Installations where a lot of users have adminitration right. 
+; Useful for Demo-Installations where a lot of users may have administration rights. 
+show_admin_mail=true
+
+; Show users e-mail-address to other users.
+; Default=true. 
 show_mail=true
 
 ; Users are able to send mesages to another users via e-mail

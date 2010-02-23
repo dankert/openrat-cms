@@ -23,7 +23,7 @@ page
 					text text:user_fullname
 				cell
 					input name:fullname
-			if true:config:security/user/show_mail
+			if true:config:security/user/show_admin_mail
 				row
 					cell
 						text text:user_mail
