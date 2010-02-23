@@ -647,6 +647,7 @@ class IndexAction extends Action
 		                   
 		if	( !$loginOk )
 		{
+			// Anmeldung nicht erfolgreich
 			sleep(3);
 			
 			if	( $this->mustChangePassword )
@@ -669,6 +670,9 @@ class IndexAction extends Action
 		}
 		else
 		{
+			// Anmeldung erfolgreich.
+			$this->recreateSession();
+			
 			$user = Session::getUser();
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
 			
@@ -730,8 +734,22 @@ class IndexAction extends Action
 		if	( is_object($db) )
 			$this->setTemplateVar('dbid',$db->id);
 		
-		// Aus Sicherheitsgruenden die komplette Session deaktvieren.
+			/*
+		// Alle Variablen aus der Sitzung entfernen.
 		session_unset();
+		
+		// Damit wird die Session gelöscht, nicht nur die Session-Daten!
+		if	( ini_get("session.use_cookies") )
+		{
+			$params = session_get_cookie_params();
+			setcookie( session_name(),'', time() - 3600,
+			           $params["path"],$params["domain"],$params["secure"],$params["httponly"] );
+		}
+		
+		// Loeschen der Session.
+		session_destroy();
+		*/
+		$this->recreateSession();
 		
 		if	( @$conf['theme']['compiler']['compile_at_logout'])
 		{
@@ -1551,8 +1569,40 @@ class IndexAction extends Action
 		}
 	}
 	
-	
-	
+
+	/**
+	 * Erzeugt eine neue Sitzung.
+	 */
+	function recreateSession()
+	{
+		session_unset();
+		
+		// PHP < 4.3.2 kennt die Funktion session_regenerate_id() nicht.
+		if	( version_compare(phpversion(),"4.3.2","<") )
+		{
+			$randlen = 32;
+			$randval = "0123456789abcdefghijklmnopqrstuvwxyz";
+			$newid   = "";
+			for ($i = 1; $i <= $randlen; $i++)
+			{
+				$newid .= substr($randval, rand(0,(strlen($randval) - 1)), 1);
+			}
+			session_id( $newid );
+		}
+		elseif( version_compare(phpversion(),"4.3.2","==") )
+		{
+			session_regenerate_id();
+			
+			// Bug in PHP 4.3.2: Session-Cookie wird nicht neu gesetzt.
+			if ( ini_get("session.use_cookies") )
+				setcookie( session_name(),session_id(),ini_get("session.cookie_lifetime"),"/" );
+		}
+		else
+		{
+			// PHP >= 4.3.3
+			session_regenerate_id();
+		}
+	}
 	
 }
 
