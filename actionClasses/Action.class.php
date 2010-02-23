@@ -336,7 +336,7 @@ class Action
 			Logger::trace('Output'."\n".print_r($this->templateVars,true));
 		
 		// Weitere Variablen anreichern.
-		$this->templateVars['session'] = array('name'=>session_name(),'id'=>session_id());
+		$this->templateVars['session'] = array('name'=>session_name(),'id'=>session_id(),'token'=>token() );
 		$this->templateVars['version'] = OR_VERSION;
 		
 		if	( sizeof($types)==1 && in_array('application/php-array',$types) || $this->getRequestVar('output')=='php-array' )

@@ -91,5 +91,14 @@ function config( $part1,$part2,$part3=null )
 }
 
 
+/**
+ * Generiert aus der Session-Id einen Token.
+ * @return Token
+ */
+function token()
+{
+	return substr(session_id(),-10);
+}
+
 
 ?>

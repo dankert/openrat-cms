@@ -56,6 +56,7 @@ define('OR_TMP_DIR'           ,'./tmp/'            );
 define('OR_CONTROLLER_FILE'   ,defined('OR_EXT_CONTROLLER_FILE')?OR_EXT_CONTROLLER_FILE:'do');
 define('START_TIME'           ,time()              );
 
+define('REQ_PARAM_TOKEN'          ,'token'          );
 define('REQ_PARAM_ACTION'         ,'action'         );
 define('REQ_PARAM_SUBACTION'      ,'subaction'      );
 define('REQ_PARAM_TARGETSUBACTION','targetSubAction');
@@ -92,6 +93,8 @@ if (version_compare(PHP_VERSION, '5.1.0', '>'))
 session_start();
 require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
 
+if	( $_SERVER['REQUEST_METHOD'] == 'POST' && $REQ[REQ_PARAM_TOKEN]!=token() )
+	Http::notAuthorized("Token mismatch");
 
 // Vorhandene Konfiguration aus der Sitzung lesen.
 $conf = Session::getConfig();
