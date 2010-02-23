@@ -30,7 +30,7 @@ class TitleAction extends Action
 	 */
 	function show()
 	{
-		$this->setTemplateVar('css_body_class','title');
+		$this->setTemplateVar('buildinfo',OR_TITLE.' '.OR_VERSION.' - build '.config('build','build') );
 
 		$db = Session::getDatabase();
 		$this->setTemplateVar('dbname',$db->conf['comment'].(readonly()?' ('.lang('readonly').')':''));

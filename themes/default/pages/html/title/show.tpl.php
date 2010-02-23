@@ -70,8 +70,7 @@
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($a5_class,$a5_raw,$a5_escape,$a5_cut) ?><?php $a5_class='text';$a5_var='cms_title';$a5_escape=true;$a5_cut='both'; ?><?php
-		$a5_title = '';
+?></<?php echo $tmp_tag ?>><?php unset($a5_class,$a5_raw,$a5_escape,$a5_cut) ?><?php $a5_title=$buildinfo;$a5_class='text';$a5_var='cms_title';$a5_escape=true;$a5_cut='both'; ?><?php
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a5_class ?>" title="<?php echo $a5_title ?>"><?php
 		$langF = $a5_escape?'langHtml':'lang';
@@ -79,7 +78,7 @@
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($a5_class,$a5_var,$a5_escape,$a5_cut) ?></td><?php $a4_width='40%';$a4_style='text-align:center;';$a4_class='title'; ?><?php $column_idx++; ?><td
+?></<?php echo $tmp_tag ?>><?php unset($a5_title,$a5_class,$a5_var,$a5_escape,$a5_cut) ?></td><?php $a4_width='40%';$a4_style='text-align:center;';$a4_class='title'; ?><?php $column_idx++; ?><td
  width="40%"
  style="text-align:center;"
  class="title"

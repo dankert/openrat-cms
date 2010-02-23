@@ -7,7 +7,7 @@ page class:title
 				image icon:database align:left
 				text title:message:database var:dbname maxlength:25
 				text raw:_-_
-				text var:cms_title
+				text var:cms_title title:var:buildinfo
 					
 
 			// Titel anzeigen				

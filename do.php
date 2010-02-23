@@ -106,7 +106,7 @@ if	( !is_array( $conf ) || isset($REQ['reload']) )
 	$prefs = new Preferences();
 	$conf = $prefs->load();
 	$conf['action'] = $prefs->load(OR_ACTIONCLASSES_DIR);
-	
+	$conf['build'] = parse_ini_file('build.ini');
 	// Sprache lesen und zur Konfiguration hinzufuegen
 
 	if	( $conf['i18n']['use_http'] )
