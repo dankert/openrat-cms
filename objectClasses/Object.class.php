@@ -494,9 +494,11 @@ SQL
 		
 		if (count($row) == 0)
 		{
+			$project = Session::getProject();
+			
 			$this->name = lang('unknown');
-			$this->parentid  = Session::getProject()->getRootObjectId();
-			$this->projectid = Session::getProject()->projectid;
+			$this->parentid  = $project->getRootObjectId();
+			$this->projectid = $project->projectid;
 			$this->filename  = "";
 			$this->orderid   = 0;
 			$this->isRoot = false;
