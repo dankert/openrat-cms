@@ -1579,7 +1579,6 @@ class IndexAction extends Action
 	 */
 	function recreateSession()
 	{
-		session_unset();
 		
 		// PHP < 4.3.2 kennt die Funktion session_regenerate_id() nicht.
 		if	( version_compare(phpversion(),"4.3.2","<") )
