@@ -1600,10 +1600,13 @@ class IndexAction extends Action
 			if ( ini_get("session.use_cookies") )
 				setcookie( session_name(),session_id(),ini_get("session.cookie_lifetime"),"/" );
 		}
+		elseif	( version_compare(phpversion(),"5.1.0",">") )
+		{
+			session_regenerate_id(true);
+		}
 		else
 		{
-			// PHP >= 4.3.3
-			session_regenerate_id();
+			// 5.1.0 > PHP >= 4.3.3
 		}
 	}
 	
