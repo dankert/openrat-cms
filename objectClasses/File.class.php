@@ -38,7 +38,17 @@ class File extends Object
 	var $fullFilename  = '';
 	var $publish       = null;
 	var $mime_type     = '';
+	
+	/**
+	 * Breite eines Bildes. Ist nur verfuegbar, wenn vorher
+	 * #getImageSize() aufgerufen wurde.
+	 */
 	var $width         = null;
+	
+	/**
+	 * Hoehe eines Bildes. Ist nur verfuegbar, wenn vorher
+	 * #getImageSize() aufgerufen wurde.
+	 */
 	var $height        = null;
 	
 	var $tmpfile;
