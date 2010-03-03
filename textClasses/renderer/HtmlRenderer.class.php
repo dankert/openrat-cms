@@ -230,24 +230,21 @@ class HtmlRenderer
 									}
 									else
 									{
-										Logger::warn('element:'.$this->element->name.', '.
-										             'class:'.$className.', no method: execute()');
+										Logger::warn('class:'.$className.', no method: execute()');
 										if	( config('editor','macro','show_errors') )
 											$val = 'Internal Macro error: method execute() not found';
 									}
 								}
 								else
 								{
-									Logger::warn('element:'.$this->element->name.', '.
-									             'class not found:'.$className);
+									Logger::warn('class not found:'.$className);
 									if	( config('editor','macro','show_errors') )
 										$val = 'Internal Macro error: class not found';
 																	}
 							}
 							else
 							{
-								Logger::warn('element:'.$this->element->name.', '.
-								             'file not found:'.$fileName);
+								Logger::warn('file not found:'.$fileName);
 								
 								if	( config('editor','macro','show_errors') )
 								{
