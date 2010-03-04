@@ -101,4 +101,25 @@ function token()
 }
 
 
+/**
+ * Ermittelt, ob der Wert 'true' oder 'false' entspricht.
+ * 
+ * Anders als beim PHP-Cast auf boolean wird hier auch die
+ * Zeichenkette 'true' als wahr betrachtet.
+ * 
+ * @param val mixed
+ * @return boolean 
+ */
+function istrue( $val )
+{
+	if	( is_bool($val) )
+		return $val;
+	elseif( is_numeric($val) )
+		return $val != 0;
+	elseif( is_string($val) )
+		return $val == 'true' || $val == 'yes' || $val == '1';
+	else
+		return false;
+}
+
 ?>
