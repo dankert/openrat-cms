@@ -98,6 +98,14 @@ page
 						focus field:text
 
 			if value:var:type equals:longtext
+				if present:preview
+					row
+						cell colspan:2 class:preview
+							fieldset title:message:page_preview
+								text var:preview escape:false
+							newline
+							newline
+
 				row
 					cell colspan:2
 						//focus field:text
@@ -107,12 +115,6 @@ page
 
 						if value:var:editor equals:wiki
 						
-							if present:preview
-								fieldset title:message:page_preview
-									text var:preview escape:false
-								newline
-								newline
-
 							if present:languagetext
 								fieldset title:var:languagename
 									text var:languagetext

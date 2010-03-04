@@ -22,7 +22,7 @@ Basis-Style for Openrat.
 */
 
 
-/* Alle Elemente zuruecksetzen */
+/* R e s e t - Alle Elemente zuruecksetzen */
 /* Source: http://meyerweb.com/eric/tools/css/reset/ */
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
 body {line-height:1.5;}
@@ -32,6 +32,55 @@ table, td, th {vertical-align:top;}
 blockquote:before, blockquote:after, q:before, q:after {content:"";}
 blockquote, q {quotes:"" "";}
 a img {border:none;}
+
+
+/* Vorschau von Text-Inhalten */
+
+td.preview { background-color:papayawhip; border-top:1px solid silver; border-bottom:1px solid silver; }
+.preview h1 { font-size:138.5%; }
+.preview h2 { font-size:123.1%; }
+.preview h3 { font-size:108%;   }
+.preview h1,.preview h2,.preview h3 {
+	margin:1em 0;
+}
+.preview h1,
+.preview h2,
+.preview h3,
+.preview h4,
+.preview h5,
+.preview h6,
+.preview strong
+{
+	font-weight:bold; 
+}
+.preview abbr,.preview acronym {
+	border-bottom:1px dotted #000;
+	cursor:help;
+} 
+.preview em {
+	font-style:italic;
+}
+.preview ol,.preview ul,.preview dl {
+	margin-left:2em;
+}
+.preview ol li
+{
+	list-style: decimal outside;	
+}
+.preview ul li
+{
+	list-style: disc outside;
+}
+.preview a:link,
+.preview a:visited,
+.preview a:active,
+.preview a:hover
+{
+	text-decoration:underline;
+	color:blue;
+}
+
+
 
 /* Verweise */
 a:link,

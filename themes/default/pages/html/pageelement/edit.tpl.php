@@ -1086,7 +1086,34 @@ document.forms[0].<?php echo $a7_field ?>.select();
 	if	( $a4_tmp_exec )
 	{
 ?>
-<?php unset($a4_equals,$a4_value) ?><?php
+<?php unset($a4_equals,$a4_value) ?><?php $a5_present='preview'; ?><?php 
+	$a5_tmp_exec = isset($$a5_present);
+	$a5_tmp_last_exec = $a5_tmp_exec;
+	if	( $a5_tmp_exec )
+	{
+?>
+<?php unset($a5_present) ?><?php
+	$row_idx++;
+	$column_idx = 0;
+?>
+<tr
+>
+<?php $a7_class='preview';$a7_colspan='2'; ?><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+ class="preview"
+ colspan="2"
+><?php unset($a7_class,$a7_colspan) ?><?php $a8_title=lang('page_preview'); ?><fieldset><?php if(isset($a8_title)) { ?><legend><?php echo encodeHtml($a8_title) ?></legend><?php } ?><?php unset($a8_title) ?><?php $a9_class='text';$a9_var='preview';$a9_escape=false;$a9_cut='both'; ?><?php
+		$a9_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a9_class ?>" title="<?php echo $a9_title ?>"><?php
+		$langF = $a9_escape?'langHtml':'lang';
+		$tmp_text = isset($$a9_var)?$$a9_var:$langF('UNKNOWN');
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a9_class,$a9_var,$a9_escape,$a9_cut) ?></fieldset><br/><br/></td></tr><?php } ?><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -1296,22 +1323,7 @@ function table()
 	if	( $a7_tmp_exec )
 	{
 ?>
-<?php unset($a7_equals,$a7_value) ?><?php $a8_present='preview'; ?><?php 
-	$a8_tmp_exec = isset($$a8_present);
-	$a8_tmp_last_exec = $a8_tmp_exec;
-	if	( $a8_tmp_exec )
-	{
-?>
-<?php unset($a8_present) ?><?php $a9_title=lang('page_preview'); ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?><?php $a10_class='text';$a10_var='preview';$a10_escape=false;$a10_cut='both'; ?><?php
-		$a10_title = '';
-		$tmp_tag = 'span';
-?><<?php echo $tmp_tag ?> class="<?php echo $a10_class ?>" title="<?php echo $a10_title ?>"><?php
-		$langF = $a10_escape?'langHtml':'lang';
-		$tmp_text = isset($$a10_var)?$$a10_var:$langF('UNKNOWN');
-	$tmp_text = nl2br($tmp_text);
-	echo $tmp_text;
-	unset($tmp_text);
-?></<?php echo $tmp_tag ?>><?php unset($a10_class,$a10_var,$a10_escape,$a10_cut) ?></fieldset><br/><br/><?php } ?><?php $a8_present='languagetext'; ?><?php 
+<?php unset($a7_equals,$a7_value) ?><?php $a8_present='languagetext'; ?><?php 
 	$a8_tmp_exec = isset($$a8_present);
 	$a8_tmp_last_exec = $a8_tmp_exec;
 	if	( $a8_tmp_exec )
