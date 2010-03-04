@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2010 Jan Dankert
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,66 +15,39 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.2  2005-01-04 19:59:55  dankert
-// Allgemeine Korrekturen, Erben von "Dynamic"-klasse
-//
-// Revision 1.1  2004/10/14 21:15:43  dankert
-// Anzeige einer Nachrichtenliste
-//
-// ---------------------------------------------------------------------------
 
 
 
 /**
- * Erstellen einer Teaser-Liste
+ * Erstellen einer Teaser-Liste.
+ *
  * @author Jan Dankert
  */
 class TeaserList extends Dynamic
 {
-	/**
-	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
-	 * @type String
-	 */
-	var $parameters  = Array(
-		'folderid'             =>'Id of the folder whose pages should go into the list, default: the root folder',
-		'forward_text'         =>'Link text, default: "read more..."',
-		'title_html_tag'       =>'HTML-Tag for the titles, default: "h2"',
-		'title_css_class'      =>'CSS-Class to use for title, default: ""',
-		'description_css_class'=>'CSS-Class to use for description, default: ""',
-		'link_css_class'       =>'CSS-Class to use for the forward link, default: ""'
-		);
-
 	var $folderid              = 0;
-	var $forward_text          = 'read more ...';
 	var $title_html_tag        = 'h2';
-	var $title_css_class       = '';
-	var $description_css_class = '';
-	var $link_css_class        = '';
+	var $time_html_tag         = 'h6';
+	var $title_css_class       = 'teaser';
+	var $description_css_class = 'teaser';
+	var $link_css_class        = 'teaser';
 	var $teaserElementId       = '';
 	var $teaserMaxLength       = 100;
+	var $plaintext             = 'true';
+	var $linktitle             = 'true';
+	var $linktext              = 'true';
+	var $timeelementid         = 0;
 	
 	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $description = 'Creates a teaser list of pages in a folder';
-	var $api;
 
 	// Erstellen des Hauptmenues
 	function execute()
 	{
 		$feed = array();
-
-		if	( !empty($this->title_css_class) )
-			$this->title_css_class       = ' class="'.$this->title_css_class.'"';
-
-		if	( !empty($this->description_css_class) )
-			$this->description_css_class = ' class="'.$this->description_css_class.'"';
-
-		if	( !empty($this->link_css_class) )
-			$this->link_css_class        = ' class="'.$this->link_css_class.'"';
 
 		// Lesen des Root-Ordners
 		if	( intval($this->folderid) == 0 )
@@ -96,16 +66,47 @@ class TeaserList extends Dynamic
 				$p->load();
 				
 				$desc = $p->desc;
+				$p->generate_elements();
+				
 				if	( !empty($this->teaserElementId) )
 				{
-					$p->generate_elements();
-					$desc = $p->values[$this->teaserElementId]->value;
-					$desc = Text::maxLength(strip_tags($desc),$this->teaserMaxLength);
+					$value = $p->values[$this->teaserElementId];
+					$desc = $value->value;
+					if	( istrue($this->plaintext)  )
+					{
+						$desc = strip_tags($desc);
+						// Und nur wenn die Tags raus sind duerfen wir nun den Text kuerzen.
+						// (sonst drohen offene Tags)
+						if	( is_numeric($this->teaserMaxLength) && $this->teaserMaxLength > 0 )
+							$desc = Text::maxLength($desc,$this->teaserMaxLength);
+					}
 				}
 
-				$this->output( '<'.$this->title_html_tag.$this->title_css_class.'><a href="'.$this->pathToObject($o->objectid).'">'.$p->name.'</a></'.$this->title_html_tag.'>' );
-				$this->output( '<p'.$this->description_css_class.'><a href="'.$this->pathToObject($o->objectid).'">'.$desc.'</a></p>' );
-				//$this->output( '<p><a href="'.$this->pathToObject($o->objectid).'"'.$this->link_css_class.'>'.$this->forward_text.'</a></p>' );
+				$time = '';
+				if	( !empty($this->timeelementid) )
+				{
+					$value = $p->values[$this->timeelementid];
+					$time = $value->value;
+				}
+				
+				$this->output('<'.$this->time_html_tag.'>'.$time.'</'.$this->time_html_tag.'>');
+				
+				$url = $this->pathToObject($o->objectid);
+				
+				$this->output( '<'.$this->title_html_tag.' class="'.$this->title_css_class.'">');
+				if	( istrue($this->linktitle) )
+					$this->output( '<a href="'.$url.'">'.$p->name.'</a>' );
+				else
+					$this->output( $p->name );
+				$this->output( '</'.$this->title_html_tag.'>' );
+					
+				$this->output( '<p class="'.$this->description_css_class.'">' );
+				if	( istrue($this->linktext) )
+					$this->output( '<a href="'.$this->pathToObject($o->objectid).'">'.$desc.'</a>' );
+				else
+					$this->output( $desc );
+					
+				$this->output( '</p>' );
 			}
 		}
 	}
