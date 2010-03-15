@@ -752,8 +752,8 @@ class IndexAction extends Action
 		*/
 		if	( config('security','renew_session_logout') )
 			$this->recreateSession();
-		else
-			session_unset();
+
+		session_unset();
 		
 		if	( @$conf['theme']['compiler']['compile_at_logout'])
 		{
