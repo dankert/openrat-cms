@@ -99,7 +99,7 @@ class FilemanagerAction extends ObjectAction
 		Logger::debug($this->command);
 		Logger::debug($this->resourceType);
 		Logger::debug($this->currentFolder);
-		Logger::debug($this->folder->objectid);
+		//Logger::debug($this->folder->objectid);
 
 		
 		// Get the main request information.

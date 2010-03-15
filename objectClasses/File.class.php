@@ -209,20 +209,9 @@ class File extends Object
 		global $conf;
 		$mime_types = $conf['mime-types'];
 		
-		if	( !empty($this->extension))
-		{
-			$ext = $this->extension;
-		}
-		else
-		{
-			$pos = strrpos($this->filename,'.');
-			if	( $pos === false )
-				$ext = '';
-			else
-				$ext = substr($this->filename,$pos+1);
-		}
+
 		
-		$ext = strtolower($ext);
+		$ext = strtolower( $this->getRealExtension() );
 
 		if	( !empty($mime_types[$ext]) )
 			$this->mime_type = $mime_types[$ext];
@@ -689,6 +678,30 @@ EOF
 		parent::setTimestamp();
 	}
 	
+
+	
+	/**
+	 * Ermittelt die wirksame Datei-Endung. Diese kann sich
+	 * in der Extra-Dateiendung, aber auch direkt im Dateiname
+	 * befinden.
+	 * 
+	 * @return Dateiendung
+	 */
+	function getRealExtension() 
+	{
+		if	( !empty($this->extension))
+		{
+			return $this->extension;
+		}
+		else
+		{
+			$pos = strrpos($this->filename,'.');
+			if	( $pos === false )
+				return '';
+			else
+				return substr($this->filename,$pos+1);
+		}
+	}
 }
 
 ?>

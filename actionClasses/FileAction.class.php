@@ -162,7 +162,7 @@ class FileAction extends ObjectAction
 		if	( ! function_exists( 'imagetypes' ) )
 			return 0;
 
-		$ext      = strtolower($this->file->extension);
+		$ext      = strtolower($this->file->getRealExtension());
 		$types    = imagetypes();
 		$formats  = array( 'gif' =>IMG_GIF,
 		                   'jpg' =>IMG_JPG,
@@ -350,14 +350,16 @@ class FileAction extends ObjectAction
 		
 		$format = $this->imageFormat();
 
-		if	( $format != 0 )
-			$formats = $this->imageFormats();
-		else
-			$formats = array();
+		if	( $format == 0 )
+		{
+			$this->addNotice( 'image','','IMAGE_RESIZING_UNKNOWN_TYPE',OR_NOTICE_WARN);
+		}
+			
+		$formats = $this->imageFormats();
 			
 		if	( empty($formats) )
 			$this->addNotice( 'image','','IMAGE_RESIZING_NOT_AVAILABLE',OR_NOTICE_WARN);
-
+		
 		$sizes = array();
 		foreach( array(10,25,50,75,100,125,150,175,200,250,300,350,400,500,600,800) as $s )
 			$sizes[strval($s/100)] = $s.'%';
