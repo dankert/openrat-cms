@@ -286,6 +286,9 @@ td.motd
 
 table.main
 {
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 10px;
 	border:3px solid gray;
 	background-color:white;
 }
@@ -486,6 +489,8 @@ table.notice
 {
 	border:1px solid black;
 	border-spacing:0px;
+	-moz-border-radius:10px;
+	-khtml-border-radius:10px;
 }
 table.notice th
 {
