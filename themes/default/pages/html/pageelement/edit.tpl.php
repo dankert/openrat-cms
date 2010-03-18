@@ -76,6 +76,7 @@ if	($a3_readonly) {
 ?><input type="hidden" id="id_<?php echo $a3_name ?>" name="<?php echo $a3_name ?>" value="<?php echo isset($$a3_name)?$$a3_name:$a3_default ?>" /><?php
  } } else { ?><span class="<?php echo $a3_class ?>"><?php echo isset($$a3_name)?$$a3_name:$a3_default ?></span><?php } ?><?php unset($a3_class,$a3_default,$a3_type,$a3_name,$a3_size,$a3_maxlength,$a3_onchange,$a3_readonly) ?><?php $a3_name='element';$a3_width='93%';$a3_rowclasses='odd,even';$a3_columnclasses='1,2,3'; ?><?php
 	$coloumn_widths=array();
+	$icon=$actionName;
 	$row_classes   = explode(',',$a3_rowclasses);
 	$row_class_idx = 999;
 	$column_classes = explode(',',$a3_columnclasses);
@@ -94,7 +95,7 @@ if	($a3_readonly) {
 		if (!@$conf['interface']['application_mode'] )
 		{
 		echo '<tr class="title"><td>';
-		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
+		echo '<img src="'.$image_dir.'icon_'.$icon.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->isEditMode()) { 
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php }
@@ -102,7 +103,7 @@ if	($a3_readonly) {
   ?><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /> <?php } else {
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
-		echo '<span class="path">'.langHtml('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
+		echo '<span class="path">'.langHtml($actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
@@ -1199,8 +1200,8 @@ switch( $a8_type )
     array(/*'Styles',*/'Format','Font','FontSize'),
     array('TextColor','BGColor'),
     array('Source','-', 'ShowBlocks','Maximize') );
-			$editor->config['filebrowserUploadUrl' ] = './'.OR_EXT_CONTROLLER_FILE.'.php?action=filemanager&subaction=connector&Command=DirectUpload&CurrentFolder=/&Type=File&'.REQ_PARAM_TOKEN.'='.token();
-			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filemanager','browse','-',array('oid'=>'',REQ_PARAM_TOKEN=>token()) ));
+			$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','upload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
+			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','browse','-'));
 			$editor->editor($a8_name,$$a8_name);
 		}
 		else
@@ -1423,8 +1424,8 @@ switch( $a8_type )
     array(/*'Styles',*/'Format','Font','FontSize'),
     array('TextColor','BGColor'),
     array('Source','-', 'ShowBlocks','Maximize') );
-			$editor->config['filebrowserUploadUrl' ] = './'.OR_EXT_CONTROLLER_FILE.'.php?action=filemanager&subaction=connector&Command=DirectUpload&CurrentFolder=/&Type=File&'.REQ_PARAM_TOKEN.'='.token();
-			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filemanager','browse','-',array('oid'=>'',REQ_PARAM_TOKEN=>token()) ));
+			$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','upload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
+			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','browse','-'));
 			$editor->editor($a8_name,$$a8_name);
 		}
 		else
