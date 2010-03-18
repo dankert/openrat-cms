@@ -569,12 +569,12 @@ class PageelementAction extends Action
 			if ( !isset($this->templateVars['text']))
 				// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
 				// einen Text eingegeben hat (Vorschaufunktion).
-				$this->setTemplateVar( 'text',$this->convertOIDs( $this->value->text ) );
+				$this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
 
 			if	(! $this->isEditMode() )
 			{
 				$this->value->generate(); // Inhalt erzeugen.
-				$this->setTemplateVar('text',$this->convertOIDs( $this->value->value ));
+				$this->setTemplateVar('text',$this->linkifyOIDs( $this->value->value ));
 			}
 
 			if	( $this->getSessionVar('pageaction') != '' )
@@ -934,7 +934,7 @@ class PageelementAction extends Action
 			if   ( $this->hasRequestVar('linkobjectid') )
 				$value->linkToObjectId = $this->getRequestVar('linkobjectid');
 			else
-				$value->text           = $this->convertOIDs( $this->getRequestVar('text','raw') );
+				$value->text           = $this->compactOIDs( $this->getRequestVar('text','raw') );
 
 			// Vorschau anzeigen
 			if	( $this->hasRequestVar('preview'  ) ||
@@ -1310,16 +1310,23 @@ class PageelementAction extends Action
 		}
 
 
-		function convertOIDs( $text )
+		function linkifyOIDs( $text )
 		{
-			$treffer = array();
-			preg_match_all('/\"([^\"]*)__OID__([0-9]+)__([^\"]*)\"/', $text, $treffer,PREG_SET_ORDER);
-			//		preg_match_all('(.*)__OID__([0-9]+)__', $text, $treffer);
-			foreach( $treffer as $t )
+			foreach( Text::parseOID($text) as $oid=>$t )
 			{
-				$oid = $t[2];
 				$url = $this->page->path_to_object($oid);
-				$text = str_replace($t[0],'"'.$url.'"',$text);
+				$text = str_replace($t,'"'.$url.'"',$text);
+			}
+
+			return $text;
+		}
+
+
+		function compactOIDs( $text )
+		{
+			foreach( Text::parseOID($text) as $oid=>$t )
+			{
+				$text = str_replace($t,'"?__OID__'.$oid.'__"',$text);
 			}
 
 			return $text;
