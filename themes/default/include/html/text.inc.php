@@ -44,11 +44,7 @@
 	#END-IF#
 
 ?><<?php echo $tmp_tag ?> class="<?php echo $attr_class ?>" title="<?php echo $attr_title ?>"><?php
-	#IF-ATTR escape#
 		$langF = $attr_escape?'langHtml':'lang';
-	#ELSE
-		$langF = 'langHtml';
-	#END-IF
 
 	#IF-ATTR array#
 		//geht nicht:
@@ -81,7 +77,7 @@
 	#END-IF
 		
 	#IF-ATTR value#
-		$tmp_text = $attr_value;
+		$tmp_text = $attr_escape?htmlentities($attr_value):$attr_value;
 	#END-IF
 		
 	#IF-ATTR maxlength#
