@@ -1048,7 +1048,14 @@ SQL
 					$inhalt = str_replace( "\n",'',$inhalt );
 					$inhalt = str_replace( "\r",'',$inhalt );
 				}
-				
+
+				// "__OID__nnn__" ersetzen durch einen richtigen Link
+				foreach( Text::parseOID($inhalt) as $oid=>$t )
+				{
+					$url    = $this->page->path_to_object($oid);
+					$inhalt = str_replace($t,'"'.$url.'"',$inhalt);
+				}
+
 				break;
 
 
