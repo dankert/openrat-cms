@@ -1176,13 +1176,32 @@ switch( $a8_type )
 	case 'html':
 		if	( $this->isEditMode() )
 		{
-			include('./editor/fckeditor.php');
-			$editor = new FCKeditor( $a8_name ) ;
-			$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
-			$editor->Value = $$a8_name;
-			$editor->Height = '290';
-			$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
-			$editor->Create();
+			include_once('./editor/editor/ckeditor.php');
+			$editor = new CKeditor() ;
+			$url = FileUtils::slashify(dirname($_SERVER['SCRIPT_NAME']));
+			$base = defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/editor/':'./editor/editor/';
+			$editor->basePath = $base;
+			$editor->config['skin' ] = 'v2';
+			$editor->config['language' ] = config('language','language_code');
+			$editor->config['toolbar' ] = 'Openrat';
+			$editor->config['toolbar_Openrat' ] =  array( 
+	array('Save','Preview','-'/*,'Templates'*/),
+    array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'),
+    array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'),
+    array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'),
+    '/',
+    array('Bold','Italic',/*'Underline',*/'Strike','-','Subscript','Superscript'),
+    array('NumberedList','BulletedList','-','Outdent','Indent','Blockquote'),
+    array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'),
+    array('Link','Unlink','Anchor'),
+    array('Image','Flash','Table','HorizontalRule','SpecialChar','PageBreak'),
+    '/',
+    array(/*'Styles',*/'Format','Font','FontSize'),
+    array('TextColor','BGColor'),
+    array('Source','-', 'ShowBlocks','Maximize') );
+			$editor->config['filebrowserUploadUrl' ] = './'.OR_EXT_CONTROLLER_FILE.'.php?action=filemanager&subaction=connector&Command=DirectUpload&CurrentFolder=/&Type=File&'.REQ_PARAM_TOKEN.'='.token();
+			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filemanager','browse','-',array('oid'=>'',REQ_PARAM_TOKEN=>token()) ));
+			$editor->editor($a8_name,$$a8_name);
 		}
 		else
 		{
@@ -1381,13 +1400,32 @@ switch( $a8_type )
 	case 'html':
 		if	( $this->isEditMode() )
 		{
-			include('./editor/fckeditor.php');
-			$editor = new FCKeditor( $a8_name ) ;
-			$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
-			$editor->Value = $$a8_name;
-			$editor->Height = '290';
-			$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
-			$editor->Create();
+			include_once('./editor/editor/ckeditor.php');
+			$editor = new CKeditor() ;
+			$url = FileUtils::slashify(dirname($_SERVER['SCRIPT_NAME']));
+			$base = defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/editor/':'./editor/editor/';
+			$editor->basePath = $base;
+			$editor->config['skin' ] = 'v2';
+			$editor->config['language' ] = config('language','language_code');
+			$editor->config['toolbar' ] = 'Openrat';
+			$editor->config['toolbar_Openrat' ] =  array( 
+	array('Save','Preview','-'/*,'Templates'*/),
+    array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'),
+    array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'),
+    array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'),
+    '/',
+    array('Bold','Italic',/*'Underline',*/'Strike','-','Subscript','Superscript'),
+    array('NumberedList','BulletedList','-','Outdent','Indent','Blockquote'),
+    array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'),
+    array('Link','Unlink','Anchor'),
+    array('Image','Flash','Table','HorizontalRule','SpecialChar','PageBreak'),
+    '/',
+    array(/*'Styles',*/'Format','Font','FontSize'),
+    array('TextColor','BGColor'),
+    array('Source','-', 'ShowBlocks','Maximize') );
+			$editor->config['filebrowserUploadUrl' ] = './'.OR_EXT_CONTROLLER_FILE.'.php?action=filemanager&subaction=connector&Command=DirectUpload&CurrentFolder=/&Type=File&'.REQ_PARAM_TOKEN.'='.token();
+			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filemanager','browse','-',array('oid'=>'',REQ_PARAM_TOKEN=>token()) ));
+			$editor->editor($a8_name,$$a8_name);
 		}
 		else
 		{
@@ -1552,7 +1590,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1570,7 +1608,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1579,7 +1617,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1597,7 +1635,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1613,7 +1651,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1631,7 +1669,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1656,7 +1694,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1674,7 +1712,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1699,7 +1737,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1717,7 +1755,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1735,7 +1773,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1753,7 +1791,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1762,7 +1800,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1780,7 +1818,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1798,7 +1836,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -1816,7 +1854,7 @@ function table()
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a11_class ?>" title="<?php echo $a11_title ?>"><?php
 		$langF = $a11_escape?'langHtml':'lang';
-		$tmp_text = $a11_value;
+		$tmp_text = $a11_escape?htmlentities($a11_value):$a11_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);

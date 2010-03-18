@@ -50,6 +50,20 @@ class FilemanagerAction extends ObjectAction
 	 */
 	function FilemanagerAction()
 	{
+		if	( $this->getRequestId() != 0  )
+		{
+			$fid = $this->getRequestId();
+		}
+		else
+		{
+			$project = Session::getProject();
+			$fid = $project->getRootObjectId();
+		}
+		
+		$this->folder = new Folder( $fid );
+		$this->folder->load();
+		
+		
 	}
 
 	
@@ -59,9 +73,6 @@ class FilemanagerAction extends ObjectAction
 	 */
 	function investigateCurrentFolder()
 	{
-		$project = Session::getProject();
-		$folderid = $project->getRootObjectId();
-		$this->folder = new Folder( $folderid );
 		$parts = explode('/',$this->currentFolder);
 
 		foreach( $parts as $part )
@@ -87,7 +98,7 @@ class FilemanagerAction extends ObjectAction
 	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
 	 * auf die Standardausgabe geschrieben
 	 */
-	function show()
+	function connector()
 	{
 		// PHP-Fehler ins Log schreiben, damit die Ausgabe nicht zerst�rt wird.
 		if (version_compare(PHP_VERSION, '5.0.0', '>'))
@@ -124,10 +135,14 @@ class FilemanagerAction extends ObjectAction
 		// File Upload doesn't have to Return XML, so it must be intercepted before anything.
 		if ( $this->command == 'FileUpload' )
 		{
-			$this->fileUpload() ;
+			$this->fileUpload('NewFile') ;
 			return ;
 		}
-		Logger::debug("Start");
+		if ( $this->command == 'DirectUpload' )
+		{
+			$this->fileUpload('upload') ;
+			return ;
+		}
 		
 		$this->setXmlHeaders();
 		$this->createXmlHeader();
@@ -311,9 +326,9 @@ class FilemanagerAction extends ObjectAction
 	 * Datei-Upload.
 	 *
 	 */
-	function fileUpload()
+	function fileUpload( $var )
 	{
-		$upload = new Upload('NewFile');
+		$upload = new Upload( $var );
 		
 		// From FCK-Editor-Doc:
 		// The "OnUploadCompleted" is a JavaScript function that is called to expose the upload result. The possible values are: 
@@ -323,77 +338,161 @@ class FilemanagerAction extends ObjectAction
 		// OnUploadCompleted( 202 ) : invalid file.
 		if	( !$upload->isValid() )
 		{
-			$errorNr   = 202;
-			$errorText = 'Upload failed, reason: '.$upload->error; 
+			echo 'Upload failed, reason: '.$upload->error; 
 		}
 		else
 		{
 			$file = new File();
-			$file->parentid = $this->folder->objectid;
-			$file->filename = $upload->filename;
-			$file->value    = $upload->value;
+			$file->parentid  = $this->folder->objectid;
+			$file->name      = $upload->filename;
+			$file->filename  = $upload->filename;
+			$file->extension = $upload->extension;
+			$file->value     = $upload->value;
 			$file->add();
-
-			$errorNr   = 0;
-			$errorText = $file->filename; 
+			
+			$newId  = $file->objectid;
+			$newUrl = str_replace('&amp;','&',Html::url('file','show',$newId,array('oid'=>'__OID__'.$newId.'__')));
+			
+			echo '<script type="text/javascript">' ;
+			echo 'window.parent.CKEDITOR.tools.callFunction('.$this->getRequestVar('CKEditorFuncNum','123').",'".$newUrl."','');</script>";
+			echo '</script>' ;
+			echo 'OK' ;
 		}
 	
-		echo '<script type="text/javascript">' ;
-		echo 'window.parent.frames["frmUpload"].OnUploadCompleted(' .$errorNr.',"' . str_replace( '"', '\\"', $errorText ) . '") ;' ;
-		echo '</script>' ;
 	}
-	
-	
-	
-	/**
-	 * Erzeugt Javascript mit der Konfiguration für den FCK-Editor.
-	 */
-	function config()
-	{
-		echo <<<EOF
-FCKConfig.ToolbarSets["Default"] = [
-	['Save','NewPage','Preview','Templates','-','Source','DocProps','ShowBlocks'],
-	['Cut','Copy','Paste','PasteText','PasteWord','-','Print','SpellCheck'],
-	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-	['Form','Checkbox','Radio','TextField','Textarea','Select','Button','ImageButton','HiddenField'],
-	'/',
-	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
-	['OrderedList','UnorderedList','-','Outdent','Indent','Blockquote'],
-	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
-	['Link','Unlink','Anchor'],
-	['Image','Flash','Table','Rule','SpecialChar','PageBreak'],
-	'/',
-	['Style','FontFormat','FontName','FontSize'],
-	['TextColor','BGColor'],
-	['FitWindow']		// No comma for the last row.
-] ;
-EOF
-;
 
-		if	( $this->hasRequestVar( session_name() ) )
-			$s = '&'.session_name().'='.session_id();
-		else
-			$s = '';
-			
-		echo "var _FileBrowserLanguage	= 'php' ;";
-		echo "var _QuickUploadLanguage	= 'php' ;";
-		echo "var _FileBrowserExtension = _FileBrowserLanguage == 'perl' ? 'cgi' : _FileBrowserLanguage ;";
 	
-		echo "FCKConfig.LinkBrowser = true;";
-		echo "FCKConfig.LinkBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=../../../../../do.php?action=filemanager".$s."';";
-	
-		echo "FCKConfig.ImageBrowser = true ;";
-		echo "FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=../../../../../do.php?action=filemanager".$s."';";
-	
-		echo "FCKConfig.FlashBrowser = true ;";
-		echo "FCKConfig.FlashBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Flash&Connector=../../../../../do.php?action=filemanager".$s."';";
-	
-		echo "FCKConfig.LinkUpload = true;";
-		echo "FCKConfig.ImageUpload = true;";
-		echo "FCKConfig.FlashUpload = true;";
+	function browse()
+	{
+		global $conf_php;
+		$funcNum = $this->getRequestVar('CKEditorFuncNum','123');
+
+		if   ( ! $this->folder->isRoot )
+			$this->setTemplateVar('up_url',Html::url('filemanager','browse',$this->folder->parentid,array('CKEditorFuncNum'=>$funcNum)));
+
+		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
 		
+		$list = array();
+
+		// Schleife ueber alle Objekte in diesem Ordner
+		foreach( $this->folder->getObjects() as $o )
+		{
+			$id = $o->objectid;
+
+			if   ( $o->hasRight(ACL_READ) )
+			{
+				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
+				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
+				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
+				if	( $list[$id]['desc'] == '' )
+					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id; 
+
+				$list[$id]['type'] = $o->getType();
+				
+				$list[$id]['icon' ] = $o->getType();
+				$list[$id]['class'] = $o->getType();
+				if	( $o->isFolder )
+					$list[$id]['url' ] = Html::url('filemanager','browse',$id,array('CKEditorFuncNum'=>$funcNum) );
+				else
+					$list[$id]['url' ] = "javascript:window.top.opener.CKEDITOR.tools.callFunction($funcNum,'".Html::url('file','show',$id,array('oid'=>'__OID__'.$id.'__'))."','');window.top.close();window.top.opener.focus();";					
+				
+				
+				
+				if	( $o->getType() == 'file' )
+				{
+					$file = new File( $id );
+					$file->load();
+					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
+
+					if	( $file->isImage() )
+					{
+						$list[$id]['icon' ] = 'image';
+						$list[$id]['class'] = 'image';
+						//$list[$id]['url' ] = Html::url('file','show',$id) nur sinnvoll bei Lightbox-Anzeige
+					}
+//					if	( substr($file->mimeType(),0,5) == 'text/' )
+//						$list[$id]['icon'] = 'text';
+				}
+
+				$list[$id]['date'] = $o->lastchangeDate;
+				$list[$id]['user'] = $o->lastchangeUser;
+			}
+		}
+
+		$this->setTemplateVar('object'      ,$list            );
+		$this->setTemplateVar('CKEditorFuncNum',$funcNum );
+		$this->setTemplateVar('token',token() );
+		$this->setTemplateVar('id',$this->folder->objectid );
+	}
+
+
+	function addfolder()
+	{
+		
+		$filename = $this->getRequestVar('name');
+		
+		if ( empty($filename) )
+		{
+			$this->addNotice('folder',$this->name,'ADDED',OR_NOTICE_ERROR);
+		}
+		elseif( !$this->folder->hasRight(ACL_CREATE_FOLDER) )
+		{
+			$this->addNotice('folder',$this->name,'ERROR',OR_NOTICE_ERROR);
+		}
+		elseif( $this->folder->hasFilename( $filename ) )
+		{
+			$this->addNotice('folder',$this->name,'ERROR',OR_NOTICE_ERROR);
+			
+		}
+		else
+		{
+			$newFolder = new Folder();
+			$newFolder->parentid = $this->folder->objectid;
+			$newFolder->filename = $filename;
+			$newFolder->name     = $filename;
+			$newFolder->add();
+			
+			$this->addNotice('folder',$this->folder->name,'ADDED',OR_NOTICE_OK);
+		}
 	}
 	
+	
+	
+	function upload()
+	{
+		$upload = new Upload('file');
+		
+		if	( !$upload->isValid() )
+		{
+			Html::debug($upload);
+			$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
+			return;
+		}
+		// Pr�fen der maximal erlaubten Dateigr��e.
+		elseif	( $upload->size < 0 )
+		{
+			// Maximale Dateigr��e ist �berschritten
+			$this->addValidationError('file','MAX_FILE_SIZE_EXCEEDED');
+			return;
+		}
+		elseif( $upload->size > 0 )
+		{
+			$file   = new File();
+			$file->desc      = '';
+			$file->filename  = $upload->filename;
+			$file->name      = $upload->filename;
+			$file->extension = $upload->extension;		
+			$file->size      = $upload->size;
+			$file->parentid  = $this->folder->objectid;
+	
+			$file->value     = $upload->value;
+	
+			$file->add(); // Datei hinzufuegen
+			$this->folder->setTimestamp();
+			$this->addNotice('file',$file->name,'ADDED','ok');
+		}
+	}
 }
 
 

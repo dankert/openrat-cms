@@ -531,13 +531,15 @@ switch( $a7_type )
 	case 'html':
 		if	( $this->isEditMode() )
 		{
-			include('./editor/fckeditor.php');
-			$editor = new FCKeditor( $a7_name ) ;
-			$editor->BasePath	= defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/':'./editor/';
-			$editor->Value = $$a7_name;
-			$editor->Height = '290';
-			$editor->Config['CustomConfigurationsPath'] = '../openrat-fckconfig.js';
-			$editor->Create();
+			include_once('./editor/editor/ckeditor.php');
+			$editor = new CKeditor() ;
+			$url = FileUtils::slashify(dirname($_SERVER['SCRIPT_NAME']));
+			$base = defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/editor/':'./editor/editor/';
+			$editor->basePath = $base;
+			$editor->config['skin' ] = 'v2';
+			$editor->config['filebrowserUploadUrl' ] = './'.OR_EXT_CONTROLLER_FILE.'.php?action=filemanager&subaction=connector&Command=DirectUpload&CurrentFolder=/&Type=File&'.REQ_PARAM_TOKEN.'='.token();
+			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filemanager','browse','-',array('oid'=>'',REQ_PARAM_TOKEN=>token()) ));
+			$editor->editor($a7_name,$$a7_name);
 		}
 		else
 		{

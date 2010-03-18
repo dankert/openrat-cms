@@ -416,7 +416,7 @@
 		$a8_title = '';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
 		$langF = $a8_escape?'langHtml':'lang';
-		$tmp_text = $a8_value;
+		$tmp_text = $a8_escape?htmlentities($a8_value):$a8_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -428,7 +428,7 @@
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
 		$langF = $a8_escape?'langHtml':'lang';
-		$tmp_text = $a8_value;
+		$tmp_text = $a8_escape?htmlentities($a8_value):$a8_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -460,7 +460,7 @@ unset($a5_tmp_last_exec) ?><?php $a6_present='right'; ?><?php
 		$a8_title = '';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
 		$langF = $a8_escape?'langHtml':'lang';
-		$tmp_text = $a8_value;
+		$tmp_text = $a8_escape?htmlentities($a8_value):$a8_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
@@ -472,7 +472,7 @@ unset($a5_tmp_last_exec) ?><?php $a6_present='right'; ?><?php
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
 		$langF = $a8_escape?'langHtml':'lang';
-		$tmp_text = $a8_value;
+		$tmp_text = $a8_escape?htmlentities($a8_value):$a8_value;
 	$tmp_text = nl2br($tmp_text);
 	echo $tmp_text;
 	unset($tmp_text);
