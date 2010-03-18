@@ -205,7 +205,9 @@ class DB
 			// Es handelt sich um eine nicht-vorbereitete Anfrage. Das gesamte
 			// SQL wird durch die SQL-Klasse erzeugt, dort werden auch die Parameter
 			// in die Abfrage gesetzt.
-			$flatQuery = $query->getQuery();
+			
+			$escape_function = method_exists($this->client,'escape')?$this->client->escape():'addslashes';
+			$flatQuery = $query->getQuery( $escape_function );
 			
 			Logger::trace('DB query on DB '.$this->id."\n".$query->raw);
 	

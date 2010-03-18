@@ -124,6 +124,13 @@ class DB_sqlite
 	{
 		return true;
 	}
+	
+	
+	function escape()
+	{
+		return 'sqlite_escape_string';
+	}
 }
+
 
 ?>

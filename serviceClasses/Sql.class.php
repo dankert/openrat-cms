@@ -220,8 +220,6 @@ class Sql
 				
 			}
 		}
-		//Html::debug($this,'bei '.$name);
-		//unset( $this->param[$name] );
 	}
 	
 
@@ -314,13 +312,16 @@ class Sql
 
 	/**
 	 * Ermittelt die fertige SQL-Anfrage.
+	 * @param Name einer Funktion, die eine Zeichenkette für die
+	 *        Datenbank schuetzt. Dies kann je nach verwendetem RDBMS
+	 *        unterschiedlich sein, daher diese Funktionsreferenz.
 	 */
-	function &getQuery()
+	function &getQuery( $escape_function )
 	{
 		// Bereits gesetzte Parameter setzen.		
 		foreach( $this->data as $name=>$data )
 		{
-			if		( $data['type']=='string' ) $this->setParam($name,"'".addslashes($data['value'])."'" );
+			if		( $data['type']=='string' ) $this->setParam($name,"'".$escape_function($data['value'])."'" );
 			elseif	( $data['type']=='int'    ) $this->setParam($name,(int)$data['value']                );
 			elseif	( $data['type']=='null'   ) $this->setParam($name,'NULL'                             );
 		}
