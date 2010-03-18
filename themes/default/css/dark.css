@@ -67,4 +67,12 @@ input.ok,
 div.cancel
 {
 	color:black;
+	-moz-border-radius:10px;
+	-khtml-border-radius:10px;
+}
+
+table.main
+{
+	-moz-border-radius:5px;
+	-khtml-border-radius:5px;
 }
