@@ -12,3 +12,7 @@ page
 						text raw:_(
 						text key:USER_ADMIN
 						text raw:)
+				cell
+					link target:_top action:index subaction:switchuser id:var:userid
+						text key:LOGIN
+						

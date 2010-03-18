@@ -1049,6 +1049,22 @@ class IndexAction extends Action
 	}
 		
 
+	function switchuser()
+	{
+		$user = Session::getUser();
+		
+		if	( ! $user->isAdmin )
+			Http::notAuthorized("");
+		
+		$this->recreateSession();
+		
+		$newUser = new User( $this->getRequestId() );
+		$newUser->load();
+		
+		$newUser->setCurrent();
+	}
+	
+	
 	function show()
 	{
 		global $conf;

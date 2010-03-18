@@ -8,6 +8,9 @@ goto=show
 guest=true
 goto=showlogin
 
+[switchuser]
+goto=show
+
 [object]
 goto=show
 guest=true
