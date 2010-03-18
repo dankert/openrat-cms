@@ -584,7 +584,8 @@ EOF
 	 */
 	function saveValue( $value = '' )
 	{
-		@unlink( $this->tmpfile() );
+		if	( is_file($this->tmpfile()) )
+			@unlink( $this->tmpfile() );
 
 		$db = db_connection();
 
