@@ -1,7 +1,13 @@
 <?php
 	$coloumn_widths=array();
+#IF-ATTR icon#
+	$icon=$attr_icon;
+#ELSE#
+	$icon=$actionName;
+#END-IF#
+	
 #IF-ATTR widths#
-	$column_widths = explode(',',$attr_widths);
+	$coldumn_widths = explode(',',$attr_widths);
 #END-IF#
 #IF-ATTR rowclasses#
 	$row_classes   = explode(',',$attr_rowclasses);
@@ -28,7 +34,7 @@
 		if (!@$conf['interface']['application_mode'] )
 		{
 		echo '<tr class="title"><td>';
-		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
+		echo '<img src="'.$image_dir.'icon_'.$icon.IMG_ICON_EXT.'" align="left" border="0">';
 		
 		if ($this->isEditable()) { ?>
   <?php if ($this->isEditMode()) { 
@@ -40,7 +46,7 @@
 				
 		
 		
-		echo '<span class="path">'.langHtml('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
+		echo '<span class="path">'.langHtml($actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 //		if	( !empty($attr_icon) )
 //			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
 		if	( !isset($path) || is_array($path) )

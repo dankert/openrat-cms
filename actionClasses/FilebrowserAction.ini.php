@@ -2,10 +2,7 @@
 [default]
 goto=show
 
-[connector]
-direct=true
-
-[config]
+[directupload]
 direct=true
 
 [browse]

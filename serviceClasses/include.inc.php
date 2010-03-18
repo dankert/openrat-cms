@@ -47,7 +47,7 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pa
 }
 
 
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','folder','filemanager')) )
+if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','folder','filebrowser')) )
 {
 	require_once( OR_SERVICECLASSES_DIR."Upload.class.".PHP_EXT );
 }

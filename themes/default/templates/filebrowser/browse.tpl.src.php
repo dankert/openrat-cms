@@ -1,6 +1,6 @@
 page class:main
 
-	table class:main
+	window icon:folder
 		list list:notices extract:true
 			row
 				cell colspan:2
@@ -39,28 +39,23 @@ page class:main
 
 		if true:var:writable							
 			row
-				cell colspan:2
+				cell class:act colspan:2
 					newline
-					newline
-					fieldset title:message:file
-			row
-				cell colspan:2
-					form action:filemanager subaction:upload id:var:id enctype:multipart/form-data
+					form action:filebrowser subaction:upload id:var:id enctype:multipart/form-data
 						hidden name:CKEditorFuncNum
+						text key:file
+						text raw:__
 						upload name:file
+						text raw:__
 						button type:ok text:add
-					
-			row
-				cell colspan:2
 					newline
 					newline
-					fieldset title:message:folder							
-			row
-				cell colspan:2
 					set var:name value:
-					form action:filemanager subaction:addfolder id:var:id
+					form action:filebrowser subaction:addfolder id:var:id
 						hidden name:CKEditorFuncNum
-						text key:name
+						text key:folder
+						text raw:__
 						input name:name
+						text raw:__
 						button type:ok text:add
 		

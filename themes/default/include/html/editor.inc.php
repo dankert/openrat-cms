@@ -93,9 +93,8 @@ switch( $attr_type )
     array('TextColor','BGColor'),
     array('Source','-', 'ShowBlocks','Maximize') );
 			
-			$editor->config['filebrowserUploadUrl' ] = './'.OR_EXT_CONTROLLER_FILE.'.php?action=filemanager&subaction=connector&Command=DirectUpload&CurrentFolder=/&Type=File&'.REQ_PARAM_TOKEN.'='.token();
-			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filemanager','browse','-',array('oid'=>'',REQ_PARAM_TOKEN=>token()) ));
-			//$editor->config['filebrowserBrowseUrl' ] = $base.'filemanager/browser/default/browser.html?Connector='.urlencode('http://'.$_SERVER['SERVER_NAME'].$url.'?action=filemanager&subaction=connector&'.REQ_PARAM_TOKEN.'='.token());
+			$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','upload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
+			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','browse','-'));
 			
 			$editor->editor($attr_name,$$attr_name);
 		}
