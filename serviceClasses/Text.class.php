@@ -393,6 +393,21 @@ class Text
 		$second = strtr( $eingabe, $first  , str_repeat("\x00", strlen($first )) );
 		return str_replace("\x00",'',$second);
 	}
+	
+	
+	
+	function parseOID( $text )
+	{
+		$oids    = array();
+		$treffer = array();
+		
+		preg_match_all('/\"([^\"]*)__OID__([0-9]+)__([^\"]*)\"/', $text, $treffer,PREG_SET_ORDER);
+		
+		foreach( $treffer as $t )
+			$oids[$t[2]] = $t[0];
+
+		return $oids;
+	}
 }
 
  
