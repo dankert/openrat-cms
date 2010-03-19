@@ -111,10 +111,7 @@ class Html
 		else
 			$controller_file_name = OR_CONTROLLER_FILE.'.'.PHP_EXT;
 
-		if	( isset($params['oid']) )
-			$prefix = FileUtils::slashify(dirname($_SERVER['SCRIPT_NAME']));
-		else
-			$prefix = './';
+		$prefix = './';
 		
 		if	( $fake_urls )
 			$src = sprintf( $url_format,$action,$subaction,$id,session_id() ).$urlParameter;
