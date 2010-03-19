@@ -147,6 +147,10 @@ class Action
 				break;
 				
 			case OR_FILTER_FILENAME:
+				// RFC 1738, Section 2.2:
+				// Thus, only alphanumerics, the special characters "$-_.+!*'(),", and
+				// reserved characters used for their reserved purposes may be used
+				// unencoded within a URL.
 				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$-_.+!*(),'."'";
 				break;
 				
