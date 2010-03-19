@@ -567,7 +567,7 @@ class FileAction extends ObjectAction
 		switch( $format )
 		{
 			case 'gz':
-				if	( $this->getRequestVar('replace','num')=='1' )
+				if	( $this->getRequestVar('replace',OR_FILTER_NUMBER)=='1' )
 				{
 					$this->file->value = gzencode( $this->file->loadValue(),1 );
 					$this->file->parse_filename( $this->file->filename.'.'.$this->file->extension.'.gz',FORCE_GZIP );

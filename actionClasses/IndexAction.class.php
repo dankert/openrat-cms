@@ -329,10 +329,10 @@ class IndexAction extends Action
 			$this->setTemplateVar('force_username',$username);
 		}
 
-		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,'num') );
-		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,'num') );
-		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,'num') );
-		$this->setTemplateVar('languageid',$this->getRequestVar('languageid','num') );
+		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,OR_FILTER_NUMBER) );
+		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,OR_FILTER_NUMBER) );
+		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,OR_FILTER_NUMBER) );
+		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',OR_FILTER_NUMBER) );
 				
 		$this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
 		$this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
