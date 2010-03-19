@@ -26,6 +26,7 @@ define('OR_NOTICE_ERROR','error'  );
 
 define('OR_FILTER_ALPHA'   ,'abc'   );
 define('OR_FILTER_ALPHANUM','abc123');
+define('OR_FILTER_FILENAME','file'  );
 define('OR_FILTER_MAIL'    ,'mail'  );
 define('OR_FILTER_TEXT'    ,'text'  );
 define('OR_FILTER_FULL'    ,'full'  );
@@ -41,7 +42,6 @@ define('OR_FILTER_RAW'     ,'raw'   );
  * diesem Package bzw. Verzeichnis.
  *
  * @author Jan Dankert
- * @version $Revision$
  * @package openrat.actions
  * @abstract 
  */
@@ -128,7 +128,7 @@ class Action
 	 * @param String $varName Schl�ssel
 	 * @return String Inhalt
 	 */
-	function getRequestVar( $varName,$transcode='' )
+	function getRequestVar( $varName,$transcode=OR_FILTER_FULL )
 	{
 		global $REQ;
 
@@ -138,45 +138,51 @@ class Action
 		
 		switch( $transcode )
 		{
-			case 'abc':
-			case 'alpha':
-				$value  = $REQ[ $varName ];
-				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
+			case OR_FILTER_ALPHA:
+				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				break;
 				
-			case 'alphanum':
-			case 'abc123':
-				$value  = $REQ[ $varName ];
-				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-!?%&/()');
+			case OR_FILTER_ALPHANUM:
+				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-!?%&/()';
+				break;
 				
-			case 'mail':
-				$value  = $REQ[ $varName ];
-				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-@');
+			case OR_FILTER_FILENAME:
+				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$-_.+!*(),'."'";
+				break;
 				
-			case 'text':
-				$value  = $REQ[ $varName ];
-				return Text::clean($value,'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:!"§$%&/(){}#=?._- '.chr(10).chr(13));
+			case OR_FILTER_MAIL:
+				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-@';
+				break;
 				
-			case 'full':
-			default:
-				$value   = $REQ[ $varName ];
-				$allowed = ' ';
-				for ($i =  40; $i <=  59; $i++) $allowed .= chr($i);  // Zahlen
-				                                $allowed .= chr(10).chr(13);
-				                                $allowed .= '@?&={}#"%';
-				for ($i =  63; $i <=  93; $i++) $allowed .= chr($i);  // ?@ABC
-				                                $allowed .= chr(95);  // _
-				for ($i =  97; $i <= 122; $i++) $allowed .= chr($i);  // abc
-				for ($i = 192; $i <= 255; $i++) $allowed .= chr($i);  // Sonderzeichen
-				return Text::clean($value,$allowed);
+			case OR_FILTER_TEXT:
+				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:!"§$%&/(){}#=?._- '.chr(10).chr(13);
+				break;
 				
-				case 'num':
-			case '123':
-				$value  = $REQ[ $varName ];
-				return Text::clean($value,'1234567890.');
+			case OR_FILTER_FULL:
+				$white = ' ';
+				for ($i =  40; $i <=  59; $i++) $white .= chr($i);  // Zahlen
+				                                $white .= chr(10).chr(13);
+				                                $white .= '@?&={}#"%';
+				for ($i =  63; $i <=  93; $i++) $white .= chr($i);  // ?@ABC
+				                                $white .= chr(95);  // _
+				for ($i =  97; $i <= 122; $i++) $white .= chr($i);  // abc
+				for ($i = 192; $i <= 255; $i++) $white .= chr($i);  // Sonderzeichen
+				break;
 				
-			case 'raw':
+			case OR_FILTER_NUMBER:
+				$white = '1234567890.';
+				break;
+				
+			case OR_FILTER_RAW:
 				return $REQ[ $varName ];
+				
+			default:
+				Logger::warn('unknown request filter: '.$transcode);
+				return '?';
 		}
+		
+		$value  = $REQ[ $varName ];
+		return Text::clean( $value, $white );
 	}
 
 
