@@ -610,10 +610,10 @@ class IndexAction extends Action
 			die('login disabled');
 
 		$openid_user   = $this->getRequestVar('openid_url'    );
-		$loginName     = $this->getRequestVar('login_name'    ,'alphanum');
-		$loginPassword = $this->getRequestVar('login_password','alphanum');
-		$newPassword1  = $this->getRequestVar('password1'     ,'alphanum');
-		$newPassword2  = $this->getRequestVar('password2'     ,'alphanum');
+		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
+		$loginPassword = $this->getRequestVar('login_password',OR_FILTER_ALPHANUM);
+		$newPassword1  = $this->getRequestVar('password1'     ,OR_FILTER_ALPHANUM);
+		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
 		
 		// Cookie setzen
 		setcookie('or_username',$loginName,time()+(60*60*24*30*12*2) );

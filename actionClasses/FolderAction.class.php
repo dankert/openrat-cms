@@ -335,7 +335,7 @@ class FolderAction extends ObjectAction
 		if   ( $this->getRequestVar('name') != '' )
 			$this->folder->name     = $this->getRequestVar('name'    ,'full');
 		elseif ($this->getRequestVar('filename') != '' )
-		 	$this->folder->name     = $this->getRequestVar('filename','alphanum');
+		 	$this->folder->name     = $this->getRequestVar('filename',OR_FILTER_ALPHANUM);
 		else
 		{
 			$this->addValidationError('name');
@@ -344,7 +344,7 @@ class FolderAction extends ObjectAction
 			return;
 		}
 		
-		$this->folder->filename = $this->getRequestVar('filename'   ,'alphanum');
+		$this->folder->filename = $this->getRequestVar('filename'   ,OR_FILTER_ALPHANUM);
 		$this->folder->desc     = $this->getRequestVar('description','full'    );
 		$this->folder->save();
 		$this->addNotice($this->folder->getType(),$this->folder->name,'PROP_SAVED','ok');

@@ -103,7 +103,7 @@ class FilebrowserAction extends ObjectAction
 			$newUrl = str_replace('&amp;','&',Html::url('file','show',$newId,array('oid'=>'__OID__'.$newId.'__')));
 			
 			echo '<script type="text/javascript">' ;
-			echo 'window.parent.CKEDITOR.tools.callFunction('.$this->getRequestVar('CKEditorFuncNum','123').",'".$newUrl."','');</script>";
+			echo 'window.parent.CKEDITOR.tools.callFunction('.$this->getRequestVar('CKEditorFuncNum',OR_FILTER_NUMBER).",'".$newUrl."','');</script>";
 			echo '</script>' ;
 			echo 'OK' ;
 		}
@@ -114,7 +114,7 @@ class FilebrowserAction extends ObjectAction
 	function browse()
 	{
 		global $conf_php;
-		$funcNum = $this->getRequestVar('CKEditorFuncNum','123');
+		$funcNum = $this->getRequestVar('CKEditorFuncNum',OR_FILTER_NUMBER);
 
 		if   ( ! $this->folder->isRoot )
 			$this->setTemplateVar('up_url',Html::url('filebrowser','browse',$this->folder->parentid,array('CKEditorFuncNum'=>$funcNum)));

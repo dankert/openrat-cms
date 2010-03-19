@@ -219,7 +219,7 @@ class TemplateAction extends Action
 	function addelement()
 	{
 
-		$name = $this->getRequestVar('name','alphanum');
+		$name = $this->getRequestVar('name',OR_FILTER_ALPHANUM);
 		if  ( empty($name) )
 		{
 			$this->addValidationError('name');

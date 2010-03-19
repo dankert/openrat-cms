@@ -51,7 +51,7 @@ class ElementAction extends Action
 	 */
 	function savename()
 	{
-		$this->element->name = $this->getRequestVar('name'       ,'alphanum');
+		$this->element->name = $this->getRequestVar('name'       ,OR_FILTER_ALPHANUM);
 		$this->element->desc = $this->getRequestVar('description','all'     );
 
 		$this->element->save();
@@ -598,7 +598,7 @@ class ElementAction extends Action
 		if	( $this->hasRequestVar('default_longtext'))
 			$this->element->defaultText     = $this->getRequestVar('default_longtext','text');
 		else
-			$this->element->defaultText     = $this->getRequestVar('default_text','alphanum');
+			$this->element->defaultText     = $this->getRequestVar('default_text',OR_FILTER_ALPHANUM);
 		$this->element->wiki            = in_array('wiki',explode(',',$this->getRequestVar('format')));
 		$this->element->html            = in_array('html',explode(',',$this->getRequestVar('format')));
 		$this->element->withIcon        = $this->getRequestVar('with_icon') != '';
