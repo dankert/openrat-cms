@@ -87,10 +87,10 @@ class FileAction extends ObjectAction
 	function saveprop()
 	{
 		// Eigenschaften speichern
-		$this->file->filename  = $this->getRequestVar('filename'   ,'alphanum');
-		$this->file->name      = $this->getRequestVar('name'       ,'full'    );
-		$this->file->extension = $this->getRequestVar('extension'  ,'alphanum');
-		$this->file->desc      = $this->getRequestVar('description','full'    );
+		$this->file->filename  = $this->getRequestVar('filename'   ,OR_FILTER_FILENAME);
+		$this->file->name      = $this->getRequestVar('name'       ,OR_FILTER_FULL    );
+		$this->file->extension = $this->getRequestVar('extension'  ,OR_FILTER_FILENAME);
+		$this->file->desc      = $this->getRequestVar('description',OR_FILTER_FULL    );
 		
 		$this->file->save();
 		$this->file->setTimestamp();
@@ -562,7 +562,7 @@ class FileAction extends ObjectAction
 	 */
 	function compressAction()
 	{
-		$format = $this->getRequestVar('format','alphanum');
+		$format = $this->getRequestVar('format',OR_FILTER_ALPHANUM);
 		
 		switch( $format )
 		{
