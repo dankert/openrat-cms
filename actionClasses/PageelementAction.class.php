@@ -76,7 +76,7 @@ class PageelementAction extends Action
 
 		if	( $this->hasRequestVar('elementid') )
 		{
-			$this->element = new Element( $this->getRequestVar('elementid','num') );
+			$this->element = new Element( $this->getRequestVar('elementid',OR_FILTER_NUMBER) );
 			Session::setElement( $this->element );
 		}
 		else
