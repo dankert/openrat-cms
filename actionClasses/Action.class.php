@@ -182,7 +182,12 @@ class Action
 		}
 		
 		$value  = $REQ[ $varName ];
-		return Text::clean( $value, $white );
+		$newValue = Text::clean( $value, $white );
+		
+		if	( strlen($newValue) != strlen($value) )
+			$this->addNotice('','','UNEXPECTED_CHARS',OR_NOTICE_WARN);
+			
+		return $newValue;
 	}
 
 
