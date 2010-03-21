@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
+// Copyright (C) 2002-2010 Jan Dankert
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,13 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-//
-// ---------------------------------------------------------------------------
 
 /**
- * Action-Klasse fuer die Bearbeitung eines Template-Elementes
- * @author $Author$
- * @version $Revision$
+ * Action-Klasse fuer die Bearbeitung eines Template-Elementes.
+ * 
+ * @author Jan Dankert
  * @package openrat.actions
  */
 class ElementAction extends Action
@@ -621,7 +616,7 @@ class ElementAction extends Action
 			$this->element->setPrefix( $this->getRequestVar('linkelement') );
 		
 		if	( $this->hasRequestVar('parameters'))
-			$this->element->code = $this->getRequestVar('parameters','text');
+			$this->element->code = $this->getRequestVar('parameters',OR_FILTER_RAW);
 		
 //		Html::debug($this->element);
 		$this->element->save();
