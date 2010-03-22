@@ -49,7 +49,7 @@ class Ldap
 	
 	
 	/**
-	 * Verbindung öffnen. 
+	 * Verbindung ï¿½ffnen. 
 	 */
 	function connect()
 	{
@@ -61,11 +61,6 @@ class Ldap
 		// Verbindung zum LDAP-Server herstellen
 		$this->connection = @ldap_connect( $ldapHost,$ldapPort );
 		
-		// Protokollversion setzen.
-		$j = ldap_set_option( $this->connection, LDAP_OPT_PROTOCOL_VERSION,intval($conf['ldap']['protocol']) );
-		if	( ! $j )
-			die( 'LDAP error while setting protocol version'.ldap_errno().'/'.ldap_error().')' );
-		
 		// siehe http://bugs.php.net/bug.php?id=15637
 		// Unter bestimmten Bedingungen wird trotz nicht erreichbarem LDAP-Server eine PHP-Resource
 		// zurueck gegeben. Dann erscheint zwar keine Fehlermeldung, aber zumindestens misslingt
@@ -76,12 +71,18 @@ class Ldap
 			// Abbruch, wenn LDAP-Server nicht erreichbar
 			die( "Connection failed to $ldapHost:$ldapPort (".ldap_errno().'/'.ldap_error().'). Please contact your administrator.' );
 		}
+		
+		// Protokollversion setzen.
+		$j = ldap_set_option( $this->connection, LDAP_OPT_PROTOCOL_VERSION,intval($conf['ldap']['protocol']) );
+		if	( ! $j )
+			die( 'LDAP error while setting protocol version'.ldap_errno().'/'.ldap_error().')' );
+		
 	}	
 	
 	
 	
 	/**
-	 * Ein Binding auf den LDAP-Server durchführen.
+	 * Ein Binding auf den LDAP-Server durchfï¿½hren.
 	 */
 	function bind( $user,$pw )
 	{
@@ -91,7 +92,7 @@ class Ldap
 	
 	
 	/**
-	 * Ein Binding auf den LDAP-Server durchführen.
+	 * Ein Binding auf den LDAP-Server durchfï¿½hren.
 	 */
 	function bindAnonymous()
 	{
@@ -111,7 +112,7 @@ class Ldap
 	
 	
 	/**
-	 * Eine Suche auf den LDAP-Server durchführen.
+	 * Eine Suche auf den LDAP-Server durchfï¿½hren.
 	 */
 	function searchUser( $username )
 	{
@@ -124,14 +125,17 @@ class Ldap
 			$this->bindAnonymous();
 		else
 			$this->bind( $techUser, $techPass );
-		                                
+
 		$dn      = $conf['ldap']['search']['basedn'];
 		$filter  = $conf['ldap']['search']['filter'];
 		$filter  = str_replace('{user}', $username, $filter);
-			
+
+		$s = @ldap_search( $this->connection,$dn,$filter,array(),0,1,$this->timeout,$this->aliases );
 		
-		$s = ldap_search( $this->connection,$dn,$filter,array(),0,1,$this->timeout,$this->aliases );
-		$dn = ldap_get_dn($this->connection, ldap_first_entry($this->connection,$s) );
+		if	( ! is_resource($s) )
+			return null;
+			
+		$dn = @ldap_get_dn($this->connection, ldap_first_entry($this->connection,$s) );
 		
 		return $dn;
 	}
@@ -139,7 +143,7 @@ class Ldap
 
 
 	/**
-	 * Ein Binding auf den LDAP-Server durchführen.
+	 * Ein Binding auf den LDAP-Server durchfï¿½hren.
 	 */
 	function searchAttribute( $filter,$attr )
 	{
@@ -168,7 +172,7 @@ class Ldap
 	
 	
 	/**
-	 * Verbindung schließen.
+	 * Verbindung schlieï¿½en.
 	 */	
 	function close()
 	{
