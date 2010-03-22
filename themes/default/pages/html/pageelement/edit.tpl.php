@@ -1200,7 +1200,7 @@ switch( $a8_type )
     array(/*'Styles',*/'Format','Font','FontSize'),
     array('TextColor','BGColor'),
     array('Source','-', 'ShowBlocks','Maximize') );
-			$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','upload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
+			$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','directupload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
 			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','browse','-'));
 			$editor->editor($a8_name,$$a8_name);
 		}
@@ -1424,7 +1424,7 @@ switch( $a8_type )
     array(/*'Styles',*/'Format','Font','FontSize'),
     array('TextColor','BGColor'),
     array('Source','-', 'ShowBlocks','Maximize') );
-			$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','upload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
+			$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','directupload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
 			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','browse','-'));
 			$editor->editor($a8_name,$$a8_name);
 		}

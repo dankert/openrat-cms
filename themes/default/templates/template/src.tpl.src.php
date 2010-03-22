@@ -4,7 +4,7 @@ page
 		window name:TEMPLATE_SOURCE
 			row
 				cell
-					inputarea rows:25 cols:80 name:src
+					inputarea rows:25 cols:80 name:src class:editor
 			
 			row
 				cell class:act

@@ -222,7 +222,7 @@ function table()
     </table>
     <fieldset><legend><?php echo langHtml('CONTENT') ?></legend></fieldset>
 			
-	<textarea name="<?php echo $attr_name ?>" class="editor" style="width:100%;height:300px;"><?php echo $$attr_name ?></textarea>
+	<textarea name="<?php echo $attr_name ?>" class="editor"><?php echo $$attr_name ?></textarea>
 			
 <?php
 		}
