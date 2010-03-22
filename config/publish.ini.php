@@ -46,6 +46,18 @@ style="id"
 url=relative
 ;url=absolute
 
+; Should PHP code in page source be interpreted
+; 'false': page source is never interpreted as PHP
+; 'auto' : interpreted, if page extension = '.php'
+; 'true' : always interpret PHP in page source
+enable_php_in_page_content=false
+
+; Should PHP code in file content be interpreted
+; 'false': file content is never interpreted as PHP
+; 'auto' : interpreted, if file extension = '.php'
+; 'true' : always interpret PHP in file content
+enable_php_in_file_content=false
+
 
 
 ; Content-Negotiation as defined in RFC 2295.

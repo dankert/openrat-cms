@@ -606,7 +606,12 @@ class PageAction extends ObjectAction
 		$language = Session::getProjectLanguage();
 		header('Content-Language: '.$language->isoCode);
 
-		require( $this->page->tmpfile() );
+		// Wenn 
+		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
+		        config('publish','enable_php_in_page_content')===true )
+			require( $this->page->tmpfile() );
+		else
+			readfile( $this->page->tmpfile() );
 	}
 
 
@@ -632,8 +637,13 @@ class PageAction extends ObjectAction
 		header('Content-Language: '.$language->isoCode);
 
 		
-		require( $this->page->tmpfile() );
-
+		// Wenn 
+		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
+		        config('publish','enable_php_in_page_content')===true )
+			require( $this->page->tmpfile() );
+		else
+			readfile( $this->page->tmpfile() );
+		
 		// Inhalt ist ausgegeben... Skript beenden.
 		exit;
 	}

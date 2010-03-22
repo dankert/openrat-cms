@@ -151,8 +151,11 @@ class FileAction extends ObjectAction
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
 		header('Content-Length: '.filesize($this->file->tmpfile()) );
 		
-		
-		readfile( $this->file->tmpfile() );
+		if	( ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtensionextension()=='php') ||
+		        config('publish','enable_php_in_file_content')===true )
+			require( $this->file->tmpfile() );
+		else
+			readfile( $this->file->tmpfile() );
 		exit;
 	}
 
