@@ -72,7 +72,7 @@ class FileAction extends ObjectAction
 
 	function savevalue()
 	{
-		$this->file->value = $this->getRequestVar('value');
+		$this->file->value = $this->getRequestVar('value',OR_FILTER_RAW);
 		$this->file->saveValue();
 	
 		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
@@ -151,7 +151,7 @@ class FileAction extends ObjectAction
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
 		header('Content-Length: '.filesize($this->file->tmpfile()) );
 		
-		if	( ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtensionextension()=='php') ||
+		if	( ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
 		        config('publish','enable_php_in_file_content')===true )
 			require( $this->file->tmpfile() );
 		else
