@@ -5,7 +5,7 @@ page
 				cell
 					text text:GLOBAL_VALUE
 				cell
-					inputarea cols:60 rows:35 name:value
+					inputarea rows:40 name:value class:editor
 			row
 				cell class:act colspan:2
 					button type:ok
