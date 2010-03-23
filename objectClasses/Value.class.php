@@ -812,6 +812,7 @@ SQL
 					break;
 					
 				$linkedObject = new Object( $objectid );
+				$linkedObject->languageid = $this->languageid;
 				$linkedObject->load();
 				
 				switch( $this->element->subtype )
