@@ -279,6 +279,11 @@ class Action
 	 */
 	function addNotice( $type,$name,$text,$status=OR_NOTICE_OK,$vars=array(),$log=array() )
 	{
+		if	( $status === true )
+			$status = OR_NOTICE_OK;
+		elseif	( $status === false )
+			$status = OR_NOTICE_ERROR;
+
 		$this->templateVars['notice_status'] = $status;
 		
 		if	( $status == OR_NOTICE_OK && isset($_COOKIE['or_ignore_ok_notices']))
@@ -290,11 +295,6 @@ class Action
 		if	( !is_array($vars))
 			$vars = array($vars);
 			
-		if	( $status === true )
-			$status = OR_NOTICE_OK;
-		elseif	( $status === false )
-			$status = OR_NOTICE_ERROR;
-
 		$this->templateVars['notices'][] = array('type'=>$type,
                                                  'name'=>$name,
 		                                         'key'=>'NOTICE_'.$text,
