@@ -41,7 +41,8 @@ persistent = yes                   ; use persistent connections (try this, it's 
 ;charset = UTF-8
 
 ; SQL-Statement which is executed after opening the connection
-;connection_sql = ""
+; connection_sql = "SET NAMES 'UTF8';"  ; using UTF-8 as database charset
+connection_sql = ""
  
 ; System command for executing before connecting to the database.
 ; Maybe for installing an SSH-Tunnel.
