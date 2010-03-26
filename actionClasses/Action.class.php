@@ -157,20 +157,18 @@ class Action
 			case OR_FILTER_MAIL:
 				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-@';
 				break;
-				
+
 			case OR_FILTER_TEXT:
-				$white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:!"§$%&/(){}#=?._- '.chr(10).chr(13);
-				break;
-				
 			case OR_FILTER_FULL:
-				$white = ' ';
-				for ($i =  40; $i <=  59; $i++) $white .= chr($i);  // Zahlen
-				                                $white .= chr(10).chr(13);
-				                                $white .= '@?&={}#"%';
-				for ($i =  63; $i <=  93; $i++) $white .= chr($i);  // ?@ABC
-				                                $white .= chr(95);  // _
-				for ($i =  97; $i <= 122; $i++) $white .= chr($i);  // abc
-				for ($i = 192; $i <= 255; $i++) $white .= chr($i);  // Sonderzeichen
+				// Ausfiltern von Control-Chars ( ASCII < 32 außer CR,LF) und HTML (<,>)
+				$white = '';
+				                                $white .= chr(10).chr(13); // Line-Feed, Carriage-Return
+				for ($i =  32; $i <=  59; $i++) $white .= chr($i);  // Zahlen
+												// 60: '<'
+				                                $white .= chr(61);
+												// 62: '>'
+				for ($i =  63; $i <= 126; $i++) $white .= chr($i);  // abc
+				for ($i = 128; $i <= 255; $i++) $white .= chr($i);  // Sonderzeichen incl. UTF-8, UTF-16 (beginnen mit Bit 1)
 				break;
 				
 			case OR_FILTER_NUMBER:
@@ -181,7 +179,7 @@ class Action
 				return $REQ[ $varName ];
 				
 			default:
-				Logger::warn('unknown request filter: '.$transcode);
+				Http::serverError('Unknown request filter','not found: '.$transcode);
 				return '?';
 		}
 		
