@@ -63,18 +63,20 @@
 ?><?php unset($a2_name,$a2_target,$a2_method,$a2_enctype) ?><?php $a3_class='text';$a3_default='';$a3_type='hidden';$a3_name='elementid';$a3_size='40';$a3_maxlength='256';$a3_onchange='';$a3_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a3_readonly=true;
 	  if ($a3_readonly && empty($$a3_name)) $$a3_name = '- '.lang('EMPTY').' -';
       if(!isset($a3_default)) $a3_default='';
+      $tmp_value = Text::encodeHtml(isset($$a3_name)?$$a3_name:$a3_default);
 ?><?php if (!$a3_readonly || $a3_type=='hidden') {
-?><input<?php if ($a3_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a3_name ?><?php if ($a3_readonly) echo '_disabled' ?>" name="<?php echo $a3_name ?><?php if ($a3_readonly) echo '_disabled' ?>" type="<?php echo $a3_type ?>" size="<?php echo $a3_size ?>" maxlength="<?php echo $a3_maxlength ?>" class="<?php echo $a3_class ?>" value="<?php echo isset($$a3_name)?$$a3_name:$a3_default ?>" <?php if (in_array($a3_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a3_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a3_name ?><?php if ($a3_readonly) echo '_disabled' ?>" name="<?php echo $a3_name ?><?php if ($a3_readonly) echo '_disabled' ?>" type="<?php echo $a3_type ?>" size="<?php echo $a3_size ?>" maxlength="<?php echo $a3_maxlength ?>" class="<?php echo $a3_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a3_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a3_readonly) {
-?><input type="hidden" id="id_<?php echo $a3_name ?>" name="<?php echo $a3_name ?>" value="<?php echo isset($$a3_name)?$$a3_name:$a3_default ?>" /><?php
- } } else { ?><span class="<?php echo $a3_class ?>"><?php echo isset($$a3_name)?$$a3_name:$a3_default ?></span><?php } ?><?php unset($a3_class,$a3_default,$a3_type,$a3_name,$a3_size,$a3_maxlength,$a3_onchange,$a3_readonly) ?><?php $a3_class='text';$a3_default='';$a3_type='hidden';$a3_name='value_time';$a3_size='40';$a3_maxlength='256';$a3_onchange='';$a3_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a3_readonly=true;
+?><input type="hidden" id="id_<?php echo $a3_name ?>" name="<?php echo $a3_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a3_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a3_class,$a3_default,$a3_type,$a3_name,$a3_size,$a3_maxlength,$a3_onchange,$a3_readonly) ?><?php $a3_class='text';$a3_default='';$a3_type='hidden';$a3_name='value_time';$a3_size='40';$a3_maxlength='256';$a3_onchange='';$a3_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a3_readonly=true;
 	  if ($a3_readonly && empty($$a3_name)) $$a3_name = '- '.lang('EMPTY').' -';
       if(!isset($a3_default)) $a3_default='';
+      $tmp_value = Text::encodeHtml(isset($$a3_name)?$$a3_name:$a3_default);
 ?><?php if (!$a3_readonly || $a3_type=='hidden') {
-?><input<?php if ($a3_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a3_name ?><?php if ($a3_readonly) echo '_disabled' ?>" name="<?php echo $a3_name ?><?php if ($a3_readonly) echo '_disabled' ?>" type="<?php echo $a3_type ?>" size="<?php echo $a3_size ?>" maxlength="<?php echo $a3_maxlength ?>" class="<?php echo $a3_class ?>" value="<?php echo isset($$a3_name)?$$a3_name:$a3_default ?>" <?php if (in_array($a3_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a3_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a3_name ?><?php if ($a3_readonly) echo '_disabled' ?>" name="<?php echo $a3_name ?><?php if ($a3_readonly) echo '_disabled' ?>" type="<?php echo $a3_type ?>" size="<?php echo $a3_size ?>" maxlength="<?php echo $a3_maxlength ?>" class="<?php echo $a3_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a3_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a3_readonly) {
-?><input type="hidden" id="id_<?php echo $a3_name ?>" name="<?php echo $a3_name ?>" value="<?php echo isset($$a3_name)?$$a3_name:$a3_default ?>" /><?php
- } } else { ?><span class="<?php echo $a3_class ?>"><?php echo isset($$a3_name)?$$a3_name:$a3_default ?></span><?php } ?><?php unset($a3_class,$a3_default,$a3_type,$a3_name,$a3_size,$a3_maxlength,$a3_onchange,$a3_readonly) ?><?php $a3_name='element';$a3_width='93%';$a3_rowclasses='odd,even';$a3_columnclasses='1,2,3'; ?><?php
+?><input type="hidden" id="id_<?php echo $a3_name ?>" name="<?php echo $a3_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a3_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a3_class,$a3_default,$a3_type,$a3_name,$a3_size,$a3_maxlength,$a3_onchange,$a3_readonly) ?><?php $a3_name='element';$a3_width='93%';$a3_rowclasses='odd,even';$a3_columnclasses='1,2,3'; ?><?php
 	$coloumn_widths=array();
 	$icon=$actionName;
 	$row_classes   = explode(',',$a3_rowclasses);
@@ -1071,11 +1073,12 @@ if (count($$a8_list)==1) echo '<input type="hidden" name="'.$a8_name.'" value="'
 ><?php unset($a6_colspan) ?><?php $a7_class='text';$a7_default='';$a7_type='text';$a7_name='text';$a7_size='50';$a7_maxlength='255';$a7_onchange='';$a7_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a7_readonly=true;
 	  if ($a7_readonly && empty($$a7_name)) $$a7_name = '- '.lang('EMPTY').' -';
       if(!isset($a7_default)) $a7_default='';
+      $tmp_value = Text::encodeHtml(isset($$a7_name)?$$a7_name:$a7_default);
 ?><?php if (!$a7_readonly || $a7_type=='hidden') {
-?><input<?php if ($a7_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" name="<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" type="<?php echo $a7_type ?>" size="<?php echo $a7_size ?>" maxlength="<?php echo $a7_maxlength ?>" class="<?php echo $a7_class ?>" value="<?php echo isset($$a7_name)?$$a7_name:$a7_default ?>" <?php if (in_array($a7_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a7_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" name="<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" type="<?php echo $a7_type ?>" size="<?php echo $a7_size ?>" maxlength="<?php echo $a7_maxlength ?>" class="<?php echo $a7_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a7_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a7_readonly) {
-?><input type="hidden" id="id_<?php echo $a7_name ?>" name="<?php echo $a7_name ?>" value="<?php echo isset($$a7_name)?$$a7_name:$a7_default ?>" /><?php
- } } else { ?><span class="<?php echo $a7_class ?>"><?php echo isset($$a7_name)?$$a7_name:$a7_default ?></span><?php } ?><?php unset($a7_class,$a7_default,$a7_type,$a7_name,$a7_size,$a7_maxlength,$a7_onchange,$a7_readonly) ?><?php $a7_field='text'; ?><?php
+?><input type="hidden" id="id_<?php echo $a7_name ?>" name="<?php echo $a7_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a7_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a7_class,$a7_default,$a7_type,$a7_name,$a7_size,$a7_maxlength,$a7_onchange,$a7_readonly) ?><?php $a7_field='text'; ?><?php
 if (isset($errors[0])) $a7_field = $errors[0];
 ?><script name="JavaScript" type="text/javascript"><!--
 document.forms[0].<?php echo $a7_field ?>.focus();
@@ -1307,7 +1310,7 @@ function table()
       </tr>
     </table>
     <fieldset><legend><?php echo langHtml('CONTENT') ?></legend></fieldset>
-	<textarea name="<?php echo $a8_name ?>" class="editor" style="width:100%;height:300px;"><?php echo $$a8_name ?></textarea>
+	<textarea name="<?php echo $a8_name ?>" class="editor"><?php echo $$a8_name ?></textarea>
 <?php
 		}
 		else
@@ -1531,7 +1534,7 @@ function table()
       </tr>
     </table>
     <fieldset><legend><?php echo langHtml('CONTENT') ?></legend></fieldset>
-	<textarea name="<?php echo $a8_name ?>" class="editor" style="width:100%;height:300px;"><?php echo $$a8_name ?></textarea>
+	<textarea name="<?php echo $a8_name ?>" class="editor"><?php echo $$a8_name ?></textarea>
 <?php
 		}
 		else
@@ -2014,11 +2017,12 @@ document.forms[0].<?php echo $a7_field ?>.select();
 ><?php $a8_class='text';$a8_default='';$a8_type='text';$a8_name='linkurl';$a8_size='40';$a8_maxlength='256';$a8_onchange='';$a8_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a8_readonly=true;
 	  if ($a8_readonly && empty($$a8_name)) $$a8_name = '- '.lang('EMPTY').' -';
       if(!isset($a8_default)) $a8_default='';
+      $tmp_value = Text::encodeHtml(isset($$a8_name)?$$a8_name:$a8_default);
 ?><?php if (!$a8_readonly || $a8_type=='hidden') {
-?><input<?php if ($a8_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" name="<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" type="<?php echo $a8_type ?>" size="<?php echo $a8_size ?>" maxlength="<?php echo $a8_maxlength ?>" class="<?php echo $a8_class ?>" value="<?php echo isset($$a8_name)?$$a8_name:$a8_default ?>" <?php if (in_array($a8_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a8_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" name="<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" type="<?php echo $a8_type ?>" size="<?php echo $a8_size ?>" maxlength="<?php echo $a8_maxlength ?>" class="<?php echo $a8_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a8_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a8_readonly) {
-?><input type="hidden" id="id_<?php echo $a8_name ?>" name="<?php echo $a8_name ?>" value="<?php echo isset($$a8_name)?$$a8_name:$a8_default ?>" /><?php
- } } else { ?><span class="<?php echo $a8_class ?>"><?php echo isset($$a8_name)?$$a8_name:$a8_default ?></span><?php } ?><?php unset($a8_class,$a8_default,$a8_type,$a8_name,$a8_size,$a8_maxlength,$a8_onchange,$a8_readonly) ?></td></tr><?php } ?><?php } ?><?php $a4_equals='list';$a4_value=$type; ?><?php 
+?><input type="hidden" id="id_<?php echo $a8_name ?>" name="<?php echo $a8_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a8_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a8_class,$a8_default,$a8_type,$a8_name,$a8_size,$a8_maxlength,$a8_onchange,$a8_readonly) ?></td></tr><?php } ?><?php } ?><?php $a4_equals='list';$a4_value=$type; ?><?php 
 	$a4_tmp_exec = $a4_equals == $a4_value;
 	$a4_tmp_last_exec = $a4_tmp_exec;
 	if	( $a4_tmp_exec )
@@ -2208,11 +2212,12 @@ else
 ?><input type="hidden" name="<?php echo $a7_name ?>" value="<?php echo $a7_tmp_value ?>" /><?php unset($a7_name,$a7_default) ?><?php $a7_class='text';$a7_default='';$a7_type='text';$a7_name='number';$a7_size='15';$a7_maxlength='20';$a7_onchange='';$a7_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a7_readonly=true;
 	  if ($a7_readonly && empty($$a7_name)) $$a7_name = '- '.lang('EMPTY').' -';
       if(!isset($a7_default)) $a7_default='';
+      $tmp_value = Text::encodeHtml(isset($$a7_name)?$$a7_name:$a7_default);
 ?><?php if (!$a7_readonly || $a7_type=='hidden') {
-?><input<?php if ($a7_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" name="<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" type="<?php echo $a7_type ?>" size="<?php echo $a7_size ?>" maxlength="<?php echo $a7_maxlength ?>" class="<?php echo $a7_class ?>" value="<?php echo isset($$a7_name)?$$a7_name:$a7_default ?>" <?php if (in_array($a7_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a7_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" name="<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" type="<?php echo $a7_type ?>" size="<?php echo $a7_size ?>" maxlength="<?php echo $a7_maxlength ?>" class="<?php echo $a7_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a7_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a7_readonly) {
-?><input type="hidden" id="id_<?php echo $a7_name ?>" name="<?php echo $a7_name ?>" value="<?php echo isset($$a7_name)?$$a7_name:$a7_default ?>" /><?php
- } } else { ?><span class="<?php echo $a7_class ?>"><?php echo isset($$a7_name)?$$a7_name:$a7_default ?></span><?php } ?><?php unset($a7_class,$a7_default,$a7_type,$a7_name,$a7_size,$a7_maxlength,$a7_onchange,$a7_readonly) ?><?php $a7_field='number'; ?><?php
+?><input type="hidden" id="id_<?php echo $a7_name ?>" name="<?php echo $a7_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a7_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a7_class,$a7_default,$a7_type,$a7_name,$a7_size,$a7_maxlength,$a7_onchange,$a7_readonly) ?><?php $a7_field='number'; ?><?php
 if (isset($errors[0])) $a7_field = $errors[0];
 ?><script name="JavaScript" type="text/javascript"><!--
 document.forms[0].<?php echo $a7_field ?>.focus();

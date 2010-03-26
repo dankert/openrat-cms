@@ -62,7 +62,8 @@
 			echo '<input type="hidden" name="'.session_name().'" value="'.session_id().'" />'."\n";
 ?><?php unset($a2_name,$a2_target,$a2_method,$a2_enctype) ?><?php $a3_name='GLOBAL_PREFS';$a3_widths='30%,70%';$a3_width='93%';$a3_rowclasses='odd,even';$a3_columnclasses='1,2,3'; ?><?php
 	$coloumn_widths=array();
-	$column_widths = explode(',',$a3_widths);
+	$icon=$actionName;
+	$coldumn_widths = explode(',',$a3_widths);
 	$row_classes   = explode(',',$a3_rowclasses);
 	$row_class_idx = 999;
 	$column_classes = explode(',',$a3_columnclasses);
@@ -81,7 +82,7 @@
 		if (!@$conf['interface']['application_mode'] )
 		{
 		echo '<tr class="title"><td>';
-		echo '<img src="'.$image_dir.'icon_'.$actionName.IMG_ICON_EXT.'" align="left" border="0">';
+		echo '<img src="'.$image_dir.'icon_'.$icon.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->isEditMode()) { 
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php }
@@ -89,7 +90,7 @@
   ?><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /> <?php } else {
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
-		echo '<span class="path">'.langHtml('GLOBAL_'.$actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
+		echo '<span class="path">'.langHtml($actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
 		if	( !isset($path) || is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
@@ -636,6 +637,7 @@ if (count($$a7_list)==1) echo '<input type="hidden" name="'.$a7_name.'" value="'
 			$a7_tmp_default = '';
 		foreach( $a7_tmp_list as $box_key=>$box_value )
 		{
+			$box_value = is_array($box_value)?(isset($box_value['lang'])?langHtml($box_value['lang']):$box_value['value']):$box_value;
 			$id = 'id_'.$a7_name.'_'.$box_key;
 			echo '<input id="'.$id.'" name="'.$a7_name.'" type="radio" class="'.$a7_class.'" value="'.$box_key.'"';
 			if ($box_key==$a7_tmp_default)

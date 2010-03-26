@@ -166,11 +166,12 @@
 ?><?php unset($a7_action,$a7_subaction,$a7_name,$a7_target,$a7_method,$a7_enctype) ?><?php $a8_class='search';$a8_default='';$a8_type='text';$a8_name='search';$a8_size='15';$a8_maxlength='256';$a8_onchange='';$a8_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a8_readonly=true;
 	  if ($a8_readonly && empty($$a8_name)) $$a8_name = '- '.lang('EMPTY').' -';
       if(!isset($a8_default)) $a8_default='';
+      $tmp_value = Text::encodeHtml(isset($$a8_name)?$$a8_name:$a8_default);
 ?><?php if (!$a8_readonly || $a8_type=='hidden') {
-?><input<?php if ($a8_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" name="<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" type="<?php echo $a8_type ?>" size="<?php echo $a8_size ?>" maxlength="<?php echo $a8_maxlength ?>" class="<?php echo $a8_class ?>" value="<?php echo isset($$a8_name)?$$a8_name:$a8_default ?>" <?php if (in_array($a8_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a8_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" name="<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" type="<?php echo $a8_type ?>" size="<?php echo $a8_size ?>" maxlength="<?php echo $a8_maxlength ?>" class="<?php echo $a8_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a8_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a8_readonly) {
-?><input type="hidden" id="id_<?php echo $a8_name ?>" name="<?php echo $a8_name ?>" value="<?php echo isset($$a8_name)?$$a8_name:$a8_default ?>" /><?php
- } } else { ?><span class="<?php echo $a8_class ?>"><?php echo isset($$a8_name)?$$a8_name:$a8_default ?></span><?php } ?><?php unset($a8_class,$a8_default,$a8_type,$a8_name,$a8_size,$a8_maxlength,$a8_onchange,$a8_readonly) ?><?php $a8_true=@$conf['search']['quicksearch']['show_button']; ?><?php 
+?><input type="hidden" id="id_<?php echo $a8_name ?>" name="<?php echo $a8_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a8_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a8_class,$a8_default,$a8_type,$a8_name,$a8_size,$a8_maxlength,$a8_onchange,$a8_readonly) ?><?php $a8_true=@$conf['search']['quicksearch']['show_button']; ?><?php 
 	if	(gettype($a8_true) === '' && gettype($a8_true) === '1')
 		$a8_tmp_exec = $$a8_true == true;
 	else
