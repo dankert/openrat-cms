@@ -591,7 +591,7 @@ class ElementAction extends Action
 		$this->element->subtype         = $this->getRequestVar('subtype');
 		
 		if	( $this->hasRequestVar('default_longtext'))
-			$this->element->defaultText     = $this->getRequestVar('default_longtext','text');
+			$this->element->defaultText     = $this->getRequestVar('default_longtext',OR_FILTER_RAW);
 		else
 			$this->element->defaultText     = $this->getRequestVar('default_text',OR_FILTER_ALPHANUM);
 		$this->element->wiki            = in_array('wiki',explode(',',$this->getRequestVar('format')));
