@@ -33,7 +33,7 @@
 class Publish
 {
 	/**
-	 * Enthaelt bei Bedarf das FTP-Objekt. Nämlich dann, wenn
+	 * Enthaelt bei Bedarf das FTP-Objekt. Nï¿½mlich dann, wenn
 	 * zu einem FTP-Server veroeffentlicht werden soll.
 	 * @var Object
 	 */
@@ -46,7 +46,7 @@ class Publish
 	var $with_local          = false;
 	
 	/**
-	 * Flag, ob zu einem FTP-Server veröffentlicht werden soll.
+	 * Flag, ob zu einem FTP-Server verï¿½ffentlicht werden soll.
 	 * @var boolean
 	 */
 	var $with_ftp            = false;
@@ -72,7 +72,7 @@ class Publish
 	var $cmd_after_publish   = '';
 	
 	/**
-	 * Enthaelt am Ende der Veröffentlichung ein Array mit den veröffentlichten Objekten.
+	 * Enthaelt am Ende der Verï¿½ffentlichung ein Array mit den verï¿½ffentlichten Objekten.
 	 * @var Array
 	 */
 	var $publishedObjects    = array();
@@ -86,8 +86,8 @@ class Publish
 	var $log                 = array();
 	
 	/**
-	 * Stellt nach der Veröffentlichung fest, ob der Vorgang erfolgreich ist.
-	 * Falls nicht, enthält die Variable 'log' eine Fehlermeldung. 
+	 * Stellt nach der Verï¿½ffentlichung fest, ob der Vorgang erfolgreich ist.
+	 * Falls nicht, enthï¿½lt die Variable 'log' eine Fehlermeldung. 
 	 * @var boolean
 	 */
 	var $ok                  = true;
@@ -162,7 +162,7 @@ class Publish
 		if	( $conf_project['override_system_command'] && !empty($project->cmd_after_publish) )
 			$this->cmd_after_publish   = $project->cmd_after_publish;
 		else
-			$this->cmd_after_publish   = $conf_project['system_command'];
+			$this->cmd_after_publish   = @$conf_project['system_command'];
 		
 		// Im Systemkommando Variablen ersetzen
 		$this->cmd_after_publish = str_replace('{name}'   ,$project->name                ,$this->cmd_after_publish);
