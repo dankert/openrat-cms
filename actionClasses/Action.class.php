@@ -32,6 +32,7 @@ define('OR_FILTER_TEXT'    ,'text'  );
 define('OR_FILTER_FULL'    ,'full'  );
 define('OR_FILTER_NUMBER'  ,'123'   );
 define('OR_FILTER_RAW'     ,'raw'   );
+define('OR_FILTER_ALL'     ,'all'   );
 
 /**
  * Eltern-Klasse fuer alle Actions.
@@ -160,6 +161,7 @@ class Action
 
 			case OR_FILTER_TEXT:
 			case OR_FILTER_FULL:
+			case OR_FILTER_ALL:
 				// Ausfiltern von Control-Chars ( ASCII < 32 außer CR,LF) und HTML (<,>)
 				$white = '';
 				                                $white .= chr(10).chr(13); // Line-Feed, Carriage-Return
