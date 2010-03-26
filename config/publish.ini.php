@@ -89,6 +89,7 @@ override_publish_dir=true
 ;       {dir}     = Target directory,
 ;       {dirbase} = Target directory basename
 ;system_command="sudo -u xyz /usr/local/bin/mirror.sh {dirbase}"
+system_command=
 
 ; Input overrides the default system command.
 ; 'true' or 'false'
