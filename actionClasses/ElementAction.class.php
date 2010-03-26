@@ -347,10 +347,17 @@ class ElementAction extends Action
 						$format = 'wiki,html';
 						
 					$this->setTemplateVar('format', $format );
-					$formatlist = array('none'=>'raw','html'=>'html','wiki'=>'wiki','wiki,html'=>'wikihtml');
-
+					
+					$formatlist = array();
+					$formatlist['none'     ] = 'raw';      // Nur Text, ohne Auszeichnungen
+					// Für einfache Textelemente gibt es keinen HTML-Editor
+					if	( $this->element->type == 'longtext' )
+						$formatlist['html'     ] = 'html'; // Text mit HTML-Editor
+					$formatlist['wiki'     ] = 'wiki';     // Text mit Markup, HTML nicht erlaubt
+					$formatlist['wiki,html'] = 'wikihtml'; // Text mit Markup, HTML erlaubt
+					
 					foreach( $formatlist as $t=>$v )
-						$formatlist[$t] = lang('EL_PROP_'.$v);
+						$formatlist[$t] = array('lang'=>'EL_PROP_'.$v);
 					
 					$this->setTemplateVar('formatlist', $formatlist );
 					//Html::debug($this->templateVars);
