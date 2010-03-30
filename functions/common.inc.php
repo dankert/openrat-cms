@@ -122,4 +122,20 @@ function istrue( $val )
 		return false;
 }
 
+/**
+ * Liefert den für die Ausgabe zu verwendenden Zeichensatz.
+ * Falls konfiguriert, wird das Charset aus der DB-Konfiguration
+ * genommen. Sonst das Charset aus der Sprachdatei.
+ * 
+ * @return Zeichensatz, z.B. "UTF-8", "ISO-8859-1".
+ */
+function charset()
+{
+	$db = db_connection();
+	
+	if	( isset($db->conf['charset']) )
+		return $db->conf['charset'];
+	else
+		return lang('CHARSET');
+}
 ?>

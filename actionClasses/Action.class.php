@@ -674,12 +674,7 @@ class Action
 	 */
 	function getCharset()
 	{
-		$db = db_connection();
-		
-		if	( isset($db->conf['charset']) )
-			return $db->conf['charset'];
-		else
-			return lang('CHARSET');
+		return charset();
 	}
 	
 	

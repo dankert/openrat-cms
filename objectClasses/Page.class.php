@@ -728,6 +728,15 @@ class Page extends Object
 				$src = str_replace( '{{->'.$id.'}}','',$src );
 		}
 		
+		if	( config('publish','escape_8bit_characters') )
+			if	( substr($this->mimeType(),-4) == 'html' )
+			{
+				$src = htmlentities($src,ENT_NOQUOTES,charset());
+				$src = str_replace('&lt;' , '<', $src);
+				$src = str_replace('&gt;' , '>', $src);
+				$src = str_replace('&amp;', '&', $src);
+			}
+		
 		$this->value = &$src;
 
 		// Store in cache.
