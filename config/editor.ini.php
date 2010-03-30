@@ -109,7 +109,7 @@ override_speech_close = "&raquo;"
 rendermode=sgml
 ;rendermode=xml
 
-replace = "EUR:&euro; �:&Auml; �:&auml; �:&Ouml; �:&ouml; �:&Uuml; �:&uuml; �:&szlig; (c):&copy; (r):&reg; ^1:&sup1; ^2:&sup2; ^3:&sup3; 1/4:&frac14; 1/2:&frac12; 3/4:&frac34;"
+replace = "EUR:&euro; (c):&copy; (r):&reg; ^1:&sup1; ^2:&sup2; ^3:&sup3; 1/4:&frac14; 1/2:&frac12; 3/4:&frac34;"
 
 
 
