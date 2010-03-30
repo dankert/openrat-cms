@@ -58,8 +58,11 @@ enable_php_in_page_content=false
 ; 'true' : always interpret PHP in file content
 enable_php_in_file_content=false
 
-; Escape all non-ascii characters to HTML entities (e.g. "&entity;")
-escape_8bit_characters=true
+; Escape all non-ascii characters to HTML entities.
+; Normally this is not necessary, if there is a correct charset in the meta-section of your HTML-head.
+; 'true' : Escape all non-ascii-characters
+; 'false': Do nothing (default)
+escape_8bit_characters=false
 
 
 
