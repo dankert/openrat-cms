@@ -11,7 +11,7 @@ default=de
 
 ; Available Languages.
 ; A comma seperated list with language codes.
-available=de,en,es,fr,it,ru
+available=de,en,es,fr,it,ru,cn
 
 
 
