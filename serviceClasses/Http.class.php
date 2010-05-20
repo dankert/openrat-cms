@@ -2,7 +2,7 @@
 
 /**
  * Kapselung einer HTTP-Anfrage.<br>
- * Unter Berücksichtigung von RFC 1945.<br>
+ * Unter Beruecksichtigung von RFC 1945.<br>
  *
  * @author Jan Dankert
  * @package openrat.services
@@ -95,7 +95,7 @@ class Http
 
 	/**
 	 * Erzeugt eine Zeichenkette mit allen Parametern.
-	 * @param withPraefixQuestionMark Praefix mit Fragezeichen (für GET-Anfragen)
+	 * @param withPraefixQuestionMark Praefix mit Fragezeichen (fï¿½r GET-Anfragen)
 	 * @return String URL-Parameter
 	 */
 	function getParameterString( $withPraefixQuestionMark=false )
@@ -259,7 +259,7 @@ class Http
 						$this->body .= $line;
 					}
 				}
-				fclose($fp); // Verbindung brav schließen.
+				fclose($fp); // Verbindung brav schlieï¿½en.
 
 
 				// RFC 1945 (Section 6.1.1) schreibt
@@ -283,7 +283,7 @@ class Http
 //					Html::debug($location,"NEUES REDIRECT AUF");
 					$this->setURL($location);
 //					Html::debug($this->url,"NEUE URL NACH REDIRECT");
-					continue; // Nächster Versuch mit umgeleiteter Adresse.
+					continue; // Nï¿½chster Versuch mit umgeleiteter Adresse.
 				}
 				// RFC 1945 (Section 6.1.1) schreibt
 				// "2xx: Success - The action was successfully received, understood, and accepted."
@@ -334,7 +334,7 @@ class Http
 		$http_languages = @$HTTP_SERVER_VARS['HTTP_ACCEPT_LANGUAGE'];
 		foreach( explode(',',$http_languages) as $l )
 		{
-			list($part) = explode(';',$l); // Prioritäten ignorieren.
+			list($part) = explode(';',$l); // Prioritï¿½ten ignorieren.
 			$languages[] = trim($part);
 
 			// Aus "de_DE" das "de" extrahieren.
@@ -370,8 +370,8 @@ class Http
 	/**
 	 * Server-Fehlermeldung anzeigen.<br>
 	 * 
-	 * Erzeugt einen "HTTP 501 Internal Server Error". Zuätzlich
-	 * wird ein 'rollback' auf der Datenbank ausgeführt.
+	 * Erzeugt einen "HTTP 501 Internal Server Error". Zuï¿½tzlich
+	 * wird ein 'rollback' auf der Datenbank ausgefï¿½hrt.
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
@@ -439,6 +439,8 @@ class Http
 		else
 		{
 			header('Content-Type: text/html');
+			$message = htmlentities($message);
+			$reason  = htmlentities($reason );
 			$signature = OR_TITLE.' '.OR_VERSION.' '.getenv('SERVER_SOFTWARE');
 			echo <<<HTML
 <html>
