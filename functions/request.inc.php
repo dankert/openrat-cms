@@ -37,13 +37,11 @@
 //
 // ---------------------------------------------------------------------------
 
-
-
-$REQ = array_merge($HTTP_GET_VARS,$HTTP_POST_VARS,$_GET,$_POST);
+$REQ = array_merge($_GET,$_POST);
 
 // Zur Sicherheit:
 // Falls REGISTER_GLOBALS aktiviert ist, dann alle REQUEST-Variablen aus dem
-// globalen Gültigkeitsraum entfernen.
+// globalen Gï¿½ltigkeitsraum entfernen.
 if	( ini_get('register_globals') )
 {
 	foreach( $REQ as $reqVar=>$reqValue )
