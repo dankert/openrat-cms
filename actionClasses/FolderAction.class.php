@@ -1157,7 +1157,11 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('files'  ,count($this->folder->getFiles()) > 0 );
 		$this->setTemplateVar('pages'  ,count($this->folder->getPages()) > 0 );
 		$this->setTemplateVar('subdirs',count($this->folder->getSubFolderIds()) > 0 );
-		$this->setTemplateVar('clean'  ,$this->folder->isRoot );
+		
+		//$this->setTemplateVar('clean'  ,$this->folder->isRoot );
+		// Gefaehrliche Option, da dies bestehende Dateien, die evtl. nicht zum CMS gehören, überschreibt.
+		// Daher deaktiviert.
+		$this->setTemplateVar('clean'  ,false );
 	}
 
 
