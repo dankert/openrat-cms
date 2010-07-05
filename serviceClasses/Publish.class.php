@@ -179,7 +179,7 @@ class Publish
 	 * @param String $tmp_filename
 	 * @param String $dest_filename
 	 */
-	function copy( $tmp_filename,$dest_filename )
+	function copy( $tmp_filename,$dest_filename,$lastChangeDate=null )
 	{
 		if	( !$this->ok)
 			return;
@@ -204,6 +204,8 @@ class Publish
 					$this->log[] = 'destination: '.$dest;
 					return; // Fehler beim Kopieren, also abbrechen.
 				}
+				if	( ! is_null($lastChangeDate) )
+					touch( $dest,$lastChangeDate );
 			}
 			
 			if	(!empty($conf['security']['chmod']))

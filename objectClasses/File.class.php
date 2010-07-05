@@ -646,7 +646,7 @@ EOF
 			$this->publish = new Publish();
 
 		$this->write();
-		$this->publish->copy( $this->tmpfile(),$this->full_filename() );
+		$this->publish->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );
 		
 		$this->publish->publishedObjects[] = $this->getProperties();
 	}
