@@ -395,7 +395,10 @@ SQL
 	
 	
 	/**
-	 * Ermittelt den Mime-Type zu diesem Template
+	 * Ermittelt den Mime-Type zu diesem Template.
+	 * 
+	 * Es wird die Extension des Templates betrachtet und dann mit Hilfe der
+	 * Konfigurationsdatei 'mime-types.ini' der Mime-Type bestimmt. 
 	 *
 	 * @return String Mime-Type  
 	 */
@@ -404,7 +407,9 @@ SQL
 		global $conf;
 		$mime_types = $conf['mime-types'];
 
-		$extension = strtolower($this->extension);
+		// Nur den letzten Teil der Extension auswerten:
+		// Aus 'mobile.html' wird nur 'html' verwendet.
+		$extension = strtolower(array_pop(explode('.',$this->extension)));
 
 		if	( !empty($mime_types[$extension]) )
 			$this->mime_type = $mime_types[$extension];
