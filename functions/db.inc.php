@@ -23,6 +23,12 @@
 //
 require( 'serviceClasses/Sql.class.php');
 
+/**
+ * Liefert alle Tabellennamen zur aktuellen Datenbankverbindung.
+ * 
+ * @param int $dbid
+ * @return Array Schlüssel=log. Tabellenname, Werte=Phys. Tabellennamen 
+ */
 function table_names( $dbid )
 {
 	$t = array();
@@ -78,6 +84,11 @@ function table_names( $dbid )
 
 
 
+/**
+ * Liefert die Datenbankverbindung fuer die aktuelle Sitzung.
+ * 
+ * @return Db
+ */
 function db_connection()
 {
 
