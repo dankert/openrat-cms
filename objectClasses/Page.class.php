@@ -200,6 +200,7 @@ class Page extends Object
 					
 					$p = new Page( $objectid );
 					$p->languageid          = $this->languageid;
+					$p->modelid             = $this->modelid;
 					$p->cut_index           = $cut_index;
 					$p->content_negotiation = $content_negotiation;
 					$p->withLanguage        = $this->withLanguage;
@@ -229,6 +230,7 @@ class Page extends Object
 							case 'page':
 								$p = new Page( $link->linkedObjectId );
 								$p->languageid          = $this->languageid;
+								$p->modelid             = $this->modelid;
 								$p->cut_index           = $cut_index;
 								$p->content_negotiation = $content_negotiation;
 								$p->load();
