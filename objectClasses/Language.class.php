@@ -86,6 +86,32 @@ class Language
 	}
 
 
+	/**
+	 * Ermittelt die Anzahl aller Sprachen zum aktuellen Projekt.
+	 */
+	function count()
+	{
+		global $SESS;
+		$db = db_connection();
+
+		$sql = new Sql( <<<SQL
+			SELECT count(*) FROM {t_language} 
+	         WHERE projectid = {projectid}
+SQL
+);
+
+		if	( !empty($this->projectid) )
+			$sql->setInt('projectid',$this->projectid );
+		else
+		{
+			$project = Session::getProject();
+			$sql->setInt('projectid',$project->projectid);
+		}
+
+		return $db->getOne( $sql );
+	}
+
+
 	// Lesen aus der Datenbank
 	function load()
 	{

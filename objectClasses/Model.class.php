@@ -84,6 +84,28 @@ class Model
 		return $db->getAssoc( $sql );
 	}
 
+	
+	
+	/**
+	 * Bestimmt die Anzahl aller Varianten fuer das aktuelle Projekt.
+	 */
+	function count()
+	{
+		global $SESS;
+		$db = db_connection();
+
+		$sql = new Sql( <<<SQL
+		SELECT count(*) FROM {t_projectmodel} 
+		                   WHERE projectid = {projectid} 
+SQL
+);
+		if	( isset($this) )
+			$sql->setInt('projectid',$this->projectid );
+		else	$sql->setInt('projectid',$SESS['projectid'] );
+
+		return $db->getOne( $sql );
+	}
+	
 
 	/**
 	 * Lesen aus der Datenbank
