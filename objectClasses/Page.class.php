@@ -112,7 +112,7 @@ class Page extends Object
 	function getProperties()
 	{
 		return array_merge( parent::getProperties(),
-		                    array('full_filename'=>$this->fullFilename,
+		                    array('full_filename'=>$this->realFilename(),
 		                          'pageid'       =>$this->pageid,
 		                          'templateid'   =>$this->templateid,
 		                          'mime_type'    =>$this->mimeType() ) );
@@ -491,7 +491,11 @@ class Page extends Object
 
 	
 	/**
-	  * Ermitteln des Dateinamens dieser Seite
+	  * Ermitteln des Dateinamens dieser Seite.
+	  * 
+	  * Wenn '$this->content_negotiation' auf 'true' steht, wird der Dateiname ggf. gekürzt,
+	  * so wie er für HTML-Links verwendet wird. Sonst wird immer der echte Dateiname
+	  * ermittelt.
 	  *
 	  * @return String Kompletter Dateiname, z.B. '/pfad/seite.en.html'
 	  */
@@ -655,7 +659,8 @@ class Page extends Object
 
 
 	/**
-	  * Erzeugen des Inhaltes der gesamten Seite
+	  * Erzeugen des Inhaltes der gesamten Seite.
+	  * 
 	  * @return String Inhalt
 	  */
 	function generate()
@@ -771,10 +776,10 @@ class Page extends Object
 		
 		$this->public              = true;
 
-		// Schleife ueber alle Sprachvarianten
 		$allLanguages = Language::getAll();
 		$allModels    = Model::getAll();
 		
+		// Schleife ueber alle Sprachvarianten
 		foreach( $allLanguages as $languageid=>$x )
 		{
 			$this->languageid   = $languageid;
@@ -794,6 +799,7 @@ class Page extends Object
 				$t = new Template( $this->templateid );
 				$t->modelid = $this->modelid;
 				$t->load();
+				
 				// Nur wenn eine Datei-Endung vorliegt wird die Seite veroeffentlicht
 				if	( !empty($t->extension) )
 				{ 	
@@ -855,6 +861,17 @@ class Page extends Object
 		parent::setTimestamp();
 	}
 	
+	
+	/**
+	 * Ermittelt den Dateinamen dieser Seite, so wie sie auch im Dateisystem steht.
+	 */
+	function realFilename()
+	{
+		$this->withLanguage = config('publish','filename_language') == 'always' || count(Language::count()) > 1;
+		$this->withModel    = config('publish','filename_type'    ) == 'always' || count(Model::count()   ) > 1;
+		
+		return $this->full_filename();
+	}		
 }
 
 
