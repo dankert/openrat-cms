@@ -657,9 +657,18 @@ class PageAction extends ObjectAction
 	 */
 	function src()
 	{
-		$this->page->public = true;
+		$language = Session::getProjectLanguage();
+		$model    = Session::getProjectModel();
+		
+		$this->page->languageid = $language->languageid;
+		$this->page->modelid    = $model->modelid;
+
+		$this->page->withLanguage = config('publish','filename_language') == 'always' || count(Language::count()) > 1;
+		$this->page->withModel    = config('publish','filename_type'    ) == 'always' || count(Model::count()   ) > 1;
+		
+		$this->page->public     = true;
 		$this->page->load();
-	
+
 		$src = $this->page->generate();
 		
 		// HTML Highlighting
