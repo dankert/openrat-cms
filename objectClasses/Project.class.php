@@ -420,7 +420,6 @@ SQL
 			{
 				foreach( $languages as $lid )
 				{
-					//Html::debug($lid,'lid');
 					$value = new Value();
 					$value->element    = new Element($eid);
 					$value->pageid     = $page->pageid;
@@ -476,10 +475,12 @@ EOF
 	/**
 	 * Kopiert ein Projekt von einer Datenbank zu einer anderen.<br>
 	 * <br>
-	 * Alle Projektinhalte werden kopiert, die Fremdschl�sselbeziehungen werden entsprechend angepasst.<br>
+	 * Alle Projektinhalte werden kopiert, die Fremdschluesselbeziehungen werden entsprechend angepasst.<br>
 	 * <br>
-	 * Alle Beziehungen zu Benutzern, z.B. "Zuletzt ge�ndert von", "angelegt von" sowie<br>
+	 * Alle Beziehungen zu Benutzern, z.B. "Zuletzt geaendert von", "angelegt von" sowie<br>
 	 * alle Berechtigungsinformationen gehen verloren!<br>
+	 * 
+	 * @param dbid_destination ID der Ziel-Datenbank
 	 */
 	function export( $dbid_destination )
 	{
@@ -488,12 +489,13 @@ EOF
 		
 		$db_src  = db_connection();
 		$db_dest = new DB( $conf['database'][$dbid_destination] );
+		$db_dest->id = $dbid_destination;
 		$db_dest->start();
 		
-//		$aa = 5000; // Bisher nicht erreichte ID in der Zieldatenbank
-
+		$sameDB = ( $db_dest->id == $db_src->id );
+		Html::debug($sameDB);
+		
 		// -------------------------------------------------------
-//		$prefix = 'a24_';
 		$mapping = array();
 		$ids = array('project'      => array('foreign_keys'=>array(),
 		                                     'primary_key' =>'id',
@@ -555,12 +557,11 @@ EOF
 		);
 		foreach( $ids as $tabelle=>$data )
 		{
-//			Html::debug($tabelle,"Tabelle");
 			
 			$mapping[$tabelle] = array();
 			$idcolumn = $data['primary_key'];
 
-			// N�chste freie Id in der Zieltabelle ermitteln.
+			// Naechste freie Id in der Zieltabelle ermitteln.
 			$sql = new Sql( 'SELECT MAX('.$idcolumn.') FROM {t_'.$tabelle.'}',$dbid_destination);
 			$maxid = intval($db_dest->getOne($sql));
 			$nextid = $maxid;
@@ -584,8 +585,6 @@ EOF
 			{
 				$mapping[$tabelle][$srcid] = ++$nextid;
 
-//				Html::debug($mapping,"Mapping");
-				
 				$sql = new Sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
 				$sql->setInt('id',$srcid);
 				$row = $db_src->getRow( $sql );
@@ -598,9 +597,6 @@ EOF
 				{
 					if	( intval($row[$fkey_column]) != 0 )
 						$row[$fkey_column] = $mapping[$target_tabelle][$row[$fkey_column]];
-//					if	( !isset($mapping[$target_tabelle][$row[$fkey_column]]))
-//						Html::debug('Fehler: T='.$target_tabelle.', Column='.$fkey_column);
-						
 				}
 				
 				foreach( array_keys($row) as $key )
@@ -609,14 +605,13 @@ EOF
 					{
 						// Nachschauen, ob es einen UNIQUE-Key in der Zieltabelle schon gibt.
 						$sql = new Sql( 'SELECT 1 FROM {t_'.$tabelle.'} WHERE '.$key."='".$row[$key]."'",$dbid_destination);
-//						Html::debug($sql);
 						
 						if	( intval($db_dest->getOne( $sql )) == 1 )
 							$row[$key] = $row[$key].$zeit;
 
 					}
 
-					if	( isset($data['erase']) && in_array($key,$data['erase']) )
+					if	( !$sameDB && isset($data['erase']) && in_array($key,$data['erase']) )
 						$row[$key] = null;
 
 					if	( isset($data['self_key']) && $key == $data['self_key'] && intval($row[$key]) > 0 )
@@ -642,13 +637,11 @@ EOF
 						$row[$data['binary']] = base64_decode($row[$data['binary']]);
 				}
 				
-//				Html::debug($row,'Zeile');
-				
 				// Daten in Zieltabelle einf�gen.
 				$sql = new Sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES({'.join(array_keys($row),'},{').'})',$dbid_destination);
 				foreach( $row as $key=>$value )
 				{
-					if	( isset($data['erase']) && in_array($key,$data['erase']) )
+					if	( !$sameDB && isset($data['erase']) && in_array($key,$data['erase']) )
 						$sql->setNull($key);
 					else
 						$sql->setVar($key,$value);
