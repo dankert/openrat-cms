@@ -493,7 +493,6 @@ EOF
 		$db_dest->start();
 		
 		$sameDB = ( $db_dest->id == $db_src->id );
-		Html::debug($sameDB);
 		
 		// -------------------------------------------------------
 		$mapping = array();
@@ -555,6 +554,13 @@ EOF
 		                                     ),
 		             
 		);
+		
+		if	( $sameDB )
+			$ids['acl'] = array('foreign_keys'=>array('objectid'   => 'object',
+		                                              'languageid' => 'language' ),
+		                        'primary_key' =>'id'
+		                        );
+			 
 		foreach( $ids as $tabelle=>$data )
 		{
 			
