@@ -54,8 +54,8 @@ function table_names( $dbid )
 	}
 	else
 	{
-		$conf_db_prefix = $config('database',$dbid,'prefix');
-		$conf_db_suffix = $config('database',$dbid,'suffix');
+		$conf_db_prefix = config('database',$dbid,'prefix');
+		$conf_db_suffix = config('database',$dbid,'suffix');
 	}
 
 	foreach( array(
