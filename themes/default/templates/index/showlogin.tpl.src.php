@@ -82,7 +82,7 @@ page
 					row
 						row
 							cell colspan:2
-								fieldset title:message:DATABASE
+								fieldset title:message:DATABASE icon:database
 						cell
 							text key:DATABASE
 						cell

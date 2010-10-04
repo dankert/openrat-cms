@@ -1,1 +1,1 @@
-<fieldset><?php if(isset($attr_title)) { ?><legend><?php echo encodeHtml($attr_title) ?></legend><?php } ?>
+<fieldset><?php if(isset($attr_title)) { ?><legend><?php if(isset($attr_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$attr_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($attr_title) ?></legend><?php } ?>
