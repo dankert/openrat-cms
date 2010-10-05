@@ -345,9 +345,12 @@ input.ok,
 div.cancel
 {
 	color:#FFFFFF;
+	padding:5px;
 	background-color:#7B9CBD;
 	width:110px;
 	font-weight: bold;
+	-moz-border-radius:10px;
+	-khtml-border-radius:10px;
 }
 
 input.reset  { color:black; background-color:#cac2a6; text-align:right; }
