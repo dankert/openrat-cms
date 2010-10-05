@@ -100,18 +100,19 @@ class ProjectAction extends Action
 					$this->project = new Project();
 					$this->project->name = $this->getRequestVar('name');
 					$this->project->add();
+					$this->addNotice('project',$this->project->name,'ADDED'); 
 					break;
 				case 'copy':
 					$db = db_connection();
 					$project = new Project($this->getRequestVar('projectid'));
 					$project->load();
 					$project->export($db->id);
+					$this->addNotice('project',$project->name,'DONE'); 
 					break;
 				default:
 					Http::serverError('Unknown type while adding project '.$this->getRequestVar('type') );
 			}
 			
-			$this->addNotice('project',$this->project->name,'ADDED'); 
 		}
 	}
 
