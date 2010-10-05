@@ -58,7 +58,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->text        = lang('GLOBAL_PROJECTS');
 		$treeElement->description = lang('GLOBAL_PROJECTS');
 		$treeElement->url         = Html::url('main','project','',array(REQ_PARAM_TARGETSUBACTION=>'listing'));
-		$treeElement->icon        = 'project';
+		$treeElement->icon        = 'project_list';
 		$treeElement->type        = 'projects';
 		$treeElement->target      = 'cms_main';
 		
@@ -68,7 +68,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('USER_AND_GROUPS');
 		$treeElement->description = lang('USER_AND_GROUPS');
-		$treeElement->icon        = 'group';
+		$treeElement->icon        = 'user_list';
 		$treeElement->type        = 'userandgroups';
 		
 		$this->addTreeElement( $treeElement );
@@ -112,7 +112,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->text        = lang('GLOBAL_USER');
 		$treeElement->description = lang('GLOBAL_USER');
 		$treeElement->url         = Html::url('main','user','',array(REQ_PARAM_TARGETSUBACTION=>'listing'));
-		$treeElement->icon        = 'user';
+		$treeElement->icon        = 'user_list';
 		$treeElement->target      = 'cms_main';
 		$treeElement->type        = 'users';
 		
@@ -122,7 +122,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->text        = lang('GLOBAL_GROUPS');
 		$treeElement->description = lang('GLOBAL_GROUPS');
 		$treeElement->url         = Html::url('main','group','',array(REQ_PARAM_TARGETSUBACTION=>'listing'));
-		$treeElement->icon        = 'group';
+		$treeElement->icon        = 'user_list';
 		$treeElement->target      = 'cms_main';
 		$treeElement->type        = 'groups';
 
