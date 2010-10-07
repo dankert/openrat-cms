@@ -167,6 +167,7 @@ class AdministrationTree extends AbstractTree
 			$treeElement->text = $key.'='.$value;
 			$treeElement->icon   = 'config_property';
 			$this->addTreeElement( $treeElement );
+			$treeElement->description = lang('SETTING')." '".$key."'".(!empty($value)?': '.$value:'');
 		}
 
 		if	( function_exists('getrusage') ) // Funktion existiert auf WIN32 nicht.
@@ -175,6 +176,7 @@ class AdministrationTree extends AbstractTree
 			{
 				$treeElement = new TreeElement();
 				$treeElement->text = $name.':'.$value;
+				$treeElement->description = lang('SETTING')." '".$name."'".(!empty($value)?': '.$value:'');
 				$treeElement->icon   = 'config_property';
 				$this->addTreeElement( $treeElement );
 			}
@@ -206,6 +208,7 @@ class AdministrationTree extends AbstractTree
 		{
 			$treeElement = new TreeElement();
 			$treeElement->text = $key.'='.$value;
+			$treeElement->description = lang('SETTING')." '".$key."'".(!empty($value)?': '.$value:'');
 			$treeElement->icon   = 'config_property';
 			$this->addTreeElement( $treeElement );
 		}
@@ -246,7 +249,11 @@ class AdministrationTree extends AbstractTree
 	}
 	
 		
-	
+	/**
+	 * Anzeigen von Einstellungen.
+	 * 
+	 * @param $id
+	 */
 	function prefs( $id )
 	{
 		global $conf;
@@ -350,6 +357,8 @@ class AdministrationTree extends AbstractTree
 			}
 			else
 			{
+				// Die PHP-funktion 'parse_ini_file()' liefert alle Einstellungen leider nur als String
+				// Daher weiß man hier nicht, ob '1' nun '1' oder 'true' heißen soll.
 				if	( $value=='' )
 					// Anzeige 'Leer'
 					$value = lang('EMPTY');
