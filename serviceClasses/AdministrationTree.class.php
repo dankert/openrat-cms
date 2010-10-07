@@ -335,6 +335,9 @@ class AdministrationTree extends AbstractTree
 		}
 		else
 			$tmpConf = $this->confCache[$id];
+			
+		if	( !is_array($tmpConf) )
+			$tmpConf = array('unknown');
 		
 		foreach( $tmpConf as $key=>$value )
 		{

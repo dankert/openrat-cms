@@ -37,6 +37,8 @@ class AbstractTree
 	
 	var $autoOpen     = array(0,1);
 	
+	var $opened       = array();
+	
 	/**
 	 * Hoechste Element-Id
 	 * @type Integer
@@ -60,6 +62,45 @@ class AbstractTree
 			$this->open($openId);
 	}
 
+	function refresh() {
+		
+		$this->elements = array();
+		
+		// Wurzel-Element laden
+		$this->root();
+		$this->elements[0]  = $this->tempElements[0];
+		$this->tempElements = array();
+		$this->maxId = 0;
+
+		$oids = $this->opened;
+		$this->opened = array();
+		foreach( $oids as $oid)
+		{
+			if	( isset($this->elements[$oid]) )
+				$this->open($oid);
+		}
+	}
+
+	
+	
+	function all() {
+		
+		$this->elements = array();
+		$this->opened = array();
+		
+		// Wurzel-Element laden
+		$this->root();
+		$this->elements[0]  = $this->tempElements[0];
+		$this->tempElements = array();
+		$this->maxId = 0;
+		
+		for( $eid=0;isset($this->elements[$eid]); $eid++)
+		{
+			$this->open($eid);
+		}
+	}
+	
+	
 	/**
 	 * Oeffnen eines Teilbaumes. Es wird der eindeutige Name des zu oeffnenden Teilbaumes als
 	 * Parameter uebergeben
@@ -67,6 +108,11 @@ class AbstractTree
 	 */
 	function open( $elementId )
 	{
+		$k = array_search($elementId,$this->opened);
+		if	( $k !== false )
+			return; // Ist schon offen. Evtl. Reload gedrückt?
+		
+		$this->opened[] = $elementId;
 		$funcName = $this->elements[$elementId]->type;
 		if	( empty($funcName) )
 			return;
@@ -102,6 +148,10 @@ class AbstractTree
 	function close( $elementId )
 	{
 		$this->elements[$elementId]->subElementIds = array();
+		
+		$k = array_search($elementId,$this->opened);
+		if	( $k !== false )
+			unset($this->opened[$k]);
 	}	
 
 

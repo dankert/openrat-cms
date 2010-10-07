@@ -7,7 +7,13 @@ goto=show
 [load]
 goto=show
 
+[openall]
+goto=show
+
 [open]
+goto=show
+
+[refresh]
 goto=show
 
 [close]

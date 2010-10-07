@@ -85,6 +85,21 @@ class TreeAction extends Action
 	 */
 	function openall()
 	{
+		$this->tree = Session::getTree();
+		$this->tree->all();
+		Session::setTree( $this->tree );
+
+		$this->callSubAction('show');
+	}
+	
+	
+	function refresh()
+	{
+		$this->tree = Session::getTree();
+		$this->tree->refresh();
+		Session::setTree( $this->tree );
+
+		$this->callSubAction('show');
 	}
 	
 	

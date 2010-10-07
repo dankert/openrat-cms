@@ -22,5 +22,14 @@ page class:tree
 					else
 						image icon:var:icon
 						text var:text maxlength:20 cut:right title:var:desc
+					if not: present:image
+						text raw:__
+						link action:tree subaction:refresh
+							text key:refresh
+							//image icon:refresh align:left
+						text raw:__
+						link action:tree subaction:openall
+							text key:all
+							//image icon:openall align:left
 				set var:url
 				set var:image
