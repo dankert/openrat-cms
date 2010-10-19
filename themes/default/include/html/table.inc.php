@@ -27,4 +27,4 @@
 	#END-IF
 		
 ?><table class="%class%" cellspacing="%space%" width="%width%" cellpadding="%padding%">
-/* ignore */ </table>
+<!-- ignore this line --></table>
