@@ -105,17 +105,21 @@ body.main
 body.title table tr td {
 	margin:0px;
 	padding:3px;
-	background-color:#EEEEEE;
+	xbackground-color:#EEEEEE;
 }
 
 body.tree {
 	padding:5px;
 }
 
+/*
 body.tree tr.active td.treevalue
 {
 	border-right:2px solid #7B9CBD;
 }
+*/
+
+
 /*
 body.tree tr.active
 {
@@ -148,7 +152,7 @@ body.main tr.menu td table tr td.noaction
 
 
 body.menu tr.title span.title,
-body.main tr.title span.title
+body.menu tr.title span.title
 {
 	color:white;
 	font-family:Arial;
@@ -256,14 +260,47 @@ body.main tr.title td
 	vertical-align:middle;
 	padding:4px;
 	height:30px;
-	
 	background: -webkit-gradient(linear, left top, left bottom, from(#7B9CBD), to(#9BBCDD));
 	background: -moz-linear-gradient(top,  #7B9CBD,#9BBCDD);
+}
+
+body.menu
+{
+	margin:0px;
+}
+
+body.menu > table.treemenu,
+body.menu > table.mainmenu
+{
+	/*
+	margin-top:1px;
+	margin-left:5px;
+	margin-right:5px;
+	margin-bottom:5px;
+	*/
 	
+	border-top:3px solid gray;
+	border-bottom:1px solid gray;
+}
+
+body.menu > table
+{
+	/*
+	border-radius: 10px;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-box-shadow: 5px 5px 10px black;
+	-moz-box-shadow: 3px 3px 3px #303030;
+	box-shadow: 5px 5px 10px black;
+	*/
 }
 
 td.message { padding:10px; font-weight:bold; }
-td.title   { font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px; }
+td.title
+{
+	white-space:nowrap;
+	/*font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px;*/
+}
 td.submenu { border-bottom:solid 1px black; background-color:#cac2a6; }
 td.subaction { background-color:#cac2a6; vertical-align:middle; padding:4px;}
 table.main td.window td { padding:4px;}
