@@ -1237,8 +1237,6 @@ class IndexAction extends Action
 		$this->setTemplateVar( 'frame_src_tree_title',Html::url( 'treetitle'            ) );
 		$this->setTemplateVar( 'frame_src_tree'      ,Html::url( 'tree'    ,'load'      ) );
 		$this->setTemplateVar( 'frame_src_clipboard' ,Html::url( 'clipboard'            ) );
-		$this->setTemplateVar( 'frame_src_border'    ,Html::url( 'empty'   ,'border'    ) );
-		$this->setTemplateVar( 'frame_src_background',Html::url( 'empty'   ,'background') );
 		$this->setTemplateVar( 'frame_src_status'    ,Html::url( 'status'               ) );
 
 		$this->setTemplateVar( 'tree_width',$conf['interface']['tree_width'] );

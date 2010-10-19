@@ -1,5 +1,5 @@
 page class:menu
-	table padding:5 space:0 width:100%
+	table padding:5 space:0 width:100% class:treemenu
 
 		if true:!config:interface/application_mode	
 			row class:title
