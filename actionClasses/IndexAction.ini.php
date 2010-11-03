@@ -24,8 +24,8 @@ goto=show
 [applications]
 menu=menu
 
-;[userinfo]
-;
+[userinfo]
+direct=true
 
 [project]
 goto=show
