@@ -38,7 +38,7 @@ class IndexAction extends Action
 		global $conf;
 
 		if	( !isset($conf['database'][$dbid] ))
-			die( 'unknown DB-Id: '.$dbid );
+			Http::serverError( 'unknown DB-Id: '.$dbid );
 			
 		$db = db_connection();
 		if	( is_object($db) )
@@ -76,7 +76,7 @@ class IndexAction extends Action
 			global $conf;
 	
 			if	( !isset($conf['database']['default']) )
-				die('default-database not set');
+				Http::serverError('default-database not set');
 	
 			$dbid = $conf['database']['default'];
 		}
@@ -185,7 +185,7 @@ class IndexAction extends Action
 			$authid = $this->getRequestVar( $sso['auth_param_name']);
 			
 			if	( empty( $authid) )
-				die( 'no authorization data (no auth-id)');
+				Http::notAuthorized( 'no authorization data (no auth-id)');
 				
 			if	( $sso['auth_param_serialized'] )
 				$authid = unserialize( $authid );
@@ -235,12 +235,12 @@ class IndexAction extends Action
 				$html = implode('',$inhalt);
 //				Html::debug($html);
 				if	( !preg_match($sso['expect_regexp'],$html) )
-					die('auth failed');
+					Http::notAuthorized('auth failed');
 				$treffer=0;
 				if	( !preg_match($sso['username_regexp'],$html,$treffer) )
-					die('auth failed');
+					Http::notAuthorized('auth failed');
 				if	( !isset($treffer[1]) )
-					die('auth failed');
+					Http::notAuthorized('authorization failed');
 					
 				$username = $treffer[1];
 				
@@ -250,7 +250,7 @@ class IndexAction extends Action
 				$user = User::loadWithName( $username );
 				
 				if	( ! $user->isValid( ))
-					die('auth failed: user not found: '.$username);
+					Http::notAuthorized('authorization failed: user not found: '.$username);
 					
 				$user->setCurrent();
 
@@ -261,19 +261,19 @@ class IndexAction extends Action
 		elseif	( $ssl_trust )
 		{
 			if	( empty($ssl_user_var) )
-				die( 'please set environment variable name in ssl-configuration.' );
+				Http::serverError( 'please set environment variable name in ssl-configuration.' );
 
 			$username = getenv( $ssl_user_var );
 
 			if	( empty($username) )
-				die( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
+				Http::notAuthorized( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
 			
 			$this->setDefaultDb();
 
 			$user = User::loadWithName( $username );
 
 			if	( !$user->isValid() )
-				die( 'unknown username: '.$username );
+				Http::serverError( 'unknown username: '.$username );
 
 			$user->setCurrent();
 
@@ -607,7 +607,7 @@ class IndexAction extends Action
 		Session::setUser('');
 		
 		if	( $conf['login']['nologin'] )
-			die('login disabled');
+			Http::notAuthorized('login disabled');
 
 		$openid_user   = $this->getRequestVar('openid_url'    );
 		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
@@ -632,7 +632,7 @@ class IndexAction extends Action
 			}
 			
 			$openId->redirect();
-			die('Unreachable Code.');
+			Http::serverError('Unreachable Code.');
 		}
 		
 
@@ -915,7 +915,7 @@ class IndexAction extends Action
 			if	( isset($vars[REQ_PARAM_DATABASE_ID]) )
 				$this->setDb($vars[REQ_PARAM_DATABASE_ID]);
 			else
-				die('no database available.');
+				Http::serverError('no database available.');
 		}
 		else
 		{
