@@ -261,7 +261,7 @@ td.message { padding:10px; font-weight:bold; }
 /* Title-Frame */
 body.title td.title
 {
-	font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px;
+	/*font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px;*/
 }
 
 /* Allgemeine Inhaltszellen */
