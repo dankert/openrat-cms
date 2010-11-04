@@ -39,7 +39,7 @@
 
 		$host   = $_SERVER['SERVER_ADDR'];
 		$port   = $_SERVER['SERVER_PORT'];
-		$path   = substr($_SERVER['SCRIPT_NAME'],0,-15).'/do.php';
+		$path   = substr($_SERVER['SCRIPT_NAME'],0,-22).'/do.php';
 		$method = 'GET';
 
 		// Die Funktion fsockopen() erwartet eine Protokollangabe (bei TCP optional, bei SSL notwendig).
