@@ -287,7 +287,7 @@ if (count($$a6_list)==1) echo '<input type="hidden" name="'.$a6_name.'" value="'
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a7_colspan) ?><?php $a8_title=lang('options'); ?><fieldset><?php if(isset($a8_title)) { ?><legend><?php echo encodeHtml($a8_title) ?></legend><?php } ?><?php unset($a8_title) ?></fieldset></td></tr><?php } ?><?php } ?><?php $a4_present='release'; ?><?php 
+><?php unset($a7_colspan) ?><?php $a8_title=lang('options'); ?><fieldset><?php if(isset($a8_title)) { ?><legend><?php if(isset($a8_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a8_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a8_title) ?></legend><?php } ?><?php unset($a8_title) ?></fieldset></td></tr><?php } ?><?php } ?><?php $a4_present='release'; ?><?php 
 	$a4_tmp_exec = isset($$a4_present);
 	$a4_tmp_last_exec = $a4_tmp_exec;
 	if	( $a4_tmp_exec )

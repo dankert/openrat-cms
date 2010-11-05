@@ -229,7 +229,7 @@ if	($a3_readonly) {
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a6_colspan) ?><?php $a7_title=lang('calendar'); ?><fieldset><?php if(isset($a7_title)) { ?><legend><?php echo encodeHtml($a7_title) ?></legend><?php } ?><?php unset($a7_title) ?></fieldset></td></tr><?php
+><?php unset($a6_colspan) ?><?php $a7_title=lang('calendar'); ?><fieldset><?php if(isset($a7_title)) { ?><legend><?php if(isset($a7_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a7_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a7_title) ?></legend><?php } ?><?php unset($a7_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -632,7 +632,7 @@ if	($a3_readonly) {
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a7_colspan) ?><?php $a8_title=lang('date'); ?><fieldset><?php if(isset($a8_title)) { ?><legend><?php echo encodeHtml($a8_title) ?></legend><?php } ?><?php unset($a8_title) ?></fieldset></td></tr><?php
+><?php unset($a7_colspan) ?><?php $a8_title=lang('date'); ?><fieldset><?php if(isset($a8_title)) { ?><legend><?php if(isset($a8_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a8_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a8_title) ?></legend><?php } ?><?php unset($a8_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -1108,7 +1108,7 @@ document.forms[0].<?php echo $a7_field ?>.select();
 <?php } ?>
  class="preview"
  colspan="2"
-><?php unset($a7_class,$a7_colspan) ?><?php $a8_title=lang('page_preview'); ?><fieldset><?php if(isset($a8_title)) { ?><legend><?php echo encodeHtml($a8_title) ?></legend><?php } ?><?php unset($a8_title) ?><?php $a9_class='text';$a9_var='preview';$a9_escape=false;$a9_cut='both'; ?><?php
+><?php unset($a7_class,$a7_colspan) ?><?php $a8_title=lang('page_preview'); ?><fieldset><?php if(isset($a8_title)) { ?><legend><?php if(isset($a8_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a8_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a8_title) ?></legend><?php } ?><?php unset($a8_title) ?><?php $a9_class='text';$a9_var='preview';$a9_escape=false;$a9_cut='both'; ?><?php
 		$a9_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a9_class ?>" title="<?php echo $a9_title ?>"><?php
@@ -1352,7 +1352,7 @@ function table()
 	if	( $a8_tmp_exec )
 	{
 ?>
-<?php unset($a8_present) ?><?php $a9_title=$languagename; ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?><?php $a10_class='text';$a10_var='languagetext';$a10_escape=true;$a10_cut='both'; ?><?php
+<?php unset($a8_present) ?><?php $a9_title=$languagename; ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php if(isset($a9_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a9_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?><?php $a10_class='text';$a10_var='languagetext';$a10_escape=true;$a10_cut='both'; ?><?php
 		$a10_title = '';
 		$tmp_tag = 'span';
 ?><<?php echo $tmp_tag ?> class="<?php echo $a10_class ?>" title="<?php echo $a10_title ?>"><?php
@@ -1573,7 +1573,7 @@ function table()
 	if	( $a8_tmp_exec )
 	{
 ?>
-<?php unset($a8_true) ?><?php $a9_title=lang('help'); ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?></fieldset><?php $a9_width='100%';$a9_space='0px';$a9_padding='0px'; ?><?php
+<?php unset($a8_true) ?><?php $a9_title=lang('help'); ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php if(isset($a9_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a9_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?></fieldset><?php $a9_width='100%';$a9_space='0px';$a9_padding='0px'; ?><?php
 	$last_row_idx    = @$row_idx;
 	$last_column_idx = @$column_idx;
 	$row_idx    = 0;
@@ -2344,7 +2344,7 @@ document.forms[0].<?php echo $a7_field ?>.select();
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a9_colspan) ?><?php $a10_title=lang('editor_show_language'); ?><fieldset><?php if(isset($a10_title)) { ?><legend><?php echo encodeHtml($a10_title) ?></legend><?php } ?><?php unset($a10_title) ?></fieldset></td></tr><?php
+><?php unset($a9_colspan) ?><?php $a10_title=lang('editor_show_language'); ?><fieldset><?php if(isset($a10_title)) { ?><legend><?php if(isset($a10_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a10_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a10_title) ?></legend><?php } ?><?php unset($a10_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -2409,7 +2409,7 @@ document.forms[0].<?php echo $a7_field ?>.select();
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a8_colspan) ?><?php $a9_title=lang('PAGE_PREVIEW'); ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?></fieldset></td></tr><?php
+><?php unset($a8_colspan) ?><?php $a9_title=lang('PAGE_PREVIEW'); ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php if(isset($a9_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a9_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -2478,7 +2478,7 @@ if ( $a9_readonly && $checked )
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a8_colspan) ?><?php $a9_title=lang('options'); ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?></fieldset></td></tr><?php } ?><?php } ?><?php $a5_present='release'; ?><?php 
+><?php unset($a8_colspan) ?><?php $a9_title=lang('options'); ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php if(isset($a9_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a9_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?></fieldset></td></tr><?php } ?><?php } ?><?php $a5_present='release'; ?><?php 
 	$a5_tmp_exec = isset($$a5_present);
 	$a5_tmp_last_exec = $a5_tmp_exec;
 	if	( $a5_tmp_exec )

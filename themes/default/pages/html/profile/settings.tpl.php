@@ -185,7 +185,7 @@
 <?php if (!empty($column_classes)) { ?>
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
-><br/><?php $a6_title=lang('settings'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?><?php $a7_default=false;$a7_readonly=false;$a7_name='always_edit'; ?><?php
+><br/><?php $a6_title=lang('settings'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?><?php $a7_default=false;$a7_readonly=false;$a7_name='always_edit'; ?><?php
 	if ($this->isEditable() && !$this->isEditMode()) $a7_readonly=true;
 	if	( isset($$a7_name) )
 		$checked = $$a7_name;
@@ -251,7 +251,7 @@ if ( $a6_readonly && $checked )
 <?php if (!empty($column_classes)) { ?>
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
-><br/><?php $a6_title=lang('timezone'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?><?php $a7_list='timezone_list';$a7_name='timezone_offset';$a7_onchange='';$a7_title='';$a7_class='';$a7_addempty=true;$a7_multiple=false;$a7_size='1';$a7_lang=false; ?><?php
+><br/><?php $a6_title=lang('timezone'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?><?php $a7_list='timezone_list';$a7_name='timezone_offset';$a7_onchange='';$a7_title='';$a7_class='';$a7_addempty=true;$a7_multiple=false;$a7_size='1';$a7_lang=false; ?><?php
 $a7_readonly=false;
 $a7_tmp_list = $$a7_list;
 if ($this->isEditable() && !$this->isEditMode())
@@ -318,7 +318,7 @@ if (count($$a7_list)==1) echo '<input type="hidden" name="'.$a7_name.'" value="'
 <?php if (!empty($column_classes)) { ?>
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
-><br/><?php $a6_title=lang('language'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?><?php $a7_list='language_list';$a7_name='language';$a7_onchange='';$a7_title='';$a7_class='';$a7_addempty=true;$a7_multiple=false;$a7_size='1';$a7_lang=false; ?><?php
+><br/><?php $a6_title=lang('language'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?><?php $a7_list='language_list';$a7_name='language';$a7_onchange='';$a7_title='';$a7_class='';$a7_addempty=true;$a7_multiple=false;$a7_size='1';$a7_lang=false; ?><?php
 $a7_readonly=false;
 $a7_tmp_list = $$a7_list;
 if ($this->isEditable() && !$this->isEditMode())

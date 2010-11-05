@@ -28,13 +28,13 @@
 	if	( $a2_tmp_exec )
 	{
 ?>
-<?php unset($a2_true) ?><?php $a3_var='menuheight';$a3_value='24'; ?><?php
+<?php unset($a2_true) ?><?php $a3_var='menuheight';$a3_value='30'; ?><?php
 	if (isset($a3_key))
 		$$a3_var = $a3_value[$a3_key];
 	else
 		$$a3_var = $a3_value;
 ?><?php unset($a3_var,$a3_value) ?><?php } ?><?php if (!$a2_tmp_last_exec) { ?>
-<?php $a3_var='menuheight';$a3_value='54'; ?><?php
+<?php $a3_var='menuheight';$a3_value='60'; ?><?php
 	if (isset($a3_key))
 		$$a3_var = $a3_value[$a3_key];
 	else
@@ -62,32 +62,10 @@ unset($a1_tmp_last_exec) ?><?php $a2_true=@$conf['interface']['application_mode'
 <?php unset($a5_file,$a5_name) ?></frameset>
 </frameset>
 <?php } ?><?php if (!$a2_tmp_last_exec) { ?>
-<?php $a3_rows='23,3,*'; ?><frameset
+<?php $a3_rows='23,*'; ?><frameset
 <?php echo ' rows="'.$a3_rows.'"' ?>
  border="0" frameborder="5" framespacing="0" bordercolor="#000000"><?php unset($a3_rows) ?><?php $a4_file=$frame_src_title;$a4_name='cms_title'; ?><frame src="<?php echo $a4_file ?>" name="<?php echo empty($a4_name)?'':$a4_name ?>" marginheight="0" marginwidth="0" scrolling="<?php echo empty($a4_scrolling)?'no':$a4_scrolling ?>">
-<?php unset($a4_file,$a4_name) ?><?php $a4_file=$frame_src_border; ?><frame src="<?php echo $a4_file ?>" name="<?php echo empty($a4_name)?'':$a4_name ?>" marginheight="0" marginwidth="0" scrolling="<?php echo empty($a4_scrolling)?'no':$a4_scrolling ?>">
-<?php unset($a4_file) ?><?php $a4_true=@$conf['interface']['application_mode']; ?><?php 
-	if	(gettype($a4_true) === '' && gettype($a4_true) === '1')
-		$a4_tmp_exec = $$a4_true == true;
-	else
-		$a4_tmp_exec = $a4_true == true;
-	$a4_tmp_last_exec = $a4_tmp_exec;
-	if	( $a4_tmp_exec )
-	{
-?>
-<?php unset($a4_true) ?><?php $a5_var='menuheight';$a5_value='24'; ?><?php
-	if (isset($a5_key))
-		$$a5_var = $a5_value[$a5_key];
-	else
-		$$a5_var = $a5_value;
-?><?php unset($a5_var,$a5_value) ?><?php } ?><?php if (!$a4_tmp_last_exec) { ?>
-<?php $a5_var='menuheight';$a5_value='54'; ?><?php
-	if (isset($a5_key))
-		$$a5_var = $a5_value[$a5_key];
-	else
-		$$a5_var = $a5_value;
-?><?php unset($a5_var,$a5_value) ?><?php }
-unset($a3_tmp_last_exec) ?><?php $a4_columns='25%,*'; ?><frameset
+<?php unset($a4_file,$a4_name) ?><?php $a4_columns='25%,*'; ?><frameset
 <?php echo ' cols="'.$a4_columns.'"' ?>
  border="0" frameborder="5" framespacing="0" bordercolor="#000000"><?php unset($a4_columns) ?><?php $a5_rows=''.$menuheight.',*'; ?><frameset
 <?php echo ' rows="'.$a5_rows.'"' ?>

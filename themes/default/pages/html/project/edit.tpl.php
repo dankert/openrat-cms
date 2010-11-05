@@ -186,7 +186,7 @@
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a5_colspan) ?><?php $a6_title=lang('NAME'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
+><?php unset($a5_colspan) ?><?php $a6_title=lang('NAME'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -218,11 +218,12 @@
 ><?php $a6_class='name';$a6_default='';$a6_type='text';$a6_name='name';$a6_size='30';$a6_maxlength='256';$a6_onchange='';$a6_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a6_readonly=true;
 	  if ($a6_readonly && empty($$a6_name)) $$a6_name = '- '.lang('EMPTY').' -';
       if(!isset($a6_default)) $a6_default='';
+      $tmp_value = Text::encodeHtml(isset($$a6_name)?$$a6_name:$a6_default);
 ?><?php if (!$a6_readonly || $a6_type=='hidden') {
-?><input<?php if ($a6_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" name="<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" type="<?php echo $a6_type ?>" size="<?php echo $a6_size ?>" maxlength="<?php echo $a6_maxlength ?>" class="<?php echo $a6_class ?>" value="<?php echo isset($$a6_name)?$$a6_name:$a6_default ?>" <?php if (in_array($a6_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a6_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" name="<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" type="<?php echo $a6_type ?>" size="<?php echo $a6_size ?>" maxlength="<?php echo $a6_maxlength ?>" class="<?php echo $a6_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a6_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a6_readonly) {
-?><input type="hidden" id="id_<?php echo $a6_name ?>" name="<?php echo $a6_name ?>" value="<?php echo isset($$a6_name)?$$a6_name:$a6_default ?>" /><?php
- } } else { ?><span class="<?php echo $a6_class ?>"><?php echo isset($$a6_name)?$$a6_name:$a6_default ?></span><?php } ?><?php unset($a6_class,$a6_default,$a6_type,$a6_name,$a6_size,$a6_maxlength,$a6_onchange,$a6_readonly) ?></td></tr><?php
+?><input type="hidden" id="id_<?php echo $a6_name ?>" name="<?php echo $a6_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a6_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a6_class,$a6_default,$a6_type,$a6_name,$a6_size,$a6_maxlength,$a6_onchange,$a6_readonly) ?></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -236,7 +237,7 @@ if	($a6_readonly) {
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a5_colspan) ?><?php $a6_title=lang('PUBLISH'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
+><?php unset($a5_colspan) ?><?php $a6_title=lang('PUBLISH'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -268,11 +269,12 @@ if	($a6_readonly) {
 ><?php $a6_class='filename';$a6_default='';$a6_type='text';$a6_name='target_dir';$a6_size='50';$a6_maxlength='256';$a6_onchange='';$a6_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a6_readonly=true;
 	  if ($a6_readonly && empty($$a6_name)) $$a6_name = '- '.lang('EMPTY').' -';
       if(!isset($a6_default)) $a6_default='';
+      $tmp_value = Text::encodeHtml(isset($$a6_name)?$$a6_name:$a6_default);
 ?><?php if (!$a6_readonly || $a6_type=='hidden') {
-?><input<?php if ($a6_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" name="<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" type="<?php echo $a6_type ?>" size="<?php echo $a6_size ?>" maxlength="<?php echo $a6_maxlength ?>" class="<?php echo $a6_class ?>" value="<?php echo isset($$a6_name)?$$a6_name:$a6_default ?>" <?php if (in_array($a6_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a6_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" name="<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" type="<?php echo $a6_type ?>" size="<?php echo $a6_size ?>" maxlength="<?php echo $a6_maxlength ?>" class="<?php echo $a6_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a6_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a6_readonly) {
-?><input type="hidden" id="id_<?php echo $a6_name ?>" name="<?php echo $a6_name ?>" value="<?php echo isset($$a6_name)?$$a6_name:$a6_default ?>" /><?php
- } } else { ?><span class="<?php echo $a6_class ?>"><?php echo isset($$a6_name)?$$a6_name:$a6_default ?></span><?php } ?><?php unset($a6_class,$a6_default,$a6_type,$a6_name,$a6_size,$a6_maxlength,$a6_onchange,$a6_readonly) ?></td></tr><?php
+?><input type="hidden" id="id_<?php echo $a6_name ?>" name="<?php echo $a6_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a6_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a6_class,$a6_default,$a6_type,$a6_name,$a6_size,$a6_maxlength,$a6_onchange,$a6_readonly) ?></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -304,11 +306,12 @@ if	($a6_readonly) {
 ><?php $a6_class='filename';$a6_default='';$a6_type='text';$a6_name='cmd_after_publish';$a6_size='50';$a6_maxlength='256';$a6_onchange='';$a6_readonly=! @$conf['publish']['project']['override_system_command']; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a6_readonly=true;
 	  if ($a6_readonly && empty($$a6_name)) $$a6_name = '- '.lang('EMPTY').' -';
       if(!isset($a6_default)) $a6_default='';
+      $tmp_value = Text::encodeHtml(isset($$a6_name)?$$a6_name:$a6_default);
 ?><?php if (!$a6_readonly || $a6_type=='hidden') {
-?><input<?php if ($a6_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" name="<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" type="<?php echo $a6_type ?>" size="<?php echo $a6_size ?>" maxlength="<?php echo $a6_maxlength ?>" class="<?php echo $a6_class ?>" value="<?php echo isset($$a6_name)?$$a6_name:$a6_default ?>" <?php if (in_array($a6_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a6_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" name="<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" type="<?php echo $a6_type ?>" size="<?php echo $a6_size ?>" maxlength="<?php echo $a6_maxlength ?>" class="<?php echo $a6_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a6_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a6_readonly) {
-?><input type="hidden" id="id_<?php echo $a6_name ?>" name="<?php echo $a6_name ?>" value="<?php echo isset($$a6_name)?$$a6_name:$a6_default ?>" /><?php
- } } else { ?><span class="<?php echo $a6_class ?>"><?php echo isset($$a6_name)?$$a6_name:$a6_default ?></span><?php } ?><?php unset($a6_class,$a6_default,$a6_type,$a6_name,$a6_size,$a6_maxlength,$a6_onchange,$a6_readonly) ?></td></tr><?php
+?><input type="hidden" id="id_<?php echo $a6_name ?>" name="<?php echo $a6_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a6_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a6_class,$a6_default,$a6_type,$a6_name,$a6_size,$a6_maxlength,$a6_onchange,$a6_readonly) ?></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -322,7 +325,7 @@ if	($a6_readonly) {
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a5_colspan) ?><?php $a6_title=lang('project_FTP'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
+><?php unset($a5_colspan) ?><?php $a6_title=lang('project_FTP'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -354,11 +357,12 @@ if	($a6_readonly) {
 ><?php $a6_class='filename';$a6_default='';$a6_type='text';$a6_name='ftp_url';$a6_size='50';$a6_maxlength='256';$a6_onchange='';$a6_readonly=! @$conf['publish']['ftp']['enable']; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a6_readonly=true;
 	  if ($a6_readonly && empty($$a6_name)) $$a6_name = '- '.lang('EMPTY').' -';
       if(!isset($a6_default)) $a6_default='';
+      $tmp_value = Text::encodeHtml(isset($$a6_name)?$$a6_name:$a6_default);
 ?><?php if (!$a6_readonly || $a6_type=='hidden') {
-?><input<?php if ($a6_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" name="<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" type="<?php echo $a6_type ?>" size="<?php echo $a6_size ?>" maxlength="<?php echo $a6_maxlength ?>" class="<?php echo $a6_class ?>" value="<?php echo isset($$a6_name)?$$a6_name:$a6_default ?>" <?php if (in_array($a6_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a6_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" name="<?php echo $a6_name ?><?php if ($a6_readonly) echo '_disabled' ?>" type="<?php echo $a6_type ?>" size="<?php echo $a6_size ?>" maxlength="<?php echo $a6_maxlength ?>" class="<?php echo $a6_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a6_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a6_readonly) {
-?><input type="hidden" id="id_<?php echo $a6_name ?>" name="<?php echo $a6_name ?>" value="<?php echo isset($$a6_name)?$$a6_name:$a6_default ?>" /><?php
- } } else { ?><span class="<?php echo $a6_class ?>"><?php echo isset($$a6_name)?$$a6_name:$a6_default ?></span><?php } ?><?php unset($a6_class,$a6_default,$a6_type,$a6_name,$a6_size,$a6_maxlength,$a6_onchange,$a6_readonly) ?></td></tr><?php
+?><input type="hidden" id="id_<?php echo $a6_name ?>" name="<?php echo $a6_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a6_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a6_class,$a6_default,$a6_type,$a6_name,$a6_size,$a6_maxlength,$a6_onchange,$a6_readonly) ?></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
@@ -412,7 +416,7 @@ if ( $a6_readonly && $checked )
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a5_colspan) ?><?php $a6_title=lang('options'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
+><?php unset($a5_colspan) ?><?php $a6_title=lang('options'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>
