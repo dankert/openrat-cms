@@ -378,7 +378,7 @@
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="4"
-><?php unset($a5_colspan) ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?></fieldset></td></tr><?php $a4_list='diff';$a4_extract=true;$a4_key='list_key';$a4_value='list_value'; ?><?php
+><?php unset($a5_colspan) ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?></fieldset></td></tr><?php $a4_list='diff';$a4_extract=true;$a4_key='list_key';$a4_value='list_value'; ?><?php
 	$a4_list_tmp_key   = $a4_key;
 	$a4_list_tmp_value = $a4_value;
 	$a4_list_extract   = $a4_extract;

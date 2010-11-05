@@ -351,11 +351,12 @@ if ( $a8_readonly && $checked )
 <?php unset($a8_value,$a8_contains) ?><?php $a9_class='text';$a9_default=$value;$a9_type='text';$a9_index=true;$a9_name=$id;$a9_size='40';$a9_maxlength='255';$a9_onchange='onchange';$a9_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a9_readonly=true;
 	  if ($a9_readonly && empty($$a9_name)) $$a9_name = '- '.lang('EMPTY').' -';
       if(!isset($a9_default)) $a9_default='';
+      $tmp_value = Text::encodeHtml(isset($$a9_name)?$$a9_name:$a9_default);
 ?><?php if (!$a9_readonly || $a9_type=='hidden') {
-?><input<?php if ($a9_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a9_name ?><?php if ($a9_readonly) echo '_disabled' ?>" name="<?php echo $a9_name ?><?php if ($a9_readonly) echo '_disabled' ?>" type="<?php echo $a9_type ?>" size="<?php echo $a9_size ?>" maxlength="<?php echo $a9_maxlength ?>" class="<?php echo $a9_class ?>" value="<?php echo isset($$a9_name)?$$a9_name:$a9_default ?>" <?php if (in_array($a9_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a9_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a9_name ?><?php if ($a9_readonly) echo '_disabled' ?>" name="<?php echo $a9_name ?><?php if ($a9_readonly) echo '_disabled' ?>" type="<?php echo $a9_type ?>" size="<?php echo $a9_size ?>" maxlength="<?php echo $a9_maxlength ?>" class="<?php echo $a9_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a9_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a9_readonly) {
-?><input type="hidden" id="id_<?php echo $a9_name ?>" name="<?php echo $a9_name ?>" value="<?php echo isset($$a9_name)?$$a9_name:$a9_default ?>" /><?php
- } } else { ?><span class="<?php echo $a9_class ?>"><?php echo isset($$a9_name)?$$a9_name:$a9_default ?></span><?php } ?><?php unset($a9_class,$a9_default,$a9_type,$a9_index,$a9_name,$a9_size,$a9_maxlength,$a9_onchange,$a9_readonly) ?><?php } ?><?php $a8_equals='longtext';$a8_value=$type; ?><?php 
+?><input type="hidden" id="id_<?php echo $a9_name ?>" name="<?php echo $a9_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a9_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a9_class,$a9_default,$a9_type,$a9_index,$a9_name,$a9_size,$a9_maxlength,$a9_onchange,$a9_readonly) ?><?php } ?><?php $a8_equals='longtext';$a8_value=$type; ?><?php 
 	$a8_tmp_exec = $a8_equals == $a8_value;
 	$a8_tmp_last_exec = $a8_tmp_exec;
 	if	( $a8_tmp_exec )
@@ -450,7 +451,7 @@ if (count($$a9_list)==1) echo '<input type="hidden" name="'.$a9_name.'" value="'
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="3"
-><?php unset($a8_colspan) ?><?php $a9_title=lang('options'); ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?></fieldset></td></tr><?php } ?><?php } ?><?php $a5_present='release'; ?><?php 
+><?php unset($a8_colspan) ?><?php $a9_title=lang('options'); ?><fieldset><?php if(isset($a9_title)) { ?><legend><?php if(isset($a9_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a9_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a9_title) ?></legend><?php } ?><?php unset($a9_title) ?></fieldset></td></tr><?php } ?><?php } ?><?php $a5_present='release'; ?><?php 
 	$a5_tmp_exec = isset($$a5_present);
 	$a5_tmp_last_exec = $a5_tmp_exec;
 	if	( $a5_tmp_exec )

@@ -289,7 +289,7 @@ if	($a6_readonly) {
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a5_colspan) ?><?php $a6_title=lang('additional_info'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php $a4_false=$mode=="edit"; ?><?php 
+><?php unset($a5_colspan) ?><?php $a6_title=lang('additional_info'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php $a4_false=$mode=="edit"; ?><?php 
 	if	(gettype($a4_false) === '' && gettype($a4_false) === '1')
 		$a4_tmp_exec = $$a4_false == false;
 	else
@@ -387,7 +387,7 @@ if	($a6_readonly) {
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="3"
-><?php unset($a5_colspan) ?><?php $a6_title=lang('PROP_USERINFO'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
+><?php unset($a5_colspan) ?><?php $a6_title=lang('PROP_USERINFO'); ?><fieldset><?php if(isset($a6_title)) { ?><legend><?php if(isset($a6_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a6_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a6_title) ?></legend><?php } ?><?php unset($a6_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>

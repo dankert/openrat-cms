@@ -301,7 +301,7 @@ else
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a6_colspan) ?><?php $a7_title=lang('folder_select_target_folder'); ?><fieldset><?php if(isset($a7_title)) { ?><legend><?php echo encodeHtml($a7_title) ?></legend><?php } ?><?php unset($a7_title) ?></fieldset></td></tr><?php $a5_list='folder';$a5_extract=false;$a5_key='list_key';$a5_value='list_value'; ?><?php
+><?php unset($a6_colspan) ?><?php $a7_title=lang('folder_select_target_folder'); ?><fieldset><?php if(isset($a7_title)) { ?><legend><?php if(isset($a7_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a7_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a7_title) ?></legend><?php } ?><?php unset($a7_title) ?></fieldset></td></tr><?php $a5_list='folder';$a5_extract=false;$a5_key='list_key';$a5_value='list_value'; ?><?php
 	$a5_list_tmp_key   = $a5_key;
 	$a5_list_tmp_value = $a5_value;
 	$a5_list_extract   = $a5_extract;
@@ -382,11 +382,12 @@ else
 ><?php unset($a6_colspan) ?><?php $a7_class='text';$a7_default='';$a7_type='text';$a7_name='filename';$a7_size='40';$a7_maxlength='256';$a7_onchange='';$a7_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a7_readonly=true;
 	  if ($a7_readonly && empty($$a7_name)) $$a7_name = '- '.lang('EMPTY').' -';
       if(!isset($a7_default)) $a7_default='';
+      $tmp_value = Text::encodeHtml(isset($$a7_name)?$$a7_name:$a7_default);
 ?><?php if (!$a7_readonly || $a7_type=='hidden') {
-?><input<?php if ($a7_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" name="<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" type="<?php echo $a7_type ?>" size="<?php echo $a7_size ?>" maxlength="<?php echo $a7_maxlength ?>" class="<?php echo $a7_class ?>" value="<?php echo isset($$a7_name)?$$a7_name:$a7_default ?>" <?php if (in_array($a7_name,$errors)) echo 'style="border-rightx:10px solid red; background-colorx:yellow; border:2px dashed red;"' ?> /><?php
+?><input<?php if ($a7_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" name="<?php echo $a7_name ?><?php if ($a7_readonly) echo '_disabled' ?>" type="<?php echo $a7_type ?>" size="<?php echo $a7_size ?>" maxlength="<?php echo $a7_maxlength ?>" class="<?php echo $a7_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a7_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
 if	($a7_readonly) {
-?><input type="hidden" id="id_<?php echo $a7_name ?>" name="<?php echo $a7_name ?>" value="<?php echo isset($$a7_name)?$$a7_name:$a7_default ?>" /><?php
- } } else { ?><span class="<?php echo $a7_class ?>"><?php echo isset($$a7_name)?$$a7_name:$a7_default ?></span><?php } ?><?php unset($a7_class,$a7_default,$a7_type,$a7_name,$a7_size,$a7_maxlength,$a7_onchange,$a7_readonly) ?></td></tr><?php } ?><?php $a4_present='ask_commit'; ?><?php 
+?><input type="hidden" id="id_<?php echo $a7_name ?>" name="<?php echo $a7_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a7_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a7_class,$a7_default,$a7_type,$a7_name,$a7_size,$a7_maxlength,$a7_onchange,$a7_readonly) ?></td></tr><?php } ?><?php $a4_present='ask_commit'; ?><?php 
 	$a4_tmp_exec = isset($$a4_present);
 	$a4_tmp_last_exec = $a4_tmp_exec;
 	if	( $a4_tmp_exec )
@@ -406,7 +407,7 @@ if	($a7_readonly) {
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="2"
-><?php unset($a6_colspan) ?><?php $a7_title=lang('options'); ?><fieldset><?php if(isset($a7_title)) { ?><legend><?php echo encodeHtml($a7_title) ?></legend><?php } ?><?php unset($a7_title) ?></fieldset></td></tr><?php
+><?php unset($a6_colspan) ?><?php $a7_title=lang('options'); ?><fieldset><?php if(isset($a7_title)) { ?><legend><?php if(isset($a7_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a7_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a7_title) ?></legend><?php } ?><?php unset($a7_title) ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>

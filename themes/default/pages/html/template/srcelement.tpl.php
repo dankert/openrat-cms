@@ -298,7 +298,7 @@ if (count($$a7_list)==1) echo '<input type="hidden" name="'.$a7_name.'" value="'
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
  colspan="3"
-><?php unset($a6_colspan) ?><fieldset><?php if(isset($a7_title)) { ?><legend><?php echo encodeHtml($a7_title) ?></legend><?php } ?></fieldset></td></tr><?php
+><?php unset($a6_colspan) ?><fieldset><?php if(isset($a7_title)) { ?><legend><?php if(isset($a7_icon)) { ?><image src="<?php echo $image_dir.'icon_'.$a7_icon.IMG_ICON_EXT ?>" align="left" border="0"><?php } ?><?php echo encodeHtml($a7_title) ?></legend><?php } ?></fieldset></td></tr><?php
 	$row_idx++;
 	$column_idx = 0;
 ?>

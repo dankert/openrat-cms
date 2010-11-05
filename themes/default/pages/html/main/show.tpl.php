@@ -28,13 +28,13 @@
 	if	( $a2_tmp_exec )
 	{
 ?>
-<?php unset($a2_true) ?><?php $a3_var='menuheight';$a3_value='24'; ?><?php
+<?php unset($a2_true) ?><?php $a3_var='menuheight';$a3_value='30'; ?><?php
 	if (isset($a3_key))
 		$$a3_var = $a3_value[$a3_key];
 	else
 		$$a3_var = $a3_value;
 ?><?php unset($a3_var,$a3_value) ?><?php } ?><?php if (!$a2_tmp_last_exec) { ?>
-<?php $a3_var='menuheight';$a3_value='54'; ?><?php
+<?php $a3_var='menuheight';$a3_value='60'; ?><?php
 	if (isset($a3_key))
 		$$a3_var = $a3_value[$a3_key];
 	else

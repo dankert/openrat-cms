@@ -172,7 +172,58 @@ unset($a6_tmp_last_exec) ?></td><?php } ?><?php $a5_class='treevalue';$a5_colspa
 	echo $tmp_text;
 	unset($tmp_text);
 ?></<?php echo $tmp_tag ?>><?php unset($a7_title,$a7_class,$a7_var,$a7_maxlength,$a7_escape,$a7_cut) ?><?php }
-unset($a5_tmp_last_exec) ?></td><?php $a5_var='url'; ?><?php
+unset($a5_tmp_last_exec) ?><?php $a6_not='';$a6_present='image'; ?><?php 
+	$a6_tmp_exec = isset($$a6_present);
+	$a6_tmp_exec = !$a6_tmp_exec;
+	$a6_tmp_last_exec = $a6_tmp_exec;
+	if	( $a6_tmp_exec )
+	{
+?>
+<?php unset($a6_not,$a6_present) ?><?php $a7_class='text';$a7_raw='__';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = str_replace('_','&nbsp;',$a7_raw);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_raw,$a7_escape,$a7_cut) ?><?php $a7_title='';$a7_target='_self';$a7_class='';$a7_action='tree';$a7_subaction='refresh'; ?><?php
+	$params = array();
+	$tmp_url = '';
+		$tmp_url = Html::url($a7_action,$a7_subaction,!empty($a7_id)?$a7_id:$this->getRequestId(),$params);
+?><a<?php if (isset($a7_name)) echo ' name="'.$a7_name.'"'; else echo ' href="'.$tmp_url.(isset($a7_anchor)?'#'.$a7_anchor:'').'"' ?> class="<?php echo $a7_class ?>" target="<?php echo $a7_target ?>"<?php if (isset($a7_accesskey)) echo ' accesskey="'.$a7_accesskey.'"' ?>  title="<?php echo encodeHtml($a7_title) ?>"><?php unset($a7_title,$a7_target,$a7_class,$a7_action,$a7_subaction) ?><?php $a8_class='text';$a8_key='refresh';$a8_escape=true;$a8_cut='both'; ?><?php
+		$a8_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
+		$langF = $a8_escape?'langHtml':'lang';
+		$tmp_text = $langF($a8_key);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a8_class,$a8_key,$a8_escape,$a8_cut) ?></a><?php $a7_class='text';$a7_raw='__';$a7_escape=true;$a7_cut='both'; ?><?php
+		$a7_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a7_class ?>" title="<?php echo $a7_title ?>"><?php
+		$langF = $a7_escape?'langHtml':'lang';
+		$tmp_text = str_replace('_','&nbsp;',$a7_raw);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a7_class,$a7_raw,$a7_escape,$a7_cut) ?><?php $a7_title='';$a7_target='_self';$a7_class='';$a7_action='tree';$a7_subaction='openall'; ?><?php
+	$params = array();
+	$tmp_url = '';
+		$tmp_url = Html::url($a7_action,$a7_subaction,!empty($a7_id)?$a7_id:$this->getRequestId(),$params);
+?><a<?php if (isset($a7_name)) echo ' name="'.$a7_name.'"'; else echo ' href="'.$tmp_url.(isset($a7_anchor)?'#'.$a7_anchor:'').'"' ?> class="<?php echo $a7_class ?>" target="<?php echo $a7_target ?>"<?php if (isset($a7_accesskey)) echo ' accesskey="'.$a7_accesskey.'"' ?>  title="<?php echo encodeHtml($a7_title) ?>"><?php unset($a7_title,$a7_target,$a7_class,$a7_action,$a7_subaction) ?><?php $a8_class='text';$a8_key='all';$a8_escape=true;$a8_cut='both'; ?><?php
+		$a8_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
+		$langF = $a8_escape?'langHtml':'lang';
+		$tmp_text = $langF($a8_key);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a8_class,$a8_key,$a8_escape,$a8_cut) ?></a><?php } ?></td><?php $a5_var='url'; ?><?php
 	if (!isset($a5_value))
 		unset($$a5_var);
 ?><?php unset($a5_var) ?><?php $a5_var='image'; ?><?php

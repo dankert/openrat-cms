@@ -30,7 +30,7 @@
 <?php } ?>
 </head>
 <body class="menu" <?php if (@$conf['interface']['application_mode']) { ?> style="padding:0px;margin:0px;"<?php } ?> >
-<?php /* Debug-Information */ if ($showDuration) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($this->templateVars,true));echo "\n-->";} ?><?php unset($a1_class) ?><?php $a2_width='100%';$a2_space='0';$a2_padding='5'; ?><?php
+<?php /* Debug-Information */ if ($showDuration) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($this->templateVars,true));echo "\n-->";} ?><?php unset($a1_class) ?><?php $a2_class='treemenu';$a2_width='100%';$a2_space='0';$a2_padding='5'; ?><?php
 	$last_row_idx    = @$row_idx;
 	$last_column_idx = @$column_idx;
 	$row_idx    = 0;
@@ -38,8 +38,8 @@
 	$coloumn_widths = array();
 	$row_classes    = array();
 	$column_classes = array();
-?><table class="%class%" cellspacing="0" width="100%" cellpadding="5">
-<?php unset($a2_width,$a2_space,$a2_padding) ?><?php $a3_true=! @$conf['interface']['application_mode']; ?><?php 
+?><table class="treemenu" cellspacing="0" width="100%" cellpadding="5">
+<?php unset($a2_class,$a2_width,$a2_space,$a2_padding) ?><?php $a3_true=! @$conf['interface']['application_mode']; ?><?php 
 	if	(gettype($a3_true) === '' && gettype($a3_true) === '1')
 		$a3_tmp_exec = $$a3_true == true;
 	else
