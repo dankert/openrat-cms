@@ -225,6 +225,32 @@ trusted_server=
 ; Should Users fullname and e-mail updated from the OpenId-Server?
 update_user=true
 
+; Using User-Identitys?
+user_identity=true
+
+; List of OpenId-Provider to use
+; Special name "identity" for user defined identitys
+;provider=example
+provider=google
+
+; location of the providers Yadis-document (XRDS-file)
+provider.example.xrds_uri=http://google.com/accounts
+; which attribute is used for mappin to the internal database
+;provider.example.map_attribute=email
+; which attribut of internal user database is used
+; valid values are 'mail', 'username'
+;provider.example.map_internal=mail
+
+; Google supports Open-Id 2.0
+provider.google.xrds_uri=http://google.com/accounts/o8/id
+provider.google.map_attribute=email
+provider.google.map_internal=mail
+
+; Yahoo
+provider.yahoo.xrds_uri=http://??????
+provider.yahoo.map_attribute=usename
+provider.yahoo.map_internal=mail
+
 
 
 ; Single Sign-on
@@ -264,6 +290,7 @@ expect_regexp="/running on/"
 ; regular expression for find out the username
 ; this example is used for "PhpMyAdmin"
 username_regexp="/running on localhost as ([a-z]+)@localhost/"
+
 
 
 ; Settings for a new user
