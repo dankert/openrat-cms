@@ -49,11 +49,11 @@ use_post_token=true
 
 ; Creates a new Session on login.
 ; Useful against session fixation attacks.
-renew_session_login=true
+renew_session_login=false
 
 ; Creates a new Session on logout.
 ; Useful against session fixation attacks. 
-renew_session_logout=true
+renew_session_logout=false
 
 
 
