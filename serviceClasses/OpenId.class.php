@@ -43,6 +43,13 @@ class OpenId
 	 */
 	var $user;
 
+	/**
+	 * OpenId-Provider.
+	 *
+	 * @var String
+	 */
+	var $provider;
+
 	
 	var $supportAX;
 	var $supportSREG;
@@ -56,9 +63,10 @@ class OpenId
 	 * @param String $user
 	 * @return OpenId
 	 */
-	function OpenId( $user='' )
+	function OpenId( $provider='',$user='' )
 	{
-		$this->user = $user;
+		$this->provider = $provider;
+		$this->user     = $user;
 	}
 
 	
@@ -102,9 +110,14 @@ class OpenId
 	 */
 	function login()
 	{
+		if	( $this->provider != 'identity' ) 
+		{
+			$this->user     = config('security','openid','provider.'.$this->provider.'.xrds_uri'); 
+			$this->identity = 'http://specs.openid.net/auth/2.0/identifier_select'; 
+		}
 		// Schritt 1: Identity aus Yadis-Dokument laden.
 		$this->getIdentityFromYadis();
-		
+
 		// Schritt 2: Fallback auf HTML-Dokument.
 		if	( empty($this->server) )
 		{
@@ -120,7 +133,7 @@ class OpenId
 		}
 		
 		if	( !$this->serverOk() )
-			return false; // Server nicht vertrauensw�rdig.
+			return false; // Server nicht vertrauenswuerdig.
 		
 		if	( empty($this->identity) )
 			// Falls die Identity bis hierher nicht deligiert wurde...
@@ -138,61 +151,8 @@ class OpenId
 	function redirect()
 	{
 		global $conf;
-		/*
-doodle:
-https://www.google.com/accounts/o8/ud?
-openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&
-openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select
-&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select
-&openid.mode=checkid_setup
-&openid.ns.ext1=http%3A%2F%2Fopenid.net%2Fsrv%2Fax%2F1.0
-&openid.ext1.mode=fetch_request
-&openid.ext1.type.email=http%3A%2F%2Faxschema.org%2Fcontact%2Femail
-&openid.ext1.type.fullname=http%3A%2F%2Faxschema.org%2FnamePerson
-&openid.ext1.type.firstname=http%3A%2F%2Faxschema.org%2FnamePerson%2Ffirst
-&openid.ext1.type.lastname=http%3A%2F%2Faxschema.org%2FnamePerson%2Flast
-&openid.ext1.type.language=http%3A%2F%2Faxschema.org%2Fpref%2Flanguage
-&openid.ext1.type.timezone=http%3A%2F%2Faxschema.org%2Fpref%2Ftimezone
-&openid.ext1.type.dob=http%3A%2F%2Faxschema.org%2FbirthDate
-&openid.ext1.type.gender=http%3A%2F%2Faxschema.org%2Fperson%2Fgender
-&openid.ext1.required=email%2Cfullname%2Cfirstname%2Clastname
-&openid.ext1.if_available=language%2Ctimezone%2Cdob%2Cgender
-&openid.ns.sreg=http%3A%2F%2Fopenid.net%2Fextensions%2Fsreg%2F1.1
-&openid.sreg.required=email%2Cfullname
-&openid.sreg.optional=language%2Ctimezone%2Cdob%2Cgender
-&openid.sreg.policy_url=http%3A%2F%2Fdoodle.com%2Fabout%2Ftos.html
-&openid.return_to=https%3A%2F%2Fdoodle.com%2Fmydoodle%2FopenIdAuth
-&openid.assoc_handle=AOQobUe2ez4x3-uPrza74M3s6dFXM-guMR8Q8nt6OBZ2Bbr-ehJ1y0n1
-&openid.realm=https%3A%2F%2Fdoodle.com
-or:
-https://www.google.com/accounts/o8/ud?openid.mode=checkid_setup&openid.identity=http%3A%2F%2Fhttp%3A%2F%2Fwww.google.com%2Faccounts%2Fo8%2Fid&openid.sreg.required=email&openid.sreg.optional=fullname%2Clanguage&openid.trust_root=http%3A%2F%2Flocalhost%2F~dankert%2Fcms-test%2F09%2F&openid.return_to=http%3A%2F%2Flocalhost%2F~dankert%2Fcms-test%2F09%2Fopenid.php&openid.assoc_handle=ba1a257963793d3da613012507f8b3dc
-
-
-https://www.google.com/accounts/o8/ud?openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.mode=checkid_setup&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.sreg.required=email&openid.sreg.optional=fullname%2Clanguage&openid.trust_root=http%3A%2F%2Flocalhost%2F~dankert%2Fcms-test%2F09%2F&openid.return_to=http%3A%2F%2Flocalhost%2F~dankert%2Fcms-test%2F09%2Fopenid.php&openid.assoc_handle=49d81537840793d1c9c6dd81ba87481d
-
-
-antwort von google an or:
-http://localhost/~dankert/cms-test/09/openid.php?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.mode=id_res
-&openid.op_endpoint=https%3A%2F%2Fwww.google.com%2Faccounts%2Fo8%2Fud&
-openid.response_nonce=2010-11-04T23%3A25%3A28ZfqphjoO3sRtDqw
-&openid.return_to=http%3A%2F%2Flocalhost%2F~dankert%2Fcms-test%2F09%2Fopenid.php
-&openid.invalidate_handle=68190efac8e20589c43ca83abc48a859
-&openid.assoc_handle=AOQobUcqrjsOLlzkJgE5QFWdFpikCKcFHbVtGMOG4L3ktOp4jS9NKpi
-7&openid.signed=op_endpoint%2Cclaimed_id%2Cidentity%2Creturn_to%2Cresponse_nonce%2Cassoc_handle
-&openid.sig=bErVC%2FlYpm%2Bi1HVAIe4vvhSld2g%3D
-&openid.identity=https%3A%2F%2Fwww.google.com%2Faccounts%2Fo8%2Fid%3Fid%3DAItOawn9xVhyM9_Yf-XkfYtSZnSBP5hgXIuVAUA
-&openid.claimed_id=https%3A%2F%2Fwww.google.com%2Faccounts%2Fo8%2Fid%3Fid%3DAItOawn9xVhyM9_Yf-XkfYtSZnSBP5hgXIuVAUA
-
-antwort von google an doodle:
-https://doodle.com/mydoodle/openIdAuth?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.mode=id_res&openid.op_endpoint=https%3A%2F%2Fwww.google.com%2Faccounts%2Fo8%2Fud&openid.response_nonce=2010-11-05T00%3A07%3A11Z56FFqcL6B5teKQ&openid.return_to=https%3A%2F%2Fdoodle.com%2Fmydoodle%2FopenIdAuth&openid.assoc_handle=AOQobUe2ez4x3-uPrza74M3s6dFXM-guMR8Q8nt6OBZ2Bbr-ehJ1y0n1&openid.signed=op_endpoint%2Cclaimed_id%2Cidentity%2Creturn_to%2Cresponse_nonce%2Cassoc_handle%2Cns.ext1%2Cext1.mode%2Cext1.type.firstname%2Cext1.value.firstname%2Cext1.type.email%2Cext1.value.email%2Cext1.type.lastname%2Cext1.value.lastname&openid.sig=eDdaxAhDl8IOgPLjgJB25pG9hKA%3D&openid.identity=https%3A%2F%2Fwww.google.com%2Faccounts%2Fo8%2Fid%3Fid%3DAItOawkhGOOFbCs1EsijGYKG_afWsM8AfHedV5s&openid.claimed_id=https%3A%2F%2Fwww.google.com%2Faccounts%2Fo8%2Fid%3Fid%3DAItOawkhGOOFbCs1EsijGYKG_afWsM8AfHedV5s&openid.ns.ext1=http%3A%2F%2Fopenid.net%2Fsrv%2Fax%2F1.0&openid.ext1.mode=fetch_response&openid.ext1.type.firstname=http%3A%2F%2Faxschema.org%2FnamePerson%2Ffirst&openid.ext1.value.firstname=Jan&openid.ext1.type.email=http%3A%2F%2Faxschema.org%2Fcontact%2Femail&openid.ext1.value.email=jandunkerbeck%40googlemail.com&openid.ext1.type.lastname=http%3A%2F%2Faxschema.org%2FnamePerson%2Flast&openid.ext1.value.lastname=Dunkerbeck
-
-*/
-		//$this->identity = 'http://specs.openid.net/auth/2.0/identifier_select';
-		$openid_handle = md5(microtime().session_id());
-		Session::set('openid_user'    ,$this->user     );
-		Session::set('openid_server'  ,$this->server   );
-		Session::set('openid_identity',$this->identity );
-		Session::set('openid_handle'  ,$openid_handle  );
+		
+		$this->handle = md5(microtime().session_id());
 
 		$redirHttp = new Http($this->server);
 		
@@ -237,7 +197,7 @@ https://doodle.com/mydoodle/openIdAuth?openid.ns=http%3A%2F%2Fspecs.openid.net%2
 		$redirHttp->requestParameter['openid.trust_root'   ] = slashify($trustRoot);
 		$redirHttp->requestParameter['openid.return_to'    ] = slashify($server).'openid.'.PHP_EXT;
 		//$redirHttp->requestParameter['openid.realm'        ] = slashify($server).'openid.'.PHP_EXT;
-		$redirHttp->requestParameter['openid.assoc_handle' ] = $openid_handle;
+		$redirHttp->requestParameter['openid.assoc_handle' ] = $this->handle;
 
 		$redirHttp->sendRedirect(); // Browser umleiten.
 		exit;                       // Ende.
@@ -262,7 +222,6 @@ https://doodle.com/mydoodle/openIdAuth?openid.ns=http%3A%2F%2Fspecs.openid.net%2
 			return false;
 		}
 		
-		//Html::debug(htmlentities($http->body));
 		//die();
 		$p = xml_parser_create();
 		$ok = xml_parse_into_struct($p, $http->body, $vals, $index);
@@ -294,6 +253,17 @@ https://doodle.com/mydoodle/openIdAuth?openid.ns=http%3A%2F%2Fspecs.openid.net%2
 			{
 				$this->identity = $tag['value'];
 			}
+		}
+		
+		if	( !$this->supportOpenId1_1 && !$this->supportOpenId2_0 )
+		{
+			$this->error = 'Only OpenId 1.1 and 2.0 is supported but this identity-provider does not seem to support any of these.';
+			return false;
+		}
+		if	( !$this->supportAX && !$this->supportSREG )
+		{
+			$this->error = 'The identity-provider must support either Attribute-Exchange (AX) oder Simple-Registration (SREG), but it does not seem to support any of these.';
+			return false;
 		}
 	}
 
@@ -336,8 +306,16 @@ https://doodle.com/mydoodle/openIdAuth?openid.ns=http%3A%2F%2Fspecs.openid.net%2
 	 */
 	function getUserFromIdentiy()
 	{
-		$http = new Http($this->identity);
-		return $http->url['host'];
+		if	( $this->provider == 'identity' )
+		{
+			$http = new Http($this->identity);
+			return $http->url['host'];
+		}
+		else
+		{
+			$attribute_name = config('provider.'.$this->provider.'.map_attribute');
+			return $this->info[$attribute_name];
+		}
 	}
 		
 	
@@ -357,12 +335,7 @@ https://doodle.com/mydoodle/openIdAuth?openid.ns=http%3A%2F%2Fspecs.openid.net%2
 		global $REQ,
 		       $conf;
 		       
-		$this->user      = Session::get('openid_user'    );
-		$this->server    = Session::get('openid_server'  );
-		$this->identity  = Session::get('openid_identity');
-		$openid_handle   = Session::get('openid_handle'  );
-
-		if	( $REQ['openid_invalidate_handle'] != $openid_handle )
+		if	( $REQ['openid_invalidate_handle'] != $this->handle )
 		{
 			$this->error = 'Association-Handle mismatch.';
 			return false;
@@ -374,7 +347,7 @@ https://doodle.com/mydoodle/openIdAuth?openid.ns=http%3A%2F%2Fspecs.openid.net%2
 			return false;
 		}
 		
-		if	( $REQ['openid_identity'] != $this->identity )
+		if	( $this->provider=='identity' && $REQ['openid_identity'] != $this->identity )
 		{
 			$this->error ='Open-Id: Identity mismatch. Wrong identity:'.$REQ['openid_identity'];
 			return false;
@@ -382,22 +355,41 @@ https://doodle.com/mydoodle/openIdAuth?openid.ns=http%3A%2F%2Fspecs.openid.net%2
 		
 
 		$params = array();
+
+		if	( $this->supportAX )
+			foreach( $REQ as $request_key=>$request_value )
+				if	(  substr($request_key,0,10)=='openid_ns_' && $request_value == 'http://openid.net/srv/ax/1.0' )
+					$axPrefix = substr($request_key,10);
 		
 		foreach( $REQ as $request_key=>$request_value )
 		{
-			if	( substr($request_key,0,12)=='openid_sreg_' )
+			// Benutzer-Attribute ermitteln.
+			if	( $this->supportSREG && substr($request_key,0,12)=='openid_sreg_' )
 			{
-				$params['openid.sreg.'.substr($request_key,12) ] = $request_value;			
 				$this->info[ substr($request_key,12) ] = $request_value;
 			}			
-			elseif	( substr($request_key,0,7)=='openid_' )
-				$params['openid.'.substr($request_key,7) ] = $request_value;			
+			elseif	( $this->supportAX && substr($request_key,0,14+strlen($axPrefix))=='openid_'.$axPrefix.'_value_' )
+			{
+				$this->info[ substr($request_key,14+strlen($axPrefix)) ] = $request_value;
+			}
+						
+			// Uebelstes Gefrickel. Grund dafuer ist, dass PHP die Punkte in Request-Variablen durch Unterstriche ersetzt. Und wir müssen das
+			// hier zurücksetzen.
+			// TODO: Original-Request-Variable ermitteln?
+			if	( substr($request_key,0,7)=='openid_' )
+				if	( $this->supportAX && substr($request_key,0,8+strlen($axPrefix))=='openid_'.$axPrefix.'_')
+					$params[ str_replace('_','.',$request_key) ] = $request_value;
+				elseif( $this->supportAX && $request_key == 'openid_ns_'.$axPrefix)
+					$params[ str_replace('_','.',$request_key) ] = $request_value;
+				else
+					$params['openid.'.substr($request_key,7) ] = $request_value;			
 		}
 		$params['openid.mode'] = 'check_authentication';
 		
 		$checkRequest = new Http($this->server);
 		
 		$checkRequest->method = 'POST'; // Spezifikation verlangt POST.
+		$checkRequest->header['Accept'] = 'text/plain';
 		$checkRequest->requestParameter = $params;
 		
 		if	( ! $checkRequest->request() )
@@ -406,32 +398,33 @@ https://doodle.com/mydoodle/openIdAuth?openid.ns=http%3A%2F%2Fspecs.openid.net%2
 			$this->error = $checkRequest->error;
 			return false;
 		}
-
+		//Html::debug($checkRequest);
+		
 		// Analyse der HTTP-Antwort, Parsen des BODYs.
 		// Die Anmeldung ist best�tigt, wenn im BODY die Zeile "is_valid:true" vorhanden ist.
 		// Siehe Spezifikation Kapitel 4.4.2
-		$valid = null;
+		$result = array();
 		foreach( explode("\n",$checkRequest->body) as $line )
 		{
 			$pair = explode(':',trim($line));
-			if	(count($pair)==2 && strtolower($pair[0])=='is_valid')
-				$valid = (strtolower($pair[1])=='true');
+			if	(count($pair)==2)
+				$result[strtolower($pair[0])] = strtolower($pair[1]);
 		}
 		
-		if	( is_null($valid) )
+		if	( !array_key_exists('is_valid',$result) )
 		{
 			// Zeile nicht gefunden.
-			$this->error = 'Undefined Open-Id response: '.$response;
+			$this->error = 'Undefined Open-Id response: "is_valid" expected, but not found';
 			return false;
 		}
-		elseif	( $valid )
+		elseif	( $result['is_valid'] == 'true' )
 		{
 			// Anmeldung wurde mit "is_valid:true" best�tigt.
 			return true;
 		}
 		else
 		{
-			// Best�tigung wurde durch den OpenId-Provider abgelehnt.
+			// Bestaetigung wurde durch den OpenId-Provider abgelehnt.
 			$this->error = 'Server refused login.';
 			return false;
 		}
