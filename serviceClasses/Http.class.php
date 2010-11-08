@@ -26,6 +26,8 @@ class Http
 	var $error  = '';
 	var $status = '';
 	var $body   = '';
+	
+	var $httpCmd = '';
 
 
 
@@ -38,8 +40,8 @@ class Http
 	function Http( $url = '' )
 	{
 		$this->setURL( $url );
-		$this->header[] = 'User-Agent: Mozilla/5.0 (OpenRat CMS)';
-		$this->header[] = 'Connection: close';
+		$this->header['User-Agent'] = 'Mozilla/5.0 (OpenRat CMS)';
+		$this->header['Connection'] = 'close';
 	}
 
 
@@ -88,7 +90,7 @@ class Http
 	 */
 	function setBasicAuthentication( $user, $password )
 	{
-		$this->header[] = 'Authorization: Basic '.base64_encode($user.':'.$password);
+		$this->header['Authorization'] = 'Basic '.base64_encode($user.':'.$password);
 	}
 
 	
@@ -174,11 +176,38 @@ class Http
 			return false;
 		}
 		
+		foreach( $this->header as $header_key=>$header_value )
+		{
+			if	( is_numeric( $header_key ) )
+			{
+				$dp = strpos($header_value,':');
+				if	( $dp!==FALSE)
+					$this->header[substr($header_value,0,$dp)] = substr($header_value,$dp+1); 
+				unset($this->header[$header_key]);
+			}
+		}
+		
+		$parameterString = $this->getParameterString();
+		
+		if	( $this->method == 'POST' )
+		{
+			$this->header['Content-Type'  ] = 'application/x-www-form-urlencoded';
+			$this->header['Content-Length'] = strlen($parameterString);
+		}
+				
+		// Accept-Header setzen, falls noch nicht vorhanden.
+		if	( !array_key_exists('Accept',$this->header) )
+			$this->header['Accept'] = '*/*';
+			
+		$this->responseHeader = array();
+
 		// RFC 1945 (Section 9.3) says:
 		// A user agent should never automatically redirect a request
 		// more than 5 times, since such redirections usually indicate an infinite loop.
 		for( $r=1; $r<=5; $r++ )
 		{
+			$this->header['Host'] = $this->url['host'];
+			
 			// Die Funktion fsockopen() erwartet eine Protokollangabe (bei TCP optional, bei SSL notwendig).
 			if	( $this->url['scheme'] == 'https' || $this->url['port'] == '443' )
 				$prx_proto = 'ssl://'; // SSL
@@ -195,25 +224,20 @@ class Http
 			}
 			else
 			{
+		
 				$lb = "\r\n";
 				$http_get = $this->url['path'];
 
-				$parameterString = $this->getParameterString();
+				$request_header = array( $this->method.' '.$http_get.' HTTP/1.0');
+				
+				foreach($this->header as $header_key=>$header_value)
+					$request_header[] = $header_key.': '.$header_value;
+					
+				$http_request = implode($lb,$request_header).$lb.$lb;
 
 				if	( $this->method == 'GET')
 					if	( !empty($parameterString) )
 						$http_get .= '?'.$parameterString;
-
-				if	( $this->method == 'POST' )
-				{
-					$this->header[] = 'Content-Type: application/x-www-form-urlencoded';
-					$this->header[] = 'Content-Length: '.strlen($parameterString);
-				}
-						
-				$this->header[] = 'Host: '.$this->url['host'];
-				$this->header[] = 'Accept: */*';
-				$request_header = array( $this->method.' '.$http_get.' HTTP/1.0') + $this->header;
-				$http_request = implode($lb,$request_header).$lb.$lb;
 				
 				if	( $this->method == 'POST' )
 					$http_request .= $parameterString;
@@ -243,6 +267,7 @@ class Http
 					return false;
 				}
 				
+				$this->body = '';
 				while (!feof($fp)) {
 					$line = fgets($fp,1028);
 					if	( $isHeader && trim($line)=='' ) // Leerzeile nach Header.
@@ -279,12 +304,12 @@ class Http
 						return false;
 					}
 					
-//					Html::debug($this->url,"alte URL");
-//					Html::debug($location,"NEUES REDIRECT AUF");
+					//Html::debug($this->url,"alte URL");
+					//Html::debug($location,"NEUES REDIRECT AUF");
 					$this->setURL($location);
-//					Html::debug($this->url,"NEUE URL NACH REDIRECT");
-					continue; // N�chster Versuch mit umgeleiteter Adresse.
+					continue; // Naechster Versuch mit umgeleiteter Adresse.
 				}
+				
 				// RFC 1945 (Section 6.1.1) schreibt
 				// "2xx: Success - The action was successfully received, understood, and accepted."
 				elseif	( substr($this->status,0,1) == '2' )
