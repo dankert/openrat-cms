@@ -355,7 +355,7 @@ class OpenId
 		
 
 		$params = array();
-
+		
 		if	( $this->supportAX )
 			foreach( $REQ as $request_key=>$request_value )
 				if	(  substr($request_key,0,10)=='openid_ns_' && $request_value == 'http://openid.net/srv/ax/1.0' )
@@ -429,6 +429,32 @@ class OpenId
 			return false;
 		}
 	}
+	
+	
+	/**
+	 * Liefert die Query-Parameter aus der aktuellen URL.<br>
+	 * <br>
+	 * PHP hat leider die sehr bescheuerte Angewohnheit, Punkte und Leerzeichen in Request-Variablen
+	 * durch Unterstriche zu ersetzen. Diese Funktion liefert die GET-Parameter ohne diese Ersetzung.
+	 * 
+	 * @return Parameter der aktuellen URL
+	 */
+	function getQueryParamList()
+	{
+		// Quelle: php.net
+		$str = $_SERVER['QUERY_STRING'];
+		$op = array();
+		$pairs = explode("&", $str);
+		foreach ($pairs as $pair)
+		{
+			list($k, $v) = array_map("urldecode", explode("=", $pair));
+			$op[$k] = $v;
+		}
+		
+		return $op;
+	}
+
+	
 }
 
 ?>
