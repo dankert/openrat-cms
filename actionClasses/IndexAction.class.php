@@ -287,6 +287,13 @@ class IndexAction extends Action
 				                        'value'=>Text::maxLength($dbconf['comment']),
 				                        'title'=>$dbconf['comment'].' ('.$dbconf['host'].')' );
 		}
+		
+		$openid_provider = array();
+		foreach( explode(',',$conf['security']['openid']['provider']) as $provider )
+			$openid_provider[$provider] = config('security','openid','provider.'.$provider.'.name');
+		$this->setTemplateVar('openid_provider',$openid_provider);
+		$this->setTemplateVar('openid_user_identity',config('security','openid','user_identity'));
+		//$this->setTemplateVar('openid_provider','identity');
 
 		
 		if	( empty($dbids) )
@@ -544,7 +551,7 @@ class IndexAction extends Action
 	function openid()
 	{
 		global $conf;
-		$openId = new OpenId();
+		$openId = Session::get('openid');
 
 		if	( !$openId->checkAuthentication() )
 		{
@@ -553,6 +560,8 @@ class IndexAction extends Action
 			$this->callSubAction('showlogin');
 			return;
 		}
+		
+		//Html::debug($openId);
 		
 		// Anmeldung wurde mit "is_valid:true" best�tigt.
 		// Der Benutzer ist jetzt eingeloggt.
@@ -619,9 +628,9 @@ class IndexAction extends Action
 		setcookie('or_username',$loginName,time()+(60*60*24*30*12*2) );
 		
 		// Login mit Open-Id.
-		if	( !empty($openid_user) )
+		if	( $this->hasRequestVar('openid_provider') && ($this->getRequestVar('openid_provider') != 'identity' || !empty($openid_user)) )
 		{
-			$openId = new OpenId($openid_user);
+			$openId = new OpenId($this->getRequestVar('openid_provider'),$openid_user);
 			
 			if	( ! $openId->login() )
 			{
@@ -631,8 +640,9 @@ class IndexAction extends Action
 				return;
 			}
 			
+			Session::set('openid',$openId);
 			$openId->redirect();
-			Http::serverError('Unreachable Code.');
+			die('Unreachable Code');
 		}
 		
 

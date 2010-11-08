@@ -1,4 +1,4 @@
-; <?php exit('direct access denied') ?>
+ ; <?php exit('direct access denied') ?>
 
 ; Security settings for Openrat - be careful :)
 
@@ -244,6 +244,7 @@ provider.example.xrds_uri=http://google.com/accounts
 ; Google supports Open-Id 2.0
 provider.google.xrds_uri=http://google.com/accounts/o8/id
 provider.google.map_attribute=email
+provider.google.name=Google
 provider.google.map_internal=mail
 
 ; Yahoo
