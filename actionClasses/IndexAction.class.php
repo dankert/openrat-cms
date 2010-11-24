@@ -291,7 +291,7 @@ class IndexAction extends Action
 		$openid_provider = array();
 		foreach( explode(',',$conf['security']['openid']['provider']) as $provider )
 			$openid_provider[$provider] = config('security','openid','provider.'.$provider.'.name');
-		$this->setTemplateVar('openid_provider',$openid_provider);
+		$this->setTemplateVar('openid_providers',$openid_provider);
 		$this->setTemplateVar('openid_user_identity',config('security','openid','user_identity'));
 		//$this->setTemplateVar('openid_provider','identity');
 
@@ -567,8 +567,17 @@ class IndexAction extends Action
 		// Der Benutzer ist jetzt eingeloggt.
 		$username = $openId->getUserFromIdentiy();
 		
+		if	( empty($username) )
+		{
+			// Es konnte kein Benutzername ermittelt werden.
+			$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
+			$this->addValidationError('openid_url','');
+			$this->callSubAction('showlogin');
+			return;
+		}
+		
 		$user = User::loadWithName( $username );
-			
+		
 		if	( $user->userid <=0)
 		{
 			// Benutzer ist (noch) nicht vorhanden.

@@ -115,6 +115,9 @@ class OpenId
 			$this->user     = config('security','openid','provider.'.$this->provider.'.xrds_uri'); 
 			$this->identity = 'http://specs.openid.net/auth/2.0/identifier_select'; 
 		}
+		$this->supportSREG = config('security','openid','provider.'.$this->provider.'.sreg_1_0');
+		$this->supportAX   = config('security','openid','provider.'.$this->provider.'.ax_1_0'  );
+		
 		// Schritt 1: Identity aus Yadis-Dokument laden.
 		$this->getIdentityFromYadis();
 
@@ -170,7 +173,7 @@ class OpenId
 		
 		if	( $this->supportAX )
 		{
-			Logger::info("Server is using OpenID Attribute Exchange 1.0");
+			Logger::info("OpenId-Server is using OpenID Attribute Exchange 1.0");
 			$redirHttp->requestParameter['openid.ns.ax'            ] = 'http://openid.net/srv/ax/1.0';
 			$redirHttp->requestParameter['openid.ax.mode'          ] = 'fetch_request';
 			$redirHttp->requestParameter['openid.ax.type.email'    ] = 'http://axschema.org/contact/email';
@@ -183,7 +186,7 @@ class OpenId
 		
 		if	( $this->supportSREG )
 		{
-			Logger::info("Server is using OpenID Simple Registration Extension 1.0");
+			Logger::info("OpenId-Server is using OpenID Simple Registration Extension 1.0");
 			$redirHttp->requestParameter['openid.ns.sreg'      ] = 'http://openid.net/sreg/1.0';
 			$redirHttp->requestParameter['openid.sreg.required'] = 'email,nickname';
 			$redirHttp->requestParameter['openid.sreg.optional'] = 'fullname,language';
@@ -222,6 +225,7 @@ class OpenId
 			return false;
 		}
 		
+		Logger::debug("OpenId: Found YADIS-document for ".$http->getUrl());
 		//die();
 		$p = xml_parser_create();
 		$ok = xml_parse_into_struct($p, $http->body, $vals, $index);
@@ -286,11 +290,22 @@ class OpenId
 		
 		$seite = $http->body;
 		
-		// Die Meta-Tags mit regul�rem Ausdruck auslesen.
+		// Die Meta-Tags mit regulaerem Ausdruck auslesen.
 		$treffer = array();
 		preg_match('/rel="openid.server"\s+href="(\S+)"/',$seite,$treffer);
 		if	( count($treffer) >= 1 )
+		{
 			$this->server = $treffer[1];
+			$this->supportOpenId1_1 = true;
+		}
+
+		$treffer = array();
+		preg_match('/rel="openid2.provider"\s+href="(\S+)"/',$seite,$treffer);
+		if	( count($treffer) >= 1 )
+		{
+			$this->supportOpenId2_0 = true;
+			$this->server = $treffer[1];
+		}
 
 		$treffer = array();
 		preg_match('/rel="openid.delegate"\s+href="(\S+)"/',$seite,$treffer);
@@ -313,7 +328,7 @@ class OpenId
 		}
 		else
 		{
-			$attribute_name = config('provider.'.$this->provider.'.map_attribute');
+			$attribute_name = config('security','openid','provider.'.$this->provider.'.map_attribute');
 			return $this->info[$attribute_name];
 		}
 	}
@@ -332,24 +347,23 @@ class OpenId
 	 */
 	function checkAuthentication()
 	{
-		global $REQ,
-		       $conf;
+		$queryVars = $this->getQueryParamList(); 
 		       
-		if	( $REQ['openid_invalidate_handle'] != $this->handle )
+		if	( $queryVars['openid.invalidate_handle'] != $this->handle )
 		{
 			$this->error = 'Association-Handle mismatch.';
 			return false;
 		}
 
-		if	( $REQ['openid_mode'] != 'id_res' )
+		if	( $queryVars['openid.mode'] != 'id_res' )
 		{
-			$this->error ='Open-Id: Unknown mode:'.$REQ['openid_mode'];
+			$this->error ='Open-Id: Unknown mode:'.$queryVars['openid.mode'];
 			return false;
 		}
 		
-		if	( $this->provider=='identity' && $REQ['openid_identity'] != $this->identity )
+		if	( $this->provider=='identity' && $queryVars['openid.identity'] != $this->identity )
 		{
-			$this->error ='Open-Id: Identity mismatch. Wrong identity:'.$REQ['openid_identity'];
+			$this->error ='Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity'];
 			return false;
 		}
 		
@@ -357,31 +371,24 @@ class OpenId
 		$params = array();
 		
 		if	( $this->supportAX )
-			foreach( $REQ as $request_key=>$request_value )
-				if	(  substr($request_key,0,10)=='openid_ns_' && $request_value == 'http://openid.net/srv/ax/1.0' )
+			// Den Namespace-Prefix für AX (attribute exchange) herausfinden.
+			// Leider kann das ein anderer Prefix sein, als wir im Request verwendet haben.
+			foreach( $queryVars as $request_key=>$request_value )
+				if	(  substr($request_key,0,10)=='openid.ns.' && $request_value == 'http://openid.net/srv/ax/1.0' )
 					$axPrefix = substr($request_key,10);
 		
-		foreach( $REQ as $request_key=>$request_value )
+		foreach( $queryVars as $request_key=>$request_value )
 		{
 			// Benutzer-Attribute ermitteln.
-			if	( $this->supportSREG && substr($request_key,0,12)=='openid_sreg_' )
-			{
+			// Benutzer-Attribute über SREG ermitteln.
+			if	( $this->supportSREG && substr($request_key,0,12)=='openid.sreg.' )
 				$this->info[ substr($request_key,12) ] = $request_value;
-			}			
-			elseif	( $this->supportAX && substr($request_key,0,14+strlen($axPrefix))=='openid_'.$axPrefix.'_value_' )
-			{
+			// Benutzer-Attribute über AX ermitteln.
+			elseif	( $this->supportAX && substr($request_key,0,14+strlen($axPrefix))=='openid.'.$axPrefix.'.value.' )
 				$this->info[ substr($request_key,14+strlen($axPrefix)) ] = $request_value;
-			}
-						
-			// Uebelstes Gefrickel. Grund dafuer ist, dass PHP die Punkte in Request-Variablen durch Unterstriche ersetzt. Und wir müssen das
-			// hier zurücksetzen.
-			// TODO: Original-Request-Variable ermitteln?
-			if	( substr($request_key,0,7)=='openid_' )
-				if	( $this->supportAX && substr($request_key,0,8+strlen($axPrefix))=='openid_'.$axPrefix.'_')
-					$params[ str_replace('_','.',$request_key) ] = $request_value;
-				elseif( $this->supportAX && $request_key == 'openid_ns_'.$axPrefix)
-					$params[ str_replace('_','.',$request_key) ] = $request_value;
-				else
+
+			// Alle OpenId-Parameter in den Check-Authentication-Request übertragen.
+			if	( substr($request_key,0,7)=='openid.' )
 					$params['openid.'.substr($request_key,7) ] = $request_value;			
 		}
 		$params['openid.mode'] = 'check_authentication';

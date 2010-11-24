@@ -616,15 +616,49 @@ unset($a6_tmp_last_exec) ?></td></tr><?php
 <?php if (!empty($column_classes)) { ?>
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
-><?php $a8_class='name';$a8_default='';$a8_type='text';$a8_name='openid_url';$a8_size='20';$a8_maxlength='256';$a8_onchange='';$a8_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a8_readonly=true;
-	  if ($a8_readonly && empty($$a8_name)) $$a8_name = '- '.lang('EMPTY').' -';
-      if(!isset($a8_default)) $a8_default='';
-      $tmp_value = Text::encodeHtml(isset($$a8_name)?$$a8_name:$a8_default);
-?><?php if (!$a8_readonly || $a8_type=='hidden') {
-?><input<?php if ($a8_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" name="<?php echo $a8_name ?><?php if ($a8_readonly) echo '_disabled' ?>" type="<?php echo $a8_type ?>" size="<?php echo $a8_size ?>" maxlength="<?php echo $a8_maxlength ?>" class="<?php echo $a8_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a8_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
-if	($a8_readonly) {
-?><input type="hidden" id="id_<?php echo $a8_name ?>" name="<?php echo $a8_name ?>" value="<?php echo $tmp_value ?>" /><?php
- } } else { ?><span class="<?php echo $a8_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a8_class,$a8_default,$a8_type,$a8_name,$a8_size,$a8_maxlength,$a8_onchange,$a8_readonly) ?></td></tr><?php } ?><?php $a5_value=@count($dbids);$a5_greaterthan='1'; ?><?php 
+><?php $a8_list='openid_providers';$a8_name='openid_provider';$a8_onchange='';$a8_title='';$a8_class=''; ?><?php $a8_tmp_list = $$a8_list;
+		if	( isset($$a8_name) && isset($a8_tmp_list[$$a8_name]) )
+			$a8_tmp_default = $$a8_name;
+		elseif ( isset($a8_default) )
+			$a8_tmp_default = $a8_default;
+		else
+			$a8_tmp_default = '';
+		foreach( $a8_tmp_list as $box_key=>$box_value )
+		{
+			$box_value = is_array($box_value)?(isset($box_value['lang'])?langHtml($box_value['lang']):$box_value['value']):$box_value;
+			$id = 'id_'.$a8_name.'_'.$box_key;
+			echo '<input id="'.$id.'" name="'.$a8_name.'" type="radio" class="'.$a8_class.'" value="'.$box_key.'"';
+			if ($box_key==$a8_tmp_default)
+				echo ' checked="checked"';
+			echo '>&nbsp;<label for="'.$id.'">'.$box_value.'</label><br>';
+		}
+?><?php unset($a8_list,$a8_name,$a8_onchange,$a8_title,$a8_class) ?><?php $a8_true=$openid_user_identity; ?><?php 
+	if	(gettype($a8_true) === '' && gettype($a8_true) === '1')
+		$a8_tmp_exec = $$a8_true == true;
+	else
+		$a8_tmp_exec = $a8_true == true;
+	$a8_tmp_last_exec = $a8_tmp_exec;
+	if	( $a8_tmp_exec )
+	{
+?>
+<?php unset($a8_true) ?><?php $a9_readonly=false;$a9_name='openid_provider';$a9_value='identity';$a9_default=false;$a9_prefix='';$a9_suffix='';$a9_class='';$a9_onchange=''; ?><?php
+		if ($this->isEditable() && !$this->isEditMode()) $a9_readonly=true;
+		if	( isset($$a9_name)  )
+			$a9_tmp_default = $$a9_name;
+		elseif ( isset($a9_default) )
+			$a9_tmp_default = $a9_default;
+		else
+			$a9_tmp_default = '';
+ ?><input onclick="" class="radio" type="radio" id="id_<?php echo $a9_name.'_'.$a9_value ?>"  name="<?php echo $a9_prefix.$a9_name ?>"<?php if ( $a9_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a9_value ?>" <?php if($a9_value==$a9_tmp_default) echo 'checked="checked"' ?><?php if (in_array($a9_name,$errors)) echo ' style="borderx:2px dashed red; background-color:red;"' ?> />
+<?php /* #END-IF# */ ?><?php unset($a9_readonly,$a9_name,$a9_value,$a9_default,$a9_prefix,$a9_suffix,$a9_class,$a9_onchange) ?><?php $a9_class='name';$a9_default='';$a9_type='text';$a9_name='openid_url';$a9_size='20';$a9_maxlength='256';$a9_onchange='';$a9_readonly=false; ?><?php if ($this->isEditable() && !$this->isEditMode()) $a9_readonly=true;
+	  if ($a9_readonly && empty($$a9_name)) $$a9_name = '- '.lang('EMPTY').' -';
+      if(!isset($a9_default)) $a9_default='';
+      $tmp_value = Text::encodeHtml(isset($$a9_name)?$$a9_name:$a9_default);
+?><?php if (!$a9_readonly || $a9_type=='hidden') {
+?><input<?php if ($a9_readonly) echo ' disabled="true"' ?> id="id_<?php echo $a9_name ?><?php if ($a9_readonly) echo '_disabled' ?>" name="<?php echo $a9_name ?><?php if ($a9_readonly) echo '_disabled' ?>" type="<?php echo $a9_type ?>" size="<?php echo $a9_size ?>" maxlength="<?php echo $a9_maxlength ?>" class="<?php echo $a9_class ?>" value="<?php echo $tmp_value ?>" <?php if (in_array($a9_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php
+if	($a9_readonly) {
+?><input type="hidden" id="id_<?php echo $a9_name ?>" name="<?php echo $a9_name ?>" value="<?php echo $tmp_value ?>" /><?php
+ } } else { ?><span class="<?php echo $a9_class ?>"><?php echo $tmp_value ?></span><?php } ?><?php unset($a9_class,$a9_default,$a9_type,$a9_name,$a9_size,$a9_maxlength,$a9_onchange,$a9_readonly) ?><?php } ?></td></tr><?php } ?><?php $a5_value=@count($dbids);$a5_greaterthan='1'; ?><?php 
 	$a5_tmp_exec = intval($a5_greaterthan) < intval($a5_value);
 	$a5_tmp_last_exec = $a5_tmp_exec;
 	if	( $a5_tmp_exec )

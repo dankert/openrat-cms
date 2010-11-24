@@ -77,7 +77,7 @@ page
 								image url:config:security/openid/logo_url
 							text key:openid_user
 						cell
-							radiobox name:openid_provider list:openid_provider
+							radiobox name:openid_provider list:openid_providers
 							if true:var:openid_user_identity
 								radio name:openid_provider value:identity
 								input name:openid_url class:name size:20
