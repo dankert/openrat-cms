@@ -595,6 +595,15 @@ class PageAction extends ObjectAction
 	 */
 	function show()
 	{
+		$this->setTemplateVar('preview_url',Html::url('page','preview',$this->page->objectid,array('target'=>'none') ) );
+	}
+
+		/**
+	 * Seite anzeigen
+	 */
+	function preview()
+	{
+		Logger::debug("preview von seite");
 		// Seite definieren
 		$this->page->load();
 		$this->page->generate();
@@ -606,6 +615,8 @@ class PageAction extends ObjectAction
 		$language = Session::getProjectLanguage();
 		header('Content-Language: '.$language->isoCode);
 
+		Logger::debug("preview von seite: ".$this->page->tmpfile() );
+		
 		// Wenn 
 		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
 		        config('publish','enable_php_in_page_content')===true )
@@ -614,7 +625,7 @@ class PageAction extends ObjectAction
 			readfile( $this->page->tmpfile() );
 	}
 
-
+	
 
 	/**
 	 * Die Seite im Bearbeitungsmodus anzeigen

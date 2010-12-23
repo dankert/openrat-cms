@@ -3,8 +3,6 @@
   </tr>
 </table>
 
-</center>
-
 <?php if ($showDuration)
       { ?>
 <br/>

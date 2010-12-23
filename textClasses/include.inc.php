@@ -1,7 +1,7 @@
 <?php
 
 // Die DOM-Klassen sind nur bei der Erzeugung von Seiten notwendig.
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pageelement','page','folder')) )
+//if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pageelement','page','folder')) )
 {
 	require_once( OR_TEXTCLASSES_DIR."parser/WikiParser.class.".PHP_EXT );
 	require_once( OR_TEXTCLASSES_DIR."renderer/HtmlRenderer.class.".PHP_EXT );

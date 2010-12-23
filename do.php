@@ -68,6 +68,7 @@ define('REQ_PARAM_PROJECT_ID'     ,'projectid'      );
 define('REQ_PARAM_ELEMENT_ID'     ,'elementid'      );
 define('REQ_PARAM_TEMPLATE_ID'    ,'templateid'     );
 define('REQ_PARAM_DATABASE_ID'    ,'dbid'           );
+define('REQ_PARAM_TARGET'         ,'target'         );
 
 require_once( "functions/request.inc.php" );
 
@@ -221,154 +222,337 @@ else
 		$subaction = '';
 }
 
+
+require( OR_ACTIONCLASSES_DIR.'/Action.class.php' );
+require( OR_ACTIONCLASSES_DIR.'/ObjectAction.class.php' );
+
+
+// Aktualisiere die aktuellen Views
+$views = Session::get('views');
+
+if	( !is_array($views) ) 
+{
+	$views = array( 'tree'   => array('action'=>'tree' ,'subaction'=>'show' ),
+	                'header' => array('action'=>'title','subaction'=>'show' ),
+	                'content'=> array('action'=>'index','subaction'=>'login')  );
+}
+
+// Wenn 'target' übergeben wurde und als View bekannt ist
+if	( isset($REQ[REQ_PARAM_TARGET]) && isset($views[$REQ[REQ_PARAM_TARGET]])  ) {
+	// Mit der aktuellen Aktion die Views aktualisieren. 
+	$views[$REQ[REQ_PARAM_TARGET]] = array('action'=>$action,'subaction'=>$subaction); 
+}
+
+
+$viewCache = Session::get('view_cache');
+
+$viewCache = array(); // Notlösung!
+
+
+// Schritt 1:
+// Zuerst die Schreibaktion durchführen, erst anschließend folgenen die Views.
+// if	( $_SERVER['REQUEST_METHOD'] == 'POST' )
+	
 $actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
 
 if	( !isset($conf['action'][$actionClassName]) )
 	Http::serverError("Action '$action' is undefined.");
 
-require( OR_ACTIONCLASSES_DIR.'/Action.class.php' );
-require( OR_ACTIONCLASSES_DIR.'/ObjectAction.class.php' );
-require( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
+require_once( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
-// Erzeugen der Action-Klasse
-$do = new $actionClassName;
-$do->actionConfig = $conf['action'][$actionClassName];
-$do->actionClassName = $actionClassName; 
-$do->actionName      = $action;
-if	( $subaction == '' )
-	$subaction = $do->actionConfig['default']['goto'];
-	
-$do->subActionName   = $subaction;
-
-
-$do->init();
-
-if	( !isset($do->actionConfig[$subaction]) )
+// Wenn
+// - *Action-Methode zum Schreiben vorhanden und POST-Request
+// oder
+// - Methode mit direkter Ausgabe
+if	(    ( isset($conf['action'][$actionClassName][$subaction]['write']) && $_SERVER['REQUEST_METHOD'] == 'POST' )
+      || isset($conf['action'][$actionClassName][$subaction]['direct'] ) )
 {
-	Logger::warn( "Action $action has no configured method named $subaction");
-	Http::serverError("Action '$action' has no accessable method '$subaction'.");
-	exit;
-}
-	
-$subactionConfig = $do->actionConfig[$subaction];
-//Logger::trace("controller is calling subaction '$subaction'");
-
-// Eine Subaktion ohne "guest=true" verlangt einen angemeldeten Benutzer.
-if	( !isset($subactionConfig['guest']) || !$subactionConfig['guest'] )
-	if	( !is_object($do->currentUser) )
-	{
-		Logger::debug('No session and no guest action occured, maybe session expired');
-		Http::notAuthorized( lang('SESSION_EXPIRED') );
-		exit;
-	}
-
-// Eine Aktion mit "admin=true" verlangt einen Administrator als Benutzer.
-if	( isset($do->actionConfig['admin']) && $do->actionConfig['admin'] )
-	if	( !$do->currentUser->isAdmin )
-	{
-		Logger::debug('Admin action, but user '.$do->currentUser->name.' is not an admin');
-		Http::notAuthorized( lang('SESSION_EXPIRED') );
-		exit;
-	}
-
-
-// Aktuelle Subaction in Sitzung merken
-if	( isset($do->actionConfig[$subaction]['menu']) || isset($do->actionConfig[$subaction]['direct']) )
-{
-	$sl = Session::getSubaction();
-	if	( !is_array($sl))
-		$sl = array();
-	$sl[$action] = $subaction;
-	Session::setSubaction( $sl );
-}
-
-
-// Alias-Methode aufrufen.
-if	( isset($do->actionConfig[$do->subActionName]['alias']) )
-{
-	$subaction = $do->actionConfig[$do->subActionName]['alias'];
-//    $do->subActionName = $subaction;
-}
-
-
-// Alias-Methode aufrufen.
-if	( isset($do->actionConfig[$do->subActionName]['write']) )
-{
-	//Html::debug($_SERVER);
-	if	( $_SERVER['REQUEST_METHOD'] == 'POST' )
-	{
-		$subactionAction = $subaction.'Action';
-		$do->$subactionAction();
+	if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		$viewCache = array(); // Cache löschen.
 		
-		if	( $conf['interface']['redirect'] )
-		{
-			// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
-			// im nächste Request die Eingabedaten fehlen.
-			if	( empty($do->templateVars['errors']) )
-			{
-				header( 'HTTP/1.0 303 See other');
-				// Absoluten Pfad kann auch der Client erg�nzen.
-				header( 'Location: '.Html::url($action,$subaction,$do->getRequestId()) );
-				exit;
-			}
-		}
-	}
+	// Erzeugen der Action-Klasse
+	$do = new $actionClassName;
+	$do->actionConfig = $conf['action'][$actionClassName];
+	$do->actionClassName = $actionClassName; 
+	$do->actionName      = $action;
+	if	( $subaction == '' )
+		$subaction = $do->actionConfig['default']['goto'];
+		
+	$do->subActionName   = $subaction;
 	
-	$subactionView = $subaction.'View';
-	$do->$subactionView();
-}
-else
-{
-	// Aufruf der Subaction
-	$do->$subaction();
-}
-
-
-// Aufruf der n�chsten Subaction (falls vorhanden)
-if	( isset($do->actionConfig[$do->subActionName]['goto']) )
-{
-	/* Achtung: Redirect fuehrt zu Problemen beim Login sowie der Anzeige von Notices */
-	if	( $conf['interface']['redirect'] )
+	
+	$do->init();
+	
+	if	( !isset($do->actionConfig[$subaction]) )
 	{
-		// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
-		// im naechsten Request die Eingabedaten fehlen.
-		if	( empty($do->templateVars['errors']) )
+		Logger::warn( "Action $action has no configured method named $subaction");
+		Http::serverError("Action '$action' has no accessable method '$subaction'.");
+		exit;
+	}
+		
+	$subactionConfig = $do->actionConfig[$subaction];
+	//Logger::trace("controller is calling subaction '$subaction'");
+	
+	// Eine Subaktion ohne "guest=true" verlangt einen angemeldeten Benutzer.
+	if	( !isset($subactionConfig['guest']) || !$subactionConfig['guest'] )
+		if	( !is_object($do->currentUser) )
 		{
-			$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
-			header( 'HTTP/1.0 303 See other');
-			// Absoluten Pfad kann auch der Client ergaenzen.
-			header( 'Location: '.Html::url($action,$do->actionConfig[$do->subActionName]['goto'],$do->getRequestId()) );
-			exit;
+			Logger::debug('No session and no guest action occured, maybe session expired');
+			//Http::notAuthorized( lang('SESSION_EXPIRED') );
+			$do->templateVars['error'] = 'not logged in';
+			continue;
 		}
+	
+	// Eine Aktion mit "admin=true" verlangt einen Administrator als Benutzer.
+	if	( isset($do->actionConfig['admin']) && $do->actionConfig['admin'] )
+		if	( !$do->currentUser->isAdmin )
+		{
+			Logger::debug('Admin action, but user '.$do->currentUser->name.' is not an admin');
+			//Http::notAuthorized( lang('SESSION_EXPIRED') );
+			$do->templateVars['error'] = 'no admin';
+			continue;
+		}
+	
+	
+	// Aktuelle Subaction in Sitzung merken
+	if	( isset($do->actionConfig[$subaction]['menu']) )
+	{
+		$sl = Session::getSubaction();
+		if	( !is_array($sl))
+			$sl = array();
+		$sl[$action] = $subaction;
+		Session::setSubaction( $sl );
 	}
 	
-	$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
-
-	$do->subActionName = $subActionName;
-	$subaction = $subActionName;
-
-	// Auf Alias pr�fen.
+	
+	// Alias-Methode aufrufen.
 	if	( isset($do->actionConfig[$do->subActionName]['alias']) )
 	{
 		$subaction = $do->actionConfig[$do->subActionName]['alias'];
 	}
+
 	
-	Logger::trace("controller is calling next subaction '$subaction'");
-	// Alias-Methode aufrufen.
-	if	( isset($do->actionConfig[$subActionName]['write']) )
-	{
-		$subActionView = $subActionName.'View';
-		$do->$subActionView();
-	}
+	
+	if	( isset($do->actionConfig[$do->subActionName]['write']) )
+		$subactionAction = $subaction.'Action';
 	else
+		$subactionAction = $subaction;
+	Logger::debug("Executing $actionClassName::$subactionAction");
+	
+	$do->$subactionAction();
+
+	if	( isset($do->actionConfig[$do->subActionName]['direct']) )
+		exit;
+	
+	if	( $conf['interface']['redirect'] )
 	{
-		$do->$subaction();
+		// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
+		// im nächste Request die Eingabedaten fehlen.
+		if	( empty($do->templateVars['errors']) )
+		{
+			header( 'HTTP/1.0 303 See other');
+			// Absoluten Pfad kann auch der Client erg�nzen.
+			header( 'Location: '.Html::url($action,$subaction,$do->getRequestId()) );
+			exit;
+		}
 	}
 }
 
-$do->setMenu(); // Menue erzeugen
+		
+// Schritt 2:
+// Alle Views durchlaufen
+foreach( $views as $view=>$viewConfig )
+{
+	$action    = $viewConfig['action'];
+	$subaction = $viewConfig['subaction'];
 
-$do->forward(); // Anzeige rendern
+	if	( isset($viewCache[$view]) && $view != @$REQ[REQ_PARAM_TARGET] )
+	{
+		$viewCache[$view]['source'] = 'cache';
+		continue;
+	}
+		
+	$actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
+
+	if	( !isset($conf['action'][$actionClassName]) )
+		Http::serverError("Action '$action' is undefined.");
+	
+	require_once( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
+	
+	// Erzeugen der Action-Klasse
+	$do = new $actionClassName;
+	$do->actionConfig = $conf['action'][$actionClassName];
+	$do->actionClassName = $actionClassName; 
+	$do->actionName      = $action;
+	if	( $subaction == '' )
+		$subaction = $do->actionConfig['default']['goto'];
+		
+	$do->subActionName   = $subaction;
+	
+	
+	$do->init();
+	
+	if	( !isset($do->actionConfig[$subaction]) )
+	{
+		Logger::warn( "Action $action has no configured method named $subaction");
+		Http::serverError("Action '$action' has no accessable method '$subaction'.");
+		exit;
+	}
+		
+	$subactionConfig = $do->actionConfig[$subaction];
+	//Logger::trace("controller is calling subaction '$subaction'");
+	
+	// Eine Subaktion ohne "guest=true" verlangt einen angemeldeten Benutzer.
+	if	( !isset($subactionConfig['guest']) || !$subactionConfig['guest'] )
+		if	( !is_object($do->currentUser) )
+		{
+			Logger::debug('No session and no guest action occured, maybe session expired');
+			//Http::notAuthorized( lang('SESSION_EXPIRED') );
+			
+			$viewCache[$view] = array('error'=>'not logged in');
+			continue;
+		}
+	
+	// Eine Aktion mit "admin=true" verlangt einen Administrator als Benutzer.
+	if	( isset($do->actionConfig['admin']) && $do->actionConfig['admin'] )
+		if	( !$do->currentUser->isAdmin )
+		{
+			Logger::debug('Admin action, but user '.$do->currentUser->name.' is not an admin');
+			//Http::notAuthorized( lang('SESSION_EXPIRED') );
+			$viewCache[$view] = array('error'=>'no admin');
+			continue;
+		}
+	
+	
+	// Aktuelle Subaction in Sitzung merken
+	if	( isset($do->actionConfig[$subaction]['menu']) )
+	{
+		$sl = Session::getSubaction();
+		if	( !is_array($sl))
+			$sl = array();
+		$sl[$action] = $subaction;
+		Session::setSubaction( $sl );
+	}
+	
+	
+	// Alias-Methode aufrufen.
+	if	( isset($do->actionConfig[$do->subActionName]['alias']) )
+	{
+		$subaction = $do->actionConfig[$do->subActionName]['alias'];
+	//    $do->subActionName = $subaction;
+	}
+
+	
+	Logger::debug("Executing $actionClassName::$subaction");
+
+	// Alias-Methode aufrufen.
+	if	( isset($do->actionConfig[$do->subActionName]['write']) )
+	{
+		$subactionView = $subaction.'View';
+		$do->$subactionView();
+	}
+	else
+	{
+		// Aufruf der Subaction
+		$do->$subaction();
+	}
+	
+	$views[$view]['subaction'] = $subaction;
+	
+
+	// Aufruf der n�chsten Subaction (falls vorhanden)
+	if	( isset($do->actionConfig[$do->subActionName]['goto']) )
+	{
+		/* Achtung: Redirect fuehrt zu Problemen beim Login sowie der Anzeige von Notices */
+		if	( $conf['interface']['redirect'] )
+		{
+			// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
+			// im naechsten Request die Eingabedaten fehlen.
+			if	( empty($do->templateVars['errors']) )
+			{
+				$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
+				header( 'HTTP/1.0 303 See other');
+				// Absoluten Pfad kann auch der Client ergaenzen.
+				header( 'Location: '.Html::url($action,$do->actionConfig[$do->subActionName]['goto'],$do->getRequestId()) );
+				exit;
+			}
+		}
+		
+		$subActionName     = $do->actionConfig[$do->subActionName]['goto'];
+		$views[$view]['subaction'] = $subActionName;
+			
+		$do->subActionName = $subActionName;
+		$subaction = $subActionName;
+	
+		// Auf Alias pr�fen.
+		if	( isset($do->actionConfig[$do->subActionName]['alias']) )
+		{
+			$subaction = $do->actionConfig[$do->subActionName]['alias'];
+		}
+		
+		Logger::debug("Executing $actionClassName::$subaction (following GOTO)");
+		// Alias-Methode aufrufen.
+		if	( isset($do->actionConfig[$subActionName]['write']) )
+		{
+			$subActionView = $subActionName.'View';
+			$do->$subActionView();
+		}
+		else
+		{
+			$do->$subaction();
+		}
+	}
+	$do->setMenu(); // Menue erzeugen
+	
+	// Anzeigedaten in den Cache schreiben.
+	$viewCache[$view] = $do->templateVars;
+	$viewCache[$view]['source'] = 'request';
+	
+	// $do->forward(); // Anzeige rendern
+}
+
+// ViewCache zurück in die Sitzung schreiben
+Session::set('view_cache',$viewCache);
+
+// Erst jetzt die Views wegschreiben (könnten sich durch ein "GOTO" verändert haben).
+Session::set('views'     ,$views    );
+
+
+
+
+// TODO: Globle Variablen für den Seitenkopf.
+$root_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/base.css';
+$user_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['default'].'.css';
+//$self = $HTTP_SERVER_VARS['PHP_SELF'];
+if	( !empty($conf['interface']['override_title']) )
+	$cms_title = $conf['interface']['override_title'];
+else
+	$cms_title = OR_TITLE.' '.OR_VERSION;
+$charset = 'UTF-8'; // $this->getCharset();
+$showDuration = $conf['interface']['show_duration'];
+
+require( OR_THEMES_DIR.'default/pages/view.php');
+
+function showView( $viewName )
+{
+	global $viewCache;
+	global $views;
+	global $view;
+	global $conf;
+	$view = $viewName;
+	
+	$viewConfig = $views[$viewName];
+	
+	$actionClassName = strtoupper(substr($viewConfig['action'],0,1)).substr($viewConfig['action'],1).'Action';
+	$f = new Action();
+	$f->actionConfig = $conf['action'][$actionClassName];
+	$f->templateVars  = $viewCache[$viewName];
+	$f->actionName    = $viewConfig['action'];
+	$f->subActionName = $viewConfig['subaction'];
+	error_reporting(E_ALL ^ E_NOTICE);
+	$f->forward();
+	error_reporting(E_ALL);
+}
 
 // fertig :)
 ?>

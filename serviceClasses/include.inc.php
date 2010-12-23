@@ -10,7 +10,7 @@ require_once( OR_SERVICECLASSES_DIR."TemplateEngine.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Preferences.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."FileUtils.class.".PHP_EXT );
 
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('tree')) )
+//if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('tree')) )
 {
 	require_once( OR_SERVICECLASSES_DIR."TreeElement.class.".PHP_EXT );
 	require_once( OR_SERVICECLASSES_DIR."AbstractTree.class.".PHP_EXT );
@@ -19,26 +19,26 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('tr
 }
 
 // Login
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('index')) )
+//if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('index')) )
 {
 	require_once( OR_SERVICECLASSES_DIR."OpenId.class.".PHP_EXT );
 }
 
 // Veroeffentlichung
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','page','pageelement','folder')) )
+//if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','page','pageelement','folder')) )
 {
 	require_once( OR_SERVICECLASSES_DIR."Publish.class.".PHP_EXT );
 	require_once( OR_SERVICECLASSES_DIR."Ftp.class.".PHP_EXT );
 }
 
 // Nur bei der Erzeugung von Seiten notwendig.
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pageelement','page','folder','element')) )
+//if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pageelement','page','folder','element')) )
 {
 	require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT        );
 }
 
 // Nur bei der Erzeugung von Seiten notwendig.
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pageelement','page','folder')) )
+//if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pageelement','page','folder')) )
 {
 	require_once( OR_SERVICECLASSES_DIR."Api.class.".PHP_EXT );
 	require_once( OR_SERVICECLASSES_DIR."Code.class.".PHP_EXT           );
@@ -47,13 +47,13 @@ if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pa
 }
 
 
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','folder','filebrowser')) )
+//if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','folder','filebrowser')) )
 {
 	require_once( OR_SERVICECLASSES_DIR."Upload.class.".PHP_EXT );
 }
 
 
-if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','folder')) )
+//if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('file','folder')) )
 {
 	require_once( OR_SERVICECLASSES_DIR."Upload.class.".PHP_EXT );
 	require_once( OR_SERVICECLASSES_DIR."ArchiveTar.class.".PHP_EXT     );

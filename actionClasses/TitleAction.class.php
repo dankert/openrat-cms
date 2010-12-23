@@ -52,8 +52,8 @@ class TitleAction extends Action
 			$this->setTemplateVar('modelname',$model->name);
 		
 		// Urls zum Benutzerprofil und zum Abmelden
-		$this->setTemplateVar('profile_url',Html::url( 'profile'         ));
-		$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
+		//$this->setTemplateVar('profile_url',Html::url( 'profile'         ));
+		//$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
 		
 		if	( Session::get('showtree') )
 		{

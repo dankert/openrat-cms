@@ -10,6 +10,9 @@ goto=show
 ;target=prop
 
 [show]
+menu=elements
+
+[preview]
 direct=true
 
 [edit]
@@ -69,8 +72,8 @@ goto=rights
 
 
 [menu]
-pub=pub
-elements=el,form
-rights=rights,aclform
-src=src
-prop=prop,changetemplate
+pub=show,pub,el,form,rights,prop,changetemplate,src
+elements=show,pub,el,form,rights,prop,changetemplate,src
+rights=show,pub,el,form,rights,prop,changetemplate,src
+src=show,pub,el,form,rights,prop,changetemplate,src
+prop=show,pub,el,form,rights,prop,changetemplate,src

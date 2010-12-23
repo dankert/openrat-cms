@@ -57,6 +57,7 @@ class Action
 	var $writable;
 	var $publishing;
 	var $actionConfig;
+	var $refresh;
 	
 	/**
 	 * Aktuell angemeldeter Benutzer.<br>
@@ -88,6 +89,8 @@ class Action
 			$this->templateVars['mode'] = $this->getRequestVar('mode');
 		
 		header('Content-Language: '.$conf['language']['language_code']);
+		
+		$this->refresh = false;
 	}
 
 
@@ -319,29 +322,29 @@ class Action
 	{
 		$db = db_connection();
 
-		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
-		{
-			if	( is_object( $db ) )
-				$db->commit();
-			exit; // Die Ausgabe ist bereits erfolgt (z.B. Bin�rdateien o. WebDAV)
-		}
+//		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
+//		{
+//			if	( is_object( $db ) )
+//				$db->commit();
+//			exit; // Die Ausgabe ist bereits erfolgt (z.B. Bin�rdateien o. WebDAV)
+//		}
 			
 		// Pruefen, ob HTTP-Header gesendet wurden. Dies deutet stark darauf hin, dass eine
 		// PHP-Fehlermeldung ausgegeben wurde. In diesem Fall wird hier abgebrochen.
 		// Weitere Ausgabe wuerde keinen Sinn machen, da wir nicht wissen, was
 		// passiert ist.
-		if	( headers_sent() )
-		{
-			Http::serverError("Some server error messages occured - see above - CMS canceled.");
-		}
+//		if	( headers_sent() )
+//		{
+//			Http::serverError("Some server error messages occured - see above - CMS canceled.");
+//		}
 		
-		if	( is_object( $db ) )
-			$db->commit();
+//		if	( is_object( $db ) )
+//			$db->commit();
 		
 		$expires = substr(gmdate('r'),0,-5).'GMT';
-		header('Expires: '      .$expires );
+		//header('Expires: '      .$expires );
 		
-		header('X-Content-Security-Policy: '.'allow *; script-src \'self\'; options \'inline-script\'');
+		//header('X-Content-Security-Policy: '.'allow *; script-src \'self\'; options \'inline-script\'');
 		
 		
 		$httpAccept = getenv('HTTP_ACCEPT');
@@ -470,9 +473,19 @@ class Action
 			unset($te);
 		}
 
-		// Einbinden des Templates
-		require( $tpl_dir.$tplFileName );
-		
+		$iFile = $tpl_dir.$tplFileName;
+		//try
+		//{
+			if	( is_file($iFile))
+				// Einbinden des Templates
+				require_once( $iFile );
+			else
+				echo "File not found: $iFile"; 
+		//}
+		//catch( Exception $e )
+		//{
+		//	echo "Error occured:".$e; 
+		//}
 	}
 	
 	
@@ -501,7 +514,7 @@ class Action
 	function userIsAdmin()
 	{
 		$user = Session::getUser();
-		return $user->isAdmin;
+		return is_object($user) && $user->isAdmin;
 	}
 
 
@@ -540,6 +553,7 @@ class Action
 	 */
 	function lastModified( $time )
 	{
+		return;
 		$user = Session::getUser();
 		if	( $user->loginDate > $time && !isset($this->actionConfig[$this->subActionName]['direct']) )
 			// Falls Benutzer-Login nach letzter �nderung.
@@ -688,6 +702,18 @@ class Action
 		return isset($this->actionConfig[$this->subActionName]['editable']) && $this->actionConfig[$this->subActionName]['editable']; 
 	}
 
+	
+	/**
+	 * Sorgt dafür, dass alle anderen Views aktualisiert werden.
+	 * 
+	 * Diese Methode sollte dann aufgerufen werden, wenn Objekte geändert werden
+	 * und dies Einfluss auf andere Views hat.
+	 */
+	function refresh()
+	{
+		$this->refresh = true;
+	}
+	
 	
 	/**
 	 * Stellt fest, ob sich die Anzeige im Editier-Modus befindet.

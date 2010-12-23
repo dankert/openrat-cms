@@ -285,7 +285,7 @@ class TemplateEngine
 				$linebreaks = false;
 
 			// Zeilenumbr�che setzen.
-			if  ( strpos($line,'#SET-LINEBREAK-OFF')!==FALSE )
+			if  ( strpos($line,'#SET-LINEBREAK-ON')!==FALSE )
 				$linebreaks = true;
 				
 			// Ignoriere Zeilen, die zu ignorieren sind (logisch).
@@ -300,7 +300,10 @@ class TemplateEngine
 			// Ignoriere Kommentarzeilen
 			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) || substr(ltrim($line),0,1) == '#')
 				continue;
-
+			// Ignoriere Kommentarzeilen
+			if	( in_array(substr(rtrim($line),-3),array('-->',' */') ) )
+				continue;
+				
 			if	( !$linebreaks )
 				$line = rtrim($line);
 				

@@ -13,6 +13,10 @@ page
 				cell
 					#link action:profile subaction:mail title:message:menu_mail_desc
 					text var:mail class:filename
+					if false:mode:edit
+						newline
+						link class:action action:profile subaction:mail
+							text key:edit
 					
 			row
 				cell colspan:2

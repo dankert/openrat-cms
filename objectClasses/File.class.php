@@ -552,6 +552,8 @@ EOF
 	{
 		if	( is_file($this->tmpfile()))
 			return implode('',file($this->tmpfile())); // From cache
+
+		Logger::debug("preview 1");
 			
 		$db = db_connection();
 
@@ -574,7 +576,8 @@ EOF
 		$f = fopen( $this->tmpfile(),'w' );
 		fwrite( $f,$this->value );
 		fclose( $f );
-			
+		Logger::debug("preview 2:".$this->objectid.'/'.strlen($this->value));
+		
 		return $this->value;
 	}
 

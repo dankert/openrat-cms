@@ -170,7 +170,7 @@ class IndexAction extends Action
 	 * Hier nie "304 not modified" setzen, da sonst keine
 	 * Login-Fehlermeldung erscheinen kann
 	 */
-	function showlogin()
+	function loginView()
 	{
 		global $conf;
 		$sso = $conf['security']['sso'];
@@ -617,7 +617,7 @@ class IndexAction extends Action
 	/**
 	 * Login.
 	 */
-	function login()
+	function loginAction()
 	{
 		global $conf;
 
@@ -683,12 +683,16 @@ class IndexAction extends Action
 				$this->addValidationError('login_name'    ,'');
 				$this->addValidationError('login_password','');
 			}
-				
-			$this->callSubAction('showlogin');
+
+			Logger::debug("Login failed for user '$loginName'");
+			
+			$this->callSubAction('login');
 			return;
 		}
 		else
 		{
+			Logger::debug("Login successful for user '$loginName'");
+			
 			// Anmeldung erfolgreich.
 			if	( config('security','renew_session_login') )
 				$this->recreateSession();
@@ -723,6 +727,8 @@ class IndexAction extends Action
 				Session::setProjectModel( $model );
 			}
 		}
+		
+		$this->refresh(); // Benutzer ist angemeldet: Andere Views könnte das interessieren.
 	}
 
 
@@ -774,7 +780,7 @@ class IndexAction extends Action
 
 		session_unset();
 		
-		if	( @$conf['theme']['compiler']['compile_at_logout'])
+		if	( @$conf['theme']['compiler']['compile_at_logout'] )
 		{
 			foreach( $conf['action'] as $actionName => $actionConfig )
 			{
@@ -1290,7 +1296,7 @@ class IndexAction extends Action
 				// "Administration" nat�rlich nur f�r Administratoren.
 				return $this->userIsAdmin();
 
-			case 'showlogin':
+			case 'login':
 				return !@$conf['login']['nologin'];
 				
 			case 'logout':

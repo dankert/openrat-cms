@@ -3,6 +3,9 @@
 goto=show
 
 [show]
+menu=edit
+
+[preview]
 direct=true
 
 [edit]
@@ -78,7 +81,8 @@ menu=edit
 write=true
 
 [menu]
-edit=edit,editvalue,compress,uncompress,extract
-prop=prop,size
-rights=rights,aclform
-pub=pub
+actions=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights,aclform
+edit=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights,aclform
+prop=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights,aclform
+rights=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights,aclform
+pub=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights,aclform

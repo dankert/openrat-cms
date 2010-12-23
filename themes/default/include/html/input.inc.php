@@ -10,4 +10,4 @@
 if	($attr_readonly) {
 	/* Nur anzeigen */
 ?><input type="hidden" id="id_<?php echo $attr_name ?>" name="<?php echo $attr_name ?>" value="<?php echo $tmp_value ?>" /><?php
- } } else { ?><span class="<?php echo $attr_class ?>"><?php echo $tmp_value ?></span><?php } ?>
+ } } else { ?><a href="<?php echo Html::url('','',0,array('mode'=>'edit')) ?>"><span class="<?php echo $attr_class ?>"><?php echo $tmp_value ?></span></a><?php } ?>

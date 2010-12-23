@@ -1,12 +1,13 @@
 
 admin=false
 
+
 [default]
 goto=show
 
 [logout]
 guest=true
-goto=showlogin
+goto=login
 
 [switchuser]
 goto=show
@@ -68,15 +69,12 @@ menu=login
 goto=showlogin
 guest=true
 
-[showlogin]
-menu=login
-guest=true
-
 [administration]
 goto=show
 
 [login]
-goto=show
+menu=login
+write=true
 guest=true
 
 [openid]
@@ -98,5 +96,5 @@ goto=projectmenu
 guest=true
 
 [menu]
-login=showlogin,register,password
-menu=applications,projectmenu,administration,logout
+login=login,register,password,applications,projectmenu,administration,logout
+menu =login,register,password,applications,projectmenu,administration,logout

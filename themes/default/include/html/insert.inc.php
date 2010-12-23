@@ -20,3 +20,7 @@ else
 }
 ?>
 /* #END-IF# */
+
+/* #IF-ATTR url# */
+<iframe src="<?php echo $attr_url ?>"></iframe>
+/* #END-IF# */

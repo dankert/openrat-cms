@@ -36,6 +36,10 @@ page
 					if empty:template_url
 						image file:icon_template
 						text var:template_name
+					newline
+					if false:mode:edit
+						link class:action action:page subaction:changetemplate
+							text key:menu_page_changetemplate
 			row
 				cell
 					text key:FILE_MIMETYPE

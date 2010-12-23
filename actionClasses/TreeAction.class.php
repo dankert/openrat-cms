@@ -1,7 +1,5 @@
 <?php
 // ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // DaCMS Content Management System
 // Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
 //
@@ -19,53 +17,6 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.14  2009-03-22 18:47:21  dankert
-// Korrektur Ermittlung des Col-Spans
-//
-// Revision 1.13  2009-03-03 21:08:09  dankert
-// Umstellung der Baumanzeige auf Template-System (Ausbau RAW-Template).
-//
-// Revision 1.12  2007-11-08 23:11:58  dankert
-// SubAction "load()" reaktiviert.
-//
-// Revision 1.11  2007-10-29 23:29:17  dankert
-// Konstanten f?r Request-Variablen.
-//
-// Revision 1.10  2004/12/18 00:16:15  dankert
-// language_read() entfernt
-//
-// Revision 1.9  2004/12/15 23:24:58  dankert
-// Html::url()-Parameter angepasst
-//
-// Revision 1.8  2004/11/27 13:08:49  dankert
-// Benutzen "id"-Attribut
-//
-// Revision 1.7  2004/11/10 22:40:49  dankert
-// Benutzen der Session-Klasse
-//
-// Revision 1.6  2004/09/30 20:28:30  dankert
-// Titel bei ?ffnen/Schlie?en von Baumzweigen
-//
-// Revision 1.5  2004/09/07 21:12:30  dankert
-// F?llen des Navigationsbaumes mit neuen Klassen
-//
-// Revision 1.4  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.3  2004/04/25 17:53:37  dankert
-// Neue Methode openall()
-//
-// Revision 1.2  2004/04/25 12:50:11  dankert
-// Korrektur: Projektliste
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// Revision 1.1  2003/09/29 18:19:48  dankert
-// erste Version
-//
-// ---------------------------------------------------------------------------
 
 /**
  * Action-Klasse zum Laden/Anzeigen des Navigations-Baumes
@@ -76,7 +27,6 @@
 
 class TreeAction extends Action
 {
-	var $defaultSubAction = 'load';
 	var $tree;
 
 
@@ -88,8 +38,6 @@ class TreeAction extends Action
 		$this->tree = Session::getTree();
 		$this->tree->all();
 		Session::setTree( $this->tree );
-
-		$this->callSubAction('show');
 	}
 	
 	
@@ -98,8 +46,6 @@ class TreeAction extends Action
 		$this->tree = Session::getTree();
 		$this->tree->refresh();
 		Session::setTree( $this->tree );
-
-		$this->callSubAction('show');
 	}
 	
 	
@@ -111,8 +57,6 @@ class TreeAction extends Action
 		$this->tree = Session::getTree();
 		$this->tree->open( $this->getRequestId() );
 		Session::setTree( $this->tree );
-
-		$this->callSubAction('show');
 	}
 	
 	
@@ -124,8 +68,6 @@ class TreeAction extends Action
 		$this->tree = Session::getTree();
 		$this->tree->close( $this->getRequestId() );
 		Session::setTree( $this->tree );
-
-		$this->callSubAction('show');
 	}
 	
 		
@@ -272,13 +214,15 @@ class TreeAction extends Action
 	 */
 	function show()
 	{
-		global
-			$tree,
-			$SESS,
-			$tree_last,
-			$var;
+		$this->tree = Session::getTree();
+		
+		if	( $this->tree == null )
+		{
+			Logger::debug("Reloading Tree...");
+			$this->load();
+		}
 
-		$var['zeilen'] = array();
+		$var = array();
 		$var['zeilen'] = $this->outputElement( 0,0,array() );
 
 		$this->setTemplateVars( $var );

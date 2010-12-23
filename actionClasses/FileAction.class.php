@@ -97,12 +97,23 @@ class FileAction extends ObjectAction
 		$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
 	}
 
-
+	
+	
 	/**
 	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
 	 * auf die Standardausgabe geschrieben
 	 */
 	function show()
+	{
+		$this->setTemplateVar('preview_url',Html::url('file','preview',$this->file->objectid,array('target'=>'none') ) );
+	}
+	
+
+	/**
+	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
+	 * auf die Standardausgabe geschrieben
+	 */
+	function preview()
 	{
 		$this->lastModified( $this->file->lastchangeDate );
 		
@@ -118,7 +129,7 @@ class FileAction extends ObjectAction
 				$ext = substr($this->file->filename,$pos+1);
 			
 			$ext = strtolower($ext);
-	
+			
 			if	( !empty($mime_types[$ext]) )
 				$mime_type = $mime_types[$ext];
 			else
@@ -134,7 +145,6 @@ class FileAction extends ObjectAction
 			header('Content-Type: '.$this->file->mimeType() );
 		}
 		
-		
 		header('X-File-Id: '   .$this->file->fileid     );
 		header('X-Id: '        .$this->file->id         );
 		
@@ -144,9 +154,9 @@ class FileAction extends ObjectAction
 		header('Content-Disposition: inline; filename='.$this->file->filenameWithExtension() );
 		header('Content-Transfer-Encoding: binary' );
 		header('Content-Description: '.$this->file->name );
-
+		
 		$this->file->write(); // Bild aus Datenbank laden
-
+		
 		// Groesse des Bildes in Bytes
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
 		header('Content-Length: '.filesize($this->file->tmpfile()) );

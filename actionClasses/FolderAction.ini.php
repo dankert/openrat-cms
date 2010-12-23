@@ -109,8 +109,14 @@ goto=order
 goto=order
 
 [menu]
-pub=pub
-show=show,select,order
-new=create,createfolder,createfile,createpage,createlink
-prop=prop
-rights=rights,aclform
+;pub=pub
+;show=show,select,order
+;new=create,createfolder,createfile,createpage,createlink
+;prop=prop
+;rights=rights,aclform
+
+pub=show,select,order,create,pub,prop,rights,aclform
+show=show,select,order,create,pub,prop,rights,aclform
+new=show,select,order,create,pub,prop,rights,aclform
+prop=show,select,order,create,pub,prop,rights,aclform
+rights=show,select,order,create,pub,prop,rights,aclform

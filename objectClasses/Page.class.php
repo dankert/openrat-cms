@@ -252,11 +252,11 @@ class Page extends Object
 			switch( $object->getType() )
 			{
 				case 'file':
-					$inhalt = Html::url('file','show',$objectid,$param);
+					$inhalt = Html::url('file','preview',$objectid,$param);
 					break;
 
 				case 'page':
-					$inhalt = Html::url('page','show',$objectid,$param);
+					$inhalt = Html::url('page','preview',$objectid,$param);
 					break;
 
 				case 'link':
@@ -271,11 +271,11 @@ class Page extends Object
 						switch( $linkedObject->getType() )
 						{
 							case 'file':
-								$inhalt = Html::url('file','show',$link->linkedObjectId,$param);
+								$inhalt = Html::url('file','preview',$link->linkedObjectId,$param);
 							break;
 			
 							case 'page':
-								$inhalt = Html::url('page','show',$link->linkedObjectId,$param);
+								$inhalt = Html::url('page','preview',$link->linkedObjectId,$param);
 							break;
 						}
 					}

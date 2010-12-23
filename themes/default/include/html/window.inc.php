@@ -1,39 +1,11 @@
-<?php
-	$coloumn_widths=array();
+<div class="breadcrumb">
+		<?php 
 #IF-ATTR icon#
 	$icon=$attr_icon;
 #ELSE#
 	$icon=$actionName;
 #END-IF#
-	
-#IF-ATTR widths#
-	$coldumn_widths = explode(',',$attr_widths);
-#END-IF#
-#IF-ATTR rowclasses#
-	$row_classes   = explode(',',$attr_rowclasses);
-	$row_class_idx = 999;
-#END-IF#
-#IF-ATTR columnclasses#
-	$column_classes = explode(',',$attr_columnclasses);
-#END-IF#
-	$row_idx    = 0;
-	$column_idx = 0;
-	
-		global $image_dir;
-		if (@$conf['interface']['application_mode'] )
-		{
-			echo '<table class="main" cellspacing="0" cellpadding="4" width="100%" style="margin:0px;border:0px; padding:0px;" height_oo="100%">';
-		}
-		else
-		{
-			echo '<br/><br/><br/><center>';
-			echo '<table class="main" cellspacing="0" cellpadding="4" width="'.$attr_width.'">';
-		}
 		
-		
-		if (!@$conf['interface']['application_mode'] )
-		{
-		echo '<tr class="title"><td>';
 		echo '<img src="'.$image_dir.'icon_'.$icon.IMG_ICON_EXT.'" align="left" border="0">';
 		
 		if ($this->isEditable()) { ?>
@@ -46,7 +18,7 @@
 				
 		
 		
-		echo '<span class="path">'.langHtml($actionName).'</span>&nbsp;<strong>&raquo;</strong>&nbsp;';
+		echo '<span class="path">'.langHtml($actionName).'</span>&nbsp;<strong>&rarr;</strong>&nbsp;';
 //		if	( !empty($attr_icon) )
 //			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
 		if	( !isset($path) || is_array($path) )
@@ -66,10 +38,8 @@
 		
 		
 		?>
-		</td>
-		<?php
-		}
-		?>
+		
+</div>
 <?php ?>		<!--<td class="menu" style="align:right;">
     <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
           {
@@ -78,9 +48,32 @@
      ?>
     </td>-->
   </tr>
-  <tr class="menu"><td>
-      <table class="menu"><tr>
-    <?php if	( !isset($windowMenu) || !is_array($windowMenu) )
+
+
+
+
+
+
+
+
+
+<?php
+	$coloumn_widths=array();
+	
+#IF-ATTR widths#
+	$coldumn_widths = explode(',',$attr_widths);
+#END-IF#
+#IF-ATTR rowclasses#
+	$row_classes   = explode(',',$attr_rowclasses);
+	$row_class_idx = 999;
+#END-IF#
+#IF-ATTR columnclasses#
+	$column_classes = explode(',',$attr_columnclasses);
+#END-IF#
+	$row_idx    = 0;
+	$column_idx = 0;
+
+	    if	( !isset($windowMenu) || !is_array($windowMenu) )
 			$windowMenu = array();
     foreach( $windowMenu as $menu )
           {
@@ -92,20 +85,26 @@
           	
           	if	( isset($menu['url']) )
           	{
-          		?><td class="action"><a href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>" class="menu<?php echo $this->subActionName==$menu['subaction']?'_highlight':'' ?>"><?php echo $tmp_text ?></a></td><?php
+          		?><a class="action<?php echo $this->subActionName==$menu['subaction']?'_active':'' ?>" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><?php echo $tmp_text ?></a><?php
           	}
           	else
           	{
-          		?><td class="noaction"><?php echo $tmp_text ?></td><?php
+          		?><div class="noaction"><?php echo $tmp_text ?></div><?php
           	}
           }
           	if (@$conf['help']['enabled'] )
           	{
-             ?><td><a href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>" class="menu" style="cursor:help;"><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a></td><?php
+             ?><a class="help" href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
           	}
-          	?>
-          	</tr></table></td>
-  </tr>
+          	?><br/><?php
+	
+	
+	
+		global $image_dir;
+		echo '<br/><br/>';
+		echo '<table class="x-main" cellspacing="0" cellpadding="4" width="'.$attr_width.'">';
+		?>
+		
 
 <?php if (isset($notices) && count($notices)>0 )
       { ?>
@@ -143,7 +142,7 @@
 
 
   <tr>
-    <td class="window">
+    <td class="x-window">
       <table cellspacing="0" width="100%" cellpadding="4">
       
 
