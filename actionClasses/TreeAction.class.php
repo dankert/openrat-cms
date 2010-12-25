@@ -227,6 +227,12 @@ class TreeAction extends Action
 	 */
 	function show()
 	{
+		$project = Session::getProject();
+		if	( is_object($project) )
+		{
+			$this->setTemplateVar('projectname',$project->name);
+		}
+		
 		$this->tree = Session::getTree();
 		
 		if	( $this->getRequestVar('target')!='tree' )
