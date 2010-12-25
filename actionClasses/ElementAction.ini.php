@@ -31,4 +31,5 @@ target=delete
 goto=name
 
 [menu]
-edit=name,type,properties,remove
+;edit=name,type,properties,remove
+menu=name,type,properties,remove

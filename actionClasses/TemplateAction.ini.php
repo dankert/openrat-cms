@@ -67,7 +67,4 @@ goto=listing
 menu=prop
 
 [menu]
-listing=listing,add
-prop=name,extension,pages,remove
-el=el,addel
-edit=src,srcelement
+menu=listing,name,extension,pages,remove,el,src

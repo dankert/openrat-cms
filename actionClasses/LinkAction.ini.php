@@ -40,3 +40,4 @@ goto=rights
 edit=edit
 prop=prop
 rights=rights,aclform
+menu=edit,prop,rights

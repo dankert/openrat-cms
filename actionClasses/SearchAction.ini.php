@@ -24,4 +24,4 @@ goto=result
 goto=result
 
 [menu]
-search=prop,content
+menu=prop,content

@@ -39,4 +39,4 @@ menu=edit
 write=true
 
 [menu]
-edit=edit,settings,pwchange,mail,groups
+menu=edit,settings,pwchange,mail,groups

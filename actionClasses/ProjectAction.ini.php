@@ -36,5 +36,4 @@ write=true
 menu=edit
 
 [menu]
-list=listing,add
-edit=edit,remove,info,export,maintenance
+menu=listing,add,edit,remove,info,export,maintenance

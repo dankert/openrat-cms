@@ -30,5 +30,4 @@ menu=listing
 target=addmodel
 
 [menu]
-listing=listing,add
-edit=edit,remove
+menu=listing,add,edit,remove

@@ -67,6 +67,20 @@ class Action
 	 */
 	var $currentUser;
 
+	
+	
+	function setCharset( $charset )
+	{
+		Session::set('charset',$charset);
+	}
+	
+	
+	
+	function setStyle( $style )
+	{
+		Session::set('style',$style);
+	}
+	
 
 	/**
 	 * Wird durch das Controller-Skript (do.php) nach der Kontruierung des Objektes aufgerufen.
@@ -516,8 +530,7 @@ class Action
 		$user = Session::getUser();
 		return is_object($user) && $user->isAdmin;
 	}
-
-
+	
 
 	/**
 	 * Ermitteln des Benutzerobjektes aus der Session
@@ -624,8 +637,9 @@ class Action
 			return;
 		$windowMenu = array();
 		$name       = $this->actionConfig[$this->subActionName]['menu'];
-		$menuList   = explode(',',$this->actionConfig['menu'][$name]);
-
+		$menuList   = explode(',',$this->actionConfig['menu']['menu']);
+		//$menuList   = explode(',',$this->actionConfig['menu'][$name]);
+		
 		if	( isset($this->actionConfig[$this->subActionName]['menuaction']))
 			$actionName = $this->actionConfig[$this->subActionName]['menuaction'];
 		else
@@ -641,7 +655,6 @@ class Action
 			
 			$menuKey = 'accesskey_window_'.$menuName;
 			
-//			Logger::trace("testing menu $menuName");
 			$menuEntry = array('subaction'=>$menuName,
                                'text'     =>$menuText,
                                'title'    =>$menuText.'_DESC',

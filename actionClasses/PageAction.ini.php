@@ -72,6 +72,7 @@ goto=rights
 
 
 [menu]
+menu=show,pub,el,prop,src,rights
 pub=show,pub,el,form,rights,prop,changetemplate,src
 elements=show,pub,el,form,rights,prop,changetemplate,src
 rights=show,pub,el,form,rights,prop,changetemplate,src

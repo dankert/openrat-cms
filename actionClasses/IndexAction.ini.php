@@ -8,6 +8,8 @@ goto=show
 [logout]
 guest=true
 goto=login
+write=get
+clear=tree
 
 [switchuser]
 goto=show
@@ -76,6 +78,9 @@ goto=show
 menu=login
 write=true
 guest=true
+;goto=projectmenu
+
+[projectmenu]
 
 [openid]
 guest=true
@@ -96,5 +101,5 @@ goto=projectmenu
 guest=true
 
 [menu]
-login=login,register,password,applications,projectmenu,administration,logout
-menu =login,register,password,applications,projectmenu,administration,logout
+login=login,register,password
+menu =login,register,password

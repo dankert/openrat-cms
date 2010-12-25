@@ -37,9 +37,5 @@ write=true
 menu=rights
 
 [menu]
-listing=listing,add
-edit=edit,remove
-memberships=groups
-pw=pw
+menu=listing,add,edit,remove,groups,pw,rights
 ;info=show,mail
-rights=rights
