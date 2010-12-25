@@ -41,12 +41,12 @@ class TreeAction extends Action
 	}
 	
 	
-	function refresh()
-	{
-		$this->tree = Session::getTree();
-		$this->tree->refresh();
-		Session::setTree( $this->tree );
-	}
+//	function refresh()
+//	{
+//		$this->tree = Session::getTree();
+//		$this->tree->refresh();
+//		Session::setTree( $this->tree );
+//	}
 	
 	
 	/**
@@ -74,32 +74,45 @@ class TreeAction extends Action
 	/**
 	 * Neues Laden des Baumes
 	 */
-	function load()
+	function loadAction()
 	{
 		global $SESS;
-		$project   = Session::getProject();
-		$projectid = $project->projectid; 
 
-		// Erzeugen des Menue-Baums
-		//
-	
+		$projectid = $this->getRequestVar('projectid');
+
 		if	( $projectid == -1 )
 		{
 			$this->tree = new AdministrationTree();
-			
+			Session::setProjectLanguage(null);
+			Session::setProjectModel(null);
+			Session::setProject(null);
 		}
 		else
 		{
+			$project = new Project($projectid);
+			$project->load();
+			Session::setProject($project);
+	
 			$this->tree = new ProjectTree();
 			$this->tree->projectId = $projectid;
 
-			$SESS[REQ_PARAM_LANGUAGE_ID] = Language::getDefaultId();
-			$SESS['modelid'   ] = Model::getDefaultId();
+			$language = new Language( Language::getDefaultId() );
+			$language->load();
+			Session::setProjectLanguage( $language );
+			
+			$model = new Model( Model::getDefaultId() );
+			$model->load();
+			Session::setProjectModel( $model ); 
 		}
 
 		Session::setTree( $this->tree );
 	}
 
+	
+	public function loadView()
+	{
+		
+	}
 
 	/**
 	 * Liefert ein Array mit allen Zeilen des Baumes.
@@ -216,12 +229,9 @@ class TreeAction extends Action
 	{
 		$this->tree = Session::getTree();
 		
-		if	( $this->tree == null )
-		{
-			Logger::debug("Reloading Tree...");
-			$this->load();
-		}
-
+		if	( $this->getRequestVar('target')!='tree' )
+			$this->tree->refresh();
+		
 		$var = array();
 		$var['zeilen'] = $this->outputElement( 0,0,array() );
 
