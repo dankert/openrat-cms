@@ -101,5 +101,4 @@ goto=projectmenu
 guest=true
 
 [menu]
-login=login,register,password
-menu =login,register,password
+menu =login
