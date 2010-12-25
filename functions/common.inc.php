@@ -136,6 +136,7 @@ function charset()
 	if	( isset($db->conf['charset']) )
 		return $db->conf['charset'];
 	else
-		return lang('CHARSET');
+		//return lang('CHARSET');
+		return 'US-ASCII';
 }
 ?>
