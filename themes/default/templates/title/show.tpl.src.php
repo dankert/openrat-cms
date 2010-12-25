@@ -4,6 +4,10 @@ part
 	if present:dbname
 		text title:message:database var:dbname maxlength:25
 		text raw:_-_
+		part class:dropdown
+			list list:databases key:id value:name
+				link class:entry action:index subaction:logout var1:dbid value1:var:id target:content
+					text var:name
 	text var:cms_title title:var:buildinfo
 			
 if present:projectname
