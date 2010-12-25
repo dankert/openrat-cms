@@ -52,6 +52,8 @@ class ProfileAction extends Action
 		$this->user->desc     = $this->getRequestVar('desc'    );
 		$this->user->style    = $this->getRequestVar('style'   );
 		
+		$this->setStyle( $this->user->style ); // Style sofort anwenden
+		
 		if	( !empty($this->user->fullname) )
 		{
 			$this->user->save();
