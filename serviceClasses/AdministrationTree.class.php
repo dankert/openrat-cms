@@ -57,7 +57,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_PROJECTS');
 		$treeElement->description = lang('GLOBAL_PROJECTS');
-		$treeElement->url         = Html::url('main','project','',array(REQ_PARAM_TARGETSUBACTION=>'listing'));
+		$treeElement->url         = Html::url('project','listing',0,array(REQ_PARAM_TARGET=>'content'));
 		$treeElement->icon        = 'project_list';
 		$treeElement->type        = 'projects';
 		$treeElement->target      = 'cms_main';
@@ -111,7 +111,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_USER');
 		$treeElement->description = lang('GLOBAL_USER');
-		$treeElement->url         = Html::url('main','user','',array(REQ_PARAM_TARGETSUBACTION=>'listing'));
+		$treeElement->url         = Html::url('user','listing',0,array(REQ_PARAM_TARGET=>'content'));
 		$treeElement->icon        = 'user_list';
 		$treeElement->target      = 'cms_main';
 		$treeElement->type        = 'users';
@@ -121,7 +121,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_GROUPS');
 		$treeElement->description = lang('GLOBAL_GROUPS');
-		$treeElement->url         = Html::url('main','group','',array(REQ_PARAM_TARGETSUBACTION=>'listing'));
+		$treeElement->url         = Html::url('group','listing',0,array(REQ_PARAM_TARGET=>'content'));
 		$treeElement->icon        = 'user_list';
 		$treeElement->target      = 'cms_main';
 		$treeElement->type        = 'groups';
@@ -139,8 +139,7 @@ class AdministrationTree extends AbstractTree
 			
 			$treeElement->internalId   = $id;
 			$treeElement->text         = $name;
-			$treeElement->url          = Html::url('main','project',$id,
-			                                       array(REQ_PARAM_TARGETSUBACTION=>'edit') );
+			$treeElement->url          = Html::url('project','edit',$id,array(REQ_PARAM_TARGET=>'content'));
 			$treeElement->icon         = 'project';
 			$treeElement->description  = '';
 			$treeElement->target       = 'cms_main';
@@ -402,8 +401,8 @@ class AdministrationTree extends AbstractTree
 			
 			$treeElement->internalId  = $user->userid;
 			$treeElement->text        = $user->name;
-			$treeElement->url         = Html::url('main','user',
-			                                      $user->userid,array(REQ_PARAM_TARGETSUBACTION=>'edit') );
+			$treeElement->url         = Html::url('user','edit',
+			                                      $user->userid,array(REQ_PARAM_TARGET=>'content') );
 			$treeElement->icon        = 'user';
 			
 			$desc =  $user->fullname;
@@ -435,8 +434,8 @@ class AdministrationTree extends AbstractTree
 
 			$treeElement->internalId  = $id;
 			$treeElement->text        = $g->name;
-			$treeElement->url         = Html::url('main','group',$id,
-			                                      array(REQ_PARAM_TARGETSUBACTION=>'edit') );
+			$treeElement->url         = Html::url('group','edit',$id,
+			                                      array(REQ_PARAM_TARGET=>'content') );
 			$treeElement->icon        = 'group';
 	     	$treeElement->description = lang('GLOBAL_GROUP').' '.$g->name.': '.implode(', ',$g->getUsers());
 			$treeElement->target      = 'cms_main';
@@ -458,7 +457,7 @@ class AdministrationTree extends AbstractTree
 			$u = new User( $id );
 			$u->load();
 			$treeElement->text        = $u->name;
-			$treeElement->url         = Html::url('main','user',$id);
+			$treeElement->url         = Html::url('user','edit',$id,array(REQ_PARAM_TARGET=>'content'));
 			$treeElement->icon        = 'user';
 			$treeElement->description = $u->fullname;
 			$treeElement->target      = 'cms_main';
