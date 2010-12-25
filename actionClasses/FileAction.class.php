@@ -46,6 +46,16 @@ class FileAction extends ObjectAction
 		{
 			$this->file = Session::getObject();
 		}
+		
+		$folder = new Folder( $this->file->parentid );
+		$folder->filenames = false;
+		$folder->load();
+		$path = array();
+		foreach( $folder->parentObjectNames(true,true) as $id=>$name )
+		{
+			$path[] = array('key'=>'','name'=>$name,'title'=>$name,'url'=>Html::url('folder','show',$id),'type'=>'folder');
+		}
+		$this->setTemplateVar('path',$path);
 	}
 
 
