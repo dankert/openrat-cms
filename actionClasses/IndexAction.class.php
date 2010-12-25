@@ -86,7 +86,7 @@ class IndexAction extends Action
 
 
 
-	function checkLogin( $name,$pw,$pw1,$pw2 )
+	private function checkLogin( $name,$pw,$pw1,$pw2 )
 	{
 		Logger::debug( "login user $name" );
 	
@@ -104,6 +104,14 @@ class IndexAction extends Action
 			$this->callSubAction('showlogin');
 			return false;
 		}
+		
+		// Zeichensatz der Datenbank benutzen
+		if	( isset($db->conf['charset']) )
+			$charset = $db->conf['charset'];
+		else
+			$charset = 'US-ASCII';
+		$this->setCharset($charset);
+		
 		
 		$ip = getenv("REMOTE_ADDR");
 	
@@ -686,7 +694,7 @@ class IndexAction extends Action
 
 			Logger::debug("Login failed for user '$loginName'");
 			
-			$this->callSubAction('login');
+			//$this->callSubAction('login');
 			return;
 		}
 		else
@@ -699,6 +707,8 @@ class IndexAction extends Action
 			
 			$user = Session::getUser();
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
+			
+			$this->setStyle( $user->style );
 			
 			$this->evaluateRequestVars();
 
@@ -735,7 +745,7 @@ class IndexAction extends Action
 	/**
 	 * Benutzer meldet sich ab.
 	 */
-	function logout()
+	function logoutAction()
 	{
 		global $conf;
 		
@@ -810,6 +820,15 @@ class IndexAction extends Action
 		}
 	}
 
+	
+	
+	/**
+	 * Benutzer meldet sich ab.
+	 */
+	function logoutView()
+	{
+	}
+	
 
 	/**
 	 * Ausw�hlen der Administration.
