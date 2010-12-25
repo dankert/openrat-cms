@@ -120,3 +120,4 @@ show=show,select,order,create,pub,prop,rights,aclform
 new=show,select,order,create,pub,prop,rights,aclform
 prop=show,select,order,create,pub,prop,rights,aclform
 rights=show,select,order,create,pub,prop,rights,aclform
+menu=show,select,order,create,pub,prop,rights
