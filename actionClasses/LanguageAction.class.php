@@ -271,8 +271,8 @@ class LanguageAction extends Action
 				return
 					!readonly()                          && 
 					$this->userIsAdmin()                 &&
-					count( $this->language->getAll() ) >= 2 &&
 					isset($this->language) &&
+					count( $this->language->getAll() ) >= 2 &&
 					$actLanguage->languageid != $this->language->languageid;
 				
 			case 'add':

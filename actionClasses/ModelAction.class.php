@@ -210,6 +210,7 @@ class ModelAction extends Action
 				return
 					!readonly()                          && 
 					$this->userIsAdmin()                 &&
+					is_object($this->model)              &&
 					count( $this->model->getAll() ) >= 2 &&
 					$actModel->modelid != $this->model->modelid;
 				
