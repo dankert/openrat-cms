@@ -933,7 +933,7 @@ class FolderAction extends ObjectAction
 		global $conf_php;
 
 		if   ( ! $this->folder->isRoot )
-			$this->setTemplateVar('up_url',Html::url('main','folder',$this->folder->parentid));
+			$this->setTemplateVar('up_url',Html::url('folder','show',$this->folder->parentid));
 
 		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
 		
@@ -957,7 +957,7 @@ class FolderAction extends ObjectAction
 				
 				$list[$id]['icon' ] = $o->getType();
 				$list[$id]['class'] = $o->getType();
-				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
+				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
 				
 				if	( $o->getType() == 'file' )
 				{
@@ -1023,7 +1023,7 @@ class FolderAction extends ObjectAction
 //						$list[$id]['icon'] = 'text';
 				}
 
-				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
+				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
 				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
 				$list[$id]['user'] = $o->lastchangeUser;
 				
@@ -1108,7 +1108,7 @@ class FolderAction extends ObjectAction
 						$list[$id]['icon'] = 'image';
 				}
 
-				$list[$id]['url' ] = Html::url('main',$o->getType(),$id);
+				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
 				$list[$id]['date'] = $o->lastchangeDate;
 				$list[$id]['user'] = $o->lastchangeUser;
 

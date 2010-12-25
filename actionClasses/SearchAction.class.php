@@ -91,7 +91,7 @@ class SearchAction extends Action
 			$o = new Object( $objectid );
 			$o->load();
 			$resultList[$objectid] = array();
-			$resultList[$objectid]['url']  = Html::url('main',$o->getType(),$objectid);
+			$resultList[$objectid]['url']  = Html::url($o->getType(),'',$objectid);
 			$resultList[$objectid]['type'] = $o->getType();
 			$resultList[$objectid]['name'] = $o->name;
 			$resultList[$objectid]['lastchange_date'] = $o->lastchangeDate;
@@ -107,7 +107,7 @@ class SearchAction extends Action
 			$t = new Template( $templateid );
 			$t->load();
 			$resultList['t'.$templateid] = array();
-			$resultList['t'.$templateid]['url' ]  = Html::url('main','template',$templateid);
+			$resultList['t'.$templateid]['url' ]  = Html::url('template','',$templateid);
 			$resultList['t'.$templateid]['type'] = 'template';
 			$resultList['t'.$templateid]['name'] = $t->name;
 			$resultList['t'.$templateid]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
