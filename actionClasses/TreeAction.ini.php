@@ -5,7 +5,9 @@ goto=show
 [show]
 
 [load]
+write=get
 goto=show
+clear=content
 
 [openall]
 goto=show
@@ -13,8 +15,8 @@ goto=show
 [open]
 goto=show
 
-[refresh]
-goto=show
-
 [close]
 goto=show
+
+;[refresh]
+;goto=show

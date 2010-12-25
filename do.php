@@ -171,7 +171,10 @@ require_once( "functions/config.inc.php" );
 require_once( "functions/language.inc.".PHP_EXT );
 require_once( "functions/db.inc.".PHP_EXT );
 
-header( 'Content-Type: text/html; charset='.lang('CHARSET') );
+$charset = Session::get('charset');
+$charset = !empty($charset)?$charset:'US-ASCII';
+
+header( 'Content-Type: text/html; charset='.$charset );
 
 // Request-Variablen in Session speichern
 //request_into_session('action'    );
@@ -232,13 +235,12 @@ $views = Session::get('views');
 
 if	( !is_array($views) ) 
 {
-	$views = array( 'tree'   => array('action'=>'tree' ,'subaction'=>'show' ),
+	$views = array( 'tree'   => null,
 	                'header' => array('action'=>'title','subaction'=>'show' ),
 	                'content'=> array('action'=>'index','subaction'=>'login')  );
 }
-
 // Wenn 'target' übergeben wurde und als View bekannt ist
-if	( isset($REQ[REQ_PARAM_TARGET]) && isset($views[$REQ[REQ_PARAM_TARGET]])  ) {
+if	( isset($REQ[REQ_PARAM_TARGET]) && array_key_exists($REQ[REQ_PARAM_TARGET],$views)  ) {
 	// Mit der aktuellen Aktion die Views aktualisieren. 
 	$views[$REQ[REQ_PARAM_TARGET]] = array('action'=>$action,'subaction'=>$subaction); 
 }
@@ -246,30 +248,32 @@ if	( isset($REQ[REQ_PARAM_TARGET]) && isset($views[$REQ[REQ_PARAM_TARGET]])  ) {
 
 $viewCache = Session::get('view_cache');
 
-$viewCache = array(); // Notlösung!
-
 
 // Schritt 1:
 // Zuerst die Schreibaktion durchführen, erst anschließend folgenen die Views.
 // if	( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	
-$actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
+$actionClassName = ucfirst($action).'Action';
 
 if	( !isset($conf['action'][$actionClassName]) )
 	Http::serverError("Action '$action' is undefined.");
 
 require_once( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
+$sConf = @$conf['action'][$actionClassName][$subaction];
+
 // Wenn
 // - *Action-Methode zum Schreiben vorhanden und POST-Request
 // oder
 // - Methode mit direkter Ausgabe
-if	(    ( isset($conf['action'][$actionClassName][$subaction]['write']) && $_SERVER['REQUEST_METHOD'] == 'POST' )
+if	(    (    isset($sConf['write']) 
+           && ( $_SERVER['REQUEST_METHOD'] == 'POST'
+                || $sConf['write']=='get') )
       || isset($conf['action'][$actionClassName][$subaction]['direct'] ) )
 {
-	if ($_SERVER['REQUEST_METHOD'] == 'POST')
+	if ($_SERVER['REQUEST_METHOD'] == 'POST'|| @$sConf['write']=='get')
 		$viewCache = array(); // Cache löschen.
-		
+
 	// Erzeugen der Action-Klasse
 	$do = new $actionClassName;
 	$do->actionConfig = $conf['action'][$actionClassName];
@@ -289,9 +293,16 @@ if	(    ( isset($conf['action'][$actionClassName][$subaction]['write']) && $_SER
 		Http::serverError("Action '$action' has no accessable method '$subaction'.");
 		exit;
 	}
-		
+
+	
 	$subactionConfig = $do->actionConfig[$subaction];
-	//Logger::trace("controller is calling subaction '$subaction'");
+	
+	if	( isset($subactionConfig['clear'] ) ) 
+	{
+		foreach( explode(',',$subactionConfig['clear']) as $clearView )
+			if	( isset($views[$clearView]) )
+				$views[$clearView] = null;
+	}
 	
 	// Eine Subaktion ohne "guest=true" verlangt einen angemeldeten Benutzer.
 	if	( !isset($subactionConfig['guest']) || !$subactionConfig['guest'] )
@@ -363,6 +374,9 @@ if	(    ( isset($conf['action'][$actionClassName][$subaction]['write']) && $_SER
 // Alle Views durchlaufen
 foreach( $views as $view=>$viewConfig )
 {
+	if	( $viewConfig == null )
+		continue;
+		
 	$action    = $viewConfig['action'];
 	$subaction = $viewConfig['subaction'];
 
@@ -372,7 +386,7 @@ foreach( $views as $view=>$viewConfig )
 		continue;
 	}
 		
-	$actionClassName = strtoupper(substr($action,0,1)).substr($action,1).'Action';
+	$actionClassName = ucfirst($action).'Action';
 
 	if	( !isset($conf['action'][$actionClassName]) )
 		Http::serverError("Action '$action' is undefined.");
@@ -522,13 +536,13 @@ Session::set('views'     ,$views    );
 
 // TODO: Globle Variablen für den Seitenkopf.
 $root_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/base.css';
-$user_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['default'].'.css';
+$sessionSyle = Session::get('style');
+$user_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.(!empty($sessionStyle)?$sessionStyle:$conf['interface']['style']['default']).'.css';
 //$self = $HTTP_SERVER_VARS['PHP_SELF'];
 if	( !empty($conf['interface']['override_title']) )
 	$cms_title = $conf['interface']['override_title'];
 else
 	$cms_title = OR_TITLE.' '.OR_VERSION;
-$charset = 'UTF-8'; // $this->getCharset();
 $showDuration = $conf['interface']['show_duration'];
 
 require( OR_THEMES_DIR.'default/pages/view.php');
@@ -542,6 +556,9 @@ function showView( $viewName )
 	$view = $viewName;
 	
 	$viewConfig = $views[$viewName];
+	
+	if	( $viewConfig == null )
+		return; // View ist leer.
 	
 	$actionClassName = strtoupper(substr($viewConfig['action'],0,1)).substr($viewConfig['action'],1).'Action';
 	$f = new Action();
