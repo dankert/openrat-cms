@@ -77,9 +77,13 @@ class Model
 		                "   WHERE projectid = {projectid} ".
 		                "   ORDER BY name" );
 
-		if	( isset($this) )
+		if	( !empty($this->projectid) )
 			$sql->setInt('projectid',$this->projectid );
-		else	$sql->setInt('projectid',$SESS['projectid'] );
+		else
+		{
+			$project = Session::getProject();
+			$sql->setInt('projectid',$project->projectid);
+		}
 
 		return $db->getAssoc( $sql );
 	}
