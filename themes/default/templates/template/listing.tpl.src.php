@@ -12,3 +12,8 @@ page
 				cell class:help
 					text text:GLOBAL_NO_TEMPLATES_AVAILABLE_DESC
 
+		row
+			cell
+				link class:action action:template subaction:add
+						text key:menu_template_add
+				

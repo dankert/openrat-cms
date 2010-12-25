@@ -1,13 +1,13 @@
 part class:breadcrumb
-	link action:index subaction:projectmenu target:content
+	link action:start subaction:projectmenu target:content
 		image icon:project align:left
 		text title:message:project var:projectname maxlength:20
 
-link action:tree subaction:refresh class:action
-	image icon:project align:left
-	text key:refresh
 link action:tree subaction:openall class:action
-	text key:all
+	text key:open_all
+link action:start subaction:projectmenu class:action target:content
+	#image icon:project align:left
+	text key:change_to
 
 table space:0 padding:0 class:tree
 	list list:zeilen extract:true

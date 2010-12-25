@@ -37,4 +37,5 @@ page
 				text text:PAGE_ELEMENTS_DESC
 		row
 			cell colspan:3
-				text raw:_
+				link action:page subaction:form title:message:menu_page_form_desc class:action 
+					text key:menu_page_form

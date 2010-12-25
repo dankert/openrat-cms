@@ -61,5 +61,5 @@ page
 			row
 				cell class:act colspan:15
 					button type:ok
-					link class:action action: subaction:aclform
+					link class:action action:var:actionName subaction:aclform
 						text key:add

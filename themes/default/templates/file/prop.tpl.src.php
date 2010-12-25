@@ -56,7 +56,12 @@ page
 					text text:FILE_mimetype
 				cell class:filename
 					text var:mimetype
-	
+
+			row
+				cell
+				cell
+					link class:action action:file subaction:size
+						text key:menu_file_size
 			row
 				cell
 					text text:message:id

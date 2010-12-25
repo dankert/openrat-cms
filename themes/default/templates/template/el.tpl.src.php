@@ -9,6 +9,10 @@ page
 				cell
 					text key:var:type prefix:EL_
 
+		row
+			cell
+				link class:action action:template subaction:addel
+					text key:menu_template_addel
 		if empty:el
 			row
 				cell colspan:2
