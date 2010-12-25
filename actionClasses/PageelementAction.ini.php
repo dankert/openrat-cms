@@ -45,4 +45,7 @@ menu=edit
 goto=edit
 
 [menu]
-edit=edit,prop,link,import,export,archive
+menu=edit,prop,link,import,export,archive
+
+;import/export haben wir noch nicht
+;menu=edit,prop,link,import,export,archive

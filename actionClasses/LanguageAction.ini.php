@@ -33,3 +33,4 @@ goto=listing
 [menu]
 listing=listing,add
 edit=edit,advanced,remove
+menu=listing,add,edit,advanced,remove
