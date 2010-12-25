@@ -664,15 +664,18 @@ class TemplateAction extends Action
 		{
 			case 'srcelement':
 				// Platzhalter nur hinzufuegbar, wenn es welche gibt.
-				return (count($this->template->getElementIds()) > 0);
+				return is_object($this->template) &&
+				       (count($this->template->getElementIds()) > 0);
 
 			case 'remove':
 				// Entfernen von Templates nur dann erlaubt, wenn keine Seiten auf diesem Template basieren.
-				return (count($this->template->getDependentObjectIds()) == 0);
+				return is_object($this->template) &&
+				       (count($this->template->getDependentObjectIds()) == 0);
 
 			case 'pages':
 				// Anzeige von Seiten nur dann sinnvoll, wenn es auch Seiten gibt.
-				return (count($this->template->getDependentObjectIds()) > 0);
+				return is_object($this->template) &&
+				       (count($this->template->getDependentObjectIds()) > 0);
 
 			case 'add':
 			case 'addel':
