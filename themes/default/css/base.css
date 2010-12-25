@@ -134,10 +134,17 @@ input.ok
     -moz-box-shadow: 3px 2px 5px gray;
     box-shadow: 3px 2px 5px gray;
     cursor:default;
+    color:black;
 }
+
+a.help
+{
+	float:right;
+}
+
 input.ok
 {
-	font-weight:bold;
+	x-font-weight:bold;
 }
 
 a.help
@@ -154,6 +161,130 @@ input.ok:hover
 	text-decoration:none;
 	border-color:white;
 }
+
+a.action:active,
+a.action_active:active,
+a.help:active,
+div.noaction:active,
+input.ok:active
+{
+	border-color:red;
+}
+
+
+a
+{
+	color:black;
+}
+
+
+div.dropdown
+{
+	display:none;
+	opacity:0.9;
+	background-color:white;
+	position: absolute;
+	
+	padding:4px;
+	border:1px solid grey;
+	-moz-border-radius:5px; /* Mozilla */
+    -webkit-border-radius:5px; /* Webkit */
+    -khtml-border-radius:5px; /* Konqui */
+    border-radius:5px;
+	background: -moz-linear-gradient(top, gray, silver);
+	background: -webkit-gradient(linear, left top, left bottom, from(gray), to(silver));
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:none;
+	-webkit-box-shadow: 3px 2px 5px gray;
+    -moz-box-shadow: 3px 2px 5px gray;
+    box-shadow: 3px 2px 5px gray;
+    color:black;
+}
+
+div.dropdown > a
+{
+	display:block;
+}
+div.dropdown part.entry:hover
+{
+	background-color:silver;
+}
+
+/*Dropdown anzeigen!!!*/
+div#header div:hover div.dropdown
+{
+	display:block;
+}
+
+
+topmenu{
+	list-style:none;
+	display:inline;
+	margin:0;
+	padding:0;
+}
+.topmenu li{
+	display:inline;
+	padding:3px 15px 3px 15px;
+	border:1px solid #ccc;
+	border-bottom:none;
+	margin-right:9px;
+	background:#828080;
+	-moz-border-radius:5px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0, .3);
+}
+.topmenu li:hover{
+	background: #999898;
+}
+.topmenu li a{
+	color:#fff;
+	text-decoration:none;
+}
+/*Dropdown*/
+.topmenu ul{
+	display:none;
+	width:110px;
+	background-color: #fff;
+	padding: 5px 5px;
+	margin-left: 75px;
+	margin-top:1px;
+	border: solid 1px #b4b4b4;
+	-webkit-border-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-topright: 3px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0, .3);
+	-moz-box-shadow: 0 1px 5px rgba(0,0,0, .3);
+	box-shadow: 0 1px 3px rgba(0,0,0, .3);
+	position:absolute;
+	opacity:0.7;
+}
+/*Dropdown anzeigen!!!*/
+.topmenu li:hover > ul{
+	display:inline-table;
+}
+.topmenu ul li{
+	list-style-type: none;
+	display: block;
+	padding: 4px 2px 4px 2px;
+	border:none;
+	background:none;
+	-moz-box-shadow:none;
+	border-bottom:1px solid #ccc;
+}
+.topmenu ul li:hover{
+	background: none;
+	font-weight: bold;
+}
+.topmenu ul li:last-child{
+	border-bottom:none;
+}
+.topmenu ul li a{
+	color:#000000;
+}
+
 
 
 /* Vorschau von Text-Inhalten */
@@ -440,18 +571,6 @@ textarea
 	padding:2px;
 }
 
-input.submit,
-input.ok,
-div.cancel
-{
-	width:110px;
-	font-weight: bold;
-}
-
-input.reset
-{
-	text-align:right;
-}
 
 input.checkbox,
 input.radio
