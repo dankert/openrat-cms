@@ -21,7 +21,7 @@
 
 // Namen der Datenbanktabellen in Variablen schreiben
 //
-require( 'serviceClasses/Sql.class.php');
+require( OR_SERVICECLASSES_DIR.'Sql.class.php');
 
 /**
  * Liefert alle Tabellennamen zur aktuellen Datenbankverbindung.
