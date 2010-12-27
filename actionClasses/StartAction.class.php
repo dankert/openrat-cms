@@ -20,7 +20,8 @@
 // ---------------------------------------------------------------------------
 
 
-define('PROJECTID_ADMIN',-1);
+if	( !defined('PROJECTID_ADMIN') )
+	define('PROJECTID_ADMIN',-1);
 
 /**
  * Action-Klasse fuer die Start-Action
@@ -372,7 +373,7 @@ class StartAction extends Action
 		foreach( $projects as $id=>$name )
 		{
 			$p = array();
-			$p['url' ] = Html::url('tree','load',0,array('projectid'=>$id,'target'=>'content'));
+			$p['url' ] = Html::url('tree','load',0,array('projectid'=>$id,'target'=>'tree'));
 			$p['name'] = $name;
 			$p['id'  ] = $id;
 
