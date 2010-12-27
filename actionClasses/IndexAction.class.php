@@ -738,7 +738,9 @@ class IndexAction extends Action
 			}
 		}
 		
-		$this->refresh(); // Benutzer ist angemeldet: Andere Views könnte das interessieren.
+		//$this->refresh(); // Benutzer ist angemeldet: Andere Views könnte das interessieren.
+		$this->updateView('content','start','projectmenu');
+		
 	}
 
 
