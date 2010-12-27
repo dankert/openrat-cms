@@ -29,7 +29,7 @@ define('PROJECTID_ADMIN',-1);
  * @package openrat.actions
  */
 
-class IndexAction extends Action
+class LoginAction extends Action
 {
 	var $mustChangePassword = false;
 	

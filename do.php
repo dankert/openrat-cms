@@ -210,7 +210,7 @@ if	( is_object( $db ) )
 
 if	( !empty($REQ[REQ_PARAM_ACTION]) )
 	$action = $REQ[REQ_PARAM_ACTION];
-else	$action = 'index';
+else	$action = 'login';
 
 Session::set('action',$action);
 
@@ -237,7 +237,7 @@ if	( !is_array($views) )
 {
 	$views = array( 'tree'   => null,
 	                'header' => array('action'=>'title','subaction'=>'show' ),
-	                'content'=> array('action'=>'index','subaction'=>'login')  );
+	                'content'=> array('action'=>'login','subaction'=>'login')  );
 }
 // Wenn 'target' übergeben wurde und als View bekannt ist
 if	( isset($REQ[REQ_PARAM_TARGET]) && array_key_exists($REQ[REQ_PARAM_TARGET],$views)  ) {
