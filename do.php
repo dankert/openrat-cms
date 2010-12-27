@@ -40,7 +40,7 @@ define('OR_TYPE_FILE'  ,'file'  );
 define('OR_TYPE_LINK'  ,'link'  );
 define('OR_TYPE_FOLDER','folder');
 
-define('OR_ACTIONCLASSES_DIR' ,'./actionClasses/'  );
+define('OR_ACTIONCLASSES_DIR' ,'./action/'  );
 define('OR_FORMCLASSES_DIR'   ,'./formClasses/'    );
 define('OR_OBJECTCLASSES_DIR' ,'./objectClasses/'  );
 define('OR_SERVICECLASSES_DIR','./serviceClasses/' );
