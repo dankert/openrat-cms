@@ -15,6 +15,7 @@ menu=menu
 
 [projectmenu]
 menu=menu
+clear=tree
 
 [menu]
 menu=projectmenu,applications

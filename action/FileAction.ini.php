@@ -86,4 +86,4 @@ edit=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights,aclfor
 prop=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights,aclform
 rights=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights,aclform
 pub=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights,aclform
-menu=show,edit,editvalue,compress,uncompress,extract,pub,prop,size,rights
+menu=show,edit,editvalue,compress,uncompress,extract,pub,prop,rights

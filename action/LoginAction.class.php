@@ -98,10 +98,10 @@ class LoginAction extends Action
 		
 		$db = db_connection();
 		
-		if	( !$db->available )
+		if	( !is_object($db) || !$db->available )
 		{
 			$this->addNotice('database',$db->conf['comment'],'DATABASE_CONNECTION_ERROR',OR_NOTICE_ERROR,array(),array('Database Error: '.$db->error));
-			$this->callSubAction('showlogin');
+			//$this->callSubAction('showlogin');
 			return false;
 		}
 		
@@ -665,7 +665,7 @@ class LoginAction extends Action
 
 		// Ermitteln, ob der Baum angezeigt werden soll
 		// Ist die Breite zu klein, dann wird der Baum nicht angezeigt
-		Session::set('showtree',intval($this->getRequestVar('screenwidth')) > $conf['interface']['min_width'] );
+		//Session::set('showtree',intval($this->getRequestVar('screenwidth')) > $conf['interface']['min_width'] );
 
 		$loginOk = $this->checkLogin( $loginName,
 		                              $loginPassword,

@@ -55,6 +55,7 @@ class FileAction extends ObjectAction
 		{
 			$path[] = array('key'=>'','name'=>$name,'title'=>$name,'url'=>Html::url('folder','show',$id),'type'=>'folder');
 		}
+		$path[] = array('key'=>'','name'=>$this->file->name,'title'=>$this->file->description,'xurl'=>Html::url('file','show',$this->file->id),'type'=>'file');
 		$this->setTemplateVar('path',$path);
 	}
 
