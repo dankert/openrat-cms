@@ -740,6 +740,21 @@ class Action
 			
 		return !$this->isEditable() || $this->getRequestVar('mode')=='edit' || isset($_COOKIE['or_always_edit']) || (isset($this->templateVars) && $this->templateVars['mode']=='edit'); 
 	}
+	
+	
+	
+	/**
+	 * 
+	 * @param $viewName
+	 * @param $viewAction
+	 * @param $viewSubaction
+	 */
+	function updateView( $viewName, $viewAction,$viewSubaction )
+	{
+		global $views;
+		if	( array_key_exists($viewName,$views) )
+			$views[$viewName] = array('action'=>$viewAction,'subaction'=>$viewSubaction);
+	}
 }
 
 ?>
