@@ -42,7 +42,7 @@ if present:languagename
 
 if present:dbname
 	part class:logout
-		link title:message:USER_LOGOUT_DESC action:index subaction:logout target:content
+		link title:message:USER_LOGOUT_DESC action:login subaction:logout target:content
 			image icon:close align:left
 			text key:USER_LOGOUT
 		

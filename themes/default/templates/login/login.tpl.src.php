@@ -1,5 +1,5 @@
 page
-	form action:index subaction:login target:_top
+	form action:login subaction:login target:_top
 		window title:GLOBAL_LOGIN name:login width:400px icon:user
 	
 			if present:config:login/logo/file
@@ -70,10 +70,10 @@ page
 				row
 					cell
 					cell
-						link class:action action:index subaction:password
-							text key:menu_index_password
-						link class:action action:index subaction:register
-							text key:menu_index_register
+						link class:action action:login subaction:password
+							text key:menu_login_password
+						link class:action action:login subaction:register
+							text key:menu_login_register
 							
 				if true:config:security/openid/enable
 					row
