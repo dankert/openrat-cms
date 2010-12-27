@@ -43,7 +43,7 @@ define('OR_TYPE_FOLDER','folder');
 define('OR_ACTIONCLASSES_DIR' ,'./action/'  );
 define('OR_FORMCLASSES_DIR'   ,'./formClasses/'    );
 define('OR_OBJECTCLASSES_DIR' ,'./model/'  );
-define('OR_SERVICECLASSES_DIR','./serviceClasses/' );
+define('OR_SERVICECLASSES_DIR','./util/' );
 define('OR_LANGUAGE_DIR'      ,'./language/'       );
 define('OR_DBCLASSES_DIR'     ,'./db/'             );
 define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/' );
