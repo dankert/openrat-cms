@@ -90,30 +90,84 @@ function langHtml( $key,$vars = array() ) {
 function encodeHtml($text)
 {
 	$charset = lang('CHARSET');
-	if	( in_array( $charset, array('ISO-8859-1','ISO-8859-15','UTF-8')) )
+	
+	switch( $charset )
 	{
-		return htmlentities($text,ENT_QUOTES,$charset );
-	}
-	else
-	{
-		return $text;
-		// TODO: Was tun mit ISO-8859-5 (kyryllisch)?
-		
-		$t2 = '';
-		
-		for	( $i=0;$i<strlen($text);$i++)
-		{
-			$o = ord($text[$i]);
-			if	( $o <= 127 )
-				$t2 .= $text[$i];
-			else
-				$t2 .= '&#'.$o.';';
-		}
-		
-		return $t2;
+		case 'ISO-8859-1':
+		case 'ISO-8859-15':
+			return htmlentities($text,ENT_QUOTES,$charset );
+		case 'UTF-8':
+			return translateutf8tohtml($text);
+		default:
+			return $text;
 	}
 }
 
+
+
+
+// Source: http://de.php.net/manual/de/function.htmlentities.php#96648
+// Thx to silverbeat!
+// When using UTF-8 as a charset, htmlentities will only convert 1-byte and 2-byte characters.
+// Use this function if you also want to convert 3-byte and 4-byte characters:
+// converts a UTF8-string into HTML entities
+    function translateutf8tohtml($txt) {
+        //$txt = html_entity_decode($txt);
+        $txt2 = '';
+        for ($i=0;$i<strlen($txt);$i++) {
+            $o = ord($txt{$i});
+            if ($o<128) {
+                // 0..127: raw
+                $txt2 .= $txt{$i};
+            } else {
+                $o1 = 0;
+                $o2 = 0;
+                $o3 = 0;
+                if ($i<strlen($txt)-1) $o1 = ord($txt{$i+1});
+                if ($i<strlen($txt)-2) $o2 = ord($txt{$i+2});
+                if ($i<strlen($txt)-3) $o3 = ord($txt{$i+3});
+                $hexval = 0;
+                if ($o>=0xc0 && $o<0xc2) {
+                    // INVALID --- should never occur: 2-byte UTF-8 although value < 128
+                    $hexval = $o1;
+                    $i++;
+                } elseif ($o>=0xc2 && $o<0xe0 && $o1>=0x80) {
+                    // 194..223: 2-byte UTF-8
+                    $hexval |= ($o  & 0x1f) << 6;   // 1. byte: five bits of 1. char
+                    $hexval |= ($o1 & 0x3f);   // 2. byte: six bits of 2. char
+                    $i++;
+                } elseif ($o>=0xe0 && $o<0xf0 && $o1>=0x80 && $o2>=0x80) {
+                    // 224..239: 3-byte UTF-8
+                    $hexval |= ($o  & 0x0f) << 12;  // 1. byte: four bits of 1. char
+                    $hexval |= ($o1 & 0x3f) << 6;  // 2.+3. byte: six bits of 2.+3. char
+                    $hexval |= ($o2 & 0x3f);
+                    $i += 2;
+                } elseif ($o>=0xf0 && $o<0xf4 && $o1>=0x80) {
+                    // 240..244: 4-byte UTF-8
+                    $hexval |= ($o  & 0x07) << 18; // 1. byte: three bits of 1. char
+                    $hexval |= ($o1 & 0x3f) << 12; // 2.-4. byte: six bits of 2.-4. char
+                    $hexval |= ($o2 & 0x3f) << 6;
+                    $hexval |= ($o3 & 0x3f);
+                    $i += 3;
+                } else {
+                    // don't know ... just encode
+                    $hexval = $o;
+                }
+                $hexstring = dechex($hexval);
+                if (strlen($hexstring)%2) $hexstring = '0' . $hexstring;
+                $txt2 .= '&#x' . $hexstring . ';';
+            }
+        }
+        $result = $txt2;
+        //echo "'$txt wird zu:".htmlentities($result)."'";
+        return $result;
+    }
+
+
+    
+    
+    
+    
 
 /**
  * Diese Funktion prueft, ob ein Sprachelement vorhanden ist
