@@ -49,7 +49,7 @@ $ping_timeout = @$viewCache['header']['ping_timeout'];
     //window.setTimeout("ping()", <?php echo $ping_timeout*1000 ?>);
     window.setTimeout("ping()", 5000);
   
-  // –>
+  // -->
   </script>
 <?php } ?>
 
