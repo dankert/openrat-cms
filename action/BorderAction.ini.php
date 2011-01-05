@@ -1,5 +1,0 @@
-
-[default]
-goto=show
-
-[show]
