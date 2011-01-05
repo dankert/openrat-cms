@@ -86,9 +86,15 @@ class TitleAction extends Action
 		
 		if	( config('interface','session','auto_extend') )
 		{
-			$this->setTemplateVar('refresh_url'    ,Html::url('title','show')            );			
-			$this->setTemplateVar('refresh_timeout',ini_get('session.gc_maxlifetime')-60 );			
+			$this->setTemplateVar('ping_url'    ,Html::url('title','ping')            );			
+			$this->setTemplateVar('ping_timeout',ini_get('session.gc_maxlifetime')-60 );
 		}
+	}
+	
+	
+	public function ping()
+	{
+		echo "1";
 	}
 }
 

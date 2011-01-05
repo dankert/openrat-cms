@@ -30,6 +30,29 @@
 <?php } ?>
 </head>
 
+<?php
+$ping_url     = @$viewCache['header']['ping_url'    ];
+$ping_timeout = @$viewCache['header']['ping_timeout'];
+ ?>
+<?php if (!empty($ping_url)) { ?>
+<script type="text/javascript">
+  <!--
+    function ping() {
+	    
+	    var xmlHttpObject = new XMLHttpRequest();
+	    
+        xmlHttpObject.open('GET', '<?php echo $ping_url ?>');
+        xmlHttpObject.send(null);
+	    window.setTimeout("ping()", <?php echo $ping_timeout*1000 ?>);
+    }
+  
+    //window.setTimeout("ping()", <?php echo $ping_timeout*1000 ?>);
+    window.setTimeout("ping()", 5000);
+  
+  // –>
+  </script>
+<?php } ?>
+
 <body>
 
 <?php global $viewCache; /* Debug-Information */ if ($showDuration||true) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($viewCache,true));echo "\n-->";} ?>
