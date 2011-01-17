@@ -5,7 +5,8 @@
 #ELSE#
 	$icon=$actionName;
 #END-IF#
-		
+	$icon=$actionName;
+	
 		echo '<img src="'.$image_dir.'icon_'.$icon.IMG_ICON_EXT.'" align="left" border="0">';
 		
 		if ($this->isEditable()) { ?>
@@ -15,19 +16,17 @@
   ?><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /> <?php } else {
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
-				
-		
-		
+  
 		echo '<span class="path">'.langHtml($actionName).'</span>&nbsp;<strong>&rarr;</strong>&nbsp;';
 //		if	( !empty($attr_icon) )
 //			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
-		if	( !isset($path) || is_array($path) )
+		if	( !isset($path) || !is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
 			extract($pathElement);
-			echo '<a href="'.$url.'" class="path">'.langHtml($name).'</a>';
-			echo '&nbsp;&raquo;&nbsp;';
+			echo '<a href="'.$url.'" title="'.$title.'" class="path">'.(!empty($key)?langHtml($key):$name).'</a>';
+			echo '&nbsp;&rarr;&nbsp;';
 		}
 		echo '<span class="title">'.langHtml($windowTitle).'</span>';
 		
@@ -85,16 +84,16 @@
           	
           	if	( isset($menu['url']) )
           	{
-          		?><a class="action<?php echo $this->subActionName==$menu['subaction']?'_active':'' ?>" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><!-- <img src="<?php echo $image_dir.'icon_'.$menu['subaction'].'.png' ?>" align="left" />--><?php echo $tmp_text ?></a><?php
+          		?><a class="action<?php echo $this->subActionName==$menu['subaction']?'_active':'' ?>" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><img src="<?php echo $image_dir.'icon/'.$menu['subaction'].'.png' ?>" /><?php echo $tmp_text ?></a><?php
           	}
           	else
           	{
-          		?><div class="noaction"><!-- <img src="<?php echo $image_dir.'icon_'.$menu['subaction'].'.png' ?>" align="left" />--><?php echo $tmp_text ?></div><?php
+          		?><div class="noaction"><img src="<?php echo $image_dir.'icon/'.$menu['subaction'].'.png' ?>" /><?php echo $tmp_text ?></div><?php
           	}
           }
           	if (@$conf['help']['enabled'] )
           	{
-             ?><a class="help" href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><!-- <img src="<?php echo $image_dir.'icon_help.png' ?>" align="left" />--><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
+             ?><a class="help" href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo $image_dir.'icon/help.png' ?>" /><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
           	}
           	?><br/><?php
 	

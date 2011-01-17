@@ -1,12 +1,14 @@
 part class:breadcrumb
-	link action:start subaction:projectmenu target:content
-		image icon:project align:left
-		text title:message:project var:projectname maxlength:20
+	if present:projectname
+		link action:start subaction:projectmenu target:content
+			image icon:project align:left
+			text title:message:project var:projectname maxlength:20
 
 link action:tree subaction:openall class:action
+	image icon:open
 	text key:open_all
 link action:start subaction:projectmenu class:action target:content
-	#image icon:project align:left
+	image icon:project
 	text key:change_to
 
 table space:0 padding:0 class:tree
