@@ -536,7 +536,7 @@ Session::set('views'     ,$views    );
 
 // TODO: Globle Variablen für den Seitenkopf.
 $root_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/base.css';
-$sessionSyle = Session::get('style');
+$sessionStyle = Session::get('style');
 $user_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.(!empty($sessionStyle)?$sessionStyle:$conf['interface']['style']['default']).'.css';
 //$self = $HTTP_SERVER_VARS['PHP_SELF'];
 if	( !empty($conf['interface']['override_title']) )
