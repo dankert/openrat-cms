@@ -108,7 +108,7 @@ class ProjectTree extends AbstractTree
 					$treeElement->type       = $object->getType();
 					$treeElement->internalId = $object->objectid;
 				}
-				$treeElement->url  = Html::url($object->getType(),'',$objectid);
+				$treeElement->url  = Html::url($object->getType(),'',$objectid,array(REQ_PARAM_TARGET=>'content'));
 				$treeElement->icon = $object->getType();
 	
 				$treeElement->description = lang('GLOBAL_'.$object->getType());
