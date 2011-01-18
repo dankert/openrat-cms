@@ -98,7 +98,14 @@ class LoginAction extends Action
 		
 		$db = db_connection();
 		
-		if	( !is_object($db) || !$db->available )
+		if	( !is_object($db) )
+		{
+			$this->addNotice('database','','DATABASE_CONNECTION_ERROR',OR_NOTICE_ERROR,array(),array('no connection'));
+			//$this->callSubAction('showlogin');
+			return false;
+		}
+		
+		if	( !$db->available )
 		{
 			$this->addNotice('database',$db->conf['comment'],'DATABASE_CONNECTION_ERROR',OR_NOTICE_ERROR,array(),array('Database Error: '.$db->error));
 			//$this->callSubAction('showlogin');
