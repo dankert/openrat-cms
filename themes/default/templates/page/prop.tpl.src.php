@@ -31,7 +31,7 @@ page
 				cell
 					if present:template_url
 						link url:var:template_url target:cms_main
-							image file:icon_template
+							image icon:template
 							text var:template_name
 					if empty:template_url
 						image file:icon_template
@@ -39,6 +39,7 @@ page
 					newline
 					if false:mode:edit
 						link class:action action:page subaction:changetemplate
+							image icon:template
 							text key:menu_page_changetemplate
 			row
 				cell
