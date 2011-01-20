@@ -124,6 +124,17 @@ page
 
 
 			row
+				cell colspan:2
+					link class:action action:file subaction:compress
+						image file:icon/compress
+						text key:menu_file_compress
+					link class:action action:file subaction:uncompress
+						image file:icon/uncompress
+						text key:menu_file_uncompress
+					link class:action action:file subaction:extract
+						image file:icon/extract
+						text key:menu_file_extract
+			row
 				cell colspan:2 class:act
 					button type:ok
 	focus field:name

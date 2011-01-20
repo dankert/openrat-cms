@@ -53,6 +53,7 @@ class ProfileAction extends Action
 		$this->user->style    = $this->getRequestVar('style'   );
 		
 		$this->setStyle( $this->user->style ); // Style sofort anwenden
+		Session::setUser( $this->user );
 		
 		if	( !empty($this->user->fullname) )
 		{
