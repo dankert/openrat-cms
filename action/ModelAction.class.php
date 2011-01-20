@@ -175,8 +175,8 @@ class ModelAction extends Action
 			$list[$id]['name'] = $m->name;
 			
 			if	( $this->userIsAdmin() )
-				$list[$id]['url' ] = Html::url('main','model',$id,
-				                               array(REQ_PARAM_TARGETSUBACTION=>'edit') );
+				$list[$id]['url' ] = Html::url('model','edit',$id,
+				                               array() );
 
 			if	( ! $m->isDefault && $this->userIsAdmin() )
 				$list[$id]['default_url'] = Html::url('model','setdefault',$id);

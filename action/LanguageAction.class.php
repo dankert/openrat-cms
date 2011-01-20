@@ -207,8 +207,8 @@ class LanguageAction extends Action
 			
 			if	( $this->userIsAdmin() )
 			{
-				$list[$id]['url' ] = Html::url('main','language',$id,
-				                               array(REQ_PARAM_TARGETSUBACTION=>'edit') );
+				$list[$id]['url' ] = Html::url('language','edit',$id,
+				                               array() );
 			
 				if	( ! $l->isDefault )
 					$list[$id]['default_url'] = Html::url( 'language','setdefault',$id );

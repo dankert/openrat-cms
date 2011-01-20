@@ -644,7 +644,7 @@ class TemplateAction extends Action
 		{
 			$list[$id] = array();
 			$list[$id]['name'] = $name;
-			$list[$id]['url' ] = Html::url('main','template',$id,array(REQ_PARAM_TARGETSUBACTION=>'el'));
+			$list[$id]['url' ] = Html::url('template','el',$id,array());
 		}
 		
 //		$var['templatemodelid'] = htmlentities( $id   );
