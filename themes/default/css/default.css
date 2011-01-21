@@ -63,3 +63,25 @@ legend
 {
 	font-weight:bold;
 }
+
+
+
+/* Eingabfeld fuer Namen */
+fieldset > div input.name,
+fieldset > div span.name
+{
+	font-weight:bold;
+}
+
+
+/* Eingabfelder fuer Dateiname */
+fieldset > div input.filename,
+fieldset > div input.extension,
+fieldset > div input.ansidate,
+fieldset > div span.filename,
+fieldset > div span.extension,
+fieldset > div span.ansidate
+{
+	font-family:Courier;
+	font-size:14px;
+}

@@ -10,20 +10,15 @@ page
 			row
 				cell colspan:3
 					fieldset title:message:options
-			row
-				cell
-					radio name:type value:empty
-				cell
-					label for:type_empty
-						text key:empty
-			row
-				cell
-					radio name:type value:copy
-				cell
-					label for:type_copy
-						text key:copy
-				cell
-					selectbox name:projectid list:projects
+						part
+							radio name:type value:empty
+							label for:type_empty
+								text key:empty
+						part
+							radio name:type value:copy
+							label for:type_copy
+								text key:copy
+							selectbox name:projectid list:projects
 			row
 				cell class:act colspan:3
 					button type:ok

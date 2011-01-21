@@ -596,25 +596,6 @@ textarea.longtext
 	border:1px solid black;
 }
 
-/* Eingabfeld fuer Namen */
-input.name,
-td.name
-{
-	font-weight:bold;
-}
-
-
-/* Eingabfelder fuer Dateiname */
-input.filename,
-input.extension,
-input.ansidate,
-td.filename,
-td.extension,
-td.ansidate
-{
-	font-family:Courier;
-	font-size:13px;
-}
 
 
 

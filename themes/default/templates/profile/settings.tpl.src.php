@@ -4,13 +4,14 @@ page
 			row
 				cell
 					fieldset title:message:settings
-						checkbox name:always_edit
-						label for:always_edit
-							text key:setting_always_edit
-						newline
-						checkbox name:ignore_ok_notices
-						label for:ignore_ok_notices
-							text key:setting_ignore_ok_notices
+						part
+							checkbox name:always_edit
+							label for:always_edit
+								text key:setting_always_edit
+						part
+							checkbox name:ignore_ok_notices
+							label for:ignore_ok_notices
+								text key:setting_ignore_ok_notices
 
 					fieldset title:message:timezone
 						selectbox name:timezone_offset list:timezone_list addempty:true
