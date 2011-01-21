@@ -138,11 +138,7 @@
 
 <?php } ?>
 
+</table>
 
-
-  <tr>
-    <td class="x-window">
-      <table cellspacing="0" width="100%" cellpadding="4">
-      
 
       

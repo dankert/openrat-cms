@@ -1,7 +1,3 @@
-      </table>
-	</td>
-  </tr>
-</table>
 
 <?php if ($showDuration)
       { ?>
