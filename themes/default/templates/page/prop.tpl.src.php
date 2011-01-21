@@ -1,83 +1,73 @@
 page
 
 	form
-		window icon:folder widths:40%,60%
+		window
 			row
 				cell
-					text text:global_name
+					label for:name
+						text text:global_name
 				cell class:name
 					input name:name size:50 class:name
 			row
 				cell
-					text text:global_filename
+					label for:filename
+						text text:global_filename
 				cell class:filename
 					input name:filename class:filename
 			row
 				cell
-					text text:global_description
+					label for:description
+						text text:global_description
 				cell
 					inputarea name:description class:description
 			row
 				cell colspan:2
 					fieldset title:message:additional_info
-			row
-				cell
-					text text:global_full_filename
-				cell class:filename
-					text var:full_filename
-			row
-				cell
-					text text:global_template
-				cell
-					if present:template_url
-						link url:var:template_url target:cms_main
-							image icon:template
-							text var:template_name
-					if empty:template_url
-						image file:icon_template
-						text var:template_name
-					newline
-					if false:mode:edit
-						link class:action action:page subaction:changetemplate
-							image icon:template
-							text key:menu_page_changetemplate
-			row
-				cell
-					text key:FILE_MIMETYPE
-				cell class:filename
-					text var:mime_type
-			row
-				cell
-					text key:id
-				cell
-					text var:objectid
-			row
-				cell colspan:2
+						part
+							label for:full_filename
+								text text:global_full_filename
+							text var:full_filename class:filename
+							
+						part
+							label for:template_name
+								text text:global_template
+							if present:template_url
+								link url:var:template_url target:cms_main
+									image icon:template
+									text var:template_name
+							if empty:template_url
+								image file:icon_template
+								text var:template_name
+							newline
+							if false:mode:edit
+								link class:action action:page subaction:changetemplate
+									image icon:template
+									text key:menu_page_changetemplate
+						part
+							label for:mime_type
+								text key:FILE_MIMETYPE
+							text var:mime_type class:filename
+							
+						part
+							label for:objectid
+								text key:id
+							text var:objectid
+							
 					fieldset title:message:prop_userinfo
-			row
-				cell
-					text text:global_created
-				cell
-					table
-						row
-							cell
-								image icon:el_date
-								date date:var:create_date
-							cell
-								image icon:user
-								user user:var:create_user
-			row
-				cell
-					text text:global_lastchange
-				cell
-					table
-						row
-							cell
-								image icon:el_date
-								date date:var:lastchange_date
-							cell
-								image icon:user
-								user user:var:lastchange_user
+						part
+							label for:create_date
+								text text:global_created
+							image icon:el_date
+							date date:var:create_date
+							image icon:user
+							user user:var:create_user
+						part
+							label for:lastchange_date
+								text text:global_lastchange
+							image icon:el_date
+							date date:var:lastchange_date
+							image icon:user
+							user user:var:lastchange_user
 			row
 				cell colspan:2 class:act
 					button type:ok
