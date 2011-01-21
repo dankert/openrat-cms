@@ -465,39 +465,6 @@ body.tree tr:hover
 }
 
 
-/* Anzeige von Text-Unterschieden */
-
-/* Zeilen-Nr */
-tr.diff td.line
-{
-	background-color:white;
-	text-align:right;
-}
-
-/* Unveränderter Text */
-tr.diff td.equal
-{
-}
-
-/* Entfernter Text */
-tr.diff td.old
-{
-	background-color:red;
-}
-
-/* Hinzugefuegter Text */
-tr.diff td.new
-{
-	background-color:green;
-}
-
-/* Geaenderter Text */
-tr.diff td.notequal
-{
-	background-color:yellow;
-}
-
-
 
 /* Menzue-Titel-Zeile */
 body.menu tr.title td,
