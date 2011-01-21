@@ -79,27 +79,22 @@ page
 					row
 						cell colspan:2
 							fieldset title:message:OPENID
-					row
-						cell
-							if not:true empty:config:security/openid/logo_url
-								image url:config:security/openid/logo_url
-							text key:openid_user
-						cell
-							radiobox name:openid_provider list:openid_providers
-							if true:var:openid_user_identity
-								radio name:openid_provider value:identity
-								input name:openid_url class:name size:20
+								if not:true empty:config:security/openid/logo_url
+									image url:config:security/openid/logo_url
+								text key:openid_user
+								radiobox name:openid_provider list:openid_providers
+								if true:var:openid_user_identity
+									radio name:openid_provider value:identity
+									input name:openid_url class:name size:20
 				if value:size:dbids greaterthan:1
 					row
-						row
-							cell colspan:2
-								fieldset title:message:DATABASE icon:database
-						cell
-							text key:DATABASE
-						cell
-							selectbox name:dbid list:dbids default:var:actdbid
-							hidden name:screenwidth default:9999
-							#script 
+						cell colspan:2
+							fieldset title:message:DATABASE icon:database
+								label for:dbid
+									text key:DATABASE
+								selectbox name:dbid list:dbids default:var:actdbid
+								hidden name:screenwidth default:9999
+								#script 
 				row
 					cell colspan:2 class:act
 						button type:ok

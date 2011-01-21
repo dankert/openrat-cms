@@ -44,12 +44,9 @@ page
 				row
 					cell colspan:2
 						fieldset title:message:options
-				row
-					cell colspan:2
-						checkbox name:commit
-						label for:commit
-							text raw:_
-							text key:FOLDER_SELECT_DELETE_COMMIT
+							checkbox name:commit
+							label for:commit
+								text key:FOLDER_SELECT_DELETE_COMMIT
 
 			row
 				cell class:act colspan:2

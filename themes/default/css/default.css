@@ -1,21 +1,27 @@
 
+fieldset div
+{
+	clear:left;
+}
+
+
 label
 {
 	width:30%;
 	float:left;
 }
 
-input[type='checkbox']
+xinput[type='checkbox']
 {
 	float:left;
 }
-input[type='checkbox'] + label
+xinput[type='checkbox'] + label
 {
 	width:80%;
 	float:left;
 }
 
-label + input
+xlabel + input
 {
 	margin-left:0%;
 }

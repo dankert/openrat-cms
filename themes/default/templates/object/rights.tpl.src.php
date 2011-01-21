@@ -62,4 +62,5 @@ page
 				cell class:act colspan:15
 					button type:ok
 					link class:action action:var:actionName subaction:aclform
+						image icon:add
 						text key:add

@@ -39,16 +39,13 @@ page
 			row
 				cell colspan:2
 					fieldset title:message:options
-			row
-				cell colspan:2
-				
-					set var:type value:var:defaulttype
-					list list:actionlist value:actiontype
-						radio name:type value:var:actiontype
-						label for:type value:var:actiontype
-							text raw:_
-							text key:var:actiontype prefix:FOLDER_SELECT_
-						newline
+						set var:type value:var:defaulttype
+						list list:actionlist value:actiontype
+							radio name:type value:var:actiontype
+							label for:type value:var:actiontype
+								text raw:_
+								text key:var:actiontype prefix:FOLDER_SELECT_
+							newline
 			row
 				cell class:act colspan:2
 					button type:ok text:button_next

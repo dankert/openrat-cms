@@ -21,44 +21,30 @@ page
 			row
 				cell colspan:2
 					fieldset title:message:additional_info
-			if false:mode:edit
-				row
-					cell
-						text key:FULL_FILENAME
-					cell colspan:2 class:filename
-						text var:full_filename
-			row
-				cell
-					text key:id
-				cell
-					text var:objectid
+						if false:mode:edit
+							label for:full_filename
+								text key:FULL_FILENAME
+							text var:full_filename
+							newline
+						label for:objectid
+							text key:id
+						text var:objectid
 			row
 				cell colspan:3
 					fieldset title:message:PROP_USERINFO
-			row
-				cell
-					text text:global_created
-				cell
-					table
-						row
-							cell
-								image icon:el_date
-								date date:var:create_date
-							cell
-								image icon:user
-								user user:var:create_user
-			row
-				cell
-					text text:global_lastchange
-				cell
-					table
-						row
-							cell
-								image icon:el_date
-								date date:var:lastchange_date
-							cell
-								image icon:user
-								user user:var:lastchange_user
+						part class:label
+							text text:global_created
+						image icon:el_date
+						date date:var:create_date
+						image icon:user
+						user user:var:create_user
+						
+						newline
+						part class:label
+							image icon:el_date
+							date date:var:lastchange_date
+						image icon:user
+						user user:var:lastchange_user
 	
 
 			row
