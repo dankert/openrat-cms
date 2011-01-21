@@ -10,5 +10,9 @@ page
 			row
 				cell colspan:2 class:act
 					button type:ok
+					
+					if false:mode:edit
+						link class:action action:group subaction:remove
+							text key:menu_group_remove					
 	focus field:name			
 					

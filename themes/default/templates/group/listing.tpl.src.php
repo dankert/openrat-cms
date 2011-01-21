@@ -6,3 +6,7 @@ page
 					link url:var:url target:cms_main
 						image file:icon_group
 						text var:name
+		row
+			cell
+				link class:action action:group subaction:add
+					text key:menu_group_add

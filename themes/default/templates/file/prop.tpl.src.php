@@ -39,86 +39,63 @@ page
 						text key:DELETE
 			row
 				cell colspan:2
-					fieldset title:message:additional_info
-			if false:mode:edit
-				row
-					cell
-						text text:global_full_filename
-					cell class:filename
-						text var:full_filename
-			row
-				cell
-					text text:FILE_SIZE
-				cell
-					text var:size
-			row
-				cell
-					text text:FILE_mimetype
-				cell class:filename
-					text var:mimetype
-
-			row
-				cell
-				cell
-					link class:action action:file subaction:size
-						text key:menu_file_size
-			row
-				cell
-					text text:message:id
-				cell
-					text var:objectid
-			row
-				cell
-					text text:CACHE_FILENAME
-				cell class:filename
-					if present:cache_filename
-						text var:cache_filename
-			if present:cache_filename
-				row
-					cell
-					cell
-						image icon:el_date
-						date date:var:cache_filemtime
-			row
-				cell
-					text text:FILE_PAGES
-				cell
-					table
-						list list:pages extract:true
-							row
-								cell
-									link url:var:url target:cms_main
-										image type:page
-										text var:name
-					if empty:pages
-						text text:GLOBAL_NOT_FOUND
-			row
-				cell colspan:2
+					if false:mode:edit
+						fieldset title:message:additional_info
+							part
+								label for:full_filename
+									text text:global_full_filename
+								text var:full_filename
+								
+							part
+								label for:size
+									text text:FILE_SIZE
+								text var:size
+							
+							part
+								label for:mimetype
+									text text:FILE_mimetype
+								text var:mimetype
+								
+								link class:action action:file subaction:size
+									text key:menu_file_size
+									
+							part
+								text text:message:id
+								text var:objectid
+								
+							if present:cache_filename
+								part
+									text text:CACHE_FILENAME
+									text var:cache_filename
+									image icon:el_date
+									date date:var:cache_filemtime
+									
+							part
+								label for:pages
+									text text:FILE_PAGES
+									table
+										list list:pages extract:true
+											row
+												cell
+													link url:var:url target:cms_main
+														image type:page
+														text var:name
+									if empty:pages
+										text text:GLOBAL_NOT_FOUND
 					fieldset title:message:prop_userinfo
-			row
-				cell
-					text text:global_created
-				cell
-					table
-						row
-							cell
-								image icon:el_date
-								date date:var:create_date
-							cell
-								image icon:user
-								user user:var:create_user
-			row
-				cell
-					text text:global_lastchange
-				cell
-					table
-						row
-							cell
-								image icon:el_date
-								date date:var:lastchange_date
-							cell
-								image icon:user
-								user user:var:lastchange_user
+						part
+							text text:global_created
+							image icon:el_date
+							date date:var:create_date
+							image icon:user
+							user user:var:create_user
+							
+						part
+							text text:global_lastchange
+							image icon:el_date
+							date date:var:lastchange_date
+							image icon:user
+							user user:var:lastchange_user
 						
 	
 

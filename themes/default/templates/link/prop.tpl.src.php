@@ -16,38 +16,26 @@ page
 			row
 				cell colspan:2
 					fieldset title:message:additional_info
-			row
-				cell
-					text key:id
-				cell
-					text var:objectid
-			row
-				cell colspan:2
+						part
+							label for:objectid
+								text key:id
+							text var:objectid
+							
 					fieldset title:message:prop_userinfo
-			row
-				cell
-					text text:global_created
-				cell
-					table
-						row
-							cell
-								image icon:el_date
-								date date:var:create_date
-							cell
-								image icon:user
-								user user:var:create_user
-			row
-				cell
-					text text:global_lastchange
-				cell
-					table
-						row
-							cell
-								image icon:el_date
-								date date:var:lastchange_date
-							cell
-								image icon:user
-								user user:var:lastchange_user
+						part
+							label for:
+								text text:global_created
+							image icon:el_date
+							date date:var:create_date
+							image icon:user
+							user user:var:create_user
+						part
+							label for:
+								text text:global_lastchange
+							image icon:el_date
+							date date:var:lastchange_date
+							image icon:user
+							user user:var:lastchange_user
 						
 			row
 				cell colspan:2 class:act

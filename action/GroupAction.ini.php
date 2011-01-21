@@ -40,4 +40,4 @@ users=users,adduser
 edit=edit,remove
 memberships=users
 rights=rights
-menu=listing,add,users,adduser,edit,remove,users,rights
+menu=listing,edit,users,remove,rights

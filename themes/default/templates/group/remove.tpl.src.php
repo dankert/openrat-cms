@@ -10,15 +10,13 @@ page
 			row
 				cell colspan:2
 					fieldset title:message:options
-			row
-				cell colspan:2
-					checkbox name:confirm
-					label for:confirm
-						text text:GLOBAL_DELETE
+						part
+							checkbox name:confirm
+							label for:confirm
+								text text:GLOBAL_DELETE
 			row
 				cell colspan:2 class:help
 					text text:GROUP_DELETE_DESC
-
 			row
 				cell colspan:2 class:act
 					button type:ok
