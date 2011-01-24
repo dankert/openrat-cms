@@ -2,87 +2,81 @@ page
 	form method:post
 		input type:hidden name:elementid
 		input type:hidden name:value_time
+		
 		window name:element
-			row
-				cell colspan:2 class:help
-					text var:desc
+		
+			text var:desc class:help
 
 			if value:var:type equals:date
-				row
-					cell colspan:2
-						fieldset title:message:calendar
-				row
-					cell colspan:2
-						table width:85% class:calendar
-							row
-								cell colspan:8 class:help
-									if true:mode:edit
-										link url:var:lastmonthurl
-											image file:left align:middle
-										text raw:_
-									text var:monthname type:strong
-									if true:mode:edit
-										text raw:_
-										link url:var:nextmonthurl
-											image file:right align:middle
-									text raw:_____
-									if true:mode:edit
-										link url:var:lastyearurl
-											image file:left align:middle
-										text raw:_
-									text var:yearname type:strong
-									if true:mode:edit
-										text raw:_
-										link url:var:nextyearurl
-											image file:right align:middle
-							row
-								cell
-									text key:week
-								list list:weekdays value:weekday
-									cell
-										text var:weekday
-		
-							list list:weeklist key:weeknr value:week
+				if true:mode:edit
+					fieldset title:message:calendar
+						part
+							table width:85% class:calendar
 								row
-									cell width:12%
-										text var:weeknr
-									list list:week extract:true
+									cell colspan:8 class:help
+										if true:mode:edit
+											link url:var:lastmonthurl
+												image file:left align:middle
+											text raw:_
+										text var:monthname type:strong
+										if true:mode:edit
+											text raw:_
+											link url:var:nextmonthurl
+												image file:right align:middle
+										text raw:_____
+										if true:mode:edit
+											link url:var:lastyearurl
+												image file:left align:middle
+											text raw:_
+										text var:yearname type:strong
+										if true:mode:edit
+											text raw:_
+											link url:var:nextyearurl
+												image file:right align:middle
+								row
+									cell
+										text key:week
+									list list:weekdays value:weekday
+										cell
+											text var:weekday
+			
+								list list:weeklist key:weeknr value:week
+									row
 										cell width:12%
-											if empty:url
-												text raw:__
-												text var:nr type:strong
-												text raw:__
-											if not:true empty:url
-												link url:var:url
+											text var:weeknr
+										list list:week extract:true
+											cell width:12%
+												if empty:url
 													text raw:__
-													text var:nr
+													text var:nr type:strong
 													text raw:__
-											if true:var:today
-												text raw:*
+												if not:true empty:url
+													link url:var:url
+														text raw:__
+														text var:nr
+														text raw:__
+												if true:var:today
+													text raw:*
 		
 		
-					row
-						cell colspan:2
-							fieldset title:message:date
-					row
-						cell
+				fieldset title:message:date
+					part
+						label for:year
 							text key:date
-						cell
-							selectbox name:year list:all_years
-							text raw:_-_
-							selectbox name:month list:all_months
-							text raw:_-_
-							selectbox name:day list:all_days
-							
-					row
-						cell
+						selectbox name:year list:all_years
+						text raw:_-_
+						selectbox name:month list:all_months
+						text raw:_-_
+						selectbox name:day list:all_days
+
+					part
+						label for:hour							
 							text key:date_time
-						cell
-							selectbox name:hour list:all_hours
-							text raw:_-_
-							selectbox name:minute list:all_minutes
-							text raw:_-_
-							selectbox name:second list:all_seconds
+						selectbox name:hour list:all_hours
+						text raw:_-_
+						selectbox name:minute list:all_minutes
+						text raw:_-_
+						selectbox name:second list:all_seconds
 
 
 #			if value:var:type equals:date
@@ -99,116 +93,111 @@ page
 
 			if value:var:type equals:longtext
 				if present:preview
-					row
-						cell colspan:2 class:preview
-							fieldset title:message:page_preview
-								text var:preview escape:false
-							newline
-							newline
+					part class:preview
+						fieldset title:message:page_preview
+							text var:preview escape:false
 
-				row
-					cell colspan:2
-						//focus field:text
+				//focus field:text
 
-						if value:var:editor equals:html
-							editor type:html name:text
+				if value:var:editor equals:html
+					editor type:html name:text
 
-						if value:var:editor equals:wiki
+				if value:var:editor equals:wiki
+				
+					if present:languagetext
+						fieldset title:var:languagename
+							text var:languagetext
+						newline
+						newline
 						
-							if present:languagetext
-								fieldset title:var:languagename
-									text var:languagetext
-								newline
-								newline
-								
-							editor type:wiki name:text
-							
-							if true:mode:edit
-								fieldset title:message:help
-								table
-									cell
-										text value:config:editor/text-markup/strong-begin
-										text key:text_markup_strong
-										text value:config:editor/text-markup/strong-end
-										newline
-										text value:config:editor/text-markup/emphatic-begin
-										text key:text_markup_emphatic
-										text value:config:editor/text-markup/emphatic-end
-									cell
-										text value:config:editor/text-markup/list-numbered
-										text key:text_markup_numbered_list
-										newline
-										text value:config:editor/text-markup/list-numbered
-										text raw:...
-										newline
-									cell
-										text value:config:editor/text-markup/list-unnumbered
-										text key:text_markup_unnumbered_list
-										newline
-										text value:config:editor/text-markup/list-unnumbered
-										text raw:...
-										newline
-									cell
-										text value:config:editor/text-markup/table-cell-sep
-										text key:text_markup_table
-										text value:config:editor/text-markup/table-cell-sep
-										text raw:...
-										text value:config:editor/text-markup/table-cell-sep
-										text raw:...
-										text value:config:editor/text-markup/table-cell-sep
-										newline
-										text value:config:editor/text-markup/table-cell-sep
-										text raw:...
-										text value:config:editor/text-markup/table-cell-sep
-										text raw:...
-										text value:config:editor/text-markup/table-cell-sep
-										text raw:...
-										text value:config:editor/text-markup/table-cell-sep
-										newline
+					editor type:wiki name:text
+					
+					if true:mode:edit
+						fieldset title:message:help
+							table
+								cell
+									text value:config:editor/text-markup/strong-begin
+									text key:text_markup_strong
+									text value:config:editor/text-markup/strong-end
+									newline
+									text value:config:editor/text-markup/emphatic-begin
+									text key:text_markup_emphatic
+									text value:config:editor/text-markup/emphatic-end
+								cell
+									text value:config:editor/text-markup/list-numbered
+									text key:text_markup_numbered_list
+									newline
+									text value:config:editor/text-markup/list-numbered
+									text raw:...
+									newline
+								cell
+									text value:config:editor/text-markup/list-unnumbered
+									text key:text_markup_unnumbered_list
+									newline
+									text value:config:editor/text-markup/list-unnumbered
+									text raw:...
+									newline
+								cell
+									text value:config:editor/text-markup/table-cell-sep
+									text key:text_markup_table
+									text value:config:editor/text-markup/table-cell-sep
+									text raw:...
+									text value:config:editor/text-markup/table-cell-sep
+									text raw:...
+									text value:config:editor/text-markup/table-cell-sep
+									newline
+									text value:config:editor/text-markup/table-cell-sep
+									text raw:...
+									text value:config:editor/text-markup/table-cell-sep
+									text raw:...
+									text value:config:editor/text-markup/table-cell-sep
+									text raw:...
+									text value:config:editor/text-markup/table-cell-sep
+									newline
 
 
-						if value:var:editor equals:text
-							inputarea class:longtext name:text rows:25 cols:70
-							focus field:text
+				if value:var:editor equals:text
+					inputarea class:longtext name:text rows:25 cols:70
+					focus field:text
 										
 	
 
 			if value:var:type equals:link
-				row
-					cell
-						text key:link_target
-					cell
+				fieldset
+					part
+						label for:linkobjectid
+							text key:link_target
 						selectbox list:objects name:linkobjectid addempty:true
 						focus field:linkobjectid
-				if true:mode:edit
-					row
-						cell
-							text key:link_url
-						cell
+						
+					if true:mode:edit
+						part
+							label for:link_url
+								text key:link_url
 							input name:linkurl
 
 			if value:var:type equals:list
-				row
-					cell colspan:2
+				fieldset
+					part
 						selectbox list:objects name:linkobjectid
 						focus field:linkobjectid
 
 			if value:var:type equals:insert
-				row
-					cell colspan:2
+				fieldset
+					part
 						selectbox list:objects name:linkobjectid
 						focus field:linkobjectid
 
 			if value:var:type equals:number
-				row
-					cell colspan:2
+				fieldset
+					part
 						hidden name:decimals default:decimals
 						input size:15 maxlength:20 name:number
 						focus field:number
 
 			if value:var:type equals:select
-				row
-					cell colspan:2
+				fieldset
+					part
 						selectbox list:items name:text
 						focus field:text
 
@@ -217,21 +206,15 @@ page
 					if value:var:editor equals:wiki
 	
 						if present:languages
-							row
-								cell colspan:2
-									fieldset title:message:editor_show_language
-							row
-								cell colspan:2
+							fieldset title:message:editor_show_language
+								part
 									list list:languages key:languageid value:languagename
 										radio name:otherlanguageid value:var:languageid
 										label for:otherlanguageid_{languageid}
 											text var:languagename
 										newline
-						row
-							cell colspan:2
-								fieldset title:message:PAGE_PREVIEW
-						row
-							cell colspan:2
+						fieldset title:message:PAGE_PREVIEW
+							part
 								checkbox name:preview 
 								label for:preview
 									text key:PAGE_PREVIEW
@@ -242,30 +225,21 @@ page
 #								text key:SAVE
 								
 			if true:mode:edit
-				if present:release
-					if present:publish
-						row
-							cell colspan:2
-								fieldset title:message:options
+				fieldset title:message:options
 	
-				if present:release
-					row
-						cell colspan:2
+					if present:release
+						part
 							checkbox name:release
 							label for:release
 								text text:GLOBAL_RELEASE
 	
-				if present:publish
-					row
-						cell colspan:2
+					if present:publish
+						part
 							checkbox name:publish
 							label for:publish
 								text text:PAGE_PUBLISH_AFTER_SAVE
 
 	
-			row
-				cell colspan:2 class:act
-				
 					# Preview jetzt über Checkbox.
 					#if true:mode:edit
 					#	if value:var:type equals:longtext
@@ -273,4 +247,4 @@ page
 					#			button type:submit value:preview text:PAGE_PREVIEW
 					#			text raw:___
 					
-					button type:ok
+		button type:ok
