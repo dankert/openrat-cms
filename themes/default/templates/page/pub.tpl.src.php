@@ -1,16 +1,12 @@
 page
 	form
 		window
-			row
-				cell
-					fieldset title:message:options
-			row
-				cell
+			fieldset title:message:options
+				part
 					checkbox name:files
 					label for:files
 						text text:global_files
 						newline
 						newline
-			row
-				cell class:act
-					button type:ok
+						
+			button type:ok

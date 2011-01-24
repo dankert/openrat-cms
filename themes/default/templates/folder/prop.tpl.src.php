@@ -18,32 +18,33 @@ page
 						text text:global_description
 					inputarea name:description class:description
 
-			fieldset title:message:additional_info
-				if false:mode:edit
-					label for:full_filename
-						text key:FULL_FILENAME
-					text var:full_filename
-					newline
-				label for:objectid
-					text key:id
-				text var:objectid
-				
-			fieldset title:message:PROP_USERINFO
-				part
-					label for:create_user
-						text text:global_created
-					image icon:el_date
-					date date:var:create_date
-					image icon:user
-					user user:var:create_user
-				
-				part
-					label for:lastchange_user
-						text text:global_lastchange
-					image icon:el_date
-					date date:var:lastchange_date
-					image icon:user
-					user user:var:lastchange_user
+			if false:mode:edit
+				fieldset title:message:additional_info
+					if false:mode:edit
+						label for:full_filename
+							text key:FULL_FILENAME
+						text var:full_filename
+						newline
+					label for:objectid
+						text key:id
+					text var:objectid
+					
+				fieldset title:message:PROP_USERINFO
+					part
+						label for:create_user
+							text text:global_created
+						image icon:el_date
+						date date:var:create_date
+						image icon:user
+						user user:var:create_user
+					
+					part
+						label for:lastchange_user
+							text text:global_lastchange
+						image icon:el_date
+						date date:var:lastchange_date
+						image icon:user
+						user user:var:lastchange_user
 
 
 		button type:ok
