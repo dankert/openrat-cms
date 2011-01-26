@@ -33,10 +33,6 @@ goto=show
 [order]
 menu=show
 
-[reorder]
-menu=show
-goto=order
-
 ; Die Aktionen "rights", "aclform", "addacl" und "delacl" sind
 ; f�r Seiten,Ordner,Links und Dateien identisch.
 [rights]
@@ -99,14 +95,22 @@ goto=createlink
 [createnew]
 goto=create
 
+[reorder]
+menu=show
+goto=order
+write=get
+
 [changesequence]
 goto=order
+write=get
 
 [settop]
 goto=order
+write=get
 
 [setbottom]
 goto=order
+write=get
 
 [menu]
 ;pub=pub

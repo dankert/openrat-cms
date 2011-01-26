@@ -367,7 +367,7 @@ class FolderAction extends ObjectAction
 
 
 	// Reihenfolge von Objekten aendern
-	function changesequence()
+	function changesequenceAction()
 	{
 		$ids = $this->folder->getObjectIds();
 		$seq = 0;
@@ -699,7 +699,7 @@ class FolderAction extends ObjectAction
 
 
 	// Reihenfolge von Objekten aendern
-	function reorder()
+	function reorderAction()
 	{
 		$type = $this->getRequestVar('type');
 		
@@ -744,7 +744,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function settop()
+	function settopAction()
 	{
 		$o = new Object( $this->getRequestVar('objectid1') );
 		$o->setOrderId( 1 );
@@ -773,7 +773,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function setbottom()
+	function setbottomAction()
 	{
 		$ids = $this->folder->getObjectIds();
 		$seq = 0;

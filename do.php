@@ -453,13 +453,17 @@ foreach( $views as $view=>$viewConfig )
 	if	( isset($do->actionConfig[$do->subActionName]['alias']) )
 	{
 		$subaction = $do->actionConfig[$do->subActionName]['alias'];
-	//    $do->subActionName = $subaction;
 	}
-
+	// GOTO-Methode aufrufen.
+	elseif	( isset($do->actionConfig[$do->subActionName]['goto']) )
+	{
+		$subaction = $do->actionConfig[$do->subActionName]['goto'];
+		$do->subActionName = $subaction;
+	}
+	
 	
 	Logger::debug("Executing $actionClassName::$subaction");
 
-	// Alias-Methode aufrufen.
 	if	( isset($do->actionConfig[$do->subActionName]['write']) )
 	{
 		$subactionView = $subaction.'View';
@@ -475,7 +479,8 @@ foreach( $views as $view=>$viewConfig )
 	
 
 	// Aufruf der n�chsten Subaction (falls vorhanden)
-	if	( isset($do->actionConfig[$do->subActionName]['goto']) )
+	
+	if	( false && isset($do->actionConfig[$do->subActionName]['goto']) )
 	{
 		/* Achtung: Redirect fuehrt zu Problemen beim Login sowie der Anzeige von Notices */
 		if	( $conf['interface']['redirect'] )
