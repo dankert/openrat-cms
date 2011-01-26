@@ -80,6 +80,8 @@ class Action
 	{
 		Session::set('style',$style);
 	}
+
+	
 	
 
 	/**
@@ -96,7 +98,8 @@ class Action
 		
 		$this->templateVars['errors' ] = array();
 		$this->templateVars['notices'] = array();
-
+		
+		//Html::debug($this);
 		if	( !$this->isEditable() || isset($_COOKIE['or_always_edit']) )
 			$this->templateVars['mode'] = 'edit';
 		else 
@@ -743,7 +746,16 @@ class Action
 		if	( readonly() )
 			return false;
 			
-		return !$this->isEditable() || $this->getRequestVar('mode')=='edit' || isset($_COOKIE['or_always_edit']) || (isset($this->templateVars) && $this->templateVars['mode']=='edit'); 
+		if	( !$this->isEditable() )
+			return true;
+
+		if	( $this->getRequestVar('mode')=='edit' )
+			return true;
+
+		if	( isset($_COOKIE['or_always_edit']) )
+			return true;
+
+		return (isset($this->templateVars) && $this->templateVars['mode']=='edit'); 
 	}
 	
 	

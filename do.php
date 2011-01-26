@@ -285,7 +285,7 @@ if	(    (    isset($sConf['write'])
 	$do->subActionName   = $subaction;
 	
 	
-	$do->init();
+	$do->init(); 
 	
 	if	( !isset($do->actionConfig[$subaction]) )
 	{
@@ -404,7 +404,6 @@ foreach( $views as $view=>$viewConfig )
 	$do->subActionName   = $subaction;
 	
 	
-	$do->init();
 	
 	if	( !isset($do->actionConfig[$subaction]) )
 	{
@@ -413,6 +412,22 @@ foreach( $views as $view=>$viewConfig )
 		exit;
 	}
 		
+
+	
+		// Alias-Methode aufrufen.
+	if	( isset($do->actionConfig[$do->subActionName]['alias']) )
+	{
+		$subaction = $do->actionConfig[$do->subActionName]['alias'];
+	}
+	// GOTO-Methode aufrufen.
+	elseif	( isset($do->actionConfig[$do->subActionName]['goto']) )
+	{
+		$subaction = $do->actionConfig[$do->subActionName]['goto'];
+		$do->subActionName = $subaction;
+	}
+	
+	$do->init();
+	
 	$subactionConfig = $do->actionConfig[$subaction];
 	//Logger::trace("controller is calling subaction '$subaction'");
 	
@@ -449,31 +464,16 @@ foreach( $views as $view=>$viewConfig )
 	}
 	
 	
-	// Alias-Methode aufrufen.
-	if	( isset($do->actionConfig[$do->subActionName]['alias']) )
-	{
-		$subaction = $do->actionConfig[$do->subActionName]['alias'];
-	}
-	// GOTO-Methode aufrufen.
-	elseif	( isset($do->actionConfig[$do->subActionName]['goto']) )
-	{
-		$subaction = $do->actionConfig[$do->subActionName]['goto'];
-		$do->subActionName = $subaction;
-	}
 	
-	
-	Logger::debug("Executing $actionClassName::$subaction");
 
 	if	( isset($do->actionConfig[$do->subActionName]['write']) )
-	{
-		$subactionView = $subaction.'View';
-		$do->$subactionView();
-	}
+		$subactionMethodName = $subaction.'View';
 	else
-	{
-		// Aufruf der Subaction
-		$do->$subaction();
-	}
+		$subactionMethodName = $subaction;
+		 
+	Logger::debug("Executing $actionClassName::$subactionMethodName");
+	
+	$do->$subactionMethodName(); // Aufruf der Subaction
 	
 	$views[$view]['subaction'] = $subaction;
 	

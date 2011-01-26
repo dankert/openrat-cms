@@ -700,3 +700,15 @@ label
 {
 	cursor: pointer;
 }
+
+div.menu
+{
+	float:none;
+	height:50px;
+	xclear:left;
+}
+
+fieldset
+{
+	xclear:left;
+}
