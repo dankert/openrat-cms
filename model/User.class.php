@@ -1052,7 +1052,7 @@ SQL
 		$allstyles = array();
 		
 		// Theme-Verzeichnis nach "*.css"-Dateien durchsuchen.
-		$dir = $conf_themedir.'/css';
+		$dir = $conf_themedir.'/css/user';
 		$handle = @opendir( $dir ); 
 
 		if	( !is_resource($handle) )
