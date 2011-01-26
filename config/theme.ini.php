@@ -20,4 +20,9 @@ chmod=
 ; Compile ALL templates at logout
 ; (only useful while developing)
 ; default=false
-compile_at_logout=false
+compile_at_logout=true
+
+; Compile ALL templates to temporary directory
+; only useful while developing! Not for production use.
+; default:false 
+compile_to_tmp_dir=false

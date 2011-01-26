@@ -68,8 +68,11 @@ class TemplateEngine
 		else
 			// Wenn Vorlage (noch) nicht existiert
 			die( get_class($this).': Template not found: "'.$tplName.'"' );
-					
-		$filename = 'themes/default/pages/html/'.$tplName.'.tpl.'.PHP_EXT;
+
+		if	( config('theme','compiler','compile_to_tmp_dir') )
+			$filename = Object::getTempDir().'/'.str_replace('/', '_',$tplName).'.tpl.'.PHP_EXT;
+		else	
+			$filename = 'themes/default/pages/html/'.$tplName.'.tpl.'.PHP_EXT;
 		
 		// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausf�hren.		
 		if	( $conf['theme']['compiler']['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))

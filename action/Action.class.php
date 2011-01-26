@@ -487,14 +487,19 @@ class Action
 			unset($te);
 		}
 
-		$iFile = $tpl_dir.$tplFileName;
+		if	( config('theme','compiler','compile_to_tmp_dir') )
+			$iFile = Object::getTempDir().'/'.str_replace('/', '_',$tplFileName);
+		else
+			$iFile = $tpl_dir.$tplFileName;
+			
+		//Html::debug( $iFile );
 		//try
 		//{
 			if	( is_file($iFile))
 				// Einbinden des Templates
 				require_once( $iFile );
 			else
-				echo "File not found: $iFile"; 
+				echo Http::serverError("File not found: $iFile","Template not found: $iFile"); 
 		//}
 		//catch( Exception $e )
 		//{
