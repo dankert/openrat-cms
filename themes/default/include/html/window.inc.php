@@ -1,52 +1,44 @@
 <div class="breadcrumb">
-		<?php 
-#IF-ATTR icon#
-	$icon=$attr_icon;
-#ELSE#
-	$icon=$actionName;
-#END-IF#
-	$icon=$actionName;
-	
-		echo '<img src="'.$image_dir.'icon_'.$icon.IMG_ICON_EXT.'" align="left" border="0">';
+		<?php $icon=$actionName; ?>
+		<img src="<?php echo $image_dir.'icon_'.$icon.IMG_ICON_EXT ?>" align="left" />
 		
-		if ($this->isEditable()) { ?>
+		<?php if ($this->isEditable()) { ?>
   <?php if ($this->isEditMode()) { 
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId()                       ) ?>" accesskey="1" title="<?php echo langHtml('MODE_EDIT_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>mode-edit.png" style="vertical-align:top; " border="0" /></a> <?php }
    elseif (readonly()) {
   ?><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /> <?php } else {
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
-  ?><?php }
+  ?><?php } ?>
   
-		echo '<span class="path">'.langHtml($actionName).'</span>&nbsp;<strong>&rarr;</strong>&nbsp;';
+		<span class="path"><?php echo langHtml($actionName) ?></span>&nbsp;<strong>&rarr;</strong>&nbsp;
+		<?php
 //		if	( !empty($attr_icon) )
 //			echo '<img src="'.$image_dir.'icon_'.$attr_icon.IMG_ICON_EXT.'" align="left" border="0">';
 		if	( !isset($path) || !is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
-			extract($pathElement);
-			echo '<a href="'.$url.'" title="'.$title.'" class="path">'.(!empty($key)?langHtml($key):$name).'</a>';
-			echo '&nbsp;&rarr;&nbsp;';
-		}
-		echo '<span class="title">'.langHtml($windowTitle).'</span>';
-		
+			extract($pathElement); ?>
+			<a href="<?php echo $url ?>" title="<?php echo $title ?>" class="path"><?php echo (!empty($key)?langHtml($key):$name) ?></a>
+			&nbsp;&rarr;&nbsp;
+		<?php } ?>
+		<span class="title"><?php echo langHtml($windowTitle) ?></span>
+		<?php
 		if	( isset($notice_status))
 		{
 			?><img src="<?php echo $image_dir.'notice_'.$notice_status.IMG_ICON_EXT ?>" align="right" /><?php
 		}
-		
-		
 		?>
+	</div>
+
 		
-</div>
-<?php ?>		<!--<td class="menu" style="align:right;">
+		<?php ?>		<!--<td class="menu" style="align:right;">
     <?php if (isset($windowIcons)) foreach( $windowIcons as $icon )
           {
           	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.langHtml($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
           }
      ?>
     </td>-->
-  </tr>
 
 
 
@@ -55,25 +47,10 @@
 
 
 
-
+<div class="menu">
 <?php
-	$coloumn_widths=array();
-	
-#IF-ATTR widths#
-	$coldumn_widths = explode(',',$attr_widths);
-#END-IF#
-#IF-ATTR rowclasses#
-	$row_classes   = explode(',',$attr_rowclasses);
-	$row_class_idx = 999;
-#END-IF#
-#IF-ATTR columnclasses#
-	$column_classes = explode(',',$attr_columnclasses);
-#END-IF#
-	$row_idx    = 0;
-	$column_idx = 0;
 
-	    if	( !isset($windowMenu) || !is_array($windowMenu) )
-			$windowMenu = array();
+	if	( !isset($windowMenu) || !is_array($windowMenu) ) $windowMenu = array();
     foreach( $windowMenu as $menu )
           {
           	$tmp_text = langHtml($menu['text']);
@@ -99,46 +76,29 @@
 	
 	
 	
-		global $image_dir;
-		echo '<br/><br/>';
-		echo '<table class="x-main" cellspacing="0" cellpadding="4" width="'.$attr_width.'">';
 		?>
+</div>
 		
 
-<?php if (isset($notices) && count($notices)>0 )
+<!-- Hinweis-Meldungen -->
+
+<?php 		global $image_dir; 
+      if (isset($notices) && count($notices)>0 )
       { ?>
-
-  <tr>
-    <td align="center" class="notice">
-
+    	<dl class="notice">
   <?php foreach( $notices as $notice_idx=>$notice ) { ?>
-    	<br><table class="notice">
     
   <?php if ($notice['name']!='') { ?>
-  <tr>
-    <th colspan="2"><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?>
-    </th>
-  </tr>
+    <dt><img src="<?php echo $image_dir.'icon_'.$notice['type'].IMG_ICON_EXT ?>" align="left" /><?php echo $notice['name'] ?></dt>
 <?php } ?>
-  <tr class="<?php echo $notice['status'] ?>">
+  <dd class="<?php echo $notice['status'] ?>">
     <td style="padding:10px;" width="30px"><img src="<?php echo $image_dir.'notice_'.$notice['status'].IMG_ICON_EXT ?>" style="padding:10px" /></td>
     <td style="padding:10px;padding-right:10px;padding-bottom:10px;"><?php if ($notice['status']=='error') { ?><strong><?php } ?><?php echo langHtml($notice['key'],$notice['vars']) ?><?php if ($notice['status']=='error') { ?></strong><?php } ?>
     <?php if (!empty($notice['log'])) { ?><pre><?php echo htmlentities(implode("\n",$notice['log'])) ?></pre><?php } ?>
     </td>
-  </tr>
+  </dd>
   
-    </table>
   <?php } ?>
+    </dl>
   
-    </td>
-  </tr>
-  <tr>
-  <td colspan="2"><fieldset></fieldset></td>
-  </tr>
-
 <?php } ?>
-
-</table>
-
-
-      

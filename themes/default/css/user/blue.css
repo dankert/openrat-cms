@@ -85,14 +85,14 @@ div#tree > table.tree
 
 
 /* Menü-Knöpfe */
-body > div > a.action,
-body > div > a.action_active,
-body > div > a.help,
-body > div > div.noaction,
-body > div > form > a.action,
-body > div > form > a.action_active,
-body > div > form > a.help,
-body > div > form > div.noaction
+div.menu > a.action,
+div.menu > a.action_active,
+div.menu > a.help,
+div.menu > div.noaction,
+div.menu > form > a.action,
+div.menu > form > a.action_active,
+div.menu > form > a.help,
+div.menu > form > div.noaction
 {
 	x-height:20px;
 	margin:9px;
@@ -514,15 +514,9 @@ input.searchbutton
 
 fieldset
 {
-	border-top:1px solid black;
-	border-bottom:0px;
-	border-left:0px;
-	border-right:0px;
-	margin-top:5px;
-	margin-bottom:0px;
-	margin-left:0px;
-	margin-right:0px;
-	padding:0px;
+	border:1px solid grey;
+	margin:10px;
+	padding:15px;
 }
 
 
@@ -531,9 +525,15 @@ fieldset
 
 legend
 {
-	font-weight:bold;
+	font-weight:italic;
 }
 
+
+label
+{
+	width:30%;
+	float:left;
+}
 
 
 
