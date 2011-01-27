@@ -317,7 +317,7 @@ class PageAction extends ObjectAction
 		else
 		{
 			$this->addValidationError('name');
-			$this->callSubAction('prop');
+			//$this->callSubAction('prop');
 		}
 	}
 
