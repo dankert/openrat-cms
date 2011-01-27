@@ -20,7 +20,7 @@ table space:0 padding:0 class:tree
 			if present:image
 				cell class:treeimage
 					if present:image_url
-						link url:var:image_url class:tree target:_self title:var:image_url_desc anchor:var:name
+						link url:var:image_url class:tree target:_self title:var:image_url_desc
 							image tree:var:image
 					else
 						image tree:var:image
