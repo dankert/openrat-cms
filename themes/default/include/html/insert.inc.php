@@ -22,5 +22,5 @@ else
 /* #END-IF# */
 
 /* #IF-ATTR url# */
-<iframe src="<?php echo $attr_url ?>"></iframe>
+<iframe name="<?php echo $attr_name ?>" src="<?php echo $attr_url ?>"></iframe>
 /* #END-IF# */

@@ -40,4 +40,4 @@
 	#END-IF
 		
 	
-?><a<?php if (isset($attr_name)) echo ' name="'.$attr_name.'"'; else echo ' href="'.$tmp_url.(isset($attr_anchor)?'#'.$attr_anchor:'').'"' ?> class="<?php echo $attr_class ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
+?><a target="<?php echo $attr_frame ?>" <?php if (isset($attr_name)) echo ' name="'.$attr_name.'"'; else echo ' href="'.$tmp_url.(isset($attr_anchor)?'#'.$attr_anchor:'').'"' ?> class="<?php echo $attr_class ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
