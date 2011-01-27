@@ -269,6 +269,7 @@ $sConf = @$conf['action'][$actionClassName][$subaction];
 if	(    (    isset($sConf['write']) 
            && ( $_SERVER['REQUEST_METHOD'] == 'POST'
                 || $sConf['write']=='get') )
+      || @$sConf['call']
       || isset($conf['action'][$actionClassName][$subaction]['direct'] ) )
 {
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'|| @$sConf['write']=='get')
@@ -367,6 +368,8 @@ if	(    (    isset($sConf['write'])
 			exit;
 		}
 	}
+	
+	$actionTemplateVars = $do->templateVars;
 }
 
 		
@@ -427,6 +430,12 @@ foreach( $views as $view=>$viewConfig )
 	}
 	
 	$do->init();
+	
+	if	( isset($actionTemplateVars))
+	{
+		//unset( $actionTemplateVars['mode'] );
+		$do->templateVars = $actionTemplateVars;
+	}
 	
 	$subactionConfig = $do->actionConfig[$subaction];
 	//Logger::trace("controller is calling subaction '$subaction'");
