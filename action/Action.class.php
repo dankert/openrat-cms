@@ -447,10 +447,14 @@ class Action
 
 		// Falls Eingabefehler, dann Uebertragen der Request-Variablen in den aktuellen Kontext
 		if	( count($errors)>0 )
+		{
 			foreach( $REQ as $requestVar=>$dummy )
-				if	( !isset($$requestVar) )
+				//if	( true|| !isset($$requestVar) )
 					// Aber achtung, hier geben wir die Request-Variablen einfach so wieder raus!
 					$$requestVar = $this->getRequestVar( $requestVar );
+			$this->templateVars['mode'] = 'edit';
+			$mode = 'edit';
+		}
 				
 		// Setzen einiger Standard-Variablen
 		//
