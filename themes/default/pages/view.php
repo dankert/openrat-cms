@@ -27,6 +27,8 @@
 <?php } ?>
 <?php if($root_stylesheet!=$user_stylesheet) { ?>
   <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" >
+  <script src="<?php echo OR_THEMES_EXT_DIR.'/default/js/jquery-1.5.min.jsx'; ?>"></script>
+  <script src="/~dankert/cms-test/cms09/themes/default/js/jquery-1.5.min.js"></script>
 <?php } ?>
 </head>
 
@@ -65,11 +67,25 @@ $ping_timeout = @$viewCache['header']['ping_timeout'];
 <?php showView('tree') ?>
 </div>
 
-
 <div id="content">
 <?php showView('content') ?>
 </div>
 
+<script name="JavaScript" type="text/javascript">
+$('form.login').parents('body').addClass('dark');
+
+if	( $('form.login').size() > 0 )
+{
+	$('div#header, div#tree').animate({
+		opacity: .4
+		}, 1000, function() {
+		// Animation complete; works in all browsers
+	});
+}
+
+//$('form.login').modal();
+
+</script>
 
 </body>
 </html>

@@ -712,3 +712,22 @@ fieldset
 {
 	xclear:left;
 }
+
+
+form.login
+{
+	xbackground-color:#E0E0D5;
+	border:2px solid silver;
+	position:absolute;
+	z-index:999;
+	top:5%;
+	left:5%;
+	width:80%;
+	margin:5%;
+	padding:10%;
+	opacity:1;
+	
+	-webkit-box-shadow: 3px 2px 5px gray;
+    -moz-box-shadow: 3px 2px 5px gray;
+    box-shadow: 3px 2px 5px gray;
+}
