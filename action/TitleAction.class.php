@@ -32,6 +32,11 @@ class TitleAction extends Action
 	{
 		$this->setTemplateVar('buildinfo',OR_TITLE.' '.OR_VERSION.' - build '.config('build','build') );
 
+		$user = Session::getUser();
+		if	( !is_object($user) )
+			return; // Keine aktive Sitzung vorhanden.
+			
+
 		$db = Session::getDatabase();
 		$this->setTemplateVar('dbname',$db->conf['comment'].(readonly()?' ('.lang('readonly').')':''));
 		
@@ -42,7 +47,6 @@ class TitleAction extends Action
 				$databases[$dbid] = $dbconf['comment'];
 		$this->setTemplateVar('databases',$databases);
 		
-		$user = Session::getUser();		
 		$this->setTemplateVar('username'    ,$user->name    );
 		$this->setTemplateVar('userfullname',$user->fullname);
 
@@ -94,7 +98,8 @@ class TitleAction extends Action
 	
 	public function ping()
 	{
-		echo "1";
+		$this->setTemplateVar('ping',true      );
+		$this->setTemplateVar('time',date('r') );
 	}
 }
 

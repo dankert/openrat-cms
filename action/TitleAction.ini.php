@@ -1,8 +1,10 @@
 
+
 [default]
 goto=show
 
 [show]
+guest=true
 
 [ping]
-direct=true
+async=true
