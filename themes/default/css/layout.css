@@ -714,7 +714,7 @@ fieldset
 }
 
 
-form.login
+form.xlogin
 {
 	xbackground-color:#E0E0D5;
 	border:2px solid silver;
@@ -731,3 +731,40 @@ form.login
     -moz-box-shadow: 3px 2px 5px gray;
     box-shadow: 3px 2px 5px gray;
 }
+
+
+
+/*
+Baum
+*/
+ul.tree,
+ul.tree ul
+{
+	list-style-type: none;
+	background: url(../images/tree_line.gif) repeat-y;
+	margin: 0;
+	padding: 0;
+}
+
+ul.tree ul
+{
+	margin-left: 10px;
+}
+
+ul.tree li
+{
+	margin: 0;
+	padding:0 12px;
+	line-height: 20px;
+	background: url(../images/tree_plus.gif) no-repeat;
+	color: #369;
+	font-weight: bold;
+}
+
+ul.tree li.last,
+ul.tree li:last-child
+{
+	background: #fff url(../images/tree_plus_end.gif) no-repeat;
+} 
+
+body > div { display:none; }
