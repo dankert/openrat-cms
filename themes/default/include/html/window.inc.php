@@ -19,7 +19,7 @@
 		foreach( $path as $pathElement)
 		{
 			extract($pathElement); ?>
-			<a href="<?php echo $url ?>" title="<?php echo $title ?>" class="path"><?php echo (!empty($key)?langHtml($key):$name) ?></a>
+			<a javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $url ?>'); return false; " title="<?php echo $title ?>" class="path"><?php echo (!empty($key)?langHtml($key):$name) ?></a>
 			&nbsp;&rarr;&nbsp;
 		<?php } ?>
 		<span class="title"><?php echo langHtml($windowTitle) ?></span>
@@ -61,7 +61,7 @@
           	
           	if	( isset($menu['url']) )
           	{
-          		?><a class="action<?php echo $this->subActionName==$menu['subaction']?'_active':'' ?>" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><img src="<?php echo $image_dir.'icon/'.$menu['subaction'].'.png' ?>" /><?php echo $tmp_text ?></a><?php
+          		?><a class="action<?php echo $this->subActionName==$menu['subaction']?'_active':'' ?>"  javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>'); return false; " accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><img src="<?php echo $image_dir.'icon/'.$menu['subaction'].'.png' ?>" /><?php echo $tmp_text ?></a><?php
           	}
           	else
           	{

@@ -1,1 +1,1 @@
-<?php require('do.php') ?>
+<?php require('init.php'); require('themes/default/pages/view.php'); ?>

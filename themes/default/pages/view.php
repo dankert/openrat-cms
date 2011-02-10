@@ -4,7 +4,7 @@
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title><?php echo isset($attr_title)?langHtml($attr_title).' - ':(isset($windowTitle)?langHtml($windowTitle).' - ':'') ?><?php echo $cms_title ?></title>
+  <title><?php echo OR_TITLE.' '.OR_VERSION ?></title>
   <meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" >
 <?php if ( isset($refresh_url) ) { ?>
   <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url; if (ini_get('session.use_trans_sid')) echo '&'.session_name().'='.session_id(); ?>">
@@ -21,15 +21,13 @@
       {
        	?>
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo $meta['title'] ?>" ><?php
-      }
-?><?php if(!empty($root_stylesheet)) { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $root_stylesheet ?>" >
-<?php } ?>
-<?php if($root_stylesheet!=$user_stylesheet) { ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo $user_stylesheet ?>" >
-  <script src="<?php echo OR_THEMES_EXT_DIR.'/default/js/jquery-1.5.min.jsx'; ?>"></script>
+      } ?>
+  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/layout.css" >
+  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/user/default.css" >
   <script src="/~dankert/cms-test/cms09/themes/default/js/jquery-1.5.min.js"></script>
-<?php } ?>
+  <script src="/~dankert/cms-test/cms09/themes/default/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" >
+  <script src="/~dankert/cms-test/cms09/themes/default/js/openrat.js"></script>
 </head>
 
 <?php
@@ -40,13 +38,9 @@ $ping_timeout = @$viewCache['header']['ping_timeout'];
 <script type="text/javascript">
   <!--
     function ping() {
-	    
-	    var xmlHttpObject = new XMLHttpRequest();
-	    
-        xmlHttpObject.open('GET', '<?php echo $ping_url ?>');
-        xmlHttpObject.send(null);
-	    window.setTimeout("ping()", <?php echo $ping_timeout*1000 ?>);
-    }
+		$.getJSON('<?php echo str_replace('&amp;','&',$ping_url) ?>', function(json) {});
+		window.setTimeout("ping()", <?php echo $ping_timeout*1000 ?>);
+	}
   
     //window.setTimeout("ping()", <?php echo $ping_timeout*1000 ?>);
     window.setTimeout("ping()", 5000);
@@ -57,35 +51,18 @@ $ping_timeout = @$viewCache['header']['ping_timeout'];
 
 <body>
 
-<?php global $viewCache; /* Debug-Information */ if ($showDuration||true) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($viewCache,true));echo "\n-->";} ?>
+<?php global $viewCache; /* Debug-Information */ if (@$showDuration||true) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($viewCache,true));echo "\n-->";} ?>
 
 <div id="header">
-<?php showView('header') ?>
 </div>
 
 <div id="tree">
-<?php showView('tree') ?>
 </div>
 
 <div id="content">
-<?php showView('content') ?>
 </div>
 
-<script name="JavaScript" type="text/javascript">
-$('form.login').parents('body').addClass('dark');
-
-if	( $('form.login').size() > 0 )
-{
-	$('div#header, div#tree').animate({
-		opacity: .4
-		}, 1000, function() {
-		// Animation complete; works in all browsers
-	});
-}
-
-//$('form.login').modal();
-
-</script>
+<noscript><em>Javascript is required to view this site</em></noscript>
 
 </body>
 </html>

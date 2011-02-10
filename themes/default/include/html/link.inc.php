@@ -30,6 +30,8 @@
 	
 	#IF-ATTR target#
 	$params[REQ_PARAM_TARGET] = $attr_target;
+	#ELSE
+	$attr_target = $view;
 	#END-IF	
 	
 	#IF-ATTR action#
@@ -40,4 +42,4 @@
 	#END-IF
 		
 	
-?><a target="<?php echo $attr_frame ?>" <?php if (isset($attr_name)) echo ' name="'.$attr_name.'"'; else echo ' href="'.$tmp_url.(isset($attr_anchor)?'#'.$attr_anchor:'').'"' ?> class="<?php echo $attr_class ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
+?><a target="<?php echo $attr_frame ?>"<?php if (isset($attr_name)) { ?> name="<?php echo $attr_name ?>"<?php }else{ ?> href="javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $attr_target ?>','<?php echo $tmp_url.(isset($attr_anchor)?'#'.$attr_anchor:'') ?>'); return false; "<?php } ?> class="<?php echo $attr_class ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
