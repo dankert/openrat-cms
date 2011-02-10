@@ -435,6 +435,7 @@ class Action
 		global $PHP_SELF;
 		global $HTTP_SERVER_VARS;
 		global $image_dir;
+		global $view;
 		       
 		$tplName = str_replace( '_','/',$tplName );
 		
@@ -737,6 +738,7 @@ class Action
 	function refresh()
 	{
 		$this->refresh = true;
+		$this->setTemplateVar('refresh',true);
 	}
 	
 	
@@ -775,6 +777,8 @@ class Action
 		global $views;
 		if	( array_key_exists($viewName,$views) )
 			$views[$viewName] = array('action'=>$viewAction,'subaction'=>$viewSubaction);
+			
+		$this->refresh();
 	}
 }
 
