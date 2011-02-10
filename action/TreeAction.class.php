@@ -74,7 +74,7 @@ class TreeAction extends Action
 	/**
 	 * Neues Laden des Baumes
 	 */
-	function loadAction()
+	function load()
 	{
 		global $SESS;
 
@@ -109,11 +109,6 @@ class TreeAction extends Action
 	}
 
 	
-	public function loadView()
-	{
-		
-	}
-
 	/**
 	 * Liefert ein Array mit allen Zeilen des Baumes.
 	 * 
@@ -243,6 +238,30 @@ class TreeAction extends Action
 
 		$this->setTemplateVars( $var );
 	}
+	
+	
+	/**
+	 * Anzeigen des Baumes fuer asynchrone Anfragen.
+	 */
+	function loadAll()
+	{
+		$this->tree = Session::getTree();
+		
+		$this->setTemplateVar( 'lines',$this->outputElement( 0,0,array() ) );
+		$this->setTemplateVar( 'tree',$this->tree->elements                ); 
+	}
+
+	/**
+	 * Anzeigen des Baumes fuer asynchrone Anfragen.
+	 */
+	function loadEntry()
+	{
+		$this->tree = Session::getTree();
+		
+		$this->setTemplateVar( 'lines',$this->outputElement( 0,0,array() ) );
+		$this->setTemplateVar( 'tree',$this->tree->elements                ); 
+	}
+	
 }
 
 ?>

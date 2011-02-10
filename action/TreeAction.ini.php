@@ -5,7 +5,7 @@ goto=show
 [show]
 
 [load]
-write=get
+;write=get
 goto=show
 clear=content
 
@@ -23,3 +23,9 @@ goto=show
 
 ;[refresh]
 ;goto=show
+
+[loadEntry]
+async=true
+
+[loadAll]
+async=true
