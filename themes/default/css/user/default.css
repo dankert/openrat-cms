@@ -146,3 +146,8 @@ dl.notice > dd
 {
 	border-bottom: 1px silver solid;
 }
+
+input.error
+{
+	border-bottom:2px solid red;
+}
