@@ -1,19 +1,18 @@
 page
 	window name:GLOBAL_TEMPLATES
 
-		list list:templates extract:true
-			row class:data
+		table
+			row class:headline
 				cell
-					link url:var:url target:cms_main
+					text key:name
+			list list:templates extract:true
+				row class:data
+					cell url:var:url 
 						text var:name
 
 		if empty:templates
-			row
-				cell class:help
-					text text:GLOBAL_NO_TEMPLATES_AVAILABLE_DESC
+			text text:GLOBAL_NO_TEMPLATES_AVAILABLE_DESC
 
-		row
-			cell
-				link class:action action:template subaction:add
-						text key:menu_template_add
+		link class:action action:template subaction:add
+			text key:menu_template_add
 				

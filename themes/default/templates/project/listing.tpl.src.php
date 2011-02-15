@@ -1,11 +1,16 @@
 page
 	window icon:project name:GLOBAL_PROJECTS width:70%
-		list list:el extract:true
-			row class:data
+		table
+			row class:headline
 				cell
-					link url:var:url target:cms_main
+					text key:name
+				cell
+					text key:GLOBAL_SELECT
+					
+			list list:el extract:true
+				row class:data
+					cell url:var:url
 						image file:icon_project
 						text value:var:name maxlength:30
-				cell
-					link url:var:use_url target:config:interface/frames/top
+					cell url:var:use_url 
 						text key:GLOBAL_SELECT

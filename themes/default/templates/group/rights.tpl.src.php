@@ -13,7 +13,7 @@ page
 									text text:GLOBAL_NOT_FOUND
 						if not:true empty:acls
 							table
-								row
+								row class:headline
 									cell class:help
 										text text:GLOBAL_USER
 									cell class:help
@@ -39,7 +39,7 @@ page
 											set var:groupname
 										cell
 											image type:var:objecttype
-											link action:index subaction:object id:var:objectid target:_top
+											link action:var:objecttype subaction: id:var:objectid
 												text var:objectname maxlength:20 title:message:select
 										cell
 											text var:languagename maxlength:20

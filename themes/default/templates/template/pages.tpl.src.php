@@ -1,8 +1,13 @@
 page
 	window icon:template name:pages
-		list list:pages value:name key:pageid
-			row
+		table
+			row class:headline
 				cell
-					image icon:page
-					link action:main subaction:page id:var:pageid target:cms_main
-						text var:name
+					text key:name
+				
+			list list:pages value:name key:pageid
+				row class:data
+					cell
+						image icon:page
+						link action:main subaction:page id:var:pageid target:cms_main
+							text var:name

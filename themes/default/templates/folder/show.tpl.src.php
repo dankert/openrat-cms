@@ -1,12 +1,6 @@
 page class:main
 	window
 		table
-			if present:up_url
-				row
-					cell width:50% colspan:8
-						link url:var:up_url target:cms_main
-							image type:folder
-							text raw:__.._____________
 			row class:headline
 				cell class:help
 					text key:GLOBAL_TYPE
@@ -15,13 +9,20 @@ page class:main
 				cell class:help
 					text key:GLOBAL_LASTCHANGE
 					
+			if present:up_url
+				row class:data
+					cell url:var:up_url
+						image type:folder
+						text raw:..
+					cell
+						text raw:
+							
 			list list:object extract:true
 				row class:data
-					cell
-						link url:var:url target:cms_main title:var:desc class:var:class
-							image type:var:icon
-							text var:name
-							text raw:_
+					cell url:var:url title:var:desc class:var:class
+						image type:var:icon
+						text var:name
+						text raw:_
 					cell
 						date date:var:date
 	

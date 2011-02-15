@@ -3,7 +3,7 @@ page
 		window
 			fieldset
 				table widths:5%,5%,5%,15%,15%,35%,10%,10%
-					row
+					row class:headline
 						cell class:help
 							text text:GLOBAL_NR
 						cell class:help colspan:2

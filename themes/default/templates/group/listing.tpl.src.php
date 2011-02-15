@@ -1,12 +1,17 @@
 page
-	window icon:group name:GLOBAL_GROUPS width:70%
-		list list:el extract:true
-			row class:data
+	window
+		table
+			row class:headline
 				cell
-					link url:var:url target:cms_main
+					text key:name
+					
+			list list:el extract:true
+		
+				row class:data
+					cell url:var:url
 						image file:icon_group
 						text var:name
-		row
-			cell
-				link class:action action:group subaction:add
-					text key:menu_group_add
+			row
+				cell
+					link class:action action:group subaction:add
+						text key:menu_group_add
