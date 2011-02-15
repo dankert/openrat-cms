@@ -77,17 +77,6 @@ class TitleAction extends Action
 		//$this->setTemplateVar('profile_url',Html::url( 'profile'         ));
 		//$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
 		
-		if	( Session::get('showtree') )
-		{
-			$this->setTemplateVar('showtree_url' ,Html::url('index','hidetree') );
-			$this->setTemplateVar('showtree_text',lang('HIDETREE')       );
-		}
-		else
-		{
-			$this->setTemplateVar('showtree_url' ,Html::url('index','showtree') );
-			$this->setTemplateVar('showtree_text',lang('SHOWTREE')       );
-		}
-		
 		if	( config('interface','session','auto_extend') )
 		{
 			$this->setTemplateVar('ping_url'    ,Html::url('title','ping')            );			
@@ -100,6 +89,35 @@ class TitleAction extends Action
 	{
 		$this->setTemplateVar('ping',true      );
 		$this->setTemplateVar('time',date('r') );
+	}
+	
+	
+	public function history()
+	{
+		$resultList = array();
+
+		$history = Session::get('history');
+		
+		if	( is_array($history) )
+		{
+			foreach( array_reverse($history) as $objectid )
+			{
+				$o = new Object( $objectid );
+				$o->load();
+				$resultList[$objectid] = array();
+				$resultList[$objectid]['url']  = Html::url($o->getType(),'',$objectid);
+				$resultList[$objectid]['type'] = $o->getType();
+				$resultList[$objectid]['name'] = $o->name;
+				$resultList[$objectid]['lastchange_date'] = $o->lastchangeDate;
+	
+				if	( $o->desc != '' )
+					$resultList[$objectid]['desc'] = $o->desc;
+				else
+					$resultList[$objectid]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+			}
+		}
+
+		$this->setTemplateVar( 'history',$resultList );		
 	}
 }
 
