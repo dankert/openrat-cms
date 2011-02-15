@@ -4,7 +4,7 @@
 
 
 button   = type:submit,src,class:ok,value:ok,text:button_ok
-cell     = width,style,class,colspan,rowspan
+cell     = width,style,class,colspan,rowspan,header:false,title,url
 char     = type:*
 checkbox = default:false,readonly:false,name:*
 date     = date
@@ -22,7 +22,7 @@ if       = equals,value,not,empty,present,contains,greaterthan,lessthan,true,fal
 image    = config,file,url,icon,align:left,type,elementtype,fileext,tree,notice,size,title
 input    = class:text,default:,type:text,index,name:*,prefix,value,size:40,maxlength:256,onchange:,readonly:false
 inputarea= name,rows:10,cols:40,value,index,onchange,prefix,class:inputarea,default:
-insert   = file,script,inline:false,url,name
+insert   = file,script,inline:false,url,name,function
 label    = for:*,value
 link     = title:,config,target,var,url,class:,action,subaction,id,var1,value1,var2,value2,var3,value3,var4,value4,var5,value5,accesskey,name,anchor,frame:_self
 list     = list:*,extract:false,key:list_key,value:list_value

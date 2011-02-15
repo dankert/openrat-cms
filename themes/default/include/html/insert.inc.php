@@ -24,3 +24,8 @@ else
 /* #IF-ATTR url# */
 <iframe name="<?php echo $attr_name ?>" src="<?php echo $attr_url ?>"></iframe>
 /* #END-IF# */
+
+/* #IF-ATTR function# */
+Hallo!
+<script type="text/javascript" name="JavaScript"><?php echo $attr_function?>();</script>
+/* #END-IF# */
