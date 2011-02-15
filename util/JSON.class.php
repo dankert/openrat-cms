@@ -353,7 +353,7 @@ class JSON
                                          ord($var{$c + 2}),
                                          ord($var{$c + 3}),
                                          ord($var{$c + 4}),
-                                         ord($var{$c + 5}));
+                                         ord(@$var{$c + 5}));
                             $c += 5;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
