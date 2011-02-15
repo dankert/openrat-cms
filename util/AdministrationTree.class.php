@@ -106,7 +106,7 @@ class AdministrationTree extends AbstractTree
 
 
 
-	function userandgroups( $id )
+	function userandgroups( )
 	{
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('GLOBAL_USER');
@@ -130,7 +130,7 @@ class AdministrationTree extends AbstractTree
 	}
 
 
-	function projects( $id )
+	function projects( )
 	{
 		// Schleife ueber alle Projekte
 		foreach( Project::getAll() as $id=>$name )
@@ -150,7 +150,7 @@ class AdministrationTree extends AbstractTree
 
 
 
-	function prefs_system( $id )
+	function prefs_system( )
 	{
 		$system = array( 'time'   => date('r'),
 		                 'os'     => php_uname('s'),
@@ -185,7 +185,7 @@ class AdministrationTree extends AbstractTree
 	
 
 
-	function prefs_php( $id )
+	function prefs_php( )
 	{
 		$php_prefs = array( 'version'             => phpversion(),
 		                    'SAPI'                => php_sapi_name(),
@@ -215,7 +215,7 @@ class AdministrationTree extends AbstractTree
 		
 
 	
-	function prefs_extensions( $id )
+	function prefs_extensions( )
 	{
 		$extensions = get_loaded_extensions();
 		asort( $extensions );
@@ -253,7 +253,7 @@ class AdministrationTree extends AbstractTree
 	 * 
 	 * @param $id
 	 */
-	function prefs( $id )
+	function prefs( )
 	{
 		global $conf;
 		
@@ -265,7 +265,7 @@ class AdministrationTree extends AbstractTree
 
 		$treeElement = new TreeElement();
 		
-		$treeElement->internalId  = 0;
+		$treeElement->internalId  = -1;
 		$treeElement->text        = 'OpenRat';
 		$treeElement->icon        = 'config_folder';
 
@@ -328,7 +328,7 @@ class AdministrationTree extends AbstractTree
 	{
 		global $conf;
 		
-		if	( $id == 0 )
+		if	( $id < 0 )
 		{
 			$tmpConf = $conf;
 		}
@@ -393,7 +393,7 @@ class AdministrationTree extends AbstractTree
 	}
 
 
-	function users( $id )
+	function users( )
 	{	
 		foreach( User::getAllUsers() as $user )
 		{
@@ -422,7 +422,7 @@ class AdministrationTree extends AbstractTree
 	}
 
 
-	function groups( $id )
+	function groups( )
 	{
 
 		foreach( Group::getAll() as $id=>$name )
