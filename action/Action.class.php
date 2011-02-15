@@ -749,6 +749,8 @@ class Action
 	 */
 	function isEditMode()
 	{
+		return true;
+		
 		if	( readonly() )
 			return false;
 			
