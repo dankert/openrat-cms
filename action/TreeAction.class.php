@@ -222,6 +222,9 @@ class TreeAction extends Action
 	 */
 	function show()
 	{
+		if	( $this->hasRequestVar('projectid') )
+			$this->load();
+			
 		$project = Session::getProject();
 		if	( is_object($project) )
 		{
@@ -260,6 +263,38 @@ class TreeAction extends Action
 		
 		$this->setTemplateVar( 'lines',$this->outputElement( 0,0,array() ) );
 		$this->setTemplateVar( 'tree',$this->tree->elements                ); 
+	}
+
+	
+	
+	/**
+	 * Anzeigen des Baumes fuer asynchrone Anfragen.
+	 */
+	function loadBranch()
+	{
+		$this->tree = Session::getTree();
+		
+		if	( !is_object($this->tree) ) {
+			$this->setTemplateVar('notice','fuck, kein Baum');
+			return;
+		}
+		
+		$type = $this->getRequestVar('type');
+		
+		$this->tree->tempElements = array();
+		
+		if	( intval($this->getRequestVar('id')) != 0 )
+			$this->tree->$type( $this->getRequestId() );
+		else
+			$this->tree->$type();
+			
+		$branch = array();
+		foreach( $this->tree->tempElements as $element )
+		{
+			$branch[] = get_object_vars($element);
+		}
+		
+		$this->setTemplateVar( 'branch',$branch ); 
 	}
 	
 }

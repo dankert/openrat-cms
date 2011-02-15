@@ -3,6 +3,7 @@
 goto=show
 
 [show]
+menu=true
 
 [load]
 ;write=get
@@ -29,3 +30,10 @@ async=true
 
 [loadAll]
 async=true
+
+[loadBranch]
+async=true
+
+[menu]
+menu=content,settings
+
