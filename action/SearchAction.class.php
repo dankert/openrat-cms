@@ -186,42 +186,64 @@ class SearchAction extends Action
 		
 		$text = $this->getRequestVar('search');
 		
-		$o = new Object();
-		if	( Object::available( intval($text) ) )
-			$listObjectIds[] = intval( $text );
+		$project = Session::getProject();
+		if	( is_object($project) && $project->projectid == -1 )
+		{
+			$resultList = array();
 			
-		if	( $conf['search']['quicksearch']['search_name'] )
-		{
-			$o = new Object();
-			$listObjectIds += $o->getObjectIdsByName( $text );
+			$user = User::loadWithName($text);
+			if	( is_object($user) )
+			{
+				$userResult = array( 'url'  => Html::url('template','',$templateid),
+				                     'type' => 'user',
+				                     'name' => $user->name,
+				                     'desc' => lang('NO_DESCRIPTION_AVAILABLE'),
+				                     'lastchange_date' => 0 );
+			}
+			$resultList[] = $userResult;
+			
+			$this->setTemplateVar( 'result',$resultList );
 		}
-
-		if	( $conf['search']['quicksearch']['search_description'] )
+		else
 		{
 			$o = new Object();
-			$listObjectIds += $o->getObjectIdsByDescription( $text );
-		}
-
-		if	( $conf['search']['quicksearch']['search_filename'] )
-		{
-			$o = new Object();
-			$listObjectIds += $o->getObjectIdsByFilename( $text );
+			if	( Object::available( intval($text) ) )
+				$listObjectIds[] = intval( $text );
+				
+			if	( $conf['search']['quicksearch']['search_name'] )
+			{
+				$o = new Object();
+				$listObjectIds += $o->getObjectIdsByName( $text );
+			}
 	
-			$f = new File();
-			$listObjectIds += $f->getObjectIdsByExtension( $text );
-		}
+			if	( $conf['search']['quicksearch']['search_description'] )
+			{
+				$o = new Object();
+				$listObjectIds += $o->getObjectIdsByDescription( $text );
+			}
+	
+			if	( $conf['search']['quicksearch']['search_filename'] )
+			{
+				$o = new Object();
+				$listObjectIds += $o->getObjectIdsByFilename( $text );
 		
-		// Inhalte durchsuchen
-		if	( $conf['search']['quicksearch']['search_content'] )
-		{
-			$e = new Value();
-			$listObjectIds += $e->getObjectIdsByValue( $text );
-	
-			$template = new Template();
-			$listTemplateIds += $template->getTemplateIdsByValue( $text );
+				$f = new File();
+				$listObjectIds += $f->getObjectIdsByExtension( $text );
+			}
+			
+			// Inhalte durchsuchen
+			if	( $conf['search']['quicksearch']['search_content'] )
+			{
+				$e = new Value();
+				$listObjectIds += $e->getObjectIdsByValue( $text );
+		
+				$template = new Template();
+				$listTemplateIds += $template->getTemplateIdsByValue( $text );
+			}
+			
+			$this->explainResult( $listObjectIds, $listTemplateIds );
 		}
 
-		$this->explainResult( $listObjectIds, $listTemplateIds );
 	}
 	
 	

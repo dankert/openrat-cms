@@ -3,8 +3,8 @@
 goto=prop
 
 [quicksearch]
-menu=search
-goto=result
+async=true
+;goto=result
 
 [result]
 menu=search
