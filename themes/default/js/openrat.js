@@ -16,10 +16,6 @@ function refreshAll()
 		//$(this).fadeIn();
 	});
 	
-	// Oberstes Tree-Element erzeugen
-	$('div#tree').html("Wird geladen");
-	$('div#tree').append('<ul class="tree" />');
-	
 	loadTree();
 	
 	// Modale Dialoge
@@ -35,17 +31,111 @@ function loadViewByName(viewName, url )
 function loadView(jo, url )
 {
 	$(jo).fadeOut('fast').load(url,null, function() { $(jo).fadeIn(100) });
+	
+	//   S u c h e
+	$('div.search input').blur( function(){
+		$('div.search input div.dropdown').fadeOut();
+	});
+	
+	$('div.search input').keyup( function(){
+		var val = $(this).val();
+		if	( val.length > 3 )
+		{
+			$('div.search div.dropdown').html('');
+			$.ajax( { 'type':'GET',url:'./dispatcher.php?action=search&subaction=quicksearch&search='+val, data:null, success:function(data, textStatus, jqXHR)
+				{
+					for( id in data.result )
+					{
+						var result = data.result[id];
+						
+						//$('div.search input div.dropdown').append('Hallo '+result);
+						// Suchergebnis-Zeile in das Ergebnis schreiben.
+						$('div.search div.dropdown').append('<div title="'+result.desc+'"><a href="javascript:loadViewByName(\'content\',\''+result.url+'\');"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</a></div>');
+					}
+				} } );
+			$('div.search div.dropdown').fadeIn();
+			
+			
+		}
+		else
+		{
+			$('div.search input div.dropdown').fadeOut();
+		}
+	});
+	
+	
+	// V e r l a u f
+	$('div#header div.history').hover( function(){
+		$('div#header div.history div.dropdown').html('');
+		$.ajax( { 'type':'GET',url:'./dispatcher.php?action=title&subaction=history', data:null, success:function(data, textStatus, jqXHR)
+			{
+				for( id in data.history )
+				{
+					var result = data.history[id];
+					
+					// Suchergebnis-Zeile in das Ergebnis schreiben.
+					$('div#header div.history div.dropdown').append('<div title="'+result.desc+'" onclick="loadViewByName(\'content\',\''+result.url+'\');"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</div>');
+				}
+			} } );
+		$('div#header div.history div.dropdown').fadeIn();
+	});
+	
 }
 
 function loadTree()
 {
-	// Baum initial laden
-	$.getJSON("./dispatcher.php?action=tree&subaction=loadAll", function(json) {
-		$.each(json['lines'],function(idx,line)
+	// Oberstes Tree-Element erzeugen
+	$('div#tree div.window div.content').html("Wird geladen");
+	$('div#tree div.window div.content').append('<ul class="tree"><li class="root">Baum</li></ul>');
+	
+	// Wurzel des Baums laden
+	loadBranch( $('div#tree ul.tree > li'),'root',0);
+}
+
+
+/**
+ * Zweig laden.
+ * @param li JQuery-Objekt, in welches der Inhalt des neuen Zweiges geladen werden soll.
+ * @param type Typ
+ * @param id Id
+ * @return
+ */
+function loadBranch(li,type,id)
+{
+	//alert("hier rein: "+$(li).html() );
+	$.getJSON('./dispatcher.php?action=tree&subaction=loadBranch&id='+id+'&type='+type, function(json) {
+		$(li).append('<ul style="display:none;"/>');
+		var ul = $(li).children('ul').first();
+		$.each(json['branch'],function(idx,line)
 		{
-			$('div#tree > ul.tree').append('<li><img src="http://127.0.0.1/~dankert/cms-test/cms09/themes/default/images/icon_'+line['icon']+'.png" /><a href="'+line['url']+'">'+ line['text'] + '</a></li>');
+			var img = (line.url!==undefined?'tree_plus':'tree_none');
+			$(ul).append( '<li><img class="tree" src="'+OR_THEMES_EXT_DIR+'default/images/'+img+'.gif" /><a href="javascript:void(0)" title="'+ line.description + '"><img class="entry" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+line['icon']+'.png" />'+ line.text + '</a></li>' );
+			var new_li = $(ul).children('li').last();
+			$(new_li).children('img.tree').unbind('click');
+			$(new_li).children('img.tree').click( {},function(e) {loadBranch( $(e.target).parent(),line.type,line.internalId) }); // Zweig öffnen
+			$(new_li).children('a').click( function() { loadViewByName('content',line['url'].replace(/&amp;/g,'&')); }); // Objekt laden
 		});
+		$(ul).fadeIn(600); // Einblenden
 	});
+	
+	$(li).children('img.tree').unbind('click');
+	$(li).children('img.tree').click( function(e) { closeBranch($(e.target).parent(),type,id) } );
+	$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_minus.gif');
+}
+
+
+/**
+ * 
+ * @param li JQuery-Objekt
+ * @return
+ */
+function closeBranch(li,type,id)
+{
+	//alert("schließen:"+$(li).html() );
+	$(li).children('ul').fadeOut('slow').remove();
+	$(li).children('img.tree').unbind('click');
+	$(li).children('img.tree').click( function() { loadBranch($(this).parent(),type,id) });
+	$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_plus.gif');
 }
 
 
@@ -81,3 +171,31 @@ function doResponse(data,status)
 	if	( 'refresh' in data )
 		refreshAll();
 }
+
+
+
+
+/*
+$(function(){ //Document ready shorthand
+
+var $search = $('#search');//Cache the element for faster DOM searching since we are using it more than once
+original_val = $search.val(); //Get the original value to test against. We use .val() to grab value="Search"
+$search.focus(function(){ //When the user tabs/clicks the search box.
+	if($(this).val()===original_val){ //If the value is still the default, in this case, "Search"
+		$(this).val('');//If it is, set it to blank
+	}
+})
+.blur(function(){//When the user tabs/clicks out of the input
+	if($(this).val()===''){//If the value is blank (such as the user clicking in it and clicking out)...
+		$(this).val(original_val); //... set back to the original value
+	}
+});
+
+});
+
+ */
+
+
+
+
+
