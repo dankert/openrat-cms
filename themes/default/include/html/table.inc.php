@@ -1,8 +1,6 @@
 <?php
 	// Status speichern
-	$last_row_idx    = @$row_idx;
 	$last_column_idx = @$column_idx;
-	$row_idx    = 0;
 	$column_idx = 0;
 	$coloumn_widths = array();
 	$row_classes    = array();
