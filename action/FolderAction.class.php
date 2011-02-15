@@ -36,6 +36,15 @@ class FolderAction extends ObjectAction
 			$this->folder = new Folder( $this->getRequestId() );
 			$this->folder->load();
 			Session::setObject( $this->folder );
+			
+			$history = Session::get('history');
+			if	( !is_array($history) )
+				$history = array();
+			unset($history[$this->getRequestId()]);
+			if	( count($history) > 20 )
+				array_shift($history);
+			$history[ $this->getRequestId() ] = $this->getRequestId();
+			Session::set('history',$history);
 		}
 		else
 		{
