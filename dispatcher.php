@@ -180,7 +180,7 @@ if	( isset($REQ[REQ_PARAM_TARGET])
 	$views[$REQ[REQ_PARAM_TARGET]] = array('action'=>$REQ[REQ_PARAM_ACTION],'subaction'=>$REQ[REQ_PARAM_SUBACTION]); 
 }
 // Action und Subaction aus der View-Konfiguration ermitteln.
-if	( !empty($REQ[REQ_PARAM_TARGET]) )
+if	( !empty($REQ[REQ_PARAM_TARGET]) && array_key_exists($REQ[REQ_PARAM_TARGET],$views) )
 {
 	$view      = $REQ[REQ_PARAM_TARGET];
 	$action    = $views[$view]['action'   ];
@@ -534,10 +534,13 @@ else
 $showDuration = $conf['interface']['show_duration'];
 */
 
+/*
+ * 
 	$viewConfig = $views[$view];
 	
 	if	( $viewConfig == null )
 		return; // View ist leer.
+ */
 	
 	$do->forward();
 
