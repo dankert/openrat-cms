@@ -1,4 +1,6 @@
-<div class="breadcrumb">
+<div class="window">
+
+<div class="title">
 		<?php $icon=$actionName; ?>
 		<img src="<?php echo $image_dir.'icon_'.$icon.IMG_ICON_EXT ?>" align="left" />
 		
@@ -22,14 +24,13 @@
 			<a javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $url ?>'); return false; " title="<?php echo $title ?>" class="path"><?php echo (!empty($key)?langHtml($key):$name) ?></a>
 			&nbsp;&rarr;&nbsp;
 		<?php } ?>
-		<span class="title"><?php echo langHtml($windowTitle) ?></span>
+		<span class="title"><?php echo langHtml(@$windowTitle) ?></span>
 		<?php
 		if	( isset($notice_status))
 		{
 			?><img src="<?php echo $image_dir.'notice_'.$notice_status.IMG_ICON_EXT ?>" align="right" /><?php
 		}
 		?>
-	</div>
 
 		
 		<?php ?>		<!--<td class="menu" style="align:right;">
@@ -40,14 +41,9 @@
      ?>
     </td>-->
 
+</div>
 
-
-
-
-
-
-
-<div class="menu">
+<ul class="menu">
 <?php
 
 	if	( !isset($windowMenu) || !is_array($windowMenu) ) $windowMenu = array();
@@ -58,26 +54,32 @@
 			$tmp_pos = strpos(strtolower($tmp_text),strtolower($tmp_key));
 			if	( $tmp_pos !== false )
 				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
-          	
+
+			$liClass  = (isset($menu['url'])?'':'no').'action'.($this->subActionName==$menu['subaction']?'_active':'');
+			$icon_url = $image_dir.'icon/'.$menu['subaction'].'.png';
+			
+			?><li class="<?php echo $liClass?>"><?php
           	if	( isset($menu['url']) )
           	{
-          		?><a class="action<?php echo $this->subActionName==$menu['subaction']?'_active':'' ?>"  javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>'); return false; " accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><img src="<?php echo $image_dir.'icon/'.$menu['subaction'].'.png' ?>" /><?php echo $tmp_text ?></a><?php
+          		$link_url = Html::url($actionName,$menu['subaction'],$this->getRequestId() );
+          		?><a href="javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $link_url ?>'); return false; " accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><img src="<?php echo $icon_url ?>" /><?php echo $tmp_text ?></a><?php
           	}
           	else
           	{
-          		?><div class="noaction"><img src="<?php echo $image_dir.'icon/'.$menu['subaction'].'.png' ?>" /><?php echo $tmp_text ?></div><?php
+          		?><span><img src="<?php echo $icon_url ?>" /><?php echo $tmp_text ?></span><?php
           	}
           }
-          	if (@$conf['help']['enabled'] )
+          	?></li><?php
+          if ( /* Deaktiviert */ false && @$conf['help']['enabled'] )
           	{
              ?><a class="help" href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo $image_dir.'icon/help.png' ?>" /><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
           	}
-          	?><br/><?php
+          	?><?php
 	
 	
 	
 		?>
-</div>
+</ul>
 		
 
 <!-- Hinweis-Meldungen -->
@@ -102,3 +104,5 @@
     </dl>
   
 <?php } ?>
+
+<div class="content">

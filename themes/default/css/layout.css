@@ -1,3 +1,4 @@
+body
 /*
 OpenRat Content Management System
 Copyright (C) 2002-2010 Jan Dankert
@@ -36,6 +37,8 @@ a img {border:none;}
 body
 {
 	background-color:#E0E0D5;
+	height:100%;
+	min-height:100%;
 }
 
 iframe
@@ -47,11 +50,13 @@ iframe
 }
 
 div.breadcrumb,
-div.breadcrumb a
+div.breadcrumb a,
+div.window > div.title
 {
 	height:20px;
 	x-background-color:grey;
-	color:grey;
+	xsopacity:0.7;
+	color:white;
 	font-weight:bold;
 }
 
@@ -60,7 +65,6 @@ div#header
 {
 	height:19px;
 	overflow:hidden;
-	background-color:grey;
 	margin:0px;
 	padding:5px;
 }
@@ -73,15 +77,17 @@ div#header div
 	color:white;
 }
 
-div#header div
+div#header div.title
 {
 	float:left;
 	margin-right:24px;
 	margin-left:0px;
 }
 
-div#header div.logout,
-div#header div.user
+div#header div.user,
+div#header div.search,
+div#header div.projects,
+div#header div.history
 {
 	float:right;
 	margin-right:0px;
@@ -93,7 +99,6 @@ div#tree
 	padding:5px;
 	width:25%;
 	margin-left:0px;
-	overflow:auto;
 	height:100%;
 	float:left;
 }
@@ -106,11 +111,9 @@ div#content
 	
 }
 
-a.action,
-a.action_active,
-a.help,
-div.noaction,
-input.ok
+div.content a.action,
+div.content a.help,
+div.content input.ok
 {
 	x-height:20px;
 	margin:9px;
@@ -130,11 +133,21 @@ input.ok
 	font-style:normal;
 	font-weight:normal;
 	text-decoration:none;
+    cursor:default;
+    color:black;
+}
+
+/*   S c h a t t e n   */
+div.content a.action,
+div.content a.help,
+div.content input.ok,
+div#header,
+div.dropdown,
+div.window
+{
 	-webkit-box-shadow: 3px 2px 5px gray;
     -moz-box-shadow: 3px 2px 5px gray;
     box-shadow: 3px 2px 5px gray;
-    cursor:default;
-    color:black;
 }
 
 a.help
@@ -181,11 +194,11 @@ a
 div.dropdown
 {
 	display:none;
-	opacity:0.9;
+	opacity:0.95;
 	background-color:white;
 	position: absolute;
 	
-	padding:4px;
+	padding:10px;
 	border:1px solid grey;
 	-moz-border-radius:5px; /* Mozilla */
     -webkit-border-radius:5px; /* Webkit */
@@ -196,9 +209,6 @@ div.dropdown
 	font-style:normal;
 	font-weight:normal;
 	text-decoration:none;
-	-webkit-box-shadow: 3px 2px 5px gray;
-    -moz-box-shadow: 3px 2px 5px gray;
-    box-shadow: 3px 2px 5px gray;
     color:black;
 }
 
@@ -218,72 +228,6 @@ div#header div:hover div.dropdown
 }
 
 
-topmenu{
-	list-style:none;
-	display:inline;
-	margin:0;
-	padding:0;
-}
-.topmenu li{
-	display:inline;
-	padding:3px 15px 3px 15px;
-	border:1px solid #ccc;
-	border-bottom:none;
-	margin-right:9px;
-	background:#828080;
-	-moz-border-radius:5px;
-	-moz-box-shadow: 0 1px 3px rgba(0,0,0, .3);
-}
-.topmenu li:hover{
-	background: #999898;
-}
-.topmenu li a{
-	color:#fff;
-	text-decoration:none;
-}
-/*Dropdown*/
-.topmenu ul{
-	display:none;
-	width:110px;
-	background-color: #fff;
-	padding: 5px 5px;
-	margin-left: 75px;
-	margin-top:1px;
-	border: solid 1px #b4b4b4;
-	-webkit-border-radius: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	-moz-border-radius-bottomright: 5px;
-	-moz-border-radius-topright: 3px;
-	border-radius: 5px;
-	-webkit-box-shadow: 0 1px 3px rgba(0,0,0, .3);
-	-moz-box-shadow: 0 1px 5px rgba(0,0,0, .3);
-	box-shadow: 0 1px 3px rgba(0,0,0, .3);
-	position:absolute;
-	opacity:0.7;
-}
-/*Dropdown anzeigen!!!*/
-.topmenu li:hover > ul{
-	display:inline-table;
-}
-.topmenu ul li{
-	list-style-type: none;
-	display: block;
-	padding: 4px 2px 4px 2px;
-	border:none;
-	background:none;
-	-moz-box-shadow:none;
-	border-bottom:1px solid #ccc;
-}
-.topmenu ul li:hover{
-	background: none;
-	font-weight: bold;
-}
-.topmenu ul li:last-child{
-	border-bottom:none;
-}
-.topmenu ul li a{
-	color:#000000;
-}
 
 
 
@@ -457,12 +401,6 @@ body.main span.accesskey
 	text-decoration:underline;
 }
 
-/* Datenzeile-Mauseffekt */
-tr.data:hover,
-body.tree tr:hover
-{
-	background-color:silver;
-}
 
 
 
@@ -531,16 +469,16 @@ table.main
 
 
 /* Eingabefelder */
-input.text,
-textarea
+div.window input.text,
+div.window textarea
 {
 	border:2px solid;
 	padding:2px;
 }
 
 
-input.checkbox,
-input.radio
+div.window input.checkbox,
+div.window input.radio
 {
 	border:1px solid grey;
 }
@@ -601,24 +539,13 @@ p.logo
 	font-size:13px;
 }
 
-input.search
+div#header div.search input
 {
 	margin:0px;
 	padding:0px;
 	font-size:10px;
-	border:2px solid black;
+	border:1px solid silver;
 }
-input.searchbutton
-{
-	margin:0px;
-	margin-left:5px;
-	border:0px;
-	padding:0px;
-	font-size:4px;
-	max-height:20px;
-}
-
-
 
 
 
@@ -734,9 +661,7 @@ form.xlogin
 
 
 
-/*
-Baum
-*/
+/*   B a u m   */
 ul.tree,
 ul.tree ul
 {
@@ -746,25 +671,196 @@ ul.tree ul
 	padding: 0;
 }
 
+ul.tree:xlast-child,
+ul.tree ul:xlast-child
+{
+	list-style-type: none;
+	background: url(../images/tree_none_end.gif) repeat-y;
+	margin: 0;
+	padding: 0;
+}
+
 ul.tree ul
 {
-	margin-left: 10px;
+	margin-left: 0px;
 }
 
 ul.tree li
 {
 	margin: 0;
-	padding:0 12px;
-	line-height: 20px;
-	background: url(../images/tree_plus.gif) no-repeat;
-	color: #369;
+	padding:0 18px;
+	line-height: 16px;
+	xbackground: url(../images/tree_plus.gif) no-repeat;
+	xcolor: #369;
 	font-weight: bold;
+	white-space:nowrap;
 }
 
 ul.tree li.last,
 ul.tree li:last-child
 {
-	background: #fff url(../images/tree_plus_end.gif) no-repeat;
+	xbackground: #fff url(../images/tree_plus_end.gif) no-repeat;
 } 
 
 body > div { display:none; }
+
+
+
+
+
+
+/* Menue-Reiter */
+
+div.window ul.menu { /* general settings */
+text-align: left; /* set to left, right or center */
+margin: 1em 0 1em 0; /* set margins as desired */
+xfont: bold 11px verdana, arial, sans-serif; /* set font as desired */
+border-bottom: 1px solid #6c6; /* set border COLOR as desired */
+list-style-type: none;
+padding: 3px 10px 3px 10px; /* THIRD number must change with respect to padding-top (X) below */
+}
+
+div.window ul.menu li a,div.window ul.menu li div{ /* do not change */
+	
+	-moz-border-radius-topleft:5px; /* Mozilla */
+    -webkit-border-radius-topleft:5px; /* Webkit */
+    -khtml-border-top-radius-topleft:5px; /* Konqui */
+    border-top-right-radius:5px;
+	-moz-border-radius-topright:5px; /* Mozilla */
+    -webkit-border-radius-topright:5px; /* Webkit */
+    -khtml-border-top-radius-topright:5px; /* Konqui */
+    border-top-right-radius:5px;
+    border:1px solid gray;
+}
+
+div.window ul.menu li { /* do not change */
+   
+	display: inline;
+}
+
+div.window ul.menu li.action_active { /* settings for selected tab */
+border-bottom: 1px solid #fff; /* set border color to page background color */
+background-color: #fff; /* set background color to match above border color */
+}
+
+div.window ul.menu li.action_active a { /* settings for selected tab link */
+background-color: #fff; /* set selected tab background color as desired */
+color: #000; /* set selected tab link color as desired */
+position: relative;
+top: 1px;
+padding-top: 4px; /* must change with respect to padding (X) above and below */
+}
+
+div.window ul.menu li a,
+div.window ul.menu li > span
+{ /* settings for all tab links */
+padding: 3px 4px; /* set padding (tab size) as desired; FIRST number must change with respect to padding-top (X) above */
+border: 1px solid #6c6; /* set border COLOR as desired; usually matches border color specified in #tabnav */
+color: #666; /* set unselected tab link color as desired */
+margin-right: 0px; /* set additional spacing between tabs as desired */
+text-decoration: none;
+border-bottom: none;
+}
+
+div.window ul.menu a:hover { /* settings for hover effect */
+background: #fff; /* set desired hover color */
+}
+
+
+
+
+
+
+
+
+
+div.window {
+	padding:3px;
+	border:1px solid grey;
+	
+	-moz-border-radius:5px; /* Mozilla */
+    -webkit-border-radius:5px; /* Webkit */
+    -khtml-border-radius:5px; /* Konqui */
+    border-radius:5px;
+    
+    height:auto;
+    
+}
+
+
+
+
+div.window div.content {
+	padding:3px;
+	border:1px solid grey;
+	
+	-moz-border-radius:3px; /* Mozilla */
+    -webkit-border-radius:3px; /* Webkit */
+    -khtml-border-radius:3px; /* Konqui */
+    border-radius:3px;
+    
+    overflow:auto;
+    height:100%;
+}
+
+table tr.headline > td {
+    background-color: silver;
+	background: -moz-linear-gradient(top, gray, silver);
+	background: -webkit-gradient(linear, left top, left bottom, from(gray), to(silver));
+    border-bottom:1px solid gray;
+    border-right:1px solid silver;
+    padding:3px;
+}
+
+
+table tr.data > td {
+    border-bottom:1px solid gray;
+    border-right:1px solid silver;
+    padding:3px;
+}
+
+
+
+/*   F a r b e n   */
+
+/* Ungerade Tabellenzeilen (funktioniert nicht im FF) */
+table > tr.data:nth-child(2n) {
+	background-color: silver;
+}
+
+/* Datenzeile - Mauseffekt */
+table tr.data:hover,
+body.tree tr:hover
+{
+	background-color:#EEEEEE;
+}
+
+/* Datenzeile mit URL - Mauseffekt */
+table tr.data td[onclick]:hover{
+	background-color:silver;
+}
+
+tr.data > td[onclick],
+div.dropdown div[onclick]
+{
+cursor:pointer;
+}
+
+table tr.data,
+div.content pre {
+    background-color: white;
+}
+
+/* Hintergrund Fenster */
+div.window {
+	background-color: #3399FF;
+}
+
+/* Sonstiger Fensterhintergrund */
+div#header,                   /* Titelleite-Hintergrund */
+div.window div.content,       /* Fensterinhalt-Hintergrund */
+div.window ul.menu li a,      /* Tabs */
+div.window ul.menu li > span  /* Tabs */
+{
+	background-color: gray;
+}

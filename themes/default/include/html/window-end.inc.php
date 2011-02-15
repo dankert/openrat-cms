@@ -1,4 +1,7 @@
 
+</div>
+</div>
+
 <?php if ($showDuration)
       { ?>
 <br/>
