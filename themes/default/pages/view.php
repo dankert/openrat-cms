@@ -24,13 +24,13 @@
       } ?>
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/layout.css" >
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/user/default.css" >
-  <script src="/~dankert/cms-test/cms09/themes/default/js/jquery-1.5.min.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-1.5.min.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/openrat.js"></script>
   <!-- 
   <script src="/~dankert/cms-test/cms09/themes/default/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>
-  <script src="/~dankert/cms-test/cms09/themes/default/js/xxxxxxxxxxxjquery-plugin-orSearchBox.js"></script>
+  <script src="/~dankert/cms/themes/default/js/xxxxxxxxxxxjquery-plugin-orSearchBox.js"></script>
    -->
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" >
-  <script src="/~dankert/cms-test/cms09/themes/default/js/openrat.js"></script>
 </head>
 
 <?php

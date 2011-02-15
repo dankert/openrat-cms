@@ -19,7 +19,7 @@ function refreshAll()
 	loadTree();
 	
 	// Modale Dialoge
-	$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
+	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
 }
 
 
