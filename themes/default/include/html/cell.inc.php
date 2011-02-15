@@ -22,4 +22,11 @@
 #IF-ATTR rowspan#
  rowspan="%rowspan%"
 #END-IF#
+#IF-ATTR title#
+ title="%title%"
+#END-IF#
+
+#IF-ATTR url#
+ onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $attr_url ?>'); "
+#END-IF#
 >
