@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window name:GLOBAL_USER widths:30%,70%
 			row

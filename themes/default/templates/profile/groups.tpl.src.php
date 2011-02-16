@@ -1,4 +1,4 @@
-page
+dummy
 	window icon:user name:user_groups
 		row
 			cell

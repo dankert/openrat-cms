@@ -1,4 +1,4 @@
-page
+dummy
 	form target:_top
 		window title:GLOBAL_REGISTER name:login width:400 icon:user columnclasses:x
 

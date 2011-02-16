@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window icon:project name:GLOBAL_PROJECT
 			row

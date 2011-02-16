@@ -1,4 +1,4 @@
-page
+dummy
 	form
 
 		window icon:group name:GLOBAL_GROUPS

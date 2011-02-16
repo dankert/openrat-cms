@@ -1,4 +1,4 @@
-page
+dummy
 
 	window icon:folder
 		row

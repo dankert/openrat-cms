@@ -1,4 +1,4 @@
-page
+dummy
 	window icon:template name:pages
 		table
 			row class:headline

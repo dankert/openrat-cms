@@ -1,4 +1,4 @@
-page
+dummy
 	form action:folder subaction:multiple
 		hidden name:ids
 		hidden name:type

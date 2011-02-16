@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window name:GLOBAL_PREFS widths:30%,70%
 			if present:subtype

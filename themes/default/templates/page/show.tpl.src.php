@@ -1,4 +1,4 @@
-page
+dummy
 
 	window icon:folder
 		fieldset title:message:menu_page_show

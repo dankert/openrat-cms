@@ -1,4 +1,4 @@
-page
+dummy
 
 	window name:x title:TEMPLATE_ELEMENTS widths:30%,50%,20%
 		table

@@ -1,4 +1,4 @@
-page
+dummy
 	window icon:user name:GLOBAL_USERS width:70%
 		table
 			row class:headline

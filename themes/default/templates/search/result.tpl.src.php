@@ -1,4 +1,4 @@
-page
+dummy
 	window icon:search widths:70%,30%
 		row
 			cell class:help

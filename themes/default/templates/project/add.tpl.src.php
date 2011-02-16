@@ -1,4 +1,4 @@
-page
+dummy
 	form method:post
 
 		window icon:project name:GLOBAL_PROJECTS widths:20px,20%,80% width:70%

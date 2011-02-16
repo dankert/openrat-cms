@@ -144,7 +144,7 @@ class FilebrowserAction extends ObjectAction
 				if	( $o->isFolder )
 					$list[$id]['url' ] = Html::url('filebrowser','browse',$id,array('CKEditorFuncNum'=>$funcNum) );
 				else
-					$list[$id]['url' ] = "javascript:window.top.opener.CKEDITOR.tools.callFunction($funcNum,'".Html::url('file','show',$id,array('oid'=>'__OID__'.$id.'__'))."','');window.top.close();window.top.opener.focus();";					
+					$list[$id]['url' ] = "javascript:window.top.opener.CKEDITOR.tools.callFunction($funcNum,'".Html::url('file','preview',$id,array('oid'=>'__OID__'.$id.'__'))."','');window.top.close();window.top.opener.focus();";					
 				
 				
 				

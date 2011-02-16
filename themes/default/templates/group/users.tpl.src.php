@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window icon:user name:GROUP_MEMBERSHIPS
 			list list:memberships extract:true

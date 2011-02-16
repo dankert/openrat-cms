@@ -1,4 +1,4 @@
-page title:MENU_INDEX_PROJECTMENU
+dummy
 	window title:GLOBAL_PROJECTS
 
 		row

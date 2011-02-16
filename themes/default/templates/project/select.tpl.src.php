@@ -1,4 +1,4 @@
-page
+dummy
 	window title:GLOBAL_PROJECTS name:login width:400
 
 		list list:el extract:true

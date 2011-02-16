@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window title:GLOBAL_password name:login icon:user widths:50%,50%
 

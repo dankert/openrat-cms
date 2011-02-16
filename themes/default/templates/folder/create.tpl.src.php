@@ -1,4 +1,4 @@
-page
+dummy
 	form enctype:multipart/form-data
 		window title:GLOBAL_NEW name:global_new
 			row

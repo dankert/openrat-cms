@@ -1,4 +1,4 @@
-page
+dummy
 	form
 
 		window name:element

@@ -1,4 +1,4 @@
-page
+dummy
 	form method:post
 
 		window icon:group name:GLOBAL_GROUPS

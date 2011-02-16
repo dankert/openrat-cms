@@ -1,4 +1,4 @@
-page
+dummy
 	form enctype:multipart/form-data
 		hidden name:type default:file
 

@@ -1,4 +1,4 @@
-page
+dummy
 	window icon:language
 		table
 			row class:headline

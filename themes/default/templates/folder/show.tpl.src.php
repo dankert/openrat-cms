@@ -1,4 +1,4 @@
-page class:main
+dummy
 	window
 		table
 			row class:headline

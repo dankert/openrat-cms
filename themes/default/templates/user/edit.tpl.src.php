@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window name:GLOBAL_USER widths:50%,50%
 			if not: empty:image

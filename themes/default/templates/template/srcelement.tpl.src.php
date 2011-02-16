@@ -1,4 +1,4 @@
-page
+dummy
 
 	form
 		window widths:10px,150px

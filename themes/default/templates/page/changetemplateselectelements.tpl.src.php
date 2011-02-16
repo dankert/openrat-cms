@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		hidden name:newTemplateId default:newTemplateId
 		window

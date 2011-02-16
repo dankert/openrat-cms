@@ -1,4 +1,4 @@
-page
+dummy
 	window icon:project name:GLOBAL_PROJECTS width:70%
 		table
 			row class:headline

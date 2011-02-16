@@ -1,4 +1,4 @@
-page
+dummy
 	window name:GLOBAL_TEMPLATES
 
 		table

@@ -1,4 +1,4 @@
-page
+dummy
 	form action:login subaction:login target:_top
 		window title:GLOBAL_LOGIN name:login width:400px icon:user
 	

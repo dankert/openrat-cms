@@ -1,4 +1,4 @@
-page title:MENU_INDEX_APPLICATIONS
+dummy
 	window width:600 icon:project
 
 		row

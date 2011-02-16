@@ -1,4 +1,4 @@
-page
+dummy
 	window icon:group name:GLOBAL_MODELS widths:50%,25%,25%
 		table
 			row class:headline

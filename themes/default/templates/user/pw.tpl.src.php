@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window name:USER_PASSWORD columnclasses:fx rowclasses:rx
 			row

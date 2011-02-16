@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window width:70% widths:5%,40%,55%
 

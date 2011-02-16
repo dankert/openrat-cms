@@ -1,4 +1,4 @@
-page
+dummy
 	form target:_top
 		window name:password icon:user width:400px widths:50%,50%
 

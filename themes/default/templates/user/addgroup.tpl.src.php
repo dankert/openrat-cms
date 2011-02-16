@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window name:USER_MEMBERSHIPS width:70%
 			row

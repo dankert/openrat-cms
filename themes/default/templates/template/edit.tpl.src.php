@@ -1,4 +1,4 @@
-page
+dummy
 	window name:TEMPLATE_SHOW
 		row
 			cell

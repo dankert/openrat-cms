@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window name:GLOBAL_TEMPLATES widths:10px,40px
 	

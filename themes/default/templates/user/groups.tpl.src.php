@@ -1,4 +1,4 @@
-page
+dummy
 	form
 		window name:USER_MEMBERSHIPS widths:5%,95% width:70%
 			list list:memberships extract:true

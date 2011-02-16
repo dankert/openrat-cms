@@ -1,4 +1,4 @@
-page
+dummy
 	window name:element
 		row
 			cell colspan:2
