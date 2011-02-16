@@ -40,6 +40,8 @@
 	#IF-ATTR url#
 		$tmp_url = $attr_url;
 	#END-IF
-		
+
+	if	( substr($tmp_url,0,10) != 'javascript' )
+		$tmp_url = "javascript:loadViewByName('".$attr_target."','".$tmp_url.(isset($attr_anchor)?'#'.$attr_anchor:'')."'); return false;";
 	
-?><a target="<?php echo $attr_frame ?>"<?php if (isset($attr_name)) { ?> name="<?php echo $attr_name ?>"<?php }else{ ?> href="javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $attr_target ?>','<?php echo $tmp_url.(isset($attr_anchor)?'#'.$attr_anchor:'') ?>'); return false; "<?php } ?> class="<?php echo $attr_class ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
+?><a target="<?php echo $attr_frame ?>"<?php if (isset($attr_name)) { ?> name="<?php echo $attr_name ?>"<?php }else{ ?> href="javascript:void(0);" onclick="<?php echo $tmp_url ?>"<?php } ?> class="<?php echo $attr_class ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
