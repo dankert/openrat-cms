@@ -30,7 +30,22 @@ function loadViewByName(viewName, url )
 
 function loadView(jo, url )
 {
-	$(jo).fadeOut('fast').load(url,null, function() { $(jo).fadeIn(100) });
+	//   E d i t o r
+	var editorConfig = {
+			skin : 'v2',
+			baseHref: OR_THEMES_EXT_DIR+'../editor/editor/',
+			filebrowserUploadUrl:'./dispatcher.php?action=filebrowser&subaction=directupload&name=upload',
+			filebrowserBrowseUrl:'./dispatcher.php?action=filebrowser&subaction=browse'
+	};
+	
+	$(jo).fadeOut('fast').load(url,null, function() {
+			$(jo).fadeIn(100);
+			var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
+			if (o) o.destroy();
+			
+			//alert("o ist "+o);
+			$('textarea.editor').ckeditor( function() { /*alert("editor ready");*/ /* callback code */ }, editorConfig );
+		});
 	
 	//   S u c h e
 	$('div.search input').blur( function(){
@@ -67,7 +82,7 @@ function loadView(jo, url )
 	// V e r l a u f
 	$('div#header div.history').hover( function(){
 		$('div#header div.history div.dropdown').html('');
-		$.ajax( { 'type':'GET',url:'./dispatcher.php?action=title&subaction=history', data:null, success:function(data, textStatus, jqXHR)
+		$.ajax( { 'type':'GET', url:'./dispatcher.php?action=title&subaction=history', data:null, success:function(data, textStatus, jqXHR)
 			{
 				for( id in data.history )
 				{
@@ -80,6 +95,34 @@ function loadView(jo, url )
 		$('div#header div.history div.dropdown').fadeIn();
 	});
 	
+	
+	
+	
+	/*
+	$base = defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/editor/':'./editor/editor/';
+	$editor->basePath = $base;
+	$editor->config['skin' ] = 'v2';
+	$editor->config['language' ] = config('language','language_code');
+	$editor->config['toolbar' ] = 'Openrat';
+	$editor->config['toolbar_Openrat' ] =  array( 
+array('Save','Preview','-','Templates'),
+array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'),
+array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'),
+array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'),
+'/',
+array('Bold','Italic','Underline','Strike','-','Subscript','Superscript'),
+array('NumberedList','BulletedList','-','Outdent','Indent','Blockquote'),
+array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'),
+array('Link','Unlink','Anchor'),
+array('Image','Flash','Table','HorizontalRule','SpecialChar','PageBreak'),
+'/',
+array('Styles','Format','Font','FontSize'),
+array('TextColor','BGColor'),
+array('Source','-', 'ShowBlocks','Maximize') );
+	
+	$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','directupload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
+	$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','browse','-'));
+	*/
 }
 
 function loadTree()

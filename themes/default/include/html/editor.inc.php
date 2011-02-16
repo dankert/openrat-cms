@@ -56,7 +56,7 @@ switch( $attr_type )
 {
 	case 'fckeditor':
 	case 'html':
-		
+		echo '<textarea name="'.$attr_name.'" class="editor">'.$$attr_name.'</textarea>';
 		if	( $this->isEditMode() )
 		{
 			include_once('./editor/editor/ckeditor.php');
@@ -96,7 +96,8 @@ switch( $attr_type )
 			$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','directupload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
 			$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','browse','-'));
 			
-			$editor->editor($attr_name,$$attr_name);
+			// Editor hier raus.
+			//$editor->editor($attr_name,$$attr_name);
 		}
 		else
 		{
