@@ -1,5 +1,8 @@
 
 </div>
+
+<div class="status"></div>
+
 </div>
 
 <?php if ($showDuration)

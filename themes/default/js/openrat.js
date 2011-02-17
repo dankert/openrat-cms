@@ -191,6 +191,7 @@ function closeBranch(li,type,id)
 	//alert("schließen:"+$(li).html() );
 	$(li).children('ul').fadeOut('slow').remove();
 	$(li).children('div.tree').unbind('click');
+	$(li).children('div.tree').removeClass('open').addClass('closed');
 	//alert( "wieder öffnen: "+$(li).children('div').first().html());
 	$(li).children('div.tree').click( function() { loadBranch($(this).parent(),type,id) });
 	//$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_plus.gif');
@@ -199,6 +200,8 @@ function closeBranch(li,type,id)
 
 function formSubmit(form)
 {
+	$('.error').removeClass('error');
+
 	$(form).fadeTo(0.5);
 	var params = $(form).serializeArray();
 	//params['json'] = 'true';
@@ -219,7 +222,11 @@ function doResponse(data,status)
 		alert('Error while saving the values: ' + status);
 	
 	$.each(data['notices'], function(idx,value) {
-		alert(value.text);
+		$('div.window div.status').html('<div>');
+		$('div.window div.status div').addClass( value.status );
+		$('div.window div.status div').append( value.text );
+		$('div.window div.status div').delay(3000).fadeOut(2500);
+		//alert(value.text);
 	});
 	
 	$.each(data['errors'], function(idx,value) {

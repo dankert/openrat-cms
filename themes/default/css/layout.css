@@ -98,9 +98,14 @@ div#tree
 	padding:5px;
 	width:25%;
 	margin-left:0px;
-	height:100%;
 	float:left;
 }
+
+div#tree, div#content
+{
+	height:70%;
+}
+
 div#content
 {
 	padding:5px;
@@ -691,6 +696,7 @@ div.tree.closed
 }
 
 div#tree div.content,
+div#content div.content,
 ul.tree li.last,
 ul.tree li:last-child
 {
@@ -698,7 +704,6 @@ ul.tree li:last-child
 }
 
 body > div { display:none; }
-
 
 
 
@@ -715,7 +720,8 @@ list-style-type: none;
 padding: 3px 10px 3px 10px; /* THIRD number must change with respect to padding-top (X) below */
 }
 
-div.window ul.menu li a,div.window ul.menu li div{ /* do not change */
+div.window ul.menu li a,
+div.window ul.menu li div{ /* do not change */
 	
 	-moz-border-radius-topleft:5px; /* Mozilla */
     -webkit-border-radius-topleft:5px; /* Webkit */
@@ -741,7 +747,7 @@ background-color: #fff; /* set background color to match above border color */
 div.window ul.menu li.action_active a { /* settings for selected tab link */
 background-color: #fff; /* set selected tab background color as desired */
 color: #000; /* set selected tab link color as desired */
-position: relative;
+xposition: relative;
 top: 1px;
 padding-top: 4px; /* must change with respect to padding (X) above and below */
 }
@@ -796,6 +802,12 @@ div.window div.content {
     
     overflow:auto;
     height:100%;
+}
+
+div.content table
+{
+	overflow:auto;
+	border:2px silver;
 }
 
 table tr.headline > td {
@@ -859,4 +871,27 @@ div.window ul.menu li a,      /* Tabs */
 div.window ul.menu li > span  /* Tabs */
 {
 	background-color: gray;
+}
+
+
+
+/*   S t a t u s z e i l e   */
+div.window div.status
+{
+	height:35px; padding:10px;
+}
+div.window div.status div.error {
+	xborder:1px solid silver;
+	background: url(../images/notice_error.png) no-repeat;
+	padding-left:20px;
+}
+div.window div.status div.warn {
+	xborder:1px solid silver;
+	background: url(../images/notice_warn.png) no-repeat;
+	padding-left:20px;
+}
+div.window div.status div.ok {
+	xborder:1px solid silver;
+	background: url(../images/notice_ok.png) no-repeat;
+	padding-left:20px;
 }
