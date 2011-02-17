@@ -338,7 +338,7 @@ class FolderAction extends ObjectAction
 	 * Abspeichern der Ordner-Eigenschaften. Ist der Schalter "delete" gesetzt, wird
 	 * der Ordner stattdessen gel?scht.
 	 */
-	function saveprop()
+	function propAction()
 	{
 		// Ordnereigenschaften speichern
 		if   ( $this->getRequestVar('name') != '' )
@@ -1147,7 +1147,7 @@ class FolderAction extends ObjectAction
 
 
 	
-	function prop()
+	function propView()
 	{
 		$this->setTemplateVars( $this->folder->getProperties() );
 		$this->setTemplateVar( 'full_filename',$this->folder->full_filename() );

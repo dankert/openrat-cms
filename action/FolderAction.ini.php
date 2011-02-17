@@ -17,11 +17,7 @@ goto=show
 
 [prop]
 menu=prop
-target=saveprop
-editable=true
-
-[saveprop]
-goto=prop
+write=yes
 
 [remove]
 menu=prop
