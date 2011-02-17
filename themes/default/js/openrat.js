@@ -128,11 +128,13 @@ array('Source','-', 'ShowBlocks','Maximize') );
 function loadTree()
 {
 	// Oberstes Tree-Element erzeugen
-	$('div#tree div.window div.content').html("Wird geladen");
-	$('div#tree div.window div.content').append('<ul class="tree"><li class="root">Baum</li></ul>');
+	$('div#tree div.window div.content').html("&nbsp;");
+	//$('div#tree div.window div.content').append('<ul class="tree"><li class="root"><div>Baum</div></li></ul>');
 	
 	// Wurzel des Baums laden
-	loadBranch( $('div#tree ul.tree > li'),'root',0);
+	//loadBranch( $('div#tree ul.tree > li'),'root',0);
+	loadBranch( $('div#tree div.content'),'root',0);
+	$('div#tree div.content > ul.tree > li > div.tree').delay(500).click();
 }
 
 
@@ -147,23 +149,35 @@ function loadBranch(li,type,id)
 {
 	//alert("hier rein: "+$(li).html() );
 	$.getJSON('./dispatcher.php?action=tree&subaction=loadBranch&id='+id+'&type='+type, function(json) {
-		$(li).append('<ul style="display:none;"/>');
+		$(li).append('<ul class="tree" style="display:none;"/>');
+		//alert("öffne: "+$(li).html()+"                     neu: "+$(li).html());
 		var ul = $(li).children('ul').first();
 		$.each(json['branch'],function(idx,line)
 		{
-			var img = (line.url!==undefined?'tree_plus':'tree_none');
-			$(ul).append( '<li><img class="tree" src="'+OR_THEMES_EXT_DIR+'default/images/'+img+'.gif" /><a href="javascript:void(0)" title="'+ line.description + '"><img class="entry" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+line['icon']+'.png" />'+ line.text + '</a></li>' );
+			//var img = (line.url!==undefined?'tree_plus':'tree_none');
+			$(ul).append( '<li><div class="tree">&nbsp;</div><div class="entry" title="'+ line.description + '"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+line['icon']+'.png" />'+ line.text + '</div></li>' );
 			var new_li = $(ul).children('li').last();
-			$(new_li).children('img.tree').unbind('click');
-			$(new_li).children('img.tree').click( {},function(e) {loadBranch( $(e.target).parent(),line.type,line.internalId) }); // Zweig öffnen
-			$(new_li).children('a').click( function() { loadViewByName('content',line['url'].replace(/&amp;/g,'&')); }); // Objekt laden
+			//$(new_li).children('div').unbind('click');
+			if ( line.type )
+			{
+				$(new_li).children('div.tree').addClass('closed');
+				$(new_li).children('div.tree').click( {},function(e) {loadBranch( $(e.target).parent(),line.type,line.internalId) }); // Zweig öffnen
+			}
+			
+			if	( line.url )
+			{
+				$(new_li).children('div.entry').click( function() { loadViewByName('content',line.url.replace(/&amp;/g,'&')); }); // Objekt laden
+			}
+				
 		});
+		//$(ul).children('li:last-child').addClass('last');
 		$(ul).fadeIn(600); // Einblenden
 	});
 	
-	$(li).children('img.tree').unbind('click');
-	$(li).children('img.tree').click( function(e) { closeBranch($(e.target).parent(),type,id) } );
-	$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_minus.gif');
+	$(li).children('div.tree').unbind('click');
+	$(li).children('div.tree').removeClass('closed').addClass('open');
+	$(li).children('div.tree').click( function(e) { closeBranch($(e.target).parent(),type,id) } );
+	//$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_minus.gif');
 }
 
 
@@ -176,9 +190,10 @@ function closeBranch(li,type,id)
 {
 	//alert("schließen:"+$(li).html() );
 	$(li).children('ul').fadeOut('slow').remove();
-	$(li).children('img.tree').unbind('click');
-	$(li).children('img.tree').click( function() { loadBranch($(this).parent(),type,id) });
-	$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_plus.gif');
+	$(li).children('div.tree').unbind('click');
+	//alert( "wieder öffnen: "+$(li).children('div').first().html());
+	$(li).children('div.tree').click( function() { loadBranch($(this).parent(),type,id) });
+	//$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_plus.gif');
 }
 
 

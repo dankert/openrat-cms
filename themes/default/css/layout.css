@@ -1,4 +1,3 @@
-body
 /*
 OpenRat Content Management System
 Copyright (C) 2002-2010 Jan Dankert
@@ -329,20 +328,6 @@ body.title table tr td {
 	padding:3px;
 }
 
-/* Baum-Innenabstand */
-body.tree {
-	padding:5px;
-}
-
-
-/* Gerade aktivierte Baumelemente */
-body.tree tr.opened td.treevalue a,
-body.tree tr.opened td.treevalue,
-/* Aktive Menuepunkte */
-body.main table.main table.menu td.action a.menu_highlight
-{
-	font-weight:bold; /* fett */
-}
 
 /* Submenu-Entrys */
 body.menu tr.menu td table tr td,
@@ -370,11 +355,6 @@ body.main tr.title span.title
 	text-shadow:#cac2a6 2px 1px 3px;
 }
 
-/* Tree-Icons */
-body.tree td.treevalue img {
-	padding-right:2px;
-	padding-left:2px;
-}
 
 /* Icon-Innenabstand */
 img[align=left],
@@ -582,20 +562,6 @@ table.notice tr.warning
 }
 
 
-/* Baum */
-table.tree td.treecol,
-table.tree td.treeimage
-{
-	width:1%;
-}
-table.tree td.treevalue
-{
-	vertical-align:middle;
-	white-space:nowrap;
-	text-align: left;
-}
-
-
 
 /* Kalender */
 table.calendar
@@ -661,46 +627,75 @@ form.xlogin
 
 
 
+
+
+
+
 /*   B a u m   */
 ul.tree,
 ul.tree ul
 {
 	list-style-type: none;
 	background: url(../images/tree_line.gif) repeat-y;
-	margin: 0;
-	padding: 0;
-}
-
-ul.tree:xlast-child,
-ul.tree ul:xlast-child
-{
-	list-style-type: none;
-	background: url(../images/tree_none_end.gif) repeat-y;
-	margin: 0;
-	padding: 0;
+	margin: 0; padding: 0; 
 }
 
 ul.tree ul
 {
-	margin-left: 0px;
+	margin-left:18px;
+}
+
+ul.tree div.tree
+{
+	width:18px;
+	min-width:18px;
+	height:18px;
+	xbackground-color:red;
+	float:left;
+}
+ul.tree div.tree,
+ul.tree div.entry
+{
+	height:18px;
+	max-height:18px;
+	min-height:18px;
+}
+
+ul.tree div img
+{
+	cfloat:left;
 }
 
 ul.tree li
-{
-	margin: 0;
-	padding:0 18px;
-	line-height: 16px;
-	xbackground: url(../images/tree_plus.gif) no-repeat;
+{margin: 0; padding: 0 0px; 
+	line-height: 18px;
+	background: url(../images/tree_none.gif) no-repeat;
 	xcolor: #369;
-	font-weight: bold;
+	font-weight: normal;
 	white-space:nowrap;
 }
 
 ul.tree li.last,
 ul.tree li:last-child
 {
-	xbackground: #fff url(../images/tree_plus_end.gif) no-repeat;
+	background: url(../images/tree_none_end.gif) no-repeat;
 } 
+
+div.tree.open
+{
+	background: url(../images/tree_minus.png) no-repeat;
+}
+div.tree.closed
+{
+	background: url(../images/tree_plus.png) no-repeat;
+}
+
+div#tree div.content,
+ul.tree li.last,
+ul.tree li:last-child
+{
+	background-color:white;
+}
 
 body > div { display:none; }
 
@@ -830,7 +825,7 @@ table > tr.data:nth-child(2n) {
 
 /* Datenzeile - Mauseffekt */
 table tr.data:hover,
-body.tree tr:hover
+div#tree div.content li div.entry:hover
 {
 	background-color:#EEEEEE;
 }
@@ -841,7 +836,8 @@ table tr.data td[onclick]:hover{
 }
 
 tr.data > td[onclick],
-div.dropdown div[onclick]
+div.dropdown div[onclick],
+ul.tree div
 {
 cursor:pointer;
 }
