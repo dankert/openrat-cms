@@ -200,6 +200,7 @@ function closeBranch(li,type,id)
 
 function formSubmit(form)
 {
+	$('div.window div.status').html('<div class="loader" />');
 	$('.error').removeClass('error');
 
 	$(form).fadeTo(0.5);
@@ -210,6 +211,7 @@ function formSubmit(form)
 	
 	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 		{
+			$('div.window div.status div.loader').html('&nbsp;');
 			doResponse(data,textStatus);
 		} } );
 	$(form).fadeIn();
@@ -222,7 +224,7 @@ function doResponse(data,status)
 		alert('Error while saving the values: ' + status);
 	
 	$.each(data['notices'], function(idx,value) {
-		$('div.window div.status').html('<div>');
+		$('div.window div.status').html('<div />');
 		$('div.window div.status div').addClass( value.status );
 		$('div.window div.status div').append( value.text );
 		$('div.window div.status div').delay(3000).fadeOut(2500);

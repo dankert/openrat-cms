@@ -895,3 +895,9 @@ div.window div.status div.ok {
 	background: url(../images/notice_ok.png) no-repeat;
 	padding-left:20px;
 }
+div.window div.status div.loader {
+	xborder:1px solid silver;
+	width:230;
+	height:25px;
+	background: url(../images/loader.gif) no-repeat;
+}
