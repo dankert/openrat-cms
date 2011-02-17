@@ -297,6 +297,34 @@ class TreeAction extends Action
 		$this->setTemplateVar( 'branch',$branch ); 
 	}
 	
+
+	/**
+	 * Inhalt des Projektes anzeigen.
+	 */
+	public function content()
+	{
+		if	( $this->hasRequestVar('projectid') )
+			$this->load();
+		
+		// Nichts - denn der Baum lädt sich über AJAX selbst.
+	}
+	
+
+	/**
+	 * Projekt-Einstellungen anzeigen.
+	 */
+	public function settings()
+	{
+		$this->setTemplateVar( 'languages' ,Language::getAll()                        );
+		$this->setTemplateVar( 'languageid',Session::getProjectLanguage()->languageid );
+		$this->setTemplateVar( 'models'    ,Model::getAll()                           );
+		$this->setTemplateVar( 'modelid'   ,Session::getProjectModel()->modelid       );
+	}
+	
+	public function settingsAction()
+	{
+	}
+	
 }
 
 ?>

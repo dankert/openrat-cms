@@ -5,6 +5,12 @@ goto=show
 [show]
 menu=true
 
+[content]
+menu=true
+
+[settings]
+menu=true
+
 [load]
 ;write=get
 goto=show
