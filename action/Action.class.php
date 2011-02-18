@@ -117,7 +117,7 @@ class Action
 	 * @param String $varName Schl�ssel
 	 * @return mixed
 	 */
-	function getSessionVar( $varName )
+	protected function getSessionVar( $varName )
 	{
 		global $SESS;
 
@@ -134,7 +134,7 @@ class Action
 	 * @param mixed $value Inhalt
 	 * @return mixed
 	 */
-	function setSessionVar( $varName,$value )
+	protected function setSessionVar( $varName,$value )
 	{
 		global $SESS;
 
@@ -149,7 +149,7 @@ class Action
 	 * @param String $varName Schl�ssel
 	 * @return String Inhalt
 	 */
-	function getRequestVar( $varName,$transcode=OR_FILTER_FULL )
+	protected function getRequestVar( $varName,$transcode=OR_FILTER_FULL )
 	{
 		global $REQ;
 
@@ -222,7 +222,7 @@ class Action
 	 * @param String $varName Schl�ssel
 	 * @return boolean true, falls vorhanden.
 	 */
-	function hasRequestVar( $varName )
+	protected function hasRequestVar( $varName )
 	{
 		global $REQ;
 
@@ -236,7 +236,7 @@ class Action
 	 *
 	 * @return Integer
 	 */
-	function getRequestId()
+	protected function getRequestId()
 	{
 		if	( $this->hasRequestVar('idvar') )
 			return intval( $this->getRequestVar( $this->getRequestVar('idvar') ) );
@@ -252,7 +252,7 @@ class Action
 	 * @param String $varName Schl�ssel
 	 * @param Mixed $value
 	 */
-	function setTemplateVar( $varName,$value )
+	protected function setTemplateVar( $varName,$value )
 	{
 		$this->templateVars[ $varName ] = $value;
 	}
@@ -263,7 +263,7 @@ class Action
 	 *
 	 * @param Array $varList Assoziatives Array
 	 */
-	function setTemplateVars( $varList )
+	protected function setTemplateVars( $varList )
 	{
 		foreach( $varList as $name=>$value )
 		{
@@ -278,7 +278,7 @@ class Action
 	 * @param String $name Name des validierten Eingabefeldes
 	 * @param String Textschl�ssel der Fehlermeldung (optional)
 	 */
-	function addValidationError( $name,$message="COMMON_VALIDATION_ERROR",$vars=array(),$log=array() )
+	protected function addValidationError( $name,$message="COMMON_VALIDATION_ERROR",$vars=array(),$log=array() )
 	{
 		if	( !empty($message) )
 			$this->addNotice('','',$message,OR_NOTICE_ERROR,$vars,$log);
@@ -297,7 +297,7 @@ class Action
 	 * @param Array  $vars Variablen f�r den Textschl�ssel
 	 * @param Array $log Weitere Hinweistexte f�r diese Meldung.
 	 */
-	function addNotice( $type,$name,$text,$status=OR_NOTICE_OK,$vars=array(),$log=array() )
+	protected function addNotice( $type,$name,$text,$status=OR_NOTICE_OK,$vars=array(),$log=array() )
 	{
 		if	( $status === true )
 			$status = OR_NOTICE_OK;
@@ -332,8 +332,6 @@ class Action
 	 * Erst hier soll die Ausgabe auf die Standardausgabe, also die
 	 * Ausgabe f�r den Browser, starten.<br>
 	 * <br>
-	 *
-	 * @param String Wird nicht benutzt!
 	 */
 	function forward()
 	{
@@ -521,7 +519,7 @@ class Action
 	 *
 	 * @param String $subActionName Name der n�chsten Subaction. Es muss eine Methode mit diesem Namen geben.
 	 */
-	function callSubAction( $subActionName )
+	protected function callSubAction( $subActionName )
 	{
 		if	( in_array($this->actionName,array('page','file','link','folder')) )
 			Session::setSubaction( $subActionName );
@@ -538,7 +536,7 @@ class Action
 	 * Ermitteln, ob Benutzer Administratorrechte besitzt
 	 * @return Boolean TRUE, falls der Benutzer ein Administrator ist.
 	 */
-	function userIsAdmin()
+	protected function userIsAdmin()
 	{
 		$user = Session::getUser();
 		return is_object($user) && $user->isAdmin;
@@ -549,7 +547,7 @@ class Action
 	 * Ermitteln des Benutzerobjektes aus der Session
 	 * @return User
 	 */
-	function getUserFromSession()
+	protected function getUserFromSession()
 	{
 		return Session::getUser();
 	}
@@ -577,7 +575,7 @@ class Action
 	 *
 	 * @param Timestamp Letztes Aenderungsdatum dieser Seite
 	 */
-	function lastModified( $time )
+	protected function lastModified( $time )
 	{
 		return;
 		$user = Session::getUser();
@@ -631,7 +629,7 @@ class Action
 	/**
 	 * @param max Anzahl der Sekunden, die die Seite im Browsercache bleiben darf
 	 */
-	function maxAge( $max=3600 ) 
+	protected function maxAge( $max=3600 ) 
 	{
 		// Die Header "Last-Modified" und "ETag" wurden bereits in der
 		// Methode "lastModified()" gesetzt.
@@ -644,7 +642,7 @@ class Action
 	
 	
 	
-	function setMenu()
+	protected function setMenu()
 	{
 		if	(!isset($this->actionConfig[$this->subActionName]['menu']))
 			return;
@@ -693,7 +691,7 @@ class Action
 	 * @param String $name Logischer Name des Men�punktes
 	 * @return boolean TRUE, wenn Men�punkt aktiv ist.
 	 */
-	function checkMenu( $name )
+	protected function checkMenu( $name )
 	{
 		// Standard: Alle Men�punkt sind aktiv.
 		return true;
@@ -712,7 +710,7 @@ class Action
 	 *
 	 * @return String Zeichensatz
 	 */
-	function getCharset()
+	protected function getCharset()
 	{
 		return charset();
 	}
@@ -735,7 +733,7 @@ class Action
 	 * Diese Methode sollte dann aufgerufen werden, wenn Objekte geändert werden
 	 * und dies Einfluss auf andere Views hat.
 	 */
-	function refresh()
+	protected function refresh()
 	{
 		$this->refresh = true;
 		$this->setTemplateVar('refresh',true);
@@ -747,7 +745,7 @@ class Action
 	 *
 	 * @return boolean
 	 */
-	function isEditMode()
+	protected function isEditMode()
 	{
 		return true;
 		
@@ -774,7 +772,7 @@ class Action
 	 * @param $viewAction
 	 * @param $viewSubaction
 	 */
-	function updateView( $viewName, $viewAction,$viewSubaction )
+	protected function updateView( $viewName, $viewAction,$viewSubaction )
 	{
 		global $views;
 		if	( array_key_exists($viewName,$views) )
