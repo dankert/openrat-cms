@@ -1,1 +1,1 @@
-<?php require('init.php'); require('themes/default/pages/view.php'); ?>
+<?php require('init.php'); require('themes/default/layout/login.php'); ?>
