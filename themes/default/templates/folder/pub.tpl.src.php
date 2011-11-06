@@ -1,6 +1,6 @@
 dummy
-	form
-		window
+	window
+		form
 			if present:pages
 				if present:subdirs
 					checkbox name:pages

@@ -1,7 +1,7 @@
 dummy
 
-	form
-		window
+	window
+		form
 			fieldset title:message:GLOBAL_PROP
 				part
 					label for:name
@@ -47,5 +47,5 @@ dummy
 						user user:var:lastchange_user
 
 
-		button type:ok
-	focus field:name
+			button type:ok
+			focus field:name
