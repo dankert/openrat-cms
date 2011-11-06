@@ -349,7 +349,7 @@ class FolderAction extends ObjectAction
 		{
 			$this->addValidationError('name');
 			$this->addValidationError('filename');
-			$this->callSubAction('prop');
+			//$this->callSubAction('prop');
 			return;
 		}
 		
