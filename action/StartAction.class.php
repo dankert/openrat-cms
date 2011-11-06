@@ -349,9 +349,23 @@ class StartAction extends Action
 
 
 	/**
+	 * Setzt die neue Projekt-Id und lädt die Workbench neu.
+	 * 
+	 */
+	public function projectmenuAction() {
+		
+		//Session::setProject( $this->getRequestId() );
+		
+		$this->evaluateRequestVars( array('projectid'=>$this->getRequestId()) );
+		Session::set('perspective','normal');
+		$this->refresh();
+	}
+	
+	
+	/**
 	 * Erzeugt ein Projekt-Auswahlmenue.
 	 */
-	function projectmenu()
+	function projectmenuView()
 	{
 		$user = Session::getUser();
 		
@@ -373,7 +387,7 @@ class StartAction extends Action
 		foreach( $projects as $id=>$name )
 		{
 			$p = array();
-			$p['url' ] = Html::url('tree','load',0,array('projectid'=>$id,'target'=>'tree'));
+			$p['url' ] = Html::url('start','project',$id);
 			$p['name'] = $name;
 			$p['id'  ] = $id;
 
@@ -824,9 +838,11 @@ class StartAction extends Action
 	/**
 	 * Ausw�hlen der Administration.
 	 */
-	function administration()
+	function administrationAction()
 	{
 		Session::setProject( new Project(-1) );
+		Session::set('perspective','administration');
+		$this->refresh();
 	}
 	
 	
@@ -939,7 +955,7 @@ class StartAction extends Action
 	 *
 	 * @param Array $add
 	 */
-	function evaluateRequestVars( $add = array() )
+	private function evaluateRequestVars( $add = array() )
 	{
 		global $REQ;
 		$vars = $REQ + $add;
@@ -1658,7 +1674,8 @@ class StartAction extends Action
 			// 5.1.0 > PHP >= 4.3.3
 		}
 	}
-	
+
+
 }
 
 
