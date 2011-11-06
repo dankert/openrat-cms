@@ -19,7 +19,7 @@ default=listing
 
 [member]
 
-views=groups,users,info
+views=memberships,info
 action=project
 refreshable=true
 default=groups
