@@ -14,7 +14,7 @@ refreshable=false
 views=listing,edit,pw,export,maintenance
 action=project
 refreshable=true
-default=listing
+default=edit
 
 
 [member]
@@ -22,4 +22,4 @@ default=listing
 views=memberships,info
 action=project
 refreshable=true
-default=groups
+default=memberships
