@@ -848,6 +848,17 @@ class StartAction extends Action
 	
 	
 	/**
+	 * Auswaehlen des Benutzer-Profiles.
+	 */
+	function profileAction()
+	{
+		Session::set('perspective','profile');
+		$this->refresh();
+	}
+	
+	
+	
+	/**
 	 * Ausgeben von maschinenlesbaren Benutzerinformationen.
 	 * 
 	 * Diese Funktion dient dem Single-Signon f�r fremde Anwendungen, welche

@@ -3,15 +3,16 @@
 goto=edit
 
 [edit]
-target=saveprofile
 menu=edit
 editable=true
+write=true
 
-[groups]
+[memberships]
 menu=edit
+write=true
 
-[pwchange]
-target=savepw
+[pw]
+write=true
 menu=edit
 
 [mail]
@@ -28,15 +29,7 @@ menu=edit
 [savemail]
 goto=edit
 
-[savepw]
-goto=edit
-
-[saveprofile]
-goto=edit
-
 [settings]
 menu=edit
 write=true
 
-[menu]
-menu=edit,settings,pwchange,mail,groups

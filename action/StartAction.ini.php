@@ -14,6 +14,9 @@ direct=true
 menu=menu
 write=true
 
+[profile]
+write=true
+
 [projectmenu]
 menu=menu
 clear=tree

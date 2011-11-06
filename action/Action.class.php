@@ -543,6 +543,21 @@ class Action
 	
 
 	/**
+	 * Stellt klar, dass ein Administrator angemeldet sein muss.
+	 */
+	protected function requireAdmin()
+	{
+		if	( ! $this->userIsAdmin() )
+		{
+			Logger::warn('User has no administration privileges');
+			Http::notAuthorized( lang('SESSION_EXPIRED'),'administration privileges required' );
+			$do->templateVars['error'] = 'administration privileges required';
+			exit;
+		}
+	}
+	
+
+	/**
 	 * Ermitteln des Benutzerobjektes aus der Session
 	 * @return User
 	 */
@@ -643,6 +658,8 @@ class Action
 	
 	protected function setMenu()
 	{
+		return;
+		
 		if	(!isset($this->actionConfig[$this->subActionName]['menu']))
 			return;
 		$windowMenu = array();

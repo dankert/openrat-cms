@@ -45,7 +45,7 @@ class ProfileAction extends Action
 	/**
 	 * Abspeichern des Profiles
 	 */
-	function saveprofile()
+	function editAction()
 	{
 		$this->user->fullname = $this->getRequestVar('fullname');
 		$this->user->tel      = $this->getRequestVar('tel'     );
@@ -130,7 +130,7 @@ class ProfileAction extends Action
 	/**
 	 * Anzeigen einer Maske zum Ändern des Kennwortes.
 	 */
-	function pwchange()
+	function pwView()
 	{
 	}
 	
@@ -225,7 +225,7 @@ class ProfileAction extends Action
 	
 	
 	
-	function savepw()
+	public function pwAction()
 	{
 		if	( ! $this->user->checkPassword( $this->getRequestVar('act_password') ) )
 		{
@@ -254,7 +254,7 @@ class ProfileAction extends Action
 	/**
 	 * Anzeige aller Benutzer-Eigenschaften.
 	 */
-	function edit()
+	function editView()
 	{
 		$this->setTemplateVars( $this->user->getProperties() );
 
@@ -267,7 +267,7 @@ class ProfileAction extends Action
 	 * Anzeige aller Gruppen des angemeldeten Benutzers.
 	 *
 	 */
-	function groups()
+	function membershipsView()
 	{
 		$this->setTemplateVar( 'groups',$this->user->getGroups() );
 	}
