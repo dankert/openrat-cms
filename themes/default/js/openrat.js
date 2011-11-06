@@ -321,18 +321,20 @@ function linkSubmit(data)
 
 function formSubmit(form)
 {
-	$('div.window div.status').html('<div class="loader" />');
-	$('.error').removeClass('error');
+	var status = $(form).parent().parent().parent().find('div.bottom div.status');
+	
+	$(status).html('<div class="loader" />');
+	
+	// Alle vorhandenen Error-Marker entfernen.
+	// Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
+	$(form).find('.error').removeClass('error');
 
-	$(form).fadeTo(0.5);
 	var params = $(form).serializeArray();
-	//params['json'] = 'true';
-	//alert(params);
-	var url    = $(form).attr('action');
+	var url    = './dispatcher.php'; // Alle Parameter befinden sich im Formular
 	
 	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 		{
-			$('div.window div.status div.loader').html('&nbsp;');
+			$(status).find('div.loader').html('&nbsp;');
 			doResponse(data,textStatus);
 		} } );
 	$(form).fadeIn();
