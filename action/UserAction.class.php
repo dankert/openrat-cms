@@ -287,6 +287,7 @@ class UserAction extends Action
 	{
 		$allGroups  = Group::getAll();
 		$userGroups = $this->user->getGroups();
+		$aenderung = false;
 		
 		foreach( $allGroups as $id=>$name )
 		{
@@ -296,14 +297,19 @@ class UserAction extends Action
 			{
 				$this->user->addGroup($id);
 				$this->addNotice('group',$name,'ADDED');
+				$aenderung = true;
 			}
 
 			if	( $hasGroup && !$this->hasRequestVar('group'.$id) )
 			{
 				$this->user->delGroup($id);
 				$this->addNotice('group',$name,'DELETED');
+				$aenderung = true;
 			}
 		}
+		
+		if	( ! $aenderung )
+				$this->addNotice('group',$name,'NOTHING_DONE');
 	}
 
 
