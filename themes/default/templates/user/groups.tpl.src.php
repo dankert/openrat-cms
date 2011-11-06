@@ -1,6 +1,10 @@
-dummy
-	form
-		window name:USER_MEMBERSHIPS widths:5%,95% width:70%
+form
+	window
+		table
+			row class:headline
+				cell width:10%
+				cell
+					text key:name
 			list list:memberships extract:true
 				row class:data
 					cell
