@@ -62,7 +62,7 @@ function view_header( $name )
 	<div class="status">
 	</div>
 	<div class="command">
-	<input type="button" value="<?php echo lang('BUTTON_OK') ?>" onclick="formSubmit( $(this).parent().parent().parent().find('form') );" />
+	<input type="button" class="submit" value="<?php echo lang('BUTTON_OK') ?>" onclick="formSubmit( $(this).parent().parent().parent().find('form') );" />
 	<!-- 
 	<input type="button" value="<?php echo lang('CANCEL') ?>" />
 	-->

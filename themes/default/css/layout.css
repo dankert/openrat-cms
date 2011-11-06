@@ -190,6 +190,28 @@ div.content input.ok
     color:black;
 }
 
+div.command > input.submit
+{
+	margin:5px;
+	padding-top:4px;
+	padding-bottom:4px;
+	padding-left:7px;
+	padding-right:7px;
+	border:1px solid grey;
+	-moz-border-radius:5px; /* Mozilla */
+    -webkit-border-radius:5px; /* Webkit */
+    -khtml-border-radius:5px; /* Konqui */
+    border-radius:5px;
+    background-color: white;
+	background: -moz-linear-gradient(top, gray, silver);
+	background: -webkit-gradient(linear, left top, left bottom, from(gray), to(silver));
+	font-style:normal;
+	font-weight:bold;
+	text-decoration:none;
+    cursor:pointer;
+    color:black;
+}
+
 /*   S c h a t t e n   */
 div.content a.action,
 div.content a.help,
