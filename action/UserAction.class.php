@@ -254,12 +254,7 @@ class UserAction extends Action
 	}
 
 
-	function memberships()
-	{
-	}
-
-	
-	function groupsView()
+	function membershipsView()
 	{
 		$gruppenListe = array();
 		
@@ -286,7 +281,7 @@ class UserAction extends Action
 	}
 
 
-	function groupsAction()
+	function membershipsAction()
 	{
 		$allGroups  = Group::getAll();
 		$userGroups = $this->user->getGroups();

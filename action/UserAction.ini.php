@@ -20,11 +20,8 @@ write=true
 menu=edit
 write=true
 
-[memberships]
-goto=groups
-
 ; Gruppenzugehoerigkeiten
-[groups]
+[memberships]
 menu=memberships
 editable=true
 write=yes

@@ -24,9 +24,6 @@ write=true
 goto=users
 
 [memberships]
-goto=users
-
-[users]
 menu=memberships
 editable=true
 write=true

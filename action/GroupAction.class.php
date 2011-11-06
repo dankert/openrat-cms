@@ -189,12 +189,6 @@ class GroupAction extends Action
 
 
 	
-	/**
-	 * Dummy-Funktion.
-	 */
-	function memberships()
-	{
-	}
 	
 	
 	
@@ -202,7 +196,7 @@ class GroupAction extends Action
 	 * Liste aller Benutzer in dieser Gruppe.
 	 *
 	 */
-	function usersView()
+	function membershipsView()
 	{
 		// Mitgliedschaften ermitteln
 		//
@@ -231,7 +225,7 @@ class GroupAction extends Action
 	}
 	
 	
-	function usersAction()
+	function membershipsAction()
 	{
 		$allUsers  = User::listAll();
 		$groupUsers = $this->group->getUsers();

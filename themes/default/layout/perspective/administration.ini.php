@@ -11,7 +11,7 @@ refreshable=false
 
 [content]
 
-views=listing,prop,edit,memberships
+views=listing,edit,pw,export,maintenance
 action=project
 refreshable=true
 default=listing
@@ -19,7 +19,7 @@ default=listing
 
 [member]
 
-views=groups
+views=groups,users,info
 action=project
 refreshable=true
 default=groups
