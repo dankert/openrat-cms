@@ -47,6 +47,7 @@ class TreeElement
 	var $url         = "";
 	var $icon        = "";
 	var $target      = "";
+	var $action      = "";
 	
 	/**
 	 * Unterelemente

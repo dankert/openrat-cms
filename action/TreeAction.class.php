@@ -74,35 +74,36 @@ class TreeAction extends Action
 	/**
 	 * Neues Laden des Baumes
 	 */
-	function load()
+	private function load()
 	{
 		global $SESS;
 
-		$projectid = $this->getRequestVar('projectid');
+		$project = Session::getProject();
+		$projectid = $project->projectid;
 
 		if	( $projectid == -1 )
 		{
 			$this->tree = new AdministrationTree();
-			Session::setProjectLanguage(null);
-			Session::setProjectModel(null);
-			Session::setProject(null);
+//			Session::setProjectLanguage(null);
+//			Session::setProjectModel(null);
+//			Session::setProject(null);
 		}
 		else
 		{
-			$project = new Project($projectid);
-			$project->load();
-			Session::setProject($project);
+//			$project = new Project($projectid);
+//			$project->load();
+//			Session::setProject($project);
 	
 			$this->tree = new ProjectTree();
 			$this->tree->projectId = $projectid;
 
-			$language = new Language( Language::getDefaultId() );
-			$language->load();
-			Session::setProjectLanguage( $language );
-			
-			$model = new Model( Model::getDefaultId() );
-			$model->load();
-			Session::setProjectModel( $model ); 
+//			$language = new Language( Language::getDefaultId() );
+//			$language->load();
+//			Session::setProjectLanguage( $language );
+//			
+//			$model = new Model( Model::getDefaultId() );
+//			$model->load();
+//			Session::setProjectModel( $model ); 
 		}
 
 		Session::setTree( $this->tree );
@@ -220,10 +221,10 @@ class TreeAction extends Action
 	/**
 	 * Anzeigen des Baumes
 	 */
-	function show()
+	public function show()
 	{
-		if	( $this->hasRequestVar('projectid') )
-			$this->load();
+		//if	( $this->hasRequestVar('projectid') )
+		$this->load();
 			
 		$project = Session::getProject();
 		if	( is_object($project) )
@@ -233,7 +234,7 @@ class TreeAction extends Action
 		
 		$this->tree = Session::getTree();
 		
-		if	( $this->getRequestVar('target')!='tree' )
+		//if	( $this->getRequestVar('target')!='tree' )
 			$this->tree->refresh();
 		
 		$var = array();

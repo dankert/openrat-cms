@@ -9,7 +9,7 @@ dummy
 			row
 				cell colspan:2
 					fieldset title:var:name
-						link url:var:url title:message:TREE_CHOOSE_PROJECT
+						link id:var:id title:message:TREE_CHOOSE_PROJECT
 							set var:project value:project
 							image type:project
 							text var:name maxlength:30

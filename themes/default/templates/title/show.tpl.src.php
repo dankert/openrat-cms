@@ -56,7 +56,7 @@ part class:user
 			text key:profile
 		
 		if true:method:userIsAdmin
-			link class:entry action:tree subaction:content target:tree var1:projectid value1:-1
+			link class:entry action:start subaction:administration target:tree id:-1
 				image icon:administration align:left
 				text key:administration
 				
@@ -78,5 +78,5 @@ part class:projects
 	part class:dropdown
 		list list:projects key:id value:name
 			image icon:project
-			link class:entry action:tree subaction:content var1:projectid value1:var:id target:tree
+			link class:entry action:start subaction:projectmenu id:var:id target:tree
 				text var:name maxlength:20

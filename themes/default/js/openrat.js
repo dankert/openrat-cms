@@ -8,19 +8,90 @@ $(document).ready(function()
 });
 
 
+
 function refreshAll()
 {
-	// Initial die Views über AJAX befüllen.
-	$('div#header, div#content').each( function(index){
-		loadView( $(this),'./dispatcher.php?target='+this.id );
-		//$(this).fadeIn();
+
+	refreshHeader();
+	refreshWorkbench();
+}
+
+
+function refreshAllRefreshables() {
+
+	// Default-Inhalte der einzelnen Views laden.
+	$('div#workbench div.refreshable li.active').each( function() {
+		var method = $(this).attr('data-method');
+		var p = $(this).parent().parent().parent().parent().parent();
+		var action = p.attr('data-action');
+		var id     = p.attr('data-id');
+		//alert(method+' '+action);
+		
+		
+		//alert('go2');
+		loadView( p.find('div.filler'),createUrl(action,method,id));
 	});
+
+}
+
+
+
+/**
+ * Lade die Workbench neu.
+ */
+function refreshWorkbench()
+{
+	// Workbench laden
+	$('div#workbench').empty().load(createUrl('workbench','show',0),null,function() {
+		
+		// Default-Inhalte der einzelnen Views laden.
+		$(this).fadeIn('fast').find('li.active').each( function() {
+			var method = $(this).attr('data-method');
+			var p = $(this).parent().parent().parent().parent().parent();
+			var action = p.attr('data-action');
+			//alert(method+' '+action);
+			
+			
+			//alert('go2');
+			loadView( p.find('div.filler'),createUrl(action,method,0));
+		});
+		
+		// OnClick-Handler für Klick auf einen Tab-Reiter.
+		$('ul.views > li.action').click( function() {
+			var method = $(this).attr('data-method');
+			var p = $(this).parent().parent().parent().parent().parent();
+			var action = p.attr('data-action');
+			var id     = p.attr('data-id');
+			p.find('ul.views li.active').removeClass('active');
+			$(this).addClass('active');
+			loadView( p.find('div.filler'),createUrl(action,method,id));
+		});
+	});
+	//alert('go');
 	
-	loadTree();
+	
+	loadTree(); // ??
 	
 	// Modale Dialoge
 	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
 }
+
+
+/**
+ * Laedt den Header neu.
+ */
+function refreshHeader()
+{
+	$('div#header').each( function(index){
+		loadView( $(this),createUrl('title','show',0 ) );
+	});
+	
+	registerHeaderEvents();
+	
+	// Modale Dialoge
+	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
+}
+
 
 
 function loadViewByName(viewName, url )
@@ -30,6 +101,7 @@ function loadViewByName(viewName, url )
 
 function loadView(jo, url )
 {
+	//alert("Lade "+url + " in Objekt "+jo);
 	//   E d i t o r
 	var editorConfig = {
 			skin : 'v2',
@@ -39,22 +111,34 @@ function loadView(jo, url )
 			filebrowserBrowseUrl:'./dispatcher.php?action=filebrowser&subaction=browse'
 	};
 	
-	$(jo).fadeOut('fast').load(url,null, function() {
+	$(jo).fadeOut('fast').empty().load(url,function() {
 			$(jo).fadeIn(100);
 			var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
 			if (o) o.destroy();
 			
 			//alert("o ist "+o);
 			//$('textarea.editor').ckeditor( function() { /*alert("editor ready");*/ /* callback code */ }, editorConfig );
-			CKEDITOR.replace('text',{
-		        customConfig : 'config-openrat.js'
-		    });
+			//CKEDITOR.replace('text',{
+		    //    customConfig : 'config-openrat.js'
+		    //});
+			if ( $(jo).find('form').length > 0 )
+				$(jo).parent().parent().find('div.bottom > div.command > input').removeClass('invisible');
+			else
+				$(jo).parent().parent().find('div.bottom > div.command > input').addClass('invisible');
+				
+			
 		});
-	
+}
+
+
+
+function registerHeaderEvents()
+{
 	//   S u c h e
 	$('div.search input').blur( function(){
 		$('div.search input div.dropdown').fadeOut();
 	});
+
 	
 	$('div.search input').keyup( function(){
 		var val = $(this).val();
@@ -129,16 +213,23 @@ array('Source','-', 'ShowBlocks','Maximize') );
 	*/
 }
 
+function fullscreen( element ) {
+	$(element).fadeOut('fast', function()
+	{
+		$(this).toggleClass('fullscreen').fadeIn('fast');
+	} );
+}
+
 function loadTree()
 {
 	// Oberstes Tree-Element erzeugen
-	$('div#tree div.window div.content').html("&nbsp;");
+	$('div#tree div.window div.content div.filler').html("&nbsp;");
 	//$('div#tree div.window div.content').append('<ul class="tree"><li class="root"><div>Baum</div></li></ul>');
 	
 	// Wurzel des Baums laden
 	//loadBranch( $('div#tree ul.tree > li'),'root',0);
-	loadBranch( $('div#tree div.content'),'root',0);
-	$('div#tree div.content > ul.tree > li > div.tree').delay(500).click();
+	loadBranch( $('div#tree div.content div.filler'),'root',0);
+	$('div#tree div.content div.filler > ul.tree > li > div.tree').delay(500).click();
 }
 
 
@@ -168,14 +259,26 @@ function loadBranch(li,type,id)
 				$(new_li).children('div.tree').click( {},function(e) {loadBranch( $(e.target).parent(),line.type,line.internalId) }); // Zweig öffnen
 			}
 			
-			if	( line.url )
+			if	( line.action )
 			{
-				$(new_li).children('div.entry').click( function() { loadViewByName('content',line.url.replace(/&amp;/g,'&')); }); // Objekt laden
+				// Onclick-Handler für auswählbare Objekte setzen
+				$(new_li).children('div.entry').click( function() {
+					//loadViewByName('content',line.url.replace(/&amp;/g,'&'));
+					//var url = './dispatcher.php';
+					//$.ajax( { 'type':'POST',url:url, data:{'action':'tree','subaction':'select','id':line.id,'type':line.type},success:function(data, textStatus, jqXHR)
+//						{
+//							doResponse(data,textStatus);
+//						} } );
+					// Den Objekt-Typ und die Objekt-Id für alle Views setzen (die dies zulassen)
+					$('div#workbench div.refreshable').attr('data-action',line.action).attr('data-id',line.id);
+					// Alle refresh-fähigen Views mit dem neuen Objekt laden.
+					refreshAllRefreshables();
+				});
 			}
 				
 		});
 		//$(ul).children('li:last-child').addClass('last');
-		$(ul).fadeIn(600); // Einblenden
+		$(ul).fadeIn('fast'); // Einblenden
 	});
 	
 	$(li).children('div.tree').unbind('click');
@@ -202,6 +305,20 @@ function closeBranch(li,type,id)
 }
 
 
+function linkSubmit(data)
+{
+	var params = jQuery.parseJSON( data );
+	var url = './dispatcher.php';
+	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
+		{
+			$('div.window div.status div.loader').html('&nbsp;');
+			doResponse(data,textStatus);
+		} } );
+	
+}
+
+
+
 function formSubmit(form)
 {
 	$('div.window div.status').html('<div class="loader" />');
@@ -225,7 +342,10 @@ function formSubmit(form)
 function doResponse(data,status)
 {
 	if	( status != 'success' )
-		alert('Error while saving the values: ' + status);
+	{
+		alert('Server error: ' + status);
+		return;
+	}
 	
 	// Hinweismeldungen in Statuszeile anzeigen
 	$.each(data['notices'], function(idx,value) {
@@ -334,4 +454,99 @@ else
  var insText = prompt("Text");
  input.value = input.value.substr(0, pos) + aTag + insText + eTag + input.value.substr(pos);
 }
+}
+
+
+
+function loadSubaction( el, actionName, subactionName,id )
+{
+	//   E d i t o r
+	var editorConfig = {
+			skin : 'v2',
+			baseHref: OR_THEMES_EXT_DIR+'../editor/editor/',
+			customConfig : 'config-openrat.js',
+			filebrowserUploadUrl:'./dispatcher.php?action=filebrowser&subaction=directupload&name=upload',
+			filebrowserBrowseUrl:'./dispatcher.php?action=filebrowser&subaction=browse'
+	};
+	
+	var main = $(el).parent().parent().parent('div.window').children('div.content').first();
+	$(main).load(createUrl(actionName,subactionName,id)+' div.content',null, function() {
+			var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
+			if (o) o.destroy();
+			
+			//alert("o ist "+o);
+			//$('textarea.editor').ckeditor( function() { /*alert("editor ready");*/ /* callback code */ }, editorConfig );
+			CKEDITOR.replace('text',{
+		        customConfig : 'config-openrat.js'
+		    });
+		});
+
+	$(el).parent().parent().find('.active').removeClass('active');
+	$(el).parent().addClass('active');
+
+	
+}
+
+
+
+function loadWindow( el, actionName, subactionName )
+{
+
+	// Zeichnet das Fenster-Gerüst, erstmal ohne Inhalt.
+	$(el).html('<div class="window"><div class="title"></div><ul class="menu"></div><div class="content"></div><div class="status"></div></div>');
+
+	// Icon
+	$(el).find('div.title').html('<img src="'+image_dir+'icon_'+icon+'.'+IMG_ICON_EXT+'" align="left" />');
+
+	/* Pfad
+			<span class="path"><?php echo langHtml($actionName) ?></span>&nbsp;<strong>&rarr;</strong>&nbsp;
+				<a javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $url ?>'); return false; " title="<?php echo $title ?>" class="path"><?php echo (!empty($key)?langHtml($key):$name) ?></a>
+				&nbsp;&rarr;&nbsp;
+			<?php } ?>
+			<span class="title"><?php echo langHtml(@$windowTitle) ?></span>
+	 */
+
+	
+	/*
+	 * Menü
+		if	( !isset($windowMenu) || !is_array($windowMenu) ) $windowMenu = array();
+	    foreach( $windowMenu as $menu )
+	          {
+	          	$tmp_text = langHtml($menu['text']);
+	          	$tmp_key  = strtoupper(langHtml($menu['key' ]));
+				$tmp_pos = strpos(strtolower($tmp_text),strtolower($tmp_key));
+				if	( $tmp_pos !== false )
+					$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
+
+				$liClass  = (isset($menu['url'])?'':'no').'action'.($this->subActionName==$menu['subaction']?'_active':'');
+				$icon_url = $image_dir.'icon/'.$menu['subaction'].'.png';
+				
+				?><li class="<?php echo $liClass?>"><?php
+	          	if	( isset($menu['url']) )
+	          	{
+	          		$link_url = Html::url($actionName,$menu['subaction'],$this->getRequestId() );
+	          		?><a href="javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $link_url ?>'); return false; " accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><img src="<?php echo $icon_url ?>" /><?php echo $tmp_text ?></a><?php
+	          	}
+	          	else
+	          	{
+	          		?><span><img src="<?php echo $icon_url ?>" /><?php echo $tmp_text ?></span><?php
+	          	}
+	          }
+	          	?></li><?php
+	 */
+
+	/*
+	 * Hilfe
+	 * if ( false && @$conf['help']['enabled'] )
+	          	{
+	             ?><a class="help" href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo $image_dir.'icon/help.png' ?>" /><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
+	          	}
+	          	?><?php
+	          	*/
+}
+
+
+function createUrl(action,subaction,id) 
+{
+	return './dispatcher.php?action='+action+'&subaction='+subaction+'&id='+id;
 }

@@ -1,6 +1,7 @@
 dummy
 	form action:login subaction:login target:_top
-		window title:GLOBAL_LOGIN name:login width:400px icon:user
+		#window title:GLOBAL_LOGIN name:login width:400px icon:user
+		dummy
 	
 			fieldset
 				if present:config:login/logo/file
@@ -79,7 +80,7 @@ dummy
 			else 
 				hidden name:dbid default:var:actdbid
 			button type:ok
-			insert script:screenwidth
+			#insert script:screenwidth
 			
 		hidden name:objectid
 		hidden name:modelid

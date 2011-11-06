@@ -34,14 +34,13 @@
 	$attr_target = $view;
 	#END-IF	
 	
-	#IF-ATTR action#
-		$tmp_url = Html::url($attr_action,$attr_subaction,!empty($attr_id)?$attr_id:$this->getRequestId(),$params);
-	#END-IF
-	#IF-ATTR url#
-		$tmp_url = $attr_url;
-	#END-IF
+		//$tmp_url = Html::url($attr_action,$attr_subaction,!empty($attr_id)?$attr_id:$this->getRequestId(),$params);
+		$json = new JSON();
+		$tmp_data = $json->encode( array('action'=>!empty($attr_action)?$attr_action:$this->actionName,'subaction'=>!empty($attr_subaction)?$attr_subaction:$this->subActionName,'id'=>!empty($attr_id)?$attr_id:$this->getRequestId())
+		                          +array(REQ_PARAM_TOKEN=>token())
+		                          +$params );
 
 	if	( substr($tmp_url,0,10) != 'javascript' )
 		$tmp_url = "javascript:loadViewByName('".$attr_target."','".$tmp_url.(isset($attr_anchor)?'#'.$attr_anchor:'')."'); return false;";
 	
-?><a target="<?php echo $attr_frame ?>"<?php if (isset($attr_name)) { ?> name="<?php echo $attr_name ?>"<?php }else{ ?> href="javascript:void(0);" onclick="<?php echo $tmp_url ?>"<?php } ?> class="<?php echo $attr_class ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
+?><a target="<?php echo $attr_frame ?>"<?php if (isset($attr_name)) { ?> name="<?php echo $attr_name ?>"<?php }else{ ?> href="javascript:void(0);" onclick="linkSubmit('<?php echo str_replace("\n",'',str_replace('"','&quot;',$tmp_data)) ?>');" <?php } ?> class="<?php echo $attr_class ?>"<?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">

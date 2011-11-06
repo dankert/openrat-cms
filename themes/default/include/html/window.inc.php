@@ -1,3 +1,4 @@
+<?php if (false) { ?>
 <div class="window">
 
 <div class="title">
@@ -55,14 +56,14 @@
 			if	( $tmp_pos !== false )
 				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
 
-			$liClass  = (isset($menu['url'])?'':'no').'action'.($this->subActionName==$menu['subaction']?'_active':'');
+			$liClass  = (isset($menu['url'])?'':'no').'action'.($this->subActionName==$menu['subaction']?' active':'');
 			$icon_url = $image_dir.'icon/'.$menu['subaction'].'.png';
 			
 			?><li class="<?php echo $liClass?>"><?php
           	if	( isset($menu['url']) )
           	{
           		$link_url = Html::url($actionName,$menu['subaction'],$this->getRequestId() );
-          		?><a href="javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $link_url ?>'); return false; " accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><img src="<?php echo $icon_url ?>" /><?php echo $tmp_text ?></a><?php
+          		?><a href="javascript:void(0);" onclick="javascript:loadSubaction(this,'<?php echo $actionName ?>','<?php echo $menu['subaction'] ?>','<?php echo $this->getRequestId() ?>'); return false; " accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><img src="<?php echo $icon_url ?>" /><?php echo $tmp_text ?></a><?php
           	}
           	else
           	{
@@ -105,4 +106,6 @@
   
 <?php } ?>
 
-<div class="content">
+<div class="content"><div class="filler">
+
+<?php } ?>

@@ -36,9 +36,8 @@ a img {border:none;}
 body
 {
 	background-color:#E0E0D5;
-	height:100%;
-	min-height:100%;
 }
+
 
 iframe
 {
@@ -52,20 +51,19 @@ div.breadcrumb,
 div.breadcrumb a,
 div.window > div.title
 {
-	height:20px;
 	x-background-color:grey;
 	xsopacity:0.7;
 	color:white;
 	font-weight:bold;
 }
 
-/* Einzel-Views */
+/*   H e a d e r   */
 div#header
 {
-	height:19px;
 	overflow:hidden;
-	margin:0px;
 	padding:5px;
+	margin:0px;
+	margin-bottom:20px;
 }
 
 div#header a,
@@ -93,6 +91,8 @@ div#header div.history
 	margin-left:24px;
 }
 
+/*
+
 div#tree
 {
 	padding:5px;
@@ -100,12 +100,60 @@ div#tree
 	margin-left:0px;
 	float:left;
 }
+*/
+
+/*   H o e h e n   */
+html,body
+{
+	height:100%;
+}
+
+div#header
+{
+	height:23px;
+}
+
+/*
 
 div#tree, div#content
 {
-	height:70%;
+	height:auto;
+}
+*/
+
+/*div.window {
+    height:90%;
+}
+*/
+
+div.window > div.title
+{
+	height:20px;
 }
 
+/*
+div.window > div.menu
+{
+	height:50px;
+}
+*/
+
+
+div.window div.content
+{
+    height:auto;
+}
+div.window div.status
+{
+	height:35px;
+}
+div.window div.content div.filler
+{
+	height:70%;
+	overflow:auto;
+}
+
+/*
 div#content
 {
 	padding:5px;
@@ -114,6 +162,7 @@ div#content
 	margin-top:0px;
 	
 }
+*/
 
 div.content a.action,
 div.content a.help,
@@ -146,12 +195,17 @@ div.content a.action,
 div.content a.help,
 div.content input.ok,
 div#header,
-div.dropdown,
 div.window
 {
 	-webkit-box-shadow: 3px 2px 5px gray;
     -moz-box-shadow: 3px 2px 5px gray;
     box-shadow: 3px 2px 5px gray;
+}
+div.dropdown
+{
+	-webkit-box-shadow: 3px 2px 10px gray;
+    -moz-box-shadow: 3px 2px 10px gray;
+    box-shadow: 3px 2px 10px gray;
 }
 
 a.help
@@ -170,7 +224,6 @@ a.help
 }
 
 a.action:hover,
-a.action_active:hover,
 a.help:hover,
 div.noaction:hover,
 input.ok:hover
@@ -180,7 +233,6 @@ input.ok:hover
 }
 
 a.action:active,
-a.action_active:active,
 a.help:active,
 div.noaction:active,
 input.ok:active
@@ -195,15 +247,18 @@ a
 }
 
 
+
+/*   D r o p d o w n  -  M e n u e s  */
 div.dropdown
 {
+	z-index:2;
 	display:none;
 	opacity:0.95;
 	background-color:white;
 	position: absolute;
 	
 	padding:10px;
-	border:1px solid grey;
+	border:2px solid grey;
 	-moz-border-radius:5px; /* Mozilla */
     -webkit-border-radius:5px; /* Webkit */
     -khtml-border-radius:5px; /* Konqui */
@@ -602,7 +657,6 @@ label
 div.menu
 {
 	float:none;
-	height:50px;
 	xclear:left;
 }
 
@@ -709,20 +763,35 @@ body > div { display:none; }
 
 
 
-/* Menue-Reiter */
+/*   T a b s   */
 
-div.window ul.menu { /* general settings */
-text-align: left; /* set to left, right or center */
-margin: 1em 0 1em 0; /* set margins as desired */
-xfont: bold 11px verdana, arial, sans-serif; /* set font as desired */
-border-bottom: 1px solid #6c6; /* set border COLOR as desired */
-list-style-type: none;
-padding: 3px 10px 3px 10px; /* THIRD number must change with respect to padding-top (X) below */
+div.window div.menu > div.icons
+{
+	float:right;
 }
 
-div.window ul.menu li a,
-div.window ul.menu li div{ /* do not change */
+
+div.window div.menu
+{
+	padding-top:20px;
+	padding-left:5px;
+	padding-right:5px;
+	border-bottom:2px solid grey;	
+}
+
+div.window div.menu ul.views  { /* general settings */
+text-align: left; /* set to left, right or center */
+list-style-type: none;
+}
+
+div.window ul.views li
+{
+	padding-top:4px;
+	padding-bottom:4px;
+	padding-left:8px;
+	padding-right:8px;
 	
+	cursor:pointer;
 	-moz-border-radius-topleft:5px; /* Mozilla */
     -webkit-border-radius-topleft:5px; /* Webkit */
     -khtml-border-top-radius-topleft:5px; /* Konqui */
@@ -731,84 +800,72 @@ div.window ul.menu li div{ /* do not change */
     -webkit-border-radius-topright:5px; /* Webkit */
     -khtml-border-top-radius-topright:5px; /* Konqui */
     border-top-right-radius:5px;
-    border:1px solid gray;
-}
-
-div.window ul.menu li { /* do not change */
-   
+    border-top:1px solid gray;
+    border-left:1px solid gray;
+    border-right:1px solid gray;
+    margin-right:10px;
 	display: inline;
 }
 
-div.window ul.menu li.action_active { /* settings for selected tab */
-border-bottom: 1px solid #fff; /* set border color to page background color */
-background-color: #fff; /* set background color to match above border color */
+
+div.window ul.views > li.active {
+	background-color: grey;
+	color: white;
 }
 
-div.window ul.menu li.action_active a { /* settings for selected tab link */
-background-color: #fff; /* set selected tab background color as desired */
-color: #000; /* set selected tab link color as desired */
-xposition: relative;
-top: 1px;
-padding-top: 4px; /* must change with respect to padding (X) above and below */
-}
-
-div.window ul.menu li a,
-div.window ul.menu li > span
-{ /* settings for all tab links */
-padding: 3px 4px; /* set padding (tab size) as desired; FIRST number must change with respect to padding-top (X) above */
-border: 1px solid #6c6; /* set border COLOR as desired; usually matches border color specified in #tabnav */
-color: #666; /* set unselected tab link color as desired */
-margin-right: 0px; /* set additional spacing between tabs as desired */
-text-decoration: none;
-border-bottom: none;
-}
-
-div.window ul.menu a:hover { /* settings for hover effect */
-background: #fff; /* set desired hover color */
+div.window ul.views li:hover {
+	background: grey;
+	color: white;
 }
 
 
 
 
+/*
+
+div#workbench div.frame {
+	padding:3px;
+	border:1px solid grey;
+	
+	-moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    -khtml-border-radius:3px;
+    border-radius:3px;
+}
+*/
 
 
 
-
-
+/*
 div.window {
 	padding:3px;
 	border:1px solid grey;
 	
-	-moz-border-radius:5px; /* Mozilla */
-    -webkit-border-radius:5px; /* Webkit */
-    -khtml-border-radius:5px; /* Konqui */
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -khtml-border-radius:5px;
     border-radius:5px;
-    
-    height:auto;
-    
 }
+*/
 
 
 
-
-div.window div.content {
-	padding:3px;
+div.window {
+	padding:0px;
 	border:1px solid grey;
 	
 	-moz-border-radius:3px; /* Mozilla */
     -webkit-border-radius:3px; /* Webkit */
     -khtml-border-radius:3px; /* Konqui */
     border-radius:3px;
-    
-    overflow:auto;
-    height:100%;
 }
 
-div.content table
+div.window div.content table
 {
 	overflow:auto;
 	border:2px silver;
 }
+
 
 table tr.headline > td {
     background-color: silver;
@@ -860,15 +917,18 @@ div.content pre {
 }
 
 /* Hintergrund Fenster */
+/*
+
 div.window {
 	background-color: #3399FF;
 }
+*/
 
 /* Sonstiger Fensterhintergrund */
 div#header,                   /* Titelleite-Hintergrund */
 div.window div.content,       /* Fensterinhalt-Hintergrund */
 div.window ul.menu li a,      /* Tabs */
-div.window ul.menu li > span  /* Tabs */
+xdiv.window ul.menu li > span  /* Tabs */
 {
 	background-color: gray;
 }
@@ -878,7 +938,7 @@ div.window ul.menu li > span  /* Tabs */
 /*   S t a t u s z e i l e   */
 div.window div.status
 {
-	height:35px; padding:10px;
+	padding:10px;
 }
 div.window div.status div.error {
 	xborder:1px solid silver;
@@ -901,3 +961,373 @@ div.window div.status div.loader {
 	height:25px;
 	background: url(../images/loader.gif) no-repeat;
 }
+
+/*   V o l l b i l d   */
+div.window.fullscreen
+{
+	display:block;
+	z-index:109;
+
+    /*set the div in the top-left corner of the screen*/
+    xposition:absolute;
+    position:fixed;
+    top:0;
+    left:0;
+    background-color:silver;
+    
+    /*set the width and height to 100% of the screen*/
+    width:100%;
+    height:100%;
+}
+
+.invisible
+{
+	visibility:hidden;
+}
+
+
+
+/*
+	Variable Grid System (Fluid Version).
+	Learn more ~ http://www.spry-soft.com/grids/
+	Based on 960 Grid System - http://960.gs/ & 960 Fluid - http://www.designinfluences.com/
+
+	Licensed under GPL and MIT.
+*/
+
+
+/* Containers
+----------------------------------------------------------------------------------------------------*/
+.container_12 {
+	width: 96%;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+/* Grid >> Global
+----------------------------------------------------------------------------------------------------*/
+
+.grid_1,
+.grid_2,
+.grid_3,
+.grid_4,
+.grid_5,
+.grid_6,
+.grid_7,
+.grid_8,
+.grid_9,
+.grid_10,
+.grid_11,
+.grid_12 {
+	display:inline;
+	float: left;
+	position: relative;
+	margin-left: 1%;
+	margin-right: 1%;
+}
+
+/* Grid >> Children (Alpha ~ First, Omega ~ Last)
+----------------------------------------------------------------------------------------------------*/
+
+.alpha {
+	margin-left: 0;
+}
+
+.omega {
+	margin-right: 0;
+}
+
+/* Grid >> 12 Columns
+----------------------------------------------------------------------------------------------------*/
+
+
+.container_12 .grid_1 {
+	width:6.333%;
+}
+
+.container_12 .grid_2 {
+	width:14.667%;
+}
+
+.container_12 .grid_3 {
+	width:23.0%;
+}
+
+.container_12 .grid_4 {
+	width:31.333%;
+}
+
+.container_12 .grid_5 {
+	width:39.667%;
+}
+
+.container_12 .grid_6 {
+	width:48.0%;
+}
+
+.container_12 .grid_7 {
+	width:56.333%;
+}
+
+.container_12 .grid_8 {
+	width:64.667%;
+}
+
+.container_12 .grid_9 {
+	width:73.0%;
+}
+
+.container_12 .grid_10 {
+	width:81.333%;
+}
+
+.container_12 .grid_11 {
+	width:89.667%;
+}
+
+.container_12 .grid_12 {
+	width:98.0%;
+}
+
+
+
+/* Prefix Extra Space >> 12 Columns
+----------------------------------------------------------------------------------------------------*/
+
+
+.container_12 .prefix_1 {
+	padding-left:8.333%;
+}
+
+.container_12 .prefix_2 {
+	padding-left:16.667%;
+}
+
+.container_12 .prefix_3 {
+	padding-left:25.0%;
+}
+
+.container_12 .prefix_4 {
+	padding-left:33.333%;
+}
+
+.container_12 .prefix_5 {
+	padding-left:41.667%;
+}
+
+.container_12 .prefix_6 {
+	padding-left:50.0%;
+}
+
+.container_12 .prefix_7 {
+	padding-left:58.333%;
+}
+
+.container_12 .prefix_8 {
+	padding-left:66.667%;
+}
+
+.container_12 .prefix_9 {
+	padding-left:75.0%;
+}
+
+.container_12 .prefix_10 {
+	padding-left:83.333%;
+}
+
+.container_12 .prefix_11 {
+	padding-left:91.667%;
+}
+
+
+
+/* Suffix Extra Space >> 12 Columns
+----------------------------------------------------------------------------------------------------*/
+
+
+.container_12 .suffix_1 {
+	padding-right:8.333%;
+}
+
+.container_12 .suffix_2 {
+	padding-right:16.667%;
+}
+
+.container_12 .suffix_3 {
+	padding-right:25.0%;
+}
+
+.container_12 .suffix_4 {
+	padding-right:33.333%;
+}
+
+.container_12 .suffix_5 {
+	padding-right:41.667%;
+}
+
+.container_12 .suffix_6 {
+	padding-right:50.0%;
+}
+
+.container_12 .suffix_7 {
+	padding-right:58.333%;
+}
+
+.container_12 .suffix_8 {
+	padding-right:66.667%;
+}
+
+.container_12 .suffix_9 {
+	padding-right:75.0%;
+}
+
+.container_12 .suffix_10 {
+	padding-right:83.333%;
+}
+
+.container_12 .suffix_11 {
+	padding-right:91.667%;
+}
+
+
+
+/* Push Space >> 12 Columns
+----------------------------------------------------------------------------------------------------*/
+
+
+.container_12 .push_1 {
+	left:8.333%;
+}
+
+.container_12 .push_2 {
+	left:16.667%;
+}
+
+.container_12 .push_3 {
+	left:25.0%;
+}
+
+.container_12 .push_4 {
+	left:33.333%;
+}
+
+.container_12 .push_5 {
+	left:41.667%;
+}
+
+.container_12 .push_6 {
+	left:50.0%;
+}
+
+.container_12 .push_7 {
+	left:58.333%;
+}
+
+.container_12 .push_8 {
+	left:66.667%;
+}
+
+.container_12 .push_9 {
+	left:75.0%;
+}
+
+.container_12 .push_10 {
+	left:83.333%;
+}
+
+.container_12 .push_11 {
+	left:91.667%;
+}
+
+
+
+/* Pull Space >> 12 Columns
+----------------------------------------------------------------------------------------------------*/
+
+
+.container_12 .pull_1 {
+	left:-8.333%;
+}
+
+.container_12 .pull_2 {
+	left:-16.667%;
+}
+
+.container_12 .pull_3 {
+	left:-25.0%;
+}
+
+.container_12 .pull_4 {
+	left:-33.333%;
+}
+
+.container_12 .pull_5 {
+	left:-41.667%;
+}
+
+.container_12 .pull_6 {
+	left:-50.0%;
+}
+
+.container_12 .pull_7 {
+	left:-58.333%;
+}
+
+.container_12 .pull_8 {
+	left:-66.667%;
+}
+
+.container_12 .pull_9 {
+	left:-75.0%;
+}
+
+.container_12 .pull_10 {
+	left:-83.333%;
+}
+
+.container_12 .pull_11 {
+	left:-91.667%;
+}
+
+
+
+
+/* Clear Floated Elements
+----------------------------------------------------------------------------------------------------*/
+
+/* http://sonspring.com/journal/clearing-floats */
+
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+/* http://perishablepress.com/press/2008/02/05/lessons-learned-concerning-the-clearfix-css-hack */
+
+.clearfix:after {
+	clear: both;
+	content: ' ';
+	display: block;
+	font-size: 0;
+	line-height: 0;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+
+.clearfix {
+	display: block;
+}
+

@@ -1,3 +1,4 @@
+<div class="invisible">
 <?php
 	#IF-ATTR-VALUE type:ok#
 		if ($this->isEditable() && !$this->isEditMode() && !readonly() )
@@ -28,3 +29,4 @@
 		}
 	#END-IF
 ?>
+</div>
