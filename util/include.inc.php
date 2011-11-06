@@ -9,6 +9,8 @@ require_once( OR_SERVICECLASSES_DIR."Ldap.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."TemplateEngine.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Preferences.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."FileUtils.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
+
 
 //if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('tree')) )
 {

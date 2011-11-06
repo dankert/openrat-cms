@@ -391,7 +391,6 @@ class Action
 
 		if	( sizeof($types)==1 && in_array('application/json',$types) || $this->getRequestVar('output')=='json' )
 		{
-			require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
 			$json = new JSON();
 			header('Content-Type: application/json');
 			echo $json->encode( $this->templateVars );
