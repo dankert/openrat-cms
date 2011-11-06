@@ -313,8 +313,8 @@ class JSON
                             // characters U-00000800 - U-0000FFFF, mask 1110XXXX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
                             $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}));
+                                         @ord($var{$c + 1}),
+                                         @ord($var{$c + 2}));
                             $c += 2;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
@@ -324,9 +324,9 @@ class JSON
                             // characters U-00010000 - U-001FFFFF, mask 11110XXX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
                             $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}),
-                                         ord($var{$c + 3}));
+                                         @ord($var{$c + 1}),
+                                         @ord($var{$c + 2}),
+                                         @ord($var{$c + 3}));
                             $c += 3;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
@@ -336,10 +336,10 @@ class JSON
                             // characters U-00200000 - U-03FFFFFF, mask 111110XX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
                             $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}),
-                                         ord($var{$c + 3}),
-                                         ord($var{$c + 4}));
+                                         @ord($var{$c + 1}),
+                                         @ord($var{$c + 2}),
+                                         @ord($var{$c + 3}),
+                                         @ord($var{$c + 4}));
                             $c += 4;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
@@ -349,11 +349,11 @@ class JSON
                             // characters U-04000000 - U-7FFFFFFF, mask 1111110X
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
                             $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}),
-                                         ord($var{$c + 3}),
-                                         ord($var{$c + 4}),
-                                         ord(@$var{$c + 5}));
+                                         @ord($var{$c + 1}),
+                                         @ord($var{$c + 2}),
+                                         @ord($var{$c + 3}),
+                                         @ord($var{$c + 4}),
+                                         @ord(@$var{$c + 5}));
                             $c += 5;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
