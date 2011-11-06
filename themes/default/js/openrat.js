@@ -270,9 +270,9 @@ function loadBranch(li,type,id)
 //							doResponse(data,textStatus);
 //						} } );
 					// Den Objekt-Typ und die Objekt-Id für alle Views setzen (die dies zulassen)
-					$('div#workbench div.refreshable').attr('data-action',line.action).attr('data-id',line.id);
-					// Alle refresh-fähigen Views mit dem neuen Objekt laden.
-					refreshAllRefreshables();
+
+					// Neue Action starten.
+					setNewAction( line.action, line.id );
 				});
 			}
 				
@@ -285,6 +285,33 @@ function loadBranch(li,type,id)
 	$(li).children('div.tree').removeClass('closed').addClass('open');
 	$(li).children('div.tree').click( function(e) { closeBranch($(e.target).parent(),type,id) } );
 	//$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_minus.gif');
+}
+
+
+/**
+ * Setzt neue Action und aktualisiert alle Fenster.
+ * @param action Action
+ * @param id Id
+ */
+function setNewAction( action,id )
+{
+	//alert( "Action: "+action+", Id: "+id);
+	$('div#workbench div.refreshable').attr('data-action',action).attr('data-id',id);
+	
+	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
+	refreshAllRefreshables();
+}
+
+
+/**
+ * Setzt neue Id und aktualisiert alle Fenster.
+ * @param id Id
+ */
+function setNewId( id )
+{
+	$('div#workbench div.refreshable').attr('data-id',id);
+	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
+	refreshAllRefreshables();
 }
 
 
