@@ -142,6 +142,7 @@ class AdministrationTree extends AbstractTree
 			$treeElement = new TreeElement();
 			
 			$treeElement->internalId   = $id;
+			$treeElement->id           = $id;
 			$treeElement->text         = $name;
 			$treeElement->url          = Html::url('project','edit',$id,array(REQ_PARAM_TARGET=>'content'));
 			$treeElement->icon         = 'project';
