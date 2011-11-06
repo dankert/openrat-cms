@@ -747,7 +747,7 @@ class LoginAction extends Action
 		
 		//$this->refresh(); // Benutzer ist angemeldet: Andere Views könnte das interessieren.
 		$this->updateView('content','start','projectmenu');
-		
+		Session::set('perspective','start');
 	}
 
 
@@ -826,6 +826,11 @@ class LoginAction extends Action
 		{
 			header('Location: '.$redirect_url);
 			exit;
+		}
+		else
+		{
+			Session::set('perspective','login');
+			$this->refresh();
 		}
 	}
 
