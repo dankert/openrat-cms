@@ -43,6 +43,8 @@ class UserAction extends Action
 			$this->user->load();
 			$this->setTemplateVar('userid',$this->user->userid);
 		}
+				
+		$this->requireAdmin();
 	}
 
 

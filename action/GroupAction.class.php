@@ -46,6 +46,9 @@ class GroupAction extends Action
 			$this->group->load();
 			$this->setTemplateVar( 'groupid',$this->group->groupid );
 		}
+		
+				
+		$this->requireAdmin();
 	}
 
 

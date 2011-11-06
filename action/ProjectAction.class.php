@@ -37,7 +37,7 @@ class ProjectAction extends Action
 			$this->project->load();
 		}
 		
-		
+		$this->requireAdmin();
 	}
 
 
