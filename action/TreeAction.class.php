@@ -221,7 +221,7 @@ class TreeAction extends Action
 	/**
 	 * Anzeigen des Baumes
 	 */
-	public function show()
+	public function showView()
 	{
 		//if	( $this->hasRequestVar('projectid') )
 		$this->load();
@@ -258,7 +258,7 @@ class TreeAction extends Action
 	/**
 	 * Anzeigen des Baumes fuer asynchrone Anfragen.
 	 */
-	function loadEntry()
+	public function loadEntryView()
 	{
 		$this->tree = Session::getTree();
 		
@@ -271,7 +271,7 @@ class TreeAction extends Action
 	/**
 	 * Anzeigen des Baumes fuer asynchrone Anfragen.
 	 */
-	function loadBranch()
+	public function loadBranchView()
 	{
 		$this->tree = Session::getTree();
 		
@@ -314,7 +314,7 @@ class TreeAction extends Action
 	/**
 	 * Projekt-Einstellungen anzeigen.
 	 */
-	public function settings()
+	public function settingsView()
 	{
 		$this->setTemplateVar( 'languages' ,Language::getAll()                        );
 		$this->setTemplateVar( 'languageid',Session::getProjectLanguage()->languageid );

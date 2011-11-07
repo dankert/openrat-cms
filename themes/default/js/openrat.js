@@ -82,11 +82,11 @@ function refreshWorkbench()
  */
 function refreshHeader()
 {
-	$('div#header').each( function(index){
-		loadView( $(this),createUrl('title','show',0 ) );
+	$('div#header').load( createUrl('title','show',0 ),function() {
+		$(this).fadeIn('slow');
+		registerHeaderEvents();
 	});
 	
-	registerHeaderEvents();
 	
 	// Modale Dialoge
 	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
@@ -382,7 +382,7 @@ function doResponse(data,status)
 		$('div.window div.status div').addClass( value.status );
 		$('div.window div.status div').append( value.text );
 		$('div.window div.status div').delay(3000).fadeOut(2500);
-		//alert(value.text);
+		//alert( value.text );
 	});
 	
 	$.each(data['errors'], function(idx,value) {

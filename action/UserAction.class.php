@@ -209,7 +209,7 @@ class UserAction extends Action
 
 
 
-	function listing()
+	function listingView()
 	{
 		$list = array();
 

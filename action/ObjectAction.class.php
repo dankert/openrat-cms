@@ -196,7 +196,7 @@ class ObjectAction extends Action
 	/**
 	 * Alle Rechte anzeigen
 	 */
-	function rights()
+	function rightsView()
 	{
 //		$this->actionName = 'object';
 		$o = Session::getObject();

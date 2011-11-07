@@ -160,51 +160,22 @@ if	( is_object( $db ) )
 	$db->start();
 }
 
-// Aktualisiere die aktuellen Views
-$views = Session::get('views');
+if	( !empty($REQ[REQ_PARAM_ACTION]) )
+	$action = $REQ[REQ_PARAM_ACTION];
+else
+	$action = 'login';
 
-if	( !is_array($views) ) 
-{
-	$views = array( 'tree'   => null,
-	                'header' => array('action'=>'title','subaction'=>'show' ),
-	                'content'=> array('action'=>'login','subaction'=>'login')  );
-}
+Session::set('action',$action);
 
-// Wenn 'target' übergeben wurde und als View bekannt ist
-if	( isset($REQ[REQ_PARAM_TARGET])
-	  && array_key_exists($REQ[REQ_PARAM_TARGET],$views)
-	  && !empty($REQ[REQ_PARAM_ACTION])
-	 )
-{
-	// Mit der aktuellen Aktion die Views aktualisieren. 
-	$views[$REQ[REQ_PARAM_TARGET]] = array('action'=>$REQ[REQ_PARAM_ACTION],'subaction'=>$REQ[REQ_PARAM_SUBACTION]); 
-}
-// Action und Subaction aus der View-Konfiguration ermitteln.
-if	( !empty($REQ[REQ_PARAM_TARGET]) && array_key_exists($REQ[REQ_PARAM_TARGET],$views) )
-{
-	$view      = $REQ[REQ_PARAM_TARGET];
-	$action    = $views[$view]['action'   ];
-	$subaction = $views[$view]['subaction'];
-}
+if	( !empty( $REQ[REQ_PARAM_SUBACTION] ) )
+	$subaction = $REQ[REQ_PARAM_SUBACTION];
 else
 {
-	if	( !empty($REQ[REQ_PARAM_ACTION]) )
-		$action = $REQ[REQ_PARAM_ACTION];
+	$sl = Session::getSubaction();
+	if	( is_array($sl) && isset($sl[$action]) )
+		$subaction = $sl[$action];
 	else
-		$action = 'login';
-	
-	Session::set('action',$action);
-	
-	if	( !empty( $REQ[REQ_PARAM_SUBACTION] ) )
-		$subaction = $REQ[REQ_PARAM_SUBACTION];
-	else
-	{
-		$sl = Session::getSubaction();
-		if	( is_array($sl) && isset($sl[$action]) )
-			$subaction = $sl[$action];
-		else
-			$subaction = '';
-	}
+		$subaction = '';
 }
 
 require( OR_ACTIONCLASSES_DIR.'/Action.class.php' );
@@ -252,12 +223,6 @@ if	( !isset($do->actionConfig[$subaction]) )
 
 $subactionConfig = $do->actionConfig[$subaction];
 
-if	( isset($subactionConfig['clear'] ) ) 
-{
-	foreach( explode(',',$subactionConfig['clear']) as $clearView )
-		if	( isset($views[$clearView]) )
-			$views[$clearView] = null;
-}
 
 // Eine Subaktion ohne "guest=true" verlangt einen angemeldeten Benutzer.
 if	( !isset($subactionConfig['guest']) || !$subactionConfig['guest'] )
@@ -298,21 +263,16 @@ if	( isset($do->actionConfig[$do->subActionName]['alias']) )
 }
 
 
-$isAction = (   (    isset($sConf['write']) 
-           && ( $_SERVER['REQUEST_METHOD'] == 'POST'
-                || $sConf['write']=='get') )
-      || @$sConf['call']
-      || isset($conf['action'][$actionClassName][$subaction]['direct'] ) );
+$isAction = $_SERVER['REQUEST_METHOD'] == 'POST' || (isset($sConf['write']) && $sConf['write']=='get');
+//      || @$sConf['call']
+//      || isset($conf['action'][$actionClassName][$subaction]['direct'] ) );
      
 
 
-if	( isset($do->actionConfig[$do->subActionName]['write']) )
-	if	( $isAction )
-		$subactionMethodName = $subaction.'Action';
-	else
-		$subactionMethodName = $subaction.'View';
+if	( $isAction )
+	$subactionMethodName = $subaction.'Action';
 else
-	$subactionMethodName = $subaction;
+	$subactionMethodName = $subaction.'View';
 	
 Logger::debug("Executing $actionClassName::$subactionMethodName");
 
@@ -322,11 +282,8 @@ if	( isset($do->actionConfig[$do->subActionName]['direct']) )
 	exit;
 
 	
-Session::set('views'     ,$views    );
-	
 if	( isset($do->actionConfig[$do->subActionName]['async' ]) || $isAction )
 {
-	require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
 	$json = new JSON();
 	header('Content-Type: application/json');
 	echo $json->encode( $do->templateVars );

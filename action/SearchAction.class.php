@@ -177,7 +177,7 @@ class SearchAction extends Action
 	 * Durchf?hren der Suche
 	 * und Anzeige der Ergebnisse
 	 */
-	function quicksearch()
+	function quicksearchView()
 	{
 		global $conf;
 

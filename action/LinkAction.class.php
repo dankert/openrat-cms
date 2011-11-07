@@ -104,7 +104,7 @@ class LinkAction extends ObjectAction
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
-	function saveprop()
+	function propAction()
 	{
 		// Wenn Name gefuellt, dann Datenbank-Update
 		if   ( $this->getRequestVar('name') != '' )
@@ -123,7 +123,7 @@ class LinkAction extends ObjectAction
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
-	function save()
+	function editAction()
 	{
 		if( $this->getRequestVar('type') != '' )
 		{
@@ -153,14 +153,8 @@ class LinkAction extends ObjectAction
 	}
 
 
-	function showprop()
-	{
-		$this->setTemplateVars( $this->link->getProperties() );
-	}
 
-
-
-	function edit()
+	function editView()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
 
@@ -194,7 +188,7 @@ class LinkAction extends ObjectAction
 
 
 
-	function prop()
+	function propView()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
 		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);

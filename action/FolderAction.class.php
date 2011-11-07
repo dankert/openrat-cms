@@ -411,7 +411,7 @@ class FolderAction extends ObjectAction
 	 * Es werden alle ausgew�hlten Dateien nochmal angezeigt.
 	 * Abh�ngig von der ausgew�hlten Aktion wird eine weitere Auswahl ben�tigt. 
 	 */
-	function edit()
+	function editView()
 	{
 		$type = $this->getRequestVar('type'); // Typ der Aktion, z.B "copy" oder "move"
 		
@@ -937,7 +937,7 @@ class FolderAction extends ObjectAction
 	 * Anzeige aller Objekte in diesem Ordner.
 	 * @return unknown_type
 	 */
-	function show()
+	function showView()
 	{
 		global $conf_php;
 

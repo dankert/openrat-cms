@@ -131,7 +131,7 @@ class ModelAction extends Action
 	
 	
 	// Speichern eines Modells
-	function save()
+	function editAction()
 	{
 		if   ( $this->getRequestVar('name') != '' )
 		{
@@ -159,7 +159,7 @@ class ModelAction extends Action
 	}
 
 
-	function listing()
+	function listingView()
 	{
 		global $conf_php;
 		$actModel = Session::getProjectModel();
@@ -193,7 +193,7 @@ class ModelAction extends Action
 	 * Bearbeiten der Variante.
 	 * Ermitteln aller Eigenschaften der Variante.
 	 */
-	function edit()
+	function editView()
 	{
 		$this->model->load();
 	

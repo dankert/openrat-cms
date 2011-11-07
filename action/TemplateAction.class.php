@@ -416,7 +416,7 @@ class TemplateAction extends Action
 	/**
 	 * Voransicht einer Vorlage
 	 */
-	function show()
+	function showView()
 	{
 		$text = $this->template->src;
 	

@@ -57,7 +57,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Alle Daten aus dem Formular speichern
 	 */
-	function saveform()
+	function formAction()
 	{
 		$this->page->public = true;
 		$this->page->simple = true;
@@ -146,7 +146,7 @@ class PageAction extends ObjectAction
 	 *
 	 * Der Inhalt eines Elementes wird abgespeichert
 	 */
-	function elsave()
+	function elAction()
 	{
 		$value = new Value();
 		$language = Session::getProjectLanguage();
@@ -317,7 +317,6 @@ class PageAction extends ObjectAction
 		else
 		{
 			$this->addValidationError('name');
-			//$this->callSubAction('prop');
 		}
 	}
 
@@ -458,7 +457,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Alle Elemente der Seite anzeigen
 	 */
-	function el()
+	function elView()
 	{
 		$this->page->public = true;
 		$this->page->simple = true;
@@ -494,7 +493,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Alle editierbaren Felder in einem Formular bereitstellen
 	 */
-	function form()
+	function formView()
 	{
 		global $conf_php;
 
@@ -593,7 +592,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Seite anzeigen
 	 */
-	function show()
+	function showView()
 	{
 		$this->setTemplateVar('preview_url',Html::url('page','preview',$this->page->objectid,array('target'=>'none') ) );
 	}
@@ -601,7 +600,7 @@ class PageAction extends ObjectAction
 		/**
 	 * Seite anzeigen
 	 */
-	function preview()
+	function previewView()
 	{
 		Logger::debug("preview von seite");
 		// Seite definieren
@@ -632,7 +631,7 @@ class PageAction extends ObjectAction
 	 *
 	 * Bei editierbaren Feldern wird ein Editor-Ikon vorangestellt.
 	 */
-	function edit()
+	function editView()
 	{
 		// Editier-Icons anzeigen
 		$this->page->icons = true;

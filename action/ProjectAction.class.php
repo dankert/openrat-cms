@@ -43,6 +43,7 @@ class ProjectAction extends Action
 
 	function editAction()
 	{
+		sleep(2);
 		if	( $this->getRequestVar('name') != '')
 		{
 			$this->project->name                = $this->getRequestVar('name'               ,OR_FILTER_ALPHANUM);
@@ -121,7 +122,7 @@ class ProjectAction extends Action
 	 * Liste aller Projekte anzeigen.
 	 *
 	 */
-	function listing()
+	function listingView()
 	{
 		global $conf_php;
 
@@ -287,7 +288,7 @@ class ProjectAction extends Action
 	
 	
 	
-	function info()
+	function infoView()
 	{
 		$this->setTemplateVar( 'info', $this->project->info() );
 	}

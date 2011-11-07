@@ -28,7 +28,7 @@ class TitleAction extends Action
 	/**
 	 * Fuellen der Variablen und Anzeigen der Titelleiste
 	 */
-	function show()
+	function showView()
 	{
 		$this->setTemplateVar('buildinfo',OR_TITLE.' '.OR_VERSION.' - build '.config('build','build') );
 
@@ -92,7 +92,7 @@ class TitleAction extends Action
 	}
 	
 	
-	public function history()
+	public function historyView()
 	{
 		$resultList = array();
 

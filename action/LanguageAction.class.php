@@ -162,7 +162,7 @@ class LanguageAction extends Action
 	/**
 	 * Speichern der Sprache
 	 */
-	function save()
+	function editAction()
 	{
 		global $conf;
 
@@ -184,7 +184,7 @@ class LanguageAction extends Action
 
 
 
-	function listing()
+	function listingView()
 	{
 		global $conf;
 		$countryList = $conf['countries'];
@@ -229,7 +229,7 @@ class LanguageAction extends Action
 
 
 
-	function edit()
+	function editView()
 	{
 		global $conf;
 		$countryList = $conf['countries'];

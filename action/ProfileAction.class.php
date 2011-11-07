@@ -230,17 +230,14 @@ class ProfileAction extends Action
 		if	( ! $this->user->checkPassword( $this->getRequestVar('act_password') ) )
 		{
 			$this->addValidationError('act_password');
-			$this->callSubAction('pwchange');
 		}
 		elseif	( $this->getRequestVar('password1') == '' )
 		{
 			$this->addValidationError('password1');
-			$this->callSubAction('pwchange');
 		}
 		elseif ( $this->getRequestVar('password1') != $this->getRequestVar('password2') )
 		{
 			$this->addValidationError('password2','PASSWORDS_DO_NOT_MATCH');
-			$this->callSubAction('pwchange');
 		}
 		else
 		{

@@ -170,7 +170,7 @@ class GroupAction extends Action
 	/**
 	 * Liste aller Gruppen.
 	 */
-	function listing()
+	function listingView()
 	{
 		$list = array();
 

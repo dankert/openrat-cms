@@ -28,7 +28,7 @@ class WorkbenchAction extends Action
 	/**
 	 * Ersetzt den Inhalt mit einer anderen Datei
 	 */
-	public function show()
+	public function showView()
 	{
 		global $viewconfig;
 		$viewconfig = parse_ini_file('themes/default/layout/perspective/'.$this->perspective.'.ini.php',true);

@@ -22,20 +22,12 @@ direct=true
 menu=elements
 
 [form]
-target=saveform
-menu=elements
 
 [pub]
 menu=pub
 write=true
 
-[saveform]
-goto=el
-
 [prop]
-menu=prop
-write=true
-target=prop
 editable=true
 
 [changetemplate]
@@ -71,10 +63,3 @@ goto=rights
 goto=rights
 
 
-[menu]
-menu=show,pub,el,prop,src,rights
-pub=show,pub,el,form,rights,prop,changetemplate,src
-elements=show,pub,el,form,rights,prop,changetemplate,src
-rights=show,pub,el,form,rights,prop,changetemplate,src
-src=show,pub,el,form,rights,prop,changetemplate,src
-prop=show,pub,el,form,rights,prop,changetemplate,src

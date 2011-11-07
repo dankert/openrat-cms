@@ -95,7 +95,7 @@ class FileAction extends ObjectAction
 	 * Abspeichern der Eigenschaften zu dieser Datei.
 	 *
 	 */
-	function saveprop()
+	function propAction()
 	{
 		// Eigenschaften speichern
 		$this->file->filename  = $this->getRequestVar('filename'   ,OR_FILTER_FILENAME);
@@ -114,7 +114,7 @@ class FileAction extends ObjectAction
 	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
 	 * auf die Standardausgabe geschrieben
 	 */
-	function show()
+	function showView()
 	{
 		$this->setTemplateVar('preview_url',Html::url('file','preview',$this->file->objectid,array('target'=>'none') ) );
 	}
@@ -124,7 +124,7 @@ class FileAction extends ObjectAction
 	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
 	 * auf die Standardausgabe geschrieben
 	 */
-	function preview()
+	function previewView()
 	{
 		$this->lastModified( $this->file->lastchangeDate );
 		
@@ -296,7 +296,7 @@ class FileAction extends ObjectAction
 	}
 
 
-	function prop()
+	function propView()
 	{
 		
 				global $conf;
@@ -337,7 +337,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function edit()
+	function editView()
 	{
 		global $conf;
 		// MIME-Types aus Datei lesen
