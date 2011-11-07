@@ -61,7 +61,7 @@ class FolderAction extends ObjectAction
 	 * Neues Objekt anlegen.<br>
 	 * Dies kann ein(e) Verzeichnis, Seite, Verkn�pfung oder Datei sein.<br>
 	 */
-	function createnew()
+	function createAction()
 	{
 		global $conf;
 		$type = $this->getRequestVar('type'       );
@@ -813,7 +813,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function create()
+	function createView()
 	{
 		// Maximale Dateigroesse.
 		$maxSizeBytes = $this->maxFileSize();
@@ -993,7 +993,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function select()
+	function selectView()
 	{
 		global $conf_php;
 
@@ -1082,7 +1082,7 @@ class FolderAction extends ObjectAction
 
 
 
-	function order()
+	function orderView()
 	{
 		global $conf_php;
 
