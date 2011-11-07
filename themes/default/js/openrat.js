@@ -302,6 +302,51 @@ function loadBranch(li,type,id)
 
 
 /**
+ * Setzt neue View und aktualisiert alle Fenster.
+ * @param element
+ * @param action Action
+ * @param id Id
+ */
+function submitUrl( element,url )
+{
+	postUrl( url );
+	
+	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
+	refreshAllRefreshables();
+}
+
+
+
+function postUrl(url)
+{
+	$.ajax( { 'type':'POST',url:url, data:{}, success:function(data, textStatus, jqXHR)
+		{
+			$('div.window div.status div.loader').html('&nbsp;');
+			doResponse(data,textStatus);
+		} } );
+	
+}
+
+
+
+/**
+ * Setzt neue View und aktualisiert alle Fenster.
+ * @param element
+ * @param action Action
+ * @param id Id
+ */
+function startView( element,view )
+{
+	var action = $(element).closest('div.frame').attr('data-action');
+	var url    = createUrl(action, view, 0);
+	loadView( $(element).closest('div.filler'), url );
+	
+	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
+	// refreshAllRefreshables();
+}
+
+
+/**
  * Setzt neue Action und aktualisiert alle Fenster.
  * @param action Action
  * @param id Id
@@ -345,19 +390,17 @@ function closeBranch(li,type,id)
 }
 
 
-function linkSubmit(data)
+function submitLink(data)
 {
 	var params = jQuery.parseJSON( data );
 	var url = './dispatcher.php';
 	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 		{
-			$('div.window div.status div.loader').html('&nbsp;');
-			doResponse(data,textStatus);
+		$('div.window div.status div.loader').html('&nbsp;');
+		doResponse(data,textStatus);
 		} } );
 	
 }
-
-
 
 function formSubmit(form)
 {

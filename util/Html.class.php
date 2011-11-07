@@ -73,6 +73,9 @@ class Html
 		// Session-Id ergaenzen
 		if	( $conf['interface']['url']['add_sessionid'] )
 			$params[ session_name() ] = session_id();
+			
+		if	( config('security','use_post_token')  )
+			$params[ 'token'] = token();
 
 		$fake_urls  = $conf['interface']['url']['fake_url' ];
 		$url_format = $conf['interface']['url']['url_format'];
