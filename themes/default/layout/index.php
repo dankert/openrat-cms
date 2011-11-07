@@ -23,8 +23,9 @@
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo $meta['title'] ?>" ><?php
       } ?>
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/layout.css" >
-  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/user/default.css" >
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-1.5.min.js"></script>
+  <link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/user/default.css" >
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-1.6.2.min.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/openrat.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/ckeditor.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/adapters/jquery.js"></script>
