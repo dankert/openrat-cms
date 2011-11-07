@@ -726,6 +726,14 @@ ul.tree ul
 	margin-left:18px;
 }
 
+div.entry.selected
+{
+	/*border:1px solid black;*/
+	background-color:silver;
+}
+
+
+
 ul.tree div.tree
 {
 	width:18px;

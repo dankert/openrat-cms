@@ -272,6 +272,8 @@ function loadBranch(li,type,id)
 					// Den Objekt-Typ und die Objekt-Id für alle Views setzen (die dies zulassen)
 
 					// Neue Action starten.
+					$('div#tree div.entry').removeClass('selected');
+					$(this).addClass('selected');
 					setNewAction( line.action, line.id );
 				});
 			}
