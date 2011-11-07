@@ -111,7 +111,7 @@ function loadView(jo, url )
 			filebrowserBrowseUrl:'./dispatcher.php?action=filebrowser&subaction=browse'
 	};
 	
-	$(jo).fadeOut('fast').empty().load(url,function() {
+	$(jo).empty().html('<div class="loader" />').load(url,function() {
 			$(jo).fadeIn(100);
 			var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
 			if (o) o.destroy();
