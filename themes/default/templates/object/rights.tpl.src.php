@@ -3,24 +3,26 @@ dummy
 	form
 		window
 			table
+				row class:headline
+					cell class:help
+						text key:GLOBAL_NAME
+					cell class:help
+						text key:GLOBAL_LANGUAGE
+						
+					list list:show value:t
+						cell class:help
+							text key:var:t prefix:acl_ suffix:_abbrev
+	
+					cell class:help
+						if true:mode:edit
+							text key:global_delete
+							
 				if empty:acls
-					row
+					row class:data
 						cell
 							text text:GLOBAL_NOT_FOUND
-				if not:true empty:acls
-					row class:headline
-						cell class:help
-							text key:GLOBAL_NAME
-						cell class:help
-							text key:GLOBAL_LANGUAGE
 							
-						list list:show value:t
-							cell class:help
-								text key:var:t prefix:acl_ suffix:_abbrev
-		
-						cell class:help
-							if true:mode:edit
-								text key:global_delete
+				if not:true empty:acls
 		
 				list list:acls key:aclid value:acl extract:true
 					row class:data
