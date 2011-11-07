@@ -13,7 +13,7 @@ refreshable=false
 
 title=
 default=show
-views=listing,show,pub,prop,rights
+views=listing,show,edit,prop,pub,rights
 action=folder
 refreshable=true
 
