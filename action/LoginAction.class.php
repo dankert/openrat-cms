@@ -1478,7 +1478,7 @@ class LoginAction extends Action
 	/**
 	 * Vergessenes Kennwort zusenden lassen.
 	 */
-	function password()
+	function passwordView()
 	{
 		global $conf;
 		
