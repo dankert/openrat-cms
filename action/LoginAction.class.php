@@ -743,11 +743,10 @@ class LoginAction extends Action
 				$model->load();
 				Session::setProjectModel( $model );
 			}
+			
+			$this->setPerspective('start');
 		}
 		
-		//$this->refresh(); // Benutzer ist angemeldet: Andere Views könnte das interessieren.
-		$this->updateView('content','start','projectmenu');
-		Session::set('perspective','start');
 	}
 
 

@@ -783,17 +783,13 @@ class Action
 	
 	
 	/**
+	 * Setzt eine neue Perspektive für die Sitzung.
 	 * 
-	 * @param $viewName
-	 * @param $viewAction
-	 * @param $viewSubaction
+	 * @param String Name der Perspektive
 	 */
-	protected function updateView( $viewName, $viewAction,$viewSubaction )
+	protected function setPerspective( $name )
 	{
-		global $views;
-		if	( array_key_exists($viewName,$views) )
-			$views[$viewName] = array('action'=>$viewAction,'subaction'=>$viewSubaction);
-			
+		Session::set('perspective',$name);
 		$this->refresh();
 	}
 }
