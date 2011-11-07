@@ -66,6 +66,14 @@ function refreshWorkbench()
 			$(this).addClass('active');
 			loadView( p.find('div.filler'),createUrl(action,method,id));
 		});
+		
+		// Drag n Drop für Views
+		$('ul.views > li.action').draggable( {cursor:'move',revert: 'invalid' });
+		$('ul.views').droppable( {accept:'li.action',hoverClass: 'drophover',activeClass: 'dropactive',drop: function(event, ui) {
+			var dropped   = ui.draggable;
+            var droppedOn = $(this);
+            $(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
+		} } );
 	});
 	//alert('go');
 	
@@ -276,6 +284,9 @@ function loadBranch(li,type,id)
 					$(this).addClass('selected');
 					setNewAction( line.action, line.id );
 				});
+				
+				// Drag and drop für die Baum-Inhalte.
+				//$(new_li).children('div.entry').draggable( {cursor:'move',revert: 'invalid' });
 			}
 				
 		});

@@ -795,6 +795,15 @@ body > div { display:none; }
 
 /*   T a b s   */
 
+.drophover
+{
+	border:2px dotted green;
+}
+.dropactive
+{
+	border:1px dotted blue;
+}
+
 div.window div.menu > div.icons
 {
 	float:right;
