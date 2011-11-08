@@ -447,9 +447,19 @@ function doResponse(data,status)
 	
 	if	( 'refresh' in data )
 		refreshAll();
+	
+	if	( data.new_style )
+		setUserStyle( data.new_style );
+	
+
 }
 
 
+
+function setUserStyle( url )
+{
+	$('#userstyle').attr('href',url);
+}
 
 
 /*

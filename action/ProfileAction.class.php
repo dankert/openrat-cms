@@ -58,12 +58,12 @@ class ProfileAction extends Action
 		if	( !empty($this->user->fullname) )
 		{
 			$this->user->save();
+			$this->setStyle($this->user->style);
 			$this->addNotice('user',$this->user->name,'SAVED','ok');
 		}
 		else
 		{
 			$this->addValidationError('fullname');
-			$this->callSubAction('edit');
 		}
 	}
 

@@ -720,7 +720,7 @@ class LoginAction extends Action
 			$this->evaluateRequestVars();
 
 			$object = Session::getObject();
-			// Falls noch kein Objekt ausgew�hlt, dann das zuletzt ge�nderte benutzen.
+			// Falls noch kein Objekt ausgewaehlt, dann das zuletzt ge�nderte benutzen.
 			if	( !is_object($object) && @$conf['login']['start']['start_lastchanged_object'] )
 			{
 				$objectid = Value::getLastChangedObjectByUserId($user->userid);
@@ -744,6 +744,7 @@ class LoginAction extends Action
 				Session::setProjectModel( $model );
 			}
 			
+			$this->setStyle( $user->style );
 			$this->setPerspective('start');
 		}
 		
