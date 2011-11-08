@@ -54,7 +54,10 @@ function view_header( $name )
 <!-- Hinweis-Meldungen -->
 
 <div class="content">
-	<div class="filler"></div>
+	<div class="filler">
+		<div class="loader">
+		</div>
+	</div>
 </div>
 
 <div class="bottom">
