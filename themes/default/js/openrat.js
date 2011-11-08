@@ -18,17 +18,35 @@ function refreshAll()
 
 
 function refreshAllRefreshables() {
-
+	
 	// Default-Inhalte der einzelnen Views laden.
 	$('div#workbench div.refreshable li.active').each( function() {
 		var method = $(this).attr('data-method');
-		var p = $(this).parent().parent().parent().parent().parent();
+		var p = $(this).closest('div.frame');
 		var action = p.attr('data-action');
 		var id     = p.attr('data-id');
 		//alert(method+' '+action);
 		
 		
 		//alert('go2');
+		loadView( p.find('div.filler'),createUrl(action,method,id));
+	});
+	
+}
+
+
+
+function refreshActualView(element) {
+
+	// Default-Inhalte der einzelnen Views laden.
+	$(element).closest('div.frame').find('li.active').each( function() {
+		var method = $(this).attr('data-method');
+		var p = $(this).closest('div.frame');
+		var action = p.attr('data-action');
+		var id     = p.attr('data-id');
+		//alert(method+' '+action);
+		
+		
 		loadView( p.find('div.filler'),createUrl(action,method,id));
 	});
 
@@ -47,7 +65,7 @@ function refreshWorkbench()
 		// Default-Inhalte der einzelnen Views laden.
 		$(this).fadeIn('fast').find('li.active').each( function() {
 			var method = $(this).attr('data-method');
-			var p = $(this).parent().parent().parent().parent().parent();
+			var p = $(this).closest('div.frame');
 			var action = p.attr('data-action');
 			//alert(method+' '+action);
 			
@@ -59,7 +77,7 @@ function refreshWorkbench()
 		// OnClick-Handler für Klick auf einen Tab-Reiter.
 		$('ul.views > li.action').click( function() {
 			var method = $(this).attr('data-method');
-			var p = $(this).parent().parent().parent().parent().parent();
+			var p = $(this).closest('div.frame');
 			var action = p.attr('data-action');
 			var id     = p.attr('data-id');
 			p.find('ul.views li.active').removeClass('active');
@@ -337,6 +355,7 @@ function postUrl(url)
  */
 function startView( element,view )
 {
+	alert( "startView: "+$(element).html() );
 	var action = $(element).closest('div.frame').attr('data-action');
 	var url    = createUrl(action, view, 0);
 	loadView( $(element).closest('div.filler'), url );
@@ -451,7 +470,8 @@ function doResponse(data,status)
 	if	( data.new_style )
 		setUserStyle( data.new_style );
 	
-
+	if	( data.next_view )
+		startView( $('div.filler').first(),data.next_view );
 }
 
 

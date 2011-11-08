@@ -139,7 +139,7 @@ class ProfileAction extends Action
 	/**
 	 * Anzeige einer Maske zum Ändern der E-Mail-Adresse
 	 */
-	function mail()
+	function mailView()
 	{
 	}
 	
@@ -148,7 +148,7 @@ class ProfileAction extends Action
 	/*
 	 * Es wird eine E-Mail mit einem Freischaltcode an die eingegebene Adresse geschickt.
 	 */
-	function mailcode()
+	function mailAction()
 	{
 		srand ((double)microtime()*1000003);
 		$code = rand(); // Zufalls-Freischaltcode erzeugen
@@ -174,11 +174,11 @@ class ProfileAction extends Action
 			if	( $mail->send() )
 			{
 				$this->addNotice('user',$this->user->name,'mail_sent',OR_NOTICE_OK); // Meldung
+				$this->nextView('confirmmail');
 			}
 			else
 			{
 				$this->addNotice('user',$this->user->name,'mail_not_sent',OR_NOTICE_ERROR,array(),$mail->error); // Meldung
-				$this->callSubAction('mail');
 				return;
 			}
 		}
@@ -190,7 +190,7 @@ class ProfileAction extends Action
 	 * Anzeige einer Maske, in die der Freischaltcode für das
 	 * Ändern der E-Mail-Adresse eingetragen werden muss.
 	 */
-	function confirmmail()
+	function confirmmailView()
 	{
 	}
 	
@@ -199,7 +199,7 @@ class ProfileAction extends Action
 	/**
 	 * Abspeichern der neuen E-Mail-Adresse
 	 */
-	function savemail()
+	function confirmmailAction()
 	{
 		$sessionCode       = Session::get('mailChangeCode');
 		$newMail           = Session::get('mailChangeMail');
@@ -218,7 +218,6 @@ class ProfileAction extends Action
 		{
 			// Best�tigungscode stimmt nicht.
 			$this->addValidationError('code','code_not_match');
-			$this->callSubAction('confirmmail');
 		}
 		
 	}

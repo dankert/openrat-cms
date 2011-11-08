@@ -16,6 +16,7 @@ frame    = file,name,scrolling
 frameset = rows,columns
 frameset-page=menu
 hidden   = name:*,default
+header   = name:,views,back:false
 editor   = name:*,type:*
 else     =
 if       = equals,value,not,empty,present,contains,greaterthan,lessthan,true,false

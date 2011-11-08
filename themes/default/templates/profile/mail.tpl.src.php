@@ -1,4 +1,5 @@
 dummy
+	header back:true
 	form method:post
 		window icon:user name:user_profile
 			row

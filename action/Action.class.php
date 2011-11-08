@@ -78,7 +78,13 @@ class Action
 	
 	function setStyle( $style )
 	{
-		Session::set('style',$style);
+		$this->setTemplateVar( "new_style", OR_THEMES_EXT_DIR.'default/css/user/'.$style.'.css' );
+	}
+
+	
+	function nextView( $viewName )
+	{
+		$this->setTemplateVar( "next_view", $viewName );
 	}
 
 	

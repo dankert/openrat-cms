@@ -1,14 +1,12 @@
-dummy
-	window icon:user name:user_groups
-		row
+table
+	row class:headline
+		cell
+			text key:name
+	if empty:groups
+		row class:data
 			cell
-				fieldset title:message:groups
-					if empty:groups
-						newline
-						image notice:warning
-						text key:NOT_FOUND
-						newline
-						newline
-					list list:groups value:group
-						text var:group
-						newline
+				text key:NOT_FOUND
+	list list:groups value:group
+		row class:data
+			cell
+				text var:group

@@ -1,4 +1,5 @@
 dummy
+	header views:mail
 	form method:post
 		window icon:user name:user_profile
 			row
@@ -17,7 +18,7 @@ dummy
 							text var:mail class:filename
 							if false:mode:edit
 								newline
-								link class:action action:profile subaction:mail
+								link type:view class:action action:profile subaction:mail
 									text key:edit
 					
 					fieldset title:message:GLOBAL_PROP

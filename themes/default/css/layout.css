@@ -303,7 +303,8 @@ div.dropdown part.entry:hover
 }
 
 /*Dropdown anzeigen!!!*/
-div#header div:hover div.dropdown
+div#header div:hover div.dropdown,
+div.window div.header:hover div.dropdown
 {
 	display:block;
 }
@@ -684,8 +685,26 @@ div.menu
 
 fieldset
 {
-	xclear:left;
+	border:1px solid grey;
+	
+	border-bottom:0px;
+	border-left:0px;
+	border-right:0px;
+	
+	margin-top:5px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
 }
+
+fieldset legend
+{
+	margin-left:30px;
+	/*
+	padding-left:30px;
+	*/
+}
+
 
 
 form.xlogin
@@ -967,7 +986,8 @@ div.window {
 div#header,                   /* Titelleite-Hintergrund */
 div.window div.content,       /* Fensterinhalt-Hintergrund */
 div.window ul.menu li a,      /* Tabs */
-xdiv.window ul.menu li > span  /* Tabs */
+xdiv.window ul.menu li > span,  /* Tabs */
+div.window div.header /* Fenster-Header */
 {
 	background-color: gray;
 }
