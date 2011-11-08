@@ -34,12 +34,12 @@ dummy
 						
 			row
 				cell
-					link class:action action:folder subaction:select
+					link type:view class:action action:folder subaction:select
 						image file:icon/select
 						text key:menu_folder_select
-					link class:action action:folder subaction:order
+					link type:view class:action action:folder subaction:order
 						image file:icon/order
 						text key:menu_folder_order
-					link class:action action:folder subaction:create
+					link type:view class:action action:folder subaction:create
 						image file:icon/create
 						text key:menu_folder_create

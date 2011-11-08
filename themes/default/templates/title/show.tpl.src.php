@@ -51,7 +51,7 @@ part class:user
 		image icon:user align:left
 		text var:userfullname maxlength:20
 	part class:dropdown
-		link title:message:USER_PROFILE_DESC action:profile subaction: target:content
+		link title:message:USER_PROFILE_DESC action:start subaction:profile
 			image icon:user align:left
 			text key:profile
 		
