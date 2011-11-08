@@ -103,7 +103,7 @@ class ObjectAction extends Action
 	  *
 	  * @access public
 	  */
-	function addacl()
+	function aclformAction()
 	{
 		$acl = new Acl();
 
@@ -222,7 +222,7 @@ class ObjectAction extends Action
 			$acl->load();
 			$key = 'bu'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
 			$acllist[$key] = $acl->getProperties();
-			$acllist[$key]['delete_url'] = Html::url($this->actionName,'delacl',$o->objectid,array('aclid'=>$aclid));
+			$acllist[$key]['aclid'] = $aclid;
 		}
 		ksort( $acllist );
 
@@ -237,7 +237,7 @@ class ObjectAction extends Action
 	 * 
 	 * @return unknown_type
 	 */
-	function inherit()
+	function inheritAction()
 	{
 		$log = array();
 		
@@ -299,7 +299,7 @@ class ObjectAction extends Action
 	/**
 	 * Formular anzeigen, um Rechte hinzufuegen
 	 */
-	function aclform()
+	function aclformView()
 	{
 		$o = Session::getObject();
 		$o->objectLoadRaw();
@@ -324,7 +324,7 @@ class ObjectAction extends Action
 	 * 
 	 * @access protected
 	 */
-	function delacl()
+	function delaclAction()
 	{
 		$acl = new Acl($this->getRequestVar('aclid'));
 		$acl->objectid = $this->getRequestId();
