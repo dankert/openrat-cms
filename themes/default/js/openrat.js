@@ -137,7 +137,7 @@ function loadView(jo, url )
 			filebrowserBrowseUrl:'./dispatcher.php?action=filebrowser&subaction=browse'
 	};
 	
-	$(jo).empty().html('<div class="loader" />').load(url,function() {
+	$(jo).empty().html('<div class="loader" />').load(url,function(response, status, xhr) {
 			$(jo).fadeIn(100);
 			var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
 			if (o) o.destroy();
@@ -148,10 +148,19 @@ function loadView(jo, url )
 		    //    customConfig : 'config-openrat.js'
 		    //});
 			if ( $(jo).find('form').length > 0 )
-				$(jo).parent().parent().find('div.bottom > div.command > input').removeClass('invisible');
+				$(jo).closest('div.frame').find('div.bottom > div.command > input').removeClass('invisible');
 			else
-				$(jo).parent().parent().find('div.bottom > div.command > input').addClass('invisible');
-				
+				$(jo).closest('div.frame').find('div.bottom > div.command > input').addClass('invisible');
+
+			if ( $('div.window form input[type=password]').length>0 )
+			{
+				$('div.window form input[name=login_name]    ').attr('value',$('#uname'    ).attr('value'));
+				$('div.window form input[name=login_password]').attr('value',$('#upassword').attr('value'));
+			}
+				//$.get( createUrl('login','ping',0) );
+			//alert( "user: "+$('#uname').attr('value') );
+			//alert( "up: "+$('#upassword').attr('value') );
+
 			
 		});
 }
@@ -423,6 +432,17 @@ function submitLink(data)
 
 function formSubmit(form)
 {
+	// Login-Hack
+	if ( $('div.window form input[type=password]').length>0 )
+	{
+		$('#uname'    ).attr('value',$('div.window form input[name=login_name]'    ).attr('value'));
+		$('#upassword').attr('value',$('div.window form input[name=login_password]').attr('value'));
+		
+		$('#uname'    ).closest('form').submit();
+	}
+
+	
+	
 	var status = $(form).parent().parent().parent().find('div.bottom div.status');
 	
 	$(status).html('<div class="loader" />');

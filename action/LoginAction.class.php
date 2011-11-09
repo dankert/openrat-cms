@@ -1708,6 +1708,11 @@ class LoginAction extends Action
 		$this->setTemplateVar('software',$software);
 	}
 	
+	
+	function pingView()
+	{
+		echo "1";
+	}
 }
 
 

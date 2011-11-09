@@ -100,5 +100,10 @@ document.writeln("</div>");
 // -->
 </script>
 
+<form class="invisible" target="temp" action="">
+<input type="text" id="uname" name="l1" /><input id="upassword" type="password" name="l2" /><input type="submit" /> 
+</form>
+<iframe src="about:blank" name="temp" class="invisiblex" width="0px" height="0px" style="width:0px;height:0px;"></iframe>
+
 </body>
 </html>

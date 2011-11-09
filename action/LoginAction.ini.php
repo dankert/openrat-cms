@@ -105,3 +105,7 @@ menu =login
 
 [license]
 guest=true
+
+[ping]
+guest=true
+direct=true
