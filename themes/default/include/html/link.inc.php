@@ -54,6 +54,10 @@
 			$tmp_function_call = "submitUrl(this,'".($attr_url)."');";
 			break;
 			
+		case 'external':
+			$tmp_function_call = "location.href='".$attr_url."';";
+			break;
+			
 		default:
 			$tmp_function_call = "alert('TODO');";
 	}

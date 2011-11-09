@@ -1,4 +1,5 @@
 dummy
+	header views:password
 	form action:login subaction:login target:_top
 		#window title:GLOBAL_LOGIN name:login width:400px icon:user
 		dummy
@@ -54,9 +55,9 @@ dummy
 							text key:USER_NEW_PASSWORD_REPEAT
 						password name:password2 default: size:25
 		
-				link class:action action:login subaction:password
+				link type:view class:action action:login subaction:password
 					text key:menu_login_password
-				link class:action action:login subaction:register
+				link type:view class:action action:login subaction:register
 					text key:menu_login_register
 							
 			if true:config:security/openid/enable
@@ -79,8 +80,6 @@ dummy
 						#script
 			else 
 				hidden name:dbid default:var:actdbid
-			button type:ok
-			#insert script:screenwidth
 			
 		hidden name:objectid
 		hidden name:modelid
@@ -92,7 +91,7 @@ dummy
 	newline
 	newline
 	link url:config:login/gpl/url target:_top class:copyright
-		text value:message:GPL
+		text key:GPL
 
 	if present:force_username
 		focus field:login_password

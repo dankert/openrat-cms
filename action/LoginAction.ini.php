@@ -102,3 +102,6 @@ guest=true
 
 [menu]
 menu =login
+
+[license]
+guest=true

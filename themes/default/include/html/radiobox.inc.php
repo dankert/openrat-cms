@@ -13,6 +13,6 @@
 			echo '<input id="'.$id.'" name="'.$attr_name.'" type="radio" class="'.$attr_class.'" value="'.$box_key.'"';
 			if ($box_key==$attr_tmp_default)
 				echo ' checked="checked"';
-			echo '>&nbsp;<label for="'.$id.'">'.$box_value.'</label><br>';
+			echo ' />&nbsp;<label for="'.$id.'">'.$box_value.'</label><br />';
 		}
 ?>

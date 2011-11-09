@@ -2,7 +2,7 @@
 
 [content]
 
-views=login,password
+views=login,register,license
 action=login
 refreshable=false
 default=login

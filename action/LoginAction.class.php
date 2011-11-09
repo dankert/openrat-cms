@@ -1347,7 +1347,7 @@ class LoginAction extends Action
 	/**
 	 * Maske anzeigen, um Benutzer zu registrieren.
 	 */
-	function register()
+	function registerView()
 	{
 		
 	}
@@ -1357,7 +1357,7 @@ class LoginAction extends Action
 	 * Registriercode erzeugen und per E-Mail dem Benutzer mitteilen.
 	 * Maske anzeigen, damit Benuter Registriercode anzeigen kann.
 	 */
-	function registercode()
+	function registerAction()
 	{
 		$email_address = $this->getRequestVar('mail','mail');
 		
@@ -1365,7 +1365,6 @@ class LoginAction extends Action
 		{
 			$this->addValidationError('mail');
 			$this->setTemplateVar('mail',$email_address);
-			$this->callSubAction('register');
 			return;
 		}
 		
@@ -1383,18 +1382,18 @@ class LoginAction extends Action
 		if	( $mail->send() )
 		{
 			$this->addNotice('','','mail_sent',OR_NOTICE_OK);
+			$this->nextView('registeruserdata');
 		}
 		else
 		{
 			$this->addNotice('','','mail_not_sent',OR_NOTICE_ERROR,array(),$mail->error);
-			$this->callSubAction('register');
 			return;
 		}
 	}
 
 	
 	
-	function registeruserdata()
+	function registeruserdataView()
 	{
 		global $conf;
 
@@ -1420,7 +1419,7 @@ class LoginAction extends Action
 	 * Benutzerregistierung.
 	 * Benutzer hat Best�tigungscode erhalten und eingegeben.
 	 */
-	function registercommit()
+	function registeruserdataAction()
 	{
 		global $conf;
 		$this->checkForDb();
@@ -1432,7 +1431,6 @@ class LoginAction extends Action
 		{
 			// Best�tigungscode stimmt nicht.
 			$this->addValidationError('code','code_not_match');
-			$this->callSubAction('registeruserdata');
 			return;
 		}
 
@@ -1442,7 +1440,6 @@ class LoginAction extends Action
 		if	( !$this->hasRequestVar('username') )
 		{
 			$this->addValidationError('username');
-			$this->callSubAction('registeruserdata');
 			return;
 		}
 		
@@ -1450,14 +1447,12 @@ class LoginAction extends Action
 		if	( $user->isValid() )
 		{
 			$this->addValidationError('username','USER_ALREADY_IN_DATABASE');
-			$this->callSubAction('registeruserdata');
 			return;
 		}
 		
 		if	( strlen($this->getRequestVar('password')) < $conf['security']['password']['min_length'] )
 		{
 			$this->addValidationError('password','password_minlength',array('minlength'=>$conf['security']['password']['min_length']));
-			$this->callSubAction('registeruserdata');
 			return;
 		}
 		
@@ -1471,6 +1466,8 @@ class LoginAction extends Action
 		$newUser->setPassword( $this->getRequestVar('password'),true );
 			
 		$this->addNotice('user',$newUser->name,'user_added','ok');
+		
+		$this->nextView('login');
 	}
 
 
@@ -1554,7 +1551,6 @@ class LoginAction extends Action
 		if	( !$this->hasRequestVar('username') )
 		{
 			$this->addValidationError('username');
-			$this->callSubAction('password');
 			return;
 		}
 		
@@ -1680,6 +1676,36 @@ class LoginAction extends Action
 		{
 			// 5.1.0 > PHP >= 4.3.3
 		}
+	}
+	
+	
+	function licenseView()
+	{
+		$software = array();
+		
+		$software[] = array('name'   =>'jQuery Core Javascript Framework',
+		                    'url'    =>'http://jquery.com/',
+		                    'license'=>'MPL, GPL v2');
+		$software[] = array('name'   =>'jQuery UI Javascript Framework',
+		                    'url'    =>'http://jqueryui.com/',
+		                    'license'=>'MPL, GPL v2');
+		$software[] = array('name'   =>'GeSHi - Generic Syntax Highlighter',
+		                    'url'    =>'http://qbnz.com/highlighter/',
+		                    'license'=>'GPL v2');
+		$software[] = array('name'   =>'CKEditor',
+		                    'url'    =>'http://ckeditor.com/',
+		                    'license'=>'GPL v2');
+		$software[] = array('name'   =>'960 Grid System CSS',
+		                    'url'    =>'http://960.gs/',
+		                    'license'=>'GPL v3, MIT');
+		$software[] = array('name'   =>'TAR file format from Josh Barger',
+		                    'url'    =>'http://www.phpclasses.org/package/529',
+		                    'license'=>'LGPL');
+		$software[] = array('name'   =>'JSON file format',
+		                    'url'    =>'http://pear.php.net/pepr/pepr-proposal-show.php?id=198',
+		                    'license'=>'BSD');
+		
+		$this->setTemplateVar('software',$software);
 	}
 	
 }

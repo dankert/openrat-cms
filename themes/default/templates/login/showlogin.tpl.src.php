@@ -1,4 +1,5 @@
 dummy
+	header views:password
 	form action:index subaction:login target:_top
 		window title:GLOBAL_LOGIN name:login width:400px icon:user
 	
@@ -92,10 +93,6 @@ dummy
 							selectbox name:dbid list:dbids default:var:actdbid
 							hidden name:screenwidth default:9999
 							#script 
-				row
-					cell colspan:2 class:act
-						button type:ok
-						insert script:screenwidth
 		if value:size:dbids lessthan:2
 			hidden name:dbid default:var:actdbid
 		hidden name:objectid

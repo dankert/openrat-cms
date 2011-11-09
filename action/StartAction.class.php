@@ -421,7 +421,7 @@ class StartAction extends Action
 	/**
 	 * Erzeugt eine Anwendungsliste.
 	 */
-	function applications()
+	function applicationsView()
 	{
 		global $conf;
 		
