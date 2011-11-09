@@ -528,6 +528,10 @@ class Action
 	 */
 	protected function callSubAction( $subActionName )
 	{
+		return;
+		
+		/*
+		 * 
 		if	( in_array($this->actionName,array('page','file','link','folder')) )
 			Session::setSubaction( $subActionName );
 
@@ -536,6 +540,7 @@ class Action
 		Logger::trace("next subaction is '$subActionName'");
 		
 		$this->$subActionName();
+		 */
 	}
 
 
