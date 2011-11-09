@@ -285,7 +285,7 @@ if	( isset($do->actionConfig[$do->subActionName]['direct']) )
 if	( isset($do->actionConfig[$do->subActionName]['async' ]) || $isAction )
 {
 	$json = new JSON();
-	header('Content-Type: application/json');
+	header('Content-Type: application/json; charset=UTF-8');
 	echo $json->encode( $do->templateVars );
 	exit;
 }

@@ -383,14 +383,14 @@ class Action
 			if	(version_compare(PHP_VERSION, '4.3.0', '<'))
 				Http::serverError('application/php-array is only available with PHP >= 4.3');
 				
-			header('Content-Type: application/php-array');
+			header('Content-Type: application/php-array; charset=UTF-8');
 			echo print_r($this->templateVars,true);
 			exit;
 		}
 
 		if	( sizeof($types)==1 && in_array('application/php-serialized',$types) || $this->getRequestVar('output')=='php' )
 		{
-			header('Content-Type: application/php-serialized');
+			header('Content-Type: application/php-serialized; charset=UTF-8');
 			serialize($this->templateVars);
 			exit;
 		}
@@ -398,7 +398,7 @@ class Action
 		if	( sizeof($types)==1 && in_array('application/json',$types) || $this->getRequestVar('output')=='json' )
 		{
 			$json = new JSON();
-			header('Content-Type: application/json');
+			header('Content-Type: application/json; charset=UTF-8');
 			echo $json->encode( $this->templateVars );
 			exit;
 		}
@@ -408,11 +408,12 @@ class Action
 			require_once( OR_SERVICECLASSES_DIR."XML.class.".PHP_EXT );
 			$xml = new XML();
 			$xml->root = 'server'; // Name des XML-root-Elementes
-			header('Content-Type: application/xml');
+			header('Content-Type: application/xml; charset=UTF-8');
 			echo $xml->encode( $this->templateVars );
 			exit;
 		}
 
+		header('Content-Type: text/html; charset=UTF-8');
 		$this->setMenu();
 		
 		$tplName = $this->actionName.'/'.$this->subActionName;
@@ -483,7 +484,8 @@ class Action
 		else
 			$cms_title = OR_TITLE.' '.OR_VERSION;
 
-		$charset = $this->getCharset();
+		//$charset = $this->getCharset();
+		$charset = 'UTF-8';
 			
 		$showDuration = $conf['interface']['show_duration'];
 
