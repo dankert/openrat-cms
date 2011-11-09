@@ -1549,7 +1549,7 @@ class LoginAction extends Action
 	/**
 	 * Einen Kennwort-Anforderungscode an den Benutzer senden.
 	 */
-	function passwordcode()
+	function passwordAction()
 	{
 		if	( !$this->hasRequestVar('username') )
 		{
@@ -1588,6 +1588,7 @@ class LoginAction extends Action
 		}
 		
 		$this->setSessionVar("password_commit_name",$user->name);
+		$this->nextView('passwordinputcode');
 	}
 
 	
@@ -1596,7 +1597,7 @@ class LoginAction extends Action
 	 * Anzeige Formular zum Eingeben des Kennwort-Codes.
 	 *
 	 */
-	function passwordinputcode()
+	function passwordinputcodeView()
 	{
 		
 	}
@@ -1605,7 +1606,7 @@ class LoginAction extends Action
 	/**
 	 * Neues Kennwort erzeugen und dem Benutzer zusenden.
 	 */
-	function passwordcommit()
+	function passwordinputcodeAction()
 	{
 		$username = $this->getSessionVar("password_commit_name");
 
@@ -1613,7 +1614,6 @@ class LoginAction extends Action
 			  $this->getSessionVar("password_commit_code") != $this->getRequestVar("code") )
 		{
 			$this->addValidationError('code','PASSWORDCODE_NOT_MATCH');
-			$this->callSubAction('passwordinputcode');
 		  	return;
 		}
 		
