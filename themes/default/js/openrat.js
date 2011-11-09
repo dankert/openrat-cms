@@ -355,7 +355,7 @@ function postUrl(url)
  */
 function startView( element,view )
 {
-	alert( "startView: "+$(element).html() );
+	//alert( "startView: "+$(element).html() );
 	var action = $(element).closest('div.frame').attr('data-action');
 	var url    = createUrl(action, view, 0);
 	loadView( $(element).closest('div.filler'), url );
