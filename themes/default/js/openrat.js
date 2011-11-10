@@ -456,9 +456,15 @@ function formSubmit(form)
 	
 	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 		{
-			$(status).find('div.loader').html('&nbsp;');
+			$(status).find('div.loader').remove();
 			doResponse(data,textStatus);
-		} } );
+		},
+		error:function(jqXHR, textStatus, errorThrown) {
+			$(status).find('div.loader').remove();
+			alert( errorThrown );
+		}
+		
+	} );
 	$(form).fadeIn();
 	
 }
@@ -485,6 +491,15 @@ function doResponse(data,status)
 	});
 	
 	// Jetzt das erhaltene Dokument auswerten.
+	
+	// Hinweismeldungen in Statuszeile anzeigen
+	if	( ! data.control ) {
+		$('div.window div.status').html('<div />');
+		$('div.window div.status div').append( data );
+		$('div.window div.status div').delay(3000).fadeOut(2500);
+		//alert( value.text );
+	};
+	
 	
 	// Redirect
 	if	( data.control.redirect )
