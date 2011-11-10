@@ -237,7 +237,7 @@ class ObjectAction extends Action
 	 * 
 	 * @return unknown_type
 	 */
-	function inheritAction()
+	function rightsAction()
 	{
 		$log = array();
 		

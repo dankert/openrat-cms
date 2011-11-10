@@ -366,7 +366,8 @@ function startView( element,view )
 {
 	//alert( "startView: "+$(element).html() );
 	var action = $(element).closest('div.frame').attr('data-action');
-	var url    = createUrl(action, view, 0);
+	var id     = $(element).closest('div.frame').attr('data-id'    );
+	var url    = createUrl(action, view, id);
 	loadView( $(element).closest('div.filler'), url );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
