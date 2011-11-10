@@ -563,13 +563,15 @@ class LoginAction extends Action
 	 * Es muss noch beim OpenId-Provider die Best�tigung eingeholt werden, danach ist der
 	 * Benutzer angemeldet.<br>
 	 */
-	function openid()
+	public function openidView()
 	{
 		global $conf;
 		$openId = Session::get('openid');
 
 		if	( !$openId->checkAuthentication() )
 		{
+			Http::notAuthorized('OpenId-Login failed' );
+			die();
 			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',OR_NOTICE_ERROR,array('name'=>$openId->user),array($openId->error) );
 			$this->addValidationError('openid_url','');
 			$this->callSubAction('showlogin');
@@ -582,9 +584,13 @@ class LoginAction extends Action
 		// Der Benutzer ist jetzt eingeloggt.
 		$username = $openId->getUserFromIdentiy();
 		
+		Logger::debug("OpenId-Login successful for $username");
+		
 		if	( empty($username) )
 		{
 			// Es konnte kein Benutzername ermittelt werden.
+			Http::notAuthorized('no username supplied by openid provider' );
+			die();
 			$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
 			$this->addValidationError('openid_url','');
 			$this->callSubAction('showlogin');
@@ -601,16 +607,19 @@ class LoginAction extends Action
 				$user->name     = $username;
 				$user->add();
 
-				$user->mail     = $openId->info['email'];
-				$user->fullname = $openId->info['fullname'];
+				$user->mail     = @$openId->info['email'];
+				$user->fullname = @$openId->info['fullname'];
 				$user->save();  // Um E-Mail zu speichern (wird bei add() nicht gemacht)
 			}
 			else
 			{
+				Logger::debug("OpenId-Login failed for $username");
 				// Benutzer ist nicht in Benutzertabelle vorhanden (und angelegt werden soll er auch nicht).
+				Http::notAuthorized('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
+				die();
+				
 				$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
 				$this->addValidationError('openid_url','');
-				$this->callSubAction('showlogin');
 				return;
 			}
 		}
@@ -619,13 +628,22 @@ class LoginAction extends Action
 			// Benutzer ist bereits vorhanden.
 			if	( @$conf['security']['openid']['update_user'])
 			{
-				$user->fullname = $openId->info['fullname'];
-				$user->mail     = $openId->info['email'];
+				$user->fullname = @$openId->info['fullname'];
+				$user->mail     = @$openId->info['email'];
 				$user->save();
 			}
 		}
 
+		Logger::info("User login successful: ".$username);
 		$user->setCurrent();  // Benutzer ist jetzt in der Sitzung.
+		
+		$this->setStyle( $user->style );
+		$this->setPerspective('start');
+		
+		$server = Http::getServer();
+		Logger::debug("Redirecting to $server");
+		header('Location: '.slashify($server) );
+		exit();
 	}
 	
 
@@ -665,8 +683,8 @@ class LoginAction extends Action
 			}
 			
 			Session::set('openid',$openId);
-			$openId->redirect();
-			die('Unreachable Code');
+			$this->redirect( $openId->getRedirectUrl() );
+			return;
 		}
 		
 

@@ -484,14 +484,23 @@ function doResponse(data,status)
 		$('input[name='+value+']').addClass('error');
 	});
 	
-	if	( 'refresh' in data )
+	// Jetzt das erhaltene Dokument auswerten.
+	
+	// Redirect
+	if	( data.control.redirect )
+		window.location.href = data.control.redirect;
+
+	// Views aktualisieren
+	if	( data.control.refresh )
 		refreshAll();
 	
-	if	( data.new_style )
-		setUserStyle( data.new_style );
+	// CSS-Datei setzen
+	if	( data.control.new_style )
+		setUserStyle( data.control.new_style );
 	
-	if	( data.next_view )
-		startView( $('div.filler').first(),data.next_view );
+	// Nächste View aufrufen
+	if	( data.control.next_view )
+		startView( $('div.filler').first(),data.control.next_view );
 }
 
 

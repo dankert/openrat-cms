@@ -78,13 +78,13 @@ class Action
 	
 	function setStyle( $style )
 	{
-		$this->setTemplateVar( "new_style", OR_THEMES_EXT_DIR.'default/css/user/'.$style.'.css' );
+		$this->setControlVar( "new_style", OR_THEMES_EXT_DIR.'default/css/user/'.$style.'.css' );
 	}
 
 	
 	function nextView( $viewName )
 	{
-		$this->setTemplateVar( "next_view", $viewName );
+		$this->setControlVar( "next_view", $viewName );
 	}
 
 	
@@ -104,6 +104,7 @@ class Action
 		
 		$this->templateVars['errors' ] = array();
 		$this->templateVars['notices'] = array();
+		$this->templateVars['control'] = array();
 		
 		//Html::debug($this);
 		if	( !$this->isEditable() || isset($_COOKIE['or_always_edit']) )
@@ -261,6 +262,18 @@ class Action
 	protected function setTemplateVar( $varName,$value )
 	{
 		$this->templateVars[ $varName ] = $value;
+	}
+
+
+	/**
+	 * Setzt eine Variable f�r die Oberfl�che.
+	 *
+	 * @param String $varName Schl�ssel
+	 * @param Mixed $value
+	 */
+	protected function setControlVar( $varName,$value )
+	{
+		$this->templateVars[ 'control' ][ $varName ] = $value;
 	}
 
 
@@ -757,6 +770,15 @@ class Action
 
 	
 	/**
+	 * Erzeugt einen Redirect auf einen bestimmte URL.
+	 */
+	protected function redirect( $url )
+	{
+		$this->setControlVar( 'redirect',$url );
+	}
+	
+	
+	/**
 	 * Sorgt dafür, dass alle anderen Views aktualisiert werden.
 	 * 
 	 * Diese Methode sollte dann aufgerufen werden, wenn Objekte geändert werden
@@ -765,7 +787,7 @@ class Action
 	protected function refresh()
 	{
 		$this->refresh = true;
-		$this->setTemplateVar('refresh',true);
+		$this->setControlVar('refresh',true);
 	}
 	
 	

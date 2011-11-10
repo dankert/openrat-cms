@@ -71,9 +71,9 @@ class OpenId
 
 	
 	/**
-	 * Stellt fest, ob der Server vertrauensw�rdig ist.
+	 * Stellt fest, ob der Server vertrauenswuerdig ist.
 	 *
-	 * @return true, wenn vertrauensw�rdig.
+	 * @return true, wenn vertrauenswuerdig.
 	 */
 	function serverOk()
 	{
@@ -151,7 +151,7 @@ class OpenId
 	/**
 	 * Erzeugt einen HTTP-Redirect auf den OpenId-Provider.
 	 */
-	function redirect()
+	public function getRedirectUrl()
 	{
 		global $conf;
 		
@@ -202,8 +202,7 @@ class OpenId
 		//$redirHttp->requestParameter['openid.realm'        ] = slashify($server).'openid.'.PHP_EXT;
 		$redirHttp->requestParameter['openid.assoc_handle' ] = $this->handle;
 
-		$redirHttp->sendRedirect(); // Browser umleiten.
-		exit;                       // Ende.
+		return $redirHttp->getUrl();
 	}
 	
 	
@@ -213,7 +212,7 @@ class OpenId
 	 *
 	 * @return unknown
 	 */
-	function getIdentityFromYadis()
+	private function getIdentityFromYadis()
 	{
 		$http = new Http($this->user);
 //		$http->url['host'] = $this->user;
@@ -275,7 +274,7 @@ class OpenId
 	/**
 	 * Ermittelt OpenId-Server und OpenId-Identity aus HTML Meta-Tags.<br>
 	 */
-	function getIdentityFromHtmlMetaData()
+	private function getIdentityFromHtmlMetaData()
 	{
 		$http = new Http($this->user);
 //		$http = new Http();
@@ -319,7 +318,7 @@ class OpenId
 	 *
 	 * @return String
 	 */
-	function getUserFromIdentiy()
+	public function getUserFromIdentiy()
 	{
 		if	( $this->provider == 'identity' )
 		{
@@ -345,24 +344,32 @@ class OpenId
 	 * Es muss noch beim OpenId-Provider die Best�tigung eingeholt werden, danach ist der
 	 * Benutzer angemeldet.<br>
 	 */
-	function checkAuthentication()
+	public function checkAuthentication()
 	{
 		$queryVars = $this->getQueryParamList(); 
 		       
 		if	( $queryVars['openid.invalidate_handle'] != $this->handle )
 		{
+			Http::notAuthorized('Association-Handle mismatch.');
+			die();
 			$this->error = 'Association-Handle mismatch.';
 			return false;
 		}
 
 		if	( $queryVars['openid.mode'] != 'id_res' )
 		{
+			Http::notAuthorized('Open-Id: Unknown mode:'.$queryVars['openid.mode']);
+			die();
+			
 			$this->error ='Open-Id: Unknown mode:'.$queryVars['openid.mode'];
 			return false;
 		}
 		
 		if	( $this->provider=='identity' && $queryVars['openid.identity'] != $this->identity )
 		{
+			Http::notAuthorized('Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity']);
+			die();
+			
 			$this->error ='Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity'];
 			return false;
 		}
@@ -421,6 +428,9 @@ class OpenId
 		if	( !array_key_exists('is_valid',$result) )
 		{
 			// Zeile nicht gefunden.
+			Http::notAuthorized('Undefined Open-Id response: "is_valid" expected, but not found');
+			die();
+			
 			$this->error = 'Undefined Open-Id response: "is_valid" expected, but not found';
 			return false;
 		}
@@ -432,6 +442,8 @@ class OpenId
 		else
 		{
 			// Bestaetigung wurde durch den OpenId-Provider abgelehnt.
+			Http::notAuthorized('Server refused login.');
+			die();
 			$this->error = 'Server refused login.';
 			return false;
 		}
@@ -446,7 +458,7 @@ class OpenId
 	 * 
 	 * @return Parameter der aktuellen URL
 	 */
-	function getQueryParamList()
+	private function getQueryParamList()
 	{
 		// Quelle: php.net
 		$str = $_SERVER['QUERY_STRING'];

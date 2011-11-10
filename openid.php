@@ -1,8 +1,8 @@
 <?php
-
-$_GET['action']    = 'index';
+exit();
+$_GET['action']    = 'login';
 $_GET['subaction'] = 'openid';
 
-require( 'do.php' );
+require( 'dispcher.php' );
 
 ?>
