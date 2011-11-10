@@ -163,7 +163,8 @@ if	( is_object( $db ) )
 if	( !empty($REQ[REQ_PARAM_ACTION]) )
 	$action = $REQ[REQ_PARAM_ACTION];
 else
-	$action = 'login';
+	Http::serverError("no action supplied");
+	//$action = 'login';
 
 Session::set('action',$action);
 
@@ -171,11 +172,7 @@ if	( !empty( $REQ[REQ_PARAM_SUBACTION] ) )
 	$subaction = $REQ[REQ_PARAM_SUBACTION];
 else
 {
-	$sl = Session::getSubaction();
-	if	( is_array($sl) && isset($sl[$action]) )
-		$subaction = $sl[$action];
-	else
-		$subaction = '';
+	Http::serverError("no method (subaction) supplied");
 }
 
 require( OR_ACTIONCLASSES_DIR.'/Action.class.php' );
