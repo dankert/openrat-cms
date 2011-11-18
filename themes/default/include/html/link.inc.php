@@ -43,7 +43,7 @@
 			$tmp_data = $json->encode( array('action'=>!empty($attr_action)?$attr_action:$this->actionName,'subaction'=>!empty($attr_subaction)?$attr_subaction:$this->subActionName,'id'=>!empty($attr_id)?$attr_id:$this->getRequestId())
 		                          +array(REQ_PARAM_TOKEN=>token())
 		                          +$params );
-			$tmp_function_call = "submitLink('".str_replace("\n",'',str_replace('"','&quot;',$tmp_data))."');";
+			$tmp_function_call = "submitLink(this,'".str_replace("\n",'',str_replace('"','&quot;',$tmp_data))."');";
 			break;
 			
 		case 'view':
