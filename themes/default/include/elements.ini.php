@@ -3,6 +3,7 @@
 ; default-value could be nothing (blank), a string or "*" for required attributes
 
 
+output   =
 button   = type:submit,src,class:ok,value:ok,text:button_ok
 cell     = width,style,class,colspan,rowspan,header:false,title,url
 char     = type:*
@@ -11,7 +12,7 @@ date     = date
 dummy    =
 fieldset = title,icon
 focus    = field:*
-form     = action,subaction,id,name:,target:_self,method:post,enctype:application/x-www-form-urlencoded
+form     = action,subaction,id,name:,target:_self,method:post,enctype:application/x-www-form-urlencoded,type:
 frame    = file,name,scrolling
 frameset = rows,columns
 frameset-page=menu
@@ -21,10 +22,10 @@ editor   = name:*,type:*
 else     =
 if       = equals,value,not,empty,present,contains,greaterthan,lessthan,true,false
 image    = config,file,url,icon,align:left,type,elementtype,fileext,tree,notice,size,title
-input    = class:text,default:,type:text,index,name:*,prefix,value,size:40,maxlength:256,onchange:,readonly:false
+input    = class:text,default:,type:text,index,name:*,prefix,value,size:,maxlength:256,onchange:,readonly:false
 inputarea= name,rows:10,cols:40,value,index,onchange,prefix,class:inputarea,default:
 insert   = file,script,inline:false,url,name,function
-label    = for:*,value
+label    = for,value,key
 link     = title:,config,type:,target,var,url,class:,action,subaction,id,var1,value1,var2,value2,var3,value3,var4,value4,var5,value5,accesskey,name,anchor,frame:_self
 list     = list:*,extract:false,key:list_key,value:list_value
 logo     = name:*
