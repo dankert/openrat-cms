@@ -1,0 +1,27 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<dummy>
+		<form>
+			<window>
+				<fieldset>
+					<part>
+						<radio name="type" value="url"></radio>
+						<label for="type_url">
+							<text text="link_url"></text>
+						</label>
+						<input name="url"></input>
+					</part>
+					<part> 
+						<radio name="type" value="link"></radio>
+						<label for="type_link">
+							<text text="link_target"></text>
+						</label>
+						<selectbox list="objects" name="targetobjectid"></selectbox>
+					</part>
+				</fieldset>
+				<button type="ok"></button>
+			</window>
+		</form>
+		<focus field="name"></focus>
+	</dummy>
+</output>

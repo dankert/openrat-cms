@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><window><form><fieldset title="message:languages"><list list="languages" key="id" value="name"><part><radio name="languageid" value="var:id"></radio><label for="languageid" value="var:id"><text var="name"></text></label></part></list></fieldset><fieldset title="message:models"><list list="models" key="id" value="name"><part><radio name="modelid" value="var:id"></radio><label for="modelid" value="var:id"><text var="name"></text></label></part></list></fieldset></form><button type="ok"></button></window></output>

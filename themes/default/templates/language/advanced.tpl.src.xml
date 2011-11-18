@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form method="post"><window icon="group" name="GLOBAL_GROUPS"><row><cell><text text="GLOBAL_NAME"></text></cell><cell><input name="name"></input></cell></row><row><cell><text text="LANGUAGE_ISOCODE"></text></cell><cell><input name="isocode"></input></cell></row><row><cell colspan="2" class="act"><button type="ok"></button></cell></row></window></form><focus field="name"></focus></dummy></output>

@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form target="_top"><window title="GLOBAL_REGISTER" name="login" width="400" icon="user" columnclasses="x"><row><cell class="logo" colspan="2"><logo name="register"></logo></cell><row><cell width="50%"><text text="USER_MAIL"></text></cell><cell width="50%"><input name="mail" default="" size="25"></input></cell></row><row><cell colspan="2" class="act"><button type="ok" text="button_next"></button></cell></row></row></window></form><focus field="mail"></focus></dummy></output>

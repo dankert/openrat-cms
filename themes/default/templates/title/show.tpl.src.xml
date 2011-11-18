@@ -1,16 +1,3 @@
-<?xml version="1.0"  encoding="ISO-8859-1" ?>
-<page class="title" xmlns="http://www.openrat.de"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de ../template.xsd">
-
-	<!-- TODO -->
-	<table padding="5" space="0" width="100%">
-		<row>
-			<cell></cell>
-		</row>
-
-
-	</table>
-
-
-</page>
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><part class="title"><image icon="database" align="left"></image><if present="dbname"><text title="message:database" var="dbname" maxlength="25"></text></if><text var="cms_title" title="var:buildinfo"></text></part><part class="search"><form><image icon="search"></image><input name="text" value="message:search"></input><part class="dropdown"><text raw=""></text></part></form></part><part class="user"><link title="message:USER_PROFILE_DESC" action="profile" subaction="" target="content"><image icon="user" align="left"></image><text var="userfullname" maxlength="20"></text></link><part class="dropdown"><link type="post" title="message:USER_PROFILE_DESC" action="start" subaction="profile"><image icon="user" align="left"></image><text key="profile"></text></link><if true="method:userIsAdmin"><link type="post" class="entry" action="start" subaction="administration" target="tree" id="-1"><image icon="administration" align="left"></image><text key="administration"></text></link></if><link type="post" class="entry" title="message:USER_LOGOUT_DESC" action="login" subaction="logout"><image icon="close" align="left"></image><text key="USER_LOGOUT"></text></link></part></part><part class="history"><image icon="history" align="left"></image><text key="history" maxlength="20"></text><part class="dropdown"><text raw=""></text></part></part><part class="projects"><image icon="project" align="left"></image><text key="GLOBAL_CHANGE_TO"></text><part class="dropdown"><list list="projects" key="id" value="name"><image icon="project"></image><link type="post" class="entry" action="start" subaction="projectmenu" id="var:id"><text var="name" maxlength="20"></text></link></list></part></part></output>

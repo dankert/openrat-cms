@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><dummy><row><cell colspan="2"><fieldset title="message:options"><part><text value=""></text><radio name="type" value="check_limit"></radio><label for="type_check_limit"><text key="project_check_limit"></text></label></part><part><text value=""></text><radio name="type" value="check_files"></radio><label for="type_check_files"><text key="project_check_files"></text></label></part></fieldset></cell></row></dummy></form></dummy></output>

@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><header back="true"></header><form><window title="" name=""><row><cell><text text="global_TEMPLATE"></text></cell><cell><selectbox name="templateid" list="templates"></selectbox></cell></row><row><cell><text text="global_NAME"></text></cell><cell><input name="name" size="20"></input></cell></row><row><cell><text text="global_DESCRIPTION"></text></cell><cell><inputarea rows="5" cols="50" name="description"></inputarea></cell></row><row><cell class="act" colspan="2"><button type="ok"></button></cell></row></window></form><focus field="name"></focus></dummy></output>

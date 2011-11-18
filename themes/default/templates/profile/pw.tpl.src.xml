@@ -1,0 +1,42 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form>
+
+		<logo name="changepassword"></logo>
+
+		<fieldset title="message:user_act_password">
+			<part class="line">
+				<part class="label">
+					<label for="act_password">
+						<text text="user_password"></text>
+					</label>
+				</part>
+				<part class="input">
+					<password name="act_password" class="focus"></password>
+				</part>
+			</part>
+		</fieldset>
+		<fieldset title="message:user_new_password">
+			<part class="line">
+				<part class="label">
+					<label for="password1">
+						<text text="user_new_password"></text>
+					</label>
+				</part>
+				<part class="input">
+					<password name="password1"></password>
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="password2">
+						<text text="user_new_password_repeat"></text>
+					</label>
+				</part>
+				<part class="input">
+					<password name="password2"></password>
+				</part>
+			</part>
+		</fieldset>
+	</form>
+</output>

@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><window><table><row class="headline"><cell><text key="name"></text></cell></row><list list="el" extract="true"><row class="data"><cell url="var:url"><image file="icon_group"></image><text var="name"></text></cell></row></list><row><cell><link class="action" action="group" subaction="add"><text key="menu_group_add"></text></link></cell></row></table></window></dummy></output>

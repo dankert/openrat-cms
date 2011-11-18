@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><header views="el"></header><window icon="folder"><fieldset title="message:menu_page_show"><part><insert url="var:preview_url" name="preview"></insert></part></fieldset><link class="action" action="page" subaction="preview" frame="preview"><image icon="show"></image><text key="menu_page_show"></text></link><link class="action" action="page" subaction="edit" frame="preview"><image icon="show"></image><text key="menu_page_edit"></text></link><link class="action" url="var:preview_url" frame="_blank"><text key="link_open_in_new_window"></text></link></window></dummy></output>

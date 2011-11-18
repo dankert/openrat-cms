@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><form><window icon="user" name="GROUP_MEMBERSHIPS"><table><row class="headline"><cell width="10%"></cell><cell><text key="name"></text></cell></row><list list="memberships" extract="true"><row class="data"><cell><checkbox name="var:var"></checkbox></cell><cell><label for="var:var"><image file="icon_user"></image><text var="name"></text></label></cell></row></list></table><row><cell colspan="2" class="act"><button type="ok"></button></cell></row></window></form></output>

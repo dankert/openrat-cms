@@ -1,0 +1,55 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<dummy>
+		<form>
+			<window>
+				<fieldset title="message:global_prop">
+					<part>
+						<label for="name">
+							<text text="GLOBAL_name"></text>
+						</label>
+						<input name="name" class="name"></input>
+					</part>
+					<part>
+						<label for="description">
+							<text text="GLOBAL_description"></text>
+						</label>
+						<inputarea name="description" class="description"></inputarea>
+					</part>
+				</fieldset>
+				<if not="mode:edit">
+					<fieldset title="message:additional_info">
+						<part>
+							<label for="objectid">
+								<text key="id"></text>
+							</label>
+							<text var="objectid"></text>
+						</part>
+					</fieldset>
+					<fieldset title="message:prop_userinfo">
+						<part>
+							<label for="">
+								<text text="global_created"></text>
+							</label>
+							<image icon="el_date"></image>
+							<date date="var:create_date"></date>
+							<image icon="user"></image>
+							<user user="var:create_user"></user>
+						</part>
+						<part>
+							<label for="">
+								<text text="global_lastchange"></text>
+							</label>
+							<image icon="el_date"></image>
+							<date date="var:lastchange_date"></date>
+							<image icon="user"></image>
+							<user user="var:lastchange_user"></user>
+						</part>
+					</fieldset>
+				</if>
+				<button type="ok"></button>
+			</window>
+		</form>
+		<focus field="name"></focus>
+	</dummy>
+</output>

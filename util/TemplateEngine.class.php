@@ -60,11 +60,13 @@ class TemplateEngine
 		global $conf;
 		$srcOrmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.'.PHP_EXT;
 		$srcXmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.xml';
+
 		
+		if ( is_file($srcXmlFilename) )
+			$srcFilename = $srcXmlFilename;
+		else
 		if	( is_file($srcOrmlFilename) )
 			$srcFilename = $srcOrmlFilename;
-		elseif ( is_file($srcXmlFilename) )
-			$srcFilename = $srcXmlFilename;
 		else
 			// Wenn Vorlage (noch) nicht existiert
 			die( get_class($this).': Template not found: "'.$tplName.'"' );
@@ -214,7 +216,7 @@ class TemplateEngine
 				return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
 				
 			default:
-				Http::serverError( get_class($this).': Unknown type "'.$type.'" in attribute. Allowed: var|method|property|message|messagevar|config or none');
+				//Http::serverError( get_class($this).': Unknown type "'.$type.'" in attribute. Allowed: var|method|property|message|messagevar|config or none');
 			}
 	}
 	
@@ -382,8 +384,9 @@ class TemplateEngine
 		
 		if	( count($attr) > 0 )
 		{
-			foreach($attr as $name=>$value)
-				Http::serverError( get_class($this).': Unknown attribute "'.$name.'" in element "'.$cmd.'". Allowed: '.$elements[$cmd]."\n" );
+			
+			//foreach($attr as $name=>$value)
+				//Http::serverError( get_class($this).': Unknown attribute "'.$name.'" in element "'.$cmd.'". Allowed: '.$elements[$cmd]."\n" );
 		}
 		
 		return $checkedAttr;
@@ -503,8 +506,67 @@ class TemplateEngine
 		}
 
 		
+		$f = substr($filename,0,-4).'.xml';
+		$xml = '<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">'.$this->array2xml($vals).'</output>';
+		$fp = fopen( $f, 'w');
+		fwrite($fp, $xml);
+		fclose($fp);
+		
 		return $vals;
 	}
+	
+	
+	
+	
+	private function array2xml($xmlary){
+  $o='';
+  foreach($xmlary as $tag ){
+  	$nl = "\n";
+  	$tab  = "\t";
+  	$nl  = "";
+  	$tab  = "";
+    if($tag['tag'] == 'textarea' && !isset($tag['value'])){
+      //fake a value so it won't self close
+      $tag['value']='';
+    }
+    //tab space:
+    $t = '';
+    for($i=1; $i < $tag['level'];$i++){
+      $t.=$tab;
+    }
+    switch($tag['type']){
+      case 'complete':
+      case 'open':
+        $o.=$t.'<'.$tag['tag'];
+        if(isset($tag['attributes'])){
+          foreach($tag['attributes'] as $attr=>$aval){
+            $o.=' '.$attr.'="'.$aval.'"';
+          }//foreach
+        }//attributes
+        if($tag['type'] == 'complete'){
+          if(!isset($tag['value'])){
+            $o .= ' />'.$nl;
+          } else {
+            $o .= '>'.$nl.$t.$tag['value'].$br.$t.'</'.$tag['tag'].'>'.$nl;
+          }
+        }else{
+          $o .= '>'.$nl;
+        }
+        break;
+      case 'close':
+        $o .= $t.'</'.$tag['tag'].'>'.$nl;
+        break;
+      case 'cdata':
+        $o .= $t.$tag['value'].$nl;
+        break;
+      default:
+      		echo "Warn: ".$tag['type'];
+    }//switch
+  }//foreach
+  return $o;
+}
 }
 
 ?>
