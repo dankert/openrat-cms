@@ -371,7 +371,7 @@ class TemplateAction extends Action
 	}
 
 	
-	function prop()
+	function propView()
 	{
 	}
 	
@@ -453,7 +453,7 @@ class TemplateAction extends Action
 	/**
 	 * Bearbeiten einer Vorlage
 	 */
-	function edit()
+	function editView()
 	{
 		$text = htmlentities( $this->template->src );
 		$text = str_replace("\n",'<br/>',$text);
@@ -634,7 +634,7 @@ class TemplateAction extends Action
 
 	// Anzeigen aller Templates
 	//
-	function listing()
+	function listingView()
 	{
 		global $conf_php;
 

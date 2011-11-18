@@ -90,7 +90,7 @@ class PageelementAction extends Action
 	/**
 	 * Anzeigen des Element-Inhaltes.
 	 */
-	function prop()
+	public function propView()
 	{
 		$language = Session::getProjectLanguage();
 		$this->value->languageid = $language->languageid;
@@ -135,7 +135,7 @@ class PageelementAction extends Action
 	 *
 	 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
 	 */
-	function edit()
+	public function editView()
 	{
 		$language = Session::getProjectLanguage();
 		$this->value->languageid = $language->languageid;
@@ -182,7 +182,7 @@ class PageelementAction extends Action
 	 * Datum bearbeiten.
 	 *
 	 */
-	function editdate()
+	private function editdate()
 	{
 		global $conf;
 		$date =  $this->value->date;
@@ -372,7 +372,7 @@ class PageelementAction extends Action
 	 * Verkn�pfung bearbeiten.
 	 *
 	 */
-	function editlink()
+	private function editlink()
 	{
 
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
@@ -417,7 +417,7 @@ class PageelementAction extends Action
 
 
 
-		function link()
+		function linkView()
 		{
 			$language = Session::getProjectLanguage();
 			$this->value->languageid = $language->languageid;
@@ -484,7 +484,7 @@ class PageelementAction extends Action
 		 * Auswahlbox.
 		 *
 		 */
-		function editselect()
+		private function editselect()
 		{
 			$this->setTemplateVar( 'items',$this->value->element->getSelectItems() );
 			$this->setTemplateVar( 'text' ,$this->value->text                      );
@@ -501,7 +501,7 @@ class PageelementAction extends Action
 		 * Einf�gen-Element.
 		 *
 		 */
-		function editlist()
+		private function editlist()
 		{
 			$this->editinsert();
 		}
@@ -512,7 +512,7 @@ class PageelementAction extends Action
 		 * Einf�gen-Element.
 		 *
 		 */
-		function editinsert()
+		private function editinsert()
 		{
 			// Auswahl ueber alle Elementtypen
 			$objects = array();
@@ -542,7 +542,7 @@ class PageelementAction extends Action
 		 * Zahl bearbeiten.
 		 *
 		 */
-		function editnumber()
+		private function editnumber()
 		{
 			$this->setTemplateVar('number',$this->value->number / pow(10,$this->value->element->decimals) );
 
@@ -557,7 +557,7 @@ class PageelementAction extends Action
 		 *
 		 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
 		 */
-		function editlongtext()
+		private function editlongtext()
 		{
 			if	($this->value->element->wiki)
 				$this->setTemplateVar( 'editor','wiki' );
@@ -623,7 +623,7 @@ class PageelementAction extends Action
 		 *
 		 * Es wird ein Formular erzeugt, mit dem der Benutzer den Inhalt bearbeiten kann.
 		 */
-		function edittext()
+		private function edittext()
 		{
 			$this->setTemplateVar( 'text',$this->value->text );
 
@@ -667,7 +667,7 @@ class PageelementAction extends Action
 		/**
 		 * Erzeugt eine Liste aller Versionsst?nde zu diesem Inhalt
 		 */
-		function archive()
+		function archiveView()
 		{
 			$this->page->public = true;
 			$this->page->simple = true;
@@ -799,7 +799,7 @@ class PageelementAction extends Action
 		/**
 		 * Ein Element der Seite speichern.
 		 */
-		function save()
+		public function editAction()
 		{
 			$this->element->load();
 			$type = $this->element->type;
@@ -819,7 +819,7 @@ class PageelementAction extends Action
 		 *
 		 * Der Inhalt eines Elementes wird abgespeichert
 		 */
-		function savetext()
+		private function savetext()
 		{
 			$value = new Value();
 			$language = Session::getProjectLanguage();
@@ -855,7 +855,7 @@ class PageelementAction extends Action
 		 * <br>
 		 * Nicht zu verwechseln mit <i>Aftershave</i> :)
 		 */
-		function afterSave( $value )
+		private function afterSave( $value )
 		{
 			$value->page = new Page( $value->objectid );
 			$value->page->load();
@@ -912,7 +912,7 @@ class PageelementAction extends Action
 		 *
 		 * Der Inhalt eines Elementes wird abgespeichert
 		 */
-		function savelongtext()
+		private function savelongtext()
 		{
 			global $conf;
 			$value = new Value();
@@ -1037,7 +1037,7 @@ class PageelementAction extends Action
 		 *
 		 * Der Inhalt eines Elementes wird abgespeichert
 		 */
-		function savedate()
+		private function savedate()
 		{
 			$value = new Value();
 			$language = Session::getProjectLanguage();
@@ -1078,7 +1078,7 @@ class PageelementAction extends Action
 		 *
 		 * Der Inhalt eines Elementes wird abgespeichert
 		 */
-		function saveselect()
+		private function saveselect()
 		{
 			$value = new Value();
 			$language = Session::getProjectLanguage();
@@ -1107,7 +1107,7 @@ class PageelementAction extends Action
 		 *
 		 * Der Inhalt eines Elementes wird abgespeichert
 		 */
-		function savelink()
+		private function savelink()
 		{
 			$value = new Value();
 			$language = Session::getProjectLanguage();
@@ -1139,7 +1139,7 @@ class PageelementAction extends Action
 		 *
 		 * Der Inhalt eines Elementes wird abgespeichert
 		 */
-		function savelist()
+		private function savelist()
 		{
 			$this->saveinsert();
 		}
@@ -1151,7 +1151,7 @@ class PageelementAction extends Action
 		 *
 		 * Der Inhalt eines Elementes wird abgespeichert
 		 */
-		function saveinsert()
+		private function saveinsert()
 		{
 			$value = new Value();
 			$language = Session::getProjectLanguage();
@@ -1180,7 +1180,7 @@ class PageelementAction extends Action
 		 *
 		 * Der Inhalt eines Elementes wird abgespeichert
 		 */
-		function savenumber()
+		private function savenumber()
 		{
 			$value = new Value();
 			$language = Session::getProjectLanguage();
@@ -1263,7 +1263,7 @@ class PageelementAction extends Action
 		 *
 		 * @return unknown
 		 */
-		function createOdfDocument()
+		private function createOdfDocument()
 		{
 			// TODO: ODF ist nicht ganz ohne.
 			$transformer = new Transformer();

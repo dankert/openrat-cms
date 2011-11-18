@@ -179,7 +179,7 @@ class FolderAction extends ObjectAction
 
 	
 	
-	function createnewfolder()
+	function createfolderAction()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -208,7 +208,7 @@ class FolderAction extends ObjectAction
 
 
 
-	function createnewfile()
+	function createfileAction()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -266,11 +266,12 @@ class FolderAction extends ObjectAction
 		$this->folder->setTimestamp();
 
 		$this->setTemplateVar('tree_refresh',true);
+		exit();
 	}	
 
 
 
-	function createnewlink()
+	function createlinkAction()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -303,7 +304,7 @@ class FolderAction extends ObjectAction
 
 
 
-	function createnewpage()
+	function createpageAction()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -831,7 +832,7 @@ class FolderAction extends ObjectAction
 
 
 
-	function createfolder()
+	function createfolderView()
 	{
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 	}
@@ -875,7 +876,7 @@ class FolderAction extends ObjectAction
 	 * Hochladen einer Datei.
 	 *
 	 */
-	function createfile()
+	function createfileView()
 	{
 		// Maximale Dateigroesse.
 		$maxSizeBytes = $this->maxFileSize();
@@ -916,13 +917,13 @@ class FolderAction extends ObjectAction
  
 	
 
-	function createlink()
+	function createlinkView()
 	{
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 	}
 
 
-	function createpage()
+	function createpageView()
 	{
 		$all_templates = Template::getAll();
 		$this->setTemplateVar('templates' ,$all_templates          );
@@ -1183,6 +1184,7 @@ class FolderAction extends ObjectAction
 		$pages   = ( $this->hasRequestVar('pages'  ) );
 		$files   = ( $this->hasRequestVar('files'  ) );
 
+		session_write_close ();
 		$publish = new Publish();
 		
 		$this->folder->publish = &$publish;
