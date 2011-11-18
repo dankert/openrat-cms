@@ -24,6 +24,15 @@
 			$attr_subaction = $subActionName;
 		}
 	}
+	
+	switch( $attr_type )
+	{
+		case 'upload':
+			$attr_tmp_submitFunction = '';
+			break;
+		default:
+			$attr_tmp_submitFunction = 'formSubmit( $(this) ); return false;';
+	}
 		
 ?><form name="<?php echo $attr_name ?>"
       target="<?php echo $attr_target ?>"
@@ -31,7 +40,7 @@
       method="<?php echo $attr_method ?>"
       enctype="<?php echo $attr_enctype ?>" style="margin:0px;padding:0px;"
       class="<?php echo $attr_action ?>"
-      onSubmit="formSubmit( $(this) ); return false;">
+      onSubmit="<?php echo $attr_tmp_submitFunction ?>"><input type="submit" class="invisible" />
       
 <?php if ($this->isEditable() && !$this->isEditMode()) { ?>
 <input type="hidden" name="mode" value="edit" />
