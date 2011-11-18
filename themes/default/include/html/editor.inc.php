@@ -56,7 +56,7 @@ switch( $attr_type )
 {
 	case 'fckeditor':
 	case 'html':
-		echo '<textarea name="'.$attr_name.'" class="editor">'.$$attr_name.'</textarea>';
+		echo '<textarea name="'.$attr_name.'" class="editor" id="pageelement_edit_editor">'.$$attr_name.'</textarea>';
 		if	( $this->isEditMode() )
 		{
 			include_once('./editor/editor/ckeditor.php');
