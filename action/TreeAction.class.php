@@ -302,7 +302,7 @@ class TreeAction extends Action
 	/**
 	 * Inhalt des Projektes anzeigen.
 	 */
-	public function content()
+	private function content()
 	{
 		if	( $this->hasRequestVar('projectid') )
 			$this->load();
@@ -324,6 +324,16 @@ class TreeAction extends Action
 	
 	public function settingsAction()
 	{
+		$language = new Language( $this->getRequestVar(REQ_PARAM_LANGUAGE_ID,OR_FILTER_NUMBER) );
+		$language->load();
+		Session::setProjectLanguage( $language );
+
+		$model = new Model( $this->getRequestVar(REQ_PARAM_MODEL_ID,OR_FILTER_NUMBER) );
+		$model->load();
+		Session::setProjectModel( $model );
+		
+		$this->addNotice('language',$language->name,'DONE',OR_NOTICE_OK);
+		$this->addNotice('model'   ,$model->name   ,'DONE',OR_NOTICE_OK);
 	}
 	
 }
