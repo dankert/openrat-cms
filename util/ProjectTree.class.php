@@ -57,7 +57,8 @@ class ProjectTree extends AbstractTree
 			if	( $element->isWritable() )
 			{
 				$treeElement = new TreeElement();
-				$treeElement->id   = $elementid;
+				$treeElement->id   = $id;
+				$treeElement->extraId['elementid'] =  $elementid;
 				$treeElement->text = $element->name;
 				$treeElement->url  = Html::url('pageelement','edit',
 				                               $id,
