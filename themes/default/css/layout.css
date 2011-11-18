@@ -102,6 +102,23 @@ div#tree
 }
 */
 
+
+
+/*   N o t i c e   */
+div#noticebar
+{
+	visibility:none;
+	position:fixed;
+	bottom:40px;
+	right:40px;
+	width:250px;
+	border 2px solid gray;
+	background-color:white;
+	padding:10px;
+	z-index:3;
+}
+
+
 /*   H o e h e n   */
 html,body
 {
@@ -799,7 +816,6 @@ div.tree.closed
 }
 
 div#tree div.content,
-div#content div.content,
 ul.tree li.last,
 ul.tree li:last-child
 {
@@ -984,7 +1000,6 @@ div.window {
 
 /* Sonstiger Fensterhintergrund */
 div#header,                   /* Titelleite-Hintergrund */
-div.window div.content,       /* Fensterinhalt-Hintergrund */
 div.window ul.menu li a,      /* Tabs */
 xdiv.window ul.menu li > span,  /* Tabs */
 div.window div.header /* Fenster-Header */

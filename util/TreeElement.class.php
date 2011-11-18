@@ -31,6 +31,8 @@ class TreeElement
 	 */
 	var $id;
 	
+	var $extraId = array();
+	
 	var $internalId = 0;
 
 	/**

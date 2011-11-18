@@ -21,15 +21,17 @@ function refreshAllRefreshables() {
 	
 	// Default-Inhalte der einzelnen Views laden.
 	$('div#workbench div.refreshable li.active').each( function() {
-		var method = $(this).attr('data-method');
-		var p = $(this).closest('div.frame');
-		var action = p.attr('data-action');
-		var id     = p.attr('data-id');
+		var method  = $(this).attr('data-method');
+		var p       = $(this).closest('div.frame');
+		
+		var action  = p.attr('data-action');
+		var id      = p.attr('data-id');
+		var extraid = p.attr('data-extra');
 		//alert(method+' '+action);
 		
 		
 		//alert('go2');
-		loadView( p.find('div.filler'),createUrl(action,method,id));
+		loadView( p.find('div.filler'),createUrl(action,method,id,extraid));
 	});
 	
 }
@@ -136,11 +138,17 @@ function loadView(jo, url )
 			filebrowserUploadUrl:'./dispatcher.php?action=filebrowser&subaction=directupload&name=upload',
 			filebrowserBrowseUrl:'./dispatcher.php?action=filebrowser&subaction=browse'
 	};
+
+	/*
+	if	( $(jo).find('textarea#pageelement_edit_editor').length > 0 )
+	{
+	var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
+	if (o) o.destroy();
+	}
+	*/
 	
 	$(jo).empty().html('<div class="loader" />').load(url,function(response, status, xhr) {
 			$(jo).fadeIn(100);
-			var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
-			if (o) o.destroy();
 			
 			//alert("o ist "+o);
 			//$('textarea.editor').ckeditor( function() { /*alert("editor ready");*/ /* callback code */ }, editorConfig );
@@ -160,8 +168,17 @@ function loadView(jo, url )
 				//$.get( createUrl('login','ping',0) );
 			//alert( "user: "+$('#uname').attr('value') );
 			//alert( "up: "+$('#upassword').attr('value') );
-
+			$(jo).find('input.focus').focus();
 			
+			if	( $(jo).find('textarea#pageelement_edit_editor').length > 0 )
+			{
+				var instance = CKEDITOR.instances['pageelement_edit_editor'];
+			    if(instance)
+			    {
+			        CKEDITOR.remove(instance);
+			    }
+			    CKEDITOR.replace( 'pageelement_edit_editor',{customConfig:'config-openrat.js'} );
+			}
 		});
 }
 
@@ -309,7 +326,7 @@ function loadBranch(li,type,id)
 					// Neue Action starten.
 					$('div#tree div.entry').removeClass('selected');
 					$(this).addClass('selected');
-					setNewAction( line.action, line.id );
+					setNewAction( line.action, line.id,line.extraId );
 				});
 				
 				// Drag and drop für die Baum-Inhalte.
@@ -336,7 +353,7 @@ function loadBranch(li,type,id)
  */
 function submitUrl( element,url )
 {
-	postUrl( url );
+	postUrl( url,element );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	refreshAllRefreshables();
@@ -344,12 +361,12 @@ function submitUrl( element,url )
 
 
 
-function postUrl(url)
+function postUrl(url,element)
 {
 	$.ajax( { 'type':'POST',url:url, data:{}, success:function(data, textStatus, jqXHR)
 		{
 			$('div.window div.status div.loader').html('&nbsp;');
-			doResponse(data,textStatus);
+			doResponse(data,textStatus,element);
 		} } );
 	
 }
@@ -377,13 +394,14 @@ function startView( element,view )
 
 /**
  * Setzt neue Action und aktualisiert alle Fenster.
+ * 
  * @param action Action
  * @param id Id
  */
-function setNewAction( action,id )
+function setNewAction( action,id,extraId )
 {
 	//alert( "Action: "+action+", Id: "+id);
-	$('div#workbench div.refreshable').attr('data-action',action).attr('data-id',id);
+	$('div#workbench div.refreshable').attr('data-action',action).attr('data-id',id).attr('data-extra',JSON.stringify(extraId));
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	refreshAllRefreshables();
@@ -419,14 +437,14 @@ function closeBranch(li,type,id)
 }
 
 
-function submitLink(data)
+function submitLink(element,data)
 {
 	var params = jQuery.parseJSON( data );
 	var url = './dispatcher.php';
 	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 		{
 		$('div.window div.status div.loader').html('&nbsp;');
-		doResponse(data,textStatus);
+		doResponse(data,textStatus,element);
 		} } );
 	
 }
@@ -441,6 +459,17 @@ function formSubmit(form)
 		
 		$('#uname'    ).closest('form').submit();
 	}
+	
+	if ( $('#pageelement_edit_editor').length>0 )
+	{
+		var instance = CKEDITOR.instances['pageelement_edit_editor'];
+	    if(instance)
+	    {
+	        var value = instance.getData();
+	        $('#pageelement_edit_editor').html( value );
+	    }
+	}
+	
 
 	
 	
@@ -458,7 +487,7 @@ function formSubmit(form)
 	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 		{
 			$(status).find('div.loader').remove();
-			doResponse(data,textStatus);
+			doResponse(data,textStatus,form);
 		},
 		error:function(jqXHR, textStatus, errorThrown) {
 			$(status).find('div.loader').remove();
@@ -470,7 +499,7 @@ function formSubmit(form)
 	
 }
 
-function doResponse(data,status)
+function doResponse(data,status,element)
 {
 	if	( status != 'success' )
 	{
@@ -480,6 +509,18 @@ function doResponse(data,status)
 	
 	// Hinweismeldungen in Statuszeile anzeigen
 	$.each(data['notices'], function(idx,value) {
+		
+		// Notice-Bar mit dieser Meldung erweitern.
+		var notice = $('<div class="notice '+value.status+'"><div class="text">'+value.text+'</div></div');
+		$.each(value.log, function(name,value) {
+			$(notice).append('<div class="log">'+value+'</div>');
+		});
+		$('#noticebar').prepend(notice).slideDown('fast').click( function()
+				{
+			$(this).fadeOut('fast',function() { $(this).empty(); } );
+				} );
+		$('#noticebar').delay('3000').slideUp('fast');
+		
 		$('div.window div.status').html('<div />');
 		$('div.window div.status div').addClass( value.status );
 		$('div.window div.status div').append( value.text );
@@ -489,6 +530,7 @@ function doResponse(data,status)
 	
 	$.each(data['errors'], function(idx,value) {
 		$('input[name='+value+']').addClass('error');
+		$('input[name='+value+']').parent().addClass('error');
 	});
 	
 	// Jetzt das erhaltene Dokument auswerten.
@@ -516,7 +558,7 @@ function doResponse(data,status)
 	
 	// Nächste View aufrufen
 	if	( data.control.next_view )
-		startView( $('div.filler').first(),data.control.next_view );
+		startView( $(element).closest('div.filler'),data.control.next_view );
 }
 
 
@@ -706,7 +748,15 @@ function loadWindow( el, actionName, subactionName )
 }
 
 
-function createUrl(action,subaction,id) 
+function createUrl(action,subaction,id,extraid) 
 {
-	return './dispatcher.php?action='+action+'&subaction='+subaction+'&id='+id;
+	var url = './dispatcher.php?action='+action+'&subaction='+subaction+'&id='+id;
+	if	( extraid !== undefined )
+	{
+		jQuery.each(jQuery.parseJSON(extraid), function(name, value) {
+			url = url + '&' + name + '=' + value;
+		});
+		
+	}
+	return url;
 }

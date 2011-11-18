@@ -1,30 +1,62 @@
 
-fieldset div
+
+/* Formulare */
+
+fieldset
 {
-	clear:left;
+	padding:10px;
 }
 
+form div.line
+{
+	clear:left;
+	margin-top:10px;
+}
+
+form div.label
+{
+	vertical-align:top;
+	width:30%;
+	display:inline-block;
+}
+
+form div.input
+{
+	vertical-align:top;
+	width:70%;
+	display:inline-block;
+}
+
+form div.input input[type=text],
+form div.input textarea,
+form div.input select
+{
+	width:90%;
+}
+form div.input input[type=checkbox],
+form div.input input[type=radio]
+{
+	vertical-align:top;
+}
 
 label
 {
-	width:30%;
-	float:left;
+	display:inline-block;
 }
 
-xinput[type='checkbox']
-{
-	float:left;
-}
-xinput[type='checkbox'] + label
+input[type=checkbox] + label,
+input[type=radio] + label
 {
 	width:80%;
-	float:left;
 }
 
-xlabel + input
+label div.description
 {
-	margin-left:0%;
+	font-size: 0.75em;
+	color:gray;
 }
+
+
 
 
 /* Zwischen-Ueberschriften */
@@ -148,7 +180,8 @@ dl.notice > dd
 	border-bottom: 1px silver solid;
 }
 
-input.error
+input.error,
+.error
 {
-	border-bottom:2px solid red;
+	border:2px dotted red !important;
 }
