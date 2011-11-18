@@ -44,7 +44,7 @@ class Preferences
 		{
 			$filename = $dir.$datei;
 			
-			if	( is_file($filename) && eregi('\.(ini.*|conf)$',$datei) )
+			if	( is_file($filename) && eregi('\.(ini.*|ini|conf)$',$datei) )
 			{
 				$nameBestandteile = explode('.',$datei);
 			    $values[$nameBestandteile[0]] = parse_ini_file( $filename,true );
