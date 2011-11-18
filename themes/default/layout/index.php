@@ -82,6 +82,9 @@ var REQ_PARAM_TARGET  = '<?php echo  REQ_PARAM_TARGET ?>';
 
 <?php global $viewCache; /* Debug-Information */ if (@$showDuration||true) { echo "<!-- Output Variables are:\n";echo str_replace('-->','-- >',print_r($viewCache,true));echo "\n-->";} ?>
 
+<div id="noticebar">
+</div>
+
 <div id="header">
 </div>
 
