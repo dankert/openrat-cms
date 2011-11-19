@@ -253,6 +253,7 @@ class Folder extends Object
 
 	function publish( $withPages,$withFiles,$subdirs = false )
 	{
+		set_time_limit(30);
 		if	( ! is_object($this->publish) )
 			$this->publish = new Publish();
 
@@ -304,7 +305,7 @@ class Folder extends Object
 
 	
 	/**
-	 * Ermittelt alle Objekte vom gewünschten Typ, die sic in
+	 * Ermittelt alle Objekte vom gewï¿½nschten Typ, die sic in
 	 * diesem Projekt befinden.
 	 * 
 	 * @see objectClasses/Object#getAllObjectIds()
