@@ -769,7 +769,12 @@ class PageAction extends ObjectAction
 //			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
 //		}
 
-		$this->addNotice('page',$this->page->fullFilename,'PUBLISHED'.($this->page->publish->ok?'':'_ERROR'),$this->page->publish->ok,array(),$this->page->publish->log);
+		$this->addNotice( 'page',
+		                  $this->page->fullFilename,
+		                  'PUBLISHED'.($this->page->publish->ok?'':'_ERROR'),
+		                  $this->page->publish->ok,
+		                  array(),
+		                  $this->page->publish->log  );
 	}
 	
 	
