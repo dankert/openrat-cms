@@ -163,7 +163,7 @@ class TemplateAction extends Action
 	/**
 	 * Anzeigen aller Seiten der Vorlage.
 	 */
-	function pages()
+	function pagesView()
 	{
 		$pages = array();
 		$pageids = $this->template->getDependentObjectIds();
@@ -182,7 +182,7 @@ class TemplateAction extends Action
 
 	// Speichern der Dateiendung
 	//
-	function saveextension()
+	function extensionAction()
 	{
 		if	( $this->getRequestVar('type') == "list" )
 			$this->template->extension = $this->getRequestVar('extension');
@@ -392,7 +392,7 @@ class TemplateAction extends Action
 	/**
 	 * Eigenschaften einer Vorlage anzeigen
 	 */
-	function extension()
+	function extensionView()
 	{
 
 		global $conf;

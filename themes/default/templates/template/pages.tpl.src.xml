@@ -1,0 +1,20 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<table>
+		<row class="headline">
+			<cell>
+				<text key="name"></text>
+			</cell>
+		</row>
+		<list list="pages" value="name" key="pageid">
+			<row class="data">
+				<cell>
+					<image icon="page"></image>
+					<link action="main" subaction="page" id="var:pageid" target="cms_main">
+						<text var="name"></text>
+					</link>
+				</cell>
+			</row>
+		</list>
+	</table>
+</output>

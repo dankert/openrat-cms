@@ -5,24 +5,21 @@
 		<fieldset>
 			<part class="line">
 				<part class="label">
-					<text text="GLOBAL_NAME"></text>
+					<text text="TEMPLATE_extension"></text>
 				</part>
 				<part class="input">
-					<text var="name" class="name"></text>
+					<radio name="type" value="list"></radio>
+					<selectbox list="mime_types" name="extension" addempty="true"></selectbox>
 				</part>
 			</part>
-		</fieldset>
 
-		<fieldset title="message:options">
 
 			<part class="line">
 				<part class="label">
 				</part>
 				<part class="input">
-					<checkbox name="delete"></checkbox>
-					<label for="delete">
-						<text text="CONFIRM_DELETE"></text>
-					</label>
+					<radio name="type" value="text"></radio>
+					<input name="extensiontext" size="10"></input>
 				</part>
 			</part>
 		</fieldset>

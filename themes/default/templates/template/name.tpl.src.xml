@@ -1,3 +1,38 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><window name="GLOBAL_PROP"><row><cell><text text="TEMPLATE_NAME"></text></cell><cell><input name="name"></input></cell></row><row><cell colspan="2"><fieldset></fieldset></cell></row><row><cell><text key="file_extension"></text></cell><cell><link action="template" subaction="extension"><text var="extension"></text></link></cell></row><row><cell><text key="file_mimetype"></text></cell><cell><link action="template" subaction="extension"><text var="mime_type"></text></link></cell></row><row><cell colspan="2" class="act"><button type="ok"></button></cell></row></window></form><focus field="name"></focus></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header back="true" views="extension"></header>
+	<form>
+		<part class="line">
+			<part class="label">
+				<text text="TEMPLATE_NAME"></text>
+			</part>
+			<part class="input">
+				<input name="name"></input>
+			</part>
+		</part>
+		<fieldset></fieldset>
+
+		<part class="line">
+			<part class="label">
+				<text key="file_extension"></text>
+			</part>
+			<part class="input">
+				<link action="template" subaction="extension">
+					<text var="extension"></text>
+				</link>
+			</part>
+		</part>
+
+		<part class="line">
+			<part class="label">
+				<text key="file_mimetype"></text>
+			</part>
+			<part class="input">
+				<link action="template" subaction="extension">
+					<text var="mime_type"></text>
+				</link>
+			</part>
+		</part>
+
+	</form>
+</output>
