@@ -73,25 +73,27 @@
 				</part>
 				<part class="input">
 					<text var="mimetype"></text>
+					<newline></newline>
+					<link class="action" action="file" subaction="size">
+						<text key="menu_file_size"></text>
+					</link>
 				</part>
-				<link class="action" action="file" subaction="size">
-					<text key="menu_file_size"></text>
-				</link>
 			</part>
 			<part class="line">
 				<part class="label">
+					<text text="message:id"></text>
 				</part>
 				<part class="input">
-					<text text="message:id"></text>
 					<text var="objectid"></text>
 				</part>
 			</part>
 			<if present="cache_filename">
 				<part class="line">
-					<part class="label"></part>
-					<label for="cache_filename">
-						<text text="CACHE_FILENAME"></text>
-					</label>
+					<part class="label">
+						<label for="cache_filename">
+							<text text="CACHE_FILENAME"></text>
+						</label>
+					</part>
 					<part class="input">
 						<text var="cache_filename"></text>
 						<newline></newline>
