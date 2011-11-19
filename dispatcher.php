@@ -210,7 +210,7 @@ $do->subActionName   = $subaction;
 
 $do->init(); 
 
-if	( !isset($do->actionConfig[$subaction]) )
+if	( !isset($do->actionConfig[$subaction]) && false )
 {
 	Logger::warn( "Action $action has no configured method named $subaction");
 	Http::serverError("Action '$action' has no accessable method '$subaction'.");
@@ -218,7 +218,7 @@ if	( !isset($do->actionConfig[$subaction]) )
 }
 
 
-$subactionConfig = $do->actionConfig[$subaction];
+$subactionConfig = @$do->actionConfig[$subaction];
 
 
 // Eine Subaktion ohne "guest=true" verlangt einen angemeldeten Benutzer.
@@ -272,6 +272,12 @@ else
 	$subactionMethodName = $subaction.'View';
 	
 Logger::debug("Executing $actionClassName::$subactionMethodName");
+
+if	( ! method_exists($do,$subactionMethodName) )
+{
+	Http::sendStatus(404,"Method not found","Method '".$subactionMethodName."' does not exist in this context" );
+	
+}
 
 $do->$subactionMethodName();
 
