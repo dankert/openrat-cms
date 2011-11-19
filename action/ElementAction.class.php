@@ -44,7 +44,7 @@ class ElementAction extends Action
 	/**
 	 * Umbenennen des Elementes
 	 */
-	function savename()
+	function editAction()
 	{
 		$this->element->name = $this->getRequestVar('name'       ,OR_FILTER_ALPHANUM);
 		$this->element->desc = $this->getRequestVar('description','all'     );
@@ -60,7 +60,7 @@ class ElementAction extends Action
 	/**
 	 * Umbenennen des Elementes
 	 */
-	function remove()
+	function deleteView()
 	{
 		$this->setTemplateVar( 'name' ,$this->element->name );
 	}
@@ -69,7 +69,7 @@ class ElementAction extends Action
 	/**
 	 * Entfernen des Elementes
 	 */
-	function delete()
+	function deleteAction()
 	{
 		if	( !$this->hasRequestVar('confirm') )
 		{
@@ -96,7 +96,7 @@ class ElementAction extends Action
 	/**
 	 * Aendern des Element-Typs
 	 */
-	function savetype()
+	function typeAction()
 	{
 		if	( !$this->userIsAdmin() && $this->getRequestVar('type') == 'code' )
 		{
@@ -115,7 +115,7 @@ class ElementAction extends Action
 	/**
 	 * Anzeigen des Elementes
 	 */
-	function name()
+	function editView()
 	{
 
 		// Name und Beschreibung
@@ -126,7 +126,8 @@ class ElementAction extends Action
 	
 	
 	
-	function type()
+	function typeView
+	()
 	{
 		// Die verschiedenen Element-Typen
 		$types = array();
@@ -150,7 +151,7 @@ class ElementAction extends Action
 	 * Auswahlmaske f�r weitere Einstellungen zum Template-Element.
 	 *
 	 */
-	function properties()
+	function propView()
 	{
 		global $conf;
 		
@@ -588,7 +589,7 @@ class ElementAction extends Action
 	/**
 	 * Speichern der Element-Eigenschaften
 	 */
-	function saveproperties()
+	function propAction()
 	{
 		global $conf;
 		$ini_date_format = $conf['date']['format'];
