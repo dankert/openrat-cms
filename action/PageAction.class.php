@@ -616,7 +616,6 @@ class PageAction extends ObjectAction
 	 */
 	function previewView()
 	{
-		Logger::debug("preview von seite");
 		// Seite definieren
 		$this->page->load();
 		$this->page->generate();
@@ -628,7 +627,7 @@ class PageAction extends ObjectAction
 		$language = Session::getProjectLanguage();
 		header('Content-Language: '.$language->isoCode);
 
-		Logger::debug("preview von seite: ".$this->page->tmpfile() );
+		Logger::debug("preview page: ".$this->page->tmpfile() );
 		
 		// Wenn 
 		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
