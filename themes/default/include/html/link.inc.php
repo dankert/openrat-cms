@@ -58,6 +58,10 @@
 			$tmp_function_call = "location.href='".$attr_url."';";
 			break;
 			
+		case 'popup':
+			$tmp_function_call = "window.open('".$attr_url."', 'Popup', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');";
+			break;
+			
 		default:
 			$tmp_function_call = "alert('TODO');";
 	}

@@ -1114,3 +1114,7 @@ HISTORY=Verlauf
 WINDOW_FULLSCREEN="Vollbild"
 MENU_MAIL="E-Mail"
 BACK="Zurück"
+MENU_ARCHIVE="Archiv"
+MENU_LINK="Verknüpfung"
+MENU_CHANGETEMPLATE="Vorlage wechseln"
+LINK_OPEN_IN_NEW_WINDOW="In neuem Fenster öffnen"
