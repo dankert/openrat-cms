@@ -77,12 +77,12 @@ class ModelAction extends Action
 	}
 
 
-	function add()
+	function addView()
 	{
 	}
 
 
-	function addmodel()
+	function addAction()
 	{
 		$model = new Model();
 		$model->projectid = $this->project->projectid;
@@ -104,7 +104,7 @@ class ModelAction extends Action
 	 * Entfernen der Variante.<br>
 	 * Es wird ein Best�tigungsdialog angezeigt.
 	 */
-	function remove()
+	function removeView()
 	{
 		$this->model->load();
 
@@ -115,7 +115,7 @@ class ModelAction extends Action
 	/**
 	 * Löschen des Models.
 	 */
-	function delete() 
+	function removeAction() 
 	{
 		if   ( $this->hasRequestVar('confirm') )
 		{
