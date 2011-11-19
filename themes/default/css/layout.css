@@ -114,7 +114,7 @@ div#noticebar
 	width:250px;
 	border 2px solid gray;
 	background-color:white;
-	padding:10px;
+	padding:5px;
 	z-index:3;
 	
 	-moz-border-radius:5px; /* Mozilla */
@@ -122,6 +122,22 @@ div#noticebar
     -khtml-border-radius:5px; /* Konqui */
 }
 
+div#noticebar div.notice
+{
+	border-bottom:1px solid silver;
+}
+div#noticebar div.notice.ok
+{
+	border-left:4px solid green;
+}
+div#noticebar div.notice.warn
+{
+	border-left:4px solid yellow;
+}
+div#noticebar div.notice.error
+{
+	border-left:4px solid red;
+}
 
 /*   H o e h e n   */
 html,body

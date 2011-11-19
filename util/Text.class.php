@@ -141,7 +141,7 @@ class Text
 	 */
 	function encodeHtml( $inhalt )
 	{
-		$inhalt = str_replace('&','&amp;',$inhalt);
+		//$inhalt = str_replace('&','&amp;',$inhalt);
 		$inhalt = str_replace('"','&quot;',$inhalt);
 		$inhalt = str_replace('<','&lt;' ,$inhalt);
 		$inhalt = str_replace('>','&gt;' ,$inhalt);
