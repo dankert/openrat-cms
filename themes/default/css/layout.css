@@ -116,6 +116,10 @@ div#noticebar
 	background-color:white;
 	padding:10px;
 	z-index:3;
+	
+	-moz-border-radius:5px; /* Mozilla */
+    -webkit-border-radius:5px; /* Webkit */
+    -khtml-border-radius:5px; /* Konqui */
 }
 
 
@@ -234,7 +238,8 @@ div.content a.action,
 div.content a.help,
 div.content input.ok,
 div#header,
-div.window
+div.window,
+div#noticebar
 {
 	-webkit-box-shadow: 3px 2px 5px gray;
     -moz-box-shadow: 3px 2px 5px gray;
