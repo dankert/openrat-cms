@@ -738,7 +738,7 @@ class Page extends Object
 		if	( config('publish','escape_8bit_characters') )
 			if	( substr($this->mimeType(),-4) == 'html' )
 			{
-				$src = htmlentities($src,ENT_NOQUOTES,charset());
+				$src = htmlentities($src,ENT_NOQUOTES,'UTF-8');
 				$src = str_replace('&lt;' , '<', $src);
 				$src = str_replace('&gt;' , '>', $src);
 				$src = str_replace('&amp;', '&', $src);

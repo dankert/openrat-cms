@@ -84,7 +84,7 @@ class DB
 	 * @param Array Konfiguration der Verbindung
 	 * @return Status 'true' wenn Verbindung erfolgreich aufgebaut.
 	 */
-	function DB( $conf )
+	public function DB( $conf )
 	{
 		$this->available = false;
 		$this->conf      = $conf;
@@ -100,7 +100,7 @@ class DB
 	 *
 	 * @return Status
 	 */
-	function connect()
+	public function connect()
 	{
 		// Ausfuehren des Systemkommandos vor Verbindungsaufbau
 		if	( !empty($this->conf['cmd']))
@@ -170,7 +170,7 @@ class DB
 	 * @param SQL-Objekt
 	 * @return Object (Result)
 	 */
-	function query( $query )
+	public function query( $query )
 	{
 		if ( !is_object($query) )
 			die('SQL-Query must be an object');
@@ -185,7 +185,7 @@ class DB
 			
 			// Einzelne Parameter an die Anfrage binden
 			foreach ($query->param as $name=>$unused)
-				$this->client->bind($name,$query->data[$name]);
+				$this->client->bind($name,$this->convertCharsetToDatabase($query->data[$name]));
 			
 			// Ausf�hren...
 			$result = $this->client->query($query);
@@ -208,6 +208,8 @@ class DB
 			
 			$escape_function = method_exists($this->client,'escape')?$this->client->escape():'addslashes';
 			$flatQuery = $query->getQuery( $escape_function );
+
+			$flatQuery = $this->convertCharsetToDatabase($flatQuery);
 			
 			Logger::trace('DB query on DB '.$this->id."\n".$query->raw);
 	
@@ -240,7 +242,7 @@ class DB
 	 * @param String $query
 	 * @return String
 	 */
-	function &getOne( $query )
+	public function &getOne( $query )
 	{
 		$none = '';
 		$result = $this->query($query);
@@ -250,7 +252,8 @@ class DB
 
 		if	( ! is_array($row) )
 			return $none;
-
+			
+		array_walk($row,array($this,'convertCharsetFromDatabase'));
 		$keys = array_keys($row);
 		
 		return $row[ $keys[0] ];
@@ -263,7 +266,7 @@ class DB
 	 * @param String $query
 	 * @return Array
 	 */
-	function &getRow( $query )
+	public function &getRow( $query )
 	{
 		$result = $this->query($query);
 		
@@ -281,6 +284,10 @@ class DB
 		if	( ! is_array($row) )
 			$row = array();
 
+			//Html::debug($row,"vorher");
+		$row = $this->convertRowWithCharsetFromDatabase($row);
+			//Html::debug($row,"nachher");
+			
 		return $row;
 	}
 
@@ -291,7 +298,7 @@ class DB
 	 * @param String $query
 	 * @return Array
 	 */
-	function &getCol( $query )
+	public function &getCol( $query )
 	{
 		$result = $this->query($query);
 
@@ -302,6 +309,7 @@ class DB
 			if	( empty($row) )
 				break;
 				
+			array_walk($row,array($this,'convertCharsetFromDatabase'));
 			$keys = array_keys($row);
 			$col[] = $row[ $keys[0] ];
 		}
@@ -319,7 +327,7 @@ class DB
 	 * @param Boolean $force_array
 	 * @return Array
 	 */
-	function &getAssoc( $query, $force_array = false )
+	public function &getAssoc( $query, $force_array = false )
 	{
 		$results = array();
 		$result = $this->query($query);
@@ -330,9 +338,12 @@ class DB
 		{
 			if	( empty($row) )
 				break;
+
+			array_walk($row,array($this,'convertCharsetFromDatabase'));
 				
 			if	( count($row) > 2 || $force_array )
 			{
+				// FIXME: Wird offenbar nie ausgeführt.
 				$row = $res->fetchRow($i);
 
 				$keys = array_keys($row);
@@ -363,7 +374,7 @@ class DB
 	 * @param String $query
 	 * @return Array
 	 */
-	function &getAll( $query )
+	public function &getAll( $query )
 	{
 		$result = $this->query( $query );
 
@@ -372,6 +383,7 @@ class DB
 
 		while( $row = $this->client->fetchRow( $result,$i++ ) )
 		{
+			array_walk($row,array($this,'convertCharsetFromDatabase'));
 			$results[] = $row;
 		}
 
@@ -384,7 +396,7 @@ class DB
 	/**
 	 * Startet eine Transaktion.
 	 */
-	function start()
+	public function start()
 	{
 		if	( @$this->conf['transaction'])
 			if	( method_exists($this->client,'start') )
@@ -398,7 +410,7 @@ class DB
 	/**
 	 * Beendet und best�tigt eine Transaktion.
 	 */
-	function commit()
+	public function commit()
 	{
 		if	( @$this->conf['transaction'])
 			if	( method_exists($this->client,'commit') )
@@ -412,7 +424,7 @@ class DB
 	/**
 	 * Setzt eine Transaktion zur�ck.
 	 */
-	function rollback()
+	public function rollback()
 	{
 		if	( @$this->conf['transaction'])
 			if	( method_exists($this->client,'rollback') )
@@ -421,6 +433,54 @@ class DB
 					$this->client->rollback();
 					$this->transactionInProgress = false;
 				}
+	}
+	
+	
+	private function convertCharsetToDatabase($text)
+	{
+		//Logger::debug('from '.$text);
+		$dbCharset = @$this->conf['charset'];
+		if	( !empty($dbCharset) && $dbCharset != 'UTF-8' )
+		{
+		//	Logger::debug('Converting from UTF-8 to '.$dbCharset);
+			if	( !function_exists('iconv') )
+				Logger::warn('iconv not available - database charset unchanged. Please '.
+				             'enable iconv on your system or transform your database content to UTF-8.');
+			else
+				$text = iconv('UTF-8',$dbCharset.'//TRANSLIT',$text);
+		}
+		//Logger::debug('to   '.$text);
+		return $text;
+		
+	}
+	
+	
+	private function convertCharsetFromDatabase($text)
+	{
+		//Logger::debug('from '.$text);
+		$dbCharset = @$this->conf['charset'];
+		if	( !empty($dbCharset) && $dbCharset != 'UTF-8' )
+		{
+			//Logger::debug('Converting to UTF-8 from '.$dbCharset);
+			if	( !function_exists('iconv') )
+				Logger::warn('iconv not available - database charset unchanged. Please '.
+				             'enable iconv on your system or transform your database content to UTF-8.');
+			else
+				$text = iconv($dbCharset,'UTF-8//TRANSLIT',$text);
+		}
+		//Logger::debug('to   '.$text);
+		return $text;
+		
+	}
+	
+	
+	private function convertRowWithCharsetFromDatabase($row)
+	{
+		foreach( $row as $key=>$value)
+		{
+			$row[$key] = $this->convertCharsetFromDatabase($row[$key]);
+		}
+		return $row;
 	}
 	
 }

@@ -1382,6 +1382,9 @@ SQL
 				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML �bersetzen
 				if   ( $this->page->mimeType()=='text/html' )
 					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
+					//Html::debug($inhalt);
+					//$inhalt = htmlspecialchars($inhalt,ENT_NOQUOTES,'UTF-8');
+					$inhalt = translateutf8tohtml($inhalt);
 					
 				break;
 				

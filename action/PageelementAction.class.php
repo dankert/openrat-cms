@@ -570,7 +570,7 @@ class PageelementAction extends Action
 				// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
 				// einen Text eingegeben hat (Vorschaufunktion).
 				$this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
-
+				
 			if	(! $this->isEditMode() )
 			{
 				$this->value->generate(); // Inhalt erzeugen.
