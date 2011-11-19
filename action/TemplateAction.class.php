@@ -52,7 +52,7 @@ class TemplateAction extends Action
 	}
 
 
-	function savesrc()
+	function srcAction()
 	{
 		// Speichern des Quelltextes
 		//
@@ -78,7 +78,7 @@ class TemplateAction extends Action
 
 
 
-	function srcaddelement()
+	function srcelementAction()
 	{
 		$text = $this->template->src;
 
@@ -117,7 +117,7 @@ class TemplateAction extends Action
 
 	// Speichern der Template-Eigenschaftens
 	//
-	function savename()
+	function nameAction()
 	{
 		
 		if	($this->getRequestVar('name') == "")
@@ -137,7 +137,7 @@ class TemplateAction extends Action
 
 	// Speichern der Template-Eigenschaftens
 	//
-	function delete()
+	function removeAction()
 	{
 		if   ( $this->getRequestVar('delete') != '' )
 		{
@@ -154,7 +154,7 @@ class TemplateAction extends Action
 	/**
 	 * Entfernen der Vorlage
 	 */
-	function remove()
+	function removeView()
 	{
 		$this->setTemplateVar('name',$this->template->name);
 	}
@@ -194,7 +194,7 @@ class TemplateAction extends Action
 	}
 
 
-	function addel()
+	function addelView()
 	{
 		// Die verschiedenen Element-Typen
 		$types = array();
@@ -216,7 +216,7 @@ class TemplateAction extends Action
 	/*
 	 * Neues Element hinzufuegen.
 	 */
-	function addelement()
+	function addelAction()
 	{
 
 		$name = $this->getRequestVar('name',OR_FILTER_ALPHANUM);
@@ -245,7 +245,7 @@ class TemplateAction extends Action
 	/**
 	 * Vorlage hinzuf�gen.
 	 */
-	function add()
+	function addView()
 	{
 		$this->setTemplateVar( 'templates',Template::getAll() );
 
@@ -264,7 +264,7 @@ class TemplateAction extends Action
 	
 	
 	
-	function addtemplate()
+	function addAction()
 	{
 		// Hinzufuegen eines Templates
 		if   ( $this->getRequestVar('name') == '' )
@@ -380,7 +380,7 @@ class TemplateAction extends Action
 	/**
 	 * Eigenschaften einer Vorlage anzeigen
 	 */
-	function name()
+	function nameView()
 	{
 		$this->setTemplateVar('name'     ,$this->template->name       );
 		$this->setTemplateVar('extension',$this->template->extension  );
@@ -502,7 +502,7 @@ class TemplateAction extends Action
 
 	// Anzeigen der Template-Elemente
 	//
-	function el()
+	function elView()
 	{
 		global $conf_php;
 		$list = array();
@@ -525,7 +525,7 @@ class TemplateAction extends Action
 
 
 
-	function srcelement()
+	function srcelementView()
 	{
 		$elements           = array();
 		$writable_elements = array();
@@ -550,7 +550,7 @@ class TemplateAction extends Action
 	/**
 	  * Anzeigen des Template-Quellcodes
 	  */
-	function src()
+	function srcView()
 	{
 		if	( $this->isEditMode() )
 		{

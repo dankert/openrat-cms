@@ -1,0 +1,11 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header views="src,addel,srcelement,el,remove"></header>
+		<window name="TEMPLATE_SHOW">
+			<row>
+				<cell>
+					<text var="text" escape="false" type="code"></text>
+				</cell>
+			</row>
+		</window>
+</output>

@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><window><table><row class="headline"><cell><text key="name"></text></cell><cell><text key="type"></text></cell></row><list list="el" extract="true"><row class="data"><cell url="var:url"><image elementtype="var:type"></image><text var="name"></text></cell><cell><text key="var:type" prefix="EL_"></text></cell></row></list><row><cell class="data"><link class="action" action="template" subaction="addel"><text key="menu_template_addel"></text></link></cell></row><if empty="el"><row><cell colspan="2"><text key="GLOBAL_NOT_FOUND"></text></cell></row></if></table></window></dummy></output>
