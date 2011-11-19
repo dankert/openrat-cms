@@ -116,7 +116,7 @@
 
 	<xsd:element name="row" type="rowType"></xsd:element>
 
-	<xsd:element name="radiobox" type="xsd:string"></xsd:element>
+	<xsd:element name="radiobox" type="radioboxType"></xsd:element>
 
 	<xsd:element name="selectbox" type="selectBoxType"></xsd:element>
 
@@ -190,6 +190,7 @@
 			<xsd:element ref="date"></xsd:element>
 			<xsd:element ref="user"></xsd:element>
 			<xsd:element ref="if"></xsd:element>
+			<xsd:element ref="list"></xsd:element>
 		</xsd:choice>
 		<xsd:attributeGroup ref="universal"></xsd:attributeGroup>
 	</xsd:complexType>
@@ -284,6 +285,7 @@
     		<xsd:element ref="row" maxOccurs="unbounded"
     			minOccurs="0">
     		</xsd:element>
+    		<xsd:element ref="text"></xsd:element>
     	</xsd:choice>
     	<xsd:attribute name="list" type="xsd:string"></xsd:attribute>
     	<xsd:attribute name="extract" type="xsd:boolean"></xsd:attribute>
@@ -303,6 +305,9 @@
 			<xsd:element ref="link"></xsd:element>
 			<xsd:element ref="image"></xsd:element>
 			<xsd:element ref="if"></xsd:element>
+			<xsd:element ref="selectbox"></xsd:element>
+			<xsd:element ref="radiobox"></xsd:element>
+			<xsd:element ref="input"></xsd:element>
 		</xsd:choice>
 		<xsd:attribute name="true" type="xsd:string"></xsd:attribute>
 		<xsd:attribute name="false" type="xsd:string"></xsd:attribute>
@@ -346,6 +351,15 @@
 
     <xsd:complexType name="inputareaType">
     	<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
-        <xsd:attributeGroup ref="universal"></xsd:attributeGroup>
+    	<xsd:attributeGroup ref="universal"></xsd:attributeGroup>
+    	<xsd:attribute name="rows" type="xsd:string"></xsd:attribute>
     </xsd:complexType>
+
+    <xsd:complexType name="radioboxType">
+    	<xsd:attribute name="list" type="xsd:string"></xsd:attribute>
+    	<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:attribute name="NewAttribute" type="xsd:string"></xsd:attribute>
+
 </xsd:schema>

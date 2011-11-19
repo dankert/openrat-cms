@@ -1,3 +1,48 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><window><row><cell><text text="ELEMENT_NAME"></text></cell><cell><text var="name"></text></cell></row><row><cell colspan="2"><fieldset title="message:options"></fieldset></cell></row><row><cell colspan="2"><checkbox name="confirm"></checkbox><label for="confirm"><text text="CONFIRM_DELETE"></text></label></cell></row><row><cell colspan="2"><label for="type_value"><text raw="_____"></text><radio name="type" value="value" default="value"></radio><text text="ELEMENT_DELETE_VALUES"></text></label><newline></newline><label for="type_all"><text raw="_____"></text><radio name="type" value="all"></radio><text text="DELETE"></text></label></cell></row><row><cell colspan="2" class="act"><button type="ok"></button></cell></row></window></form><focus field="delete"></focus></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header back="true"></header>
+	<form>
+		<fieldset>
+			<part class="line">
+				<part class="label">
+					<text key="ELEMENT_NAME"></text>
+				</part>
+				<part class="input">
+					<text var="name" class="name"></text>
+				</part>
+			</part>
+		</fieldset>
+		<fieldset title="message:options">
+
+			<part class="line">
+				<part class="label">
+				</part>
+				<part class="input">
+					<checkbox name="confirm"></checkbox>
+					<label for="confirm">
+						<text text="CONFIRM_DELETE"></text>
+					</label>
+				</part>
+			</part>
+
+			<part class="line">
+				<part class="label">
+				</part>
+				<part class="input">
+					<text raw="_____"></text>
+					<radio name="type" value="value" default="value"></radio>
+					<label for="type_value">
+						<text text="ELEMENT_DELETE_VALUES"></text>
+					</label>
+					<newline></newline>
+					<text raw="_____"></text>
+					<radio name="type" value="all"></radio>
+					<label for="type_all">
+						<text text="DELETE"></text>
+					</label>
+				</part>
+			</part>
+		</fieldset>
+
+	</form>
+</output>
