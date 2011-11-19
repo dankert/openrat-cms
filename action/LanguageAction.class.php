@@ -92,7 +92,7 @@ class LanguageAction extends Action
 	/**
 	 * Sprache hinzufuegen
 	 */
-	function add()
+	function addView()
 	{
 		global $conf;
 		$countryList = $conf['countries'];
@@ -113,7 +113,7 @@ class LanguageAction extends Action
 	}
 	
 	
-	function addlanguage()
+	function addAction()
 	{
 		global $conf;
 		$countryList = $conf['countries'];
@@ -143,7 +143,7 @@ class LanguageAction extends Action
 	/**
 	 * Anzeigen der L�schbest�tigungs-Maske.
 	 */
-	function remove()
+	function removeView()
 	{
 		$this->setTemplateVar('name'   ,$this->language->name   );
 	}
@@ -152,12 +152,37 @@ class LanguageAction extends Action
 	/**
 	 * L�schen der Sprache.
 	 */
-	function delete() 
+	function removeAction() 
 	{
 		if   ( $this->getRequestVar('confirm') == '1' )
 			$this->language->delete();
 	}
 	
+
+	/**
+	 * Speichern der Sprache
+	 */
+	function advancedAction()
+	{
+		global $conf;
+
+		if	( $this->hasRequestVar('name') )
+		{
+			$this->language->name    = $this->getRequestVar('name'   );
+			$this->language->isoCode = $this->getRequestVar('isocode');
+		}
+		else
+		{
+			$countryList = $conf['countries'];
+			$iso = $this->getRequestVar('isocode');
+			$this->language->name    = $countryList[$iso];
+			$this->language->isoCode = strtolower( $iso );
+		}
+		
+		$this->language->save();
+	}
+
+
 
 	/**
 	 * Speichern der Sprache
@@ -252,7 +277,7 @@ class LanguageAction extends Action
 	
 
 
-	function advanced()
+	function advancedView()
 	{
 		$this->setTemplateVar('isocode',$this->language->isoCode);
 		$this->setTemplateVar('name'   ,$this->language->name   );
