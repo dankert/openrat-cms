@@ -59,6 +59,12 @@ class DB_postgresql
 		else
 			$connect_function = 'pg_connect';
 
+		if	( ! function_exists($connect_function))
+		{
+			$this->error = 'Function does not exist: '.$connect_function.' Postgresql is not available';
+			return false;
+		}
+			
 		if    ( $pw != '' )
 			$this->connection = @$connect_function( "host=$host dbname=$db user=$user password=$pw" );
 		elseif ( $user != '' ) 

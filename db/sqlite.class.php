@@ -50,7 +50,13 @@ class DB_sqlite
 			$connect_function = 'sqlite_popen';
 		else
 			$connect_function = 'sqlite_open';
-		
+			
+		if	( ! function_exists($connect_function))
+		{
+			$this->error = 'Function does not exist: '.$connect_function.' SQlite is not available';
+			return false;
+		}
+				
 		$this->connection = @$connect_function($filename,0666,$error);
 
 		if	( !is_resource($this->connection) )
