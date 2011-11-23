@@ -322,7 +322,7 @@ class TreeAction extends Action
 		$this->setTemplateVar( 'modelid'   ,Session::getProjectModel()->modelid       );
 	}
 	
-	public function settingsAction()
+	public function settingsPost()
 	{
 		$language = new Language( $this->getRequestVar(REQ_PARAM_LANGUAGE_ID,OR_FILTER_NUMBER) );
 		$language->load();

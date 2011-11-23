@@ -104,7 +104,7 @@ class LinkAction extends ObjectAction
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
-	function propAction()
+	function propPost()
 	{
 		// Wenn Name gefuellt, dann Datenbank-Update
 		if   ( $this->getRequestVar('name') != '' )
@@ -123,7 +123,7 @@ class LinkAction extends ObjectAction
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
-	function editAction()
+	function editPost()
 	{
 		if( $this->getRequestVar('type') != '' )
 		{

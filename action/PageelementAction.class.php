@@ -799,7 +799,7 @@ class PageelementAction extends Action
 		/**
 		 * Ein Element der Seite speichern.
 		 */
-		public function editAction()
+		public function editPost()
 		{
 			$this->element->load();
 			$type = $this->element->type;

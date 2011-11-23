@@ -44,7 +44,7 @@ class ElementAction extends Action
 	/**
 	 * Umbenennen des Elementes
 	 */
-	function editAction()
+	function editPost()
 	{
 		$this->element->name = $this->getRequestVar('name'       ,OR_FILTER_ALPHANUM);
 		$this->element->desc = $this->getRequestVar('description','all'     );
@@ -69,7 +69,7 @@ class ElementAction extends Action
 	/**
 	 * Entfernen des Elementes
 	 */
-	function deleteAction()
+	function deletePost()
 	{
 		if	( !$this->hasRequestVar('confirm') )
 		{
@@ -96,7 +96,7 @@ class ElementAction extends Action
 	/**
 	 * Aendern des Element-Typs
 	 */
-	function typeAction()
+	function typePost()
 	{
 		if	( !$this->userIsAdmin() && $this->getRequestVar('type') == 'code' )
 		{
@@ -589,7 +589,7 @@ class ElementAction extends Action
 	/**
 	 * Speichern der Element-Eigenschaften
 	 */
-	function propAction()
+	function propPost()
 	{
 		global $conf;
 		$ini_date_format = $conf['date']['format'];

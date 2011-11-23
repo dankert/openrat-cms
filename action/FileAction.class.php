@@ -95,7 +95,7 @@ class FileAction extends ObjectAction
 	 * Abspeichern der Eigenschaften zu dieser Datei.
 	 *
 	 */
-	function propAction()
+	function propPost()
 	{
 		// Eigenschaften speichern
 		$this->file->filename  = $this->getRequestVar('filename'   ,OR_FILTER_FILENAME);
@@ -427,7 +427,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function uncompressAction()
+	function uncompressPost()
 	{
 		switch( $this->file->extension )
 		{
@@ -493,7 +493,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function extractAction()
+	function extractPost()
 	{
 		switch( $this->file->extension )
 		{
@@ -584,7 +584,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function compressAction()
+	function compressPost()
 	{
 		$format = $this->getRequestVar('format',OR_FILTER_ALPHANUM);
 		
@@ -651,7 +651,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Datei veroeffentlichen
 	 */
-	function pubAction()
+	function pubPost()
 	{
 		$this->file->publish();
 		$this->file->publish->close();

@@ -267,7 +267,7 @@ $isAction = $_SERVER['REQUEST_METHOD'] == 'POST' || (isset($sConf['write']) && $
 
 
 if	( $isAction )
-	$subactionMethodName = $subaction.'Action';
+	$subactionMethodName = $subaction.'Post';
 else
 	$subactionMethodName = $subaction.'View';
 	

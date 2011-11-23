@@ -82,7 +82,7 @@ class ModelAction extends Action
 	}
 
 
-	function addAction()
+	function addPost()
 	{
 		$model = new Model();
 		$model->projectid = $this->project->projectid;
@@ -115,7 +115,7 @@ class ModelAction extends Action
 	/**
 	 * Löschen des Models.
 	 */
-	function removeAction() 
+	function removePost() 
 	{
 		if   ( $this->hasRequestVar('confirm') )
 		{
@@ -131,7 +131,7 @@ class ModelAction extends Action
 	
 	
 	// Speichern eines Modells
-	function editAction()
+	function editPost()
 	{
 		if   ( $this->getRequestVar('name') != '' )
 		{

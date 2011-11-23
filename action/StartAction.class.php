@@ -352,7 +352,7 @@ class StartAction extends Action
 	 * Setzt die neue Projekt-Id und lädt die Workbench neu.
 	 * 
 	 */
-	public function projectmenuAction() {
+	public function projectmenuPost() {
 		
 		//Session::setProject( $this->getRequestId() );
 		
@@ -632,7 +632,7 @@ class StartAction extends Action
 	/**
 	 * Login.
 	 */
-	function loginAction()
+	function loginPost()
 	{
 		global $conf;
 
@@ -750,7 +750,7 @@ class StartAction extends Action
 	/**
 	 * Benutzer meldet sich ab.
 	 */
-	function logoutAction()
+	function logoutPost()
 	{
 		global $conf;
 		
@@ -838,7 +838,7 @@ class StartAction extends Action
 	/**
 	 * Ausw�hlen der Administration.
 	 */
-	function administrationAction()
+	function administrationPost()
 	{
 		Session::setProject( new Project(-1) );
 		Session::set('perspective','administration');
@@ -850,7 +850,7 @@ class StartAction extends Action
 	/**
 	 * Auswaehlen des Benutzer-Profiles.
 	 */
-	function profileAction()
+	function profilePost()
 	{
 		Session::set('perspective','profile');
 		$this->refresh();

@@ -52,7 +52,7 @@ class TemplateAction extends Action
 	}
 
 
-	function srcAction()
+	function srcPost()
 	{
 		// Speichern des Quelltextes
 		//
@@ -78,7 +78,7 @@ class TemplateAction extends Action
 
 
 
-	function srcelementAction()
+	function srcelementPost()
 	{
 		$text = $this->template->src;
 
@@ -117,7 +117,7 @@ class TemplateAction extends Action
 
 	// Speichern der Template-Eigenschaftens
 	//
-	function nameAction()
+	function namePost()
 	{
 		
 		if	($this->getRequestVar('name') == "")
@@ -137,7 +137,7 @@ class TemplateAction extends Action
 
 	// Speichern der Template-Eigenschaftens
 	//
-	function removeAction()
+	function removePost()
 	{
 		if   ( $this->getRequestVar('delete') != '' )
 		{
@@ -182,7 +182,7 @@ class TemplateAction extends Action
 
 	// Speichern der Dateiendung
 	//
-	function extensionAction()
+	function extensionPost()
 	{
 		if	( $this->getRequestVar('type') == "list" )
 			$this->template->extension = $this->getRequestVar('extension');
@@ -216,7 +216,7 @@ class TemplateAction extends Action
 	/*
 	 * Neues Element hinzufuegen.
 	 */
-	function addelAction()
+	function addelPost()
 	{
 
 		$name = $this->getRequestVar('name',OR_FILTER_ALPHANUM);
@@ -264,7 +264,7 @@ class TemplateAction extends Action
 	
 	
 	
-	function addAction()
+	function addPost()
 	{
 		// Hinzufuegen eines Templates
 		if   ( $this->getRequestVar('name') == '' )

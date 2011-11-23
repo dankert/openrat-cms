@@ -103,7 +103,7 @@ class ObjectAction extends Action
 	  *
 	  * @access public
 	  */
-	function aclformAction()
+	function aclformPost()
 	{
 		$acl = new Acl();
 
@@ -237,7 +237,7 @@ class ObjectAction extends Action
 	 * 
 	 * @return unknown_type
 	 */
-	function rightsAction()
+	function rightsPost()
 	{
 		$log = array();
 		
@@ -324,7 +324,7 @@ class ObjectAction extends Action
 	 * 
 	 * @access protected
 	 */
-	function delaclAction()
+	function delaclPost()
 	{
 		$acl = new Acl($this->getRequestVar('aclid'));
 		$acl->objectid = $this->getRequestId();

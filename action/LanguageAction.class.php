@@ -113,7 +113,7 @@ class LanguageAction extends Action
 	}
 	
 	
-	function addAction()
+	function addPost()
 	{
 		global $conf;
 		$countryList = $conf['countries'];
@@ -152,7 +152,7 @@ class LanguageAction extends Action
 	/**
 	 * L�schen der Sprache.
 	 */
-	function removeAction() 
+	function removePost() 
 	{
 		if   ( $this->getRequestVar('confirm') == '1' )
 			$this->language->delete();
@@ -162,7 +162,7 @@ class LanguageAction extends Action
 	/**
 	 * Speichern der Sprache
 	 */
-	function advancedAction()
+	function advancedPost()
 	{
 		global $conf;
 
@@ -187,7 +187,7 @@ class LanguageAction extends Action
 	/**
 	 * Speichern der Sprache
 	 */
-	function editAction()
+	function editPost()
 	{
 		global $conf;
 

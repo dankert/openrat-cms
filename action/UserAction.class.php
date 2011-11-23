@@ -48,7 +48,7 @@ class UserAction extends Action
 	}
 
 
-	function editAction()
+	function editPost()
 	{
 		if	( $this->getRequestVar('name') != '' )
 		{
@@ -85,7 +85,7 @@ class UserAction extends Action
 	
 	
 	
-	function removeAction()
+	function removePost()
 	{
 		if   ( $this->hasRequestVar('confirm') )
 		{
@@ -106,7 +106,7 @@ class UserAction extends Action
 	
 	
 	
-	function addAction()
+	function addPost()
 	{
 		if	( $this->getRequestVar('name') != '' )
 		{
@@ -166,7 +166,7 @@ class UserAction extends Action
 	/**
 	 * Aendern des Kennwortes
 	 */
-	function pwAction()
+	function pwPost()
 	{
 		global $conf;
 
@@ -283,7 +283,7 @@ class UserAction extends Action
 	}
 
 
-	function membershipsAction()
+	function membershipsPost()
 	{
 		$allGroups  = Group::getAll();
 		$userGroups = $this->user->getGroups();

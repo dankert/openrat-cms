@@ -61,7 +61,7 @@ class FolderAction extends ObjectAction
 	 * Neues Objekt anlegen.<br>
 	 * Dies kann ein(e) Verzeichnis, Seite, Verkn�pfung oder Datei sein.<br>
 	 */
-	function createAction()
+	function createPost()
 	{
 		global $conf;
 		$type = $this->getRequestVar('type'       );
@@ -179,7 +179,7 @@ class FolderAction extends ObjectAction
 
 	
 	
-	function createfolderAction()
+	function createfolderPost()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -208,7 +208,7 @@ class FolderAction extends ObjectAction
 
 
 
-	function createfileAction()
+	function createfilePost()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -271,7 +271,7 @@ class FolderAction extends ObjectAction
 
 
 
-	function createlinkAction()
+	function createlinkPost()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -304,7 +304,7 @@ class FolderAction extends ObjectAction
 
 
 
-	function createpageAction()
+	function createpagePost()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -339,7 +339,7 @@ class FolderAction extends ObjectAction
 	 * Abspeichern der Ordner-Eigenschaften. Ist der Schalter "delete" gesetzt, wird
 	 * der Ordner stattdessen gel?scht.
 	 */
-	function propAction()
+	function propPost()
 	{
 		// Ordnereigenschaften speichern
 		if   ( $this->getRequestVar('name') != '' )
@@ -377,7 +377,7 @@ class FolderAction extends ObjectAction
 
 
 	// Reihenfolge von Objekten aendern
-	function changesequenceAction()
+	function changesequencePost()
 	{
 		$ids = $this->folder->getObjectIds();
 		$seq = 0;
@@ -709,7 +709,7 @@ class FolderAction extends ObjectAction
 
 
 	// Reihenfolge von Objekten aendern
-	function reorderAction()
+	function reorderPost()
 	{
 		$type = $this->getRequestVar('type');
 		
@@ -754,7 +754,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function settopAction()
+	function settopPost()
 	{
 		$o = new Object( $this->getRequestVar('objectid1') );
 		$o->setOrderId( 1 );
@@ -783,7 +783,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function setbottomAction()
+	function setbottomPost()
 	{
 		$ids = $this->folder->getObjectIds();
 		$seq = 0;
@@ -1175,7 +1175,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function pubAction()
+	function pubPost()
 	{
 		if	( !$this->folder->hasRight( ACL_PUBLISH ) )
 			die('no rights for publish');

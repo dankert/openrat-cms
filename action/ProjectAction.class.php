@@ -41,7 +41,7 @@ class ProjectAction extends Action
 	}
 
 
-	function editAction()
+	function editPost()
 	{
 		sleep(2);
 		if	( $this->getRequestVar('name') != '')
@@ -79,7 +79,7 @@ class ProjectAction extends Action
 	 * Projekt hinzufuegen.
 	 *
 	 */
-	function addAction()
+	function addPost()
 	{
 		if	( !$this->hasRequestVar('type') )
 		{
@@ -182,7 +182,7 @@ class ProjectAction extends Action
 	}
 	
 	
-	function removeAction()
+	function removePost()
 	{
 		if   ( !$this->hasRequestVar('delete') )
 		{
@@ -211,7 +211,7 @@ class ProjectAction extends Action
 	/**
 	 * Wartung durchfuehren.
 	 */
-	function maintenanceAction()
+	function maintenancePost()
 	{
 		switch( $this->getRequestVar('type') )
 		{
@@ -245,7 +245,7 @@ class ProjectAction extends Action
 	/**
 	 * Projekt exportieren.
 	 */
-	function exportAction()
+	function exportPost()
 	{
 		$db = db_connection();
 		$this->setTemplateVar( 'dbid',$db->id );

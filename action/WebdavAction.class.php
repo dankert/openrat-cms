@@ -4,11 +4,11 @@
 /**
  * Action-Klasse fuer WebDAV.<br>
  * 
- * Das virtuelle Ordnersystem dieses CMS kann über das WebDAV-Protokoll
+ * Das virtuelle Ordnersystem dieses CMS kann ï¿½ber das WebDAV-Protokoll
  * dargestellt werden.
  * 
  * Diese Klasse nimmt die Anfragen von WebDAV-Clients entgegen, zerlegt die
- * Anfrage und erzeugt eine Antwort, die im HTTP-Body zurück übertragen
+ * Anfrage und erzeugt eine Antwort, die im HTTP-Body zurï¿½ck ï¿½bertragen
  * wird.
  * <br>
  * WebDAV ist spezifiziert in der RFC 2518.<br>
@@ -23,7 +23,7 @@
 class WebdavAction extends Action
 {
 	// Zahlreiche Instanzvariablen, die im Konstruktor
-	// beim Zerlegen der Anfrag gefüllt werden.
+	// beim Zerlegen der Anfrag gefï¿½llt werden.
 	var $defaultSubAction = 'show';
 	var $database;
 	var $depth;
@@ -107,7 +107,7 @@ class WebdavAction extends Action
 		// Prï¿½fen, ob Benutzer angemeldet ist.
 		$user = $this->getUserFromSession();
 
-		// Authentisierung erzwingen (außer bei Methode OPTIONS).
+		// Authentisierung erzwingen (auï¿½er bei Methode OPTIONS).
         // For the motivation for not checking OPTIONS requests see 
         // http://pear.php.net/bugs/bug.php?id=5363
 		if	( !is_object($user) && $_GET[REQ_PARAM_SUBACTION] != 'options' )
@@ -391,7 +391,7 @@ class WebdavAction extends Action
 			header('Content-Transfer-Encoding: binary' );
 			header('Content-Description: '.$file->name );
 	
-			$file->write(); // Bild aus Datenbank laden und in temporäre Datei schreiben
+			$file->write(); // Bild aus Datenbank laden und in temporï¿½re Datei schreiben
 
 			// Groesse des Bildes in Bytes
 			// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen

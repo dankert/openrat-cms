@@ -53,7 +53,7 @@ class GroupAction extends Action
 
 
 
-	function removeAction()
+	function removePost()
 	{
 		if   ( $this->hasRequestVar('confirm') )
 		{
@@ -76,7 +76,7 @@ class GroupAction extends Action
 	
 	
 	
-	function editAction()
+	function editPost()
 	{
 		if	( $this->getRequestVar('name') != '' )
 		{
@@ -99,7 +99,7 @@ class GroupAction extends Action
 	}
 	
 	
-	function addAction()
+	function addPost()
 	{
 		if	( $this->getRequestVar('name') != '')
 		{
@@ -228,7 +228,7 @@ class GroupAction extends Action
 	}
 	
 	
-	function membershipsAction()
+	function membershipsPost()
 	{
 		$allUsers  = User::listAll();
 		$groupUsers = $this->group->getUsers();

@@ -45,7 +45,7 @@ class ProfileAction extends Action
 	/**
 	 * Abspeichern des Profiles
 	 */
-	function editAction()
+	function editPost()
 	{
 		$this->user->fullname = $this->getRequestVar('fullname');
 		$this->user->tel      = $this->getRequestVar('tel'     );
@@ -103,7 +103,7 @@ class ProfileAction extends Action
 	/**
 	 * Speichern der Benutzereinstellungen.
 	 */
-	function settingsAction()
+	function settingsPost()
 	{
 		foreach( array('always_edit','ignore_ok_notices','timezone_offset','language') as $name )
 		{
@@ -148,7 +148,7 @@ class ProfileAction extends Action
 	/*
 	 * Es wird eine E-Mail mit einem Freischaltcode an die eingegebene Adresse geschickt.
 	 */
-	function mailAction()
+	function mailPost()
 	{
 		srand ((double)microtime()*1000003);
 		$code = rand(); // Zufalls-Freischaltcode erzeugen
@@ -199,7 +199,7 @@ class ProfileAction extends Action
 	/**
 	 * Abspeichern der neuen E-Mail-Adresse
 	 */
-	function confirmmailAction()
+	function confirmmailPost()
 	{
 		$sessionCode       = Session::get('mailChangeCode');
 		$newMail           = Session::get('mailChangeMail');
@@ -224,7 +224,7 @@ class ProfileAction extends Action
 	
 	
 	
-	public function pwAction()
+	public function pwPost()
 	{
 		if	( ! $this->user->checkPassword( $this->getRequestVar('act_password') ) )
 		{

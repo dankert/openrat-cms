@@ -650,7 +650,7 @@ class LoginAction extends Action
 	/**
 	 * Login.
 	 */
-	function loginAction()
+	function loginPost()
 	{
 		global $conf;
 
@@ -772,7 +772,7 @@ class LoginAction extends Action
 	/**
 	 * Benutzer meldet sich ab.
 	 */
-	function logoutAction()
+	function logoutPost()
 	{
 		global $conf;
 		
@@ -1375,7 +1375,7 @@ class LoginAction extends Action
 	 * Registriercode erzeugen und per E-Mail dem Benutzer mitteilen.
 	 * Maske anzeigen, damit Benuter Registriercode anzeigen kann.
 	 */
-	function registerAction()
+	function registerPost()
 	{
 		$email_address = $this->getRequestVar('mail','mail');
 		
@@ -1437,7 +1437,7 @@ class LoginAction extends Action
 	 * Benutzerregistierung.
 	 * Benutzer hat Best�tigungscode erhalten und eingegeben.
 	 */
-	function registeruserdataAction()
+	function registeruserdataPost()
 	{
 		global $conf;
 		$this->checkForDb();
@@ -1564,7 +1564,7 @@ class LoginAction extends Action
 	/**
 	 * Einen Kennwort-Anforderungscode an den Benutzer senden.
 	 */
-	function passwordAction()
+	function passwordPost()
 	{
 		if	( !$this->hasRequestVar('username') )
 		{
@@ -1620,7 +1620,7 @@ class LoginAction extends Action
 	/**
 	 * Neues Kennwort erzeugen und dem Benutzer zusenden.
 	 */
-	function passwordinputcodeAction()
+	function passwordinputcodePost()
 	{
 		$username = $this->getSessionVar("password_commit_name");
 

@@ -57,7 +57,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Alle Daten aus dem Formular speichern
 	 */
-	function formAction()
+	function formPost()
 	{
 		$this->page->public = true;
 		$this->page->simple = true;
@@ -146,7 +146,7 @@ class PageAction extends ObjectAction
 	 *
 	 * Der Inhalt eines Elementes wird abgespeichert
 	 */
-	function elAction()
+	function elPost()
 	{
 		$value = new Value();
 		$language = Session::getProjectLanguage();
@@ -303,7 +303,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Eigenschaften der Seite speichern
 	 */
-	function propAction()
+	function propPost()
 	{
 		if   ( $this->getRequestVar('name')!='' )
 		{
@@ -377,7 +377,7 @@ class PageAction extends ObjectAction
 	 *
 	 * Die Vorlage wird ausgetauscht, die Inhalte werden gemaess der Benutzereingaben kopiert
 	 */
-	public function changetemplateAction()
+	public function changetemplatePost()
 	{
 		Session::set('newtemplateid',intval($this->getRequestVar('templateid')) );
 		$this->nextView('changetemplateselectelements');
@@ -447,7 +447,7 @@ class PageAction extends ObjectAction
 	 *
 	 * Die Vorlage wird ausgetauscht, die Inhalte werden gemaess der Benutzereingaben kopiert
 	 */
-	public function changetemplateselectelementsAction()
+	public function changetemplateselectelementsPost()
 	{
 		$newTemplateId = intval( Session::get('newtemplateid') );
 		$replaceElementMap = Array();
@@ -755,7 +755,7 @@ class PageAction extends ObjectAction
 	 *
 	 * Die Seite wird generiert.
 	 */
-	function pubAction()
+	function pubPost()
 	{
 		if	( !$this->page->hasRight( ACL_PUBLISH ) )
 			Http::notAuthorized( 'no right for publish' );
