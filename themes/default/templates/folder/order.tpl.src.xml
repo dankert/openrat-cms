@@ -1,3 +1,83 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><window><table><row><cell colspan="7" class="help"><text text="GLOBAL_FOLDER_DESC"></text></cell></row><row class="headline"><cell class="help" colspan="4"><link type="url" url="var:flip_url" title="message:FOLDER_FLIP"><text key="FOLDER_ORDER"></text></link></cell><cell class="help"><link type="url" url="var:orderbytype_url" title="message:FOLDER_ORDERBYTYPE"><text key="GLOBAL_TYPE"></text></link><text raw="_/_"></text><link type="url" url="var:orderbyname_url" title="message:FOLDER_ORDERBYNAME"><text key="GLOBAL_NAME"></text></link></cell><cell class="help"><link type="url" url="var:orderbylastchange_url" title="message:FOLDER_ORDERBYLASTCHANGE"><text key="GLOBAL_LASTCHANGE"></text></link></cell></row><list list="object" extract="true"><row class="data"><cell width="3%"><if present="upurl"><link type="url" url="var:upurl" title="GLOBAL_UP"><set var="bild" value="arrow_up"></set><image file="var:bild"></image></link></if><if empty="upurl"><text raw="_"></text></if></cell><cell width="3%"><if present="topurl"><link type="url" url="var:topurl" title="GLOBAL_TOP"><set var="bild" value="arrow_top"></set><image file="var:bild"></image></link></if><if empty="topurl"><text raw="_"></text></if></cell><cell width="3%"><if present="bottomurl"><link type="url" url="var:bottomurl" title="GLOBAL_BOTTOM"><set var="bild" value="arrow_bottom"></set><image file="var:bild"></image></link></if><if empty="bottomurl"><text raw="_"></text></if></cell><cell width="3%"><if present="downurl"><link type="url" url="var:downurl" title="GLOBAL_DOWN"><set var="bild" value="arrow_down"></set><image file="var:bild"></image></link></if><if empty="downurl"><text raw="_"></text></if></cell><cell width="40%"><image type="var:icon"></image><text var="name"></text></cell><cell width="18%"><date date="var:date"></date></cell></row></list></table></window></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<text text="GLOBAL_FOLDER_DESC"></text>
+	<input type="hidden" name="token" default="function:token"></input>
+	<table class="sortable">
+		<row class="headline">
+			<cell class="help" colspan="4">
+				<link type="url" url="var:flip_url" title="message:FOLDER_FLIP">
+					<text key="FOLDER_ORDER"></text>
+				</link>
+			</cell>
+			<cell class="help">
+				<link type="url" url="var:orderbytype_url" title="message:FOLDER_ORDERBYTYPE">
+					<text key="GLOBAL_TYPE"></text>
+				</link>
+				<text raw="_/_"></text>
+				<link type="url" url="var:orderbyname_url" title="message:FOLDER_ORDERBYNAME">
+					<text key="GLOBAL_NAME"></text>
+				</link>
+			</cell>
+			<cell class="help">
+				<link type="url" url="var:orderbylastchange_url" title="message:FOLDER_ORDERBYLASTCHANGE">
+					<text key="GLOBAL_LASTCHANGE"></text>
+				</link>
+			</cell>
+		</row>
+		<list list="object" extract="true">
+			<row class="data" id="o_{id}">
+				<cell width="3%">
+					<if present="upurl">
+						<link type="url" url="var:upurl" title="GLOBAL_UP">
+							<set var="bild" value="arrow_up"></set>
+							<image file="var:bild"></image>
+						</link>
+					</if>
+					<if empty="upurl">
+						<text raw="_"></text>
+					</if>
+				</cell>
+				<cell width="3%">
+					<if present="topurl">
+						<link type="url" url="var:topurl" title="GLOBAL_TOP">
+							<set var="bild" value="arrow_top"></set>
+							<image file="var:bild"></image>
+						</link>
+					</if>
+					<if empty="topurl">
+						<text raw="_"></text>
+					</if>
+				</cell>
+				<cell width="3%">
+					<if present="bottomurl">
+						<link type="url" url="var:bottomurl" title="GLOBAL_BOTTOM">
+							<set var="bild" value="arrow_bottom"></set>
+							<image file="var:bild"></image>
+						</link>
+					</if>
+					<if empty="bottomurl">
+						<text raw="_"></text>
+					</if>
+				</cell>
+				<cell width="3%">
+					<if present="downurl">
+						<link type="url" url="var:downurl" title="GLOBAL_DOWN">
+							<set var="bild" value="arrow_down"></set>
+							<image file="var:bild"></image>
+						</link>
+					</if>
+					<if empty="downurl">
+						<text raw="_"></text>
+					</if>
+				</cell>
+				<cell width="40%">
+					<image type="var:icon"></image>
+					<text var="name"></text>
+				</cell>
+				<cell width="18%">
+					<date date="var:date"></date>
+				</cell>
+			</row>
+		</list>
+	</table>
+</output>

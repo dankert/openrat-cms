@@ -376,6 +376,35 @@ class FolderAction extends ObjectAction
 	}
 
 
+	/**
+	 * Reihenfolge von Objekten aendern.
+	 */
+	function orderPost()
+	{
+		$ids   = $this->folder->getObjectIds();
+		$seq   = 0;
+		
+		$order = explode(',',$this->getRequestVar('order') );
+		
+		foreach( $order as $objectid )
+		{
+			if	( ! in_array($objectid,$ids) )
+			{
+				Http::serverError('Object-Id '.$objectid.' is not in this folder any more');
+			}
+			$seq++; // Sequenz um 1 erhoehen
+			
+			$o = new Object( $objectid );
+			$o->setOrderId( $seq );
+	
+			unset( $o ); // Selfmade Garbage Collection :-)
+		}
+		
+		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
+		$this->folder->setTimestamp();
+	}
+
+
 	// Reihenfolge von Objekten aendern
 	function changesequencePost()
 	{
@@ -1097,6 +1126,7 @@ class FolderAction extends ObjectAction
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
+				$list[$id]['id'  ]     = $id;
 				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
 				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );

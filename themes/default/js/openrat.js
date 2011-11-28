@@ -170,6 +170,34 @@ function loadView(jo, url )
 			//alert( "up: "+$('#upassword').attr('value') );
 			$(jo).find('input.focus').focus();
 			
+			// Sortieren von Tabellen
+			$(jo).find('table.sortable > tbody').sortable({
+				   update: function(event, ui)
+				   {
+						var order = [];
+						$(ui.item).closest('table.sortable').find('tbody > tr.data').each( function() {
+							var objectid = $(this).data('id').substring(2);
+							order.push( objectid );
+						});
+						var url    = './dispatcher.php';
+						var params = {};
+						params.action    = 'folder';
+						params.subaction = 'order';
+						params.token     = $('#id_token').attr('value');
+						params.order     = order.join(',');
+						
+						$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
+							{
+								doResponse(data,textStatus,form);
+							},
+							error:function(jqXHR, textStatus, errorThrown) {
+								alert( errorThrown );
+							}
+							
+						} );
+				   }
+			});
+			
 			if	( $(jo).find('textarea#pageelement_edit_editor').length > 0 )
 			{
 				var instance = CKEDITOR.instances['pageelement_edit_editor'];
