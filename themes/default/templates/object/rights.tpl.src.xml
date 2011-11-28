@@ -60,32 +60,31 @@
 					</cell>
 				</row>
 			</list>
-			<if value="var:type" equals="folder">
-				<row>
-					<cell colspan="15">
-						<fieldset title="message:options"></fieldset>
-					</cell>
-				</row>
-				<row>
-					<cell colspan="15">
+		</table>
+
+		<link type="view" class="action" action="var:actionName"
+			subaction="aclform">
+			<image icon="add"></image>
+			<text key="add"></text>
+		</link>
+		<newline></newline>
+		<newline></newline>
+		<newline></newline>
+
+		<if value="var:type" equals="folder">
+			<fieldset title="message:options">
+				<part class="line">
+					<part class="label">
+					</part>
+					<part class="input">
 						<set var="inherit" value="1"></set>
 						<input type="checkbox" name="inherit"></input>
 						<label for="inherit">
 							<text key="inherit_rights"></text>
 						</label>
-					</cell>
-				</row>
-			</if>
-			<row>
-				<cell class="act" colspan="15">
-					<button type="ok"></button>
-					<link type="view" class="action" action="var:actionName"
-						subaction="aclform">
-						<image icon="add"></image>
-						<text key="add"></text>
-					</link>
-				</cell>
-			</row>
-		</table>
+					</part>
+				</part>
+			</fieldset>
+		</if>
 	</form>
 </output>
