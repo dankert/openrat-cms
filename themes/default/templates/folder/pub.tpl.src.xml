@@ -1,3 +1,68 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><window><form><if present="pages"><if present="subdirs"><checkbox name="pages"></checkbox><label for="pages"><text raw="_"></text><text text="global_pages"></text></label><newline></newline></if></if><if present="files"><if true="subdirs"><checkbox name="files"></checkbox><label for="files"><text raw="_"></text><text text="global_files"></text></label><newline></newline></if></if><fieldset title="message:options"><if present="subdirs"><part><checkbox name="subdirs"></checkbox><label for="subdirs"><text raw="_"></text><text text="GLOBAL_PUBLISH_WITH_SUBDIRS"></text></label></part></if><if present="clean"><part><checkbox name="clean"></checkbox><label for="clean"><text raw="_"></text><text text="global_CLEAN_AFTER_PUBLISH"></text></label><newline></newline></part></if></fieldset><text text="GLOBAL_MUCH_TIME" class="help"></text><newline></newline><button type="ok"></button></form></window></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form>
+		<fieldset title="message:publish">
+			<if present="pages">
+				<if present="subdirs">
+
+					<part class="line">
+						<part class="label">
+						</part>
+						<part class="input">
+							<checkbox name="pages"></checkbox>
+							<label for="pages">
+								<text raw="_"></text>
+								<text text="global_pages"></text>
+							</label>
+						</part>
+					</part>
+				</if>
+			</if>
+			<if present="files">
+				<if true="subdirs">
+					<part class="line">
+						<part class="label">
+						</part>
+						<part class="input">
+							<checkbox name="files"></checkbox>
+							<label for="files">
+								<text raw="_"></text>
+								<text text="global_files"></text>
+							</label>
+						</part>
+					</part>
+
+				</if>
+			</if>
+		</fieldset>
+		<fieldset title="message:options">
+			<if present="subdirs">
+				<part class="line">
+					<part class="label">
+					</part>
+					<part class="input">
+						<checkbox name="subdirs"></checkbox>
+						<label for="subdirs">
+							<text raw="_"></text>
+							<text text="GLOBAL_PUBLISH_WITH_SUBDIRS"></text>
+						</label>
+					</part>
+				</part>
+			</if>
+			<if present="clean">
+				<part class="line">
+					<part class="label">
+					</part>
+					<part class="input">
+						<checkbox name="clean"></checkbox>
+						<label for="clean">
+							<text raw="_"></text>
+							<text text="global_CLEAN_AFTER_PUBLISH"></text>
+						</label>
+					</part>
+				</part>
+			</if>
+		</fieldset>
+
+	</form>
+</output>
