@@ -1,0 +1,15 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form>
+		<list list="elements" extract="true">
+			<part class="line">
+				<part class="label">
+					<text var="name"></text>
+				</part>
+				<part class="input">
+					<selectbox name="var:newElementsName" list="newElementsList"></selectbox>
+				</part>
+			</part>
+		</list>
+	</form>
+</output>
