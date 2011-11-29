@@ -1,3 +1,146 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><header views="password"></header><form action="login" subaction="login" target="_top"><dummy><fieldset><if present="config:login/logo/file"><if false="property:mustChangePassword"><if present="config:login/logo/url"><link url="config:login/logo/url" target="_top"><image url="config:login/logo/file"></image></link></if><if empty="config:login/logo/url"><image url="config:login/logo/file"></image></if></if></if><if not="" empty="config:login/motd"><text raw="config:login/motd"></text></if><if true="config:login/nologin"><text key="LOGIN_NOLOGIN_DESC"></text></if><if true="config:security/readonly"><text key="GLOBAL_READONLY_DESC" class="help"></text></if><if true="config:security/nopublish"><text key="GLOBAL_NOPUBLISH_DESC" class="help"></text></if><if false="config:login/nologin"><logo name="login"></logo><part><label for="login_name"><text key="USER_USERNAME"></text></label><if not="true" present="force_username"><input type="text" name="login_name" class="name" value="" size="20"></input></if><else><input type="hidden" name="login_name" value="var:force_username"></input><text value="var:force_username"></text></else></part><part><label for="login_password"><text key="USER_PASSWORD"></text></label><password name="login_password" class="name" default="" size="20"></password></part></if><if true="property:mustChangePassword"><part><fieldset title="message:USER_NEW_PASSWORD"></fieldset></part><part><label for="password1"><text key="USER_NEW_PASSWORD"></text></label><password name="password1" default="" size="25"></password></part><part><label for="password2"><text key="USER_NEW_PASSWORD_REPEAT"></text></label><password name="password2" default="" size="25"></password></part></if><link type="view" class="action" action="login" subaction="password"><text key="menu_login_password"></text></link><link type="view" class="action" action="login" subaction="register"><text key="menu_login_register"></text></link></fieldset><if true="config:security/openid/enable"><fieldset title="message:OPENID"><part><if not="true" empty="config:security/openid/logo_url"><image url="config:security/openid/logo_url"></image></if><text key="openid_user"></text><radiobox name="openid_provider" list="openid_providers"></radiobox><if true="var:openid_user_identity"><radio name="openid_provider" value="identity"></radio><input name="openid_url" class="name" size="20"></input></if></part></fieldset></if><if value="size:dbids" greaterthan="1"><fieldset title="message:DATABASE" icon="database"><part><label for="dbid"><text key="DATABASE"></text></label><selectbox name="dbid" list="dbids" default="var:actdbid"></selectbox><hidden name="screenwidth" default="9999"></hidden></part></fieldset></if><else><hidden name="dbid" default="var:actdbid"></hidden></else></dummy><hidden name="objectid"></hidden><hidden name="modelid"></hidden><hidden name="projectid"></hidden><hidden name="languageid"></hidden></form><newline></newline><newline></newline><link url="config:login/gpl/url" target="_top" class="copyright"><text key="GPL"></text></link><if present="force_username"><focus field="login_password"></focus></if><else><focus field="login_name"></focus></else></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header views="password"></header>
+	<form action="login" subaction="login" target="_top">
+		<fieldset>
+			<if present="config:login/logo/file">
+				<if false="property:mustChangePassword">
+					<if present="config:login/logo/url">
+						<link url="config:login/logo/url" target="_top">
+							<image url="config:login/logo/file"></image>
+						</link>
+					</if>
+					<if empty="config:login/logo/url">
+						<image url="config:login/logo/file"></image>
+					</if>
+				</if>
+			</if>
+			<if not="" empty="config:login/motd">
+				<text raw="config:login/motd"></text>
+			</if>
+			<if true="config:login/nologin">
+				<text key="LOGIN_NOLOGIN_DESC"></text>
+			</if>
+			<if true="config:security/readonly">
+				<text key="GLOBAL_READONLY_DESC" class="help"></text>
+			</if>
+			<if true="config:security/nopublish">
+				<text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
+			</if>
+			<if false="config:login/nologin">
+				<logo name="login"></logo>
+
+				<part class="line">
+					<part class="label">
+						<label for="login_name">
+							<text key="USER_USERNAME"></text>
+						</label>
+					</part>
+					<part class="input">
+						<if not="true" present="force_username">
+							<input type="text" name="login_name" class="name" value=""
+								size="20"></input>
+						</if>
+						<else><input type="hidden" name="login_name" value="var:force_username"></input><text
+							value="var:force_username"></text></else>
+					</part>
+				</part>
+				<part class="line">
+					<part class="label">
+						<label for="login_password">
+							<text key="USER_PASSWORD"></text>
+						</label>
+					</part>
+					<part class="input">
+						<password name="login_password" class="name" default=""
+							size="20"></password>
+					</part>
+				</part>
+			</if>
+		</fieldset>
+		<if true="property:mustChangePassword">
+			<fieldset title="message:USER_NEW_PASSWORD">
+				<part class="line">
+					<part class="label">
+						<label for="password1">
+							<text key="USER_NEW_PASSWORD"></text>
+						</label>
+					</part>
+					<part class="input">
+						<password name="password1" default="" size="25"></password>
+					</part>
+				</part>
+				<part class="line">
+					<part class="label">
+						<label for="password2">
+							<text key="USER_NEW_PASSWORD_REPEAT"></text>
+						</label>
+					</part>
+					<part class="input">
+						<password name="password2" default="" size="25"></password>
+					</part>
+				</part>
+			</fieldset>
+		</if>
+		<link type="view" class="action" action="login" subaction="password">
+			<text key="menu_password"></text>
+		</link>
+		<link type="view" class="action" action="login" subaction="register">
+			<text key="menu_register"></text>
+		</link>
+		<newline></newline>
+		<newline></newline>
+		<newline></newline>
+		<newline></newline>
+		<newline></newline>
+
+		<!--  Open-Id -->
+		<if true="config:security/openid/enable">
+			<fieldset title="message:OPENID">
+				<part class="line">
+					<part class="label">
+						<text key="openid_user"></text>
+						<if not="true" empty="config:security/openid/logo_url">
+							<image url="config:security/openid/logo_url"></image>
+						</if>
+					</part>
+					<part class="input">
+						<radiobox name="openid_provider" list="openid_providers"></radiobox>
+						<if true="var:openid_user_identity">
+							<radio name="openid_provider" value="identity"></radio>
+							<input name="openid_url" class="name" size="20"></input>
+						</if>
+					</part>
+				</part>
+			</fieldset>
+		</if>
+
+		<if value="size:dbids" greaterthan="1">
+			<fieldset title="message:DATABASE" icon="database">
+				<part class="line">
+					<part class="label">
+						<label for="dbid">
+							<text key="DATABASE"></text>
+						</label>
+					</part>
+					<part class="input">
+						<selectbox name="dbid" list="dbids" default="var:actdbid"></selectbox>
+						<hidden name="screenwidth" default="9999"></hidden>
+					</part>
+				</part>
+			</fieldset>
+		</if>
+		<else>
+		<hidden name="dbid" default="var:actdbid"></hidden>
+		</else>
+		<hidden name="objectid"></hidden>
+		<hidden name="modelid"></hidden>
+		<hidden name="projectid"></hidden>
+		<hidden name="languageid"></hidden>
+	</form>
+	<newline></newline>
+	<newline></newline>
+	<link url="config:login/gpl/url" target="_top" class="copyright">
+		<text key="GPL"></text>
+	</link>
+</output>
