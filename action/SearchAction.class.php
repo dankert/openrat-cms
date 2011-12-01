@@ -38,11 +38,22 @@ class SearchAction extends Action
 	}
 
 
+	public function showView()
+	{
+		$this->nextSubAction('content');
+	}
+	
+	public function showAction()
+	{
+		$this->nextSubAction('content');
+	}
+	
+	
 	/**
 	 * Durchf?hren der Suche
 	 * und Anzeige der Ergebnisse
 	 */
-	function searchcontent()
+	public function contentPost()
 	{
 		global $conf_php;
 
@@ -82,7 +93,7 @@ class SearchAction extends Action
 	/**
 	 * 
 	 */
-	function explainResult( $listObjectIds, $listTemplateIds )
+	private function explainResult( $listObjectIds, $listTemplateIds )
 	{
 		$resultList = array();
 
@@ -122,7 +133,7 @@ class SearchAction extends Action
 	 * Durchf?hren der Suche
 	 * und Anzeige der Ergebnisse
 	 */
-	function searchprop()
+	public function propPost()
 	{
 		global $conf_php;
 
@@ -177,7 +188,7 @@ class SearchAction extends Action
 	 * Durchf?hren der Suche
 	 * und Anzeige der Ergebnisse
 	 */
-	function quicksearchView()
+	public function quicksearchView()
 	{
 		global $conf;
 
@@ -247,7 +258,7 @@ class SearchAction extends Action
 	}
 	
 	
-	function prop()
+	public function propView()
 	{
 		$user = Session::getUser();
 		$this->setTemplateVar( 'users'     ,User::listAll() );
@@ -255,7 +266,7 @@ class SearchAction extends Action
 	}
 
 
-	function content()
+	public function contentView()
 	{
 		$user = Session::getUser();
 		$this->setTemplateVar( 'users'     ,User::listAll() );

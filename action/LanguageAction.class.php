@@ -158,6 +158,11 @@ class LanguageAction extends Action
 			$this->language->delete();
 	}
 	
+	
+	function propView()
+	{
+		$this->nextSubAction('advanced');
+	}
 
 	/**
 	 * Speichern der Sprache

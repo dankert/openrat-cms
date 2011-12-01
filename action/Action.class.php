@@ -558,6 +558,22 @@ class Action
 
 
 	/**
+	 * Ruft eine weitere Subaction auf.
+	 *
+	 * @param String $subActionName Name der n�chsten Subaction. Es muss eine Methode mit diesem Namen geben.
+	 */
+	protected function nextSubAction( $subActionName )
+	{
+		$this->subActionName = $subActionName;		
+
+		Logger::trace("next subaction is '$subActionName'");
+		
+		$methodName = $subActionName.($_SERVER['REQUEST_METHOD'] == 'POST'?'Post':'View');
+		$this->$methodName();
+	}
+
+
+	/**
 	 * Ermitteln, ob Benutzer Administratorrechte besitzt
 	 * @return Boolean TRUE, falls der Benutzer ein Administrator ist.
 	 */
