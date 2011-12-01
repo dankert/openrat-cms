@@ -148,8 +148,19 @@ function loadView(jo, url )
 	*/
 	
 	$(jo).empty().html('<div class="loader" />').load(url,function(response, status, xhr) {
-			$(jo).fadeIn(100);
+			$(jo).slideDown('fast');
 			
+			if	( status == "error" )
+			{
+				// Seite nicht gefunden.
+				$(this).html("");
+				// OK-button Ausblenden.
+				$(jo).closest('div.frame').find('div.bottom > div.command > input').addClass('invisible');
+				// var msg = "Sorry but there was an error: ";
+				//$(this).html(msg + xhr.status + " " + xhr.statusText);
+				return;
+			}
+
 			//alert("o ist "+o);
 			//$('textarea.editor').ckeditor( function() { /*alert("editor ready");*/ /* callback code */ }, editorConfig );
 			//CKEDITOR.replace('text',{
