@@ -185,8 +185,8 @@ require( OR_ACTIONCLASSES_DIR.'/ObjectAction.class.php' );
 	
 $actionClassName = ucfirst($action).'Action';
 
-if	( !isset($conf['action'][$actionClassName]) )
-	Http::serverError("Action '$action' is undefined.");
+//if	( !isset($conf['action'][$actionClassName]) )
+//	Http::serverError("Action '$action' is undefined.");
 
 require_once( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
@@ -199,7 +199,11 @@ $sConf = @$conf['action'][$actionClassName][$subaction];
 
 // Erzeugen der Action-Klasse
 $do = new $actionClassName;
-$do->actionConfig = $conf['action'][$actionClassName];
+
+// TODO: ActionConfig entfernen.
+$do->actionConfig = @$conf['action'][$actionClassName];
+//$do->actionConfig = array();
+
 $do->actionClassName = $actionClassName; 
 $do->actionName      = $action;
 if	( $subaction == '' )
