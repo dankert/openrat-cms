@@ -196,6 +196,7 @@ class FolderAction extends ObjectAction
 
 			$f->add();
 			$this->addNotice('folder',$f->name,'ADDED','ok');
+			$this->setTemplateVar('objectid',$f->objectid);
 		}
 		else
 		{
