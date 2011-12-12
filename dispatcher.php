@@ -110,7 +110,7 @@ if	( !empty($conf['security']['umask']) )
 if	( !empty($conf['interface']['timeout']) )
 	set_time_limit( intval($conf['interface']['timeout']) );
 
-if	( config('security','use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && $REQ[REQ_PARAM_TOKEN]!=token() )
+if	( config('security','use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN]!=token() )
 	Http::notAuthorized("Token mismatch");
 	
 define('FILE_SEP',$conf['interface']['file_separator']);
@@ -191,7 +191,7 @@ $actionClassName = ucfirst($action).'Action';
 require_once( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
 $sConf = @$conf['action'][$actionClassName][$subaction];
-	
+
 // Wenn
 // - *Action-Methode zum Schreiben vorhanden und POST-Request
 // oder
@@ -245,7 +245,7 @@ if	( isset($do->actionConfig['admin']) && $do->actionConfig['admin'] )
 		exit;
 				}
 
-
+				
 // Aktuelle Subaction in Sitzung merken
 if	( isset($do->actionConfig[$subaction]['menu']) )
 {
@@ -293,6 +293,11 @@ if	( isset($do->actionConfig[$do->subActionName]['async' ]) || $isAction )
 {
 	$json = new JSON();
 	header('Content-Type: application/json; charset=UTF-8');
+	
+	// Weitere Variablen anreichern.
+	$do->templateVars['session'] = array('name'=>session_name(),'id'=>session_id(),'token'=>token() );
+	$do->templateVars['version'] = OR_VERSION;
+	
 	echo $json->encode( $do->templateVars );
 	exit;
 }
@@ -505,7 +510,7 @@ $showDuration = $conf['interface']['show_duration'];
 	if	( $viewConfig == null )
 		return; // View ist leer.
  */
-	
+
 	$do->forward();
 
 // fertig :)
