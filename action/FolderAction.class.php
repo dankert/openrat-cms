@@ -263,7 +263,8 @@ class FolderAction extends ObjectAction
 
 		$file->add(); // Datei hinzufuegen
 		$this->addNotice('file',$file->name,'ADDED','ok');
-
+		$this->setTemplateVar('objectid',$file->objectid);
+		
 		$this->folder->setTimestamp();
 
 		$this->setTemplateVar('tree_refresh',true);
@@ -289,9 +290,10 @@ class FolderAction extends ObjectAction
 			$link->isLinkToObject = false;
 			$link->url            = $this->getRequestVar('name');
 
-			$this->addNotice('link',$link->name,'ADDED','ok');
-
 			$link->add();
+
+			$this->addNotice('link',$link->name,'ADDED','ok');
+			$this->setTemplateVar('objectid',$link->objectid);
 		}
 		else
 		{
@@ -321,8 +323,10 @@ class FolderAction extends ObjectAction
 			$page->templateid = $this->getRequestVar('templateid');
 			$page->parentid   = $this->folder->objectid;
 
-			$this->addNotice('page',$page->name,'ADDED','ok');
 			$page->add();
+			
+			$this->addNotice('page',$page->name,'ADDED','ok');
+			$this->setTemplateVar('objectid',$page->objectid);
 		}
 		else
 		{
