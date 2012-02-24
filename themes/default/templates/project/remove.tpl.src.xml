@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form method="post"><window><row><cell><text text="GLOBAL_NAME"></text></cell><cell><text var="name" class="name"></text></cell></row><row><cell colspan="2"><fieldset title="message:options"><part><checkbox name="delete"></checkbox><label for="delete"><text text="CONFIRM_DELETE"></text></label></part></fieldset></cell></row><row><cell colspan="2" class="act"><button type="ok"></button></cell></row></window></form><focus field="delete"></focus></dummy></output>

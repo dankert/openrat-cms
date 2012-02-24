@@ -1,0 +1,33 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header back="true"></header>
+	<form method="post">
+		<part class="line">
+			<part class="label">
+				<text text="message:name"></text>
+			</part>
+			<part class="input">
+
+				<input name="name"></input>
+			</part>
+		</part>
+		<fieldset title="message:options">
+			<part class="line">
+				<part class="label">
+					<radio name="type" value="empty"></radio>
+					<label for="type_empty">
+						<text key="empty"></text>
+					</label>
+					<part class="input">
+						<radio name="type" value="copy"></radio>
+						<label for="type_copy">
+							<text key="copy"></text>
+						</label>
+						<selectbox name="projectid" list="projects"></selectbox>
+					</part>
+				</part>
+			</part>
+		</fieldset>
+	</form>
+	<focus field="name"></focus>
+</output>

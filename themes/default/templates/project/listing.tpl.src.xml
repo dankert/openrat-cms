@@ -1,3 +1,0 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><window icon="project" name="GLOBAL_PROJECTS" width="70%"><table><row class="headline"><cell><text key="name"></text></cell><cell><text key="GLOBAL_SELECT"></text></cell></row><list list="el" extract="true"><row class="data"><cell url="var:url"><image file="icon_project"></image><text value="var:name" maxlength="30"></text></cell><cell url="var:use_url"><text key="GLOBAL_SELECT"></text></cell></row></list></table></window></dummy></output>
