@@ -258,7 +258,7 @@ class GroupAction extends Action
 	/**
 	 * Anzeigen der Benutzerrechte
 	 */
-	function rights()
+	function rightsView()
 	{
 		$rights = $this->group->getAllAcls();
 

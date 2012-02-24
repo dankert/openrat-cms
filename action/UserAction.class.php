@@ -325,7 +325,7 @@ class UserAction extends Action
 	/**
 	 * Anzeigen der Benutzerrechte
 	 */
-	function rights()
+	function rightsView()
 	{
 		$rights = $this->user->getAllAcls();
 
