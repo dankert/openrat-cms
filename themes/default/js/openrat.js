@@ -92,8 +92,15 @@ function refreshWorkbench()
 		$('ul.views').droppable( {accept:'li.action',hoverClass: 'drophover',activeClass: 'dropactive',drop: function(event, ui) {
 			var dropped   = ui.draggable;
             var droppedOn = $(this);
-            $(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
+            if	( $(dropped).closest('div.frame').attr('id') == $(droppedOn).closest('div.frame').attr('id') )
+            	$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
+            else
+            	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
 		} } );
+		
+		// geht nicht zusammen mit draggable...
+		//$('ul.views').sortable();
+
 	});
 	//alert('go');
 	
