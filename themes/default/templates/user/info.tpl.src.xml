@@ -1,0 +1,40 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header></header>
+	<if not="true" empty="image">
+		<part class="line">
+			<part class="line">
+				<image url="var:image" size="80x80" />
+			</part>
+		</part>
+	</if>
+
+	<part class="line">
+		<text var="name" class="name" />
+	</part>
+	<part class="line">
+		<text var="fullname" />
+	</part>
+
+	<if true="config:security/user/show_admin_mail">
+		<part class="line">
+			<link action="var:mail">
+				<text var="mail" />
+			</link>
+		</part>
+	</if>
+	<part class="line">
+		<text var="desc" />
+	</part>
+
+	<part class="line">
+		<text text="user_tel" />
+		<text var="tel" />
+	</part>
+
+	<if true="is_admin">
+		<part class="line">
+			<text key="user_admin" />
+		</part>
+	</if>
+</output>

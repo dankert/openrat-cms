@@ -231,6 +231,15 @@ class UserAction extends Action
 		$this->setTemplateVars( $this->user->getProperties() );
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
+	}
+
+
+	/**
+	 * Eigenschaften des Benutzers anzeigen
+	 */
+	function infoView()
+	{
+		$this->setTemplateVars( $this->user->getProperties() );
 
 		$gravatarConfig = config('interface','gravatar');
 		
@@ -252,7 +261,6 @@ class UserAction extends Action
 				$this->setTemplateVar( 'image', $url );
 			}
 		}
-
 	}
 
 
