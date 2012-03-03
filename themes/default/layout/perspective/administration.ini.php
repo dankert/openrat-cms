@@ -11,8 +11,8 @@ refreshable=false
 
 [content]
 
-views=edit,pw,export,maintenance
-action=project
+views=edit,pw,export,maintenance,rights
+action=projectlist
 refreshable=true
 default=edit
 
