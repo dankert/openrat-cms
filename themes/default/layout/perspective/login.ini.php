@@ -2,7 +2,7 @@
 
 [content]
 
-views=login,register,license
+views=login,openid,register,license
 action=login
 refreshable=false
 default=login

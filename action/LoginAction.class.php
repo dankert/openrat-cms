@@ -303,13 +303,6 @@ class LoginAction extends Action
 				                        'title'=>$dbconf['comment'].' ('.$dbconf['host'].')' );
 		}
 		
-		$openid_provider = array();
-		foreach( explode(',',$conf['security']['openid']['provider']) as $provider )
-			$openid_provider[$provider] = config('security','openid','provider.'.$provider.'.name');
-		$this->setTemplateVar('openid_providers',$openid_provider);
-		$this->setTemplateVar('openid_user_identity',config('security','openid','user_identity'));
-		//$this->setTemplateVar('openid_provider','identity');
-
 		
 		if	( empty($dbids) )
 			$this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
@@ -359,7 +352,64 @@ class LoginAction extends Action
 		$this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
 		$this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
 	}
+	
+	
+	
+		/**
+	 * Anzeigen der Loginmaske.
+	 *
+	 * Es wird nur die Loginmaske angezeigt.
+	 * Hier nie "304 not modified" setzen, da sonst keine
+	 * Login-Fehlermeldung erscheinen kann
+	 */
+	function openidView()
+	{
+		global $conf;
+		
+		foreach( $conf['database'] as $dbname=>$dbconf )
+		{
+			if	( is_array($dbconf) && $dbconf['enabled'] )
+				$dbids[$dbname] = array('key'  =>$dbname,
+				                        'value'=>Text::maxLength($dbconf['comment']),
+				                        'title'=>$dbconf['comment'].' ('.$dbconf['host'].')' );
+		}
+		
+		$openid_provider = array();
+		foreach( explode(',',$conf['security']['openid']['provider']) as $provider )
+			$openid_provider[$provider] = config('security','openid','provider.'.$provider.'.name');
+		$this->setTemplateVar('openid_providers',$openid_provider);
+		$this->setTemplateVar('openid_user_identity',config('security','openid','user_identity'));
+		//$this->setTemplateVar('openid_provider','identity');
 
+		
+		if	( empty($dbids) )
+			$this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
+		
+		if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
+			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
+		
+		if	( !isset($this->templateVars['login_name']) )
+			$this->setTemplateVar('login_name',@$conf['security']['default']['username']);
+
+		if	( $this->templateVars['login_name']== @$conf['security']['default']['username'])
+			$this->setTemplateVar('login_password',@$conf['security']['default']['password']);
+
+		$this->setTemplateVar( 'dbids',$dbids );
+		
+		$db = Session::getDatabase();
+		if	( is_object($db) )
+			$this->setTemplateVar('actdbid',$db->id);
+		elseif( isset($this->templateVars['actid']) )
+			;
+		else
+			$this->setTemplateVar('actdbid',$conf['database']['default']);
+
+		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,OR_FILTER_NUMBER) );
+		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,OR_FILTER_NUMBER) );
+		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,OR_FILTER_NUMBER) );
+		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',OR_FILTER_NUMBER) );
+	}
+	
 
 
 	/**
@@ -563,7 +613,7 @@ class LoginAction extends Action
 	 * Es muss noch beim OpenId-Provider die Best�tigung eingeholt werden, danach ist der
 	 * Benutzer angemeldet.<br>
 	 */
-	public function openidView()
+	public function openidloginView()
 	{
 		global $conf;
 		$openId = Session::get('openid');
@@ -650,7 +700,7 @@ class LoginAction extends Action
 	/**
 	 * Login.
 	 */
-	function loginPost()
+	function openidPost()
 	{
 		global $conf;
 
@@ -686,8 +736,31 @@ class LoginAction extends Action
 			$this->redirect( $openId->getRedirectUrl() );
 			return;
 		}
-		
+	}
+	
+	
+	
+	/**
+	 * Login.
+	 */
+	function loginPost()
+	{
+		global $conf;
 
+		$this->checkForDb();
+		Session::setUser('');
+		
+		if	( $conf['login']['nologin'] )
+			Http::notAuthorized('login disabled');
+
+		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
+		$loginPassword = $this->getRequestVar('login_password',OR_FILTER_ALPHANUM);
+		$newPassword1  = $this->getRequestVar('password1'     ,OR_FILTER_ALPHANUM);
+		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
+		
+		// Cookie setzen
+		setcookie('or_username',$loginName,time()+(60*60*24*30*12*2) );
+		
 		// Ermitteln, ob der Baum angezeigt werden soll
 		// Ist die Breite zu klein, dann wird der Baum nicht angezeigt
 		//Session::set('showtree',intval($this->getRequestVar('screenwidth')) > $conf['interface']['min_width'] );

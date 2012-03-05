@@ -94,27 +94,6 @@
 		<newline></newline>
 		<newline></newline>
 
-		<!--  Open-Id -->
-		<if true="config:security/openid/enable">
-			<fieldset title="message:OPENID">
-				<part class="line">
-					<part class="label">
-						<text key="openid_user"></text>
-						<if not="true" empty="config:security/openid/logo_url">
-							<image url="config:security/openid/logo_url"></image>
-						</if>
-					</part>
-					<part class="input">
-						<radiobox name="openid_provider" list="openid_providers"></radiobox>
-						<if true="var:openid_user_identity">
-							<radio name="openid_provider" value="identity"></radio>
-							<input name="openid_url" class="name" size="20"></input>
-						</if>
-					</part>
-				</part>
-			</fieldset>
-		</if>
-
 		<if value="size:dbids" greaterthan="1">
 			<fieldset title="message:DATABASE" icon="database">
 				<part class="line">
