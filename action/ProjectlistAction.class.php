@@ -56,4 +56,55 @@ class ProjectlistAction extends Action
 		}
 		$this->setTemplateVar('el',$list);
 	}
+	
+	
+	
+	function addView()
+	{
+		$this->setTemplateVar( 'projects',Project::getAll() );
+	}
+	
+
+	/**
+	 * Projekt hinzufuegen.
+	 *
+	 */
+	function addPost()
+	{
+		if	( !$this->hasRequestVar('type') )
+		{
+			$this->addValidationError('type');
+			$this->callSubAction('add');
+			return;
+		}
+		else
+		{
+			switch( $this->getRequestVar('type') )
+			{
+				case 'empty':
+					if	( !$this->hasRequestVar('name') )
+					{
+						$this->addValidationError('name');
+						$this->callSubAction('add');
+						return;
+					}
+					$this->project = new Project();
+					$this->project->name = $this->getRequestVar('name');
+					$this->project->add();
+					$this->addNotice('project',$this->project->name,'ADDED'); 
+					break;
+				case 'copy':
+					$db = db_connection();
+					$project = new Project($this->getRequestVar('projectid'));
+					$project->load();
+					$project->export($db->id);
+					$this->addNotice('project',$project->name,'DONE'); 
+					break;
+				default:
+					Http::serverError('Unknown type while adding project '.$this->getRequestVar('type') );
+			}
+			
+		}
+	}
+	
 }

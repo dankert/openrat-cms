@@ -94,29 +94,6 @@ class GroupAction extends Action
 	}
 
 
-	function addView()
-	{
-	}
-	
-	
-	function addPost()
-	{
-		if	( $this->getRequestVar('name') != '')
-		{
-			$this->group = new Group();
-			$this->group->name = $this->getRequestVar('name');
-			$this->group->add();
-			$this->addNotice('group',$this->group->name,'ADDED','ok');
-			$this->callSubAction('listing');
-		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('add');
-		}
-	}
-
-
 	function adduser()
 	{
 		$this->setTemplateVar('users',$this->group->getOtherUsers());

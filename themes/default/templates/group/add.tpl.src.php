@@ -1,14 +1,8 @@
-dummy
-	form method:post
-
-		window icon:group name:GLOBAL_GROUPS width:70%
-			row
-				cell
-					text text:name
-				cell
-					input name:name
-			row
-				cell colspan:2 class:act
-					button type:ok
-					
-	focus field:name
+header back:true
+	form
+		part class:line
+			part class:label
+				label for:name key:name
+				
+			part class:input
+				input name:name class:focus

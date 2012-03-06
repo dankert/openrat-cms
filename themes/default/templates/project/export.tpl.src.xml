@@ -1,3 +1,19 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><window icon="project" name="GLOBAL_PROJECT" widths="30%,70%"><row><cell width="50%"><text key="GLOBAL_DATABASE"></text></cell><cell width="50%"><selectbox name="dbid" list="dbids" default="actdbid"></selectbox></cell></row><row><cell colspan="2" class="act"><button></button></cell></row></window></form></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header back="true"/>
+	<form>
+		<row>
+			<cell width="50%">
+				<text key="GLOBAL_DATABASE"></text>
+			</cell>
+			<cell width="50%">
+				<selectbox name="dbid" list="dbids" default="actdbid"></selectbox>
+			</cell>
+		</row>
+		<row>
+			<cell colspan="2" class="act">
+				<button></button>
+			</cell>
+		</row>
+	</form>
+</output>

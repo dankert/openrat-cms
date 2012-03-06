@@ -6,20 +6,21 @@
 			<cell>
 				<text key="name"></text>
 			</cell>
-			<cell>
-				<text key="GLOBAL_SELECT"></text>
-			</cell>
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
 				<cell url="var:url">
-					<image file="icon_project"></image>
-					<text value="var:name" maxlength="30"></text>
-				</cell>
-				<cell url="var:use_url">
-					<text key="GLOBAL_SELECT"></text>
+					<image file="icon_group"></image>
+					<text var="name"></text>
 				</cell>
 			</row>
 		</list>
+		<row>
+			<cell>
+				<link class="action" action="group" subaction="add">
+					<text key="menu_group_add"></text>
+				</link>
+			</cell>
+		</row>
 	</table>
 </output>

@@ -100,28 +100,6 @@ class UserAction extends Action
 	}
 
 
-	function addView()
-	{
-	}
-	
-	
-	
-	function addPost()
-	{
-		if	( $this->getRequestVar('name') != '' )
-		{
-			$this->user = new User();
-			$this->user->add( $this->getRequestVar('name') );
-			$this->addNotice('user',$this->user->name,'ADDED','ok');
-		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('add');
-		}
-	}
-
-
 	function addgrouptouser()
 	{
 		$this->user->addGroup( $this->getRequestVar('groupid') );
