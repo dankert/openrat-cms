@@ -373,6 +373,36 @@ class PageAction extends ObjectAction
 	
 	
 	/**
+	 * Die Eigenschaften der Seite anzeigen
+	 */
+	function infoView()
+	{
+		$this->setTemplateVar('id',$this->page->objectid);
+	
+		$this->page->public = true;
+		$this->page->load();
+		$this->page->full_filename();
+
+		if	( $this->page->filename == $this->page->objectid )
+			$this->page->filename = '';
+
+		$this->setTemplateVars( $this->page->getProperties() );
+		
+		if   ( $this->userIsAdmin() )
+		{
+			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
+		}
+	
+		$template = new Template( $this->page->templateid );
+		$template->load();
+		$this->setTemplateVar('template_name',$template->name);
+	
+	 
+	}
+
+	
+	
+	/**
 	 * Die Vorlage der Seite austauschen
 	 *
 	 * Die Vorlage wird ausgetauscht, die Inhalte werden gemaess der Benutzereingaben kopiert

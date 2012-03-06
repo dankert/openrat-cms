@@ -1186,6 +1186,11 @@ class FolderAction extends ObjectAction
 	function propView()
 	{
 		$this->setTemplateVars( $this->folder->getProperties() );
+	}
+
+	function infoView()
+	{
+		$this->setTemplateVars( $this->folder->getProperties() );
 		$this->setTemplateVar( 'full_filename',$this->folder->full_filename() );
 	}
 

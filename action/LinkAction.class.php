@@ -193,4 +193,11 @@ class LinkAction extends ObjectAction
 		$this->setTemplateVars( $this->link->getProperties() );
 		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
 	}
+	
+	
+	
+	function infoView()
+	{
+		$this->setTemplateVars( $this->link->getProperties() );
+	}
 }

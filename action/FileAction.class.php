@@ -334,6 +334,44 @@ class FileAction extends ObjectAction
 	}
 
 
+	public function infoView()
+	{
+		
+		global $conf;
+		
+		if	( $this->file->filename == $this->file->objectid )
+			$this->file->filename = '';
+
+		// Eigenschaften der Datei uebertragen
+		$this->setTemplateVars( $this->file->getProperties() );
+
+		$this->setTemplateVar('size',number_format($this->file->size/1000,0,',','.').' kB' );
+		$this->setTemplateVar('full_filename',$this->file->full_filename());
+		
+		if	( is_file($this->file->tmpfile()))
+		{
+			$this->setTemplateVar('cache_filename' ,$this->file->tmpfile());
+			$this->setTemplateVar('cache_filemtime',@filemtime($this->file->tmpfile()));
+		}
+
+		// Alle Seiten mit dieser Datei ermitteln
+		$pages = $this->file->getDependentObjectIds();
+			
+		$list = array();
+		foreach( $pages as $id )
+		{
+			$o = new Object( $id );
+			$o->load();
+			$list[$id] = array();
+			$list[$id]['url' ] = Html::url('main','page',$id);
+			$list[$id]['name'] = $o->name;
+		}
+		asort( $list );
+		$this->setTemplateVar('pages',$list);
+		$this->setTemplateVar('edit_filename',$conf['filename']['edit']);	
+	}
+
+
 	/**
 	 * Anzeigen des Inhaltes
 	 */

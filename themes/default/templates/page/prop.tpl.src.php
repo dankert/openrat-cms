@@ -1,4 +1,5 @@
 dummy
+	header views:changetemplate
 
 	form
 		window
