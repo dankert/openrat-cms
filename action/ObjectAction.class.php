@@ -198,7 +198,6 @@ class ObjectAction extends Action
 	 */
 	function rightsView()
 	{
-//		$this->actionName = 'object';
 		$o = Session::getObject();
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
@@ -234,10 +233,25 @@ class ObjectAction extends Action
 	
 	
 	/**
+	 * Alle Rechte anzeigen
+	 */
+	function inheritView()
+	{
+		$o = Session::getObject();
+		$o->objectLoadRaw();
+		$this->setTemplateVar( 'type',$o->getType() );
+		
+		$acllist = array();
+		$this->setTemplateVar('acls',$acllist );
+	}
+
+	
+	
+	/**
 	 * 
 	 * @return unknown_type
 	 */
-	function rightsPost()
+	function inheritPost()
 	{
 		$log = array();
 		
