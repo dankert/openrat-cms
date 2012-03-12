@@ -52,14 +52,18 @@ $conf = Session::getConfig();
  
 // Wenn Konfiguration noch nicht in Session vorhanden, dann
 // aus Datei lesen.
-if	( !is_array( $conf ) )
+if	( !is_array( $conf ) || @$REQ['reload']=='1' )
 {
 	// Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
 	session_unset();
 	
-	$prefs = new Preferences();
-	$conf = $prefs->load();
-	$conf['action'] = $prefs->load(OR_ACTIONCLASSES_DIR);
+	$conf = Preferences::load();
+	
+	if	( $conf['config']['per_host_configuration'] )
+		if	( !empty($_SERVER['HTTP_HOST']))
+			$conf = Preferences::load($conf['config']['per_host_configuration_dir'].'/'.$_SERVER['HTTP_HOST'].'/');
+			
+	$conf['action'] = Preferences::load(OR_ACTIONCLASSES_DIR);
 	$conf['build'] = parse_ini_file('build.ini');
 	// Sprache lesen und zur Konfiguration hinzufuegen
 
