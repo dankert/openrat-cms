@@ -16,7 +16,7 @@ class Preferences
 	 * das Standard-Konfigurationsverzeichnis verwendet. 
 	 * @return Array
 	 */
-	function load( $dir='' )
+	public static function load( $dir='' )
 	{
 		if	( !defined('QUOTE') )
 			define('QUOTE','"');
