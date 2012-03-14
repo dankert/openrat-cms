@@ -33,10 +33,6 @@ blockquote:before, blockquote:after, q:before, q:after {content:"";}
 blockquote, q {quotes:"" "";}
 a img {border:none;}
 
-body
-{
-	background-color:#E0E0D5;
-}
 
 
 iframe
@@ -186,8 +182,11 @@ div.window div.status
 }
 div.window div.content div.filler
 {
-	height:70%;
+	height:auto;
+	/*
+	height:30%;
 	overflow:auto;
+	*/
 }
 
 /*
@@ -1430,3 +1429,26 @@ div.window.fullscreen
 	display: block;
 }
 
+
+
+body > ul#history {
+	display:block;
+}
+ul#history >  li {
+	
+	display:inline;
+	margin:5px;
+	padding:5px;
+	border:1px solid gray;
+	background-color: silver;
+	color:black;
+}
+ul#history >  li.active {
+	
+	display:inline;
+	margin:5px;
+	padding:5px;
+	border:1px solid black;
+	background-color: white;
+	color:black;
+}

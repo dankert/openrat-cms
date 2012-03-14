@@ -24,12 +24,17 @@
       } ?>
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/layout.css" >
   <link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/user/default.css" >
+  
+  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/skins/markitup/style.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/sets/default/style.css" />
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-1.6.2.min.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/openrat.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/jquery.markitup.js"></script>
+  <!-- 
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/ckeditor.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/adapters/jquery.js"></script>
-  <!-- 
   <script src="/~dankert/cms-test/cms09/themes/default/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>
   <script src="/~dankert/cms/themes/default/js/xxxxxxxxxxxjquery-plugin-orSearchBox.js"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" >
@@ -87,6 +92,9 @@ var REQ_PARAM_TARGET  = '<?php echo  REQ_PARAM_TARGET ?>';
 
 <div id="header">
 </div>
+
+<ul id="history">
+</ul>
 
 <div id="workbench">
 </div>

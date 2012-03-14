@@ -216,6 +216,8 @@ function loadView(jo, url )
 				   }
 			});
 			
+			/*
+			 * 
 			if	( $(jo).find('textarea#pageelement_edit_editor').length > 0 )
 			{
 				var instance = CKEDITOR.instances['pageelement_edit_editor'];
@@ -225,6 +227,48 @@ function loadView(jo, url )
 			    }
 			    CKEDITOR.replace( 'pageelement_edit_editor',{customConfig:'config-openrat.js'} );
 			}
+			 */
+			
+			// Wiki-Editor
+			var markitupSettings = {	markupSet:  [ 	
+			                        	     		{name:'Bold', key:'B', openWith:'*', closeWith:'*' },
+			                        	    		{name:'Italic', key:'I', openWith:'_', closeWith:'_'  },
+			                        	    		{name:'Stroke through', key:'S', openWith:'--', closeWith:'--' },
+			                        	    		{separator:'-----------------' },
+			                        	    		{name:'Bulleted List', openWith:'*', closeWith:'', multiline:true, openBlockWith:'\n', closeBlockWith:'\n'},
+			                        	    		{name:'Numeric List', openWith:'#', closeWith:'', multiline:true, openBlockWith:'\n', closeBlockWith:'\n'},
+			                        	    		{separator:'---------------' },
+			                        	    		{name:'Picture', key:'P', replaceWith:'{[![Source:!:http://]!]" alt="[![Alternative text]!]" }' },
+			                        	    		{name:'Link', key:'L', openWith:'""->"[![Link:!:http://]!]"', closeWith:'"', placeHolder:'Your text to link...' },
+			                        	    		{separator:'---------------' },
+			                        	    		{name:'Clean', className:'clean', replaceWith:function(markitup) { return markitup.selection.replace(/<(.*?)>/g, "") } },		
+			                        	    		{name:'Preview', className:'preview',  call:'preview'}
+			                        	    	]};
+			$(jo).find('.wikieditor').markItUp(markitupSettings);
+			
+			// HTML-Editor
+			var wymSettings = {lang: 'de',basePath: OR_THEMES_EXT_DIR+'../editor/wymeditor/wymeditor/',
+					  toolsItems: [
+					               {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'}, 
+					               {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},
+					               {'name': 'Superscript', 'title': 'Superscript', 'css': 'wym_tools_superscript'},
+					               {'name': 'Subscript', 'title': 'Subscript', 'css': 'wym_tools_subscript'},
+					               {'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'},
+					               {'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'},
+					               {'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'},
+					               {'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'},
+					               {'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'},
+					               {'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'},
+					               {'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'},
+					               {'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'},
+					               {'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'},
+					               {'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'},
+					               {'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'},
+					               {'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'},
+					               {'name': 'Preview', 'title': 'Preview', 'css': 'wym_tools_preview'}
+					             ]
+					          };
+			$(jo).find('.htmleditor').wymeditor(wymSettings);
 		});
 }
 
@@ -372,7 +416,7 @@ function loadBranch(li,type,id)
 					// Neue Action starten.
 					$('div#tree div.entry').removeClass('selected');
 					$(this).addClass('selected');
-					setNewAction( line.action, line.id,line.extraId );
+					openNewAction( $(this).text(), line.action, line.id, line.extraId );
 				});
 				
 				// Drag and drop für die Baum-Inhalte.
@@ -444,9 +488,45 @@ function startView( element,view )
  * @param action Action
  * @param id Id
  */
+function openNewAction( name,action,id,extraId )
+{
+	// Andere Tabs auf inaktiv setzen
+	$('ul#history li.active').removeClass('active');
+	
+	// Tab schon vorhanden?
+	if	( $('ul#history li.'+action+'.id'+id).length > 0 )
+	{
+		// Ja, Tab schon vorhanden
+		// Gewünschtes Tab aktiv setzen
+		$('ul#history li.'+action+'.id'+id).addClass('active');
+	}
+	else
+	{
+		// Tab noch nicht vorhanden, also jetzt hier ergänzen.
+		$('ul#history').append('<li class="action active '+action+' id'+id+'">'+name+'</li>');
+		$('ul#history li.active').click( function()
+			{
+				// Action-Tab wurde angeklickt
+				$('ul#history li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
+				$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
+			
+				setNewAction(action,id,extraId);
+			} );
+	}
+	
+	setNewAction( action,id,extraId );
+	
+}
+
+
+/**
+ * Setzt neue Action und aktualisiert alle Fenster.
+ * 
+ * @param action Action
+ * @param id Id
+ */
 function setNewAction( action,id,extraId )
 {
-	//alert( "Action: "+action+", Id: "+id);
 	$('div#workbench div.refreshable').attr('data-action',action).attr('data-id',id).attr('data-extra',JSON.stringify(extraId));
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
