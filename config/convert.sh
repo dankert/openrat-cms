@@ -21,7 +21,7 @@ for fn in *.ini.php; do
 			echo "; next section: $line"
 		elif [ "${line:0:2}" == ";[" ]; then
 			sec="${fn}.${line:2}."
-			ru="${line;1}"
+			ru="${line:1}"
 			echo ";;PHP \$conf['${fn}']['${ru}'] = array();"
 			echo "; next unused section: $line"
 		elif [ "$line" == "" ]; then

@@ -58,12 +58,11 @@ if	( !is_array( $conf ) || @$REQ['reload']=='1' )
 	session_unset();
 	
 	$conf = Preferences::load();
+	#echo "<code><tt>";
+	#print_r($conf);
+	#echo "</tt></code>";
 	
-	if	( $conf['config']['per_host_configuration'] )
-		if	( !empty($_SERVER['HTTP_HOST']))
-			$conf = Preferences::load($conf['config']['per_host_configuration_dir'].'/'.$_SERVER['HTTP_HOST'].'/');
-			
-	$conf['action'] = Preferences::load(OR_ACTIONCLASSES_DIR);
+	$conf['action'] = Preferences::loadDirectory(OR_ACTIONCLASSES_DIR);
 	$conf['build'] = parse_ini_file('build.ini');
 	// Sprache lesen und zur Konfiguration hinzufuegen
 
