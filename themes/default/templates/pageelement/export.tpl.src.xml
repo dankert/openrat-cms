@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><window name="export" columnclasses="a"><row><cell><selectbox list="types" name="type"></selectbox></cell></row><row><cell><button type="ok"></button></cell></row></window></form><focus field="text"></focus></dummy></output>

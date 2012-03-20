@@ -1,0 +1,3 @@
+<output xmlns="http://www.openrat.de/template"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><header back="true"></header><form method="post"><window icon="user" name="user_profile"><row><cell class="logo" colspan="2"><logo name="changemail"></logo></cell></row><row><cell colspan="2"><fieldset title="message:user_mail"><label for="mail"><text text="user_new_mail"></text></label><input name="mail"></input></fieldset></cell></row><row><cell colspan="2" class="act"><button type="ok"></button></cell></row></window></form><focus field="mail"></focus></dummy></output>

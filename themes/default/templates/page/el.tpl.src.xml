@@ -1,0 +1,61 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<table>
+		<if not="" empty="el">
+			<row class="headline">
+				<cell class="help">
+					<text text="PAGE_ELEMENT_NAME"></text>
+				</cell>
+				<cell class="help">
+					<text text="PAGE_ELEMENT_VALUE"></text>
+				</cell>
+				<cell class="help">
+					<text text="GLOBAL_ARCHIVE"></text>
+				</cell>
+			</row>
+		</if>
+		<if empty="el">
+			<row>
+				<cell>
+					<text text="GLOBAL_NOT_FOUND"></text>
+				</cell>
+			</row>
+		</if>
+		<list list="el" extract="true">
+			<row class="data">
+				<cell>
+					<link url="var:url" title="var:desc">
+						<image elementtype="var:type" align="left"></image>
+						<text var="name"></text>
+					</link>
+				</cell>
+				<cell>
+					<text var="value"></text>
+					<text raw="_"></text>
+				</cell>
+				<cell>
+					<if present="archive_url">
+						<link url="var:archive_url" title="message:GLOBAL_ARCHIVE_DESC">
+							<text text="GLOBAL_ARCHIVE"></text>
+						</link>
+						<text raw="_(_"></text>
+						<text var="archive_count"></text>
+						<text raw="_)"></text>
+					</if>
+					<else><text text="GLOBAL_NO_ARCHIVE" type="emphatic"
+						title="message:GLOBAL_NO_ARCHIVE_DESC"></text></else>
+					<set var="archive_url"></set>
+				</cell>
+			</row>
+		</list>
+		<row>
+			<cell class="help" colspan="3">
+				<text text="PAGE_ELEMENTS_DESC"></text>
+			</cell>
+		</row>
+	</table>
+	<link action="page" subaction="form" title="message:menu_page_form_desc"
+		class="action">
+		<text key="menu_page_form"></text>
+	</link>
+</output>

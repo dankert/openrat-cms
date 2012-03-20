@@ -1,3 +1,99 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><header back="true" views="createfolder,createlink,createpage,createfile"></header><form enctype="multipart/form-data"><window title="GLOBAL_NEW" name="global_new"><row><cell colspan="3"><fieldset title="message:folder"></fieldset></cell></row><row><cell><radio name="type" value="folder" children="folder_name"></radio></cell><cell><label for="type_folder"><text text="global_folder"></text></label></cell><cell><input name="folder_name" size="30" maxlength="250" default="" class="name"></input></cell></row><row><cell colspan="3"><fieldset title="message:file"></fieldset></cell></row><row><cell><radio name="type" value="file" children="file"></radio></cell><cell><label for="type_file"><text text="global_FILE"></text></label></cell><cell><upload name="file" size="30" maxlength="var:maxlength"></upload><newline></newline><text class="help" key="file_max_size"></text><text raw="_"></text><text var="max_size"></text></cell></row><row><cell colspan="3"><fieldset title="message:page"></fieldset></cell></row><row><cell><radio name="type" value="page" children="page_templateid,page_name"></radio></cell><cell><label for="type_page"><text text="global_TEMPLATE"></text></label></cell><cell><selectbox name="page_templateid" list="templates"></selectbox></cell></row><row><cell></cell><cell><label for="type_page"><text text="global_NAME"></text></label></cell><cell><input name="page_name" size="30" maxlength="250" class="name"></input></cell></row><row><cell colspan="3"><fieldset title="message:link"></fieldset></cell></row><row><cell><radio name="type" value="link" children="link_name"></radio></cell><cell><label for="type_link"><text text="global_NAME"></text></label></cell><cell><input name="link_name" size="30" maxlength="250" class="name"></input></cell></row><row><cell class="act" colspan="3"><button type="ok"></button></cell></row></window></form></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header back="true" views="createfolder,createlink,createpage,createfile"></header>
+	<form enctype="multipart/form-data">
+		<row>
+			<cell colspan="3">
+				<fieldset title="message:folder"></fieldset>
+			</cell>
+		</row>
+		<row>
+			<cell>
+				<radio name="type" value="folder" children="folder_name"></radio>
+			</cell>
+			<cell>
+				<label for="type_folder">
+					<text text="global_folder"></text>
+				</label>
+			</cell>
+			<cell>
+				<input name="folder_name" size="30" maxlength="250" default=""
+					class="name"></input>
+			</cell>
+		</row>
+		<row>
+			<cell colspan="3">
+				<fieldset title="message:file"></fieldset>
+			</cell>
+		</row>
+		<row>
+			<cell>
+				<radio name="type" value="file" children="file"></radio>
+			</cell>
+			<cell>
+				<label for="type_file">
+					<text text="global_FILE"></text>
+				</label>
+			</cell>
+			<cell>
+				<upload name="file" size="30" maxlength="var:maxlength"></upload>
+				<newline></newline>
+				<text class="help" key="file_max_size"></text>
+				<text raw="_"></text>
+				<text var="max_size"></text>
+			</cell>
+		</row>
+		<row>
+			<cell colspan="3">
+				<fieldset title="message:page"></fieldset>
+			</cell>
+		</row>
+		<row>
+			<cell>
+				<radio name="type" value="page" children="page_templateid,page_name"></radio>
+			</cell>
+			<cell>
+				<label for="type_page">
+					<text text="global_TEMPLATE"></text>
+				</label>
+			</cell>
+			<cell>
+				<selectbox name="page_templateid" list="templates"></selectbox>
+			</cell>
+		</row>
+		<row>
+			<cell></cell>
+			<cell>
+				<label for="type_page">
+					<text text="global_NAME"></text>
+				</label>
+			</cell>
+			<cell>
+				<input name="page_name" size="30" maxlength="250" class="name"></input>
+			</cell>
+		</row>
+		<row>
+			<cell colspan="3">
+				<fieldset title="message:link"></fieldset>
+			</cell>
+		</row>
+		<row>
+			<cell>
+				<radio name="type" value="link" children="link_name"></radio>
+			</cell>
+			<cell>
+				<label for="type_link">
+					<text text="global_NAME"></text>
+				</label>
+			</cell>
+			<cell>
+				<input name="link_name" size="30" maxlength="250" class="name"></input>
+			</cell>
+		</row>
+		<row>
+			<cell class="act" colspan="3">
+				<button type="ok"></button>
+			</cell>
+		</row>
+	</form>
+</output>
