@@ -52,7 +52,7 @@ $conf = Session::getConfig();
  
 // Wenn Konfiguration noch nicht in Session vorhanden, dann
 // aus Datei lesen.
-if	( !is_array( $conf ) || @$REQ['reload']=='1' )
+if	( !is_array( $conf ) || $conf['config']['auto_reload'] && Preferences::lastModificationTime()>$conf['config']['last_modification'] )
 {
 	// Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
 	session_unset();

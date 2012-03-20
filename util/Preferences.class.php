@@ -10,13 +10,19 @@
 class Preferences
 {
 	/**
-	 * Liest die Konfigurationsdateien im angegebenen Ordner.
-	 * 
-	 * @param $dir Verzeichnis, welche gelesen wird. Optional. Falls nicht gesetzt, wird
-	 * das Standard-Konfigurationsverzeichnis verwendet. 
-	 * @return Array
+	 * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.
 	 */
-	public static function load()
+	public static function lastModificationTime()
+	{
+		return filemtime( Preferences::configurationFile() );
+	}
+	
+	
+
+	/**
+	 * Ermittelt den Dateinamen der Konfigurationsdatei.
+	 */
+	public static function configurationFile()
 	{
 		if	( !empty($_SERVER['OPENRAT_CONFIG_FILE']) )
 		{
@@ -40,13 +46,30 @@ class Preferences
 			}
 		}
 		
+		if	( ! is_file($config_filename))
+		{
+			error_log('configuration file not found: '.$config_filename,0);
+			Http::serverError("Configuration not found","The file does not exist: ".$config_filename);
+		}
+
+		return $config_filename;
+	}
+	
+	
+	
+	/**
+	 * Liest die Konfigurationsdateien im angegebenen Ordner.
+	 * 
+	 * @param $dir Verzeichnis, welche gelesen wird. Optional. Falls nicht gesetzt, wird
+	 * das Standard-Konfigurationsverzeichnis verwendet. 
+	 * @return Array
+	 */
+	public static function load()
+	{
 		require('./config/config-default.php');
 		//echo "default: "; print_r($conf);
-		
-		if	( ! is_file($config_filename))
-			Http::serverError("Configuration not found","The file does not exist: ".$config_filename);
-		
-		$ini_values =  parse_ini_file( $config_filename,false );
+
+		$ini_values =  parse_ini_file( Preferences::configurationFile(),false );
 		
 		//echo "loading ".$config_filename;
 		foreach ( $ini_values as $key=>$value )
@@ -66,6 +89,7 @@ class Preferences
 				$conf[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]][$parts[5]] = $value;
 		}
 	    
+		$conf['config']['last_modification'] = Preferences::lastModificationTime();
 		return $conf;
 	}
 	
