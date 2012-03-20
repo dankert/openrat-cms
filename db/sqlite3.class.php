@@ -72,9 +72,9 @@ class DB_sqlite3
 	{
 		$this->result = $this->connection->query($query);
 
-		if	( !$result )
+		if	( !$this->result )
 		{
-			$this->error = 'Database error: '.SQLite3::lastErrorMsg();
+			$this->error = 'Database error: '.$this->connection->lastErrorMsg();
 			return FALSE;
 		}
 
@@ -132,7 +132,7 @@ class DB_sqlite3
 			}
 		}
 
-		$this->stmt = sqlite3_prepare($this->connection,$query);
+		$this->stmt = $this->connection->prepare($query);
 		
 	}
 	
@@ -141,6 +141,10 @@ class DB_sqlite3
 		$this->params[$param] = $value;
 	}
 	
+	function clear()
+	{
+		$this->params = array();
+	}
 }
 
 ?>
