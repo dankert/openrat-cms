@@ -29,6 +29,7 @@
 ?><?php unset($a2_action,$a2_subaction,$a2_name,$a2_target,$a2_method,$a2_enctype) ?><?php $a3_title='GLOBAL_LOGIN';$a3_name='login';$a3_icon='user';$a3_width='400px';$a3_rowclasses='odd,even';$a3_columnclasses='1,2,3'; ?><div class="breadcrumb">
 		<?php 
 	$icon=$a3_icon;
+	$icon=$actionName;
 		echo '<img src="'.$image_dir.'icon_'.$icon.IMG_ICON_EXT.'" align="left" border="0">';
 		if ($this->isEditable()) { ?>
   <?php if ($this->isEditMode()) { 
@@ -38,13 +39,13 @@
   ?><a href="<?php echo Html::url($actionName,$subActionName,$this->getRequestId(),array('mode'=>'edit') ) ?>" accesskey="1" title="<?php echo langHtml('MODE_SHOW_DESC') ?>" class="path" style="text-align:right;font-weight:bold;font-weight:bold;"><img src="<?php echo $image_dir ?>readonly.png" style="vertical-align:top; " border="0" /></a> <?php }
   ?><?php }
 		echo '<span class="path">'.langHtml($actionName).'</span>&nbsp;<strong>&rarr;</strong>&nbsp;';
-		if	( !isset($path) || is_array($path) )
+		if	( !isset($path) || !is_array($path) )
 			$path = array();
 		foreach( $path as $pathElement)
 		{
 			extract($pathElement);
-			echo '<a href="'.$url.'" class="path">'.langHtml($name).'</a>';
-			echo '&nbsp;&raquo;&nbsp;';
+			echo '<a href="'.$url.'" title="'.$title.'" class="path">'.(!empty($key)?langHtml($key):$name).'</a>';
+			echo '&nbsp;&rarr;&nbsp;';
 		}
 		echo '<span class="title">'.langHtml($windowTitle).'</span>';
 		if	( isset($notice_status))
@@ -59,6 +60,7 @@
           	?><a href="<?php echo $icon['url'] ?>" title="<?php echo 'ICON_'.langHtml($menu['type'].'_DESC') ?>"><image border="0" src="<?php echo $image_dir.$icon['type'].IMG_ICON_EXT ?>"></a>&nbsp;<?php
           }
      ?>
+    </td>--><nix/>
   </tr>
 <?php
 	$coloumn_widths=array();
@@ -78,16 +80,16 @@
 				$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
           	if	( isset($menu['url']) )
           	{
-          		?><a class="action<?php echo $this->subActionName==$menu['subaction']?'_active':'' ?>" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><?php echo $tmp_text ?></a><?php
+          		?><a class="action<?php echo $this->subActionName==$menu['subaction']?'_active':'' ?>" href="<?php echo Html::url($actionName,$menu['subaction'],$this->getRequestId() ) ?>" accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><!-- <img src="<?php echo $image_dir.'icon_'.$menu['subaction'].'.png' ?>" align="left" />--><?php echo $tmp_text ?></a><?php
           	}
           	else
           	{
-          		?><div class="noaction"><?php echo $tmp_text ?></div><?php
+          		?><div class="noaction"><!-- <img src="<?php echo $image_dir.'icon_'.$menu['subaction'].'.png' ?>" align="left" />--><?php echo $tmp_text ?></div><?php
           	}
           }
           	if (@$conf['help']['enabled'] )
           	{
-             ?><a class="help" href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
+             ?><a class="help" href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><!-- <img src="<?php echo $image_dir.'icon_help.png' ?>" align="left" />--><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
           	}
           	?><br/><?php
 		global $image_dir;
@@ -501,7 +503,53 @@ unset($a6_tmp_last_exec) ?></td></tr><?php
 <?php if (!empty($column_classes)) { ?>
  class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
 <?php } ?>
-><?php $a8_name='password2';$a8_default='';$a8_class='';$a8_size='25';$a8_maxlength='256'; ?><input type="password" name="<?php echo $a8_name ?>" size="<?php echo $a8_size ?>" maxlength="<?php echo $a8_maxlength ?>" class="<?php echo $a8_class ?>" value="<?php if (count($errors)==0) echo isset($$a8_name)?$$a8_name:$a8_default ?>" <?php if (in_array($a8_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php unset($a8_name,$a8_default,$a8_class,$a8_size,$a8_maxlength) ?></td></tr><?php } ?><?php $a5_true=@$conf['security']['openid']['enable']; ?><?php 
+><?php $a8_name='password2';$a8_default='';$a8_class='';$a8_size='25';$a8_maxlength='256'; ?><input type="password" name="<?php echo $a8_name ?>" size="<?php echo $a8_size ?>" maxlength="<?php echo $a8_maxlength ?>" class="<?php echo $a8_class ?>" value="<?php if (count($errors)==0) echo isset($$a8_name)?$$a8_name:$a8_default ?>" <?php if (in_array($a8_name,$errors)) echo 'style="border:2px dashed red;"' ?> /><?php unset($a8_name,$a8_default,$a8_class,$a8_size,$a8_maxlength) ?></td></tr><?php } ?><?php
+	$row_idx++;
+	$column_idx = 0;
+?>
+<tr
+>
+<?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+></td><?php $column_idx++; ?><td
+<?php if (!empty($column_widths)) { ?>
+ width="<?php echo $column_widths[($column_idx-1)%count($column_widths)] ?>"
+<?php } ?>
+<?php if (!empty($column_classes)) { ?>
+ class="<?php echo $column_classes[($column_idx-1)%count($column_classes)] ?>"
+<?php } ?>
+><?php $a7_title='';$a7_class='action';$a7_action='index';$a7_subaction='password'; ?><?php
+	$params = array();
+	$tmp_url = '';
+		$tmp_url = Html::url($a7_action,$a7_subaction,!empty($a7_id)?$a7_id:$this->getRequestId(),$params);
+?><a<?php if (isset($a7_name)) echo ' name="'.$a7_name.'"'; else echo ' href="'.$tmp_url.(isset($a7_anchor)?'#'.$a7_anchor:'').'"' ?> class="<?php echo $a7_class ?>"<?php if (isset($a7_accesskey)) echo ' accesskey="'.$a7_accesskey.'"' ?>  title="<?php echo encodeHtml($a7_title) ?>"><?php unset($a7_title,$a7_class,$a7_action,$a7_subaction) ?><?php $a8_class='text';$a8_key='menu_index_password';$a8_escape=true;$a8_cut='both'; ?><?php
+		$a8_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
+		$langF = $a8_escape?'langHtml':'lang';
+		$tmp_text = $langF($a8_key);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a8_class,$a8_key,$a8_escape,$a8_cut) ?></a><?php $a7_title='';$a7_class='action';$a7_action='index';$a7_subaction='register'; ?><?php
+	$params = array();
+	$tmp_url = '';
+		$tmp_url = Html::url($a7_action,$a7_subaction,!empty($a7_id)?$a7_id:$this->getRequestId(),$params);
+?><a<?php if (isset($a7_name)) echo ' name="'.$a7_name.'"'; else echo ' href="'.$tmp_url.(isset($a7_anchor)?'#'.$a7_anchor:'').'"' ?> class="<?php echo $a7_class ?>"<?php if (isset($a7_accesskey)) echo ' accesskey="'.$a7_accesskey.'"' ?>  title="<?php echo encodeHtml($a7_title) ?>"><?php unset($a7_title,$a7_class,$a7_action,$a7_subaction) ?><?php $a8_class='text';$a8_key='menu_index_register';$a8_escape=true;$a8_cut='both'; ?><?php
+		$a8_title = '';
+		$tmp_tag = 'span';
+?><<?php echo $tmp_tag ?> class="<?php echo $a8_class ?>" title="<?php echo $a8_title ?>"><?php
+		$langF = $a8_escape?'langHtml':'lang';
+		$tmp_text = $langF($a8_key);
+	$tmp_text = nl2br($tmp_text);
+	echo $tmp_text;
+	unset($tmp_text);
+?></<?php echo $tmp_tag ?>><?php unset($a8_class,$a8_key,$a8_escape,$a8_cut) ?></a></td></tr><?php $a5_true=@$conf['security']['openid']['enable']; ?><?php 
 	if	(gettype($a5_true) === '' && gettype($a5_true) === '1')
 		$a5_tmp_exec = $$a5_true == true;
 	else
