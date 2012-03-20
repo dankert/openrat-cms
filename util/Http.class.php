@@ -402,7 +402,7 @@ class Http
 	 */
 	function serverError($message,$reason='')
 	{
-		$db = db_connection();
+		$db = Session::getDatabase();
 		if	( is_object( $db ) )
 			$db->rollback();
 
