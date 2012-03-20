@@ -1331,10 +1331,10 @@ security.openid.user_identity=true
 ; List of OpenId-Provider to use
 ; Special name "identity" for user defined identitys
 ;security.openid.provider=example
-security.openid.provider=google
+security.openid.provider.name=google
 
 ; location of the providers Yadis-document (XRDS-file)
-security.openid.provider.example.xrds_uri=http://google.com/accounts
+;security.openid.provider.example.xrds_uri=http://google.com/accounts
 ; which attribute is used for mappin to the internal database
 ;security.openid.provider.example.map_attribute=email
 ; which attribut of internal user database is used
