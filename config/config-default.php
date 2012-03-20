@@ -17,6 +17,7 @@ $conf['cache']['tmp_dir']="";
 $conf['config'] = array();
 $conf['config']['per_host_configuration']= true;
 $conf['config']['per_host_configuration_dir']= "./config/virtual";
+$conf['config']['auto_reload']= true;
 $conf['content'] = array();
 $conf['content']['file'] = array();
 $conf['content']['file']['max_file_size']='1500';
