@@ -1,13 +1,13 @@
 #!/bin/bash
-echo "# `date`"
-echo "#"
+echo "; `date`"
+echo ";"
 echo ";;PHP \$conf = array();"
 
 for fn in *.ini.php; do
 
 	fn="${fn:-8}"
-	echo "#"
-	echo "# converted from $fn"
+	echo ";"
+	echo "; converted from $fn"
 	echo ";;PHP \$conf['${fn}'] = array();"
 	
 	ru=
