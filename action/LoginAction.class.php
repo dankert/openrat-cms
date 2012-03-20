@@ -148,7 +148,7 @@ class LoginAction extends Action
 			}
 			else
 			{
-				// Kennwï¿½rter identisch und lang genug.
+				// Kennw?rter identisch und lang genug.
 				$user->setPassword( $pw1,true );
 				
 				// Das neue Kennwort ist gesetzt, die Anmeldung ist also doch noch gelungen. 
@@ -300,7 +300,7 @@ class LoginAction extends Action
 			if	( is_array($dbconf) && $dbconf['enabled'] )
 				$dbids[$dbname] = array('key'  =>$dbname,
 				                        'value'=>Text::maxLength($dbconf['comment']),
-				                        'title'=>$dbconf['comment'].' ('.$dbconf['host'].')' );
+				                        'title'=>$dbconf['comment'].(isset($dbconf['host'])?' ('.$dbconf['host'].')':'') );
 		}
 		
 		
@@ -340,7 +340,7 @@ class LoginAction extends Action
 				exit;
 			}
 			
-			// Benutzername ist in Eingabemaske unverÃ¤nderlich
+			// Benutzername ist in Eingabemaske unveränderlich
 			$this->setTemplateVar('force_username',$username);
 		}
 
@@ -371,11 +371,11 @@ class LoginAction extends Action
 			if	( is_array($dbconf) && $dbconf['enabled'] )
 				$dbids[$dbname] = array('key'  =>$dbname,
 				                        'value'=>Text::maxLength($dbconf['comment']),
-				                        'title'=>$dbconf['comment'].' ('.$dbconf['host'].')' );
+				                        'title'=>$dbconf['comment'].(isset($dbconf['host'])?' ('.$dbconf['host'].')':'') );
 		}
 		
 		$openid_provider = array();
-		foreach( explode(',',$conf['security']['openid']['provider']) as $provider )
+		foreach( explode(',',$conf['security']['openid']['provider']['name']) as $provider )
 			$openid_provider[$provider] = config('security','openid','provider.'.$provider.'.name');
 		$this->setTemplateVar('openid_providers',$openid_provider);
 		$this->setTemplateVar('openid_user_identity',config('security','openid','user_identity'));
@@ -422,7 +422,7 @@ class LoginAction extends Action
 		if	( $user->mustChangePassword ) 
 		{
 			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
-			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ï¿½ndern.
+			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ?ndern.
 		}
 		
 
@@ -459,7 +459,7 @@ class LoginAction extends Action
 				// Administratoren bekommen bescheid, dass sie ein Projekt anlegen sollen
 				$this->addNotice('','','ADMIN_NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
 			else
-				// Normale Benutzer erhalten eine Meldung, dass kein Projekt zur Verfï¿½gung steht
+				// Normale Benutzer erhalten eine Meldung, dass kein Projekt zur Verf?gung steht
 				$this->addNotice('','','NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
 		}
 		
@@ -512,9 +512,9 @@ class LoginAction extends Action
 	
 	
 	/**
-	 * Ermittelt Meta-Angaben fï¿½r den HTML-Kopf.<br>
-	 * Falls der Browser die Meta-Angaben entsprechend auswertet, kï¿½nnen ï¿½ber feste Browser-Menï¿½s 
-	 die Projekt direkt ausgewï¿½hlt werden.
+	 * Ermittelt Meta-Angaben f?r den HTML-Kopf.<br>
+	 * Falls der Browser die Meta-Angaben entsprechend auswertet, k?nnen ?ber feste Browser-Men?s 
+	 die Projekt direkt ausgew?hlt werden.
 	 */
 	function metaValues()
 	{
@@ -603,14 +603,14 @@ class LoginAction extends Action
 	
 
 	/**
-	 * Open-Id Login, ï¿½berprï¿½fen der Anmeldung.<br>
+	 * Open-Id Login, ?berpr?fen der Anmeldung.<br>
 	 * Spezifikation: http://openid.net/specs/openid-authentication-1_1.html<br>
 	 * Kapitel "4.4. check_authentication"<br>
 	 * <br>
-	 * Im 2. Schritt (Mode "id_res") erfolgte ein Redirect vom Open-Id Provider an OpenRat zurï¿½ck.<br>
+	 * Im 2. Schritt (Mode "id_res") erfolgte ein Redirect vom Open-Id Provider an OpenRat zur?ck.<br>
 	 * Wir befinden uns nun im darauf folgenden Request des Browsers.<br>
 	 * <br>
-	 * Es muss noch beim OpenId-Provider die Bestï¿½tigung eingeholt werden, danach ist der
+	 * Es muss noch beim OpenId-Provider die Best?tigung eingeholt werden, danach ist der
 	 * Benutzer angemeldet.<br>
 	 */
 	public function openidloginView()
@@ -630,7 +630,7 @@ class LoginAction extends Action
 		
 		//Html::debug($openId);
 		
-		// Anmeldung wurde mit "is_valid:true" bestï¿½tigt.
+		// Anmeldung wurde mit "is_valid:true" best?tigt.
 		// Der Benutzer ist jetzt eingeloggt.
 		$username = $openId->getUserFromIdentiy();
 		
@@ -777,7 +777,7 @@ class LoginAction extends Action
 			
 			if	( $this->mustChangePassword )
 			{
-				// Anmeldung gescheitert, Benutzer muss Kennwort ï¿½ndern.
+				// Anmeldung gescheitert, Benutzer muss Kennwort ?ndern.
 				$this->addNotice('user',$loginName,'LOGIN_FAILED_MUSTCHANGEPASSWORD','error' );
 				$this->addValidationError('password1','');
 				$this->addValidationError('password2','');
@@ -811,7 +811,7 @@ class LoginAction extends Action
 			$this->evaluateRequestVars();
 
 			$object = Session::getObject();
-			// Falls noch kein Objekt ausgewaehlt, dann das zuletzt geï¿½nderte benutzen.
+			// Falls noch kein Objekt ausgewaehlt, dann das zuletzt ge?nderte benutzen.
 			if	( !is_object($object) && @$conf['login']['start']['start_lastchanged_object'] )
 			{
 				$objectid = Value::getLastChangedObjectByUserId($user->userid);
@@ -820,19 +820,19 @@ class LoginAction extends Action
 					$object = new Object($objectid);
 					$object->load();
 					Session::setObject($object); 
+				
+					$project = new Project( $object->projectid );
+					$project->load();
+					Session::setProject( $project );
+					
+					$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])&&Language::available($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
+					$language->load();
+					Session::setProjectLanguage( $language );
+			
+					$model = new Model( isset($vars[REQ_PARAM_MODEL_ID])&&Model::available($vars[REQ_PARAM_MODEL_ID])?$vars[REQ_PARAM_MODEL_ID]:$project->getDefaultModelId() );
+					$model->load();
+					Session::setProjectModel( $model );
 				}
-				
-				$project = new Project( $object->projectid );
-				$project->load();
-				Session::setProject( $project );
-				
-				$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])&&Language::available($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
-				$language->load();
-				Session::setProjectLanguage( $language );
-		
-				$model = new Model( isset($vars[REQ_PARAM_MODEL_ID])&&Model::available($vars[REQ_PARAM_MODEL_ID])?$vars[REQ_PARAM_MODEL_ID]:$project->getDefaultModelId() );
-				$model->load();
-				Session::setProjectModel( $model );
 			}
 			
 			$this->setStyle( $user->style );
@@ -853,7 +853,7 @@ class LoginAction extends Action
 		if	( is_object($user) )
 			$this->setTemplateVar('login_username',$user->name);
 		
-		// Ausgewï¿½hlte Objekte merken, um nach dem nï¿½. Login wieder sofort auszuwï¿½hlen.
+		// Ausgew?hlte Objekte merken, um nach dem n?. Login wieder sofort auszuw?hlen.
 		$o = Session::getObject();
 		if	( is_object($o) )
 			$this->setTemplateVar('objectid',$o->objectid);
@@ -874,7 +874,7 @@ class LoginAction extends Action
 		// Alle Variablen aus der Sitzung entfernen.
 		session_unset();
 		
-		// Damit wird die Session gelÃ¶scht, nicht nur die Session-Daten!
+		// Damit wird die Session gelöscht, nicht nur die Session-Daten!
 		if	( ini_get("session.use_cookies") )
 		{
 			$params = session_get_cookie_params();
@@ -936,7 +936,7 @@ class LoginAction extends Action
 	
 
 	/**
-	 * Auswï¿½hlen der Administration.
+	 * Ausw?hlen der Administration.
 	 */
 	function administration()
 	{
@@ -948,9 +948,9 @@ class LoginAction extends Action
 	/**
 	 * Ausgeben von maschinenlesbaren Benutzerinformationen.
 	 * 
-	 * Diese Funktion dient dem Single-Signon fï¿½r fremde Anwendungen, welche
+	 * Diese Funktion dient dem Single-Signon f?r fremde Anwendungen, welche
 	 * die Benutzerinformationen des angemeldeten Benutzers aus dieser
-	 * Anwendung auslesen kï¿½nnen.
+	 * Anwendung auslesen k?nnen.
 	 */
 	function userinfo()
 	{
@@ -1068,8 +1068,8 @@ class LoginAction extends Action
 		}
 		else
 		{
-			// PrÃ¼ft, ob die Ã¼bergebene Datenbank-Id mit der
-			// aktuellen Ã¼bereinstimmt.
+			// Prüft, ob die übergebene Datenbank-Id mit der
+			// aktuellen übereinstimmt.
 			// Falls nicht, muss ein Re-Login erfolgen. 
 			if	( isset($vars[REQ_PARAM_DATABASE_ID]) )
 				if	( $db->id != $vars[REQ_PARAM_DATABASE_ID] )
@@ -1279,10 +1279,10 @@ class LoginAction extends Action
 		if	( $user->mustChangePassword ) 
 		{
 			$this->addNotice( 'user',$user->name,'PASSWORD_TIMEOUT','warn' );
-			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ï¿½ndern.
+			$this->callSubAction( 'changepassword' ); // Zwang, das Kennwort zu ?ndern.
 		}
 
-		// Seite ï¿½ndert sich nur 1x pro Session
+		// Seite ?ndert sich nur 1x pro Session
 		$this->lastModified( $user->loginDate );
 
 		$projectid  = intval( $this->getRequestVar('projectid' ) );
@@ -1402,7 +1402,7 @@ class LoginAction extends Action
 		switch( $name )
 		{
 			case 'applications':
-				// Menï¿½punkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
+				// Men?punkt "Anwendungen" wird nur angezeigt, wenn weitere Anwendungen
 				// konfiguriert sind.
 				return count(@$conf['applications']) > 0;
 
@@ -1417,7 +1417,7 @@ class LoginAction extends Action
 				                                        && !@$conf['security']['auth']['userdn'];
 				
 			case 'administration':
-				// "Administration" natï¿½rlich nur fï¿½r Administratoren.
+				// "Administration" nat?rlich nur f?r Administratoren.
 				return $this->userIsAdmin();
 
 			case 'login':
@@ -1508,7 +1508,7 @@ class LoginAction extends Action
 	
 	/**
 	 * Benutzerregistierung.
-	 * Benutzer hat Bestï¿½tigungscode erhalten und eingegeben.
+	 * Benutzer hat Best?tigungscode erhalten und eingegeben.
 	 */
 	function registeruserdataPost()
 	{
@@ -1520,12 +1520,12 @@ class LoginAction extends Action
 		
 		if	( $origRegisterCode != $inputRegisterCode )
 		{
-			// Bestï¿½tigungscode stimmt nicht.
+			// Best?tigungscode stimmt nicht.
 			$this->addValidationError('code','code_not_match');
 			return;
 		}
 
-		// Bestï¿½tigungscode stimmt ï¿½berein.
+		// Best?tigungscode stimmt ?berein.
 		// Neuen Benutzer anlegen.
 			
 		if	( !$this->hasRequestVar('username') )
@@ -1609,7 +1609,7 @@ class LoginAction extends Action
 			// Aktuellen Benutzer aus der Sitzung ermitteln
 			$user = $this->getUserFromSession();
 			
-			// Altes Kennwort prï¿½fen.
+			// Altes Kennwort pr?fen.
 			$ok = $user->checkPassword( $oldPw );
 			
 			if	( $ok )  // Altes Kennwort ist ok.
@@ -1627,7 +1627,7 @@ class LoginAction extends Action
 		}
 		else
 		{
-			// Beide neuen Kennwï¿½rter stimmen nicht ï¿½berein
+			// Beide neuen Kennw?rter stimmen nicht ?berein
 			$this->addNotice('user',$user->name,'passwords_not_match','error');
 		}
 	}
@@ -1667,8 +1667,8 @@ class LoginAction extends Action
 		else
 		{
 			//$this->addNotice('','user','username_not_found');
-			// Trotzdem vortï¿½uschen, eine E-Mail zu senden, damit die Gï¿½ltigkeit
-			// eines Benutzernamens nicht von auï¿½en geprï¿½ft werden kann.
+			// Trotzdem vort?uschen, eine E-Mail zu senden, damit die G?ltigkeit
+			// eines Benutzernamens nicht von au?en gepr?ft werden kann.
 			// 
 			$this->addNotice('user',$this->getRequestVar("username"),'mail_sent');
 			sleep(5);
@@ -1721,7 +1721,7 @@ class LoginAction extends Action
 
 		if	( $eMail->send() )
 		{
-			$user->setPassword( $newPw, false ); // Kennwort muss beim nï¿½. Login geï¿½ndert werden.
+			$user->setPassword( $newPw, false ); // Kennwort muss beim n?. Login ge?ndert werden.
 			$this->addNotice('user',$username,'mail_sent',OR_NOTICE_OK);
 		}
 		else
