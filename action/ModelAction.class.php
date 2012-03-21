@@ -77,27 +77,6 @@ class ModelAction extends Action
 	}
 
 
-	function addView()
-	{
-	}
-
-
-	function addPost()
-	{
-		$model = new Model();
-		$model->projectid = $this->project->projectid;
-		$model->name      = $this->getRequestVar('name');
-		$model->add();
-		
-		// Wenn kein Namen eingegeben, dann einen setzen.
-		if	( empty($model->name) )
-		{
-			// Name ist "Variante <id>"
-			$model->name = lang('MODEL').' '.$model->modelid;
-			$model->save();
-		}
-	}
-
 
 
 	/**

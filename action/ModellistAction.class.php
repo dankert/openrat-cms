@@ -1,7 +1,4 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
 // Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
 //
@@ -18,39 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.10  2007-05-08 20:25:58  dankert
-// Erweiterung der Methode "checkmenu()"
-//
-// Revision 1.9  2007-05-08 20:21:03  dankert
-// ?berschreiben der Methode "checkmenu()"
-//
-// Revision 1.8  2007-04-08 21:18:16  dankert
-// Korrektur URL in listing()
-//
-// Revision 1.7  2007/01/21 22:27:49  dankert
-// Direkt Punkt "Bearbeiten" ?ffnen.
-//
-// Revision 1.6  2006/01/29 17:18:58  dankert
-// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
-//
-// Revision 1.5  2004/12/19 14:55:27  dankert
-// Anpassung von urls
-//
-// Revision 1.4  2004/12/13 22:17:51  dankert
-// URL-Korrektur
-//
-// Revision 1.3  2004/05/07 21:37:31  dankert
-// Url ?ber Html::url erzeugen
-//
-// Revision 1.2  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**
@@ -109,6 +73,31 @@ class ModellistAction extends Action
 	 */
 	function editView()
 	{
-		$this->nextSubActionsetTemplateVars('show');
+		$this->nextSubAction('show');
 	}
+	
+	
+	
+	
+	function addView()
+	{
+	}
+
+
+	function addPost()
+	{
+		$model = new Model();
+		$model->projectid = $this->project->projectid;
+		$model->name      = $this->getRequestVar('name');
+		$model->add();
+		
+		// Wenn kein Namen eingegeben, dann einen setzen.
+		if	( empty($model->name) )
+		{
+			// Name ist "Variante <id>"
+			$model->name = lang('MODEL').' '.$model->modelid;
+			$model->save();
+		}
+	}
+	
 }
