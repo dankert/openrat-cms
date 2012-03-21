@@ -1,3 +1,22 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><window name="TEMPLATE_SOURCE"><row><cell><inputarea rows="25" cols="80" name="src" class="editor"></inputarea></cell></row><row><cell class="act"><button type="ok"></button><if false="mode:edit"><link class="action" action="template" subaction="srcelement"><text key="menu_template_srcelement"></text></link></if></cell></row></window></form><focus field="src"></focus></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header back="true"></header>
+	<form>
+		<row>
+			<cell>
+				<inputarea rows="25" cols="80" name="src" class="editor"></inputarea>
+			</cell>
+		</row>
+		<row>
+			<cell class="act">
+				<button type="ok"></button>
+				<if false="mode:edit">
+					<link class="action" action="template" subaction="srcelement">
+						<text key="menu_template_srcelement"></text>
+					</link>
+				</if>
+			</cell>
+		</row>
+	</form>
+	<focus field="src"></focus>
+</output>
