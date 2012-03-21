@@ -54,7 +54,7 @@ div.window > div.title
 }
 
 /*   H e a d e r   */
-div#header
+div#title
 {
 	overflow:hidden;
 	padding:5px;
@@ -62,25 +62,18 @@ div#header
 	margin-bottom:20px;
 }
 
-div#header a,
-div#header div
-{
-	x-font-weight:bold;
-	x-color:#404040;
-	color:white;
-}
 
-div#header div.title
+div#title div.title
 {
 	float:left;
 	margin-right:24px;
 	margin-left:0px;
 }
 
-div#header div.user,
-div#header div.search,
-div#header div.projects,
-div#header div.history
+div#title div.user,
+div#title div.search,
+div#title div.projects,
+div#title div.history
 {
 	float:right;
 	margin-right:0px;
@@ -141,7 +134,11 @@ html,body
 	height:100%;
 }
 
-div#header
+div#title
+{
+	height:23px;
+}
+ul#history
 {
 	height:23px;
 }
@@ -189,22 +186,15 @@ div.window div.content div.filler
 	*/
 }
 
-/*
-div#content
-{
-	padding:5px;
-	margin-left:30%;
-	x-background-color:white;
-	margin-top:0px;
-	
-}
-*/
 
+ul#history > li,
 div.content a.action,
 div.content a.help,
-div.content input.ok
+div.content input.ok,
+div.command > input.submit,
+div.filler div.headermenu > a.entry,
+div.filler div.header a.back.button
 {
-	x-height:20px;
 	margin:9px;
 	padding-top:4px;
 	padding-bottom:4px;
@@ -218,7 +208,6 @@ div.content input.ok
     background-color: white;
 	background: -moz-linear-gradient(top, gray, silver);
 	background: -webkit-gradient(linear, left top, left bottom, from(gray), to(silver));
-	float:left;
 	font-style:normal;
 	font-weight:normal;
 	text-decoration:none;
@@ -226,45 +215,35 @@ div.content input.ok
     color:black;
 }
 
-div.command > input.submit
+ul#history > li.active
 {
-	margin:5px;
-	padding-top:4px;
-	padding-bottom:4px;
-	padding-left:7px;
-	padding-right:7px;
-	border:1px solid grey;
-	-moz-border-radius:5px; /* Mozilla */
-    -webkit-border-radius:5px; /* Webkit */
-    -khtml-border-radius:5px; /* Konqui */
-    border-radius:5px;
     background-color: white;
-	background: -moz-linear-gradient(top, gray, silver);
-	background: -webkit-gradient(linear, left top, left bottom, from(gray), to(silver));
-	font-style:normal;
-	font-weight:bold;
-	text-decoration:none;
-    cursor:pointer;
+    background: white;
+    font-weight:bold;
+    cursor:default;
     color:black;
 }
+
+div.content a.action,
+div.content a.help,
+div.content input.ok,
+div.command > input.submit
+{
+	float:left;
+}
+
 
 /*   S c h a t t e n   */
 div.content a.action,
 div.content a.help,
 div.content input.ok,
-div#header,
+div#title,
 div.window,
 div#noticebar
 {
 	-webkit-box-shadow: 3px 2px 5px gray;
     -moz-box-shadow: 3px 2px 5px gray;
     box-shadow: 3px 2px 5px gray;
-}
-div.dropdown
-{
-	-webkit-box-shadow: 3px 2px 10px gray;
-    -moz-box-shadow: 3px 2px 10px gray;
-    box-shadow: 3px 2px 10px gray;
 }
 
 a.help
@@ -312,23 +291,10 @@ div.dropdown
 {
 	z-index:2;
 	display:none;
-	opacity:0.95;
-	background-color:white;
 	position: absolute;
-	
 	padding:10px;
-	border:2px solid grey;
-	-moz-border-radius:5px; /* Mozilla */
-    -webkit-border-radius:5px; /* Webkit */
-    -khtml-border-radius:5px; /* Konqui */
-    border-radius:5px;
-	background: -moz-linear-gradient(top, gray, silver);
-	background: -webkit-gradient(linear, left top, left bottom, from(gray), to(silver));
-	font-style:normal;
-	font-weight:normal;
-	text-decoration:none;
-    color:black;
 }
+
 
 div.dropdown > a
 {
@@ -340,7 +306,7 @@ div.dropdown part.entry:hover
 }
 
 /*Dropdown anzeigen!!!*/
-div#header div:hover div.dropdown,
+div#title div:hover div.dropdown,
 div.window div.header:hover div.dropdown
 {
 	display:block;
@@ -639,7 +605,7 @@ p.logo
 	font-size:13px;
 }
 
-div#header div.search input
+div#title div.search input
 {
 	margin:0px;
 	padding:0px;
@@ -842,7 +808,10 @@ ul.tree li:last-child
 	background-color:white;
 }
 
-body > div { display:none; }
+body > div
+{
+	display:none;
+}
 
 
 
@@ -1059,6 +1028,8 @@ div.progress
 	height:25px;
 	background: url(../images/loader.gif) no-repeat;
 }
+
+
 
 /*   V o l l b i l d   */
 div.window.fullscreen
@@ -1431,7 +1402,74 @@ div.window.fullscreen
 
 
 
-body > ul#history {
+
+
+
+
+
+
+
+
+/* Smaller screens */
+
+@media only screen and (max-width: 1023px) {
+
+	body {
+	font-size: 0.8em;
+	line-height: 1.5em;
+	}
+	
+	}
+
+
+/* Mobile */
+
+@media handheld, only screen and (max-width: 767px) {
+
+	body {
+		font-size: 16px;
+		-webkit-text-size-adjust: none;
+	}
+	
+	body, .container_12 {
+		width: 100%;
+		min-width: 0;
+		margin-left: 0px;
+		margin-right: 0px;
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	
+	div.container_12 > div
+	{
+		width: auto;
+		float: none;
+		margin-left: 0px;
+		margin-right: 0px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body > div#header {
 	display:block;
 }
 ul#history >  li {
