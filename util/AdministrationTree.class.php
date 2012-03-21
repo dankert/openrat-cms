@@ -82,7 +82,8 @@ class AdministrationTree extends AbstractTree
 			$treeElement->text        = lang('PREFERENCES');
 			$treeElement->description = lang('PREFERENCES');
 			$treeElement->icon        = 'config_folder';
-			$treeElement->type        = 'prefs';
+			//$treeElement->type        = 'prefs';
+			$treeElement->action      = 'configuration';
 			
 			$this->addTreeElement( $treeElement );
 		}

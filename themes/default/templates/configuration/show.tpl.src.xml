@@ -1,0 +1,24 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header views="create"></header>
+	<table>
+		<row class="headline">
+			<cell class="help">
+				<text key="GLOBAL_NAME"></text>
+			</cell>
+			<cell class="help">
+				<text key="GLOBAL_VALUE"></text>
+			</cell>
+		</row>
+		<list list="config" extract="true">
+			<row class="data">
+				<cell>
+					<text var="key"></text>
+				</cell>
+				<cell class="var:class">
+					<text class="var:class" var="value"></text>
+				</cell>
+			</row>
+		</list>
+	</table>
+</output>

@@ -1490,3 +1490,16 @@ ul#history >  li.active {
 	background-color: white;
 	color:black;
 }
+
+table td.readonly {
+	font-style: italic;
+	font-weight: normal;
+}
+table td.default {
+	font-style: normal;
+	font-weight: normal;
+}
+table td.changed {
+	font-style: normal;
+	font-weight: bold;
+}
