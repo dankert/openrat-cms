@@ -900,6 +900,7 @@ class LoginAction extends Action
 						  !isset($subaction['goto'  ]) && 
 						  !isset($subaction['direct']) &&
 						  !isset($subaction['action']) &&
+						  !isset($subaction['async' ]) &&
 						  !isset($subaction['alias' ]) &&
 						  $subActionName != 'menu'            )
 					{
