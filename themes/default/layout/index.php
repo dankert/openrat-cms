@@ -91,10 +91,12 @@ var REQ_PARAM_TARGET  = '<?php echo  REQ_PARAM_TARGET ?>';
 </div>
 
 <div id="header">
+	<div id="title">
+	</div>
+	<ul id="history">
+	</ul>
 </div>
 
-<ul id="history">
-</ul>
 
 <div id="workbench">
 </div>
