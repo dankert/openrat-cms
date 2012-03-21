@@ -24,9 +24,6 @@ goto=show
 [model]
 goto=show
 
-[applications]
-menu=menu
-
 [userinfo]
 direct=true
 
@@ -80,14 +77,9 @@ write=true
 guest=true
 ;goto=projectmenu
 
-[projectmenu]
-
 [openid]
 guest=true
 goto=show
-
-[projectmenu]
-menu=menu
 
 [changepassword]
 menu=menu

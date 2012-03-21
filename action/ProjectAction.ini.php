@@ -8,13 +8,6 @@ direct=true
 [default]
 goto=listing
 
-[listing]
-menu=list
-
-[remove]
-menu=edit
-write=true
-
 [maintenance]
 menu=edit
 write=true

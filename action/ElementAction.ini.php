@@ -23,12 +23,9 @@ goto=name
 [savetype]
 goto=name
 
-[remove]
+[delete]
 menu=edit
 target=delete
-
-[delete]
-goto=name
 
 [menu]
 ;edit=name,type,properties,remove

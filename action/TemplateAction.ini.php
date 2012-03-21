@@ -1,9 +1,3 @@
-[default]
-goto=listing
-
-[listing]
-menu=listing
-
 [add]
 menu=listing
 target=addtemplate
