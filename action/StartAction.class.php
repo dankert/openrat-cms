@@ -859,6 +859,17 @@ class StartAction extends Action
 	
 	
 	/**
+	 * Auswaehlen der Startseite.
+	 */
+	function startPost()
+	{
+		Session::set('perspective','start');
+		$this->refresh();
+	}
+	
+	
+	
+	/**
 	 * Ausgeben von maschinenlesbaren Benutzerinformationen.
 	 * 
 	 * Diese Funktion dient dem Single-Signon f�r fremde Anwendungen, welche
