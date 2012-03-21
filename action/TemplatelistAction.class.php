@@ -36,7 +36,7 @@ class TemplatelistAction extends Action
 	 */
 	function editView()
 	{
-		$this->nextSubActionsetTemplateVar('show');
+		$this->nextSubAction('show');
 	}
 
 
