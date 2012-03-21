@@ -11,8 +11,9 @@ $(document).ready(function()
 
 function refreshAll()
 {
-
-	refreshHeader();
+	$('ul#history').sortable();
+	
+	refreshTitleBar();
 	refreshWorkbench();
 }
 
@@ -62,6 +63,7 @@ function refreshActualView(element) {
 function refreshWorkbench()
 {
 	// Workbench laden
+	$('ul#history').empty();
 	$('div#workbench').empty().load(createUrl('workbench','show',0),null,function() {
 		
 		// Default-Inhalte der einzelnen Views laden.
@@ -115,9 +117,9 @@ function refreshWorkbench()
 /**
  * Laedt den Header neu.
  */
-function refreshHeader()
+function refreshTitleBar()
 {
-	$('div#header').load( createUrl('title','show',0 ),function() {
+	$('div#title').load( createUrl('title','show',0 ),function() {
 		$(this).fadeIn('slow');
 		registerHeaderEvents();
 	});
@@ -503,7 +505,7 @@ function openNewAction( name,action,id,extraId )
 	else
 	{
 		// Tab noch nicht vorhanden, also jetzt hier ergänzen.
-		$('ul#history').append('<li class="action active '+action+' id'+id+'">'+name+'</li>');
+		$('ul#history').append('<li class="action active '+action+' id'+id+'"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'</li>');
 		$('ul#history li.active').click( function()
 			{
 				// Action-Tab wurde angeklickt
