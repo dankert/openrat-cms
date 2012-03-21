@@ -1,7 +1,23 @@
 #!/bin/bash
+#
+# converting openrat-1.0-configurations to the 1.1 single-file-format.
+#
+# This is a dirty quick-coding-tool.
+#
+# Usage:
+# - Start dos2unix.sh to kill the windows line endings.
+# - Start this script in the config-directory. The new file will be written to stdout.
+# - save standardout to a file named config.new
+# - rename config.ini.php to config.ini.orig.php
+# - rename config.new to config.ini.php or config-<domain>.ini.php
+# - Edit the file: replace '.ini.php.' with '.#
+# - Edit the file: replace '].'        with '.' (sorry about that)
+#
+# Alternative: Do not use this script and start a new configuration
+#              with config.ini.php ;) 
+#
 echo "; `date`"
 echo ";"
-echo ";;PHP \$conf = array();"
 
 for fn in *.ini.php; do
 
@@ -17,12 +33,10 @@ for fn in *.ini.php; do
 		if [ "${line:0:1}" == "[" ]; then
 			sec="${fn}.${line:1}."
 			ru="$line"
-			echo ";;PHP \$conf['${fn}']['${ru}'] = array();"
 			echo "; next section: $line"
 		elif [ "${line:0:2}" == ";[" ]; then
 			sec="${fn}.${line:2}."
 			ru="${line:1}"
-			echo ";;PHP \$conf['${fn}']['${ru}'] = array();"
 			echo "; next unused section: $line"
 		elif [ "$line" == "" ]; then
 			echo ""
@@ -30,9 +44,7 @@ for fn in *.ini.php; do
 			echo "$line"
 		elif [ "${line:0:1}" == ";" ]; then
 			echo ";${sec}${line:1}"
-			echo ";;PHP \$conf['${fn}']['${ru}']=${line:1};"
 		else
-			echo ";;PHP \$conf['${fn}']['${ru}']=$line;"
 			echo "${sec}${line}"
 		fi
 	done < $fn
