@@ -90,45 +90,6 @@ class LanguageAction extends Action
 
 
 	/**
-	 * Sprache hinzufuegen
-	 */
-	function addView()
-	{
-		global $conf;
-		$countryList = $conf['countries'];
-
-		foreach( $this->project->getLanguageIds() as $id )
-		{
-			if	( $id == $this->language->languageid )
-				continue;		
-
-			$l = new Language( $id );
-			$l->load();
-
-			unset( $countryList[$l->isoCode] );
-		}
-
-		asort( $countryList );		
-		$this->setTemplateVar('isocodes'  ,$countryList );
-	}
-	
-	
-	function addPost()
-	{
-		global $conf;
-		$countryList = $conf['countries'];
-		
-		// Hinzufuegen einer Sprache
-		$iso = 	$this->getRequestVar('isocode');
-		$language = new Language();
-		$language->projectid = $this->project->projectid;
-		$language->isoCode   = $iso;
-		$language->name      = $countryList[$iso];
-		$language->add();
-	}
-
-
-	/**
 	 * Setzen der Sprache als Standardsprache.
 	 * Diese Sprache wird benutzt beim Ausw?hlen des Projektes sowie
 	 * als Default-Sprache bei mehrsprachigen Webseiten ("content-negotiation") 

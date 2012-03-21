@@ -124,4 +124,52 @@ class LanguagelistAction extends Action
 	{
 		$this->nextSubAction('show');
 	}
+	
+	
+	
+	
+	/**
+	 * Sprache hinzufuegen
+	 */
+	function addView()
+	{
+		global $conf;
+		$countryList = $conf['countries'];
+		
+		$language = Session::getProjectLanguage();
+
+		foreach( $this->project->getLanguageIds() as $id )
+		{
+			
+			if	( $id == $language->languageid )
+				continue;		
+
+			$l = new Language( $id );
+			$l->load();
+
+			unset( $countryList[$l->isoCode] );
+		}
+
+		asort( $countryList );		
+		$this->setTemplateVar('isocodes'  ,$countryList );
+	}
+	
+	
+	function addPost()
+	{
+		global $conf;
+		$countryList = $conf['countries'];
+		
+		// Hinzufuegen einer Sprache
+		$iso = 	$this->getRequestVar('isocode');
+		$language = new Language();
+		$language->projectid = $this->project->projectid;
+		$language->isoCode   = $iso;
+		$language->name      = $countryList[$iso];
+		$language->add();
+		
+		$this->addNotice('language',$language->name,'ADDED','ok');
+	}
+
+	
 }
