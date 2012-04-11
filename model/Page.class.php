@@ -49,8 +49,10 @@ class Page extends Object
 	var $content_negotiation = false;
 	var $cut_index           = false;
 	var $default_language    = false;
-	var $withLanguage        = false;
-	var $withModel           = false;
+//	var $withLanguage        = false;
+	var $withLanguage        = true;
+	var $withModel           = true;
+//	var $withModel           = false;
 	var $link                = false;
 	var $fullFilename = '';
 
@@ -223,6 +225,7 @@ class Page extends Object
 							case 'file':
 								$f = new File( $link->linkedObjectId );
 								$f->load();
+								$f->content_negotiation = $content_negotiation;
 								$inhalt  = $this->up_path();
 								$inhalt .= $f->full_filename();
 							break;
@@ -233,6 +236,8 @@ class Page extends Object
 								$p->modelid             = $this->modelid;
 								$p->cut_index           = $cut_index;
 								$p->content_negotiation = $content_negotiation;
+					$p->withLanguage        = $this->withLanguage;
+					$p->withModel           = $this->withModel;
 								$p->load();
 								$inhalt  = $this->up_path();
 								$inhalt .= $p->full_filename();

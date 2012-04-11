@@ -516,6 +516,19 @@ class PageelementAction extends Action
 		{
 			// Auswahl ueber alle Elementtypen
 			$objects = array();
+			//Änderung der möglichen Types
+			$types = array('file','page','link');
+                        $objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
+			//Auch Dateien dazu
+			foreach( Folder::getAllObjectIds($types) as $id )
+                        {
+                                $f = new Folder( $id );
+                                $f->load();
+                                        
+                                $objects[ $id ]  = lang( $f->getType() ).': ';
+                                $objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
+                        }
+
 			foreach( Folder::getAllFolders() as $id )
 			{
 				$f = new Folder( $id );
@@ -570,7 +583,7 @@ class PageelementAction extends Action
 				// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
 				// einen Text eingegeben hat (Vorschaufunktion).
 				$this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
-				
+
 			if	(! $this->isEditMode() )
 			{
 				$this->value->generate(); // Inhalt erzeugen.
