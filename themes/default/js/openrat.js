@@ -515,9 +515,22 @@ function openNewAction( name,action,id,extraId )
 				setNewAction(action,id,extraId);
 			} );
 	}
+
 	
+	// Neuen Tab in Hauptfenster anlegen
+	$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
+	$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'"><span><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'</span></li>');
+	$('div#content > div.window > div.menu > div.views > ul.views li.active').click( function()
+		{
+			// Action-Tab wurde angeklickt
+			$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
+			$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
+		
+			setNewAction(action,id,extraId);
+		} );
+
+
 	setNewAction( action,id,extraId );
-	
 }
 
 
