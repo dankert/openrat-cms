@@ -11,15 +11,22 @@ refreshable=false
 
 [content]
 
-views=edit,pw,rights
-action=projectlist
+views=
+action=
 refreshable=true
 default=edit
 
 
 [member]
 
-views=memberships,info
+views=memberships,edit
 action=project
 refreshable=true
 default=memberships
+
+[extra]
+
+views=info,pw,rights
+action=project
+refreshable=true
+default=info

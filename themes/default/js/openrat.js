@@ -516,20 +516,38 @@ function openNewAction( name,action,id,extraId )
 			} );
 	}
 
-	
-	// Neuen Tab in Hauptfenster anlegen
+	// Andere Tabs auf inaktiv setzen
 	$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
-	$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'"><span><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'</span></li>');
-	$('div#content > div.window > div.menu > div.views > ul.views li.active').click( function()
-		{
-			// Action-Tab wurde angeklickt
-			$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
-			$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
-		
-			setNewAction(action,id,extraId);
-		} );
+	
+	// Tab schon vorhanden?
+	if	( $('div#content > div.window > div.menu > div.views > ul.views  li.'+action+'.id'+id).length > 0 )
+	{
+		// Ja, Tab schon vorhanden
+		// Gewünschtes Tab aktiv setzen
+		$('div#content > div.window > div.menu > div.views > ul.views li.'+action+'.id'+id).addClass('active');
+	}
+	else
+	{	
+		// Neuen Tab in Hauptfenster anlegen
+		$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
+		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" data-method="edit"><span><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'<img class="close" src="'+OR_THEMES_EXT_DIR+'default/images/icon_close.png" title="" /></span></li>');
+		$('div#content > div.window > div.menu > div.views > ul.views').scrollLeft(9999);
+		$('div#content > div.window > div.menu > div.views > ul.views img.close').click( function()
+				{
+					// Schließen
+					$(this).parent().parent().parent().parent().parent().parent().find('div.content > div.filler').html(''); // Inhalt entfernen
+					$(this).parent().parent().remove(); // Tab entfernen
+				} );
+		$('div#content > div.window > div.menu > div.views > ul.views li.active').click( function()
+			{
+				// Action-Tab wurde angeklickt
+				$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
+				$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
+			
+				setNewAction(action,id,extraId);
+			} );
 
-
+	}
 	setNewAction( action,id,extraId );
 }
 

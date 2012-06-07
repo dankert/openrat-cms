@@ -17,7 +17,7 @@ view_header('content');
 <div class="grid_3">
 <?php 
 view_header('member');
-//view_header('extra');
+view_header('extra');
 ?>
 </div>
 

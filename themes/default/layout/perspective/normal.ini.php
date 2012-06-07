@@ -13,15 +13,15 @@ refreshable=false
 
 title=
 default=show
-views=show,edit,prop,rights
-action=folder
+views=
+action=
 refreshable=true
 
 [extra]
 
 title=
 default=pub
-views=pub
+views=pub,show,edit,prop,rights
 action=folder
 refreshable=true
 
