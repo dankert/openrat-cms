@@ -1,6 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header back="true"></header>
 	<form method="post">
 		<part class="line">
 			<part class="label">
@@ -8,13 +7,13 @@
 			</part>
 			<part class="input">
 
-				<input name="name"></input>
+				<input name="name" class="focus"></input>
 			</part>
 		</part>
 		<fieldset title="message:options">
 			<part class="line">
 				<part class="label">
-					<radio name="type" value="empty"></radio>
+					<radio name="type" value="empty" checked="true"></radio>
 					<label for="type_empty">
 						<text key="empty"></text>
 					</label>
@@ -29,5 +28,4 @@
 			</part>
 		</fieldset>
 	</form>
-	<focus field="name"></focus>
 </output>
