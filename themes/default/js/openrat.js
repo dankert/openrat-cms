@@ -175,10 +175,13 @@ function loadView(jo, url )
 			//CKEDITOR.replace('text',{
 		    //    customConfig : 'config-openrat.js'
 		    //});
-			if ( $(jo).find('form').length > 0 )
-				$(jo).closest('div.frame').find('div.bottom > div.command > input').removeClass('invisible');
+			
+			var $formVorhanden = $(jo).find('form').size() > 0;
+			var $formInput     = $(jo).closest('div.frame').find('div.bottom > div.command > input')
+			if	( $formVorhanden )
+				$formInput.removeClass('invisible');
 			else
-				$(jo).closest('div.frame').find('div.bottom > div.command > input').addClass('invisible');
+				$formInput.addClass('invisible');
 
 			if ( $('div.window form input[type=password]').length>0 )
 			{
@@ -530,7 +533,7 @@ function openNewAction( name,action,id,extraId )
 	{	
 		// Neuen Tab in Hauptfenster anlegen
 		$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
-		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" data-method="edit"><span><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'<img class="close" src="'+OR_THEMES_EXT_DIR+'default/images/icon_close.png" title="" /></span></li>');
+		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" data-method="edit"><span><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'<img class="close" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></span></li>');
 		$('div#content > div.window > div.menu > div.views > ul.views').scrollLeft(9999);
 		$('div#content > div.window > div.menu > div.views > ul.views img.close').click( function()
 				{
