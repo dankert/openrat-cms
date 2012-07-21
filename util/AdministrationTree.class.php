@@ -60,7 +60,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->description = lang('GLOBAL_PROJECTS');
 		$treeElement->url         = Html::url('projectlist','show',0,array(REQ_PARAM_TARGET=>'content'));
 		$treeElement->action      = 'projectlist'; 
-		$treeElement->icon        = 'project_list';
+		$treeElement->icon        = 'projectlist';
 		$treeElement->type        = 'projects';
 		$treeElement->target      = 'cms_main';
 		
@@ -70,7 +70,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->text        = lang('USER_AND_GROUPS');
 		$treeElement->description = lang('USER_AND_GROUPS');
-		$treeElement->icon        = 'user_list';
+		$treeElement->icon        = 'userlist';
 		$treeElement->type        = 'userandgroups';
 		
 		$this->addTreeElement( $treeElement );
@@ -116,7 +116,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->description = lang('GLOBAL_USER');
 		$treeElement->url         = Html::url('user','listing',0,array(REQ_PARAM_TARGET=>'content'));
 		$treeElement->action      = 'userlist'; 
-		$treeElement->icon        = 'user_list';
+		$treeElement->icon        = 'userlist';
 		$treeElement->target      = 'cms_main';
 		$treeElement->type        = 'users';
 		
@@ -127,7 +127,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement->description = lang('GLOBAL_GROUPS');
 		$treeElement->url         = Html::url('group','listing',0,array(REQ_PARAM_TARGET=>'content'));
 		$treeElement->action      = 'grouplist';
-		$treeElement->icon        = 'user_list';
+		$treeElement->icon        = 'userlist';
 		$treeElement->target      = 'cms_main';
 		$treeElement->type        = 'groups';
 
@@ -274,7 +274,7 @@ class AdministrationTree extends AbstractTree
 		
 		$treeElement->internalId  = -1;
 		$treeElement->text        = 'OpenRat';
-		$treeElement->icon        = 'config_folder';
+		$treeElement->icon        = 'configuration';
 
 		if	( !empty($conf_config['file_manager_url']) )
 			$treeElement->url         = $conf_config['file_manager_url'];
