@@ -284,7 +284,7 @@ class ProjectTree extends AbstractTree
 			$treeElement->text       = lang('GLOBAL_TEMPLATES');
 			$treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 			$treeElement->description= lang('GLOBAL_TEMPLATES_DESC');
-			$treeElement->icon       = 'template_list';
+			$treeElement->icon       = 'templatelist';
 			$treeElement->action     = 'templatelist';
 			$treeElement->target     = 'content';
 			$treeElement->type       = 'templates';
@@ -299,7 +299,7 @@ class ProjectTree extends AbstractTree
 		$treeElement->action     = 'languagelist';
 		$treeElement->text       = lang('GLOBAL_LANGUAGES');
 		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-		$treeElement->icon       = 'language_list';
+		$treeElement->icon       = 'languagelist';
 		$treeElement->description= lang('GLOBAL_LANGUAGES_DESC');
 		$treeElement->target     = 'content';
 
@@ -323,7 +323,7 @@ class ProjectTree extends AbstractTree
 		$treeElement->text       = lang('GLOBAL_MODELS');
 		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 		$treeElement->action     = 'modellist';
-		$treeElement->icon       = 'model_list';
+		$treeElement->icon       = 'modellist';
 		$treeElement->target     = 'content';
 		$this->addTreeElement( $treeElement );
 
