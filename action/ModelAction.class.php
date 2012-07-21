@@ -128,7 +128,7 @@ class ModelAction extends Action
 	}
 
 
-	function setdefault()
+	function setdefaultPost()
 	{
 		if	( !$this->userIsAdmin() ) exit();
 

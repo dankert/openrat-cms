@@ -52,7 +52,7 @@ class TemplatelistAction extends Action
 		{
 			$list[$id] = array();
 			$list[$id]['name'] = $name;
-			$list[$id]['url' ] = Html::url('template','el',$id,array());
+			$list[$id]['id'  ] = $id;
 		}
 		
 //		$var['templatemodelid'] = htmlentities( $id   );

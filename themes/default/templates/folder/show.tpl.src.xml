@@ -1,6 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header views="create"></header>
 	<table>
 		<row class="headline">
 			<cell class="help">
@@ -42,11 +41,35 @@
 				</cell>
 			</row>
 		</if>
-		<row>
-			<cell>
-				<link type="view" class="action" action="folder" subaction="create">
+		<row class="data">
+			<cell colspan="2">
+				<link type="view" action="folder" subaction="createfolder">
 					<image file="icon/create"></image>
-					<text key="menu_folder_create"></text>
+					<text key="menu_folder_createfolder"></text>
+				</link>
+			</cell>
+		</row>
+		<row class="data">
+			<cell colspan="2">
+				<link type="view" action="folder" subaction="createpage">
+					<image file="icon/create"></image>
+					<text key="menu_folder_createpage"></text>
+				</link>
+			</cell>
+		</row>
+		<row class="data">
+			<cell colspan="2">
+				<link type="view" action="folder" subaction="createfile">
+					<image file="icon/create"></image>
+					<text key="menu_folder_createfile"></text>
+				</link>
+			</cell>
+		</row>
+		<row class="data">
+			<cell colspan="2">
+				<link type="view" action="folder" subaction="createlink">
+					<image file="icon/create"></image>
+					<text key="menu_folder_createlink"></text>
 				</link>
 			</cell>
 		</row>

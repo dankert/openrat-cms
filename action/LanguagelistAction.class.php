@@ -1,4 +1,4 @@
-<?php
+O<?php
 // ---------------------------------------------------------------------------
 // $Id$
 // ---------------------------------------------------------------------------
@@ -98,8 +98,7 @@ class LanguagelistAction extends Action
 			
 			if	( $this->userIsAdmin() )
 			{
-				$list[$id]['url' ] = Html::url('language','edit',$id,
-				                               array() );
+				$list[$id]['id' ] = $id;
 			
 				if	( ! $l->isDefault )
 					$list[$id]['default_url'] = Html::url( 'language','setdefault',$id );
