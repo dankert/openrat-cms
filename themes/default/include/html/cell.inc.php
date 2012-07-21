@@ -26,7 +26,7 @@
  title="%title%"
 #END-IF#
 
-#IF-ATTR url#
- onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $attr_url ?>'); "
+#IF-ATTR id#
+ onclick="javascript:openNewAction('<?php echo $attr_name ?>','<?php echo $attr_action ?>','<?php echo $attr_id ?>'); "
 #END-IF#
 >

@@ -8,7 +8,7 @@
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<cell url="var:url">
+				<cell id="var:id" name="var:name" action="group">>
 					<image file="icon_group"></image>
 					<text var="name"></text>
 				</cell>

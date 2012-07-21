@@ -11,7 +11,7 @@
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<cell url="var:url">
+				<cell id="var:id" name="var:name" action="project">
 					<image file="icon_project"></image>
 					<text value="var:name" maxlength="30"></text>
 				</cell>

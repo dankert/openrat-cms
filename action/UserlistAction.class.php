@@ -40,9 +40,8 @@ class UserlistAction extends Action
 
 		foreach( User::getAllUsers() as $user )
 		{
-			$list[$user->userid]         = $user->getProperties();
-			$list[$user->userid]['url' ] = Html::url('main','user',$user->userid,
-			                                         array(REQ_PARAM_TARGETSUBACTION=>'edit') );
+			$list[$user->userid]        = $user->getProperties();
+			$list[$user->userid]['id' ] = $user->userid;
 		}
 		$this->setTemplateVar('el',$list);
 	}	

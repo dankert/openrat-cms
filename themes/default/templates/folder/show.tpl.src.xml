@@ -25,7 +25,7 @@
 		</if>
 		<list list="object" extract="true">
 			<row class="data">
-				<cell url="var:url" title="var:desc" class="var:class">
+				<cell  id="var:id" name="var:name" action="var:type" title="var:desc" class="var:class">
 					<image type="var:icon"></image>
 					<text var="name"></text>
 					<text raw="_"></text>

@@ -51,6 +51,7 @@ class ProjectlistAction extends Action
 		{
 			$list[$id]             = array();
 			$list[$id]['url'     ] = Html::url('project','edit',$id);
+			$list[$id]['id'      ] = $id;
 			$list[$id]['use_url' ] = Html::url('tree'   ,'load',0  ,array('projectid'=>$id,'target'=>'tree'));
 			$list[$id]['name'    ] = $name;
 		}
