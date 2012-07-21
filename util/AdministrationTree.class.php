@@ -81,7 +81,7 @@ class AdministrationTree extends AbstractTree
 			$treeElement = new TreeElement();
 			$treeElement->text        = lang('PREFERENCES');
 			$treeElement->description = lang('PREFERENCES');
-			$treeElement->icon        = 'config_folder';
+			$treeElement->icon        = 'configuration';
 			//$treeElement->type        = 'prefs';
 			$treeElement->action      = 'configuration';
 			
@@ -291,7 +291,7 @@ class AdministrationTree extends AbstractTree
 			
 			$treeElement->internalId  = 0;
 			$treeElement->text        = lang('GLOBAL_SYSTEM');
-			$treeElement->icon        = 'config_folder';
+			$treeElement->icon        = 'configuration';
 			
 			$treeElement->description = '';
 			$treeElement->target      = 'cms_main';
@@ -306,7 +306,7 @@ class AdministrationTree extends AbstractTree
 			
 			$treeElement->internalId  = 0;
 			$treeElement->text        = lang('GLOBAL_PHP');
-			$treeElement->icon        = 'config_folder';
+			$treeElement->icon        = 'configuration';
 			
 			$treeElement->description = '';
 			$treeElement->target      = 'cms_main';
@@ -321,7 +321,7 @@ class AdministrationTree extends AbstractTree
 			
 			$treeElement->internalId  = 0;
 			$treeElement->text        = lang('GLOBAL_EXTENSIONS');
-			$treeElement->icon        = 'config_folder';
+			$treeElement->icon        = 'configuration';
 			
 			$treeElement->description = '';
 			$treeElement->target      = 'cms_main';
@@ -357,7 +357,7 @@ class AdministrationTree extends AbstractTree
 				$treeElement->text        = $key;
 //				if	( $id == 0 )
 //					$treeElement->url         = Html::url('main','prefs',0,array('conf'=>$key));
-				$treeElement->icon        = 'config_folder';
+				$treeElement->icon        = 'configuration';
 				
 				$treeElement->description = count($value).' '.lang('SETTINGS');
 				$treeElement->target      = 'cms_main';
