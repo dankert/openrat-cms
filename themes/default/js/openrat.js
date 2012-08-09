@@ -199,7 +199,7 @@ function loadView(jo, url )
 	};
 
 	/*
-	if	( $(jo).find('textarea#pageelement_edit_editor').length > 0 )
+	if	( $(jo).find('textarea#pageelement_edit_editor').size() > 0 )
 	{
 	var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
 	if (o) o.destroy();
@@ -283,9 +283,7 @@ function loadView(jo, url )
 				   }
 			});
 			
-			/*
-			 * 
-			if	( $(jo).find('textarea#pageelement_edit_editor').length > 0 )
+			if	( $(jo).find('textarea#pageelement_edit_editor').size() > 0 )
 			{
 				var instance = CKEDITOR.instances['pageelement_edit_editor'];
 			    if(instance)
@@ -294,7 +292,6 @@ function loadView(jo, url )
 			    }
 			    CKEDITOR.replace( 'pageelement_edit_editor',{customConfig:'config-openrat.js'} );
 			}
-			 */
 			
 			// Wiki-Editor
 			var markitupSettings = {	markupSet:  [ 	
@@ -335,7 +332,7 @@ function loadView(jo, url )
 					               {'name': 'Preview', 'title': 'Preview', 'css': 'wym_tools_preview'}
 					             ]
 					          };
-			$(jo).find('.htmleditor').wymeditor(wymSettings);
+			//$(jo).find('.htmleditor').wymeditor(wymSettings);
 			resizeWorkbench();
 		});
 }
