@@ -69,7 +69,8 @@ class Preferences
 		require('./config/config-default.php');
 		//echo "default: "; print_r($conf);
 
-		$ini_values =  parse_ini_file( Preferences::configurationFile(),false );
+		$filename = Preferences::configurationFile();
+		$ini_values =  parse_ini_file( $filename,false );
 		
 		//echo "loading ".$config_filename;
 		foreach ( $ini_values as $key=>$value )
@@ -89,6 +90,7 @@ class Preferences
 				$conf[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]][$parts[5]] = $value;
 		}
 	    
+		$conf['config']['filename'         ] = $filename;
 		$conf['config']['last_modification'] = Preferences::lastModificationTime();
 		return $conf;
 	}
