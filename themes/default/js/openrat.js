@@ -1,17 +1,44 @@
 
 
+var DEFAULT_CONTENT_ACTION = 'edit';
+
+var menus =
+{
+	"folder" :
+	{
+		"show" : [ "show", "order", "edit" ]
+	},
+	"file" :
+	{
+		"show" : [ "show", "edit" ],
+   		"prop" : [ "compress", "uncompress" ]
+	},
+	"page" :
+	{
+		"show" : [ "show", "edit", "content" ],
+   		"prop" : [ "changetemplate" ]
+	},
+	"project" :
+	{
+		"edit" : [ "edit","export","maintenance" ],
+   		"prop" : [ "changetemplate" ],
+   		"info" : [ "info" ]
+	}
+};
+
+
+
 $(document).ready(function()
 {
-	
+
 	refreshAll();
-	
 });
 
 
 
 function refreshAll()
 {
-	$('ul#history').sortable();
+	//$('ul#history').sortable();
 	
 	refreshTitleBar();
 	refreshWorkbench();
@@ -30,9 +57,7 @@ function refreshAllRefreshables() {
 		var extraid = p.attr('data-extra');
 		//alert(method+' '+action);
 		
-		
-		//alert('go2');
-		loadView( p.find('div.filler'),createUrl(action,method,id,extraid));
+		loadView( p.find('div.content'),createUrl(action,method,id,extraid));
 	});
 	
 }
@@ -50,7 +75,7 @@ function refreshActualView(element) {
 		//alert(method+' '+action);
 		
 		
-		loadView( p.find('div.filler'),createUrl(action,method,id));
+		loadView( p.find('div.content'),createUrl(action,method,id));
 	});
 
 }
@@ -75,18 +100,36 @@ function refreshWorkbench()
 			
 			
 			//alert('go2');
-			loadView( p.find('div.filler'),createUrl(action,method,0));
+			loadView( p.find('div.content'),createUrl(action,method,0));
 		});
+
+		// OnClick-Handler zum Scrollen der Tabs
+		$('div.backward_link').click( function() {
+			var $views = $(this).closest('div.views').find('ul.views');
+			//$views.scrollTo( -50 );
+			var $prev = $views.find('li.action.active').prev();
+			$views.scrollTo( $prev,500,{"axis":"x"} );
+			$prev.click();
+		}
+		);
+		$('div.forward_link').click( function() {
+			var $views = $(this).closest('div.views').find('ul.views');
+			var $next  = $views.find('li.action.active').next();
+			$views.scrollTo( $next,500,{"axis":"x"} );
+			$next.click();
+		}
+		);
 		
 		// OnClick-Handler für Klick auf einen Tab-Reiter.
 		$('ul.views > li.action').click( function() {
+			//alert("klicke auf "+$(this).html() );
 			var method = $(this).attr('data-method');
 			var p = $(this).closest('div.frame');
 			var action = p.attr('data-action');
 			var id     = p.attr('data-id');
 			p.find('ul.views li.active').removeClass('active');
 			$(this).addClass('active');
-			loadView( p.find('div.filler'),createUrl(action,method,id));
+			loadView( p.find('div.content'),createUrl(action,method,id));
 		});
 		
 		// Drag n Drop für Views
@@ -111,6 +154,13 @@ function refreshWorkbench()
 	
 	// Modale Dialoge
 	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
+	
+	// View-Größe initial berechnen.
+	resizeWorkbench();
+	
+	$(window).resize( function() {
+		resizeWorkbench();
+	} );
 }
 
 
@@ -155,8 +205,20 @@ function loadView(jo, url )
 	if (o) o.destroy();
 	}
 	*/
+
+	// Untermenü ermitteln.
+	var submenu = "";
+	var action = $(jo).closest("div.frame").attr("data-action");
+	var method = $(jo).closest("div.frame").find("li.active").attr("data-method");
 	
-	$(jo).empty().html('<div class="loader" />').load(url,function(response, status, xhr) {
+	var menuEntries = menus[action];
+	if	( menuEntries != null )
+	{
+	}
+		
+	//alert(action+"_"+method);
+	
+	$(jo).empty().html('<div class="loader" />'+submenu).load(url,function(response, status, xhr) {
 			$(jo).slideDown('fast');
 			
 			if	( status == "error" )
@@ -274,6 +336,7 @@ function loadView(jo, url )
 					             ]
 					          };
 			$(jo).find('.htmleditor').wymeditor(wymSettings);
+			resizeWorkbench();
 		});
 }
 
@@ -370,13 +433,13 @@ function fullscreen( element ) {
 function loadTree()
 {
 	// Oberstes Tree-Element erzeugen
-	$('div#tree div.window div.content div.filler').html("&nbsp;");
+	$('div#tree div.window div.content').html("&nbsp;");
 	//$('div#tree div.window div.content').append('<ul class="tree"><li class="root"><div>Baum</div></li></ul>');
 	
 	// Wurzel des Baums laden
 	//loadBranch( $('div#tree ul.tree > li'),'root',0);
-	loadBranch( $('div#tree div.content div.filler'),'root',0);
-	$('div#tree div.content div.filler > ul.tree > li > div.tree').delay(500).click();
+	loadBranch( $('div#tree div.content'),'root',0);
+	$('div#tree div.content > ul.tree > li > div.tree').delay(500).click();
 }
 
 
@@ -480,7 +543,27 @@ function startView( element,view )
 	var action = $(element).closest('div.frame').attr('data-action');
 	var id     = $(element).closest('div.frame').attr('data-id'    );
 	var url    = createUrl(action, view, id);
-	loadView( $(element).closest('div.filler'), url );
+	loadView( $(element).closest('div.content'), url );
+	
+	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
+	// refreshAllRefreshables();
+}
+
+
+/**
+ * Setzt neue modale View und aktualisiert alle Fenster.
+ * @param element
+ * @param action Action
+ * @param id Id
+ */
+function modalView( element,view )
+{
+	//alert( "startView: "+$(element).html() );
+	var action = $(element).closest('div.frame').attr('data-action');
+	var id     = $(element).closest('div.frame').attr('data-id'    );
+	var url    = createUrl(action, view, id);
+	$(element).closest('div.content').modal( { "overlayClose":"true","xxxonClose":function(){alert("close)");} } );
+	loadView( $(element).closest('div.content'), url );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
@@ -533,12 +616,12 @@ function openNewAction( name,action,id,extraId )
 	{	
 		// Neuen Tab in Hauptfenster anlegen
 		$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
-		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" data-method="show"><span><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'<img class="close" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></span></li>');
+		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><span><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'<img class="close" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></span></li>');
 		$('div#content > div.window > div.menu > div.views > ul.views').scrollLeft(9999);
 		$('div#content > div.window > div.menu > div.views > ul.views img.close').click( function()
 				{
 					// Schließen
-					$(this).parent().parent().parent().parent().parent().parent().find('div.content > div.filler').html(''); // Inhalt entfernen
+					$(this).parent().parent().parent().parent().parent().parent().find('div.content').html(''); // Inhalt entfernen
 					$(this).parent().parent().remove(); // Tab entfernen
 				} );
 		$('div#content > div.window > div.menu > div.views > ul.views li.active').click( function()
@@ -546,11 +629,18 @@ function openNewAction( name,action,id,extraId )
 				// Action-Tab wurde angeklickt
 				$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
 				$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
+				
+				// Zum angeklickten Tab scrollen
+				//$('div#content > div.window > div.menu > div.views > ul.views').scrollTo(this);
 			
 				setNewAction(action,id,extraId);
 			} );
 
 	}
+	
+	// Zum angeklickten Tab scrollen
+	
+	//$('div#content > div.window > div.menu > div.views > ul.views').scrollTo(this);
 	setNewAction( action,id,extraId );
 }
 
@@ -723,7 +813,7 @@ function doResponse(data,status,element)
 	
 	// Nächste View aufrufen
 	if	( data.control.next_view )
-		startView( $(element).closest('div.filler'),data.control.next_view );
+		startView( $(element).closest('div.content'),data.control.next_view );
 }
 
 
@@ -924,4 +1014,32 @@ function createUrl(action,subaction,id,extraid)
 		
 	}
 	return url;
+}
+
+
+/**
+ * Fenstergröße wurde verändert, nun die Größe der DIVs neu berechnen.
+ */
+function resizeWorkbench()
+{
+	// Größe des Anzeige-Bereiches im Browser ermitteln.
+	var viewportWidth  = $(window).width();
+	var viewportHeight = $(window).height();
+	
+	// OpenRat-spezifische Ermittlung der einzelnen DIV-Größen
+	var height      = viewportHeight-120;
+	var upperHeight = Math.ceil((viewportHeight-180)*(2/3));
+	var lowerHeight = viewportHeight-upperHeight-180;
+	
+	var outerWidth = Math.ceil((viewportWidth-60)*(1/4));
+	var innerWidth = viewportWidth-60-(2*outerWidth);
+	$('div#workbench > div#navigationbar > div.frame > div.window').css('width',outerWidth+'px');
+	$('div#workbench > div#contentbar    > div.frame > div.window').css('width',innerWidth+'px');
+	$('div#workbench > div#sidebar       > div.frame > div.window').css('width',outerWidth+'px');
+	$('div#workbench > div#bottombar     > div.frame > div.window').css('width',(outerWidth+innerWidth)+'px');
+
+	$('div#workbench > div#navigationbar > div.frame > div.window > div.content').css('height',height+'px');
+	$('div#workbench > div#contentbar    > div.frame > div.window > div.content').css('height',upperHeight+'px');
+	$('div#workbench > div#sidebar       > div.frame > div.window > div.content').css('height',upperHeight+'px');
+	$('div#workbench > div#bottombar     > div.frame > div.window > div.content').css('height',lowerHeight+'px');
 }
