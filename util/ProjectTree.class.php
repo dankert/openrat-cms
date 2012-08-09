@@ -57,11 +57,11 @@ class ProjectTree extends AbstractTree
 			if	( $element->isWritable() )
 			{
 				$treeElement = new TreeElement();
-				$treeElement->id   = $id;
+				$treeElement->id   = $id.'_'.$elementid;
 				$treeElement->extraId['elementid'] =  $elementid;
 				$treeElement->text = $element->name;
 				$treeElement->url  = Html::url('pageelement','edit',
-				                               $id,
+				                               $id.'_'.$elementid,
 				                               array('elementid'=>$elementid,
 				                                     REQ_PARAM_TARGETSUBACTION=>'edit',REQ_PARAM_TARGET=>'content'));
 				$treeElement->action = 'pageelement'; 
