@@ -14,10 +14,15 @@ function view_header( $name )
 <div class="menu">
 
 <div class="views">
+<div class="backward_link"><img src="<?php echo OR_THEMES_EXT_DIR ?>default/images/icon/backward_nav.gif"/></div>
+<div class="forward_link"><img src="<?php echo OR_THEMES_EXT_DIR ?>default/images/icon/forward_nav.gif"/></div>
 <ul class="views">
 <?php
 
-    foreach( explode(',',$v['views']) as $vn )
+	$viewlist = explode(',',$v['views']);
+	if ( empty($viewlist[0])) $viewlist = array();
+	
+    foreach( $viewlist as $vn )
           {
           	$tmp_text = langHtml('menu_'.$vn);
 			$liClass  = 'action'.($vn==$v['default']?' active':'');
@@ -54,25 +59,22 @@ function view_header( $name )
 <!-- Hinweis-Meldungen -->
 
 <div class="content">
-	<div class="filler">
-		<div class="loader">
-		</div>
-	</div>
+	<div class="empty" />
 </div>
 
+<!-- 
 <div class="bottom">
-
 	<div class="status">
 	</div>
 	<div class="command">
 	
 	<input type="button" class="submit" value="<?php echo lang('BUTTON_OK') ?>" onclick="$(this).closest('div.window').find('form').submit();" />
-	<!-- 
+	<!- 
 	<input type="button" value="<?php echo lang('CANCEL') ?>" />
-	-->
+	->
 	</div>
-
 </div>
+ -->
 
 </div>
 </div>
