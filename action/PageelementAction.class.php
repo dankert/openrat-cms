@@ -63,9 +63,19 @@ class PageelementAction extends Action
 
 		$this->page = Session::getObject();
 
-		if	( $this->getRequestId() != 0  )
+		$id = $this->getRequestVar('id');
+		$ids = explode('_',$id);
+		if	( count($ids) > 1 )
+			list($pageid,$elementid)= $ids;
+		else
 		{
-			$this->page = new Page( $this->getRequestId() );
+			$pageid = $this->getRequestId();
+			$elementid = $this->getRequestVar('elementid');
+		}
+		
+		if	( $pageid != 0  )
+		{
+			$this->page = new Page( $pageid );
 			$this->page->load();
 			Session::setObject( $this->page );
 		}
@@ -74,9 +84,9 @@ class PageelementAction extends Action
 			$this->page = Session::getObject();
 		}
 
-		if	( $this->hasRequestVar('elementid') )
+		if	( $elementid != 0 )
 		{
-			$this->element = new Element( $this->getRequestVar('elementid',OR_FILTER_NUMBER) );
+			$this->element = new Element( $elementid );
 			Session::setElement( $this->element );
 		}
 		else
