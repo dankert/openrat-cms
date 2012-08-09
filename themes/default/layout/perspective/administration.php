@@ -1,24 +1,21 @@
-
-<div class="container_12">
-
-<div class="grid_3">
+<div class="bar" id="navigationbar">
 <?php 
 view_header('tree');
 ?>
 </div>
 
-<div class="grid_6">
+<div class="bar" id="contentbar">
 <?php 
 view_header('content');
-//view_header('extra');
 ?>
 </div>
 
-<div class="grid_3">
+<div class="bar" id="sidebar">
 <?php 
 view_header('member');
+?>
+<?php 
 view_header('extra');
 ?>
 </div>
 
-</div>

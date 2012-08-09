@@ -1,4 +1,6 @@
 
+icons=templatelist,languagelist
+
 
 [tree]
 
@@ -17,17 +19,18 @@ views=
 action=
 refreshable=true
 
-[extra]
+[side]
 
 title=
-default=pub
-views=pub,show,edit,prop,rights
+default=prop
+views=prop,pub
 action=folder
 refreshable=true
 
-[extra2]
+[bottom]
 
 title=
 default=structure
-views=structure,info
+views=structure,info,archive,rights
 refreshable=true
+

@@ -1,8 +1,22 @@
 <?php  ?>
 
+[tree]
+views=
+
 [content]
 
-views=applications,projectmenu
+views=projectmenu
 action=start
 refreshable=false
 default=projectmenu
+
+
+[side]
+views=applications
+action=start
+refreshable=false
+default=applications
+
+
+[bottom]
+views=
