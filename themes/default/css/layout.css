@@ -59,7 +59,8 @@ div#title
 	overflow:hidden;
 	padding:5px;
 	margin:0px;
-	margin-bottom:20px;
+	margin-bottom:10px;
+	height:25px;
 }
 
 
@@ -134,14 +135,6 @@ html,body
 	height:100%;
 }
 
-div#title
-{
-	height:23px;
-}
-ul#history
-{
-	height:23px;
-}
 
 /*
 

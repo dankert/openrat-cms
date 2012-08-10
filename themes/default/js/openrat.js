@@ -1,38 +1,29 @@
 
-
+// Default-Subaction
 var DEFAULT_CONTENT_ACTION = 'edit';
-
-var menus =
-{
-	"folder" :
-	{
-		"show" : [ "show", "order", "edit" ]
-	},
-	"file" :
-	{
-		"show" : [ "show", "edit" ],
-   		"prop" : [ "compress", "uncompress" ]
-	},
-	"page" :
-	{
-		"show" : [ "show", "edit", "content" ],
-   		"prop" : [ "changetemplate" ]
-	},
-	"project" :
-	{
-		"edit" : [ "edit","export","maintenance" ],
-   		"prop" : [ "changetemplate" ],
-   		"info" : [ "info" ]
-	}
-};
-
 
 
 $(document).ready(function()
 {
 
 	refreshAll();
+	
+	// Alle 5 Minuten pingen.
+	window.setInterval( "ping()", 300000 );
 });
+
+
+
+/**
+ * Ping den Server. Führt keine Aktion aus, aber sorgt dafür, dass die Sitzung erhalten bleibt.
+ * 
+ * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
+ */
+function ping()
+{
+	$.ajax( createUrl('title','ping',0) );
+	console.log("Session-Ping");
+}
 
 
 
@@ -169,6 +160,7 @@ function refreshWorkbench()
  */
 function refreshTitleBar()
 {
+	console.debug("Reloading Titlebar");
 	$('div#title').load( createUrl('title','show',0 ),function() {
 		$(this).fadeIn('slow');
 		registerHeaderEvents();
@@ -188,6 +180,8 @@ function loadViewByName(viewName, url )
 
 function loadView(jo, url )
 {
+	console.debug("Loading "+url);
+
 	//alert("Lade "+url + " in Objekt "+jo);
 	//   E d i t o r
 	var editorConfig = {
@@ -210,11 +204,14 @@ function loadView(jo, url )
 	var submenu = "";
 	var action = $(jo).closest("div.frame").attr("data-action");
 	var method = $(jo).closest("div.frame").find("li.active").attr("data-method");
-	
+
+	/*
+	 * 
 	var menuEntries = menus[action];
 	if	( menuEntries != null )
 	{
 	}
+	 */
 		
 	//alert(action+"_"+method);
 	
@@ -1024,19 +1021,21 @@ function resizeWorkbench()
 	var viewportHeight = $(window).height();
 	
 	// OpenRat-spezifische Ermittlung der einzelnen DIV-Größen
-	var height      = viewportHeight-120;
-	var upperHeight = Math.ceil((viewportHeight-180)*(2/3));
-	var lowerHeight = viewportHeight-upperHeight-180;
+	var titleBarHeight = 80; // Title:35px
+	var viewBorder     = 37; // Padding 2x6px, View-Kopf:20px
+	var singleHeight = viewportHeight - titleBarHeight - viewBorder;
+	var upperHeight  = Math.ceil((viewportHeight - titleBarHeight - viewBorder)*(2/3));
+	var lowerHeight  = viewportHeight - upperHeight - titleBarHeight - (2*viewBorder);
 	
-	var outerWidth = Math.ceil((viewportWidth-60)*(1/4));
-	var innerWidth = viewportWidth-60-(2*outerWidth);
+	var outerWidth = Math.ceil((viewportWidth)*(1/4));
+	var innerWidth = viewportWidth-(3*6)-(2*outerWidth);
 	$('div#workbench > div#navigationbar > div.frame > div.window').css('width',outerWidth+'px');
 	$('div#workbench > div#contentbar    > div.frame > div.window').css('width',innerWidth+'px');
 	$('div#workbench > div#sidebar       > div.frame > div.window').css('width',outerWidth+'px');
-	$('div#workbench > div#bottombar     > div.frame > div.window').css('width',(outerWidth+innerWidth)+'px');
+	$('div#workbench > div#bottombar     > div.frame > div.window').css('width',(outerWidth+innerWidth+6)+'px');
 
-	$('div#workbench > div#navigationbar > div.frame > div.window > div.content').css('height',height+'px');
-	$('div#workbench > div#contentbar    > div.frame > div.window > div.content').css('height',upperHeight+'px');
-	$('div#workbench > div#sidebar       > div.frame > div.window > div.content').css('height',upperHeight+'px');
-	$('div#workbench > div#bottombar     > div.frame > div.window > div.content').css('height',lowerHeight+'px');
+	$('div#workbench > div#navigationbar > div.frame > div.window > div.content').css('height',singleHeight+'px');
+	$('div#workbench > div#contentbar    > div.frame > div.window > div.content').css('height',upperHeight +'px');
+	$('div#workbench > div#sidebar       > div.frame > div.window > div.content').css('height',upperHeight +'px');
+	$('div#workbench > div#bottombar     > div.frame > div.window > div.content').css('height',lowerHeight +'px');
 }

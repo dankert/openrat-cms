@@ -85,7 +85,7 @@ class TitleAction extends Action
 	}
 	
 	
-	public function ping()
+	public function pingView()
 	{
 		$this->setTemplateVar('ping',true      );
 		$this->setTemplateVar('time',date('r') );
