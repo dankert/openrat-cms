@@ -10,6 +10,8 @@ class Preferences
 {
 	/**
 	 * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.
+	 * 
+	 * @return Zeitpunkt der letzten Änderung als Unix-Timestamp
 	 */
 	public static function lastModificationTime()
 	{
@@ -101,7 +103,9 @@ class Preferences
 
 		// Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
 		$conf['config']['filename'         ] = $filename;
-		$conf['config']['last_modification'] = Preferences::lastModificationTime();
+		$conf['config']['last_modification'] = filemtime($filename);
+		$conf['config']['file_modification'] = date('r',filemtime($filename));
+		$conf['config']['read'             ] = date('r');
 		return $conf;
 	}
 	

@@ -50,12 +50,14 @@ require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
 // Vorhandene Konfiguration aus der Sitzung lesen.
 $conf = Session::getConfig();
  
-// Wenn Konfiguration noch nicht in Session vorhanden, dann
-// aus Datei lesen.
+// Konfiguration lesen.
+// Wenn Konfiguration noch nicht in Session vorhanden oder die Konfiguration geändert wurde (erkennbar anhand des Datei-Datums)
+// dann die Konfiguration neu einlesen.
 if	( !is_array( $conf ) || $conf['config']['auto_reload'] && Preferences::lastModificationTime()>$conf['config']['last_modification'] )
 {
 	// Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
-	session_unset();
+	if	( is_array($conf) && $conf['config']['session_destroy_on_config_reload'] ) 
+		session_unset();
 	
 	$conf = Preferences::load();
 	#echo "<code><tt>";
