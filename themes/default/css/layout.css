@@ -499,14 +499,6 @@ table.main
 }
 
 
-/* Eingabefelder */
-div.window input.text,
-div.window textarea
-{
-	border:2px solid;
-	padding:2px;
-}
-
 
 div.window input.checkbox,
 div.window input.radio
@@ -1018,6 +1010,14 @@ body
 div#workbench > div.bar
 {
 	float:left;
+	
+	border:1px solid gray;
+	margin:3px;
+	padding:0px;
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -khtml-border-radius:5px;
+    border-radius:5px;
 }
 
 div#workbench > div.bar

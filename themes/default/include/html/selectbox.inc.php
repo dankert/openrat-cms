@@ -14,7 +14,7 @@ if ( $attr_addempty!==FALSE  )
 	else
 		$attr_tmp_list = array(''=>'- '.lang($attr_addempty).' -')+$attr_tmp_list;
 }
-?><select<?php if ($attr_readonly) echo ' disabled="disabled"' ?> id="id_<?php echo $attr_name ?>"  name="<?php echo $attr_name; if ($attr_multiple) echo '[]'; ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
+?><div class="inputholder"><select<?php if ($attr_readonly) echo ' disabled="disabled"' ?> id="id_<?php echo $attr_name ?>"  name="<?php echo $attr_name; if ($attr_multiple) echo '[]'; ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
 if (count($$attr_list)<=1) echo ' disabled="disabled"';
 if	($attr_multiple) echo ' multiple="multiple"';
 if (in_array($attr_name,$errors)) echo ' style="background-color:red; border:2px dashed red;"';
@@ -51,7 +51,7 @@ echo ' size="'.intval($attr_size).'"';
 
 			echo '>'.$box_value.'</option>';
 		}
-?></select><?php
+?></select></div><?php
 if (count($$attr_list)==0) echo '<input type="hidden" name="'.$attr_name.'" value="" />';
 if (count($$attr_list)==1) echo '<input type="hidden" name="'.$attr_name.'" value="'.$box_key.'" />';
 }

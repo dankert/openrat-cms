@@ -68,26 +68,40 @@ div.inputholder
 	border:1px solid grey;
 	margin:0px;
 	padding:4px;
-	-moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    -khtml-border-radius:5px;
-    border-radius:5px;
+	-moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    -khtml-border-radius:3px;
+    border-radius:3px;
 }
 
 
-input
+input,
+textarea,
+select
 {
 	border:0px;
 	border-bottom:1px solid silver;
 	padding:2px;
 	margin:0px;
-}
-input.error,
-.error
-{
-	border-bottom:1px dotted red !important;
+	background-color:white;
 }
 
+input.error,
+textarea.error,
+select.error
+{
+	border-bottom:1px dotted black !important;
+}
+
+div.inputholder.error
+{
+	border:1px solid red !important;
+}
+
+input.hint
+{
+	color:grey;
+}
 
 /* Zwischen-Ueberschriften */
 fieldset

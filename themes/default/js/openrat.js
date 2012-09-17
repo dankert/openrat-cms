@@ -331,6 +331,9 @@ function loadView(jo, url )
 					          };
 			//$(jo).find('.htmleditor').wymeditor(wymSettings);
 			resizeWorkbench();
+			
+			$(jo).find('input[data-hint]').orHint();
+
 		});
 }
 
@@ -349,6 +352,8 @@ function registerHeaderEvents()
 	
 	$('div.search input').orSearch( { dropdown:'div.search div.dropdown' } );
 
+	/*
+	 * 
 	// V e r l a u f
 	$('div#header div.history').hover( function(){
 		$('div#header div.history div.dropdown').html('');
@@ -364,9 +369,8 @@ function registerHeaderEvents()
 			} } );
 		$('div#header div.history div.dropdown').fadeIn();
 	});
-	
-	
-	
+	 */
+
 	
 	/*
 	$base = defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/editor/':'./editor/editor/';
@@ -1000,13 +1004,13 @@ function resizeWorkbench()
 	
 	// OpenRat-spezifische Ermittlung der einzelnen DIV-Größen
 	var titleBarHeight = 80; // Title:35px
-	var viewBorder     = 37; // Padding 2x6px, View-Kopf:20px
+	var viewBorder     = 40; // Padding 2x6px, View-Kopf:20px
 	var singleHeight = viewportHeight - titleBarHeight - viewBorder;
 	var upperHeight  = Math.ceil((viewportHeight - titleBarHeight - viewBorder)*(2/3));
 	var lowerHeight  = viewportHeight - upperHeight - titleBarHeight - (2*viewBorder);
 	
 	var outerWidth = Math.ceil((viewportWidth)*(1/4));
-	var innerWidth = viewportWidth-(3*6)-(2*outerWidth);
+	var innerWidth = viewportWidth-(3*20)-(2*outerWidth);
 	$('div#workbench > div#navigationbar > div.frame > div.window').css('width',outerWidth+'px');
 	$('div#workbench > div#contentbar    > div.frame > div.window').css('width',innerWidth+'px');
 	$('div#workbench > div#sidebar       > div.frame > div.window').css('width',outerWidth+'px');
