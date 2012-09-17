@@ -47,7 +47,7 @@ class GrouplistAction extends Action
 		foreach( Group::getAll() as $id=>$name )
 		{
 			$list[$id]         = array();
-			$list[$id]['url' ] = Html::url('main','group',$id,array(REQ_PARAM_TARGETSUBACTION=>'edit'));
+			$list[$id]['id'  ] = $id;
 			$list[$id]['name'] = $name;
 		}
 

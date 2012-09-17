@@ -1,28 +1,32 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header views="add"></header>
-	<dummy>
-		<window name="GLOBAL_TEMPLATES">
-			<table>
-				<row class="headline">
-					<cell>
-						<text key="name"></text>
-					</cell>
-				</row>
-				<list list="templates" extract="true">
-					<row class="data">
-						<cell url="var:url">
-							<text var="name"></text>
-						</cell>
-					</row>
-				</list>
-			</table>
-			<if empty="templates">
-				<text text="GLOBAL_NO_TEMPLATES_AVAILABLE_DESC"></text>
-			</if>
-			<link class="action" action="template" subaction="add">
-				<text key="menu_template_add"></text>
-			</link>
-		</window>
-	</dummy>
+	<table>
+		<row class="headline">
+			<cell>
+				<text key="name"></text>
+			</cell>
+		</row>
+		<list list="templates" extract="true">
+			<row class="data">
+				<cell id="var:id" name="var:name" action="template">
+					<text var="name"></text>
+				</cell>
+			</row>
+		</list>
+		
+		<row class="data">
+			<cell colspan="1">
+				<link type="view" subaction="add">
+					<image icon="add"/>
+					<text text="new"/>
+				</link>
+			</cell>
+		</row>
+	</table>
+	<if empty="templates">
+		<text text="GLOBAL_NO_TEMPLATES_AVAILABLE_DESC"></text>
+	</if>
+	<link class="action" action="template" subaction="add">
+		<text key="menu_template_add"></text>
+	</link>
 </output>

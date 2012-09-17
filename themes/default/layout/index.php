@@ -29,12 +29,20 @@
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/sets/default/style.css" />
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-1.6.2.min.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.scrollTo.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.simplemodal.1.4.2.min.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.mjs.nestedSortable.js"></script>
+
+  <!-- OpenRat internal JS -->
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/openrat.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orHint.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orSearch.js"></script>
+  
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/jquery.markitup.js"></script>
-  <!-- 
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/ckeditor.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/adapters/jquery.js"></script>
+  <!-- 
   <script src="/~dankert/cms-test/cms09/themes/default/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>
   <script src="/~dankert/cms/themes/default/js/xxxxxxxxxxxjquery-plugin-orSearchBox.js"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" >

@@ -59,7 +59,8 @@ div#title
 	overflow:hidden;
 	padding:5px;
 	margin:0px;
-	margin-bottom:20px;
+	margin-bottom:10px;
+	height:25px;
 }
 
 
@@ -134,14 +135,6 @@ html,body
 	height:100%;
 }
 
-div#title
-{
-	height:23px;
-}
-ul#history
-{
-	height:23px;
-}
 
 /*
 
@@ -169,21 +162,13 @@ div.window > div.menu
 */
 
 
-div.window div.content
-{
-    height:auto;
-}
 div.window div.status
 {
 	height:35px;
 }
-div.window div.content div.filler
+div.window > div.content
 {
-	height:auto;
-	/*
-	height:30%;
-	overflow:auto;
-	*/
+	xxoverflow-x:auto;
 }
 
 
@@ -229,22 +214,10 @@ div.content a.help,
 div.content input.ok,
 div.command > input.submit
 {
-	float:left;
+	/*float:left;*/
 }
 
 
-/*   S c h a t t e n   */
-div.content a.action,
-div.content a.help,
-div.content input.ok,
-div#title,
-div.window,
-div#noticebar
-{
-	-webkit-box-shadow: 3px 2px 5px gray;
-    -moz-box-shadow: 3px 2px 5px gray;
-    box-shadow: 3px 2px 5px gray;
-}
 
 a.help
 {
@@ -393,14 +366,6 @@ a.editorlink:visited
 	text-decoration:none;
 }
 
-/* Voreingestellte Schriftart */
-body,
-body th,
-body td
-{
-	font-family:Arial;
-	font-size:13px;
-}
 
 /* Hauptfenster */
 body.main
@@ -801,12 +766,6 @@ div.tree.closed
 	background: url(../images/tree_plus.png) no-repeat;
 }
 
-div#tree div.content,
-ul.tree li.last,
-ul.tree li:last-child
-{
-	background-color:white;
-}
 
 body > div
 {
@@ -830,21 +789,33 @@ body > div
 
 div.window div.menu > div.icons
 {
+	/*float:right;*/
+}
+
+div.backward_link
+{
+	float:left;
+}
+div.forward_link
+{
 	float:right;
 }
 
-
-div.window div.menu
+div.window > div.menu
 {
 	padding-top:20px;
-	padding-left:5px;
-	padding-right:5px;
+	padding-left:0px;
+	padding-right:0px;
 	border-bottom:2px solid grey;	
 }
 
-div.window div.menu ul.views  { /* general settings */
-text-align: left; /* set to left, right or center */
-list-style-type: none;
+
+div.window div.menu ul.views
+{
+	text-align: left; /* set to left, right or center */
+	list-style-type: none;
+	overflow: hidden; /* Gescrollt wird hier mit JavaScript */
+	white-space:nowrap;
 }
 
 div.window ul.views li
@@ -871,15 +842,6 @@ div.window ul.views li
 }
 
 
-div.window ul.views > li.active {
-	background-color: grey;
-	color: white;
-}
-
-div.window ul.views li:hover {
-	background: grey;
-	color: white;
-}
 
 
 
@@ -914,13 +876,8 @@ div.window {
 
 
 div.window {
+	margin:3px;
 	padding:0px;
-	border:1px solid grey;
-	
-	-moz-border-radius:3px; /* Mozilla */
-    -webkit-border-radius:3px; /* Webkit */
-    -khtml-border-radius:3px; /* Konqui */
-    border-radius:3px;
 }
 
 div.window div.content table
@@ -974,10 +931,6 @@ ul.tree div
 cursor:pointer;
 }
 
-table tr.data,
-div.content pre {
-    background-color: white;
-}
 
 /* Hintergrund Fenster */
 /*
@@ -987,14 +940,6 @@ div.window {
 }
 */
 
-/* Sonstiger Fensterhintergrund */
-div#header,                   /* Titelleite-Hintergrund */
-div.window ul.menu li a,      /* Tabs */
-xdiv.window ul.menu li > span,  /* Tabs */
-div.window div.header /* Fenster-Header */
-{
-	background-color: gray;
-}
 
 
 
@@ -1032,21 +977,26 @@ div.progress
 
 
 /*   V o l l b i l d   */
-div.window.fullscreen
+div#workbench div.bar > div.frame > div.window.fullscreen
 {
 	display:block;
 	z-index:109;
 
     /*set the div in the top-left corner of the screen*/
-    xposition:absolute;
     position:fixed;
     top:0;
     left:0;
     background-color:silver;
+    margin:0px;
     
     /*set the width and height to 100% of the screen*/
-    width:100%;
-    height:100%;
+    width:100% !important;
+    height:100% !important;
+}
+div#workbench div.bar > div.frame > div.window.fullscreen > div.content
+{
+    width:100% !important;
+    height:100% !important;
 }
 
 .invisible
@@ -1055,357 +1005,90 @@ div.window.fullscreen
 }
 
 
+div#workbench
+{
+	width:100%;
+}
+
+body
+{
+	overflow:hidden;
+}
+
+div#workbench > div.bar
+{
+	float:left;
+}
+
+div#workbench > div.bar
+{
+}
+
+
+
+div#workbench > div.bar > div.frame > div.window > div.content
+{
+	overflow:auto;
+}
+
 
 /*
-	Variable Grid System (Fluid Version).
-	Learn more ~ http://www.spry-soft.com/grids/
-	Based on 960 Grid System - http://960.gs/ & 960 Fluid - http://www.designinfluences.com/
-
-	Licensed under GPL and MIT.
-*/
-
-
-/* Containers
-----------------------------------------------------------------------------------------------------*/
-.container_12 {
-	width: 96%;
-	margin-left: 2%;
-	margin-right: 2%;
+ * Formular-Button-Leiste
+ */
+div.window {
+	position:relative;
 }
-
-/* Grid >> Global
-----------------------------------------------------------------------------------------------------*/
-
-.grid_1,
-.grid_2,
-.grid_3,
-.grid_4,
-.grid_5,
-.grid_6,
-.grid_7,
-.grid_8,
-.grid_9,
-.grid_10,
-.grid_11,
-.grid_12 {
-	display:inline;
-	float: left;
-	position: relative;
-	margin-left: 1%;
-	margin-right: 1%;
+div.content div.bottom
+{
+	height:30px;
+	width:200px;
+	position:absolute;
+	bottom:30px;
+	right:0px;
+	opacity:0.7;
 }
-
-/* Grid >> Children (Alpha ~ First, Omega ~ Last)
-----------------------------------------------------------------------------------------------------*/
-
-.alpha {
-	margin-left: 0;
-}
-
-.omega {
-	margin-right: 0;
-}
-
-/* Grid >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-
-.container_12 .grid_1 {
-	width:6.333%;
-}
-
-.container_12 .grid_2 {
-	width:14.667%;
-}
-
-.container_12 .grid_3 {
-	width:23.0%;
-}
-
-.container_12 .grid_4 {
-	width:31.333%;
-}
-
-.container_12 .grid_5 {
-	width:39.667%;
-}
-
-.container_12 .grid_6 {
-	width:48.0%;
-}
-
-.container_12 .grid_7 {
-	width:56.333%;
-}
-
-.container_12 .grid_8 {
-	width:64.667%;
-}
-
-.container_12 .grid_9 {
-	width:73.0%;
-}
-
-.container_12 .grid_10 {
-	width:81.333%;
-}
-
-.container_12 .grid_11 {
-	width:89.667%;
-}
-
-.container_12 .grid_12 {
-	width:98.0%;
+div.content > form
+{
+	padding-bottom:45px;
 }
 
 
-
-/* Prefix Extra Space >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-
-.container_12 .prefix_1 {
-	padding-left:8.333%;
-}
-
-.container_12 .prefix_2 {
-	padding-left:16.667%;
-}
-
-.container_12 .prefix_3 {
-	padding-left:25.0%;
-}
-
-.container_12 .prefix_4 {
-	padding-left:33.333%;
-}
-
-.container_12 .prefix_5 {
-	padding-left:41.667%;
-}
-
-.container_12 .prefix_6 {
-	padding-left:50.0%;
-}
-
-.container_12 .prefix_7 {
-	padding-left:58.333%;
-}
-
-.container_12 .prefix_8 {
-	padding-left:66.667%;
-}
-
-.container_12 .prefix_9 {
-	padding-left:75.0%;
-}
-
-.container_12 .prefix_10 {
-	padding-left:83.333%;
-}
-
-.container_12 .prefix_11 {
-	padding-left:91.667%;
-}
-
-
-
-/* Suffix Extra Space >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-
-.container_12 .suffix_1 {
-	padding-right:8.333%;
-}
-
-.container_12 .suffix_2 {
-	padding-right:16.667%;
-}
-
-.container_12 .suffix_3 {
-	padding-right:25.0%;
-}
-
-.container_12 .suffix_4 {
-	padding-right:33.333%;
-}
-
-.container_12 .suffix_5 {
-	padding-right:41.667%;
-}
-
-.container_12 .suffix_6 {
-	padding-right:50.0%;
-}
-
-.container_12 .suffix_7 {
-	padding-right:58.333%;
-}
-
-.container_12 .suffix_8 {
-	padding-right:66.667%;
-}
-
-.container_12 .suffix_9 {
-	padding-right:75.0%;
-}
-
-.container_12 .suffix_10 {
-	padding-right:83.333%;
-}
-
-.container_12 .suffix_11 {
-	padding-right:91.667%;
-}
-
-
-
-/* Push Space >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-
-.container_12 .push_1 {
-	left:8.333%;
-}
-
-.container_12 .push_2 {
-	left:16.667%;
-}
-
-.container_12 .push_3 {
-	left:25.0%;
-}
-
-.container_12 .push_4 {
-	left:33.333%;
-}
-
-.container_12 .push_5 {
-	left:41.667%;
-}
-
-.container_12 .push_6 {
-	left:50.0%;
-}
-
-.container_12 .push_7 {
-	left:58.333%;
-}
-
-.container_12 .push_8 {
-	left:66.667%;
-}
-
-.container_12 .push_9 {
-	left:75.0%;
-}
-
-.container_12 .push_10 {
-	left:83.333%;
-}
-
-.container_12 .push_11 {
-	left:91.667%;
-}
-
-
-
-/* Pull Space >> 12 Columns
-----------------------------------------------------------------------------------------------------*/
-
-
-.container_12 .pull_1 {
-	left:-8.333%;
-}
-
-.container_12 .pull_2 {
-	left:-16.667%;
-}
-
-.container_12 .pull_3 {
-	left:-25.0%;
-}
-
-.container_12 .pull_4 {
-	left:-33.333%;
-}
-
-.container_12 .pull_5 {
-	left:-41.667%;
-}
-
-.container_12 .pull_6 {
-	left:-50.0%;
-}
-
-.container_12 .pull_7 {
-	left:-58.333%;
-}
-
-.container_12 .pull_8 {
-	left:-66.667%;
-}
-
-.container_12 .pull_9 {
-	left:-75.0%;
-}
-
-.container_12 .pull_10 {
-	left:-83.333%;
-}
-
-.container_12 .pull_11 {
-	left:-91.667%;
-}
-
-
-
-
-/* Clear Floated Elements
-----------------------------------------------------------------------------------------------------*/
-
-/* http://sonspring.com/journal/clearing-floats */
-
-.clear {
-	clear: both;
-	display: block;
-	overflow: hidden;
+/* Pfeile nur anzeigen, wenn Maus über der Titelleiste */
+div.views > div.backward_link,
+div.views > div.forward_link
+{
 	visibility: hidden;
-	width: 0;
-	height: 0;
 }
-
-/* http://perishablepress.com/press/2008/02/05/lessons-learned-concerning-the-clearfix-css-hack */
-
-.clearfix:after {
-	clear: both;
-	content: ' ';
-	display: block;
-	font-size: 0;
-	line-height: 0;
-	visibility: hidden;
-	width: 0;
-	height: 0;
-}
-
-.clearfix {
-	display: inline-block;
-}
-
-* html .clearfix {
-	height: 1%;
-}
-
-.clearfix {
-	display: block;
+div.views:HOVER > div.backward_link,
+div.views:HOVER > div.forward_link
+{
+	visibility: visible;
 }
 
 
+div#shortcuts {
+	height:24px;
+	margin-left:10px;
+}
+div#shortcuts > div.shortcut {
+	width:24px;
+	height:24px;
+	margin-left:5px;
+	float:left;
+    opacity:0.8;
+}
 
-
-
-
-
+div#shortcuts > div.shortcut:HOVER {
+	
+	xborder: 1px solid gray;
+	x-moz-border-radius:2px; /* Mozilla */
+    x-webkit-border-radius:2px; /* Webkit */
+    x-khtml-border-radius:2px; /* Konqui */
+    opacity:1.0;
+    position:relative;
+    bottom:3px;
+	
+}
 
 
 
@@ -1472,9 +1155,10 @@ div.window.fullscreen
 body > div#header {
 	display:block;
 }
+
 ul#history >  li {
 	
-	display:inline;
+	xdisplay:inline;
 	margin:5px;
 	padding:5px;
 	border:1px solid gray;
@@ -1483,13 +1167,18 @@ ul#history >  li {
 }
 ul#history >  li.active {
 	
-	display:inline;
+	xdisplay:inline;
 	margin:5px;
 	padding:5px;
 	border:1px solid black;
 	background-color: white;
 	color:black;
 }
+
+ul#history {
+	display:none;
+}
+
 
 table td.readonly {
 	font-style: italic;
@@ -1503,3 +1192,8 @@ table td.changed {
 	font-style: normal;
 	font-weight: bold;
 }
+
+
+/* Modale Dialoge */
+#simplemodal-overlay {background-color:#000;}
+#simplemodal-container {background-color:#333; border:8px solid #444; padding:12px;}

@@ -94,7 +94,7 @@ class LanguageAction extends Action
 	 * Diese Sprache wird benutzt beim Ausw?hlen des Projektes sowie
 	 * als Default-Sprache bei mehrsprachigen Webseiten ("content-negotiation") 
 	 */
-	function setdefault()
+	function setdefaultPost()
 	{
 		$this->language->setDefault();
 	}

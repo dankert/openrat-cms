@@ -63,7 +63,7 @@
 			break;
 			
 		default:
-			$tmp_function_call = "alert('TODO');";
+			$tmp_function_call = "alert('Link-attribute type required');";
 	}
 
 //	if	( substr($tmp_url,0,10) != 'javascript' )

@@ -1,17 +1,35 @@
 
+// Default-Subaction
+var DEFAULT_CONTENT_ACTION = 'edit';
+
 
 $(document).ready(function()
 {
-	
+
 	refreshAll();
 	
+	// Alle 5 Minuten pingen.
+	window.setInterval( "ping()", 300000 );
 });
+
+
+
+/**
+ * Ping den Server. Führt keine Aktion aus, aber sorgt dafür, dass die Sitzung erhalten bleibt.
+ * 
+ * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
+ */
+function ping()
+{
+	$.ajax( createUrl('title','ping',0) );
+	console.log("Session-Ping");
+}
 
 
 
 function refreshAll()
 {
-	$('ul#history').sortable();
+	//$('ul#history').sortable();
 	
 	refreshTitleBar();
 	refreshWorkbench();
@@ -30,9 +48,7 @@ function refreshAllRefreshables() {
 		var extraid = p.attr('data-extra');
 		//alert(method+' '+action);
 		
-		
-		//alert('go2');
-		loadView( p.find('div.filler'),createUrl(action,method,id,extraid));
+		loadView( p.find('div.content'),createUrl(action,method,id,extraid));
 	});
 	
 }
@@ -50,7 +66,7 @@ function refreshActualView(element) {
 		//alert(method+' '+action);
 		
 		
-		loadView( p.find('div.filler'),createUrl(action,method,id));
+		loadView( p.find('div.content'),createUrl(action,method,id));
 	});
 
 }
@@ -75,18 +91,36 @@ function refreshWorkbench()
 			
 			
 			//alert('go2');
-			loadView( p.find('div.filler'),createUrl(action,method,0));
+			loadView( p.find('div.content'),createUrl(action,method,0));
 		});
+
+		// OnClick-Handler zum Scrollen der Tabs
+		$('div.backward_link').click( function() {
+			var $views = $(this).closest('div.views').find('ul.views');
+			//$views.scrollTo( -50 );
+			var $prev = $views.find('li.action.active').prev();
+			$views.scrollTo( $prev,500,{"axis":"x"} );
+			$prev.click();
+		}
+		);
+		$('div.forward_link').click( function() {
+			var $views = $(this).closest('div.views').find('ul.views');
+			var $next  = $views.find('li.action.active').next();
+			$views.scrollTo( $next,500,{"axis":"x"} );
+			$next.click();
+		}
+		);
 		
 		// OnClick-Handler für Klick auf einen Tab-Reiter.
 		$('ul.views > li.action').click( function() {
+			//alert("klicke auf "+$(this).html() );
 			var method = $(this).attr('data-method');
 			var p = $(this).closest('div.frame');
 			var action = p.attr('data-action');
 			var id     = p.attr('data-id');
 			p.find('ul.views li.active').removeClass('active');
 			$(this).addClass('active');
-			loadView( p.find('div.filler'),createUrl(action,method,id));
+			loadView( p.find('div.content'),createUrl(action,method,id));
 		});
 		
 		// Drag n Drop für Views
@@ -111,6 +145,13 @@ function refreshWorkbench()
 	
 	// Modale Dialoge
 	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
+	
+	// View-Größe initial berechnen.
+	resizeWorkbench();
+	
+	$(window).resize( function() {
+		resizeWorkbench();
+	} );
 }
 
 
@@ -119,6 +160,7 @@ function refreshWorkbench()
  */
 function refreshTitleBar()
 {
+	console.debug("Reloading Titlebar");
 	$('div#title').load( createUrl('title','show',0 ),function() {
 		$(this).fadeIn('slow');
 		registerHeaderEvents();
@@ -138,6 +180,8 @@ function loadViewByName(viewName, url )
 
 function loadView(jo, url )
 {
+	console.debug("Loading "+url);
+
 	//alert("Lade "+url + " in Objekt "+jo);
 	//   E d i t o r
 	var editorConfig = {
@@ -149,14 +193,29 @@ function loadView(jo, url )
 	};
 
 	/*
-	if	( $(jo).find('textarea#pageelement_edit_editor').length > 0 )
+	if	( $(jo).find('textarea#pageelement_edit_editor').size() > 0 )
 	{
 	var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
 	if (o) o.destroy();
 	}
 	*/
+
+	// Untermenü ermitteln.
+	var submenu = "";
+	var action = $(jo).closest("div.frame").attr("data-action");
+	var method = $(jo).closest("div.frame").find("li.active").attr("data-method");
+
+	/*
+	 * 
+	var menuEntries = menus[action];
+	if	( menuEntries != null )
+	{
+	}
+	 */
+		
+	//alert(action+"_"+method);
 	
-	$(jo).empty().html('<div class="loader" />').load(url,function(response, status, xhr) {
+	$(jo).empty().html('<div class="loader" />'+submenu).load(url,function(response, status, xhr) {
 			$(jo).slideDown('fast');
 			
 			if	( status == "error" )
@@ -175,10 +234,13 @@ function loadView(jo, url )
 			//CKEDITOR.replace('text',{
 		    //    customConfig : 'config-openrat.js'
 		    //});
-			if ( $(jo).find('form').length > 0 )
-				$(jo).closest('div.frame').find('div.bottom > div.command > input').removeClass('invisible');
+			
+			var $formVorhanden = $(jo).find('form').size() > 0;
+			var $formInput     = $(jo).closest('div.frame').find('div.bottom > div.command > input')
+			if	( $formVorhanden )
+				$formInput.removeClass('invisible');
 			else
-				$(jo).closest('div.frame').find('div.bottom > div.command > input').addClass('invisible');
+				$formInput.addClass('invisible');
 
 			if ( $('div.window form input[type=password]').length>0 )
 			{
@@ -218,9 +280,7 @@ function loadView(jo, url )
 				   }
 			});
 			
-			/*
-			 * 
-			if	( $(jo).find('textarea#pageelement_edit_editor').length > 0 )
+			if	( $(jo).find('textarea#pageelement_edit_editor').size() > 0 )
 			{
 				var instance = CKEDITOR.instances['pageelement_edit_editor'];
 			    if(instance)
@@ -229,7 +289,6 @@ function loadView(jo, url )
 			    }
 			    CKEDITOR.replace( 'pageelement_edit_editor',{customConfig:'config-openrat.js'} );
 			}
-			 */
 			
 			// Wiki-Editor
 			var markitupSettings = {	markupSet:  [ 	
@@ -270,7 +329,8 @@ function loadView(jo, url )
 					               {'name': 'Preview', 'title': 'Preview', 'css': 'wym_tools_preview'}
 					             ]
 					          };
-			$(jo).find('.htmleditor').wymeditor(wymSettings);
+			//$(jo).find('.htmleditor').wymeditor(wymSettings);
+			resizeWorkbench();
 		});
 }
 
@@ -282,35 +342,13 @@ function registerHeaderEvents()
 	$('div.search input').blur( function(){
 		$('div.search input div.dropdown').fadeOut();
 	});
+	
+	// Hints...
+	$('div.search input').orHint();
 
 	
-	$('div.search input').keyup( function(){
-		var val = $(this).val();
-		if	( val.length > 3 )
-		{
-			$('div.search div.dropdown').html('');
-			$.ajax( { 'type':'GET',url:'./dispatcher.php?action=search&subaction=quicksearch&search='+val, data:null, success:function(data, textStatus, jqXHR)
-				{
-					for( id in data.result )
-					{
-						var result = data.result[id];
-						
-						//$('div.search input div.dropdown').append('Hallo '+result);
-						// Suchergebnis-Zeile in das Ergebnis schreiben.
-						$('div.search div.dropdown').append('<div title="'+result.desc+'"><a href="javascript:loadViewByName(\'content\',\''+result.url+'\');"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</a></div>');
-					}
-				} } );
-			$('div.search div.dropdown').fadeIn();
-			
-			
-		}
-		else
-		{
-			$('div.search input div.dropdown').fadeOut();
-		}
-	});
-	
-	
+	$('div.search input').orSearch( { dropdown:'div.search div.dropdown' } );
+
 	// V e r l a u f
 	$('div#header div.history').hover( function(){
 		$('div#header div.history div.dropdown').html('');
@@ -367,13 +405,13 @@ function fullscreen( element ) {
 function loadTree()
 {
 	// Oberstes Tree-Element erzeugen
-	$('div#tree div.window div.content div.filler').html("&nbsp;");
+	$('div#tree div.window div.content').html("&nbsp;");
 	//$('div#tree div.window div.content').append('<ul class="tree"><li class="root"><div>Baum</div></li></ul>');
 	
 	// Wurzel des Baums laden
 	//loadBranch( $('div#tree ul.tree > li'),'root',0);
-	loadBranch( $('div#tree div.content div.filler'),'root',0);
-	$('div#tree div.content div.filler > ul.tree > li > div.tree').delay(500).click();
+	loadBranch( $('div#tree div.content'),'root',0);
+	$('div#tree div.content > ul.tree > li > div.tree').delay(500).click();
 }
 
 
@@ -477,7 +515,27 @@ function startView( element,view )
 	var action = $(element).closest('div.frame').attr('data-action');
 	var id     = $(element).closest('div.frame').attr('data-id'    );
 	var url    = createUrl(action, view, id);
-	loadView( $(element).closest('div.filler'), url );
+	loadView( $(element).closest('div.content'), url );
+	
+	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
+	// refreshAllRefreshables();
+}
+
+
+/**
+ * Setzt neue modale View und aktualisiert alle Fenster.
+ * @param element
+ * @param action Action
+ * @param id Id
+ */
+function modalView( element,view )
+{
+	//alert( "startView: "+$(element).html() );
+	var action = $(element).closest('div.frame').attr('data-action');
+	var id     = $(element).closest('div.frame').attr('data-id'    );
+	var url    = createUrl(action, view, id);
+	$(element).closest('div.content').modal( { "overlayClose":"true","xxxonClose":function(){alert("close)");} } );
+	loadView( $(element).closest('div.content'), url );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
@@ -515,9 +573,47 @@ function openNewAction( name,action,id,extraId )
 				setNewAction(action,id,extraId);
 			} );
 	}
+
+	// Andere Tabs auf inaktiv setzen
+	$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
 	
+	// Tab schon vorhanden?
+	if	( $('div#content > div.window > div.menu > div.views > ul.views  li.'+action+'.id'+id).length > 0 )
+	{
+		// Ja, Tab schon vorhanden
+		// Gewünschtes Tab aktiv setzen
+		$('div#content > div.window > div.menu > div.views > ul.views li.'+action+'.id'+id).addClass('active');
+	}
+	else
+	{	
+		// Neuen Tab in Hauptfenster anlegen
+		$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
+		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><span><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'<img class="close" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></span></li>');
+		$('div#content > div.window > div.menu > div.views > ul.views').scrollLeft(9999);
+		$('div#content > div.window > div.menu > div.views > ul.views img.close').click( function()
+				{
+					// Schließen
+					$(this).parent().parent().parent().parent().parent().parent().find('div.content').html(''); // Inhalt entfernen
+					$(this).parent().parent().remove(); // Tab entfernen
+				} );
+		$('div#content > div.window > div.menu > div.views > ul.views li.active').click( function()
+			{
+				// Action-Tab wurde angeklickt
+				$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
+				$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
+				
+				// Zum angeklickten Tab scrollen
+				//$('div#content > div.window > div.menu > div.views > ul.views').scrollTo(this);
+			
+				setNewAction(action,id,extraId);
+			} );
+
+	}
+	
+	// Zum angeklickten Tab scrollen
+	
+	//$('div#content > div.window > div.menu > div.views > ul.views').scrollTo(this);
 	setNewAction( action,id,extraId );
-	
 }
 
 
@@ -689,7 +785,7 @@ function doResponse(data,status,element)
 	
 	// Nächste View aufrufen
 	if	( data.control.next_view )
-		startView( $(element).closest('div.filler'),data.control.next_view );
+		startView( $(element).closest('div.content'),data.control.next_view );
 }
 
 
@@ -890,4 +986,34 @@ function createUrl(action,subaction,id,extraid)
 		
 	}
 	return url;
+}
+
+
+/**
+ * Fenstergröße wurde verändert, nun die Größe der DIVs neu berechnen.
+ */
+function resizeWorkbench()
+{
+	// Größe des Anzeige-Bereiches im Browser ermitteln.
+	var viewportWidth  = $(window).width();
+	var viewportHeight = $(window).height();
+	
+	// OpenRat-spezifische Ermittlung der einzelnen DIV-Größen
+	var titleBarHeight = 80; // Title:35px
+	var viewBorder     = 37; // Padding 2x6px, View-Kopf:20px
+	var singleHeight = viewportHeight - titleBarHeight - viewBorder;
+	var upperHeight  = Math.ceil((viewportHeight - titleBarHeight - viewBorder)*(2/3));
+	var lowerHeight  = viewportHeight - upperHeight - titleBarHeight - (2*viewBorder);
+	
+	var outerWidth = Math.ceil((viewportWidth)*(1/4));
+	var innerWidth = viewportWidth-(3*6)-(2*outerWidth);
+	$('div#workbench > div#navigationbar > div.frame > div.window').css('width',outerWidth+'px');
+	$('div#workbench > div#contentbar    > div.frame > div.window').css('width',innerWidth+'px');
+	$('div#workbench > div#sidebar       > div.frame > div.window').css('width',outerWidth+'px');
+	$('div#workbench > div#bottombar     > div.frame > div.window').css('width',(outerWidth+innerWidth+6)+'px');
+
+	$('div#workbench > div#navigationbar > div.frame > div.window > div.content').css('height',singleHeight+'px');
+	$('div#workbench > div#contentbar    > div.frame > div.window > div.content').css('height',upperHeight +'px');
+	$('div#workbench > div#sidebar       > div.frame > div.window > div.content').css('height',upperHeight +'px');
+	$('div#workbench > div#bottombar     > div.frame > div.window > div.content').css('height',lowerHeight +'px');
 }

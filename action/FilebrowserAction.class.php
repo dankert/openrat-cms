@@ -81,7 +81,7 @@ class FilebrowserAction extends ObjectAction
 	 * Datei-Upload.
 	 *
 	 */
-	function directupload()
+	public function directuploadPost()
 	{
 		$upload = new Upload( $this->getRequestVar('name','abc') );
 		
@@ -111,7 +111,7 @@ class FilebrowserAction extends ObjectAction
 	}
 
 	
-	function browse()
+	public function browseView()
 	{
 		global $conf_php;
 		$funcNum = $this->getRequestVar('CKEditorFuncNum',OR_FILTER_NUMBER);
@@ -176,7 +176,7 @@ class FilebrowserAction extends ObjectAction
 	}
 
 
-	function addfolder()
+	public function addfolderPost()
 	{
 		
 		$filename = $this->getRequestVar('name');
@@ -208,7 +208,7 @@ class FilebrowserAction extends ObjectAction
 	
 	
 	
-	function upload()
+	public function uploadPost()
 	{
 		if	( $this->hasRequestVar('name') )
 			$name = $this->getRequestVar('name','abc');

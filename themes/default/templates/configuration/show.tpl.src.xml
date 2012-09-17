@@ -1,6 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header views="create"></header>
 	<table>
 		<row class="headline">
 			<cell class="help">

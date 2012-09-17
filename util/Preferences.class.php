@@ -1,16 +1,17 @@
 <?php
 
 /**
- * Bereitstellen von Methoden fuer das Lesen von Einstellungen
+ * Hilfsmethoden fuer das Lesen von Einstellungen.
  *
- * @author $Author$
- * @version $Revision$
- * @package openrat.services
+ * @author Jan Dankert
+ * @package openrat.util
  */
 class Preferences
 {
 	/**
 	 * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.
+	 * 
+	 * @return Zeitpunkt der letzten Änderung als Unix-Timestamp
 	 */
 	public static function lastModificationTime()
 	{
@@ -24,25 +25,36 @@ class Preferences
 	 */
 	public static function configurationFile()
 	{
+		// Falls Umgebungsvariable OPENRAT_CONFIG_FILE gesetzt ist,
+		// dann diesen Dateinamen verwenden.
 		if	( !empty($_SERVER['OPENRAT_CONFIG_FILE']) )
 		{
 			$config_filename = $_SERVER['OPENRAT_CONFIG_FILE'];
 		}
 		else
 		{
+			// Falls Umgebungsvariable OPENRAT_CONFIG_DIR gesetzt ist, dann
+			// die Datei in diesem Ordner suchen.
 			if	( !empty($_SERVER['OPENRAT_CONFIG_DIR']) )
 				$dir = $_SERVER['OPENRAT_CONFIG_DIR'];
 			else
 				$dir = './config/';
-			
+
+				
 			if	( !empty($_SERVER['HTTP_HOST']) )
 			{
+				// Falls es eine Datei config-<hostname>.ini.php gibt, dann diese
+				// vor der Datei config.ini.php bevorzugen.
 				$vhost_config_file = slashify($dir).'config-'.$_SERVER['HTTP_HOST'].'.ini.php';
 				
 				if	( is_file($vhost_config_file) )
 					$config_filename = $vhost_config_file;
 				else
 					$config_filename = slashify($dir).'config.ini.php';
+			}
+			else
+			{
+				$config_filename = slashify($dir).'config.ini.php';
 			}
 		}
 		
@@ -66,12 +78,12 @@ class Preferences
 	 */
 	public static function load()
 	{
+		// Fest eingebaute Standard-Konfiguration laden.
 		require('./config/config-default.php');
-		//echo "default: "; print_r($conf);
 
-		$ini_values =  parse_ini_file( Preferences::configurationFile(),false );
+		$filename = Preferences::configurationFile();
+		$ini_values =  parse_ini_file( $filename,false );
 		
-		//echo "loading ".$config_filename;
 		foreach ( $ini_values as $key=>$value )
 		{
 			$parts = explode('.',$key);
@@ -88,8 +100,12 @@ class Preferences
 			elseif	( count($parts)==6)
 				$conf[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]][$parts[5]] = $value;
 		}
-	    
-		$conf['config']['last_modification'] = Preferences::lastModificationTime();
+
+		// Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
+		$conf['config']['filename'         ] = $filename;
+		$conf['config']['last_modification'] = filemtime($filename);
+		$conf['config']['file_modification'] = date('r',filemtime($filename));
+		$conf['config']['read'             ] = date('r');
 		return $conf;
 	}
 	

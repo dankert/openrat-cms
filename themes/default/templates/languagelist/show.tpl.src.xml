@@ -1,6 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header views="add"></header>
 	<table>
 		<row class="headline">
 			<cell>
@@ -18,7 +17,7 @@
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<cell url="var:url">
+				<cell id="var:id" name="var:name" action="language">
 					<image file="icon_language"></image>
 					<text var="name" maxlength="25"></text>
 				</cell>
@@ -26,8 +25,10 @@
 					<text var="isocode"></text>
 				</cell>
 				<if present="default_url">
-					<cell url="var:default_url">
-						<text text="GLOBAL_make_default"></text>
+					<cell>
+						<link type="post" action="language" subaction="setdefault" id="var:id">
+							<text text="GLOBAL_make_default"></text>
+						</link>
 					</cell>
 				</if>
 				<else>
@@ -36,8 +37,10 @@
 					</cell>
 				</else>
 				<if present="select_url">
-					<cell url="var:select_url">
-						<text text="GLOBAL_select"></text>
+					<cell>
+						<link type="post" action="start" subaction="language" id="var:id">
+							<text text="GLOBAL_select"></text>
+						</link>
 					</cell>
 				</if>
 				<else>
@@ -49,5 +52,13 @@
 			<set var="select_url"></set>
 			<set var="default_url"></set>
 		</list>
+		<row class="data">
+			<cell colspan="4">
+				<link type="view" subaction="add">
+					<image icon="add"/>
+					<text text="new"/>
+				</link>
+			</cell>
+		</row>
 	</table>
 </output>

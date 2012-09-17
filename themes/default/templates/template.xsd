@@ -29,11 +29,14 @@
 	</xsd:complexType>
 	<xsd:complexType name="cellType">
 		<xsd:choice maxOccurs="unbounded" minOccurs="0">
-			<xsd:element ref="part" maxOccurs="unbounded" minOccurs="0">
+			<xsd:element ref="part" maxOccurs="unbounded"
+				minOccurs="0">
 			</xsd:element>
-			<xsd:element ref="image" maxOccurs="unbounded" minOccurs="0">
+			<xsd:element ref="image" maxOccurs="unbounded"
+				minOccurs="0">
 			</xsd:element>
-			<xsd:element ref="text" maxOccurs="unbounded" minOccurs="0">
+			<xsd:element ref="text" maxOccurs="unbounded"
+				minOccurs="0">
 			</xsd:element>
 			<xsd:element ref="fieldset" maxOccurs="unbounded"
 				minOccurs="0">
@@ -41,6 +44,7 @@
 			<xsd:element ref="button" maxOccurs="unbounded"
 				minOccurs="0">
 			</xsd:element>
+			<xsd:element ref="link" maxOccurs="unbounded" minOccurs="0"></xsd:element>
 		</xsd:choice>
 		<xsd:attribute name="width" type="xsd:int" />
 		<xsd:attributeGroup ref="universal"></xsd:attributeGroup>
@@ -335,6 +339,7 @@
     	<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
     	<xsd:attributeGroup ref="universal"></xsd:attributeGroup>
     	<xsd:attribute name="value" type="xsd:string"></xsd:attribute>
+    	<xsd:attribute name="checked" type="xsd:boolean"></xsd:attribute>
     </xsd:complexType>
 
     <xsd:element name="inputarea" type="inputareaType"></xsd:element>

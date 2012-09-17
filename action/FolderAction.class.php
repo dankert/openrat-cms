@@ -998,6 +998,7 @@ class FolderAction extends ObjectAction
 				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id; 
 
 				$list[$id]['type'] = $o->getType();
+				$list[$id]['id'  ] = $id;
 				
 				$list[$id]['icon' ] = $o->getType();
 				$list[$id]['class'] = $o->getType();

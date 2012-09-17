@@ -513,7 +513,7 @@ class TemplateAction extends Action
 			$element->load();
 
 			$list[$elid]         = array();
-			$list[$elid]['url' ] = Html::url('element','name',$elid);
+			$list[$elid]['id'  ] = $elid;
 			$list[$elid]['name'] = $element->name;
 			$list[$elid]['desc'] = $element->desc;
 			$list[$elid]['type'] = $element->type;

@@ -10,7 +10,7 @@
 # - save standardout to a file named config.new
 # - rename config.ini.php to config.ini.orig.php
 # - rename config.new to config.ini.php or config-<domain>.ini.php
-# - Edit the file: replace '.ini.php.' with '.#
+# - Edit the file: replace '.ini.php.' with '.'
 # - Edit the file: replace '].'        with '.' (sorry about that)
 #
 # Alternative: Do not use this script and start a new configuration

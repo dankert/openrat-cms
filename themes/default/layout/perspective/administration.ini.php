@@ -1,5 +1,6 @@
 <?php  ?>
 
+icons=projectlist,userlist,grouplist,configuration
 
 [tree]
 
@@ -11,15 +12,22 @@ refreshable=false
 
 [content]
 
-views=edit,pw,rights
-action=projectlist
+views=
+action=
 refreshable=true
 default=edit
 
 
-[member]
+[side]
 
 views=memberships,info
 action=project
 refreshable=true
 default=memberships
+
+[bottom]
+
+views=info,pw,rights
+action=project
+refreshable=true
+default=info

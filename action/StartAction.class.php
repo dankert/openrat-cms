@@ -944,7 +944,7 @@ class StartAction extends Action
 	}
 
 
-	function language()
+	function languagePost()
 	{
 		$user = Session::getUser();
 		if   ( ! is_object($user) )
@@ -957,7 +957,7 @@ class StartAction extends Action
 	}
 
 
-	function model()
+	function modelPost()
 	{
 		$user = Session::getUser();
 		if   ( ! is_object($user) )

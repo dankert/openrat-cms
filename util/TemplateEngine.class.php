@@ -194,6 +194,8 @@ class TemplateEngine
 				else
 					// macht aus "text1{var}text2" => "text1".$var."text2"
 					return "'".preg_replace('/{(\w+)\}/','\'.$\\1.\'',$value)."'";
+			case 'function':
+				return $invert.$value.'()';
 			case 'method':
 				return $invert.'$this->'.$value.'()';
 			case 'size':

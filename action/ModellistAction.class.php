@@ -53,8 +53,7 @@ class ModellistAction extends Action
 			$list[$id]['name'] = $m->name;
 			
 			if	( $this->userIsAdmin() )
-				$list[$id]['url' ] = Html::url('model','edit',$id,
-				                               array() );
+				$list[$id]['id' ] = $id;
 
 			if	( ! $m->isDefault && $this->userIsAdmin() )
 				$list[$id]['default_url'] = Html::url('model','setdefault',$id);
