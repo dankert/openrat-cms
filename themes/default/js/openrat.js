@@ -342,35 +342,13 @@ function registerHeaderEvents()
 	$('div.search input').blur( function(){
 		$('div.search input div.dropdown').fadeOut();
 	});
+	
+	// Hints...
+	$('div.search input').orHint();
 
 	
-	$('div.search input').keyup( function(){
-		var val = $(this).val();
-		if	( val.length > 3 )
-		{
-			$('div.search div.dropdown').html('');
-			$.ajax( { 'type':'GET',url:'./dispatcher.php?action=search&subaction=quicksearch&search='+val, data:null, success:function(data, textStatus, jqXHR)
-				{
-					for( id in data.result )
-					{
-						var result = data.result[id];
-						
-						//$('div.search input div.dropdown').append('Hallo '+result);
-						// Suchergebnis-Zeile in das Ergebnis schreiben.
-						$('div.search div.dropdown').append('<div title="'+result.desc+'"><a href="javascript:loadViewByName(\'content\',\''+result.url+'\');"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</a></div>');
-					}
-				} } );
-			$('div.search div.dropdown').fadeIn();
-			
-			
-		}
-		else
-		{
-			$('div.search input div.dropdown').fadeOut();
-		}
-	});
-	
-	
+	$('div.search input').orSearch( { dropdown:'div.search div.dropdown' } );
+
 	// V e r l a u f
 	$('div#header div.history').hover( function(){
 		$('div#header div.history div.dropdown').html('');

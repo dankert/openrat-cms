@@ -33,7 +33,11 @@
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.simplemodal.1.4.2.min.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.mjs.nestedSortable.js"></script>
 
+  <!-- OpenRat internal JS -->
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/openrat.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orHint.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orSearch.js"></script>
+  
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/jquery.markitup.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/ckeditor.js"></script>

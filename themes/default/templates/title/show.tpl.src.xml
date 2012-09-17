@@ -11,13 +11,10 @@
 	</part>
 	
 	<part class="search">
-		<form>
-			<image icon="search"></image>
-			<input name="text" value="message:search"></input>
-			<part class="dropdown">
-				<text raw=""></text>
-			</part>
-		</form>
+		<input name="text" hint="message:search" icon="search"></input>
+		<part class="dropdown">
+			<text raw=""></text>
+		</part>
 	</part>
 	<part class="user">
 		<image icon="user" align="left"></image>

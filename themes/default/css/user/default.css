@@ -62,6 +62,31 @@ label div.description
 }
 
 
+div.inputholder
+{
+	background-color:white;
+	border:1px solid grey;
+	margin:0px;
+	padding:4px;
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -khtml-border-radius:5px;
+    border-radius:5px;
+}
+
+
+input
+{
+	border:0px;
+	border-bottom:1px solid silver;
+	padding:2px;
+	margin:0px;
+}
+input.error,
+.error
+{
+	border-bottom:1px dotted red !important;
+}
 
 
 /* Zwischen-Ueberschriften */
@@ -185,11 +210,6 @@ dl.notice > dd
 	border-bottom: 1px silver solid;
 }
 
-input.error,
-.error
-{
-	border:2px dotted red !important;
-}
 
 /*   R a h m e n  */
 div.windowx
