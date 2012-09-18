@@ -1,4 +1,5 @@
 # Mo 19. Mär 21:38:25 CET 2012
+; /* vim: set filetype=ini : */
 ;
 ;
 ; converted from applications.ini.php
