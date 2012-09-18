@@ -14,8 +14,10 @@ function view_header( $name )
 <div class="menu">
 
 <div class="views">
+<!-- 
 <div class="backward_link"><img src="<?php echo OR_THEMES_EXT_DIR ?>default/images/icon/backward_nav.gif"/></div>
 <div class="forward_link"><img src="<?php echo OR_THEMES_EXT_DIR ?>default/images/icon/forward_nav.gif"/></div>
+ -->
 <ul class="views">
 <?php
 
@@ -28,8 +30,8 @@ function view_header( $name )
 			$liClass  = 'action'.($vn==$v['default']?' active':'');
 			$icon_url = OR_THEMES_EXT_DIR.'default/images/icon/'.$vn.'.png';
 			
-			?><li data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
-          		?><span><img src="<?php echo $icon_url ?>" /><?php echo $tmp_text ?></span><?php
+			?><li title="<?php echo $tmp_text ?>" data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
+          		?><img class="icon" src="<?php echo $icon_url ?>" /><span class="tabname"><?php echo $tmp_text ?></span><?php
           	?></li><?php
           }
           if ( /* Deaktiviert */ false && @$conf['help']['enabled'] )
@@ -42,13 +44,9 @@ function view_header( $name )
 	
 		?>
 </ul>
-</div>
-
 <div class="icons">
-<div class="icon"><a href="javascript:void(0);" class="fullscreen" onClick="javascript:fullscreen( $(this).parent().parent().parent().parent() );"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /></a></div>
-<!-- 
-<div><a href="javascript:void(0);" class="minimize" onClick="javascript:minimize($(this).parent().parent() );"><?php echo langHtml('fullscreen') ?></a></div>
- -->
+<div class="icon"><a href="javascript:void(0);" class="fullscreen" onClick="javascript:fullscreen( $(this).closest('div.window') );"><img class="icon" src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /></a></div>
+</div>
 </div>
  
 </div>

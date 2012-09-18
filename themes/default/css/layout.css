@@ -566,8 +566,6 @@ div#title div.search input
 {
 	margin:0px;
 	padding:0px;
-	font-size:10px;
-	border:1px solid silver;
 }
 
 
@@ -795,10 +793,7 @@ div.forward_link
 
 div.window > div.menu
 {
-	padding-top:20px;
-	padding-left:0px;
-	padding-right:0px;
-	border-bottom:2px solid grey;	
+	padding:0px;
 }
 
 
@@ -810,14 +805,56 @@ div.window div.menu ul.views
 	white-space:nowrap;
 }
 
+img.icon
+{
+	padding:4px;
+	width: 16px;
+	height: 16px;
+}
+
+ 
+ul.views span.tabname
+{
+	width:20px;
+	max-width:30px;
+	overflow: hidden;
+	white-space: nowrap;
+	padding-bottom:4px;
+	padding-right:4px;
+	display: inline;
+	vertical-align: top;
+}
+
+div.views div.icons
+{
+	float: right;
+}
+
+div.window div.menu ul.views
+{
+	float:left;
+	height: 25px;
+}
+
+div.window div.menu 
+{
+	xborder-bottom: 1px solid grey;
+}
+
+
+div.content 
+{
+	clear: both;
+}
 div.window ul.views li
 {
-	padding-top:4px;
-	padding-bottom:4px;
-	padding-left:8px;
-	padding-right:8px;
+	vertical-align: middle;
+	padding:0px;
 	
 	cursor:pointer;
+	
+	border-right: 1px solid grey;
+	
 	-moz-border-radius-topleft:5px; /* Mozilla */
     -webkit-border-radius-topleft:5px; /* Webkit */
     -khtml-border-top-radius-topleft:5px; /* Konqui */
@@ -826,11 +863,13 @@ div.window ul.views li
     -webkit-border-radius-topright:5px; /* Webkit */
     -khtml-border-top-radius-topright:5px; /* Konqui */
     border-top-right-radius:5px;
-    border-top:1px solid gray;
-    border-left:1px solid gray;
-    border-right:1px solid gray;
-    margin-right:10px;
-	display: inline;
+    
+    xborder-top:1px solid gray;
+    xborder-left:1px solid gray;
+    xborder-right:1px solid gray;
+    xmargin-right:10px;
+	display: block;
+	float:left;
 }
 
 
@@ -868,7 +907,7 @@ div.window {
 
 
 div.window {
-	margin:3px;
+	margin:0px;
 	padding:0px;
 }
 
