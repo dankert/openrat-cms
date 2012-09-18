@@ -6,7 +6,8 @@ jQuery.fn.orHint = function()
 
 	$(this).each(function(i)
 	{
-		$(this).val($(this).attr('data-hint')).addClass('hint');
+		if ($(this).val() == '')
+			$(this).val($(this).attr('data-hint')).addClass('hint');
 	});
 
 	return $(this).focus(function()
