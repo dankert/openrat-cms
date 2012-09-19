@@ -21,10 +21,6 @@ menu=edit
 editable=true
 write=true
 
-[add]
-menu=list
-write=true
-
 [info]
 menu=edit
 

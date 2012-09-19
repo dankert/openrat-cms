@@ -25,9 +25,5 @@ goto=edit
 [addmodel]
 goto=listing
 
-[add]
-menu=listing
-target=addmodel
-
 [menu]
 menu=listing,add,edit,remove
