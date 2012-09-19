@@ -80,10 +80,13 @@ function refreshWorkbench()
 {
 	// Workbench laden
 	$('ul#history').empty();
-	$('div#workbench').empty().load(createUrl('workbench','show',0),null,function() {
-		
+	$('div#workbench').empty().fadeOut('fast').load(createUrl('workbench','show',0),null,function() {
+
+		// View-Größe initial berechnen.
+		resizeWorkbench();
+
 		// Default-Inhalte der einzelnen Views laden.
-		$(this).fadeIn('fast').find('li.active').each( function() {
+		$(this).fadeIn(750).find('li.active').each( function() {
 			var method = $(this).attr('data-method');
 			var p = $(this).closest('div.frame');
 			var action = p.attr('data-action');
@@ -122,7 +125,7 @@ function refreshWorkbench()
 			$(this).addClass('active');
 			loadView( p.find('div.content'),createUrl(action,method,id));
 		});
-		$('ul.views > li.action').dblclick( function()
+		$('div.menu').dblclick( function()
 				{
 					fullscreen( this );
 				} );
@@ -140,6 +143,7 @@ function refreshWorkbench()
 		
 		// geht nicht zusammen mit draggable...
 		//$('ul.views').sortable();
+		
 
 	});
 	//alert('go');
@@ -150,8 +154,6 @@ function refreshWorkbench()
 	// Modale Dialoge
 	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
 	
-	// View-Größe initial berechnen.
-	resizeWorkbench();
 	
 	$(window).resize( function() {
 		resizeWorkbench();
@@ -334,7 +336,7 @@ function loadView(jo, url )
 					             ]
 					          };
 			//$(jo).find('.htmleditor').wymeditor(wymSettings);
-			resizeWorkbench();
+			//resizeWorkbench();
 			
 			$(jo).find('input[data-hint]').orHint();
 
@@ -632,10 +634,14 @@ function openNewAction( name,action,id,extraId )
 			
 				setNewAction(action,id,extraId);
 			} );
+		
+		/*
+		 * Eventhandler hängt schon auf div.menu
 		$('div#content > div.window > div.menu > div.views > ul.views li.active').dblclick( function()
 				{
 					fullscreen( this );
 				} );
+				*/
 
 	}
 	
