@@ -122,6 +122,10 @@ function refreshWorkbench()
 			$(this).addClass('active');
 			loadView( p.find('div.content'),createUrl(action,method,id));
 		});
+		$('ul.views > li.action').dblclick( function()
+				{
+					fullscreen( this );
+				} );
 		
 		// Drag n Drop für Views
 		$('ul.views > li.action').draggable( {cursor:'move',revert: 'invalid' });
@@ -399,8 +403,14 @@ array('Source','-', 'ShowBlocks','Maximize') );
 	*/
 }
 
+
+/**
+ * Schaltet die Vollbildfunktion an oder aus.
+ * 
+ * @param element Das Element, auf dem die Vollbildfunktion ausgeführt wurde
+ */
 function fullscreen( element ) {
-	$(element).fadeOut('fast', function()
+	$(element).closest('div.window').fadeOut('fast', function()
 	{
 		$(this).toggleClass('fullscreen').fadeIn('fast');
 	} );
@@ -614,6 +624,10 @@ function openNewAction( name,action,id,extraId )
 			
 				setNewAction(action,id,extraId);
 			} );
+		$('div#content > div.window > div.menu > div.views > ul.views li.active').dblclick( function()
+				{
+					fullscreen( this );
+				} );
 
 	}
 	
@@ -1023,4 +1037,13 @@ function resizeWorkbench()
 	$('div#workbench > div#contentbar    > div.frame > div.window > div.content').css('height',upperHeight +'px');
 	$('div#workbench > div#sidebar       > div.frame > div.window > div.content').css('height',upperHeight +'px');
 	$('div#workbench > div#bottombar     > div.frame > div.window > div.content').css('height',lowerHeight +'px');
+}
+
+
+/**
+ * Größe der TABs pro Frame neu berechnen.
+ */
+function resizeTabs( closable ) 
+{
+	//
 }

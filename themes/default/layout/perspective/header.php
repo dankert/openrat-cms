@@ -23,7 +23,8 @@ function view_header( $name )
 
 	$viewlist = explode(',',$v['views']);
 	if ( empty($viewlist[0])) $viewlist = array();
-	
+
+	// Tabreiter pro View erzeugen
     foreach( $viewlist as $vn )
           {
           	$tmp_text = langHtml('menu_'.$vn);
@@ -45,7 +46,7 @@ function view_header( $name )
 		?>
 </ul>
 <div class="icons">
-<div class="icon"><a href="javascript:void(0);" class="fullscreen" onClick="javascript:fullscreen( $(this).closest('div.window') );"><img class="icon" src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /></a></div>
+<div class="icon"><a href="javascript:void(0);" class="fullscreen" onClick="javascript:fullscreen( this );"><img class="icon" src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /></a></div>
 </div>
 </div>
  
