@@ -221,8 +221,9 @@ function loadView(jo, url )
 		
 	//alert(action+"_"+method);
 	
-	$(jo).empty().html('<div class="loader" />'+submenu).load(url,function(response, status, xhr) {
-			$(jo).slideDown('fast');
+	$(jo).empty().fadeTo(1,0.7).html('<div class="loader" />'+submenu).load(url,function(response, status, xhr) {
+			//$(jo).slideDown('fast');
+			$(jo).fadeTo(350,1);
 			
 			if	( status == "error" )
 			{

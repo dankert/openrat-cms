@@ -999,9 +999,10 @@ div.window div.status div.ok {
 div.loader,
 div.progress
 {
-	xborder:1px solid silver;
+	margin:0px auto;
 	width:230;
 	height:25px;
+	margin-top:40px;
 	background: url(../images/loader.gif) no-repeat;
 }
 
