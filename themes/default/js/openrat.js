@@ -602,7 +602,14 @@ function openNewAction( name,action,id,extraId )
 	{	
 		// Neuen Tab in Hauptfenster anlegen
 		$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
+		
+		// Wenn max. Anzahl überschritten, dann den ersten entfernen.
+		var maxTabs = 7;
+		if	( $('div#content > div.window > div.menu > div.views > ul.views > li.action').size() >= maxTabs )
+			$('div#content > div.window > div.menu > div.views > ul.views > li.action').first().remove();
+				
 		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" title="'+name+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><span class="tabname">'+name+'</span><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
+		resizeTabs( $('div#contentbar'),true);
 		$('div#content > div.window > div.menu > div.views > ul.views').scrollLeft(9999);
 		$('div#content > div.window > div.menu > div.views > ul.views img.close').click( function()
 				{
@@ -612,6 +619,7 @@ function openNewAction( name,action,id,extraId )
 						$(this).closest('div.window').find('div.content').html(''); // Inhalt entfernen
 					// Und jetzt den Tab entfernen
 					$(this).parent().remove(); // Tab entfernen
+					resizeTabs( $('div#contentbar'),true);
 				} );
 		$('div#content > div.window > div.menu > div.views > ul.views li.active').click( function()
 			{
@@ -1029,9 +1037,13 @@ function resizeWorkbench()
 	var outerWidth = Math.ceil((viewportWidth)*(1/4));
 	var innerWidth = viewportWidth-(3*20)-(2*outerWidth);
 	$('div#workbench > div#navigationbar > div.frame > div.window').css('width',outerWidth+'px');
+	resizeTabs( $('div#navigationbar'),false);
 	$('div#workbench > div#contentbar    > div.frame > div.window').css('width',innerWidth+'px');
+	resizeTabs( $('div#contentbar'),true);
 	$('div#workbench > div#sidebar       > div.frame > div.window').css('width',outerWidth+'px');
+	resizeTabs( $('div#sidebar'),false);
 	$('div#workbench > div#bottombar     > div.frame > div.window').css('width',(outerWidth+innerWidth+6)+'px');
+	resizeTabs( $('div#bottombar'),false);
 
 	$('div#workbench > div#navigationbar > div.frame > div.window > div.content').css('height',singleHeight+'px');
 	$('div#workbench > div#contentbar    > div.frame > div.window > div.content').css('height',upperHeight +'px');
@@ -1043,7 +1055,11 @@ function resizeWorkbench()
 /**
  * Größe der TABs pro Frame neu berechnen.
  */
-function resizeTabs( closable ) 
+function resizeTabs( el, windowsize, closable ) 
 {
-	//
+	return;
+	var windowsize = parseInt($(el).find('div.frame > div.window').css('width'));
+	var count = $(el).find('ul.views > li').size();
+	var width = Math.floor(Math.min(((windowsize-60)/count)-0,120));
+	$(el).find('li.action').css('width',width+'px');
 }
