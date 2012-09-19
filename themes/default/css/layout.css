@@ -1236,3 +1236,31 @@ table td.changed {
 /* Modale Dialoge */
 #simplemodal-overlay {background-color:#000;}
 #simplemodal-container {background-color:#333; border:8px solid #444; padding:12px;}
+
+div#filler
+{
+	xxxxdisplay: block;
+	position:absolute;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	height:100%;
+	width:100%;
+	background-color: black;
+	opacity: 0.5;
+}
+
+div#modaldialog
+{
+	xxxxdisplay: block;
+	position:absolute;
+	z-index: 198;
+	top: 0;
+	left: 0;
+	opacity: 1;
+	margin:10%;
+	height:60%;
+	width:80%;
+	border:5px solid black;
+	background-color:white;
+}

@@ -126,5 +126,12 @@ document.writeln("</div>");
 </form>
 <iframe src="about:blank" name="temp" class="invisiblex" width="0px" height="0px" style="width:0px;height:0px;"></iframe>
 
+<div id="filler">
+</div>
+
+<div id="modaldialog" class="xinvisible">
+Test test test test
+</div>
+
 </body>
 </html>
