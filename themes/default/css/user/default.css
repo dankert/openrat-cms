@@ -278,10 +278,16 @@ div.window ul.views > li.active:hover
 }
 
 /* Reiter */
-div.window ul.views li {
+div.window ul.views li
+{
+	background-color: #eeeeee;
+}
+
+div.window ul.views li,
+div.dropdown > div.entry
+{
 	font-family:Arial;
 	font-size:13px;
-	background-color: #eeeeee;
 	color: blue;
 }
 
