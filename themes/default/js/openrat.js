@@ -627,7 +627,7 @@ function openNewAction( name,action,id,extraId )
 		if	( $('div#content > div.window > div.menu > div.views > ul.views > li.action').size() >= maxTabs )
 			$('div#content > div.window > div.menu > div.views > ul.views > li.action').first().remove();
 				
-		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" title="'+name+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><span class="tabname">'+name+'</span><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
+		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" title="'+name+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><div class="tabname">'+name+'</div><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
 		resizeTabs( $('div#contentbar'),true);
 		$('div#content > div.window > div.menu > div.views > ul.views').scrollLeft(9999);
 		$('div#content > div.window > div.menu > div.views > ul.views img.close').click( function()
@@ -1051,21 +1051,21 @@ function resizeWorkbench()
 	var viewportHeight = $(window).height();
 	
 	// OpenRat-spezifische Ermittlung der einzelnen DIV-Größen
-	var titleBarHeight = 80; // Title:35px
-	var viewBorder     = 40; // Padding 2x6px, View-Kopf:20px
+	var titleBarHeight = 55; // Title:35px
+	var viewBorder     = 33; // Padding 2x3px, Rand 2x1px, View-Kopf:25px
 	var singleHeight = viewportHeight - titleBarHeight - viewBorder;
 	var upperHeight  = Math.ceil((viewportHeight - titleBarHeight - viewBorder)*(2/3));
 	var lowerHeight  = viewportHeight - upperHeight - titleBarHeight - (2*viewBorder);
 	
-	var outerWidth = Math.ceil((viewportWidth)*(1/4));
-	var innerWidth = viewportWidth-(3*20)-(2*outerWidth);
+	var outerWidth = Math.floor(viewportWidth/4);
+	var innerWidth = viewportWidth-(3*8)-(2*outerWidth);
 	$('div#workbench > div#navigationbar > div.frame > div.window').css('width',outerWidth+'px');
 	resizeTabs( $('div#navigationbar'),false);
 	$('div#workbench > div#contentbar    > div.frame > div.window').css('width',innerWidth+'px');
 	resizeTabs( $('div#contentbar'),true);
 	$('div#workbench > div#sidebar       > div.frame > div.window').css('width',outerWidth+'px');
 	resizeTabs( $('div#sidebar'),false);
-	$('div#workbench > div#bottombar     > div.frame > div.window').css('width',(outerWidth+innerWidth+6)+'px');
+	$('div#workbench > div#bottombar     > div.frame > div.window').css('width',(outerWidth+innerWidth+8)+'px');
 	resizeTabs( $('div#bottombar'),false);
 
 	$('div#workbench > div#navigationbar > div.frame > div.window > div.content').css('height',singleHeight+'px');
@@ -1078,11 +1078,10 @@ function resizeWorkbench()
 /**
  * Größe der TABs pro Frame neu berechnen.
  */
-function resizeTabs( el, windowsize, closable ) 
+function resizeTabs( el, closable ) 
 {
-	return;
 	var windowsize = parseInt($(el).find('div.frame > div.window').css('width'));
 	var count = $(el).find('ul.views > li').size();
-	var width = Math.floor(Math.min(((windowsize-60)/count)-0,120));
-	$(el).find('li.action').css('width',width+'px');
+	var width = Math.floor(Math.min(((windowsize-24)/count)-(closable?24:0)-24-8-1,100));
+	$(el).find('li.action div.tabname').css('width',width+'px');
 }

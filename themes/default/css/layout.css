@@ -825,16 +825,17 @@ img.icon
 }
 
  
-ul.views span.tabname
+ul.views div.tabname
 {
-	width:20px;
-	max-width:30px;
 	overflow: hidden;
 	white-space: nowrap;
-	padding-bottom:4px;
-	padding-right:4px;
-	display: inline;
-	vertical-align: top;
+	padding:4px;
+	vertical-align: middle;
+}
+ul.views > li > img,
+ul.views > li > div
+{
+	float:left;
 }
 
 div.views div.icons
