@@ -19,3 +19,9 @@ default=license
 
 [bottom]
 views=
+
+[modal]
+views=login,openid,register
+action=login
+refreshable=false
+default=login

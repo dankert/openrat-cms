@@ -129,9 +129,6 @@ document.writeln("</div>");
 <div id="filler">
 </div>
 
-<div id="modaldialog" class="xinvisible">
-Test test test test
-</div>
 
 </body>
 </html>

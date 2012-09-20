@@ -39,3 +39,8 @@ view_header('bottom');
 ?>
 </div>
 
+<div class="bar" id="modalbar">
+<?php 
+view_header('modal');
+?>
+</div>

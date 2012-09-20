@@ -84,6 +84,10 @@ function refreshWorkbench()
 
 		// View-Größe initial berechnen.
 		resizeWorkbench();
+		
+		// Modale Dialoge beenden
+		$('div.modaldialog').fadeOut(500);
+		$('div#filler').fadeOut(500);
 
 		// Default-Inhalte der einzelnen Views laden.
 		$(this).fadeIn(750).find('li.active').each( function() {
@@ -143,6 +147,18 @@ function refreshWorkbench()
 		
 		// geht nicht zusammen mit draggable...
 		//$('ul.views').sortable();
+
+		// Modalen Dialog erzeugen.
+		if	( $('div#modalbar li.action').size() > 0 )
+		{
+			$('div#filler').fadeTo(500,0.5);
+			$('div#modalbar').addClass('modaldialog');
+		}
+		else
+		{
+			$('div#modalbar').fadeOut(0);
+		}
+		
 		
 
 	});
