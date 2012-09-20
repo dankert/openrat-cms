@@ -74,10 +74,25 @@ div.inputholder
     border-radius:3px;
 }
 
+div.search > div.inputholder
+{
+	padding-top:1px;
+}
 
 input,
 textarea,
 select
+{
+	border:0px;
+	border-bottom:1px solid white;
+	padding:2px;
+	margin:0px;
+	background-color:white;
+}
+
+input:hover,input:focus,
+textarea:hover,textarea:focus,
+select:hover,select:focus
 {
 	border:0px;
 	border-bottom:1px solid silver;
@@ -85,6 +100,7 @@ select
 	margin:0px;
 	background-color:white;
 }
+
 
 input.error,
 textarea.error,
