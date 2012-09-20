@@ -33,12 +33,12 @@ function view_header( $name )
 			$icon_url = OR_THEMES_EXT_DIR.'default/images/icon/'.$vn.'.png';
 			
 			?><li title="<?php echo $tmp_text ?>" data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
-          		?><img class="icon" src="<?php echo $icon_url ?>" /><span class="tabname"><?php echo $tmp_text ?></span><?php
+          		?><img class="icon" src="<?php echo $icon_url ?>" /><div class="tabname"><?php echo $tmp_text ?></div><?php
           	?></li><?php
           }
           if ( /* Deaktiviert */ false && @$conf['help']['enabled'] )
           	{
-             ?><a class="help" href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo $image_dir.'icon/help.png' ?>" /><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
+             ?><a class="help" href="javascript:help(this,'<?php echo $conf['help']['url'] ?>','<?php echo @$conf['help']['suffix'] ?> " title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo $image_dir.'icon/help.png' ?>" /><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
           	}
           	?><?php
 	
@@ -56,7 +56,7 @@ function view_header( $name )
 <?php 
           if ( @$conf['help']['enabled'] )
           	{
-             ?><div class="entry"><a href="<?php echo @$conf['help']['url'].@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/help.png' ?>" /><?php echo langHtml('MENU_HELP') ?></a></div><?php
+             ?><div class="entry"><a onclick="help(this,'<?php echo $conf['help']['url'] ?>','<?php echo @$conf['help']['suffix'] ?>');" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/help.png' ?>" /><?php echo langHtml('MENU_HELP') ?></a></div><?php
           	}
           	?>
 </div>
