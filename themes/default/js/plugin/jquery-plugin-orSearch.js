@@ -22,7 +22,7 @@ jQuery.fn.orSearch = function( options )
 						var result = data.result[id];
 						
 						// Suchergebnis-Zeile in das Ergebnis schreiben.
-						$(settings.dropdown).append('<div title="'+result.desc+'"><a href="javascript:openNewAction(\''+result.name+'\',\''+result.type+'\','+id+',0);"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</a></div>');
+						$(settings.dropdown).append('<div class="entry" title="'+result.desc+'"><a href="javascript:openNewAction(\''+result.name+'\',\''+result.type+'\','+id+',0);"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</a></div>');
 					}
 				} } );
 			$(settings.dropdown).fadeIn();
