@@ -3,6 +3,7 @@
 function view_header( $name )
 {
 	global $viewconfig;
+	global $conf;
 	$v = $viewconfig[$name];
 	
 ?>
@@ -53,7 +54,7 @@ function view_header( $name )
 <div class="dropdown dropdownalignright">
 <div class="entry"><a href="javascript:void(0);" class="fullscreen" onClick="javascript:fullscreen( this );"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /><?php echo langHtml('window_fullscreen') ?></a></div>
 <?php 
-          if ( true || @$conf['help']['enabled'] )
+          if ( @$conf['help']['enabled'] )
           	{
              ?><div class="entry"><a href="<?php echo @$conf['help']['url'].@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/help.png' ?>" /><?php echo langHtml('MENU_HELP') ?></a></div><?php
           	}
