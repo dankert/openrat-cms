@@ -257,7 +257,8 @@ div#noticebar
 /* Gesamt-Hintergrund */
 body
 {
-	background-color:#c9c9c9;
+	xxxbackground-color:#c9c9c9;
+	background-color:#d9d9d9;
 }
 
 /* Fenster-Hintergrund */
@@ -280,8 +281,13 @@ div.window ul.views > li.active:hover
 div.window ul.views li {
 	font-family:Arial;
 	font-size:13px;
-	background-color: #dddddd;
+	background-color: #eeeeee;
 	color: blue;
+}
+
+div.bar
+{
+	background-color:#eeeeee;
 }
 
 div.window ul.views li:hover {
