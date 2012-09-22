@@ -1,3 +1,47 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><window><fieldset><table><row><cell></cell><cell><text type="emphatic" text="GLOBAL_COMPARE"></text><text raw="_"></text><date date="var:date_left"></date></cell><cell></cell><cell><text type="emphatic" text="GLOBAL_WITH"></text><text raw="_"></text><date date="var:date_right"></date></cell></row><row><cell colspan="4"></cell></row><list list="diff" extract="true"><row class="diff"><if present="left"><cell width="5%" class="line"><text value="arrayvar:left:line" type="tt"></text></cell><cell width="45%" class="arrayvar:left:type"><text value="arrayvar:left:text"></text></cell></if><else><cell colspan="2" class="help" width="50%"><text raw="_"></text></cell></else><if present="right"><cell width="5%" class="line"><text value="arrayvar:right:line" type="tt"></text></cell><cell width="45%" class="arrayvar:right:type"><text value="arrayvar:right:text"></text></cell></if><else><cell colspan="2" class="help" width="50%"><text raw="_"></text></cell></else></row><set var="left"></set><set var="right"></set></list></table></fieldset><button text="BUTTON_BACK"></button></window></form></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<table>
+		<row>
+			<cell></cell>
+			<cell>
+				<text type="emphatic" text="GLOBAL_COMPARE"></text>
+				<text raw="_"></text>
+				<date date="var:date_left"></date>
+			</cell>
+			<cell></cell>
+			<cell>
+				<text type="emphatic" text="GLOBAL_WITH"></text>
+				<text raw="_"></text>
+				<date date="var:date_right"></date>
+			</cell>
+		</row>
+		<row>
+			<cell colspan="4"></cell>
+		</row>
+		<list list="diff" extract="true">
+			<row class="diff">
+				<if present="left">
+					<cell width="5%" class="line">
+						<text value="arrayvar:left:line" type="tt"></text>
+					</cell>
+					<cell width="45%" class="arrayvar:left:type">
+						<text value="arrayvar:left:text"></text>
+					</cell>
+				</if>
+				<else><cell colspan="2" class="help" width="50%"><text raw="_"></text></cell></else>
+				<if present="right">
+					<cell width="5%" class="line">
+						<text value="arrayvar:right:line" type="tt"></text>
+					</cell>
+					<cell width="45%" class="arrayvar:right:type">
+						<text value="arrayvar:right:text"></text>
+					</cell>
+				</if>
+				<else><cell colspan="2" class="help" width="50%"><text raw="_"></text></cell></else>
+			</row>
+			<set var="left"></set>
+			<set var="right"></set>
+		</list>
+	</table>
+	<button text="BUTTON_BACK"></button>
+</output>

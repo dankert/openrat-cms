@@ -761,7 +761,7 @@ class PageelementAction extends Action
 		/**
 		 * Vergleicht 2 Versionen eines Inhaltes
 		 */
-		function diff()
+		function diffView()
 		{
 			$value1id = $this->getRequestVar('compareid');
 			$value2id = $this->getRequestVar('withid'   );

@@ -783,21 +783,42 @@ function formSubmit(form)
 	var params = $(form).serializeArray();
 	var url    = './dispatcher.php'; // Alle Parameter befinden sich im Formular
 	
-	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
-		{
-			$(status).find('div.loader').remove();
-			doResponse(data,textStatus,form);
-		},
-		error:function(jqXHR, textStatus, errorThrown) {
-			$(status).find('div.loader').remove();
-			alert( errorThrown );
-		}
-		
-	} );
-	$(form).fadeIn();
+	var method = $(form).attr('method').toUpperCase();
 	
+	if	( method == 'GET' )
+	{
+		var method  = $(form).closest('div.frame').attr('data-method');
+		var p       = $(form).closest('div.frame');
+		var action  = p.attr('data-action');
+		var id      = p.attr('data-id');
+		//alert(method+'/'+action+'/'+id);
+		loadView(  $(form).closest('div.content'),createUrl(action,method,id,params));
+	}
+	else
+	{
+		$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
+			{
+				$(status).find('div.loader').remove();
+				doResponse(data,textStatus,form);
+			},
+			error:function(jqXHR, textStatus, errorThrown) {
+				$(status).find('div.loader').remove();
+				alert( 'OpenRat: Error while performing the POST request: ' + errorThrown );
+			}
+			
+		} );
+		$(form).fadeIn();
+	}
 }
 
+
+/**
+ * HTTP-Antwort auf einen POST-Request auswerten.
+ * 
+ * @param data Formulardaten
+ * @param status Status
+ * @param element
+ */
 function doResponse(data,status,element)
 {
 	if	( status != 'success' )
@@ -1049,14 +1070,26 @@ function loadWindow( el, actionName, subactionName )
 
 function createUrl(action,subaction,id,extraid) 
 {
-	var url = './dispatcher.php?action='+action+'&subaction='+subaction+'&id='+id;
-	if	( extraid !== undefined )
+	var url = './dispatcher.php';
+	if	( typeof extraid === 'string')
 	{
+		url += '?action='+action+'&subaction='+subaction+'&id='+id;
 		jQuery.each(jQuery.parseJSON(extraid), function(name, value) {
 			url = url + '&' + name + '=' + value;
 		});
-		
 	}
+	else if	( typeof extraid === 'object')
+	{
+		url += '?0=0';
+		jQuery.each(extraid, function(name, field) {
+			url = url + '&' + field.name + '=' + field.value;
+		});
+	}
+	else
+	{
+		url += '?action='+action+'&subaction='+subaction+'&id='+id;
+	}
+	
 	return url;
 }
 
