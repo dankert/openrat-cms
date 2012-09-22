@@ -399,19 +399,6 @@ class PageAction extends ObjectAction
 	
 	 
 	}
-
-	
-	
-	/**
-	 * Die Vorlage der Seite austauschen
-	 *
-	 * Die Vorlage wird ausgetauscht, die Inhalte werden gemaess der Benutzereingaben kopiert
-	 */
-	public function changetemplatePost()
-	{
-		Session::set('newtemplateid',intval($this->getRequestVar('templateid')) );
-		$this->nextView('changetemplateselectelements');
-	}
 	
 	
 
@@ -424,11 +411,11 @@ class PageAction extends ObjectAction
 	 */
 	public function changetemplateselectelementsView()
 	{
-		$newTemplateId = intval( Session::get('newtemplateid') );
+		$newTemplateId = $this->getRequestVar( 'newtemplateid' );
 
 		if   ( $newTemplateId != 0  )
 		{
-			$this->setTemplateVar('newTemplateId',$newTemplateId );
+			$this->setTemplateVar('newtemplateid',$newTemplateId );
 
 			$oldElements = array();
 			$oldTemplate = new Template( $this->page->templateid );
@@ -479,7 +466,7 @@ class PageAction extends ObjectAction
 	 */
 	public function changetemplateselectelementsPost()
 	{
-		$newTemplateId = intval( Session::get('newtemplateid') );
+		$newTemplateId = $this->getRequestVar('newtemplateid');
 		$replaceElementMap = Array();
 		
 		$oldTemplate = new Template( $this->page->templateid );

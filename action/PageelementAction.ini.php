@@ -35,7 +35,6 @@ goto=archive
 
 [edit]
 menu=edit
-target=save
 editable=true
 
 [prop]

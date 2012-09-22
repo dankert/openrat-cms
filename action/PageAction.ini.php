@@ -36,7 +36,7 @@ target=changetemplateselectelements
 
 [changetemplateselectelements]
 menu=prop
-target=replacetemplate
+target=changetemplateselectelements
 
 [replacetemplate]
 goto=prop
