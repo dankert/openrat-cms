@@ -355,7 +355,26 @@ function loadView(jo, url )
 			//$(jo).find('.htmleditor').wymeditor(wymSettings);
 			//resizeWorkbench();
 			
+			// Eingabefeld-Hints aktivieren...
 			$(jo).find('input[data-hint]').orHint();
+			
+			
+			
+			// Untermenüpunkte aus der View in das Fenstermenü kopieren...
+			$(jo).closest('div.frame').find('div.menu div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
+			
+			$(jo).find('div.headermenu > a').each( function(idx,el)
+			{
+				// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
+				$(el).wrap('<div class="entry perview" />').parent().appendTo( $(jo).closest('div.frame').find('div.menu div.dropdown').first() );
+			} );
+			
+			$(jo).find('div.header > a.back').each( function(idx,el)
+			{
+				// Zurück-Knopf zum Fenstermenü hinzufügen.
+				$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(jo).closest('div.frame').find('div.menu div.dropdown').first() );
+			} );
+			$(jo).find('div.header').html('<!-- moved to window-menu -->');
 
 		});
 }
@@ -548,7 +567,8 @@ function startView( element,view )
 	var action = $(element).closest('div.frame').attr('data-action');
 	var id     = $(element).closest('div.frame').attr('data-id'    );
 	var url    = createUrl(action, view, id);
-	loadView( $(element).closest('div.content'), url );
+	//alert( "startView: "+action+"/"+view+"#"+id );
+	loadView( $(element).closest('div.frame').find('div.content'), url );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
