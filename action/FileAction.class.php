@@ -237,11 +237,54 @@ class FileAction extends ObjectAction
 		return $formats2;
 	}
 
+	
+	
+	/**
+	 * Anzeigen des Inhaltes
+	 */
+	function sizeView()
+	{
+		$this->setTemplateVars( $this->file->getProperties() );
+		
+		$format = $this->imageFormat();
+
+		if	( $format == 0 )
+		{
+			$this->addNotice( 'image','','IMAGE_RESIZING_UNKNOWN_TYPE',OR_NOTICE_WARN);
+		}
+			
+		$formats = $this->imageFormats();
+			
+		if	( empty($formats) )
+			$this->addNotice( 'image','','IMAGE_RESIZING_NOT_AVAILABLE',OR_NOTICE_WARN);
+		
+		$sizes = array();
+		foreach( array(10,25,50,75,100,125,150,175,200,250,300,350,400,500,600,800) as $s )
+			$sizes[strval($s/100)] = $s.'%';
+			
+		$jpeglist = array();
+		for ($i=10; $i<=95; $i+=5)
+			$jpeglist[$i]=$i.'%';
+
+		$this->setTemplateVar('factors'       ,$sizes      );
+		$this->setTemplateVar('jpeglist'      ,$jpeglist   );
+		$this->setTemplateVar('formats'       ,$formats    );
+		$this->setTemplateVar('format'        ,$format     );
+		$this->setTemplateVar('factor'        ,1           );
+		
+		$this->file->getImageSize();
+		$this->setTemplateVar('width' ,$this->file->width  );
+		$this->setTemplateVar('height',$this->file->height );
+		$this->setTemplateVar('type'  ,'input'             );
+	}
+
+
+	
 
 	/**
 	 * Bildgroesse eines Bildes aendern
 	 */
-	function resize()
+	public function sizePost()
 	{
 		$width           = intval($this->getRequestVar('width'           ));
 		$height          = intval($this->getRequestVar('height'          ));
@@ -400,46 +443,6 @@ class FileAction extends ObjectAction
 		// MIME-Types aus Datei lesen
 		$this->setTemplateVars( $this->file->getProperties() );
 		$this->setTemplateVar('value',$this->file->loadValue());
-	}
-
-
-	/**
-	 * Anzeigen des Inhaltes
-	 */
-	function size()
-	{
-		$this->setTemplateVars( $this->file->getProperties() );
-		
-		$format = $this->imageFormat();
-
-		if	( $format == 0 )
-		{
-			$this->addNotice( 'image','','IMAGE_RESIZING_UNKNOWN_TYPE',OR_NOTICE_WARN);
-		}
-			
-		$formats = $this->imageFormats();
-			
-		if	( empty($formats) )
-			$this->addNotice( 'image','','IMAGE_RESIZING_NOT_AVAILABLE',OR_NOTICE_WARN);
-		
-		$sizes = array();
-		foreach( array(10,25,50,75,100,125,150,175,200,250,300,350,400,500,600,800) as $s )
-			$sizes[strval($s/100)] = $s.'%';
-			
-		$jpeglist = array();
-		for ($i=10; $i<=95; $i+=5)
-			$jpeglist[$i]=$i.'%';
-
-		$this->setTemplateVar('factors'       ,$sizes      );
-		$this->setTemplateVar('jpeglist'      ,$jpeglist   );
-		$this->setTemplateVar('formats'       ,$formats    );
-		$this->setTemplateVar('format'        ,$format     );
-		$this->setTemplateVar('factor'        ,1           );
-		
-		$this->file->getImageSize();
-		$this->setTemplateVar('width' ,$this->file->width  );
-		$this->setTemplateVar('height',$this->file->height );
-		$this->setTemplateVar('type'  ,'input'             );
 	}
 
 

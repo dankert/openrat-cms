@@ -32,7 +32,6 @@ goto=prop
 
 [size]
 menu=prop
-target=resize
 editable=true
 
 [remove]
