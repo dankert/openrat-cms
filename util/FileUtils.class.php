@@ -21,18 +21,34 @@ class FileUtils
 	}
 	
 	
+
 	/**
-	 * Ermittelt das tempor�re Verzeichnis.
-	 *
-	 * @return String
+	 * Liefert einen Verzeichnisnamen fuer temporaere Dateien.
 	 */
 	function getTempDir()
 	{
-		$tmpFilename = tempnam(ini_get('upload_tmp_dir'),"bla");
-		@unlink($tmpFilename);
-		return FileUtils::slashify( dirname($tmpFilename) );
+		global $conf;
+		$tmpdir = @$conf['cache']['tmp_dir'];
+		$tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
+
+		// 2. Versuch: Temp-Dir aus "upload_tmp_dir".
+		if	( $tmpfile === FALSE )
+		{
+			$tmpdir = ini_get('upload_tmp_dir');
+			$tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
+		}
+		
+		elseif	( $tmpfile === FALSE )
+		{
+			$tmpfile = @tempnam( '','openrat_tmp' );
+		}
+		
+		$tmpdir = dirname($tmpfile);
+		@unlink($tmpfile);
+			
+		return FileUtils::slashify( $tmpdir );
 	}
-	
+
 	
 	
 	/**

@@ -454,11 +454,6 @@ class Action
 		global $image_dir;
 		global $view;
 		       
-		$tplName = str_replace( '_','/',$tplName );
-		
-		$tplFileName = $tplName.'.tpl.'.PHP_EXT;
-		$conf_php = PHP_EXT;
-	
 		// ?bertragen der Array-Variablen in den aktuellen Kontext
 		//
 		extract( $this->templateVars );
@@ -490,8 +485,6 @@ class Action
 		
 		$self = $HTTP_SERVER_VARS['PHP_SELF'];
 	
-		$tplFileName = str_replace( '_','/',$tplFileName );
-
 		if	( !empty($conf['interface']['override_title']) )
 			$cms_title = $conf['interface']['override_title'];
 		else
@@ -513,12 +506,8 @@ class Action
 			unset($te);
 		}
 
-		if	( config('theme','compiler','compile_to_tmp_dir') )
-			$iFile = Object::getTempDir().'/'.str_replace('/', '_',$tplFileName);
-		else
-			$iFile = $tpl_dir.$tplFileName;
+		$iFile = FileUtils::getTempDir().'/'.'or.cache.tpl.'.str_replace('/', '.',$tplName).'.tpl.'.PHP_EXT;;
 			
-		//Html::debug( $iFile );
 		//try
 		//{
 			if	( is_file($iFile))

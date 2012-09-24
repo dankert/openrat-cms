@@ -71,10 +71,7 @@ class TemplateEngine
 			// Wenn Vorlage (noch) nicht existiert
 			die( get_class($this).': Template not found: "'.$tplName.'"' );
 
-		if	( config('theme','compiler','compile_to_tmp_dir') )
-			$filename = Object::getTempDir().'/'.str_replace('/', '_',$tplName).'.tpl.'.PHP_EXT;
-		else	
-			$filename = 'themes/default/pages/html/'.$tplName.'.tpl.'.PHP_EXT;
+		$filename = FileUtils::getTempDir().'/'.'or.cache.tpl.'.str_replace('/', '.',$tplName).'.tpl.'.PHP_EXT;
 		
 		// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausf�hren.		
 		if	( $conf['theme']['compiler']['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
@@ -87,14 +84,6 @@ class TemplateEngine
 			
 		// Vorlage und Zieldatei oeffnen
 		$document = $this->loadDocument( $srcFilename );
-		
-		// Prüfen, ob Zielverzeichnis existiert, falls nicht: Anlegen.
-		if	( ! is_dir(dirname($filename)) )
-		{
-			$rc = mkdir( dirname($filename) );
-			if	( ! $rc )
-				Http::serverError('Unable to create directory: '.dirname($filename));
-		}
 		
 		$outFile = @fopen($filename,'w');
 

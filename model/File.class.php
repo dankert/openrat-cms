@@ -663,7 +663,7 @@ EOF
 		if	( $this->tmpfile == '' )
 		{
 			$db = db_connection();
-			$this->tmpfile = $this->getTempDir().'/openrat_db'.$db->id.'_'.$this->objectid.'.tmp';
+			$this->tmpfile = $this->getTempDir().'openrat_db'.$db->id.'_'.$this->objectid.'.tmp';
 		}
 		return $this->tmpfile;
 	}

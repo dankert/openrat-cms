@@ -1100,70 +1100,6 @@ SQL
 		}
 	}
 
-
-	/**
-	 * Dateinamen der temporaeren Datei bestimmen
-	 */
-	function tmpfileYYYYYY()
-	{
-		if	( isset($this->tmpfile) && $this->tmpfile != '' )
-			return $this->tmpfile; // Tempor�rer Dateiname bereits vorhanden.
-
-		global $conf;
-		
-		// 1. Versuch: Temp-Dir aus Konfiguration.
-		$tmpdir = @$conf['cache']['tmp_dir'];
-		if	( $this->tmpfile === FALSE )
-			$this->tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
-
-		// 2. Versuch: Temp-Dir aus "upload_tmp_dir".
-		if	( $this->tmpfile === FALSE )
-		{
-			Html::debug($this->tmpfile,"nochmal");
-			$tmpdir = ini_get('upload_tmp_dir');
-			$this->tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
-		}
-		
-		elseif	( $this->tmpfile === FALSE )
-		{
-		Html::debug($this->tmpfile,"nochmal");
-			$this->tmpfile = @tempnam( '','openrat_tmp' );
-		}
-			
-		Html::debug($this->tmpfile,"tmpfile in objekt");
-		Logger::debug( 'creating temporary file: '.$this->tmpfile );
-
-		return $this->tmpfile;
-	}
-
-
-	/**
-	 * Liefert einen Verzeichnisnamen fuer temporaere Dateien.
-	 */
-	function getTempDir()
-	{
-		global $conf;
-		$tmpdir = @$conf['cache']['tmp_dir'];
-		$tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
-
-		// 2. Versuch: Temp-Dir aus "upload_tmp_dir".
-		if	( $tmpfile === FALSE )
-		{
-			$tmpdir = ini_get('upload_tmp_dir');
-			$tmpfile = @tempnam( $tmpdir,'openrat_tmp' );
-		}
-		
-		elseif	( $tmpfile === FALSE )
-		{
-			$tmpfile = @tempnam( '','openrat_tmp' );
-		}
-		
-		$tmpdir = dirname($tmpfile);
-		@unlink($tmpfile);
-			
-		return $tmpdir;
-	}
-
 	
 	
 	/**
@@ -1171,13 +1107,13 @@ SQL
 	 * @param $attr Attribute fuer den Dateinamen, um diesen eindeutig zu gestalten.
 	 * @return unknown_type
 	 */
-	function getTempFileName( $attr = array() )
+	public function getTempFileName( $attr = array() )
 	{
 		global $conf;
 		
 //		if	( $conf['cache']['enable_cache'] )
 //		{
-			$filename = Object::getTempDir().'/openrat';
+			$filename = FileUtils::getTempDir().'/openrat';
 			foreach( $attr as $a=>$w )
 				$filename .= '_'.$a.$w;
 				
@@ -1199,12 +1135,16 @@ SQL
 	 * Gibt ein fertiges Dateihandle fuer eine temporaere Datei zurück.
 	 * @return Resource
 	 */
-	function getTempFile()
+	protected function getTempFile()
 	{
 		return tmpfile();
 	}
 
 
+	public function getTempDir()
+	{
+		FileUtils::getTempDir();
+	}
 
 	/**
 	 * Reihenfolge-Sequenznr. dieses Objektes neu speichern

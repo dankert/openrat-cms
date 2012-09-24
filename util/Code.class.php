@@ -39,7 +39,7 @@ class Code extends Dynamic
 		if	( substr($this->code,0,5) != '<?php' )
 			$this->code = "<?php\n".$this->code."\n?>";
 
-		$tmp = Object::getTempDir().'/openratDynamic';
+		$tmp = FileUtils::getTempDir().'/openratDynamic';
 		$tmp .= '.code.php.tmp';
 		
 		$f = fopen( $tmp,'w' );

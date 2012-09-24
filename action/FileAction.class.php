@@ -172,11 +172,14 @@ class FileAction extends ObjectAction
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
 		header('Content-Length: '.filesize($this->file->tmpfile()) );
 		
+		// Unterscheidung, ob PHP-Code in der Datei ausgefuehrt werden soll.
 		if	( ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
 		        config('publish','enable_php_in_file_content')===true )
+		    // PHP-Code ausfuehren
 			require( $this->file->tmpfile() );
 		else
-			readfile( $this->file->tmpfile() );
+		    // PHP-Code nicht ausfuehren, Datei direkt auf die Standardausgabe schreiben
+		readfile( $this->file->tmpfile() );
 		exit;
 	}
 
