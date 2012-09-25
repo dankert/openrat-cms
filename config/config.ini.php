@@ -51,16 +51,21 @@ cache.enable_cache=false
 
 
 ; Directory for temporary files.
-; Default=blank (OpenRat uses the system temporary dir)
-cache.tmp_dir=""
-;
-; converted from config.ini.php
-; <?php exit('direct access denied') ?>
+; Default: blank (means: OpenRat is using the system temporary dir)
+;cache.tmp_dir=
 
 
-config.per_host_configuration = true
 
-config.per_host_configuration_dir = ./config/virtual
+; Auto-Reload session.
+; If the configuration file is changed, its content is reloaded automatically
+; Default: true
+;config.auto_reload= true;
+
+; 
+; If the configuration file is changed, a new session will be created.
+; Default: true
+;config.session_destroy_on_config_reload= true;
+
 ;
 ; converted from content.ini.php
 ; <?php exit('direct access denied') ?>
@@ -74,9 +79,8 @@ content.file.max_file_size=1500
 
 
 
-; next section: [revision-limit]
 
-; This is your delete-strategy of old content.
+; Delete-strategy of old content.
 
 ; Values are deleted, if
 ; a) max-age and min-revisions are reached OR
@@ -95,20 +99,16 @@ content.revision-limit.min-revisions = 3
 
 
 
-; next section: [language]
-
-; If a text is empty, try using the default language
+; If a textvalue is empty, try using the default language
 ; Default: true
-content.language.use_default_language = true
+;content.language.use_default_language = true
 ;
 
-;
-; converted from database.ini.php
-; <?php exit('direct access denied') ?>
 
-; Database configuration file
+
+; Database configuration.
 ; You have to have at least one database connection which has 'enabled=true'.
-;database.
+;
 ; Supported RDBMS-types:
 ; - 'mysql'      the old PHP-mysql-driver
 ; - 'mysqli'     PHP-mysql-driver with support for prepared statements (EXPERIMENTAL) (since PHP 5.0)
@@ -125,8 +125,6 @@ content.language.use_default_language = true
 database.default=sample_db_mysql
 
 
-
-; next section: [sample_db_mysql]
 
 ; This is a sample database connection.
 ; If you want to use it, just fill out the login data and set 'enabled' to 'true'
@@ -171,8 +169,6 @@ database.sample_db_mysql.transaction = false
 database.sample_db_mysql.readonly = false
 
 
-
-; next section: [sample_db_postgresql]
 
 ; This is a sample database connection.
 ; If you want to use it, just fill out the login data and set 'enabled' to 'true'
@@ -300,18 +296,17 @@ database.sample_pdo_sqlite.convert_to_lowercase = false
 ;database.sample_pdo_sqlite.option_myoption_b
 
 
-
 ; Add here more sections with other database connections.
 ; next unused section: ;[another_db]
 ; type=...
 ; comment="My production DB ..."
 ; ...
 
-;
-; converted from date.ini.php
-; <?php die('no access'); ?>
 
-; date formats
+
+
+;
+; Date formats
 ; see http://www.php.net/manual/en/function.date.php for details
 ; next section: [format]
 
@@ -1429,30 +1424,28 @@ security.user.show_mail=true
 ; (not yet implemented)
 security.user.send_message=true
 ;
-; converted from theme.ini.php
-; <?php exit('direct access denied') ?>
+
+
 
 ; Theme compiler.
-; These settings are only useful for developers!
-; next section: [compiler]
 
 ; Enable the Template Compiler
-; files under themes/default/pages must be writable.
-; default=false
-theme.compiler.enable=false
+; Templates files are written to a temporary directory.
+; default=true
+;theme.compiler.enable=true
 
 ; Only compile, if the file under themes/default/templates is changed.
 ; default=true
-theme.compiler.cache=true
+;theme.compiler.cache=true
 
-; Do a CHMOD on a written file.
-; default=
+; Do a CHMOD on the output file.
+; default: empty
 theme.compiler.chmod=
 
 ; Compile ALL templates at logout
 ; (only useful while developing)
-; default=false
-theme.compiler.compile_at_logout=true
+; default: false
+;theme.compiler.compile_at_logout=false
 
 ; Compile ALL templates to temporary directory
 ; only useful while developing! Not for production use.

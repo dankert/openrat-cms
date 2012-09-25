@@ -58,6 +58,8 @@ class TemplateEngine
 			$tplName = $this->tplName;
 		
 		global $conf;
+		$confCompiler = $conf['theme']['compiler'];
+		
 		$srcOrmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.'.PHP_EXT;
 		$srcXmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.xml';
 
@@ -74,7 +76,7 @@ class TemplateEngine
 		$filename = FileUtils::getTempDir().'/'.'or.cache.tpl.'.str_replace('/', '.',$tplName).'.tpl.'.PHP_EXT;
 		
 		// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausf�hren.		
-		if	( $conf['theme']['compiler']['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
+		if	( $confCompiler['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
 			return;
 			
 		if	( is_file($filename) && !is_writable($filename) )
@@ -123,9 +125,9 @@ class TemplateEngine
 
 		fclose($outFile);
 
-		// CHMOD ausf�hren.
-		if	( !empty($conf['theme']['compiler']['chmod']))
-			if	( !@chmod($filename,octdec($conf['theme']['compiler']['chmod'])) )
+		// CHMOD ausfuehren.
+		if	( !empty($confCompiler['chmod']))
+			if	( !@chmod($filename,octdec($confCompiler['chmod'])) )
 				die( "CHMOD failed on file ".$filename );
 	}
 	

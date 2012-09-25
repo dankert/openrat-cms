@@ -1,5 +1,5 @@
 <?php
-// DO NOT MAKE ANY CHANGES IN THIS FILE, please edit the configuration file instead.
+// DO NOT MAKE ANY CHANGES IN THIS FILE, please edit the file 'config.ini.php' or 'config-<host>.ini.php' instead.
 // This file should only be changed by developers. 
 $conf = array();
 $conf['applications'] = array();
@@ -15,8 +15,6 @@ $conf['cache']['conditional_get']='true';
 $conf['cache']['enable_cache']=false;
 $conf['cache']['tmp_dir']="";
 $conf['config'] = array();
-$conf['config']['per_host_configuration']= true;
-$conf['config']['per_host_configuration_dir']= "./config/virtual";
 $conf['config']['auto_reload']= true;
 $conf['config']['session_destroy_on_config_reload']= true;
 $conf['content'] = array();
@@ -801,11 +799,10 @@ $conf['security']['user']['show_mail']=true;
 $conf['security']['user']['send_message']=true;
 $conf['theme'] = array();
 $conf['theme']['compiler'] = array();
-$conf['theme']['compiler']['enable']=false;
+$conf['theme']['compiler']['enable']=true;
 $conf['theme']['compiler']['cache']=true;
-$conf['theme']['compiler']['chmod']='0';
-$conf['theme']['compiler']['compile_at_logout']=true;
-$conf['theme']['compiler']['compile_to_tmp_dir']=false;
+$conf['theme']['compiler']['chmod']='';
+$conf['theme']['compiler']['compile_at_logout']=false;
 $conf['webdav'] = array();
 $conf['webdav']['enable']=false;
 $conf['webdav']['create']=true;
