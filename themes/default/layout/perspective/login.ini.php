@@ -5,10 +5,7 @@ views=
 
 [content]
 
-views=login,openid,register
-action=login
-refreshable=false
-default=login
+views=
 
 [side]
 views=license

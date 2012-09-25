@@ -1264,18 +1264,19 @@ div#filler
 	opacity: 0.5;
 }
 
-div.modaldialog
+div#workbench > div.bar.modaldialog
 {
-	xxxxdisplay: block;
+	width:60%;
 	position:absolute;
+	top:0;
+	left:0;
 	z-index: 101;
-	top: 0;
-	left: 0;
 	opacity: 1;
-	xxxxmargin:10%;
-	xxxxheight:60% !important;
-	width:60% !important;
-	border:5px solid black !important;
+	border:3px solid black !important;
 	background-color:white !important;
-	margin:0px auto !important;
+	margin:5% 20% !important;
+	-webkit-box-shadow: 20px 20px 20px black;
+    -moz-box-shadow: 20px 20px 20px black;
+    box-shadow: 20px 20px 20px black;
 }
+ 
