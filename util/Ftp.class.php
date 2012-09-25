@@ -59,9 +59,9 @@ class Ftp
 		$ftp = array_merge($conf_ftp,$ftp);
 	
 		// Nur FTP und FTPS (seit PHP 4.3) erlaubt
-		if   ( !ereg('^ftps?$',$ftp['scheme']) )
+		if   ( !ereg('^ftps?$',@$ftp['scheme']) )
 		{
-			$this->log[] = 'Unknown scheme in FTP Url: '.$ftp['scheme'];
+			$this->log[] = 'Unknown scheme in FTP Url: '.@$ftp['scheme'];
 			$this->log[] = 'Only FTP (and FTPS, if compiled in) are supported';
 			$this->ok  = false;
 			return;
