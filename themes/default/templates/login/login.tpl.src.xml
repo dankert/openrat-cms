@@ -38,7 +38,7 @@
 					</part>
 					<part class="input">
 						<if not="true" present="force_username">
-							<input type="text" name="login_name" class="name" value=""
+							<input type="text" name="login_name" class="name" value="" hint="message:USER_USERNAME"
 								size="20"></input>
 						</if>
 						<else><input type="hidden" name="login_name" value="var:force_username"></input><text

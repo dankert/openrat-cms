@@ -67,7 +67,7 @@
 		</row>
 		<row class="data">
 			<cell colspan="2">
-				<link type="view" action="folder" subaction="createlink">
+				<link type="modal" action="folder" subaction="createlink">
 					<image file="icon/create"></image>
 					<text key="menu_folder_createlink"></text>
 				</link>
