@@ -1,7 +1,7 @@
 <?php
 exit();
 $_GET['action']    = 'login';
-$_GET['subaction'] = 'openid';
+$_GET['subaction'] = 'openidlogin';
 
 require( 'dispatcher.php' );
 
