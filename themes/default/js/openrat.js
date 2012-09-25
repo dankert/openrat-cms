@@ -22,7 +22,7 @@ $(document).ready(function()
 function ping()
 {
 	$.ajax( createUrl('title','ping',0) );
-	console.log("Session-Ping");
+	window.console && console.log("session-ping");
 }
 
 
@@ -182,7 +182,6 @@ function refreshWorkbench()
  */
 function refreshTitleBar()
 {
-	console.debug("Reloading Titlebar");
 	$('div#title').load( createUrl('title','show',0 ),function() {
 		$(this).fadeIn('slow');
 		registerHeaderEvents();
@@ -202,8 +201,6 @@ function loadViewByName(viewName, url )
 
 function loadView(jo, url )
 {
-	console.debug("Loading "+url);
-
 	//alert("Lade "+url + " in Objekt "+jo);
 	//   E d i t o r
 	var editorConfig = {
