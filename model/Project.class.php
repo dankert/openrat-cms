@@ -433,13 +433,17 @@ SQL
 	}
 
 	
-	
-	function checkLostFiles()
+
+	/**
+	 * Testet die Integrität der Datenbank.
+	 */
+	public function checkLostFiles()
 	{
 		$this->log = array();
 		
 		$db = &Session::getDatabase();
-		
+
+		// Ordnerstruktur prüfen.
 		$sql = new Sql( <<<EOF
 SELECT thistab.id FROM {t_object} AS thistab
  LEFT JOIN {t_object} AS parenttab
@@ -469,6 +473,22 @@ EOF
 			}
 		}
 
+		
+		// Prüfe, ob die Verbindung Projekt->Template->Templatemodell->Projectmodell->Projekt konsistent ist. 
+		$sql = new Sql( <<<EOF
+SELECT DISTINCT projectid FROM {t_projectmodel} WHERE id IN (SELECT projectmodelid from {t_templatemodel} WHERE templateid in (SELECT id from {t_template} WHERE projectid={projectid}))
+EOF
+);
+		$sql->setInt('projectid',$this->projectid);
+
+		$idList = $db->getCol($sql);
+		
+		if	( count( $idList ) > 1 )
+		{
+			Logger::warn('Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.');
+			$this->log[] = 'Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.';
+		}
+
 	}
 	
 	
@@ -484,6 +504,8 @@ EOF
 	 */
 	function export( $dbid_destination )
 	{
+		Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
+		
 		global $conf;
 		$zeit = date('Y-m-d\TH:i:sO');
 		
@@ -563,7 +585,7 @@ EOF
 			 
 		foreach( $ids as $tabelle=>$data )
 		{
-			
+			Logger::debug( 'Copying table '.$tabelle.' ...' );
 			$mapping[$tabelle] = array();
 			$idcolumn = $data['primary_key'];
 
@@ -589,6 +611,7 @@ EOF
 
 			foreach( $db_src->getCol($sql) as $srcid )
 			{
+				Logger::debug('Id '.$srcid.' of table '.$tabelle);
 				$mapping[$tabelle][$srcid] = ++$nextid;
 
 				$sql = new Sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
@@ -601,6 +624,8 @@ EOF
 				// Fremdschl�sselbeziehungen auf neue IDn korrigieren.
 				foreach( $data['foreign_keys'] as $fkey_column=>$target_tabelle)
 				{
+					Logger::debug($fkey_column.' '.$target_tabelle.' '.$row[$fkey_column]);
+					
 					if	( intval($row[$fkey_column]) != 0 )
 						$row[$fkey_column] = $mapping[$target_tabelle][$row[$fkey_column]];
 				}
@@ -665,6 +690,8 @@ EOF
 				}
 			}
 		}
+		
+		Logger::debug( 'Finished copying project' );
 		
 		$db_dest->commit();
 	}

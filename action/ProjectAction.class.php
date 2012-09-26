@@ -167,11 +167,15 @@ class ProjectAction extends Action
 		switch( $this->getRequestVar('type') )
 		{
 			case 'check_files':
+				// Konsistenzprüfungen
 				$this->project->checkLostFiles();
-				$this->addNotice('project',$this->project->name,'DONE');
+				$status = empty($this->project->log) ? OR_NOTICE_OK : OR_NOTICE_ERROR;
+					
+				$this->addNotice('project',$this->project->name,'DONE',$status,array(),$this->project->log);
 				break;
 				
 			case 'check_limit':
+				// Alte Versionen löschen.
 				$this->project->checkLimit();
 				$this->addNotice('project',$this->project->name,'DONE');
 				break;
