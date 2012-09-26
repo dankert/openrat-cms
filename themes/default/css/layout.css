@@ -93,40 +93,54 @@ div#tree
 */
 
 
-
 /*   N o t i c e   */
 div#noticebar
 {
-	visibility:none;
+	display:block;
 	position:fixed;
 	bottom:40px;
 	right:40px;
 	width:250px;
-	border 2px solid gray;
-	background-color:white;
-	padding:5px;
-	z-index:3;
-	
-	-moz-border-radius:5px; /* Mozilla */
-    -webkit-border-radius:5px; /* Webkit */
-    -khtml-border-radius:5px; /* Konqui */
+	z-index:113;
 }
 
 div#noticebar div.notice
 {
-	border-bottom:1px solid silver;
+	border: 2px solid black;
+	
+	padding:5px;
+	margin:5px;
+	
+	-moz-border-radius:5px; /* Mozilla */
+    -webkit-border-radius:5px; /* Webkit */
+    -khtml-border-radius:5px; /* Konqui */
+    border-radius:5px; /* CSS 3 */
+        
+	-webkit-box-shadow: 3px 2px 5px black;
+    -moz-box-shadow: 3px 2px 5px black;
+    box-shadow: 3px 2px 5px black;
+	
+	display:none;
 }
 div#noticebar div.notice.ok
 {
-	border-left:4px solid green;
+	background-color: green;
 }
 div#noticebar div.notice.warn
 {
-	border-left:4px solid yellow;
+	background-color: yellow;
 }
 div#noticebar div.notice.error
 {
-	border-left:4px solid red;
+	background-color:red;
+}
+div#noticebar div.notice.error div.text
+{
+	font-weight: bold;
+}
+div#noticebar div.log
+{
+	font-family: monospace;
 }
 
 /*   H o e h e n   */

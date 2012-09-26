@@ -832,16 +832,22 @@ function doResponse(data,status,element)
 		$.each(value.log, function(name,value) {
 			$(notice).append('<div class="log">'+value+'</div>');
 		});
-		$('#noticebar').prepend(notice).slideDown('fast').click( function()
-				{
-			$(this).fadeOut('fast',function() { $(this).empty(); } );
-				} );
-		$('#noticebar').delay('3000').slideUp('fast');
+		$('#noticebar').prepend(notice);
+		$('#noticebar div.notice').fadeIn();
+		$(notice).fadeIn().click( function()
+		{
+			$(this).fadeOut('fast',function() { $(this).remove(); } );
+		} );
 		
+		if	( value.status == 'ok' )
+			$(notice).delay(3000).fadeOut( function() { $(this).remove(); } );
+		
+		/*
 		$('div.window div.status').html('<div />');
 		$('div.window div.status div').addClass( value.status );
 		$('div.window div.status div').append( value.text );
-		$('div.window div.status div').delay(3000).fadeOut(2500);
+		$('div.window div.status div').delay(3000).fadeOut(2500, function() { $(this).remove(); });
+		*/
 		//alert( value.text );
 	});
 	
@@ -854,9 +860,11 @@ function doResponse(data,status,element)
 	
 	// Hinweismeldungen in Statuszeile anzeigen
 	if	( ! data.control ) {
+		/*
 		$('div.window div.status').html('<div />');
 		$('div.window div.status div').append( data );
 		$('div.window div.status div').delay(3000).fadeOut(2500);
+		*/
 		//alert( value.text );
 	};
 	
