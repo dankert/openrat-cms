@@ -40,16 +40,16 @@ iframe
 	width:100%;
 	height:500px;
 	display:block;
-	border: 1px solid grey;
+	border: 1px solid <?php echo $_GET['title_background_color']; ?>;
 }
 
 div.breadcrumb,
 div.breadcrumb a,
 div.window > div.title
 {
-	x-background-color:grey;
+	x-background-color:<?php echo $_GET['title_background_color']; ?>;
 	xsopacity:0.7;
-	color:white;
+	color:<?php echo $_GET['title_text_color']; ?>;
 	font-weight:bold;
 }
 
@@ -106,7 +106,7 @@ div#noticebar
 
 div#noticebar div.notice
 {
-	border: 2px solid black;
+	border: 2px solid <?php echo $_GET['text_color']; ?>;
 	
 	padding:5px;
 	margin:5px;
@@ -116,9 +116,9 @@ div#noticebar div.notice
     -khtml-border-radius:5px; /* Konqui */
     border-radius:5px; /* CSS 3 */
         
-	-webkit-box-shadow: 3px 2px 5px black;
-    -moz-box-shadow: 3px 2px 5px black;
-    box-shadow: 3px 2px 5px black;
+	-webkit-box-shadow: 3px 2px 5px <?php echo $_GET['text_color']; ?>;
+    -moz-box-shadow: 3px 2px 5px <?php echo $_GET['text_color']; ?>;
+    box-shadow: 3px 2px 5px <?php echo $_GET['text_color']; ?>;
 	
 	display:none;
 }
@@ -199,28 +199,27 @@ div.filler div.header a.back.button
 	padding-bottom:4px;
 	padding-left:7px;
 	padding-right:7px;
-	border:1px solid grey;
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 	-moz-border-radius:5px; /* Mozilla */
     -webkit-border-radius:5px; /* Webkit */
     -khtml-border-radius:5px; /* Konqui */
     border-radius:5px;
-    background-color: white;
-	background: -moz-linear-gradient(top, gray, silver);
-	background: -webkit-gradient(linear, left top, left bottom, from(gray), to(silver));
+    background-color: <?php echo $_GET['title_text_color']; ?>;
+	background: -moz-linear-gradient(top, <?php echo $_GET['title_background_color']; ?>, <?php echo $_GET['inactive_background_color']; ?>);
+	background: -webkit-gradient(linear, left top, left bottom, from(<?php echo $_GET['title_background_color']; ?>), to(<?php echo $_GET['inactive_background_color']; ?>));
 	font-style:normal;
 	font-weight:normal;
 	text-decoration:none;
     cursor:default;
-    color:black;
+    color:<?php echo $_GET['text_color']; ?>;
 }
 
 ul#history > li.active
 {
-    background-color: white;
-    background: white;
+    background-color: <?php echo $_GET['title_text_color']; ?>;
     font-weight:bold;
     cursor:default;
-    color:black;
+    color:<?php echo $_GET['text_color']; ?>;
 }
 
 div.content a.action,
@@ -254,7 +253,7 @@ div.noaction:hover,
 input.ok:hover
 {
 	text-decoration:none;
-	border-color:white;
+	border-color:<?php echo $_GET['title_text_color']; ?>;
 }
 
 a.action:active,
@@ -268,7 +267,7 @@ input.ok:active
 
 a
 {
-	color:black;
+	color:<?php echo $_GET['text_color']; ?>;
 }
 
 
@@ -294,7 +293,7 @@ div.dropdown > a
 div.dropdown div.entry:hover,
 div.dropdown div.entry:hover > a
 {
-	background-color:silver;
+	background-color:<?php echo $_GET['inactive_background_color']; ?>;
 }
 div.dropdown div.entry
 {
@@ -316,7 +315,7 @@ div.icon:hover > div.dropdown
 
 /* Vorschau von Text-Inhalten */
 
-td.preview { background-color:papayawhip; border-top:1px solid silver; border-bottom:1px solid silver; }
+td.preview { background-color:papayawhip; border-top:1px solid <?php echo $_GET['inactive_background_color']; ?>; border-bottom:1px solid <?php echo $_GET['inactive_background_color']; ?>; }
 .preview h1 { font-size:138.5%; }
 .preview h2 { font-size:123.1%; }
 .preview h3 { font-size:108%;   }
@@ -408,7 +407,10 @@ body.title table tr td {
 /* Submenu-Entrys */
 body.menu tr.menu td table tr td,
 body.main tr.menu td table tr td
-{ padding:4px; padding-right:6px;padding-left:6px; width:30px; white-space:nowrap;}
+{
+	padding:4px; padding-right:6px;padding-left:6px; width:30px;
+	white-space:nowrap;
+}
 
 /* Submenu-Width */
 body.menu tr.menu table { width:50px;}
@@ -418,7 +420,7 @@ body.menu tr.menu table { width:50px;}
 body.menu tr.menu td table tr td.noaction,
 body.main tr.menu td table tr td.noaction
 {
-	color:gray;
+	color:<?php echo $_GET['title_background_color']; ?>;
 }
 
 /* Fenster-Titel */
@@ -446,7 +448,7 @@ pre
 /* Kleingedrucktes */
 small
 {
-	color:gray;
+	color:<?php echo $_GET['title_background_color']; ?>;
 }
 
 
@@ -495,7 +497,7 @@ body.main table.main td.window td.act
 {
 	padding:15px;
 	margin-top:20px;
-	border-top:1px solid gray;
+	border-top:1px solid <?php echo $_GET['title_background_color']; ?>;
 	text-align:right;
 }
 
@@ -528,7 +530,7 @@ table.main
 div.window input.checkbox,
 div.window input.radio
 {
-	border:1px solid grey;
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 }
 
 /* Eingabefeld fuer Beschreibung */
@@ -546,7 +548,7 @@ textarea.longtext
 	font-size:13px;
 	width:100%;
 	height:300px;
-	border:1px solid black;
+	border:1px solid <?php echo $_GET['text_color']; ?>;
 }
 
 
@@ -561,7 +563,7 @@ tr td.help
 
 tr.headline td.help
 {
-	border-bottom:1px solid black;
+	border-bottom:1px solid <?php echo $_GET['text_color']; ?>;
 	font-style: normal;
 }
 
@@ -612,7 +614,7 @@ table.notice th
 {
 	padding:2px;
 	white-space:nowrap;
-	border-bottom:1px solid black;
+	border-bottom:1px solid <?php echo $_GET['text_color']; ?>;
 	font-weight:normal;
 	text-align:left;
 }
@@ -668,7 +670,7 @@ div.menu
 
 fieldset
 {
-	border:1px solid grey;
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 	
 	border-bottom:0px;
 	border-left:0px;
@@ -693,7 +695,7 @@ fieldset legend
 form.xlogin
 {
 	xbackground-color:#E0E0D5;
-	border:2px solid silver;
+	border:2px solid <?php echo $_GET['inactive_background_color']; ?>;
 	position:absolute;
 	z-index:999;
 	top:5%;
@@ -703,9 +705,9 @@ form.xlogin
 	padding:10%;
 	opacity:1;
 	
-	-webkit-box-shadow: 3px 2px 5px gray;
-    -moz-box-shadow: 3px 2px 5px gray;
-    box-shadow: 3px 2px 5px gray;
+	-webkit-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
+    -moz-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
+    box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
 }
 
 
@@ -731,8 +733,8 @@ ul.tree ul
 div.entry.selected,
 div.dropdown > div.entry:hover
 {
-	/*border:1px solid black;*/
-	background-color:silver;
+	/*border:1px solid <?php echo $_GET['text_color']; ?>;*/
+	background-color:<?php echo $_GET['inactive_background_color']; ?>;
 }
 
 
@@ -865,7 +867,7 @@ div.window div.menu ul.views
 
 div.window div.menu 
 {
-	xborder-bottom: 1px solid grey;
+	xborder-bottom: 1px solid <?php echo $_GET['title_background_color']; ?>;
 }
 
 
@@ -880,7 +882,7 @@ div.window ul.views li
 	
 	cursor:pointer;
 	
-	border-right: 1px solid grey;
+	border-right: 1px solid <?php echo $_GET['title_background_color']; ?>;
 	
 	-moz-border-radius-topleft:5px; /* Mozilla */
     -webkit-border-radius-topleft:5px; /* Webkit */
@@ -891,9 +893,9 @@ div.window ul.views li
     -khtml-border-top-radius-topright:5px; /* Konqui */
     border-top-right-radius:5px;
     
-    xborder-top:1px solid gray;
-    xborder-left:1px solid gray;
-    xborder-right:1px solid gray;
+    xborder-top:1px solid <?php echo $_GET['title_background_color']; ?>;
+    xborder-left:1px solid <?php echo $_GET['title_background_color']; ?>;
+    xborder-right:1px solid <?php echo $_GET['title_background_color']; ?>;
     xmargin-right:10px;
 	display: block;
 	float:left;
@@ -908,7 +910,7 @@ div.window ul.views li
 
 div#workbench div.frame {
 	padding:3px;
-	border:1px solid grey;
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 	
 	-moz-border-radius:3px;
     -webkit-border-radius:3px;
@@ -922,7 +924,7 @@ div#workbench div.frame {
 /*
 div.window {
 	padding:3px;
-	border:1px solid grey;
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 	
 	-moz-border-radius:5px;
     -webkit-border-radius:5px;
@@ -941,23 +943,23 @@ div.window {
 div.window div.content table
 {
 	overflow:auto;
-	border:2px silver;
+	border:2px <?php echo $_GET['inactive_background_color']; ?>;
 }
 
 
 table tr.headline > td {
-    background-color: silver;
-	background: -moz-linear-gradient(top, gray, silver);
-	background: -webkit-gradient(linear, left top, left bottom, from(gray), to(silver));
-    border-bottom:1px solid gray;
-    border-right:1px solid silver;
+    background-color: <?php echo $_GET['inactive_background_color']; ?>;
+	background: -moz-linear-gradient(top, <?php echo $_GET['title_background_color']; ?>, <?php echo $_GET['inactive_background_color']; ?>);
+	background: -webkit-gradient(linear, left top, left bottom, from(<?php echo $_GET['title_background_color']; ?>), to(<?php echo $_GET['inactive_background_color']; ?>));
+    border-bottom:1px solid <?php echo $_GET['title_background_color']; ?>;
+    border-right:1px solid <?php echo $_GET['inactive_background_color']; ?>;
     padding:3px;
 }
 
 
 table tr.data > td {
-    border-bottom:1px solid gray;
-    border-right:1px solid silver;
+    border-bottom:1px solid <?php echo $_GET['title_background_color']; ?>;
+    border-right:1px solid <?php echo $_GET['inactive_background_color']; ?>;
     padding:3px;
 }
 
@@ -967,7 +969,7 @@ table tr.data > td {
 
 /* Ungerade Tabellenzeilen (funktioniert nicht im FF) */
 table > tr.data:nth-child(2n) {
-	background-color: silver;
+	background-color: <?php echo $_GET['inactive_background_color']; ?>;
 }
 
 /* Datenzeile - Mauseffekt */
@@ -979,7 +981,7 @@ div#tree div.content li div.entry:hover
 
 /* Datenzeile mit URL - Mauseffekt */
 table tr.data td[onclick]:hover{
-	background-color:silver;
+	background-color:<?php echo $_GET['inactive_background_color']; ?>;
 }
 
 tr.data > td[onclick],
@@ -1007,17 +1009,17 @@ div.window div.status
 	padding:10px;
 }
 div.window div.status div.error {
-	xborder:1px solid silver;
+	xborder:1px solid <?php echo $_GET['inactive_background_color']; ?>;
 	background: url(../images/notice_error.png) no-repeat;
 	padding-left:20px;
 }
 div.window div.status div.warn {
-	xborder:1px solid silver;
+	xborder:1px solid <?php echo $_GET['inactive_background_color']; ?>;
 	background: url(../images/notice_warn.png) no-repeat;
 	padding-left:20px;
 }
 div.window div.status div.ok {
-	xborder:1px solid silver;
+	xborder:1px solid <?php echo $_GET['inactive_background_color']; ?>;
 	background: url(../images/notice_ok.png) no-repeat;
 	padding-left:20px;
 }
@@ -1045,7 +1047,7 @@ div#workbench div.bar > div.frame > div.window.fullscreen
     position:fixed;
     top:0;
     left:0;
-    background-color:silver;
+    background-color:<?php echo $_GET['inactive_background_color']; ?>;
     margin:0px;
     
     /*set the width and height to 100% of the screen*/
@@ -1078,7 +1080,7 @@ div#workbench > div.bar
 {
 	float:left;
 	
-	border:1px solid gray;
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 	margin:3px;
 	padding:0px;
 	-moz-border-radius:5px;
@@ -1147,7 +1149,7 @@ div#shortcuts > div.shortcut {
 
 div#shortcuts > div.shortcut:HOVER {
 	
-	xborder: 1px solid gray;
+	xborder: 1px solid <?php echo $_GET['title_background_color']; ?>;
 	x-moz-border-radius:2px; /* Mozilla */
     x-webkit-border-radius:2px; /* Webkit */
     x-khtml-border-radius:2px; /* Konqui */
@@ -1228,18 +1230,18 @@ ul#history >  li {
 	xdisplay:inline;
 	margin:5px;
 	padding:5px;
-	border:1px solid gray;
-	background-color: silver;
-	color:black;
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
+	background-color: <?php echo $_GET['inactive_background_color']; ?>;
+	color:<?php echo $_GET['text_color']; ?>;
 }
 ul#history >  li.active {
 	
 	xdisplay:inline;
 	margin:5px;
 	padding:5px;
-	border:1px solid black;
-	background-color: white;
-	color:black;
+	border:1px solid <?php echo $_GET['text_color']; ?>;
+	background-color: <?php echo $_GET['title_text_color']; ?>;
+	color:<?php echo $_GET['text_color']; ?>;
 }
 
 ul#history {
@@ -1274,7 +1276,7 @@ div#filler
 	left: 0;
 	height:100%;
 	width:100%;
-	background-color: black;
+	background-color: <?php echo $_GET['text_color']; ?>;
 	opacity: 0.5;
 }
 
@@ -1286,11 +1288,385 @@ div#workbench > div.bar.modaldialog
 	left:0;
 	z-index: 101;
 	opacity: 1;
-	border:3px solid black !important;
-	background-color:white !important;
+	border:3px solid <?php echo $_GET['text_color']; ?> !important;
+	background-color:<?php echo $_GET['title_text_color']; ?> !important;
 	margin:5% 20% !important;
-	-webkit-box-shadow: 20px 20px 20px black;
-    -moz-box-shadow: 20px 20px 20px black;
-    box-shadow: 20px 20px 20px black;
+	-webkit-box-shadow: 20px 20px 20px <?php echo $_GET['text_color']; ?>;
+    -moz-box-shadow: 20px 20px 20px <?php echo $_GET['text_color']; ?>;
+    box-shadow: 20px 20px 20px <?php echo $_GET['text_color']; ?>;
 }
  
+
+ /* Voreingestellte Schriftart */
+body
+{
+
+}
+
+
+/* Formulare */
+
+fieldset
+{
+	padding:10px;
+}
+
+form div.line
+{
+	clear:left;
+	margin-top:10px;
+}
+
+form div.label
+{
+	vertical-align:top;
+	width:30%;
+	display:inline-block;
+}
+
+form div.input
+{
+	vertical-align:top;
+	width:70%;
+	display:inline-block;
+}
+
+form div.input input[type=text],
+form div.input textarea,
+form div.input select
+{
+	width:90%;
+}
+form div.input input[type=checkbox],
+form div.input input[type=radio]
+{
+	vertical-align:top;
+}
+
+label
+{
+	display:inline-block;
+}
+
+input[type=checkbox] + label,
+input[type=radio] + label
+{
+	width:80%;
+}
+
+label div.description
+{
+	font-size: 0.75em;
+	color:<?php echo $_GET['title_background_color']; ?>;
+}
+
+
+div.inputholder
+{
+	background-color:<?php echo $_GET['title_text_color']; ?>;
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
+	margin:0px;
+	padding:4px;
+	-moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    -khtml-border-radius:3px;
+    border-radius:3px;
+}
+
+div.search > div.inputholder
+{
+	padding-top:1px;
+}
+
+input,
+textarea,
+select
+{
+	border:0px;
+	border-bottom:1px solid <?php echo $_GET['title_text_color']; ?>;
+	padding:2px;
+	margin:0px;
+	background-color:<?php echo $_GET['title_text_color']; ?>;
+}
+
+input:hover,input:focus,
+textarea:hover,textarea:focus,
+select:hover,select:focus
+{
+	border:0px;
+	border-bottom:1px solid <?php echo $_GET['inactive_background_color']; ?>;
+	padding:2px;
+	margin:0px;
+	background-color:<?php echo $_GET['title_text_color']; ?>;
+}
+
+
+input.error,
+textarea.error,
+select.error
+{
+	border-bottom:1px dotted <?php echo $_GET['text_color']; ?> !important;
+}
+
+div.inputholder.error
+{
+	border:1px solid red !important;
+}
+
+input.hint
+{
+	color:<?php echo $_GET['title_background_color']; ?>;
+}
+
+/* Zwischen-Ueberschriften */
+fieldset
+{
+	/*
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
+	
+	border-bottom:0px;
+	border-left:0px;
+	border-right:0px;
+	margin-top:5px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
+	*/
+    /*
+	margin:0px;
+	margin-top:20px;
+	margin-bottom:20px;
+	padding:15px;
+	
+	
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -khtml-border-radius:5px;
+    border-radius:5px;
+	-webkit-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
+    -moz-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
+    box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
+    */
+}
+
+
+/* Legende */
+legend
+{
+	font-weight:bold;
+}
+
+
+
+/* Eingabfeld fuer Namen */
+fieldset > div input.name,
+fieldset > div span.name
+{
+	font-weight:bold;
+}
+
+
+/* Eingabfelder fuer Dateiname */
+fieldset > div input.filename,
+fieldset > div input.extension,
+fieldset > div input.ansidate,
+fieldset > div span.filename,
+fieldset > div span.extension,
+fieldset > div span.ansidate
+{
+	font-family:Courier;
+	font-size:14px;
+}
+
+
+div#tree
+{
+	overflow:visible;
+}
+
+
+
+
+
+/* Anzeige von Text-Unterschieden */
+
+/* Zeilen-Nr */
+tr.diff > td.line
+{
+	background-color:<?php echo $_GET['title_text_color']; ?>;
+	padding-right:2px;
+	border-right:3px solid <?php echo $_GET['title_background_color']; ?>;
+	text-align:right;
+	margin-right:2px;
+}
+
+/* Unveränderter Text */
+tr.diff > td.equal
+{
+}
+
+/* Entfernter Text */
+tr.diff > td.old
+{
+	background-color:red;
+}
+
+/* Hinzugefuegter Text */
+tr.diff > td.new
+{
+	background-color:green;
+}
+
+/* Geaenderter Text */
+tr.diff > td.notequal
+{
+	background-color:yellow;
+}
+
+dl.notice
+{
+	border-left:10px <?php echo $_GET['inactive_background_color']; ?> solid;
+	border-right:1px <?php echo $_GET['inactive_background_color']; ?> solid;
+	padding:15px;
+}
+
+dl.notice > dt
+{
+	border-top: 1px <?php echo $_GET['inactive_background_color']; ?> solid;
+}
+dl.notice > dd
+{
+	border-bottom: 1px <?php echo $_GET['inactive_background_color']; ?> solid;
+}
+
+
+/*   R a h m e n  */
+div.windowx
+{
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
+	
+	-moz-border-radius:5px; /* Mozilla */
+    -webkit-border-radius:5px; /* Webkit */
+    -khtml-border-radius:5px; /* Konqui */
+    border-radius:5px;
+}
+
+
+/*   S c h a t t e n   */
+div.content a.action,
+div.content a.help,
+div.content input.ok,
+div#title,
+div.xwindow,
+div#noticebar
+{
+	-webkit-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
+    -moz-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
+    box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
+}
+
+
+
+/*   F a r b e n   */
+
+/* Gesamt-Hintergrund */
+body
+{
+	xxxbackground-color:#c9c9c9;
+	background-color:<?php echo $_GET['background-color'] ?>;
+}
+
+/* Fenster-Hintergrund */
+div#header,                   /* Titelleite-Hintergrund */
+div.window > div.menu > div.icons,
+div.window > div.content,
+div.window > div.menu ul.menu li a,      /* Tabs */
+xdiv.window ul.menu li > span,  /* Tabs */
+div.window div.header, /* Fenster-Header */
+div.window ul.views > li.active,
+div.window ul.views > li.active:hover
+{
+	background-color: <?php echo $_GET['title_background_color']; ?>;
+	color: <?php echo $_GET['title_text_color']; ?>;
+	font-family:Arial;
+	font-size:13px;
+}
+
+/* Reiter */
+div.window ul.views li
+{
+	background-color: #eeeeee;
+}
+
+div.window ul.views li,
+div.dropdown > div.entry
+{
+	font-family:Arial;
+	font-size:13px;
+	color: blue;
+}
+
+div.bar
+{
+	background-color:#eeeeee;
+}
+
+div.window ul.views li:hover {
+	background-color: #bbbbbb;
+	color: blue;
+}
+
+
+
+div#tree div.content,
+ul.tree li.last,
+ul.tree li:last-child,
+table tr.data,
+div.content pre,
+div.dropdown,
+div.dropdown a
+{
+	background-color:<?php echo $_GET['title_text_color']; ?>;
+	color:blue;
+	font-family: Trebuchet MS, Helvetica, Arial, sans-serif;
+	font-size: 1.0em;
+}
+
+
+/*   D r o p d o w n  -  M e n u e s  */
+div.dropdown
+{
+	/* Schatten */
+	-webkit-box-shadow: 3px 2px 10px <?php echo $_GET['title_background_color']; ?>;
+    -moz-box-shadow: 3px 2px 10px <?php echo $_GET['title_background_color']; ?>;
+    box-shadow: 3px 2px 10px <?php echo $_GET['title_background_color']; ?>;
+	
+	opacity:0.95;
+	
+	border:2px solid <?php echo $_GET['title_background_color']; ?>;
+	-moz-border-radius:5px; /* Mozilla */
+    -webkit-border-radius:5px; /* Webkit */
+    -khtml-border-radius:5px; /* Konqui */
+    border-radius:5px;
+    
+    /*
+	background: -moz-linear-gradient(top, <?php echo $_GET['title_background_color']; ?>, <?php echo $_GET['inactive_background_color']; ?>);
+	background: -webkit-gradient(linear, left top, left bottom, from(<?php echo $_GET['title_background_color']; ?>), to(<?php echo $_GET['inactive_background_color']; ?>));
+	*/
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+
+div#title span.titletext
+{
+	color:<?php echo $_GET['title_text_color']; ?>;
+}
+
+
+
+div.filler div.headermenu > a.entry,
+div.filler div.header a.back.button
+{
+	font-size: 0.8em;

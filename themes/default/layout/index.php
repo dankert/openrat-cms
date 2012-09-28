@@ -22,8 +22,7 @@
        	?>
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo $meta['title'] ?>" ><?php
       } ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/layout.css" >
-  <link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/css/user/default.css" >
+  <link id="userstyle" rel="stylesheet" type="text/css" href="<?php /* erzeuge $conf: */ require( 'config/config-default.php'); echo css_link() ?>" >
   
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/skins/markitup/style.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/sets/default/style.css" />

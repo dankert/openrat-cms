@@ -797,6 +797,32 @@ $conf['security']['user'] = array();
 $conf['security']['user']['show_admin_mail']=true;
 $conf['security']['user']['show_mail']=true;
 $conf['security']['user']['send_message']=true;
+
+$conf['style'] = array();
+$conf['style']['default']=array();
+$conf['style']['default']['name']='Earl grey';
+$conf['style']['default']['title_background_color']='grey';
+$conf['style']['default']['title_text_color']='white';
+$conf['style']['default']['text_color'] ='black';
+$conf['style']['default']['background_color'] = '#d9d9d9';
+$conf['style']['default']['inactive_background_color'] = 'silver';
+
+$conf['style']['system']=array();
+$conf['style']['system']['name']='System colors';
+$conf['style']['system']['title_background_color']='Menu';
+$conf['style']['system']['title_text_color']='MenuText';
+$conf['style']['system']['text_color'] ='WindowText';
+$conf['style']['system']['background_color'] = 'Background';
+$conf['style']['system']['inactive_background_color'] = 'WindowFrame';
+
+$conf['style']['modern']=array();
+$conf['style']['modern']['name']='Modern Style';
+$conf['style']['modern']['title_background_color']='#3F6194';
+$conf['style']['modern']['title_text_color']='white';
+$conf['style']['modern']['text_color'] ='black';
+$conf['style']['modern']['background_color'] = '#FFF6E6';
+$conf['style']['modern']['inactive_background_color'] = '#FFE5B8';
+
 $conf['theme'] = array();
 $conf['theme']['compiler'] = array();
 $conf['theme']['compiler']['enable']=true;

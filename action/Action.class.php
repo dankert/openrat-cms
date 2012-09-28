@@ -78,7 +78,7 @@ class Action
 	
 	function setStyle( $style )
 	{
-		$this->setControlVar( "new_style", OR_THEMES_EXT_DIR.'default/css/user/'.$style.'.css' );
+		$this->setControlVar( "new_style", css_link($style) );
 	}
 
 	

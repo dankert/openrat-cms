@@ -139,4 +139,43 @@ function charset()
 		//return lang('CHARSET');
 		return 'US-ASCII';
 }
+
+
+
+/**
+ * Erzeugt einen Link auf die OpenRat-lokale CSS-Datei
+ * @param $name Name der Style-Konfiguration. Default: 'default'.
+ */
+function css_link( $name='default' )
+{
+	global $conf;
+	
+	// Falls Style-Konfiguration unbekannt, dann Fallback auf default.
+	if	( ! isset($conf['style'][$name]))
+		$name = 'default';
+
+	
+	return OR_THEMES_EXT_DIR.'default/css/openrat.css.php?'.encode_array($conf['style'][$name]);
+}
+
+
+/**
+ * Encodiert ein Array für eine URL.
+ * 
+ * @param $args URL-Parameter
+ */
+function encode_array( $args )
+{
+	if	( !is_array($args) )
+		return '';
+		
+	$out = array();
+	
+  	foreach( $args as $name => $value )
+		$out[] = $name.'='.urlencode($value);
+		
+	return implode('&',$out);
+}
+
+
 ?>
