@@ -1045,31 +1045,15 @@ SQL
 	/**
 	 * Ermitteln aller zur Verfuegung stehenden Stylesheets
 	 */
-	function getAvailableStyles()
+	public function getAvailableStyles()
 	{
-		global $conf_themedir;
+		global $conf;
+		$styles = array();
 		
-		$allstyles = array();
-		
-		// Theme-Verzeichnis nach "*.css"-Dateien durchsuchen.
-		$dir = $conf_themedir.'/css/user';
-		$handle = @opendir( $dir ); 
+		foreach( $conf['style'] as $key=>$values)
+			$styles[$key] = $values['name'];
 
-		if	( !is_resource($handle) )
-			Http::serverError('Cannot open CSS dir: '.$dir);
-			
-		while ($file = readdir ($handle))
-		{ 
-			if ( substr($file,-4)=='.css' && substr($file,0,4) != 'base' )
-			{ 
-				$file = substr($file,0,-4);
-				$allstyles[$file] = ucwords($file);
-			}
-		}
-		closedir($handle);
-
-		asort($allstyles); // Alphabetisch sortieren.	
-		return $allstyles;	
+		return $styles;	
 	}
 	
 	
