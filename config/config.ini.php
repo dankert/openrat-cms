@@ -1,17 +1,28 @@
-# Mo 19. Mär 21:38:25 CET 2012
 ; /* vim: set filetype=ini : */
 ;
 ;
-; converted from applications.ini.php
-; <?php exit('direct access denied') ?>
+
+; OpenRat configuration file
+
+; Per host configuration:
+; A file 'config-<hostname>.ini.php' is preferred before file 'config.ini.php'.
+
+; Rules for reading this file:
+; 1. if environment-variable 'OR_CONFIG_FILE' is set, then this value is used for the configuration filename.
+; 2. if environment-variable 'OR_CONFIG_DIR' is set, then a file 'config-<hostname>.ini.php' is read. If it does not exist,  'config.ini.php' is read instead.
+; 3. file 'config/config-<hostname>.ini.php' is read. If it does not exist,  'config/config.ini.php' is read instead.
+;
+; Lines which begins with ';' are ignored.
+
+
+
+; Configuration
+
 
 
 ; Start other applications out of OpenRat.
-;applications.ini.php.
-; Other applications are able to authenticate the user with an ticket id (Single Signon)
-
-; Insert a new section for every application here
-; next unused section: ;[phpmyadmin]
+; Other applications are able to authenticate the user with a ticket id (Single Signon)
+; see documentation for more details.
 
 ; The Name of the application
 ;applications.phpmyadmin.name=PHPYourAdmin
@@ -29,15 +40,16 @@
 ;applications.phpmyadmin.group=
 
 ; A brief description of this application.
-applications.phpmyadmin.description="Your database administration"
+;applications.phpmyadmin.description="Your database administration"
 ;
-; converted from cache.ini.php
-; <?php exit('direct access denied') ?>
+
+
 
 ; Conditional-GET enables the "304 not modified" HTTP-Header
 ; This is much faster, but sometimes caching is unwanted
-; if you have caching problems, set this to 'false'. Default: 'true'
-cache.conditional_get=true
+; if you have caching problems, set this to 'false'.
+; Default: 'true'
+;cache.conditional_get=true
 
 
 
@@ -46,7 +58,8 @@ cache.conditional_get=true
 ; 'true'  will cache a page's content. This will improve
 ;         the performance, but has some side effects,
 ;         f.e. no dynamic content will be updated.
-cache.enable_cache=false
+; Default: 'false'
+;cache.enable_cache=false
 
 
 
@@ -59,23 +72,19 @@ cache.enable_cache=false
 ; Auto-Reload session.
 ; If the configuration file is changed, its content is reloaded automatically
 ; Default: true
-;config.auto_reload= true;
+;config.auto_reload=true;
 
-; 
+;
 ; If the configuration file is changed, a new session will be created.
 ; Default: true
 ;config.session_destroy_on_config_reload= true;
 
-;
-; converted from content.ini.php
-; <?php exit('direct access denied') ?>
 
-
-; next section: [file]
 
 ; Maximum file size for uploads in KB
-; 0,-1 = not restricted
-content.file.max_file_size=1500
+; Special values: 0,-1 = not restricted
+; Default: 0
+;content.file.max_file_size=1500
 
 
 
@@ -85,24 +94,23 @@ content.file.max_file_size=1500
 ; Values are deleted, if
 ; a) max-age and min-revisions are reached OR
 ; b) max-revisions and min-age are reached
-
-content.revision-limit.enabled = false
+;content.revision-limit.enabled = false
 
 ; max age of values (days)
-content.revision-limit.max-age = 120
+;content.revision-limit.max-age = 120
 ; min age of values (days)
-content.revision-limit.min-age = 1
+;content.revision-limit.min-age = 1
 
 ; number of revisions
-content.revision-limit.max-revisions = 100
-content.revision-limit.min-revisions = 3
+;content.revision-limit.max-revisions = 100
+;content.revision-limit.min-revisions = 3
 
 
 
 ; If a textvalue is empty, try using the default language
 ; Default: true
 ;content.language.use_default_language = true
-;
+
 
 
 
@@ -328,17 +336,14 @@ date.format.UNIX = "U"
 date.format.LONG = "F j, Y, g:i a"
 
 
-; next section: [timezone]
 date.timezone.-6="New York"
 date.timezone.0="UTC (GMT)"
 date.timezone.60="MET (Middle European Time)"
 date.timezone.120="MEST (Middle European Summertime)"
-;
-; converted from editor.ini.php
-; <?php exit('direct access denied') ?>
 
-; Settings for Text Formatting Rules
-; next section: [text-markup]
+
+
+; Editor configuration
 
 ; Strong/important text (mostly "bold")
 editor.text-markup.strong-begin = "*"
@@ -457,16 +462,8 @@ editor.wiki.convert_bbcode=true
 
 
 
-; Settings for text/plain-documents
-; next section: [text]
-
-; maximum line length
-editor.text.linelength=70
-
-
 
 ; Calendar settings
-; next section: [calendar]
 
 ; Weekday-Offset: Ho many days a week begins after Sunday.
 ; 0 = Week begins with Sunday (America, Australia, Islam)
@@ -474,63 +471,62 @@ editor.text.linelength=70
 editor.calendar.weekday_offset=1
 
 
-; next section: [text]
 editor.text.linelength=70
 
 ; next section: [macro]
 editor.macro.show_errors=false
-;
-; converted from filename.ini.php
-; <?php die('no access'); ?>
 
-filename.edit    = true           ; Allow editing of filenames (true|false)
-filename.default = index          ; filename of index file. Default: 'index'.
 
-;filename.style  = ss             ; poor imitation of story server urls
-;filename.style  = id             ; simply use the object id for the url
-;filename.style  = longid         ; use a more longer id in the url
-filename.style   = short          ; use a url which is as short as possible
+
+; Should filenames be editable?
+; 'true' : Author may edit the filenames of pages, files and folders.
+; 'false': filenames are generated by the CMS
+; Default: true
+;filename.edit    = true
+
+; filename of folder start file
+; Default: 'index'.
+;filename.default = index
+
+
+; 'ss'     : nerdy and poor imitation of story server urls. Looks important, but is cheap ;)
+; 'id'     : simply use the object id for the url
+; 'longid ': use a more longer id in the url
+; 'short'  : use a url which is as short as possible (uses all possible characters)
+; Default: 'short'
+;filename.style   = short          ; use a url which is as short as possible
+
 ; hint: If edit=true, then the stored filename will be used.
 ;       If no filename stored, or if edit=false, then the defined style is used.
 
-filename.url=relative             ; how the target url is referenced (relative|absolute), 'relative' is always a good choice.
+; how the links to other pages are generated.
+; 'relative': Links are generated like '../../path/page.html'
+; 'absolute': Links are generated like '/path/page.html'
+; Default: relative
+;filename.url=relative
 
-;
-; converted from ftp.ini.php
-; <?php exit('direct access denied') ?>
 
-ftp.ascii    = html,htm,php  ; file extensions to use FTP ascii mode for
-;
-; converted from help.ini.php
-; <?php exit('direct access denied') ?>
+
+; FTP configuration
+
+
+; for which file extensions the ASCII-Mode should be used
+;ftp.ascii    = html,htm,php
+
+
 
 ; Enable online help
+; Default: true
 help.enabled=true
 
-; URL to the documents
-help.url=help/html/
+; URL praefix to the help documents
+;help.url=help/html/
 ;help.url=http://help.openrat.de/
 
 ; file extension of the help documents
-help.suffix=.html
+;help.suffix=.html
 
-; show only a question mark instead of "help"
-help.only_question_mark=false
-;
-; converted from html.ini.php
-; <?php exit('direct access denied') ?>
 
-; *** this page is outdated and will be removed in a future version ***
-
-html.tag_teletype = tt
-html.tag_emphatic = em
-html.tag_strong   = strong
-html.tag_speech   = cite
-html.speech_open  = "&bdquo;"
-html.speech_close = "&rdquo;"
-;
-; converted from i18n.ini.php
-; <?php exit('direct access denied') ?>
 
 ; Search for language in HTTP header
 ; This is a useful setting. The Browser says, which language will be taken.
@@ -538,90 +534,70 @@ i18n.use_http=true
 
 
 ; Default language
-i18n.default=de
+; If no language is found, which should be used?
+;i18n.default=de
 
 
 ; Available Languages.
 ; A comma seperated list with language codes.
-i18n.available=de,en,es,fr,it,ru,cn
+; for each language there must be a file named 'language/<code>.ini'.
+;i18n.available=de,en,es,fr,it,ru,cn
 
 
 
 ; Mappings from the language to installed locales
-; next section: [locale]
-i18n.locale.de="de_DE.utf8"
-i18n.locale.en="en_US.utf8"
-;
-; converted from image.ini.php
-; <?php exit('direct access denied') ?>
+;i18n.locale.de="de_DE.utf8"
+;i18n.locale.en="en_US.utf8"
+
+
 
 ; Say 'true' if GD2 is available, otherwise 'false'
-image.truecolor=true
-;
-; converted from interface.ini.php
-; <?php exit('direct access denied') ?>
+;image.truecolor=true
 
-; In Application-Mode all window-borders and window-titles are disabled.
-; This is useful, if you are using something like "Mozilla Prism" and
-; want OpenRat to look more like a native application.
-; Default=false
-interface.application_mode=false
-
-
-; width of navigation frame (tree)
-; (actually outdated!)
-interface.tree_width = "25%"
 
 
 ; The seperator char between directory names
-interface.file_separator = " &raquo; "
+;interface.file_separator = " &raquo; "
 
 
 ; be aware: if 'true' you need special rewrite rules in a .htaccess file!
-; If unsure, say "false" here.
-interface.nice_urls = false
+; Default: false
+;interface.nice_urls = false
 
 
 ; In most environments this setting is "false"
-interface.url_sessionid        = false
+;interface.url_sessionid = false
 
 
 ; Theme
 ; At the moment, der is only "default" available.
-interface.theme = "default"
+; *deprecated*
+;interface.theme = "default"
 
 
 ; Show request duration on every page. Only useful for developers.
-interface.show_duration = false
+;interface.show_duration = false
 
 
-; Request timeout in seconds (blank=system default)
+; Request timeout in seconds
 ; This sets the PHP time limit for an Request.
-interface.timeout =
+; Default: '' (blank=system default)
+;interface.timeout =
 
 
 ; Replace the default title (Program name+version) with this text
 ; If blank, the default is "OpenRat {Version}".
-interface.override_title =
+; Maybe you want to use your company name here.
+;interface.override_title =
 
-
-; Minimal Width of the browser window. If smaller, then tree is initally disabled.
-interface.min_width            = 950
-
-
-; Use redirects before going to view (actually in testing)
-; If unsure, say "false" here.
-interface.redirect = false
 
 
 ; Use of human date format
 ; looks like "3 years ago", or "7 months ago"
+; Default: false
 interface.human_date_format = false
 
 
-
-; Settings for colors and fonts.
-; next section: [style]
 
 ; The default style which is used, when no user is logged in.
 ; 'default' is the classic Openrat style.
@@ -633,29 +609,27 @@ interface.style.default=default
 
 
 ; Settings for preferences (under "Administration")
-; next section: [config]
 
 ; If you have an online editor for editing the .ini-files you can put the URL here.
 ; Security belongs to the 3rd-party editor! Openrat only creates a link to this url!
 ; Set to '' (blank) for disabling this.
-interface.config.file_manager_url=""
+;interface.config.file_manager_url=""
 
 ; Enable "preferences"-menu
-interface.config.enable=true
+;interface.config.enable=true
 
 ; show system settings (operating system, system time, ...)
-interface.config.show_system=true
+;interface.config.show_system=true
 
 ; show PHP settings
-interface.config.show_interpreter=true
+;interface.config.show_interpreter=true
 
 ; show a list of PHP extensions (without any details)
-interface.config.show_extensions=true
+;interface.config.show_extensions=true
 
 
 
 ; Frameset settings
-; next section: [frames]
 
 ; Logical name of top-frame. Change this, if you want Openrat running in another parent frameset
 interface.frames.top=_top
@@ -664,26 +638,29 @@ interface.frames.top=_top
 ; Manipulating the URL of Openrat.
 ; next section: [url]
 
+
 ; faking urls
 ; for faking urls you HAVE TO create a url rewriting rule!
 ; If unsure, set to "false"
-interface.url.fake_url = false
+; Default: false
+;interface.url.fake_url = false
 
 ; If the entry filename is the index file of the directory, set this to true.
 ; This enables urls like "path/to/openrat/?a=1&b=2" and hides PHP.
 ; only useful, if fake_url=false
 ; if unsure, set to 'false' (default)
-interface.url.index = false
+;interface.url.index = false
+
+; You can create funny urls which look like asp,jsp,jsf and other crap :)
+; Hint: Hiding the PHP interpreter *can* increase security.
+; But remember, Security by obscurity is lame :)
 
 ; abc,xyz.1
 ;interface.url.url_format= "%s,%s.%i"
 
 ; looks like Jakarta Struts: abc,xyz,1.do
-interface.url.url_format= "%s,%s,%d.do"
+;interface.url.url_format= "%s,%s,%d.do"
 
-; You can create funny urls which look like asp,jsp,jsf and other crap :)
-; Hint: Hiding the PHP interpreter *can* increase security.
-; But remember, Security by obscurity is lame :)
 
 ; add the session ID as an URL-Parameter.
 ; useful, if you do not want cookies and trans_sid is not installed.
@@ -692,31 +669,27 @@ interface.url.add_sessionid = false
 
 
 
-; Use gravatar images
-; see www.gravator.com for details
-; next section: [gravatar]
+; Use gravatar for user images
+; see http://www.gravator.com for details
 
-interface.gravatar.enable=true
-interface.gravatar.size=80
+;interface.gravatar.enable=true
+;interface.gravatar.size=80
 ;interface.gravatar.default=404
 ;interface.gravatar.rating=g
 
 
 
 ; Session-related settings
-; next section: [session]
 
 ; auto-extend the session while the browser is still open.
 ; if 'true', the title frame will be refreshed automatically
 ; 1 minute before the session times out.
 ; Because this is maybe unsecure, the default setting is 'false'.
-interface.session.auto_extend=false
+;interface.session.auto_extend=false
 ;
-; converted from ldap.ini.php
-; <?php exit('direct access denied') ?>
+
 
 ; Openrat is able to check passwords against a LDAP-based directory.
-; see file "security.ini.php" for relating infos.
 
 ; Hostname of your LDAP server.
 ldap.host="localhost"
@@ -1488,8 +1461,6 @@ webdav.session_in_uri_prefix = ors
 ;webdav.
 webdav.compliant_to_redmond = true
 ;
-; converted from wiki.ini.php
-; <?php exit('direct access denied') ?>
 
 ; *** This part is deprecated and will be removed in one of the next versions.
 
