@@ -218,7 +218,6 @@
 ; SQ-Lite is an embedded, 'mostly-ANSI-SQL-supporting' database system.
 ; for using SQLite, please check for the PHP module
 ; f.e. on ubuntu 'sudo apt-get install php5-sqlite'
-; next section: [sample_db_sqlite]
 
 ;database.sample_db_sqlite.enabled    = false                    ; set this to 'true' for using this connection
 ;database.sample_db_sqlite.comment    = "DB-SQLite"              ; comment of this database
@@ -247,7 +246,6 @@
 
 
 ; PDO (means PHP Data Objects) is an abstract database interface
-; next section: [sample_pdo_sqlite]
 
 ;database.sample_pdo_sqlite.enabled    = false                    ; set this to 'true' for using this connection
 ;database.sample_pdo_sqlite.comment    = "DB-PDO"                 ; comment of this database
@@ -316,7 +314,6 @@
 ;
 ; Date formats
 ; see http://www.php.net/manual/en/function.date.php for details
-; next section: [format]
 
 ;date.format.SHORT = ""
 ;date.format.ISO8601SHORT = "Ymd"
@@ -425,7 +422,7 @@
 ;editor.text-markup.macro-attribute-quote = "'"
 ;editor.text-markup.macro-attribute-value-seperator = "="
 
-; next section: [html]
+
 
 ; Which HTML-Tag to use for cites
 ;editor.html.tag_strong = "strong"
@@ -455,7 +452,6 @@
 
 
 
-; next section: [wiki]
 
 ;editor.wiki.convert_html=true
 ;editor.wiki.convert_bbcode=true
@@ -473,7 +469,6 @@
 
 ;editor.text.linelength=70
 
-; next section: [macro]
 ;editor.macro.show_errors=false
 
 
@@ -636,7 +631,6 @@
 
 
 ; Manipulating the URL of Openrat.
-; next section: [url]
 
 
 ; faking urls
@@ -707,9 +701,9 @@
 ;ldap.dn = "uid={user},ou=users,dc=example,dc=com"
 ;ldap.dn = "";
 
+
 ; Settings for authentication against a LDAP directory
-; This is only activated, if the setting '/security/auth/type' is 'ldap'.
-; next section: [search]
+; This is only activated, if the setting 'security.auth.type' is 'ldap'.
 
 ; use of anonymous bind ('true' or 'false')
 ; if 'true', the following user and password settings are ignored.
@@ -742,8 +736,7 @@
 
 
 ; The user-group-relation can be read out of the LDAP tree.
-; For using this, /security/authorize/type must be "ldap".
-; next section: [authorize]
+; For using this, 'security.authorize.type' must be set to 'ldap'.
 
 ; Search filter for reading the groups a user belongs to.
 ;ldap.authorize.group_filter="(memberUid={dn})"
@@ -763,15 +756,12 @@
 ;login.register=false
 ;login.send_password=false
 
-; next section: [gpl]
 ;login.gpl.url="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
 
-; next section: [logo]
 ;login.logo.file="./themes/default/images/logo.jpg"  ; logo (url to image) in login mask
 ;login.logo.url="http://www.openrat.de"              ; linked url in login mask
 
 
-; next section: [start]
 ; After Login, start with the last changed object.
 ; If 'true', the project menu is not displayed.
 ;login.start.start_lastchanged_object=true
@@ -866,7 +856,6 @@
 
 ; Settings for the internal SMTP client.
 ; If client='php', you have no need to change anything in this section.
-; next section: [smtp]
 
 ; Relay host
 ; It is useful, to have your own relay host, as servers doing greylisting
@@ -976,7 +965,6 @@
 
 ; Content-Negotiation as defined in RFC 2295.
 ; These settings are only considered, if the project setting "use content negotiation" is switched on.
-; next section: [negotiation]
 
 ; if 'true', then the mime-type is omitted in the URL for page links.
 ;publish.negotiation.page_negotiate_type = true
@@ -989,7 +977,6 @@
 
 
 
-; next section: [project]
 ; Default publish directory. The edited target directory is appended.
 ;publish.project.publish_dir="/var/www/"
 
@@ -1011,7 +998,6 @@
 
 
 
-; next section: [ftp]
 ; 'true' : (Default) FTP is enabled
 ; 'false': FTP is disabled, f.e. if FTP is not compiled with PHP.
 ;publish.ftp.enable=true
@@ -1049,7 +1035,6 @@
 
 ; Settings for the quicksearch field
 ;search.
-; next section: [quicksearch]
 
 ; Show submit button for quicksearch. Not needed for modern browsers
 ;search.quicksearch.show_button=false
@@ -1128,7 +1113,6 @@
 
 ; Default Login
 ; These values are used for the login form.
-; next section: [default]
 
 ; default: ''
 ;security.default.username=
@@ -1140,36 +1124,35 @@
 
 ; Guest Login
 ; if enabled, a named guest user is automatically logged in.
-; next section: [guest]
 
 ; enable auto-login for a guest user.
 ;security.guest.enable=false
 
 ; Name of the guest user, who is automatically logged in.
-; This user must exist in your user database.
+; This username must exist in your user database.
 ;security.guest.user=guest
 
 
 
-; next section: [login]
 ; Type of authorization.
 ; 'http' uses the HTTP Basic Authrization.
 ;        Only available if PHP is used in the module version.
 ;        Not available, if PHP is used via the CGI way.
 ;        Only the default database is available (because there is no way to select another one)
-; 'form' shows a login form via a HTML page (default).
+; 'form' shows a login form via a HTML page.
+; Default: 'form'
 
 ;security.login.type=form
 ;security.login.type=http
 
 
 
-; next section: [auth]
 ; this is the backend where the passwords are checked against.
 ; 'database' uses the internal database table as password store.
-; 'authdb'   uses an external database table as password store, see section [authdb] which has to exist.
-; 'ldap'     uses an external LDAP directory for password checking, see file "ldap.ini.php".
+; 'authdb'   uses an external database table as password store, see section 'security.auth'.
+; 'ldap'     uses an external LDAP directory for password checking, see section 'ldap'.
 ; 'http'     uses an HTTP-Auth Server for password checking
+; Default: 'database'
 ;security.auth.type=database
 
 ; per-user setting of the LDAP DN.
@@ -1179,7 +1162,6 @@
 
 
 
-; next section: [authorize]
 ; A user belongs to certain groups. This information can be stored in 2 ways.
 ; 'database' uses the internal database for the user-group-relation. (default)
 ; 'ldap' reads the user-group-relations in a LDAP-Directory
@@ -1191,7 +1173,6 @@
 
 
 ; password settings
-; next section: [password]
 
 ; length of automatic generated password
 ;security.password.random_length=8
@@ -1204,6 +1185,7 @@
 ; 'id'      : salt the password with userid
 ; 'username': salt the password with username
 ; 'custom'  : use the 'salt_text'-setting
+; Default: ''
 ;security.password.salt = ""
 
 ;security.password.salt_text = "somerandomtext"
@@ -1212,7 +1194,6 @@
 
 ; this section is needed if the setting "auth/type" is 'http'.
 ; passwords are checked against another HTTP-Server with Basic Authorization.
-; next section: [http]
 
 ; The URL where an HTTP basic authorization ist required.
 ;security.http.url = "http://example.net/restricted-area"
@@ -1223,7 +1204,6 @@
 ; passwords are stored against an external database table.
 ; This is quite useful, if you have another software running (f.e. a forum system)
 ; and so the user must only remember 1 password.
-; next section: [authdb]
 
 ; 'mysql', 'postgresql' or 'sqlite'
 ;security.authdb.type = postgresql
@@ -1245,7 +1225,6 @@
 
 
 ; SSL Client certificate Authentication
-; next section: [ssl]
 
 ; The environment variable name which has the username out of the certificate.
 ; See modssl-configuration for more infos:
@@ -1265,7 +1244,6 @@
 
 ; Open-ID
 ; see http://openid.net/ for specifications and more informations.
-; next section: [openid]
 
 ; Enable Open-ID
 ; default=false
@@ -1328,7 +1306,6 @@
 ; PhpMyAdmin must include a link to Openrat with the authid which includes the serialized cookies.
 ; Example: Include this in the file .../phpmyadmin/main.php:
 ; <a href="https://example.com/openrat/?authid=<?php echo urlencode(serialize($_COOKIE)) ?>">OpenRat</a>
-; next section: [sso]
 
 ; use single sign-on? Set to 'true' or 'false'.
 ;security.sso.enable=false
@@ -1364,25 +1341,22 @@
 
 
 ; Settings for a new user
-; next section: [newuser]
 
 ; These groups are automatically added while a new user is inserted.
+; Default: ''
 ;security.newuser.groups=YourGroup,AnotherGroup
 
 
 
 ; Logout settings
-; next section: [logout]
 
 ; Redirect to this URL after logout
 ; <blank>= Show Login.
-; Default: ""
+; Default: ''
 ;security.logout.redirect_url="http://your.intranet.example/"
 ;security.logout.redirect_url=
 
 
-
-; next section: [user]
 
 ; Show E-Mail-Adress in Administration-Interface.
 ; Default=true. If admin users should not know the mail adresses, set this to false.
@@ -1458,11 +1432,11 @@
 ; - Set "MS-Author-Via:"-Header
 ; Set to 'true', if you want to use lame clients like MS-Office, MS-IE, ...
 ; Set to 'false' for strict WEBDAV, but no MS-clients are doing the job...
-;webdav.
+; Default: true
 ;webdav.compliant_to_redmond = true
 ;
 
-; *** This part is deprecated and will be removed in one of the next versions.
+; *** The following settings are deprecated and will be removed in one of the next versions.
 
 ; convert simple HTML-tags to wiki-markup (if HTML is disabled)
 ;wiki.convert_html         = true
