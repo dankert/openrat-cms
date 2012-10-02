@@ -130,70 +130,70 @@
 ; Default Database
 ; This database will be selected by default.
 ; There has to exist a section with this name.
-database.default=sample_db_mysql
+;database.default=sample_db_mysql
 
 
 
 ; This is a sample database connection.
 ; If you want to use it, just fill out the login data and set 'enabled' to 'true'
 
-database.sample_db_mysql.enabled    = false                 ; set this to 'true' for using this connection
-database.sample_db_mysql.comment    = "DB MySQL"            ; comment of this database
+;database.sample_db_mysql.enabled    = false                 ; set this to 'true' for using this connection
+;database.sample_db_mysql.comment    = "DB MySQL"            ; comment of this database
 
-database.sample_db_mysql.type       = mysql                 ;
-database.sample_db_mysql.user       = dbuser                ; database user
-database.sample_db_mysql.password   = dbpass                ; database password
-database.sample_db_mysql.host       = localhost             ; database hostname
+;database.sample_db_mysql.type       = mysql                 ;
+;database.sample_db_mysql.user       = dbuser                ; database user
+;database.sample_db_mysql.password   = dbpass                ; database password
+;database.sample_db_mysql.host       = localhost             ; database hostname
 ;database.sample_db_mysql.port                              ; database TCP/IP-Port (optional)
-database.sample_db_mysql.database   = cms                   ; database name
+;database.sample_db_mysql.database   = cms                   ; database name
 
-database.sample_db_mysql.base64     = false                 ; store binary as BASE64
-database.sample_db_mysql.prefix     = or_                   ; table praefix
-database.sample_db_mysql.persistent = yes                   ; use persistent connections (try this, it's faster)
+;database.sample_db_mysql.base64     = false                 ; store binary as BASE64
+;database.sample_db_mysql.prefix     = or_                   ; table praefix
+;database.sample_db_mysql.persistent = yes                   ; use persistent connections (try this, it's faster)
 ;database.sample_db_mysql.charset = UTF-8
 
 ; SQL-Statement which is executed after opening the connection
 ; connection_sql = "SET NAMES 'UTF8';"  ; using UTF-8 as database charset
-database.sample_db_mysql.connection_sql = ""
+;database.sample_db_mysql.connection_sql = ""
 
 ; System command for executing before connecting to the database.
 ; Maybe for installing an SSH-Tunnel.
 ; For background programs, you have to redirect stdin and stdout! (maybe to /dev/null)
 ; Example: "sudo -u u123 /usr/local/bin/sshtunnel-example.sh"
 ; Default: blank.
-database.sample_db_mysql.cmd = ""
+;database.sample_db_mysql.cmd = ""
 
 ; Using prepared statements.
 ; The 'old' mysql-interface in PHP does not support prepared statements
-database.sample_db_mysql.prepare = false
+;database.sample_db_mysql.prepare = false
 
 ; Using transactions. Set to 'true' when you are using 'InnoDB'-tables.
 ; If so, maybe you need to set 'SET AUTOCOMMIT=0' as connection_sql above.
 ; Default: false
-database.sample_db_mysql.transaction = false
+;database.sample_db_mysql.transaction = false
 
 ; Readonly tables. Set to 'true' during maintainance activitys.
 ; If 'true', OpenRat will disable all writing operations.
-database.sample_db_mysql.readonly = false
+;database.sample_db_mysql.readonly = false
 
 
 
 ; This is a sample database connection.
 ; If you want to use it, just fill out the login data and set 'enabled' to 'true'
 
-database.sample_db_postgresql.enabled    = false                 ; set this to 'true' for using this connection
-database.sample_db_postgresql.comment    = "DB-PostgreSQL"       ; comment of this database
+;database.sample_db_postgresql.enabled    = false                 ; set this to 'true' for using this connection
+;database.sample_db_postgresql.comment    = "DB-PostgreSQL"       ; comment of this database
 
-database.sample_db_postgresql.type       = postgresql            ;
-database.sample_db_postgresql.user       = dbuser                ; database user
-database.sample_db_postgresql.password   = dbpass                ; database password
-database.sample_db_postgresql.host       = localhost             ; database hostname
+;database.sample_db_postgresql.type       = postgresql            ;
+;database.sample_db_postgresql.user       = dbuser                ; database user
+;database.sample_db_postgresql.password   = dbpass                ; database password
+;database.sample_db_postgresql.host       = localhost             ; database hostname
 ;database.sample_db_postgresql.port                              ; database TCP/IP-Port (optional)
-database.sample_db_postgresql.database   = cms                   ; database name
+;database.sample_db_postgresql.database   = cms                   ; database name
 
-database.sample_db_postgresql.base64     = false                 ; store binary as BASE64 (in postgresql 7.x set this to 'true')
-database.sample_db_postgresql.prefix     = or_                   ; table praefix
-database.sample_db_postgresql.persistent = yes                   ; use persistent connections (try this, it's faster)
+;database.sample_db_postgresql.base64     = false                 ; store binary as BASE64 (in postgresql 7.x set this to 'true')
+;database.sample_db_postgresql.prefix     = or_                   ; table praefix
+;database.sample_db_postgresql.persistent = yes                   ; use persistent connections (try this, it's faster)
 ;database.sample_db_postgresql.charset = UTF-8
 
 ; SQL-Statement which is executed after opening the connection
@@ -204,14 +204,14 @@ database.sample_db_postgresql.persistent = yes                   ; use persisten
 ; For background programs, you have to redirect stdin and stdout! (maybe to /dev/null)
 ; Example: "sudo -u u123 /usr/local/bin/sshtunnel-example.sh"
 ; Default: blank.
-database.sample_db_postgresql.cmd = ""
+;database.sample_db_postgresql.cmd = ""
 
 ; Using prepared statements.
 ; This is EXPERIMENTAL, do not use in production environments
-database.sample_db_postgresql.prepare = false
+;database.sample_db_postgresql.prepare = false
 
 ; Using transactions. Set this to true, if the MySQL table engine supports transactions
-database.sample_db_postgresql.transaction = false
+;database.sample_db_postgresql.transaction = false
 
 
 
@@ -220,42 +220,42 @@ database.sample_db_postgresql.transaction = false
 ; f.e. on ubuntu 'sudo apt-get install php5-sqlite'
 ; next section: [sample_db_sqlite]
 
-database.sample_db_sqlite.enabled    = false                    ; set this to 'true' for using this connection
-database.sample_db_sqlite.comment    = "DB-SQLite"              ; comment of this database
+;database.sample_db_sqlite.enabled    = false                    ; set this to 'true' for using this connection
+;database.sample_db_sqlite.comment    = "DB-SQLite"              ; comment of this database
 
-database.sample_db_sqlite.type       = sqlite                   ;
+;database.sample_db_sqlite.type       = sqlite                   ;
 
 ; Filename of your SQlite database
-database.sample_db_sqlite.filename   = "/local/path/to/your/sqlite/openrat.db"
+;database.sample_db_sqlite.filename   = "/local/path/to/your/sqlite/openrat.db"
 
-database.sample_db_sqlite.base64     = false                 ; store binary as BASE64 (in postgresql=true)
-database.sample_db_sqlite.prefix     = or_                   ; table praefix
-database.sample_db_sqlite.persistent = yes                   ; use persistent connections (try this, it's faster)
+;database.sample_db_sqlite.base64     = false                 ; store binary as BASE64 (in postgresql=true)
+;database.sample_db_sqlite.prefix     = or_                   ; table praefix
+;database.sample_db_sqlite.persistent = yes                   ; use persistent connections (try this, it's faster)
 ;database.sample_db_sqlite.charset = UTF-8
 
 ; per default SQlite uses table-prefixed column names when using JOINs which MUST BE off.
-database.sample_db_sqlite.connection_sql = "pragma short_column_names=true;"
+;database.sample_db_sqlite.connection_sql = "pragma short_column_names=true;"
 
 ; System command for executing before connecting to the database.
-database.sample_db_sqlite.cmd = ""
+;database.sample_db_sqlite.cmd = ""
 
-database.sample_db_sqlite.prepare = false
+;database.sample_db_sqlite.prepare = false
 
 ; Set this to true, if you want to use transactions.
-database.sample_db_sqlite.transaction = false
+;database.sample_db_sqlite.transaction = false
 
 
 
 ; PDO (means PHP Data Objects) is an abstract database interface
 ; next section: [sample_pdo_sqlite]
 
-database.sample_pdo_sqlite.enabled    = false                    ; set this to 'true' for using this connection
-database.sample_pdo_sqlite.comment    = "DB-PDO"                 ; comment of this database
+;database.sample_pdo_sqlite.enabled    = false                    ; set this to 'true' for using this connection
+;database.sample_pdo_sqlite.comment    = "DB-PDO"                 ; comment of this database
 
-database.sample_pdo_sqlite.type       = pdo                      ;
+;database.sample_pdo_sqlite.type       = pdo                      ;
 
 ; The DSN-Url for your database
-database.sample_pdo_sqlite.dsn = ""
+;database.sample_pdo_sqlite.dsn = ""
 ; Examples:
 ; MySql
 ;database.sample_pdo_sqlite.dsn = "mysql:dbname=testdb;host=127.0.0.1"
@@ -270,13 +270,13 @@ database.sample_pdo_sqlite.dsn = ""
 ;database.sample_pdo_sqlite.user     = "dbuser"
 ;database.sample_pdo_sqlite.password = "dbpass"
 
-database.sample_pdo_sqlite.base64     = false                 ; store binary as BASE64 (in postgresql=true)
-database.sample_pdo_sqlite.prefix     = or_                   ; table praefix
-database.sample_pdo_sqlite.persistent = yes                   ; use persistent connections (try this, it's faster)
+;database.sample_pdo_sqlite.base64     = false                 ; store binary as BASE64 (in postgresql=true)
+;database.sample_pdo_sqlite.prefix     = or_                   ; table praefix
+;database.sample_pdo_sqlite.persistent = yes                   ; use persistent connections (try this, it's faster)
 ;database.sample_pdo_sqlite.charset = UTF-8
 
 ; SQL-Statement which is executed after opening the connection
-database.sample_pdo_sqlite.connection_sql = ""
+;database.sample_pdo_sqlite.connection_sql = ""
 ; Examples:
 ; per default SQlite uses table-prefixed column names when using JOINs which MUST BE off.
 ;database.sample_pdo_sqlite.connection_sql = "pragma short_column_names=true;"
@@ -284,19 +284,19 @@ database.sample_pdo_sqlite.connection_sql = ""
 ;database.sample_pdo_sqlite.connection_sql = "alter session set current_schema=myschema;"
 
 ; System command for executing before connecting to the database.
-database.sample_pdo_sqlite.cmd = ""
+;database.sample_pdo_sqlite.cmd = ""
 
-database.sample_pdo_sqlite.prepare = false
+;database.sample_pdo_sqlite.prepare = false
 
 ; Set this to true, if you want to use transactions.
-database.sample_pdo_sqlite.transaction = false
+;database.sample_pdo_sqlite.transaction = false
 
-database.sample_pdo_sqlite.readonly = false
+;database.sample_pdo_sqlite.readonly = false
 
 
 ; The database results MUST contain lowercase column names.
 ; if using Oracle, set this to 'true', default is 'false'.
-database.sample_pdo_sqlite.convert_to_lowercase = false
+;database.sample_pdo_sqlite.convert_to_lowercase = false
 
 ; PDO driver-specific options
 ; key 'option_a' means option 'a'.
@@ -318,147 +318,147 @@ database.sample_pdo_sqlite.convert_to_lowercase = false
 ; see http://www.php.net/manual/en/function.date.php for details
 ; next section: [format]
 
-date.format.SHORT = ""
-date.format.ISO8601SHORT = "Ymd"
-date.format.ISO8601 = "Y-m-d"
-date.format.ISO8601BAS = "YmdTHis"
-date.format.ISO8601EXT = "Y-m-dTH:i:s"
-date.format.ISO8601FULL = "Y-m-dTH:i:sO"
-date.format.ISO8601WEEK = "YWW"
-date.format.GER1 = "d.m.Y"
-date.format.GER2 = "d.m.Y, H:i"
-date.format.GER3 = "d.m.Y, H:i:s"
-date.format.GER4 = "d. F Y, H:i:s"
-date.format.ENGLONG = "l dS of F Y h:i:s A"
-date.format.GMDATE = "D, d M Y H:i:s GMT"
-date.format.RFC822 = "r"
-date.format.UNIX = "U"
-date.format.LONG = "F j, Y, g:i a"
+;date.format.SHORT = ""
+;date.format.ISO8601SHORT = "Ymd"
+;date.format.ISO8601 = "Y-m-d"
+;date.format.ISO8601BAS = "YmdTHis"
+;date.format.ISO8601EXT = "Y-m-dTH:i:s"
+;date.format.ISO8601FULL = "Y-m-dTH:i:sO"
+;date.format.ISO8601WEEK = "YWW"
+;date.format.GER1 = "d.m.Y"
+;date.format.GER2 = "d.m.Y, H:i"
+;date.format.GER3 = "d.m.Y, H:i:s"
+;date.format.GER4 = "d. F Y, H:i:s"
+;date.format.ENGLONG = "l dS of F Y h:i:s A"
+;date.format.GMDATE = "D, d M Y H:i:s GMT"
+;date.format.RFC822 = "r"
+;date.format.UNIX = "U"
+;date.format.LONG = "F j, Y, g:i a"
 
 
-date.timezone.-6="New York"
-date.timezone.0="UTC (GMT)"
-date.timezone.60="MET (Middle European Time)"
-date.timezone.120="MEST (Middle European Summertime)"
+;date.timezone.-6="New York"
+;date.timezone.0="UTC (GMT)"
+;date.timezone.60="MET (Middle European Time)"
+;date.timezone.120="MEST (Middle European Summertime)"
 
 
 
 ; Editor configuration
 
 ; Strong/important text (mostly "bold")
-editor.text-markup.strong-begin = "*"
-editor.text-markup.strong-end   = "*"
+;editor.text-markup.strong-begin = "*"
+;editor.text-markup.strong-end   = "*"
 
 ; Emphatic text (mostly "italic")
-editor.text-markup.emphatic-begin = "_"
-editor.text-markup.emphatic-end   = "_"
+;editor.text-markup.emphatic-begin = "_"
+;editor.text-markup.emphatic-end   = "_"
 
 ; Image
-editor.text-markup.image-begin = "{"
-editor.text-markup.image-end   = "}"
+;editor.text-markup.image-begin = "{"
+;editor.text-markup.image-end   = "}"
 
 ; Speech
-editor.text-markup.speech-begin = QUOTE
-editor.text-markup.speech-end   = QUOTE
+;editor.text-markup.speech-begin = QUOTE
+;editor.text-markup.speech-end   = QUOTE
 
 ; text with same width
-editor.text-markup.code-begin = "="
-editor.text-markup.code-end   = "="
+;editor.text-markup.code-begin = "="
+;editor.text-markup.code-end   = "="
 
 ; footnotes
-editor.text-markup.footnote-begin = "["
-editor.text-markup.footnote-end   = "]"
+;editor.text-markup.footnote-begin = "["
+;editor.text-markup.footnote-end   = "]"
 
 ; pre-formatted Text
-editor.text-markup.pre-begin = "="
-editor.text-markup.pre-end   = "="
+;editor.text-markup.pre-begin = "="
+;editor.text-markup.pre-end   = "="
 
 ; Inserted Text
-editor.text-markup.insert-begin = "++"
-editor.text-markup.insert-end   = "++"
+;editor.text-markup.insert-begin = "++"
+;editor.text-markup.insert-end   = "++"
 
 ; Removed text
-editor.text-markup.remove-begin = "--"
-editor.text-markup.remove-end   = "--"
+;editor.text-markup.remove-begin = "--"
+;editor.text-markup.remove-end   = "--"
 
 ; Separator for a definition item
-editor.text-markup.definition-sep = "::"
+;editor.text-markup.definition-sep = "::"
 
 ; Indenting headline
-editor.text-markup.headline       = "+"
+;editor.text-markup.headline       = "+"
 
 ; Underlining of headline level 1
-editor.text-markup.headline_level1_underline = "="
+;editor.text-markup.headline_level1_underline = "="
 
 ; Underlining of headline level 2
-editor.text-markup.headline_level2_underline = "-"
+;editor.text-markup.headline_level2_underline = "-"
 
 ; Underlining of headline level 3
-editor.text-markup.headline_level3_underline = "."
+;editor.text-markup.headline_level3_underline = "."
 
 ; Unnumbered Listentry
-editor.text-markup.list-unnumbered = "-"
+;editor.text-markup.list-unnumbered = "-"
 
 ; Numbered Listentry
-editor.text-markup.list-numbered   = "#"
+;editor.text-markup.list-numbered   = "#"
 
 ; Table of content
-editor.text-markup.table-of-content= "##TOC##"
+;editor.text-markup.table-of-content= "##TOC##"
 
 ; Link to
-editor.text-markup.linkto          = "->"
+;editor.text-markup.linkto          = "->"
 
 ; Table cell separator
-editor.text-markup.table-cell-sep  = "|"
+;editor.text-markup.table-cell-sep  = "|"
 
-editor.text-markup.style-begin = "'"
-editor.text-markup.style-end   = "'"
+;editor.text-markup.style-begin = "'"
+;editor.text-markup.style-end   = "'"
 
 ; Quote Text
-editor.text-markup.quote            = ">"
-editor.text-markup.quote-line-begin = ">"
-editor.text-markup.quote-line-end   = ">"
+;editor.text-markup.quote            = ">"
+;editor.text-markup.quote-line-begin = ">"
+;editor.text-markup.quote-line-end   = ">"
 
 ; Makro
-editor.text-markup.macro-begin = "<<"
-editor.text-markup.macro-end   = ">>"
-editor.text-markup.macro-attribute-quote = "'"
-editor.text-markup.macro-attribute-value-seperator = "="
+;editor.text-markup.macro-begin = "<<"
+;editor.text-markup.macro-end   = ">>"
+;editor.text-markup.macro-attribute-quote = "'"
+;editor.text-markup.macro-attribute-value-seperator = "="
 
 ; next section: [html]
 
 ; Which HTML-Tag to use for cites
-editor.html.tag_strong = "strong"
+;editor.html.tag_strong = "strong"
 
 ; Which HTML-Tag to use for emphatic text
-editor.html.tag_emphatic = "em"
+;editor.html.tag_emphatic = "em"
 
 ; Which HTML-Tag to use for teletyped text
-editor.html.tag_teletype = "tt"
+;editor.html.tag_teletype = "tt"
 
 ; Which HTML-Tag to use for cites
-editor.html.tag_speech = "cite"
+;editor.html.tag_speech = "cite"
 
 ; OpenRat tries to use a good speech tag. You may override this.
-editor.html.override_speech = false
-editor.html.override_speech_open  = "&laquo;"
-editor.html.override_speech_close = "&raquo;"
+;editor.html.override_speech = false
+;editor.html.override_speech_open  = "&laquo;"
+;editor.html.override_speech_close = "&raquo;"
 
 ; HTML-Rendermode
 ; explains how to handle emtpy elements.
 ; 'xml'  => <br />, <image src="..." />
 ; 'sgml' => <br>, <image src="...">
-editor.html.rendermode=sgml
+;editor.html.rendermode=sgml
 ;editor.html.rendermode=xml
 
-editor.html.replace = "EUR:&euro; (c):&copy; (r):&reg; ^1:&sup1; ^2:&sup2; ^3:&sup3; 1/4:&frac14; 1/2:&frac12; 3/4:&frac34;"
+;editor.html.replace = "EUR:&euro; (c):&copy; (r):&reg; ^1:&sup1; ^2:&sup2; ^3:&sup3; 1/4:&frac14; 1/2:&frac12; 3/4:&frac34;"
 
 
 
 ; next section: [wiki]
 
-editor.wiki.convert_html=true
-editor.wiki.convert_bbcode=true
+;editor.wiki.convert_html=true
+;editor.wiki.convert_bbcode=true
 
 
 
@@ -468,13 +468,13 @@ editor.wiki.convert_bbcode=true
 ; Weekday-Offset: Ho many days a week begins after Sunday.
 ; 0 = Week begins with Sunday (America, Australia, Islam)
 ; 1 = Week begins with Monday (ISO-8601, Europe)
-editor.calendar.weekday_offset=1
+;editor.calendar.weekday_offset=1
 
 
-editor.text.linelength=70
+;editor.text.linelength=70
 
 ; next section: [macro]
-editor.macro.show_errors=false
+;editor.macro.show_errors=false
 
 
 
@@ -517,7 +517,7 @@ editor.macro.show_errors=false
 
 ; Enable online help
 ; Default: true
-help.enabled=true
+;help.enabled=true
 
 ; URL praefix to the help documents
 ;help.url=help/html/
@@ -530,7 +530,7 @@ help.enabled=true
 
 ; Search for language in HTTP header
 ; This is a useful setting. The Browser says, which language will be taken.
-i18n.use_http=true
+;i18n.use_http=true
 
 
 ; Default language
@@ -595,13 +595,13 @@ i18n.use_http=true
 ; Use of human date format
 ; looks like "3 years ago", or "7 months ago"
 ; Default: false
-interface.human_date_format = false
+;interface.human_date_format = false
 
 
 
 ; The default style which is used, when no user is logged in.
 ; 'default' is the classic Openrat style.
-interface.style.default=default
+;interface.style.default=default
 
 ; 'system' uses system colors from the client (nice choice)
 ;interface.style.default=system
@@ -632,7 +632,7 @@ interface.style.default=default
 ; Frameset settings
 
 ; Logical name of top-frame. Change this, if you want Openrat running in another parent frameset
-interface.frames.top=_top
+;interface.frames.top=_top
 
 
 ; Manipulating the URL of Openrat.
@@ -665,7 +665,7 @@ interface.frames.top=_top
 ; add the session ID as an URL-Parameter.
 ; useful, if you do not want cookies and trans_sid is not installed.
 ; if unsure, set to "false"
-interface.url.add_sessionid = false
+;interface.url.add_sessionid = false
 
 
 
@@ -692,20 +692,20 @@ interface.url.add_sessionid = false
 ; Openrat is able to check passwords against a LDAP-based directory.
 
 ; Hostname of your LDAP server.
-ldap.host="localhost"
+;ldap.host="localhost"
 
 ; TCP-Port of your LDAP server.
-ldap.port="389"
+;ldap.port="389"
 
 ; Protocol-Version
 ; Set this to '2' or '3'.
-ldap.protocol="2"
+;ldap.protocol="2"
 
 ; The format of the DN
 ; If blank, the DN is automatically searched in the LDAP tree (see section "search").
 ; for using LDAP authentication, /security/auth/type has to be set to "ldap"!
 ;ldap.dn = "uid={user},ou=users,dc=example,dc=com"
-ldap.dn = "";
+;ldap.dn = "";
 
 ; Settings for authentication against a LDAP directory
 ; This is only activated, if the setting '/security/auth/type' is 'ldap'.
@@ -713,31 +713,31 @@ ldap.dn = "";
 
 ; use of anonymous bind ('true' or 'false')
 ; if 'true', the following user and password settings are ignored.
-ldap.search.anonymous = true
+;ldap.search.anonymous = true
 
 ; if 'anonymous' is 'false': DN of technical user for searching the real user DN
-ldap.search.user      = "uid=openrat,ou=users,dc=example,dc=com"
+;ldap.search.user      = "uid=openrat,ou=users,dc=example,dc=com"
 
 ; if 'anonymous' is 'false': password of technical user
-ldap.search.password  = "verysecret"
+;ldap.search.password  = "verysecret"
 
 ; Base-DN of the subtree where the search begins
-ldap.search.basedn    = "dc=example,dc=com"
+;ldap.search.basedn    = "dc=example,dc=com"
 
 ; Filter setting for searching the user objects.
 ; The string {user} will be replaced by the user name.
-ldap.search.filter    = "(uid={user})"
+;ldap.search.filter    = "(uid={user})"
 
 ; Aliases are dereferenced ('true' or 'false')
-ldap.search.aliases   = true
+;ldap.search.aliases   = true
 
 ; Timeout in seconds
-ldap.search.timeout   = 30
+;ldap.search.timeout   = 30
 
 ; If the user is found in the LDAP tree, but is not yet stored in the internal database.
 ; 'true'  the user will be logged in and automatically inserted in the internal database.
 ; 'false' login will be rejected, all users must exist in the internal database.
-ldap.search.add       = true
+;ldap.search.add       = true
 
 
 
@@ -746,35 +746,35 @@ ldap.search.add       = true
 ; next section: [authorize]
 
 ; Search filter for reading the groups a user belongs to.
-ldap.authorize.group_filter="(memberUid={dn})"
+;ldap.authorize.group_filter="(memberUid={dn})"
 
 ; LDAP attribute name of the name of the group
-ldap.authorize.group_name="cn"
+;ldap.authorize.group_name="cn"
 
 ; Add groups found in LDAP (but not known in the internal database) automatically into database?
 ; If 'false', the LDAP groups cannot be used!
-ldap.authorize.auto_add = true
+;ldap.authorize.auto_add = true
 ;
 ; converted from login.ini.php
 ; <?php exit('direct access denied') ?>
 
-login.motd=""                                  ; Message of the day, shown in login mask
-login.nologin=false                            ; Disable Login (for maintanance jobs)
-login.register=false
-login.send_password=false
+;login.motd=""                                  ; Message of the day, shown in login mask
+;login.nologin=false                            ; Disable Login (for maintanance jobs)
+;login.register=false
+;login.send_password=false
 
 ; next section: [gpl]
-login.gpl.url="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+;login.gpl.url="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
 
 ; next section: [logo]
-login.logo.file="./themes/default/images/logo.jpg"  ; logo (url to image) in login mask
-login.logo.url="http://www.openrat.de"              ; linked url in login mask
+;login.logo.file="./themes/default/images/logo.jpg"  ; logo (url to image) in login mask
+;login.logo.url="http://www.openrat.de"              ; linked url in login mask
 
 
 ; next section: [start]
 ; After Login, start with the last changed object.
 ; If 'true', the project menu is not displayed.
-login.start.start_lastchanged_object=true
+;login.start.start_lastchanged_object=true
 ;
 ; converted from log.ini.php
 ; <?php exit('direct access denied') ?>
@@ -786,18 +786,18 @@ login.start.start_lastchanged_object=true
 ; filename of logfile. Every log entry will be appended to this file.
 ; This file must be writable by the webserver.
 ; If blank (default), no logging will be done.
-log.file = ""
+;log.file = ""
 
 ; loglevel are one of 'trace','debug','info','warn','error'
-log.level = "warn"
+;log.level = "warn"
 
 ; date format (for variable %time, see 'format'. This format is used by PHPs date()-function.
 ; See http://www.php.net/date
-log.date_format = "M j H:i:s"
+;log.date_format = "M j H:i:s"
 
 ; lookup hostname of client-IP
 ; this may increase performance, if 'true'. Be careful!
-log.dns_lookup = false
+;log.dns_lookup = false
 
 ; output format
 ; the following variables are replaced:
@@ -807,7 +807,7 @@ log.dns_lookup = false
 ; %user username, who is logged in, ore '-' if not logged in.
 ; %action what is happening now
 ; %text reason of the log entry
-log.format = "%time %level %host %user %action %text"
+;log.format = "%time %level %host %user %action %text"
 ;
 ; converted from mail.ini.php
 ; <?php exit('direct access denied') ?>
@@ -816,7 +816,7 @@ log.format = "%time %level %host %user %action %text"
 
 ; Does your server send e-mails?
 ; 'true' or 'false'
-mail.enabled=true
+;mail.enabled=true
 
 ; The "from"-Adress. Creates a "From: "-Header.
 ; This is not neccecary. Hint: Most MTAs require a valid email adress.
@@ -824,7 +824,7 @@ mail.enabled=true
 
 ; This signature is appended at the end of a mail. Use ';' for line-breaks.
 ; A useful information is maybe the URL of your OpenRat installation.
-mail.signature="http://www.openrat.de"
+;mail.signature="http://www.openrat.de"
 
 ; Copy Recipient
 ;mail.cc=
@@ -835,7 +835,7 @@ mail.signature="http://www.openrat.de"
 ; Priority of the mail (creates an "X-Priority"-Header)
 ; 1=Highest, 2=High, 3=Normal, 4=Low, 5=Lowest
 ; Hint: Most MUAs ignore this header.
-mail.priority=3
+;mail.priority=3
 
 
 ; Non-7-bit-chars are not allowed in Mailheaders (see RFC 822, 2045, 2047)
@@ -843,7 +843,7 @@ mail.priority=3
 ; 'Quoted-printable' (default),
 ; 'Base64'
 ; '' (blank) no encoding.
-mail.header_encoding="Quoted-printable"
+;mail.header_encoding="Quoted-printable"
 
 
 ; Which SMTP client you want to use.
@@ -851,16 +851,16 @@ mail.header_encoding="Quoted-printable"
 ; 'smtp': OpenRat internal SMTP-client
 ; If unsure, use the builtin PHP function.
 ;mail.client=smtp
-mail.client=php
+;mail.client=php
 
 
 ; Whitelist
 ; A comma-seperated list of domains names
-mail.whitelist = ""
+;mail.whitelist = ""
 
 ; Blacklist
 ; A comma-seperated list of domain names
-mail.blacklist = ""
+;mail.blacklist = ""
 
 
 
@@ -874,34 +874,34 @@ mail.blacklist = ""
 ; If this is blank, the mail is delivered directly to the destination MX host.
 ; I repeat, it is better to always use a relay host!
 ;mail.smtp.host="mail.yourdomain.example"
-mail.smtp.host="locahost"
+;mail.smtp.host="locahost"
 
 ; SMTP-Port is '25' in most environments
-mail.smtp.port="25"
+;mail.smtp.port="25"
 
 ; SMTP Authentication
 ; (only needed if using a relay host)
 ; (FYI: The client makes use of the SMTP "AUTH LOGIN" method.
-mail.smtp.auth_username="your.user@something.example"
-mail.smtp.auth_password="notsecret"
+;mail.smtp.auth_username="your.user@something.example"
+;mail.smtp.auth_password="notsecret"
 
 ; Timeout in seconds
-mail.smtp.timeout="45"
+;mail.smtp.timeout="45"
 
 ; Your fully-qualified hostname (FQDN)
 ; if empty, Openrat will use your simple hostname
-mail.smtp.localhost=
+;mail.smtp.localhost=
 ;mail.smtp.localhost="your.fully.qualified.hostname.example"
 
 ; Use TLS
 ; The client will send a "STARTTLS" command after HELO.
 ; TLS is not tested, use at your own risk!
-mail.smtp.tls=false
+;mail.smtp.tls=false
 
 ; Use SSL
 ; The client will connection using the SSL-protocol.
 ; This is not tested, use at your own risk!
-mail.smtp.ssl=false
+;mail.smtp.ssl=false
 
 
 ;
@@ -911,33 +911,33 @@ mail.smtp.ssl=false
 ; Allow editing of file names.
 ; 'true' : Author is allowed to edit the file names of his files and pages.
 ; 'false': File names are generated by OpenRat only.
-publish.edit=true
+;publish.edit=true
 
 
 ; filename for the first object in a folder.
 ; Default is 'index'.
-publish.default=index
+;publish.default=index
 
 
 ; File naming conventions
 ; See http://httpd.apache.org/docs/2.0/content-negotiation.html#naming
 ; '{filename}{language_sep}{language}{type_sep}{type}' means 'foo.en.html'
-publish.format       = "{filename}{language_sep}{language}{type_sep}{type}"
+;publish.format       = "{filename}{language_sep}{language}{type_sep}{type}"
 
 
 ; Seperators, mostly you will use '.'
-publish.language_sep = "."
-publish.type_sep     = "."
+;publish.language_sep = "."
+;publish.type_sep     = "."
 
 
 ; 'always': language name is always appended to the filename
 ; 'auto'  : language is appended if there are at least 2 languages
-publish.filename_language = auto
+;publish.filename_language = auto
 
 
 ; 'always': type is always appended to the filename
 ; 'auto'  : type is appended if there are at least 2 project models
-publish.filename_type = always
+;publish.filename_type = always
 
 
 ; Filename Mode. Only used, if edit=false or no filename is set for an object.
@@ -945,32 +945,32 @@ publish.filename_type = always
 ; 'id'    : simply use the object id.
 ; 'longid': use a unique and long number.
 ; 'short' : use a unique name which is as short as possible.
-publish.style="id"
+;publish.style="id"
 
 
 ; Mode of generated URLs.
 ; 'relative': (Default) Generates URLs like '../../path/to/example.html'.
 ; 'absolute': Generates URLs like '/path/to/example.html'.
-publish.url=relative
+;publish.url=relative
 ;publish.url=absolute
 
 ; Should PHP code in page source be interpreted
 ; 'false': page source is never interpreted as PHP
 ; 'auto' : interpreted, if page extension = '.php'
 ; 'true' : always interpret PHP in page source
-publish.enable_php_in_page_content=false
+;publish.enable_php_in_page_content=false
 
 ; Should PHP code in file content be interpreted
 ; 'false': file content is never interpreted as PHP
 ; 'auto' : interpreted, if file extension = '.php'
 ; 'true' : always interpret PHP in file content
-publish.enable_php_in_file_content=false
+;publish.enable_php_in_file_content=false
 
 ; Escape all non-ascii characters to HTML entities.
 ; Normally this is not necessary, if there is a correct charset in the meta-section of your HTML-head.
 ; 'true' : Escape all non-ascii-characters
 ; 'false': Do nothing (default)
-publish.escape_8bit_characters=false
+;publish.escape_8bit_characters=false
 
 
 
@@ -979,46 +979,46 @@ publish.escape_8bit_characters=false
 ; next section: [negotiation]
 
 ; if 'true', then the mime-type is omitted in the URL for page links.
-publish.negotiation.page_negotiate_type = true
+;publish.negotiation.page_negotiate_type = true
 
 ; if 'true', then the language is omitted in the URL for page links.
-publish.negotiation.page_negotiate_language = true
+;publish.negotiation.page_negotiate_language = true
 
 ; if 'true', then the mime type is omitted in the URL for file links
-publish.negotiation.file_negotiate_type = true
+;publish.negotiation.file_negotiate_type = true
 
 
 
 ; next section: [project]
 ; Default publish directory. The edited target directory is appended.
-publish.project.publish_dir="/var/www/"
+;publish.project.publish_dir="/var/www/"
 
 ; Allow paths in target directory
 ; 'false': only the base name is taken
 ; 'true' : user input is taken with full path
-publish.project.override_publish_dir=true
+;publish.project.override_publish_dir=true
 
 ; Default system command.
 ; Vars: {name}    = project name,
 ;       {dir}     = Target directory,
 ;       {dirbase} = Target directory basename
 ;publish.project.system_command="sudo -u xyz /usr/local/bin/mirror.sh {dirbase}"
-publish.project.system_command=
+;publish.project.system_command=
 
 ; Input overrides the default system command.
 ; 'true' or 'false'
-publish.project.override_system_command=true
+;publish.project.override_system_command=true
 
 
 
 ; next section: [ftp]
 ; 'true' : (Default) FTP is enabled
 ; 'false': FTP is disabled, f.e. if FTP is not compiled with PHP.
-publish.ftp.enable=true
+;publish.ftp.enable=true
 
 ; Default FTP-Port
 ; Default: '21'
-publish.ftp.port=21
+;publish.ftp.port=21
 
 ; Default hostname
 ;publish.ftp.host="ftp.example.com"
@@ -1041,8 +1041,8 @@ publish.ftp.port=21
 ;replace.
 ; See file editor.ini.php section "html", setting "replace".
 ;replace.
-replace.euro   = "EUR,&euro;"
-replace.copy   = "(c),&copy;"
+;replace.euro   = "EUR,&euro;"
+;replace.copy   = "(c),&copy;"
 ;
 ; converted from search.ini.php
 
@@ -1052,19 +1052,19 @@ replace.copy   = "(c),&copy;"
 ; next section: [quicksearch]
 
 ; Show submit button for quicksearch. Not needed for modern browsers
-search.quicksearch.show_button=false
+;search.quicksearch.show_button=false
 
 ; Search in the name of objects
-search.quicksearch.search_name=true
+;search.quicksearch.search_name=true
 
 ; search in the filename of objects
-search.quicksearch.search_filename=true
+;search.quicksearch.search_filename=true
 
 ; search in the description of objects
-search.quicksearch.search_description=true
+;search.quicksearch.search_description=true
 
 ; Search in all text content (slow on big databases!)
-search.quicksearch.search_content=false
+;search.quicksearch.search_content=false
 ;
 ; converted from security.ini.php
 ; <?php exit('direct access denied') ?>
@@ -1075,28 +1075,28 @@ search.quicksearch.search_content=false
 
 ; All is readonly (for maintanance jobs)
 ; true|false, default:false
-security.readonly=false
+;security.readonly=false
 
 ; Disable publishing
-security.nopublish=false
+;security.nopublish=false
 
 ; Unix-UMask for all created files
 ; Default: none (uses system default)
 ; Example: '0022' (means '-rw-r--r--')
 ; Example: '0002' (means '-rw-rw-r--')
-security.umask=
+;security.umask=
 
 ; CHMOD for created files
 ; Default: none
 ; Example: '0644' (means '-rw-r--r--')
 ; Example: '0755' (means '-rwxr-xr-x')
-security.chmod=
+;security.chmod=
 
 ; CHMOD for created directories
 ; Default: none
 ; Example: '0755' (means 'drwxr-xr-x')
 ; Example: '0770' (means 'drwxrwx---')
-security.chmod_dir=
+;security.chmod_dir=
 
 ; You may disable dynamic code.
 ; dynamic code ("CODE"-Elements in templates) are dangerous, because they may
@@ -1106,23 +1106,23 @@ security.chmod_dir=
 ; Enable, if admin users are trustful.
 ; Disable, if admin users are anonym (f.e. demo-installations).
 ; Default: true (for secure default installation).
-security.disable_dynamic_code = true
+;security.disable_dynamic_code = true
 
 
 ; Enable or disable the displaying of system information
-security.show_system_info = true
+;security.show_system_info = true
 
 
 ; Useful against CSRF-attacks, this adds a token to all POST request.
-security.use_post_token=true
+;security.use_post_token=true
 
 ; Creates a new Session on login.
 ; Useful against session fixation attacks.
-security.renew_session_login=false
+;security.renew_session_login=false
 
 ; Creates a new Session on logout.
 ; Useful against session fixation attacks.
-security.renew_session_logout=false
+;security.renew_session_logout=false
 
 
 
@@ -1131,10 +1131,10 @@ security.renew_session_logout=false
 ; next section: [default]
 
 ; default: ''
-security.default.username=
+;security.default.username=
 
 ; default: ''
-security.default.password=
+;security.default.password=
 
 
 
@@ -1143,11 +1143,11 @@ security.default.password=
 ; next section: [guest]
 
 ; enable auto-login for a guest user.
-security.guest.enable=false
+;security.guest.enable=false
 
 ; Name of the guest user, who is automatically logged in.
 ; This user must exist in your user database.
-security.guest.user=guest
+;security.guest.user=guest
 
 
 
@@ -1159,7 +1159,7 @@ security.guest.user=guest
 ;        Only the default database is available (because there is no way to select another one)
 ; 'form' shows a login form via a HTML page (default).
 
-security.login.type=form
+;security.login.type=form
 ;security.login.type=http
 
 
@@ -1170,12 +1170,12 @@ security.login.type=form
 ; 'authdb'   uses an external database table as password store, see section [authdb] which has to exist.
 ; 'ldap'     uses an external LDAP directory for password checking, see file "ldap.ini.php".
 ; 'http'     uses an HTTP-Auth Server for password checking
-security.auth.type=database
+;security.auth.type=database
 
 ; per-user setting of the LDAP DN.
 ; 'true'  users which have there LDAP-DN explicitly stored are authenticated against LDAP.
 ; 'false' no LDAP-DN storage per user.
-security.auth.userdn=false
+;security.auth.userdn=false
 
 
 
@@ -1185,7 +1185,7 @@ security.auth.userdn=false
 ; 'ldap' reads the user-group-relations in a LDAP-Directory
 ;        (in this case, /security/auth/type has to be set to "ldap", too!)
 ;        (see /ldap/authorize!)
-security.authorize.type=database
+;security.authorize.type=database
 ;security.authorize.type=ldap
 
 
@@ -1194,19 +1194,19 @@ security.authorize.type=database
 ; next section: [password]
 
 ; length of automatic generated password
-security.password.random_length=8
+;security.password.random_length=8
 
 ; minimum passwort length
-security.password.min_length=5
+;security.password.min_length=5
 
 ; Password "salt"
 ; ''        : no salt (default)
 ; 'id'      : salt the password with userid
 ; 'username': salt the password with username
 ; 'custom'  : use the 'salt_text'-setting
-security.password.salt = ""
+;security.password.salt = ""
 
-security.password.salt_text = "somerandomtext"
+;security.password.salt_text = "somerandomtext"
 
 
 
@@ -1215,7 +1215,7 @@ security.password.salt_text = "somerandomtext"
 ; next section: [http]
 
 ; The URL where an HTTP basic authorization ist required.
-security.http.url = "http://example.net/restricted-area"
+;security.http.url = "http://example.net/restricted-area"
 
 
 
@@ -1226,21 +1226,21 @@ security.http.url = "http://example.net/restricted-area"
 ; next section: [authdb]
 
 ; 'mysql', 'postgresql' or 'sqlite'
-security.authdb.type = postgresql
+;security.authdb.type = postgresql
 
-security.authdb.user = dbuser
-security.authdb.password = dbpassword
-security.authdb.host = 127.0.0.1
-security.authdb.database = dbname
-security.authdb.persistent = false
+;security.authdb.user = dbuser
+;security.authdb.password = dbpassword
+;security.authdb.host = 127.0.0.1
+;security.authdb.database = dbname
+;security.authdb.persistent = false
 
 ; the sql which is executed while checking the password.
 ; the variables {username} and {password} are replaced.
-security.authdb.sql = "select 1 from table where user={username} and password=md5({password})"
+;security.authdb.sql = "select 1 from table where user={username} and password=md5({password})"
 
 ; if the user exists in the external database, should it
 ; automatically be inserted into the openrat internal table?
-security.authdb.add = true
+;security.authdb.add = true
 
 
 
@@ -1251,7 +1251,7 @@ security.authdb.add = true
 ; See modssl-configuration for more infos:
 ; http://httpd.apache.org/docs/2.0/mod/mod_ssl.html.en#envvars
 ; if blank, ssl client auth is unused (default)
-security.ssl.user_var=
+;security.ssl.user_var=
 ;security.ssl.user_var="REMOTE_USER"
 ;security.ssl.user_var="SSL_CLIENT_S_DN"
 ;security.ssl.user_var="SSL_CLIENT_S_DN_CN"
@@ -1259,7 +1259,7 @@ security.ssl.user_var=
 ; if 'true', you trust the client certificate fully, this is a passwordless login!
 ; take care tto have an useful webserver configuration where you only trust CA-signed certificates.
 ; if 'true', the 'user_var' is needed.
-security.ssl.trust=false
+;security.ssl.trust=false
 
 
 
@@ -1269,38 +1269,38 @@ security.ssl.trust=false
 
 ; Enable Open-ID
 ; default=false
-security.openid.enable=false
+;security.openid.enable=false
 
 ; Should authenticated users, which are not in your user database, automatically be added?
 ; default=false
-security.openid.add=false
+;security.openid.add=false
 
 ; Open-Id Logo
 ; The specification recommends the original Open-Id logo.
 ;security.openid.logo_url=
-security.openid.logo_url="http://openid.net/login-bg.gif"
+;security.openid.logo_url="http://openid.net/login-bg.gif"
 
 ; Trust-Root
 ; URL-Prefix in which your OpenRat installations are running.
 ; default=<empty> (OpenRat tries to use its own server name)
 ;security.openid.trust_root=http://your.server.example/openrat/
-security.openid.trust_root=
+;security.openid.trust_root=
 
 ; Trustful servers
 ; Default='' (all)
 ;security.openid.trusted_server=openid1.example.com,openid2.example.com
-security.openid.trusted_server=
+;security.openid.trusted_server=
 
 ; Should Users fullname and e-mail updated from the OpenId-Server?
-security.openid.update_user=true
+;security.openid.update_user=true
 
 ; Using User-Identitys?
-security.openid.user_identity=true
+;security.openid.user_identity=true
 
 ; List of OpenId-Provider to use
 ; Special name "identity" for user defined identitys
 ;security.openid.provider=example
-security.openid.provider.name=google
+;security.openid.provider.name=google
 
 ; location of the providers Yadis-document (XRDS-file)
 ;security.openid.provider.example.xrds_uri=http://google.com/accounts
@@ -1311,15 +1311,15 @@ security.openid.provider.name=google
 ;security.openid.provider.example.map_internal=mail
 
 ; Google supports Open-Id 2.0
-security.openid.provider.google.xrds_uri=http://google.com/accounts/o8/id
-security.openid.provider.google.map_attribute=email
-security.openid.provider.google.name=Google
-security.openid.provider.google.map_internal=mail
+;security.openid.provider.google.xrds_uri=http://google.com/accounts/o8/id
+;security.openid.provider.google.map_attribute=email
+;security.openid.provider.google.name=Google
+;security.openid.provider.google.map_internal=mail
 
 ; Yahoo
-security.openid.provider.yahoo.xrds_uri=http://??????
-security.openid.provider.yahoo.map_attribute=usename
-security.openid.provider.yahoo.map_internal=mail
+;security.openid.provider.yahoo.xrds_uri=http://??????
+;security.openid.provider.yahoo.map_attribute=usename
+;security.openid.provider.yahoo.map_internal=mail
 
 
 
@@ -1331,35 +1331,35 @@ security.openid.provider.yahoo.map_internal=mail
 ; next section: [sso]
 
 ; use single sign-on? Set to 'true' or 'false'.
-security.sso.enable=false
+;security.sso.enable=false
 
 ; the url against the auth-id will be checked.
 ;security.sso.url="http://localhost/check.php?phpsessid={id}&check=true"
-security.sso.url="https://www.example.com/phpmyadmin/main.php?server=1"
+;security.sso.url="https://www.example.com/phpmyadmin/main.php?server=1"
 
 ; the name of the parameter, where OpenRat will receive the Id, which will then be checked.
-security.sso.auth_param_name=authid
+;security.sso.auth_param_name=authid
 
 ; is the auth-id serialized?
-security.sso.auth_param_serialized=true
+;security.sso.auth_param_serialized=true
 
 ; the auth-id will be used as a cookie
-security.sso.cookie=true
+;security.sso.cookie=true
 
 ; if the auth-id is no array, use this cookie-name.
-security.sso.cookie_name=
+;security.sso.cookie_name=
 
-security.sso.force=true
+;security.sso.force=true
 
 ; leave this blank.
-security.sso.expect=
+;security.sso.expect=
 
 ; this is a regular expression which checks, if the login at the third-party-system is ok.
-security.sso.expect_regexp="/running on/"
+;security.sso.expect_regexp="/running on/"
 
 ; regular expression for find out the username
 ; this example is used for "PhpMyAdmin"
-security.sso.username_regexp="/running on localhost as ([a-z]+)@localhost/"
+;security.sso.username_regexp="/running on localhost as ([a-z]+)@localhost/"
 
 
 
@@ -1367,7 +1367,7 @@ security.sso.username_regexp="/running on localhost as ([a-z]+)@localhost/"
 ; next section: [newuser]
 
 ; These groups are automatically added while a new user is inserted.
-security.newuser.groups=YourGroup,AnotherGroup
+;security.newuser.groups=YourGroup,AnotherGroup
 
 
 
@@ -1378,7 +1378,7 @@ security.newuser.groups=YourGroup,AnotherGroup
 ; <blank>= Show Login.
 ; Default: ""
 ;security.logout.redirect_url="http://your.intranet.example/"
-security.logout.redirect_url=
+;security.logout.redirect_url=
 
 
 
@@ -1387,15 +1387,15 @@ security.logout.redirect_url=
 ; Show E-Mail-Adress in Administration-Interface.
 ; Default=true. If admin users should not know the mail adresses, set this to false.
 ; Useful for Demo-Installations where a lot of users may have administration rights.
-security.user.show_admin_mail=true
+;security.user.show_admin_mail=true
 
 ; Show users e-mail-address to other users.
 ; Default=true.
-security.user.show_mail=true
+;security.user.show_mail=true
 
 ; Users are able to send mesages to another users via e-mail
 ; (not yet implemented)
-security.user.send_message=true
+;security.user.send_message=true
 ;
 
 
@@ -1413,7 +1413,7 @@ security.user.send_message=true
 
 ; Do a CHMOD on the output file.
 ; default: empty
-theme.compiler.chmod=
+;theme.compiler.chmod=
 
 ; Compile ALL templates at logout
 ; (only useful while developing)
@@ -1423,7 +1423,7 @@ theme.compiler.chmod=
 ; Compile ALL templates to temporary directory
 ; only useful while developing! Not for production use.
 ; default:false
-theme.compiler.compile_to_tmp_dir=false
+;theme.compiler.compile_to_tmp_dir=false
 ;
 ; converted from webdav.ini.php
 ; <!-- $Id$ -->
@@ -1431,47 +1431,47 @@ theme.compiler.compile_to_tmp_dir=false
 
 ; WEBDAV-settings
 
-webdav.enable=false
+;webdav.enable=false
 
 ; Creation of new folders, files.
-webdav.create=true
+;webdav.create=true
 
 ; Maximum filesize for uploaded files (in kB)
-webdav.max_file_size=1000
+;webdav.max_file_size=1000
 
 ; Readonly-Access.
-webdav.readonly=true
+;webdav.readonly=true
 
 ; Set "X-powered-by"-Header?
-webdav.expose_openrat = true
+;webdav.expose_openrat = true
 
 ; Redirecting from "http://server/path/webdav.php"
 ;               to "http://server/<prefix><session-id>/webdav.php"
 ; This is a must-have for clients who do not use cookies.
 ; If 'true', a rewriting rule (.htaccess) is needed.
-webdav.session_in_uri = false
+;webdav.session_in_uri = false
 
 ; the prefix before the session id.
-webdav.session_in_uri_prefix = ors
+;webdav.session_in_uri_prefix = ors
 
 ; Make some Microsoft-specific stuff (they cannot read RFCs):
 ; - Set "MS-Author-Via:"-Header
 ; Set to 'true', if you want to use lame clients like MS-Office, MS-IE, ...
 ; Set to 'false' for strict WEBDAV, but no MS-clients are doing the job...
 ;webdav.
-webdav.compliant_to_redmond = true
+;webdav.compliant_to_redmond = true
 ;
 
 ; *** This part is deprecated and will be removed in one of the next versions.
 
 ; convert simple HTML-tags to wiki-markup (if HTML is disabled)
-wiki.convert_html         = true
+;wiki.convert_html         = true
 
 ; convert a few BB-code tags to wiki-markup
-wiki.convert_bbcode       = true
+;wiki.convert_bbcode       = true
 
 ; how strong text is marked
-wiki.tag_strong           = "*"
+;wiki.tag_strong           = "*"
 
 ; how emphatic text is marked
-wiki.tag_emphatic         = "_"
+;wiki.tag_emphatic         = "_"
