@@ -1,7 +1,8 @@
-;
+; <?php die() ?>
+
 ; OpenRat configuration file - Minimal settings.
 ; For all configuration settings and an explanation for each setting, see file 'config.ini.php'.
-; Lines beginning with ';' are ignored.
+; Lines beginning with ';' are ignored.                   
 
 database.default=db1                            ; Default Database
 
