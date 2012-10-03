@@ -219,7 +219,7 @@ constraint()
 # param 3: values. Seperate multiple values with ','
 insert()
 {
-	echo "INSERT INTO ${prefix}${1}${suffix} ($2) VALUES($3)" >> $outfile
+	echo "INSERT INTO ${prefix}${1}${suffix} ($2) VALUES($3);" >> $outfile
 }
 
 

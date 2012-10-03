@@ -360,4 +360,4 @@ CREATE INDEX or_idx_77
           ON or_acl (objectid);
 CREATE INDEX or_idx_78
           ON or_acl (is_transmit);
-INSERT INTO or_user (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','admin','','Administrator','','','Admin user','default',1)
+INSERT INTO or_user (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','admin','','Administrator','','','Admin user','default',1);
