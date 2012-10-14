@@ -1,10 +1,13 @@
 <?php showList($attr_tree);
 
-function showList( &$contents )
+function showList( $contents )
 {
+	//Html::debug($contents,'contents');
+	
 	echo '<ul class="tree">';
 	foreach( $contents as $key=>$el) {
 
+		//Html::debug($el['name'],'Name');
 		$selected = isset($el['self']);
 		if	($selected )
 			echo '<li class="">';
@@ -12,7 +15,7 @@ function showList( &$contents )
 			echo '<li>';
 			
 		echo '<div class="tree" />';
-		echo '<div class="entry '.($selected?' selected':'').'" onclick="javascript:openNewAction( \''.$el['name'].'\',\''.$el['type'].'\','.$el['id'].',0 );">';
+		echo '<div class="entry '.($selected?' selected':'').'" onclick="javascript:openNewAction( \''.$el['name'].'\',\''.$el['type'].'\',\''.$el['id'].'\',0 );">';
 		//Html::debug($el);
 		echo '<img src="'.OR_THEMES_EXT_DIR.'default/images/icon_'.$el['type'].'.png" />';
 		echo $el['name'];

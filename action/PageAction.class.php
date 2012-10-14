@@ -838,6 +838,73 @@ class PageAction extends ObjectAction
 		}
 	}
 	
+	
+	/**
+	 * Liefert die Struktur zu diesem Ordner:
+	 * - Mit den übergeordneten Ordnern und
+	 * - den in diesem Ordner enthaltenen Objekten
+	 * 
+	 * Beispiel:
+	 * <pre>
+	 * - A
+	 *   - B
+	 *     - C (dieser Ordner)
+	 *       - Unterordner
+	 *       - Seite
+	 *       - Seite
+	 *       - Datei
+	 * </pre> 
+	 */
+	public function structureView()
+	{
+
+		$structure = array();
+		$tmp = &$structure;
+		$nr  = 0;
+		
+		$folder = new Folder( $this->page->parentid );
+		$parents = $folder->parentObjectNames(false,true);
+		
+		foreach( $parents as $id=>$name)
+		{
+			unset($children);
+			unset($o);
+			$children = array();
+			$o = array('id'=>$id,'name'=>$name,'type'=>'folder','level'=>++$nr,'children'=>&$children);
+			
+			$tmp[$id] = &$o;;
+			
+			unset($tmp);
+			
+			$tmp = &$children; 
+		}
+		
+		
+		
+		unset($children);
+		unset($id);
+		unset($name);
+		
+		$elementChildren = array();
+		
+		$tmp[ $this->page->objectid ] = array('id'=>$this->page->objectid,'name'=>$this->page->name,'type'=>'page','self'=>true,'children'=>&$elementChildren);
+		
+		$template = new Template( $this->page->templateid );
+		$elements = $template->getElementNames(); 
+		
+		foreach( $elements as $id=>$name )
+		{
+			$elementChildren[$id] = array('id'=>$this->page->objectid.'_'.$id,'name'=>$name,'type'=>'pageelement','children'=>array() );
+		}
+		
+		//Html::debug($structure);
+		
+		$this->setTemplateVar('outline',$structure);
+	}
+	
+	
+	
+	
 }
 
 ?>
