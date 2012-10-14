@@ -820,8 +820,8 @@ $conf['style']['modern']['name']='Modern Style';
 $conf['style']['modern']['title_background_color']='#3F6194';
 $conf['style']['modern']['title_text_color']='white';
 $conf['style']['modern']['text_color'] ='black';
-$conf['style']['modern']['background_color'] = '#FFF6E6';
-$conf['style']['modern']['inactive_background_color'] = '#FFE5B8';
+$conf['style']['modern']['background_color'] = '#EEEEEE';
+$conf['style']['modern']['inactive_background_color'] = '#7FB1E4';
 
 $conf['theme'] = array();
 $conf['theme']['compiler'] = array();
