@@ -34,6 +34,13 @@ blockquote, q {quotes:"" "";}
 a img {border:none;}
 
 
+html
+{
+	scrollbar-face-color: <?php echo $_GET['title_background_color']; ?>;
+	scrollbar-arrow-color: <?php echo $_GET['title_background_color']; ?>;
+	scrollbar-base-color: <?php echo $_GET['title_text_color']; ?>;
+} 
+
 
 iframe
 {
@@ -1040,7 +1047,7 @@ div#workbench div.bar > div.frame > div.window.fullscreen
     position:fixed;
     top:0;
     left:0;
-    background-color:<?php echo $_GET['inactive_background_color']; ?>;
+    background-color:<?php echo $_GET['background_color']; ?>;
     margin:0px;
     
     /*set the width and height to 100% of the screen*/
