@@ -411,6 +411,18 @@ class TemplateAction extends Action
 			$this->setTemplateVar('type','text');
 	}
 
+	
+	
+	/**
+	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
+	 * auf die Standardausgabe geschrieben
+	 */
+	function previewView()
+	{
+		$this->setTemplateVar('preview_url',Html::url('template','show',$this->template->templateid,array('target'=>'none') ) );
+	}
+	
+	
 
 
 	/**
