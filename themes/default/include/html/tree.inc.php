@@ -11,7 +11,7 @@ function showList( &$contents )
 		else
 			echo '<li>';
 			
-		echo '<div class="tree open" />';
+		echo '<div class="tree" />';
 		echo '<div class="entry '.($selected?' selected':'').'" onclick="javascript:openNewAction( \''.$el['name'].'\',\''.$el['type'].'\','.$el['id'].',0 );">';
 		//Html::debug($el);
 		echo '<img src="'.OR_THEMES_EXT_DIR.'default/images/icon_'.$el['type'].'.png" />';
