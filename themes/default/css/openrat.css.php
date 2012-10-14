@@ -780,12 +780,14 @@ body > div
 }
 
 
-/* Strukturen */
+/* Strukturen 
 div.structure ul
 {
 	padding-left:10px;
 	margin-left:10px;
 }
+*/
+
 div.structure em
 {
 	font-style: italic;
@@ -1635,11 +1637,12 @@ div.window ul.views li:hover {
 
 
 
-
-/*
 ul.tree li.last,
-ul.tree li:last-child,*/
-/*table tr.data,*/
+ul.tree li:last-child
+{
+	background-color:<?php echo $_GET['background_color']; ?>;
+}
+
 div.content pre,
 div.dropdown
 {
