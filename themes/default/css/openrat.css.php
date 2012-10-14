@@ -780,6 +780,17 @@ body > div
 }
 
 
+/* Strukturen */
+div.structure ul
+{
+	padding-left:10px;
+	margin-left:10px;
+}
+div.structure em
+{
+	font-style: italic;
+}
+
 
 
 

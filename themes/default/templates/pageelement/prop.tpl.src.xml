@@ -67,18 +67,6 @@
 						</if>
 					</cell>
 				</row>
-				<if present="text">
-					<row>
-						<cell colspan="2">
-							<fieldset title="message:DOCUMENT_TREE"></fieldset>
-						</cell>
-					</row>
-					<row>
-						<cell colspan="2">
-							<editor type="dom" name="text"></editor>
-						</cell>
-					</row>
-				</if>
 				<row>
 					<cell colspan="2">
 						<fieldset title="message:prop_userinfo"></fieldset>
