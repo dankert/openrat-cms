@@ -114,9 +114,9 @@ class FileAction extends ObjectAction
 	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
 	 * auf die Standardausgabe geschrieben
 	 */
-	function showView()
+	function previewView()
 	{
-		$this->setTemplateVar('preview_url',Html::url('file','preview',$this->file->objectid,array('target'=>'none') ) );
+		$this->setTemplateVar('preview_url',Html::url('file','show',$this->file->objectid,array('target'=>'none') ) );
 	}
 	
 
@@ -124,7 +124,7 @@ class FileAction extends ObjectAction
 	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
 	 * auf die Standardausgabe geschrieben
 	 */
-	function previewView()
+	function showView()
 	{
 		$this->lastModified( $this->file->lastchangeDate );
 		

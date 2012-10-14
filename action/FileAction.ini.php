@@ -2,10 +2,9 @@
 [default]
 goto=show
 
-[show]
-menu=edit
-
 [preview]
+
+[show]
 direct=true
 
 [edit]

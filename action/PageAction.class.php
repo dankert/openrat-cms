@@ -623,15 +623,15 @@ class PageAction extends ObjectAction
 	/**
 	 * Seite anzeigen
 	 */
-	function showView()
+	function previewView()
 	{
-		$this->setTemplateVar('preview_url',Html::url('page','preview',$this->page->objectid,array('target'=>'none') ) );
+		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('target'=>'none') ) );
 	}
 
 		/**
 	 * Seite anzeigen
 	 */
-	function previewView()
+	function showView()
 	{
 		// Seite definieren
 		$this->page->load();

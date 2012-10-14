@@ -10,10 +10,9 @@ goto=show
 ;target=prop
 
 [show]
-menu=elements
+direct=true
 
 [preview]
-direct=true
 
 [edit]
 direct=true
