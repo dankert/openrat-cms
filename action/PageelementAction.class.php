@@ -1457,6 +1457,46 @@ class PageelementAction extends Action
 			else
 			return intval($text);
 		}
+
+	/**
+	 * Seite veroeffentlichen
+	 *
+	 * Es wird ein Formular angzeigt, mit dem die Seite veroeffentlicht
+	 * werden kann 
+	 */
+	public function pubView()
+	{
 	}
 
-	?>
+
+
+	/**
+	 * Seite veroeffentlichen
+	 *
+	 * Die Seite wird generiert.
+	 */
+	function pubPost()
+	{
+		if	( !$this->page->hasRight( ACL_PUBLISH ) )
+			Http::notAuthorized( 'no right for publish' );
+
+		$this->page->public = true;
+		$this->page->publish();
+		$this->page->publish->close();
+
+//		foreach( $this->page->publish->publishedObjects as $o )
+//		{
+//			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
+//		}
+
+		$this->addNotice( 'page',
+		                  $this->page->fullFilename,
+		                  'PUBLISHED'.($this->page->publish->ok?'':'_ERROR'),
+		                  $this->page->publish->ok,
+		                  array(),
+		                  $this->page->publish->log  );
+	}
+	
+}
+	
+?>
