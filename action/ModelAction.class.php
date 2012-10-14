@@ -201,4 +201,36 @@ class ModelAction extends Action
 				return true;
 		}
 	}
+	
+	
+	/**
+	 * Liefert die Struktur zu diesem Ordner:
+	 * - Mit den übergeordneten Ordnern und
+	 * - den in diesem Ordner enthaltenen Objekten
+	 * 
+	 * Beispiel:
+	 * <pre>
+	 * - A
+	 *   - B
+	 *     - C (dieser Ordner)
+	 *       - Unterordner
+	 *       - Seite
+	 *       - Seite
+	 *       - Datei
+	 * </pre> 
+	 */
+	public function structureView()
+	{
+		$structure = array();
+		$modellistChildren = array();
+		
+		$structure[0] = array('id'=>'0','name'=>lang('MODELS'),'type'=>'modellist','level'=>1,'children'=>&$modellistChildren);
+			
+		$modellistChildren[ $this->model->modelid ] = array('id'=>$this->model->modelid,'name'=>$this->model->name,'type'=>'model','self'=>true);
+		
+		
+		//Html::debug($structure);
+		
+		$this->setTemplateVar('outline',$structure);
+	}
 }
