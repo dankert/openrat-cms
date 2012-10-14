@@ -293,7 +293,9 @@ div.dropdown > a
 div.dropdown div.entry:hover,
 div.dropdown div.entry:hover > a
 {
+	/*
 	background-color:<?php echo $_GET['inactive_background_color']; ?>;
+	*/
 }
 div.dropdown div.entry
 {
@@ -423,17 +425,6 @@ body.main tr.menu td table tr td.noaction
 	color:<?php echo $_GET['title_background_color']; ?>;
 }
 
-/* Fenster-Titel */
-body.menu tr.title span.title,
-body.main tr.title span.title
-{
-	font-family:Arial;
-	font-size:13px;
-	font-weight:bold;
-	text-shadow:#cac2a6 2px 1px 3px;
-}
-
-
 /* Icon-Innenabstand */
 img[align=left],
 img[align=right] {padding-right:1px;padding-left:1px;}
@@ -474,11 +465,6 @@ body.main tr.title td
 /* Hinweis */
 td.message { padding:10px; font-weight:bold; }
 
-/* Title-Frame */
-body.title td.title
-{
-	/*font-family:Verdana,Arial,Helvetica,sans-serif; font-size:11px;*/
-}
 
 /* Allgemeine Inhaltszellen */
 body.main table.main td.window td
@@ -504,8 +490,7 @@ body.main table.main td.window td.act
 /* Lizenzhinweis  */
 a.copyright
 {
-	font-family:Verdana,Arial,Helvetica,sans-serif;
-	font-size:9px;
+	font-size:0.7em;
 	text-decoration:none;
 }
 
@@ -563,8 +548,11 @@ tr td.help
 
 tr.headline td.help
 {
+	/*
 	border-bottom:1px solid <?php echo $_GET['text_color']; ?>;
+	*/
 	font-style: normal;
+	
 }
 
 /* Logo */
@@ -641,14 +629,6 @@ table.calendar
 table.calendar td
 {
 	border: 1px dotted;
-}
-
-table.main td.help span
-{
-	padding:10px;
-	text-align:center;
-	font-family:Verdana,Arial,Helvetica,sans-serif;
-	font-size:11px;
 }
 
 textarea.editor
@@ -731,10 +711,12 @@ ul.tree ul
 }
 
 div.entry.selected,
-div.dropdown > div.entry:hover
+div.dropdown > div.entry:hover,
+div.dropdown > div.entry:hover > a
 {
 	/*border:1px solid <?php echo $_GET['text_color']; ?>;*/
-	background-color:<?php echo $_GET['inactive_background_color']; ?>;
+	background-color:<?php echo $_GET['title_background_color']; ?>;
+	color:<?php echo $_GET['title_text_color']; ?>;
 }
 
 
@@ -822,6 +804,9 @@ div.forward_link
 div.window > div.menu
 {
 	padding:0px;
+	width:100%;
+	height:25px;
+	border-bottom: 1px solid <?php echo $_GET['title_background_color'] ?>;
 }
 
 
@@ -948,18 +933,26 @@ div.window div.content table
 
 
 table tr.headline > td {
+	
+	/*
     background-color: <?php echo $_GET['inactive_background_color']; ?>;
 	background: -moz-linear-gradient(top, <?php echo $_GET['title_background_color']; ?>, <?php echo $_GET['inactive_background_color']; ?>);
 	background: -webkit-gradient(linear, left top, left bottom, from(<?php echo $_GET['title_background_color']; ?>), to(<?php echo $_GET['inactive_background_color']; ?>));
-    border-bottom:1px solid <?php echo $_GET['title_background_color']; ?>;
+	
     border-right:1px solid <?php echo $_GET['inactive_background_color']; ?>;
+    
+    */
+    border-bottom:1px solid <?php echo $_GET['title_background_color']; ?>;
     padding:3px;
+    font-weight: bold;
 }
 
 
 table tr.data > td {
     border-bottom:1px solid <?php echo $_GET['title_background_color']; ?>;
+    /*
     border-right:1px solid <?php echo $_GET['inactive_background_color']; ?>;
+    */
     padding:3px;
 }
 
@@ -976,7 +969,7 @@ table > tr.data:nth-child(2n) {
 table tr.data:hover,
 div#tree div.content li div.entry:hover
 {
-	background-color:#EEEEEE;
+	background-color:<?php echo $_GET['inactive_background_color']; ?>;;
 }
 
 /* Datenzeile mit URL - Mauseffekt */
@@ -1475,7 +1468,7 @@ fieldset > div span.extension,
 fieldset > div span.ansidate
 {
 	font-family:Courier;
-	font-size:14px;
+	font-size:1em;
 }
 
 
@@ -1579,7 +1572,6 @@ body
 /* Fenster-Hintergrund */
 div#header,                   /* Titelleite-Hintergrund */
 div.window > div.menu > div.icons,
-div.window > div.content,
 div.window > div.menu ul.menu li a,      /* Tabs */
 xdiv.window ul.menu li > span,  /* Tabs */
 div.window div.header, /* Fenster-Header */
@@ -1588,48 +1580,52 @@ div.window ul.views > li.active:hover
 {
 	background-color: <?php echo $_GET['title_background_color']; ?>;
 	color: <?php echo $_GET['title_text_color']; ?>;
-	font-family:Arial;
+}
+
+div#header, /* Titelleite */
+ul.views > li.action /* Tabreiter */
+{
+ 	font-family: Arial, sans-serif;
 	font-size:13px;
 }
+
+div.content
+{
+	font-family: Trebuchet MS, Helvetica, Arial, sans-serif;
+	font-size:13px;
+}
+
 
 /* Reiter */
 div.window ul.views li
 {
-	background-color: #eeeeee;
+	background-color:<?php echo $_GET['background_color']; ?>;
 }
 
-div.window ul.views li,
-div.dropdown > div.entry
-{
-	font-family:Arial;
-	font-size:13px;
-	color: blue;
-}
 
 div.bar
 {
-	background-color:#eeeeee;
+	background-color:<?php echo $_GET['background_color']; ?>;
 }
 
 div.window ul.views li:hover {
-	background-color: #bbbbbb;
+	background-color: <?php echo $_GET['inactive_background_color']; ?>;
+	/*
 	color: blue;
+	*/
 }
 
 
 
-div#tree div.content,
+
+/*
 ul.tree li.last,
-ul.tree li:last-child,
-table tr.data,
+ul.tree li:last-child,*/
+/*table tr.data,*/
 div.content pre,
-div.dropdown,
-div.dropdown a
+div.dropdown
 {
 	background-color:<?php echo $_GET['title_text_color']; ?>;
-	color:blue;
-	font-family: Trebuchet MS, Helvetica, Arial, sans-serif;
-	font-size: 1.0em;
 }
 
 
@@ -1670,3 +1666,10 @@ div.filler div.headermenu > a.entry,
 div.filler div.header a.back.button
 {
 	font-size: 0.8em;
+}
+
+
+div.command
+{
+	visibility: hidden;
+}
