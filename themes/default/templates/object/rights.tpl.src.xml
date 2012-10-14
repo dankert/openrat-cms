@@ -10,32 +10,32 @@
 
 	<table>
 		<row class="headline">
-			<cell class="help">
+			<column class="help">
 				<text key="GLOBAL_NAME"></text>
-			</cell>
-			<cell class="help">
+			</column>
+			<column class="help">
 				<text key="GLOBAL_LANGUAGE"></text>
-			</cell>
+			</column>
 			<list list="show" value="t">
-				<cell class="help">
+				<column class="help">
 					<text key="var:t" prefix="acl_" suffix="_abbrev"></text>
-				</cell>
+				</column>
 			</list>
-			<cell class="help">
+			<column class="help">
 				<text key="global_delete"></text>
-			</cell>
+			</column>
 		</row>
 		<if empty="acls">
 			<row class="data">
-				<cell>
+				<column>
 					<text text="GLOBAL_NOT_FOUND"></text>
-				</cell>
+				</column>
 			</row>
 		</if>
 		<if not="true" empty="acls"></if>
 		<list list="acls" key="aclid" value="acl" extract="true">
 			<row class="data">
-				<cell>
+				<column>
 					<if present="username">
 						<image type="user"></image>
 						<text var="username"></text>
@@ -50,20 +50,20 @@
 							<text key="global_all"></text>
 						</if>
 					</if>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<text var="languagename"></text>
-				</cell>
+				</column>
 				<list list="show" value="t">
-					<cell>
+					<column>
 						<checkbox name="var:t" default="false" readonly="true"></checkbox>
-					</cell>
+					</column>
 				</list>
-				<cell>
+				<column>
 					<link type="post" subaction="delacl" id="var:aclid">
 						<text key="GLOBAL_DELETE"></text>
 					</link>
-				</cell>
+				</column>
 			</row>
 		</list>
 	</table>

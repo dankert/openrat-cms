@@ -10,7 +10,7 @@
 				<input name="name"></input>
 			</part>
 		</part>
-		<fieldset></fieldset>
+		<group></group>
 
 		<part class="line">
 			<part class="label">

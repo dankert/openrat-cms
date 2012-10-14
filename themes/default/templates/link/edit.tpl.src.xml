@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<form>
-		<fieldset>
+		<group>
 			<part class="line">
 				<part class="label">
 					<radio name="type" value="url"></radio>
@@ -26,6 +26,6 @@
 				</part>
 			</part>
 
-		</fieldset>
+		</group>
 	</form>
 </output>

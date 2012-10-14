@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<form>
-		<fieldset title="message:publish">
+		<group title="message:publish">
 			<if present="pages">
 				<if present="subdirs">
 
@@ -34,8 +34,8 @@
 
 				</if>
 			</if>
-		</fieldset>
-		<fieldset title="message:options">
+		</group>
+		<group title="message:options">
 			<if present="subdirs">
 				<part class="line">
 					<part class="label">
@@ -62,7 +62,7 @@
 					</part>
 				</part>
 			</if>
-		</fieldset>
+		</group>
 
 	</form>
 </output>

@@ -5,15 +5,15 @@
 		<window name="GLOBAL_TEMPLATES">
 			<table>
 				<row class="headline">
-					<cell>
+					<column>
 						<text key="name"></text>
-					</cell>
+					</column>
 				</row>
 				<list list="templates" extract="true">
 					<row class="data">
-						<cell url="var:url">
+						<column url="var:url">
 							<text var="name"></text>
-						</cell>
+						</column>
 					</row>
 				</list>
 			</table>

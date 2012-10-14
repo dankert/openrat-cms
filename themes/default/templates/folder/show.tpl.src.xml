@@ -2,76 +2,76 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<table>
 		<row class="headline">
-			<cell class="help">
+			<column class="help">
 				<text key="GLOBAL_TYPE"></text>
 				<text raw="_/_"></text>
 				<text key="GLOBAL_NAME"></text>
-			</cell>
-			<cell class="help">
+			</column>
+			<column class="help">
 				<text key="GLOBAL_LASTCHANGE"></text>
-			</cell>
+			</column>
 		</row>
 		<if present="up_url">
 			<row class="data">
-				<cell url="var:up_url">
+				<column url="var:up_url">
 					<image type="folder"></image>
 					<text raw=".."></text>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<text raw=""></text>
-				</cell>
+				</column>
 			</row>
 		</if>
 		<list list="object" extract="true">
 			<row class="data">
-				<cell  id="var:id" name="var:name" action="var:type" title="var:desc" class="var:class">
+				<column  id="var:id" name="var:name" action="var:type" title="var:desc" class="var:class">
 					<image type="var:icon"></image>
 					<text var="name"></text>
 					<text raw="_"></text>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<date date="var:date"></date>
-				</cell>
+				</column>
 			</row>
 		</list>
 		<if empty="object">
 			<row>
-				<cell colspan="2">
+				<column colspan="2">
 					<text text="GLOBAL_NOT_FOUND"></text>
-				</cell>
+				</column>
 			</row>
 		</if>
 		<row class="data">
-			<cell colspan="2">
+			<column colspan="2">
 				<link type="view" action="folder" subaction="createfolder">
 					<image file="icon/create"></image>
 					<text key="menu_folder_createfolder"></text>
 				</link>
-			</cell>
+			</column>
 		</row>
 		<row class="data">
-			<cell colspan="2">
+			<column colspan="2">
 				<link type="view" action="folder" subaction="createpage">
 					<image file="icon/create"></image>
 					<text key="menu_folder_createpage"></text>
 				</link>
-			</cell>
+			</column>
 		</row>
 		<row class="data">
-			<cell colspan="2">
+			<column colspan="2">
 				<link type="view" action="folder" subaction="createfile">
 					<image file="icon/create"></image>
 					<text key="menu_folder_createfile"></text>
 				</link>
-			</cell>
+			</column>
 		</row>
 		<row class="data">
-			<cell colspan="2">
+			<column colspan="2">
 				<link type="modal" action="folder" subaction="createlink">
 					<image file="icon/create"></image>
 					<text key="menu_folder_createlink"></text>
 				</link>
-			</cell>
+			</column>
 		</row>
 	</table>
 </output>

@@ -2,83 +2,83 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<form>
 		<row>
-			<cell colspan="2">
+			<column colspan="2">
 				<text text="IMAGE_OLD_SIZE"></text>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<text var="width"></text>
 				<text raw="_*_"></text>
 				<text var="height"></text>
-			</cell>
+			</column>
 		</row>
 		<if not="" empty="formats">
 			<row>
-				<cell colspan="3">
-					<fieldset title="message:IMAGE_NEW_SIZE"></fieldset>
-				</cell>
+				<column colspan="3">
+					<group title="message:IMAGE_NEW_SIZE"></group>
+				</column>
 			</row>
 			<row>
-				<cell>
+				<column>
 					<radio name="type" value="factor"></radio>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<label for="type_factor">
 						<text text="FILE_IMAGE_SIZE_FACTOR"></text>
 					</label>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<selectbox name="factor" list="factors"></selectbox>
 					<set var="factor" value="1"></set>
-				</cell>
+				</column>
 			</row>
 			<row>
-				<cell>
+				<column>
 					<radio name="type" value="input"></radio>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<label for="type_input">
 						<text text="FILE_IMAGE_NEW_WIDTH_HEIGHT"></text>
 					</label>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<input name="width" size="10"></input>
 					<text raw="_*_"></text>
 					<input name="height" size="10"></input>
-				</cell>
+				</column>
 			</row>
 			<row>
-				<cell colspan="3">
-					<fieldset title="message:options"></fieldset>
-				</cell>
+				<column colspan="3">
+					<group title="message:options"></group>
+				</column>
 			</row>
 			<row>
-				<cell colspan="2">
+				<column colspan="2">
 					<label for="format">
 						<text text="FILE_IMAGE_FORMAT"></text>
 					</label>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<selectbox name="format" list="formats"></selectbox>
-				</cell>
+				</column>
 			</row>
 			<row>
-				<cell colspan="2">
+				<column colspan="2">
 					<label for="jpeglist_compression">
 						<text text="FILE_IMAGE_JPEG_COMPRESSION"></text>
 					</label>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<set var="jpeg_compression" value="70"></set>
 					<selectbox list="jpeglist" name="jpeg_compression"></selectbox>
-				</cell>
+				</column>
 			</row>
 			<row>
-				<cell colspan="3">
+				<column colspan="3">
 					<checkbox name="copy"></checkbox>
 					<label for="copy">
 						<text key="copy"></text>
 					</label>
-				</cell>
+				</column>
 			</row>
 		</if>
 		<focus field="width"></focus>

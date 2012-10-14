@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="remove"></header>
 	<form>
-		<fieldset title="message:NAME">
+		<group title="message:NAME">
 			<part class="line">
 				<part class="label">
 					<label for="name" key="user_username"></label>
@@ -11,8 +11,8 @@
 					<input name="name" size="20" class="name,focus"></input>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:ADDITIONAL_INFO">
+		</group>
+		<group title="message:ADDITIONAL_INFO">
 			<part class="line">
 				<part class="label">
 					<label for="fullname" key="user_fullname"></label>
@@ -47,8 +47,8 @@
 					<input name="tel"></input>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:options">
+		</group>
+		<group title="message:options">
 			<part class="line">
 				<part class="label"></part>
 				<part class="input">
@@ -73,6 +73,6 @@
 						default="config:interface/style/default"></selectbox>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>

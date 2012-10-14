@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<form>
 
-		<fieldset title="message:GLOBAL_PROP">
+		<group title="message:GLOBAL_PROP">
 			<part class="line">
 				<part class="label">
 					<label for="name" key="global_name" />
@@ -27,9 +27,9 @@
 					<text var="description" class="description" />
 				</part>
 			</part>
-		</fieldset>
+		</group>
 
-		<fieldset title="message:additional_info">
+		<group title="message:additional_info">
 			<part class="line">
 				<part class="label">
 					<label for="full_filename" key="FULL_FILENAME" />
@@ -47,9 +47,9 @@
 					<text var="objectid"></text>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 
-		<fieldset title="message:PROP_USERINFO">
+		<group title="message:PROP_USERINFO">
 			<part class="line">
 				<part class="label">
 					<label for="create_user" key="global_created">
@@ -77,6 +77,6 @@
 					<user user="var:lastchange_user"></user>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>

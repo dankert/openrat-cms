@@ -4,25 +4,25 @@
 		<form>
 			<window name="GLOBAL_NAME">
 				<row>
-					<cell>
+					<column>
 						<text text="ELEMENT_NAME"></text>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<input name="name"></input>
-					</cell>
+					</column>
 				</row>
 				<row>
-					<cell>
+					<column>
 						<text text="GLOBAL_DESCRIPTION"></text>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<inputarea name="description" rows="5" cols="50"></inputarea>
-					</cell>
+					</column>
 				</row>
 				<row>
-					<cell colspan="2" class="act">
+					<column colspan="2" class="act">
 						<button type="ok"></button>
-					</cell>
+					</column>
 				</row>
 			</window>
 		</form>

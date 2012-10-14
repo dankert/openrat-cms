@@ -7,66 +7,66 @@
 			<window>
 				<table>
 					<row>
-						<cell class="help">
+						<column class="help">
 							<text raw="_"></text>
-						</cell>
-						<cell class="help">
+						</column>
+						<column class="help">
 							<text text="GLOBAL_NAME"></text>
-						</cell>
+						</column>
 					</row>
 					<list list="objectlist" extract="true">
 						<row class="data">
-							<cell>
+							<column>
 								<image icon="var:type"></image>
-							</cell>
-							<cell>
+							</column>
+							<column>
 								<text var="name"></text>
 								<text raw="_"></text>
-							</cell>
+							</column>
 						</row>
 					</list>
 					<if present="folder">
 						<row>
-							<cell colspan="2">
-								<fieldset title="message:folder_select_target_folder"></fieldset>
-							</cell>
+							<column colspan="2">
+								<group title="message:folder_select_target_folder"></group>
+							</column>
 						</row>
 						<list list="folder">
 							<row class="data">
-								<cell>
+								<column>
 									<radio name="targetobjectid" value="var:list_key"></radio>
-								</cell>
-								<cell>
+								</column>
+								<column>
 									<label for="targetobjectid_{list_key}">
 										<text var="list_value"></text>
 									</label>
-								</cell>
+								</column>
 							</row>
 						</list>
 					</if>
 					<if present="ask_filename">
 						<row>
-							<cell colspan="2">
+							<column colspan="2">
 								<input name="filename"></input>
-							</cell>
+							</column>
 						</row>
 					</if>
 					<if present="ask_commit">
 						<row>
-							<cell colspan="2">
-								<fieldset title="message:options">
+							<column colspan="2">
+								<group title="message:options">
 									<checkbox name="commit"></checkbox>
 									<label for="commit">
 										<text key="FOLDER_SELECT_DELETE_COMMIT"></text>
 									</label>
-								</fieldset>
-							</cell>
+								</group>
+							</column>
 						</row>
 					</if>
 					<row>
-						<cell class="act" colspan="2">
+						<column class="act" colspan="2">
 							<button type="ok"></button>
-						</cell>
+						</column>
 					</row>
 				</table>
 			</window>

@@ -3,84 +3,84 @@
 	<form method="get" subaction="diff">
 		<table widths="5%,5%,5%,15%,15%,35%,10%,10%">
 			<row class="headline">
-				<cell class="help">
+				<column class="help">
 					<text text="GLOBAL_NR"></text>
-				</cell>
-				<cell class="help" colspan="2">
+				</column>
+				<column class="help" colspan="2">
 					<if present="compareid">
 						<text text="GLOBAL_COMPARE"></text>
 					</if>
-				</cell>
-				<cell class="help">
+				</column>
+				<column class="help">
 					<text text="DATE"></text>
-				</cell>
-				<cell class="help">
+				</column>
+				<column class="help">
 					<text text="GLOBAL_USER"></text>
-				</cell>
-				<cell class="help">
+				</column>
+				<column class="help">
 					<text text="GLOBAL_VALUE"></text>
-				</cell>
-				<cell class="help">
+				</column>
+				<column class="help">
 					<text text="GLOBAL_STATE"></text>
-				</cell>
-				<cell class="help">
+				</column>
+				<column class="help">
 					<text text="GLOBAL_ACTION"></text>
-				</cell>
+				</column>
 			</row>
 			<if empty="el">
 				<row>
-					<cell colspan="8">
+					<column colspan="8">
 						<text text="GLOBAL_NOT_FOUND"></text>
-					</cell>
+					</column>
 				</row>
 			</if>
 			<list list="el" extract="true">
 				<row class="data">
-					<cell>
+					<column>
 						<text var="lfd_nr"></text>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<if present="compareid">
 							<radio name="compareid" value="var:id"></radio>
 						</if>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<if present="compareid">
 							<radio name="withid" value="var:id"></radio>
 						</if>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<date date="var:date"></date>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<text var="user"></text>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<text var="value"></text>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<if true="var:public">
 							<text key="GLOBAL_PUBLIC" type="strong"></text>
 						</if>
 						<else><if present="releaseUrl"><link url="var:releaseUrl" title="message:GLOBAL_RELEASE_DESC"><text
 							key="GLOBAL_RELEASE" type="strong"></text></link></if><else><text
 							key="GLOBAL_INACTIVE" type="emphatic"></text></else></else>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<if true="var:active">
 							<text key="GLOBAL_ACTIVE" type="emphatic"></text>
 						</if>
 						<else><if present="useUrl"><link url="var:useUrl" title="message:GLOBAL_USE_DESC"><text
 							key="GLOBAL_USE"></text></link></if></else>
-					</cell>
+					</column>
 				</row>
 			</list>
 		</table>
 		<if present="compareid">
 			<row>
-				<cell colspan="8" class="act">
+				<column colspan="8" class="act">
 					<button type="ok"></button>
-				</cell>
+				</column>
 			</row>
 		</if>
 	</form>

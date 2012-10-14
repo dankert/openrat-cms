@@ -3,19 +3,19 @@
 	<header back="true"></header>
 	<form>
 		<row>
-			<cell>
+			<column>
 				<inputarea rows="25" cols="80" name="src" class="editor"></inputarea>
-			</cell>
+			</column>
 		</row>
 		<row>
-			<cell class="act">
+			<column class="act">
 				<button type="ok"></button>
 				<if false="mode:edit">
 					<link class="action" action="template" subaction="srcelement">
 						<text key="menu_template_srcelement"></text>
 					</link>
 				</if>
-			</cell>
+			</column>
 		</row>
 	</form>
 	<focus field="src"></focus>

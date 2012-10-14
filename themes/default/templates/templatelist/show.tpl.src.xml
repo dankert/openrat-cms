@@ -2,25 +2,25 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<table>
 		<row class="headline">
-			<cell>
+			<column>
 				<text key="name"></text>
-			</cell>
+			</column>
 		</row>
 		<list list="templates" extract="true">
 			<row class="data">
-				<cell id="var:id" name="var:name" action="template">
+				<column id="var:id" name="var:name" action="template">
 					<text var="name"></text>
-				</cell>
+				</column>
 			</row>
 		</list>
 		
 		<row class="data">
-			<cell colspan="1">
+			<column colspan="1">
 				<link type="view" subaction="add">
 					<image icon="add"/>
 					<text text="new"/>
 				</link>
-			</cell>
+			</column>
 		</row>
 	</table>
 	<if empty="templates">

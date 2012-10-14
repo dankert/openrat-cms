@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header back="true" />
 	<form>
-		<fieldset title="message:options">
+		<group title="message:options">
 			<part>
 				<text value=""></text>
 				<radio name="type" value="check_limit"></radio>
@@ -17,6 +17,6 @@
 					<text key="project_check_files"></text>
 				</label>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>

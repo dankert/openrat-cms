@@ -5,12 +5,12 @@
 
 output   =
 button   = type:submit,src,class:ok,value:ok,text:button_ok
-cell     = width,style,class,colspan,rowspan,header:false,title,url,action,id,name
+column   = width,style,class,colspan,rowspan,header:false,title,url,action,id,name
 char     = type:*
 checkbox = default:false,readonly:false,name:*
 date     = date
 dummy    =
-fieldset = title,icon
+group    = title,icon
 focus    = field:*
 form     = action,subaction,id,name:,target:_self,method:post,enctype:application/x-www-form-urlencoded,type:
 frame    = file,name,scrolling

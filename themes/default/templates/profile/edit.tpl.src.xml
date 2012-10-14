@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="mail"></header>
 	<form>
-		<fieldset title="message:name">
+		<group title="message:name">
 			<part class="line">
 				<part class="label">
 					<label for="name" key="user_username"></label>
@@ -11,8 +11,8 @@
 					<text var="name" class="name"></text>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:MENU_PROFILE_MAIL">
+		</group>
+		<group title="message:MENU_PROFILE_MAIL">
 			<part class="line">
 				<part class="label">
 					<label for="mail" key="user_mail"></label>
@@ -25,8 +25,8 @@
 					</link>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:GLOBAL_PROP">
+		</group>
+		<group title="message:GLOBAL_PROP">
 			<part class="line">
 				<part class="label">
 					<label for="fullname" key="user_fullname"></label>
@@ -60,6 +60,6 @@
 						default="config:interface/style/default"></selectbox>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>

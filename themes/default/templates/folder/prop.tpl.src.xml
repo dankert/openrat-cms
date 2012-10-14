@@ -3,7 +3,7 @@
 	<header></header>
 	<form>
 
-		<fieldset title="message:GLOBAL_PROP">
+		<group title="message:GLOBAL_PROP">
 			<part class="line">
 				<part class="label">
 					<label for="name" key="global_name" />
@@ -29,6 +29,6 @@
 					<inputarea name="description" class="description"></inputarea>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>

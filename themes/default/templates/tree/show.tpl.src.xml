@@ -5,12 +5,12 @@
 			<list list="zeilen" extract="true">
 				<row class="var:class">
 					<list list="cols" value="i">
-						<cell class="treecol">
+						<column class="treecol">
 							<image tree="var:i"></image>
-						</cell>
+						</column>
 					</list>
 					<if present="image">
-						<cell class="treeimage">
+						<column class="treeimage">
 							<if present="image_url">
 								<link url="var:image_url" class="tree" target="_self"
 									title="var:image_url_desc">
@@ -18,9 +18,9 @@
 								</link>
 							</if>
 							<else><image tree="var:image"></image></else>
-						</cell>
+						</column>
 					</if>
-					<cell colspan="var:colspan" class="treevalue">
+					<column colspan="var:colspan" class="treevalue">
 						<link name="var:name"></link>
 						<if present="url">
 							<link url="var:url" title="var:desc" class="tree" target="var:target">
@@ -30,7 +30,7 @@
 						</if>
 						<else><image icon="var:icon"></image><text var="text" maxlength="20"
 							cut="right" title="var:desc"></text></else>
-					</cell>
+					</column>
 					<set var="url"></set>
 					<set var="image"></set>
 				</row>

@@ -2,59 +2,59 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<table>
 		<row class="data">
-			<cell>
+			<column>
 				<text text="name"></text>
-			</cell>
-			<cell class="name">
+			</column>
+			<column class="name">
 				<text var="name"></text>
-			</cell>
+			</column>
 		</row>
 		<row class="data">
-			<cell>
+			<column>
 				<text text="description"></text>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<text var="description"></text>
-			</cell>
+			</column>
 		</row>
 		<row class="data">
-			<cell>
+			<column>
 				<text text="type"></text>
-			</cell>
-			<cell class="filename">
+			</column>
+			<column class="filename">
 				<image elementtype="var:element_type"></image>
 				<text key="el_{element_type}"></text>
-			</cell>
+			</column>
 		</row>
 		<row class="data">
-			<cell>
+			<column>
 				<text key="template"></text>
-			</cell>
-			<cell id="var:template_id" name="var:template_name" action="template">
+			</column>
+			<column id="var:template_id" name="var:template_name" action="template">
 				<image file="icon_template"></image>
 				<text var="template_name"></text>
-			</cell>
+			</column>
 		</row>
 		<row class="data">
-			<cell>
+			<column>
 				<text key="element"></text>
-			</cell>
-			<cell id="var:element_id" name="var:element_name" action="element">
+			</column>
+			<column id="var:element_id" name="var:element_name" action="element">
 				<image type="var:element_type"></image>
 				<text var="element_name"></text>
-			</cell>
+			</column>
 		</row>
 		<row class="data">
-			<cell>
+			<column>
 				<text text="lastchange"></text>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<image icon="el_date"></image>
 				<date date="var:lastchange_date"></date>
 				<text raw=", "></text>
 				<image icon="user"></image>
 				<user user="var:lastchange_user"></user>
-			</cell>
+			</column>
 		</row>
 	</table>
 </output>
