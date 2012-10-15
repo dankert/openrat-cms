@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header views="password"></header>
+	<header views="password,register"></header>
 	<form action="login" subaction="login" target="_top">
 		<group>
 			<if present="config:login/logo/file">
@@ -16,7 +16,9 @@
 				</if>
 			</if>
 			<if not="" empty="config:login/motd">
-				<text raw="config:login/motd"></text>
+				<part class="motd">
+					<text raw="config:login/motd"></text>
+				</part>
 			</if>
 			<if true="config:login/nologin">
 				<text key="LOGIN_NOLOGIN_DESC"></text>
@@ -38,11 +40,13 @@
 					</part>
 					<part class="input">
 						<if not="true" present="force_username">
-							<input type="text" name="login_name" class="name" value="" hint="message:USER_USERNAME"
-								size="20"></input>
+							<input type="text" name="login_name" class="name" value=""
+								hint="message:USER_USERNAME" size="20"></input>
 						</if>
-						<else><input type="hidden" name="login_name" value="var:force_username"></input><text
-							value="var:force_username"></text></else>
+						<else>
+							<input type="hidden" name="login_name" value="var:force_username"></input>
+							<text value="var:force_username"></text>
+						</else>
 					</part>
 				</part>
 				<part class="line">
@@ -58,30 +62,30 @@
 				</part>
 			</if>
 		</group>
-		<if true="property:mustChangePassword">
-			<group title="message:USER_NEW_PASSWORD">
-				<part class="line">
-					<part class="label">
-						<label for="password1">
-							<text key="USER_NEW_PASSWORD"></text>
-						</label>
-					</part>
-					<part class="input">
-						<password name="password1" default="" size="25"></password>
-					</part>
+		<!-- <if true="property:mustChangePassword"> -->
+		<group title="message:USER_NEW_PASSWORD">
+			<part class="line">
+				<part class="label">
+					<label for="password1">
+						<text key="USER_NEW_PASSWORD"></text>
+					</label>
 				</part>
-				<part class="line">
-					<part class="label">
-						<label for="password2">
-							<text key="USER_NEW_PASSWORD_REPEAT"></text>
-						</label>
-					</part>
-					<part class="input">
-						<password name="password2" default="" size="25"></password>
-					</part>
+				<part class="input">
+					<password name="password1" default="" size="25"></password>
 				</part>
-			</group>
-		</if>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="password2">
+						<text key="USER_NEW_PASSWORD_REPEAT"></text>
+					</label>
+				</part>
+				<part class="input">
+					<password name="password2" default="" size="25"></password>
+				</part>
+			</part>
+		</group>
+		<!-- </if> -->
 		<link type="view" class="action" action="login" subaction="password">
 			<text key="menu_password"></text>
 		</link>
@@ -90,11 +94,9 @@
 		</link>
 		<newline></newline>
 		<newline></newline>
-		<newline></newline>
-		<newline></newline>
-		<newline></newline>
 
 		<if value="size:dbids" greaterthan="1">
+		<!-- Mehr als 1 Datenbank zur Auswahl. Auswahlfeld anzeigen. -->
 			<group title="message:DATABASE" icon="database">
 				<part class="line">
 					<part class="label">
@@ -110,16 +112,19 @@
 			</group>
 		</if>
 		<else>
-		<hidden name="dbid" default="var:actdbid"></hidden>
+		<!-- Nur 1 Datenbank zur Auswahl. Kein Auswahlfeld notwendig. -->
+			<hidden name="dbid" default="var:actdbid"></hidden>
 		</else>
+		
+		
 		<hidden name="objectid"></hidden>
 		<hidden name="modelid"></hidden>
 		<hidden name="projectid"></hidden>
 		<hidden name="languageid"></hidden>
 	</form>
-	<newline></newline>
-	<newline></newline>
-	<link url="config:login/gpl/url" target="_top" class="copyright">
+	<newline />
+	<newline />
+	<link url="config:login/gpl/url" type="external" class="copyright">
 		<text key="GPL"></text>
 	</link>
 </output>
