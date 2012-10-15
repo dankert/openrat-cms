@@ -1570,8 +1570,7 @@ div.content a.action,
 div.content a.help,
 div.content input.ok,
 div#title,
-div.xwindow,
-div#noticebar
+div.xwindow
 {
 	-webkit-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
     -moz-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
