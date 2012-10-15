@@ -6,17 +6,15 @@ views=
 
 [content]
 
-views       = edit,pw,memberships
+views       = edit,pw,settings
 action      = profile
 refreshable = false
 default     = edit
-
+modal = false
 
 [side]
-views       = settings
-action      = profile
-refreshable = false
-default     = settings
+views       = 
+default     = 
 
 [bottom]
 views       = memberships

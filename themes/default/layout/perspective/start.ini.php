@@ -9,7 +9,7 @@ views=projectmenu
 action=start
 refreshable=false
 default=projectmenu
-
+modal = false
 
 [side]
 views=applications
