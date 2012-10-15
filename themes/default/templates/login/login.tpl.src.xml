@@ -15,21 +15,28 @@
 			</if>
 		</if>
 		<if not="" empty="config:login/motd">
-			<part class="message warn">
+			<part class="message info">
 				<text raw="config:login/motd"></text>
 			</part>
 		</if>
+
 		<if true="config:login/nologin">
-			<text key="LOGIN_NOLOGIN_DESC"></text>
+			<part class="message error">
+				<text key="LOGIN_NOLOGIN_DESC"></text>
+			</part>
 		</if>
+
 		<if true="config:security/readonly">
-			<text key="GLOBAL_READONLY_DESC" class="help"></text>
+			<part class="message warn">
+				<text key="GLOBAL_READONLY_DESC"></text>
+			</part>
 		</if>
-		<if true="config:security/nopublish">
-			<text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
-		</if>
+
 		<if false="config:login/nologin">
-			<logo name="login"></logo>
+			<!--
+				<part class="line"> <part class="label" /> <part class="input">
+				<logo name="login"></logo> </part> </part>
+			-->
 
 			<part class="line">
 				<part class="label">
@@ -60,6 +67,8 @@
 				</part>
 			</part>
 		</if>
+
+
 		<!-- <if true="property:mustChangePassword"> -->
 		<group title="message:USER_NEW_PASSWORD" open="true">
 			<part class="line">
@@ -84,14 +93,17 @@
 			</part>
 		</group>
 		<!-- </if> -->
-		<link type="view" class="action" action="login" subaction="password">
-			<text key="menu_password"></text>
-		</link>
-		<link type="view" class="action" action="login" subaction="register">
-			<text key="menu_register"></text>
-		</link>
-		<newline></newline>
-		<newline></newline>
+
+		<!--
+			<link type="view" class="action" action="login" subaction="password">
+			<text key="menu_password"></text> </link>
+		-->
+
+		<!--
+			<link type="view" class="action" action="login" subaction="register">
+			<text key="menu_register"></text> </link> <newline></newline>
+			<newline />
+		-->
 
 		<if value="size:dbids" greaterthan="1">
 			<!-- Mehr als 1 Datenbank zur Auswahl. Auswahlfeld anzeigen. -->
@@ -109,7 +121,7 @@
 			</group>
 		</if>
 		<else>
-		<!-- Nur 1 Datenbank zur Auswahl. Kein Auswahlfeld notwendig. -->
+			<!-- Nur 1 Datenbank zur Auswahl. Kein Auswahlfeld notwendig. -->
 			<hidden name="dbid" default="var:actdbid"></hidden>
 		</else>
 
@@ -119,9 +131,8 @@
 		<hidden name="projectid"></hidden>
 		<hidden name="languageid"></hidden>
 	</form>
-	<newline />
-	<newline />
-	<link url="config:login/gpl/url" type="external" class="copyright">
-		<text key="GPL"></text>
-	</link>
+	<!--
+		<newline /> <newline /> <link url="config:login/gpl/url"
+		type="external" class="copyright"> <text key="GPL"></text> </link>
+	-->
 </output>

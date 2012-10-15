@@ -1033,6 +1033,7 @@ div.window div.status div.error,
 div.message.error
 {
 	background: url(../images/notice_error.png) no-repeat;
+	background-position:5px 7px;
 }
 div.window div.status div.warn,
 div.message.warn
@@ -1044,11 +1045,13 @@ div.window div.status div.ok,
 div.message.ok
 {
 	background: url(../images/notice_ok.png) no-repeat;
+	background-position:5px 7px;
 }
 div.window div.status div.info,
 div.message.info
 {
 	background: url(../images/notice_info.png) no-repeat;
+	background-position:5px 7px;
 }
 
 div.window div.status div,
@@ -1363,23 +1366,31 @@ form div.line
 
 form div.label
 {
-	vertical-align:top;
-	width:30%;
 	display:inline-block;
+	width:30%;
+	vertical-align:top;
+	text-align: right;
 }
 
 form div.input
 {
-	vertical-align:top;
-	width:70%;
 	display:inline-block;
+	width:60%;
+	vertical-align:top;
+	text-align: left;
+}
+
+form div.label > label,
+form div.input > div.intputholder
+{
+	padding:0px 5px;
 }
 
 form div.input input[type=text],
 form div.input textarea,
 form div.input select
 {
-	width:90%;
+	width:100%;
 }
 form div.input input[type=checkbox],
 form div.input input[type=radio]
