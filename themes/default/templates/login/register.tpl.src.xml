@@ -5,7 +5,9 @@
 
 		<part class="line">
 			<part class="label">
-				<text text="USER_MAIL"></text>
+				<label for="mail">
+					<text text="USER_MAIL"></text>
+				</label>
 			</part>
 			<part class="input">
 				<input name="mail" default="" class="focus"></input>
