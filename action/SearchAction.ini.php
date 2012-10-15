@@ -11,11 +11,9 @@ menu=search
 
 [prop]
 menu=search
-target=searchprop
 
 [content]
 menu=search
-target=searchcontent
 
 [searchcontent]
 goto=result
