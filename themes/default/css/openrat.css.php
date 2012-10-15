@@ -1394,6 +1394,11 @@ div.inputholder
     -webkit-border-radius:3px;
     -khtml-border-radius:3px;
     border-radius:3px;
+    
+    -webkit-box-shadow:inset 0px 0px 3px <?php echo $_GET['title_background_color']; ?>;
+    -moz-box-shadow:inset 0px 0px 3px  <?php echo $_GET['title_background_color']; ?>;
+    box-shadow:inset 0px 0px 3px <?php echo $_GET['title_background_color']; ?>;
+    
 }
 
 div.search > div.inputholder
