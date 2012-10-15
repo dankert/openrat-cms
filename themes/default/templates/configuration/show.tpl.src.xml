@@ -11,7 +11,7 @@
 		</row>
 		<list list="config" extract="true">
 			<row class="data">
-				<column>
+				<column> 
 					<text var="key"></text>
 				</column>
 				<column class="var:class">

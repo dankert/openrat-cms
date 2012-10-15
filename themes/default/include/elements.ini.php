@@ -5,17 +5,17 @@
 
 output   =
 button   = type:submit,src,class:ok,value:ok,text:button_ok
-column   = width,style,class,colspan,rowspan,header:false,title,url,action,id,name
 char     = type:*
 checkbox = default:false,readonly:false,name:*
+column   = width,style,class,colspan,rowspan,header:false,title,url,action,id,name
 date     = date
 dummy    =
-group    = title,icon
 focus    = field:*
 form     = action,subaction,id,name:,target:_self,method:post,enctype:application/x-www-form-urlencoded,type:
 frame    = file,name,scrolling
 frameset = rows,columns
 frameset-page=menu
+group    = title,icon,open:false,class
 hidden   = name:*,default
 header   = name:,views,back:false
 editor   = name:*,type:*

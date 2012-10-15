@@ -644,7 +644,8 @@ textarea.editor
 	height:400px;
 }
 
-label
+label,
+fieldset.open > legend
 {
 	cursor: pointer;
 }
@@ -667,14 +668,19 @@ fieldset
 	margin-bottom:20px;
 	margin-left:0px;
 	margin-right:0px;
+	padding:10px;
 }
 
-fieldset legend
+fieldset > legend
 {
 	margin-left:30px;
-	/*
-	padding-left:30px;
-	*/
+	font-weight:bold;
+}
+
+
+fieldset.open > div.invisible
+{
+	display:none;
 }
 
 
@@ -1317,12 +1323,6 @@ body
 }
 
 
-/* Formulare */
-
-fieldset
-{
-	padding:10px;
-}
 
 form div.line
 {
@@ -1431,43 +1431,6 @@ input.hint
 	color:<?php echo $_GET['title_background_color']; ?>;
 }
 
-/* Zwischen-Ueberschriften */
-fieldset
-{
-	/*
-	border:1px solid <?php echo $_GET['title_background_color']; ?>;
-	
-	border-bottom:0px;
-	border-left:0px;
-	border-right:0px;
-	margin-top:5px;
-	margin-bottom:0px;
-	margin-left:0px;
-	margin-right:0px;
-	*/
-    /*
-	margin:0px;
-	margin-top:20px;
-	margin-bottom:20px;
-	padding:15px;
-	
-	
-	-moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    -khtml-border-radius:5px;
-    border-radius:5px;
-	-webkit-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
-    -moz-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
-    box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
-    */
-}
-
-
-/* Legende */
-legend
-{
-	font-weight:bold;
-}
 
 
 

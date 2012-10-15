@@ -1,3 +1,7 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><header><link type="external" url="config:login/gpl/url" target="_top" class="copyright"><text key="GPL"></text></link><group></group><list list="software" extract="true"><link type="external" url="var:url"><text var="name"></text></link><text var="license"></text><newline></newline><newline></newline></list></header></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header><link type="external" url="config:login/gpl/url" target="_top"
+		class="copyright"><text key="GPL"></text></link><group></group><list list="software"
+		extract="true"><link type="external" url="var:url"><text var="name"></text></link><text
+		var="license"></text><newline></newline><newline></newline></list></header>
+</output>
