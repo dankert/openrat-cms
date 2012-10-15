@@ -1,5 +1,17 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+
+	<!--
+		Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
+	-->
+	<if true="config:security/nopublish">
+		<part class="message warn">
+			<text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
+		</part>
+	</if>
+
+
+
 	<form>
 		<group title="message:options">
 
