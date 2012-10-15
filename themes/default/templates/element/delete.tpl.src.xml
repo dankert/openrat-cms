@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header back="true"></header>
 	<form>
-		<fieldset>
+		<group>
 			<part class="line">
 				<part class="label">
 					<text key="ELEMENT_NAME"></text>
@@ -11,8 +11,8 @@
 					<text var="name" class="name"></text>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:options">
+		</group>
+		<group title="message:options">
 
 			<part class="line">
 				<part class="label">
@@ -42,7 +42,7 @@
 					</label>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 
 	</form>
 </output>

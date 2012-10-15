@@ -2,21 +2,21 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<table>
 		<row class="headline">
-			<cell class="help">
+			<column class="help">
 				<text key="GLOBAL_NAME"></text>
-			</cell>
-			<cell class="help">
+			</column>
+			<column class="help">
 				<text key="GLOBAL_VALUE"></text>
-			</cell>
+			</column>
 		</row>
 		<list list="config" extract="true">
 			<row class="data">
-				<cell>
+				<column>
 					<text var="key"></text>
-				</cell>
-				<cell class="var:class">
+				</column>
+				<column class="var:class">
 					<text class="var:class" var="value"></text>
-				</cell>
+				</column>
 			</row>
 		</list>
 	</table>

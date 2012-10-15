@@ -10,7 +10,7 @@
 				<input name="name" class="focus"></input>
 			</part>
 		</part>
-		<fieldset title="message:options">
+		<group title="message:options">
 			<part class="line">
 				<part class="label">
 					<radio name="type" value="empty" checked="true"></radio>
@@ -26,6 +26,6 @@
 					</part>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>

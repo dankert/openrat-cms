@@ -2,45 +2,45 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<table>
 		<row class="headline">
-			<cell>
+			<column>
 				<image type="user"></image>
 				<text key="name"></text>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<text raw=""></text>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<text key="LOGIN"></text>
-			</cell>
+			</column>
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<cell id="var:id" name="var:name" action="user">
+				<column id="var:id" name="var:name" action="user">
 					<image type="user"></image>
 					<text var="name"></text>
-				</cell>
-				<cell id="var:id" name="var:name" action="user">
+				</column>
+				<column id="var:id" name="var:name" action="user">
 					<text value="var:fullname"></text>
 					<if true="var:isAdmin">
 						<text raw="_("></text>
 						<text key="USER_ADMIN"></text>
 						<text raw=")"></text>
 					</if>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<link target="_top" action="index" subaction="switchuser" id="var:userid">
 						<text key="LOGIN"></text>
 					</link>
-				</cell>
+				</column>
 			</row>
 		</list>
 		<row class="data">
-			<cell colspan="3">
+			<column colspan="3">
 				<link type="view" subaction="add">
 					<image icon="add"/>
 					<text text="new"/>
 				</link>
-			</cell>
+			</column>
 		</row>
 	</table>
 </output>

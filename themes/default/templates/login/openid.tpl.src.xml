@@ -5,7 +5,7 @@
 
 		<!--  Open-Id -->
 		<if true="config:security/openid/enable">
-			<fieldset title="message:OPENID">
+			<group title="message:OPENID">
 				<part class="line">
 					<part class="label">
 						<text key="openid_user"></text>
@@ -21,11 +21,11 @@
 						</if>
 					</part>
 				</part>
-			</fieldset>
+			</group>
 		</if>
 
 		<if value="size:dbids" greaterthan="1">
-			<fieldset title="message:DATABASE" icon="database">
+			<group title="message:DATABASE" icon="database">
 				<part class="line">
 					<part class="label">
 						<label for="dbid">
@@ -37,7 +37,7 @@
 						<hidden name="screenwidth" default="9999"></hidden>
 					</part>
 				</part>
-			</fieldset>
+			</group>
 		</if>
 		<else>
 		<hidden name="dbid" default="var:actdbid"></hidden>

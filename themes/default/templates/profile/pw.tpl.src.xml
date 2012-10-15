@@ -4,7 +4,7 @@
 
 		<logo name="changepassword"></logo>
 
-		<fieldset title="message:user_act_password">
+		<group title="message:user_act_password">
 			<part class="line">
 				<part class="label">
 					<label for="act_password">
@@ -15,8 +15,8 @@
 					<password name="act_password" class="focus"></password>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:user_new_password">
+		</group>
+		<group title="message:user_new_password">
 			<part class="line">
 				<part class="label">
 					<label for="password1">
@@ -37,6 +37,6 @@
 					<password name="password2"></password>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>

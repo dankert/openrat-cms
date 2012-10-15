@@ -1,109 +1,60 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<dummy>
-		<form>
-			<window icon="folder" widths="40%,60%">
-				<row>
-					<cell>
-						<text text="name"></text>
-					</cell>
-					<cell class="name">
-						<text var="name"></text>
-					</cell>
-				</row>
-				<row>
-					<cell>
-						<text text="description"></text>
-					</cell>
-					<cell>
-						<text var="description"></text>
-					</cell>
-				</row>
-				<row>
-					<cell>
-						<text text="type"></text>
-					</cell>
-					<cell class="filename">
-						<image elementtype="var:element_type"></image>
-						<text key="el_{element_type}"></text>
-					</cell>
-				</row>
-				<row>
-					<cell colspan="2">
-						<fieldset title="message:additional_info"></fieldset>
-					</cell>
-				</row>
-				<row>
-					<cell>
-						<text key="template"></text>
-					</cell>
-					<cell>
-						<if present="template_url">
-							<link url="var:template_url" target="cms_main_main">
-								<image file="icon_template"></image>
-								<text var="template_name"></text>
-							</link>
-						</if>
-						<if empty="template_url">
-							<image file="icon_template"></image>
-							<text var="template_name"></text>
-						</if>
-					</cell>
-				</row>
-				<row>
-					<cell>
-						<text key="element"></text>
-					</cell>
-					<cell>
-						<if present="element_url">
-							<link url="var:element_url" target="cms_main_main">
-								<image elementtype="var:element_type"></image>
-								<text var="element_name"></text>
-							</link>
-						</if>
-						<if empty="element_url">
-							<image icon="element"></image>
-							<text var="element_name"></text>
-						</if>
-					</cell>
-				</row>
-				<if present="text">
-					<row>
-						<cell colspan="2">
-							<fieldset title="message:DOCUMENT_TREE"></fieldset>
-						</cell>
-					</row>
-					<row>
-						<cell colspan="2">
-							<editor type="dom" name="text"></editor>
-						</cell>
-					</row>
-				</if>
-				<row>
-					<cell colspan="2">
-						<fieldset title="message:prop_userinfo"></fieldset>
-					</cell>
-				</row>
-				<row>
-					<cell>
-						<text text="lastchange"></text>
-					</cell>
-					<cell>
-						<table>
-							<row>
-								<cell>
-									<image icon="el_date"></image>
-									<date date="var:lastchange_date"></date>
-								</cell>
-								<cell>
-									<image icon="user"></image>
-									<user user="var:lastchange_user"></user>
-								</cell>
-							</row>
-						</table>
-					</cell>
-				</row>
-			</window>
-		</form>
-	</dummy>
+	<table>
+		<row class="data">
+			<column>
+				<text text="name"></text>
+			</column>
+			<column class="name">
+				<text var="name"></text>
+			</column>
+		</row>
+		<row class="data">
+			<column>
+				<text text="description"></text>
+			</column>
+			<column>
+				<text var="description"></text>
+			</column>
+		</row>
+		<row class="data">
+			<column>
+				<text text="type"></text>
+			</column>
+			<column class="filename">
+				<image elementtype="var:element_type"></image>
+				<text key="el_{element_type}"></text>
+			</column>
+		</row>
+		<row class="data">
+			<column>
+				<text key="template"></text>
+			</column>
+			<column id="var:template_id" name="var:template_name" action="template">
+				<image file="icon_template"></image>
+				<text var="template_name"></text>
+			</column>
+		</row>
+		<row class="data">
+			<column>
+				<text key="element"></text>
+			</column>
+			<column id="var:element_id" name="var:element_name" action="element">
+				<image type="var:element_type"></image>
+				<text var="element_name"></text>
+			</column>
+		</row>
+		<row class="data">
+			<column>
+				<text text="lastchange"></text>
+			</column>
+			<column>
+				<image icon="el_date"></image>
+				<date date="var:lastchange_date"></date>
+				<text raw=", "></text>
+				<image icon="user"></image>
+				<user user="var:lastchange_user"></user>
+			</column>
+		</row>
+	</table>
 </output>

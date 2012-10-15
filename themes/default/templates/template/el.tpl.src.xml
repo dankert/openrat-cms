@@ -2,38 +2,38 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<table>
 		<row class="headline">
-			<cell>
+			<column>
 				<text key="name"></text>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<text key="type"></text>
-			</cell>
+			</column>
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<cell id="var:id" name="var:name" action="element">
+				<column id="var:id" name="var:name" action="element">
 					<image elementtype="var:type"></image>
 					<text var="name"></text>
-				</cell>
-				<cell>
+				</column>
+				<column>
 					<text key="var:type" prefix="EL_"></text>
-				</cell>
+				</column>
 			</row>
 		</list>
 		<if empty="el">
 			<row>
-				<cell colspan="2">
+				<column colspan="2">
 					<text key="GLOBAL_NOT_FOUND"></text>
-				</cell>
+				</column>
 			</row>
 		</if>
 		<row class="data">
-			<cell colspan="2">
+			<column colspan="2">
 				<link type="view" subaction="addel">
 					<image icon="add"/>
 					<text key="menu_template_addel"></text>
 				</link>
-			</cell>
+			</column>
 		</row>
 	</table>
 </output>

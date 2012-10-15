@@ -270,7 +270,9 @@ function loadView(jo, url )
 				//$.get( createUrl('login','ping',0) );
 			//alert( "user: "+$('#uname').attr('value') );
 			//alert( "up: "+$('#upassword').attr('value') );
-			$(jo).find('input.focus').focus();
+			
+			// Fokus nicht setzen, da mehrere Views sich sonst um den Fokus streiten.
+			//$(jo).find('input.focus').focus();
 			
 			// Sortieren von Tabellen
 			$(jo).find('table.sortable > tbody').sortable({
@@ -372,6 +374,10 @@ function loadView(jo, url )
 				$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(jo).closest('div.frame').find('div.menu div.dropdown').first() );
 			} );
 			$(jo).find('div.header').html('<!-- moved to window-menu -->');
+			
+			$(jo).find('input,select,textarea').focus( function() {
+				$(this).closest('div.frame').find('div.command').css('visibility','visible').fadeIn('slow');
+			});
 
 		});
 }

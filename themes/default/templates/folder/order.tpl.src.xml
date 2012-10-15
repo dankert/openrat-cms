@@ -5,12 +5,12 @@
 	<input type="hidden" name="token" default="function:token"></input>
 	<table class="sortable">
 		<row class="headline">
-			<cell class="help" colspan="4">
+			<column class="help" colspan="4">
 				<link type="url" url="var:flip_url" title="message:FOLDER_FLIP">
 					<text key="FOLDER_ORDER"></text>
 				</link>
-			</cell>
-			<cell class="help">
+			</column>
+			<column class="help">
 				<link type="url" url="var:orderbytype_url" title="message:FOLDER_ORDERBYTYPE">
 					<text key="GLOBAL_TYPE"></text>
 				</link>
@@ -18,16 +18,16 @@
 				<link type="url" url="var:orderbyname_url" title="message:FOLDER_ORDERBYNAME">
 					<text key="GLOBAL_NAME"></text>
 				</link>
-			</cell>
-			<cell class="help">
+			</column>
+			<column class="help">
 				<link type="url" url="var:orderbylastchange_url" title="message:FOLDER_ORDERBYLASTCHANGE">
 					<text key="GLOBAL_LASTCHANGE"></text>
 				</link>
-			</cell>
+			</column>
 		</row>
 		<list list="object" extract="true">
 			<row class="data" id="o_{id}">
-				<cell width="3%">
+				<column width="3%">
 					<if present="upurl">
 						<link type="url" url="var:upurl" title="GLOBAL_UP">
 							<set var="bild" value="arrow_up"></set>
@@ -37,8 +37,8 @@
 					<if empty="upurl">
 						<text raw="_"></text>
 					</if>
-				</cell>
-				<cell width="3%">
+				</column>
+				<column width="3%">
 					<if present="topurl">
 						<link type="url" url="var:topurl" title="GLOBAL_TOP">
 							<set var="bild" value="arrow_top"></set>
@@ -48,8 +48,8 @@
 					<if empty="topurl">
 						<text raw="_"></text>
 					</if>
-				</cell>
-				<cell width="3%">
+				</column>
+				<column width="3%">
 					<if present="bottomurl">
 						<link type="url" url="var:bottomurl" title="GLOBAL_BOTTOM">
 							<set var="bild" value="arrow_bottom"></set>
@@ -59,8 +59,8 @@
 					<if empty="bottomurl">
 						<text raw="_"></text>
 					</if>
-				</cell>
-				<cell width="3%">
+				</column>
+				<column width="3%">
 					<if present="downurl">
 						<link type="url" url="var:downurl" title="GLOBAL_DOWN">
 							<set var="bild" value="arrow_down"></set>
@@ -70,14 +70,14 @@
 					<if empty="downurl">
 						<text raw="_"></text>
 					</if>
-				</cell>
-				<cell width="40%">
+				</column>
+				<column width="40%">
 					<image type="var:icon"></image>
 					<text var="name"></text>
-				</cell>
-				<cell width="18%">
+				</column>
+				<column width="18%">
 					<date date="var:date"></date>
-				</cell>
+				</column>
 			</row>
 		</list>
 	</table>

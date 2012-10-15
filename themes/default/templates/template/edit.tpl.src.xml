@@ -3,9 +3,9 @@
 	<header views="src,addel,srcelement,el,remove"></header>
 		<window name="TEMPLATE_SHOW">
 			<row>
-				<cell>
+				<column>
 					<text var="text" escape="false" type="code"></text>
-				</cell>
+				</column>
 			</row>
 		</window>
 </output>

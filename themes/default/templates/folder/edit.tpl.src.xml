@@ -4,36 +4,36 @@
 	<form action="folder" subaction="edit">
 		<table>
 			<row class="headline">
-				<cell class="help">
+				<column class="help">
 					<text key="SELECT"></text>
-				</cell>
-				<cell class="help">
+				</column>
+				<column class="help">
 					<text key="GLOBAL_TYPE"></text>
 					<text raw="_/_"></text>
 					<text key="GLOBAL_NAME"></text>
-				</cell>
+				</column>
 			</row>
 			<list list="object" extract="true">
 				<row class="data">
-					<cell>
+					<column>
 						<if true="writable">
 							<checkbox name="var:id"></checkbox>
 						</if>
 						<if false="writable">
 							<text raw="_"></text>
 						</if>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<label for="var:id">
 							<image type="var:icon"></image>
 							<text var="name"></text>
 							<text raw="_"></text>
 						</label>
-					</cell>
+					</column>
 				</row>
 			</list>
 			<row>
-				<cell colspan="2">
+				<column colspan="2">
 					<image fileext="tree_none_end.gif" align="left"></image>
 					<text raw="_"></text>
 					<link var1="markall" value1="1" action="var:actionName"
@@ -48,11 +48,11 @@
 					<link url=":javascript:flip();">
 						<text key="FOLDER_FLIP_MARK"></text>
 					</link>
-				</cell>
+				</column>
 			</row>
 			<row>
-				<cell colspan="2">
-					<fieldset title="message:options">
+				<column colspan="2">
+					<group title="message:options">
 						<set var="type" value="var:defaulttype"></set>
 						<list list="actionlist" value="actiontype">
 							<radio name="type" value="var:actiontype"></radio>
@@ -62,19 +62,19 @@
 							</label>
 							<newline></newline>
 						</list>
-					</fieldset>
-				</cell>
+					</group>
+				</column>
 			</row>
 			<row>
-				<cell class="act" colspan="2">
+				<column class="act" colspan="2">
 					<button type="ok" text="button_next"></button>
-				</cell>
+				</column>
 			</row>
 			<if empty="object">
 				<row>
-					<cell colspan="2">
+					<column colspan="2">
 						<text text="GLOBAL_NOT_FOUND"></text>
-					</cell>
+					</column>
 				</row>
 			</if>
 		</table>

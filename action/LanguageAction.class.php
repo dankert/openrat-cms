@@ -274,4 +274,36 @@ class LanguageAction extends Action
 				return true;
 		}
 	}
+	
+	
+	/**
+	 * Liefert die Struktur zu diesem Ordner:
+	 * - Mit den übergeordneten Ordnern und
+	 * - den in diesem Ordner enthaltenen Objekten
+	 * 
+	 * Beispiel:
+	 * <pre>
+	 * - A
+	 *   - B
+	 *     - C (dieser Ordner)
+	 *       - Unterordner
+	 *       - Seite
+	 *       - Seite
+	 *       - Datei
+	 * </pre> 
+	 */
+	public function structureView()
+	{
+		$structure = array();
+		$languagelistChildren = array();
+		
+		$structure[0] = array('id'=>'0','name'=>lang('LANGUAGES'),'type'=>'languagelist','level'=>1,'children'=>&$languagelistChildren);
+			
+		$languagelistChildren[ $this->language->languageid ] = array('id'=>$this->language->languageid,'name'=>$this->language->name,'type'=>'language','self'=>true);
+		
+		
+		//Html::debug($structure);
+		
+		$this->setTemplateVar('outline',$structure);
+	}
 }

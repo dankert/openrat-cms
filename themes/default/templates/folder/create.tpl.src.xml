@@ -3,97 +3,97 @@
 	<header back="true" views="createfolder,createlink,createpage,createfile"></header>
 	<form enctype="multipart/form-data">
 		<row>
-			<cell colspan="3">
-				<fieldset title="message:folder"></fieldset>
-			</cell>
+			<column colspan="3">
+				<group title="message:folder"></group>
+			</column>
 		</row>
 		<row>
-			<cell>
+			<column>
 				<radio name="type" value="folder" children="folder_name"></radio>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<label for="type_folder">
 					<text text="global_folder"></text>
 				</label>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<input name="folder_name" size="30" maxlength="250" default=""
 					class="name"></input>
-			</cell>
+			</column>
 		</row>
 		<row>
-			<cell colspan="3">
-				<fieldset title="message:file"></fieldset>
-			</cell>
+			<column colspan="3">
+				<group title="message:file"></group>
+			</column>
 		</row>
 		<row>
-			<cell>
+			<column>
 				<radio name="type" value="file" children="file"></radio>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<label for="type_file">
 					<text text="global_FILE"></text>
 				</label>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<upload name="file" size="30" maxlength="var:maxlength"></upload>
 				<newline></newline>
 				<text class="help" key="file_max_size"></text>
 				<text raw="_"></text>
 				<text var="max_size"></text>
-			</cell>
+			</column>
 		</row>
 		<row>
-			<cell colspan="3">
-				<fieldset title="message:page"></fieldset>
-			</cell>
+			<column colspan="3">
+				<group title="message:page"></group>
+			</column>
 		</row>
 		<row>
-			<cell>
+			<column>
 				<radio name="type" value="page" children="page_templateid,page_name"></radio>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<label for="type_page">
 					<text text="global_TEMPLATE"></text>
 				</label>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<selectbox name="page_templateid" list="templates"></selectbox>
-			</cell>
+			</column>
 		</row>
 		<row>
-			<cell></cell>
-			<cell>
+			<column></column>
+			<column>
 				<label for="type_page">
 					<text text="global_NAME"></text>
 				</label>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<input name="page_name" size="30" maxlength="250" class="name"></input>
-			</cell>
+			</column>
 		</row>
 		<row>
-			<cell colspan="3">
-				<fieldset title="message:link"></fieldset>
-			</cell>
+			<column colspan="3">
+				<group title="message:link"></group>
+			</column>
 		</row>
 		<row>
-			<cell>
+			<column>
 				<radio name="type" value="link" children="link_name"></radio>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<label for="type_link">
 					<text text="global_NAME"></text>
 				</label>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<input name="link_name" size="30" maxlength="250" class="name"></input>
-			</cell>
+			</column>
 		</row>
 		<row>
-			<cell class="act" colspan="3">
+			<column class="act" colspan="3">
 				<button type="ok"></button>
-			</cell>
+			</column>
 		</row>
 	</form>
 </output>

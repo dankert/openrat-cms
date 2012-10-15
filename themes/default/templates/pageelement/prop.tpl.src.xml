@@ -4,40 +4,40 @@
 		<form>
 			<window icon="folder" widths="40%,60%">
 				<row>
-					<cell>
+					<column>
 						<text text="name"></text>
-					</cell>
-					<cell class="name">
+					</column>
+					<column class="name">
 						<text var="name"></text>
-					</cell>
+					</column>
 				</row>
 				<row>
-					<cell>
+					<column>
 						<text text="description"></text>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<text var="description"></text>
-					</cell>
+					</column>
 				</row>
 				<row>
-					<cell>
+					<column>
 						<text text="type"></text>
-					</cell>
-					<cell class="filename">
+					</column>
+					<column class="filename">
 						<image elementtype="var:element_type"></image>
 						<text key="el_{element_type}"></text>
-					</cell>
+					</column>
 				</row>
 				<row>
-					<cell colspan="2">
-						<fieldset title="message:additional_info"></fieldset>
-					</cell>
+					<column colspan="2">
+						<group title="message:additional_info"></group>
+					</column>
 				</row>
 				<row>
-					<cell>
+					<column>
 						<text key="template"></text>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<if present="template_url">
 							<link url="var:template_url" target="cms_main_main">
 								<image file="icon_template"></image>
@@ -48,13 +48,13 @@
 							<image file="icon_template"></image>
 							<text var="template_name"></text>
 						</if>
-					</cell>
+					</column>
 				</row>
 				<row>
-					<cell>
+					<column>
 						<text key="element"></text>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<if present="element_url">
 							<link url="var:element_url" target="cms_main_main">
 								<image elementtype="var:element_type"></image>
@@ -65,43 +65,31 @@
 							<image icon="element"></image>
 							<text var="element_name"></text>
 						</if>
-					</cell>
-				</row>
-				<if present="text">
-					<row>
-						<cell colspan="2">
-							<fieldset title="message:DOCUMENT_TREE"></fieldset>
-						</cell>
-					</row>
-					<row>
-						<cell colspan="2">
-							<editor type="dom" name="text"></editor>
-						</cell>
-					</row>
-				</if>
-				<row>
-					<cell colspan="2">
-						<fieldset title="message:prop_userinfo"></fieldset>
-					</cell>
+					</column>
 				</row>
 				<row>
-					<cell>
+					<column colspan="2">
+						<group title="message:prop_userinfo"></group>
+					</column>
+				</row>
+				<row>
+					<column>
 						<text text="lastchange"></text>
-					</cell>
-					<cell>
+					</column>
+					<column>
 						<table>
 							<row>
-								<cell>
+								<column>
 									<image icon="el_date"></image>
 									<date date="var:lastchange_date"></date>
-								</cell>
-								<cell>
+								</column>
+								<column>
 									<image icon="user"></image>
 									<user user="var:lastchange_user"></user>
-								</cell>
+								</column>
 							</row>
 						</table>
-					</cell>
+					</column>
 				</row>
 			</window>
 		</form>

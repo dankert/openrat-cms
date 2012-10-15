@@ -3,8 +3,8 @@
 	<form method="post">
 <table>
 		<row>
-			<cell>
-				<fieldset title="message:settings">
+			<column>
+				<group title="message:settings">
 					<part>
 						<checkbox name="always_edit"></checkbox>
 						<label for="always_edit"><text key="setting_always_edit"></text>
@@ -16,20 +16,20 @@
 							<text key="setting_ignore_ok_notices"></text>
 						</label>
 					</part>
-				</fieldset>
-				<fieldset title="message:timezone">
+				</group>
+				<group title="message:timezone">
 					<selectbox name="timezone_offset" list="timezone_list"
 						addempty="true"></selectbox>
-				</fieldset>
-				<fieldset title="message:language">
+				</group>
+				<group title="message:language">
 					<selectbox name="language" list="language_list" addempty="true"></selectbox>
-				</fieldset> 
-			</cell>
+				</group> 
+			</column>
 		</row>
 		<row>  
-			<cell colspan="2" class="act">
+			<column colspan="2" class="act">
 				<button type="ok"></button>
-			</cell>
+			</column>
 		</row>
 </table>
 	</form>

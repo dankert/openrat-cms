@@ -2,60 +2,60 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<table>
 		<row class="headline">
-			<cell>
+			<column>
 				<text key="name"></text>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<text raw=""></text>
-			</cell>
-			<cell>
+			</column>
+			<column>
 				<text raw=""></text>
-			</cell>
+			</column>
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<cell id="var:id" name="var:name" action="model">
+				<column id="var:id" name="var:name" action="model">
 						<image file="icon_model"></image>
 						<text var="name" maxlength="25"></text>
-				</cell>
+				</column>
 
 				<if present="default_url">
-					<cell>
+					<column>
 						<link type="post" action="model" subaction="setdefault" id="var:id">
 							<text text="GLOBAL_make_default"></text>
 						</link>
-					</cell>
+					</column>
 				</if>
 				<else>
-					<cell>
+					<column>
 						<text text="GLOBAL_is_default"></text>
-					</cell>
+					</column>
 				</else>
 
 
 				<if present="select_url">
-					<cell>
+					<column>
 						<link type="post" action="start" subaction="model" id="var:id">
 							<text text="GLOBAL_select"></text>
 						</link>
-					</cell>
+					</column>
 				</if>
 				<else>
-					<cell>
+					<column>
 						<text text="GLOBAL_selected"></text>
-					</cell>
+					</column>
 				</else>
 			</row>
 			<set var="select_url"></set>
 			<set var="default_url"></set>
 		</list>
 		<row class="data">
-			<cell colspan="3">
+			<column colspan="3">
 				<link type="view" subaction="add">
 					<image icon="add"/>
 					<text text="new"/>
 				</link>
-			</cell>
+			</column>
 		</row>
 	</table>
 </output>

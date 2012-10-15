@@ -5,12 +5,12 @@
 
 output   =
 button   = type:submit,src,class:ok,value:ok,text:button_ok
-cell     = width,style,class,colspan,rowspan,header:false,title,url,action,id,name
+column   = width,style,class,colspan,rowspan,header:false,title,url,action,id,name
 char     = type:*
 checkbox = default:false,readonly:false,name:*
 date     = date
 dummy    =
-fieldset = title,icon
+group    = title,icon
 focus    = field:*
 form     = action,subaction,id,name:,target:_self,method:post,enctype:application/x-www-form-urlencoded,type:
 frame    = file,name,scrolling
@@ -41,6 +41,7 @@ radiobox = list:*,name:*,default,onchange:,title:,class:
 set      = var:*,value,key
 table    = class,width:100%,space:0px,padding:0px,widths,rowclasses,columnclasses
 text     = title,class:text,var,text,key,textvar,raw,maxlength,value,suffix,prefix,accesskey,escape:true,type,cut:both
+tree     = tree
 upload   = name:*,class:upload,maxlength,size:40
 user     = user
 window   = title,name,icon,widths,width:93%,rowclasses:oddCOMMAeven,columnclasses:1COMMA2COMMA3

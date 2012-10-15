@@ -66,13 +66,13 @@ class PageelementAction extends Action
 		$id = $this->getRequestVar('id');
 		$ids = explode('_',$id);
 		if	( count($ids) > 1 )
-			list($pageid,$elementid)= $ids;
+		list($pageid,$elementid)= $ids;
 		else
 		{
 			$pageid = $this->getRequestId();
 			$elementid = $this->getRequestVar('elementid');
 		}
-		
+
 		if	( $pageid != 0  )
 		{
 			$this->page = new Page( $pageid );
@@ -118,11 +118,6 @@ class PageelementAction extends Action
 		$this->setTemplateVar('elementid'   ,$this->value->element->elementid);
 		$this->setTemplateVar('element_type',$this->value->element->type     );
 
-		if	( $this->value->element->type == 'longtext' && $this->value->element->wiki )
-		{
-			$this->setTemplateVar('text',$this->value->text);
-		}
-		
 		$user = new User( $this->value->lastchangeUserId );
 		$user->load();
 		$this->setTemplateVar('lastchange_user',$user);
@@ -135,6 +130,69 @@ class PageelementAction extends Action
 
 		$this->setTemplateVar('element_name' ,$this->value->element->name );
 		$this->setTemplateVar('element_url'  ,Html::url('element','name',$this->value->element->elementid) );
+
+	}
+
+
+
+	/**
+	 * Anzeigen des Element-Inhaltes.
+	 */
+	public function infoView()
+	{
+		$language = Session::getProjectLanguage();
+		$this->value->languageid = $language->languageid;
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->page       = $this->page;
+		$this->value->simple = false;
+		$this->value->element = &$this->element;
+		$this->value->element->load();
+		$this->value->publish = false;
+		$this->value->load();
+
+		$this->setTemplateVar('name'        ,$this->value->element->name     );
+		$this->setTemplateVar('description' ,$this->value->element->desc     );
+		$this->setTemplateVar('elementid'   ,$this->value->element->elementid);
+		$this->setTemplateVar('element_type',$this->value->element->type     );
+
+		$user = new User( $this->value->lastchangeUserId );
+		$user->load();
+		$this->setTemplateVar('lastchange_user',$user);
+		$this->setTemplateVar('lastchange_date',$this->value->lastchangeTimeStamp);
+
+		$t = new Template( $this->page->templateid );
+		$t->load();
+		$this->setTemplateVar('template_name',$t->name );
+		$this->setTemplateVar('template_id'  ,$t->templateid );
+
+		$this->setTemplateVar('element_name' ,$this->value->element->name );
+		$this->setTemplateVar('element_id'   ,$this->value->element->elementid );
+
+	}
+
+
+
+	/**
+	 * Anzeigen des Element-Inhaltes.
+	 */
+	public function structureView()
+	{
+		$language = Session::getProjectLanguage();
+		$this->value->languageid = $language->languageid;
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->page       = $this->page;
+		$this->value->simple = false;
+		$this->value->element = &$this->element;
+		$this->value->element->load();
+		$this->value->publish = false;
+		$this->value->load();
+
+		if	( $this->value->element->type == 'longtext' && $this->value->element->wiki )
+		{
+			$this->setTemplateVar('text',$this->value->text);
+		}
 
 	}
 
@@ -156,16 +214,16 @@ class PageelementAction extends Action
 		$this->value->publish = false;
 
 		if	( intval($this->value->valueid)!=0 )
-			$this->value->loadWithId();
+		$this->value->loadWithId();
 		else
-			$this->value->load();
+		$this->value->load();
 
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
 		$this->setTemplateVar('elementid',$this->value->element->elementid);
 		$this->setTemplateVar('type'     ,$this->value->element->type     );
 		$this->setTemplateVar('value_time',time() );
-		
+
 
 		$this->value->page             = new Page( $this->page->objectid );
 		$this->value->page->languageid = $this->value->languageid;
@@ -189,6 +247,37 @@ class PageelementAction extends Action
 
 
 	/**
+	 * Vorschau.
+	 */
+	public function previewView()
+	{
+		$language = Session::getProjectLanguage();
+		$this->value->languageid = $language->languageid;
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->element = &$this->element;
+		$this->value->element->load();
+		$this->value->publish = false;
+		$this->value->public  = true;
+		$this->value->simple  = true;
+
+		if	( intval($this->value->valueid)!=0 )
+		$this->value->loadWithId();
+		else
+		$this->value->load();
+
+
+		$this->value->page             = new Page( $this->page->objectid );
+		$this->value->page->languageid = $this->value->languageid;
+		$this->value->page->load();
+
+		$this->value->generate();
+		$this->setTemplateVar('preview' ,$this->value->value );
+	}
+
+
+
+	/**
 	 * Datum bearbeiten.
 	 *
 	 */
@@ -199,8 +288,8 @@ class PageelementAction extends Action
 
 		// Wenn Datum nicht vorhanden...
 		if	( $date == 0 )
-			// ... dann aktuelles Datum (gerundet auf 1 Minute) verwenden
-			$date = intval(time()/60)*60;
+		// ... dann aktuelles Datum (gerundet auf 1 Minute) verwenden
+		$date = intval(time()/60)*60;
 
 		$this->setTemplateVar('ansidate',date( 'Y-m-d H:i:s',$date ) );
 		$this->setTemplateVar('date'    ,$date);
@@ -264,7 +353,7 @@ class PageelementAction extends Action
 		do
 		{
 			$woche = array(); // Neue Woche
-				
+
 			for  ( $i=0; $i<=6; $i++ ) // Alle Wochentage der Woche
 			{
 				$wday = ($i+$weekdayOffset)%7;
@@ -347,7 +436,7 @@ class PageelementAction extends Action
 						                               'hour'  =>$hour  ,
 						                               'minute'=>$minute,
 						                               'second'=>$second  ) ) );
-		 
+			
 		//		$this->setTemplateVar('date'    ,$date);
 
 
@@ -387,18 +476,73 @@ class PageelementAction extends Action
 
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
 		$type = $this->value->element->subtype;
-		
+
 		if	( substr($type,0,5) == 'image' )
-			$type = 'file';
+		$type = 'file';
 			
 		if	( !in_array($type,array('file','page','link')) )
-			$types = array('file','page','link');
+		$types = array('file','page','link');
 		else
-			$types = array($type);
+		$types = array($type);
 
 		$objects = array();
 
 		foreach( Folder::getAllObjectIds($types) as $id )
+		{
+			$o = new Object( $id );
+			$o->load();
+
+			//			if	( in_array( $o->getType(),$types ))
+			//			{
+			$f = new Folder( $o->parentid );
+			//					$f->load();
+
+			$objects[ $id ]  = lang( $o->getType() ).': ';
+			$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
+			$objects[ $id ] .= FILE_SEP.$o->name;
+			//			}
+		}
+
+		asort( $objects ); // Sortieren
+
+		$this->setTemplateVar('objects'         ,$objects);
+		$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
+
+		if	( $this->getSessionVar('pageaction') != '' )
+		$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+		else
+		$this->setTemplateVar('old_pageaction','show'                            );
+	}
+
+
+
+	function linkView()
+	{
+		$language = Session::getProjectLanguage();
+		$this->value->languageid = $language->languageid;
+		$this->value->objectid   = $this->page->objectid;
+		$this->value->pageid     = $this->page->pageid;
+		$this->value->element = &$this->element;
+		$this->value->element->load();
+		$this->value->publish = false;
+		$this->value->load();
+
+		$this->setTemplateVar('name'     ,$this->value->element->name     );
+		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
+			
+		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
+		if	( empty($this->value->element->subtype) )
+		$types = array('page','file','link'); // Fallback: Alle erlauben :)
+		else
+		$types = explode(',',$this->value->element->subtype );
+
+		$objects = array();
+			
+		$objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
+
+		$t = new Template( $this->page->templateid );
+
+		foreach( $t->getDependentObjectIds() as $id )
 		{
 			$o = new Object( $id );
 			$o->load();
@@ -412,61 +556,6 @@ class PageelementAction extends Action
 			$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
 			$objects[ $id ] .= FILE_SEP.$o->name;
 			//			}
-			}
-
-			asort( $objects ); // Sortieren
-
-			$this->setTemplateVar('objects'         ,$objects);
-			$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
-
-			if	( $this->getSessionVar('pageaction') != '' )
-				$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
-			else
-				$this->setTemplateVar('old_pageaction','show'                            );
-		}
-
-
-
-		function linkView()
-		{
-			$language = Session::getProjectLanguage();
-			$this->value->languageid = $language->languageid;
-			$this->value->objectid   = $this->page->objectid;
-			$this->value->pageid     = $this->page->pageid;
-			$this->value->element = &$this->element;
-			$this->value->element->load();
-			$this->value->publish = false;
-			$this->value->load();
-
-			$this->setTemplateVar('name'     ,$this->value->element->name     );
-			$this->setTemplateVar('desc'     ,$this->value->element->desc     );
-			
-			// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
-			if	( empty($this->value->element->subtype) )
-			$types = array('page','file','link'); // Fallback: Alle erlauben :)
-			else
-			$types = explode(',',$this->value->element->subtype );
-
-			$objects = array();
-			
-			$objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
-
-			$t = new Template( $this->page->templateid );
-
-			foreach( $t->getDependentObjectIds() as $id )
-			{
-				$o = new Object( $id );
-				$o->load();
-					
-				//			if	( in_array( $o->getType(),$types ))
-				//			{
-				$f = new Folder( $o->parentid );
-				//					$f->load();
-
-				$objects[ $id ]  = lang( $o->getType() ).': ';
-				$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
-				$objects[ $id ] .= FILE_SEP.$o->name;
-				//			}
 			}
 
 			asort( $objects ); // Sortieren
@@ -515,9 +604,9 @@ class PageelementAction extends Action
 		{
 			$this->editinsert();
 		}
-		
-		
-		
+
+
+
 		/**
 		 * Einf�gen-Element.
 		 *
@@ -528,16 +617,16 @@ class PageelementAction extends Action
 			$objects = array();
 			//Änderung der möglichen Types
 			$types = array('file','page','link');
-                        $objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
+			$objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
 			//Auch Dateien dazu
 			foreach( Folder::getAllObjectIds($types) as $id )
-                        {
-                                $f = new Folder( $id );
-                                $f->load();
-                                        
-                                $objects[ $id ]  = lang( $f->getType() ).': ';
-                                $objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
-                        }
+			{
+				$f = new Folder( $id );
+				$f->load();
+
+				$objects[ $id ]  = lang( $f->getType() ).': ';
+				$objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
+			}
 
 			foreach( Folder::getAllFolders() as $id )
 			{
@@ -583,16 +672,16 @@ class PageelementAction extends Action
 		private function editlongtext()
 		{
 			if	($this->value->element->wiki)
-				$this->setTemplateVar( 'editor','wiki' );
+			$this->setTemplateVar( 'editor','wiki' );
 			elseif	($this->value->element->html)
-				$this->setTemplateVar( 'editor','html' );
+			$this->setTemplateVar( 'editor','html' );
 			else
-				$this->setTemplateVar( 'editor','text' );
+			$this->setTemplateVar( 'editor','text' );
 
 			if ( !isset($this->templateVars['text']))
-				// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
-				// einen Text eingegeben hat (Vorschaufunktion).
-				$this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
+			// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
+			// einen Text eingegeben hat (Vorschaufunktion).
+			$this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
 
 			if	(! $this->isEditMode() )
 			{
@@ -604,19 +693,19 @@ class PageelementAction extends Action
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 			else	$this->setTemplateVar('old_pageaction','show'                            );
 
-			
+				
 
 			if	( $this->element->wiki )
 			{
 				$project = Session::getProject();
 				$languages = $project->getLanguages();
-				
+
 				if	( count($languages) > 1 )
 				{
 					$languages[$this->value->languageid] = $languages[$this->value->languageid].' *';
 					$this->setTemplateVar('languages',$languages);
 				}
-				
+
 				if	( $this->hasRequestVar('otherlanguageid') )
 				{
 					$lid = $this->getRequestVar('otherlanguageid');
@@ -630,11 +719,11 @@ class PageelementAction extends Action
 					$this->setTemplateVar('languagename'   ,$languages[$lid]   );
 					$this->setTemplateVar('otherlanguageid',$lid               );
 				}
-				
+
 				if ( !isset($this->templateVars['text']))
-					// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
-					// einen Text eingegeben hat (Vorschaufunktion).
-					$this->setTemplateVar( 'text',$this->value->text          );
+				// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
+				// einen Text eingegeben hat (Vorschaufunktion).
+				$this->setTemplateVar( 'text',$this->value->text          );
 			}
 
 		}
@@ -829,7 +918,7 @@ class PageelementAction extends Action
 
 			if	( empty($type))
 			die('Error: No element type available.');
-				
+
 			$funktionName = 'save'.$type;
 
 			$this->$funktionName(); // Aufruf Methode "save<ElementTyp>()"
@@ -888,9 +977,9 @@ class PageelementAction extends Action
 			// - Recht vorhanden
 			// - Freigabe gewuenscht
 			if	( $value->page->hasRight( ACL_RELEASE ) && $this->hasRequestVar('release') )
-				$value->publish = true;
+			$value->publish = true;
 			else
-				$value->publish = false;
+			$value->publish = false;
 
 			// Up-To-Date-Check
 			$lastChangeTime = $value->getLastChangeTime();
@@ -955,16 +1044,16 @@ class PageelementAction extends Action
 
 
 			if   ( $this->hasRequestVar('linkobjectid') )
-				$value->linkToObjectId = $this->getRequestVar('linkobjectid');
+			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
 			else
-				$value->text           = $this->compactOIDs( $this->getRequestVar('text','raw') );
+			$value->text           = $this->compactOIDs( $this->getRequestVar('text','raw') );
 
 			// Vorschau anzeigen
 			if	( $this->hasRequestVar('preview'  ) ||
-				  $this->hasRequestVar('addmarkup')    )
+			$this->hasRequestVar('addmarkup')    )
 			{
 				$inputText = $this->getRequestVar('text','raw');
-				
+
 				if	( $this->hasRequestVar('preview') )
 				{
 					$value->page             = $this->page;
@@ -984,35 +1073,35 @@ class PageelementAction extends Action
 						$addText = $this->getRequestVar('addtext','raw');
 
 						if	( $this->hasRequestVar('strong') )
-							$inputText .= $conf_tags['strong-begin'].$addText.$conf_tags['strong-end'];
+						$inputText .= $conf_tags['strong-begin'].$addText.$conf_tags['strong-end'];
 
 						if	( $this->hasRequestVar('emphatic') )
-							$inputText .= $conf_tags['emphatic-begin'].$addText.$conf_tags['emphatic-end'];
+						$inputText .= $conf_tags['emphatic-begin'].$addText.$conf_tags['emphatic-end'];
 
 						if	( $this->hasRequestVar('link') )
-							$inputText .= '"'.$addText.'"'.$conf_tags['linkto'].'"'.$this->parseOID($this->getRequestVar('objectid')).'"';
+						$inputText .= '"'.$addText.'"'.$conf_tags['linkto'].'"'.$this->parseOID($this->getRequestVar('objectid')).'"';
 					}
 
 					if	( $this->hasRequestVar('table') )
-						$inputText .= "\n".
-						              $conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep']."\n".
-						              $conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep']."\n".
-						              $conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep']."\n";
+					$inputText .= "\n".
+					$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep']."\n".
+					$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep']."\n".
+					$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep'].' '.$addText.' '.$conf_tags['table-cell-sep']."\n";
 
 					if	( $this->hasRequestVar('list') )
-						$inputText .= "\n".
-						              $conf_tags['list-unnumbered'].' '.$addText."\n".
-						              $conf_tags['list-unnumbered'].' '.$addText."\n".
-						              $conf_tags['list-unnumbered'].' '.$addText."\n";
+					$inputText .= "\n".
+					$conf_tags['list-unnumbered'].' '.$addText."\n".
+					$conf_tags['list-unnumbered'].' '.$addText."\n".
+					$conf_tags['list-unnumbered'].' '.$addText."\n";
 
 					if	( $this->hasRequestVar('numlist') )
-						$inputText .= "\n".
-						              $conf_tags['list-numbered'].' '.$addText."\n".
-						              $conf_tags['list-numbered'].' '.$addText."\n".
-						              $conf_tags['list-numbered'].' '.$addText."\n";
+					$inputText .= "\n".
+					$conf_tags['list-numbered'].' '.$addText."\n".
+					$conf_tags['list-numbered'].' '.$addText."\n".
+					$conf_tags['list-numbered'].' '.$addText."\n";
 
 					if	( $this->hasRequestVar('image') )
-						$inputText .= $conf_tags['image-begin'].$this->parseOID($this->getRequestVar('objectid')).$conf_tags['image-end'];
+					$inputText .= $conf_tags['image-begin'].$this->parseOID($this->getRequestVar('objectid')).$conf_tags['image-end'];
 				}
 
 				// Ermitteln aller verlinkbaren Objekte (fuer Editor)
@@ -1021,16 +1110,16 @@ class PageelementAction extends Action
 
 				foreach( Folder::getAllObjectIds() as $id )
 				{
-					$o = new Object( $id );
-					$o->load();
+				$o = new Object( $id );
+				$o->load();
 
-					if	( $o->getType() != 'folder' )
-					{
-						$f = new Folder( $o->parentid );
-						$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
-						$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
-						$objects[ $id ] .= FILE_SEP.$o->name;
-					}
+				if	( $o->getType() != 'folder' )
+				{
+				$f = new Folder( $o->parentid );
+				$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+				$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
+				$objects[ $id ] .= FILE_SEP.$o->name;
+				}
 				}
 				asort($objects);
 				$this->setTemplateVar( 'objects' ,$objects );
@@ -1166,9 +1255,9 @@ class PageelementAction extends Action
 		{
 			$this->saveinsert();
 		}
-		
 
-		
+
+
 		/**
 		 * Element speichern
 		 *
@@ -1260,7 +1349,7 @@ class PageelementAction extends Action
 			switch($type)
 			{
 				case 'odf':
-						
+
 					// Angabe Content-Type
 					//				header('Content-Type: '.$this->file->mimeType());
 					//				header('X-File-Id: '.$this->file->fileid);
@@ -1316,11 +1405,11 @@ class PageelementAction extends Action
 
 				case 'archive':
 					// Archiv ist nur verf�gbar, wenn es mind. 1 Version des Inhaltes gibt.
-					
+						
 					if	( $this->subActionName!='diff' && is_object($this->value) )
-						return $this->value->getCountVersions() > 0;
+					return $this->value->getCountVersions() > 0;
 					else
-						return true;
+					return true;
 
 				case 'link':
 					// Verkn�pfung zu anderen Seiten ist nur m�glich f�r
@@ -1362,12 +1451,52 @@ class PageelementAction extends Action
 			preg_match_all('/(.*)__OID__([0-9]+)__(.*)/', $text, $treffer,PREG_SET_ORDER);
 
 			$oid = $treffer[0][2];
-			
+				
 			if	( !empty($oid) )
-				return $oid;
+			return $oid;
 			else
-				return intval($text);
+			return intval($text);
 		}
-}
 
+	/**
+	 * Seite veroeffentlichen
+	 *
+	 * Es wird ein Formular angzeigt, mit dem die Seite veroeffentlicht
+	 * werden kann 
+	 */
+	public function pubView()
+	{
+	}
+
+
+
+	/**
+	 * Seite veroeffentlichen
+	 *
+	 * Die Seite wird generiert.
+	 */
+	function pubPost()
+	{
+		if	( !$this->page->hasRight( ACL_PUBLISH ) )
+			Http::notAuthorized( 'no right for publish' );
+
+		$this->page->public = true;
+		$this->page->publish();
+		$this->page->publish->close();
+
+//		foreach( $this->page->publish->publishedObjects as $o )
+//		{
+//			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
+//		}
+
+		$this->addNotice( 'page',
+		                  $this->page->fullFilename,
+		                  'PUBLISHED'.($this->page->publish->ok?'':'_ERROR'),
+		                  $this->page->publish->ok,
+		                  array(),
+		                  $this->page->publish->log  );
+	}
+	
+}
+	
 ?>

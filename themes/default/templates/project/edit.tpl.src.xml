@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="remove,export,maintenance"></header>
 	<form>
-		<fieldset title="message:NAME">
+		<group title="message:NAME">
 			<part class="line">
 				<part class="label">
 					<label for="name" key="PROJECT_NAME"></label>
@@ -11,8 +11,8 @@
 					<input name="name" class="name"></input>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:PUBLISH">
+		</group>
+		<group title="message:PUBLISH">
 			<part class="line">
 				<part class="label">
 					<label for="target_dir" key="PROJECT_TARGET_DIR"></label>
@@ -30,8 +30,8 @@
 						readonly="!config:publish/project/override_system_command"></input>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:project_FTP">
+		</group>
+		<group title="message:project_FTP">
 			<part class="line">
 				<part class="label">
 					<label for="ftp_url" key="PROJECT_FTP_URL"></label>
@@ -43,8 +43,8 @@
 					<label for="ftp_passive" key="PROJECT_FTP_PASSIVE"></label>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:options">
+		</group>
+		<group title="message:options">
 			<part class="line">
 				<part class="label"></part>
 				<part class="input">
@@ -59,6 +59,6 @@
 					<label for="cut_index" key="PROJECT_CUT_INDEX"></label>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>

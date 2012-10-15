@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="password"></header>
 	<form action="login" subaction="login" target="_top">
-		<fieldset>
+		<group>
 			<if present="config:login/logo/file">
 				<if false="property:mustChangePassword">
 					<if present="config:login/logo/url">
@@ -57,9 +57,9 @@
 					</part>
 				</part>
 			</if>
-		</fieldset>
+		</group>
 		<if true="property:mustChangePassword">
-			<fieldset title="message:USER_NEW_PASSWORD">
+			<group title="message:USER_NEW_PASSWORD">
 				<part class="line">
 					<part class="label">
 						<label for="password1">
@@ -80,7 +80,7 @@
 						<password name="password2" default="" size="25"></password>
 					</part>
 				</part>
-			</fieldset>
+			</group>
 		</if>
 		<link type="view" class="action" action="login" subaction="password">
 			<text key="menu_password"></text>
@@ -95,7 +95,7 @@
 		<newline></newline>
 
 		<if value="size:dbids" greaterthan="1">
-			<fieldset title="message:DATABASE" icon="database">
+			<group title="message:DATABASE" icon="database">
 				<part class="line">
 					<part class="label">
 						<label for="dbid">
@@ -107,7 +107,7 @@
 						<hidden name="screenwidth" default="9999"></hidden>
 					</part>
 				</part>
-			</fieldset>
+			</group>
 		</if>
 		<else>
 		<hidden name="dbid" default="var:actdbid"></hidden>

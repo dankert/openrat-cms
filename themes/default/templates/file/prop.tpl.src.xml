@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="size,compress,uncompress,extract"></header>
 	<form>
-		<fieldset>
+		<group>
 			<part class="line">
 				<part class="label">
 					<label for="name">
@@ -43,7 +43,7 @@
 					<inputarea name="description" class="description"></inputarea>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 
 		<link class="action" action="file" subaction="compress">
 			<image file="icon/compress"></image>

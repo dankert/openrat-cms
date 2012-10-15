@@ -3,17 +3,17 @@
 	<header back="true"/>
 	<form>
 		<row>
-			<cell width="50%">
+			<column width="50%">
 				<text key="GLOBAL_DATABASE"></text>
-			</cell>
-			<cell width="50%">
+			</column>
+			<column width="50%">
 				<selectbox name="dbid" list="dbids" default="actdbid"></selectbox>
-			</cell>
+			</column>
 		</row>
 		<row>
-			<cell colspan="2" class="act">
+			<column colspan="2" class="act">
 				<button></button>
-			</cell>
+			</column>
 		</row>
 	</form>
 </output>

@@ -967,12 +967,82 @@ class FolderAction extends ObjectAction
 			$this->addNotice('folder',$this->folder->name,'NO_TEMPLATES_AVAILABLE',OR_NOTICE_WARN);
 	}
 
+	
+	/**
+	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
+	 * auf die Standardausgabe geschrieben
+	 */
+	private function previewViewUnused()
+	{
+		$this->setTemplateVar('preview_url',Html::url('folder','show',$this->folder->objectid,array('target'=>'none') ) );
+	}
+	
+	
 
 	/**
 	 * Anzeige aller Objekte in diesem Ordner.
 	 * @return unknown_type
 	 */
-	function showView()
+	public function previewView()
+	{
+		global $conf_php;
+
+		if   ( ! $this->folder->isRoot )
+			$this->setTemplateVar('up_url',Html::url('folder','show',$this->folder->parentid));
+
+		$list = array();
+
+		// Schleife ueber alle Objekte in diesem Ordner
+		foreach( $this->folder->getObjects() as $o )
+		{
+			$id = $o->objectid;
+
+			if   ( $o->hasRight(ACL_READ) )
+			{
+				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
+				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
+				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
+				if	( $list[$id]['desc'] == '' )
+					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id; 
+
+				$list[$id]['type'] = $o->getType();
+				$list[$id]['id'  ] = $id;
+				
+				$list[$id]['icon' ] = $o->getType();
+				$list[$id]['class'] = $o->getType();
+				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
+				
+				if	( $o->getType() == 'file' )
+				{
+					$file = new File( $id );
+					$file->load();
+					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
+
+					if	( $file->isImage() )
+					{
+						$list[$id]['icon' ] = 'image';
+						$list[$id]['class'] = 'image';
+						//$list[$id]['url' ] = Html::url('file','show',$id) nur sinnvoll bei Lightbox-Anzeige
+					}
+//					if	( substr($file->mimeType(),0,5) == 'text/' )
+//						$list[$id]['icon'] = 'text';
+				}
+
+				$list[$id]['date'] = $o->lastchangeDate;
+				$list[$id]['user'] = $o->lastchangeUser;
+			}
+		}
+
+		$this->setTemplateVar('object'      ,$list            );
+	}
+
+
+	/**
+	 * Anzeige aller Objekte in diesem Ordner.
+	 * @return unknown_type
+	 */
+	function contentView()
 	{
 		global $conf_php;
 
@@ -1196,6 +1266,71 @@ class FolderAction extends ObjectAction
 	}
 
 
+
+	/**
+	 * Liefert die Struktur zu diesem Ordner:
+	 * - Mit den übergeordneten Ordnern und
+	 * - den in diesem Ordner enthaltenen Objekten
+	 * 
+	 * Beispiel:
+	 * <pre>
+	 * - A
+	 *   - B
+	 *     - C (dieser Ordner)
+	 *       - Unterordner
+	 *       - Seite
+	 *       - Seite
+	 *       - Datei
+	 * </pre> 
+	 */
+	public function structureView()
+	{
+
+		$structure = array();
+		$tmp = &$structure;
+		$nr  = 0;
+		
+		$parents = $this->folder->parentObjectNames(false,true);
+		
+		foreach( $parents as $id=>$name)
+		{
+			//Html::debug($name,"Name");
+			
+			unset($children);
+			unset($o);
+			$children = array();
+			$o = array('id'=>$id,'name'=>$name,'type'=>'folder','level'=>++$nr,'children'=>&$children);
+			
+			if	( $id == $this->folder->objectid)
+				$o['self'] = true;
+				
+			$tmp[$id] = &$o;;
+			
+			unset($tmp);
+			
+			$tmp = &$children; 
+		}
+		
+		
+		$contents = $this->folder->getObjects();
+		
+		unset($children);
+		unset($o);
+		
+		$children = array(); 
+		foreach( $contents as $o )
+		{
+			$children[$o->objectid] = array('id'=>$o->objectid,'name'=>$o->name,'type'=>$o->getType());
+		}
+		$tmp+= $children;
+		
+		//Html::debug($structure);
+		
+		$this->setTemplateVar('outline',$structure);
+	}
+	
+	
+	
 	function remove()
 	{
 		$this->setTemplateVars( $this->folder->getProperties() );

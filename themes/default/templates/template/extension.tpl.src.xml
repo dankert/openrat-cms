@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header back="true"></header>
 	<form>
-		<fieldset>
+		<group>
 			<part class="line">
 				<part class="label">
 					<text text="TEMPLATE_extension"></text>
@@ -22,6 +22,6 @@
 					<input name="extensiontext" size="10"></input>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>

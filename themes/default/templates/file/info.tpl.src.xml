@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<form>
-		<fieldset>
+		<group>
 			<part class="line">
 				<part class="label">
 					<text text="global_name"></text>
@@ -34,9 +34,9 @@
 					<text var="description" />
 				</part>
 			</part>
-		</fieldset>
+		</group>
 
-		<fieldset title="message:additional_info">
+		<group title="message:additional_info">
 			<part class="line">
 				<part class="label">
 					<label for="full_filename">
@@ -104,12 +104,12 @@
 					<table>
 						<list list="pages" extract="true">
 							<row>
-								<cell>
+								<column>
 									<link url="var:url" target="cms_main">
 										<image type="page"></image>
 										<text var="name"></text>
 									</link>
-								</cell>
+								</column>
 							</row>
 						</list>
 					</table>
@@ -118,8 +118,8 @@
 					</if>
 				</part>
 			</part>
-		</fieldset>
-		<fieldset title="message:prop_userinfo">
+		</group>
+		<group title="message:prop_userinfo">
 			<part class="line">
 				<part class="label">
 					<text text="global_created"></text>
@@ -144,6 +144,6 @@
 					<user user="var:lastchange_user"></user>
 				</part>
 			</part>
-		</fieldset>
+		</group>
 	</form>
 </output>
