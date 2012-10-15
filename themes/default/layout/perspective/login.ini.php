@@ -5,7 +5,11 @@ views=
 
 [content]
 
-views=
+views=login,openid,register
+action=login
+refreshable=false
+default=login
+modal=true
 
 [side]
 views=license
@@ -17,8 +21,8 @@ default=license
 [bottom]
 views=
 
-[modal]
-views=login,openid,register
-action=login
-refreshable=false
-default=login
+;[modal]
+;views=login,openid,register
+;action=login
+;refreshable=false
+;default=login

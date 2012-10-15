@@ -87,6 +87,7 @@ function refreshWorkbench()
 		
 		// Modale Dialoge beenden
 		$('div.modaldialog').fadeOut(500);
+		$('div#workbench').removeClass('modal');
 		$('div#filler').fadeOut(500);
 
 		// Default-Inhalte der einzelnen Views laden.
@@ -149,14 +150,11 @@ function refreshWorkbench()
 		//$('ul.views').sortable();
 
 		// Modalen Dialog erzeugen.
-		if	( $('div#modalbar li.action').size() > 0 )
+		if	( $('div#workbench div.frame.modal').size() > 0 )
 		{
+			$('div#workbench div.frame.modal').parent().addClass('modal');
 			$('div#filler').fadeTo(500,0.5);
-			$('div#modalbar').addClass('modaldialog');
-		}
-		else
-		{
-			$('div#modalbar').fadeOut(0);
+			$('div#workbench').addClass('modal');
 		}
 		
 		

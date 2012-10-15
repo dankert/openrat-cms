@@ -9,7 +9,7 @@ function view_header( $name )
 ?>
 
 
-<div id="<?php echo $name ?>" data-action="<?php echo $v['action'] ?>" class="frame <?php echo ($v['refreshable']?' refreshable':'') ?>">
+<div id="<?php echo $name ?>" data-action="<?php echo $v['action'] ?>" class="frame<?php echo ($v['refreshable']?' refreshable':'') ?><?php echo (@$v['modal']?' modal':'') ?>">
 <div class="window">
 
 <div class="menu">

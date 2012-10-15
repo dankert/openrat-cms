@@ -152,7 +152,7 @@ function css_link( $name='default' )
 	
 	// Falls Style-Konfiguration unbekannt, dann Fallback auf default.
 	if	( ! isset($conf['style'][$name]))
-		$name = 'default';
+		$name = $conf['interface']['style']['default'];
 
 	
 	return OR_THEMES_EXT_DIR.'default/css/openrat.css.php?'.encode_array($conf['style'][$name]);

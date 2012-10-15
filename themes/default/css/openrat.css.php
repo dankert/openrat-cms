@@ -1299,20 +1299,30 @@ div#filler
 	opacity: 0.5;
 }
 
-div#workbench > div.bar.modaldialog
+div#workbench > div.bar.modal
 {
-	width:60%;
-	position:absolute;
-	top:0;
-	left:0;
+	
+	/*width:60%;*/
+	position:relative;
+	xtop:0;
+	xleft:0;
+	
 	z-index: 101;
-	opacity: 1;
+	
+	border:1px solid <?php echo $_GET['text_color']; ?> !important;
+	/*
 	border:3px solid <?php echo $_GET['text_color']; ?> !important;
 	background-color:<?php echo $_GET['title_text_color']; ?> !important;
+	*/
+	/*
+	
 	margin:5% 20% !important;
-	-webkit-box-shadow: 20px 20px 20px <?php echo $_GET['text_color']; ?>;
-    -moz-box-shadow: 20px 20px 20px <?php echo $_GET['text_color']; ?>;
-    box-shadow: 20px 20px 20px <?php echo $_GET['text_color']; ?>;
+	*/
+	
+	-webkit-box-shadow: 0px 0px 40px <?php echo $_GET['text_color']; ?>;
+    -moz-box-shadow: 0px 0px 40px  <?php echo $_GET['text_color']; ?>;
+    box-shadow: 0px 0px 40px <?php echo $_GET['text_color']; ?>;
+    
 }
  
 
