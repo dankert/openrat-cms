@@ -12,7 +12,7 @@ default=login
 modal=true
 
 [side]
-views=license
+views=
 action=login
 refreshable=false
 default=license

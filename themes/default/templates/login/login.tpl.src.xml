@@ -1,67 +1,65 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header views="password,register"></header>
+	<header views="password,register,license"></header>
 	<form action="login" subaction="login" target="_top">
-		<group>
-			<if present="config:login/logo/file">
-				<if false="property:mustChangePassword">
-					<if present="config:login/logo/url">
-						<link url="config:login/logo/url" target="_top">
-							<image url="config:login/logo/file"></image>
-						</link>
-					</if>
-					<if empty="config:login/logo/url">
+		<if present="config:login/logo/file">
+			<if false="property:mustChangePassword">
+				<if present="config:login/logo/url">
+					<link url="config:login/logo/url" target="_top">
 						<image url="config:login/logo/file"></image>
-					</if>
+					</link>
+				</if>
+				<if empty="config:login/logo/url">
+					<image url="config:login/logo/file"></image>
 				</if>
 			</if>
-			<if not="" empty="config:login/motd">
-				<part class="motd">
-					<text raw="config:login/motd"></text>
-				</part>
-			</if>
-			<if true="config:login/nologin">
-				<text key="LOGIN_NOLOGIN_DESC"></text>
-			</if>
-			<if true="config:security/readonly">
-				<text key="GLOBAL_READONLY_DESC" class="help"></text>
-			</if>
-			<if true="config:security/nopublish">
-				<text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
-			</if>
-			<if false="config:login/nologin">
-				<logo name="login"></logo>
+		</if>
+		<if not="" empty="config:login/motd">
+			<part class="message warn">
+				<text raw="config:login/motd"></text>
+			</part>
+		</if>
+		<if true="config:login/nologin">
+			<text key="LOGIN_NOLOGIN_DESC"></text>
+		</if>
+		<if true="config:security/readonly">
+			<text key="GLOBAL_READONLY_DESC" class="help"></text>
+		</if>
+		<if true="config:security/nopublish">
+			<text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
+		</if>
+		<if false="config:login/nologin">
+			<logo name="login"></logo>
 
-				<part class="line">
-					<part class="label">
-						<label for="login_name">
-							<text key="USER_USERNAME"></text>
-						</label>
-					</part>
-					<part class="input">
-						<if not="true" present="force_username">
-							<input type="text" name="login_name" class="name" value=""
-								hint="message:USER_USERNAME" size="20"></input>
-						</if>
-						<else>
+			<part class="line">
+				<part class="label">
+					<label for="login_name">
+						<text key="USER_USERNAME"></text>
+					</label>
+				</part>
+				<part class="input">
+					<if not="true" present="force_username">
+						<input type="text" name="login_name" class="name" value=""
+							hint="message:USER_USERNAME" size="20"></input>
+					</if>
+					<else>
 							<input type="hidden" name="login_name" value="var:force_username"></input>
 							<text value="var:force_username"></text>
 						</else>
-					</part>
 				</part>
-				<part class="line">
-					<part class="label">
-						<label for="login_password">
-							<text key="USER_PASSWORD"></text>
-						</label>
-					</part>
-					<part class="input">
-						<password name="login_password" class="name" default=""
-							size="20"></password>
-					</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="login_password">
+						<text key="USER_PASSWORD"></text>
+					</label>
 				</part>
-			</if>
-		</group>
+				<part class="input">
+					<password name="login_password" class="name" default=""
+						size="20"></password>
+				</part>
+			</part>
+		</if>
 		<!-- <if true="property:mustChangePassword"> -->
 		<group title="message:USER_NEW_PASSWORD" open="true">
 			<part class="line">
@@ -96,7 +94,7 @@
 		<newline></newline>
 
 		<if value="size:dbids" greaterthan="1">
-		<!-- Mehr als 1 Datenbank zur Auswahl. Auswahlfeld anzeigen. -->
+			<!-- Mehr als 1 Datenbank zur Auswahl. Auswahlfeld anzeigen. -->
 			<group title="message:DATABASE" icon="database">
 				<part class="line">
 					<part class="label">
@@ -114,8 +112,8 @@
 		<!-- Nur 1 Datenbank zur Auswahl. Kein Auswahlfeld notwendig. -->
 			<hidden name="dbid" default="var:actdbid"></hidden>
 		</else>
-		
-		
+
+
 		<hidden name="objectid"></hidden>
 		<hidden name="modelid"></hidden>
 		<hidden name="projectid"></hidden>

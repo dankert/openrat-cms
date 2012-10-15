@@ -1027,20 +1027,41 @@ div.window div.status
 {
 	padding:10px;
 }
-div.window div.status div.error {
-	xborder:1px solid <?php echo $_GET['inactive_background_color']; ?>;
+
+
+div.window div.status div.error,
+div.message.error
+{
 	background: url(../images/notice_error.png) no-repeat;
-	padding-left:20px;
 }
-div.window div.status div.warn {
-	xborder:1px solid <?php echo $_GET['inactive_background_color']; ?>;
-	background: url(../images/notice_warn.png) no-repeat;
-	padding-left:20px;
+div.window div.status div.warn,
+div.message.warn
+{
+	background: url(../images/notice_warning.png) no-repeat;
+	background-position:5px 7px;
 }
-div.window div.status div.ok {
-	xborder:1px solid <?php echo $_GET['inactive_background_color']; ?>;
+div.window div.status div.ok,
+div.message.ok
+{
 	background: url(../images/notice_ok.png) no-repeat;
-	padding-left:20px;
+}
+div.window div.status div.info,
+div.message.info
+{
+	background: url(../images/notice_info.png) no-repeat;
+}
+
+div.window div.status div,
+div.message
+{
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
+	padding:5px 0px 5px 25px;
+	margin:0px 10px 20px 10px;
+	
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -khtml-border-radius:5px;
+    border-radius:5px;
 }
 
 /* Fortschrittsbalken */
