@@ -51,7 +51,6 @@ guest=true
 
 [password]
 menu=login
-target=passwordcode
 guest=true
 
 [passwordcode]
@@ -60,7 +59,6 @@ goto=passwordinputcode
 
 [passwordinputcode]
 menu=login
-target=passwordcommit
 guest=true
 
 [passwordcommit]

@@ -2,3 +2,4 @@
 syntax: glob
 .project
 .settings
+config/config-localhost.ini.php

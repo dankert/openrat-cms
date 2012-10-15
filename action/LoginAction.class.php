@@ -340,7 +340,7 @@ class LoginAction extends Action
 				exit;
 			}
 			
-			// Benutzername ist in Eingabemaske unveränderlich
+			// Benutzername ist in Eingabemaske unverï¿½nderlich
 			$this->setTemplateVar('force_username',$username);
 		}
 
@@ -874,7 +874,7 @@ class LoginAction extends Action
 		// Alle Variablen aus der Sitzung entfernen.
 		session_unset();
 		
-		// Damit wird die Session gelöscht, nicht nur die Session-Daten!
+		// Damit wird die Session gelï¿½scht, nicht nur die Session-Daten!
 		if	( ini_get("session.use_cookies") )
 		{
 			$params = session_get_cookie_params();
@@ -1069,8 +1069,8 @@ class LoginAction extends Action
 		}
 		else
 		{
-			// Prüft, ob die übergebene Datenbank-Id mit der
-			// aktuellen übereinstimmt.
+			// Prï¿½ft, ob die ï¿½bergebene Datenbank-Id mit der
+			// aktuellen ï¿½bereinstimmt.
 			// Falls nicht, muss ein Re-Login erfolgen. 
 			if	( isset($vars[REQ_PARAM_DATABASE_ID]) )
 				if	( $db->id != $vars[REQ_PARAM_DATABASE_ID] )
@@ -1439,7 +1439,7 @@ class LoginAction extends Action
 	/**
 	 * Maske anzeigen, um Benutzer zu registrieren.
 	 */
-	function registerView()
+	public function registerView()
 	{
 		
 	}
@@ -1449,9 +1449,9 @@ class LoginAction extends Action
 	 * Registriercode erzeugen und per E-Mail dem Benutzer mitteilen.
 	 * Maske anzeigen, damit Benuter Registriercode anzeigen kann.
 	 */
-	function registerPost()
+	public function registercodeView()
 	{
-		$email_address = $this->getRequestVar('mail','mail');
+		$email_address = $this->getRequestVar('mail',OR_FILTER_MAIL);
 		
 		if	( ! Mail::checkAddress($email_address) )
 		{
@@ -1485,7 +1485,7 @@ class LoginAction extends Action
 
 	
 	
-	function registeruserdataView()
+	function registerxxxxPost()
 	{
 		global $conf;
 
@@ -1511,7 +1511,7 @@ class LoginAction extends Action
 	 * Benutzerregistierung.
 	 * Benutzer hat Best?tigungscode erhalten und eingegeben.
 	 */
-	function registeruserdataPost()
+	function registercodePost()
 	{
 		global $conf;
 		$this->checkForDb();
@@ -1676,7 +1676,7 @@ class LoginAction extends Action
 		}
 		
 		$this->setSessionVar("password_commit_name",$user->name);
-		$this->nextView('passwordinputcode');
+		$this->nextView('passwordcode');
 	}
 
 	
@@ -1685,7 +1685,7 @@ class LoginAction extends Action
 	 * Anzeige Formular zum Eingeben des Kennwort-Codes.
 	 *
 	 */
-	function passwordinputcodeView()
+	function passwordcodeView()
 	{
 		
 	}
@@ -1694,7 +1694,7 @@ class LoginAction extends Action
 	/**
 	 * Neues Kennwort erzeugen und dem Benutzer zusenden.
 	 */
-	function passwordinputcodePost()
+	function passwordcodePost()
 	{
 		$username = $this->getSessionVar("password_commit_name");
 
