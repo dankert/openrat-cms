@@ -674,7 +674,7 @@ fieldset
 fieldset > legend
 {
 	margin-left:30px;
-	font-weight:bold;
+	font-weight:normal;
 }
 
 
@@ -1059,7 +1059,7 @@ div.message
 {
 	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 	padding:5px 0px 5px 25px;
-	margin:0px 10px 20px 10px;
+	margin:10px 10px 20px 10px;
 	
 	-moz-border-radius:5px;
     -webkit-border-radius:5px;

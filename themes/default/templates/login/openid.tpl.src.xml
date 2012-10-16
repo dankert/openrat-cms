@@ -3,7 +3,7 @@
 	<header views="password"></header>
 	<form action="login" subaction="login" target="_top">
 
-		<!--  Open-Id -->
+		<!-- Open-Id -->
 		<if true="config:security/openid/enable">
 			<group title="message:OPENID">
 				<part class="line">
@@ -22,34 +22,37 @@
 					</part>
 				</part>
 			</group>
-		</if>
 
-		<if value="size:dbids" greaterthan="1">
-			<group title="message:DATABASE" icon="database">
-				<part class="line">
-					<part class="label">
-						<label for="dbid">
-							<text key="DATABASE"></text>
-						</label>
+			<if value="size:dbids" greaterthan="1">
+				<group title="message:DATABASE" icon="database">
+					<part class="line">
+						<part class="label">
+							<label for="dbid">
+								<text key="DATABASE"></text>
+							</label>
+						</part>
+						<part class="input">
+							<selectbox name="dbid" list="dbids" default="var:actdbid"></selectbox>
+							<hidden name="screenwidth" default="9999"></hidden>
+						</part>
 					</part>
-					<part class="input">
-						<selectbox name="dbid" list="dbids" default="var:actdbid"></selectbox>
-						<hidden name="screenwidth" default="9999"></hidden>
-					</part>
-				</part>
-			</group>
+				</group>
+			</if>
+			<else>
+				<hidden name="dbid" default="var:actdbid"></hidden>
+			</else>
+			<hidden name="objectid"></hidden>
+			<hidden name="modelid"></hidden>
+			<hidden name="projectid"></hidden>
+			<hidden name="languageid"></hidden>
 		</if>
 		<else>
-		<hidden name="dbid" default="var:actdbid"></hidden>
+			<part class="message error">
+				<text key="OPENID_NOT_ENABLED" />
+			</part>
 		</else>
-		<hidden name="objectid"></hidden>
-		<hidden name="modelid"></hidden>
-		<hidden name="projectid"></hidden>
-		<hidden name="languageid"></hidden>
 	</form>
-	<newline></newline>
-	<newline></newline>
-	<link url="config:login/gpl/url" target="_top" class="copyright">
-		<text key="GPL"></text>
-	</link>
+
+	<!-- <newline></newline> <newline></newline> <link url="config:login/gpl/url" 
+		target="_top" class="copyright"> <text key="GPL"></text> </link> -->
 </output>
