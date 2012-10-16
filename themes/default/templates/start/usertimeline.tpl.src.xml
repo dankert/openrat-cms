@@ -18,8 +18,8 @@
 				<column>
 					<text var="projectname"></text>
 				</column>
-				<column>
-					<text var="filename"></text>
+				<column title="var:filename">
+					<text var="filename" maxlength="40"></text>
 				</column>
 				<column>
 					<date date="var:lastchange_date" />
