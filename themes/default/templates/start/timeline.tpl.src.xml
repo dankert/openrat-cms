@@ -3,7 +3,7 @@
 	<table>
 		<row class="headline">
 			<column>
-				<text key="name"></text>
+				<text key="project"></text>
 			</column>
 			<column>
 				<text key="filename"></text>

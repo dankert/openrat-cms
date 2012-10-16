@@ -312,13 +312,23 @@ div.dropdown div.entry
 
 /*Dropdown anzeigen!!!*/
 div#title div:hover div.dropdown,
-div.window div.header:hover div.dropdown,
+div.window div:hover > div.dropdown,
 div.icon:hover > div.dropdown
 {
 	display:block;
 }
 
 
+
+div.onrowvisible
+{
+	visibility: hidden;
+	display:inline;
+}
+td:hover > div.onrowvisible
+{
+	visibility: visible;
+}
 
 
 
