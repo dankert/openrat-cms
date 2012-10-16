@@ -365,7 +365,7 @@ class StartAction extends Action
 	/**
 	 * Erzeugt ein Projekt-Auswahlmenue.
 	 */
-	function projectmenuView()
+	public function projectmenuView()
 	{
 		$user = Session::getUser();
 		
@@ -421,7 +421,7 @@ class StartAction extends Action
 	/**
 	 * Erzeugt eine Anwendungsliste.
 	 */
-	function applicationsView()
+	public function applicationsView()
 	{
 		global $conf;
 		
@@ -1372,7 +1372,7 @@ class StartAction extends Action
 	 * Registriercode erzeugen und per E-Mail dem Benutzer mitteilen.
 	 * Maske anzeigen, damit Benuter Registriercode anzeigen kann.
 	 */
-	function registercode()
+	public function registercode()
 	{
 		$email_address = $this->getRequestVar('mail','mail');
 		
@@ -1409,7 +1409,7 @@ class StartAction extends Action
 
 	
 	
-	function registeruserdata()
+	public function registeruserdata()
 	{
 		global $conf;
 
@@ -1435,7 +1435,7 @@ class StartAction extends Action
 	 * Benutzerregistierung.
 	 * Benutzer hat Best�tigungscode erhalten und eingegeben.
 	 */
-	function registercommit()
+	public function registercommit()
 	{
 		global $conf;
 		$this->checkForDb();
@@ -1493,7 +1493,7 @@ class StartAction extends Action
 	/**
 	 * Vergessenes Kennwort zusenden lassen.
 	 */
-	function password()
+	public function password()
 	{
 		global $conf;
 		
@@ -1564,7 +1564,7 @@ class StartAction extends Action
 	/**
 	 * Einen Kennwort-Anforderungscode an den Benutzer senden.
 	 */
-	function passwordcode()
+	public function passwordcode()
 	{
 		if	( !$this->hasRequestVar('username') )
 		{
@@ -1611,7 +1611,7 @@ class StartAction extends Action
 	 * Anzeige Formular zum Eingeben des Kennwort-Codes.
 	 *
 	 */
-	function passwordinputcode()
+	public function passwordinputcode()
 	{
 		
 	}
@@ -1620,7 +1620,7 @@ class StartAction extends Action
 	/**
 	 * Neues Kennwort erzeugen und dem Benutzer zusenden.
 	 */
-	function passwordcommit()
+	public function passwordcommit()
 	{
 		$username = $this->getSessionVar("password_commit_name");
 
@@ -1664,7 +1664,7 @@ class StartAction extends Action
 	/**
 	 * Erzeugt eine neue Sitzung.
 	 */
-	function recreateSession()
+	private function recreateSession()
 	{
 		
 		// PHP < 4.3.2 kennt die Funktion session_regenerate_id() nicht.
@@ -1697,7 +1697,55 @@ class StartAction extends Action
 		}
 	}
 
+	
 
+	/**
+	 * Ermittelt die letzten Änderungen, die durch den aktuellen Benutzer in allen Projekten gemacht worden sind.
+	 */
+	public function usertimelineView()
+	{
+		$result = Project::getMyAllLastChanges();
+		$this->setTemplateVar('timeline', $result);
+	}
+	
+	
+	
+	/**
+	 * Ermittelt die letzten Änderungen, die durch den aktuellen Benutzer im aktuellen Projekt gemacht worden sind.
+	 */
+	public function userprojecttimelineView()
+	{
+		$project = Session::getProject();
+				Logger::debug('1');
+		$result = $project->getMyLastChanges();
+		
+		$this->setTemplateVar('timeline', $result);
+	}
+
+	
+
+	/**
+	 * Ermittelt die letzten Änderungen, die in allen Projekten gemacht worden sind.
+	 */
+	public function timelineView()
+	{
+		$result = Project::getAllLastChanges();
+		$this->setTemplateVar('timeline', $result);
+	}
+	
+	
+	
+	/**
+	 * Ermittelt die letzten Änderungen, die im aktuellen Projekt gemacht worden sind.
+	 */
+	public function projecttimelineView()
+	{
+		$project = Session::getProject();
+		
+		$result = $project->getLastChanges();
+		
+		$this->setTemplateVar('timeline', $result);
+	}
 }
 
 

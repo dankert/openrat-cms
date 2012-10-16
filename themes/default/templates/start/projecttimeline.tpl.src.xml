@@ -1,0 +1,38 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+
+	<table>
+		<row class="headline">
+			<column>
+				<text key="name"></text>
+			</column>
+			<column>
+				<text key="filename"></text>
+			</column>
+			<column>
+				<text key="user_username"></text>
+			</column>
+			<column>
+				<text key="lastchange" />
+			</column>
+		</row>
+		<list list="timeline" extract="true">
+			<row class="data">
+				<column>
+					<link url="var:url">
+						<text var="name"></text>
+					</link>
+				</column>
+				<column>
+					<text var="filename"></text>
+				</column>
+				<column>
+					<text var="username"></text>
+				</column>
+				<column>
+					<date date="var:lastchange_date" />
+				</column>
+			</row>
+		</list>
+	</table>
+</output>

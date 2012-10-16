@@ -750,6 +750,151 @@ SQL
 		
 		return $info;
 	}
+	
+	
+	/**
+	 * Ermittelt projektübergreifend die letzten Änderungen des angemeldeten Benutzers.
+	 *  
+	 * @return Ambigous <string, unknown>
+	 */
+	public static function getMyAllLastChanges()
+	{
+		$db = db_connection();
+		
+		$sql = new Sql( <<<SQL
+		SELECT {t_object}.id       as objectid,
+		       {t_object}.filename as filename,
+		       {t_object}.lastchange_date as lastchange_date,
+		       {t_project}.id      as projectid,
+			   {t_project}.name    as projectname
+		  FROM {t_object}
+		LEFT JOIN {t_project}
+		       ON {t_object}.projectid = {t_project}.id
+		   WHERE {t_object}.lastchange_userid = {userid}
+		ORDER BY {t_object}.lastchange_date DESC
+SQL
+		);
+		
+		$user = Session::getUser();
+		$sql->setInt( 'userid', $user->userid );
+		
+		return $db->getAll( $sql );
+		
+	}
+	
+
+	/**
+	 * Ermittelt projektübergreifend die letzten Änderungen des angemeldeten Benutzers.
+	 *  
+	 * @return Ambigous <string, unknown>
+	 */
+	public function getMyLastChanges()
+	{
+		
+		$db = db_connection();
+
+
+		$sql = new Sql( <<<SQL
+		SELECT {t_object}.id    as objectid,
+		       {t_object}.filename as filename,
+		       {t_object}.lastchange_date as lastchange_date,			
+		       {t_name}.name as name				
+		  FROM {t_object}
+		  LEFT JOIN {t_name}
+		         ON {t_name}.objectid = {t_object}.id
+				AND {t_name}.languageid = {languageid}
+		  LEFT JOIN {t_project}
+		         ON {t_object}.projectid = {t_project}.id
+			  WHERE {t_object}.projectid         = {projectid}
+				AND {t_object}.lastchange_userid = {userid}
+		   ORDER BY {t_object}.lastchange_date DESC;
+SQL
+		);
+		
+		// Variablen setzen.
+		$sql->setInt( 'projectid', $this->projectid );
+		
+		$language = Session::getProjectLanguage();
+		$sql->setInt( 'languageid', $language->languageid );
+		
+		$user = Session::getUser();
+		$sql->setInt( 'userid', $user->userid );
+		
+		return $db->getAll( $sql );		
+	}
+	
+
+	/**
+	 * Ermittelt projektübergreifend die letzten Änderungen.
+	 *  
+	 * @return Ambigous <string, unknown>
+	 */
+	public static function getAllLastChanges()
+	{
+		$db = db_connection();
+
+		$sql = new Sql( <<<SQL
+		SELECT {t_object}.id    as objectid,
+		       {t_object}.lastchange_date as lastchange_date,
+		       {t_object}.filename as filename,
+		       {t_project}.id   as projectid,
+			   {t_project}.name as projectname,
+		       {t_user}.name       as username,
+		       {t_user}.id         as userid,
+		       {t_user}.mail       as usermail,
+		       {t_user}.fullname   as userfullname
+		  FROM {t_object}
+		  LEFT JOIN {t_project}
+		         ON {t_object}.projectid = {t_project}.id
+		  LEFT JOIN {t_user}
+		         ON {t_user}.id = {t_object}.lastchange_userid
+		  ORDER BY {t_object}.lastchange_date DESC
+		  LIMIT 50
+SQL
+		);
+		
+		return $db->getAll( $sql );
+	}
+	
+
+
+	/**
+	 * Ermittelt die letzten Änderung im Projekt.
+	 * @return Array[Objektid]=Array())
+	 */
+	public function getLastChanges()
+	{
+		
+		$db = db_connection();
+		
+		$sql = new Sql( <<<SQL
+		SELECT {t_object}.id    as objectid,
+		       {t_object}.lastchange_date as lastchange_date,
+		       {t_object}.filename as filename,
+		       {t_name}.name       as name,
+		       {t_user}.name       as username,
+		       {t_user}.id         as userid,
+		       {t_user}.mail       as usermail,
+		       {t_user}.fullname   as userfullname
+		  FROM {t_object}
+		  LEFT JOIN {t_name}
+		         ON {t_name}.objectid = {t_object}.id
+				AND {t_name}.languageid = {languageid}
+		  LEFT JOIN {t_user}
+		         ON {t_user}.id = {t_object}.lastchange_userid
+			  WHERE {t_object}.projectid = {projectid}
+		   ORDER BY {t_object}.lastchange_date DESC
+SQL
+		);
+		
+		// Variablen setzen.
+		$sql->setInt( 'projectid', $this->projectid );
+		
+		$language = Session::getProjectLanguage();
+		$sql->setInt( 'languageid', $language->languageid );
+		
+		return $db->getAll( $sql );
+	}
 }
 
 ?>

@@ -2,7 +2,9 @@
 
 
 [tree]
-views=
+views=usertimeline
+default     = usertimeline
+action=start
 
 [content]
 
