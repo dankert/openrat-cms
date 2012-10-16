@@ -377,8 +377,8 @@ function loadView(jo, url )
 				$(this).closest('div.frame').find('div.command').css('visibility','visible').fadeIn('slow');
 			});
 
-			$(jo).find('fieldset.open').click( function() {
-				$(this).find('div').first().toggleClass('invisible');
+			$(jo).find('fieldset.open > legend').click( function() {
+				$(this).parent().find('div').first().toggleClass('invisible');
 			});
 
 		});
