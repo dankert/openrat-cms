@@ -19,9 +19,7 @@
 		<list list="timeline" extract="true">
 			<row class="data">
 				<column>
-					<link url="var:url">
-						<text var="projectname"></text>
-					</link>
+					<text var="projectname"></text>
 				</column>
 				<column>
 					<text var="filename"></text>
