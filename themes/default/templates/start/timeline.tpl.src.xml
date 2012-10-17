@@ -18,8 +18,10 @@
 
 		<list list="timeline" extract="true">
 			<row class="data">
-				<column>
-					<text var="projectname"></text>
+				<column class="clickable">
+					<link type="post" action="start" subaction="projectmenu" id="var:projectid">
+						<text var="projectname"></text>
+					</link>
 				</column>
 				<column>
 					<text var="filename" maxlength="40"></text>
