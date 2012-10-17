@@ -38,7 +38,7 @@ function view_header( $name )
           }
           if ( /* Deaktiviert */ false && @$conf['help']['enabled'] )
           	{
-             ?><a class="help" href="javascript:help(this,'<?php echo $conf['help']['url'] ?>','<?php echo @$conf['help']['suffix'] ?> " title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo $image_dir.'icon/help.png' ?>" /><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
+             ?><a class="help" data-url="<?php echo $conf['help']['url'] ?>" data-suffix="<?php echo @$conf['help']['suffix'] ?>" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo $image_dir.'icon/help.png' ?>" /><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
           	}
           	?><?php
 	
@@ -52,11 +52,11 @@ function view_header( $name )
 <?php if (!empty($viewlist)) { /* Fenster-Menü anzeigen (sofern Views vorhanden) */ ?>
 <img class="icon" src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/menu.gif' ?>" />
 <div class="dropdown dropdownalignright">
-<div class="entry"><a href="javascript:void(0);" class="fullscreen" onClick="javascript:fullscreen( this );"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /><?php echo langHtml('window_fullscreen') ?></a></div>
+<div class="entry clickable"><a href="javascript:void(0);" class="fullscreen" data-type="fullscreen"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /><?php echo langHtml('window_fullscreen') ?></a></div>
 <?php 
           if ( @$conf['help']['enabled'] )
           	{
-             ?><div class="entry"><a onclick="help(this,'<?php echo $conf['help']['url'] ?>','<?php echo @$conf['help']['suffix'] ?>');" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/help.png' ?>" /><?php echo langHtml('MENU_HELP') ?></a></div><?php
+             ?><div class="entry clickable"><a href="javascript:void(0);" data-type="help" data-url="<?php echo $conf['help']['url'] ?>" data-suffix="<?php echo @$conf['help']['suffix'] ?>" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/help.png' ?>" /><?php echo langHtml('MENU_HELP') ?></a></div><?php
           	}
           	?>
 </div>

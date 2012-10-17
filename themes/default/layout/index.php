@@ -37,6 +37,7 @@
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/openrat.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orHint.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orSearch.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLinkify.js"></script>
   <!-- 
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
    -->

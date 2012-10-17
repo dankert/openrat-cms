@@ -22,14 +22,14 @@
 		<text class="titletext" var="userfullname" maxlength="25"></text>
 		<image fileext="icon/menu.gif" align="left"></image>
 		<part class="dropdown">
-			<part class="entry">
+			<part class="entry clickable">
 				<link type="post" title="message:USER_PROFILE_DESC" action="start"
 					subaction="profile">
 					<image icon="user" align="left"></image>
 					<text key="profile"></text>
 				</link>
 			</part>
-			<part class="entry">
+			<part class="entry clickable">
 				<link type="post" title="message:start" action="start"
 					subaction="start">
 					<image icon="start" align="left"></image>
@@ -37,7 +37,7 @@
 				</link>
 			</part>
 			<if true="method:userIsAdmin">
-				<part class="entry">
+				<part class="entry clickable">
 					<link type="post" class="entry" action="start" subaction="administration"
 						target="tree" id="-1">
 						<image icon="administration" align="left"></image>
@@ -45,7 +45,7 @@
 					</link>
 				</part>
 			</if>
-			<part class="entry">
+			<part class="entry clickable">
 				<link type="post" class="entry" title="message:USER_LOGOUT_DESC"
 					action="login" subaction="logout">
 					<image icon="close" align="left"></image>
@@ -66,7 +66,7 @@
 		<text class="titletext" key="GLOBAL_CHANGE_TO"></text>
 		<part class="dropdown">
 			<list list="projects" key="id" value="name">
-				<part class="entry">
+				<part class="entry clickable">
 					<image icon="project"></image>
 					<link type="post" action="start" subaction="projectmenu" id="var:id">
 						<text var="name" maxlength="45"></text>

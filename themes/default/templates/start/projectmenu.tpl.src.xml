@@ -8,7 +8,7 @@
 		</row>
 		<list list="projects" extract="true">
 			<row>
-				<column colspan="2">
+				<column colspan="2" class="clickable">
 					<group title="var:name">
 						<link type="post" id="var:id" title="message:TREE_CHOOSE_PROJECT">
 							<set var="project" value="project"></set>

@@ -1,5 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+ 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<table>
 		<row class="headline">
 			<column>
@@ -18,8 +18,8 @@
 
 		<list list="timeline" extract="true">
 			<row class="data">
-				<column>
-					<link url="var:url">
+				<column class="clickable">
+					<link type="post" id="var:projectid">
 						<text var="projectname"></text>
 					</link>
 				</column>

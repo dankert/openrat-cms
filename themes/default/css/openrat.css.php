@@ -381,7 +381,7 @@ a:active,
 a:hover
 {
 	font-weight:normal;
-	text-decoration:underline;
+	text-decoration:none;
 }
 
 
@@ -645,7 +645,8 @@ textarea.editor
 }
 
 label,
-fieldset.open > legend
+fieldset.open > legend,
+.clickable
 {
 	cursor: pointer;
 }

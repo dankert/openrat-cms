@@ -355,15 +355,13 @@ function loadView(jo, url )
 			// Eingabefeld-Hints aktivieren...
 			$(jo).find('input[data-hint]').orHint();
 			
-			
-			
 			// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 			$(jo).closest('div.frame').find('div.menu div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
 			
 			$(jo).find('div.headermenu > a').each( function(idx,el)
 			{
 				// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
-				$(el).wrap('<div class="entry perview" />').parent().appendTo( $(jo).closest('div.frame').find('div.menu div.dropdown').first() );
+				$(el).wrap('<div class="entry clickable perview" />').parent().appendTo( $(jo).closest('div.frame').find('div.menu div.dropdown').first() );
 			} );
 			
 			$(jo).find('div.header > a.back').each( function(idx,el)
@@ -381,6 +379,8 @@ function loadView(jo, url )
 				$(this).parent().find('div').first().toggleClass('invisible');
 			});
 
+			// Links aktivieren...
+			$(jo).closest('div.frame').find('.clickable').orLinkify();
 		});
 }
 
@@ -388,6 +388,9 @@ function loadView(jo, url )
 
 function registerHeaderEvents()
 {
+	// Links aktivieren...
+	$('div#title').find('.clickable').orLinkify();
+	
 	//   S u c h e
 	$('div.search input').blur( function(){
 		$('div.search input div.dropdown').fadeOut();
