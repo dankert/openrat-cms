@@ -9,16 +9,12 @@ function view_header( $name )
 ?>
 
 
-<div id="<?php echo $name ?>" data-action="<?php echo $v['action'] ?>" class="frame<?php echo ($v['refreshable']?' refreshable':'') ?><?php echo (@$v['modal']?' modal':'') ?>">
+<div id="<?php echo $name ?>" data-action="<?php echo @$v['action'] ?>" class="frame<?php echo (@$v['refreshable']?' refreshable':'') ?><?php echo (@$v['modal']?' modal':'') ?>">
 <div class="window">
 
 <div class="menu">
 
 <div class="views">
-<!-- 
-<div class="backward_link"><img src="<?php echo OR_THEMES_EXT_DIR ?>default/images/icon/backward_nav.gif"/></div>
-<div class="forward_link"><img src="<?php echo OR_THEMES_EXT_DIR ?>default/images/icon/forward_nav.gif"/></div>
- -->
 <ul class="views">
 <?php
 
@@ -32,7 +28,7 @@ function view_header( $name )
 			$liClass  = 'action'.($vn==$v['default']?' active':'');
 			$icon_url = OR_THEMES_EXT_DIR.'default/images/icon/'.$vn.'.png';
 			
-			?><li title="<?php echo $tmp_text ?>" data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
+			?><li data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
           		?><img class="icon" src="<?php echo $icon_url ?>" /><div class="tabname"><?php echo $tmp_text ?></div><?php
           	?></li><?php
           }
@@ -73,22 +69,8 @@ function view_header( $name )
 <!-- Hinweis-Meldungen -->
 
 <div class="content">
-	<div class="empty" />
+	<div class="empty"></div>
 </div>
-
-<!-- 
-<div class="bottom">
-	<div class="status">
-	</div>
-	<div class="command">
-	
-	<input type="button" class="submit" value="<?php echo lang('BUTTON_OK') ?>" onclick="$(this).closest('div.window').find('form').submit();" />
-	<!- 
-	<input type="button" value="<?php echo lang('CANCEL') ?>" />
-	->
-	</div>
-</div>
- -->
 
 </div>
 </div>

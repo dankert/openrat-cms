@@ -1,20 +1,4 @@
 
-<!-- 
-<div id="shortcuts">
-<?php 
-$icons = @$viewconfig['icons'];
-if (false&&!empty($icons))
-{
-	foreach( explode(',',$icons) as $name )
-	{
-		echo "<div class=\"shortcut\" title=\"".lang('ACTION_'.$name)."\" onClick=\"javascript:openNewAction('".lang('ACTION_'.$name)."','$name','','');\"><img src=\"".OR_THEMES_EXT_DIR.'/default/images/icon_'.$name.'.png'."\" /></div>";
-	}
-} 
-?>
-
-</div>
- -->
-
 <div class="bar" id="navigationbar">
 <?php 
 view_header('tree');
@@ -37,6 +21,4 @@ view_header('side');
 <?php 
 view_header('bottom');
 ?>
-</div>
-
 </div>
