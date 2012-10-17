@@ -1,3 +1,4 @@
+<?php header('Content-Type: text/css',true) ?>
 /*
 OpenRat Content Management System
 Copyright (C) 2002-2010 Jan Dankert
