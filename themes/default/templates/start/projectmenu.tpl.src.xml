@@ -13,7 +13,7 @@
 		</row>
 		<list list="projects" extract="true">
 			<row class="data">
-				<column>
+				<column class="clickable">
 					<link type="post" id="var:id" title="message:TREE_CHOOSE_PROJECT">
 						<set var="project" value="project"></set>
 						<image type="project"></image>
