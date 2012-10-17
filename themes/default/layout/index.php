@@ -5,6 +5,7 @@
 <html>
 <head>
   <title><?php echo OR_TITLE.' '.OR_VERSION ?></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" >
 <?php if ( isset($refresh_url) ) { ?>
   <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url; if (ini_get('session.use_trans_sid')) echo '&'.session_name().'='.session_id(); ?>">
