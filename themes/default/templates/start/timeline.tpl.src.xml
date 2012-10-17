@@ -1,9 +1,9 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<table>
 		<row class="headline">
 			<column>
-				<text key="name"></text>
+				<text key="project"></text>
 			</column>
 			<column>
 				<text key="filename"></text>
@@ -18,13 +18,11 @@
 
 		<list list="timeline" extract="true">
 			<row class="data">
-				<column class="clickable">
-					<link type="post" id="var:projectid">
-						<text var="projectname"></text>
-					</link>
+				<column>
+					<text var="projectname"></text>
 				</column>
 				<column>
-					<text var="filename"></text>
+					<text var="filename" maxlength="40"></text>
 				</column>
 				<column>
 					<text var="username"></text>

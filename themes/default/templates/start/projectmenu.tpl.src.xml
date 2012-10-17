@@ -6,32 +6,40 @@
 				<logo name="projectmenu"></logo>
 			</column>
 		</row>
+		<row class="headline">
+			<column>
+				<text key="project" />
+			</column>
+		</row>
 		<list list="projects" extract="true">
-			<row>
-				<column colspan="2" class="clickable">
-					<group title="var:name">
-						<link type="post" id="var:id" title="message:TREE_CHOOSE_PROJECT">
-							<set var="project" value="project"></set>
-							<image type="project"></image>
-							<text var="name" maxlength="30"></text>
-						</link>
-						<form action="index" subaction="project" id="var:id">
-							<table widths="150px,150px">
-								<row>
-									<column>
-										<radiobox list="models" name="modelid" default="var:defaultmodelid"></radiobox>
-									</column>
-									<column>
-										<radiobox list="languages" name="languageid"
-											default="var:defaultlanguageid"></radiobox>
-									</column>
-									<column>
-										<button type="ok" text="message:start"></button>
-									</column>
-								</row>
-							</table>
-						</form>
-					</group>
+			<row class="data">
+				<column>
+					<link type="post" id="var:id" title="message:TREE_CHOOSE_PROJECT">
+						<set var="project" value="project"></set>
+						<image type="project"></image>
+						<text var="name" maxlength="30"></text>
+					</link>
+					<part class="onrowvisible">
+						<image fileext="icon/menu.gif" align="left"></image>
+						<part class="dropdown">
+							<form action="index" subaction="project" id="var:id">
+								<table widths="150px,150px">
+									<row>
+										<column>
+											<radiobox list="models" name="modelid" default="var:defaultmodelid"></radiobox>
+										</column>
+										<column>
+											<radiobox list="languages" name="languageid"
+												default="var:defaultlanguageid"></radiobox>
+										</column>
+										<column>
+											<button type="ok" text="message:start"></button>
+										</column>
+									</row>
+								</table>
+							</form>
+						</part>
+					</part>
 				</column>
 			</row>
 		</list>

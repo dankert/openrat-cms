@@ -18,13 +18,11 @@
 		</row>
 		<list list="timeline" extract="true">
 			<row class="data">
-				<column class="clickable">
-					<link url="var:url">
-						<text var="name"></text>
-					</link>
+				<column>
+					<text var="name" maxlength="40"></text>
 				</column>
 				<column>
-					<text var="filename"></text>
+					<text var="filename" maxlength="40"></text>
 				</column>
 				<column>
 					<text var="username"></text>
