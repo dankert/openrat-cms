@@ -485,11 +485,12 @@ function loadTree()
 function loadBranch(li,type,id)
 {
 	//alert("hier rein: "+$(li).html() );
-	$.getJSON('./dispatcher.php?action=tree&subaction=loadBranch&id='+id+'&type='+type, function(json) {
+	$.getJSON('./dispatcher.php?action=tree&subaction=loadBranch&id='+id+'&type='+type+'&output=json', function(json) {
 		$(li).append('<ul class="tree" style="display:none;"/>');
 		//alert("öffne: "+$(li).html()+"                     neu: "+$(li).html());
 		var ul = $(li).children('ul').first();
-		$.each(json['branch'],function(idx,line)
+		var output = json['output'];
+		$.each(output['branch'],function(idx,line)
 		{
 			//var img = (line.url!==undefined?'tree_plus':'tree_none');
 			$(ul).append( '<li><div class="tree">&nbsp;</div><div class="entry" title="'+ line.description + '"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+line['icon']+'.png" />'+ line.text + '</div></li>' );

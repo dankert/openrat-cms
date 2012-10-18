@@ -49,7 +49,7 @@ define('OR_FILTER_ALL'     ,'all'   );
 class Action
 {
 	var $db;
-	var $templateVars = Array();
+	private $templateVars = Array();
 	var $actionName;
 	var $subActionName;
 	var $actionClassName;
@@ -105,6 +105,7 @@ class Action
 		$this->templateVars['errors' ] = array();
 		$this->templateVars['notices'] = array();
 		$this->templateVars['control'] = array();
+		$this->templateVars['output' ] = array();
 		
 		//Html::debug($this);
 		if	( !$this->isEditable() || isset($_COOKIE['or_always_edit']) )
@@ -261,7 +262,7 @@ class Action
 	 */
 	protected function setTemplateVar( $varName,$value )
 	{
-		$this->templateVars[ $varName ] = $value;
+		$this->templateVars[ 'output' ][ $varName ] = $value;
 	}
 
 
@@ -352,7 +353,7 @@ class Action
 	 * Ausgabe f�r den Browser, starten.<br>
 	 * <br>
 	 */
-	function forward()
+	public function forward()
 	{
 		$db = db_connection();
 
@@ -390,6 +391,7 @@ class Action
 		// Weitere Variablen anreichern.
 		$this->templateVars['session'] = array('name'=>session_name(),'id'=>session_id(),'token'=>token() );
 		$this->templateVars['version'] = OR_VERSION;
+		$this->templateVars['api'    ] = '2';
 		
 		if	( sizeof($types)==1 && in_array('application/php-array',$types) || $this->getRequestVar('output')=='php-array' )
 		{
@@ -456,7 +458,7 @@ class Action
 		       
 		// ?bertragen der Array-Variablen in den aktuellen Kontext
 		//
-		extract( $this->templateVars );
+		extract( $this->templateVars['output'] );
 
 		// Falls Eingabefehler, dann Uebertragen der Request-Variablen in den aktuellen Kontext
 		if	( count($errors)>0 )
