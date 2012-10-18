@@ -14,9 +14,26 @@
 		</row>
 
 		<list list="timeline" extract="true">
+
+			<!-- Den Typ des Objektes ermitteln -->
+			<if value="var:is_folder" equals="1">
+				<set var="type" value="folder" />
+			</if>
+			<if value="var:is_file" equals="1">
+				<set var="type" value="file" />
+			</if>
+			<if value="var:is_link" equals="1">
+				<set var="type" value="link" />
+			</if>
+			<if value="var:is_page" equals="1">
+				<set var="type" value="page" />
+			</if>
+
 			<row class="data">
-				<column>
-					<text var="name" maxlength="40"></text>
+				<column class="clickable">
+					<link type="open" name="var:name" id="var:objectid" action="var:type">
+						<text var="name" maxlength="40"></text>
+					</link>
 				</column>
 				<column>
 					<text var="filename" maxlength="40"></text>

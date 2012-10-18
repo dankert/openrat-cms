@@ -797,6 +797,10 @@ SQL
 		$sql = new Sql( <<<SQL
 		SELECT {t_object}.id    as objectid,
 		       {t_object}.filename as filename,
+		       {t_object}.is_folder as is_folder,
+		       {t_object}.is_file  as is_file,
+		       {t_object}.is_link  as is_link,
+		       {t_object}.is_page  as is_page,
 		       {t_object}.lastchange_date as lastchange_date,			
 		       {t_name}.name as name				
 		  FROM {t_object}
@@ -868,9 +872,13 @@ SQL
 		$db = db_connection();
 		
 		$sql = new Sql( <<<SQL
-		SELECT {t_object}.id    as objectid,
+		SELECT {t_object}.id       as objectid,
 		       {t_object}.lastchange_date as lastchange_date,
 		       {t_object}.filename as filename,
+		       {t_object}.is_folder as is_folder,
+		       {t_object}.is_file  as is_file,
+		       {t_object}.is_link  as is_link,
+		       {t_object}.is_page  as is_page,
 		       {t_name}.name       as name,
 		       {t_user}.name       as username,
 		       {t_user}.id         as userid,
