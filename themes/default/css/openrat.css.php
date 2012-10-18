@@ -217,7 +217,6 @@ div.filler div.header a.back.button
 	font-style:normal;
 	font-weight:normal;
 	text-decoration:none;
-    cursor:default;
     color:<?php echo $_GET['text_color']; ?>;
 }
 
@@ -225,7 +224,6 @@ ul#history > li.active
 {
     background-color: <?php echo $_GET['title_text_color']; ?>;
     font-weight:bold;
-    cursor:default;
     color:<?php echo $_GET['text_color']; ?>;
 }
 
@@ -661,6 +659,15 @@ fieldset.open > legend,
 	cursor: pointer;
 }
 
+body {
+    cursor:default;
+}
+
+input {
+    xcursor:text;
+}
+
+
 div.menu
 {
 	float:none;
@@ -818,10 +825,12 @@ div.structure em
 .drophover
 {
 	border:2px dotted green;
+	cursor: move;
 }
 .dropactive
 {
 	border:1px dotted blue;
+	cursor: move;
 }
 
 div.window div.menu > div.icons
