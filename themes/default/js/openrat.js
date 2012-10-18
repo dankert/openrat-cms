@@ -287,6 +287,7 @@ function loadView(jo, url )
 						params.subaction = 'order';
 						params.token     = $('#id_token').attr('value');
 						params.order     = order.join(',');
+						params.output    = 'json';
 						
 						$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 							{
@@ -554,6 +555,7 @@ function submitUrl( element,url )
 
 function postUrl(url,element)
 {
+	url += '&output=json';
 	$.ajax( { 'type':'POST',url:url, data:{}, success:function(data, textStatus, jqXHR)
 		{
 			$('div.window div.status div.loader').html('&nbsp;');
@@ -749,6 +751,7 @@ function submitLink(element,data)
 {
 	var params = jQuery.parseJSON( data );
 	var url = './dispatcher.php';
+	params.output = 'json';
 	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 		{
 		$('div.window div.status div.loader').html('&nbsp;');
@@ -800,11 +803,14 @@ function formSubmit(form)
 		var p       = $(form).closest('div.frame');
 		var action  = p.attr('data-action');
 		var id      = p.attr('data-id');
+		params.output = 'html';
 		//alert(method+'/'+action+'/'+id);
 		loadView(  $(form).closest('div.content'),createUrl(action,method,id,params));
 	}
 	else
 	{
+		url += '?output=json';
+		params['output'] = 'json';// Irgendwie geht das nicht.
 		$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 			{
 				$(status).find('div.loader').remove();
