@@ -8,9 +8,11 @@
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<column id="var:id" name="var:name" action="project">
-					<image file="icon_project"></image>
-					<text value="var:name" maxlength="30"></text>
+				<column class="clickable">
+					<link type="open" id="var:id" name="var:name" action="project">
+						<image file="icon_project"></image>
+						<text value="var:name" maxlength="30"></text>
+					</link>
 				</column>
 			</row>
 		</list>
