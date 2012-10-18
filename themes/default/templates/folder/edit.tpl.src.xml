@@ -23,11 +23,13 @@
 							<text raw="_"></text>
 						</if>
 					</column>
-					<column>
+					<column class="clickable">
 						<label for="var:id">
-							<image type="var:icon"></image>
-							<text var="name"></text>
-							<text raw="_"></text>
+							<link type="open" name="var:name" action="var:type" id="var:objectid">
+								<image type="var:icon"></image>
+								<text var="name" maxlength="40"></text>
+								<text raw="_"></text>
+							</link>
 						</label>
 					</column>
 				</row>

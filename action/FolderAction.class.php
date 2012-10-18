@@ -1114,10 +1114,11 @@ class FolderAction extends ObjectAction
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
-				$list[$id]['id']     = 'obj'.$id;
-				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
-				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
-				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
+				$list[$id]['objectid'] = $id;
+				$list[$id]['id'      ] = 'obj'.$id;
+				$list[$id]['name'    ] = $o->name;
+				$list[$id]['filename'] = $o->filename;
+				$list[$id]['desc'    ] = $o->desc;
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
