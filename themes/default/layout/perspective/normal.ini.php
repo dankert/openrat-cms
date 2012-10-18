@@ -13,9 +13,9 @@ refreshable=false
 
 [content]
 
-views=projecttimeline,userprojecttimeline
-default=projecttimeline
-action=start
+views=
+default=
+action=
 refreshable=true
 
 [side]
