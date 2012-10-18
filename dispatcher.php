@@ -134,24 +134,6 @@ $charset = !empty($charset)?$charset:'US-ASCII';
 
 header( 'Content-Type: text/html; charset='.$charset );
 
-// Request-Variablen in Session speichern
-//request_into_session('action'    );
-//request_into_session('subaction' );
-//request_into_session('objectid'  );
-//request_into_session('templateid');
-//request_into_session('elementid' );
-//request_into_session('projectid' );
-//request_into_session('modelid'   );
-//request_into_session('userid'    );
-//request_into_session('groupid'   );
-//request_into_session('languageid');
-
-//if	( isset($REQ['objectid']) )
-//{
-//	$o = new Object( $REQ['objectid'] );
-//	Session::setObject($o);
-//}
-
 // Verbindung zur Datenbank
 //
 $db = Session::getDatabase();
@@ -171,8 +153,6 @@ else
 	Http::serverError("no action supplied");
 	//$action = 'login';
 
-Session::set('action',$action);
-
 if	( !empty( $REQ[REQ_PARAM_SUBACTION] ) )
 	$subaction = $REQ[REQ_PARAM_SUBACTION];
 else
@@ -183,24 +163,12 @@ else
 require( OR_ACTIONCLASSES_DIR.'/Action.class.php' );
 require( OR_ACTIONCLASSES_DIR.'/ObjectAction.class.php' );
 
-
-// Schritt 1:
-// Zuerst die Schreibaktion durchführen, erst anschließend folgenen die Views.
-// if	( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	
 $actionClassName = ucfirst($action).'Action';
-
-//if	( !isset($conf['action'][$actionClassName]) )
-//	Http::serverError("Action '$action' is undefined.");
 
 require_once( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
 $sConf = @$conf['action'][$actionClassName][$subaction];
-
-// Wenn
-// - *Action-Methode zum Schreiben vorhanden und POST-Request
-// oder
-// - Methode mit direkter Ausgabe
 
 // Erzeugen der Action-Klasse
 $do = new $actionClassName;
@@ -248,18 +216,8 @@ if	( isset($do->actionConfig['admin']) && $do->actionConfig['admin'] )
 		Http::notAuthorized( lang('SESSION_EXPIRED'),'intrusion detection' );
 		$do->templateVars['error'] = 'no admin';
 		exit;
-				}
+	}
 
-				
-// Aktuelle Subaction in Sitzung merken
-if	( isset($do->actionConfig[$subaction]['menu']) )
-{
-	$sl = Session::getSubaction();
-	if	( !is_array($sl))
-		$sl = array();
-	$sl[$action] = $subaction;
-	Session::setSubaction( $sl );
-}
 
 
 // Alias-Methode aufrufen.
@@ -270,9 +228,6 @@ if	( isset($do->actionConfig[$do->subActionName]['alias']) )
 
 
 $isAction = $_SERVER['REQUEST_METHOD'] == 'POST' || (isset($sConf['write']) && $sConf['write']=='get');
-//      || @$sConf['call']
-//      || isset($conf['action'][$actionClassName][$subaction]['direct'] ) );
-     
 
 
 if	( $isAction )
@@ -288,25 +243,13 @@ if	( ! method_exists($do,$subactionMethodName) )
 	
 }
 
+// Jetzt wird die Aktion aus der Actionklasse aufgerufen.
 $do->$subactionMethodName();
 
 if	( isset($do->actionConfig[$do->subActionName]['direct']) )
 	exit;
 
 		
-if	( $conf['interface']['redirect'] )
-{
-	// Wenn Validierungsfehler aufgetrete sind, auf keinen Fall einen Redirect machen, da sonst
-	// im nächste Request die Eingabedaten fehlen.
-	if	( empty($do->templateVars['errors']) )
-	{
-		header( 'HTTP/1.0 303 See other');
-		// Absoluten Pfad kann auch der Client erg�nzen.
-		header( 'Location: '.Html::url($action,$subaction,$do->getRequestId()) );
-		exit;
-	}
-}
-
 $do->forward();
 
 // fertig :)

@@ -310,7 +310,6 @@ $conf['interface']['show_duration']=false;
 $conf['interface']['timeout']='0';
 $conf['interface']['override_title']='0';
 $conf['interface']['min_width']= 950;
-$conf['interface']['redirect']=false;
 $conf['interface']['human_date_format']=false;
 $conf['interface']['style'] = array();
 $conf['interface']['style']['default']='modern';
