@@ -1,3 +1,26 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><window><form><group title="message:languages"><list list="languages" key="id" value="name"><part><radio name="languageid" value="var:id"></radio><label for="languageid" value="var:id"><text var="name"></text></label></part></list></group><group title="message:models"><list list="models" key="id" value="name"><part><radio name="modelid" value="var:id"></radio><label for="modelid" value="var:id"><text var="name"></text></label></part></list></group></form><button type="ok"></button></window></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header views="projecttimeline,userprojecttimeline" />
+	<form>
+		<group title="message:languages">
+			<list list="languages" key="id" value="name">
+				<part>
+					<radio name="languageid" value="var:id"></radio>
+					<label for="languageid" value="var:id">
+						<text var="name"></text>
+					</label>
+				</part>
+			</list>
+		</group>
+		<group title="message:models">
+			<list list="models" key="id" value="name">
+				<part>
+					<radio name="modelid" value="var:id"></radio>
+					<label for="modelid" value="var:id">
+						<text var="name"></text>
+					</label>
+				</part>
+			</list>
+		</group>
+	</form>
+</output>

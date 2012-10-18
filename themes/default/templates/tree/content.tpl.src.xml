@@ -1,3 +1,4 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><window><table space="0" padding="0" class="tree"><list list="zeilen" extract="true"><row class="var:class"><list list="cols" value="i"><column class="treecol"><image tree="var:i"></image></column></list><if present="image"><column class="treeimage"><if present="image_url"><link url="var:image_url" class="tree" target="_self" title="var:image_url_desc"><image tree="var:image"></image></link></if><else><image tree="var:image"></image></else></column></if><column colspan="var:colspan" class="treevalue"><link name="var:name"></link><if present="url"><link url="var:url" title="var:desc" class="tree" target="var:target"><image icon="var:icon"></image><text var="text" maxlength="20" cut="right"></text></link></if><else><image icon="var:icon"></image><text var="text" maxlength="20" cut="right" title="var:desc"></text></else></column><set var="url"></set><set var="image"></set></row></list></table><insert function="loadTree"></insert></window></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+
+</output>
