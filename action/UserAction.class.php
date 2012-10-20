@@ -144,44 +144,54 @@ class UserAction extends Action
 	/**
 	 * Aendern des Kennwortes
 	 */
-	function pwPost()
+	public function pwPost()
 	{
 		global $conf;
 
 		$pw1 = $this->getRequestVar('password1');
 		$pw2 = $this->getRequestVar('password2');
 
-		// Zufaelliges Kennwort erzeugen
-		if	( $this->hasRequestVar('random') && $this->hasRequestVar('email') )
+		$type = $this->getRequestVar('type');
+
+		switch( $type )
 		{
-			$pw1 = $this->user->createPassword();
-			$pw2 = $pw1;
+			case 'input':
+				if ( strlen($pw1)<intval($conf['security']['password']['min_length']) )
+				{
+					$this->addValidationError('password1');
+					return;
+				}
+				elseif	( $pw1 != $pw2 )
+				{
+					$this->addValidationError('password2');
+					return;
+				}
+				else
+				{
+					$newPassword = $pw1;
+				}
+				break;
+			case 'proposal';
+				$newPassword = $this->getRequestVar('password_proposal');
+				break;
+			case 'random';
+				$newPassword = $this->user->createPassword();
+				break;
+			default:
+				Http::serverError('Type unknown: '.$type);
 		}
 
-		if ( strlen($pw1)<intval($conf['security']['password']['min_length']) )
+		// Kennwoerter identisch und lang genug
+		$this->user->setPassword($pw1,!$this->hasRequestVar('timeout') ); // Kennwort setzen
+		
+		// E-Mail mit dem neuen Kennwort an Benutzer senden
+		if	( $this->hasRequestVar('email') && !empty($this->user->mail) && $conf['mail']['enabled'] )
 		{
-			$this->addValidationError('password1');
-			return;
+			$this->mailPw( $pw1 );
+			$this->addNotice('user',$this->user->name,'MAIL_SENT','ok');
 		}
-		elseif	( $pw1 != $pw2 )
-		{
-			$this->addValidationError('password2');
-			return;
-		}
-		else
-		{
-			// Kennwoerter identisch und lang genug
-			$this->user->setPassword($pw1,!$this->hasRequestVar('timeout') ); // Kennwort setzen
-			
-			// E-Mail mit dem neuen Kennwort an Benutzer senden
-			if	( $this->hasRequestVar('email') && !empty($this->user->mail) && $conf['mail']['enabled'] )
-			{
-				$this->mailPw( $pw1 );
-				$this->addNotice('user',$this->user->name,'MAIL_SENT','ok');
-			}
 
-			$this->addNotice('user',$this->user->name,'SAVED','ok');
-		}
+		$this->addNotice('user',$this->user->name,'SAVED','ok');
 
 	}
 
@@ -305,6 +315,8 @@ class UserAction extends Action
 	function pwView()
 	{
 		$this->setTemplateVars( $this->user->getProperties() );
+		
+		$this->setTemplateVar('password_proposal', $this->user->createPassword() );
 	}
 
 

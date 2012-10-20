@@ -1098,6 +1098,7 @@ USER_MAIL_NEW_PASSWORD = "E-Mail mit dem neuen Kennwort an Benutzer senden"
 USER_MEMBERSHIPS = "Mitgliedschaften"
 USER_NEW_MAIL = "Neue E-Mail-Adresse"
 USER_NEW_PASSWORD = "Neues Kennwort"
+USER_NEW_PASSWORD_INPUT = "Neues Kennwort eingeben"
 USER_NEW_PASSWORD_REPEAT = "Neues Kennwort Wiederholung"
 USER_PASSWORD = Kennwort
 USER_PASSWORD_TIMEOUT =Kennwort läuft ab
