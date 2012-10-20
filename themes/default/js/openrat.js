@@ -854,8 +854,14 @@ function doResponse(data,status,element)
 			$(this).fadeOut('fast',function() { $(this).remove(); } );
 		} );
 		
+		var timeoutSeconds;
 		if	( value.status == 'ok' )
-			$(notice).delay(3000).fadeOut( function() { $(this).remove(); } );
+			timeoutSeconds = 2;
+		else
+			timeoutSeconds = 8;
+			
+		
+		$(notice).delay(timeoutSeconds*1000).fadeOut( function() { $(this).remove(); } );
 		
 		/*
 		$('div.window div.status').html('<div />');
