@@ -858,7 +858,7 @@ function doResponse(data,status,element)
 		if	( value.status == 'ok' )
 			timeoutSeconds = 2;
 		else
-			timeoutSeconds = 8;
+			timeoutSeconds = 5;
 			
 		
 		$(notice).delay(timeoutSeconds*1000).fadeOut( function() { $(this).remove(); } );
