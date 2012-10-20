@@ -197,8 +197,6 @@ div.window > div.content
 ul#history > li,
 div.content a.action,
 div.content a.help,
-div.content input.ok,
-div.command > input.submit,
 div.filler div.headermenu > a.entry,
 div.filler div.header a.back.button
 {
@@ -228,24 +226,10 @@ ul#history > li.active
     color:<?php echo $_GET['text_color']; ?>;
 }
 
-div.content a.action,
-div.content a.help,
-div.content input.ok,
-div.command > input.submit
-{
-	/*float:left;*/
-}
-
-
 
 a.help
 {
 	float:right;
-}
-
-input.ok
-{
-	x-font-weight:bold;
 }
 
 a.help
@@ -255,8 +239,7 @@ a.help
 
 a.action:hover,
 a.help:hover,
-div.noaction:hover,
-input.ok:hover
+div.noaction:hover
 {
 	text-decoration:none;
 	border-color:<?php echo $_GET['title_text_color']; ?>;
@@ -295,13 +278,6 @@ div.dropdownalignright
 div.dropdown > a
 {
 	display:block;
-}
-div.dropdown div.entry:hover,
-div.dropdown div.entry:hover > a
-{
-	/*
-	background-color:<?php echo $_GET['inactive_background_color']; ?>;
-	*/
 }
 div.dropdown div.entry
 {
@@ -1128,6 +1104,10 @@ div#workbench div.bar > div.frame > div.window.fullscreen > div.content
 {
 	visibility:hidden;
 }
+.visible
+{
+	visibility:visible;
+}
 
 
 div#workbench
@@ -1173,16 +1153,49 @@ div.window {
 }
 div.content div.bottom
 {
-	height:30px;
-	width:200px;
+	xbackground-color: <?php echo $_GET['background_color']; ?>;
+	height:55px;
+	width:100%;
 	position:absolute;
-	bottom:30px;
+	padding-right:40px;
+	bottom:0px;
 	right:0px;
-	opacity:0.7;
+	visibility:hidden;
 }
+
+div.content div.bottom > div.command
+{
+	xvisibility:visible;
+	float:right;
+	z-index:20;
+}
+
 div.content > form
 {
 	padding-bottom:45px;
+}
+
+input.submit
+{
+	background-color: <?php echo $_GET['title_background_color']; ?>;
+	color: <?php echo $_GET['title_text_color']; ?>;
+	padding: 7px;
+	border:0px;
+	-moz-border-radius:7px; /* Mozilla */
+    -webkit-border-radius:7px; /* Webkit */
+    -khtml-border-radius:7px; /* Konqui */
+    border-radius:7px;
+    margin-left:20px;
+	-webkit-box-shadow: 0px 0px 15px <?php echo $_GET['background_color']; ?>;
+    -moz-box-shadow: 0px 0px 15px <?php echo $_GET['background_color']; ?>;
+    box-shadow: 0px 0px 15px 10px <?php echo $_GET['background_color']; ?>;
+    cursor:pointer;
+}
+
+
+input.submit.ok
+{
+	font-weight:bold; /* Primäre Aktion in Fettdruck */
 }
 
 
@@ -1408,6 +1421,7 @@ form div.input > div.intputholder
 }
 
 form div.input input[type=text],
+form div.input input[type=password],
 form div.input textarea,
 form div.input select
 {
@@ -1459,9 +1473,9 @@ div.search > div.inputholder
 	padding-top:1px;
 }
 
-input,
-textarea,
-select
+div.inputholder > input,
+div.inputholder > textarea,
+div.inputholder > select
 {
 	border:0px;
 	border-bottom:1px solid <?php echo $_GET['title_text_color']; ?>;
@@ -1470,15 +1484,12 @@ select
 	background-color:<?php echo $_GET['title_text_color']; ?>;
 }
 
-input:hover,input:focus,
-textarea:hover,textarea:focus,
-select:hover,select:focus
+input:focus,
+textarea:focus,
+select:focus
 {
 	border:0px;
 	border-bottom:1px solid <?php echo $_GET['inactive_background_color']; ?>;
-	padding:2px;
-	margin:0px;
-	background-color:<?php echo $_GET['title_text_color']; ?>;
 }
 
 
@@ -1584,24 +1595,10 @@ dl.notice > dd
 }
 
 
-/*   R a h m e n  */
-div.windowx
-{
-	border:1px solid <?php echo $_GET['title_background_color']; ?>;
-	
-	-moz-border-radius:5px; /* Mozilla */
-    -webkit-border-radius:5px; /* Webkit */
-    -khtml-border-radius:5px; /* Konqui */
-    border-radius:5px;
-}
-
-
 /*   S c h a t t e n   */
 div.content a.action,
 div.content a.help,
-div.content input.ok,
-div#title,
-div.xwindow
+div#title
 {
 	-webkit-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
     -moz-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
@@ -1717,10 +1714,4 @@ div.filler div.headermenu > a.entry,
 div.filler div.header a.back.button
 {
 	font-size: 0.8em;
-}
-
-
-div.command
-{
-	visibility: hidden;
 }

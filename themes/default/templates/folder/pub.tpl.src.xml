@@ -11,41 +11,39 @@
 	</if>
 
 
-	<form>
-		<group title="message:publish">
-			<if present="pages">
-				<if present="subdirs">
+	<form cancel="false" visible="true" label="message:publish">
+		<if present="pages">
+			<if present="subdirs">
 
-					<part class="line">
-						<part class="label">
-						</part>
-						<part class="input">
-							<checkbox name="pages"></checkbox>
-							<label for="pages">
-								<text raw="_"></text>
-								<text text="global_pages"></text>
-							</label>
-						</part>
+				<part class="line">
+					<part class="label">
 					</part>
-				</if>
+					<part class="input">
+						<checkbox name="pages"></checkbox>
+						<label for="pages">
+							<text raw="_"></text>
+							<text text="global_pages"></text>
+						</label>
+					</part>
+				</part>
 			</if>
-			<if present="files">
-				<if true="subdirs">
-					<part class="line">
-						<part class="label">
-						</part>
-						<part class="input">
-							<checkbox name="files"></checkbox>
-							<label for="files">
-								<text raw="_"></text>
-								<text text="global_files"></text>
-							</label>
-						</part>
+		</if>
+		<if present="files">
+			<if true="subdirs">
+				<part class="line">
+					<part class="label">
 					</part>
+					<part class="input">
+						<checkbox name="files"></checkbox>
+						<label for="files">
+							<text raw="_"></text>
+							<text text="global_files"></text>
+						</label>
+					</part>
+				</part>
 
-				</if>
 			</if>
-		</group>
+		</if>
 		<group title="message:options">
 			<if present="subdirs">
 				<part class="line">

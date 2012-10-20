@@ -11,7 +11,16 @@
 	#ELSE
 		$attr_id = $this->getRequestId();
 	#END-IF
+
+	#IF-ATTR label#
+		$attr_tmp_ok_label = $attr_label;
+	#ELSE
+		$attr_tmp_ok_label = lang('BUTTON_OK');
+	#END-IF
 		
+	$attr_tmp_show_cancel = $attr_cancel;
+	$attr_tmp_visible     = $attr_visible;
+	
 	if ($this->isEditable())
 	{
 		if	($this->isEditMode())

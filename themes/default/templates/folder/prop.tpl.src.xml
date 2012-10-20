@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header></header>
-	<form>
+	<form label="message:global_save">
 
 		<group title="message:GLOBAL_PROP">
 			<part class="line">
