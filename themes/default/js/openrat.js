@@ -465,14 +465,18 @@ function fullscreen( element ) {
 
 function loadTree()
 {
-	// Oberstes Tree-Element erzeugen
-	$('div#tree div.window div.content').html("&nbsp;");
-	//$('div#tree div.window div.content').append('<ul class="tree"><li class="root"><div>Baum</div></li></ul>');
-	
-	// Wurzel des Baums laden
-	//loadBranch( $('div#tree ul.tree > li'),'root',0);
-	loadBranch( $('div#tree div.content'),'root',0);
-	$('div#tree div.content > ul.tree > li > div.tree').delay(500).click();
+	// Nur, wenn ein Baum auch angezeigt werden soll.
+	if	( $('div#tree').attr('data-action')=='tree' )
+	{
+		// Oberstes Tree-Element erzeugen
+		$('div#tree div.window div.content').html("&nbsp;");
+		//$('div#tree div.window div.content').append('<ul class="tree"><li class="root"><div>Baum</div></li></ul>');
+		
+		// Wurzel des Baums laden
+		//loadBranch( $('div#tree ul.tree > li'),'root',0);
+		loadBranch( $('div#tree div.content'),'root',0);
+		$('div#tree div.content > ul.tree > li > div.tree').delay(500).click();
+	}
 }
 
 
@@ -857,8 +861,14 @@ function doResponse(data,status,element)
 			$(this).fadeOut('fast',function() { $(this).remove(); } );
 		} );
 		
+		var timeoutSeconds;
 		if	( value.status == 'ok' )
-			$(notice).delay(3000).fadeOut( function() { $(this).remove(); } );
+			timeoutSeconds = 2;
+		else
+			timeoutSeconds = 5;
+			
+		
+		$(notice).delay(timeoutSeconds*1000).fadeOut( function() { $(this).remove(); } );
 		
 		/*
 		$('div.window div.status').html('<div />');

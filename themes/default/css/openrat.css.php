@@ -1,3 +1,4 @@
+<?php header('Content-Type: text/css',true) ?>
 /*
 OpenRat Content Management System
 Copyright (C) 2002-2010 Jan Dankert
@@ -133,7 +134,7 @@ div#noticebar div.notice.ok
 {
 	background-color: green;
 }
-div#noticebar div.notice.warn
+div#noticebar div.notice.warning
 {
 	background-color: yellow;
 }

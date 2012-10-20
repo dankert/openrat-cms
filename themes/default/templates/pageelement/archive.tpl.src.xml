@@ -10,6 +10,7 @@
 					<if present="compareid">
 						<text text="GLOBAL_COMPARE"></text>
 					</if>
+					<else><text raw="_" /></else>
 				</column>
 				<column class="help">
 					<text text="DATE"></text>
@@ -43,11 +44,13 @@
 						<if present="compareid">
 							<radio name="compareid" value="var:id"></radio>
 						</if>
+						<else><text raw="_" /></else>
 					</column>
 					<column>
 						<if present="compareid">
 							<radio name="withid" value="var:id"></radio>
 						</if>
+						<else><text raw="_" /></else>
 					</column>
 					<column>
 						<date date="var:date"></date>
@@ -58,30 +61,30 @@
 					<column>
 						<text var="value"></text>
 					</column>
-					<column>
+					<column class="clickable">
 						<if true="var:public">
 							<text key="GLOBAL_PUBLIC" type="strong"></text>
 						</if>
-						<else><if present="releaseUrl"><link url="var:releaseUrl" title="message:GLOBAL_RELEASE_DESC"><text
-							key="GLOBAL_RELEASE" type="strong"></text></link></if><else><text
-							key="GLOBAL_INACTIVE" type="emphatic"></text></else></else>
+						<else>
+						<if present="releaseUrl">
+						<link type="open" url="var:releaseUrl" title="message:GLOBAL_RELEASE_DESC">
+						<text key="GLOBAL_RELEASE" type="strong"></text>
+							</link>
+							</if>
+							<else>
+							<text key="GLOBAL_INACTIVE" type="emphatic" />
+							</else>
+							</else>
 					</column>
-					<column>
+					<column class="clickable">
 						<if true="var:active">
 							<text key="GLOBAL_ACTIVE" type="emphatic"></text>
 						</if>
-						<else><if present="useUrl"><link url="var:useUrl" title="message:GLOBAL_USE_DESC"><text
-							key="GLOBAL_USE"></text></link></if></else>
+						<else><if present="useUrl">
+						<link type="open" url="var:useUrl" title="message:GLOBAL_USE_DESC"><text key="GLOBAL_USE"></text></link></if></else>
 					</column>
 				</row>
 			</list>
 		</table>
-		<if present="compareid">
-			<row>
-				<column colspan="8" class="act">
-					<button type="ok"></button>
-				</column>
-			</row>
-		</if>
 	</form>
 </output>
