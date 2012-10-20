@@ -134,7 +134,7 @@ div#noticebar div.notice.ok
 {
 	background-color: green;
 }
-div#noticebar div.notice.warn
+div#noticebar div.notice.warning
 {
 	background-color: yellow;
 }
