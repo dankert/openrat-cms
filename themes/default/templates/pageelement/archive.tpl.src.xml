@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<form method="get" subaction="diff">
+	<form method="get" subaction="diff" label="message:compare" cancel="false" visible="true">
 		<table widths="5%,5%,5%,15%,15%,35%,10%,10%">
 			<row class="headline">
 				<column class="help">
