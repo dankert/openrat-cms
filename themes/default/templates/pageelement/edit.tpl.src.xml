@@ -7,81 +7,71 @@
 		<window name="element">
 			<text var="desc" class="help"></text>
 			<if value="var:type" equals="date">
-				<if true="mode:edit">
-					<group title="message:calendar">
-						<part>
-							<table width="85%" class="calendar">
-								<row>
-									<column colspan="8" class="help">
-										<if true="mode:edit">
-											<link url="var:lastmonthurl">
-												<image file="left" align="middle"></image>
-											</link>
-											<text raw="_"></text>
-										</if>
-										<text var="monthname" type="strong"></text>
-										<if true="mode:edit">
-											<text raw="_"></text>
-											<link url="var:nextmonthurl">
-												<image file="right" align="middle"></image>
-											</link>
-										</if>
-										<text raw="_____"></text>
-										<if true="mode:edit">
-											<link url="var:lastyearurl">
-												<image file="left" align="middle"></image>
-											</link>
-											<text raw="_"></text>
-										</if>
-										<text var="yearname" type="strong"></text>
-										<if true="mode:edit">
-											<text raw="_"></text>
-											<link url="var:nextyearurl">
-												<image file="right" align="middle"></image>
-											</link>
-										</if>
-									</column>
-								</row>
-								<row>
+				<group title="message:calendar">
+					<part>
+						<table width="85%" class="calendar">
+							<row>
+								<column colspan="8" class="help">
+										<link url="var:lastmonthurl">
+											<image file="left" align="middle"></image>
+										</link>
+										<text raw="_"></text>
+									<text var="monthname" type="strong"></text>
+										<text raw="_"></text>
+										<link url="var:nextmonthurl">
+											<image file="right" align="middle"></image>
+										</link>
+									<text raw="_____"></text>
+										<link url="var:lastyearurl">
+											<image file="left" align="middle"></image>
+										</link>
+										<text raw="_"></text>
+									<text var="yearname" type="strong"></text>
+										<text raw="_"></text>
+										<link url="var:nextyearurl">
+											<image file="right" align="middle"></image>
+										</link>
+								</column>
+							</row>
+							<row>
+								<column>
+									<text key="week"></text>
+								</column>
+								<list list="weekdays" value="weekday">
 									<column>
-										<text key="week"></text>
+										<text var="weekday"></text>
 									</column>
-									<list list="weekdays" value="weekday">
-										<column>
-											<text var="weekday"></text>
+								</list>
+							</row>
+							<list list="weeklist" key="weeknr" value="week">
+								<row>
+									<column width="12%">
+										<text var="weeknr"></text>
+									</column>
+									<list list="week" extract="true">
+										<column width="12%">
+											<if empty="url">
+												<text raw="__"></text>
+												<text var="nr" type="strong"></text>
+												<text raw="__"></text>
+											</if>
+											<if not="true" empty="url">
+												<link url="var:url">
+													<text raw="__"></text>
+													<text var="nr"></text>
+													<text raw="__"></text>
+												</link>
+											</if>
+											<if true="var:today">
+												<text raw="*"></text>
+											</if>
 										</column>
 									</list>
 								</row>
-								<list list="weeklist" key="weeknr" value="week">
-									<row>
-										<column width="12%">
-											<text var="weeknr"></text>
-										</column>
-										<list list="week" extract="true">
-											<column width="12%">
-												<if empty="url">
-													<text raw="__"></text>
-													<text var="nr" type="strong"></text>
-													<text raw="__"></text>
-												</if>
-												<if not="true" empty="url">
-													<link url="var:url">
-														<text raw="__"></text>
-														<text var="nr"></text>
-														<text raw="__"></text>
-													</link>
-												</if>
-												<if true="var:today">
-													<text raw="*"></text>
-												</if>
-											</column>
-										</list>
-									</row>
-								</list>
-							</table>
-						</part>
-					</group>
-				</if>
+							</list>
+						</table>
+					</part>
+				</group>
 				<group title="message:date">
 					<part>
 						<label for="year">
@@ -133,55 +123,53 @@
 						<newline></newline>
 					</if>
 					<editor type="wiki" name="text"></editor>
-					<if true="mode:edit">
-						<group title="message:help">
-							<table>
-								<column>
-									<text value="config:editor/text-markup/strong-begin"></text>
-									<text key="text_markup_strong"></text>
-									<text value="config:editor/text-markup/strong-end"></text>
-									<newline></newline>
-									<text value="config:editor/text-markup/emphatic-begin"></text>
-									<text key="text_markup_emphatic"></text>
-									<text value="config:editor/text-markup/emphatic-end"></text>
-								</column>
-								<column>
-									<text value="config:editor/text-markup/list-numbered"></text>
-									<text key="text_markup_numbered_list"></text>
-									<newline></newline>
-									<text value="config:editor/text-markup/list-numbered"></text>
-									<text raw="..."></text>
-									<newline></newline>
-								</column>
-								<column>
-									<text value="config:editor/text-markup/list-unnumbered"></text>
-									<text key="text_markup_unnumbered_list"></text>
-									<newline></newline>
-									<text value="config:editor/text-markup/list-unnumbered"></text>
-									<text raw="..."></text>
-									<newline></newline>
-								</column>
-								<column>
-									<text value="config:editor/text-markup/table-cell-sep"></text>
-									<text key="text_markup_table"></text>
-									<text value="config:editor/text-markup/table-cell-sep"></text>
-									<text raw="..."></text>
-									<text value="config:editor/text-markup/table-cell-sep"></text>
-									<text raw="..."></text>
-									<text value="config:editor/text-markup/table-cell-sep"></text>
-									<newline></newline>
-									<text value="config:editor/text-markup/table-cell-sep"></text>
-									<text raw="..."></text>
-									<text value="config:editor/text-markup/table-cell-sep"></text>
-									<text raw="..."></text>
-									<text value="config:editor/text-markup/table-cell-sep"></text>
-									<text raw="..."></text>
-									<text value="config:editor/text-markup/table-cell-sep"></text>
-									<newline></newline>
-								</column>
-							</table>
-						</group>
-					</if>
+					<group title="message:help">
+						<table>
+							<column>
+								<text value="config:editor/text-markup/strong-begin"></text>
+								<text key="text_markup_strong"></text>
+								<text value="config:editor/text-markup/strong-end"></text>
+								<newline></newline>
+								<text value="config:editor/text-markup/emphatic-begin"></text>
+								<text key="text_markup_emphatic"></text>
+								<text value="config:editor/text-markup/emphatic-end"></text>
+							</column>
+							<column>
+								<text value="config:editor/text-markup/list-numbered"></text>
+								<text key="text_markup_numbered_list"></text>
+								<newline></newline>
+								<text value="config:editor/text-markup/list-numbered"></text>
+								<text raw="..."></text>
+								<newline></newline>
+							</column>
+							<column>
+								<text value="config:editor/text-markup/list-unnumbered"></text>
+								<text key="text_markup_unnumbered_list"></text>
+								<newline></newline>
+								<text value="config:editor/text-markup/list-unnumbered"></text>
+								<text raw="..."></text>
+								<newline></newline>
+							</column>
+							<column>
+								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text key="text_markup_table"></text>
+								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text raw="..."></text>
+								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text raw="..."></text>
+								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<newline></newline>
+								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text raw="..."></text>
+								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text raw="..."></text>
+								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<text raw="..."></text>
+								<text value="config:editor/text-markup/table-cell-sep"></text>
+								<newline></newline>
+							</column>
+						</table>
+					</group>
 				</if>
 				<if value="var:editor" equals="text">
 					<inputarea class="longtext" name="text" rows="25" cols="70"></inputarea>
@@ -197,14 +185,12 @@
 						<selectbox list="objects" name="linkobjectid" addempty="true"></selectbox>
 						<focus field="linkobjectid"></focus>
 					</part>
-					<if true="mode:edit">
-						<part>
-							<label for="link_url">
-								<text key="link_url"></text>
-							</label>
-							<input name="linkurl"></input>
-						</part>
-					</if>
+					<part>
+						<label for="link_url">
+							<text key="link_url"></text>
+						</label>
+						<input name="linkurl"></input>
+					</part>
 				</group>
 			</if>
 			<if value="var:type" equals="list">
@@ -240,7 +226,6 @@
 					</part>
 				</group>
 			</if>
-			<if true="mode:edit">
 				<if value="var:type" equals="longtext">
 					<if value="var:editor" equals="wiki">
 						<if present="languages">
@@ -265,7 +250,6 @@
 							</part>
 						</group>
 					</if>
-				</if>
 			</if>
 			<group title="message:options">
 				<if present="release">
