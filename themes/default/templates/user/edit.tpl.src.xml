@@ -2,16 +2,14 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="remove"></header>
 	<form>
-		<group title="message:NAME">
-			<part class="line">
-				<part class="label">
-					<label for="name" key="user_username"></label>
-				</part>
-				<part class="input">
-					<input name="name" size="20" class="name,focus"></input>
-				</part>
+		<part class="line">
+			<part class="label">
+				<label for="name" key="user_username"></label>
 			</part>
-		</group>
+			<part class="input">
+				<input name="name" size="20" class="name,focus"></input>
+			</part>
+		</part>
 		<group title="message:ADDITIONAL_INFO">
 			<part class="line">
 				<part class="label">
