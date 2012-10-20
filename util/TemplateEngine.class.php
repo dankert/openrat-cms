@@ -28,21 +28,21 @@
  */
 class TemplateEngine
 {
-	var $actualTagName   = '';
+	private $actualTagName   = '';
 	
 	/**
 	 * Name Template.
 	 *
 	 * @var String
 	 */
-	var $tplName;
+	private $tplName;
 
 	/**
 	 * Erzeugt einen Templateparser.
 	 *
 	 * @param String $tplName Name des Templates, das umgewandelt werden soll.
 	 */
-	function TemplateEngine( $tplName='' )
+	public function TemplateEngine( $tplName='' )
 	{
 		$this->tplName = $tplName;
 	}
@@ -52,7 +52,7 @@ class TemplateEngine
 	 * Wandelt eine Vorlage um
 	 * @param filename Dateiname der Datei, die erstellt werden soll.
 	 */
-	function compile( $tplName = '')
+	public function compile( $tplName = '')
 	{
 		if	( empty($tplName) )
 			$tplName = $this->tplName;
@@ -60,15 +60,11 @@ class TemplateEngine
 		global $conf;
 		$confCompiler = $conf['theme']['compiler'];
 		
-		$srcOrmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.'.PHP_EXT;
 		$srcXmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.xml';
 
 		
 		if ( is_file($srcXmlFilename) )
 			$srcFilename = $srcXmlFilename;
-		else
-		if	( is_file($srcOrmlFilename) )
-			$srcFilename = $srcOrmlFilename;
 		else
 			// Wenn Vorlage (noch) nicht existiert
 			die( get_class($this).': Template not found: "'.$tplName.'"' );
@@ -116,11 +112,11 @@ class TemplateEngine
 				$this->copyFileContents( $tag,$outFile,$attributes,++$depth );
 			elseif ( $type == 'complete' )
 			{
-				$this->copyFileContents( $tag       ,$outFile,$attributes,$depth+1 );
-				$this->copyFileContents( $tag.'-end',$outFile,array()    ,$depth+1 );
+				$this->copyFileContents( $tag       ,$outFile,$attributes,++$depth   );
+				$this->copyFileContents( $tag.'-end',$outFile,array()    ,  $depth-- );
 			}
 			elseif ( $type == 'close' )
-				$this->copyFileContents( $tag.'-end',$outFile,array(),--$depth );
+				$this->copyFileContents( $tag.'-end',$outFile,array(),$depth-- );
 		}
 
 		fclose($outFile);
@@ -133,16 +129,7 @@ class TemplateEngine
 	
 	
 
-	function getElementValue( $elFilename,$attributes )
-	{
-		extract($attributes);
-		require($elFilename);
-		return $value;
-	}
-	
-	
-
-	function attributeValueOpenPHP($value)
+	private function attributeValueOpenPHP($value)
 	{
 		$erg = $this->attributeValue($value);
 		
@@ -155,7 +142,7 @@ class TemplateEngine
 	
 	
 	
-	function attributeValue( $value )
+	private function attributeValue( $value )
 	{
 		$parts = explode( ':', $value, 2 );
 
@@ -218,13 +205,12 @@ class TemplateEngine
 	/**
 	 * Ein Baustein wird in die neue Vorlagedatei kopiert. 
 	 */
-	function copyFileContents( $infile,$outFileHandler,$attr,$depth )
+	private function copyFileContents( $infile,$outFileHandler,$attr,$depth )
 	{
 		global $conf;
 		$hash = $depth;
 		
 		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
-		$elFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.el.' .PHP_EXT;
 		if	( !is_file($inFileName) )
 			if	( count($attr)==0 )
 				return;
@@ -323,11 +309,6 @@ class TemplateEngine
 			
 		if	( count($unset_attr) > 0 )
 			fwrite( $outFileHandler,'<?php unset('.implode(',',$unset_attr).') ?>');
-
-		if	( is_file($elFileName) )
-		{
-			fwrite( $outFileHandler, $this->getElementValue( $elFileName,$attr) );
-		}
 	}
 	
 	
@@ -338,7 +319,7 @@ class TemplateEngine
 	 * so wird das Skript abgebrochen.
 	 * @return �berpr�fte und mit Default-Werten angereicherte Attribute
 	 */
-	function checkAttributes( $cmd,$attr )
+	private function checkAttributes( $cmd,$attr )
 	{
 		global $conf;
 		$elements = parse_ini_file( OR_THEMES_DIR.$conf['interface']['theme'].'/include/elements.ini.'.PHP_EXT);
@@ -388,21 +369,18 @@ class TemplateEngine
 	
 	
 	/**
-	 * Diese Funktion l�dt die passende Vorlagedatei.
+	 * Diese Funktion lädt die Vorlagedatei.
 	 */
-	function loadDocument( $filename )
+	private function loadDocument( $filename )
 	{
-		if	( substr($filename,-4)=='.xml')
-			return $this->loadXmlDocument( $filename );
-		else
-			return $this->loadOrmlDocument( $filename );
+		return $this->loadXmlDocument( $filename );
 	}
 
 
 	/**
 	 * Laden und Parsen eines XML-Dokumentes.
 	 */
-	function loadXmlDocument( $filename )
+	private function loadXmlDocument( $filename )
 	{
 		$index = array();
 		$vals  = array();
@@ -414,152 +392,6 @@ class TemplateEngine
 		
 		return $vals;
 	}
-
-
-	/**
-	 * Laden und Parsen eines Dokumentes im Openrat-eigenem Format.<br>
-	 * ("ORML"=Openrat Meta Language)
-	 */
-	function loadOrmlDocument( $filename )
-	{
-		$vals  = array();
-
-		$openCmd = array();
-		
-		foreach( file($filename) as $line )
-		{
-			$indent = strlen($line)-strlen(ltrim($line));  // Einzugstiefe
-			$line   = trim($line);                         // Inhalt der Zeile ohne Einzug
-
-			if	( empty($line) )  // Leerzeilen in Vorlage
-			{
-				continue;
-			}
-			
-			if	( substr($line,0,1)=='#' || substr($line,0,2)=='//')
-				continue;
-					
-			$openCmdCopy = $openCmd;
-			krsort($openCmdCopy);
-			foreach($openCmdCopy as $idx=>$ccmd)
-			{
-				if	( $idx >= $indent )
-				{
-					$vals[] = array( 'tag'        =>$ccmd,
-					                 'type'       =>'close',
-					                 'value'      =>'',
-					                 'attributes' => array(),
-					                 'level'      => $indent ); 
-					unset($openCmd[$idx]);
-				}
-			}
-
-			// Zeile parsen
-			$li = explode(' ',$line);
-			$attr = array();
-			foreach( $li as $nr=>$part )
-			{
-				if	($nr==0)
-					$cmd = $part;
-				else
-				{
-					$el = explode(':',$part,2);
-					if	( count($el) < 2 )
-						die( 'parser error in line: '.$line );
-						
-					list($a,$b) = $el;
-					$attr[$a]=$b;
-				}
-				
-			}
-			// $cmd  => enthaelt das Kommando
-			// $attr => enthaelt die Attribute
-			
-			$openCmd[$indent]=$cmd;
-
-			$vals[] = array( 'tag'=>$cmd,
-			                 'type'=>'open',
-			                 'value'=>'',
-			                 'attributes'=>$attr,
-			                 'level'=>$indent ); 
-		}
-
-		// Am Ende der Datei alle offenen Tags schlie�en
-		$openCmdCopy = $openCmd;
-		krsort($openCmdCopy);
-		foreach($openCmdCopy as $idx=>$ccmd)
-		{
-			$vals[] = array( 'tag'=>$ccmd,
-			                 'type'=>'close',
-			                 'value'=>'',
-			                 'attributes'=>array(),
-			                 'level'=>$indent ); 
-			
-			unset($openCmd[$idx]);
-		}
-
-		
-		$f = substr($filename,0,-4).'.xml';
-		$xml = '<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">'.$this->array2xml($vals).'</output>';
-		$fp = fopen( $f, 'w');
-		fwrite($fp, $xml);
-		fclose($fp);
-		
-		return $vals;
-	}
-	
-	
-	
-	
-	private function array2xml($xmlary){
-  $o='';
-  foreach($xmlary as $tag ){
-  	$nl = "\n";
-  	$tab  = "\t";
-  	$nl  = "";
-  	$tab  = "";
-    if($tag['tag'] == 'textarea' && !isset($tag['value'])){
-      //fake a value so it won't self close
-      $tag['value']='';
-    }
-    //tab space:
-    $t = '';
-    for($i=1; $i < $tag['level'];$i++){
-      $t.=$tab;
-    }
-    switch($tag['type']){
-      case 'complete':
-      case 'open':
-        $o.=$t.'<'.$tag['tag'];
-        if(isset($tag['attributes'])){
-          foreach($tag['attributes'] as $attr=>$aval){
-            $o.=' '.$attr.'="'.$aval.'"';
-          }//foreach
-        }//attributes
-        if($tag['type'] == 'complete'){
-          if(!isset($tag['value'])){
-            $o .= ' />'.$nl;
-          } else {
-            $o .= '>'.$nl.$t.$tag['value'].$br.$t.'</'.$tag['tag'].'>'.$nl;
-          }
-        }else{
-          $o .= '>'.$nl;
-        }
-        break;
-      case 'close':
-        $o .= $t.'</'.$tag['tag'].'>'.$nl;
-        break;
-      case 'cdata':
-        $o .= $t.$tag['value'].$nl;
-        break;
-      default:
-      		echo "Warn: ".$tag['type'];
-    }//switch
-  }//foreach
-  return $o;
-}
 }
 
 ?>
