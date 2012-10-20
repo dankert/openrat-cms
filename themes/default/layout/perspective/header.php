@@ -45,7 +45,7 @@ function view_header( $name )
 <div class="icons">
 <div class="icon">
 
-<?php if (!empty($viewlist)) { /* Fenster-Menü anzeigen (sofern Views vorhanden) */ ?>
+<?php if (!empty($viewlist) || $name=='content') { /* Fenster-Menü anzeigen (sofern Views vorhanden) */ ?>
 <img class="icon" src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/menu.gif' ?>" />
 <div class="dropdown dropdownalignright">
 <div class="entry clickable"><a href="javascript:void(0);" class="fullscreen" data-type="fullscreen"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /><?php echo langHtml('window_fullscreen') ?></a></div>
