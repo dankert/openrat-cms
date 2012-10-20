@@ -8,7 +8,7 @@
  */
 class GlobalFunctions
 {
-	function getIsoCodes()
+	public static function getIsoCodes()
 	{
 		global $conf_php;
 		
@@ -18,7 +18,7 @@ class GlobalFunctions
 	}
 
 
-	function lang( $text )
+	public static function lang( $text )
 	{
 	     global $SESS;
 		$text = strtoupper($text);
@@ -36,7 +36,7 @@ class GlobalFunctions
 
 	# Spracheinstellungen laden
 	
-	function language_from_http()
+	public static function language_from_http()
 	{
 		global $SESS,
 		       $HTTP_SERVER_VARS,
@@ -57,7 +57,7 @@ class GlobalFunctions
 	}
 	
 	
-	function language_read( $l='' )
+	public static function language_read( $l='' )
 	{
 		global $SESS,
 		       $HTTP_SERVER_VARS,
