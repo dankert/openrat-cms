@@ -456,34 +456,16 @@ class Action
 		global $image_dir;
 		global $view;
 		       
-		// ?bertragen der Array-Variablen in den aktuellen Kontext
+		// Übertragen der Ausgabe-Variablen in den aktuellen Kontext
 		//
 		extract( $this->templateVars['output'] );
 
-		// Falls Eingabefehler, dann Uebertragen der Request-Variablen in den aktuellen Kontext
-		if	( count($errors)>0 )
-		{
-			foreach( $REQ as $requestVar=>$dummy )
-				//if	( true|| !isset($$requestVar) )
-					// Aber achtung, hier geben wir die Request-Variablen einfach so wieder raus!
-					$$requestVar = $this->getRequestVar( $requestVar );
-			$this->templateVars['mode'] = 'edit';
-			$mode = 'edit';
-		}
-				
 		// Setzen einiger Standard-Variablen
 		//
 		$tpl_dir    = OR_THEMES_DIR.$conf['interface']['theme'].'/pages/html/';
 		$image_dir  = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/';
 	
 		$user = Session::getUser();
-		
-		$root_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/base.css';
-			
-		if	( !is_object($user) )
-			$user_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.$conf['interface']['style']['default'].'.css';
-		else
-			$user_stylesheet = OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/css/'.$user->style.'.css';
 		
 		$self = $HTTP_SERVER_VARS['PHP_SELF'];
 	
@@ -492,7 +474,7 @@ class Action
 		else
 			$cms_title = OR_TITLE.' '.OR_VERSION;
 
-		//$charset = $this->getCharset();
+		// Wir arbeiten im HTML nur noch mit UTF-8.
 		$charset = 'UTF-8';
 			
 		$showDuration = $conf['interface']['show_duration'];
