@@ -5,7 +5,10 @@
 		<table>
 			<row class="headline">
 				<column class="help">
+					<!-- 
 					<text key="SELECT"></text>
+				 -->
+					<text raw="_" />
 				</column>
 				<column class="help">
 					<text key="GLOBAL_TYPE"></text>
@@ -15,7 +18,7 @@
 			</row>
 			<list list="object" extract="true">
 				<row class="data">
-					<column>
+					<column width="1%">
 						<if true="writable">
 							<checkbox name="var:id"></checkbox>
 						</if>
@@ -34,6 +37,58 @@
 					</column>
 				</row>
 			</list>
+			<if empty="object">
+				<row>
+					<column colspan="2">
+						<text text="GLOBAL_NOT_FOUND"></text>
+					</column>
+				</row>
+			</if>
+
+			<row class="data">
+				<column>
+					<text raw="_" />
+				</column>
+				<column colspan="2" class="clickable">>
+					<link type="view" action="folder" subaction="createfolder">
+						<image file="icon/create"></image>
+						<text key="menu_folder_createfolder"></text>
+					</link>
+				</column>
+			</row>
+			<row class="data">
+				<column>
+					<text raw="_" />
+				</column>
+				<column colspan="2" class="clickable">
+					<link type="view" action="folder" subaction="createpage">
+						<image file="icon/create"></image>
+						<text key="menu_folder_createpage"></text>
+					</link>
+				</column>
+			</row>
+			<row class="data">
+				<column>
+					<text raw="_" />
+				</column>
+				<column colspan="2" class="clickable">>
+					<link type="view" action="folder" subaction="createfile">
+						<image file="icon/create"></image>
+						<text key="menu_folder_createfile"></text>
+					</link>
+				</column>
+			</row>
+			<row class="data">
+				<column>
+					<text raw="_" />
+				</column>
+				<column colspan="2" class="clickable">>
+					<link type="view" action="folder" subaction="createlink">
+						<image file="icon/create"></image>
+						<text key="menu_folder_createlink"></text>
+					</link>
+				</column>
+			</row>
 			<row>
 				<column colspan="2">
 					<image fileext="tree_none_end.gif" align="left"></image>
@@ -67,18 +122,6 @@
 					</group>
 				</column>
 			</row>
-			<row>
-				<column class="act" colspan="2">
-					<button type="ok" text="button_next"></button>
-				</column>
-			</row>
-			<if empty="object">
-				<row>
-					<column colspan="2">
-						<text text="GLOBAL_NOT_FOUND"></text>
-					</column>
-				</row>
-			</if>
 		</table>
 	</form>
 	<insert script="mark" inline="true"></insert>
