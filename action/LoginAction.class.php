@@ -313,7 +313,7 @@ class LoginAction extends Action
 		if	( !isset($this->templateVars['login_name']) )
 			$this->setTemplateVar('login_name',@$conf['security']['default']['username']);
 
-		if	( $this->templateVars['login_name']== @$conf['security']['default']['username'])
+		if	( @$this->templateVars['login_name']== @$conf['security']['default']['username'])
 			$this->setTemplateVar('login_password',@$conf['security']['default']['password']);
 
 		$this->setTemplateVar( 'dbids',$dbids );
@@ -323,6 +323,9 @@ class LoginAction extends Action
 			$this->setTemplateVar('actdbid',$db->id);
 		elseif( isset($this->templateVars['actid']) )
 			;
+		elseif  ( isset($_COOKIE['or_dbid']) && isset($dbids[$_COOKIE['or_dbid']]) )
+			// DB-Id aus dem Cookie lesen.
+			$this->setTemplateVar('actdbid',$_COOKIE['or_dbid'] );
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
@@ -760,6 +763,7 @@ class LoginAction extends Action
 		
 		// Cookie setzen
 		setcookie('or_username',$loginName,time()+(60*60*24*30*12*2) );
+		setcookie('or_dbid',$this->getRequestVar('dbid'),time()+(60*60*24*30*12*2) );
 		
 		// Ermitteln, ob der Baum angezeigt werden soll
 		// Ist die Breite zu klein, dann wird der Baum nicht angezeigt
