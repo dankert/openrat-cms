@@ -1149,3 +1149,12 @@ MENU_USERPROJECTTIMELINE="Meine Änderungen"
 MENU_USERTIMELINE="Meine Änderungen"
 MENU_PROJECTTIMELINE="Verlauf"
 MENU_TIMELINE="Verlauf"
+
+MENU_COMPRESS =Komprimieren
+MENU_COMPRESS_DESC =Die Datei komprimieren
+MENU_UNCOMPRESS =Dekomprimieren
+MENU_UNCOMPRESS_DESC =Die komprimierte Datei dekomprimieren
+MENU_EXTRACT = Auspacken
+MENU_EXTRACT_DESC = Archiv auspacken
+MENU_SIZE =Bildgröße
+MENU_SIZE_DESC =Bildgröße ändern

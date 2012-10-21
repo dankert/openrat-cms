@@ -2,60 +2,46 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="size,compress,uncompress,extract"></header>
 	<form>
-		<group>
-			<part class="line">
-				<part class="label">
-					<label for="name">
-						<text text="global_name"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="name" size="50" class="name"></input>
-				</part>
+		<part class="line">
+			<part class="label">
+				<label for="name">
+					<text text="global_name"></text>
+				</label>
 			</part>
-			<part class="line">
-				<part class="label">
-					<label for="filename">
-						<text text="global_filename"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="filename" class="filename"></input>
-				</part>
+			<part class="input">
+				<input name="name" size="50" class="name"></input>
 			</part>
-			<part class="line">
-				<part class="label">
-					<label for="extension">
-						<text text="file_extension"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="extension" size="10" class="extension"></input>
-				</part>
+		</part>
+		<part class="line">
+			<part class="label">
+				<label for="filename">
+					<text text="global_filename"></text>
+				</label>
 			</part>
-			<part class="line">
-				<part class="label">
-					<label for="description">
-						<text text="global_description"></text>
-					</label>
-				</part>
-				<part class="input">
-					<inputarea name="description" class="description"></inputarea>
-				</part>
+			<part class="input">
+				<input name="filename" class="filename"></input>
 			</part>
-		</group>
+		</part>
+		<part class="line">
+			<part class="label">
+				<label for="extension">
+					<text text="file_extension"></text>
+				</label>
+			</part>
+			<part class="input">
+				<input name="extension" size="10" class="extension"></input>
+			</part>
+		</part>
+		<part class="line">
+			<part class="label">
+				<label for="description">
+					<text text="global_description"></text>
+				</label>
+			</part>
+			<part class="input">
+				<inputarea name="description" class="description"></inputarea>
+			</part>
+		</part>
 
-		<link class="action" action="file" subaction="compress">
-			<image file="icon/compress"></image>
-			<text key="menu_file_compress"></text>
-		</link>
-		<link class="action" action="file" subaction="uncompress">
-			<image file="icon/uncompress"></image>
-			<text key="menu_file_uncompress"></text>
-		</link>
-		<link class="action" action="file" subaction="extract">
-			<image file="icon/extract"></image>
-			<text key="menu_file_extract"></text>
-		</link>
 	</form>
 </output>

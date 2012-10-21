@@ -2,38 +2,36 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="changetemplate"></header>
 	<form>
-		<group>
-			<part class="line">
-				<part class="label">
-					<label for="name">
-						<text text="global_name"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="name" size="50" class="name"></input>
-				</part>
+		<part class="line">
+			<part class="label">
+				<label for="name">
+					<text text="global_name"></text>
+				</label>
 			</part>
-			<part class="line">
-				<part class="label">
-					<label for="filename">
-						<text text="global_filename"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="filename" class="filename"></input>
-				</part>
+			<part class="input">
+				<input name="name" size="50" class="name"></input>
 			</part>
-			<part class="line">
-				<part class="label">
-					<label for="description">
-						<text text="global_description"></text>
-					</label>
-				</part>
-				<part class="input">
-					<inputarea name="description" class="description"></inputarea>
-				</part>
+		</part>
+		<part class="line">
+			<part class="label">
+				<label for="filename">
+					<text text="global_filename"></text>
+				</label>
 			</part>
-		</group>
+			<part class="input">
+				<input name="filename" class="filename"></input>
+			</part>
+		</part>
+		<part class="line">
+			<part class="label">
+				<label for="description">
+					<text text="global_description"></text>
+				</label>
+			</part>
+			<part class="input">
+				<inputarea name="description" class="description"></inputarea>
+			</part>
+		</part>
 		<if false="mode:edit">
 			<group title="message:additional_info">
 				<part class="line">

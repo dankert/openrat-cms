@@ -10,7 +10,7 @@
 		</part>
 	</if>
 
-	<form>
+	<form cancel="false" visible="true" label="message:publish">
 		<row>
 			<column>
 				<newline></newline>
