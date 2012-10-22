@@ -382,6 +382,10 @@ function loadView(jo, url )
 
 			// Links aktivieren...
 			$(jo).closest('div.frame').find('.clickable').orLinkify();
+
+			// Selectors (Einzel-Ausahl für Dateien) initialisieren
+			// Wurzel des Baums laden
+			loadBranch( $(jo).find('div.selector.tree'),'root',0);
 		});
 }
 
@@ -470,7 +474,6 @@ function loadTree()
 	{
 		// Oberstes Tree-Element erzeugen
 		$('div#tree div.window div.content').html("&nbsp;");
-		//$('div#tree div.window div.content').append('<ul class="tree"><li class="root"><div>Baum</div></li></ul>');
 		
 		// Wurzel des Baums laden
 		//loadBranch( $('div#tree ul.tree > li'),'root',0);
@@ -478,6 +481,8 @@ function loadTree()
 		$('div#tree div.content > ul.tree > li > div.tree').delay(500).click();
 	}
 }
+
+
 
 
 /**

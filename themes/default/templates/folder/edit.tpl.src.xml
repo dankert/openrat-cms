@@ -119,6 +119,7 @@
 							</label>
 							<newline></newline>
 						</list>
+						<selector name="Name" id="1" />
 					</group>
 				</column>
 			</row>
