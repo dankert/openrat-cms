@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="link,import,export"></header>
-	<form method="post">
+	<form method="post" label="message:save">
 		<input type="hidden" name="elementid"></input>
 		<input type="hidden" name="value_time"></input>
 		<window name="element">
@@ -12,25 +12,25 @@
 						<table width="85%" class="calendar">
 							<row>
 								<column colspan="8" class="help">
-										<link url="var:lastmonthurl">
-											<image file="left" align="middle"></image>
-										</link>
-										<text raw="_"></text>
+									<link url="var:lastmonthurl">
+										<image file="left" align="middle"></image>
+									</link>
+									<text raw="_"></text>
 									<text var="monthname" type="strong"></text>
-										<text raw="_"></text>
-										<link url="var:nextmonthurl">
-											<image file="right" align="middle"></image>
-										</link>
+									<text raw="_"></text>
+									<link url="var:nextmonthurl">
+										<image file="right" align="middle"></image>
+									</link>
 									<text raw="_____"></text>
-										<link url="var:lastyearurl">
-											<image file="left" align="middle"></image>
-										</link>
-										<text raw="_"></text>
+									<link url="var:lastyearurl">
+										<image file="left" align="middle"></image>
+									</link>
+									<text raw="_"></text>
 									<text var="yearname" type="strong"></text>
-										<text raw="_"></text>
-										<link url="var:nextyearurl">
-											<image file="right" align="middle"></image>
-										</link>
+									<text raw="_"></text>
+									<link url="var:nextyearurl">
+										<image file="right" align="middle"></image>
+									</link>
 								</column>
 							</row>
 							<row>
@@ -178,18 +178,29 @@
 			</if>
 			<if value="var:type" equals="link">
 				<group>
-					<part>
-						<label for="linkobjectid">
-							<text key="link_target"></text>
-						</label>
-						<selectbox list="objects" name="linkobjectid" addempty="true"></selectbox>
-						<focus field="linkobjectid"></focus>
+					<part clas="line">
+						<part class="label">
+							<label for="linkobjectid">
+								<text key="link_target"></text>
+							</label>
+						</part>
+						<part class="input">
+							<selectbox list="objects" name="linkobjectid" addempty="true"></selectbox>
+							<selector types="folder,page,file,link" name="var:linkobjectid"
+								id="var:linkobjectid" folderid="var:rootfolderid" />
+						</part>
+
 					</part>
-					<part>
-						<label for="link_url">
-							<text key="link_url"></text>
-						</label>
-						<input name="linkurl"></input>
+					<part class="line">
+
+						<part class="label">
+							<label for="link_url">
+								<text key="link_url"></text>
+							</label>
+						</part>
+						<part class="input">
+							<input name="linkurl"></input>
+						</part>
 					</part>
 				</group>
 			</if>
@@ -226,30 +237,30 @@
 					</part>
 				</group>
 			</if>
-				<if value="var:type" equals="longtext">
-					<if value="var:editor" equals="wiki">
-						<if present="languages">
-							<group title="message:editor_show_language">
-								<part>
-									<list list="languages" key="languageid" value="languagename">
-										<radio name="otherlanguageid" value="var:languageid"></radio>
-										<label for="otherlanguageid_{languageid}">
-											<text var="languagename"></text>
-										</label>
-										<newline></newline>
-									</list>
-								</part>
-							</group>
-						</if>
-						<group title="message:PAGE_PREVIEW">
+			<if value="var:type" equals="longtext">
+				<if value="var:editor" equals="wiki">
+					<if present="languages">
+						<group title="message:editor_show_language">
 							<part>
-								<checkbox name="preview"></checkbox>
-								<label for="preview">
-									<text key="PAGE_PREVIEW"></text>
-								</label>
+								<list list="languages" key="languageid" value="languagename">
+									<radio name="otherlanguageid" value="var:languageid"></radio>
+									<label for="otherlanguageid_{languageid}">
+										<text var="languagename"></text>
+									</label>
+									<newline></newline>
+								</list>
 							</part>
 						</group>
 					</if>
+					<group title="message:PAGE_PREVIEW">
+						<part>
+							<checkbox name="preview"></checkbox>
+							<label for="preview">
+								<text key="PAGE_PREVIEW"></text>
+							</label>
+						</part>
+					</group>
+				</if>
 			</if>
 			<group title="message:options">
 				<if present="release">

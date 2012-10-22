@@ -473,7 +473,8 @@ class PageelementAction extends Action
 	 */
 	private function editlink()
 	{
-
+		$this->setTemplateVar('rootfolderid',Folder::getRootFolderId() );
+		
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
 		$type = $this->value->element->subtype;
 
@@ -529,7 +530,9 @@ class PageelementAction extends Action
 
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
-			
+
+		$this->setTemplateVar('rootfolderid'     ,Folder::getRootFolderId() );
+		
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
 		if	( empty($this->value->element->subtype) )
 		$types = array('page','file','link'); // Fallback: Alle erlauben :)
@@ -540,6 +543,7 @@ class PageelementAction extends Action
 			
 		$objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
 
+		
 		$t = new Template( $this->page->templateid );
 
 		foreach( $t->getDependentObjectIds() as $id )
