@@ -1182,6 +1182,12 @@ class FolderAction extends ObjectAction
 		
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
+		
+		$rootFolder = new Folder( Folder::getRootFolderId() );
+		$rootFolder->load();
+		
+		$this->setTemplateVar('rootfolderid'  ,$rootFolder->id  );
+		$this->setTemplateVar('rootfoldername',$rootFolder->name);
 	}
 
 

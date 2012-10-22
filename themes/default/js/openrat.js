@@ -247,146 +247,167 @@ function loadView(jo, url )
 				return;
 			}
 
-			//alert("o ist "+o);
-			//$('textarea.editor').ckeditor( function() { /*alert("editor ready");*/ /* callback code */ }, editorConfig );
-			//CKEDITOR.replace('text',{
-		    //    customConfig : 'config-openrat.js'
-		    //});
-			
-			var $formVorhanden = $(jo).find('form').size() > 0;
-			var $formInput     = $(jo).closest('div.frame').find('div.bottom > div.command > input')
-			if	( $formVorhanden )
-				$formInput.removeClass('invisible');
-			else
-				$formInput.addClass('invisible');
-
-			if ( $('div.window form input[type=password]').length>0 )
-			{
-				$('div.window form input[name=login_name]    ').attr('value',$('#uname'    ).attr('value'));
-				$('div.window form input[name=login_password]').attr('value',$('#upassword').attr('value'));
-			}
-				//$.get( createUrl('login','ping',0) );
-			//alert( "user: "+$('#uname').attr('value') );
-			//alert( "up: "+$('#upassword').attr('value') );
-			
-			// Fokus nicht setzen, da mehrere Views sich sonst um den Fokus streiten.
-			//$(jo).find('input.focus').focus();
-			
-			// Sortieren von Tabellen
-			$(jo).find('table.sortable > tbody').sortable({
-				   update: function(event, ui)
-				   {
-						var order = [];
-						$(ui.item).closest('table.sortable').find('tbody > tr.data').each( function() {
-							var objectid = $(this).data('id').substring(2);
-							order.push( objectid );
-						});
-						var url    = './dispatcher.php';
-						var params = {};
-						params.action    = 'folder';
-						params.subaction = 'order';
-						params.token     = $('#id_token').attr('value');
-						params.order     = order.join(',');
-						params.output    = 'json';
-						
-						$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
-							{
-								doResponse(data,textStatus,form);
-							},
-							error:function(jqXHR, textStatus, errorThrown) {
-								alert( errorThrown );
-							}
-							
-						} );
-				   }
-			});
-			
-			if	( $(jo).find('textarea#pageelement_edit_editor').size() > 0 )
-			{
-				var instance = CKEDITOR.instances['pageelement_edit_editor'];
-			    if(instance)
-			    {
-			        CKEDITOR.remove(instance);
-			    }
-			    CKEDITOR.replace( 'pageelement_edit_editor',{customConfig:'config-openrat.js'} );
-			}
-			
-			// Wiki-Editor
-			var markitupSettings = {	markupSet:  [ 	
-			                        	     		{name:'Bold', key:'B', openWith:'*', closeWith:'*' },
-			                        	    		{name:'Italic', key:'I', openWith:'_', closeWith:'_'  },
-			                        	    		{name:'Stroke through', key:'S', openWith:'--', closeWith:'--' },
-			                        	    		{separator:'-----------------' },
-			                        	    		{name:'Bulleted List', openWith:'*', closeWith:'', multiline:true, openBlockWith:'\n', closeBlockWith:'\n'},
-			                        	    		{name:'Numeric List', openWith:'#', closeWith:'', multiline:true, openBlockWith:'\n', closeBlockWith:'\n'},
-			                        	    		{separator:'---------------' },
-			                        	    		{name:'Picture', key:'P', replaceWith:'{[![Source:!:http://]!]" alt="[![Alternative text]!]" }' },
-			                        	    		{name:'Link', key:'L', openWith:'""->"[![Link:!:http://]!]"', closeWith:'"', placeHolder:'Your text to link...' },
-			                        	    		{separator:'---------------' },
-			                        	    		{name:'Clean', className:'clean', replaceWith:function(markitup) { return markitup.selection.replace(/<(.*?)>/g, "") } },		
-			                        	    		{name:'Preview', className:'preview',  call:'preview'}
-			                        	    	]};
-			$(jo).find('.wikieditor').markItUp(markitupSettings);
-			
-			// HTML-Editor
-			var wymSettings = {lang: 'de',basePath: OR_THEMES_EXT_DIR+'../editor/wymeditor/wymeditor/',
-					  toolsItems: [
-					               {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'}, 
-					               {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},
-					               {'name': 'Superscript', 'title': 'Superscript', 'css': 'wym_tools_superscript'},
-					               {'name': 'Subscript', 'title': 'Subscript', 'css': 'wym_tools_subscript'},
-					               {'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'},
-					               {'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'},
-					               {'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'},
-					               {'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'},
-					               {'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'},
-					               {'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'},
-					               {'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'},
-					               {'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'},
-					               {'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'},
-					               {'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'},
-					               {'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'},
-					               {'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'},
-					               {'name': 'Preview', 'title': 'Preview', 'css': 'wym_tools_preview'}
-					             ]
-					          };
-			//$(jo).find('.htmleditor').wymeditor(wymSettings);
-			//resizeWorkbench();
-			
-			// Eingabefeld-Hints aktivieren...
-			$(jo).find('input[data-hint]').orHint();
-			
-			// Untermenüpunkte aus der View in das Fenstermenü kopieren...
-			$(jo).closest('div.frame').find('div.menu div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
-			
-			$(jo).find('div.headermenu > a').each( function(idx,el)
-			{
-				// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
-				$(el).wrap('<div class="entry clickable perview" />').parent().appendTo( $(jo).closest('div.frame').find('div.menu div.dropdown').first() );
-			} );
-			
-			$(jo).find('div.header > a.back').each( function(idx,el)
-			{
-				// Zurück-Knopf zum Fenstermenü hinzufügen.
-				$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(jo).closest('div.frame').find('div.menu div.dropdown').first() );
-			} );
-			$(jo).find('div.header').html('<!-- moved to window-menu -->');
-			
-			$(jo).find('input,select,textarea').focus( function() {
-				$(this).closest('div.frame').find('div.command').css('visibility','visible').fadeIn('slow');
-			});
-
-			$(jo).find('fieldset.open > legend').click( function() {
-				$(this).parent().find('div').first().toggleClass('invisible');
-			});
-
-			// Links aktivieren...
-			$(jo).closest('div.frame').find('.clickable').orLinkify();
-
-			// Selectors (Einzel-Ausahl für Dateien) initialisieren
-			// Wurzel des Baums laden
-			loadBranch( $(jo).find('div.selector.tree'),'root',0);
+			registerViewEvents( jo )
 		});
+}
+
+
+
+/**
+ * Registriert alle Handler für den Inhalt einer View.
+ *
+ * @param viewEl DOM-Element der View
+ */
+function registerViewEvents( viewEl )
+{
+	//alert("o ist "+o);
+	//$('textarea.editor').ckeditor( function() { /*alert("editor ready");*/ /* callback code */ }, editorConfig );
+	//CKEDITOR.replace('text',{
+    //    customConfig : 'config-openrat.js'
+    //});
+	
+	var $formVorhanden = $(viewEl).find('form').size() > 0;
+	var $formInput     = $(viewEl).closest('div.frame').find('div.bottom > div.command > input')
+	if	( $formVorhanden )
+		$formInput.removeClass('invisible');
+	else
+		$formInput.addClass('invisible');
+
+	if ( $('div.window form input[type=password]').length>0 )
+	{
+		$('div.window form input[name=login_name]    ').attr('value',$('#uname'    ).attr('value'));
+		$('div.window form input[name=login_password]').attr('value',$('#upassword').attr('value'));
+	}
+		//$.get( createUrl('login','ping',0) );
+	//alert( "user: "+$('#uname').attr('value') );
+	//alert( "up: "+$('#upassword').attr('value') );
+	
+	// Fokus nicht setzen, da mehrere Views sich sonst um den Fokus streiten.
+	//$(viewEl).find('input.focus').focus();
+	
+	// Sortieren von Tabellen
+	$(viewEl).find('table.sortable > tbody').sortable({
+		   update: function(event, ui)
+		   {
+				var order = [];
+				$(ui.item).closest('table.sortable').find('tbody > tr.data').each( function() {
+					var objectid = $(this).data('id').substring(2);
+					order.push( objectid );
+				});
+				var url    = './dispatcher.php';
+				var params = {};
+				params.action    = 'folder';
+				params.subaction = 'order';
+				params.token     = $('#id_token').attr('value');
+				params.order     = order.join(',');
+				params.output    = 'json';
+				
+				$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
+					{
+						doResponse(data,textStatus,form);
+					},
+					error:function(jqXHR, textStatus, errorThrown) {
+						alert( errorThrown );
+					}
+					
+				} );
+		   }
+	});
+	
+	if	( $(viewEl).find('textarea#pageelement_edit_editor').size() > 0 )
+	{
+		var instance = CKEDITOR.instances['pageelement_edit_editor'];
+	    if(instance)
+	    {
+	        CKEDITOR.remove(instance);
+	    }
+	    CKEDITOR.replace( 'pageelement_edit_editor',{customConfig:'config-openrat.js'} );
+	}
+	
+	// Wiki-Editor
+	var markitupSettings = {	markupSet:  [ 	
+	                        	     		{name:'Bold', key:'B', openWith:'*', closeWith:'*' },
+	                        	    		{name:'Italic', key:'I', openWith:'_', closeWith:'_'  },
+	                        	    		{name:'Stroke through', key:'S', openWith:'--', closeWith:'--' },
+	                        	    		{separator:'-----------------' },
+	                        	    		{name:'Bulleted List', openWith:'*', closeWith:'', multiline:true, openBlockWith:'\n', closeBlockWith:'\n'},
+	                        	    		{name:'Numeric List', openWith:'#', closeWith:'', multiline:true, openBlockWith:'\n', closeBlockWith:'\n'},
+	                        	    		{separator:'---------------' },
+	                        	    		{name:'Picture', key:'P', replaceWith:'{[![Source:!:http://]!]" alt="[![Alternative text]!]" }' },
+	                        	    		{name:'Link', key:'L', openWith:'""->"[![Link:!:http://]!]"', closeWith:'"', placeHolder:'Your text to link...' },
+	                        	    		{separator:'---------------' },
+	                        	    		{name:'Clean', className:'clean', replaceWith:function(markitup) { return markitup.selection.replace(/<(.*?)>/g, "") } },		
+	                        	    		{name:'Preview', className:'preview',  call:'preview'}
+	                        	    	]};
+	$(viewEl).find('.wikieditor').markItUp(markitupSettings);
+	
+	// HTML-Editor
+	var wymSettings = {lang: 'de',basePath: OR_THEMES_EXT_DIR+'../editor/wymeditor/wymeditor/',
+			  toolsItems: [
+			               {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'}, 
+			               {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},
+			               {'name': 'Superscript', 'title': 'Superscript', 'css': 'wym_tools_superscript'},
+			               {'name': 'Subscript', 'title': 'Subscript', 'css': 'wym_tools_subscript'},
+			               {'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'},
+			               {'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'},
+			               {'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'},
+			               {'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'},
+			               {'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'},
+			               {'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'},
+			               {'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'},
+			               {'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'},
+			               {'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'},
+			               {'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'},
+			               {'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'},
+			               {'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'},
+			               {'name': 'Preview', 'title': 'Preview', 'css': 'wym_tools_preview'}
+			             ]
+			          };
+	//$(viewEl).find('.htmleditor').wymeditor(wymSettings);
+	//resizeWorkbench();
+	
+	// Eingabefeld-Hints aktivieren...
+	$(viewEl).find('input[data-hint]').orHint();
+	
+	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
+	$(viewEl).closest('div.frame').find('div.menu div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
+	
+	$(viewEl).find('div.headermenu > a').each( function(idx,el)
+	{
+		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
+		$(el).wrap('<div class="entry clickable perview" />').parent().appendTo( $(viewEl).closest('div.frame').find('div.menu div.dropdown').first() );
+	} );
+	
+	$(viewEl).find('div.header > a.back').each( function(idx,el)
+	{
+		// Zurück-Knopf zum Fenstermenü hinzufügen.
+		$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(viewEl).closest('div.frame').find('div.menu div.dropdown').first() );
+	} );
+	$(viewEl).find('div.header').html('<!-- moved to window-menu -->');
+	
+	$(viewEl).find('input,select,textarea').focus( function() {
+		$(this).closest('div.frame').find('div.command').css('visibility','visible').fadeIn('slow');
+	});
+
+	$(viewEl).find('fieldset.open > legend').click( function() {
+		$(this).parent().find('div').first().toggleClass('invisible');
+	});
+
+	// Links aktivieren...
+	$(viewEl).closest('div.frame').find('.clickable').orLinkify();
+
+	// Selectors (Einzel-Ausahl für Dateien) initialisieren
+	// Wurzel des Baums laden
+	$(viewEl).find('div.selector.tree').each( function() {
+		var selectorEl = this;
+		$(this).orTree( { type:'project',selectable:$(selectorEl).attr('data-types').split(','),id:$(selectorEl).attr('data-init-folderid'),onSelect:function(name,type,id) {
+		
+			var inputholder = $(selectorEl).closest('div.inputholder');
+			$(inputholder).find('div.name').text( name );
+			$(inputholder).find('input[type=hidden]').attr( 'value',id );
+		} });
+	} );
+	
 }
 
 
@@ -477,73 +498,17 @@ function loadTree()
 		
 		// Wurzel des Baums laden
 		//loadBranch( $('div#tree ul.tree > li'),'root',0);
-		loadBranch( $('div#tree div.content'),'root',0);
-		$('div#tree div.content > ul.tree > li > div.tree').delay(500).click();
+		$('div#tree div.content').orTree( { type:'root',id:0,onSelect:function(name,type,id) {
+			openNewAction( name,type,id, '' );
+		} });
+		
+		// Die ersten 2 Hierarchien öffnen:
+		$('div#tree div.content > ul.tree > div.tree').delay(500).click();
+		$('div#tree div.content > ul.tree > div.tree').delay(500).click();
 	}
 }
 
 
-
-
-/**
- * Zweig laden.
- * @param li JQuery-Objekt, in welches der Inhalt des neuen Zweiges geladen werden soll.
- * @param type Typ
- * @param id Id
- * @return
- */
-function loadBranch(li,type,id)
-{
-	//alert("hier rein: "+$(li).html() );
-	$.getJSON('./dispatcher.php?action=tree&subaction=loadBranch&id='+id+'&type='+type+'&output=json', function(json) {
-		$(li).append('<ul class="tree" style="display:none;"/>');
-		//alert("öffne: "+$(li).html()+"                     neu: "+$(li).html());
-		var ul = $(li).children('ul').first();
-		var output = json['output'];
-		$.each(output['branch'],function(idx,line)
-		{
-			//var img = (line.url!==undefined?'tree_plus':'tree_none');
-			$(ul).append( '<li><div class="tree">&nbsp;</div><div class="entry" title="'+ line.description + '"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+line['icon']+'.png" />'+ line.text + '</div></li>' );
-			var new_li = $(ul).children('li').last();
-			//$(new_li).children('div').unbind('click');
-			if ( line.type )
-			{
-				$(new_li).children('div.tree').addClass('closed');
-				$(new_li).children('div.tree').click( {},function(e) {loadBranch( $(e.target).parent(),line.type,line.internalId) }); // Zweig öffnen
-			}
-			
-			if	( line.action )
-			{
-				// Onclick-Handler für auswählbare Objekte setzen
-				$(new_li).children('div.entry').click( function() {
-					//loadViewByName('content',line.url.replace(/&amp;/g,'&'));
-					//var url = './dispatcher.php';
-					//$.ajax( { 'type':'POST',url:url, data:{'action':'tree','subaction':'select','id':line.id,'type':line.type},success:function(data, textStatus, jqXHR)
-//						{
-//							doResponse(data,textStatus);
-//						} } );
-					// Den Objekt-Typ und die Objekt-Id für alle Views setzen (die dies zulassen)
-
-					// Neue Action starten.
-					$('div#tree div.entry').removeClass('selected');
-					$(this).addClass('selected');
-					openNewAction( $(this).text(), line.action, line.id, line.extraId );
-				});
-				
-				// Drag and drop für die Baum-Inhalte.
-				//$(new_li).children('div.entry').draggable( {cursor:'move',revert: 'invalid' });
-			}
-				
-		});
-		//$(ul).children('li:last-child').addClass('last');
-		$(ul).slideDown('fast'); // Einblenden
-	});
-	
-	$(li).children('div.tree').unbind('click');
-	$(li).children('div.tree').removeClass('closed').addClass('open');
-	$(li).children('div.tree').click( function(e) { closeBranch($(e.target).parent(),type,id) } );
-	//$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_minus.gif');
-}
 
 
 /**
@@ -736,24 +701,6 @@ function setNewId( id )
 }
 
 
-/**
- * 
- * @param li JQuery-Objekt
- * @return
- */
-function closeBranch(li,type,id)
-{
-	//alert("schließen:"+$(li).html() );
-	$(li).children('ul').slideUp('fast', function() {
-		
-		$(li).children('ul').remove();
-		$(li).children('div.tree').unbind('click');
-		$(li).children('div.tree').removeClass('open').addClass('closed');
-		//alert( "wieder öffnen: "+$(li).children('div').first().html());
-		$(li).children('div.tree').click( function() { loadBranch($(this).parent(),type,id) });
-		//$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_plus.gif');
-	} );
-}
 
 
 function submitLink(element,data)

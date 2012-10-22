@@ -119,7 +119,7 @@
 							</label>
 							<newline></newline>
 						</list>
-						<selector name="Name" id="1" />
+						<selector types="folder,link" name="var:rootfoldername" id="var:rootfolderid" folderid="var:rootfolderid" />
 					</group>
 				</column>
 			</row>
