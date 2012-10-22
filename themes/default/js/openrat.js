@@ -145,7 +145,7 @@ function refreshWorkbench()
             else
             	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
 		} } );
-		
+
 		// geht nicht zusammen mit draggable...
 		//$('ul.views').sortable();
 
@@ -408,6 +408,23 @@ function registerViewEvents( viewEl )
 		} });
 	} );
 	
+	// Drag n Drop für Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen)
+	$('div.content li.object').draggable( {cursor:'move',revert: 'invalid' });
+	$('div.content li.object > div.entry[data-type=\'folder\']').droppable( {accept:'li.object',hoverClass: 'drophover',activeClass: 'dropactive',drop: function(event, ui) {
+		var dropped   = ui.draggable;
+        var droppedOn = $(this).parent();
+        
+        //alert('Moving '+$(dropped).attr('data-id')+' to folder '+$(droppedOn).attr('data-id') );
+        /*
+        if	( $(dropped).closest('div.frame').attr('id') == $(droppedOn).closest('div.frame').attr('id') )
+        	$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
+        else
+        	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
+        	*/
+    	//$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
+    	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
+	} } );
+
 }
 
 

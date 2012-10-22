@@ -24,7 +24,7 @@ jQuery.fn.orTree = function( options )
 				if	( settings.selectable.length==0 ||  settings.selectable[0]=='' || jQuery.inArray(line.type, settings.selectable)!=-1)
 				{
 					//var img = (line.url!==undefined?'tree_plus':'tree_none');
-					$(ul).append( '<li><div class="tree">&nbsp;</div><div class="entry" title="'+ line.description + '"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+line['icon']+'.png" />'+ line.text + '</div></li>' );
+					$(ul).append( '<li class="object" data-id="'+line.internalId+'" data-type="'+line.type+'"><div class="tree">&nbsp;</div><div class="entry" data-id="'+line.internalId+'" data-type="'+line.type+'" title="'+ line.description + '"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+line['icon']+'.png" />'+ line.text + '</div></li>' );
 					var new_li = $(ul).children('li').last();
 					//$(new_li).children('div').unbind('click');
 					if ( line.type )
@@ -46,7 +46,7 @@ jQuery.fn.orTree = function( options )
 							// Den Objekt-Typ und die Objekt-Id für alle Views setzen (die dies zulassen)
 	
 							// Neue Action starten.
-							$(this).closest('div#content').find('div.entry').removeClass('selected');
+							$(this).closest('div.content').find('div.entry').removeClass('selected');
 							$(this).addClass('selected');
 							
 							settings.onSelect( $(this).text(), line.action, line.id );
