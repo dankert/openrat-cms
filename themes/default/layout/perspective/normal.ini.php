@@ -30,6 +30,6 @@ refreshable=true
 
 title=
 default=structure
-views=structure,info,preview,clipboard,console,archive,rights
+views=structure,info,preview,archive,rights
 refreshable=true
 
