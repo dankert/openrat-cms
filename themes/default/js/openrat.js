@@ -657,9 +657,24 @@ function openNewAction( name,action,id,extraId )
 					// Schließen
 					// Wenn aktiver Tab, dann den Inhalt loeschen
 					if	( $(this).closest('li.action').hasClass('active') )
-						$(this).closest('div.window').find('div.content').html(''); // Inhalt entfernen
-					// Und jetzt den Tab entfernen
-					$(this).parent().remove(); // Tab entfernen
+					{
+						//$(this).closest('div.window').find('div.content').html(''); // Inhalt entfernen
+						$('div#workbench div.refreshable div.content').html('');
+						
+						var views = $(this).closest('ul.views');
+						
+						// Und jetzt den Tab entfernen
+						$(this).parent().remove(); // Tab entfernen
+						
+						// Letzten Tab aktivieren (sofern vorhanden)
+						$(views).find('li.action').last().click();
+					}
+					else
+					{
+						// Inaktive Tabs nur löschen.
+						$(this).parent().remove(); // Tab entfernen
+					}
+					
 					resizeTabs( $('div#contentbar'),true);
 				} );
 		$('div#content > div.window > div.menu > div.views > ul.views li.active').click( function()
