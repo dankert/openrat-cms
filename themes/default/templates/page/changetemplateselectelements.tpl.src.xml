@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<form>
+	<form visible="true" cancel="true" label="message:MENU_CHANGETEMPLATE">
 		<hidden name="newtemplateid" />
 		<list list="elements" extract="true">
 			<part class="line">
