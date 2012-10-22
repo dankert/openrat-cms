@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="password,register,license"></header>
-	<form cancel="false" label="message:menu_login">
+	<form cancel="false" label="message:menu_login" visible="true">
 		<if present="config:login/logo/file">
 			<if false="property:mustChangePassword">
 				<if present="config:login/logo/url">
