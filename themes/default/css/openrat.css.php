@@ -862,10 +862,12 @@ ul.views > li > div
 	float:left;
 }
 
-div.views div.icons
+div.views div.icons,
+div.inputholder > div.icon
 {
 	float: right;
 }
+
 
 div.window div.menu ul.views
 {
@@ -990,18 +992,11 @@ table > tr.data:nth-child(2n) {
 
 /* Datenzeile - Mauseffekt */
 table tr.data:hover,
-div#tree div.content li div.entry:hover
+div.content li div.entry:hover
 {
 	background-color:<?php echo $_GET['inactive_background_color']; ?>;;
 }
 
-/* Datenzeile mit URL - Mauseffekt */
-table tr.data td[onclick]:hover{
-	background-color:<?php echo $_GET['inactive_background_color']; ?>;
-}
-
-tr.data > td[onclick],
-div.dropdown div[onclick],
 ul.tree div
 {
 cursor:pointer;
@@ -1466,6 +1461,19 @@ div.inputholder
     -moz-box-shadow:inset 0px 0px 3px  <?php echo $_GET['title_background_color']; ?>;
     box-shadow:inset 0px 0px 3px <?php echo $_GET['title_background_color']; ?>;
     
+}
+
+
+div.inputholder ul.tree,
+div.inputholder ul.tree li.last,
+div.inputholder ul.tree li:last-child
+{
+	background-color:<?php echo $_GET['title_text_color']; ?>;
+}
+
+div.inputholder > div.dropdown
+{
+	width:70%;
 }
 
 div.search > div.inputholder

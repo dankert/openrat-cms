@@ -49,7 +49,7 @@
 				<column>
 					<text raw="_" />
 				</column>
-				<column colspan="2" class="clickable">>
+				<column colspan="2" class="clickable">
 					<link type="view" action="folder" subaction="createfolder">
 						<image file="icon/create"></image>
 						<text key="menu_folder_createfolder"></text>
@@ -71,7 +71,7 @@
 				<column>
 					<text raw="_" />
 				</column>
-				<column colspan="2" class="clickable">>
+				<column colspan="2" class="clickable">
 					<link type="view" action="folder" subaction="createfile">
 						<image file="icon/create"></image>
 						<text key="menu_folder_createfile"></text>
@@ -82,7 +82,7 @@
 				<column>
 					<text raw="_" />
 				</column>
-				<column colspan="2" class="clickable">>
+				<column colspan="2" class="clickable">
 					<link type="view" action="folder" subaction="createlink">
 						<image file="icon/create"></image>
 						<text key="menu_folder_createlink"></text>
@@ -112,14 +112,27 @@
 					<group title="message:options">
 						<set var="type" value="var:defaulttype"></set>
 						<list list="actionlist" value="actiontype">
-							<radio name="type" value="var:actiontype"></radio>
-							<label for="type" value="var:actiontype">
-								<text raw="_"></text>
-								<text key="var:actiontype" prefix="FOLDER_SELECT_"></text>
-							</label>
-							<newline></newline>
+							<part class="line">
+								<part class="label">
+								</part>
+								<part class="input">
+									<radio name="type" value="var:actiontype"></radio>
+									<label for="type" value="var:actiontype">
+										<text raw="_"></text>
+										<text key="var:actiontype" prefix="FOLDER_SELECT_"></text>
+									</label>
+								</part>
+							</part>
 						</list>
-						<selector types="folder,link" name="var:rootfoldername" id="var:rootfolderid" folderid="var:rootfolderid" />
+						<part class="line">
+							<part class="label">
+								<text key="FOLDER_SELECT_TARGET_FOLDER" />
+							</part>
+							<part class="input">
+								<selector types="folder,link" name="var:rootfoldername"
+									id="var:rootfolderid" folderid="var:rootfolderid" />
+							</part>
+						</part>
 					</group>
 				</column>
 			</row>
