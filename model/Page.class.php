@@ -735,7 +735,7 @@ class Page extends Object
 			}
 			
 			if   ( $this->icons )
-				$src = str_replace( '{{->'.$id.'}}','<a href="'.Html::url('pageelement','edit',$this->objectid,array('elementid'=>$id)).'" title="'.$value->element->desc.'" target="cms_main_main"><img src="'.OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_ICON_EXT.'" border="0"></a>',$src );
+				$src = str_replace( '{{->'.$id.'}}','<a href="javascript:openNewAction(\''.$value->element->name.'\',\'pageelement\',\''.$this->objectid.'_'.$value->element->elementid.'\');" title="'.$value->element->desc.'"><img src="'.OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/icon_el_'.$value->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>',$src );
 			else
 				$src = str_replace( '{{->'.$id.'}}','',$src );
 		}
