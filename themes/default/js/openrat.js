@@ -22,7 +22,7 @@ $(document).ready(function()
 function ping()
 {
 	$.ajax( createUrl('title','ping',0) );
-	window.console && console.log("session-ping");
+	//window.console && console.log("session-ping");
 }
 
 
@@ -402,9 +402,11 @@ function registerViewEvents( viewEl )
 		var selectorEl = this;
 		$(this).orTree( { type:'project',selectable:$(selectorEl).attr('data-types').split(','),id:$(selectorEl).attr('data-init-folderid'),onSelect:function(name,type,id) {
 		
-			var inputholder = $(selectorEl).closest('div.inputholder');
-			$(inputholder).find('div.name').text( name );
-			$(inputholder).find('input[type=hidden]').attr( 'value',id );
+			var selector = $(selectorEl).parent();
+			
+			//console.log( 'Selected: '+name+" #"+id );
+			$(selector).find('input[type=text]'  ).attr( 'value',name );
+			$(selector).find('input[type=hidden]').attr( 'value',id   );
 		} });
 	} );
 	
