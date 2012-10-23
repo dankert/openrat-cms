@@ -266,9 +266,6 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('objectid',$file->objectid);
 		
 		$this->folder->setTimestamp();
-
-		$this->setTemplateVar('tree_refresh',true);
-		exit();
 	}	
 
 
