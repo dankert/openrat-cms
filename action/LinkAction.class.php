@@ -154,36 +154,15 @@ class LinkAction extends ObjectAction
 
 
 
-	function editView()
+	public function editView()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );
 
-		// Typ der Verkn?pfung
+		// Typ der Verknuepfung
 		$this->setTemplateVar('type'            ,$this->link->getType()     );
-		$this->setTemplateVar('targetobjectid',$this->link->linkedObjectId);
+		$this->setTemplateVar('targetobjectid'  ,$this->link->linkedObjectId);
+		$this->setTemplateVar('targetobjectname',$this->link->name          );
 		$this->setTemplateVar('url'             ,$this->link->url           );
-
-		// Alle verlinkbaren Objekte anzeigen
-		$list = array();
-		
-		foreach( Object::getAllObjectIds() as $oid )
-		{
-			$o = new Object( $oid );
-			$o->load();
-			
-			if	( $o->isFile ||
-			       $o->isPage    )
-			{
-				$folder = new Folder( $o->parentid );
-				$folder->linknames = false;
-				$folder->load();
-				$list[$oid]  = lang( $o->getType() ).': ';
-				$list[$oid] .= implode( FILE_SEP,$folder->parentObjectNames( false,true ) );
-				$list[$oid] .= FILE_SEP.$o->name;
-			}
-		}
-		asort( $list );
-		$this->setTemplateVar('objects',$list);		
 	}
 
 
