@@ -370,10 +370,8 @@ class Action
 		if	( is_object( $db ) )
 			$db->commit();
 		
-		// Ablaufzeit für den Inhalt ist schwer zu ermitteln.
-		// Nicht setzen.
-		//$expires = substr(gmdate('r'),0,-5).'GMT';
-		//header('Expires: '      .$expires );
+		// Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
+		header('Expires: '.substr(date('r',time()-date('Z')),0,-5).'GMT',false );
 		
 		header('X-Content-Security-Policy: '.'allow *; script-src \'self\'; options \'inline-script\'');
 		
