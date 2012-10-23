@@ -395,6 +395,7 @@ class DB
 	
 	/**
 	 * Startet eine Transaktion.
+	 * Falls der Schalter 'transaction' nicht gesetzt ist, passiert nichts.
 	 */
 	public function start()
 	{
@@ -408,7 +409,8 @@ class DB
 	
 	
 	/**
-	 * Beendet und best�tigt eine Transaktion.
+	 * Beendet und bestaetigt eine Transaktion.
+	 * Falls der Schalter 'transaction' nicht gesetzt ist, passiert nichts.
 	 */
 	public function commit()
 	{
@@ -422,7 +424,8 @@ class DB
 	}
 	
 	/**
-	 * Setzt eine Transaktion zur�ck.
+	 * Setzt eine Transaktion zurueck. 
+	 * Falls der Schalter 'transaction' nicht gesetzt ist, passiert nichts.
 	 */
 	public function rollback()
 	{
