@@ -1089,7 +1089,7 @@ class FolderAction extends ObjectAction
 	 * Anzeige aller Objekte in diesem Ordner.
 	 * @return unknown_type
 	 */
-	function contentView()
+	public function contentView()
 	{
 		global $conf_php;
 
@@ -1241,7 +1241,9 @@ class FolderAction extends ObjectAction
 
 
 
-
+	/**
+	 * Reihenfolge bearbeiten.
+	 */
 	function orderView()
 	{
 		global $conf_php;
@@ -1307,13 +1309,19 @@ class FolderAction extends ObjectAction
 	}
 
 
-	
-	function propView()
+
+	/**
+	 * Eigenschaften anzeigen.
+	 */
+	public function propView()
 	{
 		$this->setTemplateVars( $this->folder->getProperties() );
 	}
 
-	function infoView()
+	/**
+	 * Infos anzeigen.
+	 */
+	public function infoView()
 	{
 		$this->setTemplateVars( $this->folder->getProperties() );
 		$this->setTemplateVar( 'full_filename',$this->folder->full_filename() );
@@ -1382,16 +1390,9 @@ class FolderAction extends ObjectAction
 		
 		$this->setTemplateVar('outline',$structure);
 	}
-	
-	
-	
-	function remove()
-	{
-		$this->setTemplateVars( $this->folder->getProperties() );
-	}
 
 
-	function pubView()
+	public function pubView()
 	{
 		// Schalter nur anzeigen, wenn sinnvoll
 		$this->setTemplateVar('files'  ,count($this->folder->getFiles()) > 0 );
@@ -1405,7 +1406,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function pubPost()
+	public function pubPost()
 	{
 		if	( !$this->folder->hasRight( ACL_PUBLISH ) )
 			die('no rights for publish');

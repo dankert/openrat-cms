@@ -291,7 +291,7 @@ function registerViewEvents( viewEl )
 		   {
 				var order = [];
 				$(ui.item).closest('table.sortable').find('tbody > tr.data').each( function() {
-					var objectid = $(this).data('id').substring(2);
+					var objectid = $(this).data('id');
 					order.push( objectid );
 				});
 				var url    = './dispatcher.php';
@@ -304,7 +304,7 @@ function registerViewEvents( viewEl )
 				
 				$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 					{
-						doResponse(data,textStatus,form);
+						doResponse(data,textStatus,ui);
 					},
 					error:function(jqXHR, textStatus, errorThrown) {
 						alert( errorThrown );

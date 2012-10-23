@@ -1,81 +1,44 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header back="true"></header>
-	<text text="GLOBAL_FOLDER_DESC"></text>
 	<input type="hidden" name="token" default="function:token"></input>
 	<table class="sortable">
 		<row class="headline">
-			<column class="help" colspan="4">
-				<link type="url" url="var:flip_url" title="message:FOLDER_FLIP">
+			<column class="help clickable">
+				<link type="post" action="folder" subaction="reorder" var1="type"
+					value1="flip" title="message:FOLDER_FLIP">
 					<text key="FOLDER_ORDER"></text>
 				</link>
 			</column>
-			<column class="help">
-				<link type="url" url="var:orderbytype_url" title="message:FOLDER_ORDERBYTYPE">
+			<column class="help clickable">
+				<link type="post" action="folder" subaction="reorder" var1="type"
+					value1="type" title="message:FOLDER_ORDERBYTYPE">
 					<text key="GLOBAL_TYPE"></text>
 				</link>
-				<text raw="_/_"></text>
-				<link type="url" url="var:orderbyname_url" title="message:FOLDER_ORDERBYNAME">
+			</column>
+			<column class="help clickable">
+				<link type="post" action="folder" subaction="reorder" var1="type"
+					value1="name" title="message:FOLDER_ORDERBYNAME">
 					<text key="GLOBAL_NAME"></text>
 				</link>
 			</column>
-			<column class="help">
-				<link type="url" url="var:orderbylastchange_url" title="message:FOLDER_ORDERBYLASTCHANGE">
+			<column class="help clickable">
+				<link type="post" action="folder" subaction="reorder" var1="type"
+					value1="lastchange" title="message:FOLDER_ORDERBYLASTCHANGE">
 					<text key="GLOBAL_LASTCHANGE"></text>
 				</link>
 			</column>
 		</row>
 		<list list="object" extract="true">
-			<row class="data" id="o_{id}">
-				<column width="3%">
-					<if present="upurl">
-						<link type="url" url="var:upurl" title="GLOBAL_UP">
-							<set var="bild" value="arrow_up"></set>
-							<image file="var:bild"></image>
-						</link>
-					</if>
-					<if empty="upurl">
-						<text raw="_"></text>
-					</if>
+			<row class="data" id="var:id">
+				<column>
+					<text raw="_"></text>
 				</column>
-				<column width="3%">
-					<if present="topurl">
-						<link type="url" url="var:topurl" title="GLOBAL_TOP">
-							<set var="bild" value="arrow_top"></set>
-							<image file="var:bild"></image>
-						</link>
-					</if>
-					<if empty="topurl">
-						<text raw="_"></text>
-					</if>
-				</column>
-				<column width="3%">
-					<if present="bottomurl">
-						<link type="url" url="var:bottomurl" title="GLOBAL_BOTTOM">
-							<set var="bild" value="arrow_bottom"></set>
-							<image file="var:bild"></image>
-						</link>
-					</if>
-					<if empty="bottomurl">
-						<text raw="_"></text>
-					</if>
-				</column>
-				<column width="3%">
-					<if present="downurl">
-						<link type="url" url="var:downurl" title="GLOBAL_DOWN">
-							<set var="bild" value="arrow_down"></set>
-							<image file="var:bild"></image>
-						</link>
-					</if>
-					<if empty="downurl">
-						<text raw="_"></text>
-					</if>
-				</column>
-				<column width="40%">
+				<column colspan="2">
 					<image type="var:icon"></image>
 					<text var="name"></text>
 				</column>
-				<column width="18%">
+				<column>
 					<date date="var:date"></date>
 				</column>
 			</row>
