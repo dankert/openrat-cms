@@ -186,7 +186,7 @@
 						</part>
 						<part class="input">
 							<selectbox list="objects" name="linkobjectid" addempty="true"></selectbox>
-							<selector types="folder,page,file,link" name="var:linkobjectid"
+							<selector types="page,file,link" name="var:linkobjectid"
 								id="var:linkobjectid" folderid="var:rootfolderid" />
 						</part>
 
