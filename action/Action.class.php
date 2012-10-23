@@ -107,12 +107,6 @@ class Action
 		$this->templateVars['control'] = array();
 		$this->templateVars['output' ] = array();
 		
-		//Html::debug($this);
-		if	( !$this->isEditable() || isset($_COOKIE['or_always_edit']) )
-			$this->templateVars['mode'] = 'edit';
-		else 
-			$this->templateVars['mode'] = $this->getRequestVar('mode');
-		
 		header('Content-Language: '.$conf['language']['language_code']);
 		
 		$this->refresh = false;
@@ -373,13 +367,15 @@ class Action
 //			Http::serverError("Some server error messages occured - see above - CMS canceled.");
 //		}
 		
-//		if	( is_object( $db ) )
-//			$db->commit();
+		if	( is_object( $db ) )
+			$db->commit();
 		
-		$expires = substr(gmdate('r'),0,-5).'GMT';
+		// Ablaufzeit für den Inhalt ist schwer zu ermitteln.
+		// Nicht setzen.
+		//$expires = substr(gmdate('r'),0,-5).'GMT';
 		//header('Expires: '      .$expires );
 		
-		//header('X-Content-Security-Policy: '.'allow *; script-src \'self\'; options \'inline-script\'');
+		header('X-Content-Security-Policy: '.'allow *; script-src \'self\'; options \'inline-script\'');
 		
 		
 		$httpAccept = getenv('HTTP_ACCEPT');
@@ -440,9 +436,9 @@ class Action
 		if	(isset($this->actionConfig[$this->subActionName]['alias']))
 			$tplName = (method_exists(new ObjectAction(),$this->subActionName)?'object':$this->actionName).'/'.$this->actionConfig[$this->subActionName]['alias'];
 			
-		if	(isset($this->actionConfig[$this->subActionName]['target']))
-			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
-		else
+// 		if	(isset($this->actionConfig[$this->subActionName]['target']))
+// 			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
+// 		else
 			$targetSubActionName = $this->subActionName;
 		
 
@@ -606,7 +602,6 @@ class Action
 	 */
 	protected function lastModified( $time )
 	{
-		return;
 		$user = Session::getUser();
 		if	( $user->loginDate > $time && !isset($this->actionConfig[$this->subActionName]['direct']) )
 			// Falls Benutzer-Login nach letzter �nderung.
@@ -643,7 +638,6 @@ class Action
 		// At least one of the headers is there - check them
 		if	( $if_none_match && $if_none_match != $etag )
 			return; // etag is there but doesn't match
-
 
 		if	( $if_modified_since && $if_modified_since != $lastModified )
 			return; // if-modified-since is there but doesn't match
@@ -784,24 +778,11 @@ class Action
 	 * Stellt fest, ob sich die Anzeige im Editier-Modus befindet.
 	 *
 	 * @return boolean
+	 * @deprecated
 	 */
 	protected function isEditMode()
 	{
 		return true;
-		
-		if	( readonly() )
-			return false;
-			
-		if	( !$this->isEditable() )
-			return true;
-
-		if	( $this->getRequestVar('mode')=='edit' )
-			return true;
-
-		if	( isset($_COOKIE['or_always_edit']) )
-			return true;
-
-		return (isset($this->templateVars) && $this->templateVars['mode']=='edit'); 
 	}
 	
 	
