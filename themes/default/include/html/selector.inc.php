@@ -1,6 +1,6 @@
 <div class="inputholder">
 
-<input type="hidden" name="targetid" value="<?php echo $attr_id ?>" />
+<input type="hidden" name="<?php echo $attr_param ?>" value="<?php echo $attr_id ?>" />
 <div class="name"><?php echo $attr_name ?></div>
 <div class="icon"><img class="icon" src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/menu.gif' ?>" /></div>
 <div class="dropdown">
