@@ -8,7 +8,7 @@
 					<!-- 
 					<text key="SELECT"></text>
 				 -->
-					<text raw="_" />
+					<checkbox name="checkall" class="checkall" />
 				</column>
 				<column class="help">
 					<text key="GLOBAL_TYPE"></text>
@@ -91,24 +91,6 @@
 			</row>
 			<row>
 				<column colspan="2">
-					<image fileext="tree_none_end.gif" align="left"></image>
-					<text raw="_"></text>
-					<link var1="markall" value1="1" action="var:actionName"
-						subaction="select">
-						<text key="FOLDER_MARK_ALL"></text>
-					</link>
-					<text raw="_|_"></text>
-					<link url=":javascript:unmark();">
-						<text key="FOLDER_UNMARK_ALL"></text>
-					</link>
-					<text raw="_|_"></text>
-					<link url=":javascript:flip();">
-						<text key="FOLDER_FLIP_MARK"></text>
-					</link>
-				</column>
-			</row>
-			<row>
-				<column colspan="2">
 					<group title="message:options">
 						<set var="type" value="var:defaulttype"></set>
 						<list list="actionlist" value="actiontype">
@@ -124,12 +106,24 @@
 								</part>
 							</part>
 						</list>
+							<part class="line">
+								<part class="label">
+								</part>
+								<part class="input">
+									<text raw="____" />
+									<checkbox name="confirm" />
+									<label for="confirm">
+										<text key="CONFIRM_DELETE"></text>
+									</label>
+								</part>
+							</part>
+						
 						<part class="line">
 							<part class="label">
 								<text key="FOLDER_SELECT_TARGET_FOLDER" />
 							</part>
 							<part class="input">
-								<selector types="folder,link" name="var:rootfoldername"
+								<selector types="folder" param="targetobjectid" name="var:rootfoldername"
 									id="var:rootfolderid" folderid="var:rootfolderid" />
 							</part>
 						</part>

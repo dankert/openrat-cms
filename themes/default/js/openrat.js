@@ -427,6 +427,11 @@ function registerViewEvents( viewEl )
     	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
 	} } );
 
+	// Alle Checkboxen setzen oder nicht setzen.
+	$(viewEl).find('tr.headline > td > input.checkbox').click( function() {
+		$(this).closest('table').find('tr.data > td > input.checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
+	});
+
 }
 
 

@@ -437,13 +437,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	/**
-	 * Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner.
-	 * 
-	 * Es werden alle ausgew�hlten Dateien nochmal angezeigt.
-	 * Abh�ngig von der ausgew�hlten Aktion wird eine weitere Auswahl ben�tigt. 
-	 */
-	public function editPost()
+	private function OLD__________editPost()
 	{
 		$type = $this->getRequestVar('type'); // Typ der Aktion, z.B "copy" oder "move"
 		
@@ -526,12 +520,68 @@ class FolderAction extends ObjectAction
 	/**
 	 * Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner 
 	 */
-	function multiple()
+	public function editPost()
 	{
 		$type           = $this->getRequestVar('type');
 		$ids            = explode(',',$this->getRequestVar('ids'));
 		$targetObjectId = $this->getRequestVar('targetobjectid');
 
+		// Prüfen, ob Schreibrechte im Zielordner bestehen.
+		switch( $type )
+		{
+			case 'move':
+			case 'copy':
+			case 'link':
+				$f = new Folder( $targetObjectId );
+				
+				// Beim Verkn�pfen muss im Zielordner die Berechtigung zum Erstellen
+				// von Verkn�pfungen vorhanden sein.
+				//
+				// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
+				// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
+				if	( ( $type=='link' && $f->hasRight( ACL_CREATE_LINK ) ) || 
+					  ( ( $type=='move' || $type == 'copy' ) && 
+					    ( $f->hasRight(ACL_CREATE_FOLDER) || $f->hasRight(ACL_CREATE_FILE) || $f->hasRight(ACL_CREATE_PAGE) ) ) )
+				{
+					// OK
+				}
+				else
+				{
+					$this->addValidationError('targetobjectid','no_rights');
+					return;
+				}
+				
+				break;
+			default:
+		}
+		
+		
+		$ids        = $this->folder->getObjectIds();
+		$objectList = array();
+		
+		foreach( $ids as $id )
+		{
+			// Nur, wenn Objekt ausgewaehlt wurde
+			if	( !$this->hasRequestVar('obj'.$id) )
+				continue;
+
+			$o = new Object( $id );
+			$o->load();
+			
+			// Fuer die gewuenschte Aktion muessen pro Objekt die entsprechenden Rechte
+			// vorhanden sein.
+			if	( $type == 'copy'    && $o->hasRight( ACL_READ   ) ||
+				  $type == 'move'    && $o->hasRight( ACL_WRITE  ) ||
+				  $type == 'link'    && $o->hasRight( ACL_READ   ) ||
+				  $type == 'archive' && $o->hasRight( ACL_READ   ) ||
+				  $type == 'delete'  && $o->hasRight( ACL_DELETE )    )
+				$objectList[ $id ] = $o->getProperties();
+			else
+				$this->addNotice($o->getType(),$o->name,'no_rights',OR_NOTICE_WARN);
+		}
+		
+		$ids = array_keys($objectList);
+		
 		if	( $type == 'archive' )
 		{
 			require_once('serviceClasses/ArchiveTar.class.php');
@@ -636,6 +686,7 @@ class FolderAction extends ObjectAction
 								$f->parentid = $targetObjectId;
 								$f->add();
 								$f->copyValueFromFile( $id );
+								
 								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
 								break;
 							
@@ -688,7 +739,7 @@ class FolderAction extends ObjectAction
 		
 					case 'delete':
 	
-						if	( $this->hasRequestVar('commit') ) 
+						if	( $this->hasRequestVar('confirm') ) 
 						{
 							switch( $o->getType() )
 							{
@@ -733,14 +784,13 @@ class FolderAction extends ObjectAction
 		}
 
 		$this->folder->setTimestamp();
-		
-		// Ordner anzeigen
-		$this->callSubAction('show');
 	}
 
 
-	// Reihenfolge von Objekten aendern
-	function reorderPost()
+	/**
+	 * Reihenfolge von Objekten aendern.
+	 */
+	public function reorderPost()
 	{
 		$type = $this->getRequestVar('type');
 		
