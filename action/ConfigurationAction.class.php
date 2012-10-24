@@ -23,6 +23,8 @@
  */
 class ConfigurationAction extends Action
 {
+	public $security = SECURITY_ADMIN;
+	
 	/**
 	 * Konstruktor
 	 */

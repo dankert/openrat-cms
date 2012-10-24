@@ -29,6 +29,8 @@
 
 class PageAction extends ObjectAction
 {
+	public $security = SECURITY_USER;
+	
 	var $page;
 	var $defaultSubAction = 'show';
 

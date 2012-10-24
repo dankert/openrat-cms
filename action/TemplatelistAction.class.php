@@ -25,6 +25,8 @@
 
 class TemplatelistAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	function TemplatelistAction()
 	{
 	}

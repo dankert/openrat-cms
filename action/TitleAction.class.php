@@ -25,6 +25,8 @@
  */
 class TitleAction extends Action
 {
+	public $security = SECURITY_GUEST;
+		
 	/**
 	 * Fuellen der Variablen und Anzeigen der Titelleiste
 	 */

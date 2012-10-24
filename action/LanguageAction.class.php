@@ -64,6 +64,8 @@
  */
 class LanguageAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	var $defaultSubAction = 'listing';
 
 	/**

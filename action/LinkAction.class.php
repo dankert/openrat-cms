@@ -61,6 +61,8 @@
  */
 class LinkAction extends ObjectAction
 {
+	public $security = SECURITY_USER;
+	
 	var $link;
 	var $defaultSubAction = 'prop';
 

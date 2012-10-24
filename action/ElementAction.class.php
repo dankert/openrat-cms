@@ -23,6 +23,8 @@
  */
 class ElementAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	var $element;
 
 	/**

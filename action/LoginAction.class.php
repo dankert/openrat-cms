@@ -31,6 +31,8 @@ define('PROJECTID_ADMIN',-1);
 
 class LoginAction extends Action
 {
+	public $security = SECURITY_GUEST;
+	
 	var $mustChangePassword = false;
 	
 	function setDb( $dbid )

@@ -48,6 +48,9 @@ define('OR_TMP_DIR'           ,'./tmp/'            );
 define('OR_CONTROLLER_FILE'   ,defined('OR_EXT_CONTROLLER_FILE')?OR_EXT_CONTROLLER_FILE:'dispatcher');
 define('START_TIME'           ,time()              );
 
+define('SECURITY_GUEST',1);
+define('SECURITY_USER' ,2);
+define('SECURITY_ADMIN',3);
 
 define('REQ_PARAM_TOKEN'          ,'token'          );
 define('REQ_PARAM_ACTION'         ,'action'         );

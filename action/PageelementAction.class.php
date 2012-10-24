@@ -29,6 +29,8 @@
  */
 class PageelementAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	var $defaultSubAction = 'edit';
 
 

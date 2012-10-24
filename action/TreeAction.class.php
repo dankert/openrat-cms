@@ -27,6 +27,8 @@
 
 class TreeAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	var $tree;
 
 

@@ -31,6 +31,8 @@
 
 class GrouplistAction extends Action
 {
+	public $security = SECURITY_ADMIN;
+	
 	function GrouplistAction()
 	{
 		$this->requireAdmin();

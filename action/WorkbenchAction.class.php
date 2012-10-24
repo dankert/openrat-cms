@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Action-Klasse zum Bearbeiten einer Datei
+ * Action-Klasse zum Anzeigen der Workbench
  * @author Jan Dankert
  * @package openrat.actions
  */
 class WorkbenchAction extends Action
 {
-	var $defaultSubAction = 'show';
+	public $security = SECURITY_GUEST;
 
 	private $perspective;
 	
@@ -19,7 +19,14 @@ class WorkbenchAction extends Action
 		$this->perspective = Session::get('perspective');
 		if	( empty($this->perspective) )
 		{
-			$this->perspective = 'login';
+			global $conf;
+			$guestConf = $conf['security']['guest'];
+			
+			if	( $guestConf['enable'] )
+				$this->perspective = 'start';
+			else
+				$this->perspective = 'login';
+			
 			Session::set('perspective',$this->perspective);
 		}
 	}
@@ -35,6 +42,7 @@ class WorkbenchAction extends Action
 		require_once('themes/default/layout/perspective/header.php');
 		require_once('themes/default/layout/perspective/normal.php');
 		// Ausgabe fertig.
+		exit;
 	}
 }
 

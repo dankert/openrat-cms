@@ -32,6 +32,8 @@ if	( !defined('PROJECTID_ADMIN') )
 
 class StartAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	var $mustChangePassword = false;
 	
 	function setDb( $dbid )

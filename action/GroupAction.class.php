@@ -31,6 +31,8 @@
 
 class GroupAction extends Action
 {
+	public $security = SECURITY_ADMIN;
+	
 	var $group;
 	var $defaultSubAction = 'edit';
 

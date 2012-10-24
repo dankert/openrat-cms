@@ -23,6 +23,8 @@
  */
 class IndexAction extends Action
 {
+	public $security = SECURITY_GUEST;
+	
 	/**
 	 * Konstruktor
 	 */

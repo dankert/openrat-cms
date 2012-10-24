@@ -64,6 +64,8 @@ O<?php
  */
 class LanguagelistAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 
 	/**
 	 * Konstruktor

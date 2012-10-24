@@ -28,6 +28,8 @@
  */
 class FilebrowserAction extends ObjectAction
 {
+	public $security = SECURITY_USER;
+	
 	var $command;
 	var $resourceType;
 	

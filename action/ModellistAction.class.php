@@ -25,6 +25,8 @@
  */
 class ModellistAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	function ModellistAction()
 	{
 		if	( $this->getRequestId() != 0 )

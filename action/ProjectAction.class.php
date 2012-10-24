@@ -25,6 +25,8 @@
  */
 class ProjectAction extends Action
 {
+	public $security = SECURITY_ADMIN;
+	
 	var $project;
 	var $defaultSubAction = 'listing';
 

@@ -28,6 +28,8 @@
  */
 class FileAction extends ObjectAction
 {
+	public $security = SECURITY_USER;
+	
 	var $file;
 	var $defaultSubAction = 'show';
 

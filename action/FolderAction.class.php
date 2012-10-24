@@ -26,6 +26,8 @@
 
 class FolderAction extends ObjectAction
 {
+	public $security = SECURITY_USER;
+	
 	var $defaultSubAction = 'show';
 	var $folder;
 

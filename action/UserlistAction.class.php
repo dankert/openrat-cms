@@ -28,6 +28,8 @@
  */
 class UserlistAction extends Action
 {
+	public $security = SECURITY_ADMIN;
+	
 	function UserlistAction()
 	{
 		$this->requireAdmin();

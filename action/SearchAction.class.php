@@ -30,6 +30,8 @@
 
 class SearchAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	/**
 	 * leerer Kontruktor
 	 */

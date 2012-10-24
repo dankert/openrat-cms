@@ -418,9 +418,8 @@ class Http
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
-	function notAuthorized($message)
+	function notAuthorized($text,$message)
 	{
-
 		Http::sendStatus(403,'Not Authorized',$message);
 	}
 	

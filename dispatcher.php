@@ -60,13 +60,9 @@ if	( !is_array( $conf ) || $conf['config']['auto_reload'] && Preferences::lastMo
 		session_unset();
 	
 	$conf = Preferences::load();
-	#echo "<code><tt>";
-	#print_r($conf);
-	#echo "</tt></code>";
 	
-	$conf['action'] = Preferences::loadDirectory(OR_ACTIONCLASSES_DIR);
 	$conf['build'] = parse_ini_file('build.ini');
-	// Sprache lesen und zur Konfiguration hinzufuegen
+	// Sprache lesen
 
 	if	( $conf['i18n']['use_http'] )
 		// Die vom Browser angeforderten Sprachen ermitteln     
@@ -168,67 +164,46 @@ $actionClassName = ucfirst($action).'Action';
 
 require_once( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
-$sConf = @$conf['action'][$actionClassName][$subaction];
-
 // Erzeugen der Action-Klasse
 $do = new $actionClassName;
 
-// TODO: ActionConfig entfernen.
-$do->actionConfig = @$conf['action'][$actionClassName];
-//$do->actionConfig = array();
-
 $do->actionClassName = $actionClassName; 
 $do->actionName      = $action;
-if	( $subaction == '' )
-	$subaction = $do->actionConfig['default']['goto'];
-	
 $do->subActionName   = $subaction;
-
 
 $do->init(); 
 
-if	( !isset($do->actionConfig[$subaction]) && false )
+
+switch( @$do->security )
 {
-	Logger::warn( "Action $action has no configured method named $subaction");
-	Http::serverError("Action '$action' has no accessable method '$subaction'.");
-	exit;
+	case SECURITY_GUEST:
+		// Ok.
+		break;
+	case SECURITY_USER:
+		if	( !is_object($do->currentUser) )
+		{
+			Logger::debug('No session and no guest action occured, maybe session expired');
+			Http::notAuthorized( lang('SESSION_EXPIRED'),'login required' );
+			$do->templateVars['error'] = 'not logged in';
+			exit;
+		}
+		break;
+	case SECURITY_ADMIN:
+		if	( !$do->currentUser->isAdmin )
+		{
+			Logger::debug('Admin action, but user '.$do->currentUser->name.' is not an admin');
+			Http::notAuthorized( lang('SESSION_EXPIRED'),'intrusion detection' );
+			$do->templateVars['error'] = 'no admin';
+			exit;
+		}
+		break;
+	default:
+		Http::notAuthorized( lang('SESSION_EXPIRED'),'no security information for this action' );
 }
 
 
-$subactionConfig = @$do->actionConfig[$subaction];
 
-
-// Eine Subaktion ohne "guest=true" verlangt einen angemeldeten Benutzer.
-if	( !isset($subactionConfig['guest']) || !$subactionConfig['guest'] )
-	if	( !is_object($do->currentUser) )
-	{
-		Logger::debug('No session and no guest action occured, maybe session expired');
-		Http::notAuthorized( lang('SESSION_EXPIRED'),'login required' );
-		$do->templateVars['error'] = 'not logged in';
-		exit;
-	}
-
-// Eine Aktion mit "admin=true" verlangt einen Administrator als Benutzer.
-if	( isset($do->actionConfig['admin']) && $do->actionConfig['admin'] )
-	if	( !$do->currentUser->isAdmin )
-	{
-		Logger::debug('Admin action, but user '.$do->currentUser->name.' is not an admin');
-		Http::notAuthorized( lang('SESSION_EXPIRED'),'intrusion detection' );
-		$do->templateVars['error'] = 'no admin';
-		exit;
-	}
-
-
-
-// Alias-Methode aufrufen.
-if	( isset($do->actionConfig[$do->subActionName]['alias']) )
-{
-	$subaction = $do->actionConfig[$do->subActionName]['alias'];
-}
-
-
-$isAction = $_SERVER['REQUEST_METHOD'] == 'POST' || (isset($sConf['write']) && $sConf['write']=='get');
-
+$isAction = $_SERVER['REQUEST_METHOD'] == 'POST';
 
 if	( $isAction )
 	$subactionMethodName = $subaction.'Post';
@@ -238,18 +213,11 @@ else
 Logger::debug("Executing $actionClassName::$subactionMethodName");
 
 if	( ! method_exists($do,$subactionMethodName) )
-{
 	Http::sendStatus(404,"Method not found","Method '".$subactionMethodName."' does not exist in this context" );
-	
-}
 
 // Jetzt wird die Aktion aus der Actionklasse aufgerufen.
 $do->$subactionMethodName();
 
-if	( isset($do->actionConfig[$do->subActionName]['direct']) )
-	exit;
-
-		
 $do->forward();
 
 // fertig :)

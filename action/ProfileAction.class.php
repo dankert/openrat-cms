@@ -29,6 +29,8 @@
  */
 class ProfileAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	var $user;
 	var $defaultSubAction = 'edit';
 

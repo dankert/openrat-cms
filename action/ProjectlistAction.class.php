@@ -25,6 +25,8 @@
  */
 class ProjectlistAction extends Action
 {
+	public $security = SECURITY_ADMIN;
+	
 	function ProjectlistAction()
 	{
 		$this->requireAdmin();

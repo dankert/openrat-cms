@@ -22,6 +22,8 @@
 
 class WebdavAction extends Action
 {
+	public $security = SECURITY_USER;
+	
 	// Zahlreiche Instanzvariablen, die im Konstruktor
 	// beim Zerlegen der Anfrag gef�llt werden.
 	var $defaultSubAction = 'show';
