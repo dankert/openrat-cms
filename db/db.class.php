@@ -159,6 +159,8 @@ class DB
 			}
 		}
 		
+		Logger::debug('database connection established');
+		
 		$this->available = true;
 		return true;
 	}
