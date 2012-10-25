@@ -249,11 +249,18 @@ SQL
 		$sql->setInt   ('projectid'          ,$this->projectid );
 
 		$db->query( $sql );
-		
-		$rootFolder = new Folder( $this->getRootObjectId() );
-		$rootFolder->load();
-		$rootFolder->filename = $this->name;
-		$rootFolder->save();
+
+		try
+		{
+			$rootFolder = new Folder( $this->getRootObjectId() );
+			$rootFolder->load();
+			$rootFolder->filename = $this->name;
+			$rootFolder->save();
+		}
+		catch( Exception $e )
+		{
+			Logger::warn('Project '.$this->projectid.' has not a root folder'."\n".$e->getTraceAsString());
+		}
 	}
 
 

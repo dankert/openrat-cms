@@ -211,6 +211,9 @@ SQL
 		$sql->setInt( 'userid',$this->userid );
 		$row = $db->getRow( $sql );
 
+		if	( count($row) == 0 )
+			throw new ObjectNotFoundException();
+		
 		$this->setDatabaseRow( $row );		
 	}
 
@@ -258,36 +261,21 @@ SQL
 	{
 		global $conf;
 		
-		if	( count($row) > 1 )
-		{
-			$this->userid   = $row['id'      ];
-			$this->name     = $row['name'    ];
-			$this->style    = $row['style'   ];
-			$this->isAdmin  = ( $row['is_admin'] == '1');
-			$this->ldap_dn  = $row['ldap_dn' ];
-			$this->fullname = $row['fullname'];
-			$this->tel      = $row['tel'     ];
-			$this->mail     = $row['mail'    ];
-			$this->desc     = $row['descr'   ];
+		$this->userid   = $row['id'      ];
+		$this->name     = $row['name'    ];
+		$this->style    = $row['style'   ];
+		$this->isAdmin  = ( $row['is_admin'] == '1');
+		$this->ldap_dn  = $row['ldap_dn' ];
+		$this->fullname = $row['fullname'];
+		$this->tel      = $row['tel'     ];
+		$this->mail     = $row['mail'    ];
+		$this->desc     = $row['descr'   ];
+		
+		if	( $this->fullname == '' )
+			$this->fullname = $this->name;
 			
-			if	( $this->fullname == '' )
-				$this->fullname = $this->name;
-				
-			if	( $this->style == '' )
+		if	( $this->style == '' )
 				$this->style = $conf['interface']['style']['default'];
-		}
-		else
-		{
-			$this->userid   = -99;
-			$this->name     = lang('UNKNOWN');
-			$this->style    = $conf['interface']['style']['default'];
-			$this->isAdmin  = false;
-			$this->ldap_dn  = '';
-			$this->fullname = lang('UNKNOWN');
-			$this->tel      = '';
-			$this->mail     = '';
-			$this->desc     = '';
-		}
 
 		/* vorerst unbenutzt:
 		if	( $row['use_ldap'] == '1' )
