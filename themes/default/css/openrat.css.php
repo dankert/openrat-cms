@@ -1253,10 +1253,12 @@ div#shortcuts > div.shortcut:HOVER {
 	body {
 		font-size: 16px;
 		-webkit-text-size-adjust: none;
+		overflow: visible;
 	}
-	
-	body, .container_12 {
+	div#title,
+	div#workbench {
 		width: 100%;
+		height: auto;
 		min-width: 0;
 		margin-left: 0px;
 		margin-right: 0px;
@@ -1264,7 +1266,17 @@ div#shortcuts > div.shortcut:HOVER {
 		padding-right: 0px;
 	}
 	
-	div.container_12 > div
+	div#workbench > div.bar > div.frame > div.window
+	{
+		width:auto !important;
+	}
+	
+	li.action div.tabname
+	{
+		width:auto !import;ant;
+	}
+	
+	div#workbench > div.bar
 	{
 		width: auto;
 		float: none;
@@ -1273,7 +1285,12 @@ div#shortcuts > div.shortcut:HOVER {
 		padding-left: 20px;
 		padding-right: 20px;
 	}
-
+	div#workbench > div.bar > div.frame > div.window > div.content
+	{
+		overflow:auto;
+		height: auto !important;
+	}
+	
 }
 
 
