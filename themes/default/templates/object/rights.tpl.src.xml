@@ -27,7 +27,7 @@
 		</row>
 		<if empty="acls">
 			<row class="data">
-				<column>
+				<column colspan="99">
 					<text text="GLOBAL_NOT_FOUND"></text>
 				</column>
 			</row>
@@ -59,12 +59,21 @@
 						<checkbox name="var:t" default="false" readonly="true"></checkbox>
 					</column>
 				</list>
-				<column>
-					<link type="post" subaction="delacl" id="var:aclid">
+				<column class="clickable">
+					<link type="post" subaction="delacl" var1="aclid" value1="var:aclid">
 						<text key="GLOBAL_DELETE"></text>
 					</link>
 				</column>
 			</row>
 		</list>
+		<row class="data">
+			<column colspan="99" class="clickable">
+				<link type="view" subaction="aclform">
+					<image icon="add" />
+					<text text="new" />
+				</link>
+
+			</column>
+		</row>
 	</table>
 </output>
