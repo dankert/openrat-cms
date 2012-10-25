@@ -13,8 +13,9 @@ jQuery.fn.orTree = function( options )
 	
 	$(this).each(function(idxx,treeEl)
 	{
-		
+		$(treeEl).closest('div.content').addClass('loader');
 		$.getJSON('./dispatcher.php?action=tree&subaction=loadBranch&id='+settings.id+'&type='+settings.type+'&output=json', function(json) {
+			$(treeEl).closest('div.content').removeClass('loader');
 			$(treeEl).append('<ul class="tree" style="display:none;"/>');
 			var ul = $(treeEl).children('ul').first();
 			var output = json['output'];
