@@ -847,7 +847,8 @@ function doResponse(data,status,element)
 			$(notice).append('<div class="log">'+value+'</div>');
 		});
 		$('#noticebar').prepend(notice);
-		$('#noticebar div.notice').fadeIn();
+		//$('#noticebar div.notice').fadeIn();
+		
 		$(notice).fadeIn().click( function()
 		{
 			$(this).fadeOut('fast',function() { $(this).remove(); } );
@@ -858,9 +859,9 @@ function doResponse(data,status,element)
 			timeoutSeconds = 2;
 		else
 			timeoutSeconds = 5;
-			
 		
-		$(notice).delay(timeoutSeconds*1000).fadeOut( function() { $(this).remove(); } );
+		//$(notice).delay(timeoutSeconds*1000).fadeOut( function() { $(this).remove(); } );
+		setTimeout( function() { $(notice).fadeOut('slow').remove(); },timeoutSeconds*1000 );
 		
 		/*
 		$('div.window div.status').html('<div />');
