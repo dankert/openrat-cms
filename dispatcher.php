@@ -171,6 +171,7 @@ try
 }
 catch( ObjectNotFoundException $e )
 {
+	Logger::warn( $e->__toString() );
 	Http::sendStatus(404,"Object not found","The requested object was not found." );
 }
 catch( Exception $e )
@@ -233,6 +234,7 @@ try
 }
 catch( ObjectNotFoundException $e )
 {
+	Logger::warn( $e->__toString() );
 	Http::sendStatus(404,"Object not found","The requested object was not found." );
 }
 

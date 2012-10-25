@@ -701,7 +701,6 @@ SQL
 			case 'link':
 
 				$objectid = $this->linkToObjectId;
-				
 				if   ( intval($objectid) == 0 )
 					$objectid = $this->element->defaultObjectId;
 	
@@ -853,62 +852,123 @@ SQL
 					
 					case 'create_user_desc':
 						$user = $linkedObject->createUser;
-						$user->load();
-						$inhalt = $user->desc;
+						try
+						{
+							$user->load();
+							$inhalt = $user->desc;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
 						break;
 					
 					case 'create_user_fullname':
 						$user = $linkedObject->createUser;
-						$user->load();
-						$inhalt = $user->fullname;
+						try
+						{
+							$user->load();
+							$inhalt = $user->fullname;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
 						break;
 					
 					case 'create_user_mail':
 						$user = $linkedObject->createUser;
-						$user->load();
-						$inhalt = $user->mail;
+						try
+						{
+							$user->load();
+							$inhalt = $user->mail;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
 						break;
 					
 					case 'create_user_tel':
 						$user = $linkedObject->createUser;
-						$user->load();
-						$inhalt = $user->tel;
+						try
+						{
+							$user->load();
+							$inhalt = $user->tel;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
 						break;
 					
 					case 'create_user_username':
 						$user = $linkedObject->createUser;
-						$user->load();
-						$inhalt = $user->name;
+						try
+						{
+							$user->load();
+							$inhalt = $user->name;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
 						break;
 					
 					case 'lastch_user_desc':
 						$user = $linkedObject->lastchangeUser;
-						$user->load();
-						$inhalt = $user->desc;
+						try
+						{
+							$user->load();
+							$inhalt = $user->desc;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
 						break;
 					
 					case 'lastch_user_fullname':
 						$user = $linkedObject->lastchangeUser;
-						$user->load();
-						$inhalt = $user->fullname;
+						try
+						{
+							$user->load();
+							$inhalt = $user->fullname;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
 						break;
 					
 					case 'lastch_user_mail':
 						$user = $linkedObject->lastchangeUser;
-						$user->load();
-						$inhalt = $user->mail;
+						try
+						{
+							$user->load();
+							$inhalt = $user->mail;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
 						break;
 					
 					case 'lastch_user_tel':
 						$user = $linkedObject->lastchangeUser;
-						$user->load();
-						$inhalt = $user->tel;
+						try
+						{
+							$user->load();
+							$inhalt = $user->tel;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
+						
 						break;
 					
 					case 'lastch_user_username':
 						$user = $linkedObject->lastchangeUser;
-						$user->load();
-						$inhalt = $user->name;
+						try
+						{
+							$user->load();
+							$inhalt = $user->name;
+						}
+						catch( ObjectNotFoundException $e )
+						{
+						}
 						break;
 						
 					case 'mime-type':
