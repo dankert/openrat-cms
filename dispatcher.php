@@ -165,7 +165,18 @@ $actionClassName = ucfirst($action).'Action';
 require_once( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
 
 // Erzeugen der Action-Klasse
-$do = new $actionClassName;
+try
+{
+	$do = new $actionClassName;
+}
+catch( ObjectNotFoundException $e )
+{
+	Http::sendStatus(404,"Object not found","The requested object was not found." );
+}
+catch( Exception $e )
+{
+	Http::serverError($e->getMessage(),$e->getTraceAsString() );
+}
 
 $do->actionClassName = $actionClassName; 
 $do->actionName      = $action;
@@ -216,7 +227,14 @@ if	( ! method_exists($do,$subactionMethodName) )
 	Http::sendStatus(404,"Method not found","Method '".$subactionMethodName."' does not exist in this context" );
 
 // Jetzt wird die Aktion aus der Actionklasse aufgerufen.
-$do->$subactionMethodName();
+try
+{
+	$do->$subactionMethodName();
+}
+catch( ObjectNotFoundException $e )
+{
+	Http::sendStatus(404,"Object not found","The requested object was not found." );
+}
 
 $do->forward();
 

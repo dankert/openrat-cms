@@ -69,11 +69,8 @@ class ModelAction extends Action
 
 	function ModelAction()
 	{
-		if	( $this->getRequestId() != 0 )
-		{
-			$this->model = new Model( $this->getRequestId() );
-			$this->model->load();
-		}
+		$this->model = new Model( $this->getRequestId() );
+		$this->model->load();
 		
 		$this->project = Session::getProject();
 	}

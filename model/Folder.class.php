@@ -107,7 +107,7 @@ class Folder extends Object
 	}
 
 
-	function load()
+	public function load()
 	{
 //		$db = db_connection();
 //

@@ -187,6 +187,9 @@ class Project
 
 		$row = $db->getRow( $sql );
 
+		if	( empty($row) )
+			throw new ObjectNotFoundException('project '.$this->projectid.' not found');
+			
 		$this->name                = $row['name'               ];
 		$this->target_dir          = $row['target_dir'         ];
 		$this->ftp_url             = $row['ftp_url'            ];

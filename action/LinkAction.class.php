@@ -71,16 +71,8 @@ class LinkAction extends ObjectAction
 	 */
 	function LinkAction()
 	{
-		if	( $this->getRequestId() != 0  )
-		{
-			$this->link = new Link( $this->getRequestId() );
-			$this->link->load();
-			Session::setObject( $this->link );
-		}
-		else
-		{
-			$this->link = Session::getObject();
-		}
+		$this->link = new Link( $this->getRequestId() );
+		$this->link->load();
 	}
 
 

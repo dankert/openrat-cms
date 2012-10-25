@@ -34,16 +34,9 @@ class TemplateAction extends Action
 
 	function TemplateAction()
 	{
-		if	( $this->getRequestId() != 0 )
-		{
-			$this->template = new Template( $this->getRequestId() );
-			$this->template->load();
-			$this->setTemplateVar( 'templateid',$this->template->templateid );
-		}
-		else
-		{
-			$this->defaultSubAction = 'listing';
-		}
+		$this->template = new Template( $this->getRequestId() );
+		$this->template->load();
+		$this->setTemplateVar( 'templateid',$this->template->templateid );
 
 		if	( intval($this->getRequestVar('elementid')) != 0 )
 		{

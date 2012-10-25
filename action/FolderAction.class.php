@@ -28,32 +28,13 @@ class FolderAction extends ObjectAction
 {
 	public $security = SECURITY_USER;
 	
-	var $defaultSubAction = 'show';
-	var $folder;
+	private $folder;
 
 	function FolderAction()
 	{
-		if	( $this->getRequestId() != 0  )
-		{
-			$this->folder = new Folder( $this->getRequestId() );
-			$this->folder->load();
-			Session::setObject( $this->folder );
-			
-			$history = Session::get('history');
-			if	( !is_array($history) )
-				$history = array();
-			unset($history[$this->getRequestId()]);
-			if	( count($history) > 20 )
-				array_shift($history);
-			$history[ $this->getRequestId() ] = $this->getRequestId();
-			Session::set('history',$history);
-		}
-		else
-		{
-			$this->folder = Session::getObject();
-		}
+		$this->folder = new Folder( $this->getRequestId() );
+		$this->folder->load();
 		
-		// Datum letzte Aenderung an Browser uebertragen
 		//$this->lastModified( $this->folder->lastchangeDate );
 	}
 
@@ -362,21 +343,6 @@ class FolderAction extends ObjectAction
 		$this->folder->desc     = $this->getRequestVar('description','full'    );
 		$this->folder->save();
 		$this->addNotice($this->folder->getType(),$this->folder->name,'PROP_SAVED','ok');
-	}
-
-
-	/**
-	 * Abspeichern der Ordner-Eigenschaften. Ist der Schalter "delete" gesetzt, wird
-	 * der Ordner stattdessen gel?scht.
-	 */
-	function delete()
-	{
-		if   ( $this->getRequestVar('delete') != '' )
-		{
-			// Ordner l?schen
-			$this->folder->delete();
-			$this->addNotice($this->folder->getType(),$this->folder->name,lang('DELETED'),'ok');
-		}
 	}
 
 
@@ -928,7 +894,7 @@ class FolderAction extends ObjectAction
 	 * 
 	 * @return Integer maximale Dateigroesse in Bytes
 	 */
-	function maxFileSize()
+	private function maxFileSize()
 	{
 		global $conf;
 		

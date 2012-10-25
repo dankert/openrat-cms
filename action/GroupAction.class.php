@@ -33,24 +33,14 @@ class GroupAction extends Action
 {
 	public $security = SECURITY_ADMIN;
 	
-	var $group;
-	var $defaultSubAction = 'edit';
+	private $group;
 
 
 	function GroupAction()
 	{
-		if   ( !$this->userIsAdmin() )
-			die('you are not an admin');
-
-		if	( $this->getRequestId() != 0 )
-		{
-			$this->group = new Group( $this->getRequestId() );
-			$this->group->load();
-			$this->setTemplateVar( 'groupid',$this->group->groupid );
-		}
-		
-				
-		$this->requireAdmin();
+		$this->group = new Group( $this->getRequestId() );
+		$this->group->load();
+		$this->setTemplateVar( 'groupid',$this->group->groupid );
 	}
 
 

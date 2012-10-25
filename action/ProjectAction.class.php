@@ -33,13 +33,8 @@ class ProjectAction extends Action
 
 	function ProjectAction()
 	{
-		if	( $this->getRequestId()!=0 )
-		{
-			$this->project = new Project( $this->getRequestId() );
-			$this->project->load();
-		}
-		
-		$this->requireAdmin();
+		$this->project = new Project( $this->getRequestId() );
+		$this->project->load();
 	}
 
 

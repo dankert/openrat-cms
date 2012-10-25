@@ -32,7 +32,6 @@ class UserlistAction extends Action
 	
 	function UserlistAction()
 	{
-		$this->requireAdmin();
 	}
 
 

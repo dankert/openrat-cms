@@ -36,17 +36,9 @@ class UserAction extends Action
 
 	function UserAction()
 	{
-		if   ( !$this->userIsAdmin() )
-			die('you are not an admin');
-
-		if	( $this->getRequestId() != 0 )
-		{
-			$this->user = new User( $this->getRequestId() );
-			$this->user->load();
-			$this->setTemplateVar('userid',$this->user->userid);
-		}
-				
-		$this->requireAdmin();
+		$this->user = new User( $this->getRequestId() );
+		$this->user->load();
+		$this->setTemplateVar('userid',$this->user->userid);
 	}
 
 

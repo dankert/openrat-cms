@@ -35,7 +35,6 @@ class GrouplistAction extends Action
 	
 	function GrouplistAction()
 	{
-		$this->requireAdmin();
 	}
 
 

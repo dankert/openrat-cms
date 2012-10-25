@@ -38,27 +38,8 @@ class FileAction extends ObjectAction
 	 */
 	function FileAction()
 	{
-		if	( $this->getRequestId() != 0  )
-		{
-			$this->file = new File( $this->getRequestId() );
-			$this->file->load();
-			Session::setObject( $this->file );
-		}
-		else
-		{
-			$this->file = Session::getObject();
-		}
-		
-		$folder = new Folder( $this->file->parentid );
-		$folder->filenames = false;
-		$folder->load();
-		$path = array();
-		foreach( $folder->parentObjectNames(true,true) as $id=>$name )
-		{
-			$path[] = array('key'=>'','name'=>$name,'title'=>$name,'url'=>Html::url('folder','show',$id),'type'=>'folder');
-		}
-		$path[] = array('key'=>'','name'=>$this->file->name,'title'=>$this->file->description,'xurl'=>Html::url('file','show',$this->file->id),'type'=>'file');
-		$this->setTemplateVar('path',$path);
+		$this->file = new File( $this->getRequestId() );
+		$this->file->load();
 	}
 
 

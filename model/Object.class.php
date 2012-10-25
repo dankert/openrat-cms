@@ -493,24 +493,9 @@ SQL
 		$row = $db->getRow($sql);
 		
 		if (count($row) == 0)
-		{
-			$project = Session::getProject();
+			throw new ObjectNotFoundException('object '.$this->objectid.' not found');
 			
-			$this->name = lang('unknown');
-			$this->parentid  = $project->getRootObjectId();
-			$this->projectid = $project->projectid;
-			$this->filename  = "";
-			$this->orderid   = 0;
-			$this->isRoot = false;
-			$this->createDate     = 0;
-			$this->lastchangeDate = 0;
-			$this->createUser = new User();
-			$this->lastchangeUser = new User();
-		}
-		else
-			$this->setDatabaseRow( $row );
-
-
+		$this->setDatabaseRow( $row );
 	}
 
 

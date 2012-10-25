@@ -34,6 +34,8 @@ define('OR_FILTER_NUMBER'  ,'123'   );
 define('OR_FILTER_RAW'     ,'raw'   );
 define('OR_FILTER_ALL'     ,'all'   );
 
+class ObjectNotFoundException extends Exception {}
+
 /**
  * Eltern-Klasse fuer alle Actions.
  *
@@ -319,6 +321,8 @@ class Action
 			$status = OR_NOTICE_ERROR;
 
 		$this->templateVars['notice_status'] = $status;
+		$this->templateVars['status'       ] = $status;
+		$this->templateVars['success'      ] = ($status==OR_NOTICE_ERROR?'false':'true');
 		
 		if	( $status == OR_NOTICE_OK && isset($_COOKIE['or_ignore_ok_notices']))
 			return;
@@ -548,21 +552,6 @@ class Action
 	{
 		$user = Session::getUser();
 		return is_object($user) && $user->isAdmin;
-	}
-	
-
-	/**
-	 * Stellt klar, dass ein Administrator angemeldet sein muss.
-	 */
-	protected function requireAdmin()
-	{
-		if	( ! $this->userIsAdmin() )
-		{
-			Logger::warn('User has no administration privileges');
-			Http::notAuthorized( lang('SESSION_EXPIRED'),'administration privileges required' );
-			$do->templateVars['error'] = 'administration privileges required';
-			exit;
-		}
 	}
 	
 

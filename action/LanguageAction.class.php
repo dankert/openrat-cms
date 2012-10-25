@@ -81,11 +81,8 @@ class LanguageAction extends Action
 	 */
 	function LanguageAction()
 	{
-		if	( $this->getRequestId() != 0 )
-		{
-			$this->language = new Language( $this->getRequestId() );
-			$this->language->load();
-		}
+		$this->language = new Language( $this->getRequestId() );
+		$this->language->load();
 		
 		$this->project = Session::getProject();
 	}

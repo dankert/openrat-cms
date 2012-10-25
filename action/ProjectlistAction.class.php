@@ -29,7 +29,6 @@ class ProjectlistAction extends Action
 	
 	function ProjectlistAction()
 	{
-		$this->requireAdmin();
 	}
 
 
