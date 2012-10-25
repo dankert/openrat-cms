@@ -121,15 +121,9 @@ function refreshWorkbench()
 		
 		// OnClick-Handler für Klick auf einen Tab-Reiter.
 		$('ul.views > li.action').click( function() {
-			//alert("klicke auf "+$(this).html() );
-			var method = $(this).attr('data-method');
-			var p = $(this).closest('div.frame');
-			var action = p.attr('data-action');
-			var id     = p.attr('data-id');
-			p.find('ul.views li.active').removeClass('active');
-			$(this).addClass('active');
-			loadView( p.find('div.content'),createUrl(action,method,id));
+			$(this).orLoadView();
 		});
+		
 		$('div.menu').dblclick( function()
 				{
 					fullscreen( this );
