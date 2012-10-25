@@ -1397,7 +1397,7 @@ SQL
 		
 		
 		if   ( $this->page->icons && $this->element->withIcon )
-			$inhalt = '<a href="javascript:openNewAction(\''.$this->element->name.'\',\'pageelement\',\''.$this->page->objectid.'_'.$this->element->elementid.'\');" title="'.$this->element->desc.'"><img src="'.OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>'.$inhalt;
+			$inhalt = '<a href="javascript:parent.openNewAction(\''.$this->element->name.'\',\'pageelement\',\''.$this->page->objectid.'_'.$this->element->elementid.'\');" title="'.$this->element->desc.'"><img src="'.OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>'.$inhalt;
 		
 		$this->value = $inhalt;
 

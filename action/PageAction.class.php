@@ -140,7 +140,7 @@ class PageAction extends ObjectAction
 	 *
 	 * Der Inhalt eines Elementes wird abgespeichert
 	 */
-	function elPost()
+	function editPost()
 	{
 		$value = new Value();
 		$language = Session::getProjectLanguage();
@@ -482,7 +482,7 @@ class PageAction extends ObjectAction
 	/**
 	 * Alle Elemente der Seite anzeigen
 	 */
-	function elView()
+	function editView()
 	{
 		$this->page->public = true;
 		$this->page->simple = true;
@@ -498,7 +498,7 @@ class PageAction extends ObjectAction
 			{
 				$list[$id] = array();
 				$list[$id]['name']       = $value->element->name;
-				$list[$id]['url' ]       = Html::url( 'pageelement','edit'   ,$this->page->id,array('elementid'=>$id,'mode'=>'edit') );
+				$list[$id]['pageelementid' ] = $this->page->objectid.'_'.$id;
 				$list[$id]['desc']       = $value->element->desc;
 				$list[$id]['type']       = $value->element->type;
 	
@@ -506,11 +506,12 @@ class PageAction extends ObjectAction
 				if	( $list[$id]['archive_count'] > 0 )
 					$list[$id]['archive_url'] = Html::url( 'pageelement','archive',$this->page->id,array('elementid'=>$id) );
 				
-				// Maximal 50 Stellen des Inhaltes anzeigen
-				$list[$id]['value'] = Text::maxLaenge( 50,$value->value );
+				// Inhalt anzeigen
+				$list[$id]['value'] = $value->value;
 			}
 		}
 
+		$this->setTemplateVar('preview_url',Html::url('page','view',$this->page->objectid,array('target'=>'none') ) );
 		$this->setTemplateVar('el',$list);
 	}
 
@@ -655,7 +656,7 @@ class PageAction extends ObjectAction
 	 *
 	 * Bei editierbaren Feldern wird ein Editor-Ikon vorangestellt.
 	 */
-	function editView()
+	public function viewView()
 	{
 		// Editier-Icons anzeigen
 		$this->page->icons = true;
