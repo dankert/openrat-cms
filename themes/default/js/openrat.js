@@ -846,9 +846,9 @@ function doResponse(data,status,element)
 		$.each(value.log, function(name,value) {
 			$(notice).append('<div class="log">'+value+'</div>');
 		});
-		$('#noticebar').prepend(notice);
-		//$('#noticebar div.notice').fadeIn();
+		$('#noticebar').prepend(notice); // Notice anhängen.
 		
+		// Per Klick wird die Notice entfernt.
 		$(notice).fadeIn().click( function()
 		{
 			$(this).fadeOut('fast',function() { $(this).remove(); } );
@@ -856,20 +856,12 @@ function doResponse(data,status,element)
 		
 		var timeoutSeconds;
 		if	( value.status == 'ok' )
-			timeoutSeconds = 2;
+			timeoutSeconds = 3;
 		else
-			timeoutSeconds = 5;
+			timeoutSeconds = 8;
 		
-		//$(notice).delay(timeoutSeconds*1000).fadeOut( function() { $(this).remove(); } );
+		// Und nach einem Timeout entfernt sich die Notice von alleine.
 		setTimeout( function() { $(notice).fadeOut('slow').remove(); },timeoutSeconds*1000 );
-		
-		/*
-		$('div.window div.status').html('<div />');
-		$('div.window div.status div').addClass( value.status );
-		$('div.window div.status div').append( value.text );
-		$('div.window div.status div').delay(3000).fadeOut(2500, function() { $(this).remove(); });
-		*/
-		//alert( value.text );
 	});
 	
 	$.each(data['errors'], function(idx,value) {
