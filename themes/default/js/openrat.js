@@ -297,6 +297,7 @@ function registerViewEvents( viewEl )
 				params.subaction = 'order';
 				params.token     = $('#id_token').attr('value');
 				params.order     = order.join(',');
+				params.id        = $(viewEl).closest('div.frame').data('id');
 				params.output    = 'json';
 				
 				$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
