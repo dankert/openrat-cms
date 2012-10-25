@@ -1383,7 +1383,7 @@ class FolderAction extends ObjectAction
 		$pages   = ( $this->hasRequestVar('pages'  ) );
 		$files   = ( $this->hasRequestVar('files'  ) );
 
-		session_write_close ();
+		Session::close();
 		$publish = new Publish();
 		
 		$this->folder->publish = &$publish;

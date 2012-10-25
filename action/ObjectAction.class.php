@@ -95,7 +95,9 @@
 
 class ObjectAction extends Action
 {
-	var $objectid;
+	public $security = SECURITY_USER;
+	
+	private $objectid;
 
 
 	/**
@@ -198,7 +200,8 @@ class ObjectAction extends Action
 	 */
 	function rightsView()
 	{
-		$o = Session::getObject();
+		$this->actionName = 'object';
+		$o = new Object( $this->getRequestId() );
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
 		$this->setTemplateVar( 'type',$o->getType() );
@@ -237,7 +240,9 @@ class ObjectAction extends Action
 	 */
 	function inheritView()
 	{
-		$o = Session::getObject();
+		$this->actionName = 'object';
+		
+		$o = new Object( $this->getRequestId() );
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'type',$o->getType() );
 		
@@ -253,16 +258,18 @@ class ObjectAction extends Action
 	 */
 	function inheritPost()
 	{
-		$log = array();
+		Session::close();
+		
+		$folder = new Folder( $this->getRequestId() );
+		$folder->load();
 		
 		if	( ! $this->hasRequestVar('inherit') )
 		{
-			$this->addNotice('folder',$this->name,'NOTHING_DONE',OR_NOTICE_WARN);
+			$this->addNotice('folder',$folder->name,'NOTHING_DONE',OR_NOTICE_WARN);
 			return;
 		}
 		
 		
-		$folder = $this->folder;
 		$aclids = $folder->getAllAclIds();
 		
 		$newAclList = array();
@@ -273,7 +280,7 @@ class ObjectAction extends Action
 			if	( $acl->transmit )
 				$newAclList[] = $acl;
 		}
-		$log[] = 'inheriting '.count($newAclList).' acls';
+		Logger::debug('inheriting '.count($newAclList).' acls');
 		
 		$oids = $folder->getObjectIds();
 		
@@ -294,7 +301,7 @@ class ObjectAction extends Action
 				$acl = new Acl( $aclid );
 				$acl->objectid = $oid;
 				$acl->delete();
-				$log[] = 'removing acl '.$aclid.' for object '.$oid;
+				Logger::debug('removing acl '.$aclid.' for object '.$oid);
 			}
 			
 			// Vererbbare ACLs des aktuellen Ordners anwenden.
@@ -302,11 +309,11 @@ class ObjectAction extends Action
 			{
 				$newAcl->objectid = $oid;
 				$newAcl->add();
-				$log[] = 'adding new acl '.$newAcl->aclid.' for object '.$oid;
+				Logger::debug('adding new acl '.$newAcl->aclid.' for object '.$oid);
 			}
 		}
 		
-		$this->addNotice('folder',$this->folder->name,'SAVED',OR_NOTICE_OK,array(),$log);
+		$this->addNotice('folder',$folder->name,'SAVED',OR_NOTICE_OK);
 	}
 
 
@@ -315,7 +322,9 @@ class ObjectAction extends Action
 	 */
 	function aclformView()
 	{
-		$o = Session::getObject();
+		$this->actionName = 'object';
+		
+		$o = new Object( $this->getRequestId() );
 		$o->objectLoadRaw();
 
 		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
