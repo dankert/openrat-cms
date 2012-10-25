@@ -247,11 +247,11 @@ class HtmlDomRenderer
 				}				
 
 				$val = $this->renderValue($val);
-				$val = $praefix.$val.$suffix;
+				$val = '<div class="entry">'.$praefix.$val.$suffix.'</div>';
 				
 				if	( count($child->children)>0 )
 				{
-					$val .= '<ul>';
+					$val .= '<ul class="tree">';
 					foreach( $child->children as $c )
 					{
 						$val .= $this->renderElement( $c );
@@ -262,7 +262,7 @@ class HtmlDomRenderer
 //				echo "text:$val";
 
 				unset( $this->path[ count($this->path)-1 ] );
-				return '<li>'.$val.'</li>';
+				return '<li><div class="tree" />'.$val.'</li>';
 	}
 
 
@@ -290,12 +290,16 @@ class HtmlDomRenderer
 	{
 		$this->renderedText = '';
 		$this->footnotes    = array();
+
+		$this->renderedText = '<ul class="tree">';
 		
 		foreach( $this->children as $child )
-			$this->renderedText .= '<ul>'.$this->renderElement( $child ).'</ul>';
-
+			$this->renderedText .= ''.$this->renderElement( $child ).'';
+			//$this->renderedText .= '<li><div class="tree" /><div class="entry" /><ul class="tree">'.$this->renderElement( $child ).'</ul></li>';
+			
 		foreach( $this->footnotes as $child )
-			$this->renderedText .= '<ul>'.$this->renderElement( $child ).'</ul>';
+			$this->renderedText .= '<li><div class="tree" /><div class="entry" /><ul class="tree">'.$this->renderElement( $child ).'</ul></li>';
+		$this->renderedText .= '</ul>';
 			
 		return $this->renderedText;
 	}
