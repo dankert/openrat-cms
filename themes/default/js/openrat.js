@@ -232,7 +232,7 @@ function loadView(jo, url )
 		
 	//alert(action+"_"+method);
 	
-	$(jo).empty().fadeTo(1,0.7).html('<div class="loader" />'+submenu).load(url,function(response, status, xhr) {
+	$(jo).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
 			//$(jo).slideDown('fast');
 			$(jo).fadeTo(350,1);
 			
@@ -240,6 +240,7 @@ function loadView(jo, url )
 			{
 				// Seite nicht gefunden.
 				$(this).html("");
+				$(this).removeClass("loader");
 				// OK-button Ausblenden.
 				$(jo).closest('div.frame').find('div.bottom > div.command > input').addClass('invisible');
 				// var msg = "Sorry but there was an error: ";
@@ -247,6 +248,7 @@ function loadView(jo, url )
 				return;
 			}
 
+			$(this).removeClass("loader");
 			registerViewEvents( jo )
 		});
 }
@@ -289,6 +291,7 @@ function registerViewEvents( viewEl )
 	$(viewEl).find('table.sortable > tbody').sortable({
 		   update: function(event, ui)
 		   {
+			   $(ui).addClass('loader');
 				var order = [];
 				$(ui.item).closest('table.sortable').find('tbody > tr.data').each( function() {
 					var objectid = $(this).data('id');
@@ -304,6 +307,7 @@ function registerViewEvents( viewEl )
 				
 				$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 					{
+					   $(ui).removeClass('loader');
 						doResponse(data,textStatus,ui);
 					},
 					error:function(jqXHR, textStatus, errorThrown) {
@@ -804,14 +808,17 @@ function formSubmit(form)
 	}
 	else
 	{
+		$(form).closest('div.content').addClass('loader');
 		url += '?output=json';
 		params['output'] = 'json';// Irgendwie geht das nicht.
 		$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 			{
+				$(form).closest('div.content').removeClass('loader');
 				$(status).find('div.loader').remove();
 				doResponse(data,textStatus,form);
 			},
 			error:function(jqXHR, textStatus, errorThrown) {
+				$(form).closest('div.content').removeClass('loader');
 				$(status).find('div.loader').remove();
 				alert( 'OpenRat: Error while performing the POST request: ' + errorThrown );
 			}

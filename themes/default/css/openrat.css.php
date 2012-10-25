@@ -885,6 +885,7 @@ div.content
 {
 	clear: both;
 }
+
 div.window ul.views li
 {
 	vertical-align: middle;
@@ -1063,11 +1064,10 @@ div.message
 div.loader,
 div.progress
 {
-	margin:0px auto;
-	width:230;
-	height:25px;
-	margin-top:40px;
 	background: url(../images/loader.gif) no-repeat;
+	background-position: center;
+	opacity: 0.5;
+	cursor: wait;
 }
 
 
