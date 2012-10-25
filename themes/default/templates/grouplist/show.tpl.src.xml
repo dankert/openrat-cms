@@ -15,7 +15,7 @@
 			</row>
 		</list>
 		<row class="data">
-			<column colspan="2">
+			<column colspan="2" class="clickable">
 				<link type="view" subaction="add">
 					<image icon="add"/>
 					<text text="new"/>

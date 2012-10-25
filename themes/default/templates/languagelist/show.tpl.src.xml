@@ -53,7 +53,7 @@
 			<set var="default_url"></set>
 		</list>
 		<row class="data">
-			<column colspan="4">
+			<column colspan="4" class="clickable">
 				<link type="view" subaction="add">
 					<image icon="add"/>
 					<text text="new"/>

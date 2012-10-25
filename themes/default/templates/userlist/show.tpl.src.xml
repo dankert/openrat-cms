@@ -35,7 +35,7 @@
 			</row>
 		</list>
 		<row class="data">
-			<column colspan="3">
+			<column colspan="3" class="clickable">
 				<link type="view" subaction="add">
 					<image icon="add"/>
 					<text text="new"/>
