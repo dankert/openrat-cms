@@ -353,6 +353,8 @@ class Action
 	 */
 	public function forward()
 	{
+		Session::close();
+		
 		$db = db_connection();
 
 //		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
