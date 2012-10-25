@@ -882,21 +882,26 @@ function doResponse(data,status,element)
 	};
 	
 	
-	// Redirect
 	if	( data.control.redirect )
+		// Redirect
 		window.location.href = data.control.redirect;
-
-	// Views aktualisieren
-	if	( data.control.refresh )
-		refreshAll();
 	
-	// CSS-Datei setzen
 	if	( data.control.new_style )
+		// CSS-Datei setzen
 		setUserStyle( data.control.new_style );
 	
-	// Nächste View aufrufen
-	if	( data.control.next_view )
+	else if	( data.control.refresh )
+		// Views aktualisieren
+		refreshAll();
+	
+	else if	( data.control.next_view )
+		// Nächste View aufrufen
 		startView( $(element).closest('div.content'),data.control.next_view );
+	
+	else if ( data.errors.length==0 )
+		// Aktuelle View neu laden
+		$(element).closest('div.frame').find('li.action.active').orLoadView();
+
 }
 
 
