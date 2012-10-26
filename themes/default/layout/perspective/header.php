@@ -59,20 +59,23 @@ function view_header( $name )
 		?>
 </ul>
 
-<?php 
-
-global $preselectobject;
-if	( $name=='content' && is_object($preselectobject) )
-{
-?>
-
 <script name="javascript" type="text/javascript">
 <!--
-openNewAction( '<?php echo $preselectobject->name; ?>','<?php echo $preselectobject->getType() ?>','<?php echo $preselectobject->objectid ?>',0 )
+<?php 
+if	( $name=='content' )
+{
+	global $preselectedobjects;
+	
+	foreach( $preselectedobjects as $object )
+	{
+?>
+setTimeout( function() { openNewAction( '<?php echo $object->name; ?>','<?php echo $object->getType() ?>','<?php echo $object->objectid ?>',0 );} ,500);
+<?php
+	}
+}
+?>
 //-->
 </script>
-
-<?php } ?>
 <div class="icons">
 <div class="icon">
 

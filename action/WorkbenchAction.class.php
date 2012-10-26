@@ -30,7 +30,7 @@ class WorkbenchAction extends Action
 	public function showView()
 	{
 		global $conf;
-		global $preselectobject;
+		global $preselectedobjects;
 		if	( empty($this->perspective) )
 		{
 			$guestConf = $conf['security']['guest'];
@@ -43,20 +43,29 @@ class WorkbenchAction extends Action
 			Session::set('perspective',$this->perspective);
 		}
 
+		
+		$preselectedobjects = array();;
 		// Zuletzt geändertes Objekt laden.
-		if	( $this->perspective == 'normal' &&
-			  $conf['login']['start']['start_lastchanged_object'] ) {
-			$user    = Session::getUser();
+		if	( $this->perspective == 'normal' )
+		{
 			$project = Session::getProject();
+			$rootFolder = new Folder( $project->getRootObjectId() );
+			$rootFolder->load();
+			$preselectedobjects[] = $rootFolder;
 			
-			$objectid = Value::getLastChangedObjectInProjectByUserId($project->projectid, $user->userid);
-			if	( Object::available($objectid))
+			if	( $conf['login']['start']['start_lastchanged_object'] )
 			{
-				$object = new Object($objectid);
-				$object->load();
+				$user    = Session::getUser();
 				
-				Logger::debug('preselecting object '.$objectid);
-				$preselectobject = $object;
+				$objectid = Value::getLastChangedObjectInProjectByUserId($project->projectid, $user->userid);
+				if	( Object::available($objectid))
+				{
+					$object = new Object($objectid);
+					$object->load();
+					
+					Logger::debug('preselecting object '.$objectid);
+					$preselectedobjects[] = $object;
+				}
 			}
 		}
 		
