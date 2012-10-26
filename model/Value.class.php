@@ -1524,7 +1524,7 @@ SQL
 	  * 
 	  * @return Integer Objekt-Id
 	  */
-	function getLastChangedObjectByUserId( $userid )
+	public static function getLastChangedObjectByUserId( $userid )
 	{
 		$db = db_connection();
 		
@@ -1540,6 +1540,33 @@ SELECT {t_object}.id
 SQL
 );
 		$sql->setInt   ( 'userid'    ,$userid           );
+		return $db->getOne( $sql );
+	}
+	
+	
+	/**
+	  * Es wird das Objekt ermittelt, welches der Benutzer zuletzt ge�ndert hat.
+	  * 
+	  * @return Integer Objekt-Id
+	  */
+	public static function getLastChangedObjectInProjectByUserId( $projectid, $userid )
+	{
+		$db = db_connection();
+		
+		$sql = new Sql( <<<SQL
+SELECT {t_object}.id
+  FROM {t_value} 
+  LEFT JOIN {t_page} 
+    ON {t_page}.id={t_value}.pageid 
+  LEFT JOIN {t_object} 
+    ON {t_object}.id={t_page}.objectid 
+ WHERE {t_value}.lastchange_userid={userid}
+   AND {t_object}.projectid = {projectid}
+ ORDER BY {t_value}.lastchange_date DESC
+SQL
+);
+		$sql->setInt   ( 'userid'    ,$userid     );
+		$sql->setInt   ( 'projectid' ,$projectid  );
 		return $db->getOne( $sql );
 	}
 	

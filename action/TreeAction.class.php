@@ -83,29 +83,16 @@ class TreeAction extends Action
 		$project = Session::getProject();
 		$projectid = $project->projectid;
 
+		Logger::debug( "Initializing Tree for Project ".$projectid);
+		
 		if	( $projectid == -1 )
 		{
 			$this->tree = new AdministrationTree();
-//			Session::setProjectLanguage(null);
-//			Session::setProjectModel(null);
-//			Session::setProject(null);
 		}
 		else
 		{
-//			$project = new Project($projectid);
-//			$project->load();
-//			Session::setProject($project);
-	
 			$this->tree = new ProjectTree();
 			$this->tree->projectId = $projectid;
-
-//			$language = new Language( Language::getDefaultId() );
-//			$language->load();
-//			Session::setProjectLanguage( $language );
-//			
-//			$model = new Model( Model::getDefaultId() );
-//			$model->load();
-//			Session::setProjectModel( $model ); 
 		}
 
 		Session::setTree( $this->tree );
@@ -225,7 +212,7 @@ class TreeAction extends Action
 	 */
 	public function showView()
 	{
-		//if	( $this->hasRequestVar('projectid') )
+		return;
 		$this->load();
 			
 		$project = Session::getProject();
@@ -241,7 +228,8 @@ class TreeAction extends Action
 		
 		$var = array();
 		$var['zeilen'] = $this->outputElement( 0,0,array() );
-
+		$var['zeilen'] = array();
+		
 		$this->setTemplateVars( $var );
 	}
 	
@@ -262,6 +250,7 @@ class TreeAction extends Action
 	 */
 	public function loadEntryView()
 	{
+		exit;
 		$this->tree = Session::getTree();
 		
 		$this->setTemplateVar( 'lines',$this->outputElement( 0,0,array() ) );
@@ -275,24 +264,33 @@ class TreeAction extends Action
 	 */
 	public function loadBranchView()
 	{
-		$this->tree = Session::getTree();
+		$project   = Session::getProject();
+		$projectid = $project->projectid;
 		
-		if	( !is_object($this->tree) ) {
-			$this->setTemplateVar('notice','fuck, kein Baum');
-			return;
+		Logger::debug( "Initializing Tree for Project ".$projectid);
+		
+		if	( $projectid == -1 )
+		{
+			$tree = new AdministrationTree();
 		}
+		else
+		{
+			$tree = new ProjectTree();
+			$tree->projectId = $projectid;
+		}
+		
 		
 		$type = $this->getRequestVar('type');
 		
-		$this->tree->tempElements = array();
+		$tree->tempElements = array();
 		
 		if	( intval($this->getRequestVar('id')) != 0 )
-			$this->tree->$type( $this->getRequestId() );
+			$tree->$type( $this->getRequestId() );
 		else
-			$this->tree->$type();
+			$tree->$type();
 			
 		$branch = array();
-		foreach( $this->tree->tempElements as $element )
+		foreach( $tree->tempElements as $element )
 		{
 			$branch[] = get_object_vars($element);
 		}

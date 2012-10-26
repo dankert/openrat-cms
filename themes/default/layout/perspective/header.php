@@ -2,6 +2,8 @@
 
 function view_header( $name )
 {
+	global $preselectobject;
+		
 	global $viewconfig;
 	global $conf;
 	$v = $viewconfig[$name];
@@ -20,6 +22,7 @@ function view_header( $name )
 
 	$viewlist = explode(',',$v['views']);
 	if ( empty($viewlist[0])) $viewlist = array();
+	
 
 	// Tabreiter pro View erzeugen
     foreach( $viewlist as $vn )
@@ -32,6 +35,19 @@ function view_header( $name )
           		?><img class="icon" src="<?php echo $icon_url ?>" /><div class="tabname"><?php echo $tmp_text ?></div><?php
           	?></li><?php
           }
+          
+          global $preselectobject;
+          if	( false && $name=='content' && is_object($preselectobject) )
+          {
+          	$tmp_text = $preselectobject->name;
+          	$liClass  = 'action active';
+          	$icon_url = OR_THEMES_EXT_DIR.'default/images/icon_'.$preselectobject->getType().'.png';
+          		
+          	?><li data-id="<?php echo $preselectobject->objectid ?>" data-method="edit" data-u="<?php echo $preselectobject->getType() ?>" class="<?php echo $liClass?>" title="<?php echo $preselectobject->description ?>"><?php
+          	          		?><img class="icon" src="<?php echo $icon_url ?>" /><div class="tabname"><?php echo $tmp_text ?></div><?php
+          	          	?></li><?php
+          }
+          
           if ( /* Deaktiviert */ false && @$conf['help']['enabled'] )
           	{
              ?><a class="help" data-url="<?php echo $conf['help']['url'] ?>" data-suffix="<?php echo @$conf['help']['suffix'] ?>" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo $image_dir.'icon/help.png' ?>" /><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
@@ -42,6 +58,21 @@ function view_header( $name )
 	
 		?>
 </ul>
+
+<?php 
+
+global $preselectobject;
+if	( $name=='content' && is_object($preselectobject) )
+{
+?>
+
+<script name="javascript" type="text/javascript">
+<!--
+openNewAction( '<?php echo $preselectobject->name; ?>','<?php echo $preselectobject->getType() ?>','<?php echo $preselectobject->objectid ?>',0 )
+//-->
+</script>
+
+<?php } ?>
 <div class="icons">
 <div class="icon">
 

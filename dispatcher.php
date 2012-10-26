@@ -218,9 +218,17 @@ switch( @$do->security )
 $isAction = $_SERVER['REQUEST_METHOD'] == 'POST';
 
 if	( $isAction )
+{
+	// POST-Request => ...Post() wird aufgerufen.
 	$subactionMethodName = $subaction.'Post';
+}
 else
+{
+	// GET-Request => ...View() wird aufgerufen.
 	$subactionMethodName = $subaction.'View';
+	// Daten werden nur angezeigt, die Sitzung kann also schon geschlossen werden.
+	Session::close();
+}
 	
 Logger::debug("Executing $actionClassName::$subactionMethodName");
 

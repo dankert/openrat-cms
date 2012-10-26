@@ -361,6 +361,7 @@ $conf['login']['logo']['file']="./themes/default/images/logo.jpg"  ;
 $conf['login']['logo']['url']="http://www.openrat.de"              ;
 $conf['login']['start'] = array();
 $conf['login']['start']['start_lastchanged_object']=true;
+$conf['login']['start']['start_single_project']=true;
 $conf['log'] = array();
 $conf['log']['file']= "";
 $conf['log']['level']= "warn";

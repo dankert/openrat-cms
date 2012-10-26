@@ -841,8 +841,40 @@ class LoginAction extends Action
 				}
 			}
 			
-			$this->setStyle( $user->style );
-			$this->setPerspective('start');
+			$this->setStyle( $user->style ); // Benutzer-Style setzen
+			
+			// Entscheiden, welche Perspektive als erstes angezeigt werden soll.
+			
+			$allProjects = Project::getAllProjects();
+			
+			if	( $conf['login']['start']['start_single_project'] &&
+				  count($allProjects) == 1 ) 
+			{
+				// Das einzige Projekt sofort starten.
+				$projectIds = array_keys($allProjects);
+				Session::setProject( new Project($projectIds[0]) );
+				$this->setPerspective('normal');
+			}
+			elseif	( $conf['login']['start']['start_lastchanged_object'] )
+			{
+				$user     = Session::getUser();
+				$objectid = Value::getLastChangedObjectByUserId($user->userid);
+				if	( Object::available($objectid))
+				{
+					// Das Projekt des zuletzt geänderten Objekts ermitteln
+					// und dieses Projekt starten.
+					$o = new Object( $objectid );
+					$o->load();
+					Session::setProject( new Project($o->projectid) );
+					$this->setPerspective('normal');
+				}
+			}
+			
+			else
+			{
+				// Erstmal die Startseite anzeigen.
+				$this->setPerspective('start');
+			}
 		}
 		
 	}

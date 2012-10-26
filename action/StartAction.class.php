@@ -354,13 +354,11 @@ class StartAction extends Action
 	 * Setzt die neue Projekt-Id und lädt die Workbench neu.
 	 * 
 	 */
-	public function projectmenuPost() {
-		
-		//Session::setProject( $this->getRequestId() );
+	public function projectmenuPost()
+	{
 		
 		$this->evaluateRequestVars( array('projectid'=>$this->getRequestId()) );
-		Session::set('perspective','normal');
-		$this->refresh();
+		$this->setPerspective('normal');
 	}
 	
 	
