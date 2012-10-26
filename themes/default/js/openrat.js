@@ -891,7 +891,7 @@ function doResponse(data,status,element)
 		// CSS-Datei setzen
 		setUserStyle( data.control.new_style );
 	
-	else if	( data.control.refresh )
+	if	( data.control.refresh )
 		// Views aktualisieren
 		refreshAll();
 	
