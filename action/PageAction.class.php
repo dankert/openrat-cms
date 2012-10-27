@@ -650,6 +650,8 @@ class PageAction extends ObjectAction
 			require( $this->page->tmpfile() );
 		else
 			readfile( $this->page->tmpfile() );
+			
+		exit();
 	}
 
 	
