@@ -1158,3 +1158,4 @@ MENU_EXTRACT = Auspacken
 MENU_EXTRACT_DESC = Archiv auspacken
 MENU_SIZE =Bildgröße
 MENU_SIZE_DESC =Bildgröße ändern
+LICENSE="Lizenz"

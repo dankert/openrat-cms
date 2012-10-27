@@ -28,7 +28,7 @@ jQuery.fn.orLinkify = function()
 			
 			else if	( type == 'external' )
 			{
-				location.href = $(this).attr('data-url');
+				window.open( $(this).attr('data-url'),' _blank' );
 			}
 			
 			else if	( type == 'popup' )

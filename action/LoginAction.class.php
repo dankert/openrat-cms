@@ -1813,6 +1813,9 @@ class LoginAction extends Action
 	{
 		$software = array();
 		
+		$software[] = array('name'   =>'OpenRat Content Management System',
+		                    'url'    =>'http://www.openrat.de/',
+		                    'license'=>'GPL v2');
 		$software[] = array('name'   =>'jQuery Core Javascript Framework',
 		                    'url'    =>'http://jquery.com/',
 		                    'license'=>'MPL, GPL v2');
@@ -1828,7 +1831,7 @@ class LoginAction extends Action
 		$software[] = array('name'   =>'960 Grid System CSS',
 		                    'url'    =>'http://960.gs/',
 		                    'license'=>'GPL v3, MIT');
-		$software[] = array('name'   =>'TAR file format from Josh Barger',
+		$software[] = array('name'   =>'TAR file format',
 		                    'url'    =>'http://www.phpclasses.org/package/529',
 		                    'license'=>'LGPL');
 		$software[] = array('name'   =>'JSON file format',
