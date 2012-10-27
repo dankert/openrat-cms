@@ -511,7 +511,7 @@ class PageAction extends ObjectAction
 			}
 		}
 
-		$this->setTemplateVar('preview_url',Html::url('page','view',$this->page->objectid,array('target'=>'none') ) );
+		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('withIcons'=>'1') ) );
 		$this->setTemplateVar('el',$list);
 	}
 
@@ -620,7 +620,7 @@ class PageAction extends ObjectAction
 	 */
 	function previewView()
 	{
-		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('target'=>'none') ) );
+		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid ) );
 	}
 
 		/**
@@ -629,6 +629,9 @@ class PageAction extends ObjectAction
 	function showView()
 	{
 		// Seite definieren
+		if	( $this->hasRequestVar('withIcons') )
+			$this->page->icons = true;
+		
 		$this->page->load();
 		$this->page->generate();
 		$this->page->write();
@@ -650,40 +653,6 @@ class PageAction extends ObjectAction
 	}
 
 	
-
-	/**
-	 * Die Seite im Bearbeitungsmodus anzeigen
-	 *
-	 * Bei editierbaren Feldern wird ein Editor-Ikon vorangestellt.
-	 */
-	public function viewView()
-	{
-		// Editier-Icons anzeigen
-		$this->page->icons = true;
-	
-		$this->page->load();
-		$this->page->generate();
-		$this->page->write();
-		
-		header('Content-Type: '.$this->page->mimeType().'; charset='.$this->getCharset() );
-		
-		// HTTP-Header mit Sprachinformation setzen.
-		$language = Session::getProjectLanguage();
-		header('Content-Language: '.$language->isoCode);
-
-		
-		// Wenn 
-		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
-		        config('publish','enable_php_in_page_content')===true )
-			require( $this->page->tmpfile() );
-		else
-			readfile( $this->page->tmpfile() );
-		
-		// Inhalt ist ausgegeben... Skript beenden.
-		exit;
-	}
-
-
 
 	/**
 	 * Den Quellcode der Seite anzeigen
