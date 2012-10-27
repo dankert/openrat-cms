@@ -49,7 +49,7 @@ class DB_mysql
 		$pw     = $conf['password'];
 		$db     = $conf['database'];
 		
-		if	( isset($conf['port']) )
+		if	( !empty($conf['port']) )
 			$host .= ':'.$conf['port'];
 
 		if   ( $conf['persistent'] )
@@ -81,6 +81,13 @@ class DB_mysql
 			}
 		}
 
+		// Falls es sich um eine UTF-8-Datenbank handelt, dann setzen wir
+		// hier explizit den Zeichensatz für alle Anfragen.
+		$dbCharset = $conf['charset'];
+		if	( empty($dbCharset) || $dbCharset == 'UTF-8' )
+			@mysql_query("SET NAMES 'utf8';",$this->connection);
+		
+		
 		return true;
     }
 

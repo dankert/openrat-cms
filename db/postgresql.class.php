@@ -51,7 +51,7 @@ class DB_postgresql
 		$pw     = $conf['password'];
 		$db     = $conf['database'];
 
-		if	( isset($conf['port']) )
+		if	( !empty($conf['port']) )
 			$host .= ':'.$conf['port'];
 		
 		if   ( $conf['persistent'] )
@@ -64,7 +64,9 @@ class DB_postgresql
 			$this->error = 'Function does not exist: '.$connect_function.' Postgresql is not available';
 			return false;
 		}
-			
+		
+		Logger::debug('postgresql: connecting to: '."host=$host, dbname=$db");
+		
 		if    ( $pw != '' )
 			$this->connection = @$connect_function( "host=$host dbname=$db user=$user password=$pw" );
 		elseif ( $user != '' ) 

@@ -106,7 +106,60 @@ class Preferences
 		$conf['config']['last_modification'] = filemtime($filename);
 		$conf['config']['file_modification'] = date('r',filemtime($filename));
 		$conf['config']['read'             ] = date('r');
+		
+		Preferences::fixConfiguration( &$conf );
+		
 		return $conf;
+	}
+	
+	
+	public static function fixConfiguration( &$conf )
+	{
+		$defaultStyleConfig = array(
+			'name'=>'Unnamed',
+			'title_background_color'=>'grey',
+			'title_text_color'=>'white',
+			'text_color' => 'black',
+			'background_color' => '#d9d9d9',
+			'inactive_background_color' => 'silver'
+		);
+		
+		$defaultDatabaseConfig = array(
+			'enabled'       =>true,
+			'comment2'      =>'',
+			'user'          =>'',
+			'password'      => '',
+			'host'          =>'localhost',
+			'port'          => '',
+			'database'      => '',
+			'base64'        => false,
+			'prefix'        => 'or_',
+			'persistent'    => true,
+			'charset'       => 'UTF-8',
+			'connection_sql'=> '',
+			'cmd'           => '',
+			'prepare'       => false,
+			'transaction'   => false,
+			'autocommit'    => false,
+			'readonly'      => false
+		);
+		
+		$dbconfig = &$conf['database'];
+		if	( is_array($dbconfig) )
+			foreach( $dbconfig as &$db )
+			{
+				if	( is_array($db))
+					$db = array_merge( $defaultDatabaseConfig,$db );
+			}
+		
+		$styleconfig = &$conf['style'];
+		if	( is_array($styleconfig) )
+			foreach( $styleconfig as &$style )
+			{
+				if	( is_array($style))
+					$style = array_merge( $defaultStyleConfig, $style );
+			}
+		
 	}
 }
 ?>

@@ -146,7 +146,7 @@ class DB
 
 				
 		// SQL nach Verbindungsaufbau ausfuehren.
-		if	( isset($this->conf['connection_sql']) &&  ! empty($this->conf['connection_sql']) )
+		if	( ! empty($this->conf['connection_sql']) )
 		{
 			$cmd = $this->conf['connection_sql'];
 			$ok = $this->client->query($cmd);
@@ -178,7 +178,7 @@ class DB
 			die('SQL-Query must be an object');
 			
 		// Vorbereitete Datenbankabfrage ("Prepared Statement")
-		if	( isset($this->conf['prepare']) && $this->conf['prepare'] )
+		if	( $this->conf['prepare'] )
 		{
 			$this->client->clear();
 			
@@ -228,7 +228,7 @@ class DB
 				}
 			}
 	
-			if	( isset($this->conf['autocommit']) && @$this->conf['autocommit'])
+			if	( $this->conf['autocommit'] )
 				if	( method_exists($this->client,'commit') )
 					$this->client->commit();
 			
