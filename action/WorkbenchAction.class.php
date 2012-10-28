@@ -72,8 +72,8 @@ class WorkbenchAction extends Action
 		global $viewconfig;
 		$viewconfig = parse_ini_file('themes/default/layout/perspective/'.$this->perspective.'.ini.php',true);
 		
-		require_once('themes/default/layout/perspective/header.php');
-		require_once('themes/default/layout/perspective/normal.php');
+		require_once('themes/default/layout/perspective/window.php');
+		require_once('themes/default/layout/perspective/workbench.php');
 		// Ausgabe fertig.
 		exit;
 	}
