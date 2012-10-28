@@ -65,13 +65,10 @@ function view_header( $name )
 if	( $name=='content' )
 {
 	global $preselectedobjects;
-	
-	foreach( $preselectedobjects as $object )
-	{
+	$object = $preselectedobjects[ count($preselectedobjects)-1];
 ?>
 setTimeout( function() { openNewAction( '<?php echo $object->name; ?>','<?php echo $object->getType() ?>','<?php echo $object->objectid ?>',0 );} ,500);
 <?php
-	}
 }
 ?>
 //-->
