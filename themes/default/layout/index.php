@@ -41,6 +41,7 @@
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLinkify.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orTree.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLoadView.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orAutoheight.js"></script>
   <!-- 
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
    -->

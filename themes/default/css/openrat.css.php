@@ -524,7 +524,6 @@ textarea.longtext
 	font-family:Arial;
 	font-size:13px;
 	width:100%;
-	height:300px;
 	border:1px solid <?php echo $_GET['text_color']; ?>;
 }
 
@@ -626,7 +625,6 @@ table.calendar td
 textarea.editor
 {
 	width:100%;
-	height:400px;
 }
 
 label,
