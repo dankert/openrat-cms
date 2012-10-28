@@ -2,21 +2,6 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header back="true"></header>
 	<form>
-		<row>
-			<column>
-				<inputarea rows="25" cols="80" name="src" class="editor"></inputarea>
-			</column>
-		</row>
-		<row>
-			<column class="act">
-				<button type="ok"></button>
-				<if false="mode:edit">
-					<link class="action" action="template" subaction="srcelement">
-						<text key="menu_template_srcelement"></text>
-					</link>
-				</if>
-			</column>
-		</row>
+		<inputarea rows="25" cols="80" name="src" class="editor"></inputarea>
 	</form>
-	<focus field="src"></focus>
 </output>

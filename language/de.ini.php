@@ -1161,3 +1161,5 @@ MENU_SIZE_DESC =Bildgröße ändern
 LICENSE="Lizenz"
 MENU_TREE=Navigation
 MENU_TREE_DESC=Navigation
+SRC="Quellcode"
+EDIT="Bearbeiten"
