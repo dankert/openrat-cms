@@ -5,8 +5,8 @@ icons=templatelist,languagelist
 [tree]
 
 title=navigator
-views=show,settings
-default=show
+views=tree,settings
+default=tree
 action=tree
 refreshable=false
 

@@ -210,7 +210,7 @@ class TreeAction extends Action
 	/**
 	 * Anzeigen des Baumes
 	 */
-	public function showView()
+	public function treeView()
 	{
 		return;
 		$this->load();
