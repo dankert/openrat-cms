@@ -1208,7 +1208,17 @@ class FolderAction extends ObjectAction
 
 
 
-
+	public function rootView()
+	{
+		$rootFolder = new Folder( Folder::getRootFolderId() );
+		$rootFolder->load();
+		
+		$this->setTemplateVar('rootfolderid'  ,$rootFolder->id  );
+		$this->setTemplateVar('rootfoldername',$rootFolder->name);
+	}
+	
+	
+	
 	/**
 	 * Reihenfolge bearbeiten.
 	 */
