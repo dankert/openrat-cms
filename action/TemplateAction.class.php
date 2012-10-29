@@ -297,6 +297,7 @@ class TemplateAction extends Action
 	 */
 	function showView()
 	{
+		header('Content-Type: '.$this->template->mimeType().'; charset='.$this->getCharset() );
 		$text = $this->template->src;
 	
 		foreach( $this->template->getElementIds() as $elid )
@@ -353,7 +354,7 @@ class TemplateAction extends Action
 		$this->setTemplateVar('elements',$list);	
 		
 		
-		$text = htmlentities( $this->template->src );
+		$text = Text::encodeHtml( $this->template->src );
 		$text = str_replace("\n",'<br/>',$text);
 	
 		foreach( $this->template->getElementIds() as $elid )

@@ -1,1 +1,1 @@
-<div class="inputholder"><textarea class="<?php echo $attr_class ?>" name="<?php echo $attr_name ?>" ><?php echo htmlentities(isset($$attr_name)?$$attr_name:$attr_default) ?></textarea></div>
+<div class="inputholder"><textarea class="<?php echo $attr_class ?>" name="<?php echo $attr_name ?>" ><?php echo Text::encodeHtml(isset($$attr_name)?$$attr_name:$attr_default) ?></textarea></div>
