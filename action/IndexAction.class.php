@@ -35,6 +35,16 @@ class IndexAction extends Action
 
 	public function showView()
 	{
+		global $conf;
+		
+		$user = Session::getUser();
+		if	( is_object($user) )
+			$style = $user->style; 
+		else
+			$style = 'default';
+		
+		
+		
 		require('themes/default/layout/index.php');
 		exit;
 	}

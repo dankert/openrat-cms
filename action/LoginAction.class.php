@@ -960,6 +960,7 @@ class LoginAction extends Action
 		else
 		{
 			Session::set('perspective','login');
+			$this->setStyle('default');
 			$this->refresh();
 		}
 	}
