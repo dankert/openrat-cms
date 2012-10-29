@@ -62,7 +62,7 @@ function view_header( $name )
 <script name="javascript" type="text/javascript">
 <!--
 <?php 
-if	( $name=='content' )
+if	( $name=='content' && count(@$preselectedobjects)>0 )
 {
 	global $preselectedobjects;
 	$object = $preselectedobjects[ count($preselectedobjects)-1];
