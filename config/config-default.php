@@ -674,6 +674,7 @@ $conf['publish']['url']='absolute';
 $conf['publish']['enable_php_in_page_content']=false;
 $conf['publish']['enable_php_in_file_content']=false;
 $conf['publish']['escape_8bit_characters']=false;
+$conf['publish']['encode_utf8_in_html']=true;
 $conf['publish']['negotiation'] = array();
 $conf['publish']['negotiation']['page_negotiate_type']=true;
 $conf['publish']['negotiation']['page_negotiate_language']=true;
