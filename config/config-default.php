@@ -792,6 +792,7 @@ $conf['security']['user'] = array();
 $conf['security']['user']['show_admin_mail']=true;
 $conf['security']['user']['show_mail']=true;
 $conf['security']['user']['send_message']=true;
+$conf['security']['content-security-policy']=true;
 
 $conf['style'] = array();
 $conf['style']['grey']=array();

@@ -354,6 +354,7 @@ class Action
 	public function forward()
 	{
 		Session::close();
+		global $conf;
 		
 		$db = db_connection();
 
@@ -378,8 +379,9 @@ class Action
 		
 		// Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
 		header('Expires: '.substr(date('r',time()-date('Z')),0,-5).'GMT',false );
-		
-		header('X-Content-Security-Policy: '.'allow *; script-src \'self\'; options \'inline-script\'');
+
+		if	( $conf['security']['content-security-policy'] )
+			header('X-Content-Security-Policy: '.'allow  \'self\'; img-src: *; script-src \'self\'; options inline-script');
 		
 		
 		$httpAccept = getenv('HTTP_ACCEPT');
@@ -449,7 +451,6 @@ class Action
 		if	( isset($this->actionConfig[$this->subActionName]['menu']))
 			$windowTitle = 'menu_title_'.$this->actionName.'_'.$this->actionConfig[$this->subActionName]['menu'];
 
-		global $conf;
 		global $REQ;
 		global $PHP_SELF;
 		global $HTTP_SERVER_VARS;
