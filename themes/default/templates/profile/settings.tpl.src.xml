@@ -1,36 +1,26 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<form method="post">
-<table>
-		<row>
-			<column>
-				<group title="message:settings">
-					<part>
-						<checkbox name="always_edit"></checkbox>
-						<label for="always_edit"><text key="setting_always_edit"></text>
-						</label> 
-					</part>
-					<part> 
-						<checkbox name="ignore_ok_notices"></checkbox>
-						<label for="ignore_ok_notices">
-							<text key="setting_ignore_ok_notices"></text>
-						</label>
-					</part>
-				</group>
-				<group title="message:timezone">
-					<selectbox name="timezone_offset" list="timezone_list"
-						addempty="true"></selectbox>
-				</group>
-				<group title="message:language">
-					<selectbox name="language" list="language_list" addempty="true"></selectbox>
-				</group> 
-			</column>
-		</row>
-		<row>  
-			<column colspan="2" class="act">
-				<button type="ok"></button>
-			</column>
-		</row>
-</table>
+		<part class="line">
+			<part class="label">
+				<label for="timezone_offset">
+					<text key="timezone" />
+				</label>
+			</part>
+			<part class="input">
+				<selectbox name="timezone_offset" list="timezone_list"
+					addempty="true"></selectbox>
+			</part>
+		</part>
+		<part class="line">
+			<part class="label">
+				<label for="">
+					<text key="language" />
+				</label>
+			</part>
+			<part class="input">
+				<selectbox name="language" list="language_list" addempty="true"></selectbox>
+			</part>
+		</part>
 	</form>
 </output>
