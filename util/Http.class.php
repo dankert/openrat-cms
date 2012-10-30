@@ -420,7 +420,24 @@ class Http
 	 */
 	function notAuthorized($text,$message)
 	{
-		Http::sendStatus(403,'Not Authorized',$message);
+		Http::sendStatus(403,$text,$message);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Der Benutzer ist nicht autorisiert, eine Aktion auszufuehren.
+	 * Diese Funktion erzeugt einen "HTTP 403 Not Authorized" und das
+	 * Skript wird beendet.
+	 *
+	 * @param String $message Eigener Hinweistext
+	 */
+	function notFound($text,$message)
+	{
+		Http::sendStatus(404,$text,$message);
 	}
 	
 	
