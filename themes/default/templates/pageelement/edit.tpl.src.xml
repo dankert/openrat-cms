@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="link,import,export"></header>
-	<form method="post" label="message:save">
+	<form method="post" label="message:save" visible="yes">
 		<input type="hidden" name="elementid"></input>
 		<input type="hidden" name="value_time"></input>
 		<window name="element">
