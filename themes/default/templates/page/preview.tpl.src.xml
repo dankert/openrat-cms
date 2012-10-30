@@ -1,20 +1,9 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header views="el"></header>
-	<group title="message:menu_page_show">
-		<part>
-			<insert url="var:preview_url" name="preview"></insert>
-		</part>
-	</group>
-	<link class="action" action="page" subaction="preview" target="preview">
-		<image icon="show"></image>
-		<text key="menu_page_show"></text>
-	</link>
-	<link class="action" action="page" subaction="edit" target="preview">
-		<image icon="show"></image>
-		<text key="menu_page_edit"></text>
-	</link>
-	<link type="popup" class="action" url="var:preview_url">
-		<text key="link_open_in_new_window"></text>
-	</link>
+	<insert url="var:preview_url" name="preview"></insert>
+	<part class="clickable">
+		<link type="popup" class="action" url="var:preview_url">
+			<text key="link_open_in_new_window"></text>
+		</link>
+	</part>
 </output>
