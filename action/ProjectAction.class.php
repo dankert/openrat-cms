@@ -183,12 +183,74 @@ class ProjectAction extends Action
 		}
 	}
 
+	
+
+	/**
+	 * Synchronisation mit dem Dateisystem. 
+	 */
+	public function syncPost()
+	{
+		
+	}
+
+
+	/**
+	 * Synchronisation mit dem Dateisystem. 
+	 */
+	public function syncView()
+	{
+		global $conf;
+		$syncConf = $conf['sync'];
+		
+		if	( ! $syncConf['enabled'] )
+			return;
+		
+		$syncDir = slashify($syncConf['directory']).$this->project->name;
+		
+		
+	}
+
+
+	/**
+	 * Import aus dem Dateisystem. 
+	 */
+	public function importView()
+	{
+		
+	}
+
+
+	/**
+	 * Import aus dem Dateisystem. 
+	 */
+	public function importPost()
+	{
+		
+	}
+
+
+	/**
+	 * Export in Dateisystem.
+	 */
+	public function exportView()
+	{
+		
+	}
+
+
+	/**
+	 * Export in Dateisystem.
+	 */
+	public function exportPost()
+	{
+		
+	}
 
 
 	/**
 	 * Projekt exportieren.
 	 */
-	function exportView()
+	public function copyView()
 	{
 		
 	}
@@ -197,7 +259,7 @@ class ProjectAction extends Action
 	/**
 	 * Projekt exportieren.
 	 */
-	function exportPost()
+	public function copyPost()
 	{
 		$db = db_connection();
 		$this->setTemplateVar( 'dbid',$db->id );

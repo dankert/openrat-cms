@@ -503,6 +503,21 @@ EOF
 	
 	
 	/**
+	 * Synchronisation des Projektinhaltes mit dem Dateisystem.
+	 */
+	public function sync()
+	{
+		global $conf;
+		$syncConf = $conf['sync'];
+		
+		if	( ! $syncConf['enabled'] )
+			return;
+		
+		$syncDir = slashify($syncConf['directory']).$this->name;
+		
+	}
+	
+	/**
 	 * Kopiert ein Projekt von einer Datenbank zu einer anderen.<br>
 	 * <br>
 	 * Alle Projektinhalte werden kopiert, die Fremdschluesselbeziehungen werden entsprechend angepasst.<br>
@@ -512,7 +527,7 @@ EOF
 	 * 
 	 * @param dbid_destination ID der Ziel-Datenbank
 	 */
-	function export( $dbid_destination )
+	function copy( $dbid_destination,$name='' )
 	{
 		Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
 		
