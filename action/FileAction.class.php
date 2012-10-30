@@ -46,7 +46,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Ersetzt den Inhalt mit einer anderen Datei
 	 */
-	function replace()
+	public function editPost()
 	{
 		$upload = new Upload();
 
@@ -64,7 +64,7 @@ class FileAction extends ObjectAction
 	}
 
 
-	function savevalue()
+	public function valuePost()
 	{
 		$this->file->value = $this->getRequestVar('value',OR_FILTER_RAW);
 		$this->file->saveValue();
@@ -423,7 +423,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Anzeigen des Inhaltes
 	 */
-	function editvalue()
+	function valueView()
 	{
 		global $conf;
 		// MIME-Types aus Datei lesen

@@ -102,7 +102,7 @@ class Publish
 	function Publish()
 	{
 		global $conf;
-		$conf_project = $conf['publish']['project']; 
+		$confPublish = $conf['publish']; 
 		
 		if	( $conf['security']['nopublish'] )
 		{
@@ -115,9 +115,16 @@ class Publish
 
 		// Feststellen, ob FTP benutzt wird.
 		// Dazu muss FTP aktiviert sein (enable=true) und eine URL vorhanden sein.
-		if   ( @$conf['publish']['ftp']['enable'] && 
-			   ( !empty($project->ftp_url) ||
-			     isset($conf['publish']['ftp']['host']) ) )
+		$ftpUrl = '';
+		if   ( $conf['publish']['ftp']['enable'] )
+		{
+			if	( $conf['publish']['ftp']['per_project'] && !empty($project->ftp_url) )
+				$ftpUrl = $project->ftp_url;
+			elseif ( !empty($conf['publish']['ftp']['host']) ) 
+				$ftpUrl = $project->ftp_url;
+		}
+		
+		if	( ! empty($ftpUrl) )
 		{
 			$this->with_ftp = true;
 			$this->ftp = new Ftp( $project->ftp_url ); // Aufbauen einer FTP-Verbindung
@@ -133,13 +140,18 @@ class Publish
 		}
 		
 		$localDir = ereg_replace( '\/$','',$project->target_dir);
-		if	( empty( $localDir))
-			$localDir = $project->name;
 			
-		if	( $conf_project['override_publish_dir'] && $localDir != basename($localDir) )
-			$this->local_destdir = $localDir;
+		if	( $confPublish['filesystem']['per_project'] && (!empty($localDir)) )
+		{
+			$this->local_destdir = $localDir; // Projekteinstellung verwenden.
+		}
 		else
-			$this->local_destdir = $conf_project['publish_dir'].$localDir;
+		{
+			if	( empty( $localDir))
+				$localDir = $project->name;
+			// Konfiguriertes Verzeichnis verwenden.
+			$this->local_destdir = $confPublish['filesystem']['directory'].$localDir;
+		}
 			
 
 		// Sofort pruefen, ob das Zielverzeichnis ueberhaupt beschreibbar ist.
@@ -159,10 +171,13 @@ class Publish
 		$this->content_negotiation = ( $project->content_negotiation == '1' );
 		$this->cut_index           = ( $project->cut_index           == '1' );
 
-		if	( $conf_project['override_system_command'] && !empty($project->cmd_after_publish) )
-			$this->cmd_after_publish   = $project->cmd_after_publish;
-		else
-			$this->cmd_after_publish   = @$conf_project['system_command'];
+		if	( $confPublish['command']['enable'] )
+		{
+			if	( $confPublish['command']['per_project'] && !empty($project->cmd_after_publish) )
+				$this->cmd_after_publish   = $project->cmd_after_publish;
+			else
+				$this->cmd_after_publish   = @$confPublish['command']['command'];
+		}
 		
 		// Im Systemkommando Variablen ersetzen
 		$this->cmd_after_publish = str_replace('{name}'   ,$project->name                ,$this->cmd_after_publish);
@@ -288,6 +303,7 @@ class Publish
 	{
 		if   ( $this->with_ftp )
 		{
+			Logger::debug('Closing FTP connection' );
 			$this->ftp->close();
 		}
 
@@ -296,6 +312,7 @@ class Publish
 		{
 			$ausgabe = array();
 			$rc      = false;
+			Logger::debug('Executing system command: '.$this->cmd_after_publish );
 			exec( $this->cmd_after_publish,$ausgabe,$rc );
 			
 			if	( $rc != 0 ) // Wenn Returncode ungleich 0, dann Ausgabe ins Log schreiben und Fehler melden.

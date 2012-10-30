@@ -524,7 +524,6 @@ textarea.longtext
 	font-family:Arial;
 	font-size:13px;
 	width:100%;
-	height:300px;
 	border:1px solid <?php echo $_GET['text_color']; ?>;
 }
 
@@ -626,7 +625,6 @@ table.calendar td
 textarea.editor
 {
 	width:100%;
-	height:400px;
 }
 
 label,
@@ -720,7 +718,8 @@ ul.tree ul
 
 div.entry.selected,
 div.dropdown > div.entry:hover,
-div.dropdown > div.entry:hover > a
+div.dropdown > div.entry:hover > a,
+a.element
 {
 	/*border:1px solid <?php echo $_GET['text_color']; ?>;*/
 	background-color:<?php echo $_GET['title_background_color']; ?>;
@@ -1404,13 +1403,14 @@ body
 
 
 
-form div.line
+/* Formulare breit */
+div.bar.wide form div.line
 {
 	clear:left;
 	margin-top:10px;
 }
 
-form div.label
+div.bar.wide form div.label
 {
 	display:inline-block;
 	width:30%;
@@ -1418,13 +1418,38 @@ form div.label
 	text-align: right;
 }
 
-form div.input
+div.bar.wide form div.input
 {
 	display:inline-block;
 	width:60%;
 	vertical-align:top;
 	text-align: left;
 }
+
+/* Formulare schmal */
+div.bar.small form div.line
+{
+	clear:left;
+	padding:10px;
+}
+
+div.bar.small form div.label
+{
+	display:block;
+	width:100%;
+	vertical-align:top;
+	text-align: left;
+}
+
+div.bar.small form div.input
+{
+	display:block;
+	width:100%;
+	vertical-align:top;
+	text-align: left;
+}
+
+
 
 form div.label > label,
 form div.input > div.intputholder

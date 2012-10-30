@@ -430,6 +430,8 @@ function registerViewEvents( viewEl )
 	$(viewEl).find('tr.headline > td > input.checkbox').click( function() {
 		$(this).closest('table').find('tr.data > td > input.checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
 	});
+	
+	$(viewEl).find('textarea').orAutoheight();
 
 }
 

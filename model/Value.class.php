@@ -525,7 +525,8 @@ SQL
 			$this->load();
 	
 		$inhalt = '';
-
+		$raw    = false;
+		
 		global $conf;
 
 		if	( $conf['cache']['enable_cache'] && is_file( $this->tmpfile() ))
@@ -1288,7 +1289,6 @@ SQL
 				if   ( $this->page->simple )
 					break;
 
-				$raw = false;
 				switch( $this->element->subtype )
 				{
 					case 'db_id':
@@ -1436,16 +1436,6 @@ SQL
 						// Keine Fehlermeldung in erzeugte Seite schreiben. 
 				}
 
-				if	( !$raw && $this->page->mimeType()=='text/html' )
-					$inhalt = Text::encodeHtml( $inhalt );
-
-				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML �bersetzen
-				if   ( $this->page->mimeType()=='text/html' )
-					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
-					//Html::debug($inhalt);
-					//$inhalt = htmlspecialchars($inhalt,ENT_NOQUOTES,'UTF-8');
-					$inhalt = translateutf8tohtml($inhalt);
-					
 				break;
 				
 			default:
@@ -1454,7 +1444,24 @@ SQL
 				              'unknown type:'.$this->element->type);
 				
 		}
+
 		
+		switch( $this->element->type )
+		{
+			case 'longtext':
+			case 'text':
+			case 'select':
+				
+				if	( $conf['publish']['encode_utf8_in_html'] )
+					// Wenn HTML-Ausgabe, dann UTF-8-Zeichen als HTML-Code uebersetzen
+					if   ( $this->page->mimeType()=='text/html' )
+						$inhalt = translateutf8tohtml($inhalt);
+				break;
+				
+			default:
+		}
+
+					
 		
 		if   ( $this->page->icons && $this->element->withIcon )
 			$inhalt = '<a href="javascript:parent.openNewAction(\''.$this->element->name.'\',\'pageelement\',\''.$this->page->objectid.'_'.$this->element->elementid.'\');" title="'.$this->element->desc.'"><img src="'.OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>'.$inhalt;

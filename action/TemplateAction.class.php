@@ -297,6 +297,7 @@ class TemplateAction extends Action
 	 */
 	function showView()
 	{
+		header('Content-Type: '.$this->template->mimeType().'; charset='.$this->getCharset() );
 		$text = $this->template->src;
 	
 		foreach( $this->template->getElementIds() as $elid )
@@ -334,41 +335,60 @@ class TemplateAction extends Action
 	 */
 	function editView()
 	{
-		$text = htmlentities( $this->template->src );
+		// Elemente laden 
+		$list = array();
+	
+		foreach( $this->template->getElementIds() as $elid )
+		{
+			$element = new Element( $elid );
+			$element->load();
+
+			$list[$elid] = array();
+			$list[$elid]['id'         ] = $elid;
+			$list[$elid]['name'       ] = $element->name;
+			$list[$elid]['description'] = $element->desc;
+			$list[$elid]['type'       ] = $element->type;
+			
+			unset( $element );
+		}
+		$this->setTemplateVar('elements',$list);	
+		
+		
+		$text = Text::encodeHtml( $this->template->src );
 		$text = str_replace("\n",'<br/>',$text);
 	
 		foreach( $this->template->getElementIds() as $elid )
 		{
 			$element = new Element( $elid );
 			$element->load();
-			$url = Html::url( 'element','name',$elid );
+			$url = 'javascript:openNewAction(\''.$element->name.'\',\'element\',\''.$elid.'\');';
 			
 			$text = str_replace('{{'.$elid.'}}',
-			                    '<a href="'.$url.'" class="el_'.
-			                    $element->getTypeClass().'" target="cms_main_main" title="'.$element->desc.'">{{'.
+			                    '<a href="'.$url.'" class="element el_'.
+			                    $element->getTypeClass().'" title="'.$element->desc.'">{{'.
 			                    $element->name.'}}</a>',
 			                    $text );
 			$text = str_replace('{{-&gt;'.$elid.'}}',
-			                    '<a href="'.$url.'" class="el_'.
-			                    $element->getTypeClass().'" target="cms_main_main" title="'.$element->desc.'">{{-&gt;'.
+			                    '<a href="'.$url.'" class="element el_'.
+			                    $element->getTypeClass().'" title="'.$element->desc.'">{{-&gt;'.
 			                    $element->name.'}}</a>',
 			                    $text );
 
 			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-			                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
+			                    '<a href="'.$url.'" class="element el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
 			                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
 			                    $text );
 			$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-			                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
+			                    '<a href="'.$url.'" class="element el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
 			                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
 			                    $text );
 
 			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-			                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
+			                    '<a href="'.$url.'" class="element el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
 			                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
 			                    $text );
 			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-			                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
+			                    '<a href="'.$url.'" class="element el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
 			                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
 			                    $text );
 			                    
@@ -377,31 +397,6 @@ class TemplateAction extends Action
 	
 		$this->setTemplateVar('text',$text);
 	}
-
-
-	// Anzeigen der Template-Elemente
-	//
-	function elView()
-	{
-		global $conf_php;
-		$list = array();
-	
-		foreach( $this->template->getElementIds() as $elid )
-		{
-			$element = new Element( $elid );
-			$element->load();
-
-			$list[$elid]         = array();
-			$list[$elid]['id'  ] = $elid;
-			$list[$elid]['name'] = $element->name;
-			$list[$elid]['desc'] = $element->desc;
-			$list[$elid]['type'] = $element->type;
-			
-			unset( $element );
-		}
-		$this->setTemplateVar('el',$list);	
-	}
-
 
 
 	function srcelementView()
@@ -431,82 +426,34 @@ class TemplateAction extends Action
 	  */
 	function srcView()
 	{
-		if	( $this->isEditMode() )
+		$text = $this->template->src;
+	
+		foreach( $this->template->getElementIds() as $elid )
 		{
-			$text = $this->template->src;
-		
-			foreach( $this->template->getElementIds() as $elid )
-			{
-				$element = new Element( $elid );
-				$element->load();
-	
-				$text = str_replace('{{'.$elid.'}}',
-				                           '{{'.$element->name.'}}',
-				                           $text );
-				$text = str_replace('{{->'.$elid.'}}',
-				                           '{{->'.$element->name.'}}',
-				                           $text );
-				$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-				                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
-				                           $text );
-				$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-				                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
-				                           $text );
-				$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-				                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
-				                           $text );
-				$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-				                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
-				                           $text );
-			}
-	
-			$this->setTemplateVar( 'src',$text );
+			$element = new Element( $elid );
+			$element->load();
+
+			$text = str_replace('{{'.$elid.'}}',
+			                           '{{'.$element->name.'}}',
+			                           $text );
+			$text = str_replace('{{->'.$elid.'}}',
+			                           '{{->'.$element->name.'}}',
+			                           $text );
+			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
+			                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+			                           $text );
+			$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
+			                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+			                           $text );
+			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
+			                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+			                           $text );
+			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
+			                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+			                           $text );
 		}
-		else
-		{
-			$text = htmlentities( $this->template->src );
-			$text = str_replace("\n",'<br/>',$text);
-		
-			foreach( $this->template->getElementIds() as $elid )
-			{
-				$element = new Element( $elid );
-				$element->load();
-				$url = Html::url( 'element','name',$elid );
-				
-				$text = str_replace('{{'.$elid.'}}',
-				                    '<a href="'.$url.'" class="el_'.
-				                    $element->getTypeClass().'" target="cms_main_main" title="'.$element->desc.'">{{'.
-				                    $element->name.'}}</a>',
-				                    $text );
-				$text = str_replace('{{-&gt;'.$elid.'}}',
-				                    '<a href="'.$url.'" class="el_'.
-				                    $element->getTypeClass().'" target="cms_main_main" title="'.$element->desc.'">{{-&gt;'.
-				                    $element->name.'}}</a>',
-				                    $text );
-	
-				$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-				                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
-				                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
-				                    $text );
-				$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-				                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.
-				                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
-				                    $text );
-	
-				$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-				                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
-				                    $element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}</a>',
-				                    $text );
-				$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-				                    '<a href="'.$url.'" class="el_'.$element->getTypeClass().'" title="'.$element->desc.'">{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.
-				                    $element->name.':'.lang('TEMPLATE_SRC_END').'}}</a>',
-				                    $text );
-				                    
-				unset( $element );
-			}
-		
-			$this->setTemplateVar('src',$text);
-		}
+
+		$this->setTemplateVar( 'src',$text );
 		
 	}
 

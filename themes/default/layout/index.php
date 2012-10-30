@@ -23,7 +23,7 @@
        	?>
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo $meta['title'] ?>" ><?php
       } ?>
-  <link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo css_link() ?>" >
+  <link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo css_link($style) ?>" >
   
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/skins/markitup/style.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/sets/default/style.css" />
@@ -41,6 +41,7 @@
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLinkify.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orTree.js"></script>
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLoadView.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orAutoheight.js"></script>
   <!-- 
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
    -->

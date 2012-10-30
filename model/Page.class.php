@@ -175,6 +175,9 @@ class Page extends Object
 			return '';
 			
 		$param = array('oid'=>'__OID__'.$objectid.'__'); 
+		
+		if	( $this->icons )
+			$param['withIcons'] = '1';
 			
 		$object = new Object( $objectid );
 		$object->objectLoad();

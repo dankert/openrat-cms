@@ -35,7 +35,7 @@
 	#END-IF	
 	
 		//$tmp_url = Html::url($attr_action,$attr_subaction,!empty($attr_id)?$attr_id:$this->getRequestId(),$params);
-		                          
+	$tmp_href = 'javascript:void(0);';		                          
 	switch( $attr_type )
 	{
 		case 'post':
@@ -45,9 +45,13 @@
 		                          +$params );
 			$tmp_data = str_replace("\n",'',str_replace('"','&quot;',$tmp_data));
 			break;
+		case 'html';
+			$tmp_href = $attr_url;
+		default:
+			$tmp_data = '';
 	}
 
 //	if	( substr($tmp_url,0,10) != 'javascript' )
 //		$tmp_url = "javascript:loadViewByName('".$attr_target."','".$tmp_url.(isset($attr_anchor)?'#'.$attr_anchor:'')."'); return false;";
 	
-?><a target="<?php echo $attr_frame ?>"<?php if (isset($attr_name)) { ?> data-name="<?php echo $attr_name ?>" name="<?php echo $attr_name ?>"<?php }else{ ?> href="javascript:void(0);" <?php } ?> class="<?php echo $attr_class ?>" data-id="<?php echo $attr_id ?>" data-type="<?php echo $attr_type ?>" data-action="<?php echo $attr_action ?>" data-method="<?php echo $attr_subaction ?>" data-data="<?php echo $tmp_data ?>" <?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">
+?><a data-url="<?php echo $attr_url ?>" target="<?php echo $attr_frame ?>"<?php if (isset($attr_name)) { ?> data-name="<?php echo $attr_name ?>" name="<?php echo $attr_name ?>"<?php }else{ ?> href="<?php echo $tmp_href ?>" <?php } ?> class="<?php echo $attr_class ?>" data-id="<?php echo @$attr_id ?>" data-type="<?php echo $attr_type ?>" data-action="<?php echo @$attr_action ?>" data-method="<?php echo @$attr_subaction ?>" data-data="<?php echo $tmp_data ?>" <?php if (isset($attr_accesskey)) echo ' accesskey="'.$attr_accesskey.'"' ?>  title="<?php echo encodeHtml($attr_title) ?>">

@@ -354,6 +354,7 @@ class Action
 	public function forward()
 	{
 		Session::close();
+		global $conf;
 		
 		$db = db_connection();
 
@@ -378,8 +379,9 @@ class Action
 		
 		// Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
 		header('Expires: '.substr(date('r',time()-date('Z')),0,-5).'GMT',false );
-		
-		header('X-Content-Security-Policy: '.'allow *; script-src \'self\'; options \'inline-script\'');
+
+		if	( $conf['security']['content-security-policy'] )
+			header('X-Content-Security-Policy: '.'allow  \'self\'; img-src: *; script-src \'self\'; options inline-script');
 		
 		
 		$httpAccept = getenv('HTTP_ACCEPT');
@@ -449,7 +451,6 @@ class Action
 		if	( isset($this->actionConfig[$this->subActionName]['menu']))
 			$windowTitle = 'menu_title_'.$this->actionName.'_'.$this->actionConfig[$this->subActionName]['menu'];
 
-		global $conf;
 		global $REQ;
 		global $PHP_SELF;
 		global $HTTP_SERVER_VARS;
@@ -716,17 +717,16 @@ class Action
 	/**
 	 * Ermitelt den Zeichensatz fuer die Ausgabe.
 	 * 
-	 * Falls für die Datenbank-Verbindung ein Zeichensatz angegeben ist, so wird
-	 * dieser genommen und in HTTP-Response-Header sowieso auch im HTML-Kopf verwendet.
-	 * 
-	 * Falls nicht vorhanden, wird der Zeichensatz aus der geladenen Sprachdatei verwendet. Diese
-	 * ergibt sich dann aus der Sprache, die der Browser anfordert. 
+	 * Seit Version 1.1 werden alle Ausgaben in UTF-8 kodiert. Falls die
+	 * Datenbank intern eine andere Kodierung verwendet, so wird diese bei
+	 * der Datenbankanbindung umgewandelt. Nach außen wird die Kodierung
+	 * grundsätzlich in UTF-8 durchgeführt. 
 	 *
-	 * @return String Zeichensatz
+	 * @return String Zeichensatz, konstant UTF-8.
 	 */
 	protected function getCharset()
 	{
-		return charset();
+		return 'UTF-8';
 	}
 	
 	

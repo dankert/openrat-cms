@@ -104,6 +104,8 @@ class PageelementAction extends Action
 	 */
 	public function propView()
 	{
+		Http::notFound("","");
+		exit();
 		$language = Session::getProjectLanguage();
 		$this->value->languageid = $language->languageid;
 		$this->value->objectid   = $this->page->objectid;

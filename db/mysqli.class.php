@@ -59,7 +59,7 @@ class DB_mysqli
 		$db     = $conf['database'];
 		$host = '127.0.0.1';
 		
-		if	( isset($conf['port']) )
+		if	( !empty($conf['port']) )
 			$host .= ':'.$conf['port'];
 
 		// 5.3.0 - Added the ability of persistent connections. 

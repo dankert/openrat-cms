@@ -11,13 +11,13 @@ CKEDITOR.editorConfig = function( config )
 	//baseHref: OR_THEMES_EXT_DIR+'../editor/editor/'
 	config.baseHref = '';
 	config.skin = 'v2';
-	config.filebrowserUploadUrl = './dispatcher.php?action=filebrowser&subaction=directupload&name=upload';
+	//config.filebrowserUploadUrl = './dispatcher.php?action=filebrowser&subaction=directupload&name=upload';
 	config.filebrowserBrowseUrl = './dispatcher.php?action=filebrowser&subaction=browse';
 	
 	config.toolbar = 'Openrat';
 	config.toolbar_Openrat = [    /* Eigene Toolbar für OpenRat */
-	                          ['Save','Preview','-'], /*,'Templates'*/
-	                          ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
+	                          ['Preview','-'], /*,'Templates'*/
+	                          ['Cut','Copy','Paste','PasteText','PasteFromWord'],
 	                          ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 	                          ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],
 	                          '/',

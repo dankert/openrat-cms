@@ -1,11 +1,56 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header views="src,addel,srcelement,el,remove"></header>
-		<window name="TEMPLATE_SHOW">
-			<row>
+	<header views="src,remove"></header>
+
+	<table>
+		<row class="headline">
+			<column>
+				<text key="name"></text>
+			</column>
+			<column>
+				<text key="type"></text>
+			</column>
+		</row>
+		<list list="elements" extract="true">
+			<row class="data">
+				<column id="var:id" name="var:name" action="element">
+					<image elementtype="var:type"></image>
+					<text var="name" title="var:description"></text>
+				</column>
 				<column>
-					<text var="text" escape="false" type="code"></text>
+					<text key="var:type" prefix="EL_"></text>
 				</column>
 			</row>
-		</window>
+		</list>
+		<if empty="el">
+			<row>
+				<column colspan="2">
+					<text key="GLOBAL_NOT_FOUND"></text>
+				</column>
+			</row>
+		</if>
+		<row class="data">
+			<column colspan="2" class="clickable">
+				<link type="view" subaction="addel">
+					<image icon="add" />
+					<text key="menu_template_addel"></text>
+				</link>
+			</column>
+		</row>
+	</table>
+
+	<group title="message:src">
+	<table>
+	<row class="data">
+	<column class="clickable">
+				<link type="view" subaction="src">
+					<image icon="template" />
+					<text key="edit"></text>
+				</link>
+	</column>
+	</row>
+	</table>
+
+		<text var="text" escape="false" type="code"></text>
+	</group>
 </output>

@@ -4,8 +4,8 @@ icons=projectlist,userlist,grouplist,configuration
 
 [tree]
 
-views=show
-default=show
+views=tree
+default=tree
 action=tree
 refreshable=false
 
