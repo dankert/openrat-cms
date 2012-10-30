@@ -1403,13 +1403,14 @@ body
 
 
 
-form div.line
+/* Formulare breit */
+div.bar.wide form div.line
 {
 	clear:left;
 	margin-top:10px;
 }
 
-form div.label
+div.bar.wide form div.label
 {
 	display:inline-block;
 	width:30%;
@@ -1417,13 +1418,38 @@ form div.label
 	text-align: right;
 }
 
-form div.input
+div.bar.wide form div.input
 {
 	display:inline-block;
 	width:60%;
 	vertical-align:top;
 	text-align: left;
 }
+
+/* Formulare schmal */
+div.bar.small form div.line
+{
+	clear:left;
+	padding:10px;
+}
+
+div.bar.small form div.label
+{
+	display:block;
+	width:100%;
+	vertical-align:top;
+	text-align: left;
+}
+
+div.bar.small form div.input
+{
+	display:block;
+	width:100%;
+	vertical-align:top;
+	text-align: left;
+}
+
+
 
 form div.label > label,
 form div.input > div.intputholder

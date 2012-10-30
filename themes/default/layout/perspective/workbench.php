@@ -1,23 +1,23 @@
 
-<div class="bar" id="navigationbar">
+<div class="bar small" id="navigationbar">
 <?php 
 view_header('tree');
 ?>
 </div>
 
-<div class="bar" id="contentbar">
+<div class="bar wide" id="contentbar">
 <?php 
 view_header('content');
 ?>
 </div>
 
-<div class="bar" id="sidebar">
+<div class="bar small" id="sidebar">
 <?php 
 view_header('side');
 ?>
 </div>
 
-<div class="bar" id="bottombar">
+<div class="bar wide" id="bottombar">
 <?php 
 view_header('bottom');
 ?>
