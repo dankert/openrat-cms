@@ -156,6 +156,7 @@ class ElementAction extends Action
 	function propView()
 	{
 		global $conf;
+		$this->setTemplateVar('type',$this->element->type );
 		
 		// Abhaengig vom aktuellen Element-Typ die Eigenschaften anzeigen
 		$properties = $this->element->getRelatedProperties();
