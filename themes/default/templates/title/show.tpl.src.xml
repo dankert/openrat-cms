@@ -63,7 +63,7 @@
 
 	<part class="projects">
 		<image icon="project" align="left"></image>
-		<text class="titletext" key="GLOBAL_CHANGE_TO"></text>
+		<text class="titletext" key="GLOBAL_PROJECTS"></text>
 		<part class="dropdown">
 			<list list="projects" key="id" value="name">
 				<part class="entry clickable">
