@@ -416,9 +416,12 @@ SQL
 					$this->filename = base_convert($this->objectid,10,36);
 					break;
 
-//					case 'md5':
-//						$this->filename = md5(md5($this->objectid));
-//						break;
+				case 'md5':
+					// MD5-Summe als Dateinamen verwenden
+					// Achtung: Kollisionen sind unwahrscheinlich, aber theoretisch möglich.
+					$this->filename = md5(md5($this->objectid));
+					break;
+					
 				case  'ss':
 					// Imitieren von "StoryServer" URLs. Wers braucht.
 					$this->filename = '0,'.
@@ -427,12 +430,15 @@ SQL
 					                  base_convert(str_pad($this->objectid,7,'a'),11,10).
 					                  ',00';
 					break;
-//					case  'title':
-//						$this->filename = $this->goodFilename(trim(strtolower($this->name)));
-//						break;
+					
+				case  'title':
+					// Achtung: Kollisionen sind möglich.
+					$this->filename = $this->goodFilename(trim(strtolower($this->name)));
+					break;
 
 				default:
-					die('Unknown filename style: '.$conf['filename']['style'] );
+					// Als Fallback die Objekt-Id als Dateinamen verwenden.
+					$this->filename = $this->objectid;
 			}
 		}
 
