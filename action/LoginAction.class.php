@@ -852,7 +852,19 @@ class LoginAction extends Action
 			{
 				// Das einzige Projekt sofort starten.
 				$projectIds = array_keys($allProjects);
-				Session::setProject( new Project($projectIds[0]) );
+				
+				$project  = new Project($projectIds[0]);
+				$project->load();
+				$language = new Language( $project->getDefaultLanguageId() );
+				$language->load();
+				$model    = new Model( $project->getDefaultModelId() );
+				$model->load();
+					
+				Session::setProject( $project );
+				Session::setProjectLanguage( $language );
+				Session::setProjectModel( $model );
+					
+				
 				$this->setPerspective('normal');
 			}
 			elseif	( $conf['login']['start']['start_lastchanged_object'] )
@@ -865,7 +877,18 @@ class LoginAction extends Action
 					// und dieses Projekt starten.
 					$o = new Object( $objectid );
 					$o->load();
-					Session::setProject( new Project($o->projectid) );
+					
+					$project  = new Project($o->projectid);
+					$project->load();
+					$language = new Language( $project->getDefaultLanguageId() );
+					$language->load();
+					$model    = new Model( $project->getDefaultModelId() );
+					$model->load();
+					
+					Session::setProject( $project );
+					Session::setProjectLanguage( $language );
+					Session::setProjectModel( $model );
+					
 					$this->setPerspective('normal');
 				}
 			}
