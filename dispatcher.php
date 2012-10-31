@@ -125,11 +125,6 @@ require_once( "functions/config.inc.php" );
 require_once( "functions/language.inc.".PHP_EXT );
 require_once( "functions/db.inc.".PHP_EXT );
 
-$charset = Session::get('charset');
-$charset = !empty($charset)?$charset:'US-ASCII';
-
-header( 'Content-Type: text/html; charset='.$charset );
-
 // Verbindung zur Datenbank
 //
 $db = Session::getDatabase();
@@ -194,16 +189,16 @@ switch( @$do->security )
 	case SECURITY_USER:
 		if	( !is_object($do->currentUser) )
 		{
-			Logger::debug('No session and no guest action occured, maybe session expired');
+			Logger::debug('No user logged in, but this action requires a valid user');
 			Http::notAuthorized( lang('SESSION_EXPIRED'),'login required' );
 			$do->templateVars['error'] = 'not logged in';
 			exit;
 		}
 		break;
 	case SECURITY_ADMIN:
-		if	( !$do->currentUser->isAdmin )
+		if	( !is_object($do->currentUser) || !$do->currentUser->isAdmin )
 		{
-			Logger::debug('Admin action, but user '.$do->currentUser->name.' is not an admin');
+			Logger::debug('This action requires administration privileges, but user '.$do->currentUser->name.' is not an admin');
 			Http::notAuthorized( lang('SESSION_EXPIRED'),'intrusion detection' );
 			$do->templateVars['error'] = 'no admin';
 			exit;
