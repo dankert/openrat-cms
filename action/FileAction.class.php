@@ -99,7 +99,12 @@ class FileAction extends ObjectAction
 	 */
 	function previewView()
 	{
-		$this->setTemplateVar('preview_url',Html::url('file','show',$this->file->objectid,array('target'=>'none') ) );
+		$url = Html::url('file','show',$this->file->objectid,array('target'=>'none') );
+		$this->setTemplateVar('preview_url',$url );
+		
+		$isImage = substr($this->file->mimeType(),0,6) == 'image/';
+		$this->setTemplateVar('image',$isImage );
+		
 	}
 	
 
