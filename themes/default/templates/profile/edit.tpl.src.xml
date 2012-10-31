@@ -18,11 +18,14 @@
 					<label for="mail" key="user_mail"></label>
 				</part>
 				<part class="input">
-					<text var="mail" class="filename"></text>
-					<newline></newline>
-					<link type="view" class="action" action="profile" subaction="mail">
-						<text key="edit"></text>
-					</link>
+					<text var="mail"></text>
+					<newline />
+					<newline />
+					<part class="clickable">
+						<link type="view" class="action" action="profile" subaction="mail">
+							<text key="edit"></text>
+						</link>
+					</part>
 				</part>
 			</part>
 		</group>
