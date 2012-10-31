@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
-// DaCMS Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// OpenRat Content Management System
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,36 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.4  2005-01-03 19:38:03  dankert
-// Neue Methode outputLn
-//
-// Revision 1.3  2004/12/19 21:49:02  dankert
-// Methode pathToObject()
-//
-// Revision 1.2  2004/12/19 15:25:12  dankert
-// Anpassung Session-Funktionen
-//
-// Revision 1.1  2004/12/15 23:14:21  dankert
-// *** empty log message ***
-//
-// Revision 1.5  2004/11/10 22:50:10  dankert
-// Neue Methode execute()
-//
-// Revision 1.4  2004/10/06 09:53:39  dankert
-// Benutzung auch nicht-statisch
-//
-// Revision 1.3  2004/05/03 20:21:34  dankert
-// neu: setObjectId()
-//
-// Revision 1.2  2004/05/02 15:04:16  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 17:03:29  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
+
 
 /**
  * Service-Klasse fuer allgemeine Interface-Methoden. Insbesondere

@@ -1,7 +1,4 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
 // Copyright (C) 2002-2006 Jan Dankert, jandankert@jandankert.de
 //
@@ -18,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
 
 
 
@@ -312,7 +308,7 @@ class Sql
 
 	/**
 	 * Ermittelt die fertige SQL-Anfrage.
-	 * @param Name einer Funktion, die eine Zeichenkette für die
+	 * @param Name einer Funktion, die eine Zeichenkette fï¿½r die
 	 *        Datenbank schuetzt. Dies kann je nach verwendetem RDBMS
 	 *        unterschiedlich sein, daher diese Funktionsreferenz.
 	 */

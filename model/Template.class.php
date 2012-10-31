@@ -1,6 +1,6 @@
 <?php
 // OpenRat Content Management System
-// Copyright (C) 2002-2010 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -67,6 +67,7 @@ class Template
 	{
 		$model   = Session::getProjectModel();
 		$project = Session::getProject();
+
 		if	( is_object($model) )
 			$this->modelid   = $model->modelid;
 		if	( is_object($project) )

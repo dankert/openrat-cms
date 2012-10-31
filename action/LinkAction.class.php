@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,39 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.10  2009-03-22 21:49:08  dankert
-// Subaction "showprop" entfernt, da in "prop" mit aufgegangen.
-//
-// Revision 1.9  2006/06/02 19:49:06  dankert
-// Bearbeiten von Verkn?pfungen
-//
-// Revision 1.8  2006/01/29 17:18:58  dankert
-// Steuerung der Aktionsklasse ?ber .ini-Datei, dazu umbenennen einzelner Methoden
-//
-// Revision 1.7  2006/01/23 23:10:45  dankert
-// *** empty log message ***
-//
-// Revision 1.6  2004/12/20 22:04:25  dankert
-// kein Lesen der Benutzer
-//
-// Revision 1.5  2004/12/15 23:23:11  dankert
-// Anpassung an Session-Funktionen
-//
-// Revision 1.4  2004/11/24 21:28:36  dankert
-// "Verschieben" entfernt
-//
-// Revision 1.3  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.2  2004/04/30 20:31:47  dankert
-// Berechtigungen anzeigen
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**

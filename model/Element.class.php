@@ -1,6 +1,6 @@
 <?php
 // OpenRat Content Management System
-// Copyright (C) 2002-2010 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -192,7 +192,7 @@ SQL
 	function setDatabaseRow( $prop )
 	{
 		if	( count($prop) <= 0 )
-			return;
+			throw new ObjectNotFoundException("Element not found");
 
 		$this->elementid      = $prop['id'        ];
 		$this->templateid     = $prop['templateid'];

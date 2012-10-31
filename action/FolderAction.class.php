@@ -1,6 +1,6 @@
 <?php
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -34,8 +34,6 @@ class FolderAction extends ObjectAction
 	{
 		$this->folder = new Folder( $this->getRequestId() );
 		$this->folder->load();
-		
-		//$this->lastModified( $this->folder->lastchangeDate );
 	}
 
 

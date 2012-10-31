@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
-// DaCMS Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// OpenRat Content Management System
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,24 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.5  2007-11-09 00:01:44  dankert
-// Bugfix: Request-Variablen k?nnen Arrays sein.
-//
-// Revision 1.4  2007-05-14 23:29:06  dankert
-// Falls REGISTER_GLOBALS aktiviert ist, dann alle REQUEST-Variablen aus dem globalen G?ltigkeitsraum entfernen.
-//
-// Revision 1.3  2004/12/19 21:16:43  dankert
-// Workaround, falls magic_quotes_gpc eingeschaltet ist
-//
-// Revision 1.2  2004/11/10 22:44:36  dankert
-// *** empty log message ***
-//
-// Revision 1.1  2004/05/02 19:27:22  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 $REQ = array_merge($_GET,$_POST);
 

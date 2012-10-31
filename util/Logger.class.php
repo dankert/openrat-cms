@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,24 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.5  2007-11-08 21:32:06  dankert
-// Aktion-Name mitloggen.
-//
-// Revision 1.4  2004/11/10 22:50:37  dankert
-// Benutzen von Konstanten zur Performancesteigerung
-//
-// Revision 1.3  2004/10/04 19:57:17  dankert
-// Bugfix und trace()
-//
-// Revision 1.2  2004/05/02 15:04:16  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.1  2004/04/24 17:03:28  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 switch( strtolower($conf['log']['level']) )

@@ -1,7 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// DaCMS Content Management System
-// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
+// OpenRat Content Management System
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -16,17 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.2  2004-12-15 23:20:04  dankert
-// aufgeraeumt
-//
-// Revision 1.1  2004/05/02 19:27:22  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 $conf_logfile     = $conf['log']['file'];

@@ -1,9 +1,6 @@
 <?php
-// ---------------------------------------------------------------------------
-// $Id$
-// ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2002-2004 Jan Dankert, cms@jandankert.de
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,72 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.12  2009-03-22 21:13:22  dankert
-// Rechte-Seite auch für Nicht-Ordner editierbar, damit Rechte löschbar sind.
-//
-// Revision 1.11  2009-03-19 04:36:42  dankert
-// Neue Methode "inherit()".
-//
-// Revision 1.10  2009-03-19 02:02:43  dankert
-// Keine ererbten Rechte anzeigen.
-//
-// Revision 1.9  2009-03-06 13:00:40  dankert
-// Zeichenketten 'action' und 'subaction' durch Konstanten ersetzt.
-//
-// Revision 1.8  2007-11-09 20:41:51  dankert
-// Hinweismeldungen setzen.
-//
-// Revision 1.7  2007-10-29 23:29:17  dankert
-// Konstanten f?r Request-Variablen.
-//
-// Revision 1.6  2006/01/29 17:25:07  dankert
-// Methode setWindowMenu() entfernt
-//
-// Revision 1.5  2006/01/23 23:10:46  dankert
-// *** empty log message ***
-//
-// Revision 1.4  2004/12/19 14:56:33  dankert
-// Abfrage von Rechten
-//
-// Revision 1.3  2004/11/28 19:25:38  dankert
-// Anpassen an neue Sprachdatei-Konventionen
-//
-// Revision 1.2  2004/11/28 16:55:20  dankert
-// Berechtigungen f?r "alle" hinzufuegen
-//
-// Revision 1.1  2004/11/27 13:08:22  dankert
-// Neu: Beinhaltet objekt?bergreifende Methoden. Die Klassen File,Page,Link und Folder erben nun von dieser Klasse
-//
-// Revision 1.9  2004/11/10 22:36:16  dankert
-// Dateioperationen, Verschieben/Kopieren/Verknuepfen von mehreren Objekten in einem Arbeitsschritt
-//
-// Revision 1.8  2004/10/14 22:57:44  dankert
-// Neue Verknuepfungen mit dem Linknamen als Url vorbelegen
-//
-// Revision 1.7  2004/10/13 21:18:50  dankert
-// Neue Links zum Verschieben nach ganz oben/unten
-//
-// Revision 1.6  2004/05/07 21:30:59  dankert
-// Korrektur up_url
-//
-// Revision 1.5  2004/05/07 21:29:16  dankert
-// Url ?ber Html::url erzeugen
-//
-// Revision 1.4  2004/05/02 14:49:37  dankert
-// Einf?gen package-name (@package)
-//
-// Revision 1.3  2004/04/28 20:01:52  dankert
-// Ordner l?schen erm?glichen
-//
-// Revision 1.2  2004/04/24 16:57:13  dankert
-// Korrektur: pub()
-//
-// Revision 1.1  2004/04/24 15:14:52  dankert
-// Initiale Version
-//
-// ---------------------------------------------------------------------------
 
 
 /**

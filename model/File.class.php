@@ -1,6 +1,6 @@
 <?php
 // OpenRat Content Management System
-// Copyright (C) 2002-2009 Jan Dankert, jandankert@jandankert.de
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -73,7 +73,7 @@ class File extends Object
 	 */
 	function File( $objectid='' )
 	{
-		global $conf,$SESS;
+		global $conf;
 		
 		$db = Session::getDatabase();
 		$this->storeValueAsBase64 = $db->conf['base64'];
