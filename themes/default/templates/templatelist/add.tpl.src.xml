@@ -1,3 +1,47 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><window name="GLOBAL_TEMPLATES" widths="10px,40px"><row><column colspan="2"><text text="message:name"></text></column><column><input name="name"></input></column></row><row><column colspan="3"><group title="message:options"></group></column></row><row><column><radio name="type" value="empty"></radio></column><column><label for="type_empty"><text key="empty"></text></label></column></row><row><column><radio name="type" value="copy"></radio></column><column><label for="type_copy"><text key="copy"></text></label></column><column><selectbox name="templateid" list="templates"></selectbox></column></row><row><column><radio name="type" value="example"></radio></column><column><label for="type_example"><text key="example"></text></label></column><column><selectbox name="example" list="examples"></selectbox></column></row><row><column colspan="3" class="act"><button type="ok"></button></column></row></window></form><focus field="name"></focus></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form>
+		<part class="line">
+			<part class="label" colspan="2">
+				<text text="message:name"></text>
+			</part>
+			<part class="input">
+				<input name="name"></input>
+			</part>
+		</part>
+		<group title="message:options">
+			<part class="line">
+				<part class="label">
+					<radio name="type" value="empty"></radio>
+				</part>
+				<part class="input">
+					<label for="type_empty">
+						<text key="empty"></text>
+					</label>
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="type_copy">
+						<text key="copy"></text>
+					</label>
+					<radio name="type" value="copy"></radio>
+				</part>
+				<part class="input">
+					<selectbox name="templateid" list="templates"></selectbox>
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="type_example">
+						<text key="example"></text>
+					</label>
+					<radio name="type" value="example"></radio>
+				</part>
+				<part class="input">
+					<selectbox name="example" list="examples"></selectbox>
+				</part>
+			</part>
+		</group>
+	</form>
+</output>
