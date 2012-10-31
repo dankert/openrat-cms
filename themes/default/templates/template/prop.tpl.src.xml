@@ -1,4 +1,47 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header views="name,extension,pages"></header>
+	<header views="extension"></header>
+	<form>
+		<part class="line">
+			<part class="label">
+				<text text="TEMPLATE_NAME"></text>
+			</part>
+			<part class="input">
+				<input name="name"></input>
+			</part>
+		</part>
+		<group></group>
+
+		<part class="line">
+			<part class="label">
+				<text key="file_extension"></text>
+			</part>
+			<part class="input">
+				<link type="view" subaction="extension">
+					<part class="inputholder">
+						<text var="extension"></text>
+					</part>
+				</link>
+				<part class="clickable">
+					<link class="action" type="view" subaction="extension">
+						<text key="edit"></text>
+					</link>
+				</part>
+			</part>
+		</part>
+
+		<part class="line">
+			<part class="label">
+				<text key="file_mimetype"></text>
+			</part>
+			<part class="input">
+				<link action="template" subaction="extension">
+					<part class="inputholder">
+						<text var="mime_type"></text>
+					</part>
+				</link>
+			</part>
+		</part>
+
+	</form>
 </output>

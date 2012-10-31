@@ -1,10 +1,9 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header back="true"></header>
 	<table>
 		<row class="headline">
 			<column>
-				<text key="name"></text>
+				<text key="pages"></text>
 			</column>
 		</row>
 		<list list="pages" value="name" key="pageid">

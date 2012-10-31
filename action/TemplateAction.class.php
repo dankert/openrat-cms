@@ -112,7 +112,7 @@ class TemplateAction extends Action
 
 	// Speichern der Template-Eigenschaftens
 	//
-	function namePost()
+	function propPost()
 	{
 		
 		if	($this->getRequestVar('name') == "")
@@ -158,7 +158,7 @@ class TemplateAction extends Action
 	/**
 	 * Anzeigen aller Seiten der Vorlage.
 	 */
-	function pagesView()
+	function infoView()
 	{
 		$pages = array();
 		$pageids = $this->template->getDependentObjectIds();
@@ -238,16 +238,10 @@ class TemplateAction extends Action
 
 
 	
-	function propView()
-	{
-	}
-	
-	
-	
 	/**
 	 * Eigenschaften einer Vorlage anzeigen
 	 */
-	function nameView()
+	function propView()
 	{
 		$this->setTemplateVar('name'     ,$this->template->name       );
 		$this->setTemplateVar('extension',$this->template->extension  );
