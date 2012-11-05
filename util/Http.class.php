@@ -526,6 +526,27 @@ HTML;
 		$httpAccept = getenv('HTTP_ACCEPT');
 		return $types = explode(',',$httpAccept);
 	}
+	
+	
+	public static function getClientIP()
+	{
+		$ip = '';
+		
+		if ( isset($_SERVER["REMOTE_ADDR"]) )
+		{
+			$ip = $_SERVER["REMOTE_ADDR"];
+		}
+		elseif ( isset($_SERVER["HTTP_X_FORWARDED_FOR"]) )
+		{
+			$ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+		}
+		elseif ( isset($_SERVER["HTTP_CLIENT_IP"]) )
+		{
+			$ip = $_SERVER["HTTP_CLIENT_IP"];
+		}
+		
+		return $ip;
+	}
 }
 
 ?>
