@@ -730,6 +730,11 @@ $conf['security']['auth']['userdn']=false;
 $conf['security']['authorize'] = array();
 $conf['security']['authorize']['type']='database';
 $conf['security']['authorize']['type']='ldap';
+$conf['security']['modules']['autologin']='ident,guest,SingleSignon';
+$conf['security']['modules']['preselect']='cookie';
+$conf['security']['modules']['select']='SSL';
+$conf['security']['modules']['authenticate']='Internal,';
+
 $conf['security']['password'] = array();
 $conf['security']['password']['random_length']='8';
 $conf['security']['password']['min_length']='6';
