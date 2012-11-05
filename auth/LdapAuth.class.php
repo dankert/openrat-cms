@@ -220,7 +220,13 @@ SQL
 
 		// Benutzername nicht in Datenbank.
 		return false;
-	}	
+	}
+
+	public function username()
+	{
+		return null;
+	}
+	
 }
 
 ?>

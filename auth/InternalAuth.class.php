@@ -46,6 +46,11 @@ SQL
 			return false;
 		}
 	}
+	
+	public function username()
+	{
+		return null;
+	}
 }
 
 ?>

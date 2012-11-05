@@ -27,6 +27,12 @@ class DatabaseAuth implements Auth
 		
 		return $ok;
 	}
+	
+	public function username()
+	{
+		return null;
+	}
+
 }
 
 ?>
