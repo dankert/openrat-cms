@@ -20,7 +20,7 @@ class IdentAuth implements Auth
 			return null;
 		}
 		
-		$line = $port.','.'80'."\r\n";
+		$line = $port.','.$_SERVER['SERVER_PORT']."\r\n";
 		@fwrite($socket, $line);
 		$line = @fgets($socket, 1000); // 1000 octets according to RFC 1413
 		fclose($socket);
@@ -30,6 +30,8 @@ class IdentAuth implements Auth
 		{
 			if	( isset($array[3]) )
 				return trim($array[3]);
+			else
+				Logger::warn('Ident: Invalid ident server response: '.$line);
 			
 			return null;
 		}
@@ -37,6 +39,9 @@ class IdentAuth implements Auth
 		{
 			if	( isset($array[2]) )
 				Logger::warn('Ident: '.trim($array[2]) );
+			else
+				Logger::warn('Ident: Invalid ident server response: '.$line);
+				
 			return null;
 		}
 		else
