@@ -10,11 +10,40 @@
  */
 class IdentAuth implements Auth
 {
-
 	public function username()
 	{
-		// TODO: Ident.
-		return null;
+		$ip   = Http::getClientIP();
+		$port = 113;
+		
+		if ( !$socket = @fsockopen($ip,$port,$errno, $errstr,10 ))
+		{
+			return null;
+		}
+		
+		$line = $port.','.'80'."\r\n";
+		@fwrite($socket, $line);
+		$line = @fgets($socket, 1000); // 1000 octets according to RFC 1413
+		fclose($socket);
+		
+		$array = explode(':', $string, 4);
+		if (count($array) > 1 && ! strcasecmp(trim($array[1]), 'USERID'))
+		{
+			if	( isset($array[3]) )
+				return trim($array[3]);
+			
+			return null;
+		}
+		elseif (count($array) > 1 && ! strcasecmp(trim($array[1]), 'ERROR'))
+		{
+			if	( isset($array[2]) )
+				Logger::warn('Ident: '.trim($array[2]) );
+			return null;
+		}
+		else
+		{
+			Logger::warn('Ident: Invalid ident server response: '.$line);
+			return null;		
+		}
 	}
 	
 	
