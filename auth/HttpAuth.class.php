@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * HTTP-Authentifzierung.
+ * Das vom Benutzer eingegebene Kennwort wird gegen eine HTTP-Adresse
+ * geprüft, bei der HTTP-Auth aktiviert ist.
+ *  
+ * @author dankert
+ */
 class HttpAuth implements Auth
 {
 
-	function username()
+	public function username()
 	{
 		return null;
 	}
@@ -17,7 +24,7 @@ class HttpAuth implements Auth
 	 * - ein LDAP-Dn ("distinghished-name") vorhanden ist, dann Pruefung ueber den LDAP-Server,
 	 * - sonst ueber die Benutzertabelle in der Datenbank.
 	 */
-	function login( $user, $password )
+	public function login( $user, $password )
 	{
 		global $conf;
 		
