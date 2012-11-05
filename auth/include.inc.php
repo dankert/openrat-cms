@@ -1,12 +1,12 @@
 <?php
 
 require_once( OR_AUTHCLASSES_DIR."Auth.class.".PHP_EXT );
-require_once( OR_AUTHCLASSES_DIR."Database.class.".PHP_EXT );
-require_once( OR_AUTHCLASSES_DIR."Http.class.".PHP_EXT );
-require_once( OR_AUTHCLASSES_DIR."Ident.class.".PHP_EXT );
-require_once( OR_AUTHCLASSES_DIR."Internal.class.".PHP_EXT );
-require_once( OR_AUTHCLASSES_DIR."Ldap.class.".PHP_EXT );
-require_once( OR_AUTHCLASSES_DIR."OpenId.class.".PHP_EXT );
-require_once( OR_AUTHCLASSES_DIR."Personas.class.".PHP_EXT );
+require_once( OR_AUTHCLASSES_DIR."DatabaseAuth.class.".PHP_EXT );
+require_once( OR_AUTHCLASSES_DIR."HttpAuth.class.".PHP_EXT );
+require_once( OR_AUTHCLASSES_DIR."IdentAuth.class.".PHP_EXT );
+require_once( OR_AUTHCLASSES_DIR."InternalAuth.class.".PHP_EXT );
+require_once( OR_AUTHCLASSES_DIR."LdapAuth.class.".PHP_EXT );
+require_once( OR_AUTHCLASSES_DIR."OpenIdAuth.class.".PHP_EXT );
+require_once( OR_AUTHCLASSES_DIR."PersonasAuth.class.".PHP_EXT );
 
 ?>
