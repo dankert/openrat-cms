@@ -415,6 +415,21 @@ class UserAction extends Action
 		
 		return true;
 	}
+
 	
+	/**
+	 * Wechselt zu einem ausgewählten User.
+	 */
+	public function switchPost()
+	{
+		// User laden...
+		$user = new User( $this->getRequestId() );
+		$user->load();
+		
+		// Und in der Sitzung speichern.
+		Session::setUser( $user );
+		
+		$this->refresh();
+	}
 				
 }

@@ -27,8 +27,8 @@
 						<text raw=")"></text>
 					</if>
 				</column>
-				<column>
-					<link target="_top" action="index" subaction="switchuser" id="var:userid">
+				<column class="clickable">
+					<link type="post" action="user" subaction="switch" id="var:userid">
 						<text key="LOGIN"></text>
 					</link>
 				</column>
