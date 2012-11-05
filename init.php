@@ -73,6 +73,7 @@ require_once( "functions/request.inc.php" );
 
 // Werkzeugklassen einbinden.
 require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
+require_once( OR_AUTHCLASSES_DIR."include.inc.".PHP_EXT );
 
 // TODO: Muss aus Datenbank kommen!
 $charset = 'US-ASCII';
