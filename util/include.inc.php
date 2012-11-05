@@ -23,7 +23,7 @@ require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
 // Login
 //if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('index')) )
 {
-	require_once( OR_SERVICECLASSES_DIR."OpenId.class.".PHP_EXT );
+	require_once( OR_AUTHCLASSES_DIR."OpenId.class.".PHP_EXT );
 }
 
 // Veroeffentlichung

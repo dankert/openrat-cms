@@ -67,6 +67,7 @@ define('REQ_PARAM_DATABASE_ID'    ,'dbid'           );
 define('REQ_PARAM_TARGET'         ,'target'         );
 
 define('OR_SERVICECLASSES_DIR','./util/' );
+define('OR_AUTHCLASSES_DIR'   ,'./auth/' );
 
 require_once( "functions/request.inc.php" );
 
