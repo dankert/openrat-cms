@@ -67,11 +67,13 @@ define('REQ_PARAM_DATABASE_ID'    ,'dbid'           );
 define('REQ_PARAM_TARGET'         ,'target'         );
 
 define('OR_SERVICECLASSES_DIR','./util/' );
+define('OR_AUTHCLASSES_DIR'   ,'./auth/' );
 
 require_once( "functions/request.inc.php" );
 
 // Werkzeugklassen einbinden.
 require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
+require_once( OR_AUTHCLASSES_DIR."include.inc.".PHP_EXT );
 
 // TODO: Muss aus Datenbank kommen!
 $charset = 'US-ASCII';
