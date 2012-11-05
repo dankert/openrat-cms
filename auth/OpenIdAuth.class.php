@@ -5,8 +5,32 @@
  * Open-Id Authentisierung gem�� OpenId-Spezifikation 1.0.
  *
  */
-class OpenId
+class OpenIdAuth implements Auth
 {
+	function username()
+	{
+		return null;
+	}
+	
+	
+	function login( $username, $password )
+	{
+		return false;
+	}
+	
+	
+	function redirect()
+	{
+		$this->login2();
+		return $this->getRedirectUrl();
+	}
+	
+	
+	function checkToken()
+	{
+		$this->checkAuthentication();
+	}
+	
 	/**
 	 * Open-Id Server, an den die Authentisierungsanfrage gestellt wird.
 	 *
@@ -108,7 +132,7 @@ class OpenId
 	 *
 	 * @return boolean TRUE, wenn Identity ermittelt wurde.
 	 */
-	function login()
+	function login2()
 	{
 		if	( $this->provider != 'identity' ) 
 		{
