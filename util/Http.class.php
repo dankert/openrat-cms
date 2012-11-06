@@ -479,20 +479,20 @@ class Http
 		
 		$types = Http::getAccept();
 		
-		if	( sizeof($types)==1 && in_array('application/json',$types) )
+		if	( $_REQUEST['output']=='json' || sizeof($types)==1 && in_array('application/json',$types) )
 		{
 			header('Content-Type: application/json');
 			require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
 			$json = new JSON();
-			echo $json->encode( array('status'=>$status,'error'=>$text,'description'=>$message) );
+			echo $json->encode( array('status'=>$status,'error'=>$text,'description'=>$message,'reason'=>$reason) );
 		}
-		elseif	( sizeof($types)==1 && in_array('application/xml',$types) )
+		elseif	( $_REQUEST['output']=='xml' || sizeof($types)==1 && in_array('application/xml',$types) )
 		{
 			header('Content-Type: application/xml');
 			require_once( OR_SERVICECLASSES_DIR."XML.class.".PHP_EXT );
 			$xml = new XML();
 			$xml->root='error';
-			echo $xml->encode( array('status'=>$status,'error'=>$text,'description'=>$message) );
+			echo $xml->encode( array('status'=>$status,'error'=>$text,'description'=>$message,'reason'=>$reason) );
 		}
 		else
 		{
