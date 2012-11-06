@@ -102,6 +102,7 @@ class TemplatelistAction extends Action
 		{
 			case 'empty':
 
+				// Neues Template anlegen.
 				$template = new Template();
 				$template->add( $this->getRequestVar('name') );
 				$this->addNotice('template',$template->name,'ADDED','ok');
@@ -114,22 +115,46 @@ class TemplatelistAction extends Action
 				if	( $copy_templateid == 0 )
 				{
 					$this->addValidationError('templateid');
-					$this->callSubAction('add');
 					return;
 				}
-				
+
+				// Neues Template anlegen.
 				$template = new Template();
 				$template->add( $this->getRequestVar('name') );
 				$this->addNotice('template',$template->name,'ADDED','ok');
 
+				// Template kopieren.
 				$copy_template = new Template( $copy_templateid );
 				$copy_template->load();
+				$elementMapping = array();
 				foreach( $copy_template->getElements() as $element )
 				{
 					$element->load();
+					$oldelementId = $element->elementid;
 					$element->templateid = $template->templateid;
 					$element->add();
 					$element->save();
+					
+					$elementMapping[$oldelementId] = $element->elementid;
+				}
+				
+				$project = Session::getProject();
+				foreach( $project->getModelIds() as $modelid )
+				{
+					// Template laden
+					$copy_template->modelid = $modelid;
+					$copy_template->load();
+					
+					$template->modelid   = $modelid;
+					$src                 = $copy_template->src;
+					
+					// Elemente im Quelltext an die geänderten Element-Idn anpassen.
+					foreach( $elementMapping as $oldId=>$newId)
+						$src = str_replace('{{'.$oldId.'}}','{{'.$newId.'}}',$src);
+						
+					$template->src       = $src;
+					$template->extension = $copy_template->extension;
+					$template->save();
 				}
 				
 				$this->addNotice('template',$copy_template->name,'COPIED','ok');
@@ -138,6 +163,7 @@ class TemplatelistAction extends Action
 
 			case 'example':
 
+				// Neues Template anlegen.
 				$template = new Template();
 
 				$model = Session::getProjectModel();

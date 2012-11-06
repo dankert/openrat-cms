@@ -114,6 +114,9 @@ class Template
 		                ' WHERE id={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 		$row = $db->getRow( $sql );
+		
+		if	( empty($row) )
+			throw new ObjectNotFoundException("Template not found: ".$this->templateid);
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
@@ -129,6 +132,11 @@ class Template
 		{
 			$this->extension = $row['extension'];
 			$this->src       = $row['text'];
+		}
+		else
+		{
+			$this->extension = null;
+			$this->src       = null;
 		}
 		
 	}
@@ -158,7 +166,8 @@ class Template
 		$sql->setInt   ( 'modelid'       ,$this->modelid );
 
 		if	( intval($db->getOne($sql)) > 0 )
-		{		
+		{
+			// Vorlagen-Quelltext existiert für diese Varianten schon.
 			$sql = new Sql( 'UPDATE {t_templatemodel}'.
 			                '  SET extension={extension},'.
 			                '      text={src} '.
@@ -167,8 +176,10 @@ class Template
 		}
 		else
 		{
+			// Vorlagen-Quelltext wird für diese Varianten neu angelegt.
 			$sql = new Sql('SELECT MAX(id) FROM {t_templatemodel}');
 			$nextid = intval($db->getOne($sql))+1;
+
 			$sql = new Sql( 'INSERT INTO {t_templatemodel}'.
 			                '        (id,templateid,projectmodelid,extension,text) '.
 			                ' VALUES ({id},{templateid},{modelid},{extension},{src}) ');
