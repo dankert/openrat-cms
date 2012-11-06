@@ -20,7 +20,7 @@ SELECT * FROM {t_user}
  WHERE name={name}
 SQL
 		);
-		$sql->setString('name',$this->name);
+		$sql->setString('name',$username);
 	
 		$row_user = $db->getRow( $sql );
 
@@ -34,9 +34,9 @@ SQL
 			// Login nicht erfolgreich
 			return false;
 		}
-		elseif   ( $row_user['password'] == md5( $this->saltPassword($password) ) )
+		elseif   ( $row_user['password'] == md5( User::saltPassword($password) ) )
 		{
-			// Die Kennwort-Pr�fsumme stimmt mit dem aus der Datenbank �berein.
+			// Die Kennwort-Pruefsumme stimmt mit dem aus der Datenbank �berein.
 			// Juchuu, Login ist erfolgreich.
 			return true;
 		}

@@ -762,6 +762,50 @@ class LoginAction extends Action
 	}
 	
 	
+	/**
+	 * Synchronisiert die bisherigen Gruppen des Benutzers mit den Gruppen, die sich aus der Authentifzierung ergeben haben.
+	 * 
+	 * @param unknown_type $groups Einfaches Array von Gruppennamen.
+	 */
+	private function checkGroups($user, $groups)
+	{
+		if	( $groups == null )
+			return;
+
+		$oldGroups = $user->getGroups();
+		
+		foreach( $oldGroups as $id=>$name)
+		{
+			if	( !in_array($name,$groups) )
+				$user->delGroup($id);
+		}
+		
+		foreach( $groups as $name)
+		{
+			if	( ! in_array($name,$oldGroups))
+			{
+				try
+				{
+					$group = Group::loadWithName( $name );
+					$user->addGroup($group->groupid);
+				}
+				catch (ObjectNotFoundException $e)
+				{
+					// Gruppe fehlt. Anlegen?
+					if	( $conf['ldap']['authorize']['auto_add'] )
+					{
+						// Die Gruppe in der OpenRat-Datenbank hinzufuegen.
+						$g = new Group();
+						$g->name = $group;
+						$g->add(); // Gruppe hinzufuegen
+						$user->addGroup($g->groupid); // Und Gruppe dem Benutzer hinzufuegen.
+					}
+					
+				}
+			}
+		}
+	}
+
 	
 	/**
 	 * Login.
@@ -790,17 +834,22 @@ class LoginAction extends Action
 		$modules = explode(',',$conf['security']['modules']['authenticate']);
 		
 		$loginOk = false;
+		$groups  = null;
 		foreach( $modules as $module)
 		{
 			$moduleClass = $module.'Auth';
-			$auth    = new $moduleClass;
-			Logger::info('Trying a login with module '.$moduleClass);
+			$auth        = new $moduleClass;
+			Logger::info('Trying to login with module '.$moduleClass);
 			$loginOk = $auth->login( $loginName,$loginPassword );
 				
 			if	( $loginOk )
 			{
 				Logger::info('Login successful for '.$loginName);
-				break; // Login erfolgreich.
+				
+				if	( isset($auth->groups ) )
+					$groups = $auth->groups;
+					
+				break; // Login erfolgreich, erstes Modul gewinnt.
 			}
 		}
 		
@@ -809,7 +858,41 @@ class LoginAction extends Action
 		                              $loginPassword,
 		                              $newPassword1,
 		                              $newPassword2 );
-		*/                   
+		*/
+		
+		
+		if	( $loginOk )
+		{
+			try
+			{
+				// Benutzer über den Benutzernamen laden.
+				$user = User::loadWithName($loginName);
+				Session::setUser($user);
+			}
+			catch( ObjectNotFoundException $ex )
+			{
+				// Benutzer wurde zwar authentifiziert, ist aber in der
+				// internen Datenbank nicht vorhanden
+				if	( $conf['security']['newuser']['autoadd'] )
+				{
+					// Neue Benutzer in die interne Datenbank uebernehmen.
+					$user = new User();
+					$user->name     = $loginName;
+					$user->fullname = $loginName;
+					$user->add();
+					$user->save();
+				}
+				else
+				{
+	 				// Benutzer soll nicht angelegt werden.
+					// Daher ist die Anmeldung hier gescheitert.
+					$loginOk = false;
+				}				
+			}			
+		}
+		
+		
+		
 		if	( !$loginOk )
 		{
 			// Anmeldung nicht erfolgreich
@@ -838,9 +921,8 @@ class LoginAction extends Action
 		else
 		{
 			Logger::debug("Login successful for user '$loginName'");
-			
-			$user = User::loadWithName($loginName);			
-			Session::setUser($user);
+
+			$this->checkGroups( $user, $groups );	
 			
 			// Anmeldung erfolgreich.
 			if	( config('security','renew_session_login') )
@@ -926,6 +1008,12 @@ class LoginAction extends Action
 					Session::setProjectModel( $model );
 					
 					$this->setPerspective('normal');
+				}
+				else
+				{
+					// Benutzer hat noch nie eine Änderung durchgefuehrt.
+					// Erstmal die Startseite anzeigen.
+					$this->setPerspective('start');
 				}
 			}
 			

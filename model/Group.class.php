@@ -60,7 +60,7 @@ class Group
 	}
 
 
-	// Lesen Benutzer aus der Datenbank
+	// Lesen Gruppe aus der Datenbank
 	function load()
 	{
 		$db = db_connection();
@@ -74,6 +74,30 @@ class Group
 			$this->name = $row['name'    ];
 		else
 			$this->name = '';
+	}
+
+
+	// Lesen einer Gruppe aus der Datenbank
+	public static function loadWithName( $name )
+	{
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT * FROM {t_group}'.
+		                ' WHERE name={name}' );
+		$sql->setString('name',$name );
+
+		$row = $db->getRow( $sql );
+		if	( count($row) > 0 )
+		{
+			$group = new Group( $row['id'] );
+			$group->load();
+			
+			return $group;
+		}
+		else
+		{
+			throw new ObjectNotFoundException( "Group does not exist: ".$name);
+		}
 	}
 
 

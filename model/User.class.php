@@ -38,7 +38,7 @@ class User
 	var $desc;
 	var $style;
 	var $isAdmin;
-	var $projects;
+	var $projects  = array();
 	var $rights;
 	var $loginDate = 0;
 	
@@ -822,7 +822,12 @@ SQL
 	}
 
 
-	// Benutzer einer Gruppe hinzufuegen
+	
+	/**
+	 * Benutzer zu einer Gruppe hinzufuegen.
+	 * 
+	 * @param groupid die Gruppen-Id
+	 */
 	function addGroup( $groupid )
 	{
 		$db = db_connection();
@@ -842,7 +847,12 @@ SQL
 	}
 
 
-	// Benutzer aus Gruppe entfernen
+	
+	/**
+	 * Benutzer aus Gruppe entfernen.
+	 * 
+	 * @param groupid die Gruppen-Id
+	 */
 	function delGroup( $groupid )
 	{
 		$db = db_connection();
@@ -1081,7 +1091,7 @@ SQL
 	 * @param Kennwort
 	 * @return Das gesalzene Kennwort
 	 */
-	function saltPassword( $pass )
+	public function saltPassword( $pass )
 	{
 		switch( config('security','password','salt') )
 		{

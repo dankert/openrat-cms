@@ -14,11 +14,16 @@ class DatabaseAuth implements Auth
 	public function login( $user, $password )
 	{
 		global $conf;
+		
+		$authDbConf = $conf['security']['authdb'];
+		
+		if	( ! $authDbConf['enable'] )
+			return false;
 
-		$authdb = new DB( $conf['security']['authdb'] );
+		$authdb = new DB( $authDbConf );
 		
 		$sql = new Sql( $conf['security']['authdb']['sql'] );
-		$sql->setString('username',$this->name);
+		$sql->setString('username',$user    );
 		$sql->setString('password',$password);
 		$row = $authdb->getRow( $sql );
 		$ok = !empty($row);
