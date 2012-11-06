@@ -269,7 +269,7 @@ function registerViewEvents( viewEl )
 	else
 		$formInput.addClass('invisible');
 
-	if ( $('div.window form input[type=password]').length>0 )
+	if ( $('div.window form input[type=password]').length>0 && $('#uname').attr('value')!='' )
 	{
 		$('div.window form input[name=login_name]    ').attr('value',$('#uname'    ).attr('value'));
 		$('div.window form input[name=login_password]').attr('value',$('#upassword').attr('value'));

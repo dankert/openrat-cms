@@ -186,6 +186,7 @@ class LoginAction extends Action
 	function loginView()
 	{
 		global $conf;
+		
 		$sso = $conf['security']['sso'];
 		$ssl = $conf['security']['ssl'];
 		
@@ -352,6 +353,26 @@ class LoginAction extends Action
 				
 		$this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
 		$this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
+		
+		// Versuchen, einen Benutzernamen zu ermitteln, der im Eingabeformular vorausgewählt wird.
+		$modules = explode(',',$conf['security']['modules']['preselect']);
+		
+		$username = '';
+		foreach( $modules as $module)
+		{
+			Logger::debug('Preselecting module: '.$module);
+			$moduleClass = $module.'Auth';
+			$auth = new $moduleClass;
+			$username = $auth->username();
+				
+			if	( !empty($username) )
+			{
+				Logger::debug('Preselecting User '.$username);
+				break; // Benutzername gefunden.
+			}
+		}
+		
+		$this->setTemplateVar('login_name',$username);
 	}
 	
 	
@@ -409,6 +430,7 @@ class LoginAction extends Action
 		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,OR_FILTER_NUMBER) );
 		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,OR_FILTER_NUMBER) );
 		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',OR_FILTER_NUMBER) );
+		
 	}
 	
 
@@ -760,18 +782,32 @@ class LoginAction extends Action
 		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
 		
 		// Cookie setzen
-		setcookie('or_username',$loginName,time()+(60*60*24*30*12*2) );
-		setcookie('or_dbid',$this->getRequestVar('dbid'),time()+(60*60*24*30*12*2) );
-		
-		// Ermitteln, ob der Baum angezeigt werden soll
-		// Ist die Breite zu klein, dann wird der Baum nicht angezeigt
-		//Session::set('showtree',intval($this->getRequestVar('screenwidth')) > $conf['interface']['min_width'] );
+		$cookieLifetime = 60*60*24*30*12*2; // 2 Jahre.
+		setcookie('or_username',$loginName                  ,time()+$cookieLifetime );
+		setcookie('or_dbid'    ,$this->getRequestVar('dbid'),time()+$cookieLifetime );
 
+		// Authentifzierung.
+		$modules = explode(',',$conf['security']['modules']['authenticate']);
+		
+		$loginOk = false;
+		foreach( $modules as $module)
+		{
+			$moduleClass = $module.'Auth';
+			$auth    = new $moduleClass;
+			$loginOk = $auth->login( $loginName,$loginPassword );
+				
+			if	( $loginOk )
+				break; // Login erfolgreich.
+		}
+		
+		$this->setTemplateVar('login_name',$username);
+		
+		/*
 		$loginOk = $this->checkLogin( $loginName,
 		                              $loginPassword,
 		                              $newPassword1,
 		                              $newPassword2 );
-		                   
+		*/                   
 		if	( !$loginOk )
 		{
 			// Anmeldung nicht erfolgreich

@@ -13,9 +13,9 @@ class IdentAuth implements Auth
 	public function username()
 	{
 		$ip   = Http::getClientIP();
-		$port = 113;
-		
-		if ( !$socket = @fsockopen($ip,$port,$errno, $errstr,10 ))
+		$port = Http::getClientPort();
+		$identPort = 113;
+		if ( !$socket = @fsockopen($ip,$identPort,$errno, $errstr,10 ))
 		{
 			return null;
 		}
@@ -25,23 +25,16 @@ class IdentAuth implements Auth
 		$line = @fgets($socket, 1000); // 1000 octets according to RFC 1413
 		fclose($socket);
 		
-		$array = explode(':', $string, 4);
-		if (count($array) > 1 && ! strcasecmp(trim($array[1]), 'USERID'))
+		$array = explode(':', $line, 4);
+		if (count($array) >= 4 && ! strcasecmp(trim($array[1]), 'USERID'))
 		{
-			if	( isset($array[3]) )
-				return trim($array[3]);
-			else
-				Logger::warn('Ident: Invalid ident server response: '.$line);
-			
-			return null;
+			$username = trim($array[3]);
+			Logger::debug('Ident: User-Id: '.$username );
+			return $username;
 		}
-		elseif (count($array) > 1 && ! strcasecmp(trim($array[1]), 'ERROR'))
+		elseif (count($array) >= 3 && ! strcasecmp(trim($array[1]), 'ERROR'))
 		{
-			if	( isset($array[2]) )
-				Logger::warn('Ident: '.trim($array[2]) );
-			else
-				Logger::warn('Ident: Invalid ident server response: '.$line);
-				
+			Logger::debug('Ident: Error: '.trim($array[2]) );
 			return null;
 		}
 		else

@@ -730,10 +730,15 @@ $conf['security']['auth']['userdn']=false;
 $conf['security']['authorize'] = array();
 $conf['security']['authorize']['type']='database';
 $conf['security']['authorize']['type']='ldap';
-$conf['security']['modules']['autologin']='ident,guest,SingleSignon';
-$conf['security']['modules']['preselect']='cookie';
-$conf['security']['modules']['select']='SSL';
-$conf['security']['modules']['authenticate']='Internal,';
+
+$conf['security']['modules'] = array();
+$conf['security']['modules']['autologin']='Guest,SingleSignon';
+$conf['security']['modules']['preselect']='Ident,SSL,Cookie';
+$conf['security']['modules']['authenticate']='LdapUserDN,Database,Internal';
+
+$conf['security']['newuser'] = array();
+$conf['security']['newuser']['autoadd'] = true;
+$conf['security']['newuser']['autogroups'] = "";
 
 $conf['security']['password'] = array();
 $conf['security']['password']['random_length']='8';
@@ -785,8 +790,6 @@ $conf['security']['sso']['force']=true;
 $conf['security']['sso']['expect']='0';
 $conf['security']['sso']['expect_regexp']="/running on/";
 $conf['security']['sso']['username_regexp']="/running on localhost as ([a-z]+)@localhost/";
-$conf['security']['newuser'] = array();
-$conf['security']['newuser']['groups']="YourGroup,AnotherGroup";
 $conf['security']['logout'] = array();
 $conf['security']['logout']['redirect_url']="http://your.intranet.example/";
 $conf['security']['logout']['redirect_url']='0';

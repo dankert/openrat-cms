@@ -547,6 +547,20 @@ HTML;
 		
 		return $ip;
 	}
+	
+	
+	
+	public static function getClientPort()
+	{
+		$ip = '';
+		
+		if ( isset($_SERVER["REMOTE_PORT"]) )
+		{
+			$ip = $_SERVER["REMOTE_PORT"];
+		}
+		
+		return $ip;
+	}
 }
 
 ?>
