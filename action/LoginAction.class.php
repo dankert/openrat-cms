@@ -794,13 +794,15 @@ class LoginAction extends Action
 		{
 			$moduleClass = $module.'Auth';
 			$auth    = new $moduleClass;
+			Logger::info('Trying a login with module '.$moduleClass);
 			$loginOk = $auth->login( $loginName,$loginPassword );
 				
 			if	( $loginOk )
+			{
+				Logger::info('Login successful for '.$loginName);
 				break; // Login erfolgreich.
+			}
 		}
-		
-		$this->setTemplateVar('login_name',$username);
 		
 		/*
 		$loginOk = $this->checkLogin( $loginName,
@@ -812,6 +814,7 @@ class LoginAction extends Action
 		{
 			// Anmeldung nicht erfolgreich
 			sleep(3);
+			Logger::debug("Login failed for user '$loginName'");
 			
 			if	( $this->mustChangePassword )
 			{
@@ -828,7 +831,6 @@ class LoginAction extends Action
 				$this->addValidationError('login_password','');
 			}
 
-			Logger::debug("Login failed for user '$loginName'");
 			
 			//$this->callSubAction('login');
 			return;
@@ -837,11 +839,13 @@ class LoginAction extends Action
 		{
 			Logger::debug("Login successful for user '$loginName'");
 			
+			$user = User::loadWithName($loginName);			
+			Session::setUser($user);
+			
 			// Anmeldung erfolgreich.
 			if	( config('security','renew_session_login') )
 				$this->recreateSession();
 			
-			$user = Session::getUser();
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
 			
 			$this->setStyle( $user->style );

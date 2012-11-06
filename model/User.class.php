@@ -225,7 +225,7 @@ SQL
 	 * @static 
 	 * @param name Benutzername
 	 */
-	function loadWithName( $name )
+	public static function loadWithName( $name )
 	{
 		global $conf;
 		$db = db_connection();

@@ -5,7 +5,7 @@
  * 
  * @author Jan Dankert
  */
-class LdapAuth implements Auth
+class LdapUserDNAuth implements Auth
 {
 
 	/**
@@ -22,7 +22,7 @@ SELECT * FROM {t_user}
  WHERE name={name}
 SQL
 		);
-		$sql->setString('name',$this->name);
+		$sql->setString('name',$username);
 	
 		$row_user = $db->getRow( $sql );
 		
@@ -42,7 +42,7 @@ SQL
 		
 		// Benutzer ist bereits in Datenbank
 		// LDAP-Login mit dem bereits vorhandenen DN versuchen
-		$ok = $ldap->bind( $this->ldap_dn, $password );
+		$ok = $ldap->bind( $ldap_dn, $password );
 		
 		// Verbindung zum LDAP-Server brav beenden
 		$ldap->close();
