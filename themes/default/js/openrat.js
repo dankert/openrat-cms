@@ -817,7 +817,28 @@ function formSubmit(form)
 			error:function(jqXHR, textStatus, errorThrown) {
 				$(form).closest('div.content').removeClass('loader');
 				$(status).find('div.loader').remove();
-				alert( 'OpenRat: Error while performing the POST request: ' + errorThrown );
+				
+				var msg;
+				try
+				{
+					var error = jQuery.parseJSON( jqXHR.responseText );
+					msg = error.error + '/' + error.description + ': ' + error.reason;
+				}
+				catch( e )
+				{
+					msg = jqXHR.responseText;
+				}
+				
+				// Notice-Bar mit dieser Meldung erweitern.
+				var notice = $('<div class="notice error"><div class="text">'+msg+'</div></div');
+				$('#noticebar').prepend(notice); // Notice anhängen.
+				
+				// Per Klick wird die Notice entfernt.
+				$(notice).fadeIn().click( function()
+				{
+					$(this).fadeOut('fast',function() { $(this).remove(); } );
+				} );
+				
 			}
 			
 		} );
