@@ -11,6 +11,7 @@ class GuestAuth implements Auth
 {
 	public function username()
 	{
+		global $conf;
 		$guestConf = $conf['security']['guest'];
 			
 		if	( $guestConf['enable'] )
