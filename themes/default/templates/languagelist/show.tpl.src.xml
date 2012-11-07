@@ -17,15 +17,17 @@
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<column id="var:id" name="var:name" action="language">
+				<column class="clickable">
 					<image file="icon_language"></image>
-					<text var="name" maxlength="25"></text>
+						<link type="open" name="var:name" action="language" id="var:id">
+							<text var="name" maxlength="25"></text>
+						</link>
 				</column>
 				<column>
 					<text var="isocode"></text>
 				</column>
 				<if present="default_url">
-					<column>
+					<column class="clickable">
 						<link type="post" action="language" subaction="setdefault" id="var:id">
 							<text text="GLOBAL_make_default"></text>
 						</link>
@@ -33,11 +35,11 @@
 				</if>
 				<else>
 					<column>
-						<text text="GLOBAL_is_default"></text>
+						<text text="GLOBAL_is_default" type="emphatic" />
 					</column>
 				</else>
 				<if present="select_url">
-					<column>
+					<column class="clickable">
 						<link type="post" action="start" subaction="language" id="var:id">
 							<text text="GLOBAL_select"></text>
 						</link>
@@ -45,7 +47,7 @@
 				</if>
 				<else>
 					<column>
-						<text text="GLOBAL_selected"></text>
+						<text text="GLOBAL_selected" type="emphatic" />
 					</column>
 				</else>
 			</row>

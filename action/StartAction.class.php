@@ -945,7 +945,7 @@ class StartAction extends Action
 		$user = Session::getUser();
 		if   ( ! is_object($user) )
 		{
-			$this->callSubAction('show');
+			Http::serverError('No user in session');
 			return;
 		}
 		
@@ -963,8 +963,6 @@ class StartAction extends Action
 		}
 		
 		$this->evaluateRequestVars( array(REQ_PARAM_MODEL_ID=>$this->getRequestId()) );
-
-		$user     = Session::getUser();
 	}
 	
 
@@ -1004,7 +1002,7 @@ class StartAction extends Action
 		{
 			$object = new Object( $vars[REQ_PARAM_OBJECT_ID] );
 			$object->objectLoadRaw();
-			Session::setObject( $object );
+			// Session::setObject( $object ); // Unnötig
 	
 			$project = new Project( $object->projectid );
 			$project->load();
@@ -1036,16 +1034,6 @@ class StartAction extends Action
 				Session::setProjectModel( $model );
 			}
 	
-			$object = Session::getObject();
-			if	( is_object($object) && $object->projectid == $project->projectid )
-			{
-				$object->objectLoadRaw();
-				Session::setObject( $object );
-			}
-			else
-			{
-				Session::setObject( '' );
-			}
 		}
 		elseif	( isset($vars[REQ_PARAM_MODEL_ID]) && Model::available($vars[REQ_PARAM_MODEL_ID]) )
 		{
@@ -1064,18 +1052,6 @@ class StartAction extends Action
 				$language->load();
 				Session::setProjectLanguage( $language );
 			}
-	
-			$object = Session::getObject();
-			$object->objectLoadRaw();
-			if	( is_object($object) && $object->projectid == $project->projectid )
-			{
-				$object->objectLoadRaw();
-				Session::setObject( $object );
-			}
-			else
-			{
-				Session::setObject( '' );
-			}
 		}
 		elseif	( isset($vars[REQ_PARAM_PROJECT_ID])&&Project::available($vars[REQ_PARAM_PROJECT_ID]) )
 		{
@@ -1091,17 +1067,6 @@ class StartAction extends Action
 			$model = new Model( isset($vars[REQ_PARAM_MODEL_ID])&& Model::available($vars[REQ_PARAM_MODEL_ID])?$vars[REQ_PARAM_MODEL_ID]:$project->getDefaultModelId() );
 			$model->load();
 			Session::setProjectModel( $model );
-	
-			$object = Session::getObject();
-			if	( is_object($object) && $object->projectid == $project->projectid )
-			{
-				$object->objectLoadRaw();
-				Session::setObject( $object );
-			}
-			else
-			{
-				Session::setObject( '' );
-			}
 		}
 	}
 

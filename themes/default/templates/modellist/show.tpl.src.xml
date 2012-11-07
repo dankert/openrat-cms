@@ -14,13 +14,16 @@
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<column id="var:id" name="var:name" action="model">
-						<image file="icon_model"></image>
+				<column class="clickable">
+					<image file="icon_model"></image>
+
+					<link type="open" name="var:name" action="model" id="var:id">
 						<text var="name" maxlength="25"></text>
+					</link>
 				</column>
 
 				<if present="default_url">
-					<column>
+					<column class="clickable">
 						<link type="post" action="model" subaction="setdefault" id="var:id">
 							<text text="GLOBAL_make_default"></text>
 						</link>
@@ -28,13 +31,13 @@
 				</if>
 				<else>
 					<column>
-						<text text="GLOBAL_is_default"></text>
+						<text text="GLOBAL_is_default" type="emphatic" />
 					</column>
 				</else>
 
 
 				<if present="select_url">
-					<column>
+					<column class="clickable">
 						<link type="post" action="start" subaction="model" id="var:id">
 							<text text="GLOBAL_select"></text>
 						</link>
@@ -42,7 +45,7 @@
 				</if>
 				<else>
 					<column>
-						<text text="GLOBAL_selected"></text>
+						<text text="GLOBAL_selected" type="emphatic" />
 					</column>
 				</else>
 			</row>
@@ -50,10 +53,10 @@
 			<set var="default_url"></set>
 		</list>
 		<row class="data">
-			<column colspan="3">
+			<column colspan="3" class="clickable">
 				<link type="view" subaction="add">
-					<image icon="add"/>
-					<text text="new"/>
+					<image icon="add" />
+					<text text="new" />
 				</link>
 			</column>
 		</row>
