@@ -31,17 +31,6 @@ class WorkbenchAction extends Action
 	{
 		global $conf;
 		global $preselectedobjects;
-		if	( empty($this->perspective) )
-		{
-			$guestConf = $conf['security']['guest'];
-			
-			if	( $guestConf['enable'] )
-				$this->perspective = 'start';
-			else
-				$this->perspective = 'login';
-			
-			Session::set('perspective',$this->perspective);
-		}
 
 		
 		$preselectedobjects = array();;
@@ -70,6 +59,8 @@ class WorkbenchAction extends Action
 		}
 		
 		global $viewconfig;
+		
+		Logger::debug('Workbench is using perspektive: '.$this->perspective);
 		$viewconfig = parse_ini_file('themes/default/layout/perspective/'.$this->perspective.'.ini.php',true);
 		
 		require_once('themes/default/layout/perspective/window.php');

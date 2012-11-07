@@ -1,7 +1,5 @@
 <?php  ?>
 
-icons=projectlist,userlist,grouplist,configuration
-
 [tree]
 
 views=tree
@@ -20,7 +18,7 @@ default=edit
 
 [side]
 
-views=memberships,info
+views=memberships
 action=project
 refreshable=true
 default=memberships
