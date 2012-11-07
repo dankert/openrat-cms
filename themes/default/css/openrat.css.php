@@ -1663,7 +1663,7 @@ div#title
 body
 {
 	xxxbackground-color:#c9c9c9;
-	background-color:<?php echo $_GET['background-color'] ?>;
+	background-color:<?php echo $_GET['title_text_color'] ?>;
 }
 
 /* Fenster-Hintergrund */

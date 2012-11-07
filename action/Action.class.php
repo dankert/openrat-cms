@@ -475,8 +475,6 @@ class Action
 		// Wir arbeiten im HTML nur noch mit UTF-8.
 		$charset = 'UTF-8';
 			
-		$showDuration = $conf['interface']['show_duration'];
-
 		$subActionName = $this->subActionName;
 		$actionName    = $this->actionName;
 		$requestId     = $this->getRequestId();

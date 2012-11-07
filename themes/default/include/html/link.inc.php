@@ -19,7 +19,12 @@
 	#IF-ATTR class#
 	#ELSE
 		$attr_class='';
-	#END-IF	
+	#END-IF
+		
+	#IF-ATTR url#
+	#ELSE
+		$attr_url='';
+	#END-IF
 		
 	#IF-ATTR title#
 	#ELSE
