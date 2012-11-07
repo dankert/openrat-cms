@@ -166,8 +166,8 @@ try
 }
 catch( ObjectNotFoundException $e )
 {
-	Logger::warn( $e->__toString() );
-	Http::sendStatus(404,"Object not found","The requested object was not found." );
+	Logger::debug( "Object not found: ".$e->__toString() );
+	Http::noContent();
 }
 catch( Exception $e )
 {
@@ -229,8 +229,8 @@ else
 Logger::debug("Executing $actionClassName::$subactionMethodName");
 
 if	( ! method_exists($do,$subactionMethodName) )
-	Http::sendStatus(404,"Method not found","Method '".$subactionMethodName."' does not exist in this context" );
-
+	Http::noContent();
+	
 // Jetzt wird die Aktion aus der Actionklasse aufgerufen.
 try
 {
@@ -238,8 +238,8 @@ try
 }
 catch( ObjectNotFoundException $e )
 {
-	Logger::warn( $e->__toString() );
-	Http::sendStatus(404,"Object not found","The requested object was not found." );
+	Logger::debug( $e->__toString() ); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.
+	Http::noContent();
 }
 
 $do->forward();

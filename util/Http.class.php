@@ -456,6 +456,14 @@ class Http
 	{
 		Http::sendStatus(404,$text,$message);
 	}
+
+	
+	
+	public static function noContent()
+	{
+		header('HTTP/1.0 204 No Content');
+		exit;
+	}
 	
 	
 	
