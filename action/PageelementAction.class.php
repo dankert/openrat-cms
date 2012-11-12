@@ -59,15 +59,15 @@ class PageelementAction extends Action
 	{
 		$this->value = new Value();
 
-		$this->page = Session::getObject();
-
 		$id = $this->getRequestVar('id');
 		$ids = explode('_',$id);
 		if	( count($ids) > 1 )
-		list($pageid,$elementid)= $ids;
+		{
+			list( $pageid, $elementid ) = $ids;
+		}
 		else
 		{
-			$pageid = $this->getRequestId();
+			$pageid    = $this->getRequestId();
 			$elementid = $this->getRequestVar('elementid');
 		}
 
@@ -75,21 +75,12 @@ class PageelementAction extends Action
 		{
 			$this->page = new Page( $pageid );
 			$this->page->load();
-			Session::setObject( $this->page );
-		}
-		else
-		{
-			$this->page = Session::getObject();
 		}
 
 		if	( $elementid != 0 )
 		{
-			$this->element = new Element( $elementid );
-			Session::setElement( $this->element );
-		}
-		else
-		{
-			$this->element = Session::getElement();
+			$this->elementid = $elementid;
+			$this->element   = new Element( $elementid );
 		}
 	}
 
@@ -100,8 +91,8 @@ class PageelementAction extends Action
 	 */
 	public function propView()
 	{
-		Http::notFound("","");
-		exit();
+		Http::noContent();
+		
 		$language = Session::getProjectLanguage();
 		$this->value->languageid = $language->languageid;
 		$this->value->objectid   = $this->page->objectid;
@@ -717,6 +708,7 @@ class PageelementAction extends Action
 					$otherValue->languageid = $lid;
 					$otherValue->pageid     = $this->value->pageid;
 					$otherValue->element    = $this->value->element;
+					$otherValue->elementid  = $this->value->elementid;
 					$otherValue->publish    = $this->value->publish;
 					$otherValue->load();
 					$this->setTemplateVar('languagetext'   ,wordwrap($otherValue->text,100)  );
@@ -751,11 +743,23 @@ class PageelementAction extends Action
 
 
 		/**
-		 * Benutzen eines alten Inhaltes
+		 * Wiederherstellung eines alten Inhaltes.
 		 */
-		function usevalue()
+		public function usePost()
 		{
 			$this->value->valueid = $this->getRequestVar('valueid');
+			$this->value->loadWithId();
+			$this->value->element = new Element( $this->value->elementid );
+
+			if	( $this->value->pageid != $this->page->pageid )
+				Http::serverError( 'Cannot find value','page-id does not match' );
+
+			// Pruefen, ob Berechtigung zum Freigeben besteht
+			//$this->value->release = $this->page->hasRight(ACL_RELEASE);
+			$this->value->release = false;
+				
+			// Inhalt wieder herstellen, in dem er neu gespeichert wird.
+			$this->value->save();
 		}
 
 
@@ -763,17 +767,17 @@ class PageelementAction extends Action
 		/**
 		 * Freigeben eines Inhaltes
 		 */
-		function release()
+		public function releasePost()
 		{
 			$this->value->valueid = intval($this->getRequestVar('valueid'));
 			$this->value->loadWithId();
 
 			if	( $this->value->pageid != $this->page->pageid )
-			die( 'cannot release, bad page' );
+				die( 'cannot release, bad page' );
 
 			// Pruefen, ob Berechtigung zum Freigeben besteht
 			if	( !$this->page->hasRight(ACL_RELEASE) )
-			die( 'cannot release, no right' );
+				Http::notAuthorized( 'Cannot release','no right' );
 
 			// Inhalt freigeben
 			$this->value->release();
@@ -783,7 +787,7 @@ class PageelementAction extends Action
 		/**
 		 * Erzeugt eine Liste aller Versionsst?nde zu diesem Inhalt
 		 */
-		function archiveView()
+		public function archiveView()
 		{
 			$this->page->public = true;
 			$this->page->simple = true;
@@ -817,10 +821,12 @@ class PageelementAction extends Action
 				//				$version_list[ $value->valueid ] = '('.$lfd_nr.') '.$date;
 
 				$zeile = array(  'value'     => Text::maxLaenge( 50,$value->value),
+			                 'objectid'  => $this->page->objectid,	
 			                 'date'      => $value->lastchangeTimeStamp,	
-			                 'lfd_nr'    => $lfd_nr,	
+						     'lfd_nr'    => $lfd_nr,	
 			                 'id'        => $value->valueid,	
-			                 'user'      => $value->lastchangeUserName );
+			                 'valueid'   => $value->valueid,	
+						     'user'      => $value->lastchangeUserName );
 
 				// Nicht aktive Inhalte k�nnen direkt bearbeitet werden und sind
 				// nach dem Speichern dann wieder aktiv (nat�rlich als n�chster/neuer Inhalt) 

@@ -1,6 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<form method="get" subaction="diff" label="message:compare" cancel="false" visible="true">
+	<form method="get" subaction="diff" label="message:compare"
+		cancel="false" visible="true">
 		<table widths="5%,5%,5%,15%,15%,35%,10%,10%">
 			<row class="headline">
 				<column class="help">
@@ -10,7 +11,9 @@
 					<if present="compareid">
 						<text text="GLOBAL_COMPARE"></text>
 					</if>
-					<else><text raw="_" /></else>
+					<else>
+						<text raw="_" />
+					</else>
 				</column>
 				<column class="help">
 					<text text="DATE"></text>
@@ -44,13 +47,17 @@
 						<if present="compareid">
 							<radio name="compareid" value="var:id"></radio>
 						</if>
-						<else><text raw="_" /></else>
+						<else>
+							<text raw="_" />
+						</else>
 					</column>
 					<column>
 						<if present="compareid">
 							<radio name="withid" value="var:id"></radio>
 						</if>
-						<else><text raw="_" /></else>
+						<else>
+							<text raw="_" />
+						</else>
 					</column>
 					<column>
 						<date date="var:date"></date>
@@ -61,28 +68,45 @@
 					<column>
 						<text var="value"></text>
 					</column>
-					<column class="clickable">
-						<if true="var:public">
+					<if true="var:public">
+						<column>
 							<text key="GLOBAL_PUBLIC" type="strong"></text>
+						</column>
+					</if>
+					<else>
+						<if present="releaseUrl">
+							<column class="clickable">
+								<link type="post" subaction="release" var1="valueid"
+									value1="var:valueid" id="var:objectid" title="message:GLOBAL_RELEASE_DESC">
+									<text key="GLOBAL_RELEASE" type="strong"></text>
+								</link>
+							</column>
 						</if>
 						<else>
-						<if present="releaseUrl">
-						<link type="open" url="var:releaseUrl" title="message:GLOBAL_RELEASE_DESC">
-						<text key="GLOBAL_RELEASE" type="strong"></text>
-							</link>
-							</if>
-							<else>
-							<text key="GLOBAL_INACTIVE" type="emphatic" />
-							</else>
-							</else>
-					</column>
-					<column class="clickable">
-						<if true="var:active">
+							<column>
+								<text key="GLOBAL_INACTIVE" type="emphatic" />
+							</column>
+						</else>
+					</else>
+					<if true="var:active">
+						<column>
 							<text key="GLOBAL_ACTIVE" type="emphatic"></text>
+						</column>
+					</if>
+					<else>
+						<if present="useUrl">
+							<column class="clickable">
+								<link type="post" subaction="use" var1="valueid" value1="var:valueid"
+									id="var:objectid" title="message:GLOBAL_USE_DESC">
+									<text key="GLOBAL_USE"></text>
+								</link>
+							</column>
 						</if>
-						<else><if present="useUrl">
-						<link type="open" url="var:useUrl" title="message:GLOBAL_USE_DESC"><text key="GLOBAL_USE"></text></link></if></else>
-					</column>
+						<else>
+							<column>
+							</column>
+						</else>
+					</else>
 				</row>
 			</list>
 		</table>
