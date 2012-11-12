@@ -54,7 +54,7 @@ class Http
 	 * @param String URL
 	 * @return Http
 	 */
-	function Http( $url = '' )
+	public function Http( $url = '' )
 	{
 		$this->setURL( $url );
 		$this->header['User-Agent'] = 'Mozilla/5.0 (OpenRat CMS)';
@@ -105,7 +105,7 @@ class Http
 	 * @param String Benutzername
 	 * @param String Kennwort
 	 */
-	function setBasicAuthentication( $user, $password )
+	public function setBasicAuthentication( $user, $password )
 	{
 		$this->header['Authorization'] = 'Basic '.base64_encode($user.':'.$password);
 	}
@@ -117,7 +117,7 @@ class Http
 	 * @param withPraefixQuestionMark Praefix mit Fragezeichen (f�r GET-Anfragen)
 	 * @return String URL-Parameter
 	 */
-	function getParameterString( $withPraefixQuestionMark=false )
+	public function getParameterString( $withPraefixQuestionMark=false )
 	{
 		$parameterString = '';
 		$parameter = $this->urlParameter + $this->requestParameter;
@@ -143,7 +143,7 @@ class Http
 	 * Sendet eine Redirect-Anweisung an den Browser.
 	 * @return String URL
 	 */
-	function getUrl()
+	public function getUrl()
 	{
 		$location = $this->url['scheme'];
 		$location .= '://'; 
@@ -165,7 +165,7 @@ class Http
 	/**
 	 * Sendet eine Redirect-Anweisung mit der aktuellen URL an den Browser.
 	 */
-	function sendRedirect()
+	public function sendRedirect()
 	{
 		$location = $this->getUrl();
 		
@@ -179,7 +179,7 @@ class Http
 	 *
 	 * @return boolean Erfolg der Anfrage.
 	 */
-	function request()
+	public function request()
 	{
 		$this->error  = '';
 		$this->status = '';
@@ -368,7 +368,7 @@ class Http
 	 * @static
 	 * @return Array
 	 */
-	function getLanguages()
+	public static function getLanguages()
 	{
 		global $HTTP_SERVER_VARS;
 
@@ -393,7 +393,7 @@ class Http
 	 * @static
 	 * @return String URL
 	 */
-	function getServer()
+	public function getServer()
 	{
 		$https = getenv('HTTPS');
 		
@@ -417,7 +417,7 @@ class Http
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
-	function serverError($message,$reason='')
+	public static function serverError($message,$reason='')
 	{
 		$db = Session::getDatabase();
 		if	( is_object( $db ) )
@@ -435,7 +435,7 @@ class Http
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
-	function notAuthorized($text,$message)
+	public static function notAuthorized($text,$message)
 	{
 		Http::sendStatus(403,$text,$message);
 	}
@@ -452,7 +452,7 @@ class Http
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
-	function notFound($text,$message)
+	public static function notFound($text,$message)
 	{
 		Http::sendStatus(404,$text,$message);
 	}
@@ -474,7 +474,7 @@ class Http
 	 * @param String $text HTTP-Meldung
 	 * @param String $message Eigener Hinweistext
 	 */
-	function sendStatus( $status=501,$text='Internal Server Error',$message='',$reason='' )
+	public static function sendStatus( $status=501,$text='Internal Server Error',$message='',$reason='' )
 	{
 		if	( headers_sent() )
 		{
@@ -529,7 +529,7 @@ HTML;
 	 * 
 	 * @return Array Mime-Typen, welche vom User-Agent akzeptiert werden.
 	 */
-	function getAccept()
+	public static function getAccept()
 	{
 		$httpAccept = getenv('HTTP_ACCEPT');
 		return $types = explode(',',$httpAccept);
