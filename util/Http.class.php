@@ -26,11 +26,12 @@
  */
 class Http
 {
-	var $url    = array();
-	var $header = array();
-	var $responseHeader = array();
-	var $requestParameter = array();
-	var $urlParameter = array();
+	public  $header           = array();
+	
+	public $url               = array();
+	public $responseHeader    = array();
+	public $requestParameter  = array();
+	public $urlParameter      = array();
 
 	/**
 	 * HTTP-Request-Typ.<br>
@@ -39,12 +40,12 @@ class Http
 	 *
 	 * @var String Request-Typ
 	 */
-	var $method = 'GET';
-	var $error  = '';
-	var $status = '';
-	var $body   = '';
+	public $method  = 'GET';
+	public $error   = '';
+	public $status  = '';
+	public $body    = '';
 	
-	var $httpCmd = '';
+	public $httpCmd = '';
 
 
 
@@ -113,8 +114,9 @@ class Http
 	
 
 	/**
-	 * Erzeugt eine Zeichenkette mit allen Parametern.
-	 * @param withPraefixQuestionMark Praefix mit Fragezeichen (f�r GET-Anfragen)
+	 * Erzeugt eine HTTP-Parameterstring mit allen Parametern.
+	 * 
+	 * @param withPraefixQuestionMark Praefix mit Fragezeichen (fuer GET-Anfragen)
 	 * @return String URL-Parameter
 	 */
 	public function getParameterString( $withPraefixQuestionMark=false )
@@ -140,7 +142,8 @@ class Http
 
 	
 	/**
-	 * Sendet eine Redirect-Anweisung an den Browser.
+	 * Liefert die URL des Requests.
+	 * 
 	 * @return String URL
 	 */
 	public function getUrl()
@@ -175,7 +178,7 @@ class Http
 
 
 	/**
-	 * Erzeugt den HTTP-Request
+	 * Führt einen HTTP-Request durch.
 	 *
 	 * @return boolean Erfolg der Anfrage.
 	 */
@@ -362,8 +365,11 @@ class Http
 	 * Aus dem HTTP-Header werden die vom Browser angeforderten Sprachen
 	 * gelesen.<br>
 	 * Es wird eine Liste von Sprachen erzeugt.<br>
-	 * Beispiel: 'de_DE','de','en_GB','en' ... usw.<br>
-	 * Wenn der Browser 'de_DE' anfordert, wird hier auch 'de' (als Fallback) ermittelt.
+	 * 
+	 * Beispiel:
+	 * 'de_DE','de','en_GB','en' ... usw.<br>
+	 * Wenn der Browser 'de_DE' anfordert, wird hier zusätzlich
+	 * auch 'de' (als Fallback) ermittelt.
 	 *
 	 * @static
 	 * @return Array
@@ -388,12 +394,11 @@ class Http
 	
 	
 	/**
-	 * Ermittelt die aktuelle URL des Requests (ohne Datei).
+	 * Ermittelt die aktuelle HTTP-Adresse des Requests (inkl. Pfad, jedoch ohne Datei).
 	 *
-	 * @static
 	 * @return String URL
 	 */
-	public function getServer()
+	public static function getServer()
 	{
 		$https = getenv('HTTPS');
 		
@@ -412,8 +417,8 @@ class Http
 	/**
 	 * Server-Fehlermeldung anzeigen.<br>
 	 * 
-	 * Erzeugt einen "HTTP 501 Internal Server Error". Zu�tzlich
-	 * wird ein 'rollback' auf der Datenbank ausgef�hrt.
+	 * Erzeugt einen "HTTP 501 Internal Server Error". Zusaetzlich
+	 * wird ein 'rollback' auf der Datenbank ausgefaehrt.
 	 *
 	 * @param String $message Eigener Hinweistext
 	 */
@@ -430,9 +435,11 @@ class Http
 	
 	/**
 	 * Der Benutzer ist nicht autorisiert, eine Aktion auszufuehren.
+	 * 
 	 * Diese Funktion erzeugt einen "HTTP 403 Not Authorized" und das
 	 * Skript wird beendet.
 	 *
+	 * @param String $text Text
 	 * @param String $message Eigener Hinweistext
 	 */
 	public static function notAuthorized($text,$message)
@@ -446,10 +453,12 @@ class Http
 	
 	
 	/**
-	 * Der Benutzer ist nicht autorisiert, eine Aktion auszufuehren.
-	 * Diese Funktion erzeugt einen "HTTP 403 Not Authorized" und das
+	 * Nichts gefunden.
+	 * 
+	 * Diese Funktion erzeugt einen "HTTP 404 Not found" und das
 	 * Skript wird beendet.
 	 *
+	 * @param String $text Text
 	 * @param String $message Eigener Hinweistext
 	 */
 	public static function notFound($text,$message)
@@ -459,6 +468,11 @@ class Http
 
 	
 	
+	/**
+	 * Kein Inhalt.
+	 * 
+	 * Die HTTP-Antwort stellt gegenüber dem Client klar, dass es keinen Inhalt gibt.
+	 */
 	public static function noContent()
 	{
 		header('HTTP/1.0 204 No Content');
@@ -470,9 +484,10 @@ class Http
 	/**
 	 * Schickt einen HTTP-Status zum Client und beendet das Skript.
 	 *
-	 * @param Integer $status HTTP-Status
-	 * @param String $text HTTP-Meldung
-	 * @param String $message Eigener Hinweistext
+	 * @param Integer $status HTTP-Status (ganzzahlig) (Default: 501)
+	 * @param String $text HTTP-Meldung (Default: 'Internal Server Error')
+	 * @param String $message Eigener Hinweistext (Default: leer)
+	 * @param String $reason Technischer Grund (Default: leer)
 	 */
 	public static function sendStatus( $status=501,$text='Internal Server Error',$message='',$reason='' )
 	{
@@ -526,7 +541,8 @@ HTML;
 	
 	
 	/**
-	 * 
+	 * Liefert den Mime-Type, den der Browser (oder besser: HTTP-Client) wünscht.
+	 *
 	 * @return Array Mime-Typen, welche vom User-Agent akzeptiert werden.
 	 */
 	public static function getAccept()
@@ -536,15 +552,18 @@ HTML;
 	}
 	
 	
+
+	/**
+	 * Liefert die IPv4-Adresse des Clients. Falls der Request durch einen Proxy kam, wird
+	 * versucht, die echte IP-Adresse aus dem Anfrageheader zu ermitteln.
+	 * 
+	 * @return Client-IPv4-Adresse
+	 */
 	public static function getClientIP()
 	{
 		$ip = '';
 		
-		if ( isset($_SERVER["REMOTE_ADDR"]) )
-		{
-			$ip = $_SERVER["REMOTE_ADDR"];
-		}
-		elseif ( isset($_SERVER["HTTP_X_FORWARDED_FOR"]) )
+		if ( isset($_SERVER["HTTP_X_FORWARDED_FOR"]) )
 		{
 			$ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
 		}
@@ -552,12 +571,22 @@ HTML;
 		{
 			$ip = $_SERVER["HTTP_CLIENT_IP"];
 		}
+		elseif ( isset($_SERVER["REMOTE_ADDR"]) )
+		{
+			$ip = $_SERVER["REMOTE_ADDR"];
+		}
 		
 		return $ip;
 	}
 	
 	
-	
+
+	/**
+	 * Ermittelt den TCP/IP-Port des Clients.
+	 * Achtung, bei Proxy-Zugriffen kann dies der Port des Proxys sein.
+	 * 
+	 * @return TCP/IP-Port
+	 */
 	public static function getClientPort()
 	{
 		$ip = '';
