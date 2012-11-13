@@ -760,6 +760,8 @@ class PageelementAction extends Action
 				
 			// Inhalt wieder herstellen, in dem er neu gespeichert wird.
 			$this->value->save();
+			
+			$this->addNotice('pageelement',$this->value->element->name,'PAGEELEMENT_USE_FROM_ARCHIVE',OR_NOTICE_OK);
 		}
 
 
@@ -781,6 +783,8 @@ class PageelementAction extends Action
 
 			// Inhalt freigeben
 			$this->value->release();
+			
+			$this->addNotice('pageelement',$this->value->element->name,'PAGEELEMENT_RELEASED',OR_NOTICE_OK);
 		}
 
 
