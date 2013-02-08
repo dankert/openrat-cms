@@ -43,11 +43,6 @@ class TitleAction extends Action
 		$this->setTemplateVar('dbname',$db->conf['comment'].(readonly()?' ('.lang('readonly').')':''));
 		
 		$databases = array();
-		global $conf;
-		foreach( $conf['database'] as $dbid=>$dbconf )
-			if	( $dbconf['enabled'])
-				$databases[$dbid] = $dbconf['comment'];
-		$this->setTemplateVar('databases',$databases);
 		
 		$this->setTemplateVar('username'    ,$user->name    );
 		$this->setTemplateVar('userfullname',$user->fullname);
