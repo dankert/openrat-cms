@@ -448,7 +448,6 @@ $conf['mime-types']['pfa']   = 'application/x-font';
 $conf['mime-types']['pfb']   = 'application/x-font';
 $conf['mime-types']['gsf']   = 'application/x-font';
 $conf['mime-types']['pcf']   = 'application/x-font';
-$conf['mime-types']['pcf.Z'] = 'application/x-font';
 $conf['mime-types']['spl']   = 'application/x-futuresplash ';
 $conf['mime-types']['gnumeric'] = 'application/x-gnumeric';
 $conf['mime-types']['gtar']  = 'application/x-gtar';
