@@ -123,7 +123,7 @@ class Preferences
 		$conf['config']['file_modification'] = date('r',filemtime($filename));
 		$conf['config']['read'             ] = date('r');
 		
-		Preferences::fixConfiguration( &$conf );
+		Preferences::fixConfiguration( $conf );
 		
 		return $conf;
 	}
