@@ -704,10 +704,13 @@ SQL
 
 		return $db->getAssoc( $sql );
 	}
+
 	
 	
-	// Ermitteln aller Unterordner (rekursives Absteigen)
-	//
+	/**
+	 * Ermitteln aller Unterordner (rekursives Absteigen).
+	 * 
+	 */
 	function getAllSubFolderIds()
 	{
 		global $SESS;
@@ -716,20 +719,19 @@ SQL
 
 		foreach( $this->getSubFolderIds() as $id )
 		{
-//			echo "durchlaufe $id";
 			$ids[] = $id;
 
 			$f = new Folder( $id );
 			if	( !empty($this->projectid) )
 				$f->projectid = $this->projectid;
 
+			// Rekursiver Aufruf für alle Unterordner
 			foreach( $f->getAllSubFolderIds() as $xid )
 			{
 				$ids[] = $xid;
 			}
 		}
 
-//		print_r( $ids );
 		return $ids;
 	}
 

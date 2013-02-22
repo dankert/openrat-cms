@@ -613,6 +613,8 @@ class FolderAction extends ObjectAction
 							$f = new Folder( $id );
 							$allsubfolders = $f->getAllSubFolderIds();
 							
+							// Plausibilisierungsprüfung:
+							//
 							// Wenn
 							// - Das Zielverzeichnis sich nicht in einem Unterverzeichnis des zu verschiebenen Ordners liegt
 							// und
@@ -621,7 +623,7 @@ class FolderAction extends ObjectAction
 							if	( !in_array($targetObjectId,$allsubfolders) && $id != $targetObjectId )
 							{
 								$this->addNotice($o->getType(),$o->name,'MOVED','ok');
-								//$o->setParentId( $targetObjectId );
+								$o->setParentId( $targetObjectId );
 							}
 							else
 							{
