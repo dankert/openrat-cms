@@ -731,7 +731,7 @@ $conf['security']['authorize']['type']='database';
 $conf['security']['authorize']['type']='ldap';
 
 $conf['security']['modules'] = array();
-$conf['security']['modules']['autologin']='Guest,SingleSignon';
+$conf['security']['modules']['autologin']='Remember,Guest,SingleSignon';
 $conf['security']['modules']['preselect']='Ident,SSL,Cookie';
 $conf['security']['modules']['authenticate']='LdapUserDN,Database,Internal';
 

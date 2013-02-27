@@ -199,6 +199,27 @@ SQL
 
 
 	/**
+	 * Ermittelt zu diesem Benutzer den Login-Token.
+	 */ 
+	function loginToken()
+	{
+		global $conf;
+		$db = db_connection();
+
+		$sql = new Sql( 'SELECT id,mail,name,password FROM {t_user}'.
+		                ' WHERE id={userid}' );
+		$sql->setInt( 'userid',$this->userid );
+		$row = $db->getRow( $sql );
+
+		if	( count($row) == 0 )
+			throw new ObjectNotFoundException();
+
+		// Zusammensetzen des Tokens
+		return sha1( $row['password'].$row['name'].$row['id'].$row['mail'] );
+	}
+
+
+	/**
 	 * Lesen Benutzer aus der Datenbank.
 	 */ 
 	function load()

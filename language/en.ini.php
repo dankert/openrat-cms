@@ -1212,3 +1212,4 @@ USER_YOURPROFILE = "My settings"
 VALUE = Content
 WEEK="Week"
 WINDOW_FULLSCREEN="Fullscreen"
+REMEMBER_ME="Stay logged in"

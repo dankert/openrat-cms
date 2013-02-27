@@ -863,6 +863,7 @@ class LoginAction extends Action
 		
 		if	( $loginOk )
 		{
+			
 			try
 			{
 				// Benutzer über den Benutzernamen laden.
@@ -923,7 +924,14 @@ class LoginAction extends Action
 			Logger::debug("Login successful for user '$loginName'");
 
 			$this->checkGroups( $user, $groups );	
-			
+
+			if	( $this->hasRequestVar('remember') )
+			{
+				// Cookie setzen
+				setcookie('or_username',$user->name        ,time()+(60*60*24*30*12*2) );
+				setcookie('or_token'   ,$user->loginToken(),time()+(60*60*24*30*12*2) );
+			}
+				
 			// Anmeldung erfolgreich.
 			if	( config('security','renew_session_login') )
 				$this->recreateSession();
@@ -1096,20 +1104,22 @@ class LoginAction extends Action
 			}
 		}
 		
+		// Login-Token löschen:
+		// Wenn der Benutzer sich abmelden will, dann soll auch die automatische
+		// Anmeldung deaktiviert werden.
+		setcookie('or_token'   ,'',0 );
+		
 		// Umleiten auf eine definierte URL.s
 		$redirect_url = @$conf['security']['logout']['redirect_url'];
 
 		if	( !empty($redirect_url) )
 		{
-			header('Location: '.$redirect_url);
-			exit;
+			$this->redirect($redirect_url);
 		}
-		else
-		{
-			Session::set('perspective','login');
-			$this->setStyle('default');
-			$this->refresh();
-		}
+
+		Session::set('perspective','login');
+		$this->setStyle('default');
+		$this->refresh();
 	}
 
 	

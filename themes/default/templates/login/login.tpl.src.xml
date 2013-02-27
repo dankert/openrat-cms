@@ -66,6 +66,24 @@
 						size="20"></password>
 				</part>
 			</part>
+			
+			
+			
+			
+			
+			
+			
+			<part class="line">
+				<part class="label">
+				</part>
+ 				<part class="input">
+					<checkbox name="remember" default="false"></checkbox>
+					<label for="remember">
+						<text key="REMEMBER_ME"></text>
+					</label>
+				</part>
+			</part>
+			
 		</if>
 
 
