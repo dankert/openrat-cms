@@ -5,7 +5,7 @@
  *  
  * @author dankert
  */
-class CookieAuth implements Auth
+class RememberAuth implements Auth
 {
 	public function username()
 	{
@@ -14,6 +14,12 @@ class CookieAuth implements Auth
 			$name = $_COOKIE['or_username'];
 			try
 			{
+				global $conf;
+				$db = new DB( $conf['database'][$_COOKIE['or_dbid']] );
+				$db->id = $dbid;
+				$db->start();
+				Session::setDatabase($db);
+				
 				$user = User::loadWithName($name);
 				$token = $user->loginToken();
 				
