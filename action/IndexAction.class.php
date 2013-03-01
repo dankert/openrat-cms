@@ -72,11 +72,12 @@ class IndexAction extends Action
 					$user = User::loadWithName( $username );
 					Session::setUser($user);
 					Logger::info('auto-login for user '.$username);
+					$this->setPerspective('start');
 				}
 				catch( ObjectNotFoundException $e )
 				{
 					Logger::warn('Username for autologin does not exist: '.$username);
-					$this->setPerspective('start');
+					$this->setPerspective('login');
 				}
 			}
 			else
