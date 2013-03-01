@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Authentifizierungsmodul für die interne Benutzerdatenbank.
+ * 
+ * @author Jan Dankert
+ *
+ */
 class InternalAuth implements Auth
 {
 	var $mustChangePassword = false;

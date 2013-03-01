@@ -29,8 +29,6 @@ class LoginAction extends Action
 {
 	public $security = SECURITY_GUEST;
 	
-	var $mustChangePassword = false;
-	
 	function setDb( $dbid )
 	{
 		global $conf;
@@ -125,9 +123,9 @@ class LoginAction extends Action
 		
 		$ok = $user->checkPassword( $pw );
 		
-		$this->mustChangePassword = $user->mustChangePassword;
+		$mustChangePassword = $user->mustChangePassword;
 		
-		if	( $this->mustChangePassword )
+		if	( $mustChangePassword )
 		{
 			// Der Benutzer hat zwar ein richtiges Kennwort eingegeben, aber dieses ist abgelaufen.
 			// Wir versuchen hier, das neue zu setzen (sofern eingegeben).
@@ -151,8 +149,8 @@ class LoginAction extends Action
 				
 				// Das neue Kennwort ist gesetzt, die Anmeldung ist also doch noch gelungen. 
 				$ok = true;
-				$this->mustChangePassword = false;
-				$user->mustChangePassword = false;
+				$mustChangePassword = false;
+				$mustChangePassword = false;
 			}
 		}
 		
@@ -830,17 +828,23 @@ class LoginAction extends Action
 		setcookie('or_username',$loginName                  ,time()+$cookieLifetime );
 		setcookie('or_dbid'    ,$this->getRequestVar('dbid'),time()+$cookieLifetime );
 
-		// Authentifzierung.
+		// Authentifzierungs-Module.
 		$modules = explode(',',$conf['security']['modules']['authenticate']);
 		
-		$loginOk = false;
-		$groups  = null;
+		$loginOk            = false;
+		$mustChangePassword = false;
+		$groups             = null;
+		
+		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.
 		foreach( $modules as $module)
 		{
 			$moduleClass = $module.'Auth';
 			$auth        = new $moduleClass;
 			Logger::info('Trying to login with module '.$moduleClass);
 			$loginOk = $auth->login( $loginName,$loginPassword );
+			
+			if	( @$auth->mustChangePassword )
+				$mustChangePassword = true;
 				
 			if	( $loginOk )
 			{
@@ -900,7 +904,7 @@ class LoginAction extends Action
 			sleep(3);
 			Logger::debug("Login failed for user '$loginName'");
 			
-			if	( $this->mustChangePassword )
+			if	( $mustChangePassword )
 			{
 				// Anmeldung gescheitert, Benutzer muss Kennwort ?ndern.
 				$this->addNotice('user',$loginName,'LOGIN_FAILED_MUSTCHANGEPASSWORD','error' );
