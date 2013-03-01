@@ -740,10 +740,9 @@ $conf['security']['newuser']['autoadd'] = true;
 $conf['security']['newuser']['autogroups'] = "";
 
 $conf['security']['password'] = array();
-$conf['security']['password']['random_length']='8';
-$conf['security']['password']['min_length']='6';
-$conf['security']['password']['salt']= '';
-$conf['security']['password']['salt_text']= "somerandomtext";
+$conf['security']['password']['random_length']=10;
+$conf['security']['password']['min_length']=6;
+$conf['security']['password']['pepper']= '';
 $conf['security']['http'] = array();
 $conf['security']['http']['url']= "http://example.net/restricted-area";
 $conf['security']['authdb'] = array();

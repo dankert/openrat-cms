@@ -822,6 +822,48 @@ class LoginAction extends Action
 		$loginPassword = $this->getRequestVar('login_password',OR_FILTER_ALPHANUM);
 		$newPassword1  = $this->getRequestVar('password1'     ,OR_FILTER_ALPHANUM);
 		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
+
+		// Der Benutzer hat zwar ein richtiges Kennwort eingegeben, aber dieses ist abgelaufen.
+		// Wir versuchen hier, das neue zu setzen (sofern eingegeben).
+		if	( empty($newPassword1) )
+		{
+			// Kein neues Kennwort,
+			// nichts zu tun...
+		}
+		else
+		{
+			$auth = new InternalAuth();
+			
+			if	( $auth->login($loginName, $loginPassword) || $auth->mustChangePassword ) 
+			{
+				if	( $newPassword1 != $newPassword2 )
+				{
+					$this->addValidationError('password1','PASSWORDS_DO_NOT_MATCH');
+					$this->addValidationError('password2','');
+					return;
+				}
+				elseif	( strlen($newPassword1) < $conf['security']['password']['min_length'] )
+				{
+					$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=>$conf['security']['password']['min_length']));
+					$this->addValidationError('password2','');
+					return;
+				}
+				else
+				{
+					// Kennwoerter identisch und lang genug.
+					$user = User::loadWithName($loginName);
+					$user->setPassword( $newPassword1,true );
+				}
+			}
+			else
+			{
+				// Anmeldung gescheitert.
+				$this->addNotice('user',$loginName,'LOGIN_FAILED','error',array('name'=>$loginName) );
+				$this->addValidationError('login_name'    ,'');
+				$this->addValidationError('login_password','');
+				return;
+			}
+		}
 		
 		// Cookie setzen
 		$cookieLifetime = 60*60*24*30*12*2; // 2 Jahre.

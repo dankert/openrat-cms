@@ -780,9 +780,12 @@ SQL
 		                'WHERE id={userid}' );
 		                
 		if	( $always )
-			$sql->setString('password',md5($this->saltPassword($password)) );
+			// Hashsumme für Kennwort erzeugen und speichern.
+			// Workaround: Hashsumme auf 50 Zeichen kürzen (da die DB-Spalte nicht länger ist)
+			$sql->setString('password',substr(Password::hash($this->pepperPassword($password)),0,50) );
 		else
-			$sql->setString('password',$password      );
+			// Klartext-Kennwort, der Benutzer muss das Kennwort beim nä. Login ändern.
+			$sql->setString('password',$password);
 			
 		$sql->setInt   ('userid'  ,$this->userid  );
 
@@ -1107,25 +1110,18 @@ SQL
 
 	
 	/**
-	 * Das Kennwort "salzen".
+	 * Das Kennwort "pfeffern".
+	 * 
+	 * Siehe http://de.wikipedia.org/wiki/Salt_%28Kryptologie%29#Pfeffer
+	 * für weitere Informationen.
 	 * 
 	 * @param Kennwort
-	 * @return Das gesalzene Kennwort
+	 * @return Das gepfefferte Kennwort
 	 */
-	public function saltPassword( $pass )
+	public function pepperPassword( $pass )
 	{
-		switch( config('security','password','salt') )
-		{
-			case 'userid':
-				return $this->userid.$pass;
-			case 'username':
-				return $this->name.$pass;
-			case 'custom':
-				return config('security','password','salt_text').$pass;
-			default:
-				return $pass;
-		}
-		
+		global $conf;
+		return $conf['security']['password']['pepper'].$pass;
 	}
 }
 

@@ -40,7 +40,7 @@ SQL
 			// Login nicht erfolgreich
 			return false;
 		}
-		elseif   ( $row_user['password'] == md5( User::saltPassword($password) ) )
+		elseif   ( Password::check(User::pepperPassword($password),$row_user['password']) )
 		{
 			// Die Kennwort-Pruefsumme stimmt mit dem aus der Datenbank �berein.
 			// Juchuu, Login ist erfolgreich.
