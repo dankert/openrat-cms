@@ -9,17 +9,23 @@ class RememberAuth implements Auth
 {
 	public function username()
 	{
-		if	( isset($_COOKIE['or_username']) )
+		// Ermittelt den Benutzernamen aus den Login-Cookies.
+		if	( isset($_COOKIE['or_username']) &&
+			  isset($_COOKIE['or_token'   ]) &&
+			  isset($_COOKIE['or_dbid'    ])    )
 		{
 			$name = $_COOKIE['or_username'];
 			try
 			{
+				$dbid = $_COOKIE['or_dbid'];
+				
 				global $conf;
-				$db = new DB( $conf['database'][$_COOKIE['or_dbid']] );
+				$db = new DB( $conf['database'][$dbid] );
 				$db->id = $dbid;
 				$db->start();
 				Session::setDatabase($db);
 				
+				// Jetzt den Benutzer laden und nachschauen, ob der Token stimmt.
 				$user = User::loadWithName($name);
 				$token = $user->loginToken();
 				
