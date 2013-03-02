@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<if true="config:login/register">
 
-		<form method="GET">
+		<form>
 			<logo name="register"></logo>
 
 

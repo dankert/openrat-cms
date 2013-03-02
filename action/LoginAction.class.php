@@ -1693,21 +1693,46 @@ class LoginAction extends Action
 	 */
 	public function registercodeView()
 	{
+		global $conf;
+		foreach( $conf['database'] as $dbname=>$dbconf )
+		{
+			if	( is_array($dbconf) && $dbconf['enabled'] )
+				$dbids[$dbname] = $dbconf['comment'];
+		}
+
+		$this->setTemplateVar( 'dbids',$dbids );
+		
+		$db = Session::getDatabase();
+		if	( is_object($db) )
+			$this->setTemplateVar('actdbid',$db->id);
+		else
+			$this->setTemplateVar('actdbid',$conf['database']['default']);
+		
+		
+		
+	}
+
+	
+	
+	public function registerPost()
+	{
+		global $conf;
+
+		Session::set('registerMail',$this->getRequestVar('mail') );
+		
+			srand ((double)microtime()*1000003);
+		$registerCode = rand();
+		
+		Session::set('registerCode',$registerCode                );
+
 		$email_address = $this->getRequestVar('mail',OR_FILTER_MAIL);
 		
 		if	( ! Mail::checkAddress($email_address) )
 		{
 			$this->addValidationError('mail');
-			$this->setTemplateVar('mail',$email_address);
 			return;
 		}
 		
-		
-		srand ((double)microtime()*1000003);
-		$registerCode = rand();
-		
-		Session::set('registerCode',$registerCode                );
-					
 		// E-Mail and die eingegebene Adresse verschicken
 		$mail = new Mail($email_address,
 		                 'register_commit_code','register_commit_code');
@@ -1723,29 +1748,8 @@ class LoginAction extends Action
 			$this->addNotice('','','mail_not_sent',OR_NOTICE_ERROR,array(),$mail->error);
 			return;
 		}
-	}
-
-	
-	
-	function registerxxxxPost()
-	{
-		global $conf;
-
-		Session::set('registerMail',$this->getRequestVar('mail') );
-		// TODO: Attribut "Password" abfragen
-		foreach( $conf['database'] as $dbname=>$dbconf )
-		{
-			if	( is_array($dbconf) && $dbconf['enabled'] )
-				$dbids[$dbname] = $dbconf['comment'];
-		}
-
-		$this->setTemplateVar( 'dbids',$dbids );
-		
-		$db = Session::getDatabase();
-		if	( is_object($db) )
-			$this->setTemplateVar('actdbid',$db->id);
-		else
-			$this->setTemplateVar('actdbid',$conf['database']['default']);
+				
+		$this->nextView('registercode');
 	}
 
 	
