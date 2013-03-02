@@ -86,7 +86,7 @@ class LinkElement extends AbstractElement
 				$url.='//';
 		}
 			
-		// Benutzer und Kennwort anhängen.
+		// Benutzer und Kennwort anhï¿½ngen.
 		// Format: <benutzer>:<kennwort>@
 		if	( $this->user != '' )
 		{
@@ -98,22 +98,22 @@ class LinkElement extends AbstractElement
 			$url .= '@';
 		}
 		
-		// Hostnamen anhängen.
+		// Hostnamen anhï¿½ngen.
 		$url .= $this->host;
 		
-		// Port anhängen
+		// Port anhï¿½ngen
 		if	( $this->port != '' )
 			$url .= ':'.$this->port;
 		
-		// Den Pfad anhängen.
+		// Den Pfad anhï¿½ngen.
 		$url .= $this->url_encode($this->path);
 
-		// Den Query-Teil mit einem "?" getrennt anhängen.
+		// Den Query-Teil mit einem "?" getrennt anhï¿½ngen.
 		if	( $this->query != '' )
 			$url .= '?'.$this->url_encode($this->query);
 //			$url .= '?'.urlencode($this->query);
 
-		// Fragment mit "#" getrennt anhängen.
+		// Fragment mit "#" getrennt anhï¿½ngen.
 		if	( $this->fragment != '' )
 			$url .= '#'.$this->url_encode($this->fragment);
 
@@ -123,13 +123,13 @@ class LinkElement extends AbstractElement
 	
 	
 	/**
-	 * Hilfsfunktion für #url_encode().
+	 * Hilfsfunktion fï¿½r #url_encode().
 	 * Ein Ganzzahl-Wert wird in Hexadezimal umgewandelt. 
 	 */
-	function int2hex($intega)
+	private function int2hex($intega)
 	{
 	   	$Ziffer = "0123456789ABCDEF";
-		return $Ziffer[($intega%256)/16].$Ziffer[$intega%16];
+		return @$Ziffer[($intega%256)/16].$Ziffer[$intega%16];
 	}
 	
 	
@@ -138,7 +138,7 @@ class LinkElement extends AbstractElement
 	 * Kodiert eine URL.<br>
 	 * Alle Zeichen mit dem Ordinalwert >=129 werden kodiert.
 	 */
-	function url_encode( $text )
+	private function url_encode( $text )
 	{
 		for($i=129;$i<255;$i++)
 		{
