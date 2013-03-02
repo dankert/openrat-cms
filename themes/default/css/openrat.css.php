@@ -1418,6 +1418,10 @@ div#dialog
     -moz-box-shadow: 0px 0px 40px  <?php echo $_GET['text_color']; ?>;
     box-shadow: 0px 0px 40px <?php echo $_GET['text_color']; ?>;
     
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -khtml-border-radius:5px;
+    border-radius:5px;
 }
  
 
