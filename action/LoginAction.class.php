@@ -405,22 +405,16 @@ class LoginAction extends Action
 		if	( empty($dbids) )
 			$this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
 		
-		if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
+		if	( !isset($_COOKIE['or_username']) )
 			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
-		
-		if	( !isset($this->templateVars['login_name']) )
-			$this->setTemplateVar('login_name',@$conf['security']['default']['username']);
-
-		if	( $this->templateVars['login_name']== @$conf['security']['default']['username'])
-			$this->setTemplateVar('login_password',@$conf['security']['default']['password']);
+		else
+			$this->setTemplateVar('login_name',$conf['security']['default']['username']);
 
 		$this->setTemplateVar( 'dbids',$dbids );
 		
 		$db = Session::getDatabase();
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
-		elseif( isset($this->templateVars['actid']) )
-			;
 		else
 			$this->setTemplateVar('actdbid',$conf['database']['default']);
 
