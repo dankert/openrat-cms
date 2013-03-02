@@ -21,7 +21,7 @@
 					</link>
 				</column>
 				<column title="var:filename">
-					<text var="filename" maxlength="40"></text>
+					<text var="filename" maxlength="30"></text>
 				</column>
 				<column>
 					<date date="var:lastchange_date" />

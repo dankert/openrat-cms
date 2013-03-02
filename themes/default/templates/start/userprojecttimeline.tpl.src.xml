@@ -32,11 +32,11 @@
 			<row class="data">
 				<column class="clickable">
 					<link type="open" name="var:name" id="var:objectid" action="var:type">
-						<text var="name" maxlength="40"></text>
+						<text var="name" maxlength="30"></text>
 					</link>
 				</column>
 				<column>
-					<text var="filename" maxlength="40"></text>
+					<text var="filename" maxlength="30"></text>
 				</column>
 				<column>
 					<date date="var:lastchange_date" />

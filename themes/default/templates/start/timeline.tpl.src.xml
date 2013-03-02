@@ -24,7 +24,7 @@
 					</link>
 				</column>
 				<column>
-					<text var="filename" maxlength="40"></text>
+					<text var="filename" maxlength="30"></text>
 				</column>
 				<column>
 					<text var="username"></text>
