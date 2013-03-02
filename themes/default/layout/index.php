@@ -115,6 +115,11 @@ var REQ_PARAM_TARGET  = '<?php echo  REQ_PARAM_TARGET ?>';
 <div id="workbench">
 </div>
 
+
+<div id="dialog" class="bar wide">
+</div>
+
+
 <script type="text/javascript">
 <!--
 document.writeln("<div class=\"invisible\">");

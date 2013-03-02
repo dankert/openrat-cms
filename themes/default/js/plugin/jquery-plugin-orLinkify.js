@@ -20,7 +20,17 @@ jQuery.fn.orLinkify = function()
 			{
 				startView(this, $(this).attr('data-method') );
 			}
-			
+
+			else if	( type == 'modal' )
+			{
+				startDialog(this, $(this).attr('data-method'),$(this).attr('data-action'),true );
+			}
+
+			else if	( type == 'dialog' )
+			{
+				startDialog(this, $(this).attr('data-method'),$(this).attr('data-action'),false );
+			}
+
 			else if	( type == 'url' )
 			{
 				submitUrl(this,$(this).attr('data-url') );

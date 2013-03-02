@@ -33,6 +33,23 @@ function refreshAll()
 	
 	refreshTitleBar();
 	refreshWorkbench();
+	
+	$('div#filler').click( function()
+	{
+		if	( $('div#dialog').hasClass('modal') )
+		{
+			
+		}
+		else
+		{
+			$('div#dialog').html('').hide();  // Dialog beenden
+			
+			//$('div.modaldialog').fadeOut(500); 
+			//$('div#workbench').removeClass('modal'); // Modalen Dialog beenden.
+			$('div#filler').fadeOut(500); // Filler beenden
+
+		}
+	});
 }
 
 
@@ -243,7 +260,7 @@ function loadView(jo, url )
 			}
 
 			$(this).removeClass("loader");
-			registerViewEvents( jo )
+			registerViewEvents( jo );
 		});
 }
 
@@ -374,7 +391,7 @@ function registerViewEvents( viewEl )
 	$(viewEl).find('div.headermenu > a').each( function(idx,el)
 	{
 		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
-		$(el).wrap('<div class="entry clickable perview" />').parent().appendTo( $(viewEl).closest('div.frame').find('div.menu div.dropdown').first() );
+		$(el).wrap('<div class="entry clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.frame').find('div.menu div.dropdown').first() );
 	} );
 	
 	$(viewEl).find('div.header > a.back').each( function(idx,el)
@@ -580,6 +597,34 @@ function startView( element,view )
 	//alert( "startView: "+action+"/"+view+"#"+id );
 	loadView( $(element).closest('div.frame').find('div.content'), url );
 	
+	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
+	// refreshAllRefreshables();
+}
+
+
+/**
+ * Setzt neuen modalen Dialog und aktualisiert alle Fenster.
+ * @param element
+ * @param action Action
+ * @param id Id
+ */
+function startDialog( element,method,action,modal )
+{
+	//alert( "startView: "+$(element).html() );
+	var action = $(element).closest('div.frame').attr('data-action');
+	var id     = $(element).closest('div.frame').attr('data-id'    );
+	var url    = createUrl(action, method, id);
+	//alert( "startView: "+action+"/"+view+"#"+id );
+	
+	$('div#filler').fadeTo(500,0.5);
+	$('div#dialog').html('<div class="frame" data-action="'+action+'" data-method="'+method+'" data-id="'+id+'"><div class="window"><div class="content" /></div></div>');
+	$('div#dialog').show();
+	
+	loadView( $('div#dialog div.content'), url );
+	
+	//$('div#workbench div.frame.modal').parent().addClass('modal');
+	//$('div#workbench').addClass('modal');
+
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
 }

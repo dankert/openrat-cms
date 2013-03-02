@@ -8,7 +8,7 @@
   <img src="<?php  echo $image_dir ?>icon/window/down.gif" />
   <div class="headermenu">
     <?php foreach( explode(',',$attr_views) as $attr_tmp_view ) { ?>
-		<a href="javascript:void(0);" data-type="view" data-method="<?php echo $attr_tmp_view ?>">
+		<a href="javascript:void(0);" data-type="modal" data-method="<?php echo $attr_tmp_view ?>">
 		  <img src="<?php  echo $image_dir ?>icon/<?php echo $attr_tmp_view ?>.png" /><?php echo lang('MENU_'.$attr_tmp_view) ?>
 		</a>
     <?php } ?>

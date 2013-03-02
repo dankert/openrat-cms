@@ -1393,7 +1393,34 @@ div#workbench > div.bar.modal
     box-shadow: 0px 0px 40px <?php echo $_GET['text_color']; ?>;
     
 }
+
+
+
+div#dialog
+{
+	background-color:<?php echo $_GET['background_color']; ?>;
+	color:<?php echo $_GET['text_color']; ?>;
+	overflow: auto;
+
+	/*width:60%;*/
+	position:absolute;
+	top:5%;
+	left:10%;
+	width:80%;
+	height:80%;
+	
+	z-index: 104;
+	
+	border:1px solid <?php echo $_GET['text_color']; ?> !important;
+	
+	
+	-webkit-box-shadow: 0px 0px 40px <?php echo $_GET['text_color']; ?>;
+    -moz-box-shadow: 0px 0px 40px  <?php echo $_GET['text_color']; ?>;
+    box-shadow: 0px 0px 40px <?php echo $_GET['text_color']; ?>;
+    
+}
  
+
 
  /* Voreingestellte Schriftart */
 body
