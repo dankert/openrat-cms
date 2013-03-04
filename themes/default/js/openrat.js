@@ -34,6 +34,9 @@ function refreshAll()
 	refreshTitleBar();
 	refreshWorkbench();
 	
+	// Workbench-Events registrieren
+	
+	// Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
 	$('div#filler').click( function()
 	{
 		if	( $('div#dialog').hasClass('modal') )
@@ -50,6 +53,8 @@ function refreshAll()
 
 		}
 	});
+	
+
 }
 
 
@@ -169,6 +174,51 @@ function refreshWorkbench()
 		}
 		
 		
+		// Divider
+		$('div.container.axle-x > div.divider').draggable(
+				
+				{
+					stop: function( event, ui ) {
+						var xoffset = ui.position.left;
+						var lr = $(this).hasClass('to-right')?1:-1;
+							
+						$(this).parent().children('div.resizable').each( function()
+							{
+								var factor = ((lr*xoffset)+$(this).width()) / ($(this).parent().width());
+								factor = Math.min(0.5,Math.max(0.1,factor)); // Erlaubter Bereich
+								
+								$(this).data('size-factor',factor);
+							}
+						);
+						resizeWorkbenchContainer( $(this).parent() );
+					},
+					axis: "x",
+					revert: true,
+					revertDuration: 0
+				}
+			);
+		$('div.container.axle-y > div.divider').draggable(
+				
+				{
+					stop: function( event, ui ) {
+						var yoffset = ui.position.top;
+						var lr = $(this).hasClass('to-bottom')?1:-1;
+						
+						$(this).parent().children('div.resizable').each( function()
+							{
+								var factor = ((lr*yoffset)+$(this).height()) / ($(this).parent().height());
+								factor = Math.min(0.5,Math.max(0.1,factor)); // Erlaubter Bereich
+								
+								$(this).data('size-factor',factor);
+							}
+						);
+						resizeWorkbenchContainer( $(this).parent() );
+					},
+					axis: "y",
+					revert: true,
+					revertDuration: 0
+				}
+			);
 
 	});
 	//alert('go');
@@ -1187,6 +1237,69 @@ function createUrl(action,subaction,id,extraid)
 
 
 /**
+ * Setzt Breite/Höhe für einen Container in der Workbench.
+ * 
+ * Sind weitere Container enthalten, werden diese rekursiv angepasst.
+ * 
+ * @param container
+ */
+function resizeWorkbenchContainer( container )
+{
+
+	var availableWidth  = container.width();
+	var availableHeight = container.height();
+	var factor = container.children('div.resizable').data('size-factor');
+	
+	var horizontal = container.hasClass('axle-x');
+	
+	if	( horizontal )
+	{
+		// Container ist horizontal geteilt.
+		var size = Math.floor(availableWidth * factor);
+		container.find('div.resizable > div.frame > div.window').css('width',''+size                   +'px');
+		container.find('div.resizable > div.frame > div.window > div.content').css('height',''+(availableHeight-27)+'px');
+		container.find('div.autosize  > div.frame > div.window').css('width',''+(availableWidth-size-9)+'px');
+		container.find('div.autosize  > div.frame > div.window > div.content').css('height',''+(availableHeight-27)+'px');
+
+		container.children('div.resizable').css('width',''+size                   +'px');
+		container.children('div.resizable').css('height',''+availableHeight+'px');
+		container.children('div.autosize').css('width',''+(availableWidth-size-9)+'px');
+		container.children('div.autosize').css('height',''+availableHeight+'px');
+
+		container.children('div.divider').css('height',''+availableHeight+'px');
+	}
+	else
+	{
+		// Container ist vertikal geteilt.
+		var size = Math.floor(availableHeight * factor);
+		container.find('div.resizable > div.frame > div.window').css('width',''+availableWidth +'px');
+		container.find('div.resizable > div.frame > div.window > div.content').css('height',''+(size-27)+'px');
+		container.find('div.autosize  > div.frame > div.window').css('width',''+availableWidth  +'px');
+		container.find('div.autosize  > div.frame > div.window > div.content').css('height',''+(availableHeight-size-27)+'px');
+		
+		container.children('div.resizable').css('width',''+availableWidth +'px');
+		container.children('div.resizable').css('height',''+size+'px');
+		container.children('div.autosize').css('width',''+availableWidth+'px');
+		container.children('div.autosize').css('height',''+(availableHeight-size-20)+'px');
+
+		container.children('div.divider').css('width',''+availableWidth+'px');
+	}
+
+	container.children('div.bar').each( function()
+	{
+		resizeTabs( $(this) );
+	}
+	);
+	
+	$(container).children('div.container').each( function() {
+		resizeWorkbenchContainer($(this));
+	});
+
+}
+
+
+
+/**
  * Fenstergröße wurde verändert, nun die Größe der DIVs neu berechnen.
  */
 function resizeWorkbench()
@@ -1195,40 +1308,27 @@ function resizeWorkbench()
 	var viewportWidth  = $(window).width();
 	var viewportHeight = $(window).height();
 	
-	// OpenRat-spezifische Ermittlung der einzelnen DIV-Größen
-	var titleBarHeight = 55; // Title:35px
-	var viewBorder     = 33; // Padding 2x3px, Rand 2x1px, View-Kopf:25px
-	var singleHeight = viewportHeight - titleBarHeight - viewBorder;
-	var upperHeight  = Math.ceil((viewportHeight - titleBarHeight - viewBorder)*(2/3));
-	var lowerHeight  = viewportHeight - upperHeight - titleBarHeight - (2*viewBorder);
+	var container = $('div#workbench > div.container')
 	
-	var outerWidth = Math.floor(viewportWidth/4);
-	var innerWidth = viewportWidth-(3*8)-(2*outerWidth);
-	$('div#workbench > div#navigationbar > div.frame > div.window').css('width',outerWidth+'px');
-	resizeTabs( $('div#navigationbar'),false);
-	$('div#workbench > div#contentbar    > div.frame > div.window').css('width',innerWidth+'px');
-	resizeTabs( $('div#contentbar'),true);
-	$('div#workbench > div#sidebar       > div.frame > div.window').css('width',outerWidth+'px');
-	resizeTabs( $('div#sidebar'),false);
-	$('div#workbench > div#bottombar     > div.frame > div.window').css('width',(outerWidth+innerWidth+8)+'px');
-	resizeTabs( $('div#bottombar'),false);
-
-	$('div#workbench > div#navigationbar > div.frame > div.window > div.content').css('height',singleHeight+'px');
-	$('div#workbench > div#contentbar    > div.frame > div.window > div.content').css('height',upperHeight +'px');
-	$('div#workbench > div#sidebar       > div.frame > div.window > div.content').css('height',upperHeight +'px');
-	$('div#workbench > div#bottombar     > div.frame > div.window > div.content').css('height',lowerHeight +'px');
+	// Verfügbare Breite der Workbench ist Fensterbreite - Innenabstand der Workbench (2*3px)
+	container.css('width' ,''+viewportWidth-6+'px');
+	
+	// Verfügbare Höhe   der Workbench ist Fensterhöhe - Höhe der Titelleiste - Innenabstand der Workbench (2*3px)
+	container.css('height',''+(viewportHeight-61)+'px');
+	
+	resizeWorkbenchContainer( container );
 }
 
 
 /**
  * Größe der TABs pro Frame neu berechnen.
  */
-function resizeTabs( el, closable ) 
+function resizeTabs( bar ) 
 {
-	var windowsize = parseInt($(el).find('div.frame > div.window').css('width'));
-	var count = $(el).find('ul.views > li').size();
-	var width = Math.floor(Math.min(((windowsize-24)/count)-(closable?24:0)-24-8-1,100));
-	$(el).find('li.action div.tabname').css('width',width+'px');
+	var tabCount = $(bar).find('div.views li.action').size();
+	//alert("Breite ist"+$(bar).width()+ " und Count ist "+tabCount + " sind "+(($(bar).width()-50)/tabCount));
+	var tabWidth = Math.min(90,Math.max(30,(($(bar).width()-60)/tabCount)-15 ));
+	$(bar).find('li.action div.tabname').width(tabWidth);
 }
 
 

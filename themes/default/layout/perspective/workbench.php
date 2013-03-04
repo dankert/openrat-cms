@@ -1,24 +1,44 @@
 
-<div class="bar small" id="navigationbar">
-<?php 
-view_header('tree');
-?>
-</div>
+<!-- Workbench -->
+<div class="container axle-x">
 
-<div class="bar wide" id="contentbar">
-<?php 
-view_header('content');
-?>
-</div>
+	<div class="bar small resizable" id="navigationbar" data-size-factor="0.2">
+		<?php 
+		view_header('tree');
+		?>
+	</div>
 
-<div class="bar small" id="sidebar">
-<?php 
-view_header('side');
-?>
-</div>
+	<div class="divider to-right"></div>
 
-<div class="bar wide" id="bottombar">
-<?php 
-view_header('bottom');
-?>
+	<div class="container axle-y autosize">
+
+		<div class="container axle-x autosize">
+
+			<div class="bar wide autosize">
+				<?php 
+				view_header('content');
+				?>
+			</div>
+
+			<div class="divider to-left" />
+
+			<div class="bar small resizable" data-size-factor="0.2">
+				<?php 
+				view_header('side');
+				?>
+			</div>
+			
+		</div>
+
+
+		<div class="divider to-top" />
+
+		<div class="bar wide resizable" data-size-factor="0.2">
+			<?php 
+			view_header('bottom');
+			?>
+		</div>
+
+	</div>
+
 </div>

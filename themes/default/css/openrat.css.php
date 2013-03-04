@@ -1114,12 +1114,10 @@ body
 	overflow:hidden;
 }
 
-div#workbench > div.bar
+div#workbench div.bar
 {
-	float:left;
-	
 	border:1px solid <?php echo $_GET['title_background_color']; ?>;
-	margin:3px;
+	margin:0px;
 	padding:0px;
 	-moz-border-radius:5px;
     -webkit-border-radius:5px;
@@ -1127,13 +1125,22 @@ div#workbench > div.bar
     border-radius:5px;
 }
 
-div#workbench > div.bar
+div#workbench div.container,
+div#workbench div.bar,
+div#workbench div.divider
 {
+	display: inline;
+	float: left;
+	margin: 0px;
+}
+
+div#workbench
+{
+	padding:3px;
 }
 
 
-
-div#workbench > div.bar > div.frame > div.window > div.content
+div#workbench div.bar > div.frame > div.window > div.content
 {
 	overflow:auto;
 }
@@ -1795,4 +1802,38 @@ div.filler div.headermenu > a.entry,
 div.filler div.header a.back.button
 {
 	font-size: 0.8em;
+}
+
+
+div.container.axle-x > div.divider
+{
+	width:5px;
+}
+div.container.axle-y > div.divider
+{
+	height:5px;
+}
+
+/* Pfeile */
+div.divider.to-left
+{
+	cursor: w-resize;
+}
+div.divider.to-right
+{
+	cursor: e-resize;
+}
+div.divider.to-top
+{
+	cursor: n-resize;
+}
+div.divider.to-bottom
+{
+	cursor: s-resize;
+}
+
+/* Mouseover */
+div.container > div.divider.ui-draggable-dragging
+{
+	background-color: <?php echo $_GET['title_background_color']; ?>;
 }
