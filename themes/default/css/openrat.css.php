@@ -1835,5 +1835,6 @@ div.divider.to-bottom
 /* Mouseover */
 div.container > div.divider.ui-draggable-dragging
 {
+	z-index: 150;
 	background-color: <?php echo $_GET['title_background_color']; ?>;
 }
