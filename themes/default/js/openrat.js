@@ -70,7 +70,7 @@ function refreshAllRefreshables()
 		var id      = $(this).attr('data-id');
 		var extraid = $(this).attr('data-extra');
 		
-		loadView( $(this).closest('div.frame').find('div.content'),createUrl(action,method,id,extraid));
+		loadView( $(this).closest('div.frame').find('div.content'),action,method,id);
 	});
 	
 }
@@ -85,7 +85,7 @@ function refreshActualView( element )
 		var action = $(this).attr('data-action');
 		var id     = $(this).attr('data-id');
 		
-		loadView( $(this).closest('div.frame').find('div.content'),createUrl(action,method,id));
+		loadView( $(this).closest('div.frame').find('div.content'),action,method,id);
 	});
 
 }
@@ -114,7 +114,7 @@ function refreshWorkbench()
 			var method = $(this).attr('data-method');
 			var action = $(this).attr('data-action');
 			
-			loadView( $(this).closest('div.frame').find('div.content'),createUrl(action,method,0));
+			loadView( $(this).closest('div.frame').find('div.content'),action,method,0);
 		});
 
 		// OnClick-Handler zum Scrollen der Tabs
@@ -248,6 +248,7 @@ function refreshTitleBar()
 
 function loadViewByName(viewName, url )
 {
+	alert('loadViewByName');
 	loadView( $('div#'+viewName),url );
 }
 
@@ -258,10 +259,36 @@ function loadViewByName(viewName, url )
  * @param jo
  * @param url URL, von der der Inhalt geladen wird.
  */
-function loadView(jo, url )
+function loadView(contentEl,action,method,id  )
 {
-	$(jo).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
-			$(jo).fadeTo(350,1);
+	// Schauen, ob der Inhalt schon geladen ist...
+	var targetEl = $(contentEl).children('div.sheet.action-'+action+'.method-'+method+'.id'+id);
+	
+	if	( targetEl.size() == 0 )
+	{
+		// Noch nicht vorhanden, neues Element erstellen.
+		$(contentEl).children('div.sheet').hide();
+		targetEl = $('<div class="sheet action-'+action+' method-'+method+' id'+id + '" />' );
+		$(contentEl).append(targetEl);
+	}
+	else
+	{
+		if	( targetEl.is(':visible') )
+		{
+			return;
+		}
+		else
+		{
+			$(contentEl).children('div.sheet').hide();
+			targetEl.show();
+			return;
+		}
+	}
+			
+	var url = createUrl(action,method,id,0); // URL für das Laden erzeugen.
+	
+	$(targetEl).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
+			$(targetEl).fadeTo(350,1);
 			
 			if	( status == "error" )
 			{
@@ -269,14 +296,14 @@ function loadView(jo, url )
 				$(this).html("");
 				$(this).removeClass("loader");
 				// OK-button Ausblenden.
-				$(jo).closest('div.frame').find('div.bottom > div.command > input').addClass('invisible');
+				$(targetEl).closest('div.frame').find('div.bottom > div.command > input').addClass('invisible');
 				// var msg = "Sorry but there was an error: ";
 				//$(this).html(msg + xhr.status + " " + xhr.statusText);
 				return;
 			}
 
 			$(this).removeClass("loader");
-			registerViewEvents( jo );
+			registerViewEvents( targetEl );
 		});
 }
 
@@ -544,17 +571,17 @@ function loadTree()
 	if	( $('div#tree li.action').data('action')=='tree' )
 	{
 		// Oberstes Tree-Element erzeugen
-		$('div#tree div.window div.content').html("&nbsp;");
+		$('div#tree div.window div.content > div.sheet.action-tree.method-tree').html("&nbsp;");
 		
 		// Wurzel des Baums laden
 		//loadBranch( $('div#tree ul.tree > li'),'root',0);
-		$('div#tree div.content').orTree( { type:'root',id:0,onSelect:function(name,type,id) {
+		$('div#tree div.content > div.sheet.action-tree.method-tree').orTree( { type:'root',id:0,onSelect:function(name,type,id) {
 			openNewAction( name,type,id, '' );
 		} });
 		
 		// Die ersten 2 Hierarchien öffnen:
-		$('div#tree div.content > ul.tree > div.tree').delay(500).click();
-		$('div#tree div.content > ul.tree > div.tree').delay(500).click();
+		$('div#tree div.content > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
+		$('div#tree div.content > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
 	}
 }
 
@@ -596,13 +623,12 @@ function postUrl(url,element)
  * @param action Action
  * @param id Id
  */
-function startView( element,view )
+function startView( element,method )
 {
 	var action = $(element).closest('div.frame').find('li.active').data('action');
 	var id     = $(element).closest('div.frame').find('li.active').data('id'    );
-	var url    = createUrl(action, view, id);
 	
-	loadView( $(element).closest('div.frame').find('div.content'), url );
+	loadView( $(element).closest('div.frame').find('div.content'), action,method,id );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
@@ -619,14 +645,13 @@ function startDialog( element,method,action,modal )
 {
 	var action = $(element).closest('div.frame').find('li.active').data('action');
 	var id     = $(element).closest('div.frame').find('li.active').data('id'    );
-	var url    = createUrl(action, method, id);
 	
 	$('div#filler').fadeTo(500,0.5);
 	//$('div#dialog').html('<div class="frame" data-action="'+action+'" data-method="'+method+'" data-id="'+id+'"><div class="window"><div class="content" /></div></div>');
 	$('div#dialog').html('<div class="frame"><div class="window"><div class="content" /></div></div>');
 	$('div#dialog').show();
 	
-	loadView( $('div#dialog div.content'), url );
+	loadView( $('div#dialog div.content'), action,method,id );
 	
 	//$('div#workbench div.frame.modal').parent().addClass('modal');
 	//$('div#workbench').addClass('modal');
@@ -645,10 +670,10 @@ function startDialog( element,method,action,modal )
 function modalView( element,view )
 {
 	var action = $(element).closest('div.frame').find('li.active').attr('data-action');
+	var method = $(element).closest('div.frame').find('li.active').attr('data-method');
 	var id     = $(element).closest('div.frame').find('li.active').attr('data-id'    );
-	var url    = createUrl(action, view, id);
 	$(element).closest('div.content').modal( { "overlayClose":"true","xxxonClose":function(){alert("close)");} } );
-	loadView( $(element).closest('div.content'), url );
+	loadView( $(element).closest('div.content'), action, method,id );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
@@ -1165,6 +1190,15 @@ function loadWindow( el, actionName, subactionName )
 }
 
 
+/**
+ * Erzeugt eine URL, um die gewünschte Action vom Server zu laden.
+ * 
+ * @param action
+ * @param subaction
+ * @param id
+ * @param extraid
+ * @returns URL
+ */
 function createUrl(action,subaction,id,extraid) 
 {
 	var url = './dispatcher.php';

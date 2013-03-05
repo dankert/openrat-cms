@@ -13,7 +13,7 @@ jQuery.fn.orLoadView = function()
 		frame.find('ul.views li.active').removeClass('active');
 		$(this).addClass('active');
 		
-		loadView( frame.find('div.content'),createUrl(action,method,id));
+		loadView( frame.find('div.content'),action,method,id);
 	});
 
 	
