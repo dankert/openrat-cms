@@ -262,13 +262,13 @@ function loadViewByName(viewName, url )
 function loadView(contentEl,action,method,id  )
 {
 	// Schauen, ob der Inhalt schon geladen ist...
-	var targetEl = $(contentEl).children('div.sheet.action-'+action+'.method-'+method+'.id'+id);
+	var targetEl = $(contentEl).children('div.sheet.action-'+action+'.method-'+method+'.id-'+id);
 	
 	if	( targetEl.size() == 0 )
 	{
 		// Noch nicht vorhanden, neues Element erstellen.
 		$(contentEl).children('div.sheet').hide();
-		targetEl = $('<div class="sheet action-'+action+' method-'+method+' id'+id + '" />' );
+		targetEl = $('<div class="sheet action-'+action+' method-'+method+' id-'+id + '" />' );
 		$(contentEl).append(targetEl);
 	}
 	else
@@ -737,6 +737,12 @@ function openNewAction( name,action,id,extraId )
 		$('div#content > div.window > div.menu > div.views > ul.views').scrollLeft(9999);
 		$('div#content > div.window > div.menu > div.views > ul.views img.close').click( function()
 				{
+					// Zuerst die dazugehörigen, geladenen Inhalte von Views löschen, um kein
+					// Memory-Leak zu erzeugen ;)
+					var action = $(this).closest('li.action').data('action');
+					var id     = $(this).closest('li.action').data('id'    );
+					$('div#workbench div.content > div.sheet.action-'+action+'.id-'+id).remove();
+					
 					// Schließen
 					// Wenn aktiver Tab, dann den Inhalt loeschen
 					if	( $(this).closest('li.action').hasClass('active') )
