@@ -1359,8 +1359,6 @@ table td.changed {
 
 
 /* Modale Dialoge */
-#simplemodal-overlay {background-color:#000;}
-#simplemodal-container {background-color:#333; border:8px solid #444; padding:12px;}
 
 div#filler
 {
@@ -1375,7 +1373,7 @@ div#filler
 	opacity: 0.5;
 }
 
-div#workbench > div.bar.modal
+div#workbench div.bar.modal
 {
 	
 	/*width:60%;*/
