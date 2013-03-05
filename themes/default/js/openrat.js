@@ -58,37 +58,34 @@ function refreshAll()
 }
 
 
-function refreshAllRefreshables() {
-	
+function refreshAllRefreshables()
+{
 	// Default-Inhalte der einzelnen Views laden.
-	$('div#workbench div.refreshable li.active').each( function() {
+	$('div#workbench div.bar ul.views li.active').each( function() {
+		if	( $(this).hasClass('static') )
+			return;
+		
 		var method  = $(this).attr('data-method');
-		var p       = $(this).closest('div.frame');
+		var action  = $(this).attr('data-action');
+		var id      = $(this).attr('data-id');
+		var extraid = $(this).attr('data-extra');
 		
-		var action  = p.attr('data-action');
-		var id      = p.attr('data-id');
-		var extraid = p.attr('data-extra');
-		//alert(method+' '+action);
-		
-		loadView( p.find('div.content'),createUrl(action,method,id,extraid));
+		loadView( $(this).closest('div.frame').find('div.content'),createUrl(action,method,id,extraid));
 	});
 	
 }
 
 
 
-function refreshActualView(element) {
-
+function refreshActualView( element )
+{
 	// Default-Inhalte der einzelnen Views laden.
 	$(element).closest('div.frame').find('li.active').each( function() {
 		var method = $(this).attr('data-method');
-		var p = $(this).closest('div.frame');
-		var action = p.attr('data-action');
-		var id     = p.attr('data-id');
-		//alert(method+' '+action);
+		var action = $(this).attr('data-action');
+		var id     = $(this).attr('data-id');
 		
-		
-		loadView( p.find('div.content'),createUrl(action,method,id));
+		loadView( $(this).closest('div.frame').find('div.content'),createUrl(action,method,id));
 	});
 
 }
@@ -115,13 +112,9 @@ function refreshWorkbench()
 		// Default-Inhalte der einzelnen Views laden.
 		$(this).fadeIn(750).find('li.active').each( function() {
 			var method = $(this).attr('data-method');
-			var p = $(this).closest('div.frame');
-			var action = p.attr('data-action');
-			//alert(method+' '+action);
+			var action = $(this).attr('data-action');
 			
-			
-			//alert('go2');
-			loadView( p.find('div.content'),createUrl(action,method,0));
+			loadView( $(this).closest('div.frame').find('div.content'),createUrl(action,method,0));
 		});
 
 		// OnClick-Handler zum Scrollen der Tabs
@@ -258,43 +251,16 @@ function loadViewByName(viewName, url )
 	loadView( $('div#'+viewName),url );
 }
 
+
+/**
+ * Laden einer View.
+ * 
+ * @param jo
+ * @param url URL, von der der Inhalt geladen wird.
+ */
 function loadView(jo, url )
 {
-	//alert("Lade "+url + " in Objekt "+jo);
-	//   E d i t o r
-	var editorConfig = {
-			skin : 'v2',
-			baseHref: OR_THEMES_EXT_DIR+'../editor/editor/',
-			customConfig : 'config-openrat.js',
-			filebrowserUploadUrl:'./dispatcher.php?action=filebrowser&subaction=directupload&name=upload',
-			filebrowserBrowseUrl:'./dispatcher.php?action=filebrowser&subaction=browse'
-	};
-
-	/*
-	if	( $(jo).find('textarea#pageelement_edit_editor').size() > 0 )
-	{
-	var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
-	if (o) o.destroy();
-	}
-	*/
-
-	// Untermenü ermitteln.
-	var submenu = "";
-	var action = $(jo).closest("div.frame").attr("data-action");
-	var method = $(jo).closest("div.frame").find("li.active").attr("data-method");
-
-	/*
-	 * 
-	var menuEntries = menus[action];
-	if	( menuEntries != null )
-	{
-	}
-	 */
-		
-	//alert(action+"_"+method);
-	
 	$(jo).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
-			//$(jo).slideDown('fast');
 			$(jo).fadeTo(350,1);
 			
 			if	( status == "error" )
@@ -323,14 +289,9 @@ function loadView(jo, url )
  */
 function registerViewEvents( viewEl )
 {
-	//alert("o ist "+o);
-	//$('textarea.editor').ckeditor( function() { /*alert("editor ready");*/ /* callback code */ }, editorConfig );
-	//CKEDITOR.replace('text',{
-    //    customConfig : 'config-openrat.js'
-    //});
 	
 	var $formVorhanden = $(viewEl).find('form').size() > 0;
-	var $formInput     = $(viewEl).closest('div.frame').find('div.bottom > div.command > input')
+	var $formInput     = $(viewEl).closest('div.frame').find('div.bottom > div.command > input');
 	if	( $formVorhanden )
 		$formInput.removeClass('invisible');
 	else
@@ -341,9 +302,6 @@ function registerViewEvents( viewEl )
 		$('div.window form input[name=login_name]    ').attr('value',$('#uname'    ).attr('value'));
 		$('div.window form input[name=login_password]').attr('value',$('#upassword').attr('value'));
 	}
-		//$.get( createUrl('login','ping',0) );
-	//alert( "user: "+$('#uname').attr('value') );
-	//alert( "up: "+$('#upassword').attr('value') );
 	
 	// Fokus nicht setzen, da mehrere Views sich sonst um den Fokus streiten.
 	//$(viewEl).find('input.focus').focus();
@@ -583,7 +541,7 @@ function fullscreen( element ) {
 function loadTree()
 {
 	// Nur, wenn ein Baum auch angezeigt werden soll.
-	if	( $('div#tree').attr('data-action')=='tree' )
+	if	( $('div#tree li.action').data('action')=='tree' )
 	{
 		// Oberstes Tree-Element erzeugen
 		$('div#tree div.window div.content').html("&nbsp;");
@@ -640,11 +598,10 @@ function postUrl(url,element)
  */
 function startView( element,view )
 {
-	//alert( "startView: "+$(element).html() );
-	var action = $(element).closest('div.frame').attr('data-action');
-	var id     = $(element).closest('div.frame').attr('data-id'    );
+	var action = $(element).closest('div.frame').find('li.active').data('action');
+	var id     = $(element).closest('div.frame').find('li.active').data('id'    );
 	var url    = createUrl(action, view, id);
-	//alert( "startView: "+action+"/"+view+"#"+id );
+	
 	loadView( $(element).closest('div.frame').find('div.content'), url );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
@@ -660,14 +617,13 @@ function startView( element,view )
  */
 function startDialog( element,method,action,modal )
 {
-	//alert( "startView: "+$(element).html() );
-	var action = $(element).closest('div.frame').attr('data-action');
-	var id     = $(element).closest('div.frame').attr('data-id'    );
+	var action = $(element).closest('div.frame').find('li.active').data('action');
+	var id     = $(element).closest('div.frame').find('li.active').data('id'    );
 	var url    = createUrl(action, method, id);
-	//alert( "startView: "+action+"/"+view+"#"+id );
 	
 	$('div#filler').fadeTo(500,0.5);
-	$('div#dialog').html('<div class="frame" data-action="'+action+'" data-method="'+method+'" data-id="'+id+'"><div class="window"><div class="content" /></div></div>');
+	//$('div#dialog').html('<div class="frame" data-action="'+action+'" data-method="'+method+'" data-id="'+id+'"><div class="window"><div class="content" /></div></div>');
+	$('div#dialog').html('<div class="frame"><div class="window"><div class="content" /></div></div>');
 	$('div#dialog').show();
 	
 	loadView( $('div#dialog div.content'), url );
@@ -688,9 +644,8 @@ function startDialog( element,method,action,modal )
  */
 function modalView( element,view )
 {
-	//alert( "startView: "+$(element).html() );
-	var action = $(element).closest('div.frame').attr('data-action');
-	var id     = $(element).closest('div.frame').attr('data-id'    );
+	var action = $(element).closest('div.frame').find('li.active').attr('data-action');
+	var id     = $(element).closest('div.frame').find('li.active').attr('data-id'    );
 	var url    = createUrl(action, view, id);
 	$(element).closest('div.content').modal( { "overlayClose":"true","xxxonClose":function(){alert("close)");} } );
 	loadView( $(element).closest('div.content'), url );
@@ -752,7 +707,7 @@ function openNewAction( name,action,id,extraId )
 		if	( $('div#content > div.window > div.menu > div.views > ul.views > li.action').size() >= maxTabs )
 			$('div#content > div.window > div.menu > div.views > ul.views > li.action').first().remove();
 				
-		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" title="'+name+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><div class="tabname">'+name+'</div><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
+		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" title="'+name+'" data-action="'+action+'"  data-id="'+id+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><div class="tabname">'+name+'</div><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
 		resizeTabs( $('div#contentbar'),true);
 		$('div#content > div.window > div.menu > div.views > ul.views').scrollLeft(9999);
 		$('div#content > div.window > div.menu > div.views > ul.views img.close').click( function()
@@ -817,7 +772,7 @@ function openNewAction( name,action,id,extraId )
  */
 function setNewAction( action,id,extraId )
 {
-	$('div#workbench div.refreshable').attr('data-action',action).attr('data-id',id).attr('data-extra',JSON.stringify(extraId));
+	$('div#workbench ul.views > li.action.dependent').attr('data-action',action).attr('data-id',id).attr('data-extra',JSON.stringify(extraId));
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	refreshAllRefreshables();

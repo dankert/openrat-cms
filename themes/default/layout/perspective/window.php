@@ -11,7 +11,7 @@ function view_header( $name )
 ?>
 
 
-<div id="<?php echo $name ?>" data-action="<?php echo @$v['action'] ?>" class="frame<?php echo (@$v['refreshable']?' refreshable':'') ?><?php echo (@$v['modal']?' modal':'') ?>">
+<div id="<?php echo $name ?>" class="frame<?php echo (@$v['modal']?' modal':'') ?>">
 <div class="window">
 
 <div class="menu">
@@ -28,10 +28,10 @@ function view_header( $name )
     foreach( $viewlist as $vn )
           {
           	$tmp_text = langHtml('menu_'.$vn);
-			$liClass  = 'action'.($vn==$v['default']?' active':'');
+			$liClass  = 'action'.($vn==$v['default']?' active':'').(@$v['refreshable']?' dependent':' static');
 			$icon_url = OR_THEMES_EXT_DIR.'default/images/icon/'.$vn.'.png';
 			
-			?><li data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
+			?><li data-action="<?php echo @$v['action'] ?>" data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
           		?><img class="icon" src="<?php echo $icon_url ?>" /><div class="tabname"><?php echo $tmp_text ?></div><?php
           	?></li><?php
           }
