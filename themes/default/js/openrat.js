@@ -1329,8 +1329,8 @@ function resizeTabs( bar )
 
 function help(el,url,suffix)
 {
+	var action = $(el).closest('div.frame').find('li.action.active').attr('data-action');
 	var method = $(el).closest('div.frame').find('li.action.active').attr('data-method');
-	var action = $(el).closest('div.frame').attr('data-action');
 	
 	window.open(url + action + '/'+ method + suffix, 'OpenRat_Help', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
 }
