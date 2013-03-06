@@ -22,7 +22,7 @@
 
 			<div class="divider to-left" />
 
-			<div class="bar small resizable" data-size-factor="0.2">
+			<div class="bar small resizable" data-size-factor="0.25">
 				<?php 
 				view_header('side');
 				?>
@@ -33,7 +33,7 @@
 
 		<div class="divider to-top" />
 
-		<div class="bar wide resizable" data-size-factor="0.2">
+		<div class="bar wide resizable" data-size-factor="0.25">
 			<?php 
 			view_header('bottom');
 			?>

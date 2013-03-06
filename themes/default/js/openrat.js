@@ -166,6 +166,8 @@ function registerWorkbenchEvents()
 		revert: 'invalid'
 	} );
 	
+	// Ziehen von Views in andere View-Leisten.
+	// Die View wird dabei einfach kopiert. Container mit leeren View-Leisten werden gelöscht.
 	$('ul.views').droppable(
 		{
 			accept     : 'li.action',
@@ -185,15 +187,23 @@ function registerWorkbenchEvents()
 				// Falls die View-Liste, von der die View weggezogen wurde, jetzt leer ist:
 				if	( oldViewList.find('li').size() == 0 )
 				{
-					var container = oldViewList.closest('div.container');
+					var oldContainer = oldViewList.closest('div.container');
 					oldViewList.closest('div.bar').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
-					container.replaceWith( container.children('div.bar') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
+					
+					if	( oldContainer.hasClass('autosize') )
+						oldContainer.children('div.bar').addClass('autosize').removeClass('resizable');
+					else
+						oldContainer.children('div.bar').addClass('resizable').removeClass('autosize');
+
+					oldContainer.replaceWith( oldContainer.children('div.bar') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
 					resizeWorkbench();
 				}
 			}
 		}
 	);
 
+	// Ziehen von Views in anderen Inhalt-Bereichen
+	// Dabei wird der Ziel-Bereich durch einen neuen View-Container ersetzt.
 	$('div.content').droppable(
 		{
 			accept     : 'li.action',
@@ -204,7 +214,6 @@ function registerWorkbenchEvents()
 				var dropped     = ui.draggable;
 				var droppedOn   = $(this);
 				var oldViewList = dropped.parent();
-				var bar         = $(droppedOn).closest('div.bar');
 				
 				var offsetDropped = dropped.offset();
 				var offsetContent = droppedOn.offset();
@@ -216,7 +225,7 @@ function registerWorkbenchEvents()
 				var paddingBottom = offsetContent.top+droppedOn.height()-offsetDropped.top;
 				//alert( ' L:' + paddingLeft + ' R:'  + paddingRight + ' T:'+ paddingTop + ' B:' + paddingBottom );
 				
-				var newContainer = $('<div class="container"><div class="bar first" /><div class="divider" /><div class="second"></div>');
+				var newContainer = $('<div class="container"><div class="first" /><div class="divider" /><div class="second"></div>');
 				
 				if	( paddingLeft < Math.min(paddingRight,Math.min(paddingTop,paddingBottom)) )
 				{
@@ -250,6 +259,8 @@ function registerWorkbenchEvents()
 					newContainer.children('div.first' ).removeClass('first').addClass('autosize');
 					newContainer.children('div.second').removeClass('first').addClass('resizable' );
 				}
+
+				newContainer.children('div.resizable' ).addClass('bar').data('size-factor',0.4);
 				
 				// Die komplette Bar der Quelle kopieren.
 				$(dropped).closest('div.bar').clone().addClass('resizable').removeClass('autosize').replaceAll( newContainer.children('div.resizable') );
@@ -257,7 +268,7 @@ function registerWorkbenchEvents()
 				$(dropped).detach().css({top: 0,left: 0}).appendTo( newContainer.find('ul.views') ).click(); // View kopieren
 
 				// Neuen Container in den DOM einfügen.
-				var oldContainer = $(bar).parent().replaceWith( newContainer );
+				var oldContainer = $(droppedOn).closest('div.bar').replaceWith( newContainer );
 				newContainer.children('div.autosize').replaceWith( oldContainer ); 
 				
 				if	( oldContainer.hasClass('autosize' )) { newContainer.addClass('autosize' ).removeClass('resizable'); }
@@ -267,9 +278,16 @@ function registerWorkbenchEvents()
 				// Falls die View-Liste, von der die View weggezogen wurde, jetzt leer ist:
 				if	( oldViewList.find('li').size() == 0 )
 				{
-					var container = oldViewList.closest('div.container');
+					var oldContainer = oldViewList.closest('div.container');
 					oldViewList.closest('div.bar').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
-					container.replaceWith( container.children('div.bar') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
+					
+					if	( oldContainer.hasClass('autosize') )
+						oldContainer.children('div.bar').addClass('autosize').removeClass('resizable');
+					else
+						oldContainer.children('div.bar').addClass('resizable').removeClass('autosize');
+
+					oldContainer.replaceWith( oldContainer.children('div.bar') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
+					resizeWorkbench();
 				}
 				
 				resizeWorkbench();
@@ -1363,6 +1381,9 @@ function resizeWorkbenchContainer( container )
 	var availableWidth  = container.width();
 	var availableHeight = container.height();
 	var factor = container.children('div.resizable').data('size-factor');
+	
+	if	( !factor)
+		factor = 0.3;
 	
 	var horizontal = container.hasClass('axle-x');
 	
