@@ -134,85 +134,9 @@ function refreshWorkbench()
 		}
 		);
 		
-		// OnClick-Handler für Klick auf einen Tab-Reiter.
-		$('ul.views > li.action').click( function() {
-			$(this).orLoadView();
-		});
-		
-		$('div.menu').dblclick( function()
-				{
-					fullscreen( this );
-				} );
-		
-		// Drag n Drop für Views
-		$('ul.views > li.action').draggable( {cursor:'move',revert: 'invalid' });
-		$('ul.views').droppable( {accept:'li.action',hoverClass: 'drophover',activeClass: 'dropactive',drop: function(event, ui) {
-			var dropped   = ui.draggable;
-            var droppedOn = $(this);
-            if	( $(dropped).closest('div.frame').attr('id') == $(droppedOn).closest('div.frame').attr('id') )
-            	$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
-            else
-            	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
-		} } );
 
-		// geht nicht zusammen mit draggable...
-		//$('ul.views').sortable();
 
-		// Modalen Dialog erzeugen.
-		if	( $('div#workbench div.frame.modal').size() > 0 )
-		{
-			$('div#workbench div.frame.modal').parent().addClass('modal');
-			$('div#filler').fadeTo(500,0.5);
-			$('div#workbench').addClass('modal');
-		}
-		
-		
-		// Divider
-		$('div.container.axle-x > div.divider').draggable(
-				
-				{
-					stop: function( event, ui ) {
-						var xoffset = ui.position.left;
-						var lr = $(this).hasClass('to-right')?1:-1;
-							
-						$(this).parent().children('div.resizable').each( function()
-							{
-								var factor = ((lr*xoffset)+$(this).width()) / ($(this).parent().width());
-								factor = Math.min(0.5,Math.max(0.1,factor)); // Erlaubter Bereich
-								
-								$(this).data('size-factor',factor);
-							}
-						);
-						resizeWorkbenchContainer( $(this).parent() );
-					},
-					axis: "x",
-					revert: true,
-					revertDuration: 0
-				}
-			);
-		$('div.container.axle-y > div.divider').draggable(
-				
-				{
-					stop: function( event, ui ) {
-						var yoffset = ui.position.top;
-						var lr = $(this).hasClass('to-bottom')?1:-1;
-						
-						$(this).parent().children('div.resizable').each( function()
-							{
-								var factor = ((lr*yoffset)+$(this).height()) / ($(this).parent().height());
-								factor = Math.min(0.5,Math.max(0.1,factor)); // Erlaubter Bereich
-								
-								$(this).data('size-factor',factor);
-							}
-						);
-						resizeWorkbenchContainer( $(this).parent() );
-					},
-					axis: "y",
-					revert: true,
-					revertDuration: 0
-				}
-			);
-
+		registerWorkbenchEvents();
 	});
 	//alert('go');
 	
@@ -227,6 +151,201 @@ function refreshWorkbench()
 		resizeWorkbench();
 	} );
 }
+
+
+
+/**
+ * Registriert alle Events, die in der Workbench laufen sollen.
+ */
+function registerWorkbenchEvents()
+{
+	// Drag and Drop für Views
+	$('ul.views > li.action').draggable(
+	{
+		cursor: 'move',
+		revert: 'invalid'
+	} );
+	
+	$('ul.views').droppable(
+		{
+			accept     : 'li.action',
+			hoverClass : 'drophover',
+			activeClass: 'dropactive',
+			drop: function(event, ui) // View fällt auf eine andere, existierende View-Liste
+			{
+				var dropped     = ui.draggable;
+				var droppedOn   = $(this);
+				var oldViewList = dropped.parent();
+				
+				if	( $(dropped).closest('div.frame').attr('id') == $(droppedOn).closest('div.frame').attr('id') )
+					$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
+				else
+					$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
+				
+				// Falls die View-Liste, von der die View weggezogen wurde, jetzt leer ist:
+				if	( oldViewList.find('li').size() == 0 )
+				{
+					var container = oldViewList.closest('div.container');
+					oldViewList.closest('div.bar').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
+					container.replaceWith( container.children('div.bar') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
+					resizeWorkbench();
+				}
+			}
+		}
+	);
+
+	$('div.content').droppable(
+		{
+			accept     : 'li.action',
+			hoverClass : 'drophover',
+			activeClass: 'dropactive',
+			drop       : function(event, ui)
+			{
+				var dropped     = ui.draggable;
+				var droppedOn   = $(this);
+				var oldViewList = dropped.parent();
+				var bar         = $(droppedOn).closest('div.bar');
+				
+				var offsetDropped = dropped.offset();
+				var offsetContent = droppedOn.offset();
+
+				// Abstände im Zielelement zu dem Rändern bestimmen.
+				var paddingLeft   = offsetDropped.left-offsetContent.left;
+				var paddingRight  = offsetContent.left+droppedOn.width()-offsetDropped.left;
+				var paddingTop    = offsetDropped.top-offsetContent.top;
+				var paddingBottom = offsetContent.top+droppedOn.height()-offsetDropped.top;
+				//alert( ' L:' + paddingLeft + ' R:'  + paddingRight + ' T:'+ paddingTop + ' B:' + paddingBottom );
+				
+				var newContainer = $('<div class="container"><div class="bar first" /><div class="divider" /><div class="second"></div>');
+				
+				if	( paddingLeft < Math.min(paddingRight,Math.min(paddingTop,paddingBottom)) )
+				{
+					// Linker Rand ist der nächste.
+					newContainer.addClass('axle-x');
+					newContainer.children('div.divider' ).addClass('to-right');
+					newContainer.children('div.first' ).removeClass('first').addClass('resizable');
+					newContainer.children('div.second').removeClass('first').addClass('autosize' );
+				}
+				else if	( paddingRight < Math.min(paddingTop,paddingBottom) )
+				{
+					// Rechter Rand ist der nächste.
+					newContainer.addClass('axle-x');
+					newContainer.children('div.divider' ).addClass('to-left');
+					newContainer.children('div.first' ).removeClass('first').addClass('autosize');
+					newContainer.children('div.second').removeClass('first').addClass('resizable' );
+				}
+				else if	( paddingTop < paddingBottom )
+				{
+					// Oberer Rand ist der nächste.
+					newContainer.addClass('axle-y');
+					newContainer.children('div.divider' ).addClass('to-bottom');
+					newContainer.children('div.first' ).removeClass('first').addClass('resizable');
+					newContainer.children('div.second').removeClass('first').addClass('autosize' );
+				}
+				else
+				{
+					// Unterer Rand ist der nächste.
+					newContainer.addClass('axle-y');
+					newContainer.children('div.divider' ).addClass('to-top');
+					newContainer.children('div.first' ).removeClass('first').addClass('autosize');
+					newContainer.children('div.second').removeClass('first').addClass('resizable' );
+				}
+				
+				// Die komplette Bar der Quelle kopieren.
+				$(dropped).closest('div.bar').clone().addClass('resizable').removeClass('autosize').replaceAll( newContainer.children('div.resizable') );
+				newContainer.find('ul.views > li').remove(); // Alle View entfernen
+				$(dropped).detach().css({top: 0,left: 0}).appendTo( newContainer.find('ul.views') ).click(); // View kopieren
+
+				// Neuen Container in den DOM einfügen.
+				var oldContainer = $(bar).parent().replaceWith( newContainer );
+				newContainer.children('div.autosize').replaceWith( oldContainer ); 
+				
+				if	( oldContainer.hasClass('autosize' )) { newContainer.addClass('autosize' ).removeClass('resizable'); }
+				if	( oldContainer.hasClass('resizable')) { newContainer.addClass('resizable').removeClass('autosize' ); }
+				oldContainer.addClass('autosize' ).removeClass('resizable');
+			
+				// Falls die View-Liste, von der die View weggezogen wurde, jetzt leer ist:
+				if	( oldViewList.find('li').size() == 0 )
+				{
+					var container = oldViewList.closest('div.container');
+					oldViewList.closest('div.bar').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
+					container.replaceWith( container.children('div.bar') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
+				}
+				
+				resizeWorkbench();
+				registerWorkbenchEvents();
+			}
+		} );
+
+	// geht nicht zusammen mit draggable...
+	//$('ul.views').sortable();
+
+	// Modalen Dialog erzeugen.
+	if	( $('div#workbench div.frame.modal').size() > 0 )
+	{
+		$('div#workbench div.frame.modal').parent().addClass('modal');
+		$('div#filler').fadeTo(500,0.5);
+		$('div#workbench').addClass('modal');
+	}
+	
+	
+	// Größe der einzelnen Bereiche verändern
+	$('div.container.axle-x > div.divider').draggable(
+			
+			{
+				stop: function( event, ui ) {
+					var xoffset = ui.position.left;
+					var lr = $(this).hasClass('to-right')?1:-1;
+						
+					$(this).parent().children('div.resizable').each( function()
+						{
+							var factor = ((lr*xoffset)+$(this).width()) / ($(this).parent().width());
+							factor = Math.min(0.5,Math.max(0.1,factor)); // Erlaubter Bereich
+							
+							$(this).data('size-factor',factor);
+						}
+					);
+					resizeWorkbenchContainer( $(this).parent() );
+				},
+				axis: "x",
+				revert: true,
+				revertDuration: 0
+			}
+		);
+	$('div.container.axle-y > div.divider').draggable(
+			
+			{
+				stop: function( event, ui ) {
+					var yoffset = ui.position.top;
+					var lr = $(this).hasClass('to-bottom')?1:-1;
+					
+					$(this).parent().children('div.resizable').each( function()
+						{
+							var factor = ((lr*yoffset)+$(this).height()) / ($(this).parent().height());
+							factor = Math.min(0.5,Math.max(0.1,factor)); // Erlaubter Bereich
+							
+							$(this).data('size-factor',factor);
+						}
+					);
+					resizeWorkbenchContainer( $(this).parent() );
+				},
+				axis: "y",
+				revert: true,
+				revertDuration: 0
+			}
+		);
+
+	// OnClick-Handler für Klick auf einen Tab-Reiter.
+	$('ul.views > li.action').click( function() {
+		$(this).orLoadView();
+	});
+	
+	$('div.menu').dblclick( function()
+			{
+				fullscreen( this );
+			} );
+}
+
 
 
 /**
