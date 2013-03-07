@@ -53,7 +53,7 @@ iframe
 
 div.breadcrumb,
 div.breadcrumb a,
-div.window > div.title
+div.panel > div.title
 {
 	x-background-color:<?php echo $_GET['title_background_color']; ?>;
 	xsopacity:0.7;
@@ -166,29 +166,23 @@ div#tree, div#content
 }
 */
 
-/*div.window {
+/*div.panel {
     height:90%;
 }
 */
 
-div.window > div.title
+div.panel div.title
 {
 	height:20px;
 }
 
-/*
-div.window > div.menu
-{
-	height:50px;
-}
-*/
 
 
-div.window div.status
+div.panel div.status
 {
 	height:35px;
 }
-div.window > div.content
+div.panel > div.content
 {
 	xxoverflow-x:auto;
 }
@@ -287,7 +281,7 @@ div.dropdown div.entry
 
 /*Dropdown anzeigen!!!*/
 div#title div:hover div.dropdown,
-div.window div:hover > div.dropdown,
+div.panel div:hover > div.dropdown,
 div.icon:hover > div.dropdown
 {
 	display:block;
@@ -504,8 +498,8 @@ table.main
 
 
 
-div.window input.checkbox,
-div.window input.radio
+div.panel input.checkbox,
+div.panel input.radio
 {
 	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 }
@@ -809,7 +803,7 @@ div.structure em
 	cursor: move;
 }
 
-div.window div.menu > div.icons
+div.panel div.header > div.icons
 {
 	/*float:right;*/
 }
@@ -823,7 +817,7 @@ div.forward_link
 	float:right;
 }
 
-div.window > div.menu
+div.panel > div.header
 {
 	padding:0px;
 	width:100%;
@@ -832,7 +826,7 @@ div.window > div.menu
 }
 
 
-div.window div.menu ul.views
+div.panel div.header ul.views
 {
 	text-align: left; /* set to left, right or center */
 	list-style-type: none;
@@ -861,20 +855,20 @@ ul.views > li > div
 	float:left;
 }
 
-div.views div.icons,
+div.header div.icons,
 div.inputholder > div.icon
 {
 	float: right;
 }
 
 
-div.window div.menu ul.views
+div.panel div.header > ul.views
 {
 	float:left;
 	height: 25px;
 }
 
-div.window div.menu 
+div.panel div.header
 {
 	xborder-bottom: 1px solid <?php echo $_GET['title_background_color']; ?>;
 }
@@ -885,7 +879,7 @@ div.content
 	clear: both;
 }
 
-div.window ul.views li
+div.panel ul.views li
 {
 	vertical-align: middle;
 	padding:0px;
@@ -932,7 +926,7 @@ div#workbench div.frame {
 
 
 /*
-div.window {
+div.panel {
 	padding:3px;
 	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 	
@@ -945,12 +939,12 @@ div.window {
 
 
 
-div.window {
+div.panel {
 	margin:0px;
 	padding:0px;
 }
 
-div.window div.content table
+div.panel div.content table
 {
 	overflow:auto;
 	border:2px <?php echo $_GET['inactive_background_color']; ?>;
@@ -1006,7 +1000,7 @@ cursor:pointer;
 /* Hintergrund Fenster */
 /*
 
-div.window {
+div.panel {
 	background-color: #3399FF;
 }
 */
@@ -1015,38 +1009,38 @@ div.window {
 
 
 /*   S t a t u s z e i l e   */
-div.window div.status
+div.panel div.status
 {
 	padding:10px;
 }
 
 
-div.window div.status div.error,
+div.panel div.status div.error,
 div.message.error
 {
 	background: url(../images/notice_error.png) no-repeat;
 	background-position:5px 7px;
 }
-div.window div.status div.warn,
+div.panel div.status div.warn,
 div.message.warn
 {
 	background: url(../images/notice_warning.png) no-repeat;
 	background-position:5px 7px;
 }
-div.window div.status div.ok,
+div.panel div.status div.ok,
 div.message.ok
 {
 	background: url(../images/notice_ok.png) no-repeat;
 	background-position:5px 7px;
 }
-div.window div.status div.info,
+div.panel div.status div.info,
 div.message.info
 {
 	background: url(../images/notice_info.png) no-repeat;
 	background-position:5px 7px;
 }
 
-div.window div.status div,
+div.panel div.status div,
 div.message
 {
 	border:1px solid <?php echo $_GET['title_background_color']; ?>;
@@ -1072,7 +1066,7 @@ div.progress
 
 
 /*   V o l l b i l d   */
-div#workbench div.bar > div.frame > div.window.fullscreen
+div#workbench div.panel.fullscreen
 {
 	display:block;
 	z-index:109;
@@ -1088,7 +1082,7 @@ div#workbench div.bar > div.frame > div.window.fullscreen
     width:100% !important;
     height:100% !important;
 }
-div#workbench div.bar > div.frame > div.window.fullscreen > div.content
+div#workbench div.panel.fullscreen > div.content
 {
     width:100% !important;
     height:100% !important;
@@ -1114,7 +1108,7 @@ body
 	overflow:hidden;
 }
 
-div#workbench div.bar
+div#workbench div.panel
 {
 	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 	margin:0px;
@@ -1126,7 +1120,7 @@ div#workbench div.bar
 }
 
 div#workbench div.container,
-div#workbench div.bar,
+div#workbench div.panel,
 div#workbench div.divider
 {
 	display: inline;
@@ -1140,7 +1134,7 @@ div#workbench
 }
 
 
-div#workbench div.bar > div.frame > div.window > div.content
+div#workbench div.panel > div.content
 {
 	overflow:auto;
 }
@@ -1149,7 +1143,7 @@ div#workbench div.bar > div.frame > div.window > div.content
 /*
  * Formular-Button-Leiste
  */
-div.window {
+div.panel {
 	position:relative;
 }
 div.content div.bottom
@@ -1272,7 +1266,7 @@ div#shortcuts > div.shortcut:HOVER {
 		padding-right: 0px;
 	}
 	
-	div#workbench > div.bar > div.frame > div.window
+	div#workbench div.panel
 	{
 		width:auto !important;
 	}
@@ -1282,7 +1276,7 @@ div#shortcuts > div.shortcut:HOVER {
 		width:auto !import;ant;
 	}
 	
-	div#workbench > div.bar
+	div#workbench div.panel
 	{
 		width: auto;
 		float: none;
@@ -1291,7 +1285,7 @@ div#shortcuts > div.shortcut:HOVER {
 		padding-left: 20px;
 		padding-right: 20px;
 	}
-	div#workbench > div.bar > div.frame > div.window > div.content
+	div#workbench div.panel > div.content
 	{
 		overflow:auto;
 		height: auto !important;
@@ -1373,7 +1367,7 @@ div#filler
 	opacity: 0.5;
 }
 
-div#workbench div.bar.modal
+div#workbench div.panel.modal
 {
 	
 	/*width:60%;*/
@@ -1440,13 +1434,13 @@ body
 
 
 /* Formulare breit */
-div.bar.wide form div.line
+div.panel.wide form div.line
 {
 	clear:left;
 	margin-top:10px;
 }
 
-div.bar.wide form div.label
+div.panel.wide form div.label
 {
 	display:inline-block;
 	width:30%;
@@ -1454,7 +1448,7 @@ div.bar.wide form div.label
 	text-align: right;
 }
 
-div.bar.wide form div.input
+div.panel.wide form div.input
 {
 	display:inline-block;
 	width:60%;
@@ -1463,13 +1457,13 @@ div.bar.wide form div.input
 }
 
 /* Formulare schmal */
-div.bar.small form div.line
+div.panel.small form div.line
 {
 	clear:left;
 	padding:10px;
 }
 
-div.bar.small form div.label
+div.panel.small form div.label
 {
 	display:block;
 	width:100%;
@@ -1477,7 +1471,7 @@ div.bar.small form div.label
 	text-align: left;
 }
 
-div.bar.small form div.input
+div.panel.small form div.input
 {
 	display:block;
 	width:100%;
@@ -1683,8 +1677,7 @@ dl.notice > dd
 
 /*   S c h a t t e n   */
 div.content a.action,
-div.content a.help,
-div#title
+div.content a.help
 {
 	-webkit-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
     -moz-box-shadow: 3px 2px 5px <?php echo $_GET['title_background_color']; ?>;
@@ -1699,19 +1692,22 @@ div#title
 body
 {
 	xxxbackground-color:#c9c9c9;
-	background-color:<?php echo $_GET['title_text_color'] ?>;
+	background-color:<?php echo $_GET['inactive_background_color'] ?>;
 }
 
 /* Fenster-Hintergrund */
-div#header,                   /* Titelleite-Hintergrund */
-div.window > div.menu > div.icons,
-div.window > div.menu ul.menu li a,      /* Tabs */
-xdiv.window ul.menu li > span,  /* Tabs */
-div.window div.header, /* Fenster-Header */
-div.window ul.views > li.active,
-div.window ul.views > li.active:hover
+div.panel ul.views > li.active,
+div.panel ul.views > li.active:hover
 {
 	background-color: <?php echo $_GET['title_background_color']; ?>;
+	background-image: linear-gradient(<?php echo $_GET['inactive_background_color']; ?> 0%, <?php echo $_GET['title_background_color']; ?> 15%);
+	color: <?php echo $_GET['title_text_color']; ?>;
+}
+
+div#header                   /* Titelleite-Hintergrund */
+{
+	background-color: <?php echo $_GET['title_background_color']; ?>;
+	background-image: linear-gradient(<?php echo $_GET['title_background_color']; ?> 85%, <?php echo $_GET['inactive_background_color']; ?> 100%);
 	color: <?php echo $_GET['title_text_color']; ?>;
 }
 
@@ -1730,18 +1726,29 @@ div.content
 
 
 /* Reiter */
-div.window ul.views li
+div.panel ul.views li
+{
+	/*
+	background-color:<?php echo $_GET['background_color']; ?>;
+	*/
+}
+
+
+div.panel > div.content
 {
 	background-color:<?php echo $_GET['background_color']; ?>;
 }
 
-
-div.bar
+div.panel > div.header
 {
 	background-color:<?php echo $_GET['background_color']; ?>;
+	background-image: linear-gradient(<?php echo $_GET['inactive_background_color']; ?> 00%, <?php echo $_GET['background_color']; ?> 85%);
 }
+	
 
-div.window ul.views li:hover {
+
+
+div.panel ul.views li:hover {
 	background-color: <?php echo $_GET['inactive_background_color']; ?>;
 	/*
 	color: blue;

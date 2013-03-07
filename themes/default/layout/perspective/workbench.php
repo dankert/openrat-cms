@@ -2,7 +2,7 @@
 <!-- Workbench -->
 <div class="container axle-x">
 
-	<div class="bar small resizable" id="navigationbar" data-size-factor="0.2">
+	<div id="panel-tree" class="panel small resizable" id="navigationbar" data-size-factor="0.2">
 		<?php 
 		view_header('tree');
 		?>
@@ -14,7 +14,7 @@
 
 		<div class="container axle-x autosize">
 
-			<div class="bar wide autosize">
+			<div id="panel-content" class="panel wide autosize">
 				<?php 
 				view_header('content');
 				?>
@@ -22,7 +22,7 @@
 
 			<div class="divider to-left" />
 
-			<div class="bar small resizable" data-size-factor="0.25">
+			<div id="panel-side" class="panel small resizable" data-size-factor="0.25">
 				<?php 
 				view_header('side');
 				?>
@@ -33,7 +33,7 @@
 
 		<div class="divider to-top" />
 
-		<div class="bar wide resizable" data-size-factor="0.25">
+		<div id="panel-bottom" class="panel wide resizable" data-size-factor="0.25">
 			<?php 
 			view_header('bottom');
 			?>

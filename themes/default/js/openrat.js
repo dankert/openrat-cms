@@ -61,7 +61,7 @@ function refreshAll()
 function refreshAllRefreshables()
 {
 	// Default-Inhalte der einzelnen Views laden.
-	$('div#workbench div.bar ul.views li.active').each( function() {
+	$('div#workbench div.panel > div.header > ul.views > li.active').each( function() {
 		if	( $(this).hasClass('static') )
 			return;
 		
@@ -70,7 +70,7 @@ function refreshAllRefreshables()
 		var id      = $(this).attr('data-id');
 		var extraid = $(this).attr('data-extra');
 		
-		loadView( $(this).closest('div.frame').find('div.content'),action,method,id);
+		loadView( $(this).closest('div.panel').find('div.content'),action,method,id);
 	});
 	
 }
@@ -80,12 +80,12 @@ function refreshAllRefreshables()
 function refreshActualView( element )
 {
 	// Default-Inhalte der einzelnen Views laden.
-	$(element).closest('div.frame').find('li.active').each( function() {
+	$(element).closest('div.panel').find('li.active').each( function() {
 		var method = $(this).attr('data-method');
 		var action = $(this).attr('data-action');
 		var id     = $(this).attr('data-id');
 		
-		loadView( $(this).closest('div.frame').find('div.content'),action,method,id);
+		loadView( $(this).closest('div.panel').find('div.content'),action,method,id);
 	});
 
 }
@@ -114,12 +114,12 @@ function refreshWorkbench()
 			var method = $(this).attr('data-method');
 			var action = $(this).attr('data-action');
 			
-			loadView( $(this).closest('div.frame').find('div.content'),action,method,0);
+			loadView( $(this).closest('div.panel').find('div.content'),action,method,0);
 		});
 
 		// OnClick-Handler zum Scrollen der Tabs
 		$('div.backward_link').click( function() {
-			var $views = $(this).closest('div.views').find('ul.views');
+			var $views = $(this).closest('div.header').find('ul.views');
 			//$views.scrollTo( -50 );
 			var $prev = $views.find('li.action.active').prev();
 			$views.scrollTo( $prev,500,{"axis":"x"} );
@@ -127,7 +127,7 @@ function refreshWorkbench()
 		}
 		);
 		$('div.forward_link').click( function() {
-			var $views = $(this).closest('div.views').find('ul.views');
+			var $views = $(this).closest('div.header').find('ul.views');
 			var $next  = $views.find('li.action.active').next();
 			$views.scrollTo( $next,500,{"axis":"x"} );
 			$next.click();
@@ -179,7 +179,7 @@ function registerWorkbenchEvents()
 				var droppedOn   = $(this);
 				var oldViewList = dropped.parent();
 				
-				if	( $(dropped).closest('div.frame').attr('id') == $(droppedOn).closest('div.frame').attr('id') )
+				if	( $(dropped).closest('div.panel').attr('id') == $(droppedOn).closest('div.panel').attr('id') )
 					$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
 				else
 					$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
@@ -188,14 +188,14 @@ function registerWorkbenchEvents()
 				if	( oldViewList.find('li').size() == 0 )
 				{
 					var oldContainer = oldViewList.closest('div.container');
-					oldViewList.closest('div.bar').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
+					oldViewList.closest('div.panel').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
 					
 					if	( oldContainer.hasClass('autosize') )
-						oldContainer.children('div.bar').addClass('autosize').removeClass('resizable');
+						oldContainer.children('div.panel').addClass('autosize').removeClass('resizable');
 					else
-						oldContainer.children('div.bar').addClass('resizable').removeClass('autosize');
+						oldContainer.children('div.panel').addClass('resizable').removeClass('autosize');
 
-					oldContainer.replaceWith( oldContainer.children('div.bar') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
+					oldContainer.replaceWith( oldContainer.children('div.panel') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
 					resizeWorkbench();
 				}
 			}
@@ -263,12 +263,12 @@ function registerWorkbenchEvents()
 				newContainer.children('div.resizable' ).addClass('bar').data('size-factor',0.4);
 				
 				// Die komplette Bar der Quelle kopieren.
-				$(dropped).closest('div.bar').clone().addClass('resizable').removeClass('autosize').replaceAll( newContainer.children('div.resizable') );
+				$(dropped).closest('div.panel').clone().addClass('resizable').removeClass('autosize').replaceAll( newContainer.children('div.resizable') );
 				newContainer.find('ul.views > li').remove(); // Alle View entfernen
 				$(dropped).detach().css({top: 0,left: 0}).appendTo( newContainer.find('ul.views') ).click(); // View kopieren
 
 				// Neuen Container in den DOM einfügen.
-				var oldContainer = $(droppedOn).closest('div.bar').replaceWith( newContainer );
+				var oldContainer = $(droppedOn).closest('div.panel').replaceWith( newContainer );
 				newContainer.children('div.autosize').replaceWith( oldContainer ); 
 				
 				if	( oldContainer.hasClass('autosize' )) { newContainer.addClass('autosize' ).removeClass('resizable'); }
@@ -279,14 +279,14 @@ function registerWorkbenchEvents()
 				if	( oldViewList.find('li').size() == 0 )
 				{
 					var oldContainer = oldViewList.closest('div.container');
-					oldViewList.closest('div.bar').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
+					oldViewList.closest('div.panel').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
 					
 					if	( oldContainer.hasClass('autosize') )
-						oldContainer.children('div.bar').addClass('autosize').removeClass('resizable');
+						oldContainer.children('div.panel').addClass('autosize').removeClass('resizable');
 					else
-						oldContainer.children('div.bar').addClass('resizable').removeClass('autosize');
+						oldContainer.children('div.panel').addClass('resizable').removeClass('autosize');
 
-					oldContainer.replaceWith( oldContainer.children('div.bar') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
+					oldContainer.replaceWith( oldContainer.children('div.panel') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
 					resizeWorkbench();
 				}
 				
@@ -299,9 +299,9 @@ function registerWorkbenchEvents()
 	//$('ul.views').sortable();
 
 	// Modalen Dialog erzeugen.
-	if	( $('div#workbench div.frame.modal').size() > 0 )
+	if	( $('div#workbench div.panel.modal').size() > 0 )
 	{
-		$('div#workbench div.frame.modal').parent().addClass('modal');
+		$('div#workbench div.panel.modal').parent().addClass('modal');
 		$('div#filler').fadeTo(500,0.5);
 		$('div#workbench').addClass('modal');
 	}
@@ -358,7 +358,7 @@ function registerWorkbenchEvents()
 		$(this).orLoadView();
 	});
 	
-	$('div.menu').dblclick( function()
+	$('div.header').dblclick( function()
 			{
 				fullscreen( this );
 			} );
@@ -433,7 +433,7 @@ function loadView(contentEl,action,method,id  )
 				$(this).html("");
 				$(this).removeClass("loader");
 				// OK-button Ausblenden.
-				$(targetEl).closest('div.frame').find('div.bottom > div.command > input').addClass('invisible');
+				$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
 				// var msg = "Sorry but there was an error: ";
 				//$(this).html(msg + xhr.status + " " + xhr.statusText);
 				return;
@@ -455,16 +455,16 @@ function registerViewEvents( viewEl )
 {
 	
 	var $formVorhanden = $(viewEl).find('form').size() > 0;
-	var $formInput     = $(viewEl).closest('div.frame').find('div.bottom > div.command > input');
+	var $formInput     = $(viewEl).closest('div.panel').find('div.bottom > div.command > input');
 	if	( $formVorhanden )
 		$formInput.removeClass('invisible');
 	else
 		$formInput.addClass('invisible');
 
-	if ( $('div.window form input[type=password]').length>0 && $('#uname').attr('value')!='' )
+	if ( $('div.panel form input[type=password]').length>0 && $('#uname').attr('value')!='' )
 	{
-		$('div.window form input[name=login_name]    ').attr('value',$('#uname'    ).attr('value'));
-		$('div.window form input[name=login_password]').attr('value',$('#upassword').attr('value'));
+		$('div.panel form input[name=login_name]    ').attr('value',$('#uname'    ).attr('value'));
+		$('div.panel form input[name=login_password]').attr('value',$('#upassword').attr('value'));
 	}
 	
 	// Fokus nicht setzen, da mehrere Views sich sonst um den Fokus streiten.
@@ -486,7 +486,7 @@ function registerViewEvents( viewEl )
 				params.subaction = 'order';
 				params.token     = $('#id_token').attr('value');
 				params.order     = order.join(',');
-				params.id        = $(viewEl).closest('div.frame').data('id');
+				params.id        = $(viewEl).closest('div.panel').data('id');
 				params.output    = 'json';
 				
 				$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
@@ -558,23 +558,23 @@ function registerViewEvents( viewEl )
 	$(viewEl).find('input[data-hint]').orHint();
 	
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
-	$(viewEl).closest('div.frame').find('div.menu div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
+	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
 	
 	$(viewEl).find('div.headermenu > a').each( function(idx,el)
 	{
 		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
-		$(el).wrap('<div class="entry clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.frame').find('div.menu div.dropdown').first() );
+		$(el).wrap('<div class="entry clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
 	} );
 	
 	$(viewEl).find('div.header > a.back').each( function(idx,el)
 	{
 		// Zurück-Knopf zum Fenstermenü hinzufügen.
-		$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(viewEl).closest('div.frame').find('div.menu div.dropdown').first() );
+		$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
 	} );
 	$(viewEl).find('div.header').html('<!-- moved to window-menu -->');
 	
 	$(viewEl).find('input,select,textarea').focus( function() {
-		$(this).closest('div.frame').find('div.command').css('visibility','visible').fadeIn('slow');
+		$(this).closest('div.panel').find('div.command').css('visibility','visible').fadeIn('slow');
 	});
 
 	$(viewEl).find('fieldset.open > legend').click( function() {
@@ -582,7 +582,7 @@ function registerViewEvents( viewEl )
 	});
 
 	// Links aktivieren...
-	$(viewEl).closest('div.frame').find('.clickable').orLinkify();
+	$(viewEl).closest('div.panel').find('.clickable').orLinkify();
 
 	// Selectors (Einzel-Ausahl für Dateien) initialisieren
 	// Wurzel des Baums laden
@@ -606,7 +606,7 @@ function registerViewEvents( viewEl )
         
         //alert('Moving '+$(dropped).attr('data-id')+' to folder '+$(droppedOn).attr('data-id') );
         /*
-        if	( $(dropped).closest('div.frame').attr('id') == $(droppedOn).closest('div.frame').attr('id') )
+        if	( $(dropped).closest('div.panel').attr('id') == $(droppedOn).closest('div.panel').attr('id') )
         	$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
         else
         	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
@@ -696,7 +696,7 @@ array('Source','-', 'ShowBlocks','Maximize') );
  * @param element Das Element, auf dem die Vollbildfunktion ausgeführt wurde
  */
 function fullscreen( element ) {
-	$(element).closest('div.window').fadeOut('fast', function()
+	$(element).closest('div.panel').fadeOut('fast', function()
 	{
 		$(this).toggleClass('fullscreen').fadeIn('fast');
 	} );
@@ -705,20 +705,20 @@ function fullscreen( element ) {
 function loadTree()
 {
 	// Nur, wenn ein Baum auch angezeigt werden soll.
-	if	( $('div#tree li.action').data('action')=='tree' )
+	if	( $('div#panel-tree li.action').data('action')=='tree' )
 	{
 		// Oberstes Tree-Element erzeugen
-		$('div#tree div.window div.content > div.sheet.action-tree.method-tree').html("&nbsp;");
+		$('div#panel-tree div.panel div.content > div.sheet.action-tree.method-tree').html("&nbsp;");
 		
 		// Wurzel des Baums laden
 		//loadBranch( $('div#tree ul.tree > li'),'root',0);
-		$('div#tree div.content > div.sheet.action-tree.method-tree').orTree( { type:'root',id:0,onSelect:function(name,type,id) {
+		$('div#panel-tree div.content > div.sheet.action-tree.method-tree').orTree( { type:'root',id:0,onSelect:function(name,type,id) {
 			openNewAction( name,type,id, '' );
 		} });
 		
 		// Die ersten 2 Hierarchien öffnen:
-		$('div#tree div.content > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
-		$('div#tree div.content > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
+		$('div#panel-tree div.content > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
+		$('div#panel-tree div.content > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
 	}
 }
 
@@ -746,7 +746,7 @@ function postUrl(url,element)
 	url += '&output=json';
 	$.ajax( { 'type':'POST',url:url, data:{}, success:function(data, textStatus, jqXHR)
 		{
-			$('div.window div.status div.loader').html('&nbsp;');
+			$('div.panel div.status div.loader').html('&nbsp;');
 			doResponse(data,textStatus,element);
 		} } );
 	
@@ -762,10 +762,10 @@ function postUrl(url,element)
  */
 function startView( element,method )
 {
-	var action = $(element).closest('div.frame').find('li.active').data('action');
-	var id     = $(element).closest('div.frame').find('li.active').data('id'    );
+	var action = $(element).closest('div.panel').find('li.active').data('action');
+	var id     = $(element).closest('div.panel').find('li.active').data('id'    );
 	
-	loadView( $(element).closest('div.frame').find('div.content'), action,method,id );
+	loadView( $(element).closest('div.panel').find('div.content'), action,method,id );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
@@ -780,8 +780,8 @@ function startView( element,method )
  */
 function startDialog( element,method,action,modal )
 {
-	var action = $(element).closest('div.frame').find('li.active').data('action');
-	var id     = $(element).closest('div.frame').find('li.active').data('id'    );
+	var action = $(element).closest('div.panel').find('li.active').data('action');
+	var id     = $(element).closest('div.panel').find('li.active').data('id'    );
 	
 	$('div#filler').fadeTo(500,0.5);
 	//$('div#dialog').html('<div class="frame" data-action="'+action+'" data-method="'+method+'" data-id="'+id+'"><div class="window"><div class="content" /></div></div>');
@@ -790,7 +790,7 @@ function startDialog( element,method,action,modal )
 	
 	loadView( $('div#dialog div.content'), action,method,id );
 	
-	//$('div#workbench div.frame.modal').parent().addClass('modal');
+	//$('div#workbench div.panel.modal').parent().addClass('modal');
 	//$('div#workbench').addClass('modal');
 
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
@@ -806,9 +806,9 @@ function startDialog( element,method,action,modal )
  */
 function modalView( element,view )
 {
-	var action = $(element).closest('div.frame').find('li.active').attr('data-action');
-	var method = $(element).closest('div.frame').find('li.active').attr('data-method');
-	var id     = $(element).closest('div.frame').find('li.active').attr('data-id'    );
+	var action = $(element).closest('div.panel').find('li.active').attr('data-action');
+	var method = $(element).closest('div.panel').find('li.active').attr('data-method');
+	var id     = $(element).closest('div.panel').find('li.active').attr('data-id'    );
 	$(element).closest('div.content').modal( { "overlayClose":"true","xxxonClose":function(){alert("close)");} } );
 	loadView( $(element).closest('div.content'), action, method,id );
 	
@@ -850,29 +850,31 @@ function openNewAction( name,action,id,extraId )
 	}
 
 	// Andere Tabs auf inaktiv setzen
-	$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
+	$('div#panel-content > div.header > ul.views li.active').removeClass('active');
 	
 	// Tab schon vorhanden?
-	if	( $('div#content > div.window > div.menu > div.views > ul.views  li.'+action+'.id'+id).length > 0 )
+	if	( $('div#panel-content > div.header > ul.views > li.'+action+'.id'+id).length > 0 )
 	{
 		// Ja, Tab schon vorhanden
 		// Gewünschtes Tab aktiv setzen
-		$('div#content > div.window > div.menu > div.views > ul.views li.'+action+'.id'+id).addClass('active');
+		$('div#panel-content > div.header > ul.views > li.'+action+'.id'+id).addClass('active');
 	}
 	else
 	{	
 		// Neuen Tab in Hauptfenster anlegen
-		$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active');
+		$('div#panel-content > div.header > ul.views > li.active').removeClass('active');
 		
 		// Wenn max. Anzahl überschritten, dann den ersten entfernen.
 		var maxTabs = 7;
-		if	( $('div#content > div.window > div.menu > div.views > ul.views > li.action').size() >= maxTabs )
-			$('div#content > div.window > div.menu > div.views > ul.views > li.action').first().remove();
+		if	( $('div#panel-content > div.header > ul.views > li.action').size() >= maxTabs )
+			$('div#panel-content > div.header > ul.views > li.action').first().remove();
 				
-		$('div#content > div.window > div.menu > div.views > ul.views').append('<li class="action active '+action+' id'+id+'" title="'+name+'" data-action="'+action+'"  data-id="'+id+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><div class="tabname">'+name+'</div><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
+		$('div#panel-content > div.header > ul.views').append('<li class="action active '+action+' id'+id+'" title="'+name+'" data-action="'+action+'"  data-id="'+id+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><div class="tabname">'+name+'</div><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
 		resizeTabs( $('div#contentbar'),true);
-		$('div#content > div.window > div.menu > div.views > ul.views').scrollLeft(9999);
-		$('div#content > div.window > div.menu > div.views > ul.views img.close').click( function()
+		$('div#panel-content > div.header > ul.views').scrollLeft(9999);
+		
+		// Klick auf den "Schließen"-Knopf
+		$('div#panel-content > div.header > ul.views img.close').click( function()
 				{
 					// Zuerst die dazugehörigen, geladenen Inhalte von Views löschen, um kein
 					// Memory-Leak zu erzeugen ;)
@@ -884,7 +886,7 @@ function openNewAction( name,action,id,extraId )
 					// Wenn aktiver Tab, dann den Inhalt loeschen
 					if	( $(this).closest('li.action').hasClass('active') )
 					{
-						//$(this).closest('div.window').find('div.content').html(''); // Inhalt entfernen
+						//$(this).closest('div.panel').find('div.content').html(''); // Inhalt entfernen
 						$('div#workbench div.refreshable div.content').html('');
 						
 						var views = $(this).closest('ul.views');
@@ -901,23 +903,25 @@ function openNewAction( name,action,id,extraId )
 						$(this).parent().remove(); // Tab entfernen
 					}
 					
-					resizeTabs( $('div#contentbar'),true);
+					resizeTabs( $('div#panel-content'),true);
 				} );
-		$('div#content > div.window > div.menu > div.views > ul.views li.active').click( function()
+		
+		// Klick auf den Reiter
+		$('div#panel-content > div.header > ul.views > li.active').click( function()
 			{
 				// Action-Tab wurde angeklickt
-				$('div#content > div.window > div.menu > div.views > ul.views li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
+				$('div#panel-content > div.header > ul.views li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
 				$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
 				
 				// Zum angeklickten Tab scrollen
-				//$('div#content > div.window > div.menu > div.views > ul.views').scrollTo(this);
+				//$('div#content > div.panel > div.menu > div.views > ul.views').scrollTo(this);
 			
 				setNewAction(action,id,extraId);
 			} );
 		
 		/*
 		 * Eventhandler hängt schon auf div.menu
-		$('div#content > div.window > div.menu > div.views > ul.views li.active').dblclick( function()
+		$('div#content > div.panel > div.menu > div.views > ul.views li.active').dblclick( function()
 				{
 					fullscreen( this );
 				} );
@@ -927,7 +931,7 @@ function openNewAction( name,action,id,extraId )
 	
 	// Zum angeklickten Tab scrollen
 	
-	//$('div#content > div.window > div.menu > div.views > ul.views').scrollTo(this);
+	//$('div#content > div.panel > div.menu > div.views > ul.views').scrollTo(this);
 	setNewAction( action,id,extraId );
 }
 
@@ -968,7 +972,7 @@ function submitLink(element,data)
 	params.output = 'json';
 	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 		{
-		$('div.window div.status div.loader').html('&nbsp;');
+		$('div.panel div.status div.loader').html('&nbsp;');
 		doResponse(data,textStatus,element);
 		} } );
 	
@@ -977,10 +981,10 @@ function submitLink(element,data)
 function formSubmit(form)
 {
 	// Login-Hack
-	if ( $('div.window form input[type=password]').length>0 )
+	if ( $('div.panel form input[type=password]').length>0 )
 	{
-		$('#uname'    ).attr('value',$('div.window form input[name=login_name]'    ).attr('value'));
-		$('#upassword').attr('value',$('div.window form input[name=login_password]').attr('value'));
+		$('#uname'    ).attr('value',$('div.panel form input[name=login_name]'    ).attr('value'));
+		$('#upassword').attr('value',$('div.panel form input[name=login_password]').attr('value'));
 		
 		$('#uname'    ).closest('form').submit();
 	}
@@ -1013,8 +1017,8 @@ function formSubmit(form)
 	
 	if	( method == 'GET' )
 	{
-		var method  = $(form).closest('div.frame').attr('data-method');
-		var p       = $(form).closest('div.frame');
+		var method  = $(form).closest('div.panel').attr('data-method');
+		var p       = $(form).closest('div.panel');
 		var action  = p.attr('data-action');
 		var id      = p.attr('data-id');
 		params.output = 'html';
@@ -1116,9 +1120,9 @@ function doResponse(data,status,element)
 	// Hinweismeldungen in Statuszeile anzeigen
 	if	( ! data.control ) {
 		/*
-		$('div.window div.status').html('<div />');
-		$('div.window div.status div').append( data );
-		$('div.window div.status div').delay(3000).fadeOut(2500);
+		$('div.panel div.status').html('<div />');
+		$('div.panel div.status div').append( data );
+		$('div.panel div.status div').delay(3000).fadeOut(2500);
 		*/
 		//alert( value.text );
 	};
@@ -1142,7 +1146,7 @@ function doResponse(data,status,element)
 	
 	else if ( data.errors.length==0 )
 		// Aktuelle View neu laden
-		$(element).closest('div.frame').find('li.action.active').orLoadView();
+		$(element).closest('div.panel').find('li.action.active').orLoadView();
 
 }
 
@@ -1256,7 +1260,7 @@ function loadSubaction( el, actionName, subactionName,id )
 			filebrowserBrowseUrl:'./dispatcher.php?action=filebrowser&subaction=browse'
 	};
 	
-	var main = $(el).parent().parent().parent('div.window').children('div.content').first();
+	var main = $(el).parent().parent().parent('div.panel').children('div.content').first();
 	$(main).load(createUrl(actionName,subactionName,id)+' div.content',null, function() {
 			var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
 			if (o) o.destroy();
@@ -1391,10 +1395,10 @@ function resizeWorkbenchContainer( container )
 	{
 		// Container ist horizontal geteilt.
 		var size = Math.floor(availableWidth * factor);
-		container.find('div.resizable > div.frame > div.window').css('width',''+size                   +'px');
-		container.find('div.resizable > div.frame > div.window > div.content').css('height',''+(availableHeight-27)+'px');
-		container.find('div.autosize  > div.frame > div.window').css('width',''+(availableWidth-size-9)+'px');
-		container.find('div.autosize  > div.frame > div.window > div.content').css('height',''+(availableHeight-27)+'px');
+		container.find('div.panel.resizable').css('width',''+size                   +'px');
+		container.find('div.panel.resizable > div.content').css('height',''+(availableHeight-27)+'px');
+		container.find('div.panel.autosize ').css('width',''+(availableWidth-size-9)+'px');
+		container.find('div.panel.autosize  > div.content').css('height',''+(availableHeight-27)+'px');
 
 		container.children('div.resizable').css('width',''+size                   +'px');
 		container.children('div.resizable').css('height',''+availableHeight+'px');
@@ -1407,10 +1411,10 @@ function resizeWorkbenchContainer( container )
 	{
 		// Container ist vertikal geteilt.
 		var size = Math.floor(availableHeight * factor);
-		container.find('div.resizable > div.frame > div.window').css('width',''+availableWidth +'px');
-		container.find('div.resizable > div.frame > div.window > div.content').css('height',''+(size-27)+'px');
-		container.find('div.autosize  > div.frame > div.window').css('width',''+availableWidth  +'px');
-		container.find('div.autosize  > div.frame > div.window > div.content').css('height',''+(availableHeight-size-27)+'px');
+		container.find('div.panel.resizable ').css('width',''+availableWidth +'px');
+		container.find('div.panel.resizable > div.content').css('height',''+(size-27)+'px');
+		container.find('div.panel.autosize  ').css('width',''+availableWidth  +'px');
+		container.find('div.panel.autosize  > div.content').css('height',''+(availableHeight-size-27)+'px');
 		
 		container.children('div.resizable').css('width',''+availableWidth +'px');
 		container.children('div.resizable').css('height',''+size+'px');
@@ -1420,7 +1424,7 @@ function resizeWorkbenchContainer( container )
 		container.children('div.divider').css('width',''+availableWidth+'px');
 	}
 
-	container.children('div.bar').each( function()
+	container.children('div.panel').each( function()
 	{
 		resizeTabs( $(this) );
 	}
@@ -1443,7 +1447,7 @@ function resizeWorkbench()
 	var viewportWidth  = $(window).width();
 	var viewportHeight = $(window).height();
 	
-	var container = $('div#workbench > div.container')
+	var container = $('div#workbench > div.container');
 	
 	// Verfügbare Breite der Workbench ist Fensterbreite - Innenabstand der Workbench (2*3px)
 	container.css('width' ,''+viewportWidth-6+'px');
@@ -1458,19 +1462,19 @@ function resizeWorkbench()
 /**
  * Größe der TABs pro Frame neu berechnen.
  */
-function resizeTabs( bar ) 
+function resizeTabs( panel ) 
 {
-	var tabCount = $(bar).find('div.views li.action').size();
+	var tabCount = $(panel).find('div.header li.action').size();
 	//alert("Breite ist"+$(bar).width()+ " und Count ist "+tabCount + " sind "+(($(bar).width()-50)/tabCount));
-	var tabWidth = Math.min(90,Math.max(30,(($(bar).width()-60)/tabCount)-15 ));
-	$(bar).find('li.action div.tabname').width(tabWidth);
+	var tabWidth = Math.min(90,Math.max(30,(($(panel).width()-60)/tabCount)-15 ));
+	$(panel).find('li.action div.tabname').width(tabWidth);
 }
 
 
 function help(el,url,suffix)
 {
-	var action = $(el).closest('div.frame').find('li.action.active').attr('data-action');
-	var method = $(el).closest('div.frame').find('li.action.active').attr('data-method');
+	var action = $(el).closest('div.panel').find('li.action.active').attr('data-action');
+	var method = $(el).closest('div.panel').find('li.action.active').attr('data-method');
 	
 	window.open(url + action + '/'+ method + suffix, 'OpenRat_Help', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
 }

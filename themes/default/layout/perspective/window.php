@@ -10,13 +10,8 @@ function view_header( $name )
 	
 ?>
 
+<div class="header">
 
-<div id="<?php echo $name ?>" class="frame<?php echo (@$v['modal']?' modal':'') ?>">
-<div class="window">
-
-<div class="menu">
-
-<div class="views">
 <ul class="views">
 <?php
 
@@ -89,21 +84,19 @@ setTimeout( function() { openNewAction( '<?php echo $object->name; ?>','<?php ec
 </div>
 <?php } ?>
 </div>
-</div>
-</div>
  
-</div>
 
 <?php /*echo langHtml( $v['title'] )*/ ?>
 		
 
 <!-- Hinweis-Meldungen -->
 
+</div>
+</div>
+
 <div class="content">
 	<div class="empty"></div>
 </div>
 
-</div>
-</div>
 
 <?php } ?>

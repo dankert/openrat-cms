@@ -805,7 +805,7 @@ $conf['style']['grey']['name']='Earl grey';
 $conf['style']['grey']['title_background_color']='grey';
 $conf['style']['grey']['title_text_color']='white';
 $conf['style']['grey']['text_color'] ='black';
-$conf['style']['grey']['background_color'] = '#d9d9d9';
+$conf['style']['grey']['background_color'] = '#e9e9e9';
 $conf['style']['grey']['inactive_background_color'] = 'silver';
 
 $conf['style']['system']=array();
@@ -821,8 +821,8 @@ $conf['style']['modern']['name']='Blue sky';
 $conf['style']['modern']['title_background_color']='#3F6194';
 $conf['style']['modern']['title_text_color']='white';
 $conf['style']['modern']['text_color'] ='black';
-$conf['style']['modern']['background_color'] = '#EEEEEE';
-$conf['style']['modern']['inactive_background_color'] = '#7FB1E4';
+$conf['style']['modern']['background_color'] = '#F3F3F3';
+$conf['style']['modern']['inactive_background_color'] = '#CCCCCC';
 
 $conf['theme'] = array();
 $conf['theme']['compiler'] = array();

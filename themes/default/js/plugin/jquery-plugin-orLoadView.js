@@ -9,11 +9,11 @@ jQuery.fn.orLoadView = function()
 		var action = $(this).data('action');
 		var id     = $(this).data('id');
 		
-		var frame  = $(this).closest('div.frame');
-		frame.find('ul.views li.active').removeClass('active');
+		var panel  = $(this).closest('div.panel');
+		panel.find('ul.views li.active').removeClass('active');
 		$(this).addClass('active');
 		
-		loadView( frame.find('div.content'),action,method,id);
+		loadView( panel.find('div.content'),action,method,id);
 	});
 
 	
