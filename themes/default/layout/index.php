@@ -116,7 +116,7 @@ var REQ_PARAM_TARGET  = '<?php echo  REQ_PARAM_TARGET ?>';
 </div>
 
 
-<div id="dialog" class="bar wide">
+<div id="dialog" class="panel wide">
 </div>
 
 
