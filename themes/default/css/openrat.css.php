@@ -62,27 +62,26 @@ div.panel > div.title
 }
 
 /*   H e a d e r   */
-div#title
+div#header
 {
+	width:100%;
+	height:30px;
 	overflow:hidden;
-	padding:5px;
+	padding:7px;
 	margin:0px;
-	margin-bottom:10px;
-	height:25px;
+	margin-bottom:5px;
+	float:left;
 }
 
-
-div#title div.title
+div#header div.title
 {
 	float:left;
-	margin-right:24px;
-	margin-left:0px;
 }
 
-div#title div.user,
-div#title div.search,
-div#title div.projects,
-div#title div.history
+div#header div.user,
+div#header div.search,
+div#header div.projects,
+div#header div.history
 {
 	float:right;
 	margin-right:0px;
@@ -280,7 +279,7 @@ div.dropdown div.entry
 
 
 /*Dropdown anzeigen!!!*/
-div#title div:hover div.dropdown,
+div#header div:hover div.dropdown,
 div.panel div:hover > div.dropdown,
 div.icon:hover > div.dropdown
 {
@@ -376,19 +375,6 @@ a.editorlink:visited
 {
 	font-weight:normal;
 	text-decoration:none;
-}
-
-
-/* Hauptfenster */
-body.main
-{
-	text-align:center;
-}
-
-/* Innenabstand Titel */
-body.title table tr td {
-	margin:0px;
-	padding:3px;
 }
 
 
@@ -562,7 +548,7 @@ p.logo
 	font-size:13px;
 }
 
-div#title div.search input
+div#header div.search input
 {
 	margin:0px;
 	padding:0px;
@@ -1255,7 +1241,7 @@ div#shortcuts > div.shortcut:HOVER {
 		-webkit-text-size-adjust: none;
 		overflow: visible;
 	}
-	div#title,
+	div#header,
 	div#workbench {
 		width: 100%;
 		height: auto;
@@ -1796,7 +1782,7 @@ div.dropdown
 }
 
 
-div#title span.titletext
+div#header span.titletext
 {
 	color:<?php echo $_GET['title_text_color']; ?>;
 }

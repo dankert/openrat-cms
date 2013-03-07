@@ -371,7 +371,7 @@ function registerWorkbenchEvents()
  */
 function refreshTitleBar()
 {
-	$('div#title').load( createUrl('title','show',0 ),function() {
+	$('div#header').load( createUrl('title','show',0 ),function() {
 		$(this).fadeIn('slow');
 		registerHeaderEvents();
 	});
@@ -629,7 +629,7 @@ function registerViewEvents( viewEl )
 function registerHeaderEvents()
 {
 	// Links aktivieren...
-	$('div#title').find('.clickable').orLinkify();
+	$('div#header').find('.clickable').orLinkify();
 	
 	//   S u c h e
 	$('div.search input').blur( function(){
