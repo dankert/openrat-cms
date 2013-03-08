@@ -1213,3 +1213,5 @@ VALUE = Content
 WEEK="Week"
 WINDOW_FULLSCREEN="Fullscreen"
 REMEMBER_ME="Stay logged in"
+MENU_PROGRESS="Tasks"
+MENU_PROGRESS_DESC="Running tasks"
