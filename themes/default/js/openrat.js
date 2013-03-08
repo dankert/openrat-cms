@@ -817,6 +817,18 @@ function modalView( element,view )
 }
 
 
+
+/**
+ * Setzt einen Fenster-Titel für die ganze Anwendung. 
+ */
+function setTitle( title )
+{
+	if	( title )
+		$('head > title').text( title + ' - ' + $('head > title').data('default') );
+	else
+		$('head > title').text( $('head > title').data('default') );
+}
+
 /**
  * Setzt neue Action und aktualisiert alle Fenster.
  * 
@@ -825,6 +837,8 @@ function modalView( element,view )
  */
 function openNewAction( name,action,id,extraId )
 {
+	setTitle( name ); // Title setzen.
+	
 	// Andere Tabs auf inaktiv setzen
 	$('ul#history li.active').removeClass('active');
 	
@@ -876,6 +890,8 @@ function openNewAction( name,action,id,extraId )
 		// Klick auf den "Schließen"-Knopf
 		$('div#panel-content > div.header > ul.views img.close').click( function()
 				{
+					setTitle( '' ); // Title entfernen.
+
 					// Zuerst die dazugehörigen, geladenen Inhalte von Views löschen, um kein
 					// Memory-Leak zu erzeugen ;)
 					var action = $(this).closest('li.action').data('action');
@@ -912,7 +928,9 @@ function openNewAction( name,action,id,extraId )
 				// Action-Tab wurde angeklickt
 				$('div#panel-content > div.header > ul.views li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
 				$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
-				
+
+				setTitle( $(this).children('div.tabname').text() );
+
 				// Zum angeklickten Tab scrollen
 				//$('div#content > div.panel > div.menu > div.views > ul.views').scrollTo(this);
 			
