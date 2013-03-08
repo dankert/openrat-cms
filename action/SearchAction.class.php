@@ -45,6 +45,19 @@ class SearchAction extends Action
 	{
 		$this->nextSubAction('content');
 	}
+
+	
+	
+	public function editView()
+	{
+		$this->nextSubAction('content');
+	}
+	
+	public function editPost()
+	{
+		$this->nextSubAction('content');
+	}
+	
 	
 	
 	/**
