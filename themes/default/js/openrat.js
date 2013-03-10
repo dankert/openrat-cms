@@ -708,7 +708,7 @@ function loadTree()
 	if	( $('div#panel-tree li.action').data('action')=='tree' )
 	{
 		// Oberstes Tree-Element erzeugen
-		$('div#panel-tree div.panel div.content > div.sheet.action-tree.method-tree').html("&nbsp;");
+		$('div#panel-tree div.content > div.sheet.action-tree.method-tree').html("&nbsp;");
 		
 		// Wurzel des Baums laden
 		//loadBranch( $('div#tree ul.tree > li'),'root',0);
