@@ -11,9 +11,14 @@
 		<text class="titletext" var="cms_title" title="var:buildinfo"></text>
 	</part>
 
-	<part class="icon clickable">
-		<link type="dialog" subaction="prop">
-			<image icon="prop" align="left"></image>
+	<part class="toolbar-icon clickable">
+		<link type="dialog" subaction="prop" title="message:prop_desc">
+			<image icon="pageelement" align="left"></image>
+		</link>
+	</part>
+	<part class="toolbar-icon clickable">
+		<link type="dialog" subaction="rights" title="message:rights_desc">
+			<image icon="pageelement" align="left"></image>
 		</link>
 	</part>
 

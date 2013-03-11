@@ -1408,7 +1408,26 @@ div#dialog
     -khtml-border-radius:5px;
     border-radius:5px;
 }
- 
+
+
+
+div.toolbar-icon
+{
+	border:1px solid <?php echo $_GET['inactive_background_color']; ?> !important;
+	padding:2px;
+	float: left;
+
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    -khtml-border-radius:3px;
+    border-radius:3px;
+}
+div.toolbar-icon:hover
+{
+	background-color: <?php echo $_GET['title_background_color']; ?> !important;
+}
+
+
 
 
  /* Voreingestellte Schriftart */
