@@ -762,8 +762,8 @@ function postUrl(url,element)
  */
 function startView( element,method )
 {
-	var action = $(element).closest('div.panel').find('li.active').data('action');
-	var id     = $(element).closest('div.panel').find('li.active').data('id'    );
+	var action = $('#panel-content').find('li.active').data('action');
+	var id     = $('#panel-content').find('li.active').data('id'    );
 	
 	loadView( $(element).closest('div.panel').find('div.content'), action,method,id );
 	
@@ -778,10 +778,10 @@ function startView( element,method )
  * @param action Action
  * @param id Id
  */
-function startDialog( element,method,action,modal )
+function startDialog( method,modal )
 {
-	var action = $(element).closest('div.panel').find('li.active').data('action');
-	var id     = $(element).closest('div.panel').find('li.active').data('id'    );
+	var action = $('#panel-content').find('li.active').data('action');
+	var id     = $('#panel-content').find('li.active').data('id'    );
 	
 	$('div#filler').fadeTo(500,0.5);
 	//$('div#dialog').html('<div class="frame" data-action="'+action+'" data-method="'+method+'" data-id="'+id+'"><div class="window"><div class="content" /></div></div>');

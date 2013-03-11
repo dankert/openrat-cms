@@ -23,12 +23,12 @@ jQuery.fn.orLinkify = function()
 
 			else if	( type == 'modal' )
 			{
-				startDialog(this, $(this).attr('data-method'),$(this).attr('data-action'),true );
+				startDialog($(this).attr('data-method'),true );
 			}
 
 			else if	( type == 'dialog' )
 			{
-				startDialog(this, $(this).attr('data-method'),$(this).attr('data-action'),false );
+				startDialog($(this).attr('data-method'),false );
 			}
 
 			else if	( type == 'url' )
