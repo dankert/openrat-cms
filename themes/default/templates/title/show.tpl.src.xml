@@ -11,6 +11,12 @@
 		<text class="titletext" var="cms_title" title="var:buildinfo"></text>
 	</part>
 
+	<part class="icon clickable">
+		<link type="dialog" subaction="prop">
+			<image icon="prop" align="left"></image>
+		</link>
+	</part>
+
 	<part class="search">
 		<input name="text" hint="message:search" icon="search"></input>
 		<part class="dropdown">

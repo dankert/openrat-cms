@@ -629,7 +629,7 @@ function registerViewEvents( viewEl )
 function registerHeaderEvents()
 {
 	// Links aktivieren...
-	$('div#header').find('.clickable').orLinkify();
+	$('div#header .clickable').orLinkify();
 	
 	//   S u c h e
 	$('div.search input').blur( function(){
@@ -784,8 +784,7 @@ function startDialog( method,modal )
 	var id     = $('#panel-content').find('li.active').data('id'    );
 	
 	$('div#filler').fadeTo(500,0.5);
-	//$('div#dialog').html('<div class="frame" data-action="'+action+'" data-method="'+method+'" data-id="'+id+'"><div class="window"><div class="content" /></div></div>');
-	$('div#dialog').html('<div class="frame"><div class="window"><div class="content" /></div></div>');
+	$('div#dialog').html('<div class="content" />');
 	$('div#dialog').show();
 	
 	loadView( $('div#dialog div.content'), action,method,id );
