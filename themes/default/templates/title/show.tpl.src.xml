@@ -12,12 +12,12 @@
 	</part>
 
 	<part class="toolbar-icon clickable">
-		<link type="dialog" subaction="prop" title="message:prop_desc">
+		<link type="dialog" subaction="prop" title="message:menu_prop_desc">
 			<image icon="pageelement" align="left"></image>
 		</link>
 	</part>
 	<part class="toolbar-icon clickable">
-		<link type="dialog" subaction="rights" title="message:rights_desc">
+		<link type="dialog" subaction="rights" title="message:menu_rights_desc">
 			<image icon="pageelement" align="left"></image>
 		</link>
 	</part>

@@ -1413,8 +1413,9 @@ div#dialog
 
 div.toolbar-icon
 {
-	border:1px solid <?php echo $_GET['inactive_background_color']; ?> !important;
+	border:1px solid <?php echo $_GET['title_background_color']; ?>;
 	padding:2px;
+	margin-left:5px;
 	float: left;
 
     -moz-border-radius:3px;
@@ -1422,9 +1423,15 @@ div.toolbar-icon
     -khtml-border-radius:3px;
     border-radius:3px;
 }
+div.toolbar-icon.inactive
+{
+	opacity:0.5;
+}
+
 div.toolbar-icon:hover
 {
-	background-color: <?php echo $_GET['title_background_color']; ?> !important;
+	border:1px solid <?php echo $_GET['inactive_background_color']; ?>;
+	xxbackground-color: <?php echo $_GET['inactive_background_color']; ?>;
 }
 
 
