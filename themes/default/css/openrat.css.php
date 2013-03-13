@@ -1435,6 +1435,18 @@ div.toolbar-icon:hover
 }
 
 
+div.headermenu
+{
+	margin:5px;
+	z-index: 3;
+	position: relative;
+	right: 0;
+	top: 0;
+}
+div.headermenu > div.toolbar-icon
+{
+	float:right;
+}
 
 
  /* Voreingestellte Schriftart */

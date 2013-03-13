@@ -563,7 +563,9 @@ function registerViewEvents( viewEl )
 	$(viewEl).find('div.headermenu > a').each( function(idx,el)
 	{
 		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
-		$(el).wrap('<div class="entry clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
+		
+		// Nein, Untermenüs erscheinen jetzt in der View selbst.
+		// $(el).wrap('<div class="entry clickable modal perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
 	} );
 	
 	$(viewEl).find('div.header > a.back').each( function(idx,el)
@@ -571,7 +573,7 @@ function registerViewEvents( viewEl )
 		// Zurück-Knopf zum Fenstermenü hinzufügen.
 		$(el).removeClass('button').wrap('<div class="entry perview" />').parent().appendTo( $(viewEl).closest('div.panel').find('div.header div.dropdown').first() );
 	} );
-	$(viewEl).find('div.header').html('<!-- moved to window-menu -->');
+	//$(viewEl).find('div.header').html('<!-- moved to window-menu -->');
 	
 	$(viewEl).find('input,select,textarea').focus( function() {
 		$(this).closest('div.panel').find('div.command').css('visibility','visible').fadeIn('slow');
