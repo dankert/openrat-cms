@@ -1438,7 +1438,7 @@ div.toolbar-icon:hover
 div.headermenu
 {
 	margin:5px;
-	z-index: 3;
+	z-index: 1;
 	position: relative;
 	right: 0;
 	top: 0;
