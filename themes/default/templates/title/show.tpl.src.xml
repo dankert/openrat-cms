@@ -21,6 +21,21 @@
 			<image icon="pageelement" align="left"></image>
 		</link>
 	</part>
+	<part class="toolbar-icon clickable">
+		<link type="dialog" subaction="pub" title="message:menu_pub_desc">
+			<image icon="page" align="left"></image>
+		</link>
+	</part>
+	<part class="toolbar-icon clickable">
+		<link type="dialog" subaction="changetemplate" title="message:menu_changetemplate_desc">
+			<image icon="template" align="left"></image>
+		</link>
+	</part>
+	<part class="toolbar-icon clickable">
+		<link type="dialog" subaction="preview" title="message:menu_preview_desc">
+			<image icon="page" align="left"></image>
+		</link>
+	</part>
 
 	<part class="search">
 		<input name="text" hint="message:search" icon="search"></input>
