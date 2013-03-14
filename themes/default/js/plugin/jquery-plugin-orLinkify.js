@@ -10,6 +10,10 @@ jQuery.fn.orLinkify = function()
 			
 			var type = $(this).attr('data-type');
 			
+			// Inaktive Menüpunkte sind natürlich nicht anklickbar.
+			if	( $(this).parent().hasClass('inactive') )
+				return;
+			
 			if	( type == 'post' )
 			{
 				//alert('data:  '+$(this).attr('data-data'))

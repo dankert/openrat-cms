@@ -1173,3 +1173,11 @@ PAGEELEMENT_USE_FROM_ARCHIVE="Der Inhalt wurde wieder hergestellt."
 REMEMBER_ME="Angemeldet bleiben"
 MENU_PROGRESS="Vorgänge"
 MENU_PROGRESS_DESC="Alle laufenden Vorgänge anzeigen"
+
+MENU_SAVE=Speichern
+MENU_SAVE_DESC=Die aktuelle Datei speichern
+MENU_SAVEALL=Alles speichern
+MENU_SAVEALL_DESC=Alle geöffneten Dateien speichern
+MENU_NEW=Neu
+MENU_NEW_DESC=Neues Objekt anlegen
+EXTRAS=Extras

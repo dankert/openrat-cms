@@ -952,7 +952,17 @@ function openNewAction( name,action,id,extraId )
 	
 	//$('div#content > div.panel > div.menu > div.views > ul.views').scrollTo(this);
 	setNewAction( action,id,extraId );
+	
+	
 }
+
+
+function filterMenus(action)
+{
+	$('div.clickable.filtered').addClass('inactive');
+	$('div.clickable.filtered.on-action-'+action).removeClass('inactive');
+}
+
 
 
 /**
@@ -963,6 +973,7 @@ function openNewAction( name,action,id,extraId )
  */
 function setNewAction( action,id,extraId )
 {
+	filterMenus(action);
 	$('div#workbench ul.views > li.action.dependent').attr('data-action',action).attr('data-id',id).attr('data-extra',JSON.stringify(extraId));
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.

@@ -1215,3 +1215,11 @@ WINDOW_FULLSCREEN="Fullscreen"
 REMEMBER_ME="Stay logged in"
 MENU_PROGRESS="Tasks"
 MENU_PROGRESS_DESC="Running tasks"
+
+MENU_SAVE=Save
+MENU_SAVE_DESC=Save open file
+MENU_SAVEALL=Save all
+MENU_SAVEALL_DESC=Save all open files
+MENU_NEW=New
+MENU_NEW_DESC=New file
+EXTRAS=Extras

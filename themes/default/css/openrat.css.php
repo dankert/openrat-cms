@@ -73,19 +73,22 @@ div#header
 	float:left;
 }
 
+div#header div.projects,
+div#header div.menu,
 div#header div.title
 {
 	float:left;
+	margin-right:10px;
+	margin-left :0px;
 }
 
 div#header div.user,
 div#header div.search,
-div#header div.projects,
 div#header div.history
 {
 	float:right;
-	margin-right:0px;
-	margin-left:24px;
+	margin-right:10px;
+	margin-left :10px;
 }
 
 /*
@@ -1867,3 +1870,9 @@ div.container > div.divider.ui-draggable-dragging
 	z-index: 150;
 	background-color: <?php echo $_GET['title_background_color']; ?>;
 }
+
+div.clickable.filtered.inactive > a
+{
+	color: <?php echo $_GET['inactive_background_color']; ?>;
+}
+
