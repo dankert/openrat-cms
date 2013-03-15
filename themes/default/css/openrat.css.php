@@ -1886,13 +1886,13 @@ div#header > div > div.arrow-down
 	display: inline;
 	width:0;
 	height:0;
-	margin-top:8px;
+	margin:2;
 	padding:0px;
-	border-right : 8px solid <?php echo $_GET['title_background_color']; ?>;
-	border-left  : 8px solid <?php echo $_GET['title_background_color']; ?>;
-	border-top   : 8px solid <?php echo $_GET['inactive_background_color'      ]; ?>;
+	border-right : 6px solid <?php echo $_GET['title_background_color']; ?>;
+	border-left  : 6px solid <?php echo $_GET['title_background_color']; ?>;
+	border-top   : 6px solid <?php echo $_GET['inactive_background_color'      ]; ?>;
 	border-bottom: 4px solid <?php echo $_GET['title_background_color'   ]; ?>;
-	margin-top: 4px;
+	margin-top: 6px;
 font-size: 0;
 }
 
@@ -1902,13 +1902,13 @@ div#workbench div.panel div.arrow-down
 {
 	width:0;
 	height:0;
-	margin:0px;
+	margin:2px;
 	padding:0px;
-	border-right  : 8px solid transparent;
-	border-top    : 8px solid <?php echo $_GET['title_background_color']; ?>;
-	border-left   : 8px solid transparent;
+	border-right  : 6px solid transparent;
+	border-top    : 6px solid <?php echo $_GET['title_background_color']; ?>;
+	border-left   : 6px solid transparent;
 	border-bottom : 4px solid transparent;
-	margin-top: 4px;
+	margin-top: 6px;
 	font-size: 0;
 }
 /* Pfeile */
@@ -1916,13 +1916,13 @@ div#workbench div.panel div.arrow-right
 {
 	width:0;
 	height:0;
-	margin:0;
+	margin:2px;
 	padding:0;
-	border-top:    8px solid transparent;
-	border-left:   8px solid <?php echo $_GET['title_background_color']; ?>;
-	border-bottom: 8px solid transparent;
+	border-top:    6px solid transparent;
+	border-left:   6px solid <?php echo $_GET['title_background_color']; ?>;
+	border-bottom: 6px solid transparent;
 	border-right:  4px solid transparent;
-	margin-left:   4px;
+	margin-left:   6px;
 	font-size: 0;
 }
 
