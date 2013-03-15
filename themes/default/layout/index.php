@@ -4,7 +4,7 @@
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title data-default="<?php echo OR_TITLE.' '.OR_VERSION ?>"><?php echo OR_TITLE.' '.OR_VERSION ?></title>
+  <title data-default="<?php echo OR_TITLE ?>"><?php echo OR_TITLE ?></title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" >
 <?php if ( isset($refresh_url) ) { ?>
