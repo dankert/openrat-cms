@@ -579,8 +579,8 @@ function registerViewEvents( viewEl )
 		$(this).closest('div.panel').find('div.command').css('visibility','visible').fadeIn('slow');
 	});
 
-	$(viewEl).find('fieldset.open > legend').click( function() {
-		$(this).parent().find('div').first().toggleClass('invisible');
+	$(viewEl).find('fieldset > legend').click( function() {
+		$(this).parent().toggleClass('open');
 	});
 
 	// Links aktivieren...

@@ -654,9 +654,13 @@ fieldset > legend
 }
 
 
-fieldset.open > div.invisible
+fieldset > div
 {
 	display:none;
+}
+fieldset.open > div
+{
+	display:block;
 }
 
 
@@ -1880,14 +1884,14 @@ div.clickable.filtered.inactive > a
 div#header > div > div.arrow-down
 {
 	display: inline;
-	width:16px;
-	height:0px;
+	width:0;
+	height:0;
 	margin-top:8px;
 	padding:0px;
 	border-right : 8px solid <?php echo $_GET['title_background_color']; ?>;
 	border-left  : 8px solid <?php echo $_GET['title_background_color']; ?>;
 	border-top   : 8px solid <?php echo $_GET['inactive_background_color'      ]; ?>;
-	border-bottom: 8px solid <?php echo $_GET['title_background_color']; ?>;
+	xborder-bottom: 8px solid <?php echo $_GET['title_background_color']; ?>;
 
 }
 
@@ -1895,15 +1899,46 @@ div#header > div > div.arrow-down
 /* Pfeile */
 div#workbench div.panel div.arrow-down
 {
-	display: inline;
-	width:16px;
-	height:16px;
+	width:0;
+	height:0;
 	margin:0px;
 	padding:0px;
 	border-right: 8px solid transparent;
 	border-top: 8px solid <?php echo $_GET['title_background_color']; ?>;
 	border-left: 8px solid transparent;
-	border-bottom: 8px solid transparent;
+	xborder-bottom: 8px solid transparent;
+
+}
+/* Pfeile */
+div#workbench div.panel div.arrow-right
+{
+	width:0;
+	height:0;
+	margin:0;
+	padding:0;
+	xborder-right: 8px solid transparent;
+	border-top: 4px solid transparent;
+	border-left: 4px solid <?php echo $_GET['title_background_color']; ?>;
+	border-bottom: 4px solid transparent;
 
 }
 
+/* Geschlossene Fieldsets */
+div#workbench div.panel fieldset > legend > div.closed
+{
+	display:inline;
+}
+div#workbench div.panel fieldset > legend > div.open
+{
+	display:none;
+}
+
+/* Offene Fieldsets */
+div#workbench div.panel fieldset.open > legend > div.closed
+{
+	display:none;
+}
+div#workbench div.panel fieldset.open > legend > div.open
+{
+	display:inline;
+}
