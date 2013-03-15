@@ -18,7 +18,7 @@
 	<part class="menu">
 		<!-- <image icon="file" align="left"></image>-->
 		<text key="file"></text>
-		<image fileext="icon/menu.gif" align="left"></image>
+		<part class="arrow-down" />
 		<part class="dropdown">
 			<part class="entry clickable filtered on-action-folder on-action-page on-action-file">
 				<link type="dialog" title="message:menu_new_desc" subaction="new">
@@ -58,7 +58,7 @@
 	<part class="menu">
 		<!-- <image icon="edit" align="left"></image>-->
 		<text key="edit"></text>
-		<image fileext="icon/menu.gif" align="left"></image>
+		<part class="arrow-down" />
 		<part class="dropdown">
 			<part class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file">
 				<link type="dialog" title="message:menu_prop_desc" subaction="prop">
@@ -101,7 +101,7 @@
 				</part>
 			</list>
 		</part>
-		<image fileext="icon/menu.gif" align="left"></image>
+		<part class="arrow-down" />
 	</part>
 
 
@@ -109,7 +109,7 @@
 	<part class="menu">
 		<!-- <image icon="menu" align="left"></image>-->
 		<text key="extras"></text>
-		<image fileext="icon/menu.gif" align="left"></image>
+		<part class="arrow-down" />
 		<part class="dropdown">
 			<part class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
 				<link type="dialog" title="message:menu_rights_desc" subaction="rights">
@@ -171,7 +171,7 @@
 	<part class="user">
 		<image icon="user" align="left"></image>
 		<text class="titletext" var="userfullname" maxlength="25"></text>
-		<image fileext="icon/menu.gif" align="left"></image>
+		<part class="arrow-down" />
 		<part class="dropdown">
 			<part class="entry clickable">
 				<link type="post" title="message:USER_PROFILE_DESC" action="start"

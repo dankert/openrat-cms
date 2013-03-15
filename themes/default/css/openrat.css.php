@@ -1876,3 +1876,34 @@ div.clickable.filtered.inactive > a
 	color: <?php echo $_GET['inactive_background_color']; ?>;
 }
 
+/* Pfeile */
+div#header > div > div.arrow-down
+{
+	display: inline;
+	width:16px;
+	height:0px;
+	margin-top:8px;
+	padding:0px;
+	border-right : 8px solid <?php echo $_GET['title_background_color']; ?>;
+	border-left  : 8px solid <?php echo $_GET['title_background_color']; ?>;
+	border-top   : 8px solid <?php echo $_GET['inactive_background_color'      ]; ?>;
+	border-bottom: 8px solid <?php echo $_GET['title_background_color']; ?>;
+
+}
+
+
+/* Pfeile */
+div#workbench div.panel div.arrow-down
+{
+	display: inline;
+	width:16px;
+	height:16px;
+	margin:0px;
+	padding:0px;
+	border-right: 8px solid transparent;
+	border-top: 8px solid <?php echo $_GET['title_background_color']; ?>;
+	border-left: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+
+}
+
