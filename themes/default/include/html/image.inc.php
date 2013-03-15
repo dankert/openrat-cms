@@ -10,8 +10,18 @@
 	$attr_size = '16x16';
 /* #END-IF# */
 	
-/* #IF-ATTR icon# */		
-	$attr_tmp_image_file = $image_dir.'icon_'.$attr_icon.IMG_ICON_EXT;
+/* #IF-ATTR icon# */
+	if	( is_file($image_dir.'icon/'.$attr_icon.IMG_ICON_EXT) )		
+		$attr_tmp_image_file = $image_dir.'icon/'.$attr_icon.IMG_ICON_EXT;
+	elseif	( is_file($image_dir.'icon/'.$attr_icon.IMG_EXT) )		
+		$attr_tmp_image_file = $image_dir.'icon/'.$attr_icon.IMG_EXT;
+	elseif	( is_file($image_dir.'icon_'.$attr_icon.IMG_ICON_EXT) )
+		$attr_tmp_image_file = $image_dir.'icon_'.$attr_icon.IMG_ICON_EXT;
+	elseif	( is_file($image_dir.'icon_'.$attr_icon.IMG_EXT) )
+		$attr_tmp_image_file = $image_dir.'icon_'.$attr_icon.IMG_EXT;
+	else
+		$attr_tmp_image_file = 'about:blank';
+		
 	$attr_size = '16x16';
 /* #END-IF# */
 

@@ -74,7 +74,7 @@
 			</part>
 			<part class="entry clickable filtered on-action-page">
 				<link type="dialog" title="message:menu_changetemplate_desc" subaction="changetemplate">
-					<image icon="page" align="left"></image>
+					<image icon="changetemplate" align="left"></image>
 					<text key="menu_changetemplate"></text>
 				</link>
 			</part>
@@ -113,7 +113,7 @@
 		<part class="dropdown">
 			<part class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
 				<link type="dialog" title="message:menu_rights_desc" subaction="rights">
-					<image icon="page" align="left"></image>
+					<image icon="rights" align="left"></image>
 					<text key="menu_rights"></text>
 				</link>
 			</part>
@@ -135,27 +135,27 @@
 
 	<part class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-template on-action-element">
 		<link type="dialog" subaction="prop" title="message:menu_prop_desc">
-			<image icon="pageelement" align="left"></image>
+			<image icon="prop" align="left"></image>
 		</link>
 	</part>
 	<part class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-user">
 		<link type="dialog" subaction="rights" title="message:menu_rights_desc">
-			<image icon="pageelement" align="left"></image>
+			<image icon="rights" align="left"></image>
 		</link>
 	</part>
 	<part class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-pageelement">
 		<link type="dialog" subaction="pub" title="message:menu_pub_desc">
-			<image icon="page" align="left"></image>
+			<image icon="pub" align="left"></image>
 		</link>
 	</part>
 	<part class="toolbar-icon clickable filtered on-action-page">
 		<link type="dialog" subaction="changetemplate" title="message:menu_changetemplate_desc">
-			<image icon="template" align="left"></image>
+			<image icon="changetemplate" align="left"></image>
 		</link>
 	</part>
 	<part class="toolbar-icon clickable filtered on-action-page on-action-file on-action-pageelement on-action-template">
 		<link type="dialog" subaction="preview" title="message:menu_preview_desc">
-			<image icon="page" align="left"></image>
+			<image icon="preview" align="left"></image>
 		</link>
 	</part>
 
