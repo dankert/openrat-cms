@@ -101,6 +101,7 @@ function refreshWorkbench()
 	$('ul#history').empty();
 	$('div#workbench').empty().fadeOut('fast').load(createUrl('workbench','show',0),null,function() {
 
+		
 		// View-Größe initial berechnen.
 		resizeWorkbench();
 		
@@ -373,6 +374,8 @@ function refreshTitleBar()
 {
 	$('div#header').load( createUrl('title','show',0 ),function() {
 		$(this).fadeIn('slow');
+		$('div.clickable.filtered').addClass('inactive');
+
 		registerHeaderEvents();
 	});
 	
