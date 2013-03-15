@@ -1909,8 +1909,7 @@ div#workbench div.panel div.arrow-down
 	border-left   : 8px solid transparent;
 	border-bottom : 4px solid transparent;
 	margin-top: 4px;
-font-size: 0;
-
+	font-size: 0;
 }
 /* Pfeile */
 div#workbench div.panel div.arrow-right
