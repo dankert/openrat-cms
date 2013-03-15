@@ -125,7 +125,7 @@
 
 		<if value="size:dbids" greaterthan="1">
 			<!-- Mehr als 1 Datenbank zur Auswahl. Auswahlfeld anzeigen. -->
-			<group title="message:DATABASE" icon="database">
+			<group title="message:DATABASE" icon="database" open="true">
 				<part class="line">
 					<part class="label">
 						<label for="dbid">

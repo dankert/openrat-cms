@@ -1891,8 +1891,9 @@ div#header > div > div.arrow-down
 	border-right : 8px solid <?php echo $_GET['title_background_color']; ?>;
 	border-left  : 8px solid <?php echo $_GET['title_background_color']; ?>;
 	border-top   : 8px solid <?php echo $_GET['inactive_background_color'      ]; ?>;
-	xborder-bottom: 8px solid <?php echo $_GET['title_background_color']; ?>;
-
+	border-bottom: 4px solid <?php echo $_GET['title_background_color'   ]; ?>;
+	margin-top: 4px;
+font-size: 0;
 }
 
 
@@ -1903,10 +1904,12 @@ div#workbench div.panel div.arrow-down
 	height:0;
 	margin:0px;
 	padding:0px;
-	border-right: 8px solid transparent;
-	border-top: 8px solid <?php echo $_GET['title_background_color']; ?>;
-	border-left: 8px solid transparent;
-	xborder-bottom: 8px solid transparent;
+	border-right  : 8px solid transparent;
+	border-top    : 8px solid <?php echo $_GET['title_background_color']; ?>;
+	border-left   : 8px solid transparent;
+	border-bottom : 4px solid transparent;
+	margin-top: 4px;
+font-size: 0;
 
 }
 /* Pfeile */
@@ -1916,11 +1919,12 @@ div#workbench div.panel div.arrow-right
 	height:0;
 	margin:0;
 	padding:0;
-	xborder-right: 8px solid transparent;
-	border-top: 4px solid transparent;
-	border-left: 4px solid <?php echo $_GET['title_background_color']; ?>;
-	border-bottom: 4px solid transparent;
-
+	border-top:    8px solid transparent;
+	border-left:   8px solid <?php echo $_GET['title_background_color']; ?>;
+	border-bottom: 8px solid transparent;
+	border-right:  4px solid transparent;
+	margin-left:   4px;
+	font-size: 0;
 }
 
 /* Geschlossene Fieldsets */
