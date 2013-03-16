@@ -82,6 +82,20 @@
 					<text key="menu_pub"></text>
 				</link>
 			</part>
+			<part class="entry clickable filtered on-action-pageelement">
+				<link type="dialog" class="entry" subaction="archive"
+					title="message:menu_archive_desc">
+					<image icon="archive" align="left"></image>
+					<text key="menu_archive"></text>
+				</link>
+			</part>
+			<part
+				class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
+				<link type="dialog" title="message:menu_rights_desc" subaction="rights">
+					<image icon="rights" align="left"></image>
+					<text key="menu_rights"></text>
+				</link>
+			</part>
 
 			<part class="divide" />
 
@@ -106,29 +120,43 @@
 		<text class="titletext" key="GLOBAL_PROJECT"></text>
 		<part class="dropdown">
 
-			<list list="languages" key="id" value="name">
+			<if true="method:userIsAdmin">
 				<part class="entry clickable">
-					<image icon="language"></image>
-					<link type="post" action="tree" subaction="language" id="var:id"
-						title="message:select_language">
-						<text var="name"></text>
+					<link type="post" class="entry" action="start" subaction="administration"
+						target="tree" id="-1">
+						<image icon="administration" align="left"></image>
+						<text key="administration"></text>
 					</link>
 				</part>
-			</list>
+				<part class="divide" />
+			</if>
 
-			<part class="divide" />
+			<if value="size:languages" greaterthan="0">
+				<list list="languages" key="id" value="name">
+					<part class="entry clickable">
+						<image icon="language"></image>
+						<link type="post" action="tree" subaction="language" id="var:id"
+							title="message:select_language">
+							<text var="name"></text>
+						</link>
+					</part>
+				</list>
+				<part class="divide" />
+			</if>
 
-			<list list="models" key="id" value="name">
-				<part class="entry clickable">
-					<image icon="model"></image>
-					<link type="post" action="tree" subaction="model" id="var:id"
-						title="message:select_model">
-						<text var="name"></text>
-					</link>
-				</part>
-			</list>
+			<if value="size:models" greaterthan="0">
+				<list list="models" key="id" value="name">
+					<part class="entry clickable">
+						<image icon="model"></image>
+						<link type="post" action="tree" subaction="model" id="var:id"
+							title="message:select_model">
+							<text var="name"></text>
+						</link>
+					</part>
+				</list>
+				<part class="divide" />
+			</if>
 
-			<part class="divide" />
 
 			<list list="projects" key="id" value="name">
 				<part class="entry clickable">
@@ -141,32 +169,6 @@
 			</list>
 		</part>
 		<part class="arrow-down" />
-	</part>
-
-
-	<!-- Menü: Extras -->
-	<part class="toolbar-icon menu">
-		<image icon="extras" align="left"></image>
-		<text key="extras"></text>
-		<part class="arrow-down" />
-		<part class="dropdown">
-			<part
-				class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
-				<link type="dialog" title="message:menu_rights_desc" subaction="rights">
-					<image icon="rights" align="left"></image>
-					<text key="menu_rights"></text>
-				</link>
-			</part>
-			<if true="method:userIsAdmin">
-				<part class="entry clickable">
-					<link type="post" class="entry" action="start" subaction="administration"
-						target="tree" id="-1">
-						<image icon="administration" align="left"></image>
-						<text key="administration"></text>
-					</link>
-				</part>
-			</if>
-		</part>
 	</part>
 
 
