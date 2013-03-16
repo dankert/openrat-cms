@@ -280,7 +280,18 @@ div.dropdown div.entry
 	padding:2px 5px;
 }
 
+div.dropdown > div.divide
+{
+	height:1px;
+	background-color: <?php echo $_GET['title_background_color']; ?>;
+	width:100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
 
+div#header > div.menu {
+	overflow: hidden;
+}
 /*Dropdown anzeigen!!!*/
 div#header div:hover div.dropdown,
 div.panel div:hover > div.dropdown,
@@ -1735,10 +1746,17 @@ div.panel ul.views > li.active:hover
 	color: <?php echo $_GET['title_text_color']; ?>;
 }
 
-div#header                   /* Titelleite-Hintergrund */
+/* Titelleiste-Hintergrund */
+div#header
 {
 	background-color: <?php echo $_GET['title_background_color']; ?>;
 	background-image: linear-gradient(<?php echo $_GET['title_background_color']; ?> 85%, <?php echo $_GET['inactive_background_color']; ?> 100%);
+	color: <?php echo $_GET['title_text_color']; ?>;
+}
+
+/* Titelleiste */
+div#header div.toolbar-icon > a
+{
 	color: <?php echo $_GET['title_text_color']; ?>;
 }
 

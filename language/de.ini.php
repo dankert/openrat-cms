@@ -1181,3 +1181,7 @@ MENU_SAVEALL_DESC=Alle geöffneten Dateien speichern
 MENU_NEW=Neu
 MENU_NEW_DESC=Neues Objekt anlegen
 EXTRAS=Extras
+
+SELECT_PROJECT=Projekt auswählen
+SELECT_LANGUAGE=Sprache auswählen
+SELECT_MODEL=Variante auswählen

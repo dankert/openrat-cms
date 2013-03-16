@@ -1,31 +1,34 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 
-<if true="false">
-	<part class="title">
-		<image icon="database" align="left"></image>
-		<if present="dbname">
-			<text class="titletext" title="message:database" var="dbname"
-				maxlength="25"></text>
-			<!-- <text class="titletext" raw=" - "></text>
-			-->
-		</if>
-		<!-- <text class="titletext" var="cms_title" title="var:buildinfo"></text>-->
-	</part>
-</if>
+	<if true="false">
+		<part class="title">
+			<image icon="database" align="left"></image>
+			<if present="dbname">
+				<text class="titletext" title="message:database" var="dbname"
+					maxlength="25"></text>
+				<!-- <text class="titletext" raw=" - "></text> -->
+			</if>
+			<!-- <text class="titletext" var="cms_title" title="var:buildinfo"></text> -->
+		</part>
+	</if>
 
 	<!-- Menü: Datei -->
-	<part class="menu">
-		<!-- <image icon="file" align="left"></image>-->
+	<part class="toolbar-icon menu">
+		<image icon="file" align="left"></image>
 		<text key="file"></text>
 		<part class="arrow-down" />
 		<part class="dropdown">
-			<part class="entry clickable filtered on-action-folder on-action-page on-action-file">
+			<part
+				class="entry clickable filtered on-action-folder on-action-page on-action-file">
 				<link type="dialog" title="message:menu_new_desc" subaction="new">
 					<image icon="new" align="left"></image>
 					<text key="menu_new"></text>
 				</link>
 			</part>
+			
+			<part class="divide" />
+			
 			<part class="entry clickable">
 				<link type="post" title="message:menu_save_desc" subaction="save">
 					<image icon="save" align="left"></image>
@@ -38,12 +41,17 @@
 					<text key="menu_saveall"></text>
 				</link>
 			</part>
-			<part class="entry clickable filtered on-action-page on-action-file on-action-template on-action-pageelement">
-				<link type="dialog" title="message:menu_preview_desc" subaction="preview">
+			<part
+				class="entry clickable filtered on-action-page on-action-file on-action-template on-action-pageelement">
+				<link type="dialog" title="message:menu_preview_desc"
+					subaction="preview">
 					<image icon="page" align="left"></image>
 					<text key="menu_preview"></text>
 				</link>
 			</part>
+			
+			<part class="divide" />
+			
 			<part class="entry clickable">
 				<link type="post" class="entry" title="message:USER_LOGOUT_DESC"
 					action="login" subaction="logout">
@@ -55,25 +63,31 @@
 	</part>
 
 	<!-- Menü: Bearbeiten -->
-	<part class="menu">
-		<!-- <image icon="edit" align="left"></image>-->
+	<part class="toolbar-icon menu">
+		<image icon="edit" align="left"></image>
 		<text key="edit"></text>
 		<part class="arrow-down" />
 		<part class="dropdown">
-			<part class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file">
+			<part
+				class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file">
 				<link type="dialog" title="message:menu_prop_desc" subaction="prop">
-					<image icon="page" align="left"></image>
+					<image icon="prop" align="left"></image>
 					<text key="menu_prop"></text>
 				</link>
 			</part>
-			<part class="entry clickable filtered on-action-page on-action-file on-action-folder on-action-pageelement">
+			<part
+				class="entry clickable filtered on-action-page on-action-file on-action-folder on-action-pageelement">
 				<link type="dialog" title="message:menu_pub_desc" subaction="pub">
-					<image icon="page" align="left"></image>
+					<image icon="pub" align="left"></image>
 					<text key="menu_pub"></text>
 				</link>
 			</part>
+			
+			<part class="divide" />
+			
 			<part class="entry clickable filtered on-action-page">
-				<link type="dialog" title="message:menu_changetemplate_desc" subaction="changetemplate">
+				<link type="dialog" title="message:menu_changetemplate_desc"
+					subaction="changetemplate">
 					<image icon="changetemplate" align="left"></image>
 					<text key="menu_changetemplate"></text>
 				</link>
@@ -82,20 +96,42 @@
 	</part>
 
 
-	<!--
-		<part class="history"> <image icon="history" align="left"></image>
-		<text key="history" maxlength="20"></text> <part class="dropdown">
-		<text raw=""></text> </part> </part>
-	-->
+	<!-- <part class="history"> <image icon="history" align="left"></image> 
+		<text key="history" maxlength="20"></text> <part class="dropdown"> <text 
+		raw=""></text> </part> </part> -->
 
-	<part class="projects">
-		<!-- <image icon="project" align="left"></image>-->
-		<text class="titletext" key="GLOBAL_PROJECTS"></text>
+	<!-- Menü: Projekt -->
+	<part class="toolbar-icon projects">
+		<image icon="project" align="left"></image>
+		<text class="titletext" key="GLOBAL_PROJECT"></text>
 		<part class="dropdown">
+
+			<list list="languages" key="id" value="name">
+				<part class="entry clickable">
+					<image icon="language"></image>
+					<link type="post" action="tree" subaction="language" id="var:id" title="message:select_language">
+						<text var="name"></text>
+					</link>
+				</part>
+			</list>
+
+			<part class="divide" />
+
+			<list list="models" key="id" value="name">
+				<part class="entry clickable">
+					<image icon="model"></image>
+					<link type="post" action="tree" subaction="model" id="var:id" title="message:select_model">
+						<text var="name"></text>
+					</link>
+				</part>
+			</list>
+
+			<part class="divide" />
+
 			<list list="projects" key="id" value="name">
 				<part class="entry clickable">
 					<image icon="project"></image>
-					<link type="post" action="start" subaction="projectmenu" id="var:id">
+					<link type="post" action="start" subaction="projectmenu" id="var:id" title="message:select_project">
 						<text var="name" maxlength="45"></text>
 					</link>
 				</part>
@@ -106,12 +142,13 @@
 
 
 	<!-- Menü: Extras -->
-	<part class="menu">
-		<!-- <image icon="menu" align="left"></image>-->
+	<part class="toolbar-icon menu">
+		<image icon="extras" align="left"></image>
 		<text key="extras"></text>
 		<part class="arrow-down" />
 		<part class="dropdown">
-			<part class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
+			<part
+				class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
 				<link type="dialog" title="message:menu_rights_desc" subaction="rights">
 					<image icon="rights" align="left"></image>
 					<text key="menu_rights"></text>
@@ -133,29 +170,18 @@
 
 
 
-	<part class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-template on-action-element">
+	<part
+		class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-template on-action-element">
 		<link type="dialog" subaction="prop" title="message:menu_prop_desc">
 			<image icon="prop" align="left"></image>
+			<text key="menu_prop"></text>
 		</link>
 	</part>
-	<part class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-user">
-		<link type="dialog" subaction="rights" title="message:menu_rights_desc">
-			<image icon="rights" align="left"></image>
-		</link>
-	</part>
-	<part class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-pageelement">
+	<part
+		class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-pageelement">
 		<link type="dialog" subaction="pub" title="message:menu_pub_desc">
 			<image icon="pub" align="left"></image>
-		</link>
-	</part>
-	<part class="toolbar-icon clickable filtered on-action-page">
-		<link type="dialog" subaction="changetemplate" title="message:menu_changetemplate_desc">
-			<image icon="changetemplate" align="left"></image>
-		</link>
-	</part>
-	<part class="toolbar-icon clickable filtered on-action-page on-action-file on-action-pageelement on-action-template">
-		<link type="dialog" subaction="preview" title="message:menu_preview_desc">
-			<image icon="preview" align="left"></image>
+			<text key="menu_pub"></text>
 		</link>
 	</part>
 
@@ -168,7 +194,7 @@
 			<text raw=""></text>
 		</part>
 	</part>
-	<part class="user">
+	<part class="toolbar-icon user">
 		<image icon="user" align="left"></image>
 		<text class="titletext" var="userfullname" maxlength="25"></text>
 		<part class="arrow-down" />
@@ -187,6 +213,9 @@
 					<text key="start"></text>
 				</link>
 			</part>
+			
+			<part class="divide" />
+			
 			<part class="entry clickable">
 				<link type="post" class="entry" title="message:USER_LOGOUT_DESC"
 					action="login" subaction="logout">

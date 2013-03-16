@@ -1223,3 +1223,8 @@ MENU_SAVEALL_DESC=Save all open files
 MENU_NEW=New
 MENU_NEW_DESC=New file
 EXTRAS=Extras
+
+
+SELECT_PROJECT=Select project
+SELECT_LANGUAGE=Select language
+SELECT_MODEL=Select model

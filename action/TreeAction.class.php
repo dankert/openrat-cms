@@ -332,6 +332,29 @@ class TreeAction extends Action
 		
 		$this->addNotice('language',$language->name,'DONE',OR_NOTICE_OK);
 		$this->addNotice('model'   ,$model->name   ,'DONE',OR_NOTICE_OK);
+		$this->refresh();
+	}
+
+	
+	public function languagePost()
+	{
+		$language = new Language( $this->getRequestId() );
+		$language->load();
+		Session::setProjectLanguage( $language );
+	
+		$this->addNotice('language',$language->name,'DONE',OR_NOTICE_OK);
+		$this->refresh();
+	}
+	
+	
+	public function modelPost()
+	{
+		$model = new Model( $this->getRequestId() );
+		$model->load();
+		Session::setProjectModel( $model );
+	
+		$this->addNotice('model'   ,$model->name   ,'DONE',OR_NOTICE_OK);
+		$this->refresh();
 	}
 	
 }
