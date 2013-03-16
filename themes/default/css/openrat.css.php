@@ -719,7 +719,6 @@ div.dropdown > div.entry:hover,
 div.dropdown > div.entry:hover > a,
 a.element
 {
-	/*border:1px solid <?php echo $_GET['text_color']; ?>;*/
 	background-color:<?php echo $_GET['title_background_color']; ?>;
 	color:<?php echo $_GET['title_text_color']; ?>;
 }
@@ -1816,6 +1815,9 @@ div.content pre,
 div.dropdown
 {
 	background-color:<?php echo $_GET['title_text_color']; ?>;
+	color:<?php echo $_GET['text_color']; ?>;
+	min-width: 150px;
+	max-width: 450px;
 }
 
 

@@ -26,9 +26,9 @@
 					<text key="menu_new"></text>
 				</link>
 			</part>
-			
+
 			<part class="divide" />
-			
+
 			<part class="entry clickable">
 				<link type="post" title="message:menu_save_desc" subaction="save">
 					<image icon="save" align="left"></image>
@@ -49,9 +49,9 @@
 					<text key="menu_preview"></text>
 				</link>
 			</part>
-			
+
 			<part class="divide" />
-			
+
 			<part class="entry clickable">
 				<link type="post" class="entry" title="message:USER_LOGOUT_DESC"
 					action="login" subaction="logout">
@@ -82,9 +82,9 @@
 					<text key="menu_pub"></text>
 				</link>
 			</part>
-			
+
 			<part class="divide" />
-			
+
 			<part class="entry clickable filtered on-action-page">
 				<link type="dialog" title="message:menu_changetemplate_desc"
 					subaction="changetemplate">
@@ -109,7 +109,8 @@
 			<list list="languages" key="id" value="name">
 				<part class="entry clickable">
 					<image icon="language"></image>
-					<link type="post" action="tree" subaction="language" id="var:id" title="message:select_language">
+					<link type="post" action="tree" subaction="language" id="var:id"
+						title="message:select_language">
 						<text var="name"></text>
 					</link>
 				</part>
@@ -120,7 +121,8 @@
 			<list list="models" key="id" value="name">
 				<part class="entry clickable">
 					<image icon="model"></image>
-					<link type="post" action="tree" subaction="model" id="var:id" title="message:select_model">
+					<link type="post" action="tree" subaction="model" id="var:id"
+						title="message:select_model">
 						<text var="name"></text>
 					</link>
 				</part>
@@ -131,7 +133,8 @@
 			<list list="projects" key="id" value="name">
 				<part class="entry clickable">
 					<image icon="project"></image>
-					<link type="post" action="start" subaction="projectmenu" id="var:id" title="message:select_project">
+					<link type="post" action="start" subaction="projectmenu" id="var:id"
+						title="message:select_project">
 						<text var="name" maxlength="45"></text>
 					</link>
 				</part>
@@ -186,6 +189,22 @@
 	</part>
 
 
+	<!-- Info-Meldung anzeigen (sofern vorhanden -->
+	<if not="" empty="config:login/motd">
+		<part class="toolbar-icon">
+			<image icon="info" align="left"></image>
+			<text raw="_" />
+			<part class="arrow-down" />
+			<part class="dropdown">
+				<part class="entry">
+					<text raw="config:login/motd"></text>
+				</part>
+			</part>
+		</part>
+	</if>
+
+
+
 
 
 	<part class="search">
@@ -213,9 +232,9 @@
 					<text key="start"></text>
 				</link>
 			</part>
-			
+
 			<part class="divide" />
-			
+
 			<part class="entry clickable">
 				<link type="post" class="entry" title="message:USER_LOGOUT_DESC"
 					action="login" subaction="logout">
