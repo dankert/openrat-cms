@@ -824,6 +824,14 @@ $conf['style']['modern']['text_color'] ='black';
 $conf['style']['modern']['background_color'] = '#F3F3F3';
 $conf['style']['modern']['inactive_background_color'] = '#CCCCCC';
 
+$conf['style']['moorweide']=array();
+$conf['style']['moorweide']['name']='Moorweide';
+$conf['style']['moorweide']['title_background_color']='#006633';
+$conf['style']['moorweide']['title_text_color']='white';
+$conf['style']['moorweide']['text_color'] ='black';
+$conf['style']['moorweide']['background_color'] = '#F5FFFA';
+$conf['style']['moorweide']['inactive_background_color'] = '#CEE6DA';
+
 $conf['theme'] = array();
 $conf['theme']['compiler'] = array();
 $conf['theme']['compiler']['enable']=true;
