@@ -5,24 +5,15 @@ views=
 
 [content]
 
-views=login,openid,register
-action=login
-refreshable=false
+views=login:login,login:openid,login:register
 default=login
 modal=true
 
 [side]
-views=
-action=login
-refreshable=false
+views=login:license
 default=license
 
 
 [bottom]
 views=
 
-;[modal]
-;views=login,openid,register
-;action=login
-;refreshable=false
-;default=login

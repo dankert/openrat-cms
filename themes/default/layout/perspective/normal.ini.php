@@ -5,10 +5,8 @@ icons=templatelist,languagelist
 [tree]
 
 title=navigator
-views=tree,settings
+views=tree:tree,tree:settings,start:projectmenu,start:projecttimeline,start:userprojecttimeline
 default=tree
-action=tree
-refreshable=false
 
 
 [content]
@@ -16,20 +14,16 @@ refreshable=false
 views=
 default=
 action=
-refreshable=true
 
 [side]
 
 title=
 default=prop
 views=prop,pub
-action=folder
-refreshable=true
 
 [bottom]
 
 title=
 default=structure
 views=structure,info,preview,progress,console,search,archive,rights
-refreshable=true
 

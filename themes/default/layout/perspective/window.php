@@ -22,11 +22,17 @@ function view_header( $name )
 	// Tabreiter pro View erzeugen
     foreach( $viewlist as $vn )
           {
+          	$actionAndMethod = explode(':',$vn);
+          	if	( count($actionAndMethod) > 1 )
+          		list($action,$vn) = $actionAndMethod;
+          	else $action = '';
+          	 
+          		
           	$tmp_text = langHtml('menu_'.$vn);
-			$liClass  = 'action'.($vn==$v['default']?' active':'').(@$v['refreshable']?' dependent':' static');
+			$liClass  = 'action'.($vn==$v['default']?' active':'').(empty($action)?' dependent':' static');
 			$icon_url = OR_THEMES_EXT_DIR.'default/images/icon/'.$vn.'.png';
 			
-			?><li data-action="<?php echo @$v['action'] ?>" data-id="0" data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
+			?><li data-action="<?php echo $action ?>" data-id="0" data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
           		?><img class="icon" src="<?php echo $icon_url ?>" /><div class="tabname"><?php echo $tmp_text ?></div><?php
           	?></li><?php
           }

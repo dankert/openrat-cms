@@ -1,22 +1,16 @@
 <?php  ?>
 
 [tree]
-views=projectmenu
+views=start:projectmenu
 default=projectmenu
-action=start
-refreshable=false
 
 [content]
 
-views=timeline,usertimeline
+views=start:timeline,start:usertimeline
 default=timeline
-action=start
-refreshable=false
 
 [side]
-views=applications
-action=start
-refreshable=false
+views=start:applications
 default=applications
 
 [bottom]

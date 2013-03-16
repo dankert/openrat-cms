@@ -3,14 +3,11 @@
 
 [tree]
 views=usertimeline
-default     = usertimeline
-action=start
+default     = start:usertimeline
 
 [content]
 
-views       = edit,pw,settings
-action      = profile
-refreshable = false
+views       = profile:edit,profile:pw,profile:settings
 default     = edit
 modal = false
 
@@ -19,7 +16,5 @@ views       =
 default     = 
 
 [bottom]
-views       = memberships
-default     = memberships
-action      = profile
-refreshable = false
+views       = profile:memberships
+default     = profile:memberships
