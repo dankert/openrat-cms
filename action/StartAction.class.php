@@ -373,11 +373,11 @@ class StartAction extends Action
 		
 
 		// Diese Seite gilt pro Sitzung. 
-		$this->lastModified( $user->loginDate );
+		//$this->lastModified( $user->loginDate );
 
 		// Projekte ermitteln
-		$projects = $user->projects;
-
+		$projects = $user->getReadableProjects(); 
+		
 		$list     = array();
 		
 		foreach( $projects as $id=>$name )
@@ -409,7 +409,7 @@ class StartAction extends Action
 				$this->addNotice('','','NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
 		}
 		
-		$this->metaValues();
+		//$this->metaValues();
 	}
 
 
@@ -459,10 +459,10 @@ class StartAction extends Action
 	
 	/**
 	 * Ermittelt Meta-Angaben f�r den HTML-Kopf.<br>
-	 * Falls der Browser die Meta-Angaben entsprechend auswertet, k�nnen �ber feste Browser-Men�s 
-	 die Projekt direkt ausgew�hlt werden.
+	 * Falls der Browser die Meta-Angaben entsprechend auswertet, k�nnen �ber feste Browser-Men�s die Projekt direkt ausgew�hlt werden.
+	 * @Unused
 	 */
-	function metaValues()
+	private function metaValues()
 	{
 		global $conf;
 		$metaList = array();

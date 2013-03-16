@@ -20,7 +20,7 @@
 						<text var="name" maxlength="30"></text>
 					</link>
 					<part class="onrowvisible">
-						<image fileext="icon/menu.gif" align="left"></image>
+						<part class="arrow-down" />
 						<part class="dropdown">
 							<form action="index" subaction="project" id="var:id">
 								<table widths="150px,150px">
