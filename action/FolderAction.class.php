@@ -862,7 +862,16 @@ class FolderAction extends ObjectAction
 		
 	}
 
+	
+	/**
+	 * Alias für Methode 'create'.
+	 */
+	public function newView()
+	{
+		$this->nextSubAction('create');
+	}
 
+	
 	function createView()
 	{
 		// Maximale Dateigroesse.
