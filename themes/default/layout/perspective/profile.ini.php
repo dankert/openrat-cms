@@ -2,8 +2,8 @@
 
 
 [tree]
-views=usertimeline
-default     = start:usertimeline
+views		=start:usertimeline
+default     = usertimeline
 
 [content]
 
@@ -17,4 +17,4 @@ default     =
 
 [bottom]
 views       = profile:memberships
-default     = profile:memberships
+default     = memberships
