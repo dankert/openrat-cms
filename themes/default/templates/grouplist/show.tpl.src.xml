@@ -1,5 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header views="add" />
 	<table>
 		<row class="headline">
 			<column>
@@ -16,7 +17,7 @@
 		</list>
 		<row class="data">
 			<column colspan="2" class="clickable">
-				<link type="view" subaction="add">
+				<link type="dialog" subaction="add" name="message:menu_add">
 					<image icon="add"/>
 					<text text="new"/>
 				</link>

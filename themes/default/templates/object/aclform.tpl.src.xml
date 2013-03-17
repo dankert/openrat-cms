@@ -61,11 +61,13 @@
 					<list list="show" value="t" key="k">
 						<part>
 							<if value="var:t" equals="read">
-								<set var="var:t" value="true"></set>
+								<set var="var:t" value="true" />
 								<checkbox name="var:t" readonly="true"></checkbox>
 							</if>
-							<else><set var="var:t" value="false"></set><checkbox name="var:t"
-								readonly="false"></checkbox></else>
+							<else>
+								<set var="var:t" value="false" />
+								<checkbox name="var:t" readonly="false"></checkbox>
+							</else>
 							<label for="var:t" value="">
 								<text key="var:t" prefix="acl_"></text>
 							</label>

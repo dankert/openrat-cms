@@ -10,7 +10,7 @@
 					</part>
 					<part class="input">
 						<set var="inherit" value="1"></set>
-						<input type="checkbox" name="inherit"></input>
+						<checkbox name="inherit" />
 						<label for="inherit">
 							<text key="inherit_rights"></text>
 						</label>
