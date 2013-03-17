@@ -47,6 +47,7 @@ define('OR_THEMES_EXT_DIR'    ,defined('OR_BASE_URL')?slashify(OR_BASE_URL).'the
 define('OR_TMP_DIR'           ,'./tmp/'            );
 define('OR_CONTROLLER_FILE'   ,defined('OR_EXT_CONTROLLER_FILE')?OR_EXT_CONTROLLER_FILE:'dispatcher');
 define('START_TIME'           ,time()              );
+define('REQUEST_ID'           ,'req'.time().rand() );
 
 define('SECURITY_GUEST',1);
 define('SECURITY_USER' ,2);

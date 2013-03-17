@@ -3,7 +3,7 @@
 
 	function checkbox( $name,$value=false,$writable=true,$params=Array() )
 	{
-		$src = '<input type="checkbox" id="id_'.$name.'" name="'.$name.'"';
+		$src = '<input type="checkbox" id="'.REQUEST_ID.'_'.$name.'" name="'.$name.'"';
 
 		foreach( $params as $name=>$val )
 			$src .= " $name=\"$val\"";
@@ -46,7 +46,7 @@
 	function add_control($type,$image)
 	{
 		global $image_dir;
-		echo '<td><noscript>'.checkbox($type).'</noscript><label for="id_'.$type.'"><a href="javascript:'.$type.'();" title="'.langHtml('PAGE_EDITOR_ADD_'.$type).'"><img src="'.$image_dir.'/editor/'.$image.'" border"0" /></a></label>';
+		echo '<td><noscript>'.checkbox($type).'</noscript><label for="'.REQUEST_ID.'_'.$type.'"><a href="javascript:'.$type.'();" title="'.langHtml('PAGE_EDITOR_ADD_'.$type).'"><img src="'.$image_dir.'/editor/'.$image.'" border"0" /></a></label>';
 	}
 	
 	

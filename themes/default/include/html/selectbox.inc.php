@@ -14,7 +14,7 @@ if ( $attr_addempty!==FALSE  )
 	else
 		$attr_tmp_list = array(''=>'- '.lang($attr_addempty).' -')+$attr_tmp_list;
 }
-?><div class="inputholder"><select<?php if ($attr_readonly) echo ' disabled="disabled"' ?> id="id_<?php echo $attr_name ?>"  name="<?php echo $attr_name; if ($attr_multiple) echo '[]'; ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
+?><div class="inputholder"><select<?php if ($attr_readonly) echo ' disabled="disabled"' ?> id="<?php echo REQUEST_ID ?>_<?php echo $attr_name ?>"  name="<?php echo $attr_name; if ($attr_multiple) echo '[]'; ?>" onchange="<?php echo $attr_onchange ?>" title="<?php echo $attr_title ?>" class="<?php echo $attr_class ?>"<?php
 if (count($$attr_list)<=1) echo ' disabled="disabled"';
 if	($attr_multiple) echo ' multiple="multiple"';
 echo ' size="'.intval($attr_size).'"';
