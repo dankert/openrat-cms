@@ -1950,7 +1950,9 @@ div#workbench div.panel div.arrow-right
 }
 
 /* Geschlossene Fieldsets */
-div#workbench div.panel fieldset > legend > div.closed
+div#workbench div.panel fieldset > legend > div.closed,
+div#dialog    div.panel fieldset > legend > div.closed
+
 {
 	display:inline;
 }
@@ -1964,7 +1966,8 @@ div#workbench div.panel fieldset.open > legend > div.closed
 {
 	display:none;
 }
-div#workbench div.panel fieldset.open > legend > div.open
+div#workbench div.panel fieldset.open > legend > div.open,
+div#dialog    div.panel fieldset.open > legend > div.open
 {
 	display:inline;
 }

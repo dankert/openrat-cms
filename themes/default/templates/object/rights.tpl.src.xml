@@ -68,7 +68,7 @@
 		</list>
 		<row class="data">
 			<column colspan="99" class="clickable">
-				<link type="view" subaction="aclform">
+				<link type="dialog" name="message:menu_aclform" subaction="aclform">
 					<image icon="add" />
 					<text text="new" />
 				</link>
