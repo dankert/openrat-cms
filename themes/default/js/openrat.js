@@ -1429,9 +1429,9 @@ function resizeWorkbenchContainer( container )
 		// Container ist horizontal geteilt.
 		var size = Math.floor(availableWidth * factor);
 		container.find('div.panel.resizable').css('width',''+size                   +'px');
-		container.find('div.panel.resizable > div.content').css('height',''+(availableHeight-27)+'px');
+		container.find('div.panel.resizable > div.content').css('height',''+(availableHeight-26)+'px');
 		container.find('div.panel.autosize ').css('width',''+(availableWidth-size-9)+'px');
-		container.find('div.panel.autosize  > div.content').css('height',''+(availableHeight-27)+'px');
+		container.find('div.panel.autosize  > div.content').css('height',''+(availableHeight-26)+'px');
 
 		container.children('div.resizable').css('width',''+size                   +'px');
 		container.children('div.resizable').css('height',''+availableHeight+'px');
@@ -1445,14 +1445,14 @@ function resizeWorkbenchContainer( container )
 		// Container ist vertikal geteilt.
 		var size = Math.floor(availableHeight * factor);
 		container.find('div.panel.resizable ').css('width',''+availableWidth +'px');
-		container.find('div.panel.resizable > div.content').css('height',''+(size-27)+'px');
+		container.find('div.panel.resizable > div.content').css('height',''+(size-26)+'px');
 		container.find('div.panel.autosize  ').css('width',''+availableWidth  +'px');
-		container.find('div.panel.autosize  > div.content').css('height',''+(availableHeight-size-27)+'px');
+		container.find('div.panel.autosize  > div.content').css('height',''+(availableHeight-size-26)+'px');
 		
 		container.children('div.resizable').css('width',''+availableWidth +'px');
 		container.children('div.resizable').css('height',''+size+'px');
 		container.children('div.autosize').css('width',''+availableWidth+'px');
-		container.children('div.autosize').css('height',''+(availableHeight-size-20)+'px');
+		container.children('div.autosize').css('height',''+(availableHeight-size-5)+'px');
 
 		container.children('div.divider').css('width',''+availableWidth+'px');
 	}
@@ -1480,13 +1480,15 @@ function resizeWorkbench()
 	var viewportWidth  = $(window).width();
 	var viewportHeight = $(window).height();
 	
+	var titleHeight = 40;
+	
 	var container = $('div#workbench > div.container');
 	
 	// Verfügbare Breite der Workbench ist Fensterbreite - Innenabstand der Workbench (2*3px)
-	container.css('width' ,''+viewportWidth-6+'px');
+	container.css('width' ,''+(viewportWidth-6)+'px');
 	
 	// Verfügbare Höhe   der Workbench ist Fensterhöhe - Höhe der Titelleiste - Innenabstand der Workbench (2*3px)
-	container.css('height',''+(viewportHeight-61)+'px');
+	container.css('height',''+(viewportHeight-titleHeight-6)+'px');
 	
 	resizeWorkbenchContainer( container );
 }
@@ -1497,9 +1499,17 @@ function resizeWorkbench()
  */
 function resizeTabs( panel ) 
 {
+	// Anzahl Tabs pro Panel
 	var tabCount = $(panel).find('div.header li.action').size();
-	//alert("Breite ist"+$(bar).width()+ " und Count ist "+tabCount + " sind "+(($(bar).width()-50)/tabCount));
-	var tabWidth = Math.min(90,Math.max(30,(($(panel).width()-60)/tabCount)-15 ));
+	
+	// Von der Panel-Breite werden 18px für das Fenstermenü substrahiert.
+	// Von der Breite pro Tab werden 25px für das Icon substrahiert.
+	var tabWidth = Math.floor((($(panel).width()-18)/tabCount)-33);
+	if	( $(panel).is('#panel-content') )
+		tabWidth -= 24; // Im Content-Bereich gibt es noch den Schließen-Knopf.
+	
+	// Validierung: Mindest- und Maximalbreite
+	tabWidth = Math.min(90,Math.max(5,tabWidth)); 
 	$(panel).find('li.action div.tabname').width(tabWidth);
 }
 

@@ -65,11 +65,11 @@ div.panel > div.title
 div#header
 {
 	width:100%;
-	height:30px;
+	height:27px;
 	overflow:hidden;
-	padding:7px;
+	padding:5px;
 	margin:0px;
-	margin-bottom:5px;
+	margin-bottom:3px;
 	float:left;
 }
 
@@ -806,9 +806,11 @@ div.structure em
 	cursor: move;
 }
 
-div.panel div.header > div.icons
+div.panel > div.header > div.icons
 {
-	/*float:right;*/
+	xposition: static;
+	xright:-30px;
+	top:3px;
 }
 
 div.backward_link
@@ -904,7 +906,8 @@ div.panel ul.views li
     xborder-left:1px solid <?php echo $_GET['title_background_color']; ?>;
     xborder-right:1px solid <?php echo $_GET['title_background_color']; ?>;
     xmargin-right:10px;
-	display: block;
+	display: inline;
+	white-space:nowrap;
 	float:left;
 }
 
