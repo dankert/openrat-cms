@@ -2,7 +2,7 @@
 <!-- Ignore: --><form>
 
 <div class="bottom">
-	<div class="command <?php echo $attr_tmp_visible?'visible':'invisible' ?>">
+	<div class="command <?php echo $attr_tmp_visible?'visible':'xinvisible' ?>">
 	
 		<input type="button" class="submit ok" value="<?php echo $attr_tmp_ok_label ?>" onclick="$(this).closest('div.sheet').find('form').submit(); " />
 		

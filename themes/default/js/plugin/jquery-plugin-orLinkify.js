@@ -32,7 +32,7 @@ jQuery.fn.orLinkify = function()
 
 			else if	( type == 'dialog' )
 			{
-				startDialog($(this).attr('data-method'),false );
+				startDialog($(this).attr('data-name'),$(this).attr('data-method'),false );
 			}
 
 			else if	( type == 'url' )

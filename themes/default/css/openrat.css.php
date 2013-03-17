@@ -1161,7 +1161,7 @@ div.content div.bottom
 	padding-right:40px;
 	bottom:0px;
 	right:0px;
-	visibility:hidden;
+	xvisibility:hidden;
 }
 
 div.content div.bottom > div.command

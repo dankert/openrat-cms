@@ -783,13 +783,13 @@ function startView( element,method )
  * @param action Action
  * @param id Id
  */
-function startDialog( method,modal )
+function startDialog( name,method,modal )
 {
 	var action = $('#panel-content').find('li.active').data('action');
 	var id     = $('#panel-content').find('li.active').data('id'    );
 	
 	$('div#filler').fadeTo(500,0.5);
-	$('div#dialog').html('<div class="content" />');
+	$('div#dialog').html('<div class="header"><ul class="views"><li class="action active"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" /><div class="tabname" style="width:100px;">'+name+'</div></li></ul></div><div class="content" />');
 	$('div#dialog').show();
 	
 	loadView( $('div#dialog div.content'), action,method,id );
