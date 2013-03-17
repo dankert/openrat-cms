@@ -940,7 +940,10 @@ function openNewAction( name,action,id,extraId )
 			
 				setNewAction(action,id,extraId);
 			} );
-		
+
+		// Nach dem Hinzufügen eines neue Tabs die Größe aller Tabs in diesem Panel anpassen.
+		resizeTabs( $('div#panel-content ') );
+
 		/*
 		 * Eventhandler hängt schon auf div.menu
 		$('div#content > div.panel > div.menu > div.views > ul.views li.active').dblclick( function()
