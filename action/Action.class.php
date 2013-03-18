@@ -554,6 +554,17 @@ class Action
 	
 
 	/**
+	 * Ermitteln, ob Benutzer Administratorrechte besitzt
+	 * @return Boolean TRUE, falls der Benutzer ein Administrator ist.
+	 */
+	public function userIsLoggedIn()
+	{
+		$user = Session::getUser();
+		return is_object($user) && $user->isAdmin;
+	}
+	
+
+	/**
 	 * Ermitteln des Benutzerobjektes aus der Session
 	 * @return User
 	 */

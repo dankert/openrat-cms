@@ -14,181 +14,190 @@
 	</if>
 
 	<!-- Menü: Datei -->
-	<part class="toolbar-icon menu">
-		<image icon="file" align="left"></image>
-		<text key="file"></text>
-		<part class="arrow-down" />
-		<part class="dropdown">
-			<part
-				class="entry clickable filtered on-action-folder on-action-page on-action-file">
-				<link type="dialog" title="message:menu_new_desc" subaction="new">
-					<image icon="new" align="left"></image>
-					<text key="menu_new"></text>
-				</link>
-			</part>
+	<if true="method:userIsLoggedIn">
+		<part class="toolbar-icon menu">
+			<image icon="file" align="left"></image>
+			<text key="file"></text>
+			<part class="arrow-down" />
+			<part class="dropdown">
+				<part
+					class="entry clickable filtered on-action-folder on-action-page on-action-file">
+					<link type="dialog" title="message:menu_new_desc" subaction="new">
+						<image icon="new" align="left"></image>
+						<text key="menu_new"></text>
+					</link>
+				</part>
 
-			<part class="divide" />
+				<part class="divide" />
 
-			<part class="entry clickable">
-				<link type="post" title="message:menu_save_desc" subaction="save">
-					<image icon="save" align="left"></image>
-					<text key="menu_save"></text>
-				</link>
-			</part>
-			<part class="entry clickable">
-				<link type="post" title="message:menu_saveall_desc" subaction="saveall">
-					<image icon="saveall" align="left"></image>
-					<text key="menu_saveall"></text>
-				</link>
-			</part>
-			<part
-				class="entry clickable filtered on-action-page on-action-file on-action-template on-action-pageelement">
-				<link type="dialog" title="message:menu_preview_desc"
-					subaction="preview">
-					<image icon="page" align="left"></image>
-					<text key="menu_preview"></text>
-				</link>
-			</part>
+				<part class="entry clickable">
+					<link type="post" title="message:menu_save_desc" subaction="save">
+						<image icon="save" align="left"></image>
+						<text key="menu_save"></text>
+					</link>
+				</part>
+				<part class="entry clickable">
+					<link type="post" title="message:menu_saveall_desc" subaction="saveall">
+						<image icon="saveall" align="left"></image>
+						<text key="menu_saveall"></text>
+					</link>
+				</part>
+				<part
+					class="entry clickable filtered on-action-page on-action-file on-action-template on-action-pageelement">
+					<link type="dialog" title="message:menu_preview_desc"
+						subaction="preview">
+						<image icon="page" align="left"></image>
+						<text key="menu_preview"></text>
+					</link>
+				</part>
 
-			<part class="divide" />
+				<part class="divide" />
 
-			<part class="entry clickable">
-				<link type="post" class="entry" title="message:USER_LOGOUT_DESC"
-					action="login" subaction="logout">
-					<image icon="close" align="left"></image>
-					<text key="USER_LOGOUT"></text>
-				</link>
+				<part class="entry clickable">
+					<link type="post" class="entry" title="message:USER_LOGOUT_DESC"
+						action="login" subaction="logout">
+						<image icon="close" align="left"></image>
+						<text key="USER_LOGOUT"></text>
+					</link>
+				</part>
 			</part>
 		</part>
-	</part>
+	</if>
 
 	<!-- Menü: Bearbeiten -->
-	<part class="toolbar-icon menu">
-		<image icon="edit" align="left"></image>
-		<text key="edit"></text>
-		<part class="arrow-down" />
-		<part class="dropdown">
-			<part
-				class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file">
-				<link type="dialog" title="message:menu_prop_desc" subaction="prop">
-					<image icon="prop" align="left"></image>
-					<text key="menu_prop"></text>
-				</link>
-			</part>
-			<part
-				class="entry clickable filtered on-action-page on-action-file on-action-folder on-action-pageelement">
-				<link type="dialog" title="message:menu_pub_desc" subaction="pub">
-					<image icon="pub" align="left"></image>
-					<text key="menu_pub"></text>
-				</link>
-			</part>
-			<part class="entry clickable filtered on-action-pageelement">
-				<link type="dialog" class="entry" subaction="archive"
-					title="message:menu_archive_desc">
-					<image icon="archive" align="left"></image>
-					<text key="menu_archive"></text>
-				</link>
-			</part>
-			<part
-				class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
-				<link type="dialog" title="message:menu_rights_desc" subaction="rights">
-					<image icon="rights" align="left"></image>
-					<text key="menu_rights"></text>
-				</link>
-			</part>
+	<if true="method:userIsLoggedIn">
 
-			<part class="divide" />
+		<part class="toolbar-icon menu">
+			<image icon="edit" align="left"></image>
+			<text key="edit"></text>
+			<part class="arrow-down" />
+			<part class="dropdown">
+				<part
+					class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file">
+					<link type="dialog" title="message:menu_prop_desc" subaction="prop">
+						<image icon="prop" align="left"></image>
+						<text key="menu_prop"></text>
+					</link>
+				</part>
+				<part
+					class="entry clickable filtered on-action-page on-action-file on-action-folder on-action-pageelement">
+					<link type="dialog" title="message:menu_pub_desc" subaction="pub">
+						<image icon="pub" align="left"></image>
+						<text key="menu_pub"></text>
+					</link>
+				</part>
+				<part class="entry clickable filtered on-action-pageelement">
+					<link type="dialog" class="entry" subaction="archive"
+						title="message:menu_archive_desc">
+						<image icon="archive" align="left"></image>
+						<text key="menu_archive"></text>
+					</link>
+				</part>
+				<part
+					class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
+					<link type="dialog" title="message:menu_rights_desc"
+						subaction="rights">
+						<image icon="rights" align="left"></image>
+						<text key="menu_rights"></text>
+					</link>
+				</part>
 
-			<part class="entry clickable filtered on-action-page">
-				<link type="dialog" title="message:menu_changetemplate_desc"
-					subaction="changetemplate">
-					<image icon="changetemplate" align="left"></image>
-					<text key="menu_changetemplate"></text>
-				</link>
+				<part class="divide" />
+
+				<part class="entry clickable filtered on-action-page">
+					<link type="dialog" title="message:menu_changetemplate_desc"
+						subaction="changetemplate">
+						<image icon="changetemplate" align="left"></image>
+						<text key="menu_changetemplate"></text>
+					</link>
+				</part>
 			</part>
 		</part>
-	</part>
-
+	</if>
 
 	<!-- <part class="history"> <image icon="history" align="left"></image> 
 		<text key="history" maxlength="20"></text> <part class="dropdown"> <text 
 		raw=""></text> </part> </part> -->
 
 	<!-- Menü: Projekt -->
-	<part class="toolbar-icon projects">
-		<image icon="project" align="left"></image>
-		<text class="titletext" key="GLOBAL_PROJECT"></text>
-		<part class="dropdown">
+	<if true="method:userIsLoggedIn">
 
-			<if true="method:userIsAdmin">
-				<part class="entry clickable">
-					<link type="post" class="entry" action="start" subaction="administration"
-						target="tree" id="-1">
-						<image icon="administration" align="left"></image>
-						<text key="administration"></text>
-					</link>
-				</part>
-				<part class="divide" />
-			</if>
+		<part class="toolbar-icon projects">
+			<image icon="project" align="left"></image>
+			<text class="titletext" key="GLOBAL_PROJECT"></text>
+			<part class="dropdown">
 
-			<if value="size:languages" greaterthan="0">
-				<list list="languages" key="id" value="name">
+				<if true="method:userIsAdmin">
 					<part class="entry clickable">
-						<image icon="language"></image>
-						<link type="post" action="tree" subaction="language" id="var:id"
-							title="message:select_language">
-							<text var="name"></text>
+						<link type="post" class="entry" action="start" subaction="administration"
+							target="tree" id="-1">
+							<image icon="administration" align="left"></image>
+							<text key="administration"></text>
+						</link>
+					</part>
+					<part class="divide" />
+				</if>
+
+				<if value="size:languages" greaterthan="0">
+					<list list="languages" key="id" value="name">
+						<part class="entry clickable">
+							<image icon="language"></image>
+							<link type="post" action="tree" subaction="language" id="var:id"
+								title="message:select_language">
+								<text var="name"></text>
+							</link>
+						</part>
+					</list>
+					<part class="divide" />
+				</if>
+
+				<if value="size:models" greaterthan="0">
+					<list list="models" key="id" value="name">
+						<part class="entry clickable">
+							<image icon="model"></image>
+							<link type="post" action="tree" subaction="model" id="var:id"
+								title="message:select_model">
+								<text var="name"></text>
+							</link>
+						</part>
+					</list>
+					<part class="divide" />
+				</if>
+
+
+				<list list="projects" key="id" value="name">
+					<part class="entry clickable">
+						<image icon="project"></image>
+						<link type="post" action="start" subaction="projectmenu" id="var:id"
+							title="message:select_project">
+							<text var="name" maxlength="45"></text>
 						</link>
 					</part>
 				</list>
-				<part class="divide" />
-			</if>
-
-			<if value="size:models" greaterthan="0">
-				<list list="models" key="id" value="name">
-					<part class="entry clickable">
-						<image icon="model"></image>
-						<link type="post" action="tree" subaction="model" id="var:id"
-							title="message:select_model">
-							<text var="name"></text>
-						</link>
-					</part>
-				</list>
-				<part class="divide" />
-			</if>
-
-
-			<list list="projects" key="id" value="name">
-				<part class="entry clickable">
-					<image icon="project"></image>
-					<link type="post" action="start" subaction="projectmenu" id="var:id"
-						title="message:select_project">
-						<text var="name" maxlength="45"></text>
-					</link>
-				</part>
-			</list>
+			</part>
+			<part class="arrow-down" />
 		</part>
-		<part class="arrow-down" />
-	</part>
+	</if>
 
 
 
+	<if true="method:userIsLoggedIn">
 
-
-	<part
-		class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-template on-action-element">
-		<link type="dialog" subaction="prop" title="message:menu_prop_desc">
-			<image icon="prop" align="left"></image>
-			<text key="menu_prop"></text>
-		</link>
-	</part>
-	<part
-		class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-pageelement">
-		<link type="dialog" subaction="pub" title="message:menu_pub_desc">
-			<image icon="pub" align="left"></image>
-			<text key="menu_pub"></text>
-		</link>
-	</part>
+		<part
+			class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-template on-action-element">
+			<link type="dialog" subaction="prop" title="message:menu_prop_desc">
+				<image icon="prop" align="left"></image>
+				<text key="menu_prop"></text>
+			</link>
+		</part>
+		<part
+			class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-pageelement">
+			<link type="dialog" subaction="pub" title="message:menu_pub_desc">
+				<image icon="pub" align="left"></image>
+				<text key="menu_pub"></text>
+			</link>
+		</part>
+	</if>
 
 
 	<!-- Info-Meldung anzeigen (sofern vorhanden -->
