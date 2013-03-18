@@ -49,6 +49,7 @@
       method="<?php echo $attr_method ?>"
       enctype="<?php echo $attr_enctype ?>"
       class="<?php echo $attr_action ?>"
+      data-async="<?php echo $attr_async ?>"
       onSubmit="<?php echo $attr_tmp_submitFunction ?>"><input type="submit" class="invisible" />
       
 <?php if ($this->isEditable() && !$this->isEditMode()) { ?>

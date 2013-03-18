@@ -1,4 +1,3 @@
-
 // Default-Subaction
 var DEFAULT_CONTENT_ACTION = 'edit';
 
@@ -1066,6 +1065,18 @@ function formSubmit(form)
 		$(form).closest('div.content').addClass('loader');
 		url += '?output=json';
 		params['output'] = 'json';// Irgendwie geht das nicht.
+		
+		if	( $(form).data('async')=='true')
+		{
+			// Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
+			// beendet wird.
+			$('div#dialog').html('').hide();  // Dialog beenden
+			
+			//$('div.modaldialog').fadeOut(500); 
+			//$('div#workbench').removeClass('modal'); // Modalen Dialog beenden.
+			$('div#filler').fadeOut(500); // Filler beenden
+		}
+		
 		$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 			{
 				$(form).closest('div.content').removeClass('loader');
@@ -1137,10 +1148,29 @@ function doResponse(data,status,element)
 		} );
 		
 		var timeoutSeconds;
-		if	( value.status == 'ok' )
+		if	( value.status == 'ok' ) // Kein Fehler?
+		{
+			// Kein Fehler
 			timeoutSeconds = 3;
+			
+			// Nur bei synchronen Prozessen soll nach Verarbeitung der Dialog
+			// geschlossen werden.
+			if	( $(element).data('async') != 'true' )
+			{
+				// Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
+				// beendet wird.
+				$('div#dialog').html('').hide();  // Dialog beenden
+				
+				//$('div.modaldialog').fadeOut(500); 
+				//$('div#workbench').removeClass('modal'); // Modalen Dialog beenden.
+				$('div#filler').fadeOut(500); // Filler beenden
+			}
+		}
 		else
+			// Server liefert Fehler zurück.
+		{
 			timeoutSeconds = 8;
+		}
 		
 		// Und nach einem Timeout entfernt sich die Notice von alleine.
 		setTimeout( function() { $(notice).fadeOut('slow').remove(); },timeoutSeconds*1000 );
