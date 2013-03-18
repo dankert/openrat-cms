@@ -12,7 +12,7 @@
 
 
 
-	<form>
+	<form async="true">
 		<group title="message:options">
 
 			<part class="line">

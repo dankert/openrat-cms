@@ -11,7 +11,7 @@
 	</if>
 
 
-	<form cancel="false" visible="true" label="message:publish">
+	<form cancel="false" visible="true" label="message:publish" async="true">
 		<if present="pages">
 			<if present="subdirs">
 
