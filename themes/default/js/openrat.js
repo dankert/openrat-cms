@@ -1052,6 +1052,7 @@ function formSubmit(form)
 	
 	if	( method == 'GET' )
 	{
+		// GET-Request
 		var method  = $(form).closest('div.panel').attr('data-method');
 		var p       = $(form).closest('div.panel');
 		var action  = p.attr('data-action');
@@ -1062,11 +1063,12 @@ function formSubmit(form)
 	}
 	else
 	{
+		// POST-Request
 		$(form).closest('div.content').addClass('loader');
 		url += '?output=json';
 		params['output'] = 'json';// Irgendwie geht das nicht.
 		
-		if	( $(form).data('async')=='true')
+		if	( $(form).data('async') || $(form).data('async')=='true')
 		{
 			// Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
 			// beendet wird.
