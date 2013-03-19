@@ -435,7 +435,7 @@ function loadView(contentEl,action,method,id  )
 				$(this).html("");
 				$(this).removeClass("loader");
 				// OK-button Ausblenden.
-				$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
+				//$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
 				// var msg = "Sorry but there was an error: ";
 				//$(this).html(msg + xhr.status + " " + xhr.statusText);
 				return;
@@ -456,12 +456,12 @@ function loadView(contentEl,action,method,id  )
 function registerViewEvents( viewEl )
 {
 	
-	var $formVorhanden = $(viewEl).find('form').size() > 0;
-	var $formInput     = $(viewEl).closest('div.panel').find('div.bottom > div.command > input');
-	if	( $formVorhanden )
-		$formInput.removeClass('invisible');
-	else
-		$formInput.addClass('invisible');
+//	var $formVorhanden = $(viewEl).find('form').size() > 0;
+//	var $formInput     = $(viewEl).closest('div.panel').find('div.bottom > div.command > input');
+//	if	( $formVorhanden )
+//		$formInput.removeClass('invisible');
+//	else
+//		$formInput.addClass('invisible');
 
 	if ( $('div.panel form input[type=password]').length>0 && $('#uname').attr('value')!='' )
 	{
@@ -577,9 +577,9 @@ function registerViewEvents( viewEl )
 	} );
 	//$(viewEl).find('div.header').html('<!-- moved to window-menu -->');
 	
-	$(viewEl).find('input,select,textarea').focus( function() {
-		$(this).closest('div.panel').find('div.command').css('visibility','visible').fadeIn('slow');
-	});
+//	$(viewEl).find('input,select,textarea').focus( function() {
+//		$(this).closest('div.panel').find('div.command').css('visibility','visible').fadeIn('slow');
+//	});
 
 	$(viewEl).find('fieldset > legend').click( function() {
 		$(this).parent().toggleClass('open');
@@ -625,6 +625,12 @@ function registerViewEvents( viewEl )
 	});
 	
 	$(viewEl).find('textarea').orAutoheight();
+	
+	// Autosave in Formularen. Bei Veränderungen wird das Formular sofort abgeschickt.
+	$(viewEl).find('form.[data-autosave="true"] input[type="checkbox"]').click( function() {
+		formSubmit( $(this).closest('form') );
+	});
+	
 
 }
 

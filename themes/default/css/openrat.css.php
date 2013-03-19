@@ -1170,6 +1170,10 @@ div.content div.bottom > div.command
 	float:right;
 	z-index:20;
 }
+div.content form[data-autosave='true'] div.command
+{
+	display: none;
+}
 
 div.content > form
 {
