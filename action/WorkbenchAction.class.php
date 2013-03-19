@@ -64,7 +64,7 @@ class WorkbenchAction extends Action
 		$viewconfig = parse_ini_file('themes/default/layout/perspective/'.$this->perspective.'.ini.php',true);
 		
 		require_once('themes/default/layout/perspective/window.php');
-		require_once('themes/default/layout/perspective/workbench.php');
+		require_once('themes/default/layout/perspective/'.$this->perspective.'.php');
 		// Ausgabe fertig.
 		exit;
 	}

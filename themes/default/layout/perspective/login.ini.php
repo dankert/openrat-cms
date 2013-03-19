@@ -12,8 +12,3 @@ modal=true
 [side]
 views=login:license
 default=license
-
-
-[bottom]
-views=
-
