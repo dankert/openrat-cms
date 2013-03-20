@@ -1,19 +1,13 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header back="true"/>
 	<form>
-		<row>
-			<column width="50%">
+		<part class="line">
+			<part class="label">
 				<text key="GLOBAL_DATABASE"></text>
-			</column>
-			<column width="50%">
+			</part>
+			<part class="input">
 				<selectbox name="dbid" list="dbids" default="actdbid"></selectbox>
-			</column>
-		</row>
-		<row>
-			<column colspan="2" class="act">
-				<button></button>
-			</column>
-		</row>
+			</part>
+		</part>
 	</form>
 </output>
