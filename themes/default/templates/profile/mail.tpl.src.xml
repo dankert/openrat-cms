@@ -1,3 +1,19 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><header back="true"></header><form method="post"><window icon="user" name="user_profile"><row><column class="logo" colspan="2"><logo name="changemail"></logo></column></row><row><column colspan="2"><group title="message:user_mail"><label for="mail"><text text="user_new_mail"></text></label><input name="mail"></input></group></column></row><row><column colspan="2" class="act"><button type="ok"></button></column></row></window></form><focus field="mail"></focus></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form method="post">
+		<logo name="changemail" />
+		
+		<group title="message:user_mail">
+			<part class="line">
+				<part class="label">
+					<label for="mail">
+						<text text="user_new_mail"></text>
+					</label>
+				</part>
+				<part class="input">
+					<input name="mail"></input>
+				</part>
+			</part>
+		</group>
+	</form>
+</output>

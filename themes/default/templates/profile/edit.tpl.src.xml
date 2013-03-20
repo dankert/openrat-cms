@@ -22,7 +22,7 @@
 					<newline />
 					<newline />
 					<part class="clickable">
-						<link type="dialog" class="action" action="profile" subaction="mail">
+						<link type="dialog" class="action" action="profile" subaction="mail" name="message:mail">
 							<text key="edit"></text>
 						</link>
 					</part>
