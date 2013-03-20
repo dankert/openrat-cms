@@ -30,17 +30,18 @@ class TitleAction extends Action
 	/**
 	 * Fuellen der Variablen und Anzeigen der Titelleiste
 	 */
-	function showView()
+	public function showView()
 	{
 		$this->setTemplateVar('buildinfo',OR_TITLE.' '.OR_VERSION.' - build '.config('build','build') );
 
 		$user = Session::getUser();
 		if	( !is_object($user) )
-			return; // Keine aktive Sitzung vorhanden.
+			return; // Kein Benutzer angemeldet.
 			
 
 		$db = Session::getDatabase();
 		$this->setTemplateVar('dbname',$db->conf['comment'].(readonly()?' ('.lang('readonly').')':''));
+		$this->setTemplateVar('dbid'  ,$db->id);
 		
 		$databases = array();
 		

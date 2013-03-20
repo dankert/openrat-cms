@@ -1,17 +1,21 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 
-	<if true="false">
-		<part class="title">
+	<!-- Info-Meldung anzeigen (sofern vorhanden -->
+	<if present="dbname">
+		<part class="toolbar-icon" title="message:database">
 			<image icon="database" align="left"></image>
-			<if present="dbname">
-				<text class="titletext" title="message:database" var="dbname"
-					maxlength="25"></text>
-				<!-- <text class="titletext" raw=" - "></text> -->
-			</if>
-			<!-- <text class="titletext" var="cms_title" title="var:buildinfo"></text> -->
+			<text raw="_" />
+			<part class="arrow-down" />
+			<part class="dropdown">
+				<part class="entry">
+					<text title="var:dbid" var="dbname"
+						maxlength="50"></text>
+				</part>
+			</part>
 		</part>
 	</if>
+
 
 	<!-- Menü: Datei -->
 	<if true="method:userIsLoggedIn">
