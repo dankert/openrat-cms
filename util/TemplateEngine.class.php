@@ -216,6 +216,9 @@ class TemplateEngine
 				// Baustein nicht vorhanden, Abbbruch.
 				die( get_class($this).': Compile failed, file not found: '.$inFileName );
 
+		if	( !$conf['production'])
+			fwrite( $outFileHandler,"<!-- Compiling $infile @ ".date('r')." -->" );
+		
 		$values = array();
 		foreach( $attr as $attrName=>$attrValue )
 		{

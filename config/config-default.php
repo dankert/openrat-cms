@@ -853,4 +853,7 @@ $conf['wiki']['convert_html']=true;
 $conf['wiki']['convert_bbcode']=true;
 $conf['wiki']['tag_strong']= "*";
 $conf['wiki']['tag_emphatic']= "_";
+
+$conf['production']= true;
+
 ?>
