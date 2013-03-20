@@ -458,11 +458,6 @@ body.main table.main td.window td
 	padding:4px;
 }
 
-/* Logo */
-table.main td.window td.logo
-{
-	padding:10px;
-}
 
 /* Action-Button */
 body.main table.main td.window td.act
@@ -547,17 +542,14 @@ td.logo
 	margin:0px;
 }
 
-h2.logo
+div.logo h2
 {
 	font-family:Verdana;
 	font-weight:normal;
 	font-size:24px;
-	margin-left:110px;
 }
-
-p.logo
+div.logo p
 {
-	margin-left:110px;
 	font-family:Verdana;
 	font-size:13px;
 }
