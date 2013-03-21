@@ -1542,8 +1542,8 @@ function resizeTabs( panel )
 	var tabCount = $(panel).find('div.header li.action').size();
 	
 	// Von der Panel-Breite werden 18px für das Fenstermenü substrahiert.
-	// Von der Breite pro Tab werden 25px für das Icon substrahiert.
-	var tabWidth = Math.floor((($(panel).width()-18)/tabCount)-33);
+	// Von der Breite pro Tab werden 39px für das Icon substrahiert.
+	var tabWidth = Math.floor((($(panel).width()-18)/tabCount)-39);
 	if	( $(panel).is('#panel-content') )
 		tabWidth -= 24; // Im Content-Bereich gibt es noch den Schließen-Knopf.
 	

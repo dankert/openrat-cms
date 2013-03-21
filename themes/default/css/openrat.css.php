@@ -295,7 +295,7 @@ div#header > div.menu {
 /*Dropdown anzeigen!!!*/
 div#header div:hover div.dropdown,
 div.panel div:hover > div.dropdown,
-div.icon:hover > div.dropdown
+div.panel-icon:hover > div.dropdown
 {
 	display:block;
 }
@@ -798,7 +798,7 @@ div.structure em
 	cursor: move;
 }
 
-div.panel > div.header > div.icons
+div.panel > div.header > div.panel-icon
 {
 	xposition: static;
 	xright:-30px;
@@ -852,7 +852,7 @@ ul.views > li > div
 	float:left;
 }
 
-div.header div.icons,
+div.panel div.header div.panel-icon,
 div.inputholder > div.icon
 {
 	float: right;
@@ -1905,13 +1905,13 @@ div#header > div > div.arrow-down
 	display: inline;
 	width:0;
 	height:0;
-	margin:2;
+	margin:6;
 	padding:0px;
 	border-right : 6px solid <?php echo $_GET['title_background_color']; ?>;
 	border-left  : 6px solid <?php echo $_GET['title_background_color']; ?>;
 	border-top   : 6px solid <?php echo $_GET['inactive_background_color'      ]; ?>;
 	border-bottom: 4px solid <?php echo $_GET['title_background_color'   ]; ?>;
-	margin-top: 6px;
+	margin-top: 10px;
 font-size: 0;
 }
 
@@ -1921,13 +1921,13 @@ div#workbench div.panel div.arrow-down
 {
 	width:0;
 	height:0;
-	margin:2px;
+	margin:6px;
 	padding:0px;
 	border-right  : 6px solid transparent;
 	border-top    : 6px solid <?php echo $_GET['title_background_color']; ?>;
 	border-left   : 6px solid transparent;
 	border-bottom : 4px solid transparent;
-	margin-top: 6px;
+	margin-top: 10px;
 	font-size: 0;
 }
 /* Pfeile */
@@ -1935,13 +1935,13 @@ div#workbench div.panel div.arrow-right
 {
 	width:0;
 	height:0;
-	margin:2px;
+	margin:6px;
 	padding:0;
 	border-top:    6px solid transparent;
 	border-left:   6px solid <?php echo $_GET['title_background_color']; ?>;
 	border-bottom: 6px solid transparent;
 	border-right:  4px solid transparent;
-	margin-left:   6px;
+	margin-left:  10px;
 	font-size: 0;
 }
 

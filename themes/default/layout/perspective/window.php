@@ -74,8 +74,7 @@ setTimeout( function() { openNewAction( '<?php echo $object->name; ?>','<?php ec
 ?>
 //-->
 </script>
-<div class="icons">
-<div class="icon">
+<div class="panel-icon">
 
 <?php if (!empty($viewlist) || $name=='content') { /* Fenster-Menü anzeigen (sofern Views vorhanden) */ ?>
 <div class="arrow-down" />
@@ -97,7 +96,6 @@ setTimeout( function() { openNewAction( '<?php echo $object->name; ?>','<?php ec
 
 <!-- Hinweis-Meldungen -->
 
-</div>
 </div>
 
 <div class="content">
