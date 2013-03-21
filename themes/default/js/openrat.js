@@ -398,7 +398,7 @@ function loadViewByName(viewName, url )
  * @param jo
  * @param url URL, von der der Inhalt geladen wird.
  */
-function loadView(contentEl,action,method,id  )
+function loadView(contentEl,action,method,id,params  )
 {
 	// Schauen, ob der Inhalt schon geladen ist...
 	var targetEl = $(contentEl).children('div.sheet.action-'+action+'.method-'+method+'.id-'+id);
@@ -424,7 +424,7 @@ function loadView(contentEl,action,method,id  )
 		}
 	}
 			
-	var url = createUrl(action,method,id,0); // URL für das Laden erzeugen.
+	var url = createUrl(action,method,id,params); // URL für das Laden erzeugen.
 	
 	$(targetEl).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
 			$(targetEl).fadeTo(350,1);
@@ -1054,18 +1054,16 @@ function formSubmit(form)
 	var params = $(form).serializeArray();
 	var url    = './dispatcher.php'; // Alle Parameter befinden sich im Formular
 	
-	var method = $(form).attr('method').toUpperCase();
+	var formMethod = $(form).attr('method').toUpperCase();
 	
-	if	( method == 'GET' )
+	if	( formMethod == 'GET' )
 	{
 		// GET-Request
-		var method  = $(form).closest('div.panel').attr('data-method');
-		var p       = $(form).closest('div.panel');
-		var action  = p.attr('data-action');
-		var id      = p.attr('data-id');
-		params.output = 'html';
-		//alert(method+'/'+action+'/'+id);
-		loadView(  $(form).closest('div.content'),createUrl(action,method,id,params));
+		var action  = $(form).data('action');
+		var method  = $(form).data('method');
+		var id      = $(form).data('id'    );
+
+		loadView(  $(form).closest('div.content'),action,method,id,params);
 	}
 	else
 	{
@@ -1441,7 +1439,7 @@ function createUrl(action,subaction,id,extraid)
 	{
 		url += '?action='+action+'&subaction='+subaction+'&id='+id;
 	}
-	
+	console.log("URL="+url);
 	return url;
 }
 

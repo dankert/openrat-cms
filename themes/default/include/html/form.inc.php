@@ -45,7 +45,10 @@
 		
 ?><form name="<?php echo $attr_name ?>"
       target="<?php echo $attr_target ?>"
-      action="<?php echo Html::url( $attr_action,$attr_subaction,$attr_id ) ?>"
+      action=""
+      data-method="<?php echo $attr_subaction ?>"
+      data-action="<?php echo $attr_action ?>"
+      data-id="<?php echo $requestId ?>"
       method="<?php echo $attr_method ?>"
       enctype="<?php echo $attr_enctype ?>"
       class="<?php echo $attr_action ?>"
