@@ -1,86 +1,82 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<form>
-		<row>
-			<column colspan="2">
+		<part class="line">
+			<part class="label">
 				<text text="IMAGE_OLD_SIZE"></text>
-			</column>
-			<column>
+			</part>
+			<part class="input">
 				<text var="width"></text>
 				<text raw="_*_"></text>
 				<text var="height"></text>
-			</column>
-		</row>
+			</part>
+		</part>
 		<if not="" empty="formats">
-			<row>
-				<column colspan="3">
-					<group title="message:IMAGE_NEW_SIZE"></group>
-				</column>
-			</row>
-			<row>
-				<column>
-					<radio name="type" value="factor"></radio>
-				</column>
-				<column>
-					<label for="type_factor">
-						<text text="FILE_IMAGE_SIZE_FACTOR"></text>
-					</label>
-				</column>
-				<column>
-					<selectbox name="factor" list="factors"></selectbox>
-					<set var="factor" value="1"></set>
-				</column>
-			</row>
-			<row>
-				<column>
-					<radio name="type" value="input"></radio>
-				</column>
-				<column>
-					<label for="type_input">
-						<text text="FILE_IMAGE_NEW_WIDTH_HEIGHT"></text>
-					</label>
-				</column>
-				<column>
-					<input name="width" size="10"></input>
-					<text raw="_*_"></text>
-					<input name="height" size="10"></input>
-				</column>
-			</row>
-			<row>
-				<column colspan="3">
-					<group title="message:options"></group>
-				</column>
-			</row>
-			<row>
-				<column colspan="2">
-					<label for="format">
-						<text text="FILE_IMAGE_FORMAT"></text>
-					</label>
-				</column>
-				<column>
-					<selectbox name="format" list="formats"></selectbox>
-				</column>
-			</row>
-			<row>
-				<column colspan="2">
-					<label for="jpeglist_compression">
-						<text text="FILE_IMAGE_JPEG_COMPRESSION"></text>
-					</label>
-				</column>
-				<column>
-					<set var="jpeg_compression" value="70"></set>
-					<selectbox list="jpeglist" name="jpeg_compression"></selectbox>
-				</column>
-			</row>
-			<row>
-				<column colspan="3">
-					<checkbox name="copy"></checkbox>
-					<label for="copy">
-						<text key="copy"></text>
-					</label>
-				</column>
-			</row>
+			<group title="message:IMAGE_NEW_SIZE">
+				<part class="line">
+					<part class="label"></part>
+
+					<part class="input">
+
+						<radio name="type" value="factor"></radio>
+						<label for="type_factor">
+							<text text="FILE_IMAGE_SIZE_FACTOR"></text>
+						</label>
+
+
+						<selectbox name="factor" list="factors"></selectbox>
+						<set var="factor" value="1"></set>
+					</part>
+				</part>
+				<part class="line">
+					<part class="label"></part>
+					<part class="input">
+						<radio name="type" value="input"></radio>
+						<label for="type_input">
+							<text text="FILE_IMAGE_NEW_WIDTH_HEIGHT"></text>
+						</label>
+					</part>
+					<part class="label"></part>
+					<part class="input">
+						<input name="width" size="10"></input>
+						<text raw="_*_"></text>
+						<input name="height" size="10"></input>
+					</part>
+				</part>
+			</group>
+			<group title="message:options">
+				<part class="line">
+					<part class="label">
+						<label for="format">
+							<text text="FILE_IMAGE_FORMAT"></text>
+						</label>
+					</part>
+					<part class="input">
+						<selectbox name="format" list="formats"></selectbox>
+					</part>
+				</part>
+				<part class="line">
+					<part class="label">
+						<label for="jpeglist_compression">
+							<text text="FILE_IMAGE_JPEG_COMPRESSION"></text>
+						</label>
+					</part>
+					<part class="input">
+						<set var="jpeg_compression" value="70"></set>
+						<selectbox list="jpeglist" name="jpeg_compression"></selectbox>
+					</part>
+				</part>
+				<part class="line">
+					<part class="label">
+					</part>
+					<part class="input">
+						<checkbox name="copy"></checkbox>
+						<label for="copy">
+							<text key="copy"></text>
+						</label>
+					</part>
+				</part>
+			</group>
 		</if>
-		<focus field="width"></focus>
 	</form>
 </output>

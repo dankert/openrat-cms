@@ -1,3 +1,26 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><window name="asdf" title="asdfdfs"><row><column><text text="type"></text></column><column><set var="gz" value="gz"></set><selectbox list="formats" name="format" default="gz"></selectbox></column></row><row><column colspan="2"><group title="message:OPTIONS"></group></column></row><row><column></column><column><set var="replace" value="1"></set><radio name="replace" value="1"></radio><label for="replace_1"><text key="replace"></text></label><newline></newline><radio name="replace" value="0"></radio><label for="replace_0"><text key="new"></text></label></column></row><row><column colspan="2" class="act"><button type="ok"></button></column></row></window></form></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form>
+		<group title="message:OPTIONS">
+			<part class="line">
+				<part class="label">
+					<text text="type"></text>
+				</part>
+				<part class="input">
+					<set var="gz" value="gz"></set>
+					<selectbox list="formats" name="format" default="gz"></selectbox>
+					<set var="replace" value="1"></set>
+					<radio name="replace" value="1"></radio>
+					<label for="replace_1">
+						<text key="replace"></text>
+					</label>
+					<newline></newline>
+					<radio name="replace" value="0"></radio>
+					<label for="replace_0">
+						<text key="new"></text>
+					</label>
+				</part>
+			</part>
+		</group>
+	</form>
+</output>
