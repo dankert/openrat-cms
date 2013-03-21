@@ -72,16 +72,24 @@ class Transformer
 			// Hack: Sonderzeichen muessen in URLs maskiert werden, aber nur bei URLs die aus Link-Objekten kommen, bei allem
 			// anderen (insbesondere Preview-Links zu andereen Seiten) darf die Umsetzung nicht erfolgen. 
 			// Der Renderer kann dies nicht tun, denn der erzeugt nur "object://..."-URLs.
-			// Beispiel: "...?a=1&b=2" wird zu "...?a=1&amp;b=2"  
+			// Beispiel: "...?a=1&b=2" wird zu "...?a=1&amp;b=2"
 			$o = new Object($objectId);
-			$o->load();
-			if	( $o->isLink )
-			{
-				$l = new Link($objectId);
-				$l->load();
-				if	( $l->isLinkToUrl && $this->page->mimeType() == 'text/html' )
-					$targetPath = htmlspecialchars($targetPath);
+			try
+			{  
+				$o->load();
+				if	( $o->isLink )
+				{
+					$l = new Link($objectId);
+					$l->load();
+					if	( $l->isLinkToUrl && $this->page->mimeType() == 'text/html' )
+						$targetPath = htmlspecialchars($targetPath);
+				}
 			}
+			catch( ObjectNotFoundException $e)
+			{
+				$targetPath = 'javascript:alert("object '.$objectId.' not found");';
+			}
+			
 				
 			$text = str_replace( 'object:'  .$objectId, $targetPath, $text );
 			$text = str_replace( 'object://'.$objectId, $targetPath, $text );
