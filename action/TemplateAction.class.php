@@ -474,6 +474,50 @@ class TemplateAction extends Action
 
 	
 	/**
+	 * Anzeigen der Maske zum Veröffentlichen.
+	 */
+	public function pubView()
+	{
+		
+	}
+	
+	
+	
+	/**
+	 * Veröffentlichen.
+	 */
+	public function pubPost()
+	{
+		$objectIds = $this->template->getDependentObjectIds();
+		
+		foreach( $objectIds as $objectid )
+		{
+			$page = new Page( $objectid );
+			
+			if	( !$page->hasRight( ACL_PUBLISH ) )
+				continue;
+			
+			$page->public = true;
+			$page->publish();
+			$page->publish->close();
+			
+			//		foreach( $this->page->publish->publishedObjects as $o )
+				//		{
+				//			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
+				//		}
+			
+			$this->addNotice( 'page',
+					$page->fullFilename,
+					'PUBLISHED'.($page->publish->ok?'':'_ERROR'),
+					$page->publish->ok,
+					array(),
+					$page->publish->log  );
+		}
+	}
+	
+	
+	
+	/**
 	 * Stellt fest, welche Menüeinträge ggf. ausgeblendet werden.
 	 * 
 	 * @see actionClasses/Action#checkMenu($name)

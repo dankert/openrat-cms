@@ -131,6 +131,8 @@ class ProfileAction extends Action
 	 */
 	function pwView()
 	{
+		$user = $this->getUserFromSession();
+		$this->setTemplateVar('ok', strtolower($user->loginModuleName) == 'internal');
 	}
 	
 	

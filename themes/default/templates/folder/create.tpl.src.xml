@@ -2,98 +2,84 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header back="true" views="createfolder,createlink,createpage,createfile"></header>
 	<form enctype="multipart/form-data">
-		<row>
-			<column colspan="3">
-				<group title="message:folder"></group>
-			</column>
-		</row>
-		<row>
-			<column>
-				<radio name="type" value="folder" children="folder_name"></radio>
-			</column>
-			<column>
-				<label for="type_folder">
-					<text text="global_folder"></text>
-				</label>
-			</column>
-			<column>
-				<input name="folder_name" size="30" maxlength="250" default=""
-					class="name"></input>
-			</column>
-		</row>
-		<row>
-			<column colspan="3">
-				<group title="message:file"></group>
-			</column>
-		</row>
-		<row>
-			<column>
-				<radio name="type" value="file" children="file"></radio>
-			</column>
-			<column>
-				<label for="type_file">
-					<text text="global_FILE"></text>
-				</label>
-			</column>
-			<column>
-				<upload name="file" size="30" maxlength="var:maxlength"></upload>
-				<newline></newline>
-				<text class="help" key="file_max_size"></text>
-				<text raw="_"></text>
-				<text var="max_size"></text>
-			</column>
-		</row>
-		<row>
-			<column colspan="3">
-				<group title="message:page"></group>
-			</column>
-		</row>
-		<row>
-			<column>
-				<radio name="type" value="page" children="page_templateid,page_name"></radio>
-			</column>
-			<column>
-				<label for="type_page">
-					<text text="global_TEMPLATE"></text>
-				</label>
-			</column>
-			<column>
-				<selectbox name="page_templateid" list="templates"></selectbox>
-			</column>
-		</row>
-		<row>
-			<column></column>
-			<column>
-				<label for="type_page">
-					<text text="global_NAME"></text>
-				</label>
-			</column>
-			<column>
-				<input name="page_name" size="30" maxlength="250" class="name"></input>
-			</column>
-		</row>
-		<row>
-			<column colspan="3">
-				<group title="message:link"></group>
-			</column>
-		</row>
-		<row>
-			<column>
-				<radio name="type" value="link" children="link_name"></radio>
-			</column>
-			<column>
-				<label for="type_link">
-					<text text="global_NAME"></text>
-				</label>
-			</column>
-			<column>
-				<input name="link_name" size="30" maxlength="250" class="name"></input>
-			</column>
-		</row>
-		<row>
-			<column class="act" colspan="3">
-				<button type="ok"></button>
-			</column>
-		</row>
+		<group title="message:folder">
+
+			<part class="line">
+				<part class="label">
+					<radio name="type" value="folder" children="folder_name"></radio>
+					<label for="type_folder">
+						<text text="global_folder"></text>
+					</label>
+				</part>
+				<part class="input">
+					<input name="folder_name" size="30" maxlength="250" default=""
+						class="name"></input>
+				</part>
+			</part>
+
+		</group>
+
+		<group title="message:file">
+
+			<part class="line">
+				<part class="label">
+					<radio name="type" value="file" children="file"></radio>
+					<label for="type_file">
+						<text text="global_FILE"></text>
+					</label>
+				</part>
+				<part class="input">
+					<upload name="file" size="30" maxlength="var:maxlength"></upload>
+					<newline></newline>
+					<text class="help" key="file_max_size"></text>
+					<text raw="_"></text>
+					<text var="max_size"></text>
+				</part>
+			</part>
+		</group>
+
+		<group title="message:page">
+
+			<part class="line">
+				<part class="label">
+					<radio name="type" value="page" children="page_templateid,page_name"></radio>
+					<label for="type_page">
+						<text text="global_TEMPLATE"></text>
+					</label>
+				</part>
+				<part class="input">
+					<selectbox name="page_templateid" list="templates"></selectbox>
+				</part>
+			</part>
+
+
+
+			<part class="line">
+				<part class="label">
+					<label for="type_page">
+						<text text="global_NAME"></text>
+					</label>
+				</part>
+				<part class="input">
+					<input name="page_name" size="30" maxlength="250" class="name"></input>
+				</part>
+			</part>
+
+		</group>
+		<group title="message:link">
+
+			<part class="line">
+				<part class="label">
+					<radio name="type" value="link" children="link_name"></radio>
+					<label for="type_link">
+						<text text="global_NAME"></text>
+					</label>
+				</part>
+				<part class="input">
+					<input name="link_name" size="30" maxlength="250" class="name"></input>
+				</part>
+			</part>
+		</group>
+
 	</form>
 </output>

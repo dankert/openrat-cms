@@ -870,6 +870,7 @@ class LoginAction extends Action
 		$loginOk            = false;
 		$mustChangePassword = false;
 		$groups             = null;
+		$lastModule         = null;
 		
 		// Jedes Authentifizierungsmodul durchlaufen, bis ein Login erfolgreich ist.
 		foreach( $modules as $module)
@@ -885,6 +886,7 @@ class LoginAction extends Action
 			if	( $loginOk )
 			{
 				Logger::info('Login successful for '.$loginName);
+				$lastModule = $module;
 				
 				if	( isset($auth->groups ) )
 					$groups = $auth->groups;
@@ -908,6 +910,7 @@ class LoginAction extends Action
 			{
 				// Benutzer über den Benutzernamen laden.
 				$user = User::loadWithName($loginName);
+				$user->loginModuleName = $lastModule;
 				Session::setUser($user);
 			}
 			catch( ObjectNotFoundException $ex )

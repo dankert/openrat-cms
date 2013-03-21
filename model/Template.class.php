@@ -364,7 +364,8 @@ SQL
 
 
 	/**
- 	 * Ermitteln alles Objekte (=Seiten), welche auf diesem Template basieren
+ 	 * Ermitteln alles Objekte (=Seiten), welche auf diesem Template basieren.
+ 	 * 
  	 * @return Array Liste von Objekt-IDs
  	 */
 	function getDependentObjectIds()
