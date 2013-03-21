@@ -1,3 +1,31 @@
-<output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><header back="true"></header><form><window title="" name=""><row><column><text text="global_NAME"></text></column><column><input name="name" size="20" default=""></input></column></row><row><column><text text="global_DESCRIPTION"></text></column><column><inputarea rows="5" cols="50" name="description"></inputarea></column></row><row><column class="act" colspan="2"><button type="ok"></button></column></row></window></form><focus field="name"></focus></dummy></output>
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form>
+
+		<part class="line">
+			<part class="label">
+				<text text="global_NAME"></text>
+			</part>
+			<part class="input">
+				<input name="name" size="20" default=""></input>
+			</part>
+		</part>
+
+		<part class="line">
+			<part class="label">
+			</part>
+			<part class="input">
+			</part>
+		</part>
+
+		<part class="line">
+			<part class="label">
+				<text text="global_DESCRIPTION"></text>
+			</part>
+			<part class="input">
+				<inputarea rows="5" cols="50" name="description"></inputarea>
+			</part>
+		</part>
+
+	</form>
+</output>
