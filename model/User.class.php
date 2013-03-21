@@ -44,6 +44,7 @@ class User
 	
 	var $mustChangePassword = false;
 	var $groups = null;
+	var $loginModuleName = null;
 
 	// Konstruktor
 	function User( $userid='' )
