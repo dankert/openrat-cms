@@ -131,8 +131,13 @@ class ProfileAction extends Action
 	 */
 	function pwView()
 	{
-		$user = $this->getUserFromSession();
-		$this->setTemplateVar('ok', strtolower($user->loginModuleName) == 'internal');
+		// Kennwortänderung funktioniert natürlich nur in der internen Datenbank.
+		//
+		// Hier wird festgestellt, ob der Benutzer sich über die interne Datenbank angemeldet hat.
+		// Nur dann kann man auch sein Kennwort ändern.
+		$user             = $this->getUserFromSession();
+		$pwchangePossible = in_array( strtolower($user->loginModuleName), array('cookieauth','internal'));
+		$this->setTemplateVar('pwchange_enabled', $pwchangePossible);
 	}
 	
 	

@@ -2,9 +2,10 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<form>
 
-		<logo name="changepassword"></logo>
 
-		<if true="var:ok">
+		<if true="var:pwchange_enabled">
+			<logo name="changepassword"></logo>
+
 			<group title="message:user_act_password">
 				<part class="line">
 					<part class="label">
@@ -41,7 +42,9 @@
 			</group>
 		</if>
 		<else>
-			<text class="warn" key="change_not_allowed" />
+			<part class="message warn">
+				<text key="pwchange_not_allowed" />
+			</part>
 		</else>
 	</form>
 </output>

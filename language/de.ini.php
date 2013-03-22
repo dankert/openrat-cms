@@ -1185,3 +1185,4 @@ EXTRAS=Extras
 SELECT_PROJECT=Projekt auswählen
 SELECT_LANGUAGE=Sprache auswählen
 SELECT_MODEL=Variante auswählen
+PWCHANGE_NOT_ALLOWED=Eine Kennwortänderung ist nicht möglich
