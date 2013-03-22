@@ -147,6 +147,18 @@ class Html
 
 
 
+	function complete_tag($tagname,$attributes)
+	{
+		$text = '<'.$tagname;
+		foreach( $attributes as $attribute_name=>$attribute_value )
+			if	( !empty($attribute_value) )
+				$text .= ' '.$attribute_name.'="'.$attribute_value.'"';
+		$text .= ' />';
+		return $text;
+	}
+	
+	
+
 	function open_tag($tagname,$attributes)
 	{
 		$text = '<'.$tagname;
