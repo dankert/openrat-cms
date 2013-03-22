@@ -1041,12 +1041,10 @@ function formSubmit(form)
 	}
 	
 
-	
-	
-	var status = $(form).parent().parent().parent().find('div.bottom div.status');
-	
-	$(status).html('<div class="loader" />');
-	
+	var status = $('<div class="notice info"><div class="text loader"></div></div');
+	$('#noticebar').prepend(status); // Notice anhängen.
+	$(status).show();
+
 	// Alle vorhandenen Error-Marker entfernen.
 	// Falls wieder ein Fehler auftritt, werden diese erneut gesetzt.
 	$(form).find('.error').removeClass('error');
@@ -1086,12 +1084,13 @@ function formSubmit(form)
 		$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 			{
 				$(form).closest('div.content').removeClass('loader');
-				$(status).find('div.loader').remove();
+				$(status).remove();
+				
 				doResponse(data,textStatus,form);
 			},
 			error:function(jqXHR, textStatus, errorThrown) {
 				$(form).closest('div.content').removeClass('loader');
-				$(status).find('div.loader').remove();
+				$(status).remove();
 				
 				var msg;
 				try

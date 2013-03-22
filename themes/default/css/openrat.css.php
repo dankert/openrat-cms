@@ -144,6 +144,10 @@ div#noticebar div.notice.error
 {
 	background-color:red;
 }
+div#noticebar div.notice.info
+{
+	background-color:<?php echo $_GET['inactive_background_color']; ?>;
+}
 div#noticebar div.notice.error div.text
 {
 	font-weight: bold;
@@ -1059,6 +1063,7 @@ div.progress
 	background-position: center;
 	opacity: 0.5;
 	cursor: wait;
+	min-height:50px;
 }
 
 
