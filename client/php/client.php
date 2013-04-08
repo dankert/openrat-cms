@@ -24,7 +24,14 @@
 <?php foreach( array('text/html','application/json','application/xml') as $type ) { ?>
 <option value="<?php echo $type ?>" <?php echo ($_REQUEST['type']==$type)?'selected':'' ?>><?php echo $type ?></option>
 <?php } ?>
-</select><input type="submit">
+</select>
+
+<select name="method">
+<option value="GET" <?php echo ($_REQUEST['method']=='GET')?'selected':'' ?>>GET</option>
+<option value="POST" <?php echo ($_REQUEST['method']=='POST')?'selected':'' ?>>POST</option>
+</select>
+
+<input type="submit">
 </form>
 <hr>
 <h2>Response</h2>
@@ -39,8 +46,11 @@
 
 		$host   = $_SERVER['SERVER_ADDR'];
 		$port   = $_SERVER['SERVER_PORT'];
-		$path   = substr($_SERVER['SCRIPT_NAME'],0,-22).'/do.php';
-		$method = 'GET';
+		$path   = substr($_SERVER['SCRIPT_NAME'],0,-22).'/dispatcher.php';
+		
+		$method = $_REQUEST['method'];
+		if	( empty($method))
+			$method='GET';
 
 		// Die Funktion fsockopen() erwartet eine Protokollangabe (bei TCP optional, bei SSL notwendig).
 		if	( $port == '443' )
