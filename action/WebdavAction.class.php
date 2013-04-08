@@ -16,6 +16,11 @@
  * 
  * Implementiert wird DAV-Level 1 (d.h. ohne LOCK).
  * 
+ * Der Zugang über WebDAV beinhaltet einige Nachteile:
+ * - Login ist nur mit Name/Kennwort möglich (kein OpenId)
+ * - Nur die Standard-Datenbank kann verwendet werden
+ * - Der Client muss Cookies unterstützen
+ * 
  * @author Jan Dankert
  * @package openrat.actions
  */
