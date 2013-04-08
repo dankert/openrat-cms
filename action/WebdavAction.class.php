@@ -70,7 +70,12 @@ class WebdavAction extends Action
 		else
 			set_error_handler('webdavErrorHandler');
 
-		global $conf;
+		
+		//Changed tobias
+		//global $conf;		
+		$prefs = new Preferences();
+		$conf = $prefs->load();
+		//End changed Tobias
 		$this->webdav_conf = $conf['webdav'];
 
 		if	( $this->webdav_conf['compliant_to_redmond'] )

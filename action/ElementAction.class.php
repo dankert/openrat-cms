@@ -520,7 +520,12 @@ class ElementAction extends Action
 								if	( !$o->isPage && !$o->isFile && !$o->isLink )
 									continue 2;
 								break;
-							
+						        //Change tobias 
+							case 'insert':
+								if	( !$o->isFolder && !$o->isPage && !$o->isFile && !$o->isLink )
+									continue 2;
+								break;
+							//Change tobias end
 							default:
 								continue 2;
 						}
