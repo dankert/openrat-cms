@@ -262,7 +262,6 @@ class ElementAction extends Action
 							$convertToLang = true;
 							break;
 
-						case 'macro'  :
 						case 'dynamic':
 									
 							$files = Array();

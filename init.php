@@ -38,7 +38,7 @@ define('OR_FORMCLASSES_DIR'   ,'./formClasses/'    );
 define('OR_OBJECTCLASSES_DIR' ,'./model/'  );
 define('OR_LANGUAGE_DIR'      ,'./language/'       );
 define('OR_DBCLASSES_DIR'     ,'./db/'             );
-define('OR_DYNAMICCLASSES_DIR','./dynamicClasses/' );
+define('OR_DYNAMICCLASSES_DIR','./macro/' );
 define('OR_TEXTCLASSES_DIR'   ,'./textClasses/'    );
 define('OR_PREFERENCES_DIR'   ,defined('OR_EXT_CONFIG_DIR')?OR_EXT_CONFIG_DIR:'./config/');
 define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
