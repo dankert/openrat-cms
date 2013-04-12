@@ -26,7 +26,7 @@
  * Erstellen eines ATOM-Feeds
  * @author Jan Dankert
  */
-class Atom extends Dynamic
+class Atom extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.

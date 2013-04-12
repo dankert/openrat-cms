@@ -36,7 +36,7 @@
  * 
  * @author Jan Dankert
  */
-class Album extends Dynamic
+class Album extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.

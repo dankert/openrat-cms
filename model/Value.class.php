@@ -1192,10 +1192,10 @@ SQL
 
 				$this->page->load();
 				$className = $this->element->subtype;
-				$fileName  = './dynamicClasses/'.$className.'.class.php';
+				$fileName  = './macro/'.$className.'.class.php';
 				if	( is_file( $fileName ) )
 				{
-					// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
+					// Fuer den Fall, dass ein Makro mehrmals pro Vorlage auftritt
 					if	( !class_exists($className) )
 						require( $fileName );
 
@@ -1214,7 +1214,7 @@ SQL
 							{
 								if	( isset( $dynEl->$param_name ) )
 								{
-									Logger::debug("Setting parameter for dynamic Class $className, ".$param_name.':'.$param_value );
+									Logger::debug("Setting parameter for macro Class $className, ".$param_name.':'.$param_value );
 									$dynEl->$param_name = $param_value;
 								}
 							}

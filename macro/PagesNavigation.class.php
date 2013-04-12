@@ -20,14 +20,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.1  2005-01-28 23:06:10  dankert
-// Neues Menue in Listenform (HTML-Listen), aehnlich "BlockMenu"
+// Revision 1.2  2005-01-04 19:59:55  dankert
+// Allgemeine Korrekturen, Erben von "Dynamic"-klasse
 //
-// Revision 1.2  2004/12/25 21:05:14  dankert
-// erbt von Klasse Dynamic
-//
-// Revision 1.1  2004/10/14 21:16:12  dankert
-// Erzeugen eines Menues in Bloecken
+// Revision 1.1  2004/11/10 22:43:35  dankert
+// Beispiele fuer dynamische Templateelemente
 //
 // ---------------------------------------------------------------------------
 
@@ -37,14 +34,14 @@
  * Erstellen eines Hauptmenues
  * @author Jan Dankert
  */
-class ListMenu extends Dynamic
+class PagesNavigation extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $parameters  = Array(
-		'arrowChar'=>'String between menu entries, default: "&middot;"'
+		'arrowChar'=>'String between entries'
 		);
 
 
@@ -54,60 +51,27 @@ class ListMenu extends Dynamic
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
-	var $description = 'Creates a main menu.';
+	var $description = 'Creates a page navigation.';
 	var $version     = '$Id$';
 	var $api;
 
 	// Erstellen des Hauptmenues
 	function execute()
 	{
-		// Erstellen des Hauptmenues
-
 		// Lesen des Root-Ordners
-		$folder = new Folder( $this->getRootObjectId() );
+		$folder = new Folder( $this->page->parentid );
 		
+		$nr = 0;
 		// Schleife ueber alle Inhalte des Root-Ordners
-		foreach( $folder->getObjectIds() as $id )
+		foreach( $folder->getObjects() as $o )
 		{
-			$o = new Object( $id );
-			$o->languageid = $this->page->languageid;
-			$o->load();
-			if ( $o->isFolder ) // Nur wenn Ordner
+			$nr++;
+			if ( $o->isPage || $o->isLink )
 			{
-				$f = new Folder( $id );
-				$f->load();
-				
-				// Ermitteln eines Objektes mit dem Dateinamen index
-//				$oid = $f->getObjectIdByFileName('index');
-				
-				if	( count($f->getLinks())+count($f->getPages()) > 0 )
-				{
-					$this->output( '<h1 class="title">'.$o->name.'</h1><ul>');
-					// Untermenue
-					// Schleife ber alle Objekte im aktuellen Ordner
-					foreach( $f->getObjectIds() as $xid )
-				    {
-						$o = new Object( $xid );
-						$o->languageid = $this->page->languageid;
-						$o->load();
-				
-						// Nur Seiten und Verknuepfungen anzeigen
-						if (!$o->isPage && !$o->isLink ) continue;
-						
-						// Wenn aktuelle Seite, dann markieren, sonst Link
-						if ( $this->getObjectId() == $xid )
-						{
-							// aktuelle Seite
-							$this->output( '<li class="menu">'.$o->name.'</li>' );
-						}
-						else
-						{
-							$this->output( '<li class="menu"><a class="menu" href="'.$this->page->path_to_object($xid).'">'.$o->name.'</a></li>' );
-						}
-					}
-			
-					$this->output( '</ul><br />' );
-				}
+				if ( $o->objectid != $this->page->objectid )
+					$this->output( '<a href="'.$this->page->path_to_object($oid).'" title="'.$o->desc.'" class="pagenav">'.$nr.'</a>' );
+				else
+					$this->output( '<strong>'.$nr.'</strong>' );
 			}
 		}
 	}

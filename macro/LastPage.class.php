@@ -20,11 +20,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.3  2004-12-19 22:35:23  dankert
-// Parameter -Angabe
-//
-// Revision 1.2  2004/12/19 15:19:29  dankert
-// Klasse erbt von "Dynamic"
+// Revision 1.2  2005-01-04 19:59:55  dankert
+// Allgemeine Korrekturen, Erben von "Dynamic"-klasse
 //
 // Revision 1.1  2004/11/10 22:43:35  dankert
 // Beispiele fuer dynamische Templateelemente
@@ -34,66 +31,48 @@
 
 
 /**
- * Erstellen eines Menues
+ * Erstellen eines Links zur Seite davor
  * @author Jan Dankert
  */
-class CommonMenu extends Dynamic
+class LastPage extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $parameters  = Array(
-		'beforeEntry'=>'Chars before an active menu entry',
-		'afterEntry' =>'Chars after an active menu entry'
+		'arrowChar'=>'String between menu entries, default: "&middot;"'
 		);
+
+
+	var $arrowChar = ' &middot; ';
 
 	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $description = 'Creates a main menu.';
+	var $version     = '$Id$';
 
 
-	/**
-	 * Zeichenkette, die vor einem aktiven Menuepunkt gezeigt wird 
-	 */
-	var $beforeEntry = '<li><strong>';
-	var $afterEntry  = '</strong></li>';
-	
-
-	// Erstellen des Hauptmenues
 	function execute()
 	{
-		// Erstellen eines Untermenues
-		
-		// Ermitteln der aktuellen Seite
-		$thispage = new Page( $this->getObjectId() );
-		$thispage->load(); // Seite laden
-		
-		// uebergeordneter Ordner dieser Seite
-		$f = new Folder( $thispage->parentid );
-		
-		// Schleife ueber alle Objekte im aktuellen Ordner
-		foreach( $f->getObjectIds() as $id )
+		$folder = new Folder( $this->page->parentid );
+
+		$lastObject = null;
+ 
+		// Schleife ueber alle Inhalte des Ordners
+		foreach( $folder->getObjects() as $o )
 		{
-			$o = new Object( $id );
-			$o->languageid = $this->page->languageid;
-			$o->load();
-	
-			// Nur Seiten anzeigen
-			if (!$o->isPage && !$o->isLink ) continue;
-	
-			// Wenn aktuelle Seite, dann markieren, sonst Link
-			if ( $this->getObjectId() == $id )
+			if ( $o->isPage || $o->isLink )
 			{
-				// aktuelle Seite
-				$this->output( '<li><strong>'.$o->name.'</strong></li>' );
-			}
-			else
-			{
-				// Link erzeugen
-				$this->output( '<li><a href="'.$this->page->path_to_object($id).'">'.$o->name.'</a></li>' );
+				if	( is_object($lastObject) && $o->objectid == $this->page->objectid )
+				{
+					$this->output( '<a href="'.$this->pathToObject($lastObject->objectid).' class="next">'.$lastObject->name.'</a>' );
+					break;
+				}
+
+				$lastObject = $o->objectid; 
 			}
 		}
 	}

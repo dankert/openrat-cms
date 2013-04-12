@@ -3,7 +3,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 // OpenRat Content Management System
-// Copyright (C) 2012 Tobias Schöne tobias@schoenesnetz.de
+// Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -20,19 +20,28 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
+// Revision 1.2  2005-01-04 19:59:55  dankert
+// Allgemeine Korrekturen, Erben von "Dynamic"-klasse
+//
+// Revision 1.1  2004/11/10 22:43:35  dankert
+// Beispiele fuer dynamische Templateelemente
+//
 // ---------------------------------------------------------------------------
+
+
+
 /**
- * Erstellen einer Liste von Language-Links auf die selbe Seite
- * @author Tobias Schoene
+ * Erstellen eines Links zur naechsten Seite
+ * @author Jan Dankert
  */
-class LanguageLinksForPage extends Dynamic
+class NextPage extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $parameters  = Array(
-		'arrowChar'=>'String between entries'
+		'arrowChar'=>'String between menu entries, default: "&middot;"'
 		);
 
 
@@ -42,29 +51,35 @@ class LanguageLinksForPage extends Dynamic
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
-	var $description = 'Creates language links to the page.';
+	var $description = 'Creates a main menu.';
 	var $version     = '$Id$';
 	var $api;
 
-	// Build the navigation links to other languages
+
 	function execute()
 	{
-		// current language
-		$languageId = $this->page->languageid;
-	 
+		// Lesen des Ordners
+		$folder = new Folder( $this->page->parentid );
+
+		$was = false;		
+
 		// Schleife ueber alle Inhalte des Root-Ordners
-		foreach( Language::getAll() as $lid=>$lname)
+		foreach( $folder->getObjects() as $o )
 		{
-			
-			$l = new Language( $lid );
-                        $l->load();
-                        $this->page->languageid = $l->languageid;
-                        $filename = $this->page->full_filename();
-			$filename = str_replace($this->page->path(),".",$filename);
-			$this->output( '<li><a href="'.$filename.'">'.strtolower($l->isoCode).'</a></li>' );
-			
+			if ( $o->isPage || $o->isLink ) // Nur wenn Ordner
+			{
+				if	( $o->objectid == $this->page->objectid )
+				{
+					$was = true;
+					continue;
+				}
+
+				if	( $was )
+				{
+					$this->output( '<a href="'.$this->pathToObject($o->objectid).' class="next">'.$o->name.'</a>' );
+					break;
+				}
+			}
 		}
-		$this->page->languageid = $languageId;
 	}
 }
-?>
