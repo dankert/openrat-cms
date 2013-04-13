@@ -599,6 +599,7 @@ SQL
 											{
 												case OR_TYPE_PAGE:
 													$p = new Page( $oid );
+													$p->enclosingObjectId = $this->page->id;
 													$p->public         = $this->page->public;
 													$p->up_path        = $this->page->up_path();
 													$p->modelid        = $this->page->modelid;
@@ -619,6 +620,7 @@ SQL
 														if	( $op->isPage )
 														{
 															$p = new Page( $l->linkedObjectId );
+															$p->enclosingObjectId = $this->page->id;
 															$p->public         = $this->page->public;
 															$p->up_path        = $this->page->up_path();
 															$p->modelid        = $this->page->modelid;
@@ -665,6 +667,7 @@ SQL
 								case '':
 								case 'inline':
 									$p = new Page( $objectid );
+									$p->enclosingObjectId = $this->page->id;
 									$p->public         = $this->page->public;
 									$p->up_path        = $this->page->up_path();
 									$p->modelid        = $this->page->modelid;

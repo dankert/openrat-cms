@@ -26,6 +26,8 @@
 
 class Page extends Object
 {
+	var $enclosingObjectId = -1;    //Id der Seite in die diese Seite im Rahmen der Generierung eingefügt wird
+						     //Wichtig für include-Values
 	var $pageid;
 	var $templateid;
 	var $template;
@@ -662,7 +664,7 @@ class Page extends Object
 			$val->modelid    = $this->modelid;
 			$val->page       = $this;
 			$val->generate();
-			$val->page       = null;
+			$val->page       = null;			
 			$this->values[$elementid] = $val;
 		}
 	}
