@@ -1,0 +1,51 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form method="GET" subaction="result">
+		<part class="line">
+			<part class="label">
+				<label for="value">
+					<text key="value"></text>
+				</label>
+				<newline></newline>
+			</part>
+			<part class="input">
+				<input name="text" hint="message:search"></input>
+			</part>
+		</part>
+		<part class="line">
+			<part class="label">
+				<label for="value">
+					<text key="filter"></text>
+				</label>
+				<newline></newline>
+			</part>
+			<part class="input">
+				<checkbox name="id" default="config:search/quicksearch/flag/id" />
+				<label for="id">
+					<text key="id"></text>
+				</label>
+				<newline />
+				<checkbox name="name" default="config:search/quicksearch/flag/name" />
+				<label for="name">
+					<text key="name"></text>
+				</label>
+				<newline />
+				<checkbox name="filename" default="config:search/quicksearch/flag/filename" />
+				<label for="filename">
+					<text key="filename"></text>
+				</label>
+				<newline />
+				<checkbox name="description" default="config:search/quicksearch/flag/description" />
+				<label for="description">
+					<text key="description"></text>
+				</label>
+				<newline />
+				<checkbox name="content" default="config:search/quicksearch/flag/content" />
+				<label for="content">
+					<text key="content"></text>
+				</label>
+			</part>
+		</part>
+
+	</form>
+</output>
