@@ -1972,3 +1972,9 @@ div#dialog    div.panel fieldset.open > legend > div.open
 {
 	display:inline;
 }
+
+div#workbench div.panel li.action.dirty
+{
+	font-weight: bold;
+}
+ 
