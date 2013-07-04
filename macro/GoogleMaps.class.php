@@ -23,31 +23,31 @@
 
 
 /**
- * Bindet die OpenStreetMap ein.
+ * Bindet eine Google-Maps-Karte ein.
  * 
  * @author Jan Dankert
  */
-class OpenStreetMap extends Dynamic
+class GoogleMaps extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $parameters  = Array(
-		'box'    => 'coordinates',
-		'layer'  => 'mapnik',
-		'width'  => 'Width of iframe',
-		'height' => 'Height of iframe',
+		'lat'  => 'Latitude',
+		'long' => 'Longitude',
+		'zoom' => 'Zoom'
 	);
 
 	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
-	var $description = 'Includes the OpenStreetMap.';
+	var $description = 'Includes a Google Map.';
 	
-	var $box    = '9.9396,53.4821,10.184,53.643'; // default: Hamburg
-	var $layer  = 'mapnik';
+	var $long   = 10;    // Default: Hamburg
+	var $lat    = 53.55; // Default: Hamburg
+	var $zoom   = 10;
 	var $width  = 425;
 	var $height = 350;
 
@@ -55,7 +55,7 @@ class OpenStreetMap extends Dynamic
 	 */
 	function execute()
 	{
-		$this->output('<iframe width="'.$this->width.'" height="'.$this->height.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox='.$this->box.'&layer='.$this->layer.'" style="border: 1px solid black"></iframe>');
+		$this->output('<iframe width="'.$this->width.'" height="'.$this->height.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.de/?ie=UTF8&amp;ll='.$this->lat.','.$this->long.'&amp;z='.$this->zoom.'&amp;output=embed"></iframe>');
 	}
 
 }

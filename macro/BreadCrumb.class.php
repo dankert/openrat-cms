@@ -37,7 +37,7 @@
  * Erstellen einer sog. Brotkruemel-Navigation
  * @author Jan Dankert
  */
-class BreadCrumb extends Dynamic
+class BreadCrumb extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.

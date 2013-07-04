@@ -31,6 +31,7 @@ require_once( OR_SERVICECLASSES_DIR."Password.class.".PHP_EXT );
 // Nur bei der Erzeugung von Seiten notwendig.
 //if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('pageelement','page','folder','element')) )
 {
+	require_once( OR_SERVICECLASSES_DIR."Macro.class.".PHP_EXT        );
 	require_once( OR_SERVICECLASSES_DIR."Dynamic.class.".PHP_EXT        );
 }
 

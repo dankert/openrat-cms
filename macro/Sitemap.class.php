@@ -34,7 +34,7 @@
  * Erstellen eines Menues
  * @author Jan Dankert
  */
-class Sitemap extends Dynamic
+class Sitemap extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.

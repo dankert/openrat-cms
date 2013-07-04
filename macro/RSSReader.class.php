@@ -33,7 +33,7 @@
 /**
  * @author Jan Dankert
  */
-class RSSReader extends Dynamic
+class RSSReader extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.

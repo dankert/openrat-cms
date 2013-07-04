@@ -19,62 +19,41 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
-// $Log$
-// Revision 1.2  2004-12-19 15:19:16  dankert
-// Klasse erbt von "Dynamic"
-//
-// Revision 1.1  2004/10/14 21:15:57  dankert
-// Erzeugen eines Hauptmenues
-//
-// ---------------------------------------------------------------------------
 
 
 
 /**
- * Erstellen eines Hauptmenues
+ * Bindet ein Youtube-Video ein.
+ * 
  * @author Jan Dankert
  */
-class MainMenu extends Dynamic
+class Youtube extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
 	var $parameters  = Array(
-		'arrowChar'=>'String between menu entries, default: "&middot;"'
+		'id'=>'Video-Id'
 		);
-
-
-	var $arrowChar = ' &middot; ';
 
 	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
 	 * @type String
 	 */
-	var $description = 'Creates a main menu.';
-	var $version     = '$Id$';
+	var $description = 'Includes a youtube video.';
+	
+	var $id     = "0";
+	var $width  = 320;
+	var $height = 265;
 
-	// Erstellen des Hauptmenues
+	/**
+	 */
 	function execute()
 	{
-		// Lesen des Root-Ordners
-		$folder = new Folder( $this->getRootObjectId() );
-		
-		// Schleife ueber alle Inhalte des Root-Ordners
-		foreach( $folder->getObjectIds() as $id )
-		{
-			$o = new Object( $id );
-			$o->languageid = $this->page->languageid;
-			$o->load();
-			if ( $o->isFolder ) // Nur wenn Ordner
-			{
-				$f = new Folder( $id );
-				
-				// Ermitteln eines Objektes mit dem Dateinamen index
-				$oid = $f->getObjectIdByFileName('index');
-				if ( is_numeric($oid) && $oid!=0 )
-					$this->output( $this->arrowChar.'<a href="'.$this->page->path_to_object($oid).'" title="'.$o->desc.'">'.$o->name.'</a>' );
-			}
-		}
+		$this->output('<object width="'.$this->width.'" height="'.$this->height.'"><param name="movie" value="http://www.youtube.com/v/'.$this->id.'&hl=de&fs=1&rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/'.$this->id.'&hl=de&fs=1&rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="'.$this->width.'" height="'.$this->height.'"></embed></object>');
 	}
+
 }
+
+?>

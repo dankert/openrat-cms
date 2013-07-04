@@ -1168,11 +1168,16 @@ SQL
 				if   ( $this->page->simple )
 					break;
 
+				// Die Ausführung von benutzer-erzeugtem PHP-Code kann in der
+				// Konfiguration aus Sicherheitsgründen deaktiviert sein.
 				if	( $conf['security']['disable_dynamic_code'] )
 					break;
 				
 				$this->page->load();
 
+				// Das Ausführen geschieht über die Klasse "Code".
+				// In dieser wird der Code in eine Datei geschrieben und
+				// von dort eingebunden.
 				$code = new Code();
 				$code->page = &$this->page;
 				$code->setObjectId( $this->page->objectid );
@@ -1182,12 +1187,13 @@ SQL
 				// Jetzt ausfuehren des temporaeren PHP-Codes				
 				$code->execute();
 
+				// Ausgabe ermitteln.
 				$inhalt = $code->getOutput();
 
 				break;
 
 
-			// Programmcode (PHP)
+			// Makros (dynamische Klassen)
 			case 'dynamic':
 
 				if   ( $this->page->simple )
@@ -1195,10 +1201,10 @@ SQL
 
 				$this->page->load();
 				$className = $this->element->subtype;
-				$fileName  = './dynamicClasses/'.$className.'.class.php';
+				$fileName  = OR_DYNAMICCLASSES_DIR.$className.'.class.php';
 				if	( is_file( $fileName ) )
 				{
-					// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
+					// Fuer den Fall, dass ein Makro mehrmals pro Vorlage auftritt
 					if	( !class_exists($className) )
 						require( $fileName );
 
@@ -1217,7 +1223,7 @@ SQL
 							{
 								if	( isset( $dynEl->$param_name ) )
 								{
-									Logger::debug("Setting parameter for dynamic Class $className, ".$param_name.':'.$param_value );
+									Logger::debug("Setting parameter for macro Class $className, ".$param_name.':'.$param_value );
 									$dynEl->$param_name = $param_value;
 								}
 							}
@@ -1229,22 +1235,29 @@ SQL
 						{
 							Logger::warn('element:'.$this->element->name.', '.
 							             'class:'.$className.', no method: execute()');
+							if	( !$this->publish )
+								$inhalt = lang('ERROR_IN_ELEMENT').' (missing method: execute())';
 						}
 					}
 					else
 					{
 						Logger::warn('element:'.$this->element->name.', '.
 						             'class not found:'.$className);
+						if	( !$this->publish )
+							$inhalt = lang('ERROR_IN_ELEMENT').' (class not found:'.$className.')';
 					}
 				}
 				else
 				{
 					Logger::warn('element:'.$this->element->name.', '.
 					             'file not found:'.$fileName);
+					if	( !$this->publish )
+						$inhalt = lang('ERROR_IN_ELEMENT').' (file not found:'.$fileName.')';
+						
 				}
 
 				// Wenn HTML-Ausgabe, dann Sonderzeichen in HTML �bersetzen
-				if   ( $this->page->mimeType()=='text/html' )
+				if   ( $this->page->isHtml() )
 					$inhalt = Text::encodeHtmlSpecialChars( $inhalt );
 				
 				break;
@@ -1276,6 +1289,8 @@ SQL
 						Logger::warn('element:'.$this->element->name.', '.
 						             'type:'.$this->element->type.', '.
 						             'unknown subtype:'.$this->element->subtype);
+						if	( !$this->publish )
+							$inhalt = lang('ERROR_IN_ELEMENT');
 				}
 				
 				if	( strpos($this->element->dateformat,'%')!==FALSE )
@@ -1446,6 +1461,10 @@ SQL
 				Logger::error('element:'.$this->element->name.', '.
 				              'unknown type:'.$this->element->type);
 				
+				if	( !$this->publish )
+					$inhalt = lang('ERROR_IN_ELEMENT').' ('.$this->element->name.':'.
+				              'unknown type:'.$this->element->type.')';
+				
 		}
 
 		
@@ -1457,7 +1476,7 @@ SQL
 				
 				if	( $conf['publish']['encode_utf8_in_html'] )
 					// Wenn HTML-Ausgabe, dann UTF-8-Zeichen als HTML-Code uebersetzen
-					if   ( $this->page->mimeType()=='text/html' )
+					if   ( $this->page->isHtml() )
 						$inhalt = translateutf8tohtml($inhalt);
 				break;
 				
@@ -1466,8 +1485,12 @@ SQL
 
 					
 		
-		if   ( $this->page->icons && $this->element->withIcon )
-			$inhalt = '<a href="javascript:parent.openNewAction(\''.$this->element->name.'\',\'pageelement\',\''.$this->page->objectid.'_'.$this->element->elementid.'\');" title="'.$this->element->desc.'"><img src="'.OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>'.$inhalt;
+		if   ( $this->page->icons && $this->element->withIcon && $this->page->isHtml() )
+		{
+			// Anklickbaren Link voranstellen.
+			$iconLink = '<a href="javascript:parent.openNewAction(\''.$this->element->name.'\',\'pageelement\',\''.$this->page->objectid.'_'.$this->element->elementid.'\');" title="'.$this->element->desc.'"><img src="'.OR_THEMES_EXT_DIR.$conf['interface']['theme'].'/images/icon_el_'.$this->element->type.IMG_ICON_EXT.'" border="0" align="left"></a>';
+			$inhalt   = $iconLink.$inhalt;
+		}
 		
 		$this->value = $inhalt;
 

@@ -44,7 +44,7 @@
  * @see http://doimenu.sf.net for details
  * @author Jan Dankert
  */
-class DoiMenu extends Dynamic
+class DoiMenu extends Macro
 {
 	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.

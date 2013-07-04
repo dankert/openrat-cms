@@ -21,7 +21,7 @@
  * @version $Revision$
  * @package openrat.services
  */
-class Code extends Dynamic
+class Code extends Macro
 {
 	var $code = '';
 	
@@ -30,7 +30,7 @@ class Code extends Dynamic
 		if	( substr($this->code,0,5) != '<?php' )
 			$this->code = "<?php\n".$this->code."\n?>";
 
-		$tmp = FileUtils::getTempDir().'/openratDynamic';
+		$tmp = FileUtils::getTempDir().'/openratMacro';
 		$tmp .= '.code.php.tmp';
 		
 		$f = fopen( $tmp,'w' );

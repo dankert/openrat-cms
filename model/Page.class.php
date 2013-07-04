@@ -887,7 +887,17 @@ class Page extends Object
 		$this->withModel    = config('publish','filename_type'    ) == 'always' || count(Model::count()   ) > 1;
 		
 		return $this->full_filename();
-	}		
+	}
+
+	
+	/**
+	 * Stellt fest, ob diese Seite im HTML-Format veröffentlicht wird.
+	 * @return boolean
+	 */
+	public function isHtml()
+	{
+		return $this->mimeType()=='text/html';
+	}
 }
 
 

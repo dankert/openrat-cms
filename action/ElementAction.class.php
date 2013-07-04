@@ -263,9 +263,9 @@ class ElementAction extends Action
 							break;
 
 						case 'dynamic':
-							
+									
 							$files = Array();
-							$handle = opendir ('./dynamicClasses');
+							$handle = opendir ('./macro');
 							while ( $file = readdir($handle) )
 							{
 								$file = substr($file,0,strlen($file)-10);

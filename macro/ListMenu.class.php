@@ -20,7 +20,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // $Log$
-// Revision 1.2  2004-12-25 21:05:14  dankert
+// Revision 1.1  2005-01-28 23:06:10  dankert
+// Neues Menue in Listenform (HTML-Listen), aehnlich "BlockMenu"
+//
+// Revision 1.2  2004/12/25 21:05:14  dankert
 // erbt von Klasse Dynamic
 //
 // Revision 1.1  2004/10/14 21:16:12  dankert
@@ -34,7 +37,7 @@
  * Erstellen eines Hauptmenues
  * @author Jan Dankert
  */
-class BlockMenu extends Dynamic
+class ListMenu extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.
@@ -59,7 +62,7 @@ class BlockMenu extends Dynamic
 	function execute()
 	{
 		// Erstellen des Hauptmenues
-		
+
 		// Lesen des Root-Ordners
 		$folder = new Folder( $this->getRootObjectId() );
 		
@@ -72,25 +75,14 @@ class BlockMenu extends Dynamic
 			if ( $o->isFolder ) // Nur wenn Ordner
 			{
 				$f = new Folder( $id );
+				$f->load();
 				
 				// Ermitteln eines Objektes mit dem Dateinamen index
-				$oid = $f->getObjectIdByFileName('index');
+//				$oid = $f->getObjectIdByFileName('index');
 				
 				if	( count($f->getLinks())+count($f->getPages()) > 0 )
 				{
-					$this->output( '
-			<!-- sidebox -->
-		     <table bgcolor="#000000" border="0" cellpadding="0" cellspacing="0" width="100%">
-		      <tr>
-		       <td>
-		        <table border="0" cellpadding="3" cellspacing="1" width="100%">
-		         <tr>
-		          <td bgcolor="#cccccc"><span class="title"> '.$o->name.'</span></a>
-		          </td>
-		         </tr>
-		         <tr>
-		          <td bgcolor="#ffffff">
-	');
+					$this->output( '<h1 class="title">'.$o->name.'</h1><ul>');
 					// Untermenue
 					// Schleife ber alle Objekte im aktuellen Ordner
 					foreach( $f->getObjectIds() as $xid )
@@ -99,36 +91,22 @@ class BlockMenu extends Dynamic
 						$o->languageid = $this->page->languageid;
 						$o->load();
 				
-						// Nur Seiten anzeigen
+						// Nur Seiten und Verknuepfungen anzeigen
 						if (!$o->isPage && !$o->isLink ) continue;
 						
 						// Wenn aktuelle Seite, dann markieren, sonst Link
 						if ( $this->getObjectId() == $xid )
 						{
 							// aktuelle Seite
-							$this->output( '            <span class="small">o</span>
-							<strong class="nav">'.$o->name.'</strong>
-							<br />' );
+							$this->output( '<li class="menu">'.$o->name.'</li>' );
 						}
 						else
 						{
-							$this->output( '            <span class="small">o</span>
-						       <a class="nav" href="'.$this->page->path_to_object($xid).'">'.$o->name.'</a>
-						       <br />' );
+							$this->output( '<li class="menu"><a class="menu" href="'.$this->page->path_to_object($xid).'">'.$o->name.'</a></li>' );
 						}
-					//Api::output( '<br/>' );
 					}
 			
-					$this->output( '
-			          </td>
-			         </tr>
-			        </table>
-			       </td>
-			      </tr>
-			     </table>
-			     <!-- end sidebox -->
-		     <br />
-					' );
+					$this->output( '</ul><br />' );
 				}
 			}
 		}

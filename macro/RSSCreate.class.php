@@ -40,7 +40,7 @@
  * Erstellen eines Hauptmenues
  * @author Jan Dankert
  */
-class RSSCreate extends Dynamic
+class RSSCreate extends Macro
 {
 	/**
 	 * Bitte immer alle Parameter in dieses Array schreiben, dies ist fuer den Web-Developer hilfreich.

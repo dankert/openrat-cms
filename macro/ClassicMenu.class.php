@@ -22,7 +22,7 @@
  * Erstellen eines Menues
  * @author Jan Dankert
  */
-class ClassicMenu extends Dynamic
+class ClassicMenu extends Macro
 {
 	/**
 	 * Beschreibung dieser Klasse

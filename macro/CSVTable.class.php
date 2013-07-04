@@ -23,7 +23,7 @@
  *
  * @author Jan Dankert
  */
-class CSVList extends Dynamic
+class CSVList extends Macro
 {
 	/**
 	 * Id der Datei, welche die Werte enthält. 

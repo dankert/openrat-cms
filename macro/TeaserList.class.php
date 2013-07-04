@@ -23,7 +23,7 @@
  *
  * @author Jan Dankert
  */
-class TeaserList extends Dynamic
+class TeaserList extends Macro
 {
 	var $folderid              = 0;
 	var $title_html_tag        = 'h2';
