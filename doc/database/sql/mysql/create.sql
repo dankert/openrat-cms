@@ -3,55 +3,53 @@
 -- Table node
 CREATE TABLE or_node(
    id INT NOT NULL
-  ,type INT NOT NULL
+  ,typ INT NOT NULL
   ,name VARCHAR(255) NOT NULL
-  ,left INT NOT NULL
-  ,right INT NOT NULL
-  ,order INT NOT NULL
-  ,lastmodified DATE NOT NULL
+  ,lft INT NOT NULL
+  ,rgt INT NOT NULL
+  ,lastmodified DATETIME NOT NULL
   ,lastmodified_user INT NOT NULL
-  ,creation DATE NOT NULL
+  ,creation DATETIME NOT NULL
   ,creation_user INT NOT NULL
   ,PRIMARY KEY (id)
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
+CREATE UNIQUE INDEX or_uidx_node_lft_rgt
+                 ON or_node (lft,rgt);
 CREATE UNIQUE INDEX or_uidx_node_name
                  ON or_node (name);
-CREATE INDEX or_idx_node_type
-          ON or_node (type);
-CREATE INDEX or_idx_node_left
-          ON or_node (left);
-CREATE INDEX or_idx_node_right
-          ON or_node (right);
-CREATE INDEX or_idx_node_order
-          ON or_node (order);
+CREATE INDEX or_idx_node_typ
+          ON or_node (typ);
+CREATE INDEX or_idx_node_lft
+          ON or_node (lft);
+CREATE INDEX or_idx_node_rgt
+          ON or_node (rgt);
 
 -- Table prop
 CREATE TABLE or_prop(
    id INT NOT NULL
-  ,type INT NOT NULL
+  ,typ INT NOT NULL
   ,name VARCHAR(255) NOT NULL
   ,label VARCHAR(255) NOT NULL
-  ,label VARCHAR(255) NOT NULL
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 -- Table props
 CREATE TABLE or_props(
    node INT NOT NULL
   ,prop INT NOT NULL
   ,value VARCHAR(255) NOT NULL
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 -- Table target
 CREATE TABLE or_target(
    node INT NOT NULL
-  ,type INT NOT NULL
+  ,typ INT NOT NULL
   ,hostname VARCHAR(255) NOT NULL
   ,path VARCHAR(255) NOT NULL
-  ,mask INT NOT NULL
+  ,config INT NOT NULL
   ,CONSTRAINT or_fk_target_node
      FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 -- Table url
 CREATE TABLE or_url(
@@ -60,19 +58,19 @@ CREATE TABLE or_url(
   ,CONSTRAINT or_fk_url_node
      FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 -- Table link
 CREATE TABLE or_link(
    node INT NOT NULL
-  ,targetnode INT NOT NULL DEFAULT 0
+  ,targetnode INT NOT NULL
   ,CONSTRAINT or_fk_link_node
      FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
   ,CONSTRAINT or_fk_link_targetnode
      FOREIGN KEY (targetnode) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 CREATE UNIQUE INDEX or_uidx_link_node
                  ON or_link (node);
 CREATE INDEX or_idx_link_targetnode
@@ -89,112 +87,114 @@ CREATE TABLE or_user(
   ,mail VARCHAR(255) NOT NULL
   ,descr VARCHAR(255) NOT NULL
   ,style VARCHAR(64) NOT NULL
-  ,PRIMARY KEY (id)
-) TYPE=InnoDB;
-CREATE UNIQUE INDEX or_uidx_user_name
-                 ON or_user (name);
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_user_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB;
 
 -- Table group
 CREATE TABLE or_group(
    node INT NOT NULL
   ,label VARCHAR(255) NOT NULL
-  ,PRIMARY KEY (id)
-) TYPE=InnoDB;
-CREATE UNIQUE INDEX or_uidx_group_name
-                 ON or_group (name);
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_group_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB;
 
 -- Table usergroup
 CREATE TABLE or_usergroup(
-   userid INT NOT NULL
-  ,groupid INT NOT NULL
-  ,CONSTRAINT or_fk_usergroup_groupid
-     FOREIGN KEY (groupid) REFERENCES or_group (id)
+   user INT NOT NULL
+  ,grp INT NOT NULL
+  ,CONSTRAINT or_fk_usergroup_grp
+     FOREIGN KEY (grp) REFERENCES or_group (node)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_usergroup_userid
-     FOREIGN KEY (userid) REFERENCES or_user (id)
+  ,CONSTRAINT or_fk_usergroup_user
+     FOREIGN KEY (user) REFERENCES or_user (node)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
-CREATE INDEX or_idx_usergroup_groupid
-          ON or_usergroup (groupid);
-CREATE INDEX or_idx_usergroup_userid
-          ON or_usergroup (userid);
-CREATE UNIQUE INDEX or_uidx_usergroup_userid_groupid
-                 ON or_usergroup (userid,groupid);
-
--- Table acl
-CREATE TABLE or_acl(
-   node INT NOT NULL
-  ,userid INT NULL
-  ,groupid INT NULL
-  ,variant INT NULL DEFAULT 0
-  ,mask INT NOT NULL DEFAULT 0
-  ,CONSTRAINT or_fk_acl_groupid
-     FOREIGN KEY (groupid) REFERENCES or_group (id)
-     ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_acl_userid
-     FOREIGN KEY (userid) REFERENCES or_user (id)
-     ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_acl_objectid
-     FOREIGN KEY (objectid) REFERENCES or_object (id)
-     ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_acl_variant
-     FOREIGN KEY (variant) REFERENCES or_variant (node)
-     ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
-CREATE INDEX or_idx_acl_userid
-          ON or_acl (userid);
-CREATE INDEX or_idx_acl_groupid
-          ON or_acl (groupid);
-CREATE INDEX or_idx_acl_variantid
-          ON or_acl (variantid);
-CREATE INDEX or_idx_acl_node
-          ON or_acl (node);
+) ENGINE=InnoDB;
+CREATE INDEX or_idx_usergroup_grp
+          ON or_usergroup (grp);
+CREATE INDEX or_idx_usergroup_user
+          ON or_usergroup (user);
+CREATE UNIQUE INDEX or_uidx_usergroup_user_grp
+                 ON or_usergroup (user,grp);
 
 -- Table variant
 CREATE TABLE or_variant(
    node INT NOT NULL
   ,type INT NOT NULL
-  ,default INT NOT NULL
+  ,def INT NOT NULL
   ,iso VARCHAR(255) NOT NULL
   ,extension VARCHAR(255) NOT NULL
-) TYPE=InnoDB;
-
--- Table page
-CREATE TABLE or_page(
-   node INT NOT NULL
-  ,templateid INT NOT NULL DEFAULT 0
-  ,PRIMARY KEY (id)
-  ,CONSTRAINT or_fk_page_templateid
-     FOREIGN KEY (templateid) REFERENCES or_template (id)
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_variant_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
+
+-- Table acl
+CREATE TABLE or_acl(
+   node INT NOT NULL
+  ,user INT NULL
+  ,grp INT NULL
+  ,variant INT NULL
+  ,mask INT NOT NULL DEFAULT 0
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_acl_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+  ,CONSTRAINT or_fk_acl_grp
+     FOREIGN KEY (grp) REFERENCES or_group (node)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+  ,CONSTRAINT or_fk_acl_user
+     FOREIGN KEY (user) REFERENCES or_user (node)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+  ,CONSTRAINT or_fk_acl_variant
+     FOREIGN KEY (variant) REFERENCES or_variant (node)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB;
+CREATE INDEX or_idx_acl_user
+          ON or_acl (user);
+CREATE INDEX or_idx_acl_grp
+          ON or_acl (grp);
+CREATE INDEX or_idx_acl_variant
+          ON or_acl (variant);
 
 -- Table template
 CREATE TABLE or_template(
    node INT NOT NULL
-  ,projectnode INT NOT NULL
+  ,variant INT NOT NULL
+  ,extension VARCHAR(255) NULL
+  ,text MEDIUMTEXT NOT NULL
   ,PRIMARY KEY (node)
-  ,CONSTRAINT or_fk_template_projectnode
-     FOREIGN KEY (projectnode) REFERENCES or_node (id)
+  ,CONSTRAINT or_fk_template_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
-CREATE INDEX or_idx_template_projectid
-          ON or_template (projectid);
-CREATE INDEX or_idx_template_name
-          ON or_template (name);
-CREATE UNIQUE INDEX or_uidx_template_projectid_name
-                 ON or_template (projectid,name);
+  ,CONSTRAINT or_fk_template_variant
+     FOREIGN KEY (variant) REFERENCES or_variant (node)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB;
+
+-- Table page
+CREATE TABLE or_page(
+   node INT NOT NULL
+  ,template INT NOT NULL DEFAULT 0
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_page_template
+     FOREIGN KEY (template) REFERENCES or_template (node)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB;
 
 -- Table element
 CREATE TABLE or_element(
-   id INT NOT NULL
-  ,templateid INT NOT NULL DEFAULT 0
-  ,name VARCHAR(50) NOT NULL
+   node INT NOT NULL
   ,descr VARCHAR(255) NOT NULL
-  ,type VARCHAR(20) NOT NULL
-  ,subtype VARCHAR(20) NULL
+  ,type INT NOT NULL
+  ,subtype INT NOT NULL
   ,with_icon TINYINT(1) NOT NULL DEFAULT 0
-  ,dateformat VARCHAR(100) NULL
+  ,format VARCHAR(255) NULL
   ,wiki TINYINT(1) NULL DEFAULT 0
   ,html TINYINT(1) NULL DEFAULT 0
   ,all_languages TINYINT(1) NOT NULL DEFAULT 0
@@ -204,25 +204,19 @@ CREATE TABLE or_element(
   ,thousand_sep VARCHAR(1) NULL
   ,code MEDIUMTEXT NULL
   ,default_text MEDIUMTEXT NULL
-  ,folderobjectid INT NULL
-  ,default_objectid INT NULL
-  ,PRIMARY KEY (id)
-  ,CONSTRAINT or_fk_element_default_objectid
-     FOREIGN KEY (default_objectid) REFERENCES or_object (id)
+  ,foldernode INT NULL
+  ,default_node INT NULL
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_element_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_element_folderobjectid
-     FOREIGN KEY (folderobjectid) REFERENCES or_object (id)
+  ,CONSTRAINT or_fk_element_foldernode
+     FOREIGN KEY (foldernode) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_element_templateid
-     FOREIGN KEY (templateid) REFERENCES or_template (id)
+  ,CONSTRAINT or_fk_element_default_node
+     FOREIGN KEY (default_node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
-CREATE INDEX or_idx_element_templateid
-          ON or_element (templateid);
-CREATE INDEX or_idx_element_name
-          ON or_element (name);
-CREATE UNIQUE INDEX or_uidx_element_templateid_name
-                 ON or_element (templateid,name);
+) ENGINE=InnoDB;
 
 -- Table file
 CREATE TABLE or_file(
@@ -232,89 +226,64 @@ CREATE TABLE or_file(
   ,width INT NOT NULL
   ,height INT NOT NULL
   ,value MEDIUMBLOB NOT NULL
-  ,PRIMARY KEY (id)
-  ,CONSTRAINT or_fk_file_objectid
-     FOREIGN KEY (objectid) REFERENCES or_object (id)
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_file_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
-CREATE UNIQUE INDEX or_uidx_file_objectid
-                 ON or_file (objectid);
+) ENGINE=InnoDB;
 
 -- Table name
 CREATE TABLE or_name(
    node INT NOT NULL
-  ,name VARCHAR(255) NOT NULL
+  ,label VARCHAR(255) NOT NULL
   ,descr VARCHAR(255) NOT NULL
   ,variant INT NOT NULL DEFAULT 0
   ,PRIMARY KEY (node)
   ,CONSTRAINT or_fk_name_variant
      FOREIGN KEY (variant) REFERENCES or_variant (node)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
--- Table templatemodel
-CREATE TABLE or_templatemodel(
-   id INT NOT NULL
-  ,templateid INT NOT NULL DEFAULT 0
-  ,projectmodelid INT NOT NULL DEFAULT 0
-  ,extension VARCHAR(10) NULL
-  ,text MEDIUMTEXT NOT NULL
-  ,PRIMARY KEY (id)
-  ,CONSTRAINT or_fk_templatemodel_templateid
-     FOREIGN KEY (templateid) REFERENCES or_template (id)
-     ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_templatemodel_projectmodelid
-     FOREIGN KEY (projectmodelid) REFERENCES or_projectmodel (id)
-     ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
-CREATE INDEX or_idx_templatemodel_templateid
-          ON or_templatemodel (templateid);
-CREATE UNIQUE INDEX or_uidx_templatemodel_templateid_extension
-                 ON or_templatemodel (templateid,extension);
-CREATE UNIQUE INDEX or_uidx_templatemodel_templateid_projectmodelid
-                 ON or_templatemodel (templateid,projectmodelid);
+-- Table attribute
+CREATE TABLE or_attribute(
+   node INT NOT NULL
+  ,name VARCHAR(255) NOT NULL
+  ,value VARCHAR(255) NOT NULL
+) ENGINE=InnoDB;
+CREATE INDEX or_idx_attribute_node
+          ON or_attribute (node);
 
 -- Table value
 CREATE TABLE or_value(
-   id INT NOT NULL
-  ,pageid INT NOT NULL DEFAULT 0
-  ,languageid INT NOT NULL
-  ,elementid INT NOT NULL DEFAULT 0
-  ,linkobjectid INT NULL
+   node INT NOT NULL
+  ,variant INT NOT NULL
+  ,element INT NOT NULL
+  ,linknode INT NULL
   ,text MEDIUMTEXT NULL
   ,number INT NULL
-  ,date INT NULL
-  ,active INT NOT NULL DEFAULT 0
+  ,exp INT NULL
+  ,date DATETIME NULL
+  ,active INT NULL DEFAULT 0
   ,publish INT NOT NULL
-  ,lastchange_date INT NOT NULL DEFAULT 0
-  ,lastchange_userid INT NULL
-  ,PRIMARY KEY (id)
-  ,CONSTRAINT or_fk_value_pageid
-     FOREIGN KEY (pageid) REFERENCES or_page (id)
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_value_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_value_elementid
-     FOREIGN KEY (elementid) REFERENCES or_element (id)
+  ,CONSTRAINT or_fk_value_element
+     FOREIGN KEY (element) REFERENCES or_element (node)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_value_languageid
-     FOREIGN KEY (languageid) REFERENCES or_language (id)
+  ,CONSTRAINT or_fk_value_variant
+     FOREIGN KEY (variant) REFERENCES or_variant (node)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_value_lastchange_userid
-     FOREIGN KEY (lastchange_userid) REFERENCES or_user (id)
-     ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_value_linkobjectid
-     FOREIGN KEY (linkobjectid) REFERENCES or_object (id)
-     ON DELETE RESTRICT ON UPDATE RESTRICT
-) TYPE=InnoDB;
-CREATE INDEX or_idx_value_pageid
-          ON or_value (pageid);
-CREATE INDEX or_idx_value_languageid
-          ON or_value (languageid);
-CREATE INDEX or_idx_value_elementid
-          ON or_value (elementid);
+) ENGINE=InnoDB;
+CREATE INDEX or_idx_value_variant
+          ON or_value (variant);
+CREATE INDEX or_idx_value_element
+          ON or_value (element);
 CREATE INDEX or_idx_value_active
           ON or_value (active);
-CREATE INDEX or_idx_value_lastchange_date
-          ON or_value (lastchange_date);
 CREATE INDEX or_idx_value_publish
           ON or_value (publish);
-INSERT INTO or_user (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','admin','','Administrator','','','Admin user','default',1);
+INSERT INTO or_node (id,lft,rgt,typ,name) VALUES(1,1,4,1,'Root');
+INSERT INTO or_node (id,lft,rgt,typ,name) VALUES(2,2,3,13,'admin');
+INSERT INTO or_user (node,label,password,dn,fullname,tel,mail,descr,style) VALUES(2,'admin','admin','','Administrator','','','Admin user','default');

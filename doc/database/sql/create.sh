@@ -37,8 +37,8 @@ close_table()
     
     case "$type" in
      mysql)
-            #echo -n " ENGINE=$mysql_engine" >> $outfile
-            echo -n " TYPE=$mysql_engine" >> $outfile
+            echo -n " ENGINE=$mysql_engine" >> $outfile
+            #echo -n " TYPE=$mysql_engine" >> $outfile
             ;;
      *)
              ;;
@@ -100,13 +100,13 @@ column()
             ;;
      DATE)
      	if	[ "$type" == "mysql" ]; then
-            echo -n "DATE" >> $outfile
+            echo -n "DATETIME" >> $outfile
      	elif	[ "$type" == "oracle" ]; then
             echo -n "DATE" >> $outfile
         elif	[ "$type" == "postgresql" ]; then
-            echo -n "DATE" >> $outfile
+            echo -n "DATETIME" >> $outfile
         else
-            echo -n "DATE" >> $outfile
+            echo -n "DATETIME" >> $outfile
         fi
             ;;
      BLOB)
@@ -249,30 +249,28 @@ for	db in mysql postgresql oracle sqlite; do
     
     
 	open_table node
-    column id          INT - - N
-	column type        INT - - N
+    column id          INT       - - N
+	column typ         INT       - - N
     column name        VARCHAR 255 - N
-    column left        INT - - N,
-    column right       INT - - N
-    column order       INT - - N
-    column lastmodified DATE - - N
-    column lastmodified_user       INT - - Y
-    column creation     DATE - - N
-    column creation_user           INT - - Y
+    column lft         INT       - - N
+    column rgt         INT       - - N
+    column lastmodified      DATE - - N
+    column lastmodified_user INT  - - Y
+    column creation          DATE - - N
+    column creation_user     INT  - - Y
     primary_key id
 	close_table
+  	unique_index lft,rgt
   	unique_index name
-  	index type
-  	index left
-  	index right
-  	index order
+  	index typ
+  	index lft
+  	index rgt
 
 
 	open_table prop
     column id            INT - - N
-    column type          INT - - N
+    column typ           INT - - N
     column name          VARCHAR 255 - N
-    column label         VARCHAR 255 - N
     column label         VARCHAR 255 - N
 	close_table
 
@@ -285,34 +283,34 @@ for	db in mysql postgresql oracle sqlite; do
 
 
     open_table target
-    column node INT - - N
-    column type INT - - N
+    column node     INT       - - N
+    column typ      INT       - - N
     column hostname VARCHAR 255 - N
-    column path VARCHAR 255 - N
-    column mask INT - - N
-    constraint node node  id  
+    column path     VARCHAR 255 - N
+    column config   INT       - - N
+    constraint node node id  
     close_table
 
    
     open_table url
-    column node INT - - N
+    column node INT       - - N
     column url  VARCHAR 255 - N
     constraint node node id  
     close_table
 
    
     open_table link  
-    column node          INT     -   - N
-    column targetnode    INT     -   0 N
-    constraint node node  id  
-    constraint targetnode node  id  
+    column node          INT - - N
+    column targetnode    INT - - N
+    constraint node       node id  
+    constraint targetnode node id  
     close_table
     unique_index node
     index targetnode
 
 
 	open_table user  
-    column node    INT     - - N
+    column node     INT     -   - N
 	column label    VARCHAR 128 - N
 	column password VARCHAR 255 - N
 	column dn       VARCHAR 255 - N
@@ -321,84 +319,84 @@ for	db in mysql postgresql oracle sqlite; do
 	column mail     VARCHAR 255 - N
 	column descr    VARCHAR 255 - N
 	column style    VARCHAR 64  - N
-	primary_key id 
+	primary_key node
+    constraint node       node id  
     close_table
-	unique_index name
 	
 	
 	open_table group  
-	column node   INT     -   - N 
+	column node  INT     -   - N 
 	column label VARCHAR 255 - N
-	primary_key id 
+	primary_key node 
+    constraint node node id  
     close_table
-	unique_index name
 	
 	
 	open_table usergroup  
-	column      userid   INT - - N
-	column      groupid  INT - - N
-    constraint groupid group id  
-    constraint userid  user  id  
+	column      user   INT - - N
+	column      grp  INT - - N
+    constraint grp group node  
+    constraint user  user  node
     close_table
-	index groupid 
-	index userid 
-	unique_index userid,groupid
+	index grp 
+	index user 
+	unique_index user,grp
 	
-
-    open_table acl  
-	column node INT
-	column userid           INT - - J
-	column groupid          INT - - J
-	column variant       INT - 0 J
-	column mask          INT - 0 N
-    constraint groupid    group    id  
-    constraint userid     user     id  
-    constraint objectid   object   id  
-    constraint variant variant node
-    close_table
-	index userid 
-	index groupid 
-	index variantid 
-	index node 
-
 
     open_table variant
 	column node       INT - - N
 	column type       INT - - N
-	column default    INT - - N
+	column def        INT - - N
 	column iso     VARCHAR 255 - Y
 	column extension      VARCHAR 255 - Y
+	primary_key node 
+    constraint node node id  
     close_table
 	
 	
-	open_table page
-	column node       INT
-	column templateid INT - 0
-	primary_key  id 
-	constraint  templateid template id
-	close_table
-	
-	
+    open_table acl  
+	column node        INT - - N
+	column user        INT - - J
+	column grp         INT - - J
+	column variant     INT - - J
+	column mask        INT - 0 N
+	primary_key node 
+    constraint node    node    id  
+    constraint grp     group   node  
+    constraint user    user    node
+    constraint variant variant node
+    close_table
+	index user 
+	index grp 
+	index variant 
+
+
 	open_table template  
-	column node         INT
-	column projectnode INT
-	primary_key node
-	constraint projectnode node id
-	close_table
-	index projectid 
-	index name 
-	unique_index projectid,name 
+	column      node           INT       - - N
+	column      variant        INT       - - N
+	column      extension      VARCHAR 255 - J 
+	column      text           TEXT
+    primary_key node
+    constraint node    node    id
+    constraint variant variant node  
+    close_table
 
 	
+	open_table page
+	column node     INT - - N
+	column template INT - 0 N
+	primary_key node 
+	constraint  template template node
+	close_table
+	
+	
 	open_table element
-	column      id               INT
-	column      templateid       INT     -   0 0
-	column      name             VARCHAR 50
+	column      node             INT     -   - N
 	column      descr            VARCHAR 255
-	column      type             VARCHAR 20
-	column      subtype          VARCHAR 20  - J
+	column      type             INT - - N
+	column      subtype          INT - - N
 	column      with_icon        INT     1   0
-	column      dateformat       VARCHAR 100 - J
+	column      format           VARCHAR 255 - J
 	column      wiki             INT     1   0 J
 	column      html             INT     1   0 J
 	column      all_languages    INT     1   0
@@ -408,89 +406,73 @@ for	db in mysql postgresql oracle sqlite; do
 	column      thousand_sep     VARCHAR 1   - J
 	column      code             TEXT    -   - J
 	column      default_text     TEXT    -   - J
-	column      folderobjectid   INT     -   - J
-	column      default_objectid INT     -   - J
-    primary_key  id 
-    constraint  default_objectid     object  id  
-    constraint  folderobjectid   object  id  
-    constraint  templateid   template  id  
+	column      foldernode   INT     -   - J
+	column      default_node INT     -   - J
+    primary_key node 
+    constraint  node         node id  
+    constraint  foldernode   node id  
+    constraint  default_node node id  
     close_table
-	index  templateid 
-	index  name 
-	unique_index templateid,name 
 
 
 	open_table file  
-	column node        INT
-	column extension VARCHAR 10 
-	column size      INT     -  0
-	column width  INT - - Y
-	column height INT - - Y
-	column value     BLOB
-	primary_key  id 
-	constraint  objectid   object  id  
+	column node       INT
+	column extension  VARCHAR 10 
+	column size       INT     -  0
+	column width      INT - - Y
+	column height     INT - - Y
+	column value      BLOB
+	primary_key  node 
+	constraint  node node id  
     close_table
-	 
-	unique_index objectid 
 
 	
-	open_table name  
+	open_table name
 	column node       INT - - N
-	column name       VARCHAR 255 - N
-	column descr      VARCHAR 255
-	column variant INT     -   0 N
-    primary_key node 
+	column label      VARCHAR 255 - N
+	column descr      VARCHAR 255 - N
+	column variant    INT     -   0 N
+    primary_key node
     constraint variant variant node  
     close_table
  
 
-	open_table templatemodel  
-	column      id             INT     -  - N
-	column      templateid     INT     -  0 N
-	column      projectmodelid INT     -  0 N
-	column      extension      VARCHAR 10 - J 
-	column      text           TEXT
-    primary_key  id 
-    constraint templateid     template     id  
-    constraint projectmodelid projectmodel id  
+
+
+
+	open_table attribute  
+	column      node           INT     -  - N
+	column      name           VARCHAR 255 - N 
+	column      value          VARCHAR 255 - N 
     close_table
-	index templateid 
-    unique_index templateid,extension 
-	unique_index templateid,projectmodelid 
+	index node 
 
 
 	open_table value  
-	column      id                INT
-	column      pageid            INT  - 0
-	column      languageid        INT
-	column      elementid         INT  - 0
-	column      linkobjectid      INT  - - J
+	column      node              INT  - - N
+	column      variant           INT  - - Y
+	column      element           INT  - - N
+	column      linknode          INT  - - J
 	column      text              TEXT - - J
 	column      number            INT  - - J
-	column      date              INT  - - J
-	column      active            INT  - 0
+	column      exp               INT  - - J
+	column      date              DATE - - J
+	column      active            INT  - 0 J
 	column      publish           INT  - - N
-	column      lastchange_date   INT  - 0 N
-	column      lastchange_userid INT  - - J
-    primary_key  id 
-    constraint pageid            page     id  
-    constraint elementid         element  id  
-    constraint languageid        language id  
-    constraint lastchange_userid user     id  
-    constraint linkobjectid      object   id  
+    primary_key node 
+    constraint node          node     id  
+    constraint element       element  node  
+    constraint variant       variant  node  
     close_table
- 
-	index pageid 
-	index languageid 
-	index elementid 
+	index variant 
+	index element 
 	index active 
-	index lastchange_date 
 	index publish 
 
 
-	insert user "id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin" "1,'admin','admin','','Administrator','','','Admin user','default',1"
-
-
+	insert node "id,lft,rgt,typ,name" "1,1,4,1,'Root'"
+	insert node "id,lft,rgt,typ,name" "2,2,3,13,'admin'"
+	insert user "node,label,password,dn,fullname,tel,mail,descr,style" "2,'admin','admin','','Administrator','','','Admin user','default'"
 
 
     # end of table definitions

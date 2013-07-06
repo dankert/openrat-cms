@@ -3,11 +3,10 @@
 -- Table node
 CREATE TABLE or_node(
    "ID" NUMBER NOT NULL
-  ,"TYPE" NUMBER NOT NULL
+  ,"TYP" NUMBER NOT NULL
   ,"NAME" VARCHAR(255) NULL
-  ,"LEFT" NUMBER NOT NULL
-  ,"RIGHT" NUMBER NOT NULL
-  ,"ORDER" NUMBER NOT NULL
+  ,"LFT" NUMBER NOT NULL
+  ,"RGT" NUMBER NOT NULL
   ,"LASTMODIFIED" DATE NOT NULL
   ,"LASTMODIFIED_USER" NUMBER NOT NULL
   ,"CREATION" DATE NOT NULL
@@ -15,22 +14,21 @@ CREATE TABLE or_node(
   ,PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX or_uidx_1
+                 ON or_node (lft,rgt);
+CREATE UNIQUE INDEX or_uidx_2
                  ON or_node (name);
-CREATE INDEX or_idx_2
-          ON or_node (type);
 CREATE INDEX or_idx_3
-          ON or_node (left);
+          ON or_node (typ);
 CREATE INDEX or_idx_4
-          ON or_node (right);
+          ON or_node (lft);
 CREATE INDEX or_idx_5
-          ON or_node (order);
+          ON or_node (rgt);
 
 -- Table prop
 CREATE TABLE or_prop(
    "ID" NUMBER NOT NULL
-  ,"TYPE" NUMBER NOT NULL
+  ,"TYP" NUMBER NOT NULL
   ,"NAME" VARCHAR(255) NULL
-  ,"LABEL" VARCHAR(255) NULL
   ,"LABEL" VARCHAR(255) NULL
 );
 
@@ -44,10 +42,10 @@ CREATE TABLE or_props(
 -- Table target
 CREATE TABLE or_target(
    "NODE" NUMBER NOT NULL
-  ,"TYPE" NUMBER NOT NULL
+  ,"TYP" NUMBER NOT NULL
   ,"HOSTNAME" VARCHAR(255) NULL
   ,"PATH" VARCHAR(255) NULL
-  ,"MASK" NUMBER NOT NULL
+  ,"CONFIG" NUMBER NOT NULL
   ,CONSTRAINT or_fk_6
      FOREIGN KEY (node) REFERENCES or_node (id)
 );
@@ -63,7 +61,7 @@ CREATE TABLE or_url(
 -- Table link
 CREATE TABLE or_link(
    "NODE" NUMBER NOT NULL
-  ,"TARGETNODE" NUMBER DEFAULT 0 NOT NULL
+  ,"TARGETNODE" NUMBER NOT NULL
   ,CONSTRAINT or_fk_8
      FOREIGN KEY (node) REFERENCES or_node (id)
   ,CONSTRAINT or_fk_9
@@ -85,104 +83,102 @@ CREATE TABLE or_user(
   ,"MAIL" VARCHAR(255) NULL
   ,"DESCR" VARCHAR(255) NULL
   ,"STYLE" VARCHAR(64) NULL
-  ,PRIMARY KEY (id)
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_12
+     FOREIGN KEY (node) REFERENCES or_node (id)
 );
-CREATE UNIQUE INDEX or_uidx_12
-                 ON or_user (name);
 
 -- Table group
 CREATE TABLE or_group(
    "NODE" NUMBER NOT NULL
   ,"LABEL" VARCHAR(255) NULL
-  ,PRIMARY KEY (id)
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_13
+     FOREIGN KEY (node) REFERENCES or_node (id)
 );
-CREATE UNIQUE INDEX or_uidx_13
-                 ON or_group (name);
 
 -- Table usergroup
 CREATE TABLE or_usergroup(
-   "USERID" NUMBER NOT NULL
-  ,"GROUPID" NUMBER NOT NULL
+   "USER" NUMBER NOT NULL
+  ,"GRP" NUMBER NOT NULL
   ,CONSTRAINT or_fk_14
-     FOREIGN KEY (groupid) REFERENCES or_group (id)
+     FOREIGN KEY (grp) REFERENCES or_group (node)
   ,CONSTRAINT or_fk_15
-     FOREIGN KEY (userid) REFERENCES or_user (id)
+     FOREIGN KEY (user) REFERENCES or_user (node)
 );
 CREATE INDEX or_idx_16
-          ON or_usergroup (groupid);
+          ON or_usergroup (grp);
 CREATE INDEX or_idx_17
-          ON or_usergroup (userid);
+          ON or_usergroup (user);
 CREATE UNIQUE INDEX or_uidx_18
-                 ON or_usergroup (userid,groupid);
-
--- Table acl
-CREATE TABLE or_acl(
-   "NODE" NUMBER NOT NULL
-  ,"USERID" NUMBER NULL
-  ,"GROUPID" NUMBER NULL
-  ,"VARIANT" NUMBER DEFAULT 0 NULL
-  ,"MASK" NUMBER DEFAULT 0 NOT NULL
-  ,CONSTRAINT or_fk_19
-     FOREIGN KEY (groupid) REFERENCES or_group (id)
-  ,CONSTRAINT or_fk_20
-     FOREIGN KEY (userid) REFERENCES or_user (id)
-  ,CONSTRAINT or_fk_21
-     FOREIGN KEY (objectid) REFERENCES or_object (id)
-  ,CONSTRAINT or_fk_22
-     FOREIGN KEY (variant) REFERENCES or_variant (node)
-);
-CREATE INDEX or_idx_23
-          ON or_acl (userid);
-CREATE INDEX or_idx_24
-          ON or_acl (groupid);
-CREATE INDEX or_idx_25
-          ON or_acl (variantid);
-CREATE INDEX or_idx_26
-          ON or_acl (node);
+                 ON or_usergroup (user,grp);
 
 -- Table variant
 CREATE TABLE or_variant(
    "NODE" NUMBER NOT NULL
   ,"TYPE" NUMBER NOT NULL
-  ,"DEFAULT" NUMBER NOT NULL
+  ,"DEF" NUMBER NOT NULL
   ,"ISO" VARCHAR(255) NULL
   ,"EXTENSION" VARCHAR(255) NULL
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_19
+     FOREIGN KEY (node) REFERENCES or_node (id)
+);
+
+-- Table acl
+CREATE TABLE or_acl(
+   "NODE" NUMBER NOT NULL
+  ,"USER" NUMBER NULL
+  ,"GRP" NUMBER NULL
+  ,"VARIANT" NUMBER NULL
+  ,"MASK" NUMBER DEFAULT 0 NOT NULL
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_20
+     FOREIGN KEY (node) REFERENCES or_node (id)
+  ,CONSTRAINT or_fk_21
+     FOREIGN KEY (grp) REFERENCES or_group (node)
+  ,CONSTRAINT or_fk_22
+     FOREIGN KEY (user) REFERENCES or_user (node)
+  ,CONSTRAINT or_fk_23
+     FOREIGN KEY (variant) REFERENCES or_variant (node)
+);
+CREATE INDEX or_idx_24
+          ON or_acl (user);
+CREATE INDEX or_idx_25
+          ON or_acl (grp);
+CREATE INDEX or_idx_26
+          ON or_acl (variant);
+
+-- Table template
+CREATE TABLE or_template(
+   "NODE" NUMBER NOT NULL
+  ,"VARIANT" NUMBER NOT NULL
+  ,"EXTENSION" VARCHAR(255) NULL
+  ,"TEXT" CLOB NULL
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_27
+     FOREIGN KEY (node) REFERENCES or_node (id)
+  ,CONSTRAINT or_fk_28
+     FOREIGN KEY (variant) REFERENCES or_variant (node)
 );
 
 -- Table page
 CREATE TABLE or_page(
    "NODE" NUMBER NOT NULL
-  ,"TEMPLATEID" NUMBER DEFAULT 0 NOT NULL
-  ,PRIMARY KEY (id)
-  ,CONSTRAINT or_fk_27
-     FOREIGN KEY (templateid) REFERENCES or_template (id)
-);
-
--- Table template
-CREATE TABLE or_template(
-   "NODE" NUMBER NOT NULL
-  ,"PROJECTNODE" NUMBER NOT NULL
+  ,"TEMPLATE" NUMBER DEFAULT 0 NOT NULL
   ,PRIMARY KEY (node)
-  ,CONSTRAINT or_fk_28
-     FOREIGN KEY (projectnode) REFERENCES or_node (id)
+  ,CONSTRAINT or_fk_29
+     FOREIGN KEY (template) REFERENCES or_template (node)
 );
-CREATE INDEX or_idx_29
-          ON or_template (projectid);
-CREATE INDEX or_idx_30
-          ON or_template (name);
-CREATE UNIQUE INDEX or_uidx_31
-                 ON or_template (projectid,name);
 
 -- Table element
 CREATE TABLE or_element(
-   "ID" NUMBER NOT NULL
-  ,"TEMPLATEID" NUMBER DEFAULT 0 NOT NULL
-  ,"NAME" VARCHAR(50) NULL
+   "NODE" NUMBER NOT NULL
   ,"DESCR" VARCHAR(255) NULL
-  ,"TYPE" VARCHAR(20) NULL
-  ,"SUBTYPE" VARCHAR(20) NULL
+  ,"TYPE" NUMBER NOT NULL
+  ,"SUBTYPE" NUMBER NOT NULL
   ,"WITH_ICON" NUMBER(1) DEFAULT 0 NOT NULL
-  ,"DATEFORMAT" VARCHAR(100) NULL
+  ,"FORMAT" VARCHAR(255) NULL
   ,"WIKI" NUMBER(1) DEFAULT 0 NULL
   ,"HTML" NUMBER(1) DEFAULT 0 NULL
   ,"ALL_LANGUAGES" NUMBER(1) DEFAULT 0 NOT NULL
@@ -192,22 +188,16 @@ CREATE TABLE or_element(
   ,"THOUSAND_SEP" VARCHAR(1) NULL
   ,"CODE" CLOB NULL
   ,"DEFAULT_TEXT" CLOB NULL
-  ,"FOLDEROBJECTID" NUMBER NULL
-  ,"DEFAULT_OBJECTID" NUMBER NULL
-  ,PRIMARY KEY (id)
+  ,"FOLDERNODE" NUMBER NULL
+  ,"DEFAULT_NODE" NUMBER NULL
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_30
+     FOREIGN KEY (node) REFERENCES or_node (id)
+  ,CONSTRAINT or_fk_31
+     FOREIGN KEY (foldernode) REFERENCES or_node (id)
   ,CONSTRAINT or_fk_32
-     FOREIGN KEY (default_objectid) REFERENCES or_object (id)
-  ,CONSTRAINT or_fk_33
-     FOREIGN KEY (folderobjectid) REFERENCES or_object (id)
-  ,CONSTRAINT or_fk_34
-     FOREIGN KEY (templateid) REFERENCES or_template (id)
+     FOREIGN KEY (default_node) REFERENCES or_node (id)
 );
-CREATE INDEX or_idx_35
-          ON or_element (templateid);
-CREATE INDEX or_idx_36
-          ON or_element (name);
-CREATE UNIQUE INDEX or_uidx_37
-                 ON or_element (templateid,name);
 
 -- Table file
 CREATE TABLE or_file(
@@ -217,80 +207,59 @@ CREATE TABLE or_file(
   ,"WIDTH" NUMBER NOT NULL
   ,"HEIGHT" NUMBER NOT NULL
   ,"VALUE" CLOB NOT NULL
-  ,PRIMARY KEY (id)
-  ,CONSTRAINT or_fk_38
-     FOREIGN KEY (objectid) REFERENCES or_object (id)
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_33
+     FOREIGN KEY (node) REFERENCES or_node (id)
 );
-CREATE UNIQUE INDEX or_uidx_39
-                 ON or_file (objectid);
 
 -- Table name
 CREATE TABLE or_name(
    "NODE" NUMBER NOT NULL
-  ,"NAME" VARCHAR(255) NULL
+  ,"LABEL" VARCHAR(255) NULL
   ,"DESCR" VARCHAR(255) NULL
   ,"VARIANT" NUMBER DEFAULT 0 NOT NULL
   ,PRIMARY KEY (node)
-  ,CONSTRAINT or_fk_40
+  ,CONSTRAINT or_fk_34
      FOREIGN KEY (variant) REFERENCES or_variant (node)
 );
 
--- Table templatemodel
-CREATE TABLE or_templatemodel(
-   "ID" NUMBER NOT NULL
-  ,"TEMPLATEID" NUMBER DEFAULT 0 NOT NULL
-  ,"PROJECTMODELID" NUMBER DEFAULT 0 NOT NULL
-  ,"EXTENSION" VARCHAR(10) NULL
-  ,"TEXT" CLOB NULL
-  ,PRIMARY KEY (id)
-  ,CONSTRAINT or_fk_41
-     FOREIGN KEY (templateid) REFERENCES or_template (id)
-  ,CONSTRAINT or_fk_42
-     FOREIGN KEY (projectmodelid) REFERENCES or_projectmodel (id)
+-- Table attribute
+CREATE TABLE or_attribute(
+   "NODE" NUMBER NOT NULL
+  ,"NAME" VARCHAR(255) NULL
+  ,"VALUE" VARCHAR(255) NULL
 );
-CREATE INDEX or_idx_43
-          ON or_templatemodel (templateid);
-CREATE UNIQUE INDEX or_uidx_44
-                 ON or_templatemodel (templateid,extension);
-CREATE UNIQUE INDEX or_uidx_45
-                 ON or_templatemodel (templateid,projectmodelid);
+CREATE INDEX or_idx_35
+          ON or_attribute (node);
 
 -- Table value
 CREATE TABLE or_value(
-   "ID" NUMBER NOT NULL
-  ,"PAGEID" NUMBER DEFAULT 0 NOT NULL
-  ,"LANGUAGEID" NUMBER NOT NULL
-  ,"ELEMENTID" NUMBER DEFAULT 0 NOT NULL
-  ,"LINKOBJECTID" NUMBER NULL
+   "NODE" NUMBER NOT NULL
+  ,"VARIANT" NUMBER NOT NULL
+  ,"ELEMENT" NUMBER NOT NULL
+  ,"LINKNODE" NUMBER NULL
   ,"TEXT" CLOB NULL
   ,"NUMBER" NUMBER NULL
-  ,"DATE" NUMBER NULL
-  ,"ACTIVE" NUMBER DEFAULT 0 NOT NULL
+  ,"EXP" NUMBER NULL
+  ,"DATE" DATE NULL
+  ,"ACTIVE" NUMBER DEFAULT 0 NULL
   ,"PUBLISH" NUMBER NOT NULL
-  ,"LASTCHANGE_DATE" NUMBER DEFAULT 0 NOT NULL
-  ,"LASTCHANGE_USERID" NUMBER NULL
-  ,PRIMARY KEY (id)
-  ,CONSTRAINT or_fk_46
-     FOREIGN KEY (pageid) REFERENCES or_page (id)
-  ,CONSTRAINT or_fk_47
-     FOREIGN KEY (elementid) REFERENCES or_element (id)
-  ,CONSTRAINT or_fk_48
-     FOREIGN KEY (languageid) REFERENCES or_language (id)
-  ,CONSTRAINT or_fk_49
-     FOREIGN KEY (lastchange_userid) REFERENCES or_user (id)
-  ,CONSTRAINT or_fk_50
-     FOREIGN KEY (linkobjectid) REFERENCES or_object (id)
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_36
+     FOREIGN KEY (node) REFERENCES or_node (id)
+  ,CONSTRAINT or_fk_37
+     FOREIGN KEY (element) REFERENCES or_element (node)
+  ,CONSTRAINT or_fk_38
+     FOREIGN KEY (variant) REFERENCES or_variant (node)
 );
-CREATE INDEX or_idx_51
-          ON or_value (pageid);
-CREATE INDEX or_idx_52
-          ON or_value (languageid);
-CREATE INDEX or_idx_53
-          ON or_value (elementid);
-CREATE INDEX or_idx_54
+CREATE INDEX or_idx_39
+          ON or_value (variant);
+CREATE INDEX or_idx_40
+          ON or_value (element);
+CREATE INDEX or_idx_41
           ON or_value (active);
-CREATE INDEX or_idx_55
-          ON or_value (lastchange_date);
-CREATE INDEX or_idx_56
+CREATE INDEX or_idx_42
           ON or_value (publish);
-INSERT INTO or_user (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','admin','','Administrator','','','Admin user','default',1);
+INSERT INTO or_node (id,lft,rgt,typ,name) VALUES(1,1,4,1,'Root');
+INSERT INTO or_node (id,lft,rgt,typ,name) VALUES(2,2,3,13,'admin');
+INSERT INTO or_user (node,label,password,dn,fullname,tel,mail,descr,style) VALUES(2,'admin','admin','','Administrator','','','Admin user','default');
