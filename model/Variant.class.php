@@ -17,6 +17,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
+define('VARIANT_TYPE_LANGUAGE',1);
+define('VARIANT_TYPE_OUTPUT'  ,2);
+
+
 /**
  * Darstellen einer Sprache. Jeder Seiteninhalt wird einer Sprache zugeordnet.
  *
@@ -24,7 +28,7 @@
  * @author $Author$
  * @package openrat.objects
  */
-class Language
+class Variant
 {
 	var $languageid = 0;
 	var $error      = '';
@@ -55,7 +59,7 @@ class Language
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT 1 FROM {t_node} '.
+		$sql = new Sql('SELECT 1 FROM {t_language} '.
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 

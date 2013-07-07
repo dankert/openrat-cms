@@ -54,10 +54,16 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT 1 FROM {t_project} '.
-		               ' WHERE id={id}');
-		$sql->setInt('id' ,$id  );
-
+		
+		$sql = new Sql( <<<SQL
+	SELECT 1 FROM {t_node}
+	 WHERE typ = {type}			
+       AND id={id}
+SQL
+);
+		$sql->setInt('type' ,NODE_TYPE_PROJECT );
+		$sql->setInt('id'   ,$id               );
+		
 		return intval($db->getOne($sql)) == 1;
 	}
 	
@@ -73,9 +79,13 @@ class Project
 	function getAllProjects()
 	{
 		$db = db_connection();
-		$sql = new Sql( 'SELECT id,name FROM {t_project} '.
-		                '   ORDER BY name' );
-
+		$sql = new Sql( <<<SQL
+ SELECT id,name FROM {t_node}
+				WHERE typ={type}
+		        ORDER BY lft
+SQL
+);
+		$sql->setInt('type',NODE_TYPE_PROJECT);
 		return $db->getAssoc( $sql );
 	}
 
@@ -84,9 +94,14 @@ class Project
 	function getAllProjectIds()
 	{
 		$db = db_connection();
-		$sql = new Sql( 'SELECT id FROM {t_project} '.
-		                '   ORDER BY name' );
-
+		$sql = new Sql( <<<SQL
+ SELECT id FROM {t_node}
+				WHERE typ={type}
+		        ORDER BY lft
+SQL
+);
+		$sql->setInt('type',NODE_TYPE_PROJECT);
+		
 		return $db->getCol( $sql );
 	}
 
@@ -95,10 +110,13 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id,name FROM {t_language}'.
-		                '  WHERE projectid={projectid} '.
-		                '  ORDER BY name' );
-		$sql->setInt   ('projectid',$this->projectid);
+		$sql = new Sql( <<<SQL
+ SELECT id,name FROM {t_node}
+				WHERE typ={type}
+		        ORDER BY lft
+SQL
+		);
+		$sql->setInt('type',NODE_TYPE_VARIANT);
 
 		return $db->getAssoc( $sql );
 	}
@@ -164,10 +182,12 @@ class Project
 	function getRootObjectId()
 	{
 		$db = db_connection();
-		
-		$sql = new Sql('SELECT id FROM {t_object}'.
-		               '  WHERE parentid IS NULL'.
-		               '    AND projectid={projectid}' );
+
+		$sql = new Sql( <<<SQL
+ SELECT id FROM {t_node}
+				WHERE id={projectid}
+SQL
+		);
 
 		$sql->setInt('projectid',$this->projectid);
 		
@@ -205,9 +225,15 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT * FROM {t_project} '.
-		                '   WHERE name={projectname}' );
-		$sql->setString( 'projectname',$this->name );
+		$sql = new Sql( <<<SQL
+ SELECT id,name FROM {t_node}
+				WHERE typ={type}
+				  AND name={name}
+		        ORDER BY lft
+SQL
+		);
+		$sql->setInt   ( 'type',NODE_TYPE_PROJECT);
+		$sql->setString( 'name',$this->name      );
 
 		$row = $db->getRow( $sql );
 

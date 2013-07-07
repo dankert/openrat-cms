@@ -55,7 +55,7 @@ class Model
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT 1 FROM {t_projectmodel} '.
+		$sql = new Sql('SELECT 1 FROM {t_node} '.
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 

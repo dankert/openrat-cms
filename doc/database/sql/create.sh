@@ -299,6 +299,18 @@ for	db in mysql postgresql oracle sqlite; do
     close_table
 
    
+	open_table file  
+	column node       INT
+	column extension  VARCHAR 10 
+	column size       INT     -  0
+	column width      INT - - Y
+	column height     INT - - Y
+	column value      BLOB
+	primary_key  node 
+	constraint  node node id  
+    close_table
+
+
     open_table link  
     column node          INT - - N
     column targetnode    INT - - N
@@ -390,7 +402,7 @@ for	db in mysql postgresql oracle sqlite; do
 	close_table
 	
 	
-	open_table element
+	open_table input
 	column      node             INT     -   - N
 	column      descr            VARCHAR 255
 	column      type             INT - - N
@@ -415,43 +427,18 @@ for	db in mysql postgresql oracle sqlite; do
     close_table
 
 
-	open_table file  
-	column node       INT
-	column extension  VARCHAR 10 
-	column size       INT     -  0
-	column width      INT - - Y
-	column height     INT - - Y
-	column value      BLOB
-	primary_key  node 
-	constraint  node node id  
+	open_table meta
+	column      type             INT     -   - N
+	column      input            INT     -   - N
+    primary_key type,input 
+    constraint  input input node  
     close_table
-
-	
-	open_table name
-	column node       INT - - N
-	column label      VARCHAR 255 - N
-	column descr      VARCHAR 255 - N
-	column variant    INT     -   0 N
-    primary_key node
-    constraint variant variant node  
-    close_table
- 
-
-
-
-
-	open_table attribute  
-	column      node           INT     -  - N
-	column      name           VARCHAR 255 - N 
-	column      value          VARCHAR 255 - N 
-    close_table
-	index node 
 
 
 	open_table value  
 	column      node              INT  - - N
 	column      variant           INT  - - Y
-	column      element           INT  - - N
+	column      input             INT  - - N
 	column      linknode          INT  - - J
 	column      text              TEXT - - J
 	column      number            INT  - - J
@@ -468,6 +455,37 @@ for	db in mysql postgresql oracle sqlite; do
 	index element 
 	index active 
 	index publish 
+
+
+	
+	open_table label
+	column node       INT - - N
+	column label      VARCHAR 255 - N
+	column descr      TEXT
+	column variant    INT     -   0 N
+    primary_key node
+    constraint variant variant node  
+    close_table
+ 
+
+
+	open_table docnode
+	column node       INT - - N
+	column variant    INT - - Y
+	column type       INT - - N
+	column value      TEXT
+    primary_key node
+    constraint variant variant node  
+    close_table
+ 
+
+
+	open_table attribute  
+	column      node           INT     -  - N
+	column      name           VARCHAR 255 - N 
+	column      value          VARCHAR 255 - N 
+    close_table
+	index node 
 
 
 	insert node "id,lft,rgt,typ,name" "1,1,4,1,'Root'"

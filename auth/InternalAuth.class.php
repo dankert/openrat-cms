@@ -22,14 +22,17 @@ class InternalAuth implements Auth
 		
 		// Lesen des Benutzers aus der DB-Tabelle
 		$sql = new Sql( <<<SQL
-SELECT * FROM {t_user}
- WHERE name={name}
+SELECT node.name as name, user.password as password FROM {t_node} AS node
+ LEFT JOIN {t_user} AS user
+        ON user.node=node.id
+ WHERE node.name={name} AND node.typ={type}
 SQL
 		);
 		$sql->setString('name',$username);
-	
+		$sql->setInt   ('type',NODE_TYPE_USER);
+		
 		$row_user = $db->getRow( $sql );
-
+		
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt
 		if   ( $row_user['password'] == $password )
 		{

@@ -113,24 +113,26 @@ class DB_mysqli
 		if	( $this->prepared )
 		{
 			$ar     = array();
-			$ar[-1] = $this->stmt;
-			$ar[0]  = '';
+			$ar[-1] = &$this->stmt;
+			$typen = '';
+			$ar[0]  = &$typen;
 			
 			foreach($this->params as $name => $data)
 			{
 				switch( $data['type'] )
 				{
 					case 'int':
-						$ar[0] .= 'i';
+						$typen .= 'i';
 						break;
 					case 'string':
-						$ar[0] .= 's';
+						$typen .= 's';
 						break;
 					default:
 						die('mysqli: unknown data type: '.$data['type']);
 				}
 				
-        		$ar[] = &$data['value'];
+				$val = $data['value'];
+        		$ar[] = &$val;
 			}
 		
 			call_user_func_array('mysqli_stmt_bind_param',$ar);
@@ -142,7 +144,7 @@ class DB_mysqli
 
 		if	( ! $result )
 		{
-			$this->error = 'Database error: '.mysql_error();
+			$this->error = 'Database error: '.mysqli_error($this->connection);
 			return FALSE;
 		}
 

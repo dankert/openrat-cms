@@ -1562,14 +1562,10 @@ SQL
 		$db = db_connection();
 		
 		$sql = new Sql( <<<SQL
-SELECT {t_object}.id
-  FROM {t_value} 
-  LEFT JOIN {t_page} 
-    ON {t_page}.id={t_value}.pageid 
-  LEFT JOIN {t_object} 
-    ON {t_object}.id={t_page}.objectid 
- WHERE {t_value}.lastchange_userid={userid}
- ORDER BY {t_value}.lastchange_date DESC
+SELECT id
+  FROM {t_node} 
+ WHERE lastmodified_user={userid}
+ ORDER BY lastmodified DESC
 SQL
 );
 		$sql->setInt   ( 'userid'    ,$userid           );

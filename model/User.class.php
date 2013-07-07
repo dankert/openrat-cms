@@ -229,7 +229,7 @@ SQL
 		$db = db_connection();
 
 		$sql = new Sql( 'SELECT * FROM {t_user}'.
-		                ' WHERE id={userid}' );
+		                ' WHERE node={userid}' );
 		$sql->setInt( 'userid',$this->userid );
 		$row = $db->getRow( $sql );
 
@@ -253,10 +253,13 @@ SQL
 		$db = db_connection();
 
 		// Benutzer �ber Namen suchen
-		$sql = new Sql( 'SELECT id FROM {t_user}'.
-		                ' WHERE name={name}' );
-		//Html::debug($sql);
-		$sql->setString( 'name',$name );
+		$sql = new Sql(<<<SQL
+SELECT id FROM {t_node}
+ WHERE typ={type} AND name={name}
+SQL
+);
+		$sql->setInt   ( 'type',NODE_TYPE_USER );
+		$sql->setString( 'name',$name          );
 		$userId = $db->getOne( $sql );
 
 		// Benutzer �ber Id instanziieren
@@ -283,11 +286,11 @@ SQL
 	{
 		global $conf;
 		
-		$this->userid   = $row['id'      ];
-		$this->name     = $row['name'    ];
+		$this->userid   = $row['node'      ];
+		$this->name     = $row['label'    ];
 		$this->style    = $row['style'   ];
-		$this->isAdmin  = ( $row['is_admin'] == '1');
-		$this->ldap_dn  = $row['ldap_dn' ];
+		$this->isAdmin  = false;
+		$this->ldap_dn  = $row['dn' ];
 		$this->fullname = $row['fullname'];
 		$this->tel      = $row['tel'     ];
 		$this->mail     = $row['mail'    ];
@@ -566,12 +569,11 @@ SQL
 		$db = db_connection();
 
 		$sql = new Sql( 'UPDATE {t_user} SET password={password}'.
-		                'WHERE id={userid}' );
+		                'WHERE node={userid}' );
 		                
 		if	( $always )
 			// Hashsumme für Kennwort erzeugen und speichern.
-			// Workaround: Hashsumme auf 50 Zeichen kürzen (da die DB-Spalte nicht länger ist)
-			$sql->setString('password',substr(Password::hash($this->pepperPassword($password)),0,50) );
+			$sql->setString('password',Password::hash($this->pepperPassword($password)) );
 		else
 			// Klartext-Kennwort, der Benutzer muss das Kennwort beim nä. Login ändern.
 			$sql->setString('password',$password);
@@ -593,9 +595,13 @@ SQL
 		{
 			$db = db_connection();
 	
-			$sql = new Sql( 'SELECT {t_group}.id,{t_group}.name FROM {t_group} '.
-			                'LEFT JOIN {t_usergroup} ON {t_usergroup}.groupid={t_group}.id '.
-			                'WHERE {t_usergroup}.userid={userid}' );
+
+			$sql = new Sql( <<<SQL
+ SELECT id,name FROM {t_node} WHERE id IN 
+   ( SELECT group from {t_usergroup} 
+     WHERE user={userid} )
+SQL
+);
 			$sql->setInt('userid',$this->userid );
 			$this->groups = $db->getAssoc( $sql );
 		}

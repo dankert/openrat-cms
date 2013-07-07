@@ -60,11 +60,7 @@ class Password
 		
 		elseif	( function_exists('crypt') )
 		{
-			// Workaround: Die Spalte 'password' ist z.Zt. nur 50 Stellen lang, daher
-			// wird der mit crypt() erzeugte Hash auf die Länge des gespeicherten Hashes
-			// gekürzt. Falls die Spalte später länger ist, wirkt automatisch die volle
-			// Hash-Länge.
-			return $hash == substr(crypt($password,$hash),0,strlen($hash));
+			return $hash == crypt($password,$hash);
 		}
 		else
 		{

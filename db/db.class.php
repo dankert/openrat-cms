@@ -197,6 +197,7 @@ class DB
 				$this->error = $this->client->error;
 				
 				Logger::warn('Database error: '.$this->error);
+				debug_print_backtrace();
 				Http::serverError('Database Error',$this->error);
 			}
 					
@@ -223,6 +224,7 @@ class DB
 				
 				if	( true )
 				{
+					debug_print_backtrace();
 					Logger::warn('Database error: '.$this->error);
 					Http::serverError('Database Error',$this->error);
 				}

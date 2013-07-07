@@ -71,8 +71,9 @@ function table_names( $dbid )
 	'folder',
 	'file',
 	'acl',
+	'node',
 	'object',
-	'name',
+	'label',
 	'link'
 	) as $tname )
 		$t['t_'.$tname] = $conf_db_prefix.$tname.$conf_db_suffix;
