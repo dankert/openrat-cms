@@ -23,60 +23,21 @@
  * @version $Revision$
  * @package openrat.actions
  */
-class UserlistAction extends NodeAction
+class DatabaseAction extends NodeAction
 {
 	public $security = SECURITY_ADMIN;
 	
-	function UserlistAction()
+	function DatabaseAction()
 	{
+		parent::NodeAction();
 	}
 
-
-	function showView()
-	{
-		$list = array();
-
-		foreach( User::getAllUsers() as $user )
-		{
-			$list[$user->userid]        = $user->getProperties();
-			$list[$user->userid]['id' ] = $user->userid;
-		}
-		$this->setTemplateVar('el',$list);
-	}	
-		
 
 	/**
-	 * Eigenschaften des Benutzers anzeigen
+	 * Eigenschaften anzeigen
 	 */
-	function editView()
-	{
-		$this->nextSubAction('show');
-	}
-
-
-	
-		function addView()
+	function infoView()
 	{
 	}
-	
-	
-	
-	function addPost()
-	{
-		if	( $this->getRequestVar('name') != '' )
-		{
-			$this->user = new User();
-			$this->user->add( $this->getRequestVar('name') );
-			$this->addNotice('user',$this->user->name,'ADDED','ok');
-		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('add');
-		}
-	}
-
-
-	
 				
 }

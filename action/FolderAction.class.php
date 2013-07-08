@@ -24,7 +24,7 @@
  * @package openrat.actions
  */
 
-class FolderAction extends ObjectAction
+class FolderAction extends NodeAction
 {
 	public $security = SECURITY_USER;
 	
@@ -1314,69 +1314,6 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar( 'full_filename',$this->folder->full_filename() );
 	}
 
-
-
-	/**
-	 * Liefert die Struktur zu diesem Ordner:
-	 * - Mit den übergeordneten Ordnern und
-	 * - den in diesem Ordner enthaltenen Objekten
-	 * 
-	 * Beispiel:
-	 * <pre>
-	 * - A
-	 *   - B
-	 *     - C (dieser Ordner)
-	 *       - Unterordner
-	 *       - Seite
-	 *       - Seite
-	 *       - Datei
-	 * </pre> 
-	 */
-	public function structureView()
-	{
-
-		$structure = array();
-		$tmp = &$structure;
-		$nr  = 0;
-		
-		$parents = $this->folder->parentObjectNames(false,true);
-		
-		foreach( $parents as $id=>$name)
-		{
-			//Html::debug($name,"Name");
-			
-			unset($children);
-			unset($o);
-			$children = array();
-			$o = array('id'=>$id,'name'=>$name,'type'=>'folder','level'=>++$nr,'children'=>&$children);
-			
-			if	( $id == $this->folder->objectid)
-				$o['self'] = true;
-				
-			$tmp[$id] = &$o;;
-			
-			unset($tmp);
-			
-			$tmp = &$children; 
-		}
-		
-		
-		$contents = $this->folder->getObjects();
-		
-		unset($children);
-		unset($o);
-		
-		$children = array(); 
-		foreach( $contents as $o )
-		{
-			$children[$o->objectid] = array('id'=>$o->objectid,'name'=>$o->name,'type'=>$o->getType());
-		}
-		$tmp+= $children;
-		
-		//Html::debug($structure);
-		
-		$this->setTemplateVar('outline',$structure);
-	}
 
 
 	public function pubView()

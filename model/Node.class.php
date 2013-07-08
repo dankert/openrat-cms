@@ -34,18 +34,14 @@ define('NODE_TYPE_COMMENT' ,15);
 define('NODE_TYPE_XMLNODE' ,16);
 define('NODE_TYPE_DOCNODE' ,17);
 define('NODE_TYPE_CONFIG'  ,18);
-
-$possibleChilds = array(
-	NODE_TYPE_ROOT    => array(NODE_TYPE_PROJECT),
-	NODE_TYPE_PROJECT => array(NODE_TYPE_FOLDER,NODE_TYPE_USER,NODE_TYPE_TEMPLATE),
-	NODE_TYPE_FOLDER  => array(NODE_TYPE_FOLDER,NODE_TYPE_FILE,NODE_TYPE_PAGE,NODE_TYPE_LINK,NODE_TYPE_URL)
-);
+define('NODE_TYPE_UNIT'    ,19);
+define('NODE_TYPE_FRAGMENT',20);
 
 /**
  * Abstrakte Darstellung eines Baumknotens.
  * 
  * @author Jan Dankert
- * @package openrat.objects
+ * @package openrat.model
  */
 class Node
 {
@@ -54,6 +50,20 @@ class Node
 	 * @type Integer
 	 */
 	var $id;
+	
+	/**
+	 * Linkswert.
+	 * 
+	 * @var Integer
+	 */
+	var $left;
+	
+	/**
+	 * Rechtswert.
+	 * 
+	 * @var Integer
+	 */
+	var $right;
 
 	/** eindeutige ID dieses Objektes
 	 * @type Integer
@@ -91,78 +101,30 @@ class Node
 	 */
 	var $createDate;
 
-	/** Zeitpunkt der letzten Aenderung. Die Variable beinhaltet den Unix-Timestamp.
-	 * @type Integer
-	 */
-	var $lastchangeDate;
-
 	/** Benutzer, welcher dieses Objekt erstellt hat.
 	 * @type Integer
 	 */
 	var $createUser;
+
+	/** Zeitpunkt der letzten Aenderung. Die Variable beinhaltet den Unix-Timestamp.
+	 * @type Integer
+	 */
+	var $lastchangeDate;
 
 	/** Benutzer, welcher dieses Objekt zuletzt geaendert hat.
 	 * @type Integer
 	 */
 	var $lastchangeUser;
 
-	/**
-	 * Kennzeichen, ob Objekt ein Ordner ist
-	 * @type Boolean
-	 */
-	var $isFolder = false;
-
-	/**
-	 * Kennzeichen, ob Objekt eine binaere Datei ist
-	 * @type Boolean
-	 */
-	var $isFile = false;
-
-	/**
-	 * Kennzeichen, ob Objekt eine Seite ist
-	 * @type Boolean
-	 */
-	var $isPage = false;
-
-	/**
-	 * Kennzeichen, ob Objekt eine Verknuepfung (Link) ist
-	 * @type Boolean
-	 */
-	var $isLink = false;
 
 	/**
 	 * Kennzeichnet den Typ dieses Objektes.
-	 * Muss den Inhalt OR_FILE, OR_FOLDER, OR_PAGE oder OR_LINK haben.
+	 * Der Inhalt entspricht einer der Konstanten NODE_TYPE_*.
 	 * Vorbelegung mit <code>null</code>.
 	 * @type Integer
 	 */
 	var $type = null;
 	
-	/** Kennzeichen ob Objekt den Wurzelordner des Projektes darstellt (parentid ist dann NULL)
-	 * @type Boolean
-	 */
-	var $isRoot = false;
-
-	/** Sprach-ID
-	 * @see Language
-	 * @type Integer
-	 */
-	var $languageid;
-	
-	/**
-	 * Projektmodell-ID
-	 * @see Projectmodel
-	 * @type Integer
-	 */
-	var $modelid;
-	
-	/**
-	 * Projekt-ID
-	 * @see Project
-	 * @type Integer
-	 */
-	var $projectid;
-
 	/**
 	 * Dateiname der temporaeren Datei
 	 * @type String
@@ -178,31 +140,98 @@ class Node
 	  *
 	  * @param Integer Objekt-ID (optional)
 	  */
-	function Object($objectid = '')
+	function Node( $id = '')
 	{
-		global $SESS;
-
-		if	( is_numeric($objectid) )
-		{
-			$this->objectid = $objectid;
-			$this->id       = $objectid;
-		}
-
-
-		$language = Session::getProjectLanguage();
-			if	( is_object($language) )
-		$this->languageid = $language->languageid;
-
-		$model = Session::getProjectModel();
-		if	( is_object($model) )
-			$this->modelid = $model->modelid;
-
-		$project = Session::getProject();
-		if	( is_object($project) )
-			$this->projectid = $project->projectid;
+		if	( is_numeric($id) )
+			$this->id = $id;
 	}
 
+	
+	public function getAllChildren()
+	{
+		$sql = new Sql( <<<SQL
+SELECT id,name FROM {t_node}
+ WHERE lft > {left} and rgt < {right}
+SQL
+		);
+		
+		$sql->setInt  ( 'left' ,$this->left  );
+		$sql->setInt  ( 'right',$this->right );
+		
+		$db = db_connection();
+		return $db->getAssoc($query);		
+	}
 
+	
+
+	/**
+	 * Ermittelt die direkten Unterknoten zu diesem Knoten.
+	 */
+	public function getChildren()
+	{
+		$sql = new Sql( <<<SQL
+SELECT child.id,child.name FROM {t_node} AS child
+  LEFT JOIN {t_node} AS ancestor
+		 ON ancestor.lft BETWEEN {left}+1 AND {right}-1
+		AND child.lft BETWEEN ancestor.lft+1 AND ancestor.rgt-1
+ WHERE child.lft BETWEEN {left}+1 AND {right}-1
+   AND ancestor.id IS NULL
+SQL
+		);
+		
+		$sql->setInt  ( 'left' ,$this->left  );
+		$sql->setInt  ( 'right',$this->right );
+		
+		$db = db_connection();
+		return $db->getAssoc($sql);		
+	}
+
+	
+
+	/**
+	 * Ermittelt den Pfad zu diesem Knoten.
+	 * 
+	 * @return Array
+	 */
+	public function getPath()
+	{
+		$sql = new Sql( <<<SQL
+SELECT id,name FROM {t_node}
+ WHERE lft < {left} and rgt > {right}
+ ORDER BY lft ASC
+SQL
+		);
+	
+		$sql->setInt  ( 'left' ,$this->left  );
+		$sql->setInt  ( 'right',$this->right );
+	
+		$db = db_connection();
+		return $db->getAssoc($query);
+	}
+
+	
+	/**
+	 * Ermittelt den direkten, übergeordneten Knoten.
+	 *
+	 * @return Array
+	 */
+	public function getParentId()
+	{
+		$sql = new Sql( <<<SQL
+SELECT id FROM {t_node}
+ WHERE lft < {left} and rgt > {right}
+ ORDER BY lft DESC
+SQL
+		);
+	
+		$sql->setInt  ( 'left' ,$this->left  );
+		$sql->setInt  ( 'right',$this->right );
+	
+		$db = db_connection();
+		return $db->getOne($query);
+	}
+	
+	
 	/**
 	 * Lesen aller Objekte aus dem aktuellen Projekt
 	 * @return Array Alle Objekt-IDs des aktuellen Projektes 
@@ -320,22 +349,46 @@ SQL
 
 
 	/**
-	  * Typ des Objektes ermitteln
+	  * Typ des Objektes ermitteln.
 	  *
-	  * @return String der Typ des Objektes entweder 'folder','file','page' oder 'link'
+	  * @return String der Typ des Knotens, z.B. 'folder','file','page' oder 'link'.
 	  */
-	function getType()
+	public function getType()
 	{
-		if ($this->isFolder)
-			return OR_TYPE_FOLDER;
-		if ($this->isFile)
-			return OR_TYPE_FILE;
-		if ($this->isPage)
-			return OR_TYPE_PAGE;
-		if ($this->isLink)
-			return OR_TYPE_LINK;
+		return $this->getTypeFromId( $this->type );
+	}
 
-		return 'unknown';
+
+	/**
+	  * Typ des Objektes ermitteln.
+	  *
+	  * @return String der Typ des Knotens, z.B. 'folder','file','page' oder 'link'.
+	  */
+	public static function getTypeFromId( $typeId )
+	{
+		switch( $typeId )
+		{
+			case NODE_TYPE_ROOT:      return 'database';
+			case NODE_TYPE_FOLDER:    return 'folder';
+			case NODE_TYPE_FILE:      return 'file';
+			case NODE_TYPE_LINK:      return 'link';
+			case NODE_TYPE_URL:       return 'url';
+			case NODE_TYPE_PAGE:      return 'page';
+			case NODE_TYPE_TEMPLATE:  return 'template';
+			case NODE_TYPE_ELEMENT:   return 'element';
+			case NODE_TYPE_PROJECT:   return 'project';
+			case NODE_TYPE_TARGET:    return 'target';
+			case NODE_TYPE_VALUE:     return 'value';
+			case NODE_TYPE_VARIANT:   return 'variant';
+			case NODE_TYPE_USER:      return 'user';
+			case NODE_TYPE_GROUP:     return 'group';
+			case NODE_TYPE_COMMENT:   return 'comment';
+			case NODE_TYPE_XMLNODE:   return 'xmlnode';
+			case NODE_TYPE_DOCNODE:   return 'docnode';
+			case NODE_TYPE_CONFIG:    return 'config';
+			case NODE_TYPE_UNIT:      return 'unit';
+			default:                  return 'unknown_'.$this->type;
+		}
 	}
 
 
@@ -494,36 +547,25 @@ SQL
 	 * - die sprachunabh?ngigen Daten wie Dateiname, Typ sowie Erstellungs- und ?nderungsdatum geladen 
 	 * - die sprachabh?ngigen Daten wie Name und Beschreibung geladen
 	 */
-	function objectLoad()
+	function nodeLoad()
 	{
 		global $SESS;
 		$db = db_connection();
-
-		$sql = new Sql('SELECT {t_object}.*,' .
-		               '       {t_name}.name,{t_name}.descr,'.
-		               '       lastchangeuser.name     as lastchange_username,     '.
-		               '       lastchangeuser.fullname as lastchange_userfullname, '.
-		               '       lastchangeuser.mail     as lastchange_usermail,     '.
-		               '       createuser.name         as create_username,     '.
-		               '       createuser.fullname     as create_userfullname, '.
-		               '       createuser.mail         as create_usermail      '.
-		               ' FROM {t_object}'.
-		               ' LEFT JOIN {t_name} '.
-		               '        ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
-		               ' LEFT JOIN {t_user} as lastchangeuser '.
-		               '        ON {t_object}.lastchange_userid=lastchangeuser.id '.
-		               ' LEFT JOIN {t_user} as createuser '.
-		               '        ON {t_object}.create_userid=createuser.id '.
-		               ' WHERE {t_object}.id={objectid}');
-		$sql->setInt('languageid', $this->languageid);
-		$sql->setInt('objectid'  , $this->objectid  );
-
+		
+		$sql = new Sql( <<<SQL
+SELECT * FROM {t_node}
+ WHERE id={id}
+SQL
+				);
+		$sql->setInt('id', $this->id);
+		
 		$row = $db->getRow($sql);
 		
 		if (count($row) == 0)
 			throw new ObjectNotFoundException('object '.$this->objectid.' not found');
-			
+		
 		$this->setDatabaseRow( $row );
+		
 	}
 
 
@@ -579,20 +621,19 @@ SQL
 		if	( count($row)==0 )
 			die('setDatabaseRow() got empty array, oid='.$this->objectid);
 
-		$this->parentid  = $row['parentid' ];
-		$this->projectid = $row['projectid'];
-		$this->filename  = $row['filename' ];
-		$this->orderid   = $row['orderid'  ];
+		$this->id    = $row['id'  ];
+		$this->name  = $row['name'];
+		$this->left  = $row['lft' ];
+		$this->right = $row['rgt' ];
+		$this->type  = $row['typ' ];
 		
-		if	( intval($this->parentid) == 0 )
-			$this->isRoot = true;
-		else	$this->isRoot = false;
+		$this->isRoot = intval($this->left) == 1;
 
-		$this->createDate     = $row['create_date'    ];
-		$this->lastchangeDate = $row['lastchange_date'];
+		$this->createDate     = $row['creation'      ];
+		$this->lastchangeDate = $row['lastmodified'];
 
 		$this->createUser = new User();
-		$this->createUser->userid       = $row['create_userid'          ];
+		$this->createUser->userid       = $row['creation_user'          ];
 		if	( !empty($row['create_username']) )
 		{
 			$this->createUser->name         = $row['create_username'        ];
@@ -601,7 +642,7 @@ SQL
 		}
 
 		$this->lastchangeUser = new User();
-		$this->lastchangeUser->userid   = $row['lastchange_userid'      ];
+		$this->lastchangeUser->userid   = $row['lastmodified_user' ];
 		
 		if	( !empty($row['lastchange_username']) )
 		{
@@ -610,24 +651,19 @@ SQL
 			$this->lastchangeUser->mail     = $row['lastchange_usermail'    ];
 		}
 
-		$this->isFolder = ( $row['is_folder'] == '1' );
-		$this->isFile   = ( $row['is_file'  ] == '1' );
-		$this->isPage   = ( $row['is_page'  ] == '1' );
-		$this->isLink   = ( $row['is_link'  ] == '1' );
-
-		if	( $this->isRoot )
-		{
-			$project = Session::getProject();
-			$this->name        = $project->name;
-			$this->desc        = '';
-			$this->description = '';
-		}
-		else
-		{
-			$this->name        = $row['name' ];
-			$this->desc        = $row['descr'];
-			$this->description = $row['descr'];
-		}
+// 		if	( $this->isRoot )
+// 		{
+// 			$project = Session::getProject();
+// 			$this->name        = $project->name;
+// 			$this->desc        = '';
+// 			$this->description = '';
+// 		}
+// 		else
+// 		{
+// 			$this->name        = $row['name' ];
+// 			$this->desc        = $row['descr'];
+// 			$this->description = $row['descr'];
+// 		}
 
 		$this->checkName();
 	}
@@ -640,7 +676,7 @@ SQL
 	 */
 	function load()
 	{
-		$this->objectLoad();
+		$this->nodeLoad();
 	}
 
 	/**
@@ -1322,21 +1358,97 @@ SQL
 	  * @param Integer Objekt-ID
 	  * @return Boolean
 	  */
-	function isObjectId( $id )
+	public static function nodeExists( $id )
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT id FROM {t_object} '.
-		                ' WHERE id={objectid}'.
-		                '   AND projectid={projectid}' );
-		$sql->setInt   ( 'projectid' ,$this->projectid );
-		$sql->setInt   ( 'objectid'  ,$id              );
+		$sql = new Sql( <<<SQL
+SELECT id FROM {t_node}
+ WHERE id={id}
+SQL
+		);
+		$sql->setInt( 'id'  ,$id );
 
 		return ($db->getOne($sql) == intval($id) );
 	}
 
 
+	
+	/**
+	 * Ermittelt die Id des Root-Knotens.
+	 * @return Integer
+	 */
+	public static function getRootNodeId()
+	{
+		$db = db_connection();
+		
+		$sql = new Sql( <<<SQL
+SELECT id FROM {t_node}
+ WHERE lft=1
+SQL
+		);
+		
+		return $db->getOne( $sql );
+	}
 
+	
+	/**
+	 * Legt fest, zu welchen Knoten es welche Unterknoten geben darf.
+	 * @return multitype:string |multitype:
+	 */
+	public function getPossibleChildTypeIds()
+	{
+		switch( $this->type )
+		{
+			case NODE_TYPE_ROOT:      return array(NODE_TYPE_COMMENT,NODE_TYPE_PROJECT,NODE_TYPE_UNIT,NODE_TYPE_USER,NODE_TYPE_GROUP);
+			case NODE_TYPE_FOLDER:    return array(NODE_TYPE_COMMENT,NODE_TYPE_FOLDER,NODE_TYPE_FILE,NODE_TYPE_PAGE,NODE_TYPE_LINK,NODE_TYPE_URL);
+			case NODE_TYPE_FILE:      return array();
+			case NODE_TYPE_LINK:      return array();
+			case NODE_TYPE_URL:       return array();
+			case NODE_TYPE_PAGE:      return array();
+			case NODE_TYPE_TEMPLATE:  return array(NODE_TYPE_COMMENT,NODE_TYPE_XMLNODE,NODE_TYPE_ELEMENT);
+			case NODE_TYPE_ELEMENT:   return array();
+			case NODE_TYPE_PROJECT:   return array(NODE_TYPE_COMMENT,NODE_TYPE_FOLDER,NODE_TYPE_USER,NODE_TYPE_GROUP,NODE_TYPE_TEMPLATE,NODE_TYPE_CONFIG);
+			case NODE_TYPE_TARGET:    return array();
+			case NODE_TYPE_VALUE:     return array(NODE_TYPE_DOCNODE,NODE_TYPE_FRAGMENT);
+			case NODE_TYPE_VARIANT:   return array();
+			case NODE_TYPE_USER:      return array();
+			case NODE_TYPE_GROUP:     return array();
+			case NODE_TYPE_COMMENT:   return array();
+			case NODE_TYPE_XMLNODE:   return array(NODE_TYPE_XMLNODE,NODE_TYPE_COMMENT);
+			case NODE_TYPE_DOCNODE:   return array(NODE_TYPE_DOCNODE,NODE_TYPE_COMMENT);
+			case NODE_TYPE_CONFIG:    return array();
+			case NODE_TYPE_UNIT:      return array(NODE_TYPE_PROJECT,NODE_TYPE_USER,NODE_TYPE_GROUP);
+			case NODE_TYPE_FRAGMENT:  return array(NODE_TYPE_VALUE);
+				
+			default:                  return array();
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * @return multitype:string
+	 */
+	public function getPossibleChildTypes()
+	{
+		$typeNames = array();
+		foreach( $this->getPossibleChildTypeIds() as $typeId )
+		{
+			$typeNames[$typeId] = $this->getTypeFromId($typeId);
+		}
+		return $typeNames;
+	}
+	
+	
+	
+	public function addChild( $childNode )
+	{
+		$db = db_connection();
+		$sql = new Sql('SELECT MAX(id) FROM {t_node}');
+		$newid = intval($db->getOne($sql))+1;
+		
+	}
 }
 
 ?>

@@ -24,7 +24,7 @@
  * @version: $Revision$
  * @package openrat.objects
  */ 
-class Template
+class Template extends Node
 {
 	/**
 	 * ID dieses Templates

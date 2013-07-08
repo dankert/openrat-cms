@@ -1,11 +1,11 @@
 <?php
 
 // Diese Objekte stehen zeitweise in der Sitzung, daher muessen dieser immer geparst werden.
+require_once( OR_OBJECTCLASSES_DIR."Node.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Value.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Acl.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Template.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Object.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Node.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Folder.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Link.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."File.class.".PHP_EXT );

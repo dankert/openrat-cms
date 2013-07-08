@@ -28,7 +28,7 @@ define('VARIANT_TYPE_OUTPUT'  ,2);
  * @author $Author$
  * @package openrat.objects
  */
-class Variant
+class Variant extends Node
 {
 	var $languageid = 0;
 	var $error      = '';
@@ -40,7 +40,7 @@ class Variant
 
 
 	// Konstruktor
-	function Language( $languageid='' )
+	function Variant( $languageid='' )
 	{
 		global $SESS;
 

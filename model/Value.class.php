@@ -26,7 +26,7 @@
  * @package openrat.objects
  */
 
-class Value
+class Value extends Node
 {
 	/**
 	 * ID dieser Inhaltes

@@ -24,7 +24,7 @@
  * @package openrat.objects
  */
 
-class Page extends Object
+class Page extends Node
 {
 	var $enclosingObjectId = -1;    //Id der Seite in die diese Seite im Rahmen der Generierung eingefügt wird
 						     //Wichtig für include-Values

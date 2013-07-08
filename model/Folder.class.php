@@ -24,7 +24,7 @@
  * @author $Author$
  * @package openrat.objects
  */
-class Folder extends Object
+class Folder extends Node
 {
 	var $folderid;
 	var $projectid;

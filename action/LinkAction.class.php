@@ -23,7 +23,7 @@
  * @author $Author$
  * @package openrat.actions
  */
-class LinkAction extends ObjectAction
+class LinkAction extends NodeAction
 {
 	public $security = SECURITY_USER;
 	

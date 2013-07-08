@@ -58,6 +58,8 @@ class Action
 	var $actionConfig;
 	var $refresh;
 	
+	var $viewName;
+	
 	/**
 	 * Aktuell angemeldeter Benutzer.<br>
 	 * Wird ind er Funktion "init()" gesetzt.
@@ -439,6 +441,9 @@ class Action
 		if	(isset($this->actionConfig[$this->subActionName]['alias']))
 			$tplName = (method_exists(new ObjectAction(),$this->subActionName)?'object':$this->actionName).'/'.$this->actionConfig[$this->subActionName]['alias'];
 			
+		if	( $this->viewName != null)
+			$tplName = $this->viewName;
+		
 // 		if	(isset($this->actionConfig[$this->subActionName]['target']))
 // 			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
 // 		else
@@ -789,8 +794,14 @@ class Action
 	 */
 	protected function setPerspective( $name )
 	{
+		$name = 'normal';  // Nur noch 1 Perspektive ab Version 1.2
 		Session::set('perspective',$name);
 		$this->refresh();
+	}
+	
+	protected function setView( $viewName )
+	{
+		$this->viewName = $viewName;
 	}
 }
 

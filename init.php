@@ -24,7 +24,7 @@ define('IMG_EXT'         ,'.gif'   );
 define('IMG_ICON_EXT'    ,'.png'   );
 define('MAX_FOLDER_DEPTH',5        );
 
-define('OR_VERSION'      ,'1.1-snapshot'  );
+define('OR_VERSION'      ,'1.2-snapshot'  );
 define('OR_TITLE'        ,'OpenRat CMS');
 
 define('OR_TYPE_PAGE'  ,'page'  );

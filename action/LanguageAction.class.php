@@ -23,7 +23,7 @@
  * @author  $Author$
  * @package openrat.actions
  */
-class LanguageAction extends Action
+class LanguageAction extends NodeAction
 {
 	public $security = SECURITY_USER;
 	

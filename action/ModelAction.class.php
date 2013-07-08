@@ -23,7 +23,7 @@
  * @version $Revision$
  * @package openrat.actions
  */
-class ModelAction extends Action
+class ModelAction extends NodeAction
 {
 	public $security = SECURITY_USER;
 	

@@ -23,7 +23,7 @@
  * @version $Revision$
  * @package openrat.actions
  */
-class UserAction extends Action
+class UserAction extends NodeAction
 {
 	public $security = SECURITY_ADMIN;
 	

@@ -26,15 +26,11 @@
  * @author $Author$
  * @package openrat.objects
  */
-class Link extends Node
+class Url extends Node
 {
-	var $linkid;
-	var $linkedObjectId = 0;
 	var $url            = '';
-	var $isLinkToUrl    = false;
-	var $isLinkToObject = false;
 
-	function Link( $objectid='' )
+	function Url( $objectid='' )
 	{
 		$this->Object( $objectid );
 		$this->isLink = true;

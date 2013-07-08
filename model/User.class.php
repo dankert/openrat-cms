@@ -25,7 +25,7 @@
  * @author $Author$
  * @package openrat.objects
  */
-class User
+class User extends Node
 {
 	var $userid   = 0;
 	var $error    = '';

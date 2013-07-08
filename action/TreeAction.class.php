@@ -262,41 +262,67 @@ class TreeAction extends Action
 	 */
 	public function loadBranchView()
 	{
-		$project   = Session::getProject();
-		$projectid = $project->projectid;
+// 		$project   = Session::getProject();
+// 		$projectid = $project->projectid;
 		
-		Logger::debug( "Initializing Tree for Project ".$projectid);
+// 		Logger::debug( "Initializing Tree for Project ".$projectid);
 		
-		if	( $projectid == -1 )
-		{
-			$tree = new AdministrationTree();
-		}
-		else
-		{
-			$tree = new ProjectTree();
-			$tree->projectId = $projectid;
-		}
+// 		if	( $projectid == -1 )
+// 		{
+// 			$tree = new AdministrationTree();
+// 		}
+// 		else
+// 		{
+// 			$tree = new ProjectTree();
+// 			$tree->projectId = $projectid;
+// 		}
 		
 		
 		$type = $this->getRequestVar('type');
 		
-		$tree->tempElements = array();
-		
-		if	( intval($this->getRequestVar('id')) != 0 )
-			$tree->$type( $this->getRequestId() );
-		else
-			$tree->$type();
-			
-		$branch = array();
-		foreach( $tree->tempElements as $element )
-		{
-			$branch[] = get_object_vars($element);
-		}
+		$branch = $this->readBranch($this->getRequestId());
 		
 		$this->setTemplateVar( 'branch',$branch ); 
 	}
-	
 
+	
+	/*
+	 * 
+	 */
+	private function readBranch( $id)
+	{
+		if	( $id == 0 )
+		{
+			$childrenIds = array( Node::getRootNodeId() );
+		}
+		else
+		{
+			$node = new Node( $id );
+			$node->load();
+			$childrenIds = array_keys( $node->getChildren() );
+		}
+		
+		$branch = array();
+		foreach( $childrenIds as $childId )
+		{
+			$node = new Node( $childId );
+			$node->load();
+			$branch[] = array(
+				'id'     => $node->id,
+				'text'   => $node->name,
+				'type'   => $node->getType(),
+				'internalId' => $node->id,
+				'action' => $node->getType(),
+				'icon'   => $node->getType(),
+				'description' => 'GLOBAL_NO_DESCRIPTION_AVAILABLE',
+				'target' => 'content'
+			);
+		}
+		return $branch;
+	}
+
+	
+	
 	/**
 	 * Inhalt des Projektes anzeigen.
 	 */

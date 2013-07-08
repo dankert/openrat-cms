@@ -24,7 +24,7 @@
  * @version $Revision$
  * @package openrat.actions
  */
-class ProfileAction extends Action
+class ProfileAction extends NodeAction
 {
 	public $security = SECURITY_USER;
 	

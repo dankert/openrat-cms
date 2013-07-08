@@ -23,7 +23,7 @@
  * @package openrat.actions
  */
 
-class TemplatelistAction extends Action
+class TemplatelistAction extends NodeAction
 {
 	public $security = SECURITY_USER;
 	

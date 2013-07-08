@@ -21,7 +21,7 @@
  * @author Jan Dankert
  * @package openrat.actions
  */
-class ElementAction extends Action
+class ElementAction extends NodeAction
 {
 	public $security = SECURITY_USER;
 	

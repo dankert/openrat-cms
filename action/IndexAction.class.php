@@ -33,7 +33,7 @@ class IndexAction extends Action
 	 */
 	function IndexAction()
 	{
-		$this->perspective = Session::get('perspective');
+ 		$this->perspective = Session::get('perspective');
 	}
 
 

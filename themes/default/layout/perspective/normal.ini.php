@@ -19,11 +19,11 @@ action=
 
 title=
 default=prop
-views=prop,pub
+views=login:login,login:openid,login:register,prop,pub
 
 [bottom]
 
 title=
 default=structure
-views=structure,info,preview,progress,console,search,archive,rights
+views=structure,children,info,preview,progress,console,search,archive,rights
 

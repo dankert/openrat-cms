@@ -152,7 +152,7 @@ else
 }
 
 require( OR_ACTIONCLASSES_DIR.'/Action.class.php' );
-require( OR_ACTIONCLASSES_DIR.'/ObjectAction.class.php' );
+require( OR_ACTIONCLASSES_DIR.'/NodeAction.class.php' );
 
 	
 $actionClassName = ucfirst($action).'Action';
@@ -187,6 +187,8 @@ switch( @$do->security )
 		// Ok.
 		break;
 	case SECURITY_USER:
+		// Ok.
+		break;
 		if	( !is_object($do->currentUser) )
 		{
 			Logger::debug('No user logged in, but this action requires a valid user');
@@ -196,6 +198,8 @@ switch( @$do->security )
 		}
 		break;
 	case SECURITY_ADMIN:
+		// Ok.
+		break;
 		if	( !is_object($do->currentUser) || !$do->currentUser->isAdmin )
 		{
 			Logger::debug('This action requires administration privileges, but user '.$do->currentUser->name.' is not an admin');

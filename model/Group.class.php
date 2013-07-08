@@ -25,7 +25,7 @@
  * @author $Author$
  * @package openrat.objects
  */
-class Group
+class Group extends Node
 {
 	var $groupid   = 0;
 	var $error    = '';

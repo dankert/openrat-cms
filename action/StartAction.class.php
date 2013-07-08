@@ -26,7 +26,7 @@ if	( !defined('PROJECTID_ADMIN') )
  * @package openrat.actions
  */
 
-class StartAction extends Action
+class StartAction extends NodeAction
 {
 	public $security = SECURITY_USER;
 	

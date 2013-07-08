@@ -1,0 +1,33 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header></header>
+	<form label="message:global_add">
+
+		<part class="line">
+			<part class="label">
+				<label for="name" key="global_name" />
+			</part>
+			<part class="input">
+				<input name="name" class="name,focus"></input>
+			</part>
+		</part>
+		<part class="line">
+			<part class="label">
+				<label for="type" key="global_type" />
+			</part>
+			<part class="input">
+				<selectbox name="type" list="childTypes" />
+			</part>
+		</part>
+	</form>
+
+	<table>
+		<list list="children" extract="true">
+			<row>
+				<column>>
+					<text var="name"></text>
+				</column>
+			</row>
+		</list>
+	</table>
+</output>

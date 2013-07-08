@@ -24,7 +24,7 @@
  * @author $Author$
  * @package openrat.objects
  */
-class Language
+class Language extends Node
 {
 	var $languageid = 0;
 	var $error      = '';

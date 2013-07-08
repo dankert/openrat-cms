@@ -25,7 +25,7 @@
  * @package openrat.actions
  */
 
-class GrouplistAction extends Action
+class GrouplistAction extends NodeAction
 {
 	public $security = SECURITY_ADMIN;
 	

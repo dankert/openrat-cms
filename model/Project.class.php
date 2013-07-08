@@ -24,7 +24,7 @@
  * @author $Author$
  * @package openrat.objects
  */
-class Project
+class Project extends Node
 {
 	// Eigenschaften
 	var $projectid;
