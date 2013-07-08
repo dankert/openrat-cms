@@ -34,7 +34,8 @@ class ProjectAction extends NodeAction
 	function ProjectAction()
 	{
 		$this->project = new Project( $this->getRequestId() );
-		$this->project->load();
+// 		$this->project->load(); TODO
+		parent::NodeAction();
 	}
 
 

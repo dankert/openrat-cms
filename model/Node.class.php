@@ -629,8 +629,8 @@ SQL
 		
 		$this->isRoot = intval($this->left) == 1;
 
-		$this->createDate     = $row['creation'      ];
-		$this->lastchangeDate = $row['lastmodified'];
+		$this->createDate     = strtotime( $row['creation'    ] );
+		$this->lastchangeDate = strtotime( $row['lastmodified'] );
 
 		$this->createUser = new User();
 		$this->createUser->userid       = $row['creation_user'          ];
@@ -761,7 +761,90 @@ SQL
 	}
 
 
+	
+	
+	function save()
+	{
+		$this->nodeSave();
+	}
+	
+	
+	/**
+	 * Eigenschaften des Objektes in Datenbank speichern
+	 */
+	function nodeSave()
+	{
+		$db = db_connection();
+	
+// 		$this->checkFilename(); // TODO!
+	
+		$sql = new Sql( <<<SQL
+UPDATE {t_node} SET
+                id   = {id},
+		        typ  = {type} ,
+		        name = {name} ,
+				lft  = {left} ,
+				rgt  = {right},
+    lastmodified      = {lastmodified},
+    lastmodified_user = {lastmodified_user}
+ WHERE id={id}
+SQL
+		);
+	
+		$user = Session::getUser();
+		$this->lastchangeUser = $user;
+		$this->lastchangeDate = now();
 
+		$sql->setInt   ('id'   ,$this->id    );
+		$sql->setInt   ('type' ,$this->type  );
+		$sql->setString('name' ,$this->name  );
+		$sql->setInt   ('left' ,$this->left  );
+		$sql->setInt   ('right',$this->right );
+		
+		$sql->setDate  ('lastmodified'     ,$this->lastchangeDate          );
+		$sql->setInt   ('lastmodified_user',$this->lastchangeUser->userid  );
+	
+		$db->query( $sql );
+	
+	}	
+
+	
+	
+	/**
+	 * Eigenschaften des Objektes in Datenbank speichern
+	 */
+	function add()
+	{
+		$db = db_connection();
+	
+		// 		$this->checkFilename(); // TODO!
+	
+		$sql = new Sql( <<<SQL
+INSERT INTO {t_node} ( id  ,typ    ,name   ,lft    ,rgt    ,lastmodified  ,lastmodified_user  ,creation  ,creation_user  )
+	           VALUES( {id},{type} ,{name} ,{left} ,{right},{lastmodified},{lastmodified_user},{creation},{creation_user});
+SQL
+		);
+	
+		$user = Session::getUser();
+		$this->lastchangeUser = $user;
+		$this->lastchangeDate = now();
+	
+		$sql->setInt   ('id'   ,$this->id    );
+		$sql->setInt   ('type' ,$this->type  );
+		$sql->setString('name' ,$this->name  );
+		$sql->setInt   ('left' ,$this->left  );
+		$sql->setInt   ('right',$this->right );
+	
+		$sql->setDate  ('lastmodified'     ,$this->lastchangeDate          );
+		$sql->setInt   ('lastmodified_user',$this->lastchangeUser->userid  );
+		$sql->setDate  ('creation'     ,$this->createDate );
+		$sql->setInt   ('creation_user',$this->createUser->userid );
+	
+	
+		$db->query( $sql );
+	
+	}
+	
 	/**
 	 * Aenderungsdatum auf Systemzeit setzen
 	 */
@@ -1441,13 +1524,46 @@ SQL
 	}
 	
 	
-	
-	public function addChild( $childNode )
+	/**
+	 * Es wird ein neuer Unterknoten in diesen Knoten eingefügt. Der neue Kindknoten hat anschließend (noch) keine Kinder.
+	 * @param Node $childNode
+	 */
+	public function addNewChild( $childNode )
 	{
-		$db = db_connection();
-		$sql = new Sql('SELECT MAX(id) FROM {t_node}');
-		$newid = intval($db->getOne($sql))+1;
+		$user = Session::getUser();
+		$childNode->createUser = $user;
+		$childNode->createDate = time();
 		
+		$db = db_connection();
+		$sql = new Sql(<<<SQL
+ SELECT MAX(id)
+   FROM {t_node}
+SQL
+);
+		$childNode->id = intval($db->getOne($sql))+1;
+
+		// Rechtswerte erhöhen, um Platz zu schaffen
+		$sql = new Sql( <<<SQL
+UPDATE {t_node} SET RGT=RGT+2 WHERE RGT >= {right}
+SQL
+);
+		$sql->setInt('right', $this->right);
+		$db->query($sql);
+			
+		// Und auch noch die Linkswerte.
+		$sql = new Sql( <<<SQL
+UPDATE {t_node} SET LFT=LFT+2 WHERE LFT >= {right}
+SQL
+);
+		$sql->setInt('right', $this->right);
+		$db->query($sql);
+				
+		$this->load(); // Nochmal laden, damit der neue Rechts-Wert geladen wird.
+		
+		// Jetzt ist Platz für den neuen Knoten.
+		$childNode->left  = $this->right-2;
+		$childNode->right = $this->right-1;
+		$childNode->add();
 	}
 }
 

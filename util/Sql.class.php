@@ -268,6 +268,19 @@ class Sql
 	
 	
 	/**
+	 * Setzt ein Datum als Parameter.<br>
+	 * 
+	 * @param name Name des Parameters
+	 * @param value Datum
+	 */
+	function setDate( $name,$value )
+	{
+		$this->data[ $name ] = array( 'type'=>'string','value'=>date('Y-m-d H:i:s',intval($value)) );
+	}
+	
+	
+	
+	/**
 	 * Setzt einen bool'schen Wert als Parameter.<br>
 	 * Ist der Parameterwert wahr, dann wird eine 1 gesetzt. Sonst 0.<br>
 	 * 

@@ -348,7 +348,9 @@ class NodeAction extends Action
 		$newNode->name = parent::getRequestVar('name', OR_FILTER_ALPHANUM);
 		$newNode->type = parent::getRequestVar('type', OR_FILTER_NUMBER  );
 		
-		$node->addChild( $newNode );
+		$node->addNewChild( $newNode );
+		
+		parent::addNotice($newNode->getType(),$newNode->name,'ADDED');
 	}
 	
 	
