@@ -60,10 +60,14 @@ class User extends Node
 		global $conf;
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id,name '.
-		                '  FROM {t_user}'.
-		                '  ORDER BY name' );
-
+		$sql = new Sql( <<<SQL
+				SELECT id,name
+		                FROM {t_node}
+				WHERE typ={usertype}
+		                ORDER BY name
+SQL
+				);
+		$sql->setInt('usertype', NODE_TYPE_USER);
 		return $db->getAssoc( $sql );
 	}
 
@@ -451,7 +455,8 @@ SQL
 		$db = db_connection();
 
 		$groupNames = "'".implode("','",$groupNames)."'";
-		$sql = new Sql("SELECT id FROM {t_group} WHERE name IN($groupNames)");
+		$sql = new Sql("SELECT id FROM {t_node} WHERE typ={grouptype} AND name IN($groupNames)");
+		$sql->setInt('grouptype', NODE_TYPE_GROUP);
 		$groupIds = array_unique( $db->getCol($sql) );
 		
 		// Wir brauchen hier nicht weiter pr�fen, ob der Benutzer eine Gruppe schon hat, denn
@@ -479,43 +484,43 @@ SQL
 		$db = db_connection();
 
 		// "Erzeugt von" f�r diesen Benutzer entfernen.
-		$sql = new Sql( 'UPDATE {t_object} '.
-		                'SET create_userid=null '.
-		                'WHERE create_userid={userid}' );
+		$sql = new Sql( 'UPDATE {t_node} '.
+		                'SET creation_user=null '.
+		                'WHERE creation_user={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql );
 
 		// "Letzte �nderung von" f�r diesen Benutzer entfernen
-		$sql = new Sql( 'UPDATE {t_object} '.
-		                'SET lastchange_userid=null '.
-		                'WHERE lastchange_userid={userid}' );
-		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql );
-
-		// Alle Archivdaten in Dateien mit diesem Benutzer entfernen
-		$sql = new Sql( 'UPDATE {t_value} '.
-		                'SET lastchange_userid=null '.
-		                'WHERE lastchange_userid={userid}' );
+		$sql = new Sql( 'UPDATE {t_node} '.
+		                'SET lastmodified_user=null '.
+		                'WHERE lastmodified_user={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql );
 
 		// Alle Berechtigungen dieses Benutzers l?schen
 		$sql = new Sql( 'DELETE FROM {t_acl} '.
-		                'WHERE userid={userid}' );
+		                'WHERE user={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql );
 
 		// Alle Gruppenzugehoerigkeiten dieses Benutzers l?schen
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
-		                'WHERE userid={userid}' );
+		                'WHERE user={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql );
 
 		// Benutzer loeschen
 		$sql = new Sql( 'DELETE FROM {t_user} '.
-		                'WHERE id={userid}' );
+		                'WHERE node={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$db->query( $sql );
+		
+		// Benutzer loeschen
+		$sql = new Sql( 'DELETE FROM {t_node} '.
+				'WHERE id={userid}' );
+		$sql->setInt   ('userid',$this->userid );
+		$db->query( $sql );
+		
 	}
 
 
@@ -597,11 +602,13 @@ SQL
 	
 
 			$sql = new Sql( <<<SQL
- SELECT id,name FROM {t_node} WHERE id IN 
-   ( SELECT group from {t_usergroup} 
+ SELECT id,name FROM {t_node} WHERE typ={grouptype}
+	AND id IN
+   ( SELECT grp from {t_usergroup} 
      WHERE user={userid} )
 SQL
 );
+			$sql->setInt('grouptype',NODE_TYPE_GROUP );
 			$sql->setInt('userid',$this->userid );
 			$this->groups = $db->getAssoc( $sql );
 		}
@@ -651,13 +658,12 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT MAX(id) FROM {t_usergroup}');
-		$usergroupid = intval($db->getOne($sql))+1;
+// 		$sql = new Sql('SELECT MAX(id) FROM {t_usergroup}');
+// 		$usergroupid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql( 'INSERT INTO {t_usergroup} '.
-		                '       (id,userid,groupid) '.
-		                '       VALUES( {usergroupid},{userid},{groupid} )' );
-		$sql->setInt('usergroupid',$usergroupid  );
+		                '       (user,grp) '.
+		                '       VALUES( {userid},{groupid} )' );
 		$sql->setInt('userid'     ,$this->userid );
 		$sql->setInt('groupid'    ,$groupid      );
 
@@ -677,7 +683,7 @@ SQL
 		$db = db_connection();
 
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
-		                '  WHERE userid={userid} AND groupid={groupid}' );
+		                '  WHERE user={userid} AND grp={groupid}' );
 		$sql->setInt   ('userid'  ,$this->userid );
 		$sql->setInt   ('groupid' ,$groupid      );
 

@@ -31,6 +31,7 @@ define('ACL_CREATE_LINK'  ,256 );
 define('ACL_CREATE_PAGE'  ,512 );
 define('ACL_GRANT'        ,1024);
 define('ACL_TRANSMIT'     ,2048);
+define('ACL_ALL'          ,4095);
 
 
 

@@ -142,10 +142,10 @@ class NodeAction extends Action
 	function rightsView()
 	{
 		$this->actionName = 'object';
-		$o = new Object( $this->getRequestId() );
-		$o->objectLoadRaw();
-		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
-		$this->setTemplateVar( 'type',$o->getType() );
+		$n = new Node( $this->getRequestId() );
+		$n->load();
+		$this->setTemplateVar( 'show',$n->getRelatedAclTypes() );
+		$this->setTemplateVar( 'type',$n->getType() );
 		
 		$acllist = array();
 
@@ -159,7 +159,7 @@ class NodeAction extends Action
 		}
 		*/
 
-		foreach( $o->getAllAclIds() as $aclid )
+		foreach( $n->getAllAclIds() as $aclid )
 		{
 			$acl = new Acl( $aclid );
 			$acl->load();

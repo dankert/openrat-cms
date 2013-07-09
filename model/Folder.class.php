@@ -39,171 +39,72 @@ class Folder extends Node
 
 	function Folder( $objectid='' )
 	{
-		$this->Object( $objectid );
-		$this->isFolder = true;
+		$this->Node( $objectid );
 	}
 
 
+	/**
+	 * 
+	 * @see Node::add()
+	 */
 	function add()
 	{
-		$this->objectAdd();
-
-		$db = db_connection();
-
-		$sql = new Sql('SELECT MAX(id) FROM {t_folder}');
-		$this->folderid = intval($db->getOne($sql))+1;
-
-		$sql = new Sql('INSERT INTO {t_folder}'.
-		               ' (id,objectid)'.
-		               ' VALUES( {folderid},{objectid} )' );
-		$sql->setInt   ('folderid'    ,$this->folderid );
-		$sql->setInt   ('objectid'    ,$this->objectid );
-		
-		$db->query( $sql );
+		// Folder haben keine eigene Tabelle, also reicht es, den Knoten zu erzeugen.
+		parent::add();
 	}	
 	
 
 
-	function getRootFolderId()
+	/**
+	 * Liefert den höchsten Knoten.
+	 * 
+	 * Das Ergebnis ist die Id des höchsten Knotens. Achtung: Dieser ist aber vermutlich nicht vom Typ 'Folder'.
+	 * 
+	 * @return Ambigous <number, string, unknown>
+	 */
+	public function getRootFolderId()
 	{
-		global $SESS;
-		$db = db_connection();
-
-		$sql = new SQL('SELECT id FROM {t_object}'.
-		               '  WHERE parentid IS NULL'.
-		               '    AND is_folder=1'.
-		               '    AND projectid={projectid}' );
-
-		// Wenn Methode statisch aufgerufen wird, ist $this nicht vorhanden
-		if	( isset($this) && isset($this->projectid) )
-		{
-			$sql->setInt('projectid',$this->projectid );
-		}
-		else
-		{
-			$project = Session::getProject();
-			$sql->setInt('projectid',$project->projectid );
-		}
-		
-		// Datenbankabfrage ausfuehren
-		return $db->getOne( $sql );
+		return Node::getRootNodeId();
 	}
 
 
-	function hasFilename( $filename )
+	/**
+	 * Stellt fest, ob es in diesem Ordner einen Knoten mit einem bestimmten Namen gibt. 
+	 */
+	public function hasFilename( $filename )
 	{
-		$db = db_connection();
+		$id = parent::getChildIdByName( $filename );
 
-		$sql = new Sql('SELECT COUNT(*) FROM {t_object}'.'  WHERE parentid={objectid} AND filename={filename}');
-
-		if	( intval($this->objectid)== 0 )
-			$sql->setNull('objectid');
-		else
-			$sql->setString('objectid', $this->objectid);
-
-		$sql->setString('filename', $filename      );
-
-		return( $db->getOne($sql) > 0 );
+		return intval($id) > 0;
 	}
 
 
 	public function load()
 	{
-//		$db = db_connection();
-//
-//		$sql = new Sql('SELECT * FROM {t_folder} WHERE objectid={objectid}');
-//		$sql->setInt('objectid',$this->objectid);
-//
-//		$row = $db->getRow( $sql );
-//
-		$this->objectLoad();
-		
-//		$this->folderid = $row['id' ];
+		parent::load();
 	}
 
 
 
 	function save()
 	{
-		$this->objectSave();
+		parent::save();
 	}
 
 
 	
 	function setOrderId( $orderid )
 	{
-		$db = db_connection();
-
-		$sql = new Sql('UPDATE {t_folder} '.
-		               '  SET orderid={orderid}'.
-		               '  WHERE id={folderid}');
-		$sql->setInt('folderid',$this->folderid);
-		$sql->setInt('orderid' ,$orderid       );
-
-		$db->query( $sql );
 	}
 
 
 
-//	function getSubFolders()
-//	{
-//		global $SESS;
-//		$db = db_connection();
-//		
-//		$sql = new Sql('SELECT id FROM {t_folder}'.
-//		               '  WHERE parentid={folderid}'.
-//		               '    AND projectid={projectid}'.
-//		               '  ORDER BY orderid ASC' );
-//		$sql->setInt('folderid' ,$SESS['folderid' ]);
-//		$sql->setInt('projectid',$SESS['projectid']);
-//		
-//		return( $db->getCol( $sql ));
-//	}
-
-	
 	// Liest alle Objekte in diesem Ordner
 	function getObjectIds()
 	{
-		$db = db_connection();
-
-		$sql = new Sql('SELECT id FROM {t_object}'.
-		               '  WHERE parentid={objectid}'.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt('objectid' ,$this->objectid  );
-		
-		return( $db->getCol( $sql ) );
+		return array_keys( parent::getChildren() );
 	}
 
-
-
-	/**
-	 * Liest alle Objekte in diesem Ordner
-	 * @return Array von Objekten
-	 */
-	function getObjects()
-	{
-		$db = db_connection();
-
-		$sql = new Sql('SELECT {t_object}.*,{t_name}.name,{t_name}.descr'.
-		               '  FROM {t_object}'.
-		               ' LEFT JOIN {t_name} '.
-		               '   ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
-		               '  WHERE parentid={objectid}'.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt('languageid',$this->languageid );
-		$sql->setInt('objectid'  ,$this->objectid   );
-		
-		$liste = array();
-		$res = $db->getAll( $sql );
-		foreach( $res as $row )
-		{
-			$o = new Object( $row['id'] );
-			$o->setDatabaseRow( $row );
-			$liste[] = $o;
-		}
-
-		return $liste;
-	}
 
 
 	// Liest alle Objekte in diesem Ordner
@@ -289,17 +190,15 @@ class Folder extends Node
 	}
 
 
+	/**
+	 * 
+	 * @param unknown_type $filename
+	 * @return Ambigous <Array<id,name>, string, unknown>
+	 * @deprecated use Node::getChildByName($name)
+	 */
 	function getObjectIdByFileName( $filename )
 	{
-		$db = db_connection();
-		
-		$sql = new Sql('SELECT id FROM {t_object}'.
-		               '  WHERE parentid={objectid}'.
-		               '    AND filename={filename}' );
-		$sql->setInt   ('objectid' ,$this->objectid );
-		$sql->setString('filename' ,$filename       );
-		
-		return( intval($db->getOne( $sql )) );
+		return parent::getChildIdByName($filename);
 	}
 
 
@@ -346,20 +245,9 @@ class Folder extends Node
 	}
 
 	
-	function dgetRootObjectId()
+	function getRootObjectId()
 	{
-		global $SESS;
-		$db = db_connection();
-		
-		$sql = new Sql('SELECT id FROM {t_object}'.
-		               '  WHERE parentid IS NULL'.
-		               '    AND projectid={projectid}' );
-
-		if	( isset($this->projectid) )
-			$sql->setInt('projectid',$this->projectid   );
-		else	$sql->setInt('projectid',$SESS['projectid'] );
-		
-		return( $db->getOne( $sql ) );
+		return parent::getRootNodeId();
 	}
 
 	
@@ -401,14 +289,7 @@ class Folder extends Node
 	
 	function getPages()
 	{
-		$db = db_connection();
-
-		$sql = new Sql('SELECT id FROM {t_object} '.
-		               '  WHERE parentid={objectid} AND is_page=1'.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt( 'objectid' ,$this->objectid  );
-
-		return $db->getCol( $sql );
+		return parent::getChildrenOfType( NODE_TYPE_PAGE );
 	}
 
 	
@@ -461,14 +342,7 @@ class Folder extends Node
 	
 	function getFiles()
 	{
-		$db = db_connection();
-
-		$sql = new Sql('SELECT id FROM {t_object} '.
-		               '  WHERE parentid={objectid} AND is_file=1'.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt( 'objectid' ,$this->objectid  );
-
-		return $db->getCol( $sql );
+		return parent::getChildrenOfType( NODE_TYPE_FILE );
 	}
 
 
@@ -480,27 +354,13 @@ class Folder extends Node
 	 */
 	function getFileFilenames()
 	{
-		$db = db_connection();
-
-		$sql = new Sql('SELECT id,filename FROM {t_object} '.
-		               '  WHERE parentid={objectid} AND is_file=1'.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt( 'objectid' ,$this->objectid  );
-
-		return $db->getAssoc( $sql );
+		return parent::getChildrenOfType( NODE_TYPE_FILE );
 	}
 
 	
 	function getLinks()
 	{
-		$db = db_connection();
-
-		$sql = new Sql('SELECT id FROM {t_object} '.
-		               '  WHERE parentid={objectid} AND is_link=1'.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt( 'objectid' ,$this->objectid  );
-
-		return $db->getCol( $sql );
+		return parent::getChildrenOfType( NODE_TYPE_LINK );
 	}
 
 	
@@ -677,32 +537,17 @@ SQL
 
 	// Ermitteln aller Unterordner
 	//
-	function subfolder()
+	public function subfolder()
 	{
-		$db = db_connection();
-
-		$sql = new Sql('SELECT id FROM {t_object} '.
-		               '  WHERE parentid={objectid} AND is_folder=1'.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt( 'objectid' ,$this->objectid  );
-
-		$this->subfolders = $db->getCol( $sql );
-
-		return $this->subfolders;
+		return array_keys( parent::getChildrenOfType( NODE_TYPE_FOLDER ) );
+		
 	}
 
 	
 	
-	function getSubfolderFilenames()
+	public function getSubfolderFilenames()
 	{
-		$db = db_connection();
-
-		$sql = new Sql('SELECT id,filename FROM {t_object} '.
-		               '  WHERE parentid={objectid} AND is_folder=1'.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt( 'objectid' ,$this->objectid  );
-
-		return $db->getAssoc( $sql );
+		return parent::getChildrenOfType( NODE_TYPE_FOLDER );
 	}
 
 	

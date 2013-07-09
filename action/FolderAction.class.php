@@ -1132,9 +1132,9 @@ class FolderAction extends NodeAction
 		$list = array();
 
 		// Schleife ueber alle Objekte in diesem Ordner
-		foreach( $this->folder->getObjects() as $o )
+		foreach( $this->folder->getChildNodes() as $o )
 		{
-			$id = $o->objectid;
+			$id = $o->id;
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
@@ -1163,7 +1163,6 @@ class FolderAction extends NodeAction
 //						$list[$id]['icon'] = 'text';
 				}
 
-				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
 				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
 				$list[$id]['user'] = $o->lastchangeUser;
 				

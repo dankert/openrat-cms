@@ -54,7 +54,8 @@ class Group extends Node
 		global $conf;
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id,name FROM {t_group}' );
+		$sql = new Sql( 'SELECT id,name FROM {t_node} WHERE typ={grouptype}' );
+		$sql->setInt('grouptype', NODE_TYPE_GROUP );
 
 		return $db->getAssoc( $sql );
 	}
@@ -65,9 +66,10 @@ class Group extends Node
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT * FROM {t_group}'.
-		                ' WHERE id={groupid}' );
-		$sql->setInt( 'groupid',$this->groupid );
+		$sql = new Sql( 'SELECT * FROM {t_node}'.
+		                ' WHERE typ={grouptype} AND id={groupid}' );
+		$sql->setInt( 'grouptype', NODE_TYPE_GROUP );
+		$sql->setInt( 'groupid'  , $this->groupid  );
 
 		$row = $db->getRow( $sql );
 		if	( count($row) > 0 )
@@ -82,8 +84,10 @@ class Group extends Node
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT * FROM {t_group}'.
-		                ' WHERE name={name}' );
+		$sql = new Sql( 'SELECT * FROM {t_node}'.
+		                ' WHERE typ={grouptype}'.
+		                ' AND name={name}' );
+		$sql->setInt( 'grouptype', NODE_TYPE_GROUP );
 		$sql->setString('name',$name );
 
 		$row = $db->getRow( $sql );
@@ -110,7 +114,7 @@ class Group extends Node
 		$db = db_connection();
 
 		// Gruppe speichern		
-		$sql = new Sql( 'UPDATE {t_group} '.
+		$sql = new Sql( 'UPDATE {t_node} '.
 		                'SET name = {name} '.
 		                'WHERE id={groupid}' );
 		$sql->setString( 'name'  ,$this->name    );
@@ -161,19 +165,25 @@ class Group extends Node
 
 		// Berechtigungen zu dieser Gruppe loeschen
 		$sql = new Sql( 'DELETE FROM {t_acl} '.
-		                'WHERE groupid={groupid}' );
+		                'WHERE group={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
 		$db->query( $sql );
 
 
 		// Alle Gruppenzugehoerigkeiten zu dieser Gruppe loeschen
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
-		                'WHERE groupid={groupid}' );
+		                'WHERE grp={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
 		$db->query($sql);
 
 		// Gruppe loeschen
 		$sql = new Sql( 'DELETE FROM {t_group} '.
+		                'WHERE node={groupid}' );
+		$sql->setInt   ('groupid',$this->groupid );
+		$db->query($sql);
+		
+		// Gruppe loeschen
+		$sql = new Sql( 'DELETE FROM {t_node} '.
 		                'WHERE id={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
 		$db->query($sql);
@@ -185,9 +195,11 @@ class Group extends Node
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT {t_user}.id,{t_user}.name FROM {t_user} '.
-		                'LEFT JOIN {t_usergroup} ON {t_usergroup}.userid={t_user}.id '.
-		                'WHERE {t_usergroup}.groupid={groupid}' );
+		$sql = new Sql( <<<SQL
+SELECT id,name FROM {t_node}
+ WHERE id IN ( SELECT user FROM {t_usergroup} WHERE grp={groupid} )
+SQL
+				);
 		$sql->setInt('groupid',$this->groupid );
 
 		return $db->getAssoc( $sql );
@@ -213,13 +225,12 @@ class Group extends Node
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT MAX(id) FROM {t_usergroup}');
-		$usergroupid = intval($db->getOne($sql))+1;
+// 		$sql = new Sql('SELECT MAX(id) FROM {t_usergroup}');
+// 		$usergroupid = intval($db->getOne($sql))+1;
 
 		$sql = new Sql( 'INSERT INTO {t_usergroup} '.
-		                '       (id,userid,groupid) '.
-		                '       VALUES( {usergroupid},{userid},{groupid} )' );
-		$sql->setInt('usergroupid',$usergroupid  );
+		                '       (user,grp) '.
+		                '       VALUES( {userid},{groupid} )' );
 		$sql->setInt('userid'     ,$userid        );
 		$sql->setInt('groupid'    ,$this->groupid );
 
@@ -234,7 +245,7 @@ class Group extends Node
 		$db = db_connection();
 
 		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
-		                '  WHERE userid={userid} AND groupid={groupid}' );
+		                '  WHERE user={userid} AND grp={groupid}' );
 		$sql->setInt   ('userid'  ,$userid        );
 		$sql->setInt   ('groupid' ,$this->groupid );
 

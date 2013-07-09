@@ -190,6 +190,60 @@ SQL
 	
 
 	/**
+	 * Ermittelt die direkten Unterknoten zu diesem Knoten.
+	 * @return Array<id,name>
+	 */
+	public function getChildrenOfType( $type )
+	{
+		$sql = new Sql( <<<SQL
+SELECT child.id,child.name FROM {t_node} AS child
+  LEFT JOIN {t_node} AS ancestor
+		 ON ancestor.lft BETWEEN {left}+1 AND {right}-1
+		AND child.lft BETWEEN ancestor.lft+1 AND ancestor.rgt-1
+ WHERE child.lft BETWEEN {left}+1 AND {right}-1
+   AND child.typ = {type}
+   AND ancestor.id IS NULL
+SQL
+		);
+		
+		$sql->setInt  ( 'type' ,$type        );
+		$sql->setInt  ( 'left' ,$this->left  );
+		$sql->setInt  ( 'right',$this->right );
+		
+		$db = db_connection();
+		return $db->getAssoc($sql);		
+	}
+
+	
+
+	/**
+	 * Ermittelt die direkten Unterknoten zu diesem Knoten.
+	 * @return Array<id,name>
+	 */
+	public function getChildIdByName( $name )
+	{
+		$sql = new Sql( <<<SQL
+SELECT child.id FROM {t_node} AS child
+  LEFT JOIN {t_node} AS ancestor
+		 ON ancestor.lft BETWEEN {left}+1 AND {right}-1
+		AND child.lft BETWEEN ancestor.lft+1 AND ancestor.rgt-1
+ WHERE child.lft BETWEEN {left}+1 AND {right}-1
+   AND child.name = {name}
+   AND ancestor.id IS NULL
+SQL
+		);
+		
+		$sql->setString( 'name' ,$name        );
+		$sql->setInt   ( 'left' ,$this->left  );
+		$sql->setInt   ( 'right',$this->right );
+		
+		$db = db_connection();
+		return $db->getOne($sql);		
+	}
+
+	
+
+	/**
 	 * Ermittelt den Pfad zu diesem Knoten.
 	 * 
 	 * @return Array
@@ -287,57 +341,31 @@ SQL
 	 */
 	function hasRight( $type )
 	{
+		$db = db_connection();
+		
 		if	( is_null($this->aclMask) )
 		{
-			$project  = Session::getProject();
-			$language = Session::getProjectLanguage();
 			$user     = Session::getUser();
 			
-			if	( $user->isAdmin )
-			{
-				// Administratoren erhalten eine Maske mit allen Rechten
-				$this->aclMask = ACL_READ +
-				                 ACL_WRITE +
-				                 ACL_PROP +
-				                 ACL_DELETE +
-				                 ACL_RELEASE +
-				                 ACL_PUBLISH +
-				                 ACL_CREATE_FOLDER +
-				                 ACL_CREATE_FILE +
-				                 ACL_CREATE_LINK +
-				                 ACL_CREATE_PAGE +
-				                 ACL_GRANT +
-				                 ACL_TRANSMIT;
-			}
-			else
-			{
-				$this->aclMask = 0;
+			$this->aclMask = 0;
 				
-				$sqlGroupClause = $user->getGroupClause();
-				$sql = new Sql( <<<SQL
-SELECT {t_acl}.* FROM {t_acl}
-	                 LEFT JOIN {t_object}
-	                        ON {t_object}.id={t_acl}.objectid
-	                 WHERE objectid={objectid}
-	                   AND ( languageid={languageid} OR languageid IS NULL )
-	                   AND ( {t_acl}.userid={userid} OR $sqlGroupClause
-			                                         OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )
+			$sqlGroupClause = $user->getGroupClause();
+			$sql = new Sql( <<<SQL
+SELECT mask FROM {t_acl}
+	                 WHERE node={nodeid}
+	                   AND ( variant IS NULL )
+	                   AND ( user={userid}
+					         OR grp=(SELECT grp FROM {t_usergroup} WHERE user={userid} )
+			                 OR ( user IS NULL AND grp IS NULL) )
 SQL
 );
 	
-				$sql->setInt  ( 'languageid'  ,$language->languageid   );
-				$sql->setInt  ( 'objectid'    ,$this->objectid         );
-				$sql->setInt  ( 'userid'      ,$user->userid           );
-		
-				$db = db_connection();
-				foreach( $db->getAll( $sql ) as $row )
-				{
-					$acl = new Acl();
-					$acl->setDatabaseRow( $row );
-					
-					$this->aclMask |= $acl->getMask();
-				}
-			}
+// 			$sql->setInt  ( 'languageid'  ,$language->languageid   );
+			$sql->setInt  ( 'nodeid'    ,$this->id      );
+			$sql->setInt  ( 'userid'      ,$user->userid  );
+	
+			foreach( $db->getCol($sql) as $mask )
+				$this->aclMask |= $mask;
 		}
 		
 		if	( readonly() )
@@ -395,26 +423,15 @@ SQL
 
 	function getProperties()
 	{
-		return Array( 'id'               =>$this->objectid,
-		              'objectid'         =>$this->objectid,
-		              'parentid'         =>$this->parentid,
-		              'filename'         =>$this->filename,
+		return Array( 'id'               =>$this->id,
 		              'name'             =>$this->name,
-		              'desc'             =>$this->desc,
-		              'description'      =>$this->desc,
+		              'filename'         =>$this->name,
 		              'create_date'      =>$this->createDate,
 		              'create_user'      =>$this->createUser,
 		              'lastchange_date'  =>$this->lastchangeDate,
 		              'lastchange_user'  =>$this->lastchangeUser,
-		              'isFolder'         =>$this->isFolder,
-		              'isFile'           =>$this->isFile,
-		              'isLink'           =>$this->isLink,
-		              'isPage'           =>$this->isPage,
-		              'isRoot'           =>$this->isRoot,
-		              'languageid'       =>$this->languageid,
-		              'modelid'          =>$this->modelid,
-		              'projectid'        =>$this->projectid,
-		              'type'             =>$this->getType()  );
+		              'type'             =>$this->getType(),
+		              'type_id'          =>$this->type       );
 	}
 
 
@@ -781,8 +798,6 @@ SQL
 	
 		$sql = new Sql( <<<SQL
 UPDATE {t_node} SET
-                id   = {id},
-		        typ  = {type} ,
 		        name = {name} ,
 				lft  = {left} ,
 				rgt  = {right},
@@ -796,8 +811,6 @@ SQL
 		$this->lastchangeUser = $user;
 		$this->lastchangeDate = now();
 
-		$sql->setInt   ('id'   ,$this->id    );
-		$sql->setInt   ('type' ,$this->type  );
 		$sql->setString('name' ,$this->name  );
 		$sql->setInt   ('left' ,$this->left  );
 		$sql->setInt   ('right',$this->right );
@@ -1120,9 +1133,9 @@ SQL
 		$db = db_connection();
 		
 		$sql = new Sql( 'SELECT id FROM {t_acl} '.
-		                '  WHERE objectid={objectid}'.
+		                '  WHERE node={nodeid}'.
 		                '  ORDER BY userid,groupid ASC' );
-		$sql->setInt('objectid'  ,$this->objectid);
+		$sql->setInt('nodeid'  ,$this->id);
 
 		return $db->getCol( $sql );
 	}
@@ -1192,14 +1205,14 @@ SQL
 	 */
 	function getRelatedAclTypes()
 	{
-		if	( $this->isFolder )
-			return( array('read','write','delete','prop','release','publish','create_folder','create_file','create_page','create_link','grant','transmit') );
-		if	( $this->isFile )
-			return( array('read','write','delete','prop','release','publish','grant') );
-		if	( $this->isPage )
-			return( array('read','write','delete','prop','release','publish','grant') );
-		if	( $this->isLink )
-			return( array('read','write','delete','prop','grant') );
+		switch( $this->type )
+		{
+			case NODE_TYPE_FOLDER: return array('read','write','delete','prop','release','publish','create_folder','create_file','create_page','create_link','grant','transmit');
+			case NODE_TYPE_FILE:   return array('read','write','delete','prop','release','publish','grant');
+			case NODE_TYPE_PAGE:   return array('read','write','delete','prop','release','publish','grant');
+			case NODE_TYPE_LINK:   return array('read','write','delete','prop','grant');
+			default:               return array();
+		}
 	}
 
 
@@ -1476,6 +1489,29 @@ SQL
 	}
 
 	
+	
+	/**
+	 * Liest alle Objekte in diesem Ordner
+	 * @return Array von Objekten
+	 */
+	public function getChildNodes()
+	{
+		$children = $this->getChildren();
+		$liste    = array();
+	
+		foreach( $children as $id=>$name )
+		{
+			$n = new Node( $id );
+			$n->load();
+			$liste[] = $n;
+		}
+	
+		return $liste;
+	}
+	
+	
+	
+	
 	/**
 	 * Legt fest, zu welchen Knoten es welche Unterknoten geben darf.
 	 * @return multitype:string |multitype:
@@ -1492,7 +1528,7 @@ SQL
 			case NODE_TYPE_PAGE:      return array();
 			case NODE_TYPE_TEMPLATE:  return array(NODE_TYPE_COMMENT,NODE_TYPE_XMLNODE,NODE_TYPE_ELEMENT);
 			case NODE_TYPE_ELEMENT:   return array();
-			case NODE_TYPE_PROJECT:   return array(NODE_TYPE_COMMENT,NODE_TYPE_FOLDER,NODE_TYPE_USER,NODE_TYPE_GROUP,NODE_TYPE_TEMPLATE,NODE_TYPE_CONFIG);
+			case NODE_TYPE_PROJECT:   return array(NODE_TYPE_COMMENT,NODE_TYPE_FOLDER,NODE_TYPE_USER,NODE_TYPE_GROUP,NODE_TYPE_TEMPLATE,NODE_TYPE_CONFIG,NODE_TYPE_TARGET);
 			case NODE_TYPE_TARGET:    return array();
 			case NODE_TYPE_VALUE:     return array(NODE_TYPE_DOCNODE,NODE_TYPE_FRAGMENT);
 			case NODE_TYPE_VARIANT:   return array();
@@ -1570,16 +1606,24 @@ SQL
 	
 	
 	/**
-	 * Ein existierender Knoten wird am Ende dieses Knotens ergänzt. An der ursprünglichen Position wird er entfernt.
+	 * Knoten in diesen Knoten verschieben.
+	 * 
+	 * Ein existierender Knoten wird am Ende dieses Knotens ergänzt.
+	 * 
+	 * An der ursprünglichen Position wird er entfernt.
+	 * Der Knoten kann auch aus einem anderen Knoten hierher verschoben werden.
 	 *  
 	 * @param Node $node
 	 */
 	public function appendExistantChild( $movedNode )
 	{
+		$origLeft  = $movedNode->left;
+		$origRight = $movedNode->right;
+		
 		$node = new Node( $this->id );
 		$node->load();
 		
-		$width = $movedNode->right - $movedNode + 1;
+		$width = $movedNode->right - $movedNode->left + 1;
 		
 		// Rechtswerte erhöhen, um Platz zu schaffen
 		$sql = new Sql( <<<SQL
@@ -1606,6 +1650,26 @@ SQL
 		$movedNode->right = $node->right-1;
 		$movedNode->save();
 		
+		// Nun den alten Platz wieder verfüllen
+		
+		// Rechtswerte verkleinern...
+		$sql = new Sql( <<<SQL
+UPDATE {t_node} SET RGT=RGT-{width} WHERE RGT > {right}
+SQL
+		);
+		$sql->setInt('right', $origRight);
+		$sql->setInt('width', $width    );
+		$db->query($sql);
+			
+		// ... und auch noch die Linkswerte verkleiner.
+		$sql = new Sql( <<<SQL
+UPDATE {t_node} SET LFT=LFT-{width} WHERE LFT > {right}
+SQL
+		);
+		$sql->setInt('right', $origRight );
+		$sql->setInt('width', $width     );
+		$db->query($sql);
+		
 	}
 	
 	/**
@@ -1623,6 +1687,7 @@ SQL
 		
 		foreach( $orderIds as $id )
 		{
+			// Sicherstellen, dass alle zu ordnenden Knoten auch unter dem aktuellen Knoten hängen.
 			if	( in_array($id,$childIds) )
 			{
 				$movedNode = new Node( $id );

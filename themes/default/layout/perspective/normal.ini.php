@@ -19,7 +19,7 @@ action=
 
 title=
 default=prop
-views=login:login,login:openid,login:register,prop,pub
+views=login:login,login:openid,login:register,prop,pub,memberships,pw
 
 [bottom]
 
