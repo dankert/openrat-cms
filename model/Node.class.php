@@ -166,6 +166,7 @@ SQL
 
 	/**
 	 * Ermittelt die direkten Unterknoten zu diesem Knoten.
+	 * @return Array<id,name>
 	 */
 	public function getChildren()
 	{
@@ -1565,14 +1566,71 @@ SQL
 		$childNode->right = $this->right-1;
 		$childNode->add();
 	}
+
 	
+	
+	/**
+	 * Ein existierender Knoten wird am Ende dieses Knotens ergänzt. An der ursprünglichen Position wird er entfernt.
+	 *  
+	 * @param Node $node
+	 */
+	public function appendExistantChild( $movedNode )
+	{
+		$node = new Node( $this->id );
+		$node->load();
+		
+		$width = $movedNode->right - $movedNode + 1;
+		
+		// Rechtswerte erhöhen, um Platz zu schaffen
+		$sql = new Sql( <<<SQL
+UPDATE {t_node} SET RGT=RGT+{width} WHERE RGT >= {right}
+SQL
+		);
+		$sql->setInt('right', $this->right);
+		$sql->setInt('width', $width      );
+		$db->query($sql);
+			
+		// Und auch noch die Linkswerte.
+		$sql = new Sql( <<<SQL
+UPDATE {t_node} SET LFT=LFT+{width} WHERE LFT >= {right}
+SQL
+		);
+		$sql->setInt('right', $this->right);
+		$sql->setInt('width', $width      );
+		$db->query($sql);
+		
+		$node->load(); // Nochmal laden, damit der neue Rechts-Wert geladen wird.
+		
+		// Jetzt ist Platz für den neuen Knoten.
+		$movedNode->left  = $node->right-$width;
+		$movedNode->right = $node->right-1;
+		$movedNode->save();
+		
+	}
 	
 	/**
 	 * Ändern der Reihenfolge der Kinderknoten.
 	 */
 	public function order( $idListe )
 	{
+		$user = Session::getUser();
 		
+		$node = new Node( $this->id );
+		$node->load();
+		
+		$childIds = array_keys( $this->getChildren() );
+		$orderIds = explode(',',$idListe);
+		
+		foreach( $orderIds as $id )
+		{
+			if	( in_array($id,$childIds) )
+			{
+				$movedNode = new Node( $id );
+				$movedNode->load();
+				
+				$node->appendExistantChild($movedNode);
+			}
+		}
 	}
 }
 
