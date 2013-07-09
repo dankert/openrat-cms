@@ -380,4 +380,15 @@ class NodeAction extends Action
 		$this->folder->setTimestamp();
 	}
 	
+	
+	/**
+	 * Ändern der Reihenfolge aller Kindknoten.
+	 */
+	public function orderPost()
+	{
+		$idListe = parent::getRequestVar('order');
+		$this->node->order( $idListe );
+		
+		parent::addNotice($this->node->getType(), $this->node->name, 'ORDERED');
+	}
 }

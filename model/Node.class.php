@@ -1565,6 +1565,15 @@ SQL
 		$childNode->right = $this->right-1;
 		$childNode->add();
 	}
+	
+	
+	/**
+	 * Ändern der Reihenfolge der Kinderknoten.
+	 */
+	public function order( $idListe )
+	{
+		
+	}
 }
 
 ?>
