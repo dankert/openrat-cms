@@ -631,6 +631,10 @@ function registerViewEvents( viewEl )
 		formSubmit( $(this).closest('form') );
 	});
 	
+	// Bei Änderungen in der View das Tab als 'dirty' markieren
+	$(viewEl).find('input').change( function() {
+		$(this).closest('div.panel').find('ul.views li.action.active').addClass('dirty');
+	});
 
 }
 
@@ -1169,6 +1173,9 @@ function doResponse(data,status,element)
 				//$('div.modaldialog').fadeOut(500); 
 				//$('div#workbench').removeClass('modal'); // Modalen Dialog beenden.
 				$('div#filler').fadeOut(500); // Filler beenden
+				
+				// Da gespeichert wurde, jetzt das 'dirty'-flag zurücksetzen.
+				$(element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
 			}
 		}
 		else
