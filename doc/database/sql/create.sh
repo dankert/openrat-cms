@@ -248,6 +248,13 @@ for	db in mysql postgresql oracle sqlite; do
     # Now beginning the table definitions
     
     
+	open_table project
+    column id          INT       - - N
+    column hostname    VARCHAR 255 - N
+    primary_key id
+	close_table
+
+
 	open_table node
     column id          INT       - - N
 	column typ         INT       - - N
@@ -288,7 +295,27 @@ for	db in mysql postgresql oracle sqlite; do
     column hostname VARCHAR 255 - N
     column path     VARCHAR 255 - N
     column config   INT       - - N
+    column script   VARCHAR 255 - N
+    column user     VARCHAR 255 - N
+    column password VARCHAR 255 - N
     constraint node node id  
+    close_table
+
+   
+    open_table meta_keys
+    column name     INT       - - N
+    column typ      INT       - - N
+    close_table
+
+   
+    open_table meta_values
+    column node     INT       - - N
+    column key      INT       - - N
+    column language INT       - - N
+    column value_text VARCHAR 255 - N
+    column value_date DATE    -   - N
+    constraint node node id  
+    unique_index node key language
     close_table
 
    
@@ -305,7 +332,17 @@ for	db in mysql postgresql oracle sqlite; do
 	column size       INT     -  0
 	column width      INT - - Y
 	column height     INT - - Y
+	primary_key  node 
+	constraint  node node id  
+    close_table
+
+
+	open_table file_value  
+	column node       INT - - N
 	column value      BLOB
+	column status     INT - - N
+    column creation          DATE - - N
+    column creation_user     INT  - - Y
 	primary_key  node 
 	constraint  node node id  
     close_table
@@ -325,6 +362,8 @@ for	db in mysql postgresql oracle sqlite; do
     column node     INT     -   - N
 	column label    VARCHAR 128 - N
 	column password VARCHAR 255 - N
+	column expires  DATE      - - N
+	column last_login DATE      - - N
 	column dn       VARCHAR 255 - N
 	column fullname VARCHAR 128 - N
 	column tel      VARCHAR 128 - N
@@ -333,6 +372,16 @@ for	db in mysql postgresql oracle sqlite; do
 	column style    VARCHAR 64  - N
 	primary_key node
     constraint node       node id  
+    close_table
+	
+	
+	open_table token  
+    column userid   INT     -   - N
+	column series  VARCHAR 255 - N
+	column token   VARCHAR 255 - N
+	column expires  DATE      - - N
+	primary_key id
+    constraint userid user id  
     close_table
 	
 	
@@ -444,8 +493,8 @@ for	db in mysql postgresql oracle sqlite; do
 	column      number            INT  - - J
 	column      exp               INT  - - J
 	column      date              DATE - - J
-	column      active            INT  - 0 J
-	column      publish           INT  - - N
+	column      status            INT  - - N
+	
     primary_key node 
     constraint node          node     id  
     constraint element       element  node  
