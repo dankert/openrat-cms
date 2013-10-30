@@ -202,7 +202,7 @@ SQL
 		$db = db_connection();
 
 		$sql = new Sql( 'SELECT * FROM {t_project} '.
-		                '   WHERE id={projectid}' );
+		                '   WHERE node={projectid}' );
 		$sql->setInt( 'projectid',$this->projectid );
 
 		$row = $db->getRow( $sql );
