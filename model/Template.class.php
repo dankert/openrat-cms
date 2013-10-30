@@ -111,7 +111,7 @@ class Template extends Node
 		$db = db_connection();
 
 		$sql = new Sql( 'SELECT * FROM {t_template}'.
-		                ' WHERE id={templateid}' );
+		                ' WHERE node={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 		$row = $db->getRow( $sql );
 		
