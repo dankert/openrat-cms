@@ -387,15 +387,13 @@ SQL
 		$db = db_connection();
 
 		$sql = new Sql( 'UPDATE {t_user}'.
-		                ' SET name={name},'.
-		                '     fullname={fullname},'.
-		                '     ldap_dn ={ldap_dn} ,'.
+		                ' SET    fullname={fullname},'.
+		                '     dn ={ldap_dn} ,'.
 		                '     tel     ={tel}     ,'.
 		                '     descr   ={desc}    ,'.
 		                '     mail    ={mail}    ,'.
-		                '     style   ={style}   ,'.
-		                '     is_admin={isAdmin} '.
-		                ' WHERE id={userid}' );
+		                '     style   ={style}   '.
+		                ' WHERE node={userid}' );
 		$sql->setString ( 'name'    ,$this->name    );
 		$sql->setString ( 'fullname',$this->fullname);
 		$sql->setString ( 'ldap_dn' ,$this->ldap_dn );
