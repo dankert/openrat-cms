@@ -248,17 +248,11 @@ for	db in mysql postgresql oracle sqlite; do
     # Now beginning the table definitions
     
     
-	open_table project
-    column id          INT       - - N
-    column hostname    VARCHAR 255 - N
-    primary_key id
-	close_table
-
-
 	open_table node
     column id          INT       - - N
 	column typ         INT       - - N
     column name        VARCHAR 255 - N
+    column hash        VARCHAR 255 - N
     column lft         INT       - - N
     column rgt         INT       - - N
     column lastmodified      DATE - - N
@@ -268,10 +262,44 @@ for	db in mysql postgresql oracle sqlite; do
     primary_key id
 	close_table
   	unique_index lft,rgt
-  	unique_index name
+  	#unique_index name
+  	unique_index hash
   	index typ
   	index lft
   	index rgt
+
+
+	open_table hnode
+    column id         INT       - - N
+	column node       INT       - - N
+	column version    INT       - - N
+	column actual     INT       - - N 
+    column creation          DATE - - N
+    column creation_user     INT  - - Y
+    primary_key id
+    constraint node node id  
+	close_table
+
+
+
+    open_table vnode
+    column id         INT - - N
+	column node       INT - - N
+	column variant    INT - - N
+	primary_key id 
+    constraint node node id  
+    constraint variant node id  
+    close_table
+
+
+
+	open_table project
+    column node        INT       - - N
+    column hostname    VARCHAR 255 - N
+    constraint node node id  
+    primary_key node
+	close_table
+
 
 
 	open_table prop
@@ -362,6 +390,7 @@ for	db in mysql postgresql oracle sqlite; do
     column node     INT     -   - N
 	column label    VARCHAR 128 - N
 	column password VARCHAR 255 - N
+    column algo     INT     -   - N
 	column expires  DATE      - - N
 	column last_login DATE      - - N
 	column dn       VARCHAR 255 - N
@@ -435,14 +464,14 @@ for	db in mysql postgresql oracle sqlite; do
 	open_table template  
 	column      node           INT       - - N
 	column      variant        INT       - - N
-	column      extension      VARCHAR 255 - J 
+	column      extension      VARCHAR 255 - J
 	column      text           TEXT
     primary_key node
     constraint node    node    id
     constraint variant variant node  
     close_table
 
-	
+
 	open_table page
 	column node     INT - - N
 	column template INT - 0 N
@@ -484,6 +513,7 @@ for	db in mysql postgresql oracle sqlite; do
     close_table
 
 
+
 	open_table value  
 	column      node              INT  - - N
 	column      variant           INT  - - Y
@@ -494,7 +524,6 @@ for	db in mysql postgresql oracle sqlite; do
 	column      exp               INT  - - J
 	column      date              DATE - - J
 	column      status            INT  - - N
-	
     primary_key node 
     constraint node          node     id  
     constraint element       element  node  
@@ -530,16 +559,17 @@ for	db in mysql postgresql oracle sqlite; do
 
 
 	open_table attribute  
-	column      node           INT     -  - N
+	column      docnode           INT     -  - N
 	column      name           VARCHAR 255 - N 
 	column      value          VARCHAR 255 - N 
+    constraint docnode docnode node  
     close_table
 	index node 
 
 
 	insert node "id,lft,rgt,typ,name" "1,1,4,1,'Root'"
 	insert node "id,lft,rgt,typ,name" "2,2,3,13,'admin'"
-	insert user "node,label,password,dn,fullname,tel,mail,descr,style" "2,'admin','admin','','Administrator','','','Admin user','default'"
+	insert user "node,label,password,algo,dn,fullname,tel,mail,descr,style" "2,'admin','admin',1,'','Administrator','','','Admin user','default'"
 
 
     # end of table definitions
