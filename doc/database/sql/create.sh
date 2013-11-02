@@ -26,6 +26,8 @@ open_table()
     echo "" >> $outfile
     echo "-- Table $1" >> $outfile
     echo "CREATE TABLE ${prefix}${1}${suffix}(" >> $outfile
+    echo "DROP TABLE ${prefix}${1}${suffix};" >> $db/drop.sql
+    echo "TRUNCATE TABLE ${prefix}${1}${suffix};" >> $db/truncate.sql
     db_fc=1
     table=$1
 }
@@ -241,7 +243,9 @@ for	db in mysql postgresql oracle sqlite; do
 
     type=$db
     outfile=${db}/create.sql
-    echo "-- DDL-Script for $db" > $outfile
+    echo "-- DDL-Script for $db"      > $outfile
+    echo "-- DELETE-Script for $db - ATTENTION - CANNOT BE UNDONE!"   > $db/drop.sql
+    echo "-- TRUNCATE-Script for $db - ATTENTION - CANNOT BE UNDONE!" > $db/truncate.sql
     
 
    
@@ -320,6 +324,7 @@ for	db in mysql postgresql oracle sqlite; do
     open_table target
     column node     INT       - - N
     column typ      INT       - - N
+    column variant  INT       - - Y
     column hostname VARCHAR 255 - N
     column path     VARCHAR 255 - N
     column config   INT       - - N
@@ -338,13 +343,13 @@ for	db in mysql postgresql oracle sqlite; do
    
     open_table meta_values
     column node     INT       - - N
-    column key      INT       - - N
+    column meta_key INT       - - N
     column language INT       - - N
     column value_text VARCHAR 255 - N
     column value_date DATE    -   - N
     constraint node node id  
-    unique_index node key language
     close_table
+    unique_index node key language
 
    
     open_table url
@@ -360,6 +365,14 @@ for	db in mysql postgresql oracle sqlite; do
 	column size       INT     -  0
 	column width      INT - - Y
 	column height     INT - - Y
+	primary_key  node 
+	constraint  node node id  
+    close_table
+
+
+	open_table folder  
+	column node       INT
+	column order_type INT - - Y
 	primary_key  node 
 	constraint  node node id  
     close_table
@@ -405,12 +418,12 @@ for	db in mysql postgresql oracle sqlite; do
 	
 	
 	open_table token  
-    column userid   INT     -   - N
+    column user_node   INT     -   - N
 	column series  VARCHAR 255 - N
 	column token   VARCHAR 255 - N
 	column expires  DATE      - - N
-	primary_key id
-    constraint userid user id  
+	primary_key user_node
+    constraint user_node user node  
     close_table
 	
 	
@@ -418,7 +431,7 @@ for	db in mysql postgresql oracle sqlite; do
 	column node  INT     -   - N 
 	column label VARCHAR 255 - N
 	primary_key node 
-    constraint node node id  
+    constraint node node id
     close_table
 	
 	
@@ -526,13 +539,12 @@ for	db in mysql postgresql oracle sqlite; do
 	column      status            INT  - - N
     primary_key node 
     constraint node          node     id  
-    constraint element       element  node  
+    constraint input         input    node  
     constraint variant       variant  node  
     close_table
 	index variant 
-	index element 
-	index active 
-	index publish 
+	index input 
+	index status 
 
 
 	
@@ -550,7 +562,7 @@ for	db in mysql postgresql oracle sqlite; do
 	open_table docnode
 	column node       INT - - N
 	column variant    INT - - Y
-	column type       INT - - N
+	column typ        INT - - N
 	column value      TEXT
     primary_key node
     constraint variant variant node  
@@ -563,17 +575,25 @@ for	db in mysql postgresql oracle sqlite; do
 	column      name           VARCHAR 255 - N 
 	column      value          VARCHAR 255 - N 
     constraint docnode docnode node  
+    primary_key docnode
     close_table
-	index node 
 
 
-	insert node "id,lft,rgt,typ,name" "1,1,4,1,'Root'"
-	insert node "id,lft,rgt,typ,name" "2,2,3,13,'admin'"
-	insert user "node,label,password,algo,dn,fullname,tel,mail,descr,style" "2,'admin','admin',1,'','Administrator','','','Admin user','default'"
+	open_table version  
+	column      version        INT     -  - N
+    primary_key version
+    close_table
+
+
+	insert node "id,lft,rgt,typ,name,hash" "1,1,4,1,'Root','270f3bc470457203e3ad5d5d7f626485'"
+	insert node "id,lft,rgt,typ,name,hash" "2,2,3,13,'admin','37acac6f13ad72e420b717b0356e9981'"
+	insert user "node,label,password,algo,expires,dn,fullname,tel,mail,descr,style" "2,'admin','admin',1,'1900-00-00','','Administrator','','','Admin user','default'"
 
 
     # end of table definitions
 
+    tac $db/drop.sql     | sponge $db/drop.sql
+    tac $db/truncate.sql | sponge $db/truncate.sql
     
 
 done

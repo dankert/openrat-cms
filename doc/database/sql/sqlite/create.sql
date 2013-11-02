@@ -5,6 +5,7 @@ CREATE TABLE or_node(
    id INTEGER NOT NULL
   ,typ INTEGER NOT NULL
   ,name VARCHAR(255) NOT NULL
+  ,hash VARCHAR(255) NOT NULL
   ,lft INTEGER NOT NULL
   ,rgt INTEGER NOT NULL
   ,lastmodified DATETIME NOT NULL
@@ -15,14 +16,52 @@ CREATE TABLE or_node(
 );
 CREATE UNIQUE INDEX or_uidx_node_lft_rgt
                  ON or_node (lft,rgt);
-CREATE UNIQUE INDEX or_uidx_node_name
-                 ON or_node (name);
+CREATE UNIQUE INDEX or_uidx_node_hash
+                 ON or_node (hash);
 CREATE INDEX or_idx_node_typ
           ON or_node (typ);
 CREATE INDEX or_idx_node_lft
           ON or_node (lft);
 CREATE INDEX or_idx_node_rgt
           ON or_node (rgt);
+
+-- Table hnode
+CREATE TABLE or_hnode(
+   id INTEGER NOT NULL
+  ,node INTEGER NOT NULL
+  ,version INTEGER NOT NULL
+  ,actual INTEGER NOT NULL
+  ,creation DATETIME NOT NULL
+  ,creation_user INTEGER NOT NULL
+  ,PRIMARY KEY (id)
+  ,CONSTRAINT or_fk_hnode_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+-- Table vnode
+CREATE TABLE or_vnode(
+   id INTEGER NOT NULL
+  ,node INTEGER NOT NULL
+  ,variant INTEGER NOT NULL
+  ,PRIMARY KEY (id)
+  ,CONSTRAINT or_fk_vnode_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+  ,CONSTRAINT or_fk_vnode_variant
+     FOREIGN KEY (variant) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+-- Table project
+CREATE TABLE or_project(
+   node INTEGER NOT NULL
+  ,hostname VARCHAR(255) NOT NULL
+  ,CONSTRAINT or_fk_project_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+  ,PRIMARY KEY (node)
+);
 
 -- Table prop
 CREATE TABLE or_prop(
@@ -43,19 +82,79 @@ CREATE TABLE or_props(
 CREATE TABLE or_target(
    node INTEGER NOT NULL
   ,typ INTEGER NOT NULL
+  ,variant INTEGER NOT NULL
   ,hostname VARCHAR(255) NOT NULL
   ,path VARCHAR(255) NOT NULL
   ,config INTEGER NOT NULL
+  ,script VARCHAR(255) NOT NULL
+  ,user VARCHAR(255) NOT NULL
+  ,password VARCHAR(255) NOT NULL
   ,CONSTRAINT or_fk_target_node
      FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
+-- Table meta_keys
+CREATE TABLE or_meta_keys(
+   name INTEGER NOT NULL
+  ,typ INTEGER NOT NULL
+);
+
+-- Table meta_values
+CREATE TABLE or_meta_values(
+   node INTEGER NOT NULL
+  ,meta_key INTEGER NOT NULL
+  ,language INTEGER NOT NULL
+  ,value_text VARCHAR(255) NOT NULL
+  ,value_date DATETIME NOT NULL
+  ,CONSTRAINT or_fk_meta_values_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+CREATE UNIQUE INDEX or_uidx_meta_values_node
+                 ON or_meta_values (node);
 
 -- Table url
 CREATE TABLE or_url(
    node INTEGER NOT NULL
   ,url VARCHAR(255) NOT NULL
   ,CONSTRAINT or_fk_url_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+-- Table file
+CREATE TABLE or_file(
+   node INTEGER NOT NULL
+  ,extension VARCHAR(10) NOT NULL
+  ,size INTEGER NOT NULL DEFAULT 0
+  ,width INTEGER NOT NULL
+  ,height INTEGER NOT NULL
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_file_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+-- Table folder
+CREATE TABLE or_folder(
+   node INTEGER NOT NULL
+  ,order_type INTEGER NOT NULL
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_folder_node
+     FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+-- Table file_value
+CREATE TABLE or_file_value(
+   node INTEGER NOT NULL
+  ,value TEXT NOT NULL
+  ,status INTEGER NOT NULL
+  ,creation DATETIME NOT NULL
+  ,creation_user INTEGER NOT NULL
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_file_value_node
      FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
 );
@@ -81,6 +180,9 @@ CREATE TABLE or_user(
    node INTEGER NOT NULL
   ,label VARCHAR(128) NOT NULL
   ,password VARCHAR(255) NOT NULL
+  ,algo INTEGER NOT NULL
+  ,expires DATETIME NOT NULL
+  ,last_login DATETIME NOT NULL
   ,dn VARCHAR(255) NOT NULL
   ,fullname VARCHAR(128) NOT NULL
   ,tel VARCHAR(128) NOT NULL
@@ -90,6 +192,18 @@ CREATE TABLE or_user(
   ,PRIMARY KEY (node)
   ,CONSTRAINT or_fk_user_node
      FOREIGN KEY (node) REFERENCES or_node (id)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+-- Table token
+CREATE TABLE or_token(
+   user_node INTEGER NOT NULL
+  ,series VARCHAR(255) NOT NULL
+  ,token VARCHAR(255) NOT NULL
+  ,expires DATETIME NOT NULL
+  ,PRIMARY KEY (user_node)
+  ,CONSTRAINT or_fk_token_user_node
+     FOREIGN KEY (user_node) REFERENCES or_user (node)
      ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
@@ -187,8 +301,8 @@ CREATE TABLE or_page(
      ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
--- Table element
-CREATE TABLE or_element(
+-- Table input
+CREATE TABLE or_input(
    node INTEGER NOT NULL
   ,descr VARCHAR(255) NOT NULL
   ,type INTEGER NOT NULL
@@ -207,70 +321,44 @@ CREATE TABLE or_element(
   ,foldernode INTEGER NULL
   ,default_node INTEGER NULL
   ,PRIMARY KEY (node)
-  ,CONSTRAINT or_fk_element_node
+  ,CONSTRAINT or_fk_input_node
      FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_element_foldernode
+  ,CONSTRAINT or_fk_input_foldernode
      FOREIGN KEY (foldernode) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_element_default_node
+  ,CONSTRAINT or_fk_input_default_node
      FOREIGN KEY (default_node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
--- Table file
-CREATE TABLE or_file(
-   node INTEGER NOT NULL
-  ,extension VARCHAR(10) NOT NULL
-  ,size INTEGER NOT NULL DEFAULT 0
-  ,width INTEGER NOT NULL
-  ,height INTEGER NOT NULL
-  ,value TEXT NOT NULL
-  ,PRIMARY KEY (node)
-  ,CONSTRAINT or_fk_file_node
-     FOREIGN KEY (node) REFERENCES or_node (id)
+-- Table meta
+CREATE TABLE or_meta(
+   type INTEGER NOT NULL
+  ,input INTEGER NOT NULL
+  ,PRIMARY KEY (type,input)
+  ,CONSTRAINT or_fk_meta_input
+     FOREIGN KEY (input) REFERENCES or_input (node)
      ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-
--- Table name
-CREATE TABLE or_name(
-   node INTEGER NOT NULL
-  ,label VARCHAR(255) NOT NULL
-  ,descr VARCHAR(255) NOT NULL
-  ,variant INTEGER NOT NULL DEFAULT 0
-  ,PRIMARY KEY (node)
-  ,CONSTRAINT or_fk_name_variant
-     FOREIGN KEY (variant) REFERENCES or_variant (node)
-     ON DELETE RESTRICT ON UPDATE RESTRICT
-);
-
--- Table attribute
-CREATE TABLE or_attribute(
-   node INTEGER NOT NULL
-  ,name VARCHAR(255) NOT NULL
-  ,value VARCHAR(255) NOT NULL
-);
-CREATE INDEX or_idx_attribute_node
-          ON or_attribute (node);
 
 -- Table value
 CREATE TABLE or_value(
    node INTEGER NOT NULL
   ,variant INTEGER NOT NULL
-  ,element INTEGER NOT NULL
+  ,input INTEGER NOT NULL
   ,linknode INTEGER NULL
   ,text TEXT NULL
   ,number INTEGER NULL
   ,exp INTEGER NULL
   ,date DATETIME NULL
-  ,active INTEGER NULL DEFAULT 0
-  ,publish INTEGER NOT NULL
+  ,status INTEGER NOT NULL
   ,PRIMARY KEY (node)
   ,CONSTRAINT or_fk_value_node
      FOREIGN KEY (node) REFERENCES or_node (id)
      ON DELETE RESTRICT ON UPDATE RESTRICT
-  ,CONSTRAINT or_fk_value_element
-     FOREIGN KEY (element) REFERENCES or_element (node)
+  ,CONSTRAINT or_fk_value_input
+     FOREIGN KEY (input) REFERENCES or_input (node)
      ON DELETE RESTRICT ON UPDATE RESTRICT
   ,CONSTRAINT or_fk_value_variant
      FOREIGN KEY (variant) REFERENCES or_variant (node)
@@ -278,12 +366,51 @@ CREATE TABLE or_value(
 );
 CREATE INDEX or_idx_value_variant
           ON or_value (variant);
-CREATE INDEX or_idx_value_element
-          ON or_value (element);
-CREATE INDEX or_idx_value_active
-          ON or_value (active);
-CREATE INDEX or_idx_value_publish
-          ON or_value (publish);
-INSERT INTO or_node (id,lft,rgt,typ,name) VALUES(1,1,4,1,'Root');
-INSERT INTO or_node (id,lft,rgt,typ,name) VALUES(2,2,3,13,'admin');
-INSERT INTO or_user (node,label,password,dn,fullname,tel,mail,descr,style) VALUES(2,'admin','admin','','Administrator','','','Admin user','default');
+CREATE INDEX or_idx_value_input
+          ON or_value (input);
+CREATE INDEX or_idx_value_status
+          ON or_value (status);
+
+-- Table label
+CREATE TABLE or_label(
+   node INTEGER NOT NULL
+  ,label VARCHAR(255) NOT NULL
+  ,descr TEXT NOT NULL
+  ,variant INTEGER NOT NULL DEFAULT 0
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_label_variant
+     FOREIGN KEY (variant) REFERENCES or_variant (node)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+-- Table docnode
+CREATE TABLE or_docnode(
+   node INTEGER NOT NULL
+  ,variant INTEGER NOT NULL
+  ,typ INTEGER NOT NULL
+  ,value TEXT NOT NULL
+  ,PRIMARY KEY (node)
+  ,CONSTRAINT or_fk_docnode_variant
+     FOREIGN KEY (variant) REFERENCES or_variant (node)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+);
+
+-- Table attribute
+CREATE TABLE or_attribute(
+   docnode INTEGER NOT NULL
+  ,name VARCHAR(255) NOT NULL
+  ,value VARCHAR(255) NOT NULL
+  ,CONSTRAINT or_fk_attribute_docnode
+     FOREIGN KEY (docnode) REFERENCES or_docnode (node)
+     ON DELETE RESTRICT ON UPDATE RESTRICT
+  ,PRIMARY KEY (docnode)
+);
+
+-- Table version
+CREATE TABLE or_version(
+   version INTEGER NOT NULL
+  ,PRIMARY KEY (version)
+);
+INSERT INTO or_node (id,lft,rgt,typ,name,hash) VALUES(1,1,4,1,'Root','270f3bc470457203e3ad5d5d7f626485');
+INSERT INTO or_node (id,lft,rgt,typ,name,hash) VALUES(2,2,3,13,'admin','37acac6f13ad72e420b717b0356e9981');
+INSERT INTO or_user (node,label,password,algo,expires,dn,fullname,tel,mail,descr,style) VALUES(2,'admin','admin',1,'1900-00-00','','Administrator','','','Admin user','default');

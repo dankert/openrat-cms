@@ -27,4 +27,4 @@ DROP TABLE or_project;
 DROP TABLE or_vnode;
 DROP TABLE or_hnode;
 DROP TABLE or_node;
--- DELETE-Script for mysql - ATTENTION - CANNOT BE UNDONE!
+-- DELETE-Script for sqlite - ATTENTION - CANNOT BE UNDONE!

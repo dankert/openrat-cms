@@ -27,4 +27,4 @@ TRUNCATE TABLE or_project;
 TRUNCATE TABLE or_vnode;
 TRUNCATE TABLE or_hnode;
 TRUNCATE TABLE or_node;
--- TRUNCATE-Script for mysql - ATTENTION - CANNOT BE UNDONE!
+-- TRUNCATE-Script for sqlite - ATTENTION - CANNOT BE UNDONE!

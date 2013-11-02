@@ -1,19 +1,30 @@
--- Drop all OpenRat tables 
---
-DROP TABLE or_acl;
+DROP TABLE or_version;
+DROP TABLE or_attribute;
+DROP TABLE or_docnode;
+DROP TABLE or_label;
 DROP TABLE or_value;
+DROP TABLE or_meta;
+DROP TABLE or_input;
+DROP TABLE or_page;
+DROP TABLE or_template;
+DROP TABLE or_acl;
+DROP TABLE or_variant;
 DROP TABLE or_usergroup;
-DROP TABLE or_templatemodel;
-DROP TABLE or_name;
+DROP TABLE or_group;
+DROP TABLE or_token;
+DROP TABLE or_user;
 DROP TABLE or_link;
+DROP TABLE or_file_value;
 DROP TABLE or_folder;
 DROP TABLE or_file;
-DROP TABLE or_element;
-DROP TABLE or_projectmodel;
-DROP TABLE or_page;
-DROP TABLE or_language;
-DROP TABLE or_template;
-DROP TABLE or_object;
-DROP TABLE or_group;
-DROP TABLE or_user;
+DROP TABLE or_url;
+DROP TABLE or_meta_values;
+DROP TABLE or_meta_keys;
+DROP TABLE or_target;
+DROP TABLE or_props;
+DROP TABLE or_prop;
 DROP TABLE or_project;
+DROP TABLE or_vnode;
+DROP TABLE or_hnode;
+DROP TABLE or_node;
+-- DELETE-Script for postgresql - ATTENTION - CANNOT BE UNDONE!
