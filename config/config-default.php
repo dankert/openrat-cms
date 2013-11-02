@@ -742,6 +742,7 @@ $conf['security']['newuser']['autogroups'] = "";
 
 $conf['security']['password'] = array();
 $conf['security']['password']['random_length']=10;
+$conf['security']['password']['expiration_days']=365;
 $conf['security']['password']['min_length']=6;
 $conf['security']['password']['pepper']= '';
 $conf['security']['http'] = array();

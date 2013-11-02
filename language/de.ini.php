@@ -1208,3 +1208,4 @@ NODE_TYPE_DOCNODE = Dokument
 NODE_TYPE_CONFIG = Konfiguration
 NODE_TYPE_UNIT = Bereich
 NODE_TYPE_FRAGMENT = Fragment
+PASSWORD_EXPIRES=Kennwort läuft ab am

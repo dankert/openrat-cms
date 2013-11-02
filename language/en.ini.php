@@ -1229,3 +1229,4 @@ SELECT_PROJECT=Select project
 SELECT_LANGUAGE=Select language
 SELECT_MODEL=Select model
 PWCHANGE_NOT_ALLOWED=Password change is not available
+PASSWORD_EXPIRES=Password expiration date

@@ -18,6 +18,11 @@
 
 
 
+define('ALGO_TYPE_PLAIN', 1);
+define('ALGO_TYPE_MD5'  , 2);
+define('ALGO_TYPE_BCRYPT',3);
+
+
 /**
  * Darstellen eines Benutzers
  *
@@ -43,6 +48,8 @@ class User extends Node
 	var $loginDate = 0;
 	
 	var $mustChangePassword = false;
+	var $passwordExpires = 0;
+	var $passwordAlgo    = 0;
 	var $groups = null;
 	var $loginModuleName = null;
 
@@ -240,7 +247,7 @@ SQL
 		if	( count($row) == 0 )
 			throw new ObjectNotFoundException();
 		
-		$this->setDatabaseRow( $row );		
+		$this->setDatabaseRow( $row );
 	}
 
 
@@ -299,6 +306,8 @@ SQL
 		$this->tel      = $row['tel'     ];
 		$this->mail     = $row['mail'    ];
 		$this->desc     = $row['descr'   ];
+		$this->passwordAlgo    = $row['algo'];
+		$this->passwordExpires = strtotime($row['expires']);
 		
 		if	( $this->fullname == '' )
 			$this->fullname = $this->name;
@@ -403,6 +412,8 @@ SQL
 		$sql->setString ( 'style'   ,$this->style   );
 		$sql->setBoolean( 'isAdmin' ,$this->isAdmin );
 		$sql->setInt    ( 'userid'  ,$this->userid  );
+		$sql->setInt    ( 'algo'    ,$this->passwordAlgo    );
+		$sql->setDate   ( 'expires' ,$this->passwordExpires );
 		
 		// Datenbankabfrage ausfuehren
 		$db->query( $sql );
@@ -538,7 +549,7 @@ SQL
 		              'desc'    => $this->desc,
 		              'mail'    => $this->mail,
 		              'style'   => $this->style,
-		              'is_admin'=> $this->isAdmin,
+				      'passwordExpires'=> $this->passwordExpires,
 		              'isAdmin' => $this->isAdmin );
 	}
 
@@ -569,19 +580,47 @@ SQL
 	 */
 	function setPassword( $password, $always=true )
 	{
+		global $conf;
 		$db = db_connection();
 
-		$sql = new Sql( 'UPDATE {t_user} SET password={password}'.
+		$sql = new Sql( 'UPDATE {t_user} SET password={password},expires={expires},algo={algo} '.
 		                'WHERE node={userid}' );
 		                
 		if	( $always )
+		{
 			// Hashsumme für Kennwort erzeugen und speichern.
 			$sql->setString('password',Password::hash($this->pepperPassword($password)) );
+			$sql->setInt   ('algo'    ,ALGO_TYPE_BCRYPT );
+			$sql->setDate  ('expires' ,time() + ($conf['security']['password']['expiration_days']*24*60*60) );
+		}
 		else
+		{
 			// Klartext-Kennwort, der Benutzer muss das Kennwort beim nä. Login ändern.
-			$sql->setString('password',$password);
-			
+			$sql->setString('password',$password       );
+			$sql->setInt   ('algo'    ,ALGO_TYPE_PLAIN );
+			$sql->setDate  ('expires' ,time()          );
+		}
+		
+		
 		$sql->setInt   ('userid'  ,$this->userid  );
+
+		$db->query( $sql );
+	}
+
+
+	/**
+	 * Setzt das Datum des letzten Logins auf die aktuelle Zeit.
+	 */
+	public function renewLoginTime()
+	{
+		global $conf;
+		$db = db_connection();
+
+		$sql = new Sql( 'UPDATE {t_user} SET last_login={time} '.
+		                'WHERE node={userid}' );
+		                
+		$sql->setDate  ('time'  ,time()         );
+		$sql->setInt   ('userid',$this->userid  );
 
 		$db->query( $sql );
 	}

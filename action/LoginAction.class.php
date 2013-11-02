@@ -910,6 +910,7 @@ class LoginAction extends NodeAction
 			{
 				// Benutzer über den Benutzernamen laden.
 				$user = User::loadWithName($loginName);
+				$user->renewLoginTime();
 				$user->loginModuleName = $lastModule;
 				Session::setUser($user);
 			}
@@ -982,6 +983,8 @@ class LoginAction extends NodeAction
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
 			
 			$this->setStyle( $user->style );
+			
+			return; // TODO
 			
 			$this->evaluateRequestVars();
 
