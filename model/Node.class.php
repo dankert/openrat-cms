@@ -834,8 +834,8 @@ SQL
 		// 		$this->checkFilename(); // TODO!
 	
 		$sql = new Sql( <<<SQL
-INSERT INTO {t_node} ( id  ,typ    ,name   ,lft    ,rgt    ,lastmodified  ,lastmodified_user  ,creation  ,creation_user  )
-	           VALUES( {id},{type} ,{name} ,{left} ,{right},{lastmodified},{lastmodified_user},{creation},{creation_user});
+INSERT INTO {t_node} ( id  ,typ    ,name   ,lft    ,rgt    ,hash  ,lastmodified  ,lastmodified_user  ,creation  ,creation_user  )
+	           VALUES( {id},{type} ,{name} ,{left} ,{right},{hash},{lastmodified},{lastmodified_user},{creation},{creation_user});
 SQL
 		);
 	
@@ -848,7 +848,8 @@ SQL
 		$sql->setString('name' ,$this->name  );
 		$sql->setInt   ('left' ,$this->left  );
 		$sql->setInt   ('right',$this->right );
-	
+		$sql->setString('hash' ,uniqid(md5(rand()), true) );
+		
 		$sql->setDate  ('lastmodified'     ,$this->lastchangeDate          );
 		$sql->setInt   ('lastmodified_user',$this->lastchangeUser->userid  );
 		$sql->setDate  ('creation'     ,$this->createDate );
