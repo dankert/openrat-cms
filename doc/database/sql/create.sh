@@ -264,6 +264,8 @@ for	db in mysql postgresql oracle sqlite; do
     column creation          DATE - - N
     column creation_user     INT  - - Y
     primary_key id
+    constraint creation_user     user node  
+    constraint lastmodified_user user node  
 	close_table
   	unique_index lft,rgt
   	#unique_index name
@@ -585,9 +587,10 @@ for	db in mysql postgresql oracle sqlite; do
     close_table
 
 
-	insert node "id,lft,rgt,typ,name,hash" "1,1,4,1,'Root','270f3bc470457203e3ad5d5d7f626485'"
-	insert node "id,lft,rgt,typ,name,hash" "2,2,3,13,'admin','37acac6f13ad72e420b717b0356e9981'"
-	insert user "node,label,password,algo,expires,dn,fullname,tel,mail,descr,style" "2,'admin','admin',1,'1900-00-00','','Administrator','','','Admin user','default'"
+	insert node "id,lft,rgt,typ,name,hash,lastmodified,lastmodified_user,creation,creation_user" "1,1,4,1 ,'Root' ,'270f3bc470457203e3ad5d5d7f626485','1990-01-01',null,'1990-01-01',null"
+	insert node "id,lft,rgt,typ,name,hash,lastmodified,lastmodified_user,creation,creation_user" "2,2,3,13,'admin','37acac6f13ad72e420b717b0356e9981','1990-01-01',null,'1990-01-01',null"
+	insert user "node,label,password,algo,expires,dn,fullname,tel,mail,descr,style" "2,'Administrator','admin',1,'1990-00-00','','Administrator','','','Admin user','default'"
+	insert version "version" "2"
 
 
     # end of table definitions
