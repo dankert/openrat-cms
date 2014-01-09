@@ -194,13 +194,13 @@ class HtmlRenderer
 						if	( strtolower($child->name) == 'help' )
 						{
 							$tag = 'tt';
-							$macros = FileUtils::readDir('./dynamicClasses');
+							$macros = FileUtils::readDir('./macro');
 							$val = 'Available macros: '.implode(',',$macros);
 						}
 						else
 						{
 							$className = ucfirst($child->name);
-							$fileName  = './dynamicClasses/'.$className.'.class.php';
+							$fileName  = './macro/'.$className.'.class.php';
 							if	( is_file( $fileName ) )
 							{
 								// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
