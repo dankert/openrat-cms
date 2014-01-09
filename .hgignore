@@ -4,3 +4,4 @@ syntax: glob
 .settings
 config/config-localhost.ini.php
 .buildpath
+.idea
