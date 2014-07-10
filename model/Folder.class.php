@@ -417,6 +417,32 @@ class Folder extends Object
 	 *
 	 * @return Object Objekt
 	 */
+	public function getFirstPage()
+	{
+		$db = db_connection();
+
+		$sql = new Sql('SELECT id FROM {t_object} '.
+		               '  WHERE parentid={objectid}'.
+		               '    AND (is_page=1)'.
+		               '  ORDER BY orderid ASC' );
+		$sql->setInt( 'objectid' ,$this->objectid  );
+
+		$oid = intval($db->getOne( $sql ));
+		
+		if	( $oid != 0 )
+			$o = new Object($oid);
+		else
+			$o = null;
+
+		return $o;
+	}
+
+
+	/**
+	 * Ermittelt die erste Seite oder Verkn�pfung in diesem Ordner.
+	 *
+	 * @return Object Objekt
+	 */
 	function getFirstPageOrLink()
 	{
 		$db = db_connection();
