@@ -441,7 +441,7 @@ class DB
 	}
 	
 	
-	private function convertCharsetToDatabase($text)
+	private function convertCharsetToDatabase(&$text)
 	{
 		//Logger::debug('from '.$text);
 		$dbCharset = @$this->conf['charset'];
@@ -460,20 +460,17 @@ class DB
 	}
 	
 	
-	private function convertCharsetFromDatabase($text)
+	private function convertCharsetFromDatabase(&$text)
 	{
-		//Logger::debug('from '.$text);
 		$dbCharset = @$this->conf['charset'];
 		if	( !empty($dbCharset) && $dbCharset != 'UTF-8' )
 		{
-			//Logger::debug('Converting to UTF-8 from '.$dbCharset);
 			if	( !function_exists('iconv') )
 				Logger::warn('iconv not available - database charset unchanged. Please '.
 				             'enable iconv on your system or transform your database content to UTF-8.');
 			else
 				$text = iconv($dbCharset,'UTF-8//TRANSLIT',$text);
 		}
-		//Logger::debug('to   '.$text);
 		return $text;
 		
 	}
