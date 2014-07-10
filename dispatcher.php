@@ -112,7 +112,7 @@ if	( !empty($conf['interface']['timeout']) )
 	set_time_limit( intval($conf['interface']['timeout']) );
 
 if	( config('security','use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN]!=token() )
-	Http::notAuthorized("Token mismatch");
+	Http::notAuthorized("Token mismatch","Token mismatch");
 	
 define('FILE_SEP',$conf['interface']['file_separator']);
 
