@@ -252,6 +252,11 @@ class DB_postgresql
 		$this->params   = array();
 	}
 	
+	function escape()
+	{
+		return 'pg_escape_string';
+	}
+	
 }
 
 ?>
