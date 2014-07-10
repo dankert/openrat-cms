@@ -199,6 +199,7 @@ class FolderAction extends ObjectAction
 		
 		$file   = new File();
 		
+		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
 		if	( $this->hasRequestVar('url') )
 		{
 			$url = $this->getRequestVar('url');
@@ -225,21 +226,34 @@ class FolderAction extends ObjectAction
 		{
 			$upload = new Upload();
 			
-			if	( !$upload->isValid() )
+			if	( $upload->isValid() )
 			{
-				$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
-				$this->callSubAction('createfile');
-				return;
+				$file->desc      = $description;
+				$file->filename  = $upload->filename;
+				$file->name      = !empty($name)?$name:$upload->filename;
+				$file->extension = $upload->extension;		
+				$file->size      = $upload->size;
+				$file->parentid  = $this->folder->objectid;
+		
+				$file->value     = $upload->value;
 			}
-	
-			$file->desc      = $description;
-			$file->filename  = $upload->filename;
-			$file->name      = !empty($name)?$name:$upload->filename;
-			$file->extension = $upload->extension;		
-			$file->size      = $upload->size;
-			$file->parentid  = $this->folder->objectid;
-	
-			$file->value     = $upload->value;
+			else
+			{
+				if	( $this->hasRequestVar('name') )
+				{
+					$file->name     = $this->getRequestVar('name');
+					$file->desc     = $this->getRequestVar('description');
+					$file->filename = $this->getRequestVar('filename', OR_FILTER_FILENAME);
+					$file->parentid = $this->folder->objectid;
+				}
+				else
+				{
+					$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
+					$this->callSubAction('createfile');
+					return;
+				}
+				
+			}
 		}
 
 		$file->add(); // Datei hinzufuegen
@@ -265,8 +279,19 @@ class FolderAction extends ObjectAction
 			$link->desc           = $description;
 			$link->parentid       = $this->folder->objectid;
 
-			$link->isLinkToObject = false;
-			$link->url            = $this->getRequestVar('name');
+			if	( $this->hasRequestVar('targetobjectid') )
+			{
+				$link->isLinkToObject = true;
+				$link->isLinkToUrl    = false;
+				$link->linkedObjectId = $this->getRequestVar('targetobjectid');
+			}
+			else
+			{
+				$link->isLinkToObject = false;
+				$link->isLinkToUrl    = true;
+				$link->url            = $this->getRequestVar('name');
+			}
+			
 
 			$link->add();
 
