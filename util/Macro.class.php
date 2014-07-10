@@ -64,6 +64,16 @@ class Macro
 
 	
 	/**
+	 * Holt die aktuelle Seite.
+	 * @return Seite
+	 */
+	public function getPage()
+	{
+		return new Page( $this->objectid );
+	}
+	
+	
+	/**
 	 * Holt das aktuelle Objekt.
 	 * @return Object
 	 */
