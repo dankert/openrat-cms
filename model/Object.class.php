@@ -364,7 +364,7 @@ SQL
 		// ungueltige Zeichen werden entfernt
 		$gueltig = 'abcdefghijklmnopqrstuvwxyz0123456789.-_';
 		$tmp = strtr($filename, $gueltig, str_repeat('#', strlen($gueltig)));
-		return( str_replace('-','',strtr($this->filename, $tmp, str_repeat('-', strlen($tmp)))) );
+		return( strtr($this->filename, $tmp, str_repeat('-', strlen($tmp))) );
 	}
 
 
@@ -500,7 +500,7 @@ SQL
 		
 		if (count($row) == 0)
 			throw new ObjectNotFoundException('object '.$this->objectid.' not found');
-			
+
 		$this->setDatabaseRow( $row );
 	}
 
@@ -664,7 +664,7 @@ SQL
 		$db = db_connection();
 
 		$this->checkFilename();
-
+		
 		$sql = new Sql( <<<SQL
 UPDATE {t_object} SET 
                       parentid          = {parentid},
