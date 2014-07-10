@@ -1314,6 +1314,24 @@ SQL
 	}
 
 
+	
+	/**
+	 * Liefert die Link-Ids, die auf das aktuelle Objekt verweisen.
+	 * @return Array Liste der gefundenen Objekt-IDs
+	 */
+	public function getLinksToMe()
+	{
+		$db = db_connection();
+	
+		$sql = new Sql( 'SELECT objectid FROM {t_link} '.
+				' WHERE link_objectid={myid}' );
+		$sql->setInt   ( 'myid'   ,$this->objectid );
+	
+		return $db->getCol( $sql );
+	}
+	
+	
+	
 
 }
 
