@@ -59,7 +59,7 @@ class TagCloud extends Macro
 			$target->load();
 				
 			// Link zum Tag erzeugen
-			$this->output( '<div class="tag" style="font-size:'.(1+(sizeof($tf->getObjectIds())*0.1)).'em"><a href="'.$this->pathToObject($target->objectid).'">'.$tf->name.'</a></div>' );			
+			$this->output( '<div class="tag" style="font-size:'.(0.5+(sizeof($tf->getObjectIds())*0.1)).'em"><a href="'.$this->pathToObject($target->objectid).'">'.$tf->name.'</a></div>' );			
 		}
 	}
 
