@@ -729,7 +729,20 @@ SQL
 	}
 
 
+	public function setCreationTimestamp()
+	{
+		$db = db_connection();
+		
+		$sql = new Sql('UPDATE {t_object} SET '.
+				'  create_date   = {time}  '.
+				' WHERE id={objectid}');
+		
+		$sql->setInt   ('time'    ,$this->createDate );
+		
+		$db->query( $sql );
+	}
 
+	
 	/**
 	 * Logischen Namen und Beschreibung des Objektes in Datenbank speichern
 	 * (wird von objectSave() automatisch aufgerufen)
