@@ -306,6 +306,7 @@ class PageAction extends ObjectAction
 			
 			if	( $this->hasRequestVar('creationTimestamp') && $this->currentUser->isAdmin )
 				$this->page->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
+				$this->page->setCreationTimestamp();
 		}
 		else
 		{

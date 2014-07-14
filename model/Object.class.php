@@ -737,6 +737,7 @@ SQL
 				'  create_date   = {time}  '.
 				' WHERE id={objectid}');
 		
+		$sql->setInt   ('objectid',$this->objectid   );
 		$sql->setInt   ('time'    ,$this->createDate );
 		
 		$db->query( $sql );
