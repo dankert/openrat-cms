@@ -442,9 +442,9 @@ class Http
 	 * @param String $text Text
 	 * @param String $message Eigener Hinweistext
 	 */
-	public static function notAuthorized($text,$message)
+	public static function notAuthorized($message='')
 	{
-		Http::sendStatus(403,$text,$message);
+		Http::sendStatus(403,'Not authorized',$message);
 	}
 	
 	
@@ -463,7 +463,7 @@ class Http
 	 */
 	public static function notFound($text,$message)
 	{
-		Http::sendStatus(404,$text,$message);
+		Http::sendStatus(404,'Not found',$message);
 	}
 
 	
