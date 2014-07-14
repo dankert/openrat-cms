@@ -10,4 +10,4 @@
 if	($attr_readonly) {
 	/* Nur anzeigen */
 ?><input type="hidden" id="<?php echo REQUEST_ID ?>_<?php echo $attr_name ?>" name="<?php echo $attr_name ?>" value="<?php echo $tmp_value ?>" /><?php
- } } else { ?><a title="<?php echo langHtml('EDIT') ?>" href="<?php echo Html::url($actionName,$subactionName,0,array('mode'=>'edit')) ?>"><span class="<?php echo $attr_class ?>"><?php echo $tmp_value ?></span></a><?php } ?>
+ } } else { ?><a title="<?php echo langHtml('EDIT') ?>" href="<?php echo Html::url($actionName,$subActionName,0,array('mode'=>'edit')) ?>"><span class="<?php echo $attr_class ?>"><?php echo $tmp_value ?></span></a><?php } ?>

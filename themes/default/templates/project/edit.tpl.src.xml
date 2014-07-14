@@ -28,6 +28,7 @@
 				<part class="input">
 					<input name="cmd_after_publish" class="filename"
 						readonly="!config:publish/project/override_system_command"></input>
+				 
 				</part>
 			</part>
 		</group>
