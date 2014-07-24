@@ -1221,6 +1221,24 @@ SQL
 
 							foreach( $this->element->getDynamicParameters() as $param_name=>$param_value )
 							{
+								if	( $param_value[0]=='{')
+								{
+									$elName   = substr($param_value,1,strpos($param_value,'}')-1);
+									$template = new Template($this->page->templateid);
+									$elements = $template->getElementNames();
+									$elementid = array_search($elName,$elements);
+									
+									$value = new Value();
+									$value->elementid  = $elementid;
+									$value->element    = new Element( $elementid );
+									$value->pageid     = $this->page->pageid;
+									$value->languageid = $this->page->languageid;
+									$value->load();
+									
+									Logger::debug('TEST: '.$value->linkToObjectId);
+										
+									$param_value = $value->getRawValue();
+								}
 								if	( isset( $dynEl->$param_name ) )
 								{
 									Logger::debug("Setting parameter for macro Class $className, ".$param_name.':'.$param_value );
@@ -1622,5 +1640,23 @@ SQL
 	
 	
 	
-	
+	/**
+	 * Ermittelt den unbearbeiteten, "rohen" Inhalt.
+	 * 
+	 * @return Inhalt
+	 */
+	public function getRawValue()
+	{
+		switch( $this->element->type )
+		{
+			case 'link':
+				return $this->linkToObjectId;
+				
+			case 'date';
+				return $this->number;
+				
+			default:
+				return $this->text;
+		}
+	}
 }

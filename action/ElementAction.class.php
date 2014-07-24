@@ -230,6 +230,7 @@ class ElementAction extends Action
 							                  'image',
 							                  'image_data_uri',
 							                  'page',
+							                  'folder',
 							                  'link' );
 							$convertToLang = true;
 							break;

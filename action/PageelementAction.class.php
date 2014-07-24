@@ -472,10 +472,10 @@ class PageelementAction extends Action
 		if	( substr($type,0,5) == 'image' )
 		$type = 'file';
 			
-		if	( !in_array($type,array('file','page','link')) )
-		$types = array('file','page','link');
+		if	( !in_array($type,array('file','page','link','folder')) )
+			$types = array('file','page','link'); // Fallback: Der Link kann auf Seiten,Dateien und Verknüpfungen zeigen
 		else
-		$types = array($type);
+			$types = array($type); // gewünschten Typ verwenden
 
 		$objects = array();
 
@@ -499,6 +499,8 @@ class PageelementAction extends Action
 
 		$this->setTemplateVar('objects'         ,$objects);
 		$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
+		
+		$this->setTemplateVar('types',implode(',',$types));
 
 		if	( $this->getSessionVar('pageaction') != '' )
 		$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
