@@ -27,12 +27,12 @@ jQuery.fn.orLinkify = function()
 
 			else if	( type == 'modal' )
 			{
-				startDialog($(this).attr('data-method'),true );
+				startDialog($(this).attr('data-name'),null,$(this).attr('data-method') );
 			}
 
 			else if	( type == 'dialog' )
 			{
-				startDialog($(this).attr('data-name'),$(this).attr('data-method'),false );
+				startDialog($(this).attr('data-name'),null,$(this).attr('data-method') );
 			}
 
 			else if	( type == 'url' )

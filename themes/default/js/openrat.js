@@ -602,13 +602,14 @@ function registerViewEvents( viewEl )
 		} });
 	} );
 	
-	// Drag n Drop für Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen)
+	// Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
 	$('div.content li.object').draggable( {cursor:'move',revert: 'invalid' });
 	$('div.content li.object > div.entry[data-type=\'folder\']').droppable( {accept:'li.object',hoverClass: 'drophover',activeClass: 'dropactive',drop: function(event, ui) {
 		var dropped   = ui.draggable;
         var droppedOn = $(this).parent();
         
         //alert('Moving '+$(dropped).attr('data-id')+' to folder '+$(droppedOn).attr('data-id') );
+        startDialog($(this).text(),'folder','edit',$(droppedOn).attr('data-id'),{'action':'folder','subaction':'edit','id':$(droppedOn).attr('data-id'),'source_id':$(dropped).attr('data-id')});
         /*
         if	( $(dropped).closest('div.panel').attr('id') == $(droppedOn).closest('div.panel').attr('id') )
         	$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
@@ -792,16 +793,22 @@ function startView( element,method )
  * @param action Action
  * @param id Id
  */
-function startDialog( name,method,modal )
+function startDialog( name,action,method,id,params )
 {
-	var action = $('#panel-content').find('li.active').data('action');
-	var id     = $('#panel-content').find('li.active').data('id'    );
+	if ( action== null)
+		action = $('#panel-content').find('li.active').data('action');
+	if	(id==null)
+		id     = $('#panel-content').find('li.active').data('id'    );
+	if	(params==null)
+		params = {};
 	
 	$('div#filler').fadeTo(500,0.5);
 	$('div#dialog').html('<div class="header"><ul class="views"><li class="action active"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" /><div class="tabname" style="width:100px;">'+name+'</div></li></ul></div><div class="content" />');
 	$('div#dialog').show();
-	
-	loadView( $('div#dialog div.content'), action,method,id );
+
+	//alert("neuer Dialog2: "+name+" action: "+action+" method: "+method+ " id:"+id + " params:"+params);
+
+	loadView( $('div#dialog div.content'), action,method,id,params );
 	
 	//$('div#workbench div.panel.modal').parent().addClass('modal');
 	//$('div#workbench').addClass('modal');
@@ -1438,7 +1445,7 @@ function createUrl(action,subaction,id,extraid)
 	{
 		url += '?0=0';
 		jQuery.each(extraid, function(name, field) {
-			url = url + '&' + field.name + '=' + field.value;
+			url = url + '&' + name + '=' + field;
 		});
 	}
 	else
