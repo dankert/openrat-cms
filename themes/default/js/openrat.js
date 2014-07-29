@@ -609,7 +609,7 @@ function registerViewEvents( viewEl )
         var droppedOn = $(this).parent();
         
         //alert('Moving '+$(dropped).attr('data-id')+' to folder '+$(droppedOn).attr('data-id') );
-        startDialog($(this).text(),'folder','edit',$(droppedOn).attr('data-id'),{'action':'folder','subaction':'edit','id':$(droppedOn).attr('data-id'),'source_id':$(dropped).attr('data-id')});
+        startDialog($(this).text(),$(dropped).attr('data-type'),'copy',$(droppedOn).attr('data-id'),{'action':$(dropped).attr('data-type'),'subaction':'copy','id':$(dropped).attr('data-id'),'targetFolderId':$(droppedOn).attr('data-id')});
         /*
         if	( $(dropped).closest('div.panel').attr('id') == $(droppedOn).closest('div.panel').attr('id') )
         	$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
@@ -799,8 +799,8 @@ function startDialog( name,action,method,id,params )
 		action = $('#panel-content').find('li.active').data('action');
 	if	(id==null)
 		id     = $('#panel-content').find('li.active').data('id'    );
-	if	(params==null)
-		params = {};
+//	if	(params==null)
+//		params = {};
 	
 	$('div#filler').fadeTo(500,0.5);
 	$('div#dialog').html('<div class="header"><ul class="views"><li class="action active"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" /><div class="tabname" style="width:100px;">'+name+'</div></li></ul></div><div class="content" />');

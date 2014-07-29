@@ -49,9 +49,9 @@ define('OR_CONTROLLER_FILE'   ,defined('OR_EXT_CONTROLLER_FILE')?OR_EXT_CONTROLL
 define('START_TIME'           ,time()              );
 define('REQUEST_ID'           ,'req'.time().rand() );
 
-define('SECURITY_GUEST',1);
-define('SECURITY_USER' ,2);
-define('SECURITY_ADMIN',3);
+define('SECURITY_GUEST',1); // Jeder (auch nicht angemeldete) dürfen diese Aktion ausführen
+define('SECURITY_USER' ,2); // Angemeldete Benutzer dürfen diese Aktion ausführen
+define('SECURITY_ADMIN',3); // Nur Administratoren dürfen diese Aktion ausführen
 
 define('REQ_PARAM_TOKEN'          ,'token'          );
 define('REQ_PARAM_ACTION'         ,'action'         );

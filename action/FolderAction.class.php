@@ -1239,9 +1239,9 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('rootfoldername',$rootFolder->name);
 	}
 
-
-
-
+	
+	
+	
 	public function rootView()
 	{
 		$rootFolder = new Folder( Folder::getRootFolderId() );

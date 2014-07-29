@@ -1,0 +1,19 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form>
+		<part class="line">
+			<hidden name="sourceid" default="var:sourceId" />
+			<text text="arrayvar:source:name" />
+		</part>
+
+		<part class="line">
+			<hidden name="targetid" default="var:targetId" />
+			<text text="arrayvar:target:name" />
+		</part>
+
+		<part class="line">
+			<selectbox name="type" list="types" />
+		</part>
+	</form>
+
+</output>

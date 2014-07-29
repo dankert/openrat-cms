@@ -30,6 +30,175 @@ class ObjectAction extends Action
 	
 	private $objectid;
 
+	public function copyView()
+	{
+		$this->actionName = 'object';
+		global $conf_php;
+		
+		$sourceObject = new Object( $this->getRequestId());
+		$sourceObject->load();
+		
+		$targetFolder = new Object( $this->getRequestVar('targetFolderId',OR_FILTER_NUMBER));
+		$targetFolder->load();
+		
+		$this->setTemplateVar('source'  ,$sourceObject->getProperties() );
+		$this->setTemplateVar('sourceId',$sourceObject->objectid        );
+		$this->setTemplateVar('target'  ,$targetFolder->getProperties() );
+		$this->setTemplateVar('targetId',$targetFolder->objectid        );
+		$this->setTemplateVar('types'   ,array('move'=>'move','moveandlink'=>'moveandlink','copy'=>'copy','link'=>'link') );
+		
+		if   ( ! $targetFolder->hasRight(ACL_WRITE) )
+		{
+			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',OR_NOTICE_ERROR);
+		}
+	}
+	
+	
+	/**
+	 * Ein Fileobjekt wird in einen neuen Ordner kopiert oder verschoben.
+	 */
+	public function copyPost()
+	{
+		$type           = $this->getRequestVar('type');
+		$targetObjectId = $this->getRequestVar('targetid',OR_FILTER_NUMBER);
+		$sourceObjectId = $this->getRequestVar('sourceid',OR_FILTER_NUMBER);
+
+		$sourceObject = new Object( $sourceObjectId );
+		$sourceObject->load();
+		
+		$targetFolder = new Object( $targetObjectId );
+		$targetFolder->load();
+		
+		// Prüfen, ob Schreibrechte im Zielordner bestehen.
+		if   ( ! $targetFolder->hasRight(ACL_WRITE) )
+		{
+			$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',OR_NOTICE_ERROR);
+			return;
+		}
+		
+		switch( $type )
+		{
+			case 'move':
+				
+				if	( $sourceObject->isFolder )
+				{
+					$f = new Folder( $sourceObjectId );
+					$allsubfolders = $f->getAllSubFolderIds();
+				
+					// Plausibilisierungsprüfung:
+					//
+					// Wenn
+					// - Das Zielverzeichnis sich nicht in einem Unterverzeichnis des zu verschiebenen Ordners liegt
+					// und
+					// - Das Zielverzeichnis nicht der zu verschiebene Ordner ist
+					// dann verschieben
+					if	( in_array($targetObjectId,$allsubfolders) || $sourceObjectId == $targetObjectId )
+					{
+						$this->addNotice('folder',$sourceObject->name,'ERROR',OR_NOTICE_ERROR);
+						return;
+					}
+				}
+				
+				// TODO:
+				// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
+				// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
+				$sourceObject->setParentId( $targetObjectId );
+				$this->addNotice($sourceObject->type, $sourceObject->name, 'moved');
+				break;
+				
+			case 'moveandlink':
+
+				$oldParentId = $sourceObject->parentid;
+				
+				$sourceObject->setParentId( $targetObjectId );
+				$this->addNotice($sourceObject->type, $sourceObject->name, 'moved');
+				
+				$link = new Link();
+				$link->parentid = $oldParentId;
+				$link->name     = lang('LINK_TO').' '.$sourceObject->name;
+				$link->filename = $sourceObject->filename;
+				$link->linkedObjectId = $sourceObjectId;
+				$link->add();
+				$this->addNotice('link', $link->name, 'added');
+				
+				break;
+				
+			case 'copy':
+				
+				switch( $sourceObject->getType() )
+				{
+					case 'folder':
+						// Ordner zur Zeit nicht kopieren
+						// Funktion waere zu verwirrend
+						$this->addNotice($sourceObject->getType(),$sourceObject->name,'CANNOT_COPY_FOLDER','error');
+						break;
+							
+					case 'file':
+						$f = new File( $sourceObjectId );
+						$f->load();
+						$f->filename = '';
+						$f->name     = lang('COPY_OF').' '.$f->name;
+						$f->parentid = $targetObjectId;
+						$f->add();
+						$f->copyValueFromFile( $id );
+				
+						$this->addNotice($sourceObject->getType(),$sourceObject->name,'COPIED','ok');
+						break;
+				
+					case 'page':
+						$p = new Page( $sourceObjectId );
+						$p->load();
+						$p->filename = '';
+						$p->name     = lang('COPY_OF').' '.$p->name;
+						$p->parentid = $targetObjectId;
+						$p->add();
+						$p->copyValuesFromPage( $id );
+						$this->addNotice($sourceObject->getType(),$sourceObject->name,'COPIED','ok');
+						break;
+							
+					case 'link':
+						$l = new Link( $sourceObjectId );
+						$l->load();
+						$l->filename = '';
+						$l->name     = lang('COPY_OF').' '.$l->name;
+						$l->parentid = $targetObjectId;
+						$l->add();
+						$this->addNotice($sourceObject->getType(),$sourceObject->name,'COPIED','ok');
+						break;
+							
+					default:
+						Http::serverError('fatal: unknown type while deleting');
+				}
+				break;				
+				
+			case 'link':
+
+				// Beim Verkn�pfen muss im Zielordner die Berechtigung zum Erstellen
+				// von Verkn�pfungen vorhanden sein.
+				if   ( ! $targetFolder->hasRight(ACL_CREATE_LINK) )
+				{
+					$this->addNotice('folder', $targetFolder->name, 'NOT_WRITABLE',OR_NOTICE_ERROR);
+					return;
+				}
+				
+				$link = new Link();
+				$link->parentid = $targetObjectId;
+				$link->name     = lang('LINK_TO').' '.$sourceObject->name;
+				$link->filename = $sourceObject->filename;
+				$link->linkedObjectId = $sourceObjectId;
+				$link->add();
+				$this->addNotice('link', $link->name, 'added');
+				// OK
+				break;
+				
+			default:
+				Http::serverError('Unknown type for copying');
+				break;
+		}
+		
+		$targetFolder->setTimestamp();
+		
+	}
 
 	/**
 	  * ACL zu einem Objekt setzen
@@ -288,7 +457,7 @@ class ObjectAction extends Action
 		$o = new Object( $this->getRequestId() );
 
 		if	( !$o->hasRight( ACL_GRANT ) )
-			die('ehm?'); // Da wollte uns wohl einer vereimern.
+			Http::notAuthorized('no grant rights'); // Da wollte uns wohl einer vereimern.
 
 		$acl->delete(); // Weg mit der ACL
 		

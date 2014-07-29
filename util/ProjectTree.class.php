@@ -40,7 +40,7 @@ class ProjectTree extends AbstractTree
 
 
 
-	function pageelements( $id )
+	function page( $id )
 	{
 		$page = new Page( $id );
 		$page->load();
@@ -214,7 +214,7 @@ class ProjectTree extends AbstractTree
 				// Nur wenn die Seite beschreibbar ist, werden die
 				// Elemente im Baum angezeigt
 				if   ( $o->hasRight( ACL_WRITE ) )
-					$treeElement->type='pageelements';
+					$treeElement->type='page';
 			}
 
 			if   ( $o->isFile )
