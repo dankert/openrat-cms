@@ -140,7 +140,7 @@ class ObjectAction extends Action
 						$f->name     = lang('COPY_OF').' '.$f->name;
 						$f->parentid = $targetObjectId;
 						$f->add();
-						$f->copyValueFromFile( $id );
+						$f->copyValueFromFile( $sourceObjectId );
 				
 						$this->addNotice($sourceObject->getType(),$sourceObject->name,'COPIED','ok');
 						break;
@@ -152,7 +152,7 @@ class ObjectAction extends Action
 						$p->name     = lang('COPY_OF').' '.$p->name;
 						$p->parentid = $targetObjectId;
 						$p->add();
-						$p->copyValuesFromPage( $id );
+						$p->copyValuesFromPage( $sourceObjectId );
 						$this->addNotice($sourceObject->getType(),$sourceObject->name,'COPIED','ok');
 						break;
 							
@@ -186,6 +186,7 @@ class ObjectAction extends Action
 				$link->name     = lang('LINK_TO').' '.$sourceObject->name;
 				$link->filename = $sourceObject->filename;
 				$link->linkedObjectId = $sourceObjectId;
+				$link->isLinkToObject = true;
 				$link->add();
 				$this->addNotice('link', $link->name, 'added');
 				// OK
