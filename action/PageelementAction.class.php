@@ -1183,13 +1183,16 @@ class PageelementAction extends Action
 			$value->load();
 
 			if   ( $this->hasRequestVar('linkobjectid') )
-			$value->linkToObjectId = $this->getRequestVar('linkobjectid');
+				$value->linkToObjectId = $this->getRequestVar('linkobjectid');
+			elseif   ( $this->hasRequestVar('date') )
+				// Wenn ein Timestamp übergeben wurde, dann dieses verwenden
+				$value->date = $this->getRequestVar('date');
 			elseif   ( $this->getRequestVar('ansidate') != $this->getRequestVar('ansidate_orig') )
-			// Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
-			$value->date = strtotime($this->getRequestVar('ansidate') );
+				// Wenn ein ANSI-Datum eingegeben wurde, dann dieses verwenden
+				$value->date = strtotime($this->getRequestVar('ansidate') );
 			else
-			// Sonst die Zeitwerte einzeln zu einem Datum zusammensetzen
-			$value->date = mktime( $this->getRequestVar('hour'  ),
+				// Sonst die Zeitwerte einzeln zu einem Datum zusammensetzen
+				$value->date = mktime( $this->getRequestVar('hour'  ),
 			$this->getRequestVar('minute'),
 			$this->getRequestVar('second'),
 			$this->getRequestVar('month' ),
@@ -1253,9 +1256,9 @@ class PageelementAction extends Action
 			$value->load();
 
 			if	( $this->hasRequestVar('linkurl') )
-			$value->linkToObjectId = $this->parseOID($this->getRequestVar('linkurl'));
+				$value->linkToObjectId = $this->parseOID($this->getRequestVar('linkurl'));
 			else
-			$value->linkToObjectId = intval($this->getRequestVar('linkobjectid'));
+				$value->linkToObjectId = intval($this->getRequestVar('linkobjectid'));
 
 			$this->afterSave($value);
 		}
