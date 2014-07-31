@@ -62,7 +62,6 @@ class Album extends Macro
 			$folderid = $this->folderid;
 		else
 			$folderid = $this->page->parentid;
-		//Html::debug($folderid);
 		
 		$f      = new Folder($folderid);
 		

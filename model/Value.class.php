@@ -1231,12 +1231,11 @@ SQL
 									$value = new Value();
 									$value->elementid  = $elementid;
 									$value->element    = new Element( $elementid );
+									$value->element->load();
 									$value->pageid     = $this->page->pageid;
 									$value->languageid = $this->page->languageid;
 									$value->load();
 									
-									Logger::debug('TEST: '.$value->linkToObjectId);
-										
 									$param_value = $value->getRawValue();
 								}
 								if	( isset( $dynEl->$param_name ) )
@@ -1653,7 +1652,7 @@ SQL
 				return $this->linkToObjectId;
 				
 			case 'date';
-				return $this->number;
+				return $this->date;
 				
 			default:
 				return $this->text;
