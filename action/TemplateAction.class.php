@@ -172,6 +172,7 @@ class TemplateAction extends Action
 		}
 		
 		$this->setTemplateVar('pages',$pages);
+		$this->setTemplateVar('id'   ,$this->template->templateid);
 	}
 
 

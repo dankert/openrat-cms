@@ -148,6 +148,17 @@ class ElementAction extends Action
 		$this->setTemplateVar('type',$this->element->type);
 	}
 	
+
+	
+	/**
+	 * Auswahlmaske f�r weitere Einstellungen zum Template-Element.
+	 *
+	 */
+	function infoView()
+	{
+		$this->setTemplateVar('id'  ,$this->element->elementid );
+		$this->setTemplateVar('name',$this->element->name );
+	}
 	
 	/**
 	 * Auswahlmaske f�r weitere Einstellungen zum Template-Element.
