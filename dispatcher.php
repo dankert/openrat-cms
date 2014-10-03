@@ -105,6 +105,9 @@ if	( !is_array( $conf ) || $conf['config']['auto_reload'] && Preferences::lastMo
 	Session::setConfig( $conf );
 }
 
+// Nachdem die Konfiguration gelesen wurde, kann nun der Logger benutzt werden.
+require_once( OR_SERVICECLASSES_DIR."Logger.class.".PHP_EXT );
+
 if	( !empty($conf['security']['umask']) )
 	umask( octdec($conf['security']['umask']) );
 
@@ -112,7 +115,11 @@ if	( !empty($conf['interface']['timeout']) )
 	set_time_limit( intval($conf['interface']['timeout']) );
 
 if	( config('security','use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN]!=token() )
+{
+	Logger::error('Token mismatch: Needed '.token().' but got '.@$REQ[REQ_PARAM_TOKEN].'. Maybe an attacker?');
 	Http::notAuthorized("Token mismatch","Token mismatch");
+}
+
 	
 define('FILE_SEP',$conf['interface']['file_separator']);
 
@@ -120,7 +127,6 @@ define('TEMPLATE_DIR',OR_THEMES_DIR.$conf['interface']['theme'].'/templates');
 define('CSS_DIR'     ,OR_THEMES_DIR.$conf['interface']['theme'].'/css'      );
 define('IMAGE_DIR'   ,OR_THEMES_DIR.$conf['interface']['theme'].'/images'   );
 
-require_once( OR_SERVICECLASSES_DIR."Logger.class.".PHP_EXT );
 require_once( "functions/config.inc.php" );
 require_once( "functions/language.inc.".PHP_EXT );
 require_once( "functions/db.inc.".PHP_EXT );
@@ -226,7 +232,7 @@ else
 		Session::close();
 }
 	
-Logger::debug("Executing $actionClassName::$subactionMethodName");
+Logger::debug("Executing $action/$subaction/".@$REQ[REQ_PARAM_ID]);
 
 if	( ! method_exists($do,$subactionMethodName) )
 	Http::noContent();
