@@ -486,9 +486,10 @@ function registerViewEvents( viewEl )
 				var params = {};
 				params.action    = 'folder';
 				params.subaction = 'order';
-				params.token     = $('#id_token').attr('value');
+				params.token     = $('div.action-folder.method-order input[name=token]').attr('value');
 				params.order     = order.join(',');
-				params.id        = $(viewEl).closest('div.panel').data('id');
+				//params.id        = $(viewEl).closest('div.panel').data('id');
+				params.id        = $('div#dialog').data('id');
 				params.output    = 'json';
 				
 				$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
@@ -804,6 +805,7 @@ function startDialog( name,action,method,id,params )
 	
 	$('div#filler').fadeTo(500,0.5);
 	$('div#dialog').html('<div class="header"><ul class="views"><li class="action active"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" /><div class="tabname" style="width:100px;">'+name+'</div></li></ul></div><div class="content" />');
+	$('div#dialog').data('id',id);
 	$('div#dialog').show();
 
 	//alert("neuer Dialog2: "+name+" action: "+action+" method: "+method+ " id:"+id + " params:"+params);
