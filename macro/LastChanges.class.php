@@ -1,0 +1,144 @@
+<?php
+// OpenRat Content Management System
+// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+
+
+/**
+ * Erstellen einer Teaser-Liste.
+ *
+ * @author Jan Dankert
+ */
+class LastChanges extends Macro
+{
+	var $title_html_tag        = 'h3';
+	var $css_class             = 'macro-lastchanges';
+	var $teaserElementId       = '';
+	var $teaserMaxLength       = 100;
+	var $plaintext             = 'true';
+	var $linktitle             = 'true';
+	var $linktext              = 'true';
+	var $timeelementid         = 0;
+	var $folderid              = 0;
+	var $showPages             = true;
+	var $showLinks             = false;
+	
+	/**
+	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
+	 * @type String
+	 */
+	var $description = 'Creates a teaser list of pages in a folder';
+
+	// 
+	function execute()
+	{
+		$project = Session::getProject();
+		
+		if	( $this->folderid === 'self' )
+		{
+			$page = $this->getPage();
+			$page->load();
+			$folderid = $page->parentid;
+			$f = new Folder( $folderid );
+			$changes = $f->getLastChanges();
+		}
+		elseif	( $this->folderid > 0 )
+		{
+			$f = new folder( $this->folderid );
+			$changes = $f->getLastChanges();
+		}
+		else
+			$changes = $project->getLastChanges();
+				
+		foreach( $changes as $o )
+		{
+			if ($o['objectid'] == $this->getObjectId() )
+				continue;
+			
+			if	( ($o['is_page']==1 && istrue($this->showPages)) ||
+				  ($o['is_link']==1 && istrue($this->showLinks))  ) // Nur wenn gewünschter Typ
+			{
+				if	( $o['is_link']==1 ) {
+					$l = new Link( $o['objectid'] );
+					$l->load();
+					if	( !$l->isLinkToObject)
+						continue;
+					
+					$p = new Page( $l->linkedObjectId );
+				}
+				elseif ( $o['is_page']==1 )
+				{
+					$p = new Page( $o['objectid'] );
+				}
+				else
+					continue;
+				
+				$p->load();
+				
+				$desc = $p->desc;
+				$p->generate_elements();
+				
+				if	( !empty($this->teaserElementId) )
+				{
+					$value = $p->values[$this->teaserElementId];
+					$desc = $value->value;
+					if	( istrue($this->plaintext)  )
+					{
+						$desc = strip_tags($desc);
+						// Und nur wenn die Tags raus sind duerfen wir nun den Text kuerzen.
+						// (sonst drohen offene Tags)
+						if	( is_numeric($this->teaserMaxLength) && $this->teaserMaxLength > 0 )
+							$desc = Text::maxLength($desc,$this->teaserMaxLength);
+					}
+				}
+
+				$time = '';
+				if	( !empty($this->timeelementid) )
+				{
+					$value = $p->values[$this->timeelementid];
+					$time = $value->value;
+				}
+
+				$this->output('<div class="'.$this->css_class.'">');
+				
+				if	( istrue($this->linktitle) )
+				{
+					$url = $this->pathToObject($o['objectid']);
+					$this->output( '<a href="'.$url.'"><div>' );
+				}
+				
+				$this->output('<h6>'.$time.'</h6>');
+				
+				
+				$this->output( '<h3>');
+				$this->output( $p->name );
+				$this->output( '</h3>' );
+					
+				$this->output( '<p>' );
+				$this->output( $desc );
+				$this->output( '</p>'   );
+				
+				if	( istrue($this->linktitle) )
+				{
+					$this->output( '</div></a>' );
+				}
+						
+				$this->output( '</div>' );
+			}
+		}
+	}
+}

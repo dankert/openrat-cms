@@ -34,14 +34,12 @@ class ClassicMenu extends Macro
 	/**
 	 * Zeichenkette, die vor einem aktiven Menuepunkt gezeigt wird 
 	 */
-	var $beforeEntry = '<li><strong>';
-	var $afterEntry  = '</strong></li>';
-	var $csspraefix  = 'menu';
+	var $css_class  = 'macro-classicmenu';
 	var $onlySameTemplate = true;
 	
 
 	// Erstellen des Hauptmenues
-	function execute()
+	public function execute()
 	{
 		$rootId = $this->getRootObjectId();
 		// Erstellen eines Untermenues
@@ -49,12 +47,12 @@ class ClassicMenu extends Macro
 		$f = new Folder( $this->page->parentid );
 		$this->parentFolders = $f->parentObjectFileNames(false,true);
 		
-		$this->showFolder( $rootId,0 );
+		$this->showFolder( $rootId );
 	}
 
-	function showFolder( $oid,$level )
+	private function showFolder( $oid )
 	{
-		$this->outputLn('<ul class="'.$this->csspraefix.$level.'">');
+		$this->outputLn('<ul class="'.$this->css_class.'">');
 		$f = new Folder( $oid );
 
 		// Schleife ueber alle Objekte im aktuellen Ordner
@@ -75,14 +73,14 @@ class ClassicMenu extends Macro
 					// Wenn aktuelle Seite, dann markieren, sonst Link
 					if ( $this->page->objectid == $fp->objectid )
 						// aktuelle Seite
-						$this->outputLn( '<li class="'.$this->csspraefix.$level.'"><strong class="'.$this->csspraefix.$level.'">'.$o->name.'</strong>' );
+						$this->outputLn( '<li class="active">'.$o->name.'' );
 					else
 						// Link erzeugen
-						$this->outputLn( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.$this->pathToObject($fp->objectid).'">'.$o->name.'</a>' );
+						$this->outputLn( '<li><a href="'.$this->pathToObject($fp->objectid).'">'.$o->name.'</a>' );
 
 					if	( in_array($o->objectid,array_keys($this->parentFolders)) )
 					{
-						$this->showFolder($o->objectid,$level+1);
+						$this->showFolder($o->objectid);
 					}
 
 					$this->outputLn( '</li>' );
@@ -103,13 +101,13 @@ class ClassicMenu extends Macro
 				// Wenn aktuelle Seite, dann markieren, sonst Link
 				if ( $this->getObjectId() == $o->objectid)
 					// aktuelle Seite
-					$this->output( '<li class="'.$this->csspraefix.$level.'"><strong class="'.$this->csspraefix.$level.'">'.$o->name.'</strong></li>' );
+					$this->output( '<li class="active">'.$o->name.'</li>' );
 				elseif	( $o->isLink )
 					// Link mit HTML-Sonderzeichenumwandlung erzeugen
-					$this->output( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.htmlspecialchars($this->pathToObject($o->objectid)).'">'.$o->name.'</a></li>' );
+					$this->output( '<li><a href="'.htmlspecialchars($this->pathToObject($o->objectid)).'">'.$o->name.'</a></li>' );
 				else
 					// Link erzeugen
-					$this->output( '<li class="'.$this->csspraefix.$level.'"><a class="'.$this->csspraefix.$level.'" href="'.$this->pathToObject($o->objectid).'">'.$o->name.'</a></li>' );
+					$this->output( '<li><a href="'.$this->pathToObject($o->objectid).'">'.$o->name.'</a></li>' );
 			}
 		}
 		$this->output('</ul>');
