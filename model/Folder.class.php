@@ -849,6 +849,51 @@ SQL
 	{
 		return $this->subfolder();
 	}
+	
+	
+	
+	/**
+	 * Ermittelt die letzten Änderung in diesem Ordner.
+	 * @return Array[Objektid]=Array())
+	 */
+	public function getLastChanges()
+	{
+	
+		$db = db_connection();
+	
+		$sql = new Sql( <<<SQL
+		SELECT {t_object}.id       as objectid,
+		       {t_object}.lastchange_date as lastchange_date,
+		       {t_object}.filename as filename,
+		       {t_object}.is_folder as is_folder,
+		       {t_object}.is_file  as is_file,
+		       {t_object}.is_link  as is_link,
+		       {t_object}.is_page  as is_page,
+		       {t_name}.name       as name,
+		       {t_user}.name       as username,
+		       {t_user}.id         as userid,
+		       {t_user}.mail       as usermail,
+		       {t_user}.fullname   as userfullname
+		  FROM {t_object}
+		  LEFT JOIN {t_name}
+		         ON {t_name}.objectid = {t_object}.id
+				AND {t_name}.languageid = {languageid}
+		  LEFT JOIN {t_user}
+		         ON {t_user}.id = {t_object}.lastchange_userid
+			  WHERE {t_object}.parentid = {folderid}
+		   ORDER BY {t_object}.lastchange_date DESC
+SQL
+		);
+	
+		// Variablen setzen.
+		$sql->setInt( 'folderid', $this->objectid );
+	
+		$language = Session::getProjectLanguage();
+		$sql->setInt( 'languageid', $language->languageid );
+	
+		return $db->getAll( $sql );
+	}
+	
 }
 
 
