@@ -688,6 +688,8 @@ class WikiParser
 			unset($inh[0]);
 			foreach( $inh as $attr )
 			{
+				if	( empty($attr)) continue;
+				
 				list($attr_name,$attr_val) = explode($text_markup['macro-attribute-value-seperator'],$attr);
 				$attr_val = trim($attr_val,$text_markup['macro-attribute-quote']);
 				$macro->attributes[$attr_name] = $attr_val;
