@@ -305,7 +305,7 @@ class Publish
 			$this->ftp->close();
 		}
 
-		// Ausf�hren des Systemkommandos.
+		// Ausfuehren des Systemkommandos.
 		if	( !empty($this->cmd_after_publish) && $this->ok )
 		{
 			$ausgabe = array();
@@ -318,7 +318,15 @@ class Publish
 				$this->log   = $ausgabe; 
 				$this->log[] = 'OpenRat: System command failed - returncode is '.$rc; 
 				$this->ok = false;
+				
+				Logger::warn('System command '.$this->cmd_after_publish.' failed with status '.$rc );
+				
 			}
+			else
+			{
+				Logger::debug('System command successful' );
+			}
+				
 		}
 	}
 	
