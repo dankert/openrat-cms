@@ -209,24 +209,39 @@ class HtmlRenderer
 			
 								if	( class_exists($className) )
 								{
-									$dynEl = new $className;
-									$dynEl->page = &$this->page;
+									$macro = new $className;
+									$macro->page = &$this->page;
 			
-									if	( method_exists( $dynEl,'execute' ) )
+									if	( method_exists( $macro,'execute' ) )
 									{
-										$dynEl->objectid = $this->page->objectid;
-										$dynEl->page     = &$this->page;
+										$macro->objectid = $this->page->objectid;
+										$macro->page     = &$this->page;
 			
 										foreach( $child->attributes as $param_name=>$param_value )
 										{
 											if	( $param_name == 'help')
-												$val = 'Available macro attributes: '.implode(',',array_keys(get_object_vars($dynEl)));
-											if	( isset( $dynEl->$param_name ) )
-												$dynEl->$param_name = $param_value;
+												$val .= 'HELP: Available macro attributes in '.$className.': '.implode(',',array_keys(get_object_vars($macro))."\n");
+											if	( isset( $macro->$param_name ) )
+											{
+												// Die Parameter der Makro-Klasse typisiert setzen.
+												if	( is_int($macro->$param_name) )
+													$macro->$param_name = intval($param_value);
+												elseif	( is_array($macro->$param_name) )
+													$macro->$param_name = explode(',',$param_value);
+												else
+													$macro->$param_name = $param_value;
+											}
+											else
+											{
+												$val .= "WARNING: Unknown parameter '$param_name' in macro '$className'\n";
+											}
+												
+												
+												
 										}
 			
-										$dynEl->execute();
-										$val .= $dynEl->getOutput();
+										$macro->execute();
+										$val .= $macro->getOutput();
 									}
 									else
 									{

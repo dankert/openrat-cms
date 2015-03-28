@@ -1210,14 +1210,14 @@ SQL
 
 					if	( class_exists($className) )
 					{
-						$dynEl = new $className;
-						$dynEl->page = &$this->page;
+						$macro = new $className;
+						$macro->page = &$this->page;
 
-						if	( method_exists( $dynEl,'execute' ) )
+						if	( method_exists( $macro,'execute' ) )
 						{
-							//$dynEl->delOutput();
-							$dynEl->objectid = $this->page->objectid;
-							$dynEl->page    = &$this->page;
+							//$$macro->delOutput();
+							$macro->objectid = $this->page->objectid;
+							$macro->page    = &$this->page;
 
 							foreach( $this->element->getDynamicParameters() as $param_name=>$param_value )
 							{
@@ -1238,15 +1238,28 @@ SQL
 									
 									$param_value = $value->getRawValue();
 								}
-								if	( isset( $dynEl->$param_name ) )
+								if	( isset( $macro->$param_name ) )
 								{
-									Logger::debug("Setting parameter for macro Class $className, ".$param_name.':'.$param_value );
-									$dynEl->$param_name = $param_value;
+									Logger::debug("Setting parameter for Macro-class $className, ".$param_name.':'.$param_value );
+									
+									// Die Parameter der Makro-Klasse typisiert setzen.
+									if	( is_int($macro->$param_name) )
+										$macro->$param_name = intval($param_value);
+									elseif	( is_array($macro->$param_name) )
+										$macro->$param_name = explode(',',$param_value);
+									else
+										$macro->$param_name = $param_value;
+										
+								}
+								else
+								{
+									if	( !$this->publish )
+										$inhalt .= "WARNING: Unknown parameter $param_name in macro $className\n";
 								}
 							}
 
-							$dynEl->execute();
-							$inhalt = $dynEl->getOutput();
+							$macro->execute();
+							$inhalt .= $macro->getOutput();
 						}
 						else
 						{
