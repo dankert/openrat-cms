@@ -36,6 +36,9 @@ class LastChanges extends Macro
 	var $folderid              = 0;
 	var $showPages             = true;
 	var $showLinks             = false;
+	var $includeTemplateIds    = array();
+	var $excludeTemplateIds    = array();
+	var $limit                 = -1;
 	
 	/**
 	 * Bitte immer eine Beschreibung benutzen, dies ist fuer den Web-Developer hilfreich.
@@ -64,6 +67,8 @@ class LastChanges extends Macro
 		else
 			$changes = $project->getLastChanges();
 				
+		$count = 0;
+		
 		foreach( $changes as $o )
 		{
 			if ($o['objectid'] == $this->getObjectId() )
@@ -88,6 +93,20 @@ class LastChanges extends Macro
 					continue;
 				
 				$p->load();
+
+				// Template zulässig?
+				if	( !empty($this->includeTemplateIds) )
+					if	( !in_array($p->templateid,$this->includeTemplateIds))
+						continue;
+				
+				// Template zulässig?
+				if	( !empty($this->excludeTemplateIds) )
+					if	( in_array($p->templateid,$this->excludeTemplateIds))
+						continue;
+				
+				$count++;
+				if	( $this->limit >= 0 && $count > $this->limit)
+					break; // Maximale Anzahl erreicht.
 				
 				$desc = $p->desc;
 				$p->generate_elements();
