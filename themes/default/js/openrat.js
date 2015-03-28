@@ -1119,6 +1119,7 @@ function formSubmit(form)
 				// Notice-Bar mit dieser Meldung erweitern.
 				var notice = $('<div class="notice error"><div class="text">'+msg+'</div></div');
 				$('#noticebar').prepend(notice); // Notice anhängen.
+				notifyBrowser(msg);
 				
 				// Per Klick wird die Notice entfernt.
 				$(notice).fadeIn().click( function()
@@ -1132,6 +1133,41 @@ function formSubmit(form)
 		$(form).fadeIn();
 	}
 }
+
+
+/**
+ * Notification im Browser anzeigen.
+ * Quelle: https://developer.mozilla.org/en-US/docs/Web/API/notification
+ * @param text Text der Nachricht.
+ */
+function notifyBrowser(text)
+{
+	  // Let's check if the browser supports notifications
+	  if (!("Notification" in window)) {
+		return;
+	    //alert("This browser does not support desktop notification");
+	  }
+
+	  // Let's check if the user is okay to get some notification
+	  else if (Notification.permission === "granted") {
+	    // If it's okay let's create a notification
+	    var notification = new Notification(text);
+	  }
+
+	  // Otherwise, we need to ask the user for permission
+	  else if (Notification.permission !== 'denied') {
+	    Notification.requestPermission(function (permission) {
+	      // If the user is okay, let's create a notification
+	      if (permission === "granted") {
+	        var notification = new Notification(text);
+	      }
+	    });
+	  }
+
+	  // At last, if the user already denied any notification, and you 
+	  // want to be respectful there is no need to bother them any more.
+}
+
 
 
 /**
@@ -1154,6 +1190,7 @@ function doResponse(data,status,element)
 		
 		// Notice-Bar mit dieser Meldung erweitern.
 		var notice = $('<div class="notice '+value.status+'"><div class="text">'+value.text+'</div></div');
+		notifyBrowser(value.text);
 		$.each(value.log, function(name,value) {
 			$(notice).append('<div class="log">'+value+'</div>');
 		});
