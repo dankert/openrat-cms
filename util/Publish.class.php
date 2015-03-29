@@ -311,6 +311,10 @@ class Publish
 			$ausgabe = array();
 			$rc      = false;
 			Logger::debug('Executing system command: '.$this->cmd_after_publish );
+			$user = Session::getUser();
+			putenv("CMS_USER_NAME=".$user->name  );
+			putenv("CMS_USER_ID="  .$user->userid);
+			putenv("CMS_USER_MAIL=".$user->mail  );
 			exec( $this->cmd_after_publish,$ausgabe,$rc );
 			
 			if	( $rc != 0 ) // Wenn Returncode ungleich 0, dann Ausgabe ins Log schreiben und Fehler melden.
