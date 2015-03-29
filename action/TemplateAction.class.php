@@ -490,6 +490,8 @@ class TemplateAction extends Action
 	public function pubPost()
 	{
 		$objectIds = $this->template->getDependentObjectIds();
+
+		Session::close();
 		
 		foreach( $objectIds as $objectid )
 		{

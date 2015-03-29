@@ -743,6 +743,8 @@ class PageAction extends ObjectAction
 		if	( !$this->page->hasRight( ACL_PUBLISH ) )
 			Http::notAuthorized( 'no right for publish' );
 
+		Session::close();
+		
 		$this->page->public = true;
 		$this->page->publish();
 		$this->page->publish->close();
