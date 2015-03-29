@@ -46,7 +46,7 @@
 				<part class="label">
 					<radio name="type" value="addifnotempty"></radio>
 					<label for="type_addifnotempty">
-						<text key="TEMPLATE_SRC_IFEMPTY"></text>
+						<text key="TEMPLATE_SRC_IFNOTEMPTY"></text>
 					</label>
 				</part>
 				<part class="input">
