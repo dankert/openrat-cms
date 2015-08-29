@@ -16,6 +16,9 @@ class DbUpdate
 			// Oh oh, in der Datenbank ist eine neue Version, also wir unterstüzten.
 			Http::serverError('Actual DB version is not supported.',"DB-Version is $version, but this is OpenRat ".OR_VERSION." which only supports version ".OR_DB_SUPPORTED_VERSION );
 
+		if	( ! $db->conf['auto_update'])
+			Http::serverError('DB Update necessary.',"DB-Version is $version, but this is OpenRat ".OR_VERSION." which needs the version ".OR_DB_SUPPORTED_VERSION );
+		
 		require(OR_DBCLASSES_DIR.'DbVersion.class.php');
 		
 		for( $installVersion = $version + 1; $installVersion <= OR_DB_SUPPORTED_VERSION; $installVersion++ )

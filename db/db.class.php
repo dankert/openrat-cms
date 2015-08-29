@@ -102,7 +102,8 @@ class DB
 		                      'cmd'             => '',
 		                      'prepare'         => true,
 		                      'transaction'     => true,
-				              'update'          => array()
+				              'update'          => array(),
+				              'auto_update'     => true
 		                    ); 
 		
 		$this->available = false;

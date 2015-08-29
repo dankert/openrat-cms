@@ -824,6 +824,7 @@ class LoginAction extends Action
 			require_once( OR_DBCLASSES_DIR.'DbUpdate.class.'.PHP_EXT );
 			$updater = new DbUpdate();
 			$updater->update( $db );
+			
 			unset($db);
 		}
 		
