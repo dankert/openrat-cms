@@ -84,11 +84,36 @@ class DB
 	 * @param Array Konfiguration der Verbindung
 	 * @return Status 'true' wenn Verbindung erfolgreich aufgebaut.
 	 */
-	public function DB( $conf )
+	public function DB( $conf,$admin=false )
 	{
-		$this->available = false;
-		$this->conf      = $conf;
+		$defaultConf = array( 'prefix'          => '',
+		                      'suffix'          => '',
+		                      'enabled'         => true,
+		                      'comment'         => '',
+		                      'type'            => 'mysqli',
+		                      'user'            => '',
+		                      'password'        => '',
+		                      'host'            => '',
+		                      'database'        => '',
+		                      'base64'          => false,
+		                      'persistent'      => true,
+		                      'charset'         => 'UTF-8',
+		                      'connection_sql'  => '',
+		                      'cmd'             => '',
+		                      'prepare'         => true,
+		                      'transaction'     => true,
+				              'update'          => array()
+		                    ); 
 		
+		$this->available = false;
+		$this->conf      = $conf + $defaultConf;
+		
+		if	( $admin )
+		{
+			// Bevorzugung der Unter-Konfiguration 'update'
+			if	( isset($this->conf['update']) )
+				$this->conf = $this->conf['update'] + $this->conf; // linksstehender Operator hat Priorität!
+		}
 		$this->connect();
 		
 		return $this->available;
@@ -134,6 +159,11 @@ class DB
 		
 		// Client instanziieren
 		$this->client = & new $classname;
+		
+		// Schauen, ob der Treiber Prepared Statements beherscht.
+		if	( ! method_exists($this->client,'clear')) {
+			$this->conf['prepare'] = false;
+		}
 
 		$ok = $this->client->connect( $this->conf );
 		
@@ -424,6 +454,24 @@ class DB
 					$this->transactionInProgress = false;
 				}
 	}
+	
+	
+	/**
+	 * Führt eine Query aus und gibt nur zurück, ob diese funktioniert.
+	 * 
+	 * @param unknown_type $query
+	 * @return boolean
+	 */
+	public function testQuery( $query )
+	{
+		if ( !is_object($query) )
+			die('SQL-Query must be an object');
+		
+		$result = $this->client->query($query->raw);
+			
+		return $result !== FALSE;
+	}
+	
 	
 	/**
 	 * Setzt eine Transaktion zurueck. 

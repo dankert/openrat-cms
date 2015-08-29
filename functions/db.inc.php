@@ -39,10 +39,7 @@ function table_names( $dbid )
 		if	( is_object( $db ) )
 		{
 			$conf_db_prefix = $db->conf['prefix'];
-			if	( isset($db->conf['suffix']))
-				$conf_db_suffix = $db->conf['suffix'];
-			else
-				$conf_db_suffix = '';
+			$conf_db_suffix = $db->conf['suffix'];
 		}
 		else
 		{
@@ -73,7 +70,8 @@ function table_names( $dbid )
 	'acl',
 	'object',
 	'name',
-	'link'
+	'link',
+	'version'
 	) as $tname )
 		$t['t_'.$tname] = $conf_db_prefix.$tname.$conf_db_suffix;
 	

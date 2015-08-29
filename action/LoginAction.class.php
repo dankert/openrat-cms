@@ -29,7 +29,13 @@ class LoginAction extends Action
 {
 	public $security = SECURITY_GUEST;
 	
-	function setDb( $dbid )
+	
+	/**
+	 * Eine Datenbankverbindugn wird aufgebaut und initalisiert.
+	 * 
+	 * @param $dbid Datenbank-Id
+	 */
+	private function setDb( $dbid )
 	{
 		global $conf;
 
@@ -38,18 +44,19 @@ class LoginAction extends Action
 			
 		$db = db_connection();
 		if	( is_object($db) )
-		{
 			$db->rollback();
-		}
 
 		$db = new DB( $conf['database'][$dbid] );
 		$db->id = $dbid;
-		$db->start();
+		$db->start(); // Transaktion starten.
 		Session::setDatabase( $db );
 	}
 
 
 
+	/**
+	 * Prueft, ob der Parameter 'dbid' übergeben wurde.
+	 */
 	function checkForDb()
 	{
 		global $conf;
@@ -149,7 +156,6 @@ class LoginAction extends Action
 				
 				// Das neue Kennwort ist gesetzt, die Anmeldung ist also doch noch gelungen. 
 				$ok = true;
-				$mustChangePassword = false;
 				$mustChangePassword = false;
 			}
 		}
@@ -801,13 +807,29 @@ class LoginAction extends Action
 	
 	/**
 	 * Login.
+	 * Zuerst wird die Datenbankverbindung aufgebaut und falls notwendig, aktualisiert.
 	 */
 	function loginPost()
 	{
 		global $conf;
 
+		if	( $this->hasRequestVar('dbid'))
+		{
+			$dbid = $this->getRequestVar('dbid');
+				
+			$db = new DB( $conf['database'][$dbid],true );
+			$db->id = $dbid;
+			
+			// Datenbank aktualisieren, sofern notwendig.
+			require_once( OR_DBCLASSES_DIR.'DbUpdate.class.'.PHP_EXT );
+			$updater = new DbUpdate();
+			$updater->update( $db );
+			unset($db);
+		}
+		
 		$this->checkForDb();
-		Session::setUser('');
+		
+		Session::setUser(''); // Altes Login entfernen.
 		
 		if	( $conf['login']['nologin'] )
 			Http::notAuthorized('login disabled');

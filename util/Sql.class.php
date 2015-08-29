@@ -181,7 +181,7 @@ class Sql
 	 * @param dieIfUnknown wenn <code>true</code> und Parameter unbekannt, dann Abbruch.
 	 * @access private
 	 */
-	function setParam( $name,$value,$dieIfUnknown=true)
+	private function setParam( $name,$value,$dieIfUnknown=true)
 	{
 
 		//   Nett gemeint, f�hrt aber aktuell zu Fehlern, weil an vielen Stellen zu viele Parameter gef�llt werden.

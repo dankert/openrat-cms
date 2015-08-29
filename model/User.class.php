@@ -537,24 +537,7 @@ SQL
 	}
 
 
-	/**
-	 * Ueberpruefen des Kennwortes.
-	 *
-	 * Es wird festgestellt, ob das Kennwort dem des Benutzers entspricht.
-	 * Es wird dabei nur gegen die interne Datenbank geprüft. Weitere
-	 * Loginmodule werden nicht aufgerufen!
-	 */
-	function checkPassword( $password )
-	{
-		global $conf;
-		
-		$auth = new InternalAuth();
-		$ok   = $auth->login($this->name, $password);
-		
-		return $ok;
-	}
-	
-	
+
 	/**
 	 * Setzt ein neues Kennwort f�r diesen Benutzer.
 	 * 
