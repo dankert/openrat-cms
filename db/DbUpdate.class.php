@@ -25,8 +25,9 @@ class DbUpdate
 		{
 			if	( $installVersion > 2 )
 			{
-				$sql = new Sql('INSERT INTO {t_version} (id,version,status) VALUES( {version},{version},0 )',$db->id);
+				$sql = new Sql('INSERT INTO {t_version} (id,version,status,installed) VALUES( {version},{version},0,{time} )',$db->id);
 				$sql->setInt('version', $installVersion);
+				$sql->setInt('time'   , time()         );
 				$db->query( $sql );
 				$db->commit();
 			}
