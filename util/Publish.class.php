@@ -137,7 +137,7 @@ class Publish
 			$this->ftp->passive = ( $project->ftp_passive == '1' );
 		}
 		
-		$localDir = ereg_replace( '\/$','',$project->target_dir);
+		$localDir = rtrim( $project->target_dir,'/' );
 			
 		if	( $confPublish['filesystem']['per_project'] && (!empty($localDir)) )
 		{

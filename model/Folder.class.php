@@ -222,7 +222,7 @@ class Folder extends Object
 
 
 	// Liest alle Objekte in diesem Ordner sortiert nach dem Namen (nicht Dateinamen!)
-	function getObjectIdsByName()
+	function getChildObjectIdsByName()
 	{
 		$db = db_connection();
 
@@ -326,7 +326,7 @@ class Folder extends Object
 		               '          OR is_link  ={is_link} )' .
 		               '  ORDER BY orderid ASC' );
 		
-		if	(isset($this->projectid))
+		if	(isset($this) && isset($this->projectid))
 		{
 			$projectid = $this->projectid;
 		}
@@ -388,7 +388,7 @@ class Folder extends Object
 		               '  WHERE is_folder=1'.
 		               '    AND projectid={projectid}' );
 		               
-		if	( !isset($this->projectid) )
+		if	( !isset($this) || !isset($this->projectid) )
 		{
 			$project = Session::getProject();
 			$sql->setInt('projectid',$project->projectid);

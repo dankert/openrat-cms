@@ -128,7 +128,7 @@ class Ftp
 			}
 		}
 
-		$this->path = ereg_replace( '\/$','',$ftp['path']);
+		$this->path = rtrim( $ftp['path'],'/' );
 		
 		$this->log[] = 'Changing directory to '.$this->path;
 		

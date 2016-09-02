@@ -45,7 +45,7 @@ class TagCloud extends Macro
 		
 		$f = new Folder( $this->keywordFolderId );
 		
-		foreach( $f->getObjectIdsByName() as $fid )
+		foreach( $f->getChildObjectIdsByName() as $fid )
 		{
 			$tf = new Folder($fid);
 			if	( !$tf->isFolder)

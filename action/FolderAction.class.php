@@ -794,7 +794,7 @@ class FolderAction extends ObjectAction
 				break;
 
 			case 'name':
-				$ids = $this->folder->getObjectIdsByName();
+				$ids = $this->folder->getChildObjectIdsByName();
 				break;
 
 			case 'lastchange':
