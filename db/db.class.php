@@ -159,7 +159,7 @@ class DB
 		}
 		
 		// Client instanziieren
-		$this->client = & new $classname;
+		$this->client = new $classname;
 		
 		// Schauen, ob der Treiber Prepared Statements beherscht.
 		if	( ! method_exists($this->client,'clear')) {

@@ -90,7 +90,7 @@ class Template
 		$sql = new Sql( 'SELECT id,name FROM {t_template}'.
 		                ' WHERE projectid={projectid}'.
 		                ' ORDER BY name ASC '  );
-		if	( isset($this->projectid) )
+		if	( isset($this) && isset($this->projectid) )
 			$sql->setInt( 'projectid',$this->projectid   );
 		else
 		{

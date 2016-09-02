@@ -77,7 +77,7 @@ class Model
 		                "   WHERE projectid = {projectid} ".
 		                "   ORDER BY name" );
 
-		if	( !empty($this->projectid) )
+		if	( !empty($this) && !empty($this->projectid) )
 			$sql->setInt('projectid',$this->projectid );
 		else
 		{
