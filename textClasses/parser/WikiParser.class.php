@@ -585,20 +585,20 @@ class WikiParser
 	function fixLinks( $text )
 	{
 		// Text->... umsetzen nach "Text"->... (Anfuehrungszeichen ergaenzen)
-		$text = ereg_replace( '([A-Za-z0-9._-]+)\-\>','"\\1"->',$text );
+		$text = preg_replace( '/([A-Za-z0-9._-]+)\-\>/','"\\1"->',$text );
 	
 		// ...->Link umsetzen nach ...->"Link" (Anfuehrungszeichen ergaenzen)
-		$text = ereg_replace( '\->([A-Za-z0-9\.\:\_\/\,\?\=\&-]+)','->"\\1"',$text );
+		$text = preg_replace( '/\->([A-Za-z0-9\.\:\_\/\,\?\=\&-]+)/','->"\\1"',$text );
 
 		// alleinstehende externe Links
 		// Funktioniert nicht richtig, erstmal deaktiviert.
 //		$text = ereg_replace( '((https?|ftps?|news|gopher):\/\/([A-Za-z0-9._\/\,-]+))([^"])','"\\1"->"\\1"\\2',$text );
 
 		// alleinstehende E-Mail Adressen
-		$text = ereg_replace( '([A-Za-z0-9._-]+@[A-Za-z0-9\.\_\-]+)([^A-Za-z0-9\.\_\-\"])','"\\1"->"mailto:\\1"\\2',$text );
+		$text = preg_replace( '/([A-Za-z0-9._-]+@[A-Za-z0-9\.\_\-]+)([^A-Za-z0-9\.\_\-\"])/','"\\1"->"mailto:\\1"\\2',$text );
 
 		// Bilder
-		$text = ereg_replace( 'ima?ge?:\/?\/?([A-Za-z0-9\.\:\_\/\,\?\=\&-]+)','{\\1}',$text );
+		$text = preg_replace( '/ima?ge?:\/?\/?([A-Za-z0-9\.\:\_\/\,\?\=\&-]+)/','{\\1}',$text );
 		
 		return $text;
 	}

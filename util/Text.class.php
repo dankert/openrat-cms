@@ -69,12 +69,12 @@ class Text
 	 */
 	function bbCode2Wiki( $inhalt )
 	{
-		$inhalt = eregi_replace('\[b\]([^\[]*)\[\/b\]'       , '*\\1*' ,$inhalt);
-		$inhalt = eregi_replace('\[i\]([^\[]*)\[\/i\]'       , '_\\1_' ,$inhalt);
-		$inhalt = eregi_replace('\[code\]([^\[]*)\[\/code\]' , '=\\1=' ,$inhalt);
+		$inhalt = preg_replace('/\[b\]([^\[]*)\[\/b\]/i'       , '*\\1*' ,$inhalt);
+		$inhalt = preg_replace('/\[i\]([^\[]*)\[\/i\]/i'       , '_\\1_' ,$inhalt);
+		$inhalt = preg_replace('/\[code\]([^\[]*)\[\/code\]/i' , '=\\1=' ,$inhalt);
 
-		$inhalt = eregi_replace('\[url\]([^\[]*)[\/url\]'          ,'"\\1"->"\\1"' ,$inhalt);
-		$inhalt = eregi_replace('\[url=([^\[]*)\]([^\[]*)\[\/url\]','"\\2"->"\\1"' ,$inhalt);
+		$inhalt = preg_replace('/\[url\]([^\[]*)\[\/url\]/i'          ,'"\\1"->"\\1"' ,$inhalt);
+		$inhalt = preg_replace('/\[url=([^\[]*)\]([^\[]*)\[\/url\]/i' ,'"\\2"->"\\1"' ,$inhalt);
 
 		return $inhalt;
 	}
@@ -89,9 +89,9 @@ class Text
 	 */
 	function Html2Wiki( $inhalt )
 	{
-		$inhalt = eregi_replace('<b(.*)>(.*)</b>','*\\2*' ,$inhalt);
-		$inhalt = eregi_replace('<i(.*)>(.*)</i>','_\\2_' ,$inhalt);
-		$inhalt = eregi_replace('<a(.*)href="(.*)">(.*)</a>','"\\3"->"\\2"' ,$inhalt);
+		$inhalt = preg_replace('/<b(.*)>(.*)<\/b>/i','*\\2*' ,$inhalt);
+		$inhalt = preg_replace('/<i(.*)>(.*)<\/i>/i','_\\2_' ,$inhalt);
+		$inhalt = preg_replace('/<a(.*)href="(.*)">(.*)<\/a>/i','"\\3"->"\\2"' ,$inhalt);
 
 		return $inhalt;
 	}
