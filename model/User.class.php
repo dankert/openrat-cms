@@ -895,6 +895,37 @@ SQL
 		global $conf;
 		return $conf['security']['password']['pepper'].$pass;
 	}
+	
+	
+	/**
+	 * Ermittelt projektübergreifend die letzten Änderungen des Benutzers.
+	 *
+	 * @return Ambigous <string, unknown>
+	 */
+	public function getLastChanges()
+	{
+		$db = db_connection();
+	
+		$sql = new Sql( <<<SQL
+		SELECT {t_object}.id       as objectid,
+		       {t_object}.filename as filename,
+		       {t_object}.lastchange_date as lastchange_date,
+		       {t_project}.id      as projectid,
+			   {t_project}.name    as projectname
+		  FROM {t_object}
+		LEFT JOIN {t_project}
+		       ON {t_object}.projectid = {t_project}.id
+		   WHERE {t_object}.lastchange_userid = {userid}
+		ORDER BY {t_object}.lastchange_date DESC
+SQL
+		);
+	
+		$sql->setInt( 'userid', $this->userid );
+	
+		return $db->getAll( $sql );
+	
+	}
+	
 }
 
 ?>

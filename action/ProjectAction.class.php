@@ -330,4 +330,16 @@ class ProjectAction extends Action
 		}	
 	}
 	
+	
+	/**
+	 * Ermittelt die letzten Änderungen, die im aktuellen Projekt gemacht worden sind.
+	 */
+	public function historyView()
+	{
+		$result = $this->project->getLastChanges();
+	
+		$this->setTemplateVar('timeline', $result);
+	}
+	
+	
 }

@@ -604,6 +604,7 @@ MENU_ADD = New
 MENU_APPLICATIONS="Applications"
 MENU_APPLICATIONS_DESC="Start more applications"
 MENU_ARCHIVE="Archive"
+MENU_HISTORY="History"
 MENU_ARCHIVE_DESC="Archive"
 MENU_CHANGETEMPLATE="Change template"
 MENU_CLIPBOARD="Clipboard"

@@ -431,5 +431,16 @@ class UserAction extends Action
 		
 		$this->refresh();
 	}
+	
+	
+	/**
+	 * Ermittelt die letzten Änderungen, die durch den aktuellen Benutzer in allen Projekten gemacht worden sind.
+	 */
+	public function historyView()
+	{
+		$result = $this->user->getLastChanges();
+		$this->setTemplateVar('timeline', $result);
+	}
+	
 				
 }

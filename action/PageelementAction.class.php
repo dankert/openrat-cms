@@ -793,7 +793,7 @@ class PageelementAction extends Action
 		/**
 		 * Erzeugt eine Liste aller Versionsst?nde zu diesem Inhalt
 		 */
-		public function archiveView()
+		public function historyView()
 		{
 			$this->page->public = true;
 			$this->page->simple = true;
@@ -858,7 +858,7 @@ class PageelementAction extends Action
 				$this->setTemplateVar('withid'   ,$list[$lfd_nr  ]['id']);
 			}
 
-			$this->setTemplateVar('name'     ,$value->element->name);
+			$this->setTemplateVar('name'     ,$this->element->name);
 			$this->setTemplateVar('el'       ,$list                );
 		}
 

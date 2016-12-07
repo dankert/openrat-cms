@@ -19,5 +19,5 @@ default=memberships
 
 [bottom]
 
-views=info,pw,rights
+views=info,pw,rights,history
 default=info

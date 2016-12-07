@@ -5,7 +5,7 @@ icons=templatelist,languagelist
 [tree]
 
 title=navigator
-views=tree:tree,tree:settings,start:projectmenu,start:projecttimeline,start:userprojecttimeline
+views=tree:tree,tree:settings,start:projectmenu,start:userprojecttimeline
 default=tree
 
 
@@ -25,5 +25,5 @@ views=prop,pub
 
 title=
 default=structure
-views=structure,info,preview,progress,console,search,archive,rights
+views=structure,info,preview,progress,console,search,history,rights
 

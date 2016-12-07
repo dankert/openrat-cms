@@ -109,4 +109,14 @@ class ProjectlistAction extends Action
 		}
 	}
 	
+	
+	/**
+	 * Ermittelt die letzten Änderungen, die in allen Projekten gemacht worden sind.
+	 */
+	function historyView()
+	{
+		$result = Project::getAllLastChanges();
+		$this->setTemplateVar('timeline', $result);
+	}
+	
 }
