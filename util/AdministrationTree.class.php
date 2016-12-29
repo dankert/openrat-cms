@@ -36,14 +36,15 @@ class AdministrationTree extends AbstractTree
 		if	( !$this->userIsAdmin )
 			Http::notAuthorized('Administration-Tree is only visible for admins.');
 			
-		$treeElement = new TreeElement();
-		$treeElement->text        = lang('GLOBAL_ADMINISTRATION');
-		$treeElement->description = lang('GLOBAL_ADMINISTRATION');
-		$treeElement->type        = 'administration';
-		$treeElement->icon        = 'administration';
+// 		$treeElement = new TreeElement();
+// 		$treeElement->text        = lang('GLOBAL_ADMINISTRATION');
+// 		$treeElement->description = lang('GLOBAL_ADMINISTRATION');
+// 		$treeElement->type        = 'administration';
+// 		$treeElement->icon        = 'administration';
 		
-		$this->addTreeElement( $treeElement );
-		$this->autoOpen[] = 2;
+		$this->administration();
+		
+		$this->autoOpen[] = 1;
 	}
 
 
@@ -147,6 +148,7 @@ class AdministrationTree extends AbstractTree
 			$treeElement->url          = Html::url('project','edit',$id,array(REQ_PARAM_TARGET=>'content'));
 			$treeElement->icon         = 'project';
 			$treeElement->action       = 'project'; 
+			$treeElement->type         = 'project'; 
 			$treeElement->description  = '';
 			$treeElement->target       = 'cms_main';
 
@@ -154,6 +156,112 @@ class AdministrationTree extends AbstractTree
 		}
 	}
 
+	
+	
+	function project( $projectid )
+	{
+		$project  = new Project( $projectid );
+	
+		// Hoechster Ordner der Projektstruktur
+		$folder = new Folder( $project->getRootObjectId() );
+		$folder->load();
+	
+	
+		// Ermitteln, ob der Benutzer Projektadministrator ist
+		// Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
+		if   ( $folder->hasRight( ACL_PROP ) )
+			$this->userIsProjectAdmin = true;
+	
+		if   ( $folder->hasRight( ACL_READ ) )
+		{
+			$treeElement = new TreeElement();
+			$treeElement->id          = $folder->objectid;
+			//			$treeElement->text        = $folder->name;
+			$treeElement->text        = lang('FOLDER_ROOT');
+			$treeElement->description = lang('FOLDER_ROOT_DESC');
+			$treeElement->icon        = 'folder';
+			$treeElement->action      = 'folder';
+			$treeElement->url         = Html::url( 'folder','',$folder->objectid,array(REQ_PARAM_TARGET=>'content') );
+			$treeElement->target      = 'content';
+			$treeElement->type        = 'folder';
+			$treeElement->internalId  = $folder->objectid;
+			$this->addTreeElement( $treeElement );
+		}
+	
+	
+		if	( $this->userIsProjectAdmin )
+		{
+			// Templates
+			$treeElement = new TreeElement();
+			$treeElement->id         = 0;
+			$treeElement->text       = lang('GLOBAL_TEMPLATES');
+			$treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
+			$treeElement->description= lang('GLOBAL_TEMPLATES_DESC');
+			$treeElement->icon       = 'templatelist';
+			$treeElement->action     = 'templatelist';
+			$treeElement->target     = 'content';
+			$treeElement->type       = 'templates';
+			$this->addTreeElement( $treeElement );
+		}
+	
+	
+		// Sprachen
+		$treeElement = new TreeElement();
+		$treeElement->description= '';
+		$treeElement->id          = 0;
+		$treeElement->action     = 'languagelist';
+		$treeElement->text       = lang('GLOBAL_LANGUAGES');
+		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
+		$treeElement->icon       = 'languagelist';
+		$treeElement->description= lang('GLOBAL_LANGUAGES_DESC');
+		$treeElement->target     = 'content';
+	
+		// Nur fuer Projekt-Administratoren aufklappbar
+		if	( $this->userIsProjectAdmin )
+			$treeElement->type   = 'languages';
+	
+		$this->addTreeElement( $treeElement );
+	
+	
+		// Projektmodelle
+		$treeElement = new TreeElement();
+		$treeElement->description= '';
+	
+		// Nur fuer Projekt-Administratoren aufklappbar
+		if	( $this->userIsProjectAdmin )
+			$treeElement->type   = 'models';
+	
+		$treeElement->id          = 0;
+		$treeElement->description= lang('GLOBAL_MODELS_DESC');
+		$treeElement->text       = lang('GLOBAL_MODELS');
+		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
+		$treeElement->action     = 'modellist';
+		$treeElement->icon       = 'modellist';
+		$treeElement->target     = 'content';
+		$this->addTreeElement( $treeElement );
+	
+	
+		// Sonstiges
+		//		$treeElement = new TreeElement();
+		//		$treeElement->text       = lang('GLOBAL_OTHER');
+		//		$treeElement->description= lang('GLOBAL_OTHER_DESC');
+		//		$treeElement->icon       = 'other';
+		//		$treeElement->type       = 'other';
+		//		$this->addTreeElement( $treeElement );
+	
+		// Suche
+		$treeElement = new TreeElement();
+		$treeElement->id          = 0;
+		$treeElement->text        = lang('GLOBAL_SEARCH');
+		$treeElement->url         = Html::url('search','',0,array(REQ_PARAM_TARGET=>'content'));
+		$treeElement->action      = 'search';
+		$treeElement->icon        = 'search';
+		$treeElement->description = lang('GLOBAL_SEARCH_DESC');
+		$treeElement->target      = 'content';
+		$this->addTreeElement( $treeElement );
+	
+	}
+	
 
 
 	function prefs_system( )
