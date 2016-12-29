@@ -30,8 +30,11 @@ SQL
 	
 		$row_user = $db->getRow( $sql );
 
+		if	( empty($row_user) )
+			// Benutzer ist nicht vorhanden
+			return false;
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt
-		if   ( $row_user['password'] == $password )
+		elseif   ( $row_user['password'] == $password )
 		{
 			// Kennwort stimmt mit Datenbank �berein, aber nur im Klartext.
 			// Das Kennwort muss ge�ndert werden
