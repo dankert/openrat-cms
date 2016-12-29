@@ -2,6 +2,9 @@
 
 define('OR_DB_SUPPORTED_VERSION',3);
 
+define('OR_DB_STATUS_UPDATE_PROGRESS', 0);
+define('OR_DB_STATUS_UPDATE_SUCCESS' , 1);
+
 class DbUpdate 
 {
 	function update( $db )
@@ -25,7 +28,8 @@ class DbUpdate
 		{
 			if	( $installVersion > 2 )
 			{
-				$sql = new Sql('INSERT INTO {t_version} (id,version,status,installed) VALUES( {version},{version},0,{time} )',$db->id);
+				$sql = new Sql('INSERT INTO {t_version} (id,version,status,installed) VALUES( {version},{version},{status},{time} )',$db->id);
+				$sql->setInt('status' , OR_DB_STATUS_UPDATE_PROGRESS);
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('time'   , time()         );
 				$db->query( $sql );
@@ -41,7 +45,8 @@ class DbUpdate
 
 			if	( $installVersion > 2 )
 			{
-				$sql = new Sql('UPDATE {t_version} SET status=1,installed={time} WHERE version={version}',$db->id);
+				$sql = new Sql('UPDATE {t_version} SET status={status},installed={time} WHERE version={version}',$db->id);
+				$sql->setInt('status' , OR_DB_STATUS_UPDATE_SUCCESS);
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('time'   , time()         );
 				$db->query( $sql );
