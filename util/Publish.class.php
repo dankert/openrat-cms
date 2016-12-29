@@ -218,7 +218,9 @@ class Publish
 					return; // Fehler beim Kopieren, also abbrechen.
 				}
 				if	( ! is_null($lastChangeDate) )
-					touch( $dest,$lastChangeDate );
+					@touch( $dest,$lastChangeDate );
+				
+				Logger::debug("published: $dest");
 			}
 			
 			if	(!empty($conf['security']['chmod']))
