@@ -253,7 +253,7 @@ class Folder extends Object
 
 	function publish( $withPages,$withFiles,$subdirs = false )
 	{
-		set_time_limit(30);
+		set_time_limit(300);
 		if	( ! is_object($this->publish) )
 			$this->publish = new Publish();
 
