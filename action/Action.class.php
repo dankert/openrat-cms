@@ -405,7 +405,7 @@ class Action
 		if	( sizeof($types)==1 && in_array('application/php-serialized',$types) || $this->getRequestVar('output')=='php' )
 		{
 			header('Content-Type: application/php-serialized; charset=UTF-8');
-			serialize($this->templateVars);
+			echo serialize($this->templateVars);
 			exit;
 		}
 
