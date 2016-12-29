@@ -883,8 +883,8 @@ class Page extends Object
 	 */
 	function realFilename()
 	{
-		$this->withLanguage = config('publish','filename_language') == 'always' || count(Language::count()) > 1;
-		$this->withModel    = config('publish','filename_type'    ) == 'always' || count(Model::count()   ) > 1;
+		$this->withLanguage = config('publish','filename_language') == 'always' || Language::count() > 1;
+		$this->withModel    = config('publish','filename_type'    ) == 'always' || Model::count()    > 1;
 		
 		return $this->full_filename();
 	}
