@@ -75,8 +75,8 @@ abstract class DbVersion
 	{
 		$tableName = $this->getTableName($tableName);
 		
-		$ddl = new Sql('CREATE TABLE '.$tableName.'(id INTEGER)'.($this->dbmsType=='mysql'?' ENGINE=InnoDB':'').';');
-		// TYPE = InnoDB was deprecated in MySQL 5.0 and was removed in My SQL 5.1 and later versions.
+		$ddl = new Sql('CREATE TABLE '.$tableName.'(id INTEGER)'.($this->dbmsType=='mysql'?' ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci':'').';');
+		// The syntax 'TYPE = InnoDB' was deprecated in MySQL 5.0 and was removed in MySQL 5.1 and later versions.
 		
 		$this->db->query( $ddl );
 	}
