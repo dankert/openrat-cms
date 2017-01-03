@@ -157,7 +157,7 @@ class DB_pdo
 	
 	function bind( $param,$value )
 	{
-		$this->params[$param] = $value;
+		$this->params[$param] = &$value;
 	}
 	
 	

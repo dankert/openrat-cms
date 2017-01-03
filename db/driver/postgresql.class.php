@@ -149,7 +149,7 @@ class DB_postgresql
 	        			$ar[] = null;
 	        			break;
 	        		default:
-						die('unknown type "'.$data['type'].'"');
+						throw new RuntimeException('unknown type "'.$data['type'].'"');
 				}
 			}
 			
@@ -230,8 +230,7 @@ class DB_postgresql
 		
 		if	( $erg === FALSE )
 		{
-			$this->error = 'PostgreSQL is unable to prepare the statement: '.@pg_errormessage();
-			return FALSE;
+			throw new OpenRatException('ERROR_DATABASE','PostgreSQL is unable to prepare the statement: "'.$query.'" Reason: '.@pg_errormessage() );
 		}
 		else
 		{
@@ -242,7 +241,7 @@ class DB_postgresql
 	
 	function bind( $param,$value )
 	{
-		$this->params[$param] = $value;
+		$this->params[$param] = &$value;
 	}
 	
 	

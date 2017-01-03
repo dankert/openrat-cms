@@ -77,20 +77,16 @@ class DB_mysqli
 		else 
 			$this->connection = $connect_function();
 
-		#print_r($this->connection);
-		
-		if	( false && !is_object($this->connection) )
+		if	( !$this->connection )
 		{
-			$this->error = "Could not connect to mysqli-database on host $host.";
-			return false;
+			throw new OpenRatException( 'ERROR_DATABASE_CONNECTION',"Could not connect to database on host $host: ".mysqli_connect_errno().'/'.mysqli_connect_error() );
 		}
 				
 		if    ( $db != '' )
 		{
 			if	( !mysqli_select_db( $this->connection,$db ) )
 			{
-				$this->error = "Could not select database '$db' on host $host.";
-				return false;
+				throw new OpenRatException( 'ERROR_DATABASE_CONNECTION',"Could not select database $db: ".mysqli_error($this->connection) );
 			}
 		}
 
@@ -108,14 +104,14 @@ class DB_mysqli
 
 
 
-	function query($query)
+	function query( &$query )
 	{
-		if	( $this->prepared )
+		$ar     = array();
+		$ar[-1] = $this->stmt;
+		$ar[0]  = '';
+		
+		if	( ! empty($this->params) )
 		{
-			$ar     = array();
-			$ar[-1] = $this->stmt;
-			$ar[0]  = '';
-			
 			foreach($this->params as $name => $data)
 			{
 				switch( $data['type'] )
@@ -132,59 +128,42 @@ class DB_mysqli
 				
         		$ar[] = &$data['value'];
 			}
-		
+			
 			call_user_func_array('mysqli_stmt_bind_param',$ar);
-			$this->stmt->execute();
-			return $this->stmt;
 		}
+				
+		$this->stmt->execute();
 		
-		$result = mysqli_query($this->connection,$query);
-
-		if	( ! $result )
-		{
-			$this->error = 'Database error: '.mysql_error();
-			return FALSE;
-		}
-
-		return $result;
+		return $this->stmt;
 	}
 
 
 	function fetchRow( $result, $rownum )
 	{
-		if	( $this->prepared )
-		{
-	        $result = $this->stmt->result_metadata();
-	        $fields = array();
-	        while ($field = mysqli_fetch_field($result)) {
-	            $name = $field->name;
-	            $fields[$name] = &$$name;
-	        }
-	        array_unshift($fields, $this->stmt);
-	        call_user_func_array('mysqli_stmt_bind_result', $fields);
-	        
-	        array_shift($fields);
-	        if	( mysqli_stmt_fetch($this->stmt) )
-	        {
-	            $temp = array();
-	            foreach($fields as $key => $val)
-	            	$temp[$key] = $val;
-	            //array_push($results, $temp);
-	            return $temp;
-	        }
-	        else
-	        {
-		        mysqli_stmt_close($this->stmt);
-		        $this->stmt = null; 
-	        	return false;
-	        }
-		}
-		else
-		{
-			// Plain old flat query
-			$row = $result->fetch_assoc();
-			return $row;
-		}
+        $result = $this->stmt->result_metadata();
+        $fields = array();
+        while ($field = mysqli_fetch_field($result)) {
+            $name = $field->name;
+            $fields[$name] = &$$name;
+        }
+        array_unshift($fields, $this->stmt);
+        call_user_func_array('mysqli_stmt_bind_result', $fields);
+        
+        array_shift($fields);
+        if	( mysqli_stmt_fetch($this->stmt) )
+        {
+            $temp = array();
+            foreach($fields as $key => $val)
+            	$temp[$key] = $val;
+            //array_push($results, $temp);
+            return $temp;
+        }
+        else
+        {
+	        mysqli_stmt_close($this->stmt);
+	        $this->stmt = null; 
+        	return false;
+        }
 	}
 
  
@@ -202,6 +181,7 @@ class DB_mysqli
 		if	( is_object($this->stmt) )
 		{
 			mysqli_stmt_close($this->stmt);
+			unset($this->stmt);
 			$this->stmt = null;
 		}
 		
@@ -217,11 +197,11 @@ class DB_mysqli
 
 		$this->stmt = mysqli_prepare($this->connection,$query);
 		if	( $this->stmt === FALSE )
-			die( 'Mysql-I is unable to prepare the statement: '.$query.' : '.mysqli_error($this->connection) );
+			throw new OpenRatException( 'ERROR_DATABASE','Unable to prepare the statement: '.$query.' : '.mysqli_error($this->connection) );
 		$this->prepared = true;
 	}
 	
-	function bind( $param,$value )
+	function bind( $param,&$value )
 	{
 		$this->params[$param] = $value;
 	}
