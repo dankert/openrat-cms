@@ -67,14 +67,7 @@ class Action
 	var $currentUser;
 
 	
-	
-	function setCharset( $charset )
-	{
-		Session::set('charset',$charset);
-	}
-	
-	
-	
+
 	function setStyle( $style )
 	{
 		$this->setControlVar( "new_style", css_link($style) );
@@ -477,9 +470,6 @@ class Action
 		else
 			$cms_title = OR_TITLE.' '.OR_VERSION;
 
-		// Wir arbeiten im HTML nur noch mit UTF-8.
-		$charset = 'UTF-8';
-			
 		$subActionName = $this->subActionName;
 		$actionName    = $this->actionName;
 		$requestId     = $this->getRequestId();
@@ -723,22 +713,6 @@ class Action
 		return true;
 	}
 	
-	
-	
-	/**
-	 * Ermitelt den Zeichensatz fuer die Ausgabe.
-	 * 
-	 * Seit Version 1.1 werden alle Ausgaben in UTF-8 kodiert. Falls die
-	 * Datenbank intern eine andere Kodierung verwendet, so wird diese bei
-	 * der Datenbankanbindung umgewandelt. Nach außen wird die Kodierung
-	 * grundsätzlich in UTF-8 durchgeführt. 
-	 *
-	 * @return String Zeichensatz, konstant UTF-8.
-	 */
-	protected function getCharset()
-	{
-		return 'UTF-8';
-	}
 	
 	
 	/**

@@ -636,7 +636,7 @@ class PageAction extends ObjectAction
 		$this->page->generate();
 		$this->page->write();
 
-		header('Content-Type: '.$this->page->mimeType().'; charset='.$this->getCharset() );
+		header('Content-Type: '.$this->page->mimeType().'; charset=UTF-8' );
 
 		// HTTP-Header mit Sprachinformation setzen.
 		$language = Session::getProjectLanguage();

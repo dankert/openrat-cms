@@ -23,7 +23,7 @@
 
 /**
  * Darstellung einer Datenbank-Verbindung.
- * F�r die echten DB-Aufrufe werden die entsprechenden
+ * Fuer die echten DB-Aufrufe werden die entsprechenden
  * Methoden des passenden Clients aufgerufen.
  * 
  * Diese Klasse stammt urspruenglich aus dem PHP-Pear-DB-Projekt und unterliegt
@@ -142,9 +142,7 @@ class DB
 			
 			if	( $rc != 0 )
 			{
-				$this->error     = 'Command failed: '.implode("",$ausgabe);
-				$this->available = false; 
-				return false;
+				throw new OpenRatException( 'ERROR_DATABASE_CONNECTION','Command failed: '.implode("",$ausgabe) );
 			}
 		}
 		
@@ -161,21 +159,9 @@ class DB
 		// Client instanziieren
 		$this->client = new $classname;
 		
-		// Schauen, ob der Treiber Prepared Statements beherscht.
-		if	( ! method_exists($this->client,'clear')) {
-			$this->conf['prepare'] = false;
-		}
 
-		$ok = $this->client->connect( $this->conf );
+		$this->client->connect( $this->conf );
 		
-		if	( ! $ok )
-		{
-			$this->error     = 'Cannot connect to database: '.$this->client->error;
-			$this->available = false;
-			return false; 
-		}
-
-				
 		// SQL nach Verbindungsaufbau ausfuehren.
 		if	( ! empty($this->conf['connection_sql']) )
 		{
@@ -184,9 +170,7 @@ class DB
 			
 			if	( ! $ok )
 			{
-				$this->error     = $this->client->error;
-				$this->available = false;
-				return false; 
+				throw new OpenRatException( 'ERROR_DATABASE_CONNECTION',"Could not execute connection-query '".$cmd."'");
 			}
 		}
 		
@@ -203,68 +187,30 @@ class DB
 	 * @param SQL-Objekt
 	 * @return Object (Result)
 	 */
-	public function query( $query )
+	public function query( &$query )
 	{
 		if ( !is_object($query) )
-			die('SQL-Query must be an object');
+			throw new RuntimeException('SQL-Query must be an object');
 			
 		// Vorbereitete Datenbankabfrage ("Prepared Statement")
-		if	( $this->conf['prepare'] )
+		$this->client->clear();
+		
+		// Statement an die Datenbank schicken
+		$this->client->prepare( $query->raw,$query->param );
+		
+		// Einzelne Parameter an die Anfrage binden
+		foreach ($query->param as $name=>$unused)
+			$this->client->bind($name,$query->data[$name]);
+		
+		// Ausfuehren...
+		$result = $this->client->query($query);
+		
+		if	( $result === FALSE )
 		{
-			$this->client->clear();
-			
-			// Statement an die Datenbank schicken
-			$this->client->prepare( $query->raw,$query->param );
-			
-			// Einzelne Parameter an die Anfrage binden
-			foreach ($query->param as $name=>$unused)
-				$this->client->bind($name,$this->convertCharsetToDatabase($query->data[$name]));
-			
-			// Ausf�hren...
-			$result = $this->client->query($query);
-			
-			if	( $result === FALSE )
-			{
-				$this->error = $this->client->error;
-				
-				Logger::warn('Database error: '.$this->error);
-				Http::serverError('Database Error',$this->error);
-			}
-					
-			return $result;
+			throw new Exception( 'Database error: '.$this->client->error);
 		}
-		else
-		{
-			// Es handelt sich um eine nicht-vorbereitete Anfrage. Das gesamte
-			// SQL wird durch die SQL-Klasse erzeugt, dort werden auch die Parameter
-			// in die Abfrage gesetzt.
-			
-			$escape_function = method_exists($this->client,'escape')?$this->client->escape():'addslashes';
-			$flatQuery = $query->getQuery( $escape_function );
-
-			$flatQuery = $this->convertCharsetToDatabase($flatQuery);
-			
-			Logger::trace('DB query on DB '.$this->id."\n".$query->raw);
-	
-			$result = $this->client->query($flatQuery);
-			
-			if	( $result === FALSE )
-			{
-				$this->error = $this->client->error;
 				
-				if	( true )
-				{
-					Logger::warn('Database error: '.$this->error);
-					Http::serverError('Database Error',$this->error);
-				}
-			}
-	
-			if	( $this->conf['autocommit'] )
-				if	( method_exists($this->client,'commit') )
-					$this->client->commit();
-			
-			return $result;
-		}
+		return $result;
 	}
 
 
@@ -286,7 +232,6 @@ class DB
 		if	( ! is_array($row) )
 			return $none;
 			
-		array_walk($row,array($this,'convertCharsetFromDatabase'));
 		$keys = array_keys($row);
 		
 		return $row[ $keys[0] ];
@@ -317,10 +262,6 @@ class DB
 		if	( ! is_array($row) )
 			$row = array();
 
-			//Html::debug($row,"vorher");
-		$row = $this->convertRowWithCharsetFromDatabase($row);
-			//Html::debug($row,"nachher");
-			
 		return $row;
 	}
 
@@ -342,7 +283,6 @@ class DB
 			if	( empty($row) )
 				break;
 				
-			array_walk($row,array($this,'convertCharsetFromDatabase'));
 			$keys = array_keys($row);
 			$col[] = $row[ $keys[0] ];
 		}
@@ -372,8 +312,6 @@ class DB
 			if	( empty($row) )
 				break;
 
-			array_walk($row,array($this,'convertCharsetFromDatabase'));
-				
 			if	( count($row) > 2 || $force_array )
 			{
 				// FIXME: Wird offenbar nie ausgeführt.
@@ -416,7 +354,6 @@ class DB
 
 		while( $row = $this->client->fetchRow( $result,$i++ ) )
 		{
-			array_walk($row,array($this,'convertCharsetFromDatabase'));
 			$results[] = $row;
 		}
 
@@ -432,12 +369,8 @@ class DB
 	 */
 	public function start()
 	{
-		if	( @$this->conf['transaction'])
-			if	( method_exists($this->client,'start') )
-			{
-				$this->transactionInProgress = true;
-				$this->client->start();
-			}
+		$this->transactionInProgress = true;
+		$this->client->start();
 	}
 	
 	
@@ -447,13 +380,11 @@ class DB
 	 */
 	public function commit()
 	{
-		if	( @$this->conf['transaction'])
-			if	( method_exists($this->client,'commit') )
-				if	( $this->transactionInProgress )
-				{
-					$this->client->commit();
-					$this->transactionInProgress = false;
-				}
+		if	( $this->transactionInProgress )
+		{
+			$this->client->commit();
+			$this->transactionInProgress = false;
+		}
 	}
 	
 	
@@ -465,12 +396,17 @@ class DB
 	 */
 	public function testQuery( $query )
 	{
-		if ( !is_object($query) )
-			die('SQL-Query must be an object');
+				
+		try
+		{
+			$result = $this->query($query);
+			return $result; 
+		}
+		catch( Exception $e )
+		{
+			return false;
+		}
 		
-		$result = $this->client->query($query->raw);
-			
-		return $result !== FALSE;
 	}
 	
 	
@@ -480,61 +416,40 @@ class DB
 	 */
 	public function rollback()
 	{
-		if	( @$this->conf['transaction'])
-			if	( method_exists($this->client,'rollback') )
-				if	( $this->transactionInProgress )
-				{
-					$this->client->rollback();
-					$this->transactionInProgress = false;
-				}
+		if	( $this->transactionInProgress )
+		{
+			$this->client->rollback();
+			$this->transactionInProgress = false;
+		}
 	}
 	
-	
-	private function convertCharsetToDatabase(&$text)
+	public function sql( $sql )
 	{
-		//Logger::debug('from '.$text);
-		$dbCharset = @$this->conf['charset'];
-		if	( !empty($dbCharset) && $dbCharset != 'UTF-8' )
-		{
-		//	Logger::debug('Converting from UTF-8 to '.$dbCharset);
-			if	( !function_exists('iconv') )
-				Logger::warn('iconv not available - database charset unchanged. Please '.
-				             'enable iconv on your system or transform your database content to UTF-8.');
-			else
-				$text = iconv('UTF-8',$dbCharset.'//TRANSLIT',$text);
-		}
-		//Logger::debug('to   '.$text);
-		return $text;
-		
-	}
-	
-	
-	private function convertCharsetFromDatabase(&$text)
-	{
-		$dbCharset = @$this->conf['charset'];
-		if	( !empty($dbCharset) && $dbCharset != 'UTF-8' )
-		{
-			if	( !function_exists('iconv') )
-				Logger::warn('iconv not available - database charset unchanged. Please '.
-				             'enable iconv on your system or transform your database content to UTF-8.');
-			else
-				$text = iconv($dbCharset,'UTF-8//TRANSLIT',$text);
-		}
-		return $text;
-		
-	}
-	
-	
-	private function convertRowWithCharsetFromDatabase($row)
-	{
-		foreach( $row as $key=>$value)
-		{
-			$row[$key] = $this->convertCharsetFromDatabase($row[$key]);
-		}
-		return $row;
+		return new Statement( $sql,$this->client );
 	}
 	
 }
 
+
+class OpenRatException extends Exception
+{
+	public $key;
+	
+	// Die Exception neu definieren, damit die Mitteilung nicht optional ist
+	public function __construct($key, $message, $code = 0, Exception $previous = null) {
+		
+		$this->key = $key;
+		
+		// sicherstellen, dass alles korrekt zugewiesen wird
+		parent::__construct($message, $code, $previous);
+	}
+
+	// maßgeschneiderte Stringdarstellung des Objektes
+	public function __toString() {
+		return __CLASS__ . ": ".$this->key." [{$this->code}]: '{$this->message}' in {$this->file}({$this->line})\n"
+                                . "{$this->getTraceAsString()}\n";
+	}
+
+}
 
 ?>

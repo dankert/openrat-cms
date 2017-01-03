@@ -16,7 +16,6 @@ class DBVersion000001 extends DbVersion
 		
 		$this->addTable('project');
 
-		$this->addColumn('project','id'                 ,'INT'    ,null,null,$not_nullable);
 		$this->addColumn('project','name'               ,'VARCHAR', 128,null,$not_nullable);
 		$this->addColumn('project','target_dir'         ,'VARCHAR', 255,null,$not_nullable);
 		$this->addColumn('project','ftp_url'            ,'VARCHAR', 255,null,$not_nullable);
@@ -47,7 +46,6 @@ class DBVersion000001 extends DbVersion
 		
 				
 		$this->addTable('user');
-		$this->addColumn('user','id','INT',null,null,$not_nullable);
 		$this->addColumn('user','name','VARCHAR',128,null,$not_nullable);
 		$this->addColumn('user','password','VARCHAR',50,null,$not_nullable);
 		$this->addColumn('user','ldap_dn','VARCHAR',255,null,$not_nullable);
@@ -61,13 +59,11 @@ class DBVersion000001 extends DbVersion
 		$this->addUniqueIndex('user','name');
 		
 		$this->addTable('group');
-		$this->addColumn('group','id','INT',null,null,$not_nullable);
 		$this->addColumn('group','name','VARCHAR',100,null,$not_nullable);
 		$this->addPrimaryKey('group','id');
 		$this->addUniqueIndex('group','name');
 		
 		$this->addTable('object');
-		$this->addColumn('object','id','INT',null,null,$not_nullable);
 		$this->addColumn('object','parentid','INT',null,null,$nullable);
 		$this->addColumn('object','projectid','INT',0,0,$not_nullable);
 		$this->addColumn('object','filename','VARCHAR',255,null,$not_nullable);
@@ -100,7 +96,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('template');
-		$this->addColumn('template','id','INT',null,null,$not_nullable);
 		$this->addColumn('template','projectid','INT',null,null,$not_nullable);
 		$this->addColumn('template','name','VARCHAR',50,null,$not_nullable);
 		$this->addPrimaryKey('template','id');
@@ -113,7 +108,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('language');
-		$this->addColumn('language','id','INT',null,null,$not_nullable);
 		$this->addColumn('language','projectid','INT',0,null,$not_nullable);
 		$this->addColumn('language','isocode','VARCHAR',10,null,$not_nullable);
 		$this->addColumn('language','name','VARCHAR',50,null,$not_nullable);
@@ -126,7 +120,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('page');
-		$this->addColumn('page','id','INT',null,null,$not_nullable);
 		$this->addColumn('page','objectid','INT',0,null,$not_nullable);
 		$this->addColumn('page','templateid','INT',0,null,$not_nullable);
 		$this->addPrimaryKey('page','id');
@@ -140,7 +133,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('projectmodel');
-		$this->addColumn('projectmodel','id','INT',null,null,$not_nullable);
 		$this->addColumn('projectmodel','projectid','INT',0,null,$not_nullable);
 		$this->addColumn('projectmodel','name','VARCHAR',50,null,$not_nullable);
 		$this->addColumn('projectmodel','extension','VARCHAR',10,null,$nullable);
@@ -153,7 +145,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('element');
-		$this->addColumn('element','id','INT',null,null,$not_nullable);
 		$this->addColumn('element','templateid','INT',0,0,$not_nullable);
 		$this->addColumn('element','name','VARCHAR',50,null,$not_nullable);
 		$this->addColumn('element','descr','VARCHAR',255,null,$not_nullable);
@@ -185,7 +176,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('file');
-		$this->addColumn('file','id','INT',null,null,$not_nullable);
 		$this->addColumn('file','objectid','INT',0,null,$not_nullable);
 		$this->addColumn('file','extension','VARCHAR',10,null,$not_nullable);
 		$this->addColumn('file','size','INT',0,null,$not_nullable);
@@ -198,7 +188,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('folder');
-		$this->addColumn('folder','id','INT',null,null,$not_nullable);
 		$this->addColumn('folder','objectid','INT',0,null,$not_nullable);
 		$this->addPrimaryKey('folder','id');
 		$this->addConstraint('folder','objectid','object','id');
@@ -210,7 +199,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('link');
-		$this->addColumn('link','id','INT',null,null,$not_nullable);
 		$this->addColumn('link','objectid','INT',0,null,$not_nullable);
 		$this->addColumn('link','link_objectid','INT',null,null,$nullable);
 		$this->addColumn('link','url','VARCHAR',255,null,$nullable);
@@ -226,7 +214,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('name');
-		$this->addColumn('name','id','INT',null,null,$not_nullable);
 		$this->addColumn('name','objectid','INT',0,null,$not_nullable);
 		$this->addColumn('name','name','VARCHAR',255,null,$not_nullable);
 		$this->addColumn('name','descr','VARCHAR',255,null,$not_nullable);
@@ -244,7 +231,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('templatemodel');
-		$this->addColumn('templatemodel','id','INT',null,null,$not_nullable);
 		$this->addColumn('templatemodel','templateid','INT',0,null,$not_nullable);
 		$this->addColumn('templatemodel','projectmodelid','INT',0,null,$not_nullable);
 		$this->addColumn('templatemodel','extension','VARCHAR',10,null,$nullable);
@@ -262,7 +248,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('usergroup');
-		$this->addColumn('usergroup','id','INT',null,null,$not_nullable);
 		$this->addColumn('usergroup','userid','INT',null,null,$not_nullable);
 		$this->addColumn('usergroup','groupid','INT',null,null,$not_nullable);
 		$this->addPrimaryKey('usergroup','id');
@@ -277,7 +262,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('value');
-		$this->addColumn('value','id','INT',null,null,$not_nullable);
 		$this->addColumn('value','pageid','INT',0,null,$not_nullable);
 		$this->addColumn('value','languageid','INT',null,null,$not_nullable);
 		$this->addColumn('value','elementid','INT',0,null,$not_nullable);
@@ -308,7 +292,6 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('acl');
-		$this->addColumn('acl','id','INT',null,null,$not_nullable);
 		$this->addColumn('acl','userid','INT',null,null,$nullable);
 		$this->addColumn('acl','groupid','INT',null,null,$nullable);
 		$this->addColumn('acl','objectid','INT',null,null,$not_nullable);

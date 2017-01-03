@@ -115,14 +115,6 @@ class LoginAction extends Action
 			return false;
 		}
 		
-		// Zeichensatz der Datenbank benutzen
-		if	( isset($db->conf['charset']) )
-			$charset = $db->conf['charset'];
-		else
-			$charset = 'US-ASCII';
-		$this->setCharset($charset);
-		
-		
 		$ip = getenv("REMOTE_ADDR");
 	
 		$user = new User();
@@ -870,6 +862,9 @@ class LoginAction extends Action
 					// Kennwoerter identisch und lang genug.
 					$user = User::loadWithName($loginName);
 					$user->setPassword( $newPassword1,true );
+					
+					// Das neue gesetzte Kennwort für die weitere Authentifizierung benutzen.
+					$loginPassword = $newPassword1;
 				}
 			}
 			else

@@ -86,18 +86,7 @@ function langHtml( $key,$vars = array() ) {
  */
 function encodeHtml($text)
 {
-	$charset = lang('CHARSET');
-	
-	switch( $charset )
-	{
-		case 'ISO-8859-1':
-		case 'ISO-8859-15':
-			return htmlentities($text,ENT_QUOTES,$charset );
-		case 'UTF-8':
-			return translateutf8tohtml($text);
-		default:
-			return $text;
-	}
+	return translateutf8tohtml($text);
 }
 
 
@@ -156,7 +145,7 @@ function encodeHtml($text)
             }
         }
         $result = $txt2;
-        //echo "'$txt wird zu:".htmlentities($result)."'";
+
         return $result;
     }
 

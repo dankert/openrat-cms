@@ -1,5 +1,7 @@
 <?php
 
+define('OR_DB_INDEX_PREFIX','IX');
+
 abstract class DbVersion
 {
 	private $db;
@@ -65,17 +67,17 @@ abstract class DbVersion
 	}
 	
 	
-	/*
-	 * Erzeugt eine neue, leere Tabelle.
-	# Creating a new table
-	# param 1: table name
+	/**
+	 * Erzeugt eine neue Tabelle.
+	 * Die neue Tabelle enthält bereits eine Spalte "id" (da eine leere Tabelle i.d.R. nicht zulässig ist). 
 	 */
-	
 	function addTable( $tableName )
 	{
 		$tableName = $this->getTableName($tableName);
 		
-		$ddl = new Sql('CREATE TABLE '.$tableName.'(id INTEGER)'.($this->dbmsType=='mysql'?' ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci':'').';');
+		$table_opts = $this->dbmsType=='mysql'?' ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci':'';
+		
+		$ddl = new Sql('CREATE TABLE '.$tableName.'(id INTEGER)'.$table_opts.';');
 		// The syntax 'TYPE = InnoDB' was deprecated in MySQL 5.0 and was removed in MySQL 5.1 and later versions.
 		
 		$this->db->query( $ddl );
@@ -90,8 +92,6 @@ abstract class DbVersion
 		# param 5: nullable (available are: J,N)
 	function addColumn($tableName,$columnName,$type,$size,$default,$nullable)
 	{
-		if	( $columnName == 'id') return;
-		
 		$table = $this->getTableName($tableName);
 
 		$type = strtoupper($type);
@@ -213,7 +213,7 @@ abstract class DbVersion
 		if	( !is_array($columnNames) )
 			$columnNames = explode(',',$columnNames);
 		
-		$indexName = $this->tablePrefix.'uidx_'.$tableName.'_'.implode('_',$columnNames).$this->tableSuffix;
+		$indexName = $this->tablePrefix.OR_DB_INDEX_PREFIX.'_'.$tableName.'_'.implode('_',$columnNames).$this->tableSuffix;
 			
 //	if	[ "$type" == "oracle" ]; then
 //	cnt=$(($cnt+1))
@@ -225,8 +225,11 @@ abstract class DbVersion
 	}
 
 	
-	# Creating a unique key
-	# param 1: name of index column. Seperate multiple columns with ','
+	/**
+	 * Creating a unique key.
+	 * param 1: name of index column. Seperate multiple columns with ','
+	 * 
+	 */
 	function addUniqueIndex($tableName,$columnNames)
 	{
 		$this->addIndex( $tableName,$columnNames,true );

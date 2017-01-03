@@ -28,9 +28,10 @@ class DbUpdate
 		{
 			if	( $installVersion > 2 )
 			{
-				$sql = new Sql('INSERT INTO {t_version} (id,version,status,installed) VALUES( {version},{version},{status},{time} )',$db->id);
-				$sql->setInt('status' , OR_DB_STATUS_UPDATE_PROGRESS);
+				$sql = new Sql('INSERT INTO {t_version} (id,version,status,installed) VALUES( {id},{version},{status},{time} )',$db->id);
+				$sql->setInt('id'     , $installVersion);
 				$sql->setInt('version', $installVersion);
+				$sql->setInt('status' , OR_DB_STATUS_UPDATE_PROGRESS);
 				$sql->setInt('time'   , time()         );
 				$db->query( $sql );
 				$db->commit();
