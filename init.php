@@ -70,13 +70,28 @@ define('REQ_PARAM_TARGET'         ,'target'         );
 define('OR_SERVICECLASSES_DIR','./util/' );
 define('OR_AUTHCLASSES_DIR'   ,'./auth/' );
 
+
+/**
+ * Wandelt jeden Fehler in eine ErrorException um.
+ */
+function exception_error_handler($severity, $message, $file, $line) {
+	if	( !(error_reporting() & $severity) )
+	{
+		// Dieser Fehlercode ist nicht in error_reporting enthalten
+		return;
+	}
+	throw new ErrorException($message, 0, $severity, $file, $line);
+}
+
+set_error_handler("exception_error_handler");
+
+
+
 require_once( "functions/request.inc.php" );
 
 // Werkzeugklassen einbinden.
 require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
 require_once( OR_AUTHCLASSES_DIR."include.inc.".PHP_EXT );
 
-// TODO: Muss aus Datenbank kommen!
-$charset = 'US-ASCII';
 
 ?>
