@@ -77,10 +77,10 @@ abstract class DbVersion
 		
 		$table_opts = $this->dbmsType=='mysql'?' ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci':'';
 		
-		$ddl = new Sql('CREATE TABLE '.$tableName.'(id INTEGER)'.$table_opts.';');
+		$ddl = $this->db->sql('CREATE TABLE '.$tableName.'(id INTEGER)'.$table_opts.';');
 		// The syntax 'TYPE = InnoDB' was deprecated in MySQL 5.0 and was removed in MySQL 5.1 and later versions.
 		
-		$this->db->query( $ddl );
+		$ddl->query();
 	}
 
 	
@@ -179,12 +179,12 @@ abstract class DbVersion
 			
 		}
 		
-		$ddl = new Sql('ALTER TABLE '.$table.
+		$ddl = $this->db->sql('ALTER TABLE '.$table.
 	               ' ADD COLUMN '.$columnName.' '.$dbmsInternalType.($size!=null?'('.$size.')':'').
 	               ($default!=null?' DEFAULT '.(is_string($default)?"'":'').$default.(is_string($default)?"'":''):'').
 	               ' '.($nullable?'NULL':'NOT NULL').';'
 	              );
-		$this->db->query( $ddl );
+		$ddl->query();
 	
 	}
 	
@@ -197,9 +197,9 @@ abstract class DbVersion
 		if	( !is_array($columnNames) )
 			$columnNames = explode(',',$columnNames);
 
-		$ddl = new Sql('ALTER TABLE '.$table.' ADD PRIMARY KEY ('.implode(',',$columnNames).');');
-		$this->db->query( $ddl );
-		
+		$ddl = $this->db->sql('ALTER TABLE '.$table.' ADD PRIMARY KEY ('.implode(',',$columnNames).');');
+		$ddl->query();
+				
 	}
 	
 	
@@ -220,8 +220,9 @@ abstract class DbVersion
 //	echo "CREATE UNIQUE INDEX ${prefix}uidx_${cnt}" >> $outfile
 //	else
 			
-		$ddl = new Sql('CREATE '.($unique?'UNIQUE ':'').'INDEX '.$indexName.' ON '.$table.' ('.implode(',',$columnNames).');');
-		$this->db->query( $ddl );
+		$ddl = $this->db->sql('CREATE '.($unique?'UNIQUE ':'').'INDEX '.$indexName.' ON '.$table.' ('.implode(',',$columnNames).');');
+		$ddl->query();
+		
 	}
 
 	
@@ -256,9 +257,8 @@ abstract class DbVersion
 // 	fi
 	// Oracle doesn't support "ON DELETE RESTRICT"-Statements, but its the default.
 		
-		$ddl = new Sql('ALTER TABLE '.$table.' ADD CONSTRAINT '.$constraintName.' FOREIGN KEY ('.$columnName.') REFERENCES '.$targetTable.' ('.$targetColumnName.') ON DELETE RESTRICT ON UPDATE RESTRICT;');
-		$this->db->query( $ddl );
-	
+		$ddl = $this->db->sql('ALTER TABLE '.$table.' ADD CONSTRAINT '.$constraintName.' FOREIGN KEY ('.$columnName.') REFERENCES '.$targetTable.' ('.$targetColumnName.') ON DELETE RESTRICT ON UPDATE RESTRICT;');
+		$ddl->query();
 	}
 	
 	
@@ -267,25 +267,24 @@ abstract class DbVersion
 	{
 		$table = $this->getTableName($tableName);
 	
-		$ddl = new Sql('DROP TABLE '.$table.';' );
-		$this->db->query( $ddl );
-	
+		$ddl = $this->db->sql('DROP TABLE '.$table.';' );
+		$ddl->query();
 	}
 
 	function dropColumn( $tableName,$columnName )
 	{
 		$table = $this->getTableName($tableName);
 	
-		$ddl = new Sql('ALTER TABLE '.$table.' DROP COLUMN '.$columnName.';');
-		$this->db->query( $ddl );
+		$ddl = $this->db->sql('ALTER TABLE '.$table.' DROP COLUMN '.$columnName.';');
+		$ddl->query();
+		
 	
 	}
 	
 	function dropIndex( $indexName,$unique=false)
 	{
-		$ddl = new Sql('DROP'.($unique?' UNIQUE':'').' INDEX '.$indexName.';' );
-		$this->db->query( $ddl );
-	
+		$ddl = $this->db->sql('DROP'.($unique?' UNIQUE':'').' INDEX '.$indexName.';' );
+		$ddl->query();
 	}
 
 	function dropUniqueIndex( $indexName)
@@ -300,16 +299,15 @@ abstract class DbVersion
 		if	( !is_array($columnNames) )
 			$columnNames = explode(',',$columnNames);
 		
-		$ddl = new Sql('ALTER TABLE '.$table.' DROP PRIMARY KEY('.implode(',',$columnNames).')');
-		$this->db->query( $ddl );
+		$ddl = $this->db->sql('ALTER TABLE '.$table.' DROP PRIMARY KEY('.implode(',',$columnNames).')');
+		$ddl->query();
 	}
 	
 	
 	function dropConstraint( $constraintName)
 	{
-		$ddl = new Sql('DROP CONSTRAINT '.$constraintName.';' );
-		$this->db->query( $ddl );
-	
+		$ddl = $this->db->sql('DROP CONSTRAINT '.$constraintName.';' );
+		$ddl->query();
 	}
 
 	

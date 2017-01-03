@@ -21,14 +21,14 @@ class InternalAuth implements Auth
 		$db = db_connection();
 		
 		// Lesen des Benutzers aus der DB-Tabelle
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 SELECT * FROM {t_user}
  WHERE name={name}
 SQL
 		);
 		$sql->setString('name',$username);
 	
-		$row_user = $db->getRow( $sql );
+		$row_user = $sql->getRow( $sql );
 
 		if	( empty($row_user) )
 			// Benutzer ist nicht vorhanden

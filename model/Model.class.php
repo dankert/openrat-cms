@@ -55,11 +55,11 @@ class Model
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT 1 FROM {t_projectmodel} '.
+		$sql = $db->sql('SELECT 1 FROM {t_projectmodel} '.
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 
-		return intval($db->getOne($sql)) == 1;
+		return intval($sql->getOne($sql)) == 1;
 	}
 	
 
@@ -73,7 +73,7 @@ class Model
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql( "SELECT id,name FROM {t_projectmodel} ".
+		$sql = $db->sql( "SELECT id,name FROM {t_projectmodel} ".
 		                "   WHERE projectid = {projectid} ".
 		                "   ORDER BY name" );
 
@@ -85,7 +85,7 @@ class Model
 			$sql->setInt('projectid',$project->projectid);
 		}
 
-		return $db->getAssoc( $sql );
+		return $sql->getAssoc( $sql );
 	}
 
 	
@@ -98,7 +98,7 @@ class Model
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 		SELECT count(*) FROM {t_projectmodel} 
 		                   WHERE projectid = {projectid} 
 SQL
@@ -107,7 +107,7 @@ SQL
 			$sql->setInt('projectid',$this->projectid );
 		else	$sql->setInt('projectid',$SESS['projectid'] );
 
-		return $db->getOne( $sql );
+		return $sql->getOne( $sql );
 	}
 	
 
@@ -118,11 +118,11 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT * FROM {t_projectmodel}'.
+		$sql = $db->sql( 'SELECT * FROM {t_projectmodel}'.
 		                ' WHERE id={modelid}' );
 		$sql->setInt( 'modelid',$this->modelid );
 
-		$row = $db->getRow( $sql );
+		$row = $sql->getRow( $sql );
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
@@ -141,7 +141,7 @@ SQL
 		$db = db_connection();
 
 		// Gruppe speichern		
-		$sql = new Sql( 'UPDATE {t_projectmodel} '.
+		$sql = $db->sql( 'UPDATE {t_projectmodel} '.
 		                '  SET name      = {name} '.
 		                '  WHERE id={modelid}' );
 		$sql->setString( 'name'     ,$this->name    );
@@ -149,7 +149,7 @@ SQL
 		$sql->setInt( 'modelid',$this->modelid );
 
 		// Datenbankabfrage ausfuehren
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -179,11 +179,11 @@ SQL
 		
 		$db = db_connection();
 
-		$sql = new Sql('SELECT MAX(id) FROM {t_projectmodel}');
-		$this->modelid = intval($db->getOne($sql))+1;
+		$sql = $db->sql('SELECT MAX(id) FROM {t_projectmodel}');
+		$this->modelid = intval($sql->getOne($sql))+1;
 
 		// Modell hinzuf?gen
-		$sql = new Sql( 'INSERT INTO {t_projectmodel} '.
+		$sql = $db->sql( 'INSERT INTO {t_projectmodel} '.
 		                "(id,projectid,name,extension,is_default) VALUES( {modelid},{projectid},{name},'',0 )");
 
 		$sql->setInt   ('modelid'  ,$this->modelid   );
@@ -191,7 +191,7 @@ SQL
 		$sql->setString('name'     ,$this->name      );
 
 		// Datenbankbefehl ausfuehren
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -200,7 +200,7 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id FROM {t_projectmodel} '.
+		$sql = $db->sql( 'SELECT id FROM {t_projectmodel} '.
 		                '  WHERE projectid={projectid}'.
 		                '   ORDER BY is_default DESC' );
 		if	( isset($this->projectid) )
@@ -211,7 +211,7 @@ SQL
 			$sql->setInt('projectid',$project->projectid);
 		}
 		
-		return $db->getOne( $sql );
+		return $sql->getOne( $sql );
 	}
 
 
@@ -223,18 +223,18 @@ SQL
 		$db = db_connection();
 
 		// Zuerst alle auf nicht-Standard setzen
-		$sql = new Sql( 'UPDATE {t_projectmodel} '.
+		$sql = $db->sql( 'UPDATE {t_projectmodel} '.
 		                '  SET is_default = 0 '.
 		                '  WHERE projectid={projectid}' );
 		$sql->setInt('projectid',$this->projectid );
-		$db->query( $sql );
+		$sql->query( $sql );
 	
 		// Jetzt die gew?nschte Sprachvariante auf Standard setzen
-		$sql = new Sql( 'UPDATE {t_projectmodel} '.
+		$sql = $db->sql( 'UPDATE {t_projectmodel} '.
 		                '  SET is_default = 1 '.
 		                '  WHERE id={modelid}' );
 		$sql->setInt('modelid',$this->modelid );
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -248,33 +248,33 @@ SQL
 		$db = db_connection();
 
 		// Vorlagen zu dieseem Modell loeschen
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 	DELETE FROM {t_templatemodel}
 	 WHERE projectmodelid = {modelid}
 SQL
 );
 		$sql->setInt( 'modelid',$this->modelid );
-		$db->query( $sql );
+		$sql->query( $sql );
 		
 		// Dieses Modell löschen
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 	DELETE FROM {t_projectmodel}
 	 WHERE id={modelid}
 SQL
 );
 		$sql->setInt( 'modelid',$this->modelid );
-		$db->query( $sql );
+		$sql->query( $sql );
 
 		// Anderes Modell auf "Default" setzen (sofern vorhanden)
 		if	( $this->isDefault )
 		{
-			$sql = new Sql( 'SELECT id FROM {t_projectmodel} WHERE projectid={projectid}' );
+			$sql = $db->sql( 'SELECT id FROM {t_projectmodel} WHERE projectid={projectid}' );
 			$sql->setInt( 'projectid',$this->projectid );
-			$new_default_modelid = $db->getOne( $sql );
+			$new_default_modelid = $sql->getOne( $sql );
 	
-			$sql = new Sql( 'UPDATE {t_projectmodel} SET is_default=1 WHERE id={modelid}' );
+			$sql = $db->sql( 'UPDATE {t_projectmodel} SET is_default=1 WHERE id={modelid}' );
 			$sql->setInt( 'modelid',$new_default_modelid );
-			$db->query( $sql );
+			$sql->query( $sql );
 		}
 	}
 }

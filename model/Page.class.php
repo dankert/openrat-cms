@@ -82,11 +82,11 @@ class Page extends Object
 	{
 		$db = db_connection();
 
-		$sql  = new Sql( 'SELECT objectid FROM {t_page} '.
+		$sql  = $db->sql( 'SELECT objectid FROM {t_page} '.
 		                 '  WHERE id={pageid}' );
 		$sql->setInt('pageid',$pageid);
 
-		return $db->getOne( $sql );
+		return $sql->getOne( $sql );
 	}
 
 
@@ -100,11 +100,11 @@ class Page extends Object
 	{
 		$db = db_connection();
 
-		$sql  = new Sql( 'SELECT id FROM {t_page} '.
+		$sql  = $db->sql( 'SELECT id FROM {t_page} '.
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$objectid);
 
-		return $db->getOne( $sql );
+		return $sql->getOne( $sql );
 	}
 
 
@@ -348,17 +348,17 @@ class Page extends Object
 
 		$this->objectAdd(); // Hinzuf?gen von Objekt (dabei wird Objekt-ID ermittelt)
 
-		$sql = new Sql('SELECT MAX(id) FROM {t_page}');
-		$this->pageid = intval($db->getOne($sql))+1;
+		$sql = $db->sql('SELECT MAX(id) FROM {t_page}');
+		$this->pageid = intval($sql->getOne($sql))+1;
 
-		$sql = new Sql('INSERT INTO {t_page}'.
+		$sql = $db->sql('INSERT INTO {t_page}'.
 		               ' (id,objectid,templateid)'.
 		               ' VALUES( {pageid},{objectid},{templateid} )' );
 		$sql->setInt   ('pageid'    ,$this->pageid     );
 		$sql->setInt   ('objectid'  ,$this->objectid   );
 		$sql->setInt   ('templateid',$this->templateid );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -369,10 +369,10 @@ class Page extends Object
 	{
 		$db = db_connection();
 
-		$sql  = new Sql( 'SELECT * FROM {t_page} '.
+		$sql  = $db->sql( 'SELECT * FROM {t_page} '.
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$row = $db->getRow( $sql );
+		$row = $sql->getRow( $sql );
 
 		$this->pageid      = $row['id'        ];
 		$this->templateid  = $row['templateid'];
@@ -385,15 +385,15 @@ class Page extends Object
 	{
 		global $db;
 
-		$sql = new Sql( 'DELETE FROM {t_value} '.
+		$sql = $db->sql( 'DELETE FROM {t_value} '.
 		                '  WHERE pageid={pageid}' );
 		$sql->setInt('pageid',$this->pageid);
-		$db->query( $sql );
+		$sql->query( $sql );
 
-		$sql = new Sql( 'DELETE FROM {t_page} '.
+		$sql = $db->sql( 'DELETE FROM {t_page} '.
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$db->query( $sql );
+		$sql->query( $sql );
 		
 		$this->objectDelete();
 	}
@@ -438,12 +438,12 @@ class Page extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('UPDATE {t_page}'.
+		$sql = $db->sql('UPDATE {t_page}'.
 		               '  SET templateid ={templateid}'.
 		               '  WHERE objectid={objectid}' );
 		$sql->setInt('templateid' ,$this->templateid);
 		$sql->setInt('objectid'   ,$this->objectid  );
-		$db->query( $sql );
+		$sql->query( $sql );
 
 		$this->objectSave();
 	}
@@ -459,12 +459,12 @@ class Page extends Object
 		// Template-id dieser Seite aendern
 		$this->templateid = $newTemplateId;
 
-		$sql = new Sql('UPDATE {t_page}'.
+		$sql = $db->sql('UPDATE {t_page}'.
 		               '  SET templateid ={templateid}'.
 		               '  WHERE objectid={objectid}' );
 		$sql->setInt('templateid' ,$this->templateid);
 		$sql->setInt('objectid'   ,$this->objectid  );
-		$db->query( $sql );
+		$sql->query( $sql );
 
 
 		// Inhalte umschluesseln, d.h. die Element-Ids aendern
@@ -475,27 +475,27 @@ class Page extends Object
 			      intval($replaceElementMap[$oldElementId]) < 1 )
 			{
 				Logger::debug( 'deleting value of elementid '.$oldElementId );
-				$sql = new Sql('DELETE FROM {t_value}'.
+				$sql = $db->sql('DELETE FROM {t_value}'.
 				               '  WHERE pageid={pageid}'.
 				               '    AND elementid={elementid}' );
 				$sql->setInt('pageid'   ,$this->pageid);
 				$sql->setInt('elementid',$oldElementId      );
 				
-				$db->query( $sql );
+				$sql->query( $sql );
 			}
 			else
 			{
 				$newElementId = intval($replaceElementMap[$oldElementId]);
 
 				Logger::debug( 'updating elementid '.$oldElementId.' -> '.$newElementId );
-				$sql = new Sql('UPDATE {t_value}'.
+				$sql = $db->sql('UPDATE {t_value}'.
 				               '  SET elementid ={newelementid}'.
 				               '  WHERE pageid   ={pageid}'.
 				               '    AND elementid={oldelementid}' );
 				$sql->setInt('pageid'      ,$this->pageid);
 				$sql->setInt('oldelementid',$oldElementId      );
 				$sql->setInt('newelementid',$newElementId      );
-				$db->query( $sql );
+				$sql->query( $sql );
 			}
 		}
 	}
@@ -567,21 +567,21 @@ class Page extends Object
 //		
 //		$db = db_connection();
 //
-//		$sql  = new Sql( 'SELECT COUNT(*) FROM {t_language}'.
+//		$sql  = $db->sql( 'SELECT COUNT(*) FROM {t_language}'.
 //		                 ' WHERE projectid={projectid}' );
 //		$sql->setInt('projectid',$SESS['projectid']);
 //
-//		if   ( $db->getOne( $sql ) == 1 )
+//		if   ( $sql->getOne( $sql ) == 1 )
 //		{
 //			// Wenn es nur eine Sprache gibt, keine Sprachangabe im Dateinamen
 //			return '';
 //		}
 //		else
 //		{
-//			$sql = new Sql( 'SELECT isocode FROM {t_language}'.
+//			$sql = $db->sql( 'SELECT isocode FROM {t_language}'.
 //			                ' WHERE id={languageid}' );
 //			$sql->setInt('languageid',$this->languageid);
-//			$isocode = $db->getOne( $sql );
+//			$isocode = $sql->getOne( $sql );
 //
 //			return strtolower( $isocode );
 //		}		

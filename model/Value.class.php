@@ -160,13 +160,13 @@ class Value
 		$db = db_connection();
 
 		if	( $this->publish )
-			$sql = new Sql( 'SELECT * FROM {t_value}'.
+			$sql = $db->sql( 'SELECT * FROM {t_value}'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
 			                '    AND languageid={languageid}'.
 			                '    AND publish=1' );
 		else
-			$sql = new Sql( 'SELECT * FROM {t_value}'.
+			$sql = $db->sql( 'SELECT * FROM {t_value}'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
 			                '    AND languageid={languageid}'.
@@ -174,7 +174,7 @@ class Value
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
-		$row = $db->getRow( $sql );
+		$row = $sql->getRow( $sql );
 		
 		if	( count($row) > 0 ) // Wenn Inhalt gefunden
 		{
@@ -203,12 +203,12 @@ class Value
 
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT {t_value}.*,{t_user}.name as lastchange_username'.
+		$sql = $db->sql( 'SELECT {t_value}.*,{t_user}.name as lastchange_username'.
 		                ' FROM {t_value}'.
 		                ' LEFT JOIN {t_user} ON {t_user}.id={t_value}.lastchange_userid'.
 		                '  WHERE {t_value}.id={valueid}' );
 		$sql->setInt( 'valueid',$this->valueid);
-		$row = $db->getRow( $sql );
+		$row = $sql->getRow( $sql );
 		
 		$this->text           =        $row['text'        ];
 		$this->pageid         = intval($row['pageid'      ]);
@@ -236,7 +236,7 @@ class Value
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT {t_value}.*,{t_user}.name as lastchange_username'.
+		$sql = $db->sql( 'SELECT {t_value}.*,{t_user}.name as lastchange_username'.
 		                '  FROM {t_value}'.
 		                '  LEFT JOIN {t_user} ON {t_user}.id={t_value}.lastchange_userid'.
 		                '  WHERE elementid ={elementid}'.
@@ -248,7 +248,7 @@ class Value
 		$sql->setInt( 'languageid',$this->languageid);
 
 		$list = array();
-		foreach( $db->getAll( $sql ) as $row )
+		foreach( $sql->getAll( $sql ) as $row )
 		{
 			$val = new Value();
 			$val->valueid = $row['id'];
@@ -279,7 +279,7 @@ class Value
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT COUNT(*) FROM {t_value}'.
+		$sql = $db->sql( 'SELECT COUNT(*) FROM {t_value}'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
 		                '    AND languageid={languageid}' );
@@ -287,7 +287,7 @@ class Value
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		return $db->getOne( $sql );
+		return $sql->getOne( $sql );
 	}
 
 
@@ -295,7 +295,7 @@ class Value
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 
+		$sql = $db->sql( 
 <<<SQL
 	SELECT lastchange_date FROM {t_value}
 		WHERE elementid ={elementid}
@@ -308,7 +308,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		return $db->getOne( $sql );
+		return $sql->getOne( $sql );
 	}
 	
 	
@@ -320,7 +320,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'UPDATE {t_value}'.
+		$sql = $db->sql( 'UPDATE {t_value}'.
 		                '  SET publish=0'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
@@ -329,9 +329,9 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		$db->query( $sql );
+		$sql->query( $sql );
 
-		$sql = new Sql( 'UPDATE {t_value}'.
+		$sql = $db->sql( 'UPDATE {t_value}'.
 		                '  SET publish=1'.
 		                '  WHERE active    = 1'.
 		                '    AND elementid ={elementid}'.
@@ -341,7 +341,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 	/**
@@ -352,7 +352,7 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql( 'UPDATE {t_value}'.
+		$sql = $db->sql( 'UPDATE {t_value}'.
 		                '  SET active=0'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
@@ -361,13 +361,13 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		$db->query( $sql );
+		$sql->query( $sql );
 
 		if	( $this->publish )
 		{
 			// Wenn Inhalt sofort veroeffentlicht werden kann, dann
 			// alle anderen Inhalte auf nicht-veroeffentlichen stellen 
-			$sql = new Sql( 'UPDATE {t_value}'.
+			$sql = $db->sql( 'UPDATE {t_value}'.
 			                '  SET publish=0'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
@@ -376,14 +376,14 @@ SQL
 			$sql->setInt( 'pageid'    ,$this->pageid    );
 			$sql->setInt( 'languageid',$this->languageid);
 
-			$db->query( $sql );
+			$sql->query( $sql );
 		}
 
 		// Naechste ID aus Datenbank besorgen
-		$sql = new Sql('SELECT MAX(id) FROM {t_value}');
-		$this->valueid = intval($db->getOne($sql))+1;
+		$sql = $db->sql('SELECT MAX(id) FROM {t_value}');
+		$this->valueid = intval($sql->getOne($sql))+1;
 
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 INSERT INTO {t_value}
             (id       ,linkobjectid  ,text  ,number  ,date  ,elementid  ,pageid  ,languageid  ,active,publish  ,lastchange_date  ,lastchange_userid  )
      VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{pageid},{languageid},1     ,{publish},{lastchange_date},{lastchange_userid})
@@ -415,7 +415,7 @@ SQL
 		$user = Session::getUser();
 		$sql->setInt    ( 'lastchange_userid',$user->userid  );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 		
 		// Nur ausfuehren, wenn in Konfiguration aktiviert.
 		$limit = config('content','revision-limit');
@@ -434,7 +434,7 @@ SQL
 
 		$db = db_connection();
 
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 		SELECT id FROM {t_value}
 			                  WHERE elementid  = {elementid}
 			                    AND pageid     = {pageid}
@@ -447,11 +447,11 @@ SQL
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid             );
 		$sql->setInt( 'languageid',$this->languageid         );
-		$values = $db->getCol( $sql );
+		$values = $sql->getCol( $sql );
 		
 		if	( count($values) > $limit['min-revisions'] )
 		{
-			$sql = new Sql( <<<SQL
+			$sql = $db->sql( <<<SQL
 			DELETE FROM {t_value}
 				                  WHERE elementid  = {elementid}
 				                    AND pageid     = {pageid}
@@ -467,12 +467,12 @@ SQL
 			$sql->setInt( 'languageid',$this->languageid         );
 			$sql->setInt( 'min_date'  ,$limit['max-age']*24*60*60);
 			$sql->setInt( 'min_id'    ,$values[count($values)-$limit['min-revisions']]);
-			$db->query($sql);
+			$sql->query($sql);
 		}
 		
 		if	( count($values) > $limit['max-revisions'] )
 		{
-			$sql = new Sql( <<<SQL
+			$sql = $db->sql( <<<SQL
 			DELETE FROM {t_value}
 				                  WHERE elementid  = {elementid}
 				                    AND pageid     = {pageid}
@@ -488,7 +488,7 @@ SQL
 			$sql->setInt( 'languageid',$this->languageid         );
 			$sql->setInt( 'min_date'  ,$limit['min-age']*24*60*60);
 			$sql->setInt( 'min_id'    ,$values[count($values)-$limit['max-revisions']]);
-			$db->query($sql);
+			$sql->query($sql);
 		}
 	}
 
@@ -500,14 +500,14 @@ SQL
 	function delete()
 	{
 		$db = db_connection();
-		$sql = new Sql( 'DELETE * FROM {t_value}'.
+		$sql = $db->sql( 'DELETE * FROM {t_value}'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
 		                '    AND languageid={languageid}' );
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
-		$row = $db->getRow( $sql );
+		$row = $sql->getRow( $sql );
 	}
 
 
@@ -1541,7 +1541,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT {t_object}.id FROM {t_value} '.
+		$sql = $db->sql( 'SELECT {t_object}.id FROM {t_value} '.
 		                ' LEFT JOIN {t_page} '.
 		                '   ON {t_page}.id={t_value}.pageid '.
 		                ' LEFT JOIN {t_object} '.
@@ -1552,7 +1552,7 @@ SQL
 		                
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'text'      ,'%'.$text.'%'     );
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -1566,7 +1566,7 @@ SQL
 
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT {t_object}.id FROM {t_value} '.
+		$sql = $db->sql( 'SELECT {t_object}.id FROM {t_value} '.
 		                ' LEFT JOIN {t_page} '.
 		                '   ON {t_page}.id={t_value}.pageid '.
 		                ' LEFT JOIN {t_object} '.
@@ -1577,7 +1577,7 @@ SQL
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setInt   ( 'userid'    ,$userid           );
 
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 	
@@ -1591,7 +1591,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 SELECT {t_object}.id
   FROM {t_value} 
   LEFT JOIN {t_page} 
@@ -1603,7 +1603,7 @@ SELECT {t_object}.id
 SQL
 );
 		$sql->setInt   ( 'userid'    ,$userid           );
-		return $db->getOne( $sql );
+		return $sql->getOne( $sql );
 	}
 	
 	
@@ -1616,7 +1616,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 SELECT {t_object}.id
   FROM {t_value} 
   LEFT JOIN {t_page} 
@@ -1630,7 +1630,7 @@ SQL
 );
 		$sql->setInt   ( 'userid'    ,$userid     );
 		$sql->setInt   ( 'projectid' ,$projectid  );
-		return $db->getOne( $sql );
+		return $sql->getOne( $sql );
 	}
 	
 	

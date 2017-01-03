@@ -27,7 +27,7 @@
  * Beispiel<br>
  * <pre>
  * // Neues Objekt erzeugen mit SQL-Anweisung
- * $sql = new Sql('SELECT * FROM xy WHERE id={uid} AND name={name}');
+ * $sql = $db->sql('SELECT * FROM xy WHERE id={uid} AND name={name}');
  * 
  * // Parameter f�llen
  * $sql->setInt   ('uid' ,1      );

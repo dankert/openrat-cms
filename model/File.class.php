@@ -165,10 +165,10 @@ class File extends Object
 			$sqlquery .= " WHERE is_file=1 AND projectid={projectid}";
 		}
 
-		$sql = new Sql( $sqlquery );
+		$sql = $db->sql( $sqlquery );
 		$sql->setInt( 'projectid',$SESS['projectid'] );
 		
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -183,7 +183,7 @@ class File extends Object
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT {t_file}.objectid FROM {t_file} '.
+		$sql = $db->sql( 'SELECT {t_file}.objectid FROM {t_file} '.
 		                ' LEFT JOIN {t_object} '.
 		                '   ON {t_object}.id={t_file}.objectid'.
 		                ' WHERE {t_file}.extension={extension}'.
@@ -191,7 +191,7 @@ class File extends Object
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setString( 'extension',$extension       );
 		
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -424,11 +424,11 @@ class File extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id,extension,size'.
+		$sql = $db->sql( 'SELECT id,extension,size'.
 		                ' FROM {t_file}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$row = $db->getRow( $sql );
+		$row = $sql->getRow( $sql );
 		
 		if	( count($row)!=0 )
 		{
@@ -450,10 +450,10 @@ class File extends Object
 		$db = db_connection();
 
 		// Datei l?schen
-		$sql = new Sql( 'DELETE FROM {t_file} '.
+		$sql = $db->sql( 'DELETE FROM {t_file} '.
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$db->query( $sql );
+		$sql->query( $sql );
 		
 		$this->objectDelete();
 	}
@@ -515,7 +515,7 @@ class File extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = new Sql( <<<EOF
+		$sql = $db->sql( <<<EOF
 UPDATE {t_file} SET
   size      = {size},
   extension = {extension}
@@ -525,7 +525,7 @@ EOF
 		$sql->setString('size'     ,$this->size      );
 		$sql->setString('extension',$this->extension );
 		$sql->setString('objectid' ,$this->objectid  );
-		$db->query( $sql );
+		$sql->query( $sql );
 		
 		$this->objectSave();
 	}
@@ -555,11 +555,11 @@ EOF
 
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT size,value'.
+		$sql = $db->sql( 'SELECT size,value'.
 		                ' FROM {t_file}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$row = $db->getRow( $sql );
+		$row = $sql->getRow( $sql );
 		
 		if	( count($row) != 0 )
 		{
@@ -589,7 +589,7 @@ EOF
 
 		$db = db_connection();
 
-		$sql = new Sql( 'UPDATE {t_file}'.
+		$sql = $db->sql( 'UPDATE {t_file}'.
 		                ' SET value={value}, '.
 		                '      size={size}   '.
 		                ' WHERE objectid={objectid}' );
@@ -601,7 +601,7 @@ EOF
 		else
 			$sql->setString( 'value',$this->value );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -624,17 +624,17 @@ EOF
 
 		$this->objectAdd();
 		
-		$sql = new Sql('SELECT MAX(id) FROM {t_file}');
-		$this->fileid = intval($db->getOne($sql))+1;
+		$sql = $db->sql('SELECT MAX(id) FROM {t_file}');
+		$this->fileid = intval($sql->getOne($sql))+1;
 
-		$sql = new Sql('INSERT INTO {t_file}'.
+		$sql = $db->sql('INSERT INTO {t_file}'.
 		               ' (id,objectid,extension,size,value)'.
 		               " VALUES( {fileid},{objectid},{extension},0,'' )" );
 		$sql->setInt   ('fileid'   ,$this->fileid        );
 		$sql->setInt   ('objectid' ,$this->objectid      );
 		$sql->setString('extension',$this->extension     );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 		
 		$this->saveValue();
 	}	

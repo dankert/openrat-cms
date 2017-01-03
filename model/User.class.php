@@ -60,11 +60,11 @@ class User
 		global $conf;
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id,name '.
+		$sql = $db->sql( 'SELECT id,name '.
 		                '  FROM {t_user}'.
 		                '  ORDER BY name' );
 
-		return $db->getAssoc( $sql );
+		return $sql->getAssoc( $sql );
 	}
 
 
@@ -74,11 +74,11 @@ class User
 		$list = array();
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT * '.
+		$sql = $db->sql( 'SELECT * '.
 		                '  FROM {t_user}'.
 		                '  ORDER BY name' );
 
-		foreach( $db->getAll( $sql ) as $row )
+		foreach( $sql->getAll( $sql ) as $row )
 		{
 			$user = new User();
 			$user->setDatabaseRow( $row );
@@ -126,7 +126,7 @@ class User
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT COUNT(*)'.
+		$sql = $db->sql( 'SELECT COUNT(*)'.
 		                '  FROM {t_acl}'.
 		                '  LEFT JOIN {t_object} ON {t_object}.id={t_acl}.objectid '.
 		                '  WHERE projectid={projectidid} AND '.
@@ -134,7 +134,7 @@ class User
 		                '          '.$this->getGroupClause().'    )' );
 		$sql->setInt   ( 'userid',$this->userid );
 
-		return $db->getOne( $sql ) > 0;
+		return $sql->getOne( $sql ) > 0;
 	}
 
 
@@ -156,7 +156,7 @@ class User
 		else
 		{
 			$groupClause = $this->getGroupClause();
-			$sql = new Sql(<<<SQL
+			$sql = $db->sql(<<<SQL
 SELECT DISTINCT {t_project}.id,{t_project}.name
   FROM {t_object}
   LEFT JOIN {t_acl}     ON {t_object}.id  = {t_acl}.objectid 
@@ -171,7 +171,7 @@ SQL
 );
 		$sql->setInt   ( 'userid',$this->userid );
 
-			return $db->getAssoc( $sql );
+			return $sql->getAssoc( $sql );
 		}
 		
 	}
@@ -207,10 +207,10 @@ SQL
 		global $conf;
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT id,mail,name,password FROM {t_user}'.
+		$sql = $db->sql( 'SELECT id,mail,name,password FROM {t_user}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
-		$row = $db->getRow( $sql );
+		$row = $sql->getRow( $sql );
 
 		if	( count($row) == 0 )
 			throw new ObjectNotFoundException();
@@ -228,10 +228,10 @@ SQL
 		global $conf;
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT * FROM {t_user}'.
+		$sql = $db->sql( 'SELECT * FROM {t_user}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
-		$row = $db->getRow( $sql );
+		$row = $sql->getRow( $sql );
 
 		if	( count($row) == 0 )
 			throw new ObjectNotFoundException();
@@ -253,11 +253,11 @@ SQL
 		$db = db_connection();
 
 		// Benutzer �ber Namen suchen
-		$sql = new Sql( 'SELECT id FROM {t_user}'.
+		$sql = $db->sql( 'SELECT id FROM {t_user}'.
 		                ' WHERE name={name}' );
 		//Html::debug($sql);
 		$sql->setString( 'name',$name );
-		$userId = $db->getOne( $sql );
+		$userId = $sql->getOne( $sql );
 
 		// Benutzer �ber Id instanziieren
 		$neuerUser = new User( $userId );
@@ -360,11 +360,11 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT name FROM {t_user}'.
+		$sql = $db->sql( 'SELECT name FROM {t_user}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$userid );
 
-		$name = $db->getOne( $sql );
+		$name = $sql->getOne( $sql );
 		
 		if	( $name == '' )
 			return lang('UNKNOWN');
@@ -379,7 +379,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'UPDATE {t_user}'.
+		$sql = $db->sql( 'UPDATE {t_user}'.
 		                ' SET name={name},'.
 		                '     fullname={fullname},'.
 		                '     ldap_dn ={ldap_dn} ,'.
@@ -400,7 +400,7 @@ SQL
 		$sql->setInt    ( 'userid'  ,$this->userid  );
 		
 		// Datenbankabfrage ausfuehren
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -416,17 +416,17 @@ SQL
 
 		$db = db_connection();
 
-		$sql = new Sql('SELECT MAX(id) FROM {t_user}');
-		$this->userid = intval($db->getOne($sql))+1;
+		$sql = $db->sql('SELECT MAX(id) FROM {t_user}');
+		$this->userid = intval($sql->getOne($sql))+1;
 
-		$sql = new Sql('INSERT INTO {t_user}'.
+		$sql = $db->sql('INSERT INTO {t_user}'.
 		               ' (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin)'.
 		               " VALUES( {userid},{name},'','','','','','','default',0 )" );
 		$sql->setInt   ('userid',$this->userid);
 		$sql->setString('name'  ,$this->name  );
 
 		// Datenbankbefehl ausfuehren
-		$db->query( $sql );
+		$sql->query( $sql );
 		
 		$this->addNewUserGroups(); // Neue Gruppen hinzufuegen.
 	}
@@ -448,8 +448,8 @@ SQL
 		$db = db_connection();
 
 		$groupNames = "'".implode("','",$groupNames)."'";
-		$sql = new Sql("SELECT id FROM {t_group} WHERE name IN($groupNames)");
-		$groupIds = array_unique( $db->getCol($sql) );
+		$sql = $db->sql("SELECT id FROM {t_group} WHERE name IN($groupNames)");
+		$groupIds = array_unique( $sql->getCol($sql) );
 		
 		// Wir brauchen hier nicht weiter pr�fen, ob der Benutzer eine Gruppe schon hat, denn
 		// - passiert dies nur bei der Neuanlage eines Benutzers
@@ -476,43 +476,43 @@ SQL
 		$db = db_connection();
 
 		// "Erzeugt von" f�r diesen Benutzer entfernen.
-		$sql = new Sql( 'UPDATE {t_object} '.
+		$sql = $db->sql( 'UPDATE {t_object} '.
 		                'SET create_userid=null '.
 		                'WHERE create_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql );
+		$sql->query( $sql );
 
 		// "Letzte �nderung von" f�r diesen Benutzer entfernen
-		$sql = new Sql( 'UPDATE {t_object} '.
+		$sql = $db->sql( 'UPDATE {t_object} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql );
+		$sql->query( $sql );
 
 		// Alle Archivdaten in Dateien mit diesem Benutzer entfernen
-		$sql = new Sql( 'UPDATE {t_value} '.
+		$sql = $db->sql( 'UPDATE {t_value} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql );
+		$sql->query( $sql );
 
 		// Alle Berechtigungen dieses Benutzers l?schen
-		$sql = new Sql( 'DELETE FROM {t_acl} '.
+		$sql = $db->sql( 'DELETE FROM {t_acl} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql );
+		$sql->query( $sql );
 
 		// Alle Gruppenzugehoerigkeiten dieses Benutzers l?schen
-		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
+		$sql = $db->sql( 'DELETE FROM {t_usergroup} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql );
+		$sql->query( $sql );
 
 		// Benutzer loeschen
-		$sql = new Sql( 'DELETE FROM {t_user} '.
+		$sql = $db->sql( 'DELETE FROM {t_user} '.
 		                'WHERE id={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -548,7 +548,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'UPDATE {t_user} SET password={password} '.
+		$sql = $db->sql( 'UPDATE {t_user} SET password={password} '.
 		                'WHERE id={userid}' );
 		                
 		if	( $always )
@@ -561,7 +561,7 @@ SQL
 			
 		$sql->setInt   ('userid'  ,$this->userid  );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -576,11 +576,11 @@ SQL
 		{
 			$db = db_connection();
 	
-			$sql = new Sql( 'SELECT {t_group}.id,{t_group}.name FROM {t_group} '.
+			$sql = $db->sql( 'SELECT {t_group}.id,{t_group}.name FROM {t_group} '.
 			                'LEFT JOIN {t_usergroup} ON {t_usergroup}.groupid={t_group}.id '.
 			                'WHERE {t_usergroup}.userid={userid}' );
 			$sql->setInt('userid',$this->userid );
-			$this->groups = $db->getAssoc( $sql );
+			$this->groups = $sql->getAssoc( $sql );
 		}
 		
 		return $this->groups;
@@ -595,11 +595,11 @@ SQL
 		/*
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT groupid FROM {t_usergroup} '.
+		$sql = $db->sql( 'SELECT groupid FROM {t_usergroup} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt('userid',$this->userid );
 
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 		*/
 	}
 	
@@ -609,12 +609,12 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT {t_group}.id,{t_group}.name FROM {t_group}'.
+		$sql = $db->sql( 'SELECT {t_group}.id,{t_group}.name FROM {t_group}'.
 		                '   LEFT JOIN {t_usergroup} ON {t_usergroup}.groupid={t_group}.id AND {t_usergroup}.userid={userid}'.
 		                '   WHERE {t_usergroup}.userid IS NULL' );
 		$sql->setInt('userid'  ,$this->userid );
 
-		return $db->getAssoc( $sql );
+		return $sql->getAssoc( $sql );
 	}
 
 
@@ -628,17 +628,17 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT MAX(id) FROM {t_usergroup}');
-		$usergroupid = intval($db->getOne($sql))+1;
+		$sql = $db->sql('SELECT MAX(id) FROM {t_usergroup}');
+		$usergroupid = intval($sql->getOne($sql))+1;
 
-		$sql = new Sql( 'INSERT INTO {t_usergroup} '.
+		$sql = $db->sql( 'INSERT INTO {t_usergroup} '.
 		                '       (id,userid,groupid) '.
 		                '       VALUES( {usergroupid},{userid},{groupid} )' );
 		$sql->setInt('usergroupid',$usergroupid  );
 		$sql->setInt('userid'     ,$this->userid );
 		$sql->setInt('groupid'    ,$groupid      );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	
 	}
 
@@ -653,12 +653,12 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'DELETE FROM {t_usergroup} '.
+		$sql = $db->sql( 'DELETE FROM {t_usergroup} '.
 		                '  WHERE userid={userid} AND groupid={groupid}' );
 		$sql->setInt   ('userid'  ,$this->userid );
 		$sql->setInt   ('groupid' ,$groupid      );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 	
 
@@ -688,7 +688,7 @@ SQL
 
 		$group_clause = $this->getGroupClause();
 
-		$sql = new Sql( 'SELECT {t_acl}.*,{t_object}.projectid,{t_language}.name AS languagename FROM {t_acl}'.
+		$sql = $db->sql( 'SELECT {t_acl}.*,{t_object}.projectid,{t_language}.name AS languagename FROM {t_acl}'.
 		                '  LEFT JOIN {t_object} '.
 		                '         ON {t_object}.id={t_acl}.objectid '.
 		                '  LEFT JOIN {t_language} '.
@@ -700,7 +700,7 @@ SQL
 
 		$aclList = array();
 
-		foreach( $db->getAll( $sql ) as $row )
+		foreach( $sql->getAll( $sql ) as $row )
 		{
 			$acl = new Acl();
 			$acl->setDatabaseRow( $row );
@@ -728,8 +728,8 @@ SQL
 //		$var = array();
 //
 //		// Alle Projekte lesen
-//		$sql = new Sql( 'SELECT id,name FROM {t_project}' );
-//		$projects = $db->getAssoc( $sql );	
+//		$sql = $db->sql( 'SELECT id,name FROM {t_project}' );
+//		$projects = $sql->getAssoc( $sql );	
 //
 //		foreach( $projects as $projectid=>$projectname )
 //		{
@@ -738,14 +738,14 @@ SQL
 //			$var[$projectid]['folders'] = array();
 //			$var[$projectid]['rights'] = array();
 //
-//			$sql = new Sql( 'SELECT {t_acl}.* FROM {t_acl}'.
+//			$sql = $db->sql( 'SELECT {t_acl}.* FROM {t_acl}'.
 //			                '  LEFT JOIN {t_folder} ON {t_acl}.folderid = {t_folder}.id'.
 //			                '  WHERE {t_folder}.projectid={projectid}'.
 //			                '    AND {t_acl}.userid={userid}' );
 //			$sql->setInt('projectid',$projectid    );
 //			$sql->setInt('userid'   ,$this->userid );
 //			
-//			$acls = $db->getAll( $sql );
+//			$acls = $sql->getAll( $sql );
 //
 //			foreach( $acls as $acl )
 //			{
@@ -757,10 +757,10 @@ SQL
 //				$var[$projectid]['rights'][$aclid]['delete_url'] = Html::url(array('action'=>'user','subaction'=>'delright','aclid'=>$aclid));
 //			}
 //			
-//			$sql = new Sql( 'SELECT id FROM {t_folder}'.
+//			$sql = $db->sql( 'SELECT id FROM {t_folder}'.
 //			                '  WHERE projectid={projectid}' );
 //			$sql->setInt('projectid',$projectid);
-//			$folders = $db->getCol( $sql );
+//			$folders = $sql->getCol( $sql );
 //
 //			$var[$projectid]['folders'] = array();
 //
@@ -906,7 +906,7 @@ SQL
 	{
 		$db = db_connection();
 	
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 		SELECT {t_object}.id       as objectid,
 		       {t_object}.filename as filename,
 		       {t_object}.lastchange_date as lastchange_date,
@@ -922,7 +922,7 @@ SQL
 	
 		$sql->setInt( 'userid', $this->userid );
 	
-		return $db->getAll( $sql );
+		return $sql->getAll( $sql );
 	
 	}
 	

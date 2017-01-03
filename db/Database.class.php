@@ -180,189 +180,6 @@ class DB
 		return true;
 	}
 
-
-	/**
-	 * Ausfuehren einer Datenbankanfrage.
-	 *
-	 * @param SQL-Objekt
-	 * @return Object (Result)
-	 */
-	public function query( &$query )
-	{
-		if ( !is_object($query) )
-			throw new RuntimeException('SQL-Query must be an object');
-			
-		// Vorbereitete Datenbankabfrage ("Prepared Statement")
-		$this->client->clear();
-		
-		// Statement an die Datenbank schicken
-		$this->client->prepare( $query->raw,$query->param );
-		
-		// Einzelne Parameter an die Anfrage binden
-		foreach ($query->param as $name=>$unused)
-			$this->client->bind($name,$query->data[$name]);
-		
-		// Ausfuehren...
-		$result = $this->client->query($query);
-		
-		if	( $result === FALSE )
-		{
-			throw new Exception( 'Database error: '.$this->client->error);
-		}
-				
-		return $result;
-	}
-
-
-	/**
-	 * Ermittelt genau 1 Datenbankergebnis aus einer SQL-Anfrage.
-	 * Falls es mehrere Treffer gibt, wird die 1. Spalte aus der 1. Zeile genommen.
-	 *
-	 * @param String $query
-	 * @return String
-	 */
-	public function &getOne( $query )
-	{
-		$none = '';
-		$result = $this->query($query);
-		
-		$row = $this->client->fetchRow( $result,0 );
-		$this->client->freeResult($result);
-
-		if	( ! is_array($row) )
-			return $none;
-			
-		$keys = array_keys($row);
-		
-		return $row[ $keys[0] ];
-	}
-
-
-	/**
-	 * Ermittelt eine Zeile aus der Datenbank.
-	 *
-	 * @param String $query
-	 * @return Array
-	 */
-	public function &getRow( $query )
-	{
-		$result = $this->query($query);
-		
-		if	( $result === FALSE )
-		{
-			$this->error = $this->client->error;
-			
-			Logger::warn('Database error: '.$this->error);
-			Http::serverError('Database Error',$this->error);
-		}
-
-		$row = $this->client->fetchRow( $result,0 );
-		$this->client->freeResult($result);
-
-		if	( ! is_array($row) )
-			$row = array();
-
-		return $row;
-	}
-
-
-	/**
-	 * Ermittelt eine (die 1.) Spalte aus dem Datenbankergebnis.
-	 *
-	 * @param String $query
-	 * @return Array
-	 */
-	public function &getCol( $query )
-	{
-		$result = $this->query($query);
-
-		$i = 0;
-		$col = array();
-		while( $row = $this->client->fetchRow( $result,$i++ ) )
-		{
-			if	( empty($row) )
-				break;
-				
-			$keys = array_keys($row);
-			$col[] = $row[ $keys[0] ];
-		}
-			
-		$this->client->freeResult($result);
-		
-		return $col;
-	}
-
-
-	/**
-	 * Ermittelt ein assoziatives Array aus der Datenbank.
-	 *
-	 * @param String $query
-	 * @param Boolean $force_array
-	 * @return Array
-	 */
-	public function &getAssoc( $query, $force_array = false )
-	{
-		$results = array();
-		$result = $this->query($query);
-
-		$i = 0;
-		
-		while( $row = $this->client->fetchRow( $result,$i++ ) )
-		{
-			if	( empty($row) )
-				break;
-
-			if	( count($row) > 2 || $force_array )
-			{
-				// FIXME: Wird offenbar nie ausgeführt.
-				$row = $res->fetchRow($i);
-
-				$keys = array_keys($row);
-				$key1 = $keys[0];
-
-				unset( $row[$key1] );
-				$results[ $row[$key1] ] = $row;
-			}
-			else
-			{
-				$keys = array_keys($row);
-				$key1 = $keys[0];
-				$key2 = $keys[1];
-
-				$results[ $row[$key1] ] = $row[$key2];
-			}
-		}
-
-		$this->client->freeResult( $result );
-
-		return $results;
-	}
-
-
-	/**
-	 * Ermittelt alle Datenbankergebniszeilen.
-	 *
-	 * @param String $query
-	 * @return Array
-	 */
-	public function &getAll( $query )
-	{
-		$result = $this->query( $query );
-
-		$results = array();
-		$i = 0;
-
-		while( $row = $this->client->fetchRow( $result,$i++ ) )
-		{
-			$results[] = $row;
-		}
-
-		$this->client->freeResult( $result );
-		
-		return $results;
-	}
-	
-	
 	/**
 	 * Startet eine Transaktion.
 	 * Falls der Schalter 'transaction' nicht gesetzt ist, passiert nichts.
@@ -387,28 +204,7 @@ class DB
 		}
 	}
 	
-	
-	/**
-	 * Führt eine Query aus und gibt nur zurück, ob diese funktioniert.
-	 * 
-	 * @param unknown_type $query
-	 * @return boolean
-	 */
-	public function testQuery( $query )
-	{
-				
-		try
-		{
-			$result = $this->query($query);
-			return $result; 
-		}
-		catch( Exception $e )
-		{
-			return false;
-		}
-		
-	}
-	
+
 	
 	/**
 	 * Setzt eine Transaktion zurueck. 
@@ -425,7 +221,7 @@ class DB
 	
 	public function sql( $sql )
 	{
-		return new Statement( $sql,$this->client );
+		return new Statement( $sql,$this->client,$this->id);
 	}
 	
 }

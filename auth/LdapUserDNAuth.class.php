@@ -17,14 +17,14 @@ class LdapUserDNAuth implements Auth
 		$this->mustChangePassword = false;
 		
 		// Lesen des Benutzers aus der DB-Tabelle
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 SELECT * FROM {t_user}
  WHERE name={name}
 SQL
 		);
 		$sql->setString('name',$username);
 	
-		$row_user = $db->getRow( $sql );
+		$row_user = $sql->getRow( $sql );
 		
 		if	( empty($row_user) )
 			return false;

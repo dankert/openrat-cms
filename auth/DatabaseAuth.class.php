@@ -22,7 +22,7 @@ class DatabaseAuth implements Auth
 
 		$authdb = new DB( $authDbConf );
 		
-		$sql = new Sql( $conf['security']['authdb']['sql'] );
+		$sql = $db->sql( $conf['security']['authdb']['sql'] );
 		$sql->setString('username',$user    );
 		$sql->setString('password',$password);
 		$row = $authdb->getRow( $sql );

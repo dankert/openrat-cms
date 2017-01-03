@@ -140,10 +140,10 @@ class Element
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT MAX(id) FROM {t_element}');
-		$this->elementid = intval($db->getOne($sql))+1;
+		$sql = $db->sql('SELECT MAX(id) FROM {t_element}');
+		$this->elementid = intval($sql->getOne($sql))+1;
 
-		$sql = new Sql( 'INSERT INTO {t_element}'.
+		$sql = $db->sql( 'INSERT INTO {t_element}'.
 		                ' (id,templateid,name,descr,type,writable) '.
 		                " VALUES ( {elementid},{templateid},{name},{description},{type},{writable} ) " );
 
@@ -154,7 +154,7 @@ class Element
 		$sql->setBoolean( 'writable'   ,$this->writable   );
 		$sql->setString ( 'description',$this->desc       );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -178,13 +178,13 @@ class Element
 		if	( intval($this->elementid) != 0 )
 		{		
 			$db = db_connection();
-			$sql = new Sql( <<<SQL
+			$sql = $db->sql( <<<SQL
 SELECT * FROM {t_element}
  WHERE id={elementid}
 SQL
 );
 			$sql->setInt( 'elementid',$this->elementid );
-			$this->setDatabaseRow( $db->getRow( $sql ) );
+			$this->setDatabaseRow( $sql->getRow( $sql ) );
 		}
 	}
 
@@ -229,7 +229,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'UPDATE {t_element}'.
+		$sql = $db->sql( 'UPDATE {t_element}'.
 		                ' SET templateid      = {templateid},'.
 		                '     name            = {name},'.
 		                '     descr           = {desc},'.
@@ -276,7 +276,7 @@ SQL
 			$sql->setNull( 'defaultObjectId' );
 		else	$sql->setInt ( 'defaultObjectId' ,$this->defaultObjectId  );
 		
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -292,14 +292,14 @@ SQL
 		$this->type = $type;
 		$db = db_connection();
 		
-		$sql = new Sql( 'UPDATE {t_element}'.
+		$sql = $db->sql( 'UPDATE {t_element}'.
 		                ' SET type            = {type}'.
 		                ' WHERE id={elementid}'         );
 
 		$sql->setInt    ( 'elementid',$this->elementid );
 		$sql->setString ( 'type'     ,$this->type      );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -329,11 +329,11 @@ SQL
 		$this->deleteValues();
 
 		// Element l?schen
-		$sql = new Sql('DELETE FROM {t_element} '.
+		$sql = $db->sql('DELETE FROM {t_element} '.
 		               '  WHERE id={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -346,10 +346,10 @@ SQL
 		$db = db_connection();
 
 		// Alle Inhalte mit diesem Element l?schen
-		$sql = new Sql('DELETE FROM {t_value} '.
+		$sql = $db->sql('DELETE FROM {t_value} '.
 		               '  WHERE elementid={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 

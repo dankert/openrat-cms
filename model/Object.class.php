@@ -200,11 +200,11 @@ class Object
 			$projectid = $this->projectid;
 		}
 
-		$sql = new Sql('SELECT id from {t_object} '.
+		$sql = $db->sql('SELECT id from {t_object} '.
 		               '  WHERE projectid={projectid}');
 		$sql->setInt('projectid', $projectid);
 
-		return $db->getCol($sql);
+		return $sql->getCol($sql);
 	}
 
 
@@ -262,7 +262,7 @@ class Object
 				$this->aclMask = 0;
 				
 				$sqlGroupClause = $user->getGroupClause();
-				$sql = new Sql( <<<SQL
+				$sql = $db->sql( <<<SQL
 SELECT {t_acl}.* FROM {t_acl}
 	                 LEFT JOIN {t_object}
 	                        ON {t_object}.id={t_acl}.objectid
@@ -278,7 +278,7 @@ SQL
 				$sql->setInt  ( 'userid'      ,$user->userid           );
 		
 				$db = db_connection();
-				foreach( $db->getAll( $sql ) as $row )
+				foreach( $sql->getAll( $sql ) as $row )
 				{
 					$acl = new Acl();
 					$acl->setDatabaseRow( $row );
@@ -458,11 +458,11 @@ SQL
 		if	( !is_numeric($objectid) || $objectid <= 0 )
 			return false; // Objekt-Id ung�ltig.
 			
-		$sql = new Sql('SELECT 1 FROM {t_object} '.
+		$sql = $db->sql('SELECT 1 FROM {t_object} '.
 		               ' WHERE id={objectid}');
 		$sql->setInt('objectid'  , $objectid  );
 
-		return intval($db->getOne($sql)) == 1;
+		return intval($sql->getOne($sql)) == 1;
 	}
 	
 	
@@ -477,7 +477,7 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql('SELECT {t_object}.*,' .
+		$sql = $db->sql('SELECT {t_object}.*,' .
 		               '       {t_name}.name,{t_name}.descr,'.
 		               '       lastchangeuser.name     as lastchange_username,     '.
 		               '       lastchangeuser.fullname as lastchange_userfullname, '.
@@ -496,7 +496,7 @@ SQL
 		$sql->setInt('languageid', $this->languageid);
 		$sql->setInt('objectid'  , $this->objectid  );
 
-		$row = $db->getRow($sql);
+		$row = $sql->getRow($sql);
 		
 		if (count($row) == 0)
 			throw new ObjectNotFoundException('object '.$this->objectid.' not found');
@@ -515,10 +515,10 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql('SELECT * FROM {t_object}'.
+		$sql = $db->sql('SELECT * FROM {t_object}'.
                        ' WHERE {t_object}.id={objectid}');
 		$sql->setInt('objectid'  , $this->objectid  );
-		$row = $db->getRow($sql);
+		$row = $sql->getRow($sql);
 
 		if (count($row) == 0)
 			die('fatal: Object::objectLoadRaw(): objectid not found: '.$this->objectid.', SQL='.$sql->raw);
@@ -633,17 +633,17 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND languageid={languageid}');
+		$sql = $db->sql('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND languageid={languageid}');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
-		$res = $db->query($sql);
+		$res = $sql->query($sql);
 
 		if ($res->numRows() == 0)
 		{
 			// Wenn Name in dieser Sprache nicht vorhanden, dann irgendeinen Namen lesen
 			$sql->setQuery('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND name != {blank}');
 			$sql->setString('blank', '');
-			$res = $db->query($sql);
+			$res = $sql->query($sql);
 		}
 		$row = $res->fetchRow();
 
@@ -665,7 +665,7 @@ SQL
 
 		$this->checkFilename();
 		
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 UPDATE {t_object} SET 
                       parentid          = {parentid},
 		              lastchange_date   = {time}    ,
@@ -690,7 +690,7 @@ SQL
 		$sql->setInt   ('objectid', $this->objectid);
 
 
-		$db->query($sql);
+		$sql->query($sql);
 
 		// Nur wenn nicht Wurzelordner
 		if	( !$this->isRoot && $withName )
@@ -711,7 +711,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql('UPDATE {t_object} SET '.
+		$sql = $db->sql('UPDATE {t_object} SET '.
 		               '  lastchange_date   = {time}  ,'.
 		               '  lastchange_userid = {userid} '.
 		               ' WHERE id={objectid}');
@@ -724,7 +724,7 @@ SQL
 		$sql->setInt   ('objectid',$this->objectid                );
 		$sql->setInt   ('time'    ,$this->lastchangeDate          );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 		
 	}
 
@@ -733,14 +733,14 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql('UPDATE {t_object} SET '.
+		$sql = $db->sql('UPDATE {t_object} SET '.
 				'  create_date   = {time}  '.
 				' WHERE id={objectid}');
 		
 		$sql->setInt   ('objectid',$this->objectid   );
 		$sql->setInt   ('time'    ,$this->createDate );
 		
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 	
@@ -755,17 +755,17 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new Sql(<<<SQL
+		$sql = $db->sql(<<<SQL
 SELECT COUNT(*) FROM {t_name}  WHERE objectid  ={objectid} AND languageid={languageid}
 SQL
 );
 		$sql->setInt( 'objectid'  , $this->objectid   );
 		$sql->setInt( 'languageid', $this->languageid );
-		$count = $db->getOne($sql);
+		$count = $sql->getOne($sql);
 
 		if ($count > 0)
 		{
-			$sql = new Sql( <<<SQL
+			$sql = $db->sql( <<<SQL
 			UPDATE {t_name} SET 
 			                 name  = {name},
 			                 descr = {desc}
@@ -777,12 +777,12 @@ SQL
 			$sql->setString('desc', $this->desc);
 			$sql->setInt( 'objectid'  , $this->objectid   );
 			$sql->setInt( 'languageid', $this->languageid );
-			$db->query($sql);
+			$sql->query($sql);
 		}
 		else
 		{
-			$sql = new Sql('SELECT MAX(id) FROM {t_name}');
-			$nameid = intval($db->getOne($sql))+1;
+			$sql = $db->sql('SELECT MAX(id) FROM {t_name}');
+			$nameid = intval($sql->getOne($sql))+1;
 
 			$sql->setQuery('INSERT INTO {t_name}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
 			$sql->setInt   ('objectid'  , $this->objectid    );
@@ -790,7 +790,7 @@ SQL
 			$sql->setInt   ('nameid', $nameid    );
 			$sql->setString('name'  , $this->name);
 			$sql->setString('desc'  , $this->desc);
-			$db->query($sql);
+			$sql->query($sql);
 		}
 	}
 
@@ -803,37 +803,37 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'UPDATE {t_element} '.
+		$sql = $db->sql( 'UPDATE {t_element} '.
 		                '  SET default_objectid=NULL '.
 		                '  WHERE default_objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$db->query( $sql );
+		$sql->query( $sql );
 
-		$sql = new Sql( 'UPDATE {t_value} '.
+		$sql = $db->sql( 'UPDATE {t_value} '.
 		                '  SET linkobjectid=NULL '.
 		                '  WHERE linkobjectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$db->query( $sql );
+		$sql->query( $sql );
 
-		$sql = new Sql( 'UPDATE {t_link} '.
+		$sql = $db->sql( 'UPDATE {t_link} '.
 		                '  SET link_objectid=NULL '.
 		                '  WHERE link_objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$db->query( $sql );
+		$sql->query( $sql );
 
 
 		// Objekt-Namen l?schen
-		$sql = new Sql('DELETE FROM {t_name} WHERE objectid={objectid}');
+		$sql = $db->sql('DELETE FROM {t_name} WHERE objectid={objectid}');
 		$sql->setInt('objectid', $this->objectid);
-		$db->query($sql);
+		$sql->query($sql);
 
 		// ACLs loeschen
 		$this->deleteAllACLs();
 
 		// Objekt l?schen
-		$sql = new Sql('DELETE FROM {t_object} WHERE id={objectid}');
+		$sql = $db->sql('DELETE FROM {t_object} WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
-		$db->query($sql);
+		$sql->query($sql);
 	}
 
 
@@ -846,11 +846,11 @@ SQL
 		$db = db_connection();
 
 		// Neue Objekt-Id bestimmen
-		$sql = new Sql('SELECT MAX(id) FROM {t_object}');
-		$this->objectid = intval($db->getOne($sql))+1;
+		$sql = $db->sql('SELECT MAX(id) FROM {t_object}');
+		$this->objectid = intval($sql->getOne($sql))+1;
 
 		$this->checkFilename();
-		$sql = new Sql('INSERT INTO {t_object}'.
+		$sql = $db->sql('INSERT INTO {t_object}'.
 		               ' (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,is_folder,is_file,is_page,is_link)'.
 		               ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{userid},{time},{userid},{is_folder},{is_file},{is_page},{is_link} )');
 
@@ -871,7 +871,7 @@ SQL
 		$sql->setBoolean('is_page',  $this->isPage);
 		$sql->setBoolean('is_link',  $this->isLink);
 
-		$db->query($sql);
+		$sql->query($sql);
 
 		if	( !empty($this->name) )
 			$this->objectSaveName();
@@ -942,7 +942,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 SELECT COUNT(*) FROM {t_object}
  WHERE parentid={parentid} AND filename={filename}
    AND NOT id = {objectid}
@@ -954,7 +954,7 @@ SQL
 		$sql->setString('objectid', $this->objectid);
 
 
-		return( intval($db->getOne($sql)) == 0 );
+		return( intval($sql->getOne($sql)) == 0 );
 	}
 
 
@@ -975,7 +975,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT id FROM {t_acl} '.
+		$sql = $db->sql( 'SELECT id FROM {t_acl} '.
 		                '  WHERE objectid={objectid}'.
 		                '    AND ( languageid IS NULL OR '.
 		                '          languageid = {languageid} )'.
@@ -983,7 +983,7 @@ SQL
 		$sql->setInt('languageid',$this->languageid);
 		$sql->setInt('objectid'  ,$this->objectid);
 
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -991,12 +991,12 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT id FROM {t_acl} '.
+		$sql = $db->sql( 'SELECT id FROM {t_acl} '.
 		                '  WHERE objectid={objectid}'.
 		                '  ORDER BY userid,groupid ASC' );
 		$sql->setInt('objectid'  ,$this->objectid);
 
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -1016,7 +1016,7 @@ SQL
 		
 		foreach( $folder->parentObjectFileNames(true,true) as $oid=>$filename )
 		{
-			$sql = new Sql( 'SELECT id FROM {t_acl} '.
+			$sql = $db->sql( 'SELECT id FROM {t_acl} '.
 			                '  WHERE objectid={objectid}'.
 			                '    AND is_transmit = 1'.
 			                '    AND ( languageid IS NULL OR '.
@@ -1024,7 +1024,7 @@ SQL
 			                '  ORDER BY userid,groupid ASC' );
 			$sql->setInt('objectid'  ,$oid);
 			$sql->setInt('languageid',$this->languageid);
-			$acls = array_merge( $acls,$db->getCol( $sql ) );
+			$acls = array_merge( $acls,$sql->getCol( $sql ) );
 		}
 
 		return $acls;
@@ -1047,12 +1047,12 @@ SQL
 		
 		foreach( $folder->parentObjectFileNames(true,true) as $oid=>$filename )
 		{
-			$sql = new Sql( 'SELECT id FROM {t_acl} '.
+			$sql = $db->sql( 'SELECT id FROM {t_acl} '.
 			                '  WHERE objectid={objectid}'.
 			                '    AND is_transmit = 1'.
 			                '  ORDER BY userid,groupid ASC' );
 			$sql->setInt('objectid'  ,$oid);
-			$acls = array_merge( $acls,$db->getCol( $sql ) );
+			$acls = array_merge( $acls,$sql->getCol( $sql ) );
 		}
 
 		return $acls;
@@ -1161,11 +1161,11 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql('UPDATE {t_object} '.'  SET orderid={orderid}'.'  WHERE id={objectid}');
+		$sql = $db->sql('UPDATE {t_object} '.'  SET orderid={orderid}'.'  WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$sql->setInt('orderid', $orderid);
 
-		$db->query($sql);
+		$sql->query($sql);
 	}
 
 
@@ -1179,11 +1179,11 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql('UPDATE {t_object} '.'  SET parentid={parentid}'.'  WHERE id={objectid}');
+		$sql = $db->sql('UPDATE {t_object} '.'  SET parentid={parentid}'.'  WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$sql->setInt('parentid', $parentid);
 
-		$db->query($sql);
+		$sql->query($sql);
 	}
 
 
@@ -1191,13 +1191,13 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'SELECT {t_page}.objectid FROM {t_value}'.
+		$sql = $db->sql( 'SELECT {t_page}.objectid FROM {t_value}'.
 		                '  LEFT JOIN {t_page} '.
 		                '    ON {t_value}.pageid = {t_page}.id '.
 		                '  WHERE linkobjectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -1210,14 +1210,14 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT id FROM {t_object} '.
 		                ' WHERE filename LIKE {filename}'.
 		                '   AND projectid={projectid}'.
 		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setString( 'filename','%'.$text.'%' );
 		
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -1230,7 +1230,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT {t_object}.id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT {t_object}.id FROM {t_object} '.
 		                ' LEFT JOIN {t_name} '.
 		                '   ON {t_object}.id={t_name}.objectid'.
 		                ' WHERE {t_name}.name LIKE {name}'.
@@ -1241,7 +1241,7 @@ SQL
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'name'      ,'%'.$text.'%' );
 		
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -1254,7 +1254,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT {t_object}.id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT {t_object}.id FROM {t_object} '.
 		                ' LEFT JOIN {t_name} '.
 		                '   ON {t_object}.id={t_name}.objectid'.
 		                ' WHERE {t_name}.descr LIKE {desc}'.
@@ -1265,7 +1265,7 @@ SQL
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'desc'      ,'%'.$text.'%' );
 		
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -1278,14 +1278,14 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT id FROM {t_object} '.
 		                ' WHERE create_userid={userid}'.
 		                '   AND projectid={projectid}'.
 		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setInt   ( 'userid'   ,$userid          );
 		
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -1298,14 +1298,14 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT id FROM {t_object} '.
 		                ' WHERE lastchange_userid={userid}'.
 		                '   AND projectid={projectid}'.
 		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setInt   ( 'userid'   ,$userid          );
 		
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -1318,13 +1318,13 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = new Sql( 'SELECT id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT id FROM {t_object} '.
 		                ' WHERE id={objectid}'.
 		                '   AND projectid={projectid}' );
 		$sql->setInt   ( 'projectid' ,$this->projectid );
 		$sql->setInt   ( 'objectid'  ,$id              );
 
-		return ($db->getOne($sql) == intval($id) );
+		return ($sql->getOne($sql) == intval($id) );
 	}
 
 
@@ -1337,11 +1337,11 @@ SQL
 	{
 		$db = db_connection();
 	
-		$sql = new Sql( 'SELECT objectid FROM {t_link} '.
+		$sql = $db->sql( 'SELECT objectid FROM {t_link} '.
 				' WHERE link_objectid={myid}' );
 		$sql->setInt   ( 'myid'   ,$this->objectid );
 	
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 	
 	

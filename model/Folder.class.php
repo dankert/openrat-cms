@@ -50,16 +50,16 @@ class Folder extends Object
 
 		$db = db_connection();
 
-		$sql = new Sql('SELECT MAX(id) FROM {t_folder}');
-		$this->folderid = intval($db->getOne($sql))+1;
+		$sql = $db->sql('SELECT MAX(id) FROM {t_folder}');
+		$this->folderid = intval($sql->getOne($sql))+1;
 
-		$sql = new Sql('INSERT INTO {t_folder}'.
+		$sql = $db->sql('INSERT INTO {t_folder}'.
 		               ' (id,objectid)'.
 		               ' VALUES( {folderid},{objectid} )' );
 		$sql->setInt   ('folderid'    ,$this->folderid );
 		$sql->setInt   ('objectid'    ,$this->objectid );
 		
-		$db->query( $sql );
+		$sql->query( $sql );
 	}	
 	
 
@@ -69,7 +69,7 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 
-		$sql = new SQL('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {t_object}'.
 		               '  WHERE parentid IS NULL'.
 		               '    AND is_folder=1'.
 		               '    AND projectid={projectid}' );
@@ -86,7 +86,7 @@ class Folder extends Object
 		}
 		
 		// Datenbankabfrage ausfuehren
-		return $db->getOne( $sql );
+		return $sql->getOne( $sql );
 	}
 
 
@@ -94,7 +94,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT COUNT(*) FROM {t_object}'.'  WHERE parentid={objectid} AND filename={filename}');
+		$sql = $db->sql('SELECT COUNT(*) FROM {t_object}'.'  WHERE parentid={objectid} AND filename={filename}');
 
 		if	( intval($this->objectid)== 0 )
 			$sql->setNull('objectid');
@@ -103,7 +103,7 @@ class Folder extends Object
 
 		$sql->setString('filename', $filename      );
 
-		return( $db->getOne($sql) > 0 );
+		return( $sql->getOne($sql) > 0 );
 	}
 
 
@@ -111,10 +111,10 @@ class Folder extends Object
 	{
 //		$db = db_connection();
 //
-//		$sql = new Sql('SELECT * FROM {t_folder} WHERE objectid={objectid}');
+//		$sql = $db->sql('SELECT * FROM {t_folder} WHERE objectid={objectid}');
 //		$sql->setInt('objectid',$this->objectid);
 //
-//		$row = $db->getRow( $sql );
+//		$row = $sql->getRow( $sql );
 //
 		$this->objectLoad();
 		
@@ -134,13 +134,13 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('UPDATE {t_folder} '.
+		$sql = $db->sql('UPDATE {t_folder} '.
 		               '  SET orderid={orderid}'.
 		               '  WHERE id={folderid}');
 		$sql->setInt('folderid',$this->folderid);
 		$sql->setInt('orderid' ,$orderid       );
 
-		$db->query( $sql );
+		$sql->query( $sql );
 	}
 
 
@@ -150,14 +150,14 @@ class Folder extends Object
 //		global $SESS;
 //		$db = db_connection();
 //		
-//		$sql = new Sql('SELECT id FROM {t_folder}'.
+//		$sql = $db->sql('SELECT id FROM {t_folder}'.
 //		               '  WHERE parentid={folderid}'.
 //		               '    AND projectid={projectid}'.
 //		               '  ORDER BY orderid ASC' );
 //		$sql->setInt('folderid' ,$SESS['folderid' ]);
 //		$sql->setInt('projectid',$SESS['projectid']);
 //		
-//		return( $db->getCol( $sql ));
+//		return( $sql->getCol( $sql ));
 //	}
 
 	
@@ -166,12 +166,12 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {t_object}'.
 		               '  WHERE parentid={objectid}'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
-		return( $db->getCol( $sql ) );
+		return( $sql->getCol( $sql ) );
 	}
 
 
@@ -184,7 +184,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT {t_object}.*,{t_name}.name,{t_name}.descr'.
+		$sql = $db->sql('SELECT {t_object}.*,{t_name}.name,{t_name}.descr'.
 		               '  FROM {t_object}'.
 		               ' LEFT JOIN {t_name} '.
 		               '   ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
@@ -194,7 +194,7 @@ class Folder extends Object
 		$sql->setInt('objectid'  ,$this->objectid   );
 		
 		$liste = array();
-		$res = $db->getAll( $sql );
+		$res = $sql->getAll( $sql );
 		foreach( $res as $row )
 		{
 			$o = new Object( $row['id'] );
@@ -211,13 +211,13 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {t_object}'.
 		               '  WHERE parentid={objectid}'.
 		               '  ORDER BY is_link,is_page,is_file,is_folder,orderid ASC' );
 		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
-		return( $db->getCol( $sql ) );
+		return( $sql->getCol( $sql ) );
 	}
 
 
@@ -226,13 +226,13 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT {t_object}.id FROM {t_object}'.
+		$sql = $db->sql('SELECT {t_object}.id FROM {t_object}'.
 		               '  LEFT JOIN {t_name} ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
                        ' WHERE parentid={objectid}'.
                        ' ORDER BY {t_name}.name,{t_object}.filename ASC');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
-		return( $db->getCol( $sql ) );
+		return( $sql->getCol( $sql ) );
 	}
 
 
@@ -241,13 +241,13 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {t_object}'.
 		               '  WHERE parentid={objectid}'.
 		               '  ORDER BY lastchange_date,orderid ASC' );
 		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
-		return( $db->getCol( $sql ) );
+		return( $sql->getCol( $sql ) );
 	}
 
 
@@ -293,13 +293,13 @@ class Folder extends Object
 	{
 		$db = db_connection();
 		
-		$sql = new Sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {t_object}'.
 		               '  WHERE parentid={objectid}'.
 		               '    AND filename={filename}' );
 		$sql->setInt   ('objectid' ,$this->objectid );
 		$sql->setString('filename' ,$filename       );
 		
-		return( intval($db->getOne( $sql )) );
+		return( intval($sql->getOne( $sql )) );
 	}
 
 
@@ -318,7 +318,7 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = new Sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {t_object}'.
 		               '  WHERE projectid={projectid}'.
 		               '    AND (    is_folder={is_folder}' .
 		               '          OR is_file  ={is_file}' .
@@ -342,7 +342,7 @@ class Folder extends Object
 		$sql->setInt('is_page'  ,in_array('page'  ,$types)?1:2);
 		$sql->setInt('is_link'  ,in_array('link'  ,$types)?1:2);
 		
-		return( $db->getCol( $sql ) );
+		return( $sql->getCol( $sql ) );
 	}
 
 	
@@ -351,7 +351,7 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = new Sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {t_object}'.
 		               '  WHERE parentid IS NULL'.
 		               '    AND projectid={projectid}' );
 
@@ -359,7 +359,7 @@ class Folder extends Object
 			$sql->setInt('projectid',$this->projectid   );
 		else	$sql->setInt('projectid',$SESS['projectid'] );
 		
-		return( $db->getOne( $sql ) );
+		return( $sql->getOne( $sql ) );
 	}
 
 	
@@ -368,14 +368,14 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = new Sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {t_object}'.
 		               '  WHERE is_folder=1'.
 		               '    and id != {objectid} '.
 		               '    AND projectid={projectid}' );
 		$sql->setInt( 'projectid',$this->projectid );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 		
-		return( $db->getCol( $sql ) );
+		return( $sql->getCol( $sql ) );
 	}
 
 	
@@ -384,7 +384,7 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = new Sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {t_object}'.
 		               '  WHERE is_folder=1'.
 		               '    AND projectid={projectid}' );
 		               
@@ -395,7 +395,7 @@ class Folder extends Object
 		}
 		else	$sql->setInt( 'projectid',$this->projectid   );
 		
-		return( $db->getCol( $sql ) );
+		return( $sql->getCol( $sql ) );
 	}
 
 	
@@ -403,12 +403,12 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {t_object} '.
 		               '  WHERE parentid={objectid} AND is_page=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 	
@@ -421,13 +421,13 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {t_object} '.
 		               '  WHERE parentid={objectid}'.
 		               '    AND (is_page=1)'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$oid = intval($db->getOne( $sql ));
+		$oid = intval($sql->getOne( $sql ));
 		
 		if	( $oid != 0 )
 			$o = new Object($oid);
@@ -447,13 +447,13 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {t_object} '.
 		               '  WHERE parentid={objectid}'.
 		               '    AND (is_page=1 OR is_link=1)'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$oid = intval($db->getOne( $sql ));
+		$oid = intval($sql->getOne( $sql ));
 		
 		if	( $oid != 0 )
 			$o = new Object($oid);
@@ -468,13 +468,13 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {t_object} '.
 		               '  WHERE parentid={objectid}'.
 		               '    AND (is_page=1 OR is_link=1)'.
 		               '  ORDER BY orderid DESC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$oid = intval($db->getOne( $sql ));
+		$oid = intval($sql->getOne( $sql ));
 		
 		if	( $oid != 0 )
 			$o = new Object($oid);
@@ -489,12 +489,12 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {t_object} '.
 		               '  WHERE parentid={objectid} AND is_file=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 
@@ -508,12 +508,12 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id,filename FROM {t_object} '.
+		$sql = $db->sql('SELECT id,filename FROM {t_object} '.
 		               '  WHERE parentid={objectid} AND is_file=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getAssoc( $sql );
+		return $sql->getAssoc( $sql );
 	}
 
 	
@@ -521,12 +521,12 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {t_object} '.
 		               '  WHERE parentid={objectid} AND is_link=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getCol( $sql );
+		return $sql->getCol( $sql );
 	}
 
 	
@@ -635,7 +635,7 @@ class Folder extends Object
 		
  		while( intval($foid)!=0 )
  		{
-			$sql = new Sql( <<<SQL
+			$sql = $db->sql( <<<SQL
 			
 SELECT parentid,id,filename
   FROM {t_object}
@@ -645,7 +645,7 @@ SQL
  );
 	 		$sql->setInt('parentid'  ,$foid            );
 	
-			$row = $db->getRow( $sql );
+			$row = $sql->getRow( $sql );
 			
 	 		if	( in_array($row['id'],$idCache))
 	 			Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
@@ -671,7 +671,7 @@ SQL
 		
  		while( intval($foid)!=0 )
  		{
-			$sql = new Sql( <<<SQL
+			$sql = $db->sql( <<<SQL
 			
 SELECT {t_object}.parentid,{t_object}.id,{t_object}.filename,{t_name}.name FROM {t_object}
   LEFT JOIN {t_name}
@@ -684,7 +684,7 @@ SQL
 			$sql->setInt('languageid',$this->languageid);
 	 		$sql->setInt('parentid'  ,$foid            );
 	
-			$row = $db->getRow( $sql );
+			$row = $sql->getRow( $sql );
 			
 	 		if	( in_array($row['id'],$idCache))
 	 			Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
@@ -707,12 +707,12 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {t_object} '.
 		               '  WHERE parentid={objectid} AND is_folder=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$this->subfolders = $db->getCol( $sql );
+		$this->subfolders = $sql->getCol( $sql );
 
 		return $this->subfolders;
 	}
@@ -723,12 +723,12 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql('SELECT id,filename FROM {t_object} '.
+		$sql = $db->sql('SELECT id,filename FROM {t_object} '.
 		               '  WHERE parentid={objectid} AND is_folder=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $db->getAssoc( $sql );
+		return $sql->getAssoc( $sql );
 	}
 
 	
@@ -774,16 +774,16 @@ SQL
 		// Nur loeschen, wenn es keine Unterelemente gibt
 		if	( count( $this->getObjectIds() ) == 0 )
 		{
-			$sql = new Sql( 'UPDATE {t_element} '.
+			$sql = $db->sql( 'UPDATE {t_element} '.
 			                '  SET folderobjectid=NULL '.
 			                '  WHERE folderobjectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
-			$db->query( $sql );
+			$sql->query( $sql );
 	
-			$sql = new Sql( 'DELETE FROM {t_folder} '.
+			$sql = $db->sql( 'DELETE FROM {t_folder} '.
 			                '  WHERE objectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
-			$db->query( $sql );
+			$sql->query( $sql );
 	
 			$this->objectDelete();
 		}
@@ -861,7 +861,7 @@ SQL
 	
 		$db = db_connection();
 	
-		$sql = new Sql( <<<SQL
+		$sql = $db->sql( <<<SQL
 		SELECT {t_object}.id       as objectid,
 		       {t_object}.lastchange_date as lastchange_date,
 		       {t_object}.filename as filename,
@@ -891,7 +891,7 @@ SQL
 		$language = Session::getProjectLanguage();
 		$sql->setInt( 'languageid', $language->languageid );
 	
-		return $db->getAll( $sql );
+		return $sql->getAll( $sql );
 	}
 	
 }
