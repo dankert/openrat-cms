@@ -548,7 +548,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = new Sql( 'UPDATE {t_user} SET password={password}'.
+		$sql = new Sql( 'UPDATE {t_user} SET password={password} '.
 		                'WHERE id={userid}' );
 		                
 		if	( $always )
