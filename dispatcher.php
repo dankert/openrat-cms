@@ -237,6 +237,16 @@ catch( ObjectNotFoundException $e )
 	Logger::debug( $e->__toString() ); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.
 	Http::noContent();
 }
+catch( RuntimeException $e )
+{
+	Logger::warn( $e->__toString() );
+	Http::serverError($e->__toString() );
+}
+catch( OpenRatException $e )
+{
+	Logger::warn( $e->__toString() );
+	Http::serverError( lang($e->key),$e->__toString());
+}
 
 $do->forward();
 
