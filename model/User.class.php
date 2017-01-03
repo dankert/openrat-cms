@@ -61,7 +61,7 @@ class User
 		$db = db_connection();
 
 		$sql = $db->sql( 'SELECT id,name '.
-		                '  FROM {t_user}'.
+		                '  FROM {{user}}'.
 		                '  ORDER BY name' );
 
 		return $sql->getAssoc( $sql );
@@ -75,7 +75,7 @@ class User
 		$db = db_connection();
 
 		$sql = $db->sql( 'SELECT * '.
-		                '  FROM {t_user}'.
+		                '  FROM {{user}}'.
 		                '  ORDER BY name' );
 
 		foreach( $sql->getAll( $sql ) as $row )
@@ -127,8 +127,8 @@ class User
 		$db = db_connection();
 
 		$sql = $db->sql( 'SELECT COUNT(*)'.
-		                '  FROM {t_acl}'.
-		                '  LEFT JOIN {t_object} ON {t_object}.id={t_acl}.objectid '.
+		                '  FROM {{acl}}'.
+		                '  LEFT JOIN {{object}} ON {{object}}.id={{acl}}.objectid '.
 		                '  WHERE projectid={projectidid} AND '.
 		                '        ( userid={userid} OR'.
 		                '          '.$this->getGroupClause().'    )' );
@@ -157,16 +157,16 @@ class User
 		{
 			$groupClause = $this->getGroupClause();
 			$sql = $db->sql(<<<SQL
-SELECT DISTINCT {t_project}.id,{t_project}.name
-  FROM {t_object}
-  LEFT JOIN {t_acl}     ON {t_object}.id  = {t_acl}.objectid 
-  LEFT JOIN {t_project} ON {t_project}.id = {t_object}.projectid 
- WHERE {t_object}.parentid IS NULL     AND
-       {t_acl}.id          IS NOT NULL AND
-       (  {t_acl}.userid={userid} OR
+SELECT DISTINCT {{project}}.id,{{project}}.name
+  FROM {{object}}
+  LEFT JOIN {{acl}}     ON {{object}}.id  = {{acl}}.objectid 
+  LEFT JOIN {{project}} ON {{project}}.id = {{object}}.projectid 
+ WHERE {{object}}.parentid IS NULL     AND
+       {{acl}}.id          IS NOT NULL AND
+       (  {{acl}}.userid={userid} OR
        $groupClause OR 
-       ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL)) 
- ORDER BY {t_project}.name
+       ({{acl}}.userid IS NULL AND {{acl}}.groupid IS NULL)) 
+ ORDER BY {{project}}.name
 SQL
 );
 		$sql->setInt   ( 'userid',$this->userid );
@@ -207,7 +207,7 @@ SQL
 		global $conf;
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id,mail,name,password FROM {t_user}'.
+		$sql = $db->sql( 'SELECT id,mail,name,password FROM {{user}}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
 		$row = $sql->getRow( $sql );
@@ -228,7 +228,7 @@ SQL
 		global $conf;
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT * FROM {t_user}'.
+		$sql = $db->sql( 'SELECT * FROM {{user}}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
 		$row = $sql->getRow( $sql );
@@ -253,7 +253,7 @@ SQL
 		$db = db_connection();
 
 		// Benutzer �ber Namen suchen
-		$sql = $db->sql( 'SELECT id FROM {t_user}'.
+		$sql = $db->sql( 'SELECT id FROM {{user}}'.
 		                ' WHERE name={name}' );
 		//Html::debug($sql);
 		$sql->setString( 'name',$name );
@@ -360,7 +360,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT name FROM {t_user}'.
+		$sql = $db->sql( 'SELECT name FROM {{user}}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$userid );
 
@@ -379,7 +379,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {t_user}'.
+		$sql = $db->sql( 'UPDATE {{user}}'.
 		                ' SET name={name},'.
 		                '     fullname={fullname},'.
 		                '     ldap_dn ={ldap_dn} ,'.
@@ -416,10 +416,10 @@ SQL
 
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_user}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{user}}');
 		$this->userid = intval($sql->getOne($sql))+1;
 
-		$sql = $db->sql('INSERT INTO {t_user}'.
+		$sql = $db->sql('INSERT INTO {{user}}'.
 		               ' (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin)'.
 		               " VALUES( {userid},{name},'','','','','','','default',0 )" );
 		$sql->setInt   ('userid',$this->userid);
@@ -448,7 +448,7 @@ SQL
 		$db = db_connection();
 
 		$groupNames = "'".implode("','",$groupNames)."'";
-		$sql = $db->sql("SELECT id FROM {t_group} WHERE name IN($groupNames)");
+		$sql = $db->sql("SELECT id FROM {{group}} WHERE name IN($groupNames)");
 		$groupIds = array_unique( $sql->getCol($sql) );
 		
 		// Wir brauchen hier nicht weiter pr�fen, ob der Benutzer eine Gruppe schon hat, denn
@@ -476,40 +476,40 @@ SQL
 		$db = db_connection();
 
 		// "Erzeugt von" f�r diesen Benutzer entfernen.
-		$sql = $db->sql( 'UPDATE {t_object} '.
+		$sql = $db->sql( 'UPDATE {{object}} '.
 		                'SET create_userid=null '.
 		                'WHERE create_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query( $sql );
 
 		// "Letzte �nderung von" f�r diesen Benutzer entfernen
-		$sql = $db->sql( 'UPDATE {t_object} '.
+		$sql = $db->sql( 'UPDATE {{object}} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query( $sql );
 
 		// Alle Archivdaten in Dateien mit diesem Benutzer entfernen
-		$sql = $db->sql( 'UPDATE {t_value} '.
+		$sql = $db->sql( 'UPDATE {{value}} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query( $sql );
 
 		// Alle Berechtigungen dieses Benutzers l?schen
-		$sql = $db->sql( 'DELETE FROM {t_acl} '.
+		$sql = $db->sql( 'DELETE FROM {{acl}} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query( $sql );
 
 		// Alle Gruppenzugehoerigkeiten dieses Benutzers l?schen
-		$sql = $db->sql( 'DELETE FROM {t_usergroup} '.
+		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query( $sql );
 
 		// Benutzer loeschen
-		$sql = $db->sql( 'DELETE FROM {t_user} '.
+		$sql = $db->sql( 'DELETE FROM {{user}} '.
 		                'WHERE id={userid}' );
 		$sql->setInt   ('userid',$this->userid );
 		$sql->query( $sql );
@@ -548,7 +548,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {t_user} SET password={password} '.
+		$sql = $db->sql( 'UPDATE {{user}} SET password={password} '.
 		                'WHERE id={userid}' );
 		                
 		if	( $always )
@@ -576,9 +576,9 @@ SQL
 		{
 			$db = db_connection();
 	
-			$sql = $db->sql( 'SELECT {t_group}.id,{t_group}.name FROM {t_group} '.
-			                'LEFT JOIN {t_usergroup} ON {t_usergroup}.groupid={t_group}.id '.
-			                'WHERE {t_usergroup}.userid={userid}' );
+			$sql = $db->sql( 'SELECT {{group}}.id,{{group}}.name FROM {{group}} '.
+			                'LEFT JOIN {{usergroup}} ON {{usergroup}}.groupid={{group}}.id '.
+			                'WHERE {{usergroup}}.userid={userid}' );
 			$sql->setInt('userid',$this->userid );
 			$this->groups = $sql->getAssoc( $sql );
 		}
@@ -595,7 +595,7 @@ SQL
 		/*
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT groupid FROM {t_usergroup} '.
+		$sql = $db->sql( 'SELECT groupid FROM {{usergroup}} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt('userid',$this->userid );
 
@@ -609,9 +609,9 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT {t_group}.id,{t_group}.name FROM {t_group}'.
-		                '   LEFT JOIN {t_usergroup} ON {t_usergroup}.groupid={t_group}.id AND {t_usergroup}.userid={userid}'.
-		                '   WHERE {t_usergroup}.userid IS NULL' );
+		$sql = $db->sql( 'SELECT {{group}}.id,{{group}}.name FROM {{group}}'.
+		                '   LEFT JOIN {{usergroup}} ON {{usergroup}}.groupid={{group}}.id AND {{usergroup}}.userid={userid}'.
+		                '   WHERE {{usergroup}}.userid IS NULL' );
 		$sql->setInt('userid'  ,$this->userid );
 
 		return $sql->getAssoc( $sql );
@@ -628,10 +628,10 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_usergroup}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{usergroup}}');
 		$usergroupid = intval($sql->getOne($sql))+1;
 
-		$sql = $db->sql( 'INSERT INTO {t_usergroup} '.
+		$sql = $db->sql( 'INSERT INTO {{usergroup}} '.
 		                '       (id,userid,groupid) '.
 		                '       VALUES( {usergroupid},{userid},{groupid} )' );
 		$sql->setInt('usergroupid',$usergroupid  );
@@ -653,7 +653,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'DELETE FROM {t_usergroup} '.
+		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                '  WHERE userid={userid} AND groupid={groupid}' );
 		$sql->setInt   ('userid'  ,$this->userid );
 		$sql->setInt   ('groupid' ,$groupid      );
@@ -688,14 +688,14 @@ SQL
 
 		$group_clause = $this->getGroupClause();
 
-		$sql = $db->sql( 'SELECT {t_acl}.*,{t_object}.projectid,{t_language}.name AS languagename FROM {t_acl}'.
-		                '  LEFT JOIN {t_object} '.
-		                '         ON {t_object}.id={t_acl}.objectid '.
-		                '  LEFT JOIN {t_language} '.
-		                '         ON {t_language}.id={t_acl}.languageid '.
-		                '  WHERE ( {t_acl}.userid={userid} OR '.$group_clause.
-		                                                 ' OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )'.
-		                '  ORDER BY {t_object}.projectid,{t_acl}.languageid' );
+		$sql = $db->sql( 'SELECT {{acl}}.*,{{object}}.projectid,{{language}}.name AS languagename FROM {{acl}}'.
+		                '  LEFT JOIN {{object}} '.
+		                '         ON {{object}}.id={{acl}}.objectid '.
+		                '  LEFT JOIN {{language}} '.
+		                '         ON {{language}}.id={{acl}}.languageid '.
+		                '  WHERE ( {{acl}}.userid={userid} OR '.$group_clause.
+		                                                 ' OR ({{acl}}.userid IS NULL AND {{acl}}.groupid IS NULL) )'.
+		                '  ORDER BY {{object}}.projectid,{{acl}}.languageid' );
 		$sql->setInt  ( 'userid'    ,$this->userid );
 
 		$aclList = array();
@@ -728,7 +728,7 @@ SQL
 //		$var = array();
 //
 //		// Alle Projekte lesen
-//		$sql = $db->sql( 'SELECT id,name FROM {t_project}' );
+//		$sql = $db->sql( 'SELECT id,name FROM {{project}}' );
 //		$projects = $sql->getAssoc( $sql );	
 //
 //		foreach( $projects as $projectid=>$projectname )
@@ -738,10 +738,10 @@ SQL
 //			$var[$projectid]['folders'] = array();
 //			$var[$projectid]['rights'] = array();
 //
-//			$sql = $db->sql( 'SELECT {t_acl}.* FROM {t_acl}'.
-//			                '  LEFT JOIN {t_folder} ON {t_acl}.folderid = {t_folder}.id'.
-//			                '  WHERE {t_folder}.projectid={projectid}'.
-//			                '    AND {t_acl}.userid={userid}' );
+//			$sql = $db->sql( 'SELECT {{acl}}.* FROM {{acl}}'.
+//			                '  LEFT JOIN {{folder}} ON {{acl}}.folderid = {{folder}}.id'.
+//			                '  WHERE {{folder}}.projectid={projectid}'.
+//			                '    AND {{acl}}.userid={userid}' );
 //			$sql->setInt('projectid',$projectid    );
 //			$sql->setInt('userid'   ,$this->userid );
 //			
@@ -757,7 +757,7 @@ SQL
 //				$var[$projectid]['rights'][$aclid]['delete_url'] = Html::url(array('action'=>'user','subaction'=>'delright','aclid'=>$aclid));
 //			}
 //			
-//			$sql = $db->sql( 'SELECT id FROM {t_folder}'.
+//			$sql = $db->sql( 'SELECT id FROM {{folder}}'.
 //			                '  WHERE projectid={projectid}' );
 //			$sql->setInt('projectid',$projectid);
 //			$folders = $sql->getCol( $sql );
@@ -907,16 +907,16 @@ SQL
 		$db = db_connection();
 	
 		$sql = $db->sql( <<<SQL
-		SELECT {t_object}.id       as objectid,
-		       {t_object}.filename as filename,
-		       {t_object}.lastchange_date as lastchange_date,
-		       {t_project}.id      as projectid,
-			   {t_project}.name    as projectname
-		  FROM {t_object}
-		LEFT JOIN {t_project}
-		       ON {t_object}.projectid = {t_project}.id
-		   WHERE {t_object}.lastchange_userid = {userid}
-		ORDER BY {t_object}.lastchange_date DESC
+		SELECT {{object}}.id       as objectid,
+		       {{object}}.filename as filename,
+		       {{object}}.lastchange_date as lastchange_date,
+		       {{project}}.id      as projectid,
+			   {{project}}.name    as projectname
+		  FROM {{object}}
+		LEFT JOIN {{project}}
+		       ON {{object}}.projectid = {{project}}.id
+		   WHERE {{object}}.lastchange_userid = {userid}
+		ORDER BY {{object}}.lastchange_date DESC
 SQL
 		);
 	

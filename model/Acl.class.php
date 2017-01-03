@@ -195,12 +195,12 @@ class Acl
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT {t_acl}.*,{t_user}.name as username,{t_group}.name as groupname,{t_language}.name as languagename'.
-		                '  FROM {t_acl} '.
-		                '    LEFT JOIN {t_user}     ON {t_user}.id     = {t_acl}.userid     '.
-		                '    LEFT JOIN {t_group}    ON {t_group}.id    = {t_acl}.groupid    '.
-		                '    LEFT JOIN {t_language} ON {t_language}.id = {t_acl}.languageid '.
-		                '  WHERE {t_acl}.id={aclid}' );
+		$sql = $db->sql( 'SELECT {{acl}}.*,{{user}}.name as username,{{group}}.name as groupname,{{language}}.name as languagename'.
+		                '  FROM {{acl}} '.
+		                '    LEFT JOIN {{user}}     ON {{user}}.id     = {{acl}}.userid     '.
+		                '    LEFT JOIN {{group}}    ON {{group}}.id    = {{acl}}.groupid    '.
+		                '    LEFT JOIN {{language}} ON {{language}}.id = {{acl}}.languageid '.
+		                '  WHERE {{acl}}.id={aclid}' );
 
 		$sql->setInt('aclid',$this->aclid);
 		
@@ -225,8 +225,8 @@ class Acl
 		$db = db_connection();
 		
 		$sql = $db->sql( 'SELECT * '.
-		                '  FROM {t_acl} '.
-		                '  WHERE {t_acl}.id={aclid}' );
+		                '  FROM {{acl}} '.
+		                '  WHERE {{acl}}.id={aclid}' );
 
 		$sql->setInt('aclid',$this->aclid);
 		
@@ -377,7 +377,7 @@ class Acl
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'DELETE FROM {t_acl} '.
+		$sql = $db->sql( 'DELETE FROM {{acl}} '.
 		                ' WHERE id      = {aclid}   '.
 		                '   AND objectid= {objectid}' );
 
@@ -406,7 +406,7 @@ class Acl
 		$language_comp = intval($this->languageid)>0?'=':'IS';
 		
 		$sql = $db->sql( <<<SQL
-		SELECT id FROM {t_acl}
+		SELECT id FROM {{acl}}
 		 WHERE userid      $user_comp     {userid}     AND
 		       groupid     $group_comp    {groupid}    AND
 		       languageid  $language_comp {languageid} AND
@@ -464,11 +464,11 @@ SQL
 			
 
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_acl}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{acl}}');
 		$this->aclid = intval($sql->getOne($sql))+1;
 		
 		$sql = $db->sql( <<<SQL
-		INSERT INTO {t_acl} 
+		INSERT INTO {{acl}} 
 		                 (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
 		                 VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )
 SQL

@@ -48,7 +48,7 @@ class Link extends Object
 		$db = db_connection();
 
 		$sql = $db->sql( 'SELECT *'.
-		                ' FROM {t_link}'.
+		                ' FROM {{link}}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 		$row = $sql->getRow( $sql );
@@ -80,7 +80,7 @@ class Link extends Object
 		$db = db_connection();
 
 		// Verkn�pfung l�schen
-		$sql = $db->sql( 'DELETE FROM {t_link} '.
+		$sql = $db->sql( 'DELETE FROM {{link}} '.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 		
@@ -96,7 +96,7 @@ class Link extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = $db->sql('UPDATE {t_link} SET '.
+		$sql = $db->sql('UPDATE {{link}} SET '.
 		               '  url           = {url},'.
 		               '  link_objectid = {linkobjectid}'.
 		                ' WHERE objectid={objectid}' );
@@ -144,10 +144,10 @@ class Link extends Object
 
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_link}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{link}}');
 		$this->linkid = intval($sql->getOne($sql))+1;
 
-		$sql = $db->sql('INSERT INTO {t_link}'.
+		$sql = $db->sql('INSERT INTO {{link}}'.
 		               ' (id,objectid,url,link_objectid)'.
 		               ' VALUES( {linkid},{objectid},{url},{linkobjectid} )' );
 		$sql->setInt   ('linkid'      ,$this->linkid         );

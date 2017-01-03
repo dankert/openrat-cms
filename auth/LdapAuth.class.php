@@ -10,7 +10,7 @@ class LdapAuth implements Auth
 		
 		// Lesen des Benutzers aus der DB-Tabelle
 		$sql = $db->sql( <<<SQL
-SELECT * FROM {t_user}
+SELECT * FROM {{user}}
  WHERE name={name}
 SQL
 		);

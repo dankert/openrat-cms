@@ -160,13 +160,13 @@ class Value
 		$db = db_connection();
 
 		if	( $this->publish )
-			$sql = $db->sql( 'SELECT * FROM {t_value}'.
+			$sql = $db->sql( 'SELECT * FROM {{value}}'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
 			                '    AND languageid={languageid}'.
 			                '    AND publish=1' );
 		else
-			$sql = $db->sql( 'SELECT * FROM {t_value}'.
+			$sql = $db->sql( 'SELECT * FROM {{value}}'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
 			                '    AND languageid={languageid}'.
@@ -203,10 +203,10 @@ class Value
 
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT {t_value}.*,{t_user}.name as lastchange_username'.
-		                ' FROM {t_value}'.
-		                ' LEFT JOIN {t_user} ON {t_user}.id={t_value}.lastchange_userid'.
-		                '  WHERE {t_value}.id={valueid}' );
+		$sql = $db->sql( 'SELECT {{value}}.*,{{user}}.name as lastchange_username'.
+		                ' FROM {{value}}'.
+		                ' LEFT JOIN {{user}} ON {{user}}.id={{value}}.lastchange_userid'.
+		                '  WHERE {{value}}.id={valueid}' );
 		$sql->setInt( 'valueid',$this->valueid);
 		$row = $sql->getRow( $sql );
 		
@@ -236,9 +236,9 @@ class Value
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT {t_value}.*,{t_user}.name as lastchange_username'.
-		                '  FROM {t_value}'.
-		                '  LEFT JOIN {t_user} ON {t_user}.id={t_value}.lastchange_userid'.
+		$sql = $db->sql( 'SELECT {{value}}.*,{{user}}.name as lastchange_username'.
+		                '  FROM {{value}}'.
+		                '  LEFT JOIN {{user}} ON {{user}}.id={{value}}.lastchange_userid'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
 		                '    AND languageid={languageid}'.
@@ -279,7 +279,7 @@ class Value
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT COUNT(*) FROM {t_value}'.
+		$sql = $db->sql( 'SELECT COUNT(*) FROM {{value}}'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
 		                '    AND languageid={languageid}' );
@@ -297,7 +297,7 @@ class Value
 
 		$sql = $db->sql( 
 <<<SQL
-	SELECT lastchange_date FROM {t_value}
+	SELECT lastchange_date FROM {{value}}
 		WHERE elementid ={elementid}
 		  AND pageid    ={pageid}
 		  AND languageid={languageid}
@@ -320,7 +320,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {t_value}'.
+		$sql = $db->sql( 'UPDATE {{value}}'.
 		                '  SET publish=0'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
@@ -331,7 +331,7 @@ SQL
 
 		$sql->query( $sql );
 
-		$sql = $db->sql( 'UPDATE {t_value}'.
+		$sql = $db->sql( 'UPDATE {{value}}'.
 		                '  SET publish=1'.
 		                '  WHERE active    = 1'.
 		                '    AND elementid ={elementid}'.
@@ -352,7 +352,7 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {t_value}'.
+		$sql = $db->sql( 'UPDATE {{value}}'.
 		                '  SET active=0'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
@@ -367,7 +367,7 @@ SQL
 		{
 			// Wenn Inhalt sofort veroeffentlicht werden kann, dann
 			// alle anderen Inhalte auf nicht-veroeffentlichen stellen 
-			$sql = $db->sql( 'UPDATE {t_value}'.
+			$sql = $db->sql( 'UPDATE {{value}}'.
 			                '  SET publish=0'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
@@ -380,11 +380,11 @@ SQL
 		}
 
 		// Naechste ID aus Datenbank besorgen
-		$sql = $db->sql('SELECT MAX(id) FROM {t_value}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{value}}');
 		$this->valueid = intval($sql->getOne($sql))+1;
 
 		$sql = $db->sql( <<<SQL
-INSERT INTO {t_value}
+INSERT INTO {{value}}
             (id       ,linkobjectid  ,text  ,number  ,date  ,elementid  ,pageid  ,languageid  ,active,publish  ,lastchange_date  ,lastchange_userid  )
      VALUES ({valueid},{linkobjectid},{text},{number},{date},{elementid},{pageid},{languageid},1     ,{publish},{lastchange_date},{lastchange_userid})
 SQL
@@ -435,7 +435,7 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql( <<<SQL
-		SELECT id FROM {t_value}
+		SELECT id FROM {{value}}
 			                  WHERE elementid  = {elementid}
 			                    AND pageid     = {pageid}
 			                    AND languageid = {languageid}
@@ -452,7 +452,7 @@ SQL
 		if	( count($values) > $limit['min-revisions'] )
 		{
 			$sql = $db->sql( <<<SQL
-			DELETE FROM {t_value}
+			DELETE FROM {{value}}
 				                  WHERE elementid  = {elementid}
 				                    AND pageid     = {pageid}
 				                    AND languageid = {languageid}
@@ -473,7 +473,7 @@ SQL
 		if	( count($values) > $limit['max-revisions'] )
 		{
 			$sql = $db->sql( <<<SQL
-			DELETE FROM {t_value}
+			DELETE FROM {{value}}
 				                  WHERE elementid  = {elementid}
 				                    AND pageid     = {pageid}
 				                    AND languageid = {languageid}
@@ -500,7 +500,7 @@ SQL
 	function delete()
 	{
 		$db = db_connection();
-		$sql = $db->sql( 'DELETE * FROM {t_value}'.
+		$sql = $db->sql( 'DELETE * FROM {{value}}'.
 		                '  WHERE elementid ={elementid}'.
 		                '    AND pageid    ={pageid}'.
 		                '    AND languageid={languageid}' );
@@ -1541,14 +1541,14 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT {t_object}.id FROM {t_value} '.
-		                ' LEFT JOIN {t_page} '.
-		                '   ON {t_page}.id={t_value}.pageid '.
-		                ' LEFT JOIN {t_object} '.
-		                '   ON {t_object}.id={t_page}.objectid '.
-		                ' WHERE {t_value}.text LIKE {text}'.
-		                '   AND {t_value}.languageid={languageid}'.
-		                '  ORDER BY {t_object}.lastchange_date DESC' );
+		$sql = $db->sql( 'SELECT {{object}}.id FROM {{value}} '.
+		                ' LEFT JOIN {{page}} '.
+		                '   ON {{page}}.id={{value}}.pageid '.
+		                ' LEFT JOIN {{object}} '.
+		                '   ON {{object}}.id={{page}}.objectid '.
+		                ' WHERE {{value}}.text LIKE {text}'.
+		                '   AND {{value}}.languageid={languageid}'.
+		                '  ORDER BY {{object}}.lastchange_date DESC' );
 		                
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'text'      ,'%'.$text.'%'     );
@@ -1566,14 +1566,14 @@ SQL
 
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT {t_object}.id FROM {t_value} '.
-		                ' LEFT JOIN {t_page} '.
-		                '   ON {t_page}.id={t_value}.pageid '.
-		                ' LEFT JOIN {t_object} '.
-		                '   ON {t_object}.id={t_page}.objectid '.
-		                ' WHERE {t_value}.lastchange_userid={userid}'.
-		                '   AND {t_value}.languageid={languageid}'.
-		                '  ORDER BY {t_object}.lastchange_date DESC' );
+		$sql = $db->sql( 'SELECT {{object}}.id FROM {{value}} '.
+		                ' LEFT JOIN {{page}} '.
+		                '   ON {{page}}.id={{value}}.pageid '.
+		                ' LEFT JOIN {{object}} '.
+		                '   ON {{object}}.id={{page}}.objectid '.
+		                ' WHERE {{value}}.lastchange_userid={userid}'.
+		                '   AND {{value}}.languageid={languageid}'.
+		                '  ORDER BY {{object}}.lastchange_date DESC' );
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setInt   ( 'userid'    ,$userid           );
 
@@ -1592,14 +1592,14 @@ SQL
 		$db = db_connection();
 		
 		$sql = $db->sql( <<<SQL
-SELECT {t_object}.id
-  FROM {t_value} 
-  LEFT JOIN {t_page} 
-    ON {t_page}.id={t_value}.pageid 
-  LEFT JOIN {t_object} 
-    ON {t_object}.id={t_page}.objectid 
- WHERE {t_value}.lastchange_userid={userid}
- ORDER BY {t_value}.lastchange_date DESC
+SELECT {{object}}.id
+  FROM {{value}} 
+  LEFT JOIN {{page}} 
+    ON {{page}}.id={{value}}.pageid 
+  LEFT JOIN {{object}} 
+    ON {{object}}.id={{page}}.objectid 
+ WHERE {{value}}.lastchange_userid={userid}
+ ORDER BY {{value}}.lastchange_date DESC
 SQL
 );
 		$sql->setInt   ( 'userid'    ,$userid           );
@@ -1617,15 +1617,15 @@ SQL
 		$db = db_connection();
 		
 		$sql = $db->sql( <<<SQL
-SELECT {t_object}.id
-  FROM {t_value} 
-  LEFT JOIN {t_page} 
-    ON {t_page}.id={t_value}.pageid 
-  LEFT JOIN {t_object} 
-    ON {t_object}.id={t_page}.objectid 
- WHERE {t_value}.lastchange_userid={userid}
-   AND {t_object}.projectid = {projectid}
- ORDER BY {t_value}.lastchange_date DESC
+SELECT {{object}}.id
+  FROM {{value}} 
+  LEFT JOIN {{page}} 
+    ON {{page}}.id={{value}}.pageid 
+  LEFT JOIN {{object}} 
+    ON {{object}}.id={{page}}.objectid 
+ WHERE {{value}}.lastchange_userid={userid}
+   AND {{object}}.projectid = {projectid}
+ ORDER BY {{value}}.lastchange_date DESC
 SQL
 );
 		$sql->setInt   ( 'userid'    ,$userid     );

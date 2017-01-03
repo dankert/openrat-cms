@@ -54,7 +54,7 @@ class Group
 		global $conf;
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id,name FROM {t_group}' );
+		$sql = $db->sql( 'SELECT id,name FROM {{group}}' );
 
 		return $sql->getAssoc( $sql );
 	}
@@ -65,7 +65,7 @@ class Group
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT * FROM {t_group}'.
+		$sql = $db->sql( 'SELECT * FROM {{group}}'.
 		                ' WHERE id={groupid}' );
 		$sql->setInt( 'groupid',$this->groupid );
 
@@ -82,7 +82,7 @@ class Group
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT * FROM {t_group}'.
+		$sql = $db->sql( 'SELECT * FROM {{group}}'.
 		                ' WHERE name={name}' );
 		$sql->setString('name',$name );
 
@@ -110,7 +110,7 @@ class Group
 		$db = db_connection();
 
 		// Gruppe speichern		
-		$sql = $db->sql( 'UPDATE {t_group} '.
+		$sql = $db->sql( 'UPDATE {{group}} '.
 		                'SET name = {name} '.
 		                'WHERE id={groupid}' );
 		$sql->setString( 'name'  ,$this->name    );
@@ -140,11 +140,11 @@ class Group
 		if	( $name != '' )
 			$this->name = $name;
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_group}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{group}}');
 		$this->groupid = intval($sql->getOne($sql))+1;
 		
 		// Gruppe hinzuf?gen
-		$sql = $db->sql( 'INSERT INTO {t_group} '.
+		$sql = $db->sql( 'INSERT INTO {{group}} '.
 		                '(id,name) VALUES( {groupid},{name} )');
 		$sql->setInt   ('groupid',$this->groupid );
 		$sql->setString('name'   ,$this->name    );
@@ -160,20 +160,20 @@ class Group
 		$db = db_connection();
 
 		// Berechtigungen zu dieser Gruppe loeschen
-		$sql = $db->sql( 'DELETE FROM {t_acl} '.
+		$sql = $db->sql( 'DELETE FROM {{acl}} '.
 		                'WHERE groupid={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
 		$sql->query( $sql );
 
 
 		// Alle Gruppenzugehoerigkeiten zu dieser Gruppe loeschen
-		$sql = $db->sql( 'DELETE FROM {t_usergroup} '.
+		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                'WHERE groupid={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
 		$sql->query($sql);
 
 		// Gruppe loeschen
-		$sql = $db->sql( 'DELETE FROM {t_group} '.
+		$sql = $db->sql( 'DELETE FROM {{group}} '.
 		                'WHERE id={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
 		$sql->query($sql);
@@ -185,9 +185,9 @@ class Group
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT {t_user}.id,{t_user}.name FROM {t_user} '.
-		                'LEFT JOIN {t_usergroup} ON {t_usergroup}.userid={t_user}.id '.
-		                'WHERE {t_usergroup}.groupid={groupid}' );
+		$sql = $db->sql( 'SELECT {{user}}.id,{{user}}.name FROM {{user}} '.
+		                'LEFT JOIN {{usergroup}} ON {{usergroup}}.userid={{user}}.id '.
+		                'WHERE {{usergroup}}.groupid={groupid}' );
 		$sql->setInt('groupid',$this->groupid );
 
 		return $sql->getAssoc( $sql );
@@ -199,9 +199,9 @@ class Group
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT {t_user}.id,{t_user}.name FROM {t_user}'.
-		                '   LEFT JOIN {t_usergroup} ON {t_usergroup}.userid={t_user}.id AND {t_usergroup}.groupid={groupid}'.
-		                '   WHERE {t_usergroup}.groupid IS NULL' );
+		$sql = $db->sql( 'SELECT {{user}}.id,{{user}}.name FROM {{user}}'.
+		                '   LEFT JOIN {{usergroup}} ON {{usergroup}}.userid={{user}}.id AND {{usergroup}}.groupid={groupid}'.
+		                '   WHERE {{usergroup}}.groupid IS NULL' );
 		$sql->setInt('groupid'  ,$this->groupid );
 
 		return $sql->getAssoc( $sql );
@@ -213,10 +213,10 @@ class Group
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_usergroup}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{usergroup}}');
 		$usergroupid = intval($sql->getOne($sql))+1;
 
-		$sql = $db->sql( 'INSERT INTO {t_usergroup} '.
+		$sql = $db->sql( 'INSERT INTO {{usergroup}} '.
 		                '       (id,userid,groupid) '.
 		                '       VALUES( {usergroupid},{userid},{groupid} )' );
 		$sql->setInt('usergroupid',$usergroupid  );
@@ -233,7 +233,7 @@ class Group
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'DELETE FROM {t_usergroup} '.
+		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                '  WHERE userid={userid} AND groupid={groupid}' );
 		$sql->setInt   ('userid'  ,$userid        );
 		$sql->setInt   ('groupid' ,$this->groupid );
@@ -250,7 +250,7 @@ class Group
 		$var = array();
 
 		// Alle Projekte lesen
-		$sql = $db->sql( 'SELECT id,name FROM {t_project}' );
+		$sql = $db->sql( 'SELECT id,name FROM {{project}}' );
 		$projects = $sql->getAssoc( $sql );	
 
 		foreach( $projects as $projectid=>$projectname )
@@ -260,10 +260,10 @@ class Group
 			$var[$projectid]['folders'] = array();
 			$var[$projectid]['rights'] = array();
 
-			$sql = $db->sql( 'SELECT {t_acl}.* FROM {t_acl}'.
-			                '  LEFT JOIN {t_folder} ON {t_acl}.folderid = {t_folder}.id'.
-			                '  WHERE {t_folder}.projectid={projectid}'.
-			                '    AND {t_acl}.groupid={groupid}' );
+			$sql = $db->sql( 'SELECT {{acl}}.* FROM {{acl}}'.
+			                '  LEFT JOIN {{folder}} ON {{acl}}.folderid = {{folder}}.id'.
+			                '  WHERE {{folder}}.projectid={projectid}'.
+			                '    AND {{acl}}.groupid={groupid}' );
 			$sql->setInt('projectid',$projectid    );
 			$sql->setInt('groupid'   ,$this->groupid );
 			
@@ -279,7 +279,7 @@ class Group
 				$var[$projectid]['rights'][$aclid]['delete_url'] = 'user.'.$conf_php.'?useraction=delright&aclid='.$aclid;
 			}
 			
-			$sql = $db->sql( 'SELECT id FROM {t_folder}'.
+			$sql = $db->sql( 'SELECT id FROM {{folder}}'.
 			                '  WHERE projectid={projectid}' );
 			$sql->setInt('projectid',$projectid);
 			$folders = $sql->getCol( $sql );
@@ -306,7 +306,7 @@ class Group
 		global $REQ,$SESS;
 		$db = db_connection();
 		
-		$sql = $db->sql('INSERT INTO {t_acl} '.
+		$sql = $db->sql('INSERT INTO {{acl}} '.
 		               '(userid,groupid,folderid,`read`,`write`,`create`,`delete`,publish) '.
 		               'VALUES({userid},{groupid},{folderid},{read},{write},{create},{delete},{publish})');
 		               
@@ -336,13 +336,13 @@ class Group
 	function getAllAcls()
 	{
 		$db = db_connection();
-		$sql = $db->sql( 'SELECT {t_acl}.*,{t_object}.projectid,{t_language}.name AS languagename FROM {t_acl}'.
-		                '  LEFT JOIN {t_object} '.
-		                '         ON {t_object}.id={t_acl}.objectid '.
-		                '  LEFT JOIN {t_language} '.
-		                '         ON {t_language}.id={t_acl}.languageid '.
-		                '  WHERE ( {t_acl}.groupid={groupid} OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )'.
-		                '  ORDER BY {t_object}.projectid,{t_acl}.languageid' );
+		$sql = $db->sql( 'SELECT {{acl}}.*,{{object}}.projectid,{{language}}.name AS languagename FROM {{acl}}'.
+		                '  LEFT JOIN {{object}} '.
+		                '         ON {{object}}.id={{acl}}.objectid '.
+		                '  LEFT JOIN {{language}} '.
+		                '         ON {{language}}.id={{acl}}.languageid '.
+		                '  WHERE ( {{acl}}.groupid={groupid} OR ({{acl}}.userid IS NULL AND {{acl}}.groupid IS NULL) )'.
+		                '  ORDER BY {{object}}.projectid,{{acl}}.languageid' );
 		$sql->setInt  ( 'groupid'    ,$this->groupid );
 
 		$aclList = array();
@@ -367,7 +367,7 @@ class Group
 	// Berechtigung entfernen
 	function delRight( $aclid )
 	{
-		$sql = $db->sql('DELETE FROM {t_acl} WHERE id={aclid}');
+		$sql = $db->sql('DELETE FROM {{acl}} WHERE id={aclid}');
 		$sql->setInt( 'aclid',$aclid );
 	
 		// Datenbankabfrage ausf?hren

@@ -140,10 +140,10 @@ class Element
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_element}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{element}}');
 		$this->elementid = intval($sql->getOne($sql))+1;
 
-		$sql = $db->sql( 'INSERT INTO {t_element}'.
+		$sql = $db->sql( 'INSERT INTO {{element}}'.
 		                ' (id,templateid,name,descr,type,writable) '.
 		                " VALUES ( {elementid},{templateid},{name},{description},{type},{writable} ) " );
 
@@ -179,7 +179,7 @@ class Element
 		{		
 			$db = db_connection();
 			$sql = $db->sql( <<<SQL
-SELECT * FROM {t_element}
+SELECT * FROM {{element}}
  WHERE id={elementid}
 SQL
 );
@@ -229,7 +229,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'UPDATE {t_element}'.
+		$sql = $db->sql( 'UPDATE {{element}}'.
 		                ' SET templateid      = {templateid},'.
 		                '     name            = {name},'.
 		                '     descr           = {desc},'.
@@ -292,7 +292,7 @@ SQL
 		$this->type = $type;
 		$db = db_connection();
 		
-		$sql = $db->sql( 'UPDATE {t_element}'.
+		$sql = $db->sql( 'UPDATE {{element}}'.
 		                ' SET type            = {type}'.
 		                ' WHERE id={elementid}'         );
 
@@ -329,7 +329,7 @@ SQL
 		$this->deleteValues();
 
 		// Element l?schen
-		$sql = $db->sql('DELETE FROM {t_element} '.
+		$sql = $db->sql('DELETE FROM {{element}} '.
 		               '  WHERE id={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
 
@@ -346,7 +346,7 @@ SQL
 		$db = db_connection();
 
 		// Alle Inhalte mit diesem Element l?schen
-		$sql = $db->sql('DELETE FROM {t_value} '.
+		$sql = $db->sql('DELETE FROM {{value}} '.
 		               '  WHERE elementid={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
 		$sql->query( $sql );

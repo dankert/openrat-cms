@@ -54,7 +54,7 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT 1 FROM {t_project} '.
+		$sql = $db->sql('SELECT 1 FROM {{project}} '.
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 
@@ -73,7 +73,7 @@ class Project
 	function getAllProjects()
 	{
 		$db = db_connection();
-		$sql = $db->sql( 'SELECT id,name FROM {t_project} '.
+		$sql = $db->sql( 'SELECT id,name FROM {{project}} '.
 		                '   ORDER BY name' );
 
 		return $sql->getAssoc( $sql );
@@ -84,7 +84,7 @@ class Project
 	function getAllProjectIds()
 	{
 		$db = db_connection();
-		$sql = $db->sql( 'SELECT id FROM {t_project} '.
+		$sql = $db->sql( 'SELECT id FROM {{project}} '.
 		                '   ORDER BY name' );
 
 		return $sql->getCol( $sql );
@@ -95,7 +95,7 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id,name FROM {t_language}'.
+		$sql = $db->sql( 'SELECT id,name FROM {{language}}'.
 		                '  WHERE projectid={projectid} '.
 		                '  ORDER BY name' );
 		$sql->setInt   ('projectid',$this->projectid);
@@ -114,7 +114,7 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id,name FROM {t_projectmodel}'.
+		$sql = $db->sql( 'SELECT id,name FROM {{projectmodel}}'.
 		                '  WHERE projectid= {projectid} '.
 		                '  ORDER BY name' );
 		$sql->setInt   ('projectid',$this->projectid);
@@ -133,7 +133,7 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id FROM {t_template}'.
+		$sql = $db->sql( 'SELECT id FROM {{template}}'.
 		                '  WHERE projectid= {projectid} ' );
 		$sql->setInt   ('projectid',$this->projectid);
 
@@ -145,7 +145,7 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id,name FROM {t_template}'.
+		$sql = $db->sql( 'SELECT id,name FROM {{template}}'.
 		                '  WHERE projectid= {projectid} ' );
 		$sql->setInt   ('projectid',$this->projectid);
 
@@ -165,7 +165,7 @@ class Project
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid IS NULL'.
 		               '    AND projectid={projectid}' );
 
@@ -181,7 +181,7 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT * FROM {t_project} '.
+		$sql = $db->sql( 'SELECT * FROM {{project}} '.
 		                '   WHERE id={projectid}' );
 		$sql->setInt( 'projectid',$this->projectid );
 
@@ -205,7 +205,7 @@ class Project
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT * FROM {t_project} '.
+		$sql = $db->sql( 'SELECT * FROM {{project}} '.
 		                '   WHERE name={projectname}' );
 		$sql->setString( 'projectname',$this->name );
 
@@ -227,7 +227,7 @@ class Project
 		$db = db_connection();
 
 		$sql = $db->sql( <<<SQL
-				UPDATE {t_project}
+				UPDATE {{project}}
                   SET name                = {name},
                       target_dir          = {target_dir},
                       ftp_url             = {ftp_url}, 
@@ -283,12 +283,12 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql('SELECT MAX(id) FROM {t_project}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{project}}');
 		$this->projectid = intval($sql->getOne($sql))+1;
 
 
 		// Projekt hinzuf?gen
-		$sql = $db->sql( 'INSERT INTO {t_project} (id,name,target_dir,ftp_url,ftp_passive,cmd_after_publish,content_negotiation,cut_index) '.
+		$sql = $db->sql( 'INSERT INTO {{project}} (id,name,target_dir,ftp_url,ftp_passive,cmd_after_publish,content_negotiation,cut_index) '.
 		                "  VALUES( {projectid},{name},'','',0,'',0,0 ) " );
 		$sql->setInt   ('projectid',$this->projectid );
 		$sql->setString('name'     ,$this->name      );
@@ -373,7 +373,7 @@ SQL
 		
 
 		// Projekt l?schen
-		$sql = $db->sql( 'DELETE FROM {t_project}'.
+		$sql = $db->sql( 'DELETE FROM {{project}}'.
 		                '  WHERE id= {projectid} ' );
 		$sql->setInt( 'projectid',$this->projectid );
 		$sql->query( $sql );
@@ -385,7 +385,7 @@ SQL
 
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
-		$sql = $db->sql( 'SELECT id FROM {t_language} '.
+		$sql = $db->sql( 'SELECT id FROM {{language}} '.
 		                '  WHERE projectid={projectid}'.
 		                '   ORDER BY is_default DESC' );
 
@@ -401,7 +401,7 @@ SQL
 
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
-		$sql = $db->sql( 'SELECT id FROM {t_projectmodel} '.
+		$sql = $db->sql( 'SELECT id FROM {{projectmodel}} '.
 		                '  WHERE projectid={projectid}'.
 		                '   ORDER BY is_default DESC' );
 		$sql->setInt('projectid',$this->projectid );
@@ -455,8 +455,8 @@ SQL
 
 		// Ordnerstruktur prüfen.
 		$sql = $db->sql( <<<EOF
-SELECT thistab.id FROM {t_object} AS thistab
- LEFT JOIN {t_object} AS parenttab
+SELECT thistab.id FROM {{object}} AS thistab
+ LEFT JOIN {{object}} AS parenttab
         ON parenttab.id = thistab.parentid
   WHERE thistab.projectid={projectid} AND thistab.parentid IS NOT NULL AND parenttab.id IS NULL
 EOF
@@ -486,7 +486,7 @@ EOF
 		
 		// Prüfe, ob die Verbindung Projekt->Template->Templatemodell->Projectmodell->Projekt konsistent ist. 
 		$sql = $db->sql( <<<EOF
-SELECT DISTINCT projectid FROM {t_projectmodel} WHERE id IN (SELECT projectmodelid from {t_templatemodel} WHERE templateid in (SELECT id from {t_template} WHERE projectid={projectid}))
+SELECT DISTINCT projectid FROM {{projectmodel}} WHERE id IN (SELECT projectmodelid from {{templatemodel}} WHERE templateid in (SELECT id from {{template}} WHERE projectid={projectid}))
 EOF
 );
 		$sql->setInt('projectid',$this->projectid);
@@ -730,7 +730,7 @@ EOF
 	function countObjects()
 	{
 		$db = db_connection();
-		$sql = $db->sql( 'SELECT COUNT(*) FROM {t_object} '.
+		$sql = $db->sql( 'SELECT COUNT(*) FROM {{object}} '.
 		                '   WHERE projectid = {projectid}' );
 		$sql->setInt( 'projectid', $this->projectid );
 
@@ -749,9 +749,9 @@ EOF
 		$db = db_connection();
 		
 		$sql = $db->sql( <<<SQL
-		SELECT SUM(size) FROM {t_file}
-		  LEFT JOIN {t_object}
-		         ON {t_file}.objectid = {t_object}.id
+		SELECT SUM(size) FROM {{file}}
+		  LEFT JOIN {{object}}
+		         ON {{file}}.objectid = {{object}}.id
 		      WHERE projectid = {projectid}
 SQL
 );
@@ -791,23 +791,23 @@ SQL
 
 
 		$sql = $db->sql( <<<SQL
-		SELECT {t_object}.id    as objectid,
-		       {t_object}.filename as filename,
-		       {t_object}.is_folder as is_folder,
-		       {t_object}.is_file  as is_file,
-		       {t_object}.is_link  as is_link,
-		       {t_object}.is_page  as is_page,
-		       {t_object}.lastchange_date as lastchange_date,			
-		       {t_name}.name as name				
-		  FROM {t_object}
-		  LEFT JOIN {t_name}
-		         ON {t_name}.objectid = {t_object}.id
-				AND {t_name}.languageid = {languageid}
-		  LEFT JOIN {t_project}
-		         ON {t_object}.projectid = {t_project}.id
-			  WHERE {t_object}.projectid         = {projectid}
-				AND {t_object}.lastchange_userid = {userid}
-		   ORDER BY {t_object}.lastchange_date DESC;
+		SELECT {{object}}.id    as objectid,
+		       {{object}}.filename as filename,
+		       {{object}}.is_folder as is_folder,
+		       {{object}}.is_file  as is_file,
+		       {{object}}.is_link  as is_link,
+		       {{object}}.is_page  as is_page,
+		       {{object}}.lastchange_date as lastchange_date,			
+		       {{name}}.name as name				
+		  FROM {{object}}
+		  LEFT JOIN {{name}}
+		         ON {{name}}.objectid = {{object}}.id
+				AND {{name}}.languageid = {languageid}
+		  LEFT JOIN {{project}}
+		         ON {{object}}.projectid = {{project}}.id
+			  WHERE {{object}}.projectid         = {projectid}
+				AND {{object}}.lastchange_userid = {userid}
+		   ORDER BY {{object}}.lastchange_date DESC;
 SQL
 		);
 		
@@ -834,21 +834,21 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql( <<<SQL
-		SELECT {t_object}.id    as objectid,
-		       {t_object}.lastchange_date as lastchange_date,
-		       {t_object}.filename as filename,
-		       {t_project}.id   as projectid,
-			   {t_project}.name as projectname,
-		       {t_user}.name       as username,
-		       {t_user}.id         as userid,
-		       {t_user}.mail       as usermail,
-		       {t_user}.fullname   as userfullname
-		  FROM {t_object}
-		  LEFT JOIN {t_project}
-		         ON {t_object}.projectid = {t_project}.id
-		  LEFT JOIN {t_user}
-		         ON {t_user}.id = {t_object}.lastchange_userid
-		  ORDER BY {t_object}.lastchange_date DESC
+		SELECT {{object}}.id    as objectid,
+		       {{object}}.lastchange_date as lastchange_date,
+		       {{object}}.filename as filename,
+		       {{project}}.id   as projectid,
+			   {{project}}.name as projectname,
+		       {{user}}.name       as username,
+		       {{user}}.id         as userid,
+		       {{user}}.mail       as usermail,
+		       {{user}}.fullname   as userfullname
+		  FROM {{object}}
+		  LEFT JOIN {{project}}
+		         ON {{object}}.projectid = {{project}}.id
+		  LEFT JOIN {{user}}
+		         ON {{user}}.id = {{object}}.lastchange_userid
+		  ORDER BY {{object}}.lastchange_date DESC
 		  LIMIT 50
 SQL
 		);
@@ -868,26 +868,26 @@ SQL
 		$db = db_connection();
 		
 		$sql = $db->sql( <<<SQL
-		SELECT {t_object}.id       as objectid,
-		       {t_object}.lastchange_date as lastchange_date,
-		       {t_object}.filename as filename,
-		       {t_object}.is_folder as is_folder,
-		       {t_object}.is_file  as is_file,
-		       {t_object}.is_link  as is_link,
-		       {t_object}.is_page  as is_page,
-		       {t_name}.name       as name,
-		       {t_user}.name       as username,
-		       {t_user}.id         as userid,
-		       {t_user}.mail       as usermail,
-		       {t_user}.fullname   as userfullname
-		  FROM {t_object}
-		  LEFT JOIN {t_name}
-		         ON {t_name}.objectid = {t_object}.id
-				AND {t_name}.languageid = {languageid}
-		  LEFT JOIN {t_user}
-		         ON {t_user}.id = {t_object}.lastchange_userid
-			  WHERE {t_object}.projectid = {projectid}
-		   ORDER BY {t_object}.lastchange_date DESC
+		SELECT {{object}}.id       as objectid,
+		       {{object}}.lastchange_date as lastchange_date,
+		       {{object}}.filename as filename,
+		       {{object}}.is_folder as is_folder,
+		       {{object}}.is_file  as is_file,
+		       {{object}}.is_link  as is_link,
+		       {{object}}.is_page  as is_page,
+		       {{name}}.name       as name,
+		       {{user}}.name       as username,
+		       {{user}}.id         as userid,
+		       {{user}}.mail       as usermail,
+		       {{user}}.fullname   as userfullname
+		  FROM {{object}}
+		  LEFT JOIN {{name}}
+		         ON {{name}}.objectid = {{object}}.id
+				AND {{name}}.languageid = {languageid}
+		  LEFT JOIN {{user}}
+		         ON {{user}}.id = {{object}}.lastchange_userid
+			  WHERE {{object}}.projectid = {projectid}
+		   ORDER BY {{object}}.lastchange_date DESC
 SQL
 		);
 		

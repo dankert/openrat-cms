@@ -50,10 +50,10 @@ class Folder extends Object
 
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_folder}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{folder}}');
 		$this->folderid = intval($sql->getOne($sql))+1;
 
-		$sql = $db->sql('INSERT INTO {t_folder}'.
+		$sql = $db->sql('INSERT INTO {{folder}}'.
 		               ' (id,objectid)'.
 		               ' VALUES( {folderid},{objectid} )' );
 		$sql->setInt   ('folderid'    ,$this->folderid );
@@ -69,7 +69,7 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid IS NULL'.
 		               '    AND is_folder=1'.
 		               '    AND projectid={projectid}' );
@@ -94,7 +94,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT COUNT(*) FROM {t_object}'.'  WHERE parentid={objectid} AND filename={filename}');
+		$sql = $db->sql('SELECT COUNT(*) FROM {{object}}'.'  WHERE parentid={objectid} AND filename={filename}');
 
 		if	( intval($this->objectid)== 0 )
 			$sql->setNull('objectid');
@@ -111,7 +111,7 @@ class Folder extends Object
 	{
 //		$db = db_connection();
 //
-//		$sql = $db->sql('SELECT * FROM {t_folder} WHERE objectid={objectid}');
+//		$sql = $db->sql('SELECT * FROM {{folder}} WHERE objectid={objectid}');
 //		$sql->setInt('objectid',$this->objectid);
 //
 //		$row = $sql->getRow( $sql );
@@ -134,7 +134,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('UPDATE {t_folder} '.
+		$sql = $db->sql('UPDATE {{folder}} '.
 		               '  SET orderid={orderid}'.
 		               '  WHERE id={folderid}');
 		$sql->setInt('folderid',$this->folderid);
@@ -150,7 +150,7 @@ class Folder extends Object
 //		global $SESS;
 //		$db = db_connection();
 //		
-//		$sql = $db->sql('SELECT id FROM {t_folder}'.
+//		$sql = $db->sql('SELECT id FROM {{folder}}'.
 //		               '  WHERE parentid={folderid}'.
 //		               '    AND projectid={projectid}'.
 //		               '  ORDER BY orderid ASC' );
@@ -166,7 +166,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt('objectid' ,$this->objectid  );
@@ -184,10 +184,10 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT {t_object}.*,{t_name}.name,{t_name}.descr'.
-		               '  FROM {t_object}'.
-		               ' LEFT JOIN {t_name} '.
-		               '   ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
+		$sql = $db->sql('SELECT {{object}}.*,{{name}}.name,{{name}}.descr'.
+		               '  FROM {{object}}'.
+		               ' LEFT JOIN {{name}} '.
+		               '   ON {{object}}.id={{name}}.objectid AND {{name}}.languageid={languageid} '.
 		               '  WHERE parentid={objectid}'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt('languageid',$this->languageid );
@@ -211,7 +211,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
 		               '  ORDER BY is_link,is_page,is_file,is_folder,orderid ASC' );
 		$sql->setInt('projectid',$this->projectid );
@@ -226,10 +226,10 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT {t_object}.id FROM {t_object}'.
-		               '  LEFT JOIN {t_name} ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
+		$sql = $db->sql('SELECT {{object}}.id FROM {{object}}'.
+		               '  LEFT JOIN {{name}} ON {{object}}.id={{name}}.objectid AND {{name}}.languageid={languageid} '.
                        ' WHERE parentid={objectid}'.
-                       ' ORDER BY {t_name}.name,{t_object}.filename ASC');
+                       ' ORDER BY {{name}}.name,{{object}}.filename ASC');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
 		return( $sql->getCol( $sql ) );
@@ -241,7 +241,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
 		               '  ORDER BY lastchange_date,orderid ASC' );
 		$sql->setInt('projectid',$this->projectid );
@@ -293,7 +293,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
 		               '    AND filename={filename}' );
 		$sql->setInt   ('objectid' ,$this->objectid );
@@ -318,7 +318,7 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE projectid={projectid}'.
 		               '    AND (    is_folder={is_folder}' .
 		               '          OR is_file  ={is_file}' .
@@ -351,7 +351,7 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid IS NULL'.
 		               '    AND projectid={projectid}' );
 
@@ -368,7 +368,7 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE is_folder=1'.
 		               '    and id != {objectid} '.
 		               '    AND projectid={projectid}' );
@@ -384,7 +384,7 @@ class Folder extends Object
 		global $SESS;
 		$db = db_connection();
 		
-		$sql = $db->sql('SELECT id FROM {t_object}'.
+		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE is_folder=1'.
 		               '    AND projectid={projectid}' );
 		               
@@ -403,7 +403,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND is_page=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
@@ -421,7 +421,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
 		               '    AND (is_page=1)'.
 		               '  ORDER BY orderid ASC' );
@@ -447,7 +447,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
 		               '    AND (is_page=1 OR is_link=1)'.
 		               '  ORDER BY orderid ASC' );
@@ -468,7 +468,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
 		               '    AND (is_page=1 OR is_link=1)'.
 		               '  ORDER BY orderid DESC' );
@@ -489,7 +489,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND is_file=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
@@ -508,7 +508,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id,filename FROM {t_object} '.
+		$sql = $db->sql('SELECT id,filename FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND is_file=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
@@ -521,7 +521,7 @@ class Folder extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND is_link=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
@@ -638,8 +638,8 @@ class Folder extends Object
 			$sql = $db->sql( <<<SQL
 			
 SELECT parentid,id,filename
-  FROM {t_object}
- WHERE {t_object}.id={parentid}
+  FROM {{object}}
+ WHERE {{object}}.id={parentid}
 
 SQL
  );
@@ -673,11 +673,11 @@ SQL
  		{
 			$sql = $db->sql( <<<SQL
 			
-SELECT {t_object}.parentid,{t_object}.id,{t_object}.filename,{t_name}.name FROM {t_object}
-  LEFT JOIN {t_name}
-         ON {t_object}.id = {t_name}.objectid
-        AND {t_name}.languageid = {languageid}  
- WHERE {t_object}.id={parentid}
+SELECT {{object}}.parentid,{{object}}.id,{{object}}.filename,{{name}}.name FROM {{object}}
+  LEFT JOIN {{name}}
+         ON {{object}}.id = {{name}}.objectid
+        AND {{name}}.languageid = {languageid}  
+ WHERE {{object}}.id={parentid}
 
 SQL
  );
@@ -707,7 +707,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id FROM {t_object} '.
+		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND is_folder=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
@@ -723,7 +723,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT id,filename FROM {t_object} '.
+		$sql = $db->sql('SELECT id,filename FROM {{object}} '.
 		               '  WHERE parentid={objectid} AND is_folder=1'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
@@ -774,13 +774,13 @@ SQL
 		// Nur loeschen, wenn es keine Unterelemente gibt
 		if	( count( $this->getObjectIds() ) == 0 )
 		{
-			$sql = $db->sql( 'UPDATE {t_element} '.
+			$sql = $db->sql( 'UPDATE {{element}} '.
 			                '  SET folderobjectid=NULL '.
 			                '  WHERE folderobjectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
 			$sql->query( $sql );
 	
-			$sql = $db->sql( 'DELETE FROM {t_folder} '.
+			$sql = $db->sql( 'DELETE FROM {{folder}} '.
 			                '  WHERE objectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
 			$sql->query( $sql );
@@ -862,26 +862,26 @@ SQL
 		$db = db_connection();
 	
 		$sql = $db->sql( <<<SQL
-		SELECT {t_object}.id       as objectid,
-		       {t_object}.lastchange_date as lastchange_date,
-		       {t_object}.filename as filename,
-		       {t_object}.is_folder as is_folder,
-		       {t_object}.is_file  as is_file,
-		       {t_object}.is_link  as is_link,
-		       {t_object}.is_page  as is_page,
-		       {t_name}.name       as name,
-		       {t_user}.name       as username,
-		       {t_user}.id         as userid,
-		       {t_user}.mail       as usermail,
-		       {t_user}.fullname   as userfullname
-		  FROM {t_object}
-		  LEFT JOIN {t_name}
-		         ON {t_name}.objectid = {t_object}.id
-				AND {t_name}.languageid = {languageid}
-		  LEFT JOIN {t_user}
-		         ON {t_user}.id = {t_object}.lastchange_userid
-			  WHERE {t_object}.parentid = {folderid}
-		   ORDER BY {t_object}.lastchange_date DESC
+		SELECT {{object}}.id       as objectid,
+		       {{object}}.lastchange_date as lastchange_date,
+		       {{object}}.filename as filename,
+		       {{object}}.is_folder as is_folder,
+		       {{object}}.is_file  as is_file,
+		       {{object}}.is_link  as is_link,
+		       {{object}}.is_page  as is_page,
+		       {{name}}.name       as name,
+		       {{user}}.name       as username,
+		       {{user}}.id         as userid,
+		       {{user}}.mail       as usermail,
+		       {{user}}.fullname   as userfullname
+		  FROM {{object}}
+		  LEFT JOIN {{name}}
+		         ON {{name}}.objectid = {{object}}.id
+				AND {{name}}.languageid = {languageid}
+		  LEFT JOIN {{user}}
+		         ON {{user}}.id = {{object}}.lastchange_userid
+			  WHERE {{object}}.parentid = {folderid}
+		   ORDER BY {{object}}.lastchange_date DESC
 SQL
 		);
 	

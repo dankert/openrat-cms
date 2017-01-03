@@ -87,7 +87,7 @@ class Template
 		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id,name FROM {t_template}'.
+		$sql = $db->sql( 'SELECT id,name FROM {{template}}'.
 		                ' WHERE projectid={projectid}'.
 		                ' ORDER BY name ASC '  );
 		if	( isset($this) && isset($this->projectid) )
@@ -110,7 +110,7 @@ class Template
 		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT * FROM {t_template}'.
+		$sql = $db->sql( 'SELECT * FROM {{template}}'.
 		                ' WHERE id={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 		$row = $sql->getRow( $sql );
@@ -121,7 +121,7 @@ class Template
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
 
-		$sql = $db->sql( 'SELECT * FROM {t_templatemodel}'.
+		$sql = $db->sql( 'SELECT * FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}'.
 		                '   AND projectmodelid={modelid}' );
 		$sql->setInt( 'templateid',$this->templateid );
@@ -152,14 +152,14 @@ class Template
 
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {t_template}'.
+		$sql = $db->sql( 'UPDATE {{template}}'.
 		                '  SET name={name}'.
 		                '  WHERE id={templateid}' );
 		$sql->setString( 'name'      ,$this->name       );
 		$sql->setInt   ( 'templateid',$this->templateid );
 		$sql->query( $sql );
 
-		$sql = $db->sql( 'SELECT COUNT(*) FROM {t_templatemodel}'.
+		$sql = $db->sql( 'SELECT COUNT(*) FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}'.
 		                '   AND projectmodelid={modelid}' );
 		$sql->setInt   ( 'templateid'    ,$this->templateid     );
@@ -168,7 +168,7 @@ class Template
 		if	( intval($sql->getOne($sql)) > 0 )
 		{
 			// Vorlagen-Quelltext existiert für diese Varianten schon.
-			$sql = $db->sql( 'UPDATE {t_templatemodel}'.
+			$sql = $db->sql( 'UPDATE {{templatemodel}}'.
 			                '  SET extension={extension},'.
 			                '      text={src} '.
 			                ' WHERE templateid={templateid}'.
@@ -177,10 +177,10 @@ class Template
 		else
 		{
 			// Vorlagen-Quelltext wird für diese Varianten neu angelegt.
-			$sql = $db->sql('SELECT MAX(id) FROM {t_templatemodel}');
+			$sql = $db->sql('SELECT MAX(id) FROM {{templatemodel}}');
 			$nextid = intval($sql->getOne($sql))+1;
 
-			$sql = $db->sql( 'INSERT INTO {t_templatemodel}'.
+			$sql = $db->sql( 'INSERT INTO {{templatemodel}}'.
 			                '        (id,templateid,projectmodelid,extension,text) '.
 			                ' VALUES ({id},{templateid},{modelid},{extension},{src}) ');
 			$sql->setInt   ( 'id',$nextid         );
@@ -204,7 +204,7 @@ class Template
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT templateid FROM {t_templatemodel}'.
+		$sql = $db->sql( 'SELECT templateid FROM {{templatemodel}}'.
 		                ' WHERE text LIKE {text} '.
 		                '   AND projectmodelid={modelid}' );
 
@@ -224,7 +224,7 @@ class Template
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id FROM {t_element}'.
+		$sql = $db->sql( 'SELECT id FROM {{element}}'.
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
@@ -243,7 +243,7 @@ class Template
 		$list = array();
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT * FROM {t_element}'.
+		$sql = $db->sql( 'SELECT * FROM {{element}}'.
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
@@ -274,7 +274,7 @@ class Template
 		$db = db_connection();
 
 		$sql = $db->sql( <<<SQL
-SELECT * FROM {t_element}
+SELECT * FROM {{element}}
   WHERE templateid={templateid}
     AND writable=1
     AND type NOT IN ($readonlyList)
@@ -304,7 +304,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id,name FROM {t_element}'.
+		$sql = $db->sql( 'SELECT id,name FROM {{element}}'.
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
@@ -341,10 +341,10 @@ SQL
 
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_template}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{template}}');
 		$this->templateid = intval($sql->getOne($sql))+1;
 
-		$sql = $db->sql( 'INSERT INTO {t_template}'.
+		$sql = $db->sql( 'INSERT INTO {{template}}'.
 		                ' (id,name,projectid)'.
 		                ' VALUES({templateid},{name},{projectid})' );
 		$sql->setInt   ('templateid',$this->templateid   );
@@ -372,7 +372,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT objectid FROM {t_page}'.
+		$sql = $db->sql( 'SELECT objectid FROM {{page}}'.
 		                '  WHERE templateid={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 
@@ -395,12 +395,12 @@ SQL
 			$element->delete();
 		}
 
-		$sql = $db->sql( 'DELETE FROM {t_templatemodel}'.
+		$sql = $db->sql( 'DELETE FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 		$sql->query( $sql );
 
-		$sql = $db->sql( 'DELETE FROM {t_template}'.
+		$sql = $db->sql( 'DELETE FROM {{template}}'.
 		                ' WHERE id={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 		$sql->query( $sql );

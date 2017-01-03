@@ -59,6 +59,11 @@ class Statement
 	 */
 	public function Statement( $sql, $client,$dbid )
 	{
+		// Tabellen-Praefixe ergaenzen.
+		global $conf;
+		$sql = str_replace('{{',$conf['database'][$dbid]['prefix'],$sql);
+		$sql = str_replace('}}',$conf['database'][$dbid]['suffix'],$sql);
+		
 		$this->client = $client;
 		$this->sql = new Sql( $sql,$dbid );
 	}
@@ -73,7 +78,7 @@ class Statement
 	 */
 	public function query( )
 	{
-		$this->execute();
+		return $this->execute();
 	}
 	
 	

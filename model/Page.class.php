@@ -82,7 +82,7 @@ class Page extends Object
 	{
 		$db = db_connection();
 
-		$sql  = $db->sql( 'SELECT objectid FROM {t_page} '.
+		$sql  = $db->sql( 'SELECT objectid FROM {{page}} '.
 		                 '  WHERE id={pageid}' );
 		$sql->setInt('pageid',$pageid);
 
@@ -100,7 +100,7 @@ class Page extends Object
 	{
 		$db = db_connection();
 
-		$sql  = $db->sql( 'SELECT id FROM {t_page} '.
+		$sql  = $db->sql( 'SELECT id FROM {{page}} '.
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$objectid);
 
@@ -348,10 +348,10 @@ class Page extends Object
 
 		$this->objectAdd(); // Hinzuf?gen von Objekt (dabei wird Objekt-ID ermittelt)
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_page}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{page}}');
 		$this->pageid = intval($sql->getOne($sql))+1;
 
-		$sql = $db->sql('INSERT INTO {t_page}'.
+		$sql = $db->sql('INSERT INTO {{page}}'.
 		               ' (id,objectid,templateid)'.
 		               ' VALUES( {pageid},{objectid},{templateid} )' );
 		$sql->setInt   ('pageid'    ,$this->pageid     );
@@ -369,7 +369,7 @@ class Page extends Object
 	{
 		$db = db_connection();
 
-		$sql  = $db->sql( 'SELECT * FROM {t_page} '.
+		$sql  = $db->sql( 'SELECT * FROM {{page}} '.
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
 		$row = $sql->getRow( $sql );
@@ -385,12 +385,12 @@ class Page extends Object
 	{
 		global $db;
 
-		$sql = $db->sql( 'DELETE FROM {t_value} '.
+		$sql = $db->sql( 'DELETE FROM {{value}} '.
 		                '  WHERE pageid={pageid}' );
 		$sql->setInt('pageid',$this->pageid);
 		$sql->query( $sql );
 
-		$sql = $db->sql( 'DELETE FROM {t_page} '.
+		$sql = $db->sql( 'DELETE FROM {{page}} '.
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
 		$sql->query( $sql );
@@ -438,7 +438,7 @@ class Page extends Object
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('UPDATE {t_page}'.
+		$sql = $db->sql('UPDATE {{page}}'.
 		               '  SET templateid ={templateid}'.
 		               '  WHERE objectid={objectid}' );
 		$sql->setInt('templateid' ,$this->templateid);
@@ -459,7 +459,7 @@ class Page extends Object
 		// Template-id dieser Seite aendern
 		$this->templateid = $newTemplateId;
 
-		$sql = $db->sql('UPDATE {t_page}'.
+		$sql = $db->sql('UPDATE {{page}}'.
 		               '  SET templateid ={templateid}'.
 		               '  WHERE objectid={objectid}' );
 		$sql->setInt('templateid' ,$this->templateid);
@@ -475,7 +475,7 @@ class Page extends Object
 			      intval($replaceElementMap[$oldElementId]) < 1 )
 			{
 				Logger::debug( 'deleting value of elementid '.$oldElementId );
-				$sql = $db->sql('DELETE FROM {t_value}'.
+				$sql = $db->sql('DELETE FROM {{value}}'.
 				               '  WHERE pageid={pageid}'.
 				               '    AND elementid={elementid}' );
 				$sql->setInt('pageid'   ,$this->pageid);
@@ -488,7 +488,7 @@ class Page extends Object
 				$newElementId = intval($replaceElementMap[$oldElementId]);
 
 				Logger::debug( 'updating elementid '.$oldElementId.' -> '.$newElementId );
-				$sql = $db->sql('UPDATE {t_value}'.
+				$sql = $db->sql('UPDATE {{value}}'.
 				               '  SET elementid ={newelementid}'.
 				               '  WHERE pageid   ={pageid}'.
 				               '    AND elementid={oldelementid}' );
@@ -567,7 +567,7 @@ class Page extends Object
 //		
 //		$db = db_connection();
 //
-//		$sql  = $db->sql( 'SELECT COUNT(*) FROM {t_language}'.
+//		$sql  = $db->sql( 'SELECT COUNT(*) FROM {{language}}'.
 //		                 ' WHERE projectid={projectid}' );
 //		$sql->setInt('projectid',$SESS['projectid']);
 //
@@ -578,7 +578,7 @@ class Page extends Object
 //		}
 //		else
 //		{
-//			$sql = $db->sql( 'SELECT isocode FROM {t_language}'.
+//			$sql = $db->sql( 'SELECT isocode FROM {{language}}'.
 //			                ' WHERE id={languageid}' );
 //			$sql->setInt('languageid',$this->languageid);
 //			$isocode = $sql->getOne( $sql );

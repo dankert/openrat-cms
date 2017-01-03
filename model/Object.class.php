@@ -200,7 +200,7 @@ class Object
 			$projectid = $this->projectid;
 		}
 
-		$sql = $db->sql('SELECT id from {t_object} '.
+		$sql = $db->sql('SELECT id from {{object}} '.
 		               '  WHERE projectid={projectid}');
 		$sql->setInt('projectid', $projectid);
 
@@ -263,13 +263,13 @@ class Object
 				
 				$sqlGroupClause = $user->getGroupClause();
 				$sql = $db->sql( <<<SQL
-SELECT {t_acl}.* FROM {t_acl}
-	                 LEFT JOIN {t_object}
-	                        ON {t_object}.id={t_acl}.objectid
+SELECT {{acl}}.* FROM {{acl}}
+	                 LEFT JOIN {{object}}
+	                        ON {{object}}.id={{acl}}.objectid
 	                 WHERE objectid={objectid}
 	                   AND ( languageid={languageid} OR languageid IS NULL )
-	                   AND ( {t_acl}.userid={userid} OR $sqlGroupClause
-			                                         OR ({t_acl}.userid IS NULL AND {t_acl}.groupid IS NULL) )
+	                   AND ( {{acl}}.userid={userid} OR $sqlGroupClause
+			                                         OR ({{acl}}.userid IS NULL AND {{acl}}.groupid IS NULL) )
 SQL
 );
 	
@@ -458,7 +458,7 @@ SQL
 		if	( !is_numeric($objectid) || $objectid <= 0 )
 			return false; // Objekt-Id ung�ltig.
 			
-		$sql = $db->sql('SELECT 1 FROM {t_object} '.
+		$sql = $db->sql('SELECT 1 FROM {{object}} '.
 		               ' WHERE id={objectid}');
 		$sql->setInt('objectid'  , $objectid  );
 
@@ -477,22 +477,22 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT {t_object}.*,' .
-		               '       {t_name}.name,{t_name}.descr,'.
+		$sql = $db->sql('SELECT {{object}}.*,' .
+		               '       {{name}}.name,{{name}}.descr,'.
 		               '       lastchangeuser.name     as lastchange_username,     '.
 		               '       lastchangeuser.fullname as lastchange_userfullname, '.
 		               '       lastchangeuser.mail     as lastchange_usermail,     '.
 		               '       createuser.name         as create_username,     '.
 		               '       createuser.fullname     as create_userfullname, '.
 		               '       createuser.mail         as create_usermail      '.
-		               ' FROM {t_object}'.
-		               ' LEFT JOIN {t_name} '.
-		               '        ON {t_object}.id={t_name}.objectid AND {t_name}.languageid={languageid} '.
-		               ' LEFT JOIN {t_user} as lastchangeuser '.
-		               '        ON {t_object}.lastchange_userid=lastchangeuser.id '.
-		               ' LEFT JOIN {t_user} as createuser '.
-		               '        ON {t_object}.create_userid=createuser.id '.
-		               ' WHERE {t_object}.id={objectid}');
+		               ' FROM {{object}}'.
+		               ' LEFT JOIN {{name}} '.
+		               '        ON {{object}}.id={{name}}.objectid AND {{name}}.languageid={languageid} '.
+		               ' LEFT JOIN {{user}} as lastchangeuser '.
+		               '        ON {{object}}.lastchange_userid=lastchangeuser.id '.
+		               ' LEFT JOIN {{user}} as createuser '.
+		               '        ON {{object}}.create_userid=createuser.id '.
+		               ' WHERE {{object}}.id={objectid}');
 		$sql->setInt('languageid', $this->languageid);
 		$sql->setInt('objectid'  , $this->objectid  );
 
@@ -515,8 +515,8 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT * FROM {t_object}'.
-                       ' WHERE {t_object}.id={objectid}');
+		$sql = $db->sql('SELECT * FROM {{object}}'.
+                       ' WHERE {{object}}.id={objectid}');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$row = $sql->getRow($sql);
 
@@ -633,7 +633,7 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND languageid={languageid}');
+		$sql = $db->sql('SELECT *'.' FROM {{name}}'.' WHERE objectid={objectid}'.'   AND languageid={languageid}');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
 		$res = $sql->query($sql);
@@ -641,7 +641,7 @@ SQL
 		if ($res->numRows() == 0)
 		{
 			// Wenn Name in dieser Sprache nicht vorhanden, dann irgendeinen Namen lesen
-			$sql->setQuery('SELECT *'.' FROM {t_name}'.' WHERE objectid={objectid}'.'   AND name != {blank}');
+			$sql->setQuery('SELECT *'.' FROM {{name}}'.' WHERE objectid={objectid}'.'   AND name != {blank}');
 			$sql->setString('blank', '');
 			$res = $sql->query($sql);
 		}
@@ -666,7 +666,7 @@ SQL
 		$this->checkFilename();
 		
 		$sql = $db->sql( <<<SQL
-UPDATE {t_object} SET 
+UPDATE {{object}} SET 
                       parentid          = {parentid},
 		              lastchange_date   = {time}    ,
 		              lastchange_userid = {userid}  ,
@@ -711,7 +711,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('UPDATE {t_object} SET '.
+		$sql = $db->sql('UPDATE {{object}} SET '.
 		               '  lastchange_date   = {time}  ,'.
 		               '  lastchange_userid = {userid} '.
 		               ' WHERE id={objectid}');
@@ -733,7 +733,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql('UPDATE {t_object} SET '.
+		$sql = $db->sql('UPDATE {{object}} SET '.
 				'  create_date   = {time}  '.
 				' WHERE id={objectid}');
 		
@@ -756,7 +756,7 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql(<<<SQL
-SELECT COUNT(*) FROM {t_name}  WHERE objectid  ={objectid} AND languageid={languageid}
+SELECT COUNT(*) FROM {{name}}  WHERE objectid  ={objectid} AND languageid={languageid}
 SQL
 );
 		$sql->setInt( 'objectid'  , $this->objectid   );
@@ -766,7 +766,7 @@ SQL
 		if ($count > 0)
 		{
 			$sql = $db->sql( <<<SQL
-			UPDATE {t_name} SET 
+			UPDATE {{name}} SET 
 			                 name  = {name},
 			                 descr = {desc}
 			                WHERE objectid  ={objectid}
@@ -781,10 +781,10 @@ SQL
 		}
 		else
 		{
-			$sql = $db->sql('SELECT MAX(id) FROM {t_name}');
+			$sql = $db->sql('SELECT MAX(id) FROM {{name}}');
 			$nameid = intval($sql->getOne($sql))+1;
 
-			$sql->setQuery('INSERT INTO {t_name}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
+			$sql->setQuery('INSERT INTO {{name}}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
 			$sql->setInt   ('objectid'  , $this->objectid    );
 			$sql->setInt   ('languageid', $this->languageid  );
 			$sql->setInt   ('nameid', $nameid    );
@@ -803,19 +803,19 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {t_element} '.
+		$sql = $db->sql( 'UPDATE {{element}} '.
 		                '  SET default_objectid=NULL '.
 		                '  WHERE default_objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
 		$sql->query( $sql );
 
-		$sql = $db->sql( 'UPDATE {t_value} '.
+		$sql = $db->sql( 'UPDATE {{value}} '.
 		                '  SET linkobjectid=NULL '.
 		                '  WHERE linkobjectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
 		$sql->query( $sql );
 
-		$sql = $db->sql( 'UPDATE {t_link} '.
+		$sql = $db->sql( 'UPDATE {{link}} '.
 		                '  SET link_objectid=NULL '.
 		                '  WHERE link_objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
@@ -823,7 +823,7 @@ SQL
 
 
 		// Objekt-Namen l?schen
-		$sql = $db->sql('DELETE FROM {t_name} WHERE objectid={objectid}');
+		$sql = $db->sql('DELETE FROM {{name}} WHERE objectid={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$sql->query($sql);
 
@@ -831,7 +831,7 @@ SQL
 		$this->deleteAllACLs();
 
 		// Objekt l?schen
-		$sql = $db->sql('DELETE FROM {t_object} WHERE id={objectid}');
+		$sql = $db->sql('DELETE FROM {{object}} WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$sql->query($sql);
 	}
@@ -846,11 +846,11 @@ SQL
 		$db = db_connection();
 
 		// Neue Objekt-Id bestimmen
-		$sql = $db->sql('SELECT MAX(id) FROM {t_object}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{object}}');
 		$this->objectid = intval($sql->getOne($sql))+1;
 
 		$this->checkFilename();
-		$sql = $db->sql('INSERT INTO {t_object}'.
+		$sql = $db->sql('INSERT INTO {{object}}'.
 		               ' (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,is_folder,is_file,is_page,is_link)'.
 		               ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{userid},{time},{userid},{is_folder},{is_file},{is_page},{is_link} )');
 
@@ -943,7 +943,7 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql( <<<SQL
-SELECT COUNT(*) FROM {t_object}
+SELECT COUNT(*) FROM {{object}}
  WHERE parentid={parentid} AND filename={filename}
    AND NOT id = {objectid}
 SQL
@@ -975,7 +975,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT id FROM {t_acl} '.
+		$sql = $db->sql( 'SELECT id FROM {{acl}} '.
 		                '  WHERE objectid={objectid}'.
 		                '    AND ( languageid IS NULL OR '.
 		                '          languageid = {languageid} )'.
@@ -991,7 +991,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT id FROM {t_acl} '.
+		$sql = $db->sql( 'SELECT id FROM {{acl}} '.
 		                '  WHERE objectid={objectid}'.
 		                '  ORDER BY userid,groupid ASC' );
 		$sql->setInt('objectid'  ,$this->objectid);
@@ -1016,7 +1016,7 @@ SQL
 		
 		foreach( $folder->parentObjectFileNames(true,true) as $oid=>$filename )
 		{
-			$sql = $db->sql( 'SELECT id FROM {t_acl} '.
+			$sql = $db->sql( 'SELECT id FROM {{acl}} '.
 			                '  WHERE objectid={objectid}'.
 			                '    AND is_transmit = 1'.
 			                '    AND ( languageid IS NULL OR '.
@@ -1047,7 +1047,7 @@ SQL
 		
 		foreach( $folder->parentObjectFileNames(true,true) as $oid=>$filename )
 		{
-			$sql = $db->sql( 'SELECT id FROM {t_acl} '.
+			$sql = $db->sql( 'SELECT id FROM {{acl}} '.
 			                '  WHERE objectid={objectid}'.
 			                '    AND is_transmit = 1'.
 			                '  ORDER BY userid,groupid ASC' );
@@ -1161,7 +1161,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('UPDATE {t_object} '.'  SET orderid={orderid}'.'  WHERE id={objectid}');
+		$sql = $db->sql('UPDATE {{object}} '.'  SET orderid={orderid}'.'  WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$sql->setInt('orderid', $orderid);
 
@@ -1179,7 +1179,7 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('UPDATE {t_object} '.'  SET parentid={parentid}'.'  WHERE id={objectid}');
+		$sql = $db->sql('UPDATE {{object}} '.'  SET parentid={parentid}'.'  WHERE id={objectid}');
 		$sql->setInt('objectid', $this->objectid);
 		$sql->setInt('parentid', $parentid);
 
@@ -1191,9 +1191,9 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT {t_page}.objectid FROM {t_value}'.
-		                '  LEFT JOIN {t_page} '.
-		                '    ON {t_value}.pageid = {t_page}.id '.
+		$sql = $db->sql( 'SELECT {{page}}.objectid FROM {{value}}'.
+		                '  LEFT JOIN {{page}} '.
+		                '    ON {{value}}.pageid = {{page}}.id '.
 		                '  WHERE linkobjectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 
@@ -1210,7 +1210,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT id FROM {{object}} '.
 		                ' WHERE filename LIKE {filename}'.
 		                '   AND projectid={projectid}'.
 		                '  ORDER BY lastchange_date DESC' );
@@ -1230,12 +1230,12 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT {t_object}.id FROM {t_object} '.
-		                ' LEFT JOIN {t_name} '.
-		                '   ON {t_object}.id={t_name}.objectid'.
-		                ' WHERE {t_name}.name LIKE {name}'.
-		                '   AND {t_name}.languageid={languageid}'.
-		                '   AND {t_object}.projectid={projectid}'.
+		$sql = $db->sql( 'SELECT {{object}}.id FROM {{object}} '.
+		                ' LEFT JOIN {{name}} '.
+		                '   ON {{object}}.id={{name}}.objectid'.
+		                ' WHERE {{name}}.name LIKE {name}'.
+		                '   AND {{name}}.languageid={languageid}'.
+		                '   AND {{object}}.projectid={projectid}'.
 		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid' ,$this->projectid );
 		$sql->setInt   ( 'languageid',$this->languageid );
@@ -1254,12 +1254,12 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT {t_object}.id FROM {t_object} '.
-		                ' LEFT JOIN {t_name} '.
-		                '   ON {t_object}.id={t_name}.objectid'.
-		                ' WHERE {t_name}.descr LIKE {desc}'.
-		                '   AND {t_name}.languageid={languageid}'.
-		                '   AND {t_object}.projectid={projectid}'.
+		$sql = $db->sql( 'SELECT {{object}}.id FROM {{object}} '.
+		                ' LEFT JOIN {{name}} '.
+		                '   ON {{object}}.id={{name}}.objectid'.
+		                ' WHERE {{name}}.descr LIKE {desc}'.
+		                '   AND {{name}}.languageid={languageid}'.
+		                '   AND {{object}}.projectid={projectid}'.
 		                '  ORDER BY lastchange_date DESC' );
 		$sql->setInt   ( 'projectid' ,$this->projectid );
 		$sql->setInt   ( 'languageid',$this->languageid );
@@ -1278,7 +1278,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT id FROM {{object}} '.
 		                ' WHERE create_userid={userid}'.
 		                '   AND projectid={projectid}'.
 		                '  ORDER BY lastchange_date DESC' );
@@ -1298,7 +1298,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT id FROM {{object}} '.
 		                ' WHERE lastchange_userid={userid}'.
 		                '   AND projectid={projectid}'.
 		                '  ORDER BY lastchange_date DESC' );
@@ -1318,7 +1318,7 @@ SQL
 	{
 		$db = db_connection();
 		
-		$sql = $db->sql( 'SELECT id FROM {t_object} '.
+		$sql = $db->sql( 'SELECT id FROM {{object}} '.
 		                ' WHERE id={objectid}'.
 		                '   AND projectid={projectid}' );
 		$sql->setInt   ( 'projectid' ,$this->projectid );
@@ -1337,7 +1337,7 @@ SQL
 	{
 		$db = db_connection();
 	
-		$sql = $db->sql( 'SELECT objectid FROM {t_link} '.
+		$sql = $db->sql( 'SELECT objectid FROM {{link}} '.
 				' WHERE link_objectid={myid}' );
 		$sql->setInt   ( 'myid'   ,$this->objectid );
 	

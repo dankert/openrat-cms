@@ -55,7 +55,7 @@ class Language
 	{
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT 1 FROM {t_language} '.
+		$sql = $db->sql('SELECT 1 FROM {{language}} '.
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 
@@ -70,7 +70,7 @@ class Language
 		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql( "SELECT id,name FROM {t_language} ".
+		$sql = $db->sql( "SELECT id,name FROM {{language}} ".
 		                "   WHERE projectid = {projectid} ".
 		                "   ORDER BY name" );
 
@@ -95,7 +95,7 @@ class Language
 		$db = db_connection();
 
 		$sql = $db->sql( <<<SQL
-			SELECT count(*) FROM {t_language} 
+			SELECT count(*) FROM {{language}} 
 	         WHERE projectid = {projectid}
 SQL
 );
@@ -117,7 +117,7 @@ SQL
 	{
 		$db = Session::getDatabase();
 
-		$sql = $db->sql( 'SELECT * FROM {t_language}'.
+		$sql = $db->sql( 'SELECT * FROM {{language}}'.
 		                ' WHERE id={languageid}' );
 		$sql->setInt( 'languageid',$this->languageid );
 
@@ -140,7 +140,7 @@ SQL
 		$db = db_connection();
 
 		// Gruppe speichern		
-		$sql = $db->sql( 'UPDATE {t_language} '.
+		$sql = $db->sql( 'UPDATE {{language}} '.
 		                'SET name      = {name}, '.
 		                '    isocode   = {isocode} '.
 		                'WHERE id={languageid}' );
@@ -184,11 +184,11 @@ SQL
 			$this->name    = $codes[ $isocode ];
 		}
 
-		$sql = $db->sql('SELECT MAX(id) FROM {t_language}');
+		$sql = $db->sql('SELECT MAX(id) FROM {{language}}');
 		$this->languageid = intval($sql->getOne($sql))+1;
 
 		// Sprache hinzuf?gen
-		$sql = $db->sql( 'INSERT INTO {t_language} '.
+		$sql = $db->sql( 'INSERT INTO {{language}} '.
 		                '(id,projectid,name,isocode,is_default) VALUES( {languageid},{projectid},{name},{isocode},0 )');
 		$sql->setInt   ('languageid',$this->languageid );
 		$sql->setInt   ('projectid' ,$this->projectid  );
@@ -207,14 +207,14 @@ SQL
 		$db = db_connection();
 
 		// Zuerst alle auf nicht-Standard setzen
-		$sql = $db->sql( 'UPDATE {t_language} '.
+		$sql = $db->sql( 'UPDATE {{language}} '.
 		                '  SET is_default = 0 '.
 		                '  WHERE projectid={projectid}' );
 		$sql->setInt('projectid',$this->projectid );
 		$sql->query( $sql );
 	
 		// Jetzt die gew?nschte Sprachvariante auf Standard setzen
-		$sql = $db->sql( 'UPDATE {t_language} '.
+		$sql = $db->sql( 'UPDATE {{language}} '.
 		                '  SET is_default = 1 '.
 		                '  WHERE id={languageid}' );
 		$sql->setInt('languageid',$this->languageid );
@@ -227,7 +227,7 @@ SQL
 		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id FROM {t_language} '.
+		$sql = $db->sql( 'SELECT id FROM {{language}} '.
 		                '  WHERE projectid={projectid}'.
 		                '   ORDER BY is_default DESC' );
 
@@ -249,7 +249,7 @@ SQL
 		$db = db_connection();
 
 		// Sprache l?schen
-//		$sql = $db->sql( 'SELECT COUNT(*) FROM {t_language} WHERE projectid={projectid}' );
+//		$sql = $db->sql( 'SELECT COUNT(*) FROM {{language}} WHERE projectid={projectid}' );
 //		$sql->setInt( 'projectid',$this->projectid );
 //		$count = $sql->getOne( $sql );
 //		
@@ -257,26 +257,26 @@ SQL
 //		if   ( $count >= 2 )
 //		{
 			// Inhalte mit dieser Sprache l?schen
-			$sql = $db->sql( 'DELETE FROM {t_value} WHERE languageid={languageid}' );
+			$sql = $db->sql( 'DELETE FROM {{value}} WHERE languageid={languageid}' );
 			$sql->setInt( 'languageid',$this->languageid );
 			$sql->query( $sql );
 
 			// Inhalte mit dieser Sprache l?schen
-			$sql = $db->sql( 'DELETE FROM {t_name} WHERE languageid={languageid}' );
+			$sql = $db->sql( 'DELETE FROM {{name}} WHERE languageid={languageid}' );
 			$sql->setInt( 'languageid',$this->languageid );
 			$sql->query( $sql );
 
 			// Sprache l?schen
-			$sql = $db->sql( 'DELETE FROM {t_language} WHERE id={languageid}' );
+			$sql = $db->sql( 'DELETE FROM {{language}} WHERE id={languageid}' );
 			$sql->setInt( 'languageid',$this->languageid );
 			$sql->query( $sql );
 
 			// Andere Sprache auf "Default" setzen
-			$sql = $db->sql( 'SELECT id FROM {t_language} WHERE projectid={projectid}' );
+			$sql = $db->sql( 'SELECT id FROM {{language}} WHERE projectid={projectid}' );
 			$sql->setInt( 'projectid',$this->projectid );
 			$new_default_languageid = $sql->getOne( $sql );
 
-			$sql = $db->sql( 'UPDATE {t_language} SET is_default=1 WHERE id={languageid}' );
+			$sql = $db->sql( 'UPDATE {{language}} SET is_default=1 WHERE id={languageid}' );
 			$sql->setInt( 'languageid',$new_default_languageid );
 			$sql->query( $sql );
 //		}
