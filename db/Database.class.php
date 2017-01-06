@@ -1,33 +1,29 @@
 <?php
+// OpenRat Content Management System
+// Copyright (C) 2002-2006 Jan Dankert, jandankert@jandankert.de
 //
-// +----------------------------------------------------------------------+
-// | PHP version 4.0                                                      |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2001 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.02 of the PHP license,      |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/2_02.txt.                                 |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Authors: Stig Bakken <ssb@fast.no>                                   |
-// |          Jan Dankert <phpdb@jandankert.de>                           |
-// +----------------------------------------------------------------------+
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
 //
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-// This is the database abstraction layer. This class was inspired by the
-// PHP-Pear-DB package. Thanks to its developers.
 
 /**
  * Darstellung einer Datenbank-Verbindung.
+ * 
  * Fuer die echten DB-Aufrufe werden die entsprechenden
  * Methoden des passenden Clients aufgerufen.
  * 
- * Diese Klasse stammt urspruenglich aus dem PHP-Pear-DB-Projekt und unterliegt
- * daher auch der PHP-licence.
+ * Diese Klasse stammt urspruenglich aus dem PHP-Pear-DB-Projekt, wurde hier aber intensiv veraendert.
  * 
  * @author Jan Dankert
  * @package openrat.database
@@ -82,32 +78,13 @@ class DB
 	 * Erwartet die Datenbank-Konfiguration als Parameter.
 	 *
 	 * @param Array Konfiguration der Verbindung
-	 * @return Status 'true' wenn Verbindung erfolgreich aufgebaut.
+	 * @param boolean admin Wenn es eine Admin-DB-Verbindung werden soll, die auch DDL ausfuehren darf
 	 */
-	public function DB( $conf,$admin=false )
+	public function DB( $dbconf,$admin=false )
 	{
-		$defaultConf = array( 'prefix'          => '',
-		                      'suffix'          => '',
-		                      'enabled'         => true,
-		                      'comment'         => '',
-		                      'type'            => 'mysqli',
-		                      'user'            => '',
-		                      'password'        => '',
-		                      'host'            => '',
-		                      'database'        => '',
-		                      'base64'          => false,
-		                      'persistent'      => true,
-		                      'charset'         => 'UTF-8',
-		                      'connection_sql'  => '',
-		                      'cmd'             => '',
-		                      'prepare'         => true,
-		                      'transaction'     => true,
-				              'update'          => array(),
-				              'auto_update'     => true
-		                    ); 
+		global $conf;
 		
-		$this->available = false;
-		$this->conf      = $conf + $defaultConf;
+		$this->conf = $dbconf + $conf['database']['defaults']; // linksstehender Operator hat Priorität!
 		
 		if	( $admin )
 		{
@@ -116,8 +93,6 @@ class DB
 				$this->conf = $this->conf['update'] + $this->conf; // linksstehender Operator hat Priorität!
 		}
 		$this->connect();
-		
-		return $this->available;
 	}
 	
 
@@ -166,7 +141,10 @@ class DB
 		if	( ! empty($this->conf['connection_sql']) )
 		{
 			$cmd = $this->conf['connection_sql'];
-			$ok = $this->client->query($cmd);
+			
+			$sql = $this->sql($cmd);
+			
+			$ok = $sql->execute();
 			
 			if	( ! $ok )
 			{
@@ -221,7 +199,7 @@ class DB
 	
 	public function sql( $sql )
 	{
-		return new Statement( $sql,$this->client,$this->id);
+		return new Statement( $sql,$this->client,$this->conf);
 	}
 	
 }

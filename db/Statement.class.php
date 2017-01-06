@@ -1,33 +1,24 @@
 <?php
+// OpenRat Content Management System
+// Copyright (C) 2002-2006 Jan Dankert, jandankert@jandankert.de
 //
-// +----------------------------------------------------------------------+
-// | PHP version 4.0                                                      |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2001 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.02 of the PHP license,      |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/2_02.txt.                                 |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Authors: Stig Bakken <ssb@fast.no>                                   |
-// |          Jan Dankert <phpdb@jandankert.de>                           |
-// +----------------------------------------------------------------------+
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
 //
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-// This is the database abstraction layer. This class was inspired by the
-// PHP-Pear-DB package. Thanks to its developers.
 
 /**
- * Darstellung einer Datenbank-Verbindung.
- * Fuer die echten DB-Aufrufe werden die entsprechenden
- * Methoden des passenden Clients aufgerufen.
- * 
- * Diese Klasse stammt urspruenglich aus dem PHP-Pear-DB-Projekt und unterliegt
- * daher auch der PHP-licence.
+ * Darstellung einer Datenbank-Abfrage.
  * 
  * @author Jan Dankert
  * @package openrat.database
@@ -50,6 +41,13 @@ class Statement
 	 */
 	var $client;
 	
+	
+	/**
+	 * Datenbank-Konfiguration
+	 * @var Array
+	 */
+	var $conf;
+	
 	/**
 	 * Kontruktor.
 	 * Erwartet die Datenbank-Konfiguration als Parameter.
@@ -57,15 +55,22 @@ class Statement
 	 * @param Array Konfiguration der Verbindung
 	 * @return Status 'true' wenn Verbindung erfolgreich aufgebaut.
 	 */
-	public function Statement( $sql, $client,$dbid )
+	public function Statement( $sql, $client,$conf )
 	{
 		// Tabellen-Praefixe ergaenzen.
-		global $conf;
-		$sql = str_replace('{{',$conf['database'][$dbid]['prefix'],$sql);
-		$sql = str_replace('}}',$conf['database'][$dbid]['suffix'],$sql);
-		
+		$this->conf   = $conf;
 		$this->client = $client;
-		$this->sql = new Sql( $sql,$dbid );
+		
+		$sql = str_replace('{{',$conf['prefix'],$sql);
+		$sql = str_replace('}}',$conf['suffix'],$sql);
+		
+		$this->sql = new Sql( $sql );
+		
+		// Vorbereitete Datenbankabfrage ("Prepared Statement")
+		$this->client->clear();
+		
+		// Statement an die Datenbank schicken
+		$this->client->prepare( $this->sql->query,$this->sql->param );
 	}
 	
 
@@ -90,22 +95,12 @@ class Statement
 	 */
 	public function execute( )
 	{
-		// Vorbereitete Datenbankabfrage ("Prepared Statement")
-		$this->client->clear();
-	
-		// Statement an die Datenbank schicken
-		$this->client->prepare( $this->sql->raw,$this->sql->param );
-	
-		// Einzelne Parameter an die Anfrage binden
-		foreach ($this->sql->param as $name=>$unused)
-			$this->client->bind($name,$this->sql->data[$name]);
-	
 		// Ausfuehren...
 		$result = $this->client->query($this->sql);
 	
 		if	( $result === FALSE )
 		{
-			throw new Exception( 'Database error: '.$this->client->error);
+			throw new RuntimeException( 'Database error: '.$this->client->error);
 		}
 	
 		return $result;
@@ -146,14 +141,6 @@ class Statement
 	{
 		$result = $this->query();
 		
-		if	( $result === FALSE )
-		{
-			$this->error = $this->client->error;
-			
-			Logger::warn('Database error: '.$this->error);
-			Http::serverError('Database Error',$this->error);
-		}
-
 		$row = $this->client->fetchRow( $result,0 );
 		$this->client->freeResult($result);
 
@@ -198,8 +185,10 @@ class Statement
 	 * @param Boolean $force_array
 	 * @return Array
 	 */
-	public function &getAssoc( $force_array = false )
+	public function &getAssoc()
 	{
+		$force_array = false;
+		
 		$results = array();
 		$result = $this->query();
 
@@ -210,24 +199,20 @@ class Statement
 			if	( empty($row) )
 				break;
 
+			$keys = array_keys($row);
+			$key1 = $keys[0];
+			$id = $row[$key1];
+				
 			if	( count($row) > 2 || $force_array )
 			{
-				// FIXME: Wird offenbar nie ausgeführt.
-				$row = $res->fetchRow($i);
-
-				$keys = array_keys($row);
-				$key1 = $keys[0];
-
 				unset( $row[$key1] );
-				$results[ $row[$key1] ] = $row;
+				$results[ $id ] = $row;
 			}
 			else
 			{
-				$keys = array_keys($row);
-				$key1 = $keys[0];
 				$key2 = $keys[1];
 
-				$results[ $row[$key1] ] = $row[$key2];
+				$results[ $id ] = $row[$key2];
 			}
 		}
 
@@ -281,7 +266,6 @@ class Statement
 	}
 	
 	
-	
 	/**
 	 * Setzt eine Ganzzahl als Parameter.<br>
 	 *
@@ -290,7 +274,7 @@ class Statement
 	 */
 	function setInt( $name,$value )
 	{
-		$this->sql->setInt($name, $value);
+		$this->client->bind( $name, (int)$value );
 	}
 	
 	
@@ -303,7 +287,7 @@ class Statement
 	 */
 	function setString( $name,$value )
 	{
-		$this->sql->setString($name, $value);
+		$this->client->bind( $name, (string)$value );
 	}
 	
 	
@@ -319,7 +303,8 @@ class Statement
 	{
 		if	( $value )
 			$this->setInt( $name,1 );
-		else	$this->setInt( $name,0 );
+		else
+			$this->setInt( $name,0 );
 	}
 	
 	
@@ -331,7 +316,7 @@ class Statement
 	 */
 	function setNull( $name )
 	{
-		$this->sql->setNull($name);
+		$this->client->bind( $name, null );
 	}
 	
 	

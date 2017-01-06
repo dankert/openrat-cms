@@ -28,12 +28,12 @@ class DbUpdate
 		{
 			if	( $installVersion > 2 )
 			{
-				$sql = new Sql('INSERT INTO {t_version} (id,version,status,installed) VALUES( {id},{version},{status},{time} )',$db->id);
+				$sql = $db->sql('INSERT INTO {{version}} (id,version,status,installed) VALUES( {id},{version},{status},{time} )',$db->id);
 				$sql->setInt('id'     , $installVersion);
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('status' , OR_DB_STATUS_UPDATE_PROGRESS);
 				$sql->setInt('time'   , time()         );
-				$db->query( $sql );
+				$sql->query( $sql );
 				$db->commit();
 			}
 			
@@ -46,11 +46,11 @@ class DbUpdate
 
 			if	( $installVersion > 2 )
 			{
-				$sql = new Sql('UPDATE {t_version} SET status={status},installed={time} WHERE version={version}',$db->id);
+				$sql = $db->sql('UPDATE {{version}} SET status={status},installed={time} WHERE version={version}',$db->id);
 				$sql->setInt('status' , OR_DB_STATUS_UPDATE_SUCCESS);
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('time'   , time()         );
-				$db->query( $sql );
+				$sql->query( $sql );
 				$db->commit();
 			}
 		}
@@ -67,14 +67,14 @@ class DbUpdate
 	private function afterUpdate( $db )
 	{
 		// Benutzer zählen.
-		$sql = new Sql('SELECT COUNT(*) From {t_user}',$db->id);
-		$countUsers = $db->getOne( $sql );
+		$sql = $db->sql('SELECT COUNT(*) From {{user}}',$db->id);
+		$countUsers = $sql->getOne( $sql );
 		
 		// Wenn noch kein Benutzer vorhanden, dann einen anlegen.
 		if	( $countUsers == 0 )
 		{
-			$sql = new Sql("INSERT INTO {t_user} (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','admin','','Administrator','','','Account for administration tasks.','default',1)",$db->id);
-			$db->query( $sql );
+			$sql = $db->sql("INSERT INTO {{user}} (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','admin','','Administrator','','','Account for administration tasks.','default',1)",$db->id);
+			$sql->query( $sql );
 			$db->commit();
 		}
 	}
@@ -83,26 +83,26 @@ class DbUpdate
 	
 	private function getDbVersion( $db )
 	{
-		$sql = new Sql('SELECT 1 FROM {t_version}',$db->id);
-		$versionTableExists = $db->testQuery( $sql );
+		$sql = $db->sql('SELECT 1 FROM {{version}}',$db->id);
+		$versionTableExists = $sql->testQuery();
 		
 		if	( $versionTableExists )
 		{
 			// Prüfen, ob die vorherigen Updates fehlerfrei sind. 
-			$sql = new Sql(<<<SQL
-	SELECT COUNT(*) FROM {t_version} WHERE STATUS=0
+			$sql = $db->sql(<<<SQL
+	SELECT COUNT(*) FROM {{version}} WHERE STATUS=0
 SQL
 					,$db->id);
-			$countErrors = $db->getOne($sql);
+			$countErrors = $sql->getOne($sql);
 			if	( $countErrors > 0 )
 				Http::serverError('Database error','there are dirty versions (means: versions with status 0), see table VERSION for details.');
 			
 			// Aktuelle Version ermitteln.
-			$sql = new Sql(<<<SQL
-	SELECT MAX(version) FROM {t_version}
+			$sql = $db->sql(<<<SQL
+	SELECT MAX(version) FROM {{version}}
 SQL
 					,$db->id);
-			$version = $db->getOne($sql);
+			$version = $sql->getOne($sql);
 
 			if	( is_numeric($version) )
 				return $version; // Aktuelle Version.s
@@ -113,8 +113,8 @@ SQL
 		}
 		else
 		{
-			$sql = new Sql('SELECT 1 FROM {t_project}',$db->id);
-			$projectTableExists = $db->testQuery( $sql );
+			$sql = $db->sql('SELECT 1 FROM {{project}}',$db->id);
+			$projectTableExists = $sql->testQuery();
 				
 			if	( $projectTableExists )
 				// Entspricht dem Stand vor Einführung der automatischen Migration.

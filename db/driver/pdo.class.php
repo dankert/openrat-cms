@@ -42,9 +42,9 @@ class DB_pdo
 	 */
 	var $error;
 	
-	var $prepared = false;
-	
 	var $lowercase = false;
+	
+	var $params;
 
 
 	function connect( $conf )
@@ -58,16 +58,22 @@ class DB_pdo
 		
 		$options = array();
 		foreach( $conf as $c )
-			if	( substr($c,0,7) == 'option_' )
+			if	( is_string($c) && substr($c,0,7) == 'option_' )
 				$options[substr($c,8)] = $conf[$c];
-				
+
+		if	( $conf['persistent'])
+			$options[ PDO::ATTR_PERSISTENT ] = true;
+
+		if	( !$conf['prepare'])
+			$options[ PDO::ATTR_EMULATE_PREPARES ] = true;
+		
+		$options[ PDO::ERRMODE_EXCEPTION ] = true;
+		$options[ PDO::ATTR_DEFAULT_FETCH_MODE ] = PDO::FETCH_ASSOC;
+		
 		$this->connection = new PDO($url, $user, $pw, $options);
 		
 		if	( !is_object($this->connection) )
-		{
-			$this->error = "Could not connect to database on host $host. ".PDO::errorInfo();
-			return false;
-		}
+			throw new OpenRatException( 'DATABASE_ERROR_CONNECTION',"Could not connect to database on host $host. ".PDO::errorInfo() );
 				
 		return true;
     }
@@ -84,41 +90,20 @@ class DB_pdo
 
 	function query($query)
 	{
-		if	( $this->prepared )
-		{
-			$ar     = array();
-				
-			foreach( $query->data as $val )
-				$ar[] = $val['value'];
-			$erg = $this->stmt->execute( $ar );
+		$erg = $this->stmt->execute();
 
-			if	( $erg === false  )
-			{
-				die( 'Could not execute prepared statement "'.$query->query.'" with values "'.implode(',',$ar).'": '.implode('/',$this->connection->errorInfo()) );
-			}
-			
-			return $this->stmt;
-		}
-		else
+		if	( $erg === false )
 		{
-			$this->result = $this->connection->query($query);
-	
-			if	( ! $this->result )
-			{
-				$this->error = 'Database error: '.implode('/',$this->connection->errorInfo());
-				return FALSE;
-			}
-			return $this->result;
+			throw new RuntimeException( 'Could not execute prepared statement "'.$query->src.'": '.implode('/',$this->stmt->errorInfo()) );
 		}
+		
+		return $this->stmt;
 	}
 
 
 	function fetchRow( $result, $rownum )
 	{
-		if	( $this->prepared )
-			$row = $this->stmt->fetch( PDO::FETCH_ASSOC );
-		else
-			$row = $this->result->fetch( PDO::FETCH_ASSOC );
+		$row = $this->stmt->fetch( PDO::FETCH_ASSOC );
 		
 		if	( is_array($row) && $this->lowercase )
 			$row = array_change_key_case($row);
@@ -135,21 +120,23 @@ class DB_pdo
 
 	function prepare( $query,$param)
 	{
+		$this->params = $param;
 		$offset = 0;
-		foreach( $param as $pos)
+		foreach( $param as $name=>$pos)
 		{
-			foreach( $pos as $posx )
-			{
-				$posx += $offset++;
-				$query = substr($query,0,$posx).'?'.substr($query,$posx);
-			}
+			$name = ':'.$name;
+			$pos  += $offset;
+			$query = substr($query,0,$pos).$name.substr($query,$pos);
+			
+			$offset = $offset + strlen($name);
 		}
 
-		$this->prepared = true;
+		Logger::debug('PDO: SQL-before-preparation: '.$query);
+		
 		$this->stmt = $this->connection->prepare($query);
 		
 		if	( $this->stmt === false )
-			die( 'Database error: '.implode('/',$this->connection->errorInfo()) );
+			throw new OpenRatException('ERROR_DATABASE_CONNECTION','Could not prepare statement: '.$query.' Cause: '.implode('/',$this->connection->errorInfo()) );
 		
 	}
 
@@ -157,7 +144,20 @@ class DB_pdo
 	
 	function bind( $param,$value )
 	{
-		$this->params[$param] = &$value;
+		$name = ':'.$param;
+		
+		if	( is_string($value) )
+			$type = PDO::PARAM_STR;
+		elseif( is_int($value)) 
+			$type = PDO::PARAM_INT;
+		elseif( is_null($value))
+			$type = PDO::PARAM_NULL;
+		else
+			throw new RuntimeException( 'Unknown type' );
+		
+		$this->stmt->bindValue($name,$value,$type);
+		
+		Logger::debug('PDO: SQL-Binding of parameter '.$name);
 	}
 	
 	
@@ -186,7 +186,14 @@ class DB_pdo
      */
 	function rollback()
 	{
-		$this->connection->rollBack();
+		try
+		{
+			$this->connection->rollBack();
+		}
+		catch ( PDOException $e )
+		{
+			// Kommt vor, wenn keine Transaktion existiert.
+		}
 	}
 	
 	
@@ -196,7 +203,6 @@ class DB_pdo
 	 */
 	function clear()
 	{
-		$this->prepared = false;
 		$this->params   = array();
 	}
 
