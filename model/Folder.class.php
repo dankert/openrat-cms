@@ -612,13 +612,13 @@ class Folder extends Object
 //		}
 
 
-		if   ( !$with_root )
+		if   ( !$with_root && !empty($this->parentfolders) )
 		{
 			$keys = array_keys( $this->parentfolders );
 			unset( $this->parentfolders[$keys[0]] );
 		}
 
-		if   ( !$with_self )
+		if   ( !$with_self && !empty($this->parentfolders) )
 		{
 			$keys = array_keys( $this->parentfolders );
 			unset( $this->parentfolders[$keys[count($keys)-1]] );
