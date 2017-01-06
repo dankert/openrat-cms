@@ -641,9 +641,12 @@ SQL
 		if ($res->numRows() == 0)
 		{
 			// Wenn Name in dieser Sprache nicht vorhanden, dann irgendeinen Namen lesen
-			$sql->setQuery('SELECT *'.' FROM {{name}}'.' WHERE objectid={objectid}'.'   AND name != {blank}');
-			$sql->setString('blank', '');
-			$res = $sql->query($sql);
+			$sql = $db->sql('SELECT *'.' FROM {{name}}'.' WHERE objectid={objectid}'.'   AND name != {blank}');
+			$sql->setInt   ('objectid'  , $this->objectid  );
+			$sql->setInt   ('languageid', $this->languageid);
+			$sql->setString('blank'     , ''               );
+			
+			$res = $sql->execute();
 		}
 		$row = $res->fetchRow();
 
@@ -784,7 +787,7 @@ SQL
 			$sql = $db->sql('SELECT MAX(id) FROM {{name}}');
 			$nameid = intval($sql->getOne($sql))+1;
 
-			$sql->setQuery('INSERT INTO {{name}}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
+			$sql = $db->sql('INSERT INTO {{name}}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
 			$sql->setInt   ('objectid'  , $this->objectid    );
 			$sql->setInt   ('languageid', $this->languageid  );
 			$sql->setInt   ('nameid', $nameid    );
@@ -852,7 +855,7 @@ SQL
 		$this->checkFilename();
 		$sql = $db->sql('INSERT INTO {{object}}'.
 		               ' (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,is_folder,is_file,is_page,is_link)'.
-		               ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{userid},{time},{userid},{is_folder},{is_file},{is_page},{is_link} )');
+		               ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{createuserid},{createtime},{userid},{is_folder},{is_file},{is_page},{is_link} )');
 
 		if	( $this->isRoot )
 			$sql->setNull('parentid');
@@ -864,8 +867,11 @@ SQL
 		$sql->setInt   ('orderid'  , 99999           );
 		$sql->setInt   ('time'     , now()           );
 		$user = Session::getUser();
+		$sql->setInt   ('createuserid'   , $user->userid   );
+		$sql->setInt   ('createtime'     , now()           );
+		$user = Session::getUser();
 		$sql->setInt   ('userid'   , $user->userid   );
-
+		
 		$sql->setBoolean('is_folder',$this->isFolder);
 		$sql->setBoolean('is_file',  $this->isFile);
 		$sql->setBoolean('is_page',  $this->isPage);
