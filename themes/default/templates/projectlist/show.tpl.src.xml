@@ -7,7 +7,7 @@
 				<text key="name"></text>
 			</column>
 		</row>
-		<list list="el" extract="true">
+		<list list="projects" extract="true">
 			<row class="data">
 				<column class="clickable">
 					<link type="open" id="var:id" name="var:name" action="project">

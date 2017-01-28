@@ -51,12 +51,10 @@ class ProjectlistAction extends Action
 		foreach( Project::getAll() as $id=>$name )
 		{
 			$list[$id]             = array();
-			$list[$id]['url'     ] = Html::url('project','edit',$id);
 			$list[$id]['id'      ] = $id;
-			$list[$id]['use_url' ] = Html::url('tree'   ,'load',0  ,array('projectid'=>$id,'target'=>'tree'));
 			$list[$id]['name'    ] = $name;
 		}
-		$this->setTemplateVar('el',$list);
+		$this->setTemplateVar('projects',$list);
 	}
 	
 	
