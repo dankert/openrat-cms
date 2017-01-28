@@ -270,9 +270,9 @@ class DBVersion000001 extends DbVersion
 		$this->addColumn('value','number','INT',null,null,$nullable);
 		$this->addColumn('value','date','INT',null,null,$nullable);
 		$this->addColumn('value','active','INT',0,null,$not_nullable);
-		$this->addColumn('value','publish','INT',null,null,$not_nullable);
 		$this->addColumn('value','lastchange_date','INT',0,null,$not_nullable);
 		$this->addColumn('value','lastchange_userid','INT',null,null,$nullable);
+		$this->addColumn('value','publish','INT',null,null,$not_nullable);
 		$this->addPrimaryKey('value','id');
 		$this->addConstraint('value','pageid','page','id');
 		$this->addConstraint('value','elementid','element','id');
