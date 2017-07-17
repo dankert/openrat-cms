@@ -408,7 +408,7 @@ class Action
 			header('Content-Type: application/json; charset=UTF-8');
 			if	( function_exists('json_encode'))
 				// Native Methode ist schneller.. 
-				echo json_encode( $this->templateVars );
+				echo json_encode( $this->templateVars, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_PARTIAL_OUTPUT_ON_ERROR );
 			else
 				// Fallback, falls json_encode() nicht existiert...
 				echo $json->encode( $this->templateVars );
