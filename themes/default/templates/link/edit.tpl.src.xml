@@ -22,7 +22,7 @@
 					</label>
 				</part>
 				<part class="input">
-					<selector id="var:targetobjectid" name="var:targetobjectname" types="page,file" param="targetobjectid" />
+					<selector id="var:targetobjectid" name="var:targetobjectname" types="page,file" param="targetobjectid" folderid="parentid"/>
 				</part>
 			</part>
 
