@@ -1,6 +1,7 @@
 <?php
 
-define('OR_DB_INDEX_PREFIX','IX');
+define('OR_DB_INDEX_PREFIX'     ,'IX');
+define('OR_DB_CONSTRAINT_PREFIX','FK');
 
 abstract class DbVersion
 {
@@ -181,7 +182,7 @@ abstract class DbVersion
 		
 		$ddl = $this->db->sql('ALTER TABLE '.$table.
 	               ' ADD COLUMN '.$columnName.' '.$dbmsInternalType.($size!=null?'('.$size.')':'').
-	               ($default!=null?' DEFAULT '.(is_string($default)?"'":'').$default.(is_string($default)?"'":''):'').
+	               ($default!==null?' DEFAULT '.(is_string($default)?"'":'').$default.(is_string($default)?"'":''):'').
 	               ' '.($nullable?'NULL':'NOT NULL').';'
 	              );
 		$ddl->query();
@@ -246,16 +247,9 @@ abstract class DbVersion
 		$table       = $this->getTableName($tableName);
 		$targetTable = $this->getTableName($targetTableName);
 	
-		$constraintName = $this->tablePrefix.'fk_'.$tableName.$this->tableSuffix.'_'.$columnName;
+		$constraintName = $this->tablePrefix.OR_DB_CONSTRAINT_PREFIX.'_'.$tableName.$this->tableSuffix.'_'.$columnName;
 		
-		//
-// 	if	[ "$type" == "oracle" ]; then
-// 	cnt=$(($cnt+1))
-// 	echo "  ,CONSTRAINT ${prefix}fk_${cnt}" >> $outfile
-// 	else
-// 	echo "  ,CONSTRAINT ${prefix}fk_${table}${suffix}_$1" >> $outfile
-// 	fi
-	// Oracle doesn't support "ON DELETE RESTRICT"-Statements, but its the default.
+		// Oracle doesn't support "ON DELETE RESTRICT"-Statements, but its the default.
 		
 		$ddl = $this->db->sql('ALTER TABLE '.$table.' ADD CONSTRAINT '.$constraintName.' FOREIGN KEY ('.$columnName.') REFERENCES '.$targetTable.' ('.$targetColumnName.') ON DELETE RESTRICT ON UPDATE RESTRICT;');
 		$ddl->query();
