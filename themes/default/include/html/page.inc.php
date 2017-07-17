@@ -27,27 +27,28 @@
   
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/skins/markitup/style.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/sets/default/style.css" />
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-1.6.2.min.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.scrollTo.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-1.12.4.min.js" async></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js" async></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.scrollTo.js" async></script>
   <!-- 
   <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.mjs.nestedSortable.js"></script>
    -->
 
   <!-- OpenRat internal JS -->
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/openrat.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orHint.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orSearch.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLinkify.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orTree.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLoadView.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orAutoheight.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orHint.js" async></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orSearch.js" async></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLinkify.js" async></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orTree.js" async></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLoadView.js" async></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orAutoheight.js" async></script>
+  
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/openrat.js" async></script>
   <!-- 
   <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
    -->
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/jquery.markitup.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/ckeditor.js"></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/adapters/jquery.js"></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/adapters/jquery.js" async></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/jquery.markitup.js" async></script>
+  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/ckeditor.js" async></script>
   <!-- 
   <script src="/~dankert/cms-test/cms09/themes/default/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>
   <script src="/~dankert/cms/themes/default/js/xxxxxxxxxxxjquery-plugin-orSearchBox.js"></script>
