@@ -1,6 +1,7 @@
 <?php
 
 // Diese Objekte stehen zeitweise in der Sitzung, daher muessen dieser immer geparst werden.
+require_once( OR_OBJECTCLASSES_DIR."ModelBase.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Value.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Acl.class.".PHP_EXT );
 require_once( OR_OBJECTCLASSES_DIR."Template.class.".PHP_EXT );

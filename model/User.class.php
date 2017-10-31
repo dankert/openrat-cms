@@ -25,7 +25,7 @@
  * @author $Author$
  * @package openrat.objects
  */
-class User
+class User extends ModelBase
 {
 	var $userid   = 0;
 	var $error    = '';
@@ -144,7 +144,7 @@ class User
 	 *
 	 * @return Array [Projekt-Id] = Projekt-Name
 	 */
-	function getReadableProjects()
+	public function getReadableProjects()
 	{
 		$db = db_connection();
 
@@ -207,7 +207,7 @@ SQL
 		global $conf;
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id,mail,name,password FROM {{user}}'.
+		$sql = $db->sql( 'SELECT id,mail,name,password_hash FROM {{user}}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
 		$row = $sql->getRow( $sql );
@@ -216,14 +216,14 @@ SQL
 			throw new ObjectNotFoundException();
 
 		// Zusammensetzen des Tokens
-		return sha1( $row['password'].$row['name'].$row['id'].$row['mail'] );
+		return sha1( $row['password_hash'].$row['name'].$row['id'].$row['mail'] );
 	}
 
 
 	/**
 	 * Lesen Benutzer aus der Datenbank.
 	 */ 
-	function load()
+	public function load()
 	{
 		global $conf;
 		$db = db_connection();
@@ -271,67 +271,43 @@ SQL
 	/**
 	 * Stellt fest, ob der Benutzer korrekt geladen ist.
 	 */
-	function isValid()
+	public function isValid()
 	{
 		return intval($this->userid) > 0;
 	}
 
 
 
-	// Lesen Benutzer aus der Datenbank
-	function setDatabaseRow( $row )
+	/**
+	 * Lesen Benutzer aus der Datenbank
+	 */
+	protected function setDatabaseRow( $row )
 	{
 		global $conf;
 		
-		$this->userid   = $row['id'      ];
-		$this->name     = $row['name'    ];
-		$this->style    = $row['style'   ];
-		$this->isAdmin  = ( $row['is_admin'] == '1');
-		$this->ldap_dn  = $row['ldap_dn' ];
-		$this->fullname = $row['fullname'];
-		$this->tel      = $row['tel'     ];
-		$this->mail     = $row['mail'    ];
-		$this->desc     = $row['descr'   ];
+		$this->userid    = $row['id'      ];
+		$this->name      = $row['name'    ];
+		$this->style     = $row['style'   ];
+		$this->isAdmin   = ( $row['is_admin'] == '1');
+		$this->ldap_dn   = $row['ldap_dn' ];
+		$this->fullname  = $row['fullname'];
+		$this->tel       = $row['tel'     ];
+		$this->mail      = $row['mail'    ];
+		$this->desc      = $row['descr'   ];
+		$this->language  = $row['language'];
+		$this->timezone  = $row['timezone'];
+		$this->pwExpires = $row['password_expires'];
+		$this->lastLogin = $row['last_login'];
+		$this->otpSecret = $row['otp_secret'];
+		$this->hotp      = $row['hotp'];
+		$this->hotpCount = $row['hotp_counter'];
+		$this->totp      = $row['totp'];
 		
 		if	( $this->fullname == '' )
 			$this->fullname = $this->name;
 			
 		if	( $this->style == '' )
 				$this->style = $conf['interface']['style']['default'];
-
-		/* vorerst unbenutzt:
-		if	( $row['use_ldap'] == '1' )
-		{
-			// Daten aus LDAP-Verzeichnisdienst lesen
-
-			// Verbindung zum LDAP-Server herstellen
-			$ldap_conn = @ldap_connect( $conf['ldap']['host'],$conf['ldap']['port'] );
-			
-			if	( !$ldap_conn )
-			{
-				logger( 'INFO','cannot connect to LDAP server '.$conf['ldap']['host'].' '.$conf['ldap']['port'] );
-				$this->error = 'cannot connect to LDAP server';
-				return false;
-			}
-			
-			// Anonymes LDAP-Login versuchen
-			$ldap_bind = @ldap_bind( $ldap_conn );
-			
-			if   ( $ldap_bind )
-			{
-				// Login erfolgreich
-				$sr = ldap_read( $ldap_conn,$row['ldap_dn'],'(objectclass=*)' );
-				
-				$daten   = ldap_get_entries( $ldap_conn,$sr );
-				
-				$this->fullname = $daten[0]['givenName'][0].' '.$daten[0]['sn'][0];
-				$this->tel      = $daten[0]['telephoneNumber'][0];
-				$this->mail     = $daten[0]['mail'][0];
-				$this->desc     = $daten[0]['description'][0];
-			}
-			
-		}
-		*/
 	}
 
 
@@ -379,16 +355,21 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {{user}}'.
-		                ' SET name={name},'.
-		                '     fullname={fullname},'.
-		                '     ldap_dn ={ldap_dn} ,'.
-		                '     tel     ={tel}     ,'.
-		                '     descr   ={desc}    ,'.
-		                '     mail    ={mail}    ,'.
-		                '     style   ={style}   ,'.
-		                '     is_admin={isAdmin} '.
-		                ' WHERE id={userid}' );
+		$sql = $db->sql( <<<SQL
+                         UPDATE {{user}}
+		                 SET name={name},
+		                     fullname={fullname},
+		                     ldap_dn ={ldap_dn} ,
+		                     tel     ={tel}     ,
+		                     descr   ={desc}    ,
+		                     mail    ={mail}    ,
+		                     style   ={style}   ,
+		                     language = {language},
+		                     timezone = {timezone},
+		                     is_admin = {isAdmin}
+		                 WHERE id={userid}
+SQL
+ );
 		$sql->setString ( 'name'    ,$this->name    );
 		$sql->setString ( 'fullname',$this->fullname);
 		$sql->setString ( 'ldap_dn' ,$this->ldap_dn );
@@ -396,6 +377,8 @@ SQL
 		$sql->setString ( 'desc'    ,$this->desc    );
 		$sql->setString ( 'mail'    ,$this->mail    );
 		$sql->setString ( 'style'   ,$this->style   );
+		$sql->setString ( 'language',$this->language);
+		$sql->setString ( 'timezone',$this->timezone);
 		$sql->setBoolean( 'isAdmin' ,$this->isAdmin );
 		$sql->setInt    ( 'userid'  ,$this->userid  );
 		
@@ -420,7 +403,7 @@ SQL
 		$this->userid = intval($sql->getOne($sql))+1;
 
 		$sql = $db->sql('INSERT INTO {{user}}'.
-		               ' (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin)'.
+		               ' (id,name,password_hash,ldap_dn,fullname,tel,mail,descr,style,is_admin)'.
 		               " VALUES( {userid},{name},'','','','','','','default',0 )" );
 		$sql->setInt   ('userid',$this->userid);
 		$sql->setString('name'  ,$this->name  );
@@ -521,25 +504,15 @@ SQL
 	 *
 	 * @return Array Liste der Eigenschaften als assoziatives Array
 	 */
-	function getProperties()
+	public function getProperties()
 	{
-		return Array( 'userid'  => $this->userid,
-		              'id'      => $this->userid,
-		              'fullname'=> $this->fullname,
-		              'name'    => $this->name,
-		              'ldap_dn' => $this->ldap_dn,
-		              'tel'     => $this->tel,
-		              'desc'    => $this->desc,
-		              'mail'    => $this->mail,
-		              'style'   => $this->style,
-		              'is_admin'=> $this->isAdmin,
-		              'isAdmin' => $this->isAdmin );
+	    return parent::getProperties() + array('id'=>$this->userid,'is_admin'=> $this->isAdmin);
 	}
 
 
 
 	/**
-	 * Setzt ein neues Kennwort f�r diesen Benutzer.
+	 * Setzt ein neues Kennwort fuer diesen Benutzer.
 	 * 
 	 * @param password Kennwortt
 	 * @param always true, wenn Kennwort dauerhaft.
@@ -548,17 +521,29 @@ SQL
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {{user}} SET password={password} '.
+		$sql = $db->sql( 'UPDATE {{user}} SET password_hash={password},password_algo={algo},password_expires={expires} '.
 		                'WHERE id={userid}' );
 		                
 		if	( $always )
-			// Hashsumme für Kennwort erzeugen und speichern.
-			// Workaround: Hashsumme auf 50 Zeichen kürzen (da die DB-Spalte nicht länger ist)
-			$sql->setString('password',substr(Password::hash($this->pepperPassword($password)),0,50) );
+		{
+			$algo   = Password::bestAlgoAvailable();
+			$expire = null;
+		}
 		else
+		{
 			// Klartext-Kennwort, der Benutzer muss das Kennwort beim nä. Login ändern.
-			$sql->setString('password',$password);
-			
+			$algo   = OR_PASSWORD_ALGO_PLAIN;
+			$expire = time();
+		}
+
+		// Hashsumme für Kennwort erzeugen
+		if	( $expire == null )
+			$sql->setNull('expires');
+		else
+			$sql->setInt('expires',$expire);
+		
+		$sql->setInt   ('algo'    ,$algo                                                  );
+		$sql->setString('password',Password::hash($this->pepperPassword($password)),$algo );
 		$sql->setInt   ('userid'  ,$this->userid  );
 
 		$sql->query( $sql );

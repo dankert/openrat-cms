@@ -34,7 +34,7 @@ SQL
 			// Benutzer ist nicht vorhanden
 			return false;
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt
-		elseif   ( $row_user['password'] == $password )
+		elseif   ( $row_user['password_hash'] == $password )
 		{
 			// Kennwort stimmt mit Datenbank �berein, aber nur im Klartext.
 			// Das Kennwort muss ge�ndert werden
@@ -43,7 +43,7 @@ SQL
 			// Login nicht erfolgreich
 			return false;
 		}
-		elseif   ( Password::check(User::pepperPassword($password),$row_user['password']) )
+		elseif   ( Password::check(User::pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']) )
 		{
 			// Die Kennwort-Pruefsumme stimmt mit dem aus der Datenbank �berein.
 			// Juchuu, Login ist erfolgreich.

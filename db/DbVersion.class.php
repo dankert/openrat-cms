@@ -62,7 +62,7 @@ abstract class DbVersion
 	
 	
 	
-	private function getTableName( $name )
+	protected function getTableName( $name )
 	{
 		return $this->tablePrefix.$name.$this->tableSuffix;
 	}

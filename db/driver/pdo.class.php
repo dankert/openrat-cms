@@ -94,7 +94,7 @@ class DB_pdo
 
 		if	( $erg === false )
 		{
-			throw new RuntimeException( 'Could not execute prepared statement "'.$query->src.'": '.implode('/',$this->stmt->errorInfo()) );
+			throw new RuntimeException( 'Could not execute prepared statement "'.$query->query.'": '.implode('/',$this->stmt->errorInfo()) );
 		}
 		
 		return $this->stmt;

@@ -50,6 +50,8 @@ class UserAction extends Action
 			$this->user->ldap_dn  = $this->getRequestVar('ldap_dn' );
 			$this->user->tel      = $this->getRequestVar('tel'     );
 			$this->user->desc     = $this->getRequestVar('desc'    );
+			$this->user->language = $this->getRequestVar('language');
+			$this->user->timezone = $this->getRequestVar('timezone');
 			
 			global $conf;
 			if	( @$conf['security']['user']['show_admin_mail'] )
@@ -207,9 +209,21 @@ class UserAction extends Action
 	 */
 	function editView()
 	{
+	    global $conf;
 		$this->setTemplateVars( $this->user->getProperties() );
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
+		
+	    $this->setTemplateVar('timezone_list',timezone_identifiers_list() );
+	    
+        $languages = explode(',',$conf['i18n']['available']);
+        foreach($languages as $id=>$name)
+        {
+            unset($languages[$id]);
+            $languages[$name] = $name;
+        }
+        $this->setTemplateVar('language_list',$languages);
+		        
 	}
 
 
