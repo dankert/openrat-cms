@@ -116,6 +116,7 @@ define('FILE_SEP',$conf['interface']['file_separator']);
 define('TEMPLATE_DIR',OR_THEMES_DIR.$conf['interface']['theme'].'/templates');
 define('CSS_DIR'     ,OR_THEMES_DIR.$conf['interface']['theme'].'/css'      );
 define('IMAGE_DIR'   ,OR_THEMES_DIR.$conf['interface']['theme'].'/images'   );
+define('DEVELOPMENT' ,!$conf['production']);
 
 require_once( "functions/config.inc.php" );
 require_once( "functions/language.inc.".PHP_EXT );
