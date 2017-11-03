@@ -468,7 +468,7 @@ class Action
 		    }
 		    catch (Exception $e)
 		    {
-		        throw new DomainException("Template compilation failed",0,$e );
+		        throw new DomainException("Compilation failed for Template '$tplName'.",0,$e );
 		    }
 		}
 
@@ -479,7 +479,7 @@ class Action
 			// Einbinden des Templates
 			require_once( $iFile );
 		else
-		    throw new LogicException("File not found: $iFile"); 
+		    throw new LogicException("File '$iFile' not found."); 
 	}
 	
 	
