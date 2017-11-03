@@ -26,8 +26,6 @@
  */
 class TemplateEngine
 {
-	private $actualTagName   = '';
-	
 	/**
 	 * Name Template.
 	 *
@@ -52,77 +50,87 @@ class TemplateEngine
 	 */
 	public function compile( $tplName = '')
 	{
-		if	( empty($tplName) )
-			$tplName = $this->tplName;
-		
-		global $conf;
-		$confCompiler = $conf['theme']['compiler'];
-		
-		$srcXmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.xml';
-
-		
-		if ( is_file($srcXmlFilename) )
-			$srcFilename = $srcXmlFilename;
-		else
-			// Wenn Vorlage (noch) nicht existiert
-			die( get_class($this).': Template not found: "'.$tplName.'"' );
-
-		$filename = FileUtils::getTempDir().'/'.'or.cache.tpl.'.str_replace('/', '.',$tplName).'.tpl.'.PHP_EXT;
-		
-		// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausf�hren.		
-		if	( $confCompiler['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
-			return;
-			
-		if	( is_file($filename) && !is_writable($filename) )
-			die( get_class($this).': File is read-only: '.$filename);
-
-		Logger::debug("Compile template: ".$srcFilename.' to '.$filename);
-			
-		// Vorlage und Zieldatei oeffnen
-		$document = $this->loadDocument( $srcFilename );
-		
-		$outFile = @fopen($filename,'w');
-
-		if	( !is_resource($outFile) )
-			Http::serverError( get_class($this).': Unable to open file for writing: '.$filename);
-
-		$openCmd = array();
-		$depth   = 0;
-		
-		foreach( $document as $line )
-		{
-			// Initialisieren der m�glichen Element-Inhalte
-			$type       = '';
-			$attributes = array();
-			$value      = '';
-			$tag        = '';
-
-
-			// Setzt: $tag, $attributes, $value, $type
-			extract( $line );
-
-			$this->actualTagName   = $tag;
-			
-			if	($type == 'complete' || $type == 'open')
-				$attributes = $this->checkAttributes($tag,$attributes);
-				
-			if ( $type == 'open' )
-				$this->copyFileContents( $tag,$outFile,$attributes,++$depth );
-			elseif ( $type == 'complete' )
-			{
-				$this->copyFileContents( $tag       ,$outFile,$attributes,++$depth   );
-				$this->copyFileContents( $tag.'-end',$outFile,array()    ,  $depth-- );
-			}
-			elseif ( $type == 'close' )
-				$this->copyFileContents( $tag.'-end',$outFile,array(),$depth-- );
+		try {
+    		if	( empty($tplName) )
+    			$tplName = $this->tplName;
+    		
+    		global $conf;
+    		$confCompiler = $conf['theme']['compiler'];
+    		
+    		$srcXmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.xml';
+    
+    		
+    		if ( is_file($srcXmlFilename) )
+    			$srcFilename = $srcXmlFilename;
+    		else
+    			// Wenn Vorlage (noch) nicht existiert
+    			throw new LogicException( "Template not found: $tplName" );
+    
+    		$filename = FileUtils::getTempDir().'/'.'or.cache.tpl.'.str_replace('/', '.',$tplName).'.tpl.'.PHP_EXT;
+    		
+    		// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausf�hren.		
+    		if	( $confCompiler['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
+    			return;
+    			
+    		if	( is_file($filename) && !is_writable($filename) )
+    			throw new LogicException("File is read-only: $filename");
+    
+    		Logger::debug("Compile template: ".$srcFilename.' to '.$filename);
+    			
+    		// Vorlage und Zieldatei oeffnen
+    		$document = $this->loadDocument( $srcFilename );
+    		
+    		// Wir legen erstmal eine temporaere Datei an.
+    		// Falls ein Fehler auftritt, ist nur die temporaere Datei defekt.
+    		$tmpFilename = $filename.'.tmp';
+    		$outFile = @fopen($tmpFilename,'w');
+    
+    		if	( !is_resource($outFile) )
+    			throw new LogicException( "Template $tplName: Unable to open file for writing: $filename" );
+    
+    		$openCmd = array();
+    		$depth   = 0;
+    
+    		foreach( $document as $line )
+    		{
+    			// Initialisieren der m�glichen Element-Inhalte
+    			$type       = '';
+    			$attributes = array();
+    			$value      = '';
+    			$tag        = '';
+    
+    
+    			// Setzt: $tag, $attributes, $value, $type
+    			extract( $line );
+    
+    			if	($type == 'complete' || $type == 'open')
+    				$attributes = $this->checkAttributes($tag,$attributes);
+    				
+    			if ( $type == 'open' )
+    				$this->copyFileContents( $tag,$outFile,$attributes,++$depth );
+    			elseif ( $type == 'complete' )
+    			{
+    				$this->copyFileContents( $tag       ,$outFile,$attributes,++$depth   );
+    				$this->copyFileContents( $tag.'-end',$outFile,array()    ,  $depth-- );
+    			}
+    			elseif ( $type == 'close' )
+    				$this->copyFileContents( $tag.'-end',$outFile,array(),$depth-- );
+    		}
+    
+    		fclose($outFile);
+    		
+    		rename($tmpFilename,$filename);
+    
+    		// CHMOD ausfuehren.
+    		if	( !empty($confCompiler['chmod']))
+    			if	( !@chmod($filename,octdec($confCompiler['chmod'])) )
+    			    throw new InvalidArgumentException( "Template {$this->tplName} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}." );
+    			
 		}
-
-		fclose($outFile);
-
-		// CHMOD ausfuehren.
-		if	( !empty($confCompiler['chmod']))
-			if	( !@chmod($filename,octdec($confCompiler['chmod'])) )
-				die( "CHMOD failed on file ".$filename );
+		catch( Exception $e)
+		{
+		    throw new LogicException("Template $tplName failed to compile", 0, $e);
+		}
 	}
 	
 	
@@ -194,8 +202,8 @@ class TemplateEngine
 				return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
 				
 			default:
-				//Http::serverError( get_class($this).': Unknown type "'.$type.'" in attribute. Allowed: var|method|property|message|messagevar|config or none');
-			}
+				throw new LogicException("Unknown type '$type' in attribute. Allowed: var|function|method|text|size|property|message|messagevar|arrayvar|config or none");
+		}
 	}
 	
 	
@@ -214,7 +222,8 @@ class TemplateEngine
 				return;
 			else
 				// Baustein nicht vorhanden, Abbbruch.
-				die( get_class($this).': Compile failed, file not found: '.$inFileName );
+			    
+				throw new LogicException("Compile failed, file not found: $inFileName" );
 
 		if	( DEVELOPMENT )
 			fwrite( $outFileHandler,"<!-- Compiling $infile @ ".date('r')." -->" );
@@ -326,7 +335,7 @@ class TemplateEngine
 		$elements = parse_ini_file( OR_THEMES_DIR.$conf['interface']['theme'].'/include/elements.ini.'.PHP_EXT);
 
 		if	( !isset($elements[$cmd]) )
-			Http::serverError( get_class($this).': Parser error, unknown element "'.$cmd.'". Allowed: '.implode(',',array_keys($elements)) );
+			throw new InvalidArgumentException("Parser error, unknown element $cmd. Allowed: "+implode(',',array_keys($elements)) );
 			
 		$checkedAttr = array();
 
@@ -337,31 +346,39 @@ class TemplateEngine
 			if	( $al=='')
 				continue; // Leeres Attribut... nicht zu gebrauchen.
 			
-				
-			$pair = explode(':',$al,2);
-			if	( count($pair) == 1 ) $pair[] = null;
-			list($a,$default) = $pair;
-			
+		    $rpos = strrpos($al,':');
+		    if  ($rpos===FALSE)
+		    {
+		        $a = $al;
+		        $default = null;
+		    }
+		    else
+		    {
+		        $a = substr($al,0,$rpos);
+		        $default = substr($al,$rpos+1);
+		    }
 			if	( is_string($default))
 				$default = str_replace('COMMA',',',$default); // Komma in Default-Werten ersetzen.
 
 			if	( isset($attr[$a]))
 				$checkedAttr[$a]=$attr[$a]; // Attribut ist bereits vorhanden, alles ok.
 			elseif	( $default=='*') // Pflichtfeld!
-				die( get_class($this).': Element "'.$cmd.'" needs the required attribute "'.$a.'"' );
+				throw new InvalidArgumentException( "Template {$this->tplName} failed to compile: Element {$cmd} needs the required attribute {$a}" );
 			elseif	( !is_null($default) )
 					$checkedAttr[$a]=$default;
 			else
 				;
 
-			unset( $attr[$a] ); // Damit am Ende das Urprungsarray leer wird.
+			unset( $attr[$a] ); // Damit am Ende das Ursprungsarray leer wird.
 		}
+	
+		unset( $attr['xmlns'             ]);
+		unset( $attr['xmlns:xsi'         ]);
+		unset( $attr['xsi:schemaLocation']);
 		
 		if	( count($attr) > 0 )
 		{
-			
-			//foreach($attr as $name=>$value)
-				//Http::serverError( get_class($this).': Unknown attribute "'.$name.'" in element "'.$cmd.'". Allowed: '.$elements[$cmd]."\n" );
+		    throw new InvalidArgumentException( "Template {$this->tplName} failed to compile: Unknown attributes '[".implode(',',array_keys($attr))."]' in element $cmd. Allowed attributes are: {$elements[$cmd]}"  );
 		}
 		
 		return $checkedAttr;

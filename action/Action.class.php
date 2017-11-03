@@ -348,22 +348,6 @@ class Action
 		
 		$db = db_connection();
 
-//		if	( isset($this->actionConfig[$this->subActionName]['direct']) )
-//		{
-//			if	( is_object( $db ) )
-//				$db->commit();
-//			exit; // Die Ausgabe ist bereits erfolgt (z.B. Bin�rdateien o. WebDAV)
-//		}
-			
-		// Pruefen, ob HTTP-Header gesendet wurden. Dies deutet stark darauf hin, dass eine
-		// PHP-Fehlermeldung ausgegeben wurde. In diesem Fall wird hier abgebrochen.
-		// Weitere Ausgabe wuerde keinen Sinn machen, da wir nicht wissen, was
-		// passiert ist.
-//		if	( headers_sent() )
-//		{
-//			Http::serverError("Some server error messages occured - see above - CMS canceled.");
-//		}
-		
 		if	( is_object( $db ) )
 			$db->commit();
 		
@@ -476,25 +460,26 @@ class Action
 		
 		if	( $conf['theme']['compiler']['enable'] )
 		{
-			$te = new TemplateEngine();
-			$te->compile( $tplName );
-			unset($te);
+		    try
+		    {
+    			$te = new TemplateEngine();
+    			$te->compile( $tplName );
+    			unset($te);
+		    }
+		    catch (Exception $e)
+		    {
+		        throw new DomainException("Template compilation failed",0,$e );
+		    }
 		}
 
 		$iFile = FileUtils::getTempDir().'/'.'or.cache.tpl.'.str_replace('/', '.',$tplName).'.tpl.'.PHP_EXT;;
+		header("X-CMS-Template-File: ".$iFile);
 			
-		//try
-		//{
-			if	( is_file($iFile))
-				// Einbinden des Templates
-				require_once( $iFile );
-			else
-				echo Http::serverError("File not found: $iFile","Template not found: $iFile"); 
-		//}
-		//catch( Exception $e )
-		//{
-		//	echo "Error occured:".$e; 
-		//}
+		if	( is_file($iFile))
+			// Einbinden des Templates
+			require_once( $iFile );
+		else
+		    throw new LogicException("File not found: $iFile"); 
 	}
 	
 	

@@ -432,8 +432,10 @@ function loadView(contentEl,action,method,id,params  )
 			if	( status == "error" )
 			{
 				// Seite nicht gefunden.
-				$(this).html("");
-				$(this).removeClass("loader");
+				$(targetEl).html("");
+				$(targetEl).removeClass("loader");
+				
+				notify('error',response);
 				// OK-button Ausblenden.
 				//$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
 				// var msg = "Sorry but there was an error: ";
@@ -441,7 +443,7 @@ function loadView(contentEl,action,method,id,params  )
 				return;
 			}
 
-			$(this).removeClass("loader");
+			$(targetEl).removeClass("loader");
 			registerViewEvents( targetEl );
 		});
 }
@@ -629,7 +631,7 @@ function registerViewEvents( viewEl )
 	$(viewEl).find('textarea').orAutoheight();
 	
 	// Autosave in Formularen. Bei Veränderungen wird das Formular sofort abgeschickt.
-	$(viewEl).find('form.[data-autosave="true"] input[type="checkbox"]').click( function() {
+	$(viewEl).find('form[data-autosave="true"] input[type="checkbox"]').click( function() {
 		formSubmit( $(this).closest('form') );
 	});
 	
@@ -637,9 +639,101 @@ function registerViewEvents( viewEl )
 	$(viewEl).find('input').change( function() {
 		$(this).closest('div.panel').find('ul.views li.action.active').addClass('dirty');
 	});
+	
+
+	
+	
+	var form = $(viewEl).find('form');
+
+	// Dateiupload über Drag and Drop
+	var dropzone = $(viewEl).find('div.filedropzone > div.input');
+	dropzone.on('dragenter', function (e) 
+	{
+		e.stopPropagation();
+		e.preventDefault();
+		$(this).css('border', '1px dotted gray');
+	});
+	dropzone.on('dragover', function (e) 
+	{
+		 e.stopPropagation();
+		 e.preventDefault();
+	});
+	dropzone.on('drop', function (e) 
+	{
+		 $(this).css('border','1px dotted red');
+		 e.preventDefault();
+		 var files = e.originalEvent.dataTransfer.files;
+
+		 //We need to send dropped files to Server
+		 handleFileUpload(form,files);
+	});
+	
+	
+	// Dateiupload über File-Input-Button
+	$(viewEl).find('input[type=file]').change( function() {
+		
+		var files = $(this).prop('files');   
+
+		handleFileUpload(form,files);
+	});
+
+	// QR-Code anzeigen.
+	$(viewEl).find('[data-qrcode]').each( function() {
+		
+		var qrcodetext = $(this).attr('data-qrcode');
+		$(this).removeAttr('data-qrcode');
+		
+		$(this).qrcode( { render : 'div',
+			              text   : qrcodetext,
+			              fill   : 'currentColor' } );
+	} );
 
 }
 
+
+
+function handleFileUpload(form,files)
+{
+	for (var i = 0, f; f = files[i]; i++)
+	{
+	    var form_data = new FormData();                  
+	    form_data.append('file'     , f);
+	    form_data.append('action'   ,'folder');
+	    form_data.append('subaction','createfile');
+	    form_data.append('output'   ,'json');
+	    form_data.append('token'    ,$(form).find('input[name=token]').val() );
+	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
+	    
+		var status = $('<div class="notice info"><div class="text loader"></div></div');
+		$('#noticebar').prepend(status); // Notice anhängen.
+		$(status).show();
+
+		$.ajax( { 'type':'POST',url:'dispatcher.php', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
+			{
+				$(status).remove();
+				doResponse(data,textStatus,form);
+			},
+			error:function(jqXHR, textStatus, errorThrown) {
+				$(form).closest('div.content').removeClass('loader');
+				$(status).remove();
+				
+				var msg;
+				try
+				{
+					var error = jQuery.parseJSON( jqXHR.responseText );
+					msg = error.error + '/' + error.description + ': ' + error.reason;
+				}
+				catch( e )
+				{
+					msg = jqXHR.responseText;
+				}
+				
+				notify('error',msg);
+			}
+			
+		} );
+	}
+}
 
 
 function registerHeaderEvents()
@@ -1116,16 +1210,7 @@ function formSubmit(form)
 					msg = jqXHR.responseText;
 				}
 				
-				// Notice-Bar mit dieser Meldung erweitern.
-				var notice = $('<div class="notice error"><div class="text">'+msg+'</div></div');
-				$('#noticebar').prepend(notice); // Notice anhängen.
-				notifyBrowser(msg);
-				
-				// Per Klick wird die Notice entfernt.
-				$(notice).fadeIn().click( function()
-				{
-					$(this).fadeOut('fast',function() { $(this).remove(); } );
-				} );
+				notify('error',msg);
 				
 			}
 			
@@ -1611,4 +1696,20 @@ function help(el,url,suffix)
 	var method = $(el).closest('div.panel').find('li.action.active').attr('data-method');
 	
 	window.open(url + action + '/'+ method + suffix, 'OpenRat_Help', 'location=no,menubar=no,scrollbars=yes,toolbar=no,resizable=yes');
+}
+
+
+function notify( type,msg )
+{
+	// Notice-Bar mit dieser Meldung erweitern.
+	var notice = $('<div class="notice '+type+'"><div class="text">'+msg+'</div></div');
+	$('#noticebar').prepend(notice); // Notice anhängen.
+	notifyBrowser(msg);
+	
+	// Per Klick wird die Notice entfernt.
+	$(notice).fadeIn().click( function()
+	{
+		$(this).fadeOut('fast',function() { $(this).remove(); } );
+	} );
+	
 }
