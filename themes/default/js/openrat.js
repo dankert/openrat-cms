@@ -114,7 +114,8 @@ function refreshWorkbench()
 			var method = $(this).attr('data-method');
 			var action = $(this).attr('data-action');
 			
-			loadView( $(this).closest('div.panel').find('div.content'),action,method,0);
+			if	( action )
+				loadView( $(this).closest('div.panel').find('div.content'),action,method,0);
 		});
 
 		// OnClick-Handler zum Scrollen der Tabs
@@ -388,6 +389,7 @@ function refreshTitleBar()
 function loadViewByName(viewName, url )
 {
 	alert('loadViewByName');
+	
 	loadView( $('div#'+viewName),url );
 }
 
@@ -1460,6 +1462,7 @@ else
 
 function loadSubaction( el, actionName, subactionName,id )
 {
+	alert('nobody should call loadSubaction()');
 	//   E d i t o r
 	var editorConfig = {
 			skin : 'v2',
@@ -1491,7 +1494,7 @@ function loadSubaction( el, actionName, subactionName,id )
 
 function loadWindow( el, actionName, subactionName )
 {
-
+	alert('loadWindow()');
 	// Zeichnet das Fenster-Gerüst, erstmal ohne Inhalt.
 	$(el).html('<div class="window"><div class="title"></div><ul class="menu"></div><div class="content"></div><div class="status"></div></div>');
 
