@@ -149,6 +149,8 @@ class LoginAction extends Action
 				// Das neue Kennwort ist gesetzt, die Anmeldung ist also doch noch gelungen. 
 				$ok = true;
 				$mustChangePassword = false;
+				
+				$pw = $pw1;
 			}
 		}
 		
@@ -158,13 +160,19 @@ class LoginAction extends Action
 			// Login war erfolgreich!
 			$user->load();
 			$user->setCurrent();
-			Logger::info( 'login successful' );
+			
+			if ($user->passwordAlgo != Password::bestAlgoAvailable() )
+    			// Re-Hash the password with a better hash algo.
+			    $user->setPassword($pw);
+			
+			
+			Logger::info( "login successful for {$user->name} from IP $ip" );
 
 			return true;
 		}
 		else
 		{
-			Logger::info( "login for user $name failed" );
+			Logger::info( "login failed for user {$user->name} from IP $ip" );
 
 			return false;
 		}
@@ -929,7 +937,13 @@ class LoginAction extends Action
 				// Benutzer über den Benutzernamen laden.
 				$user = User::loadWithName($loginName);
 				$user->loginModuleName = $lastModule;
-				Session::setUser($user);
+// 				Session::setUser($user);
+                $user->setCurrent();
+                
+                if ($user->passwordAlgo != Password::bestAlgoAvailable() )
+                    // Re-Hash the password with a better hash algo.
+                    $user->setPassword($loginPassword);
+                
 			}
 			catch( ObjectNotFoundException $ex )
 			{
@@ -954,12 +968,13 @@ class LoginAction extends Action
 		}
 		
 		
+	    $ip = getenv("REMOTE_ADDR");
 		
 		if	( !$loginOk )
 		{
 			// Anmeldung nicht erfolgreich
 			sleep(3);
-			Logger::debug("Login failed for user '$loginName'");
+			Logger::debug("Login failed for user '$loginName' from IP $ip");
 			
 			if	( $mustChangePassword )
 			{
@@ -982,7 +997,8 @@ class LoginAction extends Action
 		}
 		else
 		{
-			Logger::debug("Login successful for user '$loginName'");
+		    
+			Logger::debug("Login successful for user '$loginName' from IP $ip");
 
 			$this->checkGroups( $user, $groups );	
 

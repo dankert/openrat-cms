@@ -41,6 +41,17 @@ class User extends ModelBase
 	var $projects  = array();
 	var $rights;
 	var $loginDate = 0;
+
+	var $language;
+	var $timezone;
+	var $pwExpires;
+	var $lastLogin;
+	var $otpSecret;
+	var $hotp     ;
+	var $hotpCount;
+	var $totp     ;
+	
+	
 	
 	var $mustChangePassword = false;
 	var $groups = null;
@@ -93,12 +104,27 @@ class User extends ModelBase
 	/**
 	  * Benutzer als aktiven Benutzer in die Session schreiben.
 	  */
-	function setCurrent()
+	public function setCurrent()
 	{
 		$this->loadProjects();
 		$this->loginDate = time();
 
 		Session::setUser( $this );
+		
+	    $db = db_connection();
+	    
+	    $sql = $db->sql( <<<SQL
+                     UPDATE {{user}}
+	                 SET last_login={time}
+	                 WHERE id={userid}
+SQL
+	        );
+	    $sql->setInt( 'time'  ,time() );
+	    $sql->setInt( 'userid',$this->userid  );
+	    
+	    // Datenbankabfrage ausfuehren
+	    $sql->query( $sql );
+	
 	}
 
 
@@ -296,12 +322,13 @@ SQL
 		$this->desc      = $row['descr'   ];
 		$this->language  = $row['language'];
 		$this->timezone  = $row['timezone'];
-		$this->pwExpires = $row['password_expires'];
 		$this->lastLogin = $row['last_login'];
 		$this->otpSecret = $row['otp_secret'];
 		$this->hotp      = $row['hotp'];
 		$this->hotpCount = $row['hotp_counter'];
 		$this->totp      = $row['totp'];
+		$this->passwordExpires = $row['password_expires'];
+		$this->passwordAlgo    = $row['password_algo'];
 		
 		if	( $this->fullname == '' )
 			$this->fullname = $this->name;
@@ -543,7 +570,7 @@ SQL
 			$sql->setInt('expires',$expire);
 		
 		$sql->setInt   ('algo'    ,$algo                                                  );
-		$sql->setString('password',Password::hash($this->pepperPassword($password)),$algo );
+		$sql->setString('password',Password::hash($this->pepperPassword($password),$algo) );
 		$sql->setInt   ('userid'  ,$this->userid  );
 
 		$sql->query( $sql );
