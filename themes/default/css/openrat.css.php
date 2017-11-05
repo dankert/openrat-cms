@@ -652,7 +652,13 @@ fieldset
 	margin-left:0px;
 	margin-right:0px;
 	padding:10px;
+	display: none;
 }
+
+fieldset.show {
+	display: block; 
+}
+
 
 fieldset > legend
 {

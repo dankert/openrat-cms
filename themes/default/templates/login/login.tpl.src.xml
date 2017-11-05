@@ -88,7 +88,7 @@
 
 
 		<!-- <if true="property:mustChangePassword"> -->
-		<group title="message:USER_NEW_PASSWORD" open="false">
+		<group title="message:USER_NEW_PASSWORD" open="false" show="false">
 			<part class="line">
 				<part class="label">
 					<label for="password1">
@@ -107,6 +107,19 @@
 				</part>
 				<part class="input">
 					<password name="password2" default="" size="25"></password>
+				</part>
+			</part>
+		</group>
+		
+		<group title="message:USER_TOKEN" open="false" show="false">
+			<part class="line">
+				<part class="label">
+					<label for="user_token">
+						<text key="USER_TOKEN"></text>
+					</label>
+				</part>
+				<part class="input">
+					<password name="user_token" default="" size="25"></password>
 				</part>
 			</part>
 		</group>

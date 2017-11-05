@@ -1348,9 +1348,9 @@ function doResponse(data,status,element)
 		setTimeout( function() { $(notice).fadeOut('slow').remove(); },timeoutSeconds*1000 );
 	});
 	
+	// Felder mit Fehleingaben markieren, ggf. das übergeordnete Fieldset aktivieren.
 	$.each(data['errors'], function(idx,value) {
-		$('input[name='+value+']').addClass('error');
-		$('input[name='+value+']').parent().addClass('error');
+		$('input[name='+value+']').addClass('error').parent().addClass('error').parents('fieldset').addClass('show').addClass('open');
 	});
 	
 	// Jetzt das erhaltene Dokument auswerten.
