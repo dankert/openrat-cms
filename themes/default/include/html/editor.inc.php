@@ -74,7 +74,17 @@ switch( $attr_type )
 			echo nl2br($$attr_name);
 		break;
 
-
+	case 'ace':
+	case 'code':
+// 	    echo '<div class="ace-editor editor">';
+//         echo '<textarea style="display:none" name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
+//         echo '<div class="ace-editor"textarea name="'.$attr_name.'_ace"></div>';
+//         echo '<textarea name="'.$attr_name.'" class="editor ace-editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
+           echo '<textarea name="'.$attr_name.'" data-mode="'.$attr_mode.'" class="code-editor">'.$$attr_name.'</textarea>';
+// 	    echo '</div>';
+        break;
+	            
+	            
 	case 'dom':
 	case 'tree':
 		

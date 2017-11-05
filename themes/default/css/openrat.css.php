@@ -1978,3 +1978,26 @@ div#workbench div.panel li.action.dirty
 	font-weight: bold;
 }
  
+ 
+div.line.filedropzone > div.input
+{
+	width: 100%;
+	height: 100px;
+	
+	background-color:<?php echo $_GET['title_text_color']; ?>;
+	border:1px dotted <?php echo $_GET['text_color']; ?>;
+}
+
+/* ACE-Editor */
+textarea.code-editor {
+	display:none;  /* Textarea nicht anzeigen, da durch Editor ersetzt */
+}
+div.code-editor
+{
+ 	position: absolute;
+    height: 500px;
+    width: 100%;
+    //background: red!important;
+    font-size:14px;
+    z-index: 256;
+}

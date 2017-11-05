@@ -3,7 +3,7 @@
 ; default-value could be nothing (blank), a string or "*" for required attributes
 
 
-output   =
+output   = 
 button   = type:submit,src,class:ok,value:ok,text:button_ok
 char     = type:*
 checkbox = default:false,readonly:false,name:*
@@ -18,7 +18,7 @@ frameset-page=menu
 group    = title,icon,open:true,class
 hidden   = name:*,default
 header   = name:,views,back:false
-editor   = name:*,type:*
+editor   = name:*,type:*,mode
 else     =
 if       = equals,value,not,empty,present,contains,greaterthan,lessthan,true,false
 image    = config,file,url,icon,align:left,type,elementtype,fileext,tree,notice,size,title
@@ -43,6 +43,7 @@ set      = var:*,value,key
 table    = class,width:100%,space:0px,padding:0px,widths,rowclasses,columnclasses
 text     = title,class:text,var,text,key,textvar,raw,maxlength,value,suffix,prefix,accesskey,escape:true,type,cut:both
 tree     = tree
-upload   = name:*,class:upload,maxlength,size:40
+upload   = name:*,class:upload,maxlength,size:40,multiple:false
 user     = user
 window   = title,name,icon,widths,width:93%,rowclasses:oddCOMMAeven,columnclasses:1COMMA2COMMA3
+qrcode   = value

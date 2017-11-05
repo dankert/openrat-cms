@@ -686,9 +686,36 @@ function registerViewEvents( viewEl )
 		$(this).removeAttr('data-qrcode');
 		
 		$(this).qrcode( { render : 'div',
-			              text   : qrcodetext,
-			              fill   : 'currentColor' } );
+			text   : qrcodetext,
+			fill   : 'currentColor' } );
 	} );
+
+	// ACE-Editor anzeigen
+	$(viewEl).find("textarea.code-editor").each( function() {
+		var textareaEl = $(this);
+		var aceEl = $("<div class=\"code-editor\" />").insertAfter(textareaEl);
+		var editor = ace.edit( aceEl.get(0) );
+		var mode = textareaEl.data('mode');
+		
+		editor.renderer.setShowGutter(true);
+		editor.setTheme("ace/theme/github");
+		
+//		editor.setReadOnly(true);
+		editor.getSession().setTabSize(4);
+		editor.getSession().setUseWrapMode(true);
+		editor.setHighlightActiveLine(true);
+		editor.getSession().setValue( textareaEl.val() );
+		editor.getSession().setMode("ace/mode/" + mode);
+		editor.getSession().on('change', function(e) {
+			textareaEl.val(editor.getSession().getValue());
+		} );
+		
+		// copy back to textarea on form submit...
+		textareaEl.closest('form').submit(function() {
+			textareaEl.val( editor.getSession().getValue() );
+		})		
+	} );
+	
 
 }
 
