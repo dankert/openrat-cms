@@ -428,6 +428,7 @@ class Http
 		if	( is_object( $db ) )
 			$db->rollback();
 
+		Logger::warn($message."\n".$reason);
 		Http::sendStatus(501,'Internal Server Error',$message,$reason);
 	}
 	
@@ -444,6 +445,7 @@ class Http
 	 */
 	public static function notAuthorized($message='')
 	{
+	    Logger::warn("Security warning: $message");
 		Http::sendStatus(403,'Not authorized',$message);
 	}
 	
