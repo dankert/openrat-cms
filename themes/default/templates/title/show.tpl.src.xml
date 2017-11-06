@@ -3,7 +3,7 @@
 
 	<!-- Info-Meldung anzeigen (sofern vorhanden -->
 	<if present="dbname">
-		<part class="toolbar-icon" title="message:database">
+		<part class="toolbar-icon">
 			<image icon="database" align="left"></image>
 			<text raw="_" />
 			<part class="arrow-down" />
@@ -15,7 +15,7 @@
 			</part>
 		</part>
 	</if>
-
+ 
 
 	<!-- Menü: Datei -->
 	<if true="method:userIsLoggedIn">
