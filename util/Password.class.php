@@ -3,13 +3,12 @@
 define('OR_PASSWORD_ALGO_PLAIN',0);
 define('OR_PASSWORD_ALGO_CRYPT',1);
 define('OR_PASSWORD_ALGO_MD5'  ,2);
+define('OR_PASSWORD_ALGO_PHP_PASSWORD_HASH',3);
+define('OR_PASSWORD_ALGO_SHA1'  ,4);
 
 
 /**
- * Hashfunktion für Passwörter.
- * 
- * Als Hashfunktion wird Bcrypt verwendet. Falls Bcrypt nicht zur
- * Verfügung steht, erfolgt ein Fallback auf MD5.
+ * Sicherheitsfunktionen für Passwörter.
  * 
  * @author dankert
  *
@@ -21,9 +20,17 @@ class Password
 	 */
 	static public function bestAlgoAvailable()
 	{
-		if	( function_exists('crypt') && defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1 )
+		if	( function_exists('password_hash') )
+		{
+			return OR_PASSWORD_ALGO_PHP_PASSWORD_HASH;
+		}
+		elseif	( function_exists('crypt') && defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1 )
 		{
 			return OR_PASSWORD_ALGO_CRYPT;
+		}
+		elseif	( function_exists('sha1') )
+		{
+			return OR_PASSWORD_ALGO_SHA1;
 		}
 		elseif	( function_exists('md5') )
 		{
@@ -34,26 +41,27 @@ class Password
 			return OR_PASSWORD_ALGO_PLAIN;
 		}
 	}
+
 	
-		
+	
 	/**
 	 * Hashen eines Kennwortes mit Bcrypt (bzw. MD5).
 	 * @param $password
-	 * @param $algo Algo
+	 * @param $algo int Algo
 	 * @param $cost Kostenfaktor: Eine Ganzzahl von 4 bis 31.
 	 */
 	static public function hash( $password,$algo,$cost=10 )
 	{
 		switch( $algo )
 		{
-			case OR_PASSWORD_ALGO_CRYPT:
+			case OR_PASSWORD_ALGO_PHP_PASSWORD_HASH:
+
+			    return password_hash( $password, PASSWORD_BCRYPT,array('cost'=>$cost) );
 				
-				$chars = './ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-				$salt  = '';
-				for( $i = 1; $i <= 22; $i++ )
-					$salt .= $chars[ rand(0,63) ];
-			
-				// 
+			case OR_PASSWORD_ALGO_CRYPT:
+
+				$salt  = Password::randomHexString(10); // this should be cryptographically safe.
+				
 				if	( version_compare(PHP_VERSION, '5.3.7') >= 0 )
 					$algo = '2y';
 				else
@@ -67,6 +75,9 @@ class Password
 				
 			case OR_PASSWORD_ALGO_MD5:
 				return md5($password); // ooold.
+				
+			case OR_PASSWORD_ALGO_SHA1:
+				return sha1($password); //
 				
 			case OR_PASSWORD_ALGO_PLAIN:
 				return $password; // you want it, you get it.
@@ -84,38 +95,72 @@ class Password
 	{
 		switch( $algo )
 		{
-			case OR_PASSWORD_ALGO_MD5:
-				return $hash == md5($password);
+			case OR_PASSWORD_ALGO_PHP_PASSWORD_HASH:
+			    // This is 'timing attack safe' as the documentation says.
+				return password_verify($password,$hash);
 				
 			case OR_PASSWORD_ALGO_CRYPT:
 		
 				if	( function_exists('crypt') )
 				{
-					// Workaround: Die Spalte 'password' ist z.Zt. nur 50 Stellen lang, daher
+					// Workaround: Die Spalte 'password' war frueher nur 50 Stellen lang, daher
 					// wird der mit crypt() erzeugte Hash auf die Länge des gespeicherten Hashes
-					// gekürzt. Falls die Spalte später länger ist, wirkt automatisch die volle
-					// Hash-Länge.
-					return $hash == substr(crypt($password,$hash),0,strlen($hash));
+					// gekürzt. Mit aktuellen Versionen gespeicherte Hashes haben die volle Länge.
+					return Password::equals( $hash, substr(crypt($password,$hash),0,strlen($hash)) );
 				}
 				else
 				{
-					throw new Exception("Modular crypt format is not supported by this PHP version (no function 'crypt()')");
+					throw new LogicException("Modular crypt format is not supported by this PHP version (no function 'crypt()')");
 				}
+
+			case OR_PASSWORD_ALGO_SHA1:
+			    return Password::equals( $hash, sha1($password) );
+				
+			case OR_PASSWORD_ALGO_MD5:
+			    return Password::equals( $hash, md5($password) );
 				
 			case OR_PASSWORD_ALGO_PLAIN:
-				return $hash == $password;
+			    return Password::equals( $hash, $password );
 		}
 	}
 	
+	
+	/**
+	 * Creates cryptographic safe random bytes in HEX format.
+	 * @param int $bytesCount
+	 * @return string HEX
+	 */
 	static public function randomHexString( $bytesCount )
+	{
+		return bin2hex( Password::randomBytes($bytesCount) );
+	}
+	
+
+	/**
+	 * Creates a cryptographic safe number.
+	 * @param int $bytesCount
+	 * @return int
+	 */
+	static public function randomNumber( $bytesCount )
+	{
+   		return bindec( Password::randomBytes($bytesCount) );
+	}
+	
+
+	/**
+	 * Creates cryptographic safe random bytes.
+	 * @param int $bytesCount
+	 * @return string Binary bytes
+	 */
+	static public function randomBytes( $bytesCount )
 	{
 		if	( function_exists('random_bytes') )
 		{
-			return bin2hex( random_bytes($bytesCount) );
+			return random_bytes($bytesCount);
 		}
 		elseif	( function_exists('openssl_random_pseudo_bytes') )
 		{
-			return bin2hex( openssl_random_pseudo_bytes($bytesCount) );
+			return openssl_random_pseudo_bytes($bytesCount);
 		}
 		else
 		{
@@ -125,8 +170,48 @@ class Password
     		{
 		        $buf .= chr(mt_rand(0, 255));
 		    }
-    		return bin2hex($buf);
+    		return $buf;
 		}
+	}
+	
+
+	/**
+	 * Time-safe Compare of 2 strings.
+	 * 
+	 * @param String $known
+	 * @param String $user
+	 * @return boolean true, if equal
+	 */
+	static private function equals( $known, $user )
+	{
+        if( function_exists('hash_equals'))
+        {
+            return hash_equals($known, $user);
+        }
+        else
+        {
+            if  ( strlen($known) != strlen($user) )
+            {
+                return false;
+            }
+            else
+            {
+                $res = $known ^ $user;
+                $ret = 0;
+                for($i = strlen($res) - 1; $i >= 0; $i--) $ret |= ord($res[$i]);
+                return !$ret;
+            }
+        }
+	}
+	
+
+	/**
+	 * Cryptographic delay of execution.
+	 * Delay is from 0 to 983 milliseconds, Steps of 15 microseconds, which would be very heavy to attack over a network.
+	 */
+	static public function delay()
+	{
+	    time_nanosleep(0, Password::randomNumber(2)*15*1000); // delay: 0-983 ms 
 	}
 }
 ?>
