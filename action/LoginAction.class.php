@@ -967,13 +967,14 @@ class LoginAction extends Action
 			}			
 		}
 		
+		usleep(hexdec(Password::randomHexString(1))); // delay: 0-255 ms
 		
 	    $ip = getenv("REMOTE_ADDR");
 		
 		if	( !$loginOk )
 		{
 			// Anmeldung nicht erfolgreich
-			sleep(3);
+			
 			Logger::debug("Login failed for user '$loginName' from IP $ip");
 			
 			if	( $mustChangePassword )
@@ -1927,6 +1928,7 @@ class LoginAction extends Action
 
 		$user = User::loadWithName( $this->getRequestVar("username") );
 		//		Html::debug($user);
+		Password::delay();
 		if	( $user->isValid() )
 		{
 			srand ((double)microtime()*1000003);
@@ -1949,7 +1951,7 @@ class LoginAction extends Action
 			// eines Benutzernamens nicht von au?en gepr?ft werden kann.
 			// 
 			$this->addNotice('user',$this->getRequestVar("username"),'mail_sent');
-			sleep(5);
+
 		}
 		
 		$this->setSessionVar("password_commit_name",$user->name);
