@@ -40,7 +40,6 @@ class ProjectAction extends Action
 
 	function editPost()
 	{
-		sleep(2);
 		if	( $this->getRequestVar('name') != '')
 		{
 			$this->project->name                = $this->getRequestVar('name'               ,OR_FILTER_ALPHANUM);
@@ -118,8 +117,9 @@ class ProjectAction extends Action
 	 */
 	function editView()
 	{
-		// Projekt laden
-		$this->setTemplateVars( $this->project->getProperties() );
+		$extraProperties = array('rootobjectid'=>$this->project->getRootObjectId());
+		
+		$this->setTemplateVars( $this->project->getProperties() + $extraProperties );
 
 	}
 	
