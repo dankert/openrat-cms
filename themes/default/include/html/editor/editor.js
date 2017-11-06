@@ -58,9 +58,9 @@ $(document).on('orViewLoaded',function(event, data) {
 	
 	
 	// ACE-Editor anzeigen
-	$(event.target).find("textarea.code-editor").each( function() {
+	$(event.target).find("textarea.editor__code-editor").each( function() {
 		var textareaEl = $(this);
-		var aceEl = $("<div class=\"code-editor\" />").insertAfter(textareaEl);
+		var aceEl = $("<div class=\"editor__code-editor\" />").insertAfter(textareaEl);
 		var editor = ace.edit( aceEl.get(0) );
 		var mode = textareaEl.data('mode');
 		

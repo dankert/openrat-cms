@@ -56,32 +56,27 @@ switch( $attr_type )
 {
 	case 'fckeditor':
 	case 'html':
-		echo '<textarea name="'.$attr_name.'" class="editor htmleditor" id="pageelement_edit_editor">'.$$attr_name.'</textarea>';
+		echo '<textarea name="'.$attr_name.'" class="editor__html-editor" id="pageelement_edit_editor">'.$$attr_name.'</textarea>';
 
 		break;
 	
 	case 'wiki':
 		$conf_tags = $conf['editor']['text-markup'];
 		
-		?><textarea name="<?php echo $attr_name ?>" class="editor wikieditor"><?php echo $$attr_name ?></textarea><?php
+		?><textarea name="<?php echo $attr_name ?>" class="editor__wiki-editor"><?php echo $$attr_name ?></textarea><?php
 		break;
 		
 	case 'text':
 	case 'raw':
 		if	( $this->isEditMode() )
-			echo '<textarea name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
+			echo '<textarea name="'.$attr_name.'" class="editor__text-editor">'.$$attr_name.'</textarea>';
 		else
 			echo nl2br($$attr_name);
 		break;
 
 	case 'ace':
 	case 'code':
-// 	    echo '<div class="ace-editor editor">';
-//         echo '<textarea style="display:none" name="'.$attr_name.'" class="editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
-//         echo '<div class="ace-editor"textarea name="'.$attr_name.'_ace"></div>';
-//         echo '<textarea name="'.$attr_name.'" class="editor ace-editor" style="width:100%;height:300px;">'.$$attr_name.'</textarea>';
-           echo '<textarea name="'.$attr_name.'" data-mode="'.$attr_mode.'" class="code-editor">'.$$attr_name.'</textarea>';
-// 	    echo '</div>';
+           echo '<textarea name="'.$attr_name.'" data-mode="'.$attr_mode.'" class="editor__code-editor">'.$$attr_name.'</textarea>';
         break;
 	            
 	            

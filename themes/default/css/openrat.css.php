@@ -381,20 +381,6 @@ a:hover
 }
 
 
-a.editorlink:active,
-a.editorlink:hover
-{
-	font-weight:normal;
-	text-decoration:none;
-}
-
-a.editorlink:link,
-a.editorlink:visited
-{
-	font-weight:normal;
-	text-decoration:none;
-}
-
 
 /* Submenu-Entrys */
 body.menu tr.menu td table tr td,
@@ -612,10 +598,6 @@ table.calendar td
 	border: 1px dotted;
 }
 
-textarea.editor
-{
-	width:100%;
-}
 
 label,
 .clickable
@@ -1939,16 +1921,3 @@ div.line.filedropzone > div.input
 	border:1px dotted <?php echo $_GET['text_color']; ?>;
 }
 
-/* ACE-Editor */
-textarea.code-editor {
-	display:none;  /* Textarea nicht anzeigen, da durch Editor ersetzt */
-}
-div.code-editor
-{
- 	position: absolute;
-    height: 500px;
-    width: 100%;
-    //background: red!important;
-    font-size:14px;
-    z-index: 256;
-}
