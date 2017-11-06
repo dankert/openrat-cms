@@ -1,5 +1,7 @@
 <?php 
 
+define('CMS_READ'  ,'GET' );
+define('CMS_WRITE' ,'POST');
 
 class CMS extends Client
 {
@@ -9,21 +11,69 @@ class CMS extends Client
 	function login($user, $password,$dbid )
 	{
 		
-		$this->action    = 'login';
-		$this->subaction = 'login';
-		$this->method    = 'GET';
+		// Erster Request der Sitzung muss ein GET-Request sein.
+		// Hier wird auch der Token gelesen.
+		$result = $this->call(CMS_READ,'login','login' );
 		
-		$result = $this->call('GET','login','login' );
-		// TODO: Read database Ids from $result
+		$result = $this->call(CMS_WRITE,'login','login',array('login_name'=>$user,'login_password'=>$password,'dbid'=>$dbid) );
 		
-		$this->action    = 'login';
-		$this->subaction = 'login';
-		$this->method    = 'POST';
-		
-		$result = $this->call('POST','login','login',array('login_name'=>$user,'login_password'=>$password,'dbid'=>$dbid) );
-		
-		return( $result['success'] == 'true' );
+		if	( $result['success'] != 'true' ) {
+			throw new Exception( 'Login failed. '.print_r($result['notices'],true));
+		}
 	}
+	
+	
+	function projectlist()
+	{
+		$result = $this->call(CMS_READ,'projectlist','edit' );
+
+// 		Logger::debug( print_r($result,true) );
+		return( $result['output'] );
+	}
+
+	
+	function project($projectid)
+	{
+		$result = $this->call(CMS_READ,'project','edit',array('id'=>$projectid) );
+	
+		return( $result['output'] );
+	}
+	
+	function folder($id)
+	{
+		$result = $this->call(CMS_READ,'folder','edit',array('id'=>$id) );
+	
+		return( $result['output'] );
+	}
+	
+	function page($id)
+	{
+		$result = $this->call(CMS_READ,'page','edit',array('id'=>$id) );
+	
+		return( $result['output'] );
+	}
+	
+	function link($id)
+	{
+		$result = $this->call(CMS_READ,'link','edit',array('id'=>$id) );
+	
+		return( $result['output'] );
+	}
+	
+	function file($id)
+	{
+		$result = $this->call(CMS_READ,'file','edit',array('id'=>$id) );
+	
+		return( $result['output'] );
+	}
+
+	function filevalue($id)
+	{
+		$result = $this->call(CMS_READ,'file','show',array('id'=>$id) );
+	
+		return( $result['output'] );
+	}
+	
 }
 
 ?>

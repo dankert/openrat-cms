@@ -29,6 +29,8 @@
 if (!defined('E_STRICT'))
 	define('E_STRICT', 2048);
 
+define('TIME_20000101',946681200);
+
 
 $defConfig = array('dav.enable'               => false,
                    'dav.create'               => true,
@@ -72,14 +74,19 @@ $dav->$davMethodName();
 
 class WebDAV
 {
+	/**
+	 * CMS-Client
+	 * @var CMS
+	 */
+	private $client;
+	 
 	// Zahlreiche Instanzvariablen, die im Konstruktor
 	// beim Zerlegen der Anfrag gef�llt werden.
 	var $defaultSubAction = 'show';
 	var $database;
 	var $depth;
-	var $project;
-	var $folder;
-	var $obj;
+	var $projectid;
+	var $objectid;
 	var $filename;
 	var $pathnames = array();
 	var $uri;
@@ -97,7 +104,7 @@ class WebDAV
 	
 	/**
 	 * Im Kontruktor wird der Request analysiert und ggf. eine Authentifzierung
-	 * durchgefuehrt.
+	 * durchgefuehrt. Anschließend wird eine interne Methode mit dem Namen davXXX() aufgerufen.
 	 */
 	function WebDAV()
 	{
@@ -145,14 +152,14 @@ class WebDAV
 		
 		session_start();
 		if	( !empty($_SESSION['DAV_CLIENT']) )
-			$client  = $_SESSION['DAV_CLIENT'];
+			$this->client  = $_SESSION['DAV_CLIENT'];
 		else
 		{
-			$client  = new CMS();
-			$_SESSION['DAV_CLIENT'] = $client;
+			$this->client  = new CMS();
+			$_SESSION['DAV_CLIENT'] = $this->client;
 		}
 
-		if	( $client->login )
+		if	( $this->client->login )
 		{
 			// Benutzer ist bereits im CMS eingeloggt.
 		}
@@ -168,9 +175,11 @@ class WebDAV
 					$username = $_SERVER['PHP_AUTH_USER'];
 					$pass     = $_SERVER['PHP_AUTH_PW'  ];
 					
-					$loginOk = $client->login($username, $pass, $config['cms.database']);
-					if	( !$loginOk) {
-						// Login falsch
+					try {
+						$this->client->login($username, $pass, $config['cms.database']);
+					}
+					catch( Exception $e )
+					{
 						$this->httpStatus('401 Unauthorized');
 						header('WWW-Authenticate: Basic realm="'.$config['dav.realm'].'"');
 						echo  'Failed login for user '.$username;
@@ -182,7 +191,7 @@ class WebDAV
 					$username = $config['cms.user'];
 					$pass     = $config['cms.password'];
 					
-					$loginOk = $client->login($username, $pass, $config['cms.database']);
+					$loginOk = $this->client->login($username, $pass, $config['cms.database']);
 					if	( !$loginOk ) {
 						$this->httpStatus('500 Internal Server Error');
 						echo 'Could not authenticate user '.$username;
@@ -207,20 +216,24 @@ class WebDAV
 		}
 		
 		
-		$this->fullSkriptName = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'].'/';	
+		$scriptName = $_SERVER['SCRIPT_NAME'];
+		
+// 		if	( substr($scriptName,-10) == '/index.php' )
+// 			$scriptName = substr($scriptName,0,-10);
+		
+		$this->fullSkriptName = 'http://'.$_SERVER['HTTP_HOST'].$scriptName.'/';	
 
 		// URL parsen.
-		$uri = substr($_SERVER['REQUEST_URI'],strlen($_SERVER['SCRIPT_NAME']));
+		$uri = substr($_SERVER['REQUEST_URI'],strlen($scriptName));
 
 		$uri = $this->parseURI( $uri );
-		$this->requestType = $uri['type'   ];
-		$this->folder      = $uri['folder' ];
-		$this->obj         = $uri['object' ];
-		$this->project     = $uri['project'];
+		$this->requestType = $uri['type'     ];
+		$this->objectid    = $uri['objectid' ];
+		$this->projectid   = $uri['projectid'];
 
-		$this->fullSkriptName .= implode('/',$uri['path']);
+// 		$this->fullSkriptName .= implode('/',$uri['path']);
 		
-		if	( is_object($this->obj) && $this->obj->isFolder )	
+		if	( $this->requestType == 'folder' )	
 			$this->fullSkriptName .= '/';	
 
 		/*
@@ -234,8 +247,7 @@ class WebDAV
 		 * http://foo.bar/blah/ in it.  In general clients SHOULD use the "/"
 		 * form of collection names."
 		 */
-		if	( is_object($this->obj)       &&
-			  $this->obj->isFolder        &&
+		if	( $this->request == 'folder'  &&
 			  $_GET['subaction'] == 'get' &&
 			  substr($_SERVER['REQUEST_URI'],strlen($_SERVER['REQUEST_URI'])-1 ) != '/' )
 		{
@@ -310,11 +322,11 @@ class WebDAV
 	 */	
 	public function davHEAD()
 	{
-		if	( $this->obj == null )
+		if	( $this->objectid == null )
 		{
 			$this->httpStatus( '404 Not Found' );
 		}
-		elseif	( $this->obj->isFolder )
+		elseif	( $this->requestType == 'folder' )
 		{
 			$this->httpStatus( '200 OK' );
 		}
@@ -340,59 +352,61 @@ class WebDAV
 	 */	
 	public function davGET()
 	{
-		if	( $this->obj->isFolder )
-			$this->getDirectory();
-		elseif( $this->obj->isPage )
+		switch( $this->requestType )
 		{
-			$this->httpStatus( '200 OK' );
+			case 'root':
+			case 'folder':
+				$this->getDirectoryIndex();
+				break;
+				
+			case 'page':
+				$this->httpStatus( '200 OK' );
+				header('Content-Type: text/html');
 			
-			header('Content-Type: text/html');
+				echo '<html><head><title>OpenRat WEBDAV Access</title></head>';
+				echo '<body>';
+				echo '<h1>'.$this->requestType.'</h1>';
+				echo '<pre>';
+				echo 'No Content available';
+				echo '</pre>';
+				echo '</body>';
+				echo '</html>';
+				break;
+				
+			case 'link':
+				$this->httpStatus( '200 OK' );
 			
-			$page = new Page( $this->obj->objectid );
-			$page->load();
-			echo '<html><head><title>OpenRat WEBDAV Access</title></head>';
-			echo '<body>';
-			echo '<h1>'.$page->full_filename().'</h1>';
-			echo '<pre>';
-			echo 'No Content available';
-			echo '</pre>';
-			echo '</body>';
-			echo '</html>';
-		}
-		elseif( $this->obj->isLink )
-		{
-			$this->httpStatus( '200 OK' );
-			
-			header('Content-Type: text/plain');
-			
-			$link = new Link( $this->obj->objectid );
-			$link->load();
-			echo 'url: '      .$link->url           ."\n";
-			echo 'target-id: '.$link->linkedObjectId."\n";
-		}
-		elseif( $this->obj->isFile )
-		{
-			$this->httpStatus( '200 OK' );
-			
-			$file = new File( $this->obj->objectid );
-			$file->load();
-			
-			header('Content-Type: '.$file->mimeType() );
-			header('X-File-Id: '.$file->fileid );
-	
-			// Angabe Content-Disposition
-			// - Bild soll "inline" gezeigt werden
-			// - Dateiname wird benutzt, wenn der Browser das Bild speichern moechte
-			header('Content-Disposition: inline; filename='.$file->filenameWithExtension() );
-			header('Content-Transfer-Encoding: binary' );
-			header('Content-Description: '.$file->name );
-	
-			$file->write(); // Bild aus Datenbank laden und in tempor�re Datei schreiben
-
-			// Groesse des Bildes in Bytes
-			// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
-			header('Content-Length: '.filesize($file->tmpfile()) );
-			readfile( $file->tmpfile() );
+				header('Content-Type: text/plain');
+				
+				$link = $this->client->link( $this->objectid );
+				echo 'url: '      .$link['url']           ."\n";
+				echo 'target-id: '.$link['linkedObjectId']."\n";
+				
+				break;
+				
+			case 'file':
+				$this->httpStatus( '200 OK' );
+				
+				$file      = $this->client->file     ( $this->objectid );
+				$filevalue = $this->client->filevalue( $this->objectid );
+				
+				header('Content-Type: '.$file['mimetype']);
+				header('X-File-Id: '   .$this->objectid );
+		
+				// Angabe Content-Disposition
+				// - Bild soll "inline" gezeigt werden
+				// - Dateiname wird benutzt, wenn der Browser das Bild speichern moechte
+				header('Content-Disposition: inline; filename='.$file['filename'].'.'.$file['extension'] );
+				header('Content-Transfer-Encoding: binary' );
+				header('Content-Description: '.$file['filename'].'.'.$file['extension'] );
+		
+				// Groesse des Bildes in Bytes
+				// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
+				header('Content-Length: '.$file['size'] );
+				
+				echo base64_decode( $filevalue['value'] );
+				
+				break;
 		}
 	}
 	
@@ -401,48 +415,55 @@ class WebDAV
 	/**
 	 * Erzeugt ein Unix-�hnliche Ausgabe des Verzeichnisses als HTML.
 	 */
-	private function getDirectory()
+	private function getDirectoryIndex()
 	{
 		$this->httpStatus( '200 OK' );
 		
 		// Verzeichnis ausgeben
 		header('Content-Type: text/html');
 		$nl = "\n";
+		
+		
+		
+
 		$titel = 'Index of '.htmlspecialchars($this->fullSkriptName);
-        $format = "%15s  %-19s  %-s\n";
+		$format = "%15s  %-19s  %-s\n";
 		
 		echo '<html><head><title>'.$titel.'</title></head>';
 		echo '<body>';
-        echo '<h1>'.$titel.'</h1>'.$nl;
+		echo '<h1>'.$titel.'</h1>'.$nl;
 		echo '<pre>';
-
-        printf($format, "Size", "Last modified", "Filename");
-
-		if	( $this->requestType == 'projectlist' )
+		
+		printf($format, "Size", "Last modified", "Filename");
+		
+		
+		switch( $this->requestType )
 		{
-			foreach( Project::getAll() as $projectName )
-			{
-				$objektinhalt = array();
-				$z = 30*365.25*24*60*60;
-				$objektinhalt['createdate'    ] = $z;
-				$objektinhalt['lastchangedate'] = $z;
-				$objektinhalt['size'          ] = 1;
-				echo '<a href="'.$this->fullSkriptName.'/'.$projectName.'">   </a>';
-			}
-		}
-		elseif( $this->requestType == 'object' )  // Verzeichnisinhalt
-		{
-			$objects = $this->folder->getObjects();
-
-			foreach( $objects as $object  )
-			{
-				printf($format, 
-				       number_format(1),
-				       strftime("%Y-%m-%d %H:%M:%S",$object->lastchangeDate ),
-				       '<a href="'.$object->filename.'">'.$object->filename.'</a>');
-				echo $nl;
-			}
-		}
+			case 'root':  // Projektliste
+		
+				$result = $this->client->projectlist();
+				$projects = $result['projects'];
+				foreach( $projects as $projectid=>$p )
+				{
+					echo '<a href="'.$p['name'].'">   </a>';
+				}
+				break;						
+		
+			case 'folder':  // Verzeichnisinhalt
+		
+				$folder = $this->client->folder( $this->objectid );
+					
+				foreach( $folder['object'] as $object )
+				{
+					
+					printf($format,
+						number_format(1),
+						strftime("%Y-%m-%d %H:%M:%S",$object['date'] ),
+						'<a href="'.$object['filename'].'">'.$object['filename'].'</a>');
+					echo $nl;
+						
+				}
+		}		
 		
 		echo '</pre>';
 		echo '</body>';
@@ -835,7 +856,7 @@ class WebDAV
 		else
 		{
 			// Fuer andere Objekttypen (Links, Seiten) ist kein PUT moeglich.
-			Logger::warn('PUT only available for files, pages and links are ignored' );
+			Logger::warn('PUT only available for files. Pages and links are ignored' );
 			$this->httpStatus('405 Not Allowed' );
 		}
 	}
@@ -856,7 +877,7 @@ class WebDAV
 	{
 		switch( $this->requestType )
 		{
-			case 'projectlist':  // Projektliste
+			case 'root':  // Projektliste
 				
 				$inhalte = array();
 				
@@ -871,20 +892,16 @@ class WebDAV
 
 				$inhalte[] = $objektinhalt;
 				
-				foreach( Project::getAll() as $projectid=>$projectName )
+				$result = $this->client->projectlist();
+				$projects = $result['projects'];
+				foreach( $projects as $projectid=>$p )
 				{
-					$project = new Project( $projectid );
-					$rootObjectId = $project->getRootObjectId();
-					$folder = new Folder( $rootObjectId );
-					$folder->load();
-					
 					$objektinhalt = array();
-					$z = 30*365.25*24*60*60;
-					$objektinhalt['createdate'    ] = $z;
-					$objektinhalt['lastchangedate'] = $folder->lastchangeDate;
-					$objektinhalt['size'          ] = $project->size();
-					$objektinhalt['name'          ] = $this->fullSkriptName.$projectName.'/';
-					$objektinhalt['displayname'   ] = $projectName;
+					$objektinhalt['createdate'    ] = TIME_20000101;
+					$objektinhalt['lastchangedate'] = TIME_20000101;
+					$objektinhalt['size'          ] = 1;
+					$objektinhalt['name'          ] = $this->fullSkriptName.$p['name'].'/';
+					$objektinhalt['displayname'   ] = $p['name'];
 					$objektinhalt['type']           = 'folder';
 					$inhalte[] = $objektinhalt;
 				}
@@ -892,109 +909,109 @@ class WebDAV
 				$this->multiStatus( $inhalte );
 				break;
 
-			case 'object':  // Verzeichnisinhalt
+			case 'folder':  // Verzeichnisinhalt
+				
+				$folder = $this->client->folder( $this->objectid );
 			
-				if	( $this->obj == null )
-				{
-					// Objekt existiert nicht.
-					Logger::trace( 'WEBDAV: PROPFIND of non-existent object');
-					$this->httpStatus('404 Not Found');
-					return;
-				}
-				elseif	( $this->obj->isFolder )
-				{
-					if	( ! $this->obj->hasRight( ACL_READ ))
-					{
-						Logger::debug( 'Folder '.$this->obj->objectid.': access denied');
-						$this->httpStatus('403 Forbidden');
-					}
-					
-					$inhalte = array();
+				$inhalte = array();
 
-					$objektinhalt = array();
-					$objektinhalt['createdate'    ] = $this->obj->createDate;
-					$objektinhalt['lastchangedate'] = $this->obj->lastchangeDate;
-					$objektinhalt['name'          ] = $this->fullSkriptName;
-					$objektinhalt['displayname'   ] = basename($this->fullSkriptName);
-					$objektinhalt['type'          ] = 'folder';
-					$objektinhalt['size'          ] = 0;
-					$inhalte[] = $objektinhalt;
+				$objektinhalt = array();
+				$objektinhalt['createdate'    ] = $folder['properties']['create_date'];
+				$objektinhalt['lastchangedate'] = $folder['properties']['lastchange_date'];
+				$objektinhalt['name'          ] = $this->fullSkriptName;
+				$objektinhalt['displayname'   ] = $folder['properties']['filename'];
+				$objektinhalt['type'          ] = 'folder';
+				$objektinhalt['size'          ] = 0;
+
+				$inhalte[] = $objektinhalt;
 					
-					if	( $this->depth > 0 )
+				if	( $this->depth > 0 )
+				{
+					
+					foreach( $folder['object'] as $object )
 					{
-						$objects = $this->folder->getObjects();
-						foreach( $objects as $object  )
+						$objektinhalt = array();
+						$objektinhalt['createdate'    ] = $object['date'];
+						$objektinhalt['lastchangedate'] = $object['date'];
+						$objektinhalt['displayname'   ] = $object['filename'];
+
+						switch( $object['type'] )
 						{
-							if	( ! $object->hasRight( ACL_READ ))
-								continue;
-							
-							//$object->loadRaw();
-							$objektinhalt = array();
-							$objektinhalt['createdate'    ] = $object->createDate;
-							$objektinhalt['lastchangedate'] = $object->lastchangeDate;
-							$objektinhalt['displayname'   ] = $object->filename;
-
-							switch( $object->getType() )
-							{
-								
-								case OR_TYPE_FOLDER:
-									$objektinhalt['name'] = $this->fullSkriptName.$object->filename.'/';
-									$objektinhalt['type'] = 'folder';
-									$objektinhalt['size'] = 0;
-									$inhalte[] = $objektinhalt;
-									break;
-								case OR_TYPE_FILE:
-									$objektinhalt['name'] = $this->fullSkriptName.$object->filename;
-									$objektinhalt['type'] = 'file';
-									$file = new File($object->objectid);
-									$file->load();
-									$objektinhalt['size'] = $file->size;
-									$objektinhalt['mime'] = 'application/x-non-readable';
-									$inhalte[] = $objektinhalt;
-									break;
-								case OR_TYPE_LINK:
-									$objektinhalt['name'] = $this->fullSkriptName.$object->filename;
-									$objektinhalt['type'] = 'file';
-									$objektinhalt['size'] = 0;
-									$objektinhalt['mime'] = 'application/x-non-readable';
-									$inhalte[] = $objektinhalt;
-									break;
-								case OR_TYPE_PAGE:
-									$objektinhalt['name'] = $this->fullSkriptName.$object->filename;
-									$objektinhalt['type'] = 'file';
-									$objektinhalt['size'] = 0;
-									$inhalte[] = $objektinhalt;
-									break;
-								default:
-							}
+							case 'folder':
+								$objektinhalt['name'] = $this->fullSkriptName.$object['filename'].'/';
+								$objektinhalt['type'] = 'folder';
+								$objektinhalt['size'] = 0;
+								$inhalte[] = $objektinhalt;
+								break;
+							case 'file':
+								$objektinhalt['name'] = $this->fullSkriptName.$object['filename'];
+								$objektinhalt['type'] = 'file';
+								$objektinhalt['size'] = $object['size'];
+								$objektinhalt['mime'] = 'application/x-non-readable';
+								$inhalte[] = $objektinhalt;
+								break;
+							case 'link':
+								$objektinhalt['name'] = $this->fullSkriptName.$object['filename'];
+								$objektinhalt['type'] = 'file';
+								$objektinhalt['size'] = 0;
+								$objektinhalt['mime'] = 'application/x-non-readable';
+								$inhalte[] = $objektinhalt;
+								break;
+							case 'page':
+								$objektinhalt['name'] = $this->fullSkriptName.$object['filename'];
+								$objektinhalt['type'] = 'file';
+								$objektinhalt['size'] = 0;
+								$inhalte[] = $objektinhalt;
+								break;
+							default:
 						}
 					}
-					Logger::trace( 'WEBDAV: PROPFIND-2');
-					
-//					if	( count($inhalte)==0 )
-//						$inhalte[] = array('createdate'=>0,'lastchangedate'=>0,'name'=>'empty','size'=>0,'type'=>'file');
-						
-					Logger::trace('Anzahl Dateien:'.count($inhalte));
-					$this->multiStatus( $inhalte );
 				}
-				else
-				{
-					$object = $this->obj;
-					Logger::trace( 'WEBDAV: PROPFIND of file');
-					$objektinhalt = array();
-					$objektinhalt = array();
-					$objektinhalt['name']           = $this->fullSkriptName.'/'.$object->filename.'/';
-					$objektinhalt['displayname']    = $object->filename;
-					$objektinhalt['createdate'    ] = $object->createDate;
-					$objektinhalt['lastchangedate'] = $object->lastchangeDate;
-					$file = new File( $this->obj->objectid );
-					$file->load();
-					$objektinhalt['size'          ] = $file->size;
-					$objektinhalt['type'          ] = 'file';
-					
-					
-					$this->multiStatus( array($objektinhalt) );
-				}
+				$this->multiStatus( $inhalte );
+				break;
+				
+			case 'page':
+				$page = $this->client->page( $objectid );
+				$prop = $page['properties'];
+				$objektinhalt = array();
+				$objektinhalt['name']           = $this->fullSkriptName.'/'.$prop['filename'].'/';
+				$objektinhalt['displayname']    = $prop['filename'];
+				$objektinhalt['createdate'    ] = $prop['date'];
+				$objektinhalt['lastchangedate'] = $prop['date'];
+				
+				$objektinhalt['size'          ] = 0;
+				$objektinhalt['type'          ] = 'file';
+				break;
+				
+			case 'file':
+				$file = $this->client->file( $objectid );
+				$objektinhalt = array();
+				$objektinhalt['name']           = $this->fullSkriptName.'/'.$file['filename'].'/';
+				$objektinhalt['displayname']    = $file['filename'];
+				$objektinhalt['createdate'    ] = $file['date'];
+				$objektinhalt['lastchangedate'] = $file['date'];
+				
+				$objektinhalt['size'          ] = $file['size'];
+				$objektinhalt['type'          ] = 'file';
+				
+				break;
+				
+			case 'link':
+				
+				$link = $this->client->link( $objectid );
+				
+				$objektinhalt = array();
+				$objektinhalt['name']           = $this->fullSkriptName.'/'.$link['filename'].'/';
+				$objektinhalt['displayname']    = $link['filename'];
+				$objektinhalt['createdate'    ] = $link['date'];
+				$objektinhalt['lastchangedate'] = $link['date'];
+
+				$objektinhalt['size'          ] = 0;
+				$objektinhalt['type'          ] = 'file';
+				
+				
+				$this->multiStatus( array($objektinhalt) );
+				
 				break;
 				
 			default:
@@ -1032,11 +1049,11 @@ class WebDAV
 			$response .= $this->getResponse( $file['name'],$file );
 		
 		$response .= '</d:multistatus>';
- 		Logger::trace('PROPFIND: '.$response);
 
 		$response = utf8_encode($response);
 
 		header('Content-Length: '.strlen($response));
+ 		Logger::debug('Multistatus: '.$response);
 		echo $response;
 	}
 	
@@ -1093,77 +1110,70 @@ class WebDAV
 	private function parseURI( $uri )
 	{
 		// Ergebnis initialisieren (damit alle Schl�ssel vorhanden sind)
-		$ergebnis = array('type'    => null,
-		                  'project' => null,
-		                  'path'    => array(),
-		                  'folder'  => null,
-		                  'object'  => null  );
+		$ergebnis = array('type'      => null,
+		                  'projectid' => null,
+		                  'objectid'  => null  );
+		
 		
 // 		Logger::trace( 'WEBDAV: Parsen der URI '.$uri);
 		$uriParts = explode('/',$uri);
+
+		$projectName = array_shift($uriParts);
 		
-		$nr = 0;
-		$f = null;
-		$o = null;
-		$ergebnis['type'] = 'projectlist';
-
-		foreach( $uriParts as $uriPart )
+		if	( empty($projectName) )
 		{
-			if	( empty( $uriPart))
-				continue;
+			$ergebnis['type'] = 'root';
+			return $ergebnis; // Root-Verzeichnis
+		}
+		
+		$result = $this->client->projectlist();
+		$projects = $result['projects'];
+		
+		$projectid = array_search($projectName,$projects);
+		
+		if	( $projectid === FALSE )
+		{
+			httpStatus("404 Not found");
+		}
 
-			$ergebnis['path'][] = $uriPart;	
-
-			if	( $f == null )			
-			{
-				// URI='/project/'
-				// Name des Projektes in der URL, es wird das Projekt geladen.
-				$ergebnis['type'] = 'object';
-				
-				$p = new Project();
-				$p->name = $uriPart;
-// 				Logger::trace("Projektname: ".$p->name);
-				$p->loadByName();
-				$ergebnis['project'] = $p;
-				// Das Projekt hat weder Sprache noch Variante gesetzt.
-				//Session::setProjectLanguage( new Language( $this->project->getDefaultLanguageId() ) );
-				//Session::setProjectModel   ( new Model   ( $this->project->getDefaultModelId()    ) );
-
-				$oid = $p->getRootObjectId();
-
-				$f = new Folder($oid);
-				$ergebnis['object'] = $f;
-				$ergebnis['folder'] = $f;
+		$project = $this->client->project($projectid);
+		 
+		$ergebnis['projectid'] = $projectid;
 			
-			}
-			else
+		$objectid = $project['rootobjectid'];
+		$type = 'folder';
+		
+		while( length($uriParts) > 0 )
+		{
+			$name = array_shift($uriParts);
+			
+			$folder = $this->client->folder($objectid);
+			
+			$found = false;
+			foreach( $folder['object'] as $oid => $object)
 			{
-				if	( $ergebnis['object'] == null )
+				if	( $object['filename'] == $name )
 				{
-					$this->httpStatus('409 Conflict');
-					exit;
+					$found = true;
+					
+					$type     = $object['type']; 
+					$objectid = $object['objectid'];
+					
+					break;
 				}
 				
-				$oid = $f->getObjectIdByFileName($uriPart);
-
-				if	( $oid == 0 )
-				{
-					$ergebnis['object'] = null;
-				}
-				else
-				{
-					$o = new Object($oid);
-					$o->load();
-					$ergebnis['object'] = $o;
-					
-					if	( $o->isFolder )
-					{
-						$f = new Folder($oid);
-						$ergebnis['folder'] = $f;
-					}
-				}
+			}
+			
+			if	( ! $found )
+			{
+				httpStatus('404 Not Found');
+				exit;
 			}
 		}
+
+		$ergebnis['type'    ] = $type;
+		$ergebnis['objectid'] = $objectid;
+		
 
 		return $ergebnis;
 	 }
