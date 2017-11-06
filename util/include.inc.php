@@ -1,6 +1,7 @@
 <?php
 
 require_once( OR_SERVICECLASSES_DIR."GlobalFunctions.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Base2n.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Http.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Html.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Text.class.".PHP_EXT );
@@ -11,7 +12,8 @@ require_once( OR_SERVICECLASSES_DIR."Preferences.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."FileUtils.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Password.class.".PHP_EXT );
-require_once( OR_SERVICECLASSES_DIR."OpenRatException.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."exception/OpenRatException.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."exception/SecurityException.class.".PHP_EXT );
 
 
 //if	( !empty($REQ[REQ_PARAM_ACTION]) && in_array($REQ[REQ_PARAM_ACTION],array('tree')) )
