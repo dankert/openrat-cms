@@ -674,11 +674,11 @@ class StartAction extends Action
 		                              $loginPassword,
 		                              $newPassword1,
 		                              $newPassword2 );
-		                   
+
+		usleep(hexdec(Password::randomHexString(1))); // delay: 0-255 ms
+		
 		if	( !$loginOk )
 		{
-			// Anmeldung nicht erfolgreich
-			sleep(3);
 			
 			if	( $this->mustChangePassword )
 			{
@@ -1537,6 +1537,9 @@ class StartAction extends Action
 		$this->checkForDb();
 
 		$user = User::loadWithName( $this->getRequestVar("username") );
+
+		Password::delay();
+		
 		//		Html::debug($user);
 		if	( $user->isValid() )
 		{
@@ -1560,7 +1563,6 @@ class StartAction extends Action
 			// eines Benutzernamens nicht von au�en gepr�ft werden kann.
 			// 
 			$this->addNotice('user',$this->getRequestVar("username"),'mail_sent');
-			sleep(5);
 		}
 		
 		$this->setSessionVar("password_commit_name",$user->name);
