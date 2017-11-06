@@ -512,6 +512,7 @@ class PageAction extends ObjectAction
 		}
 
 		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('withIcons'=>'1') ) );
+		$this->setTemplateVar('properties',$this->page->getProperties() );
 		$this->setTemplateVar('el',$list);
 	}
 
