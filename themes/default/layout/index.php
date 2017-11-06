@@ -4,7 +4,9 @@
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title data-default="<?php config('application','name') ?>"><?php echo config('application','name') ?> ?></title>
+<?php $appName = config('application','name'); $appOperator = config('application','operator');
+      $title = $appName.(($appOperator!=$appName)?' - '.$appOperator:''); ?>
+  <title data-default="<?php echo $title ?>"><?php echo $title ?></title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" >
 <?php if ( isset($refresh_url) ) { ?>
@@ -33,11 +35,11 @@
   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/sets/default/style.css';
   
     // Komponentenbasiertes CSS
-		$elements = parse_ini_file( OR_THEMES_DIR.$conf['interface']['theme'].'/include/elements.ini.'.PHP_EXT);
+		$elements = parse_ini_file( OR_THEMES_DIR.config('interface','theme').'/include/elements.ini.'.PHP_EXT);
 		
 		foreach( array_keys($elements) as $c )
 		{
-		    $componentCssFile = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$c.'/'.$c.'.css';
+		    $componentCssFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c.'.css';
 		    if    ( is_file($componentCssFile) )
 		        $css[] = $componentCssFile;
 		        
@@ -74,7 +76,7 @@
 		
 		foreach( array_keys($elements) as $c )
 		{
-		    $componentJsFile = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$c.'/'.$c.'.js';
+		    $componentJsFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c.'.js';
 		    if    ( is_file($componentJsFile) )
 		        $js[] = $componentJsFile;
 		        
