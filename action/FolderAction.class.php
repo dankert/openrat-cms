@@ -1180,6 +1180,7 @@ class FolderAction extends ObjectAction
 				{
 					$file = new File( $id );
 					$file->load();
+					$list[$id]['size'] = $file->size;
 					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
 
 					if	( substr($file->mimeType(),0,6) == 'image/' )
@@ -1235,6 +1236,7 @@ class FolderAction extends ObjectAction
 		$rootFolder = new Folder( Folder::getRootFolderId() );
 		$rootFolder->load();
 		
+		$this->setTemplateVar('properties'    ,$this->folder->getProperties() );
 		$this->setTemplateVar('rootfolderid'  ,$rootFolder->id  );
 		$this->setTemplateVar('rootfoldername',$rootFolder->name);
 	}
