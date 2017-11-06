@@ -834,6 +834,14 @@ $conf['style']['moorweide']['text_color'] ='black';
 $conf['style']['moorweide']['background_color'] = '#F5FFFA';
 $conf['style']['moorweide']['inactive_background_color'] = '#CEE6DA';
 
+$conf['style']['dark']=array();
+$conf['style']['dark']['name']='Dark';
+$conf['style']['dark']['title_background_color']='#868685';
+$conf['style']['dark']['title_text_color']='DCDCDC';
+$conf['style']['dark']['text_color'] ='FFFFFF';
+$conf['style']['dark']['background_color'] = '#201F1D';
+$conf['style']['dark']['inactive_background_color'] = '#868685';
+
 $conf['theme'] = array();
 $conf['theme']['compiler'] = array();
 $conf['theme']['compiler']['enable']=true;
@@ -846,6 +854,9 @@ $conf['wiki']['convert_bbcode']=true;
 $conf['wiki']['tag_strong']= "*";
 $conf['wiki']['tag_emphatic']= "_";
 
+$conf['application']['name'    ] = OR_TITLE;
+$conf['application']['version' ] = OR_VERSION;
+$conf['application']['operator'] = OR_TITLE;
 $conf['production']= true;
 
 ?>
