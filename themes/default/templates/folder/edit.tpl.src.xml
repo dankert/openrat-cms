@@ -8,7 +8,7 @@
 					<!-- 
 					<text key="SELECT"></text>
 				 -->
-					<checkbox name="checkall" class="checkall" />
+					<checkbox name="checkall" />
 				</column>
 				<column class="help">
 					<text key="GLOBAL_TYPE"></text>
