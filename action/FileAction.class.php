@@ -26,7 +26,7 @@
 class FileAction extends ObjectAction
 {
 	public $security = SECURITY_USER;
-	
+
 	var $file;
 	var $defaultSubAction = 'show';
 
@@ -156,14 +156,19 @@ class FileAction extends ObjectAction
 		// Der Browser hat so die Moeglichkeit, einen Fortschrittsbalken zu zeigen
 		header('Content-Length: '.filesize($this->file->tmpfile()) );
 		
+		if	( in_array( getenv('HTTP_ACCEPT'),array('application/php-array','application/php-serialized','application/json','application/xml')))
+		{
+			$this->setTemplateVar('encoding', 'base64');
+			$this->setTemplateVar('value'   , base64_encode($this->file->tmpfile()) );
+		}
 		// Unterscheidung, ob PHP-Code in der Datei ausgefuehrt werden soll.
-		if	( ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
+		elseif	( ( config('publish','enable_php_in_file_content')=='auto' && $this->file->getRealExtension()=='php') ||
 		        config('publish','enable_php_in_file_content')===true )
 		    // PHP-Code ausfuehren
 			require( $this->file->tmpfile() );
 		else
 		    // PHP-Code nicht ausfuehren, Datei direkt auf die Standardausgabe schreiben
-		readfile( $this->file->tmpfile() );
+			readfile( $this->file->tmpfile() );
 		exit;
 	}
 
