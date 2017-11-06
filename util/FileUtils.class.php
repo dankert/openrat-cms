@@ -12,7 +12,7 @@ class FileUtils
 	 * @param String $pfad
 	 * @return Pfad mit angeh�ngtem Slash.
 	 */
-	function slashify($pfad)
+    public static function slashify($pfad)
 	{
 		if	( substr($pfad,-1,1) == '/')
 			return $pfad;
@@ -25,7 +25,7 @@ class FileUtils
 	/**
 	 * Liefert einen Verzeichnisnamen fuer temporaere Dateien.
 	 */
-	function getTempDir()
+	public static function createTempFile()
 	{
 		global $conf;
 		$tmpdir = @$conf['cache']['tmp_dir'];
@@ -43,12 +43,23 @@ class FileUtils
 			$tmpfile = @tempnam( '','openrat_tmp' );
 		}
 		
-		$tmpdir = dirname($tmpfile);
-		@unlink($tmpfile);
-			
-		return FileUtils::slashify( $tmpdir );
+		return $tmpfile;
 	}
 
+
+	/**
+	 * Liefert einen Verzeichnisnamen fuer temporaere Dateien.
+	 */
+	public static function getTempDir()
+	{
+        $tmpfile = FileUtils::createTempFile();
+	    
+	    $tmpdir = dirname($tmpfile);
+	    @unlink($tmpfile);
+	    
+	    return FileUtils::slashify( $tmpdir );
+	}
+	
 	
 	
 	/**
@@ -57,7 +68,7 @@ class FileUtils
 	 * @param $dir Verzeichnis, welches gelesen werden soll
 	 * @return Array Liste der Dateien im Ordner
 	 */
-	function readDir($dir)
+	public static function readDir($dir)
 	{
 		$dir = FileUtils::slashify($dir);
 		$dateien = array();
