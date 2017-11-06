@@ -1,1 +1,0 @@
-<a href="<?php Html::url('main',$$object->type,$$object->objectid) ?>" target="cms_main" title="<?php $$object->description ?>"><img src="<?php echo $image_dir.'icon_'.$$o->getType().IMG_EXT ?>" align="left" border="0"><?php echo $$o->name ?></a>

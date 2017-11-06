@@ -107,14 +107,14 @@ class TemplateEngine
     				$attributes = $this->checkAttributes($tag,$attributes);
     				
     			if ( $type == 'open' )
-    				$this->copyFileContents( $tag,$outFile,$attributes,++$depth );
+    			    $this->copyFileContents( $tag.'/'.$tag.'-begin',$outFile,$attributes,++$depth );
     			elseif ( $type == 'complete' )
     			{
-    				$this->copyFileContents( $tag       ,$outFile,$attributes,++$depth   );
-    				$this->copyFileContents( $tag.'-end',$outFile,array()    ,  $depth-- );
+    				$this->copyFileContents( $tag.'/'.$tag.'-begin',$outFile,$attributes,++$depth   );
+    				$this->copyFileContents( $tag.'/'.$tag.'-end'  ,$outFile,array()    ,  $depth-- );
     			}
     			elseif ( $type == 'close' )
-    				$this->copyFileContents( $tag.'-end',$outFile,array(),$depth-- );
+                    $this->copyFileContents( $tag.'/'.$tag.'-end'  ,$outFile,array(),$depth-- );
     		}
     
     		fclose($outFile);
