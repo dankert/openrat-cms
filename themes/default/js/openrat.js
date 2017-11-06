@@ -459,107 +459,8 @@ function loadView(contentEl,action,method,id,params  )
  */
 function registerViewEvents( viewEl )
 {
-	
-//	var $formVorhanden = $(viewEl).find('form').size() > 0;
-//	var $formInput     = $(viewEl).closest('div.panel').find('div.bottom > div.command > input');
-//	if	( $formVorhanden )
-//		$formInput.removeClass('invisible');
-//	else
-//		$formInput.addClass('invisible');
+	$(viewEl).trigger('orViewLoaded');
 
-	if ( $('div.panel form input[type=password]').length>0 && $('#uname').attr('value')!='' )
-	{
-		$('div.panel form input[name=login_name]    ').attr('value',$('#uname'    ).attr('value'));
-		$('div.panel form input[name=login_password]').attr('value',$('#upassword').attr('value'));
-	}
-	
-	// Fokus nicht setzen, da mehrere Views sich sonst um den Fokus streiten.
-	//$(viewEl).find('input.focus').focus();
-	
-	// Sortieren von Tabellen
-	$(viewEl).find('table.sortable > tbody').sortable({
-		   update: function(event, ui)
-		   {
-			   $(ui).addClass('loader');
-				var order = [];
-				$(ui.item).closest('table.sortable').find('tbody > tr.data').each( function() {
-					var objectid = $(this).data('id');
-					order.push( objectid );
-				});
-				var url    = './dispatcher.php';
-				var params = {};
-				params.action    = 'folder';
-				params.subaction = 'order';
-				params.token     = $('div.action-folder.method-order input[name=token]').attr('value');
-				params.order     = order.join(',');
-				//params.id        = $(viewEl).closest('div.panel').data('id');
-				params.id        = $('div#dialog').data('id');
-				params.output    = 'json';
-				
-				$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
-					{
-					   $(ui).removeClass('loader');
-						doResponse(data,textStatus,ui);
-					},
-					error:function(jqXHR, textStatus, errorThrown) {
-						alert( errorThrown );
-					}
-					
-				} );
-		   }
-	});
-	
-	if	( $(viewEl).find('textarea#pageelement_edit_editor').size() > 0 )
-	{
-		var instance = CKEDITOR.instances['pageelement_edit_editor'];
-	    if(instance)
-	    {
-	        CKEDITOR.remove(instance);
-	    }
-	    CKEDITOR.replace( 'pageelement_edit_editor',{customConfig:'config-openrat.js'} );
-	}
-	
-	// Wiki-Editor
-	var markitupSettings = {	markupSet:  [ 	
-	                        	     		{name:'Bold', key:'B', openWith:'*', closeWith:'*' },
-	                        	    		{name:'Italic', key:'I', openWith:'_', closeWith:'_'  },
-	                        	    		{name:'Stroke through', key:'S', openWith:'--', closeWith:'--' },
-	                        	    		{separator:'-----------------' },
-	                        	    		{name:'Bulleted List', openWith:'*', closeWith:'', multiline:true, openBlockWith:'\n', closeBlockWith:'\n'},
-	                        	    		{name:'Numeric List', openWith:'#', closeWith:'', multiline:true, openBlockWith:'\n', closeBlockWith:'\n'},
-	                        	    		{separator:'---------------' },
-	                        	    		{name:'Picture', key:'P', replaceWith:'{[![Source:!:http://]!]" alt="[![Alternative text]!]" }' },
-	                        	    		{name:'Link', key:'L', openWith:'""->"[![Link:!:http://]!]"', closeWith:'"', placeHolder:'Your text to link...' },
-	                        	    		{separator:'---------------' },
-	                        	    		{name:'Clean', className:'clean', replaceWith:function(markitup) { return markitup.selection.replace(/<(.*?)>/g, "") } },		
-	                        	    		{name:'Preview', className:'preview',  call:'preview'}
-	                        	    	]};
-	$(viewEl).find('.wikieditor').markItUp(markitupSettings);
-	
-	// HTML-Editor
-	var wymSettings = {lang: 'de',basePath: OR_THEMES_EXT_DIR+'../editor/wymeditor/wymeditor/',
-			  toolsItems: [
-			               {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'}, 
-			               {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},
-			               {'name': 'Superscript', 'title': 'Superscript', 'css': 'wym_tools_superscript'},
-			               {'name': 'Subscript', 'title': 'Subscript', 'css': 'wym_tools_subscript'},
-			               {'name': 'InsertOrderedList', 'title': 'Ordered_List', 'css': 'wym_tools_ordered_list'},
-			               {'name': 'InsertUnorderedList', 'title': 'Unordered_List', 'css': 'wym_tools_unordered_list'},
-			               {'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'},
-			               {'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'},
-			               {'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'},
-			               {'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'},
-			               {'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'},
-			               {'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'},
-			               {'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'},
-			               {'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'},
-			               {'name': 'Paste', 'title': 'Paste_From_Word', 'css': 'wym_tools_paste'},
-			               {'name': 'ToggleHtml', 'title': 'HTML', 'css': 'wym_tools_html'},
-			               {'name': 'Preview', 'title': 'Preview', 'css': 'wym_tools_preview'}
-			             ]
-			          };
-	//$(viewEl).find('.htmleditor').wymeditor(wymSettings);
-	//resizeWorkbench();
 	
 	// Eingabefeld-Hints aktivieren...
 	$(viewEl).find('input[data-hint]').orHint();
@@ -586,9 +487,6 @@ function registerViewEvents( viewEl )
 //		$(this).closest('div.panel').find('div.command').css('visibility','visible').fadeIn('slow');
 //	});
 
-	$(viewEl).find('fieldset > legend').click( function() {
-		$(this).parent().toggleClass('open');
-	});
 
 	// Links aktivieren...
 	$(viewEl).closest('div.panel').find('.clickable').orLinkify();
@@ -625,17 +523,7 @@ function registerViewEvents( viewEl )
     	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
 	} } );
 
-	// Alle Checkboxen setzen oder nicht setzen.
-	$(viewEl).find('tr.headline > td > input.checkbox').click( function() {
-		$(this).closest('table').find('tr.data > td > input.checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
-	});
 	
-	$(viewEl).find('textarea').orAutoheight();
-	
-	// Autosave in Formularen. Bei Veränderungen wird das Formular sofort abgeschickt.
-	$(viewEl).find('form[data-autosave="true"] input[type="checkbox"]').click( function() {
-		formSubmit( $(this).closest('form') );
-	});
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
 	$(viewEl).find('input').change( function() {
@@ -645,124 +533,13 @@ function registerViewEvents( viewEl )
 
 	
 	
-	var form = $(viewEl).find('form');
 
-	// Dateiupload über Drag and Drop
-	var dropzone = $(viewEl).find('div.filedropzone > div.input');
-	dropzone.on('dragenter', function (e) 
-	{
-		e.stopPropagation();
-		e.preventDefault();
-		$(this).css('border', '1px dotted gray');
-	});
-	dropzone.on('dragover', function (e) 
-	{
-		 e.stopPropagation();
-		 e.preventDefault();
-	});
-	dropzone.on('drop', function (e) 
-	{
-		 $(this).css('border','1px dotted red');
-		 e.preventDefault();
-		 var files = e.originalEvent.dataTransfer.files;
 
-		 //We need to send dropped files to Server
-		 handleFileUpload(form,files);
-	});
-	
-	
-	// Dateiupload über File-Input-Button
-	$(viewEl).find('input[type=file]').change( function() {
-		
-		var files = $(this).prop('files');   
-
-		handleFileUpload(form,files);
-	});
-
-	// QR-Code anzeigen.
-	$(viewEl).find('[data-qrcode]').each( function() {
-		
-		var qrcodetext = $(this).attr('data-qrcode');
-		$(this).removeAttr('data-qrcode');
-		
-		$(this).qrcode( { render : 'div',
-			text   : qrcodetext,
-			fill   : 'currentColor' } );
-	} );
-
-	// ACE-Editor anzeigen
-	$(viewEl).find("textarea.code-editor").each( function() {
-		var textareaEl = $(this);
-		var aceEl = $("<div class=\"code-editor\" />").insertAfter(textareaEl);
-		var editor = ace.edit( aceEl.get(0) );
-		var mode = textareaEl.data('mode');
-		
-		editor.renderer.setShowGutter(true);
-		editor.setTheme("ace/theme/github");
-		
-//		editor.setReadOnly(true);
-		editor.getSession().setTabSize(4);
-		editor.getSession().setUseWrapMode(true);
-		editor.setHighlightActiveLine(true);
-		editor.getSession().setValue( textareaEl.val() );
-		editor.getSession().setMode("ace/mode/" + mode);
-		editor.getSession().on('change', function(e) {
-			textareaEl.val(editor.getSession().getValue());
-		} );
-		
-		// copy back to textarea on form submit...
-		textareaEl.closest('form').submit(function() {
-			textareaEl.val( editor.getSession().getValue() );
-		})		
-	} );
-	
 
 }
 
 
 
-function handleFileUpload(form,files)
-{
-	for (var i = 0, f; f = files[i]; i++)
-	{
-	    var form_data = new FormData();                  
-	    form_data.append('file'     , f);
-	    form_data.append('action'   ,'folder');
-	    form_data.append('subaction','createfile');
-	    form_data.append('output'   ,'json');
-	    form_data.append('token'    ,$(form).find('input[name=token]').val() );
-	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
-	    
-		var status = $('<div class="notice info"><div class="text loader"></div></div');
-		$('#noticebar').prepend(status); // Notice anhängen.
-		$(status).show();
-
-		$.ajax( { 'type':'POST',url:'dispatcher.php', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
-			{
-				$(status).remove();
-				doResponse(data,textStatus,form);
-			},
-			error:function(jqXHR, textStatus, errorThrown) {
-				$(form).closest('div.content').removeClass('loader');
-				$(status).remove();
-				
-				var msg;
-				try
-				{
-					var error = jQuery.parseJSON( jqXHR.responseText );
-					msg = error.error + '/' + error.description + ': ' + error.reason;
-				}
-				catch( e )
-				{
-					msg = jqXHR.responseText;
-				}
-				
-				notify('error',msg);
-			}
-			
-		} );
-	}
-}
 
 
 function registerHeaderEvents()

@@ -618,7 +618,6 @@ textarea.editor
 }
 
 label,
-fieldset.open > legend,
 .clickable
 {
 	cursor: pointer;
@@ -637,43 +636,6 @@ div.menu
 {
 	float:none;
 	xclear:left;
-}
-
-fieldset
-{
-	border:1px solid <?php echo $_GET['title_background_color']; ?>;
-	
-	border-bottom:0px;
-	border-left:0px;
-	border-right:0px;
-	
-	margin-top:20px;
-	margin-bottom:20px;
-	margin-left:0px;
-	margin-right:0px;
-	padding:10px;
-	display: none;
-}
-
-fieldset.show {
-	display: block; 
-}
-
-
-fieldset > legend
-{
-	margin-left:30px;
-	font-weight:normal;
-}
-
-
-fieldset > div
-{
-	display:none;
-}
-fieldset.open > div
-{
-	display:block;
 }
 
 
@@ -1956,28 +1918,6 @@ div#workbench div.panel div.arrow-right
 	font-size: 0;
 }
 
-/* Geschlossene Fieldsets */
-div#workbench div.panel fieldset > legend > div.closed,
-div#dialog    div.panel fieldset > legend > div.closed
-
-{
-	display:inline;
-}
-div#workbench div.panel fieldset > legend > div.open
-{
-	display:none;
-}
-
-/* Offene Fieldsets */
-div#workbench div.panel fieldset.open > legend > div.closed
-{
-	display:none;
-}
-div#workbench div.panel fieldset.open > legend > div.open,
-div#dialog    div.panel fieldset.open > legend > div.open
-{
-	display:inline;
-}
 
 div#workbench div.panel li.action.dirty
 {
