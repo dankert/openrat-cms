@@ -1614,6 +1614,11 @@ fieldset > div span.name
 }
 
 
+fieldset
+{
+	border-color:<?php echo $_GET['title_background_color']; ?>;
+}
+
 /* Eingabfelder fuer Dateiname */
 fieldset > div input.filename,
 fieldset > div input.extension,

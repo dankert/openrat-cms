@@ -7,7 +7,7 @@ fieldset.open > legend
 
 fieldset
 {
-	border:1px solid <?php echo $_GET['title_background_color']; ?>;
+	border:1px solid;
 	
 	border-bottom:0px;
 	border-left:0px;
