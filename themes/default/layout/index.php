@@ -4,13 +4,12 @@
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-  <title data-default="<?php echo OR_TITLE ?>"><?php echo OR_TITLE ?></title>
+  <title data-default="<?php config('application','name') ?>"><?php echo config('application','name') ?> ?></title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" >
 <?php if ( isset($refresh_url) ) { ?>
   <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url; if (ini_get('session.use_trans_sid')) echo '&'.session_name().'='.session_id(); ?>">
 <?php } ?>
-  <meta name="MSSmartTagsPreventParsing" content="true" >
   <meta name="robots" content="noindex,nofollow" >
 <?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
       {
@@ -23,38 +22,71 @@
        	?>
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo $meta['title'] ?>" ><?php
       } ?>
-  <link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo css_link($style) ?>" >
+      
+  <?php
   
-  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/skins/markitup/style.css" />
-  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/sets/default/style.css" />
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-1.12.4.min.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.scrollTo.js" defer></script>
-  <!-- 
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery.mjs.nestedSortable.js"></script>
-   -->
+  $css = array();
+//   $css[] = link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo css_link($style) "
+  $css['userstyle'] = css_link($style);
+  
+  $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/skins/markitup/style.css';
+  $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/sets/default/style.css';
+  
+    // Komponentenbasiertes CSS
+		$elements = parse_ini_file( OR_THEMES_DIR.$conf['interface']['theme'].'/include/elements.ini.'.PHP_EXT);
+		
+		foreach( array_keys($elements) as $c )
+		{
+		    $componentCssFile = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$c.'/'.$c.'.css';
+		    if    ( is_file($componentCssFile) )
+		        $css[] = $componentCssFile;
+		        
+		}
+		
+  foreach( $css as $id=>$cssFile )
+  {
+      ?><link <?php if ( !is_numeric($id)) {?>id="<?php echo $id ?>" <?php } ?>rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
+      <?php
+  }
+  
+  $js = array();
+  $js[] = OR_THEMES_EXT_DIR.'default/js/jquery-1.12.4.min.js';
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js';
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery.scrollTo.js';
+  //$js[] =  OR_THEMES_EXT_DIR default/js/jquery.mjs.nestedSortable.js"></script>
 
-  <!-- OpenRat internal JS -->
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/openrat.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orHint.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orSearch.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLinkify.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orTree.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orLoadView.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/plugin/jquery-plugin-orAutoheight.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-qrcode.min.js" defer></script>
-  <!-- 
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script>
-   -->
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/markitup/markitup/jquery.markitup.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/ckeditor.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/ace/src-min-noconflict/ace.js" defer></script>
-  <script src="<?php echo OR_THEMES_EXT_DIR ?>../editor/editor/adapters/jquery.js" defer></script>
-  <!-- 
-  <script src="/~dankert/cms-test/cms09/themes/default/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>
-  <script src="/~dankert/cms/themes/default/js/xxxxxxxxxxxjquery-plugin-orSearchBox.js"></script>
-  <link rel="stylesheet" type="text/css" href="<?php echo OR_THEMES_EXT_DIR ?>default/js/jquery-ui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" >
-   -->
+  //<!-- OpenRat internal JS -->
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/openrat.js';
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orHint.js';
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orSearch.js';
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLinkify.js';
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orTree.js';
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLoadView.js';
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orAutoheight.js';
+  $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-qrcode.min.js';
+    //  $js[] =  OR_THEMES_EXT_DIR.'../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script> -->
+  $js[] =  OR_THEMES_EXT_DIR.'../editor/markitup/markitup/jquery.markitup.js';
+  $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/ckeditor.js';
+  $js[] =  OR_THEMES_EXT_DIR.'../editor/ace/src-min-noconflict/ace.js';
+  $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/adapters/jquery.js';
+
+    // Komponentenbasiertes Javascript
+		
+		foreach( array_keys($elements) as $c )
+		{
+		    $componentJsFile = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$c.'/'.$c.'.js';
+		    if    ( is_file($componentJsFile) )
+		        $js[] = $componentJsFile;
+		        
+		}
+		
+		foreach( $js as $jsFile )
+		{
+		  ?><script src="<?php echo $jsFile ?>" defer></script>
+		  <?php 
+		}
+?>  
+
 </head>
 
 <?php

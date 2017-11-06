@@ -1,2 +1,11 @@
+<Files ~ "\.(gif|jpe?g|png)$">
+order allow,deny
+allow from all
+</Files>
+
+<Files ~ "\.(html|php)$">
 order deny,allow
+
 deny from all
+</Files>
+
