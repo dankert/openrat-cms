@@ -178,7 +178,7 @@
 			</if>
 			<if value="var:type" equals="link">
 				<group>
-					<part clas="line">
+					<part class="line">
 						<part class="label">
 							<label for="linkobjectid">
 								<text key="link_target"></text>
