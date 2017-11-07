@@ -21,10 +21,11 @@ class CookieAuth implements Auth
 	/**
 	 * Ueberpruefen des Kennwortes ist über Ident nicht möglich.
 	 */
-	public function login( $user, $password )
+	public function login( $user, $password, $token )
 	{
 		return false;
 	}
+
 }
 
 ?>

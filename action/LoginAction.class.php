@@ -334,20 +334,22 @@ class LoginAction extends Action
 
 
 		// Den Benutzernamen aus dem Client-Zertifikat lesen und in die Loginmaske eintragen. 
-		$ssl_user_var = $conf['security']['ssl']['user_var'];
+		$ssl_user_var = $conf['security']['ssl']['client_cert_dn_env'];
 		if	( !empty($ssl_user_var) )
 		{
-			$username = getenv( $ssl_user_var );
+		    $username = getenv( $ssl_user_var );
 
 			if	( empty($username) )
 			{
-				echo lang('ERROR_LOGIN_BROKEN_SSL_CERT');
-				Logger::warn( 'no username in SSL client certificate (var='.$ssl_user_var.').' );
-				exit;
+			    // Nothing to do.
+			    // if user has no valid client cert he could not access this form. 
+			}
+			else {
+                    
+                // Benutzername ist in Eingabemaske unver�nderlich
+                $this->setTemplateVar('force_username',$username);
 			}
 			
-			// Benutzername ist in Eingabemaske unver�nderlich
-			$this->setTemplateVar('force_username',$username);
 		}
 
 		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,OR_FILTER_NUMBER) );
@@ -839,6 +841,7 @@ class LoginAction extends Action
 		$loginPassword = $this->getRequestVar('login_password',OR_FILTER_ALPHANUM);
 		$newPassword1  = $this->getRequestVar('password1'     ,OR_FILTER_ALPHANUM);
 		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
+		$token         = $this->getRequestVar('user_token'    ,OR_FILTER_ALPHANUM);
 
 		// Der Benutzer hat zwar ein richtiges Kennwort eingegeben, aber dieses ist abgelaufen.
 		// Wir versuchen hier, das neue zu setzen (sofern eingegeben).
@@ -895,6 +898,7 @@ class LoginAction extends Action
 		
 		$loginOk            = false;
 		$mustChangePassword = false;
+		$tokenFailed        = false;
 		$groups             = null;
 		$lastModule         = null;
 		
@@ -904,10 +908,13 @@ class LoginAction extends Action
 			$moduleClass = $module.'Auth';
 			$auth        = new $moduleClass;
 			Logger::info('Trying to login with module '.$moduleClass);
-			$loginOk = $auth->login( $loginName,$loginPassword );
+			$loginStatus = $auth->login( $loginName,$loginPassword, $token );
+			$loginOk     = $loginStatus === true || $loginStatus === OR_AUTH_STATUS_SUCCESS;
 			
-			if	( @$auth->mustChangePassword )
+			if   ( $loginStatus === OR_AUTH_STATUS_PW_EXPIRED )
 				$mustChangePassword = true;
+			if   ( $loginStatus === OR_AUTH_STATUS_TOKEN_NEEDED )
+				$tokenFailed = true;
 				
 			if	( $loginOk )
 			{
@@ -967,7 +974,7 @@ class LoginAction extends Action
 			}			
 		}
 		
-		usleep(hexdec(Password::randomHexString(1))); // delay: 0-255 ms
+		Password::delay();
 		
 	    $ip = getenv("REMOTE_ADDR");
 		
@@ -977,7 +984,13 @@ class LoginAction extends Action
 			
 			Logger::debug("Login failed for user '$loginName' from IP $ip");
 			
-			if	( $mustChangePassword )
+			if	( $tokenFailed )
+			{
+				// Token falsch.
+				$this->addNotice('user',$loginName,'LOGIN_FAILED_TOKEN_FAILED','error' );
+				$this->addValidationError('user_token','');
+			}
+			elseif	( $mustChangePassword )
 			{
 				// Anmeldung gescheitert, Benutzer muss Kennwort ?ndern.
 				$this->addNotice('user',$loginName,'LOGIN_FAILED_MUSTCHANGEPASSWORD','error' );

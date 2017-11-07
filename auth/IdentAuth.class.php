@@ -48,9 +48,9 @@ class IdentAuth implements Auth
 	/**
 	 * Ueberpruefen des Kennwortes ist über Ident nicht möglich.
 	 */
-	public function login( $user, $password )
+	public function login( $user, $password, $token )
 	{
-		return false;
+		return OR_AUTH_STATUS_FAILED;
 	}
 }
 

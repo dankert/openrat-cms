@@ -1198,3 +1198,5 @@ ERROR_IN_ELEMENT="Dieses Seitenelement konnte nicht erzeugt werden"
 USER_PASSWORD_EXPIRES=Kennwort läuft ab
 USER_HOTP=Zählerbasiertes Token als Zweifaktorauthentifizierung
 USER_TOTP=Zeitbasieres Token als Zweifaktorauthentifizierung
+NOTICE_LOGIN_FAILED_TOKEN_FAILED=Bitte geben Sie ein gültiges Token ein
+USER_TOKEN=Token

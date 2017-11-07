@@ -226,7 +226,7 @@ class UserAction extends Action
 		    array('totpSecretUrl' => "otpauth://totp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}",
 		          'hotpSecretUrl' => "otpauth://hotp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}&counter={$counter}"
 		    )
-		    + array('totpToken'=>$this->getCode())
+		    + array('totpToken'=>$this->user->getCode())
 		);
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
@@ -244,38 +244,6 @@ class UserAction extends Action
 	}
 
 	
-	
-	
-	/**
-	 * Calculate the code, with given secret and point in time.
-	 *
-	 * @param string   $secret
-	 * @param int|null $timeSlice
-	 *
-	 * @return string
-	 */
-	private function getCode()
-	{
-	    $codeLength = 6;
-        $timeSlice = floor(time() / 30);
-	    $secretkey = hex2bin($this->user->otpSecret);
-	    // Pack time into binary string
-	    $time = chr(0).chr(0).chr(0).chr(0).pack('N*', $timeSlice);
-	    // Hash it with users secret key
-	    $hm = hash_hmac('SHA1', $time, $secretkey, true);
-	    // Use last nipple of result as index/offset
-	    $offset = ord(substr($hm, -1)) & 0x0F;
-	    // grab 4 bytes of the result
-	    $hashpart = substr($hm, $offset, 4);
-	    // Unpak binary value
-	    $value = unpack('N', $hashpart);
-	    $value = $value[1];
-	    // Only 32 bits
-	    $value = $value & 0x7FFFFFFF;
-	    $modulo = pow(10, $codeLength);
-	    return str_pad($value % $modulo, $codeLength, '0', STR_PAD_LEFT);
-	}
-
 	
 	
 	/**

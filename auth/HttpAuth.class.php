@@ -25,7 +25,7 @@ class HttpAuth implements Auth
 	 *
 	 * Das Kennwort wird gegen einen HTTP-Server geprüft.
 	 */
-	public function login( $user, $password )
+	public function login( $user, $password, $token )
 	{
 		global $conf;
 		

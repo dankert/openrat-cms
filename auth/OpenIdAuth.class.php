@@ -13,7 +13,7 @@ class OpenIdAuth implements Auth
 	}
 	
 	
-	function login( $username, $password )
+	function login( $username, $password, $token )
 	{
 		return false;
 	}

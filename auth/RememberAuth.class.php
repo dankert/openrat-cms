@@ -47,7 +47,7 @@ class RememberAuth implements Auth
 	/**
 	 * Ueberpruefen des Kennwortes ist über den Cookie nicht möglich.
 	 */
-	public function login( $user, $password )
+	public function login( $user, $password, $token )
 	{
 		return false;
 	}

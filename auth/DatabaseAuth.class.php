@@ -11,7 +11,7 @@ class DatabaseAuth implements Auth
 	/**
 	 * Login.
 	 */
-	public function login( $user, $password )
+    public function login( $user, $password, $token )
 	{
 		global $conf;
 		
@@ -22,15 +22,16 @@ class DatabaseAuth implements Auth
 
 		$authdb = new DB( $authDbConf );
 		
-		$sql = $authdb->sql( $conf['security']['authdb']['sql'] );
+		$sql  = $authdb->sql( $conf['security']['authdb']['sql'] );
+		$algo = $authdb->sql( $conf['security']['authdb']['hash_algo'] );
 		$sql->setString('username',$user    );
-		$sql->setString('password',$password);
+		$sql->setString('password',hash($algo,$password));
 		$row = $sql->getRow();
 		$ok = !empty($row);
 		
 		// noch nicht implementiert: $authdb->close();
 		
-		return $ok;
+		return $ok?OR_AUTH_STATUS_SUCCESS:OR_AUTH_STATUS_FAILED;
 	}
 	
 	public function username()

@@ -11,7 +11,7 @@ class LdapUserDNAuth implements Auth
 	/**
 	 * @see Auth::login()
 	 */
-	public function login($username, $password)
+    public function login($username, $password, $token)
 	{
 		$db = db_connection();
 		$this->mustChangePassword = false;

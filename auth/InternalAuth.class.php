@@ -14,10 +14,8 @@ class InternalAuth implements Auth
 	 * Ueberpruefen des Kennwortes
 	 * ueber die Benutzertabelle in der Datenbank.
 	 */
-	function login( $username, $password )
+	function login( $username, $password,$token )
 	{
-		global $conf;
-
 		$db = db_connection();
 		
 		// Lesen des Benutzers aus der DB-Tabelle
@@ -30,31 +28,58 @@ SQL
 	
 		$row_user = $sql->getRow( $sql );
 
-		if	( empty($row_user) )
-			// Benutzer ist nicht vorhanden
-			return false;
+		if	( empty($row_user) ) {
+		    
+			// Benutzer ist nicht vorhanden.
+			// Trotzdem das Kennwort hashen, um Timingattacken zu verhindern.
+		    $unusedHash = Password::hash(User::pepperPassword($password),Password::bestAlgoAvailable() );
+		    return false;
+		}
+		
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
-		elseif   ( Password::check(User::pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']) && $row_user['password_algo'] == OR_PASSWORD_ALGO_PLAIN )
+		if   ( ! Password::check(User::pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']) )
 		{
-			// Kennwort stimmt mit Datenbank �berein, aber nur im Klartext.
-			// Das Kennwort muss ge�ndert werden
-			$this->mustChangePassword = true;
-			
-			// Login nicht erfolgreich
-			return false;
+            return false;		    
 		}
-		// Pruefen ob Kennwort mit Datenbank uebereinstimmt
-		elseif   ( Password::check(User::pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']) )
+		
+		// Behandeln von Klartext-Kennwoertern (Igittigitt).
+		if    ( $row_user['password_algo'] == OR_PASSWORD_ALGO_PLAIN )
 		{
-			// Die Kennwort-Pruefsumme stimmt mit dem aus der Datenbank �berein.
-			// Juchuu, Login ist erfolgreich.
-			return true;
+		    if    ( config('security','password','force_change_if_cleartext') )
+    			// Kennwort steht in der Datenbank im Klartext.
+    			// Das Kennwort muss geaendert werden
+                return OR_AUTH_STATUS_PW_EXPIRED;
+		    
+            // Anderenfalls ist das Login zwar moeglich, aber das Kennwort wird automatisch neu gehasht, weil der beste Algo erzwungen wird.
+            // Das Klartextkennwort waere danach ueberschrieben.
 		}
-		else
+		
+		if    ( $row_user['password_expires'] != null && $row_user['password_expires'] < time() )
 		{
-			// Kennwort stimmt garnicht ueberein.
-			return false;
+			// Kennwort ist abgelaufen.
+		    if    ( config('security','password','deny_if_expired') )
+		        return false; // Abgelaufenes Kennwort wird nicht mehr akzeptiert.
+		    else
+                return OR_AUTH_STATUS_PW_EXPIRED;
 		}
+		
+		if   ( $row_user['totp'] == 1 )
+		{
+		    $user = new User($row_user['id']);
+		    $user->load();
+		    if    ( $user->getTOTPCode() == $token )
+		        return true;
+		    else
+			    return OR_AUTH_STATUS_TOKEN_NEEDED;
+		}
+		
+		if   ( $row_user['hotp'] == 1 )
+		{
+			// HOTP not yet implemented.
+		}
+		
+		// Benutzer wurde erfolgreich authentifiziert.
+		return true;
 	}
 	
 	public function username()

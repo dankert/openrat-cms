@@ -3,8 +3,9 @@
 class LdapAuth implements Auth
 {
 
-	public function login($username, $password)
+    public function login($username, $password, $token)
 	{
+	    global $conf;
 		$db = db_connection();
 		$this->mustChangePassword = false;
 		
