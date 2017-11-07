@@ -21,9 +21,14 @@ else
 ?>
 /* #END-IF# */
 
-/* #IF-ATTR url# */
-<iframe name="<?php echo $attr_name ?>" src="<?php echo $attr_url ?>"></iframe>
+<iframe
+/* #IF-ATTR name# */
+ name="<?php echo $attr_name ?>"
 /* #END-IF# */
+/* #IF-ATTR url# */
+ src="<?php echo $attr_url ?>"
+/* #END-IF# */
+></iframe>
 
 /* #IF-ATTR function# */
 Hallo!
