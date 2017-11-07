@@ -597,10 +597,12 @@ class Action
 		if	( ! $conf['cache']['conditional_get'] )
 			return;
 
+		$expires      = substr(date('r',time()-date('Z')),0,-5).'GMT';
 		$lastModified = substr(date('r',$time -date('Z')),0,-5).'GMT';
 		$etag         = '"'.md5($lastModified).'"';
 
 		// Header senden
+		header('Expires: '      .$expires      );
 		header('Last-Modified: '.$lastModified );
 		header('ETag: '         .$etag         );
 		
