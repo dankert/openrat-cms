@@ -143,7 +143,7 @@ function css_link( $name='default' )
 		$name = $conf['interface']['style']['default'];
 
 	
-	return OR_THEMES_EXT_DIR.'default/css/openrat.css.php?'.encode_array($conf['style'][$name]);
+	return encode_array($conf['style'][$name]);
 }
 
 

@@ -29,7 +29,11 @@
   
   $css = array();
 //   $css[] = link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo css_link($style) "
-  $css['userstyle'] = css_link($style);
+  $cssParam = css_link($style);
+  
+  $css['userstyle'] = OR_THEMES_EXT_DIR.'default/css/openrat-theme.css.php?'.$cssParam;
+  $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-ui.css.php?'.$cssParam;
+  $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-workbench.css.php?'.$cssParam;
   
   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/skins/markitup/style.css';
   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/sets/default/style.css';
