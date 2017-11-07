@@ -119,7 +119,7 @@
 					</label>
 				</part>
 				<part class="input">
-					<password name="user_token" default="" size="25"></password>
+					<input name="user_token" default="" size="25" />
 				</part>
 			</part>
 		</group>
