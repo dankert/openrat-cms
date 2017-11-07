@@ -207,11 +207,11 @@ class Password
 
 	/**
 	 * Cryptographic delay of execution.
-	 * Delay is from 0 to 983 milliseconds, Steps of 15 microseconds, which would be very heavy to attack over a network.
+	 * Delay is from 0 to 168 milliseconds, Steps of 10 nanoseconds(!), which would be very heavy to attack over a network.
 	 */
 	static public function delay()
 	{
-	    time_nanosleep(0, Password::randomNumber(2)*15*1000); // delay: 0-983 ms 
+	    time_nanosleep(0, Password::randomNumber(3)*10); // delay: 0-167772150ns (= 0-~168ms)  
 	}
 }
 ?>
