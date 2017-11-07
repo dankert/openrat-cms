@@ -112,6 +112,8 @@ class AbstractTree
 			return; // Ist schon offen. Evtl. Reload gedrückt?
 		
 		$this->opened[] = $elementId;
+		if	( ! isset($this->elements[$elementId]) )
+			return;
 		$funcName = $this->elements[$elementId]->type;
 		if	( empty($funcName) )
 			return;
