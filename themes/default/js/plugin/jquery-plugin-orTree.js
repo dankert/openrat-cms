@@ -15,7 +15,6 @@ jQuery.fn.orTree = function( options )
 	{
 		$(treeEl).closest('div.content').addClass('loader');
 		$.getJSON('./dispatcher.php?action=tree&subaction=loadBranch&id='+settings.id+'&type='+settings.type+'&output=json', function(json) {
-			$(treeEl).closest('div.content').removeClass('loader');
 			$(treeEl).append('<ul class="tree" style="display:none;"/>');
 			var ul = $(treeEl).children('ul').first();
 			var output = json['output'];
@@ -67,6 +66,11 @@ jQuery.fn.orTree = function( options )
 			});
 			//$(ul).children('li:last-child').addClass('last');
 			$(ul).slideDown('fast'); // Einblenden
+			
+		}).fail( function() {
+			//
+		}).always( function() {
+			$(treeEl).closest('div.content').removeClass('loader');
 		});
 		
 		$(treeEl).children('div.tree').unbind('click');
