@@ -293,6 +293,11 @@ class Action
 	}
 
 	
+	public function handleResult( $result )
+	{
+	    // TODO -
+	}
+	
 	/**
 	 * F�gt ein Meldung hinzu.
 	 *
@@ -757,5 +762,39 @@ class Action
 		$this->refresh();
 	}
 }
+
+
+// TODO - nicht benutzt
+interface ActionResult
+{
+    public function getErrorField();
+    public function isSuccess();
+}
+
+class ActionResultSuccess implements ActionResult
+{
+    public function isSuccess(){
+        return true;
+    }
+    public function getErrorField(){
+        return null;
+    }
+}
+class ActionResultError implements ActionResult
+{
+    private $fieldName;
+    
+    public function __construct( $name )
+    {
+        $this->fieldName = $name;
+    }
+    public function isSuccess(){
+        return false;
+    }
+    public function getErrorField(){
+        return $fieldName;
+    }
+}
+
 
 ?>

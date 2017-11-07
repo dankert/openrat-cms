@@ -215,7 +215,8 @@ try
     	Http::noContent();
     	
     // Jetzt wird die Aktion aus der Actionklasse aufgerufen.
-   	$do->$subactionMethodName();
+   	$result = $do->$subactionMethodName();
+   	$do->handleResult($result);
    	
     $do->forward();
 }
