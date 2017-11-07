@@ -1912,12 +1912,4 @@ div#workbench div.panel li.action.dirty
 }
  
  
-div.line.filedropzone > div.input
-{
-	width: 100%;
-	height: 100px;
-	
-	background-color:<?php echo $_GET['title_text_color']; ?>;
-	border:1px dotted <?php echo $_GET['text_color']; ?>;
-}
 
