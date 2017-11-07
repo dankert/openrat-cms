@@ -28,7 +28,7 @@ class ProfileAction extends Action
 {
 	public $security = SECURITY_USER;
 	
-	var $user;
+	private $user;
 	var $defaultSubAction = 'edit';
 
 	/**
@@ -50,6 +50,11 @@ class ProfileAction extends Action
 		$this->user->tel      = $this->getRequestVar('tel'     );
 		$this->user->desc     = $this->getRequestVar('desc'    );
 		$this->user->style    = $this->getRequestVar('style'   );
+		$this->user->language = $this->getRequestVar('language');
+		$this->user->timezone = $this->getRequestVar('timezone');
+		$this->user->hotp     = $this->hasRequestVar('hotp'    );
+		$this->user->totp     = $this->hasRequestVar('totp'    );
+		
 		
 		$this->setStyle( $this->user->style ); // Style sofort anwenden
 		Session::setUser( $this->user );
@@ -66,64 +71,6 @@ class ProfileAction extends Action
 		}
 	}
 
-	
-	
-	/**
-	 * Benutzer-Einstellungen anzeigen.
-	 * Diese Einstellungen werden im Cookie gespeichert.
-	 */
-	function settingsView()
-	{
-		foreach( array('always_edit','ignore_ok_notices','timezone_offset','language') as $name )
-			$this->setTemplateVar($name,Text::clean(isset($_COOKIE['or_'.$name])?$_COOKIE['or_'.$name]:'','abcdefghijklmnopqrstuvwxyz0123456789 .'));
-			
-		//Html::debug(Text::clean($_COOKIE['or_'.$name],'0123456789 .'));
-		$timezone_list = array();
-		//$timezone_list[ '' ] = 'SERVER ('.(date('Z')>=0?'+':'').intval(date('Z')/3600).':00)';
-		
-		global $conf;
-		$tzlist = $conf['date']['timezone'];
-		if	( !is_array($tzlist))$tzlist = array();
-		foreach ($tzlist as $offset=>$name)
-			$timezone_list[$offset] = $name.' ('.vorzeichen(intval($offset/60)).':00)'.($offset==date('Z')/60?' *':'');
-			
-		$this->setTemplateVar('timezone_list',$timezone_list);
-		$languages = explode(',',$conf['i18n']['available']);
-		foreach($languages as $id=>$name)
-		{
-			unset($languages[$id]);
-			$languages[$name] = $name;
-		}
-		$this->setTemplateVar('language_list',$languages);
-	}
-
-	
-
-	/**
-	 * Speichern der Benutzereinstellungen.
-	 */
-	function settingsPost()
-	{
-		foreach( array('always_edit','ignore_ok_notices','timezone_offset','language') as $name )
-		{
-			// Prüfen, ob Checkbox aktiviert wurde.
-			if	( $this->hasRequestVar($name))
-			{
-				// Cookie setzen
-				setcookie('or_'.$name,$this->getRequestVar($name,OR_FILTER_ALPHANUM),time()+(60*60*24*30*12*2));
-				$_COOKIE['or_'.$name] = $this->getRequestVar($name,OR_FILTER_ALPHANUM);
-			}
-			else
-			{
-				// Cookie loeschen
-				setcookie('or_'.$name,'', time()-3600);
-				unset($_COOKIE['or_'.$name]);
-			}
-		}
-		
-		$this->addNotice('user',$this->user->name,'SAVED','ok');
-	}
-	
 	
 	
 	/**
@@ -258,9 +205,35 @@ class ProfileAction extends Action
 	 */
 	function editView()
 	{
-		$this->setTemplateVars( $this->user->getProperties() );
+	    $issuer  = urlencode(config('application','operator'));
+	    $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
+	    
+	    $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);
+	    $secret = $base32->encode(hex2bin($this->user->otpSecret));
+	    $counter = $this->user->hotpCount;
+	    
+	    $this->setTemplateVars( $this->user->getProperties() );
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );
+		
+		$this->setTemplateVar('timezone_list',timezone_identifiers_list() );
+		
+		$languages = explode(',',config('i18n','available'));
+		foreach($languages as $id=>$name)
+		{
+		    unset($languages[$id]);
+		    $languages[$name] = $name;
+		}
+		$this->setTemplateVar('language_list',$languages);
+		
+		$this->setTemplateVars(
+		    $this->user->getProperties() +
+		    array('totpSecretUrl' => "otpauth://totp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}",
+		    'hotpSecretUrl' => "otpauth://hotp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}&counter={$counter}"
+		    )
+		);
+		
+		
 	}
 
 	

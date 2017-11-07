@@ -324,9 +324,9 @@ SQL
 		$this->timezone  = $row['timezone'];
 		$this->lastLogin = $row['last_login'];
 		$this->otpSecret = $row['otp_secret'];
-		$this->hotp      = $row['hotp'];
+		$this->hotp      = ($row['hotp']==1);
 		$this->hotpCount = $row['hotp_counter'];
-		$this->totp      = $row['totp'];
+		$this->totp      = ($row['totp']==1);
 		$this->passwordExpires = $row['password_expires'];
 		$this->passwordAlgo    = $row['password_algo'];
 		
@@ -393,7 +393,9 @@ SQL
 		                     style   ={style}   ,
 		                     language = {language},
 		                     timezone = {timezone},
-		                     is_admin = {isAdmin}
+		                     is_admin = {isAdmin},
+		                     totp     = {totp},
+		                     hotp     = {hotp}
 		                 WHERE id={userid}
 SQL
  );
@@ -407,6 +409,8 @@ SQL
 		$sql->setString ( 'language',$this->language);
 		$sql->setString ( 'timezone',$this->timezone);
 		$sql->setBoolean( 'isAdmin' ,$this->isAdmin );
+		$sql->setBoolean( 'totp'    ,$this->totp    );
+		$sql->setBoolean( 'hotp'    ,$this->hotp    );
 		$sql->setInt    ( 'userid'  ,$this->userid  );
 		
 		// Datenbankabfrage ausfuehren

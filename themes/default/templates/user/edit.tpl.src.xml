@@ -126,6 +126,8 @@
 					<label for="otpsecret" key="user_totp"></label>
 				</part>
 				<part class="input">
+					<checkbox name="totp"/><label for="totp" key="user_totp"></label>
+				
 					<text var="otpSecret"></text>
 					<qrcode value="var:totpSecretUrl" /> 
 				</part>  
@@ -135,6 +137,8 @@
 					<label for="otpsecret" key="user_hotp"></label>
 				</part>
 				<part class="input">
+					<checkbox name="hotp"/><label for="hotp" key="user_hotp"></label>
+				
 					<qrcode value="var:hotpSecretUrl" /> 
 				</part>
 			</part>

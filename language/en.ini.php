@@ -1230,3 +1230,8 @@ SELECT_PROJECT=Select project
 SELECT_LANGUAGE=Select language
 SELECT_MODEL=Select model
 PWCHANGE_NOT_ALLOWED=Password change is not available
+
+
+USER_PASSWORD_EXPIRES=Password expires
+USER_HOTP=Counter-based 2-factor authentification
+USER_TOTP=Time-based 2-factor authentification

@@ -7,7 +7,7 @@ default     = usertimeline
 
 [content]
 
-views       = profile:edit,profile:pw,profile:settings
+views       = profile:edit,profile:pw
 default     = edit
 modal = false
 

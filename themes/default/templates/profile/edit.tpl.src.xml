@@ -63,6 +63,53 @@
 						default="config:interface/style/default"></selectbox>
 				</part>
 			</part>
+			<part class="line">
+				<part class="label">
+					<label for="timezone_offset">
+						<text key="timezone" />
+					</label>
+				</part>
+				<part class="input">
+					<selectbox name="timezone" list="timezone_list"
+						addempty="true"></selectbox>
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="">
+						<text key="language" />
+					</label>
+				</part>
+				<part class="input">
+					<selectbox name="language" list="language_list" addempty="true"></selectbox>
+				</part>
+			</part>
+		</group>
+		<group title="message:security">
+			<part class="line">
+				<part class="label">
+					<text text="message:user_password_expires" />
+				</part>
+				<part class="input">
+					<date date="var:passwordExpires" />
+				</part>  
+			</part>
+			<part class="line">
+				<part class="label">
+				</part>
+				<part class="input">
+					<checkbox name="totp"/><label for="totp" key="user_totp"></label>
+					<qrcode value="var:totpSecretUrl" /> 
+				</part>  
+			</part>
+			<part class="line">
+				<part class="label">
+				</part>
+				<part class="input">
+					<checkbox name="hotp"/><label for="hotp" key="user_hotp"></label>
+					<qrcode value="var:hotpSecretUrl" /> 
+				</part>
+			</part>
 		</group>
 	</form>
 </output>

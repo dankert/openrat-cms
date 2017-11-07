@@ -52,6 +52,8 @@ class UserAction extends Action
 			$this->user->desc     = $this->getRequestVar('desc'    );
 			$this->user->language = $this->getRequestVar('language');
 			$this->user->timezone = $this->getRequestVar('timezone');
+			$this->user->hotp     = $this->hasRequestVar('hotp'    );
+			$this->user->totp     = $this->hasRequestVar('totp'    );
 			
 			global $conf;
 			if	( @$conf['security']['user']['show_admin_mail'] )
