@@ -40,7 +40,7 @@ class TitleAction extends Action
 			
 
 		$db = Session::getDatabase();
-		$this->setTemplateVar('dbname',$db->conf['comment'].(readonly()?' ('.lang('readonly').')':''));
+		$this->setTemplateVar('dbname',$db->conf['name'].(readonly()?' ('.lang('readonly').')':''));
 		$this->setTemplateVar('dbid'  ,$db->id);
 		
 		$databases = array();
