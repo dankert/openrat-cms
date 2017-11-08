@@ -84,7 +84,7 @@ class DB
 	{
 		global $conf;
 		
-		$this->conf = $dbconf + $conf['database']['defaults']; // linksstehender Operator hat Priorität!
+		$this->conf = $dbconf + $conf['database-default']['defaults']; // linksstehender Operator hat Priorität!
 		
 		if	( $admin )
 		{
@@ -92,6 +92,7 @@ class DB
 			if	( isset($this->conf['update']) )
 				$this->conf = $this->conf['update'] + $this->conf; // linksstehender Operator hat Priorität!
 		}
+		
 		$this->connect();
 	}
 	
@@ -126,9 +127,8 @@ class DB
 		
 		if	( ! class_exists($classname) )
 		{
-			$this->error     = 'Database type "'.$type.'" is not available';
 			$this->available = false;
-			return false;
+			throw new OpenRatException( 'ERROR_DATABASE_CONNECTION','Database type "'.$type.'" is not available');
 		}
 		
 		// Client instanziieren
