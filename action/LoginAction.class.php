@@ -298,12 +298,12 @@ class LoginAction extends Action
 			$this->callSubAction('show');
 		}
 		
-		foreach( $conf['database'] as $dbname=>$dbconf )
+		foreach( $conf['database'] as $dbid => $dbconf )
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
-				$dbids[$dbname] = array('key'  =>$dbname,
-				                        'value'=>Text::maxLength($dbconf['comment']),
-				                        'title'=>$dbconf['comment'].(isset($dbconf['host'])?' ('.$dbconf['host'].')':'') );
+				$dbids[$dbid] = array('key'   => $dbid,
+				                      'value' => empty($dbconf['name'])?$dbid:Text::maxLength($dbconf['name']),
+				                      'title' => @$dbconf['description'] );
 		}
 		
 		
@@ -330,7 +330,7 @@ class LoginAction extends Action
 			// DB-Id aus dem Cookie lesen.
 			$this->setTemplateVar('actdbid',$_COOKIE['or_dbid'] );
 		else
-			$this->setTemplateVar('actdbid',$conf['database']['default']);
+			$this->setTemplateVar('actdbid',$conf['login']['default-database']);
 
 
 		// Den Benutzernamen aus dem Client-Zertifikat lesen und in die Loginmaske eintragen. 
@@ -818,6 +818,9 @@ class LoginAction extends Action
 		if	( $this->hasRequestVar('dbid'))
 		{
 			$dbid = $this->getRequestVar('dbid');
+			
+			if   ( !is_array($conf['database'][$dbid]) )
+			    $this->addValidationError('dbid');
 				
 			$db = new DB( $conf['database'][$dbid],true );
 			$db->id = $dbid;
