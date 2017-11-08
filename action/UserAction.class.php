@@ -217,7 +217,7 @@ class UserAction extends Action
 	    $account = $this->user->name.'@'.$_SERVER['SERVER_NAME'];
 
 	    $base32 = new Base2n(5, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', FALSE, TRUE, TRUE);
-	    $secret = $base32->encode(hex2bin($this->user->otpSecret));
+	    $secret = $base32->encode(@hex2bin($this->user->otpSecret));
 	    
 	    $counter = $this->user->hotpCount;
 	    
@@ -226,7 +226,7 @@ class UserAction extends Action
 		    array('totpSecretUrl' => "otpauth://totp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}",
 		          'hotpSecretUrl' => "otpauth://hotp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}&counter={$counter}"
 		    )
-		    + array('totpToken'=>$this->user->getCode())
+		    + array('totpToken'=>$this->user->getTOTPCode())
 		);
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );

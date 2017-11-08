@@ -434,8 +434,8 @@ SQL
 		$this->userid = intval($sql->getOne($sql))+1;
 
 		$sql = $db->sql('INSERT INTO {{user}}'.
-		               ' (id,name,password_hash,ldap_dn,fullname,tel,mail,descr,style,is_admin)'.
-		               " VALUES( {userid},{name},'','','','','','','default',0 )" );
+		               ' (id,name,password_hash,ldap_dn,fullname,tel,mail,descr,style,is_admin,password_salt)'.
+		               " VALUES( {userid},{name},'','','','','','','default',0,'' )" );
 		$sql->setInt   ('userid',$this->userid);
 		$sql->setString('name'  ,$this->name  );
 
@@ -443,6 +443,8 @@ SQL
 		$sql->query( $sql );
 		
 		$this->addNewUserGroups(); // Neue Gruppen hinzufuegen.
+		
+		$this->renewOTPSecret();
 	}
 
 	
@@ -955,7 +957,7 @@ SQL
 	{
 	    $codeLength = 6;
 	    $timeSlice = floor(time() / 30);
-	    $secretkey = hex2bin($this->otpSecret);
+	    $secretkey = @hex2bin($this->otpSecret);
 	    // Pack time into binary string
 	    $time = chr(0).chr(0).chr(0).chr(0).pack('N*', $timeSlice);
 	    // Hash it with users secret key
@@ -974,7 +976,23 @@ SQL
 	}
 	
 	
-	
+	/**
+	 * Erzeugt ein neues OTP-Secret.
+	 */
+	public function renewOTPSecret() {
+	    
+	    $secret = Password::randomHexString(64);
+	    
+	    $db = db_connection();
+	    
+	    $stmt = $db->sql('UPDATE {{user}} SET otp_secret={secret} WHERE id={id}');
+	    
+	    $stmt->setString( 'secret', $secret       );
+	    $stmt->setInt   ( 'id'    , $this->userid );
+	    
+	    $stmt->execute();
+	    
+	}
 	
 }
 
