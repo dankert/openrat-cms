@@ -569,9 +569,6 @@ class Action
 	 * ("304 not modified") gesetzt.
 	 * Der Rest der Seite muss dann nicht mehr erzeugt werden,
 	 * wodurch die Performance stark erhoeht werden kann.
-	 * Ggf. kann das Benutzen dieses Mechanismus zu unerw�nschten
-	 * Effekten f�hren, dann muss "conditional GET" in der
-	 * Konfiguration deaktiviert werden.
 	 *
 	 * Credits: Danke an Charles Miller
 	 * @see http://fishbowl.pastiche.org/2002/10/21/http_conditional_get_for_rss_hackers
@@ -579,27 +576,19 @@ class Action
 	 * Gefunden auf:
 	 * @see http://simon.incutio.com/archive/2003/04/23/conditionalGet
 	 *
-	 * @param Timestamp Letztes Aenderungsdatum dieser Seite
+	 * @param Timestamp Letztes Aenderungsdatum des Objektes
 	 */
 	protected function lastModified( $time )
 	{
 		$user = Session::getUser();
-		if	( $user->loginDate > $time && !isset($this->actionConfig[$this->subActionName]['direct']) )
-			// Falls Benutzer-Login nach letzter �nderung.
-			// Zweck: Nach einem Login sollte mind. 1x jede Seite neu geladen werden, dies
-			// Ist z.B. nach einer Style-�nderung durch den Benutzer notwendig.
-			// Falls aus Versehen doch einmal zuviel gecacht wurde, kann man das durch ein
-			// Neu-Login beheben. 
-			$time = $user->loginDate;
 
 		// Conditional-Get eingeschaltet?
-		global $conf;
-		if	( ! $conf['cache']['conditional_get'] )
+		if	( ! config('cache','conditional_get') )
 			return;
 
 		$expires      = substr(date('r',time()-date('Z')),0,-5).'GMT';
 		$lastModified = substr(date('r',$time -date('Z')),0,-5).'GMT';
-		$etag         = '"'.md5($lastModified).'"';
+		$etag         = '"'.base_convert($time,10,36).'"';
 
 		// Header senden
 		header('Expires: '      .$expires      );
