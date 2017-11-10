@@ -1343,7 +1343,7 @@ SQL
 						$inhalt = $SESS['dbid'];
 						break;
 					case 'db_name':
-						$inhalt = $conf['database_'.$SESS['dbid']]['comment'];
+						$inhalt = $conf['database_'.$SESS['dbid']]['description'];
 						break;
 					case 'project_id':
 						$inhalt = $this->page->projectid;

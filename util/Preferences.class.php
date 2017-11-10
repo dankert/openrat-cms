@@ -142,7 +142,7 @@ class Preferences
 		
 		$defaultDatabaseConfig = array(
 			'enabled'       =>true,
-			'comment2'      =>'',
+			'description2'  =>'',
 			'user'          =>'',
 			'password'      => '',
 			'host'          =>'localhost',

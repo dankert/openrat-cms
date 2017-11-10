@@ -99,7 +99,7 @@ class StartAction extends Action
 		
 		if	( !$db->available )
 		{
-			$this->addNotice('database',$db->conf['comment'],'DATABASE_CONNECTION_ERROR',OR_NOTICE_ERROR,array(),array('Database Error: '.$db->error));
+			$this->addNotice('database',$db->conf['description'],'DATABASE_CONNECTION_ERROR',OR_NOTICE_ERROR,array(),array('Database Error: '.$db->error));
 			$this->callSubAction('showlogin');
 			return false;
 		}
@@ -283,8 +283,8 @@ class StartAction extends Action
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
 				$dbids[$dbname] = array('key'  =>$dbname,
-				                        'value'=>Text::maxLength($dbconf['comment']),
-				                        'title'=>$dbconf['comment'].' ('.$dbconf['host'].')' );
+				                        'value'=>Text::maxLength($dbconf['description']),
+				                        'title'=>$dbconf['description'].' ('.$dbconf['host'].')' );
 		}
 		
 		$openid_provider = array();
@@ -1379,7 +1379,7 @@ class StartAction extends Action
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
-				$dbids[$dbname] = $dbconf['comment'];
+				$dbids[$dbname] = $dbconf['description'];
 		}
 
 		$this->setTemplateVar( 'dbids',$dbids );
@@ -1462,7 +1462,7 @@ class StartAction extends Action
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
-				$dbids[$dbname] = $dbconf['comment'];
+				$dbids[$dbname] = $dbconf['description'];
 		}
 
 		$this->setTemplateVar( 'dbids',$dbids );

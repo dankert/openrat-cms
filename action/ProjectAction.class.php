@@ -270,7 +270,7 @@ class ProjectAction extends Action
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'])
-				$dbids[$dbname] = $dbconf['comment'];
+				$dbids[$dbname] = $dbconf['description'];
 		}
 		$this->setTemplateVar( 'dbids',$dbids );
 		
