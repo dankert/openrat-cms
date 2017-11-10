@@ -39,7 +39,7 @@ function formSubmit(form)
 	}
 	
 
-	var status = $('<div class="notice info"><div class="text loader"></div></div');
+	var status = $('<div class="notice info"><div class="text loader"></div></div>');
 	$('#noticebar').prepend(status); // Notice anhängen.
 	$(status).show();
 
@@ -133,7 +133,7 @@ function doResponse(data,status,element)
 	$.each(data['notices'], function(idx,value) {
 		
 		// Notice-Bar mit dieser Meldung erweitern.
-		var notice = $('<div class="notice '+value.status+'"><div class="text">'+value.text+'</div></div');
+		var notice = $('<div class="notice '+value.status+'"><div class="text">'+value.text+'</div></div>');
 		notifyBrowser(value.text);
 		$.each(value.log, function(name,value) {
 			$(notice).append('<div class="log">'+value+'</div>');

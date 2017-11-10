@@ -11,6 +11,8 @@ require_once( OR_SERVICECLASSES_DIR."TemplateEngine.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Preferences.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."FileUtils.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."JSON.class.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."Less.".PHP_EXT );
+require_once( OR_SERVICECLASSES_DIR."JSqueeze.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."Password.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."exception/OpenRatException.class.".PHP_EXT );
 require_once( OR_SERVICECLASSES_DIR."exception/SecurityException.class.".PHP_EXT );

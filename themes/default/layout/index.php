@@ -2,7 +2,7 @@
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<html class="theme-<?php echo strtolower($style) ?> nojs">
 <head>
 <?php $appName = config('application','name'); $appOperator = config('application','operator');
       $title = $appName.(($appOperator!=$appName)?' - '.$appOperator:''); ?>
@@ -31,12 +31,12 @@
 //   $css[] = link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo css_link($style) "
   $cssParam = css_link($style);
   
-  $css['userstyle'] = OR_THEMES_EXT_DIR.'default/css/openrat-theme.css.php?'.$cssParam;
-  $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-ui.css.php?'.$cssParam;
-  $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-workbench.css.php?'.$cssParam;
+  $css['userstyle'] = OR_THEMES_EXT_DIR.'default/css/openrat-theme.css.php';
+  $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-ui.css.php';
+  $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-workbench.css.php';
   
-  $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/skins/markitup/style.css';
-  $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/sets/default/style.css';
+//   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/skins/markitup/style.css';
+//   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/sets/default/style.css';
   
     // Komponentenbasiertes CSS
 		$elements = parse_ini_file( OR_THEMES_DIR.config('interface','theme').'/include/elements.ini.'.PHP_EXT);
@@ -48,12 +48,31 @@
 		        $css[] = $componentCssFile;
 		        
 		}
-		
+
+		/*
+if  ( DEVELOPMENT ) {
+    
   foreach( $css as $id=>$cssFile )
   {
       ?><link <?php if ( !is_numeric($id)) {?>id="<?php echo $id ?>" <?php } ?>rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
       <?php
   }
+}else {
+        // Production mode: Inline minified CSS  
+      ?><style><?php
+      ob_start('minifyCSS');
+      foreach( $css as $id=>$cssFile )
+      {
+          foreach( array_keys(config('style')) as $styleId )
+          {
+              extract( config('style',$styleId) );
+              include( $cssFile );
+          }
+
+      }
+      ob_end_flush();
+      ?></style><?php
+}
   
   $js = array();
   $js[] = OR_THEMES_EXT_DIR.'default/js/jquery-1.12.4.min.js';
@@ -72,10 +91,34 @@
   $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-qrcode.min.js';
     //  $js[] =  OR_THEMES_EXT_DIR.'../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script> -->
   $js[] =  OR_THEMES_EXT_DIR.'../editor/markitup/markitup/jquery.markitup.js';
-  $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/ckeditor.js';
+  //$js[] =  OR_THEMES_EXT_DIR.'../editor/editor/ckeditor.js';
   $js[] =  OR_THEMES_EXT_DIR.'../editor/ace/src-min-noconflict/ace.js';
   $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/adapters/jquery.js';
 
+    function minifyJS( $source ) {
+//         return $source;
+        $jz = new JSqueeze();
+        
+        return $jz->squeeze(
+            $source,
+            true,   // $singleLine
+            true,   // $keepImportantComments
+            false   // $specialVarRx
+        );
+    }
+    function minifyCSS( $source ) {
+        
+//         return $source;
+        // Remove comments
+        //$source = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)* /!', '', $source);
+        // Remove space after colons
+        $source = str_replace(': ', ':', $source);
+        // Remove whitespace
+        $source = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $source);
+
+        return $source;
+    }
+    
     // Komponentenbasiertes Javascript
 		
 		foreach( array_keys($elements) as $c )
@@ -86,13 +129,29 @@
 		        
 		}
 		
-		foreach( $js as $jsFile )
-		{
-		  ?><script src="<?php echo $jsFile ?>" defer></script>
-		  <?php 
-		}
+	    if    ( DEVELOPMENT )
+	    {
+	        
+    		foreach( $js as $jsFile )
+	       	{
+                ?><script src="<?php echo $jsFile ?>" defer></script><?php 
+		    }
+	    }
+	    else
+	    {
+	        ?><script type="text/javascript">
+	        document.addEventListener("DOMContentLoaded", function(event) {<?php 
+	        ob_start('minifyJS');
+    		foreach( $js as $jsFile )
+    		    include(''.$jsFile);
+            ob_end_flush();
+    		  ?>});</script><?php 
+
+		}*/
 ?>  
 
+<script src="dispatcher.php?action=index&subaction=javascript" defer></script>
+<link rel="stylesheet" type="text/css" href="dispatcher.php?action=index&subaction=stylesheet" />
 </head>
 
 <?php

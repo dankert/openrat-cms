@@ -70,7 +70,7 @@ class Action
 
 	function setStyle( $style )
 	{
-		$this->setControlVar( "new_style", css_link($style) );
+		$this->setControlVar( "new_style", $style );
 	}
 
 	
@@ -578,7 +578,7 @@ class Action
 	 *
 	 * @param Timestamp Letztes Aenderungsdatum des Objektes
 	 */
-	protected function lastModified( $time )
+	protected function lastModified( $time, $expirationDuration = 0 )
 	{
 		$user = Session::getUser();
 
@@ -586,7 +586,7 @@ class Action
 		if	( ! config('cache','conditional_get') )
 			return;
 
-		$expires      = substr(date('r',time()-date('Z')),0,-5).'GMT';
+		$expires      = substr(date('r',time()+$expirationDuration-date('Z')),0,-5).'GMT';
 		$lastModified = substr(date('r',$time -date('Z')),0,-5).'GMT';
 		$etag         = '"'.base_convert($time,10,36).'"';
 
@@ -604,15 +604,19 @@ class Action
 		$if_modified_since = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']) : false;
 		$if_none_match     = isset($_SERVER['HTTP_IF_NONE_MATCH']    ) ? stripslashes($_SERVER['HTTP_IF_NONE_MATCH']    ) :	false;
 
-		if	( !$if_modified_since && !$if_none_match )
-			return;
-
+		// Bug in Apache 2.2, mod_deflat adds '-gzip' to E-Tag
+		if    ( substr($if_none_match,-6) == '-gzip"' )
+		    $if_none_match = substr($if_none_match,0,-6).'"';
+		
 		// At least one of the headers is there - check them
 		if	( $if_none_match && $if_none_match != $etag )
 			return; // etag is there but doesn't match
 
 		if	( $if_modified_since && $if_modified_since != $lastModified )
 			return; // if-modified-since is there but doesn't match
+		
+		if	( !$if_modified_since && !$if_none_match )
+			return;
 
 		// Der entfernte Browser bzw. Proxy holt die Seite nun aus seinem Cache 
 		header('HTTP/1.0 304 Not Modified');

@@ -969,33 +969,22 @@ function notifyBrowser(text)
 
 
 
-function setUserStyle( url )
-{
-	$('#userstyle').attr('href',url);
-}
-
-
-/*
-$(function(){ //Document ready shorthand
-
-var $search = $('#search');//Cache the element for faster DOM searching since we are using it more than once
-original_val = $search.val(); //Get the original value to test against. We use .val() to grab value="Search"
-$search.focus(function(){ //When the user tabs/clicks the search box.
-	if($(this).val()===original_val){ //If the value is still the default, in this case, "Search"
-		$(this).val('');//If it is, set it to blank
-	}
-})
-.blur(function(){//When the user tabs/clicks out of the input
-	if($(this).val()===''){//If the value is blank (such as the user clicking in it and clicking out)...
-		$(this).val(original_val); //... set back to the original value
-	}
-});
-
-});
-
+/**
+ * Setzt einen neuen Theme.
+ * @param styleName
+ * @returns
  */
-
-
+function setUserStyle( styleName )
+{
+	var html = $('html');
+	var classList = html.attr('class').split(/\s+/);
+	$.each(classList, function(index, item) {
+	    if (item.startsWith('theme-')) {
+	        html.removeClass(item);
+	    }
+	});
+	html.addClass( 'theme-' + styleName.toLowerCase() );
+}
 
 
 
@@ -1097,62 +1086,6 @@ function loadSubaction( el, actionName, subactionName,id )
 }
 
 
-
-function loadWindow( el, actionName, subactionName )
-{
-	alert('loadWindow()');
-	// Zeichnet das Fenster-Gerüst, erstmal ohne Inhalt.
-	$(el).html('<div class="window"><div class="title"></div><ul class="menu"></div><div class="content"></div><div class="status"></div></div>');
-
-	// Icon
-	$(el).find('div.title').html('<img src="'+image_dir+'icon_'+icon+'.'+IMG_ICON_EXT+'" align="left" />');
-
-	/* Pfad
-			<span class="path"><?php echo langHtml($actionName) ?></span>&nbsp;<strong>&rarr;</strong>&nbsp;
-				<a javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $url ?>'); return false; " title="<?php echo $title ?>" class="path"><?php echo (!empty($key)?langHtml($key):$name) ?></a>
-				&nbsp;&rarr;&nbsp;
-			<?php } ?>
-			<span class="title"><?php echo langHtml(@$windowTitle) ?></span>
-	 */
-
-	
-	/*
-	 * Menü
-		if	( !isset($windowMenu) || !is_array($windowMenu) ) $windowMenu = array();
-	    foreach( $windowMenu as $menu )
-	          {
-	          	$tmp_text = langHtml($menu['text']);
-	          	$tmp_key  = strtoupper(langHtml($menu['key' ]));
-				$tmp_pos = strpos(strtolower($tmp_text),strtolower($tmp_key));
-				if	( $tmp_pos !== false )
-					$tmp_text = substr($tmp_text,0,max($tmp_pos,0)).'<span class="accesskey">'. substr($tmp_text,$tmp_pos,1).'</span>'.substr($tmp_text,$tmp_pos+1);
-
-				$liClass  = (isset($menu['url'])?'':'no').'action'.($this->subActionName==$menu['subaction']?'_active':'');
-				$icon_url = $image_dir.'icon/'.$menu['subaction'].'.png';
-				
-				?><li class="<?php echo $liClass?>"><?php
-	          	if	( isset($menu['url']) )
-	          	{
-	          		$link_url = Html::url($actionName,$menu['subaction'],$this->getRequestId() );
-	          		?><a href="javascript:void(0);" onclick="javascript:loadViewByName('<?php echo $view ?>','<?php echo $link_url ?>'); return false; " accesskey="<?php echo $tmp_key ?>" title="<?php echo langHtml($menu['text'].'_DESC') ?>"><img src="<?php echo $icon_url ?>" /><?php echo $tmp_text ?></a><?php
-	          	}
-	          	else
-	          	{
-	          		?><span><img src="<?php echo $icon_url ?>" /><?php echo $tmp_text ?></span><?php
-	          	}
-	          }
-	          	?></li><?php
-	 */
-
-	/*
-	 * Hilfe
-	 * if ( false && @$conf['help']['enabled'] )
-	          	{
-	             ?><a class="help" href="<?php echo $conf['help']['url'].$actionName.'/'.$subActionName.@$conf['help']['suffix'] ?> " target="_new" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo $image_dir.'icon/help.png' ?>" /><?php echo @$conf['help']['only_question_mark']?'?':langHtml('MENU_HELP') ?></a><?php
-	          	}
-	          	?><?php
-	          	*/
-}
 
 
 /**
@@ -1311,7 +1244,7 @@ function help(el,url,suffix)
 function notify( type,msg )
 {
 	// Notice-Bar mit dieser Meldung erweitern.
-	var notice = $('<div class="notice '+type+'"><div class="text">'+msg+'</div></div');
+	var notice = $('<div class="notice '+type+'"><div class="text">'+msg+'</div></div>');
 	$('#noticebar').prepend(notice); // Notice anhängen.
 	notifyBrowser(msg);
 	

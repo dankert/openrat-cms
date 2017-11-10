@@ -53,7 +53,7 @@ function handleFileUpload(form,files)
 	    form_data.append('token'    ,$(form).find('input[name=token]').val() );
 	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );
 	    
-		var status = $('<div class="notice info"><div class="text loader"></div></div');
+		var status = $('<div class="notice info"><div class="text loader"></div></div>');
 		$('#noticebar').prepend(status); // Notice anhängen.
 		$(status).show();
 

@@ -398,7 +398,7 @@ class LoginAction extends Action
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
 				$dbids[$dbname] = array('key'  =>$dbname,
-				                        'value'=>Text::maxLength($dbconf['comment']),
+				                        'value'=>Text::maxLength($dbconf['description']),
 				                        'title'=>$dbconf['comment'].(isset($dbconf['host'])?' ('.$dbconf['host'].')':'') );
 		}
 		
