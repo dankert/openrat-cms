@@ -110,26 +110,14 @@ class IndexAction extends Action
 	        $this->lastModified(config('config','last_modification',1*60*60) );
 	            
 	            
-	    function minifyCSS( $source ) {
-	        
-	        // Remove comments
-	        $source = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $source);
-	        // Remove space after colons
-	        $source = str_replace(': ', ':', $source);
-	        // Remove whitespace
-	        $source = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $source);
-	        
-	        return $source;
-	    }
-	    
 	    header('Content-Type: text/css');
 	    $css = array();
 	    //   $css[] = link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo css_link($style) "
 // 	    $cssParam = css_link($style);
 	    
 // 	    $css['userstyle'] = OR_THEMES_EXT_DIR.'default/css/openrat-theme.css.php';
-	    $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-ui.css';
-	    $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-workbench.css';
+	    $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-ui';
+	    $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-workbench';
 	    
 	    //   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/skins/markitup/style.css';
 	    //   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/sets/default/style.css';
@@ -139,77 +127,136 @@ class IndexAction extends Action
 	    
 	    foreach( array_keys($elements) as $c )
 	    {
-	        $componentCssFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c.'.css';
-	        if    ( is_file($componentCssFile) )
-	            $css[] = $componentCssFile;
-	        
-            // LESS-Version vorhanden?
-	        $componentCssFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c.'.less';
-	        if    ( is_file($componentCssFile) )
+	        $componentCssFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c;
+	        if    ( is_file($componentCssFile.'.less') )
 	            $css[] = $componentCssFile;
 	            
 	    }
 	    
 	    if  ( DEVELOPMENT ) {
 	        
-	        foreach( $css as $id=>$cssFile )
+	        foreach( $css as $id=>$cssF )
 	        {
-	            if ( substr($cssFile,-5)=='.less')
+	            $lessFile   = $cssF.'.less';
+	            $cssFile    = $cssF.'.css';
+	            $cssMinFile = $cssF.'.min.css';
+
+	            
+	            
+	            if ( !is_file($lessFile))
 	            {
-    	            echo "/* LESS Source file: $cssFile */";
-	                $parser = new Less_Parser();
-	                $parser->parse( file_get_contents($cssFile) );
-	                echo $parser->getCss();
+	                echo "\n/* File $lessFile is missing! */";
+	                Logger::warn("Stylesheet not found: $lessFile");
+	            }
+	            elseif ( !is_file($cssFile) || !is_file($cssMinFile))
+	            {
+	                echo "\n/* File $cssMinFile is missing! */";
+	                Logger::warn("Stylesheet output file not found $cssMinFile");
 	            }
 	            else
 	            {
-    	            echo "/* CSS Source file: $cssFile */";
-    	            echo file_get_contents($cssFile);
+	                if( filemtime($lessFile) > filemtime($cssMinFile) )
+	                {
+	                    // LESS-Source wurde geändert, CSS-Version muss aktualisiert werden.
+	                    if   ( !is_writable($cssFile) || !is_writable($cssMinFile))
+	                    {
+	                        echo "/* File $jsFileMin is not writable! */";
+	                        Logger::warn("Style-Output file is not writable: $cssMinFile");
+	                    }
+	                    else
+	                    {
+            	            echo "/* LESS Source file: $lessFile */\n";
+                            $parser = new Less_Parser();
+                            $parser->parse( file_get_contents($lessFile) );
+                            $source = $parser->getCss();
+                            
+	                        file_put_contents( $cssFile, "/* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */\n\n".$source );
+                            
+	                        
+	                        file_put_contents( $cssMinFile, $this->minifyCSS($source) );
+	                    }
+	                }
+	                echo "\n/* CSS file: $cssFile */\n";
+	                readfile($cssFile);
 	            }
             }
         }
         else
         {
             // Production mode: Inline minified CSS  
-              ob_start('minifyCSS');
-              foreach( $css as $id=>$cssFile )
+              foreach( $css as $id=>$cssF )
               {
-                  if ( substr($cssFile,-5)=='.less')
+                  $cssMinFile = $cssF.'.min.css';
+
+                  if ( !is_file($cssMinFile))
                   {
-                      $parser = new Less_Parser();
-                      $parser->parse( file_get_contents($cssFile) );
-                      echo $parser->getCss();
+                      echo "\n/* File $cssMinFile is missing! */\n";
+                      Logger::warn("Stylesheet output file not found $cssMinFile");
                   }
                   else
                   {
-                      echo file_get_contents($cssFile);
+                      readfile($cssMinFile);
                   }
-                  
-            }
-            ob_end_flush();
+             }                  
         }
 
+        
         // Je Theme die Theme-CSS-Datei ausgeben.
-        foreach( array_keys(config('style')) as $styleId )
-        {
+        $cssF       = OR_THEMES_EXT_DIR.'default/css/openrat-theme';
+        $lessFile   = $cssF.'.less';
+        $cssFile    = $cssF.'.css';
+        $cssMinFile = $cssF.'.min.css';
 
-            $css = file_get_contents(OR_THEMES_EXT_DIR.'default/css/openrat-theme.less');
-            $css = str_replace('__name__',$styleId,$css);
-            $css = str_replace('__IMAGE_PATH__',OR_THEMES_EXT_DIR.'default/images/',$css);
-            foreach( config('style',$styleId) as $key=>$value)
+        if  ( DEVELOPMENT )
+        {
+            if  ( filemtime($lessFile) > filemtime($cssMinFile) )
             {
-                $css = str_replace('__'.$key.'__',$value,$css);
+                file_put_contents($cssFile   , "/* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */\n\n");
+                file_put_contents($cssMinFile, '');
+            
+                foreach( array_keys(config('style')) as $styleId )
+                {
+                    $lessSource = file_get_contents( $lessFile );
+                    $lessSource = str_replace('__name__'      ,$styleId                           ,$lessSource);
+                    $lessSource = str_replace('__IMAGE_PATH__',OR_THEMES_EXT_DIR.'default/images/',$lessSource);
+                    foreach( config('style',$styleId) as $key=>$value)
+                    {
+                        $lessSource = str_replace('__'.$key.'__',$value,$lessSource);
+                    }
+                    $parser = new Less_Parser();
+                    $parser->parse( $lessSource );
+                    $css = $parser->getCss();
+                    
+                    file_put_contents($cssFile   , $css           ,FILE_APPEND);
+                    file_put_contents($cssMinFile, $this->minifyCSS($css),FILE_APPEND);
+                }
             }
-            $parser = new Less_Parser();
-            $parser->parse( $css );
-            $css = $parser->getCss();
-            if  ( PRODUCTION)
-                $css = minifyCSS($css);
-            echo $css;
+            
+            echo "\n/* Theme-CSS: $cssFile */\n";
+            readfile( $cssFile );
+        }
+        else 
+        {
+            // Production.
+            readfile( $cssMinFile );
         }
   
 	    exit;
 	}
+	
+	
+	private function minifyCSS( $css )
+	{
+	    // Remove comments
+	    $css = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css);
+	    // Remove space after colons
+	    $css = str_replace(': ', ':', $css);
+	    // Remove whitespace
+	    $css = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $css);
+	    
+	    return $css;
+	}
+	
 	
 	
 	public function javascriptView()
@@ -293,13 +340,7 @@ class IndexAction extends Action
 	                    {
             	            $jz = new JSqueeze();
             	            
-            	            file_put_contents( $jsFileMin, $jz->squeeze(
-            	                file_get_contents($jsFileNormal),
-            	                true,   // $singleLine
-            	                true,   // $keepImportantComments
-            	                false   // $specialVarRx
-            	                )
-            	             );
+            	            file_put_contents( $jsFileMin, $this->minifyJS(file_get_contents($jsFileNormal)));
 	                    }
 	                }
 
@@ -324,6 +365,20 @@ class IndexAction extends Action
 		}
 		
 		exit;
+	    
+	}
+	
+	
+	private function minifyJS( $js )
+	{
+	    $jz = new JSqueeze();
+	    
+	    return $jz->squeeze(
+	        $js,
+	        true,   // $singleLine
+	        true,   // $keepImportantComments
+	        false   // $specialVarRx
+	    );
 	    
 	}
 }
