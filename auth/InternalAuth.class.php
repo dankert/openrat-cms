@@ -57,10 +57,13 @@ SQL
 		if    ( $row_user['password_expires'] != null && $row_user['password_expires'] < time() )
 		{
 			// Kennwort ist abgelaufen.
-		    if    ( config('security','password','deny_if_expired') )
+			
+		    // Wenn das kennwort abgelaufen ist, kann es eine bestimmte Dauer noch benutzt und geändert werden.
+		    // Nach Ablauf dieser Dauer wird das Login abgelehnt.
+		    if    ( $row_user['password_expires'] +(config('security','deny_after_expiration_duration')*60*60) < time() )
 		        return false; // Abgelaufenes Kennwort wird nicht mehr akzeptiert.
 		    else
-                return OR_AUTH_STATUS_PW_EXPIRED;
+                return OR_AUTH_STATUS_PW_EXPIRED; // Kennwort ist abgelaufen, kann aber noch geändert werden.
 		}
 		
 		if   ( $row_user['totp'] == 1 )
