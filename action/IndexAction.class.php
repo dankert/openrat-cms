@@ -94,7 +94,7 @@ class IndexAction extends Action
 		if	( is_object($user) )
 			$style = $user->style; 
 		else
-			$style = 'default';
+			$style = config('interface','style','default');
 
 		// HTML-Datei direkt einbinden.
 		require('themes/default/layout/index.php');
