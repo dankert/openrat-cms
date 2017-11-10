@@ -50,6 +50,8 @@ class TemplateEngine
 	 */
 	public function compile( $tplName = '')
 	{
+	    require_once( OR_THEMES_DIR."default/include/html/Component.class.".PHP_EXT );
+	    
 		try {
     		if	( empty($tplName) )
     			$tplName = $this->tplName;
@@ -107,14 +109,14 @@ class TemplateEngine
     				$attributes = $this->checkAttributes($tag,$attributes);
     				
     			if ( $type == 'open' )
-    			    $this->copyFileContents( $tag.'/'.$tag.'-begin',$outFile,$attributes,++$depth );
+    			    $this->copyFileContents( $tag, true, $tag.'/'.$tag.'-begin',$outFile,$attributes,++$depth );
     			elseif ( $type == 'complete' )
     			{
-    				$this->copyFileContents( $tag.'/'.$tag.'-begin',$outFile,$attributes,++$depth   );
-    				$this->copyFileContents( $tag.'/'.$tag.'-end'  ,$outFile,array()    ,  $depth-- );
+    			    $this->copyFileContents( $tag, true, $tag.'/'.$tag.'-begin',$outFile,$attributes,++$depth   );
+    			    $this->copyFileContents( $tag, false, $tag.'/'.$tag.'-end'  ,$outFile,array()    ,  $depth-- );
     			}
     			elseif ( $type == 'close' )
-                    $this->copyFileContents( $tag.'/'.$tag.'-end'  ,$outFile,array(),$depth-- );
+    			     $this->copyFileContents( $tag, false, $tag.'/'.$tag.'-end'  ,$outFile,array(),$depth-- );
     		}
     
     		fclose($outFile);
@@ -209,116 +211,140 @@ class TemplateEngine
 	
 	
 	/**
-	 * Ein Baustein wird in die neue Vorlagedatei kopiert. 
+	 * Eine Komponente wird in die neue Vorlagedatei kopiert.
 	 */
-	private function copyFileContents( $infile,$outFileHandler,$attr,$depth )
+	private function copyFileContents( $tag, $begin, $infile,$outFileHandler,$attr,$depth )
 	{
 		global $conf;
 		$hash = $depth;
 		
-		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
-		if	( !is_file($inFileName) )
-			if	( count($attr)==0 )
-				return;
-			else
-				// Baustein nicht vorhanden, Abbbruch.
-			    
-				throw new LogicException("Compile failed, file not found: $inFileName" );
-
-		if	( DEVELOPMENT )
-			fwrite( $outFileHandler,"<!-- Compiling $infile @ ".date('r')." -->" );
+		$className     = ucfirst($tag);
+		$classFilename = OR_THEMES_DIR.$conf['interface']['theme']."/include/html/$tag/$className.class.".PHP_EXT;
 		
-		$values = array();
-		foreach( $attr as $attrName=>$attrValue )
+		if    ( is_file($classFilename))
 		{
-			$values[] = "'".$attrName."'=>".$this->attributeValue($attrValue);
+		    require_once( $classFilename);
+		    
+		    $className .= 'Component';
+		    $component = new $className();
+		    ob_start();
+		    if    ( $begin )
+		      $component->begin($attr);
+		    else
+		        $component->end();
+		    
+		    $src = ob_get_contents();
+		    ob_end_clean();
+		    fwrite( $outFileHandler,"\n<!-- Component $tag ".($begin?'beginn':'ennd')." -->\n".$src."\n<!-- End -->\n" );
+		    
+		    return;
 		}
-		
-		// Variablen $attr_* setzen
-		if	( count($attr) > 0 )
+		else
 		{
-			fwrite( $outFileHandler,'<?php ');
-			foreach( $attr as $attrName=>$attrValue )
-				fwrite( $outFileHandler,'$a'.$hash.'_'.$attrName."=".$this->attributeValue($attrValue).';');
-			fwrite( $outFileHandler,' ?>');
+		    
+    		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
+    		if	( !is_file($inFileName) )
+    			if	( count($attr)==0 )
+    				return;
+    			else
+    				// Baustein nicht vorhanden, Abbbruch.
+    				throw new LogicException("Compile failed, Component $infile not found." );
+    
+    		if	( DEVELOPMENT )
+    			fwrite( $outFileHandler,"<!-- Compiling $infile @ ".date('r')." -->" );
+    		
+    		$values = array();
+    		foreach( $attr as $attrName=>$attrValue )
+    		{
+    			$values[] = "'".$attrName."'=>".$this->attributeValue($attrValue);
+    		}
+    		
+    		// Variablen $attr_* setzen
+    		if	( count($attr) > 0 )
+    		{
+    			fwrite( $outFileHandler,'<?php ');
+    			foreach( $attr as $attrName=>$attrValue )
+    				fwrite( $outFileHandler,'$a'.$hash.'_'.$attrName."=".$this->attributeValue($attrValue).';');
+    			fwrite( $outFileHandler,' ?>');
+    		}
+    			
+    		$file   = file( $inFileName );
+    		$ignore = false;
+    		$linebreaks = true;
+    		
+    		foreach( $file as $line )
+    		{
+    			// Ignoriere Zeilen, die fuer ein nicht vorhandenes Attribut gelten.
+    			if  ( strpos($line,'#IF-ATTR')!==FALSE )
+    			{
+    				$found = false;
+    				foreach( $attr as $attrName=>$attrValue )
+    				{
+    					if  ( strpos($line,'#IF-ATTR '.$attrName.'#')!==FALSE )
+    						$found = true;
+    					if  ( strpos($line,'#IF-ATTR-VALUE '.$attrName.':'.$attrValue.'#')!==FALSE )
+    						$found = true;
+    				}
+    				if	( ! $found )
+    					$ignore = true;
+    			}
+    			// Nach einem IF-Block ertmal alles wieder anzeigen.
+    			if  ( strpos($line,'#END-IF')!==FALSE )
+    			{
+    				$ignore = false;
+    			}
+    			
+    			if  ( strpos($line,'#ELSE')!==FALSE )
+    			{
+    				$ignore = !$ignore;
+    			}
+    
+    			// Zeilenumbr�che nicht setzen.
+    			if  ( strpos($line,'#SET-LINEBREAK-OFF')!==FALSE )
+    				$linebreaks = false;
+    
+    			// Zeilenumbr�che setzen.
+    			if  ( strpos($line,'#SET-LINEBREAK-ON')!==FALSE )
+    				$linebreaks = true;
+    				
+    			// Ignoriere Zeilen, die zu ignorieren sind (logisch).
+    			// Dies sind Blöcke, die nur fuer ein Attribut gueltig sind, welches
+    			// aber nicht gesetzt ist.
+    			if	( $ignore )
+    				continue;
+    			
+    			// Ignoriere Leerzeilen
+    			if	( strlen(trim($line)) == 0)
+    				continue;
+    			// Ignoriere Kommentarzeilen
+    			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) || substr(ltrim($line),0,1) == '#')
+    				continue;
+    			// Ignoriere Kommentarzeilen
+    			if	( in_array(substr(rtrim($line),-3),array('-->',' */') ) )
+    				continue;
+    				
+    			if	( !$linebreaks )
+    				$line = rtrim($line);
+    				
+    			// Die Variablen "$attr_*" muessen pro Ebene eindeutig sein, daher wird an den
+    			// Variablennamen die Tiefe angehangen.
+    			$line = str_replace('$attr_','$a'.$hash.'_',$line);
+    			
+    			foreach( $attr as $attrName=>$attrValue )
+    				$line = str_replace('%'.$attrName.'%',$this->attributeValueOpenPHP($attrValue),$line);
+    			
+    			
+    			fwrite( $outFileHandler,$line );
+    		}
+    		
+    		// Variablen $attr_* entfernen.
+    		$unset_attr = array();
+    		foreach( $attr as $attrName=>$attrValue )
+    			$unset_attr[] = '$a'.$hash.'_'.$attrName;
+    			
+    		if	( count($unset_attr) > 0 )
+    			fwrite( $outFileHandler,'<?php unset('.implode(',',$unset_attr).') ?>');
 		}
-			
-		$file   = file( $inFileName );
-		$ignore = false;
-		$linebreaks = true;
-		
-		foreach( $file as $line )
-		{
-			// Ignoriere Zeilen, die fuer ein nicht vorhandenes Attribut gelten.
-			if  ( strpos($line,'#IF-ATTR')!==FALSE )
-			{
-				$found = false;
-				foreach( $attr as $attrName=>$attrValue )
-				{
-					if  ( strpos($line,'#IF-ATTR '.$attrName.'#')!==FALSE )
-						$found = true;
-					if  ( strpos($line,'#IF-ATTR-VALUE '.$attrName.':'.$attrValue.'#')!==FALSE )
-						$found = true;
-				}
-				if	( ! $found )
-					$ignore = true;
-			}
-			// Nach einem IF-Block ertmal alles wieder anzeigen.
-			if  ( strpos($line,'#END-IF')!==FALSE )
-			{
-				$ignore = false;
-			}
-			
-			if  ( strpos($line,'#ELSE')!==FALSE )
-			{
-				$ignore = !$ignore;
-			}
-
-			// Zeilenumbr�che nicht setzen.
-			if  ( strpos($line,'#SET-LINEBREAK-OFF')!==FALSE )
-				$linebreaks = false;
-
-			// Zeilenumbr�che setzen.
-			if  ( strpos($line,'#SET-LINEBREAK-ON')!==FALSE )
-				$linebreaks = true;
-				
-			// Ignoriere Zeilen, die zu ignorieren sind (logisch).
-			// Dies sind Blöcke, die nur fuer ein Attribut gueltig sind, welches
-			// aber nicht gesetzt ist.
-			if	( $ignore )
-				continue;
-			
-			// Ignoriere Leerzeilen
-			if	( strlen(trim($line)) == 0)
-				continue;
-			// Ignoriere Kommentarzeilen
-			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) || substr(ltrim($line),0,1) == '#')
-				continue;
-			// Ignoriere Kommentarzeilen
-			if	( in_array(substr(rtrim($line),-3),array('-->',' */') ) )
-				continue;
-				
-			if	( !$linebreaks )
-				$line = rtrim($line);
-				
-			// Die Variablen "$attr_*" muessen pro Ebene eindeutig sein, daher wird an den
-			// Variablennamen die Tiefe angehangen.
-			$line = str_replace('$attr_','$a'.$hash.'_',$line);
-			
-			foreach( $attr as $attrName=>$attrValue )
-				$line = str_replace('%'.$attrName.'%',$this->attributeValueOpenPHP($attrValue),$line);
-			
-			
-			fwrite( $outFileHandler,$line );
-		}
-		
-		// Variablen $attr_* entfernen.
-		$unset_attr = array();
-		foreach( $attr as $attrName=>$attrValue )
-			$unset_attr[] = '$a'.$hash.'_'.$attrName;
-			
-		if	( count($unset_attr) > 0 )
-			fwrite( $outFileHandler,'<?php unset('.implode(',',$unset_attr).') ?>');
 	}
 	
 	
