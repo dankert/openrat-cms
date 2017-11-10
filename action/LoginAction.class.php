@@ -1863,12 +1863,11 @@ class LoginAction extends Action
 	 */
 	function passwordView()
 	{
-		global $conf;
-		
 		// TODO: Attribut "Password" abfragen
-		foreach( $conf['database'] as $dbname=>$dbconf )
+		foreach( config('database') as $dbname=>$dbconf )
 		{
-			if	( is_array($dbconf) && $dbconf['enabled'] )
+		    $dbconf = $dbconf + config('database-default','defaults');
+			if	( $dbconf['enabled'] )
 				$dbids[$dbname] = $dbconf['description'];
 		}
 
@@ -1880,8 +1879,7 @@ class LoginAction extends Action
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
 		else
-			$this->setTemplateVar('actdbid',$conf['database']['default']);
-		
+			$this->setTemplateVar('actdbid',config('database-default','default-id'));		
 	}	
 	
 	
