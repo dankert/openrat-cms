@@ -12,7 +12,7 @@ $(document).ready(function()
 });
 
 
-
+ 
 /**
  * Ping den Server. Führt keine Aktion aus, aber sorgt dafür, dass die Sitzung erhalten bleibt.
  * 

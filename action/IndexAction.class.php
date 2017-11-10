@@ -221,45 +221,34 @@ class IndexAction extends Action
 	    
 	    header('Content-Type: text/javascript');
 	    
-	    function minifyJS( $source ) {
-	        $jz = new JSqueeze();
-	        
-	        return $jz->squeeze(
-	            $source,
-	            true,   // $singleLine
-	            true,   // $keepImportantComments
-	            false   // $specialVarRx
-	            );
-	    }
-	    
 	    $js = array();
-	    $js[] = OR_THEMES_EXT_DIR.'default/js/jquery-1.12.4.min.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery.scrollTo.js';
+	    $js[] = OR_THEMES_EXT_DIR.'default/js/jquery-1.12.4';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-ui/js/jquery-ui-1.8.16.custom';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery.scrollTo';
 	    //$js[] =  OR_THEMES_EXT_DIR default/js/jquery.mjs.nestedSortable.js"></script>
 	    
 	    //<!-- OpenRat internal JS -->
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/openrat.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orHint.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orSearch.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLinkify.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orTree.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLoadView.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orAutoheight.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-qrcode.min.js';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/openrat';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orHint';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orSearch';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLinkify';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orTree';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLoadView';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orAutoheight';
+	    $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-qrcode';
 	    //  $js[] =  OR_THEMES_EXT_DIR.'../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script> -->
-	    $js[] =  OR_THEMES_EXT_DIR.'../editor/markitup/markitup/jquery.markitup.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/ckeditor.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'../editor/ace/src-min-noconflict/ace.js';
-	    $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/adapters/jquery.js';
+	    $js[] =  OR_THEMES_EXT_DIR.'../editor/markitup/markitup/jquery.markitup';
+	    $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/ckeditor';
+	    $js[] =  OR_THEMES_EXT_DIR.'../editor/ace/src-min-noconflict/ace';
+	    $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/adapters/jquery';
 	    
 	    // Komponentenbasiertes Javascript
 	    $elements = parse_ini_file( OR_THEMES_DIR.config('interface','theme').'/include/elements.ini.'.PHP_EXT);
 	    
 	    foreach( array_keys($elements) as $c )
 	    {
-	        $componentJsFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c.'.js';
-	        if    ( is_file($componentJsFile) )
+	        $componentJsFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c;
+	        if    ( is_file($componentJsFile.'.js') )
 	            $js[] = $componentJsFile;
 	            
 	    }
@@ -269,17 +258,68 @@ class IndexAction extends Action
 	        
 	        foreach( $js as $jsFile )
 	        {
-	            echo "\n// JS source file: $jsFile\n";
-	            readFile($jsFile);
+	            $jsFileMin    = $jsFile.'.min.js';
+	            $jsFileNormal = $jsFile.'.js';
+	            
+	            if ( !is_file($jsFileMin) && is_file($jsFileMin))
+	            {
+	                // Es gibt nur eine minifizierte JS. Das ist ok, z.B. bei externen Bibliotheken.
+	                echo "\n// JS-Source: $jsFileMin\n";
+	                readfile($jsFileMin);
+	            }
+	            elseif ( !is_file($jsFileNormal))
+	            {
+	                echo "\n// File $jsFileNormal is missing!";
+	                Logger::warn("No Javascript file found for $jsFileNormal");
+	            }
+	            elseif ( !is_file($jsFileMin))
+	            {
+	                echo "\n// File $jsFileMin is missing!";
+	                Logger::warn("No Javascript file found for $jsFileMin");
+	                echo "\n// JS-Source: $jsFileNormal\n";
+	                readfile($jsFileNormal);
+	            }
+	            else
+	            {
+	                if( filemtime($jsFileNormal) > filemtime($jsFileMin) )
+	                {
+	                    // Java-Source wurde geändert, minifizierte Version muss aktualisiert werden.
+	                    if   ( !is_writable($jsFileMin))
+	                    {
+        	                echo "// File $jsFileMin is not writable!";
+        	                Logger::warn("No Javascript file found for $jsFileMin");
+	                    }
+	                    else
+	                    {
+            	            $jz = new JSqueeze();
+            	            
+            	            file_put_contents( $jsFileMin, $jz->squeeze(
+            	                file_get_contents($jsFileNormal),
+            	                true,   // $singleLine
+            	                true,   // $keepImportantComments
+            	                false   // $specialVarRx
+            	                )
+            	             );
+	                    }
+	                }
+
+	                echo "\n// JS-Source: $jsFileNormal\n";
+	                readfile($jsFileNormal);
+	            }
 		    }
 	    }
 	    else
-	    {
+	    {   // PRODUCTION
 	        foreach( $js as $jsFile )
 	        {
-	            ob_start('minifyJS');
-	            echo minifyJS( file_get_contents($jsFile));
-	            ob_end_flush();
+	            $jsFileMin    = $jsFile.'.min.js';
+	            $jsFileNormal = $jsFile.'.js';
+	            if ( is_file($jsFileMin))
+    	            readfile($jsFileMin);
+	            elseif( is_file($jsFileNormal))
+	                readfile($jsFileNormal);
+	            else
+	                Logger::warn("No Javascript file found for $jsFile(.js|.min.js)");
 	        }
 		}
 		

@@ -1,3 +1,4 @@
+//
 $(document).on('orViewLoaded',function(event, data) {
 
 	if ( $('div.panel form input[type=password]').length>0 && $('#uname').attr('value')!='' )
