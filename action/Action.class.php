@@ -55,7 +55,6 @@ class Action
 
 	var $writable;
 	var $publishing;
-	var $actionConfig;
 	var $refresh;
 	
 	/**
@@ -420,20 +419,11 @@ class Action
 		$tplName = $this->actionName.'/'.$this->subActionName;
 
 			
-		if	( isset($this->actionConfig[$this->subActionName]['action']) )
-			$tplName = $this->actionConfig[$this->subActionName]['action'].'/'.$this->subActionName;
-
-		if	(isset($this->actionConfig[$this->subActionName]['alias']))
-			$tplName = (method_exists(new ObjectAction(),$this->subActionName)?'object':$this->actionName).'/'.$this->actionConfig[$this->subActionName]['alias'];
-			
 // 		if	(isset($this->actionConfig[$this->subActionName]['target']))
 // 			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
 // 		else
 			$targetSubActionName = $this->subActionName;
 		
-
-		if	( isset($this->actionConfig[$this->subActionName]['menu']))
-			$windowTitle = 'menu_title_'.$this->actionName.'_'.$this->actionConfig[$this->subActionName]['menu'];
 
 		global $REQ;
 		global $PHP_SELF;
@@ -645,8 +635,6 @@ class Action
 	{
 		return;
 		
-		if	(!isset($this->actionConfig[$this->subActionName]['menu']))
-			return;
 		$windowMenu = array();
 		$name       = $this->actionConfig[$this->subActionName]['menu'];
 		$menuList   = explode(',',$this->actionConfig['menu']['menu']);
@@ -702,12 +690,13 @@ class Action
 	
 	/**
 	 * Stellt fest, ob die Anzeige dieser Aktion editierbar ist.
-	 *
+	 * 
 	 * @return boolean
+	 * @deprecated
 	 */
 	function isEditable()
 	{
-		return isset($this->actionConfig[$this->subActionName]['editable']) && $this->actionConfig[$this->subActionName]['editable']; 
+		return false; 
 	}
 
 	
