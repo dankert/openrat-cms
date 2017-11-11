@@ -308,7 +308,7 @@ class IndexAction extends Action
 	            $jsFileMin    = $jsFile.'.min.js';
 	            $jsFileNormal = $jsFile.'.js';
 	            
-	            if ( !is_file($jsFileMin) && is_file($jsFileMin))
+	            if ( !is_file($jsFileNormal) && is_file($jsFileMin))
 	            {
 	                // Es gibt nur eine minifizierte JS. Das ist ok, z.B. bei externen Bibliotheken.
 	                echo "\n// JS-Source: $jsFileMin\n";
