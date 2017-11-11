@@ -845,8 +845,8 @@ $conf['style']['moorweide']['inactive_background_color'] = '#CEE6DA';
 $conf['style']['dark']=array();
 $conf['style']['dark']['name']='Dark';
 $conf['style']['dark']['title_background_color']='#868685';
-$conf['style']['dark']['title_text_color']='DCDCDC';
-$conf['style']['dark']['text_color'] ='FFFFFF';
+$conf['style']['dark']['title_text_color']='#DCDCDC';
+$conf['style']['dark']['text_color'] ='#FFFFFF';
 $conf['style']['dark']['background_color'] = '#201F1D';
 $conf['style']['dark']['inactive_background_color'] = '#868685';
 

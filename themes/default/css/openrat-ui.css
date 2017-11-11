@@ -2,7 +2,7 @@
 
 /*
 OpenRat Content Management System
-Copyright (C) 2002-2010 Jan Dankert
+Copyright (C) 2002-2017 Jan Dankert
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -18,18 +18,19 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
+/* Usage to this variable is safe to be removed */
 iframe {
   width: 100%;
   height: 500px;
   display: block;
-  border: 1px solid __title_background_color__;
+  border: 1px solid #000000;
 }
 div.breadcrumb,
 div.breadcrumb a,
 div.panel > div.title {
-  x-background-color: __title_background_color__;
+  x-background-color: #000000;
   xsopacity: 0.7;
-  color: __title_text_color__;
+  color: #000000;
   font-weight: bold;
 }
 /*   H e a d e r   */
@@ -76,7 +77,7 @@ div#noticebar {
   z-index: 113;
 }
 div#noticebar div.notice {
-  border: 2px solid __text_color__;
+  border: 2px solid #000000;
   padding: 5px;
   margin: 5px;
   -moz-border-radius: 5px;
@@ -87,9 +88,9 @@ div#noticebar div.notice {
   /* Konqui */
   border-radius: 5px;
   /* CSS 3 */
-  -webkit-box-shadow: 3px 2px 5px __text_color__;
-  -moz-box-shadow: 3px 2px 5px __text_color__;
-  box-shadow: 3px 2px 5px __text_color__;
+  -webkit-box-shadow: 3px 2px 5px #000000;
+  -moz-box-shadow: 3px 2px 5px #000000;
+  box-shadow: 3px 2px 5px #000000;
   display: none;
 }
 div#noticebar div.notice.ok {
@@ -102,7 +103,7 @@ div#noticebar div.notice.error {
   background-color: red;
 }
 div#noticebar div.notice.info {
-  background-color: __inactive_background_color__;
+  background-color: #000000;
 }
 div#noticebar div.notice.error div.text {
   font-weight: bold;
@@ -145,7 +146,7 @@ div.filler div.header a.back.button {
   padding-bottom: 4px;
   padding-left: 7px;
   padding-right: 7px;
-  border: 1px solid __title_background_color__;
+  border: 1px solid #000000;
   -moz-border-radius: 5px;
   /* Mozilla */
   -webkit-border-radius: 5px;
@@ -153,18 +154,18 @@ div.filler div.header a.back.button {
   -khtml-border-radius: 5px;
   /* Konqui */
   border-radius: 5px;
-  background-color: __title_text_color__;
-  background: -moz-linear-gradient(top, __title_background_color__, __inactive_background_color__);
-  background: -webkit-gradient(linear, left top, left bottom, from(__title_background_color__), to(__inactive_background_color__));
+  background-color: #000000;
+  background: -moz-linear-gradient(top, #000000, #000000);
+  background: -webkit-gradient(linear, left top, left bottom, from(#000000), to(#000000));
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
-  color: __text_color__;
+  color: #000000;
 }
 ul#history > li.active {
-  background-color: __title_text_color__;
+  background-color: #000000;
   font-weight: bold;
-  color: __text_color__;
+  color: #000000;
 }
 a.help {
   float: right;
@@ -176,7 +177,7 @@ a.action:hover,
 a.help:hover,
 div.noaction:hover {
   text-decoration: none;
-  border-color: __title_text_color__;
+  border-color: #000000;
 }
 a.action:active,
 a.help:active,
@@ -185,7 +186,7 @@ input.ok:active {
   border-color: red;
 }
 a {
-  color: __text_color__;
+  color: #000000;
 }
 /*   D r o p d o w n  -  M e n u e s  */
 div.dropdown {
@@ -205,7 +206,7 @@ div.dropdown div.entry {
 }
 div.dropdown > div.divide {
   height: 1px;
-  background-color: __title_background_color__;
+  background-color: #000000;
   width: 100%;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -229,8 +230,8 @@ td:hover > div.onrowvisible {
 /* Vorschau von Text-Inhalten */
 td.preview {
   background-color: papayawhip;
-  border-top: 1px solid __inactive_background_color__;
-  border-bottom: 1px solid __inactive_background_color__;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
 }
 .preview h1 {
   font-size: 138.5%;
@@ -308,7 +309,7 @@ body.menu tr.menu table {
 /* Inaktive Menuepunkte werden ausgegraut */
 body.menu tr.menu td table tr td.noaction,
 body.main tr.menu td table tr td.noaction {
-  color: __title_background_color__;
+  color: #000000;
 }
 /* Icon-Innenabstand */
 img[align=left],
@@ -323,7 +324,7 @@ pre {
 }
 /* Kleingedrucktes */
 small {
-  color: __title_background_color__;
+  color: #000000;
 }
 /* Kurztasten */
 body.menu span.accesskey,
@@ -350,7 +351,7 @@ body.main table.main td.window td {
 body.main table.main td.window td.act {
   padding: 15px;
   margin-top: 20px;
-  border-top: 1px solid __title_background_color__;
+  border-top: 1px solid #000000;
   text-align: right;
 }
 /* Lizenzhinweis  */
@@ -372,7 +373,7 @@ table.main {
 }
 div.panel input.checkbox,
 div.panel input.radio {
-  border: 1px solid __title_background_color__;
+  border: 1px solid #000000;
 }
 /* Eingabefeld fuer Beschreibung */
 textarea.desc,
@@ -385,7 +386,7 @@ textarea.longtext {
   font-family: Arial;
   font-size: 13px;
   width: 100%;
-  border: 1px solid __text_color__;
+  border: 1px solid #000000;
 }
 /* Hilfe-Texte */
 tr td.help {
@@ -393,7 +394,7 @@ tr td.help {
 }
 tr.headline td.help {
   /*
-	border-bottom:1px solid __text_color__;
+	border-bottom:1px solid @color-overridden-by-theme;
 	*/
   font-style: normal;
 }
@@ -429,7 +430,7 @@ table.notice {
 table.notice th {
   padding: 2px;
   white-space: nowrap;
-  border-bottom: 1px solid __text_color__;
+  border-bottom: 1px solid #000000;
   font-weight: normal;
   text-align: left;
 }
@@ -462,7 +463,7 @@ div.menu {
 }
 form.xlogin {
   xbackground-color: #E0E0D5;
-  border: 2px solid __inactive_background_color__;
+  border: 2px solid #000000;
   position: absolute;
   z-index: 999;
   top: 5%;
@@ -471,9 +472,9 @@ form.xlogin {
   margin: 5%;
   padding: 10%;
   opacity: 1;
-  -webkit-box-shadow: 3px 2px 5px __title_background_color__;
-  -moz-box-shadow: 3px 2px 5px __title_background_color__;
-  box-shadow: 3px 2px 5px __title_background_color__;
+  -webkit-box-shadow: 3px 2px 5px #000000;
+  -moz-box-shadow: 3px 2px 5px #000000;
+  box-shadow: 3px 2px 5px #000000;
 }
 /*   B a u m   */
 ul.tree,
@@ -490,8 +491,8 @@ div.entry.selected,
 div.dropdown > div.entry:hover,
 div.dropdown > div.entry:hover > a,
 a.element {
-  background-color: __title_background_color__;
-  color: __title_text_color__;
+  background-color: #000000;
+  color: #000000;
 }
 ul.tree div.tree {
   width: 18px;
@@ -565,7 +566,7 @@ div.panel > div.header {
   padding: 0px;
   width: 100%;
   height: 25px;
-  border-bottom: 1px solid __title_background_color__;
+  border-bottom: 1px solid #000000;
 }
 div.panel div.header ul.views {
   text-align: left;
@@ -599,7 +600,7 @@ div.panel div.header > ul.views {
   height: 25px;
 }
 div.panel div.header {
-  xborder-bottom: 1px solid __title_background_color__;
+  xborder-bottom: 1px solid #000000;
 }
 div.content {
   clear: both;
@@ -608,7 +609,7 @@ div.panel ul.views li {
   vertical-align: middle;
   padding: 0px;
   cursor: pointer;
-  border-right: 1px solid __title_background_color__;
+  border-right: 1px solid #000000;
   -moz-border-radius-topleft: 5px;
   /* Mozilla */
   -webkit-border-radius-topleft: 5px;
@@ -622,9 +623,9 @@ div.panel ul.views li {
   -khtml-border-top-radius-topright: 5px;
   /* Konqui */
   border-top-right-radius: 5px;
-  xborder-top: 1px solid __title_background_color__;
-  xborder-left: 1px solid __title_background_color__;
-  xborder-right: 1px solid __title_background_color__;
+  xborder-top: 1px solid #000000;
+  xborder-left: 1px solid #000000;
+  xborder-right: 1px solid #000000;
   xmargin-right: 10px;
   display: inline;
   white-space: nowrap;
@@ -634,7 +635,7 @@ div.panel ul.views li {
 
 div#workbench div.frame {
 	padding:3px;
-	border:1px solid __title_background_color__;
+	border:1px solid @color-overridden-by-theme;
 	
 	-moz-border-radius:3px;
     -webkit-border-radius:3px;
@@ -645,7 +646,7 @@ div#workbench div.frame {
 /*
 div.panel {
 	padding:3px;
-	border:1px solid __title_background_color__;
+	border:1px solid @color-overridden-by-theme;
 	
 	-moz-border-radius:5px;
     -webkit-border-radius:5px;
@@ -659,32 +660,32 @@ div.panel {
 }
 div.panel div.content table {
   overflow: auto;
-  border: 2px __inactive_background_color__;
+  border: 2px #000000;
 }
 table tr.headline > td {
   /*
-    background-color: __inactive_background_color__;
-	background: -moz-linear-gradient(top, __title_background_color__, __inactive_background_color__);
-	background: -webkit-gradient(linear, left top, left bottom, from(__title_background_color__), to(__inactive_background_color__));
+    background-color: @color-overridden-by-theme;
+	background: -moz-linear-gradient(top, @color-overridden-by-theme, @color-overridden-by-theme);
+	background: -webkit-gradient(linear, left top, left bottom, from(@color-overridden-by-theme), to(@color-overridden-by-theme));
 	
-    border-right:1px solid __inactive_background_color__;
+    border-right:1px solid @color-overridden-by-theme;
     
     */
-  border-bottom: 1px solid __title_background_color__;
+  border-bottom: 1px solid #000000;
   padding: 3px;
   font-weight: bold;
 }
 table tr.data > td {
-  border-bottom: 1px solid __title_background_color__;
+  border-bottom: 1px solid #000000;
   /*
-    border-right:1px solid __inactive_background_color__;
+    border-right:1px solid @color-overridden-by-theme;
     */
   padding: 3px;
 }
 /*   F a r b e n   */
 /* Ungerade Tabellenzeilen (funktioniert nicht im FF) */
 table > tr.data:nth-child(2n) {
-  background-color: __inactive_background_color__;
+  background-color: #000000;
 }
 ul.tree div {
   cursor: pointer;
@@ -715,7 +716,7 @@ div.message.info {
 }
 div.panel div.status div,
 div.message {
-  border: 1px solid __title_background_color__;
+  border: 1px solid #000000;
   padding: 5px 0px 5px 25px;
   margin: 10px 10px 20px 10px;
   -moz-border-radius: 5px;
@@ -740,7 +741,7 @@ div#workbench div.panel.fullscreen {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: __background_color__;
+  background-color: #000000;
   margin: 0px;
   /*set the width and height to 100% of the screen*/
   width: 100% !important;
@@ -763,7 +764,7 @@ body {
   overflow: hidden;
 }
 div#workbench div.panel {
-  border: 1px solid __title_background_color__;
+  border: 1px solid #000000;
   margin: 0px;
   padding: 0px;
   -moz-border-radius: 5px;
@@ -791,7 +792,7 @@ div.panel {
   position: relative;
 }
 div.content div.bottom {
-  xbackground-color: __background_color__;
+  xbackground-color: #000000;
   height: 55px;
   width: 100%;
   position: absolute;
@@ -812,8 +813,8 @@ div.content > form {
   padding-bottom: 45px;
 }
 input.submit {
-  background-color: __title_background_color__;
-  color: __title_text_color__;
+  background-color: #000000;
+  color: #000000;
   padding: 7px;
   border: 0px;
   -moz-border-radius: 7px;
@@ -824,9 +825,9 @@ input.submit {
   /* Konqui */
   border-radius: 7px;
   margin-left: 20px;
-  -webkit-box-shadow: 0px 0px 15px __background_color__;
-  -moz-box-shadow: 0px 0px 15px __background_color__;
-  box-shadow: 0px 0px 15px 10px __background_color__;
+  -webkit-box-shadow: 0px 0px 15px #000000;
+  -moz-box-shadow: 0px 0px 15px #000000;
+  box-shadow: 0px 0px 15px 10px #000000;
   cursor: pointer;
 }
 input.submit.ok {
@@ -854,7 +855,7 @@ div#shortcuts > div.shortcut {
   opacity: 0.8;
 }
 div#shortcuts > div.shortcut:HOVER {
-  xborder: 1px solid __title_background_color__;
+  xborder: 1px solid #000000;
   x-moz-border-radius: 2px;
   /* Mozilla */
   x-webkit-border-radius: 2px;
@@ -915,17 +916,17 @@ ul#history > li {
   xdisplay: inline;
   margin: 5px;
   padding: 5px;
-  border: 1px solid __title_background_color__;
-  background-color: __inactive_background_color__;
-  color: __text_color__;
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #000000;
 }
 ul#history > li.active {
   xdisplay: inline;
   margin: 5px;
   padding: 5px;
-  border: 1px solid __text_color__;
-  background-color: __title_text_color__;
-  color: __text_color__;
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #000000;
 }
 ul#history {
   display: none;
@@ -951,11 +952,11 @@ div#filler {
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: __text_color__;
+  background-color: #000000;
   opacity: 0.5;
 }
 div.clickable.filtered.inactive > a {
-  color: __inactive_background_color__;
+  color: #000000;
 }
 /* Pfeile */
 div#header > div > div.arrow-down {
@@ -964,21 +965,21 @@ div#header > div > div.arrow-down {
   height: 0;
   margin: 6;
   padding: 0px;
-  border-right: 6px solid __title_background_color__;
-  border-left: 6px solid __title_background_color__;
-  border-top: 6px solid __inactive_background_color__;
-  border-bottom: 4px solid __title_background_color__;
+  border-right: 6px solid #000000;
+  border-left: 6px solid #000000;
+  border-top: 6px solid #000000;
+  border-bottom: 4px solid #000000;
   margin-top: 10px;
   font-size: 0;
 }
 /*   D r o p d o w n  -  M e n u e s  */
 div.dropdown {
   /* Schatten */
-  -webkit-box-shadow: 3px 2px 10px __title_background_color__;
-  -moz-box-shadow: 3px 2px 10px __title_background_color__;
-  box-shadow: 3px 2px 10px __title_background_color__;
+  -webkit-box-shadow: 3px 2px 10px #000000;
+  -moz-box-shadow: 3px 2px 10px #000000;
+  box-shadow: 3px 2px 10px #000000;
   opacity: 0.95;
-  border: 2px solid __title_background_color__;
+  border: 2px solid #000000;
   -moz-border-radius: 5px;
   /* Mozilla */
   -webkit-border-radius: 5px;
@@ -987,18 +988,18 @@ div.dropdown {
   /* Konqui */
   border-radius: 5px;
   /*
-	background: -moz-linear-gradient(top, __title_background_color__, __inactive_background_color__);
-	background: -webkit-gradient(linear, left top, left bottom, from(__title_background_color__), to(__inactive_background_color__));
+	background: -moz-linear-gradient(top, @color-overridden-by-theme, @color-overridden-by-theme);
+	background: -webkit-gradient(linear, left top, left bottom, from(@color-overridden-by-theme), to(@color-overridden-by-theme));
 	*/
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
 }
 div#header span.titletext {
-  color: __title_text_color__;
+  color: #000000;
 }
 div.toolbar-icon {
-  border: 1px solid __title_background_color__;
+  border: 1px solid #000000;
   padding: 2px;
   margin-left: 5px;
   float: left;
@@ -1011,8 +1012,8 @@ div.toolbar-icon.inactive {
   opacity: 0.5;
 }
 div.toolbar-icon:hover {
-  border: 1px solid __inactive_background_color__;
-  xxbackground-color: __inactive_background_color__;
+  border: 1px solid #000000;
+  xxbackground-color: #000000;
 }
 div.headermenu {
   margin: 5px;
@@ -1082,25 +1083,25 @@ input[type=radio] + label {
 }
 label div.description {
   font-size: 0.75em;
-  color: __title_background_color__;
+  color: #000000;
 }
 div.inputholder {
-  background-color: __title_text_color__;
-  border: 1px solid __title_background_color__;
+  background-color: #000000;
+  border: 1px solid #000000;
   margin: 0px;
   padding: 4px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
   border-radius: 3px;
-  -webkit-box-shadow: inset 0px 0px 3px __title_background_color__;
-  -moz-box-shadow: inset 0px 0px 3px  __title_background_color__;
-  box-shadow: inset 0px 0px 3px __title_background_color__;
+  -webkit-box-shadow: inset 0px 0px 3px #000000;
+  -moz-box-shadow: inset 0px 0px 3px #000000;
+  box-shadow: inset 0px 0px 3px #000000;
 }
 div.inputholder ul.tree,
 div.inputholder ul.tree li.last,
 div.inputholder ul.tree li:last-child {
-  background-color: __title_text_color__;
+  background-color: #000000;
 }
 div.inputholder > div.dropdown {
   width: 70%;
@@ -1112,27 +1113,27 @@ div.inputholder > input,
 div.inputholder > textarea,
 div.inputholder > select {
   border: 0px;
-  border-bottom: 1px solid __title_text_color__;
+  border-bottom: 1px solid #000000;
   padding: 2px;
   margin: 0px;
-  background-color: __title_text_color__;
+  background-color: #000000;
 }
 input:focus,
 textarea:focus,
 select:focus {
   border: 0px;
-  border-bottom: 1px solid __inactive_background_color__;
+  border-bottom: 1px solid #000000;
 }
 input.error,
 textarea.error,
 select.error {
-  border-bottom: 1px dotted __text_color__ !important;
+  border-bottom: 1px dotted #000000 !important;
 }
 div.inputholder.error {
   border: 1px solid red !important;
 }
 input.hint {
-  color: __title_background_color__;
+  color: #000000;
 }
 /* Eingabfeld fuer Namen */
 fieldset > div input.name,
@@ -1140,7 +1141,7 @@ fieldset > div span.name {
   font-weight: bold;
 }
 fieldset {
-  border-color: __title_background_color__;
+  border-color: #000000;
 }
 /* Eingabfelder fuer Dateiname */
 fieldset > div input.filename,
@@ -1158,9 +1159,9 @@ div#tree {
 /* Anzeige von Text-Unterschieden */
 /* Zeilen-Nr */
 tr.diff > td.line {
-  background-color: __title_text_color__;
+  background-color: #000000;
   padding-right: 2px;
-  border-right: 3px solid __title_background_color__;
+  border-right: 3px solid #000000;
   text-align: right;
   margin-right: 2px;
 }
@@ -1178,45 +1179,45 @@ tr.diff > td.notequal {
   background-color: yellow;
 }
 dl.notice {
-  border-left: 10px __inactive_background_color__ solid;
-  border-right: 1px __inactive_background_color__ solid;
+  border-left: 10px #000000 solid;
+  border-right: 1px #000000 solid;
   padding: 15px;
 }
 dl.notice > dt {
-  border-top: 1px __inactive_background_color__ solid;
+  border-top: 1px #000000 solid;
 }
 dl.notice > dd {
-  border-bottom: 1px __inactive_background_color__ solid;
+  border-bottom: 1px #000000 solid;
 }
 /*   S c h a t t e n   */
 div.content a.action,
 div.content a.help {
-  -webkit-box-shadow: 3px 2px 5px __title_background_color__;
-  -moz-box-shadow: 3px 2px 5px __title_background_color__;
-  box-shadow: 3px 2px 5px __title_background_color__;
+  -webkit-box-shadow: 3px 2px 5px #000000;
+  -moz-box-shadow: 3px 2px 5px #000000;
+  box-shadow: 3px 2px 5px #000000;
 }
 /*   F a r b e n   */
 /* Gesamt-Hintergrund */
 body {
   xxxbackground-color: #c9c9c9;
-  background-color: __inactive_background_color__;
+  background-color: #000000;
 }
 /* Fenster-Hintergrund */
 div.panel ul.views > li.active,
 div.panel ul.views > li.active:hover {
-  background-color: __title_background_color__;
-  background-image: linear-gradient(__inactive_background_color__ 0%, __title_background_color__ 15%);
-  color: __title_text_color__;
+  background-color: #000000;
+  background-image: linear-gradient(#000000 0%, #000000 15%);
+  color: #000000;
 }
 /* Titelleiste-Hintergrund */
 div#header {
-  background-color: __title_background_color__;
-  background-image: linear-gradient(__title_background_color__ 85%, __inactive_background_color__ 100%);
-  color: __title_text_color__;
+  background-color: #000000;
+  background-image: linear-gradient(#000000 85%, #000000 100%);
+  color: #000000;
 }
 /* Titelleiste */
 div#header div.toolbar-icon > a {
-  color: __title_text_color__;
+  color: #000000;
 }
 div#header,
 ul.views > li.action {
@@ -1230,30 +1231,30 @@ div.content {
 /* Reiter */
 div.panel ul.views li {
   /*
-	background-color:__background_color__;
+	background-color:@color-overridden-by-theme;
 	*/
 }
 div.panel > div.content {
-  background-color: __background_color__;
+  background-color: #000000;
 }
 div.panel > div.header {
-  background-color: __background_color__;
-  background-image: linear-gradient(__inactive_background_color__ 0%, __background_color__ 85%);
+  background-color: #000000;
+  background-image: linear-gradient(#000000 0%, #000000 85%);
 }
 div.panel ul.views li:hover {
-  background-color: __inactive_background_color__;
+  background-color: #000000;
   /*
 	color: blue;
 	*/
 }
 ul.tree li.last,
 ul.tree li:last-child {
-  background-color: __background_color__;
+  background-color: #000000;
 }
 div.content pre,
 div.dropdown {
-  background-color: __title_text_color__;
-  color: __text_color__;
+  background-color: #000000;
+  color: #000000;
   min-width: 150px;
   max-width: 450px;
 }

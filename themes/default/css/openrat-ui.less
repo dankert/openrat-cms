@@ -1,6 +1,6 @@
 /*
 OpenRat Content Management System
-Copyright (C) 2002-2010 Jan Dankert
+Copyright (C) 2002-2017 Jan Dankert
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,22 +17,25 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+
+/* Usage to this variable is safe to be removed */
+@color-overridden-by-theme: black;
  
 iframe
 {
 	width:100%;
 	height:500px;
 	display:block;
-	border: 1px solid __title_background_color__;
+	border: 1px solid @color-overridden-by-theme;
 }
 
 div.breadcrumb,
 div.breadcrumb a,
 div.panel > div.title
 {
-	x-background-color:__title_background_color__;
+	x-background-color:@color-overridden-by-theme;
 	xsopacity:0.7;
-	color:__title_text_color__;
+	color:@color-overridden-by-theme;
 	font-weight:bold;
 }
 
@@ -91,7 +94,7 @@ div#noticebar
 
 div#noticebar div.notice
 {
-	border: 2px solid __text_color__;
+	border: 2px solid @color-overridden-by-theme;
 	
 	padding:5px;
 	margin:5px;
@@ -101,9 +104,9 @@ div#noticebar div.notice
     -khtml-border-radius:5px; /* Konqui */
     border-radius:5px; /* CSS 3 */
         
-	-webkit-box-shadow: 3px 2px 5px __text_color__;
-    -moz-box-shadow: 3px 2px 5px __text_color__;
-    box-shadow: 3px 2px 5px __text_color__;
+	-webkit-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    -moz-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    box-shadow: 3px 2px 5px @color-overridden-by-theme;
 	
 	display:none;
 }
@@ -121,7 +124,7 @@ div#noticebar div.notice.error
 }
 div#noticebar div.notice.info
 {
-	background-color:__inactive_background_color__;
+	background-color:@color-overridden-by-theme;
 }
 div#noticebar div.notice.error div.text
 {
@@ -180,25 +183,25 @@ div.filler div.header a.back.button
 	padding-bottom:4px;
 	padding-left:7px;
 	padding-right:7px;
-	border:1px solid __title_background_color__;
+	border:1px solid @color-overridden-by-theme;
 	-moz-border-radius:5px; /* Mozilla */
     -webkit-border-radius:5px; /* Webkit */
     -khtml-border-radius:5px; /* Konqui */
     border-radius:5px;
-    background-color: __title_text_color__;
-	background: -moz-linear-gradient(top, __title_background_color__, __inactive_background_color__);
-	background: -webkit-gradient(linear, left top, left bottom, from(__title_background_color__), to(__inactive_background_color__));
+    background-color: @color-overridden-by-theme;
+	background: -moz-linear-gradient(top, @color-overridden-by-theme, @color-overridden-by-theme);
+	background: -webkit-gradient(linear, left top, left bottom, from(@color-overridden-by-theme), to(@color-overridden-by-theme));
 	font-style:normal;
 	font-weight:normal;
 	text-decoration:none;
-    color:__text_color__;
+    color:@color-overridden-by-theme;
 }
 
 ul#history > li.active
 {
-    background-color: __title_text_color__;
+    background-color: @color-overridden-by-theme;
     font-weight:bold;
-    color:__text_color__;
+    color:@color-overridden-by-theme;
 }
 
 
@@ -217,7 +220,7 @@ a.help:hover,
 div.noaction:hover
 {
 	text-decoration:none;
-	border-color:__title_text_color__;
+	border-color:@color-overridden-by-theme;
 }
 
 a.action:active,
@@ -231,7 +234,7 @@ input.ok:active
 
 a
 {
-	color:__text_color__;
+	color:@color-overridden-by-theme;
 }
 
 
@@ -262,7 +265,7 @@ div.dropdown div.entry
 div.dropdown > div.divide
 {
 	height:1px;
-	background-color: __title_background_color__;
+	background-color: @color-overridden-by-theme;
 	width:100%;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -295,7 +298,7 @@ td:hover > div.onrowvisible
 
 /* Vorschau von Text-Inhalten */
 
-td.preview { background-color:papayawhip; border-top:1px solid __inactive_background_color__; border-bottom:1px solid __inactive_background_color__; }
+td.preview { background-color:papayawhip; border-top:1px solid @color-overridden-by-theme; border-bottom:1px solid @color-overridden-by-theme; }
 .preview h1 { font-size:138.5%; }
 .preview h2 { font-size:123.1%; }
 .preview h3 { font-size:108%;   }
@@ -373,7 +376,7 @@ body.menu tr.menu table { width:50px;}
 body.menu tr.menu td table tr td.noaction,
 body.main tr.menu td table tr td.noaction
 {
-	color:__title_background_color__;
+	color:@color-overridden-by-theme;
 }
 
 /* Icon-Innenabstand */
@@ -390,7 +393,7 @@ pre
 /* Kleingedrucktes */
 small
 {
-	color:__title_background_color__;
+	color:@color-overridden-by-theme;
 }
 
 
@@ -429,7 +432,7 @@ body.main table.main td.window td.act
 {
 	padding:15px;
 	margin-top:20px;
-	border-top:1px solid __title_background_color__;
+	border-top:1px solid @color-overridden-by-theme;
 	text-align:right;
 }
 
@@ -461,7 +464,7 @@ table.main
 div.panel input.checkbox,
 div.panel input.radio
 {
-	border:1px solid __title_background_color__;
+	border:1px solid @color-overridden-by-theme;
 }
 
 /* Eingabefeld fuer Beschreibung */
@@ -478,7 +481,7 @@ textarea.longtext
 	font-family:Arial;
 	font-size:13px;
 	width:100%;
-	border:1px solid __text_color__;
+	border:1px solid @color-overridden-by-theme;
 }
 
 
@@ -494,7 +497,7 @@ tr td.help
 tr.headline td.help
 {
 	/*
-	border-bottom:1px solid __text_color__;
+	border-bottom:1px solid @color-overridden-by-theme;
 	*/
 	font-style: normal;
 	
@@ -544,7 +547,7 @@ table.notice th
 {
 	padding:2px;
 	white-space:nowrap;
-	border-bottom:1px solid __text_color__;
+	border-bottom:1px solid @color-overridden-by-theme;
 	font-weight:normal;
 	text-align:left;
 }
@@ -600,7 +603,7 @@ div.menu
 form.xlogin
 {
 	xbackground-color:#E0E0D5;
-	border:2px solid __inactive_background_color__;
+	border:2px solid @color-overridden-by-theme;
 	position:absolute;
 	z-index:999;
 	top:5%;
@@ -610,9 +613,9 @@ form.xlogin
 	padding:10%;
 	opacity:1;
 	
-	-webkit-box-shadow: 3px 2px 5px __title_background_color__;
-    -moz-box-shadow: 3px 2px 5px __title_background_color__;
-    box-shadow: 3px 2px 5px __title_background_color__;
+	-webkit-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    -moz-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    box-shadow: 3px 2px 5px @color-overridden-by-theme;
 }
 
 
@@ -640,8 +643,8 @@ div.dropdown > div.entry:hover,
 div.dropdown > div.entry:hover > a,
 a.element
 {
-	background-color:__title_background_color__;
-	color:__title_text_color__;
+	background-color:@color-overridden-by-theme;
+	color:@color-overridden-by-theme;
 }
 
 
@@ -748,7 +751,7 @@ div.panel > div.header
 	padding:0px;
 	width:100%;
 	height:25px;
-	border-bottom: 1px solid __title_background_color__;
+	border-bottom: 1px solid @color-overridden-by-theme;
 }
 
 
@@ -796,7 +799,7 @@ div.panel div.header > ul.views
 
 div.panel div.header
 {
-	xborder-bottom: 1px solid __title_background_color__;
+	xborder-bottom: 1px solid @color-overridden-by-theme;
 }
 
 
@@ -812,7 +815,7 @@ div.panel ul.views li
 	
 	cursor:pointer;
 	
-	border-right: 1px solid __title_background_color__;
+	border-right: 1px solid @color-overridden-by-theme;
 	
 	-moz-border-radius-topleft:5px; /* Mozilla */
     -webkit-border-radius-topleft:5px; /* Webkit */
@@ -823,9 +826,9 @@ div.panel ul.views li
     -khtml-border-top-radius-topright:5px; /* Konqui */
     border-top-right-radius:5px;
     
-    xborder-top:1px solid __title_background_color__;
-    xborder-left:1px solid __title_background_color__;
-    xborder-right:1px solid __title_background_color__;
+    xborder-top:1px solid @color-overridden-by-theme;
+    xborder-left:1px solid @color-overridden-by-theme;
+    xborder-right:1px solid @color-overridden-by-theme;
     xmargin-right:10px;
 	display: inline;
 	white-space:nowrap;
@@ -841,7 +844,7 @@ div.panel ul.views li
 
 div#workbench div.frame {
 	padding:3px;
-	border:1px solid __title_background_color__;
+	border:1px solid @color-overridden-by-theme;
 	
 	-moz-border-radius:3px;
     -webkit-border-radius:3px;
@@ -855,7 +858,7 @@ div#workbench div.frame {
 /*
 div.panel {
 	padding:3px;
-	border:1px solid __title_background_color__;
+	border:1px solid @color-overridden-by-theme;
 	
 	-moz-border-radius:5px;
     -webkit-border-radius:5px;
@@ -874,30 +877,30 @@ div.panel {
 div.panel div.content table
 {
 	overflow:auto;
-	border:2px __inactive_background_color__;
+	border:2px @color-overridden-by-theme;
 }
 
 
 table tr.headline > td {
 	
 	/*
-    background-color: __inactive_background_color__;
-	background: -moz-linear-gradient(top, __title_background_color__, __inactive_background_color__);
-	background: -webkit-gradient(linear, left top, left bottom, from(__title_background_color__), to(__inactive_background_color__));
+    background-color: @color-overridden-by-theme;
+	background: -moz-linear-gradient(top, @color-overridden-by-theme, @color-overridden-by-theme);
+	background: -webkit-gradient(linear, left top, left bottom, from(@color-overridden-by-theme), to(@color-overridden-by-theme));
 	
-    border-right:1px solid __inactive_background_color__;
+    border-right:1px solid @color-overridden-by-theme;
     
     */
-    border-bottom:1px solid __title_background_color__;
+    border-bottom:1px solid @color-overridden-by-theme;
     padding:3px;
     font-weight: bold;
 }
 
 
 table tr.data > td {
-    border-bottom:1px solid __title_background_color__;
+    border-bottom:1px solid @color-overridden-by-theme;
     /*
-    border-right:1px solid __inactive_background_color__;
+    border-right:1px solid @color-overridden-by-theme;
     */
     padding:3px;
 }
@@ -908,7 +911,7 @@ table tr.data > td {
 
 /* Ungerade Tabellenzeilen (funktioniert nicht im FF) */
 table > tr.data:nth-child(2n) {
-	background-color: __inactive_background_color__;
+	background-color: @color-overridden-by-theme;
 }
 
 ul.tree div
@@ -953,7 +956,7 @@ div.message.info
 div.panel div.status div,
 div.message
 {
-	border:1px solid __title_background_color__;
+	border:1px solid @color-overridden-by-theme;
 	padding:5px 0px 5px 25px;
 	margin:10px 10px 20px 10px;
 	
@@ -986,7 +989,7 @@ div#workbench div.panel.fullscreen
     position:fixed;
     top:0;
     left:0;
-    background-color:__background_color__;
+    background-color:@color-overridden-by-theme;
     margin:0px;
     
     /*set the width and height to 100% of the screen*/
@@ -1021,7 +1024,7 @@ body
 
 div#workbench div.panel
 {
-	border:1px solid __title_background_color__;
+	border:1px solid @color-overridden-by-theme;
 	margin:0px;
 	padding:0px;
 	-moz-border-radius:5px;
@@ -1059,7 +1062,7 @@ div.panel {
 }
 div.content div.bottom
 {
-	xbackground-color: __background_color__;
+	xbackground-color: @color-overridden-by-theme;
 	height:55px;
 	width:100%;
 	position:absolute;
@@ -1087,8 +1090,8 @@ div.content > form
 
 input.submit
 {
-	background-color: __title_background_color__;
-	color: __title_text_color__;
+	background-color: @color-overridden-by-theme;
+	color: @color-overridden-by-theme;
 	padding: 7px;
 	border:0px;
 	-moz-border-radius:7px; /* Mozilla */
@@ -1096,9 +1099,9 @@ input.submit
     -khtml-border-radius:7px; /* Konqui */
     border-radius:7px;
     margin-left:20px;
-	-webkit-box-shadow: 0px 0px 15px __background_color__;
-    -moz-box-shadow: 0px 0px 15px __background_color__;
-    box-shadow: 0px 0px 15px 10px __background_color__;
+	-webkit-box-shadow: 0px 0px 15px @color-overridden-by-theme;
+    -moz-box-shadow: 0px 0px 15px @color-overridden-by-theme;
+    box-shadow: 0px 0px 15px 10px @color-overridden-by-theme;
     cursor:pointer;
 }
 
@@ -1136,7 +1139,7 @@ div#shortcuts > div.shortcut {
 
 div#shortcuts > div.shortcut:HOVER {
 	
-	xborder: 1px solid __title_background_color__;
+	xborder: 1px solid @color-overridden-by-theme;
 	x-moz-border-radius:2px; /* Mozilla */
     x-webkit-border-radius:2px; /* Webkit */
     x-khtml-border-radius:2px; /* Konqui */
@@ -1234,18 +1237,18 @@ ul#history >  li {
 	xdisplay:inline;
 	margin:5px;
 	padding:5px;
-	border:1px solid __title_background_color__;
-	background-color: __inactive_background_color__;
-	color:__text_color__;
+	border:1px solid @color-overridden-by-theme;
+	background-color: @color-overridden-by-theme;
+	color:@color-overridden-by-theme;
 }
 ul#history >  li.active {
 	
 	xdisplay:inline;
 	margin:5px;
 	padding:5px;
-	border:1px solid __text_color__;
-	background-color: __title_text_color__;
-	color:__text_color__;
+	border:1px solid @color-overridden-by-theme;
+	background-color: @color-overridden-by-theme;
+	color:@color-overridden-by-theme;
 }
 
 ul#history {
@@ -1278,14 +1281,14 @@ div#filler
 	left: 0;
 	height:100%;
 	width:100%;
-	background-color: __text_color__;
+	background-color: @color-overridden-by-theme;
 	opacity: 0.5;
 }
 
 
 div.clickable.filtered.inactive > a
 {
-	color: __inactive_background_color__;
+	color: @color-overridden-by-theme;
 }
 
 /* Pfeile */
@@ -1296,10 +1299,10 @@ div#header > div > div.arrow-down
 	height:0;
 	margin:6;
 	padding:0px;
-	border-right : 6px solid __title_background_color__;
-	border-left  : 6px solid __title_background_color__;
-	border-top   : 6px solid __inactive_background_color__;
-	border-bottom: 4px solid __title_background_color__;
+	border-right : 6px solid @color-overridden-by-theme;
+	border-left  : 6px solid @color-overridden-by-theme;
+	border-top   : 6px solid @color-overridden-by-theme;
+	border-bottom: 4px solid @color-overridden-by-theme;
 	margin-top: 10px;
 font-size: 0;
 }
@@ -1310,21 +1313,21 @@ font-size: 0;
 div.dropdown
 {
 	/* Schatten */
-	-webkit-box-shadow: 3px 2px 10px __title_background_color__;
-    -moz-box-shadow: 3px 2px 10px __title_background_color__;
-    box-shadow: 3px 2px 10px __title_background_color__;
+	-webkit-box-shadow: 3px 2px 10px @color-overridden-by-theme;
+    -moz-box-shadow: 3px 2px 10px @color-overridden-by-theme;
+    box-shadow: 3px 2px 10px @color-overridden-by-theme;
 	
 	opacity:0.95;
 	
-	border:2px solid __title_background_color__;
+	border:2px solid @color-overridden-by-theme;
 	-moz-border-radius:5px; /* Mozilla */
     -webkit-border-radius:5px; /* Webkit */
     -khtml-border-radius:5px; /* Konqui */
     border-radius:5px;
     
     /*
-	background: -moz-linear-gradient(top, __title_background_color__, __inactive_background_color__);
-	background: -webkit-gradient(linear, left top, left bottom, from(__title_background_color__), to(__inactive_background_color__));
+	background: -moz-linear-gradient(top, @color-overridden-by-theme, @color-overridden-by-theme);
+	background: -webkit-gradient(linear, left top, left bottom, from(@color-overridden-by-theme), to(@color-overridden-by-theme));
 	*/
 	font-style:normal;
 	font-weight:normal;
@@ -1334,13 +1337,13 @@ div.dropdown
 
 div#header span.titletext
 {
-	color:__title_text_color__;
+	color:@color-overridden-by-theme;
 }
 
 
 div.toolbar-icon
 {
-	border:1px solid __title_background_color__;
+	border:1px solid @color-overridden-by-theme;
 	padding:2px;
 	margin-left:5px;
 	float: left;
@@ -1357,8 +1360,8 @@ div.toolbar-icon.inactive
 
 div.toolbar-icon:hover
 {
-	border:1px solid __inactive_background_color__;
-	xxbackground-color: __inactive_background_color__;
+	border:1px solid @color-overridden-by-theme;
+	xxbackground-color: @color-overridden-by-theme;
 }
 
 
@@ -1465,14 +1468,14 @@ input[type=radio] + label
 label div.description
 {
 	font-size: 0.75em;
-	color:__title_background_color__;
+	color:@color-overridden-by-theme;
 }
 
 
 div.inputholder
 {
-	background-color:__title_text_color__;
-	border:1px solid __title_background_color__;
+	background-color:@color-overridden-by-theme;
+	border:1px solid @color-overridden-by-theme;
 	margin:0px;
 	padding:4px;
 	-moz-border-radius:3px;
@@ -1480,9 +1483,9 @@ div.inputholder
     -khtml-border-radius:3px;
     border-radius:3px;
     
-    -webkit-box-shadow:inset 0px 0px 3px __title_background_color__;
-    -moz-box-shadow:inset 0px 0px 3px  __title_background_color__;
-    box-shadow:inset 0px 0px 3px __title_background_color__;
+    -webkit-box-shadow:inset 0px 0px 3px @color-overridden-by-theme;
+    -moz-box-shadow:inset 0px 0px 3px  @color-overridden-by-theme;
+    box-shadow:inset 0px 0px 3px @color-overridden-by-theme;
     
 }
 
@@ -1491,7 +1494,7 @@ div.inputholder ul.tree,
 div.inputholder ul.tree li.last,
 div.inputholder ul.tree li:last-child
 {
-	background-color:__title_text_color__;
+	background-color:@color-overridden-by-theme;
 }
 
 div.inputholder > div.dropdown
@@ -1509,10 +1512,10 @@ div.inputholder > textarea,
 div.inputholder > select
 {
 	border:0px;
-	border-bottom:1px solid __title_text_color__;
+	border-bottom:1px solid @color-overridden-by-theme;
 	padding:2px;
 	margin:0px;
-	background-color:__title_text_color__;
+	background-color:@color-overridden-by-theme;
 }
 
 input:focus,
@@ -1520,7 +1523,7 @@ textarea:focus,
 select:focus
 {
 	border:0px;
-	border-bottom:1px solid __inactive_background_color__;
+	border-bottom:1px solid @color-overridden-by-theme;
 }
 
 
@@ -1528,7 +1531,7 @@ input.error,
 textarea.error,
 select.error
 {
-	border-bottom:1px dotted __text_color__ !important;
+	border-bottom:1px dotted @color-overridden-by-theme !important;
 }
 
 div.inputholder.error
@@ -1538,7 +1541,7 @@ div.inputholder.error
 
 input.hint
 {
-	color:__title_background_color__;
+	color:@color-overridden-by-theme;
 }
 
 
@@ -1554,7 +1557,7 @@ fieldset > div span.name
 
 fieldset
 {
-	border-color:__title_background_color__;
+	border-color:@color-overridden-by-theme;
 }
 
 /* Eingabfelder fuer Dateiname */
@@ -1584,9 +1587,9 @@ div#tree
 /* Zeilen-Nr */
 tr.diff > td.line
 {
-	background-color:__title_text_color__;
+	background-color:@color-overridden-by-theme;
 	padding-right:2px;
-	border-right:3px solid __title_background_color__;
+	border-right:3px solid @color-overridden-by-theme;
 	text-align:right;
 	margin-right:2px;
 }
@@ -1616,18 +1619,18 @@ tr.diff > td.notequal
 
 dl.notice
 {
-	border-left:10px __inactive_background_color__ solid;
-	border-right:1px __inactive_background_color__ solid;
+	border-left:10px @color-overridden-by-theme solid;
+	border-right:1px @color-overridden-by-theme solid;
 	padding:15px;
 }
 
 dl.notice > dt
 {
-	border-top: 1px __inactive_background_color__ solid;
+	border-top: 1px @color-overridden-by-theme solid;
 }
 dl.notice > dd
 {
-	border-bottom: 1px __inactive_background_color__ solid;
+	border-bottom: 1px @color-overridden-by-theme solid;
 }
 
 
@@ -1635,9 +1638,9 @@ dl.notice > dd
 div.content a.action,
 div.content a.help
 {
-	-webkit-box-shadow: 3px 2px 5px __title_background_color__;
-    -moz-box-shadow: 3px 2px 5px __title_background_color__;
-    box-shadow: 3px 2px 5px __title_background_color__;
+	-webkit-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    -moz-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    box-shadow: 3px 2px 5px @color-overridden-by-theme;
 }
 
 
@@ -1648,30 +1651,30 @@ div.content a.help
 body
 {
 	xxxbackground-color:#c9c9c9;
-	background-color:__inactive_background_color__;
+	background-color:@color-overridden-by-theme;
 }
 
 /* Fenster-Hintergrund */
 div.panel ul.views > li.active,
 div.panel ul.views > li.active:hover
 {
-	background-color: __title_background_color__;
-	background-image: linear-gradient(__inactive_background_color__ 0%, __title_background_color__ 15%);
-	color: __title_text_color__;
+	background-color: @color-overridden-by-theme;
+	background-image: linear-gradient(@color-overridden-by-theme 0%, @color-overridden-by-theme 15%);
+	color: @color-overridden-by-theme;
 }
 
 /* Titelleiste-Hintergrund */
 div#header
 {
-	background-color: __title_background_color__;
-	background-image: linear-gradient(__title_background_color__ 85%, __inactive_background_color__ 100%);
-	color: __title_text_color__;
+	background-color: @color-overridden-by-theme;
+	background-image: linear-gradient(@color-overridden-by-theme 85%, @color-overridden-by-theme 100%);
+	color: @color-overridden-by-theme;
 }
 
 /* Titelleiste */
 div#header div.toolbar-icon > a
 {
-	color: __title_text_color__;
+	color: @color-overridden-by-theme;
 }
 
 div#header, /* Titelleite */
@@ -1692,27 +1695,27 @@ div.content
 div.panel ul.views li
 {
 	/*
-	background-color:__background_color__;
+	background-color:@color-overridden-by-theme;
 	*/
 }
 
 
 div.panel > div.content
 {
-	background-color:__background_color__;
+	background-color:@color-overridden-by-theme;
 }
 
 div.panel > div.header
 {
-	background-color:__background_color__;
-	background-image: linear-gradient(__inactive_background_color__ 00%, __background_color__ 85%);
+	background-color:@color-overridden-by-theme;
+	background-image: linear-gradient(@color-overridden-by-theme 00%, @color-overridden-by-theme 85%);
 }
 	
 
 
 
 div.panel ul.views li:hover {
-	background-color: __inactive_background_color__;
+	background-color: @color-overridden-by-theme;
 	/*
 	color: blue;
 	*/
@@ -1723,7 +1726,7 @@ div.panel ul.views li:hover {
 ul.tree li.last,
 ul.tree li:last-child
 {
-	background-color:__background_color__;
+	background-color:@color-overridden-by-theme;
 }
 
 
@@ -1731,8 +1734,8 @@ ul.tree li:last-child
 div.content pre,
 div.dropdown
 {
-	background-color:__title_text_color__;
-	color:__text_color__;
+	background-color:@color-overridden-by-theme;
+	color:@color-overridden-by-theme;
 	min-width: 150px;
 	max-width: 450px;
 }

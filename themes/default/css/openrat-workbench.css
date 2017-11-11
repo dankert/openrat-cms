@@ -1,3 +1,5 @@
+/* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */
+
 /*
 OpenRat Content Management System
 Copyright (C) 2002-2010 Jan Dankert
@@ -111,9 +113,9 @@ div#workbench div.panel.modal {
   xleft: 0;
   z-index: 101;
   border: 1px solid !important;
-  -webkit-box-shadow: 0px 0px 40px __text_color__;
-  -moz-box-shadow: 0px 0px 40px  __text_color__;
-  box-shadow: 0px 0px 40px __text_color__;
+  -webkit-box-shadow: 0px 0px 40px #000000;
+  -moz-box-shadow: 0px 0px 40px #000000;
+  box-shadow: 0px 0px 40px #000000;
 }
 div#dialog {
   overflow: auto;

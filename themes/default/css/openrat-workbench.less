@@ -21,6 +21,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 Basis-Style for Openrat.
 */
 
+@color-overridden-by-theme: black;
+
 
 /* R e s e t - Alle Elemente zuruecksetzen */
 /* Source: http://meyerweb.com/eric/tools/css/reset/ */
@@ -47,9 +49,9 @@ div#workbench div.panel.modal
 	
 	border:1px solid !important;
 	
-	-webkit-box-shadow: 0px 0px 40px __text_color__;
-    -moz-box-shadow: 0px 0px 40px  __text_color__;
-    box-shadow: 0px 0px 40px __text_color__;
+	-webkit-box-shadow: 0px 0px 40px @color-overridden-by-theme;
+    -moz-box-shadow: 0px 0px 40px  @color-overridden-by-theme;
+    box-shadow: 0px 0px 40px @color-overridden-by-theme;
     
 }
 
