@@ -686,21 +686,9 @@ table tr.data > td {
 table > tr.data:nth-child(2n) {
   background-color: __inactive_background_color__;
 }
-/* Datenzeile - Mauseffekt */
-table tr.data:hover,
-div.content li div.entry:hover {
-  background-color: __inactive_background_color__;
-}
 ul.tree div {
   cursor: pointer;
 }
-/* Hintergrund Fenster */
-/*
-
-div.panel {
-	background-color: #3399FF;
-}
-*/
 /*   S t a t u s z e i l e   */
 div.panel div.status {
   padding: 10px;
