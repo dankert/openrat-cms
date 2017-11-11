@@ -107,7 +107,7 @@ class IndexAction extends Action
 	    if ( DEVELOPMENT )
 	        $this->lastModified( config('config','last_modification') );
 	    else
-	        $this->lastModified(config('config','last_modification',1*60*60) );
+	        $this->lastModified( strtotime(config('version','date')) );
 	            
 	            
 	    header('Content-Type: text/css');
@@ -264,7 +264,7 @@ class IndexAction extends Action
 	    if ( DEVELOPMENT )
 	        $this->lastModified( config('config','last_modification') );
 	    else
-	        $this->lastModified(config('config','last_modification',1*60*60) );
+	        $this->lastModified( strtotime(config('version','date')) );
 	    
 	    header('Content-Type: text/javascript');
 	    

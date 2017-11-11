@@ -53,7 +53,8 @@ try
     	
     	$conf = Preferences::load();
     	
-    	$conf['build'] = parse_ini_file('build.ini');
+    	$conf['build']   = parse_ini_file('build.ini'  );
+    	$conf['version'] = parse_ini_file('version.ini');
     	// Sprache lesen
     
     	if	( $conf['i18n']['use_http'] )
