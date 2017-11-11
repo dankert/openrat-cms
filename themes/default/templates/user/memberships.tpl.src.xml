@@ -22,9 +22,9 @@
 			</list>
 			<row>
 				<column colspan="2" class="act">
-					<button type="ok"></button>
-				</column>
+					<button type="ok"></button> 
+				</column>       
 			</row>
 		</table>
 	</form>
-</output>
+</output>    
