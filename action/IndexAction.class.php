@@ -166,8 +166,14 @@ class IndexAction extends Action
 	                    else
 	                    {
             	            echo "/* LESS Source file: $lessFile */\n";
-                            $parser = new Less_Parser();
-                            $parser->parse( file_get_contents($lessFile) );
+                            $parser = new Less_Parser(
+	                              array('sourceMap' => true,
+	                            	'indentation'       => '     ',
+	                            	'outputSourceFiles' => true)
+	                       );
+	                        
+                            
+                            $parser->parse( file_get_contents($lessFile),$lessFile );
                             $source = $parser->getCss();
                             
 	                        file_put_contents( $cssFile, "/* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */\n\n".$source );
@@ -222,7 +228,7 @@ class IndexAction extends Action
 					{
 						$parser = new Less_Parser( array('sourceMap' => true,
 							'indentation'       => '     ',
-							'outputSourceFiles' => false)
+							'outputSourceFiles' => true)
 						);
 						
 						$parser->parse($lessSource,$lessFile);
