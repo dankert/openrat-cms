@@ -818,13 +818,13 @@ $conf['style']['grey']['text_color'] ='black';
 $conf['style']['grey']['background_color'] = '#e9e9e9';
 $conf['style']['grey']['inactive_background_color'] = 'silver';
 
-$conf['style']['system']=array();
-$conf['style']['system']['name']='System colors';
-$conf['style']['system']['title_background_color']='Menu';
-$conf['style']['system']['title_text_color']='MenuText';
-$conf['style']['system']['text_color'] ='WindowText';
-$conf['style']['system']['background_color'] = 'Background';
-$conf['style']['system']['inactive_background_color'] = 'WindowFrame';
+// $conf['style']['system']=array();
+// $conf['style']['system']['name']='System colors';
+// $conf['style']['system']['title_background_color']='Menu';
+// $conf['style']['system']['title_text_color']='MenuText';
+// $conf['style']['system']['text_color'] ='WindowText';
+// $conf['style']['system']['background_color'] = 'Background';
+// $conf['style']['system']['inactive_background_color'] = 'WindowFrame';
 
 $conf['style']['modern']=array();
 $conf['style']['modern']['name']='Blue sky';

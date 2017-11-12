@@ -1,4 +1,4 @@
-/* OpenRat Theme  */
+/* OpenRat Theme       */
 
 /* 
  * Zuweisung der Farben aus der Konfiguration
@@ -9,6 +9,7 @@
 @cms-text-color: __text_color__;
 @cms-background-color: __background_color__;
 @cms-inactive-background-color: __inactive_background_color__;
+
 html.theme-__name__ {
 	scrollbar-face-color: @cms-title-background-color;
 	scrollbar-arrow-color: @cms-title-background-color;
@@ -19,7 +20,7 @@ html.theme-__name__ {
 		-moz-box-shadow: 0px 0px 40px @cms-text-color;
 		box-shadow: 0px 0px 40px @cms-text-color;
 	}
- 
+  
 	div#dialog {
 		background-color: @cms-background-color;
 		color: @cms-text-color;
@@ -617,7 +618,10 @@ html.theme-__name__ {
 
 	div#header {
 		background-color: @cms-title-background-color;
+		background-image: linear-gradient(@cms-title-background-color,lighten(@cms-title-background-color,10%));
+		/*
 		background-image: linear-gradient(@cms-title-background-color 85%, @cms-inactive-background-color 100%);
+		 */
 		color: @cms-title-text-color;
 	}
 

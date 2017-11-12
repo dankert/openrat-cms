@@ -214,21 +214,23 @@ class IndexAction extends Action
                 file_put_contents($cssFile   , "/* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */\n\n");
                 file_put_contents($cssMinFile, '');
             
+                $lessSource = file_get_contents( $lessFile );
+                
                 foreach( array_keys(config('style')) as $styleId )
                 {
-                    $lessSource = file_get_contents( $lessFile );
-                    $lessSource = str_replace('__name__'      ,$styleId                           ,$lessSource);
-                    $lessSource = str_replace('__IMAGE_PATH__',OR_THEMES_EXT_DIR.'default/images/',$lessSource);
+                    $lessSourceStyle = $lessSource;
+                    $lessSourceStyle = str_replace('__name__'      ,$styleId                           ,$lessSourceStyle);
+                    $lessSourceStyle = str_replace('__IMAGE_PATH__',OR_THEMES_EXT_DIR.'default/images/',$lessSourceStyle);
                     foreach( config('style',$styleId) as $key=>$value)
                     {
-                        $lessSource = str_replace('__'.$key.'__',$value,$lessSource);
+                        $lessSourceStyle = str_replace('__'.$key.'__',$value,$lessSourceStyle);
                     }
                     $parser = new Less_Parser();
-                    $parser->parse( $lessSource );
+                    $parser->parse( $lessSourceStyle );
                     $css = $parser->getCss();
                     
-                    file_put_contents($cssFile   , $css           ,FILE_APPEND);
-                    file_put_contents($cssMinFile, $this->minifyCSS($css),FILE_APPEND);
+                    file_put_contents($cssFile   , "\n/* Style $styleId */\n".$css,FILE_APPEND);
+                    file_put_contents($cssMinFile, $this->minifyCSS($css)         ,FILE_APPEND);
                 }
             }
             

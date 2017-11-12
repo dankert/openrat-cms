@@ -57,7 +57,7 @@ class Logger
 	 *
 	 * @param message Log-Text
 	 */
-	function trace( $message )
+	public static function trace( $message )
 	{
 		if	( OR_LOG_LEVEL_TRACE )
 			Logger::doLog( 'trace',$message );
@@ -69,7 +69,7 @@ class Logger
 	 *
 	 * @param message Log-Text
 	 */
-	function debug( $message )
+	public static function debug( $message )
 	{
 		if	( OR_LOG_LEVEL_DEBUG )
 			Logger::doLog( 'debug',$message );
@@ -81,7 +81,7 @@ class Logger
 	 *
 	 * @param message Log-Text
 	 */
-	function info( $message )
+	public static function info( $message )
 	{
 		if	( OR_LOG_LEVEL_INFO )
 			Logger::doLog( 'info',$message );
@@ -93,7 +93,7 @@ class Logger
 	 *
 	 * @param message Log-Text
 	 */
-	function warn( $message )
+	public static function warn( $message )
 	{
 		if	( OR_LOG_LEVEL_WARN )
 			Logger::doLog( 'warn',$message );
@@ -105,7 +105,7 @@ class Logger
 	 *
 	 * @param message Log-Text
 	 */
-	function error( $message )
+	public static function error( $message )
 	{
 		if	( OR_LOG_LEVEL_ERROR )
 			Logger::doLog( 'error',$message );
@@ -120,7 +120,7 @@ class Logger
 	 * @param message Log-Text
 	 * @access private
 	 */
-	function doLog( $facility,$message )
+	private static function doLog( $facility,$message )
 	{
 		global $conf;
 		global $SESS;
@@ -130,8 +130,6 @@ class Logger
 		if	( $filename == '' )
 			return;
 
-		if	( ! is_writable($filename) )
-			Http::serverError( "logfile $filename is not writable by the server" );
 
 		$thisLevel = strtoupper($facility);
 		
@@ -144,7 +142,7 @@ class Logger
 		$text = $conf['log']['format']; // Format der Logdatei lesen
 
 		// Ersetzen von Variablen
-		if   ( $conf['log']['dns_lookup'] )
+		if  ( $conf['log']['dns_lookup'] )
 			$text = str_replace( '%host',gethostbyaddr(getenv('REMOTE_ADDR')),$text );
 		else
 			$text = str_replace( '%host',getenv('REMOTE_ADDR'),$text );
@@ -164,9 +162,15 @@ class Logger
 		$text = str_replace( '%text'  ,$message,$text );
 		$text = str_replace( '%time'  ,date($conf['log']['date_format']),$text );
 		$text = str_replace( "\n"     ,"\n ",$text );
-		
-		// Schreiben in Logdatei
-		error_log( $text."\n",3,$filename );
+		if (! is_writable($filename)) {
+			
+			error_log("logfile $filename is not writable by the server");
+			error_log($text . "\n");
+		} else {
+			
+			// Schreiben in Logdatei
+			error_log($text . "\n", 3, $filename);
+		}
 	}
 }
 

@@ -1,6 +1,8 @@
 /* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */
 
-/* OpenRat Theme  */
+
+/* Style grey */
+/* OpenRat Theme       */
 /* 
  * Zuweisung der Farben aus der Konfiguration
  */
@@ -538,7 +540,10 @@ html.theme-grey div.panel ul.views > li.active:hover {
 }
 html.theme-grey div#header {
   background-color: #808080;
-  background-image: linear-gradient(#808080 85%, #c0c0c0 100%);
+  background-image: linear-gradient(#808080, #9a9a9a);
+  /*
+		background-image: linear-gradient(@cms-title-background-color 85%, @cms-inactive-background-color 100%);
+		 */
   color: #ffffff;
 }
 html.theme-grey div#header div.toolbar-icon > a {
@@ -576,583 +581,9 @@ html.theme-grey div.line.filedropzone > div.input {
   background-color: #ffffff;
   border: 1px dotted #000000;
 }
-/* OpenRat Theme  */
-/* 
- * Zuweisung der Farben aus der Konfiguration
- */
-/* Die Werte @cms-...__ werden vom CMS mit Werten aus der Konfiguration ersetzt. */
-html.theme-system {
-  scrollbar-face-color: Menu;
-  scrollbar-arrow-color: Menu;
-  scrollbar-base-color: MenuText;
-}
-html.theme-system div#workbench div.panel.modal {
-  border-color: WindowText !important;
-  -webkit-box-shadow: 0px 0px 40px WindowText;
-  -moz-box-shadow: 0px 0px 40px WindowText;
-  box-shadow: 0px 0px 40px WindowText;
-}
-html.theme-system div#dialog {
-  background-color: Background;
-  color: WindowText;
-  border-color: WindowText !important;
-  -webkit-box-shadow: 0px 0px 40px WindowText;
-  -moz-box-shadow: 0px 0px 40px WindowText;
-  box-shadow: 0px 0px 40px WindowText;
-}
-html.theme-system div.container > div.divider.ui-draggable-dragging {
-  background-color: Menu;
-}
-html.theme-system div#workbench div.panel div.arrow-down {
-  border-top-color: Menu;
-}
-html.theme-system div#workbench div.panel div.arrow-right {
-  border-left-color: Menu;
-}
-html.theme-system iframe {
-  border: 1px solid Menu;
-}
-html.theme-system div.breadcrumb,
-html.theme-system div.breadcrumb a,
-html.theme-system div.panel > div.title {
-  color: MenuText;
-}
-html.theme-system div#noticebar div.notice {
-  border: 2px solid WindowText;
-  padding: 5px;
-  margin: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 3px 2px 5px WindowText;
-  -moz-box-shadow: 3px 2px 5px WindowText;
-  box-shadow: 3px 2px 5px WindowText;
-  display: none;
-}
-html.theme-system div#noticebar div.notice.ok {
-  background-color: green;
-}
-html.theme-system div#noticebar div.notice.warning {
-  background-color: yellow;
-}
-html.theme-system div#noticebar div.notice.error {
-  background-color: red;
-}
-html.theme-system div#noticebar div.notice.info {
-  background-color: WindowFrame;
-}
-html.theme-system ul#history > li,
-html.theme-system div.content a.action,
-html.theme-system div.content a.help,
-html.theme-system div.filler div.headermenu > a.entry,
-html.theme-system div.filler div.header a.back.button {
-  border: 1px solid Menu;
-  background-color: MenuText;
-  background: -moz-linear-gradient(top, Menu, WindowFrame);
-  background: -webkit-gradient(linear, left top, left bottom, from(Menu), to(WindowFrame));
-  color: WindowText;
-}
-html.theme-system ul#history > li.active {
-  background-color: MenuText;
-  color: WindowText;
-}
-html.theme-system a.action:hover,
-html.theme-system a.help:hover,
-html.theme-system div.noaction:hover {
-  border-color: MenuText;
-}
-html.theme-system a.action:active,
-html.theme-system a.help:active,
-html.theme-system div.noaction:active,
-html.theme-system input.ok:active {
-  border-color: red;
-}
-html.theme-system a {
-  color: WindowText;
-}
-html.theme-system div.dropdown > div.divide {
-  background-color: Menu;
-}
-html.theme-system td.preview {
-  background-color: papayawhip;
-  border-top: 1px solid WindowFrame;
-  border-bottom: 1px solid WindowFrame;
-}
-html.theme-system .preview a:link,
-html.theme-system .preview a:visited,
-html.theme-system .preview a:active,
-html.theme-system .preview a:hover {
-  color: blue;
-}
-html.theme-system body.menu tr.menu td table tr td.noaction,
-html.theme-system body.main tr.menu td table tr td.noaction {
-  color: Menu;
-}
-html.theme-system img[align=left],
-html.theme-system img[align=right] {
-  padding-right: 1px;
-  padding-left: 1px;
-}
-html.theme-system small {
-  color: Menu;
-}
-html.theme-system body.main table.main td.window td.act {
-  border-top: 1px solid Menu;
-}
-html.theme-system td.motd {
-  border-left: 3px solid red;
-  border-right: 3px solid red;
-  font-weight: bold;
-  padding: 10px;
-  margin: 10px;
-}
-html.theme-system div.panel input.checkbox,
-html.theme-system div.panel input.radio {
-  border: 1px solid Menu;
-}
-html.theme-system textarea.longtext {
-  border: 1px solid WindowText;
-}
-html.theme-system td.notice {
-  margin: 0px;
-  padding: 5%;
-  text-align: center;
-}
-html.theme-system table.notice {
-  width: 100%;
-  border: 1px solid;
-  border-spacing: 0px;
-}
-html.theme-system table.notice th {
-  padding: 2px;
-  white-space: nowrap;
-  border-bottom: 1px solid WindowText;
-  font-weight: normal;
-  text-align: left;
-}
-html.theme-system table.calendar td {
-  border: 1px dotted;
-}
-html.theme-system form.xlogin {
-  xbackground-color: #E0E0D5;
-  border: 2px solid WindowFrame;
-  position: absolute;
-  z-index: 999;
-  top: 5%;
-  left: 5%;
-  width: 80%;
-  margin: 5%;
-  padding: 10%;
-  opacity: 1;
-  -webkit-box-shadow: 3px 2px 5px Menu;
-  -moz-box-shadow: 3px 2px 5px Menu;
-  box-shadow: 3px 2px 5px Menu;
-}
-html.theme-system ul.tree,
-html.theme-system ul.tree ul {
-  list-style-type: none;
-  background: url(themes/default/images//tree_line.gif) repeat-y;
-  xmargin: 0;
-  padding: 0;
-}
-html.theme-system div.entry.selected,
-html.theme-system div.dropdown > div.entry:hover,
-html.theme-system div.dropdown > div.entry:hover > a,
-html.theme-system a.element {
-  background-color: Menu;
-  color: MenuText;
-}
-html.theme-system ul.tree li {
-  xmargin: 0;
-  padding: 0 0px;
-  line-height: 18px;
-  background: url(themes/default/images//tree_none.gif) no-repeat;
-  xcolor: #369;
-  font-weight: normal;
-  white-space: nowrap;
-}
-html.theme-system ul.tree li.last,
-html.theme-system ul.tree li:last-child {
-  background: url(themes/default/images//tree_none_end.gif) no-repeat;
-}
-html.theme-system div.tree.open {
-  background: url(themes/default/images//tree_minus.png) no-repeat;
-}
-html.theme-system div.tree.closed {
-  background: url(themes/default/images//tree_plus.png) no-repeat;
-}
-html.theme-system body > div {
-  display: none;
-}
-html.theme-system div.structure em {
-  font-style: italic;
-}
-html.theme-system .drophover {
-  border: 2px dotted green;
-  cursor: move;
-}
-html.theme-system .dropactive {
-  border: 1px dotted blue;
-  cursor: move;
-}
-html.theme-system div.panel > div.header > div.panel-icon {
-  xposition: static;
-  xright: -30px;
-  top: 3px;
-}
-html.theme-system div.backward_link {
-  float: left;
-}
-html.theme-system div.forward_link {
-  float: right;
-}
-html.theme-system div.panel > div.header {
-  padding: 0px;
-  width: 100%;
-  height: 25px;
-  border-bottom: 1px solid Menu;
-}
-html.theme-system div.panel div.header ul.views {
-  text-align: left;
-  list-style-type: none;
-  overflow: hidden;
-  white-space: nowrap;
-}
-html.theme-system img.icon {
-  padding: 4px;
-  width: 16px;
-  height: 16px;
-}
-html.theme-system ul.views div.tabname {
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 4px;
-  vertical-align: middle;
-}
-html.theme-system div.panel div.header {
-  xborder-bottom: 1px solid Menu;
-}
-html.theme-system div.panel ul.views li {
-  vertical-align: middle;
-  padding: 0px;
-  cursor: pointer;
-  border-right: 1px solid Menu;
-  -moz-border-radius-topleft: 5px;
-  -webkit-border-radius-topleft: 5px;
-  -khtml-border-top-radius-topleft: 5px;
-  -moz-border-radius-topright: 5px;
-  -webkit-border-radius-topright: 5px;
-  -khtml-border-top-radius-topright: 5px;
-  border-top-right-radius: 5px;
-  xborder-top: 1px solid Menu;
-  xborder-left: 1px solid Menu;
-  xborder-right: 1px solid Menu;
-  xmargin-right: 10px;
-  display: inline;
-  white-space: nowrap;
-  float: left;
-}
-html.theme-system div.panel div.content table {
-  border: 2px WindowFrame;
-}
-html.theme-system table tr.headline > td {
-  border-bottom: 1px solid Menu;
-}
-html.theme-system table tr.data > td {
-  border-bottom: 1px solid Menu;
-}
-html.theme-system table > tr.data:nth-child(2n) {
-  background-color: WindowFrame;
-}
-html.theme-system table tr.data:hover,
-html.theme-system div.content li div.entry:hover {
-  background-color: WindowFrame;
-}
-html.theme-system div.panel div.status div,
-html.theme-system div.message {
-  border: 1px solid Menu;
-}
-html.theme-system div#workbench div.panel.fullscreen {
-  background-color: Background;
-}
-html.theme-system div#workbench div.panel {
-  border: 1px solid Menu;
-}
-html.theme-system input.submit {
-  background-color: Menu;
-  color: MenuText;
-  -webkit-box-shadow: 0px 0px 15px Background;
-  -moz-box-shadow: 0px 0px 15px Background;
-  box-shadow: 0px 0px 15px 10px Background;
-}
-html.theme-system ul#history > li {
-  border: 1px solid Menu;
-  background-color: WindowFrame;
-  color: WindowText;
-}
-html.theme-system ul#history > li.active {
-  border: 1px solid WindowText;
-  background-color: MenuText;
-  color: WindowText;
-}
-html.theme-system ul#history {
-  display: none;
-}
-html.theme-system div#filler {
-  background-color: WindowText;
-}
-html.theme-system div.clickable.filtered.inactive > a {
-  color: WindowFrame;
-}
-html.theme-system div#header > div > div.arrow-down {
-  display: inline;
-  width: 0;
-  height: 0;
-  margin: 6;
-  padding: 0px;
-  border-right: 6px solid Menu;
-  border-left: 6px solid Menu;
-  border-top: 6px solid WindowFrame;
-  border-bottom: 4px solid Menu;
-  margin-top: 10px;
-  font-size: 0;
-}
-html.theme-system div.dropdown {
-  -webkit-box-shadow: 3px 2px 10px Menu;
-  -moz-box-shadow: 3px 2px 10px Menu;
-  box-shadow: 3px 2px 10px Menu;
-  opacity: 0.95;
-  border: 2px solid Menu;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
-  font-style: normal;
-  font-weight: normal;
-  text-decoration: none;
-}
-html.theme-system div#header span.titletext {
-  color: MenuText;
-}
-html.theme-system div.toolbar-icon {
-  border: 1px solid Menu;
-  padding: 2px;
-  margin-left: 5px;
-  float: left;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -khtml-border-radius: 3px;
-  border-radius: 3px;
-}
-html.theme-system div.toolbar-icon.inactive {
-  opacity: 0.5;
-}
-html.theme-system div.toolbar-icon:hover {
-  border: 1px solid WindowFrame;
-}
-html.theme-system div.headermenu {
-  margin: 5px;
-  z-index: 1;
-  position: relative;
-  right: 0;
-  top: 0;
-}
-html.theme-system div.headermenu > div.toolbar-icon {
-  float: right;
-}
-html.theme-system div.panel.wide form div.line {
-  clear: left;
-  margin-top: 10px;
-}
-html.theme-system div.panel.wide form div.label {
-  display: inline-block;
-  width: 30%;
-  vertical-align: top;
-  text-align: right;
-}
-html.theme-system div.panel.wide form div.input {
-  display: inline-block;
-  width: 60%;
-  vertical-align: top;
-  text-align: left;
-}
-html.theme-system div.panel.small form div.line {
-  clear: left;
-  padding: 10px;
-}
-html.theme-system div.panel.small form div.label {
-  display: block;
-  width: 100%;
-  vertical-align: top;
-  text-align: left;
-}
-html.theme-system div.panel.small form div.input {
-  display: block;
-  width: 100%;
-  vertical-align: top;
-  text-align: left;
-}
-html.theme-system form div.label > label,
-html.theme-system form div.input > div.intputholder {
-  padding: 0px 5px;
-}
-html.theme-system form div.input input[type=text],
-html.theme-system form div.input input[type=password],
-html.theme-system form div.input textarea,
-html.theme-system form div.input select {
-  width: 100%;
-}
-html.theme-system form div.input input[type=checkbox],
-html.theme-system form div.input input[type=radio] {
-  vertical-align: top;
-}
-html.theme-system label {
-  display: inline-block;
-}
-html.theme-system input[type=checkbox] + label,
-html.theme-system input[type=radio] + label {
-  width: 80%;
-}
-html.theme-system label div.description {
-  font-size: 0.75em;
-  color: Menu;
-}
-html.theme-system div.inputholder {
-  background-color: MenuText;
-  border: 1px solid Menu;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -khtml-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: inset 0px 0px 3px Menu;
-  -moz-box-shadow: inset 0px 0px 3px Menu;
-  box-shadow: inset 0px 0px 3px Menu;
-}
-html.theme-system div.inputholder ul.tree,
-html.theme-system div.inputholder ul.tree li.last,
-html.theme-system div.inputholder ul.tree li:last-child {
-  background-color: MenuText;
-}
-html.theme-system div.inputholder > input,
-html.theme-system div.inputholder > textarea,
-html.theme-system div.inputholder > select {
-  border: 0px;
-  border-bottom: 1px solid MenuText;
-  padding: 2px;
-  margin: 0px;
-  background-color: MenuText;
-}
-html.theme-system input:focus,
-html.theme-system textarea:focus,
-html.theme-system select:focus {
-  border: 0px;
-  border-bottom: 1px solid WindowFrame;
-}
-html.theme-system input.error,
-html.theme-system textarea.error,
-html.theme-system select.error {
-  border-bottom: 1px dotted WindowText !important;
-}
-html.theme-system div.inputholder.error {
-  border: 1px solid red ! important;
-}
-html.theme-system input.hint {
-  color: Menu;
-}
-html.theme-system fieldset > div input.name,
-html.theme-system fieldset > div span.name {
-  font-weight: bold;
-}
-html.theme-system fieldset {
-  border-color: Menu;
-}
-html.theme-system div#tree {
-  overflow: visible;
-}
-html.theme-system tr.diff > td.line {
-  background-color: MenuText;
-  padding-right: 2px;
-  border-right: 3px solid Menu;
-  text-align: right;
-  margin-right: 2px;
-}
-html.theme-system tr.diff > td.old {
-  background-color: red;
-}
-html.theme-system tr.diff > td.new {
-  background-color: green;
-}
-html.theme-system tr.diff > td.notequal {
-  background-color: yellow;
-}
-html.theme-system dl.notice {
-  border-left: 10px WindowFrame solid;
-  border-right: 1px WindowFrame solid;
-  padding: 15px;
-}
-html.theme-system dl.notice > dt {
-  border-top: 1px WindowFrame solid;
-}
-html.theme-system dl.notice > dd {
-  border-bottom: 1px WindowFrame solid;
-}
-html.theme-system div.content a.action,
-html.theme-system div.content a.help {
-  -webkit-box-shadow: 3px 2px 5px Menu;
-  -moz-box-shadow: 3px 2px 5px Menu;
-  box-shadow: 3px 2px 5px Menu;
-}
-html.theme-system body {
-  background-color: WindowFrame;
-}
-html.theme-system div.panel ul.views > li.active,
-html.theme-system div.panel ul.views > li.active:hover {
-  background-color: Menu;
-  background-image: linear-gradient(WindowFrame 0%, Menu 15%);
-  color: MenuText;
-}
-html.theme-system div#header {
-  background-color: Menu;
-  background-image: linear-gradient(Menu 85%, WindowFrame 100%);
-  color: MenuText;
-}
-html.theme-system div#header div.toolbar-icon > a {
-  color: MenuText;
-}
-html.theme-system div#header,
-html.theme-system ul.views > li.action {
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-}
-html.theme-system div.panel > div.content {
-  background-color: Background;
-}
-html.theme-system div.panel > div.header {
-  background-color: Background;
-  background-image: linear-gradient(WindowFrame 0%, Background 85%);
-}
-html.theme-system div.panel ul.views li:hover {
-  background-color: WindowFrame;
-}
-html.theme-system ul.tree li.last,
-html.theme-system ul.tree li:last-child {
-  background-color: Background;
-}
-html.theme-system div.content pre,
-html.theme-system div.dropdown {
-  background-color: MenuText;
-  color: WindowText;
-}
-html.theme-system div.filler div.headermenu > a.entry,
-html.theme-system div.filler div.header a.back.button {
-  font-size: 0.8em;
-}
-html.theme-system div.line.filedropzone > div.input {
-  background-color: MenuText;
-  border: 1px dotted WindowText;
-}
-/* OpenRat Theme  */
+
+/* Style modern */
+/* OpenRat Theme       */
 /* 
  * Zuweisung der Farben aus der Konfiguration
  */
@@ -1690,7 +1121,10 @@ html.theme-modern div.panel ul.views > li.active:hover {
 }
 html.theme-modern div#header {
   background-color: #3f6194;
-  background-image: linear-gradient(#3f6194 85%, #cccccc 100%);
+  background-image: linear-gradient(#3f6194, #5179b5);
+  /*
+		background-image: linear-gradient(@cms-title-background-color 85%, @cms-inactive-background-color 100%);
+		 */
   color: #ffffff;
 }
 html.theme-modern div#header div.toolbar-icon > a {
@@ -1728,7 +1162,9 @@ html.theme-modern div.line.filedropzone > div.input {
   background-color: #ffffff;
   border: 1px dotted #000000;
 }
-/* OpenRat Theme  */
+
+/* Style moorweide */
+/* OpenRat Theme       */
 /* 
  * Zuweisung der Farben aus der Konfiguration
  */
@@ -2266,7 +1702,10 @@ html.theme-moorweide div.panel ul.views > li.active:hover {
 }
 html.theme-moorweide div#header {
   background-color: #006633;
-  background-image: linear-gradient(#006633 85%, #cee6da 100%);
+  background-image: linear-gradient(#006633, #00994d);
+  /*
+		background-image: linear-gradient(@cms-title-background-color 85%, @cms-inactive-background-color 100%);
+		 */
   color: #ffffff;
 }
 html.theme-moorweide div#header div.toolbar-icon > a {
@@ -2304,7 +1743,9 @@ html.theme-moorweide div.line.filedropzone > div.input {
   background-color: #ffffff;
   border: 1px dotted #000000;
 }
-/* OpenRat Theme  */
+
+/* Style dark */
+/* OpenRat Theme       */
 /* 
  * Zuweisung der Farben aus der Konfiguration
  */
@@ -2842,7 +2283,10 @@ html.theme-dark div.panel ul.views > li.active:hover {
 }
 html.theme-dark div#header {
   background-color: #868685;
-  background-image: linear-gradient(#868685 85%, #868685 100%);
+  background-image: linear-gradient(#868685, #9f9f9f);
+  /*
+		background-image: linear-gradient(@cms-title-background-color 85%, @cms-inactive-background-color 100%);
+		 */
   color: #dcdcdc;
 }
 html.theme-dark div#header div.toolbar-icon > a {
