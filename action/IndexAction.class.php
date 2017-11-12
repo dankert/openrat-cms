@@ -220,7 +220,7 @@ class IndexAction extends Action
 					
 					foreach (array_keys(config('style')) as $styleId)
 					{
-						$parser = new Less_Parser();
+						$parser = new Less_Parser(array('sourceMap' => true));
 						
 						$parser->parse($lessSource);
 						
