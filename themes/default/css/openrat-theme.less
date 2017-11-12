@@ -1,19 +1,24 @@
-/* OpenRat Theme       */
-
+/* OpenRat Theme */
+ 
 /* 
- * Zuweisung der Farben aus der Konfiguration
+ * The following variables beginning with '@cms-...' are overwritten bei the CMS style configuration values
  */
-/* Die Werte @cms-...__ werden vom CMS mit Werten aus der Konfiguration ersetzt. */
-@cms-title-background-color: __title_background_color__;
-@cms-title-text-color: __title_text_color__;
-@cms-text-color: __text_color__;
-@cms-background-color: __background_color__;
-@cms-inactive-background-color: __inactive_background_color__;
+@cms-theme-id: 'theme-name'; /* technical name of theme */ 
+@cms-image-path: '/'; /* Image-path */
+@cms-name: name; /* Logic name of theme */
+@cms-title-background-color: white;
+@cms-title-text-color: black;
+@cms-text-color: black;
+@cms-background-color: silver;
+@cms-inactive-background-color: gray;
 
-html.theme-__name__ {
+
+html.theme-@{cms-theme-id} { 
+	
 	scrollbar-face-color: @cms-title-background-color;
 	scrollbar-arrow-color: @cms-title-background-color;
 	scrollbar-base-color: @cms-title-text-color;
+	
 	div#workbench div.panel.modal {
 		border-color: @cms-text-color ! important;
 		-webkit-box-shadow: 0px 0px 40px @cms-text-color;
@@ -58,10 +63,8 @@ html.theme-__name__ {
 			border: 2px solid @cms-text-color;
 			padding: 5px;
 			margin: 5px;
-			-moz-border-radius: 5px;
-			-webkit-border-radius: 5px;
-			-khtml-border-radius: 5px;
-			border-radius: 5px;
+
+			.border-radius(5px);
 			-webkit-box-shadow: 3px 2px 5px @cms-text-color;
 			-moz-box-shadow: 3px 2px 5px @cms-text-color;
 			box-shadow: 3px 2px 5px @cms-text-color;
@@ -199,7 +202,7 @@ html.theme-__name__ {
 
 	ul.tree , ul.tree ul {
 		list-style-type: none;
-		background: url(__IMAGE_PATH__/tree_line.gif) repeat-y;
+		background: url(./themes/default/images/tree_line.gif) repeat-y;
 		xmargin: 0;
 		padding: 0;
 	}
@@ -213,22 +216,22 @@ html.theme-__name__ {
 		xmargin: 0;
 		padding: 0 0px;
 		line-height: 18px;
-		background: url(__IMAGE_PATH__/tree_none.gif) no-repeat;
+		background: url(./themes/default/images/tree_none.gif) no-repeat;
 		xcolor: #369;
 		font-weight: normal;
 		white-space: nowrap;
 	}
 
 	ul.tree li.last , ul.tree li:last-child {
-		background: url(__IMAGE_PATH__/tree_none_end.gif) no-repeat;
+		background: url(./themes/default/images/tree_none_end.gif) no-repeat;
 	}
 
 	div.tree.open {
-		background: url(__IMAGE_PATH__/tree_minus.png) no-repeat;
+		background: url(./themes/default/images/tree_minus.png) no-repeat;
 	}
 
 	div.tree.closed {
-		background: url(__IMAGE_PATH__/tree_plus.png) no-repeat;
+		background: url(./themes/default/images/tree_plus.png) no-repeat;
 	}
 
 	body > div {
@@ -394,16 +397,22 @@ html.theme-__name__ {
 		font-size: 0;
 	}
 
+	.border-radius (@radius) {
+		border-radius: @radius;
+		-moz-border-radius: @radius;
+		-webkit-border-radius: @radius;
+		-khtml-border-radius: @radius;
+	}
+	
 	div.dropdown {
 		-webkit-box-shadow: 3px 2px 10px @cms-title-background-color;
 		-moz-box-shadow: 3px 2px 10px @cms-title-background-color;
 		box-shadow: 3px 2px 10px @cms-title-background-color;
 		opacity: 0.95;
+
 		border: 2px solid @cms-title-background-color;
-		-moz-border-radius: 5px;
-		-webkit-border-radius: 5px;
-		-khtml-border-radius: 5px;
-		border-radius: 5px;
+		.border-radius( 5px );
+		
 		font-style: normal;
 		font-weight: normal;
 		text-decoration: none;
@@ -418,10 +427,7 @@ html.theme-__name__ {
 		padding: 2px;
 		margin-left: 5px;
 		float: left;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
-		-khtml-border-radius: 3px;
-		border-radius: 3px;
+		.border-radius( 3px );
 	}
 
 	div.toolbar-icon.inactive {
@@ -513,10 +519,7 @@ html.theme-__name__ {
 	div.inputholder {
 		background-color: @cms-title-text-color;
 		border: 1px solid @cms-title-background-color;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
-		-khtml-border-radius: 3px;
-		border-radius: 3px;
+		.border-radius( 3px );
 		-webkit-box-shadow: inset 0px 0px 3px @cms-title-background-color;
 		-moz-box-shadow: inset 0px 0px 3px @cms-title-background-color;
 		box-shadow: inset 0px 0px 3px @cms-title-background-color;
@@ -666,3 +669,4 @@ html.theme-__name__ {
 	}
 }
 
+/* Theme Ende */

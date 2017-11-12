@@ -209,39 +209,52 @@ class IndexAction extends Action
 
         if  ( DEVELOPMENT )
         {
-            if  ( filemtime($lessFile) > filemtime($cssMinFile) )
-            {
-                file_put_contents($cssFile   , "/* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */\n\n");
-                file_put_contents($cssMinFile, '');
-            
-                $lessSource = file_get_contents( $lessFile );
-                
-                foreach( array_keys(config('style')) as $styleId )
-                {
-                    $lessSourceStyle = $lessSource;
-                    $lessSourceStyle = str_replace('__name__'      ,$styleId                           ,$lessSourceStyle);
-                    $lessSourceStyle = str_replace('__IMAGE_PATH__',OR_THEMES_EXT_DIR.'default/images/',$lessSourceStyle);
-                    foreach( config('style',$styleId) as $key=>$value)
-                    {
-                        $lessSourceStyle = str_replace('__'.$key.'__',$value,$lessSourceStyle);
-                    }
-                    $parser = new Less_Parser();
-                    $parser->parse( $lessSourceStyle );
-                    $css = $parser->getCss();
-                    
-                    file_put_contents($cssFile   , "\n/* Style $styleId */\n".$css,FILE_APPEND);
-                    file_put_contents($cssMinFile, $this->minifyCSS($css)         ,FILE_APPEND);
-                }
-            }
+			if (filemtime($lessFile) > filemtime($cssMinFile))
+			{
+				try
+				{
+					file_put_contents($cssFile, "/* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */\n\n");
+					file_put_contents($cssMinFile, '');
+					
+					$lessSource = file_get_contents($lessFile);
+					
+					foreach (array_keys(config('style')) as $styleId)
+					{
+						$parser = new Less_Parser();
+						
+						$parser->parse($lessSource);
+						
+						$styleConfig = config('style', $styleId);
+						$lessVars = array(
+							'cms-theme-id'   => strtolower($styleId),
+							'cms-image-path' => 'themes/default/images/'
+						);
+						
+						foreach ($styleConfig as $styleSetting => $value)
+							$lessVars['cms-' . strtolower(strtr($styleSetting, '_', '-'))] = $value;
+						$parser->modifyVars($lessVars);
+						$css = $parser->getCss();
+						
+						file_put_contents($cssFile   , "\n/* Style $styleId */\n" . $css, FILE_APPEND);
+						file_put_contents($cssMinFile, $this->minifyCSS($css), FILE_APPEND);
+					}
+				}
+				catch (Exception $e)
+				{
+					file_put_contents($cssFile, "\n\n/* WARNING!\n   LESS Parser failed on file '$lessFile'. Reason: " . $e->__toString() . " */\n\n");
+					
+					throw new LogicException("LESS Parser failed on file '$lessFile'", 0, $e);
+				}
+			}
             
             echo "\n/* Theme-CSS: $cssFile */\n";
             readfile( $cssFile );
         }
-        else 
-        {
-            // Production.
-            readfile( $cssMinFile );
-        }
+		else
+		{
+			// Production.
+			readfile($cssMinFile);
+		}
   
 	    exit;
 	}

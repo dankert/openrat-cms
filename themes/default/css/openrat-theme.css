@@ -1,24 +1,26 @@
 /* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */
 
 
-/* Style grey */
-/* OpenRat Theme       */
+/* Style earlgrey */
+/* OpenRat Theme */
 /* 
- * Zuweisung der Farben aus der Konfiguration
+ * The following variables beginning with '@cms-...' are overwritten bei the CMS style configuration values
  */
-/* Die Werte @cms-...__ werden vom CMS mit Werten aus der Konfiguration ersetzt. */
-html.theme-grey {
+/* technical name of theme */
+/* Image-path */
+/* Logic name of theme */
+html.theme-earlgrey {
   scrollbar-face-color: #808080;
   scrollbar-arrow-color: #808080;
   scrollbar-base-color: #ffffff;
 }
-html.theme-grey div#workbench div.panel.modal {
+html.theme-earlgrey div#workbench div.panel.modal {
   border-color: #000000 !important;
   -webkit-box-shadow: 0px 0px 40px #000000;
   -moz-box-shadow: 0px 0px 40px #000000;
   box-shadow: 0px 0px 40px #000000;
 }
-html.theme-grey div#dialog {
+html.theme-earlgrey div#dialog {
   background-color: #e9e9e9;
   color: #000000;
   border-color: #000000 !important;
@@ -26,141 +28,141 @@ html.theme-grey div#dialog {
   -moz-box-shadow: 0px 0px 40px #000000;
   box-shadow: 0px 0px 40px #000000;
 }
-html.theme-grey div.container > div.divider.ui-draggable-dragging {
+html.theme-earlgrey div.container > div.divider.ui-draggable-dragging {
   background-color: #808080;
 }
-html.theme-grey div#workbench div.panel div.arrow-down {
+html.theme-earlgrey div#workbench div.panel div.arrow-down {
   border-top-color: #808080;
 }
-html.theme-grey div#workbench div.panel div.arrow-right {
+html.theme-earlgrey div#workbench div.panel div.arrow-right {
   border-left-color: #808080;
 }
-html.theme-grey iframe {
+html.theme-earlgrey iframe {
   border: 1px solid #808080;
 }
-html.theme-grey div.breadcrumb,
-html.theme-grey div.breadcrumb a,
-html.theme-grey div.panel > div.title {
+html.theme-earlgrey div.breadcrumb,
+html.theme-earlgrey div.breadcrumb a,
+html.theme-earlgrey div.panel > div.title {
   color: #ffffff;
 }
-html.theme-grey div#noticebar div.notice {
+html.theme-earlgrey div#noticebar div.notice {
   border: 2px solid #000000;
   padding: 5px;
   margin: 5px;
+  border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
-  border-radius: 5px;
   -webkit-box-shadow: 3px 2px 5px #000000;
   -moz-box-shadow: 3px 2px 5px #000000;
   box-shadow: 3px 2px 5px #000000;
   display: none;
 }
-html.theme-grey div#noticebar div.notice.ok {
+html.theme-earlgrey div#noticebar div.notice.ok {
   background-color: green;
 }
-html.theme-grey div#noticebar div.notice.warning {
+html.theme-earlgrey div#noticebar div.notice.warning {
   background-color: yellow;
 }
-html.theme-grey div#noticebar div.notice.error {
+html.theme-earlgrey div#noticebar div.notice.error {
   background-color: red;
 }
-html.theme-grey div#noticebar div.notice.info {
+html.theme-earlgrey div#noticebar div.notice.info {
   background-color: #c0c0c0;
 }
-html.theme-grey ul#history > li,
-html.theme-grey div.content a.action,
-html.theme-grey div.content a.help,
-html.theme-grey div.filler div.headermenu > a.entry,
-html.theme-grey div.filler div.header a.back.button {
+html.theme-earlgrey ul#history > li,
+html.theme-earlgrey div.content a.action,
+html.theme-earlgrey div.content a.help,
+html.theme-earlgrey div.filler div.headermenu > a.entry,
+html.theme-earlgrey div.filler div.header a.back.button {
   border: 1px solid #808080;
   background-color: #ffffff;
   background: -moz-linear-gradient(top, #808080, #c0c0c0);
   background: -webkit-gradient(linear, left top, left bottom, from(#808080), to(#c0c0c0));
   color: #000000;
 }
-html.theme-grey ul#history > li.active {
+html.theme-earlgrey ul#history > li.active {
   background-color: #ffffff;
   color: #000000;
 }
-html.theme-grey a.action:hover,
-html.theme-grey a.help:hover,
-html.theme-grey div.noaction:hover {
+html.theme-earlgrey a.action:hover,
+html.theme-earlgrey a.help:hover,
+html.theme-earlgrey div.noaction:hover {
   border-color: #ffffff;
 }
-html.theme-grey a.action:active,
-html.theme-grey a.help:active,
-html.theme-grey div.noaction:active,
-html.theme-grey input.ok:active {
+html.theme-earlgrey a.action:active,
+html.theme-earlgrey a.help:active,
+html.theme-earlgrey div.noaction:active,
+html.theme-earlgrey input.ok:active {
   border-color: red;
 }
-html.theme-grey a {
+html.theme-earlgrey a {
   color: #000000;
 }
-html.theme-grey div.dropdown > div.divide {
+html.theme-earlgrey div.dropdown > div.divide {
   background-color: #808080;
 }
-html.theme-grey td.preview {
+html.theme-earlgrey td.preview {
   background-color: papayawhip;
   border-top: 1px solid #c0c0c0;
   border-bottom: 1px solid #c0c0c0;
 }
-html.theme-grey .preview a:link,
-html.theme-grey .preview a:visited,
-html.theme-grey .preview a:active,
-html.theme-grey .preview a:hover {
+html.theme-earlgrey .preview a:link,
+html.theme-earlgrey .preview a:visited,
+html.theme-earlgrey .preview a:active,
+html.theme-earlgrey .preview a:hover {
   color: blue;
 }
-html.theme-grey body.menu tr.menu td table tr td.noaction,
-html.theme-grey body.main tr.menu td table tr td.noaction {
+html.theme-earlgrey body.menu tr.menu td table tr td.noaction,
+html.theme-earlgrey body.main tr.menu td table tr td.noaction {
   color: #808080;
 }
-html.theme-grey img[align=left],
-html.theme-grey img[align=right] {
+html.theme-earlgrey img[align=left],
+html.theme-earlgrey img[align=right] {
   padding-right: 1px;
   padding-left: 1px;
 }
-html.theme-grey small {
+html.theme-earlgrey small {
   color: #808080;
 }
-html.theme-grey body.main table.main td.window td.act {
+html.theme-earlgrey body.main table.main td.window td.act {
   border-top: 1px solid #808080;
 }
-html.theme-grey td.motd {
+html.theme-earlgrey td.motd {
   border-left: 3px solid red;
   border-right: 3px solid red;
   font-weight: bold;
   padding: 10px;
   margin: 10px;
 }
-html.theme-grey div.panel input.checkbox,
-html.theme-grey div.panel input.radio {
+html.theme-earlgrey div.panel input.checkbox,
+html.theme-earlgrey div.panel input.radio {
   border: 1px solid #808080;
 }
-html.theme-grey textarea.longtext {
+html.theme-earlgrey textarea.longtext {
   border: 1px solid #000000;
 }
-html.theme-grey td.notice {
+html.theme-earlgrey td.notice {
   margin: 0px;
   padding: 5%;
   text-align: center;
 }
-html.theme-grey table.notice {
+html.theme-earlgrey table.notice {
   width: 100%;
   border: 1px solid;
   border-spacing: 0px;
 }
-html.theme-grey table.notice th {
+html.theme-earlgrey table.notice th {
   padding: 2px;
   white-space: nowrap;
   border-bottom: 1px solid #000000;
   font-weight: normal;
   text-align: left;
 }
-html.theme-grey table.calendar td {
+html.theme-earlgrey table.calendar td {
   border: 1px dotted;
 }
-html.theme-grey form.xlogin {
+html.theme-earlgrey form.xlogin {
   xbackground-color: #E0E0D5;
   border: 2px solid #c0c0c0;
   position: absolute;
@@ -175,91 +177,91 @@ html.theme-grey form.xlogin {
   -moz-box-shadow: 3px 2px 5px #808080;
   box-shadow: 3px 2px 5px #808080;
 }
-html.theme-grey ul.tree,
-html.theme-grey ul.tree ul {
+html.theme-earlgrey ul.tree,
+html.theme-earlgrey ul.tree ul {
   list-style-type: none;
-  background: url(themes/default/images//tree_line.gif) repeat-y;
+  background: url(themes/default/images/tree_line.gif) repeat-y;
   xmargin: 0;
   padding: 0;
 }
-html.theme-grey div.entry.selected,
-html.theme-grey div.dropdown > div.entry:hover,
-html.theme-grey div.dropdown > div.entry:hover > a,
-html.theme-grey a.element {
+html.theme-earlgrey div.entry.selected,
+html.theme-earlgrey div.dropdown > div.entry:hover,
+html.theme-earlgrey div.dropdown > div.entry:hover > a,
+html.theme-earlgrey a.element {
   background-color: #808080;
   color: #ffffff;
 }
-html.theme-grey ul.tree li {
+html.theme-earlgrey ul.tree li {
   xmargin: 0;
   padding: 0 0px;
   line-height: 18px;
-  background: url(themes/default/images//tree_none.gif) no-repeat;
+  background: url(themes/default/images/tree_none.gif) no-repeat;
   xcolor: #369;
   font-weight: normal;
   white-space: nowrap;
 }
-html.theme-grey ul.tree li.last,
-html.theme-grey ul.tree li:last-child {
-  background: url(themes/default/images//tree_none_end.gif) no-repeat;
+html.theme-earlgrey ul.tree li.last,
+html.theme-earlgrey ul.tree li:last-child {
+  background: url(themes/default/images/tree_none_end.gif) no-repeat;
 }
-html.theme-grey div.tree.open {
-  background: url(themes/default/images//tree_minus.png) no-repeat;
+html.theme-earlgrey div.tree.open {
+  background: url(themes/default/images/tree_minus.png) no-repeat;
 }
-html.theme-grey div.tree.closed {
-  background: url(themes/default/images//tree_plus.png) no-repeat;
+html.theme-earlgrey div.tree.closed {
+  background: url(themes/default/images/tree_plus.png) no-repeat;
 }
-html.theme-grey body > div {
+html.theme-earlgrey body > div {
   display: none;
 }
-html.theme-grey div.structure em {
+html.theme-earlgrey div.structure em {
   font-style: italic;
 }
-html.theme-grey .drophover {
+html.theme-earlgrey .drophover {
   border: 2px dotted green;
   cursor: move;
 }
-html.theme-grey .dropactive {
+html.theme-earlgrey .dropactive {
   border: 1px dotted blue;
   cursor: move;
 }
-html.theme-grey div.panel > div.header > div.panel-icon {
+html.theme-earlgrey div.panel > div.header > div.panel-icon {
   xposition: static;
   xright: -30px;
   top: 3px;
 }
-html.theme-grey div.backward_link {
+html.theme-earlgrey div.backward_link {
   float: left;
 }
-html.theme-grey div.forward_link {
+html.theme-earlgrey div.forward_link {
   float: right;
 }
-html.theme-grey div.panel > div.header {
+html.theme-earlgrey div.panel > div.header {
   padding: 0px;
   width: 100%;
   height: 25px;
   border-bottom: 1px solid #808080;
 }
-html.theme-grey div.panel div.header ul.views {
+html.theme-earlgrey div.panel div.header ul.views {
   text-align: left;
   list-style-type: none;
   overflow: hidden;
   white-space: nowrap;
 }
-html.theme-grey img.icon {
+html.theme-earlgrey img.icon {
   padding: 4px;
   width: 16px;
   height: 16px;
 }
-html.theme-grey ul.views div.tabname {
+html.theme-earlgrey ul.views div.tabname {
   overflow: hidden;
   white-space: nowrap;
   padding: 4px;
   vertical-align: middle;
 }
-html.theme-grey div.panel div.header {
+html.theme-earlgrey div.panel div.header {
   xborder-bottom: 1px solid #808080;
 }
-html.theme-grey div.panel ul.views li {
+html.theme-earlgrey div.panel ul.views li {
   vertical-align: middle;
   padding: 0px;
   cursor: pointer;
@@ -279,59 +281,59 @@ html.theme-grey div.panel ul.views li {
   white-space: nowrap;
   float: left;
 }
-html.theme-grey div.panel div.content table {
+html.theme-earlgrey div.panel div.content table {
   border: 2px #c0c0c0;
 }
-html.theme-grey table tr.headline > td {
+html.theme-earlgrey table tr.headline > td {
   border-bottom: 1px solid #808080;
 }
-html.theme-grey table tr.data > td {
+html.theme-earlgrey table tr.data > td {
   border-bottom: 1px solid #808080;
 }
-html.theme-grey table > tr.data:nth-child(2n) {
+html.theme-earlgrey table > tr.data:nth-child(2n) {
   background-color: #c0c0c0;
 }
-html.theme-grey table tr.data:hover,
-html.theme-grey div.content li div.entry:hover {
+html.theme-earlgrey table tr.data:hover,
+html.theme-earlgrey div.content li div.entry:hover {
   background-color: #c0c0c0;
 }
-html.theme-grey div.panel div.status div,
-html.theme-grey div.message {
+html.theme-earlgrey div.panel div.status div,
+html.theme-earlgrey div.message {
   border: 1px solid #808080;
 }
-html.theme-grey div#workbench div.panel.fullscreen {
+html.theme-earlgrey div#workbench div.panel.fullscreen {
   background-color: #e9e9e9;
 }
-html.theme-grey div#workbench div.panel {
+html.theme-earlgrey div#workbench div.panel {
   border: 1px solid #808080;
 }
-html.theme-grey input.submit {
+html.theme-earlgrey input.submit {
   background-color: #808080;
   color: #ffffff;
   -webkit-box-shadow: 0px 0px 15px #e9e9e9;
   -moz-box-shadow: 0px 0px 15px #e9e9e9;
   box-shadow: 0px 0px 15px 10px #e9e9e9;
 }
-html.theme-grey ul#history > li {
+html.theme-earlgrey ul#history > li {
   border: 1px solid #808080;
   background-color: #c0c0c0;
   color: #000000;
 }
-html.theme-grey ul#history > li.active {
+html.theme-earlgrey ul#history > li.active {
   border: 1px solid #000000;
   background-color: #ffffff;
   color: #000000;
 }
-html.theme-grey ul#history {
+html.theme-earlgrey ul#history {
   display: none;
 }
-html.theme-grey div#filler {
+html.theme-earlgrey div#filler {
   background-color: #000000;
 }
-html.theme-grey div.clickable.filtered.inactive > a {
+html.theme-earlgrey div.clickable.filtered.inactive > a {
   color: #c0c0c0;
 }
-html.theme-grey div#header > div > div.arrow-down {
+html.theme-earlgrey div#header > div > div.arrow-down {
   display: inline;
   width: 0;
   height: 0;
@@ -344,201 +346,201 @@ html.theme-grey div#header > div > div.arrow-down {
   margin-top: 10px;
   font-size: 0;
 }
-html.theme-grey div.dropdown {
+html.theme-earlgrey div.dropdown {
   -webkit-box-shadow: 3px 2px 10px #808080;
   -moz-box-shadow: 3px 2px 10px #808080;
   box-shadow: 3px 2px 10px #808080;
   opacity: 0.95;
   border: 2px solid #808080;
+  border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
-  border-radius: 5px;
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
 }
-html.theme-grey div#header span.titletext {
+html.theme-earlgrey div#header span.titletext {
   color: #ffffff;
 }
-html.theme-grey div.toolbar-icon {
+html.theme-earlgrey div.toolbar-icon {
   border: 1px solid #808080;
   padding: 2px;
   margin-left: 5px;
   float: left;
+  border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
-  border-radius: 3px;
 }
-html.theme-grey div.toolbar-icon.inactive {
+html.theme-earlgrey div.toolbar-icon.inactive {
   opacity: 0.5;
 }
-html.theme-grey div.toolbar-icon:hover {
+html.theme-earlgrey div.toolbar-icon:hover {
   border: 1px solid #c0c0c0;
 }
-html.theme-grey div.headermenu {
+html.theme-earlgrey div.headermenu {
   margin: 5px;
   z-index: 1;
   position: relative;
   right: 0;
   top: 0;
 }
-html.theme-grey div.headermenu > div.toolbar-icon {
+html.theme-earlgrey div.headermenu > div.toolbar-icon {
   float: right;
 }
-html.theme-grey div.panel.wide form div.line {
+html.theme-earlgrey div.panel.wide form div.line {
   clear: left;
   margin-top: 10px;
 }
-html.theme-grey div.panel.wide form div.label {
+html.theme-earlgrey div.panel.wide form div.label {
   display: inline-block;
   width: 30%;
   vertical-align: top;
   text-align: right;
 }
-html.theme-grey div.panel.wide form div.input {
+html.theme-earlgrey div.panel.wide form div.input {
   display: inline-block;
   width: 60%;
   vertical-align: top;
   text-align: left;
 }
-html.theme-grey div.panel.small form div.line {
+html.theme-earlgrey div.panel.small form div.line {
   clear: left;
   padding: 10px;
 }
-html.theme-grey div.panel.small form div.label {
+html.theme-earlgrey div.panel.small form div.label {
   display: block;
   width: 100%;
   vertical-align: top;
   text-align: left;
 }
-html.theme-grey div.panel.small form div.input {
+html.theme-earlgrey div.panel.small form div.input {
   display: block;
   width: 100%;
   vertical-align: top;
   text-align: left;
 }
-html.theme-grey form div.label > label,
-html.theme-grey form div.input > div.intputholder {
+html.theme-earlgrey form div.label > label,
+html.theme-earlgrey form div.input > div.intputholder {
   padding: 0px 5px;
 }
-html.theme-grey form div.input input[type=text],
-html.theme-grey form div.input input[type=password],
-html.theme-grey form div.input textarea,
-html.theme-grey form div.input select {
+html.theme-earlgrey form div.input input[type=text],
+html.theme-earlgrey form div.input input[type=password],
+html.theme-earlgrey form div.input textarea,
+html.theme-earlgrey form div.input select {
   width: 100%;
 }
-html.theme-grey form div.input input[type=checkbox],
-html.theme-grey form div.input input[type=radio] {
+html.theme-earlgrey form div.input input[type=checkbox],
+html.theme-earlgrey form div.input input[type=radio] {
   vertical-align: top;
 }
-html.theme-grey label {
+html.theme-earlgrey label {
   display: inline-block;
 }
-html.theme-grey input[type=checkbox] + label,
-html.theme-grey input[type=radio] + label {
+html.theme-earlgrey input[type=checkbox] + label,
+html.theme-earlgrey input[type=radio] + label {
   width: 80%;
 }
-html.theme-grey label div.description {
+html.theme-earlgrey label div.description {
   font-size: 0.75em;
   color: #808080;
 }
-html.theme-grey div.inputholder {
+html.theme-earlgrey div.inputholder {
   background-color: #ffffff;
   border: 1px solid #808080;
+  border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
-  border-radius: 3px;
   -webkit-box-shadow: inset 0px 0px 3px #808080;
   -moz-box-shadow: inset 0px 0px 3px #808080;
   box-shadow: inset 0px 0px 3px #808080;
 }
-html.theme-grey div.inputholder ul.tree,
-html.theme-grey div.inputholder ul.tree li.last,
-html.theme-grey div.inputholder ul.tree li:last-child {
+html.theme-earlgrey div.inputholder ul.tree,
+html.theme-earlgrey div.inputholder ul.tree li.last,
+html.theme-earlgrey div.inputholder ul.tree li:last-child {
   background-color: #ffffff;
 }
-html.theme-grey div.inputholder > input,
-html.theme-grey div.inputholder > textarea,
-html.theme-grey div.inputholder > select {
+html.theme-earlgrey div.inputholder > input,
+html.theme-earlgrey div.inputholder > textarea,
+html.theme-earlgrey div.inputholder > select {
   border: 0px;
   border-bottom: 1px solid #ffffff;
   padding: 2px;
   margin: 0px;
   background-color: #ffffff;
 }
-html.theme-grey input:focus,
-html.theme-grey textarea:focus,
-html.theme-grey select:focus {
+html.theme-earlgrey input:focus,
+html.theme-earlgrey textarea:focus,
+html.theme-earlgrey select:focus {
   border: 0px;
   border-bottom: 1px solid #c0c0c0;
 }
-html.theme-grey input.error,
-html.theme-grey textarea.error,
-html.theme-grey select.error {
+html.theme-earlgrey input.error,
+html.theme-earlgrey textarea.error,
+html.theme-earlgrey select.error {
   border-bottom: 1px dotted #000000 !important;
 }
-html.theme-grey div.inputholder.error {
+html.theme-earlgrey div.inputholder.error {
   border: 1px solid red ! important;
 }
-html.theme-grey input.hint {
+html.theme-earlgrey input.hint {
   color: #808080;
 }
-html.theme-grey fieldset > div input.name,
-html.theme-grey fieldset > div span.name {
+html.theme-earlgrey fieldset > div input.name,
+html.theme-earlgrey fieldset > div span.name {
   font-weight: bold;
 }
-html.theme-grey fieldset {
+html.theme-earlgrey fieldset {
   border-color: #808080;
 }
-html.theme-grey div#tree {
+html.theme-earlgrey div#tree {
   overflow: visible;
 }
-html.theme-grey tr.diff > td.line {
+html.theme-earlgrey tr.diff > td.line {
   background-color: #ffffff;
   padding-right: 2px;
   border-right: 3px solid #808080;
   text-align: right;
   margin-right: 2px;
 }
-html.theme-grey tr.diff > td.old {
+html.theme-earlgrey tr.diff > td.old {
   background-color: red;
 }
-html.theme-grey tr.diff > td.new {
+html.theme-earlgrey tr.diff > td.new {
   background-color: green;
 }
-html.theme-grey tr.diff > td.notequal {
+html.theme-earlgrey tr.diff > td.notequal {
   background-color: yellow;
 }
-html.theme-grey dl.notice {
+html.theme-earlgrey dl.notice {
   border-left: 10px #c0c0c0 solid;
   border-right: 1px #c0c0c0 solid;
   padding: 15px;
 }
-html.theme-grey dl.notice > dt {
+html.theme-earlgrey dl.notice > dt {
   border-top: 1px #c0c0c0 solid;
 }
-html.theme-grey dl.notice > dd {
+html.theme-earlgrey dl.notice > dd {
   border-bottom: 1px #c0c0c0 solid;
 }
-html.theme-grey div.content a.action,
-html.theme-grey div.content a.help {
+html.theme-earlgrey div.content a.action,
+html.theme-earlgrey div.content a.help {
   -webkit-box-shadow: 3px 2px 5px #808080;
   -moz-box-shadow: 3px 2px 5px #808080;
   box-shadow: 3px 2px 5px #808080;
 }
-html.theme-grey body {
+html.theme-earlgrey body {
   background-color: #c0c0c0;
 }
-html.theme-grey div.panel ul.views > li.active,
-html.theme-grey div.panel ul.views > li.active:hover {
+html.theme-earlgrey div.panel ul.views > li.active,
+html.theme-earlgrey div.panel ul.views > li.active:hover {
   background-color: #808080;
   background-image: linear-gradient(#c0c0c0 0%, #808080 15%);
   color: #ffffff;
 }
-html.theme-grey div#header {
+html.theme-earlgrey div#header {
   background-color: #808080;
   background-image: linear-gradient(#808080, #9a9a9a);
   /*
@@ -546,48 +548,51 @@ html.theme-grey div#header {
 		 */
   color: #ffffff;
 }
-html.theme-grey div#header div.toolbar-icon > a {
+html.theme-earlgrey div#header div.toolbar-icon > a {
   color: #ffffff;
 }
-html.theme-grey div#header,
-html.theme-grey ul.views > li.action {
+html.theme-earlgrey div#header,
+html.theme-earlgrey ul.views > li.action {
   font-family: Arial, sans-serif;
   font-size: 13px;
 }
-html.theme-grey div.panel > div.content {
+html.theme-earlgrey div.panel > div.content {
   background-color: #e9e9e9;
 }
-html.theme-grey div.panel > div.header {
+html.theme-earlgrey div.panel > div.header {
   background-color: #e9e9e9;
   background-image: linear-gradient(#c0c0c0 0%, #e9e9e9 85%);
 }
-html.theme-grey div.panel ul.views li:hover {
+html.theme-earlgrey div.panel ul.views li:hover {
   background-color: #c0c0c0;
 }
-html.theme-grey ul.tree li.last,
-html.theme-grey ul.tree li:last-child {
+html.theme-earlgrey ul.tree li.last,
+html.theme-earlgrey ul.tree li:last-child {
   background-color: #e9e9e9;
 }
-html.theme-grey div.content pre,
-html.theme-grey div.dropdown {
+html.theme-earlgrey div.content pre,
+html.theme-earlgrey div.dropdown {
   background-color: #ffffff;
   color: #000000;
 }
-html.theme-grey div.filler div.headermenu > a.entry,
-html.theme-grey div.filler div.header a.back.button {
+html.theme-earlgrey div.filler div.headermenu > a.entry,
+html.theme-earlgrey div.filler div.header a.back.button {
   font-size: 0.8em;
 }
-html.theme-grey div.line.filedropzone > div.input {
+html.theme-earlgrey div.line.filedropzone > div.input {
   background-color: #ffffff;
   border: 1px dotted #000000;
 }
+/* Theme Ende */
 
 /* Style modern */
-/* OpenRat Theme       */
+/* OpenRat Theme */
 /* 
- * Zuweisung der Farben aus der Konfiguration
+ * The following variables beginning with '@cms-...' are overwritten bei the CMS style configuration values
  */
-/* Die Werte @cms-...__ werden vom CMS mit Werten aus der Konfiguration ersetzt. */
+/* technical name of theme */
+/* Image-path */
+/* Logic name of theme */
 html.theme-modern {
   scrollbar-face-color: #3f6194;
   scrollbar-arrow-color: #3f6194;
@@ -628,10 +633,10 @@ html.theme-modern div#noticebar div.notice {
   border: 2px solid #000000;
   padding: 5px;
   margin: 5px;
+  border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
-  border-radius: 5px;
   -webkit-box-shadow: 3px 2px 5px #000000;
   -moz-box-shadow: 3px 2px 5px #000000;
   box-shadow: 3px 2px 5px #000000;
@@ -759,7 +764,7 @@ html.theme-modern form.xlogin {
 html.theme-modern ul.tree,
 html.theme-modern ul.tree ul {
   list-style-type: none;
-  background: url(themes/default/images//tree_line.gif) repeat-y;
+  background: url(themes/default/images/tree_line.gif) repeat-y;
   xmargin: 0;
   padding: 0;
 }
@@ -774,20 +779,20 @@ html.theme-modern ul.tree li {
   xmargin: 0;
   padding: 0 0px;
   line-height: 18px;
-  background: url(themes/default/images//tree_none.gif) no-repeat;
+  background: url(themes/default/images/tree_none.gif) no-repeat;
   xcolor: #369;
   font-weight: normal;
   white-space: nowrap;
 }
 html.theme-modern ul.tree li.last,
 html.theme-modern ul.tree li:last-child {
-  background: url(themes/default/images//tree_none_end.gif) no-repeat;
+  background: url(themes/default/images/tree_none_end.gif) no-repeat;
 }
 html.theme-modern div.tree.open {
-  background: url(themes/default/images//tree_minus.png) no-repeat;
+  background: url(themes/default/images/tree_minus.png) no-repeat;
 }
 html.theme-modern div.tree.closed {
-  background: url(themes/default/images//tree_plus.png) no-repeat;
+  background: url(themes/default/images/tree_plus.png) no-repeat;
 }
 html.theme-modern body > div {
   display: none;
@@ -931,10 +936,10 @@ html.theme-modern div.dropdown {
   box-shadow: 3px 2px 10px #3f6194;
   opacity: 0.95;
   border: 2px solid #3f6194;
+  border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
-  border-radius: 5px;
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
@@ -947,10 +952,10 @@ html.theme-modern div.toolbar-icon {
   padding: 2px;
   margin-left: 5px;
   float: left;
+  border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
-  border-radius: 3px;
 }
 html.theme-modern div.toolbar-icon.inactive {
   opacity: 0.5;
@@ -1028,10 +1033,10 @@ html.theme-modern label div.description {
 html.theme-modern div.inputholder {
   background-color: #ffffff;
   border: 1px solid #3f6194;
+  border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
-  border-radius: 3px;
   -webkit-box-shadow: inset 0px 0px 3px #3f6194;
   -moz-box-shadow: inset 0px 0px 3px #3f6194;
   box-shadow: inset 0px 0px 3px #3f6194;
@@ -1162,13 +1167,16 @@ html.theme-modern div.line.filedropzone > div.input {
   background-color: #ffffff;
   border: 1px dotted #000000;
 }
+/* Theme Ende */
 
 /* Style moorweide */
-/* OpenRat Theme       */
+/* OpenRat Theme */
 /* 
- * Zuweisung der Farben aus der Konfiguration
+ * The following variables beginning with '@cms-...' are overwritten bei the CMS style configuration values
  */
-/* Die Werte @cms-...__ werden vom CMS mit Werten aus der Konfiguration ersetzt. */
+/* technical name of theme */
+/* Image-path */
+/* Logic name of theme */
 html.theme-moorweide {
   scrollbar-face-color: #006633;
   scrollbar-arrow-color: #006633;
@@ -1209,10 +1217,10 @@ html.theme-moorweide div#noticebar div.notice {
   border: 2px solid #000000;
   padding: 5px;
   margin: 5px;
+  border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
-  border-radius: 5px;
   -webkit-box-shadow: 3px 2px 5px #000000;
   -moz-box-shadow: 3px 2px 5px #000000;
   box-shadow: 3px 2px 5px #000000;
@@ -1340,7 +1348,7 @@ html.theme-moorweide form.xlogin {
 html.theme-moorweide ul.tree,
 html.theme-moorweide ul.tree ul {
   list-style-type: none;
-  background: url(themes/default/images//tree_line.gif) repeat-y;
+  background: url(themes/default/images/tree_line.gif) repeat-y;
   xmargin: 0;
   padding: 0;
 }
@@ -1355,20 +1363,20 @@ html.theme-moorweide ul.tree li {
   xmargin: 0;
   padding: 0 0px;
   line-height: 18px;
-  background: url(themes/default/images//tree_none.gif) no-repeat;
+  background: url(themes/default/images/tree_none.gif) no-repeat;
   xcolor: #369;
   font-weight: normal;
   white-space: nowrap;
 }
 html.theme-moorweide ul.tree li.last,
 html.theme-moorweide ul.tree li:last-child {
-  background: url(themes/default/images//tree_none_end.gif) no-repeat;
+  background: url(themes/default/images/tree_none_end.gif) no-repeat;
 }
 html.theme-moorweide div.tree.open {
-  background: url(themes/default/images//tree_minus.png) no-repeat;
+  background: url(themes/default/images/tree_minus.png) no-repeat;
 }
 html.theme-moorweide div.tree.closed {
-  background: url(themes/default/images//tree_plus.png) no-repeat;
+  background: url(themes/default/images/tree_plus.png) no-repeat;
 }
 html.theme-moorweide body > div {
   display: none;
@@ -1512,10 +1520,10 @@ html.theme-moorweide div.dropdown {
   box-shadow: 3px 2px 10px #006633;
   opacity: 0.95;
   border: 2px solid #006633;
+  border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
-  border-radius: 5px;
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
@@ -1528,10 +1536,10 @@ html.theme-moorweide div.toolbar-icon {
   padding: 2px;
   margin-left: 5px;
   float: left;
+  border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
-  border-radius: 3px;
 }
 html.theme-moorweide div.toolbar-icon.inactive {
   opacity: 0.5;
@@ -1609,10 +1617,10 @@ html.theme-moorweide label div.description {
 html.theme-moorweide div.inputholder {
   background-color: #ffffff;
   border: 1px solid #006633;
+  border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
-  border-radius: 3px;
   -webkit-box-shadow: inset 0px 0px 3px #006633;
   -moz-box-shadow: inset 0px 0px 3px #006633;
   box-shadow: inset 0px 0px 3px #006633;
@@ -1743,13 +1751,16 @@ html.theme-moorweide div.line.filedropzone > div.input {
   background-color: #ffffff;
   border: 1px dotted #000000;
 }
+/* Theme Ende */
 
 /* Style dark */
-/* OpenRat Theme       */
+/* OpenRat Theme */
 /* 
- * Zuweisung der Farben aus der Konfiguration
+ * The following variables beginning with '@cms-...' are overwritten bei the CMS style configuration values
  */
-/* Die Werte @cms-...__ werden vom CMS mit Werten aus der Konfiguration ersetzt. */
+/* technical name of theme */
+/* Image-path */
+/* Logic name of theme */
 html.theme-dark {
   scrollbar-face-color: #868685;
   scrollbar-arrow-color: #868685;
@@ -1790,10 +1801,10 @@ html.theme-dark div#noticebar div.notice {
   border: 2px solid #ffffff;
   padding: 5px;
   margin: 5px;
+  border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
-  border-radius: 5px;
   -webkit-box-shadow: 3px 2px 5px #ffffff;
   -moz-box-shadow: 3px 2px 5px #ffffff;
   box-shadow: 3px 2px 5px #ffffff;
@@ -1921,7 +1932,7 @@ html.theme-dark form.xlogin {
 html.theme-dark ul.tree,
 html.theme-dark ul.tree ul {
   list-style-type: none;
-  background: url(themes/default/images//tree_line.gif) repeat-y;
+  background: url(themes/default/images/tree_line.gif) repeat-y;
   xmargin: 0;
   padding: 0;
 }
@@ -1936,20 +1947,20 @@ html.theme-dark ul.tree li {
   xmargin: 0;
   padding: 0 0px;
   line-height: 18px;
-  background: url(themes/default/images//tree_none.gif) no-repeat;
+  background: url(themes/default/images/tree_none.gif) no-repeat;
   xcolor: #369;
   font-weight: normal;
   white-space: nowrap;
 }
 html.theme-dark ul.tree li.last,
 html.theme-dark ul.tree li:last-child {
-  background: url(themes/default/images//tree_none_end.gif) no-repeat;
+  background: url(themes/default/images/tree_none_end.gif) no-repeat;
 }
 html.theme-dark div.tree.open {
-  background: url(themes/default/images//tree_minus.png) no-repeat;
+  background: url(themes/default/images/tree_minus.png) no-repeat;
 }
 html.theme-dark div.tree.closed {
-  background: url(themes/default/images//tree_plus.png) no-repeat;
+  background: url(themes/default/images/tree_plus.png) no-repeat;
 }
 html.theme-dark body > div {
   display: none;
@@ -2093,10 +2104,10 @@ html.theme-dark div.dropdown {
   box-shadow: 3px 2px 10px #868685;
   opacity: 0.95;
   border: 2px solid #868685;
+  border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   -khtml-border-radius: 5px;
-  border-radius: 5px;
   font-style: normal;
   font-weight: normal;
   text-decoration: none;
@@ -2109,10 +2120,10 @@ html.theme-dark div.toolbar-icon {
   padding: 2px;
   margin-left: 5px;
   float: left;
+  border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
-  border-radius: 3px;
 }
 html.theme-dark div.toolbar-icon.inactive {
   opacity: 0.5;
@@ -2190,10 +2201,10 @@ html.theme-dark label div.description {
 html.theme-dark div.inputholder {
   background-color: #dcdcdc;
   border: 1px solid #868685;
+  border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
-  border-radius: 3px;
   -webkit-box-shadow: inset 0px 0px 3px #868685;
   -moz-box-shadow: inset 0px 0px 3px #868685;
   box-shadow: inset 0px 0px 3px #868685;
@@ -2324,3 +2335,4 @@ html.theme-dark div.line.filedropzone > div.input {
   background-color: #dcdcdc;
   border: 1px dotted #ffffff;
 }
+/* Theme Ende */

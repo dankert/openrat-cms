@@ -810,13 +810,13 @@ $conf['security']['user']['send_message']=true;
 $conf['security']['content-security-policy']=true;
 
 $conf['style'] = array();
-$conf['style']['grey']=array();
-$conf['style']['grey']['name']='Earl grey';
-$conf['style']['grey']['title_background_color']='grey';
-$conf['style']['grey']['title_text_color']='white';
-$conf['style']['grey']['text_color'] ='black';
-$conf['style']['grey']['background_color'] = '#e9e9e9';
-$conf['style']['grey']['inactive_background_color'] = 'silver';
+$conf['style']['earlgrey']=array();
+$conf['style']['earlgrey']['name']='Earl grey';
+$conf['style']['earlgrey']['title_background_color']='grey';
+$conf['style']['earlgrey']['title_text_color']='white';
+$conf['style']['earlgrey']['text_color'] ='black';
+$conf['style']['earlgrey']['background_color'] = '#e9e9e9';
+$conf['style']['earlgrey']['inactive_background_color'] = 'silver';
 
 // $conf['style']['system']=array();
 // $conf['style']['system']['name']='System colors';

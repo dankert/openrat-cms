@@ -428,7 +428,9 @@ class Http
 		if	( is_object( $db ) )
 			$db->rollback();
 
-		Logger::warn($message."\n".$reason);
+		if	( class_exists('Logger')) 
+			Logger::warn($message."\n".$reason);
+		
 		Http::sendStatus(501,'Internal Server Error',$message,$reason);
 	}
 	
