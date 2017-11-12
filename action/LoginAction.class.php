@@ -1212,7 +1212,10 @@ class LoginAction extends Action
 		}
 
 		Session::set('perspective','login');
-		$this->setStyle('default');
+		
+		// Style zurücksetzen.
+		// Der Style des Benutzers koennte auch stehen bleiben. Aber dann gäbe es Rückschlüsse darauf, wer zuletzt angemeldet war (Sicherheit!).
+		$this->setStyle( config('interface','style','default') );
 		$this->refresh();
 	}
 
