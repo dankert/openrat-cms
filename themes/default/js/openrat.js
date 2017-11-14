@@ -1,3 +1,6 @@
+
+$('html').removeClass('nojs');
+ 
 // Default-Subaction
 var DEFAULT_CONTENT_ACTION = 'edit';
 
