@@ -40,12 +40,12 @@ define('OR_LANGUAGE_DIR'      ,'./language/'       );
 define('OR_DBCLASSES_DIR'     ,'./db/'             );
 define('OR_DYNAMICCLASSES_DIR','./macro/' );
 define('OR_TEXTCLASSES_DIR'   ,'./textClasses/'    );
-define('OR_PREFERENCES_DIR'   ,defined('OR_EXT_CONFIG_DIR')?OR_EXT_CONFIG_DIR:'./config/');
+define('OR_PREFERENCES_DIR'   ,'./config/');
 define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
 define('OR_THEMES_DIR'        ,'./themes/'         );
-define('OR_THEMES_EXT_DIR'    ,defined('OR_BASE_URL')?slashify(OR_BASE_URL).'themes/':OR_THEMES_DIR);
+define('OR_THEMES_EXT_DIR'    ,OR_THEMES_DIR);
 define('OR_TMP_DIR'           ,'./tmp/'            );
-define('OR_CONTROLLER_FILE'   ,defined('OR_EXT_CONTROLLER_FILE')?OR_EXT_CONTROLLER_FILE:'dispatcher');
+define('OR_CONTROLLER_FILE'   ,'dispatcher');
 define('START_TIME'           ,time()              );
 define('REQUEST_ID'           ,'req'.time().rand() );
 
