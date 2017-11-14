@@ -24,134 +24,14 @@
        	?>
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo $meta['title'] ?>" ><?php
       } ?>
-      
-  <?php
-  
-  $css = array();
-//   $css[] = link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo css_link($style) "
-  $cssParam = css_link($style);
-  
-  $css['userstyle'] = OR_THEMES_EXT_DIR.'default/css/openrat-theme.css.php';
-  $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-ui.css.php';
-  $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-workbench.css.php';
-  
-//   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/skins/markitup/style.css';
-//   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/sets/default/style.css';
-  
-    // Komponentenbasiertes CSS
-		$elements = parse_ini_file( OR_THEMES_DIR.config('interface','theme').'/include/elements.ini.'.PHP_EXT);
-		
-		foreach( array_keys($elements) as $c )
-		{
-		    $componentCssFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c.'.css';
-		    if    ( is_file($componentCssFile) )
-		        $css[] = $componentCssFile;
-		        
-		}
 
-		/*
-if  ( DEVELOPMENT ) {
-    
-  foreach( $css as $id=>$cssFile )
-  {
-      ?><link <?php if ( !is_numeric($id)) {?>id="<?php echo $id ?>" <?php } ?>rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
-      <?php
-  }
-}else {
-        // Production mode: Inline minified CSS  
-      ?><style><?php
-      ob_start('minifyCSS');
-      foreach( $css as $id=>$cssFile )
-      {
-          foreach( array_keys(config('style')) as $styleId )
-          {
-              extract( config('style',$styleId) );
-              include( $cssFile );
-          }
-
-      }
-      ob_end_flush();
-      ?></style><?php
-}
-  
-  $js = array();
-  $js[] = OR_THEMES_EXT_DIR.'default/js/jquery-1.12.4.min.js';
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js';
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery.scrollTo.js';
-  //$js[] =  OR_THEMES_EXT_DIR default/js/jquery.mjs.nestedSortable.js"></script>
-
-  //<!-- OpenRat internal JS -->
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/openrat.js';
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orHint.js';
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orSearch.js';
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLinkify.js';
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orTree.js';
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLoadView.js';
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orAutoheight.js';
-  $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-qrcode.min.js';
-    //  $js[] =  OR_THEMES_EXT_DIR.'../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script> -->
-  $js[] =  OR_THEMES_EXT_DIR.'../editor/markitup/markitup/jquery.markitup.js';
-  //$js[] =  OR_THEMES_EXT_DIR.'../editor/editor/ckeditor.js';
-  $js[] =  OR_THEMES_EXT_DIR.'../editor/ace/src-min-noconflict/ace.js';
-  $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/adapters/jquery.js';
-
-    function minifyJS( $source ) {
-//         return $source;
-        $jz = new JSqueeze();
-        
-        return $jz->squeeze(
-            $source,
-            true,   // $singleLine
-            true,   // $keepImportantComments
-            false   // $specialVarRx
-        );
-    }
-    function minifyCSS( $source ) {
-        
-//         return $source;
-        // Remove comments
-        //$source = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)* /!', '', $source);
-        // Remove space after colons
-        $source = str_replace(': ', ':', $source);
-        // Remove whitespace
-        $source = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $source);
-
-        return $source;
-    }
-    
-    // Komponentenbasiertes Javascript
-		
-		foreach( array_keys($elements) as $c )
-		{
-		    $componentJsFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c.'.js';
-		    if    ( is_file($componentJsFile) )
-		        $js[] = $componentJsFile;
-		        
-		}
-		
-	    if    ( DEVELOPMENT )
-	    {
-	        
-    		foreach( $js as $jsFile )
-	       	{
-                ?><script src="<?php echo $jsFile ?>" defer></script><?php 
-		    }
-	    }
-	    else
-	    {
-	        ?><script type="text/javascript">
-	        document.addEventListener("DOMContentLoaded", function(event) {<?php 
-	        ob_start('minifyJS');
-    		foreach( $js as $jsFile )
-    		    include(''.$jsFile);
-            ob_end_flush();
-    		  ?>});</script><?php 
-
-		}*/
-?>  
-
-<script src="dispatcher.php?action=index&subaction=javascript" defer></script>
-<link rel="stylesheet" type="text/css" href="dispatcher.php?action=index&subaction=stylesheet" />
+<?php foreach( $jsFiles  as $jsFile ) { ?>  <script src="<?php echo $jsFile ?>" defer></script>
+<?php } ?>
+<?php foreach( $cssFiles as $cssFile) { ?>  <link rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
+<?php } ?>
+  <style type="text/css">
+    <?php echo $themeCss ?>
+  </style>
 </head>
 
 <?php
@@ -167,7 +47,11 @@ $ping_timeout = @$viewCache['header']['ping_timeout'];
 	}
   
     //window.setTimeout("ping()", <?php echo $ping_timeout*1000 ?>);
-    window.setTimeout("ping()", 5000);
+    
+    window.addEventListener('DOMContentLoaded', function ()
+    {
+    		window.setTimeout("ping()", 5000);
+    }, false);
   
   // -->
   </script>

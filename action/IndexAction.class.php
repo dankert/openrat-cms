@@ -96,314 +96,281 @@ class IndexAction extends Action
 		else
 			$style = config('interface','style','default');
 
+		$jsFiles  = $this->getJSFiles();
+		$cssFiles = $this->getCSSFiles();
+		$themeCss = $this->getThemeCSS();
+		
 		// HTML-Datei direkt einbinden.
 		require('themes/default/layout/index.php');
 		exit;
 	}
+
 	
-	
-	public function stylesheetView()
+	private function getCSSFiles()
 	{
-	    if ( DEVELOPMENT )
-	        $this->lastModified( config('config','last_modification') );
-	    else
-	        $this->lastModified( strtotime(config('version','date')) );
-	            
-	            
-	    header('Content-Type: text/css');
-	    $css = array();
-	    //   $css[] = link id="userstyle" rel="stylesheet" type="text/css" href="<?php echo css_link($style) "
-// 	    $cssParam = css_link($style);
-	    
-// 	    $css['userstyle'] = OR_THEMES_EXT_DIR.'default/css/openrat-theme.css.php';
-	    $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-ui';
-	    $css[] = OR_THEMES_EXT_DIR.'default/css/openrat-workbench';
-	    
-	    //   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/skins/markitup/style.css';
-	    //   $css[] = OR_THEMES_EXT_DIR.'../editor/markitup/markitup/sets/default/style.css';
-	    
-	    // Komponentenbasiertes CSS
-	    $elements = parse_ini_file( OR_THEMES_DIR.config('interface','theme').'/include/elements.ini.'.PHP_EXT);
-	    
-	    foreach( array_keys($elements) as $c )
-	    {
-	        $componentCssFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c;
-	        if    ( is_file($componentCssFile.'.less') )
-	            $css[] = $componentCssFile;
-	            
-	    }
-	    
-	    if  ( DEVELOPMENT ) {
-	        
-	        foreach( $css as $id=>$cssF )
-	        {
-	            $lessFile   = $cssF.'.less';
-	            $cssFile    = $cssF.'.css';
-	            $cssMinFile = $cssF.'.min.css';
-
-	            
-	            
-	            if ( !is_file($lessFile))
-	            {
-	                echo "\n/* File $lessFile is missing! */";
-	                Logger::warn("Stylesheet not found: $lessFile");
-	            }
-	            elseif ( !is_file($cssFile) || !is_file($cssMinFile))
-	            {
-	                echo "\n/* File $cssMinFile is missing! */";
-	                Logger::warn("Stylesheet output file not found $cssMinFile");
-	            }
-	            else
-	            {
-	                if( filemtime($lessFile) > filemtime($cssMinFile) )
-	                {
-	                    // LESS-Source wurde geändert, CSS-Version muss aktualisiert werden.
-	                    if   ( !is_writable($cssFile) || !is_writable($cssMinFile))
-	                    {
-	                        echo "/* File $jsFileMin is not writable! */";
-	                        Logger::warn("Style-Output file is not writable: $cssMinFile");
-	                    }
-	                    else
-	                    {
-            	            echo "/* LESS Source file: $lessFile */\n";
-                            $parser = new Less_Parser(
-	                              array('sourceMap' => true,
-	                            	'indentation'       => '     ',
-	                            	'outputSourceFiles' => true)
-	                       );
-	                        
-                            
-                            $parser->parse( file_get_contents($lessFile),$lessFile );
-                            $source = $parser->getCss();
-                            
-	                        file_put_contents( $cssFile, "/* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */\n\n".$source );
-                            
-	                        
-	                        file_put_contents( $cssMinFile, $this->minifyCSS($source) );
-	                    }
-	                }
-	                echo "\n/* CSS file: $cssFile */\n";
-	                readfile($cssFile);
-	            }
-            }
-        }
-        else
-        {
-            // Production mode: Inline minified CSS  
-              foreach( $css as $id=>$cssF )
-              {
-                  $cssMinFile = $cssF.'.min.css';
-
-                  if ( !is_file($cssMinFile))
-                  {
-                      echo "\n/* File $cssMinFile is missing! */\n";
-                      Logger::warn("Stylesheet output file not found $cssMinFile");
-                  }
-                  else
-                  {
-                      readfile($cssMinFile);
-                  }
-             }                  
-        }
-
-        
-        // Je Theme die Theme-CSS-Datei ausgeben.
-        $cssF       = OR_THEMES_EXT_DIR.'default/css/openrat-theme';
-        $lessFile   = $cssF.'.less';
-        $cssFile    = $cssF.'.css';
-        $cssMinFile = $cssF.'.min.css';
-
-        if  ( DEVELOPMENT )
-        {
-			if (filemtime($lessFile) > filemtime($cssMinFile))
-			{
-				try
-				{
-					file_put_contents($cssFile, "/* DO NOT CHANGE THIS FILE! CHANGE .LESS INSTEAD! */\n\n");
-					file_put_contents($cssMinFile, '');
-					
-					$lessSource = file_get_contents($lessFile);
-					
-					foreach (array_keys(config('style')) as $styleId)
-					{
-						$parser = new Less_Parser( array('sourceMap' => true,
-							'indentation'       => '     ',
-							'outputSourceFiles' => true)
-						);
-						
-						$parser->parse($lessSource,$lessFile);
-						
-						$styleConfig = config('style', $styleId);
-						$lessVars = array(
-							'cms-theme-id'   => strtolower($styleId),
-							'cms-image-path' => 'themes/default/images/'
-						);
-						
-						foreach ($styleConfig as $styleSetting => $value)
-							$lessVars['cms-' . strtolower(strtr($styleSetting, '_', '-'))] = $value;
-						$parser->modifyVars($lessVars);
-						$css = $parser->getCss();
-						
-						file_put_contents($cssFile   , "\n/* Style $styleId */\n" . $css, FILE_APPEND);
-						file_put_contents($cssMinFile, $this->minifyCSS($css), FILE_APPEND);
-					}
-				}
-				catch (Exception $e)
-				{
-					file_put_contents($cssFile, "\n\n/* WARNING!\n   LESS Parser failed on file '$lessFile'. Reason: " . $e->__toString() . " */\n\n");
-					
-					throw new LogicException("LESS Parser failed on file '$lessFile'", 0, $e);
-				}
-			}
-            
-            echo "\n/* Theme-CSS: $cssFile */\n";
-            readfile( $cssFile );
-        }
-		else
+		$productionCSSFile = OR_THEMES_DIR . 'default/production/combined.min.css';
+		
+		if (PRODUCTION)
 		{
-			// Production.
-			readfile($cssMinFile);
-		}
-  
-	    exit;
-	}
-	
-	
-	private function minifyCSS( $css )
-	{
-	    // Remove comments
-	    $css = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css);
-	    // Remove space after colons
-	    $css = str_replace(': ', ':', $css);
-	    // Remove whitespace
-	    $css = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $css);
-	    
-	    return $css;
-	}
-	
-	
-	
-	public function javascriptView()
-	{
-	    if ( DEVELOPMENT )
-	        $this->lastModified( config('config','last_modification') );
-	    else
-	        $this->lastModified( strtotime(config('version','date')) );
-	    
-	    header('Content-Type: text/javascript');
-	    
-	    $js = array();
-	    $js[] = OR_THEMES_EXT_DIR.'default/js/jquery-1.12.4';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-ui/js/jquery-ui-1.8.16.custom';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery.scrollTo';
-	    //$js[] =  OR_THEMES_EXT_DIR default/js/jquery.mjs.nestedSortable.js"></script>
-	    
-	    //<!-- OpenRat internal JS -->
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/openrat';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orHint';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orSearch';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLinkify';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orTree';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orLoadView';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/plugin/jquery-plugin-orAutoheight';
-	    $js[] =  OR_THEMES_EXT_DIR.'default/js/jquery-qrcode';
-	    //  $js[] =  OR_THEMES_EXT_DIR.'../editor/wymeditor/wymeditor/jquery.wymeditor.min.js"></script> -->
-	    $js[] =  OR_THEMES_EXT_DIR.'../editor/markitup/markitup/jquery.markitup';
-	    $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/ckeditor';
-	    $js[] =  OR_THEMES_EXT_DIR.'../editor/ace/src-min-noconflict/ace';
-	    $js[] =  OR_THEMES_EXT_DIR.'../editor/editor/adapters/jquery';
-	    
-	    // Komponentenbasiertes Javascript
-	    $elements = parse_ini_file( OR_THEMES_DIR.config('interface','theme').'/include/elements.ini.'.PHP_EXT);
-	    
-	    foreach( array_keys($elements) as $c )
-	    {
-	        $componentJsFile = OR_THEMES_DIR.config('interface','theme').'/include/html/'.$c.'/'.$c;
-	        if    ( is_file($componentJsFile.'.js') )
-	            $js[] = $componentJsFile;
-	            
-	    }
-	    
-	    if    ( DEVELOPMENT )
-	    {
-	        
-	        foreach( $js as $jsFile )
-	        {
-	            $jsFileMin    = $jsFile.'.min.js';
-	            $jsFileNormal = $jsFile.'.js';
-	            
-	            if ( !is_file($jsFileNormal) && is_file($jsFileMin))
-	            {
-	                // Es gibt nur eine minifizierte JS. Das ist ok, z.B. bei externen Bibliotheken.
-	                echo "\n// JS-Source: $jsFileMin\n";
-	                readfile($jsFileMin);
-	            }
-	            elseif ( !is_file($jsFileNormal))
-	            {
-	                echo "\n// File $jsFileNormal is missing!";
-	                Logger::warn("No Javascript file found for $jsFileNormal");
-	            }
-	            elseif ( !is_file($jsFileMin))
-	            {
-	                echo "\n// File $jsFileMin is missing!";
-	                Logger::warn("No Javascript file found for $jsFileMin");
-	                echo "\n// JS-Source: $jsFileNormal\n";
-	                readfile($jsFileNormal);
-	            }
-	            else
-	            {
-	                if( filemtime($jsFileNormal) > filemtime($jsFileMin) )
-	                {
-	                    // Java-Source wurde geändert, minifizierte Version muss aktualisiert werden.
-	                    if   ( !is_writable($jsFileMin))
-	                    {
-        	                echo "// File $jsFileMin is not writable!";
-        	                Logger::warn("No Javascript file found for $jsFileMin");
-	                    }
-	                    else
-	                    {
-            	            $jz = new JSqueeze();
-            	            
-            	            file_put_contents( $jsFileMin, $this->minifyJS(file_get_contents($jsFileNormal)));
-	                    }
-	                }
-
-	                echo "\n// JS-Source: $jsFileNormal\n";
-	                readfile($jsFileNormal);
-	            }
-		    }
-	    }
-	    else
-	    {   // PRODUCTION
-	        foreach( $js as $jsFile )
-	        {
-	            $jsFileMin    = $jsFile.'.min.js';
-	            $jsFileNormal = $jsFile.'.js';
-	            if ( is_file($jsFileMin))
-    	            readfile($jsFileMin);
-	            elseif( is_file($jsFileNormal))
-	                readfile($jsFileNormal);
-	            else
-	                Logger::warn("No Javascript file found for $jsFile(.js|.min.js)");
-	        }
+			return array(
+				$productionCSSFile
+			);
 		}
 		
-		exit;
-	    
+		$outFiles = array();
+		
+		$css = array();
+		$css[] = OR_THEMES_EXT_DIR . 'default/css/openrat-ui';
+		$css[] = OR_THEMES_EXT_DIR . 'default/css/openrat-workbench';
+		
+		// Komponentenbasiertes CSS
+		$elements = parse_ini_file(OR_THEMES_DIR . config('interface', 'theme') . '/include/elements.ini.' . PHP_EXT);
+		
+		foreach (array_keys($elements) as $c)
+		{
+			$componentCssFile = OR_THEMES_DIR . config('interface', 'theme') . '/include/html/' . $c . '/' . $c;
+			if (is_file($componentCssFile . '.less'))
+				$css[] = $componentCssFile;
+		}
+		
+		$modified = false;
+		foreach ($css as $cssF)
+		{
+			$lessFile = $cssF . '.less';
+			$cssFile = $cssF . '.css';
+			$cssMinFile = $cssF . '.min.css';
+			
+			if (! is_file($lessFile))
+			{
+				Logger::warn("Stylesheet not found: $lessFile");
+				continue;
+			}
+			elseif (! is_file($cssFile) || ! is_writable($cssFile))
+			{
+				Logger::warn("Stylesheet output file not found or not writable: $cssFile");
+				continue;
+			}
+			elseif (! is_file($cssMinFile) || ! is_writable($cssMinFile))
+			{
+				Logger::warn("Stylesheet output file not found or not writable: $cssMinFile");
+				continue;
+			}
+			else
+			{
+				if (filemtime($lessFile) > filemtime($cssMinFile))
+				{
+					// LESS-Source wurde geändert, CSS-Version muss aktualisiert werden.
+					$modified = true;
+					
+					// Den absoluten Pfad zur LESS-Datei ermitteln. Dieser wird vom LESS-Parser für den korrekten Link
+					// auf die LESS-Datei in der Sourcemap benötigt.
+					$pfx = substr(realpath($lessFile),0,0-strlen(basename($lessFile)));
+					
+					$parser = new Less_Parser(array(
+						'sourceMap' => true,
+						'indentation' => '	',
+						'outputSourceFiles' => false,
+						'sourceMapBasepath' => $pfx
+					));
+				
+					
+					$parser->parseFile( ltrim($lessFile,'./') );
+					$source = $parser->getCss();
+					
+					file_put_contents($cssFile, $source);
+
+					$parser = new Less_Parser(array(
+						'compress' => true,
+						'sourceMap' => false,
+						'indentation' => ''
+					));
+					$parser->parseFile($lessFile);
+					$source = $parser->getCss();
+					
+					
+					file_put_contents($cssMinFile, $source);
+				}
+				
+				$outFiles[] = $cssFile;
+			}
+		}
+		
+		if ($modified)
+		{
+			if	( !is_writable($productionCSSFile))
+			{
+				Logger::warn('not writable: '.$productionCSSFile);
+			}
+			else
+			{
+				file_put_contents($productionCSSFile,'');
+				foreach ($css as $cssF)
+				{
+					$cssMinFile = $cssF . '.min.css';
+					if	( is_file($cssMinFile))
+						file_put_contents($productionCSSFile,file_get_contents($cssMinFile),FILE_APPEND);
+				}
+			}
+		}
+		
+		return $outFiles;
 	}
+
 	
 	
-	private function minifyJS( $js )
+	private function getThemeCSS()
 	{
-	    $jz = new JSqueeze();
-	    
-	    return $jz->squeeze(
-	        $js,
-	        true,   // $singleLine
-	        true,   // $keepImportantComments
-	        false   // $specialVarRx
-	    );
-	    
+		// Je Theme die Theme-CSS-Datei ausgeben.
+		$lessFile = OR_THEMES_EXT_DIR . 'default/css/openrat-theme.less';
+		$css = '';
+		
+		
+		foreach (array_keys(config('style')) as $styleId)
+		{
+			try
+			{
+				$parser = new Less_Parser(array(
+					'sourceMap' => DEVELOPMENT,
+					'indentation' => '	',
+					'outputSourceFiles' => false
+				));
+				$parser->parseFile($lessFile,basename($lessFile));
+				
+				$styleConfig = config('style', $styleId);
+				$lessVars = array(
+					'cms-theme-id' => strtolower($styleId),
+					'cms-image-path' => 'themes/default/images/'
+				);
+				
+				foreach ($styleConfig as $styleSetting => $value)
+					$lessVars['cms-' . strtolower(strtr($styleSetting, '_', '-'))] = $value;
+				$parser->modifyVars($lessVars);
+				$css .= $parser->getCss();
+			}
+			catch (Exception $e)
+			{
+				$css .= "\n\n/* WARNING!\n   LESS Parser failed on file '$lessFile'. Reason: " . $e->__toString() . " */\n\n";
+			}
+		}
+		
+		if (PRODUCTION)
+		{
+			return $this->minifyCSS($css);
+		}
+		else
+		{
+			return $css;
+		}
+	}	
+	
+
+
+	private function getJSFiles()
+	{
+		$productionJSFile = OR_THEMES_DIR . 'default/production/combined.min.js';
+		
+		if (PRODUCTION)
+		{
+			return array(
+				$productionJSFile
+			);
+		}
+		else
+		{
+			$js = array();
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery-1.12.4';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery-ui/js/jquery-ui-1.8.16.custom';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery.scrollTo';
+			// $js[] = OR_THEMES_EXT_DIR default/js/jquery.mjs.nestedSortable.js"></script>
+			
+			// <!-- OpenRat internal JS -->
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/openrat';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orHint';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orSearch';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orLinkify';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orTree';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orLoadView';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orAutoheight';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery-qrcode';
+			$js[] = OR_THEMES_EXT_DIR . '../editor/markitup/markitup/jquery.markitup';
+			$js[] = OR_THEMES_EXT_DIR . '../editor/editor/ckeditor';
+			$js[] = OR_THEMES_EXT_DIR . '../editor/ace/src-min-noconflict/ace';
+			$js[] = OR_THEMES_EXT_DIR . '../editor/editor/adapters/jquery';
+			
+			// Komponentenbasiertes Javascript
+			$elements = parse_ini_file(OR_THEMES_DIR . config('interface', 'theme') . '/include/elements.ini.' . PHP_EXT);
+			
+			foreach (array_keys($elements) as $c)
+			{
+				$componentJsFile = OR_THEMES_DIR . config('interface', 'theme') . '/include/html/' . $c . '/' . $c;
+				if (is_file($componentJsFile . '.js'))
+					$js[] = $componentJsFile;
+			}
+			
+			$outDevJsFiles = array();
+			$outProJsFiles = array();
+			$lastModTime = 0;
+			
+			foreach ($js as $jsFile)
+			{
+				$jsFileMin = $jsFile . '.min.js';
+				$jsFileNormal = $jsFile . '.js';
+				
+				if (!is_file($jsFileNormal) && !is_file($jsFileMin))
+				{
+					Logger::warn("No Javascript file found for $jsFile");
+					continue;
+				}
+				elseif (is_file($jsFileNormal) && !is_file($jsFileMin))
+				{
+					Logger::warn("No Min-Javascript file found for $jsFile");
+					continue;
+				}
+				elseif (!is_file($jsFileNormal) && is_file($jsFileMin))
+				{
+					// Nur eine Min-Version existiert. Das ist ok.
+					$outDevJsFiles[] = $jsFileMin;
+					$outProJsFiles[] = $jsFileMin;
+					$modTime = filemtime($jsFileMin); 
+				}
+				else
+				{
+					if	( filemtime($jsFileNormal) > filemtime($jsFileMin) )
+					{
+						if	( is_writable( $jsFileMin))
+						$jz = new JSqueeze();
+						file_put_contents( $jsFileMin, $jz->squeeze(file_get_contents($jsFileNormal)));
+						$modTime = time();
+					}
+					else
+					{
+						$modTime = filemtime($jsFileMin); 
+					}
+					$outDevJsFiles[] = $jsFileNormal;
+					$outProJsFiles[] = $jsFileMin;
+				}
+				$lastModTime = max($lastModTime, $modTime);
+			}
+			
+			if ($lastModTime > filemtime($productionJSFile))
+			{
+				if (! is_writable($productionJSFile))
+				{
+					Logger::warn("Not writable: " . $productionJSFile);
+				}
+				else
+				{
+					file_put_contents($productionJSFile, '');
+					foreach ($outProJsFiles as $srcFile)
+						file_put_contents($productionJSFile, file_get_contents($srcFile), FILE_APPEND);
+				}
+			}
+		}
+		
+		return $outDevJsFiles;
 	}
+	
+	
+
 }
 ?>

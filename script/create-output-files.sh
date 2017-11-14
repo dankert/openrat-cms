@@ -39,3 +39,9 @@ for lessfile in `find themes -name "*.less"`; do
 		fi
 	chmod a+rw -v $lessfile.min.css 
 done
+
+touch     themes/default/production/combined.min.css
+chmod a+w themes/default/production/combined.min.css
+
+touch     themes/default/production/combined.min.js
+chmod a+w themes/default/production/combined.min.js
