@@ -26,16 +26,12 @@ iframe
 	width:100%;
 	height:500px;
 	display:block;
-	border: 1px solid @color-overridden-by-theme;
 }
 
 div.breadcrumb,
 div.breadcrumb a,
 div.panel > div.title
 {
-	x-background-color:@color-overridden-by-theme;
-	xsopacity:0.7;
-	color:@color-overridden-by-theme;
 	font-weight:bold;
 }
 
@@ -99,32 +95,7 @@ div#noticebar div.notice
 	padding:5px;
 	margin:5px;
 	
-	-moz-border-radius:5px; /* Mozilla */
-    -webkit-border-radius:5px; /* Webkit */
-    -khtml-border-radius:5px; /* Konqui */
-    border-radius:5px; /* CSS 3 */
-        
-	-webkit-box-shadow: 3px 2px 5px @color-overridden-by-theme;
-    -moz-box-shadow: 3px 2px 5px @color-overridden-by-theme;
-    box-shadow: 3px 2px 5px @color-overridden-by-theme;
-	
 	display:none;
-}
-div#noticebar div.notice.ok
-{
-	background-color: green;
-}
-div#noticebar div.notice.warning
-{
-	background-color: yellow;
-}
-div#noticebar div.notice.error
-{
-	background-color:red;
-}
-div#noticebar div.notice.info
-{
-	background-color:@color-overridden-by-theme;
 }
 div#noticebar div.notice.error div.text
 {
@@ -141,19 +112,6 @@ html,body
 	height:100%;
 }
 
-
-/*
-
-div#tree, div#content
-{
-	height:auto;
-}
-*/
-
-/*div.panel {
-    height:90%;
-}
-*/
 
 div.panel div.title
 {
@@ -183,25 +141,15 @@ div.filler div.header a.back.button
 	padding-bottom:4px;
 	padding-left:7px;
 	padding-right:7px;
-	border:1px solid @color-overridden-by-theme;
-	-moz-border-radius:5px; /* Mozilla */
-    -webkit-border-radius:5px; /* Webkit */
-    -khtml-border-radius:5px; /* Konqui */
-    border-radius:5px;
-    background-color: @color-overridden-by-theme;
-	background: -moz-linear-gradient(top, @color-overridden-by-theme, @color-overridden-by-theme);
-	background: -webkit-gradient(linear, left top, left bottom, from(@color-overridden-by-theme), to(@color-overridden-by-theme));
+	border:1px solid;
 	font-style:normal;
 	font-weight:normal;
 	text-decoration:none;
-    color:@color-overridden-by-theme;
 }
 
 ul#history > li.active
 {
-    background-color: @color-overridden-by-theme;
     font-weight:bold;
-    color:@color-overridden-by-theme;
 }
 
 
@@ -220,7 +168,6 @@ a.help:hover,
 div.noaction:hover
 {
 	text-decoration:none;
-	border-color:@color-overridden-by-theme;
 }
 
 a.action:active,
@@ -230,14 +177,6 @@ input.ok:active
 {
 	border-color:red;
 }
-
-
-a
-{
-	color:@color-overridden-by-theme;
-}
-
-
 
 /*   D r o p d o w n  -  M e n u e s  */
 div.dropdown
@@ -265,7 +204,6 @@ div.dropdown div.entry
 div.dropdown > div.divide
 {
 	height:1px;
-	background-color: @color-overridden-by-theme;
 	width:100%;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -298,7 +236,6 @@ td:hover > div.onrowvisible
 
 /* Vorschau von Text-Inhalten */
 
-td.preview { background-color:papayawhip; border-top:1px solid @color-overridden-by-theme; border-bottom:1px solid @color-overridden-by-theme; }
 .preview h1 { font-size:138.5%; }
 .preview h2 { font-size:123.1%; }
 .preview h3 { font-size:108%;   }
@@ -339,7 +276,6 @@ td.preview { background-color:papayawhip; border-top:1px solid @color-overridden
 .preview a:hover
 {
 	text-decoration:underline;
-	color:blue;
 }
 
 
@@ -638,15 +574,6 @@ ul.tree ul
 	margin-left:18px;
 }
 
-div.entry.selected,
-div.dropdown > div.entry:hover,
-div.dropdown > div.entry:hover > a,
-a.element
-{
-	background-color:@color-overridden-by-theme;
-	color:@color-overridden-by-theme;
-}
-
 
 
 ul.tree div.tree
@@ -654,7 +581,6 @@ ul.tree div.tree
 	width:18px;
 	min-width:18px;
 	height:18px;
-	xbackground-color:red;
 	float:left;
 }
 ul.tree div.tree,
@@ -701,14 +627,6 @@ body > div
 }
 
 
-/* Strukturen 
-div.structure ul
-{
-	padding-left:10px;
-	margin-left:10px;
-}
-*/
-
 div.structure em
 {
 	font-style: italic;
@@ -751,7 +669,6 @@ div.panel > div.header
 	padding:0px;
 	width:100%;
 	height:25px;
-	border-bottom: 1px solid @color-overridden-by-theme;
 }
 
 
@@ -797,10 +714,6 @@ div.panel div.header > ul.views
 	height: 25px;
 }
 
-div.panel div.header
-{
-	xborder-bottom: 1px solid @color-overridden-by-theme;
-}
 
 
 div.content 
@@ -826,46 +739,11 @@ div.panel ul.views li
     -khtml-border-top-radius-topright:5px; /* Konqui */
     border-top-right-radius:5px;
     
-    xborder-top:1px solid @color-overridden-by-theme;
-    xborder-left:1px solid @color-overridden-by-theme;
-    xborder-right:1px solid @color-overridden-by-theme;
-    xmargin-right:10px;
 	display: inline;
 	white-space:nowrap;
 	float:left;
 }
 
-
-
-
-
-
-/*
-
-div#workbench div.frame {
-	padding:3px;
-	border:1px solid @color-overridden-by-theme;
-	
-	-moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    -khtml-border-radius:3px;
-    border-radius:3px;
-}
-*/
-
-
-
-/*
-div.panel {
-	padding:3px;
-	border:1px solid @color-overridden-by-theme;
-	
-	-moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    -khtml-border-radius:5px;
-    border-radius:5px;
-}
-*/
 
 
 
@@ -877,42 +755,22 @@ div.panel {
 div.panel div.content table
 {
 	overflow:auto;
-	border:2px @color-overridden-by-theme;
+	border:2px;
 }
 
 
 table tr.headline > td {
 	
-	/*
-    background-color: @color-overridden-by-theme;
-	background: -moz-linear-gradient(top, @color-overridden-by-theme, @color-overridden-by-theme);
-	background: -webkit-gradient(linear, left top, left bottom, from(@color-overridden-by-theme), to(@color-overridden-by-theme));
-	
-    border-right:1px solid @color-overridden-by-theme;
-    
-    */
-    border-bottom:1px solid @color-overridden-by-theme;
     padding:3px;
     font-weight: bold;
 }
 
 
 table tr.data > td {
-    border-bottom:1px solid @color-overridden-by-theme;
-    /*
-    border-right:1px solid @color-overridden-by-theme;
-    */
     padding:3px;
 }
 
 
-
-/*   F a r b e n   */
-
-/* Ungerade Tabellenzeilen (funktioniert nicht im FF) */
-table > tr.data:nth-child(2n) {
-	background-color: @color-overridden-by-theme;
-}
 
 ul.tree div
 {
@@ -979,27 +837,45 @@ div.progress
 
 
 
-/*   V o l l b i l d   */
-div#workbench div.panel.fullscreen
-{
-	display:block;
-	z-index:109;
+div#workbench {
+	width: 100%;
+	padding: 3px;
+	div.panel.fullscreen {
+		display: block;
+		z-index: 109;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background-color: @color-overridden-by-theme;
+		margin: 0px;
+		width: 100% ! important;
+		height: 100% ! important;
+	}
 
-    /*set the div in the top-left corner of the screen*/
-    position:fixed;
-    top:0;
-    left:0;
-    background-color:@color-overridden-by-theme;
-    margin:0px;
-    
-    /*set the width and height to 100% of the screen*/
-    width:100% !important;
-    height:100% !important;
-}
-div#workbench div.panel.fullscreen > div.content
-{
-    width:100% !important;
-    height:100% !important;
+	div.panel.fullscreen > div.content {
+		width: 100% ! important;
+		height: 100% ! important;
+	}
+
+	div.panel {
+		border: 1px solid @color-overridden-by-theme;
+		margin: 0px;
+		padding: 0px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-khtml-border-radius: 5px;
+		border-radius: 5px;
+	}
+
+	div.container , div.panel , div.divider {
+		display: inline;
+		float: left;
+		margin: 0px;
+	}
+	
+	div.panel > div.content {
+	overflow: auto;
+	}
 }
 
 .invisible
@@ -1012,48 +888,10 @@ div#workbench div.panel.fullscreen > div.content
 }
 
 
-div#workbench
-{
-	width:100%;
-}
-
 body
 {
 	overflow:hidden;
 }
-
-div#workbench div.panel
-{
-	border:1px solid @color-overridden-by-theme;
-	margin:0px;
-	padding:0px;
-	-moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    -khtml-border-radius:5px;
-    border-radius:5px;
-}
-
-div#workbench div.container,
-div#workbench div.panel,
-div#workbench div.divider
-{
-	display: inline;
-	float: left;
-	margin: 0px;
-}
-
-div#workbench
-{
-	padding:3px;
-}
-
-
-div#workbench div.panel > div.content
-{
-	overflow:auto;
-}
-
-
 /*
  * Formular-Button-Leiste
  */
@@ -1312,58 +1150,17 @@ font-size: 0;
 /*   D r o p d o w n  -  M e n u e s  */
 div.dropdown
 {
-	/* Schatten */
-	-webkit-box-shadow: 3px 2px 10px @color-overridden-by-theme;
-    -moz-box-shadow: 3px 2px 10px @color-overridden-by-theme;
-    box-shadow: 3px 2px 10px @color-overridden-by-theme;
-	
-	opacity:0.95;
-	
-	border:2px solid @color-overridden-by-theme;
-	-moz-border-radius:5px; /* Mozilla */
-    -webkit-border-radius:5px; /* Webkit */
-    -khtml-border-radius:5px; /* Konqui */
-    border-radius:5px;
-    
-    /*
-	background: -moz-linear-gradient(top, @color-overridden-by-theme, @color-overridden-by-theme);
-	background: -webkit-gradient(linear, left top, left bottom, from(@color-overridden-by-theme), to(@color-overridden-by-theme));
-	*/
 	font-style:normal;
 	font-weight:normal;
 	text-decoration:none;
 }
 
-
-div#header span.titletext
-{
-	color:@color-overridden-by-theme;
-}
-
-
 div.toolbar-icon
 {
-	border:1px solid @color-overridden-by-theme;
 	padding:2px;
 	margin-left:5px;
 	float: left;
-
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    -khtml-border-radius:3px;
-    border-radius:3px;
 }
-div.toolbar-icon.inactive
-{
-	opacity:0.5;
-}
-
-div.toolbar-icon:hover
-{
-	border:1px solid @color-overridden-by-theme;
-	xxbackground-color: @color-overridden-by-theme;
-}
-
 
 div.headermenu
 {
@@ -1468,33 +1265,6 @@ input[type=radio] + label
 label div.description
 {
 	font-size: 0.75em;
-	color:@color-overridden-by-theme;
-}
-
-
-div.inputholder
-{
-	background-color:@color-overridden-by-theme;
-	border:1px solid @color-overridden-by-theme;
-	margin:0px;
-	padding:4px;
-	-moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    -khtml-border-radius:3px;
-    border-radius:3px;
-    
-    -webkit-box-shadow:inset 0px 0px 3px @color-overridden-by-theme;
-    -moz-box-shadow:inset 0px 0px 3px  @color-overridden-by-theme;
-    box-shadow:inset 0px 0px 3px @color-overridden-by-theme;
-    
-}
-
-
-div.inputholder ul.tree,
-div.inputholder ul.tree li.last,
-div.inputholder ul.tree li:last-child
-{
-	background-color:@color-overridden-by-theme;
 }
 
 div.inputholder > div.dropdown
@@ -1511,39 +1281,9 @@ div.inputholder > input,
 div.inputholder > textarea,
 div.inputholder > select
 {
-	border:0px;
-	border-bottom:1px solid @color-overridden-by-theme;
 	padding:2px;
 	margin:0px;
-	background-color:@color-overridden-by-theme;
 }
-
-input:focus,
-textarea:focus,
-select:focus
-{
-	border:0px;
-	border-bottom:1px solid @color-overridden-by-theme;
-}
-
-
-input.error,
-textarea.error,
-select.error
-{
-	border-bottom:1px dotted @color-overridden-by-theme !important;
-}
-
-div.inputholder.error
-{
-	border:1px solid red !important;
-}
-
-input.hint
-{
-	color:@color-overridden-by-theme;
-}
-
 
 
 
@@ -1555,10 +1295,6 @@ fieldset > div span.name
 }
 
 
-fieldset
-{
-	border-color:@color-overridden-by-theme;
-}
 
 /* Eingabfelder fuer Dateiname */
 fieldset > div input.filename,
@@ -1619,18 +1355,7 @@ tr.diff > td.notequal
 
 dl.notice
 {
-	border-left:10px @color-overridden-by-theme solid;
-	border-right:1px @color-overridden-by-theme solid;
 	padding:15px;
-}
-
-dl.notice > dt
-{
-	border-top: 1px @color-overridden-by-theme solid;
-}
-dl.notice > dd
-{
-	border-bottom: 1px @color-overridden-by-theme solid;
 }
 
 
@@ -1650,7 +1375,6 @@ div.content a.help
 /* Gesamt-Hintergrund */
 body
 {
-	xxxbackground-color:#c9c9c9;
 	background-color:@color-overridden-by-theme;
 }
 

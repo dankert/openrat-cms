@@ -14,6 +14,18 @@
 
 
 html.theme-@{cms-theme-id} { 
+
+	.border-radius (@radius) {
+		border-radius: @radius;
+		-moz-border-radius: @radius;
+		-webkit-border-radius: @radius;
+		-khtml-border-radius: @radius;
+	}
+	.box-shadow (@x, @y, @radius, @color) {
+		-webkit-box-shadow: @x @y @radius @color;
+		-moz-box-shadow: @x @y @radius @color;
+		box-shadow: @x @y @radius @color;
+	}
 	
 	scrollbar-face-color: @cms-title-background-color;
 	scrollbar-arrow-color: @cms-title-background-color;
@@ -21,18 +33,14 @@ html.theme-@{cms-theme-id} {
 	
 	div#workbench div.panel.modal {
 		border-color: @cms-text-color ! important;
-		-webkit-box-shadow: 0px 0px 40px @cms-text-color;
-		-moz-box-shadow: 0px 0px 40px @cms-text-color;
-		box-shadow: 0px 0px 40px @cms-text-color;
+		.box-shadow( 0px, 0px, 40px, @cms-text-color);
 	}
   
 	div#dialog {
 		background-color: @cms-background-color;
 		color: @cms-text-color;
 		border-color: @cms-text-color ! important;
-		-webkit-box-shadow: 0px 0px 40px @cms-text-color;
-		-moz-box-shadow: 0px 0px 40px @cms-text-color;
-		box-shadow: 0px 0px 40px @cms-text-color;
+		.box-shadow( 0px, 0px, 40px, @cms-text-color);
 	}
 
 	div.container > div.divider.ui-draggable-dragging {
@@ -65,9 +73,7 @@ html.theme-@{cms-theme-id} {
 			margin: 5px;
 
 			.border-radius(5px);
-			-webkit-box-shadow: 3px 2px 5px @cms-text-color;
-			-moz-box-shadow: 3px 2px 5px @cms-text-color;
-			box-shadow: 3px 2px 5px @cms-text-color;
+			.box-shadow(3px, 2px, 5px, @cms-text-color);
 			display: none;
 		}
 
@@ -89,7 +95,8 @@ html.theme-@{cms-theme-id} {
 	}
 
 	ul#history > li , div.content a.action , div.content a.help , div.filler div.headermenu > a.entry , div.filler div.header a.back.button {
-		border: 1px solid @cms-title-background-color;
+		border-color: @cms-title-background-color;
+		.border-radius(5px);
 		background-color: @cms-title-text-color;
 		background: -moz-linear-gradient(top, @cms-title-background-color, @cms-inactive-background-color);
 		background: -webkit-gradient(linear, left top, left bottom, from(@cms-title-background-color), to(@cms-inactive-background-color));
@@ -152,9 +159,6 @@ html.theme-@{cms-theme-id} {
 		margin: 10px;
 	}
 
-	div.panel input.checkbox , div.panel input.radio {
-		border: 1px solid @cms-title-background-color;
-	}
 
 	textarea.longtext {
 		border: 1px solid @cms-text-color;
@@ -242,88 +246,42 @@ html.theme-@{cms-theme-id} {
 		font-style: italic;
 	}
 
-	.drophover {
-		border: 2px dotted green;
-		cursor: move;
+
+	div.panel {
+	input.checkbox , input.radio {
+		border: 1px solid @cms-title-background-color;
 	}
 
-	.dropactive {
-		border: 1px dotted blue;
-		cursor: move;
-	}
-
-	div.panel > div.header > div.panel-icon {
-		xposition: static;
-		xright: -30px;
-		top: 3px;
-	}
-
-	div.backward_link {
-		float: left;
-	}
-
-	div.forward_link {
-		float: right;
-	}
-
-	div.panel > div.header {
-		padding: 0px;
-		width: 100%;
-		height: 25px;
+	& > div.header {
 		border-bottom: 1px solid @cms-title-background-color;
 	}
 
-	div.panel div.header ul.views {
-		text-align: left;
-		list-style-type: none;
-		overflow: hidden;
-		white-space: nowrap;
-	}
-
-	img.icon {
-		padding: 4px;
-		width: 16px;
-		height: 16px;
-	}
-
-	ul.views div.tabname {
-		overflow: hidden;
-		white-space: nowrap;
-		padding: 4px;
-		vertical-align: middle;
-	}
-
-	div.panel div.header {
-		xborder-bottom: 1px solid @cms-title-background-color;
-	}
-
-	div.panel ul.views li {
-		vertical-align: middle;
-		padding: 0px;
-		cursor: pointer;
+	ul.views li {
 		border-right: 1px solid @cms-title-background-color;
-		-moz-border-radius-topleft: 5px;
-		-webkit-border-radius-topleft: 5px;
-		-khtml-border-top-radius-topleft: 5px;
-		border-top-right-radius: 5px;
-		-moz-border-radius-topright: 5px;
-		-webkit-border-radius-topright: 5px;
-		-khtml-border-top-radius-topright: 5px;
-		border-top-right-radius: 5px;
 		xborder-top: 1px solid @cms-title-background-color;
 		xborder-left: 1px solid @cms-title-background-color;
 		xborder-right: 1px solid @cms-title-background-color;
-		xmargin-right: 10px;
-		display: inline;
-		white-space: nowrap;
-		float: left;
 	}
 
-	div.panel div.content table {
-		border: 2px @cms-inactive-background-color;
+	div.content table {
+		border-color: @cms-inactive-background-color;
 	}
 
-	table tr.headline > td {
+	& > div.content {
+		background-color: @cms-background-color;
+	}
+
+	& > div.header {
+		background-color: @cms-background-color;
+		background-image: linear-gradient(@cms-inactive-background-color 00%, @cms-background-color 85%);
+	}
+
+	ul.views li:hover {
+		background-color: @cms-inactive-background-color;
+	}
+}
+
+table tr.headline > td {
 		border-bottom: 1px solid @cms-title-background-color;
 	}
 
@@ -354,9 +312,7 @@ html.theme-@{cms-theme-id} {
 	input.submit {
 		background-color: @cms-title-background-color;
 		color: @cms-title-text-color;
-		-webkit-box-shadow: 0px 0px 15px @cms-background-color;
-		-moz-box-shadow: 0px 0px 15px @cms-background-color;
-		box-shadow: 0px 0px 15px 10px @cms-background-color;
+		.box-shadow( 0px, 0px, 15px, @cms-background-color);
 	}
 
 	ul#history > li {
@@ -397,25 +353,11 @@ html.theme-@{cms-theme-id} {
 		font-size: 0;
 	}
 
-	.border-radius (@radius) {
-		border-radius: @radius;
-		-moz-border-radius: @radius;
-		-webkit-border-radius: @radius;
-		-khtml-border-radius: @radius;
-	}
-	
 	div.dropdown {
-		-webkit-box-shadow: 3px 2px 10px @cms-title-background-color;
-		-moz-box-shadow: 3px 2px 10px @cms-title-background-color;
-		box-shadow: 3px 2px 10px @cms-title-background-color;
-		opacity: 0.95;
-
-		border: 2px solid @cms-title-background-color;
 		.border-radius( 5px );
-		
-		font-style: normal;
-		font-weight: normal;
-		text-decoration: none;
+		.box-shadow(3px, 2px, 10px, @cms-title-background-color);
+		opacity: 0.95;
+		border: 2px solid @cms-title-background-color;
 	}
 
 	div#header span.titletext {
@@ -424,95 +366,19 @@ html.theme-@{cms-theme-id} {
 
 	div.toolbar-icon {
 		border: 1px solid @cms-title-background-color;
-		padding: 2px;
-		margin-left: 5px;
-		float: left;
 		.border-radius( 3px );
+		
+		&.inactive {
+			opacity: 0.5;
+		}
+	
+		&:hover {
+			border: 1px solid @cms-inactive-background-color;
+		}
 	}
 
-	div.toolbar-icon.inactive {
-		opacity: 0.5;
-	}
-
-	div.toolbar-icon:hover {
-		border: 1px solid @cms-inactive-background-color;
-	}
-
-	div.headermenu {
-		margin: 5px;
-		z-index: 1;
-		position: relative;
-		right: 0;
-		top: 0;
-	}
-
-	div.headermenu > div.toolbar-icon {
-		float: right;
-	}
-
-	body {
-	}
-
-	div.panel.wide form div.line {
-		clear: left;
-		margin-top: 10px;
-	}
-
-	div.panel.wide form div.label {
-		display: inline-block;
-		width: 30%;
-		vertical-align: top;
-		text-align: right;
-	}
-
-	div.panel.wide form div.input {
-		display: inline-block;
-		width: 60%;
-		vertical-align: top;
-		text-align: left;
-	}
-
-	div.panel.small form div.line {
-		clear: left;
-		padding: 10px;
-	}
-
-	div.panel.small form div.label {
-		display: block;
-		width: 100%;
-		vertical-align: top;
-		text-align: left;
-	}
-
-	div.panel.small form div.input {
-		display: block;
-		width: 100%;
-		vertical-align: top;
-		text-align: left;
-	}
-
-	form div.label > label , form div.input > div.intputholder {
-		padding: 0px 5px;
-	}
-
-	form div.input input[type=text] , form div.input input[type=password] , form div.input textarea , form div.input select {
-		width: 100%;
-	}
-  
-	form div.input input[type=checkbox] , form div.input input[type=radio] {
-		vertical-align: top;
-	}
-
-	label {
-		display: inline-block;
-	}
-
-	input[type=checkbox] + label , input[type=radio] + label {
-		width: 80%;
-	}
 
 	label div.description {
-		font-size: 0.75em;
 		color: @cms-title-background-color;
 	}
 
@@ -523,17 +389,16 @@ html.theme-@{cms-theme-id} {
 		-webkit-box-shadow: inset 0px 0px 3px @cms-title-background-color;
 		-moz-box-shadow: inset 0px 0px 3px @cms-title-background-color;
 		box-shadow: inset 0px 0px 3px @cms-title-background-color;
+		
+		ul.tree , ul.tree li.last , ul.tree li:last-child {
+			background-color: @cms-title-text-color;
+		}
 	}
 
-	div.inputholder ul.tree , div.inputholder ul.tree li.last , div.inputholder ul.tree li:last-child {
-		background-color: @cms-title-text-color;
-	}
 
 	div.inputholder > input , div.inputholder > textarea , div.inputholder > select {
 		border: 0px;
 		border-bottom: 1px solid @cms-title-text-color;
-		padding: 2px;
-		margin: 0px;
 		background-color: @cms-title-text-color;
 	}
 
@@ -562,10 +427,6 @@ html.theme-@{cms-theme-id} {
 		border-color: @cms-title-background-color;
 	}
 
-	div#tree {
-		overflow: visible;
-	}
-
 	tr.diff > td.line {
 		background-color: @cms-title-text-color;
 		padding-right: 2px;
@@ -574,46 +435,47 @@ html.theme-@{cms-theme-id} {
 		margin-right: 2px;
 	}
 
-	tr.diff > td.equal {
-	}
-
-	tr.diff > td.old {
-		background-color: red;
-	}
-
-	tr.diff > td.new {
-		background-color: green;
-	}
-
-	tr.diff > td.notequal {
-		background-color: yellow;
+	tr.diff {
+		
+		& > td.equal {
+		}
+	
+		& > td.old {
+			background-color: red;
+		}
+	
+		& > td.new {
+			background-color: green;
+		}
+	
+		& > td.notequal {
+			background-color: yellow;
+		}
 	}
 
 	dl.notice {
 		border-left: 10px @cms-inactive-background-color solid;
 		border-right: 1px @cms-inactive-background-color solid;
-		padding: 15px;
-	}
-
-	dl.notice > dt {
+	& > dt {
 		border-top: 1px @cms-inactive-background-color solid;
 	}
 
-	dl.notice > dd {
+	& > dd {
 		border-bottom: 1px @cms-inactive-background-color solid;
 	}
+	}
+
 
 	div.content a.action , div.content a.help {
-		-webkit-box-shadow: 3px 2px 5px @cms-title-background-color;
-		-moz-box-shadow: 3px 2px 5px @cms-title-background-color;
-		box-shadow: 3px 2px 5px @cms-title-background-color;
+		.box-shadow( 3px, 2px, 5px, @cms-title-background-color);
 	}
 
 	body {
 		background-color: @cms-inactive-background-color;
 	}
 
-	div.panel ul.views > li.active , div.panel ul.views > li.active:hover {
+	div.panel ul.views > li.active , 
+	div.panel ul.views > li.active:hover {
 		background-color: @cms-title-background-color;
 		background-image: linear-gradient(@cms-inactive-background-color 0%, @cms-title-background-color 15%);
 		color: @cms-title-text-color;
@@ -622,33 +484,19 @@ html.theme-@{cms-theme-id} {
 	div#header {
 		background-color: @cms-title-background-color;
 		background-image: linear-gradient(@cms-title-background-color,lighten(@cms-title-background-color,10%));
-		/*
-		background-image: linear-gradient(@cms-title-background-color 85%, @cms-inactive-background-color 100%);
-		 */
 		color: @cms-title-text-color;
+		
+		div.toolbar-icon > a {
+			color: @cms-title-text-color;
+		}
 	}
 
-	div#header div.toolbar-icon > a {
-		color: @cms-title-text-color;
-	}
 
 	div#header , ul.views > li.action {
 		font-family: Arial, sans-serif;
 		font-size: 13px;
 	}
 
-	div.panel > div.content {
-		background-color: @cms-background-color;
-	}
-
-	div.panel > div.header {
-		background-color: @cms-background-color;
-		background-image: linear-gradient(@cms-inactive-background-color 00%, @cms-background-color 85%);
-	}
-
-	div.panel ul.views li:hover {
-		background-color: @cms-inactive-background-color;
-	}
 
 	ul.tree li.last , ul.tree li:last-child {
 		background-color: @cms-background-color;
