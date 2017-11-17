@@ -43,95 +43,130 @@ class TemplateEngine
 		$this->tplName = $tplName;
 	}
 
-	
 	/**
 	 * Wandelt eine Vorlage um
-	 * @param filename Dateiname der Datei, die erstellt werden soll.
+	 * 
+	 * @param
+	 *        	filename Dateiname der Datei, die erstellt werden soll.
 	 */
-	public function compile( $tplName = '')
+	public function compile($tplName = '')
 	{
-	    require_once( OR_THEMES_DIR."default/include/html/Component.class.".PHP_EXT );
-	    
-		try {
-    		if	( empty($tplName) )
-    			$tplName = $this->tplName;
-    		
-    		global $conf;
-    		$confCompiler = $conf['theme']['compiler'];
-    		
-    		$srcXmlFilename = 'themes/default/templates/'.$tplName.'.tpl.src.xml';
-    
-    		
-    		if ( is_file($srcXmlFilename) )
-    			$srcFilename = $srcXmlFilename;
-    		else
-    			// Wenn Vorlage (noch) nicht existiert
-    			throw new LogicException( "Template not found: $tplName" );
-    
-    		$filename = FileUtils::getTempDir().'/'.'or.cache.tpl.'.str_replace('/', '.',$tplName).'.tpl.'.PHP_EXT;
-    		
-    		// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausf�hren.		
-    		if	( $confCompiler['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
-    			return;
-    			
-    		if	( is_file($filename) && !is_writable($filename) )
-    			throw new LogicException("File is read-only: $filename");
-    
-    		Logger::debug("Compile template: ".$srcFilename.' to '.$filename);
-    			
-    		// Vorlage und Zieldatei oeffnen
-    		$document = $this->loadDocument( $srcFilename );
-    		
-    		// Wir legen erstmal eine temporaere Datei an.
-    		// Falls ein Fehler auftritt, ist nur die temporaere Datei defekt.
-    		$tmpFilename = $filename.'.tmp';
-    		$outFile = @fopen($tmpFilename,'w');
-    
-    		if	( !is_resource($outFile) )
-    			throw new LogicException( "Template $tplName: Unable to open file for writing: $filename" );
-    
-    		$openCmd = array();
-    		$depth   = 0;
-    
-    		foreach( $document as $line )
-    		{
-    			// Initialisieren der m�glichen Element-Inhalte
-    			$type       = '';
-    			$attributes = array();
-    			$value      = '';
-    			$tag        = '';
-    
-    
-    			// Setzt: $tag, $attributes, $value, $type
-    			extract( $line );
-    
-    			if	($type == 'complete' || $type == 'open')
-    				$attributes = $this->checkAttributes($tag,$attributes);
-    				
-    			if ( $type == 'open' )
-    			    $this->copyFileContents( $tag, true, $tag.'/'.$tag.'-begin',$outFile,$attributes,++$depth );
-    			elseif ( $type == 'complete' )
-    			{
-    			    $this->copyFileContents( $tag, true, $tag.'/'.$tag.'-begin',$outFile,$attributes,++$depth   );
-    			    $this->copyFileContents( $tag, false, $tag.'/'.$tag.'-end'  ,$outFile,array()    ,  $depth-- );
-    			}
-    			elseif ( $type == 'close' )
-    			     $this->copyFileContents( $tag, false, $tag.'/'.$tag.'-end'  ,$outFile,array(),$depth-- );
-    		}
-    
-    		fclose($outFile);
-    		
-    		rename($tmpFilename,$filename);
-    
-    		// CHMOD ausfuehren.
-    		if	( !empty($confCompiler['chmod']))
-    			if	( !@chmod($filename,octdec($confCompiler['chmod'])) )
-    			    throw new InvalidArgumentException( "Template {$this->tplName} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}." );
-    			
-		}
-		catch( Exception $e)
+		require_once (OR_THEMES_DIR . "default/include/html/Component.class." . PHP_EXT);
+		
+		try
 		{
-		    throw new LogicException("Template $tplName failed to compile", 0, $e);
+			if (empty($tplName))
+				$tplName = $this->tplName;
+			
+			global $conf;
+			$confCompiler = $conf['theme']['compiler'];
+			
+			$srcXmlFilename = 'themes/default/templates/' . $tplName . '.tpl.src.xml';
+			
+			if (is_file($srcXmlFilename))
+				$srcFilename = $srcXmlFilename;
+			else
+				// Wenn Vorlage (noch) nicht existiert
+				throw new LogicException("Template not found: $tplName");
+			
+			$filename = FileUtils::getTempDir() . '/' . 'or.cache.tpl.' . str_replace('/', '.', $tplName) . '.tpl.' . PHP_EXT;
+			
+			// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausf�hren.
+			if ($confCompiler['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
+				return;
+			
+			if (is_file($filename) && ! is_writable($filename))
+				throw new LogicException("File is read-only: $filename");
+			
+			Logger::debug("Compile template: " . $srcFilename . ' to ' . $filename);
+			
+			// Vorlage und Zieldatei oeffnen
+			$document = $this->loadDocument($srcFilename);
+			
+			// Wir legen erstmal eine temporaere Datei an.
+			// Falls ein Fehler auftritt, ist nur die temporaere Datei defekt.
+			$tmpFilename = $filename . '.tmp';
+			$outFile = @fopen($tmpFilename, 'w');
+			
+			if (! is_resource($outFile))
+				throw new LogicException("Template $tplName: Unable to open file for writing: $filename");
+			
+			$openCmd = array();
+			$depth = 0;
+			$components = array();
+			
+			foreach ($document as $line)
+			{
+				// Initialisieren der m�glichen Element-Inhalte
+				$type = '';
+				$attributes = array();
+				$value = '';
+				$tag = '';
+				
+				// Setzt: $tag, $attributes, $value, $type
+				extract($line);
+				
+				if ($type == 'complete' || $type == 'open')
+					$attributes = $this->checkAttributes($tag, $attributes);
+				
+				if ($type == 'open' || $type == 'complete')
+				{
+					$depth ++;
+					
+					$className = ucfirst($tag);
+					$classFilename = OR_THEMES_DIR . $conf['interface']['theme'] . "/include/html/$tag/$className.class." . PHP_EXT;
+					
+					if (is_file($classFilename))
+					{
+						require_once ($classFilename);
+						
+						$className .= 'Component';
+						$component = new $className();
+						
+						foreach ($attributes as $prop => $value)
+						{
+							$component->$prop = $value;
+						}
+						// $component->depth = $depth;
+						
+						$components[$depth] = $component;
+						fwrite($outFile, $component->getBegin());
+					}
+					else
+					{
+						$this->copyFileContents($tag, true, $tag . '/' . $tag . '-begin', $outFile, $attributes, $depth);
+					}
+				}
+				
+				if ($type == 'close' || $type == 'complete')
+				{
+					if (isset($components[$depth]))
+					{
+						$component = $components[$depth];
+						fwrite($outFile, $component->getEnd());
+						unset($components[$depth]);
+					}
+					else
+					{
+						$this->copyFileContents($tag, false, $tag . '/' . $tag . '-end', $outFile, array(), $depth);
+					}
+					
+					$depth --;
+				}
+			}
+			
+			fclose($outFile);
+			
+			rename($tmpFilename, $filename);
+			
+			// CHMOD ausfuehren.
+			if (! empty($confCompiler['chmod']))
+				if (! @chmod($filename, octdec($confCompiler['chmod'])))
+					throw new InvalidArgumentException("Template {$this->tplName} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
+		}
+		catch (Exception $e)
+		{
+			throw new LogicException("Template $tplName failed to compile", 0, $e);
 		}
 	}
 	
@@ -221,27 +256,6 @@ class TemplateEngine
 		$className     = ucfirst($tag);
 		$classFilename = OR_THEMES_DIR.$conf['interface']['theme']."/include/html/$tag/$className.class.".PHP_EXT;
 		
-		if    ( is_file($classFilename))
-		{
-		    require_once( $classFilename);
-		    
-		    $className .= 'Component';
-		    $component = new $className();
-		    ob_start();
-		    if    ( $begin )
-		      $component->begin($attr);
-		    else
-		        $component->end();
-		    
-		    $src = ob_get_contents();
-		    ob_end_clean();
-		    fwrite( $outFileHandler,"\n<!-- Component $tag ".($begin?'beginn':'ennd')." -->\n".$src."\n<!-- End -->\n" );
-		    
-		    return;
-		}
-		else
-		{
-		    
     		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
     		if	( !is_file($inFileName) )
     			if	( count($attr)==0 )
@@ -344,7 +358,6 @@ class TemplateEngine
     			
     		if	( count($unset_attr) > 0 )
     			fwrite( $outFileHandler,'<?php unset('.implode(',',$unset_attr).') ?>');
-		}
 	}
 	
 	

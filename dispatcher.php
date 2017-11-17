@@ -175,6 +175,10 @@ try
     $do->actionName      = $action;
     $do->subActionName   = $subaction;
     
+    define('OR_ACTION',$action);
+    define('OR_METHOD',$subaction);
+    define('OR_ID'    ,$REQ[REQ_PARAM_ID]);
+    
     $do->init(); 
     
     

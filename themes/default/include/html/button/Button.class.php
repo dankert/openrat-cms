@@ -1,36 +1,49 @@
 <?php
 
-class ButtonComponent extends Component {
+class ButtonComponent extends Component
+{
 
-public function begin( $attr ) {
+	public $type;
 
-	extract( $attr,EXTR_PREFIX_ALL,'attr');
-	echo <<<'HTML'
+	public $src;
+
+	private $tmp_src;
+
+	protected function begin()
+	{
+		echo <<<'HTML'
 		<div class="invisible">
 HTML;
-
-		if ($attr_type == 'ok')
-			$attr_type = 'submit';
-
-		if (!empty($attr_src))
-	{
-			$attr_type    = 'image';
-			$attr_tmp_src = $image_dir.'icon_'.$attr_src.IMG_ICON_EXT;
+		
+		if ($this->type == 'ok')
+			$this->type = 'submit';
+		
+		if (! empty($this->src))
+		{
+			$this->type = 'image';
+			$this->tmp_src = $image_dir . 'icon_' . $this->src . IMG_ICON_EXT;
 		}
 		else
 		{
-			$attr_tmp_src  = '';
+			$this->tmp_src = '';
 		}
 		
-		if	( !empty($attr_type)) { 
-	?>
-	<input type="<?php echo $attr_type ?>"<?php if(isset($attr_src)) { ?> src="<?php $attr_tmp_src ?>"<?php } ?> name="<?php echo $attr_value ?>" class="%class%" title="<?php echo lang($attr_text.'_DESC') ?>" value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo langHtml($attr_text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($attr_src); ?>
-	<?php }
+		if (! empty($this->type))
+		{
+			?>
+<input type="<?php echo $this->type ?>" <?php if(isset($this->src)) { ?>
+	src="<?php $this->tmp_src ?>" <?php } ?>
+	name="<?php echo $this->value ?>" class="%class%"
+	title="<?php echo lang($this->text.'_DESC') ?>"
+	value="&nbsp;&nbsp;&nbsp;&nbsp;<?php echo langHtml($this->text) ?>&nbsp;&nbsp;&nbsp;&nbsp;" /><?php unset($this->src); ?>
+	<?php
+		
+}
+	}
 
-    }
-
-	public function end() {
-	    echo"</div>";
+	protected function end()
+	{
+		echo "</div>";
 	}
 }
 
