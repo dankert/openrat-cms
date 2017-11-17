@@ -291,6 +291,7 @@ class IndexAction extends Action
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orTree';
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orLoadView';
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orAutoheight';
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-svg';
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery-qrcode';
 			$js[] = OR_THEMES_EXT_DIR . '../editor/markitup/markitup/jquery.markitup';
 			$js[] = OR_THEMES_EXT_DIR . '../editor/editor/ckeditor';
