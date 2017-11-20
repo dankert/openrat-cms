@@ -34,7 +34,7 @@ class IndexAction extends Action
 	function IndexAction()
 	{
 		$this->perspective = Session::get('perspective');
-		$this->lastModified( config('config','last_modification') );
+		$this->lastModified( config('config','last_modification_time') );
 	}
 
 
@@ -236,7 +236,7 @@ class IndexAction extends Action
 				));
 				$parser->parseFile($lessFile,basename($lessFile));
 				
-				$styleConfig = config('style', $styleId);
+				$styleConfig = config('style-default') + config('style', $styleId);
 				$lessVars = array(
 					'cms-theme-id' => strtolower($styleId),
 					'cms-image-path' => 'themes/default/images/'
@@ -255,7 +255,7 @@ class IndexAction extends Action
 		
 		if (PRODUCTION)
 		{
-			return $this->minifyCSS($css);
+			return $css; // Should we minify here? Bandwidth vs. cpu-load.
 		}
 		else
 		{
