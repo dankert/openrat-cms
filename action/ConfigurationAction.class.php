@@ -44,7 +44,7 @@ class ConfigurationAction extends Action
 	 */
 	function showView()
 	{
-		require_once('./config/config-default.php');
+		require_once('./util/config-default.php');
 		$conf_default = $conf;
 		
 		$conf_cms = Session::getConfig();
