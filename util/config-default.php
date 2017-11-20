@@ -1,5 +1,5 @@
 <?php
-// DO NOT MAKE ANY CHANGES IN THIS FILE, please edit the file 'config.ini.php' or 'config-<host>.ini.php' instead.
+// DO NOT MAKE ANY CHANGES IN THIS FILE, please edit the file 'config.yml' or 'config-<host>.yml' instead.
 // This file should only be changed by developers. 
 $conf = array();
 $conf['applications'] = array();
@@ -808,6 +808,15 @@ $conf['security']['user']['show_admin_mail']=true;
 $conf['security']['user']['show_mail']=true;
 $conf['security']['user']['send_message']=true;
 $conf['security']['content-security-policy']=true;
+
+$conf['style-default'] = array();
+$conf['style-default']['name']='Unnamed';
+$conf['style-default']['title_background_color']='grey';
+$conf['style-default']['title_text_color']='white';
+$conf['style-default']['text_color' ]= 'black';
+$conf['style-default']['background_color' ]= '#d9d9d9';
+$conf['style-default']['inactive_background_color' ]= 'silver';
+
 
 $conf['style'] = array();
 $conf['style']['earlgrey']=array();

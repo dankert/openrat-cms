@@ -45,7 +45,7 @@ try
     // Konfiguration lesen.
     // Wenn Konfiguration noch nicht in Session vorhanden oder die Konfiguration geändert wurde (erkennbar anhand des Datei-Datums)
     // dann die Konfiguration neu einlesen.
-    if	( !is_array( $conf ) || $conf['config']['auto_reload'] && Preferences::lastModificationTime()>$conf['config']['last_modification'] )
+    if	( !is_array( $conf ) || $conf['config']['auto_reload'] && Preferences::lastModificationTime()>$conf['config']['last_modification_time'] )
     {
     	// Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
     	if	( is_array($conf) && $conf['config']['session_destroy_on_config_reload'] ) 
@@ -177,7 +177,10 @@ try
     
     define('OR_ACTION',$action);
     define('OR_METHOD',$subaction);
-    define('OR_ID'    ,$REQ[REQ_PARAM_ID]);
+    if	( isset($REQ[REQ_PARAM_ID]) )
+    		define('OR_ID'    ,$REQ[REQ_PARAM_ID]);
+    else
+    		define('OR_ID'    ,'');
     
     $do->init(); 
     

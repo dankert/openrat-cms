@@ -41,46 +41,40 @@ class Preferences
 	 */
 	public static function configurationFile()
 	{
+		$config_files = array();
+		
 		// Falls Umgebungsvariable OPENRAT_CONFIG_FILE gesetzt ist,
 		// dann diesen Dateinamen verwenden.
 		if	( !empty($_SERVER['OPENRAT_CONFIG_FILE']) )
-		{
-			$config_filename = $_SERVER['OPENRAT_CONFIG_FILE'];
-		}
-		else
-		{
-			// Falls Umgebungsvariable OPENRAT_CONFIG_DIR gesetzt ist, dann
-			// die Datei in diesem Ordner suchen.
-			if	( !empty($_SERVER['OPENRAT_CONFIG_DIR']) )
-				$dir = $_SERVER['OPENRAT_CONFIG_DIR'];
-			else
-				$dir = './config/';
+			$config_files[] = $_SERVER['OPENRAT_CONFIG_FILE'];
 
-				
-			if	( !empty($_SERVER['HTTP_HOST']) )
-			{
-				// Falls es eine Datei config-<hostname>.ini.php gibt, dann diese
-				// vor der Datei config.ini.php bevorzugen.
-				$vhost_config_file = slashify($dir).'config-'.$_SERVER['HTTP_HOST'].'.ini.php';
-				
-				if	( is_file($vhost_config_file) )
-					$config_filename = $vhost_config_file;
-				else
-					$config_filename = slashify($dir).'config.ini.php';
-			}
-			else
-			{
-				$config_filename = slashify($dir).'config.ini.php';
-			}
+		// Falls Umgebungsvariable OPENRAT_CONFIG_DIR gesetzt ist, dann
+		// die Datei in diesem Ordner suchen.
+		if	( !empty($_SERVER['OPENRAT_CONFIG_DIR']) )
+			$dir = $_SERVER['OPENRAT_CONFIG_DIR'];
+		else
+			$dir = './config/';
+
+			
+		if	( !empty($_SERVER['HTTP_HOST']) )
+		{
+			// Falls es eine Datei config-<hostname>.yml gibt, dann diese
+			// vor der Datei config.ini.php bevorzugen.
+			$config_files[] = slashify($dir).'config-'.$_SERVER['HTTP_HOST'].'.yml';
+		}
+			
+		$config_files[] = slashify($dir).'config.yml';
+		$config_files[] = '/etc/openrat/config.yml';
+		$config_files[] = '/etc/openrat.yml';
+
+		// Alle Orte durchsuchen, bis die Config-Datei gefunden wird.
+		foreach( $config_files as $config_filename )
+		{
+			if	( is_file($config_filename))
+				return $config_filename; // Datei gefunden.
 		}
 		
-		if	( ! is_file($config_filename))
-		{
-			error_log('configuration file not found: '.$config_filename,0);
-			Http::serverError("Configuration not found","The file does not exist: ".$config_filename);
-		}
-
-		return $config_filename;
+		throw new LogicException('Configuration file not found. Searched locations: '.implode(',',$config_files) );
 	}
 	
 	
@@ -95,87 +89,44 @@ class Preferences
 	public static function load()
 	{
 		// Fest eingebaute Standard-Konfiguration laden.
-		require('./config/config-default.php');
+		require('./util/config-default.php');
 
 		$filename = Preferences::configurationFile();
-		$ini_values =  parse_ini_file( $filename,false );
+		$customConfig =  Spyc::YAMLLoad( $filename );
 		
-		foreach ( $ini_values as $key=>$value )
+		// Besonderheit:
+		// Alle Konfigurationsschlüssel mit einem Punkt ('.') im Namen zu Arrays auflösen.
+		foreach ( $customConfig as $key=>$value )
 		{
 			$parts = explode('.',$key);
-			if	( count($parts)==1)
-				$conf[$parts[0]] = $value;
-			elseif	( count($parts)==2)
-				$conf[$parts[0]][$parts[1]] = $value;
-			elseif	( count($parts)==3)
-				$conf[$parts[0]][$parts[1]][$parts[2]] = $value;
-			elseif	( count($parts)==4)
-				$conf[$parts[0]][$parts[1]][$parts[2]][$parts[3]] = $value;
-			elseif	( count($parts)==5)
-				$conf[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]] = $value;
-			elseif	( count($parts)==6)
-				$conf[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]][$parts[5]] = $value;
+			if	( count($parts)==1 )
+				; // Kein Punkt enthalten. Dieser Konfigurationsschlüssel wird nicht geändert.
+			else
+			{
+				
+				if	( count($parts)==2)
+					$customConfig[$parts[0]][$parts[1]] = $value;
+				elseif	( count($parts)==3)
+					$customConfig[$parts[0]][$parts[1]][$parts[2]] = $value;
+				elseif	( count($parts)==4)
+					$customConfig[$parts[0]][$parts[1]][$parts[2]][$parts[3]] = $value;
+				elseif	( count($parts)==5)
+					$customConfig[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]] = $value;
+				elseif	( count($parts)==6)
+					$customConfig[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]][$parts[5]] = $value;
+			}
+			unset( $customConfig[$key] );
 		}
+		
+		$conf = array_replace_recursive( $conf, $customConfig );
 
 		// Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
-		$conf['config']['filename'         ] = $filename;
-		$conf['config']['last_modification'] = filemtime($filename);
-		$conf['config']['file_modification'] = date('r',filemtime($filename));
-		$conf['config']['read'             ] = date('r');
-		
-		Preferences::fixConfiguration( $conf );
+		$conf['config']['filename'              ] = $filename;
+		$conf['config']['last_modification_time'] = filemtime($filename);
+		$conf['config']['last_modification'     ] = date('r',filemtime($filename));
+		$conf['config']['read'                  ] = date('r');
 		
 		return $conf;
-	}
-	
-	
-	public static function fixConfiguration( &$conf )
-	{
-		$defaultStyleConfig = array(
-			'name'=>'Unnamed',
-			'title_background_color'=>'grey',
-			'title_text_color'=>'white',
-			'text_color' => 'black',
-			'background_color' => '#d9d9d9',
-			'inactive_background_color' => 'silver'
-		);
-		
-		$defaultDatabaseConfig = array(
-			'enabled'       =>true,
-			'description2'  =>'',
-			'user'          =>'',
-			'password'      => '',
-			'host'          =>'localhost',
-			'port'          => '',
-			'database'      => '',
-			'base64'        => false,
-			'prefix'        => 'or_',
-			'persistent'    => true,
-			'charset'       => 'UTF-8',
-			'connection_sql'=> '',
-			'cmd'           => '',
-			'prepare'       => false,
-			'transaction'   => false,
-			'autocommit'    => false,
-			'readonly'      => false
-		);
-		
-		$dbconfig = &$conf['database'];
-		if	( is_array($dbconfig) )
-			foreach( $dbconfig as &$db )
-			{
-				if	( is_array($db))
-					$db = array_merge( $defaultDatabaseConfig,$db );
-			}
-		
-		$styleconfig = &$conf['style'];
-		if	( is_array($styleconfig) )
-			foreach( $styleconfig as &$style )
-			{
-				if	( is_array($style))
-					$style = array_merge( $defaultStyleConfig, $style );
-			}
-		
 	}
 }
 ?>
