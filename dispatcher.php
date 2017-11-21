@@ -79,12 +79,13 @@ try
     			continue;
     
     		// Pruefen, ob Sprache vorhanden ist.
-    		$langFile = OR_LANGUAGE_DIR.$l.'.ini.'.PHP_EXT;
+    		$langFile = OR_LANGUAGE_DIR.'lang-'.$l.'.'.PHP_EXT;
     
     		if	( !file_exists( $langFile ) )
-    			Http::serverError("File does not exist: ".$langFile);
+    			throw new LogicException("File does not exist: ".$langFile);
     
-    		$conf['language'] = parse_ini_file( $langFile );
+    		require( $langFile );
+    		$conf['language'] = $lang;
     		$conf['language']['language_code'] = $l;
     		break;
     	}

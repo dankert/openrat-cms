@@ -34,7 +34,9 @@ class IndexAction extends Action
 	function IndexAction()
 	{
 		$this->perspective = Session::get('perspective');
-		$this->lastModified( config('config','last_modification_time') );
+
+		if	( !empty($this->perspective))
+			$this->lastModified( config('config','last_modification_time') );
 	}
 
 

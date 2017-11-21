@@ -1062,6 +1062,26 @@ class LoginAction extends Action
 			}
 			
 			$this->setStyle( $user->style ); // Benutzer-Style setzen
+
+			$langFile = OR_LANGUAGE_DIR.'lang-'.$user->language.'.'.PHP_EXT;
+			
+			// Pruefen, ob Sprache vorhanden ist.
+			if	( !file_exists( $langFile ) )
+			{
+				// Nur Warnung ins Log schreiben, keinen Fehler werfen
+				// Es ist möglich, dass Sprachen entfernt werden.
+				Logger::warn("Languagefile $langFile does not exist.");
+			}
+			else
+			{
+				require( $langFile );
+				global $conf;
+				$conf['language'] = $lang;
+				$conf['language']['language_code'] = $user->language;
+				Session::setConfig( $conf );
+			}
+				
+			
 			
 			// Entscheiden, welche Perspektive als erstes angezeigt werden soll.
 			

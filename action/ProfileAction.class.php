@@ -69,6 +69,22 @@ class ProfileAction extends Action
 		{
 			$this->addValidationError('fullname');
 		}
+		
+		
+		// Ausgewählte Sprache sofort verwenden.
+		$l = $this->getRequestVar('language');
+		
+		$langFile = OR_LANGUAGE_DIR.'lang-'.$l.'.'.PHP_EXT;
+		
+		// Pruefen, ob Sprache vorhanden ist.
+		if	( !file_exists( $langFile ) )
+			throw new LogicException("Languagefile $langFile does not exist.");
+		
+		require( $langFile );
+		global $conf;
+		$conf['language'] = $lang;
+		$conf['language']['language_code'] = $l;
+		Session::setConfig( $conf );
 	}
 
 	
