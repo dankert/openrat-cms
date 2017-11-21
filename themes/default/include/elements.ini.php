@@ -5,7 +5,6 @@
 
 output   = 
 button   = type:submit,src,class:ok,value:ok,text:button_ok
-char     = type:*
 checkbox = default:false,readonly:false,name:*
 column   = width,style,class,colspan,rowspan,header:false,title,url,action,id,name
 date     = date
