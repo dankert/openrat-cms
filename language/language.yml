@@ -4,6 +4,7 @@ ACCESSKEY_MAIN_ADD:
 ACCESSKEY_MAIN_ADMINISTRATION:
   de: S
   en: A
+  es: S
   fr: S
   it: S
   ru: S
@@ -16,18 +17,21 @@ ACCESSKEY_MAIN_CREATE:
 ACCESSKEY_MAIN_EDIT:
   de: B
   en: E
+  es: B
   fr: B
   it: B
   ru: B
 ACCESSKEY_MAIN_EL:
   de: E
   en: C
+  es: E
   fr: E
   it: E
   ru: E
 ACCESSKEY_MAIN_GROUPS:
   de: M
   en: G
+  es: M
   fr: M
   it: M
   ru: M
@@ -46,12 +50,14 @@ ACCESSKEY_MAIN_PROJECTMENU:
 ACCESSKEY_MAIN_PROP:
   de: G
   en: X
+  es: G
   fr: G
   it: G
   ru: G
 ACCESSKEY_MAIN_PUB:
   de: F
   en: L
+  es: F
   fr: F
   it: F
   ru: F
@@ -64,12 +70,14 @@ ACCESSKEY_MAIN_RIGHTS:
 ACCESSKEY_MAIN_SHOW:
   de: A
   en: V
+  es: A
   fr: A
   it: A
   ru: A
 ACCESSKEY_MAIN_SRC:
   de: Q
   en: S
+  es: Q
   fr: Q
   it: Q
   ru: Q
@@ -236,7 +244,8 @@ ACCESSKEY_WINDOW_USERS:
 ACL:
   de: Berechtigungen
   en: Rights
-  fr: 'Droites '
+  es: Las derechas
+  fr: Droites
   it: La lima di Upload di diritti
   ru: Человека
 ACL_CREATE_FILE_ABBREV:
@@ -245,6 +254,7 @@ ACL_CREATE_FILE_ABBREV:
 ACL_CREATE_FILE:
   de: Datei hochladen
   en: Upload File
+  es: Archivo del Upload
   fr: Dossier de téléchargement
   ru: Загрузить файл
 ACL_CREATE_FOLDER_ABBREV:
@@ -253,6 +263,7 @@ ACL_CREATE_FOLDER_ABBREV:
 ACL_CREATE_FOLDER:
   de: Ordner anlegen
   en: Create Directory
+  es: Crear el directorio
   fr: "Créer l'annuaire"
   it: "genera l'indice"
   ru: FIL Создайте Каталог DIR
@@ -262,6 +273,7 @@ ACL_CREATE_LINK_ABBREV:
 ACL_CREATE_LINK:
   de: Verknüpfung erstellen
   en: Create Link
+  es: Crean acoplamiento
   fr: Créent le lien
   it: genera il collegamento
   ru: Создать Link
@@ -271,6 +283,7 @@ ACL_CREATE_PAGE_ABBREV:
 ACL_CREATE_PAGE:
   de: Seite anlegen
   en: Create a page
+  es: Crean una página
   fr: Créent une page
   it: genera una cancellazione della pagina
   ru: LNK Создать страницу порт
@@ -281,11 +294,13 @@ ACL_DELETE_ABBREV:
 ACL_DELETE:
   de: Löschen
   en: Delete
+  es: Cancelación
   fr: Effacement
   cn: Shānchú
 ACL_DESC:
   de: Diese Berechtigungen gelten für den Zugriff auf dieses Objekt
   en: This rights are used for all request to this object
+  es: Esto endereza se utiliza para toda la petición a este objeto
   fr: Ceci redresse sont employés pour toute la demande à cet objet
   it: "che questo radrizza è usato per tutta la richiesta ai diritti di questo Grant dell'oggetto"
   ru: ДЕЛЬ этого человека используются для всех просят этот объект
@@ -295,12 +310,14 @@ ACL_GRANT_ABBREV:
 ACL_GRANT:
   de: Berechtigungen vergeben
   en: Grant rights
+  es: Grant endereza
   fr: Grant redresse
   it: Grant
   ru: Грант человека GR
 ACL_INHERITED:
   de: vererbt
   en: inherited
+  es: heredado
   fr: hérité
   it: ereditati
 ACL_PROP_ABBREV:
@@ -309,18 +326,21 @@ ACL_PROP_ABBREV:
 ACL_PROP:
   de: Eigenschaften bearbeiten
   en: Edit Properties
+  es: Corregir las características
   fr: Éditer les propriétés
   it: pubblicano le proprietà
   ru: унаследовала Редактировать Свойства ППВ
 ACL_PUBLISH_ABBREV:
   de: WEB
   en: PUB
+  es: Publicación
   fr: Publication
   it: la pubblicazione
   ru: Опубликовать PUB Прочтите
 ACL_PUBLISH:
   de: Veröffentlichen
   en: Publish
+  es: Publican
   fr: Éditent
   it: pubblicano
 ACL_READ_ABBREV:
@@ -330,6 +350,7 @@ ACL_READ_ABBREV:
 ACL_READ:
   de: Lesen
   en: Read
+  es: Leído
   fr: Lu
   it: leggono
 ACL_RELEASE_ABBREV:
@@ -338,6 +359,7 @@ ACL_RELEASE_ABBREV:
 ACL_RELEASE:
   de: Inhalt freigeben
   en: Release content
+  es: Contenido de lanzamiento
   fr: Contenu de la version
   ru: РЕА содержанию выпуска
 ACL_TRANSMIT_ABBREV:
@@ -346,6 +368,7 @@ ACL_TRANSMIT_ABBREV:
 ACL_TRANSMIT:
   de: Recht vererben
   en: Inherit rights
+  es: Heredan las derechas
   fr: Héritent des droites
   it: ereditano i diritti
   ru: REL наследования прав печень
@@ -356,12 +379,14 @@ ACL_WRITE_ABBREV:
 ACL_WRITE:
   de: Inhalt bearbeiten
   en: Edit content
+  es: Corrigen el contenido
   fr: Éditent le contenu
   it: pubblicano
   ru: Изменить содержимое ВИР
 ADDITIONAL_INFO:
   de: Weitere Informationen
   en: 'More Info:'
+  es: 'Más Info:'
   fr: "Plus d'information :"
   it: 'più Info:'
   ru: 'Дополнительная информация : Отменить'
@@ -377,6 +402,7 @@ BUTTON_BACK:
 BUTTON_CANCEL:
   de: Abbrechen
   en: Cancel
+  es: Cancelar
   fr: Décommander
   it: "L'approvazione dell'annullamento"
 BUTTON_CANCEL_DESC:
@@ -400,11 +426,13 @@ BUTTON_OK_DESC:
 BUTTON_OK:
   de: OK
   en: Ok
+  es: Aprobar
   fr: Approuver
   ru: OK
 BUTTON_UNDO:
   de: Rückgängig
   en: Undo
+  es: Deshacer
   fr: Défaire
   ru: Ок Отменить
 CACHE_FILENAME:
@@ -435,23 +463,27 @@ CONTENT:
 CREATE_USER:
   de: Erstellungsautor
   en: Creation-User
+  es: Creationuser
   fr: Creationuser
   it: Creationuser
   ru: Creationuser
 DATE_ANSI:
   de: Datum gemäß ANSI-Notation
   en: Date ANSI notation
+  es: Fechar la notación del ANSI
   fr: Dater la notation de norme ANSI
   ru: Дата ANSI счисления
 DATE:
   de: Datum
   en: Date
+  es: Fechar
   fr: Dater
   it: "la notazione dell'ANSI della data della data"
   ru: Дата
 DATE_FORMAT:
   de: j.n.Y, H:i
   en: m/d Y, H:i:s
+  es: 'm/d Y, H: i: s'
   fr: 'm/d Y, H : i : s'
   it: "m/d Y, H: i: gli ultimi elementi seguenti seguenti dell'elemento di Tempo di anno di mese gennaio di mese di s"
   ru: 'м / д Y, H : я : ы'
@@ -461,112 +493,133 @@ DATE_FORMAT_LONG:
 DATE_LAST_MONTH:
   de: Letzter Monat
   en: Last month
+  es: El mes pasado
   fr: Le mois dernier
   ru: За последний месяц За последний
 DATE_LAST_YEAR:
   de: Letztes Jahr
   en: Last year
+  es: El año pasado
   fr: "L'année dernière"
   it: "l'anno scorso"
 DATE_MONTH10:
   de: Oktober
   en: October
+  es: Octubre
   fr: Octobre
   it: di ottobre
 DATE_MONTH11:
   de: November
   en: November
+  es: Noviembre
   fr: Novembre
   it: novembre
   ru: октябрь ноябрь декабрь
 DATE_MONTH12:
   de: Dezember
   en: December
+  es: Diciembre
   fr: Décembre
   it: dicembre
 DATE_MONTH1:
   de: Januar
   en: January
+  es: Enero
   fr: Janvier
   ru: года январь
 DATE_MONTH2:
   de: Februar
   en: February
+  es: Febrero
   fr: Février
   it: febbraio
 DATE_MONTH3:
   de: März
   en: March
+  es: Marcha
   fr: Mars
   it: marzo
   ru: февраля марта апреля
 DATE_MONTH4:
   de: April
   en: April
+  es: Abril
   fr: Avril
   it: aprile
 DATE_MONTH5:
   de: Mai
   en: May
+  es: Mayo
   fr: Mai
   it: maggio
 DATE_MONTH6:
   de: Juni
   en: June
+  es: Junio
   fr: Juin
   it: giugno
   ru: мая июня июля
 DATE_MONTH7:
   de: Juli
   en: July
+  es: Julio
   fr: Juillet
   it: luglio
 DATE_MONTH8:
   de: August
   en: August
+  es: Agosto
   fr: Août
   it: agosto
 DATE_MONTH9:
   de: September
   en: September
+  es: Septiembre
   fr: Septembre
   it: settembre
   ru: августа сентября Вперед
 DATE_NEXT_MONTH:
   de: Nächster Monat
   en: Next month
+  es: El mes próximo
   fr: Le mois prochain
   it: next month
 DATE_NEXT_YEAR:
   de: Nächstes Jahr
   en: Next Year
+  es: El año próximo
   fr: "L'année prochaine"
   it: next year
   ru: месяц Следующий год
 DATE_TIME:
   de: Zeit
   en: Time
+  es: Tiempo
   fr: Temps
   ru: времени
 DATE_TODAY:
   de: Heute
   en: Today
+  es: Hoy
   fr: "Aujourd'hui"
   it: oggi
 DATE_WEEKDAY0:
   de: Sonntag
   en: Sunday
+  es: Domingo
   fr: Dimanche
   it: domenica
 DATE_WEEKDAY1:
   de: Montag
   en: Monday
+  es: Lunes
   fr: Lundi
   it: lunedì
   ru: Воскресенье Понедельник Вторник
 DATE_WEEKDAY2:
   de: Dienstag
   en: Tuesday
+  es: Martes
   fr: Mardi
   it: martedì
 DATE_WEEKDAY3:
@@ -575,17 +628,20 @@ DATE_WEEKDAY3:
 DATE_WEEKDAY4:
   de: Donnerstag
   en: Thursday
+  es: Jueves
   fr: Jeudi
   it: giovedì
   ru: Среди Четверг Пятница
 DATE_WEEKDAY5:
   de: Freitag
   en: Friday
+  es: Viernes
   fr: Vendredi
   it: venerdì
 DATE_WEEKDAY6:
   de: Samstag
   en: Saturday
+  es: Sábado
   fr: Samedi
   it: sabato
 DESCRIPTION:
@@ -609,18 +665,21 @@ EDITOR_EDITTEXT:
 EDITOR_PROMPT_LIST_ENTRY:
   de: Bitte geben Sie einen Text für den Listeneintrag ein. Leer=Ende der Liste.
   en: Please select a text for the list-entry. Space End of list.
+  es: Please select a text for the list-entry. Space=End of list.
   fr: Please select a text for the list-entry. Space=End of list.
   it: Please select a text for the list-entry. Space=End of list.
   ru: Please select a text for the list-entry. Space=End of list.
 EDITOR_PROMPT_TABLE_CELL:
   de: Bitte geben Sie einen Text für die Tabellenspalte ein. Leer=Weiter zur nächsten Tabellenzeile.
   en: Please enter a Text for the table column. Space next row.
+  es: Please enter a Text for the table column. Space=next row.
   fr: Please enter a Text for the table column. Space=next row.
   it: Please enter a Text for the table column. Space=next row.
   ru: Please enter a Text for the table column. Space=next row.
 EDITOR_PROMPT_TABLE_CELL_FIRST_COLUMN:
   de: Bitte geben Sie einen Text für die erste Tabellenzelle ein. Leer=Ende der Tabelle.
   en: Please enter a text for the first table cell. Space End of table.
+  es: Please enter a text for the first table cell. Space=End of table.
   fr: Please enter a text for the first table cell. Space=End of table.
   it: Please enter a text for the first table cell. Space=End of table.
   ru: Please enter a text for the first table cell. Space=End of table.
@@ -630,12 +689,14 @@ EDITOR_SHOW_LANGUAGE:
 EL_CODE_DESC:
   de: 'Das <strong>PHP Code</strong>-Platzhalter enthält PHP-Code, welcher während der Generierung vom System ausgeführt wird. Mit diesem Platzhalter kann eine Seite sehr dynamisch aufgebaut werden, bleibt nach der Generierung aber statisch. Dieser Platzhaltertyp verlangt Kenntnisse in der Programmierung von PHP-Code!'
   en: This PHP-code-element contains PHP-Code which is executed while publishing the page. Only for experienced PHP Programmers!
+  es: 'Este <strong>PHP code</strong>-element contiene el PHP-Código se ejecuta que mientras que publica la página. ¡Solamente para los programadores experimentados de PHP!'
   fr: 'Ce <strong>PHP code</strong>-element contient le PHP-Code qui est exécuté tout en éditant la page. Seulement pour les programmeurs expérimentés de PHP !'
   it: 'che questo <strong>PHP code</strong>-element contiene il PHP-Codice che è eseguito mentre pubblica la pagina. Soltanto per i programmatori con esperienza di PHP!'
   ru: 'Кодекс Это <strong> PHP-код </strong> - элемент содержит PHP кодекса, который выполняется при публикации страницы. Только для опытных программистов PHP! Копировать'
 EL_CODE:
   de: PHP Code
   en: PHP Code
+  es: Código de PHP
   fr: Code de PHP
   it: codice di PHP
 EL_COPY_DESC:
@@ -648,148 +709,174 @@ EL_COPY:
 EL_DATE:
   de: Datum
   en: Date
+  es: Fecha
   ru: Дата
 EL_DATE_DESC:
   de: Dieses Platzhalter enthält ein Datum
   en: This Element contains a date
+  es: Cet élément contient une date
   fr: Cet élément contient une date
   it: che questo elemento contiene una data
   ru: Этот элемент содержит дату
 EL_DYNAMIC_DESC:
   de: Ein Makro bietet fertige Skriptelemente, die während der Seitenerzeugung ausgeführt werden und z.B. komplexe Menüstrukturen erzeugen können. Die erzeugte Seite bleibt weiterhin statisch.
   en: The powerful dynamic element contains dynamic scripting-elements, f.e. complex navigation menus.
+  es: "L'élément dynamique puissant contient les scripting-éléments dynamiques, menus complexes de navigation de Fe."
   fr: "L'élément dynamique puissant contient les scripting-éléments dynamiques, menus complexes de navigation de Fe."
   it: "l'elemento dinamico potente contiene gli scripting-elementi dinamici, menu complessi di navigazione del Fe."
   ru: Динамическая Мощный динамичный элемент содержит динамические элементы сценариев, f.e. сложных навигационных меню. Инфо
 EL_DYNAMIC:
   de: Makro
   en: Dynamic
+  es: Dynamique
   fr: Dynamique
   it: dinamica
 ELEMENT_DELETE_DESC:
   de: 'Löschen des Platzhalters. <strong>Achtung</strong>, alle Seiteninhalte, die auf diesem Element basieren, werden unwiederbringlich gelöscht!'
   en: 'Delete the element. Attention: All Values with are based on this element will be lost!'
+  es: 'Suprimir el elemento. ¡<strong>Attention</strong>, todos los valores con se basan en este elemento serán perdidos!'
   fr: "Supprimer l'élément. <strong>Attention</strong>, toutes les valeurs avec sont basés sur cet élément seront perdus !"
   it: "cancellano l'elemento. <strong>Attention</strong>, tutti i valori con sono basati su questo elemento saranno persi!"
   ru: 'Элементы Удалить элемент. Внимание <strong> </strong>, все значения со основаны на этот элемент будут утеряны! Удалить'
 ELEMENT_DELETE_VALUES_DESC:
   de: Alle Inhalte von diesem Platzhalter werden (incl. Archiven!) gelöscht
   en: All values of this element will be deleted!
+  es: ¡Todos los valores de este elemento serán suprimidos!
   fr: Toutes les valeurs de cet élément seront supprimées !
   it: tutti i valori di questo elemento sarà cancellata!
   ru: значения всех значений данного элемента будут удалены!
 ELEMENT_DELETE_VALUES:
   de: Inhalte löschen
   en: Delete Values
+  es: Valores de la cancelación
   fr: "Valeurs d'effacement"
   it: La cancellazione stima
 ELEMENT_DESC_DESC:
   de: Diese Platzhalterbeschreibung erscheint als Hilfetext beim Bearbeiten dieses Platzhalters
   en: This description is shown while editing the content, this should be a helpful description for the author
+  es: Se demuestra esta descripción mientras que corrige el contenido, esto debe ser una descripción provechosa para el autor
   fr: "Cette description est montrée tout en éditant le contenu, ceci devrait être une description utile pour l'auteur"
   it: "Questa descrizione è indicata mentre pubblica il soddisfare, questa dovrebbe essere una descrizione utile per il Elemento-nome dell'autore"
   ru: Эта характеристика показана при редактировании содержания это должно быть полезно для описания автора
 ELEMENT_NAME_DESC:
   de: Der Name identifiziert diesen Platzhalter im Templatecode. Kann jederzeit geändert werden, ohne dass die dazugehörigen Inhalte verloren gehen
   en: This name identicates this element in the template code. You are able to change this name later
+  es: Este identicates conocidos este elemento en el código de la plantilla. Puedes cambiar este nombre más adelante
   fr: Ce identicates nommés cet élément dans le code de calibre. Vous pouvez changer ce nom plus tard
   it: questo identicates nomi questo elemento nel codice della mascherina. Potete cambiare questo Elemento-tipo successivo di sottotipo di nome
   ru: Это имя identicates этот элемент в код шаблона. Вы можете изменить это имя позже Подтип
 ELEMENT_NAME:
   de: Platzhalter-Name
   en: Element-name
+  es: Elemento-nombre
   fr: Élément-nom
   ru: '- имя элемента'
 ELEMENT_SUBTYPE:
   de: Untertyp
   en: Subtype
+  es: Subtipo
   fr: Sous-type
 ELEMENT_TYPE:
   de: Platzhalter-Typ
   en: Element-type
+  es: Elemento-tipo
   fr: Élément-type
   ru: Элемент типа PHP
 EL_INFO_ACT_USER_DESC:
   de: 'Angemeldeter Benutzer: Beschreibung'
   en: 'Logged in User: Description'
+  es: 'Usuario entrado: Descripción'
   fr: 'Utilisateur entré : Description'
   it: ': Utente entrato di descrizione'
   ru: 'Входвыполненсиспользованием Пользователь : Описание'
 EL_INFO_ACT_USER_FULLNAME:
   de: 'Angemeldeter Benutzer: Voller Name'
   en: 'Logged in User: Full name'
+  es: 'Usuario entrado: Nombre completo'
   fr: 'Utilisateur entré : Nom et prénoms'
   it: 'Usuario entrado: Nombre completo'
   ru: 'Входвыполненсиспользованием Пользователь : Ф.И.О.'
 EL_INFO_ACT_USER_MAIL:
   de: 'Angemeldeter Benutzer: E-Mail'
   en: 'Logged in User: E-Mail'
+  es: 'Usuario entrado: E-mail'
   fr: 'Utilisateur entré : E-mail'
   it: 'Usuario entrado: E-mail'
   ru: 'Входвыполненсиспользованием Пользователь : E-Mail'
 EL_INFO_ACT_USER_TEL:
   de: 'Angemeldeter Benutzer: Telefonnummer'
   en: 'Logged in User: Telephone'
+  es: 'Usuario entrado: Teléfono'
   fr: 'Utilisateur entré : Téléphone'
   it: 'Usuario entrado: Teléfono'
   ru: 'Входвыполненсиспользованием Пользователь :'
 EL_INFO_ACT_USER_USERNAME:
   de: 'Angemeldeter Benutzer: Benutzername'
   en: 'Logged in User: Username'
+  es: 'Usuario entrado: Username'
   fr: 'Utilisateur entré : Username'
   it: 'Usuario entrado: Username'
   ru: 'Телефон Входвыполненсиспользованием Пользователь : Имя пользователя Erstellungsautor'
 EL_INFO_CREATE_USER_DESC:
   de: 'Erstellungsautor: Beschreibung'
   en: 'Erstellungsautor: Description'
+  es: 'Erstellungsautor: Descripción'
   fr: 'Erstellungsautor : Description'
   it: 'Erstellungsautor: Descripción'
   ru: ': Описание'
 EL_INFO_CREATE_USER_FULLNAME:
   de: 'Erstellungsautor: Voller Name'
   en: 'Creation-User: Full name'
+  es: 'Creación-Usuario: Nombre completo'
   fr: 'Création-Utilisateur : Nom et prénoms'
   it: 'Creación-Usuario: Nombre completo'
   ru: 'Creation - Пользователь : Ф.И.О.'
 EL_INFO_CREATE_USER_MAIL:
   de: 'Erstellungsautor: E-Mail'
   en: 'Creation-User: email'
+  es: 'Creación-Usuario: email'
   fr: 'Création-Utilisateur : email'
   it: 'Creación-Usuario: email'
   ru: 'Creation - Пользователь : сообщение'
 EL_INFO_CREATE_USER_TEL:
   de: 'Erstellungsautor: Telefonnummer'
   en: 'Creation-User: Telephone number'
+  es: 'Creación-Usuario: Número de teléfono'
   fr: 'Création-Utilisateur : Numéro de téléphone'
   it: 'Creación-Usuario: Número de teléfono'
   ru: 'Creation - Пользователь : телефон'
 EL_INFO_CREATE_USER_USERNAME:
   de: 'Erstellungsautor: Benutzername'
   en: 'Creation-User: Benutzername'
+  es: 'Creación-Usuario: Benutzername'
   fr: 'Création-Utilisateur : Benutzername'
   it: 'Creación-Usuario: Benutzername'
   ru: 'Creation - Пользователь : Benutzername'
 EL_INFODATE_DATE_CREATED:
   de: Datum/Zeit der Erstellung
   en: Date/Time of Creation
+  es: Date/heure de création
   fr: Date/heure de création
   it: /Tempo della data della creazione
   ru: Infodate Дата / Время Творения
 EL_INFODATE_DATE_PUBLISHED:
   de: Datum/Zeit der Veröffentlichung
   en: Date/Time of Publishing
+  es: "Date/heure de l'édition"
   fr: "Date/heure de l'édition"
   it: /Tempo
   ru: Дата / время публикации
 EL_INFODATE_DATE_SAVED:
   de: Datum/Zeit der letzten Speicherung
   en: Date/Time of last save
+  es: Le date/heure du bout économisent
   fr: Le date/heure du bout économisent
   it: "della data di pubblicazione/Tempo dell'ultimo risparmi"
   ru: Дата / Время последнего спасения
 EL_INFODATE_DESC:
   de: Das Info-Datum stellt ein automatisch erzeugtes Datum bereit
   en: The Infodate contains an automatic generated date
+  es: "L'Infodate contient une date produite automatique"
   fr: "L'Infodate contient une date produite automatique"
   it: il Infodate contiene un utente entrato generato automatico della data
   ru: В Infodate содержит автоматический даты
@@ -799,6 +886,7 @@ EL_INFODATE:
 EL_INFO_DB_ID:
   de: 'Datenbank: ID'
   en: 'Database: ID'
+  es: 'Base de datos: Identificación'
   fr: 'Base de données : Identification'
   it: 'Base de datos: Identificación'
   ru: 'База данных : ID'
@@ -806,6 +894,7 @@ EL_INFO_DB_ID:
 EL_INFO_DB_NAME:
   de: 'Datenbank: Name'
   en: 'Database: Name'
+  es: 'Base de datos: Nombre'
   fr: 'Base de données : Nom'
   it: 'Base de datos: Nombre'
   ru: 'База данных : Имя'
@@ -813,125 +902,146 @@ EL_INFO_DB_NAME:
 EL_INFO_DESC:
   de: Das Infofeld enthält automatisch erzeugte Angaben
   en: This Info field contains automatic content
+  es: Este campo del Info contiene el contenido automático
   fr: "Ce champ d'information contient le contenu automatique"
   it: Este campo del Info contiene el contenido automático
   ru: Эта информация содержит поле автоматическое содержание
 EL_INFO_EDIT_FULLURL:
   de: Url fuer Login (komplett)
   en: Url for Login (complete)
+  es: URL para la conexión (completa)
   fr: "URL pour l'ouverture (complète)"
   it: URL para la conexión (completa)
   ru: для Войти Url (полный)
 EL_INFO_EDIT_URL:
   de: Url fuer Login (relativ)
   en: Url for login (relative)
+  es: URL para la conexión (relativa)
   fr: "URL pour l'ouverture (relative)"
   it: URL para la conexión (relativa)
   ru: для входа Url (относительная)
 EL_INFO:
   de: Info
   en: Info
+  es: Information
   fr: Information
   it: La data di Info
 EL_INFO_LANGUAGE_ID:
   de: 'Verwendete Sprache: ID'
   en: 'Used language: ID'
+  es: 'Lengua usada: Identificación'
   fr: 'Langue utilisée : Identification'
   it: 'Lengua usada: Identificación'
   ru: 'Используется язык : ID'
 EL_INFO_LANGUAGE_ISO:
   de: 'Verwendete Sprache: ISO-Code'
   en: 'Used language: ISO-Code'
+  es: 'Lengua usada: ISO-Código'
   fr: 'Langue utilisée : OIN-Code'
   it: 'Lengua usada: ISO-Código'
   ru: 'Используется язык : ISO - кодекс'
 EL_INFO_LANGUAGE_NAME:
   de: 'Verwendete Sprache: Name'
   en: 'Used language: Name'
+  es: 'Lengua usada: Nombre'
   fr: 'Langue utilisée : Nom'
   it: 'Lengua usada: Nombre'
   ru: 'Подержанные языка :'
 EL_INFO_LASTCH_USER_DESC:
   de: 'Letzter Benutzer: Beschreibung'
   en: 'Last User: Description'
+  es: 'Usuario pasado: Descripción'
   fr: 'Dernier utilisateur : Description'
   it: 'Usuario pasado: Descripción'
   ru: 'Имя Последнее Пользователь :'
 EL_INFO_LASTCH_USER_FULLNAME:
   de: 'Letzter Benutzer: Voller Name'
   en: 'Last User: Full name'
+  es: 'Usuario pasado: Nombre completo'
   fr: 'Dernier utilisateur : Nom et prénoms'
   it: 'Usuario pasado: Nombre completo'
   ru: 'Описание последний Пользователь : Ф.И.О.'
 EL_INFO_LASTCH_USER_MAIL:
   de: 'Letzter Benutzer: E-Mail'
   en: 'Last User: email'
+  es: 'Usuario pasado: email'
   fr: 'Dernier utilisateur : email'
   it: 'Usuario pasado: email'
   ru: 'Последнее Пользователь : по электронной почте'
 EL_INFO_LASTCH_USER_TEL:
   de: 'Letzter Benutzer: Telefonnummer'
   en: 'Last User: Telephone Number'
+  es: 'Usuario pasado: Número de teléfono'
   fr: 'Dernier utilisateur : Numéro de téléphone'
   it: ': Utente di numero di telefono ultimo'
   ru: 'В прошлом Пользователь : Телефон'
 EL_INFO_LASTCH_USER_USERNAME:
   de: 'Letzter Benutzer: Benutzername'
   en: 'Last User: Username'
+  es: 'Usuario pasado: Username'
   fr: 'Dernier utilisateur : Username'
   it: ': Pagina del username'
   ru: 'Последнее Пользователь : Имя пользователя'
 EL_INFO_PAGE_DESC:
   de: 'Seite: Beschreibung'
   en: 'Page: Beschreibung'
+  es: 'Página: Beschreibung'
   fr: 'Page : Beschreibung'
   it: ': Pagina di Beschreibung'
   ru: 'Стр :'
 EL_INFO_PAGE_EXTENSION:
   de: 'Seite: Dateiname-Erweiterung'
   en: 'Page: Filename-extension'
+  es: 'Página: Nombre de fichero-extensión'
   fr: 'Page : Nom de fichier-prolongation'
   it: ': pagina di Nome di schedario-estensione'
   ru: 'PEC Страница : Filename - продление'
 EL_INFO_PAGE_FILENAME:
   de: 'Seite: Dateiname (ohne Erweiterung)'
   en: 'Page: Filename (Without extension)'
+  es: 'Página: Nombre de fichero (sin la extensión)'
   fr: 'Page : Nom de fichier (sans prolongation)'
   it: ': Pagina di nome di schedario (senza estensione)'
   ru: 'Стр : Имя файла (без расширения)'
 EL_INFO_PAGE_FULLFILENAME:
   de: 'Seite: Kompletter Dateiname mit Pfadangabe'
   en: 'Page: Complete path and filename'
+  es: 'Página: Terminar la trayectoria y el nombre de fichero'
   fr: 'Page : Accomplir le chemin et le nom de fichier'
   it: ': Completare il percorso e la pagina di nome di schedario'
   ru: 'страницу : Полный путь и имя файла'
 EL_INFO_PAGE_ID:
   de: 'Seite: ID'
   en: 'Page: ID'
+  es: 'Página: Identificación'
   fr: 'Page : Identification'
   it: ': Pagina di identificazione'
   ru: 'Стр : ID'
 EL_INFO_PAGE_NAME:
   de: 'Seite: Name'
   en: 'Page: Name'
+  es: 'Página: Nombre'
   fr: 'Page : Nom'
   it: ': Progetto di nome'
   ru: 'Стр :'
 EL_INFO_PROJECT_ID:
   de: 'Projekt: ID'
   en: 'Project: ID'
+  es: 'Proyecto: Identificación'
   fr: 'Projet : Identification'
   it: ': Progetto di identificazione'
   ru: 'Название Проекта : ID'
 EL_INFO_PROJECT_NAME:
   de: 'Projekt: Name'
   en: 'Project: Name'
+  es: 'Proyecto: Nombre'
   fr: 'Projet : Nom'
   it: ': Il URL di nome'
   ru: ':'
 EL_INFO_URL:
   de: URL zum Einloggen
   en: URL to log in
+  es: URL a abrirse una sesión
   fr: URL à ouvrir une session
   it: per entrare
   ru: Название URL войти в
@@ -969,6 +1079,7 @@ EL_LINKDATE:
 EL_LINK_DESC:
   de: Ein Link ist eine Verknüpfung mit einer Seite oder einer Datei
   en: Link to a page or a file
+  es: Acoplamiento a una página o a un archivo
   fr: Lien à une page ou à un dossier
   it: ad una pagina o ad una lista della lima
   ru: Энкор Ссылка на страницу или файл
@@ -1054,6 +1165,7 @@ EL_LINK_LINK:
 EL_LINK:
   de: Link (Verknüpfung)
   en: Anchor
+  es: Ancla
   fr: Ancre
   it: "il collegamento dell'ancoraggio"
 EL_LINK_NONE:
@@ -1065,148 +1177,174 @@ EL_LINK_PAGE:
 EL_LONGTEXT_DESC:
   de: Ein Text Absatz ist ein langer, mehrzeiliger Text
   en: A long text is text with more than 1 line
+  es: Un texto largo es el texto con más de 1 línea
   fr: Un long texte est le texte avec plus de 1 ligne
   it: A è il testo con più di 1 linea
   ru: текст долго тексты с более чем 1 линия
 EL_LONGTEXT:
   de: Text-Absatz
   en: Long text
+  es: Texto largo
   fr: Long texte
   it: testo lungo lungo del testo
   ru: Да
 EL_NUMBER_DESC:
   de: Das Platzhalter Zahl enthält numerische Inhalte
   en: The number element contains numeric values
+  es: El elemento del número contiene valores numéricos
   fr: "L'élément de nombre contient des valeurs numériques"
   it: "l'elemento di numero contiene i valori numerici"
   ru: число Число элементов содержит числовые значения
 EL_NUMBER:
   de: Zahl
   en: Number
+  es: Número
   fr: Nombre
   it: numero
 EL_PROP_ALL_LANGUAGES:
   de: Alle Sprachen
   en: All languages
+  es: Todas las idiomas
   fr: Toutes les langues
   it: tutte le lingue
   ru: Все языки
 EL_PROP_ALL_LANGUAGES_DESC:
   de: Der Inhalt der Platzhalter ist in allen Sprachen gleich.
   en: The content is equal in all languages
+  es: El contenido es igual en todas las idiomas
   fr: Le contenu est égal dans toutes les langues
   it: 'il soddisfare è uguale in tutto il <em>Hint di codice di lingue'
   ru: Содержание равно на всех языках PHP
 EL_PROP_CODE_DESC:
   de: '<em>Hinweis:</em> Beachten Sie die API-Dokumentation der Klasse <tt>Api</tt>. Benutzen Sie ausschließlich diese Klasse und vermeiden Sie Ausgaben mit <tt>echo</tt> oder <tt>print</tt>!'
   en: 'Hint: Take a look at the API-Documentation of this class. Be sure to only use the Methods from this class, never <tt>echo</tt> or <tt>print</tt>!'
+  es: '<em>Hint: Toma de </em> una mirada en la API-Documentación de esta clase. ¡Ser seguro utilizar solamente los métodos de esta clase, nunca <tt>echo</tt> o <tt>print</tt>!'
   fr: "<em>Hint : Prise de </em> un regard à l'Api-Documentation de cette classe. Être sûr d'employer seulement les méthodes de cette classe, jamais <tt>echo</tt> ou <tt>print</tt> !"
   it: ': Introito di </em> uno sguardo alla Api-Documentazione di questo codice categoria. Essere sicuro usare soltanto i metodi da questo codice categoria, mai <tt>echo</tt> o <tt>print</tt>!'
   ru: 'Кодекс <em> Подсказка : </em> Посмотрите на API - Документация этого класса. Обязательно используйте только из методов этого класса, не повторить <tt> </tt> или распечатать <tt> </tt>!'
 EL_PROP_CODE:
   de: PHP Code
   en: PHP Code
+  es: Código de PHP
   fr: Code de PHP
   it: PHP
 EL_PROP_DATEFORMAT:
   de: Datumsformat
   en: Date format
+  es: Formato de fecha
   fr: Format de date
   it: Disposizione di disposizione di data
   ru: Формат даты
 EL_PROP_DATEFORMAT_DESC:
   de: 'Format bei der Darstellung des Datums. Wenden Sie sich an Ihren Administrator wenn sie weitere Formate benötigen<br/>(Hinweis: Die Formate sind definiert in der Datei <tt>dateformat.ini.php</tt>)'
   en: 'Format of the date. Inform your adminOCistrator if you need other formats<br/>(Hint: This formats are defined in the file <tt>dateformat.ini.php</tt>)'
+  es: 'Formato de la fecha. Informar a tu administrador si necesitas el otro formats<br/> (indirecta: Esto ajusta a formato se define en el archivo <tt>dateformat.ini.php</tt>)'
   fr: "Format de la date. Informer votre administrateur si vous avez besoin de l'autre formats<br/> (conseil : Ceci compose sont définis dans le dossier <tt>dateformat.ini.php</tt>)"
   it: "della data. Informare il vostro coordinatore se avete bisogno dell'altro formats<br/> (suggerimento: Ciò formatta è definita nel conteggio della lima <tt>dateformat.ini.php</tt>)"
   ru: 'Формат даты. Расскажите своим администратором Вам нужны другие форматы <br> (Полезный совет : Это форматы, определены в файле <tt> dateformat.ini.php </tt>)'
 EL_PROP_DECIMALS_DESC:
   de: Anzahl der Dezimalstellen bei der Darstellung dieser Zahl
   en: Count of decimal points
+  es: Cuenta de comas
   fr: Compte de virgules décimales
   it: del carbone del punto decimale, Fe del punto decimale dei punti decimali
   ru: графом сотых
 EL_PROP_DECIMALS:
   de: Dezimalstellen
   en: Count of decimal points
+  es: Cuenta de comas
   fr: Compte de virgules décimales
   it: del conteggio dei punti decimali
   ru: графом сотых
 EL_PROP_DEC_POINT_DESC:
   de: "Darstellung des Dezimalpunkt als Zeichenkette, z.B. '.' oder ',', oder leer"
   en: "Char of the decimal point, f.e. '.' or ',', or empty"
+  es: Carbón de la coma, FE. ?.? o ?,?, o vaciar
   fr: Char de la virgule décimale, Fe. « . » ou « , », ou vider
   it: . ?.? o ?,?, o svuotare
   ru: "в десятичную точку, f.e. . 'или', 'или пустые"
 EL_PROP_DEC_POINT:
   de: Dezimalpunkt
   en: decimal point
+  es: coma
   fr: virgule décimale
   ru: запятой Char
 EL_PROP_DEFAULT_FOLDEROBJECT_DESC:
   de: Das zu verlinkende Objekt kann beim Bearbeiten aus diesem Ordner (incl. aller Unterordnern) ausgewählt werden. Die Auswahlliste kann somit übersichtlicher gestaltet werden.
   en: The linked object can be choosed out of this folder. The Select-list will be much clearer with a useful setting here.
+  es: El objeto ligado puede ser choosed fuera de esta carpeta. La Seleccionar-lista será mucho clarificante con un ajuste útil aquí.
   fr: "L'objet lié peut être choosed hors de cette chemise. La Choisir-liste sera beaucoup de clairifiant avec un arrangement utile ici."
   it: che il oggetto collegato può essere choosed da questo dispositivo di piegatura. La Selezion-lista sarà molto pulitore con una regolazione utile qui.
   ru: Связанный объект можно выбравшие из этой папки. Выберите список будет намного яснее с полезным установление здесь.
 EL_PROP_DEFAULT_FOLDEROBJECT:
   de: Höchster Auswahlordner
   en: Highest directory
+  es: El directorio más alto
   fr: "L'annuaire le plus élevé"
   it: "l'più alto indice"
   ru: Наивысший каталоге
 EL_PROP_DEFAULT_LONGTEXT_DESC:
   de: Dieser Text wird benutzt, wenn der Redakteur das Seitenelement leer lässt
   en: This text is used if the element is empty
+  es: Se utiliza este texto si el elemento es vacío
   fr: "Ce texte est employé si l'élément est vide"
   it: "questo testo è usato se l'elemento è"
   ru: Этот текст используется в том случае, если элемент является пустым по умолчанию
 EL_PROP_DEFAULT_LONGTEXT:
   de: Text Vorbelegung
   en: Default Text
+  es: Texto del defecto
   fr: Texte de défaut
   it: Il testo di difetto
   ru: Текст по умолчанию
 EL_PROP_DEFAULT_OBJECT_DESC:
   de: Vorbelegtes Objekt
   en: Default object
+  es: Objeto del defecto
   fr: Objet de défaut
   ru: объект по умолчанию объект по умолчанию
 EL_PROP_DEFAULT_OBJECT:
   de: Vorbelegtes Objekt
   en: Default object
+  es: Objeto del defecto
   fr: Objet de défaut
   it: "testo vuoto di difetto dell'oggetto di difetto dell'oggetto di difetto"
 EL_PROP_DEFAULT_TEXT_DESC:
   de: Dieser Text wird benutzt, wenn der Redakteur das Seitenelement leer lässt
   en: This text is used if the element is empty
+  es: Se utiliza este texto si el elemento es vacío
   fr: "Ce texte est employé si l'élément est vide"
   it: "questo testo è usato se l'elemento è"
   ru: текст Этот текст используется в том случае, если элемент является пустым
 EL_PROP_DEFAULT_TEXT:
   de: Text Vorbelegung
   en: Default text
+  es: Texto del defecto
   fr: Texte de défaut
 EL_PROP_DYNAMIC_PARAMETERS_DESC:
   de: 'Für das Makro können Parameter gesetzt werden. Geben Sie diese hier an.<br/>Format: 1 Parameter pro Zeile, Name/Wert mit Doppelpunkt (:) getrennt.<br/>Beispiel:<br/><tt>a:1<br/>b:2</tt>'
   en: You can set parameters for this dynamic element
+  es: Puedes fijar los parámetros para este elemento dinámico
   fr: Vous pouvez placer des paramètres pour cet élément dynamique
   it: potete regolare i parametri per i parametri dinamici di questo elemento
   ru: Параметры можно задать параметры для такого динамичного элемента Параметры
 EL_PROP_DYNAMIC_PARAMETERS:
   de: Parameter
   en: Parameter
+  es: Parámetro
   fr: Paramètre
   it: parametro vuoto
 EL_PROP_DYN_PARAM_DESC:
   de: keine Beschreibung
   en: no Description
+  es: ninguna descripción
   fr: aucune description
   it: HTML di descrizione
   ru: нет
 EL_PROP_DYN_PARAM:
   de: Parameter
   en: Parameters
+  es: Parámetros
   fr: Paramètres
 EL_PROP_FORMAT:
   de: Formatierung
@@ -1214,12 +1352,14 @@ EL_PROP_FORMAT:
 EL_PROP_HTML_DESC:
   de: Dem Redakteur kann HTML-Code in diesem Platzhalter schreiben. Ist dieser Schalter nicht gesetzt, werden alle HTML-Tags maskiert.
   en: Allow writing raw HTML tags.
+  es: Permitir el escribir de etiquetas crudas del HTML.
   fr: Laisser écrire les étiquettes crues de HTML.
   it: non lasciare che scriva le modifiche grezze del HTML.
   ru: Позвольте письменно вставлять теги.
 EL_PROP_HTML:
   de: HTML mit erweitertem Editor
   en: HTML on
+  es: HTML en
   fr: HTML sur
   it: sopra
   ru: Описание по HTML
@@ -1229,30 +1369,35 @@ EL_PROP_RAW:
 EL_PROP_SELECT_ITEMS:
   de: Auswahlliste Vorbelegung
   en: Selectbox Default Values
+  es: Valores prefijados de Selectbox
   fr: Valeurs par défaut de Selectbox
   it: I valori di difetto di Selectbox
   ru: Selectbox умолчанию
 EL_PROP_SELECT_ITEMS_DESC:
   de: 'Hier werden die Werte festgelegt, aus denen der Redakteur auswählen kann. 1 Wert pro Zeile. Anzeige und Wert können mit dem Doppelpunkt (:) getrennt werden, Beispiel: DEU,Deutschland. Wählt der Redakteur jetzt Deutschland aus, wird nur DEU als Wert gespeichert.'
   en: Here are values explained out of the author is able to select values.
+  es: Aquí están los valores explicados fuera del autor pueden seleccionar valores.
   fr: "Voici les valeurs expliquées hors de l'auteur peut choisir des valeurs."
   it: "qui sono valori spiegati dall'autore può selezionare i valori."
   ru: Вот значения из пояснил автор имеет возможность выбрать ценности.
 EL_PROP_THOUSAND_SEP_DESC:
   de: "Darstellung der Tausender-Stelle als Zeichenkette, z.B. '.', oder leer"
   en: "Darstellung der Tausender-Stelle als Zeichenkette, z.B. '.', oder leer"
+  es: Als Zeichenkette, z.B. de Tausender-Stelle del der de Darstellung ?. ?, leer del oder
   fr: "Als Zeichenkette, z.B. de Tausender-Stelle de der de Darstellung « .  », regard de côté d'oder"
   it: i als Zeichenkette, z.B. di Tausender-Stelle del der di Darstellung ?. ?, il leer del oder
   ru: 'Дарстеллунг дер Tausender - Стелле мам Zeichenkette, z.B., ЛЕЕР oder'
 EL_PROP_THOUSAND_SEP:
   de: Tausender-Stelle
   en: thousand-char
+  es: mil-socarrar
   fr: mille-carboniser
   it: mille-carbonizzare
   ru: Тысячелетний символ
 EL_PROP_WIKI_DESC:
   de: Mit der Wiki-Schnellformatierung können Texte im Bearbeitungsfenster formatiert werden, z.B. Fett/Kursivschreibung, Verweise...
   en: Use wiki quickformat
+  es: Utilizar el quickformat del wiki
   fr: Employer le quickformat de wiki
   ru: Используйте вики quickformat
 EL_PROP_WIKIHTML:
@@ -1261,30 +1406,35 @@ EL_PROP_WIKIHTML:
 EL_PROP_WIKI:
   de: Wiki-ähnliche Schnellformatierung, HTML nicht erlaubt
   en: '<em>Wiki</em> Quick formatting'
+  es: 'Formato rápido de <em>Wiki</em>'
   fr: 'Formatage rapide de <em>Wiki</em>'
   it: '<em>Wiki</em> che il quickformat rapido di wiki di uso di formattazione'
   ru: '<em> Wiki </em> Быстрое форматирование'
 EL_PROP_WITH_ICON_DESC:
   de: Im Bearbeitungsmodus einer Seite erscheint vor diesem Platzhalter ein anklickbares Symbol
   en: In edit mode a icon is shown before the value
+  es: En corregir el modo que un icono se demuestra antes del valor
   fr: "Dans éditer le mode qu'une icône est montrée avant la valeur"
   it: "dentro pubblica il modo un'icona è indicata prima che il controllo scrivibile di valore"
   ru: В режим редактирования значок отображается до значения записи
 EL_PROP_WITH_ICON:
   de: mit Editier-Ikon
   en: with edit icon
+  es: con corregir el icono
   fr: "avec éditer l'icône"
   it: "con pubblica l'icona"
   ru: изменить иконку с
 EL_PROP_WRITABLE_DESC:
   de: Nur wenn dieser Schalter gesetzt ist, kann der Platzhalterinhalt über den Baum oder über den Bearbeitungsmodus einer Seite geändert werden
   en: Check this, so the element value can be changed
+  es: Comprobar esto, así que el valor del elemento puede ser cambiado
   fr: "Vérifier ceci, ainsi la valeur d'élément peut être changée"
   it: "questo, in modo da il valore dell'elemento possa essere"
   ru: Проверить это, это элемент значения могут быть изменены
 EL_PROP_WRITABLE:
   de: Editierbar
   en: writable
+  es: escribible
   fr: à affichage
 EL_SELECT:
   de: Auswahlliste
@@ -1293,18 +1443,21 @@ EL_SELECT:
 EL_SELECT_DESC:
   de: Der Inhalt wird vom Redakteur aus einer vorzugebenden Liste ausgewählt
   en: The value is given by the author out of an list
+  es: El valor es dado por el autor fuera de una lista
   fr: "La valeur est indiquée par l'auteur hors d'une liste"
   it: "il valore è dato dall'autore da un giacimento del testo della lista"
   ru: Selectbox Стоимость определяется автором из списка
 EL_TEXT_DESC:
   de: Das einfache Textfeld dient für einzeilige Texte bis max. 255 Zeichen
   en: The textfield is used for one line texts up to 255 letters
+  es: El textfield se utiliza para una línea los textos hasta 255 letras
   fr: "Le textfield est employé pour une ligne des textes jusqu'à 255 lettres"
   it: il textfield è usato per una linea testi fino a 255 lettere
   ru: В textfield используется для одной строки текста до 255 букв Technischer
 EL_TEXT:
   de: Text (einfach)
   en: Text field
+  es: Campo del texto
   fr: Gisement des textes
   ru: Текстовые области
 EMPTY:
@@ -1313,60 +1466,70 @@ EMPTY:
 ERROR_ACCESS_DENIED_DESC:
   de: Sie haben keine ausreichenden Rechte, um auf das ausgewählte Objekt zuzugreifen
   en: You do not have enough rights to access the selected object.
+  es: No tienes bastantes derechas de tener acceso al objeto seleccionado.
   fr: "Vous n'avez pas assez de droits d'accéder à l'objet choisi."
   it: "non hanno abbastanza diritti di accedere all'oggetto selezionato."
   ru: Вы не имеете достаточно прав для доступа к отдельным статьям.
 ERROR_ACCESS_DENIED:
   de: Zugriff verweigert
   en: Access denied
+  es: Tener acceso negado
   fr: Access nié
   it: li ha negati
   ru: Фехлер В доступе отказано
 ERROR_DESC:
   de: Ein nicht näher spezifizierter Fehler ist aufgetreten, Ihre Aktion wurde vermutlich nicht korrekt ausgeführt. Wenden Sie sich bei Bedarf an Ihren Administrator
   en: An unspecified error occurered. Please inform your administrator.
+  es: Un error sin especificar occurered. Informar por favor a tu administrador.
   fr: Une erreur non spécifiée occurered. Veuillez informer votre administrateur.
   it: Un errore non specificato occurered. Informare prego il vostro coordinatore.
   ru: Определенная погрешность occurered. Пожалуйста, информируйте администратора.
 ERROR_DESTDIR_NOT_WRITEABLE:
   de: Das lokale Zielverzeichnis ist nicht beschreibbar. Bitte wenden Sie sich an Ihren Administrator.
   en: The local file directory is not writable.
+  es: El directorio local del archivo no es escribible.
   fr: "L'annuaire local de dossier n'est pas à affichage."
   it: "L'indice locale della lima non è scrivibile."
   ru: В каталоге локальный файл недоступен для записи.
 ERROR_FTP_CANNOT_CONNECT_TO_SERVER:
   de: Der FTP-Server ist nicht verfügbar. Bitte wenden Sie sich an Ihren Administrator.
   en: The FTP-Server is not available.
+  es: El ftp server no está disponible.
   fr: "Le ftp server n'est pas disponible."
   it: il ftp server non è disponibile.
   ru: 'В FTP Server - нет.'
 ERROR_FTP_CANNOT_LOGIN:
   de: Das Login am FTP-Server war nicht erfolgreich. Bitte wenden Sie sich an Ihren Administrator.
   en: The Login on the FTP-Server failed.
+  es: La conexión en el ftp server falló.
   fr: "L'ouverture sur le ftp server échoue."
   it: "L'inizio attività sul ftp server è venuto a mancare."
   ru: 'В Войти на FTP Server - провалилась.'
 ERROR_FTP_CANNOT_PASV_OFF:
   de: Der FTP-Server konnte nicht den passiven übertragungsmodus ausschalten. Bitte wenden Sie sich an Ihren Administrator.
   en: The FTP-Server is unaible to switch off passive mode.
+  es: El ftp server es unaible apagar modo pasivo.
   fr: Le ftp server est unaible pour couper le mode passif.
   it: El ftp server es unaible apagar modo pasivo.
   ru: 'В FTP - Сервер unaible выключает пассивный режим.'
 ERROR_FTP_CANNOT_PASV_ON:
   de: Der FTP-Server konnte nicht in den passiven übertragungsmodus umschalten. Bitte wenden Sie sich an Ihren Administrator.
   en: The FTP-Server is unaible to switch off passive mode.
+  es: El ftp server es unaible apagar modo pasivo.
   fr: Le ftp server est unaible pour couper le mode passif.
   it: El ftp server es unaible apagar modo pasivo.
   ru: 'В FTP - Сервер unaible выключает пассивный режим.'
 ERROR_FTP:
   de: Fehler bei FTP-übertragung
   en: Error while FTP-Transfer
+  es: Error mientras que Ftp-Transferir
   fr: Erreur tandis que Ftp-Transférer
   it: "L'errore mentre Ftp-Trasferire"
   ru: 'Ошибка при FTP - передача'
 ERROR_FTP_UNABLE_TO_CHDIR:
   de: Der FTP-Server konnte nicht ins gewünschte Verzeichnis wechseln. Bitte wenden Sie sich an Ihren Administrator.
   en: The FTP-Server could not select the directory.
+  es: El ftp server no podía seleccionar el directorio.
   fr: "Le ftp server n'a pas pu choisir l'annuaire."
   it: El ftp server no podía seleccionar el directorio.
   ru: 'В FTP Server - нельзя выбрать директорию.'
@@ -1376,12 +1539,14 @@ ERROR_LOGIN_BROKEN_SSL_CERT:
 ERROR_NO_PROJECT:
   de: kein Projekt verfügbar/ausgewählt.
   en: no project available.
+  es: ningún proyecto disponible.
   fr: aucun projet disponible.
   it: ningún proyecto disponible.
   ru: нет проекта имеется.
 ERROR_NOT_A_FOLDER:
   de: Ausgewähltes Objekt ist kein Ordner
   en: object is not a directory
+  es: el objeto no es un directorio
   fr: "l'objet n'est pas un annuaire"
   it: el objeto no es un directorio
   ru: Объекта не справочник
@@ -1392,12 +1557,14 @@ ERROR:
 ERROR_USER_PW_DESC:
   de: 'Das Kennwort konnte nicht geändert werden, beachten Sie:<ul><li>Das Kennwort darf nicht leer sein</li><li>Das neue Kennwort muss zweimal identisch eingegeben werden</li></ul>Versuchen Sie es noch einmal.'
   en: The password could not be changed
+  es: La contraseña no podría ser cambiada
   fr: Le mot de passe ne pourrait pas être changé
   it: La contraseña no podría ser cambiada
   ru: пароль не может быть изменен Экспорт
 ERROR_USER_PW:
   de: Kennwortänderung fehlgeschlagen
   en: The password could not be changed
+  es: La contraseña no podría ser cambiada
   fr: Le mot de passe ne pourrait pas être changé
   it: La contraseña no podría ser cambiada
   ru: Пароль не может быть изменен
@@ -1407,12 +1574,14 @@ EXAMPLE:
 EXPORT_DESC:
   de: Mit dem Export können Sie Dateien aus einem Projektordner in das lokale Dateisystem des Servers kopieren
   en: Use the export for copying files to the server
+  es: Utilizar la exportación para los archivos de copiado al servidor
   fr: "Employer l'exportation pour les dossiers copiants au serveur"
   it: Utilizar la exportación para los archivos de copiado al servidor
   ru: Использовать для экспорта копирования файлов на сервер Ингушетия
 EXPORT:
   de: Export
   en: Export
+  es: Exportación
   fr: Exportation
   it: Exportación
 FILEBROWSER:
@@ -1421,28 +1590,33 @@ FILEBROWSER:
 FILE_DELETE_DESC:
   de: Löschen der Datei
   en: Removing the file
+  es: Quitando el archivo
   fr: Enlevant le dossier
   it: Quitando el archivo
   ru: Удаление файлов Файл
 FILE_EXTENSION:
   de: Dateiendung
   en: File extension
+  es: Extensión de archivo
   fr: Prolongation de dossier
   it: Extensión de archivo
 FILE_IMAGE_FORMAT:
   de: Bildformat
   en: Image format
+  es: Formato de la imagen
   fr: "Format d'image"
   it: Formato de la imagen
   ru: продление формат Image
 FILE_IMAGE_HEIGHT:
   de: Höhe
   en: Height
+  es: Altura
   fr: Taille
   it: Altura
 FILE_IMAGE_JPEG_COMPRESSION:
   de: JPEG Qualität
   en: JPEG Quality
+  es: Calidad del JPEG
   fr: Qualité de JPEG
   it: Calidad del JPEG
   ru: Высота Качество JPEG
@@ -1455,11 +1629,13 @@ FILE_IMAGE_NEW_WIDTH_HEIGHT:
 FILE_IMAGE_RESIZE_DESC:
   de: 'Ändern Sie die Bildgröße, indem Sie die neuen Angaben für Breite und Höhe in Pixeln angeben.<br/><em>Hinweis:</em> Geben Sie nur Breite <strong>oder</strong> Höhe an, um das Seitenverhältnis beizubehalten. Um nur das Bildformat zu ändern lassen Sie Breiten- und Höhenangabe leer.'
   en: 'Change the image size, give the new width and size in pixels<br/><em>Hint:</em> Input only width <strong>or</strong> Height for not touching the format. If you only want to change the format, leave both fields empty.'
+  es: "Changer la taille d'image, donner la nouvelles largeur et taille dans pixels<br/><em>Hint : </em> ont entré seulement la taille de la largeur <strong>or</strong> pour ne pas toucher le format. Si vous voulez seulement changer le format, laisser les deux champs vides."
   fr: "Changer la taille d'image, donner la nouvelles largeur et taille dans pixels<br/><em>Hint : </em> ont entré seulement la taille de la largeur <strong>or</strong> pour ne pas toucher le format. Si vous voulez seulement changer le format, laisser les deux champs vides."
   it: "Changer la taille d'image, donner la nouvelles largeur et taille dans pixels<br/><em>Hint : </em> ont entré seulement la taille de la largeur <strong>or</strong> pour ne pas toucher le format. Si vous voulez seulement changer le format, laisser les deux champs vides."
 FILE_IMAGE_RESIZE:
   de: Größe ändern
   en: Change size
+  es: Changer la taille
   fr: Changer la taille
   it: Changer la taille
 FILE_IMAGE_SIZE_FACTOR:
@@ -1471,6 +1647,7 @@ FILE_MAX_SIZE:
 FILE_MIMETYPE:
   de: Mime-Type
   en: Mime-Type
+  es: Pantomime-Type
   fr: Pantomime-Type
   it: Pantomime-Type
 FILENAME:
@@ -1482,87 +1659,108 @@ FILENAME_DESC:
 FILE_NO_DELETE_BECAUSE_LINKED:
   de: '<em>Hinweis:</em>: Diese Datei kann nicht gelöscht werden, da andere Seiten oder Verknüpfungen auf diese Datei verweisen.'
   en: '<em>Notice:</em>: This file cannot be removed, because it is used by some pages.'
+  es: "<em>Notice : </em> : Ce dossier ne peut pas être enlevé, parce qu'il est employé par quelques pages."
   fr: "<em>Notice : </em> : Ce dossier ne peut pas être enlevé, parce qu'il est employé par quelques pages."
 FILE_PAGES_DESC:
   de: 'Folgende Seiten verwenden diese Datei:'
   en: 'Following Pages are linking to this file:'
+  es: 'Les pages suivantes lient à ce dossier :'
   fr: 'Les pages suivantes lient à ce dossier :'
 FILE_PAGES:
   de: Seiten
   en: Reverse-Linked Pages
+  es: Pages Renversé-Liées
   fr: Pages Renversé-Liées
 FILE_REPLACE_DESC:
   de: 'Sie können diese Datei mit einer Datei von Ihrer lokalen Festplatte ersetzen. Wählen Sie dazu die gewünschte Datei aus, um diese auf den Server zu laden.<br/><em>Hinweis:</em>Alle Verweise auf diese Datei bleiben erhalten.'
   en: 'You are able to replace this file with a file from your harddisc<br/><em>Hint:</em>All Links to this page are untouched'
+  es: 'Vous pouvez remplacer ce dossier avec un dossier de votre harddisc<br/><em>Hint : Les liens de </em>All à cette page sont intacts'
   fr: 'Vous pouvez remplacer ce dossier avec un dossier de votre harddisc<br/><em>Hint : Les liens de </em>All à cette page sont intacts'
 FILE_REPLACE:
   de: Ersetzen
   en: Replace
+  es: Remplacer
   fr: Remplacer
 FILE_SIZE:
   de: Größe
   en: Size
+  es: Taille
   fr: Taille
 FILETYPE_ODF:
   de: OpenDocument Format
   en: OpenDocument format
+  es: Formato de OpenDocument
   fr: "Format d'OpenDocument"
 FILETYPE_PLAINTEXT:
   de: Einfacher Text
   en: Simple plain text
+  es: Texto llano simple
   fr: Texte plat simple
   ru: формате простого текста Простой
 FOLDER_FLIP_MARK:
   de: Markierung umdrehen
   en: Flip selected
+  es: Renverser choisi
   fr: Renverser choisi
 FOLDER_FLIP:
   de: Reihenfolge umdrehen
   en: Flip order
+  es: Ordre de chiquenaude
   fr: Ordre de chiquenaude
 FOLDER_MARK_ALL:
   de: Alle markieren
   en: Mark all
+  es: Marquent tous
   fr: Marquent tous
 FOLDER_NEW_FILE:
   de: Neue Datei
   en: New file
+  es: Nouveau dossier
   fr: Nouveau dossier
 FOLDER_NEW_FOLDER:
   de: Neuer Ordner
   en: New directory
+  es: Nouvel annuaire
   fr: Nouvel annuaire
 FOLDER_NEW_LINK:
   de: Neue Verknüpfung
   en: New link
+  es: Nouveau lien
   fr: Nouveau lien
 FOLDER_NEW_PAGE:
   de: Neue Seite
   en: New page
+  es: Nouvelle page
   fr: Nouvelle page
 FOLDER_ORDERBYLASTCHANGE:
   de: Einträge nach dem Datum der letzten änderung aufsteigend sortieren
   en: Sort entrys by the date of the last change
+  es: "Assortir les entrys d'ici la date du dernier changement"
   fr: "Assortir les entrys d'ici la date du dernier changement"
 FOLDER_ORDERBYNAME:
   de: Einträge nach dem Namen aufsteigend sortieren
   en: Sort entrys by name
+  es: Assortir les entrys de nom
   fr: Assortir les entrys de nom
 FOLDER_ORDERBYTYPE:
   de: Einträge nach dem Typ sortieren
   en: Sort entrys by type
+  es: Assortir les entrys par le type
   fr: Assortir les entrys par le type
 FOLDER_ORDER:
   de: Reihenfolge
   en: Order
+  es: Ordre
   fr: Ordre
 FOLDER_ROOT_DESC:
   de: Das Hauptverzeichnis des Projektes, es enthält die Projektstruktur mit Unterordnern, allen Seiten und Dateien
   en: Root directory of the project. It contains all values.
+  es: Répertoire racine du projet. Il contient toutes les valeurs.
   fr: Répertoire racine du projet. Il contient toutes les valeurs.
 FOLDER_ROOT:
   de: Inhalt
   en: Root directory
+  es: Répertoire racine
   fr: Répertoire racine
 FOLDER_SELECT_ARCHIVE_HELP:
   de: Ausgewählte Objekte in eine neue TAR-Datei kopieren
@@ -1606,6 +1804,7 @@ FOLDER_SELECT_TARGET_FOLDER:
 FOLDER_SUBFOLDER:
   de: Unterordner
   en: Subdirectory
+  es: Sous-répertoire
   fr: Sous-répertoire
 FOLDER_UNMARK_ALL:
   de: Markierung entfernen
@@ -1616,10 +1815,12 @@ GLOBAL_ACTION:
 GLOBAL_ACTIVE:
   de: aktuell
   en: active
+  es: actif
   fr: actif
 GLOBAL_ADD:
   de: Hinzufügen
   en: Add
+  es: Ajouter
   fr: Ajouter
 GLOBAL_ADMINISTRATION:
   de: Administration
@@ -1627,14 +1828,17 @@ GLOBAL_ADMINISTRATION:
 GLOBAL_ALL:
   de: Alle
   en: All
+  es: Tous
   fr: Tous
 GLOBAL_ALL_LANGUAGES:
   de: Alle Sprachen
   en: All languages
+  es: Toutes les langues
   fr: Toutes les langues
 GLOBAL_ARCHIVE:
   de: Archiv
   en: Archive
+  es: Archives
   fr: Archives
 GLOBAL_ARCHIVE_DESC:
   de: Alle historischen Inhalte zu diesem Platzhalter.
@@ -1642,6 +1846,7 @@ GLOBAL_ARCHIVE_DESC:
 GLOBAL_CHANGE:
   de: ändern
   en: Change
+  es: Changer
   fr: Changer
 GLOBAL_CHANGE_TO:
   de: Wechseln zu
@@ -1649,6 +1854,7 @@ GLOBAL_CHANGE_TO:
 GLOBAL_CLEAN_AFTER_PUBLISH:
   de: Zielverzeichnis anschließend aufräumen und alte Dateien entfernen.
   en: Cleanup target directory and remove old files in it.
+  es: "L'annuaire de cible de nettoyage et enlèvent de vieux dossiers dans lui."
   fr: "L'annuaire de cible de nettoyage et enlèvent de vieux dossiers dans lui."
 GLOBAL_CLIPBOARD:
   de: Ablage
@@ -1658,16 +1864,19 @@ GLOBAL_CLIPBOARD:
 GLOBAL_COMMENT:
   de: Kommentar
   en: comment
+  es: commentaire
   fr: commentaire
   it: comentario
 GLOBAL_COMMON:
   de: Allgemein
   en: Common
+  es: Terrain communal
   fr: Terrain communal
   it: Campo común
 GLOBAL_COMPARE:
   de: Vergleich
   en: Compare
+  es: Comparer
   fr: Comparer
   it: Comparar
 GLOBAL_COPY:
@@ -1676,46 +1885,55 @@ GLOBAL_COPY:
 GLOBAL_COPY_OF:
   de: Kopie von
   en: Copy of
+  es: Copy de
   fr: Copy de
   it: Copy de
 GLOBAL_CREATED:
   de: Erstellt
   en: created
+  es: créé
   fr: créé
   it: creado
 GLOBAL_DATABASE:
   de: Datenbank
   en: Database
+  es: Base de données
   fr: Base de données
   it: Base de datos
 GLOBAL_DAYS:
   de: Tage
   en: Days
+  es: Jours
   fr: Jours
   it: Días
 GLOBAL_DAY:
   de: Tag
   en: Day
+  es: Jour
   fr: Jour
   it: Día
 GLOBAL_DEFAULT:
   de: Standard
   en: Standard
+  es: Norme
   fr: Norme
   it: Estándar
 GLOBAL_DEFAULT_TEXT:
   de: Text Vorbelegung
   en: Default text
+  es: Texte de défaut
   fr: Texte de défaut
   it: Texto del defecto
 GLOBAL_DELETED:
   de: Objekt wurde gelöscht
   en: Object was deleted
+  es: "L'objet a été supprimé"
   fr: "L'objet a été supprimé"
   it: El objeto fue suprimido
 GLOBAL_DELETE:
   de: Löschen
   en: Delete
+  es: Effacement
   fr: Effacement
   it: Cancelación
 GLOBAL_DESCRIPTION:
@@ -1725,16 +1943,19 @@ GLOBAL_DESCRIPTION:
 GLOBAL_DIFFERENCES_DESC:
   de: Sie können sich die Unterschiede zwischen 2 Versionen anzeigen lassen
   en: Show differences between 2 Revisions
+  es: Montrer les différences entre 2 révisions
   fr: Montrer les différences entre 2 révisions
   it: Demostrar las diferencias entre 2 revisiones
 GLOBAL_DIFFERENCES:
   de: Unterschiede
   en: Differences
+  es: Différences
   fr: Différences
   it: Diferencias
 GLOBAL_DOWN:
   de: runter
   en: down
+  es: vers le bas
   fr: vers le bas
   it: abajo
 GLOBAL_ELEMENT:
@@ -1743,47 +1964,56 @@ GLOBAL_ELEMENT:
 GLOBAL_EXTENSIONS:
   de: Erweiterungen
   en: Extensions
+  es: Prolongements
   fr: Prolongements
   it: Extensiones
 GLOBAL_FILE:
   de: Datei
   en: File
+  es: Dossier
   fr: Dossier
   it: Archivo
 GLOBAL_FILENAME:
   de: Dateiname
   en: Filename
+  es: Nom de fichier
   fr: Nom de fichier
   it: Nombre de fichero
 GLOBAL_FILENAME_DESC:
   de: Dateiname, welcher für die Generierung verwendet wird. Wird automatisch gemäß RFC 2396 angepasst. Max. 255 Zeichen
   en: Filename, which will be used for generating. Will automatically checked against RFC 2396 (max. 255 chars).
+  es: Nom de fichier, qui sera employé pour se produire. La volonté a automatiquement vérifié contre RFC 2396 (maximum 255 chars).
   fr: Nom de fichier, qui sera employé pour se produire. La volonté a automatiquement vérifié contre RFC 2396 (maximum 255 chars).
   it: Nombre de fichero, que será utilizado para generar. La voluntad comprobó automáticamente contra RFC 2396 (máximo 255 carbones).
 GLOBAL_FILES:
   de: Dateien
   en: Files
+  es: Dossiers
   fr: Dossiers
   it: Archivos
 GLOBAL_FILE_TRANSFER:
   de: Dateitransfer
   en: File transfer
+  es: Transfert de fichier
   fr: Transfert de fichier
   it: Transferencia de archivo
 GLOBAL_FILE_TRANSFER_DESC:
   de: Mit dieser Funktion können Sie viele Dateien in einem Schritt in die Datenbank importieren
   en: Import multiple file into the media database
+  es: Importer le dossier multiple dans la base de données de médias
   fr: Importer le dossier multiple dans la base de données de médias
   it: Importar el archivo múltiple en la base de datos de los medios
 GLOBAL_FOLDER_DESC:
   de: Ein Ordner kann Seiten, Dateien, Verknüpfungen und weitere Ordner enthalten.
   en: A Directory may contain other directories, pages, files and links.
+  es: "Un annuaire peut contenir d'autres annuaires, pages, dossiers et liens."
   fr: "Un annuaire peut contenir d'autres annuaires, pages, dossiers et liens."
   it: Un directorio puede contener otros directorios, páginas, archivos y acoplamientos.
   ru: Справочник может содержать другие каталоги, Версия, файлы и ссылки.
 GLOBAL_FOLDER:
   de: Verzeichnis
   en: Directory
+  es: Annuaire
   fr: Annuaire
   it: Directorio
 GLOBAL_FORMAT:
@@ -1796,29 +2026,34 @@ GLOBAL_FULL_FILENAME_DESC:
 GLOBAL_FULL_FILENAME:
   de: Voller Dateiname
   en: Complete Filename
+  es: Accomplir le nom de fichier
   fr: Accomplir le nom de fichier
   it: Terminar el nombre de fichero
   ru: Формат файла Заполните
 GLOBAL_GPL:
   de: Für dieses Programm besteht KEINERLEI GARANTIE. Dies ist freie Software, die Sie unter bestimmten Bedingungen weitergeben dürfen.
   en: 'The software comes with ABSOLUTELY NO WARRANTY.<br/>This is free software, and you are welcome to redistribute it under certain conditions.'
+  es: 'Le logiciel vient avec ABSOLUMENT AUCUN WARRANTY.<br/>This est logiciel libre, et vous êtes bienvenu pour le redistribuer dans certaines conditions.'
   fr: 'Le logiciel vient avec ABSOLUMENT AUCUN WARRANTY.<br/>This est logiciel libre, et vous êtes bienvenu pour le redistribuer dans certaines conditions.'
   it: 'El software viene con ABSOLUTAMENTE NINGÚN WARRANTY.<br/>This es software libre, y eres agradable redistribuirlo bajo ciertas condiciones.'
   ru: 'В комплект поставки ничего НЕ ГАРАНТИРУЕТ. <br> Это бесплатное программное обеспечение, и вы вправе распространять его на определенных условиях.'
 GLOBAL_GROUP:
   de: Gruppe
   en: Group
+  es: Groupe
   fr: Groupe
   it: Grupo
 GLOBAL_GROUPS:
   de: Gruppen
   en: Groups
+  es: Groupes
   fr: Groupes
   it: Grupos
   ru: Группа группах
 GLOBAL_HIDETREE:
   de: Baum ausblenden
   en: Hide tree
+  es: Arbre de peau
   fr: Arbre de peau
   it: Árbol de la piel
   ru: Скрыть дерево час
@@ -1828,17 +2063,20 @@ GLOBAL_HOURS:
 GLOBAL_HOUR:
   de: Stunde
   en: Hour
+  es: Heure
   fr: Heure
   it: Hora
 GLOBAL_ICON:
   de: Editier-Ikon
   en: Edit-icon
+  es: Éditer-icône
   fr: Éditer-icône
   it: Corregir-icono
   ru: 'Houres Редактировать - значок ID'
 GLOBAL_ID:
   de: ID
   en: ID
+  es: Identification
   fr: Identification
   it: Identificación
 GLOBAL_INACTIVE:
@@ -1853,11 +2091,13 @@ GLOBAL_IS_DEFAULT:
 GLOBAL_KEY:
   de: Taste
   en: Key
+  es: Clef
   fr: Clef
   it: Llave
 GLOBAL_LANGUAGES_DESC:
   de: Alle Projektinhalte können in verschiedenen Sprachen erzeugt werden
   en: All content can be created in several languages
+  es: Tout le contenu peut être créé dans plusieurs langues
   fr: Tout le contenu peut être créé dans plusieurs langues
   it: Todo el contenido se puede crear en varias idiomas
   ru: Языки Все содержание могут быть созданы на нескольких языках
@@ -1867,44 +2107,52 @@ GLOBAL_LANGUAGE:
 GLOBAL_LANGUAGES:
   de: Sprachen
   en: Languages
+  es: Langues
   fr: Langues
   it: Idiomas
 GLOBAL_LASTCHANGE:
   de: Letzte Änderung
   en: Last Change
+  es: Dernier changement
   fr: Dernier changement
   it: Cambio pasado
   ru: Последние изменения
 GLOBAL_LINK_TO:
   de: Verknüpfung zu
   en: Shortcut to
+  es: Raccourci à
   fr: Raccourci à
   it: Atajo a
   ru: Ярлыки Ярлыки для перехода
 GLOBAL_LINK:
   de: Verknüpfung
   en: Shortcut
+  es: Raccourci
   fr: Raccourci
   it: Atajo
 GLOBAL_LISTING:
   de: Liste
   en: List
+  es: Liste
   fr: Liste
   it: Lista
 GLOBAL_LOGIN:
   de: Anmeldung
   en: Login
+  es: Ouverture
   fr: Ouverture
   it: Conexión
   ru: Вход Логин
 GLOBAL_LOG:
   de: Log
   en: Log
+  es: Notation
   fr: Notation
   it: Registro
 GLOBAL_MAKE_DEFAULT:
   de: Auf Standard setzen
   en: Set to standard
+  es: Placer à la norme
   fr: Placer à la norme
   it: Fijar al estándar
   ru: Комплект для стандартных
@@ -1914,6 +2162,7 @@ GLOBAL_MENU_TITLE_FILEBROWSER_BROWSE:
 GLOBAL_MINUTE:
   de: Minute
   en: Minute
+  es: Minuter
   fr: Minuter
   it: Minutar
 GLOBAL_MINUTES:
@@ -1924,56 +2173,66 @@ GLOBAL_MINUTES:
 GLOBAL_MODELS_DESC:
   de: Mit Modellen künnen verschiedene Ansichten eines Projektes erzeugt werden, z.B. neben HTML kann es ein WML-Modell für WAP-Seiten geben
   en: With models you may do more views of an project, f.e. an HTML and an WML-Model.
+  es: "Avec des modèles vous pouvez faire plus de vues d'un projet, de Fe un HTML et d'un WML-Modèle."
   fr: "Avec des modèles vous pouvez faire plus de vues d'un projet, de Fe un HTML et d'un WML-Modèle."
   it: Con los modelos puedes hacer más opiniones un proyecto, el FE un HTML y un WML-Modelo.
   ru: 'С моделями вы можете сделать больше мнений проекта f.e. HTML и WML - Образец. Месяц'
 GLOBAL_MODELS:
   de: Varianten
   en: Models
+  es: Modèles
   fr: Modèles
   it: Modelos
   ru: Типовые модели
 GLOBAL_MODEL:
   de: Variante
   en: Model
+  es: Modèle
   fr: Modèle
   it: Modelo
 GLOBAL_MONTH:
   de: Monat
   en: Month
+  es: Mois
   fr: Mois
   it: Mes
 GLOBAL_MONTHS:
   de: Monate
   en: Months
+  es: Mois
   fr: Mois
   it: Meses
 GLOBAL_MOVE:
   de: Verschieben
   en: Move
+  es: Se déplacer
   fr: Se déplacer
   it: Moverte
   ru: месяцев
 GLOBAL_MUCH_TIME:
   de: Dieser Vorgang kann längere Zeit dauern. Bitte brechen Sie das Laden der Seite nicht ab.
   en: 'Hint: This can take much time. Do not abort while loading the page.'
+  es: '<em>Hint : </em> ceci peut prendre beaucoup de temps. Ne pas avorter tout en chargeant la page.'
   fr: '<em>Hint : </em> ceci peut prendre beaucoup de temps. Ne pas avorter tout en chargeant la page.'
   it: '<em>Hint: </em> esto puede tomar mucha hora. No abortar mientras que carga la página.'
   ru: 'Переместить <em> Подсказка : </em> Это может занять много времени. Не прервать во время загрузки страницы.'
 GLOBAL_NAME_DESC:
   de: Logischer Name des Objektes. Kann beliebige Zeichen enthalten (max. 255 Zeichen)
   en: Logical Name of this object. Can contain any chars (max. 255 chars)
+  es: Nom logique de cet objet. Peut contenir tous les chars (maximum 255 chars)
   fr: Nom logique de cet objet. Peut contenir tous les chars (maximum 255 chars)
   it: Nombre lógico de este objeto. Puede contener cualquier carbón (máximo 255 carbones)
   ru: Имя Логические Имя данного объекта. Может содержать любые символы (макс. 255 символов)
 GLOBAL_NAME:
   de: Name
   en: Name
+  es: Appeler
   fr: Appeler
   it: Nombrar
 GLOBAL_NEW:
   de: Neu
   en: New
+  es: Nouveau
   fr: Nouveau
   it: Nuevo
 GLOBAL_NO_ARCHIVE_DESC:
@@ -1985,52 +2244,61 @@ GLOBAL_NO_ARCHIVE:
 GLOBAL_NO_DESCRIPTION_AVAILABLE:
   de: keine Beschreibung verfügbar
   en: No description available :(
+  es: 'Aucune description disponible : ('
   fr: 'Aucune description disponible : ('
   it: 'Aucune description disponible : ('
   ru: 'Теперь не описание недоступно : ('
 GLOBAL_NO_DIFFERENCES_FOUND:
   de: Keine Unterschiede gefunden
   en: No differences found
+  es: Aucunes différences trouvées
   fr: Aucunes différences trouvées
   it: Aucunes différences trouvées
   ru: Нет отличий
 GLOBAL_NOPUBLISH_DESC:
   de: Funktionen zum Veröffentlichen sind zur Zeit deaktiviert.
   en: All publishing functions are deactivated at the moment.
+  es: "Toutes les fonctions de édition sont mises hors tension à l'heure actuelle."
   fr: "Toutes les fonctions de édition sont mises hors tension à l'heure actuelle."
   it: Todas las funciones que publican se desactivan en el momento.
   ru: Все издательские функции, дезактивируются в данный момент. Извещение
 GLOBAL_NOPUBLISH:
   de: Veröffentlichen deaktiviert
   en: Publishing not available
+  es: Éditant non disponible
   fr: Éditant non disponible
   it: Publicando no disponible
   ru: Новые публикации отсутствует
 GLOBAL_NOT_FOUND:
   de: nicht gefunden
   en: not found
+  es: non trouvé
   fr: non trouvé
   it: non trouvé
   ru: не найден
 GLOBAL_NOTICES:
   de: Hinweis
   en: Notice
+  es: Notification
   fr: Notification
   it: Notification
 GLOBAL_NOT_LOGGED_IN:
   de: nicht angemeldet
   en: not logged in
+  es: non entré
   fr: non entré
   it: non entré
   ru: не вошли в систему
 GLOBAL_NOW:
   de: Jetzt
   en: Now
+  es: Maintenant
   fr: Maintenant
   it: Maintenant
 GLOBAL_NR:
   de: Nr.
   en: No.
+  es: Non.
   fr: Non.
   it: Non.
   ru: №
@@ -2040,18 +2308,21 @@ GLOBAL_OPEN_ALL:
 GLOBAL_OR:
   de: oder
   en: or
+  es: ou
   fr: ou
   it: ou
   ru: или
 GLOBAL_OTHER_DESC:
   de: Dateitransfer, Suche nach Objekten
   en: File transfer, search for objects
+  es: Transfert de fichier, recherche des objets
   fr: Transfert de fichier, recherche des objets
   it: Transfert de fichier, recherche des objets
   ru: передача файлов, поиск объектов страницу
 GLOBAL_OTHER:
   de: Sonstiges
   en: Other Stuff
+  es: "L'autre substance"
   fr: "L'autre substance"
   it: "L'autre substance"
   ru: Другие предметы
@@ -2067,18 +2338,21 @@ GLOBAL_PAGES:
 GLOBAL_PHP:
   de: Interpreter
   en: Interpreter
+  es: Interprète
   fr: Interprète
   it: Interprète
   ru: Страницы Переводчик
 GLOBAL_PLEASE_LOGIN:
   de: Bitte melden Sie sich an
   en: Please log in
+  es: Svp ouverture
   fr: Svp ouverture
   it: Svp ouverture
   ru: Пожалуйста, войдите Настройки
 GLOBAL_PREFS:
   de: Einstellungen
   en: Preferences
+  es: Préférences
   fr: Préférences
   it: Préférences
 GLOBAL_PROFILE:
@@ -2087,17 +2361,20 @@ GLOBAL_PROFILE:
 GLOBAL_PROJECT:
   de: Projekt
   en: Project
+  es: Projet
   fr: Projet
   it: Projet
 GLOBAL_PROJECTS:
   de: Projekte
   en: Projects
+  es: Projets
   fr: Projets
   it: Projets
   ru: Проект Проекты Свойства
 GLOBAL_PROP:
   de: Eigenschaften
   en: Properties
+  es: Propriétés
   fr: Propriétés
   it: Propriétés
 GLOBAL_PUBLIC:
@@ -2106,41 +2383,48 @@ GLOBAL_PUBLIC:
 GLOBAL_PUBLISH:
   de: Veröffentlichen
   en: publish
+  es: éditer
   fr: éditer
   it: éditer
   ru: общественности
 GLOBAL_PUBLISH_WITH_SUBDIRS:
   de: auch Unterverzeichnisse veröffentlichen
   en: publish with subdirectories
+  es: éditer avec des sous-répertoires
   fr: éditer avec des sous-répertoires
   it: éditer avec des sous-répertoires
   ru: опубликовать опубликовать в подкаталогах
 GLOBAL_READONLY_DESC:
   de: Das System ist im Nur-Lesen Modus. Sie können keine Daten speichern.
   en: The System is in read-only mode. You cannot save any data!
+  es: Le système est en mode inaltérable. Vous ne pouvez sauver aucune données !
   fr: Le système est en mode inaltérable. Vous ne pouvez sauver aucune données !
   it: Le système est en mode inaltérable. Vous ne pouvez sauver aucune données !
   ru: режиме Система в режиме только для чтения. Вы не сможете сохранить любые данные! Обновить
 GLOBAL_READONLY:
   de: Nur-Lesen Modus
   en: Read-only mode
+  es: Mode inaltérable
   fr: Mode inaltérable
   it: Mode inaltérable
   ru: Только для чтения
 GLOBAL_REFRESH:
   de: Aktualisieren
   en: Refresh
+  es: Régénérer
   fr: Régénérer
   it: Régénérer
 GLOBAL_REGISTER_DESC:
   de: Sie können sich registrieren. Sie erhalten dann Anmeldedaten per E-Mail und koennen sich sofort anmelden.
   en: Feel free to register now.
+  es: "Se sentir libre pour s'enregistrer maintenant."
   fr: "Se sentir libre pour s'enregistrer maintenant."
   it: "Se sentir libre pour s'enregistrer maintenant."
   ru: Зарегистрироваться Вы можете зарегистрироваться сейчас. Освобождение
 GLOBAL_REGISTER:
   de: Registrieren
   en: Register
+  es: Enregistrer
   fr: Enregistrer
   it: Enregistrer
 GLOBAL_RELEASE_DESC:
@@ -2149,77 +2433,92 @@ GLOBAL_RELEASE_DESC:
 GLOBAL_RELEASE:
   de: Freigeben
   en: Release content
+  es: Contenu de la version
   fr: Contenu de la version
   it: Contenu de la version
 GLOBAL_REMOVE:
   de: entfernen
   en: remove
+  es: enlever
   fr: enlever
   it: enlever
   ru: содержание удалять Переименовать
 GLOBAL_RENAME:
   de: Umbenennen
   en: Rename
+  es: Retitrer
   fr: Retitrer
   it: Retitrer
 GLOBAL_REPLACE:
   de: Auswechseln
   en: Replace
+  es: Remplacer
   fr: Remplacer
   it: Remplacer
 GLOBAL_SAVE:
   de: Speichern
   en: Save
+  es: Économiser
   fr: Économiser
   it: Économiser
 GLOBAL_SEARCH_DESC:
   de: Bei großen Projekten können Sie nach Objekten suchen, z.B. über den Namen oder einen Inhalt
   en: In big projects you can search for objects by several attributes like name,id,...
+  es: "Dans de grands projets vous pouvez rechercher des objets par plusieurs attributs comme le nom, l'identification,?"
   fr: "Dans de grands projets vous pouvez rechercher des objets par plusieurs attributs comme le nom, l'identification,?"
   it: "Dans de grands projets vous pouvez rechercher des objets par plusieurs attributs comme le nom, l'identification,?"
 GLOBAL_SEARCH:
   de: Suche
   en: Search
+  es: Recherche
   fr: Recherche
   it: Recherche
 GLOBAL_SECOND:
   de: Sekunde
   en: Second
+  es: En second lieu
   fr: En second lieu
   it: En second lieu
 GLOBAL_SECONDS:
   de: Sekunden
   en: Seconds
+  es: Secondes
   fr: Secondes
   it: Secondes
 GLOBAL_SELECT:
   de: Auswählen
   en: Select
+  es: Choisir
   fr: Choisir
   it: Choisir
 GLOBAL_SELECTED:
   de: Ist ausgewählt
   en: selected
+  es: choisi
   fr: choisi
   it: choisi
 GLOBAL_SEND_PASSWORD_DESC:
   de: Wenn Sie Ihr Kennwort vergessen haben koennen Sie sich ein neues zusenden lassen
   en: If you have forgotten your password, request a new one.
+  es: Si vous avez oublié votre mot de passe, demander un neuf.
   fr: Si vous avez oublié votre mot de passe, demander un neuf.
   it: Si vous avez oublié votre mot de passe, demander un neuf.
 GLOBAL_SEND_PASSWORD:
   de: Kennwort zusenden
   en: Forgotten password
+  es: Mot de passe oublié
   fr: Mot de passe oublié
   it: Mot de passe oublié
 GLOBAL_SETTINGS:
   de: Einstellungen
   en: Settings
+  es: Arrangements
   fr: Arrangements
   it: Arrangements
 GLOBAL_SHOWTREE:
   de: Baum einblenden
   en: Show tree
+  es: "Montrer l'arbre"
   fr: "Montrer l'arbre"
   it: "Montrer l'arbre"
 GLOBAL_STATE:
@@ -2228,21 +2527,25 @@ GLOBAL_STATE:
 GLOBAL_SYSTEM:
   de: System
   en: System
+  es: Système
   fr: Système
   it: Système
 GLOBAL_TEMPLATES_DESC:
   de: Bearbeiten Sie Vorlagen, mit welchen Seiten erzeugt werden
   en: Edit the templates
+  es: Éditer les calibres
   fr: Éditer les calibres
   it: Corregir las plantillas
 GLOBAL_TEMPLATES:
   de: Vorlagen
   en: Templates
+  es: Calibres
   fr: Calibres
   it: Plantillas
 GLOBAL_TEMPLATE:
   de: Vorlage
   en: Template
+  es: Calibre
   fr: Calibre
   it: Plantilla
 GLOBAL_TO:
@@ -2252,6 +2555,7 @@ GLOBAL_TO:
 GLOBAL_TRANSFER:
   de: Transfer
   en: Transfer
+  es: Transfert
   fr: Transfert
   it: Transferencia
   ru: Сегодня передача типа
@@ -2261,37 +2565,44 @@ GLOBAL_TREE:
 GLOBAL_TYPE:
   de: Typ
   en: Type
+  es: Dactylographier
   fr: Dactylographier
   it: Mecanografiar
 GLOBAL_UNDO:
   de: Rückgängig
   en: Undo
+  es: Défaire
   fr: Défaire
   it: Deshacer
 GLOBAL_UNKNOWN_TEXT:
   de: kein Text verfügbar
   en: no text available
+  es: aucun texte disponible
   fr: aucun texte disponible
   it: ningún texto disponible
   ru: нет текста до
 GLOBAL_UNKNOWN:
   de: unbekannt
   en: unknown
+  es: inconnu
   fr: inconnu
   it: desconocido
   ru: Отменить неизвестных
 GLOBAL_UP:
   de: hoch
   en: up
+  es: vers le haut de
   fr: vers le haut de
   it: encima de
 GLOBAL_UPLOAD:
   de: Upload
   en: Upload
+  es: Téléchargement
   fr: Téléchargement
 GLOBAL_USE:
   de: Benutzen
   en: Use
+  es: Employer
   fr: Employer
   it: Utilizar
   ru: Загрузить Используйте
@@ -2301,12 +2612,14 @@ GLOBAL_USE_DESC:
 GLOBAL_USER:
   de: Benutzer
   en: User
+  es: Utilisateur
   fr: Utilisateur
   it: Usuario
   ru: Пользователь
 GLOBAL_USERS:
   de: Benutzer
   en: Users
+  es: Utilisateurs
   fr: Utilisateurs
   it: Usuarios
   ru: Пользователи
@@ -2316,23 +2629,27 @@ GLOBAL_VALUE:
 GLOBAL_WITH:
   de: mit
   en: with
+  es: avec
   fr: avec
   it: con
   ru: с
 GLOBAL_YEAR:
   de: Jahr
   en: Year
+  es: Année
   fr: Année
   it: Año
 GLOBAL_YEARS:
   de: Jahre
   en: Years
+  es: Années
   fr: Années
   it: Años
   ru: Год Годы
 GROUP_DELETE_DESC:
   de: Löschen der Gruppe. Alle Berechtigungen und Gruppenzugehörigkeiten werden gelöscht!
   en: Delete the group. All rights and memberships will be lost!
+  es: Supprimer le groupe. Toutes les droites et adhésions seront perdues !
   fr: Supprimer le groupe. Toutes les droites et adhésions seront perdues !
   it: Suprimir a grupo. ¡Todas las derechas y calidades de miembro serán perdidas!
   ru: Удаление группы. Все права и подписки будут утеряны!
@@ -2342,12 +2659,14 @@ GROUP_MEMBERSHIPS:
 HELP_DATE_ANSIDATE:
   de: Alternativ können Sie Datum/Zeit im ANSI-Format eingeben
   en: you can input the date in ANSI-format
+  es: vous pouvez entrer la date dans le Norme ANSI-format
   fr: vous pouvez entrer la date dans le Norme ANSI-format
   it: puedes entrar la fecha en ANSI-formato
   ru: Вы можете задать дату в формате ANSI -
 HELP_DATE:
   de: Legen Sie einen Zeitpunkt als Platzhalterinhalt fest
   en: Please choose a date as value
+  es: Veuillez choisir une date comme valeur
   fr: Veuillez choisir une date comme valeur
   it: Elegir por favor una fecha como valor
   ru: Membershipss Выберите дату как значение
@@ -2357,6 +2676,7 @@ HELP:
 HELP_LANGUAGE_DELETE:
   de: 'Löschen dieser Sprache, <strong>Achtung</strong>, alle Seiteninhalte in dieser Sprache werden unwiederbringlich gelöscht!'
   en: 'Remove this language.<strong>Be careful</strong>, all Content of this language will be lost!'
+  es: 'Enlever ce language.<strong>Be careful</strong>, toute la teneur de cette langue sera perdu !'
   fr: 'Enlever ce language.<strong>Be careful</strong>, toute la teneur de cette langue sera perdu !'
   it: '¡Quitar este language.<strong>Be careful</strong>, todo el contenido de esta lengua será perdido!'
   ru: 'Убрать этот язык. <strong> Будьте осторожны </strong>, Содержание всего этого языка будет утеряно!'
@@ -2393,6 +2713,7 @@ JAVASCRIPT_REQUIRED:
 LANGUAGE_ISOCODE:
   de: ISO Code
   en: ISO Code
+  es: "L'OIN codent"
   fr: "L'OIN codent"
   it: La ISO cifra
 LASTCHANGE_USER:
@@ -2407,11 +2728,13 @@ LINK_OPEN_IN_NEW_WINDOW:
 LINK_TARGET:
   de: Verknüpfungsziel
   en: Link target
+  es: Cible de lien
   fr: Cible de lien
   it: Blanco del acoplamiento
 LINK_URL:
   de: Verknüpfte Url
   en: linked URL
+  es: URL lié
   fr: URL lié
   it: URL ligado
   ru: год связаны URL
@@ -2421,6 +2744,7 @@ LIST_ENTRY_EMPTY:
 LOGIN_NOLOGIN_DESC:
   de: Das Anmelden ist zur Zeit nicht moeglich.
   en: Login is disabled at the moment.
+  es: "L'ouverture est neutralisée à l'heure actuelle."
   fr: "L'ouverture est neutralisée à l'heure actuelle."
   it: La conexión se inhabilita en el momento.
   ru: Логин отключен в настоящий момент.
@@ -2433,12 +2757,14 @@ LOGO_CHANGEMAIL_TEXT:
 LOGO_CHANGEPASSWORD:
   de: Kennwort Änderung
   en: Change password
+  es: Changer le mot de passe
   fr: Changer le mot de passe
   it: Cambiar la contraseña
   ru: Смена пароля
 LOGO_CHANGEPASSWORD_TEXT:
   de: Hier können Sie Ihr aktuelles Kennwort ändern.
   en: Change your password
+  es: Changer votre mot de passe
   fr: Changer votre mot de passe
   it: Cambiar tu contraseña
   ru: Изменить пароль
@@ -2448,41 +2774,48 @@ LOGO_LOGIN:
 LOGO_LOGIN_TEXT:
   de: 'Zur Anmeldung benötigen Sie Benutzernamen und Kennwort. Beachten Sie bei der Eingabe Groß- und Kleinschreibung.'
   en: To login, you need an user account. Please check for case sensitives.
+  es: "À l'ouverture, vous avez besoin d'un compte d'utilisateur. Vérifier svp les sensitives de cas."
   fr: "À l'ouverture, vous avez besoin d'un compte d'utilisateur. Vérifier svp les sensitives de cas."
   it: A la conexión, necesitas una cuenta del usuario. Comprobar por favor para saber si hay sensitives del caso.
   ru: Anmeldung Чтобы войти, Вам нужно учетную запись пользователя. Пожалуйста, проверьте для самоклеящихся дело.
 LOGO_PASSWORD:
   de: Kennwort vergessen?
   en: Lost password?
+  es: Mot de passe perdu ?
   fr: Mot de passe perdu ?
   it: ¿Contraseña perdida?
   ru: Забыли пароль?
 LOGO_PASSWORD_TEXT:
   de: Wenn Sie Ihr Kennwort vergessen haben, so können Sie sich hier ein neues zuschicken lassen. Sie erhalten eine E-Mail, welche einen Bestätigungscode enthält. Mit diesem können Sie sich dann ein neues Kennwort erzeugen lassen.
   en: If you have forgotten your password, feel free to request a new one.
+  es: Si vous avez oublié votre mot de passe, sensation librement pour demander un neuf.
   fr: Si vous avez oublié votre mot de passe, sensation librement pour demander un neuf.
   it: Si te has olvidado de tu contraseña, sensación libremente para solicitar un nuevo.
   ru: Если Вы забыли пароль, стесняйтесь просить новую.
 LOGO_PROJECTMENU:
   de: Projekt auswählen
   en: Select project
+  es: Choisir le projet
   fr: Choisir le projet
   it: El proyecto selecto
   ru: Выберите проект
 LOGO_PROJECTMENU_TEXT:
   de: Bitte wählen Sie ein Projekt zur Bearbeitung aus.
   en: Please select a project.
+  es: Veuillez choisir un projet.
   fr: Veuillez choisir un projet.
   it: selecciona por favor un proyecto.
   ru: Пожалуйста, выберите проект. Регистрация
 LOGO_REGISTER:
   de: Registrierung
   en: Registration
+  es: Enregistrement
   fr: Enregistrement
   it: El registro
 LOGO_REGISTER_TEXT:
   de: Wenn sich noch nicht als Benutzer eingetragen sind, dann können Sie sich hier registrieren. Sie benötigen dazu ein gültigen E-Mail-Konto, an das ein Registrierungscode gesendet wird.
   en: If you do not have an user account, then feel free to register now. You need an E-Mail account, to which a registration code is sent.
+  es: "Si vous n'avez pas un compte d'utilisateur, alors se sentir libre pour s'enregistrer maintenant. Vous avez besoin d'un compte d'E-mail, auquel un code d'enregistrement est envoyé."
   fr: "Si vous n'avez pas un compte d'utilisateur, alors se sentir libre pour s'enregistrer maintenant. Vous avez besoin d'un compte d'E-mail, auquel un code d'enregistrement est envoyé."
   it: si no tienes una cuenta del usuario, entonces se siente libre ahora colocarse. Necesitas una cuenta del E-mail, a la cual se envía un código del registro.
   ru: Если у вас нет учетной записи Затем стесняйтесь регистрироваться сейчас. Вам нужно E-Mail записи к которому регистрационный код, который будут направляться запросы.
@@ -2495,23 +2828,27 @@ MAIL_SUBJECT_MAIL_CHANGE_CODE:
 MAIL_SUBJECT_PASSWORD_COMMIT_CODE:
   de: Bestaetigung fuer Kennwortänderung
   en: Password change request
+  es: Demande de changement de mot de passe
   fr: Demande de changement de mot de passe
   it: Contraseña de la petición del cambio de la contraseña nueva
   ru: Запрос на изменение пароля
 MAIL_SUBJECT_PASSWORD_NEW:
   de: Neues Kennwort
   en: New password
+  es: Nouveau mot de passe
   fr: Nouveau mot de passe
   ru: Новый пароль
 MAIL_SUBJECT_REGISTER_COMMIT_CODE:
   de: Ihr Registrierungscode
   en: Your registration code
+  es: "Votre code d'enregistrement"
   fr: "Votre code d'enregistrement"
   it: tu código del registro
   ru: Ваш регистрационный код
 MAIL_SUBJECT_USER_MAIL:
   de: Ihre Zugangsdaten
   en: Your password
+  es: Votre mot de passe
   fr: Votre mot de passe
   it: tu contraseña
   ru: Пароль
@@ -2521,24 +2858,28 @@ MAIL_TEXT_MAIL_CHANGE_CODE:
 MAIL_TEXT_PASSWORD_COMMIT_CODE:
   de: 'Guten Tag {name},;;Ihr Code zum Anfordern eines neuen Kennwortes lautet: {code}.;;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein;;Sollten Sie kein neues Kennwort angefordert haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank.'
   en: 'Hello {name};;your code for requesting a new password is: {code};;Please insert this number into the input field.;;If you have not request a new password, please ignore this e-mail. In this case, your password will stay unchanged.;;Thank you.'
+  es: "Bonjour {name},;;votre code pour demander un nouveau mot de passe est : {code};;Veuillez insérer ce nombre dans le champ d'entrée.;;Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement. ; ; Merci."
   fr: "Bonjour {name};;votre code pour demander un nouveau mot de passe est : {code} ; ; Veuillez insérer ce nombre dans le champ d'entrée. ; ; Si vous n'avez pas la demande un nouveau mot de passe, ignorer svp cet E-mail. Dans ce cas-ci, votre mot de passe restera sans changement. ; ; Merci."
   it: 'hola {name}; ; tu código para solicitar una nueva contraseña es: {code}; ; Insertar por favor este número en el campo de la entrada. ; ; Si no tienes petición una nueva contraseña, no hacer caso por favor de este E-mail. En este caso, tu contraseña permanecerá sin cambiar. ; ; Gracias.'
   ru: 'название Hello {name};;Ваш код для отправки запроса на получение нового пароля : {code};;Введите это число в поле ввода.;;Если Вы еще не запрашивал новый пароль, пожалуйста, игнорируйте эту электронную почту. В этом случае Ваш пароль будет оставаться неизменным.;;Спасибо.'
 MAIL_TEXT_PASSWORD_NEW:
   de: 'Guten Tag {name},;;Ihr neues Kennwort lautet: {password};;Bitte notieren Sie sich dieses gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank.'
   en: 'Hello {name};;your new password: {password};;Please note this password at a secure place and delete this mail.;;Thank you.'
+  es: 'Hola {name};;tu nueva contraseña: {password};;Observar por favor esta contraseña en un lugar seguro y suprimir este correo.;;Gracias.'
   fr: 'Bonjour {name};;votre nouveau mot de passe : {password};;Veuillez noter ce mot de passe à un endroit bloqué et supprimer ce courrier.;; Merci.'
   it: 'Hola {name}; ; tu nueva contraseña: {password}; ; Observar por favor esta contraseña en un lugar seguro y suprimir este correo. ; ; Gracias.'
   ru: 'Привет именем {name};;Ваш новый пароль : {password};;Обратите внимание, этот пароль на безопасное место и удалить это сообщение.;;Спасибо.'
 MAIL_TEXT_REGISTER_COMMIT_CODE:
   de: 'Guten Tag,;;Sie oder jemand anderes möchte sich für die Nutzung des OpenRat-CMS registrieren, hiermit erhalten Sie den notwendigen Registrierungscode.;;Ihr Registrierungs-Code: {code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.;;Falls Sie diese Registrierung nicht durchgeführt haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank für Ihr Interesse.'
   en: 'Hello,;;you (or another person) has requested a registration code.;;Your registration code: {code}.;;Please insert this number into the input field.;;Thank you.'
+  es: 'Hola,;;tú (u otra persona) has solicitado un código del registro.;;Tu código del registro: {code}.;;Insertar por favor este número en el campo de la entrada.;;Gracias.'
   fr: "Bonjour,;; toi (ou une personne différente) a demandé un code d'enregistrement. ; ; Votre code d'enregistrement : {code}. ; ; Veuillez insérer ce nombre dans le champ d'entrée. ; ; Merci."
   it: 'Hola,;; tú (u otra persona) has solicitado un código del registro. ; ; Tu código del registro: {code}. ; ; Insertar por favor este número en el campo de la entrada. ; ; Gracias.'
   ru: 'Здравствуйте,;;Ваше имя (или другое лицо) обратилось регистрационного кода.;;Ваш регистрационный код : {code}.;;Введите это число в поле ввода.;;Спасибо.'
 MAIL_TEXT_USER_MAIL:
   de: 'Guten Tag {name},;;Ihre Zugangsdaten lauten wie folgt:;;Login: {username};Kennwort: {password};;Notieren Sie sich das Kennwort gut und löschen Sie anschließend diese E-Mail.;;Vielen Dank.'
   en: 'Hello {name},;;Your account details for login in OpenRat Content Management System are the following.;;Login: {username};Password: {password};;Thank you.'
+  es: 'Hola {name};;Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes.;;Conexión: {username}; Contraseña: {password};;Gracias.'
   fr: "Bonjour {name} ;; Vos détails de compte pour l'ouverture dans le système de gestion content d'OpenRat sont les suivants. ; ; Ouverture : {username} ; Mot de passe : {password} ; ; Merci."
   it: 'Hola {name}; ; Tus detalles de la cuenta para la conexión en sistema de gerencia contento de OpenRat son los siguientes. ; ; Conexión: {username}; Contraseña: {password}; ; Gracias.'
   ru: 'Здравствуйте {name},;;Ваши данные учетной записи для входа в OpenRat Система управления контентом являются следующие.;;Логин: {username}; Пароль: {password};;Спасибо.'
@@ -2591,6 +2932,7 @@ MENU_CONTENT:
 MENU_CREATE_DESC:
   de: In diesem Ordner ein neues Objekt anlegen
   en: Create a new object in this directory
+  es: crean un nuevo objeto en este directorio
   fr: Créer un nouvel objet dans cet annuaire
   it: crean un nuevo objeto en este directorio
   ru: Новый Создать новый объект в каталог, N
@@ -2609,6 +2951,7 @@ MENU_CREATELINK:
 MENU_CREATE:
   de: Neu
   en: New
+  es: nuevo
   fr: Nouveau
   it: nuevo
 MENU_CREATEPAGE:
@@ -2620,21 +2963,25 @@ MENU_DELETE:
 MENU_EDIT:
   de: Bearbeiten
   en: Edit
+  es: corrigen
   fr: Éditer
   it: corrigen
 MENU_EDIT_DESC:
   de: Bearbeiten
   en: Edit content
+  es: corrigen
   fr: Éditer le contenu
   it: corrigen
   ru: Редактировать Редактировать содержание Б
 MENU_EDIT_KEY:
   de: B
   en: B
+  es: elementos contentos de B
   it: elementos contentos de B
 MENU_EL_DESC:
   de: Inhalt bearbeiten
   en: List of all elements
+  es: lista de todos los elementos
   fr: Liste de tous les éléments
   it: lista di tutti gli elementi
   ru: Список всех элементов
@@ -2647,18 +2994,21 @@ MENU_ELEMENT_EDIT:
 MENU_ELEMENT_NAME_DESC:
   de: Den Platzhalternamen bearbeiten
   en: Edit the element name
+  es: corrige las características del nombre del elemento
   fr: "Éditer le nom d'élément"
   it: corrige las características del nombre del elemento
   ru: Изменить имя элемента
 MENU_ELEMENT_NAME:
   de: Name
   en: Name
+  es: que el nombre
   fr: Nom
   it: que el nombre
   ru: Элементы Имя
 MENU_ELEMENT_PROPERTIES_DESC:
   de: Eigenschaften des Platzhalters bearbeiten
   en: Properties of element
+  es: las características del elemento
   fr: "Propriétés d'élément"
   it: las características del elemento
   ru: Свойства Свойства элемента
@@ -2669,17 +3019,20 @@ MENU_ELEMENT_PROPERTIES:
 MENU_ELEMENT_REMOVE_DESC:
   de: Das Platzhalter löschen
   en: Remove the element
+  es: quitan el tipo del elemento
   fr: "Enlever l'élément"
   it: "rimuovono il tipo dell'elemento"
   ru: Удалить Удалить элемент
 MENU_ELEMENT_REMOVE:
   de: Entfernen
   en: Remove
+  es: quitan
   fr: Enlever
   it: quitan
 MENU_ELEMENT_TYPE_DESC:
   de: Den Platzhalter-Typ ändern
   en: Change element-type
+  es: elemento-tipo del cambio
   fr: "Changer l'élément-type"
   it: il elemento-tipo del cambiamento
   ru: Изменение типа элемента
@@ -2715,12 +3068,14 @@ MENU_EXTRACT_DESC:
 MENU_FILE_ACLFORM_DESC:
   de: Ein Recht zu dieser Datei hinzufügen
   en: Add a right to this file
+  es: agrega una derecha a esta compresa de la compresa del archivo
   fr: Ajouter une droite à ce dossier
   it: aggiunge una destra a questa compressa della compressa della lima
   ru: Добавить права на этот файл
 MENU_FILE_ACLFORM:
   de: Hinzufügen
   en: Add
+  es: agrega a la derecha
   fr: Ajouter bien
   it: aggiunge a destra
   ru: Добавить Право
@@ -2733,6 +3088,7 @@ MENU_FILEBROWSER_BROWSE_DESC:
 MENU_FILE_COMPRESS_DESC:
   de: Die Datei komprimieren
   en: Compress this file
+  es: este archivo
   fr: Comprimer ce dossier
   it: questa lima
   ru: Сжатие сжать этот файл
@@ -2743,6 +3099,7 @@ MENU_FILE_COMPRESS:
 MENU_FILE_EDIT_DESC:
   de: Diese Datei durch eine andere ersetzen.
   en: Replace this file with another
+  es: substituyen este archivo por otro
   fr: Remplacer ce dossier avec des autres
   it: sostituiscono questa lima con un altro
 MENU_FILE_EDIT:
@@ -2751,49 +3108,58 @@ MENU_FILE_EDIT:
 MENU_FILE_EDITVALUE_DESC:
   de: Inhalt bearbeiten
   en: Edit value
+  es: corrigen valor
   fr: Éditer la valeur
   it: pubblicano il valore
 MENU_FILE_EDITVALUE:
   de: Inhalt bearbeiten
   en: Edit value
+  es: corrigen valor
   fr: Éditer la valeur
   it: pubblicano il valore
 MENU_FILE_EXTRACT:
   de: Auspacken
   en: Extract
+  es: El extracto del extracto
   fr: Extraire
   it: "L'estratto dell'estratto"
 MENU_FILE_EXTRACT_DESC:
   de: Archiv auspacken
   en: Extract this archive
+  es: este archivo
   fr: Extraire ces archives
   it: questo archivio
 MENU_FILE_PROP_DESC:
   de: Eigenschaften dieser Datei editieren
   en: Edit Properties of this file
+  es: corrige características de este archivo
   fr: Éditer les propriétés de ce dossier
   it: pubblica le proprietà di questa lima
   ru: Изменить свойства этого файла
 MENU_FILE_PROP:
   de: Eigenschaften
   en: Edit properties
+  es: corrige características
   fr: Éditer les propriétés
   it: pubblica le proprietà
   ru: Изменить свойства
 MENU_FILE_PUB_DESC:
   de: Datei veröffentlichen
   en: Publish file
+  es: publica el archivo
   fr: Éditer le dossier
   it: pubblica la lima
   ru: Опубликовать Разместить файл
 MENU_FILE_PUB:
   de: Veröffentlichen
   en: Publish
+  es: publica
   fr: Éditer
   it: pubblica
 MENU_FILE_REMOVE:
   de: Löschen
   en: Remove file
+  es: quita las derechas de la demostración de las derechas del archivo
   fr: Enlever le dossier
   it: rimuove i diritti di esposizione di diritti della lima
   ru: Удалите файл
@@ -2804,6 +3170,7 @@ MENU_FILE_RIGHTS:
 MENU_FILE_RIGHTS_DESC:
   de: Rechte dieser Datei ansehen
   en: Show rights of this file
+  es: de las características de esta del archivo
   fr: Montrer les droites de ce dossier
   it: delle proprietà di questa della lima
   ru: человека Показывать человека этот файл Смотреть
@@ -2813,12 +3180,14 @@ MENU_FILE_SHOW_DESC:
 MENU_FILE_SHOWPROP_DESC:
   de: Informationen und Eigenschaften zu dieser Datei anzeigen
   en: Show properties of this file
+  es: de este cambio del tamaño de la imagen del archivo
   fr: Montrer les propriétés de ce dossier
   it: di questo cambiamento che di formato di immagine della lima
   ru: Показывать свойства этого файла изображения
 MENU_FILE_SHOWPROP:
   de: Information
   en: Show
+  es: demostración de la demostración
   fr: Montrer
   it: esposizione di esposizione
 MENU_FILE_SHOW:
@@ -2832,6 +3201,7 @@ MENU_FILE_SIZE:
 MENU_FILE_SIZE_DESC:
   de: Bildgröße ändern
   en: Change the image size
+  es: que el Upload del tamaño de la imagen
   fr: "Changer la taille d'image"
   it: il Upload di formato di immagine
   ru: размера Изменение размера изображения
@@ -2844,6 +3214,7 @@ MENU_FILE_UNCOMPRESS_DESC:
 MENU_FILE_UPLOAD_DESC:
   de: Bestehende Datei ersetzen
   en: Replace this existent file
+  es: substituye este archivo existente
   fr: Remplacer ce dossier existant
   it: sostituisce questa lima esistente
   ru: Загрузить Вместо этого существует файл
@@ -2854,12 +3225,14 @@ MENU_FILE_UPLOAD:
 MENU_FOLDER_ACLFORM_DESC:
   de: Ein Recht zu diesem Ordner hinzufügen
   en: Add a right to this folder
+  es: agrega una derecha a este nuevo Upload del archivo de la carpeta
   fr: Ajouter une droite à cette chemise
   it: aggiunge una destra a questo nuovo Upload della lima del dispositivo di piegatura
   ru: Добавить права на эту папку
 MENU_FOLDER_ACLFORM:
   de: Hinzufügen
   en: Add right
+  es: agrega a la derecha
   fr: Ajouter bien
   it: aggiunge a destra
   ru: Добавить Право
@@ -2869,6 +3242,7 @@ MENU_FOLDER_CREATE_DESC:
 MENU_FOLDER_CREATEFILE_DESC:
   de: Neue Datei auf den Server laden
   en: Upload a new file to server
+  es: un archivo nuevo al servidor
   fr: Télécharger un nouveau dossier au serveur
   it: "una nuova lima all'assistente"
   ru: Добавить новый файл Сервер
@@ -2880,24 +3254,28 @@ MENU_FOLDER_CREATEFILE:
 MENU_FOLDER_CREATEFOLDER_DESC:
   de: Einen neuen Unterordner in diesem Ordner anlegen
   en: Add a new subfolder to this folder
+  es: agrega un nuevo subfolder a esta carpeta
   fr: Ajouter un nouveau subfolder à cette chemise
   it: aggiunge un nuovo subfolder a questo dispositivo di piegatura
   ru: Добавить новую подпапку в этой папке
 MENU_FOLDER_CREATEFOLDER:
   de: Neuer Unterordner
   en: New subfolder
+  es: el nuevo subfolder
   fr: Nouveau subfolder
   it: il nuovo subfolder
   ru: Новый папку
 MENU_FOLDER_CREATELINK_DESC:
   de: Neue Verknüpfung in diesem Ordner anlegen
   en: Add a new link in this folder
+  es: agrega un nuevo acoplamiento en esta carpeta
   fr: Ajouter un nouveau lien dans cette chemise
   it: aggiunge un nuovo collegamento in questo dispositivo di piegatura
   ru: Добавить новую ссылку в этой папке новые
 MENU_FOLDER_CREATELINK:
   de: Neue Verknüpfung
   en: New link
+  es: el nuevo acoplamiento
   fr: Nouveau lien
   it: il nuovo collegamento
   ru: Новая ссылка
@@ -2907,23 +3285,27 @@ MENU_FOLDER_CREATE:
 MENU_FOLDER_CREATEPAGE_DESC:
   de: Neue Seite in diesem Ordner anlegen
   en: Create a new page in this folder
+  es: crea una página nueva en esta carpeta
   fr: Créer une nouvelle page dans cette chemise
   it: genera una nuova pagina in questo dispositivo di piegatura
   ru: страницу Создать новую страницу в этой папке
 MENU_FOLDER_CREATEPAGE:
   de: Neue Seite
   en: New page
+  es: La página nueva
   fr: Nouvelle page
   it: La nuova pagina
 MENU_FOLDER_NEW:
   de: Neues Objekt anlegen
   en: Create a new object
+  es: crea una nueva orden del objeto
   fr: Créer un nouvel objet
   it: "genera un nuovo ordine dell'oggetto"
   ru: Создать новый объект
 MENU_FOLDER_ORDER_DESC:
   de: Reihenfolge bearbeiten
   en: Re-Order the objects in this folder
+  es: Commander à nouveau les objets dans cette chemise
   fr: Commander à nouveau les objets dans cette chemise
   it: riordina gli oggetti nelle proprietà di questo dispositivo di piegatura
   ru: Заказать Восстановление Заказ объектов в этой папке
@@ -2934,73 +3316,112 @@ MENU_FOLDER_ORDER:
 MENU_FOLDER_PROP_DESC:
   de: Eigenschaften bearbeiten
   en: Edit Properties
+  es: Éditer les propriétés
   fr: Éditer les propriétés
   it: pubblica le proprietà
   ru: Свойства Редактировать Свойства Разместить
 MENU_FOLDER_PROP:
   de: Eigenschaften
   en: Properties
+  es: Propriétés
   fr: Propriétés
 MENU_FOLDER_PUB_DESC:
   de: Ordner veröffentlichen
   en: Publish Folder
+  es: Éditer la chemise
   fr: Éditer la chemise
   it: publica la carpeta
   ru: Опубликовать папку
 MENU_FOLDER_PUB:
   de: Veröffentlichen
   en: Publish
+  es: Éditer
   fr: Éditer
   it: publica
 MENU_FOLDER_REMOVE_DESC:
   de: Diesen Ordner entfernen
   en: Remove this folder
+  es: Enlever cette chemise
   fr: Enlever cette chemise
   it: quita este contenido de la demostración de las características de la demostración de la demostración
   ru: Удалить Удалить эту папку человека
 MENU_FOLDER_REMOVE:
   de: Entfernen
   en: Remove
+  es: Enlever
   fr: Enlever
   it: quita
 MENU_FOLDER_RIGHTS:
   de: Berechtigungen
   en: Rights
+  es: Droites
   fr: Droites
   it: del valor selecto selecto del contenido de las derechas de la demostración de las derechas de la carpeta
 MENU_FOLDER_RIGHTS_DESC:
   de: Liste der Berechtigungen anzeigen
   en: Show rights
+  es: Montrer les droites
   fr: Montrer les droites
   ru: Показать прав Выберите
 MENU_FOLDER_SELECT:
   de: Auswahl
   en: Select
+  es: Choisir
   fr: Choisir
 MENU_FOLDER_SELECT_DESC:
   de: Verzeichniseinträge zum Kopieren, verschieben oder löschen auswählen
   en: Select contents
+  es: Choisir le contenu
   fr: Choisir le contenu
   ru: выберите
 MENU_FOLDER_SHOW_DESC:
   de: Inhalt des Ordners anzeigen
   en: Show content of directory
+  es: "Montrer le contenu de l'annuaire"
   fr: "Montrer le contenu de l'annuaire"
   it: de la forma de la forma del directorio
   ru: Показать содержимое каталога
 MENU_FOLDER_SHOW:
   de: Inhalt
   en: Value
+  es: |
+    Évaluer
+    MENU_FORM_DESC = Former pour tous les éléments
+    MENU_FORM = Former
+    MENU_FORM_KEY = F
+    MENU_GROUP_ADD = Ajouter
+    MENU_GROUP_ADD_DESC = Ajouter un groupe
+    MENU_GROUP_ADDUSER = Ajouter
+    MENU_GROUP_ADDUSER_DESC = Ajouter un nouvel utilisateur dans ce groupe
+    MENU_GROUP_EDIT_DESC = Éditer le nom de ce groupe
+    MENU_GROUP_EDIT = Éditer
+    MENU_GROUP_LISTING_DESC = quitar
+    MENU_GROUP_LISTING = Tous les groupes
+    MENU_GROUP_REMOVE_DESC =
+    MENU_GROUP_REMOVE = quitan calidades de miembro del grupo
+    MENU_GROUP_RIGHTS_DESC=View or edit the Rights of this group
+    MENU_GROUP_RIGHTS=Rights
+    MENU_GROUPS = Adhésions
+    MENU_GROUPS_DESC = Ajouter ou enlever les groupes
+    MENU_GROUP_USERS_DESC = que copy de la importación
+    MENU_GROUP_USERS = usuario en archivos de este del grupo
+    MENU_HELP_DESC=Online help
+    MENU_HELP=Help
+    MENU_IMPORT = de la carpeta local a una administración de la CMS-carpeta
+    MENU_IMPORT_DESC =
+    MENU_INDEX_ADMINISTRATION_DESC =
   fr: Évaluer
   ru: содержимое Стоимость Смотреть
 MENU_FOLDER_SHOWPROP_DESC:
   de: Informationen und Eigenschaften zu diesem Verzeichnis anzeigen
   en: Show properties
+  es: Montrer les propriétés
   fr: Montrer les propriétés
   ru: Показывать свойства
 MENU_FOLDER_SHOWPROP:
   de: Information
   en: Show
+  es: Montrer
   fr: Montrer
 MENU_FORM_DESC:
   de: Eingabemaske für alle Platzhalter
@@ -3125,6 +3546,7 @@ MENU_INDEX_LOGOUT:
 MENU_INDEX_LOGOUT_DESC:
   de: Von dieser Anwendung abmelden.
   en: Logout from this application.
+  es: de este uso. ?
   fr: Déconnexion de cette application. «
   it: de este uso. ?
   ru: Выход Выход из этой заявки.
@@ -3132,6 +3554,7 @@ MENU_INDEX_LOGOUT_DESC:
 MENU_INDEX_MENU:
   de: Projekt auswählen
   en: Choose project
+  es: elegir la contraseña olvidada del proyecto
   fr: Choisir le projet
   it: elegir la contraseña olvidada del proyecto
   ru: Выбрать
@@ -3148,23 +3571,27 @@ MENU_LANGUAGE_ADD_DESC:
 MENU_LANGUAGE_ADD:
   de: Hinzufügen
   en: Add
+  es: agrega
   fr: Ajouter
   it: aggiunge
 MENU_LANGUAGE_ADVANCED_DESC:
   de: Eigenschaften der Sprache einzeln bearbeiten
   en: Edit all properties of this language
+  es: Edit the properties of this language
   fr: Edit the properties of this language
   it: Edit the properties of this language
   ru: Edit the properties of this language
 MENU_LANGUAGE_ADVANCED:
   de: Erweitert
   en: Advanced
+  es: Enhanced
   fr: Enhanced
   it: Enhanced
   ru: Enhanced
 MENU_LANGUAGE_EDIT:
   de: Bearbeiten
   en: Edit
+  es: corrige
   fr: Éditer
   it: pubblica
   ru: Добавить Редактировать список
@@ -3177,6 +3604,7 @@ MENU_LANGUAGE_LISTING_DESC:
 MENU_LANGUAGE_LISTING:
   de: Liste
   en: List
+  es: la lista
   fr: Énumérer
   it: la lista
 MENU_LANGUAGE_REMOVE_DESC:
@@ -3185,6 +3613,7 @@ MENU_LANGUAGE_REMOVE_DESC:
 MENU_LANGUAGE_REMOVE:
   de: Entfernen
   en: Remove
+  es: quita
   fr: Enlever
   it: rimuove
 MENU_LICENSE:
@@ -3193,12 +3622,14 @@ MENU_LICENSE:
 MENU_LINK_ACLFORM_DESC:
   de: Ein Recht zu dieser Verknüpfung hinzufügen
   en: Add a right to this link
+  es: agregan una derecha a este acoplamiento
   fr: Ajouter une droite à ce lien
   it: agregan una derecha a este acoplamiento
   ru: Добавить Право на ссылке
 MENU_LINK_ACLFORM:
   de: Hinzufügen
   en: Add right
+  es: Agregar a la derecha
   fr: Ajouter bien
   it: Agregar a la derecha
   ru: Добавить Право
@@ -3208,6 +3639,7 @@ MENU_LINK_EDIT_DESC:
 MENU_LINK_EDIT:
   de: Ziel
   en: Edit target
+  es: corrigen la demostración de las derechas de las características de la blanco
   fr: Éditer la cible
   it: corrigen la demostración de las derechas de las características de la blanco
   ru: Изменить год
@@ -3226,6 +3658,7 @@ MENU_LINK_RIGHTS:
 MENU_LINK_RIGHTS_DESC:
   de: Rechte dieser Verknüpfung ansehen
   en: Show all rights of this link
+  es: que todas las derechas de esta lista de la lista de la opinión del acoplamiento
   fr: Montrer toutes les droites de ce lien
   it: que todas las derechas de esta lista de la lista de la opinión del acoplamiento
   ru: Показать все права на эту ссылку Смотреть
@@ -3282,29 +3715,34 @@ MENU_MODEL_ADD_DESC:
 MENU_MODEL_ADD:
   de: Hinzufügen
   en: Add
+  es: agrega
   fr: Ajouter
   it: aggiunge
   ru: Удалить Добавить Редактировать
 MENU_MODEL_EDIT:
   de: Bearbeiten
   en: Edit
+  es: corrige
   fr: Éditer
   it: pubblica
 MENU_MODEL_EDIT_DESC:
   de: Bearbeiten
   en: Edit this project model
+  es: Edit
   fr: Edit
   it: Edit
   ru: Edit
 MENU_MODEL_LISTING_DESC:
   de: Liste aller Projektvarianten anzeigen
   en: Show a list of all project models
+  es: Show list of all project models
   fr: Show list of all project models
   it: Show list of all project models
   ru: Show list of all project models
 MENU_MODEL_LISTING:
   de: Liste
   en: List
+  es: la lista
   fr: Énumérer
   it: la lista
 MENU_MODEL_REMOVE_DESC:
@@ -3313,6 +3751,7 @@ MENU_MODEL_REMOVE_DESC:
 MENU_MODEL_REMOVE:
   de: Entfernen
   en: Remove
+  es: quita
   fr: Enlever
   it: rimuove
   ru: Список Удалить
@@ -3332,29 +3771,34 @@ MENU_ORDER_DESC:
 MENU_PAGE_ACLFORM_DESC:
   de: Ein Recht zu dieser Seite hinzufügen
   en: Add a right to this page
+  es: Ajouter une droite à cette page
   fr: Ajouter une droite à cette page
   it: agrega una derecha a esta página
   ru: Добавить права на эту страницу Заменить
 MENU_PAGE_ACLFORM:
   de: Hinzufügen
   en: Add right
+  es: Ajouter bien
   fr: Ajouter bien
   it: agrega a la derecha
   ru: Добавить Право
 MENU_PAGE_CHANGETEMPLATE_DESC:
   de: Austausch der Seitenvorlage
   en: Replace the template of this page
+  es: Remplacer le calibre de cette page
   fr: Remplacer le calibre de cette page
   it: substituye la plantilla de esta página
   ru: шаблоне заменить шаблон на этой странице Редактировать
 MENU_PAGE_CHANGETEMPLATE:
   de: Vorlage wechseln
   en: Replace the template
+  es: Remplacer le calibre
   fr: Remplacer le calibre
   it: substituye la plantilla
 MENU_PAGE_EL_DESC:
   de: Alle Inhalteelemente dieser Seite anzeigen
   en: Show all elements of this page
+  es: Montrer tous les éléments de cette page
   fr: Montrer tous les éléments de cette page
   it: que todos los elementos de esta página
   ru: Показать все элементы этой странице Редактировать
@@ -3409,56 +3853,66 @@ MENU_PAGEELEMENT_SHOW_DESC:
 MENU_PAGE_ELEMENTS:
   de: Inhalte der Seite
   en: Elements of this page
+  es: Éléments de cette page
   fr: Éléments de cette page
   it: elementos de esta demostración de la página
   ru: всем элементам страницы
 MENU_PAGE_EL:
   de: Inhalte
   en: Edit all
+  es: Éditer tous
   fr: Éditer tous
   it: corrige todos los
 MENU_PAGE_FORM:
   de: Alle bearbeiten
   en: Edit
+  es: Éditer
   fr: Éditer
   it: corregir
 MENU_PAGE_FORM_DESC:
   de: Alle Inhalte dieser Seite in einem Formular bearbeiten
   en: Edit all elements of this page in one formular
+  es: Éditer tous les éléments de cette page dans une formular
   fr: Éditer tous les éléments de cette page dans une formular
   it: corrigen todos los elementos de esta página en una
   ru: Редактировать все элементы страницы в одну анкету
 MENU_PAGE_PROP_DESC:
   de: Eigenschaften der Seite bearbeiten
   en: Edit properties of this page
+  es: Éditer les propriétés de cette page
   fr: Éditer les propriétés de cette page
   it: corrigen características de esta página
   ru: Свойства Редактировать свойства страницы
 MENU_PAGE_PROP:
   de: Eigenschaften
   en: Properties
+  es: Propriétés
   fr: Propriétés
   it: las características formular
 MENU_PAGE_PUB_DESC:
   de: Seite veröffentlichen
   en: Publish this page
+  es: Seite veröffentlichen
   fr: Seite veröffentlichen
   it: Seite veröffentlichen
   ru: Publish
 MENU_PAGE_PUB:
   de: Veröffentlichen
   en: Publish
+  es: Veröffentlichen
   fr: Veröffentlichen
   it: Veröffentlichen
 MENU_PAGE_RIGHTS:
   de: Berechtigungen
   en: Rights
+  es: Rechte
   fr: Rechte
   it: Rechte
   ru: Rechte
 MENU_PAGE_RIGHTS_DESC:
   de: Rechte dieser Seite ansehen
   en: See rights of this page
+  es: consideran que las derechas de esta opinión de la página
   fr: Voir les droites de cette page
   it: consideran que las derechas de esta opinión de la página
   ru: См. человека этой страницы Смотреть
@@ -3468,6 +3922,7 @@ MENU_PAGE_SHOW_DESC:
 MENU_PAGE_SHOWPROP_DESC:
   de: Informationen und Eigenschaften der Seite anzeigen
   en: See the properties of this page
+  es: consideran las características de esta página
   fr: Voir les propriétés de cette page
   it: consideran las características de esta página
   ru: См. свойства этой странице Редактировать
@@ -3505,12 +3960,14 @@ MENU_PREVIEW:
 MENU_PROFILE_EDIT:
   de: Bearbeiten
   en: Profile
+  es: corrigen perfil
   fr: Éditer le profil
   it: corrigen perfil
   ru: Edit profile
 MENU_PROFILE_EDIT_DESC:
   de: Ihre Benutzereinstellungen bearbeiten
   en: Edit your personal settings
+  es: corrigen tu cambio personal de la contraseña del cambio de los ajustes
   fr: Éditer vos arrangements personnels
   it: corrigen tu cambio personal de la contraseña del cambio de los ajustes
   ru: Профиль Редактировать ваши персональные настройки
@@ -3529,6 +3986,7 @@ MENU_PROFILE_MAIL:
 MENU_PROFILE_PWCHANGE_DESC:
   de: Ihr Kennwort ändern
   en: Change your password
+  es: que tu contraseña
   fr: Changer votre mot de passe
   it: que tu contraseña
   ru: Изменить пароль
@@ -3546,41 +4004,48 @@ MENU_PROFILE_SETTINGS:
 MENU_PROJECT_ADD_DESC:
   de: Neues Projekt anlegen
   en: Add new project
+  es: agregar el nuevo proyecto
   fr: Ajouter le nouveau projet
   it: aggiungere il nuovo progetto
   ru: Новые Добавить новый проект
 MENU_PROJECT_ADD:
   de: Neu
   en: New
+  es: nueva
   fr: Nouveau
   it: nueva
 MENU_PROJECT_EDIT_DESC:
   de: Die Projekteinstellungen bearbeiten
   en: Edit the project settings
+  es: corrigen los ajustes del proyecto
   fr: Éditer les arrangements de projet
   it: pubblicano le regolazioni di progetto
   ru: Редактировать Редактировать параметры проекта
 MENU_PROJECT_EDIT:
   de: Einstellungen
   en: Settings
+  es: corrigen
   fr: Éditer
   it: pubblicano
   ru: Edit
 MENU_PROJECT_LIST:
   de: Alle Projekte
   en: All projects
+  es: todos los proyectos
   fr: Tous les projets
   it: tutti i progetti
   ru: Все проекты
 MENU_PROJECT_LISTING_DESC:
   de: Alle Projekte anzeigen
   en: View all projects
+  es: proyectos del alle de la visión
   fr: "Regarder les projets d'alle"
   it: progetti del alle di vista
   ru: Просмотр подозрений проектов
 MENU_PROJECT_LISTING:
   de: Projekte
   en: List
+  es: ver todos los
   fr: Regarder tous
   it: osservare tutti i
   ru: Показать все
@@ -3593,12 +4058,14 @@ MENU_PROJECTMENU:
 MENU_PROJECT_REMOVE_DESC:
   de: Das Projekt entfernen
   en: Remove the project and all content
+  es: quita el proyecto y todas las características del contenido
   fr: Enlever le projet et tous content
   it: rimuove il progetto e tutte le proprietà del soddisfare
   ru: проект Удалить проект, все содержание свойства
 MENU_PROJECT_REMOVE:
   de: Entfernen
   en: Remove
+  es: quita proyecto
   fr: Enlever le projet
   it: rimuove il progetto
   ru: Удалить
@@ -3608,6 +4075,7 @@ MENU_PROJECTTIMELINE:
 MENU_PROP_DESC:
   de: Eigenschaften wie Name, Beschreibung bearbeiten
   en: Edit the Properties of this object
+  es: corrige las características de este objeto
   fr: Éditer les propriétés de cet objet
   it: pubblica le proprietà di questo oggetto
   ru: Изменить свойства этого объекта E
@@ -3622,6 +4090,7 @@ MENU_PROP_KEY:
 MENU_PUB_DESC:
   de: Im Internet veröffentlichen
   en: Publish this object in the internet
+  es: publica este objeto en la concesión de las derechas de la contraseña del usuario de cambio de la contraseña del Internet
   fr: "Éditer cet objet dans l'Internet"
   it: "pubblica questo oggetto nella concessione di diritti di parola d'accesso dell'utente di cambiamento di parola d'accesso del Internet"
   ru: Опубликовать Опубликовать этот объект в Интернете
@@ -3631,6 +4100,7 @@ MENU_PUB_KEY:
 MENU_PUB:
   de: Veröffentlichen
   en: Publish
+  es: publica
   fr: Éditer
   it: pubblica
 MENU_PW_DESC:
@@ -3660,6 +4130,7 @@ MENU_RIGHTS:
 MENU_RIGHTS_DESC:
   de: Berechtigungen anzeigen und bearbeiten
   en: grant or revoke rights
+  es: o revocan la demostración de las derechas
   fr: accorder ou retirer les droites
   it: "o revocano l'esposizione di diritti"
   ru: выдавать или отзывать человека X
@@ -3672,6 +4143,7 @@ MENU_SEARCH_CONTENT_DESC:
 MENU_SEARCH_CONTENT:
   de: Inhalt
   en: Content
+  es: Value
   fr: Value
   it: Value
   ru: Value
@@ -3701,12 +4173,14 @@ MENU_SHOW:
 MENU_SHOW_DESC:
   de: Anzeigen
   en: Show the contents of this object
+  es: El sourcecode de la demostración de la fuente de la demostración
   fr: Montrer
   it: Il sourcecode di esposizione di fonte di esposizione
   ru: Смотреть Смотреть
 MENU_SHOW_KEY:
   de: A
   en: V
+  es: S
   fr: S
   it: S
   ru: S
@@ -3719,6 +4193,7 @@ MENU_SIZE_DESC:
 MENU_SRC_DESC:
   de: Quellcode
   en: Show sourcecode of page
+  es: de la página
   fr: Montrer le sourcecode de la page
   it: della pagina
   ru: Источник Показать исходного кода страницы
@@ -3737,51 +4212,60 @@ MENU_STRUCTURE:
 MENU_TEMPLATE_ADD_DESC:
   de: Eine neue Vorlage hinzufügen
   en: Add a new template
+  es: agrega una nueva plantilla
   fr: Ajouter un nouveau calibre
   it: aggiunge una nuova mascherina
   ru: Добавить новый шаблон
 MENU_TEMPLATE_ADDEL_DESC:
   de: Ein Platzhalter hinzufügen
   en: Add an element
+  es: agrega un elemento
   fr: Ajouter un élément
   it: aggiunge un elemento
   ru: Добавить Добавить элемент
 MENU_TEMPLATE_ADDEL:
   de: Hinzufügen
   en: Add
+  es: agrega
   fr: Ajouter
   it: aggiunge
 MENU_TEMPLATE_ADD:
   de: Hinzufügen
   en: Add
+  es: agrega
   fr: Ajouter
   it: aggiunge
   ru: Добавить
 MENU_TEMPLATE_EDIT:
   de: Bearbeiten
   en: Edit
+  es: corrige
   fr: Éditer
   it: pubblica
   ru: Редактировать Редактировать
 MENU_TEMPLATE_EDIT_DESC:
   de: Bearbeiten
   en: Edit
+  es: corrige
   fr: Éditer
   it: pubblica
 MENU_TEMPLATE_EL_DESC:
   de: Alle Platzhalter der Vorlage
   en: All Elemente of the template
+  es: que todo el Elemente de la extensión de la plantilla
   fr: "Tout l'Elemente du calibre"
   it: "che tutto il Elemente dell'estensione della mascherina"
   ru: Элементы Все Елементе из шаблона
 MENU_TEMPLATE_EL:
   de: Platzhalter
   en: Elements
+  es: elementos
   fr: Éléments
   it: gli elementi
 MENU_TEMPLATE_EXTENSION_DESC:
   de: Die Erweiterung bearbeiten
   en: Edit the extension
+  es: corregir la extensión
   fr: Éditer la prolongation
   it: "pubblicare l'estensione"
   ru: Продление Редактировать продлении
@@ -3792,24 +4276,28 @@ MENU_TEMPLATE_EXTENSION:
 MENU_TEMPLATE_LISTING:
   de: Anzeigen
   en: All templates
+  es: todas las plantillas
   fr: Tous les calibres
   it: tutte le mascherine
   ru: Все шаблоны
 MENU_TEMPLATE_LISTING_DESC:
   de: Anzeige aller Vorlagen
   en: View all Templates
+  es: ver todas las plantillas
   fr: Regarder tous les calibres
   it: osservare tutte le mascherine
   ru: Просмотр всех Шаблоны
 MENU_TEMPLATE_NAME_DESC:
   de: Den Namen der Vorlage bearbeiten
   en: Edit the template name
+  es: Éditer le nom de calibre
   fr: Éditer le nom de calibre
   it: pubblica il nome della mascherina
   ru: Имя Редактировать название шаблона
 MENU_TEMPLATE_NAME:
   de: Name
   en: Name
+  es: el nombre
   fr: Appeler
   it: il nome
 MENU_TEMPLATE_PAGES_DESC:
@@ -3821,39 +4309,46 @@ MENU_TEMPLATE_PAGES:
 MENU_TEMPLATE_PROP:
   de: Bearbeiten
   en: Edit properties
+  es: Éditer les propriétés
   fr: Éditer les propriétés
   it: pubblica la mascherina di cancellazione di cancellazione delle proprietà
   ru: Изменить свойства
 MENU_TEMPLATE_REMOVE_DESC:
   de: Template löschen
   en: Delete template
+  es: Supprimer le calibre
   fr: Supprimer le calibre
   ru: Удалить Удалить шаблон Sourcecode
 MENU_TEMPLATE_REMOVE:
   de: Löschen
   en: Delete
+  es: Supprimer
   fr: Supprimer
 MENU_TEMPLATE_SRC_DESC:
   de: Quellcode bearbeiten
   en: Edit the sourcecode
+  es: Éditer le sourcecode
   fr: Éditer le sourcecode
   it: Éditer le sourcecode
   ru: Редактировать исходного Администрации
 MENU_TEMPLATE_SRCELEMENT_DESC:
   de: Einen Platzhalter in den Quelltext einzufügen
   en: Add an element
+  es: Ajouter un élément
   fr: Ajouter un élément
   it: aggiunge un elemento
   ru: Добавить элемент
 MENU_TEMPLATE_SRCELEMENT:
   de: Platzhalter Einfügen
   en: Add element
+  es: "Ajouter l'élément"
   fr: "Ajouter l'élément"
   it: "aggiunge l'elemento"
   ru: Добавить элемент
 MENU_TEMPLATE_SRC:
   de: Quellcode
   en: Source
+  es: Sourcecode
   fr: Sourcecode
   it: Sourcecode
   ru: Sourcecode
@@ -4010,17 +4505,20 @@ MENU_TREETITLE_ADMINISTRATION:
 MENU_TREETITLE_ADMINISTRATION_DESC:
   de: Wechsel zur Systemadministration
   en: System administration
+  es: Administration de système
   fr: Administration de système
   it: Administration de système
   ru: Системное администрирование проектов
 MENU_TREETITLE_PROJECTMENU_DESC:
   de: Anderes Projekt zur Bearbeitung auswählen
   en: Select Project
+  es: Choisir le projet
   fr: Choisir le projet
   ru: Выбор проекта
 MENU_TREETITLE_PROJECTMENU:
   de: Projekte
   en: Projects
+  es: Projets
   fr: Projets
 MENU_TYPE:
   de: Typ
@@ -4037,17 +4535,20 @@ MENU_USER_ADD_DESC:
 MENU_USER_ADDGROUP:
   de: Gruppe hinzufügen
   en: Add Group
+  es: Ajouter le groupe
   fr: Ajouter le groupe
   it: "aggiungono l'utente del gruppo"
   ru: Добавить
 MENU_USER_ADD:
   de: Hinzufügen
   en: Add
+  es: Ajouter
   fr: Ajouter
   it: aggiungono
 MENU_USER_EDIT:
   de: Bearbeiten
   en: Profile
+  es: "Données d'utilisateur"
   fr: "Données d'utilisateur"
   it: "la parola d'accesso della lista di utente di Memeberships di dati"
   ru: Группы пользователей данных
@@ -4060,6 +4561,7 @@ MENU_USER_GROUPS_DESC:
 MENU_USER_GROUPS:
   de: Mitgliedschaften
   en: Memberships
+  es: Memeberships
   fr: Memeberships
   it: Groups
   ru: Memeberships
@@ -4069,6 +4571,7 @@ MENU_USER_LISTING_DESC:
 MENU_USER_LISTING:
   de: Liste
   en: List
+  es: Liste utilisateurs
   fr: Liste utilisateurs
   it: Listing
   ru: Memeberships Пользователь список Пароль
@@ -4081,6 +4584,7 @@ MENU_USER_PW_DESC:
 MENU_USER_PW:
   de: Kennwort
   en: Password
+  es: Mot de passe
   fr: Mot de passe
   it: che
 MENU_USER_REMOVE_DESC:
@@ -4089,11 +4593,13 @@ MENU_USER_REMOVE_DESC:
 MENU_USER_REMOVE:
   de: Löschen
   en: Remove
+  es: Enlever
   fr: Enlever
   it: rimuove
 MENU_USER_RIGHTS:
   de: Berechtigungen
   en: Rights
+  es: List rights
   fr: List rights
   it: List rights
   ru: List rights
@@ -4103,12 +4609,14 @@ MENU_USER_RIGHTS_DESC:
 MENU_USERS_DESC:
   de: Bearbeiten der Mitgliedschaften von Benutzern in dieser Gruppe
   en: Add or remove users
+  es: Ajouter ou enlever les utilisateurs
   fr: Ajouter ou enlever les utilisateurs
   it: aggiungono o rimuovono gli utenti
   ru: Членство Добавить или удалить пользователей Добавить
 MENU_USERS:
   de: Mitgliedschaften
   en: Memberships
+  es: Adhésions
   fr: Adhésions
   it: Gli insiemi dei membri
 MENU_USERTIMELINE:
@@ -4139,6 +4647,7 @@ MODE_SHOW:
 NOTICE_ADDED:
   de: wurde hinzugefügt.
   en: was added
+  es: a été ajouté
   fr: a été ajouté
   it: non poteva
   ru: Снять был добавлен
@@ -4154,6 +4663,7 @@ NOTICE_CANCELED:
 NOTICE_CANNOT_COPY_FOLDER:
   de: Ordner können nicht kopiert werden (nicht implementiert).
   en: Unable to copy directory (not implemented)
+  es: "Incapable de copier l'annuaire (non mis en application)"
   fr: "Incapable de copier l'annuaire (non mis en application)"
   it: "aggiunto copiare l'indice (non effettuato)"
   ru: Невозможно скопировать каталог (не реализована)
@@ -4178,6 +4688,7 @@ NOTICE_CONCURRENT_VALUE_CHANGE:
 NOTICE_COPIED:
   de: wurde kopiert.
   en: was copied
+  es: fue copiada
   fr: a été copié
   it: è stata copiata
   ru: копирования
@@ -4191,6 +4702,7 @@ ERROR_DATABASE:
 NOTICE_DELETED:
   de: wurde gelöscht.
   en: was deleted
+  es: fue suprimida
   fr: a été supprimé
   it: è stata cancellata
   ru: удалена
@@ -4200,6 +4712,7 @@ NOTICE_DONE:
 NOTICE_ERROR:
   de: Bei der Aktion trat ein Fehler auf.
   en: An error occured
+  es: un error
   fr: "Une erreur s'est produite"
   it: un errore ha accaduto
   ru: Произошла ошибка
@@ -4209,6 +4722,7 @@ NOTICE_GROUPS_MAY_CONFLICT_WITH_LDAP:
 NOTICE_IMAGE_RESIZED:
   de: Das Bild wurde geändert.
   en: The image was changed
+  es: la imagen era
   fr: "L'image a été changée"
   it: "l'immagine era"
   ru: Изображение было изменено
@@ -4222,6 +4736,7 @@ NOTICE_IMAGE_RESIZING_UNKNOWN_TYPE:
 NOTICE_IMPORTED:
   de: Datei wurde importiert.
   en: File was imported
+  es: "archivo cambiante era ist ligado del '' del <em> del '' del username de la conexión failed.<br/><br/>The del importet"
   fr: "Le dossier était l'importet"
   it: "lima cambiata era ist collegato del '' del <em> del '' del username di inizio attività failed.<br/><br/>The del importet"
   ru: Файл был importet
@@ -4235,12 +4750,14 @@ NOTICE_LINKED:
 NOTICE_LOGIN_FAILED:
   de: "Anmeldung nicht möglich. Der Benutzername ''{name}'' ist nicht vorhanden oder das eingegebene Kennwort ist falsch."
   en: "Login failed. The username ''{name}'' does not exist or the password is wrong."
+  es: '</em> {conocido} no presente o la contraseña es incorrecta.'
   fr: "L'ist de '' du <em> de '' d'username de l'ouverture failed.<br/><br/>The </em> {nommé} non actuel ou le mot de passe est erroné."
   it: "</em> {nome} non assente o la parola d'accesso è errata."
   ru: "связаны Войти провалилась. <br> <br> В''имя пользователя название <em> () </em>''агрессивным отсутствует или неверный пароль."
 NOTICE_LOGIN_FAILED_MUSTCHANGEPASSWORD:
   de: Die Anmeldung ist nicht möglich, da Ihr Kennwort abgelaufen ist. Bitte geben Sie nochmals Ihre Anmeldedaten zusammen mit einem neuen Kennwort ein.
   en: The Login was denied, because your password has timed out. Please try to login again, but now together with an new password.
+  es: la conexión fue negado, porque tu contraseña ha medido el tiempo hacia fuera. Otra vez, pero ahora intentar por favor a la conexión junto con una nueva contraseña.
   fr: "L'ouverture a été niée, parce que votre mot de passe a chronométré dehors. Essayer svp à l'ouverture encore, mais maintenant ainsi qu'un nouveau mot de passe."
   it: "l'inizio attività è stato negato, perché la vostra parola d'accesso ha cronometrato fuori. Ancora, ma ora provare prego all'inizio attività insieme ad una nuova parola d'accesso."
   ru: В Логин было отказано, б Ввиду пароль по таймауту. Попробуйте авторизоваться еще раз, б Хизб Теперь вместе с новым паролем.
@@ -4256,6 +4773,7 @@ NOTICE_MAIL_NOT_SENT:
 NOTICE_MAIL_SENT:
   de: Die E-Mail wurde gesendet.
   en: The email was sent.
+  es: El email fue enviado.
   fr: "L'email a été envoyé."
   it: Il email è stato trasmesso.
   ru: Это сообщение было отправлено.
@@ -4265,6 +4783,7 @@ NOTICE_MAX_FILE_SIZE_EXCEEDED:
 NOTICE_MOVED:
   de: wurde verschoben.
   en: was moved
+  es: fue movido
   fr: a été déplacé
   it: è stato spostato
   ru: Был переведен
@@ -4286,6 +4805,7 @@ NOTICE_NOTHING_DONE:
 NOTICE_NOT_SAVED:
   de: wurde nicht gespeichert.
   en: not saved
+  es: fue ahorrado
   fr: a été économisé
   it: è stato risparmiato
   ru: спас
@@ -4304,12 +4824,14 @@ NOTICE_PASSWORDS_DO_NOT_MATCH:
 NOTICE_PASSWORD_TIMEOUT:
   de: Ihr Kennwort ist abgelaufen und muss geändert werden.
   en: Your password has timed out and must be changed.
+  es: tu contraseña ha medido el tiempo hacia fuera y debe ser cambiado. ¡
   fr: Votre mot de passe a chronométré dehors et doit être changé.
   it: "la vostra parola d'accesso ha cronometrato fuori e deve essere cambiato."
   ru: Ваш пароль по таймауту, и должны быть изменены. Свойства
 NOTICE_PROP_SAVED:
   de: Eigenschaften wurden gespeichert.
   en: Properties saved
+  es: Las características ahorradas
   fr: Propriétés sauvées
   it: Le proprietà conservate
 NOTICE_PUBLISHED_ERROR:
@@ -4318,18 +4840,21 @@ NOTICE_PUBLISHED_ERROR:
 NOTICE_PUBLISHED:
   de: Wurde veröffentlicht.
   en: was published
+  es: fueron publicadas
   fr: a été édité
   it: sono state pubblicate
   ru: спасти было опубликовано
 NOTICE_SAVED:
   de: Wurde gespeichert.
   en: was saved
+  es: fueron ahorradas
   fr: a été économisé
   it: sono state risparmiate
   ru: спас
 NOTICE_SEQUENCE_CHANGED:
   de: Die Reihenfolge wurde geändert.
   en: The sequence was changed
+  es: la secuencia eran
   fr: "L'ordre a été changé"
   it: la sequenza erano
   ru: Последовательность изменения содержимого
@@ -4340,6 +4865,7 @@ NOTICE_UNEXPECTED_CHARS:
 NOTICE_USER_ADDED:
   de: Der Benutzer wurde hinzugefügt.
   en: The user was added
+  es: El usuario era
   fr: "L'utilisateur a été ajouté"
   it: "L'utente era"
   ru: Пользователь был добавлен
@@ -4352,6 +4878,7 @@ NOTICE_USER_ALREADY_IN_DATABASE:
 NOTICE_VALUE_SAVED:
   de: Inhalt wurde gespeichert.
   en: Content was saved
+  es: contenido cambiante fueron ahorradas
   fr: Le contenu a été sauvé
   it: soddisfare cambiato sono state risparmiate
   ru: спас
@@ -4370,65 +4897,76 @@ OPTIONS:
 PAGE_ARCHIVE_DESC:
   de: Wählen Sie eine Version aus, um den Inhalt zu übernehmen
   en: Choose a Version to overtake the value
+  es: eligen una versión para alcanzar el valor
   fr: Choisir une version pour rattraper la valeur
   it: scelgono una versione per sorpassare il valore
   ru: Выбрать вариант обгонять значение
 PAGE_DELETE_DESC:
   de: 'Löschen der Seite, <strong>Achtung</strong> alle Inhalte dieser Seite werden unwiederbringlich gelöscht!'
   en: 'Remove this page. Attention: All values of this page are deleted!'
+  es: 'quitan esta página, <strong>Attention</strong> que todos los valores de esta página se suprimen!'
   fr: 'Enlever cette page, <strong>Attention</strong> que toutes les valeurs de cette page sont supprimées !'
   it: 'rimuovono questa pagina, <strong>Attention</strong> che tutti i valori di questa pagina sono cancellati!'
   ru: Удалить эту страницу решительной Внимание всех ценностей этой странице, будут удалены!
 PAGE_EDITOR_ADD_EMPHATIC:
   de: Text als emphatisch markieren (kursiv)
   en: Mark text as emphatic (italic)
+  es: Marcar el texto como (itálico)
   fr: "Marquer le texte en tant qu'emphatique (l'italique)"
   it: Contrassegnare il testo come (corsivo)
   ru: Марк текст в решительном (курсив)
 PAGE_EDITOR_ADD_IMAGE:
   de: Ausgewähltes Bild einfügen
   en: Insert selected image
+  es: el relleno enfático seleccionó acoplamiento de la imagen
   fr: "Insérer l'image choisie"
   it: "l'inserto enfatico ha selezionato il collegamento di immagine"
   ru: Добавить выбранное изображение
 PAGE_EDITOR_ADD_LINK:
   de: Verknüpfung auf ausgewählte Seite oder Datei einfügen
   en: link with selected page or file
+  es: con la página o el relleno seleccionada del archivo
   fr: lier avec la page ou le dossier choisie
   it: "con la pagina o l'inserto selezionata della lima"
   ru: связь с выбранной страницы или файла
 PAGE_EDITOR_ADD_LIST:
   de: Einfache Liste einfügen
   en: Insert a simple list
+  es: un relleno simple de la lista
   fr: Insérer une liste simple
   it: un inserto semplice della lista
   ru: Добавить простого списка
 PAGE_EDITOR_ADD_NUMLIST:
   de: Numerierte Liste einfügen
   en: Insert a numbered list
+  es: un texto numerado de la marca de la lista
   fr: Insérer une liste numérotée
   it: un testo numerato del contrassegno della lista
   ru: Добавить нумерованном списке
 PAGE_EDITOR_ADD_STRONG:
   de: Text als wichtig markieren (fett)
   en: Mark text as strong (bold)
+  es: como
   fr: Marquer le texte comme fort (audacieux)
   it: come
   ru: Марк Текст сильный (смелый) Вставить
 PAGE_EDITOR_ADD_TABLE:
   de: Tabelle einfügen
   en: Insert Table
+  es: la tabla (en negrilla) fuerte del relleno
   fr: Insérer le Tableau
   it: "la Tabella (GRASSETTO) forte dell'inserto"
 PAGE_ELEMENT_NAME:
   de: Name des Platzhalters
   en: Name of the element
+  es: el nombre del contenido del elemento
   fr: "Nom de l'élément"
   it: "il nome del soddisfare dell'elemento"
   ru: Название элемента Содержание
 PAGE_ELEMENTS_DESC:
   de: Wählen Sie einen Platzhalter aus, um ihn zu bearbeiten.
   en: Choose an Element to edit
+  es: elige un elemento para corregir
   fr: Choisir un élément pour éditer
   it: sceglie un elemento per pubblicare
   ru: Таблица Выберите элемент для редактирования
@@ -4448,30 +4986,35 @@ PAGE_PAGEELEMENTS:
 PAGE_PREVIEW:
   de: Vorschau
   en: Preview (do not save)
+  es: (no ahorrar)
   fr: Prévision (ne pas économiser)
   it: (non risparmiare)
   ru: элементов предварительного просмотра (не сохранять)
 PAGE_PUBLISH_AFTER_SAVE:
   de: Nach dem Speichern die Seite veröffentlichen
   en: After saving publish the page
+  es: después de que ahorre publica la página
   fr: "Après l'économie éditer la page"
   it: dopo che risparmiando pubblichi la pagina
   ru: После спасения опубликовать страницу
 PAGE_REPLACE_TEMPLATE_DESC:
   de: Sie koennen die Vorlage dieser Seite gegen eine andere austauschen. Inhalte können übernommen werden, wenn es in der Zielvorlage entsprechende Platzhalter gibt.
   en: Replace the template. Content can be copied in the next window.
+  es: substituye la plantilla. El contenido se puede copiar en la ventana siguiente. ¡
   fr: Remplacer le calibre. Le contenu peut être copié dans la prochaine fenêtre.
   it: sostituisce la mascherina. Il soddisfare può essere copiato nella finestra successiva.
   ru: заменить шаблон. Содержание может быть скопирован в следующем окне.
 PAGE_REPLACE_TEMPLATE:
   de: Vorlage auswechseln
   en: Replace the template
+  es: substituye la plantilla
   fr: Remplacer le calibre
   it: sostituisce la mascherina
   ru: Заменить шаблон
 PAGE_SOURCE:
   de: Erzeugter Quellcode der Seite
   en: Sourcecode of page
+  es: Sourcecode de los ajustes de la página
   fr: Sourcecode de page
   it: Sourcecode delle regolazioni della pagina
   ru: Sourcecode страницы настроек
@@ -4484,12 +5027,14 @@ PAGE_TEMPLATE_OLD:
 PASSWORD_CODE:
   de: Code für Kennwortanforderung
   en: Code for reqesting a new password
+  es: código agregado para reqesting una nueva contraseña
   fr: Code pour reqesting un nouveau mot de passe
   it: "codice aggiunto per reqesting una nuova parola d'accesso"
   ru: Классификатор reqesting новый пароль
 PASSWORD_CODE_HELP:
   de: Sie haben per E-Mail einen Zahlencode erhalten. Diesen tragen Sie bitte jetzt in das Eingabefeld ein.
   en: You has received a code via e-mail. Please insert this code in this input field.
+  es: que has recibido un código vía E-mail. Insertar por favor este código en este campo de la entrada.
   fr: "Vous a reçu un code par l'intermédiaire de l'E-mail. Veuillez insérer ce code dans ce domaine d'entrée."
   it: "che avete ricevuto un codice via il E-mail. Inserire prego questo codice in questo campo dell'input."
   ru: Вы не получили код по электронной почте. Пожалуйста вставьте этот код в поле ввода.
@@ -4509,48 +5054,56 @@ PROJECT_CHECK_LIMIT:
 PROJECT_CMD_AFTER_PUBLISH_DESC:
   de: 'Dieses Kommando wird auf dem Server nach Beendigung einer Generierung ausgeführt.<br>Dabei wird die PHP-Funktion <tt>exec()</tt>verwendet. Es wird nicht <tt>escapeshellcmd()</tt> aufgerufen!'
   en: 'This command is executed after publishing.<br>The PHP-function <tt>exec()</tt> is used. The command <tt>escapeshellcmd()</tt> is not called!'
+  es: 'este comando se ejecuta después de que se utilice el <tt>exec de la PHP-función de publishing.<br>The () </tt>. ¡El <tt>escapeshellcmd del comando () </tt> no se llama!'
   fr: "Cette commande est exécutée après que le <tt>exec de PHP-fonction de publishing.<br>The () </tt> soit employé. Le <tt>escapeshellcmd de commande () </tt> ne s'appelle pas !"
   it: 'del questo ordine è eseguito dopo che il <tt>exec di PHP-funzione di publishing.<br>The () </tt> sia usato. Il <tt>escapeshellcmd di ordine () </tt> non è denominato!'
   ru: 'Эта команда выполняется после опубликования. <br> PHP - функция <tt> запустить </tt> () используется. команда <tt> escapeshellcmd () </tt> не открывается!'
 PROJECT_CMD_AFTER_PUBLISH:
   de: Systembefehl nach Generierung
   en: Execute after publishing
+  es: Ejecutarte después de publicar
   fr: "Exécuter après l'édition"
   it: Eseguire dopo la pubblicazione
   ru: Execute после публикации
 PROJECT_CONTENT_NEGOTIATION_DESC:
   de: 'Mit Content-Negotiation kann ein Webserver die korrekte Sprachversion ausliefern. Die URLs werden um das Sprachkürzel gekürzt.<br/>Ihr Webserver muss das entsprechende Modul geladen haben. Wenn Sie unsicher sind, lassen Sie diese Option deaktiviert.'
   en: 'With Content Negotiation the webserver is able to automatically serve the correct language. The URLs are cutted by the language-id.<br/>Your webserver has to support this!<br/>If unsure, uncheck this.'
+  es: 'con Negotiation. Content que el web server puede servir automáticamente la lengua correcta. ¡El URLs es cutted por el web server de language-id.<br/>Your tiene que apoyar esto! <br/>If inseguro, uncheck esto.'
   fr: "Avec Negotiation Content le web server peut servir automatiquement la langue correcte. L'URLs sont cutted par le web server de language-id.<br/>Your doit soutenir ceci ! <br/>If incertain, uncheck ceci."
   it: 'con Negotiation che Content il web server può servire automaticamente la lingua corretta. Il URLs è cutted dal web server di language-id.<br/>Your deve sostenere questo! <br/>If incerto, uncheck questo.'
-  ru: '                                                                                                                                                                                                        В <em> Содержание переговоров </em> веб-сервера способен автоматически выполнять правильный язык. URL-адреса с резаным - идентификатор языка. <br> Ваш веб-сервер должен поддерживать эту! <br> Если вы не знаете, что у ncheck этом.'
+  ru: 'В <em> Содержание переговоров </em> веб-сервера способен автоматически выполнять правильный язык. URL-адреса с резаным - идентификатор языка. <br> Ваш веб-сервер должен поддерживать эту! <br> Если вы не знаете, что у ncheck этом.'
 PROJECT_CONTENT_NEGOTIATION:
   de: Webserver unterstützt Content-Negotiation
   en: 'Webserver is supporting <em>Content Negotiation</em>'
+  es: El web server está apoyando Negotiation Content
   fr: Le web server soutient Negotiation Content
   it: Il web server sta sostenendo Negotiation Content
   ru: 'web-сервера поддерживает <em> Содержание переговоров </em>'
 PROJECT_CUT_INDEX_DESC:
   de: 'Links auf Dateien mit dem Dateinamen <tt>index</tt> werden um den Dateinamen gekürzt, das Ergebnis sind schönere URLs in in der Adressleiste.<br/><em>Beispiel:</em> http://server/inhalt/ statt http://server/inhalt/index.html<br/>Diese Option kann normalerweise gefahrlos gesetzt werden, da die meisten Webserver damit zurechtkommen.'
   en: 'Links to files with filename <tt>index</tt> are cutted. This gives you more beautyul URLs :)<br/><em>Example:</em> http://server/inhalt/ instead of http://server/inhalt/index.html<br/>You can set this option without care.'
+  es: 'a los archivos con el nombre de fichero index son cutted. Esto te da más beautyul URLs:) Example: http://server/inhalt/ en vez de http://server/inhalt/index.html You puede fijar esta opción sin cuidado.'
   fr: 'Les liens aux dossiers avec le nom de fichier <tt>index</tt> sont cutted. Ceci te donne plus de beautyul URLs :)<br/><em>Example : </em> http://server/inhalt/ au lieu de http://server/inhalt/index.html <br/>You peut placer cette option sans soin.'
   it: 'alle lime con il nome di schedario <tt>index</tt> sono cutted. Ciò gli dà più beautyul URLs:)<br/><em>Example: </em> http://server/inhalt/ anziché http://server/inhalt/index.html <br/>You può regolare questa opzione senza cura.'
   ru: 'Ссылки на файлы с индексом файла <tt> </tt> являются резаным. Это позволяет более beautyul сайтах :) <br> <em> Пример : </em> http://server/inhalt/ вместо http://server/inhalt/index.html <br> Можно настроить эту опцию без ухода.'
 PROJECT_CUT_INDEX:
   de: Verweise auf Index-Dateien ohne Dateinamen erzeugen
   en: remove index from URLs
+  es: 'quitar <tt>index</tt> de los acoplamientos de URLs'
   fr: "enlever <tt>index</tt> d'URLs"
   it: 'rimuovere <tt>index</tt> dai collegamenti di URLs'
   ru: '<tt> удалить из индекса </tt> URL-адреса'
 PROJECT_DELETE_DESC:
   de: Löschen des Projektes. Achtung, alle Inhalte des Projektes werden unwiederbringlich gelöscht!
   en: 'Delete the project. <strong>Attention</strong>, all values in this project are deleted unrecoverable!'
+  es: 'Suprimir el proyecto. ¡<strong>Attention</strong>, todos los valores en este proyecto son irrecuperables suprimido!'
   fr: 'Supprimer le projet. <strong>Attention</strong>, toutes les valeurs dans ce projet sont irrémédiables supprimé !'
   it: 'Cancellare il progetto. <strong>Attention</strong>, tutti i valori in questo progetto sono unrecoverable cancellato!'
   ru: 'Удаление проекта. Внимание <strong> </strong>, все ценности в данном проекте, будут удалены безвозвратно!'
 PROJECT_FOLDER:
   de: Projektordner
   en: Project folder
+  es: El uso de la carpeta del proyecto
   fr: Chemise de projet
   it: "L'uso del dispositivo di piegatura di progetto"
   ru: каталог проектов
@@ -4560,18 +5113,21 @@ PROJECT_FTP:
 PROJECT_FTP_PASSIVE_DESC:
   de: 'Passiven FTP-Transfer verwenden.<br/>Beim passiven FTP-Transfer werden ausschließlich Verbindungen vom Client zum FTP-Server aufgebaut. Einige Firewalls benötigen diese Option'
   en: 'Use passive FTP-Transfer.<br/>While using passive FTP-Transfer only the client is requesting connections. Some Firewalls need this option'
+  es: 'uso que el usar pasivo de FTP-Transfer.<br/>While pasivo Ftp-Transfiere solamente a cliente está solicitando conexiones. Algunos cortafuegos necesitan este ftp server del URL del ftp server de la opción'
   fr: "L'utilisation employer que passif de FTP-Transfer.<br/>While passif Ftp-Transfèrent seulement le client demande des raccordements. Quelques murs à l'épreuve du feu ont besoin de cette option"
   it: "l'uso che usando passivo di FTP-Transfer.<br/>While passivo Ftp-Trasferisce soltanto il cliente sta chiedendo i collegamenti. Alcune pareti refrattarie hanno bisogno di questo ftp server del URL del ftp server di opzione"
   ru: 'Использовать пассивный FTP - передача. <br> При использовании пассивного FTP - передача только клиент просит соединения. Некоторые Брандмауэры необходимости этот параметр'
 PROJECT_FTP_PASSIVE:
   de: Passiven FTP-Transfer verwenden
   en: use passive FTP-Transfer
+  es: pasivo Ftp-Transfiere
   fr: employer passif Ftp-Transfèrent
   it: passivo Ftp-Trasferisce
   ru: 'использовать пассивный FTP - передача'
 PROJECT_FTP_URL_DESC:
   de: 'FTP-Server, Format: <tt>ftp://benutzer:kennwort@hostname:port/pfad/.../pfad/</tt>.<br/>Lassen Sie dieses Feld leer, wenn die Seiten ausschließlich lokal erzeugt werden sollen.'
   en: 'FTP server, format: <tt>ftp://user:pw@hostname:port/path/.../path/</tt>.<br/>Leave this blank, if you are only generating local.'
+  es: ', formato: <tt> ftp://user:pw@hostname:port/path/.../path/ </tt>.<br/>Leave este espacio en blanco, si estás generando solamente a local.'
   fr: 'Ftp server, format : <tt> ftp://user:pw@hostname:port/path/.../path/ </tt>.<br/>Leave ce blanc, si vous produisez seulement des gens du pays.'
   it: ', disposizione: <tt> ftp://user:pw@hostname:port/path/.../path/ </tt>.<br/>Leave questo spazio in bianco, se state generando soltanto il local.'
   ru: 'URL FTP-сервера, ж ormat : @ ftp://user:pw хоста : порт / путь / ... / р нат / . Оставьте <br> т его пустым, если вы только на месте.'
@@ -4590,23 +5146,27 @@ PROJECT_INFO_SUM_FILESIZE:
 PROJECT_LOCAL_FOLDER_DESC:
   de: 'Ein Ordner im lokalen Dateisystem auf dem Server, z.B. <tt>/home/user/dir</tt>(Unix) oder <tt>c:/dokumente/ordner</tt> (Windows)'
   en: 'A Directy in the local filesystem on the server, example: <tt>/home/user/dir</tt>(Unix) or <tt>c:/documents/dir</tt> (Windows)'
+  es: 'un Directy en el filesystem local en el servidor, ejemplo: <tt>/home/user/dir</tt> (Unix) o <tt>c: El trabajo de la descripción del proyecto de /documents/dir</tt> (Windows)'
   fr: 'Un Directy dans le filesystem local sur le serveur, exemple : <tt>/home/user/dir</tt> (Unix) ou <tt>c : /documents/dir</tt> (Windows)'
   it: "un Directy nel filesystem locale sull'assistente, esempio: <tt>/home/user/dir</tt> (Unix) o <tt>c: Il lavoro di descrizione di progetto di /documents/dir</tt> (Windows)"
   ru: 'каталог Directy в локальной файловой системе на сервере, например : / дом / пользователь / директория  (Unix) или с <tt> : / документы / директория </tt> (Windows)'
 PROJECT_LOCAL_FOLDER:
   de: Lokales Verzeichnis
   en: Local directory
+  es: Directorio local
   fr: Annuaire local
   it: Indice locale
 PROJECT_LOCALPATH_DESC:
   de: 'Lokales Verzeichnis, Format: <tt>/pfad/.../pfad/</tt>.<br/>Dieses Feld kann leer bleiben, sofern Sie ausschließlich Seiten über FTP erzeugen möchten.'
   en: 'Local directory, format: <tt>/path/.../path/</tt>.<br/>Leave blank, if you are only publishing via FTP.'
+  es: 'Directorio local, formato: espacio en blanco de <tt>/path/? /path/</tt>.<br/>Leave, si estás publicando solamente vía el ftp.'
   fr: "Annuaire local, format : blanc de <tt>/path/? /path/</tt>.<br/>Leave, si vous éditez seulement par l'intermédiaire du ftp."
   it: 'Indice locale, disposizione: spazio in bianco di <tt>/path/? /path/</tt>.<br/>Leave, se state pubblicando soltanto via il ftp.'
   ru: 'Местный каталог, формат : <tt> / путь / ... / путь / </tt>. <br> Оставьте пустым, я Вы ж только публикации через FTP. Местный'
 PROJECTMODEL_DELETE_DESC:
   de: Löschen des Projektmodells, alle Templates mit diesem Modell werden gelöscht!
   en: Delete this Project model, all templates are lost!
+  es: suprime este modelo del proyecto, todas las plantillas se pierde!
   fr: Supprimer ce modèle de projet, tous les calibres sont perdus !
   it: cancella questo modello di progetto, tutte le mascherine è perso!
   ru: Исключить этот проект моделью, все шаблоны будут потеряны!
@@ -4618,6 +5178,7 @@ PROJECT_NAME:
 PROJECT_SELECT_DESC:
   de: Wenn Sie ein anderes Projekt bearbeiten möchten, so wählen Sie hier eines aus.
   en: Work in an other project
+  es: en otra búsqueda del directorio de la blanco del proyecto
   fr: Travail dans un autre projet
   it: "in un'altra ricerca dell'indice dell'obiettivo di progetto"
   ru: Работа в других проектных Целевые
@@ -4637,6 +5198,7 @@ REGISTER_NOT_ENABLED:
 SEARCH_CONTENT:
   de: Suche nach Inhalt
   en: Search for Content
+  es: para
   fr: Recherche de contenu
   it: Content
   ru: Директория для поиска содержимого
@@ -4646,6 +5208,7 @@ SEARCH_DESC:
 SEARCH_PROP:
   de: Suche nach Eigenschaft
   en: Search for Property
+  es: la búsqueda contenta para la búsqueda sumaria de la búsqueda de la característica
   fr: Recherche de propriété
   it: della ricerca soddisfatta della ricerca sommaria di ricerca della proprietà
   ru: Поиск имущества Поиск
@@ -4660,6 +5223,7 @@ SEARCH:
 SEARCH_TEMPLATE:
   de: Suche nach Vorlage
   en: Search for template
+  es: para la cancelación de la plantilla
   fr: Recherche de calibre
   it: di cancellazione della mascherina
   ru: Резюме Поиск шаблона
@@ -4687,12 +5251,14 @@ START:
 TEMPLATE_DELETE_DESC:
   de: Löschen der Seitenvorlage incl. Platzhalter
   en: Delete the template with all elements in it
+  es: la plantilla con todos los elementos en él
   fr: Supprimer le calibre avec tous les éléments dans lui
   it: la mascherina con tutti gli elementi in esso
   ru: Удаление шаблона со всеми ее элементами Элемент
 TEMPLATE_ELEMENT:
   de: Platzhalter
   en: Element
+  es: extensión de los elementos del elemento
   fr: Élément
   it: "estensione degli elementi dell'elemento"
 TEMPLATE_ELEMENTS:
@@ -4702,6 +5268,7 @@ TEMPLATE_ELEMENTS:
 TEMPLATE_EXTENSION:
   de: Dateiendung der erzeugten Seiten
   en: Extension of published pages
+  es: de la opinión publicada de la plantilla de las páginas
   fr: Prolongation des pages éditées
   it: della vista pubblicata della mascherina delle pagine
   ru: Элементы Продление опубликованных страниц шаблона
@@ -4716,23 +5283,27 @@ TEMPLATE_SHOW:
 TEMPLATE_SOURCE:
   de: Quelltext der Vorlage
   en: Sourcecode of the template
+  es: Sourcecode de la plantilla?
   fr: Sourcecode du calibre
   it: Sourcecode della mascherina?
-  ru: 'Просмотр Sourcecode в шаблон '
+  ru: Просмотр Sourcecode в шаблон
 TEMPLATE_SRC_BEGIN:
   de: Anfang
   en: Begin
+  es: comienza
   fr: Commencer
   it: comincia
   ru: Начать
 TEMPLATE_SRC_END:
   de: Ende
   en: End
+  es: la importación numerada en negrilla de la lista de la tabla de la lista del itálico del código de la célula de If_Element_is_empty?
   fr: Finir
   it: "l'importazione numerata GRASSETTO della lista della Tabella della lista di corsivo di codice delle cellule di If_Element_is_empty?"
 TEMPLATE_SRC_IFEMPTY:
   de: Bedingung:Wenn-Platzhalter-leer
   en: If_Element_is_empty
+  es: If_Element_is_NOT_empty? del final
   it: If_Element_is_NOT_empty? di conclusione
   ru: Конец If_Element_is_empty
 TEMPLATE_SRC_IFNOTEMPTY:
@@ -4856,6 +5427,7 @@ TIMEZONE:
 TRANSFER_IMPORT_DESC:
   de: Mit dem Import können Sie Dateien aus einem lokalen Dateiordner des Servers in einen Projektordner kopieren
   en: Using the import you are able to import files from the server file system.
+  es: que usa la importación que puedes importar archivos del sistema de ficheros del servidor.
   fr: "Utilisant l'importation vous pouvez importer des dossiers du système de fichiers de serveur."
   it: "che per mezzo dell'importazione che potete importare lime dal sistema di lima dell'assistente."
   ru: Использование импорта вы можете импортировать файлы из файловой системы сервера. Источник
@@ -4867,6 +5439,7 @@ TRANSFER_IMPORT:
 TRANSFER_SOURCE:
   de: Quelle
   en: Source
+  es: La blanco de la fuente
   it: "L'obiettivo di fonte"
 TRANSFER_TARGET:
   de: Ziel
@@ -4876,18 +5449,21 @@ TRANSFER_TARGET:
 TREE_CHOOSE_PROJECT:
   de: Dieses Projekt auswählen
   en: Please select a project.
+  es: selecciona por favor un proyecto.
   fr: Veuillez choisir un projet.
   it: seleziona prego un progetto.
   ru: Пожалуйста, выберите проект.
 TREE_CLOSE_ELEMENT:
   de: Schließen dieses Teilbaumes
   en: Close this part of the tree
+  es: Cerrar esta parte del árbol
   fr: "Fermer la présente partie de l'arbre"
   it: "Chiudere questa parte dell'albero"
   ru: Закрыть эту часть дерева
 TREE_OPEN_ELEMENT:
   de: Öffnen dieses Teilbaumes
   en: Open this part of the tree
+  es: abren a esta parte del usuario activo del administrador del passwort del árbol
   fr: "Ouvrir la présente partie de l'arbre"
   it: "aprono questa parte dell'utente attivo del coordinatore del passwort dell'albero"
   ru: Открыть эту часть дерева
@@ -4904,18 +5480,21 @@ USER_ADMIN:
 USER_AND_GROUPS:
   de: Benutzer und Gruppen
   en: User and groups
+  es: y los grupos
   fr: Utilisateur et groupes
   it: ed i gruppi
   ru: Администратор пользователей и групп
 USER_DELETE_DESC:
   de: Löschen des Benutzers. Vorsicht, alle Benutzereinstellungen incl. der Berechtigungen werden gelöscht!
   en: Delete the user. Attention, all settings and rights are lost!
+  es: 'suprimen a usuario. ¡se pierden <strong>Attention</strong>, todos los ajustes y las derechas!'
   fr: "Supprimer l'utilisateur. <strong>Attention</strong>, tous les arrangements et droites sont perdus !"
   it: "cancellano l'utente. <strong>Attention</strong>, tutte le regolazioni ed i diritti sono persi!"
   ru: 'Удалить пользователя. Внимание <strong> </strong>, все настройки и человека потеряли!'
 USER_DESC:
   de: Beschreibung
   en: Description
+  es: Los administradores del nombre completo de la descripción
   it: I coordinatori di nome completo di descrizione
 USER_FULLNAME:
   de: Voller Name
@@ -4925,40 +5504,47 @@ USER_FULLNAME:
 USER_ISADMIN_DESC:
   de: 'Administratoren haben gegenüber normalen Benutzern folgende erweiterte Rechte: Administration incl. Benutzer- und Projektverwaltung, Bearbeiten der Vorlagen, Bearbeiten von Sprachen und Projektvarianten. Darüber hinaus haben Administratoren volle Rechte auf alle Objekte in allen Projekten.'
   en: Administrators have all rights to all projects.
+  es: tienen todas las derechas a todos los proyectos.
   fr: Les administrateurs ont tous les droits à tous les projets.
   it: hanno tutti i diritti a tutti i progetti.
   ru: Администраторы имеют все права во всех проектах.
 USER_LDAPDN_DESC:
   de: "Der eindeutige Name ('distinguished name') dieses Benutzers im LDAP-Verzeichnisdienst. Sofern dieses Feld nicht leer ist, wird bei der Anmeldung das Kennwort gegen den in der Konfiguration festgelegten LDAP-Server geprüft. Der LDAP-Dienst ermöglicht Ihren Benutzern eine zentrales Kennwort für mehrere Anwendungen.<br/><br/>Ein Beispiel für einen solchen 'distinguished name' könnte sein<br><tt>cn =Hans Mustermann,ou =Buchhaltung,o =Meine Firma,c =DE</tt> Wenn sich nicht wissen, was LDAP ist oder was Sie hier eintragen sollen lassen Sie das Feld einfach leer."
   en: 'The distinguished name of this user in the LDAP-directory. Example: cn =Eddi Murphy,ou =Finance,o =My organization,c =DE. If unsure, leave this blank.'
+  es: '<em>distinguished name</em> de este usuario en el LDAP-diretory.<br/><br/>Example: El <tt>cn=Eddi Murphy, ou=Finance, organización o=My, c=DE</tt><br/><br/>If inseguro, deja este espacio en blanco.'
   fr: "<em>distinguished name</em> de cet utilisateur dans le LDAP-diretory.<br/><br/>Example : Le <tt>cn=Eddi Murphy, ou=Finance, l'organisation o=My, c=DE</tt><br/><br/>If incertain, laissent ce blanc."
   it: '<em>distinguished name</em> di questo utente nel LDAP-diretory.<br/><br/>Example: Il <tt>cn=Eddi Murphy, ou=Finance, organizzazione o=My, c=DE</tt><br/><br/>If incerto, lascia questo spazio in bianco.'
   ru: 'В уважаемым именем этого пользователя в LDAP - diretory. <br> <br> Пример : = cn Едди Мерфи, = или финансов, о = Моя организация, с = DE <br> <br> Если вы не знаете, что л давалось это пустое.'
 USER_LDAPDN:
   de: LDAP dn
   en: LDAP dn
+  es: LDAP abajo
   fr: LDAP vers le bas
   it: LDAP giù
 USER_LOGINAS:
   de: Angemeldet als
   en: Logged in as
+  es: Entrado como
   fr: Entré comme
   it: Entrato come
   ru: Вы вошли как
 USER_LOGOUT:
   de: Abmelden
   en: Logout
+  es: Registro de estado de la máquina del registro de estado de la máquina
   fr: Déconnexion
   it: Termine attività di termine attività
 USER_LOGOUT_DESC:
   de: Von dieser Anwendung abmelden, Ihre Sitzung wird geschlossen.
   en: Logout from this application. Your session is closed.
+  es: de este uso. Tu sesión es cerrada.
   fr: Déconnexion de cette application. Votre session est fermée.
   it: da questa applicazione. La vostra sessione è chiusa.
   ru: Выход Выход из данной заявке. Ваша сессия закрыта.
 USER_MAIL:
   de: E-Mail
   en: E-Mail
+  es: El invalid de los adress del E-mail del E-mail
   fr: E-mail
   it: Il invalid dei adress di E-mail di E-mail
 USER_MAIL_INVALID:
@@ -4969,12 +5555,14 @@ USER_MAIL_INVALID:
 USER_MAIL_NEW_PASSWORD:
   de: E-Mail mit dem neuen Kennwort an Benutzer senden
   en: Send E-Mail to user with the new password
+  es: envía E-mail al usuario con la nueva contraseña
   fr: "Envoyer l'E-mail à l'utilisateur avec le nouveau mot de passe"
   it: "trasmette a E-mail all'utente con la nuova parola d'accesso"
   ru: Отправить электронное письмо пользователю с новым паролем
 USER_MEMBERSHIPS:
   de: Mitgliedschaften
   en: Memberships
+  es: La nueva nueva contraseña de la contraseña de la contraseña de la contraseña de las calidades de miembro
   fr: Adhésions
   it: "La nuova nuova parola d'accesso di parola d'accesso di parola d'accesso di parola d'accesso di insiemi dei membri"
 USER_NEW_MAIL:
@@ -5000,18 +5588,21 @@ USER_PASSWORD:
 USER_PASSWORD_TIMEOUT:
   de: Kennwort läuft ab
   en: Password will time out
+  es: medirá el tiempo otra vez hacia fuera
   fr: Le mot de passe chronométrera dehors
   it: cronometrerà ancora fuori
   ru: Пароль Пароль будет угодно
 USER_PROFILE_DESC:
   de: Ihr Benutzerprofil, hier ändern Sie Ihre Einstellungen
   en: Your profile. Change your personal settings
+  es: de tu perfil. Cambiar tus ajustes personales
   fr: Votre profil. Changer vos arrangements personnels
   it: il vostro profilo. Cambiare le vostre regolazioni personali
   ru: ваш профиль. Изменение Ваших личных настроек
 USER_RANDOM_PASSWORD:
   de: Zufälliges Kennwort erzeugen
   en: Create random password
+  es: crean el estilo al azar del código del registro de Comit de la contraseña
   fr: Créer le mot de passe aléatoire
   it: "generano lo stile casuale di codice di registro di Comit di parola d'accesso"
   ru: Создать случайный пароль
@@ -5023,6 +5614,7 @@ USER_REGISTER_CODE:
 USER_STYLE_DESC:
   de: "Ein 'Stil' beinhaltet Farb- und Schrifteinstellungen. Jeder Benutzer kann sich im Profil seinen eigenen Stil aussuchen"
   en: "A 'Style' contains Settings for colours and Fonts. Every User is able to select his own style"
+  es: A ?estilo? contiene los ajustes para los colores y las fuentes. Cada usuario puede seleccionar su propio username del teléfono del estilo
   fr: Un modèle contient des arrangements pour des couleurs et des polices. Chaque utilisateur peut choisir son propre modèle
   it: A stile contiene le regolazioni per i colori e le serie complete di caratteri. Ogni utente può selezionare il suo proprio username del telefono di stile
   ru: Стиль содержит настройки для цвета и шрифтов. Каждый Пользователь имеет возможность выбрать свой стиль Телефон
@@ -5040,12 +5632,14 @@ USER_USERNAME:
 USER_USERNAME_DESC:
   de: Mit diesem Namen meldet sich der Benutzer am System an
   en: With this name the user is logging in
+  es: con este nombre que el usuario está entrando
   fr: "Avec ce nom l'utilisateur entre"
   it: "con questo nome che l'utente sta entrando"
   ru: Имя пользователя с таким именем пользователь рубок я н
 USER_YOURPROFILE:
   de: Persönliche Einstellungen
   en: My settings
+  es: mi contenido de los ajustes
   fr: Mes arrangements
   it: il mio soddisfare delle regolazioni
   ru: Мои настройки Содержимое
@@ -5134,54 +5728,66 @@ ACCESSKEY_WINDOW_ACL:
   en: G
 ELEMENT:
   en: Element
+  es: Elemento
   fr: Élément
   ru: Суббота Элемент
 ELEMENTS:
   en: Elements
+  es: Elementos
   fr: Éléments
 EL_LIST_DESC:
   en: The list element contains 1 ore more pages. With this element you can put more page into one together
+  es: El elemento de la lista contiene 1 mineral más páginas. Con este elemento puedes juntar más página en una
   fr: "L'élément de liste contient 1 öre plus de pages. Avec cet élément vous pouvez remonter plus de page dans une"
   it: "l'elemento della lista contiene 1 öre più pagine. Con questo elemento che potete unire più pagina in un"
   ru: Список Список элементов включает 1 или более страниц. С этим элементом вы можете поместить несколько страниц на одном вместе
 EL_LIST:
   en: List
+  es: Lista
   fr: Liste
   it: Listing
 FILE_IMAGE_NEW_HEIGHT:
   en: New height
+  es: Nueva altura
   fr: Nouvelle taille
   it: Nueva altura
   ru: Новая высота
 FILE_IMAGE_NEW_WIDTH:
   en: New width
+  es: Nueva anchura
   fr: Nouvelle largeur
   it: Nueva anchura
   ru: Новая ширина климата
 GLOBAL_LANGAUGE:
   en: Language
+  es: Langue
   fr: Langue
   it: Lengua
   ru: Ключевые Язык Sprache
 GLOBAL_NO_TEMPLATES_AVAILABLE_DESC:
   en: 'Hint: There are no templates available.'
+  es: '<em>Hint : </em> là ne sont aucun calibre disponible.'
   fr: '<em>Hint : </em> là ne sont aucun calibre disponible.'
   it: '<em>Hint : </em> là ne sont aucun calibre disponible.'
   ru: '<em> Подсказка : </em> Там нет шаблонов имеется.'
 GLOBAL_SHOW:
   en: Show
+  es: Montrer
   fr: Montrer
   it: Montrer
 GLOBAL_TIME:
   en: Time
+  es: Temps
   fr: Temps
   it: Tiempo
 GLOBAL_TODAY:
   en: Today
+  es: "Aujourd'hui"
   fr: "Aujourd'hui"
   it: Hoy
 HELP_LONGTEXT_WIKI:
   en: In this textelement you can use text quickformatting
+  es: Dans ce textelement vous pouvez employer le texte quickformatting
   fr: Dans ce textelement vous pouvez employer le texte quickformatting
   it: En este textelement puedes utilizar el texto quickformatting
   ru: В этом textelement вы можете использовать текст quickformatting If_Element_is_empty
@@ -5191,43 +5797,51 @@ IFNOTEMPTY:
   en: If_Element_NOT_empty
 ISOCODE:
   en: ISO Code
+  es: "L'OIN codent"
   fr: "L'OIN codent"
   it: La ISO cifra
   ru: If_Element_NOT_empty кодекса ИСО ИСО
 LAST_MONTH:
   en: Last Month
+  es: Le mois dernier
   fr: Le mois dernier
   it: El mes pasado
   ru: Кодекс последний месяц последний
 LAST_YEAR:
   en: Last Year
+  es: "L'année dernière"
   fr: "L'année dernière"
   it: El año pasado
 LINK:
   en: Link
+  es: Lien
   fr: Lien
   it: Acoplamiento
   ru: Год Ссылка Ссылка
 MAKE_DEFAULT:
   en: set to default
+  es: fijar al defecto
   fr: placer au défaut
   it: fijar al defecto
   ru: установлено значение по умолчанию
 MENU_FILE_DECOMPRESS:
   en: Decompress
+  es: descomprimir
   fr: Décomprimer
   it: decomprimere
 MENU_FILE_DECOMPRESS_DESC:
   en: Decompress this file
+  es: descomprimen este archivo
   fr: Décomprimer ce dossier
   it: decomprimono questa lima
 MENU_INDEX_ADMINISTRATION:
   en: Administration
+  es: manejan proyectos, del usuario y de los grupos de los grupos
   it: manejan proyectos, del usuario y de los grupos de los grupos
 MENU_INDEX_ADMINISTRATION_DESC:
   en: Manage projects, user and groups
   fr: "Contrôler les projets, l'utilisateur et les groupes"
-  ru: 'Управление проектами, пользователей и групп '
+  ru: Управление проектами, пользователей и групп
 MENU_INDEX_APPLICATIONS:
   en: Applications
 MENU_INDEX_APPLICATIONS_DESC:
@@ -5238,6 +5852,7 @@ MENU_INDEX_CHANGEPASSWORD:
   ru: Смена пароля
 MENU_INDEX_CHANGEPASSWORD_DESC:
   en: Change your password
+  es: tu registro de estado de la máquina del registro de estado de la máquina de la conexión de la contraseña
   fr: Changer votre mot de passe
   it: tu registro de estado de la máquina del registro de estado de la máquina de la conexión de la contraseña
   ru: Изменить пароль Войти
@@ -5247,6 +5862,7 @@ MENU_INDEX_LOGIN:
   cn: Zhùcè
 MENU_INDEX_PASSWORD_DESC:
   en: If you do not know your password, you can get it via mail.
+  es: si no sabes tu contraseña, tú puede conseguirla vía correo.
   fr: "Si vous ne savez pas votre mot de passe, vous pouvez l'obtenir par l'intermédiaire du courrier."
   it: si no sabes tu contraseña, tú puede conseguirla vía correo.
   ru: Если вы не знаете пароля Вы можете получить его по почте. Выберите
@@ -5257,32 +5873,38 @@ MENU_INDEX_PASSWORD:
   cn: Wàngjì mìmǎ
 MENU_INDEX_PROJECTMENU_DESC:
   en: Select a project, which you want to workk with
+  es: selecciona un proyecto, que te deseas al workk con
   fr: Choisir un projet, avec lequel vous voulez au workk
   it: selecciona un proyecto, que te deseas al workk con
   ru: Проект Выберите проект который вы хотите workk при регистрации
   cn: Xuǎnzé yīgè xiàngmù, nín xīwàng yǔ
 MENU_INDEX_PROJECTMENU:
   en: Select project
+  es: El proyecto selecto
   fr: Choisir le projet
   it: El proyecto selecto
   cn: Xuǎnzé xiàngmù
 MENU_INDEX_REGISTER_DESC:
   en: You must be a registered user to use this application.
+  es: debe ser un usuario registrado para utilizar este uso.
   fr: Vous devez être un utilisateur enregistré pour employer cette application.
   it: debe ser un usuario registrado para utilizar este uso.
   ru: Теперь Вы должны быть зарегистрированным пользователем чтобы использовать эту программу.
 MENU_INDEX_REGISTER:
   en: Register now
+  es: el registro ahora
   fr: Enregistrer maintenant
   it: el registro ahora
 MENU_INDEX_SHOWLOGIN_DESC:
   en: You must login.
+  es: debes conexión.
   fr: Vous devez ouverture.
   it: debes conexión.
   ru: Войти Вы должны войти.
   cn: Zhùcè.
 MENU_INDEX_SHOWLOGIN:
   en: Login
+  es: Conexión
   fr: Ouverture
   it: Conexión
   cn: Zhùcè
@@ -5300,6 +5922,7 @@ MENU_PROJECT_MAINTENANCE_DESC:
   en: Maintenance
 MENU_PROJECT_MAINTENANCE:
   en: Maintenance
+  es: el mantenimiento
   fr: Entretien
   it: la manutenzione
   ru: Обслуживание
@@ -5309,33 +5932,40 @@ MENU_TITLE_USER_GROUPS:
   en: Memberships
 USER_LOGIN_FAILED:
   en: Login not possible. Wrong Username or wrong password.
+  es: conexión no posible. Username incorrecto o contraseña incorrecta.
   fr: Ouverture non possible. Username faux ou mot de passe faux.
   it: "inizio attività non possibile. Username errato o parola d'accesso errata."
   ru: Войти невозможно. Wrong Имя пользователя или неверный пароль.
 USER_MAIL_SUBJECT:
   en: Your Password
+  es: tu contraseña
   fr: Votre mot de passe
   it: "la vostra parola d'accesso"
   ru: Ваш
 USER_MAIL_TEXT_PREFIX:
   en: 'Your Password for logging in to OpenRat Content Management System is:'
+  es: 'tu contraseña para entrar a OpenRat que es el sistema de gerencia contento:'
   fr: "Votre mot de passe pour entrer au système de gestion content d'OpenRat est :"
   it: "la vostra parola d'accesso per entrare a OpenRat ch'il sistema di amministrazione soddisfatto è:"
   ru: 'Пароль пароль для входа в OpenRat Система управления контентом имеет :'
 USER_MAIL_TEXT_SUFFIX:
   en: Note this password at a secure place and remove this E-Mail. Your are able to change your password after logging in.
+  es: Observar esta contraseña en un lugar seguro y quitar este E-mail. Tu poder cambiar tu contraseña después de entrar.
   fr: Noter ce mot de passe à un endroit bloqué et enlever cet E-mail. Votre pouvoir changer votre mot de passe après avoir entré.
   it: "Notare questa parola d'accesso ad un posto sicuro e rimuovere questo E-mail. Vostro potere cambiare la vostra parola d'accesso dopo avere entrato."
   ru: Примечание пароль на этом безопасном месте и удалить это письмо. Ваш сможете изменить пароль после регистрации. Членства
 CHARSET:
+  es: ISO-8859-1
   fr: ISO-8859-1
   it: ISO-8859-1
   ru: UTF-8
 MENU_TITLE_SEARCH_CONTENT:
+  es: Search for value
   fr: Search for value
   it: Search for value
   ru: Search for value
 MENU_TITLE_SEARCH_PROP:
+  es: Search for property
   fr: Search for property
   it: Search for property
   ru: Search for property
