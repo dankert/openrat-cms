@@ -1,7 +1,6 @@
 <?php	
-    global $conf;
-	$time = $attr_date;
-
+function component_date( $time )
+{
 	if	( $time==0)
 		echo lang('GLOBAL_UNKNOWN');
 	else
@@ -69,5 +68,5 @@
 		echo date(lang('DATE_FORMAT'),$time);
 		echo '</span>';
 	}
-
+}
 ?>

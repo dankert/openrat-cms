@@ -15,6 +15,7 @@ class FormComponent extends Component
 	public $enctype = 'application/x-www-form-urlencoded';
 	public $async = false;
 	public $autosave = false;
+	public $type = '';
 
 	private $submitFunction = 'formSubmit( $(this) ); return false;';
 	

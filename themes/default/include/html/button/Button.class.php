@@ -3,10 +3,12 @@
 class ButtonComponent extends Component
 {
 
-	public $type;
-
+	public $type = 'submit';
+	public $class = 'ok';
 	public $src;
-
+	public $text = 'button_ok';
+	public $value = 'ok';
+	
 	private $tmp_src;
 
 	protected function begin()
