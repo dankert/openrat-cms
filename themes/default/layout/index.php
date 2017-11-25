@@ -101,17 +101,7 @@ var REQ_PARAM_TARGET  = '<?php echo  REQ_PARAM_TARGET ?>';
 </div>
 
 
-<script type="text/javascript">
-<!--
-document.writeln("<div class=\"invisible\">");
-// -->
-</script>
-<noscript><em>Javascript is required to view this site</em></noscript>
-<script type="text/javascript">
-<!--
-document.writeln("</div>");
-// -->
-</script>
+<div class="noscript"><em>Javascript is required to view this site</em></div>
 
 <form class="invisible" target="temp" action="">
 <input type="text" id="uname" name="l1" /><input id="upassword" type="password" name="l2" /><input type="submit" /> 
