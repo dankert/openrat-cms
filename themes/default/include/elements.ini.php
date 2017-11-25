@@ -4,7 +4,7 @@
 
 
 output   = 
-button   = type:submit,src,class:ok,value:ok,text:button_ok
+button   = 
 checkbox = default:false,readonly:false,name:*
 column   = width,style,class,colspan,rowspan,header:false,title,url,action,id,name
 date     = date
@@ -20,7 +20,7 @@ header   = name:,views,back:false
 editor   = name:*,type:*,mode
 else     =
 if       = equals,value,not,empty,present,contains,greaterthan,lessthan,true,false
-image    = config,file,url,icon,align:left,type,elementtype,fileext,tree,notice,size,title
+image    = 
 input    = class:text,default:,type:text,index,name:*,prefix,value,size:,maxlength:256,onchange:,readonly:false,hint:,icon:
 inputarea= name,rows:10,cols:40,value,index,onchange,prefix,class:inputarea,default:
 insert   = file,script,inline:false,url,name,function

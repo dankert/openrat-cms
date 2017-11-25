@@ -3,6 +3,8 @@
 class ImageComponent extends Component
 {
 
+	public $action;
+	public $method;
 	public $config;
 	public $file;
 	public $url;
@@ -22,6 +24,16 @@ class ImageComponent extends Component
 		{
 			$file = OR_THEMES_DIR.'default/images/icon/element/'.$this->htmlvalue($this->elementtype).'.svg';
 			$styleClass = 'image-icon image-icon--element';
+		}
+		elseif	( !empty($this->action) )
+		{
+			$file = OR_THEMES_DIR.'default/images/icon/action/'.$this->htmlvalue($this->action).'.svg';
+			$styleClass = 'image-icon image-icon--action';
+		}
+		elseif	( !empty($this->method) )
+		{
+			$file = OR_THEMES_DIR.'default/images/icon/method/'.$this->htmlvalue($this->method).'.svg';
+			$styleClass = 'image-icon image-icon--method';
 		}
 		elseif	( !empty($this->type) )
 		{

@@ -4,7 +4,7 @@
 	<!-- Info-Meldung anzeigen (sofern vorhanden -->
 	<if present="dbname">
 		<part class="toolbar-icon">
-			<image icon="database" align="left"></image>
+			<image action="database"></image>
 			<text raw="_" />
 			<part class="arrow-down" />
 			<part class="dropdown">
@@ -20,14 +20,14 @@
 	<!-- Menü: Datei -->
 	<if true="method:userIsLoggedIn">
 		<part class="toolbar-icon menu">
-			<image icon="file" align="left"></image>
+			<image action="file"></image>
 			<text key="file"></text>
 			<part class="arrow-down" />
 			<part class="dropdown">
 				<part
 					class="entry clickable filtered on-action-folder on-action-page on-action-file">
 					<link type="dialog" title="message:menu_new_desc" subaction="new">
-						<image icon="new" align="left"></image>
+						<image method="add" align="left"></image>
 						<text key="menu_new"></text>
 					</link>
 				</part>
@@ -36,13 +36,13 @@
 
 				<part class="entry clickable">
 					<link type="post" title="message:menu_save_desc" subaction="save">
-						<image icon="save" align="left"></image>
+						<image method="save" align="left"></image>
 						<text key="menu_save"></text>
 					</link>
 				</part>
 				<part class="entry clickable">
 					<link type="post" title="message:menu_saveall_desc" subaction="saveall">
-						<image icon="saveall" align="left"></image>
+						<image method="save" align="left"></image>
 						<text key="menu_saveall"></text>
 					</link>
 				</part>
@@ -50,7 +50,7 @@
 					class="entry clickable filtered on-action-page on-action-file on-action-template on-action-pageelement">
 					<link type="dialog" title="message:menu_preview_desc"
 						subaction="preview">
-						<image icon="page" align="left"></image>
+						<image method="preview" align="left"></image>
 						<text key="menu_preview"></text>
 					</link>
 				</part>
@@ -60,7 +60,7 @@
 				<part class="entry clickable">
 					<link type="post" class="entry" title="message:USER_LOGOUT_DESC"
 						action="login" subaction="logout">
-						<image icon="close" align="left"></image>
+						<image method="logout" align="left"></image>
 						<text key="USER_LOGOUT"></text>
 					</link>
 				</part>
@@ -72,28 +72,28 @@
 	<if true="method:userIsLoggedIn">
 
 		<part class="toolbar-icon menu">
-			<image icon="edit" align="left"></image>
+			<image method="edit" align="left"></image>
 			<text key="edit"></text>
 			<part class="arrow-down" />
 			<part class="dropdown">
 				<part
 					class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file">
 					<link type="dialog" title="message:menu_prop_desc" subaction="prop">
-						<image icon="prop" align="left"></image>
+						<image method="prop" align="left"></image>
 						<text key="menu_prop"></text>
 					</link>
 				</part>
 				<part
 					class="entry clickable filtered on-action-page on-action-file on-action-folder on-action-pageelement on-action-template">
 					<link type="dialog" title="message:menu_pub_desc" subaction="pub">
-						<image icon="pub" align="left"></image>
+						<image method="publish" align="left"></image>
 						<text key="menu_pub"></text>
 					</link>
 				</part>
 				<part class="entry clickable filtered on-action-pageelement">
 					<link type="dialog" class="entry" subaction="archive"
 						title="message:menu_archive_desc">
-						<image icon="archive" align="left"></image>
+						<image method="archive" align="left"></image>
 						<text key="menu_archive"></text>
 					</link>
 				</part>
@@ -101,7 +101,7 @@
 					class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
 					<link type="dialog" title="message:menu_rights_desc"
 						subaction="rights">
-						<image icon="rights" align="left"></image>
+						<image method="rights" align="left"></image>
 						<text key="menu_rights"></text>
 					</link>
 				</part>
@@ -111,7 +111,7 @@
 				<part class="entry clickable filtered on-action-page">
 					<link type="dialog" title="message:menu_changetemplate_desc"
 						subaction="changetemplate">
-						<image icon="changetemplate" align="left"></image>
+						<image method="changetemplate" align="left"></image>
 						<text key="menu_changetemplate"></text>
 					</link>
 				</part>
@@ -127,7 +127,7 @@
 	<if true="method:userIsLoggedIn">
 
 		<part class="toolbar-icon projects">
-			<image icon="project" align="left"></image>
+			<image action="project" align="left"></image>
 			<text class="titletext" key="GLOBAL_PROJECT"></text>
 			<part class="dropdown">
 
@@ -135,7 +135,7 @@
 					<part class="entry clickable">
 						<link type="post" class="entry" action="start" subaction="administration"
 							target="tree" id="-1">
-							<image icon="administration" align="left"></image>
+							<image method="settings" align="left"></image>
 							<text key="administration"></text>
 						</link>
 					</part>
@@ -145,7 +145,7 @@
 				<if value="size:languages" greaterthan="0">
 					<list list="languages" key="id" value="name">
 						<part class="entry clickable">
-							<image icon="language"></image>
+							<image action="language"></image>
 							<link type="post" action="tree" subaction="language" id="var:id"
 								title="message:select_language">
 								<text var="name"></text>
@@ -158,7 +158,7 @@
 				<if value="size:models" greaterthan="0">
 					<list list="models" key="id" value="name">
 						<part class="entry clickable">
-							<image icon="model"></image>
+							<image action="model"></image>
 							<link type="post" action="tree" subaction="model" id="var:id"
 								title="message:select_model">
 								<text var="name"></text>
@@ -171,7 +171,7 @@
 
 				<list list="projects" key="id" value="name">
 					<part class="entry clickable">
-						<image icon="project"></image>
+						<image action="project"></image>
 						<link type="post" action="start" subaction="projectmenu" id="var:id"
 							title="message:select_project">
 							<text var="name" maxlength="45"></text>
@@ -190,14 +190,14 @@
 		<part
 			class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-template on-action-element">
 			<link type="dialog" subaction="prop" title="message:menu_prop_desc">
-				<image icon="prop" align="left"></image>
+				<image method="prop" align="left"></image>
 				<text key="menu_prop"></text>
 			</link>
 		</part>
 		<part
 			class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-pageelement on-action-template">
 			<link type="dialog" subaction="pub" title="message:menu_pub_desc">
-				<image icon="pub" align="left"></image>
+				<image method="publish" align="left"></image>
 				<text key="menu_pub"></text>
 			</link>
 		</part>
@@ -207,7 +207,7 @@
 	<!-- Info-Meldung anzeigen (sofern vorhanden -->
 	<if not="" empty="config:login/motd">
 		<part class="toolbar-icon">
-			<image icon="info" align="left"></image>
+			<image method="motd" align="left"></image>
 			<text raw="_" />
 			<part class="arrow-down" />
 			<part class="dropdown">
@@ -229,21 +229,22 @@
 		</part>
 	</part>
 	<part class="toolbar-icon user">
-		<image icon="user" align="left"></image>
+		<image action="user" align="left"></image>
 		<text class="titletext" var="userfullname" maxlength="25"></text>
-		<part class="arrow-down" />
+		<image method="arrow_down" align="left"></image>
+		<!-- <part class="arrow-down" />-->
 		<part class="dropdown">
 			<part class="entry clickable">
 				<link type="post" title="message:USER_PROFILE_DESC" action="start"
 					subaction="profile">
-					<image icon="user" align="left"></image>
+					<image action="user" align="left"></image>
 					<text key="profile"></text>
 				</link>
 			</part>
 			<part class="entry clickable">
 				<link type="post" title="message:start" action="start"
 					subaction="start">
-					<image icon="start" align="left"></image>
+					<image action="dashboard" align="left"></image>
 					<text key="start"></text>
 				</link>
 			</part>
@@ -253,7 +254,7 @@
 			<part class="entry clickable">
 				<link type="post" class="entry" title="message:USER_LOGOUT_DESC"
 					action="login" subaction="logout">
-					<image icon="close" align="left"></image>
+					<image method="close" align="left"></image>
 					<text key="USER_LOGOUT"></text>
 				</link>
 			</part>

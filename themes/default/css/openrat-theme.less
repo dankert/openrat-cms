@@ -214,6 +214,7 @@ html.theme-@{cms-theme-id} {
 	div.entry.selected , div.dropdown > div.entry:hover , div.dropdown > div.entry:hover > a , a.element {
 		background-color: @cms-title-background-color;
 		color: @cms-title-text-color;
+		
 	}
 
 	ul.tree li {
@@ -517,8 +518,35 @@ table tr.headline > td {
 		border: 1px dotted @cms-text-color;
 	}
 	
-	svg.image-icon > path {
-		fill: @cms-text-color;
+	/* SVG-Icons */
+	body {
+		svg.image-icon > path {
+			fill: @cms-text-color;
+		}
+		#header {
+			
+			svg {
+				width: 18px;
+				height: 18px;
+			}
+			svg.image-icon > path {
+				fill: @cms-title-text-color;
+			}
+			.dropdown {
+				svg.image-icon > path {
+				fill: @cms-text-color;
+				
+				}
+			}
+			div.entry:hover
+			{
+				svg.image-icon > path {
+					fill: @cms-title-text-color;
+				}
+				
+			}
+			
+		}
 	}
 }
 

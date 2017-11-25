@@ -106,9 +106,6 @@ class TemplateEngine
 				// Setzt: $tag, $attributes, $value, $type
 				extract($line);
 				
-				if ($type == 'complete' || $type == 'open')
-					$attributes = $this->checkAttributes($tag, $attributes);
-				
 				if ($type == 'open' || $type == 'complete')
 				{
 					$depth ++;
@@ -134,6 +131,9 @@ class TemplateEngine
 					}
 					else
 					{
+						if ($type == 'complete' || $type == 'open')
+							$attributes = $this->checkAttributes($tag, $attributes);
+						
 						$this->copyFileContents($tag, true, $tag . '/' . $tag . '-begin', $outFile, $attributes, $depth);
 					}
 				}

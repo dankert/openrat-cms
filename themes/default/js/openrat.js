@@ -547,6 +547,8 @@ function registerViewEvents( viewEl )
 
 function registerHeaderEvents()
 {
+	$('div#header').trigger('orHeaderLoaded');
+	
 	// Links aktivieren...
 	$('div#header .clickable').orLinkify();
 	
