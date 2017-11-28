@@ -61,7 +61,7 @@
 					<list list="show" value="t" key="k">
 						<part>
 							<if value="var:t" equals="read">
-								<set var="var:t" value="true" />
+								<set var="var:t" value="true" /> 
 								<checkbox name="var:t" readonly="true"></checkbox>
 							</if>
 							<else>

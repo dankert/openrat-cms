@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 
 	<!-- Info-Meldung anzeigen (sofern vorhanden -->
-	<if present="dbname">
+	<if present="var:dbname">
 		<part class="toolbar-icon">
 			<image action="database"></image>
 			<text raw="_" />
@@ -142,7 +142,7 @@
 					<part class="divide" />
 				</if>
 
-				<if value="size:languages" greaterthan="0">
+				<if value="size:languages" greaterthan="00">
 					<list list="languages" key="id" value="name">
 						<part class="entry clickable">
 							<image action="language"></image>

@@ -69,10 +69,10 @@ class TemplateEngine
 				// Wenn Vorlage (noch) nicht existiert
 				throw new LogicException("Template not found: $tplName");
 			
-			$filename = FileUtils::getTempDir() . '/' . 'or.cache.tpl.' . str_replace('/', '.', $tplName) . '.tpl.' . PHP_EXT;
+			$filename = 'themes/default/templates/' . $tplName . '.tpl.out.'. PHP_EXT;
 			
 			// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausf�hren.
-			if ($confCompiler['cache'] && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
+			if (false && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
 				return;
 			
 			if (is_file($filename) && ! is_writable($filename))
@@ -83,10 +83,7 @@ class TemplateEngine
 			// Vorlage und Zieldatei oeffnen
 			$document = $this->loadDocument($srcFilename);
 			
-			// Wir legen erstmal eine temporaere Datei an.
-			// Falls ein Fehler auftritt, ist nur die temporaere Datei defekt.
-			$tmpFilename = $filename . '.tmp';
-			$outFile = @fopen($tmpFilename, 'w');
+			$outFile = @fopen($filename, 'w');
 			
 			if (! is_resource($outFile))
 				throw new LogicException("Template $tplName: Unable to open file for writing: $filename");
@@ -119,6 +116,7 @@ class TemplateEngine
 						
 						$className .= 'Component';
 						$component = new $className();
+						$component->setDepth($depth); 
 						
 						foreach ($attributes as $prop => $value)
 						{
@@ -127,6 +125,7 @@ class TemplateEngine
 						// $component->depth = $depth;
 						
 						$components[$depth] = $component;
+						fwrite($outFile, "\n".str_repeat("\t",$depth));
 						fwrite($outFile, $component->getBegin());
 					}
 					else
@@ -143,6 +142,7 @@ class TemplateEngine
 					if (isset($components[$depth]))
 					{
 						$component = $components[$depth];
+						fwrite($outFile, "\n".str_repeat("\t",$depth));
 						fwrite($outFile, $component->getEnd());
 						unset($components[$depth]);
 					}
@@ -156,8 +156,6 @@ class TemplateEngine
 			}
 			
 			fclose($outFile);
-			
-			rename($tmpFilename, $filename);
 			
 			// CHMOD ausfuehren.
 			if (! empty($confCompiler['chmod']))
