@@ -8,7 +8,7 @@ class DateComponent extends Component
 	{
 		$date = $this->date;
 		
-		include_once( OR_THEMES_DIR.'default/include/html/date/date.inc.php');
+		$this->include( 'component-date.php');
 		echo '<?php component_date('.$this->value($this->date).') ?>';
 	}
 }

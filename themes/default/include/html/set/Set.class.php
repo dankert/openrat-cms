@@ -11,13 +11,13 @@ class SetComponent extends Component
 		if (!empty($this->value))
 		{
 			if (!empty($this->key))
-				echo '<?php $'.$this->value($this->var).'= '.$this->value($this->value).'['.$this->value($this->key).']; ?>';
+				echo '<?php $'.$this->varname($this->var).'= '.$this->value($this->value).'['.$this->value($this->key).']; ?>';
 			else 
-				echo '<?php $'.$this->value($this->var).'= '.$this->value($this->value).'; ?>';
+				echo '<?php $'.$this->varname($this->var).'= '.$this->value($this->value).'; ?>';
 		}
 		else {
 			// Unset
-			echo '<?php unset($'.$this->value($this->var).') ?>';
+			echo '<?php unset($'.$this->varname($this->var).') ?>';
 		}
 	}
 }

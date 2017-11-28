@@ -3,6 +3,18 @@
 abstract class Component
 {
 
+	private $depth;
+	
+	public function getDepth()
+	{
+		return $this->depth;
+	}
+
+	public function setDepth($depth)
+	{
+		$this->depth = $depth;
+	}
+
 	/**
 	 * Gets the beginning of this component.
 	 * @return string
@@ -35,6 +47,19 @@ abstract class Component
 	{}
 	
 	
+	protected function varname($value)
+	{
+		$erg = $this->value($value);
+		
+		// Für statische Texte muss kein PHP-Abschnitt geoeffnet werden.
+		if	(substr($erg,0,1) == "'" && strpos($erg,'$')===FALSE )
+			return substr($erg,1,-1);
+		else
+			return $erg;
+	}
+	
+	
+	
 	protected function htmlvalue($value)
 	{
 		$erg = $this->value($value);
@@ -42,8 +67,8 @@ abstract class Component
 		// Für statische Texte muss kein PHP-Abschnitt geoeffnet werden.
 		if	(substr($erg,0,1) == "'" && strpos($erg,'$')===FALSE )
 			return substr($erg,1,-1);
-			else
-				return '<'.'?php echo '.$erg.' ?>';
+		else
+			return '<'.'?php echo '.$erg.' ?>';
 	}
 	
 	
@@ -106,6 +131,12 @@ abstract class Component
 			}
 	}
 	
+
+	protected function include( $file ) 
+	{
+		echo "include_once( OR_THEMES_DIR.'default/include/html/date/".$file."');";
+		
+	}
 	
 }
 
