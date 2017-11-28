@@ -20,6 +20,8 @@ foreach( explode(',','de,en,es,fr,it,ru,cn') as $iso )
 		file_put_contents($filename, "\$lang['$key']=\"$t\";\n",FILE_APPEND);
 	}
 	file_put_contents($filename, "?>",FILE_APPEND);
+	
+	echo "File written: $filename\n";
 }
 
 ?>

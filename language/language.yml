@@ -485,10 +485,10 @@ DATE_FORMAT:
   en: m/d Y, H:i:s
   es: 'm/d Y, H: i: s'
   fr: 'm/d Y, H : i : s'
-  it: "m/d Y, H: i: gli ultimi elementi seguenti seguenti dell'elemento di Tempo di anno di mese gennaio di mese di s"
-  ru: 'м / д Y, H : я : ы'
+  it: "m/d Y, H: i:s"
+  ru: 'm/d Y, H: i:s'
 DATE_FORMAT_LONG:
-  de: '\{\w\e\e\k\d\a\y\}\, d.\{\m\o\n\t\h\} Y \u\m H:i:s'
+  de: \{\w\\e\\e\k\d\a\y\}\, d.\{\m\o\\n\\t\h\} Y \u\m H:i:s
   en: m/d Y, H:i
 DATE_LAST_MONTH:
   de: Letzter Monat

@@ -121,8 +121,7 @@ $lang['CREATE_USER']="Erstellungsautor";
 $lang['DATE_ANSI']="Datum gemäß ANSI-Notation";
 $lang['DATE']="Datum";
 $lang['DATE_FORMAT']="j.n.Y, H:i";
-$lang['DATE_FORMAT_LONG']="\{\w\e\e\k\d\a\y\}\, d.\{\m\o
-\t\h\} Y \u\m H:i:s";
+$lang['DATE_FORMAT_LONG']="\{\w\\e\\e\k\d\a\y\}\, d.\{\m\o\\n\\t\h\} Y \u\m H:i:s";
 $lang['DATE_LAST_MONTH']="Letzter Monat";
 $lang['DATE_LAST_YEAR']="Letztes Jahr";
 $lang['DATE_MONTH10']="Oktober";
