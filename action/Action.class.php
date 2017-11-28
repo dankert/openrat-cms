@@ -453,22 +453,25 @@ class Action
 		$actionName    = $this->actionName;
 		$requestId     = $this->getRequestId();
 		
-		if	( $conf['theme']['compiler']['enable'] )
+		$iFile = 'themes/default/templates/' . $tplName . '.tpl.out.'.PHP_EXT;
+		
+		if	( DEVELOPMENT )
 		{
-		    try
-		    {
-    			$te = new TemplateEngine();
-    			$te->compile( $tplName );
-    			unset($te);
-		    }
-		    catch (Exception $e)
-		    {
-		        throw new DomainException("Compilation failed for Template '$tplName'.",0,$e );
-		    }
+			// Das Template kompilieren.
+			// Aus dem XML wird eine PHP-Datei erzeugt.
+			try
+			{
+				$te = new TemplateEngine();
+				$te->compile($tplName);
+				unset($te);
+			}
+			catch (Exception $e)
+			{
+				throw new DomainException("Compilation failed for Template '$tplName'.", 0, $e);
+			}
+			header("X-CMS-Template-File: " . $iFile);
 		}
 
-		$iFile = FileUtils::getTempDir().'/'.'or.cache.tpl.'.str_replace('/', '.',$tplName).'.tpl.'.PHP_EXT;;
-		header("X-CMS-Template-File: ".$iFile);
 			
 		if	( is_file($iFile))
 			// Einbinden des Templates
