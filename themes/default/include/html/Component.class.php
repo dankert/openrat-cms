@@ -134,7 +134,7 @@ abstract class Component
 
 	protected function include( $file ) 
 	{
-		echo "include_once( OR_THEMES_DIR.'default/include/html/date/".$file."');";
+		echo "<?php include_once( OR_THEMES_DIR.'default/include/html/date/".$file."') ?>";
 		
 	}
 	
