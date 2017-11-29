@@ -3,7 +3,7 @@
 	<form>
 		<part class="line">
 			<part class="label" colspan="2">
-				<text text="message:name"></text>
+				<text text="name"></text>
 			</part>
 			<part class="input">
 				<input name="name"></input>

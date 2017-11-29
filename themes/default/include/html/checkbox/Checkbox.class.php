@@ -3,9 +3,9 @@
 class CheckboxComponent extends Component
 {
 	
-	public $default;
+	public $default = false;
 	public $name;
-	public $readonly;
+	public $readonly = false;
 	
 	protected function begin(){
 	

@@ -26,6 +26,22 @@
 class Text
 {
 	/**
+	 * 
+	 * @param unknown $key
+	 * @param unknown $text
+	 * @return string|unknown
+	 */
+	function accessKey( $key, $text )
+	{
+		$pos = strpos(strtolower($text),strtolower($key));
+		
+		if	( $pos !== false )
+			return substr($text,0,max($pos,0)).'<span class="accesskey">'.substr($text,$pos,1).'</span>'.substr($text,$pos+1);
+		else
+			return $text;
+	}
+	
+	/**
 	 * Alias fuer Methode maxLength()
 	 *
 	 * @deprecated use maxlength() !

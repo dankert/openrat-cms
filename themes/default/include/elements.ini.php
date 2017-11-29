@@ -1,7 +1,4 @@
 ; Control-file for template elements
-; format: <element-name>=<attribute1>:<default-value>,<attributeN>,...
-; default-value could be nothing (blank), a string or "*" for required attributes
-
 
 output   = 
 button   = 
@@ -37,8 +34,8 @@ radiobox = list:*,name:*,default,onchange:,title:,class:
 selector = types:,name,id,folderid,param
 set      = 
 table    = class,width:100%,space:0px,padding:0px,widths,rowclasses,columnclasses
-text     = title,class:text,var,text,key,textvar,raw,maxlength,value,suffix,prefix,accesskey,escape:true,type,cut:both
-tree     = tree
+text     = 
+tree     = 
 upload   = 
 user     = 
 window   = 

@@ -88,7 +88,7 @@
 		<group title="message:security">
 			<part class="line">
 				<part class="label">
-					<text text="message:user_password_expires" />
+					<text text="user_password_expires" />
 				</part>
 				<part class="input">
 					<date date="var:passwordExpires" />
