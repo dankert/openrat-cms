@@ -66,19 +66,18 @@ HTML;
 	
 	protected function end()
 	{
+		$label = $this->htmlvalue($this->label);
 		echo <<<HTML
 
 <div class="bottom">
 	<div class="command {$this->visible}">
 	
-		<input type="button" class="submit ok" value="{$this->label}" onclick="$(this).closest('div.sheet').find('form').submit(); " />
+		<input type="button" class="submit ok" value="{$label}" onclick="$(this).closest('div.sheet').find('form').submit(); " />
 		
 		<!-- Cancel-Button nicht anzeigen, wenn cancel==false. -->
 HTML;
 	if ($this->cancel) { 
-		echo <<<HTML
-		<input type="button" class="submit cancel" value="{lang('CANCEL')}" onclick="$('div#dialog').hide(); $('div#filler').fadeOut(500); $(this).closest('div.panel').find('ul.views > li.active').click();" />
-HTML;
+		echo '<input type="button" class="submit cancel" value="<?php echo lang("CANCEL") ?>" onclick="'."$(div#dialog').hide(); $('div#filler').fadeOut(500); $(this).closest('div.panel').find('ul.views > li.active').click();".'" />';
 	}
 		echo <<<HTML
 	</div>
