@@ -1,1 +1,0 @@
-<div class="qrcode" data-qrcode="<?php echo $attr_value ?>" title="<?php echo $attr_value ?>"></div>
