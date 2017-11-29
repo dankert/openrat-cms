@@ -1,1 +1,0 @@
-<input size="<?php echo $attr_size ?>" id="<?php echo REQUEST_ID ?>_<?php echo $attr_name ?>" type="file" <?php if (isset($attr_maxlength))echo ' maxlength="'.$attr_maxlength.'"' ?> name="<?php echo $attr_name ?>" class="<?php echo $attr_class ?>" <?php echo ($attr_multiple=='true'?' multiple':'') ?> />
