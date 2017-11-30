@@ -1,3 +1,10 @@
+<?php
+
+class HeaderComponent extends Component
+{
+	public function begin()
+	{
+		/*
 <?php if(!empty($attr_views)) { ?>
   <div class="headermenu">
     <?php foreach( explode(',',$attr_views) as $attr_tmp_view ) { ?>
@@ -9,3 +16,10 @@
 		<?php } ?>
   </div>
 <?php } ?>
+		 */
+		
+	}
+}
+
+
+?>
