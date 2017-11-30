@@ -263,7 +263,7 @@ class TemplateEngine
     				throw new LogicException("Compile failed, Component $infile not found." );
     
     		if	( DEVELOPMENT )
-    			fwrite( $outFileHandler,"<!-- Compiling $infile @ ".date('r')." -->" );
+    			fwrite( $outFileHandler,"<!-- Compiling $infile -->" );
     		
     		$values = array();
     		foreach( $attr as $attrName=>$attrValue )

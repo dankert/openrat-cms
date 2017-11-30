@@ -246,7 +246,7 @@
 							<part>
 								<list list="languages" key="languageid" value="languagename">
 									<radio name="otherlanguageid" value="var:languageid"></radio>
-									<label for="otherlanguageid_{languageid}">
+									<label for="tpl:otherlanguageid_{languageid}">
 										<text var="languagename"></text>
 									</label>
 									<newline></newline>

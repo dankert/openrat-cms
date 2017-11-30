@@ -6,7 +6,7 @@
 				<hidden name="sourceid" default="var:sourceId" />
 			</part>
 			<part class="input">
-				<text text="arrayvar:source:name" />
+				<text value="arrayvar:source:name" />
 			</part>
 		</part>
 
@@ -23,7 +23,7 @@
 				<hidden name="targetid" default="var:targetId" />
 			</part>
 			<part class="input">
-				<text text="arrayvar:target:name" />
+				<text value="arrayvar:target:name" />
 			</part>
 		</part>
 

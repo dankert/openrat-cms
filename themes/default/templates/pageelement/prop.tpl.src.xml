@@ -24,7 +24,7 @@
 				</column>
 				<column class="filename">
 					<image elementtype="var:element_type"></image>
-					<text key="el_{element_type}"></text>
+					<text key="tpl:el_{element_type}"></text>
 				</column>
 			</row>
 			<row>

@@ -166,4 +166,8 @@ function encode_array( $args )
 }
 
 
+function not($var) {
+	return !$var;
+}
+
 ?>

@@ -32,9 +32,9 @@ HTML;
 		elseif (strlen($this->greaterthan)>0)
 			echo 'intval(' . $this->value($this->greaterthan).')<intval('.$this->value($this->value).')';
 		elseif (! empty($this->present))
-			echo '!empty(' . $this->value($this->present).')';
+			echo '!empty(' . $this->textasvarname($this->present).')';
 		elseif (! empty($this->empty))
-			echo 'empty(' . $this->value($this->empty).')';
+			echo 'empty(' . $this->textasvarname($this->empty).')';
 		else
 			throw new LogicException("Element 'if' has not enough parameters.");
 		

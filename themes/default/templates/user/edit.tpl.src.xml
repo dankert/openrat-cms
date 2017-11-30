@@ -26,7 +26,7 @@
 					</part>
 					<part class="input">
 						<input name="mail"></input>
-						<qrcode value="text:mailto:{mail}" />
+						<qrcode value="tpl:mailto:{mail}" />
 					</part>
 				</part>
 			</if>
@@ -44,7 +44,7 @@
 				</part>
 				<part class="input">
 					<input name="tel"></input>
-					<qrcode value="text:tel:{tel}" />
+					<qrcode value="tpl:tel:{tel}" />
 					
 				</part>
 			</part>

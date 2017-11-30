@@ -27,7 +27,7 @@
 				</part>
 				<part class="input">
 					<input name="cmd_after_publish" class="filename"
-						readonly="!config:publish/project/override_system_command"></input>
+						readonly="not:config:publish/project/override_system_command"></input>
 				 
 				</part>
 			</part>
@@ -38,9 +38,9 @@
 					<label for="ftp_url" key="PROJECT_FTP_URL"></label>
 				</part>
 				<part class="input">
-					<input name="ftp_url" class="filename" readonly="!config:publish/ftp/enable"></input>
+					<input name="ftp_url" class="filename" readonly="not:config:publish/ftp/enable"></input>
 					<newline></newline>
-					<checkbox name="ftp_passive" readonly="!config:publish/ftp/enable"></checkbox>
+					<checkbox name="ftp_passive" readonly="not:config:publish/ftp/enable"></checkbox>
 					<label for="ftp_passive" key="PROJECT_FTP_PASSIVE"></label>
 				</part>
 			</part>
