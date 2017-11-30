@@ -8,13 +8,13 @@ class TableComponent extends Component
 	
 	public function begin()
 	{
-		echo '<table ';
+		echo '<table';
 		
 		if	( !empty($this->class))
-			echo 'class="'.$this->htmlvalue($this->class)."'";
+			echo ' class="'.$this->htmlvalue($this->class).'"';
 		
 		if	( !empty($this->width))
-			echo 'width="'.$this->htmlvalue($this->width)."'";
+			echo ' width="'.$this->htmlvalue($this->width).'"';
 		
 		echo '>';
 	}
