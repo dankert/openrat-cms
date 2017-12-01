@@ -88,23 +88,23 @@ class TextComponent extends Component
 		
 		$value ='';
 		
-		if	( !empty($this->key))
+		if	( isset($this->key))
 		{
 			$value = "'".$this->prefix."'.".$this->value($this->key).".'".$this->suffix."'";
 			$functions[] = "lang(@)";
 		}
-		elseif	( !empty($this->text))
+		elseif	( isset($this->text))
 		{
 			$value = $this->value($this->text);
 			$functions[] = "lang(@)";
 		}
-		elseif	( !empty($this->var))
+		elseif	( isset($this->var))
 			$value = '$'.$this->varname($this->var);
 		
-		elseif	( !empty($this->raw))
+		elseif	( isset($this->raw))
 			$value = "'".str_replace('_','&nbsp;',$this->raw)."'";
 				
-		elseif	( !empty($this->value))
+		elseif	( isset($this->value))
 			$value = $this->value($this->value);
 
 		foreach( array_reverse($functions) as $f )
