@@ -4,6 +4,7 @@ class EditorComponent extends Component
 {
 	public $type;
 	public $name;
+	public $mode='html';
 	
 	protected function begin()
 	{
@@ -26,7 +27,7 @@ class EditorComponent extends Component
 		
 			case 'ace':
 			case 'code':
-				echo '<textarea name="'.$this->htmlvalue($this->name).'" data-mode="'.$attr_mode.'" class="editor__code-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
+				echo '<textarea name="'.$this->htmlvalue($this->name).'" data-mode="'.$this->htmlvalue($this->mode).'" class="editor__code-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
 		        break;
 	            
 	            
