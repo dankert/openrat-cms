@@ -491,9 +491,6 @@ function registerViewEvents( viewEl )
 //	});
 
 
-	// Links aktivieren...
-	$(viewEl).closest('div.panel').find('.clickable').orLinkify();
-
 	// Selectors (Einzel-Ausahl für Dateien) initialisieren
 	// Wurzel des Baums laden
 	$(viewEl).find('div.selector.tree').each( function() {
@@ -549,9 +546,7 @@ function registerHeaderEvents()
 {
 	$('div#header').trigger('orHeaderLoaded');
 	
-	// Links aktivieren...
-	$('div#header .clickable').orLinkify();
-	
+
 	//   S u c h e
 	$('div.search input').blur( function(){
 		$('div.search input div.dropdown').fadeOut();
@@ -922,20 +917,6 @@ function setNewId( id )
 }
 
 
-
-
-function submitLink(element,data)
-{
-	var params = jQuery.parseJSON( data );
-	var url = './dispatcher.php';
-	params.output = 'json';
-	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
-		{
-		$('div.panel div.status div.loader').html('&nbsp;');
-		doResponse(data,textStatus,element);
-		} } );
-	
-}
 
 
 
