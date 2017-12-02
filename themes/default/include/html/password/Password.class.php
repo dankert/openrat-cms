@@ -25,10 +25,11 @@ class PasswordComponent extends Component
 		echo ' maxlength="' . $this->htmlvalue($this->maxlength) . '"';
 		echo ' class="' . $this->htmlvalue($this->class) . '"';
 		
+		echo ' value="';
 		if (isset($this->default))
-			echo ' value="' . $this->htmlvalue($this->default) . '"';
+			echo $this->htmlvalue($this->default);
 		else
-			echo ' value="<?php echo @$' . $this->varname($this->name) . '?>"';
+			echo '<?php echo @$' . $this->varname($this->name) . '?>';
 		
 		echo '" />';
 		
