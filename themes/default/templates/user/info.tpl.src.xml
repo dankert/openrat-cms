@@ -32,7 +32,7 @@
 		<text var="tel" />
 	</part>
 
-	<if true="is_admin">
+	<if true="var:is_admin">
 		<part class="line">
 			<text key="user_admin" />
 		</part>

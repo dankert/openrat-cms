@@ -19,7 +19,7 @@
 			<list list="object" extract="true">
 				<row class="data">
 					<column width="1%">
-						<if true="writable">
+						<if true="var:writable">
 							<checkbox name="var:id"></checkbox>
 						</if>
 						<if false="writable">

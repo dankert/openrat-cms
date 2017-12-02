@@ -29,7 +29,7 @@
 			</if>
 		</if>
 		<if present="files">
-			<if true="subdirs">
+			<if true="var:subdirs">
 				<part class="line">
 					<part class="label">
 					</part>
