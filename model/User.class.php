@@ -44,7 +44,9 @@ class User extends ModelBase
 
 	var $language;
 	var $timezone;
-	var $pwExpires;
+	var $passwordExpires;
+	var $passwordAlgo;
+	
 	var $lastLogin;
 	var $otpSecret;
 	var $hotp     ;
@@ -866,6 +868,28 @@ SQL
 			$styles[$key] = $values['name'];
 
 		return $styles;	
+	}
+	
+	/**
+	 * Ueberpruefen des Kennwortes.
+	 *
+	 * Es wird festgestellt, ob das Kennwort dem des Benutzers entspricht.
+	 * Es wird dabei nur gegen die interne Datenbank geprüft. Weitere
+	 * Loginmodule werden nicht aufgerufen!
+	 * Diese Methode darf kein Bestandteil des Logins sein, da nur das Kennwort geprüft wird!
+	 * Kennwortablauf und Token werden nicht geprüft!
+	 */
+	function checkPassword( $password )
+	{
+		$db = db_connection();
+		// Laden des Benutzers aus der Datenbank, um Password-Hash zu ermitteln.
+		$sql = $db->sql( 'SELECT * FROM {{user}}'.
+			' WHERE id={userid}' );
+		$sql->setInt( 'userid',$this->userid );
+		$row_user = $sql->getRow( $sql );
+		
+		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
+		return Password::check($this->pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);
 	}
 	
 	

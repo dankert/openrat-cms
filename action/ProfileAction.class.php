@@ -207,6 +207,10 @@ class ProfileAction extends Action
 		{
 			$this->addValidationError('password2','PASSWORDS_DO_NOT_MATCH');
 		}
+		elseif ( strlen($this->getRequestVar('password1'))<intval(config('security','password','min_length')) )
+		{
+			$this->addValidationError('password1','PASSWORD_MINLENGTH',array('minlength'=>config('security','password','min_length')));
+		}
 		else
 		{
 			$this->user->setPassword( $this->getRequestVar('password1') );
