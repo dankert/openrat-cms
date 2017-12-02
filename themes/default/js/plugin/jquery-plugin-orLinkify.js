@@ -16,7 +16,6 @@ jQuery.fn.orLinkify = function()
 			
 			if	( type == 'post' )
 			{
-				//alert('data:  '+$(this).attr('data-data'))
 				submitLink(this,$(this).attr('data-data') );
 			}
 			
@@ -57,7 +56,6 @@ jQuery.fn.orLinkify = function()
 			
 			else if	( type == 'fullscreen' )
 			{
-				//alert('fullscreen fuer: '+$(this).html() );
 				fullscreen(this);
 			}
 			
