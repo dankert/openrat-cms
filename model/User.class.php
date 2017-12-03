@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -60,7 +61,7 @@ class User extends ModelBase
 	var $loginModuleName = null;
 
 	// Konstruktor
-	function User( $userid='' )
+	public function __construct( $userid='' )
 	{
 		if   ( is_numeric($userid) )
 			$this->userid = $userid;
@@ -111,7 +112,7 @@ class User extends ModelBase
 		$this->loadProjects();
 		$this->loginDate = time();
 
-		Session::setUser( $this );
+		\Session::setUser( $this );
 		
 	    $db = db_connection();
 	    
@@ -241,7 +242,7 @@ SQL
 		$row = $sql->getRow( $sql );
 
 		if	( count($row) == 0 )
-			throw new ObjectNotFoundException();
+			throw new \ObjectNotFoundException();
 
 		// Zusammensetzen des Tokens
 		return sha1( $row['password_hash'].$row['name'].$row['id'].$row['mail'] );
@@ -262,7 +263,7 @@ SQL
 		$row = $sql->getRow( $sql );
 
 		if	( count($row) == 0 )
-			throw new ObjectNotFoundException();
+			throw new \ObjectNotFoundException();
 		
 		$this->setDatabaseRow( $row );		
 	}
@@ -288,7 +289,8 @@ SQL
 		$userId = $sql->getOne( $sql );
 
 		// Benutzer �ber Id instanziieren
-		$neuerUser = new User( $userId );
+		$neuerUser = new \cms\model\User( $userId );
+		
 		$neuerUser->load();
 		
 		return $neuerUser;
@@ -561,7 +563,7 @@ SQL
 		                
 		if	( $always )
 		{
-			$algo   = Password::bestAlgoAvailable();
+			$algo   = \Password::bestAlgoAvailable();
 			$expire = null;
 		}
 		else
@@ -578,7 +580,7 @@ SQL
 			$sql->setInt('expires',$expire);
 		
 		$sql->setInt   ('algo'    ,$algo                                                  );
-		$sql->setString('password',Password::hash($this->pepperPassword($password),$algo) );
+		$sql->setString('password',\Password::hash($this->pepperPassword($password),$algo) );
 		$sql->setInt   ('userid'  ,$this->userid  );
 
 		$sql->query( $sql );
@@ -889,7 +891,7 @@ SQL
 		$row_user = $sql->getRow( $sql );
 		
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
-		return Password::check($this->pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);
+		return \Password::check($this->pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);
 	}
 	
 	
@@ -1005,7 +1007,7 @@ SQL
 	 */
 	public function renewOTPSecret() {
 	    
-	    $secret = Password::randomHexString(64);
+	    $secret = \Password::randomHexString(64);
 	    
 	    $db = db_connection();
 	    

@@ -1,4 +1,14 @@
 <?php
+use cms\model\Project;
+use cms\model\Value;
+use cms\model\Element;
+use cms\model\Template;
+use cms\model\Page;
+use cms\model\Folder;
+use cms\model\Object;
+use cms\model\Language;
+use cms\model\Model;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //

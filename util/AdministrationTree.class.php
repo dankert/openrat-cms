@@ -1,4 +1,9 @@
 <?php
+use cms\model\User;
+use cms\model\Project;
+use cms\model\Group;
+use cms\model\Folder;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //

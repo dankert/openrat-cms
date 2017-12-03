@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 
 // Diese Objekte stehen zeitweise in der Sitzung, daher muessen dieser immer geparst werden.
 require_once( OR_OBJECTCLASSES_DIR."ModelBase.class.".PHP_EXT );

@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -41,7 +42,7 @@ class Model
 	/**
 	 * Konstruktor
 	 */
-	function Model( $modelid='' )
+	function __construct( $modelid='' )
 	{
 		if   ( is_numeric($modelid) )
 			$this->modelid = $modelid;
@@ -81,7 +82,7 @@ class Model
 			$sql->setInt('projectid',$this->projectid );
 		else
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$sql->setInt('projectid',$project->projectid);
 		}
 
@@ -207,7 +208,7 @@ SQL
 			$sql->setInt('projectid',$this->projectid );
 		else
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$sql->setInt('projectid',$project->projectid);
 		}
 		

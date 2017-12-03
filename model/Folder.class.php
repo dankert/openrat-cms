@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -37,9 +38,9 @@ class Folder extends Object
 	var $publish  = null;
 	
 
-	function Folder( $objectid='' )
+	function __construct( $objectid='' )
 	{
-		$this->Object( $objectid );
+		parent::__construct( $objectid );
 		$this->isFolder = true;
 	}
 
@@ -81,7 +82,7 @@ class Folder extends Object
 		}
 		else
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$sql->setInt('projectid',$project->projectid );
 		}
 		
@@ -255,7 +256,7 @@ class Folder extends Object
 	{
 		set_time_limit(300);
 		if	( ! is_object($this->publish) )
-			$this->publish = new Publish();
+			$this->publish = new \Publish();
 
 		foreach( $this->getObjectIds() as $oid )
 		{
@@ -332,7 +333,7 @@ class Folder extends Object
 		}
 		else
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$projectid = $project->projectid;
 		}
 		
@@ -390,7 +391,7 @@ class Folder extends Object
 		               
 		if	( !isset($this) || !isset($this->projectid) )
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$sql->setInt('projectid',$project->projectid);
 		}
 		else	$sql->setInt( 'projectid',$this->projectid   );
@@ -628,7 +629,7 @@ class Folder extends Object
 
 	function parentObjectFileNames(  $with_root = false, $with_self = false  )
 	{
-		$db = Session::getDatabase();
+		$db = \Session::getDatabase();
 		
 		$foid = $this->id;
 		$idCache = array();
@@ -648,7 +649,7 @@ SQL
 			$row = $sql->getRow( $sql );
 			
 	 		if	( in_array($row['id'],$idCache))
-	 			Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
+	 			\Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
 	 		else
 	 			$idCache[] = $row['id'];
 	 			
@@ -664,7 +665,7 @@ SQL
 
 	function parentObjectNames( $with_root = false, $with_self = false )
 	{
-		$db = Session::getDatabase();
+		$db = \Session::getDatabase();
 		
 		$foid = $this->id;
 		$idCache = array();
@@ -687,7 +688,7 @@ SQL
 			$row = $sql->getRow( $sql );
 			
 	 		if	( in_array($row['id'],$idCache))
-	 			Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
+	 			\Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
 	 		else
 	 			$idCache[] = $row['id'];
 	 			
@@ -888,7 +889,7 @@ SQL
 		// Variablen setzen.
 		$sql->setInt( 'folderid', $this->objectid );
 	
-		$language = Session::getProjectLanguage();
+		$language = \Session::getProjectLanguage();
 		$sql->setInt( 'languageid', $language->languageid );
 	
 		return $sql->getAll( $sql );

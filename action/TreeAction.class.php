@@ -1,4 +1,7 @@
 <?php
+use cms\model\Language;
+use cms\model\Model;
+
 // OpenRat Content Management System
 // Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
 //

@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //

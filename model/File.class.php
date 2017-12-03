@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -71,14 +72,14 @@ class File extends Object
 	 *
 	 * @param Objekt-Id
 	 */
-	function File( $objectid='' )
+	function __construct( $objectid='' )
 	{
 		global $conf;
 		
-		$db = Session::getDatabase();
+		$db = \Session::getDatabase();
 		$this->storeValueAsBase64 = $db->conf['base64'];
 
-		$this->Object( $objectid );
+		parent::__construct( $objectid );
 		$this->isFile = true;
 	}
 
@@ -643,7 +644,7 @@ EOF
 	function publish()
 	{
 		if	( ! is_object($this->publish) )
-			$this->publish = new Publish();
+			$this->publish = new \Publish();
 
 		$this->write();
 		$this->publish->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );

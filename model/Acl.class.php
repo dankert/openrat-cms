@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -180,7 +181,7 @@ class Acl
 	 * 
 	 * @param Integer Acl-ID
 	 */
-	function Acl( $aclid = 0 )
+	function __construct( $aclid = 0 )
 	{
 		if	( $aclid != 0 )
 			$this->aclid = $aclid;
@@ -339,7 +340,7 @@ class Acl
 		$this->mask += ACL_GRANT         *intval($this->grant        );
 		$this->mask += ACL_TRANSMIT      *intval($this->transmit     );
 		
-		Logger::trace('mask of acl '.$this->aclid.': '.$this->mask );
+		\Logger::trace('mask of acl '.$this->aclid.': '.$this->mask );
 		return $this->mask;
 	}
 

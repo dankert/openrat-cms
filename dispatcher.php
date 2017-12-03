@@ -242,6 +242,7 @@ catch( OpenRatException $e )
 }
 catch( SecurityException $e )
 {
+	Logger::info($e->getMessage());
     Http::notAuthorized("You are not allowed to execute this action.");
 }
 catch( Exception $e )

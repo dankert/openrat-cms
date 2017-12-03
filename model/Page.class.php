@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -65,9 +66,9 @@ class Page extends Object
 	var $up_path = '';
 
 
-	function Page( $objectid='' )
+	function __construct( $objectid='' )
 	{
-		$this->Object( $objectid );
+		parent::__construct( $objectid );
 		$this->isPage = true;
 	}
 
@@ -262,11 +263,11 @@ class Page extends Object
 			switch( $object->getType() )
 			{
 				case 'file':
-					$inhalt = Html::url('file','show',$objectid,$param);
+					$inhalt = \Html::url('file','show',$objectid,$param);
 					break;
 
 				case 'page':
-					$inhalt = Html::url('page','show',$objectid,$param);
+					$inhalt = \Html::url('page','show',$objectid,$param);
 					break;
 
 				case 'link':
@@ -281,11 +282,11 @@ class Page extends Object
 						switch( $linkedObject->getType() )
 						{
 							case 'file':
-								$inhalt = Html::url('file','show',$link->linkedObjectId,$param);
+								$inhalt = \Html::url('file','show',$link->linkedObjectId,$param);
 							break;
 			
 							case 'page':
-								$inhalt = Html::url('page','show',$link->linkedObjectId,$param);
+								$inhalt = \Html::url('page','show',$link->linkedObjectId,$param);
 							break;
 						}
 					}
@@ -474,7 +475,7 @@ class Page extends Object
 			if	( !isset($replaceElementMap[$oldElementId])  ||
 			      intval($replaceElementMap[$oldElementId]) < 1 )
 			{
-				Logger::debug( 'deleting value of elementid '.$oldElementId );
+				\Logger::debug( 'deleting value of elementid '.$oldElementId );
 				$sql = $db->sql('DELETE FROM {{value}}'.
 				               '  WHERE pageid={pageid}'.
 				               '    AND elementid={elementid}' );
@@ -487,7 +488,7 @@ class Page extends Object
 			{
 				$newElementId = intval($replaceElementMap[$oldElementId]);
 
-				Logger::debug( 'updating elementid '.$oldElementId.' -> '.$newElementId );
+				\Logger::debug( 'updating elementid '.$oldElementId.' -> '.$newElementId );
 				$sql = $db->sql('UPDATE {{value}}'.
 				               '  SET elementid ={newelementid}'.
 				               '  WHERE pageid   ={pageid}'.
@@ -692,7 +693,7 @@ class Page extends Object
 			if	( !$locale_ok )
 				// Hat nicht geklappt. Entweder ist das Mapping falsch oder die locale ist
 				// nicht korrekt installiert.
-				Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
+				\Logger::warn("Could not set locale '$locale', please check with 'locale -a' if it is installaled correctly");
 		}
 		else
 		{
@@ -728,7 +729,7 @@ class Page extends Object
 				$src = str_replace( '{{IFEMPTY:'.$id.':BEGIN}}','',$src );
 				$src = str_replace( '{{IFEMPTY:'.$id.':END}}'  ,'',$src );
 
-				$src = Text::entferneVonBis( $src,'{{IFNOTEMPTY:'.$id.':BEGIN}}','{{IFNOTEMPTY:'.$id.':END}}' );
+				$src = \Text::entferneVonBis( $src,'{{IFNOTEMPTY:'.$id.':BEGIN}}','{{IFNOTEMPTY:'.$id.':END}}' );
 			}
 			else
 			{
@@ -736,7 +737,7 @@ class Page extends Object
 				$src = str_replace( '{{IFNOTEMPTY:'.$id.':BEGIN}}','',$src );
 				$src = str_replace( '{{IFNOTEMPTY:'.$id.':END}}'  ,'',$src );
 				
-				$src = Text::entferneVonBis( $src,'{{IFEMPTY:'.$id.':BEGIN}}','{{IFEMPTY:'.$id.':END}}' );
+				$src = \Text::entferneVonBis( $src,'{{IFEMPTY:'.$id.':BEGIN}}','{{IFEMPTY:'.$id.':END}}' );
 			}
 			
 			if   ( $this->icons )
@@ -788,7 +789,7 @@ class Page extends Object
 		$db = db_connection();
 		
 		if	( ! is_object($this->publish) )
-			$this->publish = new Publish();
+			$this->publish = new \Publish();
 		
 		$this->public              = true;
 

@@ -1,4 +1,13 @@
 <?php
+use cms\model\User;
+use cms\model\Project;
+use cms\model\Value;
+use cms\model\Element;
+use cms\model\Page;
+use cms\model\Object;
+use cms\model\Language;
+use cms\model\Model;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2007 Jan Dankert, jandankert@jandankert.de
 //
@@ -804,7 +813,7 @@ class StartAction extends Action
 						  !isset($subaction['alias' ]) &&
 						  $subActionName != 'menu'            )
 					{
-						$engine = new TemplateEngine();
+						$engine = new template_engine\TemplateEngine();
 						$engine->compile( strtolower(str_replace('Action','',$actionName)).'/'.$subActionName);
 					}
 				}

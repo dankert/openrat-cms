@@ -1,4 +1,13 @@
 <?php
+namespace cms\model;
+use \ObjectNotFoundException;
+use \Logger;
+use \Text;
+use \Html;
+use \Http;
+use \Transformer;
+use \Code;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -129,12 +138,12 @@ class Value
 	/**
 	 * Konstruktor
 	 */
-	function Value()
+	function __construct()
 	{
 		$this->lastchangeUserId    = 0;
 		$this->lastchangeTimeStamp = 0;
 		
-		$language = Session::getProjectLanguage();
+		$language = \Session::getProjectLanguage();
 		if	( is_object($language) )
 			$this->languageid = $language->languageid;
 	}
@@ -412,7 +421,7 @@ SQL
 
 		$sql->setBoolean( 'publish'          ,$this->publish );
 		$sql->setInt    ( 'lastchange_date'  ,now()         );
-		$user = Session::getUser();
+		$user = \Session::getUser();
 		$sql->setInt    ( 'lastchange_userid',$user->userid  );
 
 		$sql->query( $sql );
@@ -1069,7 +1078,7 @@ SQL
 				// Wenn Inhalt leer, dann versuchen, den Inhalt der Default-Sprache zu laden.
 				if   ( $inhalt == '' && $conf['content']['language']['use_default_language'] )
 				{
-					$project = Session::getProject();
+					$project = \Session::getProject();
 					$this->languageid = $project->getDefaultLanguageId();
 					$this->load();
 					$inhalt = $this->text;
@@ -1386,13 +1395,13 @@ SQL
 						break;
 					case 'edit_url':
 						$raw = true;
-						$db = Session::getDatabase();
+						$db = \Session::getDatabase();
 						$inhalt = Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id));
 						break;
 					case 'edit_fullurl':
 						$raw = true;
 						$inhalt = Http::getServer();
-						$db = Session::getDatabase();
+						$db = \Session::getDatabase();
 						$params = array('dbid'      =>$db->id,
 						                'objectid'  =>$this->page->objectid,
 						                'modelid'   =>$this->page->modelid,

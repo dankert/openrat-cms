@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -40,7 +41,7 @@ class Project
 	
 	
 	// Konstruktor
-	function Project( $projectid='' )
+	function __construct( $projectid='' )
 	{
 		if   ( intval($projectid) != 0 )
 			$this->projectid = $projectid;
@@ -188,7 +189,7 @@ class Project
 		$row = $sql->getRow( $sql );
 
 		if	( empty($row) )
-			throw new ObjectNotFoundException('project '.$this->projectid.' not found');
+			throw new \ObjectNotFoundException('project '.$this->projectid.' not found');
 			
 		$this->name                = $row['name'               ];
 		$this->target_dir          = $row['target_dir'         ];
@@ -257,9 +258,9 @@ SQL
 			$rootFolder->filename = $this->name;
 			$rootFolder->save();
 		}
-		catch( Exception $e )
+		catch( \Exception $e )
 		{
-			Logger::warn('Project '.$this->projectid.' has not a root folder'."\n".$e->getTraceAsString());
+			\Logger::warn('Project '.$this->projectid.' has not a root folder'."\n".$e->getTraceAsString());
 		}
 	}
 
@@ -381,7 +382,7 @@ SQL
 	
 	function getDefaultLanguageId()
 	{
-		$db = Session::getDatabase();
+		$db = \Session::getDatabase();
 
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
@@ -397,7 +398,7 @@ SQL
 
 	function getDefaultModelId()
 	{
-		$db = Session::getDatabase();
+		$db = \Session::getDatabase();
 
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
@@ -451,7 +452,7 @@ SQL
 	{
 		$this->log = array();
 		
-		$db = &Session::getDatabase();
+		$db = &\Session::getDatabase();
 
 		// Ordnerstruktur prüfen.
 		$sql = $db->sql( <<<EOF
@@ -495,7 +496,7 @@ EOF
 		
 		if	( count( $idList ) > 1 )
 		{
-			Logger::warn('Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.');
+			\Logger::warn('Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.');
 			$this->log[] = 'Inconsistence found: Reference circle project<->template<->templatemodel<->projectmodel<->project is not consistent.';
 		}
 
@@ -529,13 +530,13 @@ EOF
 	 */
 	function copy( $dbid_destination,$name='' )
 	{
-		Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
+		\Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
 		
 		global $conf;
 		$zeit = date('Y-m-d\TH:i:sO');
 		
 		$db_src  = db_connection();
-		$db_dest = new DB( $conf['database'][$dbid_destination] );
+		$db_dest = new \DB( $conf['database'][$dbid_destination] );
 		$db_dest->id = $dbid_destination;
 		$db_dest->start();
 		
@@ -610,7 +611,7 @@ EOF
 			 
 		foreach( $ids as $tabelle=>$data )
 		{
-			Logger::debug( 'Copying table '.$tabelle.' ...' );
+			\Logger::debug( 'Copying table '.$tabelle.' ...' );
 			$mapping[$tabelle] = array();
 			$idcolumn = $data['primary_key'];
 
@@ -636,7 +637,7 @@ EOF
 
 			foreach( $db_src->getCol($sql) as $srcid )
 			{
-				Logger::debug('Id '.$srcid.' of table '.$tabelle);
+				\Logger::debug('Id '.$srcid.' of table '.$tabelle);
 				$mapping[$tabelle][$srcid] = ++$nextid;
 
 				$sql = $db->sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
@@ -649,7 +650,7 @@ EOF
 				// Fremdschl�sselbeziehungen auf neue IDn korrigieren.
 				foreach( $data['foreign_keys'] as $fkey_column=>$target_tabelle)
 				{
-					Logger::debug($fkey_column.' '.$target_tabelle.' '.$row[$fkey_column]);
+					\Logger::debug($fkey_column.' '.$target_tabelle.' '.$row[$fkey_column]);
 					
 					if	( intval($row[$fkey_column]) != 0 )
 						$row[$fkey_column] = $mapping[$target_tabelle][$row[$fkey_column]];
@@ -716,7 +717,7 @@ EOF
 			}
 		}
 		
-		Logger::debug( 'Finished copying project' );
+		\Logger::debug( 'Finished copying project' );
 		
 		$db_dest->commit();
 	}
@@ -814,10 +815,10 @@ SQL
 		// Variablen setzen.
 		$sql->setInt( 'projectid', $this->projectid );
 		
-		$language = Session::getProjectLanguage();
+		$language = \Session::getProjectLanguage();
 		$sql->setInt( 'languageid', $language->languageid );
 		
-		$user = Session::getUser();
+		$user = \Session::getUser();
 		$sql->setInt( 'userid', $user->userid );
 		
 		return $sql->getAll( $sql );		
@@ -894,7 +895,7 @@ SQL
 		// Variablen setzen.
 		$sql->setInt( 'projectid', $this->projectid );
 		
-		$language = Session::getProjectLanguage();
+		$language = \Session::getProjectLanguage();
 		$sql->setInt( 'languageid', $language->languageid );
 		
 		return $sql->getAll( $sql );

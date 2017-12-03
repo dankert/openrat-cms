@@ -1,4 +1,7 @@
 <?php
+use cms\model\Element;
+use cms\model\Template;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert
 //

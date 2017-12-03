@@ -1,5 +1,7 @@
 <?php
 
+use cms\model\User;
+
 /**
  * Authentifizierungsmodul für die interne Benutzerdatenbank.
  * 

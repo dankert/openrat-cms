@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -63,10 +64,10 @@ class Template
 	var $src='';
 	
 	// Konstruktor
-	function Template( $templateid='' )
+	function __construct( $templateid='' )
 	{
-		$model   = Session::getProjectModel();
-		$project = Session::getProject();
+		$model   = \Session::getProjectModel();
+		$project = \Session::getProject();
 
 		if	( is_object($model) )
 			$this->modelid   = $model->modelid;
@@ -94,7 +95,7 @@ class Template
 			$sql->setInt( 'projectid',$this->projectid   );
 		else
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$sql->setInt( 'projectid',$project->projectid );
 		}
 
@@ -116,7 +117,7 @@ class Template
 		$row = $sql->getRow( $sql );
 		
 		if	( empty($row) )
-			throw new ObjectNotFoundException("Template not found: ".$this->templateid);
+			throw new \ObjectNotFoundException("Template not found: ".$this->templateid);
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
@@ -353,7 +354,7 @@ SQL
 		// Wenn Projektid nicht vorhanden, dann aus Session lesen
 		if	( !isset($this->projectid) || intval($this->projectid) == 0 )
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$this->projectid = $project->projectid;
 		}
 

@@ -1,4 +1,14 @@
 <?php
+use cms\model\Acl;
+use cms\model\User;
+use cms\model\Group;
+use cms\model\Page;
+use cms\model\Folder;
+use cms\model\Object;
+use cms\model\Language;
+use cms\model\File;
+use cms\model\Link;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //

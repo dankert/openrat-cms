@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -41,7 +42,7 @@ class Group
 
 
 	// Konstruktor
-	function Group( $groupid='' )
+	function __construct( $groupid='' )
 	{
 		if   ( is_numeric($groupid) )
 			$this->groupid = $groupid;
@@ -96,7 +97,7 @@ class Group
 		}
 		else
 		{
-			throw new ObjectNotFoundException( "Group does not exist: ".$name);
+			throw new \ObjectNotFoundException( "Group does not exist: ".$name);
 		}
 	}
 

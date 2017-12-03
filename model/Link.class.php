@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -34,9 +35,9 @@ class Link extends Object
 	var $isLinkToUrl    = false;
 	var $isLinkToObject = false;
 
-	function Link( $objectid='' )
+	function __construct( $objectid='' )
 	{
-		$this->Object( $objectid );
+		parent::__construct( $objectid );
 		$this->isLink = true;
 		$this->isLinkToObject = false;
 	}

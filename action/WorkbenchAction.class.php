@@ -1,4 +1,7 @@
 <?php
+use cms\model\Value;
+use cms\model\Folder;
+use cms\model\Object;
 
 /**
  * Action-Klasse zum Anzeigen der Workbench

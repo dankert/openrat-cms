@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -36,7 +37,7 @@ class Language
 
 
 	// Konstruktor
-	function Language( $languageid='' )
+	function __construct( $languageid='' )
 	{
 		global $SESS;
 
@@ -78,7 +79,7 @@ class Language
 			$sql->setInt('projectid',$this->projectid );
 		else
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$sql->setInt('projectid',$project->projectid);
 		}
 
@@ -104,7 +105,7 @@ SQL
 			$sql->setInt('projectid',$this->projectid );
 		else
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$sql->setInt('projectid',$project->projectid);
 		}
 
@@ -115,7 +116,7 @@ SQL
 	// Lesen aus der Datenbank
 	function load()
 	{
-		$db = Session::getDatabase();
+		$db = \Session::getDatabase();
 
 		$sql = $db->sql( 'SELECT * FROM {{language}}'.
 		                ' WHERE id={languageid}' );
@@ -180,7 +181,7 @@ SQL
 			$isocode = str_replace('_','',$isocode);
 			
 			$this->isocode = $isocode;
-			$codes = GlobalFunctions::getIsoCodes();
+			$codes = \GlobalFunctions::getIsoCodes();
 			$this->name    = $codes[ $isocode ];
 		}
 
@@ -235,7 +236,7 @@ SQL
 			$sql->setInt('projectid',$this->projectid );
 		else
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$sql->setInt('projectid',$project->projectid);
 		}
 		

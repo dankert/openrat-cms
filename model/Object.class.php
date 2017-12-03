@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -156,7 +157,7 @@ class Object
 	  *
 	  * @param Integer Objekt-ID (optional)
 	  */
-	function Object($objectid = '')
+	function __construct($objectid = '')
 	{
 		global $SESS;
 
@@ -167,15 +168,15 @@ class Object
 		}
 
 
-		$language = Session::getProjectLanguage();
+		$language = \Session::getProjectLanguage();
 			if	( is_object($language) )
 		$this->languageid = $language->languageid;
 
-		$model = Session::getProjectModel();
+		$model = \Session::getProjectModel();
 		if	( is_object($model) )
 			$this->modelid = $model->modelid;
 
-		$project = Session::getProject();
+		$project = \Session::getProject();
 		if	( is_object($project) )
 			$this->projectid = $project->projectid;
 	}
@@ -192,7 +193,7 @@ class Object
 
 		if	( ! isset($this->projectid) )
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$projectid = $project->projectid;
 		}
 		else
@@ -237,9 +238,9 @@ class Object
 	{
 		if	( is_null($this->aclMask) )
 		{
-			$project  = Session::getProject();
-			$language = Session::getProjectLanguage();
-			$user     = Session::getUser();
+			$project  = \Session::getProject();
+			$language = \Session::getProjectLanguage();
+			$user     = \Session::getUser();
 			
 			if	( $user->isAdmin )
 			{
@@ -499,7 +500,7 @@ SQL
 		$row = $sql->getRow($sql);
 		
 		if (count($row) == 0)
-			throw new ObjectNotFoundException('object '.$this->objectid.' not found');
+			throw new \ObjectNotFoundException('object '.$this->objectid.' not found');
 
 		$this->setDatabaseRow( $row );
 	}
@@ -595,7 +596,7 @@ SQL
 
 		if	( $this->isRoot )
 		{
-			$project = Session::getProject();
+			$project = \Session::getProject();
 			$this->name        = $project->name;
 			$this->desc        = '';
 			$this->description = '';
@@ -684,7 +685,7 @@ SQL
 		else	$sql->setInt ('parentid',$this->parentid );
 
 
-		$user = Session::getUser();
+		$user = \Session::getUser();
 		$this->lastchangeUser = $user;
 		$this->lastchangeDate = now();
 		$sql->setInt   ('time'    ,$this->lastchangeDate          );
@@ -719,7 +720,7 @@ SQL
 		               '  lastchange_userid = {userid} '.
 		               ' WHERE id={objectid}');
 
-		$user = Session::getUser();
+		$user = \Session::getUser();
 		$this->lastchangeUser = $user;
 		$this->lastchangeDate = now();
 		
@@ -866,10 +867,10 @@ SQL
 		$sql->setString('projectid', $this->projectid);
 		$sql->setInt   ('orderid'  , 99999           );
 		$sql->setInt   ('time'     , now()           );
-		$user = Session::getUser();
+		$user = \Session::getUser();
 		$sql->setInt   ('createuserid'   , $user->userid   );
 		$sql->setInt   ('createtime'     , now()           );
-		$user = Session::getUser();
+		$user = \Session::getUser();
 		$sql->setInt   ('userid'   , $user->userid   );
 		
 		$sql->setBoolean('is_folder',$this->isFolder);
@@ -1124,7 +1125,7 @@ SQL
 		
 //		if	( $conf['cache']['enable_cache'] )
 //		{
-			$filename = FileUtils::getTempDir().'/openrat';
+			$filename = \FileUtils::getTempDir().'/openrat';
 			foreach( $attr as $a=>$w )
 				$filename .= '_'.$a.$w;
 				
@@ -1154,7 +1155,7 @@ SQL
 
 	public function getTempDir()
 	{
-		FileUtils::getTempDir();
+		\FileUtils::getTempDir();
 	}
 
 	/**

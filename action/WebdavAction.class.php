@@ -1,4 +1,11 @@
 <?php
+use cms\model\User;
+use cms\model\Project;
+use cms\model\Page;
+use cms\model\Folder;
+use cms\model\Object;
+use cms\model\File;
+use cms\model\Link;
 
 
 /**

@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -125,7 +126,7 @@ class Element
 	 * Im Konstruktor wird die Element-Id gesetzt
 	 * @param Integer Element-Id
 	 */
-	function Element( $elementid=0 )
+	function __construct( $elementid=0 )
 	{
 		if	( intval($elementid)!=0 )
 			$this->elementid = $elementid;
@@ -192,7 +193,7 @@ SQL
 	function setDatabaseRow( $prop )
 	{
 		if	( count($prop) <= 0 )
-			throw new ObjectNotFoundException("Element not found");
+			throw new \ObjectNotFoundException("Element not found");
 
 		$this->elementid      = $prop['id'        ];
 		$this->templateid     = $prop['templateid'];

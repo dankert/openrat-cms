@@ -103,7 +103,10 @@ function fatal_handler() {
         $errline = $error["line"];
         $errstr  = $error["message"];
         
-        Logger::error( $errno .' '. $errstr.' '. $errfile.' '. $errline);
+        if(class_exists('Logger'))
+        	Logger::error( $errno .' '. $errstr.' '. $errfile.' '. $errline);
+        else 
+        	var_dump($error);
     }
 }
 
