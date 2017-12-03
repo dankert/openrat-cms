@@ -110,46 +110,32 @@ class TemplateEngine
 					$className = ucfirst($tag);
 					$classFilename = OR_THEMES_DIR . $conf['interface']['theme'] . "/include/html/$tag/$className.class." . PHP_EXT;
 					
-					if (is_file($classFilename))
+					if (!is_file($classFilename))
+						throw new LogicException("Component Class File '$classFilename' does not exist." );
+
+					require_once ($classFilename);
+					
+					$className .= 'Component';
+					$component = new $className();
+					$component->setDepth($depth); 
+					
+					foreach ($attributes as $prop => $value)
 					{
-						require_once ($classFilename);
-						
-						$className .= 'Component';
-						$component = new $className();
-						$component->setDepth($depth); 
-						
-						foreach ($attributes as $prop => $value)
-						{
-							$component->$prop = $value;
-						}
-						// $component->depth = $depth;
-						
-						$components[$depth] = $component;
-						fwrite($outFile, "\n".str_repeat("\t",$depth));
-						fwrite($outFile, $component->getBegin());
+						$component->$prop = $value;
 					}
-					else
-					{
-						if ($type == 'complete' || $type == 'open')
-							$attributes = $this->checkAttributes($tag, $attributes);
-						
-						$this->copyFileContents($tag, true, $tag . '/' . $tag . '-begin', $outFile, $attributes, $depth);
-					}
+					// $component->depth = $depth;
+					
+					$components[$depth] = $component;
+					fwrite($outFile, "\n".str_repeat("\t",$depth));
+					fwrite($outFile, $component->getBegin());
 				}
 				
 				if ($type == 'close' || $type == 'complete')
 				{
-					if (isset($components[$depth]))
-					{
-						$component = $components[$depth];
-						fwrite($outFile, "\n".str_repeat("\t",$depth));
-						fwrite($outFile, $component->getEnd());
-						unset($components[$depth]);
-					}
-					else
-					{
-						$this->copyFileContents($tag, false, $tag . '/' . $tag . '-end', $outFile, array(), $depth);
-					}
+					$component = $components[$depth];
+					fwrite($outFile, "\n".str_repeat("\t",$depth));
+					fwrite($outFile, $component->getEnd());
+					unset($components[$depth]); // Cleanup
 					
 					$depth --;
 				}
@@ -167,261 +153,7 @@ class TemplateEngine
 			throw new LogicException("Template $tplName failed to compile", 0, $e);
 		}
 	}
-	
-	
 
-	private function attributeValueOpenPHP($value)
-	{
-		$erg = $this->attributeValue($value);
-		
-		// Für statische Texte muss kein PHP-Abschnitt geoeffnet werden.
-		if	(substr($erg,0,1) == "'" && strpos($erg,'$')===FALSE ) 
-			return substr($erg,1,-1);
-		else
-			return '<'.'?php echo '.$erg.' ?>';
-	}
-	
-	
-	
-	private function attributeValue( $value )
-	{
-		$parts = explode( ':', $value, 2 );
-
-		if	( count($parts) < 2 )
-		$parts = array('',$value);
-		
-		list( $type,$value ) = $parts;
-		
-		$invert = '';
-		if	( substr($type,0,1)=='!' )
-		{
-			$type = substr($type,1);
-			$invert = '! ';
-		}
-		
-		switch( $type )
-		{
-			case 'var':
-				return $invert.'$'.$value;
-			case 'text':
-			case '':
-				// Sonderf�lle f�r die Attributwerte "true" und "false".
-				// Hinweis: Die Zeichenkette "false" entspricht in PHP true.
-				// Siehe http://de.php.net/manual/de/language.types.boolean.php
-				if	( $value == 'true' || $value == 'false' )
-					return $value;
-				else
-					// macht aus "text1{var}text2" => "text1".$var."text2"
-					return "'".preg_replace('/{(\w+)\}/','\'.$\\1.\'',$value)."'";
-			case 'function':
-				return $invert.$value.'()';
-			case 'method':
-				return $invert.'$this->'.$value.'()';
-			case 'size':
-				return '@count($'.$value.')';
-			case 'property':
-				return $invert.'$this->'.$value;
-			case 'message':
-//				return 'lang('."'".$value."'".')';
-					// macht aus "text1{var}text2" => "text1".$var."text2"
-				return 'lang('."'".preg_replace('/{(\w+)\}/','\'.$\\1.\'',$value)."'".')';
-			case 'messagevar':
-				return 'lang($'.$value.')';
-			case 'mode':
-				return $invert.'$mode=="'.$value.'"';
-			case 'arrayvar':
-				list($arr,$key) = explode(':',$value.':none');
-				return $invert.'@$'.$arr.'['.$key.']';
-			case 'config':
-				$config_parts = explode('/',$value);
-				return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
-				
-			default:
-				throw new LogicException("Unknown type '$type' in attribute. Allowed: var|function|method|text|size|property|message|messagevar|arrayvar|config or none");
-		}
-	}
-	
-	
-	
-	/**
-	 * Eine Komponente wird in die neue Vorlagedatei kopiert.
-	 */
-	private function copyFileContents( $tag, $begin, $infile,$outFileHandler,$attr,$depth )
-	{
-		global $conf;
-		$hash = $depth;
-		
-		$className     = ucfirst($tag);
-		$classFilename = OR_THEMES_DIR.$conf['interface']['theme']."/include/html/$tag/$className.class.".PHP_EXT;
-		
-    		$inFileName = OR_THEMES_DIR.$conf['interface']['theme'].'/include/html/'.$infile.'.inc.'.PHP_EXT;
-    		if	( !is_file($inFileName) )
-    			if	( count($attr)==0 )
-    				return;
-    			else
-    				// Baustein nicht vorhanden, Abbbruch.
-    				throw new LogicException("Compile failed, Component $infile not found." );
-    
-    		if	( DEVELOPMENT )
-    			fwrite( $outFileHandler,"<!-- Compiling $infile -->" );
-    		
-    		$values = array();
-    		foreach( $attr as $attrName=>$attrValue )
-    		{
-    			$values[] = "'".$attrName."'=>".$this->attributeValue($attrValue);
-    		}
-    		
-    		// Variablen $attr_* setzen
-    		if	( count($attr) > 0 )
-    		{
-    			fwrite( $outFileHandler,'<?php ');
-    			foreach( $attr as $attrName=>$attrValue )
-    				fwrite( $outFileHandler,'$a'.$hash.'_'.$attrName."=".$this->attributeValue($attrValue).';');
-    			fwrite( $outFileHandler,' ?>');
-    		}
-    			
-    		$file   = file( $inFileName );
-    		$ignore = false;
-    		$linebreaks = true;
-    		
-    		foreach( $file as $line )
-    		{
-    			// Ignoriere Zeilen, die fuer ein nicht vorhandenes Attribut gelten.
-    			if  ( strpos($line,'#IF-ATTR')!==FALSE )
-    			{
-    				$found = false;
-    				foreach( $attr as $attrName=>$attrValue )
-    				{
-    					if  ( strpos($line,'#IF-ATTR '.$attrName.'#')!==FALSE )
-    						$found = true;
-    					if  ( strpos($line,'#IF-ATTR-VALUE '.$attrName.':'.$attrValue.'#')!==FALSE )
-    						$found = true;
-    				}
-    				if	( ! $found )
-    					$ignore = true;
-    			}
-    			// Nach einem IF-Block ertmal alles wieder anzeigen.
-    			if  ( strpos($line,'#END-IF')!==FALSE )
-    			{
-    				$ignore = false;
-    			}
-    			
-    			if  ( strpos($line,'#ELSE')!==FALSE )
-    			{
-    				$ignore = !$ignore;
-    			}
-    
-    			// Zeilenumbr�che nicht setzen.
-    			if  ( strpos($line,'#SET-LINEBREAK-OFF')!==FALSE )
-    				$linebreaks = false;
-    
-    			// Zeilenumbr�che setzen.
-    			if  ( strpos($line,'#SET-LINEBREAK-ON')!==FALSE )
-    				$linebreaks = true;
-    				
-    			// Ignoriere Zeilen, die zu ignorieren sind (logisch).
-    			// Dies sind Blöcke, die nur fuer ein Attribut gueltig sind, welches
-    			// aber nicht gesetzt ist.
-    			if	( $ignore )
-    				continue;
-    			
-    			// Ignoriere Leerzeilen
-    			if	( strlen(trim($line)) == 0)
-    				continue;
-    			// Ignoriere Kommentarzeilen
-    			if	( in_array(substr(ltrim($line),0,2),array('//','/*','<!') ) || substr(ltrim($line),0,1) == '#')
-    				continue;
-    			// Ignoriere Kommentarzeilen
-    			if	( in_array(substr(rtrim($line),-3),array('-->',' */') ) )
-    				continue;
-    				
-    			if	( !$linebreaks )
-    				$line = rtrim($line);
-    				
-    			// Die Variablen "$attr_*" muessen pro Ebene eindeutig sein, daher wird an den
-    			// Variablennamen die Tiefe angehangen.
-    			$line = str_replace('$attr_','$a'.$hash.'_',$line);
-    			
-    			foreach( $attr as $attrName=>$attrValue )
-    				$line = str_replace('%'.$attrName.'%',$this->attributeValueOpenPHP($attrValue),$line);
-    			
-    			
-    			fwrite( $outFileHandler,$line );
-    		}
-    		
-    		// Variablen $attr_* entfernen.
-    		$unset_attr = array();
-    		foreach( $attr as $attrName=>$attrValue )
-    			$unset_attr[] = '$a'.$hash.'_'.$attrName;
-    			
-    		if	( count($unset_attr) > 0 )
-    			fwrite( $outFileHandler,'<?php unset('.implode(',',$unset_attr).') ?>');
-	}
-	
-	
-	
-	/**
-	 * Diese Funktion pr�ft, ob die Attribute zu einem Element g�ltig sind.<br>
-	 * Falls ein ung�ltiges Attribut oder ein ung�ltiger Wert entdeckt wird,
-	 * so wird das Skript abgebrochen.
-	 * @return �berpr�fte und mit Default-Werten angereicherte Attribute
-	 */
-	private function checkAttributes( $cmd,$attr )
-	{
-		global $conf;
-		$elements = parse_ini_file( OR_THEMES_DIR.$conf['interface']['theme'].'/include/elements.ini.'.PHP_EXT);
-
-		if	( !isset($elements[$cmd]) )
-			throw new InvalidArgumentException("Parser error, unknown element $cmd. Allowed: "+implode(',',array_keys($elements)) );
-			
-		$checkedAttr = array();
-
-		// Schleife �ber alle Attribute.		
-		foreach( explode(',',$elements[$cmd]) as $al )
-		{
-			$al=trim($al);
-			if	( $al=='')
-				continue; // Leeres Attribut... nicht zu gebrauchen.
-			
-		    $rpos = strrpos($al,':');
-		    if  ($rpos===FALSE)
-		    {
-		        $a = $al;
-		        $default = null;
-		    }
-		    else
-		    {
-		        $a = substr($al,0,$rpos);
-		        $default = substr($al,$rpos+1);
-		    }
-			if	( is_string($default))
-				$default = str_replace('COMMA',',',$default); // Komma in Default-Werten ersetzen.
-
-			if	( isset($attr[$a]))
-				$checkedAttr[$a]=$attr[$a]; // Attribut ist bereits vorhanden, alles ok.
-			elseif	( $default=='*') // Pflichtfeld!
-				throw new InvalidArgumentException( "Template {$this->tplName} failed to compile: Element {$cmd} needs the required attribute {$a}" );
-			elseif	( !is_null($default) )
-					$checkedAttr[$a]=$default;
-			else
-				;
-
-			unset( $attr[$a] ); // Damit am Ende das Ursprungsarray leer wird.
-		}
-	
-		unset( $attr['xmlns'             ]);
-		unset( $attr['xmlns:xsi'         ]);
-		unset( $attr['xsi:schemaLocation']);
-		
-		if	( count($attr) > 0 )
-		{
-		    throw new InvalidArgumentException( "Template {$this->tplName} failed to compile: Unknown attributes '[".implode(',',array_keys($attr))."]' in element $cmd. Allowed attributes are: {$elements[$cmd]}"  );
-		}
-		
-		return $checkedAttr;
-			
-	}
-	
 	
 	/**
 	 * Diese Funktion lädt die Vorlagedatei.
