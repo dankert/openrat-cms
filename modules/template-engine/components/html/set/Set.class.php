@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 class SetComponent extends Component
 {
 	public $var;

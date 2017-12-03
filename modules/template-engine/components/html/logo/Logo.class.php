@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 class LogoComponent extends Component
 {
 	public $name;

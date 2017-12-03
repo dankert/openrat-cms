@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 class CheckboxComponent extends Component
 {
 	

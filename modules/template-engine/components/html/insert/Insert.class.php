@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 class InsertComponent extends Component
 {
 	public $name= '';

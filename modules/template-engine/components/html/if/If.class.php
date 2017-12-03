@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 class IfComponent extends Component
 {
 	public $true;
@@ -36,7 +38,7 @@ HTML;
 		elseif (! empty($this->empty))
 			echo 'empty(' . $this->textasvarname($this->empty).')';
 		else
-			throw new LogicException("Element 'if' has not enough parameters.");
+			throw new \LogicException("Element 'if' has not enough parameters.");
 		
 		echo '); if($if'.$this->getDepth().'){?>';
 	}

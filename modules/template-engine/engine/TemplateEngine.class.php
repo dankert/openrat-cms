@@ -101,7 +101,7 @@ class TemplateEngine
 
 					require_once ($classFilename);
 					
-					$className .= 'Component';
+					$className = 'template_engine\components\\'.$className .'Component';
 					$component = new $className();
 					$component->setDepth($depth); 
 					

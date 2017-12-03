@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 class DateComponent extends Component
 {
 	public $date;

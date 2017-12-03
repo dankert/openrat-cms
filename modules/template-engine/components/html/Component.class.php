@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 abstract class Component
 {
 
@@ -144,7 +146,7 @@ class Expression
 			case 'text':
 				return $this->value;
 			default:
-				throw new LogicException("Invalid expression type '$type' in attribute value. Allowed: text|var");
+				throw new \LogicException("Invalid expression type '$type' in attribute value. Allowed: text|var");
 		}
 	}
 	
@@ -209,7 +211,7 @@ class Expression
 				return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
 				
 			default:
-				throw new LogicException("Unknown expression type '{$this->type}' in attribute value. Allowed: var|function|method|text|size|property|message|messagevar|arrayvar|config or none");
+				throw new \LogicException("Unknown expression type '{$this->type}' in attribute value. Allowed: var|function|method|text|size|property|message|messagevar|arrayvar|config or none");
 		}
 	}
 	

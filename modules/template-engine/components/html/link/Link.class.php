@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 /**
  * Erzeugt einen HTML-Link.
  * 

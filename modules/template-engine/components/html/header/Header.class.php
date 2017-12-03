@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 class HeaderComponent extends Component
 {
 	public function begin()

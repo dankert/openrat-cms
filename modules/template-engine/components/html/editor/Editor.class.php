@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 class EditorComponent extends Component
 {
 	public $type;
@@ -47,7 +49,7 @@ HTML;
 				break;
 		
 			default:
-				throw new LogicException("Unknown editor type: ".$this->type);
+				throw new \LogicException("Unknown editor type: ".$this->type);
 		}
 	}
 }

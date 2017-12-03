@@ -1,5 +1,7 @@
 <?php
 
+namespace template_engine\components;
+
 class UploadComponent extends Component
 {
 	public $size = 40;
