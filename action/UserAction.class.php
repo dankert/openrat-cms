@@ -226,7 +226,7 @@ class UserAction extends Action
 		    array('totpSecretUrl' => "otpauth://totp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}",
 		          'hotpSecretUrl' => "otpauth://hotp/{$issuer}:{$account}?secret={$secret}&issuer={$issuer}&counter={$counter}"
 		    )
-		    + array('totpToken'=>$this->user->getTOTPCode())
+		    + array('totpToken'=>Password::getTOTPCode($this->user->otpSecret))
 		);
 
 		$this->setTemplateVar( 'allstyles',$this->user->getAvailableStyles() );

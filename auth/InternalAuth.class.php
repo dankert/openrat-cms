@@ -70,7 +70,7 @@ SQL
 		{
 		    $user = new User($row_user['id']);
 		    $user->load();
-		    if    ( $user->getTOTPCode() == $token )
+		    if    ( Password::getTOTPCode($user->otpSecret) == $token )
 		        return true;
 		    else
 			    return OR_AUTH_STATUS_TOKEN_NEEDED;
