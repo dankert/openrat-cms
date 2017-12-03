@@ -64,9 +64,17 @@ class DB_pdo
 		if	( $conf['persistent'])
 			$options[ PDO::ATTR_PERSISTENT ] = true;
 
-		if	( !$conf['prepare'])
-			$options[ PDO::ATTR_EMULATE_PREPARES ] = true;
+		//if	( !$conf['prepare']) <- unused...
+		// From the docs:
+		// try to use native prepared statements (if FALSE).
+		// It will always fall back to emulating the prepared statement if the driver cannot successfully prepare the current query
+		$options[ PDO::ATTR_EMULATE_PREPARES ] = false;
 		
+		// Convert numeric values to strings when fetching => NO
+		$options[ PDO::ATTR_STRINGIFY_FETCHES ] = false;
+		$options[ PDO::ATTR_AUTOCOMMIT ] = false;
+			
+		// We like Exceptions
 		$options[ PDO::ERRMODE_EXCEPTION ] = true;
 		$options[ PDO::ATTR_DEFAULT_FETCH_MODE ] = PDO::FETCH_ASSOC;
 		
@@ -104,6 +112,23 @@ class DB_pdo
 	function fetchRow( $result, $rownum )
 	{
 		$row = $this->stmt->fetch( PDO::FETCH_ASSOC );
+		
+/*
+ * 
+		
+		
+		if(intval(@$row['id'])==1)
+		{
+ 		echo "Hallo:";
+ 		
+//  		echo "\n";print_r($row)."\n";
+ 		var_dump($row);
+ 		echo " ist... ".gettype($row);
+			
+		}
+		
+ */		
+		
 		
 		if	( is_array($row) && $this->lowercase )
 			$row = array_change_key_case($row);
