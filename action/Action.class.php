@@ -463,7 +463,7 @@ class Action
 			// Aus dem XML wird eine PHP-Datei erzeugt.
 			try
 			{
-				$te = new TemplateEngine();
+				$te = new template_engine\TemplateEngine();
 				$te->compile($srcXmlFilename,$iFile);
 				unset($te);
 			}

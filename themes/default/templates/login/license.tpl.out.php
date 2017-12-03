@@ -1,5 +1,7 @@
 
-	<!-- Compiling newline/newline-begin --><br/>
+	
+		<br/>
+		
 		<table width="100%">
 			<tr class="headline">
 				<td>
