@@ -55,7 +55,7 @@ class TemplateEngine
 				$srcFilename = $srcXmlFilename;
 			else
 				// Wenn Vorlage (noch) nicht existiert
-				throw new LogicException("Template not found: $srcXmlFilename");
+				throw new \LogicException("Template not found: $srcXmlFilename");
 			
 			$filename = $tplOutName;
 			
@@ -64,7 +64,7 @@ class TemplateEngine
 				return;
 			
 			if (is_file($filename) && ! is_writable($filename))
-				throw new LogicException("File is read-only: $filename");
+				throw new \LogicException("File is read-only: $filename");
 			
 			// Vorlage und Zieldatei oeffnen
 			$document = $this->loadDocument($srcFilename);
@@ -72,7 +72,7 @@ class TemplateEngine
 			$outFile = @fopen($filename, 'w');
 			
 			if (! is_resource($outFile))
-				throw new LogicException("Template '$srcXmlFilename': Unable to open file for writing: '$filename'");
+				throw new \LogicException("Template '$srcXmlFilename': Unable to open file for writing: '$filename'");
 			
 			$openCmd = array();
 			$depth = 0;
@@ -97,7 +97,7 @@ class TemplateEngine
 					$classFilename = dirname(__FILE__).'/../components/'.$this->renderType."/$tag/$className.class." . PHP_EXT;
 					
 					if (!is_file($classFilename))
-						throw new LogicException("Component Class File '$classFilename' does not exist." );
+						throw new \LogicException("Component Class File '$classFilename' does not exist." );
 
 					require_once ($classFilename);
 					
@@ -132,11 +132,11 @@ class TemplateEngine
 			// CHMOD ausfuehren.
 			if (! empty($confCompiler['chmod']))
 				if (! @chmod($filename, octdec($confCompiler['chmod'])))
-					throw new InvalidArgumentException("Template {$this->tplName} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
+					throw new \InvalidArgumentException("Template {$this->tplName} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
-			throw new LogicException("Template '$srcXmlFilename' failed to compile", 0, $e);
+			throw new \LogicException("Template '$srcXmlFilename' failed to compile", 0, $e);
 		}
 	}
 
