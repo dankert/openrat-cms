@@ -33,7 +33,7 @@ try
     require_once( OR_TEXTCLASSES_DIR   ."include.inc.".PHP_EXT );
     
     // Datenbank-Funktionen einbinden.
-    require_once( OR_DBCLASSES_DIR."include.inc.".PHP_EXT );
+    require_once( OR_MODULES_DIR."database/require.".PHP_EXT );
     
     // Jetzt erst die Sitzung starten (nachdem alle Klassen zur Verfügung stehen).
     session_start();
