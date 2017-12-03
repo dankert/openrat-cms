@@ -680,11 +680,14 @@ class PageelementAction extends Action
 			// einen Text eingegeben hat (Vorschaufunktion).
 			$this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
 
+			/*
+			 * 
 			if	(! $this->isEditMode() )
 			{
 				$this->value->generate(); // Inhalt erzeugen.
 				$this->setTemplateVar('text',$this->linkifyOIDs( $this->value->value ));
 			}
+			 */
 
 			if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));

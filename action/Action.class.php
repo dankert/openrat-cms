@@ -693,16 +693,6 @@ class Action
 	
 	
 	
-	/**
-	 * Stellt fest, ob die Anzeige dieser Aktion editierbar ist.
-	 * 
-	 * @return boolean
-	 * @deprecated
-	 */
-	function isEditable()
-	{
-		return false; 
-	}
 
 	
 	/**
@@ -725,19 +715,6 @@ class Action
 		$this->refresh = true;
 		$this->setControlVar('refresh',true);
 	}
-	
-	
-	/**
-	 * Stellt fest, ob sich die Anzeige im Editier-Modus befindet.
-	 *
-	 * @return boolean
-	 * @deprecated
-	 */
-	protected function isEditMode()
-	{
-		return true;
-	}
-	
 	
 	
 	/**
