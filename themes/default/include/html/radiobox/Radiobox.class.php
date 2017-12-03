@@ -21,8 +21,8 @@ class RadioboxComponent extends Component
 		
 		if	( isset($this->default))
 			$value = $this->value($this->default);
-			else
-				$value = '$'.$this->varname($this->name);
+		else
+			$value = '$'.$this->varname($this->name);
 					
 		echo '<?php component_radio_box('.$this->value($this->name).',$'.$this->varname($this->list).','.$value.') ?>';
 	}
