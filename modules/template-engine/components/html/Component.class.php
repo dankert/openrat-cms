@@ -80,7 +80,7 @@ abstract class Component
 
 	protected function include( $file ) 
 	{
-		echo "<?php include_once( OR_THEMES_DIR.'default/include/html/".$file."') ?>";
+		echo "<?php include_once( 'modules/template-engine/components/html/".$file."') ?>";
 	}
 	
 }
