@@ -46,6 +46,7 @@ define('OR_THEMES_DIR'        ,'./themes/'         );
 define('OR_THEMES_EXT_DIR'    ,OR_THEMES_DIR);
 define('OR_TMP_DIR'           ,'./tmp/'            );
 define('OR_CONTROLLER_FILE'   ,'dispatcher');
+define('OR_MODULES_DIR'       ,'./modules/');
 define('START_TIME'           ,time()              );
 define('REQUEST_ID'           ,'req'.time().rand() );
 
@@ -114,6 +115,9 @@ require_once( "functions/request.inc.php" );
 // Werkzeugklassen einbinden.
 require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
 require_once( OR_AUTHCLASSES_DIR."include.inc.".PHP_EXT );
+
+
+require_once( OR_MODULES_DIR."template-engine/require.".PHP_EXT );
 
 
 ?>

@@ -457,12 +457,14 @@ class Action
 		
 		if	( DEVELOPMENT )
 		{
+			$srcXmlFilename = 'themes/default/templates/' . $tplName . '.tpl.src.xml';
+			
 			// Das Template kompilieren.
 			// Aus dem XML wird eine PHP-Datei erzeugt.
 			try
 			{
 				$te = new TemplateEngine();
-				$te->compile($tplName);
+				$te->compile($srcXmlFilename,$iFile);
 				unset($te);
 			}
 			catch (Exception $e)

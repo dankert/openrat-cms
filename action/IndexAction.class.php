@@ -130,7 +130,7 @@ class IndexAction extends Action
 		
 		foreach (array_keys($elements) as $c)
 		{
-			$componentCssFile = OR_THEMES_DIR . config('interface', 'theme') . '/include/html/' . $c . '/' . $c;
+			$componentCssFile = OR_MODULES_DIR . 'template-engine/components/html/' . $c . '/' . $c;
 			if (is_file($componentCssFile . '.less'))
 				$css[] = $componentCssFile;
 		}
@@ -285,8 +285,7 @@ class IndexAction extends Action
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery.scrollTo';
 			// $js[] = OR_THEMES_EXT_DIR default/js/jquery.mjs.nestedSortable.js"></script>
 			
-			// <!-- OpenRat internal JS -->
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/openrat';
+			// Jquery-Plugins
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orHint';
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orSearch';
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orLinkify';
@@ -295,6 +294,8 @@ class IndexAction extends Action
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orAutoheight';
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-svg';
 			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery-qrcode';
+			// OpenRat internal JS
+			$js[] = OR_THEMES_EXT_DIR . 'default/js/openrat';
 			$js[] = OR_THEMES_EXT_DIR . '../editor/markitup/markitup/jquery.markitup';
 			$js[] = OR_THEMES_EXT_DIR . '../editor/editor/ckeditor';
 			$js[] = OR_THEMES_EXT_DIR . '../editor/ace/src-min-noconflict/ace';
@@ -305,7 +306,7 @@ class IndexAction extends Action
 			
 			foreach (array_keys($elements) as $c)
 			{
-				$componentJsFile = OR_THEMES_DIR . config('interface', 'theme') . '/include/html/' . $c . '/' . $c;
+				$componentJsFile = OR_MODULES_DIR .  '/template-engine/components/html/' . $c . '/' . $c;
 				if (is_file($componentJsFile . '.js'))
 					$js[] = $componentJsFile;
 			}

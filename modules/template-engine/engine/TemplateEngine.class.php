@@ -26,21 +26,25 @@
  */
 class TemplateEngine
 {
+	public $renderType = 'html';
+
+	public $config = array();
+	
 	/**
 	 * Name Template.
 	 *
 	 * @var String
 	 */
-	private $tplName;
+	private $tplFileName;
 
 	/**
 	 * Erzeugt einen Templateparser.
 	 *
 	 * @param String $tplName Name des Templates, das umgewandelt werden soll.
 	 */
-	public function TemplateEngine( $tplName='' )
+	public function TemplateEngine( $tplFileName='' )
 	{
-		$this->tplName = $tplName;
+		$this->tplFileName = $tplFileName;
 	}
 
 	/**
@@ -49,27 +53,24 @@ class TemplateEngine
 	 * @param
 	 *        	filename Dateiname der Datei, die erstellt werden soll.
 	 */
-	public function compile($tplName = '')
+	public function compile($srcXmlFilename = '',$tplOutName = '')
 	{
-		require_once (OR_THEMES_DIR . "default/include/html/Component.class." . PHP_EXT);
+		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/Component.class.' . PHP_EXT);
 		
 		try
 		{
-			if (empty($tplName))
-				$tplName = $this->tplName;
+			if (empty($srcFilename))
+				$srcFilename = $this->tplFileName;
 			
-			global $conf;
-			$confCompiler = $conf['theme']['compiler'];
-			
-			$srcXmlFilename = 'themes/default/templates/' . $tplName . '.tpl.src.xml';
+			$confCompiler = $this->config;
 			
 			if (is_file($srcXmlFilename))
 				$srcFilename = $srcXmlFilename;
 			else
 				// Wenn Vorlage (noch) nicht existiert
-				throw new LogicException("Template not found: $tplName");
+				throw new LogicException("Template not found: $srcXmlFilename");
 			
-			$filename = 'themes/default/templates/' . $tplName . '.tpl.out.'. PHP_EXT;
+			$filename = $tplOutName;
 			
 			// Wenn Vorlage gaendert wurde, dann Umwandlung erneut ausf�hren.
 			if (false && is_file($filename) && filemtime($srcFilename) <= filemtime($filename))
@@ -86,7 +87,7 @@ class TemplateEngine
 			$outFile = @fopen($filename, 'w');
 			
 			if (! is_resource($outFile))
-				throw new LogicException("Template $tplName: Unable to open file for writing: $filename");
+				throw new LogicException("Template '$srcXmlFilename': Unable to open file for writing: '$filename'");
 			
 			$openCmd = array();
 			$depth = 0;
@@ -108,7 +109,7 @@ class TemplateEngine
 					$depth ++;
 					
 					$className = ucfirst($tag);
-					$classFilename = OR_THEMES_DIR . $conf['interface']['theme'] . "/include/html/$tag/$className.class." . PHP_EXT;
+					$classFilename = dirname(__FILE__).'/../components/'.$this->renderType."/$tag/$className.class." . PHP_EXT;
 					
 					if (!is_file($classFilename))
 						throw new LogicException("Component Class File '$classFilename' does not exist." );
@@ -150,7 +151,7 @@ class TemplateEngine
 		}
 		catch (Exception $e)
 		{
-			throw new LogicException("Template $tplName failed to compile", 0, $e);
+			throw new LogicException("Template '$srcXmlFilename' failed to compile", 0, $e);
 		}
 	}
 

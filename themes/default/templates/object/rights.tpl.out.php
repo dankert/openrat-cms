@@ -1,37 +1,14 @@
 <!-- Compiling output/output-begin -->
-		<?php $if2=($type=='folder'); if($if2){?><!-- Compiling header/header-begin --><?php $a3_name='';$a3_views='inherit,aclform';$a3_back=false; ?><?php if(!empty($a3_views)) { ?>
-  <div class="headermenu">
-    <?php foreach( explode(',',$a3_views) as $a3_tmp_view ) { ?>
-  	<div class="toolbar-icon clickable">
-    <a href="javascript:void(0);" data-type="dialog" data-name="<?php echo lang('MENU_'.$a3_tmp_view) ?>" data-method="<?php echo $a3_tmp_view ?>">
-		  <img src="<?php  echo $image_dir ?>icon/<?php echo $a3_tmp_view ?>.png" title="<?php echo lang('MENU_'.$a3_tmp_view.'_DESC') ?>" /> <?php echo lang('MENU_'.$a3_tmp_view) ?>
-		</a>
-  </div>
+		<?php $if2=($type=='folder'); if($if2){?>
+			
+			
 		<?php } ?>
-  </div>
-<?php } ?>
-<?php unset($a3_name,$a3_views,$a3_back) ?>
+		<?php if(!$if2){?>
+			
+			
 		<?php } ?>
-		<?php if(!$if2){?><!-- Compiling header/header-begin --><?php $a3_name='';$a3_views='aclform';$a3_back=false; ?><?php if(!empty($a3_views)) { ?>
-  <div class="headermenu">
-    <?php foreach( explode(',',$a3_views) as $a3_tmp_view ) { ?>
-  	<div class="toolbar-icon clickable">
-    <a href="javascript:void(0);" data-type="dialog" data-name="<?php echo lang('MENU_'.$a3_tmp_view) ?>" data-method="<?php echo $a3_tmp_view ?>">
-		  <img src="<?php  echo $image_dir ?>icon/<?php echo $a3_tmp_view ?>.png" title="<?php echo lang('MENU_'.$a3_tmp_view.'_DESC') ?>" /> <?php echo lang('MENU_'.$a3_tmp_view) ?>
-		</a>
-  </div>
-		<?php } ?>
-  </div>
-<?php } ?>
-<?php unset($a3_name,$a3_views,$a3_back) ?>
-		<?php } ?>
-		<table width="100%'><!-- Compiling row/row-begin --><?php $a3_class='headline'; ?><?php
-	$column_idx = 0;
-?>
-<tr
- class="headline"
->
-<?php unset($a3_class) ?>
+		<table width="100%">
+			<tr class="headline">
 				<td class="help">
 					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NAME'.'')))); ?></span>
 					
@@ -66,18 +43,15 @@
 				<td class="help">
 					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'global_delete'.'')))); ?></span>
 					
-				</td><!-- Compiling row/row-end --></tr>
-			<?php $if3=(empty($acls)); if($if3){?><!-- Compiling row/row-begin --><?php $a4_class='data'; ?><?php
-	$column_idx = 0;
-?>
-<tr
- class="data"
->
-<?php unset($a4_class) ?>
+				</td>
+			</tr>
+			<?php $if3=(empty($acls)); if($if3){?>
+				<tr class="data">
 					<td colspan="99">
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
 						
-					</td><!-- Compiling row/row-end --></tr>
+					</td>
+				</tr>
 			<?php } ?>
 			<?php $if3=!(empty($acls)); if($if3){?>
 			<?php } ?><!-- Compiling list/list-begin --><?php $a3_list='acls';$a3_extract=true;$a3_key='aclid';$a3_value='acl'; ?><?php
@@ -99,13 +73,8 @@
 			}
 			extract($$a3_list_tmp_value);
 		}
-?><?php unset($a3_list,$a3_extract,$a3_key,$a3_value) ?><!-- Compiling row/row-begin --><?php $a4_class='data'; ?><?php
-	$column_idx = 0;
-?>
-<tr
- class="data"
->
-<?php unset($a4_class) ?>
+?><?php unset($a3_list,$a3_extract,$a3_key,$a3_value) ?>
+				<tr class="data">
 					<td>
 						<?php $if6=(!empty($username)); if($if6){?>
 							<img class="" title="" src="./themes/default/images/icon_user.png" />
@@ -191,13 +160,9 @@
 ?><a data-url="<?php echo $a6_url ?>" target="<?php echo $a6_frame ?>"<?php if (isset($a6_name)) { ?> data-name="<?php echo $a6_name ?>" name="<?php echo $a6_name ?>"<?php }else{ ?> href="<?php echo $tmp_href ?>" <?php } ?> class="<?php echo $a6_class ?>" data-id="<?php echo @$a6_id ?>" data-type="<?php echo $a6_type ?>" data-action="<?php echo @$a6_action ?>" data-method="<?php echo @$a6_subaction ?>" data-data="<?php echo $tmp_data ?>" <?php if (isset($a6_accesskey)) echo ' accesskey="'.$a6_accesskey.'"' ?>  title="<?php echo encodeHtml($a6_title) ?>"><?php unset($a6_title,$a6_type,$a6_class,$a6_subaction,$a6_var1,$a6_value1,$a6_frame,$a6_modal) ?>
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_DELETE'.'')))); ?></span>
 							<!-- Compiling link/link-end --></a>
-					</td><!-- Compiling row/row-end --></tr><!-- Compiling list/list-end --><?php } ?><!-- Compiling row/row-begin --><?php $a3_class='data'; ?><?php
-	$column_idx = 0;
-?>
-<tr
- class="data"
->
-<?php unset($a3_class) ?>
+					</td>
+				</tr><!-- Compiling list/list-end --><?php } ?>
+			<tr class="data">
 				<td class="clickable" colspan="99"><!-- Compiling link/link-begin --><?php $a5_title='';$a5_type='dialog';$a5_class='';$a5_subaction='aclform';$a5_name=lang('menu_aclform');$a5_frame='_self';$a5_modal=false; ?><?php
 	$params = array();
 		$a5_url='';
@@ -223,5 +188,6 @@
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
 						<!-- Compiling link/link-end --></a>
-				</td><!-- Compiling row/row-end --></tr>
+				</td>
+			</tr>
 		</table>

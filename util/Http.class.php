@@ -424,9 +424,12 @@ class Http
 	 */
 	public static function serverError($message,$reason='')
 	{
-		$db = Session::getDatabase();
-		if	( is_object( $db ) )
-			$db->rollback();
+		if	( class_exists('Session'))
+		{
+			$db = Session::getDatabase();
+			if	( is_object( $db ) )
+				$db->rollback();
+		}
 
 		if	( class_exists('Logger')) 
 			Logger::warn($message."\n".$reason);

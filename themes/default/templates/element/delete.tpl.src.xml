@@ -30,7 +30,7 @@
 				</part>
 				<part class="input">
 					<text raw="_____"></text>
-					<radio name="type" value="value" default="value"></radio>
+					<radio name="type" value="value"></radio>
 					<label for="type_value">
 						<text text="ELEMENT_DELETE_VALUES"></text>
 					</label>
