@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\User;
 use cms\model\Value;
 use cms\model\Element;

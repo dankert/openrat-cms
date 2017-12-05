@@ -1,5 +1,13 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Model;
+
+
+
+use Session;
+use \Html;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -33,7 +41,7 @@ class ModelAction extends Action
 	var $model;
 
 
-	function ModelAction()
+	function __construct()
 	{
 		$this->model = new Model( $this->getRequestId() );
 		$this->model->load();

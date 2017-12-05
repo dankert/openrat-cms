@@ -1,6 +1,10 @@
 <?php
-use cms\model\Language;
 
+namespace cms\action;
+
+use cms\model\Language;
+use Session;
+use \Html;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -42,7 +46,7 @@ class LanguageAction extends Action
 	/**
 	 * Konstruktor
 	 */
-	function LanguageAction()
+	function __construct()
 	{
 		$this->language = new Language( $this->getRequestId() );
 		$this->language->load();

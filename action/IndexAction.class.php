@@ -1,5 +1,16 @@
 <?php
+
+namespace cms\action;
+
+use \Auth;
 use cms\model\User;
+use Exception;
+use JSqueeze;
+use Less_Parser;
+use Logger;
+use ObjectNotFoundException;
+use Session;
+
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -33,7 +44,7 @@ class IndexAction extends Action
 	/**
 	 * Konstruktor
 	 */
-	function IndexAction()
+	function __construct()
 	{
 		$this->perspective = Session::get('perspective');
 

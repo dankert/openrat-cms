@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Project;
 use cms\model\Value;
 use cms\model\Element;
@@ -41,7 +44,7 @@ class PageAction extends ObjectAction
 	var $defaultSubAction = 'show';
 
 
-	function PageAction()
+	function __construct()
 	{
 		$this->page = new Page( $this->getRequestId() );
 		$this->page->load();

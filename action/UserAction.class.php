@@ -1,10 +1,27 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Acl;
 use cms\model\User;
 use cms\model\Project;
 use cms\model\Group;
 use cms\model\Object;
 use cms\model\Language;
+
+
+
+
+use Base2n;
+use Exception;
+use JSqueeze;
+use Less_Parser;
+use Logger;
+use ObjectNotFoundException;
+use Password;
+use Session;
+use \Html;
+use \Mail;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -38,7 +55,7 @@ class UserAction extends Action
 	var $defaultSubAction = 'edit';
 
 
-	function UserAction()
+	function __construct()
 	{
 		$this->user = new User( $this->getRequestId() );
 		$this->user->load();

@@ -1,5 +1,13 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Language;
+
+
+
+use Session;
+use \Html;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -33,7 +41,7 @@ class LanguagelistAction extends Action
 	/**
 	 * Konstruktor
 	 */
-	function LanguagelistAction()
+	function __construct()
 	{
 		$this->project = Session::getProject();
 	}

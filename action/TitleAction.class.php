@@ -1,9 +1,14 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Project;
 use cms\model\Object;
 use cms\model\Language;
 use cms\model\Model;
 
+use Session;
+use \Html;
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert, jandankert@jandankert.de
 //

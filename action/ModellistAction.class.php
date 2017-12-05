@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Model;
 
 // OpenRat Content Management System
@@ -29,7 +32,7 @@ class ModellistAction extends Action
 {
 	public $security = SECURITY_USER;
 	
-	function ModellistAction()
+	function __construct()
 	{
 		if	( $this->getRequestId() != 0 )
 		{

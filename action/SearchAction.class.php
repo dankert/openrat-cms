@@ -1,9 +1,19 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\User;
 use cms\model\Value;
 use cms\model\Template;
 use cms\model\Object;
 use cms\model\File;
+
+
+
+use Session;
+use \Html;
+
+
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -45,7 +55,7 @@ class SearchAction extends Action
 	/**
 	 * leerer Kontruktor
 	 */
-	function SearchAction()
+	function __construct()
 	{
 	}
 

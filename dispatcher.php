@@ -153,18 +153,19 @@ try
     	Http::serverError("no method (subaction) supplied");
     }
     
-    require( OR_ACTIONCLASSES_DIR.'/Action.class.php' );
-    require( OR_ACTIONCLASSES_DIR.'/ObjectAction.class.php' );
+    require( OR_ACTIONCLASSES_DIR.'Action.class.php' );
+    require( OR_ACTIONCLASSES_DIR.'ObjectAction.class.php' );
     
     	
     $actionClassName = ucfirst($action).'Action';
-    
+    $actionClassNameWithNamespace = 'cms\\action\\'.$actionClassName;
+
     require_once( OR_ACTIONCLASSES_DIR.'/'.$actionClassName.'.class.php' );
     
     // Erzeugen der Action-Klasse
     try
     {
-    	$do = new $actionClassName;
+    	$do = new $actionClassNameWithNamespace;
     }
     catch( ObjectNotFoundException $e )
     {

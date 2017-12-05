@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\User;
 use cms\model\Project;
 use cms\model\Value;
@@ -7,6 +10,13 @@ use cms\model\Page;
 use cms\model\Object;
 use cms\model\Language;
 use cms\model\Model;
+
+
+use Logger;
+use Password;
+use Session;
+use \Html;
+use \Mail;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2007 Jan Dankert, jandankert@jandankert.de

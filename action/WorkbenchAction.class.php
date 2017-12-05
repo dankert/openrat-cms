@@ -1,7 +1,13 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Value;
 use cms\model\Folder;
 use cms\model\Object;
+
+use Logger;
+use Session;
 
 /**
  * Action-Klasse zum Anzeigen der Workbench
@@ -17,7 +23,7 @@ class WorkbenchAction extends Action
 	/**
 	 * Konstruktor
 	 */
-	function WorkbenchAction()
+	function __construct()
 	{
 		global $conf;
 		$this->perspective = Session::get('perspective');

@@ -1,9 +1,13 @@
 <?php
 
+namespace cms\action;
+
+
 use cms\model\Element;
 use cms\model\Template;
 use cms\model\Folder;
 use cms\model\Object;
+
 
 
 // OpenRat Content Management System
@@ -37,7 +41,7 @@ class ElementAction extends Action
 	/**
 	 * Konstruktor
 	 */
-	function ElementAction()
+	function __construct()
 	{
 		if	( $this->getRequestId() == 0 )
 			die('no element-id available');

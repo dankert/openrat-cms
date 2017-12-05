@@ -1,5 +1,8 @@
 <?php
 
+namespace cms\action;
+
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -36,7 +39,7 @@ class ProfileAction extends Action
 	 * Konstruktor.
 	 * Setzen der Benutzer-Objektes.
 	 */
-	function ProfileAction()
+	function __construct()
 	{
 		$this->user = Session::getUser();
 	}

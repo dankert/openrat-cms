@@ -1,5 +1,8 @@
 <?php
 
+namespace cms\action;
+
+
 use cms\model\User;
 use cms\model\Project;
 use cms\model\Group;
@@ -9,6 +12,19 @@ use cms\model\Page;
 use cms\model\Object;
 use cms\model\Language;
 use cms\model\Model;
+
+
+use DB;
+use DbUpdate;
+use Http;
+use InternalAuth;
+use Logger;
+use ObjectNotFoundException;
+use Password;
+use Session;
+use \Html;
+use \Mail;
+use \Text;
 
 
 // OpenRat Content Management System

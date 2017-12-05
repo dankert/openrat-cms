@@ -1,7 +1,16 @@
 <?php
+
+namespace cms\action;
+
+namespace cms\action;
 use cms\model\Element;
 use cms\model\Template;
 use cms\model\Page;
+
+
+
+use Session;
+use \Html;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert
@@ -36,7 +45,7 @@ class TemplateAction extends Action
 	var $element;
 
 
-	function TemplateAction()
+	function __construct()
 	{
 		$this->template = new Template( $this->getRequestId() );
 		$this->template->load();

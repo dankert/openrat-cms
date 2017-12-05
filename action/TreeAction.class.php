@@ -1,7 +1,19 @@
 <?php
+
+namespace cms\action;
+
+use AdministrationTree;
 use cms\model\Language;
 use cms\model\Model;
 
+use Exception;
+use JSqueeze;
+use Less_Parser;
+use Logger;
+use ObjectNotFoundException;
+use ProjectTree;
+use Session;
+use \Html;
 // OpenRat Content Management System
 // Copyright (C) 2002 Jan Dankert, jandankert@jandankert.de
 //

@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Acl;
 use cms\model\User;
 use cms\model\Group;

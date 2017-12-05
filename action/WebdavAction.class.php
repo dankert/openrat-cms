@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\User;
 use cms\model\Project;
 use cms\model\Page;
@@ -63,7 +66,7 @@ class WebdavAction extends Action
 	 * Im Kontruktor wird der Request analysiert und ggf. eine Authentifzierung
 	 * durchgefuehrt.
 	 */
-	function WebdavAction()
+	function __construct()
 	{
 		if (!defined('E_STRICT')) 
 			define('E_STRICT', 2048);

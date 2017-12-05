@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
@@ -6,6 +9,9 @@ use cms\model\Object;
 use cms\model\File;
 use cms\model\Link;
 
+use Http;
+use Session;
+use \Html;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -37,7 +43,7 @@ class FolderAction extends ObjectAction
 	
 	private $folder;
 
-	function FolderAction()
+	function __construct()
 	{
 		$this->folder = new Folder( $this->getRequestId() );
 		$this->folder->load();

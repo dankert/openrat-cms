@@ -1,6 +1,8 @@
 <?php
-use cms\model\Group;
 
+namespace cms\action;
+
+use cms\model\Group;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -31,7 +33,7 @@ class GrouplistAction extends Action
 {
 	public $security = SECURITY_ADMIN;
 	
-	function GrouplistAction()
+	function __construct()
 	{
 	}
 

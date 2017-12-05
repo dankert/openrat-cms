@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -15,6 +18,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+use Session;
 /**
  * Action-Klasse fuer die Bearbeitung eines Template-Elementes.
  * 
@@ -28,7 +32,7 @@ class ConfigurationAction extends Action
 	/**
 	 * Konstruktor
 	 */
-	function ConfigurationAction()
+	function __construct()
 	{
 	}
 

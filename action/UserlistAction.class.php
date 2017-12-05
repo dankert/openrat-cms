@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\User;
 
 // OpenRat Content Management System
@@ -29,7 +32,7 @@ class UserlistAction extends Action
 {
 	public $security = SECURITY_ADMIN;
 	
-	function UserlistAction()
+	function __construct()
 	{
 	}
 

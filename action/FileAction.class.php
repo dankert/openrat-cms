@@ -1,8 +1,13 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Folder;
 use cms\model\Object;
 use cms\model\File;
 
+use Http;
+use \Html;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -38,7 +43,7 @@ class FileAction extends ObjectAction
 	/**
 	 * Konstruktor
 	 */
-	function FileAction()
+	function __construct()
 	{
 		$this->file = new File( $this->getRequestId() );
 		$this->file->load();

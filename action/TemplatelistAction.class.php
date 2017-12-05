@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Element;
 use cms\model\Template;
 
@@ -30,7 +33,7 @@ class TemplatelistAction extends Action
 {
 	public $security = SECURITY_USER;
 	
-	function TemplatelistAction()
+	function __construct()
 	{
 	}
 

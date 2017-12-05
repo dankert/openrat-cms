@@ -1,4 +1,12 @@
 <?php
+
+namespace cms\action;
+
+
+use Http;
+use Session;
+use \Html;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -47,7 +55,7 @@ class FilebrowserAction extends ObjectAction
 	/**
 	 * Konstruktor
 	 */
-	function FilebrowserAction()
+	function __construct()
 	{
 		if	( $this->getRequestId() != 0  )
 		{

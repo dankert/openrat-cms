@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Project;
 
 // OpenRat Content Management System
@@ -29,7 +32,7 @@ class ProjectlistAction extends Action
 {
 	public $security = SECURITY_ADMIN;
 	
-	function ProjectlistAction()
+	function __construct()
 	{
 	}
 

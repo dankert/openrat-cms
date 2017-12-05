@@ -1,4 +1,7 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Project;
 use cms\model\Folder;
 
@@ -34,7 +37,7 @@ class ProjectAction extends Action
 	var $defaultSubAction = 'listing';
 
 
-	function ProjectAction()
+	function __construct()
 	{
 		$this->project = new Project( $this->getRequestId() );
 		$this->project->load();

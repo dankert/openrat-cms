@@ -1,6 +1,15 @@
 <?php
+
+namespace cms\action;
+
 use cms\model\Folder;
 use cms\model\Link;
+
+
+
+
+
+use Session;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -36,7 +45,7 @@ class LinkAction extends ObjectAction
 	/**
 	 * Konstruktor
 	 */
-	function LinkAction()
+	function __construct()
 	{
 		$this->link = new Link( $this->getRequestId() );
 		$this->link->load();
