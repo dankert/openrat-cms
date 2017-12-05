@@ -14,12 +14,14 @@ use cms\model\Language;
 use cms\model\Model;
 
 
+use database\Database;
 use DB;
 use DbUpdate;
 use Http;
 use InternalAuth;
 use Logger;
 use ObjectNotFoundException;
+use OpenRatException;
 use Password;
 use Session;
 use \Html;
@@ -56,13 +58,14 @@ define('PROJECTID_ADMIN',-1);
 class LoginAction extends Action
 {
 	public $security = SECURITY_GUEST;
-	
-	
-	/**
-	 * Eine Datenbankverbindugn wird aufgebaut und initalisiert.
-	 * 
-	 * @param $dbid Datenbank-Id
-	 */
+
+
+    /**
+     * Eine Datenbankverbindugn wird aufgebaut und initalisiert.
+     *
+     * @param $dbid Datenbank-Id
+     * @throws OpenRatException
+     */
 	private function setDb( $dbid )
 	{
 		global $conf;
@@ -74,10 +77,16 @@ class LoginAction extends Action
 		if	( is_object($db) )
 			$db->rollback();
 
-		$db = new DB( $conf['database'][$dbid] );
-		$db->id = $dbid;
-		$db->start(); // Transaktion starten.
-		Session::setDatabase( $db );
+        try
+        {
+            $db = new Database( $conf['database'][$dbid] );
+            $db->id = $dbid;
+            $db->start(); // Transaktion starten.
+            Session::setDatabase( $db );
+        }catch(\Exception $e)
+        {
+            throw new OpenRatException('ERROR_DATABASE_CONNECTION',$e->getMessage() );
+        }
 	}
 
 
@@ -850,7 +859,7 @@ class LoginAction extends Action
 			if   ( !is_array($conf['database'][$dbid]) )
 			    $this->addValidationError('dbid');
 				
-			$db = new DB( $conf['database'][$dbid],true );
+			$db = new Database( $conf['database'][$dbid],true );
 			$db->id = $dbid;
 			
 			// Datenbank aktualisieren, sofern notwendig.

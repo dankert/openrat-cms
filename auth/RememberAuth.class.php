@@ -1,5 +1,7 @@
 <?php
 
+use database\Database;
+
 /**
  * Authentifizierung mit einem Login-Token.
  *  
@@ -7,7 +9,10 @@
  */
 class RememberAuth implements Auth
 {
-	public function username()
+    /**
+     * @return null
+     */
+    public function username()
 	{
 		// Ermittelt den Benutzernamen aus den Login-Cookies.
 		if	( isset($_COOKIE['or_username']) &&
@@ -20,7 +25,7 @@ class RememberAuth implements Auth
 				$dbid = $_COOKIE['or_dbid'];
 				
 				global $conf;
-				$db = new DB( $conf['database'][$dbid] );
+				$db = new Database( $conf['database'][$dbid] );
 				$db->id = $dbid;
 				$db->start();
 				Session::setDatabase($db);

@@ -1,5 +1,7 @@
 <?php
 
+use database\DbVersion;
+
 
 /**
  * Baseline database structure.

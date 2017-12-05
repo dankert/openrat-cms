@@ -1,5 +1,5 @@
 <?php
-
+use database\DbVersion;
 
 /**
  * Add Columns for user language and user timezone.

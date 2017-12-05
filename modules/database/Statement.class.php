@@ -16,6 +16,9 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+namespace database;
+use Exception;
+use RuntimeException;
 
 /**
  * Darstellung einer Datenbank-Abfrage.
@@ -55,7 +58,7 @@ class Statement
 	 * @param Array Konfiguration der Verbindung
 	 * @return Status 'true' wenn Verbindung erfolgreich aufgebaut.
 	 */
-	public function Statement( $sql, $client,$conf )
+	public function __construct( $sql, $client,$conf )
 	{
 		// Tabellen-Praefixe ergaenzen.
 		$this->conf   = $conf;

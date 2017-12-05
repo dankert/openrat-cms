@@ -1,5 +1,7 @@
 <?php
 
+use database\Database;
+
 /**
  * Authentifzierung über eine externe Datenbank.
  * @author dankert
@@ -20,7 +22,7 @@ class DatabaseAuth implements Auth
 		if	( ! $authDbConf['enable'] )
 			return false;
 
-		$authdb = new DB( $authDbConf );
+		$authdb = new Database( $authDbConf );
 		
 		$sql  = $authdb->sql( $conf['security']['authdb']['sql'] );
 		$algo = $authdb->sql( $conf['security']['authdb']['hash_algo'] );

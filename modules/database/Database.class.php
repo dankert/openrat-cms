@@ -16,6 +16,9 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+namespace database;
+use Logger;
+use RuntimeException;
 
 /**
  * Darstellung einer Datenbank-Verbindung.
@@ -28,7 +31,7 @@
  * @author Jan Dankert
  * @package openrat.database
  */
-class DB
+class Database
 {
 	/**
 	 * Datenbank-Id.
@@ -80,7 +83,7 @@ class DB
 	 * @param Array Konfiguration der Verbindung
 	 * @param boolean admin Wenn es eine Admin-DB-Verbindung werden soll, die auch DDL ausfuehren darf
 	 */
-	public function DB( $dbconf,$admin=false )
+	public function __construct( $dbconf,$admin=false )
 	{
 		global $conf;
 		
@@ -118,19 +121,18 @@ class DB
 			
 			if	( $rc != 0 )
 			{
-				throw new OpenRatException( 'ERROR_DATABASE_CONNECTION','Command failed: '.implode("",$ausgabe) );
+				throw new RuntimeException( 'Command failed: '.implode("",$ausgabe) );
 			}
 		}
 		
 		$type = $this->conf['type'];
-		$classname = 'db_'.$type;
-		
+		$classname = 'database\\driver\\'.strtoupper($type).'Driver';
 		if	( ! class_exists($classname) )
 		{
 			$this->available = false;
-			throw new OpenRatException( 'ERROR_DATABASE_CONNECTION','Database type "'.$type.'" is not available');
+			throw new RuntimeException( "Database type '$type' is not available, class '$classname' was not found");
 		}
-		
+		$f = new driver\PDODriver();
 		// Client instanziieren
 		$this->client = new $classname;
 		
@@ -148,7 +150,7 @@ class DB
 			
 			if	( ! $ok )
 			{
-				throw new OpenRatException( 'ERROR_DATABASE_CONNECTION',"Could not execute connection-query '".$cmd."'");
+				throw new RuntimeException( "Could not execute connection-query '".$cmd."'");
 			}
 		}
 		

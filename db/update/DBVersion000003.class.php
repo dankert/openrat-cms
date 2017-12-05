@@ -1,5 +1,5 @@
 <?php
-
+use database\DbVersion;
 /**
  * Dummy version.
  * @author dankert

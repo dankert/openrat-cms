@@ -22,8 +22,6 @@ class DbUpdate
 		if	( ! $db->conf['auto_update'])
 			Http::serverError('DB Update necessary.',"DB-Version is $version, but this is OpenRat ".OR_VERSION." which needs the version ".OR_DB_SUPPORTED_VERSION );
 		
-		require(OR_DBCLASSES_DIR.'DbVersion.class.php');
-		
 		for( $installVersion = $version + 1; $installVersion <= OR_DB_SUPPORTED_VERSION; $installVersion++ )
 		{
 			if	( $installVersion > 2 )

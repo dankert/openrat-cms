@@ -12,6 +12,7 @@ use cms\model\Language;
 use cms\model\Model;
 
 
+use database\Database;
 use Logger;
 use Password;
 use Session;
@@ -64,7 +65,7 @@ class StartAction extends Action
 			$db->rollback();
 		}
 
-		$db = new DB( $conf['database'][$dbid] );
+		$db = new Database( $conf['database'][$dbid] );
 		$db->id = $dbid;
 		$db->start();
 		Session::setDatabase( $db );

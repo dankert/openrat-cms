@@ -18,6 +18,13 @@
 // |          Jan Dankert <phpdb@jandankert.de>                           |
 // +----------------------------------------------------------------------+
 //
+namespace database\driver;
+
+use \Logger;
+use \OpenRatException;
+use \PDO;
+use \PDOException;
+use \RuntimeException;
 
 /**
  * Datenbank-abhaengige Methoden fuer PDO.
@@ -26,7 +33,7 @@
  * @version $Revision: 1.5 $
  * @package openrat.database
  */
-class DB_pdo
+class PDODriver
 {
 	/**
 	 * Die PDO-Verbindung.
@@ -161,7 +168,7 @@ class DB_pdo
 		$this->stmt = $this->connection->prepare($query);
 		
 		if	( $this->stmt === false )
-			throw new OpenRatException('ERROR_DATABASE_CONNECTION','Could not prepare statement: '.$query.' Cause: '.implode('/',$this->connection->errorInfo()) );
+			throw new RuntimeException('Could not prepare statement: '.$query.' Cause: '.implode('/',$this->connection->errorInfo()) );
 		
 	}
 
