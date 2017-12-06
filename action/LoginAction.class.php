@@ -17,6 +17,7 @@ use cms\model\Model;
 use database\Database;
 use DB;
 use DbUpdate;
+use Exception;
 use Http;
 use InternalAuth;
 use Logger;
@@ -85,7 +86,7 @@ class LoginAction extends Action
             Session::setDatabase( $db );
         }catch(\Exception $e)
         {
-            throw new OpenRatException('ERROR_DATABASE_CONNECTION',$e->getMessage() );
+            throw new OpenRatException('DATABASE_ERROR_CONNECTION',$e->getMessage() );
         }
 	}
 
@@ -858,10 +859,17 @@ class LoginAction extends Action
 			
 			if   ( !is_array($conf['database'][$dbid]) )
 			    $this->addValidationError('dbid');
-				
-			$db = new Database( $conf['database'][$dbid],true );
-			$db->id = $dbid;
-			
+
+            try {
+
+
+                $db = new Database($conf['database'][$dbid], true);
+                $db->id = $dbid;
+            }
+            catch( Exception $e) {
+                throw new OpenRatException('DATABASE_ERROR_CONNECTION',$e->getMessage());
+            }
+
 			// Datenbank aktualisieren, sofern notwendig.
 			require_once( OR_DBCLASSES_DIR.'DbUpdate.class.'.PHP_EXT );
 			$updater = new DbUpdate();

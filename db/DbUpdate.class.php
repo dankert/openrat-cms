@@ -1,5 +1,7 @@
 <?php
 
+use database\Database;
+
 define('OR_DB_SUPPORTED_VERSION',7);
 
 define('OR_DB_STATUS_UPDATE_PROGRESS', 0);
@@ -7,7 +9,10 @@ define('OR_DB_STATUS_UPDATE_SUCCESS' , 1);
 
 class DbUpdate 
 {
-	function update( $db )
+    /**
+     * @param Database $db
+     */
+    function update(Database $db )
 	{
 		$version = $this->getDbVersion($db);
 		
@@ -37,8 +42,9 @@ class DbUpdate
 			
 			$updaterClassName = 'DBVersion'.str_pad($installVersion, 6, '0', STR_PAD_LEFT);
 			require(OR_DBCLASSES_DIR.'update/'.$updaterClassName.'.class.php');
-			
-			$updater = new $updaterClassName( $db );
+
+            /** @var \database\DbVersion $updater */
+            $updater = new $updaterClassName( $db );
 			
 			$updater->update();
 
@@ -62,7 +68,7 @@ class DbUpdate
 	 * 
 	 * @param DB $db
 	 */
-	private function afterUpdate( $db )
+	private function afterUpdate( Database $db )
 	{
 		// Benutzer zählen.
 		$sql = $db->sql('SELECT COUNT(*) From {{user}}',$db->id);
@@ -79,7 +85,7 @@ class DbUpdate
 	
 	
 	
-	private function getDbVersion( $db )
+	private function getDbVersion( Database $db )
 	{
 		$sql = $db->sql('SELECT 1 FROM {{version}}',$db->id);
 		$versionTableExists = $sql->testQuery();
