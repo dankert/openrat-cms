@@ -1,6 +1,6 @@
 
-# OpenRat configuration file - Minimal settings.
-# change this file or copy it to 'config-<hostname>.yml'.
+# OpenRat CMS configuration - Minimal settings
+# Change this file or create 'config-<hostname>.yml'.
 
 database:
   db:
@@ -8,5 +8,8 @@ database:
     user    : dbuser       # user
     password: dbpass       # password
     database: cms          # database name
+
+include:
+  - ./config/config-${http:host}.yml
 
 # There are a lot of more configuration settings available, see file 'config-all-example.yml' ...
