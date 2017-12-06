@@ -2,13 +2,17 @@
 
 
 /**
- * Hilfsmethoden fuer das Lesen von Einstellungen.
+ * Configuration Loader.
+ *
+ * Loades the configuration values from a YAML file.
  *
  * @author Jan Dankert
  * @package openrat.util
  */
 class Configuration
 {
+    public static $defaultConfigFile = './config/config.yml';
+
     /**
      * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.
      *
@@ -16,48 +20,56 @@ class Configuration
      */
     public static function lastModificationTime()
     {
-        return filemtime('./config/config.yml');
+        return filemtime(self::$defaultConfigFile);
     }
 
 
     /**
-     * Liest die Konfigurationsdateien im angegebenen Ordner.
+     * Loads the configuration file an resolves all include-commands.
      *
      * @return array Configuration
      */
     public static function load()
     {
-        $customConfig = Spyc::YAMLLoad('./config/config.yml');
+        $customConfig = Spyc::YAMLLoad(self::$defaultConfigFile);
 
         // Does we have includes?
         if (isset($customConfig['include'])) {
 
-            // Resolve include file names
+            // Resolve variables in include file names
             if (is_string($customConfig['include']))
-                $customConfig['include'] = array(Configuration::evaluateFilename($customConfig['include']));
+                $customConfig['include'] = array(self::evaluateFilename($customConfig['include']));
             elseif (is_array($customConfig['include']))
                 foreach ($customConfig['include'] as $key => $file)
-                    $customConfig['include'][$key] = Configuration::evaluateFilename($file);
+                    $customConfig['include'][$key] = self::evaluateFilename($file);
 
             // Load include files.
             foreach ($customConfig['include'] as $key => $file) {
                 if (is_file($file) || is_link($file)) {
 
-                    if (substr($file, -4) == '.yml' || substr($file, -8) == '.yml.php')
-                        $customConfig += Spyc::YAMLLoad($file);
-                    elseif (substr($file, -4) == '.ini' || substr($file, -8) == '.ini.php')
-                        $customConfig += parse_ini_file($file);
+                    if (substr($file, -4) == '.yml' || substr($file, -8) == '.yml.php') {
 
-                    $customConfig['included-files'][] = $customConfig['include'][$key] . ' loaded';
+                        $customConfig += Spyc::YAMLLoad($file);
+                        $customConfig['included-files'][] = 'Success: ' . $customConfig['include'][$key] . ' loaded as YAML';
+
+                    } elseif (substr($file, -4) == '.ini' || substr($file, -8) == '.ini.php') {
+
+                        $customConfig += parse_ini_file($file);
+                        $customConfig['included-files'][] = 'Success: ' . $customConfig['include'][$key] . ' loaded as INI';
+
+                    } else {
+                        $customConfig['included-files'][] = 'Error: ' . $customConfig['include'][$key] . ' is no YAML and no INI - not loaded';
+                    }
+
                 } else {
-                    $customConfig['included-files'][] = $customConfig['include'][$key] . ' not found';
+                    $customConfig['included-files'][] = 'Error: ' . $customConfig['include'][$key] . ' not found';
                 }
             }
         }
 
 
-        // Besonderheit:
-        // Alle Konfigurationsschlüssel mit einem Punkt ('.') im Namen zu Arrays auflösen.
+        // Resolve dot-notated configuration keys to arrays.
+        // Means: a.b.c is converted to array['a']['b']['c']
         foreach ($customConfig as $key => $value) {
             $parts = explode('.', $key);
             if (count($parts) == 1)
@@ -78,19 +90,14 @@ class Configuration
             }
         }
 
-        // Fest eingebaute Standard-Konfiguration laden.
-        $conf = array();
-        require('./util/config-default.php');
-
-        $conf = array_replace_recursive($conf, $customConfig);
 
         // Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
-        $conf['config']['last_modification_time'] = filemtime('./config/config.yml');
-        $conf['config']['last_modification'] = date('r', filemtime('./config/config.yml'));
-        $conf['config']['read'] = date('r');
+        $customConfig['config']['last_modification_time'] = filemtime(self::$defaultConfigFile);
+        $customConfig['config']['last_modification'] = date('r', filemtime(self::$defaultConfigFile));
+        $customConfig['config']['read'] = date('r');
 
 
-        return $conf;
+        return $customConfig;
     }
 
     /**
