@@ -123,6 +123,7 @@ require_once( OR_AUTHCLASSES_DIR."include.inc.".PHP_EXT );
 require_once( OR_MODULES_DIR."security/require.".PHP_EXT );
 require_once( OR_MODULES_DIR."template-engine/require.".PHP_EXT );
 require_once( OR_MODULES_DIR."util/require.".PHP_EXT );
+require_once( OR_MODULES_DIR."configuration/require.".PHP_EXT );
 
 
 ?>

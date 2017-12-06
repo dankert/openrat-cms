@@ -50,10 +50,16 @@ try
     	// Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
     	if	( is_array($conf) && $conf['config']['session_destroy_on_config_reload'] ) 
     		session_unset();
-    	
-    	$conf = Configuration::load();
-    	
-    	$conf['build']   = parse_ini_file('build.ini'  );
+
+        // Fest eingebaute Standard-Konfiguration laden.
+        $conf = array();
+        require('./util/config-default.php'); // writes to $conf
+
+        $customConfig = Configuration::load();
+        $conf = array_replace_recursive($conf, $customConfig);
+
+
+        $conf['build']   = parse_ini_file('build.ini'  );
     	$conf['version'] = parse_ini_file('version.ini');
     	// Sprache lesen
     
