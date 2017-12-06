@@ -27,7 +27,8 @@
 // Erzeugen eines Hauptmenues
 //
 // ---------------------------------------------------------------------------
-
+use cms\model\Folder;
+use cms\model\Object;
 
 
 /**

@@ -27,7 +27,8 @@
 // Erzeugen eines Menues in Bloecken
 //
 // ---------------------------------------------------------------------------
-
+use cms\model\Folder;
+use cms\model\Object;
 
 
 /**

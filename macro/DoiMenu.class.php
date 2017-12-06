@@ -33,7 +33,9 @@
 // Erzeugen und Anzeigen einer Sitemap
 //
 // ---------------------------------------------------------------------------
-
+use cms\model\File;
+use cms\model\Folder;
+use cms\model\Page;
 
 
 /**

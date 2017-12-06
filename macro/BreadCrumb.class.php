@@ -30,7 +30,7 @@
 // Beispiele fuer dynamische Templateelemente
 //
 // ---------------------------------------------------------------------------
-
+use cms\model\Folder;
 
 
 /**

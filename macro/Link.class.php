@@ -27,7 +27,7 @@
 // Beispiele fuer dynamische Templateelemente
 //
 // ---------------------------------------------------------------------------
-
+use cms\model\Object;
 
 
 /**

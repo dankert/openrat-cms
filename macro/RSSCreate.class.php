@@ -33,7 +33,7 @@
 // Erzeugen eines RSS-Feeds aus einem Ordner
 //
 // ---------------------------------------------------------------------------
-
+use cms\model\Folder;
 
 
 /**

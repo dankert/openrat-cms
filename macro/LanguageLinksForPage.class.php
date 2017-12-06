@@ -21,6 +21,8 @@
 // ---------------------------------------------------------------------------
 // $Log$
 // ---------------------------------------------------------------------------
+use cms\model\Language;
+
 /**
  * Erstellen einer Liste von Language-Links auf die selbe Seite
  * @author Tobias Schoene
