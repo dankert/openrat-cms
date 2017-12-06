@@ -7,7 +7,7 @@
  * @author Jan Dankert
  * @package openrat.util
  */
-class Preferences
+class Configuration
 {
     /**
      * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.
@@ -34,10 +34,10 @@ class Preferences
 
             // Resolve include file names
             if (is_string($customConfig['include']))
-                $customConfig['include'] = array(Preferences::evaluateFilename($customConfig['include']));
+                $customConfig['include'] = array(Configuration::evaluateFilename($customConfig['include']));
             elseif (is_array($customConfig['include']))
                 foreach ($customConfig['include'] as $key => $file)
-                    $customConfig['include'][$key] = Preferences::evaluateFilename($file);
+                    $customConfig['include'][$key] = Configuration::evaluateFilename($file);
 
             // Load include files.
             foreach ($customConfig['include'] as $key => $file) {

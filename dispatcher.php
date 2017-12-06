@@ -45,13 +45,13 @@ try
     // Konfiguration lesen.
     // Wenn Konfiguration noch nicht in Session vorhanden oder die Konfiguration geändert wurde (erkennbar anhand des Datei-Datums)
     // dann die Konfiguration neu einlesen.
-    if	( !is_array( $conf ) || $conf['config']['auto_reload'] && Preferences::lastModificationTime()>$conf['config']['last_modification_time'] )
+    if	( !is_array( $conf ) || $conf['config']['auto_reload'] && Configuration::lastModificationTime()>$conf['config']['last_modification_time'] )
     {
     	// Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
     	if	( is_array($conf) && $conf['config']['session_destroy_on_config_reload'] ) 
     		session_unset();
     	
-    	$conf = Preferences::load();
+    	$conf = Configuration::load();
     	
     	$conf['build']   = parse_ini_file('build.ini'  );
     	$conf['version'] = parse_ini_file('version.ini');
