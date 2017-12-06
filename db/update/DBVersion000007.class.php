@@ -1,5 +1,6 @@
 <?php
 use database\DbVersion;
+use security\Password;
 
 /**
  * Security enhancements.

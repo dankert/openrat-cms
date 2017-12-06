@@ -16,7 +16,7 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
+use security\Password;
 
 
 /**
@@ -563,7 +563,7 @@ SQL
 		                
 		if	( $always )
 		{
-			$algo   = \Password::bestAlgoAvailable();
+			$algo   = Password::bestAlgoAvailable();
 			$expire = null;
 		}
 		else
@@ -580,7 +580,7 @@ SQL
 			$sql->setInt('expires',$expire);
 		
 		$sql->setInt   ('algo'    ,$algo                                                  );
-		$sql->setString('password',\Password::hash($this->pepperPassword($password),$algo) );
+		$sql->setString('password',Password::hash($this->pepperPassword($password),$algo) );
 		$sql->setInt   ('userid'  ,$this->userid  );
 
 		$sql->query( $sql );
@@ -891,7 +891,7 @@ SQL
 		$row_user = $sql->getRow( $sql );
 		
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
-		return \Password::check($this->pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);
+		return Password::check($this->pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);
 	}
 	
 	
@@ -1007,7 +1007,7 @@ SQL
 	 */
 	public function renewOTPSecret() {
 	    
-	    $secret = \Password::randomHexString(64);
+	    $secret = Password::randomHexString(64);
 	    
 	    $db = db_connection();
 	    

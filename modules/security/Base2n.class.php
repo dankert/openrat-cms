@@ -1,4 +1,5 @@
 <?php
+namespace security;
 /**
  * Binary-to-text PHP Utilities
  *

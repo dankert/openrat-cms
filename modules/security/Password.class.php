@@ -1,4 +1,5 @@
 <?php
+namespace security;
 
 define('OR_PASSWORD_ALGO_PLAIN',0);
 define('OR_PASSWORD_ALGO_CRYPT',1);

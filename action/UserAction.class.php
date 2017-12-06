@@ -12,14 +12,8 @@ use cms\model\Language;
 
 
 
-use Base2n;
-use Exception;
-use JSqueeze;
-use Less_Parser;
-use Logger;
-use ObjectNotFoundException;
-use Password;
-use Session;
+use \security\Password;
+use \Session;
 use \Html;
 use \Mail;
 

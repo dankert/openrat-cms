@@ -22,7 +22,7 @@ use InternalAuth;
 use Logger;
 use ObjectNotFoundException;
 use OpenRatException;
-use Password;
+use \security\Password;
 use Session;
 use \Html;
 use \Mail;

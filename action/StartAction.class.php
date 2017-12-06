@@ -13,8 +13,9 @@ use cms\model\Model;
 
 
 use database\Database;
+use Http;
 use Logger;
-use Password;
+use \security\Password;
 use Session;
 use \Html;
 use \Mail;

@@ -1,6 +1,7 @@
 <?php
 
 use cms\model\User;
+use security\Password;
 
 /**
  * Authentifizierungsmodul für die interne Benutzerdatenbank.
