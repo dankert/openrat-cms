@@ -16,7 +16,7 @@ namespace database {
         private $tableSuffix;
         private $dbmsType;
 
-        public function __construct($db)
+        public function __construct(Database $db)
         {
             $this->db = $db;
 
@@ -295,6 +295,9 @@ namespace database {
         }
 
 
+        /**
+         * @return Database
+         */
         function getDb()
         {
             return $this->db;

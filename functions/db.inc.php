@@ -20,7 +20,7 @@
 /**
  * Liefert die Datenbankverbindung fuer die aktuelle Sitzung.
  * 
- * @return Db
+ * @return \database\Database
  */
 function db_connection()
 {
