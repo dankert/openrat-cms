@@ -9,6 +9,11 @@ use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
 use cms\model\Object;
+use Html;
+use Http;
+use Session;
+use Transformer;
+use \Text;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -66,7 +71,7 @@ class PageelementAction extends Action
 	/**
 	 * Konstruktor
 	 */
-	function PageelementAction()
+	function __construct()
 	{
 		$this->value = new Value();
 

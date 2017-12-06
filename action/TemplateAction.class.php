@@ -11,6 +11,7 @@ use cms\model\Page;
 
 use Session;
 use \Html;
+use \Text;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert
