@@ -35,7 +35,7 @@ class EditorComponent extends Component
 	            
 			case 'dom':
 			case 'tree':
-				echo <<<HTML
+				echo <<<'HTML'
 		<?php
 		$attr_tmp_doc = new DocumentElement();
 		$attr_tmp_text = $$attr_name;
