@@ -132,7 +132,6 @@ class Database
 			$this->available = false;
 			throw new RuntimeException( "Database type '$type' is not available, class '$classname' was not found");
 		}
-		$f = new driver\PDODriver();
 		// Client instanziieren
 		$this->client = new $classname;
 		
@@ -198,8 +197,12 @@ class Database
 			$this->transactionInProgress = false;
 		}
 	}
-	
-	public function sql( $sql )
+
+    /**
+     * @param $sql
+     * @return Statement
+     */
+    public function sql($sql )
 	{
 		return new Statement( $sql,$this->client,$this->conf);
 	}

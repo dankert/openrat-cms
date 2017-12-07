@@ -1692,7 +1692,6 @@ class StartAction extends Action
 	public function userprojecttimelineView()
 	{
 		$project = Session::getProject();
-				Logger::debug('1');
 		$result = $project->getMyLastChanges();
 		
 		$this->setTemplateVar('timeline', $result);

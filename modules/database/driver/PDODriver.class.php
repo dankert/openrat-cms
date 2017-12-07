@@ -21,7 +21,6 @@
 namespace database\driver;
 
 use \Logger;
-use \OpenRatException;
 use \PDO;
 use \PDOException;
 use \RuntimeException;
@@ -38,7 +37,7 @@ class PDODriver
 	/**
 	 * Die PDO-Verbindung.
 	 *
-	 * @var Resource
+	 * @var PDO
 	 */
 	var $connection;
 	
@@ -54,7 +53,13 @@ class PDODriver
 	var $params;
 
 
-	function connect( $conf )
+    /**
+     * @var \PDOStatement
+     */
+    public $stmt;
+
+
+    function connect( $conf )
 	{
 		$url    = $conf['dsn'     ];
 		$user   = $conf['user'    ];
@@ -84,20 +89,35 @@ class PDODriver
 		// We like Exceptions
 		$options[ PDO::ERRMODE_EXCEPTION ] = true;
 		$options[ PDO::ATTR_DEFAULT_FETCH_MODE ] = PDO::FETCH_ASSOC;
-		
-		$this->connection = new PDO($url, $user, $pw, $options);
-		
+
+        try
+        {
+            $this->connection = new PDO($url, $user, $pw, $options);
+        }
+        catch(\PDOException $e)
+        {
+            throw new \RuntimeException("Could not connect to database on host $url.",$e);
+        }
+
+        // This should never happen, because PDO should throw an exception if the connection fails.
 		if	( !is_object($this->connection) )
-			throw new OpenRatException( 'DATABASE_ERROR_CONNECTION',"Could not connect to database on host $host. ".PDO::errorInfo() );
+			throw new RuntimeException("Could not connect to database on host $url. ".PDO::errorInfo() );
 				
 		return true;
     }
 
 
-
-	function disconnect()
+    /**
+     * Disconnects the database connection.
+     *
+     * @return bool
+     */
+    function disconnect()
 	{
+	    // There is no disconnection-function.
+        // So the GC will call the finalize-method of the connection object.
 		$this->connection = null;
+
 		return true;
 	}
 
@@ -163,8 +183,6 @@ class PDODriver
 			$offset = $offset + strlen($name);
 		}
 
-		Logger::debug('PDO: SQL-before-preparation: '.$query);
-		
 		$this->stmt = $this->connection->prepare($query);
 		
 		if	( $this->stmt === false )
@@ -188,8 +206,6 @@ class PDODriver
 			throw new RuntimeException( 'Unknown type' );
 		
 		$this->stmt->bindValue($name,$value,$type);
-		
-		Logger::debug('PDO: SQL-Binding of parameter '.$name);
 	}
 	
 	
