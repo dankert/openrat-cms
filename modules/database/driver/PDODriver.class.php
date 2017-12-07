@@ -23,6 +23,7 @@ namespace database\driver;
 use \Logger;
 use \PDO;
 use \PDOException;
+use PDOStatement;
 use \RuntimeException;
 
 /**
@@ -54,7 +55,7 @@ class PDODriver
 
 
     /**
-     * @var \PDOStatement
+     * @var PDOStatement
      */
     public $stmt;
 
@@ -122,8 +123,11 @@ class PDODriver
 	}
 
 
-
-	function query($query)
+    /**
+     * @param $query
+     * @return PDOStatement
+     */
+    function query($query)
 	{
 		$erg = $this->stmt->execute();
 

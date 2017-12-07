@@ -53,6 +53,7 @@ class Sql
 {
 	/**
 	 * SQL-Anweisung.
+     * @type string
 	 */
 	var $query;
 	

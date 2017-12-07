@@ -102,7 +102,7 @@ class Statement
 	
 		if	( $result === FALSE )
 		{
-			throw new RuntimeException( 'Database error: '.$this->client->error);
+			throw new RuntimeException( 'Database-Statement '.$this->sql->query.' could not be executed: '.$this->client->error);
 		}
 	
 		return $result;
