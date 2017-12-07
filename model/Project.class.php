@@ -783,7 +783,7 @@ SQL
 	/**
 	 * Ermittelt projektübergreifend die letzten Änderungen des angemeldeten Benutzers.
 	 *  
-	 * @return Ambigous <string, unknown>
+	 * @return array <string, unknown>
 	 */
 	public function getMyLastChanges()
 	{
@@ -794,10 +794,7 @@ SQL
 		$sql = $db->sql( <<<SQL
 		SELECT {{object}}.id    as objectid,
 		       {{object}}.filename as filename,
-		       {{object}}.is_folder as is_folder,
-		       {{object}}.is_file  as is_file,
-		       {{object}}.is_link  as is_link,
-		       {{object}}.is_page  as is_page,
+		       {{object}}.typeid as typeid,
 		       {{object}}.lastchange_date as lastchange_date,			
 		       {{name}}.name as name				
 		  FROM {{object}}
@@ -872,10 +869,7 @@ SQL
 		SELECT {{object}}.id       as objectid,
 		       {{object}}.lastchange_date as lastchange_date,
 		       {{object}}.filename as filename,
-		       {{object}}.is_folder as is_folder,
-		       {{object}}.is_file  as is_file,
-		       {{object}}.is_link  as is_link,
-		       {{object}}.is_page  as is_page,
+		       {{object}}.typeid   as typeid,
 		       {{name}}.name       as name,
 		       {{user}}.name       as username,
 		       {{user}}.id         as userid,

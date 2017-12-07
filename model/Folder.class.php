@@ -72,7 +72,7 @@ class Folder extends Object
 
 		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid IS NULL'.
-		               '    AND is_folder=1'.
+		               '    AND typeid=1'.
 		               '    AND projectid={projectid}' );
 
 		// Wenn Methode statisch aufgerufen wird, ist $this nicht vorhanden
@@ -214,7 +214,7 @@ class Folder extends Object
 
 		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE parentid={objectid}'.
-		               '  ORDER BY is_link,is_page,is_file,is_folder,orderid ASC' );
+		               '  ORDER BY typeid,orderid ASC' );
 		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
@@ -321,10 +321,10 @@ class Folder extends Object
 		
 		$sql = $db->sql('SELECT id FROM {{object}}'.
 		               '  WHERE projectid={projectid}'.
-		               '    AND (    is_folder={is_folder}' .
-		               '          OR is_file  ={is_file}' .
-		               '          OR is_page  ={is_page}' .
-		               '          OR is_link  ={is_link} )' .
+		               '    AND (    typeid  ={is_folder}' .
+		               '          OR typeid  ={is_file}' .
+		               '          OR typeid  ={is_page}' .
+		               '          OR typeid  ={is_link} )' .
 		               '  ORDER BY orderid ASC' );
 		
 		if	(isset($this) && isset($this->projectid))
@@ -338,16 +338,16 @@ class Folder extends Object
 		}
 		
 		$sql->setInt('projectid',$projectid);
-		$sql->setInt('is_folder',in_array('folder',$types)?1:2);
-		$sql->setInt('is_file'  ,in_array('file'  ,$types)?1:2);
-		$sql->setInt('is_page'  ,in_array('page'  ,$types)?1:2);
-		$sql->setInt('is_link'  ,in_array('link'  ,$types)?1:2);
+		$sql->setInt('is_folder',in_array('folder',$types)?OR_TYPEID_FOLDER:0);
+		$sql->setInt('is_file'  ,in_array('file'  ,$types)?OR_TYPEID_FILE:0);
+		$sql->setInt('is_page'  ,in_array('page'  ,$types)?OR_TYPEID_PAGE:0);
+		$sql->setInt('is_link'  ,in_array('link'  ,$types)?OR_TYPEID_LINK:0);
 		
 		return( $sql->getCol( $sql ) );
 	}
 
 	
-	function dgetRootObjectId()
+	public function getRootObjectId()
 	{
 		global $SESS;
 		$db = db_connection();
@@ -364,13 +364,13 @@ class Folder extends Object
 	}
 
 	
-	function getOtherFolders()
+	public function getOtherFolders()
 	{
 		global $SESS;
 		$db = db_connection();
 		
 		$sql = $db->sql('SELECT id FROM {{object}}'.
-		               '  WHERE is_folder=1'.
+		               '  WHERE typeid='.OR_TYPEID_FOLDER.
 		               '    and id != {objectid} '.
 		               '    AND projectid={projectid}' );
 		$sql->setInt( 'projectid',$this->projectid );
@@ -386,7 +386,7 @@ class Folder extends Object
 		$db = db_connection();
 		
 		$sql = $db->sql('SELECT id FROM {{object}}'.
-		               '  WHERE is_folder=1'.
+		               '  WHERE typeid='.OR_TYPEID_FOLDER.
 		               '    AND projectid={projectid}' );
 		               
 		if	( !isset($this) || !isset($this->projectid) )
@@ -405,7 +405,7 @@ class Folder extends Object
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND is_page=1'.
+		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_PAGE.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -424,7 +424,7 @@ class Folder extends Object
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
-		               '    AND (is_page=1)'.
+		               '    AND (typeid='.OR_TYPEID_PAGE.')'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -450,7 +450,7 @@ class Folder extends Object
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
-		               '    AND (is_page=1 OR is_link=1)'.
+		               '    AND (typeid='.OR_TYPEID_PAGE.' OR typeid='.OR_TYPEID_LINK.')'.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -471,7 +471,7 @@ class Folder extends Object
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
 		               '  WHERE parentid={objectid}'.
-		               '    AND (is_page=1 OR is_link=1)'.
+		               '    AND (typeid='.OR_TYPEID_PAGE.' OR typeid='.OR_TYPEID_LINK.')'.
 		               '  ORDER BY orderid DESC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -491,7 +491,7 @@ class Folder extends Object
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND is_file=1'.
+		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_FILE.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -510,7 +510,7 @@ class Folder extends Object
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id,filename FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND is_file=1'.
+		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_FILE.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -523,7 +523,7 @@ class Folder extends Object
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND is_link=1'.
+		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_LINK.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -709,7 +709,7 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND is_folder=1'.
+		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_FOLDER.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -725,7 +725,7 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT id,filename FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND is_folder=1'.
+		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_FOLDER.
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
@@ -866,10 +866,7 @@ SQL
 		SELECT {{object}}.id       as objectid,
 		       {{object}}.lastchange_date as lastchange_date,
 		       {{object}}.filename as filename,
-		       {{object}}.is_folder as is_folder,
-		       {{object}}.is_file  as is_file,
-		       {{object}}.is_link  as is_link,
-		       {{object}}.is_page  as is_page,
+		       {{object}}.typeid   as typeid,
 		       {{name}}.name       as name,
 		       {{user}}.name       as username,
 		       {{user}}.id         as userid,

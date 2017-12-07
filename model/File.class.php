@@ -159,11 +159,11 @@ class File extends Object
 
 			$ext = explode(',',$extension);
 			$sqlquery .= implode( "' OR extension='",$ext );
-			$sqlquery .= "' AND is_file=1 AND projectid={projectid}";
+			$sqlquery .= "' AND typeid=".OR_TYPEID_FILE." AND projectid={projectid}";
 		}
 		else
 		{
-			$sqlquery .= " WHERE is_file=1 AND projectid={projectid}";
+			$sqlquery .= " WHERE typeid=".OR_TYPEID_FILE." AND projectid={projectid}";
 		}
 
 		$sql = $db->sql( $sqlquery );

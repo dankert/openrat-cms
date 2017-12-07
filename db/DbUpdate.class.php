@@ -2,7 +2,7 @@
 
 use database\Database;
 
-define('OR_DB_SUPPORTED_VERSION',7);
+define('OR_DB_SUPPORTED_VERSION',8);
 
 define('OR_DB_STATUS_UPDATE_PROGRESS', 0);
 define('OR_DB_STATUS_UPDATE_SUCCESS' , 1);
@@ -21,16 +21,17 @@ class DbUpdate
 			return;
 		
 		if	( $version > OR_DB_SUPPORTED_VERSION )
-			// Oh oh, in der Datenbank ist eine neue Version, also wir unterstüzten.
+			// Oh oh, in der Datenbank ist eine neue Version, als wir unterstüzten.
 			Http::serverError('Actual DB version is not supported.',"DB-Version is $version, but this is OpenRat ".OR_VERSION." which only supports version ".OR_DB_SUPPORTED_VERSION );
 
 		if	( ! $db->conf['auto_update'])
-			Http::serverError('DB Update necessary.',"DB-Version is $version, but this is OpenRat ".OR_VERSION." which needs the version ".OR_DB_SUPPORTED_VERSION );
+			Http::serverError('DB Update necessary.',"DB-Version is $version. Auto-Update is disabled, but this is OpenRat ".OR_VERSION." needs the version ".OR_DB_SUPPORTED_VERSION );
 		
 		for( $installVersion = $version + 1; $installVersion <= OR_DB_SUPPORTED_VERSION; $installVersion++ )
 		{
-			if	( $installVersion > 2 )
+			if	( $installVersion > 2 ) // Up to version 2 there was no table 'version'.
 			{
+			    $db->start();
 				$sql = $db->sql('INSERT INTO {{version}} (id,version,status,installed) VALUES( {id},{version},{status},{time} )',$db->id);
 				$sql->setInt('id'     , $installVersion);
 				$sql->setInt('version', $installVersion);
@@ -43,13 +44,16 @@ class DbUpdate
 			$updaterClassName = 'DBVersion'.str_pad($installVersion, 6, '0', STR_PAD_LEFT);
 			require(OR_DBCLASSES_DIR.'update/'.$updaterClassName.'.class.php');
 
+            $db->start();
             /** @var \database\DbVersion $updater */
             $updater = new $updaterClassName( $db );
 			
 			$updater->update();
+			$db->commit();
 
 			if	( $installVersion > 2 )
 			{
+                $db->start();
 				$sql = $db->sql('UPDATE {{version}} SET status={status},installed={time} WHERE version={version}',$db->id);
 				$sql->setInt('status' , OR_DB_STATUS_UPDATE_SUCCESS);
 				$sql->setInt('version', $installVersion);
@@ -58,32 +62,10 @@ class DbUpdate
 				$db->commit();
 			}
 		}
-		
-		$this->afterUpdate( $db );
 	}
 
 
-	/**
-	 * Initialisieren der frisch aktualisierten Datenbank.
-	 * 
-	 * @param DB $db
-	 */
-	private function afterUpdate( Database $db )
-	{
-		// Benutzer zählen.
-		$sql = $db->sql('SELECT COUNT(*) From {{user}}',$db->id);
-		$countUsers = $sql->getOne( $sql );
-		
-		// Wenn noch kein Benutzer vorhanden, dann einen anlegen.
-		if	( $countUsers == 0 )
-		{
-			$sql = $db->sql("INSERT INTO {{user}} (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','admin','','Administrator','','','Account for administration tasks.','default',1)",$db->id);
-			$sql->query( $sql );
-			$db->commit();
-		}
-	}
-	
-	
+
 	
 	private function getDbVersion( Database $db )
 	{
