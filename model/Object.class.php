@@ -200,7 +200,7 @@ namespace cms\model {
                 '  WHERE projectid={projectid}');
             $sql->setInt('projectid', $projectid);
 
-            return $sql->getCol($sql);
+            return $sql->getCol();
         }
 
 
@@ -458,7 +458,7 @@ SQL
                 ' WHERE id={objectid}');
             $sql->setInt('objectid'  , $objectid  );
 
-            return intval($sql->getOne($sql)) == 1;
+            return intval($sql->getOne()) == 1;
         }
 
 
@@ -493,7 +493,7 @@ SQL
             $sql->setInt('languageid', $this->languageid);
             $sql->setInt('objectid'  , $this->objectid  );
 
-            $row = $sql->getRow($sql);
+            $row = $sql->getRow();
 
             if (count($row) == 0)
                 throw new \ObjectNotFoundException('object '.$this->objectid.' not found');
@@ -515,7 +515,7 @@ SQL
             $sql = $db->sql('SELECT * FROM {{object}}'.
                 ' WHERE {{object}}.id={objectid}');
             $sql->setInt('objectid'  , $this->objectid  );
-            $row = $sql->getRow($sql);
+            $row = $sql->getRow();
 
             if (count($row) == 0)
                 die('fatal: Object::objectLoadRaw(): objectid not found: '.$this->objectid.', SQL='.$sql->raw);
@@ -761,7 +761,7 @@ SQL
             );
             $sql->setInt( 'objectid'  , $this->objectid   );
             $sql->setInt( 'languageid', $this->languageid );
-            $count = $sql->getOne($sql);
+            $count = $sql->getOne();
 
             if ($count > 0)
             {
@@ -782,7 +782,7 @@ SQL
             else
             {
                 $sql = $db->sql('SELECT MAX(id) FROM {{name}}');
-                $nameid = intval($sql->getOne($sql))+1;
+                $nameid = intval($sql->getOne())+1;
 
                 $sql = $db->sql('INSERT INTO {{name}}'.'  (id,objectid,languageid,name,descr)'.' VALUES( {nameid},{objectid},{languageid},{name},{desc} )');
                 $sql->setInt   ('objectid'  , $this->objectid    );
@@ -847,7 +847,7 @@ SQL
 
             // Neue Objekt-Id bestimmen
             $sql = $db->sql('SELECT MAX(id) FROM {{object}}');
-            $this->objectid = intval($sql->getOne($sql))+1;
+            $this->objectid = intval($sql->getOne())+1;
 
             $this->checkFilename();
             $sql = $db->sql('INSERT INTO {{object}}'.
@@ -954,7 +954,7 @@ SQL
             $sql->setString('objectid', $this->objectid);
 
 
-            return( intval($sql->getOne($sql)) == 0 );
+            return( intval($sql->getOne()) == 0 );
         }
 
 
@@ -983,7 +983,7 @@ SQL
             $sql->setInt('languageid',$this->languageid);
             $sql->setInt('objectid'  ,$this->objectid);
 
-            return $sql->getCol( $sql );
+            return $sql->getCol();
         }
 
 
@@ -996,7 +996,7 @@ SQL
                 '  ORDER BY userid,groupid ASC' );
             $sql->setInt('objectid'  ,$this->objectid);
 
-            return $sql->getCol( $sql );
+            return $sql->getCol();
         }
 
 
@@ -1024,7 +1024,7 @@ SQL
                     '  ORDER BY userid,groupid ASC' );
                 $sql->setInt('objectid'  ,$oid);
                 $sql->setInt('languageid',$this->languageid);
-                $acls = array_merge( $acls,$sql->getCol( $sql ) );
+                $acls = array_merge( $acls,$sql->getCol() );
             }
 
             return $acls;
@@ -1052,7 +1052,7 @@ SQL
                     '    AND is_transmit = 1'.
                     '  ORDER BY userid,groupid ASC' );
                 $sql->setInt('objectid'  ,$oid);
-                $acls = array_merge( $acls,$sql->getCol( $sql ) );
+                $acls = array_merge( $acls,$sql->getCol() );
             }
 
             return $acls;
@@ -1197,7 +1197,7 @@ SQL
                 '  WHERE linkobjectid={objectid}' );
             $sql->setInt( 'objectid',$this->objectid );
 
-            return $sql->getCol( $sql );
+            return $sql->getCol();
         }
 
 
@@ -1217,7 +1217,7 @@ SQL
             $sql->setInt   ( 'projectid',$this->projectid );
             $sql->setString( 'filename','%'.$text.'%' );
 
-            return $sql->getCol( $sql );
+            return $sql->getCol();
         }
 
 
@@ -1241,7 +1241,7 @@ SQL
             $sql->setInt   ( 'languageid',$this->languageid );
             $sql->setString( 'name'      ,'%'.$text.'%' );
 
-            return $sql->getCol( $sql );
+            return $sql->getCol();
         }
 
 
@@ -1265,7 +1265,7 @@ SQL
             $sql->setInt   ( 'languageid',$this->languageid );
             $sql->setString( 'desc'      ,'%'.$text.'%' );
 
-            return $sql->getCol( $sql );
+            return $sql->getCol();
         }
 
 
@@ -1285,7 +1285,7 @@ SQL
             $sql->setInt   ( 'projectid',$this->projectid );
             $sql->setInt   ( 'userid'   ,$userid          );
 
-            return $sql->getCol( $sql );
+            return $sql->getCol();
         }
 
 
@@ -1305,7 +1305,7 @@ SQL
             $sql->setInt   ( 'projectid',$this->projectid );
             $sql->setInt   ( 'userid'   ,$userid          );
 
-            return $sql->getCol( $sql );
+            return $sql->getCol();
         }
 
 
@@ -1324,7 +1324,7 @@ SQL
             $sql->setInt   ( 'projectid' ,$this->projectid );
             $sql->setInt   ( 'objectid'  ,$id              );
 
-            return ($sql->getOne($sql) == intval($id) );
+            return ($sql->getOne() == intval($id) );
         }
 
 
@@ -1341,7 +1341,7 @@ SQL
                 ' WHERE link_objectid={myid}' );
             $sql->setInt   ( 'myid'   ,$this->objectid );
 
-            return $sql->getCol( $sql );
+            return $sql->getCol();
         }
 
         private function getTypeid()

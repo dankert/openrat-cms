@@ -60,7 +60,7 @@ class Language
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 
-		return intval($sql->getOne($sql)) == 1;
+		return intval($sql->getOne()) == 1;
 	}
 
 	
@@ -83,7 +83,7 @@ class Language
 			$sql->setInt('projectid',$project->projectid);
 		}
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -109,7 +109,7 @@ SQL
 			$sql->setInt('projectid',$project->projectid);
 		}
 
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 
 
@@ -122,7 +122,7 @@ SQL
 		                ' WHERE id={languageid}' );
 		$sql->setInt( 'languageid',$this->languageid );
 
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 		
 		if	( count($row) > 0 )
 		{
@@ -186,7 +186,7 @@ SQL
 		}
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{language}}');
-		$this->languageid = intval($sql->getOne($sql))+1;
+		$this->languageid = intval($sql->getOne())+1;
 
 		// Sprache hinzuf?gen
 		$sql = $db->sql( 'INSERT INTO {{language}} '.
@@ -240,7 +240,7 @@ SQL
 			$sql->setInt('projectid',$project->projectid);
 		}
 		
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 
 
@@ -275,7 +275,7 @@ SQL
 			// Andere Sprache auf "Default" setzen
 			$sql = $db->sql( 'SELECT id FROM {{language}} WHERE projectid={projectid}' );
 			$sql->setInt( 'projectid',$this->projectid );
-			$new_default_languageid = $sql->getOne( $sql );
+			$new_default_languageid = $sql->getOne();
 
 			$sql = $db->sql( 'UPDATE {{language}} SET is_default=1 WHERE id={languageid}' );
 			$sql->setInt( 'languageid',$new_default_languageid );

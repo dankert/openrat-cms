@@ -52,7 +52,7 @@ class Link extends Object
 		                ' FROM {{link}}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 
 		if	( count($row ) != 0 )
 		{
@@ -146,7 +146,7 @@ class Link extends Object
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{link}}');
-		$this->linkid = intval($sql->getOne($sql))+1;
+		$this->linkid = intval($sql->getOne())+1;
 
 		$sql = $db->sql('INSERT INTO {{link}}'.
 		               ' (id,objectid,url,link_objectid)'.

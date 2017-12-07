@@ -60,7 +60,7 @@ class Model
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 
-		return intval($sql->getOne($sql)) == 1;
+		return intval($sql->getOne()) == 1;
 	}
 	
 
@@ -86,7 +86,7 @@ class Model
 			$sql->setInt('projectid',$project->projectid);
 		}
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 	
@@ -108,7 +108,7 @@ SQL
 			$sql->setInt('projectid',$this->projectid );
 		else	$sql->setInt('projectid',$SESS['projectid'] );
 
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 	
 
@@ -123,7 +123,7 @@ SQL
 		                ' WHERE id={modelid}' );
 		$sql->setInt( 'modelid',$this->modelid );
 
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
@@ -181,7 +181,7 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{projectmodel}}');
-		$this->modelid = intval($sql->getOne($sql))+1;
+		$this->modelid = intval($sql->getOne())+1;
 
 		// Modell hinzuf?gen
 		$sql = $db->sql( 'INSERT INTO {{projectmodel}} '.
@@ -212,7 +212,7 @@ SQL
 			$sql->setInt('projectid',$project->projectid);
 		}
 		
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 
 
@@ -271,7 +271,7 @@ SQL
 		{
 			$sql = $db->sql( 'SELECT id FROM {{projectmodel}} WHERE projectid={projectid}' );
 			$sql->setInt( 'projectid',$this->projectid );
-			$new_default_modelid = $sql->getOne( $sql );
+			$new_default_modelid = $sql->getOne();
 	
 			$sql = $db->sql( 'UPDATE {{projectmodel}} SET is_default=1 WHERE id={modelid}' );
 			$sql->setInt( 'modelid',$new_default_modelid );

@@ -183,7 +183,7 @@ class Value
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 		
 		if	( count($row) > 0 ) // Wenn Inhalt gefunden
 		{
@@ -217,7 +217,7 @@ class Value
 		                ' LEFT JOIN {{user}} ON {{user}}.id={{value}}.lastchange_userid'.
 		                '  WHERE {{value}}.id={valueid}' );
 		$sql->setInt( 'valueid',$this->valueid);
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 		
 		$this->text           =        $row['text'        ];
 		$this->pageid         = intval($row['pageid'      ]);
@@ -296,7 +296,7 @@ class Value
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 
 
@@ -317,7 +317,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 	
 	
@@ -390,7 +390,7 @@ SQL
 
 		// Naechste ID aus Datenbank besorgen
 		$sql = $db->sql('SELECT MAX(id) FROM {{value}}');
-		$this->valueid = intval($sql->getOne($sql))+1;
+		$this->valueid = intval($sql->getOne())+1;
 
 		$sql = $db->sql( <<<SQL
 INSERT INTO {{value}}
@@ -456,7 +456,7 @@ SQL
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid             );
 		$sql->setInt( 'languageid',$this->languageid         );
-		$values = $sql->getCol( $sql );
+		$values = $sql->getCol();
 		
 		if	( count($values) > $limit['min-revisions'] )
 		{
@@ -516,7 +516,7 @@ SQL
 		$sql->setInt( 'elementid' ,$this->element->elementid );
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 	}
 
 
@@ -1561,7 +1561,7 @@ SQL
 		                
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setString( 'text'      ,'%'.$text.'%'     );
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 
@@ -1586,7 +1586,7 @@ SQL
 		$sql->setInt   ( 'languageid',$this->languageid );
 		$sql->setInt   ( 'userid'    ,$userid           );
 
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 	
@@ -1612,7 +1612,7 @@ SELECT {{object}}.id
 SQL
 );
 		$sql->setInt   ( 'userid'    ,$userid           );
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 	
 	
@@ -1639,7 +1639,7 @@ SQL
 );
 		$sql->setInt   ( 'userid'    ,$userid     );
 		$sql->setInt   ( 'projectid' ,$projectid  );
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 	
 	

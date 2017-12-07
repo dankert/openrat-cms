@@ -59,7 +59,7 @@ class Project
 		               ' WHERE id={id}');
 		$sql->setInt('id' ,$id  );
 
-		return intval($sql->getOne($sql)) == 1;
+		return intval($sql->getOne()) == 1;
 	}
 	
 
@@ -77,7 +77,7 @@ class Project
 		$sql = $db->sql( 'SELECT id,name FROM {{project}} '.
 		                '   ORDER BY name' );
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -88,7 +88,7 @@ class Project
 		$sql = $db->sql( 'SELECT id FROM {{project}} '.
 		                '   ORDER BY name' );
 
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 
@@ -101,7 +101,7 @@ class Project
 		                '  ORDER BY name' );
 		$sql->setInt   ('projectid',$this->projectid);
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -120,7 +120,7 @@ class Project
 		                '  ORDER BY name' );
 		$sql->setInt   ('projectid',$this->projectid);
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -138,7 +138,7 @@ class Project
 		                '  WHERE projectid= {projectid} ' );
 		$sql->setInt   ('projectid',$this->projectid);
 
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 
@@ -150,7 +150,7 @@ class Project
 		                '  WHERE projectid= {projectid} ' );
 		$sql->setInt   ('projectid',$this->projectid);
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -172,7 +172,7 @@ class Project
 
 		$sql->setInt('projectid',$this->projectid);
 		
-		return( $sql->getOne( $sql ) );
+		return( $sql->getOne() );
 	}
 
 	
@@ -186,7 +186,7 @@ class Project
 		                '   WHERE id={projectid}' );
 		$sql->setInt( 'projectid',$this->projectid );
 
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 
 		if	( empty($row) )
 			throw new \ObjectNotFoundException('project '.$this->projectid.' not found');
@@ -210,7 +210,7 @@ class Project
 		                '   WHERE name={projectname}' );
 		$sql->setString( 'projectname',$this->name );
 
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 
 		$this->projectid           = $row['id'                 ];
 		$this->target_dir          = $row['target_dir'         ];
@@ -285,7 +285,7 @@ SQL
 		$db = db_connection();
 		
 		$sql = $db->sql('SELECT MAX(id) FROM {{project}}');
-		$this->projectid = intval($sql->getOne($sql))+1;
+		$this->projectid = intval($sql->getOne())+1;
 
 
 		// Projekt hinzuf?gen
@@ -392,7 +392,7 @@ SQL
 
 		$sql->setInt('projectid',$this->projectid );
 		
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 
 
@@ -407,7 +407,7 @@ SQL
 		                '   ORDER BY is_default DESC' );
 		$sql->setInt('projectid',$this->projectid );
 		
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 
 	
@@ -464,7 +464,7 @@ EOF
 );
 		$sql->setInt('projectid',$this->projectid);
 
-		$idList = $sql->getCol($sql);
+		$idList = $sql->getCol();
 		
 		if	( count( $idList ) > 0 )
 		{
@@ -492,7 +492,7 @@ EOF
 );
 		$sql->setInt('projectid',$this->projectid);
 
-		$idList = $sql->getCol($sql);
+		$idList = $sql->getCol();
 		
 		if	( count( $idList ) > 1 )
 		{
@@ -735,7 +735,7 @@ EOF
 		                '   WHERE projectid = {projectid}' );
 		$sql->setInt( 'projectid', $this->projectid );
 
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 		
 	}
 
@@ -758,7 +758,7 @@ SQL
 );
 		$sql->setInt( 'projectid', $this->projectid );
 
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 	
 	

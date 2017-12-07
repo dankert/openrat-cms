@@ -336,7 +336,7 @@ class DBVersion000001 extends DbVersion
     {
         // Benutzer zählen.
         $sql = $db->sql('SELECT COUNT(*) From {{user}}',$db->id);
-        $countUsers = $sql->getOne( $sql );
+        $countUsers = $sql->getOne();
 
         // Wenn noch kein Benutzer vorhanden, dann einen anlegen.
         if	( $countUsers == 0 )

@@ -24,7 +24,7 @@ SQL
 		);
 		$sql->setString('name',$username);
 	
-		$row_user = $sql->getRow( $sql );
+		$row_user = $sql->getRow();
 		
 		if	( empty($row_user) )
 			return false;

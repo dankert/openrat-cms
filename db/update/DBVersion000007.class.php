@@ -20,7 +20,7 @@ class DBVersion000007 extends DbVersion
 		$table = $this->getTableName('user');
 		$db    = $this->getDb();
 		$stmt  = $db->sql('SELECT id FROM '.$table);
-		foreach( $stmt->getCol() as $userid ) 
+		foreach($stmt->getCol() as $userid )
 		{
 			$secret = Password::randomHexString(64);
 			$stmt = $db->sql('UPDATE '.$table.' SET otp_secret={secret} WHERE id={id}');

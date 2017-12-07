@@ -142,7 +142,7 @@ class Element
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{element}}');
-		$this->elementid = intval($sql->getOne($sql))+1;
+		$this->elementid = intval($sql->getOne())+1;
 
 		$sql = $db->sql( 'INSERT INTO {{element}}'.
 		                ' (id,templateid,name,descr,type,writable) '.
@@ -185,7 +185,7 @@ SELECT * FROM {{element}}
 SQL
 );
 			$sql->setInt( 'elementid',$this->elementid );
-			$this->setDatabaseRow( $sql->getRow( $sql ) );
+			$this->setDatabaseRow( $sql->getRow() );
 		}
 	}
 

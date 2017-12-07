@@ -79,7 +79,7 @@ class DbUpdate
 	SELECT COUNT(*) FROM {{version}} WHERE STATUS=0
 SQL
 					,$db->id);
-			$countErrors = $sql->getOne($sql);
+			$countErrors = $sql->getOne();
 			if	( $countErrors > 0 )
 				Http::serverError('Database error','there are dirty versions (means: versions with status 0), see table VERSION for details.');
 			
@@ -88,7 +88,7 @@ SQL
 	SELECT MAX(version) FROM {{version}}
 SQL
 					,$db->id);
-			$version = $sql->getOne($sql);
+			$version = $sql->getOne();
 
 			if	( is_numeric($version) )
 				return $version; // Aktuelle Version.s

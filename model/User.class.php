@@ -78,7 +78,7 @@ class User extends ModelBase
 		                '  FROM {{user}}'.
 		                '  ORDER BY name' );
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -163,7 +163,7 @@ SQL
 		                '          '.$this->getGroupClause().'    )' );
 		$sql->setInt   ( 'userid',$this->userid );
 
-		return $sql->getOne( $sql ) > 0;
+		return $sql->getOne() > 0;
 	}
 
 
@@ -200,7 +200,7 @@ SQL
 );
 		$sql->setInt   ( 'userid',$this->userid );
 
-			return $sql->getAssoc( $sql );
+			return $sql->getAssoc();
 		}
 		
 	}
@@ -239,7 +239,7 @@ SQL
 		$sql = $db->sql( 'SELECT id,mail,name,password_hash FROM {{user}}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 
 		if	( count($row) == 0 )
 			throw new \ObjectNotFoundException();
@@ -260,7 +260,7 @@ SQL
 		$sql = $db->sql( 'SELECT * FROM {{user}}'.
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 
 		if	( count($row) == 0 )
 			throw new \ObjectNotFoundException();
@@ -286,7 +286,7 @@ SQL
 		                ' WHERE name={name}' );
 		//Html::debug($sql);
 		$sql->setString( 'name',$name );
-		$userId = $sql->getOne( $sql );
+		$userId = $sql->getOne();
 
 		// Benutzer �ber Id instanziieren
 		$neuerUser = new \cms\model\User( $userId );
@@ -371,7 +371,7 @@ SQL
 		                ' WHERE id={userid}' );
 		$sql->setInt( 'userid',$userid );
 
-		$name = $sql->getOne( $sql );
+		$name = $sql->getOne();
 		
 		if	( $name == '' )
 			return lang('UNKNOWN');
@@ -435,7 +435,7 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{user}}');
-		$this->userid = intval($sql->getOne($sql))+1;
+		$this->userid = intval($sql->getOne())+1;
 
 		$sql = $db->sql('INSERT INTO {{user}}'.
 		               ' (id,name,password_hash,ldap_dn,fullname,tel,mail,descr,style,is_admin,password_salt)'.
@@ -469,7 +469,7 @@ SQL
 
 		$groupNames = "'".implode("','",$groupNames)."'";
 		$sql = $db->sql("SELECT id FROM {{group}} WHERE name IN($groupNames)");
-		$groupIds = array_unique( $sql->getCol($sql) );
+		$groupIds = array_unique( $sql->getCol() );
 		
 		// Wir brauchen hier nicht weiter pr�fen, ob der Benutzer eine Gruppe schon hat, denn
 		// - passiert dies nur bei der Neuanlage eines Benutzers
@@ -602,7 +602,7 @@ SQL
 			                'LEFT JOIN {{usergroup}} ON {{usergroup}}.groupid={{group}}.id '.
 			                'WHERE {{usergroup}}.userid={userid}' );
 			$sql->setInt('userid',$this->userid );
-			$this->groups = $sql->getAssoc( $sql );
+			$this->groups = $sql->getAssoc();
 		}
 		
 		return $this->groups;
@@ -636,7 +636,7 @@ SQL
 		                '   WHERE {{usergroup}}.userid IS NULL' );
 		$sql->setInt('userid'  ,$this->userid );
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -651,7 +651,7 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{usergroup}}');
-		$usergroupid = intval($sql->getOne($sql))+1;
+		$usergroupid = intval($sql->getOne())+1;
 
 		$sql = $db->sql( 'INSERT INTO {{usergroup}} '.
 		                '       (id,userid,groupid) '.
@@ -888,7 +888,7 @@ SQL
 		$sql = $db->sql( 'SELECT * FROM {{user}}'.
 			' WHERE id={userid}' );
 		$sql->setInt( 'userid',$this->userid );
-		$row_user = $sql->getRow( $sql );
+		$row_user = $sql->getRow();
 		
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
 		return Password::check($this->pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);

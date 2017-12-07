@@ -47,18 +47,17 @@ class Statement
 	
 	/**
 	 * Datenbank-Konfiguration
-	 * @var Array
+	 * @var array
 	 */
 	var $conf;
-	
-	/**
-	 * Kontruktor.
-	 * Erwartet die Datenbank-Konfiguration als Parameter.
-	 *
-	 * @param Array Konfiguration der Verbindung
-	 * @return Status 'true' wenn Verbindung erfolgreich aufgebaut.
-	 */
-	public function __construct( $sql, $client,$conf )
+
+    /**
+     * Statement constructor.
+     * @param $sql string Sql
+     * @param $client Database
+     * @param $conf array
+     */
+    public function __construct($sql, $client, $conf )
 	{
 		// Tabellen-Praefixe ergaenzen.
 		$this->conf   = $conf;
@@ -108,15 +107,14 @@ class Statement
 	
 		return $result;
 	}
-	
 
-	/**
-	 * Ermittelt genau 1 Datenbankergebnis aus einer SQL-Anfrage.
-	 * Falls es mehrere Treffer gibt, wird die 1. Spalte aus der 1. Zeile genommen.
-	 *
-	 * @param String $this->query
-	 * @return String
-	 */
+
+    /**
+     * Ermittelt genau 1 Datenbankergebnis aus einer SQL-Anfrage.
+     * Falls es mehrere Treffer gibt, wird die 1. Spalte aus der 1. Zeile genommen.
+     *
+     * @return String
+     */
 	public function &getOne()
 	{
 		$none = '';
@@ -134,12 +132,11 @@ class Statement
 	}
 
 
-	/**
-	 * Ermittelt eine Zeile aus der Datenbank.
-	 *
-	 * @param String $this->query
-	 * @return Array
-	 */
+    /**
+     * Ermittelt eine Zeile aus der Datenbank.
+     *
+     * @return array
+     */
 	public function &getRow()
 	{
 		$result = $this->query();
@@ -154,12 +151,11 @@ class Statement
 	}
 
 
-	/**
-	 * Ermittelt eine (die 1.) Spalte aus dem Datenbankergebnis.
-	 *
-	 * @param String $this->query
-	 * @return Array
-	 */
+    /**
+     * Ermittelt eine (die 1.) Spalte aus dem Datenbankergebnis.
+     *
+     * @return array
+     */
 	public function &getCol()
 	{
 		$result = $this->query();
@@ -181,13 +177,11 @@ class Statement
 	}
 
 
-	/**
-	 * Ermittelt ein assoziatives Array aus der Datenbank.
-	 *
-	 * @param String $this->query
-	 * @param Boolean $force_array
-	 * @return Array
-	 */
+    /**
+     * Ermittelt ein assoziatives Array aus der Datenbank.
+     *
+     * @return array
+     */
 	public function &getAssoc()
 	{
 		$force_array = false;
@@ -251,7 +245,6 @@ class Statement
 	/**
 	 * Führt eine Query aus und gibt nur zurück, ob diese funktioniert.
 	 * 
-	 * @param unknown_type $this->query
 	 * @return boolean
 	 */
 	public function testQuery()
@@ -266,14 +259,13 @@ class Statement
 			return false;
 		}
 	}
-	
-	
-	/**
-	 * Setzt eine Ganzzahl als Parameter.<br>
-	 *
-	 * @param name Name des Parameters
-	 * @param value Inhalt
-	 */
+
+
+    /**
+     * Setzt eine Ganzzahl als Parameter.<br>
+     * @param $name string
+     * @param $value integer
+     */
 	function setInt( $name,$value )
 	{
 		$this->client->bind( $name, (int)$value );
@@ -284,8 +276,8 @@ class Statement
 	/**
 	 * Setzt eine Zeichenkette als Parameter.<br>
 	 *
-	 * @param name Name des Parameters
-	 * @param value Inhalt
+     * @param $name string
+     * @param $value string
 	 */
 	function setString( $name,$value )
 	{
@@ -298,8 +290,9 @@ class Statement
 	 * Setzt einen bool'schen Wert als Parameter.<br>
 	 * Ist der Parameterwert wahr, dann wird eine 1 gesetzt. Sonst 0.<br>
 	 *
-	 * @param name Name des Parameters
-	 * @param value Inhalt
+     * @param $name string
+     * @param $value bool
+
 	 */
 	function setBoolean( $name,$value )
 	{
@@ -314,7 +307,7 @@ class Statement
 	/**
 	 * Setzt einen Parameter auf den Wert <code>null</code>.<br>
 	 *
-	 * @param name Name des Parameters
+	 * @param $name string Name des Parameters
 	 */
 	function setNull( $name )
 	{

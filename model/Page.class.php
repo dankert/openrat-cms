@@ -87,7 +87,7 @@ class Page extends Object
 		                 '  WHERE id={pageid}' );
 		$sql->setInt('pageid',$pageid);
 
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 
 
@@ -105,7 +105,7 @@ class Page extends Object
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$objectid);
 
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 
 
@@ -350,7 +350,7 @@ class Page extends Object
 		$this->objectAdd(); // Hinzuf?gen von Objekt (dabei wird Objekt-ID ermittelt)
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{page}}');
-		$this->pageid = intval($sql->getOne($sql))+1;
+		$this->pageid = intval($sql->getOne())+1;
 
 		$sql = $db->sql('INSERT INTO {{page}}'.
 		               ' (id,objectid,templateid)'.
@@ -373,7 +373,7 @@ class Page extends Object
 		$sql  = $db->sql( 'SELECT * FROM {{page}} '.
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 
 		$this->pageid      = $row['id'        ];
 		$this->templateid  = $row['templateid'];

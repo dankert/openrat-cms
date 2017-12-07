@@ -99,7 +99,7 @@ class Template
 			$sql->setInt( 'projectid',$project->projectid );
 		}
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -114,7 +114,7 @@ class Template
 		$sql = $db->sql( 'SELECT * FROM {{template}}'.
 		                ' WHERE id={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 		
 		if	( empty($row) )
 			throw new \ObjectNotFoundException("Template not found: ".$this->templateid);
@@ -127,7 +127,7 @@ class Template
 		                '   AND projectmodelid={modelid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 		$sql->setInt( 'modelid'   ,$this->modelid    );
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 
 		if	( isset($row['extension']) )
 		{
@@ -166,7 +166,7 @@ class Template
 		$sql->setInt   ( 'templateid'    ,$this->templateid     );
 		$sql->setInt   ( 'modelid'       ,$this->modelid );
 
-		if	( intval($sql->getOne($sql)) > 0 )
+		if	( intval($sql->getOne()) > 0 )
 		{
 			// Vorlagen-Quelltext existiert für diese Varianten schon.
 			$sql = $db->sql( 'UPDATE {{templatemodel}}'.
@@ -179,7 +179,7 @@ class Template
 		{
 			// Vorlagen-Quelltext wird für diese Varianten neu angelegt.
 			$sql = $db->sql('SELECT MAX(id) FROM {{templatemodel}}');
-			$nextid = intval($sql->getOne($sql))+1;
+			$nextid = intval($sql->getOne())+1;
 
 			$sql = $db->sql( 'INSERT INTO {{templatemodel}}'.
 			                '        (id,templateid,projectmodelid,extension,text) '.
@@ -212,7 +212,7 @@ class Template
 		$sql->setInt   ( 'modelid',$this->modelid );
 		$sql->setString( 'text'   ,'%'.$text.'%'  );
 		
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 
@@ -229,7 +229,7 @@ class Template
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 
@@ -310,7 +310,7 @@ SQL
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -343,7 +343,7 @@ SQL
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{template}}');
-		$this->templateid = intval($sql->getOne($sql))+1;
+		$this->templateid = intval($sql->getOne())+1;
 
 		$sql = $db->sql( 'INSERT INTO {{template}}'.
 		                ' (id,name,projectid)'.
@@ -377,7 +377,7 @@ SQL
 		                '  WHERE templateid={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
 
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 

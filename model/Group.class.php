@@ -57,7 +57,7 @@ class Group
 
 		$sql = $db->sql( 'SELECT id,name FROM {{group}}' );
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -70,7 +70,7 @@ class Group
 		                ' WHERE id={groupid}' );
 		$sql->setInt( 'groupid',$this->groupid );
 
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 		if	( count($row) > 0 )
 			$this->name = $row['name'    ];
 		else
@@ -87,7 +87,7 @@ class Group
 		                ' WHERE name={name}' );
 		$sql->setString('name',$name );
 
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 		if	( count($row) > 0 )
 		{
 			$group = new Group( $row['id'] );
@@ -142,7 +142,7 @@ class Group
 			$this->name = $name;
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{group}}');
-		$this->groupid = intval($sql->getOne($sql))+1;
+		$this->groupid = intval($sql->getOne())+1;
 		
 		// Gruppe hinzuf?gen
 		$sql = $db->sql( 'INSERT INTO {{group}} '.
@@ -191,7 +191,7 @@ class Group
 		                'WHERE {{usergroup}}.groupid={groupid}' );
 		$sql->setInt('groupid',$this->groupid );
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 	
 
@@ -205,7 +205,7 @@ class Group
 		                '   WHERE {{usergroup}}.groupid IS NULL' );
 		$sql->setInt('groupid'  ,$this->groupid );
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 
@@ -215,7 +215,7 @@ class Group
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{usergroup}}');
-		$usergroupid = intval($sql->getOne($sql))+1;
+		$usergroupid = intval($sql->getOne())+1;
 
 		$sql = $db->sql( 'INSERT INTO {{usergroup}} '.
 		                '       (id,userid,groupid) '.
@@ -252,7 +252,7 @@ class Group
 
 		// Alle Projekte lesen
 		$sql = $db->sql( 'SELECT id,name FROM {{project}}' );
-		$projects = $sql->getAssoc( $sql );	
+		$projects = $sql->getAssoc();
 
 		foreach( $projects as $projectid=>$projectname )
 		{
@@ -283,7 +283,7 @@ class Group
 			$sql = $db->sql( 'SELECT id FROM {{folder}}'.
 			                '  WHERE projectid={projectid}' );
 			$sql->setInt('projectid',$projectid);
-			$folders = $sql->getCol( $sql );
+			$folders = $sql->getCol();
 
 			$var[$projectid]['folders'] = array();
 

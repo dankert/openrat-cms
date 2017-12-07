@@ -17,7 +17,7 @@ SQL
 		);
 		$sql->setString('name',$username);
 	
-		$row_user = $sql->getRow( $sql );
+		$row_user = $sql->getRow();
 		$userid  = $row_user['id'];
 		
 		$ldap = new Ldap();

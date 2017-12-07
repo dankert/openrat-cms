@@ -52,7 +52,7 @@ class Folder extends Object
 		$db = db_connection();
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{folder}}');
-		$this->folderid = intval($sql->getOne($sql))+1;
+		$this->folderid = intval($sql->getOne())+1;
 
 		$sql = $db->sql('INSERT INTO {{folder}}'.
 		               ' (id,objectid)'.
@@ -87,7 +87,7 @@ class Folder extends Object
 		}
 		
 		// Datenbankabfrage ausfuehren
-		return $sql->getOne( $sql );
+		return $sql->getOne();
 	}
 
 
@@ -104,7 +104,7 @@ class Folder extends Object
 
 		$sql->setString('filename', $filename      );
 
-		return( $sql->getOne($sql) > 0 );
+		return( $sql->getOne() > 0 );
 	}
 
 
@@ -172,7 +172,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
-		return( $sql->getCol( $sql ) );
+		return( $sql->getCol() );
 	}
 
 
@@ -218,7 +218,7 @@ class Folder extends Object
 		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
-		return( $sql->getCol( $sql ) );
+		return( $sql->getCol() );
 	}
 
 
@@ -233,7 +233,7 @@ class Folder extends Object
                        ' ORDER BY {{name}}.name,{{object}}.filename ASC');
 		$sql->setInt('objectid'  , $this->objectid  );
 		$sql->setInt('languageid', $this->languageid);
-		return( $sql->getCol( $sql ) );
+		return( $sql->getCol() );
 	}
 
 
@@ -248,7 +248,7 @@ class Folder extends Object
 		$sql->setInt('projectid',$this->projectid );
 		$sql->setInt('objectid' ,$this->objectid  );
 		
-		return( $sql->getCol( $sql ) );
+		return( $sql->getCol() );
 	}
 
 
@@ -300,7 +300,7 @@ class Folder extends Object
 		$sql->setInt   ('objectid' ,$this->objectid );
 		$sql->setString('filename' ,$filename       );
 		
-		return( intval($sql->getOne( $sql )) );
+		return( intval($sql->getOne()) );
 	}
 
 
@@ -343,7 +343,7 @@ class Folder extends Object
 		$sql->setInt('is_page'  ,in_array('page'  ,$types)?OR_TYPEID_PAGE:0);
 		$sql->setInt('is_link'  ,in_array('link'  ,$types)?OR_TYPEID_LINK:0);
 		
-		return( $sql->getCol( $sql ) );
+		return( $sql->getCol() );
 	}
 
 	
@@ -360,7 +360,7 @@ class Folder extends Object
 			$sql->setInt('projectid',$this->projectid   );
 		else	$sql->setInt('projectid',$SESS['projectid'] );
 		
-		return( $sql->getOne( $sql ) );
+		return( $sql->getOne() );
 	}
 
 	
@@ -376,7 +376,7 @@ class Folder extends Object
 		$sql->setInt( 'projectid',$this->projectid );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 		
-		return( $sql->getCol( $sql ) );
+		return( $sql->getCol() );
 	}
 
 	
@@ -396,7 +396,7 @@ class Folder extends Object
 		}
 		else	$sql->setInt( 'projectid',$this->projectid   );
 		
-		return( $sql->getCol( $sql ) );
+		return( $sql->getCol() );
 	}
 
 	
@@ -409,7 +409,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 	
@@ -428,7 +428,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$oid = intval($sql->getOne( $sql ));
+		$oid = intval($sql->getOne());
 		
 		if	( $oid != 0 )
 			$o = new Object($oid);
@@ -454,7 +454,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$oid = intval($sql->getOne( $sql ));
+		$oid = intval($sql->getOne());
 		
 		if	( $oid != 0 )
 			$o = new Object($oid);
@@ -475,7 +475,7 @@ class Folder extends Object
 		               '  ORDER BY orderid DESC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$oid = intval($sql->getOne( $sql ));
+		$oid = intval($sql->getOne());
 		
 		if	( $oid != 0 )
 			$o = new Object($oid);
@@ -495,7 +495,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 
@@ -514,7 +514,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 	
@@ -527,7 +527,7 @@ class Folder extends Object
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 	
@@ -646,7 +646,7 @@ SQL
  );
 	 		$sql->setInt('parentid'  ,$foid            );
 	
-			$row = $sql->getRow( $sql );
+			$row = $sql->getRow();
 			
 	 		if	( in_array($row['id'],$idCache))
 	 			\Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
@@ -685,7 +685,7 @@ SQL
 			$sql->setInt('languageid',$this->languageid);
 	 		$sql->setInt('parentid'  ,$foid            );
 	
-			$row = $sql->getRow( $sql );
+			$row = $sql->getRow();
 			
 	 		if	( in_array($row['id'],$idCache))
 	 			\Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
@@ -713,7 +713,7 @@ SQL
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		$this->subfolders = $sql->getCol( $sql );
+		$this->subfolders = $sql->getCol();
 
 		return $this->subfolders;
 	}
@@ -729,7 +729,7 @@ SQL
 		               '  ORDER BY orderid ASC' );
 		$sql->setInt( 'objectid' ,$this->objectid  );
 
-		return $sql->getAssoc( $sql );
+		return $sql->getAssoc();
 	}
 
 	

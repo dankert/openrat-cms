@@ -169,7 +169,7 @@ class File extends Object
 		$sql = $db->sql( $sqlquery );
 		$sql->setInt( 'projectid',$SESS['projectid'] );
 		
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 
@@ -192,7 +192,7 @@ class File extends Object
 		$sql->setInt   ( 'projectid',$this->projectid );
 		$sql->setString( 'extension',$extension       );
 		
-		return $sql->getCol( $sql );
+		return $sql->getCol();
 	}
 
 
@@ -429,7 +429,7 @@ class File extends Object
 		                ' FROM {{file}}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 		
 		if	( count($row)!=0 )
 		{
@@ -560,7 +560,7 @@ EOF
 		                ' FROM {{file}}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 		
 		if	( count($row) != 0 )
 		{
@@ -626,7 +626,7 @@ EOF
 		$this->objectAdd();
 		
 		$sql = $db->sql('SELECT MAX(id) FROM {{file}}');
-		$this->fileid = intval($sql->getOne($sql))+1;
+		$this->fileid = intval($sql->getOne())+1;
 
 		$sql = $db->sql('INSERT INTO {{file}}'.
 		               ' (id,objectid,extension,size,value)'.

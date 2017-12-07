@@ -205,7 +205,7 @@ class Acl
 
 		$sql->setInt('aclid',$this->aclid);
 		
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 		
 		$this->setDatabaseRow( $row );		
 
@@ -231,7 +231,7 @@ class Acl
 
 		$sql->setInt('aclid',$this->aclid);
 		
-		$row = $sql->getRow( $sql );
+		$row = $sql->getRow();
 
 		$this->setDatabaseRow( $row );		
 	}
@@ -454,7 +454,7 @@ SQL
 		else
 			$sql->setInt ('languageid',$this->languageid);
 		
-		$aclid = intval($sql->getOne($sql));
+		$aclid = intval($sql->getOne());
 		if	( $aclid > 0 )
 		{
 			// Eine ACL existiert bereits, wir übernehmen diese ID
@@ -466,7 +466,7 @@ SQL
 
 
 		$sql = $db->sql('SELECT MAX(id) FROM {{acl}}');
-		$this->aclid = intval($sql->getOne($sql))+1;
+		$this->aclid = intval($sql->getOne())+1;
 		
 		$sql = $db->sql( <<<SQL
 		INSERT INTO {{acl}} 
