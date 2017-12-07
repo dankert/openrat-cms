@@ -798,13 +798,14 @@ class LoginAction extends Action
 			return;
 		}
 	}
-	
-	
-	/**
-	 * Synchronisiert die bisherigen Gruppen des Benutzers mit den Gruppen, die sich aus der Authentifzierung ergeben haben.
-	 * 
-	 * @param unknown_type $groups Einfaches Array von Gruppennamen.
-	 */
+
+
+    /**
+     * Synchronisiert die bisherigen Gruppen des Benutzers mit den Gruppen, die sich aus der Authentifzierung ergeben haben.
+     *
+     * @param $user User Benutzerobjekt
+     * @param $groups array $groups Einfaches Array von Gruppennamen.
+     */
 	private function checkGroups($user, $groups)
 	{
 		if	( $groups == null )
@@ -830,7 +831,7 @@ class LoginAction extends Action
 				catch (ObjectNotFoundException $e)
 				{
 					// Gruppe fehlt. Anlegen?
-					if	( $conf['ldap']['authorize']['auto_add'] )
+					if	( config('ldap','authorize','auto_add' )
 					{
 						// Die Gruppe in der OpenRat-Datenbank hinzufuegen.
 						$g = new Group();
@@ -902,7 +903,7 @@ class LoginAction extends Action
 		{
 			$auth = new InternalAuth();
 			
-			if	( $auth->login($loginName, $loginPassword) || $auth->mustChangePassword ) 
+			if	( $auth->login($loginName, $loginPassword,$token) || $auth->mustChangePassword )
 			{
 				if	( $newPassword1 != $newPassword2 )
 				{

@@ -195,7 +195,7 @@ class Folder extends Object
 		$sql->setInt('objectid'  ,$this->objectid   );
 		
 		$liste = array();
-		$res = $sql->getAll( $sql );
+		$res = $sql->getAll();
 		foreach( $res as $row )
 		{
 			$o = new Object( $row['id'] );
@@ -889,7 +889,7 @@ SQL
 		$language = \Session::getProjectLanguage();
 		$sql->setInt( 'languageid', $language->languageid );
 	
-		return $sql->getAll( $sql );
+		return $sql->getAll();
 	}
 	
 }

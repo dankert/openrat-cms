@@ -225,12 +225,11 @@ class Statement
 	}
 
 
-	/**
-	 * Ermittelt alle Datenbankergebniszeilen.
-	 *
-	 * @param String $this->query
-	 * @return Array
-	 */
+    /**
+     * Ermittelt alle Datenbankergebniszeilen.
+     *
+     * @return array
+     */
 	public function &getAll()
 	{
 		$result = $this->query();

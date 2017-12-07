@@ -248,7 +248,7 @@ class Template
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
 		$sql->setInt( 'templateid',$this->templateid );
-		foreach( $sql->getAll( $sql ) as $row )
+		foreach($sql->getAll() as $row )
 		{
 			$e = new Element( $row['id'] );
 			$e->setDatabaseRow( $row );
@@ -283,7 +283,7 @@ SELECT * FROM {{element}}
 SQL
 );
 		$sql->setInt       ( 'templateid'  ,$this->templateid        );
-		foreach( $sql->getAll( $sql ) as $row )
+		foreach($sql->getAll() as $row )
 		{
 			$e = new Element( $row['id'] );
 			$e->setDatabaseRow( $row );

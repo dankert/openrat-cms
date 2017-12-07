@@ -818,7 +818,7 @@ SQL
 		$user = \Session::getUser();
 		$sql->setInt( 'userid', $user->userid );
 		
-		return $sql->getAll( $sql );		
+		return $sql->getAll();
 	}
 	
 
@@ -851,7 +851,7 @@ SQL
 SQL
 		);
 		
-		return $sql->getAll( $sql );
+		return $sql->getAll();
 	}
 	
 
@@ -892,7 +892,7 @@ SQL
 		$language = \Session::getProjectLanguage();
 		$sql->setInt( 'languageid', $language->languageid );
 		
-		return $sql->getAll( $sql );
+		return $sql->getAll();
 	}
 }
 

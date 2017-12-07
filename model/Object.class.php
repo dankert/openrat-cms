@@ -274,7 +274,7 @@ SQL
                     $sql->setInt  ( 'objectid'    ,$this->objectid         );
                     $sql->setInt  ( 'userid'      ,$user->userid           );
 
-                    foreach( $sql->getAll( $sql ) as $row )
+                    foreach($sql->getAll() as $row )
                     {
                         $acl = new Acl();
                         $acl->setDatabaseRow( $row );
@@ -446,7 +446,7 @@ SQL
         /**
          * Stellt fest, ob das Objekt mit der angegebenen Id existiert.
          */
-        function available( $objectid )
+        public static function available( $objectid )
         {
             $db = db_connection();
 

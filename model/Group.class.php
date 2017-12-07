@@ -268,7 +268,7 @@ class Group
 			$sql->setInt('projectid',$projectid    );
 			$sql->setInt('groupid'   ,$this->groupid );
 			
-			$acls = $sql->getAll( $sql );
+			$acls = $sql->getAll();
 
 			foreach( $acls as $acl )
 			{
@@ -348,7 +348,7 @@ class Group
 
 		$aclList = array();
 
-		foreach( $sql->getAll( $sql ) as $row )
+		foreach($sql->getAll() as $row )
 		{
 			$acl = new Acl();
 			$acl->setDatabaseRow( $row );

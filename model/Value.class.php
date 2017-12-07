@@ -257,7 +257,7 @@ class Value
 		$sql->setInt( 'languageid',$this->languageid);
 
 		$list = array();
-		foreach( $sql->getAll( $sql ) as $row )
+		foreach($sql->getAll() as $row )
 		{
 			$val = new Value();
 			$val->valueid = $row['id'];

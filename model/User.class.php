@@ -92,7 +92,7 @@ class User extends ModelBase
 		                '  FROM {{user}}'.
 		                '  ORDER BY name' );
 
-		foreach( $sql->getAll( $sql ) as $row )
+		foreach($sql->getAll() as $row )
 		{
 			$user = new User();
 			$user->setDatabaseRow( $row );
@@ -590,7 +590,7 @@ SQL
 	/**
 	 * Gruppen ermitteln, in denen der Benutzer Mitglied ist.
 	 *
-	 * @return Array mit Id:Name
+	 * @return array mit Id:Name
 	 */
 	function getGroups()
 	{
@@ -722,7 +722,7 @@ SQL
 
 		$aclList = array();
 
-		foreach( $sql->getAll( $sql ) as $row )
+		foreach($sql->getAll() as $row )
 		{
 			$acl = new Acl();
 			$acl->setDatabaseRow( $row );
@@ -966,7 +966,7 @@ SQL
 	
 		$sql->setInt( 'userid', $this->userid );
 	
-		return $sql->getAll( $sql );
+		return $sql->getAll();
 	
 	}
 	
