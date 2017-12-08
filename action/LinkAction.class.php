@@ -94,10 +94,6 @@ class LinkAction extends ObjectAction
 	 */
 	function editPost()
 	{
-		if( $this->getRequestVar('type') != '' )
-		{
-            $this->link->isLinkToObject = true;
-            $this->link->isLinkToUrl    = false;
             $this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
 
 			$this->link->save();
@@ -105,11 +101,6 @@ class LinkAction extends ObjectAction
 			Session::setObject( $this->link );
 			
 			$this->addNotice('link',$this->link->name,'SAVED',OR_NOTICE_OK);
-		}
-		else
-		{
-			$this->addNotice('link',$this->link->name,'NOT_SAVED',OR_NOTICE_WARN);
-		}
 	}
 
 

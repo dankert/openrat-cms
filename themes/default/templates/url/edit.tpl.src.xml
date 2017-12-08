@@ -4,12 +4,13 @@
 		<group>
 			<part class="line">
 				<part class="label">
-					<text text="link_target"></text>
+					<text text="link_url"></text>
 				</part>
 				<part class="input">
-					<selector id="var:targetobjectid" name="var:targetobjectname" types="page,file" param="targetobjectid" folderid="parentid"/>
+					<input name="url"></input>
 				</part>
 			</part>
+
 
 		</group>
 	</form>

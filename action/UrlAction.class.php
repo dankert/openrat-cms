@@ -3,7 +3,7 @@
 namespace cms\action;
 
 use cms\model\Folder;
-use cms\model\Link;
+use cms\model\Url;
 
 
 
@@ -39,7 +39,7 @@ class UrlAction extends ObjectAction
 {
 	public $security = SECURITY_USER;
 	
-	var $link;
+	var $url;
 	var $defaultSubAction = 'prop';
 
 	/**
@@ -47,15 +47,15 @@ class UrlAction extends ObjectAction
 	 */
 	function __construct()
 	{
-		$this->link = new Link( $this->getRequestId() );
-		$this->link->load();
+		$this->url = new Url( $this->getRequestId() );
+		$this->url->load();
 	}
 
 
 
 	function remove()
 	{
-		$this->setTemplateVars( $this->link->getProperties() );
+		$this->setTemplateVars( $this->url->getProperties() );
 	}
 	
 
@@ -64,8 +64,8 @@ class UrlAction extends ObjectAction
 	{
 		if	( $this->hasRequestVar("delete") )
 		{
-			$this->link->delete();
-			$this->addNotice('link',$this->link->name,'DELETED');
+			$this->url->delete();
+			$this->addNotice('url',$this->url->name,'DELETED');
 		}
 	}
 	
@@ -80,12 +80,12 @@ class UrlAction extends ObjectAction
 		if   ( $this->getRequestVar('name') != '' )
 		{
 			// Eigenschaften speichern
-			$this->link->name      = $this->getRequestVar('name'       ,'full');
-			$this->link->desc      = $this->getRequestVar('description','full');
+			$this->url->name      = $this->getRequestVar('name'       ,'full');
+			$this->url->desc      = $this->getRequestVar('description','full');
 
-			$this->link->save();
-			$this->link->setTimestamp();
-			Session::setObject( $this->link );
+			$this->url->save();
+			$this->url->setTimestamp();
+			Session::setObject( $this->url );
 		}
 	}
 
@@ -95,59 +95,37 @@ class UrlAction extends ObjectAction
 	 */
 	function editPost()
 	{
-		if( $this->getRequestVar('type') != '' )
-		{
-			if	( $this->getRequestVar('type') == 'link' )
-			{
-				$this->link->isLinkToObject = true;
-				$this->link->isLinkToUrl    = false;
-				$this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
-			}
-			else
-			{
-				$this->link->isLinkToObject = false;
-				$this->link->isLinkToUrl    = true;
-				$this->link->url            = $this->getRequestVar('url');
-			}
-			
-			$this->link->save();
-			$this->link->setTimestamp();
-			Session::setObject( $this->link );
-			
-			$this->addNotice('link',$this->link->name,'SAVED',OR_NOTICE_OK);
-		}
-		else
-		{
-			$this->addNotice('link',$this->link->name,'NOT_SAVED',OR_NOTICE_WARN);
-		}
+        $this->url->url            = $this->getRequestVar('url');
+        $this->url->save();
+        $this->url->setTimestamp();
+        Session::setObject( $this->url );
+
+        $this->addNotice('url',$this->url->name,'SAVED',OR_NOTICE_OK);
 	}
 
 
 
 	public function editView()
 	{
-		$this->setTemplateVars( $this->link->getProperties() );
+		$this->setTemplateVars( $this->url->getProperties() );
 
 		// Typ der Verknuepfung
-		$this->setTemplateVar('type'            ,$this->link->getType()     );
-		$this->setTemplateVar('targetobjectid'  ,$this->link->linkedObjectId);
-		$this->setTemplateVar('targetobjectname',$this->link->name          );
-		$this->setTemplateVar('url'             ,$this->link->url           );
+		$this->setTemplateVar('type'            ,$this->url->getType()     );
+		$this->setTemplateVar('url'             ,$this->url->url           );
 	}
 
 
 
 	function propView()
 	{
-		$this->setTemplateVars( $this->link->getProperties() );
-		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
+		$this->setTemplateVars( $this->url->getProperties() );
 	}
 	
 	
 	
 	function infoView()
 	{
-		$this->setTemplateVars( $this->link->getProperties() );
+		$this->setTemplateVars( $this->url->getProperties() );
 	}
 	
 	
@@ -174,7 +152,7 @@ class UrlAction extends ObjectAction
 		$tmp = &$structure;
 		$nr  = 0;
 		
-		$folder = new Folder( $this->link->parentid );
+		$folder = new Folder( $this->url->parentid );
 		$parents = $folder->parentObjectNames(false,true);
 		
 		foreach( $parents as $id=>$name)
@@ -199,7 +177,7 @@ class UrlAction extends ObjectAction
 		
 		$elementChildren = array();
 		
-		$tmp[ $this->link->objectid ] = array('id'=>$this->link->objectid,'name'=>$this->link->name,'type'=>'link','self'=>true,'children'=>&$elementChildren);
+		$tmp[ $this->url->objectid ] = array('id'=>$this->url->objectid,'name'=>$this->url->name,'type'=>'url','self'=>true,'children'=>&$elementChildren);
 		
 		// 
 		//$elementChildren[$id] = array('id'=>$this->page->objectid.'_'.$id,'name'=>$name,'type'=>'pageelement','children'=>array() );

@@ -4,16 +4,11 @@
 			<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('link_target')))); ?></span>
+						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('link_url')))); ?></span>
 						
 					</div>
 					<div class="input">
-						<div class="selector">
-<div class="inputholder">
-<input type="hidden" name="targetobjectid" value="{id}" />
-<input type="text" disabled="disabled" value="{name}" />
-</div>
-<div class="tree selector" data-types="{types}" data-init-id="<?php echo $targetobjectid ?>" data-init-folderid="parentid">
+						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_url" name="url<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if ('') { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
