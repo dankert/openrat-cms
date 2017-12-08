@@ -11,7 +11,7 @@
  */
 class Configuration
 {
-    public static $defaultConfigFile = './config/config.yml';
+    public static $configFile = './config/config.yml';
 
     /**
      * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.
@@ -20,7 +20,7 @@ class Configuration
      */
     public static function lastModificationTime()
     {
-        return filemtime(self::$defaultConfigFile);
+        return filemtime(self::$configFile);
     }
 
 
@@ -31,7 +31,7 @@ class Configuration
      */
     public static function load()
     {
-        $customConfig = Spyc::YAMLLoad(self::$defaultConfigFile);
+        $customConfig = Spyc::YAMLLoad(self::$configFile);
 
         // Does we have includes?
         if (isset($customConfig['include'])) {
@@ -92,8 +92,8 @@ class Configuration
 
 
         // Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
-        $customConfig['config']['last_modification_time'] = filemtime(self::$defaultConfigFile);
-        $customConfig['config']['last_modification'] = date('r', filemtime(self::$defaultConfigFile));
+        $customConfig['config']['last_modification_time'] = filemtime(self::$configFile);
+        $customConfig['config']['last_modification'] = date('r', filemtime(self::$configFile));
         $customConfig['config']['read'] = date('r');
 
 
@@ -127,12 +127,11 @@ class Configuration
                         return $_SERVER[strtoupper($value)];
                         break;
                     default:
+                        return "";
                 }
             },
 
             $file);
-
-        return $file;
     }
 
 }
