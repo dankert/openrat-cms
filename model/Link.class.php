@@ -16,7 +16,7 @@ class Link extends Object
 	var $linkedObjectId = 0;
 	var $url            = '';
 
-	function __construct( $objectid='' )
+	public function __construct( $objectid='' )
 	{
 		parent::__construct( $objectid );
 		$this->isLink = true;
@@ -28,7 +28,7 @@ class Link extends Object
      * Lesen der Verknuepfung aus der Datenbank
      * @throws \ObjectNotFoundException
      */
-    function load()
+    public function load()
 	{
 		$db = db_connection();
 
@@ -50,7 +50,7 @@ class Link extends Object
     /**
      *
      */
-    function delete()
+    public function delete()
 	{
 		$db = db_connection();
 
@@ -68,7 +68,7 @@ class Link extends Object
     /**
      *
      */
-    function save()
+    public function save()
 	{
 		global $SESS;
 		$db = db_connection();
@@ -85,7 +85,7 @@ class Link extends Object
 	}
 
 
-	function getProperties()
+	public function getProperties()
 	{
 		return array_merge( parent::getProperties(),
 		                    array( 'objectid'       =>$this->objectid,
@@ -94,29 +94,36 @@ class Link extends Object
 	}
 
 
-	function getType()
+	public function getType()
 	{
 		return 'link';
 	}
 
 
-	function add()
+    /**
+     * Add a new link.
+     */
+    public function add()
 	{
 		$this->objectAdd();
 
 		$db = db_connection();
 
-		$sql = $db->sql('SELECT MAX(id) FROM {{link}}');
-		$this->linkid = intval($sql->getOne())+1;
+		$stmt = $db->sql('SELECT MAX(id) FROM {{link}}');
+		$this->linkid = intval($stmt->getOne())+1;
 
-		$sql = $db->sql('INSERT INTO {{link}}'.
+		$stmt = $db->sql('INSERT INTO {{link}}'.
 		               ' (id,objectid,link_objectid)'.
 		               ' VALUES( {linkid},{objectid},{linkobjectid} )' );
-		$sql->setInt   ('linkid'      ,$this->linkid         );
-		$sql->setInt   ('objectid'    ,$this->objectid       );
-        $sql->setInt ('linkobjectid',$this->linkedObjectId );
+		$stmt->setInt   ('linkid'      ,$this->linkid         );
+		$stmt->setInt   ('objectid'    ,$this->objectid       );
 
-		$sql->query();
+		if ($this->linkedObjectId == 0)
+            $stmt->setNull('linkobjectid');
+		else
+            $stmt->setInt ('linkobjectid',$this->linkedObjectId );
+
+		$stmt->query();
 	}	
 }
 

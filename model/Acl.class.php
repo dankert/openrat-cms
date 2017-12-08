@@ -402,15 +402,15 @@ class Acl
 			$this->prop = true;
 			
 		// Pruefen, ob die ACL schon existiert
-		$user_comp     = intval($this->userid    )>0?'=':'IS';
-		$group_comp    = intval($this->groupid   )>0?'=':'IS';
-		$language_comp = intval($this->languageid)>0?'=':'IS';
+		$user_comp     = intval($this->userid    )>0?'={userid}':'IS NULL';
+		$group_comp    = intval($this->groupid   )>0?'={groupid}':'IS NULL';
+		$language_comp = intval($this->languageid)>0?'={languageid}':'IS NULL';
 		
-		$sql = $db->sql( <<<SQL
+		$stmt = $db->sql( <<<SQL
 		SELECT id FROM {{acl}}
-		 WHERE userid      $user_comp     {userid}     AND
-		       groupid     $group_comp    {groupid}    AND
-		       languageid  $language_comp {languageid} AND
+		 WHERE userid      $user_comp      AND
+		       groupid     $group_comp     AND
+		       languageid  $language_comp  AND
 		       objectid         = {objectid}      AND
 		       is_write         = {write}         AND
 		       is_prop          = {prop}          AND
@@ -426,35 +426,30 @@ class Acl
 SQL
 );
 
-		if	( intval($this->userid) == 0 )
-			$sql->setNull('userid');
-		else
-			$sql->setInt ('userid',$this->userid);
+		if	( intval($this->userid) > 0 )
+			$stmt->setInt ('userid',$this->userid);
 		
-		if	( intval($this->groupid) == 0 )
-			$sql->setNull('groupid');
-		else
-			$sql->setInt ('groupid',$this->groupid);
+		if	( intval($this->groupid) > 0 )
+			$stmt->setInt ('groupid',$this->groupid);
 
-		$sql->setInt('objectid',$this->objectid);
-		$sql->setBoolean('write'        ,$this->write         );
-		$sql->setBoolean('prop'         ,$this->prop          );
-		$sql->setBoolean('create_folder',$this->create_folder );
-		$sql->setBoolean('create_file'  ,$this->create_file   );
-		$sql->setBoolean('create_link'  ,$this->create_link   );
-		$sql->setBoolean('create_page'  ,$this->create_page   );
-		$sql->setBoolean('delete'       ,$this->delete        );
-		$sql->setBoolean('release'      ,$this->release       );
-		$sql->setBoolean('publish'      ,$this->publish       );
-		$sql->setBoolean('grant'        ,$this->grant         );
-		$sql->setBoolean('transmit'     ,$this->transmit      );
+        if	( intval($this->languageid) > 0 )
+            $stmt->setInt ('languageid',$this->languageid);
 
-		if	( intval($this->languageid) == 0 )
-			$sql->setNull('languageid');
-		else
-			$sql->setInt ('languageid',$this->languageid);
-		
-		$aclid = intval($sql->getOne());
+        $stmt->setInt('objectid',$this->objectid);
+        $stmt->setBoolean('write'        ,$this->write         );
+        $stmt->setBoolean('prop'         ,$this->prop          );
+        $stmt->setBoolean('create_folder',$this->create_folder );
+        $stmt->setBoolean('create_file'  ,$this->create_file   );
+        $stmt->setBoolean('create_link'  ,$this->create_link   );
+        $stmt->setBoolean('create_page'  ,$this->create_page   );
+        $stmt->setBoolean('delete'       ,$this->delete        );
+        $stmt->setBoolean('release'      ,$this->release       );
+        $stmt->setBoolean('publish'      ,$this->publish       );
+        $stmt->setBoolean('grant'        ,$this->grant         );
+        $stmt->setBoolean('transmit'     ,$this->transmit      );
+
+
+        $aclid = intval($stmt->getOne());
 		if	( $aclid > 0 )
 		{
 			// Eine ACL existiert bereits, wir übernehmen diese ID
@@ -465,46 +460,46 @@ SQL
 			
 
 
-		$sql = $db->sql('SELECT MAX(id) FROM {{acl}}');
-		$this->aclid = intval($sql->getOne())+1;
+		$stmt = $db->sql('SELECT MAX(id) FROM {{acl}}');
+		$this->aclid = intval($stmt->getOne())+1;
 		
-		$sql = $db->sql( <<<SQL
+		$stmt = $db->sql( <<<SQL
 		INSERT INTO {{acl}} 
 		                 (id,userid,groupid,objectid,is_write,is_prop,is_create_folder,is_create_file,is_create_link,is_create_page,is_delete,is_release,is_publish,is_grant,is_transmit,languageid)
 		                 VALUES( {aclid},{userid},{groupid},{objectid},{write},{prop},{create_folder},{create_file},{create_link},{create_page},{delete},{release},{publish},{grant},{transmit},{languageid} )
 SQL
 );
 
-		$sql->setInt('aclid'   ,$this->aclid   );
+		$stmt->setInt('aclid'   ,$this->aclid   );
 		
 		if	( intval($this->userid) == 0 )
-			$sql->setNull('userid');
+			$stmt->setNull('userid');
 		else
-			$sql->setInt ('userid',$this->userid);
+			$stmt->setInt ('userid',$this->userid);
 		
 		if	( intval($this->groupid) == 0 )
-			$sql->setNull('groupid');
+			$stmt->setNull('groupid');
 		else
-			$sql->setInt ('groupid',$this->groupid);
+			$stmt->setInt ('groupid',$this->groupid);
 
-		$sql->setInt('objectid',$this->objectid);
-		$sql->setBoolean('write'        ,$this->write         );
-		$sql->setBoolean('prop'         ,$this->prop          );
-		$sql->setBoolean('create_folder',$this->create_folder );
-		$sql->setBoolean('create_file'  ,$this->create_file   );
-		$sql->setBoolean('create_link'  ,$this->create_link   );
-		$sql->setBoolean('create_page'  ,$this->create_page   );
-		$sql->setBoolean('delete'       ,$this->delete        );
-		$sql->setBoolean('release'      ,$this->release       );
-		$sql->setBoolean('publish'      ,$this->publish       );
-		$sql->setBoolean('grant'        ,$this->grant         );
-		$sql->setBoolean('transmit'     ,$this->transmit      );
+		$stmt->setInt('objectid',$this->objectid);
+		$stmt->setBoolean('write'        ,$this->write         );
+		$stmt->setBoolean('prop'         ,$this->prop          );
+		$stmt->setBoolean('create_folder',$this->create_folder );
+		$stmt->setBoolean('create_file'  ,$this->create_file   );
+		$stmt->setBoolean('create_link'  ,$this->create_link   );
+		$stmt->setBoolean('create_page'  ,$this->create_page   );
+		$stmt->setBoolean('delete'       ,$this->delete        );
+		$stmt->setBoolean('release'      ,$this->release       );
+		$stmt->setBoolean('publish'      ,$this->publish       );
+		$stmt->setBoolean('grant'        ,$this->grant         );
+		$stmt->setBoolean('transmit'     ,$this->transmit      );
 
 		if	( intval($this->languageid) == 0 )
-			$sql->setNull('languageid');
+			$stmt->setNull('languageid');
 		else
-			$sql->setInt ('languageid',$this->languageid);
+			$stmt->setInt ('languageid',$this->languageid);
 
-		$sql->query();
+		$stmt->query();
 	}
 }
