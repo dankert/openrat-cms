@@ -35,11 +35,12 @@ use Session;
  * @author $Author$
  * @package openrat.actions
  */
-class LinkAction extends ObjectAction
+class UrlAction extends ObjectAction
 {
 	public $security = SECURITY_USER;
 	
-	private $link;
+	var $link;
+	var $defaultSubAction = 'prop';
 
 	/**
 	 * Konstruktor
@@ -96,10 +97,19 @@ class LinkAction extends ObjectAction
 	{
 		if( $this->getRequestVar('type') != '' )
 		{
-            $this->link->isLinkToObject = true;
-            $this->link->isLinkToUrl    = false;
-            $this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
-
+			if	( $this->getRequestVar('type') == 'link' )
+			{
+				$this->link->isLinkToObject = true;
+				$this->link->isLinkToUrl    = false;
+				$this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
+			}
+			else
+			{
+				$this->link->isLinkToObject = false;
+				$this->link->isLinkToUrl    = true;
+				$this->link->url            = $this->getRequestVar('url');
+			}
+			
 			$this->link->save();
 			$this->link->setTimestamp();
 			Session::setObject( $this->link );
@@ -122,6 +132,7 @@ class LinkAction extends ObjectAction
 		$this->setTemplateVar('type'            ,$this->link->getType()     );
 		$this->setTemplateVar('targetobjectid'  ,$this->link->linkedObjectId);
 		$this->setTemplateVar('targetobjectname',$this->link->name          );
+		$this->setTemplateVar('url'             ,$this->link->url           );
 	}
 
 

@@ -338,7 +338,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		$sql->query( $sql );
+		$sql->query();
 
 		$sql = $db->sql( 'UPDATE {{value}}'.
 		                '  SET publish=1'.
@@ -350,7 +350,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 	/**
@@ -370,7 +370,7 @@ SQL
 		$sql->setInt( 'pageid'    ,$this->pageid    );
 		$sql->setInt( 'languageid',$this->languageid);
 
-		$sql->query( $sql );
+		$sql->query();
 
 		if	( $this->publish )
 		{
@@ -385,7 +385,7 @@ SQL
 			$sql->setInt( 'pageid'    ,$this->pageid    );
 			$sql->setInt( 'languageid',$this->languageid);
 
-			$sql->query( $sql );
+			$sql->query();
 		}
 
 		// Naechste ID aus Datenbank besorgen
@@ -424,7 +424,7 @@ SQL
 		$user = \Session::getUser();
 		$sql->setInt    ( 'lastchange_userid',$user->userid  );
 
-		$sql->query( $sql );
+		$sql->query();
 		
 		// Nur ausfuehren, wenn in Konfiguration aktiviert.
 		$limit = config('content','revision-limit');
@@ -476,7 +476,7 @@ SQL
 			$sql->setInt( 'languageid',$this->languageid         );
 			$sql->setInt( 'min_date'  ,$limit['max-age']*24*60*60);
 			$sql->setInt( 'min_id'    ,$values[count($values)-$limit['min-revisions']]);
-			$sql->query($sql);
+			$sql->query();
 		}
 		
 		if	( count($values) > $limit['max-revisions'] )
@@ -497,7 +497,7 @@ SQL
 			$sql->setInt( 'languageid',$this->languageid         );
 			$sql->setInt( 'min_date'  ,$limit['min-age']*24*60*60);
 			$sql->setInt( 'min_id'    ,$values[count($values)-$limit['max-revisions']]);
-			$sql->query($sql);
+			$sql->query();
 		}
 	}
 

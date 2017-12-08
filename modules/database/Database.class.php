@@ -199,7 +199,7 @@ class Database
 	}
 
     /**
-     * @param $sql
+     * @param $sql string das SQL
      * @return Statement
      */
     public function sql($sql )

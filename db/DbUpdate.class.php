@@ -37,7 +37,7 @@ class DbUpdate
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('status' , OR_DB_STATUS_UPDATE_PROGRESS);
 				$sql->setInt('time'   , time()         );
-				$sql->query( $sql );
+				$sql->query();
 				$db->commit();
 			}
 			
@@ -58,7 +58,7 @@ class DbUpdate
 				$sql->setInt('status' , OR_DB_STATUS_UPDATE_SUCCESS);
 				$sql->setInt('version', $installVersion);
 				$sql->setInt('time'   , time()         );
-				$sql->query( $sql );
+				$sql->query();
 				$db->commit();
 			}
 		}

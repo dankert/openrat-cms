@@ -5,6 +5,7 @@ namespace {
     define('OR_TYPEID_FILE',2);
     define('OR_TYPEID_PAGE',3);
     define('OR_TYPEID_LINK',4);
+    define('OR_TYPEID_URL',5);
 
 }
 
@@ -101,6 +102,12 @@ namespace cms\model {
          * @type Boolean
          */
         var $isLink = false;
+
+        /**
+         * Kennzeichen, ob Objekt eine Verknuepfung (Url) ist
+         * @type Boolean
+         */
+        var $isUrl = false;
 
         /**
          * Kennzeichnet den Typ dieses Objektes.
@@ -308,6 +315,8 @@ SQL
                 return OR_TYPE_PAGE;
             if ($this->isLink)
                 return OR_TYPE_LINK;
+            if ($this->isUrl)
+                return OR_TYPE_URL;
 
             return 'unknown';
         }
@@ -329,6 +338,7 @@ SQL
                 'isFolder'         =>$this->isFolder,
                 'isFile'           =>$this->isFile,
                 'isLink'           =>$this->isLink,
+                'isUrl'            =>$this->isUrl,
                 'isPage'           =>$this->isPage,
                 'isRoot'           =>$this->isRoot,
                 'languageid'       =>$this->languageid,
@@ -540,6 +550,7 @@ SQL
             $this->isFile   = ( $row['typeid'] == OR_TYPEID_FILE );
             $this->isPage   = ( $row['typeid'] == OR_TYPEID_PAGE );
             $this->isLink   = ( $row['typeid'] == OR_TYPEID_LINK );
+            $this->isUrl    = ( $row['typeid'] == OR_TYPEID_URL );
 
         }
 
@@ -589,6 +600,7 @@ SQL
             $this->isFile   = ( $row['typeid'] == OR_TYPEID_FILE );
             $this->isPage   = ( $row['typeid'] == OR_TYPEID_PAGE );
             $this->isLink   = ( $row['typeid'] == OR_TYPEID_LINK );
+            $this->isUrl    = ( $row['typeid'] == OR_TYPEID_URL );
 
             if	( $this->isRoot )
             {
@@ -633,7 +645,7 @@ SQL
             $sql = $db->sql('SELECT *'.' FROM {{name}}'.' WHERE objectid={objectid}'.'   AND languageid={languageid}');
             $sql->setInt('objectid'  , $this->objectid  );
             $sql->setInt('languageid', $this->languageid);
-            $res = $sql->query($sql);
+            $res = $sql->query();
 
             if ($res->numRows() == 0)
             {
@@ -690,7 +702,7 @@ SQL
             $sql->setInt   ('objectid', $this->objectid);
 
 
-            $sql->query($sql);
+            $sql->query();
 
             // Nur wenn nicht Wurzelordner
             if	( !$this->isRoot && $withName )
@@ -724,7 +736,7 @@ SQL
             $sql->setInt   ('objectid',$this->objectid                );
             $sql->setInt   ('time'    ,$this->lastchangeDate          );
 
-            $sql->query( $sql );
+            $sql->query();
 
         }
 
@@ -740,7 +752,7 @@ SQL
             $sql->setInt   ('objectid',$this->objectid   );
             $sql->setInt   ('time'    ,$this->createDate );
 
-            $sql->query( $sql );
+            $sql->query();
         }
 
 
@@ -777,7 +789,7 @@ SQL
                 $sql->setString('desc', $this->desc);
                 $sql->setInt( 'objectid'  , $this->objectid   );
                 $sql->setInt( 'languageid', $this->languageid );
-                $sql->query($sql);
+                $sql->query();
             }
             else
             {
@@ -790,7 +802,7 @@ SQL
                 $sql->setInt   ('nameid', $nameid    );
                 $sql->setString('name'  , $this->name);
                 $sql->setString('desc'  , $this->desc);
-                $sql->query($sql);
+                $sql->query();
             }
         }
 
@@ -807,25 +819,25 @@ SQL
                 '  SET default_objectid=NULL '.
                 '  WHERE default_objectid={objectid}' );
             $sql->setInt('objectid',$this->objectid);
-            $sql->query( $sql );
+            $sql->query();
 
             $sql = $db->sql( 'UPDATE {{value}} '.
                 '  SET linkobjectid=NULL '.
                 '  WHERE linkobjectid={objectid}' );
             $sql->setInt('objectid',$this->objectid);
-            $sql->query( $sql );
+            $sql->query();
 
             $sql = $db->sql( 'UPDATE {{link}} '.
                 '  SET link_objectid=NULL '.
                 '  WHERE link_objectid={objectid}' );
             $sql->setInt('objectid',$this->objectid);
-            $sql->query( $sql );
+            $sql->query();
 
 
             // Objekt-Namen l?schen
             $sql = $db->sql('DELETE FROM {{name}} WHERE objectid={objectid}');
             $sql->setInt('objectid', $this->objectid);
-            $sql->query($sql);
+            $sql->query();
 
             // ACLs loeschen
             $this->deleteAllACLs();
@@ -833,7 +845,7 @@ SQL
             // Objekt l?schen
             $sql = $db->sql('DELETE FROM {{object}} WHERE id={objectid}');
             $sql->setInt('objectid', $this->objectid);
-            $sql->query($sql);
+            $sql->query();
         }
 
 
@@ -871,7 +883,7 @@ SQL
 
             $sql->setInt(  'typeid',$this->getTypeid());
 
-            $sql->query($sql);
+            $sql->query();
 
             if	( !empty($this->name) )
                 $this->objectSaveName();
@@ -1072,6 +1084,8 @@ SQL
                 return( array('read','write','delete','prop','release','publish','grant') );
             if	( $this->isLink )
                 return( array('read','write','delete','prop','grant') );
+            if	( $this->isUrl )
+                return( array('read','write','delete','prop','grant') );
         }
 
 
@@ -1165,7 +1179,7 @@ SQL
             $sql->setInt('objectid', $this->objectid);
             $sql->setInt('orderid', $orderid);
 
-            $sql->query($sql);
+            $sql->query();
         }
 
 
@@ -1183,7 +1197,7 @@ SQL
             $sql->setInt('objectid', $this->objectid);
             $sql->setInt('parentid', $parentid);
 
-            $sql->query($sql);
+            $sql->query();
         }
 
 
@@ -1350,6 +1364,7 @@ SQL
             if ($this->isFile) return OR_TYPEID_FILE;
             if ($this->isPage) return OR_TYPEID_PAGE;
             if ($this->isLink) return OR_TYPEID_LINK;
+            if ($this->isUrl) return OR_TYPEID_URL;
         }
 
 

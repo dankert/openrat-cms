@@ -126,7 +126,7 @@ SQL
 	    $sql->setInt( 'userid',$this->userid  );
 	    
 	    // Datenbankabfrage ausfuehren
-	    $sql->query( $sql );
+	    $sql->query();
 	
 	}
 
@@ -418,7 +418,7 @@ SQL
 		$sql->setInt    ( 'userid'  ,$this->userid  );
 		
 		// Datenbankabfrage ausfuehren
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -444,7 +444,7 @@ SQL
 		$sql->setString('name'  ,$this->name  );
 
 		// Datenbankbefehl ausfuehren
-		$sql->query( $sql );
+		$sql->query();
 		
 		$this->addNewUserGroups(); // Neue Gruppen hinzufuegen.
 		
@@ -500,39 +500,39 @@ SQL
 		                'SET create_userid=null '.
 		                'WHERE create_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query( $sql );
+		$sql->query();
 
 		// "Letzte �nderung von" f�r diesen Benutzer entfernen
 		$sql = $db->sql( 'UPDATE {{object}} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query( $sql );
+		$sql->query();
 
 		// Alle Archivdaten in Dateien mit diesem Benutzer entfernen
 		$sql = $db->sql( 'UPDATE {{value}} '.
 		                'SET lastchange_userid=null '.
 		                'WHERE lastchange_userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query( $sql );
+		$sql->query();
 
 		// Alle Berechtigungen dieses Benutzers l?schen
 		$sql = $db->sql( 'DELETE FROM {{acl}} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query( $sql );
+		$sql->query();
 
 		// Alle Gruppenzugehoerigkeiten dieses Benutzers l?schen
 		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                'WHERE userid={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query( $sql );
+		$sql->query();
 
 		// Benutzer loeschen
 		$sql = $db->sql( 'DELETE FROM {{user}} '.
 		                'WHERE id={userid}' );
 		$sql->setInt   ('userid',$this->userid );
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -583,7 +583,7 @@ SQL
 		$sql->setString('password',Password::hash($this->pepperPassword($password),$algo) );
 		$sql->setInt   ('userid'  ,$this->userid  );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -660,7 +660,7 @@ SQL
 		$sql->setInt('userid'     ,$this->userid );
 		$sql->setInt('groupid'    ,$groupid      );
 
-		$sql->query( $sql );
+		$sql->query();
 	
 	}
 
@@ -680,7 +680,7 @@ SQL
 		$sql->setInt   ('userid'  ,$this->userid );
 		$sql->setInt   ('groupid' ,$groupid      );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 	
 

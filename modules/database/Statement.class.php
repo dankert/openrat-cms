@@ -74,16 +74,14 @@ class Statement
 		// Statement an die Datenbank schicken
 		$this->client->prepare( $this->sql->query,$this->sql->param );
 	}
-	
 
 
-	/**
-	 * Ausfuehren einer Datenbankanfrage.
-	 *
-	 * @param SQL-Objekt
-	 * @return Object (Result)
-	 */
-	public function query( )
+    /**
+     * Ausfuehren einer Datenbankanfrage.
+     *
+     * @return Object (Result)
+     */
+	public function query()
 	{
 		return $this->execute();
 	}

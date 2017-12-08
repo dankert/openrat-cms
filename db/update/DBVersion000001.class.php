@@ -342,7 +342,7 @@ class DBVersion000001 extends DbVersion
         if	( $countUsers == 0 )
         {
             $sql = $db->sql("INSERT INTO {{user}} (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','admin','','Administrator','','','Account for administration tasks.','default',1)",$db->id);
-            $sql->query( $sql );
+            $sql->query();
             $db->commit();
         }
     }

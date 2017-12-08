@@ -385,7 +385,7 @@ class Acl
 		$sql->setInt('aclid'   ,$this->aclid   );
 		$sql->setInt('objectid',$this->objectid);
 		
-		$sql->query( $sql );
+		$sql->query();
 		
 		$this->aclid = 0;
 	}
@@ -505,6 +505,6 @@ SQL
 		else
 			$sql->setInt ('languageid',$this->languageid);
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 }

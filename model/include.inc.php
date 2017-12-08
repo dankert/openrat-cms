@@ -2,20 +2,21 @@
 namespace cms\model;
 
 // Diese Objekte stehen zeitweise in der Sitzung, daher muessen dieser immer geparst werden.
-require_once( OR_OBJECTCLASSES_DIR."ModelBase.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Value.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Acl.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Template.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Object.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Folder.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Link.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."File.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."User.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Group.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Project.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Page.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Language.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Model.class.".PHP_EXT );
-require_once( OR_OBJECTCLASSES_DIR."Element.class.".PHP_EXT );
+require_once( __DIR__."ModelBase.class.".PHP_EXT );
+require_once( __DIR__."Value.class.".PHP_EXT );
+require_once( __DIR__."Acl.class.".PHP_EXT );
+require_once( __DIR__."Template.class.".PHP_EXT );
+require_once( __DIR__."Object.class.".PHP_EXT );
+require_once( __DIR__."Folder.class.".PHP_EXT );
+require_once( __DIR__."Link.class.".PHP_EXT );
+require_once( __DIR__."Url.class.".PHP_EXT );
+require_once( __DIR__."File.class.".PHP_EXT );
+require_once( __DIR__."User.class.".PHP_EXT );
+require_once( __DIR__."Group.class.".PHP_EXT );
+require_once( __DIR__."Project.class.".PHP_EXT );
+require_once( __DIR__."Page.class.".PHP_EXT );
+require_once( __DIR__."Language.class.".PHP_EXT );
+require_once( __DIR__."Model.class.".PHP_EXT );
+require_once( __DIR__."Element.class.".PHP_EXT );
 
 ?>

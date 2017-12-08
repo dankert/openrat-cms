@@ -60,7 +60,7 @@ class Folder extends Object
 		$sql->setInt   ('folderid'    ,$this->folderid );
 		$sql->setInt   ('objectid'    ,$this->objectid );
 		
-		$sql->query( $sql );
+		$sql->query();
 	}	
 	
 
@@ -141,7 +141,7 @@ class Folder extends Object
 		$sql->setInt('folderid',$this->folderid);
 		$sql->setInt('orderid' ,$orderid       );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -779,12 +779,12 @@ SQL
 			                '  SET folderobjectid=NULL '.
 			                '  WHERE folderobjectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
-			$sql->query( $sql );
+			$sql->query();
 	
 			$sql = $db->sql( 'DELETE FROM {{folder}} '.
 			                '  WHERE objectid={objectid}' );
 			$sql->setInt('objectid',$this->objectid);
-			$sql->query( $sql );
+			$sql->query();
 	
 			$this->objectDelete();
 		}
@@ -830,6 +830,13 @@ SQL
 					$link = new Link( $oid );
 					$link->load();
 					$link->delete();
+				}
+
+				if	( $object->isUrl )
+				{
+					$url = new Url( $oid );
+                    $url->load();
+                    $url->delete();
 				}
 
 				if	( $object->isFile )

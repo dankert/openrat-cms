@@ -454,7 +454,7 @@ class File extends Object
 		$sql = $db->sql( 'DELETE FROM {{file}} '.
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
-		$sql->query( $sql );
+		$sql->query();
 		
 		$this->objectDelete();
 	}
@@ -526,7 +526,7 @@ EOF
 		$sql->setString('size'     ,$this->size      );
 		$sql->setString('extension',$this->extension );
 		$sql->setString('objectid' ,$this->objectid  );
-		$sql->query( $sql );
+		$sql->query();
 		
 		$this->objectSave();
 	}
@@ -602,7 +602,7 @@ EOF
 		else
 			$sql->setString( 'value',$this->value );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -635,7 +635,7 @@ EOF
 		$sql->setInt   ('objectid' ,$this->objectid      );
 		$sql->setString('extension',$this->extension     );
 
-		$sql->query( $sql );
+		$sql->query();
 		
 		$this->saveValue();
 	}	

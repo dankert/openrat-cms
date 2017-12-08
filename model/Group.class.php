@@ -118,7 +118,7 @@ class Group
 		$sql->setInt   ('groupid',$this->groupid );
 
 		// Datenbankabfrage ausfuehren
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -151,7 +151,7 @@ class Group
 		$sql->setString('name'   ,$this->name    );
 
 		// Datenbankbefehl ausfuehren
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -164,20 +164,20 @@ class Group
 		$sql = $db->sql( 'DELETE FROM {{acl}} '.
 		                'WHERE groupid={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
-		$sql->query( $sql );
+		$sql->query();
 
 
 		// Alle Gruppenzugehoerigkeiten zu dieser Gruppe loeschen
 		$sql = $db->sql( 'DELETE FROM {{usergroup}} '.
 		                'WHERE groupid={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
-		$sql->query($sql);
+		$sql->query();
 
 		// Gruppe loeschen
 		$sql = $db->sql( 'DELETE FROM {{group}} '.
 		                'WHERE id={groupid}' );
 		$sql->setInt   ('groupid',$this->groupid );
-		$sql->query($sql);
+		$sql->query();
 	}
 
 
@@ -224,7 +224,7 @@ class Group
 		$sql->setInt('userid'     ,$userid        );
 		$sql->setInt('groupid'    ,$this->groupid );
 
-		$sql->query( $sql );
+		$sql->query();
 	
 	}
 
@@ -239,7 +239,7 @@ class Group
 		$sql->setInt   ('userid'  ,$userid        );
 		$sql->setInt   ('groupid' ,$this->groupid );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -323,7 +323,7 @@ class Group
 		$sql->setInt ('publish',$data['publish']);
 	
 		// Datenbankabfrage ausf?hren
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 	

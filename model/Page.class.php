@@ -359,7 +359,7 @@ class Page extends Object
 		$sql->setInt   ('objectid'  ,$this->objectid   );
 		$sql->setInt   ('templateid',$this->templateid );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -389,12 +389,12 @@ class Page extends Object
 		$sql = $db->sql( 'DELETE FROM {{value}} '.
 		                '  WHERE pageid={pageid}' );
 		$sql->setInt('pageid',$this->pageid);
-		$sql->query( $sql );
+		$sql->query();
 
 		$sql = $db->sql( 'DELETE FROM {{page}} '.
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
-		$sql->query( $sql );
+		$sql->query();
 		
 		$this->objectDelete();
 	}
@@ -444,7 +444,7 @@ class Page extends Object
 		               '  WHERE objectid={objectid}' );
 		$sql->setInt('templateid' ,$this->templateid);
 		$sql->setInt('objectid'   ,$this->objectid  );
-		$sql->query( $sql );
+		$sql->query();
 
 		$this->objectSave();
 	}
@@ -465,7 +465,7 @@ class Page extends Object
 		               '  WHERE objectid={objectid}' );
 		$sql->setInt('templateid' ,$this->templateid);
 		$sql->setInt('objectid'   ,$this->objectid  );
-		$sql->query( $sql );
+		$sql->query();
 
 
 		// Inhalte umschluesseln, d.h. die Element-Ids aendern
@@ -482,7 +482,7 @@ class Page extends Object
 				$sql->setInt('pageid'   ,$this->pageid);
 				$sql->setInt('elementid',$oldElementId      );
 				
-				$sql->query( $sql );
+				$sql->query();
 			}
 			else
 			{
@@ -496,7 +496,7 @@ class Page extends Object
 				$sql->setInt('pageid'      ,$this->pageid);
 				$sql->setInt('oldelementid',$oldElementId      );
 				$sql->setInt('newelementid',$newElementId      );
-				$sql->query( $sql );
+				$sql->query();
 			}
 		}
 	}

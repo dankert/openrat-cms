@@ -158,7 +158,7 @@ class Template
 		                '  WHERE id={templateid}' );
 		$sql->setString( 'name'      ,$this->name       );
 		$sql->setInt   ( 'templateid',$this->templateid );
-		$sql->query( $sql );
+		$sql->query();
 
 		$sql = $db->sql( 'SELECT COUNT(*) FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}'.
@@ -192,7 +192,7 @@ class Template
 		$sql->setInt   ( 'templateid'    ,$this->templateid     );
 		$sql->setInt   ( 'modelid'       ,$this->modelid        );
 		
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -360,7 +360,7 @@ SQL
 
 		$sql->setInt   ('projectid' ,$this->projectid );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -399,12 +399,12 @@ SQL
 		$sql = $db->sql( 'DELETE FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
-		$sql->query( $sql );
+		$sql->query();
 
 		$sql = $db->sql( 'DELETE FROM {{template}}'.
 		                ' WHERE id={templateid}' );
 		$sql->setInt( 'templateid',$this->templateid );
-		$sql->query( $sql );
+		$sql->query();
 	}
 	
 	

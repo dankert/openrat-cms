@@ -151,7 +151,7 @@ SQL
 		$sql->setInt( 'languageid',$this->languageid );
 
 		// Datenbankabfrage ausfuehren
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -197,7 +197,7 @@ SQL
 		$sql->setString('isocode'   ,$this->isoCode    );
 
 		// Datenbankbefehl ausfuehren
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -212,14 +212,14 @@ SQL
 		                '  SET is_default = 0 '.
 		                '  WHERE projectid={projectid}' );
 		$sql->setInt('projectid',$this->projectid );
-		$sql->query( $sql );
+		$sql->query();
 	
 		// Jetzt die gew?nschte Sprachvariante auf Standard setzen
 		$sql = $db->sql( 'UPDATE {{language}} '.
 		                '  SET is_default = 1 '.
 		                '  WHERE id={languageid}' );
 		$sql->setInt('languageid',$this->languageid );
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -260,17 +260,17 @@ SQL
 			// Inhalte mit dieser Sprache l?schen
 			$sql = $db->sql( 'DELETE FROM {{value}} WHERE languageid={languageid}' );
 			$sql->setInt( 'languageid',$this->languageid );
-			$sql->query( $sql );
+			$sql->query();
 
 			// Inhalte mit dieser Sprache l?schen
 			$sql = $db->sql( 'DELETE FROM {{name}} WHERE languageid={languageid}' );
 			$sql->setInt( 'languageid',$this->languageid );
-			$sql->query( $sql );
+			$sql->query();
 
 			// Sprache l?schen
 			$sql = $db->sql( 'DELETE FROM {{language}} WHERE id={languageid}' );
 			$sql->setInt( 'languageid',$this->languageid );
-			$sql->query( $sql );
+			$sql->query();
 
 			// Andere Sprache auf "Default" setzen
 			$sql = $db->sql( 'SELECT id FROM {{language}} WHERE projectid={projectid}' );
@@ -279,7 +279,7 @@ SQL
 
 			$sql = $db->sql( 'UPDATE {{language}} SET is_default=1 WHERE id={languageid}' );
 			$sql->setInt( 'languageid',$new_default_languageid );
-			$sql->query( $sql );
+			$sql->query();
 //		}
 	}
 }

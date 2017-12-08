@@ -27,10 +27,11 @@ define('MAX_FOLDER_DEPTH',5        );
 define('OR_VERSION'      ,'1.1-snapshot'  );
 define('OR_TITLE'        ,'OpenRat CMS');
 
+define('OR_TYPE_FOLDER','folder');
 define('OR_TYPE_PAGE'  ,'page'  );
 define('OR_TYPE_FILE'  ,'file'  );
 define('OR_TYPE_LINK'  ,'link'  );
-define('OR_TYPE_FOLDER','folder');
+define('OR_TYPE_URL'   ,'url'   );
 
 
 define('OR_ACTIONCLASSES_DIR' ,'./action/'  );

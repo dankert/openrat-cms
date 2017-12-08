@@ -155,7 +155,7 @@ class Element
 		$sql->setBoolean( 'writable'   ,$this->writable   );
 		$sql->setString ( 'description',$this->desc       );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -277,7 +277,7 @@ SQL
 			$sql->setNull( 'defaultObjectId' );
 		else	$sql->setInt ( 'defaultObjectId' ,$this->defaultObjectId  );
 		
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -300,7 +300,7 @@ SQL
 		$sql->setInt    ( 'elementid',$this->elementid );
 		$sql->setString ( 'type'     ,$this->type      );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -334,7 +334,7 @@ SQL
 		               '  WHERE id={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
 
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 
@@ -350,7 +350,7 @@ SQL
 		$sql = $db->sql('DELETE FROM {{value}} '.
 		               '  WHERE elementid={elementid}'   );
 		$sql->setInt( 'elementid',$this->elementid );
-		$sql->query( $sql );
+		$sql->query();
 	}
 
 

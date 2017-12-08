@@ -249,7 +249,7 @@ SQL
 		$sql->setInt   ('cut_index'          ,$this->cut_index );
 		$sql->setInt   ('projectid'          ,$this->projectid );
 
-		$sql->query( $sql );
+		$sql->query();
 
 		try
 		{
@@ -294,7 +294,7 @@ SQL
 		$sql->setInt   ('projectid',$this->projectid );
 		$sql->setString('name'     ,$this->name      );
 
-		$sql->query( $sql );
+		$sql->query();
 
 		// Modell anlegen
 		$model = new Model();
@@ -377,7 +377,7 @@ SQL
 		$sql = $db->sql( 'DELETE FROM {{project}}'.
 		                '  WHERE id= {projectid} ' );
 		$sql->setInt( 'projectid',$this->projectid );
-		$sql->query( $sql );
+		$sql->query();
 	}
 	
 	function getDefaultLanguageId()
