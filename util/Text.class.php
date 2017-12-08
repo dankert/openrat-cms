@@ -31,7 +31,7 @@ class Text
 	 * @param unknown $text
 	 * @return string|unknown
 	 */
-	function accessKey( $key, $text )
+    public static function accessKey( $key, $text )
 	{
 		$pos = strpos(strtolower($text),strtolower($key));
 		
@@ -46,7 +46,7 @@ class Text
 	 *
 	 * @deprecated use maxlength() !
 	 */
-	function maxLaenge( $laenge,$text )
+    public static function maxLaenge( $laenge,$text )
 	{
 		return Text::maxLength($text,$laenge);
 	}
@@ -62,7 +62,7 @@ class Text
 	 * @param Integer maximale Laenge des Textes (optional)
 	 * @param Text, der an gekuerzten Text angehangen wird (optional)
 	 */
-	function maxLength( $text,$laenge=20,$append='...',$where=STR_PAD_RIGHT )
+	public static function maxLength( $text,$laenge=20,$append='...',$where=STR_PAD_RIGHT )
 	{
 		if	( strlen($text) > $laenge )
 		{
@@ -83,7 +83,7 @@ class Text
 	 *
 	 * @return String Ausgabe
 	 */
-	function bbCode2Wiki( $inhalt )
+    public static function bbCode2Wiki( $inhalt )
 	{
 		$inhalt = preg_replace('/\[b\]([^\[]*)\[\/b\]/i'       , '*\\1*' ,$inhalt);
 		$inhalt = preg_replace('/\[i\]([^\[]*)\[\/i\]/i'       , '_\\1_' ,$inhalt);
@@ -103,7 +103,7 @@ class Text
 	 *
 	 * @return String Ausgabe
 	 */
-	function Html2Wiki( $inhalt )
+    public static function Html2Wiki( $inhalt )
 	{
 		$inhalt = preg_replace('/<b(.*)>(.*)<\/b>/i','*\\2*' ,$inhalt);
 		$inhalt = preg_replace('/<i(.*)>(.*)<\/i>/i','_\\2_' ,$inhalt);
@@ -119,7 +119,7 @@ class Text
 	 * @param String Text, in dem HTML-Tags umgewandelt werden sollen
 	 * @return String Ausgabe
 	 */
-	function encodeHtml( $inhalt )
+    public static function encodeHtml( $inhalt )
 	{
 		//$inhalt = str_replace('&','&amp;',$inhalt);
 		$inhalt = str_replace('"','&quot;',$inhalt);
@@ -135,7 +135,7 @@ class Text
 	 * Ersetzt Sonderzeichen durch HTML-�quivalente.<br>
 	 * Z.B. Ersetzt "(c)" durch "&copy;".
 	 */
-	function replaceHtmlChars( $text )
+    public static function replaceHtmlChars( $text )
 	{
 		global $conf;
 		
@@ -156,7 +156,7 @@ class Text
 	 * @param String Text, in dem HTML-Tags umgewandelt werden sollen
 	 * @return String Ausgabe
 	 */
-	function encodeHtmlSpecialChars( $inhalt )
+    public static function encodeHtmlSpecialChars( $inhalt )
 	{
 		return Text::replaceHtmlChars( $inhalt );
 	}
@@ -167,7 +167,7 @@ class Text
 	 * Vergleicht 2 Text-Arrays und ermittelt eine Darstellung der Unterschiede
 	 *
 	 */
-	function diff( $from_text,$to_text )
+    public static function diff( $from_text,$to_text )
 	{
 		// Zaehler pro Textarray
 		$pos_from = -1;
@@ -348,7 +348,7 @@ class Text
 	 * @param $bis der Text, BIS ZU DEM entfernt wird
 	 * @return String Text
 	 */
-	function entferneVonBis($text,$von,$bis)
+    public static function entferneVonBis($text,$von,$bis)
 	{
 		$beg = strpos($text,$von);
 		$end = strpos($text,$bis);
@@ -368,16 +368,16 @@ class Text
 	 * @param $erlaubt Die erlaubten Zeichen (eine "White-List")
 	 * @return String die aufgeräumte Zeichenkette
 	 */
-	function clean( $eingabe, $erlaubt )
+    public static function clean( $eingabe, $erlaubt )
 	{
 		$first  = strtr( $eingabe, $erlaubt, str_repeat("\x01", strlen($erlaubt)) );
 		$second = strtr( $eingabe, $first  , str_repeat("\x00", strlen($first )) );
 		return str_replace("\x00",'',$second);
 	}
-	
-	
-	
-	function parseOID( $text )
+
+
+
+    public static function parseOID( $text )
 	{
 		$oids    = array();
 		$treffer = array();
@@ -391,5 +391,3 @@ class Text
 	}
 }
 
- 
-?>

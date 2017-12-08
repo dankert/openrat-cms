@@ -75,18 +75,19 @@ use \LogicException;
     class Action
     {
         public $db;
-        private $templateVars = Array();
         public $actionName;
         public $subActionName;
         public $actionClassName;
-
         public $writable;
+
         public $publishing;
         public $refresh;
 
+        protected $templateVars = Array();
+
         /**
          * Aktuell angemeldeter Benutzer.<br>
-         * Wird ind er Funktion "init()" gesetzt.
+         * Wird in der Funktion "init()" gesetzt.
          *
          * @var Object Benutzer
          */
@@ -147,7 +148,7 @@ use \LogicException;
         /**
          * Setzt eine Session-Variable
          *
-         * @param Sring $varName Schl�ssel
+         * @param string $varName Schluessel
          * @param mixed $value Inhalt
          * @return mixed
          */
@@ -288,7 +289,7 @@ use \LogicException;
         /**
          * Setzt eine Liste von Variablen f�r die Oberfl�che.
          *
-         * @param Array $varList Assoziatives Array
+         * @param array $varList Assoziatives Array
          */
         protected function setTemplateVars($varList)
         {
@@ -325,8 +326,8 @@ use \LogicException;
          * @param String $name Name des Objektes, zu dem diese Meldung geh�rt.
          * @param String $text Textschl�ssel der Fehlermeldung (optional)
          * @param String $status Einer der Werte OR_NOTICE_(OK|WARN|ERROR)
-         * @param Array $vars Variablen f�r den Textschl�ssel
-         * @param Array $log Weitere Hinweistexte f�r diese Meldung.
+         * @param array $vars Variablen f�r den Textschl�ssel
+         * @param array $log Weitere Hinweistexte f�r diese Meldung.
          */
         protected function addNotice($type, $name, $text, $status = OR_NOTICE_OK, $vars = array(), $log = array())
         {
@@ -631,7 +632,7 @@ use \LogicException;
 
 
         /**
-         * @param max Anzahl der Sekunden, die die Seite im Browsercache bleiben darf
+         * @param $max int max Anzahl der Sekunden, die die Seite im Browsercache bleiben darf
          */
         protected function maxAge($max = 3600)
         {
@@ -771,7 +772,7 @@ use \LogicException;
 
         public function getErrorField()
         {
-            return $fieldName;
+            return $this->fieldName;
         }
     }
 

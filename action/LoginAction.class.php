@@ -14,17 +14,17 @@ use cms\model\Language;
 use cms\model\Model;
 
 
-use database\Database;
-use DB;
-use DbUpdate;
-use Exception;
-use Http;
-use InternalAuth;
-use Logger;
-use ObjectNotFoundException;
-use OpenRatException;
+use \database\Database;
+use \DB;
+use \DbUpdate;
+use \Exception;
+use \Http;
+use \InternalAuth;
+use \Logger;
+use \ObjectNotFoundException;
+use \OpenRatException;
 use \security\Password;
-use Session;
+use \Session;
 use \Html;
 use \Mail;
 use \Text;
@@ -91,10 +91,10 @@ class LoginAction extends Action
 	}
 
 
-
-	/**
-	 * Prueft, ob der Parameter 'dbid' übergeben wurde.
-	 */
+    /**
+     * Prueft, ob der Parameter 'dbid' übergeben wurde.
+     * @throws OpenRatException
+     */
 	function checkForDb()
 	{
 		global $conf;
@@ -105,8 +105,10 @@ class LoginAction extends Action
 	}
 
 
-
-	function setDefaultDb()
+    /**
+     * @throws OpenRatException
+     */
+    function setDefaultDb()
 	{
 		if	( $this->hasRequestVar(REQ_PARAM_DATABASE_ID) )
 		{
@@ -121,15 +123,23 @@ class LoginAction extends Action
 	
 			$dbid = $conf['database']['default'];
 		}
-		
+
 		$this->setDb( $dbid );
 	}
 
 
-
-	private function checkLogin( $name,$pw,$pw1,$pw2 )
+    /**
+     * Führt ein Login durch.
+     * @param $name string Benutzername
+     * @param $pw string Password
+     * @param $pw1 string new Password
+     * @param $pw2 string new Password repeated
+     * @return bool
+     * @throws ObjectNotFoundException
+     */
+    private function checkLogin($name, $pw, $pw1, $pw2 )
 	{
-		Logger::debug( "login user $name" );
+		Logger::debug( "Login user: '$name'.'" );
 	
 		global $conf;
 		global $SESS;
@@ -217,211 +227,212 @@ class LoginAction extends Action
 	}
 
 
+    /**
+     * Anzeigen der Loginmaske.
+     *
+     * Es wird nur die Loginmaske angezeigt.
+     * @throws OpenRatException
+     */
+    function loginView()
+    {
+        // Hier nie "304 not modified" setzen, da sonst keine
+        // Login-Fehlermeldung erscheinen kann.
+        global $conf;
 
-	/**
-	 * Anzeigen der Loginmaske.
-	 *
-	 * Es wird nur die Loginmaske angezeigt.
-	 * Hier nie "304 not modified" setzen, da sonst keine
-	 * Login-Fehlermeldung erscheinen kann
-	 */
-	function loginView()
-	{
-		global $conf;
-		
-		$sso = $conf['security']['sso'];
-		$ssl = $conf['security']['ssl'];
-		
-		$ssl_trust    = false;
-		$ssl_user_var = '';
-		extract( $ssl, EXTR_PREFIX_ALL, 'ssl' );
-		
-		if	( $sso['enable'] )
-		{
-			$authid = $this->getRequestVar( $sso['auth_param_name']);
-			
-			if	( empty( $authid) )
-				Http::notAuthorized( 'no authorization data (no auth-id)');
-				
-			if	( $sso['auth_param_serialized'] )
-				$authid = unserialize( $authid );
-			
-			$purl = parse_url($sso['url']);
-			// Verbindung zu URL herstellen.
-			$errno=0; $errstr='';
-			$fp = fsockopen ($purl['host'],80, $errno, $errstr, 30);
-			if	( !$fp )
-			{
-				echo "Connection failed: $errstr ($errno)";
-			}
-			else
-			{
-				$http_get = $purl['path'];
-				if	( !empty($purl['query']) ) 
-					$http_get .= '?'.$purl['query'];
+        $sso = $conf['security']['sso'];
+        $ssl = $conf['security']['ssl'];
 
-				$header = array();
-					
-				$header[] = "GET $http_get HTTP/1.0";
-				$header[]  ="Host: ".$purl['host'];
-				$header[] = "User-Agent: Mozilla/5.0 (OpenRat CMS Single Sign-on Check)";
-				$header[] = "Connection: Close";
-				
-				if	( $sso['cookie'] )
-				{
-					$cookie = 'Cookie: ';
-					if	( is_array($authid))
-						foreach( $authid as $cookiename=>$cookievalue)
-							$cookie .= $cookiename.'='.$cookievalue."; ";
-					else
-						$cookie .= $sso['cookie_name'].'='.$authid;
-						
-					$header[] = $cookie;
-				}
-				
+        $ssl_trust    = false;
+        $ssl_user_var = '';
+        extract( $ssl, EXTR_PREFIX_ALL, 'ssl' );
+
+        if	( $sso['enable'] )
+        {
+            $authid = $this->getRequestVar( $sso['auth_param_name']);
+
+            if	( empty( $authid) )
+                Http::notAuthorized( 'no authorization data (no auth-id)');
+
+            if	( $sso['auth_param_serialized'] )
+                $authid = unserialize( $authid );
+
+            $purl = parse_url($sso['url']);
+            // Verbindung zu URL herstellen.
+            $errno=0; $errstr='';
+            $fp = fsockopen ($purl['host'],80, $errno, $errstr, 30);
+            if	( !$fp )
+            {
+                echo "Connection failed: $errstr ($errno)";
+            }
+            else
+            {
+                $http_get = $purl['path'];
+                if	( !empty($purl['query']) )
+                    $http_get .= '?'.$purl['query'];
+
+                $header = array();
+
+                $header[] = "GET $http_get HTTP/1.0";
+                $header[]  ="Host: ".$purl['host'];
+                $header[] = "User-Agent: Mozilla/5.0 (OpenRat CMS Single Sign-on Check)";
+                $header[] = "Connection: Close";
+
+                if	( $sso['cookie'] )
+                {
+                    $cookie = 'Cookie: ';
+                    if	( is_array($authid))
+                        foreach( $authid as $cookiename=>$cookievalue)
+                            $cookie .= $cookiename.'='.$cookievalue."; ";
+                    else
+                        $cookie .= $sso['cookie_name'].'='.$authid;
+
+                    $header[] = $cookie;
+                }
+
 //				Html::debug($header);
-				fputs ($fp, implode("\r\n",$header)."\r\n\r\n");
-				
-				$inhalt=array();
-				while (!feof($fp)) {
-					$inhalt[] = fgets($fp,128);
-				}
-				fclose($fp);
-				
-				$html = implode('',$inhalt);
+                fputs ($fp, implode("\r\n",$header)."\r\n\r\n");
+
+                $inhalt=array();
+                while (!feof($fp)) {
+                    $inhalt[] = fgets($fp,128);
+                }
+                fclose($fp);
+
+                $html = implode('',$inhalt);
 //				Html::debug($html);
-				if	( !preg_match($sso['expect_regexp'],$html) )
-					Http::notAuthorized('auth failed');
-				$treffer=0;
-				if	( !preg_match($sso['username_regexp'],$html,$treffer) )
-					Http::notAuthorized('auth failed');
-				if	( !isset($treffer[1]) )
-					Http::notAuthorized('authorization failed');
-					
-				$username = $treffer[1];
-				
+                if	( !preg_match($sso['expect_regexp'],$html) )
+                    Http::notAuthorized('auth failed');
+                $treffer=0;
+                if	( !preg_match($sso['username_regexp'],$html,$treffer) )
+                    Http::notAuthorized('auth failed');
+                if	( !isset($treffer[1]) )
+                    Http::notAuthorized('authorization failed');
+
+                $username = $treffer[1];
+
 //				Html::debug( $treffer );
-				$this->setDefaultDb();
+                $this->setDefaultDb();
 
-				$user = User::loadWithName( $username );
-				
-				if	( ! $user->isValid( ))
-					Http::notAuthorized('authorization failed: user not found: '.$username);
-					
-				$user->setCurrent();
+                $user = User::loadWithName( $username );
 
-				$this->callSubAction('show');
-			}
-		}
+                if	( ! $user->isValid( ))
+                    Http::notAuthorized('authorization failed: user not found: '.$username);
 
-		elseif	( $ssl_trust )
-		{
-			if	( empty($ssl_user_var) )
-				Http::serverError( 'please set environment variable name in ssl-configuration.' );
+                $user->setCurrent();
 
-			$username = getenv( $ssl_user_var );
+                $this->callSubAction('show');
+            }
+        }
 
-			if	( empty($username) )
-				Http::notAuthorized( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
-			
-			$this->setDefaultDb();
+        elseif	( $ssl_trust )
+        {
+            if	( empty($ssl_user_var) )
+                Http::serverError( 'please set environment variable name in ssl-configuration.' );
 
-			$user = User::loadWithName( $username );
+            $username = getenv( $ssl_user_var );
 
-			if	( !$user->isValid() )
-				Http::serverError( 'unknown username: '.$username );
+            if	( empty($username) )
+                Http::notAuthorized( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
 
-			$user->setCurrent();
+            $this->setDefaultDb();
 
-			$this->callSubAction('show');
-		}
-		
-		foreach( $conf['database'] as $dbid => $dbconf )
-		{
-			if	( is_array($dbconf) && $dbconf['enabled'] )
-				$dbids[$dbid] = array('key'   => $dbid,
-				                      'value' => empty($dbconf['name'])?$dbid:Text::maxLength($dbconf['name']),
-				                      'title' => @$dbconf['description'] );
-		}
-		
-		
-		if	( empty($dbids) )
-			$this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
-		
-		if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
-			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
-		
-		if	( !isset($this->templateVars['login_name']) )
-			$this->setTemplateVar('login_name',@$conf['security']['default']['username']);
+            $user = User::loadWithName( $username );
 
-		if	( @$this->templateVars['login_name']== @$conf['security']['default']['username'])
-			$this->setTemplateVar('login_password',@$conf['security']['default']['password']);
+            if	( !$user->isValid() )
+                Http::serverError( 'unknown username: '.$username );
 
-		$this->setTemplateVar( 'dbids',$dbids );
-		
-		$db = Session::getDatabase();
-		if	( is_object($db) )
-			$this->setTemplateVar('actdbid',$db->id);
-		elseif( isset($this->templateVars['actid']) )
-			;
-		elseif  ( isset($_COOKIE['or_dbid']) && isset($dbids[$_COOKIE['or_dbid']]) )
-			// DB-Id aus dem Cookie lesen.
-			$this->setTemplateVar('actdbid',$_COOKIE['or_dbid'] );
-		else
-			$this->setTemplateVar('actdbid',$conf['login']['default-database']);
+            $user->setCurrent();
+
+            $this->callSubAction('show');
+        }
+
+        foreach( $conf['database'] as $dbid => $dbconf )
+        {
+            if	( is_array($dbconf) && $dbconf['enabled'] )
+                $dbids[$dbid] = array('key'   => $dbid,
+                    'value' => empty($dbconf['name'])?$dbid:Text::maxLength($dbconf['name']),
+                    'title' => @$dbconf['description'] );
+        }
 
 
-		// Den Benutzernamen aus dem Client-Zertifikat lesen und in die Loginmaske eintragen. 
-		$ssl_user_var = $conf['security']['ssl']['client_cert_dn_env'];
-		if	( !empty($ssl_user_var) )
-		{
-		    $username = getenv( $ssl_user_var );
+        if	( empty($dbids) )
+            $this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
 
-			if	( empty($username) )
-			{
-			    // Nothing to do.
-			    // if user has no valid client cert he could not access this form. 
-			}
-			else {
-                    
+        if	( !isset($this->templateVars['login_name']) && isset($_COOKIE['or_username']) )
+            $this->setTemplateVar('login_name',$_COOKIE['or_username']);
+
+        if	( !isset($this->templateVars['login_name']) )
+            $this->setTemplateVar('login_name',@$conf['security']['default']['username']);
+
+        if	( @$this->templateVars['login_name']== @$conf['security']['default']['username'])
+            $this->setTemplateVar('login_password',@$conf['security']['default']['password']);
+
+        $this->setTemplateVar( 'dbids',$dbids );
+
+        $db = Session::getDatabase();
+        if	( is_object($db) )
+            $this->setTemplateVar('actdbid',$db->id);
+        elseif( isset($this->templateVars['actid']) )
+            ;
+        elseif  ( isset($_COOKIE['or_dbid']) && isset($dbids[$_COOKIE['or_dbid']]) )
+            // DB-Id aus dem Cookie lesen.
+            $this->setTemplateVar('actdbid',$_COOKIE['or_dbid'] );
+        else
+            $this->setTemplateVar('actdbid',$conf['login']['default-database']);
+
+
+        // Den Benutzernamen aus dem Client-Zertifikat lesen und in die Loginmaske eintragen.
+        $ssl_user_var = $conf['security']['ssl']['client_cert_dn_env'];
+        if	( !empty($ssl_user_var) )
+        {
+            $username = getenv( $ssl_user_var );
+
+            if	( empty($username) )
+            {
+                // Nothing to do.
+                // if user has no valid client cert he could not access this form.
+            }
+            else {
+
                 // Benutzername ist in Eingabemaske unver�nderlich
                 $this->setTemplateVar('force_username',$username);
-			}
-			
-		}
+            }
 
-		$this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,OR_FILTER_NUMBER) );
-		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,OR_FILTER_NUMBER) );
-		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,OR_FILTER_NUMBER) );
-		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',OR_FILTER_NUMBER) );
-				
-		$this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
-		$this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
-		
-		// Versuchen, einen Benutzernamen zu ermitteln, der im Eingabeformular vorausgewählt wird.
-		$modules = explode(',',$conf['security']['modules']['preselect']);
-		
-		$username = '';
-		foreach( $modules as $module)
-		{
-			Logger::debug('Preselecting module: '.$module);
-			$moduleClass = $module.'Auth';
-			$auth = new $moduleClass;
-			$username = $auth->username();
-				
-			if	( !empty($username) )
-			{
-				Logger::debug('Preselecting User '.$username);
-				break; // Benutzername gefunden.
-			}
-		}
-		
-		$this->setTemplateVar('login_name',$username);
-	}
-	
-	
-	
-		/**
+        }
+
+        $this->setTemplateVar('objectid'  ,$this->getRequestVar('objectid'  ,OR_FILTER_NUMBER) );
+        $this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,OR_FILTER_NUMBER) );
+        $this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,OR_FILTER_NUMBER) );
+        $this->setTemplateVar('languageid',$this->getRequestVar('languageid',OR_FILTER_NUMBER) );
+
+        $this->setTemplateVar('register'     ,$conf['login'   ]['register' ]);
+        $this->setTemplateVar('send_password',$conf['login'   ]['send_password']);
+
+        // Versuchen, einen Benutzernamen zu ermitteln, der im Eingabeformular vorausgewählt wird.
+        $modules = explode(',',$conf['security']['modules']['preselect']);
+
+        $username = '';
+        foreach( $modules as $module)
+        {
+            Logger::debug('Preselecting module: '.$module);
+            $moduleClass = $module.'Auth';
+            /** @var \Auth $auth */
+            $auth = new $moduleClass;
+            $username = $auth->username();
+
+            if	( !empty($username) )
+            {
+                Logger::debug('Preselecting User '.$username);
+                break; // Benutzername gefunden.
+            }
+        }
+
+        $this->setTemplateVar('login_name',$username);
+    }
+
+
+
+    /**
 	 * Anzeigen der Loginmaske.
 	 *
 	 * Es wird nur die Loginmaske angezeigt.
@@ -431,7 +442,7 @@ class LoginAction extends Action
 	function openidView()
 	{
 		global $conf;
-		
+
 		foreach( $conf['database'] as $dbname=>$dbconf )
 		{
 			if	( is_array($dbconf) && $dbconf['enabled'] )
@@ -439,7 +450,7 @@ class LoginAction extends Action
 				                        'value'=>Text::maxLength($dbconf['description']),
 				                        'title'=>$dbconf['description'].(isset($dbconf['host'])?' ('.$dbconf['host'].')':'') );
 		}
-		
+
 		$openid_provider = array();
 		foreach( explode(',',$conf['security']['openid']['provider']['name']) as $provider )
 			$openid_provider[$provider] = config('security','openid','provider.'.$provider.'.name');
@@ -447,17 +458,17 @@ class LoginAction extends Action
 		$this->setTemplateVar('openid_user_identity',config('security','openid','user_identity'));
 		//$this->setTemplateVar('openid_provider','identity');
 
-		
+
 		if	( empty($dbids) )
 			$this->addNotice('','','no_database_configuration',OR_NOTICE_WARN);
-		
+
 		if	( !isset($_COOKIE['or_username']) )
 			$this->setTemplateVar('login_name',$_COOKIE['or_username']);
 		else
 			$this->setTemplateVar('login_name',$conf['security']['default']['username']);
 
 		$this->setTemplateVar( 'dbids',$dbids );
-		
+
 		$db = Session::getDatabase();
 		if	( is_object($db) )
 			$this->setTemplateVar('actdbid',$db->id);
@@ -468,12 +479,12 @@ class LoginAction extends Action
 		$this->setTemplateVar('projectid' ,$this->getRequestVar('projectid' ,OR_FILTER_NUMBER) );
 		$this->setTemplateVar('modelid'   ,$this->getRequestVar('modelid'   ,OR_FILTER_NUMBER) );
 		$this->setTemplateVar('languageid',$this->getRequestVar('languageid',OR_FILTER_NUMBER) );
-		
+
 	}
-	
 
 
-	/**
+
+    /**
 	 * Erzeugt ein Projekt-Auswahlmenue.
 	 */
 	function projectmenu()
@@ -831,7 +842,7 @@ class LoginAction extends Action
 				catch (ObjectNotFoundException $e)
 				{
 					// Gruppe fehlt. Anlegen?
-					if	( config('ldap','authorize','auto_add' )
+					if	( config('ldap','authorize','auto_add' ) )
 					{
 						// Die Gruppe in der OpenRat-Datenbank hinzufuegen.
 						$g = new Group();

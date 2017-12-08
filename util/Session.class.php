@@ -18,6 +18,8 @@
 
 
 // PHP-Versionsunabhaengiges Array fuer die Session-Variablen ermitteln
+use cms\model\User;
+
 if	(isset($_SESSION))
 	$SESS = &$_SESSION;
 else $SESS = &$HTTP_SESSION_VARS;
@@ -48,7 +50,7 @@ else $FILES = &$HTTP_POST_FILES;
 
 class Session
 {
-	function get( $var )
+	public static function get( $var )
 	{
 		global $SESS;
 		if	( isset($SESS['ors_'.$var]) )
@@ -56,150 +58,168 @@ class Session
 		else
 			return '';
 	}
-	
-	function set( $var,$value )
+
+    public static function set( $var,$value )
 	{
 		global $SESS;
 		$SESS[ 'ors_'.$var ] = $value;
-	}	
+	}
 
 
-
-	function getConfig()
+    /**
+     * @return array
+     */
+    public static function getConfig()
 	{
 		return Session::get('config');
 	}
-	
-	function setConfig( $var )
+
+    public static function setConfig( $var )
 	{
 		Session::set('config',$var);
-	}	
+	}
 
 
-
-	function getProjectModel()
+    /**
+     * @return \cms\model\Model
+     */
+    public static function getProjectModel()
 	{
 		return Session::get('project_model');
 	}
-	
-	function setProjectModel( $var )
+
+    public static function setProjectModel( $var )
 	{
 		Session::set('project_model',$var);
-	}	
+	}
 
 
-
-	function getProjectLanguage()
+    /**
+     * @return \cms\model\Language
+     */
+    public static function getProjectLanguage()
 	{
 		return Session::get('project_language');
 	}
-	
-	function setProjectLanguage( $var )
+
+    public static function setProjectLanguage( $var )
 	{
 		Session::set('project_language',$var);
-	}	
+	}
 
 
 
-	function getObject()
+    public static function getObject()
 	{
 		return Session::get('object');
 	}
-	
-	function setObject( $var )
+
+    public static function setObject( $var )
 	{
 		Session::set('object',$var);
-	}	
+	}
 
 
-
-	function getFolder()
+    /**
+     * @return \cms\model\Folder
+     */
+    public static function getFolder()
 	{
 		return Session::get('folder');
 	}
-	
-	function setFolder( $var )
+
+    public static function setFolder( $var )
 	{
 		Session::set('folder',$var);
-	}	
+	}
 
 
 
-	function getTree()
+    public static function getTree()
 	{
 		return Session::get('tree');
 	}
-	
-	function setTree( $var )
+
+    public static function setTree( $var )
 	{
 		Session::set('tree',$var);
 	}	
 
 
 
-	function getElement()
+	public static function getElement()
 	{
 		return Session::get('element');
 	}
-	
-	function setElement( $var )
+
+    public static function setElement( $var )
 	{
 		Session::set('element',$var);
-	}	
+	}
 
 
-
-	function getProject()
+    /**
+     * @return \cms\model\Project
+     */
+    public static function getProject()
 	{
 		return Session::get('project');
 	}
-	
-	function setProject( $var )
+
+    public static function setProject( $var )
 	{
 		Session::set('project',$var);
-	}	
+	}
 
 
-
-	function getUser()
+    /**
+     * @return User
+     */
+    public static function getUser()
 	{
 		return Session::get('userObject');
 	}
 
-	function setUser( $var )
+    public static function setUser( $var )
 	{
 		Session::set('userObject',$var);
 	}
-	
-	
-	function getDatabase()
+
+
+    /**
+     * @return \database\Database
+     */
+    public static function getDatabase()
 	{
 		return Session::get('database');
 	}
 
-	function setDatabase( $var )
+    public static function setDatabase( $var )
 	{
 		Session::set('database',$var);
 	}
-	
-	
-	function getSubaction()
+
+
+    /**
+     * @return string
+     */
+    public static function getSubaction()
 	{
 		return Session::get('subaction');
 	}
 
-	function setSubaction( $var )
+    public static function setSubaction( $var )
 	{
 		Session::set('subaction',$var);
 	}
-	
-	
-	function getClipboard()
+
+
+    public static function getClipboard()
 	{
 		return Session::get('clipboard');
 	}
 
-	function setClipboard( $var )
+    public static function setClipboard( $var )
 	{
 		Session::set('clipboard',$var);
 	}
@@ -213,7 +233,7 @@ class Session
 	 * Nach Aufruf dieser Methode sind keine Session-Zugriffe ueber diese Klasse mehr
 	 * moeglich.
 	 */
-	function close()
+    public static function close()
 	{
 		session_write_close();
 	}	

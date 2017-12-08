@@ -26,7 +26,7 @@
  */
 class Html
 {
-	function error( $field )
+    public static function error( $field )
 	{
 		global $inputErrors;
 
@@ -39,7 +39,7 @@ class Html
 	/**
 	 * Ausgabe eines Variablenwertes.<br>
 	 */
-	function debug( $wert, $text='' )
+    public static function debug( $wert, $text='' )
 	{
 		echo "<strong>DEBUG: $text (".gettype($wert).")</strong><br/>";
 		echo "<pre>";
@@ -51,12 +51,12 @@ class Html
 	/**
 	 * Erzeugt eine relative Url innerhalb von Openrat
 	 *
-	 * @param Aktion, die aufgerufen werden soll
-	 * @param Unteraktion, die innerhalb der Aktion aufgerufen werden soll
-	 * @param Id fuer diesen Aufruf
-	 * @param Weitere beliebige Parameter
+	 * @param string Aktion, die aufgerufen werden soll
+	 * @param string Unteraktion, die innerhalb der Aktion aufgerufen werden soll
+	 * @param int Id fuer diesen Aufruf
+	 * @param array Weitere beliebige Parameter
 	 */
-	function url( $action,$subaction='',$id='',$params=array() )
+    public static function url( $action,$subaction='',$id='',$params=array() )
 	{
 		if	( intval($id)==0 )
 			$id='-';
@@ -147,7 +147,7 @@ class Html
 
 
 
-	function complete_tag($tagname,$attributes)
+    public static function complete_tag($tagname,$attributes)
 	{
 		$text = '<'.$tagname;
 		foreach( $attributes as $attribute_name=>$attribute_value )
@@ -156,10 +156,10 @@ class Html
 		$text .= ' />';
 		return $text;
 	}
-	
-	
 
-	function open_tag($tagname,$attributes)
+
+
+    public static function open_tag($tagname,$attributes)
 	{
 		$text = '<'.$tagname;
 		foreach( $attributes as $attribute_name=>$attribute_value )
@@ -168,9 +168,9 @@ class Html
 		$text .= '>';
 		return $text;
 	}
-	
-	
-	function close_tag($tagname)
+
+
+    public static function close_tag($tagname)
 	{
 		return '</'.$tagname.'>';
 	}
