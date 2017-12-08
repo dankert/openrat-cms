@@ -18,7 +18,7 @@
 
 namespace database;
 use Logger;
-use RuntimeException;
+use LogicException;
 
 /**
  * SQL-Anweisung.<br>
@@ -29,14 +29,14 @@ use RuntimeException;
  * Beispiel<br>
  * <pre>
  * // Neues Objekt erzeugen mit SQL-Anweisung
- * $sql = $db->sql('SELECT * FROM xy WHERE id={uid} AND name={name}');
+ * $stmt = $db->sql('SELECT * FROM xy WHERE id={uid} AND name={name}');
  * 
  * // Parameter f�llen
- * $sql->setInt   ('uid' ,1      );
- * $sql->setString('name','peter');
+ * $stmt->setInt   ('uid' ,1      );
+ * $stmt->setString('name','peter');
  * 
  * // Fertige SQL-Anweisung verwenden
- * $xy->execute( $sql->query );
+ * $stmt->execute();
  * </pre>
  * <br>
  * Ziele dieser Klasse sind:<br>
@@ -70,13 +70,14 @@ class Sql
 	 * )
 	 * </pre>
 	 */
-	var $param    = array();
-	
-	
-	/**
-	 * Erzeugt ein SQL-Objekt und analysiert die SQL-Anfrage.
-	 */
-	function __construct( $query = '' )
+	public $param    = array();
+
+
+    /**
+     * Erzeugt ein SQL-Objekt und analysiert die SQL-Anfrage.
+     * @param string $query SQL-Query
+     */
+	public function __construct( $query = '' )
 	{
 		$this->parseSourceQuery( $query );
 	}
@@ -85,9 +86,9 @@ class Sql
 	/**
 	 * Die SQL-Anfrage wird auf Parameter untersucht.
 	 */
-	function parseSourceQuery( $query )
+	private function parseSourceQuery( $query )
 	{
-		Logger::debug( 'SQL-query: '.$query);
+		Logger::debug( "SQL-query:\n$query" );
 		
 		while( true )  // Schleife wird solange durchlaufen, solange Parameter gefunden werden.
 		{
@@ -100,7 +101,7 @@ class Sql
 			$nameParam = substr($query,$posKlLinks+1,$posKlRechts-$posKlLinks-1);  // Name Parameter
 			
 			if	( isset($this->param[$nameParam ]))
-				throw new RuntimeException( 'Parameter '.$nameParam.' in Query mehrfach vorhanden.' );
+				throw new LogicException( "The named parameter '$nameParam'' is used more than one time in the SQL query:\n$query" );
 				
 			$this->param[$nameParam] = $posKlLinks;
 			

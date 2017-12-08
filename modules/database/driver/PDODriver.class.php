@@ -190,7 +190,7 @@ class PDODriver
 		$this->stmt = $this->connection->prepare($query);
 		
 		if	( $this->stmt === false )
-			throw new RuntimeException('Could not prepare statement: '.$query.' Cause: '.implode('/',$this->connection->errorInfo()) );
+			throw new RuntimeException("Could not prepare statement:\n$query\nCause: ".implode(' / ',$this->connection->errorInfo()) );
 		
 	}
 
