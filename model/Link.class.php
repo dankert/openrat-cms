@@ -70,7 +70,6 @@ class Link extends Object
      */
     public function save()
 	{
-		global $SESS;
 		$db = db_connection();
 		
 		$sql = $db->sql('UPDATE {{link}} SET '.
