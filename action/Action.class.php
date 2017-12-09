@@ -27,7 +27,8 @@ namespace {
 
 namespace cms\action {
 
-use \DomainException;
+    use cms\model\User;
+    use \DomainException;
     use \Html;
     use \Session;
 use \Logger;
