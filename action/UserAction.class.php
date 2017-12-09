@@ -10,8 +10,8 @@ use cms\model\Object;
 use cms\model\Language;
 
 
-
-
+use Http;
+use security\Base2n;
 use \security\Password;
 use \Session;
 use \Html;
@@ -49,7 +49,11 @@ class UserAction extends Action
 	var $defaultSubAction = 'edit';
 
 
-	function __construct()
+    /**
+     * UserAction constructor.
+     * @throws \ObjectNotFoundException
+     */
+    function __construct()
 	{
 		$this->user = new User( $this->getRequestId() );
 		$this->user->load();
@@ -216,6 +220,7 @@ class UserAction extends Action
 
 		foreach( User::getAllUsers() as $user )
 		{
+		    /* @var $user User */
 			$list[$user->userid]         = $user->getProperties();
 			$list[$user->userid]['url' ] = Html::url('main','user',$user->userid,
 			                                         array(REQ_PARAM_TARGETSUBACTION=>'edit') );
@@ -362,18 +367,20 @@ class UserAction extends Action
 	}
 
 
-	/**
-	 * Anzeigen der Benutzerrechte
-	 */
+    /**
+     * Anzeigen der Benutzerrechte
+     * @throws \ObjectNotFoundException
+     */
 	function rightsView()
 	{
-		$rights = $this->user->getAllAcls();
+        $rights = $this->user->getAllAcls();
 
-		$projects = array();
-		
-		foreach( $rights as $acl )
-		{
-			if	( !isset($projects[$acl->projectid]))
+        $projects = array();
+
+        foreach( $rights as $acl )
+        {
+            /* @var $acl Acl */
+            if	( !isset($projects[$acl->projectid]))
 			{
 				$projects[$acl->projectid] = array();
 				$p = new Project($acl->projectid);
@@ -416,7 +423,8 @@ class UserAction extends Action
 			}
 			else
 			{
-				// Berechtigung f�r "alle".
+			    ;
+				// Berechtigung fuer "alle".
 			}
 
 //			$show = array();
@@ -467,10 +475,11 @@ class UserAction extends Action
 		return true;
 	}
 
-	
-	/**
-	 * Wechselt zu einem ausgewählten User.
-	 */
+
+    /**
+     * Wechselt zu einem ausgewählten User.
+     * @throws \ObjectNotFoundException
+     */
 	public function switchPost()
 	{
 		// User laden...

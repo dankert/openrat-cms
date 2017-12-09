@@ -1697,10 +1697,7 @@ class StartAction extends Action
 		$this->setTemplateVar('timeline', $result);
 	}
 
-	
 
-
-	
 }
 
 
