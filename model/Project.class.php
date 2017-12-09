@@ -437,7 +437,7 @@ SQL
 	/**
 	 * Testet die Integrität der Datenbank.
 	 */
-	public function  functioncheckLostFiles()
+	public function checkLostFiles()
 	{
 		$this->log = array();
 		
