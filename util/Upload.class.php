@@ -50,7 +50,7 @@ class Upload
 	 *
 	 * @return Upload
 	 */
-	function Upload( $name='file' ) // Konstruktor
+	function __construct( $name='file' ) // Konstruktor
 	{
 		global $FILES;
 

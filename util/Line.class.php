@@ -4,7 +4,7 @@
  * Darstellung einer Zeile in einem Freitext.<br>
  * <br>
  * Im Konstruktor wird die Zeile analysiert und es wird festgestellt, was
- * die Zeile für einen Inhalt hat (z.B. ein Listenelement, eine Überschrift, usw.)<br>
+ * die Zeile fï¿½r einen Inhalt hat (z.B. ein Listenelement, eine ï¿½berschrift, usw.)<br>
  * 
  * @author Jan Dankert
  * @version $Revision$
@@ -12,7 +12,7 @@
  */
 class Line
 {
-	var $source;                       // Der ursprüngliche Inhalt
+	var $source;                       // Der ursprï¿½ngliche Inhalt
 	var $value;                        // Der textuelle Inhalt (sofern vorhanden)
 	
 	var $isDefinition   = false;       // Definitionseintrag
@@ -20,9 +20,9 @@ class Line
 	var $isNumberedList = false;       // numerierte Liste
 	var $indent         = 0;           // Einschubtiefe der Liste
 	
-	var $isHeadline          = false;  // Überschrift
-	var $isHeadlineUnderline = false;  // unterstrichene Überschrift
-	var $headlineLevel       = 0;      // Grad der Überschrift (1,2,3...)
+	var $isHeadline          = false;  // ï¿½berschrift
+	var $isHeadlineUnderline = false;  // unterstrichene ï¿½berschrift
+	var $headlineLevel       = 0;      // Grad der ï¿½berschrift (1,2,3...)
 	
 	
 	var $isTableOfContent = false;     // Inhaltsverzeichnis
@@ -41,7 +41,7 @@ class Line
 	/**
 	 * Erzeugt einen Zeilenobjekt, der Text im Parameter wird dabei geparst.
 	 */
-	function Line( $s )
+	function __construct( $s )
 	{
 		global $conf;
 		$text_markup = $conf['editor']['text-markup'];

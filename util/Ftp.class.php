@@ -35,10 +35,12 @@ class Ftp
 	var $passive = false;
 	
 	var $ok    = true;
-	
 
-	// Konstruktor
-	function Ftp( $url )
+    private $path;
+
+
+    // Konstruktor
+	function __construct( $url )
 	{
 		$this->connect( $url );
 	}
@@ -58,7 +60,7 @@ class Ftp
 		$ftp = array_merge($conf_ftp,$ftp);
 	
 		// Nur FTP und FTPS (seit PHP 4.3) erlaubt
-		if   ( !ereg('^ftps?$',@$ftp['scheme']) )
+		if   ( !in_array(@$ftp['scheme'],array('ftp','ftps')) )
 		{
 			$this->log[] = 'Unknown scheme in FTP Url: '.@$ftp['scheme'];
 			$this->log[] = 'Only FTP (and FTPS, if compiled in) are supported';

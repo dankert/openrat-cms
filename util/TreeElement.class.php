@@ -67,7 +67,7 @@ class TreeElement
 	
 	
 	// Konstruktor
-	function TreeElement()
+	function __construct()
 	{
 	}
 }

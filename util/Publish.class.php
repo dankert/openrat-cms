@@ -97,7 +97,7 @@ class Publish
 	 *
 	 * @return Publish
 	 */
-	function Publish()
+	function __construct()
 	{
 		global $conf;
 		$confPublish = $conf['publish']; 
