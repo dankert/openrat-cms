@@ -299,7 +299,7 @@ class Publish
 	 * Eine vorhandene FTP-Verbindung wird geschlossen.<br>
 	 * Falls entsprechend konfiguriert, wird ein Systemkommando ausgef�hrt.
 	 */
-	function close()
+	public function close()
 	{
 		if   ( $this->with_ftp )
 		{

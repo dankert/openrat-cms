@@ -84,7 +84,9 @@ class TitleAction extends Action
 		// Urls zum Benutzerprofil und zum Abmelden
 		//$this->setTemplateVar('profile_url',Html::url( 'profile'         ));
 		//$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
-		
+		$this->setTemplateVar('isAdmin',$this->userIsAdmin() );
+		$this->setTemplateVar('isLoggedIn',$this->userIsLoggedIn() );
+
 		if	( config('interface','session','auto_extend') )
 		{
 			$this->setTemplateVar('ping_url'    ,Html::url('title','ping')            );			

@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use ArchiveTar;
 use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
@@ -10,8 +11,12 @@ use cms\model\File;
 use cms\model\Link;
 
 use Http;
+use Publish;
 use Session;
 use \Html;
+use Text;
+use Upload;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -1001,7 +1006,7 @@ class FolderAction extends ObjectAction
 	 * @param String Abgek�rzter Bytewert
 	 * @return Integer Byteanzahl
 	 */
-	function stringToBytes($val)
+	private function stringToBytes($val)
 	{
 		$val  = trim($val);
 		$last = strtolower($val{strlen($val)-1});
@@ -1052,7 +1057,6 @@ class FolderAction extends ObjectAction
 
 	/**
 	 * Anzeige aller Objekte in diesem Ordner.
-	 * @return unknown_type
 	 */
 	public function previewView()
 	{
@@ -1066,7 +1070,9 @@ class FolderAction extends ObjectAction
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
 		{
-			$id = $o->objectid;
+            /* @var $o Object */
+
+            $id = $o->objectid;
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
@@ -1111,7 +1117,6 @@ class FolderAction extends ObjectAction
 
 	/**
 	 * Anzeige aller Objekte in diesem Ordner.
-	 * @return unknown_type
 	 */
 	public function contentView()
 	{
@@ -1127,7 +1132,8 @@ class FolderAction extends ObjectAction
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
 		{
-			$id = $o->objectid;
+            /* @var $o Object */
+            $id = $o->objectid;
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
@@ -1181,6 +1187,7 @@ class FolderAction extends ObjectAction
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
 		{
+		    /* @var $o Object */
 			$id = $o->objectid;
 
 			if   ( $o->hasRight(ACL_READ) )
@@ -1290,14 +1297,15 @@ class FolderAction extends ObjectAction
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
 		{
+            /* @var $o Object */
 			$id = $o->objectid;
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
 				$list[$id]['id'  ]     = $id;
-				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
-				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
-				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
+				$list[$id]['name']     = Text::maxLength( 30,$o->name     );
+				$list[$id]['filename'] = Text::maxLength( 20,$o->filename );
+				$list[$id]['desc']     = Text::maxLength( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
@@ -1342,6 +1350,7 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('orderbylastchange_url',Html::url('folder','reorder',0,array('type'=>'lastchange')) );
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
+		$this->setTemplateVar('token',token() );
 	}
 
 
@@ -1418,6 +1427,7 @@ class FolderAction extends ObjectAction
 		$children = array(); 
 		foreach( $contents as $o )
 		{
+            /* @var $o Object */
 			$children[$o->objectid] = array('id'=>$o->objectid,'name'=>$o->name,'type'=>$o->getType());
 		}
 		$tmp+= $children;

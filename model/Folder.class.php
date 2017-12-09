@@ -35,7 +35,10 @@ class Folder extends Object
 	var $name     = '';
 	var $filename = '';
 	var $desc     = '';
-	var $publish  = null;
+    /**
+     * @var \Publish
+     */
+	public $publish  = null;
 	
 
 	function __construct( $objectid='' )
@@ -179,7 +182,7 @@ class Folder extends Object
 
 	/**
 	 * Liest alle Objekte in diesem Ordner
-	 * @return Array von Objekten
+     * @return array[Object] Objekte
 	 */
 	function getObjects()
 	{

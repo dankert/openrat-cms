@@ -187,22 +187,12 @@ class Expression
 				return "'".$value."'";
 			case 'var':
 				return $invert.'$'.$value;
-			case 'function':
-				return $invert.$value.'()';
-			case 'method':
-				return $invert.'$this->'.$value.'()';
 			case 'size':
 				return '@count($'.$value.')';
-			case 'property':
-				return $invert.'$this->'.$value;
 			case 'message':
 				// macht aus "text1{var}text2" => "text1".$var."text2"
 				$value = preg_replace('/{(\w+)\}/','\'.$\\1.\'',$value);
 				return 'lang('."'".$value."'".')';
-			case 'messagevar':
-				return 'lang($'.$value.')';
-			case 'mode':
-				return $invert.'$mode=="'.$value.'"';
 			case 'arrayvar':
 				list($arr,$key) = explode(':',$value.':none');
 				return $invert.'@$'.$arr.'['.$key.']';
