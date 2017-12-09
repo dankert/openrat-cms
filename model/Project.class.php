@@ -825,7 +825,7 @@ SQL
 	/**
 	 * Ermittelt projektübergreifend die letzten Änderungen.
 	 *  
-	 * @return Ambigous <string, unknown>
+	 * @return array
 	 */
 	public static function getAllLastChanges()
 	{
@@ -858,7 +858,7 @@ SQL
 
 	/**
 	 * Ermittelt die letzten Änderung im Projekt.
-	 * @return Array[Objektid]=Array())
+	 * @return array
 	 */
 	public function getLastChanges()
 	{
