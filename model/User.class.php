@@ -539,7 +539,7 @@ SQL
 	/**
 	 * Ermitteln der Eigenschaften zu diesem Benutzer
 	 *
-	 * @return Array Liste der Eigenschaften als assoziatives Array
+	 * @return array Liste der Eigenschaften als assoziatives Array
 	 */
 	public function getProperties()
 	{
@@ -699,7 +699,7 @@ SQL
 	 * Ermitteln aller Berechtigungen des Benutzers.<br>
 	 * Diese Daten werden auf der Benutzerseite in der Administration angezeigt.
 	 *
-	 * @return unknown
+	 * @return array
 	 */
 	function getAllAcls()
 	{
@@ -740,7 +740,7 @@ SQL
 
 	/**
 	 * Ermitteln aller Berechtigungen.
-	 * @return Array Berechtigungen
+	 * @return array Berechtigungen
 	 */
 	function getRights()
 	{
@@ -944,7 +944,7 @@ SQL
 	/**
 	 * Ermittelt projektübergreifend die letzten Änderungen des Benutzers.
 	 *
-	 * @return Ambigous <string, unknown>
+	 * @return array <string, unknown>
 	 */
 	public function getLastChanges()
 	{

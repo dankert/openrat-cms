@@ -34,7 +34,6 @@ define('ACL_GRANT'        ,1024);
 define('ACL_TRANSMIT'     ,2048);
 
 
-
 /**
  * Darstellen einer Berechtigung (ACL "Access Control List")
  * Die Berechtigung zu einem Objekt wird mit einer Liste dieser Objekte dargestellt

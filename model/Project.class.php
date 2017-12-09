@@ -1,28 +1,14 @@
 <?php
+
 namespace cms\model;
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+use database\Database;
 
 
 /**
  * Darstellen eines Projektes
  *
- * @version $Revision$
- * @author $Author$
+ * @author Jan Dankert
  * @package openrat.objects
  */
 class Project
@@ -41,7 +27,7 @@ class Project
 	
 	
 	// Konstruktor
-	function __construct( $projectid='' )
+	public function  __construct( $projectid='' )
 	{
 		if   ( intval($projectid) != 0 )
 			$this->projectid = $projectid;
@@ -51,7 +37,7 @@ class Project
 	/**
 	 * Stellt fest, ob die angegebene Id existiert.
 	 */
-	function available( $id )
+	public function available( $id )
 	{
 		$db = db_connection();
 
@@ -64,14 +50,14 @@ class Project
 	
 
 	// Liefert alle verf?gbaren Projekte
-	function getAll()
+	public function getAll()
 	{
 		return Project::getAllProjects();
 	}
 
 
 	// Liefert alle verf?gbaren Projekte
-	function getAllProjects()
+	public function getAllProjects()
 	{
 		$db = db_connection();
 		$sql = $db->sql( 'SELECT id,name FROM {{project}} '.
@@ -82,7 +68,7 @@ class Project
 
 
 	// Liefert alle verf?gbaren Projekt-Ids
-	function getAllProjectIds()
+	public function getAllProjectIds()
 	{
 		$db = db_connection();
 		$sql = $db->sql( 'SELECT id FROM {{project}} '.
@@ -92,7 +78,7 @@ class Project
 	}
 
 
-	function getLanguages()
+	public function getLanguages()
 	{
 		$db = db_connection();
 
@@ -105,13 +91,13 @@ class Project
 	}
 
 
-	function getLanguageIds()
+	public function getLanguageIds()
 	{
 		return array_keys( $this->getLanguages() );
 	}
 
 
-	function getModels()
+	public function getModels()
 	{
 		$db = db_connection();
 
@@ -124,13 +110,13 @@ class Project
 	}
 
 
-	function getModelIds()
+	public function getModelIds()
 	{
 		return array_keys( $this->getModels() );
 	}
 
 
-	function getTemplateIds()
+    public function  getTemplateIds()
 	{
 		$db = db_connection();
 
@@ -142,7 +128,7 @@ class Project
 	}
 
 
-	function getTemplates()
+    public function  getTemplates()
 	{
 		$db = db_connection();
 
@@ -162,7 +148,7 @@ class Project
 	 * 
 	 * @return Objekt-Id des Wurzelordners
 	 */
-	function getRootObjectId()
+    public function  getRootObjectId()
 	{
 		$db = db_connection();
 		
@@ -178,7 +164,11 @@ class Project
 	
 
 	// Laden
-	function load()
+
+    /**
+     * @throws \ObjectNotFoundException
+     */
+    public function  load()
 	{
 		$db = db_connection();
 
@@ -202,7 +192,7 @@ class Project
 
 
 	// Laden
-	function loadByName()
+	public function loadByName()
 	{
 		$db = db_connection();
 
@@ -223,7 +213,7 @@ class Project
 
 
 	// Speichern
-	function save()
+	public function save()
 	{
 		$db = db_connection();
 
@@ -266,7 +256,7 @@ SQL
 
 
 	// Speichern
-	function getProperties()
+	public function getProperties()
 	{
 		return Array( 'name'               =>$this->name,
 		              'target_dir'         =>$this->target_dir,
@@ -280,7 +270,7 @@ SQL
 
 
 	// Projekt hinzufuegen
-	function add()
+	public function add()
 	{
 		$db = db_connection();
 		
@@ -343,7 +333,7 @@ SQL
 
 
 	// Projekt aus Datenbank entfernen
-	function delete()
+	public function delete()
 	{
 		$db = db_connection();
 
@@ -380,7 +370,7 @@ SQL
 		$sql->query();
 	}
 	
-	function getDefaultLanguageId()
+	public function getDefaultLanguageId()
 	{
 		$db = \Session::getDatabase();
 
@@ -396,7 +386,7 @@ SQL
 	}
 
 
-	function getDefaultModelId()
+	public function getDefaultModelId()
 	{
 		$db = \Session::getDatabase();
 
@@ -415,7 +405,7 @@ SQL
 	/**
 	 * Entfernt nicht mehr notwendige Inhalte aus dem Archiv.
 	 */
-	function checkLimit()
+	public function checkLimit()
 	{
 		$root = new Folder( $this->getRootObjectId() );
 		$root->projectid = $this->projectid;
@@ -448,7 +438,7 @@ SQL
 	/**
 	 * Testet die Integrität der Datenbank.
 	 */
-	public function checkLostFiles()
+	public function  functioncheckLostFiles()
 	{
 		$this->log = array();
 		
@@ -506,7 +496,7 @@ EOF
 	/**
 	 * Synchronisation des Projektinhaltes mit dem Dateisystem.
 	 */
-	public function sync()
+	public function  sync()
 	{
 		global $conf;
 		$syncConf = $conf['sync'];
@@ -517,18 +507,19 @@ EOF
 		$syncDir = slashify($syncConf['directory']).$this->name;
 		
 	}
-	
-	/**
-	 * Kopiert ein Projekt von einer Datenbank zu einer anderen.<br>
-	 * <br>
-	 * Alle Projektinhalte werden kopiert, die Fremdschluesselbeziehungen werden entsprechend angepasst.<br>
-	 * <br>
-	 * Alle Beziehungen zu Benutzern, z.B. "Zuletzt geaendert von", "angelegt von" sowie<br>
-	 * alle Berechtigungsinformationen gehen verloren!<br>
-	 * 
-	 * @param dbid_destination ID der Ziel-Datenbank
-	 */
-	function copy( $dbid_destination,$name='' )
+
+    /**
+     * Kopiert ein Projekt von einer Datenbank zu einer anderen.<br>
+     * <br>
+     * Alle Projektinhalte werden kopiert, die Fremdschluesselbeziehungen werden entsprechend angepasst.<br>
+     * <br>
+     * Alle Beziehungen zu Benutzern, z.B. "Zuletzt geaendert von", "angelegt von" sowie<br>
+     * alle Berechtigungsinformationen gehen verloren!<br>
+     *
+     * @param string $dbid_destination ID der Ziel-Datenbank
+     * @param string $name
+     */
+	public function copy( $dbid_destination,$name='' )
 	{
 		\Logger::debug( 'Copying project '.$this->name.' to database '.$dbid_destination );
 		
@@ -536,7 +527,7 @@ EOF
 		$zeit = date('Y-m-d\TH:i:sO');
 		
 		$db_src  = db_connection();
-		$db_dest = new \DB( $conf['database'][$dbid_destination] );
+		$db_dest = new Database( $conf['database'][$dbid_destination] );
 		$db_dest->id = $dbid_destination;
 		$db_dest->start();
 		
@@ -616,8 +607,8 @@ EOF
 			$idcolumn = $data['primary_key'];
 
 			// Naechste freie Id in der Zieltabelle ermitteln.
-			$sql = $db->sql( 'SELECT MAX('.$idcolumn.') FROM {t_'.$tabelle.'}',$dbid_destination);
-			$maxid = intval($db_dest->getOne($sql));
+			$stmt = $db_dest->sql( 'SELECT MAX('.$idcolumn.') FROM {t_'.$tabelle.'}');
+			$maxid = intval($stmt->getOne());
 			$nextid = $maxid;
 
 			// Zu �bertragende IDs ermitteln.
@@ -633,16 +624,16 @@ EOF
 					break;
 				}
 			}
-			$sql = $db->sql( 'SELECT '.$idcolumn.' FROM {t_'.$tabelle.'} '.$where);
+			$stmt = $db_src->sql( 'SELECT '.$idcolumn.' FROM {t_'.$tabelle.'} '.$where);
 
-			foreach( $db_src->getCol($sql) as $srcid )
+			foreach( $stmt->getCol() as $srcid )
 			{
 				\Logger::debug('Id '.$srcid.' of table '.$tabelle);
 				$mapping[$tabelle][$srcid] = ++$nextid;
 
-				$sql = $db->sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
-				$sql->setInt('id',$srcid);
-				$row = $db_src->getRow( $sql );
+				$stmt = $db_src->sql( 'SELECT * FROM {t_'.$tabelle.'} WHERE id={id}');
+				$stmt->setInt('id',$srcid);
+				$row = $stmt->getRow();
 
 				// Wert des Prim�rschl�ssels �ndern.
 				$row[$idcolumn] = $mapping[$tabelle][$srcid];
@@ -661,9 +652,9 @@ EOF
 					if	( isset($data['unique_idx']) && $key == $data['unique_idx'] )
 					{
 						// Nachschauen, ob es einen UNIQUE-Key in der Zieltabelle schon gibt.
-						$sql = $db->sql( 'SELECT 1 FROM {t_'.$tabelle.'} WHERE '.$key."='".$row[$key]."'",$dbid_destination);
+						$stmt = $db_dest->sql( 'SELECT 1 FROM {t_'.$tabelle.'} WHERE '.$key."='".$row[$key]."'");
 						
-						if	( intval($db_dest->getOne( $sql )) == 1 )
+						if	( intval($stmt->getOne()) == 1 )
 							$row[$key] = $row[$key].$zeit;
 
 					}
@@ -695,24 +686,31 @@ EOF
 				}
 				
 				// Daten in Zieltabelle einf�gen.
-				$sql = $db->sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES({'.join(array_keys($row),'},{').'})',$dbid_destination);
+				$stmt = $db_dest->sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES({'.join(array_keys($row),'},{').'})',$dbid_destination);
 				foreach( $row as $key=>$value )
 				{
 					if	( !$sameDB && isset($data['erase']) && in_array($key,$data['erase']) )
-						$sql->setNull($key);
+						$stmt->setNull($key);
 					else
-						$sql->setVar($key,$value);
+                    {
+                        if(is_bool($value))
+                            $stmt->setBoolean($key,$value);
+                        elseif(is_int($value))
+                            $stmt->setInt($key,$value);
+                        elseif(is_string($value))
+                            $stmt->setString($key,$value);
+                    }
 				}
 				//$sql = $db->sql( 'INSERT INTO {t_'.$tabelle.'} ('.join(array_keys($row),',').') VALUES('.join($row,',').')',$dbid_destination);
-				$db_dest->query( $sql );
+                $stmt->query();
 			}
 
 			if	( isset($data['self_key']) )
 			{
 				foreach( $mapping[$tabelle] as $oldid=>$newid )
 				{
-					$sql = $db->sql( 'UPDATE {t_'.$tabelle.'} SET '.$data['self_key'].'='.$newid.' WHERE '.$data['self_key'].'='.($oldid+$maxid),$dbid_destination );
-					$db_dest->query( $sql );
+					$stmt = $db_dest->sql( 'UPDATE {t_'.$tabelle.'} SET '.$data['self_key'].'='.$newid.' WHERE '.$data['self_key'].'='.($oldid+$maxid),$dbid_destination );
+					$stmt->query();
 				}
 			}
 		}
@@ -728,7 +726,7 @@ EOF
 	 * Ermittelt die Anzahl aller Objekte in diesem Projekt.
 	 * @return int Anzahl
 	 */
-	function countObjects()
+	public function countObjects()
 	{
 		$db = db_connection();
 		$sql = $db->sql( 'SELECT COUNT(*) FROM {{object}} '.
@@ -745,7 +743,7 @@ EOF
 	 * Ermittelt die Gr��e aller Dateien in diesem Projekt.
 	 * @return int Summe aller Dateigroessen
 	 */
-	function size()
+	public function size()
 	{
 		$db = db_connection();
 		
@@ -766,7 +764,7 @@ SQL
 	/**
 	 * Liefert alle verf?gbaren Projekt-Ids
 	 */
-	function info()
+	public function info()
 	{
 		$info = array();
 		
@@ -860,7 +858,7 @@ SQL
 	 * Ermittelt die letzten Änderung im Projekt.
 	 * @return array
 	 */
-	public function getLastChanges()
+	public function  getLastChanges()
 	{
 		
 		$db = db_connection();

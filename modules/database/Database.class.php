@@ -80,7 +80,7 @@ class Database
 	 * Kontruktor.
 	 * Erwartet die Datenbank-Konfiguration als Parameter.
 	 *
-	 * @param Array Konfiguration der Verbindung
+	 * @param array Konfiguration der Verbindung
 	 * @param boolean admin Wenn es eine Admin-DB-Verbindung werden soll, die auch DDL ausfuehren darf
 	 */
 	public function __construct( $dbconf,$admin=false )
