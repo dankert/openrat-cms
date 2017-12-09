@@ -53,7 +53,7 @@ class ProjectlistAction extends Action
 		// Projekte ermitteln
 		$list = array();
 
-		foreach( Project::getAll() as $id=>$name )
+		foreach(Project::getAllProjects() as $id=> $name )
 		{
 			$list[$id]             = array();
 			$list[$id]['id'      ] = $id;
@@ -66,7 +66,7 @@ class ProjectlistAction extends Action
 	
 	function addView()
 	{
-		$this->setTemplateVar( 'projects',Project::getAll() );
+		$this->setTemplateVar( 'projects',Project::getAllProjects() );
 	}
 	
 

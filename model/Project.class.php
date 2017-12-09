@@ -35,9 +35,12 @@ class Project
 
 	
 	/**
-	 * Stellt fest, ob die angegebene Id existiert.
+	 * Stellt fest, ob die angegebene Projekt-Id existiert.
+     * @param $id int Projekt-Id
+     * @return boolean
+     *
 	 */
-	public function available( $id )
+	public function isAvailable($id )
 	{
 		$db = db_connection();
 
@@ -49,15 +52,11 @@ class Project
 	}
 	
 
-	// Liefert alle verf?gbaren Projekte
-	public function getAll()
-	{
-		return Project::getAllProjects();
-	}
-
-
-	// Liefert alle verf?gbaren Projekte
-	public function getAllProjects()
+    /**
+     * Liefert alle verf?gbaren Projekte.
+     * @return array
+     */
+    public function getAllProjects()
 	{
 		$db = db_connection();
 		$sql = $db->sql( 'SELECT id,name FROM {{project}} '.
@@ -67,8 +66,8 @@ class Project
 	}
 
 
-	// Liefert alle verf?gbaren Projekt-Ids
-	public function getAllProjectIds()
+    // Liefert alle verf?gbaren Projekt-Ids
+    public function getAllProjectIds()
 	{
 		$db = db_connection();
 		$sql = $db->sql( 'SELECT id FROM {{project}} '.

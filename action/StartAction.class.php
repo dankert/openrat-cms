@@ -1074,7 +1074,7 @@ class StartAction extends Action
 				Session::setProjectLanguage( $language );
 			}
 		}
-		elseif	( isset($vars[REQ_PARAM_PROJECT_ID])&&Project::available($vars[REQ_PARAM_PROJECT_ID]) )
+		elseif	( isset($vars[REQ_PARAM_PROJECT_ID])&&Project::isAvailable($vars[REQ_PARAM_PROJECT_ID]) )
 		{
 			$project = new Project( $vars[REQ_PARAM_PROJECT_ID] );
 			$project->load();

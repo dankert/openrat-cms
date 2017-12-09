@@ -446,7 +446,7 @@ class WebdavAction extends Action
 
 		if	( $this->requestType == 'projectlist' )
 		{
-			foreach( Project::getAll() as $projectName )
+			foreach(Project::getAllProjects() as $projectName )
 			{
 				$objektinhalt = array();
 				$z = 30*365.25*24*60*60;
@@ -897,7 +897,7 @@ class WebdavAction extends Action
 
 				$inhalte[] = $objektinhalt;
 				
-				foreach( Project::getAll() as $projectid=>$projectName )
+				foreach(Project::getAllProjects() as $projectid=> $projectName )
 				{
 					$project = new Project( $projectid );
 					$rootObjectId = $project->getRootObjectId();

@@ -62,7 +62,7 @@ class TitleAction extends Action
 		if	( is_object($project) )
 		{
 			$this->setTemplateVar('projectname',$project->name);
-			$this->setTemplateVar('projects' ,Project::getAll()  );
+			$this->setTemplateVar('projects' ,Project::getAllProjects()  );
 		}		
 			
 		
