@@ -2,15 +2,15 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 	<header views="password,register,license"></header>
 	<form cancel="false" label="message:menu_login" visible="true">
-		<if present="config:login/logo/file">
+		<if true="config:login/logo/enabled">
 				<if present="config:login/logo/url">
 					<link url="config:login/logo/url" target="_top">
-						<image url="config:login/logo/file"></image>
+						<image url="config:login/logo/image"></image>
 					</link>
 				</if>
-				<if empty="config:login/logo/url">
-					<image url="config:login/logo/file"></image>
-				</if>
+				<else>
+					<image url="config:login/logo/image"></image>
+				</else>
 		</if>
 		<if not="" empty="config:login/motd">
 			<part class="message info">
