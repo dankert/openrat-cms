@@ -134,7 +134,12 @@ class Value
 	 * @type Boolean
 	 */
 	var $publish;
-	
+
+    /**
+     * @type Boolean
+     */
+	public $simple;
+
 	/**
 	 * Konstruktor
 	 */
@@ -557,7 +562,7 @@ SQL
 			$v->simple     = $this->simple;
 			$v->element    = $this->element;
 			$v->languageid = $this->languageid;
-			$v->modelid    = $this->modelid;
+			//$v->modelid    = $this->modelid;
 			$v->load();
 			$v->generate();
 			$this->value = $v->value;

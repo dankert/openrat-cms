@@ -1097,7 +1097,7 @@ function createUrl(action,subaction,id,extraid)
 	{
 		url += '?0=0';
 		jQuery.each(extraid, function(name, field) {
-			url = url + '&' + name + '=' + field;
+			url = url + '&' + field.name + '=' + field.value;
 		});
 	}
 	else
