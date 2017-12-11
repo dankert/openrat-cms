@@ -103,11 +103,15 @@ function fatal_handler() {
         $errfile = $error["file"];
         $errline = $error["line"];
         $errstr  = $error["message"];
-        
+
+        $message = $errno .' '. $errstr.' '. $errfile.' '. $errline;
         if(class_exists('Logger'))
-        	Logger::error( $errno .' '. $errstr.' '. $errfile.' '. $errline);
-        else 
-        	var_dump($error);
+        	Logger::error( $message);
+        else
+        {
+            error_log($message);
+            var_dump($error);
+        }
     }
 }
 
@@ -119,6 +123,8 @@ require_once( "functions/request.inc.php" );
 // Werkzeugklassen einbinden.
 require_once( OR_SERVICECLASSES_DIR."include.inc.".PHP_EXT );
 require_once( OR_AUTHCLASSES_DIR."include.inc.".PHP_EXT );
+
+
 
 
 require_once( OR_MODULES_DIR."security/require.".PHP_EXT );

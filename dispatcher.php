@@ -104,9 +104,42 @@ try
     	// mehr veraendert.
     	Session::setConfig( $conf );
     }
-    
+
+
     // Nachdem die Konfiguration gelesen wurde, kann nun der Logger benutzt werden.
-    require_once( OR_SERVICECLASSES_DIR."Logger.class.".PHP_EXT );
+    require_once( OR_MODULES_DIR."logger/require.".PHP_EXT );
+
+    // Logger initialisieren
+    Logger::$messageFormat = $conf['log']['format'];
+    Logger::$filename = $conf['log']['file'];
+    Logger::$dateFormat = $conf['log']['date_format'];
+    Logger::$nsLookup = $conf['log']['ns_lookup'];
+
+    $cname = 'LOGGER_LOG_'.strtoupper($conf['log']['level']);
+    if (defined($cname))
+    Logger::$level = constant($cname);
+
+
+    Logger::$messageCallback = function()
+    {
+        $action = Session::get('action');
+        if	( empty($action) )
+            $action = '-';
+
+        $action = Session::get('action');
+        if	( empty($action) )
+            $action = '-';
+
+        $user = Session::getUser();
+        if	( is_object($user) )
+            $username = $user->name;
+        else
+            $username = '-';
+
+        return array('user'=>$username,'action'=>$action);
+    };
+    Logger::init();
+
     
     if	( !empty($conf['security']['umask']) )
     	umask( octdec($conf['security']['umask']) );
