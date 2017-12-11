@@ -2,6 +2,7 @@
 
 
 namespace template_engine;
+use \template_engine\components\Component;
 
 /**
  * Wandelt eine Vorlage in ein PHP-Skript um.
@@ -102,6 +103,7 @@ class TemplateEngine
 					require_once ($classFilename);
 					
 					$className = 'template_engine\components\\'.$className .'Component';
+					/* @var $component Component */
 					$component = new $className();
 					$component->setDepth($depth); 
 					
@@ -132,7 +134,7 @@ class TemplateEngine
 			// CHMOD ausfuehren.
 			if (! empty($confCompiler['chmod']))
 				if (! @chmod($filename, octdec($confCompiler['chmod'])))
-					throw new \InvalidArgumentException("Template {$this->tplName} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
+					throw new \InvalidArgumentException("Template {$this->tplFileName} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
 		}
 		catch (\Exception $e)
 		{
