@@ -1,21 +1,5 @@
 <?php
 namespace cms\model;
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 
@@ -159,21 +143,11 @@ class Element
 	}
 
 
-
-//	function path_to_page( $pageid )
-//	{
-//		return $this->page->path_to_object( $pageid );
-//	}
-//	function path_to_object( $pageid )
-//	{
-//		return $this->path_to_page( $pageid );
-//	}
-
-
-	/**
-	 * Lesen des Elementes aus der Datenbank
-	 * Alle Eigenschaften des Elementes werden aus der Datenbank gelesen
-	 */
+    /**
+     * Lesen des Elementes aus der Datenbank
+     * Alle Eigenschaften des Elementes werden aus der Datenbank gelesen
+     * @throws \ObjectNotFoundException
+     */
 	function load()
 	{
 		if	( intval($this->elementid) != 0 )
@@ -190,7 +164,11 @@ SQL
 	}
 
 
-	function setDatabaseRow( $prop )
+    /**
+     * @param $prop
+     * @throws \ObjectNotFoundException
+     */
+    function setDatabaseRow($prop )
 	{
 		if	( count($prop) <= 0 )
 			throw new \ObjectNotFoundException("Element not found");
@@ -356,7 +334,7 @@ SQL
 
 	/**
 	 * Abhaengig vom Element-Typ werden die zur Darstellung notwendigen Eigenschaften ermittelt.
-	 * @return Array()
+	 * @return array
 	 */
 	function getRelatedProperties()
 	{
@@ -400,7 +378,7 @@ SQL
 
 	/**
 	 * Ermitteln aller benutzbaren Elementtypen
-	 * @return Array
+	 * @return array
 	 */
 	function getAvailableTypes()
 	{
@@ -450,6 +428,7 @@ SQL
 			case 'infodate':
 			case 'linkinfo':
 			case 'linkdate':
+            default:
 				return 'info';
 		}
 	}
