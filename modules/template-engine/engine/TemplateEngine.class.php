@@ -65,7 +65,7 @@ class TemplateEngine
 				return;
 			
 			if (is_file($filename) && ! is_writable($filename))
-				throw new \LogicException("File is read-only: $filename");
+				throw new \LogicException("Template output file is read-only: $filename");
 			
 			// Vorlage und Zieldatei oeffnen
 			$document = $this->loadDocument($srcFilename);
@@ -79,7 +79,7 @@ class TemplateEngine
 			$depth = 0;
 			$components = array();
 			
-			foreach ($document as $line)
+			foreach ($document as $element)
 			{
 				// Initialisieren der m�glichen Element-Inhalte
 				$type = '';
@@ -88,7 +88,7 @@ class TemplateEngine
 				$tag = '';
 				
 				// Setzt: $tag, $attributes, $value, $type
-				extract($line);
+				extract($element);
 				
 				if ($type == 'open' || $type == 'complete')
 				{
@@ -109,6 +109,11 @@ class TemplateEngine
 					
 					foreach ($attributes as $prop => $value)
 					{
+					    // Aus String 'true' und 'false' typechtes Boolean machen.
+                        // Sonst wäre 'false'==true!
+                        if ($value == 'false') $value = false;
+                        if ($value == 'true') $value = true;
+
 						$component->$prop = $value;
 					}
 					// $component->depth = $depth;
