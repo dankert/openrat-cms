@@ -4,6 +4,7 @@ namespace cms\action;
 
 use cms\model\Element;
 use cms\model\Template;
+use Session;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2009 Jan Dankert
@@ -89,6 +90,8 @@ class TemplatelistAction extends Action
 		}
 		
 		$this->setTemplateVar( 'examples',$examples );
+		$this->setTemplateVar( 'templateid','' );
+		$this->setTemplateVar( 'example','' );
 	}
 	
 	
@@ -135,6 +138,7 @@ class TemplatelistAction extends Action
 				$elementMapping = array();
 				foreach( $copy_template->getElements() as $element )
 				{
+				    /* @type $element Element */
 					$element->load();
 					$oldelementId = $element->elementid;
 					$element->templateid = $template->templateid;
