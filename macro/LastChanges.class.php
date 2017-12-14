@@ -76,18 +76,16 @@ class LastChanges extends Macro
 			if ($o['objectid'] == $this->getObjectId() )
 				continue;
 			
-			if	( ($o['is_page']==1 && istrue($this->showPages)) ||
-				  ($o['is_link']==1 && istrue($this->showLinks))  ) // Nur wenn gewünschter Typ
+			if	( ($o['typeid']==OR_TYPEID_PAGE && istrue($this->showPages)) ||
+				  ($o['typeid']==OR_TYPEID_LINK && istrue($this->showLinks))  ) // Nur wenn gewünschter Typ
 			{
-				if	( $o['is_link']==1 ) {
+				if	( $o['typeid']==OR_TYPEID_LINK ) {
 					$l = new Link( $o['objectid'] );
 					$l->load();
-					if	( !$l->isLinkToObject)
-						continue;
-					
+
 					$p = new Page( $l->linkedObjectId );
 				}
-				elseif ( $o['is_page']==1 )
+				elseif ( $o['typeid']==OR_TYPEID_PAGE )
 				{
 					$p = new Page( $o['objectid'] );
 				}

@@ -65,8 +65,10 @@ class Page extends Object
 	var $publish = null;
 	var $up_path = '';
 
+    public $values;
 
-	function __construct( $objectid='' )
+
+    function __construct( $objectid='' )
 	{
 		parent::__construct( $objectid );
 		$this->isPage = true;

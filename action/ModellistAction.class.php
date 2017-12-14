@@ -3,6 +3,8 @@
 namespace cms\action;
 
 use cms\model\Model;
+use Html;
+use Session;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -30,9 +32,16 @@ use cms\model\Model;
  */
 class ModellistAction extends Action
 {
+    /**
+     * @var Model
+     */
+    public $model;
+
 	public $security = SECURITY_USER;
-	
-	function __construct()
+
+    private $project;
+
+    function __construct()
 	{
 		if	( $this->getRequestId() != 0 )
 		{

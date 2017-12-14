@@ -3,6 +3,7 @@
 namespace cms\model;
 
 use database\Database;
+use Session;
 
 
 /**
@@ -371,7 +372,7 @@ SQL
 	
 	public function getDefaultLanguageId()
 	{
-		$db = \Session::getDatabase();
+		$db = Session::getDatabase();
 
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
@@ -387,7 +388,7 @@ SQL
 
 	public function getDefaultModelId()
 	{
-		$db = \Session::getDatabase();
+		$db = Session::getDatabase();
 
 		// ORDER BY deswegen, damit immer mind. eine Sprache
 		// gelesen wird
@@ -441,7 +442,7 @@ SQL
 	{
 		$this->log = array();
 		
-		$db = &\Session::getDatabase();
+		$db = &Session::getDatabase();
 
 		// Ordnerstruktur prüfen.
 		$sql = $db->sql( <<<EOF
@@ -809,10 +810,10 @@ SQL
 		// Variablen setzen.
 		$sql->setInt( 'projectid', $this->projectid );
 		
-		$language = \Session::getProjectLanguage();
+		$language = Session::getProjectLanguage();
 		$sql->setInt( 'languageid', $language->languageid );
 		
-		$user = \Session::getUser();
+		$user = Session::getUser();
 		$sql->setInt( 'userid', $user->userid );
 		
 		return $sql->getAll();
@@ -886,7 +887,7 @@ SQL
 		// Variablen setzen.
 		$sql->setInt( 'projectid', $this->projectid );
 		
-		$language = \Session::getProjectLanguage();
+		$language = Session::getProjectLanguage();
 		$sql->setInt( 'languageid', $language->languageid );
 		
 		return $sql->getAll();

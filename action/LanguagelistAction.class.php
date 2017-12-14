@@ -124,6 +124,7 @@ class LanguagelistAction extends Action
 
 		asort( $countryList );		
 		$this->setTemplateVar('isocodes'  ,$countryList );
+		$this->setTemplateVar('isocode'  ,'' );
 	}
 	
 	

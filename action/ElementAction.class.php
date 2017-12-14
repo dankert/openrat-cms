@@ -7,7 +7,7 @@ use cms\model\Element;
 use cms\model\Template;
 use cms\model\Folder;
 use cms\model\Object;
-
+use Text;
 
 
 // OpenRat Content Management System
@@ -38,7 +38,9 @@ class ElementAction extends Action
 	
 	var $element;
 
-	/**
+    private $template;
+
+    /**
 	 * Konstruktor
 	 */
 	function __construct()
@@ -387,13 +389,11 @@ class ElementAction extends Action
 						$formatlist[$t] = array('lang'=>'EL_PROP_'.$v);
 					
 					$this->setTemplateVar('formatlist', $formatlist );
-					//Html::debug($this->templateVars);
 					break;
 				
 				case 'linktype':
 					$this->setTemplateVar('linktype', $this->element->wiki );
 					$this->setTemplateVar('linktypelist', array('page','file','link') );
-					//Html::debug($this->templateVars);
 					break;
 				
 				case 'prefix':
@@ -610,7 +610,7 @@ class ElementAction extends Action
 					break;
 
 				default:
-					$this->message('ERROR','not an element property: '.$propertyName );
+					throw new \LogicException('not an element property: '.$propertyName );
 			}
 		}
 	}
