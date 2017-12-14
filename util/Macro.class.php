@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\model\Page;
 
 
 /**
@@ -30,6 +31,10 @@ class Macro
 	var $project;
 	var $output   = '';
 	var $objectid = 0;
+
+    /**
+     * @var Page
+     */
 	var $page;
 	var $parameters  = array();
 	var $description = '';
@@ -65,7 +70,7 @@ class Macro
 	
 	/**
 	 * Holt die aktuelle Seite.
-	 * @return Seite
+	 * @return \cms\model\Page
 	 */
 	public function getPage()
 	{
@@ -85,7 +90,7 @@ class Macro
 	
 	/**
 	 * Setzt eine Objekt-Id.
-	 * @param unknown_type $objectid
+	 * @param int $objectid
 	 */
 	public function setObjectId( $objectid )
 	{
@@ -173,11 +178,11 @@ class Macro
 	}
 
 
-	
-	/**
-	 * Ermittelt den Pfad auf ein Objekt.
-	 * @param Objekt oder Objekt-Id
-	 */
+    /**
+     * Ermittelt den Pfad auf ein Objekt.
+     * @param Object
+     * @return string
+     */
 	public function pathToObject( $obj )
 	{
 		if	( is_object($obj) )

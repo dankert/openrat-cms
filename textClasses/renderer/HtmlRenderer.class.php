@@ -1,5 +1,8 @@
 <?php
 
+use cms\model\File;
+use cms\model\Object;
+
 /**
  * Dokument-Objekt.<br>
  * Diese Objekt verk�rpert das Root-Objekt in einem DOM-Baum.<br>
@@ -12,18 +15,33 @@
  */
 class HtmlRenderer
 {
-	var $linkedObjectIds = array();
-	var $encodeHtml = false;
+	public $linkedObjectIds = array();
+	public $encodeHtml = false;
 		
 	/**
 	 * Fu�noten.
 	 *
-	 * @var Array
+	 * @var array
 	 */
-	var $footnotes       = array();
+	public $footnotes       = array();
+
+    /**
+     * @var string
+     */
+    public $renderedText;
+
+    /**
+     * @var \cms\model\Page
+     */
+    public $page;
+
+    /**
+     * @var array
+     */
+    public $children;
 
 
-	/**
+    /**
 	 * Rendert ein Dokument-Element.
 	 *
 	 * @param Object $child Element
@@ -210,6 +228,7 @@ class HtmlRenderer
 								if	( class_exists($className) )
 								{
 									$macro = new $className;
+									/*@type $macro Makro */
 									$macro->page = &$this->page;
 			
 									if	( method_exists( $macro,'execute' ) )
@@ -449,7 +468,6 @@ class HtmlRenderer
 				}
 
 				$val .= $suffix;
-//				echo "text:$val";
 				return $this->renderHtmlElement($tag,$val,$empty,$attr);
 		
 	}
@@ -462,7 +480,7 @@ class HtmlRenderer
 	 * @param String $tag Name des Tags
 	 * @param String $value Inhalt
 	 * @param boolean $empty abk�rzen, wenn Inhalt leer ("<... />")
-	 * @param Array $attr Attribute als Array<String,String>
+	 * @param array $attr Attribute als Array<String,String>
 	 * @return String
 	 */
 	function renderHtmlElement( $tag,$value,$empty,$attr=array() )
