@@ -49,7 +49,7 @@ class FormComponent extends Component
 		echo ' data-method="' . $this->htmlvalue($this->subaction) . '"';
 		echo ' data-action="' . $this->htmlvalue($this->action) . '"';
 		echo ' data-id="' . $this->htmlvalue($this->id) . '"';
-		echo ' method="' . $this->htmlvalue($this->subaction) . '"';
+		echo ' method="' . $this->htmlvalue($this->method) . '"';
 		echo ' enctype="' . $this->htmlvalue($this->enctype) . '"';
 		echo ' class="' . $this->htmlvalue($this->action) . '"';
 		echo ' data-async="' . $this->htmlvalue($this->async) . '"';
