@@ -128,7 +128,7 @@ class Page extends Object
 
 	/**
 	 * Ermitteln der Ordner, in dem sich die Seite befindet
-	 * @return Array
+	 * @return array
 	 */
 	function parentfolder()
 	{
@@ -139,30 +139,7 @@ class Page extends Object
 	}
 
 
-/*
-	function path_to_file( $fileid )
-	{
-		global $conf_php;
-		
-		if   ( $this->public )
-		{ 
-			$inhalt = $this->up_path();
-			
-			$file = new File();
-			$file->fileid = $fileid;
-			$file->load();
 
-			$inhalt .= $file->full_filename();
-		}
-		else
-		{
-			$inhalt = "file.$conf_php?fileaction=show&fileid=".$fileid;
-			$inhalt = sid($inhalt);
-		}
-		
-		return $inhalt;
-	}
-*/
 
 	/**
 	  * Ermittelt den Pfad zu einem beliebigen Objekt
@@ -170,7 +147,7 @@ class Page extends Object
 	  * @param Integer Objekt-ID des Zielobjektes
 	  * @return String Relative Link-angabe, Beispiel: '../../pfad/datei.jpeg'
 	  */
-	function path_to_object( $objectid )
+	public function path_to_object( $objectid )
 	{
 		global $conf_php,
 		       $SESS;
@@ -192,9 +169,9 @@ class Page extends Object
 
 		if   ( $this->public )
 		{ 
-			switch( $object->getType() )
+			switch( $object->typeid )
 			{
-				case 'file':
+				case OR_TYPEID_FILE:
 
 					$inhalt  = $this->up_path();
 					
@@ -204,7 +181,7 @@ class Page extends Object
 					$inhalt .= $f->full_filename();
 					break;
 
-				case 'page':
+				case OR_TYPEID_PAGE:
 
 					$inhalt  = $this->up_path();
 					
@@ -219,83 +196,82 @@ class Page extends Object
 					$inhalt .= $p->full_filename();
 					break;
 
-				case 'link':
+				case OR_TYPEID_LINK:
 					$link = new Link( $objectid );
 					$link->load();
 
-					if	( $link->isLinkToObject )
-					{
-						$linkedObject = new Object( $link->linkedObjectId );
-						$linkedObject->load();
+					$linkedObject = new Object( $link->linkedObjectId );
+					$linkedObject->objectLoad();
 
-						switch( $linkedObject->getType() )
-						{
-							case 'file':
-								$f = new File( $link->linkedObjectId );
-								$f->load();
-								$f->content_negotiation = $content_negotiation;
-								$inhalt  = $this->up_path();
-								$inhalt .= $f->full_filename();
-							break;
-			
-							case 'page':
-								$p = new Page( $link->linkedObjectId );
-								$p->languageid          = $this->languageid;
-								$p->modelid             = $this->modelid;
-								$p->cut_index           = $cut_index;
-								$p->content_negotiation = $content_negotiation;
-					$p->withLanguage        = $this->withLanguage;
-					$p->withModel           = $this->withModel;
-								$p->load();
-								$inhalt  = $this->up_path();
-								$inhalt .= $p->full_filename();
-							break;
-						}
-					}
-					else
+					switch( $linkedObject->getType() )
 					{
-						$inhalt = $link->url;
+						case OR_TYPEID_FILE:
+							$f = new File( $link->linkedObjectId );
+							$f->load();
+							$f->content_negotiation = $content_negotiation;
+							$inhalt  = $this->up_path();
+							$inhalt .= $f->full_filename();
+						break;
+
+						case OR_TYPEID_PAGE:
+							$p = new Page( $link->linkedObjectId );
+							$p->languageid          = $this->languageid;
+							$p->modelid             = $this->modelid;
+							$p->cut_index           = $cut_index;
+							$p->content_negotiation = $content_negotiation;
+				$p->withLanguage        = $this->withLanguage;
+				$p->withModel           = $this->withModel;
+							$p->load();
+							$inhalt  = $this->up_path();
+							$inhalt .= $p->full_filename();
+						break;
 					}
+					break;
+
+				case OR_TYPEID_URL:
+					$url = new Url( $objectid );
+                    $url->load();
+					$inhalt = $url->url;
 					break;
 			}
 		}
 		else
 		{
 			// Interne Verlinkungen in der Seitenvorschau
-			switch( $object->getType() )
+			switch( $object->typeid )
 			{
-				case 'file':
+				case OR_TYPEID_FILE:
 					$inhalt = \Html::url('file','show',$objectid,$param);
 					break;
 
-				case 'page':
+				case OR_TYPEID_PAGE:
 					$inhalt = \Html::url('page','show',$objectid,$param);
 					break;
 
-				case 'link':
+				case OR_TYPEID_LINK:
 					$link = new Link( $objectid );
 					$link->load();
 
-					if	( $link->isLinkToObject )
-					{
-						$linkedObject = new Object( $link->linkedObjectId );
-						$linkedObject->load();
+					$linkedObject = new Object( $link->linkedObjectId );
+					$linkedObject->objectLoad();
 
-						switch( $linkedObject->getType() )
-						{
-							case 'file':
-								$inhalt = \Html::url('file','show',$link->linkedObjectId,$param);
-							break;
-			
-							case 'page':
-								$inhalt = \Html::url('page','show',$link->linkedObjectId,$param);
-							break;
-						}
-					}
-					else
+					switch( $linkedObject->typeid )
 					{
-						$inhalt = $link->url;
+						case OR_TYPEID_FILE:
+							$inhalt = \Html::url('file','show',$link->linkedObjectId,$param);
+						break;
+
+						case OR_TYPEID_PAGE:
+							$inhalt = \Html::url('page','show',$link->linkedObjectId,$param);
+						break;
 					}
+					break;
+
+				case OR_TYPEID_URL:
+                    $url = new Url( $objectid );
+                    $url->load();
+                    $inhalt = $url->url;
+
 					break;
 			}
 		}

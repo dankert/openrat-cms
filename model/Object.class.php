@@ -596,6 +596,8 @@ SQL
                 $this->lastchangeUser->mail     = $row['lastchange_usermail'    ];
             }
 
+            $this->typeid = $row['typeid'];
+
             $this->isFolder = ( $row['typeid'] == OR_TYPEID_FOLDER );
             $this->isFile   = ( $row['typeid'] == OR_TYPEID_FILE );
             $this->isPage   = ( $row['typeid'] == OR_TYPEID_PAGE );

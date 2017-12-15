@@ -93,7 +93,7 @@ class ListMenu extends Macro
 						$o->load();
 				
 						// Nur Seiten und Verknuepfungen anzeigen
-						if (!$o->isPage && !$o->isLink ) continue;
+						if (!$o->isPage && !$o->isLink && !$o->isUrl ) continue;
 						
 						// Wenn aktuelle Seite, dann markieren, sonst Link
 						if ( $this->getObjectId() == $xid )
