@@ -10,6 +10,7 @@ use cms\model\Object;
 use cms\model\File;
 use cms\model\Link;
 
+use cms\model\Url;
 use Http;
 use Publish;
 use Session;
@@ -48,7 +49,7 @@ class FolderAction extends ObjectAction
 	
 	private $folder;
 
-	function __construct()
+    public function __construct()
 	{
 		$this->folder = new Folder( $this->getRequestId() );
 		$this->folder->load();
@@ -60,7 +61,7 @@ class FolderAction extends ObjectAction
 	 * Neues Objekt anlegen.<br>
 	 * Dies kann ein(e) Verzeichnis, Seite, Verkn�pfung oder Datei sein.<br>
 	 */
-	function createPost()
+    public function createPost()
 	{
 		global $conf;
 		$type = $this->getRequestVar('type'       );
@@ -152,9 +153,6 @@ class FolderAction extends ObjectAction
 					$link->name           = $name;
 					$link->parentid       = $this->folder->objectid;
 		
-					$link->isLinkToObject = false;
-					$link->url            = $name;
-		
 					$link->add();
 					$this->folder->setTimestamp();
 
@@ -168,6 +166,30 @@ class FolderAction extends ObjectAction
 				
 				break;
 				
+			case 'url':
+
+				$urlValue = $this->getRequestVar('url');
+				if   ( !empty($urlValue) )
+				{
+					$url = new Url();
+                    $url->name           = $urlValue;
+                    $url->parentid       = $this->folder->objectid;
+
+                    $url->url            = $urlValue;
+
+                    $url->add();
+					$this->folder->setTimestamp();
+
+					$this->addNotice('url',$url->name,'ADDED','ok');
+				}
+				else
+				{
+					$this->addValidationError('url');
+					$this->callSubAction('create');
+				}
+
+				break;
+
 			default:
 				$this->addValidationError('type');
 				$this->callSubAction('create');
@@ -178,7 +200,7 @@ class FolderAction extends ObjectAction
 
 	
 	
-	function createfolderPost()
+    public function createfolderPost()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -208,7 +230,7 @@ class FolderAction extends ObjectAction
 
 
 
-	function createfilePost()
+    public function createfilePost()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -283,52 +305,71 @@ class FolderAction extends ObjectAction
 
 
 
-	function createlinkPost()
+    public function createlinkPost()
 	{
-		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
 		$filename    = $this->getRequestVar('filename'   );
+        $description = $this->getRequestVar('description');
+
+        if   ( !empty($name) )
+        {
+            $link = new Link();
+            $link->filename       = $filename;
+            $link->name           = $name;
+            $link->desc           = $description;
+            $link->parentid       = $this->folder->objectid;
+
+            $link->linkedObjectId = $this->getRequestVar('targetobjectid');
+
+            $link->add();
+
+            $this->addNotice('link',$link->name,'ADDED','ok');
+            $this->setTemplateVar('objectid',$link->objectid);
+        }
+        else
+        {
+            $this->addValidationError('name');
+            $this->callSubAction('createlink');
+            return;
+        }
+
+        $this->folder->setTimestamp();
+    }
+
+	public function createurlPost()
+	{
+		$name        = $this->getRequestVar('name'       );
 		$description = $this->getRequestVar('description');
-		
+        $filename    = $this->getRequestVar('filename'   );
+
 		if   ( !empty($name) )
 		{
-			$link = new Link();
-			$link->name           = $name;
-			$link->desc           = $description;
-			$link->parentid       = $this->folder->objectid;
+			$url = new Url();
+			$url->filename       = $filename;
+			$url->name           = $name;
+			$url->desc           = $description;
+			$url->parentid       = $this->folder->objectid;
 
-			if	( $this->hasRequestVar('targetobjectid') )
-			{
-				$link->isLinkToObject = true;
-				$link->isLinkToUrl    = false;
-				$link->linkedObjectId = $this->getRequestVar('targetobjectid');
-			}
-			else
-			{
-				$link->isLinkToObject = false;
-				$link->isLinkToUrl    = true;
-				$link->url            = $this->getRequestVar('name');
-			}
-			
+			$url->url            = $this->getRequestVar('url');
 
-			$link->add();
+			$url->add();
 
-			$this->addNotice('link',$link->name,'ADDED','ok');
-			$this->setTemplateVar('objectid',$link->objectid);
+			$this->addNotice('url',$url->name,'ADDED','ok');
+			$this->setTemplateVar('objectid',$url->objectid);
 		}
 		else
 		{
 			$this->addValidationError('name');
-			$this->callSubAction('createlink');
+			$this->callSubAction('createurl');
 			return;
 		}
-		
+
 		$this->folder->setTimestamp();
-	}	
+	}
 
 
 
-	function createpagePost()
+    public function createpagePost()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
@@ -365,7 +406,7 @@ class FolderAction extends ObjectAction
 	 * Abspeichern der Ordner-Eigenschaften. Ist der Schalter "delete" gesetzt, wird
 	 * der Ordner stattdessen gel?scht.
 	 */
-	function propPost()
+    public function propPost()
 	{
 		// Ordnereigenschaften speichern
 		if   ( $this->getRequestVar('name') != '' )
@@ -390,7 +431,7 @@ class FolderAction extends ObjectAction
 	/**
 	 * Reihenfolge von Objekten aendern.
 	 */
-	function orderPost()
+    public function orderPost()
 	{
 		$ids   = $this->folder->getObjectIds();
 		$seq   = 0;
@@ -417,7 +458,7 @@ class FolderAction extends ObjectAction
 
 
 	// Reihenfolge von Objekten aendern
-	function changesequencePost()
+    public function changesequencePost()
 	{
 		$ids = $this->folder->getObjectIds();
 		$seq = 0;
@@ -775,8 +816,13 @@ class FolderAction extends ObjectAction
 									$l->delete();
 									break;
 								
+								case 'url':
+									$u = new Url( $id );
+									$u->delete();
+									break;
+
 								default:
-									Http::serverError('Internal Error while deleting: What type to delete?');
+									throw new \LogicException("Error while deleting: Unknown type: {$o->getType()}");
 							}
 							$this->addNotice($o->getType(),$o->name,'DELETED',OR_NOTICE_OK);
 						}
@@ -846,7 +892,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function settopPost()
+    public function settopPost()
 	{
 		$o = new Object( $this->getRequestVar('objectid1') );
 		$o->setOrderId( 1 );
@@ -875,7 +921,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function setbottomPost()
+    public function setbottomPost()
 	{
 		$ids = $this->folder->getObjectIds();
 		$seq = 0;
@@ -924,7 +970,7 @@ class FolderAction extends ObjectAction
 	}
 
 
-	function createView()
+    public function createView()
 	{
 		// Maximale Dateigroesse.
 		$maxSizeBytes = $this->maxFileSize();
@@ -942,7 +988,7 @@ class FolderAction extends ObjectAction
 
 
 
-	function createfolderView()
+    public function createfolderView()
 	{
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 	}
@@ -986,7 +1032,7 @@ class FolderAction extends ObjectAction
 	 * Hochladen einer Datei.
 	 *
 	 */
-	function createfileView()
+    public function createfileView()
 	{
 		// Maximale Dateigroesse.
 		$maxSizeBytes = $this->maxFileSize();
@@ -1027,13 +1073,18 @@ class FolderAction extends ObjectAction
  
 	
 
-	function createlinkView()
+    public function createlinkView()
 	{
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 	}
 
 
-	function createpageView()
+    public function createurlView()
+	{
+	}
+
+
+    public function createpageView()
 	{
 		$all_templates = Template::getAll();
 		$this->setTemplateVar('templates' ,$all_templates          );
@@ -1287,7 +1338,7 @@ class FolderAction extends ObjectAction
 	/**
 	 * Reihenfolge bearbeiten.
 	 */
-	function orderView()
+    public function orderView()
 	{
 		global $conf_php;
 
@@ -1484,7 +1535,7 @@ class FolderAction extends ObjectAction
 	
 	
 	
-	function checkMenu( $name )
+    public function checkMenu( $name )
 	{
 		switch( $name)
 		{

@@ -1,8 +1,8 @@
 
 	
+		<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" data-type="dialog" data-name="<?php echo lang('MENU_ORDER') ?>" data-method="order"><img src="./themes/default/images/icon/action/order.svg" title="<?php echo lang('MENU_order_DESC') ?>" /><?php echo lang('MENU_order') ?></a></div></div>
 		
-		
-		<form name="" target="_self" action="folder" data-method="edit" data-action="folder" data-id="<?php echo OR_ID ?>" method="edit" enctype="application/x-www-form-urlencoded" class="folder" data-async="" data-autosave="" onSubmit="formSubmit( $(this) ); return false;"><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" action="folder" data-method="edit" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="folder" data-async="" data-autosave="" onSubmit="formSubmit( $(this) ); return false;"><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<table width="100%">
 				<tr class="headline">
 					<td class="help">
@@ -146,16 +146,9 @@
 								<div class="line">
 									<div class="label">
 									</div>
-									<div class="input"><!-- Compiling radio/radio-begin --><?php $a10_readonly=false;$a10_name='type';$a10_value=$actiontype;$a10_default=false;$a10_prefix='';$a10_suffix='';$a10_class='';$a10_onchange=''; ?><?php
-		if ($this->isEditable() && !$this->isEditMode()) $a10_readonly=true;
-		if	( isset($$a10_name)  )
-			$a10_tmp_default = $$a10_name;
-		elseif ( isset($a10_default) )
-			$a10_tmp_default = $a10_default;
-		else
-			$a10_tmp_default = '';
- ?><input onclick="" class="radio" type="radio" id="<?php echo REQUEST_ID ?>_<?php echo $a10_name.'_'.$a10_value ?>"  name="<?php echo $a10_prefix.$a10_name ?>"<?php if ( $a10_readonly ) echo ' disabled="disabled"' ?> value="<?php echo $a10_value ?>"<?php if($a10_value==$a10_tmp_default||@$a10_checked) echo ' checked="checked"' ?> />
-<?php /* #END-IF# */ ?><?php unset($a10_readonly,$a10_name,$a10_value,$a10_default,$a10_prefix,$a10_suffix,$a10_class,$a10_onchange) ?>
+									<div class="input">
+										<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_<?php echo $actiontype ?>" name="type" value="<?php echo $actiontype ?>"<?php if($actiontype==@$type)echo ' checked="checked"' ?> />
+										
 										<label for="<?php echo REQUEST_ID ?>_type_<?php echo $actiontype ?>" class="label">
 											<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
 											

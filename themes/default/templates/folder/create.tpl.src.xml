@@ -1,6 +1,6 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
-	<header back="true" views="createfolder,createlink,createpage,createfile"></header>
+	<header back="true" views="createfolder,createlink,createpage,createfile,createurl"></header>
 	<form enctype="multipart/form-data">
 		<group title="message:folder">
 
@@ -48,7 +48,7 @@
 					</label>
 				</part>
 				<part class="input">
-					<selectbox name="page_templateid" list="templates"></selectbox>
+					<selectbox name="page_templateid" default="" list="templates"></selectbox>
 				</part>
 			</part>
 
@@ -77,6 +77,21 @@
 				</part>
 				<part class="input">
 					<input name="link_name" size="30" maxlength="250" class="name"></input>
+				</part>
+			</part>
+		</group>
+
+		<group title="message:url">
+
+			<part class="line">
+				<part class="label">
+					<radio name="type" value="url" children="url"></radio>
+					<label for="type_link">
+						<text text="url"></text>
+					</label>
+				</part>
+				<part class="input">
+					<input name="url" size="50" maxlength="250" class="name"></input>
 				</part>
 			</part>
 		</group>
