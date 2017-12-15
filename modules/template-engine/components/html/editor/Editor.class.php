@@ -35,17 +35,13 @@ class EditorComponent extends Component
 	            
 			case 'dom':
 			case 'tree':
-				echo <<<'HTML'
-		<?php
-		$attr_tmp_doc = new DocumentElement();
-		$attr_tmp_text = $$attr_name;
-		if	( !is_array($attr_tmp_text))
-			$attr_tmp_text = explode("\n",$attr_tmp_text);
-			
-		$attr_tmp_doc->parse($attr_tmp_text);
-		echo $attr_tmp_doc->render('application/html-dom');
-		?>
-HTML;
+				echo '<?php ';
+		        echo '$doc = new DocumentElement();';
+		        echo '$tmp_text = '.$this->textasvarname($this->name).';';
+		        echo 'if( !is_array($tmp_text))$tmp_text = explode("\n",$tmp_text);';
+		        echo '$doc->parse($tmp_text);';
+		        echo 'echo $doc->render(\'application/html-dom\');';
+		        echo '?>';
 				break;
 		
 			default:
