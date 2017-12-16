@@ -37,7 +37,7 @@ try
     
     // Jetzt erst die Sitzung starten (nachdem alle Klassen zur Verfügung stehen).
     session_start();
-    require_once( OR_SERVICECLASSES_DIR."Session.class.".PHP_EXT );
+    require_once( OR_MODULES_DIR."util/Session.class.".PHP_EXT );
     
     // Vorhandene Konfiguration aus der Sitzung lesen.
     $conf = Session::getConfig();
@@ -53,7 +53,7 @@ try
 
         // Fest eingebaute Standard-Konfiguration laden.
         $conf = array();
-        require('./util/config-default.php'); // writes to $conf
+        require(OR_MODULES_DIR.'util/config-default.php'); // writes to $conf
 
         $customConfig = Configuration::load();
         $conf = array_replace_recursive($conf, $customConfig);
