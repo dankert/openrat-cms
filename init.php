@@ -34,20 +34,20 @@ define('OR_TYPE_LINK'  ,'link'  );
 define('OR_TYPE_URL'   ,'url'   );
 
 
-define('OR_ACTIONCLASSES_DIR' ,'./action/'  );
+define('OR_MODULES_DIR'       ,'./modules/');
+define('OR_ACTIONCLASSES_DIR' ,OR_MODULES_DIR.'cms-core/action/'  );
 define('OR_FORMCLASSES_DIR'   ,'./formClasses/'    );
-define('OR_OBJECTCLASSES_DIR' ,'./model/'  );
+define('OR_OBJECTCLASSES_DIR' ,OR_MODULES_DIR.'cms-core/model/'  );
 define('OR_LANGUAGE_DIR'      ,'./language/'       );
 define('OR_DBCLASSES_DIR'     ,'./db/'             );
-define('OR_DYNAMICCLASSES_DIR','./macro/' );
-define('OR_TEXTCLASSES_DIR'   ,'./textClasses/'    );
+define('OR_DYNAMICCLASSES_DIR',OR_MODULES_DIR.'cms-macros/macro/' );
+define('OR_TEXTCLASSES_DIR'   ,OR_MODULES_DIR.'wikiparser/'    );
 define('OR_PREFERENCES_DIR'   ,'./config/');
 define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
 define('OR_THEMES_DIR'        ,'./themes/'         );
 define('OR_THEMES_EXT_DIR'    ,OR_THEMES_DIR);
 define('OR_TMP_DIR'           ,'./tmp/'            );
 define('OR_CONTROLLER_FILE'   ,'dispatcher');
-define('OR_MODULES_DIR'       ,'./modules/');
 define('START_TIME'           ,time()              );
 define('REQUEST_ID'           ,'req'.time().rand() );
 
@@ -70,7 +70,7 @@ define('REQ_PARAM_DATABASE_ID'    ,'dbid'           );
 define('REQ_PARAM_TARGET'         ,'target'         );
 
 define('OR_SERVICECLASSES_DIR','./util/' );
-define('OR_AUTHCLASSES_DIR'   ,'./auth/' );
+define('OR_AUTHCLASSES_DIR'   ,OR_MODULES_DIR.'cms-core/auth/' );
 
 
 /**
