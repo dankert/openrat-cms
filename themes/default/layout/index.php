@@ -63,7 +63,7 @@ $ping_timeout = @$viewCache['header']['ping_timeout'];
 <script type="text/javascript">
 <!--
 // Konstanten
-var OR_THEMES_EXT_DIR = '<?php echo OR_THEMES_EXT_DIR ?>';
+var OR_THEMES_EXT_DIR = '<?php echo OR_THEMES_DIR ?>';
 var OR_CONTROLLER_FILE  = '<?php echo  OR_CONTROLLER_FILE ?>';
 var REQ_PARAM_TOKEN  = '<?php echo  REQ_PARAM_TOKEN ?>';
 var REQ_PARAM_ACTION  = '<?php echo  REQ_PARAM_ACTION ?>';

@@ -13,7 +13,7 @@ function component_tree( $contents )
 			
 		echo '<div class="tree" />';
 		echo '<div class="entry '.($selected?' selected':'').'" onclick="javascript:openNewAction( \''.$el['name'].'\',\''.$el['type'].'\',\''.$el['id'].'\',0 );">';
-		echo '<img src="'.OR_THEMES_EXT_DIR.'default/images/icon_'.$el['type'].'.png" />';
+		echo '<img src="'.OR_THEMES_DIR.'default/images/icon_'.$el['type'].'.png" />';
 		echo $el['name'];
 		echo '</div>';
 		

@@ -45,7 +45,6 @@ define('OR_TEXTCLASSES_DIR'   ,OR_MODULES_DIR.'wikiparser/'    );
 define('OR_PREFERENCES_DIR'   ,'./config/');
 define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
 define('OR_THEMES_DIR'        ,'./themes/'         );
-define('OR_THEMES_EXT_DIR'    ,OR_THEMES_DIR);
 define('OR_TMP_DIR'           ,'./tmp/'            );
 define('OR_CONTROLLER_FILE'   ,'dispatcher');
 define('START_TIME'           ,time()              );

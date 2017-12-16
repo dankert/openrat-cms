@@ -135,8 +135,8 @@ class IndexAction extends Action
 		$outFiles = array();
 		
 		$css = array();
-		$css[] = OR_THEMES_EXT_DIR . 'default/css/openrat-ui';
-		$css[] = OR_THEMES_EXT_DIR . 'default/css/openrat-workbench';
+		$css[] = OR_THEMES_DIR . 'default/css/openrat-ui';
+		$css[] = OR_THEMES_DIR . 'default/css/openrat-workbench';
 		
 		// Komponentenbasiertes CSS
 		$elements = parse_ini_file(OR_THEMES_DIR . config('interface', 'theme') . '/include/elements.ini.' . PHP_EXT);
@@ -236,7 +236,7 @@ class IndexAction extends Action
 	private function getThemeCSS()
 	{
 		// Je Theme die Theme-CSS-Datei ausgeben.
-		$lessFile = OR_THEMES_EXT_DIR . 'default/css/openrat-theme.less';
+		$lessFile = OR_THEMES_DIR . 'default/css/openrat-theme.less';
 		$css = '';
 		
 		
@@ -293,26 +293,26 @@ class IndexAction extends Action
 		else
 		{
 			$js = array();
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery-1.12.4';
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery-ui/js/jquery-ui-1.8.16.custom';
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery.scrollTo';
+			$js[] = OR_THEMES_DIR . 'default/js/jquery-1.12.4';
+			$js[] = OR_THEMES_DIR . 'default/js/jquery-ui/js/jquery-ui-1.8.16.custom';
+			$js[] = OR_THEMES_DIR . 'default/js/jquery.scrollTo';
 			// $js[] = OR_THEMES_EXT_DIR default/js/jquery.mjs.nestedSortable.js"></script>
 			
 			// Jquery-Plugins
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orHint';
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orSearch';
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orLinkify';
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orTree';
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orLoadView';
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-orAutoheight';
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/plugin/jquery-plugin-svg';
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/jquery-qrcode';
+			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orHint';
+			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orSearch';
+			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orLinkify';
+			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orTree';
+			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orLoadView';
+			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orAutoheight';
+			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-svg';
+			$js[] = OR_THEMES_DIR . 'default/js/jquery-qrcode';
 			// OpenRat internal JS
-			$js[] = OR_THEMES_EXT_DIR . 'default/js/openrat';
-			$js[] = OR_THEMES_EXT_DIR . '../editor/markitup/markitup/jquery.markitup';
-			$js[] = OR_THEMES_EXT_DIR . '../editor/editor/ckeditor';
-			$js[] = OR_THEMES_EXT_DIR . '../editor/ace/src-min-noconflict/ace';
-			$js[] = OR_THEMES_EXT_DIR . '../editor/editor/adapters/jquery';
+			$js[] = OR_THEMES_DIR . 'default/js/openrat';
+			$js[] = OR_THEMES_DIR . '../editor/markitup/markitup/jquery.markitup';
+			$js[] = OR_THEMES_DIR . '../editor/editor/ckeditor';
+			$js[] = OR_THEMES_DIR . '../editor/ace/src-min-noconflict/ace';
+			$js[] = OR_THEMES_DIR . '../editor/editor/adapters/jquery';
 			
 			// Komponentenbasiertes Javascript
 			$elements = parse_ini_file(OR_THEMES_DIR . config('interface', 'theme') . '/include/elements.ini.' . PHP_EXT);

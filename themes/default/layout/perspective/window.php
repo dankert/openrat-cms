@@ -30,7 +30,7 @@ function view_header( $name )
           		
           	$tmp_text = langHtml('menu_'.$vn);
 			$liClass  = 'action'.($vn==$v['default']?' active':'').(empty($action)?' dependent':' static');
-			$icon_url = OR_THEMES_EXT_DIR.'default/images/icon/'.$vn.'.png';
+			$icon_url = OR_THEMES_DIR.'default/images/icon/'.$vn.'.png';
 			
 			?><li data-action="<?php echo $action ?>" data-id="0" data-method="<?php echo $vn ?>" class="<?php echo $liClass?>" title="<?php echo langHtml('menu_'.$vn.'_desc'); ?>"><?php
           		?><img class="icon" src="<?php echo $icon_url ?>" /><div class="tabname"><?php echo $tmp_text ?></div><?php
@@ -42,7 +42,7 @@ function view_header( $name )
           {
           	$tmp_text = $preselectobject->name;
           	$liClass  = 'action active';
-          	$icon_url = OR_THEMES_EXT_DIR.'default/images/icon_'.$preselectobject->getType().'.png';
+          	$icon_url = OR_THEMES_DIR.'default/images/icon_'.$preselectobject->getType().'.png';
           		
           	?><li data-id="<?php echo $preselectobject->objectid ?>" data-method="edit" data-u="<?php echo $preselectobject->getType() ?>" class="<?php echo $liClass?>" title="<?php echo $preselectobject->description ?>"><?php
           	          		?><img class="icon" src="<?php echo $icon_url ?>" /><div class="tabname"><?php echo $tmp_text ?></div><?php
@@ -79,11 +79,11 @@ setTimeout( function() { openNewAction( '<?php echo $object->name; ?>','<?php ec
 <?php if (!empty($viewlist) || $name=='content') { /* Fenster-Menü anzeigen (sofern Views vorhanden) */ ?>
 <div class="arrow-down" />
 <div class="dropdown dropdownalignright">
-<div class="entry clickable"><a href="javascript:void(0);" class="fullscreen" data-type="fullscreen"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /><?php echo langHtml('window_fullscreen') ?></a></div>
+<div class="entry clickable"><a href="javascript:void(0);" class="fullscreen" data-type="fullscreen"><img src="<?php echo OR_THEMES_DIR.'default/images/icon/window/maximize.gif' ?>" title="<?php echo langHtml('window_fullscreen') ?>" /><?php echo langHtml('window_fullscreen') ?></a></div>
 <?php 
           if ( @$conf['help']['enabled'] )
           	{
-             ?><div class="entry clickable"><a href="javascript:void(0);" data-type="help" data-url="<?php echo $conf['help']['url'] ?>" data-suffix="<?php echo @$conf['help']['suffix'] ?>" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo OR_THEMES_EXT_DIR.'default/images/icon/help.png' ?>" /><?php echo langHtml('MENU_HELP') ?></a></div><?php
+             ?><div class="entry clickable"><a href="javascript:void(0);" data-type="help" data-url="<?php echo $conf['help']['url'] ?>" data-suffix="<?php echo @$conf['help']['suffix'] ?>" title="<?php echo langHtml('MENU_HELP_DESC') ?>"><img src="<?php echo OR_THEMES_DIR.'default/images/icon/help.png' ?>" /><?php echo langHtml('MENU_HELP') ?></a></div><?php
           	}
           	?>
 </div>

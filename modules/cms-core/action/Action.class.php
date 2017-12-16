@@ -456,7 +456,7 @@ use \LogicException;
             // Setzen einiger Standard-Variablen
             //
             $tpl_dir = OR_THEMES_DIR . $conf['interface']['theme'] . '/pages/html/';
-            $image_dir = OR_THEMES_EXT_DIR . $conf['interface']['theme'] . '/images/';
+            $image_dir = OR_THEMES_DIR . $conf['interface']['theme'] . '/images/';
 
             $user = Session::getUser();
 
