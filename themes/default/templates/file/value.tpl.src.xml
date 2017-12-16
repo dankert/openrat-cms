@@ -1,3 +1,22 @@
 <output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../template.xsd"><dummy><form><window><row><column><text text="GLOBAL_VALUE"></text></column><column><inputarea rows="40" name="value" class="editor"></inputarea></column></row><row><column class="act" colspan="2"><button type="ok"></button></column></row></window></form><focus field="value"></focus></dummy></output>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+    <form>
+        <window>
+            <row>
+                <column>
+                    <text text="GLOBAL_VALUE"></text>
+                </column>
+                <column>
+                    <editor name="value" type="code"></editor>
+                </column>
+            </row>
+            <row>
+                <column class="act" colspan="2">
+                    <button type="ok"></button>
+                </column>
+            </row>
+        </window>
+    </form>
+    <focus field="value"></focus>
+</output>
