@@ -11,8 +11,8 @@
  * @package openrat.text
  */
 
-require('textClasses/renderer/fpdf.php');
-require('textClasses/renderer/Pdf.class.php');
+require( OR_TEXTCLASSES_DIR.'renderer/fpdf.php');
+require(OR_TEXTCLASSES_DIR.'renderer/Pdf.class.php');
 
 class PdfRenderer
 {
