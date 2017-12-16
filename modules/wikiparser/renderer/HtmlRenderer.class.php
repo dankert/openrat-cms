@@ -218,7 +218,7 @@ class HtmlRenderer
 						else
 						{
 							$className = ucfirst($child->name);
-							$fileName  = './macro/'.$className.'.class.php';
+							$fileName  = OR_DYNAMICCLASSES_DIR.$className.'.class.php';
 							if	( is_file( $fileName ) )
 							{
 								// Fuer den Fall, dass eine Dynamic-Klasse mehrmals pro Vorlage auftritt
@@ -228,7 +228,7 @@ class HtmlRenderer
 								if	( class_exists($className) )
 								{
 									$macro = new $className;
-									/*@type $macro Makro */
+									/* @type $macro Macro */
 									$macro->page = &$this->page;
 			
 									if	( method_exists( $macro,'execute' ) )

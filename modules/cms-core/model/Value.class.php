@@ -45,7 +45,7 @@ class Value
 
 	/**
 	 * Seiten-Objekt der ?bergeordneten Seite
-	 * @type Object
+	 * @type Page
 	 */
 	var $page;
 	
