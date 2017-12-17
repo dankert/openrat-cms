@@ -135,10 +135,11 @@ class IndexAction extends Action
 		$outFiles = array();
 		
 		$css = array();
-		$css[] = OR_THEMES_DIR . 'default/css/openrat-ui';
-		$css[] = OR_THEMES_DIR . 'default/css/openrat-workbench';
-		
-		// Komponentenbasiertes CSS
+        $css[] = OR_THEMES_DIR . 'default/css/openrat-ui';
+        $css[] = OR_THEMES_DIR . 'default/css/openrat-workbench';
+        //$css[] = OR_MODULES_DIR . 'editor/codemirror/lib/codemirror';
+
+        // Komponentenbasiertes CSS
 		$elements = parse_ini_file(OR_THEMES_DIR . config('interface', 'theme') . '/include/elements.ini.' . PHP_EXT);
 		
 		foreach (array_keys($elements) as $c)
@@ -309,10 +310,11 @@ class IndexAction extends Action
 			$js[] = OR_THEMES_DIR . 'default/js/jquery-qrcode';
 			// OpenRat internal JS
 			$js[] = OR_THEMES_DIR . 'default/js/openrat';
-			$js[] = OR_THEMES_DIR . '../editor/markitup/markitup/jquery.markitup';
-			$js[] = OR_THEMES_DIR . '../editor/editor/ckeditor';
-			$js[] = OR_THEMES_DIR . '../editor/ace/src-min-noconflict/ace';
-			$js[] = OR_THEMES_DIR . '../editor/editor/adapters/jquery';
+			$js[] = OR_MODULES_DIR . 'editor/codemirror/lib/codemirror';
+			//$js[] = OR_THEMES_DIR . '../editor/markitup/markitup/jquery.markitup';
+			//$js[] = OR_THEMES_DIR . '../editor/editor/ckeditor';
+			//$js[] = OR_THEMES_DIR . '../editor/ace/src-min-noconflict/ace';
+			//$js[] = OR_THEMES_DIR . '../editor/editor/adapters/jquery';
 			
 			// Komponentenbasiertes Javascript
 			$elements = parse_ini_file(OR_THEMES_DIR . config('interface', 'theme') . '/include/elements.ini.' . PHP_EXT);

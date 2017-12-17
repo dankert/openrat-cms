@@ -25,7 +25,7 @@ $(document).on('orViewLoaded',function(event, data) {
 	                        	    		{name:'Clean', className:'clean', replaceWith:function(markitup) { return markitup.selection.replace(/<(.*?)>/g, "") } },		
 	                        	    		{name:'Preview', className:'preview',  call:'preview'}
 	                        	    	]};
-	$(event.target).find('.wikieditor').markItUp(markitupSettings);
+	//$(event.target).find('.wikieditor').markItUp(markitupSettings);
 	
 	// HTML-Editor
 	var wymSettings = {lang: 'de',basePath: OR_THEMES_EXT_DIR+'../editor/wymeditor/wymeditor/',
@@ -58,7 +58,7 @@ $(document).on('orViewLoaded',function(event, data) {
 	
 	
 	// ACE-Editor anzeigen
-	$(event.target).find("textarea.editor__code-editor").each( function() {
+	$(event.target).find("textarea.editor__ace-editor").each( function() {
 		var textareaEl = $(this);
 		var aceEl = $("<div class=\"editor__code-editor\" />").insertAfter(textareaEl);
 		var editor = ace.edit( aceEl.get(0) );
@@ -83,5 +83,21 @@ $(document).on('orViewLoaded',function(event, data) {
 		})		
 	} );
 	
+	// Codemirror-Editor anzeigen
+	$(event.target).find("textarea.editor__code-editor").each( function() {
+
+        var editor = CodeMirror.fromTextArea( this, {
+            lineNumbers: true
+            /** settings **/ })
+
+        var textareaEl = this;
+
+        // copy back to textarea on form submit...
+        $(textareaEl).closest('form').submit(function() {
+            var newValue = editor.getValue();
+            $(textareaEl).val( newValue );
+        })
+    } );
+
 
 });
