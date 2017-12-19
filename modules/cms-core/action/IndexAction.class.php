@@ -294,8 +294,8 @@ class IndexAction extends Action
 		else
 		{
 			$js = array();
-			$js[] = OR_THEMES_DIR . 'default/js/jquery-1.12.4';
-			$js[] = OR_THEMES_DIR . 'default/js/jquery-ui/js/jquery-ui-1.8.16.custom';
+			$js[] = OR_THEMES_DIR . 'default/js/jquery';
+			$js[] = OR_THEMES_DIR . 'default/js/jquery-ui';
 			$js[] = OR_THEMES_DIR . 'default/js/jquery.scrollTo';
 			// $js[] = OR_THEMES_EXT_DIR default/js/jquery.mjs.nestedSortable.js"></script>
 			
@@ -306,9 +306,11 @@ class IndexAction extends Action
 			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orTree';
 			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orLoadView';
 			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orAutoheight';
-			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-svg';
-			$js[] = OR_THEMES_DIR . 'default/js/jquery-qrcode';
-			// OpenRat internal JS
+            $js[] = OR_THEMES_DIR . 'default/js/jquery-qrcode';
+
+            // Inlining of SVG
+            $js[] = OR_THEMES_DIR . 'default/js/svg-injector';
+            // OpenRat internal JS
 			$js[] = OR_THEMES_DIR . 'default/js/openrat';
 			$js[] = OR_MODULES_DIR . 'editor/codemirror/lib/codemirror';
 			//$js[] = OR_THEMES_DIR . '../editor/markitup/markitup/jquery.markitup';

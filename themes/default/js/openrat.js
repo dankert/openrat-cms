@@ -280,7 +280,7 @@ function registerWorkbenchEvents()
 				oldContainer.addClass('autosize' ).removeClass('resizable');
 			
 				// Falls die View-Liste, von der die View weggezogen wurde, jetzt leer ist:
-				if	( oldViewList.find('li').size() == 0 )
+				if	( oldViewList.find('li').length == 0 )
 				{
 					var oldContainer = oldViewList.closest('div.container');
 					oldViewList.closest('div.panel').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
@@ -303,7 +303,7 @@ function registerWorkbenchEvents()
 	//$('ul.views').sortable();
 
 	// Modalen Dialog erzeugen.
-	if	( $('div#workbench div.panel.modal').size() > 0 )
+	if	( $('div#workbench div.panel.modal').length > 0 )
 	{
 		$('div#workbench div.panel.modal').parent().addClass('modal');
 		$('div#filler').fadeTo(500,0.5);
@@ -408,7 +408,7 @@ function loadView(contentEl,action,method,id,params  )
 	// Schauen, ob der Inhalt schon geladen ist...
 	var targetEl = $(contentEl).children('div.sheet.action-'+action+'.method-'+method+'.id-'+id);
 	
-	if	( targetEl.size() == 0 )
+	if	( targetEl.length == 0 )
 	{
 		// Noch nicht vorhanden, neues Element erstellen.
 		$(contentEl).children('div.sheet').hide();
@@ -802,7 +802,7 @@ function openNewAction( name,action,id,extraId )
 		
 		// Wenn max. Anzahl überschritten, dann den ersten entfernen.
 		var maxTabs = 7;
-		if	( $('div#panel-content > div.header > ul.views > li.action').size() >= maxTabs )
+		if	( $('div#panel-content > div.header > ul.views > li.action').length >= maxTabs )
 			$('div#panel-content > div.header > ul.views > li.action').first().remove();
 				
 		$('div#panel-content > div.header > ul.views').append('<li class="action active '+action+' id'+id+'" title="'+name+'" data-action="'+action+'"  data-id="'+id+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><div class="tabname">'+name+'</div><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
@@ -1204,7 +1204,7 @@ function resizeWorkbench()
 function resizeTabs( panel ) 
 {
 	// Anzahl Tabs pro Panel
-	var tabCount = $(panel).find('div.header li.action').size();
+	var tabCount = $(panel).find('div.header li.action').length;
 	
 	// Von der Panel-Breite werden 18px für das Fenstermenü substrahiert.
 	// Von der Breite pro Tab werden 39px für das Icon substrahiert.

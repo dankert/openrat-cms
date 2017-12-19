@@ -1,6 +1,6 @@
 $(document).on('orViewLoaded',function(event, data) {
 	
-	if	( $(event.target).find('textarea#pageelement_edit_editor').size() > 0 )
+	if	( $(event.target).find('textarea#pageelement_edit_editor').length > 0 )
 	{
 		var instance = CKEDITOR.instances['pageelement_edit_editor'];
 	    if(instance)
