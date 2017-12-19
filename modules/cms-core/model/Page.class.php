@@ -172,6 +172,8 @@ class Page extends Object
 			switch( $object->typeid )
 			{
 				case OR_TYPEID_FILE:
+				case OR_TYPEID_IMAGE:
+				case OR_TYPEID_TEXT:
 
 					$inhalt  = $this->up_path();
 					
@@ -241,10 +243,11 @@ class Page extends Object
 			switch( $object->typeid )
 			{
 				case OR_TYPEID_FILE:
-					$inhalt = \Html::url('file','show',$objectid,$param);
-					break;
-
-				case OR_TYPEID_PAGE:
+                case OR_TYPEID_IMAGE:
+                case OR_TYPEID_TEXT:
+                    $inhalt = \Html::url('file','show',$objectid,$param);
+                    break;
+                case OR_TYPEID_PAGE:
 					$inhalt = \Html::url('page','show',$objectid,$param);
 					break;
 

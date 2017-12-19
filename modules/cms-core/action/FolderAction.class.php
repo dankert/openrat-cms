@@ -46,7 +46,7 @@ use Upload;
 class FolderAction extends ObjectAction
 {
 	public $security = SECURITY_USER;
-	
+
 	private $folder;
 
     public function __construct()
@@ -65,7 +65,7 @@ class FolderAction extends ObjectAction
 	{
 		global $conf;
 		$type = $this->getRequestVar('type'       );
-		
+
 		switch( $type )
 		{
 			case 'folder':
@@ -75,7 +75,7 @@ class FolderAction extends ObjectAction
 				{
 					$f = new Folder();
 					$f->name     = $name;
-					$f->parentid = $this->folder->objectid; 
+					$f->parentid = $this->folder->objectid;
 					$f->add();
 					$this->folder->setTimestamp();
 					$this->addNotice('folder',$f->name,'ADDED','ok');
@@ -110,17 +110,17 @@ class FolderAction extends ObjectAction
 					$file->desc      = '';
 					$file->filename  = $upload->filename;
 					$file->name      = $upload->filename;
-					$file->extension = $upload->extension;		
+					$file->extension = $upload->extension;
 					$file->size      = $upload->size;
 					$file->parentid  = $this->folder->objectid;
-			
+
 					$file->value     = $upload->value;
-			
+
 					$file->add(); // Datei hinzufuegen
 					$this->folder->setTimestamp();
 					$this->addNotice('file',$file->name,'ADDED','ok');
 				}
-				
+
 				break;
 
 			case 'page':
@@ -134,7 +134,7 @@ class FolderAction extends ObjectAction
 					$page->parentid   = $this->folder->objectid;
 					$page->add();
 					$this->folder->setTimestamp();
-		
+
 					$this->addNotice('page',$page->name,'ADDED','ok');
 				}
 				else
@@ -143,7 +143,7 @@ class FolderAction extends ObjectAction
 					$this->callSubAction('create');
 				}
 				break;
-				
+
 			case 'link':
 
 				$name = $this->getRequestVar('link_name');
@@ -152,7 +152,7 @@ class FolderAction extends ObjectAction
 					$link = new Link();
 					$link->name           = $name;
 					$link->parentid       = $this->folder->objectid;
-		
+
 					$link->add();
 					$this->folder->setTimestamp();
 
@@ -163,9 +163,9 @@ class FolderAction extends ObjectAction
 					$this->addValidationError('link_name');
 					$this->callSubAction('create');
 				}
-				
+
 				break;
-				
+
 			case 'url':
 
 				$urlValue = $this->getRequestVar('url');
@@ -193,27 +193,27 @@ class FolderAction extends ObjectAction
 			default:
 				$this->addValidationError('type');
 				$this->callSubAction('create');
-				
-		}
-						
-	}	
 
-	
-	
+		}
+
+	}
+
+
+
     public function createfolderPost()
 	{
 		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
 		$filename    = $this->getRequestVar('filename'   );
 		$description = $this->getRequestVar('description');
-		
+
 		if   ( !empty($name) )
 		{
 			$f = new Folder();
 			$f->name     = $name;
 			$f->filename = $name;
 			$f->desc     = $description;
-			$f->parentid = $this->folder->objectid; 
+			$f->parentid = $this->folder->objectid;
 
 			$f->add();
 			$this->addNotice('folder',$f->name,'ADDED','ok');
@@ -224,9 +224,9 @@ class FolderAction extends ObjectAction
 			$this->addValidationError('name');
 			$this->callSubAction('createfolder');
 		}
-		
+
 		$this->folder->setTimestamp();
-	}	
+	}
 
 
 
@@ -236,25 +236,25 @@ class FolderAction extends ObjectAction
 		$name        = $this->getRequestVar('name'       );
 		$filename    = $this->getRequestVar('filename'   );
 		$description = $this->getRequestVar('description');
-		
+
 		$file   = new File();
-		
+
 		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
 		if	( $this->hasRequestVar('url') )
 		{
 			$url = $this->getRequestVar('url');
 			$http = new Http();
 			$http->setUrl( $url );
-		
+
 			$ok = $http->request();
-			
+
 			if	( !$ok )
 			{
 				$this->addValidationError('url','COMMON_VALIDATION_ERROR',array(),$http->error);
 				$this->callSubAction('createfile');
 				return;
 			}
-			
+
 			$file->desc      = $description;
 			$file->filename  = basename($url);
 			$file->name      = !empty($name)?$name:basename($url);
@@ -265,16 +265,16 @@ class FolderAction extends ObjectAction
 		else
 		{
 			$upload = new Upload();
-			
+
 			if	( $upload->isValid() )
 			{
 				$file->desc      = $description;
 				$file->filename  = $upload->filename;
 				$file->name      = !empty($name)?$name:$upload->filename;
-				$file->extension = $upload->extension;		
+				$file->extension = $upload->extension;
 				$file->size      = $upload->size;
 				$file->parentid  = $this->folder->objectid;
-		
+
 				$file->value     = $upload->value;
 			}
 			else
@@ -292,16 +292,16 @@ class FolderAction extends ObjectAction
 					$this->callSubAction('createfile');
 					return;
 				}
-				
+
 			}
 		}
 
 		$file->add(); // Datei hinzufuegen
 		$this->addNotice('file',$file->name,'ADDED','ok');
 		$this->setTemplateVar('objectid',$file->objectid);
-		
+
 		$this->folder->setTimestamp();
-	}	
+	}
 
 
 
@@ -375,7 +375,7 @@ class FolderAction extends ObjectAction
 		$name        = $this->getRequestVar('name'       );
 		$filename    = $this->getRequestVar('filename'   );
 		$description = $this->getRequestVar('description');
-		
+
 		if   ( $this->getRequestVar('name') != '' )
 		{
 			$page = new Page();
@@ -386,7 +386,7 @@ class FolderAction extends ObjectAction
 			$page->parentid   = $this->folder->objectid;
 
 			$page->add();
-			
+
 			$this->addNotice('page',$page->name,'ADDED','ok');
 			$this->setTemplateVar('objectid',$page->objectid);
 		}
@@ -396,9 +396,9 @@ class FolderAction extends ObjectAction
 			$this->callSubAction('createpage');
 			return;
 		}
-		
+
 		$this->folder->setTimestamp();
-	}	
+	}
 
 
 
@@ -420,7 +420,7 @@ class FolderAction extends ObjectAction
 			//$this->callSubAction('prop');
 			return;
 		}
-		
+
 		$this->folder->filename = $this->getRequestVar('filename'   ,OR_FILTER_ALPHANUM);
 		$this->folder->desc     = $this->getRequestVar('description','full'    );
 		$this->folder->save();
@@ -435,9 +435,9 @@ class FolderAction extends ObjectAction
 	{
 		$ids   = $this->folder->getObjectIds();
 		$seq   = 0;
-		
+
 		$order = explode(',',$this->getRequestVar('order') );
-		
+
 		foreach( $order as $objectid )
 		{
 			if	( ! in_array($objectid,$ids) )
@@ -445,13 +445,13 @@ class FolderAction extends ObjectAction
 				Http::serverError('Object-Id '.$objectid.' is not in this folder any more');
 			}
 			$seq++; // Sequenz um 1 erhoehen
-			
+
 			$o = new Object( $objectid );
 			$o->setOrderId( $seq );
-	
+
 			unset( $o ); // Selfmade Garbage Collection :-)
 		}
-		
+
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
 		$this->folder->setTimestamp();
 	}
@@ -465,63 +465,63 @@ class FolderAction extends ObjectAction
 		foreach( $ids as $id )
 		{
 			$seq++; // Sequenz um 1 erhoehen
-			
+
 			// Die beiden Ordner vertauschen
 			if   ( $id == $this->getRequestVar('objectid1') )
 				$id = $this->getRequestVar('objectid2');
 			elseif ( $id == $this->getRequestVar('objectid2') )
 				$id = $this->getRequestVar('objectid1');
-				
+
 			$o = new Object( $id );
 			$o->setOrderId( $seq );
-	
+
 			unset( $o ); // Selfmade Garbage Collection :-)
 		}
-		
+
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
 		$this->folder->setTimestamp();
 
 		// Ordner anzeigen
 		$this->callSubAction('order');
-		
+
 	}
 
 
 	private function OLD__________editPost()
 	{
 		$type = $this->getRequestVar('type'); // Typ der Aktion, z.B "copy" oder "move"
-		
+
 		switch( $type )
 		{
 			case 'move':
 			case 'copy':
 			case 'link':
 				// Liste von m�glichen Zielordnern anzeigen
-	
+
 				$otherfolder = array();
 				foreach( $this->folder->getAllFolders() as $id )
 				{
 					$f = new Folder( $id );
-					
+
 					// Beim Verkn�pfen muss im Zielordner die Berechtigung zum Erstellen
 					// von Verkn�pfungen vorhanden sein.
 					//
 					// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
 					// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
-					if	( ( $type=='link' && $f->hasRight( ACL_CREATE_LINK ) ) || 
-						  ( ( $type=='move' || $type == 'copy' ) && 
+					if	( ( $type=='link' && $f->hasRight( ACL_CREATE_LINK ) ) ||
+						  ( ( $type=='move' || $type == 'copy' ) &&
 						    ( $f->hasRight(ACL_CREATE_FOLDER) || $f->hasRight(ACL_CREATE_FILE) || $f->hasRight(ACL_CREATE_PAGE) ) ) )
 						// Zielordner hinzuf�gen
 						$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
 				}
-				
+
 				// Zielordner-Liste alphabetisch sortieren
 				asort( $otherfolder );
-						
+
 				$this->setTemplateVar('folder',$otherfolder);
-				
+
 				break;
-				
+
 			case 'archive':
 				$this->setTemplateVar('ask_filename','');
 				break;
@@ -529,13 +529,13 @@ class FolderAction extends ObjectAction
 			case 'delete':
 				$this->setTemplateVar('ask_commit','');
 				break;
-				
+
 			default:
 				$this->addValidationError('type');
 				return;
-				
+
 		} // switch
-		
+
 		$ids        = $this->folder->getObjectIds();
 		$objectList = array();
 
@@ -547,7 +547,7 @@ class FolderAction extends ObjectAction
 
 			$o = new Object( $id );
 			$o->load();
-			
+
 			// F�r die gew�nschte Aktion m�ssen pro Objekt die entsprechenden Rechte
 			// vorhanden sein.
 			if	( $type == 'copy'    && $o->hasRight( ACL_READ   ) ||
@@ -557,18 +557,18 @@ class FolderAction extends ObjectAction
 				  $type == 'delete'  && $o->hasRight( ACL_DELETE )    )
 				$objectList[ $id ] = $o->getProperties();
 		}
-		
+
 		$this->setTemplateVar('type'  ,$type       );
 		$this->setTemplateVar('objectlist',$objectList );
-		
-		// Komma-separierte Liste von ausgew�hlten Objekt-Ids erzeugen 
+
+		// Komma-separierte Liste von ausgew�hlten Objekt-Ids erzeugen
 		$this->setTemplateVar('ids',join(array_keys($objectList),',') );
 	}
 
 
 
 	/**
-	 * Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner 
+	 * Verschieben/Kopieren/Loeschen/Verknuepfen von mehreren Dateien in diesem Ordner
 	 */
 	public function editPost()
 	{
@@ -583,14 +583,14 @@ class FolderAction extends ObjectAction
 			case 'copy':
 			case 'link':
 				$f = new Folder( $targetObjectId );
-				
+
 				// Beim Verkn�pfen muss im Zielordner die Berechtigung zum Erstellen
 				// von Verkn�pfungen vorhanden sein.
 				//
 				// Beim Verschieben und Kopieren muss im Zielordner die Berechtigung
 				// zum Erstellen von Ordner, Dateien oder Seiten vorhanden sein.
-				if	( ( $type=='link' && $f->hasRight( ACL_CREATE_LINK ) ) || 
-					  ( ( $type=='move' || $type == 'copy' ) && 
+				if	( ( $type=='link' && $f->hasRight( ACL_CREATE_LINK ) ) ||
+					  ( ( $type=='move' || $type == 'copy' ) &&
 					    ( $f->hasRight(ACL_CREATE_FOLDER) || $f->hasRight(ACL_CREATE_FILE) || $f->hasRight(ACL_CREATE_PAGE) ) ) )
 				{
 					// OK
@@ -600,15 +600,15 @@ class FolderAction extends ObjectAction
 					$this->addValidationError('targetobjectid','no_rights');
 					return;
 				}
-				
+
 				break;
 			default:
 		}
-		
-		
+
+
 		$ids        = $this->folder->getObjectIds();
 		$objectList = array();
-		
+
 		foreach( $ids as $id )
 		{
 			// Nur, wenn Objekt ausgewaehlt wurde
@@ -617,7 +617,7 @@ class FolderAction extends ObjectAction
 
 			$o = new Object( $id );
 			$o->load();
-			
+
 			// Fuer die gewuenschte Aktion muessen pro Objekt die entsprechenden Rechte
 			// vorhanden sein.
 			if	( $type == 'copy'    && $o->hasRight( ACL_READ   ) ||
@@ -629,25 +629,25 @@ class FolderAction extends ObjectAction
 			else
 				$this->addNotice($o->getType(),$o->name,'no_rights',OR_NOTICE_WARN);
 		}
-		
+
 		$ids = array_keys($objectList);
-		
+
 		if	( $type == 'archive' )
 		{
 			require_once('serviceClasses/ArchiveTar.class.php');
 			$tar = new ArchiveTar();
 			$tar->files = array();
-			
+
 			foreach( $ids as $id )
 			{
 				$o = new Object( $id );
 				$o->load();
-				
+
 				if	( $o->isFile )
 				{
 					$file = new File($id);
 					$file->load();
-					
+
 					// Datei dem Archiv hinzufügen.
 					$info = array();
 					$info['name'] = $file->filenameWithExtension();
@@ -659,7 +659,7 @@ class FolderAction extends ObjectAction
 					$info['group_id'] = 1000;
 					$info['user_name' ] = 'nobody';
 					$info['group_name'] = 'nobody';
-										
+
 					$tar->numFiles++;
 					$tar->files[]= $info;
 				}
@@ -668,7 +668,7 @@ class FolderAction extends ObjectAction
 					// Was anderes als Dateien ignorieren.
 					$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',OR_NOTICE_WARN);
 				}
-				
+
 			}
 
 			// TAR speichern.
@@ -677,9 +677,9 @@ class FolderAction extends ObjectAction
 			$tarFile->filename = $this->getRequestVar('filename');
 			$tarFile->extension = 'tar';
 			$tarFile->parentid = $this->folder->objectid;
-			
+
 			$tar->__generateTAR();
-			$tarFile->value = $tar->tar_file; 
+			$tarFile->value = $tar->tar_file;
 			$tarFile->add();
 		}
 		else
@@ -688,7 +688,7 @@ class FolderAction extends ObjectAction
 			{
 				$o = new Object( $id );
 				$o->load();
-	
+
 				switch( $type )
 				{
 					case 'move':
@@ -696,7 +696,7 @@ class FolderAction extends ObjectAction
 						{
 							$f = new Folder( $id );
 							$allsubfolders = $f->getAllSubFolderIds();
-							
+
 							// Plausibilisierungsprüfung:
 							//
 							// Wenn
@@ -720,7 +720,7 @@ class FolderAction extends ObjectAction
 							$this->addNotice($o->getType(),$o->name,'MOVED','ok');
 						}
 						break;
-		
+
 					case 'copy':
 						switch( $o->getType() )
 						{
@@ -729,7 +729,7 @@ class FolderAction extends ObjectAction
 								// Funktion waere zu verwirrend
 								$this->addNotice($o->getType(),$o->name,'CANNOT_COPY_FOLDER','error');
 								break;
-							
+
 							case 'file':
 								$f = new File( $id );
 								$f->load();
@@ -738,10 +738,10 @@ class FolderAction extends ObjectAction
 								$f->parentid = $targetObjectId;
 								$f->add();
 								$f->copyValueFromFile( $id );
-								
+
 								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
 								break;
-							
+
 							case 'page':
 								$p = new Page( $id );
 								$p->load();
@@ -752,7 +752,7 @@ class FolderAction extends ObjectAction
 								$p->copyValuesFromPage( $id );
 								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
 								break;
-							
+
 							case 'link':
 								$l = new Link( $id );
 								$l->load();
@@ -762,21 +762,23 @@ class FolderAction extends ObjectAction
 								$l->add();
 								$this->addNotice($o->getType(),$o->name,'COPIED','ok');
 								break;
-							
+
 							default:
 								die('fatal: what type to delete?');
 						}
 						$notices[] = lang('COPIED');
 						break;
-		
+
 					case 'link':
-	
+
 						if	( $o->isFile  ||
+                              $o->isImage ||
+                              $o->isText  ||
 							  $o->isPage  )  // Nur Seiten oder Dateien sind verknuepfbar
 						{
 							$link = new Link();
 							$link->parentid       = $targetObjectId;
-					
+
 							$link->linkedObjectId = $id;
 							$link->isLinkToObject = true;
 							$link->name           = lang('LINK_TO').' '.$o->name;
@@ -788,10 +790,10 @@ class FolderAction extends ObjectAction
 							$this->addNotice($o->getType(),$o->name,'ERROR','error');
 						}
 						break;
-		
+
 					case 'delete':
-	
-						if	( $this->hasRequestVar('confirm') ) 
+
+						if	( $this->hasRequestVar('confirm') )
 						{
 							switch( $o->getType() )
 							{
@@ -799,23 +801,23 @@ class FolderAction extends ObjectAction
 									$f = new Folder( $id );
 									$f->deleteAll();
 									break;
-								
+
 								case 'file':
 									$f = new File( $id );
 									$f->delete();
 									break;
-								
+
 								case 'page':
 									$p = new Page( $id );
 									$p->load();
 									$p->delete();
 									break;
-								
+
 								case 'link':
 									$l = new Link( $id );
 									$l->delete();
 									break;
-								
+
 								case 'url':
 									$u = new Url( $id );
 									$u->delete();
@@ -830,13 +832,13 @@ class FolderAction extends ObjectAction
 						{
 							$this->addNotice($o->getType(),$o->name,'NOTHING_DONE',OR_NOTICE_WARN);
 						}
-						
+
 						break;
-	
+
 					default:
 						$this->addNotice($o->getType(),$o->name,'ERROR','error');
 				}
-	
+
 			}
 		}
 
@@ -850,7 +852,7 @@ class FolderAction extends ObjectAction
 	public function reorderPost()
 	{
 		$type = $this->getRequestVar('type');
-		
+
 		switch( $type )
 		{
 			case 'type':
@@ -868,7 +870,7 @@ class FolderAction extends ObjectAction
 			case 'flip':
 				$ids = $this->folder->getObjectIds();
 				$ids = array_reverse( $ids ); // Reihenfolge drehen
-				
+
 				break;
 
 			default:
@@ -880,10 +882,10 @@ class FolderAction extends ObjectAction
 		foreach( $ids as $id )
 		{
 			$seq++; // Sequenz um 1 erhoehen
-			
+
 			$o = new Object( $id );
 			$o->setOrderId( $seq );
-	
+
 			unset( $o );
 		}
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
@@ -908,14 +910,14 @@ class FolderAction extends ObjectAction
 
 				$o = new Object( $id );
 				$o->setOrderId( $seq );
-	
+
 				unset( $o ); // Selfmade Garbage Collection :-)
 			}
 		}
 
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
 		$this->folder->setTimestamp();
-		
+
 		// Ordner anzeigen
 		$this->callSubAction('order');
 	}
@@ -934,7 +936,7 @@ class FolderAction extends ObjectAction
 
 				$o = new Object( $id );
 				$o->setOrderId( $seq );
-	
+
 				unset( $o ); // Selfmade Garbage Collection :-)
 			}
 		}
@@ -945,13 +947,13 @@ class FolderAction extends ObjectAction
 
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
 		$this->folder->setTimestamp();
-		
+
 		// Ordner anzeigen
 		$this->callSubAction('order');
-		
+
 	}
 
-	
+
 	/**
 	 * Alias für Methode 'create'.
 	 */
@@ -960,7 +962,7 @@ class FolderAction extends ObjectAction
 		$this->nextSubAction('create');
 	}
 
-	
+
 	/**
 	 * Alias für Methode 'create'.
 	 */
@@ -976,13 +978,13 @@ class FolderAction extends ObjectAction
 		$maxSizeBytes = $this->maxFileSize();
 		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );
 		$this->setTemplateVar('maxlength',$maxSizeBytes );
-		
+
 		$all_templates = Template::getAll();
 		$this->setTemplateVar('templates' ,$all_templates );
-		
+
 		if	( count($all_templates) == 0 )
 			$this->addNotice('folder',$this->folder->name,'NO_TEMPLATES_AVAILABLE',OR_NOTICE_WARN);
-		
+
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 	}
 
@@ -998,36 +1000,36 @@ class FolderAction extends ObjectAction
 	/**
 	 * Ermittelt die maximale Gr��e einer hochzuladenden Datei.<br>
 	 * Der Wert wird aus der PHP- und OpenRat-Konfiguration ermittelt.<br>
-	 * 
+	 *
 	 * @return Integer maximale Dateigroesse in Bytes
 	 */
 	private function maxFileSize()
 	{
 		global $conf;
-		
+
 		// When querying memory size values:
 		// Many ini memory size values, such as upload_max_filesize,
 		// are stored in the php.ini file in shorthand notation.
 		// ini_get() will return the exact string stored in the php.ini file
 		// and NOT its integer equivalent.
 		$sizes = array(10*1024*1024*1024); // Init with 10GB enough? :)
-		
+
 		foreach( array('upload_max_filesize','post_max_size','memory_limit') as $var )
 		{
 			$v = $this->stringToBytes(ini_get($var));
-			
+
 			if	($v > 0 )
 				$sizes[] = $v;
 		}
-		
-		$confMaxSize = intval($conf['content']['file']['max_file_size'])*1024; 
+
+		$confMaxSize = intval($conf['content']['file']['max_file_size'])*1024;
 		if	( $confMaxSize > 0 )
 			$sizes[] = $confMaxSize;
-		
+
 		return min($sizes);
 	}
 
-	
+
 	/**
 	 * Hochladen einer Datei.
 	 *
@@ -1038,11 +1040,11 @@ class FolderAction extends ObjectAction
 		$maxSizeBytes = $this->maxFileSize();
 		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );
 		$this->setTemplateVar('maxlength',$maxSizeBytes );
-		
+
 		$this->setTemplateVar('objectid',$this->folder->objectid );
 	}
 
-	
+
 	/**
 	 * Umwandlung von abgek�rzten Bytewerten ("Shorthand Notation") wie
 	 * "4M" oder "500K" in eine ganzzahlige Byteanzahl.<br>
@@ -1067,11 +1069,11 @@ class FolderAction extends ObjectAction
 			case 'k':
 				$val *= 1024;
 		}
-		
+
      	return intval($val);
 	}
- 
-	
+
+
 
     public function createlinkView()
 	{
@@ -1094,7 +1096,7 @@ class FolderAction extends ObjectAction
 			$this->addNotice('folder',$this->folder->name,'NO_TEMPLATES_AVAILABLE',OR_NOTICE_WARN);
 	}
 
-	
+
 	/**
 	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
 	 * auf die Standardausgabe geschrieben
@@ -1103,8 +1105,8 @@ class FolderAction extends ObjectAction
 	{
 		$this->setTemplateVar('preview_url',Html::url('folder','show',$this->folder->objectid,array('target'=>'none') ) );
 	}
-	
-	
+
+
 
 	/**
 	 * Anzeige aller Objekte in diesem Ordner.
@@ -1132,15 +1134,15 @@ class FolderAction extends ObjectAction
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
-				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id; 
+				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
 
 				$list[$id]['type'] = $o->getType();
 				$list[$id]['id'  ] = $id;
-				
+
 				$list[$id]['icon' ] = $o->getType();
 				$list[$id]['class'] = $o->getType();
 				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
-				
+
 				if	( $o->getType() == 'file' )
 				{
 					$file = new File( $id );
@@ -1177,7 +1179,7 @@ class FolderAction extends ObjectAction
 			$this->setTemplateVar('up_url',Html::url('folder','show',$this->folder->parentid));
 
 		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
-		
+
 		$list = array();
 
 		// Schleife ueber alle Objekte in diesem Ordner
@@ -1193,15 +1195,15 @@ class FolderAction extends ObjectAction
 				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
-				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id; 
+				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
 
 				$list[$id]['type'] = $o->getType();
 				$list[$id]['id'  ] = $id;
-				
+
 				$list[$id]['icon' ] = $o->getType();
 				$list[$id]['class'] = $o->getType();
 				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
-				
+
 				if	( $o->getType() == 'file' )
 				{
 					$file = new File( $id );
@@ -1232,7 +1234,7 @@ class FolderAction extends ObjectAction
 		global $conf_php;
 
 		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
-		
+
 		$list = array();
 
 		// Schleife ueber alle Objekte in diesem Ordner
@@ -1250,10 +1252,10 @@ class FolderAction extends ObjectAction
 				$list[$id]['desc'    ] = $o->desc;
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
-				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
+				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc'];
 
 				$list[$id]['type'] = $o->getType();
-				
+
 				$list[$id]['icon'] = $o->getType();
 
 				if	( $o->getType() == 'file' )
@@ -1272,7 +1274,7 @@ class FolderAction extends ObjectAction
 				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
 				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );
 				$list[$id]['user'] = $o->lastchangeUser;
-				
+
 				if	( $this->hasRequestVar("markall") || $this->hasRequestVar('obj'.$id) )
 					$this->setTemplateVar('obj'.$id,'1');
 			}
@@ -1289,52 +1291,52 @@ class FolderAction extends ObjectAction
 					$otherfolder[$id] = FILE_SEP.implode( FILE_SEP,$f->parentObjectNames(false,true) );
 			}
 			asort( $otherfolder );
-	
+
 			$this->setTemplateVar('folder',$otherfolder);
-	
+
 			// URLs zum Umsortieren der Eintraege
 			$this->setTemplateVar('order_url'      ,Html::url('folder','order',$this->folder->id) );
-		}	
+		}
 
 		$actionList = array();
 		$actionList[] = 'copy';
 		$actionList[] = 'link';
 		$actionList[] = 'archive';
-		
+
 		if	( $this->folder->hasRight(ACL_WRITE) )
 		{
 			$actionList[] = 'move';
 			$actionList[] = 'delete';
 		}
-		
+
 		$this->setTemplateVar('actionlist',$actionList );
 		$this->setTemplateVar('defaulttype',$this->getRequestVar('type','alpha'));
-		
+
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
-		
+
 		$rootFolder = new Folder( Folder::getRootFolderId() );
 		$rootFolder->load();
-		
+
 		$this->setTemplateVar('properties'    ,$this->folder->getProperties() );
 		$this->setTemplateVar('rootfolderid'  ,$rootFolder->id  );
 		$this->setTemplateVar('rootfoldername',$rootFolder->name);
 	}
 
-	
-	
-	
+
+
+
 	public function rootView()
 	{
 		$rootFolder = new Folder( Folder::getRootFolderId() );
 		$rootFolder->load();
-		
+
 		$this->setTemplateVar('rootfolderid'  ,$rootFolder->id  );
 		$this->setTemplateVar('rootfoldername',$rootFolder->name);
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Reihenfolge bearbeiten.
 	 */
@@ -1359,10 +1361,10 @@ class FolderAction extends ObjectAction
 				$list[$id]['desc']     = Text::maxLength( $o->desc     ,30);
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
-				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc']; 
+				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc'];
 
 				$list[$id]['type'] = $o->getType();
-				
+
 				$list[$id]['icon'] = $o->getType();
 
 				if	( $o->getType() == 'file' )
@@ -1429,7 +1431,7 @@ class FolderAction extends ObjectAction
 	 * Liefert die Struktur zu diesem Ordner:
 	 * - Mit den übergeordneten Ordnern und
 	 * - den in diesem Ordner enthaltenen Objekten
-	 * 
+	 *
 	 * Beispiel:
 	 * <pre>
 	 * - A
@@ -1439,7 +1441,7 @@ class FolderAction extends ObjectAction
 	 *       - Seite
 	 *       - Seite
 	 *       - Datei
-	 * </pre> 
+	 * </pre>
 	 */
 	public function structureView()
 	{
@@ -1447,44 +1449,44 @@ class FolderAction extends ObjectAction
 		$structure = array();
 		$tmp = &$structure;
 		$nr  = 0;
-		
+
 		$parents = $this->folder->parentObjectNames(false,true);
-		
+
 		foreach( $parents as $id=>$name)
 		{
 			//Html::debug($name,"Name");
-			
+
 			unset($children);
 			unset($o);
 			$children = array();
 			$o = array('id'=>$id,'name'=>$name,'type'=>'folder','level'=>++$nr,'children'=>&$children);
-			
+
 			if	( $id == $this->folder->objectid)
 				$o['self'] = true;
-				
+
 			$tmp[$id] = &$o;;
-			
+
 			unset($tmp);
-			
-			$tmp = &$children; 
+
+			$tmp = &$children;
 		}
-		
-		
+
+
 		$contents = $this->folder->getObjects();
-		
+
 		unset($children);
 		unset($o);
-		
-		$children = array(); 
+
+		$children = array();
 		foreach( $contents as $o )
 		{
             /* @var $o Object */
 			$children[$o->objectid] = array('id'=>$o->objectid,'name'=>$o->name,'type'=>$o->getType());
 		}
 		$tmp+= $children;
-		
+
 		//Html::debug($structure);
-		
+
 		$this->setTemplateVar('outline',$structure);
 	}
 
@@ -1495,7 +1497,7 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('files'  ,count($this->folder->getFiles()) > 0 );
 		$this->setTemplateVar('pages'  ,count($this->folder->getPages()) > 0 );
 		$this->setTemplateVar('subdirs',count($this->folder->getSubFolderIds()) > 0 );
-		
+
 		//$this->setTemplateVar('clean'  ,$this->folder->isRoot );
 		// Gefaehrliche Option, da dies bestehende Dateien, die evtl. nicht zum CMS gehören, überschreibt.
 		// Daher deaktiviert.
@@ -1514,7 +1516,7 @@ class FolderAction extends ObjectAction
 
 		Session::close();
 		$publish = new Publish();
-		
+
 		$this->folder->publish = &$publish;
 		$this->folder->publish( $pages,$files,$subdirs );
 		$this->folder->publish->close();
@@ -1522,19 +1524,19 @@ class FolderAction extends ObjectAction
 		$list = array();
 		foreach( $publish->publishedObjects as $o )
 			$list[] = $o['full_filename'];
-		
+
 		if	( !$publish->ok )
 			$this->addNotice('folder',$this->folder->name,'PUBLISHED_ERROR',OR_NOTICE_ERROR,array(),$publish->log);
 		else
 			$this->addNotice('folder',$this->folder->name,'PUBLISHED',OR_NOTICE_OK,array(),$list);
-				
+
 		// Wenn gewuenscht, das Zielverzeichnis aufraeumen
 		if	( $this->hasRequestVar('clean')      )
 			$publish->clean();
 	}
-	
-	
-	
+
+
+
     public function checkMenu( $name )
 	{
 		switch( $name)
@@ -1558,7 +1560,7 @@ class FolderAction extends ObjectAction
 			case 'order':
 			case 'aclform':
 				return !readonly();
-				
+
 			default:
 				return true;
 		}

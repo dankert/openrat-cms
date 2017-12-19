@@ -11,6 +11,7 @@ use Http;
 use \Html;
 use Upload;
 
+
 /**
  * Action-Klasse zum Bearbeiten eines Bildes.
  * @author Jan Dankert
@@ -30,6 +31,8 @@ class ImageAction extends FileAction
 	{
 		$this->image = new Image( $this->getRequestId() );
 		$this->image->load();
+
+		$this->file = $this->image;
 	}
 
 

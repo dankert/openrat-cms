@@ -47,7 +47,9 @@ class TextAction extends FileAction
 	{
 		$this->text = new Text( $this->getRequestId() );
 		$this->text->load();
-	}
+
+        $this->file = $this->text;
+    }
 
 }
 

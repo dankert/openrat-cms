@@ -835,7 +835,7 @@ SQL
 				switch( $this->element->subtype )
 				{
 					case 'width':
-						$f = new File( $objectid );
+						$f = new Image( $objectid );
 						$f->load();
 						if	( $f->isImage() )
 						{
@@ -846,7 +846,7 @@ SQL
 						break;
 					
 					case 'height':
-						$f = new File( $objectid );
+						$f = new Image( $objectid );
 						$f->load();
 						if	( $f->isImage() )
 						{
@@ -990,7 +990,7 @@ SQL
 						break;
 						
 					case 'mime-type':
-						if	( $linkedObject->isFile )
+						if	( $linkedObject->isFile || $linkedObject->isImage || $linkedObject->isText  )
 						{
 							$f = new File( $objectid );
 							$f->load();

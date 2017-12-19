@@ -282,6 +282,22 @@ class Folder extends Object
 				$f->publish();
 			}
 
+			if	( $o->isImage && $withFiles )
+			{
+				$f = new Image( $oid );
+				$f->load();
+				$f->publish = &$this->publish;
+				$f->publish();
+			}
+
+			if	( $o->isText && $withFiles )
+			{
+				$f = new Text( $oid );
+				$f->load();
+				$f->publish = &$this->publish;
+				$f->publish();
+			}
+
 			if	( $o->isFolder && $subdirs )
 			{
 				$f = new Folder( $oid );
@@ -845,6 +861,18 @@ SQL
 				if	( $object->isFile )
 				{
 					$file = new File( $oid );
+					$file->load();
+					$file->delete();
+				}
+				if	( $object->isImage )
+				{
+					$file = new Image( $oid );
+					$file->load();
+					$file->delete();
+				}
+				if	( $object->isText )
+				{
+					$file = new Text( $oid );
 					$file->load();
 					$file->delete();
 				}

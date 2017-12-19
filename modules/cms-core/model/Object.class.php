@@ -6,6 +6,8 @@ namespace {
     define('OR_TYPEID_PAGE',3);
     define('OR_TYPEID_LINK',4);
     define('OR_TYPEID_URL',5);
+    define('OR_TYPEID_IMAGE',6);
+    define('OR_TYPEID_TEXT',7);
 
 }
 
@@ -90,6 +92,18 @@ namespace cms\model {
          * @type Boolean
          */
         var $isFile = false;
+
+        /**
+         * Kennzeichen, ob Objekt ein Bild ist
+         * @type Boolean
+         */
+        var $isImage = false;
+
+        /**
+         * Kennzeichen, ob Objekt ein Text ist
+         * @type Boolean
+         */
+        var $isText = false;
 
         /**
          * Kennzeichen, ob Objekt eine Seite ist
@@ -311,6 +325,10 @@ SQL
                 return OR_TYPE_FOLDER;
             if ($this->isFile)
                 return OR_TYPE_FILE;
+            if ($this->isImage)
+                return OR_TYPE_IMAGE;
+            if ($this->isText)
+                return OR_TYPE_TEXT;
             if ($this->isPage)
                 return OR_TYPE_PAGE;
             if ($this->isLink)
@@ -337,6 +355,8 @@ SQL
                 'lastchange_user'  =>$this->lastchangeUser->getProperties(),
                 'isFolder'         =>$this->isFolder,
                 'isFile'           =>$this->isFile,
+                'isImage'          =>$this->isImage,
+                'isText'           =>$this->isText,
                 'isLink'           =>$this->isLink,
                 'isUrl'            =>$this->isUrl,
                 'isPage'           =>$this->isPage,
@@ -548,6 +568,8 @@ SQL
 
             $this->isFolder = ( $row['typeid'] == OR_TYPEID_FOLDER );
             $this->isFile   = ( $row['typeid'] == OR_TYPEID_FILE );
+            $this->isImage  = ( $row['typeid'] == OR_TYPEID_IMAGE );
+            $this->isText   = ( $row['typeid'] == OR_TYPEID_TEXT );
             $this->isPage   = ( $row['typeid'] == OR_TYPEID_PAGE );
             $this->isLink   = ( $row['typeid'] == OR_TYPEID_LINK );
             $this->isUrl    = ( $row['typeid'] == OR_TYPEID_URL );
@@ -600,6 +622,8 @@ SQL
 
             $this->isFolder = ( $row['typeid'] == OR_TYPEID_FOLDER );
             $this->isFile   = ( $row['typeid'] == OR_TYPEID_FILE );
+            $this->isImage  = ( $row['typeid'] == OR_TYPEID_IMAGE );
+            $this->isText   = ( $row['typeid'] == OR_TYPEID_TEXT );
             $this->isPage   = ( $row['typeid'] == OR_TYPEID_PAGE );
             $this->isLink   = ( $row['typeid'] == OR_TYPEID_LINK );
             $this->isUrl    = ( $row['typeid'] == OR_TYPEID_URL );
@@ -1082,6 +1106,10 @@ SQL
                 return( array('read','write','delete','prop','release','publish','create_folder','create_file','create_page','create_link','grant','transmit') );
             if	( $this->isFile )
                 return( array('read','write','delete','prop','release','publish','grant') );
+            if	( $this->isText )
+                return( array('read','write','delete','prop','release','publish','grant') );
+            if	( $this->isImage )
+                return( array('read','write','delete','prop','release','publish','grant') );
             if	( $this->isPage )
                 return( array('read','write','delete','prop','release','publish','grant') );
             if	( $this->isLink )
@@ -1364,6 +1392,8 @@ SQL
         {
             if ($this->isFolder) return OR_TYPEID_FOLDER;
             if ($this->isFile) return OR_TYPEID_FILE;
+            if ($this->isImage) return OR_TYPEID_IMAGE;
+            if ($this->isText) return OR_TYPEID_TEXT;
             if ($this->isPage) return OR_TYPEID_PAGE;
             if ($this->isLink) return OR_TYPEID_LINK;
             if ($this->isUrl) return OR_TYPEID_URL;
