@@ -18,9 +18,6 @@ namespace cms\model;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
-// Standard Mime-Type 
-define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
-
 
 /**
  * Datei.
