@@ -18,7 +18,7 @@
  
 
 	<!-- Menü: Datei -->
-	<if true="method:userIsLoggedIn">
+	<if true="var:isLoggedIn">
 		<part class="toolbar-icon menu">
 			<image action="file"></image>
 			<text key="file"></text>
@@ -69,7 +69,7 @@
 	</if>
 
 	<!-- Menü: Bearbeiten -->
-	<if true="method:userIsLoggedIn">
+	<if true="var:isLoggedIn">
 
 		<part class="toolbar-icon menu">
 			<image method="edit" align="left"></image>
@@ -124,14 +124,14 @@
 		raw=""></text> </part> </part> -->
 
 	<!-- Menü: Projekt -->
-	<if true="method:userIsLoggedIn">
+	<if true="var:isLoggedIn">
 
 		<part class="toolbar-icon projects">
 			<image action="project" align="left"></image>
 			<text class="titletext" key="GLOBAL_PROJECT"></text>
 			<part class="dropdown">
 
-				<if true="method:userIsAdmin">
+				<if true="var:isAdmin">
 					<part class="entry clickable">
 						<link type="post" class="entry" action="start" subaction="administration"
 							target="tree" id="-1">
@@ -185,7 +185,7 @@
 
 
 
-	<if true="method:userIsLoggedIn">
+	<if true="var:isLoggedIn">
 
 		<part
 			class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-template on-action-element">
