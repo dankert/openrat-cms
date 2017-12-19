@@ -1,4 +1,16 @@
 <?php
+
+namespace cms\action;
+
+use cms\model\Folder;
+use cms\model\Object;
+use cms\model\File;
+
+use cms\model\Text;
+use Http;
+use \Html;
+use Upload;
+
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -17,8 +29,26 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
-$conf_logfile     = $conf['log']['file'];
-$conf_loglevel    = $conf['log']['level'];
-$conf_themedir    = OR_THEMES_DIR.$conf['interface']['theme'];
+/**
+ * Action-Klasse zum Bearbeiten einer Datei
+ * @author Jan Dankert
+ * @package openrat.actions
+ */
+class TextAction extends FileAction
+{
+	public $security = SECURITY_USER;
+
+	var $text;
+
+	/**
+	 * Konstruktor
+	 */
+	function __construct()
+	{
+		$this->text = new Text( $this->getRequestId() );
+		$this->text->load();
+	}
+
+}
 
 ?>

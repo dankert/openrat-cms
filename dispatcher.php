@@ -163,7 +163,6 @@ try
     define('PRODUCTION'  ,$conf['production']);
     define('DEVELOPMENT' ,!PRODUCTION);
     
-    require_once( "functions/config.inc.php" );
     require_once( "functions/language.inc.".PHP_EXT );
     require_once( "functions/db.inc.".PHP_EXT );
     

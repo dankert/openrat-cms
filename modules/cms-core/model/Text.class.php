@@ -1,4 +1,5 @@
 <?php
+namespace cms\model;
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
 //
@@ -16,23 +17,31 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-$REQ = array_merge($_GET,$_POST);
 
-// Zur Sicherheit:
-// Falls REGISTER_GLOBALS aktiviert ist, dann alle REQUEST-Variablen aus dem
-// globalen G�ltigkeitsraum entfernen.
-if	( ini_get('register_globals') )
+// Standard Mime-Type 
+define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
+
+
+/**
+ * Datei.
+ *
+ * @author Jan Dankert
+ * @package openrat.objects
+ */
+class Text extends File
 {
-	foreach( $REQ as $reqVar=>$reqValue )
-		unset( $$reqVar );
-}
 
-if	( get_magic_quotes_gpc() == 1 )
-{
-	foreach( $REQ as $p=>$v )
-		if	( !is_array($v) )
-			$REQ[$p] = stripslashes($v);
-}
 
+    /**
+     * Konstruktor
+     *
+     * @param string $objectid
+     */
+	function __construct( $objectid='' )
+	{
+		parent::__construct( $objectid );
+	}
+
+}
 
 ?>

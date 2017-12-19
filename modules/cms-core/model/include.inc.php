@@ -11,6 +11,8 @@ require_once( __DIR__."/Folder.class.".PHP_EXT );
 require_once( __DIR__."/Link.class.".PHP_EXT );
 require_once( __DIR__."/Url.class.".PHP_EXT );
 require_once( __DIR__."/File.class.".PHP_EXT );
+require_once( __DIR__."/Image.class.".PHP_EXT );
+require_once( __DIR__."/Text.class.".PHP_EXT );
 require_once( __DIR__."/User.class.".PHP_EXT );
 require_once( __DIR__."/Group.class.".PHP_EXT );
 require_once( __DIR__."/Project.class.".PHP_EXT );
