@@ -68,28 +68,21 @@ class FormComponent extends Component
 	{
 		$label = $this->htmlvalue($this->label);
 		
-		// Fällt demnächst weg:
-		echo <<<HTML
+		echo '<div class="bottom">';
+		echo "<div class=\"command {$this->visible}\">";
 
-<div class="bottom">
-	<div class="command {$this->visible}">
-	
-		<input type="button" class="submit ok" value="{$label}" onclick="$(this).closest('div.sheet').find('form').submit(); " />
-		
-		<!-- Cancel-Button nicht anzeigen, wenn cancel==false. -->
-HTML;
+		echo "<input type=\"button\" class=\"submit ok\" value=\"{$label}\" onclick=\"$(this).closest('div.sheet').find('form').submit(); \" />";
+
+        // Cancel-Button nicht anzeigen, wenn cancel==false.
 		if ($this->cancel)
 		{
 			echo '<input type="button" class="submit cancel" value="<?php echo lang("CANCEL") ?>" onclick="' . "$(div#dialog').hide(); $('div#filler').fadeOut(500); $(this).closest('div.panel').find('ul.views > li.active').click();" . '" />';
-		}
-		echo <<<HTML
-	</div>
-</div>
+        }
+        echo '</div>';
+        echo '</div>';
+        echo '</form>';
 
-</form>
-
-HTML;
-	}
+    }
 }
 
 ?>
