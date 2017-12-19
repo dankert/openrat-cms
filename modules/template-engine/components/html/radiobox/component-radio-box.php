@@ -10,17 +10,17 @@ function component_radio_box($name, $values, $value)
 {
 	foreach ($values as $box_key => $box_value)
 	{
-		if (is_array($box_value))
+		if (is_array($box_value) && isset($box_value['lang']))
+		{
+			$box_value = '<?php echo lang(\''.$box_value['lang'].'\') ?>';
+            $box_title = '';
+		}
+		elseif (is_array($box_value))
 		{
 			$box_key = $box_value['key'];
 			$box_title = $box_value['title'];
 			$box_value = $box_value['value'];
 		}
-// 		elseif ($valuesAreLanguageKeys)
-// 		{
-// 			$box_title = lang($box_value . '_DESC');
-// 			$box_value = lang($box_value);
-// 		}
 		else
 		{
 			$box_title = '';
