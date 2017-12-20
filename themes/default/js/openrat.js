@@ -696,9 +696,9 @@ function startView( element,method )
  */
 function startDialog( name,action,method,id,params )
 {
-	if ( action== null)
+	if ( action== null || action.length ==0 )
 		action = $('#panel-content').find('li.active').data('action');
-	if	(id==null)
+	if	(id==null  || id.length ==0)
 		id     = $('#panel-content').find('li.active').data('id'    );
 //	if	(params==null)
 //		params = {};

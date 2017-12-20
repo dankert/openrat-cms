@@ -31,7 +31,7 @@ jQuery.fn.orLinkify = function()
 
 			else if	( type == 'dialog' )
 			{
-				startDialog($(this).attr('data-name'),null,$(this).attr('data-method') );
+				startDialog($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method') );
 			}
 
 			else if	( type == 'url' )

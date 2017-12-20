@@ -68,38 +68,38 @@ class LinkComponent extends Component
 	{
 		echo '<a';
 		
-		if (! empty($this->class))
+		if (isset($this->class))
 			echo ' class="' . $this->htmlvalue($this->class) . '"';
 		
-		if (! empty($this->title))
+		if (isset($this->title))
 			echo ' title="' . $this->htmlvalue($this->title) . '"';
 		
-		if (! empty($this->accesskey))
+		if (isset($this->accesskey))
 			echo ' accesskey="' . $this->htmlvalue($this->accesskey) . '"';
 		
-		if (! empty($this->frame))
+		if (isset($this->frame))
 			echo ' target="' . $this->htmlvalue($this->frame) . '"';
 		
-		if (! empty($this->name))
+		if (isset($this->name))
 			echo ' date-name="' . $this->htmlvalue($this->name) . '" name="' . $this->htmlvalue($this->name) . '"';
 		
-		if (! empty($this->url))
+		if (isset($this->url))
 			echo ' data-url="' . $this->htmlvalue($this->url) . '"';
 		
-		if (! empty($this->type))
+		if (isset($this->type))
 			echo ' data-type="' . $this->htmlvalue($this->type) . '"';
 		
-		if (! empty($this->action))
+		if (!empty($this->action))
 			echo ' data-action="' . $this->htmlvalue($this->action) . '"';
 		else
-			echo ' data-action="<?php echo OR_ACTION ?>"';
+			echo ' data-action=""';
 		
-		if (! empty($this->subaction))
+		if (isset($this->subaction))
 			echo ' data-method="' . $this->htmlvalue($this->subaction) . '"';
 		else
 			echo ' data-method="<?php echo OR_METHOD ?>"';
 		
-		if (! empty($this->id))
+		if (isset($this->id))
 			echo ' data-id="' . $this->htmlvalue($this->id) . '"';
 		else
 			echo ' data-id="<?php echo OR_ID ?>"';

@@ -185,6 +185,7 @@
 
 
 
+	<!-- Falls eingeloggt: Weitere Aktionsbuttons -->
 	<if true="var:isLoggedIn">
 
 		<part
@@ -204,7 +205,7 @@
 	</if>
 
 
-	<!-- Info-Meldung anzeigen (sofern vorhanden -->
+	<!-- Info-Meldung anzeigen (sofern vorhanden) -->
 	<if not="" empty="config:login/motd">
 		<part class="toolbar-icon">
 			<image method="motd" align="left"></image>
@@ -222,23 +223,38 @@
 
 
 
+	<!-- Suche -->
 	<part class="search">
 		<input name="text" hint="message:search" icon="search"></input>
 		<part class="dropdown">
 			<text raw=""></text>
 		</part>
 	</part>
+
+	<!-- Benutzer -->
 	<part class="toolbar-icon user">
 		<image action="user" align="left"></image>
 		<text class="titletext" var="userfullname" maxlength="25"></text>
 		<image method="arrow_down" align="left"></image>
 		<!-- <part class="arrow-down" />-->
 		<part class="dropdown">
+
 			<part class="entry clickable">
-				<link type="post" title="message:USER_PROFILE_DESC" action="start"
-					subaction="profile">
+				<link type="dialog" title="message:USER_PROFILE_DESC" action="profile" subaction="edit">
 					<image action="user" align="left"></image>
 					<text key="profile"></text>
+				</link>
+			</part>
+			<part class="entry clickable">
+				<link type="dialog" title="message:USER_PROFILE_DESC" action="profile" subaction="pw">
+					<image action="user" align="left"></image>
+					<text key="password"></text>
+				</link>
+			</part>
+			<part class="entry clickable">
+				<link type="dialog" title="message:USER_PROFILE_DESC" action="profile" subaction="mail">
+					<image action="user" align="left"></image>
+					<text key="mail"></text>
 				</link>
 			</part>
 			<part class="entry clickable">
