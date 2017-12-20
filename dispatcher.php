@@ -190,10 +190,12 @@ try
     {
     	Http::serverError("no method (subaction) supplied");
     }
-    
-    require( OR_ACTIONCLASSES_DIR.'Action.class.php' );
-    require( OR_ACTIONCLASSES_DIR.'ObjectAction.class.php' );
-    
+
+    // Elternklassen einbinden
+    require_once( OR_ACTIONCLASSES_DIR.'Action.class.php' );
+    require_once( OR_ACTIONCLASSES_DIR.'ObjectAction.class.php' );
+    require_once( OR_ACTIONCLASSES_DIR.'FileAction.class.php' );
+
     	
     $actionClassName = ucfirst($action).'Action';
     $actionClassNameWithNamespace = 'cms\\action\\'.$actionClassName;

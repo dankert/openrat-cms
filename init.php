@@ -30,6 +30,8 @@ define('OR_TITLE'        ,'OpenRat CMS');
 define('OR_TYPE_FOLDER','folder');
 define('OR_TYPE_PAGE'  ,'page'  );
 define('OR_TYPE_FILE'  ,'file'  );
+define('OR_TYPE_IMAGE' ,'image'  );
+define('OR_TYPE_TEXT'  ,'text'  );
 define('OR_TYPE_LINK'  ,'link'  );
 define('OR_TYPE_URL'   ,'url'   );
 
