@@ -48,9 +48,9 @@ class ConfigurationAction extends Action
 	 */
 	function showView()
 	{
-	    $conf = array();
-		require_once( OR_MODULES_DIR.'/util/config-default.php');
-		$conf_default = $conf;
+        require_once( OR_MODULES_DIR.'/util/config-default.php');
+        $conf = createDefaultConfig();
+        $conf_default = $conf;
 		
 		$conf_cms = Session::getConfig();
 		$conf_cms['system']['server'] = array( 'time'   => date('r'),

@@ -52,8 +52,8 @@ try
     		session_unset();
 
         // Fest eingebaute Standard-Konfiguration laden.
-        $conf = array();
-        require(OR_MODULES_DIR.'util/config-default.php'); // writes to $conf
+        require(OR_MODULES_DIR.'util/config-default.php');
+        $conf = createDefaultConfig();
 
         $customConfig = Configuration::load();
         $conf = array_replace_recursive($conf, $customConfig);
