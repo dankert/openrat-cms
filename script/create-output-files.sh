@@ -17,6 +17,14 @@ for jsfile in `find themes -name "*.js" -not -name "*.min.js"`; do
 	chmod a+rw -v $jsfile.min.js;
 done
 
+for jsfile in `find modules/editor/codemirror -name "*.js" -not -name "*.min.js"`; do
+	jsfile="${jsfile%.*}"
+	echo "JS found: $jsfile"
+	if	[ ! -f $jsfile.min.js ]; then cp -v $jsfile.js $jsfile.min.js;
+		fi
+	chmod a+rw -v $jsfile.min.js;
+done
+
 
 for tplfile in `find themes -name "*.src.xml"`; do
 	 

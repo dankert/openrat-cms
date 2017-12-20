@@ -5,6 +5,6 @@
 	<!-- 
 		<inputarea rows="25" cols="80" name="src" class="editor"></inputarea>
 	 -->     
-		<editor type="code" name="src" mode="html" /> 
+		<editor type="code" name="src" mode="htmlmixed" />
 	</form>
 </output>

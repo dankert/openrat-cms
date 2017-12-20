@@ -86,8 +86,16 @@ $(document).on('orViewLoaded',function(event, data) {
 	// Codemirror-Editor anzeigen
 	$(event.target).find("textarea.editor__code-editor").each( function() {
 
+		var mode = $(this).data('mode');
+
+        var mimetype = $(this).data('mimetype');
+		if(mimetype.length>0)
+			mode = mimetype;
+
+
         var editor = CodeMirror.fromTextArea( this, {
-            lineNumbers: true
+            lineNumbers: true,
+			mode: mode
             /** settings **/ })
 
         var textareaEl = this;
