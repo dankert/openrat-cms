@@ -2,6 +2,11 @@
 
 namespace cms\model;
 
+define('PROJECT_FLAG_CUT_INDEX',1);
+define('PROJECT_FLAG_CONTENT_NEGOTIATION',2);
+define('PROJECT_FLAG_PUBLISH_FILE_EXTENSION',4);
+define('PROJECT_FLAG_PUBLISH_PAGE_EXTENSION',8);
+
 use database\Database;
 use Session;
 
@@ -12,7 +17,7 @@ use Session;
  * @author Jan Dankert
  * @package openrat.objects
  */
-class Project
+class Project extends ModelBase
 {
 	// Eigenschaften
 	var $projectid;
@@ -21,9 +26,28 @@ class Project
 	var $ftp_url;
 	var $ftp_passive;
 	var $cmd_after_publish;
-	var $content_negotiation;
-	var $cut_index;
-	
+
+
+    /**
+     * @var boolean
+     */
+	public $content_negotiation = false;
+
+    /**
+     * @var boolean
+     */
+	public $cut_index = false;
+
+    /**
+     * @var boolean
+     */
+    public $publishFileExtension = true;
+
+    /**
+     * @var boolean
+     */
+    public $publishPageExtension = true;
+
 	var $log = array();
 	
 	
@@ -186,8 +210,10 @@ class Project
 		$this->ftp_url             = $row['ftp_url'            ];
 		$this->ftp_passive         = $row['ftp_passive'        ];
 		$this->cmd_after_publish   = $row['cmd_after_publish'  ];
-		$this->content_negotiation = $row['content_negotiation'];
-		$this->cut_index           = $row['cut_index'          ];
+        $this->cut_index           = $row['flags']&PROJECT_FLAG_CUT_INDEX;
+        $this->content_negotiation = $row['flags']&PROJECT_FLAG_CONTENT_NEGOTIATION;
+        $this->publishFileExtension = $row['flags']&PROJECT_FLAG_PUBLISH_FILE_EXTENSION;
+        $this->publishPageExtension = $row['flags']&PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
 	}
 
 
@@ -207,9 +233,11 @@ class Project
 		$this->ftp_url             = $row['ftp_url'            ];
 		$this->ftp_passive         = $row['ftp_passive'        ];
 		$this->cmd_after_publish   = $row['cmd_after_publish'  ];
-		$this->content_negotiation = $row['content_negotiation'];
-		$this->cut_index           = $row['cut_index'          ];
-	}
+        $this->cut_index           = $row['flags']&PROJECT_FLAG_CUT_INDEX;
+        $this->content_negotiation = $row['flags']&PROJECT_FLAG_CONTENT_NEGOTIATION;
+        $this->publishFileExtension = $row['flags']&PROJECT_FLAG_PUBLISH_FILE_EXTENSION;
+        $this->publishPageExtension = $row['flags']&PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
+    }
 
 
 	// Speichern
@@ -223,8 +251,7 @@ class Project
                       target_dir          = {target_dir},
                       ftp_url             = {ftp_url}, 
                       ftp_passive         = {ftp_passive}, 
-                      cut_index           = {cut_index}, 
-                      content_negotiation = {content_negotiation}, 
+                      flags               = {flags}, 
                       cmd_after_publish   = {cmd_after_publish} 
                 WHERE id= {projectid}
 SQL
@@ -235,8 +262,14 @@ SQL
 		$sql->setString('target_dir'         ,$this->target_dir );
 		$sql->setInt   ('ftp_passive'        ,$this->ftp_passive );
 		$sql->setString('cmd_after_publish'  ,$this->cmd_after_publish );
-		$sql->setInt   ('content_negotiation',$this->content_negotiation );
-		$sql->setInt   ('cut_index'          ,$this->cut_index );
+
+        $flags = 0;
+        if( $this->cut_index) $flags |= PROJECT_FLAG_CUT_INDEX;
+        if( $this->content_negotiation) $flags |= PROJECT_FLAG_CONTENT_NEGOTIATION;
+        if( $this->publishFileExtension) $flags |= PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
+        if( $this->publishPageExtension) $flags |= PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
+
+        $sql->setInt   ('flags'              ,$flags );
 		$sql->setInt   ('projectid'          ,$this->projectid );
 
 		$sql->query();
@@ -255,32 +288,29 @@ SQL
 	}
 
 
-	// Speichern
+	/**
+     * Liefert alle Eigenschaften des Projektes.
+	*/
 	public function getProperties()
 	{
-		return Array( 'name'               =>$this->name,
-		              'target_dir'         =>$this->target_dir,
-		              'ftp_url'            =>$this->ftp_url,
-		              'ftp_passive'        =>$this->ftp_passive,
-		              'cmd_after_publish'  =>$this->cmd_after_publish,
-		              'content_negotiation'=>$this->content_negotiation,
-		              'cut_index'          =>$this->cut_index,
-		              'projectid'          =>$this->projectid );
+		return parent::getProperties();
 	}
 
 
-	// Projekt hinzufuegen
-	public function add()
+    /**
+     * Add a project to the database.
+     */
+    public function add()
 	{
 		$db = db_connection();
-		
+
 		$sql = $db->sql('SELECT MAX(id) FROM {{project}}');
 		$this->projectid = intval($sql->getOne())+1;
 
 
 		// Projekt hinzuf?gen
-		$sql = $db->sql( 'INSERT INTO {{project}} (id,name,target_dir,ftp_url,ftp_passive,cmd_after_publish,content_negotiation,cut_index) '.
-		                "  VALUES( {projectid},{name},'','',0,'',0,0 ) " );
+		$sql = $db->sql( 'INSERT INTO {{project}} (id,name,target_dir,ftp_url,ftp_passive,cmd_after_publish,flags) '.
+		                "  VALUES( {projectid},{name},'','',0,'',0 ) " );
 		$sql->setInt   ('projectid',$this->projectid );
 		$sql->setString('name'     ,$this->name      );
 
@@ -363,7 +393,7 @@ SQL
 		}
 		
 
-		// Projekt l?schen
+		// Deleting the project
 		$sql = $db->sql( 'DELETE FROM {{project}}'.
 		                '  WHERE id= {projectid} ' );
 		$sql->setInt( 'projectid',$this->projectid );

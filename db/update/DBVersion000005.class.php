@@ -15,7 +15,7 @@ class DBVersion000005 extends DbVersion
 		$nullable     = true;
 		
 		// longer Passwords! 50 is not enough.
-		$this->addColumn('user','password_hash','VARCHAR',255,null,$not_nullable);
+		$this->addColumn('user','password_hash',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
 		
 		$db    = $this->getDb();
 		$table = $this->getTableName('user');
@@ -26,7 +26,7 @@ class DBVersion000005 extends DbVersion
 
 		$this->dropColumn('user','password');
 		
-		$this->addColumn('user','password_salt','VARCHAR',255,null,$not_nullable);
+		$this->addColumn('user','password_salt',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
 	}
 }
 

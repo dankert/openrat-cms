@@ -1,11 +1,21 @@
 <?php
 
-namespace {
-    define('OR_DB_INDEX_PREFIX', 'IX');
-    define('OR_DB_CONSTRAINT_PREFIX', 'FK');
-}
 
 namespace database {
+
+    define('OR_DB_INDEX_PREFIX', 'IX');
+    define('OR_DB_CONSTRAINT_PREFIX', 'FK');
+
+    define('OR_DB_TYPE_MYSQL',1);
+    define('OR_DB_TYPE_POSTGRES',2);
+    define('OR_DB_TYPE_SQLITE',3);
+    define('OR_DB_TYPE_ORACLE',4);
+
+    define('OR_DB_COLUMN_TYPE_INT',1);
+    define('OR_DB_COLUMN_TYPE_VARCHAR',2);
+    define('OR_DB_COLUMN_TYPE_TEXT',3);
+    define('OR_DB_COLUMN_TYPE_BLOB',4);
+
 
     use Http;
 
@@ -14,6 +24,11 @@ namespace database {
         private $db;
         private $tablePrefix;
         private $tableSuffix;
+
+        /**
+         * Datenbank-RDBMS-Typ
+         * @var int
+         */
         private $dbmsType;
 
         public function __construct(Database $db)
@@ -23,33 +38,33 @@ namespace database {
             switch ($db->conf['type']) {
                 case 'mysql':
                 case 'mysqli':
-                    $this->dbmsType = 'mysql';
+                    $this->dbmsType = OR_DB_TYPE_MYSQL;
                     break;
                 case 'postgresql':
-                    $this->dbmsType = 'postgresql';
+                    $this->dbmsType = OR_DB_TYPE_POSTGRES;
                     break;
                 case 'sqlite':
                 case 'sqlite3':
-                    $this->dbmsType = 'sqlite';
+                    $this->dbmsType = OR_DB_TYPE_SQLITE;
                     break;
                 case 'pdo':
                     $dsnParts = explode(':', $db->conf['dsn']);
                     switch ($dsnParts[0]) {
                         case 'mysql':
-                            $this->dbmsType = 'mysql';
+                            $this->dbmsType = OR_DB_TYPE_MYSQL;
                             break;
                         case 'pgsql':
-                            $this->dbmsType = 'postgresql';
+                            $this->dbmsType = OR_DB_TYPE_POSTGRES;
                             break;
                         case 'sqlite':
-                            $this->dbmsType = 'sqlite';
+                            $this->dbmsType = OR_DB_TYPE_SQLITE;
                             break;
                         default:
-                            Http::serverError('Datebase Configuration Error', 'Unknown DBMS in PDO-DSN: ' . $dsnParts[0]);
+                            throw new \LogicException('Unknown DBMS in PDO-DSN: ' . $dsnParts[0]);
                     }
                     break;
                 default:
-                    Http::serverError('Datebase Configuration Error', 'Unknown DBMS type: ' . $db->conf['type']);
+                    throw new \LogicException('Unknown DBMS type: ' . $db->conf['type']);
             }
 
             $this->tablePrefix = $db->conf['prefix'];
@@ -69,12 +84,13 @@ namespace database {
         /**
          * Erzeugt eine neue Tabelle.
          * Die neue Tabelle enthält bereits eine Spalte "id" (da eine leere Tabelle i.d.R. nicht zulässig ist).
+         * @param $tableName string
          */
         function addTable($tableName)
         {
             $tableName = $this->getTableName($tableName);
 
-            $table_opts = $this->dbmsType == 'mysql' ? ' ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci' : '';
+            $table_opts = $this->dbmsType == OR_DB_TYPE_MYSQL ? ' ENGINE=InnoDB CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci' : '';
 
             $ddl = $this->db->sql('CREATE TABLE ' . $tableName . '(id INTEGER)' . $table_opts . ';');
             // The syntax 'TYPE = InnoDB' was deprecated in MySQL 5.0 and was removed in MySQL 5.1 and later versions.
@@ -83,28 +99,31 @@ namespace database {
         }
 
 
-        # Creating a new column
-        # param 1: column name
-        # param 2: type (available are: INT,VARCHAR,TEXT,BLOB)
-        # param 3: size (number value)
-        # param 4: default (number value)
-        # param 5: nullable (available are: J,N)
+        /**
+         * Creating a new column.
+         * @param $tableName string Table name
+         * @param $columnName string Column name
+         * @param $type int one of the constance OR_DB_COLUMN_TYPE_*
+         * @param $size int Size
+         * @param $default mixed Default value
+         * @param $nullable boolean
+         */
         function addColumn($tableName, $columnName, $type, $size, $default, $nullable)
         {
             $table = $this->getTableName($tableName);
 
             $type = strtoupper($type);
             switch ($type) {
-                case 'INT':
+                case OR_DB_COLUMN_TYPE_INT:
                     switch ($this->dbmsType) {
-                        case 'mysql':
+                        case OR_DB_TYPE_MYSQL:
                             if ($size == 1)
                                 $dbmsInternalType = 'TINYINT';
                             else
                                 $dbmsInternalType = 'INT';
                             break;
 
-                        case 'oracle':
+                        case OR_DB_TYPE_ORACLE:
                             $dbmsInternalType = 'NUMBER';
                             break;
 
@@ -114,7 +133,7 @@ namespace database {
                     }
                     break;
 
-                case 'VARCHAR':
+                case OR_DB_COLUMN_TYPE_VARCHAR:
                     switch ($this->dbmsType) {
                         default:
                             $dbmsInternalType = 'VARCHAR';
@@ -122,13 +141,13 @@ namespace database {
                     }
                     break;
 
-                case 'TEXT':
+                case OR_DB_COLUMN_TYPE_TEXT:
                     switch ($this->dbmsType) {
-                        case 'mysql':
+                        case OR_DB_TYPE_MYSQL:
                             $dbmsInternalType = 'MEDIUMTEXT';
                             break;
 
-                        case 'oracle':
+                        case OR_DB_TYPE_ORACLE:
                             $dbmsInternalType = 'CLOB';
                             break;
 
@@ -138,21 +157,21 @@ namespace database {
                     }
                     break;
 
-                case 'BLOB':
+                case OR_DB_COLUMN_TYPE_BLOB:
                     switch ($this->dbmsType) {
-                        case 'mysql':
+                        case OR_DB_TYPE_MYSQL:
                             $dbmsInternalType = 'MEDIUMBLOB';
                             break;
 
-                        case 'oracle':
+                        case OR_DB_TYPE_ORACLE:
                             $dbmsInternalType = 'CLOB';
                             break;
 
-                        case 'postgresql':
+                        case OR_DB_TYPE_POSTGRES:
                             $dbmsInternalType = 'TEXT';
                             break;
 
-                        case 'sqlite':
+                        case OR_DB_TYPE_SQLITE:
                             $dbmsInternalType = 'TEXT';
                             break;
 
@@ -162,12 +181,12 @@ namespace database {
                     }
                     break;
                 default:
-                    Http::serverError('Datebase Configuration Error', 'Unknown Column type: ' . $type);
+                    throw new \LogicException( 'Unknown Column type: ' . $type);
             }
 
-            if ($this->dbmsType == 'oracle') {
-                // TEXT-columns should be nullable in Oracle, because empty strings are treated as NULL
-                if ($type == 'VARCHAR' || $type == 'TEXT')
+            if ($this->dbmsType == OR_DB_TYPE_ORACLE) {
+                // TEXT-columns must be nullable in Oracle, because empty strings are treated as NULL. BAD BAD BAD, Oracle!
+                if ($type == OR_DB_COLUMN_TYPE_VARCHAR || $type == OR_DB_COLUMN_TYPE_TEXT)
                     $nullable = true;
 
             }

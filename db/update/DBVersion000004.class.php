@@ -15,10 +15,10 @@ class DBVersion000004 extends DbVersion
 		$nullable     = true;
 		
 		// Add user language
-		$this->addColumn('user','language','VARCHAR', 2,null,$nullable);
+		$this->addColumn('user','language',OR_DB_COLUMN_TYPE_VARCHAR, 2,null,$nullable);
 		
 		// Add user timezone
-		$this->addColumn('user','timezone','VARCHAR',64,null,$nullable);
+		$this->addColumn('user','timezone',OR_DB_COLUMN_TYPE_VARCHAR,64,null,$nullable);
 		
 	}
 }

@@ -12,9 +12,9 @@ class DBVersion000002 extends DbVersion
 	{
 		$this->addTable('version');
 
-		$this->addColumn('version','version'  ,'INT',null,null,false);
-		$this->addColumn('version','status'   ,'INT',null,null,false);
-		$this->addColumn('version','installed','INT',null,null,false);
+		$this->addColumn('version','version'  ,OR_DB_COLUMN_TYPE_INT,null,null,false);
+		$this->addColumn('version','status'   ,OR_DB_COLUMN_TYPE_INT,null,null,false);
+		$this->addColumn('version','installed',OR_DB_COLUMN_TYPE_INT,null,null,false);
 		
 		$this->addPrimaryKey ('version','id'      );
 		$this->addIndex      ('version','status'  );

@@ -23,8 +23,8 @@ class DBVersion000009 extends DbVersion
 
 		// Creating new table 'url'
         $this->addTable('url');
-        $this->addColumn('url','objectid','INT',0,null,$not_nullable);
-        $this->addColumn('url','url','VARCHAR',255,null,$not_nullable);
+        $this->addColumn('url','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+        $this->addColumn('url','url',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
 
         $this->addPrimaryKey('url','id');
         $this->addConstraint('url','objectid','object','id');

@@ -15,7 +15,7 @@ class DBVersion000007 extends DbVersion
 		$not_nullable = false;
 		$nullable     = true;
 		
-		$this->addColumn('user','otp_secret'  ,'VARCHAR',255,null,$nullable    );
+		$this->addColumn('user','otp_secret'  ,OR_DB_COLUMN_TYPE_VARCHAR,255,null,$nullable    );
 
 		$table = $this->getTableName('user');
 		$db    = $this->getDb();
@@ -29,9 +29,9 @@ class DBVersion000007 extends DbVersion
 			$stmt->query();
 		}
 		
-		$this->addColumn('user','totp'        ,'INT'    ,  1,   0,$not_nullable);
-		$this->addColumn('user','hotp_counter','INT'    ,  0,   0,$not_nullable);
-		$this->addColumn('user','hotp'        ,'INT'    ,  1,   0,$not_nullable);
+		$this->addColumn('user','totp'        ,OR_DB_COLUMN_TYPE_INT    ,  1,   0,$not_nullable);
+		$this->addColumn('user','hotp_counter',OR_DB_COLUMN_TYPE_INT    ,  0,   0,$not_nullable);
+		$this->addColumn('user','hotp'        ,OR_DB_COLUMN_TYPE_INT    ,  1,   0,$not_nullable);
 		
 	}
 }

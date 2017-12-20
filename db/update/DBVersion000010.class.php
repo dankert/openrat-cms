@@ -3,7 +3,7 @@ use database\DbVersion;
 use security\Password;
 
 /**
- * Filetype 'file' is now devided into 'file' (unchanged), 'image' (new) and 'text' (new).
+ * Filetype 'file' is now devided into 'file' (unchanged), 'image' (new) and OR_DB_COLUMN_TYPE_TEXT (new).
  * 
  * @author dankert
  *
@@ -27,7 +27,7 @@ class DBVersion000010 extends DbVersion
 
         $updateStmt = $db->sql('UPDATE '.$tableObject.
             ' SET typeid=7 WHERE id IN (SELECT objectid FROM '.$tableFile.
-            " WHERE extension IN ('css','text','txt','js','html','xml','log','ini','gpx') )"
+            " WHERE extension IN ('css',OR_DB_COLUMN_TYPE_TEXT,'txt','js','html','xml','log','ini','gpx') )"
         );
         $updateStmt->query();
 

@@ -19,27 +19,27 @@ class DBVersion000001 extends DbVersion
 		
 		$this->addTable('project');
 
-		$this->addColumn('project','name'               ,'VARCHAR', 128,null,$not_nullable);
-		$this->addColumn('project','target_dir'         ,'VARCHAR', 255,null,$not_nullable);
-		$this->addColumn('project','ftp_url'            ,'VARCHAR', 255,null,$not_nullable);
-		$this->addColumn('project','ftp_passive'        ,'INT'    ,null,null,$not_nullable);
-		$this->addColumn('project','cmd_after_publish'  ,'VARCHAR', 255,null,$not_nullable);
-		$this->addColumn('project','content_negotiation','INT'    ,   1,   0,$not_nullable);
-		$this->addColumn('project','cut_index'          ,'INT'    ,   1,   0,$not_nullable);
+		$this->addColumn('project','name'               ,OR_DB_COLUMN_TYPE_VARCHAR, 128,null,$not_nullable);
+		$this->addColumn('project','target_dir'         ,OR_DB_COLUMN_TYPE_VARCHAR, 255,null,$not_nullable);
+		$this->addColumn('project','ftp_url'            ,OR_DB_COLUMN_TYPE_VARCHAR, 255,null,$not_nullable);
+		$this->addColumn('project','ftp_passive'        ,OR_DB_COLUMN_TYPE_INT    ,null,null,$not_nullable);
+		$this->addColumn('project','cmd_after_publish'  ,OR_DB_COLUMN_TYPE_VARCHAR, 255,null,$not_nullable);
+		$this->addColumn('project','content_negotiation',OR_DB_COLUMN_TYPE_INT    ,   1,   0,$not_nullable);
+		$this->addColumn('project','cut_index'          ,OR_DB_COLUMN_TYPE_INT    ,   1,   0,$not_nullable);
 		
 		$this->addPrimaryKey('project','id');
 		$this->addIndex('project','name');
 		
 		/*
 		 * 
-		$this->addColumn('id','INT',null,null,$not_nullable);
-		$this->addColumn('name','VARCHAR',128,null,$not_nullable);
-		$this->addColumn('target_dir','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('ftp_url','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('ftp_passive','INT',1,0,$not_nullable);
-		$this->addColumn('cmd_after_publish','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('content_negotiation','INT',1,0,$not_nullable);
-		$this->addColumn('cut_$this->addIndex('','INT');',1,0,$not_nullable);
+		$this->addColumn('id',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
+		$this->addColumn('name',OR_DB_COLUMN_TYPE_VARCHAR,128,null,$not_nullable);
+		$this->addColumn('target_dir',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('ftp_url',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('ftp_passive',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('cmd_after_publish',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('content_negotiation',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('cut_$this->addIndex('',OR_DB_COLUMN_TYPE_INT);',1,0,$not_nullable);
 		$this->addPrimaryKey('','id');
 		close_table
 		unique_$this->addIndex('','name');
@@ -49,36 +49,36 @@ class DBVersion000001 extends DbVersion
 		
 				
 		$this->addTable('user');
-		$this->addColumn('user','name','VARCHAR',128,null,$not_nullable);
-		$this->addColumn('user','password','VARCHAR',50,null,$not_nullable);
-		$this->addColumn('user','ldap_dn','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('user','fullname','VARCHAR',128,null,$not_nullable);
-		$this->addColumn('user','tel','VARCHAR',128,null,$not_nullable);
-		$this->addColumn('user','mail','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('user','descr','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('user','style','VARCHAR',64,null,$not_nullable);
-		$this->addColumn('user','is_admin','INT',1,0,$not_nullable);
+		$this->addColumn('user','name',OR_DB_COLUMN_TYPE_VARCHAR,128,null,$not_nullable);
+		$this->addColumn('user','password',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
+		$this->addColumn('user','ldap_dn',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('user','fullname',OR_DB_COLUMN_TYPE_VARCHAR,128,null,$not_nullable);
+		$this->addColumn('user','tel',OR_DB_COLUMN_TYPE_VARCHAR,128,null,$not_nullable);
+		$this->addColumn('user','mail',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('user','descr',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('user','style',OR_DB_COLUMN_TYPE_VARCHAR,64,null,$not_nullable);
+		$this->addColumn('user','is_admin',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
 		$this->addPrimaryKey('user','id');
 		$this->addUniqueIndex('user','name');
 		
 		$this->addTable('group');
-		$this->addColumn('group','name','VARCHAR',100,null,$not_nullable);
+		$this->addColumn('group','name',OR_DB_COLUMN_TYPE_VARCHAR,100,null,$not_nullable);
 		$this->addPrimaryKey('group','id');
 		$this->addUniqueIndex('group','name');
 		
 		$this->addTable('object');
-		$this->addColumn('object','parentid','INT',null,null,$nullable);
-		$this->addColumn('object','projectid','INT',0,0,$not_nullable);
-		$this->addColumn('object','filename','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('object','orderid','INT',0,null,$not_nullable);
-		$this->addColumn('object','create_date','INT',0,null,$not_nullable);
-		$this->addColumn('object','create_userid','INT',0,null,$nullable);
-		$this->addColumn('object','lastchange_date','INT',0,null,$not_nullable);
-		$this->addColumn('object','lastchange_userid','INT',0,null,$nullable);
-		$this->addColumn('object','is_folder','INT',1,null,$not_nullable);
-		$this->addColumn('object','is_file','INT',1,null,$not_nullable);
-		$this->addColumn('object','is_page','INT',1,null,$not_nullable);
-		$this->addColumn('object','is_link','INT',1,null,$not_nullable);
+		$this->addColumn('object','parentid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
+		$this->addColumn('object','projectid',OR_DB_COLUMN_TYPE_INT,0,0,$not_nullable);
+		$this->addColumn('object','filename',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('object','orderid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('object','create_date',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('object','create_userid',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
+		$this->addColumn('object','lastchange_date',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('object','lastchange_userid',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
+		$this->addColumn('object','is_folder',OR_DB_COLUMN_TYPE_INT,1,null,$not_nullable);
+		$this->addColumn('object','is_file',OR_DB_COLUMN_TYPE_INT,1,null,$not_nullable);
+		$this->addColumn('object','is_page',OR_DB_COLUMN_TYPE_INT,1,null,$not_nullable);
+		$this->addColumn('object','is_link',OR_DB_COLUMN_TYPE_INT,1,null,$not_nullable);
 		$this->addPrimaryKey('object','id');
 		$this->addConstraint('object','projectid','project','id');
 		$this->addConstraint('object','lastchange_userid','user','id');
@@ -99,8 +99,8 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('template');
-		$this->addColumn('template','projectid','INT',null,null,$not_nullable);
-		$this->addColumn('template','name','VARCHAR',50,null,$not_nullable);
+		$this->addColumn('template','projectid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
+		$this->addColumn('template','name',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
 		$this->addPrimaryKey('template','id');
 		$this->addConstraint('template','projectid','project','id');
 		
@@ -111,10 +111,10 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('language');
-		$this->addColumn('language','projectid','INT',0,null,$not_nullable);
-		$this->addColumn('language','isocode','VARCHAR',10,null,$not_nullable);
-		$this->addColumn('language','name','VARCHAR',50,null,$not_nullable);
-		$this->addColumn('language','is_default','INT',1,0,$not_nullable);
+		$this->addColumn('language','projectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('language','isocode',OR_DB_COLUMN_TYPE_VARCHAR,10,null,$not_nullable);
+		$this->addColumn('language','name',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
+		$this->addColumn('language','is_default',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
 		$this->addPrimaryKey('language','id');
 		$this->addConstraint('language','projectid','project','id');
 		$this->addUniqueIndex('language','projectid,isocode');
@@ -123,8 +123,8 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('page');
-		$this->addColumn('page','objectid','INT',0,null,$not_nullable);
-		$this->addColumn('page','templateid','INT',0,null,$not_nullable);
+		$this->addColumn('page','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('page','templateid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
 		$this->addPrimaryKey('page','id');
 		$this->addConstraint('page','templateid','template','id');
 		$this->addConstraint('page','objectid','object','id');
@@ -136,10 +136,10 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('projectmodel');
-		$this->addColumn('projectmodel','projectid','INT',0,null,$not_nullable);
-		$this->addColumn('projectmodel','name','VARCHAR',50,null,$not_nullable);
-		$this->addColumn('projectmodel','extension','VARCHAR',10,null,$nullable);
-		$this->addColumn('projectmodel','is_default','INT',1,0,$not_nullable);
+		$this->addColumn('projectmodel','projectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('projectmodel','name',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
+		$this->addColumn('projectmodel','extension',OR_DB_COLUMN_TYPE_VARCHAR,10,null,$nullable);
+		$this->addColumn('projectmodel','is_default',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
 		$this->addPrimaryKey('projectmodel','id');
 		$this->addConstraint('projectmodel','projectid','project','id');
 		
@@ -148,24 +148,24 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('element');
-		$this->addColumn('element','templateid','INT',0,0,$not_nullable);
-		$this->addColumn('element','name','VARCHAR',50,null,$not_nullable);
-		$this->addColumn('element','descr','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('element','type','VARCHAR',20,null,$not_nullable);
-		$this->addColumn('element','subtype','VARCHAR',20,null,$nullable);
-		$this->addColumn('element','with_icon','INT',1,0,$not_nullable);
-		$this->addColumn('element','dateformat','VARCHAR',100,null,$nullable);
-		$this->addColumn('element','wiki','INT',1,0,$nullable);
-		$this->addColumn('element','html','INT',1,0,$nullable);
-		$this->addColumn('element','all_languages','INT',1,0,$not_nullable);
-		$this->addColumn('element','writable','INT',1,0,$not_nullable);
-		$this->addColumn('element','decimals','INT',0,null,$nullable);
-		$this->addColumn('element','dec_point','VARCHAR',5,null,$nullable);
-		$this->addColumn('element','thousand_sep','VARCHAR',1,null,$nullable);
-		$this->addColumn('element','code','TEXT',null,null,$nullable);
-		$this->addColumn('element','default_text','TEXT',null,null,$nullable);
-		$this->addColumn('element','folderobjectid','INT',null,null,$nullable);
-		$this->addColumn('element','default_objectid','INT',null,null,$nullable);
+		$this->addColumn('element','templateid',OR_DB_COLUMN_TYPE_INT,0,0,$not_nullable);
+		$this->addColumn('element','name',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
+		$this->addColumn('element','descr',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('element','type',OR_DB_COLUMN_TYPE_VARCHAR,20,null,$not_nullable);
+		$this->addColumn('element','subtype',OR_DB_COLUMN_TYPE_VARCHAR,20,null,$nullable);
+		$this->addColumn('element','with_icon',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('element','dateformat',OR_DB_COLUMN_TYPE_VARCHAR,100,null,$nullable);
+		$this->addColumn('element','wiki',OR_DB_COLUMN_TYPE_INT,1,0,$nullable);
+		$this->addColumn('element','html',OR_DB_COLUMN_TYPE_INT,1,0,$nullable);
+		$this->addColumn('element','all_languages',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('element','writable',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('element','decimals',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
+		$this->addColumn('element','dec_point',OR_DB_COLUMN_TYPE_VARCHAR,5,null,$nullable);
+		$this->addColumn('element','thousand_sep',OR_DB_COLUMN_TYPE_VARCHAR,1,null,$nullable);
+		$this->addColumn('element','code',OR_DB_COLUMN_TYPE_TEXT,null,null,$nullable);
+		$this->addColumn('element','default_text',OR_DB_COLUMN_TYPE_TEXT,null,null,$nullable);
+		$this->addColumn('element','folderobjectid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
+		$this->addColumn('element','default_objectid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
 		$this->addPrimaryKey('element','id');
 		$this->addConstraint('element','default_objectid','object','id');
 		$this->addConstraint('element','folderobjectid','object','id');
@@ -179,10 +179,10 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('file');
-		$this->addColumn('file','objectid','INT',0,null,$not_nullable);
-		$this->addColumn('file','extension','VARCHAR',10,null,$not_nullable);
-		$this->addColumn('file','size','INT',0,null,$not_nullable);
-		$this->addColumn('file','value','BLOB',null,null,$not_nullable);
+		$this->addColumn('file','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('file','extension',OR_DB_COLUMN_TYPE_VARCHAR,10,null,$not_nullable);
+		$this->addColumn('file','size',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('file','value',OR_DB_COLUMN_TYPE_BLOB,null,null,$not_nullable);
 		$this->addPrimaryKey('file','id');
 		$this->addConstraint('file','objectid','object','id');
 		
@@ -191,7 +191,7 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('folder');
-		$this->addColumn('folder','objectid','INT',0,null,$not_nullable);
+		$this->addColumn('folder','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
 		$this->addPrimaryKey('folder','id');
 		$this->addConstraint('folder','objectid','object','id');
 		
@@ -202,9 +202,9 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('link');
-		$this->addColumn('link','objectid','INT',0,null,$not_nullable);
-		$this->addColumn('link','link_objectid','INT',null,null,$nullable);
-		$this->addColumn('link','url','VARCHAR',255,null,$nullable);
+		$this->addColumn('link','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('link','link_objectid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
+		$this->addColumn('link','url',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$nullable);
 		$this->addPrimaryKey('link','id');
 		$this->addConstraint('link','objectid','object','id');
 		$this->addConstraint('link','link_objectid','object','id');
@@ -217,10 +217,10 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('name');
-		$this->addColumn('name','objectid','INT',0,null,$not_nullable);
-		$this->addColumn('name','name','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('name','descr','VARCHAR',255,null,$not_nullable);
-		$this->addColumn('name','languageid','INT',0,null,$not_nullable);
+		$this->addColumn('name','objectid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('name','name',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('name','descr',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('name','languageid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
 		$this->addPrimaryKey('name','id');
 		$this->addConstraint('name','objectid','object','id');
 		$this->addConstraint('name','languageid','language','id');
@@ -234,10 +234,10 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('templatemodel');
-		$this->addColumn('templatemodel','templateid','INT',0,null,$not_nullable);
-		$this->addColumn('templatemodel','projectmodelid','INT',0,null,$not_nullable);
-		$this->addColumn('templatemodel','extension','VARCHAR',10,null,$nullable);
-		$this->addColumn('templatemodel','text','TEXT',null,null,$not_nullable);
+		$this->addColumn('templatemodel','templateid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('templatemodel','projectmodelid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('templatemodel','extension',OR_DB_COLUMN_TYPE_VARCHAR,10,null,$nullable);
+		$this->addColumn('templatemodel',OR_DB_COLUMN_TYPE_TEXT,OR_DB_COLUMN_TYPE_TEXT,null,null,$not_nullable);
 		$this->addPrimaryKey('templatemodel','id');
 		$this->addConstraint('templatemodel','templateid','template','id');
 		$this->addConstraint('templatemodel','projectmodelid','projectmodel','id');
@@ -251,8 +251,8 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('usergroup');
-		$this->addColumn('usergroup','userid','INT',null,null,$not_nullable);
-		$this->addColumn('usergroup','groupid','INT',null,null,$not_nullable);
+		$this->addColumn('usergroup','userid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
+		$this->addColumn('usergroup','groupid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
 		$this->addPrimaryKey('usergroup','id');
 		$this->addConstraint('usergroup','groupid','group','id');
 		$this->addConstraint('usergroup','userid','user','id');
@@ -265,17 +265,17 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('value');
-		$this->addColumn('value','pageid','INT',0,null,$not_nullable);
-		$this->addColumn('value','languageid','INT',null,null,$not_nullable);
-		$this->addColumn('value','elementid','INT',0,null,$not_nullable);
-		$this->addColumn('value','linkobjectid','INT',null,null,$nullable);
-		$this->addColumn('value','text','TEXT',null,null,$nullable);
-		$this->addColumn('value','number','INT',null,null,$nullable);
-		$this->addColumn('value','date','INT',null,null,$nullable);
-		$this->addColumn('value','active','INT',0,null,$not_nullable);
-		$this->addColumn('value','lastchange_date','INT',0,null,$not_nullable);
-		$this->addColumn('value','lastchange_userid','INT',null,null,$nullable);
-		$this->addColumn('value','publish','INT',null,null,$not_nullable);
+		$this->addColumn('value','pageid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('value','languageid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
+		$this->addColumn('value','elementid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('value','linkobjectid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
+		$this->addColumn('value',OR_DB_COLUMN_TYPE_TEXT,OR_DB_COLUMN_TYPE_TEXT,null,null,$nullable);
+		$this->addColumn('value','number',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
+		$this->addColumn('value','date',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
+		$this->addColumn('value','active',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('value','lastchange_date',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
+		$this->addColumn('value','lastchange_userid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
+		$this->addColumn('value','publish',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
 		$this->addPrimaryKey('value','id');
 		$this->addConstraint('value','pageid','page','id');
 		$this->addConstraint('value','elementid','element','id');
@@ -295,21 +295,21 @@ class DBVersion000001 extends DbVersion
 		
 		
 		$this->addTable('acl');
-		$this->addColumn('acl','userid','INT',null,null,$nullable);
-		$this->addColumn('acl','groupid','INT',null,null,$nullable);
-		$this->addColumn('acl','objectid','INT',null,null,$not_nullable);
-		$this->addColumn('acl','languageid','INT',0,null,$nullable);
-		$this->addColumn('acl','is_write','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_prop','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_create_folder','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_create_file','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_create_link','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_create_page','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_delete','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_release','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_publish','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_grant','INT',1,0,$not_nullable);
-		$this->addColumn('acl','is_transmit','INT',1,0,$not_nullable);
+		$this->addColumn('acl','userid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
+		$this->addColumn('acl','groupid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
+		$this->addColumn('acl','objectid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
+		$this->addColumn('acl','languageid',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
+		$this->addColumn('acl','is_write',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_prop',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_create_folder',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_create_file',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_create_link',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_create_page',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_delete',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_release',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_publish',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_grant',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
+		$this->addColumn('acl','is_transmit',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
 		$this->addPrimaryKey('acl','id');
 		$this->addConstraint('acl','groupid','group','id');
 		$this->addConstraint('acl','userid','user','id');

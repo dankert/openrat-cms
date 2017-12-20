@@ -18,7 +18,7 @@ class DBVersion000008 extends DbVersion
 		$not_nullable = false;
 		$nullable     = true;
 
-        $this->addColumn('object','typeid','INT',2,0,$not_nullable);
+        $this->addColumn('object','typeid',OR_DB_COLUMN_TYPE_INT,2,0,$not_nullable);
         $this->addIndex('object','typeid');
 
         // Converting old values...
