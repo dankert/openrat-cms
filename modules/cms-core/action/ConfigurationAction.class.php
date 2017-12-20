@@ -48,7 +48,8 @@ class ConfigurationAction extends Action
 	 */
 	function showView()
 	{
-		require_once('./util/config-default.php');
+	    $conf = array();
+		require_once( OR_MODULES_DIR.'/util/config-default.php');
 		$conf_default = $conf;
 		
 		$conf_cms = Session::getConfig();
@@ -85,9 +86,9 @@ class ConfigurationAction extends Action
 		foreach( $extensions as $id=>$extensionName )
 			$conf_cms['system']['interpreter'][ 'extension' ][$extensionName] = 'loaded';
 		
-		$flatDefaultConfig = flattenArray('',$conf_default);
-		$flatCMSConfig     = flattenArray('',Session::getConfig());
-		$flatConfig        = flattenArray('',$conf_cms);
+		$flatDefaultConfig = $this->flattenArray('',$conf_default);
+		$flatCMSConfig     = $this->flattenArray('',Session::getConfig());
+		$flatConfig        = $this->flattenArray('',$conf_cms);
 		
 		$config = array();
 		foreach( $flatConfig as $key=>$val )
@@ -96,21 +97,27 @@ class ConfigurationAction extends Action
 		}
 		$this->setTemplateVar('config',$config );
 	}
+
+    private function flattenArray( $prefix,$arr )
+    {
+        $new = array();
+        foreach( $arr as $key=>$val)
+        {
+            if	( is_array($val) )
+            {
+
+                $splitter = "\xC2\xA0"."\xC2\xBB"."\xC2\xA0"; // NBSP+RDQUO+NBSP as UTF-8
+                $new += $this->flattenArray($prefix.$key.$splitter,$val);
+            }
+            else
+                $new[$prefix.$key] = $key=='password'?'*******************':$val;
+        }
+        return $new;
+    }
+
 }
 
 
-function flattenArray( $prefix,$arr )
-{
-	$new = array();
-	foreach( $arr as $key=>$val)
-	{
-		if	( is_array($val) )
-			$new += flattenArray($prefix.$key.'.',$val);
-		else
-			$new[$prefix.$key] = $key=='password'?'*******************':$val;
-	}
-	return $new;
-}
 
 
 ?>
