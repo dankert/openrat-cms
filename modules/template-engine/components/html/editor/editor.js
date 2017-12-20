@@ -95,6 +95,7 @@ $(document).on('orViewLoaded',function(event, data) {
 
         var editor = CodeMirror.fromTextArea( this, {
             lineNumbers: true,
+            viewportMargin: Infinity,
 			mode: mode
             /** settings **/ })
 
