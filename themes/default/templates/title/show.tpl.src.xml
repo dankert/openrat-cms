@@ -98,11 +98,20 @@
 					</link>
 				</part>
 				<part
-					class="entry clickable filtered on-action-folder on-action-link on-action-user on-action-page on-action-file">
+					class="entry clickable filtered on-action-project on-action-folder on-action-link on-action-user on-action-group on-action-page on-action-file">
 					<link type="dialog" title="message:menu_rights_desc"
 						subaction="rights">
 						<image method="rights" align="left"></image>
 						<text key="menu_rights"></text>
+					</link>
+				</part>
+
+				<part
+					class="entry clickable filtered on-action-pageelement on-action-user on-action-group on-action-page on-action-project on-action-projectlist">
+					<link type="dialog" title="message:menu_history_desc"
+						subaction="history">
+						<image method="history" align="left"></image>
+						<text key="menu_history"></text>
 					</link>
 				</part>
 
@@ -115,13 +124,135 @@
 						<text key="menu_changetemplate"></text>
 					</link>
 				</part>
+
+				<part class="divide" />
+
+				<part class="entry clickable filtered on-action-user">
+					<link type="dialog" title="message:menu_password_desc"
+						  subaction="pw">
+						<image method="password" align="left"></image>
+						<text key="menu_password"></text>
+					</link>
+				</part>
+
+				<part class="entry clickable filtered on-action-language">
+					<link type="dialog" title="message:menu_advanced_desc"
+						  subaction="advanced">
+						<image method="advanced" align="left"></image>
+						<text key="menu_advanced"></text>
+					</link>
+				</part>
+
+				<part class="entry clickable filtered on-action-element">
+					<link type="dialog" title="message:menu_src_type"
+						  subaction="type">
+						<image method="type" align="left"></image>
+						<text key="menu_type"></text>
+					</link>
+				</part>
+
+				<part class="divide" />
+
+				<part class="entry clickable filtered on-action-project on-action-template on-action-page on-action-element on-action-image on-action-file on-action-folder on-action-link on-action-language on-action-model">
+					<link type="dialog" title="message:menu_delete_desc"
+						  subaction="remove">
+						<image method="delete" align="left"></image>
+						<text key="menu_delete"></text>
+					</link>
+				</part>
+
+				<part class="entry clickable filtered on-action-template">
+					<link type="dialog" title="message:menu_src_desc"
+						  subaction="src">
+						<image method="src" align="left"></image>
+						<text key="menu_src"></text>
+					</link>
+				</part>
+
+				<part class="entry clickable filtered on-action-template">
+					<link type="dialog" title="message:menu_order_extension"
+						  subaction="extension">
+						<image method="extension" align="left"></image>
+						<text key="menu_extension"></text>
+					</link>
+				</part>
+
+				<part class="divide" />
+
+				<part class="entry clickable filtered on-action-text">
+					<link type="dialog" title="message:menu_value_desc"
+						  subaction="value">
+						<image method="value" align="left"></image>
+						<text key="menu_value"></text>
+					</link>
+				</part>
+
+				<part class="entry clickable filtered on-action-folder">
+					<link type="dialog" title="message:menu_order_desc"
+						  subaction="order">
+						<image method="order" align="left"></image>
+						<text key="menu_order"></text>
+					</link>
+				</part>
+
+				<part class="divide" />
+
+				<part class="entry clickable filtered on-action-file">
+					<link type="dialog" title="message:menu_compress_desc"
+						subaction="compress">
+						<image method="compress" align="left"></image>
+						<text key="menu_compress"></text>
+					</link>
+				</part>
+				<part class="entry clickable filtered on-action-file">
+					<link type="dialog" title="message:menu_decompress_desc"
+						subaction="decompress">
+						<image method="decompress" align="left"></image>
+						<text key="menu_decompress"></text>
+					</link>
+				</part>
+				<part class="entry clickable filtered on-action-file">
+					<link type="dialog" title="message:menu_extract_desc"
+						subaction="extract">
+						<image method="extract" align="left"></image>
+						<text key="menu_extract"></text>
+					</link>
+				</part>
+				<part class="entry clickable filtered on-action-image">
+					<link type="dialog" title="message:menu_size_desc"
+						subaction="size">
+						<image method="size" align="left"></image>
+						<text key="menu_size"></text>
+					</link>
+				</part>
+
+
+				<part class="divide" />
+
+				<part class="entry clickable filtered on-action-project">
+					<link type="dialog" title="message:menu_maintenance_desc"
+						  subaction="maintenance">
+						<image method="maintenance" align="left"></image>
+						<text key="menu_maintenance"></text>
+					</link>
+				</part>
+				<part class="entry clickable filtered on-action-project">
+					<link type="dialog" title="message:menu_export_desc"
+						  subaction="export">
+						<image method="export" align="left"></image>
+						<text key="menu_export"></text>
+					</link>
+				</part>
+				<part class="entry clickable filtered on-action-user on-action-group">
+					<link type="dialog" title="message:menu_memberships_desc"
+						  subaction="memberships">
+						<image method="memberships" align="left"></image>
+						<text key="menu_memberships"></text>
+					</link>
+				</part>
 			</part>
 		</part>
 	</if>
-
-	<!-- <part class="history"> <image icon="history" align="left"></image> 
-		<text key="history" maxlength="20"></text> <part class="dropdown"> <text 
-		raw=""></text> </part> </part> -->
 
 	<!-- Menü: Projekt -->
 	<if true="var:isLoggedIn">
