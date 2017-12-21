@@ -34,6 +34,58 @@
 
 				<part class="divide" />
 
+				<part
+					class="entry clickable filtered on-action-folder">
+					<link type="dialog" title="message:menu_createfolder_desc" subaction="createfolder">
+						<image method="add" align="left"></image>
+						<text key="menu_createfolder"></text>
+					</link>
+				</part>
+				<part
+					class="entry clickable filtered on-action-folder">
+					<link type="dialog" title="message:menu_createpage_desc" subaction="createpage">
+						<image method="add" align="left"></image>
+						<text key="menu_createpage"></text>
+					</link>
+				</part>
+				<part
+					class="entry clickable filtered on-action-folder">
+					<link type="dialog" title="message:menu_createfile_desc" subaction="createfile">
+						<image method="add" align="left"></image>
+						<text key="menu_createfile"></text>
+					</link>
+				</part>
+				<part
+						class="entry clickable filtered on-action-folder">
+					<link type="dialog" title="message:menu_createimage_desc" subaction="createimage">
+						<image method="add" align="left"></image>
+						<text key="menu_createimage"></text>
+					</link>
+				</part>
+				<part
+						class="entry clickable filtered on-action-folder">
+					<link type="dialog" title="message:menu_createtext_desc" subaction="createtext">
+						<image method="add" align="left"></image>
+						<text key="menu_createtext"></text>
+					</link>
+				</part>
+				<part
+					class="entry clickable filtered on-action-folder">
+					<link type="dialog" title="message:menu_createlink_desc" subaction="createlink">
+						<image method="add" align="left"></image>
+						<text key="menu_createlink"></text>
+					</link>
+				</part>
+				<part
+					class="entry clickable filtered on-action-folder">
+					<link type="dialog" title="message:menu_createurl_desc" subaction="createurl">
+						<image method="add" align="left"></image>
+						<text key="menu_createurl"></text>
+					</link>
+				</part>
+
+				<part class="divide" />
+
 				<part class="entry clickable">
 					<link type="post" title="message:menu_save_desc" subaction="save">
 						<image method="save" align="left"></image>
