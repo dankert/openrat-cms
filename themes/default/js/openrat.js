@@ -546,10 +546,11 @@ function registerHeaderEvents()
 {
     // Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
     $('body').click( function() {
-        //$('.toolbar-icon.menu').parent().removeClass('open');
+        $('.toolbar-icon.menu').parent().removeClass('open');
     });
     // Mit der Maus geklicktes Menü aktivieren.
-    $('div#header .toolbar-icon.menu').off().click( function() {
+    $('div#header .toolbar-icon.menu').click( function(event) {
+        event.stopPropagation();
         $(this).parent().toggleClass('open');
     });
 
