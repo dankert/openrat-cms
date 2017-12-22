@@ -381,8 +381,8 @@ function refreshTitleBar()
 
 		registerHeaderEvents();
 	});
-	
-	
+
+
 	// Modale Dialoge
 	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
 }
@@ -544,7 +544,23 @@ function registerViewEvents( viewEl )
 
 function registerHeaderEvents()
 {
-	$('div#header').trigger('orHeaderLoaded');
+    // Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
+    $('body').click( function() {
+        //$('.toolbar-icon.menu').parent().removeClass('open');
+    });
+    // Mit der Maus geklicktes Menü aktivieren.
+    $('div#header .toolbar-icon.menu').off().click( function() {
+        $(this).parent().toggleClass('open');
+    });
+
+    // Mit der Maus überstrichenes Menü aktivieren.
+    $('div#header .toolbar-icon.menu').mouseover( function() {
+        $(this).parent().find('.toolbar-icon.menu').removeClass('open');
+        $(this).addClass('open');
+    });
+
+
+    $('div#header').trigger('orHeaderLoaded');
 	
 
 	//   S u c h e
