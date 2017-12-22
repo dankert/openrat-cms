@@ -883,8 +883,9 @@ function openNewAction( name,action,id,extraId )
 
 function filterMenus(action)
 {
-	$('div.clickable.filtered').addClass('inactive');
-	$('div.clickable.filtered.on-action-'+action).removeClass('inactive');
+	$('div.clickable').addClass('active');
+	$('div.clickable.filtered').removeClass('active');
+	$('div.clickable.filtered.on-action-'+action).addClass('active');
 }
 
 

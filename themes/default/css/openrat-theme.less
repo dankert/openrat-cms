@@ -211,11 +211,6 @@ html.theme-@{cms-theme-id} {
 		padding: 0;
 	}
 
-	div.entry.selected , div.dropdown > div.entry:hover , div.dropdown > div.entry:hover > a , a.element {
-		background-color: @cms-title-background-color;
-		color: @cms-title-text-color;
-		
-	}
 
 	ul.tree li {
 		xmargin: 0;
@@ -336,9 +331,6 @@ table tr.headline > td {
 		background-color: @cms-text-color;
 	}
 
-	div.clickable.filtered.inactive > a {
-		color: @cms-inactive-background-color;
-	}
 
 	div#header > div > div.arrow-down {
 		display: inline;
@@ -523,6 +515,7 @@ table tr.headline > td {
 		svg.image-icon > path {
 			fill: @cms-text-color;
 		}
+
 		#header {
 			
 			svg {
@@ -538,16 +531,44 @@ table tr.headline > td {
 				
 				}
 			}
-			div.entry:hover
+			div.entry
 			{
+				svg.image-icon > path {
+					fill: @cms-inactive-background-color;
+				}
+
+			}
+			div.entry.active
+		{
+				svg.image-icon > path {
+					fill: @cms-text-color;
+				}
+
+			}
+			div.entry.active:hover
+		{
 				svg.image-icon > path {
 					fill: @cms-title-text-color;
 				}
-				
+
 			}
-			
+
 		}
 	}
+
+	div.entry.selected , div.dropdown > div.entry.active:hover , div.dropdown > div.entry.active:hover > a , a.element {
+		background-color: @cms-title-background-color;
+		color: @cms-title-text-color;
+
+	}
+	div.clickable.filtered > a {
+		color: @cms-inactive-background-color;
+	}
+	div.clickable.filtered.active > a {
+		color: @cms-text-color;
+	}
+
+
 }
 
 /* Theme Ende */
