@@ -45,9 +45,14 @@ class TitleAction extends Action
 		$this->setTemplateVar('buildinfo',OR_TITLE.' '.OR_VERSION.' - build '.config('build','build') );
 
 		$user = Session::getUser();
+
 		if	( !is_object($user) )
-			return; // Kein Benutzer angemeldet.
-			
+		{
+            $this->setTemplateVar('isLoggedIn',false );
+            return; // Kein Benutzer angemeldet.
+        }
+
+        $this->setTemplateVar('isLoggedIn',true );
 
 		$db = Session::getDatabase();
 		$this->setTemplateVar('dbname',$db->conf['name'].(readonly()?' ('.lang('readonly').')':''));
@@ -85,7 +90,6 @@ class TitleAction extends Action
 		//$this->setTemplateVar('profile_url',Html::url( 'profile'         ));
 		//$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
 		$this->setTemplateVar('isAdmin',$this->userIsAdmin() );
-		$this->setTemplateVar('isLoggedIn',$this->userIsLoggedIn() );
 
 		if	( config('interface','session','auto_extend') )
 		{

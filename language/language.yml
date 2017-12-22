@@ -2892,6 +2892,12 @@ MENU_ADD_DESC:
 MENU_ADDEL:
   de: Neues Element
   en: New element
+MENU_ADVANCED:
+  de: Erweitert
+  en: Advanced
+MENU_ADVANCED_DESC:
+  de: Erweitert
+  en: Advanced
 MENU_ADD:
   de: Neu
   en: New
@@ -2907,6 +2913,9 @@ MENU_ARCHIVE:
 MENU_HISTORY:
   de: Verlauf
   en: History
+MENU_HISTORY_DESC:
+  de: Verlauf anzeigen
+  en: Show History
 MENU_CHANGETEMPLATE:
   de: Vorlage wechseln
   en: Change template
@@ -2919,6 +2928,12 @@ MENU_COMPRESS_DESC:
 MENU_COMPRESS:
   de: Komprimieren
   en: Compress
+MENU_DECOMPRESS:
+  de: Dekomprimieren
+  en: Decompress
+MENU_DECOMPRESS_DESC:
+  de: Dekomprimieren
+  en: Decompress
 MENU_CONSOLE:
   de: Konsole
   en: Console
@@ -2958,6 +2973,9 @@ MENU_CREATEPAGE:
   de: Neue Seite
   en: New page
 MENU_DELETE:
+  de: Löschen
+  en: Delete
+MENU_DELETE_DESC:
   de: Löschen
   en: Delete
 MENU_EDIT:
@@ -3058,7 +3076,10 @@ MENU_EXPORT:
   en: Export
 MENU_EXTENSION:
   de: Erweiterung
-  en: Enhancement
+  en: Extension
+MENU_EXTENSION_DESC:
+  de: Erweiterung einstellen
+  en: Show and change the file extension
 MENU_EXTRACT:
   de: Auspacken
   en: Umcompress
@@ -3697,6 +3718,9 @@ MENU_LOGIN_LOGIN:
 MENU_MAIL:
   de: E-Mail
   en: E-Mail
+MENU_MAIL_DESC:
+  de: E-Mail-Adresse ändern
+  en: Change E-Mail address
 MENU_MAINTENANCE_DESC:
   de: Integrität prüfen
   en: Check integration
@@ -3942,12 +3966,18 @@ MENU_PAGE_SRC:
 MENU_PAGES:
   de: Seiten
   en: Pages
-MENU_PASSWORD_DESC:
+MENU_LOSTPASSWORD_DESC:
   de: Wenn Sie hier Kennwort nicht mehr wissen, können Sie es sich zusenden lassen.
-  en: Wenn Sie hier Kennwort nicht mehr wissen, können Sie es sich zusenden lassen.
-MENU_PASSWORD:
+  en: If you have lost your password, you are able to get a new one.
+MENU_LOSTPASSWORD:
   de: Kennwort vergessen
   en: Forgotten password
+MENU_PASSWORD_DESC:
+  de: Kennwort ändern
+  en: Change the password
+MENU_PASSWORD:
+  de: Kennwort
+  en: Password
 MENU_PHPINFO_DESC:
   de: Anzeigen von Systeminformationen
   en: Show some informations about the server system
@@ -3957,6 +3987,13 @@ MENU_PHPINFO:
 MENU_PREVIEW:
   de: Vorschau
   en: Preview
+MENU_PROFILE:
+  de: Bearbeiten
+  en: Profile
+  es: corrigen perfil
+  fr: Éditer le profil
+  it: corrigen perfil
+  ru: Edit profile
 MENU_PROFILE_EDIT:
   de: Bearbeiten
   en: Profile
@@ -4522,7 +4559,10 @@ MENU_TREETITLE_PROJECTMENU:
   fr: Projets
 MENU_TYPE:
   de: Typ
-  en: Typ
+  en: Type
+MENU_TYPE_DESC:
+  de: Typ ändern
+  en: Change type
 MENU_UNCOMPRESS:
   de: Dekomprimieren
   en: Decompress
@@ -5051,13 +5091,12 @@ PROJECT_CHECK_FILES:
 PROJECT_CHECK_LIMIT:
   de: Entfernen von alten Inhalten aus dem Archiv
   en: Remove old values from archives
-PROJECT_CMD_AFTER_PUBLISH_DESC:
-  de: 'Dieses Kommando wird auf dem Server nach Beendigung einer Generierung ausgeführt.<br>Dabei wird die PHP-Funktion <tt>exec()</tt>verwendet. Es wird nicht <tt>escapeshellcmd()</tt> aufgerufen!'
-  en: 'This command is executed after publishing.<br>The PHP-function <tt>exec()</tt> is used. The command <tt>escapeshellcmd()</tt> is not called!'
-  es: 'este comando se ejecuta después de que se utilice el <tt>exec de la PHP-función de publishing.<br>The () </tt>. ¡El <tt>escapeshellcmd del comando () </tt> no se llama!'
-  fr: "Cette commande est exécutée après que le <tt>exec de PHP-fonction de publishing.<br>The () </tt> soit employé. Le <tt>escapeshellcmd de commande () </tt> ne s'appelle pas !"
-  it: 'del questo ordine è eseguito dopo che il <tt>exec di PHP-funzione di publishing.<br>The () </tt> sia usato. Il <tt>escapeshellcmd di ordine () </tt> non è denominato!'
-  ru: 'Эта команда выполняется после опубликования. <br> PHP - функция <tt> запустить </tt> () используется. команда <tt> escapeshellcmd () </tt> не открывается!'
+PROJECT_PUBLISH_FILE_EXTENSION:
+  de: 'Links auf Dateien mit Datei-Endung'
+  de: 'Links to files are including the file extension'
+PROJECT_PUBLISH_PAGE_EXTENSION:
+  de: 'Links auf Seiten mit Datei-Endung'
+  de: 'Links to pages are including the file extension'
 PROJECT_CMD_AFTER_PUBLISH:
   de: Systembefehl nach Generierung
   en: Execute after publishing
@@ -5065,6 +5104,13 @@ PROJECT_CMD_AFTER_PUBLISH:
   fr: "Exécuter après l'édition"
   it: Eseguire dopo la pubblicazione
   ru: Execute после публикации
+PROJECT_CMD_AFTER_PUBLISH_DESC:
+  de: 'Dieses Kommando wird auf dem Server nach Beendigung einer Generierung ausgeführt.<br>Dabei wird die PHP-Funktion <tt>exec()</tt>verwendet. Es wird nicht <tt>escapeshellcmd()</tt> aufgerufen!'
+  en: 'This command is executed after publishing.<br>The PHP-function <tt>exec()</tt> is used. The command <tt>escapeshellcmd()</tt> is not called!'
+  es: 'este comando se ejecuta después de que se utilice el <tt>exec de la PHP-función de publishing.<br>The () </tt>. ¡El <tt>escapeshellcmd del comando () </tt> no se llama!'
+  fr: "Cette commande est exécutée après que le <tt>exec de PHP-fonction de publishing.<br>The () </tt> soit employé. Le <tt>escapeshellcmd de commande () </tt> ne s'appelle pas !"
+  it: 'del questo ordine è eseguito dopo che il <tt>exec di PHP-funzione di publishing.<br>The () </tt> sia usato. Il <tt>escapeshellcmd di ordine () </tt> non è denominato!'
+  ru: 'Эта команда выполняется после опубликования. <br> PHP - функция <tt> запустить </tt> () используется. команда <tt> escapeshellcmd () </tt> не открывается!'
 PROJECT_CONTENT_NEGOTIATION_DESC:
   de: 'Mit Content-Negotiation kann ein Webserver die korrekte Sprachversion ausliefern. Die URLs werden um das Sprachkürzel gekürzt.<br/>Ihr Webserver muss das entsprechende Modul geladen haben. Wenn Sie unsicher sind, lassen Sie diese Option deaktiviert.'
   en: 'With Content Negotiation the webserver is able to automatically serve the correct language. The URLs are cutted by the language-id.<br/>Your webserver has to support this!<br/>If unsure, uncheck this.'
@@ -5592,7 +5638,7 @@ USER_PASSWORD_TIMEOUT:
   fr: Le mot de passe chronométrera dehors
   it: cronometrerà ancora fuori
   ru: Пароль Пароль будет угодно
-USER_PROFILE_DESC:
+MENU_PROFILE_DESC:
   de: Ihr Benutzerprofil, hier ändern Sie Ihre Einstellungen
   en: Your profile. Change your personal settings
   es: de tu perfil. Cambiar tus ajustes personales
@@ -5969,3 +6015,7 @@ MENU_TITLE_SEARCH_PROP:
   fr: Search for property
   it: Search for property
   ru: Search for property
+MENU_START:
+  en: Start
+MENU_START_DESC:
+  en: Start

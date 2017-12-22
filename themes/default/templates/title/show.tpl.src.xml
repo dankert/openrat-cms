@@ -196,7 +196,7 @@
 				</part>
 
 				<part class="entry clickable filtered on-action-element">
-					<link type="dialog" title="message:menu_src_type"
+					<link type="dialog" title="message:menu_type_desc"
 						  subaction="type">
 						<image method="type" align="left"></image>
 						<text key="menu_type"></text>
@@ -222,7 +222,7 @@
 				</part>
 
 				<part class="entry clickable filtered on-action-template">
-					<link type="dialog" title="message:menu_order_extension"
+					<link type="dialog" title="message:menu_extension_desc"
 						  subaction="extension">
 						<image method="extension" align="left"></image>
 						<text key="menu_extension"></text>
@@ -423,28 +423,28 @@
 		<part class="dropdown">
 
 			<part class="entry clickable">
-				<link type="dialog" title="message:USER_PROFILE_DESC" action="profile" subaction="edit">
+				<link type="dialog" title="message:menu_PROFILE_DESC" action="profile" subaction="edit">
 					<image action="user" align="left"></image>
-					<text key="profile"></text>
+					<text key="menu_profile"></text>
 				</link>
 			</part>
 			<part class="entry clickable">
-				<link type="dialog" title="message:USER_PROFILE_DESC" action="profile" subaction="pw">
+				<link type="dialog" title="message:menu_password_DESC" action="profile" subaction="pw">
 					<image action="user" align="left"></image>
-					<text key="password"></text>
+					<text key="menu_password"></text>
 				</link>
 			</part>
 			<part class="entry clickable">
-				<link type="dialog" title="message:USER_PROFILE_DESC" action="profile" subaction="mail">
+				<link type="dialog" title="message:menu_mail_DESC" action="profile" subaction="mail">
 					<image action="user" align="left"></image>
-					<text key="mail"></text>
+					<text key="menu_mail"></text>
 				</link>
 			</part>
 			<part class="entry clickable">
-				<link type="post" title="message:start" action="start"
+				<link type="post" title="message:menu_start_desc" action="start"
 					subaction="start">
 					<image action="dashboard" align="left"></image>
-					<text key="start"></text>
+					<text key="menu_start"></text>
 				</link>
 			</part>
 

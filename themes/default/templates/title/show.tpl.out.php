@@ -36,6 +36,71 @@
 					</div>
 					<div class="divide">
 					</div>
+					<div class="entry clickable filtered on-action-folder">
+						<a title="<?php echo lang('menu_createfolder_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createfolder" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/add.svg" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createfolder'.'')))); ?></span>
+							
+						</a>
+
+					</div>
+					<div class="entry clickable filtered on-action-folder">
+						<a title="<?php echo lang('menu_createpage_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createpage" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/add.svg" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createpage'.'')))); ?></span>
+							
+						</a>
+
+					</div>
+					<div class="entry clickable filtered on-action-folder">
+						<a title="<?php echo lang('menu_createfile_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createfile" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/add.svg" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createfile'.'')))); ?></span>
+							
+						</a>
+
+					</div>
+					<div class="entry clickable filtered on-action-folder">
+						<a title="<?php echo lang('menu_createimage_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createimage" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/add.svg" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createimage'.'')))); ?></span>
+							
+						</a>
+
+					</div>
+					<div class="entry clickable filtered on-action-folder">
+						<a title="<?php echo lang('menu_createtext_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createtext" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/add.svg" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createtext'.'')))); ?></span>
+							
+						</a>
+
+					</div>
+					<div class="entry clickable filtered on-action-folder">
+						<a title="<?php echo lang('menu_createlink_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createlink" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/add.svg" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createlink'.'')))); ?></span>
+							
+						</a>
+
+					</div>
+					<div class="entry clickable filtered on-action-folder">
+						<a title="<?php echo lang('menu_createurl_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createurl" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/add.svg" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createurl'.'')))); ?></span>
+							
+						</a>
+
+					</div>
+					<div class="divide">
+					</div>
 					<div class="entry clickable">
 						<a title="<?php echo lang('menu_save_desc') ?>" target="_self" data-type="post" data-action="" data-method="save" data-id="<?php echo OR_ID ?>" data-data="{&quot;action&quot;:&quot;<?php echo OR_ACTION ?>&quot;,&quot;subaction&quot;:&quot;save&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/save.svg" />
@@ -163,7 +228,7 @@
 
 					</div>
 					<div class="entry clickable filtered on-action-element">
-						<a title="<?php echo lang('menu_src_type') ?>" target="_self" data-type="dialog" data-action="" data-method="type" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+						<a title="<?php echo lang('menu_type_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="type" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
 							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/type.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_type'.'')))); ?></span>
@@ -192,7 +257,7 @@
 
 					</div>
 					<div class="entry clickable filtered on-action-template">
-						<a title="<?php echo lang('menu_order_extension') ?>" target="_self" data-type="dialog" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+						<a title="<?php echo lang('menu_extension_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
 							<img class="image-icon image-icon--method" title="" src="./themes/default/images/icon/method/extension.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_extension'.'')))); ?></span>
@@ -409,37 +474,37 @@
 			
 			<div class="dropdown">
 				<div class="entry clickable">
-					<a title="<?php echo lang('USER_PROFILE_DESC') ?>" target="_self" data-type="dialog" data-action="profile" data-method="edit" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+					<a title="<?php echo lang('menu_PROFILE_DESC') ?>" target="_self" data-type="dialog" data-action="profile" data-method="edit" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
 						<img class="image-icon image-icon--action" title="" src="./themes/default/images/icon/action/user.svg" />
 						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'profile'.'')))); ?></span>
+						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_profile'.'')))); ?></span>
 						
 					</a>
 
 				</div>
 				<div class="entry clickable">
-					<a title="<?php echo lang('USER_PROFILE_DESC') ?>" target="_self" data-type="dialog" data-action="profile" data-method="pw" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+					<a title="<?php echo lang('menu_password_DESC') ?>" target="_self" data-type="dialog" data-action="profile" data-method="pw" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
 						<img class="image-icon image-icon--action" title="" src="./themes/default/images/icon/action/user.svg" />
 						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'password'.'')))); ?></span>
+						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_password'.'')))); ?></span>
 						
 					</a>
 
 				</div>
 				<div class="entry clickable">
-					<a title="<?php echo lang('USER_PROFILE_DESC') ?>" target="_self" data-type="dialog" data-action="profile" data-method="mail" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+					<a title="<?php echo lang('menu_mail_DESC') ?>" target="_self" data-type="dialog" data-action="profile" data-method="mail" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
 						<img class="image-icon image-icon--action" title="" src="./themes/default/images/icon/action/user.svg" />
 						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'mail'.'')))); ?></span>
+						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_mail'.'')))); ?></span>
 						
 					</a>
 
 				</div>
 				<div class="entry clickable">
-					<a title="<?php echo lang('start') ?>" target="_self" data-type="post" data-action="start" data-method="start" data-id="<?php echo OR_ID ?>" data-data="{&quot;action&quot;:&quot;start&quot;,&quot;subaction&quot;:&quot;start&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
+					<a title="<?php echo lang('menu_start_desc') ?>" target="_self" data-type="post" data-action="start" data-method="start" data-id="<?php echo OR_ID ?>" data-data="{&quot;action&quot;:&quot;start&quot;,&quot;subaction&quot;:&quot;start&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 						<img class="image-icon image-icon--action" title="" src="./themes/default/images/icon/action/dashboard.svg" />
 						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'start'.'')))); ?></span>
+						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_start'.'')))); ?></span>
 						
 					</a>
 
