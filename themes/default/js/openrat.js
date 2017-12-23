@@ -377,7 +377,6 @@ function refreshTitleBar()
 {
 	$('div#header').load( createUrl('title','show',0 ),function() {
 		$(this).fadeIn('slow');
-		$('div.clickable.filtered').addClass('inactive');
 
 		registerHeaderEvents();
 	});
@@ -901,8 +900,8 @@ function openNewAction( name,action,id,extraId )
 function filterMenus(action)
 {
 	$('div.clickable').addClass('active');
-	$('div.clickable.filtered').removeClass('active');
-	$('div.clickable.filtered.on-action-'+action).addClass('active');
+	$('div.clickable.filtered').removeClass('active').addClass('inactive');
+	$('div.clickable.filtered.on-action-'+action).addClass('active').removeClass('inactive');
 }
 
 
