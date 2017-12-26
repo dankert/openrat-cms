@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
 
-	<!-- Info-Meldung anzeigen (sofern vorhanden -->
+	<!-- Info-Meldung anzeigen (sofern vorhanden) -->
 	<if present="var:dbname">
 		<part class="toolbar-icon">
 			<image action="database"></image>
@@ -187,19 +187,11 @@
 					</link>
 				</part>
 
-				<part class="entry clickable filtered on-action-language">
+				<part class="entry clickable filtered on-action-language on-action-element">
 					<link type="dialog" title="message:menu_advanced_desc"
 						  subaction="advanced">
 						<image method="advanced" align="left"></image>
 						<text key="menu_advanced"></text>
-					</link>
-				</part>
-
-				<part class="entry clickable filtered on-action-element">
-					<link type="dialog" title="message:menu_type_desc"
-						  subaction="type">
-						<image method="type" align="left"></image>
-						<text key="menu_type"></text>
 					</link>
 				</part>
 
@@ -216,7 +208,7 @@
 				<part class="entry clickable filtered on-action-template">
 					<link type="dialog" title="message:menu_src_desc"
 						  subaction="src">
-						<image method="src" align="left"></image>
+						<image method="code" align="left"></image>
 						<text key="menu_src"></text>
 					</link>
 				</part>
@@ -298,7 +290,7 @@
 				<part class="entry clickable filtered on-action-user on-action-group">
 					<link type="dialog" title="message:menu_memberships_desc"
 						  subaction="memberships">
-						<image method="memberships" align="left"></image>
+						<image method="membership" align="left"></image>
 						<text key="menu_memberships"></text>
 					</link>
 				</part>
@@ -309,7 +301,7 @@
 	<!-- Menü: Projekt -->
 	<if true="var:isLoggedIn">
 
-		<part class="toolbar-icon projects">
+		<part class="toolbar-icon projects menu">
 			<image action="project" align="left"></image>
 			<text class="titletext" key="GLOBAL_PROJECT"></text>
 			<part class="dropdown">
@@ -415,7 +407,7 @@
 	</part>
 
 	<!-- Benutzer -->
-	<part class="toolbar-icon user">
+	<part class="toolbar-icon user menu">
 		<image action="user" align="left"></image>
 		<text class="titletext" var="userfullname" maxlength="25"></text>
 		<image method="arrow_down" align="left"></image>
@@ -430,13 +422,13 @@
 			</part>
 			<part class="entry clickable">
 				<link type="dialog" title="message:menu_password_DESC" action="profile" subaction="pw">
-					<image action="user" align="left"></image>
+					<image method="password" align="left"></image>
 					<text key="menu_password"></text>
 				</link>
 			</part>
 			<part class="entry clickable">
 				<link type="dialog" title="message:menu_mail_DESC" action="profile" subaction="mail">
-					<image action="user" align="left"></image>
+					<image method="mail" align="left"></image>
 					<text key="menu_mail"></text>
 				</link>
 			</part>

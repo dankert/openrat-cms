@@ -2954,9 +2954,33 @@ MENU_CREATE_DESC:
 MENU_CREATEFILE:
   de: Datei hochladen
   en: Upload file
+MENU_CREATEFILE_DESC:
+  de: Neue Datei hochladen
+  en: Upload a file
 MENU_CREATEFOLDER:
-  de: Neuer Unterordner
-  en: New subfolder
+  de: Neuer Ordner
+  en: New folder
+MENU_CREATEFOLDER:
+  de: Neuen Ordner anlegen
+  en: Create a new folder
+MENU_CREATEIMAGE:
+  de: Neues Bild
+  en: New image
+MENU_CREATEIMAGE_DESC:
+  de: Neues Bild hochladen
+  en: Upload a new image
+MENU_CREATETEXT:
+  de: Neue Textdatei
+  en: New text file
+MENU_CREATETEXT_DESC:
+  de: Neue Textdatei anlegen
+  en: Create a new text file
+MENU_CREATEURL:
+  de: Neue URL
+  en: New URL
+MENU_CREATEURL_DESC:
+  de: Neue Verknüpfung zu einer URL anlegen
+  en: Create a new URL
 MENU_CREATE_KEY:
   de: 'N'
   en: 'N'
@@ -2972,6 +2996,9 @@ MENU_CREATE:
 MENU_CREATEPAGE:
   de: Neue Seite
   en: New page
+MENU_CREATEPAGE_DESC:
+  de: Neue Seite anlegen
+  en: Create a new page
 MENU_DELETE:
   de: Löschen
   en: Delete

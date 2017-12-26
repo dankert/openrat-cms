@@ -75,7 +75,7 @@ class ElementAction extends Action
 	/**
 	 * Umbenennen des Elementes
 	 */
-	function deleteView()
+	public function removeView()
 	{
 		$this->setTemplateVar( 'name' ,$this->element->name );
 	}
@@ -84,7 +84,7 @@ class ElementAction extends Action
 	/**
 	 * Entfernen des Elementes
 	 */
-	function deletePost()
+	public function removePost()
 	{
 		if	( !$this->hasRequestVar('confirm') )
 		{
@@ -111,7 +111,7 @@ class ElementAction extends Action
 	/**
 	 * Aendern des Element-Typs
 	 */
-	function typePost()
+	public function advancedPost()
 	{
 		if	( !$this->userIsAdmin() && $this->getRequestVar('type') == 'code' )
 		{
@@ -141,7 +141,7 @@ class ElementAction extends Action
 	
 	
 	
-	function typeView
+	public function advancedView
 	()
 	{
 		// Die verschiedenen Element-Typen
