@@ -5120,10 +5120,10 @@ PROJECT_CHECK_LIMIT:
   en: Remove old values from archives
 PROJECT_PUBLISH_FILE_EXTENSION:
   de: 'Links auf Dateien mit Datei-Endung'
-  de: 'Links to files are including the file extension'
+  en: 'Links to files are including the file extension'
 PROJECT_PUBLISH_PAGE_EXTENSION:
   de: 'Links auf Seiten mit Datei-Endung'
-  de: 'Links to pages are including the file extension'
+  en: 'Links to pages are including the file extension'
 PROJECT_CMD_AFTER_PUBLISH:
   de: Systembefehl nach Generierung
   en: Execute after publishing
