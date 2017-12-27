@@ -48,20 +48,21 @@ class TitleAction extends Action
 
 		if	( !is_object($user) )
 		{
-            $this->setTemplateVar('isLoggedIn',false );
+            $this->setTemplateVar('isLoggedIn'  ,false );
+            $this->setTemplateVar('userfullname',lang('NOT_LOGGED_IN') );
             return; // Kein Benutzer angemeldet.
         }
 
         $this->setTemplateVar('isLoggedIn',true );
 
-		$db = Session::getDatabase();
-		$this->setTemplateVar('dbname',$db->conf['name'].(readonly()?' ('.lang('readonly').')':''));
-		$this->setTemplateVar('dbid'  ,$db->id);
-		
-		$databases = array();
-		
-		$this->setTemplateVar('username'    ,$user->name    );
-		$this->setTemplateVar('userfullname',$user->fullname);
+        $db = Session::getDatabase();
+        $this->setTemplateVar('dbname',$db->conf['name'].(readonly()?' ('.lang('readonly').')':''));
+        $this->setTemplateVar('dbid'  ,$db->id);
+
+        $databases = array();
+
+        $this->setTemplateVar('username'    ,$user->name    );
+        $this->setTemplateVar('userfullname',$user->fullname);
 
 		$project = Session::getProject();
 		if	( is_object($project) )
