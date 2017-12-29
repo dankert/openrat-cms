@@ -49,7 +49,7 @@ function formSubmit(form)
 	$(form).find('.error').removeClass('error');
 
 	var params = $(form).serializeArray();
-	var url    = './dispatcher.php'; // Alle Parameter befinden sich im Formular
+	var url    = './'; // Alle Parameter befinden sich im Formular
 	
 	var formMethod = $(form).attr('method').toUpperCase();
 	

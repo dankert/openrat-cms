@@ -26,9 +26,11 @@ class WorkbenchAction extends Action
 	function __construct()
 	{
 		global $conf;
+		global $SESS;
 		$this->perspective = Session::get('perspective');
-		
-		
+		Logger::info('Workbench: Perspective is '.$this->perspective);
+		//Logger::info('Workbench: Sitzung: '.print_r($SESS,true));
+
 		
 	}
 
@@ -70,10 +72,10 @@ class WorkbenchAction extends Action
 		global $viewconfig;
 		
 		Logger::debug('Workbench is using perspektive: '.$this->perspective);
-		$viewconfig = parse_ini_file('themes/default/layout/perspective/'.$this->perspective.'.ini.php',true);
+		$viewconfig = parse_ini_file(__DIR__.'/../../cms-ui/themes/default/layout/perspective/'.$this->perspective.'.ini.php',true);
 		
-		require_once('themes/default/layout/perspective/window.php');
-		require_once('themes/default/layout/perspective/'.$this->perspective.'.php');
+		require_once(__DIR__.'/../../cms-ui/themes/default/layout/perspective/window.php');
+		require_once(__DIR__.'/../../cms-ui/themes/default/layout/perspective/'.$this->perspective.'.php');
 		// Ausgabe fertig.
 		exit;
 	}

@@ -47,6 +47,7 @@ class IndexAction extends Action
 	function __construct()
 	{
 		$this->perspective = Session::get('perspective');
+        Logger::info('Index: Perspective is '.$this->perspective);
 
 		if	( !empty($this->perspective))
 			$this->lastModified( config('config','last_modification_time') );
@@ -72,6 +73,7 @@ class IndexAction extends Action
 				Logger::debug('Auto-Login module: '.$module);
 				$moduleClass = $module.'Auth';
 				$auth = new $moduleClass;
+				/* @type $auth Auth */
 				$username = $auth->username();
 			
 				if	( !empty($username) )
@@ -116,7 +118,7 @@ class IndexAction extends Action
 		$themeCss = $this->getThemeCSS();
 		
 		// HTML-Datei direkt einbinden.
-		require('themes/default/layout/index.php');
+		require('modules/cms-ui/themes/default/layout/index.php');
 		exit;
 	}
 

@@ -360,142 +360,10 @@ use \LogicException;
         }
 
 
-        /**
-         * Ausgabe des Templates.<br>
-         * <br>
-         * Erst hier soll die Ausgabe auf die Standardausgabe, also die
-         * Ausgabe f�r den Browser, starten.<br>
-         * <br>
-         */
-        public function forward()
+        public function getOutputData()
         {
-            Session::close();
-            global $conf;
-
-            $db = db_connection();
-
-            if (is_object($db))
-                $db->commit();
-
-            // Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
-            header('Expires: ' . substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
-
-            if ($conf['security']['content-security-policy'])
-                header('X-Content-Security-Policy: ' . 'allow  \'self\'; img-src: *; script-src \'self\'; options inline-script');
-
-
-            $httpAccept = getenv('HTTP_ACCEPT');
-            $types = explode(',', $httpAccept);
-
-            if (version_compare(PHP_VERSION, '4.3.0', '>='))
-                Logger::trace('Output' . "\n" . print_r($this->templateVars, true));
-
-            // Weitere Variablen anreichern.
-            $this->templateVars['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => token());
-            $this->templateVars['version'] = OR_VERSION;
-            $this->templateVars['api'] = '2';
-
-            if (sizeof($types) == 1 && in_array('application/php-array', $types) || $this->getRequestVar('output') == 'php-array') {
-                if (version_compare(PHP_VERSION, '4.3.0', '<'))
-                    Http::serverError('application/php-array is only available with PHP >= 4.3');
-
-                header('Content-Type: application/php-array; charset=UTF-8');
-                echo print_r($this->templateVars, true);
-                exit;
-            }
-
-            if (sizeof($types) == 1 && in_array('application/php-serialized', $types) || $this->getRequestVar('output') == 'php') {
-                header('Content-Type: application/php-serialized; charset=UTF-8');
-                echo serialize($this->templateVars);
-                exit;
-            }
-
-            if (sizeof($types) == 1 && in_array('application/json', $types) || $this->getRequestVar('output') == 'json') {
-                $json = new JSON();
-                header('Content-Type: application/json; charset=UTF-8');
-                if (function_exists('json_encode'))
-                    // Native Methode ist schneller..
-                    echo json_encode($this->templateVars, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_PARTIAL_OUTPUT_ON_ERROR);
-                else
-                    // Fallback, falls json_encode() nicht existiert...
-                    echo $json->encode($this->templateVars);
-                exit;
-            }
-
-            if (sizeof($types) == 1 && in_array('application/xml', $types) || $this->getRequestVar('output') == 'xml') {
-                require_once(OR_SERVICECLASSES_DIR . "XML.class." . PHP_EXT);
-                $xml = new XML();
-                $xml->root = 'server'; // Name des XML-root-Elementes
-                header('Content-Type: application/xml; charset=UTF-8');
-                echo $xml->encode($this->templateVars);
-                exit;
-            }
-
-            header('Content-Type: text/html; charset=UTF-8');
-            $this->setMenu();
-
-            $tplName = $this->actionName . '/' . $this->subActionName;
-
-
-// 		if	(isset($this->actionConfig[$this->subActionName]['target']))
-// 			$targetSubActionName = $this->actionConfig[$this->subActionName]['target'];
-// 		else
-            $targetSubActionName = $this->subActionName;
-
-
-            global $REQ;
-            global $PHP_SELF;
-            global $HTTP_SERVER_VARS;
-            global $image_dir;
-            global $view;
-
-            // Übertragen der Ausgabe-Variablen in den aktuellen Kontext
-            //
-            extract($this->templateVars['output']);
-
-            // Setzen einiger Standard-Variablen
-            //
-            $tpl_dir = OR_THEMES_DIR . $conf['interface']['theme'] . '/pages/html/';
-            $image_dir = OR_THEMES_DIR . $conf['interface']['theme'] . '/images/';
-
-            $user = Session::getUser();
-
-            $self = $HTTP_SERVER_VARS['PHP_SELF'];
-
-            if (!empty($conf['interface']['override_title']))
-                $cms_title = $conf['interface']['override_title'];
-            else
-                $cms_title = OR_TITLE . ' ' . OR_VERSION;
-
-            $subActionName = $this->subActionName;
-            $actionName = $this->actionName;
-            $requestId = $this->getRequestId();
-
-            $iFile = 'themes/default/templates/' . $tplName . '.tpl.out.' . PHP_EXT;
-
-            if (DEVELOPMENT) {
-                $srcXmlFilename = 'themes/default/templates/' . $tplName . '.tpl.src.xml';
-
-                // Das Template kompilieren.
-                // Aus dem XML wird eine PHP-Datei erzeugt.
-                try {
-                    $te = new TemplateEngine();
-                    $te->compile($srcXmlFilename, $iFile);
-                    unset($te);
-                } catch (Exception $e) {
-                    throw new DomainException("Compilation failed for Template '$tplName'.", 0, $e);
-                }
-                header("X-CMS-Template-File: " . $iFile);
-            }
-
-
-            if (is_file($iFile))
-                // Einbinden des Templates
-                require_once($iFile);
-            else
-                throw new LogicException("File '$iFile' not found.");
+            return $this->templateVars;
         }
-
 
         /**
          * Ruft eine weitere Subaction auf.
@@ -505,18 +373,6 @@ use \LogicException;
         protected function callSubAction($subActionName)
         {
             return;
-
-            /*
-             *
-            if	( in_array($this->actionName,array('page','file','link','folder')) )
-                Session::setSubaction( $subActionName );
-
-            $this->subActionName = $subActionName;
-
-            Logger::trace("next subaction is '$subActionName'");
-
-            $this->$subActionName();
-             */
         }
 
 
@@ -730,7 +586,9 @@ use \LogicException;
          */
         protected function setPerspective($name)
         {
+            Logger::info("Setting perspective to ".$name);
             Session::set('perspective', $name);
+
             $this->refresh();
         }
     }

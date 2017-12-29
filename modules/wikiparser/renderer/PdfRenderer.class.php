@@ -11,8 +11,8 @@
  * @package openrat.text
  */
 
-require( OR_TEXTCLASSES_DIR.'renderer/fpdf.php');
-require(OR_TEXTCLASSES_DIR.'renderer/Pdf.class.php');
+require( __DIR__.'/fpdf.php');
+require(__DIR__.'/Pdf.class.php');
 
 class PdfRenderer
 {
@@ -20,7 +20,7 @@ class PdfRenderer
 	
 	/**
 	 *
-	 * @var Array
+	 * @var array
 	 */
 	var $footnotes       = array();
 	

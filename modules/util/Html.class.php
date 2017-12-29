@@ -133,7 +133,7 @@ class Html
 		if	( @$conf['interface']['url']['index'] )
 			$controller_file_name = '';
 		else
-			$controller_file_name = OR_CONTROLLER_FILE.'.'.PHP_EXT;
+			$controller_file_name = '';
 
 		$prefix = './';
 		

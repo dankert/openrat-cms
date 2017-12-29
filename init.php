@@ -46,7 +46,7 @@ define('OR_DYNAMICCLASSES_DIR',OR_MODULES_DIR.'cms-macros/macro/' );
 define('OR_TEXTCLASSES_DIR'   ,OR_MODULES_DIR.'wikiparser/'    );
 define('OR_PREFERENCES_DIR'   ,'./config/');
 define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
-define('OR_THEMES_DIR'        ,'./themes/'         );
+define('OR_THEMES_DIR'        ,'./modules/cms-ui/themes/'         );
 define('OR_TMP_DIR'           ,'./tmp/'            );
 define('OR_CONTROLLER_FILE'   ,'dispatcher');
 define('START_TIME'           ,time()              );
@@ -121,13 +121,6 @@ register_shutdown_function( "fatal_handler" );
 
 require_once( "functions/request.inc.php" );
 
-// Werkzeugklassen einbinden.
-require_once( OR_MODULES_DIR."util/require.".PHP_EXT );
-require_once( OR_AUTHCLASSES_DIR."include.inc.".PHP_EXT );
-
-require_once( OR_MODULES_DIR."security/require.".PHP_EXT );
-require_once( OR_MODULES_DIR."template-engine/require.".PHP_EXT );
-require_once( OR_MODULES_DIR."configuration/require.".PHP_EXT );
 
 
 ?>

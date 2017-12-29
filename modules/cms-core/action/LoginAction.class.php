@@ -865,6 +865,7 @@ class LoginAction extends Action
 	{
 		global $conf;
 
+        Logger::info("DBID: ".$this->getRequestVar('dbid'));
 		if	( $this->hasRequestVar('dbid'))
 		{
 			$dbid = $this->getRequestVar('dbid');

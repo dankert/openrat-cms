@@ -1,32 +1,9 @@
 <?php
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 
 // PHP-Versionsunabhaengiges Array fuer die Session-Variablen ermitteln
 use cms\model\User;
 
-if	(isset($_SESSION))
-	$SESS = &$_SESSION;
-else $SESS = &$HTTP_SESSION_VARS;
 
-if	( isset($_FILES) )
-	$FILES = &$_FILES;
-else $FILES = &$HTTP_POST_FILES;
 
 
 /**
@@ -53,7 +30,9 @@ class Session
 	public static function get( $var )
 	{
 		global $SESS;
-		if	( isset($SESS['ors_'.$var]) )
+        $SESS = &$_SESSION;
+
+        if	( isset($SESS['ors_'.$var]) )
 			return $SESS['ors_'.$var];
 		else
 			return '';
@@ -61,8 +40,9 @@ class Session
 
     public static function set( $var,$value )
 	{
-		global $SESS;
-		$SESS[ 'ors_'.$var ] = $value;
+        global $SESS;
+        $SESS = &$_SESSION;
+        $SESS[ 'ors_'.$var ] = $value;
 	}
 
 

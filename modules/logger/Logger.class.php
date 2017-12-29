@@ -116,8 +116,10 @@ class Logger
             $vars['host'] = getenv('REMOTE_ADDR');
 
         if (isset(Logger::$messageCallback))
+        {
             $cb = Logger::$messageCallback;
-        $vars += $cb();
+            $vars += $cb();
+        }
 
         $vars['level'] = str_pad($thisLevel, 5);
         $vars['agent'] = getenv('HTTP_USER_AGENT');
