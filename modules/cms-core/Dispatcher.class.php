@@ -3,7 +3,7 @@
 /*
  * Loading and calling the action class (the "controller").
  */
-//namespace cms;
+namespace cms;
 
 use Configuration;
 use Http;

@@ -1,6 +1,6 @@
 <?php
 
-use Dispatcher;
+use cms\Dispatcher;
 use template_engine\TemplateEngine;
 
 define('CMS_UI_REQ_PARAM_SUBACTION'      ,'subaction'      );
