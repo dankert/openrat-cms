@@ -19,7 +19,7 @@ require_once(__DIR__ . "/auth/require.php");
 
 // Session functions
 require_once(__DIR__. "/../util/Session.class.php");
-require_once(__DIR__.'/../../init.php');
+require_once(__DIR__.'/init.php');
 
 require_once(__DIR__ . "/Dispatcher.class.php");
 
