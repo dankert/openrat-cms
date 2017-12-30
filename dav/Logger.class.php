@@ -113,7 +113,7 @@ class Logger
 			return;
 
 		if	( ! is_writable($filename) )
-			Http::serverError( "logfile $filename is not writable by the server" );
+			throw new \LogicException( "logfile $filename is not writable by the server" );
 
 		$thisLevel = strtoupper($facility);
 		

@@ -22,10 +22,10 @@ class DbUpdate
 		
 		if	( $version > OR_DB_SUPPORTED_VERSION )
 			// Oh oh, in der Datenbank ist eine neue Version, als wir unterstüzten.
-			Http::serverError('Actual DB version is not supported.',"DB-Version is $version, but this is OpenRat ".OR_VERSION." which only supports version ".OR_DB_SUPPORTED_VERSION );
+			throw new \LogicException('Actual DB version is not supported.',"DB-Version is $version, but this is OpenRat ".OR_VERSION." which only supports version ".OR_DB_SUPPORTED_VERSION );
 
 		if	( ! $db->conf['auto_update'])
-			Http::serverError('DB Update necessary.',"DB-Version is $version. Auto-Update is disabled, but this is OpenRat ".OR_VERSION." needs the version ".OR_DB_SUPPORTED_VERSION );
+			throw new \LogicException('DB Update necessary.',"DB-Version is $version. Auto-Update is disabled, but this is OpenRat ".OR_VERSION." needs the version ".OR_DB_SUPPORTED_VERSION );
 		
 		for( $installVersion = $version + 1; $installVersion <= OR_DB_SUPPORTED_VERSION; $installVersion++ )
 		{
@@ -81,7 +81,7 @@ SQL
 					,$db->id);
 			$countErrors = $sql->getOne();
 			if	( $countErrors > 0 )
-				Http::serverError('Database error','there are dirty versions (means: versions with status 0), see table VERSION for details.');
+				throw new \LogicException('Database error','there are dirty versions (means: versions with status 0), see table VERSION for details.');
 			
 			// Aktuelle Version ermitteln.
 			$sql = $db->sql(<<<SQL
