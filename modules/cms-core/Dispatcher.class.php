@@ -267,13 +267,8 @@ class Dispatcher
         require_once(OR_ACTIONCLASSES_DIR . '/' . $actionClassName . '.class.php');
 
         // Erzeugen der Action-Klasse
-        try {
-            /* @type $do \cms\action\Action */
-            $do = new $actionClassNameWithNamespace;
-        } catch (ObjectNotFoundException $e) {
-            Logger::debug("Object not found: " . $e->__toString());
-            throw $e;
-        }
+        /* @type $do \cms\action\Action */
+        $do = new $actionClassNameWithNamespace;
 
         $do->actionClassName = $actionClassName;
         $do->actionName = $this->action;
