@@ -18,7 +18,6 @@
 
 
 define('PHP_EXT'         ,'php'    );
-require_once( "functions/common.inc.".PHP_EXT );
 
 define('IMG_EXT'         ,'.gif'   );
 define('IMG_ICON_EXT'    ,'.png'   );
@@ -36,18 +35,19 @@ define('OR_TYPE_LINK'  ,'link'  );
 define('OR_TYPE_URL'   ,'url'   );
 
 
-define('OR_MODULES_DIR'       ,'./modules/');
+define( 'CMS_ROOT_DIR',__DIR__.'/../../');
+
+define('OR_MODULES_DIR'       ,CMS_ROOT_DIR.'modules/');
 define('OR_ACTIONCLASSES_DIR' ,OR_MODULES_DIR.'cms-core/action/'  );
-define('OR_FORMCLASSES_DIR'   ,'./formClasses/'    );
 define('OR_OBJECTCLASSES_DIR' ,OR_MODULES_DIR.'cms-core/model/'  );
-define('OR_LANGUAGE_DIR'      ,'./language/'       );
-define('OR_DBCLASSES_DIR'     ,'./db/'             );
+define('OR_LANGUAGE_DIR'      ,CMS_ROOT_DIR.'language/'       );
+define('OR_DBCLASSES_DIR'     ,CMS_ROOT_DIR.'db/'             );
 define('OR_DYNAMICCLASSES_DIR',OR_MODULES_DIR.'cms-macros/macro/' );
 define('OR_TEXTCLASSES_DIR'   ,OR_MODULES_DIR.'wikiparser/'    );
-define('OR_PREFERENCES_DIR'   ,'./config/');
+define('OR_PREFERENCES_DIR'   ,CMS_ROOT_DIR.'config/');
 define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
-define('OR_THEMES_DIR'        ,'./modules/cms-ui/themes/'         );
-define('OR_TMP_DIR'           ,'./tmp/'            );
+define('OR_THEMES_DIR'        ,OR_MODULES_DIR.'cms-ui/themes/'         );
+define('OR_TMP_DIR'           ,CMS_ROOT_DIR.'tmp/'            );
 define('OR_CONTROLLER_FILE'   ,'dispatcher');
 define('START_TIME'           ,time()              );
 define('REQUEST_ID'           ,'req'.time().rand() );
@@ -117,9 +117,6 @@ function fatal_handler() {
 }
 
 register_shutdown_function( "fatal_handler" );
-
-
-require_once( "functions/request.inc.php" );
 
 
 

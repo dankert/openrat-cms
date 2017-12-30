@@ -11,7 +11,7 @@
  */
 class Configuration
 {
-    public static $configFile = './config/config.yml';
+    public static $configFile = __DIR__.'/../../config/config.yml';
 
     /**
      * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.

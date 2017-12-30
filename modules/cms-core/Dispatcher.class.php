@@ -161,9 +161,6 @@ class Dispatcher
             define('PRODUCTION', $conf['production']);
             define('DEVELOPMENT', !PRODUCTION);
 
-            require_once("functions/language.inc." . PHP_EXT);
-            require_once("functions/db.inc." . PHP_EXT);
-
             // Verbindung zur Datenbank
             //
             $db = Session::getDatabase();
@@ -195,9 +192,6 @@ class Dispatcher
             $do->actionClassName = $actionClassName;
             $do->actionName = $this->action;
             $do->subActionName = $this->subaction;
-
-            define('OR_ACTION', $this->action);
-            define('OR_METHOD', $this->subaction);
 
             if (isset($REQ[REQ_PARAM_ID]))
                 define('OR_ID', $REQ[REQ_PARAM_ID]);

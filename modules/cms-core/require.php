@@ -18,8 +18,15 @@ require_once(__DIR__ . "/model/require.php");
 require_once(__DIR__ . "/auth/require.php");
 
 // Session functions
-require_once(__DIR__. "/../util/Session.class.php");
-require_once(__DIR__.'/init.php');
+require_once(__DIR__ . "/../util/Session.class.php");
+
+// Helper functions...
+require_once(__DIR__ . "/functions/common.inc.php");
+require_once(__DIR__ . "/functions/language.inc.php");
+require_once(__DIR__ . "/functions/request.inc.php");
+
+
+require_once(__DIR__ . '/init.php');
 
 require_once(__DIR__ . "/Dispatcher.class.php");
 

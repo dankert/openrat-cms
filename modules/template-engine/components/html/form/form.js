@@ -49,8 +49,7 @@ function formSubmit(form)
 	$(form).find('.error').removeClass('error');
 
 	var params = $(form).serializeArray();
-	var url    = './'; // Alle Parameter befinden sich im Formular
-	
+
 	var formMethod = $(form).attr('method').toUpperCase();
 	
 	if	( formMethod == 'GET' )
@@ -64,6 +63,8 @@ function formSubmit(form)
 	}
 	else
 	{
+        var url    = './api/'; // Alle Parameter befinden sich im Formular
+
 		// POST-Request
 		$(form).closest('div.content').addClass('loader');
 		url += '?output=json';
