@@ -170,4 +170,18 @@ function not($var) {
 	return !$var;
 }
 
+/**
+ * Liefert die Datenbankverbindung fuer die aktuelle Sitzung.
+ *
+ * @return \database\Database
+ */
+function db_connection()
+{
+
+    return Session::getDatabase();
+}
+
+
+
+
 ?>
