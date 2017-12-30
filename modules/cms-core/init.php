@@ -70,7 +70,7 @@ define('REQ_PARAM_TEMPLATE_ID'    ,'templateid'     );
 define('REQ_PARAM_DATABASE_ID'    ,'dbid'           );
 define('REQ_PARAM_TARGET'         ,'target'         );
 
-define('OR_SERVICECLASSES_DIR','./util/' );
+define('OR_SERVICECLASSES_DIR',OR_MODULES_DIR.'util/' );
 define('OR_AUTHCLASSES_DIR'   ,OR_MODULES_DIR.'cms-core/auth/' );
 
 
