@@ -80,7 +80,7 @@ class FilebrowserAction extends ObjectAction
 	 */
 	function show()
 	{
-		Http::notAuthorized('no subaction found');
+        throw new \SecurityException('no subaction found');
 	}
 	
 

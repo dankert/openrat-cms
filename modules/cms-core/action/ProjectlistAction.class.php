@@ -106,7 +106,7 @@ class ProjectlistAction extends Action
 					$this->addNotice('project',$project->name,'DONE'); 
 					break;
 				default:
-					Http::serverError('Unknown type while adding project '.$this->getRequestVar('type') );
+					throw new \LogicException('Unknown type while adding project '.$this->getRequestVar('type') );
 			}
 			
 		}

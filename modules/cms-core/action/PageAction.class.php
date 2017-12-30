@@ -743,7 +743,7 @@ class PageAction extends ObjectAction
 	function pubPost()
 	{
 		if	( !$this->page->hasRight( ACL_PUBLISH ) )
-			Http::notAuthorized( 'no right for publish' );
+            throw new \SecurityException( 'no right for publish' );
 
 		Session::close();
 		

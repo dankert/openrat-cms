@@ -193,7 +193,7 @@ namespace cms\action {
                     return $REQ[$varName];
 
                 default:
-                    Http::serverError('Unknown request filter', 'not found: ' . $transcode);
+                    throw new \LogicException('Unknown request filter', 'not found: ' . $transcode);
                     return '?';
             }
 

@@ -66,12 +66,12 @@ class UI
             Logger::warn("Object not found: " . $e->__toString()); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.
             Http::noContent();
         } catch (OpenRatException $e) {
-            Http::serverError(lang($e->key), $e->__toString());
+            throw new \LogicException(lang($e->key), $e->__toString());
         } catch (SecurityException $e) {
             Logger::info($e->getMessage());
             Http::notAuthorized("You are not allowed to execute this action.");
         } catch (Exception $e) {
-            Http::serverError("Internal CMS error", $e->__toString());
+            throw new \LogicException("Internal CMS error", $e->__toString());
         }
     }
 

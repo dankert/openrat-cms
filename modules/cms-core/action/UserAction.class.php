@@ -195,7 +195,7 @@ class UserAction extends Action
 				$newPassword = $this->user->createPassword();
 				break;
 			default:
-				Http::serverError('Type unknown: '.$type);
+				throw new \LogicException('Type unknown: '.$type);
 		}
 
 		// Kennwoerter identisch und lang genug

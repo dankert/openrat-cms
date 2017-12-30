@@ -374,7 +374,7 @@ class OpenIdAuth implements Auth
 		       
 		if	( $queryVars['openid.invalidate_handle'] != $this->handle )
 		{
-			Http::notAuthorized('Association-Handle mismatch.');
+			throw new \SecurityException('Association-Handle mismatch.');
 			die();
 			$this->error = 'Association-Handle mismatch.';
 			return false;
@@ -382,7 +382,7 @@ class OpenIdAuth implements Auth
 
 		if	( $queryVars['openid.mode'] != 'id_res' )
 		{
-			Http::notAuthorized('Open-Id: Unknown mode:'.$queryVars['openid.mode']);
+			throw new \SecurityException('Open-Id: Unknown mode:'.$queryVars['openid.mode']);
 			die();
 			
 			$this->error ='Open-Id: Unknown mode:'.$queryVars['openid.mode'];
@@ -391,7 +391,7 @@ class OpenIdAuth implements Auth
 		
 		if	( $this->provider=='identity' && $queryVars['openid.identity'] != $this->identity )
 		{
-			Http::notAuthorized('Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity']);
+			throw new \SecurityException('Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity']);
 			die();
 			
 			$this->error ='Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity'];
@@ -452,7 +452,7 @@ class OpenIdAuth implements Auth
 		if	( !array_key_exists('is_valid',$result) )
 		{
 			// Zeile nicht gefunden.
-			Http::notAuthorized('Undefined Open-Id response: "is_valid" expected, but not found');
+			throw new \SecurityException('Undefined Open-Id response: "is_valid" expected, but not found');
 			die();
 			
 			$this->error = 'Undefined Open-Id response: "is_valid" expected, but not found';
@@ -466,7 +466,7 @@ class OpenIdAuth implements Auth
 		else
 		{
 			// Bestaetigung wurde durch den OpenId-Provider abgelehnt.
-			Http::notAuthorized('Server refused login.');
+			throw new \SecurityException('Server refused login.');
 			die();
 			$this->error = 'Server refused login.';
 			return false;

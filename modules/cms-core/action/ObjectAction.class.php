@@ -180,7 +180,7 @@ class ObjectAction extends Action
 						break;
 							
 					default:
-						Http::serverError('fatal: unknown type while deleting');
+						throw new \LogicException('fatal: unknown type while deleting');
 				}
 				break;				
 				
@@ -206,7 +206,7 @@ class ObjectAction extends Action
 				break;
 				
 			default:
-				Http::serverError('Unknown type for copying');
+				throw new \LogicException('Unknown type for copying');
 				break;
 		}
 		

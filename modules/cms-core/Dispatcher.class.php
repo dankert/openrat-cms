@@ -145,7 +145,7 @@ class Dispatcher
         global $REQ;
         if (config('security', 'use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN] != token()) {
             Logger::error('Token mismatch: Needed ' . token() . ' but got ' . @$REQ[REQ_PARAM_TOKEN] . '. Maybe an attacker?');
-            Http::notAuthorized("Token mismatch", "Token mismatch");
+            throw new SecurityException("Token mismatch");
         }
     }
 
@@ -245,7 +245,7 @@ class Dispatcher
 
 
             if (!isset($conf['language']))
-                Http::serverError('no language found! (languages=' . implode(',', $languages) . ')');
+                throw new \LogicException('no language found! (languages=' . implode(',', $languages) . ')');
 
             // Schreibt die Konfiguration in die Sitzung. Diese wird anschliessend nicht
             // mehr veraendert.

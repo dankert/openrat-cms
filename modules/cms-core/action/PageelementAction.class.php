@@ -244,7 +244,7 @@ class PageelementAction extends Action
 		$funktionName = 'edit'.$this->value->element->type;
 
 		if	( ! method_exists($this,$funktionName) )
-		Http::serverError('Method does not exist: PageElementAction#'.$funktionName );
+		throw new \LogicException('Method does not exist: PageElementAction#'.$funktionName );
 			
 		$this->$funktionName(); // Aufruf der Funktion "edit<Elementtyp>()".
 	}
@@ -771,7 +771,7 @@ class PageelementAction extends Action
 			$this->value->element = new Element( $this->value->elementid );
 
 			if	( $this->value->pageid != $this->page->pageid )
-				Http::serverError( 'Cannot find value','page-id does not match' );
+				throw new \LogicException( 'Cannot find value','page-id does not match' );
 
 			// Pruefen, ob Berechtigung zum Freigeben besteht
 			//$this->value->release = $this->page->hasRight(ACL_RELEASE);
@@ -798,7 +798,7 @@ class PageelementAction extends Action
 
 			// Pruefen, ob Berechtigung zum Freigeben besteht
 			if	( !$this->page->hasRight(ACL_RELEASE) )
-				Http::notAuthorized( 'Cannot release','no right' );
+                throw new \SecurityException( 'Cannot release','no right' );
 
 			// Inhalt freigeben
 			$this->value->release();
@@ -1514,7 +1514,7 @@ class PageelementAction extends Action
 	function pubPost()
 	{
 		if	( !$this->page->hasRight( ACL_PUBLISH ) )
-			Http::notAuthorized( 'no right for publish' );
+            throw new \SecurityException( 'no right for publish' );
 
 		$this->page->public = true;
 		$this->page->publish();

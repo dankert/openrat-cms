@@ -442,7 +442,7 @@ class FolderAction extends ObjectAction
 		{
 			if	( ! in_array($objectid,$ids) )
 			{
-				Http::serverError('Object-Id '.$objectid.' is not in this folder any more');
+				throw new \LogicException('Object-Id '.$objectid.' is not in this folder any more');
 			}
 			$seq++; // Sequenz um 1 erhoehen
 

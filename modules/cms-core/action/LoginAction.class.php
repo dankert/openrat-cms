@@ -72,7 +72,7 @@ class LoginAction extends Action
 		global $conf;
 
 		if	( !isset($conf['database'][$dbid] ))
-			Http::serverError( 'unknown DB-Id: '.$dbid );
+			throw new \LogicException( 'unknown DB-Id: '.$dbid );
 			
 		$db = db_connection();
 		if	( is_object($db) )
@@ -119,7 +119,7 @@ class LoginAction extends Action
 			global $conf;
 	
 			if	( !isset($conf['database']['default']) )
-				Http::serverError('default-database not set');
+				throw new \LogicException('default-database not set');
 	
 			$dbid = $conf['database']['default'];
 		}
@@ -251,7 +251,7 @@ class LoginAction extends Action
             $authid = $this->getRequestVar( $sso['auth_param_name']);
 
             if	( empty( $authid) )
-                Http::notAuthorized( 'no authorization data (no auth-id)');
+                throw new \SecurityException( 'no authorization data (no auth-id)');
 
             if	( $sso['auth_param_serialized'] )
                 $authid = unserialize( $authid );
@@ -301,12 +301,12 @@ class LoginAction extends Action
                 $html = implode('',$inhalt);
 //				Html::debug($html);
                 if	( !preg_match($sso['expect_regexp'],$html) )
-                    Http::notAuthorized('auth failed');
+                    throw new \SecurityException('auth failed');
                 $treffer=0;
                 if	( !preg_match($sso['username_regexp'],$html,$treffer) )
-                    Http::notAuthorized('auth failed');
+                    throw new \SecurityException('auth failed');
                 if	( !isset($treffer[1]) )
-                    Http::notAuthorized('authorization failed');
+                    throw new \SecurityException('authorization failed');
 
                 $username = $treffer[1];
 
@@ -316,7 +316,7 @@ class LoginAction extends Action
                 $user = User::loadWithName( $username );
 
                 if	( ! $user->isValid( ))
-                    Http::notAuthorized('authorization failed: user not found: '.$username);
+                    throw new \SecurityException('authorization failed: user not found: '.$username);
 
                 $user->setCurrent();
 
@@ -327,19 +327,19 @@ class LoginAction extends Action
         elseif	( $ssl_trust )
         {
             if	( empty($ssl_user_var) )
-                Http::serverError( 'please set environment variable name in ssl-configuration.' );
+                throw new \LogicException( 'please set environment variable name in ssl-configuration.' );
 
             $username = getenv( $ssl_user_var );
 
             if	( empty($username) )
-                Http::notAuthorized( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
+                throw new \SecurityException( 'no username in client certificate ('.$ssl_user_var.') (or there is no client certificate...?)' );
 
             $this->setDefaultDb();
 
             $user = User::loadWithName( $username );
 
             if	( !$user->isValid() )
-                Http::serverError( 'unknown username: '.$username );
+                throw new \LogicException( 'unknown username: '.$username );
 
             $user->setCurrent();
 
@@ -692,7 +692,7 @@ class LoginAction extends Action
 
 		if	( !$openId->checkAuthentication() )
 		{
-			Http::notAuthorized('OpenId-Login failed' );
+			throw new \SecurityException('OpenId-Login failed' );
 			die();
 			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',OR_NOTICE_ERROR,array('name'=>$openId->user),array($openId->error) );
 			$this->addValidationError('openid_url','');
@@ -711,7 +711,7 @@ class LoginAction extends Action
 		if	( empty($username) )
 		{
 			// Es konnte kein Benutzername ermittelt werden.
-			Http::notAuthorized('no username supplied by openid provider' );
+			throw new \SecurityException('no username supplied by openid provider' );
 			die();
 			$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
 			$this->addValidationError('openid_url','');
@@ -737,7 +737,7 @@ class LoginAction extends Action
 			{
 				Logger::debug("OpenId-Login failed for $username");
 				// Benutzer ist nicht in Benutzertabelle vorhanden (und angelegt werden soll er auch nicht).
-				Http::notAuthorized('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
+				throw new \SecurityException('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
 				die();
 				
 				$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
@@ -780,7 +780,7 @@ class LoginAction extends Action
 		Session::setUser('');
 		
 		if	( $conf['login']['nologin'] )
-			Http::notAuthorized('login disabled');
+			throw new \SecurityException('login disabled');
 
 		$openid_user   = $this->getRequestVar('openid_url'    );
 		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
@@ -896,7 +896,7 @@ class LoginAction extends Action
 		Session::setUser(''); // Altes Login entfernen.
 		
 		if	( $conf['login']['nologin'] )
-			Http::notAuthorized('login disabled');
+			throw new \SecurityException('login disabled');
 
 		$loginName     = $this->getRequestVar('login_name'    ,OR_FILTER_ALPHANUM);
 		$loginPassword = $this->getRequestVar('login_password',OR_FILTER_ALPHANUM);
@@ -1436,7 +1436,7 @@ class LoginAction extends Action
 			if	( isset($vars[REQ_PARAM_DATABASE_ID]) )
 				$this->setDb($vars[REQ_PARAM_DATABASE_ID]);
 			else
-				Http::serverError('no database available.');
+				throw new \LogicException('no database available.');
 		}
 		else
 		{
@@ -1575,7 +1575,7 @@ class LoginAction extends Action
 		$user = Session::getUser();
 		
 		if	( ! $user->isAdmin )
-			Http::notAuthorized("");
+			throw new \SecurityException("Switching the user is only possible for admins.");
 		
 		$this->recreateSession();
 		
@@ -1644,7 +1644,7 @@ class LoginAction extends Action
 					break;
 					
 				default:
-					Http::serverError('Unknown auth-type: '.$conf['security']['login']['type'].'. Please check the configuration setting /security/login/type' );
+					throw new \LogicException('Unknown auth-type: '.$conf['security']['login']['type'].'. Please check the configuration setting /security/login/type' );
 			}
 		}
 		

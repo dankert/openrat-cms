@@ -4,6 +4,3 @@ class SecurityException extends RuntimeException
 {
 
 }
-
-
-?>

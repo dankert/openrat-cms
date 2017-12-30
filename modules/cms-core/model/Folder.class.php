@@ -668,7 +668,7 @@ SQL
 			$row = $sql->getRow();
 			
 	 		if	( in_array($row['id'],$idCache))
-	 			\Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
+	 			\throw new \LogicException('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
 	 		else
 	 			$idCache[] = $row['id'];
 	 			
@@ -707,7 +707,7 @@ SQL
 			$row = $sql->getRow();
 			
 	 		if	( in_array($row['id'],$idCache))
-	 			\Http::serverError('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
+	 			\throw new \LogicException('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
 	 		else
 	 			$idCache[] = $row['id'];
 	 			
