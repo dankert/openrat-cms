@@ -874,7 +874,7 @@ class FolderAction extends ObjectAction
 				break;
 
 			default:
-				Http::sendStatus(400,'Bad request','Unknown reordertype: '.$type );
+				throw new \InvalidArgumentException('Unknown reordertype: '.$type );
 		}
 
 		// Und jetzt die neu ermittelte Reihenfolge speichern

@@ -6,6 +6,7 @@
 namespace cms;
 
 use Configuration;
+use DomainException;
 use Http;
 use http\Exception;
 use Logger;
@@ -167,7 +168,7 @@ class Dispatcher
             if (is_object($db)) {
                 $ok = $db->connect();
                 if (!$ok)
-                    Http::sendStatus('503', 'Service Unavailable', 'Database is not available: ' . $db->error);
+                    throw new DomainException('Database is not available: ' . $db->error);
 
                 Session::setDatabase($db);
                 $db->start();
