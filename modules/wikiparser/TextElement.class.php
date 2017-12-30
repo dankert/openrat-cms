@@ -9,7 +9,7 @@ class TextElement extends AbstractElement
 {
 	var $text = '';
 	
-	function TextElement( $t='' )
+	function __construct( $t='' )
 	{
 		$this->text = $t;
 		
