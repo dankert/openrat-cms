@@ -6,6 +6,7 @@
 namespace cms;
 
 use BadMethodCallException;
+use cms\action\Action;
 use Configuration;
 use DomainException;
 use Http;
@@ -21,17 +22,25 @@ $conf = array();
 $SESS = array();
 $FILES = array();
 
+/**
+ * Dispatcher for all cms actions.
+ *
+ * @package cms
+ */
 class Dispatcher
 {
     public $action;
     public $subaction;
 
     /**
-     * @return array
+     * @return array data for the client
      */
     public function doAction()
     {
-        // Jetzt erst die Sitzung starten (nachdem alle Klassen zur Verfügung stehen).
+        define('PRODUCTION', config('production'));
+        define('DEVELOPMENT', !PRODUCTION);
+
+        // Start the session. All classes should have been loaded up to now.
         session_start();
 
         global $SESS;
@@ -40,8 +49,145 @@ class Dispatcher
         global $FILES;
         $FILES = &$_FILES;
 
+        $this->checkConfiguration();
+
         // Vorhandene Konfiguration aus der Sitzung lesen.
         global $conf;
+        $conf = Session::getConfig();
+
+        // Nachdem die Konfiguration gelesen wurde, kann nun der Logger benutzt werden.
+        require_once(OR_MODULES_DIR . "logger/require." . PHP_EXT);
+        $this->initializeLogger();
+
+
+        if (!empty($conf['security']['umask']))
+            umask(octdec($conf['security']['umask']));
+
+        if (!empty($conf['interface']['timeout']))
+            set_time_limit(intval($conf['interface']['timeout']));
+
+        $this->checkPostToken();
+
+        define('FILE_SEP', $conf['interface']['file_separator']);
+
+        define('TEMPLATE_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/templates');
+        define('CSS_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/css');
+        define('IMAGE_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/images');
+
+
+        $this->startDatabaseTransaction();
+
+        $result = $this->callActionMethod();
+
+        Logger::trace('Output' . "\n" . print_r($result, true));
+
+        // Weitere Variablen anreichern.
+        $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => token());
+        $result['version'] = OR_VERSION;
+        $result['api'] = '2';
+
+        $this->commitDatabaseTransaction();
+
+        Session::close();
+
+        // Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
+        header('Expires: ' . substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
+
+        return $result;
+    }
+
+    /**
+     * Prüft, ob die Actionklasse aufgerufen werden darf.
+     *
+     * @param $do Action
+     * @throws SecurityException falls der Aufruf nicht erlaubt ist.
+     */
+    private function checkAccess($do)
+    {
+        switch (@$do->security) {
+            case SECURITY_GUEST:
+                // Ok.
+                break;
+            case SECURITY_USER:
+                if (!is_object($do->currentUser))
+                    throw new SecurityException('No user logged in, but this action requires a valid user');
+                break;
+            case SECURITY_ADMIN:
+                if (!is_object($do->currentUser) || !$do->currentUser->isAdmin)
+                    throw new SecurityException('This action requires administration privileges, but user ' . $do->currentUser->name . ' is not an admin');
+                break;
+            default:
+        }
+
+    }
+
+    /**
+     * Startet die Verbindung zur Datenbank und eröffnet eine Transaktion.
+     */
+    private function startDatabaseTransaction()
+    {
+        // Verbindung zur Datenbank
+        //
+        $db = Session::getDatabase();
+        if (is_object($db)) {
+            $ok = $db->connect();
+            if (!$ok)
+                throw new DomainException('Database is not available: ' . $db->error);
+
+            Session::setDatabase($db);
+            $db->start();
+        }
+
+    }
+
+    private function checkPostToken()
+    {
+        global $REQ;
+        if (config('security', 'use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN] != token()) {
+            Logger::error('Token mismatch: Needed ' . token() . ' but got ' . @$REQ[REQ_PARAM_TOKEN] . '. Maybe an attacker?');
+            Http::notAuthorized("Token mismatch", "Token mismatch");
+        }
+    }
+
+    /**
+     * Logger initialisieren.
+     */
+    private function initializeLogger()
+    {
+        $logConfig = config('log');
+
+        Logger::$messageFormat = $logConfig['format'];
+        Logger::$filename = $logConfig['file'];
+        Logger::$dateFormat = $logConfig['date_format'];
+        Logger::$nsLookup = $logConfig['ns_lookup'];
+
+        $cname = 'LOGGER_LOG_' . strtoupper($logConfig['level']);
+        if (defined($cname))
+            Logger::$level = constant($cname);
+
+
+        Logger::$messageCallback = function () {
+            $action = Session::get('action');
+            if (empty($action))
+                $action = '-';
+
+            $action = Session::get('action');
+            if (empty($action))
+                $action = '-';
+
+            $user = Session::getUser();
+            if (is_object($user))
+                $username = $user->name;
+            else
+                $username = '-';
+
+            return array('user' => $username, 'action' => $action);
+        };
+        Logger::init();
+    }
+
+    private function checkConfiguration()
+    {
         $conf = Session::getConfig();
 
         // Konfiguration lesen.
@@ -106,77 +252,14 @@ class Dispatcher
             Session::setConfig($conf);
         }
 
+    }
 
-// Nachdem die Konfiguration gelesen wurde, kann nun der Logger benutzt werden.
-        require_once(OR_MODULES_DIR . "logger/require." . PHP_EXT);
-
-// Logger initialisieren
-        Logger::$messageFormat = $conf['log']['format'];
-        Logger::$filename = $conf['log']['file'];
-        Logger::$dateFormat = $conf['log']['date_format'];
-        Logger::$nsLookup = $conf['log']['ns_lookup'];
-
-        $cname = 'LOGGER_LOG_' . strtoupper($conf['log']['level']);
-        if (defined($cname))
-            Logger::$level = constant($cname);
-
-
-        Logger::$messageCallback = function () {
-            $action = Session::get('action');
-            if (empty($action))
-                $action = '-';
-
-            $action = Session::get('action');
-            if (empty($action))
-                $action = '-';
-
-            $user = Session::getUser();
-            if (is_object($user))
-                $username = $user->name;
-            else
-                $username = '-';
-
-            return array('user' => $username, 'action' => $action);
-        };
-        Logger::init();
-
-
-        if (!empty($conf['security']['umask']))
-            umask(octdec($conf['security']['umask']));
-
-        if (!empty($conf['interface']['timeout']))
-            set_time_limit(intval($conf['interface']['timeout']));
-
+    /**
+     * @return array
+     */
+    private function callActionMethod()
+    {
         global $REQ;
-        if (config('security', 'use_post_token') && $_SERVER['REQUEST_METHOD'] == 'POST' && @$REQ[REQ_PARAM_TOKEN] != token()) {
-            Logger::error('Token mismatch: Needed ' . token() . ' but got ' . @$REQ[REQ_PARAM_TOKEN] . '. Maybe an attacker?');
-            Http::notAuthorized("Token mismatch", "Token mismatch");
-        }
-
-
-
-        define('FILE_SEP', $conf['interface']['file_separator']);
-
-        define('TEMPLATE_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/templates');
-        define('CSS_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/css');
-        define('IMAGE_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/images');
-
-        define('PRODUCTION', $conf['production']);
-        define('DEVELOPMENT', !PRODUCTION);
-
-        // Verbindung zur Datenbank
-        //
-        $db = Session::getDatabase();
-        if (is_object($db)) {
-            $ok = $db->connect();
-            if (!$ok)
-                throw new DomainException('Database is not available: ' . $db->error);
-
-            Session::setDatabase($db);
-            $db->start();
-        }
-
-
         $actionClassName = ucfirst($this->action) . 'Action';
         $actionClassNameWithNamespace = 'cms\\action\\' . $actionClassName;
 
@@ -203,21 +286,7 @@ class Dispatcher
 
         $do->init();
 
-
-        switch (@$do->security) {
-            case SECURITY_GUEST:
-                // Ok.
-                break;
-            case SECURITY_USER:
-                if (!is_object($do->currentUser))
-                    throw new SecurityException('No user logged in, but this action requires a valid user');
-                break;
-            case SECURITY_ADMIN:
-                if (!is_object($do->currentUser) || !$do->currentUser->isAdmin)
-                    throw new SecurityException('This action requires administration privileges, but user ' . $do->currentUser->name . ' is not an admin');
-                break;
-            default:
-        }
+        $this->checkAccess($do);
 
 
         $isAction = $_SERVER['REQUEST_METHOD'] == 'POST';
@@ -238,43 +307,21 @@ class Dispatcher
         if (!method_exists($do, $subactionMethodName))
             throw new BadMethodCallException("Method '$subactionMethodName' does not exist");
 
-        $result = $do->$subactionMethodName(); // <== Executing the Action
+        $do->$subactionMethodName(); // <== Executing the Action
 
         // The action is able to change its method name.
         $this->subaction = $do->subActionName;
 
-        Logger::trace('Output' . "\n" . print_r($result, true));
+        $result = $do->getOutputData();
 
-        // Weitere Variablen anreichern.
-        $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => token());
-        $result['version'] = OR_VERSION;
-        $result['api'] = '2';
-
-        $do->handleResult($result);
-
-        $this->cleanup();
-
-        return $do->getOutputData();
-
+        return $result;
     }
 
-    private function cleanup()
+    private function commitDatabaseTransaction()
     {
-
-        Session::close();
-        global $conf;
-
         $db = db_connection();
 
         if (is_object($db))
             $db->commit();
-
-        // Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
-        header('Expires: ' . substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
-
-        if ($conf['security']['content-security-policy'])
-            header('X-Content-Security-Policy: ' . 'allow  \'self\'; img-src: *; script-src \'self\'; options inline-script');
-
-
     }
 }

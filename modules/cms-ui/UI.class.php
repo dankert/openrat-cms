@@ -47,12 +47,16 @@ class UI
 
             $data = $dispatcher->doAction();
 
+
             // The action is able to change its method name.
             $subaction = $dispatcher->subaction;
 
             header('Content-Type: text/html; charset=UTF-8');
 
             $tplName = $action . '/' . $subaction;
+
+            if (config('security','content-security-policy'))
+                header('X-Content-Security-Policy: ' . 'allow  \'self\'; img-src: *; script-src \'self\'; options inline-script');
 
             UI::outputTemplate($tplName,$data['output']);
         } catch (BadMethodCallException $e) {
