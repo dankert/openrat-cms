@@ -24,7 +24,7 @@
 			<tr class="data">
 				<td class="clickable" colspan="1">
 					<a target="_self" data-type="view" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-						<img class="" title="" src="./themes/default/images/icon/add.png" />
+						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
 						

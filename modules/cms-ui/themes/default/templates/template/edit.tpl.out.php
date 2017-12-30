@@ -16,7 +16,7 @@
 			<?php foreach($elements as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
 					<td onclick="javascript:openNewAction('<?php echo $name ?>','element','<?php echo $id ?>');">
-						<img class="image-icon image-icon--element" title="" src="./themes/default/images/icon/element/<?php echo $type ?>.svg" />
+						<img class="image-icon image-icon--element" title="" src="./modules/cms-ui/themes/default/images/icon/element/<?php echo $type ?>.svg" />
 						
 						<span class="text" title="<?php echo $description ?>"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 						
@@ -38,7 +38,7 @@
 			<tr class="data">
 				<td class="clickable" colspan="2">
 					<a target="_self" data-type="view" data-action="" data-method="addel" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-						<img class="" title="" src="./themes/default/images/icon/add.png" />
+						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_template_addel'.'')))); ?></span>
 						
@@ -52,7 +52,7 @@
 				<tr class="data">
 					<td class="clickable">
 						<a target="_self" data-type="view" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-							<img class="" title="" src="./themes/default/images/icon/template.png" />
+							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/template.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 							

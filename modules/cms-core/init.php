@@ -46,11 +46,14 @@ define('OR_DYNAMICCLASSES_DIR',OR_MODULES_DIR.'cms-macros/macro/' );
 define('OR_TEXTCLASSES_DIR'   ,OR_MODULES_DIR.'wikiparser/'    );
 define('OR_PREFERENCES_DIR'   ,CMS_ROOT_DIR.'config/');
 define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
-define('OR_THEMES_DIR'        ,OR_MODULES_DIR.'cms-ui/themes/'         );
 define('OR_TMP_DIR'           ,CMS_ROOT_DIR.'tmp/'            );
 define('OR_CONTROLLER_FILE'   ,'dispatcher');
 define('START_TIME'           ,time()              );
 define('REQUEST_ID'           ,'req'.time().rand() );
+
+// Must be relative to HTML-Path!
+define('OR_HTML_MODULES_DIR'  ,'./modules/'      );
+define('OR_THEMES_DIR'        ,OR_HTML_MODULES_DIR.'cms-ui/themes/');
 
 define('SECURITY_GUEST',1); // Jeder (auch nicht angemeldete) dürfen diese Aktion ausführen
 define('SECURITY_USER' ,2); // Angemeldete Benutzer dürfen diese Aktion ausführen

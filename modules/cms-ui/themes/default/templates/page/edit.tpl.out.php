@@ -25,7 +25,7 @@
 				<tr class="data">
 					<td class="clickable">
 						<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="pageelement" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $pageelementid ?>" href="javascript:void(0);">
-							<img class="image-icon image-icon--element" title="" src="./modules/cms-ui/themes/default/images/icon/element/<?php echo $type ?>.svg" />
+							<img class="image-icon image-icon--element" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon/element/<?php echo $type ?>.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 							

@@ -8,7 +8,7 @@
 				</div>
 				<div class="input">
 					<a target="_self" data-url="<?php echo $template_url ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-						<img class="" title="" src="./themes/default/images/icon_template.png" />
+						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_template.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
 						

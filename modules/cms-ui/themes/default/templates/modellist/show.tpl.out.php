@@ -18,7 +18,7 @@
 			<?php foreach($el as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
 					<td class="clickable">
-						<img class="" title="" src="./themes/default/images/icon/icon_model.png" />
+						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon_model.png" />
 						
 						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="model" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $id ?>" href="javascript:void(0);">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,25,'..',constant('STR_PAD_BOTH') )))); ?></span>
@@ -64,8 +64,8 @@
 			<?php } ?>
 			<tr class="data">
 				<td class="clickable" colspan="3">
-					<a target="_self" data-type="view" data-action="<?php echo OR_ACTION ?>" data-method="add" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-						<img class="" title="" src="./themes/default/images/icon/add.png" />
+					<a target="_self" data-type="view" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
 						

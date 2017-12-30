@@ -33,7 +33,7 @@
 						<a title="<?php echo lang('TREE_CHOOSE_PROJECT') ?>" target="_self" data-type="post" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $id ?>" data-data="{&quot;action&quot;:&quot;<?php echo OR_ACTION ?>&quot;,&quot;subaction&quot;:&quot;<?php echo OR_METHOD ?>&quot;,&quot;id&quot;:&quot;<?php echo $id ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 							<?php $project= 'project'; ?>
 							
-							<img class="" title="" src="./themes/default/images/icon_project.png" />
+							<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon_project.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,30,'..',constant('STR_PAD_BOTH') )))); ?></span>
 							

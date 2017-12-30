@@ -9,7 +9,7 @@
 #
 #
 echo "Start ("as `whoami` ")"
-for jsfile in `find themes -name "*.js" -not -name "*.min.js"`; do
+for jsfile in `find modules/cms-ui/themes -name "*.js" -not -name "*.min.js"`; do
 	jsfile="${jsfile%.*}"
 	echo "JS found: $jsfile"
 	if	[ ! -f $jsfile.min.js ]; then cp -v $jsfile.js $jsfile.min.js; 
@@ -26,7 +26,7 @@ for jsfile in `find modules/editor/codemirror -name "*.js" -not -name "*.min.js"
 done
 
 
-for tplfile in `find themes -name "*.src.xml"`; do
+for tplfile in `find modules/cms-ui/themes -name "*.src.xml"`; do
 	 
 	tplfile="${tplfile%.*}"
 	tplfile="${tplfile%.*}"
@@ -37,7 +37,7 @@ for tplfile in `find themes -name "*.src.xml"`; do
 done
 
 # CSS-Files
-for lessfile in `find themes -name "*.less"`; do
+for lessfile in `find modules/cms-ui/themes -name "*.less"`; do
 	lessfile="${lessfile%.*}"
 	echo "LESS found: $lessfile"
 	if	[ ! -f $lessfile.css ]; then touch -d '2000-01-01' $lessfile.css;
@@ -48,8 +48,8 @@ for lessfile in `find themes -name "*.less"`; do
 	chmod a+rw -v $lessfile.min.css 
 done
 
-touch     themes/default/production/combined.min.css
-chmod a+w themes/default/production/combined.min.css
+touch     modules/cms-ui/themes/default/production/combined.min.css
+chmod a+w modules/cms-ui/themes/default/production/combined.min.css
 
-touch     themes/default/production/combined.min.js
-chmod a+w themes/default/production/combined.min.js
+touch     modules/cms-ui/themes/default/production/combined.min.js
+chmod a+w modules/cms-ui/themes/default/production/combined.min.js

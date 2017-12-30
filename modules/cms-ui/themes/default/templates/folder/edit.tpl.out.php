@@ -57,7 +57,7 @@
 						<td class="clickable">
 							<label for="<?php echo REQUEST_ID ?>_<?php echo $id ?>" class="label">
 								<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $objectid ?>" href="javascript:void(0);">
-									<img class="" title="" src="./themes/default/images/icon_<?php echo $icon ?>.png" />
+									<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
 									
 									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,40,'..',constant('STR_PAD_BOTH') )))); ?></span>
 									
@@ -84,7 +84,7 @@
 					</td>
 					<td class="clickable" colspan="2">
 						<a target="_self" data-type="view" data-action="folder" data-method="createfolder" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-							<img class="" title="" src="./themes/default/images/icon/icon/create.png" />
+							<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon/icon/create.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfolder'.'')))); ?></span>
 							
@@ -99,7 +99,7 @@
 					</td>
 					<td class="clickable" colspan="2">
 						<a target="_self" data-type="view" data-action="folder" data-method="createpage" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-							<img class="" title="" src="./themes/default/images/icon/icon/create.png" />
+							<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon/icon/create.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createpage'.'')))); ?></span>
 							
@@ -114,7 +114,7 @@
 					</td>
 					<td class="clickable" colspan="2">
 						<a target="_self" data-type="view" data-action="folder" data-method="createfile" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-							<img class="" title="" src="./themes/default/images/icon/icon/create.png" />
+							<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon/icon/create.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfile'.'')))); ?></span>
 							
@@ -129,7 +129,7 @@
 					</td>
 					<td class="clickable" colspan="2">
 						<a target="_self" data-type="view" data-action="folder" data-method="createlink" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-							<img class="" title="" src="./themes/default/images/icon/icon/create.png" />
+							<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon/icon/create.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createlink'.'')))); ?></span>
 							

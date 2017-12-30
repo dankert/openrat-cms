@@ -17,7 +17,7 @@
 								<tr>
 									<td class="help" colspan="8">
 										<a target="_self" data-url="<?php echo $lastmonthurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-											<img class="" title="" src="./themes/default/images/icon/left.png" />
+											<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon/left.png" />
 											
 										</a>
 
@@ -28,14 +28,14 @@
 										<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
 										
 										<a target="_self" data-url="<?php echo $nextmonthurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-											<img class="" title="" src="./themes/default/images/icon/right.png" />
+											<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon/right.png" />
 											
 										</a>
 
 										<span class="text"><?php echo nl2br('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'); ?></span>
 										
 										<a target="_self" data-url="<?php echo $lastyearurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-											<img class="" title="" src="./themes/default/images/icon/left.png" />
+											<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon/left.png" />
 											
 										</a>
 
@@ -46,7 +46,7 @@
 										<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
 										
 										<a target="_self" data-url="<?php echo $nextyearurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
-											<img class="" title="" src="./themes/default/images/icon/right.png" />
+											<img class="" title="" src="/mnt/data/dankert/public_html/cms/cms09/modules/cms-core/../../modules/cms-ui/themes/default/images/icon/right.png" />
 											
 										</a>
 
