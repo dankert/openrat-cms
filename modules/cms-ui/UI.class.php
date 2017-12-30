@@ -50,21 +50,6 @@ class UI
             // The action is able to change its method name.
             $subaction = $dispatcher->subaction;
 
-            $httpAccept = getenv('HTTP_ACCEPT');
-            $types = explode(',', $httpAccept);
-
-            if (sizeof($types) == 1 && in_array('application/json', $types) || @$_REQUEST['output'] == 'json') {
-                $json = new JSON();
-                header('Content-Type: application/json; charset=UTF-8');
-                if (function_exists('json_encode'))
-                    // Native Methode ist schneller..
-                    echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_PARTIAL_OUTPUT_ON_ERROR);
-                else
-                    // Fallback, falls json_encode() nicht existiert...
-                    echo $json->encode($data);
-                exit;
-            }
-
             header('Content-Type: text/html; charset=UTF-8');
 
             $tplName = $action . '/' . $subaction;

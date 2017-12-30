@@ -25,7 +25,7 @@ $(document).on('orHeaderLoaded',function(event, data) {
 function submitLink(element,data)
 {
 	var params = jQuery.parseJSON( data );
-	var url = './dispatcher.php';
+	var url = './api/';
 	params.output = 'json';
 	$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
 		{

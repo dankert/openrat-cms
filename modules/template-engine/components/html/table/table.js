@@ -10,7 +10,7 @@ $(document).on('orViewLoaded',function(event, data) {
 					var objectid = $(this).data('id');
 					order.push( objectid );
 				});
-				var url    = './dispatcher.php';
+				var url    = './api/';
 				var params = {};
 				params.action    = 'folder';
 				params.subaction = 'order';

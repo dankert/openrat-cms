@@ -36,7 +36,7 @@ class Client
 			$path = $path.'/';
 		if	( substr($path,0,1 ) != '/' )
 			$path = '/'.$path;
-		$path .= '/dispatcher.php';
+		$path .= '/api/';
 		
 		// Methode: Fallback GET
 		if	( empty($method))

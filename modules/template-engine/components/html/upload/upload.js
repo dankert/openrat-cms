@@ -57,7 +57,7 @@ function handleFileUpload(form,files)
 		$('#noticebar').prepend(status); // Notice anhängen.
 		$(status).show();
 
-		$.ajax( { 'type':'POST',url:'dispatcher.php', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
+		$.ajax( { 'type':'POST',url:'./api/', cache:false,contentType: false, processData: false, data:form_data, success:function(data, textStatus, jqXHR)
 			{
 				$(status).remove();
 				doResponse(data,textStatus,form);
