@@ -47,6 +47,9 @@ class UI
 
             $data = $dispatcher->doAction();
 
+            // The action is able to change its method name.
+            $subaction = $dispatcher->subaction;
+
             $httpAccept = getenv('HTTP_ACCEPT');
             $types = explode(',', $httpAccept);
 

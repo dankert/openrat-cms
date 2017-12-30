@@ -235,8 +235,10 @@ class Dispatcher
             if (!method_exists($do, $subactionMethodName))
                 Http::noContent();
 
-            // Jetzt wird die Aktion aus der Actionklasse aufgerufen.
-            $result = $do->$subactionMethodName();
+            $result = $do->$subactionMethodName(); // <== Executing the Action
+
+            // The action is able to change its method name.
+            $this->subaction = $do->subActionName;
 
             Logger::trace('Output' . "\n" . print_r($result, true));
 
