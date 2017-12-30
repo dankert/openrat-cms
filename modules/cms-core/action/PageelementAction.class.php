@@ -107,8 +107,6 @@ class PageelementAction extends Action
 	 */
 	public function propView()
 	{
-		Http::noContent();
-		
 		$language = Session::getProjectLanguage();
 		$this->value->languageid = $language->languageid;
 		$this->value->objectid   = $this->page->objectid;
@@ -127,7 +125,7 @@ class PageelementAction extends Action
 
 		$user = new User( $this->value->lastchangeUserId );
 		$user->load();
-		$this->setTemplateVar('lastchange_user',$user);
+		$this->setTemplateVar('lastchange_user',$user->getProperties());
 		$this->setTemplateVar('lastchange_date',$this->value->lastchangeTimeStamp);
 
 		$t = new Template( $this->page->templateid );
