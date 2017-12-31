@@ -46,12 +46,16 @@ class UI
             //if (config('security','content-security-policy')) // config is not loaded yet.
             $csp = array('default-src \'none\'',
                 'script-src \'self\' \'unsafe-inline\'',
+                // No <object>, <embed> or <applet>.
                 'object-src \'none\'',
                 'style-src \'self\' \'unsafe-inline\'',
                 'img-src \'self\'',
+                // No <audio>, <video> elements
                 'media-src \'none\'',
-                'frame-src \'self\'',
+                'child-src \'self\'',
+                'form-action \'self\'',
                 'font-src \'none\'',
+                // Ajax-Calls
                 'connect-src \'self\'');
             header('Content-Security-Policy: '.implode(';',$csp));
 
