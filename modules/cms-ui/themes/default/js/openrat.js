@@ -11,7 +11,7 @@ $(document).ready(function()
 	refreshAll();
 	
 	// Alle 5 Minuten pingen.
-	window.setInterval( "ping()", 300000 );
+	window.setInterval( function(){ping();}, 300000 );
 });
 
 

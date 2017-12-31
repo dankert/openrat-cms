@@ -7,13 +7,11 @@ use cms\Dispatcher;
 use DomainException;
 use Exception;
 use Http;
-use JSON;
 use Logger;
 use LogicException;
 use ObjectNotFoundException;
 use OpenRatException;
 use SecurityException;
-use Session;
 use template_engine\TemplateEngine;
 
 define('CMS_UI_REQ_PARAM_SUBACTION', 'subaction');
@@ -44,9 +42,10 @@ class UI
             $dispatcher->subaction = $subaction;
             define('OR_METHOD', $subaction);
 
+            //if (config('security','content-security-policy'))
+                header('Content-Security-Policy: default-src \'none\'; script-src \'self\' \'unsafe-inline\'; object-src \'none\'; style-src \'self\' \'unsafe-inline\'; img-src \'self\'; media-src \'none\'; frame-src \'self\'; font-src \'none\'; connect-src \'self\'');
 
             $data = $dispatcher->doAction();
-
 
             // The action is able to change its method name.
             $subaction = $dispatcher->subaction;
@@ -55,10 +54,8 @@ class UI
 
             $tplName = $action . '/' . $subaction;
 
-            if (config('security','content-security-policy'))
-                header('X-Content-Security-Policy: ' . 'allow  \'self\'; img-src: *; script-src \'self\'; options inline-script');
-
             UI::outputTemplate($tplName,$data['output']);
+
         } catch (BadMethodCallException $e) {
             // Action-Method does not exist.
             Http::noContent();
@@ -66,73 +63,54 @@ class UI
             Logger::warn("Object not found: " . $e->__toString()); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.
             Http::noContent();
         } catch (OpenRatException $e) {
-            throw new \LogicException(lang($e->key), $e->__toString());
+            throw new LogicException(lang($e->key), $e->__toString());
         } catch (SecurityException $e) {
             Logger::info($e->getMessage());
             Http::notAuthorized("You are not allowed to execute this action.");
         } catch (Exception $e) {
-            throw new \LogicException("Internal CMS error", $e->__toString());
+            throw new LogicException("Internal CMS error", $e->__toString());
         }
     }
 
     /**
      * Executes and outputs a HTML template.
      *
-     * @param $tplName string Name of template
-     * @param $output array Output data
+     * @param $templateName string Name of template
+     * @param $outputData array Output data
      */
-    private static function outputTemplate($tplName, $output)
+    private static function outputTemplate($templateName, $outputData)
     {
-        global $REQ;
-        global $PHP_SELF;
-        global $HTTP_SERVER_VARS;
-        global $image_dir;
-        global $view;
-        global $conf;
+        $templateFile = __DIR__.'/themes/default/templates/' . $templateName . '.tpl.out.php';
 
-        $image_dir = OR_THEMES_DIR . $conf['interface']['theme'] . '/images/';
-
-        $user = Session::getUser();
-
-        if (!empty($conf['interface']['override_title']))
-            $cms_title = $conf['interface']['override_title'];
-        else
-            $cms_title = OR_TITLE . ' ' . OR_VERSION;
-
-
-
-        $subActionName = OR_ACTION;
-        $actionName = OR_METHOD;
-        $requestId = $_REQUEST['id'];
-
-        $iFile = 'modules/cms-ui/themes/default/templates/' . $tplName . '.tpl.out.' . PHP_EXT;
-
+        // In development mode, we are compiling every template on the fly.
         if (DEVELOPMENT) {
-            $srcXmlFilename = 'modules/cms-ui/themes/default/templates/' . $tplName . '.tpl.src.xml';
+            $srcFile = __DIR__.'/themes/default/templates/' . $templateName . '.tpl.src.xml';
 
-            // Das Template kompilieren.
-            // Aus dem XML wird eine PHP-Datei erzeugt.
-            try {
+            // Compile the template.
+            // From a XML source file we are generating a PHP file.
+            try
+            {
                 $te = new TemplateEngine();
-                $te->compile($srcXmlFilename, $iFile);
+                $te->compile($srcFile, $templateFile);
                 unset($te);
             } catch (Exception $e) {
-                throw new DomainException("Compilation failed for Template '$tplName'.", 0, $e);
+                throw new DomainException("Compilation failed for Template '$templateName'.", 0, $e);
             }
-            header("X-CMS-Template-File: " . $iFile);
+            header("X-CMS-Template-File: " . $templateFile);
         }
 
 
         // Übertragen der Ausgabe-Variablen in den aktuellen Kontext
         //
-        extract($output);
+        extract($outputData);
 
-        if (is_file($iFile))
+        if (is_file($templateFile))
             // Einbinden des Templates
-            require_once($iFile);
+            require_once($templateFile);
         else
-            throw new LogicException("File '$iFile' not found.");
+            throw new LogicException("Template file '$templateFile' was not found.");
 
 
     }
+
 }
