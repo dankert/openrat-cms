@@ -42,8 +42,18 @@ class UI
             $dispatcher->subaction = $subaction;
             define('OR_METHOD', $subaction);
 
-            //if (config('security','content-security-policy'))
-                header('Content-Security-Policy: default-src \'none\'; script-src \'self\' \'unsafe-inline\'; object-src \'none\'; style-src \'self\' \'unsafe-inline\'; img-src \'self\'; media-src \'none\'; frame-src \'self\'; font-src \'none\'; connect-src \'self\'');
+            // Content-Security-Policy
+            //if (config('security','content-security-policy')) // config is not loaded yet.
+            $csp = array('default-src \'none\'',
+                'script-src \'self\' \'unsafe-inline\'',
+                'object-src \'none\'',
+                'style-src \'self\' \'unsafe-inline\'',
+                'img-src \'self\'',
+                'media-src \'none\'',
+                'frame-src \'self\'',
+                'font-src \'none\'',
+                'connect-src \'self\'');
+            header('Content-Security-Policy: '.implode(';',$csp));
 
             $data = $dispatcher->doAction();
 
