@@ -42,23 +42,8 @@ class UI
             $dispatcher->subaction = $subaction;
             define('OR_METHOD', $subaction);
 
-            // Content-Security-Policy
-            //if (config('security','content-security-policy')) // config is not loaded yet.
-            $contentSecurityPolicyEntries = array(
-                'default-src \'none\'',
-                'script-src \'self\' \'unsafe-inline\'',
-                // No <object>, <embed> or <applet>.
-                'object-src \'none\'',
-                'style-src \'self\'',
-                'img-src \'self\'',
-                // No <audio>, <video> elements
-                'media-src \'none\'',
-                'child-src \'self\'',
-                'form-action \'self\'',
-                'font-src \'none\'',
-                // Ajax-Calls
-                'connect-src \'self\'');
-            header('Content-Security-Policy: '.implode(';',$contentSecurityPolicyEntries));
+            self::setContentSecurityPolicy();
+
 
             $data = $dispatcher->doAction();
 
@@ -126,6 +111,30 @@ class UI
             throw new LogicException("Template file '$templateFile' was not found.");
 
 
+    }
+
+
+    /**
+     * Content-Security-Policy.
+     */
+    private static function setContentSecurityPolicy()
+    {
+        //if (config('security','content-security-policy')) // config is not loaded yet.
+        $contentSecurityPolicyEntries = array(
+            'default-src \'none\'',
+            'script-src \'self\' \'unsafe-inline\'',
+            // No <object>, <embed> or <applet>.
+            'object-src \'none\'',
+            'style-src \'self\'',
+            'img-src \'self\'',
+            // No <audio>, <video> elements
+            'media-src \'none\'',
+            'child-src \'self\'',
+            'form-action \'self\'',
+            'font-src \'none\'',
+            // Ajax-Calls
+            'connect-src \'self\'');
+        header('Content-Security-Policy: ' . implode(';', $contentSecurityPolicyEntries));
     }
 
 }
