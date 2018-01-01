@@ -60,20 +60,6 @@ function view_header( $name )
 		?>
 </ul>
 
-<script name="javascript" type="text/javascript">
-<!--
-<?php 
-if	( $name=='content' && count(@$preselectedobjects)>0 )
-{
-	global $preselectedobjects;
-	$object = $preselectedobjects[ count($preselectedobjects)-1];
-?>
-setTimeout( function() { openNewAction( '<?php echo $object->name; ?>','<?php echo $object->getType() ?>','<?php echo $object->objectid ?>',0 );} ,500);
-<?php
-}
-?>
-//-->
-</script>
 <div class="panel-icon">
 
 <?php if (!empty($viewlist) || $name=='content') { /* Fenster-Menü anzeigen (sofern Views vorhanden) */ ?>

@@ -31,8 +31,6 @@ class FormComponent extends Component
 
 	public $type = '';
 
-	private $submitFunction = 'formSubmit( $(this) ); return false;';
-
 	protected function begin()
 	{
 		if (empty($this->label))
@@ -54,10 +52,11 @@ class FormComponent extends Component
 		echo ' class="' . $this->htmlvalue($this->action) . '"';
 		echo ' data-async="' . $this->htmlvalue($this->async) . '"';
 		echo ' data-autosave="' . $this->htmlvalue($this->autosave) . '"';
-		echo ' onSubmit="' . $this->htmlvalue($this->submitFunction) . '">';
-		
-		echo '<input type="submit" class="invisible" />'; // why this?
-		
+		echo '>';
+
+        // Enable Submit on Enter
+		echo '<input type="submit" class="invisible" />';
+
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="' . $this->htmlvalue($this->action) . '" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="' . $this->htmlvalue($this->subaction) . '" />';
@@ -71,12 +70,12 @@ class FormComponent extends Component
 		echo '<div class="bottom">';
 		echo "<div class=\"command {$this->visible}\">";
 
-		echo "<input type=\"button\" class=\"submit ok\" value=\"{$label}\" onclick=\"$(this).closest('div.sheet').find('form').submit(); \" />";
+		echo "<input type=\"button\" class=\"submit ok\" value=\"{$label}\" />";
 
         // Cancel-Button nicht anzeigen, wenn cancel==false.
 		if ($this->cancel)
 		{
-			echo '<input type="button" class="submit cancel" value="<?php echo lang("CANCEL") ?>" onclick="' . "$(div#dialog').hide(); $('div#filler').fadeOut(500); $(this).closest('div.panel').find('ul.views > li.active').click();" . '" />';
+			echo '<input type="button" class="submit cancel" value="<?php echo lang("CANCEL") ?>" />';
         }
         echo '</div>';
         echo '</div>';

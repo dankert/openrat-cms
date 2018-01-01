@@ -28,7 +28,7 @@ $(document).on('orViewLoaded',function(event, data) {
 	//$(event.target).find('.wikieditor').markItUp(markitupSettings);
 	
 	// HTML-Editor
-	var wymSettings = {lang: 'de',basePath: OR_THEMES_EXT_DIR+'../editor/wymeditor/wymeditor/',
+	var wymSettings = {lang: 'de',basePath: 'modules/cms-ui/editor/wymeditor/wymeditor/',
 			  toolsItems: [
 			               {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'}, 
 			               {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},

@@ -122,7 +122,7 @@ class UI
         //if (config('security','content-security-policy')) // config is not loaded yet.
         $contentSecurityPolicyEntries = array(
             'default-src \'none\'',
-            'script-src \'self\' \'unsafe-inline\'',
+            'script-src \'self\'',
             // No <object>, <embed> or <applet>.
             'object-src \'none\'',
             'style-src \'self\'',

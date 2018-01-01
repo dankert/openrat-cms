@@ -10,8 +10,23 @@ $(document).on('orViewLoaded',function(event, data) {
 
 	// Autosave in Formularen. Bei Veränderungen wird das Formular sofort abgeschickt.
 	$(event.target).find('form[data-autosave="true"] input[type="checkbox"]').click( function() {
-		formSubmit( $(this).closest('form') );
+		$(this).closest('form').submit();
 	});
+
+	// After click to "OK" the form is submitted.
+    $(event.target).find('input.submit.ok').click( function() {
+		$(this).closest('form').submit();
+	});
+
+    $(event.target).find('input.submit.cancel').click( function() {
+        // TODO: cancel dialog screen (if clicked in dialog)
+    });
+
+    // Submithandler for the whole form.
+    $(event.target).find('form').submit(function( event ) {
+        formSubmit($(this));
+        event.preventDefault();
+    });
 
 } );
 

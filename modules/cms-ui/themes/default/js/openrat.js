@@ -1,12 +1,13 @@
 
-$('html').removeClass('nojs');
- 
 // Default-Subaction
 var DEFAULT_CONTENT_ACTION = 'edit';
 
+var OR_THEMES_EXT_DIR = 'modules/cms-ui/themes/';
 
 $(document).ready(function()
 {
+	// JS is available.
+    $('html').removeClass('nojs');
 
 	refreshAll();
 	
@@ -142,10 +143,9 @@ function refreshWorkbench()
 
 		registerWorkbenchEvents();
 	});
-	//alert('go');
+
 	
-	
-	loadTree(); // ??
+
 	
 	// Modale Dialoge
 	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
@@ -366,6 +366,8 @@ function registerWorkbenchEvents()
 			{
 				fullscreen( this );
 			} );
+
+    loadTree(); // Initial Loading of the navigationtree
 }
 
 
@@ -528,12 +530,6 @@ function registerViewEvents( viewEl )
 	$(viewEl).find('input').change( function() {
 		$(this).closest('div.panel').find('ul.views li.action.active').addClass('dirty');
 	});
-	
-
-	
-	
-
-
 
 }
 

@@ -18,13 +18,13 @@ class ColumnComponent extends Component
 	
 	protected function begin()
 	{
+	    $styleClasses = array();
 		echo '<td';
 		if	( ! empty($this->width))
 			echo ' width="'.$this->htmlvalue($this->width).'"';
 		if	( ! empty($this->style))
 			echo ' style="'.$this->htmlvalue($this->style).'"';
-		if	( ! empty($this->class))
-			echo ' class="'.$this->htmlvalue($this->class).'"';
+
 		if	( ! empty($this->colspan))
 			echo ' colspan="'.$this->htmlvalue($this->colspan).'"';
 		if	( ! empty($this->rowspan))
@@ -33,9 +33,21 @@ class ColumnComponent extends Component
 			echo ' rowspan="'.$this->htmlvalue($this->rowspan).'"';
 		if	( ! empty($this->title))
 			echo ' title="'.$this->htmlvalue($this->title).'"';
-		if	( ! empty($this->id))
-			echo ' onclick="javascript:openNewAction('."'".$this->htmlvalue($this->name)."','".$this->htmlvalue($this->action)."','".$this->htmlvalue($this->id)."');".'"';
-		echo '>';
+
+        if	( ! empty($this->id))
+        {
+            echo ' data-name="'.$this->htmlvalue($this->name).'"';
+            echo ' data-action="'.$this->htmlvalue($this->action).'"';
+            echo ' data-id="'.$this->htmlvalue($this->id).'"';
+            $styleClasses[] = 'clickable';
+        }
+        if	( ! empty($this->class))
+            $styleClasses[] = $this->htmlvalue($this->class);
+
+        if  ( sizeof($styleClasses) > 0)
+            echo ' class="'.implode(' ',$styleClasses).'"';
+
+        echo '>';
 	}
 	
 	

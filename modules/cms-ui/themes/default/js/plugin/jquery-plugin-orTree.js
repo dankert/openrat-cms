@@ -15,7 +15,7 @@ jQuery.fn.orTree = function( options )
 	{
 		$(treeEl).closest('div.content').addClass('loader');
 		$.getJSON('./api/?action=tree&subaction=loadBranch&id='+settings.id+'&type='+settings.type+'&output=json', function(json) {
-			$(treeEl).append('<ul class="tree" style="display:none;"/>');
+			$(treeEl).append('<ul class="tree"/>');
 			var ul = $(treeEl).children('ul').first();
 			var output = json['output'];
 			$.each(output['branch'],function(idx,line)
@@ -23,7 +23,7 @@ jQuery.fn.orTree = function( options )
 				if	( !line.action || line.action=='folder' || settings.selectable.length==0 || settings.selectable[0]=='' || jQuery.inArray(line.action, settings.selectable)!=-1 )
 				{
 					//var img = (line.url!==undefined?'tree_plus':'tree_none');
-					$(ul).append( '<li class="object" data-id="'+line.internalId+'" data-type="'+line.type+'"><div class="tree">&nbsp;</div><div class="entry" data-id="'+line.internalId+'" data-type="'+line.type+'" title="'+ line.description + '"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+line['icon']+'.png" />'+ line.text + '</div></li>' );
+					$(ul).append( '<li class="object" data-id="'+line.internalId+'" data-type="'+line.type+'"><div class="tree">&nbsp;</div><div class="entry" data-id="'+line.internalId+'" data-type="'+line.type+'" title="'+ line.description + '"><img src="modules/cms-ui/themes/default/images/icon_'+line['icon']+'.png" />'+ line.text + '</div></li>' );
 					var new_li = $(ul).children('li').last();
 					//$(new_li).children('div').unbind('click');
 					if ( line.type )
