@@ -30,9 +30,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror.css' ?>" />
 <?php foreach( $cssFiles as $cssFile) { ?>  <link rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
 <?php } ?>
-  <style type="text/css">
-    <?php echo $themeCss ?>
-  </style>
+  <link rel="stylesheet" type="text/css" href="<?php echo Html::url('index','themestyle') ?>" />
 </head>
 
 <?php

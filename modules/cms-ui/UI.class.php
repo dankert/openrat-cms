@@ -44,11 +44,12 @@ class UI
 
             // Content-Security-Policy
             //if (config('security','content-security-policy')) // config is not loaded yet.
-            $csp = array('default-src \'none\'',
+            $contentSecurityPolicyEntries = array(
+                'default-src \'none\'',
                 'script-src \'self\' \'unsafe-inline\'',
                 // No <object>, <embed> or <applet>.
                 'object-src \'none\'',
-                'style-src \'self\' \'unsafe-inline\'',
+                'style-src \'self\'',
                 'img-src \'self\'',
                 // No <audio>, <video> elements
                 'media-src \'none\'',
@@ -57,7 +58,7 @@ class UI
                 'font-src \'none\'',
                 // Ajax-Calls
                 'connect-src \'self\'');
-            header('Content-Security-Policy: '.implode(';',$csp));
+            header('Content-Security-Policy: '.implode(';',$contentSecurityPolicyEntries));
 
             $data = $dispatcher->doAction();
 
@@ -77,12 +78,12 @@ class UI
             Logger::warn("Object not found: " . $e->__toString()); // Nur Debug, da dies bei gelöschten Objekten vorkommen kann.
             Http::noContent();
         } catch (OpenRatException $e) {
-            throw new LogicException(lang($e->key), $e->__toString());
+            throw new LogicException(lang($e->key),0, $e);
         } catch (SecurityException $e) {
             Logger::info($e->getMessage());
             Http::notAuthorized("You are not allowed to execute this action.");
         } catch (Exception $e) {
-            throw new LogicException("Internal CMS error", $e->__toString());
+            throw new LogicException("Internal CMS error: ".$e->__toString(),0, $e);
         }
     }
 

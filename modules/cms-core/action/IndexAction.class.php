@@ -115,7 +115,7 @@ class IndexAction extends Action
 
 		$jsFiles  = $this->getJSFiles();
 		$cssFiles = $this->getCSSFiles();
-		$themeCss = $this->getThemeCSS();
+		//$themeCss = $this->getThemeCSS();
 		
 		// HTML-Datei direkt einbinden.
 		require('modules/cms-ui/themes/default/layout/index.php');
@@ -235,7 +235,18 @@ class IndexAction extends Action
 	}
 
 	
-	
+	public function themestyleView()
+    {
+        $themeLessFile = OR_THEMES_DIR . 'default/css/openrat-theme.less';
+        $this->lastModified(filemtime($themeLessFile));
+
+        header('Content-Type: text/css');
+        echo $this->getThemeCSS();
+        exit;
+    }
+
+
+
 	private function getThemeCSS()
 	{
 		// Je Theme die Theme-CSS-Datei ausgeben.
