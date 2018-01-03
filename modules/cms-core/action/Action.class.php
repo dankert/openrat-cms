@@ -98,7 +98,8 @@ namespace cms\action {
             $this->templateVars['control'] = array();
             $this->templateVars['output'] = array();
 
-            header('Content-Language: ' . $conf['language']['language_code']);
+            if(!headers_sent())
+                header('Content-Language: ' . $conf['language']['language_code']);
 
             $this->refresh = false;
         }

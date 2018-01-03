@@ -11,6 +11,7 @@ use Configuration;
 use DomainException;
 use Http;
 use http\Exception;
+use language\Language;
 use Logger;
 use LogicException;
 use ObjectNotFoundException;
@@ -229,15 +230,9 @@ class Dispatcher
 
             foreach ($languages as $l) {
                 if (!in_array($l, $available))
-                    continue;
+                    continue; // language is not configured as available.
 
-                // Pruefen, ob Sprache vorhanden ist.
-                $langFile = OR_LANGUAGE_DIR . 'lang-' . $l . '.' . PHP_EXT;
-
-                if (!file_exists($langFile))
-                    throw new LogicException("File does not exist: " . $langFile);
-
-                require($langFile);
+                $lang = Language::getLanguage( $l,PRODUCTION);
                 $conf['language'] = $lang;
                 $conf['language']['language_code'] = $l;
                 break;

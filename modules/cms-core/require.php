@@ -7,6 +7,7 @@ require_once(__DIR__ . '/../configuration/require.php');
 require_once(__DIR__ . '/../security/require.php');
 require_once(__DIR__ . '/../wikiparser/require.php');
 require_once(__DIR__ . '/../logger/require.php');
+require_once(__DIR__ . '/../language/require.php');
 
 // Internal baseclasses
 require_once(__DIR__ . '/action/Action.class.php');

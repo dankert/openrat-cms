@@ -1,30 +1,18 @@
 <?php
 
+use language\Language;
+
+require(__DIR__ . '/../modules/language/require.php');
+
 header('Content-Type: text/plain');
 
-include('../modules/util/Spyc.class.php');
+try {
+    Language::updateProduction();
 
-$lang = Spyc::YAMLLoad('../language/language.yml');
+    echo 'OK';
+} catch (Exception $e) {
+    if (!headers_sent())
+        header('HTTP/1.0 500 Internal Server Error');
 
-foreach( explode(',','de,en,es,fr,it,ru,cn') as $iso )
-{
-	$filename = '../language/lang-'.$iso.'.php';
-	file_put_contents($filename, "<?php /* DO NOT CHANGE THIS GENERATED FILE */\n");
-	foreach( $lang as $key=>$value )
-	{
-		if	( isset($value[$iso] ) )
-			$t = $value[$iso];
-		else
-			$t = $value['en'];
-		$t = str_replace('"','\"',$t);
-		file_put_contents($filename, "\$lang['$key']=\"$t\";\n",FILE_APPEND);
-	}
-	$success = file_put_contents($filename, "?>",FILE_APPEND);
-
-	if($success)
-		echo "File written: $filename\n";
-	else
-	    die("Failed write to $filename\n");
+    echo 'Failed: ' . $e->getMessage();
 }
-
-?>
