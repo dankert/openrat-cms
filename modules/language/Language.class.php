@@ -22,7 +22,7 @@ class Language
         foreach (self::getLanguageSource() as $key => $value) {
             if (isset($value[$iso]))
                 $lang[$key] = $value[$iso];
-            elseif(isset($value['emn']))
+            elseif(isset($value['en']))
                 $lang[$key] = $value['en'];
             else
                 $lang[$key] = $key;
@@ -87,8 +87,10 @@ class Language
             foreach ($lang as $key => $value) {
                 if (isset($value[$iso]))
                     $t = $value[$iso];
-                else
+                elseif (isset($value['en']))
                     $t = $value['en']; // Fallback to english
+                else
+                    $t = $key;
                 $t = str_replace('"', '\"', $t); // escaping
                 file_put_contents($outputFilename, "'$key'=>\"$t\",\n", FILE_APPEND);
             }
