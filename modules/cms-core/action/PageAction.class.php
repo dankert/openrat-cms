@@ -630,7 +630,12 @@ class PageAction extends ObjectAction
 	 */
 	function showView()
 	{
-		// Seite definieren
+	    // Do NOT use CSP here.
+        // The output is only shown in an iframe, so there is no security impact to the CMS.
+        // But if the template is using inline JS or CSS, we would break this with a CSP-header.
+        header('Content-Security-Policy:');
+
+        // Seite definieren
 		if	( $this->hasRequestVar('withIcons') )
 			$this->page->icons = true;
 		
