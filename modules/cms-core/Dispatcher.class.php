@@ -33,6 +33,8 @@ class Dispatcher
     public $action;
     public $subaction;
 
+    private $isAction;
+
     /**
      * @return array data for the client
      */
@@ -76,11 +78,33 @@ class Dispatcher
         define('IMAGE_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/images');
 
 
+        // Is this a POST request?
+        $this->isAction = $_SERVER['REQUEST_METHOD'] == 'POST';
+
+        $this->connectToDatabase();
         $this->startDatabaseTransaction();
 
-        $result = $this->callActionMethod();
+        try{
 
-        Logger::trace('Output' . "\n" . print_r($result, true));
+            $result = $this->callActionMethod();
+        }
+        catch(Exception $e)
+        {
+            // In case of exception, rolling back the transaction
+            try
+            {
+                $this->rollbackDatabaseTransaction();
+            }
+            catch(Exception $re)
+            {
+                Logger::warn("rollback failed:".$e->getMessage());
+            }
+
+            throw $e;
+        }
+
+        if  ( DEVELOPMENT )
+            Logger::trace('Output' . "\n" . print_r($result, true));
 
         // Weitere Variablen anreichern.
         $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => token());
@@ -118,25 +142,6 @@ class Dispatcher
                     throw new SecurityException('This action requires administration privileges, but user ' . $do->currentUser->name . ' is not an admin');
                 break;
             default:
-        }
-
-    }
-
-    /**
-     * Startet die Verbindung zur Datenbank und eröffnet eine Transaktion.
-     */
-    private function startDatabaseTransaction()
-    {
-        // Verbindung zur Datenbank
-        //
-        $db = Session::getDatabase();
-        if (is_object($db)) {
-            $ok = $db->connect();
-            if (!$ok)
-                throw new DomainException('Database is not available: ' . $db->error);
-
-            Session::setDatabase($db);
-            $db->start();
         }
 
     }
@@ -278,10 +283,7 @@ class Dispatcher
 
         $this->checkAccess($do);
 
-
-        $isAction = $_SERVER['REQUEST_METHOD'] == 'POST';
-
-        if ($isAction) {
+        if ($this->isAction) {
             // POST-Request => ...Post() wird aufgerufen.
             $subactionMethodName = $this->subaction . 'Post';
         } else {
@@ -307,11 +309,65 @@ class Dispatcher
         return $result;
     }
 
+    /**
+     * Startet die Verbindung zur Datenbank.
+     */
+    private function connectToDatabase()
+    {
+        // Connect to database
+        //
+        $db = Session::getDatabase();
+
+        if (is_object($db)) {
+
+            $ok = $db->connect();
+            if (!$ok)
+                throw new DomainException('Database is not available: ' . $db->error);
+
+            Session::setDatabase($db);
+        }
+
+    }
+
+
+    /**
+     * Eröffnet eine Transaktion.
+     */
+    private function startDatabaseTransaction()
+    {
+        // Verbindung zur Datenbank
+        //
+        $db = Session::getDatabase();
+
+        if (is_object($db)) {
+            // Transactions are only needed for POST-Request
+            // GET-Request do only read from the database and have no need for transactions.
+            if  ( $this->isAction )
+                $db->start();
+        }
+
+    }
+
+
     private function commitDatabaseTransaction()
     {
         $db = db_connection();
 
         if (is_object($db))
-            $db->commit();
+            // Transactions were only started for POST-Request
+            if($this->isAction)
+                $db->commit();
+    }
+
+
+
+    private function rollbackDatabaseTransaction()
+    {
+        $db = db_connection();
+
+        if (is_object($db))
+            // Transactions were only started for POST-Request
+            if($this->isAction)
+                $db->rollback();
     }
 }
