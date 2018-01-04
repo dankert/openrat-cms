@@ -55,10 +55,6 @@
 
 <div class="noscript"><em>Javascript is required to view this site</em></div>
 
-<form class="invisible" target="temp" action="">
-<input type="text" id="uname" name="l1" /><input id="upassword" type="password" name="l2" /><input type="submit" /> 
-</form>
-
 <div id="filler">
 </div>
 
