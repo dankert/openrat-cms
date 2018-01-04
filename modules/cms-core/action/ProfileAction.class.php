@@ -19,6 +19,7 @@ namespace cms\action;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use language\Language;
 use LogicException;
 use Mail;
 use security\Base2n;
@@ -296,16 +297,7 @@ class ProfileAction extends Action
     public function setLanguage($l)
     {
         global $conf;
-        $langFile = OR_LANGUAGE_DIR . 'lang-' . $l . '.' . PHP_EXT;
-
-        // Pruefen, ob Sprache vorhanden ist.
-        if (!file_exists($langFile))
-            throw new LogicException("Languagefile $langFile does not exist.");
-
-        $lang = array();
-        require($langFile); // Setzt $lang
-        global $conf;
-        $conf['language'] = $lang;
+        $conf['language'] = Language::getLanguage($l,PRODUCTION);
         $conf['language']['language_code'] = $l;
         Session::setConfig($conf);
     }
