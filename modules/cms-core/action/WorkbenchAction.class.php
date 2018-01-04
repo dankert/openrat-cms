@@ -49,24 +49,30 @@ class WorkbenchAction extends Action
 		if	( $this->perspective == 'normal' )
 		{
 			$project = Session::getProject();
-			$rootFolder = new Folder( $project->getRootObjectId() );
-			$rootFolder->load();
-			$preselectedobjects[] = $rootFolder;
-			
-			if	( $conf['login']['start']['start_lastchanged_object'] )
-			{
-				$user    = Session::getUser();
-				
-				$objectid = Value::getLastChangedObjectInProjectByUserId($project->projectid, $user->userid);
-				if	( Object::available($objectid))
-				{
-					$object = new Object($objectid);
-					$object->load();
-					
-					Logger::debug('preselecting object '.$objectid);
-					$preselectedobjects[] = $object;
-				}
-			}
+			if(!empty($project)){
+
+                $rootFolder = new Folder( $project->getRootObjectId() );
+                $rootFolder->load();
+                $preselectedobjects[] = $rootFolder;
+
+                if	( $conf['login']['start']['start_lastchanged_object'] )
+                {
+                    $user    = Session::getUser();
+                    if(!empty($user)){
+
+                        $objectid = Value::getLastChangedObjectInProjectByUserId($project->projectid, $user->userid);
+                        if	( Object::available($objectid))
+                        {
+                            $object = new Object($objectid);
+                            $object->load();
+
+                            Logger::debug('preselecting object '.$objectid);
+                            $preselectedobjects[] = $object;
+                        }
+                    }
+
+                }
+            }
 		}
 		
 		global $viewconfig;
