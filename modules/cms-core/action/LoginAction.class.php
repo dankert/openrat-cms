@@ -936,8 +936,8 @@ class LoginAction extends Action
 		
 		// Cookie setzen
 		$cookieLifetime = 60*60*24*30*12*2; // 2 Jahre.
-		setcookie('or_username',$loginName                  ,time()+$cookieLifetime );
-		setcookie('or_dbid'    ,$this->getRequestVar('dbid'),time()+$cookieLifetime );
+		setcookie('or_username',$loginName                  ,time()+$cookieLifetime,'/' );
+		setcookie('or_dbid'    ,$this->getRequestVar('dbid'),time()+$cookieLifetime,'/');
 
 		// Authentifzierungs-Module.
 		$modules = explode(',',$conf['security']['modules']['authenticate']);
