@@ -873,22 +873,7 @@ class LoginAction extends Action
 			if   ( !is_array($conf['database'][$dbid]) )
 			    $this->addValidationError('dbid');
 
-            try {
-
-
-                $db = new Database($conf['database'][$dbid], true);
-                $db->id = $dbid;
-            }
-            catch( Exception $e) {
-                throw new OpenRatException('DATABASE_ERROR_CONNECTION',$e->getMessage());
-            }
-
-			// Datenbank aktualisieren, sofern notwendig.
-			require_once( OR_DBCLASSES_DIR.'DbUpdate.class.'.PHP_EXT );
-			$updater = new DbUpdate();
-			$updater->update( $db );
-			
-			unset($db);
+            $this->updateDatabase($dbid); // Updating...
 		}
 		
 		$this->checkForDb();
@@ -2182,6 +2167,36 @@ class LoginAction extends Action
 	{
 		echo "1";
 	}
+
+    /**
+     * Updating the database.
+     *
+     * @param $dbid integer
+     * @throws OpenRatException
+     */
+    private function updateDatabase($dbid)
+    {
+        try {
+            $db = new Database( config('database',$dbid), true);
+            $db->id = $dbid;
+        } catch (Exception $e) {
+
+            throw new OpenRatException('DATABASE_ERROR_CONNECTION', $e->getMessage());
+        }
+
+        // Datenbank aktualisieren, sofern notwendig.
+        require_once(OR_DBCLASSES_DIR . 'DbUpdate.class.' . PHP_EXT);
+
+        $updater = new DbUpdate();
+        $updater->update($db);
+
+        // Try to close the PDO connection. PDO doc:
+        // To close the connection, you need to destroy the object by ensuring that all
+        // remaining references to it are deleted—you do this by assigning NULL to the variable that holds the object.
+        // If you don't do this explicitly, PHP will automatically close the connection when your script ends.
+        $db = null;
+        unset($db);
+    }
 }
 
 
