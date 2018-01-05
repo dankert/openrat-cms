@@ -26,30 +26,57 @@ for jsfile in `find modules/editor/codemirror -name "*.js" -not -name "*.min.js"
 done
 
 
-for tplfile in `find modules/cms-ui/themes -name "*.src.xml"`; do
-	 
-	tplfile="${tplfile%.*}"
-	tplfile="${tplfile%.*}"
-	echo "Template found: $tplfile"
-	if	[ ! -f $tplfile.out.php ]; then touch -d '2000-01-01' $tplfile.out.php; 
+# Template files
+for tpldir in `find modules/cms-ui/themes/default/templates -type d`; do
+    for tplfile in `find ${tpldir} -name "*.src.xml"`; do
+
+        tplfile="${tplfile%.*}"
+        tplfile="${tplfile%.*}"
+        tplfile=`basename ${tplfile}`
+
+        outfile=modules/cms-ui/themes/default/html/${tpldir}/${tplfile}.php
+        if	[ ! -f $outfile ]; then touch -d '2000-01-01' $outfile;
+            fi
+         chmod a+rw -v $outfile
+	 done
+done
+
+
+# Language files
+
+for lang in `egrep ^[[:space:]]*[[:alpha:]]{2}: modules/language/language.yml|cut -d ':' -f 1|awk '{$1=$1};1'|sort|uniq`; do
+    outfile=modules/language/lang-$lang.php
+	if	[ ! -f $outfile ]; then touch -d '2000-01-01' $outfile;
 		fi
-	 chmod a+rw -v $tplfile.out.php 
+	chmod a+rw -v $outfile
 done
 
 # CSS-Files
 for lessfile in `find modules/cms-ui/themes -name "*.less"`; do
-	lessfile="${lessfile%.*}"
-	echo "LESS found: $lessfile"
-	if	[ ! -f $lessfile.css ]; then touch -d '2000-01-01' $lessfile.css;
+	lessfile="${lessfile%.*}" # cut extension
+	lessfile=`basename ${lessfile}`
+	outfile=modules/cms-ui/themes/default/html/${lessfile}
+
+	if	[ ! -f $outfile ]; then touch -d '2000-01-01' $outfile;
 		fi
-	chmod a+rw -v $lessfile.css 
-	if	[ ! -f $lessfile.min.css ]; then touch -d '2000-01-01' $lessfile.min.css;
-		fi
-	chmod a+rw -v $lessfile.min.css 
+	chmod a+rw -v $outfile
 done
 
-touch     modules/cms-ui/themes/default/production/combined.min.css
-chmod a+w modules/cms-ui/themes/default/production/combined.min.css
 
-touch     modules/cms-ui/themes/default/production/combined.min.js
-chmod a+w modules/cms-ui/themes/default/production/combined.min.js
+
+for lessfile in `find modules/cms-ui/themes -name "*.less"`; do
+	lessfile="${lessfile%.*}" # cut extension
+	lessfile=`basename ${lessfile}`
+	outfile=modules/cms-ui/themes/default/html/${lessfile}
+
+	if	[ ! -f $outfile ]; then touch -d '2000-01-01' $outfile;
+		fi
+	chmod a+rw -v $outfile
+done
+
+# Production files
+touch     modules/cms-ui/themes/default/html/openrat-all.min.css
+chmod a+w modules/cms-ui/themes/default/html/openrat-all.min.css
+
+touch     modules/cms-ui/themes/default/html/openrat-all.min.js
+chmod a+w modules/cms-ui/themes/default/html/openrat-all.min.js
