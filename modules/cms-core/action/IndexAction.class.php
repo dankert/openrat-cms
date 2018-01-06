@@ -121,8 +121,8 @@ class IndexAction extends Action
 		$outFiles = array();
 		
 		$css = array();
-        $css[] = OR_THEMES_DIR . 'default/css/openrat-ui';
-        $css[] = OR_THEMES_DIR . 'default/css/openrat-workbench';
+        $css[] = OR_THEMES_DIR . 'default/style/openrat-ui';
+        $css[] = OR_THEMES_DIR . 'default/style/openrat-workbench';
         //$css[] = OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror';
 
         // Komponentenbasiertes CSS
@@ -221,7 +221,7 @@ class IndexAction extends Action
 	
 	public function themestyleView()
     {
-        $themeLessFile = OR_THEMES_DIR . 'default/css/openrat-theme.less';
+        $themeLessFile = OR_THEMES_DIR . 'default/style/openrat-theme.less';
         $this->lastModified(filemtime($themeLessFile));
 
         header('Content-Type: text/css');
@@ -234,7 +234,7 @@ class IndexAction extends Action
 	private function getThemeCSS()
 	{
 		// Je Theme die Theme-CSS-Datei ausgeben.
-		$lessFile = OR_THEMES_DIR . 'default/css/openrat-theme.less';
+		$lessFile = OR_THEMES_DIR . 'default/style/openrat-theme.less';
 		$css = '';
 		
 		
@@ -291,25 +291,25 @@ class IndexAction extends Action
 		else
 		{
 			$js = array();
-			$js[] = OR_THEMES_DIR . 'default/js/jquery';
-			$js[] = OR_THEMES_DIR . 'default/js/jquery-ui';
-			$js[] = OR_THEMES_DIR . 'default/js/jquery.scrollTo';
-			// $js[] = OR_THEMES_EXT_DIR default/js/jquery.mjs.nestedSortable.js"></script>
+			$js[] = OR_THEMES_DIR . 'default/script/jquery';
+			$js[] = OR_THEMES_DIR . 'default/script/jquery-ui';
+			$js[] = OR_THEMES_DIR . 'default/script/jquery.scrollTo';
+			// $js[] = OR_THEMES_EXT_DIR default/script/jquery.mjs.nestedSortable.js"></script>
 			
 			// Jquery-Plugins
-			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orHint';
-			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orSearch';
-			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orLinkify';
-			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orTree';
-			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orLoadView';
-			$js[] = OR_THEMES_DIR . 'default/js/plugin/jquery-plugin-orAutoheight';
-            $js[] = OR_THEMES_DIR . 'default/js/jquery-qrcode';
+			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orHint';
+			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orSearch';
+			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orLinkify';
+			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orTree';
+			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orLoadView';
+			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orAutoheight';
+            $js[] = OR_THEMES_DIR . 'default/script/jquery-qrcode';
 
             // Inlining of SVG
-            $js[] = OR_THEMES_DIR . 'default/js/svg-injector';
+            $js[] = OR_THEMES_DIR . 'default/script/svg-injector';
 
             // OpenRat internal JS
-			$js[] = OR_THEMES_DIR . 'default/js/openrat';
+			$js[] = OR_THEMES_DIR . 'default/script/openrat';
 
 			// Codemirror Source Editor
 

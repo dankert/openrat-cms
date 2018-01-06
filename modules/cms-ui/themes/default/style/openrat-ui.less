@@ -1,0 +1,1487 @@
+/*
+OpenRat Content Management System
+Copyright (C) 2002-2017 Jan Dankert
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*/
+
+
+/* Usage to this variable is safe to be removed */
+@color-overridden-by-theme: black;
+ 
+iframe
+{
+	width:100%;
+	height:500px;
+	display:block;
+}
+
+div.breadcrumb,
+div.breadcrumb a,
+div.panel > div.title
+{
+	font-weight:bold;
+}
+
+/*   H e a d e r   */
+div#header
+{
+	width:100%;
+	height:27px;
+	overflow:hidden;
+	padding:5px;
+	margin:0px;
+	margin-bottom:3px;
+	float:left;
+}
+
+div#header div.projects,
+div#header div.menu,
+div#header div.title
+{
+	float:left;
+	margin-right:10px;
+	margin-left :0px;
+}
+
+div#header div.user,
+div#header div.search,
+div#header div.history
+{
+	float:right;
+	margin-right:10px;
+	margin-left :10px;
+}
+
+/*
+
+div#tree
+{
+	padding:5px;
+	width:25%;
+	margin-left:0px;
+	float:left;
+}
+*/
+
+
+/*   N o t i c e   */
+div#noticebar
+{
+	display:block;
+	position:fixed;
+	bottom:40px;
+	right:40px;
+	width:250px;
+	z-index:113;
+}
+
+div#noticebar div.notice
+{
+	border: 2px solid @color-overridden-by-theme;
+	
+	padding:5px;
+	margin:5px;
+	
+	display:none;
+}
+div#noticebar div.notice.error div.text
+{
+	font-weight: bold;
+}
+div#noticebar div.log
+{
+	font-family: monospace;
+}
+
+/*   H o e h e n   */
+html,body
+{
+	height:100%;
+}
+
+
+div.panel div.title
+{
+	height:20px;
+}
+
+
+
+div.panel div.status
+{
+	height:35px;
+}
+div.panel > div.content
+{
+	xxoverflow-x:auto;
+}
+
+
+ul#history > li,
+div.content a.action,
+div.content a.help,
+div.filler div.headermenu > a.entry,
+div.filler div.header a.back.button
+{
+	margin:9px;
+	padding-top:4px;
+	padding-bottom:4px;
+	padding-left:7px;
+	padding-right:7px;
+	border:1px solid;
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+ul#history > li.active
+{
+    font-weight:bold;
+}
+
+
+a.help
+{
+	float:right;
+}
+
+a.help
+{
+	cursor:help;
+}
+
+a.action:hover,
+a.help:hover,
+div.noaction:hover
+{
+	text-decoration:none;
+}
+
+a.action:active,
+a.help:active,
+div.noaction:active,
+input.ok:active
+{
+	border-color:red;
+}
+
+/*   D r o p d o w n  -  M e n u e s  */
+div.dropdown
+{
+	z-index:2;
+	display:none;
+	position: absolute;
+	padding:5px 0px;
+}
+
+div.dropdownalignright
+{
+	right:0;
+}
+
+div.dropdown > a
+{
+	display:block;
+}
+div.dropdown div.entry
+{
+	padding:2px 5px;
+}
+
+div.dropdown > div.divide
+{
+	height:1px;
+	width:100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div#header > div.menu {
+	overflow: hidden;
+}
+
+/* Dropdown anzeigen  */
+div#header.open div.menu.open div.dropdown,
+div.panel div:hover > div.dropdown,
+div.panel-icon:hover > div.dropdown
+{
+	display:block;
+}
+
+
+
+div.onrowvisible
+{
+	visibility: hidden;
+	display:inline;
+}
+td:hover > div.onrowvisible
+{
+	visibility: visible;
+}
+
+
+
+/* Vorschau von Text-Inhalten */
+
+.preview h1 { font-size:138.5%; }
+.preview h2 { font-size:123.1%; }
+.preview h3 { font-size:108%;   }
+.preview h1,.preview h2,.preview h3 {
+	margin:1em 0;
+}
+.preview h1,
+.preview h2,
+.preview h3,
+.preview h4,
+.preview h5,
+.preview h6,
+.preview strong
+{
+	font-weight:bold; 
+}
+.preview abbr,.preview acronym {
+	border-bottom:1px dotted #000;
+	cursor:help;
+} 
+.preview em {
+	font-style:italic;
+}
+.preview ol,.preview ul,.preview dl {
+	margin-left:2em;
+}
+.preview ol li
+{
+	list-style: decimal outside;	
+}
+.preview ul li
+{
+	list-style: disc outside;
+}
+.preview a:link,
+.preview a:visited,
+.preview a:active,
+.preview a:hover
+{
+	text-decoration:underline;
+}
+
+
+
+/* Verweise */
+a:link,
+a:visited
+{
+	font-weight:normal;
+	text-decoration:none;
+}
+a:active,
+a:hover
+{
+	font-weight:normal;
+	text-decoration:none;
+}
+
+
+
+/* Submenu-Entrys */
+body.menu tr.menu td table tr td,
+body.main tr.menu td table tr td
+{
+	padding:4px; padding-right:6px;padding-left:6px; width:30px;
+	white-space:nowrap;
+}
+
+/* Submenu-Width */
+body.menu tr.menu table { width:50px;}
+
+
+/* Inaktive Menuepunkte werden ausgegraut */
+body.menu tr.menu td table tr td.noaction,
+body.main tr.menu td table tr td.noaction
+{
+	color:@color-overridden-by-theme;
+}
+
+/* Icon-Innenabstand */
+img[align=left],
+img[align=right] {padding-right:1px;padding-left:1px;}
+
+/* Vorformatierter Text */
+pre
+{
+	font-family:Courier;
+	font-size:13px;
+}
+
+/* Kleingedrucktes */
+small
+{
+	color:@color-overridden-by-theme;
+}
+
+
+/* Kurztasten */
+body.menu span.accesskey,
+body.main span.accesskey
+{
+	text-decoration:underline;
+}
+
+
+
+
+/* Menzue-Titel-Zeile */
+body.menu tr.title td,
+body.main tr.title td
+{
+	vertical-align:middle;
+	padding:4px;
+	height:30px;
+}
+
+/* Hinweis */
+td.message { padding:10px; font-weight:bold; }
+
+
+/* Allgemeine Inhaltszellen */
+body.main table.main td.window td
+{
+	padding:4px;
+}
+
+
+/* Action-Button */
+body.main table.main td.window td.act
+{
+	padding:15px;
+	margin-top:20px;
+	border-top:1px solid @color-overridden-by-theme;
+	text-align:right;
+}
+
+/* Lizenzhinweis  */
+a.copyright
+{
+	font-size:0.7em;
+	text-decoration:none;
+}
+
+/* Message of the day */
+td.motd
+{
+	border-left: 3px solid red;
+	border-right: 3px solid red;
+	font-weight: bold;
+	padding:10px;
+	margin:10px;
+}
+
+/* Hauptfenster */
+table.main
+{
+	x-border:3px solid;
+}
+
+
+
+div.panel input.checkbox,
+div.panel input.radio
+{
+	border:1px solid @color-overridden-by-theme;
+}
+
+/* Eingabefeld fuer Beschreibung */
+textarea.desc,
+textarea.description
+{
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell", 
+	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	font-size:13px;
+}
+
+/* Eingabefeld fuer Textabsatz */
+textarea.longtext
+{
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell", 
+	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	font-size:13px;
+	width:100%;
+	border:1px solid @color-overridden-by-theme;
+}
+
+
+
+
+
+/* Hilfe-Texte */
+tr td.help
+{
+	font-style: italic;
+}
+
+tr.headline td.help
+{
+	/*
+	border-bottom:1px solid @color-overridden-by-theme;
+	*/
+	font-style: normal;
+	
+}
+
+/* Logo */
+td.logo
+{
+	padding:10px;
+	margin:0px;
+}
+
+div.logo h2
+{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell", 
+	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	font-weight:normal;
+	font-size:24px;
+}
+div.logo p
+{
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell", 
+	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	font-size:13px;
+}
+
+div#header div.search input
+{
+	margin:0px;
+	padding:0px;
+}
+
+
+
+/* Notizen */
+td.notice
+{
+	margin:0px;
+	padding:5%;
+	text-align:center;
+}
+table.notice
+{
+	width:100%;
+	border:1px solid;
+	border-spacing:0px;
+}
+table.notice th
+{
+	padding:2px;
+	white-space:nowrap;
+	border-bottom:1px solid @color-overridden-by-theme;
+	font-weight:normal;
+	text-align:left;
+}
+
+table.notice tr.error
+{
+}
+
+table.notice tr.warning
+{
+	margin:0px;
+	padding:0px;
+}
+
+
+
+/* Kalender */
+table.calendar
+{
+	table-layout:fixed;
+	border-collapse:collapse;
+	text-align: center;
+}
+table.calendar td
+{
+	border: 1px dotted;
+}
+
+
+label,
+.clickable
+{
+	cursor: pointer;
+}
+
+body {
+    cursor:default;
+}
+
+input {
+    xcursor:text;
+}
+
+
+div.menu
+{
+	float:none;
+	xclear:left;
+}
+
+
+
+form.xlogin
+{
+	xbackground-color:#E0E0D5;
+	border:2px solid @color-overridden-by-theme;
+	position:absolute;
+	z-index:999;
+	top:5%;
+	left:5%;
+	width:80%;
+	margin:5%;
+	padding:10%;
+	opacity:1;
+	
+	-webkit-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    -moz-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    box-shadow: 3px 2px 5px @color-overridden-by-theme;
+}
+
+
+
+
+
+
+
+/*   B a u m   */
+ul.tree,
+ul.tree ul
+{
+	list-style-type: none;
+	background: url(__IMAGE_PATH__/tree_line.gif) repeat-y;
+	margin: 0; padding: 0; 
+}
+
+ul.tree ul
+{
+	margin-left:18px;
+}
+
+
+
+ul.tree div.tree
+{
+	width:18px;
+	min-width:18px;
+	height:18px;
+	float:left;
+}
+ul.tree div.tree,
+ul.tree div.entry
+{
+	height:18px;
+	max-height:18px;
+	min-height:18px;
+}
+
+ul.tree div img
+{
+	cfloat:left;
+}
+
+ul.tree li
+{margin: 0; padding: 0 0px; 
+	line-height: 18px;
+	background: url(__IMAGE_PATH__/tree_none.gif) no-repeat;
+	xcolor: #369;
+	font-weight: normal;
+	white-space:nowrap;
+}
+
+ul.tree li.last,
+ul.tree li:last-child
+{
+	background: url(__IMAGE_PATH__/tree_none_end.gif) no-repeat;
+} 
+
+div.tree.open
+{
+	background: url(__IMAGE_PATH__/tree_minus.png) no-repeat;
+}
+div.tree.closed
+{
+	background: url(__IMAGE_PATH__/tree_plus.png) no-repeat;
+}
+
+
+body > div
+{
+	display:none;
+}
+
+
+div.structure em
+{
+	font-style: italic;
+}
+
+
+
+
+/*   T a b s   */
+
+.drophover
+{
+	border:2px dotted green;
+	cursor: move;
+}
+.dropactive
+{
+	border:1px dotted blue;
+	cursor: move;
+}
+
+div.panel > div.header > div.panel-icon
+{
+	xposition: static;
+	xright:-30px;
+	top:3px;
+}
+
+div.backward_link
+{
+	float:left;
+}
+div.forward_link
+{
+	float:right;
+}
+
+div.panel > div.header
+{
+	padding:0px;
+	width:100%;
+	height:25px;
+}
+
+
+div.panel div.header ul.views
+{
+	text-align: left; /* set to left, right or center */
+	list-style-type: none;
+	overflow: hidden; /* Gescrollt wird hier mit JavaScript */
+	white-space:nowrap;
+}
+
+img.icon
+{
+	padding:4px;
+	width: 16px;
+	height: 16px;
+}
+
+ 
+ul.views div.tabname
+{
+	overflow: hidden;
+	white-space: nowrap;
+	padding:4px;
+	vertical-align: middle;
+}
+ul.views > li > img,
+ul.views > li > div
+{
+	float:left;
+}
+
+div.panel div.header div.panel-icon,
+div.inputholder > div.icon
+{
+	float: right;
+}
+
+
+div.panel div.header > ul.views
+{
+	float:left;
+	height: 25px;
+}
+
+
+
+div.content 
+{
+	clear: both;
+}
+
+div.panel ul.views li
+{
+	vertical-align: middle;
+	padding:0px;
+	
+	cursor:pointer;
+	
+	border-right: 1px solid @color-overridden-by-theme;
+	
+	-moz-border-radius-topleft:5px; /* Mozilla */
+    -webkit-border-radius-topleft:5px; /* Webkit */
+    -khtml-border-top-radius-topleft:5px; /* Konqui */
+    border-top-right-radius:5px;
+	-moz-border-radius-topright:5px; /* Mozilla */
+    -webkit-border-radius-topright:5px; /* Webkit */
+    -khtml-border-top-radius-topright:5px; /* Konqui */
+    border-top-right-radius:5px;
+    
+	display: inline;
+	white-space:nowrap;
+	float:left;
+}
+
+
+
+
+div.panel {
+	margin:0px;
+	padding:0px;
+}
+
+div.panel div.content table
+{
+	overflow:auto;
+	border:2px;
+}
+
+
+table tr.headline > td {
+	
+    padding:3px;
+    font-weight: bold;
+}
+
+
+table tr.data > td {
+    padding:3px;
+}
+
+
+
+ul.tree div
+{
+cursor:pointer;
+}
+
+
+
+/*   S t a t u s z e i l e   */
+div.panel div.status
+{
+	padding:10px;
+}
+
+
+div.panel div.status div.error,
+div.message.error
+{
+	background: url(__IMAGE_PATH__/notice_error.png) no-repeat;
+	background-position:5px 7px;
+}
+div.panel div.status div.warn,
+div.message.warn
+{
+	background: url(__IMAGE_PATH__/notice_warning.png) no-repeat;
+	background-position:5px 7px;
+}
+div.panel div.status div.ok,
+div.message.ok
+{
+	background: url(__IMAGE_PATH__/notice_ok.png) no-repeat;
+	background-position:5px 7px;
+}
+div.panel div.status div.info,
+div.message.info
+{
+	background: url(__IMAGE_PATH__/notice_info.png) no-repeat;
+	background-position:5px 7px;
+}
+
+div.panel div.status div,
+div.message
+{
+	border:1px solid @color-overridden-by-theme;
+	padding:5px 0px 5px 25px;
+	margin:10px 10px 20px 10px;
+	
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -khtml-border-radius:5px;
+    border-radius:5px;
+}
+
+/* Fortschrittsbalken */
+div.loader,
+div.progress
+{
+	background: url(__IMAGE_PATH__/loader.gif) no-repeat;
+	background-position: center;
+	opacity: 0.5;
+	cursor: wait;
+	min-height:50px;
+}
+
+
+
+div#workbench {
+	width: 100%;
+	padding: 3px;
+	div.panel.fullscreen {
+		display: block;
+		z-index: 109;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background-color: @color-overridden-by-theme;
+		margin: 0px;
+		width: 100% ! important;
+		height: 100% ! important;
+	}
+
+	div.panel.fullscreen > div.content {
+		width: 100% ! important;
+		height: 100% ! important;
+	}
+
+	div.panel {
+		border: 1px solid @color-overridden-by-theme;
+		margin: 0px;
+		padding: 0px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-khtml-border-radius: 5px;
+		border-radius: 5px;
+	}
+
+	div.container , div.panel , div.divider {
+		display: inline;
+		float: left;
+		margin: 0px;
+	}
+	
+	div.panel > div.content {
+	overflow: auto;
+	}
+}
+
+.invisible
+{
+	visibility:hidden;
+}
+.visible
+{
+	visibility:visible;
+}
+
+
+body
+{
+	overflow:hidden;
+}
+/*
+ * Formular-Button-Leiste
+ */
+div.panel {
+	position:relative;
+}
+div.content div.bottom
+{
+	xbackground-color: @color-overridden-by-theme;
+	height:55px;
+	width:100%;
+	position:absolute;
+	padding-right:40px;
+	bottom:0px;
+	right:0px;
+	xvisibility:hidden;
+}
+
+div.content div.bottom > div.command
+{
+	xvisibility:visible;
+	float:right;
+	z-index:20;
+}
+div.content form[data-autosave='true'] div.command
+{
+	display: none;
+}
+
+div.content > form
+{
+	padding-bottom:45px;
+}
+
+input.submit
+{
+	background-color: @color-overridden-by-theme;
+	color: @color-overridden-by-theme;
+	padding: 7px;
+	border:0px;
+	-moz-border-radius:7px; /* Mozilla */
+    -webkit-border-radius:7px; /* Webkit */
+    -khtml-border-radius:7px; /* Konqui */
+    border-radius:7px;
+    margin-left:20px;
+	-webkit-box-shadow: 0px 0px 15px @color-overridden-by-theme;
+    -moz-box-shadow: 0px 0px 15px @color-overridden-by-theme;
+    box-shadow: 0px 0px 15px 10px @color-overridden-by-theme;
+    cursor:pointer;
+}
+
+
+input.submit.ok
+{
+	font-weight:bold; /* Primäre Aktion in Fettdruck */
+}
+
+
+/* Pfeile nur anzeigen, wenn Maus über der Titelleiste */
+div.views > div.backward_link,
+div.views > div.forward_link
+{
+	visibility: hidden;
+}
+div.views:HOVER > div.backward_link,
+div.views:HOVER > div.forward_link
+{
+	visibility: visible;
+}
+
+
+div#shortcuts {
+	height:24px;
+	margin-left:10px;
+}
+div#shortcuts > div.shortcut {
+	width:24px;
+	height:24px;
+	margin-left:5px;
+	float:left;
+    opacity:0.8;
+}
+
+div#shortcuts > div.shortcut:HOVER {
+	
+	xborder: 1px solid @color-overridden-by-theme;
+	x-moz-border-radius:2px; /* Mozilla */
+    x-webkit-border-radius:2px; /* Webkit */
+    x-khtml-border-radius:2px; /* Konqui */
+    opacity:1.0;
+    position:relative;
+    bottom:3px;
+	
+}
+
+
+
+
+/* Smaller screens */
+
+@media only screen and (max-width: 1023px) {
+
+	body {
+	font-size: 0.8em;
+	line-height: 1.5em;
+	}
+	
+	}
+
+
+/* Mobile */
+
+@media handheld, only screen and (max-width: 767px) {
+
+	body {
+		font-size: 16px;
+		-webkit-text-size-adjust: none;
+		overflow: visible;
+	}
+	div#header,
+	div#workbench {
+		width: 100%;
+		height: auto;
+		min-width: 0;
+		margin-left: 0px;
+		margin-right: 0px;
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	
+	div#workbench div.panel
+	{
+		width:auto !important;
+	}
+	
+	li.action div.tabname
+	{
+		width:auto !important;
+	}
+	
+	div#workbench div.panel
+	{
+		width: auto;
+		float: none;
+		margin-left: 0px;
+		margin-right: 0px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	div#workbench div.panel > div.content
+	{
+		overflow:auto;
+		height: auto !important;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body > div#header {
+	display:block;
+}
+
+ul#history >  li {
+	
+	xdisplay:inline;
+	margin:5px;
+	padding:5px;
+	border:1px solid @color-overridden-by-theme;
+	background-color: @color-overridden-by-theme;
+	color:@color-overridden-by-theme;
+}
+ul#history >  li.active {
+	
+	xdisplay:inline;
+	margin:5px;
+	padding:5px;
+	border:1px solid @color-overridden-by-theme;
+	background-color: @color-overridden-by-theme;
+	color:@color-overridden-by-theme;
+}
+
+ul#history {
+	display:none;
+}
+
+
+table td.readonly {
+	font-style: italic;
+	font-weight: normal;
+}
+table td.default {
+	font-style: normal;
+	font-weight: normal;
+}
+table td.changed {
+	font-style: normal;
+	font-weight: bold;
+}
+
+
+/* Modale Dialoge */
+
+div#filler
+{
+	xxxxdisplay: block;
+	position:absolute;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	height:100%;
+	width:100%;
+	background-color: @color-overridden-by-theme;
+	opacity: 0.5;
+}
+
+
+/* Pfeile */
+div#header > div > div.arrow-down
+{
+	display: inline;
+	width:0;
+	height:0;
+	margin:6;
+	padding:0px;
+	border-right : 6px solid @color-overridden-by-theme;
+	border-left  : 6px solid @color-overridden-by-theme;
+	border-top   : 6px solid @color-overridden-by-theme;
+	border-bottom: 4px solid @color-overridden-by-theme;
+	margin-top: 10px;
+font-size: 0;
+}
+
+
+
+/*   D r o p d o w n  -  M e n u e s  */
+div.dropdown
+{
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+div.toolbar-icon
+{
+	padding:2px;
+	margin-left:5px;
+	float: left;
+}
+
+div.headermenu
+{
+	margin:5px;
+	z-index: 1;
+	position: relative;
+	right: 0;
+	top: 0;
+}
+div.headermenu > div.toolbar-icon
+{
+	float:right;
+}
+
+
+ /* Voreingestellte Schriftart */
+body
+{
+
+}
+
+
+
+/* Formulare breit */
+div.panel.wide form div.line
+{
+	clear:left;
+	margin-top:10px;
+}
+
+div.panel.wide form div.label
+{
+	display:inline-block;
+	width:30%;
+	vertical-align:top;
+	text-align: right;
+}
+
+div.panel.wide form div.input
+{
+	display:inline-block;
+	width:60%;
+	vertical-align:top;
+	text-align: left;
+}
+
+/* Formulare schmal */
+div.panel.small form div.line
+{
+	clear:left;
+	padding:10px;
+}
+
+div.panel.small form div.label
+{
+	display:block;
+	width:100%;
+	vertical-align:top;
+	text-align: left;
+}
+
+div.panel.small form div.input
+{
+	display:block;
+	width:100%;
+	vertical-align:top;
+	text-align: left;
+}
+
+
+
+form div.label > label,
+form div.input > div.intputholder
+{
+	padding:0px 5px;
+}
+
+form div.input input[type=text],
+form div.input input[type=password],
+form div.input textarea,
+form div.input select
+{
+	width:100%;
+}
+form div.input input[type=checkbox],
+form div.input input[type=radio]
+{
+	vertical-align:top;
+}
+
+label
+{
+	display:inline-block;
+}
+
+input[type=checkbox] + label,
+input[type=radio] + label
+{
+	width:80%;
+}
+
+label div.description
+{
+	font-size: 0.75em;
+}
+
+div.inputholder > div.dropdown
+{
+	width:70%;
+}
+
+div.search > div.inputholder
+{
+	padding-top:1px;
+}
+
+div.inputholder > input,
+div.inputholder > textarea,
+div.inputholder > select
+{
+	padding:2px;
+	margin:0px;
+}
+
+
+
+/* Eingabfeld fuer Namen */
+fieldset > div input.name,
+fieldset > div span.name
+{
+	font-weight:bold;
+}
+
+
+
+/* Eingabfelder fuer Dateiname */
+fieldset > div input.filename,
+fieldset > div input.extension,
+fieldset > div input.ansidate,
+fieldset > div span.filename,
+fieldset > div span.extension,
+fieldset > div span.ansidate
+{
+	font-family:Courier;
+	font-size:1em;
+}
+
+
+div#tree
+{
+	overflow:visible;
+}
+
+
+
+
+
+/* Anzeige von Text-Unterschieden */
+
+/* Zeilen-Nr */
+tr.diff > td.line
+{
+	background-color:@color-overridden-by-theme;
+	padding-right:2px;
+	border-right:3px solid @color-overridden-by-theme;
+	text-align:right;
+	margin-right:2px;
+}
+
+/* Unveränderter Text */
+tr.diff > td.equal
+{
+}
+
+/* Entfernter Text */
+tr.diff > td.old
+{
+	background-color:red;
+}
+
+/* Hinzugefuegter Text */
+tr.diff > td.new
+{
+	background-color:green;
+}
+
+/* Geaenderter Text */
+tr.diff > td.notequal
+{
+	background-color:yellow;
+}
+
+dl.notice
+{
+	padding:15px;
+}
+
+
+/*   S c h a t t e n   */
+div.content a.action,
+div.content a.help
+{
+	-webkit-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    -moz-box-shadow: 3px 2px 5px @color-overridden-by-theme;
+    box-shadow: 3px 2px 5px @color-overridden-by-theme;
+}
+
+
+
+/*   F a r b e n   */
+
+/* Gesamt-Hintergrund */
+body
+{
+	background-color:@color-overridden-by-theme;
+}
+
+/* Fenster-Hintergrund */
+div.panel ul.views > li.active,
+div.panel ul.views > li.active:hover
+{
+	background-color: @color-overridden-by-theme;
+	background-image: linear-gradient(@color-overridden-by-theme 0%, @color-overridden-by-theme 15%);
+	color: @color-overridden-by-theme;
+}
+
+/* Titelleiste-Hintergrund */
+div#header
+{
+	background-color: @color-overridden-by-theme;
+	background-image: linear-gradient(@color-overridden-by-theme 85%, @color-overridden-by-theme 100%);
+	color: @color-overridden-by-theme;
+}
+
+/* Titelleiste */
+div#header div.toolbar-icon > a
+{
+	color: @color-overridden-by-theme;
+}
+
+div#header, /* Titelleite */
+ul.views > li.action /* Tabreiter */
+{
+ 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell", 
+	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	font-size:13px;
+}
+
+div.content
+{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell", 
+	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	font-size:13px;
+}
+
+
+/* Reiter */
+div.panel ul.views li
+{
+	/*
+	background-color:@color-overridden-by-theme;
+	*/
+}
+
+
+div.panel > div.content
+{
+	background-color:@color-overridden-by-theme;
+}
+
+div.panel > div.header
+{
+	background-color:@color-overridden-by-theme;
+	background-image: linear-gradient(@color-overridden-by-theme 00%, @color-overridden-by-theme 85%);
+}
+	
+
+
+
+div.panel ul.views li:hover {
+	background-color: @color-overridden-by-theme;
+	/*
+	color: blue;
+	*/
+}
+
+
+
+ul.tree li.last,
+ul.tree li:last-child
+{
+	background-color:@color-overridden-by-theme;
+}
+
+
+
+div.content pre,
+div.dropdown
+{
+	background-color:@color-overridden-by-theme;
+	color:@color-overridden-by-theme;
+	min-width: 150px;
+	max-width: 450px;
+}
+
+
+
+
+
+div.filler div.headermenu > a.entry,
+div.filler div.header a.back.button
+{
+	font-size: 0.8em;
+}
+
+img.image-icon {
+	visibility: hidden;
+}
+
+
+/* Make Codemirror Auto-Resizable */
+.CodeMirror {
+	height: auto;
+}
