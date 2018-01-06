@@ -13,6 +13,7 @@ use ObjectNotFoundException;
 use OpenRatException;
 use SecurityException;
 use template_engine\TemplateEngine;
+use template_engine\TemplateEngineInfo;
 
 define('CMS_UI_REQ_PARAM_SUBACTION', 'subaction');
 define('CMS_UI_REQ_PARAM_ACTION', 'action');
@@ -80,7 +81,7 @@ class UI
      */
     private static function outputTemplate($templateName, $outputData)
     {
-        $templateFile = __DIR__.'/themes/default/templates/' . $templateName . '.tpl.out.php';
+        $templateFile = __DIR__.'/themes/default/html/views/' . $templateName . '.php';
 
         // In development mode, we are compiling every template on the fly.
         if (DEVELOPMENT) {
@@ -136,5 +137,123 @@ class UI
             'connect-src \'self\'');
         header('Content-Security-Policy: ' . implode(';', $contentSecurityPolicyEntries));
     }
+    
+    
+    public static function updateProduction()
+    {
+        self::updateProductionCSS();
+        self::updateProductionJS();
+    }
 
+    private static function updateProductionCSS()
+    {
+        $productionCSSFile = __DIR__ . 'cms-ui/themes/default/production/combined.min.css';
+
+        $css = self::getCSSFiles();
+        //$css[] = OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror';
+
+        // Komponentenbasiertes CSS
+
+        $modified = false;
+        foreach ($css as $cssF)
+        {
+            $lessFile = $cssF . '.less';
+            $cssFile = $cssF . '.css';
+            $cssMinFile = $cssF . '.min.css';
+
+            if (! is_file($lessFile))
+            {
+                Logger::warn("Stylesheet not found: $lessFile");
+                continue;
+            }
+            elseif (! is_file($cssFile) || ! is_writable($cssFile))
+            {
+                Logger::warn("Stylesheet output file not found or not writable: $cssFile");
+                continue;
+            }
+            elseif (! is_file($cssMinFile) || ! is_writable($cssMinFile))
+            {
+                Logger::warn("Stylesheet output file not found or not writable: $cssMinFile");
+                continue;
+            }
+            else
+            {
+                if (filemtime($lessFile) > filemtime($cssMinFile))
+                {
+                    // LESS-Source wurde geändert, CSS-Version muss aktualisiert werden.
+                    $modified = true;
+
+                    // Den absoluten Pfad zur LESS-Datei ermitteln. Dieser wird vom LESS-Parser für den korrekten Link
+                    // auf die LESS-Datei in der Sourcemap benötigt.
+                    $pfx = substr(realpath($lessFile),0,0-strlen(basename($lessFile)));
+
+                    $parser = new Less_Parser(array(
+                        'sourceMap' => true,
+                        'indentation' => '	',
+                        'outputSourceFiles' => false,
+                        'sourceMapBasepath' => $pfx
+                    ));
+
+
+                    $parser->parseFile( ltrim($lessFile,'./') );
+                    $source = $parser->getCss();
+
+                    file_put_contents($cssFile, $source);
+
+                    $parser = new Less_Parser(array(
+                        'compress' => true,
+                        'sourceMap' => false,
+                        'indentation' => ''
+                    ));
+                    $parser->parseFile($lessFile);
+                    $source = $parser->getCss();
+
+
+                    file_put_contents($cssMinFile, $source);
+                }
+
+                $outFiles[] = $cssFile;
+            }
+        }
+
+        if ($modified)
+        {
+            if	( !is_writable($productionCSSFile))
+            {
+                Logger::warn('not writable: '.$productionCSSFile);
+            }
+            else
+            {
+                file_put_contents($productionCSSFile,'');
+                foreach ($css as $cssF)
+                {
+                    $cssMinFile = $cssF . '.min.css';
+                    if	( is_file($cssMinFile))
+                        file_put_contents($productionCSSFile,file_get_contents($cssMinFile),FILE_APPEND);
+                }
+            }
+        }
+
+    }
+
+    private static function updateProductionJS()
+    {
+    }
+
+    /**
+     * @return array
+     */
+    private static function getCSSFiles(): array
+    {
+        $css = array();
+        $css[] = OR_THEMES_DIR . 'default/css/openrat-ui';
+        $css[] = OR_THEMES_DIR . 'default/css/openrat-workbench';
+
+        foreach (TemplateEngineInfo::getLESSFiles() as $lessFile)
+        {
+            $css[] = OR_HTML_MODULES_DIR . 'template-engine/components/html/' . $lessFile . '/' . $lessFile;
+        }
+
+        return $css;
+    }
 }

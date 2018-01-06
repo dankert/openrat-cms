@@ -9,11 +9,12 @@
 #
 #
 echo "Start ("as `whoami` ")"
+
 for jsfile in `find modules/cms-ui/themes -name "*.js" -not -name "*.min.js"`; do
 	jsfile="${jsfile%.*}"
 	echo "JS found: $jsfile"
-	if	[ ! -f $jsfile.min.js ]; then cp -v $jsfile.js $jsfile.min.js; 
-		fi 
+	if	[ ! -f $jsfile.min.js ]; then cp -v $jsfile.js $jsfile.min.js;
+		fi
 	chmod a+rw -v $jsfile.min.js;
 done
 
@@ -41,38 +42,16 @@ for tpldir in `find modules/cms-ui/themes/default/templates -type d`; do
 	 done
 done
 
-
-# Language files
-
-for lang in `egrep ^[[:space:]]*[[:alpha:]]{2}: modules/language/language.yml|cut -d ':' -f 1|awk '{$1=$1};1'|sort|uniq`; do
-    outfile=modules/language/lang-$lang.php
-	if	[ ! -f $outfile ]; then touch -d '2000-01-01' $outfile;
-		fi
-	chmod a+rw -v $outfile
-done
-
 # CSS-Files
 for lessfile in `find modules/cms-ui/themes -name "*.less"`; do
 	lessfile="${lessfile%.*}" # cut extension
 	lessfile=`basename ${lessfile}`
-	outfile=modules/cms-ui/themes/default/html/${lessfile}
+	outfile=modules/cms-ui/themes/default/html/css/${lessfile}.css
 
 	if	[ ! -f $outfile ]; then touch -d '2000-01-01' $outfile;
 		fi
-	chmod a+rw -v $outfile
 done
 
-
-
-for lessfile in `find modules/cms-ui/themes -name "*.less"`; do
-	lessfile="${lessfile%.*}" # cut extension
-	lessfile=`basename ${lessfile}`
-	outfile=modules/cms-ui/themes/default/html/${lessfile}
-
-	if	[ ! -f $outfile ]; then touch -d '2000-01-01' $outfile;
-		fi
-	chmod a+rw -v $outfile
-done
 
 # Production files
 touch     modules/cms-ui/themes/default/html/openrat-all.min.css
