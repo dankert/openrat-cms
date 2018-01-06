@@ -10,6 +10,7 @@ use Less_Parser;
 use Logger;
 use ObjectNotFoundException;
 use Session;
+use template_engine\TemplateEngineInfo;
 
 
 /**
@@ -126,9 +127,7 @@ class IndexAction extends Action
         //$css[] = OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror';
 
         // Komponentenbasiertes CSS
-		$elements = parse_ini_file(OR_THEMES_DIR . config('interface', 'theme') . '/include/elements.ini.' . PHP_EXT);
-		
-		foreach (array_keys($elements) as $c)
+		foreach (TemplateEngineInfo::getComponentList() as $c)
 		{
 			$componentCssFile = OR_HTML_MODULES_DIR . 'template-engine/components/html/' . $c . '/' . $c;
 			if (is_file($componentCssFile . '.less'))
@@ -443,9 +442,7 @@ class IndexAction extends Action
 			//$js[] = OR_THEMES_DIR . '../editor/editor/adapters/jquery';
 			
 			// Komponentenbasiertes Javascript
-			$elements = parse_ini_file(OR_THEMES_DIR . config('interface', 'theme') . '/include/elements.ini.' . PHP_EXT);
-			
-			foreach (array_keys($elements) as $c)
+			foreach ( TemplateEngineInfo::getComponentList() as $c)
 			{
 				$componentJsFile = OR_HTML_MODULES_DIR .  '/template-engine/components/html/' . $c . '/' . $c;
 				if (is_file($componentJsFile . '.js'))
