@@ -103,16 +103,19 @@ class Dispatcher
             throw $e;
         }
 
+        $this->commitDatabaseTransaction();
+
         if  ( DEVELOPMENT )
-            Logger::trace('Output' . "\n" . print_r($result, true));
+        Logger::trace('Output' . "\n" . print_r($result, true));
 
         // Weitere Variablen anreichern.
         $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => token());
         $result['version'] = OR_VERSION;
         $result['api'] = '2';
 
-        $this->commitDatabaseTransaction();
 
+        // Yes, closing the session flushes the session data and unlocks other waiting requests.
+        // Now another request is able to be executed.
         Session::close();
 
         // Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
