@@ -2,7 +2,7 @@
 #
 # -- Only for OpenRat-Developers! --
 # 
-# Creating a minified/compiled version of CSS/LESS, JS and XML-Template files.
+# Creates files for minified/compiled version of CSS/LESS, JS and XML-Template files.
 # Sets file permission bits to World-Readable that the CMS is able to write to these files!
 #
 # Do NOT use this in production environments! 
@@ -10,52 +10,70 @@
 #
 echo "Start ("as `whoami` ")"
 
-for jsfile in `find modules/cms-ui/themes -name "*.js" -not -name "*.min.js"`; do
-	jsfile="${jsfile%.*}"
-	echo "JS found: $jsfile"
-	if	[ ! -f $jsfile.min.js ]; then cp -v $jsfile.js $jsfile.min.js;
-		fi
-	chmod a+rw -v $jsfile.min.js;
-done
-
-for jsfile in `find modules/editor/codemirror -name "*.js" -not -name "*.min.js"`; do
-	jsfile="${jsfile%.*}"
-	echo "JS found: $jsfile"
-	if	[ ! -f $jsfile.min.js ]; then cp -v $jsfile.js $jsfile.min.js;
-		fi
-	chmod a+rw -v $jsfile.min.js;
-done
+function check
+{
 
 
-# Template files
-for tpldir in `find modules/cms-ui/themes/default/templates -type d`; do
-    for tplfile in `find ${tpldir} -name "*.src.xml"`; do
+    for jsfile in `find modules/cms-ui/themes -name "*.js" -not -name "*.min.js"`; do
+        jsfile="${jsfile%.*}"
+        createfile $jsfile.min.js $jsfile.js
+    done
+    for jsfile in `find modules/template-engine/components -name "*.js" -not -name "*.min.js"`; do
+        jsfile="${jsfile%.*}"
+        createfile $jsfile.min.js $jsfile.js
+    done
+
+    for jsfile in `find modules/editor/codemirror -name "*.js" -not -name "*.min.js"`; do
+        jsfile="${jsfile%.*}"
+        createfile $jsfile.min.js $jsfile.js
+    done
+
+
+    for tplfile in `find modules/cms-ui/themes/ -name "*.tpl.src.xml"`; do
 
         tplfile="${tplfile%.*}"
         tplfile="${tplfile%.*}"
-        tplfile=`basename ${tplfile}`
+        tplfile="${tplfile%.*}"
+        createfile $tplfile.php;
+    done
 
-        outfile=modules/cms-ui/themes/default/html/${tpldir}/${tplfile}.php
-        if	[ ! -f $outfile ]; then touch -d '2000-01-01' $outfile;
-            fi
-         chmod a+rw -v $outfile
-	 done
-done
+    # CSS-Files
+    for lessfile in `find modules/cms-ui/themes -name "*.less"`; do
+        lessfile="${lessfile%.*}"
+        createfile $lessfile.css
+        createfile $lessfile.min.css;
+    done
 
-# CSS-Files
-for lessfile in `find modules/cms-ui/themes -name "*.less"`; do
-	lessfile="${lessfile%.*}" # cut extension
-	lessfile=`basename ${lessfile}`
-	outfile=modules/cms-ui/themes/default/html/css/${lessfile}.css
+    # CSS-Files
+    for lessfile in `find modules/template-engine/components -name "*.less"`; do
+        lessfile="${lessfile%.*}"
+        createfile $lessfile.css
+        createfile $lessfile.min.css;
+    done
 
-	if	[ ! -f $outfile ]; then touch -d '2000-01-01' $outfile;
-		fi
-done
+    createfile modules/cms-ui/themes/default/production/combined.min.css
+    createfile modules/cms-ui/themes/default/production/combined.min.js
+
+}
 
 
-# Production files
-touch     modules/cms-ui/themes/default/html/openrat-all.min.css
-chmod a+w modules/cms-ui/themes/default/html/openrat-all.min.css
+function createfile
+{
+    file=$1
+    copy=$2
+	if	[ ! -f $file ]; then
+	    if [ ! -z $copy ]; then
+	        cp -v $copy $file
+	    else
+	        touch -d '2000-01-01' $file;
+	    fi
+	    echo "OK: Created $file"
+	fi
 
-touch     modules/cms-ui/themes/default/html/openrat-all.min.js
-chmod a+w modules/cms-ui/themes/default/html/openrat-all.min.js
+
+	if [ -e /etc/apache2/mods-enabled/php7.0.load ] && [ `stat -c %a $file` -ne "666" ]; then
+	    chmod 666 -v $file
+	fi
+}
+
+check

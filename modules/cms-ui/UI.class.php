@@ -85,7 +85,7 @@ class UI
 
         // In development mode, we are compiling every template on the fly.
         if (DEVELOPMENT) {
-            $srcFile = __DIR__.'/themes/default/templates/' . $templateName . '.tpl.src.xml';
+            $srcFile = __DIR__.'/themes/default/html/views/' . $templateName . '.tpl.src.xml';
 
             // Compile the template.
             // From a XML source file we are generating a PHP file.
