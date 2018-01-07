@@ -1250,9 +1250,9 @@ function language() { return array(
 'USER_MAIL_SUBJECT'=>"Your Password",
 'USER_MAIL_TEXT_PREFIX'=>"Your Password for logging in to OpenRat Content Management System is:",
 'USER_MAIL_TEXT_SUFFIX'=>"Note this password at a secure place and remove this E-Mail. Your are able to change your password after logging in.",
-'CHARSET'=>"",
-'MENU_TITLE_SEARCH_CONTENT'=>"",
-'MENU_TITLE_SEARCH_PROP'=>"",
+'CHARSET'=>"CHARSET",
+'MENU_TITLE_SEARCH_CONTENT'=>"MENU_TITLE_SEARCH_CONTENT",
+'MENU_TITLE_SEARCH_PROP'=>"Suche nach Eigenschaft",
 'MENU_START'=>"Start",
 'MENU_START_DESC'=>"Start",
 );}
