@@ -8,8 +8,12 @@
 class RawElement extends AbstractElement
 {
 	var $src = '';
-	
-	function RawElement( $t='' )
+
+    /**
+     * RawElement constructor.
+     * @param string $t
+     */
+    function __construct($t='' )
 	{
 		$this->src = $t;
 	}
