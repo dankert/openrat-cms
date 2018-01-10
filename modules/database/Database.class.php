@@ -17,6 +17,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 namespace database;
+use database\driver\PDODriver;
 use Logger;
 use RuntimeException;
 
@@ -43,7 +44,7 @@ class Database
 	/**
 	 * Konfiguration der Datenbank-Verbindung
 	 *
-	 * @var Array
+	 * @var array
 	 */
 	var $conf;
 	
@@ -65,7 +66,7 @@ class Database
 	 * Client.
 	 * Enth�lt ein Objekt der Klasse db_<type>.
 	 *
-	 * @var Object
+	 * @var PDODriver
 	 */
 	var $client;
 	
@@ -103,7 +104,7 @@ class Database
 	/**
 	 * Verbindung zur Datenbank aufbauen.
 	 *
-	 * @return Status
+	 * @return bool Status
 	 */
 	public function connect()
 	{
