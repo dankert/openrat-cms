@@ -266,8 +266,11 @@ class Dispatcher
         $actionClassName = ucfirst($this->action) . 'Action';
         $actionClassNameWithNamespace = 'cms\\action\\' . $actionClassName;
 
-        // Laden der Action-Klasse.
-        require_once(OR_ACTIONCLASSES_DIR . '/' . $actionClassName . '.class.php');
+        if (!class_exists($actionClassNameWithNamespace))
+        {
+            // Laden der Action-Klasse.
+            require_once(OR_ACTIONCLASSES_DIR . '/' . $actionClassName . '.class.php');
+        }
 
         // Erzeugen der Action-Klasse
         /* @type $do \cms\action\Action */
