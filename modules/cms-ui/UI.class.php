@@ -100,18 +100,16 @@ class UI
             header("X-CMS-Template-File: " . $templateFile);
         }
 
+        // Spätestens jetzt muss das Template vorhanden sein.
+        if (!is_file($templateFile))
+            throw new LogicException("Template file '$templateFile' was not found.");
 
         // Übertragen der Ausgabe-Variablen in den aktuellen Kontext
         //
         extract($outputData);
 
-        if (is_file($templateFile))
-            // Einbinden des Templates
-            require_once($templateFile);
-        else
-            throw new LogicException("Template file '$templateFile' was not found.");
-
-
+        // Einbinden des Templates
+        require_once($templateFile);
     }
 
 
