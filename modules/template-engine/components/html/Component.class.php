@@ -198,7 +198,7 @@ class Expression
 				return $invert.'@$'.$arr.'['.$key.']';
 			case 'config':
 				$config_parts = explode('/',$value);
-				return $invert.'@$conf['."'".implode("'".']'.'['."'",$config_parts)."'".']';
+				return $invert.'config('."'".implode("'".','."'",$config_parts)."'".')';
 				
 			default:
 				throw new \LogicException("Unknown expression type '{$this->type}' in attribute value. Allowed: var|function|method|text|size|property|message|messagevar|arrayvar|config or none");
