@@ -367,7 +367,7 @@ function createDefaultConfig()
     $conf['login']['gpl']['url']="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html";
     $conf['login']['logo'] = array();
     $conf['login']['logo']['enabled']=false;
-    $conf['login']['logo']['image']="./themes/default/images/logo.jpg"  ;
+    $conf['login']['logo']['image']="./modules/cms-ui/themes/default/images/logo.jpg"  ;
     $conf['login']['logo']['url']="http://www.openrat.de"              ;
     $conf['login']['start'] = array();
     $conf['login']['start']['start_lastchanged_object']=true;
