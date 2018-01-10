@@ -20,7 +20,7 @@ class IfComponent extends Component
 		echo <<<'HTML'
 HTML;
 
-		echo '<?php $if'.$this->getDepth().'='.(empty($this->not)?'':'!').'(';
+		echo '<?php $if'.$this->getDepth().'='.(!isset($this->not)?'':'!').'(';
 		if	( !empty($this->true ))
 			echo $this->value($this->true);
 		elseif (! empty($this->false))
