@@ -1,0 +1,47 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<table>
+		<row>
+			<column></column>
+			<column>
+				<text type="emphatic" text="GLOBAL_COMPARE"></text>
+				<text raw="_"></text>
+				<date date="var:date_left"></date>
+			</column>
+			<column></column>
+			<column>
+				<text type="emphatic" text="GLOBAL_WITH"></text>
+				<text raw="_"></text>
+				<date date="var:date_right"></date>
+			</column>
+		</row>
+		<row>
+			<column colspan="4"></column>
+		</row>
+		<list list="diff" extract="true">
+			<row class="diff">
+				<if present="left">
+					<column width="5%" class="line">
+						<text value="arrayvar:left:line" type="tt"></text>
+					</column>
+					<column width="45%" class="arrayvar:left:type">
+						<text value="arrayvar:left:text"></text>
+					</column>
+				</if>
+				<else><column colspan="2" class="help" width="50%"><text raw="_"></text></column></else>
+				<if present="right">
+					<column width="5%" class="line">
+						<text value="arrayvar:right:line" type="tt"></text>
+					</column>
+					<column width="45%" class="arrayvar:right:type">
+						<text value="arrayvar:right:text"></text>
+					</column>
+				</if>
+				<else><column colspan="2" class="help" width="50%"><text raw="_"></text></column></else>
+			</row>
+			<set var="left"></set>
+			<set var="right"></set>
+		</list>
+	</table>
+	<button text="BUTTON_BACK"></button>
+</output>

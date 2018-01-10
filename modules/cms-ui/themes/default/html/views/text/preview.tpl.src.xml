@@ -1,0 +1,14 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+
+	<if true="var:image">
+		<insert url="var:preview_url"></insert>
+	</if>
+	<else>
+		<part class="clickable">
+			<link type="popup" url="var:preview_url" class="action">
+				<text key="LINK_OPEN_IN_NEW_WINDOW" />
+			</link>
+		</part>
+	</else>
+</output> 

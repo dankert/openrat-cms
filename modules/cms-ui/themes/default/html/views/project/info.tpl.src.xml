@@ -1,0 +1,15 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<list list="info">
+		<part class="line">
+			<part class="label">
+				<label for="">
+					<text key="var:list_key" prefix="project_info_"></text>
+				</label>
+			</part>
+			<part class="input">
+				<text type="strong" var="list_value"></text>
+			</part>
+		</part>
+	</list>
+</output>

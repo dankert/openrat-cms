@@ -1,0 +1,13 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form>
+		<part class="line">
+			<part class="label">
+				<label for="name" key="name"></label>
+			</part>
+			<part class="input">
+				<input name="name" class="focus"></input>
+			</part>
+		</part>
+	</form>
+</output>

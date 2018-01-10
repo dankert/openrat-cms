@@ -1,0 +1,147 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header views="pw,remove"></header>
+	<form>
+		<part class="line">
+			<part class="label">
+				<label for="name" key="user_username"></label>
+			</part>
+			<part class="input">
+				<input name="name" size="20" class="name,focus"></input>
+			</part>
+		</part>
+		<group title="message:ADDITIONAL_INFO">
+			<part class="line">
+				<part class="label">
+					<label for="fullname" key="user_fullname"></label>
+				</part>
+				<part class="input">
+					<input name="fullname"></input>
+				</part>
+			</part>
+			<if true="config:security/user/show_admin_mail">
+				<part class="line">
+					<part class="label">
+						<label for="mail" key="user_mail"></label>
+					</part>
+					<part class="input">
+						<input name="mail"></input>
+						<qrcode value="tpl:mailto:{mail}" />
+					</part>
+				</part>
+			</if>
+			<part class="line">
+				<part class="label">
+					<label for="desc" key="user_desc"></label>
+				</part>
+				<part class="input">
+					<input name="desc"></input>
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="tel" key="user_tel"></label>
+				</part>
+				<part class="input">
+					<input name="tel"></input>
+					<qrcode value="tpl:tel:{tel}" />
+					
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="timezone_offset">
+						<text key="timezone" />
+					</label>
+				</part>
+				<part class="input">
+					<selectbox name="timezone" list="timezone_list"
+						addempty="true"></selectbox>
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="">
+						<text key="language" />
+					</label>
+				</part>
+				<part class="input">
+					<selectbox name="language" list="language_list" addempty="true"></selectbox>
+				</part>
+			</part>
+		</group>
+		<group title="message:options">
+			<part class="line">
+				<part class="label"></part>
+				<part class="input">
+					<checkbox name="is_admin"></checkbox>
+					<label for="is_admin" key="user_admin"></label>
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="ldap_dn" key=":user_ldapdn"></label>
+				</part>
+				<part class="input">
+					<input name="ldap_dn"></input>
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="style" key="user_style"></label>
+				</part>
+				<part class="input">
+					<selectbox list="allstyles" name="style"
+						default="config:interface/style/default"></selectbox>
+				</part>
+			</part>
+		</group>
+		<group title="message:security">
+			<part class="line">
+				<part class="label">
+					<text text="user_password_expires" />
+				</part>
+				<part class="input">
+					<date date="var:passwordExpires" />
+				</part>  
+			</part>
+			<part class="line">
+				<part class="label">
+					<text text="user_last_login" />
+				</part>
+				<part class="input">
+					<date date="var:lastLogin" />
+				</part>  
+			</part>
+			<part class="line">
+				<part class="label">
+					<text text="token" />
+				</part>
+				<part class="input">
+					<text value="var:totpToken" />
+				</part>  
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="otpsecret" key="user_totp"></label>
+				</part>
+				<part class="input">
+					<checkbox name="totp"/><label for="totp" key="user_totp"></label>
+				
+					<text var="otpSecret"></text>
+					<qrcode value="var:totpSecretUrl" /> 
+				</part>  
+			</part>
+			<part class="line">
+				<part class="label">
+					<label for="otpsecret" key="user_hotp"></label>
+				</part>
+				<part class="input">
+					<checkbox name="hotp"/><label for="hotp" key="user_hotp"></label>
+				
+					<qrcode value="var:hotpSecretUrl" /> 
+				</part>
+			</part>
+		</group>
+	</form>
+</output>

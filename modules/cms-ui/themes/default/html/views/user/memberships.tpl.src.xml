@@ -1,0 +1,30 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form autosave="true">
+		<table>
+			<row class="headline">
+				<column colspan="2">
+					<text key="group"></text>
+				</column>
+			</row>
+			<list list="memberships" extract="true">
+				<row class="data">
+					<column width="10%">
+						<checkbox name="var:var"></checkbox>
+					</column>
+					<column>
+						<label for="var:var">
+							<image file="icon_group"></image>
+							<text var="name"></text>
+						</label>
+					</column>
+				</row>
+			</list>
+			<row>
+				<column colspan="2" class="act">
+					<button type="ok"></button> 
+				</column>       
+			</row>
+		</table>
+	</form>
+</output>    

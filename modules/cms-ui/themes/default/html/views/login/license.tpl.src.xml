@@ -1,0 +1,26 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<newline />
+	<table>
+		<row class="headline">
+			<column>
+				<text key="name" />
+			</column>
+			<column>
+				<text key="license" />
+			</column>
+		</row>
+		<list list="software" extract="true">
+			<row class="data">
+				<column class="clickable">
+					<link type="external" url="var:url">
+						<text var="name"></text>
+					</link>
+				</column>
+				<column>
+					<text var="license"></text>
+				</column>
+			</row>
+		</list>
+	</table>
+</output>

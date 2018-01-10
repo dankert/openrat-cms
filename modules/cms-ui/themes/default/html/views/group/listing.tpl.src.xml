@@ -1,0 +1,26 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header views="add" />
+			<table>
+				<row class="headline">
+					<column>
+						<text key="name"></text>
+					</column>
+				</row>
+				<list list="el" extract="true">
+					<row class="data">
+						<column url="var:url">
+							<image file="icon_group"></image>
+							<text var="name"></text>
+						</column>
+					</row>
+				</list>
+				<row>
+					<column>
+						<link type="dialog" class="action" action="group" subaction="add">
+							<text key="menu_group_add"></text>
+						</link>
+					</column>
+				</row>
+			</table>
+</output>

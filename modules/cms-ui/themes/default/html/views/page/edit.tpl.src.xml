@@ -1,0 +1,52 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<table>
+		<if not="" empty="el">
+			<row class="headline">
+				<column class="help">
+					<text text="PAGE_ELEMENT_NAME"></text>
+				</column>
+				<column class="help">
+					<text text="PAGE_ELEMENT_VALUE"></text>
+				</column>
+			</row>
+		</if>
+		<if empty="el">
+			<row>
+				<column>
+					<text text="GLOBAL_NOT_FOUND"></text>
+				</column>
+			</row>
+		</if>
+		<list list="el" extract="true">
+			<row class="data">
+				<column class="clickable">
+					<link type="open" title="var:desc" name="var:name" action="pageelement" id="var:pageelementid">
+						<image elementtype="var:type" align="left"></image>
+						<text var="name"></text>
+					</link>
+				</column>
+				<column>
+					<text var="value" maxlength="50"></text>
+					<text raw="_"></text>
+				</column>
+			</row>
+		</list>
+		<!--
+			<row> <column class="help" colspan="3"> <text
+			text="PAGE_ELEMENTS_DESC"></text> </column> </row>
+		-->
+	</table>
+
+	<!--
+		<link action="page" subaction="form"
+		title="message:menu_page_form_desc" class="action"> <text
+		key="menu_page_form"></text> </link>
+	-->
+
+	<group title="message:menu_page_show">
+		<part>
+			<insert url="var:preview_url" name="preview"></insert>
+		</part>
+	</group>
+</output>

@@ -1,0 +1,9 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<insert url="var:preview_url" name="preview"></insert>
+	<part class="clickable">
+		<link type="popup" class="action" url="var:preview_url">
+			<text key="link_open_in_new_window"></text>
+		</link>
+	</part>
+</output>

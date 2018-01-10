@@ -1,0 +1,64 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<table>
+		<row class="headline">
+			<column>
+				<text key="name"></text>
+			</column>
+			<column>
+				<text raw=""></text>
+			</column>
+			<column>
+				<text raw=""></text>
+			</column>
+		</row>
+		<list list="el" extract="true">
+			<row class="data">
+				<column class="clickable">
+					<image file="icon_model"></image>
+
+					<link type="open" name="var:name" action="model" id="var:id">
+						<text var="name" maxlength="25"></text>
+					</link>
+				</column>
+
+				<if present="default_url">
+					<column class="clickable">
+						<link type="post" action="model" subaction="setdefault" id="var:id">
+							<text text="GLOBAL_make_default"></text>
+						</link>
+					</column>
+				</if>
+				<else>
+					<column>
+						<text text="GLOBAL_is_default" type="emphatic" />
+					</column>
+				</else>
+
+
+				<if present="select_url">
+					<column class="clickable">
+						<link type="post" action="start" subaction="model" id="var:id">
+							<text text="GLOBAL_select"></text>
+						</link>
+					</column>
+				</if>
+				<else>
+					<column>
+						<text text="GLOBAL_selected" type="emphatic" />
+					</column>
+				</else>
+			</row>
+			<set var="select_url"></set>
+			<set var="default_url"></set>
+		</list>
+		<row class="data">
+			<column colspan="3" class="clickable">
+				<link type="view" subaction="add">
+					<image icon="add" />
+					<text text="new" />
+				</link>
+			</column>
+		</row>
+	</table>
+</output>

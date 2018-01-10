@@ -1,0 +1,243 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header></header>
+
+	<if true="config:security/disable_dynamic_code">
+		<if value="var:type" equals="code" false="true">
+			<part class="message warn">
+				<text key="NOTICE_CODE_DISABLED" />
+			</part>
+		</if>
+	</if>
+	<form>
+		<group>
+			<if present="subtype">
+				<part class="line">
+					<part class="label">
+						<text text="ELEMENT_SUBTYPE"></text>
+					</part>
+					<part class="input">
+						<if present="subtypes">
+							<selectbox name="subtype" list="subtypes" addempty="true"></selectbox>
+						</if>
+						<if not="true" present="subtypes">
+							<input name="subtype"></input>
+						</if>
+					</part>
+				</part>
+			</if>
+			<if present="with_icon">
+				<part class="line">
+					<part class="label">
+					</part>
+					<part class="input">
+						<checkbox name="with_icon"></checkbox>
+						<label for="with_icon">
+							<text text="EL_PROP_WITH_ICON"></text>
+						</label>
+					</part>
+				</part>
+			</if>
+			<if present="all_languages">
+				<part class="line">
+					<part class="label">
+					</part>
+					<part class="input">
+						<checkbox name="all_languages"></checkbox>
+						<label for="all_languages">
+							<text text="EL_PROP_ALL_LANGUAGES"></text>
+						</label>
+					</part>
+				</part>
+			</if>
+			<if present="writable">
+				<part class="line">
+					<part class="label">
+					</part>
+					<part class="input">
+						<checkbox name="writable"></checkbox>
+						<label for="writable">
+							<text text="EL_PROP_writable"></text>
+						</label>
+					</part>
+				</part>
+			</if>
+			<if present="width">
+				<part class="line">
+					<part class="label">
+						<text text="width"></text>
+					</part>
+					<part class="input">
+						<input size="10" name="width"></input>
+					</part>
+				</part>
+
+			</if>
+			<if present="height">
+				<part class="line">
+					<part class="label">
+						<text text="height"></text>
+					</part>
+					<part class="input">
+						<input size="10" name="height"></input>
+					</part>
+				</part>
+			</if>
+			<if present="dateformat">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_DATEFORMAT"></text>
+					</part>
+					<part class="input">
+						<selectbox name="dateformat" list="dateformats"></selectbox>
+					</part>
+				</part>
+			</if>
+			<if present="format">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_FORMAT"></text>
+					</part>
+					<part class="input">
+						<radiobox name="format" list="formatlist"></radiobox>
+					</part>
+				</part>
+			</if>
+			<if present="decimals">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_DECIMALS"></text>
+					</part>
+					<part class="input">
+						<input size="10" maxlength="2" name="decimals"></input>
+					</part>
+				</part>
+			</if>
+			<if present="dec_point">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_DEC_POINT"></text>
+					</part>
+					<part class="input">
+						<input size="10" maxlength="5" name="dec_point"></input>
+					</part>
+				</part>
+			</if>
+			<if present="thousand_sep">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_thousand_sep"></text>
+					</part>
+					<part class="input">
+						<input size="10" maxlength="1" name="thousand_sep"></input>
+					</part>
+				</part>
+			</if>
+			<if present="default_text">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_default_text"></text>
+					</part>
+					<part class="input">
+						<input size="40" maxlength="255" name="default_text"></input>
+					</part>
+				</part>
+			</if>
+			<if present="default_longtext">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_default_longtext"></text>
+					</part>
+					<part class="input">
+						<inputarea rows="10" name="default_longtext"></inputarea>
+					</part>
+				</part>
+			</if>
+			<if present="parameters">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_DYNAMIC_PARAMETERS"></text>
+					</part>
+					<part class="input">
+						<inputarea rows="15" name="parameters"></inputarea>
+					</part>
+				</part>
+				<part class="line">
+					<part class="label">
+					</part>
+					<part class="input">
+						<list list="dynamic_class_parameters" key="paramName" value="defaultValue">
+							<text var="paramName"></text>
+							<text raw="_("></text>
+							<text text="GLOBAL_DEFAULT"></text>
+							<text raw=")_=_"></text>
+							<text var="defaultValue"></text>
+							<newline></newline>
+						</list>
+					</part>
+				</part>
+			</if>
+			<if present="select_items">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_select_items"></text>
+					</part>
+					<part class="input">
+						<inputarea rows="15" cols="40" name="select_items"></inputarea>
+					</part>
+				</part>
+			</if>
+			<if present="linkelement">
+				<part class="line">
+					<part class="label">
+						<text text="EL_LINK"></text>
+					</part>
+					<part class="input">
+						<selectbox name="linkelement" list="linkelements"></selectbox>
+					</part>
+				</part>
+			</if>
+			<if present="name">
+				<part class="line">
+					<part class="label">
+						<text text="ELEMENT_NAME"></text>
+					</part>
+					<part class="input">
+						<selectbox name="name" list="names"></selectbox>
+					</part>
+				</part>
+			</if>
+			<if present="folderobjectid">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_DEFAULT_FOLDEROBJECT"></text>
+					</part>
+					<part class="input">
+						<selectbox name="folderobjectid" list="folders"></selectbox>
+					</part>
+				</part>
+			</if>
+			<if present="default_objectid">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_DEFAULT_OBJECT"></text>
+					</part>
+					<part class="input">
+						<selectbox name="default_objectid" list="objects"
+							addempty="true"></selectbox>
+					</part>
+				</part>
+			</if>
+			<if present="code">
+				<part class="line">
+					<part class="label">
+						<text text="EL_PROP_code"></text>
+					</part>
+					<part class="input">
+						<inputarea name="code" rows="35"></inputarea>
+					</part>
+				</part>
+			</if>
+		</group>
+	</form>
+</output>

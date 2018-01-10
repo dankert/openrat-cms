@@ -1,0 +1,24 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header views="advanced,remove"></header>
+	<form>
+		<part class="line">
+			<part class="label">
+				<text text="ELEMENT_NAME"></text>
+			</part>
+			<part class="input">
+				<input name="name" class="focus"></input>
+			</part>
+		</part>
+
+		<part class="line">
+			<part class="label">
+				<text text="GLOBAL_DESCRIPTION"></text>
+			</part>
+			<part class="input">
+				<inputarea name="description" rows="5"></inputarea>
+			</part>
+		</part>
+
+	</form>
+</output>

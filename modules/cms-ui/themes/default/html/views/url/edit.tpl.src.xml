@@ -1,0 +1,17 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<form>
+		<group>
+			<part class="line">
+				<part class="label">
+					<text text="link_url"></text>
+				</part>
+				<part class="input">
+					<input name="url"></input>
+				</part>
+			</part>
+
+
+		</group>
+	</form>
+</output>

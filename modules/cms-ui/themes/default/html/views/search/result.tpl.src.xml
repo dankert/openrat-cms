@@ -1,0 +1,26 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<table>
+		<row>
+			<column class="header">
+				<text key="GLOBAL_NAME"></text>
+			</column>
+			<column class="header">
+				<text key="GLOBAL_LASTCHANGE"></text>
+			</column>
+		</row>
+		<list list="result" extract="true">
+			<row class="data">
+				<column class="clickable">
+					<link type="open" action="var:type" name="var:name" id="var:id">
+						<image type="var:type"></image>
+						<text var="name" title="var:desc"></text>
+					</link>
+				</column>
+				<column>
+					<date date="var:lastchange_date"></date>
+				</column>
+			</row>
+		</list>
+	</table>
+</output>

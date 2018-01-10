@@ -1,0 +1,28 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header views="add"></header>
+	<dummy>
+		<window name="GLOBAL_TEMPLATES">
+			<table>
+				<row class="headline">
+					<column>
+						<text key="name"></text>
+					</column>
+				</row>
+				<list list="templates" extract="true">
+					<row class="data">
+						<column url="var:url">
+							<text var="name"></text>
+						</column>
+					</row>
+				</list>
+			</table>
+			<if empty="templates">
+				<text text="GLOBAL_NO_TEMPLATES_AVAILABLE_DESC"></text>
+			</if>
+			<link class="action" action="template" subaction="add">
+				<text key="menu_template_add"></text>
+			</link>
+		</window>
+	</dummy>
+</output>

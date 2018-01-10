@@ -1,0 +1,80 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+	<header back="true" />
+	<form>
+		<group title="message:users">
+			<part class="line">
+				<part class="label">
+					<radio name="type" value="all"></radio>
+					<label for="type" value="all">
+						<text text="GLOBAL_ALL"></text>
+					</label>
+				</part>
+				<part class="input">
+				</part>
+			</part>
+			<part class="line">
+				<part class="label">
+					<radio name="type" value="user"></radio>
+					<label for="type" value="user">
+						<text text="GLOBAL_USER"></text>
+					</label>
+				</part>
+				<part class="input">
+					<selectbox name="userid" list="users" addempty="true"></selectbox>
+				</part>
+			</part>
+			<if present="groups">
+				<part class="line">
+					<part class="label">
+						<radio name="type" value="group"></radio>
+						<label for="type" value="group">
+							<text text="GLOBAL_GROUP"></text>
+						</label>
+					</part>
+					<part class="input">
+						<selectbox name="groupid" list="groups" addempty="true"></selectbox>
+					</part>
+				</part>
+			</if>
+		</group>
+
+		<group title="message:language">
+			<part class="line">
+				<part class="label">
+					<label for="languageid">
+						<text text="GLOBAL_LANGUAGE"></text>
+					</label>
+				</part>
+
+				<part class="input">
+					<selectbox name="languageid" list="languages"></selectbox>
+				</part>
+			</part>
+		</group>
+
+		<group title="message:acl">
+			<part class="line">
+				<part class="label">
+				</part>
+				<part class="input">
+					<list list="show" value="t" key="k">
+						<part>
+							<if value="var:t" equals="read">
+								<set var="var:t" value="true" /> 
+								<checkbox name="var:t" readonly="true"></checkbox>
+							</if>
+							<else>
+								<set var="var:t" value="false" />
+								<checkbox name="var:t" readonly="false"></checkbox>
+							</else>
+							<label for="var:t" value="">
+								<text key="var:t" prefix="acl_"></text>
+							</label>
+						</part>
+					</list>
+				</part>
+			</part>
+		</group>
+	</form>
+</output>
