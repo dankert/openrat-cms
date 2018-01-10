@@ -53,38 +53,11 @@ class ConfigurationAction extends Action
         $conf_default = $conf;
 		
 		$conf_cms = Session::getConfig();
-		$conf_cms['system']['server'] = array( 'time'   => date('r'),
-								               'os'     => php_uname('s'),
-								               'host'   => php_uname('n'),
-								               'release'=> php_uname('r'),
-								               'machine'=> php_uname('m'),
-								               'owner'  => get_current_user(),
-								               'pid'    => getmypid()          );
 
-				
-		$conf_cms['system']['interpreter'] = array( 'version'             => phpversion(),
-								                    'SAPI'                => php_sapi_name(),
-								                    'session-name'        => session_name(),
-								                    'magic_quotes_gpc'    => get_magic_quotes_gpc(),
-								                    'magic_quotes_runtime'=> get_magic_quotes_runtime() );
+        // Language are to much entries
+        unset($conf_cms['language']);
 
-		unset($conf_cms['language']);
-		
-		foreach( array('upload_max_filesize',
-		               'file_uploads',
-		               'memory_limit',
-		               'max_execution_time',
-		               'post_max_size',
-		               'display_errors',
-		               'register_globals'
-		               ) as $iniName )
-			$conf_cms['system']['environment'][ $iniName ] = ini_get( $iniName );
-			
-		$extensions = get_loaded_extensions();
-		asort( $extensions );
-		 
-		foreach( $extensions as $id=>$extensionName )
-			$conf_cms['system']['interpreter'][ 'extension' ][$extensionName] = 'loaded';
+        $conf_cms['system'] = $this->getSystemConfiguration();
 		
 		$flatDefaultConfig = $this->flattenArray('',$conf_default);
 		$flatCMSConfig     = $this->flattenArray('',Session::getConfig());
@@ -113,6 +86,45 @@ class ConfigurationAction extends Action
                 $new[$prefix.$key] = $key=='password'?'*******************':$val;
         }
         return $new;
+    }
+
+    /**
+     * Reads system configuration.
+     * @return array
+     */
+    private function getSystemConfiguration()
+    {
+        $conf['server'] = array('time' => date('r'),
+            'name' => php_uname(),
+            'os' => php_uname('s'),
+            'host' => php_uname('n'),
+            'release' => php_uname('r'),
+            'machine' => php_uname('m'),
+            'owner' => get_current_user(),
+            'pid' => getmypid());
+
+
+        $conf['interpreter'] = array('version' => phpversion(),
+            'SAPI' => php_sapi_name(),
+            'session-name' => session_name(),
+            'magic_quotes_gpc' => get_magic_quotes_gpc(),
+            'loaded_ini_file' => php_ini_loaded_file(),
+            'magic_quotes_runtime' => get_magic_quotes_runtime());
+
+        $conf['interpreter']['server'] = $_SERVER;
+        $conf['interpreter']['environment'] = $_ENV;
+        $conf['interpreter']['temp_dir'] = sys_get_temp_dir();
+
+        $conf['interpreter']['configuration'] = ini_get_all();
+        $conf['resources'] = getrusage();
+
+        $extensions = get_loaded_extensions();
+        asort($extensions);
+
+        foreach ($extensions as $id => $extensionName)
+            $conf['interpreter']['extension'][$extensionName] = 'loaded';
+
+        return $conf;
     }
 
 }
