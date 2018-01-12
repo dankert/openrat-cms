@@ -2184,9 +2184,6 @@ class LoginAction extends Action
             throw new OpenRatException('DATABASE_ERROR_CONNECTION', $e->getMessage());
         }
 
-        // Datenbank aktualisieren, sofern notwendig.
-        require_once(OR_DBCLASSES_DIR . 'DbUpdate.class.' . PHP_EXT);
-
         $updater = new DbUpdate();
         $updater->update($db);
 

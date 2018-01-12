@@ -2,6 +2,7 @@
 
 // Require other modules
 require_once(__DIR__ . '/../database/require.php');
+require_once(__DIR__ . '/../database-update/require.php');
 require_once(__DIR__ . '/../util/require.php');
 require_once(__DIR__ . '/../configuration/require.php');
 require_once(__DIR__ . '/../security/require.php');

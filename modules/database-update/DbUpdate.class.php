@@ -42,7 +42,7 @@ class DbUpdate
 			}
 			
 			$updaterClassName = 'DBVersion'.str_pad($installVersion, 6, '0', STR_PAD_LEFT);
-			require(OR_DBCLASSES_DIR.'update/'.$updaterClassName.'.class.php');
+			require(__DIR__.'/update/'.$updaterClassName.'.class.php');
 
             $db->start();
             /** @var \database\DbVersion $updater */
