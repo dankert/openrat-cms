@@ -21,7 +21,6 @@ define('PHP_EXT'         ,'php'    );
 
 define('IMG_EXT'         ,'.gif'   );
 define('IMG_ICON_EXT'    ,'.png'   );
-define('MAX_FOLDER_DEPTH',5        );
 
 define('OR_VERSION'      ,'1.1-snapshot'  );
 define('OR_TITLE'        ,'OpenRat CMS');
@@ -38,16 +37,11 @@ define('OR_TYPE_URL'   ,'url'   );
 define( 'CMS_ROOT_DIR',__DIR__.'/../../');
 
 define('OR_MODULES_DIR'       ,CMS_ROOT_DIR.'modules/');
-define('OR_ACTIONCLASSES_DIR' ,OR_MODULES_DIR.'cms-core/action/'  );
-define('OR_OBJECTCLASSES_DIR' ,OR_MODULES_DIR.'cms-core/model/'  );
-define('OR_LANGUAGE_DIR'      ,CMS_ROOT_DIR.'language/'       );
-define('OR_DBCLASSES_DIR'     ,CMS_ROOT_DIR.'db/'             );
 define('OR_DYNAMICCLASSES_DIR',OR_MODULES_DIR.'cms-macros/macro/' );
-define('OR_TEXTCLASSES_DIR'   ,OR_MODULES_DIR.'wikiparser/'    );
-define('OR_PREFERENCES_DIR'   ,CMS_ROOT_DIR.'config/');
-define('OR_CONFIG_DIR'        ,OR_PREFERENCES_DIR  );
+define('OR_SERVICECLASSES_DIR',OR_MODULES_DIR.'util/' );
+define('OR_AUTHCLASSES_DIR'   ,OR_MODULES_DIR.'cms-core/auth/' );
 define('OR_TMP_DIR'           ,CMS_ROOT_DIR.'tmp/'            );
-define('OR_CONTROLLER_FILE'   ,'dispatcher');
+
 define('START_TIME'           ,time()              );
 define('REQUEST_ID'           ,'req'.time().rand() );
 
@@ -72,9 +66,6 @@ define('REQ_PARAM_ELEMENT_ID'     ,'elementid'      );
 define('REQ_PARAM_TEMPLATE_ID'    ,'templateid'     );
 define('REQ_PARAM_DATABASE_ID'    ,'dbid'           );
 define('REQ_PARAM_TARGET'         ,'target'         );
-
-define('OR_SERVICECLASSES_DIR',OR_MODULES_DIR.'util/' );
-define('OR_AUTHCLASSES_DIR'   ,OR_MODULES_DIR.'cms-core/auth/' );
 
 
 /**

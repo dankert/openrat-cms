@@ -73,11 +73,6 @@ class Dispatcher
 
         define('FILE_SEP', $conf['interface']['file_separator']);
 
-        define('TEMPLATE_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/templates');
-        define('CSS_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/css');
-        define('IMAGE_DIR', OR_THEMES_DIR . $conf['interface']['theme'] . '/images');
-
-
         // Is this a POST request?
         $this->isAction = $_SERVER['REQUEST_METHOD'] == 'POST';
 
@@ -269,7 +264,7 @@ class Dispatcher
         if (!class_exists($actionClassNameWithNamespace))
         {
             // Laden der Action-Klasse.
-            require_once(OR_ACTIONCLASSES_DIR . '/' . $actionClassName . '.class.php');
+            require_once(__DIR__. '/action/' . $actionClassName . '.class.php');
         }
 
         // Erzeugen der Action-Klasse
