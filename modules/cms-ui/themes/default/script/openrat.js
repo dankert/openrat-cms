@@ -102,47 +102,44 @@ function refreshWorkbench()
 {
 	// Workbench laden
 	$('ul#history').empty();
-	$('div#workbench').empty().fadeOut('fast').load(createUrl('workbench','show',0),null,function() {
 
-		
-		// View-Größe initial berechnen.
-		resizeWorkbench();
-		
-		// Modale Dialoge beenden
-		$('div.modaldialog').fadeOut(500);
-		$('div#workbench').removeClass('modal');
-		$('div#filler').fadeOut(500);
+	// View-Größe initial berechnen.
+	resizeWorkbench();
 
-		// Default-Inhalte der einzelnen Views laden.
-		$(this).fadeIn(750).find('li.active').each( function() {
-			var method = $(this).attr('data-method');
-			var action = $(this).attr('data-action');
-			
-			if	( action )
-				loadView( $(this).closest('div.panel').find('div.content'),action,method,0);
-		});
+	// Modale Dialoge beenden
+	$('div.modaldialog').fadeOut(500);
+	$('div#workbench').removeClass('modal');
+	$('div#filler').fadeOut(500);
 
-		// OnClick-Handler zum Scrollen der Tabs
-		$('div.backward_link').click( function() {
-			var $views = $(this).closest('div.header').find('ul.views');
-			//$views.scrollTo( -50 );
-			var $prev = $views.find('li.action.active').prev();
-			$views.scrollTo( $prev,500,{"axis":"x"} );
-			$prev.click();
-		}
-		);
-		$('div.forward_link').click( function() {
-			var $views = $(this).closest('div.header').find('ul.views');
-			var $next  = $views.find('li.action.active').next();
-			$views.scrollTo( $next,500,{"axis":"x"} );
-			$next.click();
-		}
-		);
-		
+	// Default-Inhalte der einzelnen Views laden.
+	$('div#workbench').fadeIn(750).find('li.active').each( function() {
+		var method = $(this).attr('data-method');
+		var action = $(this).attr('data-action');
 
-
-		registerWorkbenchEvents();
+		if	( action )
+			loadView( $(this).closest('div.panel').find('div.content'),action,method,0);
 	});
+
+	// OnClick-Handler zum Scrollen der Tabs
+	$('div.backward_link').click( function() {
+		var $views = $(this).closest('div.header').find('ul.views');
+		//$views.scrollTo( -50 );
+		var $prev = $views.find('li.action.active').prev();
+		$views.scrollTo( $prev,500,{"axis":"x"} );
+		$prev.click();
+	}
+	);
+	$('div.forward_link').click( function() {
+		var $views = $(this).closest('div.header').find('ul.views');
+		var $next  = $views.find('li.action.active').next();
+		$views.scrollTo( $next,500,{"axis":"x"} );
+		$next.click();
+	}
+	);
+
+
+
+	registerWorkbenchEvents();
 
 	
 
