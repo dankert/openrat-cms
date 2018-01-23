@@ -11,9 +11,9 @@ default=tree
 
 [content]
 
-views=
-default=
-action=
+views=login:login,login:openid,login:register
+default=edit
+modal=true
 
 [side]
 
