@@ -31,21 +31,20 @@
 <?php foreach( $cssFiles as $cssFile) { ?>  <link rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
 <?php } ?>
   <link rel="stylesheet" type="text/css" href="<?php echo Html::url('index','themestyle') ?>" />
+  <meta name="theme-color" content="<?php echo $themeColor ?>" />
+  <link rel="manifest" href="<?php echo Html::url('index','manifest') ?>" />
 </head>
 
 <body>
 
 
-<div id="noticebar">
-</div>
-
-<div id="header">
+<header id="header" class="initial-hidden">
 	<ul id="history">
 	</ul>
-</div>
+</header>
 
 
-<div id="workbench">
+<main id="workbench" class="initial-hidden">
 
     <?php
     global $viewconfig;
@@ -98,18 +97,23 @@
 
     </div>
 
-</div>
+</main>
 
-
+<?php /* Modal dialog */ ?>
 <div id="dialog" class="panel wide">
 </div>
-
-
-<div class="noscript"><em>Javascript is required to view this site</em></div>
 
 <div id="filler">
 </div>
 
+<div id="noticebar">
+</div>
+
+<footer class="initial-hidden" id="footer">
+
+</footer>
+
+<noscript><div class="noscript"><em>Javascript is required to view this site</em></div></noscript>
 
 </body>
 </html>

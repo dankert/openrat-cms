@@ -4,12 +4,16 @@ var DEFAULT_CONTENT_ACTION = 'edit';
 
 var OR_THEMES_EXT_DIR = 'modules/cms-ui/themes/';
 
-$(document).ready(function()
+// Execute after DOM ready:
+$( function()
 {
 	// JS is available.
     $('html').removeClass('nojs');
 
-	refreshAll();
+    /* Fade in all elements. */
+    $('.initial-hidden').removeClass('initial-hidden');
+
+    refreshAll();
 	
 	// Alle 5 Minuten pingen.
 	window.setInterval( function(){ping();}, 300000 );
@@ -51,7 +55,7 @@ function refreshAll()
 			$('div#dialog').html('').hide();  // Dialog beenden
 			
 			//$('div.modaldialog').fadeOut(500); 
-			//$('div#workbench').removeClass('modal'); // Modalen Dialog beenden.
+			//$('#workbench').removeClass('modal'); // Modalen Dialog beenden.
 			$('div#filler').fadeOut(500); // Filler beenden
 
 		}
@@ -64,7 +68,7 @@ function refreshAll()
 function refreshAllRefreshables()
 {
 	// Default-Inhalte der einzelnen Views laden.
-	$('div#workbench div.panel > div.header > ul.views > li.active').each( function() {
+	$('#workbench div.panel > div.header > ul.views > li.active').each( function() {
 		if	( $(this).hasClass('static') )
 			return;
 		
@@ -108,11 +112,11 @@ function refreshWorkbench()
 
 	// Modale Dialoge beenden
 	$('div.modaldialog').fadeOut(500);
-	$('div#workbench').removeClass('modal');
+	$('#workbench').removeClass('modal');
 	$('div#filler').fadeOut(500);
 
 	// Default-Inhalte der einzelnen Views laden.
-	$('div#workbench').fadeIn(750).find('li.active').each( function() {
+	$('#workbench').fadeIn(750).find('li.active').each( function() {
 		var method = $(this).attr('data-method');
 		var action = $(this).attr('data-action');
 
@@ -300,11 +304,11 @@ function registerWorkbenchEvents()
 	//$('ul.views').sortable();
 
 	// Modalen Dialog erzeugen.
-	if	( $('div#workbench div.panel.modal').length > 0 )
+	if	( $('#workbench div.panel.modal').length > 0 )
 	{
-		$('div#workbench div.panel.modal').parent().addClass('modal');
+		$('#workbench div.panel.modal').parent().addClass('modal');
 		$('div#filler').fadeTo(500,0.5);
-		$('div#workbench').addClass('modal');
+		$('#workbench').addClass('modal');
 	}
 	
 	
@@ -374,7 +378,7 @@ function registerWorkbenchEvents()
  */
 function refreshTitleBar()
 {
-	$('div#header').load( createUrl('title','show',0 ),function() {
+	$('#header').load( createUrl('title','show',0 ),function() {
 		$(this).fadeIn('slow');
 
 		registerHeaderEvents();
@@ -541,19 +545,19 @@ function registerHeaderEvents()
         $('.toolbar-icon.menu').parent().removeClass('open');
     });
     // Mit der Maus geklicktes Menü aktivieren.
-    $('div#header .toolbar-icon.menu').click( function(event) {
+    $('#header .toolbar-icon.menu').click( function(event) {
         event.stopPropagation();
         $(this).parent().toggleClass('open');
     });
 
     // Mit der Maus überstrichenes Menü aktivieren.
-    $('div#header .toolbar-icon.menu').mouseover( function() {
+    $('#header .toolbar-icon.menu').mouseover( function() {
         $(this).parent().find('.toolbar-icon.menu').removeClass('open');
         $(this).addClass('open');
     });
 
 
-    $('div#header').trigger('orHeaderLoaded');
+    $('#header').trigger('orHeaderLoaded');
 	
 
 	//   S u c h e
@@ -570,8 +574,8 @@ function registerHeaderEvents()
 	/*
 	 * 
 	// V e r l a u f
-	$('div#header div.history').hover( function(){
-		$('div#header div.history div.dropdown').html('');
+	$('#header div.history').hover( function(){
+		$('#header div.history div.dropdown').html('');
 		$.ajax( { 'type':'GET', url:'./dispatcher.php?action=title&subaction=history', data:null, success:function(data, textStatus, jqXHR)
 			{
 				for( id in data.history )
@@ -579,10 +583,10 @@ function registerHeaderEvents()
 					var result = data.history[id];
 					
 					// Suchergebnis-Zeile in das Ergebnis schreiben.
-					$('div#header div.history div.dropdown').append('<div title="'+result.desc+'" onclick="loadViewByName(\'content\',\''+result.url+'\');"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</div>');
+					$('#header div.history div.dropdown').append('<div title="'+result.desc+'" onclick="loadViewByName(\'content\',\''+result.url+'\');"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</div>');
 				}
 			} } );
-		$('div#header div.history div.dropdown').fadeIn();
+		$('#header div.history div.dropdown').fadeIn();
 	});
 	 */
 
@@ -721,8 +725,8 @@ function startDialog( name,action,method,id,params )
 
 	loadView( $('div#dialog div.content'), action,method,id,params );
 	
-	//$('div#workbench div.panel.modal').parent().addClass('modal');
-	//$('div#workbench').addClass('modal');
+	//$('#workbench div.panel.modal').parent().addClass('modal');
+	//$('#workbench').addClass('modal');
 
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
@@ -827,14 +831,14 @@ function openNewAction( name,action,id,extraId )
 					// Memory-Leak zu erzeugen ;)
 					var action = $(this).closest('li.action').data('action');
 					var id     = $(this).closest('li.action').data('id'    );
-					$('div#workbench div.content > div.sheet.action-'+action+'.id-'+id).remove();
+					$('#workbench div.content > div.sheet.action-'+action+'.id-'+id).remove();
 					
 					// Schließen
 					// Wenn aktiver Tab, dann den Inhalt loeschen
 					if	( $(this).closest('li.action').hasClass('active') )
 					{
 						//$(this).closest('div.panel').find('div.content').html(''); // Inhalt entfernen
-						$('div#workbench div.refreshable div.content').html('');
+						$('#workbench div.refreshable div.content').html('');
 						
 						var views = $(this).closest('ul.views');
 						
@@ -908,7 +912,7 @@ function filterMenus(action)
 function setNewAction( action,id,extraId )
 {
 	filterMenus(action);
-	$('div#workbench ul.views > li.action.dependent').attr('data-action',action).attr('data-id',id).attr('data-extra',JSON.stringify(extraId));
+	$('#workbench ul.views > li.action.dependent').attr('data-action',action).attr('data-id',id).attr('data-extra',JSON.stringify(extraId));
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	refreshAllRefreshables();
@@ -921,7 +925,7 @@ function setNewAction( action,id,extraId )
  */
 function setNewId( id )
 {
-	$('div#workbench div.refreshable').attr('data-id',id);
+	$('#workbench div.refreshable').attr('data-id',id);
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	refreshAllRefreshables();
 }
@@ -1196,7 +1200,7 @@ function resizeWorkbench()
 	
 	var titleHeight = 40;
 	
-	var container = $('div#workbench > div.container');
+	var container = $('#workbench > div.container');
 	
 	// Verfügbare Breite der Workbench ist Fensterbreite - Innenabstand der Workbench (2*3px)
 	container.css('width' ,''+(viewportWidth-6)+'px');
