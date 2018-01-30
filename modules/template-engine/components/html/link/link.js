@@ -9,7 +9,7 @@ $(document).on('orViewLoaded',function(event, data) {
 $(document).on('orHeaderLoaded',function(event, data) {
 	
 	// Links aktivieren...
-	$('div#header .clickable').orLinkify();
+	$('#header .clickable').orLinkify();
 	
 });
 
