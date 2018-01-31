@@ -55,7 +55,7 @@ jQuery.fn.orTree = function( options )
 						//$(new_li).children('div.entry').draggable( {cursor:'move',revert: 'invalid' });
 					}
 					
-					if	($(new_li).parents('ul.tree').length <= 2 )
+					if	($(new_li).parents('ul.tree').length <= 1 )
 					{
 						// Falls eine bestimmte Tiefe nicht erreicht ist, dann
 						// den Pfad auch gleich öffnen.
