@@ -102,7 +102,12 @@ class Project extends ModelBase
 	}
 
 
-	public function getLanguages()
+    /**
+     * Liefert die Sprachen des Projektes.
+     *
+     * @return array Id->Name
+     */
+    public function getLanguages()
 	{
 		$db = db_connection();
 

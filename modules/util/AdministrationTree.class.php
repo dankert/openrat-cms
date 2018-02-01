@@ -194,7 +194,7 @@ class AdministrationTree extends AbstractTree
 			$treeElement->description = lang('FOLDER_ROOT_DESC');
 			$treeElement->icon        = 'folder';
 			$treeElement->action      = 'folder';
-			$treeElement->url         = Html::url( 'folder','',$folder->objectid,array(REQ_PARAM_TARGET=>'content') );
+//			$treeElement->url         = Html::url( 'folder','',$folder->objectid,array(REQ_PARAM_TARGET=>'content') );
 			$treeElement->target      = 'content';
 			$treeElement->type        = 'folder';
 			$treeElement->internalId  = $folder->objectid;
@@ -206,9 +206,10 @@ class AdministrationTree extends AbstractTree
 		{
 			// Templates
 			$treeElement = new TreeElement();
-			$treeElement->id         = 0;
+			$treeElement->id         = $projectid;
+			$treeElement->internalId = $projectid;
 			$treeElement->text       = lang('GLOBAL_TEMPLATES');
-			$treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
+//			$treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 			$treeElement->description= lang('GLOBAL_TEMPLATES_DESC');
 			$treeElement->icon       = 'templatelist';
 			$treeElement->action     = 'templatelist';
@@ -221,10 +222,11 @@ class AdministrationTree extends AbstractTree
 		// Sprachen
 		$treeElement = new TreeElement();
 		$treeElement->description= '';
-		$treeElement->id          = 0;
+		$treeElement->id          = $projectid;
+        $treeElement->internalId = $projectid;
 		$treeElement->action     = 'languagelist';
 		$treeElement->text       = lang('GLOBAL_LANGUAGES');
-		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
+//		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 		$treeElement->icon       = 'languagelist';
 		$treeElement->description= lang('GLOBAL_LANGUAGES_DESC');
 		$treeElement->target     = 'content';
@@ -244,10 +246,11 @@ class AdministrationTree extends AbstractTree
 		if	( $this->userIsProjectAdmin )
 			$treeElement->type   = 'models';
 	
-		$treeElement->id          = 0;
+		$treeElement->id         = $projectid;
+        $treeElement->internalId = $projectid;
 		$treeElement->description= lang('GLOBAL_MODELS_DESC');
 		$treeElement->text       = lang('GLOBAL_MODELS');
-		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
+//		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 		$treeElement->action     = 'modellist';
 		$treeElement->icon       = 'modellist';
 		$treeElement->target     = 'content';
@@ -264,9 +267,10 @@ class AdministrationTree extends AbstractTree
 	
 		// Suche
 		$treeElement = new TreeElement();
-		$treeElement->id          = 0;
+        $treeElement->id         = $projectid;
+        $treeElement->internalId = $projectid;
 		$treeElement->text        = lang('GLOBAL_SEARCH');
-		$treeElement->url         = Html::url('search','',0,array(REQ_PARAM_TARGET=>'content'));
+//		$treeElement->url         = Html::url('search','',0,array(REQ_PARAM_TARGET=>'content'));
 		$treeElement->action      = 'search';
 		$treeElement->icon        = 'search';
 		$treeElement->description = lang('GLOBAL_SEARCH_DESC');
@@ -908,9 +912,11 @@ class AdministrationTree extends AbstractTree
     }
 
 
-    function templates()
+    function templates( $projectid )
     {
-        foreach( Template::getAll() as $id=>$name )
+        $project = new Project($projectid);
+
+        foreach( $project->getTemplates() as $id=>$name )
         {
             $treeElement = new TreeElement();
 
@@ -968,14 +974,13 @@ class AdministrationTree extends AbstractTree
     /**
      * Sprachen
      */
-    function languages()
+    function languages( $projectid )
     {
         // Sprachvarianten
         //
-        $l = Session::getProjectLanguage();
-        $languages = $l->getAll();
+        $project = new Project($projectid);
 
-        foreach( $languages as $languageid=>$name )
+        foreach( $project->getLanguages() as $languageid=>$name )
         {
             $treeElement = new TreeElement();
             $treeElement->id          = $languageid;
@@ -993,12 +998,12 @@ class AdministrationTree extends AbstractTree
 
     // Projektvarianten
     //
-    function models()
+    function models( $projectid )
     {
-        $m = Session::getProjectModel();
-        $models = $m->getAll();
 
-        foreach( $models as $id=>$name )
+        $project = new Project($projectid);
+
+        foreach( $project->getModels() as $id=>$name )
         {
             $treeElement = new TreeElement();
             $treeElement->id          = $id;
