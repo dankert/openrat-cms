@@ -52,6 +52,7 @@ class FolderAction extends ObjectAction
     public function __construct()
 	{
 		$this->folder = new Folder( $this->getRequestId() );
+		$this->folder->languageid = $this->getRequestVar('languageid');
 		$this->folder->load();
 	}
 

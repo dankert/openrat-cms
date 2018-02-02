@@ -43,8 +43,10 @@ class AdministrationTree extends AbstractTree
 	 */
 	var $elements;
 	var $confCache = array();
-	
-	function root()
+
+    private $userIsProjectAdmin;
+
+    function root()
 	{
 		if	( !$this->userIsAdmin )
             throw new \SecurityException('Administration-Tree is only visible for admins.');
@@ -179,7 +181,8 @@ class AdministrationTree extends AbstractTree
 		$folder = new Folder( $project->getRootObjectId() );
 		$folder->load();
 	
-	
+		$defaultLanguageId = $project->getDefaultLanguageId();
+
 		// Ermitteln, ob der Benutzer Projektadministrator ist
 		// Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
 		if   ( $folder->hasRight( ACL_PROP ) )
@@ -192,7 +195,8 @@ class AdministrationTree extends AbstractTree
 			//			$treeElement->text        = $folder->name;
 			$treeElement->text        = lang('FOLDER_ROOT');
 			$treeElement->description = lang('FOLDER_ROOT_DESC');
-			$treeElement->icon        = 'folder';
+            $treeElement->extraId['languageid'] =  $defaultLanguageId;
+            $treeElement->icon        = 'folder';
 			$treeElement->action      = 'folder';
 //			$treeElement->url         = Html::url( 'folder','',$folder->objectid,array(REQ_PARAM_TARGET=>'content') );
 			$treeElement->target      = 'content';
@@ -607,6 +611,8 @@ class AdministrationTree extends AbstractTree
     function page( $id )
     {
         $page = new Page( $id );
+        $page->languageid = $_REQUEST['languageid'];
+
         $page->load();
 
         $template = new Template( $page->templateid );
@@ -628,6 +634,8 @@ class AdministrationTree extends AbstractTree
                         REQ_PARAM_TARGETSUBACTION=>'edit',REQ_PARAM_TARGET=>'content'));
                 $treeElement->action = 'pageelement';
                 $treeElement->icon = 'el_'.$element->type;
+                $treeElement->extraId = array('languageid'=>$page->languageid);
+
 
                 $treeElement->description = lang('EL_'.$element->type);
                 if	( $element->desc != '' )
@@ -642,6 +650,7 @@ class AdministrationTree extends AbstractTree
                     $value = new Value();
                     $value->pageid  = $page->pageid;
                     $value->element = $element;
+                    $value->languageid = $page->languageid;
                     $value->load();
                     $treeElement->internalId = $value->valueid;
                 }
@@ -696,38 +705,36 @@ class AdministrationTree extends AbstractTree
         $link = new Link( $id );
         $link->load();
 
-        if	( $link->isLinkToObject )
+        $o = new Object( $link->linkedObjectId );
+        $o->load();
+
+        $treeElement = new TreeElement();
+        $treeElement->id         = $o->objectid;
+        $treeElement->internalId = $o->objectid;
+        $treeElement->target     = 'content';
+        $treeElement->text       = $o->name;
+        $treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$id;
+
+        if	( $o->desc != '' )
+            $treeElement->description .= ': '.$o->desc;
+        else
+            $treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+
+        $treeElement->url        = Html::url($o->getType(),'',$o->objectid,array(REQ_PARAM_TARGET=>'content') );
+        $treeElement->action     = $o->getType();
+        $treeElement->icon       = $o->getType();
+        $treeElement->extraId    = array('languageid'=>$_REQUEST['languageid']);
+
+        // Besonderheiten fuer bestimmte Objekttypen
+
+        if   ( $o->isPage )
         {
-            $o = new Object( $link->linkedObjectId );
-            $o->load();
-
-            $treeElement = new TreeElement();
-            $treeElement->id         = $o->objectid;
-            $treeElement->internalId = $o->objectid;
-            $treeElement->target     = 'content';
-            $treeElement->text       = $o->name;
-            $treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$id;
-
-            if	( $o->desc != '' )
-                $treeElement->description .= ': '.$o->desc;
-            else
-                $treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-
-            $treeElement->url        = Html::url($o->getType(),'',$o->objectid,array(REQ_PARAM_TARGET=>'content') );
-            $treeElement->action     = $o->getType();
-            $treeElement->icon       = $o->getType();
-
-            // Besonderheiten fuer bestimmte Objekttypen
-
-            if   ( $o->isPage )
-            {
-                // Nur wenn die Seite beschreibbar ist, werden die
-                // Elemente im Baum angezeigt
-                if   ( $o->hasRight( ACL_WRITE ) )
-                    $treeElement->type='pageelements';
-            }
-            $this->addTreeElement( $treeElement );
+            // Nur wenn die Seite beschreibbar ist, werden die
+            // Elemente im Baum angezeigt
+            if   ( $o->hasRight( ACL_WRITE ) )
+                $treeElement->type='pageelements';
         }
+        $this->addTreeElement( $treeElement );
     }
 
 
@@ -743,6 +750,7 @@ class AdministrationTree extends AbstractTree
 
         $f = new Folder( $id );
         $t = time();
+        $f->languageid = $_REQUEST['languageid'];
 
         foreach( $f->getObjects() as $o )
         {
@@ -753,6 +761,7 @@ class AdministrationTree extends AbstractTree
             $treeElement = new TreeElement();
             $treeElement->id         = $o->objectid;
             $treeElement->internalId = $o->objectid;
+            $treeElement->extraId    = array('languageid'=>$f->languageid);
             $treeElement->target     = 'content';
             $treeElement->text       = $o->name;
             $treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$o->objectid;

@@ -72,12 +72,12 @@ function refreshAllRefreshables()
 		if	( $(this).hasClass('static') )
 			return;
 		
-		var method  = $(this).attr('data-method');
-		var action  = $(this).attr('data-action');
-		var id      = $(this).attr('data-id');
-		var extraid = $(this).attr('data-extra');
+		var method  = $(this).data('method');
+		var action  = $(this).data('action');
+		var id      = $(this).data('id');
+		var extraid = $(this).data('extra');
 		
-		loadView( $(this).closest('div.panel').find('div.content'),action,method,id);
+		loadView( $(this).closest('div.panel').find('div.content'),action,method,id,extraid);
 	});
 	
 }
@@ -641,8 +641,8 @@ function loadTree()
 		
 		// Wurzel des Baums laden
 		//loadBranch( $('div#tree ul.tree > li'),'root',0);
-		$('div#panel-tree div.content > div.sheet.action-tree.method-tree').orTree( { type:'root',id:0,onSelect:function(name,type,id) {
-			openNewAction( name,type,id, '' );
+		$('div#panel-tree div.content > div.sheet.action-tree.method-tree').orTree( { type:'root',id:0,onSelect:function(name,type,id,extraId) {
+			openNewAction( name,type,id, extraId );
 		} });
 		
 		// Die ersten 2 Hierarchien öffnen:
@@ -817,9 +817,16 @@ function openNewAction( name,action,id,extraId )
 		var maxTabs = 7;
 		if	( $('div#panel-content > div.header > ul.views > li.action').length >= maxTabs )
 			$('div#panel-content > div.header > ul.views > li.action').first().remove();
-				
-		$('div#panel-content > div.header > ul.views').append('<li class="action active '+action+' id'+id+'" title="'+name+'" data-action="'+action+'"  data-id="'+id+'" data-method="'+DEFAULT_CONTENT_ACTION+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><div class="tabname">'+name+'</div><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
-		resizeTabs( $('div#contentbar'),true);
+
+		var newLi = $('<li class="action active '+action+' id'+id+'" title="'+name+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><div class="tabname">'+name+'</div><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
+		$('div#panel-content > div.header > ul.views').append(newLi);
+
+        newLi.data('action',action);
+        newLi.data('id',id);
+        newLi.data('extra',extraId);
+        newLi.data('method',DEFAULT_CONTENT_ACTION);
+
+        resizeTabs( $('div#contentbar'),true);
 		$('div#panel-content > div.header > ul.views').scrollLeft(9999);
 		
 		// Klick auf den "Schließen"-Knopf
@@ -912,7 +919,7 @@ function filterMenus(action)
 function setNewAction( action,id,extraId )
 {
 	filterMenus(action);
-	$('#workbench ul.views > li.action.dependent').attr('data-action',action).attr('data-id',id).attr('data-extra',JSON.stringify(extraId));
+	$('#workbench ul.views > li.action.dependent').data('action',action).data('id',id).data('extra',extraId);
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	refreshAllRefreshables();
@@ -1109,9 +1116,9 @@ function createUrl(action,subaction,id,extraid)
 	}
 	else if	( typeof extraid === 'object')
 	{
-		url += '?0=0';
+        url += '?action='+action+'&subaction='+subaction+'&id='+id;
 		jQuery.each(extraid, function(name, field) {
-			url = url + '&' + field.name + '=' + field.value;
+			url = url + '&' + name + '=' + field;
 		});
 	}
 	else

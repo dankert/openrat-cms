@@ -57,8 +57,11 @@ class TemplatelistAction extends Action
 		global $conf_php;
 
 		$list = array();
-	
-		foreach( Template::getAll() as $id=>$name )
+
+		$template = new Template();
+		$template->projectid = $this->getRequestId();
+
+		foreach( $template::getAll() as $id=>$name )
 		{
 			$list[$id] = array();
 			$list[$id]['name'] = $name;
