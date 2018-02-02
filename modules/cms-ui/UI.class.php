@@ -48,8 +48,9 @@ class UI
 
             $data = $dispatcher->doAction();
 
-            // The action is able to change its method name.
+            // The action is able to change its method and action name.
             $subaction = $dispatcher->subaction;
+            $action    = $dispatcher->action;
 
             header('Content-Type: text/html; charset=UTF-8');
 

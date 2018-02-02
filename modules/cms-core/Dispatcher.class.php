@@ -291,8 +291,7 @@ class Dispatcher
             // GET-Request => ...View() wird aufgerufen.
             $subactionMethodName = $this->subaction . 'View';
             // Daten werden nur angezeigt, die Sitzung kann also schon geschlossen werden.
-            if ($this->action != 'index') // In Index wird die Perspektive manipuliert.
-                Session::close();
+            Session::close();
         }
 
         Logger::debug("Executing {$this->action}/{$this->subaction}/" . @$REQ[REQ_PARAM_ID]);
@@ -304,6 +303,7 @@ class Dispatcher
 
         // The action is able to change its method name.
         $this->subaction = $do->subActionName;
+        $this->action    = $do->actionName;
 
         $result = $do->getOutputData();
 

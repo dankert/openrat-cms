@@ -21,7 +21,7 @@
 					</label>
 				</part>
 				<part class="input">
-					<selectbox name="userid" list="users" addempty="true"></selectbox>
+					<selectbox name="userid" list="users" addempty="true" default=""></selectbox>
 				</part>
 			</part>
 			<if present="groups">
@@ -33,7 +33,7 @@
 						</label>
 					</part>
 					<part class="input">
-						<selectbox name="groupid" list="groups" addempty="true"></selectbox>
+						<selectbox name="groupid" list="groups" addempty="true" default=""></selectbox>
 					</part>
 				</part>
 			</if>
@@ -48,7 +48,7 @@
 				</part>
 
 				<part class="input">
-					<selectbox name="languageid" list="languages"></selectbox>
+					<selectbox name="languageid" list="languages" default=""></selectbox>
 				</part>
 			</part>
 		</group>
