@@ -1,6 +1,7 @@
 <?php
 
 use cms\model\File;
+use cms\model\Image;
 use cms\model\Object;
 
 /**
@@ -327,7 +328,7 @@ class HtmlRenderer
 							$attr['border'] = '0';
 							
 							// Breite/H�he des Bildes bestimmen.
-							$image = new File( $child->objectId );
+							$image = new Image( $child->objectId );
 							
 							$image->load();
 							$attr['alt'   ]    = $image->name;

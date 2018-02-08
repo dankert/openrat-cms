@@ -34,6 +34,7 @@ class ConfigurationAction extends Action
 	 */
 	function __construct()
 	{
+        parent::__construct();
 	}
 
 

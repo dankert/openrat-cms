@@ -67,6 +67,11 @@ class Page extends Object
 
     public $values;
 
+    /**
+     * Inhalt der Seite.
+     */
+    public $value;
+
 
     function __construct( $objectid='' )
 	{
@@ -156,7 +161,10 @@ class Page extends Object
 		if	( ! Object::available( $objectid) )
 			return '';
 			
-		$param = array('oid'=>'__OID__'.$objectid.'__'); 
+		$param = array(
+			'oid'                 => '__OID__'.$objectid.'__',
+			REQ_PARAM_MODEL_ID    => $this->modelid          ,
+			REQ_PARAM_LANGUAGE_ID => $this->languageid        );
 		
 		if	( $this->icons )
 			$param['withIcons'] = '1';
@@ -620,10 +628,8 @@ class Page extends Object
 	/**
 	  * Erzeugen der Inhalte zu allen Elementen dieser Seite
 	  * wird von generate() aufgerufen
-	  *
-	  * @access private 
 	  */
-	function generate_elements()
+	public function generate_elements()
 	{
 		$this->values = array();
 		
@@ -657,7 +663,7 @@ class Page extends Object
 	  * 
 	  * @return String Inhalt
 	  */
-	function generate()
+	public function generate()
 	{
 		global $conf;
 		
@@ -754,7 +760,7 @@ class Page extends Object
 	/**
 	  * Schreiben des Seiteninhaltes in die temporaere Datei
 	  */
-	function write()
+	public function write()
 	{
 		if	( !is_file($this->tmpfile()))
 			$this->generate();
@@ -764,7 +770,7 @@ class Page extends Object
 	/**
 	 * Generieren dieser Seite in Dateisystem und/oder auf FTP-Server
 	 */
-	function publish()
+	public function publish()
 	{
 		global $SESS;
 		$db = db_connection();
@@ -880,6 +886,11 @@ class Page extends Object
 	{
 		return $this->mimeType()=='text/html';
 	}
+
+    public function __toString()
+    {
+    	return 'Id '.$this->pageid.' (filename='.$this->filename.',language='.$this->languageid.', modelid='.$this->modelid.', templateid='.$this->templateid.')';
+    }
 }
 
 

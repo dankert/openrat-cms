@@ -39,11 +39,17 @@ use cms\model\Link;
 
 class ObjectAction extends Action
 {
+
 	public $security = SECURITY_USER;
 	
 	private $objectid;
 
-	public function copyView()
+	public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function copyView()
 	{
 		$this->actionName = 'object';
 		global $conf_php;

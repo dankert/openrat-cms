@@ -11,17 +11,6 @@ namespace {
     define('OR_NOTICE_WARN', 'warning');
     define('OR_NOTICE_ERROR', 'error');
 
-    define('OR_FILTER_ALPHA', 'abc');
-    define('OR_FILTER_ALPHANUM', 'abc123');
-    define('OR_FILTER_FILENAME', 'file');
-    define('OR_FILTER_MAIL', 'mail');
-    define('OR_FILTER_TEXT', 'text');
-    define('OR_FILTER_FULL', 'full');
-    define('OR_FILTER_NUMBER', '123');
-    define('OR_FILTER_RAW', 'raw');
-    define('OR_FILTER_ALL', 'all');
-
-
 }
 
 
@@ -68,6 +57,11 @@ namespace cms\action {
          */
         var $currentUser;
 
+        /**
+         * @var RequestParams
+         */
+        protected $request;
+
 
         protected function setStyle($style)
         {
@@ -81,16 +75,12 @@ namespace cms\action {
         }
 
 
-        /**
-         * Wird durch das Controller-Skript (do.php) nach der Kontruierung des Objektes aufgerufen.
-         * So koennen Unterklassen ihren eigenen Kontruktor besitzen, ohne den Superkontruktor
-         * (=diese Funktion) aufrufen zu m�ssen.
-         */
-        public function init()
+        public function __construct()
         {
-            global $conf;
-            $this->writable = !$conf['security']['readonly'];
-            $this->publishing = !$conf['security']['nopublish'];
+            $this->request =  new RequestParams();
+
+            $this->writable   = !config('security','readonly');
+            $this->publishing = !config('security','nopublish');
             $this->currentUser = Session::getUser();
 
             $this->templateVars['errors'] = array();
@@ -99,9 +89,19 @@ namespace cms\action {
             $this->templateVars['output'] = array();
 
             if(!headers_sent())
-                header('Content-Language: ' . $conf['language']['language_code']);
+                header('Content-Language: ' . config('language','language_code') );
 
             $this->refresh = false;
+        }
+
+        /**
+         * Wird durch das Controller-Skript (do.php) nach der Kontruierung des Objektes aufgerufen.
+         * So koennen Unterklassen ihren eigenen Kontruktor besitzen, ohne den Superkontruktor
+         * (=diese Funktion) aufrufen zu m�ssen.
+         */
+        public function init()
+        {
+
         }
 
 
@@ -145,66 +145,7 @@ namespace cms\action {
          */
         protected function getRequestVar($varName, $transcode = OR_FILTER_FULL)
         {
-            global $REQ;
-
-            if (!isset($REQ[$varName]))
-                return '';
-
-
-            switch ($transcode) {
-                case OR_FILTER_ALPHA:
-                    $white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-                    break;
-
-                case OR_FILTER_ALPHANUM:
-                    $white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,_-!?%&/()';
-                    break;
-
-                case OR_FILTER_FILENAME:
-                    // RFC 1738, Section 2.2:
-                    // Thus, only alphanumerics, the special characters "$-_.+!*'(),", and
-                    // reserved characters used for their reserved purposes may be used
-                    // unencoded within a URL.
-                    $white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$-_.+!*(),' . "'";
-                    break;
-
-                case OR_FILTER_MAIL:
-                    $white = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789._-@';
-                    break;
-
-                case OR_FILTER_TEXT:
-                case OR_FILTER_FULL:
-                case OR_FILTER_ALL:
-                    // Ausfiltern von Control-Chars ( ASCII < 32 außer CR,LF) und HTML (<,>)
-                    $white = '';
-                    $white .= chr(10) . chr(13); // Line-Feed, Carriage-Return
-                    for ($i = 32; $i <= 59; $i++) $white .= chr($i);  // Zahlen
-                    // 60: '<'
-                    $white .= chr(61);
-                    // 62: '>'
-                    for ($i = 63; $i <= 126; $i++) $white .= chr($i);  // abc
-                    for ($i = 128; $i <= 255; $i++) $white .= chr($i);  // Sonderzeichen incl. UTF-8, UTF-16 (beginnen mit Bit 1)
-                    break;
-
-                case OR_FILTER_NUMBER:
-                    $white = '1234567890.';
-                    break;
-
-                case OR_FILTER_RAW:
-                    return $REQ[$varName];
-
-                default:
-                    throw new \LogicException('Unknown request filter', 'not found: ' . $transcode);
-                    return '?';
-            }
-
-            $value = $REQ[$varName];
-            $newValue = Text::clean($value, $white);
-
-            if (strlen($newValue) != strlen($value))
-                $this->addNotice('', '', 'UNEXPECTED_CHARS', OR_NOTICE_WARN);
-
-            return $newValue;
+            return $this->request->getRequestVar($varName,$transcode);
         }
 
 
@@ -217,9 +158,7 @@ namespace cms\action {
          */
         protected function hasRequestVar($varName)
         {
-            global $REQ;
-
-            return (isset($REQ[$varName]) && (!empty($REQ[$varName]) || $REQ[$varName] == '0'));
+            return $this->request->hasRequestVar($varName);
         }
 
 
@@ -231,10 +170,7 @@ namespace cms\action {
          */
         protected function getRequestId()
         {
-            if ($this->hasRequestVar('idvar'))
-                return intval($this->getRequestVar($this->getRequestVar('idvar')));
-            else
-                return intval($this->getRequestVar(REQ_PARAM_ID));
+            return $this->request->getRequestId();
         }
 
 

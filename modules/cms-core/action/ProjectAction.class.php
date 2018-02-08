@@ -39,6 +39,8 @@ class ProjectAction extends Action
 
 	function __construct()
 	{
+        parent::__construct();
+
 		$this->project = new Project( $this->getRequestId() );
 		$this->project->load();
 	}

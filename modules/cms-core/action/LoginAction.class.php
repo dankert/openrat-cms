@@ -61,6 +61,11 @@ class LoginAction extends Action
 	public $security = SECURITY_GUEST;
 
 
+	public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * Eine Datenbankverbindugn wird aufgebaut und initalisiert.
      *

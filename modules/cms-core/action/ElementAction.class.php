@@ -45,7 +45,9 @@ class ElementAction extends Action
 	 */
 	function __construct()
 	{
-		if	( $this->getRequestId() == 0 )
+        parent::__construct();
+
+        if	( $this->getRequestId() == 0 )
 			die('no element-id available');
 
 		$this->element = new Element( $this->getRequestId() );

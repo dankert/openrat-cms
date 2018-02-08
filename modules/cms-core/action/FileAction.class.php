@@ -45,7 +45,9 @@ class FileAction extends ObjectAction
 	 * Konstruktor
 	 */
 	function __construct()
-	{
+    {
+	    parent::__construct();
+
 		$this->file = new File( $this->getRequestId() );
 		$this->file->load();
 	}

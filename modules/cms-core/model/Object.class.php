@@ -182,19 +182,6 @@ namespace cms\model {
                 $this->objectid = $objectid;
                 $this->id       = $objectid;
             }
-
-
-            $language = \Session::getProjectLanguage();
-            if	( is_object($language) )
-                $this->languageid = $language->languageid;
-
-            $model = \Session::getProjectModel();
-            if	( is_object($model) )
-                $this->modelid = $model->modelid;
-
-            $project = \Session::getProject();
-            if	( is_object($project) )
-                $this->projectid = $project->projectid;
         }
 
 

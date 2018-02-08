@@ -57,6 +57,7 @@ class SearchAction extends Action
 	 */
 	function __construct()
 	{
+        parent::__construct();
 	}
 
 

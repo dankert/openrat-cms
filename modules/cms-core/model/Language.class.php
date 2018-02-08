@@ -39,12 +39,8 @@ class Language
 	// Konstruktor
 	function __construct( $languageid='' )
 	{
-		global $SESS;
-
 		if   ( is_numeric($languageid) )
 			$this->languageid = $languageid;
-
-//		$this->projectid = $SESS['projectid'];
 	}
 
 	

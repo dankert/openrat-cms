@@ -36,6 +36,7 @@ class TemplatelistAction extends Action
 	
 	function __construct()
 	{
+        parent::__construct();
 	}
 
 

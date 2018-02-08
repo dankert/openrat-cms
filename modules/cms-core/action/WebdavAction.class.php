@@ -68,7 +68,9 @@ class WebdavAction extends Action
 	 */
 	function __construct()
 	{
-		if (!defined('E_STRICT')) 
+        parent::__construct();
+
+		if (!defined('E_STRICT'))
 			define('E_STRICT', 2048);
 
 		// Nicht notwendig, da wir den Error-Handler umbiegen:

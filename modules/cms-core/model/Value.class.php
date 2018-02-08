@@ -147,10 +147,6 @@ class Value
 	{
 		$this->lastchangeUserId    = 0;
 		$this->lastchangeTimeStamp = 0;
-		
-		$language = \Session::getProjectLanguage();
-		if	( is_object($language) )
-			$this->languageid = $language->languageid;
 	}
 
 	

@@ -46,7 +46,9 @@ class ProfileAction extends Action
 	 */
 	function __construct()
 	{
-		$this->user = Session::getUser();
+        parent::__construct();
+
+        $this->user = Session::getUser();
 	}
 
 

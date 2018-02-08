@@ -34,14 +34,22 @@ class PageAction extends ObjectAction
 
 	function __construct()
 	{
+	    parent::__construct();
+
 		$this->page = new Page( $this->getRequestId() );
+
+		if  ( $this->request->hasLanguageId())
+		    $this->page->languageid = $this->request->getLanguageId();
+		if  ( $this->request->hasModelId())
+		    $this->page->modelid = $this->request->getModelId();
+
 		$this->page->load();
 		
 		// Hier kann leider nicht das Datum der letzten Änderung verwendet werden,
 		// da sich die Seite auch danach ändern kann, z.B. durch Includes anderer
 		// Seiten oder Änderung einer Vorlage oder Änderung des Dateinamens einer
 		// verlinkten Datei. 
-		//$this->lastModified( time() );
+		$this->lastModified( time() );
 	}
 
 
@@ -335,7 +343,7 @@ class PageAction extends ObjectAction
 		
 		if   ( $this->userIsAdmin() )
 		{
-			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
+			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid,array(REQ_PARAM_MODEL_ID=>$this->page->modelid)));
 		}
 	
 		$template = new Template( $this->page->templateid );
@@ -385,7 +393,7 @@ class PageAction extends ObjectAction
 		
 		if   ( $this->userIsAdmin() )
 		{
-			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
+			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid,array(REQ_PARAM_MODEL_ID=>$this->page->modelid)));
 		}
 	
 		$template = new Template( $this->page->templateid );
@@ -512,7 +520,7 @@ class PageAction extends ObjectAction
 			}
 		}
 
-		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('withIcons'=>'1') ) );
+		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('withIcons'=>'1',REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid) ) );
 		$this->setTemplateVar('properties',$this->page->getProperties() );
 		$this->setTemplateVar('el',$list);
 	}
@@ -622,7 +630,7 @@ class PageAction extends ObjectAction
 	 */
 	function previewView()
 	{
-		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid ) );
+		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array(REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid) ) );
 	}
 
 		/**
@@ -641,15 +649,15 @@ class PageAction extends ObjectAction
 		
 		$this->page->load();
 		$this->page->generate();
-		$this->page->write();
 
 		header('Content-Type: '.$this->page->mimeType().'; charset=UTF-8' );
 
 		// HTTP-Header mit Sprachinformation setzen.
-		$language = Session::getProjectLanguage();
+		$language = new Language( $this->page->languageid);
+		$language->load();
 		header('Content-Language: '.$language->isoCode);
 
-		Logger::debug("preview page: ".$this->page->tmpfile() );
+		Logger::debug("Preview page: ".$this->page->__toString() );
 		
 		// Wenn 
 		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
@@ -708,7 +716,7 @@ class PageAction extends ObjectAction
 		
 		if   ( $this->userIsAdmin() )
 		{
-			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid));
+			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid,array(REQ_PARAM_MODEL_ID=>$this->page->modelid)));
 		}
 	
 		$template = new Template( $this->page->templateid );

@@ -43,6 +43,8 @@ class ModelAction extends Action
 
 	function __construct()
 	{
+        parent::__construct();
+
 		$this->model = new Model( $this->getRequestId() );
 		$this->model->load();
 		

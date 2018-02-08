@@ -45,7 +45,12 @@ class TreeAction extends Action
 	var $tree;
 
 
-	/**
+	public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
 	 * ?ffnen aller Baumelemente
 	 */
 	function openall()

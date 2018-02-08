@@ -55,6 +55,8 @@ class UserAction extends Action
      */
     function __construct()
 	{
+        parent::__construct();
+
 		$this->user = new User( $this->getRequestId() );
 		$this->user->load();
 		$this->setTemplateVar('userid',$this->user->userid);

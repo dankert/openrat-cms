@@ -14,6 +14,7 @@ require_once(__DIR__ . '/../language/require.php');
 require_once(__DIR__ . '/action/Action.class.php');
 require_once(__DIR__ . '/action/ObjectAction.class.php');
 require_once(__DIR__ . '/action/FileAction.class.php');
+require_once(__DIR__ . '/action/RequestParams.class.php');
 
 // Internal packages
 require_once(__DIR__ . "/model/require.php");

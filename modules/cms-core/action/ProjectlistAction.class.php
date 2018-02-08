@@ -34,6 +34,7 @@ class ProjectlistAction extends Action
 	
 	function __construct()
 	{
+        parent::__construct();
 	}
 
 

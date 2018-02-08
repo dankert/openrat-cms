@@ -43,6 +43,8 @@ class LanguagelistAction extends Action
 	 */
 	function __construct()
 	{
+        parent::__construct();
+
 		$this->project = Session::getProject();
 	}
 

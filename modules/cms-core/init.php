@@ -53,19 +53,6 @@ define('SECURITY_GUEST',1); // Jeder (auch nicht angemeldete) dürfen diese Akti
 define('SECURITY_USER' ,2); // Angemeldete Benutzer dürfen diese Aktion ausführen
 define('SECURITY_ADMIN',3); // Nur Administratoren dürfen diese Aktion ausführen
 
-define('REQ_PARAM_TOKEN'          ,'token'          );
-define('REQ_PARAM_ACTION'         ,'action'         );
-define('REQ_PARAM_SUBACTION'      ,'subaction'      );
-define('REQ_PARAM_TARGETSUBACTION','targetSubAction');
-define('REQ_PARAM_ID'             ,'id'             );
-define('REQ_PARAM_OBJECT_ID'      ,'objectid'       );
-define('REQ_PARAM_LANGUAGE_ID'    ,'languageid'     );
-define('REQ_PARAM_MODEL_ID'       ,'modelid'        );
-define('REQ_PARAM_PROJECT_ID'     ,'projectid'      );
-define('REQ_PARAM_ELEMENT_ID'     ,'elementid'      );
-define('REQ_PARAM_TEMPLATE_ID'    ,'templateid'     );
-define('REQ_PARAM_DATABASE_ID'    ,'dbid'           );
-define('REQ_PARAM_TARGET'         ,'target'         );
 
 
 /**

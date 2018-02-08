@@ -73,7 +73,9 @@ class PageelementAction extends Action
 	 */
 	function __construct()
 	{
-		$this->value = new Value();
+        parent::__construct();
+
+        $this->value = new Value();
 
 		$id = $this->getRequestVar('id');
 		$ids = explode('_',$id);
@@ -90,7 +92,11 @@ class PageelementAction extends Action
 		if	( $pageid != 0  )
 		{
 			$this->page = new Page( $pageid );
-			$this->page->load();
+
+            if  ( $this->hasRequestVar('languageid'))
+                $this->page->languageid = $this->getRequestVar('languageid',OR_FILTER_NUMBER);
+
+            $this->page->load();
 		}
 
 		if	( $elementid != 0 )

@@ -45,6 +45,8 @@ class GroupAction extends Action
 
 	function __construct()
 	{
+        parent::__construct();
+
 		$this->group = new Group( $this->getRequestId() );
 		$this->group->load();
 		$this->setTemplateVar( 'groupid',$this->group->groupid );

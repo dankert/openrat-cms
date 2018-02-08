@@ -34,6 +34,7 @@ class UserlistAction extends Action
 	
 	function __construct()
 	{
+        parent::__construct();
 	}
 
 

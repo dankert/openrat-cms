@@ -182,6 +182,7 @@ class AdministrationTree extends AbstractTree
 		$folder->load();
 	
 		$defaultLanguageId = $project->getDefaultLanguageId();
+		$defaultModelId = $project->getDefaultModelId();
 
 		// Ermitteln, ob der Benutzer Projektadministrator ist
 		// Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
@@ -195,7 +196,8 @@ class AdministrationTree extends AbstractTree
 			//			$treeElement->text        = $folder->name;
 			$treeElement->text        = lang('FOLDER_ROOT');
 			$treeElement->description = lang('FOLDER_ROOT_DESC');
-            $treeElement->extraId['languageid'] =  $defaultLanguageId;
+            $treeElement->extraId[REQ_PARAM_LANGUAGE_ID] =  $defaultLanguageId;
+            $treeElement->extraId[REQ_PARAM_MODEL_ID   ] =  $defaultModelId;
             $treeElement->icon        = 'folder';
 			$treeElement->action      = 'folder';
 //			$treeElement->url         = Html::url( 'folder','',$folder->objectid,array(REQ_PARAM_TARGET=>'content') );
@@ -611,7 +613,8 @@ class AdministrationTree extends AbstractTree
     function page( $id )
     {
         $page = new Page( $id );
-        $page->languageid = $_REQUEST['languageid'];
+        $page->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
+        $page->modelid = $_REQUEST[REQ_PARAM_MODEL_ID];
 
         $page->load();
 
@@ -634,7 +637,7 @@ class AdministrationTree extends AbstractTree
                         REQ_PARAM_TARGETSUBACTION=>'edit',REQ_PARAM_TARGET=>'content'));
                 $treeElement->action = 'pageelement';
                 $treeElement->icon = 'el_'.$element->type;
-                $treeElement->extraId = array('languageid'=>$page->languageid);
+                $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID=>$page->languageid,REQ_PARAM_MODEL_ID=>$page->modelid);
 
 
                 $treeElement->description = lang('EL_'.$element->type);
@@ -723,7 +726,7 @@ class AdministrationTree extends AbstractTree
         $treeElement->url        = Html::url($o->getType(),'',$o->objectid,array(REQ_PARAM_TARGET=>'content') );
         $treeElement->action     = $o->getType();
         $treeElement->icon       = $o->getType();
-        $treeElement->extraId    = array('languageid'=>$_REQUEST['languageid']);
+        $treeElement->extraId    = array(REQ_PARAM_LANGUAGE_ID=>$_REQUEST[REQ_PARAM_LANGUAGE_ID],REQ_PARAM_MODEL_ID=>$_REQUEST[REQ_PARAM_MODEL_ID]);
 
         // Besonderheiten fuer bestimmte Objekttypen
 
@@ -750,7 +753,8 @@ class AdministrationTree extends AbstractTree
 
         $f = new Folder( $id );
         $t = time();
-        $f->languageid = $_REQUEST['languageid'];
+        $f->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
+        $f->modelid    = $_REQUEST[REQ_PARAM_MODEL_ID];
 
         foreach( $f->getObjects() as $o )
         {
@@ -761,7 +765,7 @@ class AdministrationTree extends AbstractTree
             $treeElement = new TreeElement();
             $treeElement->id         = $o->objectid;
             $treeElement->internalId = $o->objectid;
-            $treeElement->extraId    = array('languageid'=>$f->languageid);
+            $treeElement->extraId    = array(REQ_PARAM_LANGUAGE_ID=>$f->languageid,REQ_PARAM_MODEL_ID=>$f->modelid);
             $treeElement->target     = 'content';
             $treeElement->text       = $o->name;
             $treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$o->objectid;

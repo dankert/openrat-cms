@@ -48,6 +48,8 @@ class TemplateAction extends Action
 
 	function __construct()
 	{
+        parent::__construct();
+
 		$this->template = new Template( $this->getRequestId() );
 		$this->template->load();
 		$this->setTemplateVar( 'templateid',$this->template->templateid );
@@ -306,7 +308,7 @@ class TemplateAction extends Action
 	 */
 	function showView()
 	{
-		header('Content-Type: '.$this->template->mimeType().'; charset='.$this->getCharset() );
+		header('Content-Type: '.$this->template->mimeType().'; charset=UTF-8' );
 		$text = $this->template->src;
 	
 		foreach( $this->template->getElementIds() as $elid )

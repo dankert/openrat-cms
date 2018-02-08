@@ -43,7 +43,9 @@ class ModellistAction extends Action
 
     function __construct()
 	{
-		if	( $this->getRequestId() != 0 )
+        parent::__construct();
+
+        if	( $this->getRequestId() != 0 )
 		{
 			$this->model = new Model( $this->getRequestId() );
 			$this->model->load();

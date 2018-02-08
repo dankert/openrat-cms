@@ -1,5 +1,9 @@
 <?php
 
+use cms\model\Link;
+use cms\model\Object;
+use cms\model\Url;
+
 /**
  * Transformieren eines Textes.<br>
  * Ein Text wird geparst und neu gerendert.
@@ -77,11 +81,11 @@ class Transformer
 			try
 			{  
 				$o->load();
-				if	( $o->isLink )
+				if	( $o->isUrl )
 				{
-					$l = new Link($objectId);
+					$l = new Url($objectId);
 					$l->load();
-					if	( $l->isLinkToUrl && $this->page->mimeType() == 'text/html' )
+					if	( $this->page->mimeType() == 'text/html' )
 						$targetPath = htmlspecialchars($targetPath);
 				}
 			}

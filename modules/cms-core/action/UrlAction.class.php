@@ -47,6 +47,8 @@ class UrlAction extends ObjectAction
 	 */
 	function __construct()
 	{
+        parent::__construct();
+
 		$this->url = new Url( $this->getRequestId() );
 		$this->url->load();
 	}

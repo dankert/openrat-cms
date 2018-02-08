@@ -29,6 +29,8 @@ class ImageAction extends FileAction
 	 */
 	public function __construct()
 	{
+        parent::__construct();
+
 		$this->image = new Image( $this->getRequestId() );
 		$this->image->load();
 
