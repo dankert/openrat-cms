@@ -38,710 +38,675 @@ use cms\model\Value;
  */
 class AdministrationTree extends AbstractTree
 {
-	/**
-	 * Alle Elemente des Baumes
-	 */
-	var $elements;
-	var $confCache = array();
+    /**
+     * Alle Elemente des Baumes
+     */
+    var $elements;
+    var $confCache = array();
 
     private $userIsProjectAdmin;
 
     function root()
-	{
-		if	( !$this->userIsAdmin )
+    {
+        if (!$this->userIsAdmin)
             throw new \SecurityException('Administration-Tree is only visible for admins.');
-			
+
 // 		$treeElement = new TreeElement();
 // 		$treeElement->text        = lang('GLOBAL_ADMINISTRATION');
 // 		$treeElement->description = lang('GLOBAL_ADMINISTRATION');
 // 		$treeElement->type        = 'administration';
 // 		$treeElement->icon        = 'administration';
-		
-		$this->administration();
-		
-		$this->autoOpen[] = 1;
-	}
+
+        $this->administration();
+
+        $this->autoOpen[] = 1;
+    }
 
 
+    function administration()
+    {
+        global $conf;
+        $conf_config = $conf['interface']['config'];
 
-	function administration()
-	{
-		global $conf;
-		$conf_config = $conf['interface']['config'];
+        $treeElement = new TreeElement();
+        $treeElement->id = 0;
+        $treeElement->text = lang('GLOBAL_PROJECTS');
+        $treeElement->description = lang('GLOBAL_PROJECTS');
+        $treeElement->url = Html::url('projectlist', 'show', 0, array(REQ_PARAM_TARGET => 'content'));
+        $treeElement->action = 'projectlist';
+        $treeElement->icon = 'projectlist';
+        $treeElement->type = 'projects';
+        $treeElement->target = 'cms_main';
 
-		$treeElement = new TreeElement();
-		$treeElement->id          = 0;
-		$treeElement->text        = lang('GLOBAL_PROJECTS');
-		$treeElement->description = lang('GLOBAL_PROJECTS');
-		$treeElement->url         = Html::url('projectlist','show',0,array(REQ_PARAM_TARGET=>'content'));
-		$treeElement->action      = 'projectlist'; 
-		$treeElement->icon        = 'projectlist';
-		$treeElement->type        = 'projects';
-		$treeElement->target      = 'cms_main';
-		
-		$this->addTreeElement( $treeElement );
+        $this->addTreeElement($treeElement);
 
 
-		$treeElement = new TreeElement();
-		$treeElement->text        = lang('USER_AND_GROUPS');
-		$treeElement->description = lang('USER_AND_GROUPS');
-		$treeElement->icon        = 'userlist';
-		$treeElement->type        = 'userandgroups';
-		
-		$this->addTreeElement( $treeElement );
+        $treeElement = new TreeElement();
+        $treeElement->text = lang('USER_AND_GROUPS');
+        $treeElement->description = lang('USER_AND_GROUPS');
+        $treeElement->icon = 'userlist';
+        $treeElement->type = 'userandgroups';
+
+        $this->addTreeElement($treeElement);
 //		$this->userandgroups(0);;
 
-		if	( $conf_config['enable'] )
-		{
-			$treeElement = new TreeElement();
-			$treeElement->text        = lang('PREFERENCES');
-			$treeElement->description = lang('PREFERENCES');
-			$treeElement->icon        = 'configuration';
-			//$treeElement->type        = 'prefs';
-			$treeElement->action      = 'configuration';
-			
-			$this->addTreeElement( $treeElement );
-		}
+        if ($conf_config['enable']) {
+            $treeElement = new TreeElement();
+            $treeElement->text = lang('PREFERENCES');
+            $treeElement->description = lang('PREFERENCES');
+            $treeElement->icon = 'configuration';
+            //$treeElement->type        = 'prefs';
+            $treeElement->action = 'configuration';
 
-		// Wechseln zu: Projekte...
-		/*
-		foreach( Project::getAll() as $id=>$name )
-		{
-			$treeElement = new TreeElement();
-			
-			$treeElement->text         = lang('PROJECT').' '.$name;
-			$treeElement->url          = Html::url(array('action'    =>'tree',
-		                                                  'subaction' =>'reload',
-			                                             'projectid' =>$id       ));
-			$treeElement->icon         = 'project';
-			$treeElement->description  = '';
-			$treeElement->target       = 'cms_tree';
+            $this->addTreeElement($treeElement);
+        }
 
-			$this->addTreeElement( $treeElement );
-		}
-		*/
-	}
+        // Wechseln zu: Projekte...
+        /*
+        foreach( Project::getAll() as $id=>$name )
+        {
+            $treeElement = new TreeElement();
 
+            $treeElement->text         = lang('PROJECT').' '.$name;
+            $treeElement->url          = Html::url(array('action'    =>'tree',
+                                                          'subaction' =>'reload',
+                                                         'projectid' =>$id       ));
+            $treeElement->icon         = 'project';
+            $treeElement->description  = '';
+            $treeElement->target       = 'cms_tree';
+
+            $this->addTreeElement( $treeElement );
+        }
+        */
+    }
 
 
-	function userandgroups( )
-	{
-		$treeElement = new TreeElement();
-		$treeElement->text        = lang('GLOBAL_USER');
-		$treeElement->description = lang('GLOBAL_USER');
-		$treeElement->url         = Html::url('user','listing',0,array(REQ_PARAM_TARGET=>'content'));
-		$treeElement->action      = 'userlist'; 
-		$treeElement->icon        = 'userlist';
-		$treeElement->target      = 'cms_main';
-		$treeElement->type        = 'users';
-		
-		$this->addTreeElement( $treeElement );
+    function userandgroups()
+    {
+        $treeElement = new TreeElement();
+        $treeElement->text = lang('GLOBAL_USER');
+        $treeElement->description = lang('GLOBAL_USER');
+        $treeElement->url = Html::url('user', 'listing', 0, array(REQ_PARAM_TARGET => 'content'));
+        $treeElement->action = 'userlist';
+        $treeElement->icon = 'userlist';
+        $treeElement->target = 'cms_main';
+        $treeElement->type = 'users';
 
-		$treeElement = new TreeElement();
-		$treeElement->text        = lang('GLOBAL_GROUPS');
-		$treeElement->description = lang('GLOBAL_GROUPS');
-		$treeElement->url         = Html::url('group','listing',0,array(REQ_PARAM_TARGET=>'content'));
-		$treeElement->action      = 'grouplist';
-		$treeElement->icon        = 'userlist';
-		$treeElement->target      = 'cms_main';
-		$treeElement->type        = 'groups';
+        $this->addTreeElement($treeElement);
 
-		$this->addTreeElement( $treeElement );
-	}
+        $treeElement = new TreeElement();
+        $treeElement->text = lang('GLOBAL_GROUPS');
+        $treeElement->description = lang('GLOBAL_GROUPS');
+        $treeElement->url = Html::url('group', 'listing', 0, array(REQ_PARAM_TARGET => 'content'));
+        $treeElement->action = 'grouplist';
+        $treeElement->icon = 'userlist';
+        $treeElement->target = 'cms_main';
+        $treeElement->type = 'groups';
+
+        $this->addTreeElement($treeElement);
+    }
 
 
-	function projects( )
-	{
-		// Schleife ueber alle Projekte
-		foreach(Project::getAllProjects() as $id=> $name )
-		{
-			$treeElement = new TreeElement();
-			
-			$treeElement->internalId   = $id;
-			$treeElement->id           = $id;
-			$treeElement->text         = $name;
-			$treeElement->url          = Html::url('project','edit',$id,array(REQ_PARAM_TARGET=>'content'));
-			$treeElement->icon         = 'project';
-			$treeElement->action       = 'project'; 
-			$treeElement->type         = 'project'; 
-			$treeElement->description  = '';
-			$treeElement->target       = 'cms_main';
+    function projects()
+    {
+        // Schleife ueber alle Projekte
+        foreach (Project::getAllProjects() as $id => $name) {
+            $treeElement = new TreeElement();
 
-			$this->addTreeElement( $treeElement );
-		}
-	}
+            $treeElement->internalId = $id;
+            $treeElement->id = $id;
+            $treeElement->text = $name;
+            $treeElement->url = Html::url('project', 'edit', $id, array(REQ_PARAM_TARGET => 'content'));
+            $treeElement->icon = 'project';
+            $treeElement->action = 'project';
+            $treeElement->type = 'project';
+            $treeElement->description = '';
+            $treeElement->target = 'cms_main';
 
-	
-	
-	function project( $projectid )
-	{
-		$project  = new Project( $projectid );
-	
-		// Hoechster Ordner der Projektstruktur
-		$folder = new Folder( $project->getRootObjectId() );
-		$folder->load();
-	
-		$defaultLanguageId = $project->getDefaultLanguageId();
-		$defaultModelId = $project->getDefaultModelId();
+            $this->addTreeElement($treeElement);
+        }
+    }
 
-		// Ermitteln, ob der Benutzer Projektadministrator ist
-		// Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
-		if   ( $folder->hasRight( ACL_PROP ) )
-			$this->userIsProjectAdmin = true;
-	
-		if   ( $folder->hasRight( ACL_READ ) )
-		{
-			$treeElement = new TreeElement();
-			$treeElement->id          = $folder->objectid;
-			//			$treeElement->text        = $folder->name;
-			$treeElement->text        = lang('FOLDER_ROOT');
-			$treeElement->description = lang('FOLDER_ROOT_DESC');
-            $treeElement->extraId[REQ_PARAM_LANGUAGE_ID] =  $defaultLanguageId;
-            $treeElement->extraId[REQ_PARAM_MODEL_ID   ] =  $defaultModelId;
-            $treeElement->icon        = 'folder';
-			$treeElement->action      = 'folder';
+
+    function project($projectid)
+    {
+        $project = new Project($projectid);
+
+        // Hoechster Ordner der Projektstruktur
+        $folder = new Folder($project->getRootObjectId());
+        $folder->load();
+
+        $defaultLanguageId = $project->getDefaultLanguageId();
+        $defaultModelId = $project->getDefaultModelId();
+
+        // Ermitteln, ob der Benutzer Projektadministrator ist
+        // Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
+        if ($folder->hasRight(ACL_PROP))
+            $this->userIsProjectAdmin = true;
+
+        if ($folder->hasRight(ACL_READ)) {
+            $treeElement = new TreeElement();
+            $treeElement->id = $folder->objectid;
+            //			$treeElement->text        = $folder->name;
+            $treeElement->text = lang('FOLDER_ROOT');
+            $treeElement->description = lang('FOLDER_ROOT_DESC');
+            $treeElement->extraId[REQ_PARAM_LANGUAGE_ID] = $defaultLanguageId;
+            $treeElement->extraId[REQ_PARAM_MODEL_ID] = $defaultModelId;
+            $treeElement->icon = 'folder';
+            $treeElement->action = 'folder';
 //			$treeElement->url         = Html::url( 'folder','',$folder->objectid,array(REQ_PARAM_TARGET=>'content') );
-			$treeElement->target      = 'content';
-			$treeElement->type        = 'folder';
-			$treeElement->internalId  = $folder->objectid;
-			$this->addTreeElement( $treeElement );
-		}
-	
-	
-		if	( $this->userIsProjectAdmin )
-		{
-			// Templates
-			$treeElement = new TreeElement();
-			$treeElement->id         = $projectid;
+            $treeElement->target = 'content';
+            $treeElement->type = 'folder';
+            $treeElement->internalId = $folder->objectid;
+            $this->addTreeElement($treeElement);
+        }
+
+
+        // Templates
+        if ($this->userIsProjectAdmin) {
+            $treeElement = new TreeElement();
+            $treeElement->id = $projectid;
             $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
+            $treeElement->extraId[REQ_PARAM_MODEL_ID] = $defaultModelId;
+            $treeElement->extraId[REQ_PARAM_LANGUAGE_ID] = $defaultLanguageId;
             $treeElement->internalId = $projectid;
-			$treeElement->text       = lang('GLOBAL_TEMPLATES');
+            $treeElement->text = lang('GLOBAL_TEMPLATES');
 //			$treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-			$treeElement->description= lang('GLOBAL_TEMPLATES_DESC');
-			$treeElement->icon       = 'templatelist';
-			$treeElement->action     = 'templatelist';
-			$treeElement->target     = 'content';
-			$treeElement->type       = 'templates';
-			$this->addTreeElement( $treeElement );
-		}
-	
-	
-		// Sprachen
-		$treeElement = new TreeElement();
-		$treeElement->description= '';
-		$treeElement->id          = $projectid;
+            $treeElement->description = lang('GLOBAL_TEMPLATES_DESC');
+            $treeElement->icon = 'templatelist';
+            $treeElement->action = 'templatelist';
+            $treeElement->target = 'content';
+            $treeElement->type = 'templates';
+            $this->addTreeElement($treeElement);
+        }
+
+
+        // Sprachen
+        $treeElement = new TreeElement();
+        $treeElement->description = '';
+        $treeElement->id = $projectid;
         $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
         $treeElement->internalId = $projectid;
-		$treeElement->action     = 'languagelist';
-		$treeElement->text       = lang('GLOBAL_LANGUAGES');
+        $treeElement->action = 'languagelist';
+        $treeElement->text = lang('GLOBAL_LANGUAGES');
 //		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-		$treeElement->icon       = 'languagelist';
-		$treeElement->description= lang('GLOBAL_LANGUAGES_DESC');
-		$treeElement->target     = 'content';
-	
-		// Nur fuer Projekt-Administratoren aufklappbar
-		if	( $this->userIsProjectAdmin )
-			$treeElement->type   = 'languages';
-	
-		$this->addTreeElement( $treeElement );
-	
-	
-		// Projektmodelle
-		$treeElement = new TreeElement();
-		$treeElement->description= '';
-	
-		// Nur fuer Projekt-Administratoren aufklappbar
-		if	( $this->userIsProjectAdmin )
-			$treeElement->type   = 'models';
-	
-		$treeElement->id         = $projectid;
+        $treeElement->icon = 'languagelist';
+        $treeElement->description = lang('GLOBAL_LANGUAGES_DESC');
+        $treeElement->target = 'content';
+
+        // Nur fuer Projekt-Administratoren aufklappbar
+        if ($this->userIsProjectAdmin)
+            $treeElement->type = 'languages';
+
+        $this->addTreeElement($treeElement);
+
+
+        // Projektmodelle
+        $treeElement = new TreeElement();
+        $treeElement->description = '';
+
+        // Nur fuer Projekt-Administratoren aufklappbar
+        if ($this->userIsProjectAdmin)
+            $treeElement->type = 'models';
+
+        $treeElement->id = $projectid;
         $treeElement->internalId = $projectid;
         $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
-		$treeElement->description= lang('GLOBAL_MODELS_DESC');
-		$treeElement->text       = lang('GLOBAL_MODELS');
+        $treeElement->description = lang('GLOBAL_MODELS_DESC');
+        $treeElement->text = lang('GLOBAL_MODELS');
 //		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-		$treeElement->action     = 'modellist';
-		$treeElement->icon       = 'modellist';
-		$treeElement->target     = 'content';
-		$this->addTreeElement( $treeElement );
-	
-	
-		// Sonstiges
-		//		$treeElement = new TreeElement();
-		//		$treeElement->text       = lang('GLOBAL_OTHER');
-		//		$treeElement->description= lang('GLOBAL_OTHER_DESC');
-		//		$treeElement->icon       = 'other';
-		//		$treeElement->type       = 'other';
-		//		$this->addTreeElement( $treeElement );
-	
-		// Suche
-		$treeElement = new TreeElement();
-        $treeElement->id         = $projectid;
+        $treeElement->action = 'modellist';
+        $treeElement->icon = 'modellist';
+        $treeElement->target = 'content';
+        $this->addTreeElement($treeElement);
+
+
+        // Sonstiges
+        //		$treeElement = new TreeElement();
+        //		$treeElement->text       = lang('GLOBAL_OTHER');
+        //		$treeElement->description= lang('GLOBAL_OTHER_DESC');
+        //		$treeElement->icon       = 'other';
+        //		$treeElement->type       = 'other';
+        //		$this->addTreeElement( $treeElement );
+
+        // Suche
+        $treeElement = new TreeElement();
+        $treeElement->id = $projectid;
         $treeElement->internalId = $projectid;
         $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
-		$treeElement->text        = lang('GLOBAL_SEARCH');
+        $treeElement->text = lang('GLOBAL_SEARCH');
 //		$treeElement->url         = Html::url('search','',0,array(REQ_PARAM_TARGET=>'content'));
-		$treeElement->action      = 'search';
-		$treeElement->icon        = 'search';
-		$treeElement->description = lang('GLOBAL_SEARCH_DESC');
-		$treeElement->target      = 'content';
-		$this->addTreeElement( $treeElement );
-	
-	}
-	
+        $treeElement->action = 'search';
+        $treeElement->icon = 'search';
+        $treeElement->description = lang('GLOBAL_SEARCH_DESC');
+        $treeElement->target = 'content';
+        $this->addTreeElement($treeElement);
+
+    }
 
 
-	function prefs_system( )
-	{
-		$system = array( 'time'   => date('r'),
-		                 'os'     => php_uname('s'),
-		                 'host'   => php_uname('n'),
-		                 'release'=> php_uname('r'),
-		                 'machine'=> php_uname('m'),
-		                 'owner'  => get_current_user(),
-		                 'pid'    => getmypid()          );
-		
-		foreach( $system as $key=>$value )
-		{
-			$treeElement = new TreeElement();
-			$treeElement->text = $key.'='.$value;
-			$treeElement->icon   = 'config_property';
-			$this->addTreeElement( $treeElement );
-			$treeElement->description = lang('SETTING')." '".$key."'".(!empty($value)?': '.$value:'');
-		}
+    function prefs_system()
+    {
+        $system = array('time' => date('r'),
+            'os' => php_uname('s'),
+            'host' => php_uname('n'),
+            'release' => php_uname('r'),
+            'machine' => php_uname('m'),
+            'owner' => get_current_user(),
+            'pid' => getmypid());
 
-		if	( function_exists('getrusage') ) // Funktion existiert auf WIN32 nicht.
-		{
-			foreach( getrusage() as $name=>$value );
-			{
-				$treeElement = new TreeElement();
-				$treeElement->text = $name.':'.$value;
-				$treeElement->description = lang('SETTING')." '".$name."'".(!empty($value)?': '.$value:'');
-				$treeElement->icon   = 'config_property';
-				$this->addTreeElement( $treeElement );
-			}
-		}
-	}
-	
-	
+        foreach ($system as $key => $value) {
+            $treeElement = new TreeElement();
+            $treeElement->text = $key . '=' . $value;
+            $treeElement->icon = 'config_property';
+            $this->addTreeElement($treeElement);
+            $treeElement->description = lang('SETTING') . " '" . $key . "'" . (!empty($value) ? ': ' . $value : '');
+        }
+
+        if (function_exists('getrusage')) // Funktion existiert auf WIN32 nicht.
+        {
+            foreach (getrusage() as $name => $value) ;
+            {
+                $treeElement = new TreeElement();
+                $treeElement->text = $name . ':' . $value;
+                $treeElement->description = lang('SETTING') . " '" . $name . "'" . (!empty($value) ? ': ' . $value : '');
+                $treeElement->icon = 'config_property';
+                $this->addTreeElement($treeElement);
+            }
+        }
+    }
 
 
-	function prefs_php( )
-	{
-		$php_prefs = array( 'version'             => phpversion(),
-		                    'SAPI'                => php_sapi_name(),
-		                    'session-name'        => session_name(),
-		                    'magic_quotes_gpc'    => get_magic_quotes_gpc(),
-		                    'magic_quotes_runtime'=> get_magic_quotes_runtime() );
+    function prefs_php()
+    {
+        $php_prefs = array('version' => phpversion(),
+            'SAPI' => php_sapi_name(),
+            'session-name' => session_name(),
+            'magic_quotes_gpc' => get_magic_quotes_gpc(),
+            'magic_quotes_runtime' => get_magic_quotes_runtime());
 
-		foreach( array('upload_max_filesize',
-		               'file_uploads',
-		               'memory_limit',
-		               'max_execution_time',
-		               'post_max_size',
-		               'display_errors',
-		               'register_globals'
-		               ) as $iniName )
-			$php_prefs[ $iniName ] = ini_get( $iniName );
-			
-		foreach( $php_prefs as $key=>$value )
-		{
-			$treeElement = new TreeElement();
-			$treeElement->text = $key.'='.$value;
-			$treeElement->description = lang('SETTING')." '".$key."'".(!empty($value)?': '.$value:'');
-			$treeElement->icon   = 'config_property';
-			$this->addTreeElement( $treeElement );
-		}
-	}
-		
+        foreach (array('upload_max_filesize',
+                     'file_uploads',
+                     'memory_limit',
+                     'max_execution_time',
+                     'post_max_size',
+                     'display_errors',
+                     'register_globals'
+                 ) as $iniName)
+            $php_prefs[$iniName] = ini_get($iniName);
 
-	
-	function prefs_extensions( )
-	{
-		$extensions = get_loaded_extensions();
-		asort( $extensions );
-		 
-		foreach( $extensions as $id=>$extensionName )
-		{
-			$treeElement = new TreeElement();
-			$treeElement->text       = $extensionName;
-			$treeElement->icon       = 'config_property';
-			$treeElement->internalId = $id;
-			$this->addTreeElement( $treeElement );
-		}
-	}
-	
-		
-	
-	function prefs_extension( $id )
-	{
-		$extensions = get_loaded_extensions();
-		$functions = get_extension_funcs( $extensions[$id] );
-		asort( $functions );
-
-		foreach( $functions as $functionName )
-		{
-			$treeElement = new TreeElement();
-			$treeElement->text = $functionName;
-			$treeElement->icon   = 'config_property';
-			$this->addTreeElement( $treeElement );
-		}
-	}
-	
-		
-	/**
-	 * Anzeigen von Einstellungen.
-	 * 
-	 * @param $id
-	 */
-	function prefs( )
-	{
-		global $conf;
-		
-		if	( !@$conf['security']['show_system_info'] )
-			return;
-		
-		$conf_config = $conf['interface']['config'];
+        foreach ($php_prefs as $key => $value) {
+            $treeElement = new TreeElement();
+            $treeElement->text = $key . '=' . $value;
+            $treeElement->description = lang('SETTING') . " '" . $key . "'" . (!empty($value) ? ': ' . $value : '');
+            $treeElement->icon = 'config_property';
+            $this->addTreeElement($treeElement);
+        }
+    }
 
 
-		$treeElement = new TreeElement();
-		
-		$treeElement->internalId  = -1;
-		$treeElement->text        = 'OpenRat';
-		$treeElement->icon        = 'configuration';
+    function prefs_extensions()
+    {
+        $extensions = get_loaded_extensions();
+        asort($extensions);
 
-		if	( !empty($conf_config['file_manager_url']) )
-			$treeElement->url         = $conf_config['file_manager_url'];
-		$treeElement->target      = '_blank';
-		$treeElement->description = '';
-		$treeElement->type        = 'prefs_cms';
-		$this->addTreeElement( $treeElement );
-
-
-
-		if	( !empty($conf_config['show_system']) )
-		{
-			$treeElement = new TreeElement();
-			
-			$treeElement->internalId  = 0;
-			$treeElement->text        = lang('GLOBAL_SYSTEM');
-			$treeElement->icon        = 'configuration';
-			
-			$treeElement->description = '';
-			$treeElement->target      = 'cms_main';
-			$treeElement->type        = 'prefs_system';
-			$this->addTreeElement( $treeElement );
-		}
+        foreach ($extensions as $id => $extensionName) {
+            $treeElement = new TreeElement();
+            $treeElement->text = $extensionName;
+            $treeElement->icon = 'config_property';
+            $treeElement->internalId = $id;
+            $this->addTreeElement($treeElement);
+        }
+    }
 
 
-		if	( !empty($conf_config['show_interpreter']) )
-		{
-			$treeElement = new TreeElement();
-			
-			$treeElement->internalId  = 0;
-			$treeElement->text        = lang('GLOBAL_PHP');
-			$treeElement->icon        = 'configuration';
-			
-			$treeElement->description = '';
-			$treeElement->target      = 'cms_main';
-			$treeElement->type        = 'prefs_php';
-			$this->addTreeElement( $treeElement );
-		}
+    function prefs_extension($id)
+    {
+        $extensions = get_loaded_extensions();
+        $functions = get_extension_funcs($extensions[$id]);
+        asort($functions);
+
+        foreach ($functions as $functionName) {
+            $treeElement = new TreeElement();
+            $treeElement->text = $functionName;
+            $treeElement->icon = 'config_property';
+            $this->addTreeElement($treeElement);
+        }
+    }
 
 
-		if	( !empty($conf_config['show_extensions']) )
-		{
-			$treeElement = new TreeElement();
-			
-			$treeElement->internalId  = 0;
-			$treeElement->text        = lang('GLOBAL_EXTENSIONS');
-			$treeElement->icon        = 'configuration';
-			
-			$treeElement->description = '';
-			$treeElement->target      = 'cms_main';
-			$treeElement->type        = 'prefs_extensions';
-			$this->addTreeElement( $treeElement );
-		}
-	}
+    /**
+     * Anzeigen von Einstellungen.
+     *
+     * @param $id
+     */
+    function prefs()
+    {
+        global $conf;
+
+        if (!@$conf['security']['show_system_info'])
+            return;
+
+        $conf_config = $conf['interface']['config'];
 
 
-	function prefs_cms( $id )
-	{
-		global $conf;
-		
-		if	( $id < 0 )
-		{
-			$tmpConf = $conf;
-		}
-		else
-			$tmpConf = $this->confCache[$id];
-			
-		if	( !is_array($tmpConf) )
-			$tmpConf = array('unknown');
-		
-		foreach( $tmpConf as $key=>$value )
-		{
-			if	( is_array($value) )
-			{
-				$this->confCache[crc32($key)] = $value;
+        $treeElement = new TreeElement();
 
-				$treeElement = new TreeElement();
-				
-				$treeElement->internalId  = crc32($key);
-				$treeElement->text        = $key;
+        $treeElement->internalId = -1;
+        $treeElement->text = 'OpenRat';
+        $treeElement->icon = 'configuration';
+
+        if (!empty($conf_config['file_manager_url']))
+            $treeElement->url = $conf_config['file_manager_url'];
+        $treeElement->target = '_blank';
+        $treeElement->description = '';
+        $treeElement->type = 'prefs_cms';
+        $this->addTreeElement($treeElement);
+
+
+        if (!empty($conf_config['show_system'])) {
+            $treeElement = new TreeElement();
+
+            $treeElement->internalId = 0;
+            $treeElement->text = lang('GLOBAL_SYSTEM');
+            $treeElement->icon = 'configuration';
+
+            $treeElement->description = '';
+            $treeElement->target = 'cms_main';
+            $treeElement->type = 'prefs_system';
+            $this->addTreeElement($treeElement);
+        }
+
+
+        if (!empty($conf_config['show_interpreter'])) {
+            $treeElement = new TreeElement();
+
+            $treeElement->internalId = 0;
+            $treeElement->text = lang('GLOBAL_PHP');
+            $treeElement->icon = 'configuration';
+
+            $treeElement->description = '';
+            $treeElement->target = 'cms_main';
+            $treeElement->type = 'prefs_php';
+            $this->addTreeElement($treeElement);
+        }
+
+
+        if (!empty($conf_config['show_extensions'])) {
+            $treeElement = new TreeElement();
+
+            $treeElement->internalId = 0;
+            $treeElement->text = lang('GLOBAL_EXTENSIONS');
+            $treeElement->icon = 'configuration';
+
+            $treeElement->description = '';
+            $treeElement->target = 'cms_main';
+            $treeElement->type = 'prefs_extensions';
+            $this->addTreeElement($treeElement);
+        }
+    }
+
+
+    function prefs_cms($id)
+    {
+        global $conf;
+
+        if ($id < 0) {
+            $tmpConf = $conf;
+        } else
+            $tmpConf = $this->confCache[$id];
+
+        if (!is_array($tmpConf))
+            $tmpConf = array('unknown');
+
+        foreach ($tmpConf as $key => $value) {
+            if (is_array($value)) {
+                $this->confCache[crc32($key)] = $value;
+
+                $treeElement = new TreeElement();
+
+                $treeElement->internalId = crc32($key);
+                $treeElement->text = $key;
 //				if	( $id == 0 )
 //					$treeElement->url         = Html::url('main','prefs',0,array('conf'=>$key));
-				$treeElement->icon        = 'configuration';
-				
-				$treeElement->description = count($value).' '.lang('SETTINGS');
-				$treeElement->target      = 'cms_main';
-				$treeElement->type        = 'prefs_cms';
-				$this->addTreeElement( $treeElement );
-			}
-			else
-			{
-				// Die PHP-funktion 'parse_ini_file()' liefert alle Einstellungen leider nur als String
-				// Daher weiß man hier nicht, ob '1' nun '1' oder 'true' heißen soll.
-				if	( $value=='' )
-					// Anzeige 'Leer'
-					$value = lang('EMPTY');
-				elseif	( $value=='0' )
-					// Anzeige 'Nein'
-					$value = $value.' ('.lang('IS_NO').')';
-				elseif	( $value=='1' )
-					// Anzeige 'Ja'
-					$value = '+'.$value.' ('.lang('IS_YES').')';
-				elseif	( is_numeric($value) )
-					// Anzeige numerische Werte
-					$value = ($value>0?'+':'').$value;
-				else
-					// Anzeige von Zeichenketten
-					$value = $value;
-					
-				$this->confCache[crc32($key)] = $value;
+                $treeElement->icon = 'configuration';
 
-				if	( strpos($key,'pass') !== FALSE )
-					$value = '***'; // Kennwörter nicht anzeigen
-				
-				$treeElement = new TreeElement();
-				$treeElement->text        = $key.': '.$value;
-				$treeElement->icon        = 'config_property';
-				$treeElement->description = lang('SETTING')." '".$key."'".(!empty($value)?': '.$value:'');
-					
-				$this->addTreeElement( $treeElement );
-			}
-		}
-	}
+                $treeElement->description = count($value) . ' ' . lang('SETTINGS');
+                $treeElement->target = 'cms_main';
+                $treeElement->type = 'prefs_cms';
+                $this->addTreeElement($treeElement);
+            } else {
+                // Die PHP-funktion 'parse_ini_file()' liefert alle Einstellungen leider nur als String
+                // Daher weiß man hier nicht, ob '1' nun '1' oder 'true' heißen soll.
+                if ($value == '')
+                    // Anzeige 'Leer'
+                    $value = lang('EMPTY');
+                elseif ($value == '0')
+                    // Anzeige 'Nein'
+                    $value = $value . ' (' . lang('IS_NO') . ')';
+                elseif ($value == '1')
+                    // Anzeige 'Ja'
+                    $value = '+' . $value . ' (' . lang('IS_YES') . ')';
+                elseif (is_numeric($value))
+                    // Anzeige numerische Werte
+                    $value = ($value > 0 ? '+' : '') . $value;
+                else
+                    // Anzeige von Zeichenketten
+                    $value = $value;
+
+                $this->confCache[crc32($key)] = $value;
+
+                if (strpos($key, 'pass') !== FALSE)
+                    $value = '***'; // Kennwörter nicht anzeigen
+
+                $treeElement = new TreeElement();
+                $treeElement->text = $key . ': ' . $value;
+                $treeElement->icon = 'config_property';
+                $treeElement->description = lang('SETTING') . " '" . $key . "'" . (!empty($value) ? ': ' . $value : '');
+
+                $this->addTreeElement($treeElement);
+            }
+        }
+    }
 
 
-	function users( )
-	{	
-		foreach( User::getAllUsers() as $user )
-		{
-			$treeElement = new TreeElement();
-			$treeElement->id          = $user->userid;
-			$treeElement->internalId  = $user->userid;
-			$treeElement->text        = $user->name;
-			$treeElement->url         = Html::url('user','edit',
-			                                      $user->userid,array(REQ_PARAM_TARGET=>'content') );
-			$treeElement->action      = 'user';
-			$treeElement->icon        = 'user';
-			
-			$desc =  $user->fullname;
-
-			if	( $user->isAdmin )
-				$desc .= ' ('.lang('USER_ADMIN').') ';
-			if	( $user->desc == "" )
-				$desc .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-			else
-				$desc .= ' - '.$user->desc;
-
-			$treeElement->description = $desc;
-			$treeElement->target      = 'cms_main';
-
-			$this->addTreeElement( $treeElement );
-		}
-	}
-
-
-	function groups( )
-	{
-
-		foreach( Group::getAll() as $id=>$name )
-		{
-			$treeElement = new TreeElement();
-			
-			$g = new Group( $id );
-			$g->load();
-
-			$treeElement->id          = $id;
-			$treeElement->internalId  = $id;
-			$treeElement->text        = $g->name;
-			$treeElement->url         = Html::url('group','edit',$id,
-			                                      array(REQ_PARAM_TARGET=>'content') );
-			$treeElement->icon        = 'group';
-	     	$treeElement->description = lang('GLOBAL_GROUP').' '.$g->name.': '.implode(', ',$g->getUsers());
-			$treeElement->target      = 'cms_main';
-			$treeElement->type        = 'userofgroup';
-			$treeElement->action      = 'group';
-
-			$this->addTreeElement( $treeElement );
-		}
-	}
-
-
-	function userofgroup( $id )
-	{
-		$g = new Group( $id );
-
-		foreach( $g->getUsers() as $id=>$name )
-		{
-			$treeElement = new TreeElement();
-			
-			$u = new User( $id );
-			$u->load();
-			$treeElement->id          = $u->userid;
-			$treeElement->text        = $u->name;
-			$treeElement->url         = Html::url('user','edit',$id,array(REQ_PARAM_TARGET=>'content'));
-			$treeElement->icon        = 'user';
-			$treeElement->action      = 'user'; 
-			$treeElement->description = $u->fullname;
-			$treeElement->target      = 'cms_main';
-
-			$this->addTreeElement( $treeElement );
-		}
-	}
-
-
-
-    function page( $id )
+    function users()
     {
-        $page = new Page( $id );
+        foreach (User::getAllUsers() as $user) {
+            $treeElement = new TreeElement();
+            $treeElement->id = $user->userid;
+            $treeElement->internalId = $user->userid;
+            $treeElement->text = $user->name;
+            $treeElement->url = Html::url('user', 'edit',
+                $user->userid, array(REQ_PARAM_TARGET => 'content'));
+            $treeElement->action = 'user';
+            $treeElement->icon = 'user';
+
+            $desc = $user->fullname;
+
+            if ($user->isAdmin)
+                $desc .= ' (' . lang('USER_ADMIN') . ') ';
+            if ($user->desc == "")
+                $desc .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+            else
+                $desc .= ' - ' . $user->desc;
+
+            $treeElement->description = $desc;
+            $treeElement->target = 'cms_main';
+
+            $this->addTreeElement($treeElement);
+        }
+    }
+
+
+    function groups()
+    {
+
+        foreach (Group::getAll() as $id => $name) {
+            $treeElement = new TreeElement();
+
+            $g = new Group($id);
+            $g->load();
+
+            $treeElement->id = $id;
+            $treeElement->internalId = $id;
+            $treeElement->text = $g->name;
+            $treeElement->url = Html::url('group', 'edit', $id,
+                array(REQ_PARAM_TARGET => 'content'));
+            $treeElement->icon = 'group';
+            $treeElement->description = lang('GLOBAL_GROUP') . ' ' . $g->name . ': ' . implode(', ', $g->getUsers());
+            $treeElement->target = 'cms_main';
+            $treeElement->type = 'userofgroup';
+            $treeElement->action = 'group';
+
+            $this->addTreeElement($treeElement);
+        }
+    }
+
+
+    function userofgroup($id)
+    {
+        $g = new Group($id);
+
+        foreach ($g->getUsers() as $id => $name) {
+            $treeElement = new TreeElement();
+
+            $u = new User($id);
+            $u->load();
+            $treeElement->id = $u->userid;
+            $treeElement->text = $u->name;
+            $treeElement->url = Html::url('user', 'edit', $id, array(REQ_PARAM_TARGET => 'content'));
+            $treeElement->icon = 'user';
+            $treeElement->action = 'user';
+            $treeElement->description = $u->fullname;
+            $treeElement->target = 'cms_main';
+
+            $this->addTreeElement($treeElement);
+        }
+    }
+
+
+    function page($id)
+    {
+        $page = new Page($id);
         $page->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
         $page->modelid = $_REQUEST[REQ_PARAM_MODEL_ID];
 
         $page->load();
 
-        $template = new Template( $page->templateid );
+        $template = new Template($page->templateid);
 
-        foreach( $template->getElementIds() as $elementid )
-        {
-            $element = new Element( $elementid );
+        foreach ($template->getElementIds() as $elementid) {
+            $element = new Element($elementid);
             $element->load();
 
-            if	( $element->isWritable() )
-            {
+            if ($element->isWritable()) {
                 $treeElement = new TreeElement();
-                $treeElement->id   = $id.'_'.$elementid;
-                $treeElement->extraId['elementid'] =  $elementid;
+                $treeElement->id = $id . '_' . $elementid;
+                $treeElement->extraId['elementid'] = $elementid;
                 $treeElement->text = $element->name;
-                $treeElement->url  = Html::url('pageelement','edit',
-                    $id.'_'.$elementid,
-                    array('elementid'=>$elementid,
-                        REQ_PARAM_TARGETSUBACTION=>'edit',REQ_PARAM_TARGET=>'content'));
+                $treeElement->url = Html::url('pageelement', 'edit',
+                    $id . '_' . $elementid,
+                    array('elementid' => $elementid,
+                        REQ_PARAM_TARGETSUBACTION => 'edit', REQ_PARAM_TARGET => 'content'));
                 $treeElement->action = 'pageelement';
-                $treeElement->icon = 'el_'.$element->type;
-                $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID=>$page->languageid,REQ_PARAM_MODEL_ID=>$page->modelid);
+                $treeElement->icon = 'el_' . $element->type;
+                $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
 
 
-                $treeElement->description = lang('EL_'.$element->type);
-                if	( $element->desc != '' )
-                    $treeElement->description .= ' - '.Text::maxLaenge( 25,$element->desc );
+                $treeElement->description = lang('EL_' . $element->type);
+                if ($element->desc != '')
+                    $treeElement->description .= ' - ' . Text::maxLaenge(25, $element->desc);
                 else
-                    $treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-                $treeElement->target      = 'content';
+                    $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+                $treeElement->target = 'content';
 
-                if	( in_array($element->type,array('link','list','include') ) )
-                {
+                if (in_array($element->type, array('link', 'list', 'include'))) {
                     $treeElement->type = 'value';
                     $value = new Value();
-                    $value->pageid  = $page->pageid;
+                    $value->pageid = $page->pageid;
                     $value->element = $element;
                     $value->languageid = $page->languageid;
                     $value->load();
                     $treeElement->internalId = $value->valueid;
                 }
 
-                $this->addTreeElement( $treeElement );
+                $this->addTreeElement($treeElement);
             }
         }
     }
 
 
-    function value( $id )
+    function value($id)
     {
         //echo "id: $id";
-        if	( $id != 0 )
-        {
+        if ($id != 0) {
             $value = new Value();
-            $value->loadWithId( $id );
+            $value->loadWithId($id);
 
             $objectid = intval($value->linkToObjectId);
-            if	( $objectid != 0 )
-            {
-                $object = new Object( $objectid );
+            if ($objectid != 0) {
+                $object = new Object($objectid);
                 $object->load();
 
                 $treeElement = new TreeElement();
-                $treeElement->id         = $id;
-                $treeElement->text       = $object->name;
-                if	( in_array($object->getType(),array('page','folder')))
-                {
-                    $treeElement->type       = $object->getType();
+                $treeElement->id = $id;
+                $treeElement->text = $object->name;
+                if (in_array($object->getType(), array('page', 'folder'))) {
+                    $treeElement->type = $object->getType();
                     $treeElement->internalId = $object->objectid;
                 }
-                $treeElement->url    = Html::url($object->getType(),'',$objectid,array(REQ_PARAM_TARGET=>'content'));
+                $treeElement->url = Html::url($object->getType(), '', $objectid, array(REQ_PARAM_TARGET => 'content'));
                 $treeElement->action = $object->getType();
-                $treeElement->icon   = $object->getType();
+                $treeElement->icon = $object->getType();
 
-                $treeElement->description = lang('GLOBAL_'.$object->getType());
-                if	( $object->desc != '' )
-                    $treeElement->description .= ' - '.Text::maxLaenge( 25,$object->desc );
+                $treeElement->description = lang('GLOBAL_' . $object->getType());
+                if ($object->desc != '')
+                    $treeElement->description .= ' - ' . Text::maxLaenge(25, $object->desc);
                 else
-                    $treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-                $treeElement->target      = 'content';
+                    $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+                $treeElement->target = 'content';
 
-                $this->addTreeElement( $treeElement );
+                $this->addTreeElement($treeElement);
             }
         }
     }
 
 
-    function link( $id )
+    function link($id)
     {
-        $link = new Link( $id );
+        $link = new Link($id);
         $link->load();
 
-        $o = new Object( $link->linkedObjectId );
+        $o = new Object($link->linkedObjectId);
         $o->load();
 
         $treeElement = new TreeElement();
-        $treeElement->id         = $o->objectid;
+        $treeElement->id = $o->objectid;
         $treeElement->internalId = $o->objectid;
-        $treeElement->target     = 'content';
-        $treeElement->text       = $o->name;
-        $treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$id;
+        $treeElement->target = 'content';
+        $treeElement->text = $o->name;
+        $treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $id;
 
-        if	( $o->desc != '' )
-            $treeElement->description .= ': '.$o->desc;
+        if ($o->desc != '')
+            $treeElement->description .= ': ' . $o->desc;
         else
-            $treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+            $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
-        $treeElement->url        = Html::url($o->getType(),'',$o->objectid,array(REQ_PARAM_TARGET=>'content') );
-        $treeElement->action     = $o->getType();
-        $treeElement->icon       = $o->getType();
-        $treeElement->extraId    = array(REQ_PARAM_LANGUAGE_ID=>$_REQUEST[REQ_PARAM_LANGUAGE_ID],REQ_PARAM_MODEL_ID=>$_REQUEST[REQ_PARAM_MODEL_ID]);
+        $treeElement->url = Html::url($o->getType(), '', $o->objectid, array(REQ_PARAM_TARGET => 'content'));
+        $treeElement->action = $o->getType();
+        $treeElement->icon = $o->getType();
+        $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
 
         // Besonderheiten fuer bestimmte Objekttypen
 
-        if   ( $o->isPage )
-        {
+        if ($o->isPage) {
             // Nur wenn die Seite beschreibbar ist, werden die
             // Elemente im Baum angezeigt
-            if   ( $o->hasRight( ACL_WRITE ) )
-                $treeElement->type='pageelements';
+            if ($o->hasRight(ACL_WRITE))
+                $treeElement->type = 'pageelements';
         }
-        $this->addTreeElement( $treeElement );
+        $this->addTreeElement($treeElement);
     }
 
 
@@ -749,72 +714,67 @@ class AdministrationTree extends AbstractTree
      * Laedt Elemente zu einem Ordner
      * @return Array
      */
-    function folder( $id )
+    function folder($id)
     {
         global
         $SESS,
         $projectid;
 
-        $f = new Folder( $id );
+        $f = new Folder($id);
         $t = time();
         $f->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
-        $f->modelid    = $_REQUEST[REQ_PARAM_MODEL_ID];
+        $f->modelid = $_REQUEST[REQ_PARAM_MODEL_ID];
 
-        foreach( $f->getObjects() as $o )
-        {
+        foreach ($f->getObjects() as $o) {
             // Wenn keine Leseberechtigung
-            if	( !$o->hasRight( ACL_READ ) )
+            if (!$o->hasRight(ACL_READ))
                 continue;
 
             $treeElement = new TreeElement();
-            $treeElement->id         = $o->objectid;
+            $treeElement->id = $o->objectid;
             $treeElement->internalId = $o->objectid;
-            $treeElement->extraId    = array(REQ_PARAM_LANGUAGE_ID=>$f->languageid,REQ_PARAM_MODEL_ID=>$f->modelid);
-            $treeElement->target     = 'content';
-            $treeElement->text       = $o->name;
-            $treeElement->description= lang( 'GLOBAL_'.$o->getType() ).' '.$o->objectid;
+            $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $f->languageid, REQ_PARAM_MODEL_ID => $f->modelid);
+            $treeElement->target = 'content';
+            $treeElement->text = $o->name;
+            $treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $o->objectid;
 
-            if	( $o->desc != '' )
-                $treeElement->description .= ': '.$o->desc;
+            if ($o->desc != '')
+                $treeElement->description .= ': ' . $o->desc;
             else
-                $treeElement->description .= ' - '.lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
+                $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
-            $treeElement->url        = Html::url( $o->getType(),'',$o->objectid,array('readit'=>'__OID__'.$o->objectid.'__',REQ_PARAM_TARGET=>'content') );
-            $treeElement->action     = $o->getType();
-            $treeElement->icon       = $o->getType();
+            $treeElement->url = Html::url($o->getType(), '', $o->objectid, array('readit' => '__OID__' . $o->objectid . '__', REQ_PARAM_TARGET => 'content'));
+            $treeElement->action = $o->getType();
+            $treeElement->icon = $o->getType();
 
             // Besonderheiten fuer bestimmte Objekttypen
 
-            if   ( $o->isLink )
-            {
-                $treeElement->type='link';
+            if ($o->isLink) {
+                $treeElement->type = 'link';
             }
 
-            if   ( $o->isPage )
-            {
+            if ($o->isPage) {
                 // Nur wenn die Seite beschreibbar ist, werden die
                 // Elemente im Baum angezeigt
-                if   ( $o->hasRight( ACL_WRITE ) )
-                    $treeElement->type='page';
+                if ($o->hasRight(ACL_WRITE))
+                    $treeElement->type = 'page';
             }
 
-            if   ( $o->isFile )
-            {
-                $file = new File( $o->objectid );
+            if ($o->isFile) {
+                $file = new File($o->objectid);
                 $file->load();
 
-                if	( substr($file->mimeType(),0,6) == 'image/' )
+                if (substr($file->mimeType(), 0, 6) == 'image/')
                     $treeElement->icon = 'image';
-                else	$treeElement->icon = 'file';
+                else    $treeElement->icon = 'file';
             }
 
-            if   ( $o->isFolder )
-            {
+            if ($o->isFolder) {
                 $treeElement->type = 'folder';
             }
 
 
-            $this->addTreeElement( $treeElement );
+            $this->addTreeElement($treeElement);
         }
     }
 
@@ -822,89 +782,87 @@ class AdministrationTree extends AbstractTree
     function project_old()
     {
         $language = Session::getProjectLanguage();
-        $model    = Session::getProjectModel();
-        $user     = Session::getUser();
+        $model = Session::getProjectModel();
+        $user = Session::getUser();
 
-        $project  = Session::getProject();
+        $project = Session::getProject();
         $this->projectid = $project->projectid;
 
         // Hoechster Ordner der Projektstruktur
-        $folder = new Folder( $project->getRootObjectId() );
+        $folder = new Folder($project->getRootObjectId());
         $folder->load();
 
 
         // Ermitteln, ob der Benutzer Projektadministrator ist
         // Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
-        if   ( $folder->hasRight( ACL_PROP ) )
+        if ($folder->hasRight(ACL_PROP))
             $this->userIsProjectAdmin = true;
 
-        if   ( $folder->hasRight( ACL_READ ) )
-        {
+        if ($folder->hasRight(ACL_READ)) {
             $treeElement = new TreeElement();
-            $treeElement->id          = $folder->objectid;
+            $treeElement->id = $folder->objectid;
             //			$treeElement->text        = $folder->name;
-            $treeElement->text        = lang('FOLDER_ROOT');
+            $treeElement->text = lang('FOLDER_ROOT');
             $treeElement->description = lang('FOLDER_ROOT_DESC');
-            $treeElement->icon        = 'folder';
-            $treeElement->action      = 'folder';
-            $treeElement->url         = Html::url( 'folder','',$folder->objectid,array(REQ_PARAM_TARGET=>'content') );
-            $treeElement->target      = 'content';
-            $treeElement->type        = 'folder';
-            $treeElement->internalId  = $folder->objectid;
-            $this->addTreeElement( $treeElement );
+            $treeElement->icon = 'folder';
+            $treeElement->action = 'folder';
+            $treeElement->url = Html::url('folder', '', $folder->objectid, array(REQ_PARAM_TARGET => 'content'));
+            $treeElement->target = 'content';
+            $treeElement->type = 'folder';
+            $treeElement->internalId = $folder->objectid;
+            $this->addTreeElement($treeElement);
         }
 
 
-        if	( $this->userIsProjectAdmin )
-        {
+        if ($this->userIsProjectAdmin) {
             // Templates
             $treeElement = new TreeElement();
-            $treeElement->id         = 0;
-            $treeElement->text       = lang('GLOBAL_TEMPLATES');
-            $treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-            $treeElement->description= lang('GLOBAL_TEMPLATES_DESC');
-            $treeElement->icon       = 'templatelist';
-            $treeElement->action     = 'templatelist';
-            $treeElement->target     = 'content';
-            $treeElement->type       = 'templates';
-            $this->addTreeElement( $treeElement );
+            $treeElement->id = 0;
+            $treeElement->text = lang('GLOBAL_TEMPLATES');
+            $treeElement->url = Html::url('template', 'listing', 0, array(REQ_PARAM_TARGETSUBACTION => 'listing', REQ_PARAM_TARGET => 'content'));
+            $treeElement->description = lang('GLOBAL_TEMPLATES_DESC');
+            $treeElement->icon = 'templatelist';
+            $treeElement->action = 'templatelist';
+            $treeElement->target = 'content';
+            $treeElement->type = 'templates';
+            $this->addTreeElement($treeElement);
         }
 
 
         // Sprachen
         $treeElement = new TreeElement();
-        $treeElement->description= '';
-        $treeElement->id          = 0;
-        $treeElement->action     = 'languagelist';
-        $treeElement->text       = lang('GLOBAL_LANGUAGES');
-        $treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-        $treeElement->icon       = 'languagelist';
-        $treeElement->description= lang('GLOBAL_LANGUAGES_DESC');
-        $treeElement->target     = 'content';
+        $treeElement->description = '';
+        $treeElement->id = 0;
+        $treeElement->action = 'languagelist';
+        $treeElement->text = lang('GLOBAL_LANGUAGES');
+        $treeElement->url = Html::url('language', 'listing', 0, array(REQ_PARAM_TARGETSUBACTION => 'listing', REQ_PARAM_TARGET => 'content'));
+        $treeElement->icon = 'languagelist';
+        $treeElement->description = lang('GLOBAL_LANGUAGES_DESC');
+        $treeElement->target = 'content';
 
         // Nur fuer Projekt-Administratoren aufklappbar
-        if	( $this->userIsProjectAdmin )
-            $treeElement->type   = 'languages';
+        if ($this->userIsProjectAdmin)
+            $treeElement->type = 'languages';
 
-        $this->addTreeElement( $treeElement );
+        $this->addTreeElement($treeElement);
 
 
         // Projektmodelle
         $treeElement = new TreeElement();
-        $treeElement->description= '';
+        $treeElement->description = '';
 
         // Nur fuer Projekt-Administratoren aufklappbar
-        if	( $this->userIsProjectAdmin )
-            $treeElement->type   = 'models';
+        if ($this->userIsProjectAdmin)
+            $treeElement->type = 'models';
 
-        $treeElement->id          = 0;
-        $treeElement->description= lang('GLOBAL_MODELS_DESC');
-        $treeElement->text       = lang('GLOBAL_MODELS');
-        $treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
-        $treeElement->action     = 'modellist';
-        $treeElement->icon       = 'modellist';
-        $treeElement->target     = 'content';
-        $this->addTreeElement( $treeElement );
+        $treeElement->id = 0;
+        $treeElement->description = lang('GLOBAL_MODELS_DESC');
+        $treeElement->text = lang('GLOBAL_MODELS');
+        $treeElement->url = Html::url('model', 'listing', 0, array(REQ_PARAM_TARGETSUBACTION => 'listing', REQ_PARAM_TARGET => 'content'));
+        $treeElement->action = 'modellist';
+        $treeElement->icon = 'modellist';
+        $treeElement->target = 'content';
+        $this->addTreeElement($treeElement);
 
 
         // Sonstiges
@@ -917,73 +875,73 @@ class AdministrationTree extends AbstractTree
 
         // Suche
         $treeElement = new TreeElement();
-        $treeElement->id          = 0;
-        $treeElement->text        = lang('GLOBAL_SEARCH');
-        $treeElement->url         = Html::url('search','',0,array(REQ_PARAM_TARGET=>'content'));
-        $treeElement->action      = 'search';
-        $treeElement->icon        = 'search';
+        $treeElement->id = 0;
+        $treeElement->text = lang('GLOBAL_SEARCH');
+        $treeElement->url = Html::url('search', '', 0, array(REQ_PARAM_TARGET => 'content'));
+        $treeElement->action = 'search';
+        $treeElement->icon = 'search';
         $treeElement->description = lang('GLOBAL_SEARCH_DESC');
-        $treeElement->target      = 'content';
-        $this->addTreeElement( $treeElement );
+        $treeElement->target = 'content';
+        $this->addTreeElement($treeElement);
 
     }
 
 
-    function templates( $projectid )
+    function templates($projectid)
     {
         $project = new Project($projectid);
 
-        foreach( $project->getTemplates() as $id=>$name )
-        {
+        foreach ($project->getTemplates() as $id => $name) {
             $treeElement = new TreeElement();
 
-            $t = new Template( $id );
+            $t = new Template($id);
             $t->load();
-            $treeElement->text        = $t->name;
-            $treeElement->id          = $id;
-            $treeElement->url         = Html::url('template','src',$id,array(REQ_PARAM_TARGETSUBACTION=>'src',REQ_PARAM_TARGET=>'content'));
-            $treeElement->icon        = 'template';
-            $treeElement->action      = 'template';
-            $treeElement->target      = 'content';
-            $treeElement->internalId  = $id;
-            $treeElement->type        = 'template';
-            $treeElement->description = $t->name.' ('.lang('GLOBAL_TEMPLATE').' '.$id.'): '.htmlentities(Text::maxLaenge( 40,$t->src ));
-            $this->addTreeElement( $treeElement );
+            $treeElement->text = $t->name;
+            $treeElement->id = $id;
+            $treeElement->url = Html::url('template', 'src', $id, array(REQ_PARAM_TARGETSUBACTION => 'src', REQ_PARAM_TARGET => 'content'));
+            $treeElement->icon = 'template';
+            $treeElement->action = 'template';
+            $treeElement->target = 'content';
+            $treeElement->internalId = $id;
+            $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
+            $treeElement->type = 'template';
+            $treeElement->description = $t->name . ' (' . lang('GLOBAL_TEMPLATE') . ' ' . $id . '): ' . htmlentities(Text::maxLaenge(40, $t->src));
+            $this->addTreeElement($treeElement);
         }
     }
 
 
-    function template( $id )
+    function template($id)
     {
 
-        $t = new Template( $id );
+        $t = new Template($id);
         $t->load();
 
         // Anzeigen der Template-Elemente
         //
-        foreach( $t->getElementIds() as $elementid )
-        {
-            $e = new Element( $elementid );
+        foreach ($t->getElementIds() as $elementid) {
+            $e = new Element($elementid);
             $e->load();
 
             // "Code"-Element nur fuer Administratoren
-            if	( $e->type == 'code' && !$this->userIsAdmin )
+            if ($e->type == 'code' && !$this->userIsAdmin)
                 continue;
 
             $treeElement = new TreeElement();
-            $treeElement->id          = $elementid;
-            $treeElement->text        = $e->name;
-            $treeElement->url         = Html::url('element','',$elementid,array(REQ_PARAM_TARGET=>'content') );
-            $treeElement->icon        = 'el_'.$e->type;
-            $treeElement->action      = 'element';
+            $treeElement->id = $elementid;
+            $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
+            $treeElement->text = $e->name;
+            $treeElement->url = Html::url('element', '', $elementid, array(REQ_PARAM_TARGET => 'content'));
+            $treeElement->icon = 'el_' . $e->type;
+            $treeElement->action = 'element';
 
-            if	( $e->desc == '' )
+            if ($e->desc == '')
                 $desc = lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
             else
                 $desc = $e->desc;
-            $treeElement->description = $e->name.' ('.lang('EL_'.$e->type).'): '.Text::maxLaenge( 40,$desc );
-            $treeElement->target      = 'content';
-            $this->addTreeElement( $treeElement );
+            $treeElement->description = $e->name . ' (' . lang('EL_' . $e->type) . '): ' . Text::maxLaenge(40, $desc);
+            $treeElement->target = 'content';
+            $this->addTreeElement($treeElement);
         }
     }
 
@@ -991,47 +949,45 @@ class AdministrationTree extends AbstractTree
     /**
      * Sprachen
      */
-    function languages( $projectid )
+    function languages($projectid)
     {
         // Sprachvarianten
         //
         $project = new Project($projectid);
 
-        foreach( $project->getLanguages() as $languageid=>$name )
-        {
+        foreach ($project->getLanguages() as $languageid => $name) {
             $treeElement = new TreeElement();
-            $treeElement->id          = $languageid;
-            $treeElement->text         = $name;
-            $treeElement->url          = Html::url('language','edit',$languageid,
-                array(REQ_PARAM_TARGETSUBACTION=>'edit',REQ_PARAM_TARGET=>'content') );
-            $treeElement->icon         = 'language';
-            $treeElement->action       = 'language';
-            $treeElement->description  = '';
-            $treeElement->target       = 'content';
-            $this->addTreeElement( $treeElement );
+            $treeElement->id = $languageid;
+            $treeElement->text = $name;
+            $treeElement->url = Html::url('language', 'edit', $languageid,
+                array(REQ_PARAM_TARGETSUBACTION => 'edit', REQ_PARAM_TARGET => 'content'));
+            $treeElement->icon = 'language';
+            $treeElement->action = 'language';
+            $treeElement->description = '';
+            $treeElement->target = 'content';
+            $this->addTreeElement($treeElement);
         }
     }
 
 
     // Projektvarianten
     //
-    function models( $projectid )
+    function models($projectid)
     {
 
         $project = new Project($projectid);
 
-        foreach( $project->getModels() as $id=>$name )
-        {
+        foreach ($project->getModels() as $id => $name) {
             $treeElement = new TreeElement();
-            $treeElement->id          = $id;
-            $treeElement->text        = $name;
-            $treeElement->url         = Html::url('model','edit',$id,
-                array(REQ_PARAM_TARGETSUBACTION=>'edit',REQ_PARAM_TARGET=>'content'));
-            $treeElement->action      = 'model';
-            $treeElement->icon        = 'model';
+            $treeElement->id = $id;
+            $treeElement->text = $name;
+            $treeElement->url = Html::url('model', 'edit', $id,
+                array(REQ_PARAM_TARGETSUBACTION => 'edit', REQ_PARAM_TARGET => 'content'));
+            $treeElement->action = 'model';
+            $treeElement->icon = 'model';
             $treeElement->description = '';
-            $treeElement->target      = 'content';
-            $this->addTreeElement( $treeElement );
+            $treeElement->target = 'content';
+            $this->addTreeElement($treeElement);
         }
     }
 
@@ -1053,35 +1009,35 @@ class AdministrationTree extends AbstractTree
 //		}
 
         $treeElement = new TreeElement();
-        $treeElement->id          = 0;
-        $treeElement->text        = lang('GLOBAL_SEARCH');
-        $treeElement->url         = Html::url('search');
-        $treeElement->icon        = 'search';
-        $treeElement->action      = 'search';
+        $treeElement->id = 0;
+        $treeElement->text = lang('GLOBAL_SEARCH');
+        $treeElement->url = Html::url('search');
+        $treeElement->icon = 'search';
+        $treeElement->action = 'search';
         $treeElement->description = lang('GLOBAL_SEARCH_DESC');
-        $treeElement->target      = 'content';
-        $this->addTreeElement( $treeElement );
+        $treeElement->target = 'content';
+        $this->addTreeElement($treeElement);
 
 
         $treeElement = new TreeElement();
-        $treeElement->id          = 0;
-        $treeElement->text        = lang('USER_YOURPROFILE');
-        $treeElement->url         = Html::url('profile','edit',0,array(REQ_PARAM_TARGET=>'content'));
-        $treeElement->icon        = 'user';
-        $treeElement->action      = 'profile';
+        $treeElement->id = 0;
+        $treeElement->text = lang('USER_YOURPROFILE');
+        $treeElement->url = Html::url('profile', 'edit', 0, array(REQ_PARAM_TARGET => 'content'));
+        $treeElement->icon = 'user';
+        $treeElement->action = 'profile';
         $treeElement->description = lang('USER_PROFILE_DESC');
-        $treeElement->target      = 'content';
-        $this->addTreeElement( $treeElement );
+        $treeElement->target = 'content';
+        $this->addTreeElement($treeElement);
 
 
         $treeElement = new TreeElement();
-        $treeElement->id          = 0;
-        $treeElement->text        = lang('GLOBAL_PROJECTS');
-        $treeElement->url         = Html::url('index','projectmenu',0,array(REQ_PARAM_TARGET=>'content'));
-        $treeElement->icon        = 'project';
+        $treeElement->id = 0;
+        $treeElement->text = lang('GLOBAL_PROJECTS');
+        $treeElement->url = Html::url('index', 'projectmenu', 0, array(REQ_PARAM_TARGET => 'content'));
+        $treeElement->icon = 'project';
         $treeElement->description = lang('GLOBAL_PROJECTS');
-        $treeElement->target      = 'content';
-        $this->addTreeElement( $treeElement );
+        $treeElement->target = 'content';
+        $this->addTreeElement($treeElement);
     }
 
 }

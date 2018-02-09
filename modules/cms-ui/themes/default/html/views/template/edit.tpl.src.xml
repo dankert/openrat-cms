@@ -42,11 +42,13 @@
 	<group title="message:src">
 	<table>
 	<row class="data">
-	<column class="clickable">
-				<link type="view" subaction="src">
-					<image icon="template" />
-					<text key="edit"></text>
-				</link>
+	<column>
+		<part class="clickable">
+			<link type="view" subaction="src">
+				<image icon="template" />
+				<text key="edit"></text>
+			</link>
+		</part>
 	</column>
 	</row>
 	</table>

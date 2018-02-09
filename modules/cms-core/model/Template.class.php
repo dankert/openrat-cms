@@ -66,14 +66,6 @@ class Template
 	// Konstruktor
 	function __construct( $templateid='' )
 	{
-		$model   = \Session::getProjectModel();
-		$project = \Session::getProject();
-
-		if	( is_object($model) )
-			$this->modelid   = $model->modelid;
-		if	( is_object($project) )
-			$this->projectid = $project->projectid;
-
 		if   ( is_numeric($templateid) )
 			$this->templateid = $templateid;
 	}

@@ -51,8 +51,12 @@ class TemplateAction extends Action
         parent::__construct();
 
 		$this->template = new Template( $this->getRequestId() );
+
+		$this->template->modelid = $this->request->getModelId();
 		$this->template->load();
+
 		$this->setTemplateVar( 'templateid',$this->template->templateid );
+		$this->setTemplateVar( 'modelid'   ,$this->template->modelid    );
 
 		if	( intval($this->getRequestVar('elementid')) != 0 )
 		{
