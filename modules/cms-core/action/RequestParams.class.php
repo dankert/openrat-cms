@@ -165,5 +165,9 @@ namespace cms\action {
         {
             return $this->getRequestVar(REQ_PARAM_MODEL_ID,OR_FILTER_NUMBER);
         }
+        public function getProjectId()
+        {
+            return $this->getRequestVar(REQ_PARAM_PROJECT_ID,OR_FILTER_NUMBER);
+        }
     }
 }

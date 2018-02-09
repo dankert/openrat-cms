@@ -82,7 +82,7 @@ class Template
 	/**
  	 * Ermitteln aller Templates in dem aktuellen Projekt.
  	 * @return Array mit Id:Name
-     * @deprecated use Project::getLanguages()
+     * @deprecated use Project::getTemplates()
  	 */
 	function getAll()
 	{

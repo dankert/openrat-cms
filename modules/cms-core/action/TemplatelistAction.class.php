@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\model\Element;
+use cms\model\Project;
 use cms\model\Template;
 use Session;
 
@@ -59,10 +60,12 @@ class TemplatelistAction extends Action
 
 		$list = array();
 
+		$project = new Project( $this->request->getProjectId());
+
 		$template = new Template();
 		$template->projectid = $this->getRequestId();
 
-		foreach( $template::getAll() as $id=>$name )
+		foreach( $project->getTemplates() as $id=>$name )
 		{
 			$list[$id] = array();
 			$list[$id]['name'] = $name;

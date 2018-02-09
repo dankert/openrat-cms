@@ -5,7 +5,7 @@ namespace cms\action;
 use cms\model\Language;
 
 
-
+use cms\model\Project;
 use Session;
 use \Html;
 
@@ -36,16 +36,21 @@ use \Html;
 class LanguagelistAction extends Action
 {
 	public $security = SECURITY_USER;
-	
 
-	/**
+    /**
+     * @var Project
+     */
+    private $project;
+
+
+    /**
 	 * Konstruktor
 	 */
 	function __construct()
 	{
         parent::__construct();
 
-		$this->project = Session::getProject();
+        $this->project = new Project( $this->request->getProjectId());
 	}
 
 

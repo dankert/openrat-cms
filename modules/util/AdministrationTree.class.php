@@ -213,7 +213,8 @@ class AdministrationTree extends AbstractTree
 			// Templates
 			$treeElement = new TreeElement();
 			$treeElement->id         = $projectid;
-			$treeElement->internalId = $projectid;
+            $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
+            $treeElement->internalId = $projectid;
 			$treeElement->text       = lang('GLOBAL_TEMPLATES');
 //			$treeElement->url        = Html::url('template','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
 			$treeElement->description= lang('GLOBAL_TEMPLATES_DESC');
@@ -229,6 +230,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
 		$treeElement->description= '';
 		$treeElement->id          = $projectid;
+        $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
         $treeElement->internalId = $projectid;
 		$treeElement->action     = 'languagelist';
 		$treeElement->text       = lang('GLOBAL_LANGUAGES');
@@ -254,6 +256,7 @@ class AdministrationTree extends AbstractTree
 	
 		$treeElement->id         = $projectid;
         $treeElement->internalId = $projectid;
+        $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
 		$treeElement->description= lang('GLOBAL_MODELS_DESC');
 		$treeElement->text       = lang('GLOBAL_MODELS');
 //		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
@@ -275,6 +278,7 @@ class AdministrationTree extends AbstractTree
 		$treeElement = new TreeElement();
         $treeElement->id         = $projectid;
         $treeElement->internalId = $projectid;
+        $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
 		$treeElement->text        = lang('GLOBAL_SEARCH');
 //		$treeElement->url         = Html::url('search','',0,array(REQ_PARAM_TARGET=>'content'));
 		$treeElement->action      = 'search';

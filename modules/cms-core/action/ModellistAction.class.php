@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\model\Model;
+use cms\model\Project;
 use Html;
 use Session;
 
@@ -39,19 +40,16 @@ class ModellistAction extends Action
 
 	public $security = SECURITY_USER;
 
+    /**
+     * @var Project
+     */
     private $project;
 
     function __construct()
 	{
         parent::__construct();
 
-        if	( $this->getRequestId() != 0 )
-		{
-			$this->model = new Model( $this->getRequestId() );
-			$this->model->load();
-		}
-		
-		$this->project = Session::getProject();
+        $this->project = new Project( $this->request->getProjectId() );
 	}
 
 
