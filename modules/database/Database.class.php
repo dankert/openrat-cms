@@ -153,8 +153,19 @@ class Database
 				throw new RuntimeException( "Could not execute connection-query '".$cmd."'");
 			}
 		}
-		
-		Logger::debug('database connection established');
+
+		// Setting isolation level to "read committed".
+        // if another session is committing data, we want to read that immediatly
+        if  ( $this->conf['persistent'])
+        {
+//            $sql = $this->sql('ROLLBACK');
+//            $sql->execute();
+//            $sql = $this->sql('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+//            $sql->execute();
+        }
+
+
+        Logger::debug('database connection established');
 		
 		$this->available = true;
 		return true;
@@ -166,6 +177,7 @@ class Database
 	 */
 	public function start()
 	{
+	    Logger::debug("Starting database transaction!");
 		$this->transactionInProgress = true;
 		$this->client->start();
 	}
@@ -177,6 +189,7 @@ class Database
 	 */
 	public function commit()
 	{
+        Logger::debug("Committing database transaction!");
 		if	( $this->transactionInProgress )
 		{
 			$this->client->commit();
@@ -192,6 +205,7 @@ class Database
 	 */
 	public function rollback()
 	{
+        Logger::debug("Rolling back database transaction!");
 		if	( $this->transactionInProgress )
 		{
 			$this->client->rollback();
