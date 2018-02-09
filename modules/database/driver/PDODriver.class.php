@@ -75,17 +75,28 @@ class PDODriver
 				$options[substr($c,8)] = $conf[$c];
 
 		if	( $conf['persistent'])
+		    // From the docs:
+		    // "Many web applications will benefit from making persistent connections to database servers.
+		    //  Persistent connections are not closed at the end of the script, but are cached and re-used
+		    //  when another script requests a connection using the same credentials."
+		    // "The persistent connection cache allows you to avoid the overhead of establishing a new
+		    // connection every time a script needs to talk to a database, resulting in a faster web application."
 			$options[ PDO::ATTR_PERSISTENT ] = true;
 
-		//if	( !$conf['prepare']) <- unused...
 		// From the docs:
-		// try to use native prepared statements (if FALSE).
-		// It will always fall back to emulating the prepared statement if the driver cannot successfully prepare the current query
+		// "try to use native prepared statements (if FALSE).
+		//  It will always fall back to emulating the prepared statement if the driver cannot successfully prepare the current query"
 		$options[ PDO::ATTR_EMULATE_PREPARES ] = false;
 		
 		// Convert numeric values to strings when fetching => NO
 		$options[ PDO::ATTR_STRINGIFY_FETCHES ] = false;
-		$options[ PDO::ATTR_AUTOCOMMIT ] = false;
+
+		// From the docs:
+		// "If this value is FALSE, PDO attempts to disable autocommit so that the connection begins a transaction."
+        // We do NOT need transactions for reading actions (GET requests).
+        // We are opening a transaction with PDO::beginTransaction at the beginning of a  POST-request.
+        // do NOT set this to false, otherwise there will be left open transactions.
+		//$options[ PDO::ATTR_AUTOCOMMIT ] = true;
 			
 		// We like Exceptions
 		$options[ PDO::ERRMODE_EXCEPTION ] = true;
