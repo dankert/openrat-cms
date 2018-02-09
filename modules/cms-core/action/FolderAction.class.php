@@ -53,8 +53,10 @@ class FolderAction extends ObjectAction
 	{
         parent::__construct();
 		$this->folder = new Folder( $this->getRequestId() );
-		$this->folder->languageid = $this->getRequestVar('languageid');
+		$this->folder->languageid = $this->request->getLanguageId();
 		$this->folder->load();
+
+		$this->lastModified( $this->folder->lastchangeDate);
 	}
 
 
