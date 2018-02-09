@@ -158,10 +158,17 @@ class Dispatcher
      */
     private function initializeLogger()
     {
+
         $logConfig = config('log');
 
+        $logFile = $logConfig['file'];
+        // Wenn Logfile relativ angegeben wurde, dann muss dies relativ zum Root der Anwendung sein.
+        if   ( substr($logFile,0,1) != '/' )
+            $logFile = __DIR__.'/../../'.$logFile;
+        //$logFile = __DIR__.'/../../'.$logFile;
+
         Logger::$messageFormat = $logConfig['format'];
-        Logger::$filename = $logConfig['file'];
+        Logger::$filename = $logFile;
         Logger::$dateFormat = $logConfig['date_format'];
         Logger::$nsLookup = $logConfig['ns_lookup'];
 
