@@ -1,4 +1,6 @@
 
+'use strict';
+
 // Default-Subaction
 var DEFAULT_CONTENT_ACTION = 'edit';
 
@@ -15,22 +17,105 @@ $( function()
 
     refreshAll();
 	
-	// Alle 5 Minuten pingen.
-	window.setInterval( function(){ping();}, 300000 );
+	Workbench.initialize();
 });
 
 
- 
-/**
- * Ping den Server. Führt keine Aktion aus, aber sorgt dafür, dass die Sitzung erhalten bleibt.
- * 
- * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
- */
-function ping()
+
+var Workbench = new function()
 {
-	$.ajax( createUrl('title','ping',0) );
-	//window.console && console.log("session-ping");
+    /**
+	 * Initializes the Workbench.
+     */
+	this.initialize = function() {
+
+		// Initialze Ping timer.
+		this.initializePingTimer();
+	}
+
+
+    /**
+	 *  Registriert den Ping-Timer für den Sitzungserhalt.
+     */
+	this.initializePingTimer = function() {
+
+        /**
+         * Ping den Server. Führt keine Aktion aus, aber sorgt dafür, dass die Sitzung erhalten bleibt.
+         *
+         * "Geben Sie mir ein Ping, Vasily. Und bitte nur ein einziges Ping!" (aus: Jagd auf Roter Oktober)
+         */
+        var ping = function()
+        {
+            $.ajax( createUrl('title','ping',0) );
+            //window.console && console.log("session-ping");
+        }
+
+        // Alle 5 Minuten pingen.
+		var timeoutMinutes = 5;
+
+        window.setInterval( ping, timeoutMinutes*60*1000 );
+    }
+
+
+    /**
+	 *
+     */
+    this.openNewTab = function(contentEl,action,method,id,params ) {
+
+        // Schauen, ob der Inhalt schon geladen ist...
+        var targetEl = $(contentEl).children('div.sheet.action-'+action+'.method-'+method+'.id-'+id);
+
+        if	( targetEl.length == 0 )
+        {
+            // Noch nicht vorhanden, neues Element erstellen.
+            $(contentEl).children('div.sheet').hide();
+            targetEl = $('<div class="sheet action-'+action+' method-'+method+' id-'+id + '" />' );
+            $(contentEl).append(targetEl);
+        }
+        else
+        {
+            if	( targetEl.is(':visible') )
+            {
+                return;
+            }
+            else
+            {
+                $(contentEl).children('div.sheet').hide();
+                targetEl.show();
+                return;
+            }
+        }
+
+        var url = createUrl(action,method,id,params); // URL für das Laden erzeugen.
+
+        $(targetEl).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
+            $(targetEl).fadeTo(350,1);
+
+            if	( status == "error" )
+            {
+                // Seite nicht gefunden.
+                $(targetEl).html("");
+                $(targetEl).removeClass("loader");
+
+                notify('error',response);
+                // OK-button Ausblenden.
+                //$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
+                // var msg = "Sorry but there was an error: ";
+                //$(this).html(msg + xhr.status + " " + xhr.statusText);
+                return;
+            }
+
+            $(targetEl).removeClass("loader");
+            registerViewEvents( targetEl );
+        });
+
+    }
+
 }
+
+
+
+
 
 
 
@@ -410,52 +495,7 @@ function loadViewByName(viewName, url )
  */
 function loadView(contentEl,action,method,id,params  )
 {
-	// Schauen, ob der Inhalt schon geladen ist...
-	var targetEl = $(contentEl).children('div.sheet.action-'+action+'.method-'+method+'.id-'+id);
-	
-	if	( targetEl.length == 0 )
-	{
-		// Noch nicht vorhanden, neues Element erstellen.
-		$(contentEl).children('div.sheet').hide();
-		targetEl = $('<div class="sheet action-'+action+' method-'+method+' id-'+id + '" />' );
-		$(contentEl).append(targetEl);
-	}
-	else
-	{
-		if	( targetEl.is(':visible') )
-		{
-			return;
-		}
-		else
-		{
-			$(contentEl).children('div.sheet').hide();
-			targetEl.show();
-			return;
-		}
-	}
-			
-	var url = createUrl(action,method,id,params); // URL für das Laden erzeugen.
-	
-	$(targetEl).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
-			$(targetEl).fadeTo(350,1);
-			
-			if	( status == "error" )
-			{
-				// Seite nicht gefunden.
-				$(targetEl).html("");
-				$(targetEl).removeClass("loader");
-				
-				notify('error',response);
-				// OK-button Ausblenden.
-				//$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
-				// var msg = "Sorry but there was an error: ";
-				//$(this).html(msg + xhr.status + " " + xhr.statusText);
-				return;
-			}
-
-			$(targetEl).removeClass("loader");
-			registerViewEvents( targetEl );
-		});
+	Workbench.openNewTab(contentEl,action,method,id,params );
 }
 
 
