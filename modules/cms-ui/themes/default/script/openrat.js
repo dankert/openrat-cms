@@ -401,9 +401,12 @@ function loadViewByName(viewName, url )
 
 /**
  * Laden einer View.
- * 
- * @param jo
- * @param url URL, von der der Inhalt geladen wird.
+ *
+ * @param contentEl
+ * @param action
+ * @param method
+ * @param id
+ * @param params
  */
 function loadView(contentEl,action,method,id,params  )
 {
@@ -682,19 +685,32 @@ function postUrl(url,element)
 }
 
 
+/**
+ * Ermittelt die aktuelle, ausgewählte View.
+ *
+ * @returns JSON
+ */
+function getActiveView()
+{
+    var element = $('#panel-content').find('li.active');
+
+    return{
+    	'action'  : $(element).data('action'),
+        'id'      : $(element).data('id'    ),
+    	'extraid' : $(element).data('extra' )
+	};
+}
+
 
 /**
  * Setzt neue View und aktualisiert alle Fenster.
  * @param element
- * @param action Action
- * @param id Id
+ * @param method
  */
 function startView( element,method )
 {
-	var action = $('#panel-content').find('li.active').data('action');
-	var id     = $('#panel-content').find('li.active').data('id'    );
-	
-	loadView( $(element).closest('div.panel').find('div.content'), action,method,id );
+	var active = getActiveView();
+	loadView( $(element).closest('div.panel').find('div.content'), active.action,method,active.id,active.extraid );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
@@ -703,9 +719,11 @@ function startView( element,method )
 
 /**
  * Setzt neuen modalen Dialog und aktualisiert alle Fenster.
- * @param element
+ * @param name
  * @param action Action
+ * @param method
  * @param id Id
+ * @param params
  */
 function startDialog( name,action,method,id,params )
 {
@@ -713,21 +731,16 @@ function startDialog( name,action,method,id,params )
 		action = $('#panel-content').find('li.active').data('action');
 	if	(id==null  || id.length ==0)
 		id     = $('#panel-content').find('li.active').data('id'    );
-//	if	(params==null)
-//		params = {};
-	
+	if	(typeof params === "undefined")
+        params = $('#panel-content').find('li.active').data('extra');
+
 	$('div#filler').fadeTo(500,0.5);
 	$('div#dialog').html('<div class="header"><ul class="views"><li class="action active"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" /><div class="tabname" style="width:100px;">'+name+'</div></li></ul></div><div class="content" />');
 	$('div#dialog').data('id',id);
 	$('div#dialog').show();
 
-	//alert("neuer Dialog2: "+name+" action: "+action+" method: "+method+ " id:"+id + " params:"+params);
-
 	loadView( $('div#dialog div.content'), action,method,id,params );
 	
-	//$('#workbench div.panel.modal').parent().addClass('modal');
-	//$('#workbench').addClass('modal');
-
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
 }
