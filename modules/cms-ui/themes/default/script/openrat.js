@@ -1,5 +1,4 @@
 
-'use strict';
 
 // Default-Subaction
 var DEFAULT_CONTENT_ACTION = 'edit';
@@ -24,6 +23,8 @@ $( function()
 
 var Workbench = new function()
 {
+    'use strict'; // Strict mode
+
     /**
 	 * Initializes the Workbench.
      */
