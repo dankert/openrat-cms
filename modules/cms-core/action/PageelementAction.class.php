@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\model\Project;
 use cms\model\User;
 use cms\model\Value;
 use cms\model\Element;
@@ -113,8 +114,7 @@ class PageelementAction extends Action
 	 */
 	public function propView()
 	{
-		$language = Session::getProjectLanguage();
-		$this->value->languageid = $language->languageid;
+		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->page       = $this->page;
@@ -151,8 +151,7 @@ class PageelementAction extends Action
 	 */
 	public function infoView()
 	{
-		$language = Session::getProjectLanguage();
-		$this->value->languageid = $language->languageid;
+		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->page       = $this->page;
@@ -189,8 +188,7 @@ class PageelementAction extends Action
 	 */
 	public function structureView()
 	{
-		$language = Session::getProjectLanguage();
-		$this->value->languageid = $language->languageid;
+		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->page       = $this->page;
@@ -216,8 +214,7 @@ class PageelementAction extends Action
 	 */
 	public function editView()
 	{
-		$language = Session::getProjectLanguage();
-		$this->value->languageid = $language->languageid;
+		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->element = &$this->element;
@@ -232,6 +229,7 @@ class PageelementAction extends Action
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
 		$this->setTemplateVar('elementid',$this->value->element->elementid);
+		$this->setTemplateVar('languageid',$this->value->languageid       );
 		$this->setTemplateVar('type'     ,$this->value->element->type     );
 		$this->setTemplateVar('value_time',time() );
 
@@ -262,8 +260,7 @@ class PageelementAction extends Action
 	 */
 	public function previewView()
 	{
-		$language = Session::getProjectLanguage();
-		$this->value->languageid = $language->languageid;
+		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->element = &$this->element;
@@ -532,8 +529,7 @@ class PageelementAction extends Action
 
 	function linkView()
 	{
-		$language = Session::getProjectLanguage();
-		$this->value->languageid = $language->languageid;
+		$this->value->languageid = $this->page->languageid;
 		$this->value->objectid   = $this->page->objectid;
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->element = &$this->element;
@@ -717,7 +713,7 @@ class PageelementAction extends Action
 
 			if	( $this->element->wiki )
 			{
-				$project = Session::getProject();
+				$project = new Project( $this->page->projectid );
 				$languages = $project->getLanguages();
 
 				if	( count($languages) > 1 )
@@ -824,8 +820,7 @@ class PageelementAction extends Action
 			$this->value->page = &$this->page;
 
 			$this->value->simple = true;
-			$language = Session::getProjectLanguage();
-			$this->value->languageid = $language->languageid;
+			$this->value->languageid = $this->page->languageid;
 			$this->value->objectid   = $this->page->objectid;
 			$this->value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 			$this->value->element    = &$this->element;
@@ -956,7 +951,7 @@ class PageelementAction extends Action
 			$type = $this->element->type;
 
 			if	( empty($type))
-			die('Error: No element type available.');
+			    throw new \InvalidArgumentException('No element type available');
 
 			$funktionName = 'save'.$type;
 
@@ -973,8 +968,7 @@ class PageelementAction extends Action
 		private function savetext()
 		{
 			$value = new Value();
-			$language = Session::getProjectLanguage();
-			$value->languageid = $language->languageid;
+			$value->languageid = $this->page->languageid;
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
@@ -1033,7 +1027,7 @@ class PageelementAction extends Action
 			// fuer jede Sprache einzeln gespeichert.
 			if	( $value->element->allLanguages )
 			{
-				$project = Session::getProject();
+				$project = new Project( $this->page->projectid );
 				foreach( $project->getLanguageIds() as $languageid )
 				{
 					$value->languageid = $languageid;
@@ -1067,8 +1061,7 @@ class PageelementAction extends Action
 		{
 			global $conf;
 			$value = new Value();
-			$language = Session::getProjectLanguage();
-			$value->languageid = $language->languageid;
+			$value->languageid = $this->page->languageid;
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
@@ -1191,8 +1184,7 @@ class PageelementAction extends Action
 		private function savedate()
 		{
 			$value = new Value();
-			$language = Session::getProjectLanguage();
-			$value->languageid = $language->languageid;
+			$value->languageid = $this->page->languageid;
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
@@ -1235,8 +1227,7 @@ class PageelementAction extends Action
 		private function saveselect()
 		{
 			$value = new Value();
-			$language = Session::getProjectLanguage();
-			$value->languageid = $language->languageid;
+			$value->languageid = $this->page->languageid;
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
@@ -1264,15 +1255,14 @@ class PageelementAction extends Action
 		private function savelink()
 		{
 			$value = new Value();
-			$language = Session::getProjectLanguage();
-			$value->languageid = $language->languageid;
+			$value->languageid = $this->page->languageid;
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
 			if	( $this->hasRequestVar('elementid') )
-			$value->element = new Element( $this->getRequestVar('elementid') );
+			    $value->element = new Element( $this->getRequestVar('elementid') );
 			else
-			$value->element = Session::getElement();
+			    $value->element = Session::getElement();
 
 			$value->element->load();
 			$value->publish = false;
@@ -1308,8 +1298,7 @@ class PageelementAction extends Action
 		private function saveinsert()
 		{
 			$value = new Value();
-			$language = Session::getProjectLanguage();
-			$value->languageid = $language->languageid;
+			$value->languageid = $this->page->languageid;
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
@@ -1337,8 +1326,7 @@ class PageelementAction extends Action
 		private function savenumber()
 		{
 			$value = new Value();
-			$language = Session::getProjectLanguage();
-			$value->languageid = $language->languageid;
+			$value->languageid = $this->page->languageid;
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
