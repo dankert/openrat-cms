@@ -1,7 +1,7 @@
 <?php
 
 use cms\model\Link;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Url;
 
 /**
@@ -77,7 +77,7 @@ class Transformer
 			// anderen (insbesondere Preview-Links zu andereen Seiten) darf die Umsetzung nicht erfolgen. 
 			// Der Renderer kann dies nicht tun, denn der erzeugt nur "object://..."-URLs.
 			// Beispiel: "...?a=1&b=2" wird zu "...?a=1&amp;b=2"
-			$o = new Object($objectId);
+			$o = new BaseObject($objectId);
 			try
 			{  
 				$o->load();

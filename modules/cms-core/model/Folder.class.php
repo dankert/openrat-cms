@@ -25,7 +25,7 @@ namespace cms\model;
  * @author $Author$
  * @package openrat.objects
  */
-class Folder extends Object
+class Folder extends BaseObject
 {
 	var $folderid;
 	var $projectid;
@@ -201,7 +201,7 @@ class Folder extends Object
 		$res = $sql->getAll();
 		foreach( $res as $row )
 		{
-			$o = new Object( $row['id'] );
+			$o = new BaseObject( $row['id'] );
 			$o->setDatabaseRow( $row );
 			$liste[] = $o;
 		}
@@ -263,7 +263,7 @@ class Folder extends Object
 
 		foreach( $this->getObjectIds() as $oid )
 		{
-			$o = new Object( $oid );
+			$o = new BaseObject( $oid );
 			$o->objectLoadRaw();
 
 			if	( $o->isPage && $withPages )
@@ -435,7 +435,7 @@ class Folder extends Object
 	/**
 	 * Ermittelt die erste Seite oder Verkn�pfung in diesem Ordner.
 	 *
-	 * @return Object Objekt
+	 * @return BaseObject Objekt
 	 */
 	public function getFirstPage()
 	{
@@ -450,7 +450,7 @@ class Folder extends Object
 		$oid = intval($sql->getOne());
 		
 		if	( $oid != 0 )
-			$o = new Object($oid);
+			$o = new BaseObject($oid);
 		else
 			$o = null;
 
@@ -461,7 +461,7 @@ class Folder extends Object
 	/**
 	 * Ermittelt die erste Seite oder Verkn�pfung in diesem Ordner.
 	 *
-	 * @return Object Objekt
+	 * @return BaseObject Objekt
 	 */
 	function getFirstPageOrLink()
 	{
@@ -476,7 +476,7 @@ class Folder extends Object
 		$oid = intval($sql->getOne());
 		
 		if	( $oid != 0 )
-			$o = new Object($oid);
+			$o = new BaseObject($oid);
 		else
 			$o = null;
 
@@ -497,7 +497,7 @@ class Folder extends Object
 		$oid = intval($sql->getOne());
 		
 		if	( $oid != 0 )
-			$o = new Object($oid);
+			$o = new BaseObject($oid);
 		else
 			$o = null;
 
@@ -833,7 +833,7 @@ SQL
 		// diesem Ordner
 		foreach( $this->getObjectIds() as $oid )
 		{
-			$object = new Object( $oid );
+			$object = new BaseObject( $oid );
 			{
 				$object->load();
 

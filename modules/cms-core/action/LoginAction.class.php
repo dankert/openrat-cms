@@ -9,7 +9,7 @@ use cms\model\Group;
 use cms\model\Value;
 use cms\model\Element;
 use cms\model\Page;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\Model;
 
@@ -1089,9 +1089,9 @@ class LoginAction extends Action
 			if	( !is_object($object) && @$conf['login']['start']['start_lastchanged_object'] )
 			{
 				$objectid = Value::getLastChangedObjectByUserId($user->userid);
-				if	( Object::available($objectid))
+				if	( BaseObject::available($objectid))
 				{
-					$object = new Object($objectid);
+					$object = new BaseObject($objectid);
 					$object->load();
 					Session::setObject($object); 
 				
@@ -1146,11 +1146,11 @@ class LoginAction extends Action
 			{
 				$user     = Session::getUser();
 				$objectid = Value::getLastChangedObjectByUserId($user->userid);
-				if	( Object::available($objectid))
+				if	( BaseObject::available($objectid))
 				{
 					// Das Projekt des zuletzt geänderten Objekts ermitteln
 					// und dieses Projekt starten.
-					$o = new Object( $objectid );
+					$o = new BaseObject( $objectid );
 					$o->load();
 					
 					$project  = new Project($o->projectid);
@@ -1429,9 +1429,9 @@ class LoginAction extends Action
 		}
 		
 
-		if	( isset($vars[REQ_PARAM_OBJECT_ID]) && Object::available($vars[REQ_PARAM_OBJECT_ID]) )
+		if	( isset($vars[REQ_PARAM_OBJECT_ID]) && BaseObject::available($vars[REQ_PARAM_OBJECT_ID]) )
 		{
-			$object = new Object( $vars[REQ_PARAM_OBJECT_ID] );
+			$object = new BaseObject( $vars[REQ_PARAM_OBJECT_ID] );
 			$object->objectLoadRaw();
 			Session::setObject( $object );
 	
@@ -1660,7 +1660,7 @@ class LoginAction extends Action
 		}
 		elseif	( $objectid != 0 )
 		{
-			$object = new Object( $objectid );
+			$object = new BaseObject( $objectid );
 			$object->objectLoad();
 			Session::setObject($object);
 		}

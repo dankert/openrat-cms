@@ -27,7 +27,7 @@
 // Beispiele fuer dynamische Templateelemente
 //
 // ---------------------------------------------------------------------------
-use cms\model\Object;
+use cms\model\BaseObject;
 
 
 /**
@@ -45,7 +45,7 @@ class NextPage extends Macro
 	function execute()
 	{
 		// Lesen des Ordners
-		$o = new Object( $this->targetid );
+		$o = new BaseObject( $this->targetid );
 		$o->load();
 		
 		if	( empty($this->name ) ) $this->name  = $o->name;

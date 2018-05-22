@@ -37,7 +37,7 @@
 			<?php } ?>
 			<tr class="data">
 				<td colspan="2" class="clickable">
-					<a target="_self" data-type="view" data-action="" data-method="addel" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+					<a target="_self" data-type="view" data-action="template" data-method="addel" data-id="<?php echo $templateid ?>" href="javascript:void(0);">
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_template_addel'.'')))); ?></span>

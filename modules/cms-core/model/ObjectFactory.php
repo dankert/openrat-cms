@@ -21,7 +21,7 @@ class ObjectFactory
 {
 	function create( $objectid )
 	{
-		$o = new Object( $objectid );
+		$o = new BaseObject( $objectid );
 		
 		switch( $o->getType() )
 		{

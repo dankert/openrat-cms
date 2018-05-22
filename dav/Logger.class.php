@@ -67,7 +67,7 @@ class Logger
 	function info( $message )
 	{
 		if	( DAV_LOG_LEVEL >= DAV_LOG_LEVEL_INFO )
-			Logger::doLog( 'info',$message );
+			Logger::doLog( 'TemplateEngineInfo',$message );
 	}
 
 

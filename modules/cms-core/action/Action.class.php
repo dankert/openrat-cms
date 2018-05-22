@@ -351,7 +351,8 @@ namespace cms\action {
          * Gefunden auf:
          * @see http://simon.incutio.com/archive/2003/04/23/conditionalGet
          *
-         * @param Timestamp Letztes Aenderungsdatum des Objektes
+         * @param $time int Letztes Aenderungsdatum des Objektes
+         * @param $expirationDuration int Gültigkeitsdauer
          */
         protected function lastModified($time, $expirationDuration = 0)
         {

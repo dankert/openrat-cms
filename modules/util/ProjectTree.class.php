@@ -4,7 +4,7 @@ use cms\model\Element;
 use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Link;
 
@@ -108,7 +108,7 @@ class ProjectTree extends AbstractTree
 			$objectid = intval($value->linkToObjectId);
 			if	( $objectid != 0 )
 			{
-				$object = new Object( $objectid );
+				$object = new BaseObject( $objectid );
 				$object->load();
 		
 				$treeElement = new TreeElement();
@@ -143,7 +143,7 @@ class ProjectTree extends AbstractTree
 
 		if	( $link->isLinkToObject )
 		{
-			$o = new Object( $link->linkedObjectId );
+			$o = new BaseObject( $link->linkedObjectId );
 			$o->load();
 			
 			$treeElement = new TreeElement();
