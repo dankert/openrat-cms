@@ -9,7 +9,7 @@ use cms\model\Element;
 use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use Html;
 use Http;
 use Session;
@@ -49,13 +49,13 @@ class PageelementAction extends Action
 
 	/**
 	 * Enthaelt das Seitenobjekt
-	 * @type Object
+	 * @type BaseObject
 	 */
 	var $page;
 
 	/**
 	 * Enthaelt das Elementobjekt
-	 * @type Object
+	 * @type BaseObject
 	 */
 	var $element;
 
@@ -63,7 +63,7 @@ class PageelementAction extends Action
 	/**
 	 * Enth�lt den Inhalt
 	 *
-	 * @var Object
+	 * @var BaseObject
 	 */
 	var $value;
 
@@ -498,7 +498,7 @@ class PageelementAction extends Action
 
 		foreach( Folder::getAllObjectIds($types) as $id )
 		{
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->load();
 
 			//			if	( in_array( $o->getType(),$types ))
@@ -557,7 +557,7 @@ class PageelementAction extends Action
 
 		foreach( $t->getDependentObjectIds() as $id )
 		{
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->load();
 				
 			//			if	( in_array( $o->getType(),$types ))

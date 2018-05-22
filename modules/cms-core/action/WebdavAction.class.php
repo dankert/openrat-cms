@@ -6,7 +6,7 @@ use cms\model\User;
 use cms\model\Project;
 use cms\model\Page;
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Link;
 
@@ -1182,7 +1182,7 @@ class WebdavAction extends Action
 				else
 				{
 					Logger::trace( 'Teil '.$uriPart);
-					$o = new Object($oid);
+					$o = new BaseObject($oid);
 					$o->load();
 					$ergebnis['object'] = $o;
 					

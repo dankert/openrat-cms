@@ -6,7 +6,7 @@ namespace cms\action;
 use cms\model\Element;
 use cms\model\Template;
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use Text;
 
 
@@ -531,7 +531,7 @@ class ElementAction extends Action
 					// Ermitteln aller verfuegbaren Objekt-IDs
 					foreach( Folder::getAllObjectIds() as $id )
 					{
-						$o = new Object( $id );
+						$o = new BaseObject( $id );
 						$o->load();
 						
 						switch( $this->element->type )
@@ -586,7 +586,7 @@ class ElementAction extends Action
 					// Ermitteln aller verf?gbaren Objekt-IDs
 					foreach( Folder::getAllFolders() as $id )
 					{
-						$o = new Object( $id );
+						$o = new BaseObject( $id );
 						$o->load();
 						
 						$folders[ $id ] = '';
