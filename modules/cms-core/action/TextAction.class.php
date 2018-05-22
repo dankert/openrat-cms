@@ -3,7 +3,7 @@
 namespace cms\action;
 
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\File;
 
 use cms\model\Text;

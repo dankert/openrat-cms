@@ -7,7 +7,7 @@ use cms\model\User;
 use cms\model\Group;
 use cms\model\Page;
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\File;
 use cms\model\Link;
@@ -54,10 +54,10 @@ class ObjectAction extends Action
 		$this->actionName = 'object';
 		global $conf_php;
 		
-		$sourceObject = new Object( $this->getRequestId());
+		$sourceObject = new BaseObject( $this->getRequestId());
 		$sourceObject->load();
 		
-		$targetFolder = new Object( $this->getRequestVar('targetFolderId',OR_FILTER_NUMBER));
+		$targetFolder = new BaseObject( $this->getRequestVar('targetFolderId',OR_FILTER_NUMBER));
 		$targetFolder->load();
 		
 		$this->setTemplateVar('source'  ,$sourceObject->getProperties() );
@@ -82,10 +82,10 @@ class ObjectAction extends Action
 		$targetObjectId = $this->getRequestVar('targetid',OR_FILTER_NUMBER);
 		$sourceObjectId = $this->getRequestVar('sourceid',OR_FILTER_NUMBER);
 
-		$sourceObject = new Object( $sourceObjectId );
+		$sourceObject = new BaseObject( $sourceObjectId );
 		$sourceObject->load();
 		
-		$targetFolder = new Object( $targetObjectId );
+		$targetFolder = new BaseObject( $targetObjectId );
 		$targetFolder->load();
 		
 		// Prüfen, ob Schreibrechte im Zielordner bestehen.
@@ -233,7 +233,7 @@ class ObjectAction extends Action
 		
 		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
 		// diesem Objekt die ACLs zu aendern.
-		$o = new Object( $acl->objectid );
+		$o = new BaseObject( $acl->objectid );
 
 		if	( !$o->hasRight( ACL_GRANT ) )
 			die('uh?'); // Scheiss Hacker.
@@ -321,7 +321,7 @@ class ObjectAction extends Action
 	function rightsView()
 	{
 		$this->actionName = 'object';
-		$o = new Object( $this->getRequestId() );
+		$o = new BaseObject( $this->getRequestId() );
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
 		$this->setTemplateVar( 'type',$o->getType() );
@@ -362,7 +362,7 @@ class ObjectAction extends Action
 	{
 		$this->actionName = 'object';
 		
-		$o = new Object( $this->getRequestId() );
+		$o = new BaseObject( $this->getRequestId() );
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'type',$o->getType() );
 		
@@ -413,7 +413,7 @@ class ObjectAction extends Action
 		
 		foreach( $oids as $oid )
 		{
-			$object = new Object( $oid );
+			$object = new BaseObject( $oid );
 		
 			// Die alten ACLs des Objektes löschen.
 			foreach( $object->getAllAclIds() as $aclid )
@@ -444,7 +444,7 @@ class ObjectAction extends Action
 	{
 		$this->actionName = 'object';
 		
-		$o = new Object( $this->getRequestId() );
+		$o = new BaseObject( $this->getRequestId() );
 		$o->objectLoadRaw();
 
 		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
@@ -474,7 +474,7 @@ class ObjectAction extends Action
 
 		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
 		// diesem Objekt die ACLs zu aendern.
-		$o = new Object( $this->getRequestId() );
+		$o = new BaseObject( $this->getRequestId() );
 
 		if	( !$o->hasRight( ACL_GRANT ) )
 			Http::notAuthorized('no grant rights'); // Da wollte uns wohl einer vereimern.

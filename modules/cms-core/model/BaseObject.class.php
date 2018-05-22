@@ -22,7 +22,7 @@ namespace cms\model {
      * @author Jan Dankert
      * @package openrat.objects
      */
-    class Object
+    class BaseObject
     {
         /** eindeutige ID dieses Objektes
          * @see #$objectid

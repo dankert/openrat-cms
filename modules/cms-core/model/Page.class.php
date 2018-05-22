@@ -25,7 +25,7 @@ namespace cms\model;
  * @package openrat.objects
  */
 
-class Page extends Object
+class Page extends BaseObject
 {
 	var $enclosingObjectId = -1;    //Id der Seite in die diese Seite im Rahmen der Generierung eingefügt wird
 						     //Wichtig für include-Values
@@ -158,7 +158,7 @@ class Page extends Object
 		       $SESS;
 		$inhalt = '';
 		
-		if	( ! Object::available( $objectid) )
+		if	( ! BaseObject::available( $objectid) )
 			return '';
 			
 		$param = array(
@@ -169,7 +169,7 @@ class Page extends Object
 		if	( $this->icons )
 			$param['withIcons'] = '1';
 			
-		$object = new Object( $objectid );
+		$object = new BaseObject( $objectid );
 		$object->objectLoad();
 		
 		$cut_index           = ( is_object($this->publish) && $this->publish->cut_index           );
@@ -210,7 +210,7 @@ class Page extends Object
 					$link = new Link( $objectid );
 					$link->load();
 
-					$linkedObject = new Object( $link->linkedObjectId );
+					$linkedObject = new BaseObject( $link->linkedObjectId );
 					$linkedObject->objectLoad();
 
 					switch( $linkedObject->getType() )
@@ -263,7 +263,7 @@ class Page extends Object
 					$link = new Link( $objectid );
 					$link->load();
 
-					$linkedObject = new Object( $link->linkedObjectId );
+					$linkedObject = new BaseObject( $link->linkedObjectId );
 					$linkedObject->objectLoad();
 
 					switch( $linkedObject->typeid )

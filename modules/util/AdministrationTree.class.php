@@ -3,7 +3,7 @@
 use cms\model\Element;
 use cms\model\File;
 use cms\model\Link;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Page;
 use cms\model\Template;
 use cms\model\User;
@@ -646,7 +646,7 @@ class AdministrationTree extends AbstractTree
 
             $objectid = intval($value->linkToObjectId);
             if ($objectid != 0) {
-                $object = new Object($objectid);
+                $object = new BaseObject($objectid);
                 $object->load();
 
                 $treeElement = new TreeElement();
@@ -678,7 +678,7 @@ class AdministrationTree extends AbstractTree
         $link = new Link($id);
         $link->load();
 
-        $o = new Object($link->linkedObjectId);
+        $o = new BaseObject($link->linkedObjectId);
         $o->load();
 
         $treeElement = new TreeElement();

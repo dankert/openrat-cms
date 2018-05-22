@@ -3,7 +3,7 @@
 namespace cms\action;
 
 use cms\model\Project;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\Model;
 
@@ -117,7 +117,7 @@ class TitleAction extends Action
 		{
 			foreach( array_reverse($history) as $objectid )
 			{
-				$o = new Object( $objectid );
+				$o = new BaseObject( $objectid );
 				$o->load();
 				$resultList[$objectid] = array();
 				$resultList[$objectid]['url']  = Html::url($o->getType(),'',$objectid);

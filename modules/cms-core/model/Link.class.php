@@ -10,7 +10,7 @@ namespace cms\model;
  * @author $Author$
  * @package openrat.objects
  */
-class Link extends Object
+class Link extends BaseObject
 {
 	var $linkid;
 	var $linkedObjectId = 0;

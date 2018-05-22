@@ -31,7 +31,7 @@
 //
 // ---------------------------------------------------------------------------
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 
 
 /**
@@ -70,7 +70,7 @@ class ListMenu extends Macro
 		// Schleife ueber alle Inhalte des Root-Ordners
 		foreach( $folder->getObjectIds() as $id )
 		{
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->languageid = $this->page->languageid;
 			$o->load();
 			if ( $o->isFolder ) // Nur wenn Ordner
@@ -88,7 +88,7 @@ class ListMenu extends Macro
 					// Schleife ber alle Objekte im aktuellen Ordner
 					foreach( $f->getObjectIds() as $xid )
 				    {
-						$o = new Object( $xid );
+						$o = new BaseObject( $xid );
 						$o->languageid = $this->page->languageid;
 						$o->load();
 				
