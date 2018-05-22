@@ -108,12 +108,13 @@ class PDODriver
         }
         catch(\PDOException $e)
         {
-            throw new \RuntimeException("Could not connect to database on host $url.",$e);
+            Logger::warn( "Could not connect to database: ".$e->getMessage() );
+            throw new \RuntimeException("Could not connect to database on host $url.",0,$e);
         }
 
         // This should never happen, because PDO should throw an exception if the connection fails.
 		if	( !is_object($this->connection) )
-			throw new RuntimeException("Could not connect to database on host $url. ".PDO::errorInfo() );
+			throw new RuntimeException("Could not connect to database on host '$url', Reason: ".PDO::errorInfo() );
 				
 		return true;
     }
