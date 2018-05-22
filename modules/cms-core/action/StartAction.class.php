@@ -7,7 +7,7 @@ use cms\model\Project;
 use cms\model\Value;
 use cms\model\Element;
 use cms\model\Page;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\Model;
 
@@ -739,9 +739,9 @@ class StartAction extends Action
 			if	( !is_object($object) && @$conf['login']['start']['start_lastchanged_object'] )
 			{
 				$objectid = Value::getLastChangedObjectByUserId($user->userid);
-				if	( Object::available($objectid))
+				if	( BaseObject::available($objectid))
 				{
-					$object = new Object($objectid);
+					$object = new BaseObject($objectid);
 					$object->load();
 					Session::setObject($object); 
 				}
@@ -1019,9 +1019,9 @@ class StartAction extends Action
 		}
 		
 
-		if	( isset($vars[REQ_PARAM_OBJECT_ID]) && Object::available($vars[REQ_PARAM_OBJECT_ID]) )
+		if	( isset($vars[REQ_PARAM_OBJECT_ID]) && BaseObject::available($vars[REQ_PARAM_OBJECT_ID]) )
 		{
-			$object = new Object( $vars[REQ_PARAM_OBJECT_ID] );
+			$object = new BaseObject( $vars[REQ_PARAM_OBJECT_ID] );
 			$object->objectLoadRaw();
 			// Session::setObject( $object ); // Unnötig
 	
@@ -1217,7 +1217,7 @@ class StartAction extends Action
 		}
 		elseif	( $objectid != 0 )
 		{
-			$object = new Object( $objectid );
+			$object = new BaseObject( $objectid );
 			$object->objectLoad();
 			Session::setObject($object);
 		}

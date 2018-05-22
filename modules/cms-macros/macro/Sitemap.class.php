@@ -28,7 +28,7 @@
 //
 // ---------------------------------------------------------------------------
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Page;
 
 
@@ -84,7 +84,7 @@ class Sitemap extends Macro
 		// Schleife ueber alle Objekte im aktuellen Ordner
 		foreach( $f->getObjectIds() as $id )
 		{
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->languageid = $this->page->languageid;
 			$o->load();
 	

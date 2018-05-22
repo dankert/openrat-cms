@@ -5,7 +5,7 @@ namespace cms\action;
 use cms\model\User;
 use cms\model\Value;
 use cms\model\Template;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\File;
 
 
@@ -154,24 +154,24 @@ class SearchAction extends Action
 		}
 		else
 		{
-			if	( $flag & SEARCH_FLAG_ID && Object::available( intval($text) ) )
+			if	( $flag & SEARCH_FLAG_ID && BaseObject::available( intval($text) ) )
 				$listObjectIds[] = intval( $text );
 	
 			if	( $flag & SEARCH_FLAG_NAME )
 			{
-				$o = new Object();
+				$o = new BaseObject();
 				$listObjectIds += $o->getObjectIdsByName( $text );
 			}
 	
 			if	( $flag & SEARCH_FLAG_DESCRIPTION )
 			{
-				$o = new Object();
+				$o = new BaseObject();
 				$listObjectIds += $o->getObjectIdsByDescription( $text );
 			}
 	
 			if	( $flag & SEARCH_FLAG_FILENAME )
 			{
-				$o = new Object();
+				$o = new BaseObject();
 				$listObjectIds += $o->getObjectIdsByFilename( $text );
 	
 				$f = new File();
@@ -203,7 +203,7 @@ class SearchAction extends Action
 	
 		foreach( $listObjectIds as $objectid )
 		{
-			$o = new Object( $objectid );
+			$o = new BaseObject( $objectid );
 			$o->load();
 			$resultList[$objectid] = array();
 			$resultList[$objectid]['id'  ] = $objectid;

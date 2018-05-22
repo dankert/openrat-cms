@@ -20,7 +20,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Page;
 
 
@@ -82,7 +82,7 @@ class Atom extends Macro
 		{
 			if	( $id == $this->getObjectId() )
 				continue;
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->languageid = $this->page->languageid;
 			$o->load();
 			if ( $o->isPage ) // Nur wenn Seite

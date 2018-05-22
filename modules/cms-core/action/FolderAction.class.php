@@ -6,7 +6,7 @@ use ArchiveTar;
 use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Link;
 
@@ -450,7 +450,7 @@ class FolderAction extends ObjectAction
 			}
 			$seq++; // Sequenz um 1 erhoehen
 
-			$o = new Object( $objectid );
+			$o = new BaseObject( $objectid );
 			$o->setOrderId( $seq );
 
 			unset( $o ); // Selfmade Garbage Collection :-)
@@ -476,7 +476,7 @@ class FolderAction extends ObjectAction
 			elseif ( $id == $this->getRequestVar('objectid2') )
 				$id = $this->getRequestVar('objectid1');
 
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->setOrderId( $seq );
 
 			unset( $o ); // Selfmade Garbage Collection :-)
@@ -549,7 +549,7 @@ class FolderAction extends ObjectAction
 			if	( !$this->hasRequestVar('obj'.$id) )
 				continue;
 
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->load();
 
 			// F�r die gew�nschte Aktion m�ssen pro Objekt die entsprechenden Rechte
@@ -619,7 +619,7 @@ class FolderAction extends ObjectAction
 			if	( !$this->hasRequestVar('obj'.$id) )
 				continue;
 
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->load();
 
 			// Fuer die gewuenschte Aktion muessen pro Objekt die entsprechenden Rechte
@@ -644,7 +644,7 @@ class FolderAction extends ObjectAction
 
 			foreach( $ids as $id )
 			{
-				$o = new Object( $id );
+				$o = new BaseObject( $id );
 				$o->load();
 
 				if	( $o->isFile )
@@ -690,7 +690,7 @@ class FolderAction extends ObjectAction
 		{
 			foreach( $ids as $id )
 			{
-				$o = new Object( $id );
+				$o = new BaseObject( $id );
 				$o->load();
 
 				switch( $type )
@@ -887,7 +887,7 @@ class FolderAction extends ObjectAction
 		{
 			$seq++; // Sequenz um 1 erhoehen
 
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->setOrderId( $seq );
 
 			unset( $o );
@@ -900,7 +900,7 @@ class FolderAction extends ObjectAction
 
     public function settopPost()
 	{
-		$o = new Object( $this->getRequestVar('objectid1') );
+		$o = new BaseObject( $this->getRequestVar('objectid1') );
 		$o->setOrderId( 1 );
 
 		$ids = $this->folder->getObjectIds();
@@ -912,7 +912,7 @@ class FolderAction extends ObjectAction
 			{
 				$seq++; // Sequenz um 1 erhoehen
 
-				$o = new Object( $id );
+				$o = new BaseObject( $id );
 				$o->setOrderId( $seq );
 
 				unset( $o ); // Selfmade Garbage Collection :-)
@@ -938,7 +938,7 @@ class FolderAction extends ObjectAction
 			{
 				$seq++; // Sequenz um 1 erhoehen
 
-				$o = new Object( $id );
+				$o = new BaseObject( $id );
 				$o->setOrderId( $seq );
 
 				unset( $o ); // Selfmade Garbage Collection :-)
@@ -946,7 +946,7 @@ class FolderAction extends ObjectAction
 		}
 
 		$seq++; // Sequenz um 1 erhoehen
-		$o = new Object( $this->getRequestVar('objectid1') );
+		$o = new BaseObject( $this->getRequestVar('objectid1') );
 		$o->setOrderId( $seq );
 
 		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
@@ -1127,7 +1127,7 @@ class FolderAction extends ObjectAction
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
 		{
-            /* @var $o Object */
+            /* @var $o BaseObject */
 
             $id = $o->objectid;
 
@@ -1189,7 +1189,7 @@ class FolderAction extends ObjectAction
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
 		{
-            /* @var $o Object */
+            /* @var $o BaseObject */
             $id = $o->objectid;
 
 			if   ( $o->hasRight(ACL_READ) )
@@ -1244,7 +1244,7 @@ class FolderAction extends ObjectAction
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
 		{
-		    /* @var $o Object */
+		    /* @var $o BaseObject */
 			$id = $o->objectid;
 
 			if   ( $o->hasRight(ACL_READ) )
@@ -1354,7 +1354,7 @@ class FolderAction extends ObjectAction
 		// Schleife ueber alle Objekte in diesem Ordner
 		foreach( $this->folder->getObjects() as $o )
 		{
-            /* @var $o Object */
+            /* @var $o BaseObject */
 			$id = $o->objectid;
 
 			if   ( $o->hasRight(ACL_READ) )
@@ -1484,7 +1484,7 @@ class FolderAction extends ObjectAction
 		$children = array();
 		foreach( $contents as $o )
 		{
-            /* @var $o Object */
+            /* @var $o BaseObject */
 			$children[$o->objectid] = array('id'=>$o->objectid,'name'=>$o->name,'type'=>$o->getType());
 		}
 		$tmp+= $children;

@@ -8,7 +8,7 @@ use cms\model\Element;
 use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\Model;
 use \Html;
@@ -215,7 +215,7 @@ class PageAction extends ObjectAction
 	
 			foreach( Folder::getAllObjectIds() as $id )
 			{
-				$o = new Object( $id );
+				$o = new BaseObject( $id );
 				$o->load();
 				
 				if	( $o->getType() != 'folder' )
@@ -575,7 +575,7 @@ class PageAction extends ObjectAction
 				
 						foreach( Folder::getAllObjectIds() as $oid )
 						{
-							$o = new Object( $oid );
+							$o = new BaseObject( $oid );
 							$o->load();
 							
 							if	( $o->getType() != 'folder' )

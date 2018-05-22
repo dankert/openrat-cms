@@ -28,7 +28,7 @@ define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
  * @author Jan Dankert
  * @package openrat.objects
  */
-class File extends Object
+class File extends BaseObject
 {
 	var $fileid;
 

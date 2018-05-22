@@ -6,7 +6,7 @@ use cms\model\Acl;
 use cms\model\User;
 use cms\model\Project;
 use cms\model\Group;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\Language;
 
 
@@ -405,7 +405,7 @@ class UserAction extends Action
 			}
 			
 			
-			$o = new Object($acl->objectid);
+			$o = new BaseObject($acl->objectid);
 			$o->objectLoad();
 			$right['objectname'] = $o->name;
 			$right['objectid'  ] = $o->objectid;

@@ -46,7 +46,7 @@ $defConfig = array('dav.enable'               => false,
 		           'cms.database'             => 'db1',
 		           'cms.path'                 => '/',
 		           'cms.max_file_size'        => 1000,
-		           'log.level'                => 'info',
+		           'log.level'                => 'TemplateEngineInfo',
 		           'log.file'                 => null
                    );
 

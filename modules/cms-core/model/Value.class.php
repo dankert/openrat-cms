@@ -57,7 +57,7 @@ class Value
 	
 	/**
 	 * Kennzeichen, ob der Inhalt mit dem Inhalt einer anderern Seite verkn�pft wird.
-	 * @type Object
+	 * @type BaseObject
 	 */
 	var $isLink = false;
 	
@@ -88,7 +88,7 @@ class Value
 	
 	/**
 	 * Element-Objekt
-	 * @type Object
+	 * @type BaseObject
 	 */
 	var $element;
 	
@@ -575,10 +575,10 @@ SQL
 				if   ( intval($objectid) == 0 )
 					$objectid = $this->element->defaultObjectId;
 				
-				if	( ! Object::available( $objectid) )
+				if	( ! BaseObject::available( $objectid) )
 					return;
 					
-				$object = new Object( $objectid );
+				$object = new BaseObject( $objectid );
 				$object->objectLoadRaw();
 				
 				if	( $object->isFolder )
@@ -603,7 +603,7 @@ SQL
 									{
 										case '':
 										case 'inline':
-											$o = new Object( $oid );
+											$o = new BaseObject( $oid );
 											$o->load();
 											switch( $o->getType() )
 											{
@@ -625,7 +625,7 @@ SQL
 													$l->load();
 													if	( $l->isLinkToObject )
 													{
-														$op = new Object( $l->linkedObjectId );
+														$op = new BaseObject( $l->linkedObjectId );
 														$op->load();
 														if	( $op->isPage )
 														{
@@ -723,13 +723,13 @@ SQL
 					// Link noch nicht gefuellt
 					$inhalt = '';
 				}
-				elseif	 ( ! Object::available($objectid) )
+				elseif	 ( ! BaseObject::available($objectid) )
 				{
 					$inhalt = $this->simple?'-':'';
 				}
 				elseif   ( $this->simple )
 				{
-					$o = new Object( $objectid );
+					$o = new BaseObject( $objectid );
 					$o->load();
 					$inhalt = $o->name;
 				}
@@ -770,7 +770,7 @@ SQL
 				$linkValue->languageid = $this->languageid;
 				$linkValue->load();
 				
-				if	( !Object::available( $linkValue->linkToObjectId ) )
+				if	( !BaseObject::available( $linkValue->linkToObjectId ) )
 					break;
 
 				$linkedPage = new Page( $linkValue->linkToObjectId );
@@ -821,10 +821,10 @@ SQL
 				if   ( intval($objectid) == 0 )
 					$objectid = $linkValue->element->defaultObjectId;
 					
-				if	( !Object::available( $objectid ) )
+				if	( !BaseObject::available( $objectid ) )
 					break;
 					
-				$linkedObject = new Object( $objectid );
+				$linkedObject = new BaseObject( $objectid );
 				$linkedObject->languageid = $this->languageid;
 				$linkedObject->load();
 				
@@ -1034,10 +1034,10 @@ SQL
 				if   ( intval($objectid) == 0 )
 					$objectid = $linkValue->element->defaultObjectId;
 					
-				if	( !Object::available( $objectid ) )
+				if	( !BaseObject::available( $objectid ) )
 					break;
 					
-				$linkedObject = new Object( $objectid );
+				$linkedObject = new BaseObject( $objectid );
 				$linkedObject->load();
 				
 				
@@ -1650,7 +1650,7 @@ SQL
 	function tmpfile()
 	{
 		$db = db_connection();
-		$filename = Object::getTempFileName( array('db'=>$db->id,
+		$filename = BaseObject::getTempFileName( array('db'=>$db->id,
 		                                           'va'=>$this->valueid,
 		                                           'el'=>$this->element->elementid,
 		                                           'la'=>$this->languageid,

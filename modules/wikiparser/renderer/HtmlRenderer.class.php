@@ -2,7 +2,7 @@
 
 use cms\model\File;
 use cms\model\Image;
-use cms\model\Object;
+use cms\model\BaseObject;
 
 /**
  * Dokument-Objekt.<br>
@@ -45,7 +45,7 @@ class HtmlRenderer
     /**
 	 * Rendert ein Dokument-Element.
 	 *
-	 * @param Object $child Element
+	 * @param BaseObject $child Element
 	 * @return String
 	 */
 	function renderElement( $child )
@@ -304,7 +304,7 @@ class HtmlRenderer
 						else
 							$attr['href'] = htmlspecialchars($child->getUrl());
 
-						if	( Object::available( $child->objectId ) )
+						if	( BaseObject::available( $child->objectId ) )
 						{
 							$file = new File( $child->objectId );
 							$file->load();
@@ -317,7 +317,7 @@ class HtmlRenderer
 						$empty       = true;
 						$attr['alt'] = '';
 						
-						if	( ! Object::available( $child->objectId ) )
+						if	( ! BaseObject::available( $child->objectId ) )
 						{
 							$tag = '';
 						}

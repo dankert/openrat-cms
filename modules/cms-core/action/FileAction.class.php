@@ -3,7 +3,7 @@
 namespace cms\action;
 
 use cms\model\Folder;
-use cms\model\Object;
+use cms\model\BaseObject;
 use cms\model\File;
 
 use Http;
@@ -212,7 +212,7 @@ class FileAction extends ObjectAction
 		$list = array();
 		foreach( $pages as $id )
 		{
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->load();
 			$list[$id] = array();
 			$list[$id]['url' ] = Html::url('main','page',$id);
@@ -250,7 +250,7 @@ class FileAction extends ObjectAction
 		$list = array();
 		foreach( $pages as $id )
 		{
-			$o = new Object( $id );
+			$o = new BaseObject( $id );
 			$o->load();
 			$list[$id] = array();
 			$list[$id]['url' ] = Html::url('main','page',$id);
