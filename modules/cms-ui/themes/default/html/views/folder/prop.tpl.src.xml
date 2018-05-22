@@ -3,6 +3,7 @@
 	<header></header>
 	<form label="message:global_save">
 
+		<hidden name="languageid" />
 		<part class="line">
 			<part class="label">
 				<label for="name" key="global_name" />

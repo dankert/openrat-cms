@@ -504,7 +504,7 @@ EOF
 			foreach( $idList as $id )
 			{
 				$this->log[] = 'Lost file! Moving '.$id.' to lost+found.';
-				$obj = new Object( $id );
+				$obj = new BaseObject( $id );
 				$obj->setParentId( $lostAndFoundFolder->objectid );
 			}
 		}

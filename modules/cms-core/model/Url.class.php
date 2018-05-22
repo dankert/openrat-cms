@@ -7,7 +7,7 @@ namespace cms\model;
  * @author Jan Dankert
  * @package openrat.objects
  */
-class Url extends Object
+class Url extends BaseObject
 {
 	public $urlid;
 	public $url    = '';
