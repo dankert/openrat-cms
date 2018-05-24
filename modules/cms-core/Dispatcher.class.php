@@ -162,8 +162,9 @@ class Dispatcher
         $logConfig = config('log');
 
         $logFile = $logConfig['file'];
+
         // Wenn Logfile relativ angegeben wurde, dann muss dies relativ zum Root der Anwendung sein.
-        if   ( substr($logFile,0,1) != '/' )
+        if   ( !empty($logFile) && $logFile[0] != '/' )
             $logFile = __DIR__.'/../../'.$logFile;
         //$logFile = __DIR__.'/../../'.$logFile;
 
