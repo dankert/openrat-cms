@@ -5,6 +5,14 @@ class LdapAuth implements Auth
 
     public function login($username, $password, $token)
 	{
+
+        // Falls Modul LDAP nicht vorhanden ist können wir gleich beenden.
+        if   (!extension_loaded('ldap')){
+
+            Logger::warn("LdapAuth: LDAP Login is not possible: LDAP-Extension ist not loaded.");
+            return false;
+        }
+
 	    global $conf;
 		$db = db_connection();
 		$this->mustChangePassword = false;

@@ -7,7 +7,6 @@
  */
 class LdapUserDNAuth implements Auth
 {
-
 	/**
 	 * @see Auth::login()
 	 */
@@ -35,8 +34,16 @@ SQL
 		
 		if	( empty($ldap_dn ) )
 			return false;
-		
-		Logger::debug( 'checking login via ldap' );
+
+        // Falls Modul LDAP nicht vorhanden ist können wir gleich beenden.
+        if   (!extension_loaded('ldap')){
+
+            Logger::warn("LDAP Login is not possible: LDAP-Extension ist not loaded.");
+            return false;
+        }
+
+
+        Logger::debug( 'checking login via ldap' );
 		$ldap = new Ldap();
 		$ldap->connect();
 		

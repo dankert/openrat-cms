@@ -5,7 +5,10 @@ require_once( __DIR__.'/'.'Http.class.php' );
 require_once( __DIR__.'/'.'Html.class.php' );
 require_once( __DIR__.'/'.'Text.class.php' );
 require_once( __DIR__.'/'.'Mail.class.php' );
-require_once( __DIR__.'/'.'Ldap.class.php' );
+
+if (extension_loaded('ldap') )
+    require_once( __DIR__.'/'.'Ldap.class.php' );
+
 require_once( __DIR__.'/'.'FileUtils.class.php' );
 require_once( __DIR__.'/'.'JSON.class.php' );
 require_once( __DIR__.'/'.'Less.php' );
