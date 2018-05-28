@@ -25,45 +25,62 @@ class Configuration
 
 
     /**
-     * Loads the configuration file an resolves all include-commands.
+     * Loads the custom configuration file.
      *
      * @return array Configuration
      */
     public static function load()
     {
-        $customConfig = Spyc::YAMLLoad(self::$configFile);
+        $customConfig = Configuration::loadCustomConfig(self::$configFile);
+
+        // Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
+        $customConfig['config']['filename'              ] = self::$configFile;
+        $customConfig['config']['last_modification_time'] = filemtime(self::$configFile);
+        $customConfig['config']['last_modification'     ] = date('r', filemtime(self::$configFile));
+        $customConfig['config']['read'                  ] = date('r');
+
+        return $customConfig;
+    }
+
+    /**
+     * Loads the configuration file an resolves all include-commands.
+     *
+     * @return array Configuration
+     */
+    public static function loadCustomConfig( $configFile )
+    {
+        if (!is_file($configFile) && !is_link($configFile)) {
+            error_log('Warning: Configuration file ' . $configFile . ' not found');
+            return array();
+        }
+
+        $customConfig = Spyc::YAMLLoad( $configFile );
+
+        // Resolve variables in all custom configuration values
+        array_walk_recursive( $customConfig, function(&$value,$key)
+            {
+                $value = Configuration::evaluateFilename($value);
+
+            }
+        );
 
         // Does we have includes?
         if (isset($customConfig['include'])) {
 
-            // Resolve variables in include file names
             if (is_string($customConfig['include']))
-                $customConfig['include'] = array(self::evaluateFilename($customConfig['include']));
-            elseif (is_array($customConfig['include']))
-                foreach ($customConfig['include'] as $key => $file)
-                    $customConfig['include'][$key] = self::evaluateFilename($file);
+                $customConfig['include'] = array($customConfig['include']);
 
             // Load include files.
             foreach ($customConfig['include'] as $key => $file) {
-                if (is_file($file) || is_link($file)) {
 
-                    if (substr($file, -4) == '.yml' || substr($file, -8) == '.yml.php') {
+                if (substr($file, -4) == '.yml' || substr($file, -8) == '.yml.php') {
 
-                        $customConfig += Spyc::YAMLLoad($file);
-                        $customConfig['included-files'][] = 'Success: ' . $customConfig['include'][$key] . ' loaded as YAML';
-
-                    } elseif (substr($file, -4) == '.ini' || substr($file, -8) == '.ini.php') {
-
-                        $customConfig += parse_ini_file($file);
-                        $customConfig['included-files'][] = 'Success: ' . $customConfig['include'][$key] . ' loaded as INI';
-
-                    } else {
-                        $customConfig['included-files'][] = 'Error: ' . $customConfig['include'][$key] . ' is no YAML and no INI - not loaded';
-                    }
+                    $customConfig += Configuration::loadCustomConfig($file);
 
                 } else {
-                    $customConfig['included-files'][] = 'Error: ' . $customConfig['include'][$key] . ' not found';
+                    error_log('Warning: ' . $file . ' is no YAML and no INI - not loaded');
                 }
+
             }
         }
 
@@ -91,11 +108,6 @@ class Configuration
         }
 
 
-        // Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
-        $customConfig['config']['last_modification_time'] = filemtime(self::$configFile);
-        $customConfig['config']['last_modification'] = date('r', filemtime(self::$configFile));
-        $customConfig['config']['read'] = date('r');
-
 
         return $customConfig;
     }
@@ -109,7 +121,7 @@ class Configuration
     private static function evaluateFilename($file)
     {
         return preg_replace_callback(
-            "|\\$\{([[:alnum:]]+)\:([[:alnum:]]+)\}|",
+            "|\\$\{([[:alnum:]]+)\:([[:alnum:]_]+)\}|",
 
             function ($match) {
                 $type = $match[1];
@@ -117,15 +129,13 @@ class Configuration
                 $value = str_replace('-', '_', $value);
                 switch (strtolower($type)) {
                     case 'env':
-                        return $_ENV[strtoupper($value)];
-                        break;
+                        return getenv(strtoupper($value));
 
                     case 'http': // http:... is a shortcut for server:http-...
-                        return $_SERVER['HTTP_' . strtoupper($value)];
-                        break;
+                        return @$_SERVER['HTTP_' . strtoupper($value)];
+
                     case 'server':
-                        return $_SERVER[strtoupper($value)];
-                        break;
+                        return @$_SERVER[strtoupper($value)];
                     default:
                         return "";
                 }
