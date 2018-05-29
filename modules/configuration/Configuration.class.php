@@ -59,7 +59,7 @@ class Configuration
         // Resolve variables in all custom configuration values
         array_walk_recursive( $customConfig, function(&$value,$key)
             {
-                $value = Configuration::evaluateFilename($value);
+                $value = Configuration::resolveVariables($value);
 
             }
         );
@@ -73,13 +73,12 @@ class Configuration
             // Load include files.
             foreach ($customConfig['include'] as $key => $file) {
 
-                if (substr($file, -4) == '.yml' || substr($file, -8) == '.yml.php') {
-
+                if   (substr($file, -4) == '.yml'    ||
+                      substr($file, -5) == '.yaml'   ||
+                      substr($file, -8) == '.yml.php'  )
                     $customConfig += Configuration::loadCustomConfig($file);
-
-                } else {
-                    error_log('Warning: ' . $file . ' is no YAML and no INI - not loaded');
-                }
+                else
+                    error_log('Warning: ' . $file . ' is no .yml file - not loaded');
 
             }
         }
@@ -113,21 +112,27 @@ class Configuration
     }
 
     /**
-     * Evaluates variables in an include file string.
-     * Example: config-{http:host}.yml => config-yourdomain.yml
-     * @param $file String filename
+     * Evaluates variables in a text value.
+     * Examples:
+     * - config-${http:host}.yml => config-yourdomain.yml
+     * - config-${server:http-host}.yml => config-yourdomain.yml
+     * - config-${env:myvar}.yml => config-myvalue.yml
+     * @param $value String Configuration value
      * @return String
      */
-    private static function evaluateFilename($file)
+    private static function resolveVariables($value)
     {
         return preg_replace_callback(
             "|\\$\{([[:alnum:]]+)\:([[:alnum:]_]+)\}|",
 
-            function ($match) {
-                $type = $match[1];
+            function ($match)
+            {
+                $type  = $match[1];
                 $value = $match[2];
                 $value = str_replace('-', '_', $value);
-                switch (strtolower($type)) {
+
+                switch( strtolower( $type ) )
+                {
                     case 'env':
                         return getenv(strtoupper($value));
 
@@ -141,7 +146,7 @@ class Configuration
                 }
             },
 
-            $file);
+            $value);
     }
 
 }
