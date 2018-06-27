@@ -6,20 +6,14 @@
 <head>
 <?php $appName = config('application','name'); $appOperator = config('application','operator');
       $title = $appName.(($appOperator!=$appName)?' - '.$appOperator:''); ?>
-  <title data-default="<?php echo $title ?>"><?php echo $title ?></title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" >
-<?php if ( isset($refresh_url) ) { ?>
+  <title data-default="<?php echo htmlentities($title,ENT_QUOTES|ENT_HTML5) ?>"><?php echo htmlentities($title,ENT_COMPAT|ENT_HTML5) ?></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+    <?php if ( isset($refresh_url) ) { ?>
   <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url; if (ini_get('session.use_trans_sid')) echo '&'.session_name().'='.session_id(); ?>">
 <?php } ?>
   <meta name="robots" content="noindex,nofollow" >
-<?php if (isset($windowMenu) && is_array($windowMenu)) foreach( $windowMenu as $menu )
-      {
-       	?>
-  <link rel="section" href="<?php echo Html::url($actionName,@$menu['subaction'],$this->getRequestId() ) ?>" title="<?php echo lang($menu['text']) ?>" >
-<?php
-      }
-?><?php if (isset($metaList) && is_array($metaList)) foreach( $metaList as $meta )
+<?php if (isset($metaList) && is_array($metaList)) foreach( $metaList as $meta )
       {
        	?>
   <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo $meta['title'] ?>" ><?php
@@ -38,66 +32,29 @@
 <body>
 
 
-<header id="header" class="initial-hidden">
-	<ul id="history">
-	</ul>
-</header>
+<div id="workbench" class="initial-hidden">
+
+    <header class="view" data-action="title" data-method="show">
+    </header>
 
 
-<main id="workbench" class="initial-hidden">
+    <div>
 
-    <?php
-    global $viewconfig;
-    $viewconfig = parse_ini_file(__DIR__.'/perspective/normal.ini.php',true);
+        <nav class="view" data-action="tree" data-method="show">
 
-    require_once(__DIR__.'/perspective/window.php');
-    ?>
+        </nav>
 
-    <!-- Workbench 2 -->
-    <div class="container axle-x">
+        <main class="view" data-method="edit">
 
-        <div id="panel-tree" class="panel small resizable" id="navigationbar" data-size-factor="0.2">
-            <?php
-            view_header('tree');
-            ?>
-        </div>
+        </main>
 
-        <div class="divider to-right"></div>
+        <aside class="view" data-method="info">
 
-        <div class="container axle-y autosize">
-
-            <div class="container axle-x autosize">
-
-                <div id="panel-content" class="panel wide autosize">
-                    <?php
-                    view_header('content');
-                    ?>
-                </div>
-
-                <div class="divider to-left"></div>
-
-                <div id="panel-side" class="panel small resizable" data-size-factor="0.25">
-                    <?php
-                    view_header('side');
-                    ?>
-                </div>
-
-            </div>
-
-
-            <div class="divider to-top"></div>
-
-            <div id="panel-bottom" class="panel wide resizable" data-size-factor="0.25">
-                <?php
-                view_header('bottom');
-                ?>
-            </div>
-
-        </div>
-
+        </aside>
     </div>
 
-</main>
+</div>
+
 
 <?php /* Modal dialog */ ?>
 <div id="dialog" class="panel wide">

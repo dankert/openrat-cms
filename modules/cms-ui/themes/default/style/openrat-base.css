@@ -1,0 +1,44 @@
+/* Box-Sizing: We are using border-box as this is the most intuitive way for sizing. */
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+/* After page loading, all elements are hidden. This class will be removed by javascript. */
+.initial-hidden {
+	display: none;
+}
+/* Use Transition effects for all elements. */
+* {
+	transition: all ease 0.5s;
+}
+div#workbench {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	/* vertikale Flex-Box zwischen Header und Hauptbereich */
+}
+div#workbench > header {
+	height: 4rem;
+	background-color: #2fff99;
+}
+div#workbench > div {
+	background-color: #ff5772;
+	/* Horizontale Flexbox */
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+}
+div#workbench > div > main {
+	flex: 3;
+}
+div#workbench > div > nav {
+	width: 10rem;
+	flex: 1;
+}
+div#workbench > div > aside {
+	xwidth: 10rem;
+	flex: 1;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-base.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAACA%3BAAAG%3BAAAU%3BCACX%3B%3B%3BAAIF%3BCACE%3B%3B%3BAAIF%3BCACE%2CyBAAA%3B%3BAAGF%2CGAAG%3BCACD%3BCACA%3BCACA%3BCACA%3B%3B%3BAAJF%2CGAAG%2CUAUC%3BCACA%3BCACA%3B%3BAAZJ%2CGAAG%2CUAcC%3BCACA%3B%3BCAGA%3BCACA%3BCACA%3B%3BAApBJ%2CGAAG%2CUAcC%2CMAQE%3BCACA%3B%3BAAvBN%2CGAAG%2CUAcC%2CMAWE%3BCACA%3BCACA%3B%3BAA3BN%2CGAAG%2CUAcC%2CMAeE%3BCACA%3BCACA%22%7D */
