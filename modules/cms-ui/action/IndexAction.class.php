@@ -146,23 +146,28 @@ class IndexAction extends Action
 				$productionCSSFile
 			);
 		}
-		
-		$outFiles = array();
-		
-		$css = array();
-        $css[] = OR_THEMES_DIR . 'default/style/openrat-ui';
-        $css[] = OR_THEMES_DIR . 'default/style/openrat-workbench';
+
+
+        $css = array();
+
+        $styleFiles = \FileUtils::readDir(OR_THEMES_DIR . 'default/style');
+        foreach( $styleFiles as $styleFile ) {
+            if  (substr($styleFile,-5) == '.less')
+                $css[] = OR_THEMES_DIR . 'default/style'.'/'.substr($styleFile,0,-5);
+        }
+
         //$css[] = OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror';
 
         // Komponentenbasiertes CSS
-		foreach (TemplateEngineInfo::getComponentList() as $c)
-		{
-			$componentCssFile = OR_HTML_MODULES_DIR . 'template-engine/components/html/' . $c . '/' . $c;
-			if (is_file($componentCssFile . '.less'))
-				$css[] = $componentCssFile;
-		}
-		
-		$modified = false;
+        foreach (TemplateEngineInfo::getComponentList() as $c)
+        {
+            $componentCssFile = OR_HTML_MODULES_DIR . 'template-engine/components/html/' . $c . '/' . $c;
+            if (is_file($componentCssFile . '.less'))
+                $css[] = $componentCssFile;
+        }
+
+        $outFiles = array();
+        $modified = false;
 		foreach ($css as $cssF)
 		{
 			$lessFile = $cssF . '.less';
@@ -228,7 +233,7 @@ class IndexAction extends Action
 		{
 			if	( !is_writable($productionCSSFile))
 			{
-				Logger::warn('not writable: '.$productionCSSFile);
+				Logger::warn('Development mode, but style file is not writable: '.$productionCSSFile);
 			}
 			else
 			{
