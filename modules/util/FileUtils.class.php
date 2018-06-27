@@ -65,8 +65,8 @@ class FileUtils
 	/**
 	 * Liest die Dateien aus dem angegebenen Ordner in ein Array.
 	 * 
-	 * @param $dir Verzeichnis, welches gelesen werden soll
-	 * @return Array Liste der Dateien im Ordner
+	 * @param $dir string Verzeichnis, welches gelesen werden soll
+	 * @return array Liste der Dateien im Ordner
 	 */
 	public static function readDir($dir)
 	{
@@ -75,7 +75,7 @@ class FileUtils
 		
 		if	( !is_dir($dir) )
 		{
-			return false;
+            throw new RuntimeException('not a directory: '.$dir);
 		}
 		
 		if	( $dh = opendir($dir) )
@@ -93,7 +93,7 @@ class FileUtils
 	    }
 	    else
 	    {
-			die('unable to open directory: '.$dir);
+			throw new RuntimeException('unable to open directory: '.$dir);
 	    }
 		
 	}
