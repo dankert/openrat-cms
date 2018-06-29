@@ -35,6 +35,7 @@
 <div id="workbench" class="initial-hidden">
 
     <header class="view" data-action="title" data-method="show">
+        <?php echo embedView('title','show'); ?>
     </header>
 
 
