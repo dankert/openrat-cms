@@ -40,11 +40,16 @@ class Dispatcher
      */
     public function doAction()
     {
-        define('PRODUCTION', config('production'));
-        define('DEVELOPMENT', !PRODUCTION);
+        if(!defined('PRODUCTION')) {
+
+            define('PRODUCTION', config('production'));
+            define('DEVELOPMENT', !PRODUCTION);
+        }
+
 
         // Start the session. All classes should have been loaded up to now.
-        session_start();
+        if(session_status()==PHP_SESSION_NONE && !headers_sent())
+            session_start();
 
         global $SESS;
         $SESS = &$_SESSION;
@@ -71,7 +76,9 @@ class Dispatcher
 
         $this->checkPostToken();
 
-        define('FILE_SEP', $conf['interface']['file_separator']);
+        if(!defined('FILE_SEP'))
+
+            define('FILE_SEP', $conf['interface']['file_separator']);
 
         // Is this a POST request?
         $this->isAction = $_SERVER['REQUEST_METHOD'] == 'POST';
@@ -114,7 +121,7 @@ class Dispatcher
         Session::close();
 
         // Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
-        header('Expires: ' . substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
+        #header('Expires: ' . substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
 
         return $result;
     }
@@ -283,6 +290,7 @@ class Dispatcher
         $do->actionName = $this->action;
         $do->subActionName = $this->subaction;
 
+        if(!defined('OR_ID'))
         if (isset($REQ[REQ_PARAM_ID]))
             define('OR_ID', $REQ[REQ_PARAM_ID]);
         else

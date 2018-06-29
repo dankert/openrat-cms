@@ -32,8 +32,21 @@ var Workbench = new function()
 
 		// Initialze Ping timer.
 		this.initializePingTimer();
+		this.loadInitialViews();
 	}
 
+
+	this.loadInitialViews = function() {
+
+		/*
+        $('div#workbench > div .view').load( createUrl('login','login',0 ),function() {
+            $(this).fadeIn('slow');
+
+            registerHeaderEvents();
+        });
+        */
+
+    }
 
     /**
 	 *  Registriert den Ping-Timer für den Sitzungserhalt.
@@ -1193,59 +1206,6 @@ function createUrl(action,subaction,id,extraid)
  */
 function resizeWorkbenchContainer( container )
 {
-
-	var availableWidth  = container.width();
-	var availableHeight = container.height();
-	var factor = container.children('div.resizable').data('size-factor');
-	
-	if	( !factor)
-		factor = 0.3;
-	
-	var horizontal = container.hasClass('axle-x');
-	
-	if	( horizontal )
-	{
-		// Container ist horizontal geteilt.
-		var size = Math.floor(availableWidth * factor);
-		container.find('div.panel.resizable').css('width',''+size                   +'px');
-		container.find('div.panel.resizable > div.content').css('height',''+(availableHeight-26)+'px');
-		container.find('div.panel.autosize ').css('width',''+(availableWidth-size-9)+'px');
-		container.find('div.panel.autosize  > div.content').css('height',''+(availableHeight-26)+'px');
-
-		container.children('div.resizable').css('width',''+size                   +'px');
-		container.children('div.resizable').css('height',''+availableHeight+'px');
-		container.children('div.autosize').css('width',''+(availableWidth-size-9)+'px');
-		container.children('div.autosize').css('height',''+availableHeight+'px');
-
-		container.children('div.divider').css('height',''+availableHeight+'px');
-	}
-	else
-	{
-		// Container ist vertikal geteilt.
-		var size = Math.floor(availableHeight * factor);
-		container.find('div.panel.resizable ').css('width',''+availableWidth +'px');
-		container.find('div.panel.resizable > div.content').css('height',''+(size-26)+'px');
-		container.find('div.panel.autosize  ').css('width',''+availableWidth  +'px');
-		container.find('div.panel.autosize  > div.content').css('height',''+(availableHeight-size-26)+'px');
-		
-		container.children('div.resizable').css('width',''+availableWidth +'px');
-		container.children('div.resizable').css('height',''+size+'px');
-		container.children('div.autosize').css('width',''+availableWidth+'px');
-		container.children('div.autosize').css('height',''+(availableHeight-size-5)+'px');
-
-		container.children('div.divider').css('width',''+availableWidth+'px');
-	}
-
-	container.children('div.panel').each( function()
-	{
-		resizeTabs( $(this) );
-	}
-	);
-	
-	$(container).children('div.container').each( function() {
-		resizeWorkbenchContainer($(this));
-	});
-
 }
 
 
@@ -1255,21 +1215,6 @@ function resizeWorkbenchContainer( container )
  */
 function resizeWorkbench()
 {
-	// Größe des Anzeige-Bereiches im Browser ermitteln.
-	var viewportWidth  = $(window).width();
-	var viewportHeight = $(window).height();
-	
-	var titleHeight = 40;
-	
-	var container = $('#workbench > div.container');
-	
-	// Verfügbare Breite der Workbench ist Fensterbreite - Innenabstand der Workbench (2*3px)
-	container.css('width' ,''+(viewportWidth-6)+'px');
-	
-	// Verfügbare Höhe   der Workbench ist Fensterhöhe - Höhe der Titelleiste - Innenabstand der Workbench (2*3px)
-	container.css('height',''+(viewportHeight-titleHeight-6)+'px');
-	
-	resizeWorkbenchContainer( container );
 }
 
 
@@ -1278,18 +1223,6 @@ function resizeWorkbench()
  */
 function resizeTabs( panel ) 
 {
-	// Anzahl Tabs pro Panel
-	var tabCount = $(panel).find('div.header li.action').length;
-	
-	// Von der Panel-Breite werden 18px für das Fenstermenü substrahiert.
-	// Von der Breite pro Tab werden 39px für das Icon substrahiert.
-	var tabWidth = Math.floor((($(panel).width()-18)/tabCount)-39);
-	if	( $(panel).is('#panel-content') )
-		tabWidth -= 24; // Im Content-Bereich gibt es noch den Schließen-Knopf.
-	
-	// Validierung: Mindest- und Maximalbreite
-	tabWidth = Math.min(90,Math.max(5,tabWidth)); 
-	$(panel).find('li.action div.tabname').width(tabWidth);
 }
 
 

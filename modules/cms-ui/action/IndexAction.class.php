@@ -123,6 +123,14 @@ class IndexAction extends Action
 		else
 			$style = config('interface','style','default');
 
+        $userIsLoggedIn = is_object($user);
+
+        // Welche Aktion soll ausgeführt werden?
+        $action = $userIsLoggedIn ? 'start' : 'login';
+        if  ( $userIsLoggedIn && isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        }
+
 		$jsFiles  = $this->getJSFiles();
 		$cssFiles = $this->getCSSFiles();
 		//$themeCss = $this->getThemeCSS();

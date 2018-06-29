@@ -35,28 +35,10 @@ class UI
                 $subaction = 'show';
             }
 
-            $dispatcher = new Dispatcher();
-
-            $dispatcher->action = $action;
-            define('OR_ACTION', $action);
-
-            $dispatcher->subaction = $subaction;
-            define('OR_METHOD', $subaction);
-
+            header('Content-Type: text/html; charset=UTF-8');
             self::setContentSecurityPolicy();
 
-
-            $data = $dispatcher->doAction();
-
-            // The action is able to change its method and action name.
-            $subaction = $dispatcher->subaction;
-            $action    = $dispatcher->action;
-
-            header('Content-Type: text/html; charset=UTF-8');
-
-            $tplName = $action . '/' . $subaction;
-
-            UI::outputTemplate($tplName,$data['output']);
+            UI::executeAction($action,$subaction);
 
         } catch (BadMethodCallException $e) {
             // Action-Method does not exist.
@@ -72,6 +54,30 @@ class UI
         } catch (Exception $e) {
             throw new LogicException("Internal CMS error: ".$e->__toString(),0, $e);
         }
+    }
+
+    public static function executeAction( $action, $subaction )
+    {
+        $dispatcher = new Dispatcher();
+
+        $dispatcher->action = $action;
+        if(!defined('OR_ACTION'))
+            define('OR_ACTION', $action);
+
+        $dispatcher->subaction = $subaction;
+        if(!defined('OR_METHOD'))
+            define('OR_METHOD', $subaction);
+
+
+        $data = $dispatcher->doAction();
+
+        // The action is able to change its method and action name.
+        $subaction = $dispatcher->subaction;
+        $action    = $dispatcher->action;
+
+        $tplName = $action . '/' . $subaction;
+
+        UI::outputTemplate($tplName,$data['output']);
     }
 
     /**
@@ -98,7 +104,7 @@ class UI
             } catch (Exception $e) {
                 throw new DomainException("Compilation failed for Template '$templateName'.", 0, $e);
             }
-            header("X-CMS-Template-File: " . $templateFile);
+            #header("X-CMS-Template-File: " . $templateFile);
         }
 
         // Spätestens jetzt muss das Template vorhanden sein.
