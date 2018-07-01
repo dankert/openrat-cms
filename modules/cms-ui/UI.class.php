@@ -56,7 +56,30 @@ class UI
         }
     }
 
-    public static function executeAction( $action, $subaction )
+    public static function executeEmbedded($action, $subaction)
+    {
+        try {
+            UI::executeEmbeddedAction($action,$subaction);
+
+        } catch (BadMethodCallException $e) {
+            // Action-Method does not exist.
+            return "";
+        } catch (ObjectNotFoundException $e) {
+            Logger::warn("Object not found: " . $e->__toString()); // Nicht so schlimm, da dies bei gelöschten Objekten vorkommen kann.
+            return DEVELOPMENT ? $e->getMessage() : "";
+        } catch (OpenRatException $e) {
+            Logger::warn(  $e->__toString() );
+            return DEVELOPMENT ? $e->getMessage() : lang($e->key);
+        } catch (SecurityException $e) {
+            Logger::info( $e->getMessage() );
+            return DEVELOPMENT ? $e->getMessage() : "";
+        } catch (Exception $e) {
+            Logger::info( $e->getMessage() );
+            return DEVELOPMENT ? $e->getMessage() : "";
+        }
+    }
+
+    private static function executeAction( $action, $subaction )
     {
         $dispatcher = new Dispatcher();
 
@@ -70,6 +93,32 @@ class UI
 
 
         $data = $dispatcher->doAction();
+
+        // The action is able to change its method and action name.
+        $subaction = $dispatcher->subaction;
+        $action    = $dispatcher->action;
+
+        $tplName = $action . '/' . $subaction;
+
+        UI::outputTemplate($tplName,$data['output']);
+    }
+
+    private static function executeEmbeddedAction( $action, $subaction )
+    {
+        $dispatcher = new Dispatcher();
+
+        $dispatcher->action = $action;
+        if(!defined('OR_ACTION'))
+            define('OR_ACTION', $action);
+
+        $dispatcher->subaction = $subaction;
+        if(!defined('OR_METHOD'))
+            define('OR_METHOD', $subaction);
+
+        // Embedded Actions are ALWAYS Queries (means: GET).
+        $dispatcher->isAction = false;
+
+        $data = $dispatcher->callActionMethod();
 
         // The action is able to change its method and action name.
         $subaction = $dispatcher->subaction;

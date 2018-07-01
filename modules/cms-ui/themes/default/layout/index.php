@@ -46,7 +46,7 @@
                 <a href=""></a>
             </header>
             <div class="view-static" data-action="tree" data-method="show">
-                <?php echo embedView('tree','show'); ?>
+                <?php embedView('tree','show'); ?>
             </div>
 
         </nav>
@@ -56,7 +56,7 @@
                 <span class="title"></span>
             </header>
             <div class="view" data-method="edit">
-                <?php echo embedView('login','login'); ?>
+                <?php embedView('login','login'); ?>
             </div>
 
         </main>
@@ -66,7 +66,7 @@
                 <a href=""></a>
             </header>
             <div class="view" data-method="info">
-                <?php echo embedView('login','login'); ?>
+                <?php embedView('login','login'); ?>
             </div>
 
         </aside>
@@ -95,21 +95,6 @@
 </html>
 <?php
 function embedView( $action, $method ) {
-    try {
-
-        return cms_ui\UI::executeAction($action,$method);
-    }
-    catch (BadMethodCallException $e) {
-        // Action-Method does not exist.
-        return "Method dows not exist: ".$method;
-    } catch (ObjectNotFoundException $e) {
-        return "Object not found";
-    } catch (OpenRatException $e) {
-        return lang($e->key);
-    } catch (SecurityException $e) {
-        return("You are not allowed to execute '".$action.'/'.$method."''.");
-    } catch (Exception $e) {
-        return "Hups...: ".$e->__toString();
-    }
+        echo cms_ui\UI::executeEmbedded($action,$method);
 }
 ?>

@@ -33,23 +33,19 @@ class Dispatcher
     public $action;
     public $subaction;
 
-    private $isAction;
+    public $isAction;
 
     /**
      * @return array data for the client
      */
     public function doAction()
     {
-        if(!defined('PRODUCTION')) {
-
-            define('PRODUCTION', config('production'));
-            define('DEVELOPMENT', !PRODUCTION);
-        }
+        define('PRODUCTION', config('production'));
+        define('DEVELOPMENT', !PRODUCTION);
 
 
         // Start the session. All classes should have been loaded up to now.
-        if(session_status()==PHP_SESSION_NONE && !headers_sent())
-            session_start();
+        session_start();
 
         global $SESS;
         $SESS = &$_SESSION;
@@ -76,9 +72,7 @@ class Dispatcher
 
         $this->checkPostToken();
 
-        if(!defined('FILE_SEP'))
-
-            define('FILE_SEP', $conf['interface']['file_separator']);
+        define('FILE_SEP', $conf['interface']['file_separator']);
 
         // Is this a POST request?
         $this->isAction = $_SERVER['REQUEST_METHOD'] == 'POST';
@@ -108,7 +102,7 @@ class Dispatcher
         $this->commitDatabaseTransaction();
 
         if  ( DEVELOPMENT )
-        Logger::trace('Output' . "\n" . print_r($result, true));
+            Logger::trace('Output' . "\n" . print_r($result, true));
 
         // Weitere Variablen anreichern.
         $result['session'] = array('name' => session_name(), 'id' => session_id(), 'token' => token());
@@ -121,7 +115,7 @@ class Dispatcher
         Session::close();
 
         // Ablaufzeit für den Inhalt auf aktuelle Zeit setzen.
-        #header('Expires: ' . substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
+        header('Expires: ' . substr(date('r', time() - date('Z')), 0, -5) . 'GMT', false);
 
         return $result;
     }
@@ -268,9 +262,12 @@ class Dispatcher
     }
 
     /**
-     * @return array
+     * Aufruf der Action-Methode.
+     * Diese Methode muss public sein, da sie für Embedded-Actions aus dem UI direkt aufgerufen wird.
+     *
+     * @return array Vollständige Rückgabe aller Daten als assoziatives Array
      */
-    private function callActionMethod()
+    public function callActionMethod()
     {
         global $REQ;
         $actionClassName = ucfirst($this->action) . 'Action';
