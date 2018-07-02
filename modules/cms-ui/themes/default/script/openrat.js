@@ -51,17 +51,16 @@ function initActualHistoryState() {
 var History = new function () {
 	'use strict';
 
-	this.fromHistory = function(ev) {
-		var state = ev.state;
+	this.fromHistory = function(state) {
 		Workbench.loadNewAction(state.action,state.id);
 	}
 
 	this.toHistory = function(obj) {
-		window.history.pushState(obj,obj.name,'./?action='+obj.action+'&id='+obj.subaction);
+		window.history.pushState(obj,obj.name,createUrl(obj.action,null,obj.id,obj.data,false) );
 	}
 
     this.toActualHistory = function(obj) {
-        window.history.replaceState(obj,obj.name,'./?action='+obj.action+'&id='+obj.subaction);
+        window.history.replaceState(obj,obj.name,createUrl(obj.action,null,obj.id,obj.data,false) );
     }
 }
 
@@ -984,7 +983,9 @@ else
 function createUrl(action,subaction,id,extraid,embed)
 {
 	var url = './';
+
     url += '?action=' + action;
+
     if	(subaction != null)
     	url += '&subaction='+subaction;
 

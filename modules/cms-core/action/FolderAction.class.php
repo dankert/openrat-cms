@@ -1569,4 +1569,8 @@ class FolderAction extends ObjectAction
 				return true;
 		}
 	}
+
+	public function showView() {
+	    $this->nextSubAction('edit');
+    }
 }

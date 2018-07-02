@@ -208,7 +208,12 @@ class LanguageAction extends Action
 		$this->setTemplateVar('isocodes'  ,$countryList               );
 		$this->setTemplateVar('isocode'   ,strtoupper($this->language->isoCode) );
 	}
-	
+
+
+
+	function showView() {
+	    $this->nextSubAction('edit');
+    }
 
 
 	function advancedView()
