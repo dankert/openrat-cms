@@ -34,7 +34,7 @@
 
 <div id="workbench" class="initial-hidden">
 
-    <header class="view" data-action="title" data-method="show">
+    <header id="title" class="view view-static" data-action="title" data-method="show">
         <?php echo embedView('title','show'); ?>
     </header>
 
@@ -45,8 +45,8 @@
             <header>
                 <a href=""></a>
             </header>
-            <div class="view-static" data-action="tree" data-method="show">
-                <?php embedView('tree','show'); ?>
+            <div id="navigation" class="view view-static" data-action="tree" data-method="show">
+                <?php embedView('tree','tree'); ?>
             </div>
 
         </nav>
@@ -55,7 +55,7 @@
             <header>
                 <span class="title"></span>
             </header>
-            <div class="view" data-method="edit">
+            <div id="editor" class="view view-loader" data-method="edit">
                 <?php embedView('login','login'); ?>
             </div>
 
@@ -65,7 +65,7 @@
             <header>
                 <a href=""></a>
             </header>
-            <div class="view" data-method="info">
+            <div id="info" class="view view-loader" data-method="info">
                 <?php embedView('login','login'); ?>
             </div>
 

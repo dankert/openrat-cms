@@ -43,7 +43,7 @@ class FormComponent extends Component
 		echo ' name="' . $this->htmlvalue($this->name) . '"';
 		
 		echo ' target="' . $this->htmlvalue($this->target) . '"';
-		echo ' action="' . $this->htmlvalue($this->action) . '"';
+		echo ' action="./"';
 		echo ' data-method="' . $this->htmlvalue($this->subaction) . '"';
 		echo ' data-action="' . $this->htmlvalue($this->action) . '"';
 		echo ' data-id="' . $this->htmlvalue($this->id) . '"';
@@ -70,7 +70,7 @@ class FormComponent extends Component
 		echo '<div class="bottom">';
 		echo "<div class=\"command {$this->visible}\">";
 
-		echo "<input type=\"button\" class=\"submit ok\" value=\"{$label}\" />";
+		echo "<input type=\"submit\" class=\"submit ok\" value=\"{$label}\" />";
 
         // Cancel-Button nicht anzeigen, wenn cancel==false.
 		if ($this->cancel)

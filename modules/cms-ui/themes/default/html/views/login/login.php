@@ -2,7 +2,7 @@
 	
 		<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_PASSWORD') ?>" data-type="dialog" data-name="<?php echo lang('MENU_PASSWORD') ?>" data-method="password"><img src="./themes/default/images/icon/action/password.svg" title="<?php echo lang('MENU_password_DESC') ?>" /><?php echo lang('MENU_password') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_REGISTER') ?>" data-type="dialog" data-name="<?php echo lang('MENU_REGISTER') ?>" data-method="register"><img src="./themes/default/images/icon/action/register.svg" title="<?php echo lang('MENU_register_DESC') ?>" /><?php echo lang('MENU_register') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_LICENSE') ?>" data-type="dialog" data-name="<?php echo lang('MENU_LICENSE') ?>" data-method="license"><img src="./themes/default/images/icon/action/license.svg" title="<?php echo lang('MENU_license_DESC') ?>" /><?php echo lang('MENU_license') ?></a></div></div>
 		
-		<form name="" target="_self" action="<?php echo OR_ACTION ?>" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="login" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=(config('login','logo','enabled')); if($if3){?>
 				<?php $if4=(!empty(config('login','logo','url'))); if($if4){?>
 					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
@@ -160,5 +160,5 @@
 			
 			<input type="hidden" name="languageid" value="<?php echo $languageid ?>"/>
 			
-		<div class="bottom"><div class="command 1"><input type="button" class="submit ok" value="<?php echo lang('menu_login') ?>" /></div></div></form>
+		<div class="bottom"><div class="command 1"><input type="submit" class="submit ok" value="<?php echo lang('menu_login') ?>" /></div></div></form>
 	

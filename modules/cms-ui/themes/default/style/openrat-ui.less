@@ -15,37 +15,6 @@ div.panel > div.title
 {
 	font-weight:bold;
 }
-
-/*   H e a d e r   */
-#header
-{
-	width:100%;
-	height:27px;
-	overflow:hidden;
-	padding:5px;
-	margin:0px;
-	margin-bottom:3px;
-	float:left;
-}
-
-#header div.projects,
-#header div.menu,
-#header div.title
-{
-	float:left;
-	margin-right:10px;
-	margin-left :0px;
-}
-
-#header div.user,
-#header div.search,
-#header div.history
-{
-	float:right;
-	margin-right:10px;
-	margin-left :10px;
-}
-
 /*
 
 div#tree
@@ -190,17 +159,6 @@ div.dropdown > div.divide
 	margin-bottom: 5px;
 }
 
-#header > div.menu {
-	overflow: hidden;
-}
-
-/* Dropdown anzeigen  */
-#header.open div.menu.open div.dropdown,
-div.panel div:hover > div.dropdown,
-div.panel-icon:hover > div.dropdown
-{
-	display:block;
-}
 
 
 
@@ -444,11 +402,6 @@ div.logo p
 	font-size:13px;
 }
 
-#header div.search input
-{
-	margin:0px;
-	padding:0px;
-}
 
 
 
@@ -1052,9 +1005,6 @@ div#shortcuts > div.shortcut:HOVER {
 
 
 
-body > #header {
-	display:block;
-}
 
 ul#history >  li {
 	
@@ -1109,52 +1059,6 @@ div#filler
 	opacity: 0.5;
 }
 
-
-/* Pfeile */
-#header > div > div.arrow-down
-{
-	display: inline;
-	width:0;
-	height:0;
-	margin:6;
-	padding:0px;
-	border-right : 6px solid @color-overridden-by-theme;
-	border-left  : 6px solid @color-overridden-by-theme;
-	border-top   : 6px solid @color-overridden-by-theme;
-	border-bottom: 4px solid @color-overridden-by-theme;
-	margin-top: 10px;
-font-size: 0;
-}
-
-
-
-/*   D r o p d o w n  -  M e n u e s  */
-div.dropdown
-{
-	font-style:normal;
-	font-weight:normal;
-	text-decoration:none;
-}
-
-div.toolbar-icon
-{
-	padding:2px;
-	margin-left:5px;
-	float: left;
-}
-
-div.headermenu
-{
-	margin:5px;
-	z-index: 1;
-	position: relative;
-	right: 0;
-	top: 0;
-}
-div.headermenu > div.toolbar-icon
-{
-	float:right;
-}
 
 
  /* Voreingestellte Schriftart */
@@ -1368,27 +1272,6 @@ div.panel ul.views > li.active:hover
 	color: @color-overridden-by-theme;
 }
 
-/* Titelleiste-Hintergrund */
-#header
-{
-	background-color: @color-overridden-by-theme;
-	background-image: linear-gradient(@color-overridden-by-theme 85%, @color-overridden-by-theme 100%);
-	color: @color-overridden-by-theme;
-}
-
-/* Titelleiste */
-#header div.toolbar-icon > a
-{
-	color: @color-overridden-by-theme;
-}
-
-#header, /* Titelleite */
-ul.views > li.action /* Tabreiter */
-{
- 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell", 
-	"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-	font-size:13px;
-}
 
 div.content
 {

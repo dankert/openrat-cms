@@ -1,0 +1,85 @@
+/*   H e a d e r   */
+#title {
+  width: 100%;
+  height: 27px;
+  overflow: hidden;
+  padding: 5px;
+  margin: 0px;
+  margin-bottom: 3px;
+  float: left;
+
+  div.projects,
+  div.menu,
+  div.title {
+    float: left;
+    margin-right: 10px;
+    margin-left: 0px;
+  }
+
+  div.user,
+  div.search,
+   div.history {
+    float: right;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+   > div.menu {
+    overflow: hidden;
+  }
+
+  /* Dropdown anzeigen  */
+  &.open div.menu.open div.dropdown,
+  div.panel div:hover > div.dropdown,
+  div.panel-icon:hover > div.dropdown {
+    display: block;
+  }
+
+   div.search input {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  /* Pfeile */
+   > div > div.arrow-down {
+    display: inline;
+    width: 0;
+    height: 0;
+    margin: 6;
+    padding: 0px;
+    margin-top: 10px;
+    font-size: 0;
+  }
+
+  /*   D r o p d o w n  -  M e n u e s  */
+  div.dropdown {
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+  }
+
+  div.toolbar-icon {
+    padding: 2px;
+    margin-left: 5px;
+    float: left;
+  }
+
+  div.headermenu {
+    margin: 5px;
+    z-index: 1;
+    position: relative;
+    right: 0;
+    top: 0;
+  }
+  div.headermenu > div.toolbar-icon {
+    float: right;
+  }
+
+
+  /* Titelleite */
+  ul.views > li.action /* Tabreiter */ {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 13px;
+  }
+}

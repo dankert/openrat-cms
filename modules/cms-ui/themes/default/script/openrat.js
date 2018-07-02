@@ -15,10 +15,55 @@ $( function()
     $('.initial-hidden').removeClass('initial-hidden');
 
     refreshAll();
+    registerHeaderEvents();
+
+    $('#workbench .view').each( function(index) {
+    	registerViewEvents(this);
+    });
+
+    // Listening to the "popstate" event:
+    window.onpopstate = function(ev) {
+        History.fromHistory(ev.state);
+    };
+
+    initActualHistoryState();
 	
 	Workbench.initialize();
+
+    loadTree(); // Initial Loading of the navigationtree
+
 });
 
+function initActualHistoryState() {
+	var state = new Object();
+	state.name   = window.document.title;
+	state.action = $('#editor').data('action');
+    state.id     = $('#editor').data('id'    );
+    History.toActualHistory( state );
+}
+
+
+
+
+/**
+ * History-API.
+ */
+var History = new function () {
+	'use strict';
+
+	this.fromHistory = function(ev) {
+		var state = ev.state;
+		Workbench.loadNewAction(state.action,state.id);
+	}
+
+	this.toHistory = function(obj) {
+		window.history.pushState(obj,obj.name,'./?action='+obj.action+'&id='+obj.subaction);
+	}
+
+    this.toActualHistory = function(obj) {
+        window.history.replaceState(obj,obj.name,'./?action='+obj.action+'&id='+obj.subaction);
+    }
+}
 
 
 var Workbench = new function()
@@ -74,53 +119,38 @@ var Workbench = new function()
     /**
 	 *
      */
-    this.openNewTab = function(contentEl,action,method,id,params ) {
+    this.loadNewAction = function(action, method, id, params ) {
 
-        // Schauen, ob der Inhalt schon geladen ist...
-        var targetEl = $(contentEl).children('div.sheet.action-'+action+'.method-'+method+'.id-'+id);
+        var state = {action:action,method:method,id:id,data:params};
+        History.toHistory(state);
 
-        if	( targetEl.length == 0 )
-        {
-            // Noch nicht vorhanden, neues Element erstellen.
-            $(contentEl).children('div.sheet').hide();
-            targetEl = $('<div class="sheet action-'+action+' method-'+method+' id-'+id + '" />' );
-            $(contentEl).append(targetEl);
-        }
-        else
-        {
-            if	( targetEl.is(':visible') )
-            {
-                return;
-            }
-            else
-            {
-                $(contentEl).children('div.sheet').hide();
-                targetEl.show();
-                return;
-            }
-        }
+        $('#workbench .view-loader').each( function(idx) {
+            var targetDOMElement = $(this);
+            var method = targetDOMElement.data('method');
 
-        var url = createUrl(action,method,id,params); // URL für das Laden erzeugen.
+            var url = createUrl(action,method,id,params); // URL für das Laden erzeugen.
 
-        $(targetEl).empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
-            $(targetEl).fadeTo(350,1);
+            targetDOMElement.empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
+                targetDOMElement.fadeTo(350,1);
 
-            if	( status == "error" )
-            {
-                // Seite nicht gefunden.
-                $(targetEl).html("");
-                $(targetEl).removeClass("loader");
+                if	( status == "error" )
+                {
+                    // Seite nicht gefunden.
+                    $(targetDOMElement).html("");
+                    $(targetDOMElement).removeClass("loader");
 
-                notify('error',response);
-                // OK-button Ausblenden.
-                //$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
-                // var msg = "Sorry but there was an error: ";
-                //$(this).html(msg + xhr.status + " " + xhr.statusText);
-                return;
-            }
+                    notify('error',response);
+                    // OK-button Ausblenden.
+                    //$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
+                    // var msg = "Sorry but there was an error: ";
+                    //$(this).html(msg + xhr.status + " " + xhr.statusText);
+                    return;
+                }
 
-            $(targetEl).removeClass("loader");
-            registerViewEvents( targetEl );
+                $(targetDOMElement).removeClass("loader");
+
+                registerViewEvents( targetDOMElement );
+            });
         });
 
     }
@@ -467,7 +497,6 @@ function registerWorkbenchEvents()
 				fullscreen( this );
 			} );
 
-    loadTree(); // Initial Loading of the navigationtree
 }
 
 
@@ -477,13 +506,6 @@ function registerWorkbenchEvents()
  */
 function refreshTitleBar()
 {
-	$('#header').load( createUrl('title','show',0 ),function() {
-		$(this).fadeIn('slow');
-
-		registerHeaderEvents();
-	});
-
-
 	// Modale Dialoge
 	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
 }
@@ -509,7 +531,7 @@ function loadViewByName(viewName, url )
  */
 function loadView(contentEl,action,method,id,params  )
 {
-	Workbench.openNewTab(contentEl,action,method,id,params );
+	Workbench.loadNewAction(action,method,id,params );
 }
 
 
@@ -602,19 +624,19 @@ function registerHeaderEvents()
         $('.toolbar-icon.menu').parent().removeClass('open');
     });
     // Mit der Maus geklicktes Menü aktivieren.
-    $('#header .toolbar-icon.menu').click( function(event) {
+    $('#title .toolbar-icon.menu').click( function(event) {
         event.stopPropagation();
         $(this).parent().toggleClass('open');
     });
 
     // Mit der Maus überstrichenes Menü aktivieren.
-    $('#header .toolbar-icon.menu').mouseover( function() {
+    $('#title .toolbar-icon.menu').mouseover( function() {
         $(this).parent().find('.toolbar-icon.menu').removeClass('open');
         $(this).addClass('open');
     });
 
 
-    $('#header').trigger('orHeaderLoaded');
+    $('#title').trigger('orHeaderLoaded');
 	
 
 	//   S u c h e
@@ -628,51 +650,6 @@ function registerHeaderEvents()
 	
 	$('div.search input').orSearch( { dropdown:'div.search div.dropdown' } );
 
-	/*
-	 * 
-	// V e r l a u f
-	$('#header div.history').hover( function(){
-		$('#header div.history div.dropdown').html('');
-		$.ajax( { 'type':'GET', url:'./dispatcher.php?action=title&subaction=history', data:null, success:function(data, textStatus, jqXHR)
-			{
-				for( id in data.history )
-				{
-					var result = data.history[id];
-					
-					// Suchergebnis-Zeile in das Ergebnis schreiben.
-					$('#header div.history div.dropdown').append('<div title="'+result.desc+'" onclick="loadViewByName(\'content\',\''+result.url+'\');"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</div>');
-				}
-			} } );
-		$('#header div.history div.dropdown').fadeIn();
-	});
-	 */
-
-	
-	/*
-	$base = defined('OR_BASE_URL')?slashify(OR_BASE_URL).'editor/editor/':'./editor/editor/';
-	$editor->basePath = $base;
-	$editor->config['skin' ] = 'v2';
-	$editor->config['language' ] = config('language','language_code');
-	$editor->config['toolbar' ] = 'Openrat';
-	$editor->config['toolbar_Openrat' ] =  array( 
-array('Save','Preview','-','Templates'),
-array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'),
-array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'),
-array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'),
-'/',
-array('Bold','Italic','Underline','Strike','-','Subscript','Superscript'),
-array('NumberedList','BulletedList','-','Outdent','Indent','Blockquote'),
-array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'),
-array('Link','Unlink','Anchor'),
-array('Image','Flash','Table','HorizontalRule','SpecialChar','PageBreak'),
-'/',
-array('Styles','Format','Font','FontSize'),
-array('TextColor','BGColor'),
-array('Source','-', 'ShowBlocks','Maximize') );
-	
-	$editor->config['filebrowserUploadUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','directupload','-',array(REQ_PARAM_TOKEN=>token(),'name'=>'upload')));
-	$editor->config['filebrowserBrowseUrl' ] = str_replace('&amp;','&',Html::url('filebrowser','browse','-'));
-	*/
 }
 
 
@@ -690,22 +667,18 @@ function fullscreen( element ) {
 
 function loadTree()
 {
-	// Nur, wenn ein Baum auch angezeigt werden soll.
-	if	( $('div#panel-tree li.action').data('action')=='tree' )
-	{
 		// Oberstes Tree-Element erzeugen
-		$('div#panel-tree div.content > div.sheet.action-tree.method-tree').html("&nbsp;");
+		$('#navigation').html("&nbsp;");
 		
 		// Wurzel des Baums laden
 		//loadBranch( $('div#tree ul.tree > li'),'root',0);
-		$('div#panel-tree div.content > div.sheet.action-tree.method-tree').orTree( { type:'root',id:0,onSelect:function(name,type,id,extraId) {
+		$('#navigation').orTree( { type:'root',id:0,onSelect:function(name,type,id,extraId) {
 			openNewAction( name,type,id, extraId );
 		} });
 		
 		// Die ersten 2 Hierarchien öffnen:
-		$('div#panel-tree div.content > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
-		$('div#panel-tree div.content > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
-	}
+		$('#navigation > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
+		$('#navigation > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
 }
 
 
@@ -763,7 +736,6 @@ function getActiveView()
  */
 function startView( element,method )
 {
-	var active = getActiveView();
 	loadView( $(element).closest('div.panel').find('div.content'), active.action,method,active.id,active.extraid );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
@@ -781,13 +753,6 @@ function startView( element,method )
  */
 function startDialog( name,action,method,id,params )
 {
-	if ( action== null || action.length ==0 )
-		action = $('#panel-content').find('li.active').data('action');
-	if	(id==null  || id.length ==0)
-		id     = $('#panel-content').find('li.active').data('id'    );
-	if	(typeof params === "undefined")
-        params = $('#panel-content').find('li.active').data('extra');
-
 	$('div#filler').fadeTo(500,0.5);
 	$('div#dialog').html('<div class="header"><ul class="views"><li class="action active"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" /><div class="tabname" style="width:100px;">'+name+'</div></li></ul></div><div class="content" />');
 	$('div#dialog').data('id',id);
@@ -841,130 +806,7 @@ function openNewAction( name,action,id,extraId )
 {
 	setTitle( name ); // Title setzen.
 	
-	// Andere Tabs auf inaktiv setzen
-	$('ul#history li.active').removeClass('active');
-	
-	// Tab schon vorhanden?
-	if	( $('ul#history li.'+action+'.id'+id).length > 0 )
-	{
-		// Ja, Tab schon vorhanden
-		// Gewünschtes Tab aktiv setzen
-		$('ul#history li.'+action+'.id'+id).addClass('active');
-	}
-	else
-	{
-		// Tab noch nicht vorhanden, also jetzt hier ergänzen.
-		$('ul#history').append('<li class="action active '+action+' id'+id+'"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" />'+name+'</li>');
-		$('ul#history li.active').click( function()
-			{
-				// Action-Tab wurde angeklickt
-				$('ul#history li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
-				$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
-			
-				setNewAction(action,id,extraId);
-			} );
-	}
-
-	// Andere Tabs auf inaktiv setzen
-	$('div#panel-content > div.header > ul.views li.active').removeClass('active');
-	
-	// Tab schon vorhanden?
-	if	( $('div#panel-content > div.header > ul.views > li.'+action+'.id'+id).length > 0 )
-	{
-		// Ja, Tab schon vorhanden
-		// Gewünschtes Tab aktiv setzen
-		$('div#panel-content > div.header > ul.views > li.'+action+'.id'+id).addClass('active');
-	}
-	else
-	{	
-		// Neuen Tab in Hauptfenster anlegen
-		$('div#panel-content > div.header > ul.views > li.active').removeClass('active');
-		
-		// Wenn max. Anzahl überschritten, dann den ersten entfernen.
-		var maxTabs = 7;
-		if	( $('div#panel-content > div.header > ul.views > li.action').length >= maxTabs )
-			$('div#panel-content > div.header > ul.views > li.action').first().remove();
-
-		var newLi = $('<li class="action active '+action+' id'+id+'" title="'+name+'"><img class="icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+action+'.png" title="" /><div class="tabname">'+name+'</div><img class="close icon" src="'+OR_THEMES_EXT_DIR+'default/images/icon/close.gif" title="" /></li>');
-		$('div#panel-content > div.header > ul.views').append(newLi);
-
-        newLi.data('action',action);
-        newLi.data('id',id);
-        newLi.data('extra',extraId);
-        newLi.data('method',DEFAULT_CONTENT_ACTION);
-
-        resizeTabs( $('div#contentbar'),true);
-		$('div#panel-content > div.header > ul.views').scrollLeft(9999);
-		
-		// Klick auf den "Schließen"-Knopf
-		$('div#panel-content > div.header > ul.views img.close').click( function()
-				{
-					setTitle( '' ); // Title entfernen.
-
-					// Zuerst die dazugehörigen, geladenen Inhalte von Views löschen, um kein
-					// Memory-Leak zu erzeugen ;)
-					var action = $(this).closest('li.action').data('action');
-					var id     = $(this).closest('li.action').data('id'    );
-					$('#workbench div.content > div.sheet.action-'+action+'.id-'+id).remove();
-					
-					// Schließen
-					// Wenn aktiver Tab, dann den Inhalt loeschen
-					if	( $(this).closest('li.action').hasClass('active') )
-					{
-						//$(this).closest('div.panel').find('div.content').html(''); // Inhalt entfernen
-						$('#workbench div.refreshable div.content').html('');
-						
-						var views = $(this).closest('ul.views');
-						
-						// Und jetzt den Tab entfernen
-						$(this).parent().remove(); // Tab entfernen
-						
-						// Letzten Tab aktivieren (sofern vorhanden)
-						$(views).find('li.action').last().click();
-					}
-					else
-					{
-						// Inaktive Tabs nur löschen.
-						$(this).parent().remove(); // Tab entfernen
-					}
-					
-					resizeTabs( $('div#panel-content'),true);
-				} );
-		
-		// Klick auf den Reiter
-		$('div#panel-content > div.header > ul.views > li.active').click( function()
-			{
-				// Action-Tab wurde angeklickt
-				$('div#panel-content > div.header > ul.views li.active').removeClass('active'); // Andere Tabs auf inaktiv setzen
-				$(this).addClass('active'); // Angeklicktes Tab auf aktiv setzen
-
-				setTitle( $(this).children('div.tabname').text() );
-
-				// Zum angeklickten Tab scrollen
-				//$('div#content > div.panel > div.menu > div.views > ul.views').scrollTo(this);
-			
-				setNewAction(action,id,extraId);
-			} );
-
-		// Nach dem Hinzufügen eines neue Tabs die Größe aller Tabs in diesem Panel anpassen.
-		resizeTabs( $('div#panel-content ') );
-
-		/*
-		 * Eventhandler hängt schon auf div.menu
-		$('div#content > div.panel > div.menu > div.views > ul.views li.active').dblclick( function()
-				{
-					fullscreen( this );
-				} );
-				*/
-
-	}
-	
-	// Zum angeklickten Tab scrollen
-	
-	//$('div#content > div.panel > div.menu > div.views > ul.views').scrollTo(this);
 	setNewAction( action,id,extraId );
-	
-	
 }
 
 
@@ -986,10 +828,10 @@ function filterMenus(action)
 function setNewAction( action,id,extraId )
 {
 	filterMenus(action);
-	$('#workbench ul.views > li.action.dependent').data('action',action).data('id',id).data('extra',extraId);
-	
+
+	Workbench.loadNewAction(action,'edit',id,extraId);
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
-	refreshAllRefreshables();
+	//refreshAllRefreshables();
 }
 
 
@@ -1129,38 +971,6 @@ else
 
 
 
-function loadSubaction( el, actionName, subactionName,id )
-{
-	alert('nobody should call loadSubaction()');
-	//   E d i t o r
-	var editorConfig = {
-			skin : 'v2',
-			baseHref: OR_THEMES_EXT_DIR+'../editor/editor/',
-			customConfig : 'config-openrat.js',
-			filebrowserUploadUrl:'./dispatcher.php?action=filebrowser&subaction=directupload&name=upload',
-			filebrowserBrowseUrl:'./dispatcher.php?action=filebrowser&subaction=browse'
-	};
-	
-	var main = $(el).parent().parent().parent('div.panel').children('div.content').first();
-	$(main).load(createUrl(actionName,subactionName,id)+' div.content',null, function() {
-			var o=CKEDITOR.instances[ $('textarea.editor').attr('name') ];
-			if (o) o.destroy();
-			
-			//alert("o ist "+o);
-			//$('textarea.editor').ckeditor( function() { /*alert("editor ready");*/ /* callback code */ }, editorConfig );
-			CKEDITOR.replace('text',{
-		        customConfig : 'config-openrat.js'
-		    });
-		});
-
-	$(el).parent().parent().find('.active').removeClass('active');
-	$(el).parent().addClass('active');
-
-	
-}
-
-
-
 
 /**
  * Erzeugt eine URL, um die gewünschte Action vom Server zu laden.
@@ -1174,25 +984,27 @@ function loadSubaction( el, actionName, subactionName,id )
 function createUrl(action,subaction,id,extraid) 
 {
 	var url = './';
+    url += '?action=' + action + ';';
+    if	(subaction != null)
+    	url += '&subaction='+subaction+';'
+
+	url += '&id='+id;
+
 	if	( typeof extraid === 'string')
 	{
-		url += '?action='+action+'&subaction='+subaction+'&id='+id;
 		jQuery.each(jQuery.parseJSON(extraid), function(name, value) {
 			url = url + '&' + name + '=' + value;
 		});
 	}
 	else if	( typeof extraid === 'object')
 	{
-        url += '?action='+action+'&subaction='+subaction+'&id='+id;
 		jQuery.each(extraid, function(name, field) {
 			url = url + '&' + name + '=' + field;
 		});
 	}
 	else
 	{
-		url += '?action='+action+'&subaction='+subaction+'&id='+id;
 	}
-	console.log("URL="+url);
 	return url;
 }
 
