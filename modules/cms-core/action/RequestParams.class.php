@@ -3,6 +3,7 @@
 namespace {
 
     /* Request Parameter Names */
+    define('REQ_PARAM_EMBED'          ,'embed'          );
     define('REQ_PARAM_TOKEN'          ,'token'          );
     define('REQ_PARAM_ACTION'         ,'action'         );
     define('REQ_PARAM_SUBACTION'      ,'subaction'      );

@@ -17,6 +17,7 @@ use template_engine\TemplateEngineInfo;
 
 define('CMS_UI_REQ_PARAM_SUBACTION', 'subaction');
 define('CMS_UI_REQ_PARAM_ACTION', 'action');
+define('CMS_UI_REQ_PARAM_EMBED', 'embed');
 
 
 class UI
@@ -24,15 +25,23 @@ class UI
     public static function execute()
     {
         try {
-            if (!empty($_REQUEST[CMS_UI_REQ_PARAM_ACTION]))
-                $action = $_REQUEST[CMS_UI_REQ_PARAM_ACTION];
-            else
-                $action = 'index';
 
-            if (!empty($_REQUEST[CMS_UI_REQ_PARAM_SUBACTION]))
-                $subaction = $_REQUEST[CMS_UI_REQ_PARAM_SUBACTION];
-            else {
+            if(empty($_REQUEST[CMS_UI_REQ_PARAM_EMBED])) {
+                $action = 'index';
                 $subaction = 'show';
+            }
+            else
+            {
+                if (!empty($_REQUEST[CMS_UI_REQ_PARAM_ACTION]))
+                    $action = $_REQUEST[CMS_UI_REQ_PARAM_ACTION];
+                else
+                    $action = 'index';
+
+                if (!empty($_REQUEST[CMS_UI_REQ_PARAM_SUBACTION]))
+                    $subaction = $_REQUEST[CMS_UI_REQ_PARAM_SUBACTION];
+                else {
+                    $subaction = 'show';
+                }
             }
 
             header('Content-Type: text/html; charset=UTF-8');

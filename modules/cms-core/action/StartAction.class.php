@@ -1120,7 +1120,7 @@ class StartAction extends Action
 	}
 	
 	
-	function show()
+	function showView()
 	{
 		global $conf;
 		global $PHP_AUTH_USER;

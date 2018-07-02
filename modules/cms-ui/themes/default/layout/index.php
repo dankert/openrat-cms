@@ -55,8 +55,8 @@
             <header>
                 <span class="title"></span>
             </header>
-            <div id="editor" class="view view-loader" data-method="edit">
-                <?php embedView('login','login'); ?>
+            <div id="editor" class="view view-loader" data-method="show">
+                <?php embedView($action,'show'); ?>
             </div>
 
         </main>
@@ -66,7 +66,7 @@
                 <a href=""></a>
             </header>
             <div id="info" class="view view-loader" data-method="info">
-                <?php embedView('login','login'); ?>
+                <?php embedView($action,'info'); ?>
             </div>
 
         </aside>
@@ -95,6 +95,8 @@
 </html>
 <?php
 function embedView( $action, $method ) {
+        if (DEVELOPMENT)
+            echo "<!-- $action - $method -->";
         echo cms_ui\UI::executeEmbedded($action,$method);
 }
 ?>

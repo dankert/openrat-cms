@@ -25,7 +25,7 @@ class FormComponent extends Component
 
 	public $enctype = 'application/x-www-form-urlencoded';
 
-	public $async = false;
+	public $async = true;
 
 	public $autosave = false;
 
@@ -57,6 +57,7 @@ class FormComponent extends Component
         // Enable Submit on Enter
 		echo '<input type="submit" class="invisible" />';
 
+        echo '<input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="'.$this->htmlvalue($this->async).'" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="' . $this->htmlvalue($this->action) . '" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="' . $this->htmlvalue($this->subaction) . '" />';

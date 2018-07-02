@@ -128,7 +128,7 @@ var Workbench = new function()
             var targetDOMElement = $(this);
             var method = targetDOMElement.data('method');
 
-            var url = createUrl(action,method,id,params); // URL für das Laden erzeugen.
+            var url = createUrl(action,method,id,params,true); // URL für das Laden erzeugen.
 
             targetDOMElement.empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
                 targetDOMElement.fadeTo(350,1);
@@ -981,14 +981,17 @@ else
  * @param extraid
  * @returns URL
  */
-function createUrl(action,subaction,id,extraid) 
+function createUrl(action,subaction,id,extraid,embed)
 {
 	var url = './';
-    url += '?action=' + action + ';';
+    url += '?action=' + action;
     if	(subaction != null)
-    	url += '&subaction='+subaction+';'
+    	url += '&subaction='+subaction;
 
 	url += '&id='+id;
+
+    if(embed)
+    	url += '&embed=1';
 
 	if	( typeof extraid === 'string')
 	{

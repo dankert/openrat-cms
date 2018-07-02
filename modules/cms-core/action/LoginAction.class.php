@@ -2192,6 +2192,11 @@ class LoginAction extends Action
         $db = null;
         unset($db);
     }
+
+
+    public function showView() {
+        $this->nextSubAction('login');
+    }
 }
 
 
