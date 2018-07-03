@@ -45,6 +45,7 @@ class UI
             }
 
             header('Content-Type: text/html; charset=UTF-8');
+
             self::setContentSecurityPolicy();
 
             UI::executeAction($action,$subaction);
@@ -74,16 +75,16 @@ class UI
             // Action-Method does not exist.
             return "";
         } catch (ObjectNotFoundException $e) {
-            Logger::warn("Object not found: " . $e->__toString()); // Nicht so schlimm, da dies bei gelöschten Objekten vorkommen kann.
+            Logger::warn("Embedded Action $action/$subaction: Object not found: " . $e->__toString()); // Nicht so schlimm, da dies bei gelöschten Objekten vorkommen kann.
             return DEVELOPMENT ? $e->getMessage() : "";
         } catch (OpenRatException $e) {
-            Logger::warn(  $e->__toString() );
+            Logger::warn(  "Embedded Action $action/$subaction: ".$e->__toString() );
             return DEVELOPMENT ? $e->getMessage() : lang($e->key);
         } catch (SecurityException $e) {
-            Logger::info( $e->getMessage() );
+            Logger::info( "Embedded Action $action/$subaction: ".$e->getMessage() );
             return DEVELOPMENT ? $e->getMessage() : "";
         } catch (Exception $e) {
-            Logger::info( $e->getMessage() );
+            Logger::warn( "Embedded Action $action/$subaction: ".$e->__toString() );
             return DEVELOPMENT ? $e->getMessage() : "";
         }
     }
@@ -126,6 +127,7 @@ class UI
 
         // Embedded Actions are ALWAYS Queries (means: GET).
         $dispatcher->isAction = false;
+        $dispatcher->isEmbedded = true;
 
         $data = $dispatcher->callActionMethod();
 
