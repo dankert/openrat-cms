@@ -42,7 +42,7 @@ class TreeAction extends Action
 {
 	public $security = SECURITY_USER;
 	
-	var $tree;
+	//var $tree;
 
 
 	public function __construct()
@@ -55,6 +55,7 @@ class TreeAction extends Action
 	 */
 	function openall()
 	{
+        throw new \LogicException("probably dead code reached");
 		$this->tree = Session::getTree();
 		$this->tree->all();
 		Session::setTree( $this->tree );
@@ -74,6 +75,7 @@ class TreeAction extends Action
 	 */
 	function open()
 	{
+        throw new \LogicException("probably dead code reached");
 		$this->tree = Session::getTree();
 		$this->tree->open( $this->getRequestId() );
 		Session::setTree( $this->tree );
@@ -85,6 +87,7 @@ class TreeAction extends Action
 	 */
 	function close()
 	{
+        throw new \LogicException("probably dead code reached");
 		$this->tree = Session::getTree();
 		$this->tree->close( $this->getRequestId() );
 		Session::setTree( $this->tree );
@@ -96,6 +99,7 @@ class TreeAction extends Action
 	 */
 	private function load()
 	{
+        throw new \LogicException("probably dead code reached");
 		global $SESS;
 
 		$project = Session::getProject();
@@ -129,7 +133,9 @@ class TreeAction extends Action
 	 */
 	function outputElement( $elId,$tiefe,$isLast )
 	{
-		$treeElement = $this->tree->elements[$elId]; 
+        throw new \LogicException("probably dead code reached");
+
+		$treeElement = $this->tree->elements[$elId];
 
 		$zeilen = array();
 		$zeile  = array();
@@ -226,37 +232,12 @@ class TreeAction extends Action
 	
 	
 	/**
-	 * Anzeigen des Baumes
-	 */
-	public function treeView()
-	{
-		return;
-		$this->load();
-			
-		$project = Session::getProject();
-		if	( is_object($project) )
-		{
-			$this->setTemplateVar('projectname',$project->name);
-		}
-		
-		$this->tree = Session::getTree();
-		
-		//if	( $this->getRequestVar('target')!='tree' )
-			$this->tree->refresh();
-		
-		$var = array();
-		$var['zeilen'] = $this->outputElement( 0,0,array() );
-		$var['zeilen'] = array();
-		
-		$this->setTemplateVars( $var );
-	}
-	
-	
-	/**
 	 * Anzeigen des Baumes fuer asynchrone Anfragen.
 	 */
 	function loadAll()
 	{
+        throw new \LogicException("probably dead code reached");
+
 		$this->tree = Session::getTree();
 		
 		$this->setTemplateVar( 'lines',$this->outputElement( 0,0,array() ) );
@@ -268,7 +249,8 @@ class TreeAction extends Action
 	 */
 	public function loadEntryView()
 	{
-		exit;
+        throw new \LogicException("probably dead code reached");
+
 		$this->tree = Session::getTree();
 		
 		$this->setTemplateVar( 'lines',$this->outputElement( 0,0,array() ) );
@@ -282,6 +264,7 @@ class TreeAction extends Action
 	 */
 	public function loadBranchView()
 	{
+	    /*
 		$project   = Session::getProject();
 		$projectid = $project->projectid;
 		
@@ -296,9 +279,12 @@ class TreeAction extends Action
 			$tree = new ProjectTree();
 			$tree->projectId = $projectid;
 		}
-		
-		
-		$type = $this->getRequestVar('type');
+	    */
+
+        $tree = new AdministrationTree();
+
+
+        $type = $this->getRequestVar('type');
 		
 		$tree->tempElements = array();
 		
@@ -322,6 +308,7 @@ class TreeAction extends Action
 	 */
 	private function content()
 	{
+	    throw new \LogicException("probably dead code reached");
 		if	( $this->hasRequestVar('projectid') )
 			$this->load();
 		

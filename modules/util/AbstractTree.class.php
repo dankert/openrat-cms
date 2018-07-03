@@ -29,28 +29,30 @@ class AbstractTree
 	/**
 	 * Alle Elemente des Baumes
 	 */
-	var $elements     = array();
+
+	//var $elements     = array();
 	
 	var $tempElements = array();
 	var $userIsAdmin  = false;
 	
-	var $autoOpen     = array(0,1);
+	//var $autoOpen     = array(0,1);
 	
-	var $opened       = array();
+	//var $opened       = array();
 	
 	/**
 	 * Hoechste Element-Id
 	 * @type Integer
 	 */
-	var $maxId;
+	//var $maxId;
 	
 	// Konstruktor
-	function AbstractTree()
+	function __construct()
 	{
 		// Feststellen, ob der angemeldete Benutzer ein Administrator ist
 		$user = Session::getUser();
 		$this->userIsAdmin = $user->isAdmin;
 
+		/*
 		// Wurzel-Element laden
 		$this->root();
 		$this->elements[0]  = $this->tempElements[0];
@@ -59,32 +61,40 @@ class AbstractTree
 		
 		foreach( $this->autoOpen as $openId )
 			$this->open($openId);
+		*/
 	}
 
 	function refresh() {
-		
-		$this->elements = array();
-		
-		// Wurzel-Element laden
-		$this->root();
-		$this->elements[0]  = $this->tempElements[0];
-		$this->tempElements = array();
-		$this->maxId = 0;
 
-		$oids = $this->opened;
-		$this->opened = array();
-		foreach( $oids as $oid)
-		{
-			if	( isset($this->elements[$oid]) )
-				$this->open($oid);
-		}
+        throw new \LogicException("probably dead code reached");
+
+        /*
+        $this->elements = array();
+
+        // Wurzel-Element laden
+        $this->root();
+        $this->elements[0]  = $this->tempElements[0];
+        $this->tempElements = array();
+        $this->maxId = 0;
+
+        $oids = $this->opened;
+        $this->opened = array();
+        foreach( $oids as $oid)
+        {
+            if	( isset($this->elements[$oid]) )
+                $this->open($oid);
+        }
+        */
 	}
 
 	
 	
 	function all() {
-		
-		$this->elements = array();
+
+        throw new \LogicException("probably dead code reached");
+
+        /*
+        $this->elements = array();
 		$this->opened = array();
 		
 		// Wurzel-Element laden
@@ -97,6 +107,7 @@ class AbstractTree
 		{
 			$this->open($eid);
 		}
+        */
 	}
 	
 	
@@ -107,7 +118,10 @@ class AbstractTree
 	 */
 	function open( $elementId )
 	{
-		$k = array_search($elementId,$this->opened);
+        throw new \LogicException("probably dead code reached");
+
+
+        $k = array_search($elementId,$this->opened);
 		if	( $k !== false )
 			return; // Ist schon offen. Evtl. Reload gedrückt?
 		
@@ -148,7 +162,11 @@ class AbstractTree
 
 	function close( $elementId )
 	{
-		$this->elements[$elementId]->subElementIds = array();
+        throw new \LogicException("probably dead code reached");
+
+
+
+        $this->elements[$elementId]->subElementIds = array();
 		
 		$k = array_search($elementId,$this->opened);
 		if	( $k !== false )
