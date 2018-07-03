@@ -23,7 +23,7 @@ $( function()
 
     // Listening to the "popstate" event:
     window.onpopstate = function(ev) {
-        History.fromHistory(ev.state);
+        Navigator.navigateTo(ev.state);
     };
 
     initActualHistoryState();
@@ -32,33 +32,73 @@ $( function()
 
     loadTree(); // Initial Loading of the navigationtree
 
+
+
 });
 
 function initActualHistoryState() {
-	var state = new Object();
+	var state = {};
 	state.name   = window.document.title;
-	state.action = $('#editor').data('action');
-    state.id     = $('#editor').data('id'    );
-    History.toActualHistory( state );
+
+	var params = new URLSearchParams( window.location.search );
+
+    if (params.has('action')){
+
+        state.action = params.get('action');
+        state.id     = params.get('id'    );
+        state.name   = window.document.title;
+
+        state.data   = {};
+
+        //Iterate the search parameters.
+
+        var params = Array.from( params.entries() );
+		for( var entry in params ) {
+            state.data[params[entry][0]] = params[entry][1];
+        };
+
+        Navigator.toActualHistory( state );
+    }
 }
 
 
 
 
 /**
- * History-API.
+ * Navigation.
  */
-var History = new function () {
+var Navigator = new function () {
 	'use strict';
 
-	this.fromHistory = function(state) {
-		Workbench.loadNewAction(state.action,state.id);
+	/**
+	 * Navigiert zu einer Action, aber ohne ein neues History-Element einzufügen.
+	 */
+	this.navigateTo = function(state) {
+		Workbench.loadNewActionState(state);
 	}
 
-	this.toHistory = function(obj) {
+
+    /**
+	 *
+     * Navigiert zu einer neue Action und fügt einen neuen History-Eintrag hinzu.
+     */
+	this.navigateToNew = function(obj) {
+
+		Workbench.loadNewActionState(obj);
 		window.history.pushState(obj,obj.name,createUrl(obj.action,null,obj.id,obj.data,false) );
+
+        var state = {action:action,method:method,id:id,data:params};
+    }
+
+    this.navigateToNewAction = function(action, method, id, params ) {
+        var state = {action:action,method:method,id:id,data:params};
+        this.navigateToNew(state);
 	}
 
+    /**
+	 * Setzt den State für den aktuellen History-Eintrag.
+     * @param obj
+     */
     this.toActualHistory = function(obj) {
         window.history.replaceState(obj,obj.name,createUrl(obj.action,null,obj.id,obj.data,false) );
     }
@@ -76,21 +116,8 @@ var Workbench = new function()
 
 		// Initialze Ping timer.
 		this.initializePingTimer();
-		this.loadInitialViews();
 	}
 
-
-	this.loadInitialViews = function() {
-
-		/*
-        $('div#workbench > div .view').load( createUrl('login','login',0 ),function() {
-            $(this).fadeIn('slow');
-
-            registerHeaderEvents();
-        });
-        */
-
-    }
 
     /**
 	 *  Registriert den Ping-Timer für den Sitzungserhalt.
@@ -115,13 +142,17 @@ var Workbench = new function()
     }
 
 
+
+    this.loadNewActionState = function(state) {
+
+		Workbench.loadNewAction(state.action,state.method,state.id,state.data);
+	}
+
     /**
 	 *
      */
-    this.loadNewAction = function(action, method, id, params ) {
 
-        var state = {action:action,method:method,id:id,data:params};
-        History.toHistory(state);
+    this.loadNewAction = function(action, method, id, params ) {
 
         $('#workbench .view-loader').each( function(idx) {
             var targetDOMElement = $(this);
@@ -152,6 +183,8 @@ var Workbench = new function()
             });
         });
 
+        filterMenus(action);
+
     }
 
 }
@@ -166,7 +199,6 @@ function refreshAll()
 {
 	//$('ul#history').sortable();
 	
-	refreshTitleBar();
 	refreshWorkbench();
 	
 	// Workbench-Events registrieren
@@ -232,57 +264,8 @@ function refreshActualView( element )
  */
 function refreshWorkbench()
 {
-	// Workbench laden
-	$('ul#history').empty();
-
-	// View-Größe initial berechnen.
-	resizeWorkbench();
-
-	// Modale Dialoge beenden
-	$('div.modaldialog').fadeOut(500);
-	$('#workbench').removeClass('modal');
-	$('div#filler').fadeOut(500);
-
-	// Default-Inhalte der einzelnen Views laden.
-	$('#workbench').fadeIn(750).find('li.active').each( function() {
-		var method = $(this).attr('data-method');
-		var action = $(this).attr('data-action');
-
-		if	( action )
-			loadView( $(this).closest('div.panel').find('div.content'),action,method,0);
-	});
-
-	// OnClick-Handler zum Scrollen der Tabs
-	$('div.backward_link').click( function() {
-		var $views = $(this).closest('div.header').find('ul.views');
-		//$views.scrollTo( -50 );
-		var $prev = $views.find('li.action.active').prev();
-		$views.scrollTo( $prev,500,{"axis":"x"} );
-		$prev.click();
-	}
-	);
-	$('div.forward_link').click( function() {
-		var $views = $(this).closest('div.header').find('ul.views');
-		var $next  = $views.find('li.action.active').next();
-		$views.scrollTo( $next,500,{"axis":"x"} );
-		$next.click();
-	}
-	);
-
-
-
 	registerWorkbenchEvents();
 
-	
-
-	
-	// Modale Dialoge
-	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
-	
-	
-	$(window).resize( function() {
-		resizeWorkbench();
-	} );
 }
 
 
@@ -292,145 +275,6 @@ function refreshWorkbench()
  */
 function registerWorkbenchEvents()
 {
-	// Drag and Drop für Views
-	$('ul.views > li.action').draggable(
-	{
-		cursor: 'move',
-		revert: 'invalid'
-	} );
-	
-	// Ziehen von Views in andere View-Leisten.
-	// Die View wird dabei einfach kopiert. Container mit leeren View-Leisten werden gelöscht.
-	$('ul.views').droppable(
-		{
-			accept     : 'li.action',
-			hoverClass : 'drophover',
-			activeClass: 'dropactive',
-			drop: function(event, ui) // View fällt auf eine andere, existierende View-Liste
-			{
-				var dropped     = ui.draggable;
-				var droppedOn   = $(this);
-				var oldViewList = dropped.parent();
-				
-				if	( $(dropped).closest('div.panel').attr('id') == $(droppedOn).closest('div.panel').attr('id') )
-					$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
-				else
-					$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
-				
-				// Falls die View-Liste, von der die View weggezogen wurde, jetzt leer ist:
-				if	( oldViewList.find('li').size() == 0 )
-				{
-					var oldContainer = oldViewList.closest('div.container');
-					oldViewList.closest('div.panel').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
-					
-					if	( oldContainer.hasClass('autosize') )
-						oldContainer.children('div.panel').addClass('autosize').removeClass('resizable');
-					else
-						oldContainer.children('div.panel').addClass('resizable').removeClass('autosize');
-
-					oldContainer.replaceWith( oldContainer.children('div.panel') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
-					resizeWorkbench();
-				}
-			}
-		}
-	);
-
-	// Ziehen von Views in anderen Inhalt-Bereichen
-	// Dabei wird der Ziel-Bereich durch einen neuen View-Container ersetzt.
-	$('div.content').droppable(
-		{
-			accept     : 'li.action',
-			hoverClass : 'drophover',
-			activeClass: 'dropactive',
-			drop       : function(event, ui)
-			{
-				var dropped     = ui.draggable;
-				var droppedOn   = $(this);
-				var oldViewList = dropped.parent();
-				
-				var offsetDropped = dropped.offset();
-				var offsetContent = droppedOn.offset();
-
-				// Abstände im Zielelement zu dem Rändern bestimmen.
-				var paddingLeft   = offsetDropped.left-offsetContent.left;
-				var paddingRight  = offsetContent.left+droppedOn.width()-offsetDropped.left;
-				var paddingTop    = offsetDropped.top-offsetContent.top;
-				var paddingBottom = offsetContent.top+droppedOn.height()-offsetDropped.top;
-				//alert( ' L:' + paddingLeft + ' R:'  + paddingRight + ' T:'+ paddingTop + ' B:' + paddingBottom );
-				
-				var newContainer = $('<div class="container"><div class="first" /><div class="divider" /><div class="second"></div>');
-				
-				if	( paddingLeft < Math.min(paddingRight,Math.min(paddingTop,paddingBottom)) )
-				{
-					// Linker Rand ist der nächste.
-					newContainer.addClass('axle-x');
-					newContainer.children('div.divider' ).addClass('to-right');
-					newContainer.children('div.first' ).removeClass('first').addClass('resizable');
-					newContainer.children('div.second').removeClass('first').addClass('autosize' );
-				}
-				else if	( paddingRight < Math.min(paddingTop,paddingBottom) )
-				{
-					// Rechter Rand ist der nächste.
-					newContainer.addClass('axle-x');
-					newContainer.children('div.divider' ).addClass('to-left');
-					newContainer.children('div.first' ).removeClass('first').addClass('autosize');
-					newContainer.children('div.second').removeClass('first').addClass('resizable' );
-				}
-				else if	( paddingTop < paddingBottom )
-				{
-					// Oberer Rand ist der nächste.
-					newContainer.addClass('axle-y');
-					newContainer.children('div.divider' ).addClass('to-bottom');
-					newContainer.children('div.first' ).removeClass('first').addClass('resizable');
-					newContainer.children('div.second').removeClass('first').addClass('autosize' );
-				}
-				else
-				{
-					// Unterer Rand ist der nächste.
-					newContainer.addClass('axle-y');
-					newContainer.children('div.divider' ).addClass('to-top');
-					newContainer.children('div.first' ).removeClass('first').addClass('autosize');
-					newContainer.children('div.second').removeClass('first').addClass('resizable' );
-				}
-
-				newContainer.children('div.resizable' ).addClass('bar').data('size-factor',0.4);
-				
-				// Die komplette Bar der Quelle kopieren.
-				$(dropped).closest('div.panel').clone().addClass('resizable').removeClass('autosize').replaceAll( newContainer.children('div.resizable') );
-				newContainer.find('ul.views > li').remove(); // Alle View entfernen
-				$(dropped).detach().css({top: 0,left: 0}).appendTo( newContainer.find('ul.views') ).click(); // View kopieren
-
-				// Neuen Container in den DOM einfügen.
-				var oldContainer = $(droppedOn).closest('div.panel').replaceWith( newContainer );
-				newContainer.children('div.autosize').replaceWith( oldContainer ); 
-				
-				if	( oldContainer.hasClass('autosize' )) { newContainer.addClass('autosize' ).removeClass('resizable'); }
-				if	( oldContainer.hasClass('resizable')) { newContainer.addClass('resizable').removeClass('autosize' ); }
-				oldContainer.addClass('autosize' ).removeClass('resizable');
-			
-				// Falls die View-Liste, von der die View weggezogen wurde, jetzt leer ist:
-				if	( oldViewList.find('li').length == 0 )
-				{
-					var oldContainer = oldViewList.closest('div.container');
-					oldViewList.closest('div.panel').remove(); // Die Bar, in der die leere Viewliste ist, entfernen.
-					
-					if	( oldContainer.hasClass('autosize') )
-						oldContainer.children('div.panel').addClass('autosize').removeClass('resizable');
-					else
-						oldContainer.children('div.panel').addClass('resizable').removeClass('autosize');
-
-					oldContainer.replaceWith( oldContainer.children('div.panel') ); // die andere Bar nehmen und den übergeordneten Container ersetzen.
-					resizeWorkbench();
-				}
-				
-				resizeWorkbench();
-				registerWorkbenchEvents();
-			}
-		} );
-
-	// geht nicht zusammen mit draggable...
-	//$('ul.views').sortable();
-
 	// Modalen Dialog erzeugen.
 	if	( $('#workbench div.panel.modal').length > 0 )
 	{
@@ -440,82 +284,11 @@ function registerWorkbenchEvents()
 	}
 	
 	
-	// Größe der einzelnen Bereiche verändern
-	$('div.container.axle-x > div.divider').draggable(
-			
-			{
-				stop: function( event, ui ) {
-					var xoffset = ui.position.left;
-					var lr = $(this).hasClass('to-right')?1:-1;
-						
-					$(this).parent().children('div.resizable').each( function()
-						{
-							var factor = ((lr*xoffset)+$(this).width()) / ($(this).parent().width());
-							factor = Math.min(0.5,Math.max(0.1,factor)); // Erlaubter Bereich
-							
-							$(this).data('size-factor',factor);
-						}
-					);
-					resizeWorkbenchContainer( $(this).parent() );
-				},
-				axis: "x",
-				revert: true,
-				revertDuration: 0
-			}
-		);
-	$('div.container.axle-y > div.divider').draggable(
-			
-			{
-				stop: function( event, ui ) {
-					var yoffset = ui.position.top;
-					var lr = $(this).hasClass('to-bottom')?1:-1;
-					
-					$(this).parent().children('div.resizable').each( function()
-						{
-							var factor = ((lr*yoffset)+$(this).height()) / ($(this).parent().height());
-							factor = Math.min(0.5,Math.max(0.1,factor)); // Erlaubter Bereich
-							
-							$(this).data('size-factor',factor);
-						}
-					);
-					resizeWorkbenchContainer( $(this).parent() );
-				},
-				axis: "y",
-				revert: true,
-				revertDuration: 0
-			}
-		);
-
-	// OnClick-Handler für Klick auf einen Tab-Reiter.
-	$('ul.views > li.action').click( function() {
-		$(this).orLoadView();
-	});
-	
 	$('div.header').dblclick( function()
-			{
-				fullscreen( this );
-			} );
+	{
+		fullscreen( this );
+	} );
 
-}
-
-
-
-/**
- * Laedt den Header neu.
- */
-function refreshTitleBar()
-{
-	// Modale Dialoge
-	//$('form.login, form.profile').dialog( { modal:true, resizable:false, width:760, height:600, draggable: false } );
-}
-
-
-
-function loadViewByName(viewName, url )
-{
-	alert('loadViewByName');
-	
-	loadView( $('div#'+viewName),url );
 }
 
 
@@ -530,7 +303,7 @@ function loadViewByName(viewName, url )
  */
 function loadView(contentEl,action,method,id,params  )
 {
-	Workbench.loadNewAction(action,method,id,params );
+	Navigator.navigateToNewAction( action,method,id,params );
 }
 
 
@@ -607,7 +380,7 @@ function registerViewEvents( viewEl )
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
 	$(viewEl).find('input').change( function() {
-		$(this).closest('div.panel').find('ul.views li.action.active').addClass('dirty');
+		$('#editor').find('header').addClass('dirty');
 	});
 
 }
@@ -664,6 +437,7 @@ function fullscreen( element ) {
 	} );
 }
 
+
 function loadTree()
 {
 		// Oberstes Tree-Element erzeugen
@@ -679,7 +453,6 @@ function loadTree()
 		$('#navigation > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
 		$('#navigation > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
 }
-
 
 
 
@@ -710,36 +483,6 @@ function postUrl(url,element)
 	
 }
 
-
-/**
- * Ermittelt die aktuelle, ausgewählte View.
- *
- * @returns JSON
- */
-function getActiveView()
-{
-    var element = $('#panel-content').find('li.active');
-
-    return{
-    	'action'  : $(element).data('action'),
-        'id'      : $(element).data('id'    ),
-    	'extraid' : $(element).data('extra' )
-	};
-}
-
-
-/**
- * Setzt neue View und aktualisiert alle Fenster.
- * @param element
- * @param method
- */
-function startView( element,method )
-{
-	loadView( $(element).closest('div.panel').find('div.content'), active.action,method,active.id,active.extraid );
-	
-	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
-	// refreshAllRefreshables();
-}
 
 
 /**
@@ -826,9 +569,7 @@ function filterMenus(action)
  */
 function setNewAction( action,id,extraId )
 {
-	filterMenus(action);
-
-	Workbench.loadNewAction(action,'edit',id,extraId);
+	Navigator.navigateToNewAction(action,'edit',id,extraId);
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	//refreshAllRefreshables();
 }
@@ -838,11 +579,7 @@ function setNewAction( action,id,extraId )
  * Setzt neue Id und aktualisiert alle Fenster.
  * @param id Id
  */
-function setNewId( id )
-{
-	$('#workbench div.refreshable').attr('data-id',id);
-	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
-	refreshAllRefreshables();
+function setNewId( id ) {
 }
 
 
@@ -997,12 +734,16 @@ function createUrl(action,subaction,id,extraid,embed)
 	if	( typeof extraid === 'string')
 	{
 		jQuery.each(jQuery.parseJSON(extraid), function(name, value) {
+			if(name=='action'||name=='subaction'||name=='id')
+				return;
 			url = url + '&' + name + '=' + value;
 		});
 	}
 	else if	( typeof extraid === 'object')
 	{
 		jQuery.each(extraid, function(name, field) {
+            if(name=='action'||name=='subaction'||name=='id')
+                return;
 			url = url + '&' + name + '=' + field;
 		});
 	}
