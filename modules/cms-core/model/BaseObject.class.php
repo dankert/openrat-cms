@@ -617,8 +617,7 @@ SQL
 
             if	( $this->isRoot )
             {
-                $project = \Session::getProject();
-                $this->name        = $project->name;
+                $this->name        = $row['name' ];
                 $this->desc        = '';
                 $this->description = '';
             }
