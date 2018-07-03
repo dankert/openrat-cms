@@ -49,16 +49,16 @@ class API
             API::sendHTTPStatus(500, 'Object not found');
             $data = array('status' => 500, 'error' => 'Object not found', 'description' => $e->getMessage(), 'reason' => $e->getCode());
         } catch (OpenRatException $e) {
+            Logger::warn($e->__toString());
 
             API::sendHTTPStatus(500, 'Internal CMS Error');
             $data = array('status' => 500, 'error' => 'Internal CMS error', 'description' => $e->getMessage(), 'reason' => $e->getCode());
         } catch (SecurityException $e) {
-
             Logger::info('API request not allowed: ' . $e->getMessage());
             API::sendHTTPStatus(403, 'Forbidden');
             $data = array('status' => 403, 'error' => 'You are not allowed to execute this action.', 'description' => $e->getMessage(), 'reason' => $e->getCode());
         } catch (Exception $e) {
-
+            Logger::warn($e->__toString());
             API::sendHTTPStatus(500, 'Internal Server Error');
             $data = array('status' => 500, 'error' => 'Internal CMS error', 'description' => $e->getMessage(), 'reason' => $e->getCode());
         }
