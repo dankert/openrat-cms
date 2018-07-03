@@ -360,7 +360,7 @@ function registerViewEvents( viewEl )
 	
 	// Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
 	$('div.content li.object').draggable( {cursor:'move',revert: 'invalid' });
-	$('div.content li.object > div.entry[data-type=\'folder\']').droppable( {accept:'li.object',hoverClass: 'drophover',activeClass: 'dropactive',drop: function(event, ui) {
+	$('div.content li.object > .entry[data-type=\'folder\']').droppable( {accept:'li.object',hoverClass: 'drophover',activeClass: 'dropactive',drop: function(event, ui) {
 		var dropped   = ui.draggable;
         var droppedOn = $(this).parent();
         

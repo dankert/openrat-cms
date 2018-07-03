@@ -45,7 +45,7 @@ jQuery.fn.orTree = function( options )
 				if	( !line.action || line.action=='folder' || settings.selectable.length==0 || settings.selectable[0]=='' || jQuery.inArray(line.action, settings.selectable)!=-1 )
 				{
 					//var img = (line.url!==undefined?'tree_plus':'tree_none');
-                    var new_li = $('<li class="object" data-id="'+line.internalId+'" data-type="'+line.type+'"><div class="tree">&nbsp;</div><div class="entry" data-extra="'+JSON.stringify(line.extraId).replace(/"/g, "'")+'" data-id="'+line.internalId+'" data-type="'+line.type+'" title="'+ line.description + '"><img src="modules/cms-ui/themes/default/images/icon_'+line['icon']+'.png" />'+ line.text + '</div></li>');
+                    var new_li = $('<li class="object" data-id="'+line.internalId+'" data-type="'+line.type+'"><div class="tree">&nbsp;</div><a href="./?action='+line.type+'&id='+line.internalId+'" class="entry" data-extra="'+JSON.stringify(line.extraId).replace(/"/g, "'")+'" data-id="'+line.internalId+'" data-type="'+line.type+'" title="'+ line.description + '"><img src="modules/cms-ui/themes/default/images/icon_'+line['icon']+'.png" />'+ line.text + '</a></li>');
 					$(ul).append( new_li );
 					//var new_li = $(ul).children('li').last();
 					//$(new_li).children('div').unbind('click');
@@ -62,7 +62,10 @@ jQuery.fn.orTree = function( options )
 					if	( line.action && ( settings.selectable.length==0 || settings.selectable[0]=='' || jQuery.inArray(line.action, settings.selectable)!=-1 ))
 					{
 						// Onclick-Handler für auswählbare Objekte setzen
-						$(new_li).children('div.entry').click( function() {
+						$(new_li).children('.entry').click( function(event) {
+
+                            event.preventDefault(); // Der Browser soll die Seite nicht neu laden, da hier alles über Ajax gemacht wird.
+
 							//loadViewByName('content',line.url.replace(/&amp;/g,'&'));
 							//var url = './dispatcher.php';
 							//$.ajax( { 'type':'POST',url:url, data:{'action':'tree','subaction':'select','id':line.id,'type':line.type},success:function(data, textStatus, jqXHR)
@@ -72,10 +75,12 @@ jQuery.fn.orTree = function( options )
 							// Den Objekt-Typ und die Objekt-Id für alle Views setzen (die dies zulassen)
 	
 							// Neue Action starten.
-							$(this).closest('div.content').find('div.entry').removeClass('selected');
+							$(this).closest('div.content').find('.entry').removeClass('selected');
 							$(this).addClass('selected');
-							
+
+							// Die Aktion starten
 							settings.onSelect( $(this).text(), line.action, line.id, line.extraId );
+
 						});
 						
 						// Drag and drop für die Baum-Inhalte.
