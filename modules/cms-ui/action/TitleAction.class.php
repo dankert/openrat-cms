@@ -68,12 +68,13 @@ class TitleAction extends Action
 		if	( is_object($project) )
 		{
 			$this->setTemplateVar('projectname',$project->name);
-			$this->setTemplateVar('projects' ,Project::getAllProjects()  );
-		}		
-			
-		
-		
-		$language = Session::getProjectLanguage();
+        }
+
+        if	( is_object($user) )
+            $this->setTemplateVar('projects' ,Project::getAllProjects()  );
+
+
+        $language = Session::getProjectLanguage();
 		if	( is_object($language) )
 		{
 			$this->setTemplateVar('languagename',$language->name);
