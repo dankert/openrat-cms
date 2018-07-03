@@ -1,6 +1,7 @@
 <?php
 
 use database\Database;
+use cms\model\User;
 
 /**
  * Authentifizierung mit einem Login-Token.
