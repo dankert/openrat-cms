@@ -62,6 +62,18 @@ namespace cms\action {
          */
         protected $request;
 
+        /**
+         * Handelt es sich um einen Embedded-View?
+         * @var Boolean
+         */
+        public $isEmbedded;
+
+        /**
+         * Zeitpunkt letzte Änderung.
+         * @var integer
+         */
+        private $lastModified;
+
 
         protected function setStyle($style)
         {
@@ -87,9 +99,6 @@ namespace cms\action {
             $this->templateVars['notices'] = array();
             $this->templateVars['control'] = array();
             $this->templateVars['output'] = array();
-
-            if(!headers_sent())
-                header('Content-Language: ' . config('language','language_code') );
 
             $this->refresh = false;
         }
@@ -356,7 +365,8 @@ namespace cms\action {
          */
         protected function lastModified($time, $expirationDuration = 0)
         {
-            $user = Session::getUser();
+            if   ( $this->isEmbedded || $this->isEmbedded == null )
+                return; // Embedded-Views können keine HTTP-Header setzen, daher ist alles weitere überflüssig.
 
             // Conditional-Get eingeschaltet?
             if (!config('cache', 'conditional_get'))

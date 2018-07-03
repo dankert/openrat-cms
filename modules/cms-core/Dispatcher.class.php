@@ -34,6 +34,7 @@ class Dispatcher
     public $subaction;
 
     public $isAction;
+    public $isEmbedded = false;
 
     /**
      * @return array data for the client
@@ -55,9 +56,12 @@ class Dispatcher
 
         $this->checkConfiguration();
 
+        header('Content-Language: ' . config('language','language_code') );
+
         // Vorhandene Konfiguration aus der Sitzung lesen.
         global $conf;
         $conf = Session::getConfig();
+
 
         // Nachdem die Konfiguration gelesen wurde, kann nun der Logger benutzt werden.
         require_once(OR_MODULES_DIR . "logger/require." . PHP_EXT);
@@ -284,8 +288,9 @@ class Dispatcher
         $do = new $actionClassNameWithNamespace;
 
         $do->actionClassName = $actionClassName;
-        $do->actionName = $this->action;
-        $do->subActionName = $this->subaction;
+        $do->actionName      = $this->action;
+        $do->subActionName   = $this->subaction;
+        $do->isEmbedded      = $this->isEmbedded;
 
         if(!defined('OR_ID'))
         if (isset($REQ[REQ_PARAM_ID]))
@@ -303,11 +308,14 @@ class Dispatcher
         } else {
             // GET-Request => ...View() wird aufgerufen.
             $subactionMethodName = $this->subaction . 'View';
+
             // Daten werden nur angezeigt, die Sitzung kann also schon geschlossen werden.
-            Session::close();
+            // Halt! In Index-Action können Benutzer-Logins gesetzt werden.
+            if   ( $this->action != 'index' )
+                Session::close();
         }
 
-        Logger::debug("Executing {$this->action}/{$this->subaction}/" . @$REQ[REQ_PARAM_ID]);
+        Logger::debug("Executing {$this->action}/{$this->subaction}/" . @$REQ[REQ_PARAM_ID].' embed='.$this->isEmbedded);
 
         if (!method_exists($do, $subactionMethodName))
             throw new BadMethodCallException("Method '$subactionMethodName' does not exist");
