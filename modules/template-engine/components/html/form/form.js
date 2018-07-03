@@ -227,8 +227,10 @@ function doResponse(data,status,element)
 	
 	else if	( data.control.next_view )
 		// Nächste View aufrufen
-		startView( $(element).closest('div.content'),data.control.next_view );
-	
+		//startView( $(element).closest('div.content'),data.control.next_view );
+		;
+		// Views gibt es so nicht mehr. Rauswerfen?
+
 	else if ( data.errors.length==0 )
 		// Aktuelle View neu laden
 		$(element).closest('div.panel').find('li.action.active').orLoadView();

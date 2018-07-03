@@ -21,7 +21,9 @@ jQuery.fn.orLinkify = function()
 			
 			else if	( type == 'view' )
 			{
-				startView(this, $(this).attr('data-method') );
+				//startView(this, $(this).attr('data-method') );
+				// gibt es so nicht mehr, kann wohl raus.
+				;
 			}
 
 			else if	( type == 'modal' )
