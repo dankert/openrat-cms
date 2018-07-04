@@ -24,9 +24,9 @@
   <link rel="stylesheet" type="text/css" href="<?php echo OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror.css' ?>" />
 <?php foreach( $cssFiles as $cssFile) { ?>  <link rel="stylesheet" type="text/css" href="<?php echo $cssFile ?>" />
 <?php } ?>
-  <link rel="stylesheet" type="text/css" href="<?php echo Html::url('index','themestyle') ?>" />
+  <link rel="stylesheet" type="text/css" href="<?php echo Html::url('index','themestyle',0,array('embed'=>'1')) ?>" />
   <meta name="theme-color" content="<?php echo $themeColor ?>" />
-  <link rel="manifest" href="<?php echo Html::url('index','manifest') ?>" />
+  <link rel="manifest" href="<?php echo Html::url('index','manifest',0,array('embed'=>'1')) ?>" />
 </head>
 
 <body>
@@ -45,7 +45,7 @@
             <header>
                 <a href=""></a>
             </header>
-            <div id="navigation" class="view view-static" data-action="tree" data-method="show">
+            <div id="navigation" class="view view-static" data-action="tree" data-method="tree">
                 <?php embedView('tree','tree'); ?>
             </div>
 
@@ -55,8 +55,8 @@
             <header>
                 <span class="title"></span>
             </header>
-            <div id="editor" class="view view-loader" data-method="show">
-                <?php embedView($action,'show'); ?>
+            <div id="editor" class="view view-loader" data-method="edit">
+                <?php embedView($action,'edit'); ?>
             </div>
 
         </main>

@@ -160,7 +160,7 @@ class IndexAction extends Action
 
         $styleFiles = \FileUtils::readDir(OR_THEMES_DIR . 'default/style');
         foreach( $styleFiles as $styleFile ) {
-            if  (substr($styleFile,-5) == '.less')
+            if  (substr($styleFile,-5) == '.less' )
                 $css[] = OR_THEMES_DIR . 'default/style'.'/'.substr($styleFile,0,-5);
         }
 
@@ -261,7 +261,7 @@ class IndexAction extends Action
 	
 	public function themestyleView()
     {
-        $themeLessFile = OR_THEMES_DIR . 'default/style/openrat-theme.less';
+        $themeLessFile = OR_THEMES_DIR . 'default/style/theme/openrat-theme.less';
         $this->lastModified(filemtime($themeLessFile));
 
         header('Content-Type: text/css');
@@ -274,7 +274,7 @@ class IndexAction extends Action
 	private function getThemeCSS()
 	{
 		// Je Theme die Theme-CSS-Datei ausgeben.
-		$lessFile = OR_THEMES_DIR . 'default/style/openrat-theme.less';
+		$lessFile = OR_THEMES_DIR . 'default/style/theme/openrat-theme.less';
 		$css = '';
 		
 		
