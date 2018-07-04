@@ -1,0 +1,64 @@
+/*   B a u m   */
+
+ul.tree,
+ul.tree ul {
+  list-style-type: none;
+  background: url(../images/tree_line.gif) repeat-y;
+  margin: 0;
+  padding: 0;
+}
+
+#navigation {
+
+  ul.tree {
+    ul {
+      margin-left: 18px;
+    }
+    div.tree {
+      width: 18px;
+      min-width: 18px;
+      height: 18px;
+      float: left;
+    }
+
+    div.tree,
+    div.entry {
+      height: 18px;
+      max-height: 18px;
+      min-height: 18px;
+    }
+
+    div img {
+      cfloat: left;
+    }
+
+    li {
+      margin: 0;
+      padding: 0 0px;
+      line-height: 18px;
+      background: url(../images/tree_none.gif) no-repeat;
+      font-weight: normal;
+      white-space: nowrap;
+    }
+
+    li.last,
+    li:last-child {
+      background: url(../images/tree_none_end.gif) no-repeat;
+    }
+    div.tree.open {
+      background: url(../images/tree_minus.png) no-repeat;
+    }
+
+    div.tree.closed {
+      background: url(../images/tree_plus.png) no-repeat;
+    }
+
+    div {
+      cursor: pointer;
+    }
+  }
+
+}
+
+
+

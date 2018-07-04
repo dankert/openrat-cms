@@ -18,13 +18,13 @@
 
   div.user,
   div.search,
-   div.history {
+  div.history {
     float: right;
     margin-right: 10px;
     margin-left: 10px;
   }
 
-   > div.menu {
+  > div.menu {
     overflow: hidden;
   }
 
@@ -35,13 +35,13 @@
     display: block;
   }
 
-   div.search input {
+  div.search input {
     margin: 0px;
     padding: 0px;
   }
 
   /* Pfeile */
-   > div > div.arrow-down {
+  > div > div.arrow-down {
     display: inline;
     width: 0;
     height: 0;
@@ -52,10 +52,33 @@
   }
 
   /*   D r o p d o w n  -  M e n u e s  */
+  div.dropdownalignright {
+    right: 0;
+  }
   div.dropdown {
+    z-index: 2;
+    display: none;
+    position: absolute;
+    padding: 5px 0px;
+
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
+
+    > a {
+      display: block;
+    }
+    div.entry {
+      padding: 2px 5px;
+    }
+
+    div.divide {
+      height: 1px;
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
   }
 
   div.toolbar-icon {
@@ -75,11 +98,4 @@
     float: right;
   }
 
-
-  /* Titelleite */
-  ul.views > li.action /* Tabreiter */ {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    font-size: 13px;
-  }
 }

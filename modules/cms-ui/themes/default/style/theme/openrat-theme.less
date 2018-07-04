@@ -1,0 +1,560 @@
+/* OpenRat Theme */
+
+/* 
+ * The following variables beginning with '@cms-...' are overwritten by the CMS style configuration values
+ */
+@cms-theme-id: 'theme-name'; /* technical name of theme */
+@cms-image-path: '/'; /* Image-path */
+@cms-name: name; /* Logic name of theme */
+@cms-title-background-color: white;
+@cms-title-text-color: black;
+@cms-text-color: black;
+@cms-background-color: silver;
+@cms-inactive-background-color: gray;
+
+html.theme-@{cms-theme-id} {
+
+  .border-radius (@radius) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -khtml-border-radius: @radius;
+  }
+  .box-shadow (@x, @y, @radius, @color) {
+    -webkit-box-shadow: @x @y @radius @color;
+    -moz-box-shadow: @x @y @radius @color;
+    box-shadow: @x @y @radius @color;
+  }
+
+  scrollbar-face-color: @cms-title-background-color;
+  scrollbar-arrow-color: @cms-title-background-color;
+  scrollbar-base-color: @cms-title-text-color;
+
+  #workbench div.panel.modal {
+    border-color: @cms-text-color ! important;
+    .box-shadow(0px, 0px, 40px, @cms-text-color);
+  }
+
+  div#dialog {
+    background-color: @cms-background-color;
+    color: @cms-text-color;
+    border-color: @cms-text-color ! important;
+    .box-shadow(0px, 0px, 40px, @cms-text-color);
+  }
+
+  div.container > div.divider.ui-draggable-dragging {
+    background-color: @cms-title-background-color;
+  }
+
+  #workbench div.panel {
+    div.arrow-down {
+      border-top-color: @cms-title-background-color;
+    }
+
+    div.arrow-right {
+      border-left-color: @cms-title-background-color;
+    }
+  }
+
+  iframe {
+    border: 1px solid @cms-title-background-color;
+  }
+
+  div.breadcrumb, div.breadcrumb a, div.panel > div.title {
+    color: @cms-title-text-color;
+  }
+
+  div#noticebar {
+
+    div.notice {
+      border: 2px solid @cms-text-color;
+      padding: 5px;
+      margin: 5px;
+
+      .border-radius(5px);
+      .box-shadow(3px, 2px, 5px, @cms-text-color);
+      display: none;
+    }
+
+    div.notice.ok {
+      background-color: green;
+    }
+
+    div.notice.warning {
+      background-color: yellow;
+    }
+
+    div.notice.error {
+      background-color: red;
+    }
+
+    div.notice.info {
+      background-color: @cms-inactive-background-color;
+    }
+  }
+
+  ul#history > li, div.content a.action, div.content a.help, div.filler div.headermenu > a.entry, div.filler div.header a.back.button {
+    border-color: @cms-title-background-color;
+    .border-radius(5px);
+    background-color: @cms-title-text-color;
+    background: -moz-linear-gradient(top, @cms-title-background-color, @cms-inactive-background-color);
+    background: -webkit-gradient(linear, left top, left bottom, from(@cms-title-background-color), to(@cms-inactive-background-color));
+    color: @cms-text-color;
+  }
+
+  ul#history > li.active {
+    background-color: @cms-title-text-color;
+    color: @cms-text-color;
+  }
+
+  a.action:hover, a.help:hover, div.noaction:hover {
+    border-color: @cms-title-text-color;
+  }
+
+  a.action:active, a.help:active, div.noaction:active, input.ok:active {
+    border-color: red;
+  }
+
+  a {
+    color: @cms-text-color;
+  }
+
+  div.dropdown > div.divide {
+    background-color: @cms-title-background-color;
+  }
+
+  td.preview {
+    background-color: papayawhip;
+    border-top: 1px solid @cms-inactive-background-color;
+    border-bottom: 1px solid @cms-inactive-background-color;
+  }
+
+  .preview a:link, .preview a:visited, .preview a:active, .preview a:hover {
+    color: blue;
+  }
+
+  body.menu tr.menu td table tr td.noaction, body.main tr.menu td table tr td.noaction {
+    color: @cms-title-background-color;
+  }
+
+  img[align=left], img[align=right] {
+    padding-right: 1px;
+    padding-left: 1px;
+  }
+
+  small {
+    color: @cms-title-background-color;
+  }
+
+  body.main table.main td.window td.act {
+    border-top: 1px solid @cms-title-background-color;
+  }
+
+  td.motd {
+    border-left: 3px solid red;
+    border-right: 3px solid red;
+    font-weight: bold;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  textarea.longtext {
+    border: 1px solid @cms-text-color;
+  }
+
+  td.notice {
+    margin: 0px;
+    padding: 5%;
+    text-align: center;
+  }
+
+  table.notice {
+    width: 100%;
+    border: 1px solid;
+    border-spacing: 0px;
+  }
+
+  table.notice th {
+    padding: 2px;
+    white-space: nowrap;
+    border-bottom: 1px solid @cms-text-color;
+    font-weight: normal;
+    text-align: left;
+  }
+
+  table.calendar td {
+    border: 1px dotted;
+  }
+
+  form.xlogin {
+    xbackground-color: #E0E0D5;
+    border: 2px solid @cms-inactive-background-color;
+    position: absolute;
+    z-index: 999;
+    top: 5%;
+    left: 5%;
+    width: 80%;
+    margin: 5%;
+    padding: 10%;
+    opacity: 1;
+    -webkit-box-shadow: 3px 2px 5px @cms-title-background-color;
+    -moz-box-shadow: 3px 2px 5px @cms-title-background-color;
+    box-shadow: 3px 2px 5px @cms-title-background-color;
+  }
+
+  ul.tree, ul.tree ul {
+    list-style-type: none;
+    background: url(../images/tree_line.gif) repeat-y;
+    xmargin: 0;
+    padding: 0;
+  }
+
+  ul.tree li {
+    xmargin: 0;
+    padding: 0 0px;
+    line-height: 18px;
+    background: url(../images/tree_none.gif) no-repeat;
+    xcolor: #369;
+    font-weight: normal;
+    white-space: nowrap;
+  }
+
+  ul.tree li.last, ul.tree li:last-child {
+    background: url(../images/tree_none_end.gif) no-repeat;
+  }
+
+  div.tree.open {
+    background: url(../images/tree_minus.png) no-repeat;
+  }
+
+  div.tree.closed {
+    background: url(../images/tree_plus.png) no-repeat;
+  }
+
+  body > div {
+    display: none;
+  }
+
+  div.structure em {
+    font-style: italic;
+  }
+
+  div.panel {
+    input.checkbox, input.radio {
+      border: 1px solid @cms-title-background-color;
+    }
+
+    & > div.header {
+      border-bottom: 1px solid @cms-title-background-color;
+    }
+
+    ul.views li {
+      border-right: 1px solid @cms-title-background-color;
+      xborder-top: 1px solid @cms-title-background-color;
+      xborder-left: 1px solid @cms-title-background-color;
+      xborder-right: 1px solid @cms-title-background-color;
+    }
+
+    div.content table {
+      border-color: @cms-inactive-background-color;
+    }
+
+    & > div.content {
+      background-color: @cms-background-color;
+    }
+
+    & > div.header {
+      background-color: @cms-background-color;
+      background-image: linear-gradient(@cms-inactive-background-color 00%, @cms-background-color 85%);
+    }
+
+    ul.views li:hover {
+      background-color: @cms-inactive-background-color;
+    }
+  }
+
+  table tr.headline > td {
+    border-bottom: 1px solid @cms-title-background-color;
+  }
+
+  table tr.data > td {
+    border-bottom: 1px solid @cms-title-background-color;
+  }
+
+  table > tr.data:nth-child(2n) {
+    background-color: @cms-inactive-background-color;
+  }
+
+  table tr.data:hover, div.content li div.entry:hover {
+    background-color: @cms-inactive-background-color;
+  }
+
+  div.panel div.status div, div.message {
+    border: 1px solid @cms-title-background-color;
+  }
+
+  #workbench div.panel.fullscreen {
+    background-color: @cms-background-color;
+  }
+
+  #workbench div.panel {
+    border: 1px solid @cms-title-background-color;
+  }
+
+  input.submit {
+    background-color: @cms-title-background-color;
+    color: @cms-title-text-color;
+    .box-shadow(0px, 0px, 15px, @cms-background-color);
+  }
+
+  ul#history > li {
+    border: 1px solid @cms-title-background-color;
+    background-color: @cms-inactive-background-color;
+    color: @cms-text-color;
+  }
+
+  ul#history > li.active {
+    border: 1px solid @cms-text-color;
+    background-color: @cms-title-text-color;
+    color: @cms-text-color;
+  }
+
+  ul#history {
+    display: none;
+  }
+
+  div#filler {
+    background-color: @cms-text-color;
+  }
+
+  #title > div > div.arrow-down {
+    display: inline;
+    width: 0;
+    height: 0;
+    margin: 6;
+    padding: 0px;
+    border-right: 6px solid @cms-title-background-color;
+    border-left: 6px solid @cms-title-background-color;
+    border-top: 6px solid @cms-inactive-background-color;
+    border-bottom: 4px solid @cms-title-background-color;
+    margin-top: 10px;
+    font-size: 0;
+  }
+
+  div.dropdown {
+    .border-radius(5px);
+    .box-shadow(3px, 2px, 10px, @cms-title-background-color);
+    opacity: 0.95;
+    border: 2px solid @cms-title-background-color;
+  }
+
+  #title span.titletext {
+    color: @cms-title-text-color;
+  }
+
+  div.toolbar-icon {
+    border: 1px solid @cms-title-background-color;
+    .border-radius(3px);
+
+    &.inactive {
+      opacity: 0.5;
+    }
+
+    &:hover {
+      border: 1px solid @cms-inactive-background-color;
+    }
+  }
+
+  label div.description {
+    color: @cms-title-background-color;
+  }
+
+  div.inputholder {
+    background-color: @cms-title-text-color;
+    border: 1px solid @cms-title-background-color;
+    .border-radius(3px);
+    -webkit-box-shadow: inset 0px 0px 3px @cms-title-background-color;
+    -moz-box-shadow: inset 0px 0px 3px @cms-title-background-color;
+    box-shadow: inset 0px 0px 3px @cms-title-background-color;
+
+    ul.tree, ul.tree li.last, ul.tree li:last-child {
+      background-color: @cms-title-text-color;
+    }
+  }
+
+  div.inputholder > input, div.inputholder > textarea, div.inputholder > select {
+    border: 0px;
+    border-bottom: 1px solid @cms-title-text-color;
+    background-color: @cms-title-text-color;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border: 0px;
+    border-bottom: 1px solid @cms-inactive-background-color;
+  }
+
+  input.error, textarea.error, select.error {
+    border-bottom: 1px dotted @cms-text-color ! important;
+  }
+
+  div.inputholder.error {
+    border: 1px solid red ! important;
+  }
+
+  input.hint {
+    color: @cms-title-background-color;
+  }
+
+  fieldset > div input.name, fieldset > div span.name {
+    font-weight: bold;
+  }
+
+  fieldset {
+    border-color: @cms-title-background-color;
+  }
+
+  tr.diff > td.line {
+    background-color: @cms-title-text-color;
+    padding-right: 2px;
+    border-right: 3px solid @cms-title-background-color;
+    text-align: right;
+    margin-right: 2px;
+  }
+
+  tr.diff {
+
+    & > td.equal {
+    }
+
+    & > td.old {
+      background-color: red;
+    }
+
+    & > td.new {
+      background-color: green;
+    }
+
+    & > td.notequal {
+      background-color: yellow;
+    }
+  }
+
+  dl.notice {
+    border-left: 10px @cms-inactive-background-color solid;
+    border-right: 1px @cms-inactive-background-color solid;
+    & > dt {
+      border-top: 1px @cms-inactive-background-color solid;
+    }
+
+    & > dd {
+      border-bottom: 1px @cms-inactive-background-color solid;
+    }
+  }
+
+  div.content a.action, div.content a.help {
+    .box-shadow(3px, 2px, 5px, @cms-title-background-color);
+  }
+
+  body {
+    background-color: @cms-inactive-background-color;
+  }
+
+  div.panel ul.views > li.active,
+  div.panel ul.views > li.active:hover {
+    background-color: @cms-title-background-color;
+    background-image: linear-gradient(@cms-inactive-background-color 0%, @cms-title-background-color 15%);
+    color: @cms-title-text-color;
+  }
+
+  #title {
+    background-color: @cms-title-background-color;
+    background-image: linear-gradient(@cms-title-background-color, lighten(@cms-title-background-color, 10%));
+    color: @cms-title-text-color;
+
+    div.toolbar-icon > a {
+      color: @cms-title-text-color;
+    }
+  }
+
+  #title, ul.views > li.action {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 13px;
+  }
+
+  ul.tree li.last, ul.tree li:last-child {
+    background-color: @cms-background-color;
+  }
+
+  div.content pre, div.dropdown {
+    background-color: @cms-title-text-color;
+    color: @cms-text-color;
+  }
+
+  div.filler div.headermenu > a.entry, div.filler div.header a.back.button {
+    font-size: 0.8em;
+  }
+
+  div.line.filedropzone > div.input {
+    background-color: @cms-title-text-color;
+    border: 1px dotted @cms-text-color;
+  }
+
+  /* SVG-Icons */
+  body {
+    svg.image-icon > path {
+      fill: @cms-text-color;
+    }
+
+    #title {
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+      svg.image-icon > path {
+        fill: @cms-title-text-color;
+      }
+      .dropdown {
+        svg.image-icon > path {
+          fill: @cms-text-color;
+
+        }
+      }
+      div.entry {
+        svg.image-icon > path {
+          fill: @cms-inactive-background-color;
+        }
+
+      }
+      div.entry.active {
+        svg.image-icon > path {
+          fill: @cms-text-color;
+        }
+
+      }
+      div.entry.active:hover {
+        svg.image-icon > path {
+          fill: @cms-title-text-color;
+        }
+
+      }
+
+    }
+  }
+
+  div.entry.selected, div.dropdown > div.entry.active:hover, div.dropdown > div.entry.active:hover > a, a.element {
+    background-color: @cms-title-background-color;
+    color: @cms-title-text-color;
+
+  }
+  div.clickable.filtered > a {
+    color: @cms-inactive-background-color;
+  }
+  div.clickable.filtered.active > a {
+    color: @cms-text-color;
+  }
+
+}
+
+/* Theme Ende */

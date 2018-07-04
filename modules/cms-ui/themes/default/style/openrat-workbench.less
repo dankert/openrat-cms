@@ -38,13 +38,8 @@ a img {border:none;}
 div#workbench div.panel.modal
 {
 	position:relative;
-	xtop:0;
-	xleft:0;
-	
 	z-index: 101;
-	
 	border:1px solid !important;
-	
 }
 
 
@@ -68,43 +63,10 @@ div#dialog
 
 
 
-div.container.axle-x > div.divider
-{
-	width:5px;
-}
-div.container.axle-y > div.divider
-{
-	height:5px;
-}
-
-/* Pfeile */
-div.divider.to-left
-{
-	cursor: w-resize;
-}
-div.divider.to-right
-{
-	cursor: e-resize;
-}
-div.divider.to-top
-{
-	cursor: n-resize;
-}
-div.divider.to-bottom
-{
-	cursor: s-resize;
-}
-
-/* Mouseover */
-div.container > div.divider.ui-draggable-dragging
-{
-	z-index: 150;
-}
-
 
 
 /* Pfeile */
-div#workbench div.panel div.arrow-down
+.arrow-down
 {
 	width:0;
 	height:0;
@@ -118,7 +80,7 @@ div#workbench div.panel div.arrow-down
 	font-size: 0;
 }
 /* Pfeile */
-div#workbench div.panel div.arrow-right
+.arrow-right
 {
 	width:0;
 	height:0;
@@ -133,7 +95,7 @@ div#workbench div.panel div.arrow-right
 }
 
 
-div#workbench div.panel li.action.dirty
+#editor .dirty
 {
 	font-weight: bold;
 }
