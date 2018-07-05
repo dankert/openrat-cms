@@ -1,7 +1,10 @@
 $(document).on('orViewLoaded',function(event, data) {
 	
 	// Links aktivieren...
-	$(event.target).closest('div.panel').find('.clickable').orLinkify();
+	$(event.target).find('.clickable').orLinkify();
+	$(event.target).find('.clickable a').click( function(event) {
+		event.preventDefault();
+	} );
 
 });
 
@@ -10,7 +13,11 @@ $(document).on('orHeaderLoaded',function(event, data) {
 	
 	// Links aktivieren...
 	$('#title .clickable').orLinkify();
-	
+
+    $(event.target).find('.clickable a').click( function(event) {
+        event.preventDefault();
+    } );
+
 });
 
 

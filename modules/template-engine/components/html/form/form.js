@@ -223,7 +223,7 @@ function doResponse(data,status,element)
 	
 	if	( data.control.refresh )
 		// Views aktualisieren
-		refreshAll();
+		; //refreshAll();
 	
 	else if	( data.control.next_view )
 		// Nächste View aufrufen

@@ -2,6 +2,8 @@
 
 namespace template_engine\components;
 
+use Html;
+
 /**
  * Erzeugt einen HTML-Link.
  * 
@@ -156,7 +158,7 @@ class LinkComponent extends Component
 				break;
 			
 			default:
-				echo ' href="' . 'javascript:void(0);' . '"';
+				echo ' href="<?php echo Html::url('.$this->value($this->action).','.$this->value($this->subaction).','.$this->value($this->id).') ?>"';
 		}
 		
 		echo '>';
