@@ -6,6 +6,7 @@ var DEFAULT_CONTENT_ACTION = 'edit';
 var OR_THEMES_EXT_DIR = 'modules/cms-ui/themes/';
 
 // Execute after DOM ready:
+//$( function()
 $( function()
 {
 	// JS is available.
@@ -14,8 +15,12 @@ $( function()
     /* Fade in all elements. */
     $('.initial-hidden').removeClass('initial-hidden');
 
-    refreshAll();
     registerHeaderEvents();
+    registerWorkbenchEvents();
+
+    var action = $('#editor').data('action');
+    filterMenus(action);
+
 
     $('#workbench .view').each( function(index) {
     	registerViewEvents(this);
@@ -86,8 +91,6 @@ var Navigator = new function () {
 
 		Workbench.loadNewActionState(obj);
 		window.history.pushState(obj,obj.name,createUrl(obj.action,null,obj.id,obj.data,false) );
-
-        var state = {action:action,method:method,id:id,data:params};
     }
 
     this.navigateToNewAction = function(action, method, id, params ) {
@@ -145,14 +148,16 @@ var Workbench = new function()
 
     this.loadNewActionState = function(state) {
 
-		Workbench.loadNewAction(state.action,state.method,state.id,state.data);
+		Workbench.loadNewAction(state.action,state.id,state.data);
 	}
 
     /**
 	 *
      */
 
-    this.loadNewAction = function(action, method, id, params ) {
+    this.loadNewAction = function(action, id, params ) {
+
+    	$('#editor').attr('data-action',action);
 
         $('#workbench .view-loader').each( function(idx) {
             var targetDOMElement = $(this);
@@ -192,84 +197,6 @@ var Workbench = new function()
 
 
 
-
-
-
-function refreshAll()
-{
-	//$('ul#history').sortable();
-	
-	refreshWorkbench();
-	
-	// Workbench-Events registrieren
-	
-	// Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
-	$('div#filler').click( function()
-	{
-		if	( $('div#dialog').hasClass('modal') )
-		{
-			
-		}
-		else
-		{
-			$('div#dialog').html('').hide();  // Dialog beenden
-			
-			//$('div.modaldialog').fadeOut(500); 
-			//$('#workbench').removeClass('modal'); // Modalen Dialog beenden.
-			$('div#filler').fadeOut(500); // Filler beenden
-
-		}
-	});
-	
-
-}
-
-
-function refreshAllRefreshables()
-{
-	// Default-Inhalte der einzelnen Views laden.
-	$('#workbench div.panel > div.header > ul.views > li.active').each( function() {
-		if	( $(this).hasClass('static') )
-			return;
-		
-		var method  = $(this).data('method');
-		var action  = $(this).data('action');
-		var id      = $(this).data('id');
-		var extraid = $(this).data('extra');
-		
-		loadView( $(this).closest('div.panel').find('div.content'),action,method,id,extraid);
-	});
-	
-}
-
-
-
-function refreshActualView( element )
-{
-	// Default-Inhalte der einzelnen Views laden.
-	$(element).closest('div.panel').find('li.active').each( function() {
-		var method = $(this).attr('data-method');
-		var action = $(this).attr('data-action');
-		var id     = $(this).attr('data-id');
-		
-		loadView( $(this).closest('div.panel').find('div.content'),action,method,id);
-	});
-
-}
-
-
-
-/**
- * Lade die Workbench neu.
- */
-function refreshWorkbench()
-{
-	registerWorkbenchEvents();
-
-}
-
-
-
 /**
  * Registriert alle Events, die in der Workbench laufen sollen.
  */
@@ -288,6 +215,24 @@ function registerWorkbenchEvents()
 	{
 		fullscreen( this );
 	} );
+
+    // Nicht-Modale Dialoge durch Klick auf freie Fläche schließen.
+    $('div#filler').click( function()
+    {
+        if	( $('div#dialog').hasClass('modal') )
+        {
+
+        }
+        else
+        {
+            $('div#dialog').html('').hide();  // Dialog beenden
+
+            //$('div.modaldialog').fadeOut(500);
+            //$('#workbench').removeClass('modal'); // Modalen Dialog beenden.
+            $('div#filler').fadeOut(500); // Filler beenden
+
+        }
+    });
 
 }
 
@@ -467,7 +412,7 @@ function submitUrl( element,url )
 	postUrl( url,element );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
-	refreshAllRefreshables();
+	//refreshAllRefreshables();
 }
 
 
