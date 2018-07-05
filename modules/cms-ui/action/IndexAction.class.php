@@ -348,9 +348,6 @@ class IndexAction extends Action
             // Inlining of SVG
             $js[] = OR_THEMES_DIR . 'default/script/svg-injector';
 
-            // OpenRat internal JS
-			$js[] = OR_THEMES_DIR . 'default/script/openrat';
-
 			// Codemirror Source Editor
 
 			$js[] = OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror';
@@ -489,8 +486,12 @@ class IndexAction extends Action
 				if (is_file($componentJsFile . '.js'))
 					$js[] = $componentJsFile;
 			}
-			
-			$outDevJsFiles = array();
+
+            // OpenRat internal JS - als letztes, damit die vorigen bereits geladen sind.
+            $js[] = OR_THEMES_DIR . 'default/script/openrat';
+
+
+            $outDevJsFiles = array();
 			$outProJsFiles = array();
 			$lastModTime = 0;
 			
