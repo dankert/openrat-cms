@@ -24,7 +24,7 @@ class GroupComponent extends Component
 			if	( !empty($this->icon))
 				echo  '<img src="/themes/default/images/icon/method/'.$this->htmlvalue($this->icon).'.svg" />';
 			
-			echo '<div class="arrow-right closed" /><div class="arrow-down open" />';
+			echo '<div class="arrow-right closed"></div><div class="arrow-down open"></div>';
 			echo $this->htmlvalue($this->title);
 			echo '</legend>';
 		}
