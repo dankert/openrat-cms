@@ -10,7 +10,7 @@
 }
 /* Use Transition effects for all elements. */
 * {
-	transition: all ease 0.5s;
+	transition: width ease 0.5s;
 }
 div#workbench {
 	width: 100%;
@@ -20,15 +20,18 @@ div#workbench {
 	/* vertikale Flex-Box zwischen Header und Hauptbereich */
 }
 div#workbench > header {
-	height: 4rem;
-	background-color: #2fff99;
+	height: 3rem;
 }
 div#workbench > div {
-	background-color: #ff5772;
 	/* Horizontale Flexbox */
 	display: flex;
 	flex: 1;
 	flex-direction: row;
+	/*
+    https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
+    Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
+     */
+	min-height: 0;
 }
 div#workbench > div > main {
 	flex: 3;
@@ -41,4 +44,8 @@ div#workbench > div > aside {
 	xwidth: 10rem;
 	flex: 1;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-base.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAACA%3BAAAG%3BAAAU%3BCACX%3B%3B%3BAAIF%3BCACE%3B%3B%3BAAIF%3BCACE%2CyBAAA%3B%3BAAGF%2CGAAG%3BCACD%3BCACA%3BCACA%3BCACA%3B%3B%3BAAJF%2CGAAG%2CUAUC%3BCACA%3BCACA%3B%3BAAZJ%2CGAAG%2CUAcC%3BCACA%3B%3BCAGA%3BCACA%3BCACA%3B%3BAApBJ%2CGAAG%2CUAcC%2CMAQE%3BCACA%3B%3BAAvBN%2CGAAG%2CUAcC%2CMAWE%3BCACA%3BCACA%3B%3BAA3BN%2CGAAG%2CUAcC%2CMAeE%3BCACA%3BCACA%22%7D */
+div#workbench > div > * {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-base.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAACA%3BAAAG%3BAAAU%3BCACX%3B%3B%3BAAIF%3BCACE%3B%3B%3BAAIF%3BCACE%2C2BAAA%3B%3BAAGF%2CGAAG%3BCACD%3BCACA%3BCACA%3BCACA%3B%3B%3BAAJF%2CGAAG%2CUAUC%3BCACA%3B%3BAAXJ%2CGAAG%2CUAaC%3B%3BCAGA%3BCACA%3BCACA%3B%3B%3B%3B%3BCAMA%3B%3BAAxBJ%2CGAAG%2CUAaC%2CMAaE%3BCACA%3B%3BAA3BN%2CGAAG%2CUAaC%2CMAgBE%3BCACA%3BCACA%3B%3BAA%5C%2FBN%2CGAAG%2CUAaC%2CMAoBE%3BCACA%3BCACA%3B%3BAAnCN%2CGAAG%2CUAaC%2CMAwBE%3BCACA%3BCACA%22%7D */
