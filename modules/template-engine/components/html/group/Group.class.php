@@ -14,7 +14,7 @@ class GroupComponent extends Component
 	{
 		echo '<fieldset';
 		echo ' class="';
-		echo '<?php echo '.$this->value($this->open).'?" open":"" ?>';
+		echo '<?php echo '.$this->value($this->open).'?" open":" closed" ?>';
 		echo '<?php echo '.$this->value($this->show).'?" show":"" ?>';
 		echo '">';
 		
@@ -24,7 +24,7 @@ class GroupComponent extends Component
 			if	( !empty($this->icon))
 				echo  '<img src="/themes/default/images/icon/method/'.$this->htmlvalue($this->icon).'.svg" />';
 			
-			echo '<div class="arrow-right closed"></div><div class="arrow-down open"></div>';
+			echo '<div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div>';
 			echo $this->htmlvalue($this->title);
 			echo '</legend>';
 		}

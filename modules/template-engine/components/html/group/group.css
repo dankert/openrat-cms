@@ -1,6 +1,3 @@
-fieldset.open > legend {
-	cursor: pointer;
-}
 fieldset {
 	border: 1px solid;
 	border-bottom: 0px;
@@ -12,34 +9,33 @@ fieldset {
 	margin-right: 0px;
 	padding: 10px;
 	display: none;
+	/* Geschlossene Fieldsets */
+	/* Offene Fieldsets */
+}
+fieldset > legend {
+	cursor: pointer;
+	margin-left: 30px;
+	font-weight: normal;
 }
 fieldset.show {
 	display: block;
 }
-fieldset > legend {
-	margin-left: 30px;
-	font-weight: normal;
+fieldset.closed > legend > div.arrow.on-closed {
+	display: inline;
 }
-fieldset > div {
+fieldset.closed > legend > div.arrow.on-open {
+	display: none;
+}
+fieldset.closed > div {
 	display: none;
 }
 fieldset.open > div {
 	display: block;
 }
-/* Geschlossene Fieldsets */
-div#workbench div.panel fieldset > legend > div.closed,
-div#dialog div.panel fieldset > legend > div.closed {
-	display: inline;
-}
-div#workbench div.panel fieldset > legend > div.open {
+fieldset.open > legend > div.arrow.on-closed {
 	display: none;
 }
-/* Offene Fieldsets */
-div#workbench div.panel fieldset.open > legend > div.closed {
-	display: none;
-}
-div#workbench div.panel fieldset.open > legend > div.open,
-div#dialog div.panel fieldset.open > legend > div.open {
+fieldset.open > legend > div.arrow.on-open {
 	display: inline;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22group.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAAA%2CQAAQ%2CKAAQ%3BCAEf%3B%3BAAKD%3BCAEC%2CiBAAA%3BCAEA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAGD%2CQAAQ%3BCACP%3B%3BAAID%2CQAAW%3BCAEV%3BCACA%3B%3BAAID%2CQAAW%3BCAEV%3B%3BAAED%2CQAAQ%2CKAAQ%3BCAEf%3B%3B%3BAAID%2CGAAG%2CUAAW%2CIAAG%2CMAAO%2CSAAW%2CSAAS%2CMAAG%3BAAC%5C%2FC%2CGAAG%2COAAW%2CIAAG%2CMAAO%2CSAAW%2CSAAS%2CMAAG%3BCAG9C%3B%3BAAED%2CGAAG%2CUAAW%2CIAAG%2CMAAO%2CSAAW%2CSAAS%2CMAAG%3BCAE9C%3B%3B%3BAAID%2CGAAG%2CUAAW%2CIAAG%2CMAAO%2CSAAQ%2CKAAQ%2CSAAS%2CMAAG%3BCAEnD%3B%3BAAED%2CGAAG%2CUAAW%2CIAAG%2CMAAO%2CSAAQ%2CKAAQ%2CSAAS%2CMAAG%3BAACpD%2CGAAG%2COAAW%2CIAAG%2CMAAO%2CSAAQ%2CKAAQ%2CSAAS%2CMAAG%3BCAEnD%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22group.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAAA%3BCAEC%2CiBAAA%3BCAEA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3B%3B%3BAAbD%2CQAeG%3BCAED%3BCACA%3BCACA%3B%3BAAGD%2CQAAC%3BCACA%3B%3BAAID%2CQAAC%2COACE%2CSAAS%2CMAAG%2CMAAM%3BCACnB%3B%3BAAFF%2CQAAC%2COAIE%2CSAAS%2CMAAG%2CMAAM%3BCACnB%3B%3BAALF%2CQAAC%2COAOE%3BCAED%3B%3BAAKF%2CQAAC%2CKACE%3BCAED%3B%3BAAHF%2CQAAC%2CKAKE%2CSAAS%2CMAAG%2CMAAM%3BCAEnB%3B%3BAAPF%2CQAAC%2CKASE%2CSAAS%2CMAAG%2CMAAM%3BCAEnB%22%7D */
