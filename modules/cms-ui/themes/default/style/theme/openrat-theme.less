@@ -46,15 +46,12 @@ html.theme-@{cms-theme-id} {
     background-color: @cms-title-background-color;
   }
 
-  #workbench div.panel {
-    div.arrow-down {
+  .arrow-down {
       border-top-color: @cms-title-background-color;
     }
-
-    div.arrow-right {
+  .arrow-right {
       border-left-color: @cms-title-background-color;
     }
-  }
 
   iframe {
     border: 1px solid @cms-title-background-color;
@@ -202,76 +199,11 @@ html.theme-@{cms-theme-id} {
     box-shadow: 3px 2px 5px @cms-title-background-color;
   }
 
-  ul.tree, ul.tree ul {
-    list-style-type: none;
-    background: url(./modules/cms-ui/themes/default/images//tree_line.gif) repeat-y;
-    xmargin: 0;
-    padding: 0;
-  }
-
-  ul.tree li {
-    xmargin: 0;
-    padding: 0 0px;
-    line-height: 18px;
-    background: url(./modules/cms-ui/themes/default/images//tree_none.gif) no-repeat;
-    xcolor: #369;
-    font-weight: normal;
-    white-space: nowrap;
-  }
-
-  ul.tree li.last, ul.tree li:last-child {
-    background: url(./modules/cms-ui/themes/default/images//tree_none_end.gif) no-repeat;
-  }
-
-  div.tree.open {
-    background: url(./modules/cms-ui/themes/default/images//tree_minus.png) no-repeat;
-  }
-
-  div.tree.closed {
-    background: url(./modules/cms-ui/themes/default/images//tree_plus.png) no-repeat;
-  }
-
-  body > div {
-    display: none;
-  }
 
   div.structure em {
     font-style: italic;
   }
 
-  div.panel {
-    input.checkbox, input.radio {
-      border: 1px solid @cms-title-background-color;
-    }
-
-    & > div.header {
-      border-bottom: 1px solid @cms-title-background-color;
-    }
-
-    ul.views li {
-      border-right: 1px solid @cms-title-background-color;
-      xborder-top: 1px solid @cms-title-background-color;
-      xborder-left: 1px solid @cms-title-background-color;
-      xborder-right: 1px solid @cms-title-background-color;
-    }
-
-    div.content table {
-      border-color: @cms-inactive-background-color;
-    }
-
-    & > div.content {
-      background-color: @cms-background-color;
-    }
-
-    & > div.header {
-      background-color: @cms-background-color;
-      background-image: linear-gradient(@cms-inactive-background-color 00%, @cms-background-color 85%);
-    }
-
-    ul.views li:hover {
-      background-color: @cms-inactive-background-color;
-    }
-  }
 
   table tr.headline > td {
     border-bottom: 1px solid @cms-title-background-color;
@@ -333,10 +265,10 @@ html.theme-@{cms-theme-id} {
     height: 0;
     margin: 6;
     padding: 0px;
-    border-right: 6px solid @cms-title-background-color;
-    border-left: 6px solid @cms-title-background-color;
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
     border-top: 6px solid @cms-inactive-background-color;
-    border-bottom: 4px solid @cms-title-background-color;
+    border-bottom: 4px solid transparent;
     margin-top: 10px;
     font-size: 0;
   }
@@ -376,10 +308,6 @@ html.theme-@{cms-theme-id} {
     -webkit-box-shadow: inset 0px 0px 3px @cms-title-background-color;
     -moz-box-shadow: inset 0px 0px 3px @cms-title-background-color;
     box-shadow: inset 0px 0px 3px @cms-title-background-color;
-
-    ul.tree, ul.tree li.last, ul.tree li:last-child {
-      background-color: @cms-title-text-color;
-    }
   }
 
   div.inputholder > input, div.inputholder > textarea, div.inputholder > select {
@@ -457,6 +385,7 @@ html.theme-@{cms-theme-id} {
 
   body {
     background-color: @cms-inactive-background-color;
+    background-image: linear-gradient(@cms-inactive-background-color, lighten(@cms-inactive-background-color, 10%));
   }
 
   div.panel ul.views > li.active,
@@ -468,7 +397,7 @@ html.theme-@{cms-theme-id} {
 
   #title {
     background-color: @cms-title-background-color;
-    background-image: linear-gradient(@cms-title-background-color, lighten(@cms-title-background-color, 10%));
+    background-image: linear-gradient(to bottom, @cms-title-background-color, lighten(@cms-title-background-color, 10%) 80%, @cms-inactive-background-color);
     color: @cms-title-text-color;
 
     div.toolbar-icon > a {
@@ -480,10 +409,6 @@ html.theme-@{cms-theme-id} {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
     "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: 13px;
-  }
-
-  ul.tree li.last, ul.tree li:last-child {
-    background-color: @cms-background-color;
   }
 
   div.content pre, div.dropdown {

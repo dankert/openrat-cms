@@ -45,7 +45,7 @@ jQuery.fn.orTree = function( options )
 				if	( !line.action || line.action=='folder' || settings.selectable.length==0 || settings.selectable[0]=='' || jQuery.inArray(line.action, settings.selectable)!=-1 )
 				{
 					//var img = (line.url!==undefined?'tree_plus':'tree_none');
-                    var new_li = $('<li class="object" data-id="'+line.internalId+'" data-type="'+line.type+'"><div class="tree">&nbsp;</div><a href="./?action='+line.type+'&id='+line.internalId+'" class="entry" data-extra="'+JSON.stringify(line.extraId).replace(/"/g, "'")+'" data-id="'+line.internalId+'" data-type="'+line.type+'" title="'+ line.description + '"><img src="modules/cms-ui/themes/default/images/icon_'+line['icon']+'.png" />'+ line.text + '</a></li>');
+                    var new_li = $('<li class="object" data-id="'+line.internalId+'" data-type="'+line.type+'"><div class="tree"><div class="arrow"></div></div><a href="./?action='+line.type+'&id='+line.internalId+'" class="entry" data-extra="'+JSON.stringify(line.extraId).replace(/"/g, "'")+'" data-id="'+line.internalId+'" data-type="'+line.type+'" title="'+ line.description + '"><img src="modules/cms-ui/themes/default/images/icon_'+line['icon']+'.png" />'+ line.text + '</a></li>');
 					$(ul).append( new_li );
 					//var new_li = $(ul).children('li').last();
 					//$(new_li).children('div').unbind('click');
@@ -53,7 +53,7 @@ jQuery.fn.orTree = function( options )
 					// Wenn ein Type vorhanden ist, dann kann man den Zweig öffnen
 					if ( line.type )
 					{
-						$(new_li).children('div.tree').addClass('closed');
+						$(new_li).children('div.tree').addClass('closed').find('.arrow').addClass('arrow-right');
 
 						// Klick-Funktion zum Öffnen des Zweiges.
 						$(new_li).children('div.tree').click( function() { $(this).parent().orTree( {type:line.type,id:line.internalId,extraId:line.extraId,onSelect:settings.onSelect,selectable:settings.selectable} );} ); // Zweig öffnen
@@ -106,8 +106,10 @@ jQuery.fn.orTree = function( options )
 		});
 		
 		$(treeEl).children('div.tree').unbind('click');
-		$(treeEl).children('div.tree').removeClass('closed').addClass('open');
-		$(treeEl).children('div.tree').click( function(e) { closeBranch($(e.target).parent(),settings.type,settings.id); } );
+		$(treeEl).children('div.tree').removeClass('closed').addClass('open').find('.arrow').removeClass('arrow-right').addClass('arrow-down');
+        $(treeEl).children('div.tree').click(function (e) {
+            closeBranch($(e.delegateTarget).parent(), settings.type, settings.id,settings.extraId);
+        });
 	});
 
 	
@@ -116,17 +118,22 @@ jQuery.fn.orTree = function( options )
 	 * @param li JQuery-Objekt
 	 * @return
 	 */
-	function closeBranch(li,type,id)
+	function closeBranch(li,type,id,extraId)
 	{
-		//alert("schließen:"+$(li).html() );
 		$(li).children('ul').slideUp('fast', function() {
 			
 			$(li).children('ul').remove();
 			$(li).children('div.tree').unbind('click');
-			$(li).children('div.tree').removeClass('open').addClass('closed');
-			//alert( "wieder öffnen: "+$(li).children('div').first().html());
-			$(li).children('div.tree').click( function() { $(this).parent().orTree( {type:type,id:id,onSelect:settings.onSelect,selectable:settings.selectable}); });
-			//$(li).children('img.tree').attr('src',OR_THEMES_EXT_DIR+'default/images/tree_plus.gif');
+			$(li).children('div.tree').removeClass('open').addClass('closed').find('.arrow').removeClass('arrow-down').addClass('arrow arrow-right');
+            $(li).children('div.tree').click(function () {
+                $(this).parent().orTree({
+                    type: type,
+                    id: id,
+					extraId: extraId,
+                    onSelect: settings.onSelect,
+                    selectable: settings.selectable
+                });
+            });
 		} );
 	}
 

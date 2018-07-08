@@ -63,37 +63,28 @@ div#dialog
 
 
 
-
-
-/* Pfeile */
-.arrow-down
-{
-	width:0;
-	height:0;
-	margin:6px;
-	padding:0px;
-	border-right  : 6px solid transparent;
-	border-top    : 6px solid ;
-	border-left   : 6px solid transparent;
-	border-bottom : 4px solid transparent;
-	margin-top: 10px;
+.arrow {
+	width: 0;
+	height: 0;
+	margin: 6px;
+	padding: 0;
 	font-size: 0;
-}
-/* Pfeile */
-.arrow-right
-{
-	width:0;
-	height:0;
-	margin:6px;
-	padding:0;
-	border-top:    6px solid transparent;
-	border-left:   6px solid ;
-	border-bottom: 6px solid transparent;
-	border-right:  4px solid transparent;
-	margin-left:  10px;
-	font-size: 0;
-}
 
+	&.arrow-down {
+		border-right: 6px solid transparent;
+		border-top: 6px solid;
+		border-left: 6px solid transparent;
+		border-bottom: 4px solid transparent;
+		margin-top: 10px;
+	}
+	&.arrow-right {
+		border-top: 6px solid transparent;
+		border-left: 6px solid;
+		border-bottom: 6px solid transparent;
+		border-right: 4px solid transparent;
+		margin-left: 10px;
+	}
+}
 
 #editor .dirty
 {

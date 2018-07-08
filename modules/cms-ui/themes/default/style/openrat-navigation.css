@@ -2,9 +2,24 @@
 ul.tree,
 ul.tree ul {
 	list-style-type: none;
-	background: url(../images/tree_line.gif) repeat-y;
+	/*background: url(../images/tree_line.gif) repeat-y;*/
 	margin: 0;
 	padding: 0;
+}
+#navigation ul.tree {
+	/*
+    li.last,
+    li:last-child {
+      background: url(../images/tree_none_end.gif) no-repeat;
+    }
+    div.tree.open {
+      background: url(../images/tree_minus.png) no-repeat;
+    }
+
+    div.tree.closed {
+      background: url(../images/tree_plus.png) no-repeat;
+    }
+*/
 }
 #navigation ul.tree ul {
 	margin-left: 18px;
@@ -28,21 +43,11 @@ ul.tree ul {
 	margin: 0;
 	padding: 0 0px;
 	line-height: 18px;
-	background: url(../images/tree_none.gif) no-repeat;
+	/*background: url(../images/tree_none.gif) no-repeat;*/
 	font-weight: normal;
 	white-space: nowrap;
-}
-#navigation ul.tree li.last,
-#navigation ul.tree li:last-child {
-	background: url(../images/tree_none_end.gif) no-repeat;
-}
-#navigation ul.tree div.tree.open {
-	background: url(../images/tree_minus.png) no-repeat;
-}
-#navigation ul.tree div.tree.closed {
-	background: url(../images/tree_plus.png) no-repeat;
 }
 #navigation ul.tree div {
 	cursor: pointer;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-navigation.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAEA%2CEAAE%3BAACF%2CEAAE%2CKAAM%3BCACN%3BCACA%2CiDAAA%3BCACA%3BCACA%3B%3BAAGF%2CWAEE%2CGAAE%2CKACA%3BCACE%3B%3BAAJN%2CWAEE%2CGAAE%2CKAIA%2CIAAG%3BCACD%3BCACA%3BCACA%3BCACA%3B%3BAAVN%2CWAEE%2CGAAE%2CKAWA%2CIAAG%3BAAbP%2CWAEE%2CGAAE%2CKAYA%2CIAAG%3BCACD%3BCACA%3BCACA%3B%3BAAjBN%2CWAEE%2CGAAE%2CKAkBA%2CIAAI%3BCACF%3B%3BAArBN%2CWAEE%2CGAAE%2CKAsBA%3BCACE%3BCACA%2CcAAA%3BCACA%3BCACA%2CkDAAA%3BCACA%3BCACA%3B%3BAA9BN%2CWAEE%2CGAAE%2CKA%2BBA%2CGAAE%3BAAjCN%2CWAEE%2CGAAE%2CKAgCA%2CGAAE%3BCACA%2CsDAAA%3B%3BAAnCN%2CWAEE%2CGAAE%2CKAmCA%2CIAAG%2CKAAK%3BCACN%2CmDAAA%3B%3BAAtCN%2CWAEE%2CGAAE%2CKAuCA%2CIAAG%2CKAAK%3BCACN%2CkDAAA%3B%3BAA1CN%2CWAEE%2CGAAE%2CKA2CA%3BCACE%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-navigation.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAEA%2CEAAE%3BAACF%2CEAAE%2CKAAM%3BCACN%3B%3BCAEA%3BCACA%3B%3BAAGF%2CWAEE%2CGAAE%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAFJ%2CWAEE%2CGAAE%2CKACA%3BCACE%3B%3BAAJN%2CWAEE%2CGAAE%2CKAIA%2CIAAG%3BCACD%3BCACA%3BCACA%3BCACA%3B%3BAAVN%2CWAEE%2CGAAE%2CKAWA%2CIAAG%3BAAbP%2CWAEE%2CGAAE%2CKAYA%2CIAAG%3BCACD%3BCACA%3BCACA%3B%3BAAjBN%2CWAEE%2CGAAE%2CKAkBA%2CIAAI%3BCACF%3B%3BAArBN%2CWAEE%2CGAAE%2CKAsBA%3BCACE%3BCACA%2CcAAA%3BCACA%3B%3BCAEA%3BCACA%3B%3BAA9BN%2CWAEE%2CGAAE%2CKA4CA%3BCACE%22%7D */
