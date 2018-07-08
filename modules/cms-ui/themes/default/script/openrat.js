@@ -203,12 +203,15 @@ var Workbench = new function()
 function registerWorkbenchEvents()
 {
 	// Modalen Dialog erzeugen.
+
+	/*
 	if	( $('#workbench div.panel.modal').length > 0 )
 	{
 		$('#workbench div.panel.modal').parent().addClass('modal');
 		$('div#filler').fadeTo(500,0.5);
 		$('#workbench').addClass('modal');
 	}
+	*/
 	
 	
 	$('div.header').dblclick( function()
@@ -225,11 +228,8 @@ function registerWorkbenchEvents()
         }
         else
         {
-            $('div#dialog').html('').hide();  // Dialog beenden
-
-            //$('div.modaldialog').fadeOut(500);
-            //$('#workbench').removeClass('modal'); // Modalen Dialog beenden.
-            $('div#filler').fadeOut(500); // Filler beenden
+            $('div#dialog').removeClass('open').addClass('closed');
+            $('div#dialog > .view').html('');  // Dialog beenden
 
         }
     });
@@ -440,12 +440,12 @@ function postUrl(url,element)
  */
 function startDialog( name,action,method,id,params )
 {
-	$('div#filler').fadeTo(500,0.5);
-	$('div#dialog').html('<div class="header"><ul class="views"><li class="action active"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" /><div class="tabname" style="width:100px;">'+name+'</div></li></ul></div><div class="content" />');
-	$('div#dialog').data('id',id);
-	$('div#dialog').show();
+	//$('div#filler').fadeTo(500,0.5);
+	$('div#dialog > .view').html('<div class="header"><ul class="views"><li class="action active"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" /><div class="tabname" style="width:100px;">'+name+'</div></li></ul></div><div class="content" />');
+	$('div#dialog > .view').data('id',id);
+	$('div#dialog').removeClass('closed').addClass('open');
 
-	loadView( $('div#dialog div.content'), action,method,id,params );
+	loadView( $('div#dialog > .view'), action,method,id,params );
 	
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
