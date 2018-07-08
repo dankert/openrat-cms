@@ -158,39 +158,46 @@ var Workbench = new function()
     this.loadNewAction = function(action, id, params ) {
 
     	$('#editor').attr('data-action',action);
+    	$('#editor').attr('data-id'    ,id    );
 
         $('#workbench .view-loader').each( function(idx) {
             var targetDOMElement = $(this);
             var method = targetDOMElement.data('method');
 
-            var url = createUrl(action,method,id,params,true); // URL für das Laden erzeugen.
-
-            targetDOMElement.empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
-                targetDOMElement.fadeTo(350,1);
-
-                if	( status == "error" )
-                {
-                    // Seite nicht gefunden.
-                    $(targetDOMElement).html("");
-                    $(targetDOMElement).removeClass("loader");
-
-                    notify('error',response);
-                    // OK-button Ausblenden.
-                    //$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
-                    // var msg = "Sorry but there was an error: ";
-                    //$(this).html(msg + xhr.status + " " + xhr.statusText);
-                    return;
-                }
-
-                $(targetDOMElement).removeClass("loader");
-
-                registerViewEvents( targetDOMElement );
-            });
+            Workbench.loadViewIntoElement(targetDOMElement,action,method,id,params)
         });
 
         filterMenus(action);
 
     }
+
+
+    this.loadViewIntoElement = function(targetDOMElement,action,method,id,params) {
+
+		var url = createUrl(action,method,id,params,true); // URL für das Laden erzeugen.
+
+		targetDOMElement.empty().fadeTo(1,0.7).addClass('loader').html('').load(url,function(response, status, xhr) {
+			targetDOMElement.fadeTo(350,1);
+
+            $(targetDOMElement).removeClass("loader");
+
+            if	( status == "error" )
+			{
+				// Seite nicht gefunden.
+				$(targetDOMElement).html("");
+
+				notify('error',response);
+				// OK-button Ausblenden.
+				//$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
+				// var msg = "Sorry but there was an error: ";
+				//$(this).html(msg + xhr.status + " " + xhr.statusText);
+				return;
+			}
+
+			registerViewEvents( targetDOMElement );
+		});
+
+	}
 
 }
 
@@ -440,15 +447,17 @@ function postUrl(url,element)
  */
 function startDialog( name,action,method,id,params )
 {
-	//$('div#filler').fadeTo(500,0.5);
-	$('div#dialog > .view').html('<div class="header"><ul class="views"><li class="action active"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" /><div class="tabname" style="width:100px;">'+name+'</div></li></ul></div><div class="content" />');
+	// Attribute aus dem aktuellen Editor holen, falls die Daten beim Aufrufer nicht angegeben sind.
+	if (!action)
+		action = $('#editor').attr('data-action');
+
+    id = $('#editor').attr('data-id');
+
+	$('div#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
 	$('div#dialog > .view').data('id',id);
 	$('div#dialog').removeClass('closed').addClass('open');
 
-	loadView( $('div#dialog > .view'), action,method,id,params );
-	
-	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
-	// refreshAllRefreshables();
+	Workbench.loadViewIntoElement( $('div#dialog > .view'), action, method, id, params );
 }
 
 
