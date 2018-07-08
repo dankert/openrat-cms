@@ -280,7 +280,10 @@ class Dispatcher
         if (!class_exists($actionClassNameWithNamespace))
         {
             // Laden der Action-Klasse.
-            require_once(__DIR__. '/action/' . $actionClassName . '.class.php');
+            $success = include_once(__DIR__. '/action/' . $actionClassName . '.class.php');
+
+            if ( !$success)
+                throw new LogicException("Action '$this->action' is not available");
         }
 
         // Erzeugen der Action-Klasse
