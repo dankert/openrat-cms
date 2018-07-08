@@ -32,7 +32,9 @@ class IndexAction extends Action
 	 */
 	function __construct()
 	{
-		$this->perspective = Session::get('perspective');
+        parent::__construct();
+
+        $this->perspective = Session::get('perspective');
         Logger::info('Index: Perspective is '.$this->perspective);
 
 		if	( !empty($this->perspective))
@@ -130,6 +132,7 @@ class IndexAction extends Action
         if  ( $userIsLoggedIn && isset($_REQUEST['action'])) {
             $action = $_REQUEST['action'];
         }
+        $id = $this->getRequestId();
 
 		$jsFiles  = $this->getJSFiles();
 		$cssFiles = $this->getCSSFiles();
