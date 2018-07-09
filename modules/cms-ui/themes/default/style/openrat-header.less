@@ -1,101 +1,88 @@
 /*   H e a d e r   */
 #title {
-  width: 100%;
-  height: 27px;
-  overflow: hidden;
-  padding: 5px;
-  margin: 0px;
-  margin-bottom: 3px;
-  float: left;
-
-  div.projects,
-  div.menu,
-  div.title {
-    float: left;
-    margin-right: 10px;
-    margin-left: 0px;
-  }
-
-  div.user,
-  div.search,
-  div.history {
-    float: right;
-    margin-right: 10px;
-    margin-left: 10px;
-  }
-
-  > div.menu {
     overflow: hidden;
-  }
+    padding: 5px;
 
-  /* Dropdown anzeigen  */
-  &.open div.menu.open div.dropdown,
-  div.panel div:hover > div.dropdown,
-  div.panel-icon:hover > div.dropdown {
-    display: block;
-  }
-
-  div.search input {
-    margin: 0px;
-    padding: 0px;
-  }
-
-  /* Pfeile */
-  > div > div.arrow-down {
-    display: inline;
-    width: 0;
-    height: 0;
-    margin: 6;
-    padding: 0px;
-    margin-top: 10px;
-    font-size: 0;
-  }
-
-  /*   D r o p d o w n  -  M e n u e s  */
-  div.dropdownalignright {
-    right: 0;
-  }
-  div.dropdown {
-    z-index: 2;
-    display: none;
-    position: absolute;
-    padding: 5px 0px;
-
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: none;
-
-    > a {
-      display: block;
-    }
-    div.entry {
-      padding: 2px 5px;
+    /* Pfeile */
+    > div > div.arrow-down {
+        display: inline;
+        width: 0;
+        height: 0;
+        margin: 6;
+        padding: 0px;
+        margin-top: 10px;
+        font-size: 0;
     }
 
-    div.divide {
-      height: 1px;
-      width: 100%;
-      margin-top: 5px;
-      margin-bottom: 5px;
+    div.toolbar-icon {
+        padding: 2px;
+
+        margin-left: 10px;
+        float: left;
+
+        /* Bestimmte Menüs sind nach rechts ausgerichet */
+        &.user,
+        &.search,
+        &.history {
+            float: right;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        &.menu {
+            cursor: default;
+        }
+        &.search input {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /*   D r o p d o w n  -  M e n u e s  */
+        div.dropdown {
+            z-index: 2;
+            min-width: 250px;
+            display: none;
+            position: absolute;
+            padding: 5px 0px;
+
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+
+            div.entry {
+                padding: 0;
+
+                > a {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    padding: 2px 5px;
+                }
+
+                /* Außenabstand Text */
+                > .text {
+                    display: block;
+                    margin: 10px;
+                }
+            }
+
+            div.divide {
+                height: 1px;
+                width: 100%;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+        }
     }
 
-  }
-
-  div.toolbar-icon {
-    padding: 2px;
-    margin-left: 5px;
-    float: left;
-  }
-
-  div.headermenu {
-    margin: 5px;
-    z-index: 1;
-    position: relative;
-    right: 0;
-    top: 0;
-  }
-  div.headermenu > div.toolbar-icon {
-    float: right;
-  }
+    /* Dropdown anzeigen, wenn Titel geöffnet und wenn mit Maus überstrichen */
+    &.open {
+        .toolbar-icon.open {
+            > div.dropdown {
+                display: block;
+            }
+        }
+    }
 
 }

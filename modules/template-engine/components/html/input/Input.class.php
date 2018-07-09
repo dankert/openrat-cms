@@ -79,7 +79,7 @@ class InputComponent extends Component
 				
 				
 			if(isset($this->icon))
-				echo '<img src="/themes/default/images/icon_'.$this->htmlvalue($this->icon).'<?php echo IMG_ICON_EXT ?>" width="16" height="16" />';
+				echo '<img src="'.OR_THEMES_DIR.'default/images/icon_'.$this->htmlvalue($this->icon). IMG_ICON_EXT .'" width="16" height="16" />';
 			
 			echo '</div>';
 			

@@ -1,41 +1,9 @@
 /*   H e a d e r   */
 #title {
-	width: 100%;
-	height: 27px;
 	overflow: hidden;
 	padding: 5px;
-	margin: 0px;
-	margin-bottom: 3px;
-	float: left;
-	/* Dropdown anzeigen  */
 	/* Pfeile */
-	/*   D r o p d o w n  -  M e n u e s  */
-}
-#title div.projects,
-#title div.menu,
-#title div.title {
-	float: left;
-	margin-right: 10px;
-	margin-left: 0px;
-}
-#title div.user,
-#title div.search,
-#title div.history {
-	float: right;
-	margin-right: 10px;
-	margin-left: 10px;
-}
-#title > div.menu {
-	overflow: hidden;
-}
-#title.open div.menu.open div.dropdown,
-#title div.panel div:hover > div.dropdown,
-#title div.panel-icon:hover > div.dropdown {
-	display: block;
-}
-#title div.search input {
-	margin: 0px;
-	padding: 0px;
+	/* Dropdown anzeigen, wenn Titel geöffnet und wenn mit Maus überstrichen */
 }
 #title > div > div.arrow-down {
 	display: inline;
@@ -46,11 +14,30 @@
 	margin-top: 10px;
 	font-size: 0;
 }
-#title div.dropdownalignright {
-	right: 0;
+#title div.toolbar-icon {
+	padding: 2px;
+	margin-left: 10px;
+	float: left;
+	/* Bestimmte Menüs sind nach rechts ausgerichet */
+	/*   D r o p d o w n  -  M e n u e s  */
 }
-#title div.dropdown {
+#title div.toolbar-icon.user,
+#title div.toolbar-icon.search,
+#title div.toolbar-icon.history {
+	float: right;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+#title div.toolbar-icon.menu {
+	cursor: default;
+}
+#title div.toolbar-icon.search input {
+	margin: 0px;
+	padding: 0px;
+}
+#title div.toolbar-icon div.dropdown {
 	z-index: 2;
+	min-width: 250px;
 	display: none;
 	position: absolute;
 	padding: 5px 0px;
@@ -58,31 +45,27 @@
 	font-weight: normal;
 	text-decoration: none;
 }
-#title div.dropdown > a {
-	display: block;
+#title div.toolbar-icon div.dropdown div.entry {
+	padding: 0;
+	/* Außenabstand Text */
 }
-#title div.dropdown div.entry {
+#title div.toolbar-icon div.dropdown div.entry > a {
+	display: block;
+	width: 100%;
+	height: 100%;
 	padding: 2px 5px;
 }
-#title div.dropdown div.divide {
+#title div.toolbar-icon div.dropdown div.entry > .text {
+	display: block;
+	margin: 10px;
+}
+#title div.toolbar-icon div.dropdown div.divide {
 	height: 1px;
 	width: 100%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-#title div.toolbar-icon {
-	padding: 2px;
-	margin-left: 5px;
-	float: left;
+#title.open .toolbar-icon.open > div.dropdown {
+	display: block;
 }
-#title div.headermenu {
-	margin: 5px;
-	z-index: 1;
-	position: relative;
-	right: 0;
-	top: 0;
-}
-#title div.headermenu > div.toolbar-icon {
-	float: right;
-}
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-header.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3BAAPF%2CMASE%2CIAAG%3BAATL%2CMAUE%2CIAAG%3BAAVL%2CMAWE%2CIAAG%3BCACD%3BCACA%3BCACA%3B%3BAAdJ%2CMAiBE%2CIAAG%3BAAjBL%2CMAkBE%2CIAAG%3BAAlBL%2CMAmBE%2CIAAG%3BCACD%3BCACA%3BCACA%3B%3BAAtBJ%2CMAyBI%2CMAAG%3BCACH%3B%3BAAIF%2CMAAC%2CKAAM%2CIAAG%2CKAAK%2CKAAM%2CIAAG%3BAA9B1B%2CMA%2BBE%2CIAAG%2CMAAO%2CIAAG%2CMAAS%2CMAAG%3BAA%5C%2FB3B%2CMAgCE%2CIAAG%2CWAAW%2CMAAS%2CMAAG%3BCACxB%3B%3BAAjCJ%2CMAoCE%2CIAAG%2COAAQ%3BCACT%3BCACA%3B%3BAAtCJ%2CMA0CI%2CMAAM%2CMAAG%3BCACT%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAjDJ%2CMAqDE%2CIAAG%3BCACD%3B%3BAAtDJ%2CMAwDE%2CIAAG%3BCACD%3BCACA%3BCACA%3BCACA%2CgBAAA%3BCAEA%3BCACA%3BCACA%3B%3BAAhEJ%2CMAwDE%2CIAAG%2CSAUC%3BCACA%3B%3BAAnEN%2CMAwDE%2CIAAG%2CSAaD%2CIAAG%3BCACD%2CgBAAA%3B%3BAAtEN%2CMAwDE%2CIAAG%2CSAiBD%2CIAAG%3BCACD%3BCACA%3BCACA%3BCACA%3B%3BAA7EN%2CMAkFE%2CIAAG%3BCACD%3BCACA%3BCACA%3B%3BAArFJ%2CMAwFE%2CIAAG%3BCACD%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAA7FJ%2CMA%2BFE%2CIAAG%2CWAAc%2CMAAG%3BCAClB%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-header.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAACA%3BCACI%3BCACA%3B%3B%3B%3BAAFJ%2CMAKM%2CMAAM%2CMAAG%3BCACP%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAZR%2CMAeI%2CIAAG%3BCACC%3BCAEA%3BCACA%3B%3B%3B%3BAAGA%2CMAPJ%2CIAAG%2CaAOE%3BAACD%2CMARJ%2CIAAG%2CaAQE%3BAACD%2CMATJ%2CIAAG%2CaASE%3BCACG%3BCACA%3BCACA%3B%3BAAGJ%2CMAfJ%2CIAAG%2CaAeE%3BCACG%3B%3BAAEJ%2CMAlBJ%2CIAAG%2CaAkBE%2COAAQ%3BCACL%3BCACA%3B%3BAAnCZ%2CMAeI%2CIAAG%2CaAwBC%2CIAAG%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%2CgBAAA%3BCAEA%3BCACA%3BCACA%3B%3BAAhDZ%2CMAeI%2CIAAG%2CaAwBC%2CIAAG%2CSAWC%2CIAAG%3BCACC%3B%3B%3BAAnDhB%2CMAeI%2CIAAG%2CaAwBC%2CIAAG%2CSAWC%2CIAAG%2CMAGG%3BCACE%3BCACA%3BCACA%3BCACA%2CgBAAA%3B%3BAAzDpB%2CMAeI%2CIAAG%2CaAwBC%2CIAAG%2CSAWC%2CIAAG%2CMAWG%3BCACE%3BCACA%3B%3BAA%5C%2FDpB%2CMAeI%2CIAAG%2CaAwBC%2CIAAG%2CSA4BC%2CIAAG%3BCACC%3BCACA%3BCACA%3BCACA%3B%3BAAOZ%2CMAAC%2CKACG%2CcAAa%2CKACP%2CMAAG%3BCACD%22%7D */
