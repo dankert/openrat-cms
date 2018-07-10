@@ -340,7 +340,6 @@ class IndexAction extends Action
 			// $js[] = OR_THEMES_EXT_DIR default/script/jquery.mjs.nestedSortable.js"></script>
 			
 			// Jquery-Plugins
-			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orHint';
 			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orSearch';
 			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orLinkify';
 			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orTree';

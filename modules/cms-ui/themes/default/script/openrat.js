@@ -270,9 +270,6 @@ function registerViewEvents( viewEl )
 	$(viewEl).trigger('orViewLoaded');
 
 	
-	// Eingabefeld-Hints aktivieren...
-	$(viewEl).find('input[data-hint]').orHint();
-	
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
 	
@@ -360,19 +357,12 @@ function registerHeaderEvents()
     });
 
 
-    $('#title').trigger('orHeaderLoaded');
-	
-
 	//   S u c h e
-	$('div.search input').blur( function(){
+	$('#title div.search input').blur( function(){
 		$('div.search input div.dropdown').fadeOut();
 	});
 	
-	// Hints...
-	$('div.search input').orHint();
-
-	
-	$('div.search input').orSearch( { dropdown:'div.search div.dropdown' } );
+	$('#title div.search input').orSearch( { dropdown:'#title div.search div.dropdown' } );
 
 }
 

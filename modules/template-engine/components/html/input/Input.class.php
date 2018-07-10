@@ -45,7 +45,7 @@ class InputComponent extends Component
 			if(isset($this->readonly))
 				echo '<?php if ('.$this->value($this->readonly).') '."echo ' disabled=\"true\"' ?>";
 			if (isset($this->hint))
-				echo ' data-hint="'.$this->htmlvalue($this->hint).'"';
+				echo ' placeholder="'.$this->htmlvalue($this->hint).'"';
 			
 			echo ' id="'.'<?php echo REQUEST_ID ?>_'.$this->htmlvalue($this->name).'"';
 			
