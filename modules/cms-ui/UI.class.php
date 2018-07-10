@@ -195,7 +195,8 @@ class UI
             'img-src \'self\'',
             // No <audio>, <video> elements
             'media-src \'none\'',
-            'child-src \'self\'',
+            'frame-src \'self\'',
+            'worker-src \'self\'',
             'form-action \'self\'',
             'font-src \'none\'',
             // Ajax-Calls
