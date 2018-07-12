@@ -205,7 +205,7 @@
                     </link>
                 </part>
 
-                <part class="entry clickable filtered on-action-template">
+                <part class="entry clickable filtered on-action-template on-action-configuration">
                     <link type="dialog" title="message:menu_src_desc"
                           subaction="src">
                         <image method="code" align="left"></image>

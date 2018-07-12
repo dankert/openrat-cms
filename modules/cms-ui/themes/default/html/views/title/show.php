@@ -238,7 +238,7 @@
 						</a>
 
 					</div>
-					<div class="entry clickable filtered on-action-template">
+					<div class="entry clickable filtered on-action-template on-action-configuration">
 						<a title="<?php echo lang('menu_src_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" href="<?php echo Html::url('','src','') ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/code.svg" />
 							
@@ -384,7 +384,7 @@
 		<?php } ?>
 		<?php $if2=($isLoggedIn); if($if2){?>
 			<div class="toolbar-icon search">
-				<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> data-hint="<?php echo lang('search') ?>" id="<?php echo REQUEST_ID ?>_text" name="text<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if ('') { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?><img src="./modules/cms-ui/themes/default/images/icon_search.png" width="16" height="16" /></div>
+				<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> placeholder="<?php echo lang('search') ?>" id="<?php echo REQUEST_ID ?>_text" name="text<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if ('') { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?><img src="./modules/cms-ui/themes/default/images/icon_search.png" width="16" height="16" /></div>
 				
 				<div class="dropdown">
 					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(''))); ?></span>

@@ -41,13 +41,14 @@ class ConfigurationAction extends Action
 	public function editView()
 	{
 		$this->nextSubAction('show');
+
 	}
 	
 	
 	/**
 	 * Anzeigen des Elementes
 	 */
-	function showView()
+	public function showView()
 	{
         require_once( OR_MODULES_DIR.'/util/config-default.php');
         $conf = createDefaultConfig();
@@ -71,6 +72,26 @@ class ConfigurationAction extends Action
 		}
 		$this->setTemplateVar('config',$config );
 	}
+
+
+
+
+	public function srcView()
+    {
+        $conf = Session::getConfig();
+        unset( $conf['language']);
+
+        array_walk_recursive($conf,function(&$item,$key)
+        {
+            if($key=='password'){
+                $item='*************';
+            }
+        });
+
+        $this->setTemplateVar('source',\Spyc::YAMLDump($conf,4,0,true));
+    }
+
+
 
     private function flattenArray( $prefix,$arr )
     {
