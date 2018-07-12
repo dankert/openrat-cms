@@ -91,11 +91,7 @@ function formSubmit(form)
 		{
 			// Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
 			// beendet wird.
-			$('div#dialog').html('').hide();  // Dialog beenden
-			
-			//$('div.modaldialog').fadeOut(500); 
-			//$('div#workbench').removeClass('modal'); // Modalen Dialog beenden.
-			$('div#filler').fadeOut(500); // Filler beenden
+			$('div#dialog > .view').html('').hide();  // Dialog beenden
 		}
 		
 		$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
@@ -177,11 +173,7 @@ function doResponse(data,status,element)
 			{
 				// Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
 				// beendet wird.
-				$('div#dialog').html('').hide();  // Dialog beenden
-				
-				//$('div.modaldialog').fadeOut(500); 
-				//$('div#workbench').removeClass('modal'); // Modalen Dialog beenden.
-				$('div#filler').fadeOut(500); // Filler beenden
+				$('div#dialog > .view').html('').hide();  // Dialog beenden
 				
 				// Da gespeichert wurde, jetzt das 'dirty'-flag zurücksetzen.
 				$(element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
