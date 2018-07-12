@@ -666,7 +666,7 @@ class StartAction extends Action
 		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
 		
 		// Cookie setzen
-		setcookie('or_username',$loginName,time()+(60*60*24*30*12*2) );
+        $this->setCookie('or_username',$loginName );
 		
 		// Login mit Open-Id.
 		if	( $this->hasRequestVar('openid_provider') && ($this->getRequestVar('openid_provider') != 'identity' || !empty($openid_user)) )
@@ -1669,7 +1669,7 @@ class StartAction extends Action
 			
 			// Bug in PHP 4.3.2: Session-Cookie wird nicht neu gesetzt.
 			if ( ini_get("session.use_cookies") )
-				setcookie( session_name(),session_id(),ini_get("session.cookie_lifetime"),"/" );
+                $this->setCookie( session_name(),session_id() );
 		}
 		elseif	( version_compare(phpversion(),"5.1.0",">") )
 		{

@@ -117,7 +117,7 @@ div#dialog > .view {
 	z-index: 101;
 	border: 1px solid !important;
 }
-div#dialog.closed {
+div#dialog.is-closed {
 	display: none;
 }
 .arrow {

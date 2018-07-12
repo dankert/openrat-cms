@@ -425,60 +425,6 @@ namespace cms\action {
         }
 
 
-        protected function setMenu()
-        {
-            return;
-
-            $windowMenu = array();
-            $name = $this->actionConfig[$this->subActionName]['menu'];
-            $menuList = explode(',', $this->actionConfig['menu']['menu']);
-            //$menuList   = explode(',',$this->actionConfig['menu'][$name]);
-
-            if (isset($this->actionConfig[$this->subActionName]['menuaction']))
-                $actionName = $this->actionConfig[$this->subActionName]['menuaction'];
-            else
-                $actionName = $this->subActionName;
-
-            foreach ($menuList as $menuName) {
-                if (isset($this->actionConfig[$menuName]['alias']))
-                    $menuText = 'menu_' . $this->actionName . '_' . $this->actionConfig[$menuName]['alias'];
-                else
-                    $menuText = 'menu_' . $this->actionName . '_' . $menuName;
-
-
-                $menuKey = 'accesskey_window_' . $menuName;
-
-                $menuEntry = array('subaction' => $menuName,
-                    'text' => $menuText,
-                    'title' => $menuText . '_DESC',
-                    'key' => $menuKey);
-
-                if ($this->checkMenu($menuName))
-                    $menuEntry['url'] = Html::url($actionName, $menuName, $this->getRequestId());
-
-                $windowMenu[] = $menuEntry;
-            }
-            $this->setTemplateVar('windowMenu', $windowMenu);
-        }
-
-
-        /**
-         * Ermittelt, ob der Men�punkt aktiv ist.
-         * Ob ein Men�punkt als aktiv angezeigt werden soll, steht meist erst zur Laufzeit fest.
-         * <br>
-         * Diese Methode kann von den Unterklassen �berschrieben werden.
-         * Falls diese Methode nicht �berschrieben wird, sind alle Men�punkte aktiv.
-         *
-         * @param String $name Logischer Name des Men�punktes
-         * @return boolean TRUE, wenn Men�punkt aktiv ist.
-         */
-        protected function checkMenu($name)
-        {
-            // Standard: Alle Men�punkt sind aktiv.
-            return true;
-        }
-
-
         /**
          * Erzeugt einen Redirect auf einen bestimmte URL.
          */
@@ -489,29 +435,31 @@ namespace cms\action {
 
 
         /**
-         * Sorgt dafür, dass alle anderen Views aktualisiert werden.
-         *
-         * Diese Methode sollte dann aufgerufen werden, wenn Objekte geändert werden
-         * und dies Einfluss auf andere Views hat.
+         * @deprecated sollte im UI gesteuert werden.
          */
         protected function refresh()
         {
-            $this->refresh = true;
-            $this->setControlVar('refresh', true);
         }
 
 
         /**
-         * Setzt eine neue Perspektive für die Sitzung.
-         *
          * @param String Name der Perspektive
+         * @deprecated gibt es nicht mehr.
          */
         protected function setPerspective($name)
         {
-            Logger::info("Setting perspective to ".$name);
-            Session::set('perspective', $name);
+        }
 
-            $this->refresh();
+        protected function setCookie($name,$value='' ) {
+
+            if (empty($value))
+                $expire = time(); // Cookie wird gelöscht.
+            else
+                $expire = time() + 60 * 60 * 24 * config('security', 'cookie', 'expire');
+
+            $secure   = config('security', 'cookie', 'secure');
+            $httponly = config('security', 'cookie', 'httponly');
+            setcookie($name , $value, $expire,COOKIE_PATH, '', $secure, $httponly);
         }
     }
 

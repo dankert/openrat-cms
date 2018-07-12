@@ -36,6 +36,7 @@ $(document).on('orViewLoaded',function(event, data) {
 function formSubmit(form)
 {
 	// Login-Hack
+	/*
 	if ( $('div.panel form input[type=password]').length>0 )
 	{
 		$('#uname'    ).attr('value',$('div.panel form input[name=login_name]'    ).attr('value'));
@@ -43,6 +44,7 @@ function formSubmit(form)
 		
 		$('#uname'    ).closest('form').submit();
 	}
+	*/
 	
 	if ( $('#pageelement_edit_editor').length>0 )
 	{

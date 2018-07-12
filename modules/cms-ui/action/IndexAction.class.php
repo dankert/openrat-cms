@@ -66,16 +66,20 @@ class IndexAction extends Action
     }
 
 
+    /**
+     * Show the UI.
+     */
 	public function showView()
 	{
 		global $conf;
-		
-		// Schauen, ob eine Perspektive existiert.
-		if	( empty($this->perspective) )
+
+        $user = Session::getUser();
+
+        // Is a user logged in?
+        if	( !is_object($user) )
 		{
-			// Da keine Perspektive existiert, handelt es sich wohl um den
-			// ersten Aufruf in dieser Sitzung.
-			
+		    // Lets try an auto login.
+
 			// Versuchen, einen Benutzernamen zu ermitteln, der im Eingabeformular vorausgewählt wird.
 			$modules = explode(',',$conf['security']['modules']['autologin']);
 			
@@ -102,28 +106,29 @@ class IndexAction extends Action
 					$user = User::loadWithName( $username );
 					Session::setUser($user);
 					Logger::info('auto-login for user '.$username);
-					$this->setPerspective('start');
 				}
 				catch( ObjectNotFoundException $e )
 				{
 					Logger::warn('Username for autologin does not exist: '.$username);
-					$this->setPerspective('login');
+
+                    // Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
+                    $this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
 				}
 			}
 			else
 			{
-				// Kein Auto-Login moeglich, die Anmeldemaske anzeigen. 
-				$this->setPerspective('login');
+				// Kein Auto-Login moeglich, die Anmeldemaske anzeigen.
+                $this->setTemplateVars( array('dialogAction'=>'login','dialogMethod'=>'login'));
 			}
 		}
 
-		// Theme für den angemeldeten Benuter ermitteln, dieser wird für
-		// den Link auf die CSS-Datei benoetigt.
-		$user = Session::getUser();
+        // Theme für den angemeldeten Benuter ermitteln
 		if	( is_object($user) )
-			$style = $user->style; 
+			$style = $user->style;
 		else
 			$style = config('interface','style','default');
+
+        $this->setTemplateVar('style',$style );
 
         $userIsLoggedIn = is_object($user);
 
@@ -134,14 +139,21 @@ class IndexAction extends Action
         }
         $id = $this->getRequestId();
 
-		$jsFiles  = $this->getJSFiles();
-		$cssFiles = $this->getCSSFiles();
-		//$themeCss = $this->getThemeCSS();
+        $this->setTemplateVar('action',$action);
+        $this->setTemplateVar('id'    ,$id    );
+
+		$this->setTemplateVar('jsFiles' , $this->getJSFiles() );
+        $this->setTemplateVar('cssFiles',$this->getCSSFiles() );
 
         $styleConfig = config('style-default') + config('style', $style);
-        $themeColor = $this->getColorHexCode($styleConfig['title_background_color']);
+        $this->setTemplateVar('themeColor', $this->getColorHexCode($styleConfig['title_background_color']));
+
+        $this->setTemplateVar('notices', array());
 
 		// HTML-Datei direkt einbinden.
+        $vars = $this->getOutputData();
+        $output = $vars['output']; // will be extracted in the included template file.
+
 		require('modules/cms-ui/themes/default/layout/index.php');
 		exit;
 	}

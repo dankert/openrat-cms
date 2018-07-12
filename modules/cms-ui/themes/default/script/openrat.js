@@ -235,7 +235,7 @@ function registerWorkbenchEvents()
         }
         else
         {
-            $('div#dialog').removeClass('open').addClass('closed');
+            $('div#dialog').removeClass('is-open').addClass('is-closed');
             $('div#dialog > .view').html('');  // Dialog beenden
 
         }
@@ -269,7 +269,6 @@ function registerViewEvents( viewEl )
 {
 	$(viewEl).trigger('orViewLoaded');
 
-	
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
 	
@@ -445,7 +444,7 @@ function startDialog( name,action,method,id,params )
 
 	$('div#dialog > .view').html('<div class="header"><img class="icon" title="" src="./themes/default/images/icon/'+method+'.png" />'+name+'</div>');
 	$('div#dialog > .view').data('id',id);
-	$('div#dialog').removeClass('closed').addClass('open');
+	$('div#dialog').removeClass('is-closed').addClass('is-open');
 
 	Workbench.loadViewIntoElement( $('div#dialog > .view'), action, method, id, params );
 }

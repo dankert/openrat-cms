@@ -21,7 +21,12 @@ class FormComponent extends Component
 
 	public $visible = false;
 
-	public $target = '_self';
+    /**
+     * 'view' = Loads Action in the same view
+     * 'top' = Replaces whole workbench.
+     * @var string
+     */
+	public $target = 'view';
 
 	public $enctype = 'application/x-www-form-urlencoded';
 
@@ -42,7 +47,8 @@ class FormComponent extends Component
 		echo '<form';
 		echo ' name="' . $this->htmlvalue($this->name) . '"';
 		
-		echo ' target="' . $this->htmlvalue($this->target) . '"';
+		echo ' target="_self"';
+		echo ' data-target="' . $this->htmlvalue($this->target) . '"';
 		echo ' action="./"';
 		echo ' data-method="' . $this->htmlvalue($this->subaction) . '"';
 		echo ' data-action="' . $this->htmlvalue($this->action) . '"';
@@ -57,7 +63,8 @@ class FormComponent extends Component
         // Enable Submit on Enter
 		echo '<input type="submit" class="invisible" />';
 
-        echo '<input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="'.$this->htmlvalue($this->async).'" />';
+		if ( $this->target!='top')
+            echo '<input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="' . $this->htmlvalue($this->action) . '" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="' . $this->htmlvalue($this->subaction) . '" />';

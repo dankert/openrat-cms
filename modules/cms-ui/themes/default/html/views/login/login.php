@@ -2,10 +2,10 @@
 	
 		<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_PASSWORD') ?>" data-type="dialog" data-name="<?php echo lang('MENU_PASSWORD') ?>" data-method="password"><img src="./themes/default/images/icon/action/password.svg" title="<?php echo lang('MENU_password_DESC') ?>" /><?php echo lang('MENU_password') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_REGISTER') ?>" data-type="dialog" data-name="<?php echo lang('MENU_REGISTER') ?>" data-method="register"><img src="./themes/default/images/icon/action/register.svg" title="<?php echo lang('MENU_register_DESC') ?>" /><?php echo lang('MENU_register') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_LICENSE') ?>" data-type="dialog" data-name="<?php echo lang('MENU_LICENSE') ?>" data-method="license"><img src="./themes/default/images/icon/action/license.svg" title="<?php echo lang('MENU_license_DESC') ?>" /><?php echo lang('MENU_license') ?></a></div></div>
 		
-		<form name="" target="_self" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="login" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="top" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="login" data-async="1" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=(config('login','logo','enabled')); if($if3){?>
 				<?php $if4=(!empty(config('login','logo','url'))); if($if4){?>
-					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="<?php echo Html::url('','','') ?>">
 						<img class="" title="" src="<?php echo config('login','logo','image') ?>" />
 						
 					</a>
@@ -44,7 +44,7 @@
 					</div>
 					<div class="input">
 						<?php $if6=!(!empty($$force_username)); if($if6){?>
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> data-hint="<?php echo lang('USER_USERNAME') ?>" id="<?php echo REQUEST_ID ?>_login_name" name="login_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name" value="<?php echo Text::encodeHtml(@$login_name) ?>" /><?php if ('') { ?><input type="hidden" name="login_name" value="<?php $login_name ?>"/><?php } ?></div>
+							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> placeholder="<?php echo lang('USER_USERNAME') ?>" id="<?php echo REQUEST_ID ?>_login_name" name="login_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name" value="<?php echo Text::encodeHtml(@$login_name) ?>" /><?php if ('') { ?><input type="hidden" name="login_name" value="<?php $login_name ?>"/><?php } ?></div>
 							
 						<?php } ?>
 						<?php if(!$if6){?>
@@ -92,7 +92,7 @@
 					</div>
 				</div>
 			<?php } ?>
-			<fieldset class="<?php echo ''?" open":"" ?><?php echo ''?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('USER_NEW_PASSWORD') ?></legend><div>
+			<fieldset class="<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_NEW_PASSWORD') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_password1" class="label">
@@ -118,7 +118,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="<?php echo ''?" open":"" ?><?php echo ''?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('USER_TOKEN') ?></legend><div>
+			<fieldset class="<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_TOKEN') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_user_token" class="label">
@@ -133,7 +133,7 @@
 				</div>
 			</div></fieldset>
 			<?php $if3=(intval('1')<intval(@count($dbids))); if($if3){?>
-				<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><img src="/themes/default/images/icon/method/database.svg" /><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('DATABASE') ?></legend><div>
+				<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><img src="/themes/default/images/icon/method/database.svg" /><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('DATABASE') ?></legend><div>
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_dbid" class="label">

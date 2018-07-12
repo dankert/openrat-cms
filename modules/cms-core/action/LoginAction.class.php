@@ -800,7 +800,7 @@ class LoginAction extends Action
 		$newPassword2  = $this->getRequestVar('password2'     ,OR_FILTER_ALPHANUM);
 		
 		// Cookie setzen
-		setcookie('or_username',$loginName,time()+(60*60*24*30*12*2) );
+		$this->setCookie('or_username',$loginName );
 		
 		// Login mit Open-Id.
 		if	( $this->hasRequestVar('openid_provider') && ($this->getRequestVar('openid_provider') != 'identity' || !empty($openid_user)) )
@@ -946,9 +946,8 @@ class LoginAction extends Action
 		}
 		
 		// Cookie setzen
-		$cookieLifetime = 60*60*24*30*12*2; // 2 Jahre.
-		setcookie('or_username',$loginName                  ,time()+$cookieLifetime,'/' );
-		setcookie('or_dbid'    ,$this->getRequestVar('dbid'),time()+$cookieLifetime,'/');
+		$this->setCookie('or_username',$loginName );
+		$this->setCookie('or_dbid'    ,$this->getRequestVar('dbid'));
 
 		// Authentifzierungs-Module.
 		$modules = explode(',',$conf['security']['modules']['authenticate']);
@@ -1076,8 +1075,8 @@ class LoginAction extends Action
 			if	( $this->hasRequestVar('remember') )
 			{
 				// Cookie setzen
-				setcookie('or_username',$user->name        ,time()+(60*60*24*30*12*2) );
-				setcookie('or_token'   ,$user->loginToken(),time()+(60*60*24*30*12*2) );
+				$this->setCookie('or_username',$user->name         );
+                $this->setCookie('or_token'   ,$user->loginToken() );
 			}
 				
 			// Anmeldung erfolgreich.
@@ -1262,7 +1261,7 @@ class LoginAction extends Action
 		// Login-Token löschen:
 		// Wenn der Benutzer sich abmelden will, dann soll auch die automatische
 		// Anmeldung deaktiviert werden.
-		setcookie('or_token'   ,'',0 );
+        $this->setCookie('or_token'   ,null );
 		
 		// Umleiten auf eine definierte URL.s
 		$redirect_url = @$conf['security']['logout']['redirect_url'];
@@ -1272,12 +1271,9 @@ class LoginAction extends Action
 			$this->redirect($redirect_url);
 		}
 
-		Session::set('perspective','login');
-		
 		// Style zurücksetzen.
 		// Der Style des Benutzers koennte auch stehen bleiben. Aber dann gäbe es Rückschlüsse darauf, wer zuletzt angemeldet war (Sicherheit!).
 		$this->setStyle( config('interface','style','default') );
-		$this->refresh();
 	}
 
 	
@@ -2115,7 +2111,7 @@ class LoginAction extends Action
 			
 			// Bug in PHP 4.3.2: Session-Cookie wird nicht neu gesetzt.
 			if ( ini_get("session.use_cookies") )
-				setcookie( session_name(),session_id(),ini_get("session.cookie_lifetime"),"/" );
+                $this->setCookie( session_name(),session_id() );
 		}
 		elseif	( version_compare(phpversion(),"5.1.0",">") )
 		{

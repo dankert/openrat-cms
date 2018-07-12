@@ -718,6 +718,10 @@ function createDefaultConfig()
     $conf['search']['quicksearch']['flag']['description']=true;
     $conf['search']['quicksearch']['flag']['content']=false;
     $conf['security'] = array();
+    $conf['security']['cookie']=array();
+    $conf['security']['cookie']['secure']=false;
+    $conf['security']['cookie']['httponly']=true;
+    $conf['security']['cookie']['expire']=720;
     $conf['security']['readonly']=false;
     $conf['security']['nopublish']=false;
     $conf['security']['umask']='0';
