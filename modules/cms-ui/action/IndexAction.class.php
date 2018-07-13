@@ -189,6 +189,8 @@ class IndexAction extends Action
                 $css[] = $componentCssFile;
         }
 
+        $css[] = OR_HTML_MODULES_DIR . 'editor/simplemde/simplemde';
+
         $outFiles = array();
         $modified = false;
 		foreach ($css as $cssF)
@@ -196,8 +198,18 @@ class IndexAction extends Action
 			$lessFile = $cssF . '.less';
 			$cssFile = $cssF . '.css';
 			$cssMinFile = $cssF . '.min.css';
-			
-			if (! is_file($lessFile))
+
+            if (! is_file($lessFile) && is_file($cssMinFile))
+            {
+                // Nur die min.css existiert. Das ist ok.
+                // Aber vielleicht muss die Production-CSS aktualisiert werden.
+                if (filemtime($cssMinFile) > filemtime($productionCSSFile)) {
+                    // minifizierte CSS-Version ist neuer als Production-CSS, muss aktualisiert werden.
+                    $modified = true;
+                }
+                $outFiles[] = $cssMinFile;
+            }
+			elseif (! is_file($lessFile))
 			{
 				Logger::warn("Stylesheet not found: $lessFile");
 				continue;
@@ -487,7 +499,9 @@ class IndexAction extends Action
             $js[] = OR_HTML_MODULES_DIR . 'editor/codemirror/mode/lua/lua';
             $js[] = OR_HTML_MODULES_DIR . 'editor/codemirror/mode/groovy/groovy';
 
-			
+
+            $js[] = OR_HTML_MODULES_DIR . 'editor/simplemde/simplemde';
+
 			//$js[] = OR_THEMES_DIR . '../editor/markitup/markitup/jquery.markitup';
 			//$js[] = OR_THEMES_DIR . '../editor/editor/ckeditor';
 			//$js[] = OR_THEMES_DIR . '../editor/ace/src-min-noconflict/ace';
@@ -516,12 +530,12 @@ class IndexAction extends Action
 				
 				if (!is_file($jsFileNormal) && !is_file($jsFileMin))
 				{
-					Logger::warn("No Javascript file found for $jsFile");
+					Logger::warn("Missing Javascript file: $jsFileNormal");
 					continue;
 				}
 				elseif (is_file($jsFileNormal) && !is_file($jsFileMin))
 				{
-					Logger::warn("No Min-Javascript file found for $jsFile");
+					Logger::warn("Missing Min-Javascript file: $jsFileMin");
 					continue;
 				}
 				elseif (!is_file($jsFileNormal) && is_file($jsFileMin))
