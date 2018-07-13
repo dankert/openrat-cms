@@ -14,9 +14,12 @@ $(document).on('orViewLoaded',function(event, data) {
 	});
 
 	// After click to "OK" the form is submitted.
+	// Why this?? input type=submit will submit!
+	/*
     $(event.target).find('input.submit.ok').click( function() {
 		$(this).closest('form').submit();
 	});
+	*/
 
     $(event.target).find('input.submit.cancel').click( function() {
         // TODO: cancel dialog screen (if clicked in dialog)
@@ -24,8 +27,14 @@ $(document).on('orViewLoaded',function(event, data) {
 
     // Submithandler for the whole form.
     $(event.target).find('form').submit(function( event ) {
-        formSubmit($(this));
-        event.preventDefault();
+
+        //
+        if   ($(this).data('target')=='view')
+		{
+            formSubmit($(this));
+        	event.preventDefault();
+        }
+        // target=top will load the native way without javascript.
     });
 
 } );

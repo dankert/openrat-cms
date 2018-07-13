@@ -22,7 +22,7 @@ $( function()
     filterMenus(action);
 
 
-    $('#workbench .view').each( function(index) {
+    $('.view').each( function(index) {
     	registerViewEvents(this);
     });
 
