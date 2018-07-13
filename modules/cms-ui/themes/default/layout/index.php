@@ -1,4 +1,5 @@
 <?php
+        extract($output);
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -55,7 +56,7 @@
             <header>
                 <span class="title"></span>
             </header>
-            <div id="editor" class="view view-loader" data-method="edit">
+            <div id="editor" class="view view-loader" data-action="<?php echo $action ?>" data-method="edit" data-id="<?php echo $id ?>">
                 <?php embedView($action,'edit'); ?>
             </div>
 
@@ -65,7 +66,7 @@
             <header>
                 <a href=""></a>
             </header>
-            <div id="info" class="view view-loader" data-method="info">
+            <div id="info" class="view view-loader" data-method="info" data-id="<?php echo $id ?>">
                 <?php embedView($action,'info'); ?>
             </div>
 
@@ -76,13 +77,24 @@
 
 
 <?php /* Modal dialog */ ?>
-<div id="dialog" class="panel wide">
+<div id="dialog" class="is-<?php echo empty($dialogAction)?'closed':'open' ?>">
+    <div class="view" class="">
+        <?php // Shows directly a modal dialog (if present)
+              if(!empty($dialogAction))
+                  embedView($dialogAction,$dialogMethod);
+        ?>
+    </div>
+
+    <div id="filler"><?php /* empty element, this is only for styling the background. */ ?>
+        <span class="icon">X</span>
+    </div>
 </div>
 
-<div id="filler">
-</div>
 
 <div id="noticebar">
+    <?php /* Inline Notices */if(is_array($notices)) foreach( $notices as $notice ) { ?>
+        <div class="notice <?php echo $notice['status'] ?>"><div class="text"><?php echo $notice['text'] ?></div></div>'
+    <?php } ?>
 </div>
 
 <footer class="initial-hidden" id="footer">

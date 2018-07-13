@@ -8,6 +8,7 @@ class HeaderComponent extends Component
 
     public function begin()
     {
+        if(false) // DEACTIVATED
         if (isset($this->views)) {
             echo '<div class="headermenu">';
 

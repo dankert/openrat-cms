@@ -100,7 +100,8 @@ function formSubmit(form)
 		{
 			// Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
 			// beendet wird.
-			$('div#dialog > .view').html('').hide();  // Dialog beenden
+			$('#dialog > .view').html('');  // Dialog beenden
+			$('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
 		}
 		
 		$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
@@ -186,10 +187,11 @@ function doResponse(data,status,element)
 			// geschlossen werden.
 			if	( $(element).data('async') != 'true' )
 			{
-				// Verarbeitung erfolgt asynchron, das heißt, dass der evtl. geöffnete Dialog
+				// Verarbeitung erfolgt synchron, das heißt, dass jetzt der evtl. geöffnete Dialog
 				// beendet wird.
-				$('div#dialog > .view').html('').hide();  // Dialog beenden
-				
+				$('#dialog > .view').html('').hide();  // Dialog beenden
+                $('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
+
 				// Da gespeichert wurde, jetzt das 'dirty'-flag zurücksetzen.
 				$(element).closest('div.panel').find('div.header ul.views li.action.active').removeClass('dirty');
 			}

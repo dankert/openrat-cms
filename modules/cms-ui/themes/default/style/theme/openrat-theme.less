@@ -35,11 +35,22 @@ html.theme-@{cms-theme-id} {
     .box-shadow(0px, 0px, 40px, @cms-text-color);
   }
 
-  div#dialog > .view{
-    background-color: @cms-background-color;
-    color: @cms-text-color;
-    border-color: @cms-text-color ! important;
-    .box-shadow(0px, 0px, 40px, @cms-text-color);
+  div#dialog {
+    > .view{
+      background-color: @cms-background-color;
+      color: @cms-text-color;
+      border-color: @cms-text-color ! important;
+      .box-shadow(0px, 0px, 40px, @cms-text-color);
+    }
+
+    div#filler {
+      background-color: @cms-text-color;
+
+      span.icon {
+        color: @cms-background-color;
+      }
+
+    }
   }
 
   div.container > div.divider.ui-draggable-dragging {
@@ -255,10 +266,6 @@ html.theme-@{cms-theme-id} {
     display: none;
   }
 
-  div#filler {
-    background-color: @cms-text-color;
-  }
-
   #title > div > div.arrow-down {
     display: inline;
     width: 0;
@@ -414,10 +421,6 @@ html.theme-@{cms-theme-id} {
   div.content pre, div.dropdown {
     background-color: @cms-title-text-color;
     color: @cms-text-color;
-  }
-
-  div.filler div.headermenu > a.entry, div.filler div.header a.back.button {
-    font-size: 0.8em;
   }
 
   div.line.filedropzone > div.input {

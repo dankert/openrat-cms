@@ -44,6 +44,13 @@ $( function()
     loadTree(); // Initial Loading of the navigationtree
 
 
+    $(document).keyup(function(e) {
+        if (e.keyCode == 27) { // ESC keycode
+            $('#dialog .view').fadeOut('fast').html('');
+            $('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
+        }
+    });
+
 
 });
 

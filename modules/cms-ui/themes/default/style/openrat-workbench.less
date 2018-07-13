@@ -64,6 +64,33 @@ div#dialog {
 	&.is-closed {
 		display: none;
 	}
+
+	/* Modale Dialoge */
+	div#filler {
+		position: absolute;
+		z-index: 100;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		opacity: 0.5;
+
+		span.icon {
+			font-family: 'Helvetica', 'Arial', sans-serif;
+			opacity: 1;
+			font-size: 3em;
+			font-weight: bold;
+			text-align: center;
+			width: 40px;
+			height: 40px;
+
+			position: absolute;
+			right:20px;
+			top: 20px;
+		}
+	}
+
+
 }
 
 
