@@ -149,7 +149,13 @@ function doResponse(data,status,element)
 		
 		// Notice-Bar mit dieser Meldung erweitern.
 		var notice = $('<div class="notice '+value.status+'"><div class="text">'+value.text+'</div></div>');
-		notifyBrowser(value.text);
+
+		// Bei asynchronen Requests wird zusätzlich eine Browser-Notice erzeugt, da der
+		// Benutzer bei länger laufenden Aktionen vielleicht das Tab oder Fenster
+		// gewechselt hat.
+        if   ($(element).data('async') == 'true')
+			notifyBrowser(value.text);
+
 		$.each(value.log, function(name,value) {
 			$(notice).append('<div class="log">'+value+'</div>');
 		});

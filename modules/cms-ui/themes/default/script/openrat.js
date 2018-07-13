@@ -35,6 +35,12 @@ $( function()
 	
 	Workbench.initialize();
 
+    // Per Klick wird die Notice entfernt.
+    $('#noticebar .notice').click( function()
+    {
+        $(this).fadeOut('fast',function() { $(this).remove(); } );
+    } );
+
     loadTree(); // Initial Loading of the navigationtree
 
 
@@ -740,8 +746,7 @@ function notify( type,msg )
 	// Notice-Bar mit dieser Meldung erweitern.
 	var notice = $('<div class="notice '+type+'"><div class="text">'+msg+'</div></div>');
 	$('#noticebar').prepend(notice); // Notice anhängen.
-	notifyBrowser(msg);
-	
+
 	// Per Klick wird die Notice entfernt.
 	$(notice).fadeIn().click( function()
 	{
