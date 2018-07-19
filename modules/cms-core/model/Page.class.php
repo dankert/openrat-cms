@@ -871,8 +871,9 @@ class Page extends BaseObject
 	 */
 	function realFilename()
 	{
-		$this->withLanguage = config('publish','filename_language') == 'always' || Language::count() > 1;
-		$this->withModel    = config('publish','filename_type'    ) == 'always' || Model::count()    > 1;
+		$project = new Project( $this->projectid );
+		$this->withLanguage = config('publish','filename_language') == 'always' || count($project->getLanguageIds()) > 1;
+		$this->withModel    = config('publish','filename_type'    ) == 'always' || count($project->getModelIds()   ) > 1;
 		
 		return $this->full_filename();
 	}
