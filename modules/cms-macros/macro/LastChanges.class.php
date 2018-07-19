@@ -18,6 +18,7 @@
 use cms\model\Folder;
 use cms\model\Link;
 use cms\model\Page;
+use cms\model\Project;
 
 
 /**
@@ -51,8 +52,6 @@ class LastChanges extends Macro
 	// 
 	function execute()
 	{
-		$project = Session::getProject();
-		
 		if	( $this->folderid === 'self' )
 		{
 			$page = $this->getPage();
@@ -67,7 +66,11 @@ class LastChanges extends Macro
 			$changes = $f->getLastChanges();
 		}
 		else
-			$changes = $project->getLastChanges();
+        {
+            $project = new Project( $this->page->projectid );
+            $changes = $project->getLastChanges();
+        }
+
 				
 		$count = 0;
 		

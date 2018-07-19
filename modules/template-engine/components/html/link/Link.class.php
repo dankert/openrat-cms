@@ -3,6 +3,7 @@
 namespace template_engine\components;
 
 use Html;
+use JSON;
 
 /**
  * Erzeugt einen HTML-Link.
@@ -105,7 +106,13 @@ class LinkComponent extends Component
 			echo ' data-id="' . $this->htmlvalue($this->id) . '"';
 		else
 			echo ' data-id="<?php echo OR_ID ?>"';
-		
+
+		$json = new JSON();
+        $arrayvalues = array();
+        foreach( $this->getExtraParamArray() as $varname => $varvalue )
+            $arrayvalues[ $this->htmlvalue($varname) ] = $this->htmlvalue($varvalue);
+        echo ' data-extra="'.str_replace('"',"'",str_replace(array("\t", "\r", "\n"),'',$json->encode($arrayvalues))).'"';
+
 		switch ($this->type)
 		{
 			case 'post':
@@ -136,19 +143,11 @@ class LinkComponent extends Component
 				echo "&quot;,";
 				
 				echo '&quot;'.REQ_PARAM_TOKEN . "&quot;:&quot;" . '<?php echo token() ?>' . "&quot;,";
-				
-				if (! empty($this->var1))
-					echo "&quot;var1&quot;:&quot;" . $this->htmlvalue($this->value1) . "&quot;,";
-				if (! empty($this->var2))
-					echo "&quot;var2&quot;:&quot;" . $this->htmlvalue($this->value2) . "&quot;,";
-				if (! empty($this->var3))
-					echo "&quot;var3&quot;:&quot;" . $this->htmlvalue($this->value3) . "&quot;,";
-				if (! empty($this->var4))
-					echo "&quot;var4&quot;:&quot;" . $this->htmlvalue($this->value4) . "&quot;,";
-				if (! empty($this->var5))
-					echo "&quot;var5&quot;:&quot;" . $this->htmlvalue($this->value5) . "&quot;,";
-				
-				echo "&quot;none&quot;:&quot;0&quot;}\"";
+
+                foreach( $this->getExtraParamArray() as $varname => $varvalue )
+					echo "&quot;".$this->htmlvalue($varname)."&quot;:&quot;" . $this->htmlvalue($varvalue) . "&quot;,";
+
+                echo "&quot;none&quot;:&quot;0&quot;}\"";
 				
 				break;
 			
@@ -158,7 +157,15 @@ class LinkComponent extends Component
 				break;
 			
 			default:
-				echo ' href="<?php echo Html::url('.$this->value($this->action).','.$this->value($this->subaction).','.$this->value($this->id).') ?>"';
+				echo ' href="<?php echo Html::url('.$this->value($this->action).','.$this->value($this->subaction).','.$this->value($this->id);
+
+				$arrayvalues = array();
+				foreach( $this->getExtraParamArray() as $varname => $varvalue )
+                    $arrayvalues[] = $this->value($varname) . '=>'.$this->value($varvalue);
+
+                echo ',array('.implode(',',$arrayvalues).')';
+
+				echo ') ?>"';
 		}
 		
 		echo '>';
@@ -168,6 +175,19 @@ class LinkComponent extends Component
 	{
 		echo '</a>
 ';
+	}
+
+
+	private function getExtraParamArray()
+	{
+		$vars = array();
+		if (! empty($this->var1))		$vars[$this->var1] = $this->value1;
+		if (! empty($this->var2))		$vars[$this->var2] = $this->value2;
+		if (! empty($this->var3))		$vars[$this->var3] = $this->value3;
+		if (! empty($this->var4))		$vars[$this->var4] = $this->value4;
+		if (! empty($this->var5))		$vars[$this->var5] = $this->value5;
+
+		return $vars;
 	}
 }
 ?>

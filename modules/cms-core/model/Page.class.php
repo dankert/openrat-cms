@@ -164,7 +164,8 @@ class Page extends BaseObject
 		$param = array(
 			'oid'                 => '__OID__'.$objectid.'__',
 			REQ_PARAM_MODEL_ID    => $this->modelid          ,
-			REQ_PARAM_LANGUAGE_ID => $this->languageid        );
+			REQ_PARAM_LANGUAGE_ID => $this->languageid       ,
+            REQ_PARAM_EMBED       => '1'                       );
 		
 		if	( $this->icons )
 			$param['withIcons'] = '1';

@@ -24,7 +24,7 @@
 			<?php foreach($el as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
 					<td class="clickable">
-						<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="pageelement" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $pageelementid ?>" href="javascript:void(0);">
+						<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="pageelement" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $pageelementid ?>" data-extra="{'languageid':'<?php echo $languageid ?>','modelid':'<?php echo $modelid ?>'}" href="<?php echo Html::url('pageelement','',$pageelementid,array('languageid'=>$languageid,'modelid'=>$modelid)) ?>">
 							<img class="image-icon image-icon--element" title="" src="./modules/cms-ui/themes/default/images/icon/element/<?php echo $type ?>.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
@@ -41,7 +41,7 @@
 				</tr>
 			<?php } ?>
 		</table>
-		<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('menu_page_show') ?></legend><div>
+		<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('menu_page_show') ?></legend><div>
 			<div>
 				<iframe name="preview" src="<?php echo $preview_url ?>"></iframe>
 				

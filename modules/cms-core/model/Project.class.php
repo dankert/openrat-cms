@@ -922,8 +922,8 @@ SQL
 		// Variablen setzen.
 		$sql->setInt( 'projectid', $this->projectid );
 		
-		$language = Session::getProjectLanguage();
-		$sql->setInt( 'languageid', $language->languageid );
+		$languageid = $this->getDefaultLanguageId();
+		$sql->setInt( 'languageid', $languageid );
 		
 		return $sql->getAll();
 	}

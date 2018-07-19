@@ -1079,7 +1079,7 @@ SQL
 				// Wenn Inhalt leer, dann versuchen, den Inhalt der Default-Sprache zu laden.
 				if   ( $inhalt == '' && $conf['content']['language']['use_default_language'] )
 				{
-					$project = \Session::getProject();
+					$project = new Project($this->page->projectid);
 					$this->languageid = $project->getDefaultLanguageId();
 					$this->load();
 					$inhalt = $this->text;
@@ -1220,7 +1220,8 @@ SQL
 
 					if	( class_exists($className) )
 					{
-						$macro = new $className;
+                        /** @var \Macro $macro */
+                        $macro = new $className;
 						$macro->page = &$this->page;
 
 						if	( method_exists( $macro,'execute' ) )
@@ -1397,7 +1398,7 @@ SQL
 					case 'edit_url':
 						$raw = true;
 						$db = \Session::getDatabase();
-						$inhalt = Html::url('index','object',$this->page->objectid,array('dbid'=>$db->id));
+						$inhalt = Html::url('page',null,$this->page->objectid,array('dbid'=>$db->id));
 						break;
 					case 'edit_fullurl':
 						$raw = true;
@@ -1408,7 +1409,7 @@ SQL
 						                'modelid'   =>$this->page->modelid,
 						                'languageid'=>$this->page->languageid,
 						                'elementid' =>$this->element->elementid );
-						$inhalt .= '/'.basename(Html::url('index','object',$this->page->objectid,$params));
+						$inhalt .= '/'.basename(Html::url('page',null,$this->page->objectid,$params));
 						break;
 					case 'lastch_user_username':
 						$user = $this->page->lastchangeUser;

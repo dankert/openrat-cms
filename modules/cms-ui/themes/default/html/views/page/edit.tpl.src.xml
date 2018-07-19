@@ -21,7 +21,7 @@
 		<list list="el" extract="true">
 			<row class="data">
 				<column class="clickable">
-					<link type="open" title="var:desc" name="var:name" action="pageelement" id="var:pageelementid">
+					<link type="open" title="var:desc" name="var:name" action="pageelement" id="var:pageelementid" var1="languageid" value1="var:languageid" var2="modelid" value2="var:modelid">
 						<image elementtype="var:type" align="left"></image>
 						<text var="name"></text>
 					</link>

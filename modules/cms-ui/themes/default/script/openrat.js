@@ -689,6 +689,7 @@ function createUrl(action,subaction,id,extraid,embed)
 
 	if	( typeof extraid === 'string')
 	{
+		extraid = extraid.replace(/'/g,'"'); // Replace ' with ".
 		jQuery.each(jQuery.parseJSON(extraid), function(name, value) {
 			if(name=='action'||name=='subaction'||name=='id')
 				return;

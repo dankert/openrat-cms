@@ -506,21 +506,23 @@ class PageAction extends ObjectAction
 			if   ( $value->element->isWritable() )
 			{
 				$list[$id] = array();
-				$list[$id]['name']       = $value->element->name;
+				$list[$id]['name']           = $value->element->name;
 				$list[$id]['pageelementid' ] = $this->page->objectid.'_'.$id;
-				$list[$id]['desc']       = $value->element->desc;
-				$list[$id]['type']       = $value->element->type;
+				$list[$id]['desc']           = $value->element->desc;
+				$list[$id]['languageid']     = $this->page->languageid;
+				$list[$id]['modelid'   ]     = $this->page->modelid;
+				$list[$id]['type']           = $value->element->type;
 	
 				$list[$id]['archive_count'] = intval($value->getCountVersions());
 				if	( $list[$id]['archive_count'] > 0 )
-					$list[$id]['archive_url'] = Html::url( 'pageelement','archive',$this->page->id,array('elementid'=>$id) );
+					$list[$id]['archive_url'] = Html::url( 'pageelement','archive',$this->page->id,array(REQ_PARAM_ELEMENT_ID=>$id,REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid) );
 				
 				// Inhalt anzeigen
 				$list[$id]['value'] = $value->value;
 			}
 		}
 
-		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('withIcons'=>'1',REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid) ) );
+		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array('withIcons'=>'1',REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid,REQ_PARAM_EMBED=>'1') ) );
 		$this->setTemplateVar('properties',$this->page->getProperties() );
 		$this->setTemplateVar('el',$list);
 	}

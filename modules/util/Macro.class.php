@@ -16,6 +16,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 use cms\model\Page;
+use cms\model\Project;
 
 
 /**
@@ -28,6 +29,9 @@ use cms\model\Page;
  */
 class Macro
 {
+    /**
+     * @var \cms\model\Project Projekt
+     */
 	var $project;
 	var $output   = '';
 	var $objectid = 0;
@@ -103,13 +107,14 @@ class Macro
 	 */
 	public function getRootObjectId()
 	{
-		$project = Session::getProject();
+	    $project = new Project( $this->page->projectid);
 		return $project->getRootObjectId();
 	}
 
 	
 	/**
 	 * DO NOT USE.
+     * @deprecated
 	 */
 	public function folderid()
 	{
