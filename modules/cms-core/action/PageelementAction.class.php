@@ -631,8 +631,13 @@ class PageelementAction extends Action
 			//Änderung der möglichen Types
 			$types = array('file','page','link');
 			$objects[ 0 ] = lang('LIST_ENTRY_EMPTY'); // Wert "nicht ausgewählt"
+
+            $project = new Project( $this->page->projectid );
+            $folder = new Folder($project->getRootObjectId());
+            $folder->load();
+
 			//Auch Dateien dazu
-			foreach( Folder::getAllObjectIds($types) as $id )
+			foreach( $folder->getAllObjectIds($types) as $id )
 			{
 				$f = new Folder( $id );
 				$f->load();
@@ -641,7 +646,7 @@ class PageelementAction extends Action
 				$objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
 			}
 
-			foreach( Folder::getAllFolders() as $id )
+			foreach( $folder->getAllFolders() as $id )
 			{
 				$f = new Folder( $id );
 				$f->load();
