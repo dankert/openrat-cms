@@ -113,36 +113,6 @@ class ModelAction extends Action
 	}
 
 
-	function listingView()
-	{
-		global $conf_php;
-		$actModel = Session::getProjectModel();
-
-//		$var['act_modelid'] = $this->getSessionVar('modelid');
-	
-		$list = array();
-		foreach( $this->project->getModelIds() as $id )
-		{
-			$m = new Model( $id );
-			$m->load();
-
-			$list[$id]['name'] = $m->name;
-			
-			if	( $this->userIsAdmin() )
-				$list[$id]['url' ] = Html::url('model','edit',$id,
-				                               array() );
-
-			if	( ! $m->isDefault && $this->userIsAdmin() )
-				$list[$id]['default_url'] = Html::url('model','setdefault',$id);
-
-			if	( $actModel->modelid != $m->modelid )
-				$list[$id]['select_url' ] = Html::url('index','model',$id);
-		}
-		$this->setTemplateVar( 'el',$list );
-		$this->setTemplateVar( 'add',$this->userIsAdmin() );
-	}
-
-
 	/**
 	 * Bearbeiten der Variante.
 	 * Ermitteln aller Eigenschaften der Variante.
@@ -155,29 +125,7 @@ class ModelAction extends Action
 	}
 
 
-	function checkmenu( $menu )
-	{
-		switch( $menu )
-		{
-			case 'remove':
-				$actModel = Session::getProjectModel();
-				return
-					!readonly()                          && 
-					$this->userIsAdmin()                 &&
-					is_object($this->model)              &&
-					count( $this->model->getAll() ) >= 2 &&
-					$actModel->modelid != $this->model->modelid;
-				
-			case 'add':
-				return
-					!readonly() && $this->userIsAdmin();
-					
-			default:
-				return true;
-		}
-	}
-	
-	
+
 	/**
 	 * Liefert die Struktur zu diesem Ordner:
 	 * - Mit den übergeordneten Ordnern und

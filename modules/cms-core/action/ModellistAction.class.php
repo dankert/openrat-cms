@@ -34,34 +34,27 @@ use Session;
 class ModellistAction extends Action
 {
     /**
-     * @var Model
+     * @var Project
      */
-    public $model;
+    public $project;
 
 	public $security = SECURITY_USER;
 
-    /**
-     * @var Project
-     */
-    private $project;
 
     function __construct()
 	{
         parent::__construct();
 
-        $this->project = new Project( $this->request->getProjectId() );
-	}
+        $this->project = new Project( $this->request->getRequestId());
+    }
 
 
 	function showView()
 	{
-		global $conf_php;
-		$actModel = Session::getProjectModel();
+		$project = new Project( $this->project->projectid );
 
-//		$var['act_modelid'] = $this->getSessionVar('modelid');
-	
 		$list = array();
-		foreach( $this->project->getModelIds() as $id )
+		foreach( $project->getModelIds() as $id )
 		{
 			$m = new Model( $id );
 			$m->load();
@@ -74,8 +67,7 @@ class ModellistAction extends Action
 			if	( ! $m->isDefault && $this->userIsAdmin() )
 				$list[$id]['default_url'] = Html::url('model','setdefault',$id);
 
-			if	( $actModel->modelid != $m->modelid )
-				$list[$id]['select_url' ] = Html::url('index','model',$id);
+			$list[$id]['select_url' ] = Html::url('index','model',$id);
 		}
 		$this->setTemplateVar( 'el',$list );
 		$this->setTemplateVar( 'add',$this->userIsAdmin() );
@@ -102,7 +94,7 @@ class ModellistAction extends Action
 	function addPost()
 	{
 		$model = new Model();
-		$model->projectid = $this->project->projectid;
+		$model->projectid = $this->getRequestVar('projectid');
 		$model->name      = $this->getRequestVar('name');
 		$model->add();
 		
