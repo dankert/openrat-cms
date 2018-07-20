@@ -36,7 +36,7 @@ use cms\model\Value;
  * @version $Revision$
  * @package openrat.services
  */
-class AdministrationTree
+class Tree
 {
     public $treeElements = array();
 

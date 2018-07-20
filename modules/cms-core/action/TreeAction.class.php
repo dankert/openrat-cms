@@ -2,7 +2,7 @@
 
 namespace cms\action;
 
-use AdministrationTree;
+use Tree;
 use cms\model\Language;
 use cms\model\Model;
 
@@ -46,7 +46,7 @@ class TreeAction extends Action
 	 */
 	public function loadBranchView()
 	{
-        $tree = new AdministrationTree();
+        $tree = new Tree();
 
         $type = $this->getRequestVar('type');
 		
