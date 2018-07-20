@@ -85,6 +85,18 @@ class Tree
         $treeElement->type = 'userandgroups';
 
         $this->addTreeElement($treeElement);
+
+        if ($this->userIsAdmin)
+        {
+            $treeElement = new TreeElement();
+            $treeElement->text = lang('PREFERENCES');
+            $treeElement->description = lang('PREFERENCES');
+            $treeElement->icon = 'configuration';
+            $treeElement->action = 'configuration';
+
+            $this->addTreeElement($treeElement);
+        }
+
     }
 
 
