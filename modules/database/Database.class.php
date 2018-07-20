@@ -64,7 +64,6 @@ class Database
 
 	/**
 	 * Client.
-	 * Enth�lt ein Objekt der Klasse db_<type>.
 	 *
 	 * @var PDODriver
 	 */
@@ -108,35 +107,14 @@ class Database
 	 */
 	public function connect()
 	{
-		// Ausfuehren des Systemkommandos vor Verbindungsaufbau
-		if	( !empty($this->conf['cmd']))
-		{
-			$ausgabe = array();
-			$rc      = false;
+        // Ausfuehren des Systemkommandos vor Verbindungsaufbau
+        if (!empty($this->conf['cmd']))
+            $this->executeSystemCommand( $this->conf['cmd'] );
 
-			Logger::debug("Database command executing: ".$this->conf['cmd']);
-			exec( $this->conf['cmd'],$ausgabe,$rc );
-			
-			foreach( $ausgabe as $zeile )
-				Logger::debug("Database command output: ".$zeile);
-			
-			if	( $rc != 0 )
-			{
-				throw new RuntimeException( 'Command failed: '.implode("",$ausgabe) );
-			}
-		}
-		
-		$type = $this->conf['type'];
-		$classname = 'database\\driver\\'.strtoupper($type).'Driver';
-		if	( ! class_exists($classname) )
-		{
-			$this->available = false;
-			throw new RuntimeException( "Database type '$type' is not available, class '$classname' was not found");
-		}
 		// Client instanziieren
-		$this->client = new $classname;
-		
+		$this->client = new PDODriver();
 
+		// Verbindung aufbauen
 		$this->client->connect( $this->conf );
 		
 		// SQL nach Verbindungsaufbau ausfuehren.
@@ -144,9 +122,9 @@ class Database
 		{
 			$cmd = $this->conf['connection_sql'];
 			
-			$sql = $this->sql($cmd);
+			$stmt = $this->sql($cmd);
 			
-			$ok = $sql->execute();
+			$ok = $stmt->execute();
 			
 			if	( ! $ok )
 			{
@@ -165,10 +143,9 @@ class Database
         }
 
 
-        Logger::debug('database connection established');
+        Logger::debug('Database connection established');
 		
 		$this->available = true;
-		return true;
 	}
 
 	/**
@@ -221,7 +198,24 @@ class Database
 	{
 		return new Statement( $sql,$this->client,$this->conf);
 	}
-	
+
+
+    private function executeSystemCommand( $cmd )
+    {
+        $ausgabe = array();
+        $rc = false;
+
+        Logger::debug("Database command executing: " . $this->conf['cmd']);
+        exec($cmd, $ausgabe, $rc);
+
+        foreach ($ausgabe as $zeile)
+            Logger::debug("Database command output: " . $zeile);
+
+        if ($rc != 0) {
+            throw new RuntimeException('Command failed: ' . implode("", $ausgabe));
+        }
+    }
+
 }
 
 

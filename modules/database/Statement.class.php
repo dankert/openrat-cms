@@ -17,6 +17,7 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 namespace database;
+use database\driver\PDODriver;
 use Exception;
 use RuntimeException;
 
@@ -38,9 +39,8 @@ class Statement
 
 	/**
 	 * Client.
-	 * Enth�lt ein Objekt der Klasse db_<type>.
 	 *
-	 * @var Object
+	 * @var PDODriver
 	 */
 	var $client;
 	
@@ -50,6 +50,12 @@ class Statement
 	 * @var array
 	 */
 	var $conf;
+
+    /**
+     * Statement
+     * @var \PDOStatement
+     */
+	var $stmt;
 
     /**
      * Statement constructor.
@@ -67,12 +73,9 @@ class Statement
 		$sql = str_replace('}}',$conf['suffix'],$sql);
 		
 		$this->sql = new Sql( $sql );
-		
-		// Vorbereitete Datenbankabfrage ("Prepared Statement")
-		$this->client->clear();
-		
+
 		// Statement an die Datenbank schicken
-		$this->client->prepare( $this->sql->query,$this->sql->param );
+		$this->stmt = $this->client->prepare( $this->sql->query,$this->sql->param );
 	}
 
 
@@ -96,7 +99,7 @@ class Statement
 	public function execute( )
 	{
 		// Ausfuehren...
-		$result = $this->client->query($this->sql);
+		$result = $this->client->query($this->stmt, $this->sql);
 	
 		if	( $result === FALSE )
 		{
@@ -118,8 +121,7 @@ class Statement
 		$none = '';
 		$result = $this->query();
 		
-		$row = $this->client->fetchRow( $result,0 );
-		$this->client->freeResult($result);
+		$row = $this->client->fetchRow( $this->stmt, $result,0 );
 
 		if	( ! is_array($row) )
 			return $none;
@@ -139,8 +141,7 @@ class Statement
 	{
 		$result = $this->query();
 		
-		$row = $this->client->fetchRow( $result,0 );
-		$this->client->freeResult($result);
+		$row = $this->client->fetchRow( $this->stmt, $result,0 );
 
 		if	( ! is_array($row) )
 			$row = array();
@@ -160,7 +161,7 @@ class Statement
 
 		$i = 0;
 		$col = array();
-		while( $row = $this->client->fetchRow( $result,$i++ ) )
+		while( $row = $this->client->fetchRow( $this->stmt, $result,$i++ ) )
 		{
 			if	( empty($row) )
 				break;
@@ -169,8 +170,6 @@ class Statement
 			$col[] = $row[ $keys[0] ];
 		}
 			
-		$this->client->freeResult($result);
-		
 		return $col;
 	}
 
@@ -189,7 +188,7 @@ class Statement
 
 		$i = 0;
 		
-		while( $row = $this->client->fetchRow( $result,$i++ ) )
+		while( $row = $this->client->fetchRow( $this->stmt, $result,$i++ ) )
 		{
 			if	( empty($row) )
 				break;
@@ -211,8 +210,6 @@ class Statement
 			}
 		}
 
-		$this->client->freeResult( $result );
-
 		return $results;
 	}
 
@@ -229,13 +226,11 @@ class Statement
 		$results = array();
 		$i = 0;
 
-		while( $row = $this->client->fetchRow( $result,$i++ ) )
+		while( $row = $this->client->fetchRow( $this->stmt, $result,$i++ ) )
 		{
 			$results[] = $row;
 		}
 
-		$this->client->freeResult( $result );
-		
 		return $results;
 	}
 	
@@ -266,7 +261,7 @@ class Statement
      */
 	function setInt( $name,$value )
 	{
-		$this->client->bind( $name, (int)$value );
+		$this->client->bind( $this->stmt, $name, (int)$value );
 	}
 	
 	
@@ -279,7 +274,7 @@ class Statement
 	 */
 	function setString( $name,$value )
 	{
-		$this->client->bind( $name, (string)$value );
+		$this->client->bind( $this->stmt, $name, (string)$value );
 	}
 	
 	
@@ -309,7 +304,7 @@ class Statement
 	 */
 	function setNull( $name )
 	{
-		$this->client->bind( $name, null );
+		$this->client->bind( $this->stmt, $name, null );
 	}
 	
 	

@@ -345,9 +345,7 @@ class Dispatcher
 
         if (is_object($db)) {
 
-            $ok = $db->connect();
-            if (!$ok)
-                throw new DomainException('Database is not available: ' . $db->error);
+            $db->connect(); // throws exception if error.
 
             Session::setDatabase($db);
         }

@@ -20,6 +20,7 @@
 //
 namespace database\driver;
 
+use database\Sql;
 use \Logger;
 use \PDO;
 use \PDOException;
@@ -40,19 +41,8 @@ class PDODriver
 	 *
 	 * @var PDO
 	 */
-	var $connection;
+	private $connection;
 	
-	/**
-	 * Datenbank-Fehler.
-	 *
-	 * @var String
-	 */
-	var $error;
-	
-	var $lowercase = false;
-	
-	var $params;
-
 
     /**
      * @var PDOStatement
@@ -125,7 +115,7 @@ class PDODriver
      *
      * @return bool
      */
-    function disconnect()
+    public function disconnect()
 	{
 	    // There is no disconnection-function.
         // So the GC will call the finalize-method of the connection object.
@@ -136,59 +126,39 @@ class PDODriver
 
 
     /**
-     * @param $query
+     * @param $stmt PDOStatement
+     * @param $query Sql
      * @return PDOStatement
      */
-    function query($query)
+    public function query($stmt,$query)
 	{
-		$erg = $this->stmt->execute();
+		$erg = $stmt->execute();
 
 		if	( $erg === false )
 		{
-			throw new RuntimeException( 'Could not execute prepared statement "'.$query->query.'": '.implode('/',$this->stmt->errorInfo()) );
+			throw new RuntimeException( 'Could not execute prepared statement "'.$query->query.'": '.implode('/',$stmt->errorInfo()) );
 		}
 		
-		return $this->stmt;
+		return $stmt;
 	}
 
 
-	function fetchRow( $result, $rownum )
+    /**
+     * @param $stmt PDOStatement
+     * @param $result
+     * @param $rownum
+     * @return mixed Row
+     */
+	public function fetchRow( $stmt, $result, $rownum )
 	{
-		$row = $this->stmt->fetch( PDO::FETCH_ASSOC );
+		$row = $stmt->fetch( PDO::FETCH_ASSOC );
 		
-/*
- * 
-		
-		
-		if(intval(@$row['id'])==1)
-		{
- 		echo "Hallo:";
- 		
-//  		echo "\n";print_r($row)."\n";
- 		var_dump($row);
- 		echo " ist... ".gettype($row);
-			
-		}
-		
- */		
-		
-		
-		if	( is_array($row) && $this->lowercase )
-			$row = array_change_key_case($row);
-				
 		return $row;
 	}
 
  
-	function freeResult($result)
+	public function prepare( $query,$param)
 	{
-		return true;
-	}
-
-
-	function prepare( $query,$param)
-	{
-		$this->params = $param;
 		$offset = 0;
 		foreach( $param as $name=>$pos)
 		{
@@ -199,16 +169,23 @@ class PDODriver
 			$offset = $offset + strlen($name);
 		}
 
-		$this->stmt = $this->connection->prepare($query);
+		$stmt = $this->connection->prepare($query);
 		
-		if	( $this->stmt === false )
+		if	( $stmt === false )
 			throw new RuntimeException("Could not prepare statement:\n$query\nCause: ".implode(' / ',$this->connection->errorInfo()) );
-		
+
+		return $stmt;
 	}
 
-	
-	
-	function bind( $param,$value )
+
+    /**
+     * Binding a parameter value.
+     *
+     * @param $stmt PDOStatement
+     * @param $param
+     * @param $value
+     */
+	public function bind( $stmt,$param,$value )
 	{
 		$name = ':'.$param;
 		
@@ -221,7 +198,7 @@ class PDODriver
 		else
 			throw new RuntimeException( 'Unknown type' );
 		
-		$this->stmt->bindValue($name,$value,$type);
+		$stmt->bindValue($name,$value,$type);
 	}
 	
 	
@@ -229,7 +206,7 @@ class PDODriver
 	/**
      * Startet eine Transaktion.
      */
-	function start()
+	public function start()
 	{
 		$this->connection->beginTransaction();
 	}
@@ -239,7 +216,7 @@ class PDODriver
 	/**
      * Beendet eine Transaktion.
      */
-	function commit()
+	public function commit()
 	{
 		$this->connection->commit();
 	}
@@ -248,7 +225,7 @@ class PDODriver
 	/**
      * Bricht eine Transaktion ab.
      */
-	function rollback()
+	public function rollback()
 	{
 		try
 		{
@@ -260,16 +237,6 @@ class PDODriver
 		}
 	}
 	
-	
-	
-	/**
-	 * Setzt die letzte Abfrage zurueck.
-	 */
-	function clear()
-	{
-		$this->params   = array();
-	}
-
 
 	/**
 	 * Why this? See http://e-mats.org/2008/07/fatal-error-exception-thrown-without-a-stack-frame-in-unknown-on-line-0/
