@@ -77,14 +77,18 @@ class Tree
 
         $this->addTreeElement($treeElement);
 
+        if ($this->userIsAdmin)
+        {
 
-        $treeElement = new TreeElement();
-        $treeElement->text = lang('USER_AND_GROUPS');
-        $treeElement->description = lang('USER_AND_GROUPS');
-        $treeElement->icon = 'userlist';
-        $treeElement->type = 'userandgroups';
+            $treeElement = new TreeElement();
+            $treeElement->text = lang('USER_AND_GROUPS');
+            $treeElement->description = lang('USER_AND_GROUPS');
+            $treeElement->icon = 'userlist';
+            $treeElement->type = 'userandgroups';
 
-        $this->addTreeElement($treeElement);
+            $this->addTreeElement($treeElement);
+        }
+
 
         if ($this->userIsAdmin)
         {
@@ -102,6 +106,9 @@ class Tree
 
     function userandgroups()
     {
+        if ( !$this->userIsAdmin )
+            throw new SecurityException();
+
         $treeElement = new TreeElement();
         $treeElement->text = lang('GLOBAL_USER');
         $treeElement->description = lang('GLOBAL_USER');
@@ -130,19 +137,31 @@ class Tree
     {
         // Schleife ueber alle Projekte
         foreach (Project::getAllProjects() as $id => $name) {
-            $treeElement = new TreeElement();
 
-            $treeElement->internalId = $id;
-            $treeElement->id = $id;
-            $treeElement->text = $name;
-            $treeElement->url = Html::url('project', 'edit', $id, array(REQ_PARAM_TARGET => 'content'));
-            $treeElement->icon = 'project';
-            $treeElement->action = 'project';
-            $treeElement->type = 'project';
-            $treeElement->description = '';
-            $treeElement->target = 'cms_main';
+            $project = new Project( $id );
+            $rootFolder = new Folder( $project->getRootObjectId() );
+            $rootFolder->load();
 
-            $this->addTreeElement($treeElement);
+            // Berechtigt für das Projekt?
+            if  ( $rootFolder->hasRight( ACL_READ ) )
+            {
+                $treeElement = new TreeElement();
+
+                $treeElement->internalId = $id;
+                $treeElement->id = $id;
+                $treeElement->text = $name;
+
+                if  ( $rootFolder->hasRight( ACL_PROP ) )
+                    // Project-Admins dürfen das Project bearbeiten.
+                    $treeElement->url = Html::url('project', 'edit', $id, array(REQ_PARAM_TARGET => 'content'));
+                $treeElement->icon = 'project';
+                $treeElement->action = 'project';
+                $treeElement->type = 'project';
+                $treeElement->description = '';
+                $treeElement->target = 'cms_main';
+
+                $this->addTreeElement($treeElement);
+            }
         }
     }
 
@@ -258,6 +277,10 @@ class Tree
 
     function users()
     {
+        if ( !$this->userIsAdmin )
+            throw new SecurityException();
+
+
         foreach (User::getAllUsers() as $user) {
             $treeElement = new TreeElement();
             $treeElement->id = $user->userid;
@@ -287,6 +310,9 @@ class Tree
 
     function groups()
     {
+        if ( !$this->userIsAdmin )
+            throw new SecurityException();
+
 
         foreach (Group::getAll() as $id => $name) {
             $treeElement = new TreeElement();
@@ -312,6 +338,10 @@ class Tree
 
     function userofgroup($id)
     {
+        if ( !$this->userIsAdmin )
+            throw new SecurityException();
+
+
         $g = new Group($id);
 
         foreach ($g->getUsers() as $id => $name) {
