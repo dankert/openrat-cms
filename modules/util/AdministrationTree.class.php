@@ -36,38 +36,35 @@ use cms\model\Value;
  * @version $Revision$
  * @package openrat.services
  */
-class AdministrationTree extends AbstractTree
+class AdministrationTree
 {
+    public $treeElements = array();
+
+    private $userIsAdmin  = false;
+
     /**
      * Alle Elemente des Baumes
      */
     var $elements;
     var $confCache = array();
 
-    private $userIsProjectAdmin;
+    // Konstruktor
+
+    function __construct()
+    {
+        // Feststellen, ob der angemeldete Benutzer ein Administrator ist
+        $user = Session::getUser();
+        $this->userIsAdmin = $user->isAdmin;
+    }
 
     function root()
     {
-        if (!$this->userIsAdmin)
-            throw new \SecurityException('Administration-Tree is only visible for admins.');
-
-// 		$treeElement = new TreeElement();
-// 		$treeElement->text        = lang('GLOBAL_ADMINISTRATION');
-// 		$treeElement->description = lang('GLOBAL_ADMINISTRATION');
-// 		$treeElement->type        = 'administration';
-// 		$treeElement->icon        = 'administration';
-
-        $this->administration();
-
-        $this->autoOpen[] = 1;
+        $this->overview();
     }
 
 
-    function administration()
+    function overview()
     {
-        global $conf;
-        $conf_config = $conf['interface']['config'];
-
         $treeElement = new TreeElement();
         $treeElement->id = 0;
         $treeElement->text = lang('GLOBAL_PROJECTS');
@@ -88,36 +85,6 @@ class AdministrationTree extends AbstractTree
         $treeElement->type = 'userandgroups';
 
         $this->addTreeElement($treeElement);
-//		$this->userandgroups(0);;
-
-        if ($conf_config['enable']) {
-            $treeElement = new TreeElement();
-            $treeElement->text = lang('PREFERENCES');
-            $treeElement->description = lang('PREFERENCES');
-            $treeElement->icon = 'configuration';
-            //$treeElement->type        = 'prefs';
-            $treeElement->action = 'configuration';
-
-            $this->addTreeElement($treeElement);
-        }
-
-        // Wechseln zu: Projekte...
-        /*
-        foreach( Project::getAll() as $id=>$name )
-        {
-            $treeElement = new TreeElement();
-
-            $treeElement->text         = lang('PROJECT').' '.$name;
-            $treeElement->url          = Html::url(array('action'    =>'tree',
-                                                          'subaction' =>'reload',
-                                                         'projectid' =>$id       ));
-            $treeElement->icon         = 'project';
-            $treeElement->description  = '';
-            $treeElement->target       = 'cms_tree';
-
-            $this->addTreeElement( $treeElement );
-        }
-        */
     }
 
 
@@ -182,7 +149,7 @@ class AdministrationTree extends AbstractTree
         // Ermitteln, ob der Benutzer Projektadministrator ist
         // Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
         if ($folder->hasRight(ACL_PROP))
-            $this->userIsProjectAdmin = true;
+            $userIsProjectAdmin = true;
 
         if ($folder->hasRight(ACL_READ)) {
             $treeElement = new TreeElement();
@@ -203,7 +170,7 @@ class AdministrationTree extends AbstractTree
 
 
         // Templates
-        if ($this->userIsProjectAdmin) {
+        if ($userIsProjectAdmin) {
             $treeElement = new TreeElement();
             $treeElement->id = $projectid;
             $treeElement->extraId[REQ_PARAM_PROJECT_ID] = $projectid;
@@ -235,7 +202,7 @@ class AdministrationTree extends AbstractTree
         $treeElement->target = 'content';
 
         // Nur fuer Projekt-Administratoren aufklappbar
-        if ($this->userIsProjectAdmin)
+        if ($userIsProjectAdmin)
             $treeElement->type = 'languages';
 
         $this->addTreeElement($treeElement);
@@ -246,7 +213,7 @@ class AdministrationTree extends AbstractTree
         $treeElement->description = '';
 
         // Nur fuer Projekt-Administratoren aufklappbar
-        if ($this->userIsProjectAdmin)
+        if ($userIsProjectAdmin)
             $treeElement->type = 'models';
 
         $treeElement->id = $projectid;
@@ -261,14 +228,6 @@ class AdministrationTree extends AbstractTree
         $this->addTreeElement($treeElement);
 
 
-        // Sonstiges
-        //		$treeElement = new TreeElement();
-        //		$treeElement->text       = lang('GLOBAL_OTHER');
-        //		$treeElement->description= lang('GLOBAL_OTHER_DESC');
-        //		$treeElement->icon       = 'other';
-        //		$treeElement->type       = 'other';
-        //		$this->addTreeElement( $treeElement );
-
         // Suche
         $treeElement = new TreeElement();
         $treeElement->id = $projectid;
@@ -282,231 +241,6 @@ class AdministrationTree extends AbstractTree
         $treeElement->target = 'content';
         $this->addTreeElement($treeElement);
 
-    }
-
-
-    function prefs_system()
-    {
-        $system = array('time' => date('r'),
-            'os' => php_uname('s'),
-            'host' => php_uname('n'),
-            'release' => php_uname('r'),
-            'machine' => php_uname('m'),
-            'owner' => get_current_user(),
-            'pid' => getmypid());
-
-        foreach ($system as $key => $value) {
-            $treeElement = new TreeElement();
-            $treeElement->text = $key . '=' . $value;
-            $treeElement->icon = 'config_property';
-            $this->addTreeElement($treeElement);
-            $treeElement->description = lang('SETTING') . " '" . $key . "'" . (!empty($value) ? ': ' . $value : '');
-        }
-
-        if (function_exists('getrusage')) // Funktion existiert auf WIN32 nicht.
-        {
-            foreach (getrusage() as $name => $value) ;
-            {
-                $treeElement = new TreeElement();
-                $treeElement->text = $name . ':' . $value;
-                $treeElement->description = lang('SETTING') . " '" . $name . "'" . (!empty($value) ? ': ' . $value : '');
-                $treeElement->icon = 'config_property';
-                $this->addTreeElement($treeElement);
-            }
-        }
-    }
-
-
-    function prefs_php()
-    {
-        $php_prefs = array('version' => phpversion(),
-            'SAPI' => php_sapi_name(),
-            'session-name' => session_name(),
-            'magic_quotes_gpc' => get_magic_quotes_gpc(),
-            'magic_quotes_runtime' => get_magic_quotes_runtime());
-
-        foreach (array('upload_max_filesize',
-                     'file_uploads',
-                     'memory_limit',
-                     'max_execution_time',
-                     'post_max_size',
-                     'display_errors',
-                     'register_globals'
-                 ) as $iniName)
-            $php_prefs[$iniName] = ini_get($iniName);
-
-        foreach ($php_prefs as $key => $value) {
-            $treeElement = new TreeElement();
-            $treeElement->text = $key . '=' . $value;
-            $treeElement->description = lang('SETTING') . " '" . $key . "'" . (!empty($value) ? ': ' . $value : '');
-            $treeElement->icon = 'config_property';
-            $this->addTreeElement($treeElement);
-        }
-    }
-
-
-    function prefs_extensions()
-    {
-        $extensions = get_loaded_extensions();
-        asort($extensions);
-
-        foreach ($extensions as $id => $extensionName) {
-            $treeElement = new TreeElement();
-            $treeElement->text = $extensionName;
-            $treeElement->icon = 'config_property';
-            $treeElement->internalId = $id;
-            $this->addTreeElement($treeElement);
-        }
-    }
-
-
-    function prefs_extension($id)
-    {
-        $extensions = get_loaded_extensions();
-        $functions = get_extension_funcs($extensions[$id]);
-        asort($functions);
-
-        foreach ($functions as $functionName) {
-            $treeElement = new TreeElement();
-            $treeElement->text = $functionName;
-            $treeElement->icon = 'config_property';
-            $this->addTreeElement($treeElement);
-        }
-    }
-
-
-    /**
-     * Anzeigen von Einstellungen.
-     *
-     * @param $id
-     */
-    function prefs()
-    {
-        global $conf;
-
-        if (!@$conf['security']['show_system_info'])
-            return;
-
-        $conf_config = $conf['interface']['config'];
-
-
-        $treeElement = new TreeElement();
-
-        $treeElement->internalId = -1;
-        $treeElement->text = 'OpenRat';
-        $treeElement->icon = 'configuration';
-
-        if (!empty($conf_config['file_manager_url']))
-            $treeElement->url = $conf_config['file_manager_url'];
-        $treeElement->target = '_blank';
-        $treeElement->description = '';
-        $treeElement->type = 'prefs_cms';
-        $this->addTreeElement($treeElement);
-
-
-        if (!empty($conf_config['show_system'])) {
-            $treeElement = new TreeElement();
-
-            $treeElement->internalId = 0;
-            $treeElement->text = lang('GLOBAL_SYSTEM');
-            $treeElement->icon = 'configuration';
-
-            $treeElement->description = '';
-            $treeElement->target = 'cms_main';
-            $treeElement->type = 'prefs_system';
-            $this->addTreeElement($treeElement);
-        }
-
-
-        if (!empty($conf_config['show_interpreter'])) {
-            $treeElement = new TreeElement();
-
-            $treeElement->internalId = 0;
-            $treeElement->text = lang('GLOBAL_PHP');
-            $treeElement->icon = 'configuration';
-
-            $treeElement->description = '';
-            $treeElement->target = 'cms_main';
-            $treeElement->type = 'prefs_php';
-            $this->addTreeElement($treeElement);
-        }
-
-
-        if (!empty($conf_config['show_extensions'])) {
-            $treeElement = new TreeElement();
-
-            $treeElement->internalId = 0;
-            $treeElement->text = lang('GLOBAL_EXTENSIONS');
-            $treeElement->icon = 'configuration';
-
-            $treeElement->description = '';
-            $treeElement->target = 'cms_main';
-            $treeElement->type = 'prefs_extensions';
-            $this->addTreeElement($treeElement);
-        }
-    }
-
-
-    function prefs_cms($id)
-    {
-        global $conf;
-
-        if ($id < 0) {
-            $tmpConf = $conf;
-        } else
-            $tmpConf = $this->confCache[$id];
-
-        if (!is_array($tmpConf))
-            $tmpConf = array('unknown');
-
-        foreach ($tmpConf as $key => $value) {
-            if (is_array($value)) {
-                $this->confCache[crc32($key)] = $value;
-
-                $treeElement = new TreeElement();
-
-                $treeElement->internalId = crc32($key);
-                $treeElement->text = $key;
-//				if	( $id == 0 )
-//					$treeElement->url         = Html::url('main','prefs',0,array('conf'=>$key));
-                $treeElement->icon = 'configuration';
-
-                $treeElement->description = count($value) . ' ' . lang('SETTINGS');
-                $treeElement->target = 'cms_main';
-                $treeElement->type = 'prefs_cms';
-                $this->addTreeElement($treeElement);
-            } else {
-                // Die PHP-funktion 'parse_ini_file()' liefert alle Einstellungen leider nur als String
-                // Daher weiß man hier nicht, ob '1' nun '1' oder 'true' heißen soll.
-                if ($value == '')
-                    // Anzeige 'Leer'
-                    $value = lang('EMPTY');
-                elseif ($value == '0')
-                    // Anzeige 'Nein'
-                    $value = $value . ' (' . lang('IS_NO') . ')';
-                elseif ($value == '1')
-                    // Anzeige 'Ja'
-                    $value = '+' . $value . ' (' . lang('IS_YES') . ')';
-                elseif (is_numeric($value))
-                    // Anzeige numerische Werte
-                    $value = ($value > 0 ? '+' : '') . $value;
-                else
-                    // Anzeige von Zeichenketten
-                    $value = $value;
-
-                $this->confCache[crc32($key)] = $value;
-
-                if (strpos($key, 'pass') !== FALSE)
-                    $value = '***'; // Kennwörter nicht anzeigen
-
-                $treeElement = new TreeElement();
-                $treeElement->text = $key . ': ' . $value;
-                $treeElement->icon = 'config_property';
-                $treeElement->description = lang('SETTING') . " '" . $key . "'" . (!empty($value) ? ': ' . $value : '');
-
-                $this->addTreeElement($treeElement);
-            }
-        }
     }
 
 
@@ -712,14 +446,9 @@ class AdministrationTree extends AbstractTree
 
     /**
      * Laedt Elemente zu einem Ordner
-     * @return Array
      */
     function folder($id)
     {
-        global
-        $SESS,
-        $projectid;
-
         $f = new Folder($id);
         $t = time();
         $f->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
@@ -776,114 +505,6 @@ class AdministrationTree extends AbstractTree
 
             $this->addTreeElement($treeElement);
         }
-    }
-
-
-    function project_old()
-    {
-        $language = Session::getProjectLanguage();
-        $model = Session::getProjectModel();
-        $user = Session::getUser();
-
-        $project = Session::getProject();
-        $this->projectid = $project->projectid;
-
-        // Hoechster Ordner der Projektstruktur
-        $folder = new Folder($project->getRootObjectId());
-        $folder->load();
-
-
-        // Ermitteln, ob der Benutzer Projektadministrator ist
-        // Projektadministratoren haben das Recht, im Root-Ordner die Eigenschaften zu aendern.
-        if ($folder->hasRight(ACL_PROP))
-            $this->userIsProjectAdmin = true;
-
-        if ($folder->hasRight(ACL_READ)) {
-            $treeElement = new TreeElement();
-            $treeElement->id = $folder->objectid;
-            //			$treeElement->text        = $folder->name;
-            $treeElement->text = lang('FOLDER_ROOT');
-            $treeElement->description = lang('FOLDER_ROOT_DESC');
-            $treeElement->icon = 'folder';
-            $treeElement->action = 'folder';
-            $treeElement->url = Html::url('folder', '', $folder->objectid, array(REQ_PARAM_TARGET => 'content'));
-            $treeElement->target = 'content';
-            $treeElement->type = 'folder';
-            $treeElement->internalId = $folder->objectid;
-            $this->addTreeElement($treeElement);
-        }
-
-
-        if ($this->userIsProjectAdmin) {
-            // Templates
-            $treeElement = new TreeElement();
-            $treeElement->id = 0;
-            $treeElement->text = lang('GLOBAL_TEMPLATES');
-            $treeElement->url = Html::url('template', 'listing', 0, array(REQ_PARAM_TARGETSUBACTION => 'listing', REQ_PARAM_TARGET => 'content'));
-            $treeElement->description = lang('GLOBAL_TEMPLATES_DESC');
-            $treeElement->icon = 'templatelist';
-            $treeElement->action = 'templatelist';
-            $treeElement->target = 'content';
-            $treeElement->type = 'templates';
-            $this->addTreeElement($treeElement);
-        }
-
-
-        // Sprachen
-        $treeElement = new TreeElement();
-        $treeElement->description = '';
-        $treeElement->id = 0;
-        $treeElement->action = 'languagelist';
-        $treeElement->text = lang('GLOBAL_LANGUAGES');
-        $treeElement->url = Html::url('language', 'listing', 0, array(REQ_PARAM_TARGETSUBACTION => 'listing', REQ_PARAM_TARGET => 'content'));
-        $treeElement->icon = 'languagelist';
-        $treeElement->description = lang('GLOBAL_LANGUAGES_DESC');
-        $treeElement->target = 'content';
-
-        // Nur fuer Projekt-Administratoren aufklappbar
-        if ($this->userIsProjectAdmin)
-            $treeElement->type = 'languages';
-
-        $this->addTreeElement($treeElement);
-
-
-        // Projektmodelle
-        $treeElement = new TreeElement();
-        $treeElement->description = '';
-
-        // Nur fuer Projekt-Administratoren aufklappbar
-        if ($this->userIsProjectAdmin)
-            $treeElement->type = 'models';
-
-        $treeElement->id = 0;
-        $treeElement->description = lang('GLOBAL_MODELS_DESC');
-        $treeElement->text = lang('GLOBAL_MODELS');
-        $treeElement->url = Html::url('model', 'listing', 0, array(REQ_PARAM_TARGETSUBACTION => 'listing', REQ_PARAM_TARGET => 'content'));
-        $treeElement->action = 'modellist';
-        $treeElement->icon = 'modellist';
-        $treeElement->target = 'content';
-        $this->addTreeElement($treeElement);
-
-
-        // Sonstiges
-//		$treeElement = new TreeElement();
-//		$treeElement->text       = lang('GLOBAL_OTHER');
-//		$treeElement->description= lang('GLOBAL_OTHER_DESC');
-//		$treeElement->icon       = 'other';
-//		$treeElement->type       = 'other';
-//		$this->addTreeElement( $treeElement );
-
-        // Suche
-        $treeElement = new TreeElement();
-        $treeElement->id = 0;
-        $treeElement->text = lang('GLOBAL_SEARCH');
-        $treeElement->url = Html::url('search', '', 0, array(REQ_PARAM_TARGET => 'content'));
-        $treeElement->action = 'search';
-        $treeElement->icon = 'search';
-        $treeElement->description = lang('GLOBAL_SEARCH_DESC');
-        $treeElement->target = 'content';
-        $this->addTreeElement($treeElement);
-
     }
 
 
@@ -992,54 +613,14 @@ class AdministrationTree extends AbstractTree
     }
 
 
-    function other()
+    /**
+     * Hinzufuegen eines Baum-Elementes
+     * @param TreeElement Hinzuzufuegendes Baumelement
+     */
+    private function addTreeElement( $treeElement )
     {
-// Deaktiviert, da
-// - Dateien auf den Server laden unverst�ndlich/undurchsichtig erscheint
-// - M�glichkeit zum Entpacken von ZIP/TAR online besteht.
-//		if	( $this->userIsProjectAdmin )
-//		{
-//			$treeElement = new TreeElement();
-//			$treeElement->text        = lang('GLOBAL_FILE_TRANSFER');
-//			$treeElement->description = lang('GLOBAL_FILE_TRANSFER_DESC');
-//			$treeElement->url         = Html::url('main','transfer');
-//			$treeElement->icon        = 'transfer';
-//			$treeElement->target      = 'content';
-//			$this->addTreeElement( $treeElement );
-//		}
-
-        $treeElement = new TreeElement();
-        $treeElement->id = 0;
-        $treeElement->text = lang('GLOBAL_SEARCH');
-        $treeElement->url = Html::url('search');
-        $treeElement->icon = 'search';
-        $treeElement->action = 'search';
-        $treeElement->description = lang('GLOBAL_SEARCH_DESC');
-        $treeElement->target = 'content';
-        $this->addTreeElement($treeElement);
-
-
-        $treeElement = new TreeElement();
-        $treeElement->id = 0;
-        $treeElement->text = lang('USER_YOURPROFILE');
-        $treeElement->url = Html::url('profile', 'edit', 0, array(REQ_PARAM_TARGET => 'content'));
-        $treeElement->icon = 'user';
-        $treeElement->action = 'profile';
-        $treeElement->description = lang('USER_PROFILE_DESC');
-        $treeElement->target = 'content';
-        $this->addTreeElement($treeElement);
-
-
-        $treeElement = new TreeElement();
-        $treeElement->id = 0;
-        $treeElement->text = lang('GLOBAL_PROJECTS');
-        $treeElement->url = Html::url('index', 'projectmenu', 0, array(REQ_PARAM_TARGET => 'content'));
-        $treeElement->icon = 'project';
-        $treeElement->description = lang('GLOBAL_PROJECTS');
-        $treeElement->target = 'content';
-        $this->addTreeElement($treeElement);
+        $this->treeElements[] = $treeElement;
     }
-
 }
 
 ?>

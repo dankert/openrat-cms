@@ -34,11 +34,19 @@ use Session;
 class TemplatelistAction extends Action
 {
 	public $security = SECURITY_USER;
-	
-	function __construct()
+
+    /**
+     * @var Project
+     */
+    private $project;
+
+
+    function __construct()
 	{
         parent::__construct();
-	}
+
+        $this->project = new Project( $this->request->getProjectId());
+    }
 
 
 
@@ -60,12 +68,10 @@ class TemplatelistAction extends Action
 
 		$list = array();
 
-		$project = new Project( $this->request->getProjectId());
-
 		$template = new Template();
-		$template->projectid = $this->getRequestId();
+		$template->projectid = $this->project->projectid;
 
-		foreach( $project->getTemplates() as $id=>$name )
+		foreach( $this->project->getTemplates() as $id=>$name )
 		{
 			$list[$id] = array();
 			$list[$id]['name'] = $name;
@@ -183,8 +189,7 @@ class TemplatelistAction extends Action
 				// Neues Template anlegen.
 				$template = new Template();
 
-				$model = Session::getProjectModel();
-				$template->modelid = $model->modelid;
+				$template->modelid = $this->project->getDefaultModelId();
 				
 				$template->add( $this->getRequestVar('name') );
 

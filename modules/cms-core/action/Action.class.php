@@ -177,9 +177,12 @@ namespace cms\action {
          *
          * @return Integer
          */
-        protected function getRequestId()
+        protected function getRequestId( $name = null )
         {
-            return $this->request->getRequestId();
+            if ( is_null($name) )
+                return $this->request->getRequestId();
+            else
+                return intval($this->request->getRequestVar($name,OR_FILTER_NUMBER));
         }
 
 

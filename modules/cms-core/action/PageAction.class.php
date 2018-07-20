@@ -680,11 +680,8 @@ class PageAction extends ObjectAction
 	 */
 	function src()
 	{
-		$language = Session::getProjectLanguage();
-		$model    = Session::getProjectModel();
-		
-		$this->page->languageid = $language->languageid;
-		$this->page->modelid    = $model->modelid;
+		$this->page->languageid = $this->getRequestId(REQ_PARAM_LANGUAGE_ID );
+		$this->page->modelid    = $this->getRequestId(REQ_PARAM_MODEL_ID    );
 
 		$this->page->withLanguage = config('publish','filename_language') == 'always' || count(Language::count()) > 1;
 		$this->page->withModel    = config('publish','filename_type'    ) == 'always' || count(Model::count()   ) > 1;

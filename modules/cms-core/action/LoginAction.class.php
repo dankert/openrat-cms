@@ -1451,32 +1451,6 @@ class LoginAction extends Action
 		}
 		elseif	( isset($vars[REQ_PARAM_LANGUAGE_ID]) && Language::available($vars[REQ_PARAM_LANGUAGE_ID]) )
 		{
-			$language = new Language( $vars[REQ_PARAM_LANGUAGE_ID] );
-			$language->load();
-			Session::setProjectLanguage( $language );
-	
-			$project = new Project( $language->projectid );
-			$project->load();
-			Session::setProject( $project );
-	
-			$model = Session::getProjectModel();
-			if	( !is_object($model) )
-			{
-				$model = new Model( $project->getDefaultModelId() );
-				$model->load();
-				Session::setProjectModel( $model );
-			}
-	
-			$object = Session::getObject();
-			if	( is_object($object) && $object->projectid == $project->projectid )
-			{
-				$object->objectLoadRaw();
-				Session::setObject( $object );
-			}
-			else
-			{
-				Session::setObject( '' );
-			}
 		}
 		elseif	( isset($vars[REQ_PARAM_MODEL_ID]) && Model::available($vars[REQ_PARAM_MODEL_ID]) )
 		{

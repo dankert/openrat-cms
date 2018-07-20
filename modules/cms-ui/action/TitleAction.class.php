@@ -64,30 +64,6 @@ class TitleAction extends Action
         $this->setTemplateVar('username'    ,$user->name    );
         $this->setTemplateVar('userfullname',$user->fullname);
 
-		$project = Session::getProject();
-		if	( is_object($project) )
-		{
-			$this->setTemplateVar('projectname',$project->name);
-        }
-
-        if	( is_object($user) )
-            $this->setTemplateVar('projects' ,Project::getAllProjects()  );
-
-
-        $language = Session::getProjectLanguage();
-		if	( is_object($language) )
-		{
-			$this->setTemplateVar('languagename',$language->name);
-			$this->setTemplateVar('languages',Language::getAll() );
-		}		
-		
-		$model = Session::getProjectModel();
-		if	( is_object($model) )
-		{
-			$this->setTemplateVar('modelname',$model->name);
-			$this->setTemplateVar('models'   ,Model::getAll()    );
-		}		
-		
 		// Urls zum Benutzerprofil und zum Abmelden
 		//$this->setTemplateVar('profile_url',Html::url( 'profile'         ));
 		//$this->setTemplateVar('logout_url' ,Html::url( 'index','logout'  ));
