@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\model\Language;
+use cms\model\Project;
 use Session;
 use \Html;
 // OpenRat Content Management System
@@ -33,27 +34,22 @@ class LanguageAction extends Action
 {
 	public $security = SECURITY_USER;
 	
-	var $defaultSubAction = 'listing';
-
 	/**
 	 * Zu bearbeitende Sprache, wird im Kontruktor instanziiert
 	 * @type Language
 	 */
 	var $language;
-	var $project;
 
 
 	/**
 	 * Konstruktor
 	 */
-	function __construct()
+	public function __construct()
 	{
         parent::__construct();
 
 		$this->language = new Language( $this->getRequestId() );
 		$this->language->load();
-		
-		$this->project = Session::getProject();
 	}
 
 
@@ -62,7 +58,7 @@ class LanguageAction extends Action
 	 * Diese Sprache wird benutzt beim Ausw?hlen des Projektes sowie
 	 * als Default-Sprache bei mehrsprachigen Webseiten ("content-negotiation") 
 	 */
-	function setdefaultPost()
+	public function setdefaultPost()
 	{
 		$this->language->setDefault();
 	}
@@ -72,7 +68,7 @@ class LanguageAction extends Action
 	/**
 	 * Anzeigen der L�schbest�tigungs-Maske.
 	 */
-	function removeView()
+	public function removeView()
 	{
 		$this->setTemplateVar('name'   ,$this->language->name   );
 	}
@@ -81,14 +77,14 @@ class LanguageAction extends Action
 	/**
 	 * L�schen der Sprache.
 	 */
-	function removePost() 
+	public function removePost()
 	{
 		if   ( $this->getRequestVar('confirm') == '1' )
 			$this->language->delete();
 	}
 	
 	
-	function propView()
+	public function propView()
 	{
 		$this->nextSubAction('advanced');
 	}
@@ -121,7 +117,7 @@ class LanguageAction extends Action
 	/**
 	 * Speichern der Sprache
 	 */
-	function editPost()
+	public function editPost()
 	{
 		global $conf;
 
@@ -143,57 +139,14 @@ class LanguageAction extends Action
 
 
 
-	function listingView()
+	public function editView()
 	{
 		global $conf;
 		$countryList = $conf['countries'];
 
-		$list = array();
-		
-		$actLanguage = Session::getProjectLanguage();
-		$this->setTemplateVar('act_languageid',$actLanguage->languageid);
-	
-		foreach( $this->project->getLanguageIds() as $id )
-		{
-			$l = new Language( $id );
-			$l->load();
-			
-			unset( $countryList[strtoupper($l->isoCode)] );
-			
-			$list[$id] = array();
-			$list[$id]['name'   ] = $l->name;
-			$list[$id]['isocode'] = $l->isoCode;
-			
-			if	( $this->userIsAdmin() )
-			{
-				$list[$id]['url' ] = Html::url('language','edit',$id,
-				                               array() );
-			
-				if	( ! $l->isDefault )
-					$list[$id]['default_url'] = Html::url( 'language','setdefault',$id );
-			}
-				
-			if	( $actLanguage->languageid != $l->languageid )
-				$list[$id]['select_url']  = Html::url( 'index','language',$id );
-		}
-		
-//		if	( $this->userIsAdmin() )
-//		{
-//			asort($countryList);
-//			$this->setTemplateVar('isocodes',$countryList);
-//		}
+		$project = new Project( $this->language->projectid );
 
-		$this->setTemplateVar('el',$list);
-	}
-
-
-
-	function editView()
-	{
-		global $conf;
-		$countryList = $conf['countries'];
-
-		foreach( $this->project->getLanguageIds() as $id )
+		foreach( $project->getLanguageIds() as $id )
 		{
 			if	( $id == $this->language->languageid )
 				continue;		

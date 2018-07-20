@@ -50,20 +50,19 @@ class LanguagelistAction extends Action
 	{
         parent::__construct();
 
-        $this->project = new Project( $this->request->getProjectId());
+        $this->project = new Project( $this->request->getRequestId());
 	}
 
 
 
-	function showView()
+	public function showView()
 	{
 		global $conf;
 		$countryList = $conf['countries'];
 
 		$list = array();
-		
-		$actLanguage = Session::getProjectLanguage();
-		$this->setTemplateVar('act_languageid',$actLanguage->languageid);
+
+		$this->setTemplateVar('act_languageid',0 );
 	
 		foreach( $this->project->getLanguageIds() as $id )
 		{
@@ -84,16 +83,9 @@ class LanguagelistAction extends Action
 					$list[$id]['default_url'] = Html::url( 'language','setdefault',$id );
 			}
 				
-			if	( $actLanguage->languageid != $l->languageid )
-				$list[$id]['select_url']  = Html::url( 'index','language',$id );
+			$list[$id]['select_url']  = Html::url( 'index','language',$id );
 		}
 		
-//		if	( $this->userIsAdmin() )
-//		{
-//			asort($countryList);
-//			$this->setTemplateVar('isocodes',$countryList);
-//		}
-
 		$this->setTemplateVar('el',$list);
 	}
 
