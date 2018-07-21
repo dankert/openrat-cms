@@ -437,22 +437,6 @@ namespace cms\action {
         }
 
 
-        /**
-         * @deprecated sollte im UI gesteuert werden.
-         */
-        protected function refresh()
-        {
-        }
-
-
-        /**
-         * @param String Name der Perspektive
-         * @deprecated gibt es nicht mehr.
-         */
-        protected function setPerspective($name)
-        {
-        }
-
         protected function setCookie($name,$value='' ) {
 
             if (empty($value))

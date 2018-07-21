@@ -771,8 +771,7 @@ class LoginAction extends Action
 		$user->setCurrent();  // Benutzer ist jetzt in der Sitzung.
 		
 		$this->setStyle( $user->style );
-		$this->setPerspective('start');
-		
+
 		$server = Http::getServer();
 		Logger::debug("Redirecting to $server");
 		header('Location: '.slashify($server) );
@@ -1143,9 +1142,7 @@ class LoginAction extends Action
 				Session::setProject( $project );
 				Session::setProjectLanguage( $language );
 				Session::setProjectModel( $model );
-					
-				
-				$this->setPerspective('normal');
+
 			}
 			elseif	( $conf['login']['start']['start_lastchanged_object'] )
 			{
@@ -1168,21 +1165,17 @@ class LoginAction extends Action
 					Session::setProject( $project );
 					Session::setProjectLanguage( $language );
 					Session::setProjectModel( $model );
-					
-					$this->setPerspective('normal');
 				}
 				else
 				{
 					// Benutzer hat noch nie eine Änderung durchgefuehrt.
 					// Erstmal die Startseite anzeigen.
-					$this->setPerspective('start');
 				}
 			}
 			
 			else
 			{
 				// Erstmal die Startseite anzeigen.
-				$this->setPerspective('start');
 			}
 		}
 		

@@ -490,8 +490,6 @@ class UserAction extends Action
 		
 		// Und in der Sitzung speichern.
 		Session::setUser( $user );
-		
-		$this->refresh();
 	}
 	
 	

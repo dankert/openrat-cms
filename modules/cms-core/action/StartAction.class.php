@@ -375,7 +375,6 @@ class StartAction extends Action
 	{
 		
 		$this->evaluateRequestVars( array('projectid'=>$this->getRequestId()) );
-		$this->setPerspective('normal');
 	}
 	
 	
@@ -760,7 +759,7 @@ class StartAction extends Action
 			}
 		}
 		
-		$this->refresh(); // Benutzer ist angemeldet: Andere Views könnte das interessieren.
+		// Benutzer ist angemeldet
 	}
 
 
@@ -857,9 +856,6 @@ class StartAction extends Action
 	 */
 	function administrationPost()
 	{
-		Session::setProject( new Project(-1) );
-		Session::set('perspective','administration');
-		$this->refresh();
 	}
 	
 	
@@ -869,8 +865,6 @@ class StartAction extends Action
 	 */
 	function profilePost()
 	{
-		Session::set('perspective','profile');
-		$this->refresh();
 	}
 	
 	
@@ -880,8 +874,6 @@ class StartAction extends Action
 	 */
 	function startPost()
 	{
-		Session::set('perspective','start');
-		$this->refresh();
 	}
 	
 	

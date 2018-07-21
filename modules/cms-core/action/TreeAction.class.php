@@ -88,7 +88,6 @@ class TreeAction extends Action
 		
 		$this->addNotice('language',$language->name,'DONE',OR_NOTICE_OK);
 		$this->addNotice('model'   ,$model->name   ,'DONE',OR_NOTICE_OK);
-		$this->refresh();
 	}
 
 	
@@ -99,7 +98,6 @@ class TreeAction extends Action
 		Session::setProjectLanguage( $language );
 	
 		$this->addNotice('language',$language->name,'DONE',OR_NOTICE_OK);
-		$this->refresh();
 	}
 	
 	
@@ -110,7 +108,6 @@ class TreeAction extends Action
 		Session::setProjectModel( $model );
 	
 		$this->addNotice('model'   ,$model->name   ,'DONE',OR_NOTICE_OK);
-		$this->refresh();
 	}
 	
 }
