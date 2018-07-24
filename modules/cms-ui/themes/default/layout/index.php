@@ -2,7 +2,7 @@
         extract($output);
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
-?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+?><!DOCTYPE html>
 <html class="theme-<?php echo strtolower($style) ?> nojs">
 <head>
 <?php $appName = config('application','name'); $appOperator = config('application','operator');
