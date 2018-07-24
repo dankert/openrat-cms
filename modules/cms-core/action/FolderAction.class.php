@@ -206,21 +206,23 @@ class FolderAction extends ObjectAction
 
     public function createfolderPost()
 	{
-		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
-		$filename    = $this->getRequestVar('filename'   );
 		$description = $this->getRequestVar('description');
 
 		if   ( !empty($name) )
 		{
 			$f = new Folder();
-			$f->name     = $name;
-			$f->filename = $name;
-			$f->desc     = $description;
-			$f->parentid = $this->folder->objectid;
+			$f->projectid  = $this->folder->projectid;
+			$f->languageid = $this->folder->languageid;
+			$f->name       = $name;
+			$f->filename   = BaseObject::urlify( $name );
+			$f->desc       = $description;
+			$f->parentid   = $this->folder->objectid;
 
 			$f->add();
 			$this->addNotice('folder',$f->name,'ADDED','ok');
+
+			// Die neue Folder-Id (wichtig für API-Aufrufe).
 			$this->setTemplateVar('objectid',$f->objectid);
 		}
 		else
@@ -996,7 +998,8 @@ class FolderAction extends ObjectAction
 
     public function createfolderView()
 	{
-		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
+		$this->setTemplateVar('objectid'  ,$this->folder->objectid   );
+		$this->setTemplateVar('languageid',$this->folder->languageid );
 	}
 
 

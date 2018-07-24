@@ -381,6 +381,24 @@ SQL
         }
 
 
+        /**
+         * Creates a slug url out of the filename.
+         *
+         * @param $filename String Name
+         * @return string
+         */
+        public static function urlify( $filename )
+        {
+            $slug = $filename;
+            $slug = iconv('utf-8', 'ascii//TRANSLIT', $slug);
+            $slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $slug);
+            $slug = trim($slug, '-');
+            $slug = strtolower($slug);
+
+            return $slug;
+        }
+
+
 
         /**
          * Ermitteln des Dateinamens und Rueckgabe desselben
@@ -940,7 +958,7 @@ SQL
         /**
          * Pruefung auf Gueltigkeit des Dateinamens
          */
-        function checkFilename()
+        private function checkFilename()
         {
             if	( empty($this->filename) )
                 $this->filename = $this->objectid;
@@ -962,7 +980,7 @@ SQL
         }
 
 
-        function filenameIsUnique( $filename )
+        private function filenameIsUnique( $filename )
         {
             $db = db_connection();
 
