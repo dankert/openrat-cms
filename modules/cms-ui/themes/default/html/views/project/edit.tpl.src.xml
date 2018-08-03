@@ -11,6 +11,14 @@
 					<input name="name" class="name"></input>
 				</part>
 			</part>
+			<part class="line">
+				<part class="label">
+					<label for="url" key="PROJECT_HOSTNAME"></label>
+				</part>
+				<part class="input">
+					<input name="url"></input>
+				</part>
+			</part>
 		</group>
 		<group title="message:PUBLISH">
 			<part class="line">

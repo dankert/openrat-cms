@@ -50,14 +50,17 @@ class ProjectAction extends Action
 	{
 		if	( $this->getRequestVar('name') != '')
 		{
-			$this->project->name                = $this->getRequestVar('name'               ,OR_FILTER_ALPHANUM);
-			$this->project->target_dir          = $this->getRequestVar('target_dir'         ,OR_FILTER_RAW     );
-			$this->project->ftp_url             = $this->getRequestVar('ftp_url'            ,OR_FILTER_RAW     );
-			$this->project->ftp_passive         = $this->getRequestVar('ftp_passive'        ,OR_FILTER_RAW     );
-			$this->project->cmd_after_publish   = $this->getRequestVar('cmd_after_publish'  ,OR_FILTER_RAW     );
-			$this->project->content_negotiation = $this->getRequestVar('content_negotiation',OR_FILTER_NUMBER  );
-			$this->project->cut_index           = $this->getRequestVar('cut_index'          ,OR_FILTER_NUMBER  );
-	
+			$this->project->name                 = $this->getRequestVar('name'               ,OR_FILTER_ALPHANUM);
+			$this->project->url                  = $this->getRequestVar('url'                ,OR_FILTER_ALPHANUM);
+			$this->project->target_dir           = $this->getRequestVar('target_dir'         ,OR_FILTER_RAW     );
+			$this->project->ftp_url              = $this->getRequestVar('ftp_url'            ,OR_FILTER_RAW     );
+			$this->project->ftp_passive          = $this->getRequestVar('ftp_passive'        ,OR_FILTER_RAW     );
+			$this->project->cmd_after_publish    = $this->getRequestVar('cmd_after_publish'  ,OR_FILTER_RAW     );
+			$this->project->content_negotiation  = $this->getRequestVar('content_negotiation',OR_FILTER_NUMBER  );
+			$this->project->cut_index            = $this->getRequestVar('cut_index'          ,OR_FILTER_NUMBER  );
+			$this->project->publishFileExtension = $this->getRequestVar('publishFileExtension',OR_FILTER_NUMBER  );
+			$this->project->publishPageExtension = $this->getRequestVar('publishPageExtension',OR_FILTER_NUMBER  );
+
 			$this->addNotice('project',$this->project->name,'SAVED','ok');
 			$this->project->save(); // speichern
 			

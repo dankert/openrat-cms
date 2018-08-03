@@ -20,12 +20,19 @@ use Session;
 class Project extends ModelBase
 {
 	// Eigenschaften
-	var $projectid;
-	var $name;
-	var $target_dir;
-	var $ftp_url;
-	var $ftp_passive;
-	var $cmd_after_publish;
+	public $projectid;
+	public $name;
+	public $target_dir;
+	public $ftp_url;
+
+    /**
+     * Hostname
+     * @var string
+     */
+	public $url;
+
+	public $ftp_passive;
+	public $cmd_after_publish;
 
 
     /**
@@ -48,7 +55,7 @@ class Project extends ModelBase
      */
     public $publishPageExtension = true;
 
-	var $log = array();
+	public $log = array();
 	
 	
 	// Konstruktor
@@ -211,6 +218,7 @@ class Project extends ModelBase
 			throw new \ObjectNotFoundException('project '.$this->projectid.' not found');
 			
 		$this->name                = $row['name'               ];
+		$this->url                 = $row['url'                ];
 		$this->target_dir          = $row['target_dir'         ];
 		$this->ftp_url             = $row['ftp_url'            ];
 		$this->ftp_passive         = $row['ftp_passive'        ];
@@ -236,6 +244,7 @@ class Project extends ModelBase
 		$this->projectid           = $row['id'                 ];
 		$this->target_dir          = $row['target_dir'         ];
 		$this->ftp_url             = $row['ftp_url'            ];
+		$this->url                 = $row['url'                ];
 		$this->ftp_passive         = $row['ftp_passive'        ];
 		$this->cmd_after_publish   = $row['cmd_after_publish'  ];
         $this->cut_index           = $row['flags']&PROJECT_FLAG_CUT_INDEX;
@@ -256,6 +265,7 @@ class Project extends ModelBase
                       target_dir          = {target_dir},
                       ftp_url             = {ftp_url}, 
                       ftp_passive         = {ftp_passive}, 
+                      url                 = {url}, 
                       flags               = {flags}, 
                       cmd_after_publish   = {cmd_after_publish} 
                 WHERE id= {projectid}
@@ -263,6 +273,7 @@ SQL
 );
 
 		$sql->setString('ftp_url'            ,$this->ftp_url );
+		$sql->setString('url'                ,$this->url );
 		$sql->setString('name'               ,$this->name );
 		$sql->setString('target_dir'         ,$this->target_dir );
 		$sql->setInt   ('ftp_passive'        ,$this->ftp_passive );
@@ -271,7 +282,7 @@ SQL
         $flags = 0;
         if( $this->cut_index) $flags |= PROJECT_FLAG_CUT_INDEX;
         if( $this->content_negotiation) $flags |= PROJECT_FLAG_CONTENT_NEGOTIATION;
-        if( $this->publishFileExtension) $flags |= PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
+        if( $this->publishFileExtension) $flags |= PROJECT_FLAG_PUBLISH_FILE_EXTENSION;
         if( $this->publishPageExtension) $flags |= PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
 
         $sql->setInt   ('flags'              ,$flags );
