@@ -15,6 +15,8 @@ namespace database {
     define('OR_DB_COLUMN_TYPE_VARCHAR',2);
     define('OR_DB_COLUMN_TYPE_TEXT',3);
     define('OR_DB_COLUMN_TYPE_BLOB',4);
+    define('OR_DB_COLUMN_NULLABLE',true);
+    define('OR_DB_COLUMN_NOT_NULLABLE',false);
 
 
     use Http;
