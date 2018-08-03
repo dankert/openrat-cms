@@ -263,15 +263,14 @@ class Template
 	{
 		$list = array();
 		$e = new Element();
-		$readonlyList = "'".implode("','",$e->readonlyElementNames)."'";
+		$readonlyList = implode(',',Element::$readonlyElementTypeIds);
 		
 		$db = db_connection();
 
 		$sql = $db->sql( <<<SQL
 SELECT * FROM {{element}}
   WHERE templateid={templateid}
-    AND writable=1
-    AND type NOT IN ($readonlyList)
+    AND typeid NOT IN ($readonlyList)
   ORDER BY name ASC
 SQL
 );
@@ -280,6 +279,9 @@ SQL
 		{
 			$e = new Element( $row['id'] );
 			$e->setDatabaseRow( $row );
+
+			if (!$e->writable)
+			    continue;
 			
 			$list[$e->elementid] = $e;
 			unset($e);

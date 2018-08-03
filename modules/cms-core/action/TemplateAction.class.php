@@ -215,14 +215,14 @@ class TemplateAction extends Action
 		// Die verschiedenen Element-Typen
 		$types = array();
 
-		foreach( Element::getAvailableTypes() as $t )
+		foreach( Element::getAvailableTypes() as $typeid => $t )
 		{
-			$types[ $t ] = 'EL_'.$t;
+			$types[ $typeid ] = 'EL_'.$t;
 		}
 
 		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
 		if	( !$this->userIsAdmin() )
-			unset( $types['code'] );
+			unset( $types[ELEMENT_TYPE_CODE] );
 		
 		$this->setTemplateVar('types',$types);
 	}
@@ -539,39 +539,5 @@ class TemplateAction extends Action
 	}
 	
 	
-	
-	/**
-	 * Stellt fest, welche Menüeinträge ggf. ausgeblendet werden.
-	 * 
-	 * @see actionClasses/Action#checkMenu($name)
-	 */
-	function checkMenu( $menu ) {
 
-		switch( $menu)
-		{
-			case 'srcelement':
-				// Platzhalter nur hinzufuegbar, wenn es welche gibt.
-				return is_object($this->template) &&
-				       (count($this->template->getElementIds()) > 0);
-
-			case 'remove':
-				// Entfernen von Templates nur dann erlaubt, wenn keine Seiten auf diesem Template basieren.
-				return is_object($this->template) &&
-				       (count($this->template->getDependentObjectIds()) == 0);
-
-			case 'pages':
-				// Anzeige von Seiten nur dann sinnvoll, wenn es auch Seiten gibt.
-				return is_object($this->template) &&
-				       (count($this->template->getDependentObjectIds()) > 0);
-
-			case 'add':
-			case 'addel':
-				return !readonly();
-				
-			default:
-				return true;
-
-		}
-	}
-	
 }

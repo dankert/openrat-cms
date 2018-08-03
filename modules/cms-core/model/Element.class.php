@@ -1,11 +1,36 @@
 <?php
 namespace cms\model;
 
+define('ELEMENT_TYPE_DATE'    , 1);
+define('ELEMENT_TYPE_NUMBER'  , 2);
+define('ELEMENT_TYPE_TEXT'    , 3);
+define('ELEMENT_TYPE_INFO'    , 4);
+define('ELEMENT_TYPE_INFODATE', 5);
+define('ELEMENT_TYPE_LINK'    , 6);
+define('ELEMENT_TYPE_LONGTEXT', 7);
+define('ELEMENT_TYPE_CODE'    , 8);
+define('ELEMENT_TYPE_DYNAMIC' , 9);
+define('ELEMENT_TYPE_SELECT'  ,10);
+define('ELEMENT_TYPE_COPY'    ,11);
+define('ELEMENT_TYPE_LINKINFO',12);
+define('ELEMENT_TYPE_LINKDATE',13);
+define('ELEMENT_TYPE_INSERT'  ,14);
+
+define('ELEMENT_FORMAT_TEXT'    ,0);
+define('ELEMENT_FORMAT_HTML'    ,1);
+define('ELEMENT_FORMAT_WIKI'    ,2);
+define('ELEMENT_FORMAT_MARKDOWN',3);
+
+define('ELEMENT_FLAG_HTML_ALLOWED' , 1);
+define('ELEMENT_FLAG_ALL_LANGUAGES', 2);
+define('ELEMENT_FLAG_WRITABLE'     , 4);
+define('ELEMENT_FLAG_WITH_ICON'    , 8);
+define('ELEMENT_FLAG_INHERIT'      ,16);
 
 
 /**
  * Diese Objektklasse stellt ein Element das.
- * 
+ *
  * Ein Element ist ein Platzhalter in einem Template und kann verschiedenen
  * Typs sein, z.B. Text oder ein Bild.
  *
@@ -45,8 +70,16 @@ class Element
 	 * </ul>
 	 *
 	 * @type String
+     * @deprecated use #typeid
 	 */
 	var $type;
+
+    /**
+     *
+     * Type of the element. Must be a constant value of ELEMENT_TYPE_*.
+     * @var integer Type of element
+     */
+	public $typeid;
 
 	/**
 	 * Logischer Name dieses Elementes
@@ -64,17 +97,17 @@ class Element
 
 	/**
 	 * Objekt-ID eines Ordners, aus diesem Ordner (samt Unterordner)
-	 * k?nnen zu verlinkende Objekte ausgew?hlt werden 
+	 * k?nnen zu verlinkende Objekte ausgew?hlt werden
 	 * @type Integer
 	 */
 	var $folderObjectId = 0;
-	
+
 	/**
-	 * Vorausgew�hltes Objekt. 
+	 * Vorausgew�hltes Objekt.
 	 * @type Integer
 	 */
 	var $defaultObjectId = 0;
-	
+
 	/**
 	 * Schalter ob dieses Element von Redakteuren bearbeiten werden kann
 	 * @type Boolean
@@ -87,8 +120,11 @@ class Element
 	 */
 	var $allLanguages;
 
-	var $readonlyElementNames = array('copy','linkinfo','linkdate','info','infodate','code','dynamic');
-	
+	public static $readonlyElementTypeIds = array(
+	    ELEMENT_TYPE_COPY,ELEMENT_TYPE_LINKINFO,ELEMENT_TYPE_LINKDATE,ELEMENT_TYPE_INFO,ELEMENT_TYPE_INFODATE,ELEMENT_TYPE_CODE,ELEMENT_TYPE_DYNAMIC
+    );
+
+
 	/**
 	 * Untertyp.
 	 *
@@ -97,15 +133,16 @@ class Element
 	var $subtype = '';
 	var $withIcon = false;
 	var $dateformat = 'r';
-	var $wiki = false;
+	var $wiki   = false;
+	var $format = ELEMENT_FORMAT_TEXT;
 	var $html = false;
 	var $decimals = 0;
 	var $decPoint = '.';
 	var $thousandSep = '';
 	var $code = '';
 	var $defaultText = '';
-	
-	
+
+
 	/**
 	 * Im Konstruktor wird die Element-Id gesetzt
 	 * @param Integer Element-Id
@@ -151,7 +188,7 @@ class Element
 	function load()
 	{
 		if	( intval($this->elementid) != 0 )
-		{		
+		{
 			$db = db_connection();
 			$sql = $db->sql( <<<SQL
 SELECT * FROM {{element}}
@@ -177,15 +214,17 @@ SQL
 		$this->templateid     = $prop['templateid'];
 		$this->name           = $prop['name'      ];
 		$this->desc           = $prop['descr'     ];
-		$this->type           = $prop['type'      ];
-		$this->subtype        = $prop['subtype'   ];
+        $this->typeid         = $prop['typeid'    ];
+        $this->type           = Element::getAvailableTypes()[ $this->typeid ]; // name of type
+        $this->subtype        = $prop['subtype'   ];
 
 		$this->dateformat     = $prop['dateformat'];
-		$this->wiki           = ( $prop['wiki'         ] == '1' );
-		$this->withIcon       = ( $prop['with_icon'    ] == '1' );
-		$this->html           = ( $prop['html'         ] == '1' );
-		$this->allLanguages   = ( $prop['all_languages'] == '1' );
-		$this->writable       = ( $prop['writable'     ] == '1' );
+		$this->wiki           = $prop['format'] == ELEMENT_FORMAT_WIKI;
+		$this->format         = $prop['format'];
+		$this->withIcon       = $prop['flags'] & ELEMENT_FLAG_WITH_ICON;
+		$this->html           = $prop['flags'] & ELEMENT_FLAG_HTML_ALLOWED;
+		$this->allLanguages   = $prop['flags'] & ELEMENT_FLAG_ALL_LANGUAGES;
+		$this->writable       = $prop['flags'] & ELEMENT_FLAG_WRITABLE;
 
 		if	( !$this->writable)
 			$this->withIcon = false;
@@ -207,12 +246,12 @@ SQL
 	function save()
 	{
 		$db = db_connection();
-		
+
 		$sql = $db->sql( 'UPDATE {{element}}'.
 		                ' SET templateid      = {templateid},'.
 		                '     name            = {name},'.
 		                '     descr           = {desc},'.
-		                '     type            = {type},'.
+		                '     typeid          = {typeid},'.
 		                '     subtype         = {subtype},'.
 		                '     with_icon       = {withIcon},'.
 		                '     dateformat      = {dateformat},'.
@@ -233,7 +272,7 @@ SQL
 		$sql->setInt    ( 'templateid'      ,$this->templateid       );
 		$sql->setString ( 'name'            ,$this->name             );
 		$sql->setString ( 'desc'            ,$this->desc             );
-		$sql->setString ( 'type'            ,$this->type             );
+		$sql->setString ( 'typeid'          ,$this->typeid           );
 		$sql->setString ( 'subtype'         ,$this->subtype          );
 		$sql->setBoolean( 'withIcon'        ,$this->withIcon         );
 		$sql->setString ( 'dateformat'      ,$this->dateformat       );
@@ -246,7 +285,7 @@ SQL
 		$sql->setString ( 'thousandSep'     ,$this->thousandSep      );
 		$sql->setString ( 'code'            ,$this->code             );
 		$sql->setString ( 'defaultText'     ,$this->defaultText      );
-		
+
 		if	( intval($this->folderObjectId)==0 )
 			$sql->setNull( 'folderObjectId' );
 		else	$sql->setInt ( 'folderObjectId'  ,$this->folderObjectId   );
@@ -254,7 +293,7 @@ SQL
 		if	( intval($this->defaultObjectId)==0 )
 			$sql->setNull( 'defaultObjectId' );
 		else	$sql->setInt ( 'defaultObjectId' ,$this->defaultObjectId  );
-		
+
 		$sql->query();
 	}
 
@@ -262,15 +301,15 @@ SQL
 
 	/**
 	 * Setzt den Typ des Elementes und schreibt diesen sofort in die Datenbank.
-	 * 
+	 *
 	 * @param String Der neue Typ, siehe getAvailableTypes() f?r m?gliche Typen
 	 * @see #type
 	 */
-	function setType( $type )
+	public function setType( $type )
 	{
 		$this->type = $type;
 		$db = db_connection();
-		
+
 		$sql = $db->sql( 'UPDATE {{element}}'.
 		                ' SET type            = {type}'.
 		                ' WHERE id={elementid}'         );
@@ -292,7 +331,7 @@ SQL
 			$name = $this->name;
 		else
 			list( $oldprefix,$name ) = explode('%',$this->name.'%');
-		
+
 		$this->name = $prefix.'%'.$name;
 	}
 
@@ -365,44 +404,46 @@ SQL
 			case 'text':
 			case 'longtext':
 				return $this->defaultText;
-				
+
 			case 'number';
 				return '0';
-		
+
 			default:
 		}
-		
+
 		return lang('EL_TYPE_'.$this->type);
-		
+
 	}
 
 	/**
 	 * Ermitteln aller benutzbaren Elementtypen
 	 * @return array
 	 */
-	function getAvailableTypes()
-	{
-		return array('text',
-		             'longtext',
-		             'select',
-		             'number',
-		             'link',
-		             'date',
-		             'insert',
-		             'copy',
-		             'linkinfo',
-		             'linkdate',
-		             'code',
-		             'dynamic',
-		             'info',
-		             'infodate');
-	}
+	public static function getAvailableTypes()
+    {
+        return array(
+            ELEMENT_TYPE_TEXT => 'text',
+            ELEMENT_TYPE_LONGTEXT => 'longtext',
+            ELEMENT_TYPE_SELECT => 'select',
+            ELEMENT_TYPE_NUMBER => 'number',
+            ELEMENT_TYPE_LINK => 'link',
+            ELEMENT_TYPE_DATE => 'date',
+            ELEMENT_TYPE_INSERT => 'insert',
+            ELEMENT_TYPE_COPY => 'copy',
+            ELEMENT_TYPE_LINKINFO => 'linkinfo',
+            ELEMENT_TYPE_LINKDATE => 'linkdate',
+            ELEMENT_TYPE_CODE => 'code',
+            ELEMENT_TYPE_DYNAMIC => 'dynamic',
+            ELEMENT_TYPE_INFO => 'info',
+            ELEMENT_TYPE_INFODATE => 'infodate'
+        );
+    }
 
 
 	/**
 	 * Ermittelt die Klasse des Element-Typs.<br>
 	 * Entweder "info", "text" oder "dynamic".
-	 * 
+	 *
 	 * @return String
 	 */
 	function getTypeClass()
@@ -438,7 +479,7 @@ SQL
 	{
 		$parameters = explode( "\n",$this->code );
 		$items      = array();
-	
+
 		foreach( $parameters as $it )
 		{
 			$paar        = explode( ":",$it,2 );
@@ -450,20 +491,20 @@ SQL
 				$param_value = trim($paar[0]);
 
 			// Wenn Inhalt mit "'" beginnt und mit "'" aufhoert, dann diese Zeichen abschneiden
-			if	( substr($param_value,0,1) == "'" && substr($param_value,strlen($param_value)-1,1) == "'" ) 
-				$param_value = substr($param_value,1,strlen($param_value)-2); 
-			
+			if	( substr($param_value,0,1) == "'" && substr($param_value,strlen($param_value)-1,1) == "'" )
+				$param_value = substr($param_value,1,strlen($param_value)-2);
+
 			$items[$param_name] = $param_value;
 		}
 		return $items;
 	}
-	
+
 
 	function getDynamicParameters()
 	{
 		$parameters = explode( "\n",$this->code );
 		$items      = array();
-	
+
 		foreach( $parameters as $it )
 		{
 			$paar = explode( ":",$it,2 );
@@ -476,13 +517,13 @@ SQL
 //				if	( substr($param_value,0,1) == "'" && substr($param_value,strlen($param_value)-1,1) == "'" ) 
 //					$param_value = substr($param_value,1,strlen($param_value)-2); 
 
-				if	( !empty($param_value) )				
+				if	( !empty($param_value) )
 					$items[$param_name] = $param_value;
 			}
 		}
 		return $items;
 	}
-	
+
 
 	/**
 	 * Ermittelt, ob das Element beschreibbar ist.
@@ -492,7 +533,7 @@ SQL
 	function isWritable()
 	{
 		// Bei bestimmten Feldern immer false zurueckgeben
-		if	( in_array($this->type,$this->readonlyElementNames) )
+		if	( in_array($this->typeid,Element::$readonlyElementTypeIds) )
 			return false;
 
 		return $this->writable;

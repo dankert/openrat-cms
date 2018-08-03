@@ -143,14 +143,13 @@ class ElementAction extends Action
 	
 	
 	
-	public function advancedView
-	()
+	public function advancedView()
 	{
 		// Die verschiedenen Element-Typen
 		$types = array();
 
-		foreach( $this->element->getAvailableTypes() as $t )
-			$types[ $t ] = 'EL_'.$t;
+		foreach( $this->element->getAvailableTypes() as $typeid=>$t )
+			$types[ $typeid ] = 'EL_'.$t;
 
 		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
 		if	( !$this->userIsAdmin() )

@@ -88,7 +88,7 @@ class Value
 	
 	/**
 	 * Element-Objekt
-	 * @type BaseObject
+	 * @type Element
 	 */
 	var $element;
 	
@@ -567,7 +567,7 @@ SQL
 		
 		switch( $this->element->type )
 		{
-			case 'list'  : // nur wg. R�ckw�rtskompabilit�t.
+			case 'list'  : // nur wg. R�ckw�rtskompabilit�t. Nicht mehr in Verwendung!
 			case 'insert':
 
 				$objectid = $this->linkToObjectId;
