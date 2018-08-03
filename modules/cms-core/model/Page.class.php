@@ -172,6 +172,18 @@ class Page extends BaseObject
 			
 		$object = new BaseObject( $objectid );
 		$object->objectLoad();
+
+		if	( $object->projectid != $this->projectid )
+		{
+			// Target is in another Project. So we have to create an absolute URL.
+			$targetProject = new Project( $object->projectid );
+			$targetProject->load();
+			$inhalt = $targetProject->url;
+			if   ( ! strpos($inhalt,'://' ) === FALSE ) {
+				// No protocol in hostname. So we have to prepend the URL with '//'.
+				$inhalt = '//'.$inhalt;
+			}
+		}
 		
 		$cut_index           = ( is_object($this->publish) && $this->publish->cut_index           );
 		$content_negotiation = ( is_object($this->publish) && $this->publish->content_negotiation );
@@ -374,7 +386,7 @@ class Page extends BaseObject
 
 	function delete()
 	{
-		global $db;
+		$db = db_connection();
 
 		$sql = $db->sql( 'DELETE FROM {{value}} '.
 		                '  WHERE pageid={pageid}' );
@@ -392,7 +404,7 @@ class Page extends BaseObject
 
 	/**
 	 * Kopieren der Inhalts von einer anderen Seite
-	 * @param ID der Seite, von der der Inhalt kopiert werden soll
+	 * @param $otherpageid integer ID der Seite, von der der Inhalt kopiert werden soll
 	 */
 	function copyValuesFromPage( $otherpageid )
 	{
