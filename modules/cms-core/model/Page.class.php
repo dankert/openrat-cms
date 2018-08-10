@@ -16,6 +16,7 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\publish\PreviewLinkSchema;use cms\publish\PublicLinkSchema;
 
 
 /**
@@ -138,9 +139,9 @@ class Page extends BaseObject
 	function parentfolder()
 	{
 		$folder = new Folder();
-		$folder->folderid = $this->folderid;
+		$folder->folderid = $this->parentid;
 		
-		return $folder->parentfolder( false,false );
+		return $folder->parentObjectFileNames( false,true );
 	}
 
 
@@ -154,152 +155,18 @@ class Page extends BaseObject
 	  */
 	public function path_to_object( $objectid )
 	{
-		global $conf_php,
-		       $SESS;
-		$inhalt = '';
-		
 		if	( ! BaseObject::available( $objectid) )
 			return '';
 			
-		$param = array(
-			'oid'                 => '__OID__'.$objectid.'__',
-			REQ_PARAM_MODEL_ID    => $this->modelid          ,
-			REQ_PARAM_LANGUAGE_ID => $this->languageid       ,
-            REQ_PARAM_EMBED       => '1'                       );
-		
-		if	( $this->icons )
-			$param['withIcons'] = '1';
-			
-		$object = new BaseObject( $objectid );
-		$object->objectLoad();
-
-		if	( $object->projectid != $this->projectid )
-		{
-			// Target is in another Project. So we have to create an absolute URL.
-			$targetProject = new Project( $object->projectid );
-			$targetProject->load();
-			$inhalt = $targetProject->url;
-			if   ( ! strpos($inhalt,'://' ) === FALSE ) {
-				// No protocol in hostname. So we have to prepend the URL with '//'.
-				$inhalt = '//'.$inhalt;
-			}
-		}
-		
-		$cut_index           = ( is_object($this->publish) && $this->publish->cut_index           );
-		$content_negotiation = ( is_object($this->publish) && $this->publish->content_negotiation );
-
 		if   ( $this->public )
-		{ 
-			switch( $object->typeid )
-			{
-				case OR_TYPEID_FILE:
-				case OR_TYPEID_IMAGE:
-				case OR_TYPEID_TEXT:
-
-					$inhalt  = $this->up_path();
-					
-					$f = new File( $objectid );
-					$f->content_negotiation = $content_negotiation;
-					$f->load();
-					$inhalt .= $f->full_filename();
-					break;
-
-				case OR_TYPEID_PAGE:
-
-					$inhalt  = $this->up_path();
-					
-					$p = new Page( $objectid );
-					$p->languageid          = $this->languageid;
-					$p->modelid             = $this->modelid;
-					$p->cut_index           = $cut_index;
-					$p->content_negotiation = $content_negotiation;
-					$p->withLanguage        = $this->withLanguage;
-					$p->withModel           = $this->withModel;
-					$p->load();
-					$inhalt .= $p->full_filename();
-					break;
-
-				case OR_TYPEID_LINK:
-					$link = new Link( $objectid );
-					$link->load();
-
-					$linkedObject = new BaseObject( $link->linkedObjectId );
-					$linkedObject->objectLoad();
-
-					switch( $linkedObject->getType() )
-					{
-						case OR_TYPEID_FILE:
-							$f = new File( $link->linkedObjectId );
-							$f->load();
-							$f->content_negotiation = $content_negotiation;
-							$inhalt  = $this->up_path();
-							$inhalt .= $f->full_filename();
-						break;
-
-						case OR_TYPEID_PAGE:
-							$p = new Page( $link->linkedObjectId );
-							$p->languageid          = $this->languageid;
-							$p->modelid             = $this->modelid;
-							$p->cut_index           = $cut_index;
-							$p->content_negotiation = $content_negotiation;
-				$p->withLanguage        = $this->withLanguage;
-				$p->withModel           = $this->withModel;
-							$p->load();
-							$inhalt  = $this->up_path();
-							$inhalt .= $p->full_filename();
-						break;
-					}
-					break;
-
-				case OR_TYPEID_URL:
-					$url = new Url( $objectid );
-                    $url->load();
-					$inhalt = $url->url;
-					break;
-			}
-		}
+			$linkSchema = new PublicLinkSchema();
 		else
-		{
-			// Interne Verlinkungen in der Seitenvorschau
-			switch( $object->typeid )
-			{
-				case OR_TYPEID_FILE:
-                case OR_TYPEID_IMAGE:
-                case OR_TYPEID_TEXT:
-                    $inhalt = \Html::url('file','show',$objectid,$param);
-                    break;
-                case OR_TYPEID_PAGE:
-					$inhalt = \Html::url('page','show',$objectid,$param);
-					break;
+			$linkSchema = new PreviewLinkSchema();
 
-				case OR_TYPEID_LINK:
-					$link = new Link( $objectid );
-					$link->load();
+        $to = new BaseObject($objectid);
+        $to->load();
+        $inhalt = $linkSchema->linkToObject( $this, $to);
 
-					$linkedObject = new BaseObject( $link->linkedObjectId );
-					$linkedObject->objectLoad();
-
-					switch( $linkedObject->typeid )
-					{
-						case OR_TYPEID_FILE:
-							$inhalt = \Html::url('file','show',$link->linkedObjectId,$param);
-						break;
-
-						case OR_TYPEID_PAGE:
-							$inhalt = \Html::url('page','show',$link->linkedObjectId,$param);
-						break;
-					}
-					break;
-
-				case OR_TYPEID_URL:
-                    $url = new Url( $objectid );
-                    $url->load();
-                    $inhalt = $url->url;
-
-					break;
-			}
-		}
-		
 		return $inhalt;
 	}
 
@@ -517,9 +384,25 @@ class Page extends BaseObject
 	function full_filename()
 	{
 		$filename = $this->path();
+		$filename .= $this->getFilename();
 
-		if	( !empty($filename) )
-			$filename .= '/';
+		$this->fullFilename = $filename;
+		return $filename;
+	}
+
+
+	/**
+	  * Ermitteln des Dateinamens dieser Seite.
+	  *
+	  * Wenn '$this->content_negotiation' auf 'true' steht, wird der Dateiname ggf. gekürzt,
+	  * so wie er für HTML-Links verwendet wird. Sonst wird immer der echte Dateiname
+	  * ermittelt.
+	  *
+	  * @return String Kompletter Dateiname, z.B. '/pfad/seite.en.html'
+	  */
+	function getFilename()
+	{
+		$filename = '';
 
 		if	( $this->cut_index && $this->filename == config('publish','default') )
 		{
@@ -529,7 +412,7 @@ class Page extends BaseObject
 		{
 			$format = config('publish','format');
 			$format = str_replace('{filename}',$this->filename(),$format );
-			
+
 			if	( !$this->withLanguage || $this->content_negotiation && config('publish','negotiation','page_negotiate_language' ) )
 			{
 				$format = str_replace('{language}'    ,'',$format );
@@ -559,7 +442,6 @@ class Page extends BaseObject
 			$filename .= $format;
 		}
 
-		$this->fullFilename = $filename;
 		return $filename;
 	}
 

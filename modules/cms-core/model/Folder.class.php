@@ -646,6 +646,13 @@ class Folder extends BaseObject
 	}
 
 
+    /**
+     * Liefert alle übergeordneten Ordner.
+     *
+     * @param bool $with_root Mit Root-Folder?
+     * @param bool $with_self Mit dem aktuellen Ordner?
+     * @return array
+     */
 	function parentObjectFileNames(  $with_root = false, $with_self = false  )
 	{
 		$db = \Session::getDatabase();
