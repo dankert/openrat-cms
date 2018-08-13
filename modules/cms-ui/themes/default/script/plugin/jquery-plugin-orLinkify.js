@@ -23,17 +23,19 @@ jQuery.fn.orLinkify = function()
 			{
 				//startView(this, $(this).attr('data-method') );
 				// gibt es so nicht mehr, kann wohl raus.
-				;
+				alert('Error: Link type = view not supported.');
 			}
 
 			else if	( type == 'modal' )
 			{
-				startDialog($(this).attr('data-name'),null,$(this).attr('data-method') );
+                alert('Error: Link type = modal not supported.');
+
+                startDialog($(this).attr('data-name'),null,$(this).attr('data-method') );
 			}
 
 			else if	( type == 'dialog' )
 			{
-				startDialog($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method') );
+				startDialog($(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-method'),$(this).attr('data-id'),$(this).attr('data-extra') );
 			}
 
 			else if	( type == 'url' )

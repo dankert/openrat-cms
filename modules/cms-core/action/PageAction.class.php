@@ -678,15 +678,14 @@ class PageAction extends ObjectAction
 	 *
 	 * Alle HTML-Sonderzeichen werden maskiert
 	 */
-	function src()
+	function srcView()
 	{
-		$this->page->languageid = $this->getRequestId(REQ_PARAM_LANGUAGE_ID );
-		$this->page->modelid    = $this->getRequestId(REQ_PARAM_MODEL_ID    );
+		$project = new Project( $this->page->projectid );
 
-		$this->page->withLanguage = config('publish','filename_language') == 'always' || count(Language::count()) > 1;
-		$this->page->withModel    = config('publish','filename_type'    ) == 'always' || count(Model::count()   ) > 1;
+		$this->page->withLanguage = config('publish','filename_language') == 'always' || count($project->getLanguageIds()) > 1;
+		$this->page->withModel    = config('publish','filename_type'    ) == 'always' || count($project->getModelIds()   ) > 1;
 		
-		$this->page->public     = true;
+		$this->page->public     = true; //
 		$this->page->load();
 
 		$src = $this->page->generate();

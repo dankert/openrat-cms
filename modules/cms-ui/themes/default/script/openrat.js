@@ -18,9 +18,6 @@ $( function()
     registerHeaderEvents();
     registerWorkbenchEvents();
 
-    var action = $('#editor').data('action');
-    filterMenus(action);
-
 
     $('.view').each( function(index) {
     	registerViewEvents(this);
@@ -76,6 +73,8 @@ function initActualHistoryState() {
         };
 
         Navigator.toActualHistory( state );
+
+        filterMenus(state.action,state.id,state.data);
     }
 }
 
@@ -180,7 +179,7 @@ var Workbench = new function()
             Workbench.loadViewIntoElement(targetDOMElement,action,method,id,params)
         });
 
-        filterMenus(action);
+        filterMenus(action, id, params);
 
     }
 
@@ -508,11 +507,17 @@ function openNewAction( name,action,id,extraId )
 }
 
 
-function filterMenus(action)
+function filterMenus(action,id,params)
 {
 	$('div.clickable').addClass('active');
 	$('div.clickable.filtered').removeClass('active').addClass('inactive');
 	$('div.clickable.filtered.on-action-'+action).addClass('active').removeClass('inactive');
+
+	// Jeder Menüeintrag bekommt die Id und Parameter.
+    $('div.clickable.filtered a').attr('data-action',action);
+    $('div.clickable.filtered a').attr('data-id'    ,id    );
+    $('div.clickable.filtered a').attr('data-extra' ,JSON.stringify(params) );
+
 }
 
 

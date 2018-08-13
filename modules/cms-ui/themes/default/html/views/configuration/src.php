@@ -1,3 +1,3 @@
 
-	<textarea name="source" class="editor__text-editor"><?php echo ${'source'} ?></textarea>
+	<textarea name="source" data-extension="" data-mimetype="" data-mode="yaml" class="editor code-editor"><?php echo ${'source'} ?></textarea>
 	
