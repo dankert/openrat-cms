@@ -645,6 +645,62 @@ class Folder extends BaseObject
 		}
 	}
 
+    /**
+     * Ermitteln des Dateinamens.
+     * @return String Dateiname
+     */
+    public function filename()
+    {
+        $filenameConfig = config('filename');
+
+        if	( $filenameConfig['edit'] )
+        {
+            if   ( $this->filename == '' )
+                // Filename ist eigentlich ein Pflichtfeld, daher kann dies nahezu nie auftreten.
+                // Rein technisch kann der Filename aber leer sein.
+                return $this->objectid;
+            else
+                return BaseObject::urlify($this->name);
+        }
+        else
+        {
+            // Filename is not edited, so we are generating a pleasant filename.
+            switch( $filenameConfig['style'] )
+            {
+                case 'longid':
+                    // Eine etwas laengere ID als Dateinamen benutzen
+                    return base_convert(str_pad($this->objectid,6,'a'),11,10);
+
+                case 'short':
+                    // So kurz wie moeglich: Erhoehen der Basis vom 10 auf 36.
+                    // Beispiele:
+                    // 1  -> 1
+                    // 10 -> a
+                    return base_convert($this->objectid,10,36);
+
+                case 'md5':
+                    // MD5-Summe als Dateinamen verwenden
+                    // Achtung: Kollisionen sind unwahrscheinlich, aber theoretisch möglich.
+                    return  md5(md5($this->objectid));
+
+                case  'ss':
+                    // Imitieren von "StoryServer" URLs. Wers braucht.
+                    return $this->objectid;
+
+                case  'title':
+                    // Achtung: Kollisionen sind möglich.
+                    // COLLISION ALARM! THIS IS NOT A GOOD IDEA!
+                    return  BaseObject::urlify($this->name);
+
+                case 'id':
+                default:
+                    // Einfach die Objekt-Id als Dateinamen verwenden.
+                    return $this->objectid;
+
+            }
+        }
+    }
+
 
     /**
      * Liefert alle übergeordneten Ordner.

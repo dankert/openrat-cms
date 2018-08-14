@@ -656,7 +656,7 @@ class FolderAction extends ObjectAction
 
 					// Datei dem Archiv hinzufügen.
 					$info = array();
-					$info['name'] = $file->filenameWithExtension();
+					$info['name'] = $file->filename();
 					$info['file'] = $file->loadValue();
 					$info['mode'] = 0600;
 					$info['size'] = $file->size;

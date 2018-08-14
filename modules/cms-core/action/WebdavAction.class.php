@@ -411,7 +411,7 @@ class WebdavAction extends Action
 			// Angabe Content-Disposition
 			// - Bild soll "inline" gezeigt werden
 			// - Dateiname wird benutzt, wenn der Browser das Bild speichern moechte
-			header('Content-Disposition: inline; filename='.$file->filenameWithExtension() );
+			header('Content-Disposition: inline; filename='.$file->filename() );
 			header('Content-Transfer-Encoding: binary' );
 			header('Content-Description: '.$file->name );
 	

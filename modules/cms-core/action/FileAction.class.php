@@ -159,7 +159,7 @@ class FileAction extends ObjectAction
 		// Angabe Content-Disposition
 		// - Bild soll "inline" gezeigt werden
 		// - Dateiname wird benutzt, wenn der Browser das Bild speichern moechte
-		header('Content-Disposition: inline; filename='.$this->file->filenameWithExtension() );
+		header('Content-Disposition: inline; filename='.$this->file->filename() );
 		header('Content-Transfer-Encoding: binary' );
 		header('Content-Description: '.$this->file->name );
 		

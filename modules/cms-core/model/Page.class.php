@@ -402,11 +402,9 @@ class Page extends BaseObject
 	  */
 	function getFilename()
 	{
-		$filename = '';
-
 		if	( $this->cut_index && $this->filename == config('publish','default') )
 		{
-			// Link auf Index-Datei, der Dateiname bleibt leer.
+			return ''; // Link auf Index-Datei, der Dateiname bleibt leer.
 		}
 		else
 		{
@@ -439,11 +437,62 @@ class Page extends BaseObject
 				$format = str_replace('{type}'    ,$t->extension               ,$format );
 				$format = str_replace('{type_sep}',config('publish','type_sep'),$format );
 			}
-			$filename .= $format;
+			return $format;
 		}
-
-		return $filename;
 	}
+
+
+
+    /**
+     * Ermitteln des Dateinamens dieser Seite.
+     *
+     * Wenn '$this->content_negotiation' auf 'true' steht, wird der Dateiname ggf. gekürzt,
+     * so wie er für HTML-Links verwendet wird. Sonst wird immer der echte Dateiname
+     * ermittelt.
+     *
+     * @return String Kompletter Dateiname, z.B. '/pfad/seite.en.html'
+     */
+    function filename()
+    {
+        if	( $this->cut_index && $this->filename == config('publish','default') )
+        {
+            return ''; // Link auf Index-Datei, der Dateiname bleibt leer.
+        }
+        else
+        {
+            $format = config('publish','format');
+            $format = str_replace('{filename}',$this->filename(),$format );
+
+            if	( !$this->withLanguage || $this->content_negotiation && config('publish','negotiation','page_negotiate_language' ) )
+            {
+                $format = str_replace('{language}'    ,'',$format );
+                $format = str_replace('{language_sep}','',$format );
+            }
+            else
+            {
+                $l = new Language( $this->languageid );
+                $l->load();
+                $format = str_replace('{language}'    ,$l->isoCode                     ,$format );
+                $format = str_replace('{language_sep}',config('publish','language_sep'),$format );
+            }
+
+            if	( !$this->withModel || $this->content_negotiation && config('publish','negotiation','page_negotiate_type' ) )
+            {
+                $format = str_replace('{type}'    ,'',$format );
+                $format = str_replace('{type_sep}','',$format );
+            }
+            else
+            {
+                $t = new Template( $this->templateid );
+                $t->modelid = $this->modelid;
+                $t->load();
+                $format = str_replace('{type}'    ,$t->extension               ,$format );
+                $format = str_replace('{type_sep}',config('publish','type_sep'),$format );
+            }
+            return $format;
+        }
+    }
+
 
 
 //	function language_filename()

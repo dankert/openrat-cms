@@ -98,27 +98,29 @@ class File extends BaseObject
 		$this->fullFilename = $filename;
 		return $filename;
 	}
-	
-	
-	
-	/**
-	  * Ermitteln des Dateinamens dieser Datei (ohne Pfadangabe)
-	  *
-	  * @return String Kompletter Dateiname, z.B. '/pfad/datei.jpeg'
-	  */
-	function filenameWithExtension()
-	{
-		if	( $this->extension != '' )
-			return $this->filename.'.'.$this->extension;
-		else	return $this->filename;
-	}
+
+
+
+    /**
+     * Ermitteln des Dateinamens dieser Datei (ohne Pfadangabe)
+     *
+     * @return String Kompletter Dateiname, z.B. '/pfad/datei.jpeg'
+     */
+	public function filename()
+    {
+        if	( !empty( $this->extension ) )
+            return parent::filename().'.'.$this->extension;
+        else
+            return parent::filename();
+
+    }
 
 
 
 	/**
-	  * Ermitteln aller Eigenschaften
+	  * Ermitteln aller Eigenschaften.
 	  *
-	  * @return Array
+	  * @return array
 	  */
 	function getProperties()
 	{

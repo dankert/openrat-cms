@@ -369,19 +369,6 @@ SQL
 
 
         /**
-         * Ueberpruft einen Dateinamen auf Gueltigkeit.
-         */
-        function goodFilename( $filename )
-        {
-            // Dateiname muss gueltig sein,
-            // ungueltige Zeichen werden entfernt
-            $gueltig = 'abcdefghijklmnopqrstuvwxyz0123456789.-_';
-            $tmp = strtr($filename, $gueltig, str_repeat('#', strlen($gueltig)));
-            return( strtr($this->filename, $tmp, str_repeat('-', strlen($tmp))) );
-        }
-
-
-        /**
          * Creates a slug url out of the filename.
          *
          * @param $filename String Name
@@ -404,14 +391,13 @@ SQL
          * Ermitteln des Dateinamens und Rueckgabe desselben
          * @return String Dateiname
          */
-        function filename()
+        public function filename()
         {
-
             global $conf;
 
             if	( $conf['filename']['edit'] && $this->filename != '' && $this->filename != $this->objectid )
             {
-                $this->filename = $this->goodFilename(trim(strtolower($this->name)));
+                $this->filename = BaseObject::urlify($this->name);
                 return $this->filename;
             }
 
@@ -427,16 +413,12 @@ SQL
             }
             else
             {
+                // Filename is not edited, so we are generating a pleasant filename.
                 switch( $conf['filename']['style'] )
                 {
                     case 'longid':
                         // Eine etwas laengere ID als Dateinamen benutzen
                         $this->filename = base_convert(str_pad($this->objectid,6,'a'),11,10);
-                        break;
-
-                    case 'id':
-                        // Einfach die Objekt-Id als Dateinamen verwenden.
-                        $this->filename = $this->objectid;
                         break;
 
                     case 'short':
@@ -464,12 +446,16 @@ SQL
 
                     case  'title':
                         // Achtung: Kollisionen sind möglich.
-                        $this->filename = $this->goodFilename(trim(strtolower($this->name)));
+                        // COLLISION ALARM! THIS IS NOT A GOOD IDEA!
+                        $this->filename = BaseObject::urlify($this->name);
                         break;
 
+                    case 'id':
                     default:
-                        // Als Fallback die Objekt-Id als Dateinamen verwenden.
+                        // Einfach die Objekt-Id als Dateinamen verwenden.
                         $this->filename = $this->objectid;
+                        break;
+
                 }
             }
 
