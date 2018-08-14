@@ -13,6 +13,8 @@ namespace {
 
 namespace cms\model {
 
+    use phpseclib\Math\BigInteger;
+
     /**
      * Superklasse fuer Objekte im Projektbaum.
      *
@@ -80,6 +82,17 @@ namespace cms\model {
          * @type User
          */
         public $lastchangeUser;
+
+        /**
+         * Benutzer, der das Objekt zuletzt veröffentlicht hat.
+         * @var User
+         */
+        public $publishedUser;
+        /**
+         * Zeitpunkt der letzten Veröffentlichung.
+         * @var Integer
+         */
+        public $publishedDate;
 
         /**
          * Kennzeichen, ob Objekt ein Ordner ist
@@ -327,7 +340,11 @@ SQL
         }
 
 
-        function getProperties()
+        /**
+         * Eigenschaften des Objektes. Kann durch Unterklassen erweitert werden.
+         * @return array
+         */
+        public function getProperties()
         {
             return Array( 'id'               =>$this->objectid,
                 'objectid'         =>$this->objectid,
@@ -340,6 +357,8 @@ SQL
                 'create_user'      =>$this->createUser->getProperties(),
                 'lastchange_date'  =>$this->lastchangeDate,
                 'lastchange_user'  =>$this->lastchangeUser->getProperties(),
+                'published_date'   =>$this->publishedDate,
+                'published_user'   =>$this->publishedUser->getProperties(),
                 'isFolder'         =>$this->isFolder,
                 'isFile'           =>$this->isFile,
                 'isImage'          =>$this->isImage,
@@ -492,14 +511,16 @@ SQL
          */
         function objectLoad()
         {
-            global $SESS;
             $db = db_connection();
 
-            $sql = $db->sql('SELECT {{object}}.*,' .
+            $stmt = $db->sql('SELECT {{object}}.*,' .
                 '       {{name}}.name,{{name}}.descr,'.
                 '       lastchangeuser.name     as lastchange_username,     '.
                 '       lastchangeuser.fullname as lastchange_userfullname, '.
                 '       lastchangeuser.mail     as lastchange_usermail,     '.
+                '       publisheduser.name      as published_username,     '.
+                '       publisheduser.fullname  as published_userfullname, '.
+                '       publisheduser.mail      as published_usermail,     '.
                 '       createuser.name         as create_username,     '.
                 '       createuser.fullname     as create_userfullname, '.
                 '       createuser.mail         as create_usermail      '.
@@ -508,13 +529,15 @@ SQL
                 '        ON {{object}}.id={{name}}.objectid AND {{name}}.languageid={languageid} '.
                 ' LEFT JOIN {{user}} as lastchangeuser '.
                 '        ON {{object}}.lastchange_userid=lastchangeuser.id '.
+                ' LEFT JOIN {{user}} as publisheduser '.
+                '        ON {{object}}.published_userid=publisheduser.id '.
                 ' LEFT JOIN {{user}} as createuser '.
                 '        ON {{object}}.create_userid=createuser.id '.
                 ' WHERE {{object}}.id={objectid}');
-            $sql->setInt('languageid', $this->languageid);
-            $sql->setInt('objectid'  , $this->objectid  );
+            $stmt->setInt('languageid', $this->languageid);
+            $stmt->setInt('objectid'  , $this->objectid  );
 
-            $row = $sql->getRow();
+            $row = $stmt->getRow();
 
             if (count($row) == 0)
                 throw new \ObjectNotFoundException('object '.$this->objectid.' not found');
@@ -571,9 +594,9 @@ SQL
         /**
          * Setzt die Eigenschaften des Objektes mit einer Datenbank-Ergebniszeile
          *
-         * @param row Ergebniszeile aus Datenbanktabelle
+         * @param array Ergebniszeile aus Datenbanktabelle
          */
-        function setDatabaseRow( $row )
+        public function setDatabaseRow( $row )
         {
             if	( count($row)==0 )
                 die('setDatabaseRow() got empty array, oid='.$this->objectid);
@@ -589,6 +612,7 @@ SQL
 
             $this->createDate     = $row['create_date'    ];
             $this->lastchangeDate = $row['lastchange_date'];
+            $this->publishedDate  = $row['published_date' ];
 
             $this->createUser = new User();
             $this->createUser->userid       = $row['create_userid'          ];
@@ -607,6 +631,16 @@ SQL
                 $this->lastchangeUser->name     = $row['lastchange_username'    ];
                 $this->lastchangeUser->fullname = $row['lastchange_userfullname'];
                 $this->lastchangeUser->mail     = $row['lastchange_usermail'    ];
+            }
+
+            $this->publishedUser = new User();
+            $this->publishedUser->userid        = $row['published_userid'      ];
+
+            if	( !empty($row['published_username']) )
+            {
+                $this->publishedUser->name     = $row['published_username'    ];
+                $this->publishedUser->fullname = $row['published_userfullname'];
+                $this->publishedUser->mail     = $row['published_usermail'    ];
             }
 
             $this->typeid = $row['typeid'];
@@ -767,6 +801,27 @@ SQL
 
             $sql->setInt   ('objectid',$this->objectid   );
             $sql->setInt   ('time'    ,$this->createDate );
+
+            $sql->query();
+        }
+
+
+        public function setPublishedTimestamp()
+        {
+            $db = db_connection();
+
+            $sql = $db->sql('UPDATE {{object}} SET '.
+                '  published_date   = {time}  ,'.
+                '  published_userid = {userid} '.
+                ' WHERE id={objectid}');
+
+            $user = \Session::getUser();
+            $this->publishedUser = $user;
+            $this->publishedDate = now();
+
+            $sql->setInt   ('userid'  ,$this->publishedUser->userid   );
+            $sql->setInt   ('objectid',$this->objectid                );
+            $sql->setInt   ('time'    ,$this->publishedDate           );
 
             $sql->query();
         }

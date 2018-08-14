@@ -5248,6 +5248,12 @@ PROJECT_NAME:
   en: Project description
   fr: Description de projet
   ru: Описание проекта
+PROJECT_HOSTNAME:
+  de: Hostname
+  en: Hostname
+PROJECT_NAME_DESC:
+  de: Hostname, unter dem das Projekt erreichbar ist.
+  en: Hostname under which the project is reachable
 PROJECT_SELECT_DESC:
   de: Wenn Sie ein anderes Projekt bearbeiten möchten, so wählen Sie hier eines aus.
   en: Work in an other project
@@ -5831,12 +5837,15 @@ FILE_IMAGE_NEW_WIDTH:
   fr: Nouvelle largeur
   it: Nueva anchura
   ru: Новая ширина климата
-GLOBAL_LANGAUGE:
+GLOBAL_LANGUAGE:
   en: Language
   es: Langue
   fr: Langue
   it: Lengua
   ru: Ключевые Язык Sprache
+GLOBAL_PUBLISH:
+  en: Published
+  de: Veröffentlicht
 GLOBAL_NO_TEMPLATES_AVAILABLE_DESC:
   en: 'Hint: There are no templates available.'
   es: '<em>Hint : </em> là ne sont aucun calibre disponible.'

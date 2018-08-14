@@ -56,7 +56,8 @@ class Project extends ModelBase
     public $publishPageExtension = true;
 
 	public $log = array();
-	
+
+
 	
 	// Konstruktor
 	public function  __construct( $projectid='' )
@@ -65,8 +66,27 @@ class Project extends ModelBase
 			$this->projectid = $projectid;
 	}
 
-	
-	/**
+
+    private static $cache = array();
+
+    /**
+     * @param $projectid
+     * @return Project
+     * @throws \ObjectNotFoundException
+     */
+    public static function create($projectid)
+    {
+        if   ( empty( Project::$cache[ $projectid ] ) )
+        {
+            $project = new Project( $projectid );
+            Project::$cache[ $projectid ] = $project;
+            $project->load();
+        }
+        return Project::$cache[ $projectid ];
+    }
+
+
+    /**
 	 * Stellt fest, ob die angegebene Projekt-Id existiert.
      * @param $id int Projekt-Id
      * @return boolean

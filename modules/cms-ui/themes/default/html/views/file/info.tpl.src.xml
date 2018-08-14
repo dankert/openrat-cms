@@ -144,6 +144,20 @@
 					<user user="var:lastchange_user"></user>
 				</part>
 			</part>
+			<part class="line">
+				<part class="label">
+					<label for="published_date">
+						<text text="global_published"></text>
+					</label>
+				</part>
+				<part class="input">
+					<image icon="el_date"></image>
+					<date date="var:published_date"></date>
+					<newline></newline>
+					<image icon="user"></image>
+					<user user="var:published_user"></user>
+				</part>
+			</part>
 		</group>
 	</form>
 </output>

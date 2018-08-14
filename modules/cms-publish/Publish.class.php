@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\model\Project;
 
 /**
  * Diese Klasse kapselt das Veroeffentlichen von Dateien.<br>
@@ -97,28 +98,28 @@ class Publish
 	 *
 	 * @return Publish
 	 */
-	function __construct()
+	function __construct( $projectid )
 	{
-		global $conf;
-		$confPublish = $conf['publish']; 
+		$confPublish = config('publish');
 		
-		if	( $conf['security']['nopublish'] )
+		if	( config('security','nopublish') )
 		{
 			$this->ok = false;
 			$this->log[] = 'publishing is disabled.';
 			return;
 		}
 		
-		$project = Session::getProject();
+		$project = new Project( $projectid );
+		$project->load();
 
 		// Feststellen, ob FTP benutzt wird.
 		// Dazu muss FTP aktiviert sein (enable=true) und eine URL vorhanden sein.
 		$ftpUrl = '';
-		if   ( $conf['publish']['ftp']['enable'] )
+		if   ( $confPublish['ftp']['enable'] )
 		{
-			if	( $conf['publish']['ftp']['per_project'] && !empty($project->ftp_url) )
+			if	( $confPublish['ftp']['per_project'] && !empty($project->ftp_url) )
 				$ftpUrl = $project->ftp_url;
-			elseif ( !empty($conf['publish']['ftp']['host']) ) 
+			elseif ( !empty($confPublish['ftp']['host']) )
 				$ftpUrl = $project->ftp_url;
 		}
 		

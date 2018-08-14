@@ -443,7 +443,7 @@ EOF
 	function publish()
 	{
 		if	( ! is_object($this->publish) )
-			$this->publish = new \Publish();
+			$this->publish = new \Publish( $this->projectid );
 
 		$this->write();
 		$this->publish->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );

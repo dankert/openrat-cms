@@ -259,7 +259,7 @@ class Folder extends BaseObject
 	{
 		set_time_limit(300);
 		if	( ! is_object($this->publish) )
-			$this->publish = new \Publish();
+			$this->publish = new \Publish( $this->projectid );
 
 		foreach( $this->getObjectIds() as $oid )
 		{

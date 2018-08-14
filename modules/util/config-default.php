@@ -679,7 +679,6 @@ function createDefaultConfig()
     $conf['publish']['filename_type']='always';
     $conf['publish']['style']="id";
     $conf['publish']['url']='relative';
-    $conf['publish']['url']='absolute';
     $conf['publish']['enable_php_in_page_content']=false;
     $conf['publish']['enable_php_in_file_content']=false;
     $conf['publish']['escape_8bit_characters']=false;

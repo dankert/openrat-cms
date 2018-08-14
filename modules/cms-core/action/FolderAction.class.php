@@ -1522,7 +1522,7 @@ class FolderAction extends ObjectAction
 		$files   = ( $this->hasRequestVar('files'  ) );
 
 		Session::close();
-		$publish = new Publish();
+		$publish = new Publish( $this->projectid );
 
 		$this->folder->publish = &$publish;
 		$this->folder->publish( $pages,$files,$subdirs );

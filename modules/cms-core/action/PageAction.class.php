@@ -313,7 +313,7 @@ class PageAction extends ObjectAction
 			$this->page->save();
 			$this->addNotice($this->page->getType(),$this->page->name,'PROP_SAVED','ok');
 			
-			if	( $this->hasRequestVar('creationTimestamp') && $this->currentUser->isAdmin )
+			if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
 				$this->page->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
 				$this->page->setCreationTimestamp();
 		}

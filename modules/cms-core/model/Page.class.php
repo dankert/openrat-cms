@@ -716,26 +716,25 @@ class Page extends BaseObject
 	 */
 	public function publish()
 	{
-		global $SESS;
-		$db = db_connection();
-		
 		if	( ! is_object($this->publish) )
-			$this->publish = new \Publish();
+			$this->publish = new \Publish( $this->projectid );
 		
 		$this->public              = true;
 
-		$allLanguages = Language::getAll();
-		$allModels    = Model::getAll();
+		$project = Project::create( $this->projectid );
+
+		$allLanguages = $project->getLanguageIds();
+		$allModels    = $project->getModelIds();
 		
 		// Schleife ueber alle Sprachvarianten
-		foreach( $allLanguages as $languageid=>$x )
+		foreach( $allLanguages as $languageid )
 		{
 			$this->languageid   = $languageid;
 			$this->withLanguage = count($allLanguages) > 1 || config('publish','filename_language') == 'always';
 			$this->withModel    = count($allModels   ) > 1 || config('publish','filename_type'    ) == 'always';
 			
 			// Schleife ueber alle Projektvarianten
-			foreach( $allModels as $projectmodelid=>$x )
+			foreach( $allModels as $projectmodelid )
 			{
 				$this->modelid = $projectmodelid;
 			
@@ -757,6 +756,8 @@ class Page extends BaseObject
 				}
 			}
 		}
+
+		parent::setPublishedTimestamp();
 
 	}
 	
