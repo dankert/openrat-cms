@@ -409,7 +409,7 @@ class Page extends BaseObject
 		else
 		{
 			$format = config('publish','format');
-			$format = str_replace('{filename}',$this->filename(),$format );
+			$format = str_replace('{filename}',parent::filename(),$format );
 
 			if	( !$this->withLanguage || $this->content_negotiation && config('publish','negotiation','page_negotiate_language' ) )
 			{
@@ -461,7 +461,7 @@ class Page extends BaseObject
         else
         {
             $format = config('publish','format');
-            $format = str_replace('{filename}',$this->filename(),$format );
+            $format = str_replace('{filename}',parent::filename(),$format );
 
             if	( !$this->withLanguage || $this->content_negotiation && config('publish','negotiation','page_negotiate_language' ) )
             {
