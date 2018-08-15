@@ -4,6 +4,7 @@ namespace cms\action;
 
 
 use cms\model\Element;
+use cms\model\Project;
 use cms\model\Template;
 use cms\model\Folder;
 use cms\model\BaseObject;
@@ -418,8 +419,12 @@ class ElementAction extends Action
 				case 'name':
 				
 					$names = array();
-										
-					foreach( Template::getAll() as $tid=>$name )
+
+                    $template = new Template( $this->element->templateid );
+                    $template->load();
+                    $project = new Project( $template->projectid );
+
+                    foreach( $project->getTemplates() as $tid=>$name )
 					{
 						$t = new Template( $tid );
 						$t->load();
@@ -526,9 +531,13 @@ class ElementAction extends Action
 				case 'defaultObjectId':
 
 					$objects = array();
-	
+
+					$template = new Template( $this->element->templateid );
+					$template->load();
+					$project = new Project( $template->projectid );
+
 					// Ermitteln aller verfuegbaren Objekt-IDs
-					foreach( Folder::getAllObjectIds() as $id )
+					foreach( $project->getAllObjectIds() as $id )
 					{
 						$o = new BaseObject( $id );
 						$o->load();

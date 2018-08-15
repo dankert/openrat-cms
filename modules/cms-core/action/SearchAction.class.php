@@ -134,63 +134,56 @@ class SearchAction extends Action
 		$listObjectIds   = array();
 		$listTemplateIds = array();
 	
-		$project = Session::getProject();
-		if	( is_object($project) && $project->projectid == -1 )
-		{
-			$resultList = array();
-				
-			$user = User::loadWithName($text);
-			if	( is_object($user) )
-			{
-				$userResult = array( 'url'  => Html::url('template','',$templateid),
-						'type' => 'user',
-						'name' => $user->name,
-						'desc' => lang('NO_DESCRIPTION_AVAILABLE'),
-						'lastchange_date' => 0 );
-			}
-			$resultList[] = $userResult;
-				
-			$this->setTemplateVar( 'result',$resultList );
-		}
-		else
-		{
-			if	( $flag & SEARCH_FLAG_ID && BaseObject::available( intval($text) ) )
-				$listObjectIds[] = intval( $text );
-	
-			if	( $flag & SEARCH_FLAG_NAME )
-			{
-				$o = new BaseObject();
-				$listObjectIds += $o->getObjectIdsByName( $text );
-			}
-	
-			if	( $flag & SEARCH_FLAG_DESCRIPTION )
-			{
-				$o = new BaseObject();
-				$listObjectIds += $o->getObjectIdsByDescription( $text );
-			}
-	
-			if	( $flag & SEARCH_FLAG_FILENAME )
-			{
-				$o = new BaseObject();
-				$listObjectIds += $o->getObjectIdsByFilename( $text );
-	
-				$f = new File();
-				$listObjectIds += $f->getObjectIdsByExtension( $text );
-			}
-				
-			// Inhalte durchsuchen
-			if	( $flag & SEARCH_FLAG_VALUE )
-			{
-				$e = new Value();
-				$listObjectIds += $e->getObjectIdsByValue( $text );
-	
-				$template = new Template();
-				$listTemplateIds += $template->getTemplateIdsByValue( $text );
-			}
-				
-			$this->explainResult( $listObjectIds, $listTemplateIds );
-		}
-	
+        $resultList = array();
+
+        $user = User::loadWithName($text);
+        if	( is_object($user) )
+        {
+            $userResult = array( 'url'  => Html::url('template','',$templateid),
+                    'type' => 'user',
+                    'name' => $user->name,
+                    'desc' => lang('NO_DESCRIPTION_AVAILABLE'),
+                    'lastchange_date' => 0 );
+        }
+        $resultList[] = $userResult;
+
+        $this->setTemplateVar( 'result',$resultList );
+        if	( $flag & SEARCH_FLAG_ID && BaseObject::available( intval($text) ) )
+            $listObjectIds[] = intval( $text );
+
+        if	( $flag & SEARCH_FLAG_NAME )
+        {
+            $o = new BaseObject();
+            $listObjectIds += $o->getObjectIdsByName( $text );
+        }
+
+        if	( $flag & SEARCH_FLAG_DESCRIPTION )
+        {
+            $o = new BaseObject();
+            $listObjectIds += $o->getObjectIdsByDescription( $text );
+        }
+
+        if	( $flag & SEARCH_FLAG_FILENAME )
+        {
+            $o = new BaseObject();
+            $listObjectIds += $o->getObjectIdsByFilename( $text );
+
+            $f = new File();
+            $listObjectIds += $f->getObjectIdsByExtension( $text );
+        }
+
+        // Inhalte durchsuchen
+        if	( $flag & SEARCH_FLAG_VALUE )
+        {
+            $e = new Value();
+            $listObjectIds += $e->getObjectIdsByValue( $text );
+
+            $template = new Template();
+            $listTemplateIds += $template->getTemplateIdsByValue( $text );
+        }
+
+        $this->explainResult( $listObjectIds, $listTemplateIds );
+
 	}
 	
 	

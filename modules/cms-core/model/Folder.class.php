@@ -68,33 +68,7 @@ class Folder extends BaseObject
 	
 
 
-	function getRootFolderId()
-	{
-		global $SESS;
-		$db = db_connection();
-
-		$sql = $db->sql('SELECT id FROM {{object}}'.
-		               '  WHERE parentid IS NULL'.
-		               '    AND typeid=1'.
-		               '    AND projectid={projectid}' );
-
-		// Wenn Methode statisch aufgerufen wird, ist $this nicht vorhanden
-		if	( isset($this) && isset($this->projectid) )
-		{
-			$sql->setInt('projectid',$this->projectid );
-		}
-		else
-		{
-			$project = \Session::getProject();
-			$sql->setInt('projectid',$project->projectid );
-		}
-		
-		// Datenbankabfrage ausfuehren
-		return $sql->getOne();
-	}
-
-
-	function hasFilename( $filename )
+	public function hasFilename( $filename )
 	{
 		$db = db_connection();
 
@@ -322,101 +296,6 @@ class Folder extends BaseObject
 		return( intval($sql->getOne()) );
 	}
 
-
-	
-	/**
-	 * Ermittelt alle Objekte vom gew�nschten Typ, die sic in
-	 * diesem Projekt befinden.
-	 * 
-	 * @see objectClasses/Object#getAllObjectIds()
-	 * @param types Array
-	 * @return Liste von Object-Ids
-	 */
-	function getAllObjectIds( $types=array('folder','page','link','file') )
-	{
-//		Html::debug($types,'Typen');
-		global $SESS;
-		$db = db_connection();
-		
-		$sql = $db->sql('SELECT id FROM {{object}}'.
-		               '  WHERE projectid={projectid}'.
-		               '    AND (    typeid  ={is_folder}' .
-		               '          OR typeid  ={is_file}' .
-		               '          OR typeid  ={is_page}' .
-		               '          OR typeid  ={is_link} )' .
-		               '  ORDER BY orderid ASC' );
-		
-		if	(isset($this) && isset($this->projectid))
-		{
-			$projectid = $this->projectid;
-		}
-		else
-		{
-			$project = \Session::getProject();
-			$projectid = $project->projectid;
-		}
-		
-		$sql->setInt('projectid',$projectid);
-		$sql->setInt('is_folder',in_array('folder',$types)?OR_TYPEID_FOLDER:0);
-		$sql->setInt('is_file'  ,in_array('file'  ,$types)?OR_TYPEID_FILE:0);
-		$sql->setInt('is_page'  ,in_array('page'  ,$types)?OR_TYPEID_PAGE:0);
-		$sql->setInt('is_link'  ,in_array('link'  ,$types)?OR_TYPEID_LINK:0);
-		
-		return( $sql->getCol() );
-	}
-
-	
-	public function getRootObjectId()
-	{
-		global $SESS;
-		$db = db_connection();
-		
-		$sql = $db->sql('SELECT id FROM {{object}}'.
-		               '  WHERE parentid IS NULL'.
-		               '    AND projectid={projectid}' );
-
-		if	( isset($this->projectid) )
-			$sql->setInt('projectid',$this->projectid   );
-		else	$sql->setInt('projectid',$SESS['projectid'] );
-		
-		return( $sql->getOne() );
-	}
-
-	
-	public function getOtherFolders()
-	{
-		global $SESS;
-		$db = db_connection();
-		
-		$sql = $db->sql('SELECT id FROM {{object}}'.
-		               '  WHERE typeid='.OR_TYPEID_FOLDER.
-		               '    and id != {objectid} '.
-		               '    AND projectid={projectid}' );
-		$sql->setInt( 'projectid',$this->projectid );
-		$sql->setInt( 'objectid' ,$this->objectid  );
-		
-		return( $sql->getCol() );
-	}
-
-	
-	function getAllFolders()
-	{
-		global $SESS;
-		$db = db_connection();
-		
-		$sql = $db->sql('SELECT id FROM {{object}}'.
-		               '  WHERE typeid='.OR_TYPEID_FOLDER.
-		               '    AND projectid={projectid}' );
-		               
-		if	( !isset($this) || !isset($this->projectid) )
-		{
-			$project = \Session::getProject();
-			$sql->setInt('projectid',$project->projectid);
-		}
-		else	$sql->setInt( 'projectid',$this->projectid   );
-		
-		return( $sql->getCol() );
-	}
 
 	
 	function getPages()
@@ -987,8 +866,7 @@ SQL
 		// Variablen setzen.
 		$sql->setInt( 'folderid', $this->objectid );
 	
-		$language = \Session::getProjectLanguage();
-		$sql->setInt( 'languageid', $language->languageid );
+		$sql->setInt( 'languageid', $this->languageid );
 	
 		return $sql->getAll();
 	}

@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use ArchiveTar;
+use cms\model\Project;
 use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
@@ -985,7 +986,8 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );
 		$this->setTemplateVar('maxlength',$maxSizeBytes );
 
-		$all_templates = Template::getAll();
+        $project = new Project( $this->folder->projectid );
+        $all_templates = $project->getTemplates();
 		$this->setTemplateVar('templates' ,$all_templates );
 
 		if	( count($all_templates) == 0 )
@@ -1095,7 +1097,9 @@ class FolderAction extends ObjectAction
 
     public function createpageView()
 	{
-		$all_templates = Template::getAll();
+        $project = new Project( $this->folder->projectid );
+
+        $all_templates = $project->getTemplates();
 		$this->setTemplateVar('templates' ,$all_templates          );
 		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 
@@ -1322,7 +1326,8 @@ class FolderAction extends ObjectAction
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
 
-		$rootFolder = new Folder( $this->folder->getRootFolderId() );
+		$project = new Project($this->folder->projectid);
+		$rootFolder = new Folder( $project->getRootObjectId() );
 		$rootFolder->load();
 
 		$this->setTemplateVar('properties'    ,$this->folder->getProperties() );
@@ -1335,7 +1340,8 @@ class FolderAction extends ObjectAction
 
 	public function rootView()
 	{
-		$rootFolder = new Folder( Folder::getRootFolderId() );
+        $project = new Project($this->folder->projectid);
+        $rootFolder = new Folder( $project->getRootObjectId() );
 		$rootFolder->load();
 
 		$this->setTemplateVar('rootfolderid'  ,$rootFolder->id  );

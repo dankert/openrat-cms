@@ -133,8 +133,14 @@ class Element
 	var $subtype = '';
 	var $withIcon = false;
 	var $dateformat = 'r';
+
+	/*
+	 * @deprecated use format.
+	 */
 	var $wiki   = false;
-	var $format = ELEMENT_FORMAT_TEXT;
+
+	public $format = ELEMENT_FORMAT_TEXT;
+
 	var $html = false;
 	var $decimals = 0;
 	var $decPoint = '.';

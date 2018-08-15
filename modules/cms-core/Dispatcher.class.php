@@ -184,9 +184,6 @@ class Dispatcher
 
 
         Logger::$messageCallback = function () {
-            $action = Session::get('action');
-            if (empty($action))
-                $action = '-';
 
             $action = Session::get('action');
             if (empty($action))
@@ -323,7 +320,13 @@ class Dispatcher
         if (!method_exists($do, $subactionMethodName))
             throw new BadMethodCallException("Method '$subactionMethodName' does not exist");
 
-        $do->$subactionMethodName(); // <== Executing the Action
+        try {
+            $do->$subactionMethodName(); // <== Executing the Action
+        }
+        catch (\ValidationException $ve)
+        {
+            $do->addValidationError( $ve->fieldName );
+        }
 
         // The action is able to change its method name.
         $this->subaction = $do->subActionName;

@@ -47,8 +47,6 @@ class ModelAction extends Action
 
 		$this->model = new Model( $this->getRequestId() );
 		$this->model->load();
-		
-		$this->project = Session::getProject();
 	}
 
 

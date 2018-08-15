@@ -1,5 +1,9 @@
 <?php
 
+require_once( __DIR__.'/'.'exception/ValidationException.class.php' );
+require_once( __DIR__.'/'.'exception/OpenRatException.class.php' );
+require_once( __DIR__.'/'.'exception/SecurityException.class.php' );
+
 require_once( __DIR__.'/'.'GlobalFunctions.class.php' );
 require_once( __DIR__.'/'.'Http.class.php' );
 require_once( __DIR__.'/'.'Html.class.php' );
@@ -14,11 +18,8 @@ require_once( __DIR__.'/'.'JSON.class.php' );
 require_once( __DIR__.'/'.'Less.php' );
 require_once( __DIR__.'/'.'JSqueeze.class.php' );
 require_once( __DIR__.'/'.'Spyc.class.php' );
-require_once( __DIR__.'/'.'exception/OpenRatException.class.php' );
-require_once( __DIR__.'/'.'exception/SecurityException.class.php' );
 require_once( __DIR__.'/'.'TreeElement.class.php' );
 require_once( __DIR__.'/'.'Tree.class.php');
-require_once( __DIR__.'/'.'Publish.class.php' );
 require_once( __DIR__.'/'.'Ftp.class.php' );
 require_once( __DIR__.'/'.'Macro.class.php'        );
 require_once( __DIR__.'/'.'Dynamic.class.php'        );

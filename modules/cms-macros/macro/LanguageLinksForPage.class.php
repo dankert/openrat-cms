@@ -22,6 +22,7 @@
 // $Log$
 // ---------------------------------------------------------------------------
 use cms\model\Language;
+use cms\model\Project;
 
 /**
  * Erstellen einer Liste von Language-Links auf die selbe Seite
@@ -53,9 +54,10 @@ class LanguageLinksForPage extends Macro
 	{
 		// current language
 		$languageId = $this->page->languageid;
-	 
+
+		$project = new Project( $this->page->projectid );
 		// Schleife ueber alle Inhalte des Root-Ordners
-		foreach( Language::getAll() as $lid=>$lname)
+		foreach( $project->getLanguages() as $lid=>$lname)
 		{
 			
 			$l = new Language( $lid );

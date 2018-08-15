@@ -178,30 +178,6 @@ class LanguageAction extends Action
 	
 	
 	
-
-	function checkmenu( $menu )
-	{
-		switch( $menu )
-		{
-			case 'remove':
-				$actLanguage = Session::getProjectLanguage();
-				return
-					!readonly()                          && 
-					$this->userIsAdmin()                 &&
-					isset($this->language) &&
-					count( $this->language->getAll() ) >= 2 &&
-					$actLanguage->languageid != $this->language->languageid;
-				
-			case 'add':
-				return
-					!readonly() && $this->userIsAdmin();
-					
-			default:
-				return true;
-		}
-	}
-	
-	
 	/**
 	 * Liefert die Struktur zu diesem Ordner:
 	 * - Mit den übergeordneten Ordnern und

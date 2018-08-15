@@ -30,6 +30,8 @@ use \Html;
  * @author $Author$
  * @version $Revision$
  * @package openrat.actions
+ *
+ * @deprecated old ckeditor trash
  */
 class FilebrowserAction extends ObjectAction
 {

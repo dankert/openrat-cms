@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use cms\model\Acl;
+use cms\model\Project;
 use cms\model\User;
 use cms\model\Group;
 use cms\model\Page;
@@ -43,10 +44,15 @@ class ObjectAction extends Action
 	public $security = SECURITY_USER;
 	
 	private $objectid;
+	private $baseObject;
+
 
 	public function __construct()
     {
         parent::__construct();
+
+        $this->baseObject = new BaseObject( $this->getRequestId() );
+        $this->baseObject->objectLoad();
     }
 
     public function copyView()
@@ -454,7 +460,10 @@ class ObjectAction extends Action
 		$this->setTemplateVar('groups'   ,Group::getAll()   );
 
 		$languages = array(0=>lang('ALL_LANGUAGES'));
-		$languages += Language::getAll();
+
+		$project = new Project( $this->baseObject->projectid );
+
+		$languages += $project->getLanguages();
 		$this->setTemplateVar('languages',$languages       );
 		$this->setTemplateVar('objectid' ,$o->objectid     );
 		$this->setTemplateVar('action'   ,$this->actionName);

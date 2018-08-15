@@ -108,7 +108,7 @@ class Project extends ModelBase
      * Liefert alle verf?gbaren Projekte.
      * @return array
      */
-    public function getAllProjects()
+    public static function getAllProjects()
 	{
 		$db = db_connection();
 		$sql = $db->sql( 'SELECT id,name FROM {{project}} '.
@@ -876,8 +876,7 @@ SQL
 		// Variablen setzen.
 		$sql->setInt( 'projectid', $this->projectid );
 		
-		$language = Session::getProjectLanguage();
-		$sql->setInt( 'languageid', $language->languageid );
+		$sql->setInt( 'languageid', 0 );
 		
 		$user = Session::getUser();
 		$sql->setInt( 'userid', $user->userid );
@@ -958,6 +957,53 @@ SQL
 		
 		return $sql->getAll();
 	}
+
+    /**
+     * Ermittelt alle Objekte vom gew�nschten Typ, die sic in
+     * diesem Projekt befinden.
+     *
+     * @see objectClasses/Object#getAllObjectIds()
+     * @param types Array
+     * @return Liste von Object-Ids
+     * @deprecated use Project!
+     */
+    public function getAllObjectIds( $types=array('folder','page','link','file') )
+    {
+        $db = db_connection();
+
+        $stmt = $db->sql('SELECT id FROM {{object}}'.
+            '  WHERE projectid={projectid}'.
+            '    AND (    typeid  ={is_folder}' .
+            '          OR typeid  ={is_file}' .
+            '          OR typeid  ={is_page}' .
+            '          OR typeid  ={is_link} )' .
+            '  ORDER BY orderid ASC' );
+
+        $stmt->setInt('projectid',$this->projectid );
+        $stmt->setInt('is_folder',in_array('folder',$types)?OR_TYPEID_FOLDER:0);
+        $stmt->setInt('is_file'  ,in_array('file'  ,$types)?OR_TYPEID_FILE:0);
+        $stmt->setInt('is_page'  ,in_array('page'  ,$types)?OR_TYPEID_PAGE:0);
+        $stmt->setInt('is_link'  ,in_array('link'  ,$types)?OR_TYPEID_LINK:0);
+
+        return( $stmt->getCol() );
+    }
+
+
+
+    public function getAllFolders()
+    {
+        $db = db_connection();
+
+        $stmt = $db->sql('SELECT id FROM {{object}}'.
+            '  WHERE typeid='.OR_TYPEID_FOLDER.
+            '    AND projectid={projectid}' );
+
+        $stmt->setInt( 'projectid',$this->projectid   );
+
+        return( $stmt->getCol() );
+    }
+
+
 }
 
 ?>

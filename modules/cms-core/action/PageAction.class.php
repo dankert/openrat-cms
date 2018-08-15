@@ -148,15 +148,14 @@ class PageAction extends ObjectAction
 	function editPost()
 	{
 		$value = new Value();
-		$language = Session::getProjectLanguage();
-		$value->languageid = $language->languageid;
+		$value->languageid = $this->page->languageid;
 		$value->objectid   = $this->page->objectid;
 		$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
-		if	( $this->hasRequestVar('elementid') )
-			$value->element = new Element( $this->getRequestVar('elementid') );
-		else
-			$value->element = Session::getElement();
+		if	( ! $this->hasRequestVar('elementid') )
+            $this->addValidationError('elementid' );
+
+        $value->element = new Element( $this->getRequestVar('elementid') );
 
 		$value->element->load();
 		$value->publish = false;
@@ -275,7 +274,7 @@ class PageAction extends ObjectAction
 		// fuer jede Sprache einzeln gespeichert.
 		if	( $value->element->allLanguages )
 		{
-			$project = Session::getProject();
+			$project = new Project( $this->page->projectid );
 			foreach( $project->getLanguageIds() as $languageid )
 			{
 				$value->languageid = $languageid;
@@ -365,7 +364,8 @@ class PageAction extends ObjectAction
 //		$this->setTemplateVar('folder',$folders); 
 
 		$templates = Array();
-		foreach( Template::getAll() as $id=>$name )
+        $project = new Project( $this->page->projectid );
+		foreach( $project->getTemplates() as $id=>$name )
 		{
 			if	( $id != $this->page->templateid )
 				$templates[$id]=$name;
@@ -710,7 +710,8 @@ class PageAction extends ObjectAction
 		$this->page->public = true;
 		$this->page->load();
 
-		$this->setTemplateVars( $this->page->getProperties() );
+
+        $this->setTemplateVars( $this->page->getProperties() );
 		
 		if   ( $this->userIsAdmin() )
 		{
@@ -722,7 +723,8 @@ class PageAction extends ObjectAction
 		$this->setTemplateVar('template_name',$template->name);
 	
 		$templates = Array();
-		foreach( Template::getAll() as $id=>$name )
+        $project = new Project( $this->page->projectid );
+		foreach( $project->getTemplates() as $id=>$name )
 		{
 			if	( $id != $this->page->templateid )
 				$templates[$id]=$name;
@@ -789,32 +791,6 @@ class PageAction extends ObjectAction
 		                       array('subaction'=>'aclform','text'=>'add' ) );
 				$this->setTemplateVar('windowMenu',$menu);
 				break;
-
-		}
-	}
-	
-	
-		/**
-	 * Stellt fest, welche Menüeinträge ggf. ausgeblendet werden.
-	 * 
-	 * @see actionClasses/Action#checkMenu($name)
-	 */
-	function checkMenu( $menu ) {
-
-		switch( $menu)
-		{
-			case 'changetemplate':
-				// Template nur austauschbar, wenn es mind. 2 gibt.
-				return (!readonly() && count(Template::getAll()) > 1);
-
-			case 'aclform':
-				return !readonly();
-
-			case 'form':
-				return !readonly();
-
-			default:
-				return true;
 
 		}
 	}

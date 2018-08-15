@@ -67,52 +67,6 @@ class Model
 	
 
 	/**
-	 * Lesen aller Projektmodelle aus der Datenbank
-	 */
-	function getAll()
-	{
-		global $SESS;
-		$db = db_connection();
-
-		$sql = $db->sql( "SELECT id,name FROM {{projectmodel}} ".
-		                "   WHERE projectid = {projectid} ".
-		                "   ORDER BY name" );
-
-		if	( !empty($this) && !empty($this->projectid) )
-			$sql->setInt('projectid',$this->projectid );
-		else
-		{
-			$project = \Session::getProject();
-			$sql->setInt('projectid',$project->projectid);
-		}
-
-		return $sql->getAssoc();
-	}
-
-	
-	
-	/**
-	 * Bestimmt die Anzahl aller Varianten fuer das aktuelle Projekt.
-	 */
-	function count()
-	{
-		global $SESS;
-		$db = db_connection();
-
-		$sql = $db->sql( <<<SQL
-		SELECT count(*) FROM {{projectmodel}} 
-		                   WHERE projectid = {projectid} 
-SQL
-);
-		if	( isset($this) )
-			$sql->setInt('projectid',$this->projectid );
-		else	$sql->setInt('projectid',$SESS['projectid'] );
-
-		return $sql->getOne();
-	}
-	
-
-	/**
 	 * Lesen aus der Datenbank
 	 */
 	function load()
@@ -193,26 +147,6 @@ SQL
 
 		// Datenbankbefehl ausfuehren
 		$sql->query();
-	}
-
-
-	function getDefaultId()
-	{
-		global $SESS;
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT id FROM {{projectmodel}} '.
-		                '  WHERE projectid={projectid}'.
-		                '   ORDER BY is_default DESC' );
-		if	( isset($this->projectid) )
-			$sql->setInt('projectid',$this->projectid );
-		else
-		{
-			$project = \Session::getProject();
-			$sql->setInt('projectid',$project->projectid);
-		}
-		
-		return $sql->getOne();
 	}
 
 

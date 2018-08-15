@@ -198,33 +198,6 @@ namespace cms\model {
         }
 
 
-        /**
-         * Lesen aller Objekte aus dem aktuellen Projekt
-         * @return array Alle Objekt-IDs des aktuellen Projektes
-         */
-        function getAllObjectIds()
-        {
-            global $SESS;
-            $db = db_connection();
-
-            if	( ! isset($this->projectid) )
-            {
-                $project = \Session::getProject();
-                $projectid = $project->projectid;
-            }
-            else
-            {
-                $projectid = $this->projectid;
-            }
-
-            $sql = $db->sql('SELECT id from {{object}} '.
-                '  WHERE projectid={projectid}');
-            $sql->setInt('projectid', $projectid);
-
-            return $sql->getCol();
-        }
-
-
         // Kompletten Dateinamen des Objektes erzeugen
         function full_filename()
         {
@@ -239,23 +212,13 @@ namespace cms\model {
         }
 
         /**
-         * Pr?fen einer Berechtigung zu diesem Objekt
-         */
-        function checkRight( $type )
-        {
-            return true;
-        }
-
-
-        /**
          * Pruefen einer Berechtigung zu diesem Objekt
          */
-        function hasRight( $type )
+        public function hasRight( $type )
         {
             if	( is_null($this->aclMask) )
             {
-                $project  = \Session::getProject();
-                $language = \Session::getProjectLanguage();
+                $language = $this->languageid;
                 $user     = \Session::getUser();
 
                 if	( $user->isAdmin )
@@ -317,7 +280,7 @@ SQL
         /**
          * Typ des Objektes ermitteln
          *
-         * @return String der Typ des Objektes entweder 'folder','file','page' oder 'link'
+         * @return String der Typ des Objektes entweder 'folder','file','page' oder 'link'.
          */
         function getType()
         {

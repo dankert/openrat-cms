@@ -229,7 +229,7 @@ namespace cms\action {
          * @param String $name Name des validierten Eingabefeldes
          * @param String Textschl�ssel der Fehlermeldung (optional)
          */
-        protected function addValidationError($name, $message = "COMMON_VALIDATION_ERROR", $vars = array(), $log = array())
+        public function addValidationError($name, $message = "COMMON_VALIDATION_ERROR", $vars = array(), $log = array())
         {
             if (!empty($message))
                 $this->addNotice('', '', $message, OR_NOTICE_ERROR, $vars, $log);

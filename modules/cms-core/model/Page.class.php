@@ -279,7 +279,8 @@ class Page extends BaseObject
 
 		foreach( $this->getElementIds() as $elementid )
 		{
-			foreach( Language::getAll() as $lid=>$lname )
+			$project = new Project( $this->projectid );
+			foreach( $project->getLanguages() as $lid=>$lname )
 			{
 				$val = new Value();
 				$val->publish = false;

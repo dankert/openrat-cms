@@ -70,33 +70,34 @@ class TreeAction extends Action
 	 */
 	public function settingsView()
 	{
+	    /*
 		$this->setTemplateVar( 'languages' ,Language::getAll()                        );
-		$this->setTemplateVar( 'languageid',Session::getProjectLanguage()->languageid );
+		$this->setTemplateVar( 'languageid',0 );
 		$this->setTemplateVar( 'models'    ,Model::getAll()                           );
-		$this->setTemplateVar( 'modelid'   ,Session::getProjectModel()->modelid       );
+		$this->setTemplateVar( 'modelid'   ,0 );
+	    */
 	}
-	
+
+
+    /**
+     * @deprecated
+     */
 	public function settingsPost()
 	{
-		$language = new Language( $this->getRequestVar(REQ_PARAM_LANGUAGE_ID,OR_FILTER_NUMBER) );
-		$language->load();
-		Session::setProjectLanguage( $language );
 
-		$model = new Model( $this->getRequestVar(REQ_PARAM_MODEL_ID,OR_FILTER_NUMBER) );
-		$model->load();
-		Session::setProjectModel( $model );
-		
 		$this->addNotice('language',$language->name,'DONE',OR_NOTICE_OK);
 		$this->addNotice('model'   ,$model->name   ,'DONE',OR_NOTICE_OK);
 	}
 
-	
+
+    /**
+     * @deprecated
+     */
 	public function languagePost()
 	{
 		$language = new Language( $this->getRequestId() );
 		$language->load();
-		Session::setProjectLanguage( $language );
-	
+
 		$this->addNotice('language',$language->name,'DONE',OR_NOTICE_OK);
 	}
 	
@@ -105,8 +106,7 @@ class TreeAction extends Action
 	{
 		$model = new Model( $this->getRequestId() );
 		$model->load();
-		Session::setProjectModel( $model );
-	
+
 		$this->addNotice('model'   ,$model->name   ,'DONE',OR_NOTICE_OK);
 	}
 	

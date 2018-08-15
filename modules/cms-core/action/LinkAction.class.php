@@ -86,7 +86,6 @@ class LinkAction extends ObjectAction
 
 			$this->link->save();
 			$this->link->setTimestamp();
-			Session::setObject( $this->link );
 		}
 	}
 
@@ -100,8 +99,7 @@ class LinkAction extends ObjectAction
 
 			$this->link->save();
 			$this->link->setTimestamp();
-			Session::setObject( $this->link );
-			
+
 			$this->addNotice('link',$this->link->name,'SAVED',OR_NOTICE_OK);
 	}
 

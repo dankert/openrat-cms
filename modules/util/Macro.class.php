@@ -88,7 +88,7 @@ class Macro
 	 */
 	public function &getObject()
 	{
-		return Session::getObject();
+		return $this->page;
 	}
 
 	

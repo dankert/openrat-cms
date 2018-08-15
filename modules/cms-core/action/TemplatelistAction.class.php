@@ -90,7 +90,7 @@ class TemplatelistAction extends Action
 	 */
 	function addView()
 	{
-		$this->setTemplateVar( 'templates',Template::getAll() );
+		$this->setTemplateVar( 'templates',array() /*Template::getAll()*/ );
 
 		$examples = array();
 		$dir = opendir( 'examples/templates');
@@ -113,11 +113,7 @@ class TemplatelistAction extends Action
 	{
 		// Hinzufuegen eines Templates
 		if   ( $this->getRequestVar('name') == '' )
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('add');
-			return;
-		}
+			throw new \ValidationException('name');
 
 		// Hinzufuegen eines Templates
 		switch( $this->getRequestVar('type') )
@@ -161,7 +157,7 @@ class TemplatelistAction extends Action
 					$elementMapping[$oldelementId] = $element->elementid;
 				}
 				
-				$project = Session::getProject();
+				$project = new Project( $this->getRequestId('projectid') );
 				foreach( $project->getModelIds() as $modelid )
 				{
 					// Template laden

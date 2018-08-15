@@ -107,13 +107,8 @@ class LanguagelistAction extends Action
 		global $conf;
 		$countryList = $conf['countries'];
 		
-		$language = Session::getProjectLanguage();
-
 		foreach( $this->project->getLanguageIds() as $id )
 		{
-			
-			if	( $id == $language->languageid )
-				continue;		
 
 			$l = new Language( $id );
 			$l->load();

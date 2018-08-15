@@ -15,6 +15,7 @@ use Http;
 use Session;
 use Transformer;
 use \Text;
+use ValidationException;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -481,7 +482,8 @@ class PageelementAction extends Action
 	 */
 	private function editlink()
 	{
-		$this->setTemplateVar('rootfolderid',Folder::getRootFolderId() );
+        $project = new Project($this->page->projectid);
+		$this->setTemplateVar('rootfolderid',$project->getRootObjectId() );
 		
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
 		$type = $this->value->element->subtype;
@@ -540,7 +542,8 @@ class PageelementAction extends Action
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
 
-		$this->setTemplateVar('rootfolderid'     ,Folder::getRootFolderId() );
+        $project = new Project($this->page->projectid);
+        $this->setTemplateVar('rootfolderid'     ,$project->getRootObjectId() );
 		
 		// Ermitteln, welche Objekttypen verlinkt werden d�rfen.
 		if	( empty($this->value->element->subtype) )
@@ -977,10 +980,9 @@ class PageelementAction extends Action
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
-			if	( $this->hasRequestVar('elementid') )
+            if	( !$this->hasRequestVar('elementid') )
+                throw new ValidationException('elementid');
 			$value->element = new Element( $this->getRequestVar('elementid') );
-			else
-			$value->element = Session::getElement();
 
 			$value->element->load();
 			$value->publish = false;
@@ -1070,10 +1072,9 @@ class PageelementAction extends Action
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
-			if	( $this->hasRequestVar('elementid') )
+            if	( !$this->hasRequestVar('elementid') )
+                throw new ValidationException('elementid');
 			$value->element = new Element( $this->getRequestVar('elementid') );
-			else
-			$value->element = Session::getElement();
 
 			$value->element->load();
 			$value->publish = false;
@@ -1193,11 +1194,10 @@ class PageelementAction extends Action
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
-			if	( $this->hasRequestVar('elementid') )
-			$value->element = new Element( $this->getRequestVar('elementid') );
-			else
-			$value->element = Session::getElement();
+			if	( !$this->hasRequestVar('elementid') )
+			    throw new ValidationException('elementid');
 
+			$value->element = new Element( $this->getRequestVar('elementid') );
 			$value->element->load();
 			$value->publish = false;
 			$value->load();
@@ -1236,10 +1236,9 @@ class PageelementAction extends Action
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
-			if	( $this->hasRequestVar('elementid') )
+            if	( !$this->hasRequestVar('elementid') )
+                throw new ValidationException('elementid');
 			$value->element = new Element( $this->getRequestVar('elementid') );
-			else
-			$value->element = Session::getElement();
 
 			$value->element->load();
 			$value->publish = false;
@@ -1264,10 +1263,9 @@ class PageelementAction extends Action
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
-			if	( $this->hasRequestVar('elementid') )
-			    $value->element = new Element( $this->getRequestVar('elementid') );
-			else
-			    $value->element = Session::getElement();
+            if	( !$this->hasRequestVar('elementid') )
+                throw new ValidationException('elementid');
+		    $value->element = new Element( $this->getRequestVar('elementid') );
 
 			$value->element->load();
 			$value->publish = false;
@@ -1307,10 +1305,9 @@ class PageelementAction extends Action
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
-			if	( $this->hasRequestVar('elementid') )
+            if	( !$this->hasRequestVar('elementid') )
+                throw new ValidationException('elementid');
 			$value->element = new Element( $this->getRequestVar('elementid') );
-			else
-			$value->element = Session::getElement();
 
 			$value->element->load();
 			$value->publish = false;
@@ -1335,10 +1332,9 @@ class PageelementAction extends Action
 			$value->objectid   = $this->page->objectid;
 			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
-			if	( $this->hasRequestVar('elementid') )
+            if	( !$this->hasRequestVar('elementid') )
+                throw new ValidationException('elementid');
 			$value->element = new Element( $this->getRequestVar('elementid') );
-			else
-			$value->element = Session::getElement();
 
 			$value->element->load();
 			$value->publish = false;

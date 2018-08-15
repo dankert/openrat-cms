@@ -4,6 +4,7 @@ namespace cms\action;
 
 namespace cms\action;
 use cms\model\Element;
+use cms\model\Project;
 use cms\model\Template;
 use cms\model\Page;
 
@@ -480,8 +481,10 @@ class TemplateAction extends Action
 		global $conf_php;
 
 		$list = array();
-	
-		foreach( Template::getAll() as $id=>$name )
+
+        $project = new Project( $this->template->projectid );
+
+		foreach( $project->getTemplates() as $id=>$name )
 		{
 			$list[$id] = array();
 			$list[$id]['name'] = $name;

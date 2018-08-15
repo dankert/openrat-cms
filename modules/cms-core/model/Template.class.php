@@ -72,42 +72,16 @@ class Template
 
 
 	/**
- 	 * Ermitteln aller Templates in dem aktuellen Projekt.
- 	 * @return Array mit Id:Name
-     * @deprecated use Project::getTemplates()
- 	 */
-	function getAll()
-	{
-		global $SESS;
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT id,name FROM {{template}}'.
-		                ' WHERE projectid={projectid}'.
-		                ' ORDER BY name ASC '  );
-		if	( isset($this) && isset($this->projectid) )
-			$sql->setInt( 'projectid',$this->projectid   );
-		else
-		{
-			$project = \Session::getProject();
-			$sql->setInt( 'projectid',$project->projectid );
-		}
-
-		return $sql->getAssoc();
-	}
-
-
-	/**
  	 * Laden des Templates aus der Datenbank und f?llen der Objekteigenschaften
  	 */
 	function load()
 	{
-		global $SESS;
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT * FROM {{template}}'.
+		$stmt = $db->sql( 'SELECT * FROM {{template}}'.
 		                ' WHERE id={templateid}' );
-		$sql->setInt( 'templateid',$this->templateid );
-		$row = $sql->getRow();
+		$stmt->setInt( 'templateid',$this->templateid );
+		$row = $stmt->getRow();
 		
 		if	( empty($row) )
 			throw new \ObjectNotFoundException("Template not found: ".$this->templateid);
@@ -115,12 +89,12 @@ class Template
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
 
-		$sql = $db->sql( 'SELECT * FROM {{templatemodel}}'.
+		$stmt = $db->sql( 'SELECT * FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}'.
 		                '   AND projectmodelid={modelid}' );
-		$sql->setInt( 'templateid',$this->templateid );
-		$sql->setInt( 'modelid'   ,$this->modelid    );
-		$row = $sql->getRow();
+		$stmt->setInt( 'templateid',$this->templateid );
+		$stmt->setInt( 'modelid'   ,$this->modelid    );
+		$row = $stmt->getRow();
 
 		if	( isset($row['extension']) )
 		{
@@ -146,23 +120,23 @@ class Template
 
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {{template}}'.
+		$stmt = $db->sql( 'UPDATE {{template}}'.
 		                '  SET name={name}'.
 		                '  WHERE id={templateid}' );
-		$sql->setString( 'name'      ,$this->name       );
-		$sql->setInt   ( 'templateid',$this->templateid );
-		$sql->query();
+		$stmt->setString( 'name'      ,$this->name       );
+		$stmt->setInt   ( 'templateid',$this->templateid );
+		$stmt->query();
 
-		$sql = $db->sql( 'SELECT COUNT(*) FROM {{templatemodel}}'.
+		$stmt = $db->sql( 'SELECT COUNT(*) FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}'.
 		                '   AND projectmodelid={modelid}' );
-		$sql->setInt   ( 'templateid'    ,$this->templateid     );
-		$sql->setInt   ( 'modelid'       ,$this->modelid );
+		$stmt->setInt   ( 'templateid'    ,$this->templateid     );
+		$stmt->setInt   ( 'modelid'       ,$this->modelid );
 
-		if	( intval($sql->getOne()) > 0 )
+		if	( intval($stmt->getOne()) > 0 )
 		{
 			// Vorlagen-Quelltext existiert für diese Varianten schon.
-			$sql = $db->sql( 'UPDATE {{templatemodel}}'.
+			$stmt = $db->sql( 'UPDATE {{templatemodel}}'.
 			                '  SET extension={extension},'.
 			                '      text={src} '.
 			                ' WHERE templateid={templateid}'.
@@ -171,21 +145,21 @@ class Template
 		else
 		{
 			// Vorlagen-Quelltext wird für diese Varianten neu angelegt.
-			$sql = $db->sql('SELECT MAX(id) FROM {{templatemodel}}');
-			$nextid = intval($sql->getOne())+1;
+			$stmt = $db->sql('SELECT MAX(id) FROM {{templatemodel}}');
+			$nextid = intval($stmt->getOne())+1;
 
-			$sql = $db->sql( 'INSERT INTO {{templatemodel}}'.
+			$stmt = $db->sql( 'INSERT INTO {{templatemodel}}'.
 			                '        (id,templateid,projectmodelid,extension,text) '.
 			                ' VALUES ({id},{templateid},{modelid},{extension},{src}) ');
-			$sql->setInt   ( 'id',$nextid         );
+			$stmt->setInt   ( 'id',$nextid         );
 		}
 
-		$sql->setString( 'extension'     ,$this->extension      );
-		$sql->setString( 'src'           ,$this->src            );
-		$sql->setInt   ( 'templateid'    ,$this->templateid     );
-		$sql->setInt   ( 'modelid'       ,$this->modelid        );
+		$stmt->setString( 'extension'     ,$this->extension      );
+		$stmt->setString( 'src'           ,$this->src            );
+		$stmt->setInt   ( 'templateid'    ,$this->templateid     );
+		$stmt->setInt   ( 'modelid'       ,$this->modelid        );
 		
-		$sql->query();
+		$stmt->query();
 	}
 
 
@@ -198,14 +172,14 @@ class Template
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT templateid FROM {{templatemodel}}'.
+		$stmt = $db->sql( 'SELECT templateid FROM {{templatemodel}}'.
 		                ' WHERE text LIKE {text} '.
 		                '   AND projectmodelid={modelid}' );
 
-		$sql->setInt   ( 'modelid',$this->modelid );
-		$sql->setString( 'text'   ,'%'.$text.'%'  );
+		$stmt->setInt   ( 'modelid',$this->modelid );
+		$stmt->setString( 'text'   ,'%'.$text.'%'  );
 		
-		return $sql->getCol();
+		return $stmt->getCol();
 	}
 
 
@@ -218,11 +192,11 @@ class Template
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id FROM {{element}}'.
+		$stmt = $db->sql( 'SELECT id FROM {{element}}'.
 		                '  WHERE templateid={templateid}'.
 		                '  ORDER BY name ASC' );
-		$sql->setInt( 'templateid',$this->templateid );
-		return $sql->getCol();
+		$stmt->setInt( 'templateid',$this->templateid );
+		return $stmt->getCol();
 	}
 
 
@@ -313,14 +287,14 @@ SQL
  	 * Hinzuf?gen eines Elementes
  	 * @param String Name des Elementes
  	 */
-	function addElement( $name,$description='',$type='text' )
+	public function addElement( $name,$description='',$type='text' )
 	{
 		$element = new Element();
 		$element->name       = $name;
 		$element->desc       = $description;
 		$element->type       = $type;
 		$element->templateid = $this->templateid;
-		$element->wiki       = true;
+		$element->format     = ELEMENT_FORMAT_TEXT;
 		$element->writable   = true;
 		$element->add();
 	}
@@ -345,13 +319,6 @@ SQL
 		                ' VALUES({templateid},{name},{projectid})' );
 		$sql->setInt   ('templateid',$this->templateid   );
 		$sql->setString('name'      ,$name               );
-
-		// Wenn Projektid nicht vorhanden, dann aus Session lesen
-		if	( !isset($this->projectid) || intval($this->projectid) == 0 )
-		{
-			$project = \Session::getProject();
-			$this->projectid = $project->projectid;
-		}
 
 		$sql->setInt   ('projectid' ,$this->projectid );
 
@@ -391,15 +358,15 @@ SQL
 			$element->delete();
 		}
 
-		$sql = $db->sql( 'DELETE FROM {{templatemodel}}'.
+		$stmt = $db->sql( 'DELETE FROM {{templatemodel}}'.
 		                ' WHERE templateid={templateid}' );
-		$sql->setInt( 'templateid',$this->templateid );
-		$sql->query();
+		$stmt->setInt( 'templateid',$this->templateid );
+		$stmt->query();
 
-		$sql = $db->sql( 'DELETE FROM {{template}}'.
+		$stmt = $db->sql( 'DELETE FROM {{template}}'.
 		                ' WHERE id={templateid}' );
-		$sql->setInt( 'templateid',$this->templateid );
-		$sql->query();
+		$stmt->setInt( 'templateid',$this->templateid );
+		$stmt->query();
 	}
 	
 	

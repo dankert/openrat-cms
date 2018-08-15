@@ -61,56 +61,11 @@ class Language
 
 	
 
-	// Lesen aller Sprachen aus der Datenbank
-	function getAll()
-	{
-		global $SESS;
-		$db = db_connection();
-
-		$sql = $db->sql( "SELECT id,name FROM {{language}} ".
-		                "   WHERE projectid = {projectid} ".
-		                "   ORDER BY name" );
-
-		if	( !empty($this) && !empty($this->projectid) )
-			$sql->setInt('projectid',$this->projectid );
-		else
-		{
-			$project = \Session::getProject();
-			$sql->setInt('projectid',$project->projectid);
-		}
-
-		return $sql->getAssoc();
-	}
-
-
 	/**
-	 * Ermittelt die Anzahl aller Sprachen zum aktuellen Projekt.
-	 */
-	function count()
-	{
-		global $SESS;
-		$db = db_connection();
-
-		$sql = $db->sql( <<<SQL
-			SELECT count(*) FROM {{language}} 
-	         WHERE projectid = {projectid}
-SQL
-);
-
-		if	( !empty($this) && !empty($this->projectid) )
-			$sql->setInt('projectid',$this->projectid );
-		else
-		{
-			$project = \Session::getProject();
-			$sql->setInt('projectid',$project->projectid);
-		}
-
-		return $sql->getOne();
-	}
-
-
-	// Lesen aus der Datenbank
-	function load()
+     * Lesen aus der Datenbank.
+     *
+     */
+	public function load()
 	{
 		$db = \Session::getDatabase();
 
@@ -131,8 +86,10 @@ SQL
 	}
 
 
-	// Speichern der Sprache in der Datenbank
-	function save()
+	/**
+     * Speichern der Sprache in der Datenbank
+     */
+	public function save()
 	{
 		$db = db_connection();
 
@@ -216,27 +173,6 @@ SQL
 		                '  WHERE id={languageid}' );
 		$sql->setInt('languageid',$this->languageid );
 		$sql->query();
-	}
-
-
-	function getDefaultId()
-	{
-		global $SESS;
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT id FROM {{language}} '.
-		                '  WHERE projectid={projectid}'.
-		                '   ORDER BY is_default DESC' );
-
-		if	( isset($this->projectid) )
-			$sql->setInt('projectid',$this->projectid );
-		else
-		{
-			$project = \Session::getProject();
-			$sql->setInt('projectid',$project->projectid);
-		}
-		
-		return $sql->getOne();
 	}
 
 

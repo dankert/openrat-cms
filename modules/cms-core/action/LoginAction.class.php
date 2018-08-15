@@ -546,7 +546,6 @@ class LoginAction extends Action
 				$this->addNotice('','','NO_PROJECTS_AVAILABLE',OR_NOTICE_WARN);
 		}
 		
-		$this->metaValues();
 	}
 
 
@@ -588,102 +587,11 @@ class LoginAction extends Action
 		}
 
 
-		$this->metaValues();
 		$this->setTemplateVar('applications',$list);
 	}
 
 	
-	
-	/**
-	 * Ermittelt Meta-Angaben f?r den HTML-Kopf.<br>
-	 * Falls der Browser die Meta-Angaben entsprechend auswertet, k?nnen ?ber feste Browser-Men?s 
-	 die Projekt direkt ausgew?hlt werden.
-	 */
-	function metaValues()
-	{
-		global $conf;
-		$metaList = array();
 
-		$user = Session::getUser();
-		if	( is_object($user) )
-		{
-			// Projekte ermitteln
-			$projects = $user->projects;
-			foreach( $projects as $id=>$name )
-			{
-				$metaList[] = array('name' => 'chapter',
-				                    'url'  => Html::url('index','project',$id),
-				                    'title'=> $name       );
-			}
-	
-			if	( $this->userIsAdmin() )
-			{
-				$metaList[] = array('name' => 'appendix',
-				                              'url'  => Html::url('index','projectmenu',0 ),
-				                              'title'=> lang('MENU_TREETITLE_ADMINISTRATION' ) );
-				
-				$metaList[] = array('name' => 'chapter',
-				                    'url'  => Html::url('index','administration',0),
-				                    'title'=> lang('administration')                );
-			}
-			
-			// Applikationen ermitteln
-			foreach( $conf['applications'] as $id=>$app )
-			{
-				if	( !is_array($app) )
-					continue;
-				$appUrl = $app['url'];
-				if	( isset($app['param']) )
-				{
-					$appUrl .= strpos($appUrl,'?')!==false?'&':'?';
-					$appUrl .= $app['param'].'='.session_id();
-				}
-				
-				$metaList[] = array('name' => 'bookmark',
-				                    'url'  => $appUrl  ,
-				                    'title'=> $app['name'] );
-			}
-		}
-		
-		$project = Session::getProject();
-		if	( is_object($project) && $project->projectid > 0 )
-		{
-			$languages =$project->getLanguages();
-			
-			foreach( $project->getModels() as $modelid=>$modelname )
-			{
-				foreach( $languages as $languageid=>$languagename )
-				{
-					
-					$metaList[] = array('name' => 'subsection',
-					                    'url'  => Html::url('index',
-					                                        'project',
-					                                        $project->projectid,
-					                                        array('languageid'=>$languageid,
-					                                              'modelid'   =>$modelid)     ),
-					                    'title'=> $modelname.' - '.$languagename
-					                   );
-				}
-			}
-		}
-
-		$metaList[] = array('name' => 'author',
-		                              'url'  => $conf['login']['logo']['url'],
-		                              'title'=> $conf['login']['logo']['url'] );
-
-		$metaList[] = array('name' => 'top',
-		                              'url'  => Html::url('index','logout',0 ),
-		                              'title'=> 'Start' );
-		
-		$metaList[] = array('name' => 'contents',
-		                              'url'  => Html::url('index','projectmenu',0 ),
-		                              'title'=> lang('MENU_TREETITLE_PROJECTMENU' ) );
-
-		
-		$this->setTemplateVar('metaList',$metaList);
-	}
-
-	
 
 	/**
 	 * Open-Id Login, ?berpr?fen der Anmeldung.<br>
@@ -1084,35 +992,6 @@ class LoginAction extends Action
 			
 			$this->addNotice('user',$user->name,'LOGIN_OK',OR_NOTICE_OK,array('name'=>$user->fullname));
 			
-			$this->setStyle( $user->style );
-			
-			$this->evaluateRequestVars();
-
-			$object = Session::getObject();
-			// Falls noch kein Objekt ausgewaehlt, dann das zuletzt ge?nderte benutzen.
-			if	( !is_object($object) && @$conf['login']['start']['start_lastchanged_object'] )
-			{
-				$objectid = Value::getLastChangedObjectByUserId($user->userid);
-				if	( BaseObject::available($objectid))
-				{
-					$object = new BaseObject($objectid);
-					$object->load();
-					Session::setObject($object); 
-				
-					$project = new Project( $object->projectid );
-					$project->load();
-					Session::setProject( $project );
-					
-					$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])&&Language::available($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
-					$language->load();
-					Session::setProjectLanguage( $language );
-			
-					$model = new Model( isset($vars[REQ_PARAM_MODEL_ID])&&Model::available($vars[REQ_PARAM_MODEL_ID])?$vars[REQ_PARAM_MODEL_ID]:$project->getDefaultModelId() );
-					$model->load();
-					Session::setProjectModel( $model );
-				}
-			}
-			
 			$this->setStyle( $user->style ); // Benutzer-Style setzen
 
             $config = Session::getConfig();
@@ -1125,58 +1004,6 @@ class LoginAction extends Action
 			// Entscheiden, welche Perspektive als erstes angezeigt werden soll.
 			
 			$allProjects = Project::getAllProjects();
-			
-			if	( $conf['login']['start']['start_single_project'] &&
-				  count($allProjects) == 1 ) 
-			{
-				// Das einzige Projekt sofort starten.
-				$projectIds = array_keys($allProjects);
-				
-				$project  = new Project($projectIds[0]);
-				$project->load();
-				$language = new Language( $project->getDefaultLanguageId() );
-				$language->load();
-				$model    = new Model( $project->getDefaultModelId() );
-				$model->load();
-					
-				Session::setProject( $project );
-				Session::setProjectLanguage( $language );
-				Session::setProjectModel( $model );
-
-			}
-			elseif	( $conf['login']['start']['start_lastchanged_object'] )
-			{
-				$user     = Session::getUser();
-				$objectid = Value::getLastChangedObjectByUserId($user->userid);
-				if	( BaseObject::available($objectid))
-				{
-					// Das Projekt des zuletzt geänderten Objekts ermitteln
-					// und dieses Projekt starten.
-					$o = new BaseObject( $objectid );
-					$o->load();
-					
-					$project  = new Project($o->projectid);
-					$project->load();
-					$language = new Language( $project->getDefaultLanguageId() );
-					$language->load();
-					$model    = new Model( $project->getDefaultModelId() );
-					$model->load();
-					
-					Session::setProject( $project );
-					Session::setProjectLanguage( $language );
-					Session::setProjectModel( $model );
-				}
-				else
-				{
-					// Benutzer hat noch nie eine Änderung durchgefuehrt.
-					// Erstmal die Startseite anzeigen.
-				}
-			}
-			
-			else
-			{
-				// Erstmal die Startseite anzeigen.
-			}
 		}
 		
 	}
@@ -1193,38 +1020,6 @@ class LoginAction extends Action
 		if	( is_object($user) )
 			$this->setTemplateVar('login_username',$user->name);
 		
-		// Ausgew?hlte Objekte merken, um nach dem n?. Login wieder sofort auszuw?hlen.
-		$o = Session::getObject();
-		if	( is_object($o) )
-			$this->setTemplateVar('objectid',$o->objectid);
-		$p = Session::getProject();
-		if	( is_object($p) )
-			$this->setTemplateVar('projectid',$p->projectid);
-		$l = Session::getProjectLanguage();
-		if	( is_object($l) )
-			$this->setTemplateVar('languageid',$l->languageid);
-		$m = Session::getProjectModel();
-		if	( is_object($m) )
-			$this->setTemplateVar('modelid',$m->modelid);
-		$db = db_connection();
-		if	( is_object($db) )
-			$this->setTemplateVar('dbid',$db->id);
-		
-			/*
-		// Alle Variablen aus der Sitzung entfernen.
-		session_unset();
-		
-		// Damit wird die Session gel�scht, nicht nur die Session-Daten!
-		if	( ini_get("session.use_cookies") )
-		{
-			$params = session_get_cookie_params();
-			setcookie( session_name(),'', time() - 3600,
-			           $params["path"],$params["domain"],$params["secure"],$params["httponly"] );
-		}
-		
-		// Loeschen der Session.
-		session_destroy();
-		*/
 		if	( config('security','renew_session_logout') )
 			$this->recreateSession();
 
@@ -1279,16 +1074,6 @@ class LoginAction extends Action
 	}
 	
 
-	/**
-	 * Ausw?hlen der Administration.
-	 */
-	function administration()
-	{
-		Session::setProject( new Project(-1) );
-	}
-	
-	
-	
 	/**
 	 * Ausgeben von maschinenlesbaren Benutzerinformationen.
 	 * 
@@ -1399,108 +1184,6 @@ class LoginAction extends Action
 	 */
 	function evaluateRequestVars( $add = array() )
 	{
-		global $REQ;
-		$vars = $REQ + $add;
-		
-		$db = db_connection();
-		if	( !is_object($db) )
-		{
-			if	( isset($vars[REQ_PARAM_DATABASE_ID]) )
-				$this->setDb($vars[REQ_PARAM_DATABASE_ID]);
-			else
-				throw new \LogicException('no database available.');
-		}
-		else
-		{
-			// Pr�ft, ob die �bergebene Datenbank-Id mit der
-			// aktuellen �bereinstimmt.
-			// Falls nicht, muss ein Re-Login erfolgen. 
-			if	( isset($vars[REQ_PARAM_DATABASE_ID]) )
-				if	( $db->id != $vars[REQ_PARAM_DATABASE_ID] )
-				{
-					$this->callSubAction('show');
-					return;
-				}
-		}
-		
-
-		if	( isset($vars[REQ_PARAM_OBJECT_ID]) && BaseObject::available($vars[REQ_PARAM_OBJECT_ID]) )
-		{
-			$object = new BaseObject( $vars[REQ_PARAM_OBJECT_ID] );
-			$object->objectLoadRaw();
-			Session::setObject( $object );
-	
-			$project = new Project( $object->projectid );
-			$project->load();
-			Session::setProject( $project );
-			
-			$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])&&Language::available($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
-			$language->load();
-			Session::setProjectLanguage( $language );
-	
-			$model = new Model( isset($vars[REQ_PARAM_MODEL_ID])&&Model::available($vars[REQ_PARAM_MODEL_ID])?$vars[REQ_PARAM_MODEL_ID]:$project->getDefaultModelId() );
-			$model->load();
-			Session::setProjectModel( $model );
-		}
-		elseif	( isset($vars[REQ_PARAM_LANGUAGE_ID]) && Language::available($vars[REQ_PARAM_LANGUAGE_ID]) )
-		{
-		}
-		elseif	( isset($vars[REQ_PARAM_MODEL_ID]) && Model::available($vars[REQ_PARAM_MODEL_ID]) )
-		{
-			$model = new Model( $vars[REQ_PARAM_MODEL_ID] );
-			$model->load();
-			Session::setProjectModel( $model );
-	
-			$project = new Project( $model->projectid );
-			$project->load();
-			Session::setProject( $project );
-	
-			$language = Session::getProjectLanguage();
-			if	( !is_object($language) || $language->projectid != $project->projectid )
-			{
-				$language = new Language( $project->getDefaultLanguageId() );
-				$language->load();
-				Session::setProjectLanguage( $language );
-			}
-	
-			$object = Session::getObject();
-			$object->objectLoadRaw();
-			if	( is_object($object) && $object->projectid == $project->projectid )
-			{
-				$object->objectLoadRaw();
-				Session::setObject( $object );
-			}
-			else
-			{
-				Session::setObject( '' );
-			}
-		}
-		elseif	( isset($vars[REQ_PARAM_PROJECT_ID])&&Project::isAvailable($vars[REQ_PARAM_PROJECT_ID]) )
-		{
-			$project = new Project( $vars[REQ_PARAM_PROJECT_ID] );
-			$project->load();
-	
-			Session::setProject( $project );
-			
-			$language = new Language( isset($vars[REQ_PARAM_LANGUAGE_ID])&& Language::available($vars[REQ_PARAM_LANGUAGE_ID])?$vars[REQ_PARAM_LANGUAGE_ID]:$project->getDefaultLanguageId() );
-			$language->load();
-			Session::setProjectLanguage( $language );
-	
-			$model = new Model( isset($vars[REQ_PARAM_MODEL_ID])&& Model::available($vars[REQ_PARAM_MODEL_ID])?$vars[REQ_PARAM_MODEL_ID]:$project->getDefaultModelId() );
-			$model->load();
-			Session::setProjectModel( $model );
-	
-			$object = Session::getObject();
-			if	( is_object($object) && $object->projectid == $project->projectid )
-			{
-				$object->objectLoadRaw();
-				Session::setObject( $object );
-			}
-			else
-			{
-				Session::setObject( '' );
-			}
-		}
 	}
 
 
@@ -1603,112 +1286,6 @@ class LoginAction extends Action
 		// Seite ?ndert sich nur 1x pro Session
 		$this->lastModified( $user->loginDate );
 
-		$projectid  = intval( $this->getRequestVar('projectid' ) );
-		$languageid = intval( $this->getRequestVar('languageid') );
-		$modelid    = intval( $this->getRequestVar('modelid'   ) );
-		$objectid   = intval( $this->getRequestVar('objectid'  ) );
-		$elementid  = intval( $this->getRequestVar('elementid' ) );
-
-		if	( $projectid != 0 )
-		{
-			$project = new Project( $projectid );
-			$project->load();
-			Session::setProject($project);
-		}
-		elseif	( $languageid != 0 )
-		{
-			$language = new Language( $languageid );
-			$language->load();
-			Session::setProjectLanguage($language);
-		}
-		elseif	( $modelid != 0 )
-		{
-			$model = new Model( $modelid );
-			$model->load();
-			Session::setProjectModel($model);
-		}
-		elseif	( $objectid != 0 )
-		{
-			$object = new BaseObject( $objectid );
-			$object->objectLoad();
-			Session::setObject($object);
-		}
-		if	( $elementid != 0 )
-		{
-			$element = new Element( $elementid );
-			Session::setElement($element);
-		}
-		
-		$project   = Session::getProject();
-		$object    = Session::getObject();
-		$elementid = 0;
-		
-		if	( is_object($project) )
-		{
-			if ( $project->projectid == PROJECTID_ADMIN )
-			{
-				$project->name = lang('ADMINISTRATION');
-				Session::setProject( $project );
-	
-				Session::setProjectLanguage( '' );
-				Session::setProjectModel   ( '' );
-				Session::setObject         ( '' );
-			}
-			
-			$this->setTemplateVar( 'title',$project->name );
-			
-			if	( is_object($object) )
-			{
-				$type = $object->getType();
-				
-				if	( $type == 'page' )
-				{
-					$page        = new Page($object->objectid);
-					$page->load();
-					$elementList = $page->getWritableElements();
-					if	( count($elementList) == 1 )
-						$elementid = current(array_keys($elementList));
-				}
-	
-				if	( $elementid > 0 )
-					$this->setTemplateVar( 'frame_src_main',Html::url('main','pageelement',$object->objectid,array('elementid'=>$elementid,'targetSubAction'=>'edit')) );
-				else
-					$this->setTemplateVar( 'frame_src_main',Html::url('main',$type,$object->objectid) );
-			}
-			else
-			{
-				$this->setTemplateVar( 'frame_src_main',Html::url('main','empty',0,array(REQ_PARAM_TARGETSUBACTION=>'blank')) );
-			}
-		}
-		elseif	( is_object($project) && $project->projectid == PROJECTID_ADMIN )
-		{
-			if	( $this->hasRequestVar('projectid') )
-				$this->setTemplateVar( 'frame_src_main',Html::url('main','project',$this->getRequestVar('projectid')) );
-			elseif	( $this->hasRequestVar('groupid') )
-				$this->setTemplateVar( 'frame_src_main',Html::url('main','group'  ,$this->getRequestVar('groupid'  )) );
-			elseif	( $this->hasRequestVar('userid') )
-				$this->setTemplateVar( 'frame_src_main',Html::url('main','user'   ,$this->getRequestVar('userid'   )) );
-			else
-				$this->setTemplateVar( 'frame_src_main',Html::url('main','empty',0,array(REQ_PARAM_TARGETSUBACTION=>'blank')) );
-		}
-		else
-		{
-			$this->callSubAction( 'projectmenu' );
-		}
-		
-
-		$this->setTemplateVar( 'show_tree',(Session::get('showtree')==true) );
-
-		$this->setTemplateVar( 'frame_src_title'     ,Html::url( 'title'                ) );
-		$this->setTemplateVar( 'frame_src_tree_menu' ,Html::url( 'treemenu'             ) );
-		$this->setTemplateVar( 'frame_src_tree_title',Html::url( 'treetitle'            ) );
-		$this->setTemplateVar( 'frame_src_tree'      ,Html::url( 'tree'    ,'load'      ) );
-		$this->setTemplateVar( 'frame_src_clipboard' ,Html::url( 'clipboard'            ) );
-		$this->setTemplateVar( 'frame_src_status'    ,Html::url( 'status'               ) );
-
-		$this->setTemplateVar( 'tree_width',$conf['interface']['tree_width'] );
-		
-		$this->metaValues();
 	}
 
 

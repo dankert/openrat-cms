@@ -3,7 +3,10 @@
 namespace cms\action;
 
 use \Auth;
+use cms\model\BaseObject;
+use cms\model\Project;
 use cms\model\User;
+use cms\model\Value;
 use Exception;
 use JSON;
 use JSqueeze;
@@ -137,10 +140,7 @@ class IndexAction extends Action
         $userIsLoggedIn = is_object($user);
 
         // Welche Aktion soll ausgeführt werden?
-        $action = $userIsLoggedIn ? 'start' : 'login';
-        if  ( $userIsLoggedIn && isset($_REQUEST['action'])) {
-            $action = $_REQUEST['action'];
-        }
+        $action = $this->getStartAction();
         $id = $this->getRequestId();
 
         $this->setTemplateVar('action',$action);
@@ -742,6 +742,51 @@ class IndexAction extends Action
         );
 
         return isset($colors[$colorName])?$colors[$colorName]:$colorName;
+    }
+
+
+
+    private function getStartAction()
+    {
+        if  ( isset($_REQUEST['action']) ) {
+            return $_REQUEST['action'];
+        }
+
+        $user = Session::getUser();
+        $userIsLoggedIn = $user != null;
+
+        // Das zuletzt geänderte benutzen.
+        if	( config('login','start','start_lastchanged_object') )
+        {
+            $objectid = Value::getLastChangedObjectByUserId($user->userid);
+
+            if	( BaseObject::available($objectid))
+            {
+                $object = new BaseObject($objectid);
+                $object->objectLoad();
+
+                return $object->getType();
+            }
+        }
+
+
+        if	( config('login','start','start_single_project') )
+        {
+            $projects = Project::getAllProjects();
+            if ( count($projects) == 1 ) {
+                // Das einzige Projekt sofort starten.
+                return 'project';
+            }
+            else{
+                return 'projectlist';
+            }
+        }
+
+
+        if( !$userIsLoggedIn )
+            return 'login';
+
+        return 'start';
     }
 
 }
