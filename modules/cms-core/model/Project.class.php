@@ -989,7 +989,11 @@ SQL
     }
 
 
-
+    /**
+     * Liefert die Ids aller Ordner in diesem Projekt.
+     *
+     * @return array
+     */
     public function getAllFolders()
     {
         $db = db_connection();

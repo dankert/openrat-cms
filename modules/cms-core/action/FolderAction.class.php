@@ -1242,8 +1242,6 @@ class FolderAction extends ObjectAction
 
 	public function editView()
 	{
-		global $conf_php;
-
 		$this->setTemplateVar('writable',$this->folder->hasRight(ACL_WRITE) );
 
 		$list = array();
@@ -1295,7 +1293,8 @@ class FolderAction extends ObjectAction
 		{
 			// Alle anderen Ordner ermitteln
 			$otherfolder = array();
-			foreach( $this->folder->getAllFolders() as $id )
+			$project = new Project( $this->folder->projectid );
+			foreach( $project->getAllFolders() as $id )
 			{
 				$f = new Folder( $id );
 				if	( $f->hasRight( ACL_WRITE ) )
