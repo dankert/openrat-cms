@@ -1,0 +1,47 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+    <group title="message:prop_userinfo">
+        <part class="line">
+            <part class="label">
+                <label for="create_date">
+                    <text text="global_created"></text>
+                </label>
+            </part>
+            <part class="input">
+                <image icon="el_date"></image>
+                <date date="var:create_date"></date>
+                <newline></newline>
+                <image icon="user"></image>
+                <user user="var:create_user"></user>
+            </part>
+        </part>
+        <part class="line">
+            <part class="label">
+                <label for="lastchange_date">
+                    <text text="global_lastchange"></text>
+                </label>
+            </part>
+            <part class="input">
+                <image icon="el_date"></image>
+                <date date="var:lastchange_date"></date>
+                <newline></newline>
+                <image icon="user"></image>
+                <user user="var:lastchange_user"></user>
+            </part>
+        </part>
+        <part class="line">
+            <part class="label">
+                <label for="published_date">
+                    <text text="global_published"></text>
+                </label>
+            </part>
+            <part class="input">
+                <image icon="el_date"></image>
+                <date date="var:published_date"></date>
+                <newline></newline>
+                <image icon="user"></image>
+                <user user="var:published_user"></user>
+            </part>
+        </part>
+    </group>
+</output>

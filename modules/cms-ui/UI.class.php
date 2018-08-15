@@ -22,13 +22,60 @@ define('CMS_UI_REQ_PARAM_EMBED', 'embed');
 
 class UI
 {
+    /**
+     * Shows the complete UI.
+     */
     public static function execute()
     {
-        try {
+        try
+        {
+            define('COOKIE_PATH',dirname($_SERVER['SCRIPT_NAME']));
+
+            // Everything is UTF-8.
+            header('Content-Type: text/html; charset=UTF-8');
+
+            // Sending the Content-Security-Policy.
+            self::setContentSecurityPolicy();
 
             if(empty($_REQUEST[CMS_UI_REQ_PARAM_EMBED])) {
-                $action = 'index';
-                $subaction = 'show';
+
+                $isPost = $_SERVER['REQUEST_METHOD'] == 'POST';
+
+                if($isPost)
+                {
+                    $action    = $_REQUEST[CMS_UI_REQ_PARAM_ACTION];
+                    $subaction = $_REQUEST[CMS_UI_REQ_PARAM_SUBACTION];
+
+                    $dispatcher = new Dispatcher();
+
+                    $dispatcher->action = $action;
+                    if(!defined('OR_ACTION'))
+                        define('OR_ACTION', $action);
+
+                    $dispatcher->subaction = $subaction;
+                    if(!defined('OR_METHOD'))
+                        define('OR_METHOD', $subaction);
+
+                    // Embedded Actions are ALWAYS Queries (means: GET).
+                    $dispatcher->isAction = true;
+                    $dispatcher->isEmbedded = true;
+
+                    $data = $dispatcher->doAction();
+
+                    //$data['notices'];
+
+                    // POST-Action has ended, now we want to show the UI.
+                    $action = 'index';
+                    $subaction = 'show';
+                    UI::executeEmbeddedAction($action,$subaction);
+                }
+                else
+                {
+                    $action = 'index';
+                    $subaction = 'show';
+                    UI::executeAction($action,$subaction);
+                }
+
             }
             else
             {
@@ -42,13 +89,8 @@ class UI
                 else {
                     $subaction = 'show';
                 }
+                UI::executeAction($action,$subaction);
             }
-
-            header('Content-Type: text/html; charset=UTF-8');
-
-            self::setContentSecurityPolicy();
-
-            UI::executeAction($action,$subaction);
 
         } catch (BadMethodCallException $e) {
             // Action-Method does not exist.
@@ -66,6 +108,10 @@ class UI
         }
     }
 
+    /**
+     * Shows a UI fragment.
+     * This can only be executed after a UI::execute()-call.
+     */
     public static function executeEmbedded($action, $subaction)
     {
         try {
@@ -89,7 +135,7 @@ class UI
         }
     }
 
-    private static function executeAction( $action, $subaction )
+    private static function executeAction( $action, $subaction,$isPost=false )
     {
         $dispatcher = new Dispatcher();
 
@@ -103,6 +149,7 @@ class UI
 
 
         $data = $dispatcher->doAction();
+        $dispatcher->isAction = $isPost;
 
         // The action is able to change its method and action name.
         $subaction = $dispatcher->subaction;
@@ -113,7 +160,7 @@ class UI
         UI::outputTemplate($tplName,$data['output']);
     }
 
-    private static function executeEmbeddedAction( $action, $subaction )
+    private static function executeEmbeddedAction( $action, $subaction,$isPost=false )
     {
         $dispatcher = new Dispatcher();
 
@@ -126,7 +173,7 @@ class UI
             define('OR_METHOD', $subaction);
 
         // Embedded Actions are ALWAYS Queries (means: GET).
-        $dispatcher->isAction = false;
+        $dispatcher->isAction = $isPost;
         $dispatcher->isEmbedded = true;
 
         $data = $dispatcher->callActionMethod();
@@ -148,35 +195,10 @@ class UI
      */
     private static function outputTemplate($templateName, $outputData)
     {
-        $templateFile = __DIR__.'/themes/default/html/views/' . $templateName . '.php';
+        $templateFile = __DIR__.'/themes/default/html/views/' . $templateName . '.tpl.src.xml';
 
-        // In development mode, we are compiling every template on the fly.
-        if (DEVELOPMENT) {
-            $srcFile = __DIR__.'/themes/default/html/views/' . $templateName . '.tpl.src.xml';
-
-            // Compile the template.
-            // From a XML source file we are generating a PHP file.
-            try
-            {
-                $te = new TemplateEngine();
-                $te->compile($srcFile, $templateFile);
-                unset($te);
-            } catch (Exception $e) {
-                throw new DomainException("Compilation failed for Template '$templateName'.", 0, $e);
-            }
-            #header("X-CMS-Template-File: " . $templateFile);
-        }
-
-        // Spätestens jetzt muss das Template vorhanden sein.
-        if (!is_file($templateFile))
-            throw new LogicException("Template file '$templateFile' was not found.");
-
-        // Übertragen der Ausgabe-Variablen in den aktuellen Kontext
-        //
-        extract($outputData);
-
-        // Einbinden des Templates
-        require_once($templateFile);
+        $engine = new TemplateEngine();
+        $engine->executeTemplate( $templateFile, $outputData );
     }
 
 

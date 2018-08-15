@@ -2,6 +2,9 @@
 
 
 namespace template_engine;
+use DomainException;
+use Exception;
+use LogicException;
 use \template_engine\components\Component;
 
 /**
@@ -19,37 +22,26 @@ class TemplateEngine
 	public $config = array();
 	
 	/**
-	 * Name Template.
-	 *
-	 * @var String
-	 */
-	private $tplFileName;
-
-	/**
 	 * Erzeugt einen Templateparser.
-	 *
-	 * @param String $tplName Name des Templates, das umgewandelt werden soll.
 	 */
-	public function TemplateEngine( $tplFileName='' )
+	public function __construct()
 	{
-		$this->tplFileName = $tplFileName;
 	}
 
 	/**
-	 * Wandelt eine Vorlage um
-	 * 
-	 * @param
-	 *        	filename Dateiname der Datei, die erstellt werden soll.
+     * Compile the template.
+     * From a XML source file we are generating a PHP file.
+     *
+     * @param $srcXmlFilename string Filename of template source
+     * @param $tplOutName string Filename of template code
 	 */
 	public function compile($srcXmlFilename = '',$tplOutName = '')
 	{
+	    // Imports the base class of all component types.
 		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/Component.class.' . PHP_EXT);
 		
 		try
 		{
-			if (empty($srcFilename))
-				$srcFilename = $this->tplFileName;
-			
 			$confCompiler = $this->config;
 			
 			if (is_file($srcXmlFilename))
@@ -78,6 +70,8 @@ class TemplateEngine
 			$openCmd = array();
 			$depth = 0;
 			$components = array();
+
+			$document = $this->parseIncludes( $document, dirname($srcXmlFilename).'/../include' );
 			
 			foreach ($document as $element)
 			{
@@ -86,7 +80,7 @@ class TemplateEngine
 				$attributes = array();
 				$value = '';
 				$tag = '';
-				
+
 				// Setzt: $tag, $attributes, $value, $type
 				extract($element);
 				
@@ -139,7 +133,7 @@ class TemplateEngine
 			// CHMOD ausfuehren.
 			if (! empty($confCompiler['chmod']))
 				if (! @chmod($filename, octdec($confCompiler['chmod'])))
-					throw new \InvalidArgumentException("Template {$this->tplFileName} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
+					throw new \InvalidArgumentException("Template {$srcXmlFilename} failed to compile: CHMOD '{$confCompiler['chmod']}' failed on file {$filename}.");
 		}
 		catch (\Exception $e)
 		{
@@ -162,6 +156,9 @@ class TemplateEngine
 	 */
 	private function loadXmlDocument( $filename )
 	{
+	    if (!is_file($filename))
+	        throw new LogicException("File '$filename' was not found.'");
+
 		$index = array();
 		$vals  = array();
 		$p = xml_parser_create();
@@ -172,6 +169,85 @@ class TemplateEngine
 		
 		return $vals;
 	}
+
+
+    /**
+     * Führt das gewünschte Template aus und schreibt das Ergebnis auf die Standardausgabe.
+     *
+     * In Development-Mode the template is compiled.
+     *
+     * @param $srcFile string Quelldateiname des Templates (im XML-Format)
+     * @param $outputData array Ausgabedaten
+     */
+    public function executeTemplate($srcFile, $outputData)
+    {
+        // Converting filename: '/path/file.src.xml' => '/path/file.php'.
+        $templateFile = dirname( $srcFile ).'/'.substr( basename($srcFile),0,strpos( basename($srcFile),'.')).'.php';
+
+        // In development mode, we are compiling every template on the fly.
+        if (DEVELOPMENT) {
+
+            // Compile the template.
+            // From a XML source file we are generating a PHP file.
+            try
+            {
+                $this->compile($srcFile, $templateFile);
+                unset($te);
+            } catch (Exception $e) {
+                throw new DomainException("Compilation failed for Template '$srcFile'.", 0, $e);
+            }
+            #header("X-CMS-Template-File: " . $templateFile);
+        }
+
+        // Spätestens jetzt muss das Template vorhanden sein.
+        if (!is_file($templateFile))
+            throw new LogicException("Template file '$templateFile' was not found.");
+
+        // Übertragen der Ausgabe-Variablen in den aktuellen Kontext
+        //
+        extract($outputData);
+
+        // Einbinden des Templates
+        require_once($templateFile);
+
+    }
+
+
+    /**
+     * @param $document array
+     * @param $includePath
+     * @return array
+     */
+    private function parseIncludes($document, $includePath )
+    {
+        $newDocument = array();
+
+        foreach ($document as $element) {
+            // Initialisieren der m�glichen Element-Inhalte
+            $type = '';
+            $attributes = array();
+            $value = '';
+            $tag = '';
+
+            // Setzt: $tag, $attributes, $value, $type
+            extract($element);
+
+            if ($tag == 'include') {
+                if ($type == 'complete' || $type == 'open') {
+
+                    $includeDocument = $this->loadDocument($includePath . '/' . $attributes['file'] . '.inc.xml');
+                    $newDocument = array_merge($newDocument,$includeDocument);
+
+                }
+            }
+            else
+            {
+                $newDocument[] = $element;
+            }
+        }
+
+        return $newDocument;
+    }
 }
 
 ?>

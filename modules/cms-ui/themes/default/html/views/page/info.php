@@ -98,67 +98,69 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div>
-				<div class="line">
-					<div class="label">
-						<label for="<?php echo REQUEST_ID ?>_create_date" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_created')))); ?></span>
+			
+				<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div>
+					<div class="line">
+						<div class="label">
+							<label for="<?php echo REQUEST_ID ?>_create_date" class="label">
+								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_created')))); ?></span>
+								
+							</label>
+						</div>
+						<div class="input">
+							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 							
-						</label>
-					</div>
-					<div class="input">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
-						
-						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($create_date) ?>
-						
-						<br/>
-						
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
-						
-						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($create_user) ?>
-						
-					</div>
-				</div>
-				<div class="line">
-					<div class="label">
-						<label for="<?php echo REQUEST_ID ?>_lastchange_date" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_lastchange')))); ?></span>
+							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($create_date) ?>
 							
-						</label>
-					</div>
-					<div class="input">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
-						
-						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
-						
-						<br/>
-						
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
-						
-						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
-						
-					</div>
-				</div>
-				<div class="line">
-					<div class="label">
-						<label for="<?php echo REQUEST_ID ?>_published_date" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_published')))); ?></span>
+							<br/>
 							
-						</label>
+							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
+							
+							<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($create_user) ?>
+							
+						</div>
 					</div>
-					<div class="input">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
-						
-						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($published_date) ?>
-						
-						<br/>
-						
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
-						
-						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($published_user) ?>
-						
+					<div class="line">
+						<div class="label">
+							<label for="<?php echo REQUEST_ID ?>_lastchange_date" class="label">
+								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_lastchange')))); ?></span>
+								
+							</label>
+						</div>
+						<div class="input">
+							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+							
+							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
+							
+							<br/>
+							
+							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
+							
+							<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
+							
+						</div>
 					</div>
-				</div>
-			</div></fieldset>
+					<div class="line">
+						<div class="label">
+							<label for="<?php echo REQUEST_ID ?>_published_date" class="label">
+								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_published')))); ?></span>
+								
+							</label>
+						</div>
+						<div class="input">
+							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+							
+							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($published_date) ?>
+							
+							<br/>
+							
+							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
+							
+							<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($published_user) ?>
+							
+						</div>
+					</div>
+				</div></fieldset>
+			
 		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
 	
