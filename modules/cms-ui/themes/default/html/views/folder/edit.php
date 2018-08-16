@@ -1,8 +1,8 @@
 
 	
-		<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_ORDER') ?>" data-type="dialog" data-name="<?php echo lang('MENU_ORDER') ?>" data-method="order"><img src="./themes/default/images/icon/action/order.svg" title="<?php echo lang('MENU_order_DESC') ?>" /><?php echo lang('MENU_order') ?></a></div></div>
 		
-		<form name="" target="_self" action="folder" data-method="edit" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="folder" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		
+		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="folder" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<table width="100%">
 				<tr class="headline">
 					<td class="help">
@@ -56,7 +56,7 @@
 						</td>
 						<td class="clickable">
 							<label for="<?php echo REQUEST_ID ?>_<?php echo $id ?>" class="label">
-								<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $objectid ?>" href="javascript:void(0);">
+								<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($type,'',$objectid,array()) ?>">
 									<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
 									
 									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,40,'..',constant('STR_PAD_BOTH') )))); ?></span>
@@ -83,7 +83,7 @@
 						
 					</td>
 					<td colspan="2" class="clickable">
-						<a target="_self" data-type="view" data-action="folder" data-method="createfolder" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+						<a target="_self" data-type="view" data-action="folder" data-method="createfolder" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('folder','createfolder','',array()) ?>">
 							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon/create.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfolder'.'')))); ?></span>
@@ -98,7 +98,7 @@
 						
 					</td>
 					<td colspan="2" class="clickable">
-						<a target="_self" data-type="view" data-action="folder" data-method="createpage" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+						<a target="_self" data-type="view" data-action="folder" data-method="createpage" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('folder','createpage','',array()) ?>">
 							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon/create.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createpage'.'')))); ?></span>
@@ -113,7 +113,7 @@
 						
 					</td>
 					<td colspan="2" class="clickable">
-						<a target="_self" data-type="view" data-action="folder" data-method="createfile" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+						<a target="_self" data-type="view" data-action="folder" data-method="createfile" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('folder','createfile','',array()) ?>">
 							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon/create.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfile'.'')))); ?></span>
@@ -128,7 +128,7 @@
 						
 					</td>
 					<td colspan="2" class="clickable">
-						<a target="_self" data-type="view" data-action="folder" data-method="createlink" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+						<a target="_self" data-type="view" data-action="folder" data-method="createlink" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('folder','createlink','',array()) ?>">
 							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon/create.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createlink'.'')))); ?></span>
@@ -139,7 +139,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('options') ?></legend><div>
+						<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
 							<?php $type= $defaulttype; ?>
 							
 							<?php foreach($actionlist as $list_key=>$actiontype){ ?>
@@ -203,7 +203,7 @@
 					</td>
 				</tr>
 			</table>
-		<div class="bottom"><div class="command "><input type="button" class="submit ok" value="OK" /></div></div></form>
+		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
 		
 		
 	

@@ -1,5 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.openrat.de/template ../template.xsd">
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
     <!-- Info-Meldung anzeigen (sofern vorhanden) -->
     <if present="var:dbname">
@@ -99,7 +99,7 @@
                     </link>
                 </part>
                 <part
-                        class="entry clickable filtered on-action-page on-action-file on-action-template on-action-pageelement">
+                        class="entry clickable filtered on-action-page on-action-file on-action-image on-action-template on-action-pageelement">
                     <link type="dialog" title="message:menu_preview_desc"
                           subaction="preview">
                         <image method="preview" align="left"></image>
@@ -205,7 +205,7 @@
                     </link>
                 </part>
 
-                <part class="entry clickable filtered on-action-template on-action-configuration">
+                <part class="entry clickable filtered on-action-template on-action-configuration on-action-page">
                     <link type="dialog" title="message:menu_src_desc"
                           subaction="src">
                         <image method="code" align="left"></image>

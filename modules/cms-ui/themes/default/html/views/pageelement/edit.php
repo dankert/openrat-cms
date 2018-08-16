@@ -1,8 +1,8 @@
 
 	
-		<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_LINK') ?>" data-type="dialog" data-name="<?php echo lang('MENU_LINK') ?>" data-method="link"><img src="./themes/default/images/icon/action/link.svg" title="<?php echo lang('MENU_link_DESC') ?>" /><?php echo lang('MENU_link') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_IMPORT') ?>" data-type="dialog" data-name="<?php echo lang('MENU_IMPORT') ?>" data-method="import"><img src="./themes/default/images/icon/action/import.svg" title="<?php echo lang('MENU_import_DESC') ?>" /><?php echo lang('MENU_import') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_EXPORT') ?>" data-type="dialog" data-name="<?php echo lang('MENU_EXPORT') ?>" data-method="export"><img src="./themes/default/images/icon/action/export.svg" title="<?php echo lang('MENU_export_DESC') ?>" /><?php echo lang('MENU_export') ?></a></div></div>
 		
-		<form name="" target="_self" action="<?php echo OR_ACTION ?>" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="post" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		
+		<form name="" target="_self" data-target="view" action="./" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="post" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_languageid" name="languageid<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$languageid) ?>" /><?php if ('') { ?><input type="hidden" name="languageid" value="<?php $languageid ?>"/><?php } ?></div>
 			
 			<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_elementid" name="elementid<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$elementid) ?>" /><?php if ('') { ?><input type="hidden" name="elementid" value="<?php $elementid ?>"/><?php } ?></div>
@@ -13,12 +13,12 @@
 				<span class="help"><?php echo nl2br(encodeHtml(htmlentities($desc))); ?></span>
 				
 				<?php $if4=($type=='date'); if($if4){?>
-					<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('calendar') ?></legend><div>
+					<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('calendar') ?></legend><div>
 						<div>
 							<table class="calendar" width="85%">
 								<tr>
 									<td colspan="8" class="help">
-										<a target="_self" data-url="<?php echo $lastmonthurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+										<a target="_self" data-url="<?php echo $lastmonthurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/left.png" />
 											
 										</a>
@@ -29,14 +29,14 @@
 										
 										<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
 										
-										<a target="_self" data-url="<?php echo $nextmonthurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+										<a target="_self" data-url="<?php echo $nextmonthurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/right.png" />
 											
 										</a>
 
 										<span class="text"><?php echo nl2br('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'); ?></span>
 										
-										<a target="_self" data-url="<?php echo $lastyearurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+										<a target="_self" data-url="<?php echo $lastyearurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/left.png" />
 											
 										</a>
@@ -47,7 +47,7 @@
 										
 										<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
 										
-										<a target="_self" data-url="<?php echo $nextyearurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+										<a target="_self" data-url="<?php echo $nextyearurl ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/right.png" />
 											
 										</a>
@@ -83,7 +83,7 @@
 													
 												<?php } ?>
 												<?php $if12=!(empty($url)); if($if12){?>
-													<a target="_self" data-url="<?php echo $url ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+													<a target="_self" data-url="<?php echo $url ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 														<span class="text"><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
 														
 														<span class="text"><?php echo nl2br(encodeHtml(htmlentities($nr))); ?></span>
@@ -104,7 +104,7 @@
 							</table>
 						</div>
 					</div></fieldset>
-					<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('date') ?></legend><div>
+					<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('date') ?></legend><div>
 						<div>
 							<label for="<?php echo REQUEST_ID ?>_year" class="label">
 								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'date'.'')))); ?></span>
@@ -152,19 +152,19 @@
 				<?php $if4=($type=='longtext'); if($if4){?>
 					<?php $if5=(!empty($preview)); if($if5){?>
 						<div class="preview">
-							<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('page_preview') ?></legend><div>
+							<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('page_preview') ?></legend><div>
 								<span class="text"><?php echo nl2br($preview); ?></span>
 								
 							</div></fieldset>
 						</div>
 					<?php } ?>
 					<?php $if5=($editor=='html'); if($if5){?>
-						<textarea name="text" class="editor__html-editor" id="pageelement_edit_editor"><?php echo ${'text'} ?></textarea>
+						<textarea name="text" class="editor html-editor" id="pageelement_edit_editor"><?php echo ${'text'} ?></textarea>
 						
 					<?php } ?>
 					<?php $if5=($editor=='wiki'); if($if5){?>
 						<?php $if6=(!empty($languagetext)); if($if6){?>
-							<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo $languagename ?></legend><div>
+							<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $languagename ?></legend><div>
 								<span class="text"><?php echo nl2br(encodeHtml(htmlentities($languagetext))); ?></span>
 								
 							</div></fieldset>
@@ -173,9 +173,9 @@
 							<br/>
 							
 						<?php } ?>
-						<textarea name="text" class="editor__wiki-editor"><?php echo ${'text'} ?></textarea>
+						<textarea name="text" class="editor wiki-editor"><?php echo ${'text'} ?></textarea>
 						
-						<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('help') ?></legend><div>
+						<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('help') ?></legend><div>
 							<table width="100%">
 								<td>
 									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','strong-begin')))); ?></span>
@@ -266,7 +266,7 @@
 					<?php } ?>
 				<?php } ?>
 				<?php $if4=($type=='link'); if($if4){?>
-					<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><div>
+					<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 						<div class="line">
 							<div class="label">
 								<label for="<?php echo REQUEST_ID ?>_linkobjectid" class="label">
@@ -299,7 +299,7 @@
 					</div></fieldset>
 				<?php } ?>
 				<?php $if4=($type=='list'); if($if4){?>
-					<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><div>
+					<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 						<div>
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_linkobjectid" name="linkobjectid" title="" class=""<?php if (count($objects)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($objects,$linkobjectid,0,0) ?><?php if (count($objects)==0) { ?><input type="hidden" name="linkobjectid" value="" /><?php } ?><?php if (count($objects)==1) { ?><input type="hidden" name="linkobjectid" value="<?php echo array_keys($objects)[0] ?>" /><?php } ?>
 							</select></div>
@@ -309,7 +309,7 @@
 					</div></fieldset>
 				<?php } ?>
 				<?php $if4=($type=='insert'); if($if4){?>
-					<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><div>
+					<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 						<div>
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_linkobjectid" name="linkobjectid" title="" class=""<?php if (count($objects)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($objects,$linkobjectid,0,0) ?><?php if (count($objects)==0) { ?><input type="hidden" name="linkobjectid" value="" /><?php } ?><?php if (count($objects)==1) { ?><input type="hidden" name="linkobjectid" value="<?php echo array_keys($objects)[0] ?>" /><?php } ?>
 							</select></div>
@@ -319,7 +319,7 @@
 					</div></fieldset>
 				<?php } ?>
 				<?php $if4=($type=='number'); if($if4){?>
-					<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><div>
+					<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 						<div>
 							<input type="hidden" name="decimals" value="decimals"/>
 							
@@ -331,7 +331,7 @@
 					</div></fieldset>
 				<?php } ?>
 				<?php $if4=($type=='select'); if($if4){?>
-					<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><div>
+					<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 						<div>
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_text" name="text" title="" class=""<?php if (count($items)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($items,$text,0,0) ?><?php if (count($items)==0) { ?><input type="hidden" name="text" value="" /><?php } ?><?php if (count($items)==1) { ?><input type="hidden" name="text" value="<?php echo array_keys($items)[0] ?>" /><?php } ?>
 							</select></div>
@@ -343,7 +343,7 @@
 				<?php $if4=($type=='longtext'); if($if4){?>
 					<?php $if5=($editor=='wiki'); if($if5){?>
 						<?php $if6=(!empty($languages)); if($if6){?>
-							<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('editor_show_language') ?></legend><div>
+							<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('editor_show_language') ?></legend><div>
 								<div>
 									<?php foreach($languages as $languageid=>$languagename){ ?>
 										<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_otherlanguageid_<?php echo $languageid ?>" name="otherlanguageid" value="<?php echo $languageid ?>"<?php if($languageid==@$otherlanguageid)echo ' checked="checked"' ?> />
@@ -358,7 +358,7 @@
 								</div>
 							</div></fieldset>
 						<?php } ?>
-						<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('PAGE_PREVIEW') ?></legend><div>
+						<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('PAGE_PREVIEW') ?></legend><div>
 							<div>
 								<?php { $tmpname     = 'preview';$default  = '';$readonly = '';		
 		if	( isset($$tmpname) )
@@ -382,7 +382,7 @@
 						</div></fieldset>
 					<?php } ?>
 				<?php } ?>
-				<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('options') ?></legend><div>
+				<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
 					<?php $if5=(!empty($release)); if($if5){?>
 						<div>
 							<?php { $tmpname     = 'release';$default  = '';$readonly = '';		
@@ -429,5 +429,5 @@
 					<?php } ?>
 				</div></fieldset>
 			
-		<div class="bottom"><div class="command yes"><input type="button" class="submit ok" value="<?php echo lang('save') ?>" /></div></div></form>
+		<div class="bottom"><div class="command yes"><input type="submit" class="submit ok" value="<?php echo lang('save') ?>" /></div></div></form>
 	

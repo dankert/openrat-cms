@@ -23,7 +23,7 @@
 			<?php } ?>
 			<tr class="data">
 				<td colspan="1" class="clickable">
-					<a target="_self" data-type="view" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+					<a target="_self" data-type="view" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','add','',array()) ?>">
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>

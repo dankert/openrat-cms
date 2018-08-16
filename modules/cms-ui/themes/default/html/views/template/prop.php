@@ -1,8 +1,8 @@
 
 	
-		<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_EXTENSION') ?>" data-type="dialog" data-name="<?php echo lang('MENU_EXTENSION') ?>" data-method="extension"><img src="./themes/default/images/icon/action/extension.svg" title="<?php echo lang('MENU_extension_DESC') ?>" /><?php echo lang('MENU_extension') ?></a></div></div>
 		
-		<form name="" target="_self" action="<?php echo OR_ACTION ?>" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		
+		<form name="" target="_self" data-target="view" action="./" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="1" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('TEMPLATE_NAME')))); ?></span>
@@ -13,7 +13,7 @@
 					
 				</div>
 			</div>
-			<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><div>
+			<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 			</div></fieldset>
 			<div class="line">
 				<div class="label">
@@ -21,7 +21,7 @@
 					
 				</div>
 				<div class="input">
-					<a target="_self" data-type="view" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+					<a target="_self" data-type="view" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','extension','',array()) ?>">
 						<div class="inputholder">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($extension))); ?></span>
 							
@@ -29,7 +29,7 @@
 					</a>
 
 					<div class="clickable">
-						<a class="action" target="_self" data-type="view" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+						<a class="action" target="_self" data-type="view" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','extension','',array()) ?>">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 							
 						</a>
@@ -43,7 +43,7 @@
 					
 				</div>
 				<div class="input">
-					<a target="_self" data-action="template" data-method="extension" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+					<a target="_self" data-action="template" data-method="extension" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('template','extension','',array()) ?>">
 						<div class="inputholder">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($mime_type))); ?></span>
 							
@@ -52,5 +52,5 @@
 
 				</div>
 			</div>
-		<div class="bottom"><div class="command "><input type="button" class="submit ok" value="OK" /></div></div></form>
+		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
 	

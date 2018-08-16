@@ -22,7 +22,7 @@
 					<td colspan="2">
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/page.png" />
 						
-						<a target="_self" data-action="main" data-method="page" data-id="<?php echo $pageid ?>" href="javascript:void(0);">
+						<a target="_self" data-action="main" data-method="page" data-id="<?php echo $pageid ?>" data-extra="[]" href="<?php echo Html::url('main','page',$pageid,array()) ?>">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 							
 						</a>

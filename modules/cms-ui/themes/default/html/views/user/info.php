@@ -20,7 +20,7 @@
 		</div>
 		<?php $if2=(config('security','user','show_admin_mail')); if($if2){?>
 			<div class="line">
-				<a target="_self" data-action="<?php echo $mail ?>" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+				<a target="_self" data-action="<?php echo $mail ?>" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url($mail,'','',array()) ?>">
 					<span class="text"><?php echo nl2br(encodeHtml(htmlentities($mail))); ?></span>
 					
 				</a>

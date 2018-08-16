@@ -1,6 +1,6 @@
 
 	
-		<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_SRC') ?>" data-type="dialog" data-name="<?php echo lang('MENU_SRC') ?>" data-method="src"><img src="./themes/default/images/icon/action/src.svg" title="<?php echo lang('MENU_src_DESC') ?>" /><?php echo lang('MENU_src') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_REMOVE') ?>" data-type="dialog" data-name="<?php echo lang('MENU_REMOVE') ?>" data-method="remove"><img src="./themes/default/images/icon/action/remove.svg" title="<?php echo lang('MENU_remove_DESC') ?>" /><?php echo lang('MENU_remove') ?></a></div></div>
+		
 		
 		<table width="100%">
 			<tr class="headline">
@@ -37,7 +37,7 @@
 			<?php } ?>
 			<tr class="data">
 				<td colspan="2" class="clickable">
-					<a target="_self" data-type="view" data-action="template" data-method="addel" data-id="<?php echo $templateid ?>" href="javascript:void(0);">
+					<a target="_self" data-type="view" data-action="template" data-method="addel" data-id="<?php echo $templateid ?>" data-extra="[]" href="<?php echo Html::url('template','addel',$templateid,array()) ?>">
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_template_addel'.'')))); ?></span>
@@ -47,12 +47,12 @@
 				</td>
 			</tr>
 		</table>
-		<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('src') ?></legend><div>
+		<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('src') ?></legend><div>
 			<table width="100%">
 				<tr class="data">
 					<td>
 						<div class="clickable">
-							<a target="_self" data-type="view" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" href="javascript:void(0);">
+							<a target="_self" data-type="view" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','src','',array()) ?>">
 								<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/template.png" />
 								
 								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
