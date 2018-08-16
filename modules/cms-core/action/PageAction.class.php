@@ -632,7 +632,7 @@ class PageAction extends ObjectAction
 	 */
 	function previewView()
 	{
-		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array(REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid) ) );
+		$this->setTemplateVar('preview_url',Html::url('page','show',$this->page->objectid,array(REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid,REQ_PARAM_EMBED=>'1') ) );
 	}
 
 		/**
