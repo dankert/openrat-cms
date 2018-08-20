@@ -15,6 +15,9 @@ class FormComponent extends Component
 
 	public $id = '<?php echo OR_ID ?>';
 
+	public $languageid = null;
+	public $modelid    = null;
+
 	public $label;
 
 	public $cancel = false;
@@ -30,7 +33,7 @@ class FormComponent extends Component
 
 	public $enctype = 'application/x-www-form-urlencoded';
 
-	public $async = true;
+	public $async = false;
 
 	public $autosave = false;
 
@@ -46,7 +49,7 @@ class FormComponent extends Component
 		
 		echo '<form';
 		echo ' name="' . $this->htmlvalue($this->name) . '"';
-		
+
 		echo ' target="_self"';
 		echo ' data-target="' . $this->htmlvalue($this->target) . '"';
 		echo ' action="./"';
@@ -65,6 +68,10 @@ class FormComponent extends Component
 
 		if ( $this->target!='top')
             echo '<input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" />';
+        if ( !empty($this->languageid))
+            echo '<input type="hidden" name="'.REQ_PARAM_LANGUAGE_ID.'" value="' . $this->htmlvalue($this->languageid) . '" />';
+        if ( !empty($this->modelid))
+            echo '<input type="hidden" name="'.REQ_PARAM_MODEL_ID.'" value="' . $this->htmlvalue($this->modelid) . '" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="' . $this->htmlvalue($this->action) . '" />';
 		echo '<input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="' . $this->htmlvalue($this->subaction) . '" />';

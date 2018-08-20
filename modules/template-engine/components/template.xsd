@@ -1684,6 +1684,8 @@
         <xsd:attribute name="action" type="xsd:string"/>
         <xsd:attribute name="subaction" type="xsd:string"/>
         <xsd:attribute name="id" type="xsd:string"/>
+        <xsd:attribute name="languageid" type="xsd:string"/>
+        <xsd:attribute name="modelid" type="xsd:string"/>
         <xsd:attribute name="label" type="xsd:string"/>
         <xsd:attribute name="cancel" type="xsd:boolean"/>
         <xsd:attribute name="visible" type="xsd:boolean"/>

@@ -49,6 +49,7 @@ class FileAction extends ObjectAction
 	    parent::__construct();
 
 		$this->file = new File( $this->getRequestId() );
+		$this->file->languageid = $this->getRequestVar(REQ_PARAM_LANGUAGE_ID);
 		$this->file->load();
 	}
 
@@ -63,6 +64,19 @@ class FileAction extends ObjectAction
 		$this->file->filename  = $upload->filename;
 		$this->file->extension = $upload->extension;		
 		$this->file->size      = $upload->size;
+
+		$this->file->settings  = $this->getRequestVar( 'settings');
+
+		// Validate YAML-Settings
+		try {
+		    \Spyc::YAMLLoad( $this->file->settings);
+        }
+        catch( \Exception $e )
+        {
+            throw new \ValidationException( 'settings' );
+        }
+
+
 		$this->file->save();
 		
 		$this->file->value = $upload->value;

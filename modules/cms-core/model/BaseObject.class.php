@@ -179,6 +179,12 @@ namespace cms\model {
 
         public $typeid;
 
+
+        /**
+         * @type array
+         */
+        public $settings;
+
         /** <strong>Konstruktor</strong>
          * F?llen des neuen Objektes mit Init-Werten
          * Es werden die Standardwerte aus der Session benutzt, um
@@ -333,6 +339,7 @@ SQL
                 'languageid'       =>$this->languageid,
                 'modelid'          =>$this->modelid,
                 'projectid'        =>$this->projectid,
+                'settings'         =>$this->settings,
                 'type'             =>$this->getType()  );
         }
 
@@ -629,6 +636,8 @@ SQL
                 $this->description = $row['descr'];
             }
 
+            $this->settings = $row['settings'];
+
             $this->checkName();
         }
 
@@ -638,84 +647,49 @@ SQL
          * Laden des Objektes
          * @deprecated bitte objectLoad() benutzen
          */
-        function load()
+        public function load()
         {
             $this->objectLoad();
         }
 
-        /**
-         * Lesen von logischem Namen und Beschreibung
-         * Diese Eigenschaften sind sprachabhaengig und stehen deswegen in einer
-         * separaten Tabelle
-         * @access private
-         */
-        function objectLoadName()
-        {
-            die();
-            global $SESS;
-            $db = db_connection();
-
-            $sql = $db->sql('SELECT *'.' FROM {{name}}'.' WHERE objectid={objectid}'.'   AND languageid={languageid}');
-            $sql->setInt('objectid'  , $this->objectid  );
-            $sql->setInt('languageid', $this->languageid);
-            $res = $sql->query();
-
-            if ($res->numRows() == 0)
-            {
-                // Wenn Name in dieser Sprache nicht vorhanden, dann irgendeinen Namen lesen
-                $sql = $db->sql('SELECT *'.' FROM {{name}}'.' WHERE objectid={objectid}'.'   AND name != {blank}');
-                $sql->setInt   ('objectid'  , $this->objectid  );
-                $sql->setInt   ('languageid', $this->languageid);
-                $sql->setString('blank'     , ''               );
-
-                $res = $sql->execute();
-            }
-            $row = $res->fetchRow();
-
-            $this->name = $row['name'];
-            $this->desc = $row['description'];
-
-            // Falls leer, id<objectnr> als Dateinamen verwenden
-            if ($this->name == '')
-                $this->name = $this->filename;
-        }
 
         /**
          * Eigenschaften des Objektes in Datenbank speichern
          */
-        function objectSave( $withName = true )
+        public function objectSave( $withName = true )
         {
-            global $SESS;
             $db = db_connection();
 
             $this->checkFilename();
 
-            $sql = $db->sql( <<<SQL
+            $stmt = $db->sql( <<<SQL
 UPDATE {{object}} SET 
                       parentid          = {parentid},
 		              lastchange_date   = {time}    ,
 		              lastchange_userid = {userid}  ,
-		              filename          = {filename}
+		              filename          = {filename},
+		              settings          = {settings}
  WHERE id={objectid}
 SQL
             );
 
 
             if	( $this->isRoot )
-                $sql->setNull('parentid');
-            else	$sql->setInt ('parentid',$this->parentid );
+                $stmt->setNull('parentid');
+            else	$stmt->setInt ('parentid',$this->parentid );
 
 
             $user = \Session::getUser();
             $this->lastchangeUser = $user;
             $this->lastchangeDate = now();
-            $sql->setInt   ('time'    ,$this->lastchangeDate          );
-            $sql->setInt   ('userid'  ,$this->lastchangeUser->userid  );
-            $sql->setString('filename', $this->filename);
-            $sql->setInt   ('objectid', $this->objectid);
+            $stmt->setInt   ('time'    ,$this->lastchangeDate          );
+            $stmt->setInt   ('userid'  ,$this->lastchangeUser->userid  );
+            $stmt->setString('filename', $this->filename);
+            $stmt->setString('settings', $this->settings);
+            $stmt->setInt   ('objectid', $this->objectid);
 
 
-            $sql->query();
+            $stmt->query();
 
             // Nur wenn nicht Wurzelordner
             if	( !$this->isRoot && $withName )
@@ -798,7 +772,6 @@ SQL
          */
         function ObjectSaveName()
         {
-            global $SESS;
             $db = db_connection();
 
             $sql = $db->sql(<<<SQL
