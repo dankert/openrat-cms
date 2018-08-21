@@ -14,6 +14,7 @@ namespace {
 namespace cms\model {
 
     use phpseclib\Math\BigInteger;
+    use Spyc;
 
     /**
      * Superklasse fuer Objekte im Projektbaum.
@@ -179,9 +180,10 @@ namespace cms\model {
 
         public $typeid;
 
+        var $parentfolders = array();
 
         /**
-         * @type array
+         * @type String
          */
         public $settings;
 
@@ -1381,6 +1383,167 @@ SQL
         }
 
 
+        /**
+         * Local Settings.
+         *
+         * @return array
+         */
+        public function getSettings()
+        {
+            return Spyc::YAMLLoad($this->settings);
+        }
+
+
+        /**
+         * Inherited Settings.
+         *
+         * @return array
+         */
+        public function getTotalSettings()
+        {
+            $totalSettings = array();
+
+            // cumulate settings of parent objects
+            $parentIds = array_keys( $this->parentObjectFileNames(true, false) );
+            foreach( $parentIds as $id )
+            {
+                $parentObject = new BaseObject( $id );
+                $parentObject->objectLoad();
+                $totalSettings = array_merge($totalSettings,$parentObject->getSettings());
+            }
+
+            // add settings from this base object.
+            $totalSettings = array_merge($totalSettings,$this->getSettings());
+
+            return $totalSettings;
+        }
+
+
+
+        /**
+         * Liefert alle übergeordneten Ordner.
+         *
+         * @param bool $with_root Mit Root-Folder?
+         * @param bool $with_self Mit dem aktuellen Ordner?
+         * @return array
+         */
+        public function parentObjectFileNames(  $with_root = false, $with_self = false  )
+        {
+            $db = \Session::getDatabase();
+
+            $foid = $this->id;
+            $idCache = array();
+
+            while( intval($foid)!=0 )
+            {
+                $sql = $db->sql( <<<SQL
+                
+    SELECT parentid,id,filename
+      FROM {{object}}
+     WHERE {{object}}.id={parentid}
+
+SQL
+                );
+                $sql->setInt('parentid'  ,$foid            );
+
+                $row = $sql->getRow();
+
+                if	( in_array($row['id'],$idCache))
+                    throw new \LogicException('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
+                else
+                    $idCache[] = $row['id'];
+
+                $this->addParentfolder( $row['id'],$row['filename'] );
+                $foid = $row['parentid'];
+            }
+
+
+            $this->checkParentFolders($with_root,$with_self);
+
+            return $this->parentfolders;
+        }
+
+        public function parentObjectNames( $with_root = false, $with_self = false )
+        {
+            $db = \Session::getDatabase();
+
+            $foid = $this->id;
+            $idCache = array();
+
+            while( intval($foid)!=0 )
+            {
+                $sql = $db->sql( <<<SQL
+                
+    SELECT {{object}}.parentid,{{object}}.id,{{object}}.filename,{{name}}.name FROM {{object}}
+      LEFT JOIN {{name}}
+             ON {{object}}.id = {{name}}.objectid
+            AND {{name}}.languageid = {languageid}  
+     WHERE {{object}}.id={parentid}
+
+SQL
+                );
+                $sql->setInt('languageid',$this->languageid);
+                $sql->setInt('parentid'  ,$foid            );
+
+                $row = $sql->getRow();
+
+                if	( in_array($row['id'],$idCache))
+                    throw new \LogicException('fatal: parent-rekursion in object-id: '.$this->objectid.', double-parent-id: '.$row['id']);
+                else
+                    $idCache[] = $row['id'];
+
+                $this->addParentfolder( $row['id'],$row['name'],$row['filename'] );
+                $foid = $row['parentid'];
+            }
+
+            $this->checkParentFolders($with_root,$with_self);
+
+            return $this->parentfolders;
+        }
+
+
+        private function addParentFolder( $id,$name,$filename='' )
+        {
+            if  ( empty($name) )
+                $name = $filename;
+
+            if  ( empty($name) )
+                $name = "($id)";
+
+            if	( intval($id) != 0 )
+                $this->parentfolders[ $id ] = $name;
+        }
+
+
+        private function checkParentFolders( $with_root, $with_self )
+        {
+            // Reihenfolge umdrehen
+            $this->parentfolders = array_reverse($this->parentfolders,true);
+
+            // Ordner ist bereits hoechster Ordner
+    //		if   ( count($this->parentfolders) == 2 && $this->isRoot && $with_root && $with_self )
+    //		{
+    //			array_pop  ( $this->parentfolders );
+    //			return;
+    //		}
+
+
+            if   ( !$with_root && !empty($this->parentfolders) )
+            {
+                $keys = array_keys( $this->parentfolders );
+                unset( $this->parentfolders[$keys[0]] );
+            }
+
+            if   ( !$with_self && !empty($this->parentfolders) )
+            {
+                $keys = array_keys( $this->parentfolders );
+                unset( $this->parentfolders[$keys[count($keys)-1]] );
+            }
+        }
+
     }
+
+
+
 
 }?>

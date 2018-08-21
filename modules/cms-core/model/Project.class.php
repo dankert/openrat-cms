@@ -965,7 +965,6 @@ SQL
      * @see objectClasses/Object#getAllObjectIds()
      * @param types Array
      * @return Liste von Object-Ids
-     * @deprecated use Project!
      */
     public function getAllObjectIds( $types=array('folder','page','link','file') )
     {
