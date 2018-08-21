@@ -90,22 +90,21 @@ class ElementAction extends Action
 	public function removePost()
 	{
 		if	( !$this->hasRequestVar('confirm') )
-		{
-			$this->addValidationError('confirm');
-			return;
-		}
-		
+			throw new \ValidationException('confirm');
+
 		$type = $this->getRequestVar('type','abc');
 		
 		if ( $type == 'value' )
 		{
+		    // Nur Inhalte löschen
 			$this->element->deleteValues();
-			$this->addNotice('element',$this->template->name,'DELETED',OR_NOTICE_OK);
+			$this->addNotice('element',$this->element->name,'DELETED',OR_NOTICE_OK);
 		}
 		elseif ( $type == 'all' )
 		{
+		    // Element löschen
 			$this->element->delete();
-			$this->addNotice('element',$this->template->name,'DELETED',OR_NOTICE_OK);
+			$this->addNotice('element',$this->element->name,'DELETED',OR_NOTICE_OK);
 		}
 	}
 
@@ -124,7 +123,7 @@ class ElementAction extends Action
 		else
 		{
 			// Neuen Typ setzen und speichern
-			$this->element->setType( $this->getRequestVar('type') );
+			$this->element->updateTypeId( $this->getRequestVar('typeid') );
 			$this->addNotice('element',$this->element->name,'SAVED',OR_NOTICE_OK);
 		}
 	}
@@ -160,7 +159,7 @@ class ElementAction extends Action
 		$this->setTemplateVar('types',$types);
 		
 		// Aktueller Typ
-		$this->setTemplateVar('type',$this->element->type);
+		$this->setTemplateVar('typeid',$this->element->typeid);
 	}
 	
 
@@ -592,7 +591,11 @@ class ElementAction extends Action
 					$folders = array();
 	
 					// Ermitteln aller verf?gbaren Objekt-IDs
-					foreach( Folder::getAllFolders() as $id )
+                    $template = new Template( $this->element->templateid );
+                    $template->load();
+                    $project = new Project( $template->projectid );
+
+                    foreach( $project->getAllFolders() as $id )
 					{
 						$o = new BaseObject( $id );
 						$o->load();

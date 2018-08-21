@@ -287,16 +287,18 @@ SQL
  	 * Hinzuf?gen eines Elementes
  	 * @param String Name des Elementes
  	 */
-	public function addElement( $name,$description='',$type='text' )
+	public function addElement($name, $description='', $typeid=ELEMENT_TYPE_TEXT )
 	{
 		$element = new Element();
 		$element->name       = $name;
 		$element->desc       = $description;
-		$element->type       = $type;
+		$element->typeid     = $typeid;
 		$element->templateid = $this->templateid;
 		$element->format     = ELEMENT_FORMAT_TEXT;
 		$element->writable   = true;
 		$element->add();
+
+		return $element;
 	}
 
 

@@ -18,7 +18,7 @@
 			</part>
 			<part class="input">
 				<set var="text" value="text"></set>
-				<selectbox list="types" default="text" name="type" lang="true"></selectbox>
+				<selectbox list="types" name="typeid" lang="true"></selectbox>
 			</part>
 		</part>
 

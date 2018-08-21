@@ -224,8 +224,12 @@ class TemplateAction extends Action
 		// Code-Element nur fuer Administratoren (da voller Systemzugriff!)		
 		if	( !$this->userIsAdmin() )
 			unset( $types[ELEMENT_TYPE_CODE] );
-		
+
+		// Auswahlmoeglichkeiten:
 		$this->setTemplateVar('types',$types);
+
+		// Vorbelegung:
+		$this->setTemplateVar('typeid',ELEMENT_TYPE_TEXT);
 	}
 	
 	
@@ -237,22 +241,26 @@ class TemplateAction extends Action
 	{
 
 		$name = $this->getRequestVar('name',OR_FILTER_ALPHANUM);
+
 		if  ( empty($name) )
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('addel');
-			return;
-		}
-		
-		$this->template->addElement( $name,$this->getRequestVar('description'),$this->getRequestVar('type') );
-		$this->setTemplateVar('tree_refresh',true);
-		
+		    throw new \ValidationException('name');
+
+		$newElement = $this->template->addElement( $name,$this->getRequestVar('description'),$this->getRequestVar('typeid') );
+
 		if	( $this->hasRequestVar('addtotemplate') )
 		{
-			$elnames = $this->template->getElementNames();
-			$elid = array_search($name,$elnames);
-			$this->template->src .= "\n".'{{'.$elid.'}}';
-			$this->template->save();
+		    $project  = new Project( $this->template->projectid);
+		    $modelIds = $project->getModelIds();
+
+		    foreach( $modelIds as $modelId )
+            {
+                $template = new Template( $this->template->templateid );
+                $template->modelid = $modelId;
+                $template->load();
+                $template->src .= "\n".'{{'.$newElement->elementid.'}}';
+                $template->save();
+            }
+
 		}
 
 		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);

@@ -37,7 +37,7 @@
 			<?php } ?>
 			<tr class="data">
 				<td colspan="2" class="clickable">
-					<a target="_self" data-type="view" data-action="template" data-method="addel" data-id="<?php echo $templateid ?>" data-extra="[]" href="<?php echo Html::url('template','addel',$templateid,array()) ?>">
+					<a target="_self" data-type="dialog" data-action="template" data-method="addel" data-id="<?php echo $templateid ?>" data-extra="{'dialogAction':'template','dialogMethod':'addel'}" href="<?php echo Html::url('template','addel',$templateid,array('dialogAction'=>'template','dialogMethod'=>'addel')) ?>">
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_template_addel'.'')))); ?></span>

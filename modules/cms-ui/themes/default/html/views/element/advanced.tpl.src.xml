@@ -8,7 +8,7 @@
 					<text text="ELEMENT_TYPE"></text>
 				</part>
 				<part class="input">
-					<selectbox name="type" list="types" lang="true"></selectbox>
+					<selectbox name="typeid" list="types" lang="true"></selectbox>
 				</part>
 			</part>
 		</group>

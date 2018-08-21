@@ -31,7 +31,7 @@
 		</if>
 		<row class="data">
 			<column colspan="2" class="clickable">
-				<link type="view" subaction="addel" action="template" id="var:templateid">
+				<link type="dialog" subaction="addel" action="template" id="var:templateid">
 					<image icon="add" />
 					<text key="menu_template_addel"></text>
 				</link>

@@ -172,14 +172,17 @@ class Element
 		$this->elementid = intval($sql->getOne())+1;
 
 		$sql = $db->sql( 'INSERT INTO {{element}}'.
-		                ' (id,templateid,name,descr,type,writable) '.
-		                " VALUES ( {elementid},{templateid},{name},{description},{type},{writable} ) " );
+		                ' (id,templateid,name,descr,typeid,flags) '.
+		                " VALUES ( {elementid},{templateid},{name},{description},{typeid},{flags} ) " );
 
-		$sql->setInt    ( 'elementid'  ,$this->elementid  );
+		$flags = 0;
+        $flags += ELEMENT_FLAG_WRITABLE * intval($this->writable);
+
+        $sql->setInt    ( 'elementid'  ,$this->elementid  );
 		$sql->setString ( 'name'       ,$this->name       );
-		$sql->setString ( 'type'       ,$this->type       );
+		$sql->setInt    ( 'typeid'     ,$this->typeid     );
 		$sql->setInt    ( 'templateid' ,$this->templateid );
-		$sql->setBoolean( 'writable'   ,$this->writable   );
+		$sql->setBoolean( 'flags'      ,$flags            );
 		$sql->setString ( 'description',$this->desc       );
 
 		$sql->query();
@@ -259,12 +262,9 @@ SQL
 		                '     descr           = {desc},'.
 		                '     typeid          = {typeid},'.
 		                '     subtype         = {subtype},'.
-		                '     with_icon       = {withIcon},'.
 		                '     dateformat      = {dateformat},'.
-		                '     wiki            = {wiki},'.
-		                '     html            = {html},'.
-		                '     all_languages   = {allLanguages},'.
-		                '     writable        = {writable},'.
+		                '     flags           = {flags},'.
+		                '     format          = {format},'.
 		                '     decimals        = {decimals},'.
 		                '     dec_point       = {decPoint},'.
 		                '     thousand_sep    = {thousandSep},'.
@@ -274,18 +274,21 @@ SQL
 		                '     default_objectid= {defaultObjectId}'.
 		                ' WHERE id={elementid}'      );
 
-		$sql->setInt    ( 'elementid'       ,$this->elementid        );
+        $flags = 0;
+        $flags += ELEMENT_FLAG_WITH_ICON     * intval($this->withIcon    );
+        $flags += ELEMENT_FLAG_HTML_ALLOWED  * intval($this->html        );
+        $flags += ELEMENT_FLAG_ALL_LANGUAGES * intval($this->allLanguages);
+        $flags += ELEMENT_FLAG_WRITABLE      * intval($this->writable    );
+
+        $sql->setInt    ( 'elementid'       ,$this->elementid        );
 		$sql->setInt    ( 'templateid'      ,$this->templateid       );
 		$sql->setString ( 'name'            ,$this->name             );
 		$sql->setString ( 'desc'            ,$this->desc             );
-		$sql->setString ( 'typeid'          ,$this->typeid           );
+		$sql->setInt    ( 'typeid'          ,$this->typeid           );
 		$sql->setString ( 'subtype'         ,$this->subtype          );
-		$sql->setBoolean( 'withIcon'        ,$this->withIcon         );
 		$sql->setString ( 'dateformat'      ,$this->dateformat       );
-		$sql->setBoolean( 'wiki'            ,$this->wiki             );
-		$sql->setBoolean( 'html'            ,$this->html             );
-		$sql->setBoolean( 'writable'        ,$this->writable         );
-		$sql->setBoolean( 'allLanguages'    ,$this->allLanguages     );
+		$sql->setInt    ( 'flags'           ,$flags                  );
+		$sql->setInt    ( 'format'          ,$this->format           );
 		$sql->setInt    ( 'decimals'        ,$this->decimals         );
 		$sql->setString ( 'decPoint'        ,$this->decPoint         );
 		$sql->setString ( 'thousandSep'     ,$this->thousandSep      );
@@ -306,24 +309,25 @@ SQL
 
 
 	/**
-	 * Setzt den Typ des Elementes und schreibt diesen sofort in die Datenbank.
+	 * Aktualisiert den Typ des Elementes und schreibt diesen sofort in die Datenbank.
 	 *
-	 * @param String Der neue Typ, siehe getAvailableTypes() f?r m?gliche Typen
-	 * @see #type
+	 * @param String Der neue Typ, siehe getAvailableTypes() fuer moegliche Typen
+	 * @see #typeid
 	 */
-	public function setType( $type )
+	public function updateTypeId($typeid )
 	{
-		$this->type = $type;
+		$this->typeid = $typeid;
+
 		$db = db_connection();
 
-		$sql = $db->sql( 'UPDATE {{element}}'.
-		                ' SET type            = {type}'.
+		$stmt = $db->sql( 'UPDATE {{element}}'.
+		                ' SET typeid            = {typeid}'.
 		                ' WHERE id={elementid}'         );
 
-		$sql->setInt    ( 'elementid',$this->elementid );
-		$sql->setString ( 'type'     ,$this->type      );
+		$stmt->setInt    ( 'elementid',$this->elementid );
+		$stmt->setString ( 'typeid'   ,$this->typeid    );
 
-		$sql->query();
+		$stmt->execute();
 	}
 
 
@@ -422,8 +426,9 @@ SQL
 	}
 
 	/**
-	 * Ermitteln aller benutzbaren Elementtypen
-	 * @return array
+	 * Ermitteln aller benutzbaren Elementtypen.
+     *
+	 * @return array id->name
 	 */
 	public static function getAvailableTypes()
     {
