@@ -12,7 +12,8 @@ function component_radio_box($name, $values, $value)
 	{
 		if (is_array($box_value) && isset($box_value['lang']))
 		{
-			$box_value = '<?php echo lang(\''.$box_value['lang'].'\') ?>';
+			//$box_value = '<?php echo lang(\''.$box_value['lang'].'\') ? >';
+			$box_value = lang($box_value['lang']);
             $box_title = '';
 		}
 		elseif (is_array($box_value))

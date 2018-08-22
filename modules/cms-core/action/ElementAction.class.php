@@ -376,25 +376,16 @@ class ElementAction extends Action
 				
 				
 				case 'format':
-					if	( !$this->element->format )
-						$format = 'none';
-					elseif	( $this->element->wiki && !$this->element->html )
-						$format = 'wiki';
-					elseif	( !$this->element->wiki && $this->element->html )
-						$format = 'html';
-					elseif	( $this->element->wiki && $this->element->html )
-						$format = 'wiki,html';
-						
-					$this->setTemplateVar('format', $format );
+					$this->setTemplateVar('format', $this->element->format );
 
                     $formats = Element::getAvailableFormats();
 
                     // Für einfache Textelemente gibt es keinen HTML-Editor
-                    if	( $this->element->typeid == ELEMENT_TYPE_LONGTEXT )
+                    if	( $this->element->typeid != ELEMENT_TYPE_LONGTEXT )
                         unset( $formats[ ELEMENT_FORMAT_HTML ] );
 
                     foreach( $formats as $t=>$v )
-                        $formats[$t] = array('lang'=>'EL_PROP_'.$v);
+                        $formats[$t] = array('lang'=>'EL_PROP_FORMAT_'.$v);
 
                     $this->setTemplateVar('formatlist', $formats);
 					break;

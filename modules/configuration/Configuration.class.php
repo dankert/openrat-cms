@@ -80,12 +80,12 @@ class Config
     }
 
 
-    public function is( $name )
+    public function is( $name, $default = false )
     {
         if   ( isset( $this->config[ $name ] ) )
             return (bool) $this->config[$name];
         else
-            return false;
+            return $default;
     }
 
 
