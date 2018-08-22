@@ -7,7 +7,7 @@ namespace cms;
 
 use BadMethodCallException;
 use cms\action\Action;
-use Configuration;
+use ConfigurationLoader;
 use DomainException;
 use Http;
 use http\Exception;
@@ -41,7 +41,7 @@ class Dispatcher
      */
     public function doAction()
     {
-        define('PRODUCTION', config('production'));
+        define('PRODUCTION', config()->is('production'));
         define('DEVELOPMENT', !PRODUCTION);
 
 
@@ -207,7 +207,7 @@ class Dispatcher
         // Konfiguration lesen.
         // Wenn Konfiguration noch nicht in Session vorhanden oder die Konfiguration geändert wurde (erkennbar anhand des Datei-Datums)
         // dann die Konfiguration neu einlesen.
-        if (!is_array($conf) || $conf['config']['auto_reload'] && Configuration::lastModificationTime() > $conf['config']['last_modification_time']) {
+        if (!is_array($conf) || $conf['config']['auto_reload'] && ConfigurationLoader::lastModificationTime() > $conf['config']['last_modification_time']) {
 
             // Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
             if (is_array($conf) && $conf['config']['session_destroy_on_config_reload'])
@@ -217,7 +217,7 @@ class Dispatcher
             require(OR_MODULES_DIR . 'util/config-default.php');
             $conf = createDefaultConfig();
 
-            $customConfig = Configuration::load();
+            $customConfig = ConfigurationLoader::load();
             $conf = array_replace_recursive($conf, $customConfig);
 
 

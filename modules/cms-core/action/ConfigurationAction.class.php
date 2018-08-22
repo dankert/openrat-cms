@@ -137,7 +137,7 @@ class ConfigurationAction extends Action
         $conf['interpreter']['environment'] = $_ENV;
         $conf['interpreter']['temp_dir'] = sys_get_temp_dir();
 
-        $conf['interpreter']['configuration'] = ini_get_all();
+        $conf['interpreter']['ConfigurationLoader'] = ini_get_all();
         $conf['resources'] = getrusage();
 
         $extensions = get_loaded_extensions();

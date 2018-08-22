@@ -181,7 +181,7 @@ class ElementAction extends Action
 	function propView()
 	{
 		global $conf;
-		$this->setTemplateVar('type',$this->element->type );
+		$this->setTemplateVar('type',$this->element->getTypeName() );
 		
 		// Abhaengig vom aktuellen Element-Typ die Eigenschaften anzeigen
 		$properties = $this->element->getRelatedProperties();
@@ -202,12 +202,20 @@ class ElementAction extends Action
 					$this->setTemplateVar('writable'     ,$this->element->writable    );
 					break;
 
+				case 'inherit':
+					$this->setTemplateVar('inherit'     ,$this->element->inherit      );
+					break;
+
+				case 'html':
+					$this->setTemplateVar('html'       ,$this->element->html          );
+					break;
+
 				case 'subtype':
 
 					$convertToLang = false;
-					switch( $this->element->type )
+					switch( $this->element->typeid )
 					{
-						case 'info':
+						case ELEMENT_TYPE_INFO:
 							$subtypes = Array('db_id',
 							                 'db_name',
 							                 'project_id',
@@ -241,15 +249,15 @@ class ElementAction extends Action
 							$convertToLang = true;
 							break;
 
-						case 'infodate':
-						case 'linkdate':
+						case ELEMENT_TYPE_INFODATE:
+						case ELEMENT_TYPE_LINKDATE:
 							$subtypes = Array('date_published',
 							                 'date_saved',
 							                 'date_created' );
 							$convertToLang = true;
 							break;
 
-						case 'link':
+						case ELEMENT_TYPE_LINK:
 							$subtypes = Array(
 							                  'file',
 							                  'image',
@@ -260,7 +268,7 @@ class ElementAction extends Action
 							$convertToLang = true;
 							break;
 
-						case 'linkinfo':
+						case ELEMENT_TYPE_LINKINFO:
 							$subtypes = Array('width',
 							                  'height',
 							                  'id',
@@ -282,13 +290,13 @@ class ElementAction extends Action
 							$convertToLang = true;
 							break;
 
-						case 'insert':
+                        case ELEMENT_TYPE_INSERT:
 							$subtypes = Array('inline',
 							                  'ssi'     );
 							$convertToLang = true;
 							break;
 
-						case 'dynamic':
+						case ELEMENT_TYPE_DYNAMIC:
 									
 							$files = Array();
 							$handle = opendir ('./macro');
@@ -313,7 +321,7 @@ class ElementAction extends Action
 						foreach( $subtypes as $t=>$v )
 						{
 							unset($subtypes[$t]);
-							$subtypes[$v] = lang('EL_'.$this->element->type.'_'.$v);
+							$subtypes[$v] = lang('EL_'.$this->element->getTypeName().'_'.$v);
 						}
 					}
 					
@@ -329,7 +337,8 @@ class ElementAction extends Action
 	
 				case 'dateformat':
 
-					$ini_date_format = $conf['date']['format'];
+					//$ini_date_format = config('date','format');
+					$ini_date_format = config()->subset('date')->get('format');
 					$dateformat = array();
 
 					$this->setTemplateVar('dateformat','');
@@ -352,22 +361,22 @@ class ElementAction extends Action
 				// Eigenschaften Text und Text-Absatz
 				case 'defaultText':
 				
-					switch( $this->element->type )
+					switch( $this->element->typeid )
 					{
-						case 'longtext':
+						case ELEMENT_TYPE_LONGTEXT:
 							$this->setTemplateVar('default_longtext',$this->element->defaultText );
 							break;
 
-						case 'select':
-						case 'text':
+						case ELEMENT_TYPE_SELECT:
+						case ELEMENT_TYPE_TEXT:
 							$this->setTemplateVar('default_text'    ,$this->element->defaultText );
 							break;
 					}
 					break;
 				
 				
-				case 'htmlwiki':
-					if	( !$this->element->wiki && !$this->element->html )
+				case 'format':
+					if	( !$this->element->format )
 						$format = 'none';
 					elseif	( $this->element->wiki && !$this->element->html )
 						$format = 'wiki';
@@ -377,19 +386,17 @@ class ElementAction extends Action
 						$format = 'wiki,html';
 						
 					$this->setTemplateVar('format', $format );
-					
-					$formatlist = array();
-					$formatlist['none'     ] = 'raw';      // Nur Text, ohne Auszeichnungen
-					// Für einfache Textelemente gibt es keinen HTML-Editor
-					if	( $this->element->type == 'longtext' )
-						$formatlist['html'     ] = 'html'; // Text mit HTML-Editor
-					$formatlist['wiki'     ] = 'wiki';     // Text mit Markup, HTML nicht erlaubt
-					$formatlist['wiki,html'] = 'wikihtml'; // Text mit Markup, HTML erlaubt
-					
-					foreach( $formatlist as $t=>$v )
-						$formatlist[$t] = array('lang'=>'EL_PROP_'.$v);
-					
-					$this->setTemplateVar('formatlist', $formatlist );
+
+                    $formats = Element::getAvailableFormats();
+
+                    // Für einfache Textelemente gibt es keinen HTML-Editor
+                    if	( $this->element->typeid == ELEMENT_TYPE_LONGTEXT )
+                        unset( $formats[ ELEMENT_FORMAT_HTML ] );
+
+                    foreach( $formats as $t=>$v )
+                        $formats[$t] = array('lang'=>'EL_PROP_'.$v);
+
+                    $this->setTemplateVar('formatlist', $formats);
 					break;
 				
 				case 'linktype':
@@ -446,14 +453,14 @@ class ElementAction extends Action
 				// Eigenschaften PHP-Code
 				case 'code':
 
-					switch( $this->element->type )
+					switch( $this->element->typeid )
 					{
 
-						case 'select':
+						case ELEMENT_TYPE_SELECT:
 							$this->setTemplateVar('select_items',$this->element->code );
 							break;
 
-						case 'dynamic':
+						case ELEMENT_TYPE_DYNAMIC:
 
 							$className = $this->element->subtype;
 							$fileName  = OR_DYNAMICCLASSES_DIR.'/'.$className.'.class.'.PHP_EXT;
@@ -503,7 +510,7 @@ class ElementAction extends Action
 							
 							break;
 
-						case 'code':
+						case ELEMENT_TYPE_CODE:
 							if	( $conf['security']['disable_dynamic_code'] )
 								$this->addNotice('element',$this->element->name,'CODE_DISABLED',OR_NOTICE_WARN);
 								
@@ -541,19 +548,19 @@ class ElementAction extends Action
 						$o = new BaseObject( $id );
 						$o->load();
 						
-						switch( $this->element->type )
+						switch( $this->element->typeid )
 						{
-							case 'list':
+							case ELEMENT_TYPE_INSERT:
 								if	( !$o->isFolder )
 									continue 2;
 								break;
 
-							case 'link':
+							case ELEMENT_TYPE_LINK:
 								if	( !$o->isPage && !$o->isFile && !$o->isLink )
 									continue 2;
 								break;
 						        //Change tobias 
-							case 'insert':
+							case ELEMENT_TYPE_INSERT:
 								if	( !$o->isFolder && !$o->isPage && !$o->isFile && !$o->isLink )
 									continue 2;
 								break;
@@ -623,7 +630,7 @@ class ElementAction extends Action
 					break;
 
 				default:
-					throw new \LogicException('not an element property: '.$propertyName );
+					throw new \LogicException('Unknown element property: '.$propertyName );
 			}
 		}
 	}
@@ -631,31 +638,41 @@ class ElementAction extends Action
 
 	
 	/**
-	 * Speichern der Element-Eigenschaften
+	 * Speichern der Element-Eigenschaften.
 	 */
 	function propPost()
 	{
 		global $conf;
-		$ini_date_format = $conf['date']['format'];
-	
-		if	( $this->hasRequestVar('dateformat'))
+		$ini_date_format = config('date','format');
+
+
+        if	( $this->hasRequestVar('format'))
+            $this->element->format = $this->getRequestId('format');
+
+
+        if	( $this->hasRequestVar('dateformat'))
 			$this->element->dateformat  = $ini_date_format[$this->getRequestVar('dateformat')];
-		$this->element->subtype         = $this->getRequestVar('subtype');
-		
-		if	( $this->hasRequestVar('default_longtext'))
-			$this->element->defaultText     = $this->getRequestVar('default_longtext',OR_FILTER_RAW);
-		else
-			$this->element->defaultText     = $this->getRequestVar('default_text',OR_FILTER_ALPHANUM);
-		$this->element->wiki            = in_array('wiki',explode(',',$this->getRequestVar('format')));
-		$this->element->html            = in_array('html',explode(',',$this->getRequestVar('format')));
-		$this->element->withIcon        = $this->getRequestVar('with_icon') != '';
-		$this->element->allLanguages    = $this->getRequestVar('all_languages') != '';
-		$this->element->writable        = $this->getRequestVar('writable') != '';
+
+
+        if	( $this->hasRequestVar('default_longtext'))
+            $this->element->defaultText     = $this->getRequestVar('default_longtext',OR_FILTER_RAW);
+        else
+            $this->element->defaultText     = $this->getRequestVar('default_text',OR_FILTER_ALPHANUM);
+
+        $this->element->subtype         = $this->getRequestVar('subtype');
+
+        $this->element->html            = $this->hasRequestVar('html');
+		$this->element->withIcon        = $this->hasRequestVar('with_icon');
+		$this->element->allLanguages    = $this->hasRequestVar('all_languages');
+		$this->element->writable        = $this->hasRequestVar('writable');
+		$this->element->inherit         = $this->hasRequestVar('inherit');
+
 		$this->element->decimals        = $this->getRequestVar('decimals');
 		$this->element->decPoint        = $this->getRequestVar('dec_point');
 		$this->element->thousandSep     = $this->getRequestVar('thousand_sep');
 		$this->element->folderObjectId  = $this->getRequestVar('folderobjectid'  );
 		$this->element->defaultObjectId = $this->getRequestVar('default_objectid');
+
 		if	( $this->hasRequestVar('select_items'))
 			$this->element->code         = $this->getRequestVar('select_items');
 		else
@@ -670,7 +687,6 @@ class ElementAction extends Action
 		if	( $this->hasRequestVar('parameters'))
 			$this->element->code = $this->getRequestVar('parameters',OR_FILTER_RAW);
 		
-//		Html::debug($this->element);
 		$this->element->save();
 		$this->addNotice('element',$this->element->name,'SAVED');
 		

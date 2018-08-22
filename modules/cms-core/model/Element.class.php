@@ -114,6 +114,12 @@ class Element
 	 */
 	var $writable;
 
+    /**
+     * values are inherited from parent nodes.
+     * @var bool
+     */
+	public $inherit;
+
 	/**
 	 * Schalter, ob dieses Element in allen Sprachen den gleichen Inhalt haben soll
 	 * @type Boolean
@@ -234,6 +240,7 @@ SQL
 		$this->html           = $prop['flags'] & ELEMENT_FLAG_HTML_ALLOWED;
 		$this->allLanguages   = $prop['flags'] & ELEMENT_FLAG_ALL_LANGUAGES;
 		$this->writable       = $prop['flags'] & ELEMENT_FLAG_WRITABLE;
+		$this->inherit        = $prop['flags'] & ELEMENT_FLAG_INHERIT;
 
 		if	( !$this->writable)
 			$this->withIcon = false;
@@ -279,6 +286,7 @@ SQL
         $flags += ELEMENT_FLAG_HTML_ALLOWED  * intval($this->html        );
         $flags += ELEMENT_FLAG_ALL_LANGUAGES * intval($this->allLanguages);
         $flags += ELEMENT_FLAG_WRITABLE      * intval($this->writable    );
+        $flags += ELEMENT_FLAG_INHERIT       * intval($this->inherit     );
 
         $sql->setInt    ( 'elementid'       ,$this->elementid        );
 		$sql->setInt    ( 'templateid'      ,$this->templateid       );
@@ -387,22 +395,22 @@ SQL
 	 */
 	function getRelatedProperties()
 	{
-		$prp = array('text'    =>array('withIcon','allLanguages','writable','htmlwiki','defaultText'),
-		             'longtext'=>array('withIcon','allLanguages','writable','htmlwiki','defaultText'),
-		             'select'  =>array('withIcon','allLanguages','writable','defaultText','code'),
-		             'number'  =>array('withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
-		             'link'    =>array('subtype','withIcon','allLanguages','writable','linktype','folderObjectId','defaultObjectId'),
-		             'date'    =>array('withIcon','allLanguages','writable','dateformat','defaultText'),
-		             'list'    =>array('subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		             'insert'  =>array('subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
-		             'copy'    =>array('prefix','name','defaultText'),
+		$prp = array('text'    =>array('inherit','withIcon','allLanguages','writable','html','defaultText'),
+		             'longtext'=>array('inherit','withIcon','allLanguages','writable','html','defaultText','format'),
+		             'select'  =>array('inherit','withIcon','allLanguages','writable','defaultText','code'),
+		             'number'  =>array('inherit','withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),
+		             'link'    =>array('inherit','subtype','withIcon','allLanguages','writable','linktype','folderObjectId','defaultObjectId'),
+		             'date'    =>array('inherit','withIcon','allLanguages','writable','dateformat','defaultText'),
+		             'list'    =>array('inherit','subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		             'insert'  =>array('inherit','subtype','withIcon','allLanguages','writable','folderObjectId','defaultObjectId'),
+		             'copy'    =>array('inherit','prefix','name','defaultText'),
 		             'linkinfo'=>array('prefix','subtype','defaultText'),
 		             'linkdate'=>array('prefix','subtype','dateformat'),
 		             'code'    =>array('code'),
 		             'dynamic' =>array('subtype','code'),
 		             'info'    =>array('subtype'),
 		             'infodate'=>array('subtype','dateformat') );
-		return $prp[ $this->type ];
+		return $prp[ $this->getTypeName() ];
 	}
 
 
@@ -425,12 +433,12 @@ SQL
 
 	}
 
-	/**
-	 * Ermitteln aller benutzbaren Elementtypen.
+    /**
+     * Ermitteln aller benutzbaren Elementtypen.
      *
-	 * @return array id->name
-	 */
-	public static function getAvailableTypes()
+     * @return array id->name
+     */
+    public static function getAvailableTypes()
     {
         return array(
             ELEMENT_TYPE_TEXT => 'text',
@@ -447,6 +455,22 @@ SQL
             ELEMENT_TYPE_DYNAMIC => 'dynamic',
             ELEMENT_TYPE_INFO => 'info',
             ELEMENT_TYPE_INFODATE => 'infodate'
+        );
+    }
+
+
+    /**
+     * Ermitteln aller benutzbaren Elementtypen.
+     *
+     * @return array id->name
+     */
+    public static function getAvailableFormats()
+    {
+        return array(
+            ELEMENT_FORMAT_TEXT => 'text',
+            ELEMENT_FORMAT_WIKI => 'wiki',
+            ELEMENT_FORMAT_HTML => 'html',
+            ELEMENT_FORMAT_MARKDOWN => 'markdown'
         );
     }
 
@@ -549,6 +573,17 @@ SQL
 
 		return $this->writable;
 	}
+
+
+    /**
+     * The technical name of this element type.
+     *
+     * @return String
+     */
+	public function getTypeName() {
+        return Element::getAvailableTypes()[ $this->typeid ]; // name of type
+
+    }
 }
 
 ?>

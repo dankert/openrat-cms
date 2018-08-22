@@ -1,153 +1,92 @@
 <?php
 
 
-/**
- * Configuration Loader.
+/*
+ * Liest einen Schluessel aus der Konfiguration
  *
- * Loades the configuration values from a YAML file.
- *
- * @author Jan Dankert
- * @package openrat.util
+ * @return String, leer falls Schluessel nicht vorhanden
  */
-class Configuration
+function config( $part1=null,$part2=null,$part3=null )
 {
-    public static $configFile = __DIR__.'/../../config/config.yml';
+    global $conf;
 
-    /**
-     * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.
-     *
-     * @return int Zeitpunkt der letzten Änderung als Unix-Timestamp
-     */
-    public static function lastModificationTime()
-    {
-        return filemtime(self::$configFile);
-    }
+    if ( $part1==null )
+        return new Config( $conf );
 
+    if	( $part2 == null)
+        if	( isset($conf[$part1]))
+            return $conf[$part1];
+        else
+            return '';
 
-    /**
-     * Loads the custom configuration file.
-     *
-     * @return array Configuration
-     */
-    public static function load()
-    {
-        $customConfig = Configuration::loadCustomConfig(self::$configFile);
+    if	( $part3 == null)
+        if	( isset($conf[$part1][$part2]))
+            return $conf[$part1][$part2];
+        else
+            return '';
 
-
-        // Resolve dot-notated configuration keys to arrays.
-        // Means: a.b.c is converted to array['a']['b']['c']
-        foreach ($customConfig as $key => $value) {
-            $parts = explode('.', $key);
-            if (count($parts) == 1)
-                ; // Kein Punkt enthalten. Dieser Konfigurationsschlüssel wird nicht geändert.
-            else {
-
-                if (count($parts) == 2)
-                    $customConfig[$parts[0]][$parts[1]] = $value;
-                elseif (count($parts) == 3)
-                    $customConfig[$parts[0]][$parts[1]][$parts[2]] = $value;
-                elseif (count($parts) == 4)
-                    $customConfig[$parts[0]][$parts[1]][$parts[2]][$parts[3]] = $value;
-                elseif (count($parts) == 5)
-                    $customConfig[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]] = $value;
-                elseif (count($parts) == 6)
-                    $customConfig[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]][$parts[5]] = $value;
-                unset($customConfig[$key]);
-            }
-        }
-
-
-        // Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
-        $customConfig['config']['filename'              ] = self::$configFile;
-        $customConfig['config']['last_modification_time'] = filemtime(self::$configFile);
-        $customConfig['config']['last_modification'     ] = date('r', filemtime(self::$configFile));
-        $customConfig['config']['read'                  ] = date('r');
-
-        return $customConfig;
-    }
-
-
-    /**
-     * Loads the configuration file an resolves all include-commands.
-     *
-     * @return array Configuration
-     */
-    private static function loadCustomConfig( $configFile )
-    {
-        if (!is_file($configFile) && !is_link($configFile)) {
-            error_log('Warning: Configuration file ' . $configFile . ' not found');
-            return array();
-        }
-
-        $customConfig = Spyc::YAMLLoad( $configFile );
-
-        // Resolve variables in all custom configuration values
-        array_walk_recursive( $customConfig, function(&$value,$key)
-            {
-                $value = Configuration::resolveVariables($value);
-
-            }
-        );
-
-        // Does we have includes?
-        if (isset($customConfig['include'])) {
-
-            if (is_string($customConfig['include']))
-                $customConfig['include'] = array($customConfig['include']);
-
-            // Load include files.
-            foreach ($customConfig['include'] as $key => $file) {
-
-                if   (substr($file, -4) == '.yml'    ||
-                      substr($file, -5) == '.yaml'   ||
-                      substr($file, -8) == '.yml.php'  )
-                    $customConfig += Configuration::loadCustomConfig($file);
-                else
-                    error_log('Warning: ' . $file . ' is no .yml file - not loaded');
-
-            }
-        }
-
-        return $customConfig;
-    }
-
-    /**
-     * Evaluates variables in a text value.
-     * Examples:
-     * - config-${http:host}.yml => config-yourdomain.yml
-     * - config-${server:http-host}.yml => config-yourdomain.yml
-     * - config-${env:myvar}.yml => config-myvalue.yml
-     * @param $value String Configuration value
-     * @return String
-     */
-    private static function resolveVariables($value)
-    {
-        return preg_replace_callback(
-            "|\\$\{([[:alnum:]]+)\:([[:alnum:]_]+)\}|",
-
-            function ($match)
-            {
-                $type  = $match[1];
-                $value = $match[2];
-                $value = str_replace('-', '_', $value);
-
-                switch( strtolower( $type ) )
-                {
-                    case 'env':
-                        return getenv(strtoupper($value));
-
-                    case 'http': // http:... is a shortcut for server:http-...
-                        return @$_SERVER['HTTP_' . strtoupper($value)];
-
-                    case 'server':
-                        return @$_SERVER[strtoupper($value)];
-                    default:
-                        return "";
-                }
-            },
-
-            $value);
-    }
-
+    if	( isset($conf[$part1][$part2][$part3]))
+        return $conf[$part1][$part2][$part3];
+    else
+        return '';
 }
 
+
+class Config
+{
+    private $config = array();
+
+
+    /**
+     * Config constructor.
+     * @param $config
+     */
+    public function __construct( $config )
+    {
+        $this->config = $config;
+    }
+
+
+    /**
+     * Giving the child configuration with a fluent interface.
+     *
+     * @param $name
+     * @return Config
+     */
+    public function subset( $name )
+    {
+        if   ( isset( $this->config[ $name ] ))
+            return new Config( $this->config[$name] );
+        else
+            return new Config( array() );
+    }
+
+
+    public function get( $name, $default = null )
+    {
+        if   ( isset( $this->config[ $name ] ) )
+        {
+            $value = $this->config[$name];
+
+            // if default-value is given, the type of the default-value is forced.
+            if( !is_null( $default) )
+                settype( $value, gettype($default) );
+            return $value;
+        }
+        else
+        {
+            return $default;
+        }
+    }
+
+
+    public function is( $name )
+    {
+        if   ( isset( $this->config[ $name ] ) )
+            return (bool) $this->config[$name];
+        else
+            return false;
+    }
+
+
+}

@@ -69,32 +69,6 @@ function readonly()
 
 
 
-/*
- * Liest einen Schluessel aus der Konfiguration
- * 
- * @return String, leer falls Schluessel nicht vorhanden
- */
-function config( $part1,$part2=null,$part3=null )
-{
-	global $conf;
-	
-	if	( $part2 == null)
-		if	( isset($conf[$part1]))
-			return $conf[$part1];
-		else
-			return '';
-		
-	if	( $part3 == null)
-	    if	( isset($conf[$part1][$part2]))
-	        return $conf[$part1][$part2];
-        else
-            return '';
-
-	if	( isset($conf[$part1][$part2][$part3]))
-		return $conf[$part1][$part2][$part3];
-	else
-		return '';
-}
 
 
 /**

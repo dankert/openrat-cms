@@ -371,8 +371,9 @@ class TemplateAction extends Action
 			$list[$elid]['id'         ] = $elid;
 			$list[$elid]['name'       ] = $element->name;
 			$list[$elid]['description'] = $element->desc;
-			$list[$elid]['type'       ] = $element->type;
-			
+			$list[$elid]['type'       ] = $element->getTypeName();
+			$list[$elid]['typeid'     ] = $element->typeid;
+
 			unset( $element );
 		}
 		$this->setTemplateVar('elements',$list);	
