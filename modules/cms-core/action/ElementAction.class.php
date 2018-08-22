@@ -299,14 +299,13 @@ class ElementAction extends Action
 						case ELEMENT_TYPE_DYNAMIC:
 									
 							$files = Array();
-							$handle = opendir ('./macro');
-							while ( $file = readdir($handle) )
+							$macroFiles = \FileUtils::readDir(__DIR__.'/../../cms-macros/macro');
+							foreach( $macroFiles as $macroFile )
 							{
-								$file = substr($file,0,strlen($file)-10);
+								$file = substr($macroFile,0,strlen($macroFile)-10);
 								if	( $file != '' )
 									$files[$file] = $file;
 							}
-							closedir($handle);
 
 							$subtypes = $files;
 							break;
