@@ -144,13 +144,11 @@
 						<td colspan="2">
 							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_text" name="text<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if ('') { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?></div>
 							
-							
-							
 						</td>
 					</tr>
 				<?php } ?>
 				<?php $if4=($type=='longtext'); if($if4){?>
-					<?php $if5=(!empty($preview)); if($if5){?>
+					<?php $if5=(isset($preview)); if($if5){?>
 						<div class="preview">
 							<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('page_preview') ?></legend><div>
 								<span class="text"><?php echo nl2br($preview); ?></span>
@@ -158,12 +156,16 @@
 							</div></fieldset>
 						</div>
 					<?php } ?>
+					<?php $if5=($editor=='markdown'); if($if5){?>
+						<textarea name="text" class="editor markdown-editor"><?php echo ${'text'} ?></textarea>
+						
+					<?php } ?>
 					<?php $if5=($editor=='html'); if($if5){?>
 						<textarea name="text" class="editor html-editor" id="pageelement_edit_editor"><?php echo ${'text'} ?></textarea>
 						
 					<?php } ?>
 					<?php $if5=($editor=='wiki'); if($if5){?>
-						<?php $if6=(!empty($languagetext)); if($if6){?>
+						<?php $if6=(isset($languagetext)); if($if6){?>
 							<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $languagename ?></legend><div>
 								<span class="text"><?php echo nl2br(encodeHtml(htmlentities($languagetext))); ?></span>
 								
@@ -259,7 +261,7 @@
 						</div></fieldset>
 					<?php } ?>
 					<?php $if5=($editor=='text'); if($if5){?>
-						<div class="inputholder"><textarea class="longtext" name="text"><?php echo Text::encodeHtml($text) ?></textarea></div>
+						<div class="inputholder"><textarea class="editor raw-editor" name="text"><?php echo Text::encodeHtml($text) ?></textarea></div>
 						
 						
 						
@@ -325,8 +327,6 @@
 							
 							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_number" name="number<?php if ('') echo '_disabled' ?>" type="text" maxlength="20" class="text" value="<?php echo Text::encodeHtml(@$number) ?>" /><?php if ('') { ?><input type="hidden" name="number" value="<?php $number ?>"/><?php } ?></div>
 							
-							
-							
 						</div>
 					</div></fieldset>
 				<?php } ?>
@@ -335,14 +335,12 @@
 						<div>
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_text" name="text" title="" class=""<?php if (count($items)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($items,$text,0,0) ?><?php if (count($items)==0) { ?><input type="hidden" name="text" value="" /><?php } ?><?php if (count($items)==1) { ?><input type="hidden" name="text" value="<?php echo array_keys($items)[0] ?>" /><?php } ?>
 							</select></div>
-							
-							
 						</div>
 					</div></fieldset>
 				<?php } ?>
 				<?php $if4=($type=='longtext'); if($if4){?>
 					<?php $if5=($editor=='wiki'); if($if5){?>
-						<?php $if6=(!empty($languages)); if($if6){?>
+						<?php $if6=(isset($languages)); if($if6){?>
 							<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('editor_show_language') ?></legend><div>
 								<div>
 									<?php foreach($languages as $languageid=>$languagename){ ?>
@@ -383,7 +381,7 @@
 					<?php } ?>
 				<?php } ?>
 				<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
-					<?php $if5=(!empty($release)); if($if5){?>
+					<?php $if5=(isset($release)); if($if5){?>
 						<div>
 							<?php { $tmpname     = 'release';$default  = '';$readonly = '';		
 		if	( isset($$tmpname) )
@@ -405,7 +403,7 @@
 							</label>
 						</div>
 					<?php } ?>
-					<?php $if5=(!empty($publish)); if($if5){?>
+					<?php $if5=(isset($publish)); if($if5){?>
 						<div>
 							<?php { $tmpname     = 'publish';$default  = '';$readonly = '';		
 		if	( isset($$tmpname) )

@@ -54,7 +54,8 @@ function formSubmit(form)
 		$('#uname'    ).closest('form').submit();
 	}
 	*/
-	
+
+	/*
 	if ( $('#pageelement_edit_editor').length>0 )
 	{
 		var instance = CKEDITOR.instances['pageelement_edit_editor'];
@@ -63,7 +64,7 @@ function formSubmit(form)
 	        var value = instance.getData();
 	        $('#pageelement_edit_editor').html( value );
 	    }
-	}
+	}*/
 	
 
 	var status = $('<div class="notice info"><div class="text loader"></div></div>');

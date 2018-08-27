@@ -194,6 +194,7 @@ class IndexAction extends Action
         }
 
         $css[] = OR_HTML_MODULES_DIR . 'editor/simplemde/simplemde';
+        $css[] = OR_HTML_MODULES_DIR . 'editor/trumbowyg/ui/trumbowyg';
 
         $outFiles = array();
         $modified = false;
@@ -505,6 +506,7 @@ class IndexAction extends Action
 
 
             $js[] = OR_HTML_MODULES_DIR . 'editor/simplemde/simplemde';
+            $js[] = OR_HTML_MODULES_DIR . 'editor/trumbowyg/trumbowyg';
 
 			//$js[] = OR_THEMES_DIR . '../editor/markitup/markitup/jquery.markitup';
 			//$js[] = OR_THEMES_DIR . '../editor/editor/ckeditor';

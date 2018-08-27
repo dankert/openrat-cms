@@ -57,5 +57,26 @@ $(document).on('orViewLoaded',function(event, data) {
         })
     } );
 
+	// Markdown-Editor anzeigen
+	$(event.target).find("textarea.editor.markdown-editor").each( function() {
+
+        var editor = new SimpleMDE({ element: $(this)[0] });
+    } );
+
+	// Markdown-Editor anzeigen
+	$(event.target).find("textarea.editor.html-editor").each( function() {
+
+
+        $(this).trumbowyg();
+
+        // copy back to textarea on form submit...
+		/*
+        $(textareaEl).closest('form').submit(function() {
+            var newValue = editor.getValue();
+            $(textareaEl).val( newValue );
+        })
+        */
+    } );
+
 
 });

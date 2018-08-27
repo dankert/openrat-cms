@@ -100,7 +100,6 @@
 				<row>
 					<column colspan="2">
 						<input size="50" maxlength="255" class="text" name="text"></input>
-						<focus field="text"></focus>
 					</column>
 				</row>
 			</if>
@@ -111,6 +110,10 @@
 							<text var="preview" escape="false"></text>
 						</group>
 					</part>
+				</if>
+
+				<if value="var:editor" equals="markdown">
+					<editor type="markdown" name="text"></editor>
 				</if>
 				<if value="var:editor" equals="html">
 					<editor type="html" name="text"></editor>
@@ -173,7 +176,7 @@
 					</group>
 				</if>
 				<if value="var:editor" equals="text">
-					<inputarea class="longtext" name="text" rows="25" cols="70"></inputarea>
+					<inputarea class="editor raw-editor" name="text" rows="25" cols="70"></inputarea>
 					<focus field="text"></focus>
 				</if>
 			</if>
@@ -228,7 +231,6 @@
 					<part>
 						<hidden name="decimals" default="decimals"></hidden>
 						<input size="15" maxlength="20" name="number"></input>
-						<focus field="number"></focus>
 					</part>
 				</group>
 			</if>
@@ -236,7 +238,6 @@
 				<group>
 					<part>
 						<selectbox list="items" name="text"></selectbox>
-						<focus field="text"></focus>
 					</part>
 				</group>
 			</if>

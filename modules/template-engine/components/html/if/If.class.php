@@ -9,6 +9,7 @@ class IfComponent extends Component
 	public $contains;
 	public $value;
 	public $empty;
+	public $equals;
 	public $lessthan;
 	public $greaterthan;
 	public $present;
@@ -34,7 +35,7 @@ HTML;
 		elseif (strlen($this->greaterthan)>0)
 			echo 'intval(' . $this->value($this->greaterthan).')<intval('.$this->value($this->value).')';
 		elseif (! empty($this->present))
-			echo '!empty(' . $this->textasvarname($this->present).')';
+			echo 'isset(' . $this->textasvarname($this->present).')'; // 'isset' verwenden! Nicht empty(), da false empty ist.
 		elseif (! empty($this->empty))
 			echo 'empty(' . $this->textasvarname($this->empty).')';
 		else

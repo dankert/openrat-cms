@@ -395,7 +395,7 @@ SQL
 	 */
 	function getRelatedProperties()
 	{
-		$prp = array('text'    =>array('inherit','withIcon','allLanguages','writable','html','defaultText'),
+		$prp = array('text'    =>array('inherit','withIcon','allLanguages','writable','html','defaultText','format'),
 		             'longtext'=>array('inherit','withIcon','allLanguages','writable','html','defaultText','format'),
 		             'select'  =>array('inherit','withIcon','allLanguages','writable','defaultText','code'),
 		             'number'  =>array('inherit','withIcon','allLanguages','writable','decPoint','decimals','thousandSep'),

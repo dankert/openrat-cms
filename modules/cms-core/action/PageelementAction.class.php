@@ -231,7 +231,7 @@ class PageelementAction extends Action
 		$this->setTemplateVar('desc'     ,$this->value->element->desc     );
 		$this->setTemplateVar('elementid',$this->value->element->elementid);
 		$this->setTemplateVar('languageid',$this->value->languageid       );
-		$this->setTemplateVar('type'     ,$this->value->element->type     );
+		$this->setTemplateVar('type'     ,$this->value->element->getTypeName() );
 		$this->setTemplateVar('value_time',time() );
 
 
@@ -692,26 +692,14 @@ class PageelementAction extends Action
 		 */
 		private function editlongtext()
 		{
-			if	($this->value->element->wiki)
-			$this->setTemplateVar( 'editor','wiki' );
-			elseif	($this->value->element->html)
-			$this->setTemplateVar( 'editor','html' );
-			else
-			$this->setTemplateVar( 'editor','text' );
+		    $formats = Element::getAvailableFormats();
+			$this->setTemplateVar( 'editor',$formats[ $this->value->element->format ] );
 
 			if ( !isset($this->templateVars['text']))
-			// Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
-			// einen Text eingegeben hat (Vorschaufunktion).
-			$this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
+                // Möglicherweise ist die Ausgabevariable bereits gesetzt, wenn man bereits
+                // einen Text eingegeben hat (Vorschaufunktion).
+                $this->setTemplateVar( 'text',$this->linkifyOIDs( $this->value->text ) );
 
-			/*
-			 * 
-			if	(! $this->isEditMode() )
-			{
-				$this->value->generate(); // Inhalt erzeugen.
-				$this->setTemplateVar('text',$this->linkifyOIDs( $this->value->value ));
-			}
-			 */
 
 			if	( $this->getSessionVar('pageaction') != '' )
 			$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
@@ -719,7 +707,7 @@ class PageelementAction extends Action
 
 				
 
-			if	( $this->element->wiki )
+			if	( $this->element->wiki && false /* OLD */ )
 			{
 				$project = new Project( $this->page->projectid );
 				$languages = $project->getLanguages();
