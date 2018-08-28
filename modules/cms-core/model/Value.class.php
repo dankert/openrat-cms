@@ -1360,9 +1360,7 @@ SQL
 						$inhalt = $this->page->projectid;
 						break;
 					case 'project_name':
-						$project = new Project( $this->page->projectid );
-						$project->load();
-						$inhalt = $project->name;
+						$inhalt = Project::create( $this->page->projectid )->load()->name;
 						break;
 					case 'language_id':
 						$inhalt = $this->page->languageid;

@@ -337,7 +337,8 @@ class ElementAction extends Action
 				case 'dateformat':
 
 					//$ini_date_format = config('date','format');
-					$ini_date_format = config()->subset('date')->get('format');
+					//$ini_date_format = Conf()->subset('date')->get('format');
+					$ini_date_format = config()['date']['format'];
 					$dateformat = array();
 
 					$this->setTemplateVar('dateformat','');

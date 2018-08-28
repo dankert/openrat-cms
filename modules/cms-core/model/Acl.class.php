@@ -175,7 +175,10 @@ class Acl
 	var $transmit = false;
 
 
-	/**
+    public $projectid;
+
+
+    /**
 	 * Konstruktor.
 	 * 
 	 * @param Integer Acl-ID
@@ -500,5 +503,19 @@ SQL
 			$stmt->setInt ('languageid',$this->languageid);
 
 		$stmt->query();
+
+
 	}
+
+    /**
+     * Liefert das Projekt-Objekt.
+     *
+     * @return Project
+     * @throws \ObjectNotFoundException
+     */
+    public function getProject() {
+        return Project::create( $this->projectid );
+    }
+
+
 }

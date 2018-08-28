@@ -32,6 +32,16 @@ function config( $part1=null,$part2=null,$part3=null )
 }
 
 
+/**
+ * @return Config
+ */
+function Conf() {
+
+    global $conf;
+    return new Config( $conf );
+
+}
+
 class Config
 {
     private $config = array();

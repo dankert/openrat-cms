@@ -384,10 +384,10 @@ class UserAction extends Action
             /* @var $acl Acl */
             if	( !isset($projects[$acl->projectid]))
 			{
-				$projects[$acl->projectid] = array();
-				$p = new Project($acl->projectid);
-				$p->load();
-				$projects[$acl->projectid]['projectname'] = $p->name;
+                $p = Project::create( $acl->projectid );
+
+                $projects[$acl->projectid] = array();
+                $projects[$acl->projectid]['projectname'] = $p->load()->name;
 				$projects[$acl->projectid]['rights'     ] = array();
 			}
 

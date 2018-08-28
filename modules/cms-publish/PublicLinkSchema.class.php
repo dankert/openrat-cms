@@ -42,8 +42,7 @@ class PublicLinkSchema
 
                 $f = new File( $to->objectid );
 
-                $p = new Project( $to->projectid );
-                $p->load();
+                $p = Project::create( $to->projectid )->load();
                 $f->content_negotiation = $p->content_negotiation;
 
                 $f->load();
@@ -111,8 +110,7 @@ class PublicLinkSchema
             $schema = OR_LINK_SCHEMA_ABSOLUTE;
 
             // Target is in another Project. So we have to create an absolute URL.
-            $targetProject = new Project( $to->projectid );
-            $targetProject->load();
+            $targetProject = Project::create( $to->projectid )->load();
             $inhalt = $targetProject->url;
 
             if   ( ! strpos($inhalt,'://' ) === FALSE ) {

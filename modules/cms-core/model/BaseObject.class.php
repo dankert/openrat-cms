@@ -651,7 +651,7 @@ SQL
          */
         public function load()
         {
-            $this->objectLoad();
+            return $this->objectLoad();
         }
 
 
@@ -1539,6 +1539,17 @@ SQL
                 $keys = array_keys( $this->parentfolders );
                 unset( $this->parentfolders[$keys[count($keys)-1]] );
             }
+        }
+
+
+        /**
+         * Liefert das Projekt-Objekt.
+         *
+         * @return Project
+         * @throws \ObjectNotFoundException
+         */
+        public function getProject() {
+            return Project::create( $this->projectid );
         }
 
     }

@@ -41,7 +41,7 @@ class Dispatcher
      */
     public function doAction()
     {
-        define('PRODUCTION', config()->is('production'));
+        define('PRODUCTION', Conf()->is('production'));
         define('DEVELOPMENT', !PRODUCTION);
 
 

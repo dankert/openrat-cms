@@ -238,6 +238,8 @@ class File extends BaseObject
 		}
 		
 		$this->objectLoad();
+
+		return $this;
 	}
 
 

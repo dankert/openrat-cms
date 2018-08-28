@@ -79,8 +79,8 @@ class Project extends ModelBase
         if   ( empty( Project::$cache[ $projectid ] ) )
         {
             $project = new Project( $projectid );
-            Project::$cache[ $projectid ] = $project;
-            $project->load();
+
+            Project::$cache[ $projectid ] = $project->load();
         }
         return Project::$cache[ $projectid ];
     }
@@ -224,7 +224,7 @@ class Project extends ModelBase
     /**
      * @throws \ObjectNotFoundException
      */
-    public function  load()
+    public function load()
 	{
 		$db = db_connection();
 
@@ -247,6 +247,8 @@ class Project extends ModelBase
         $this->content_negotiation = $row['flags']&PROJECT_FLAG_CONTENT_NEGOTIATION;
         $this->publishFileExtension = $row['flags']&PROJECT_FLAG_PUBLISH_FILE_EXTENSION;
         $this->publishPageExtension = $row['flags']&PROJECT_FLAG_PUBLISH_PAGE_EXTENSION;
+
+        return $this;
 	}
 
 

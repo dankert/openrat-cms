@@ -47,6 +47,8 @@ namespace cms\action {
         public $publishing;
         public $refresh;
 
+        public $security = SECURITY_USER;
+
         protected $templateVars = Array();
 
         /**
