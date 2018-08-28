@@ -79,6 +79,7 @@
 				</part>
 			</part>
 		</group>
-<include file="timestamps" />
+
+		<include file="../include/timestamps" />
 	</form>
 </output>

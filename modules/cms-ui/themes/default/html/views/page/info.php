@@ -56,7 +56,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<?php $if6=(!empty($template_url)); if($if6){?>
+						<?php $if6=(isset($template_url)); if($if6){?>
 							<a target="_self" data-url="<?php echo $template_url ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 								<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/template.png" />
 								

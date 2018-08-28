@@ -71,7 +71,7 @@ class TemplateEngine
 			$depth = 0;
 			$components = array();
 
-			$document = $this->parseIncludes( $document, dirname($srcXmlFilename).'/../include' );
+			$document = $this->parseIncludes( $document, dirname($srcXmlFilename) );
 			
 			foreach ($document as $element)
 			{
