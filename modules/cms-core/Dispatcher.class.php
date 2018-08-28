@@ -7,6 +7,7 @@ namespace cms;
 
 use BadMethodCallException;
 use cms\action\Action;
+use cms\action\RequestParams;
 use ConfigurationLoader;
 use DomainException;
 use Http;
@@ -19,9 +20,6 @@ use OpenRatException;
 use SecurityException;
 use Session;
 
-$conf = array();
-$SESS = array();
-$FILES = array();
 
 /**
  * Dispatcher for all cms actions.
@@ -30,33 +28,28 @@ $FILES = array();
  */
 class Dispatcher
 {
-    public $action;
-    public $subaction;
-
-    public $isAction;
-    public $isEmbedded = false;
+    /**
+     * @var RequestParams
+     */
+    public $request;
 
     /**
+     * Vollständige Abarbeitug einer Aktion.
+     * Führt die gesamte Abarbeitung einer Aktion durch, incl. Datenbank-Transaktionssteuerung.
+     *
      * @return array data for the client
      */
     public function doAction()
     {
-        define('PRODUCTION', Conf()->is('production'));
-        define('DEVELOPMENT', !PRODUCTION);
-
-
         // Start the session. All classes should have been loaded up to now.
         session_start();
 
-        global $SESS;
-        $SESS = &$_SESSION;
-
-        global $FILES;
-        $FILES = &$_FILES;
-
         $this->checkConfiguration();
 
-        header('Content-Language: ' . config('language','language_code') );
+        define('PRODUCTION', Conf()->is('production'));
+        define('DEVELOPMENT', !PRODUCTION);
+
+        $this->setContentLanguageHeader();
 
         // Vorhandene Konfiguration aus der Sitzung lesen.
         global $conf;
@@ -77,9 +70,6 @@ class Dispatcher
         $this->checkPostToken();
 
         define('FILE_SEP', $conf['interface']['file_separator']);
-
-        // Is this a POST request?
-        $this->isAction = $_SERVER['REQUEST_METHOD'] == 'POST';
 
         $this->connectToDatabase();
         $this->startDatabaseTransaction();
@@ -271,7 +261,7 @@ class Dispatcher
     public function callActionMethod()
     {
         global $REQ;
-        $actionClassName = ucfirst($this->action) . 'Action';
+        $actionClassName = ucfirst($this->request->action) . 'Action';
         $actionClassNameWithNamespace = 'cms\\action\\' . $actionClassName;
 
         if (!class_exists($actionClassNameWithNamespace))
@@ -280,17 +270,14 @@ class Dispatcher
             $success = include_once(__DIR__. '/action/' . $actionClassName . '.class.php');
 
             if ( !$success)
-                throw new LogicException("Action '$this->action' is not available");
+                throw new LogicException("Action '$this->request->action' is not available");
         }
 
         // Erzeugen der Action-Klasse
         /* @type $do \cms\action\Action */
         $do = new $actionClassNameWithNamespace;
 
-        $do->actionClassName = $actionClassName;
-        $do->actionName      = $this->action;
-        $do->subActionName   = $this->subaction;
-        $do->isEmbedded      = $this->isEmbedded;
+        $do->request         = $this->request;
 
         if(!defined('OR_ID'))
         if (isset($REQ[REQ_PARAM_ID]))
@@ -302,20 +289,17 @@ class Dispatcher
 
         $this->checkAccess($do);
 
-        if ($this->isAction) {
-            // POST-Request => ...Post() wird aufgerufen.
-            $subactionMethodName = $this->subaction . 'Post';
-        } else {
-            // GET-Request => ...View() wird aufgerufen.
-            $subactionMethodName = $this->subaction . 'View';
+        // POST-Request => ...Post() wird aufgerufen.
+        // GET-Request  => ...View() wird aufgerufen.
+        $methodSuffix = $this->request->isAction ? 'Post' :  'View';
+        $subactionMethodName = $this->request->method . $methodSuffix;
 
-            // Daten werden nur angezeigt, die Sitzung kann also schon geschlossen werden.
-            // Halt! In Index-Action können Benutzer-Logins gesetzt werden.
-            if   ( $this->action != 'index' )
-                Session::close();
-        }
+        // Daten werden nur angezeigt, die Sitzung kann also schon geschlossen werden.
+        // Halt! In Index-Action können Benutzer-Logins gesetzt werden.
+        if   ( ! $this->request->isAction && $this->request->action != 'index' )
+            Session::close();
 
-        Logger::debug("Executing {$this->action}/{$this->subaction}/" . @$REQ[REQ_PARAM_ID].' embed='.$this->isEmbedded);
+        Logger::debug("Executing {$this->request->action}/{$this->request->method}/" . @$REQ[REQ_PARAM_ID].' embed='.$this->request->isEmbedded);
 
         if (!method_exists($do, $subactionMethodName))
             throw new BadMethodCallException("Method '$subactionMethodName' does not exist");
@@ -329,8 +313,7 @@ class Dispatcher
         }
 
         // The action is able to change its method name.
-        $this->subaction = $do->subActionName;
-        $this->action    = $do->actionName;
+        $this->request   = $do->request;
 
         $result = $do->getOutputData();
 
@@ -368,7 +351,7 @@ class Dispatcher
         if (is_object($db)) {
             // Transactions are only needed for POST-Request
             // GET-Request do only read from the database and have no need for transactions.
-            if  ( $this->isAction )
+            if  ( $this->request->isAction )
                 $db->start();
         }
 
@@ -381,7 +364,7 @@ class Dispatcher
 
         if (is_object($db))
             // Transactions were only started for POST-Request
-            if($this->isAction)
+            if($this->request->isAction)
                 $db->commit();
     }
 
@@ -393,7 +376,16 @@ class Dispatcher
 
         if (is_object($db))
             // Transactions were only started for POST-Request
-            if($this->isAction)
+            if($this->request->isAction)
                 $db->rollback();
+    }
+
+
+    /**
+     * Sets the "Content-Language"-HTTP-Header with the user language.
+     */
+    private function setContentLanguageHeader()
+    {
+        header('Content-Language: ' . Conf()->subset('language')->get('language_code') );
     }
 }

@@ -230,7 +230,6 @@ class FilebrowserAction extends ObjectAction
 		
 		if	( !$upload->isValid() )
 		{
-			Html::debug($upload);
 			$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
 			return;
 		}

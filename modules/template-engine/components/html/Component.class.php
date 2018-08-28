@@ -2,12 +2,19 @@
 
 namespace template_engine\components;
 
+use cms\action\RequestParams;
+
 abstract class Component
 {
 
 	private $depth;
-	
-	public function getDepth()
+
+    /**
+     * @var RequestParams
+     */
+    public $request;
+
+    public function getDepth()
 	{
 		return $this->depth;
 	}

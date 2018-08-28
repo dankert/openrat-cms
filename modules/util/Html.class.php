@@ -26,28 +26,8 @@
  */
 class Html
 {
-    public static function error( $field )
-	{
-		global $inputErrors;
 
-		if	( isset($inputErrors[$field]) )
-			return '<span class="error">'.lang($inputErrors[$field]).'</span';
-	}
 	
-	
-	
-	/**
-	 * Ausgabe eines Variablenwertes.<br>
-	 */
-    public static function debug( $wert, $text='' )
-	{
-		echo "<strong>DEBUG: $text (".gettype($wert).")</strong><br/>";
-		echo "<pre>";
-		print_r($wert);
-		echo "</pre>";		
-	}
-	
-
 	/**
 	 * Erzeugt eine relative Url innerhalb von Openrat
 	 *
@@ -143,36 +123,6 @@ class Html
 			$src = $prefix.$controller_file_name.$urlParameter;
 
 		return $src;
-	}
-
-
-
-    public static function complete_tag($tagname,$attributes)
-	{
-		$text = '<'.$tagname;
-		foreach( $attributes as $attribute_name=>$attribute_value )
-			if	( !empty($attribute_value) )
-				$text .= ' '.$attribute_name.'="'.$attribute_value.'"';
-		$text .= ' />';
-		return $text;
-	}
-
-
-
-    public static function open_tag($tagname,$attributes)
-	{
-		$text = '<'.$tagname;
-		foreach( $attributes as $attribute_name=>$attribute_value )
-			if	( !empty($attribute_value) )
-				$text .= ' '.$attribute_name.'="'.$attribute_value.'"';
-		$text .= '>';
-		return $text;
-	}
-
-
-    public static function close_tag($tagname)
-	{
-		return '</'.$tagname.'>';
 	}
 }
 ?>

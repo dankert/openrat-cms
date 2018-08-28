@@ -305,7 +305,6 @@ class WikiParser
 				continue;
 			}
 			
-			Html::debug($dieseZeile,"Unbekannte Zeile");
 			die( 'unknown line: '.$dieseZeile );
 		}
 		

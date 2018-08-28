@@ -3,6 +3,7 @@
 namespace cms_api;
 
 use BadMethodCallException;
+use cms\action\RequestParams;
 use cms\Dispatcher;
 use Exception;
 use JSON;
@@ -27,16 +28,12 @@ class API
      */
     public static function execute()
     {
-        $data = array();
-
         try {
-            $action = $_REQUEST[CMS_API_REQ_PARAM_ACTION];
-            $subaction = $_REQUEST[CMS_API_REQ_PARAM_SUBACTION];
+            $request = new RequestParams();
 
             $dispatcher = new Dispatcher();
 
-            $dispatcher->action = $action;
-            $dispatcher->subaction = $subaction;
+            $dispatcher->request = $request;
 
             $data = $dispatcher->doAction();
 

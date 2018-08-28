@@ -3,6 +3,7 @@
 namespace cms_ui;
 
 use BadMethodCallException;
+use cms\action\RequestParams;
 use cms\Dispatcher;
 use DomainException;
 use Exception;
@@ -27,6 +28,9 @@ class UI
      */
     public static function execute()
     {
+        $request = new RequestParams();
+        $request->isEmbedded = false;
+
         try
         {
             define('COOKIE_PATH',dirname($_SERVER['SCRIPT_NAME']));
@@ -43,53 +47,39 @@ class UI
 
                 if($isPost)
                 {
-                    $action    = $_REQUEST[CMS_UI_REQ_PARAM_ACTION];
-                    $subaction = $_REQUEST[CMS_UI_REQ_PARAM_SUBACTION];
-
                     $dispatcher = new Dispatcher();
 
-                    $dispatcher->action = $action;
-                    if(!defined('OR_ACTION'))
-                        define('OR_ACTION', $action);
-
-                    $dispatcher->subaction = $subaction;
-                    if(!defined('OR_METHOD'))
-                        define('OR_METHOD', $subaction);
-
                     // Embedded Actions are ALWAYS Queries (means: GET).
-                    $dispatcher->isAction = true;
-                    $dispatcher->isEmbedded = true;
+                    $request->isAction = true;
+                    $dispatcher->request = $request;
 
                     $data = $dispatcher->doAction();
 
                     //$data['notices'];
 
                     // POST-Action has ended, now we want to show the UI.
-                    $action = 'index';
-                    $subaction = 'show';
-                    UI::executeEmbeddedAction($action,$subaction);
+                    $request->action = 'index';
+                    $request->method = 'show';
+                    $request->isEmbedded = true;
+                    UI::executeAction($request);
                 }
                 else
                 {
-                    $action = 'index';
-                    $subaction = 'show';
-                    UI::executeAction($action,$subaction);
+                    $request->action = 'index';
+                    $request->method = 'show';
+                    UI::executeAction($request);
                 }
 
             }
             else
             {
-                if (!empty($_REQUEST[CMS_UI_REQ_PARAM_ACTION]))
-                    $action = $_REQUEST[CMS_UI_REQ_PARAM_ACTION];
-                else
-                    $action = 'index';
+                if (empty($request->action))
+                    $request->action = 'index';
 
-                if (!empty($_REQUEST[CMS_UI_REQ_PARAM_SUBACTION]))
-                    $subaction = $_REQUEST[CMS_UI_REQ_PARAM_SUBACTION];
-                else {
-                    $subaction = 'show';
-                }
-                UI::executeAction($action,$subaction);
+                if (empty($request->method))
+                    $request->method = 'show';
+
+                UI::executeAction($request);
             }
 
         } catch (BadMethodCallException $e) {
@@ -114,8 +104,17 @@ class UI
      */
     public static function executeEmbedded($action, $subaction)
     {
+        $request = new RequestParams();
+
+        $request->isEmbedded = true;
+        $request->action = $action;
+        $request->method = $subaction;
+
+        // Embedded Actions are ALWAYS Queries (means: GET).
+        $request->isAction = false;
+
         try {
-            UI::executeEmbeddedAction($action,$subaction);
+            UI::executeAction($request);
 
         } catch (BadMethodCallException $e) {
             // Action-Method does not exist.
@@ -135,57 +134,28 @@ class UI
         }
     }
 
-    private static function executeAction( $action, $subaction,$isPost=false )
+
+
+    private static function executeAction($request)
     {
         $dispatcher = new Dispatcher();
+        $dispatcher->request = $request;
 
-        $dispatcher->action = $action;
-        if(!defined('OR_ACTION'))
-            define('OR_ACTION', $action);
+        if ( $request->isEmbedded )
+            $data = $dispatcher->callActionMethod();
+        else
+            $data = $dispatcher->doAction();
 
-        $dispatcher->subaction = $subaction;
-        if(!defined('OR_METHOD'))
-            define('OR_METHOD', $subaction);
-
-
-        $data = $dispatcher->doAction();
-        $dispatcher->isAction = $isPost;
 
         // The action is able to change its method and action name.
-        $subaction = $dispatcher->subaction;
-        $action    = $dispatcher->action;
+        $subaction = $dispatcher->request->method;
+        $action    = $dispatcher->request->action;
 
         $tplName = $action . '/' . $subaction;
 
-        UI::outputTemplate($tplName,$data['output']);
+        UI::outputTemplate($request,$tplName, $data['output']);
     }
 
-    private static function executeEmbeddedAction( $action, $subaction,$isPost=false )
-    {
-        $dispatcher = new Dispatcher();
-
-        $dispatcher->action = $action;
-        if(!defined('OR_ACTION'))
-            define('OR_ACTION', $action);
-
-        $dispatcher->subaction = $subaction;
-        if(!defined('OR_METHOD'))
-            define('OR_METHOD', $subaction);
-
-        // Embedded Actions are ALWAYS Queries (means: GET).
-        $dispatcher->isAction = $isPost;
-        $dispatcher->isEmbedded = true;
-
-        $data = $dispatcher->callActionMethod();
-
-        // The action is able to change its method and action name.
-        $subaction = $dispatcher->subaction;
-        $action    = $dispatcher->action;
-
-        $tplName = $action . '/' . $subaction;
-
-        UI::outputTemplate($tplName,$data['output']);
-    }
 
     /**
      * Executes and outputs a HTML template.
@@ -193,11 +163,12 @@ class UI
      * @param $templateName string Name of template
      * @param $outputData array Output data
      */
-    private static function outputTemplate($templateName, $outputData)
+    private static function outputTemplate($request, $templateName, $outputData)
     {
         $templateFile = __DIR__.'/themes/default/html/views/' . $templateName . '.tpl.src.xml';
 
         $engine = new TemplateEngine();
+        $engine->request = $request;
         $engine->executeTemplate( $templateFile, $outputData );
     }
 

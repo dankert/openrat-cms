@@ -80,7 +80,7 @@ class IndexAction extends Action
 
         // Gewünschten Dialog direkt öffnen.
         if($this->hasRequestVar('dialogMethod') )
-            $this->setTemplateVar(array('dialogAction'=>$this->actionName,'dialogMethod'=>$this->getRequestVar('dialogMethod')));
+            $this->setTemplateVar(array('dialogAction'=>$this->request->action,'dialogMethod'=>$this->getRequestVar('dialogMethod')));
 
         // Is a user logged in?
         if	( !is_object($user) )

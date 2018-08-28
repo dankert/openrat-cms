@@ -37,12 +37,23 @@ namespace cms\action {
 
     class RequestParams
     {
+        public $action;
+        public $method;
+        public $isEmbedded;
+
+        public $isAction;
 
         /**
          * RequestParams constructor.
          */
         public function __construct()
         {
+            $this->action     = @$_REQUEST[REQ_PARAM_ACTION];
+            $this->method     = @$_REQUEST[REQ_PARAM_SUBACTION];
+            $this->isEmbedded = @$_REQUEST[REQ_PARAM_EMBED]=='1';
+
+            // Is this a POST request?
+            $this->isAction = @$_SERVER['REQUEST_METHOD'] == 'POST';
         }
 
         /**
@@ -54,6 +65,12 @@ namespace cms\action {
          */
         public function getRequestVar($varName, $transcode = OR_FILTER_FULL)
         {
+            if($varName == REQ_PARAM_ACTION)
+                return $this->action;
+
+            if($varName == REQ_PARAM_SUBACTION)
+                return $this->method;
+
             global $REQ;
 
             if (!isset($REQ[$varName]))

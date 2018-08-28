@@ -57,9 +57,6 @@ class ObjectAction extends Action
 
     public function copyView()
 	{
-		$this->actionName = 'object';
-		global $conf_php;
-		
 		$sourceObject = new BaseObject( $this->getRequestId());
 		$sourceObject->load();
 		
@@ -326,7 +323,6 @@ class ObjectAction extends Action
 	 */
 	function rightsView()
 	{
-		$this->actionName = 'object';
 		$o = new BaseObject( $this->getRequestId() );
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'show',$o->getRelatedAclTypes() );
@@ -366,8 +362,6 @@ class ObjectAction extends Action
 	 */
 	function inheritView()
 	{
-		$this->actionName = 'object';
-		
 		$o = new BaseObject( $this->getRequestId() );
 		$o->objectLoadRaw();
 		$this->setTemplateVar( 'type',$o->getType() );
@@ -448,8 +442,6 @@ class ObjectAction extends Action
 	 */
 	function aclformView()
 	{
-		$this->actionName = 'object';
-		
 		$o = new BaseObject( $this->getRequestId() );
 		$o->objectLoadRaw();
 
@@ -466,7 +458,7 @@ class ObjectAction extends Action
 		$languages += $project->getLanguages();
 		$this->setTemplateVar('languages',$languages       );
 		$this->setTemplateVar('objectid' ,$o->objectid     );
-		$this->setTemplateVar('action'   ,$this->actionName);
+		$this->setTemplateVar('action'   ,$this->request->action);
 	}
 
 

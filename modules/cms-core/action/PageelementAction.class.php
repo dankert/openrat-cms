@@ -1406,40 +1406,6 @@ class PageelementAction extends Action
 
 
 
-		/**
-		 * Men�eintr�ge aktivieren/deaktivieren.
-		 *
-		 * @param String $name
-		 * @return boolean
-		 */
-		function checkMenu( $name )
-		{
-			$type = $this->element->type;
-
-			switch( $name )
-			{
-				case 'edit':
-				case 'prop':
-					return true;
-
-				case 'archive':
-					// Archiv ist nur verf�gbar, wenn es mind. 1 Version des Inhaltes gibt.
-						
-					if	( $this->subActionName!='diff' && is_object($this->value) )
-					return $this->value->getCountVersions() > 0;
-					else
-					return true;
-
-				case 'link':
-					// Verkn�pfung zu anderen Seiten ist nur m�glich f�r
-					// Datum, Text, Textabsatz, Ganzzahl.
-					return in_array($type,array('date','text','longtext','number'));
-
-				default:
-					return false;
-			}
-		}
-
 
 		function linkifyOIDs( $text )
 		{

@@ -38,22 +38,13 @@ namespace cms\action {
      */
     class Action
     {
-        public $db;
-        public $actionName;
-        public $subActionName;
-        public $actionClassName;
-        public $writable;
-
-        public $publishing;
-        public $refresh;
-
-        public $security = SECURITY_USER;
+        public $security = SECURITY_USER; // Default.
 
         protected $templateVars = Array();
 
         /**
          * Aktuell angemeldeter Benutzer.<br>
-         * Wird in der Funktion "init()" gesetzt.
+         * Wird im Konstruktor gesetzt.
          *
          * @var Object Benutzer
          */
@@ -62,19 +53,7 @@ namespace cms\action {
         /**
          * @var RequestParams
          */
-        protected $request;
-
-        /**
-         * Handelt es sich um einen Embedded-View?
-         * @var Boolean
-         */
-        public $isEmbedded;
-
-        /**
-         * Zeitpunkt letzte Änderung.
-         * @var integer
-         */
-        private $lastModified;
+        public $request;
 
 
         protected function setStyle($style)
@@ -91,18 +70,14 @@ namespace cms\action {
 
         public function __construct()
         {
-            $this->request =  new RequestParams();
+            $this->request = new RequestParams();
 
-            $this->writable   = !config('security','readonly');
-            $this->publishing = !config('security','nopublish');
             $this->currentUser = Session::getUser();
 
             $this->templateVars['errors'] = array();
             $this->templateVars['notices'] = array();
             $this->templateVars['control'] = array();
             $this->templateVars['output'] = array();
-
-            $this->refresh = false;
         }
 
         /**
@@ -308,8 +283,6 @@ namespace cms\action {
          */
         protected function nextSubAction($subActionName)
         {
-            $this->subActionName = $subActionName;
-
             Logger::trace("next subaction is '$subActionName'");
 
             $methodName = $subActionName . ($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'View');
@@ -370,7 +343,7 @@ namespace cms\action {
          */
         protected function lastModified($time, $expirationDuration = 0)
         {
-            if   ( $this->isEmbedded || $this->isEmbedded == null )
+            if   ( $this->request->isEmbedded )
                 return; // Embedded-Views können keine HTTP-Header setzen, daher ist alles weitere überflüssig.
 
             // Conditional-Get eingeschaltet?

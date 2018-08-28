@@ -9,9 +9,9 @@ class FormComponent extends Component
 
 	public $name = '';
 
-	public $action = '<?php echo OR_ACTION ?>';
+	public $action = null;
 
-	public $subaction = '<?php echo OR_METHOD ?>';
+	public $subaction = null;
 
 	public $id = '<?php echo OR_ID ?>';
 
@@ -46,7 +46,13 @@ class FormComponent extends Component
 		
 		if ($this->type == 'upload')
 			$this->submitFunction = '';
-		
+
+		// Default: Target is the actual action/method-pair.
+		if(empty($this->action))
+		    $this->action = $this->request->action;
+		if(empty($this->subaction))
+		    $this->subaction = $this->request->method;
+
 		echo '<form';
 		echo ' name="' . $this->htmlvalue($this->name) . '"';
 

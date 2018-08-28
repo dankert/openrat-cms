@@ -20,8 +20,9 @@ class TemplateEngine
 	public $renderType = 'html';
 
 	public $config = array();
-	
-	/**
+	public $request;
+
+    /**
 	 * Erzeugt einen Templateparser.
 	 */
 	public function __construct()
@@ -35,7 +36,7 @@ class TemplateEngine
      * @param $srcXmlFilename string Filename of template source
      * @param $tplOutName string Filename of template code
 	 */
-	public function compile($srcXmlFilename = '',$tplOutName = '')
+	public function compile($srcXmlFilename, $tplOutName )
 	{
 	    // Imports the base class of all component types.
 		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/Component.class.' . PHP_EXT);
@@ -99,7 +100,8 @@ class TemplateEngine
 					$className = 'template_engine\components\\'.$className .'Component';
 					/* @var $component Component */
 					$component = new $className();
-					$component->setDepth($depth); 
+					$component->setDepth($depth);
+					$component->request = $this->request;
 					
 					foreach ($attributes as $prop => $value)
 					{

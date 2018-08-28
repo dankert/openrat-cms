@@ -542,6 +542,12 @@ class Http
 <body>
 <div class="cover"><h1>Ooooh, sorry. This service is currently unavailable... <small>$text $status</small></h1><p class="lead">$message</p></div>
 
+    <p>
+        <code>
+            <?php echo $reason; ?>
+        </code>
+    </p>
+
 </body>
 </html><?php
 
