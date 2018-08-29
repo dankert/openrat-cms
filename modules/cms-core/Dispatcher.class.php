@@ -286,8 +286,6 @@ class Dispatcher
         else
             define('OR_ID', '');
 
-        $do->init();
-
         $this->checkAccess($do);
 
         // POST-Request => ...Post() wird aufgerufen.
@@ -300,7 +298,7 @@ class Dispatcher
         if   ( ! $this->request->isAction && $this->request->action != 'index' )
             Session::close();
 
-        Logger::debug("Executing {$this->request->action}/{$this->request->method}/" . @$REQ[REQ_PARAM_ID].' embed='.$this->request->isEmbedded);
+        Logger::debug("Dispatcher executing {$this->request->action}/{$this->request->method}/" . @$REQ[REQ_PARAM_ID].' -> '.$actionClassName.'#'.$subactionMethodName.'() embed='.$this->request->isEmbedded);
 
         if (!method_exists($do, $subactionMethodName))
             throw new BadMethodCallException("Method '$subactionMethodName' does not exist");

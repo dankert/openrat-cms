@@ -81,17 +81,6 @@ namespace cms\action {
         }
 
         /**
-         * Wird durch das Controller-Skript (do.php) nach der Kontruierung des Objektes aufgerufen.
-         * So koennen Unterklassen ihren eigenen Kontruktor besitzen, ohne den Superkontruktor
-         * (=diese Funktion) aufrufen zu m�ssen.
-         */
-        public function init()
-        {
-
-        }
-
-
-        /**
          * Liest eine Session-Variable
          *
          * @param String $varName Schl�ssel
@@ -298,18 +287,7 @@ namespace cms\action {
          */
         protected function userIsAdmin()
         {
-            $user = Session::getUser();
-            return is_object($user) && $user->isAdmin;
-        }
-
-
-        /**
-         * Ermitteln, ob Benutzer Administratorrechte besitzt
-         * @return Boolean TRUE, falls der Benutzer ein Administrator ist.
-         */
-        public function userIsLoggedIn()
-        {
-            $user = Session::getUser();
+            $user = $this->getUserFromSession();
             return is_object($user) && $user->isAdmin;
         }
 
@@ -426,48 +404,5 @@ namespace cms\action {
             setcookie($name , $value, $expire,COOKIE_PATH, '', $secure, $httponly);
         }
     }
-
-
-// TODO - nicht benutzt
-    interface ActionResult
-    {
-        public function getErrorField();
-
-        public function isSuccess();
-    }
-
-    class ActionResultSuccess implements ActionResult
-    {
-        public function isSuccess()
-        {
-            return true;
-        }
-
-        public function getErrorField()
-        {
-            return null;
-        }
-    }
-
-    class ActionResultError implements ActionResult
-    {
-        private $fieldName;
-
-        public function __construct($name)
-        {
-            $this->fieldName = $name;
-        }
-
-        public function isSuccess()
-        {
-            return false;
-        }
-
-        public function getErrorField()
-        {
-            return $this->fieldName;
-        }
-    }
-
 
 }

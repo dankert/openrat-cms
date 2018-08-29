@@ -1649,7 +1649,7 @@ SQL
 	function tmpfile()
 	{
 		$db = db_connection();
-		$filename = BaseObject::getTempFileName( array('db'=>$db->id,
+		$filename = \FileUtils::getTempFileName( array('db'=>$db->id,
 		                                           'va'=>$this->valueid,
 		                                           'el'=>$this->element->elementid,
 		                                           'la'=>$this->languageid,

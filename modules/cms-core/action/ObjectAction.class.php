@@ -12,6 +12,7 @@ use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\File;
 use cms\model\Link;
+use Session;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -330,15 +331,6 @@ class ObjectAction extends Action
 		
 		$acllist = array();
 
-		/*
-		foreach( $o->getAllInheritedAclIds() as $aclid )
-		{
-			$acl = new Acl( $aclid );
-			$acl->load();
-			$key = 'au'.$acl->username.'g'.$acl->groupname.'a'.$aclid;
-			$acllist[$key] = $acl->getProperties();
-		}
-		*/
 
 		foreach( $o->getAllAclIds() as $aclid )
 		{
@@ -353,7 +345,9 @@ class ObjectAction extends Action
 		$this->setTemplateVar('acls',$acllist );
 
 		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
-	}
+
+        $this->request->action = 'object';
+    }
 
 	
 	
@@ -368,7 +362,9 @@ class ObjectAction extends Action
 		
 		$acllist = array();
 		$this->setTemplateVar('acls',$acllist );
-	}
+
+        $this->request->action = 'object';
+    }
 
 	
 	
@@ -459,6 +455,8 @@ class ObjectAction extends Action
 		$this->setTemplateVar('languages',$languages       );
 		$this->setTemplateVar('objectid' ,$o->objectid     );
 		$this->setTemplateVar('action'   ,$this->request->action);
+
+		$this->request->action = 'object';
 	}
 
 

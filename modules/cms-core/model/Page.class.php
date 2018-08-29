@@ -790,7 +790,7 @@ class Page extends BaseObject
 	function tmpfile()
 	{
 		$db = db_connection();
-		$filename = $this->getTempFileName( array('db'=>$db->id,
+		$filename = \FileUtils::getTempFileName( array('db'=>$db->id,
 		                                          'o' =>$this->objectid,
 		                                          'l' =>$this->languageid,
 		                                          'm' =>$this->modelid,

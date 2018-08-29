@@ -59,10 +59,22 @@ class FileUtils
 	    
 	    return FileUtils::slashify( $tmpdir );
 	}
-	
-	
-	
-	/**
+
+
+
+    public static function getTempFileName( $attr = array() )
+    {
+        $filename = FileUtils::getTempDir() . '/openrat';
+        foreach ($attr as $a => $w)
+            $filename .= '_' . $a . $w;
+
+        $filename .= '.tmp';
+        return $filename;
+    }
+
+
+
+    /**
 	 * Liest die Dateien aus dem angegebenen Ordner in ein Array.
 	 * 
 	 * @param $dir string Verzeichnis, welches gelesen werden soll

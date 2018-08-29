@@ -4,8 +4,8 @@
 		
 		<form name="" target="_self" data-target="top" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="login" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=(config('login','logo','enabled')); if($if3){?>
-				<?php $if4=(!empty(config('login','logo','url'))); if($if4){?>
-					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
+				<?php $if4=!(empty(config('login','logo','url'))); if($if4){?>
+					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="login" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 						<img class="" title="" src="<?php echo config('login','logo','image') ?>" />
 						
 					</a>
@@ -16,7 +16,7 @@
 					
 				<?php } ?>
 			<?php } ?>
-			<?php $if3=(!empty(config('login','motd'))); if($if3){?>
+			<?php $if3=!(empty(config('login','motd'))); if($if3){?>
 				<div class="message info">
 					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('login','motd')))); ?></span>
 					
@@ -43,7 +43,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<?php $if6=!(!empty($$force_username)); if($if6){?>
+						<?php $if6=!(isset($$force_username)); if($if6){?>
 							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> placeholder="<?php echo lang('USER_USERNAME') ?>" id="<?php echo REQUEST_ID ?>_login_name" name="login_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name" value="<?php echo Text::encodeHtml(@$login_name) ?>" /><?php if ('') { ?><input type="hidden" name="login_name" value="<?php $login_name ?>"/><?php } ?></div>
 							
 						<?php } ?>

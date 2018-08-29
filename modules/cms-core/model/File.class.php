@@ -462,7 +462,7 @@ EOF
 		if	( $this->tmpfile == '' )
 		{
 			$db = db_connection();
-			$this->tmpfile = $this->getTempFileName( array('db'=>$db->id,'o'.$this->objectid) );
+			$this->tmpfile = \FileUtils::getTempFileName( array('db'=>$db->id,'o'.$this->objectid) );
 		}
 		return $this->tmpfile;
 	}

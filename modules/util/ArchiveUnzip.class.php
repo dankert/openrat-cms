@@ -53,7 +53,7 @@ class ArchiveUnzip{
 	var $dirSignatureE= "\x50\x4b\x05\x06"; // end of central dir signature
 	
 	// Public
-	Function ArchiveUnzip()
+	Function __construct()
 	{
 		$this->compressedList = 
 		$this->centralDirList = 

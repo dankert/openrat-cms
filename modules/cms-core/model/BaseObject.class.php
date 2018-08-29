@@ -772,7 +772,7 @@ SQL
          *
          * @access private
          */
-        function ObjectSaveName()
+        public function ObjectSaveName()
         {
             $db = db_connection();
 
@@ -820,7 +820,7 @@ SQL
          * Diese Methode wird daher normalerweise nur vom Unterobjekt augerufen
          * @access protected
          */
-        function objectDelete()
+        public function objectDelete()
         {
             $db = db_connection();
 
@@ -859,11 +859,12 @@ SQL
 
 
         /**
-         * Objekt hinzufuegen
+         * Objekt hinzufuegen.
+         *
+         * Standardrechte und vom Elternobjekt vererbbare Berechtigungen werden gesetzt.
          */
         function objectAdd()
         {
-            global $SESS;
             $db = db_connection();
 
             // Neue Objekt-Id bestimmen
@@ -898,8 +899,8 @@ SQL
                 $this->objectSaveName();
 
             // Standard-Rechte fuer dieses neue Objekt setzen.
-            // Der angemeldete Benutzer erhaelt Lese- und Schreibrechte auf
-            // das neue Objekt.
+            // Der angemeldete Benutzer erhaelt alle Rechte auf
+            // das neue Objekt. Legitim, denn er hat es ja angelegt.
             $acl = new Acl();
             $acl->userid = $user->userid;
             $acl->objectid = $this->objectid;
@@ -908,19 +909,18 @@ SQL
             $acl->write  = true;
             $acl->prop   = true;
             $acl->delete = true;
-            $acl->grant = true;
-            if	( $this->isFolder )
-            {
-                $acl->create_file   = true;
-                $acl->create_page   = true;
-                $acl->create_folder = true;
-                $acl->create_link   = true;
-            }
+            $acl->grant  = true;
+
+            $acl->create_file   = true;
+            $acl->create_page   = true;
+            $acl->create_folder = true;
+            $acl->create_link   = true;
+
             $acl->add();
 
             // Aus dem Eltern-Ordner vererbbare Berechtigungen uebernehmen.
-            $folder = new Folder( $this->parentid );
-            foreach( $folder->getAclIds() as $aclid )
+            $parent = new BaseObject( $this->parentid );
+            foreach( $parent->getAllAclIds() as $aclid )
             {
                 $acl = new Acl( $aclid );
                 $acl->load();
@@ -992,22 +992,6 @@ SQL
         }
 
 
-        function getAclIds()
-        {
-            $db = db_connection();
-
-            $sql = $db->sql( 'SELECT id FROM {{acl}} '.
-                '  WHERE objectid={objectid}'.
-                '    AND ( languageid IS NULL OR '.
-                '          languageid = {languageid} )'.
-                '  ORDER BY userid,groupid ASC' );
-            $sql->setInt('languageid',$this->languageid);
-            $sql->setInt('objectid'  ,$this->objectid);
-
-            return $sql->getCol();
-        }
-
-
         function getAllAclIds()
         {
             $db = db_connection();
@@ -1021,96 +1005,21 @@ SQL
         }
 
 
-        function getInheritedAclIds()
-        {
-            $acls = array();
-
-            if	( $this->getType() == 'unknown' )
-                $this->load();
-
-            // Root-Ordner erhaelt keine Vererbungen
-            if	( $this->isRoot )
-                return $acls;
-
-            $db = db_connection();
-            $folder = new Folder( $this->parentid );
-
-            foreach( $folder->parentObjectFileNames(true,true) as $oid=>$filename )
-            {
-                $sql = $db->sql( 'SELECT id FROM {{acl}} '.
-                    '  WHERE objectid={objectid}'.
-                    '    AND is_transmit = 1'.
-                    '    AND ( languageid IS NULL OR '.
-                    '          languageid = {languageid} )'.
-                    '  ORDER BY userid,groupid ASC' );
-                $sql->setInt('objectid'  ,$oid);
-                $sql->setInt('languageid',$this->languageid);
-                $acls = array_merge( $acls,$sql->getCol() );
-            }
-
-            return $acls;
-        }
-
-
-        function getAllInheritedAclIds()
-        {
-            $acls = array();
-
-            if	( $this->getType() == 'unknown' )
-                $this->load();
-
-            // Root-Ordner erhaelt keine Vererbungen
-            if	( $this->isRoot )
-                return $acls;
-
-            $db = db_connection();
-            $folder = new Folder( $this->parentid );
-
-            foreach( $folder->parentObjectFileNames(true,true) as $oid=>$filename )
-            {
-                $sql = $db->sql( 'SELECT id FROM {{acl}} '.
-                    '  WHERE objectid={objectid}'.
-                    '    AND is_transmit = 1'.
-                    '  ORDER BY userid,groupid ASC' );
-                $sql->setInt('objectid'  ,$oid);
-                $acls = array_merge( $acls,$sql->getCol() );
-            }
-
-            return $acls;
-        }
-
-
         /**
-         * Ermitteln aller Berechtigungsstufen, die fuer diesen Objekttyp wichtig sind
+         * Ermitteln aller Berechtigungsstufen.
          */
         function getRelatedAclTypes()
         {
-            if	( $this->isFolder )
-                return( array('read','write','delete','prop','release','publish','create_folder','create_file','create_page','create_link','grant','transmit') );
-            if	( $this->isFile )
-                return( array('read','write','delete','prop','release','publish','grant') );
-            if	( $this->isText )
-                return( array('read','write','delete','prop','release','publish','grant') );
-            if	( $this->isImage )
-                return( array('read','write','delete','prop','release','publish','grant') );
-            if	( $this->isPage )
-                return( array('read','write','delete','prop','release','publish','grant') );
-            if	( $this->isLink )
-                return( array('read','write','delete','prop','grant') );
-            if	( $this->isUrl )
-                return( array('read','write','delete','prop','grant') );
+            return( array('read','write','delete','prop','release','publish','create_folder','create_file','create_page','create_link','grant','transmit') );
         }
 
 
         /**
-         * Ermitteln aller Berechtigungsstufen, die fuer diesen Objekttyp wichtig sind
+         * Ermitteln aller Berechtigungsstufen.
          */
         function getAssocRelatedAclTypes()
         {
-            $rights = array('read','write','delete','prop','release','publish','create_folder','create_file','create_page','create_link','grant','transmit');
             $types  = array();
-            foreach( $rights as $r )
-                $types[$r] = false;
 
             foreach( $this->getRelatedAclTypes() as $t )
                 $types[$t] = true;
@@ -1122,7 +1031,7 @@ SQL
          * Entfernen aller ACLs zu diesem Objekt
          * @access private
          */
-        function deleteAllACLs()
+        private function deleteAllACLs()
         {
             foreach( $this->getAllAclIds() as $aclid )
             {
@@ -1133,50 +1042,6 @@ SQL
         }
 
 
-
-        /**
-         * Liefert einen temporären Dateinamen.
-         * @param $attr Attribute fuer den Dateinamen, um diesen eindeutig zu gestalten.
-         * @return unknown_type
-         */
-        public function getTempFileName( $attr = array() )
-        {
-            global $conf;
-
-//		if	( $conf['cache']['enable_cache'] )
-//		{
-            $filename = \FileUtils::getTempDir().'/openrat';
-            foreach( $attr as $a=>$w )
-                $filename .= '_'.$a.$w;
-
-            $filename .= '.tmp';
-            return $filename;
-//		}
-//		else
-//		{
-//			$tmpdir = @$conf['cache']['tmp_dir'];
-//			$tmpfile = tempnam( $tmpdir,'openrat_tmp' );
-//			
-//			return $tmpfile;
-//		}
-        }
-
-
-
-        /**
-         * Gibt ein fertiges Dateihandle fuer eine temporaere Datei zurück.
-         * @return Resource
-         */
-        protected function getTempFile()
-        {
-            return tmpfile();
-        }
-
-
-        public function getTempDir()
-        {
-            \FileUtils::getTempDir();
-        }
 
         /**
          * Reihenfolge-Sequenznr. dieses Objektes neu speichern

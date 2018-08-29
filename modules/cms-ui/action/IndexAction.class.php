@@ -28,8 +28,6 @@ class IndexAction extends Action
 	public $security = SECURITY_GUEST;
 
 	
-	private $perspective;
-	
 	/**
 	 * Konstruktor
 	 */
@@ -37,11 +35,7 @@ class IndexAction extends Action
 	{
         parent::__construct();
 
-        $this->perspective = Session::get('perspective');
-        Logger::info('Index: Perspective is '.$this->perspective);
-
-		if	( !empty($this->perspective))
-			$this->lastModified( config('config','last_modification_time') );
+		//	$this->lastModified( config('config','last_modification_time') );
 	}
 
 
@@ -149,7 +143,15 @@ class IndexAction extends Action
 		$this->setTemplateVar('jsFiles' , $this->getJSFiles() );
         $this->setTemplateVar('cssFiles',$this->getCSSFiles() );
 
-        $styleConfig = config('style-default') + config('style', $style);
+        $styleConfig     = config('style-default'); // default style config
+        $userStyleConfig = config('style', $style); // user style config
+
+        if (is_array($userStyleConfig))
+            $styleConfig += $userStyleConfig; // Merging user style into default style
+        else
+            ; // Unknown style name, we are ignoring this.
+
+        // Theme base color for smartphones colorizing their status bar.
         $this->setTemplateVar('themeColor', $this->getColorHexCode($styleConfig['title_background_color']));
 
         $this->setTemplateVar('notices', array());
@@ -755,7 +757,10 @@ class IndexAction extends Action
         }
 
         $user = Session::getUser();
-        $userIsLoggedIn = $user != null;
+
+        if  ( !is_object($user) )
+            return 'login';
+
 
         // Das zuletzt geänderte benutzen.
         if	( config('login','start','start_lastchanged_object') )
@@ -784,9 +789,6 @@ class IndexAction extends Action
             }
         }
 
-
-        if( !$userIsLoggedIn )
-            return 'login';
 
         return 'start';
     }

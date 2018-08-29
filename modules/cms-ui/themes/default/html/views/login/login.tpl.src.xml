@@ -3,7 +3,7 @@
 	<header views="password,register,license"></header>
 	<form cancel="false" label="message:menu_login" visible="true" action="login" subaction="login" target="top">
 		<if true="config:login/logo/enabled">
-				<if present="config:login/logo/url">
+				<if not="not" empty="config:login/logo/url">
 					<link url="config:login/logo/url" target="_top">
 						<image url="config:login/logo/image"></image>
 					</link>
@@ -12,7 +12,7 @@
 					<image url="config:login/logo/image"></image>
 				</else>
 		</if>
-		<if present="config:login/motd">
+		<if not="not" empty="config:login/motd">
 			<part class="message info">
 				<text value="config:login/motd"></text>
 			</part>

@@ -38,19 +38,12 @@ class ProjectlistAction extends Action
 	}
 
 
-	public function editView()
-	{
-		$this->nextSubAction('show');
-	}
-
 	/**
 	 * Liste aller Projekte anzeigen.
 	 *
 	 */
-	public function showView()
+	public function editView()
 	{
-		global $conf_php;
-
 		// Projekte ermitteln
 		$list = array();
 
@@ -94,10 +87,10 @@ class ProjectlistAction extends Action
 						$this->callSubAction('add');
 						return;
 					}
-					$this->project = new Project();
-					$this->project->name = $this->getRequestVar('name');
-					$this->project->add();
-					$this->addNotice('project',$this->project->name,'ADDED'); 
+					$project = new Project();
+					$project->name = $this->getRequestVar('name');
+					$project->add();
+					$this->addNotice('project',$project->name,'ADDED');
 					break;
 				case 'copy':
 					$db = db_connection();
