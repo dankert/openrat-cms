@@ -6,6 +6,7 @@ use BadMethodCallException;
 use cms\action\RequestParams;
 use cms\Dispatcher;
 use Exception;
+use Http;
 use JSON;
 use Logger;
 use ObjectNotFoundException;
@@ -126,8 +127,7 @@ class API
      */
     private static function discoverOutputType()
     {
-        $httpAccept = getenv('HTTP_ACCEPT');
-        $types = explode(',', $httpAccept);
+        $types = Http::getAccept();
 
         $reqOutput = @$_REQUEST['output'];
 
@@ -142,7 +142,6 @@ class API
 
         if (sizeof($types) == 1 && in_array('application/xml', $types) || $reqOutput == 'xml')
             return CMS_API_OUTPUT_XML;
-
     }
 
     /**
@@ -152,7 +151,8 @@ class API
     private static function sendHTTPStatus($status, $text)
     {
         if (headers_sent()) {
-            echo "$status $text";
+            //echo "$status $text";
+            ; // There is nothing we can do. Every output would destroy the JSON, XML, whatever.
         } else {
             header('HTTP/1.0 ' . intval($status) . ' ' . $text);
         }
