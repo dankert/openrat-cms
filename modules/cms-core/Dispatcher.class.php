@@ -235,7 +235,8 @@ class Dispatcher
                 if (!in_array($l, $available))
                     continue; // language is not configured as available.
 
-                $lang = Language::getLanguage( $l,PRODUCTION);
+                $isProduction = $conf['production'];
+                $lang = Language::getLanguage( $l,$isProduction);
                 $conf['language'] = $lang;
                 $conf['language']['language_code'] = $l;
                 break;
