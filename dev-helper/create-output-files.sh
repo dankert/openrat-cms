@@ -71,7 +71,7 @@ function createfile
 	fi
 
 
-	if [ -e /etc/apache2/mods-enabled/php7.0.load ] && [ `stat -c %a $file` -ne "666" ]; then
+	if [ -e /etc/apache2/mods-enabled/php7.2.load ] && [ `stat -c %a $file` -ne "666" ]; then
 	    chmod 666 -v $file
 	fi
 }
