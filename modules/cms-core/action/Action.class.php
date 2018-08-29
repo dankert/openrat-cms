@@ -277,15 +277,17 @@ namespace cms\action {
 
 
         /**
-         * Ruft eine weitere Subaction auf.
+         * Calling another action method.
          *
-         * @param String $subActionName Name der n�chsten Subaction. Es muss eine Methode mit diesem Namen geben.
+         * @param String $method Name of next method to call.
          */
-        protected function nextSubAction($subActionName)
+        protected function nextSubAction($method)
         {
-            Logger::trace("next subaction is '$subActionName'");
+            Logger::trace("next subaction is '$method'");
 
-            $methodName = $subActionName . ($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'View');
+            $this->request->method = $method;
+
+            $methodName = $method . ($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'View');
             $this->$methodName();
         }
 
