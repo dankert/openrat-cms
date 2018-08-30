@@ -6,7 +6,6 @@ var DEFAULT_CONTENT_ACTION = 'edit';
 var OR_THEMES_EXT_DIR = 'modules/cms-ui/themes/';
 
 // Execute after DOM ready:
-//$( function()
 $( function()
 {
 	// JS is available.
@@ -48,6 +47,12 @@ $( function()
         }
     });
 
+
+    // Per Klick werden die Notices entfernt.
+    $('#noticebar .notice').fadeIn().click( function()
+    {
+        $(this).fadeOut('fast',function() { $(this).remove(); } );
+    } );
 
 });
 

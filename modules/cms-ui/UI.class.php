@@ -49,7 +49,6 @@ class UI
                 {
                     $dispatcher = new Dispatcher();
 
-                    // Embedded Actions are ALWAYS Queries (means: GET).
                     $request->isAction = true;
                     $dispatcher->request = $request;
 
@@ -60,6 +59,7 @@ class UI
                     // POST-Action has ended, now we want to show the UI.
                     $request->action = 'index';
                     $request->method = 'show';
+                    $request->isAction = false;
                     $request->isEmbedded = true;
                     UI::executeAction($request);
                 }

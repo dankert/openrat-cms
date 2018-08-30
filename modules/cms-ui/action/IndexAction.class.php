@@ -154,11 +154,15 @@ class IndexAction extends Action
         // Theme base color for smartphones colorizing their status bar.
         $this->setTemplateVar('themeColor', $this->getColorHexCode($styleConfig['title_background_color']));
 
-        $this->setTemplateVar('notices', array());
+        $messageOfTheDay = config('login', 'motd');
+
+        if ( !empty($messageOfTheDay) )
+            $this->addNotice('user','','MOTD',OR_NOTICE_WARN,array('motd',$messageOfTheDay) );
 
 		// HTML-Datei direkt einbinden.
         $vars = $this->getOutputData();
-        $output = $vars['output']; // will be extracted in the included template file.
+        $output  = $vars['output']; // will be extracted in the included template file.
+        $notices = $vars['notices']; // will be extracted in the included template file.
 
 		require('modules/cms-ui/themes/default/layout/index.php');
 		exit;
