@@ -54,6 +54,8 @@ $( function()
         $(this).fadeOut('fast',function() { $(this).remove(); } );
     } );
 
+    registerOpenClose( $('section.toggle-open-close') );
+
 });
 
 function initActualHistoryState() {
@@ -345,7 +347,7 @@ function registerViewEvents( viewEl )
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
 	$(viewEl).find('input').change( function() {
-		$('#editor').find('header').addClass('dirty');
+		$(this).parent('div.view').addClass('dirty');
 	});
 
 }
@@ -771,4 +773,15 @@ function notify( type,msg )
 		$(this).fadeOut('fast',function() { $(this).remove(); } );
 	} );
 	
+}
+
+
+
+
+function registerOpenClose( $el )
+{
+    $($el).children('.on-click-open-close').click( function() {
+        $(this).closest('.toggle-open-close').toggleClass('open closed');
+    });
+
 }

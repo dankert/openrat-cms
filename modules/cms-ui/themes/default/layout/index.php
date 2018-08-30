@@ -3,7 +3,7 @@
  if (!defined('OR_VERSION')) die('Forbidden');
  if (!headers_sent()) header('Content-Type: text/html; charset=UTF-8')
 ?><!DOCTYPE html>
-<html class="theme-<?php echo strtolower($style) ?> nojs">
+<html class="theme-<?php echo strtolower($style) ?> nojs" lang="<?php echo Conf()->subset('language')->get('language_code') ?>">
 <head>
 <?php $appName = config('application','name'); $appOperator = config('application','operator');
       $title = $appName.(($appOperator!=$appName)?' - '.$appOperator:''); ?>
@@ -14,12 +14,6 @@
   <meta http-equiv="refresh" content="<?php echo isset($refresh_timeout)?$refresh_timeout:0 ?>; URL=<?php echo $refresh_url; if (ini_get('session.use_trans_sid')) echo '&'.session_name().'='.session_id(); ?>">
 <?php } ?>
   <meta name="robots" content="noindex,nofollow" >
-<?php if (isset($metaList) && is_array($metaList)) foreach( $metaList as $meta )
-      {
-       	?>
-  <link rel="<?php echo $meta['name'] ?>" href="<?php echo $meta['url'] ?>" title="<?php echo $meta['title'] ?>" ><?php
-      } ?>
-
 <?php foreach( $jsFiles  as $jsFile ) { ?>  <script src="<?php echo $jsFile ?>" defer></script>
 <?php } ?>
   <link rel="stylesheet" type="text/css" href="<?php echo OR_HTML_MODULES_DIR . 'editor/codemirror/lib/codemirror.css' ?>" />
@@ -52,25 +46,29 @@
 
         </nav>
 
-        <main>
+        <main id="editor">
             <header>
                 <span class="title"></span>
             </header>
-            <div id="editor" class="view view-loader" data-action="<?php echo $action ?>" data-method="edit" data-id="<?php echo $id ?>">
-                <?php embedView($action,'edit'); ?>
-            </div>
+
+            <?php foreach( $methodList as $method ) { ?>
+            <section class="toggle-open-close <?php echo $method ['open']?'open':'closed' ?>">
+
+                <header class="on-click-open-close">
+                    <div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div>
+                    <img src="/themes/default/images/icon/method/<?php echo $method['name'] ?>.svg" />
+                    <h1><?php echo lang('METHOD_'.$method['name'] ) ?></h1>
+                </header>
+
+
+                    <div class="view view-loader data-action="<?php echo $action ?>" data-method="<?php echo $method['name'] ?>" data-id="<?php echo $id ?>">
+                    <?php embedView($action,$method['name']); ?>
+                </div>
+            </section>
+            <?php } ?>
 
         </main>
 
-        <aside>
-            <header>
-                <a href=""></a>
-            </header>
-            <div id="info" class="view view-loader" data-method="info" data-id="<?php echo $id ?>">
-                <?php embedView($action,'info'); ?>
-            </div>
-
-        </aside>
     </div>
 
 </div>
@@ -92,8 +90,8 @@
 
 
 <div id="noticebar">
-    <?php /* Inline Notices */if(is_array($notices)) foreach( $notices as $notice ) { ?>
-        <div class="notice <?php echo $notice['status'] ?>"><div class="text"><?php echo $notice['text'] ?></div></div>'
+    <?php /* Inline Notices */ foreach( $notices as $notice ) { ?>
+        <div class="notice <?php echo $notice['status'] ?>"><div class="text"><?php echo $notice['text'] ?></div></div>
     <?php } ?>
 </div>
 

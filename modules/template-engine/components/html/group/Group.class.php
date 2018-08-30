@@ -13,14 +13,14 @@ class GroupComponent extends Component
 	public function begin()
 	{
 		echo '<fieldset';
-		echo ' class="';
+		echo ' class="toggle-open-close';
 		echo '<?php echo '.$this->value($this->open).'?" open":" closed" ?>';
 		echo '<?php echo '.$this->value($this->show).'?" show":"" ?>';
 		echo '">';
 		
 		if	( !empty($this->title))
 		{
-			echo '<legend>';
+			echo '<legend class="on-click-open-close">';
 			if	( !empty($this->icon))
 				echo  '<img src="/themes/default/images/icon/method/'.$this->htmlvalue($this->icon).'.svg" />';
 			

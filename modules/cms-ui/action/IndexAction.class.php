@@ -159,7 +159,25 @@ class IndexAction extends Action
         if ( !empty($messageOfTheDay) )
             $this->addNotice('user','','MOTD',OR_NOTICE_WARN,array('motd',$messageOfTheDay) );
 
-		// HTML-Datei direkt einbinden.
+        $methods = array(
+            'edit'    => true,
+            'info'    => true,
+            'preview' => false,
+            'rights'  => false,
+            'preview' => false,
+            'settings' => false,
+            'history' => false,
+            'prop'    => false,
+        );
+
+        $methodList = array();
+        foreach( $methods as $method=>$openByDefault )
+        {
+            $methodList[] = array('name'=>$method,'open'=>$openByDefault);
+        }
+        $this->setTemplateVar('methodList', $methodList);
+
+        // HTML-Datei direkt einbinden.
         $vars = $this->getOutputData();
         $output  = $vars['output']; // will be extracted in the included template file.
         $notices = $vars['notices']; // will be extracted in the included template file.

@@ -8,34 +8,5 @@ fieldset {
 	margin-left: 0px;
 	margin-right: 0px;
 	padding: 10px;
-	display: none;
-	/* Geschlossene Fieldsets */
-	/* Offene Fieldsets */
 }
-fieldset > legend {
-	cursor: pointer;
-	margin-left: 30px;
-	font-weight: normal;
-}
-fieldset.show {
-	display: block;
-}
-fieldset.closed > legend > div.arrow.on-closed {
-	display: inline;
-}
-fieldset.closed > legend > div.arrow.on-open {
-	display: none;
-}
-fieldset.closed > div {
-	display: none;
-}
-fieldset.open > div {
-	display: block;
-}
-fieldset.open > legend > div.arrow.on-closed {
-	display: none;
-}
-fieldset.open > legend > div.arrow.on-open {
-	display: inline;
-}
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22group.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAAA%3BCAEC%2CiBAAA%3BCAEA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3B%3B%3BAAbD%2CQAeG%3BCAED%3BCACA%3BCACA%3B%3BAAGD%2CQAAC%3BCACA%3B%3BAAID%2CQAAC%2COACE%2CSAAS%2CMAAG%2CMAAM%3BCACnB%3B%3BAAFF%2CQAAC%2COAIE%2CSAAS%2CMAAG%2CMAAM%3BCACnB%3B%3BAALF%2CQAAC%2COAOE%3BCAED%3B%3BAAKF%2CQAAC%2CKACE%3BCAED%3B%3BAAHF%2CQAAC%2CKAKE%2CSAAS%2CMAAG%2CMAAM%3BCAEnB%3B%3BAAPF%2CQAAC%2CKASE%2CSAAS%2CMAAG%2CMAAM%3BCAEnB%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22group.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22AAAA%3BCAEC%2CiBAAA%3BCAEA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3BCACA%3BCACA%22%7D */

@@ -11,48 +11,7 @@ fieldset
 	margin-left:0px;
 	margin-right:0px;
 	padding:10px;
-	display: none;
 
-	> legend
-	{
-		cursor:pointer;
-		margin-left:30px;
-		font-weight:normal;
-	}
-
-	&.show {
-		display: block;
-	}
-
-	/* Geschlossene Fieldsets */
-	&.closed {
-		> legend > div.arrow.on-closed {
-			display: inline;
-		}
-		> legend > div.arrow.on-open {
-			display: none;
-		}
-		> div
-		{
-			display:none;
-		}
-	}
-
-	/* Offene Fieldsets */
-	&.open {
-		> div
-		{
-			display:block;
-		}
-		> legend > div.arrow.on-closed
-		{
-			display:none;
-		}
-		> legend > div.arrow.on-open
-		{
-			display:inline;
-		}
-	}
 }
 
 
