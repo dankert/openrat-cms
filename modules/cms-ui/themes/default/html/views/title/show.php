@@ -1,10 +1,10 @@
 
 	
-		<?php $if2=(!empty($$dbname)); if($if2){?>
+		<?php $if2=(isset($$dbname)); if($if2){?>
 			<div class="toolbar-icon">
 				<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/database.svg" />
 				
-				<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+				<span class="label"><?php echo nl2br('&nbsp;'); ?></span>
 				
 				<div class="arrow-down">
 				</div>
@@ -20,7 +20,7 @@
 			<div class="toolbar-icon menu">
 				<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/file.svg" />
 				
-				<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'file'.'')))); ?></span>
+				<span class="label"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'file'.'')))); ?></span>
 				
 				<div class="arrow-down">
 				</div>
@@ -102,7 +102,7 @@
 					<div class="divide">
 					</div>
 					<div class="entry clickable">
-						<a title="<?php echo lang('menu_save_desc') ?>" target="_self" data-type="post" data-action="" data-method="save" data-id="<?php echo OR_ID ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;<?php echo OR_ACTION ?>&quot;,&quot;subaction&quot;:&quot;save&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
+						<a title="<?php echo lang('menu_save_desc') ?>" target="_self" data-type="post" data-action="" data-method="save" data-id="<?php echo OR_ID ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;title&quot;,&quot;subaction&quot;:&quot;save&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/save.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_save'.'')))); ?></span>
@@ -111,7 +111,7 @@
 
 					</div>
 					<div class="entry clickable">
-						<a title="<?php echo lang('menu_saveall_desc') ?>" target="_self" data-type="post" data-action="" data-method="saveall" data-id="<?php echo OR_ID ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;<?php echo OR_ACTION ?>&quot;,&quot;subaction&quot;:&quot;saveall&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
+						<a title="<?php echo lang('menu_saveall_desc') ?>" target="_self" data-type="post" data-action="" data-method="saveall" data-id="<?php echo OR_ID ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;title&quot;,&quot;subaction&quot;:&quot;saveall&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/save.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_saveall'.'')))); ?></span>
@@ -146,7 +146,7 @@
 			<div class="toolbar-icon menu">
 				<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/edit.svg" />
 				
-				<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
+				<span class="label"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 				
 				<div class="arrow-down">
 				</div>
@@ -347,20 +347,11 @@
 			</div>
 		<?php } ?>
 		<?php $if2=($isLoggedIn); if($if2){?>
-			<div class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-template on-action-element">
-				<a title="<?php echo lang('menu_prop_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="<?php echo Html::url('','prop','',array('dialogAction'=>'','dialogMethod'=>'prop')) ?>">
-					<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/prop.svg" />
-					
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_prop'.'')))); ?></span>
-					
-				</a>
-
-			</div>
 			<div class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-pageelement on-action-template">
 				<a title="<?php echo lang('menu_pub_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="pub" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'pub'}" href="<?php echo Html::url('','pub','',array('dialogAction'=>'','dialogMethod'=>'pub')) ?>">
 					<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/publish.svg" />
 					
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_pub'.'')))); ?></span>
+					<span class="label"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_pub'.'')))); ?></span>
 					
 				</a>
 
@@ -370,7 +361,7 @@
 			<div class="toolbar-icon menu">
 				<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/motd.svg" />
 				
-				<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+				<span class="label"><?php echo nl2br('&nbsp;'); ?></span>
 				
 				<div class="arrow-down">
 				</div>
@@ -395,7 +386,7 @@
 		<div class="toolbar-icon menu">
 			<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/user.svg" />
 			
-			<span class="titletext"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_help'.'')))); ?></span>
+			<span class="label"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_help'.'')))); ?></span>
 			
 			<div class="arrow-down">
 			</div>
@@ -414,7 +405,7 @@
 		<div class="toolbar-icon user menu">
 			<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/user.svg" />
 			
-			<span class="titletext"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $userfullname,25,'..',constant('STR_PAD_BOTH') )))); ?></span>
+			<span class="label"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $userfullname,25,'..',constant('STR_PAD_BOTH') )))); ?></span>
 			
 			<div class="arrow-down">
 			</div>

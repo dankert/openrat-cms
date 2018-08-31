@@ -5,7 +5,7 @@
     <if present="var:dbname">
         <part class="toolbar-icon">
             <image action="database"></image>
-            <text raw="_"/>
+            <text class="label" raw="_"/>
             <part class="arrow-down"/>
             <part class="dropdown">
                 <part class="entry">
@@ -21,7 +21,7 @@
     <if true="var:isLoggedIn">
         <part class="toolbar-icon menu">
             <image action="file"></image>
-            <text key="file"></text>
+            <text class="label" key="file"></text>
             <part class="arrow-down"/>
             <part class="dropdown">
                 <part
@@ -125,7 +125,7 @@
 
         <part class="toolbar-icon menu">
             <image method="edit" align="left"></image>
-            <text key="edit"></text>
+            <text class="label" key="edit"></text>
             <part class="arrow-down"/>
             <part class="dropdown">
                 <part
@@ -364,18 +364,20 @@
     <!-- Falls eingeloggt: Weitere Aktionsbuttons -->
     <if true="var:isLoggedIn">
 
+<!--
         <part
                 class="toolbar-icon clickable filtered on-action-folder on-action-file on-action-page on-action-link on-action-template on-action-element">
             <link type="dialog" subaction="prop" title="message:menu_prop_desc">
                 <image method="prop" align="left"></image>
-                <text key="menu_prop"></text>
+                <text class="label" key="menu_prop"></text>
             </link>
         </part>
+-->
         <part
                 class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-pageelement on-action-template">
             <link type="dialog" subaction="pub" title="message:menu_pub_desc">
                 <image method="publish" align="left"></image>
-                <text key="menu_pub"></text>
+                <text class="label" key="menu_pub"></text>
             </link>
         </part>
     </if>
@@ -385,7 +387,7 @@
     <if not="" empty="config:login/motd">
         <part class="toolbar-icon menu">
             <image method="motd" align="left"></image>
-            <text raw="_"/>
+            <text class="label" raw="_"/>
             <part class="arrow-down"/>
             <part class="dropdown">
                 <part class="entry">
@@ -410,7 +412,7 @@
     <!-- Benutzer -->
     <part class="toolbar-icon menu">
         <image action="user" align="left"></image>
-        <text class="titletext" key="menu_help"></text>
+        <text class="label" key="menu_help"></text>
         <part class="arrow-down"/>
         <part class="dropdown">
             <part class="entry clickable">
@@ -424,7 +426,7 @@
 
     <part class="toolbar-icon user menu">
         <image action="user" align="left"></image>
-        <text class="titletext" var="userfullname" maxlength="25"></text>
+        <text class="label" var="userfullname" maxlength="25"></text>
 
         <part class="arrow-down"/>
         <!-- <part class="arrow-down" />-->

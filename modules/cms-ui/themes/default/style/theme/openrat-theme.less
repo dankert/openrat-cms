@@ -1,6 +1,6 @@
 /* OpenRat Theme */
 
-/* 
+/*
  * The following variables beginning with '@cms-...' are overwritten by the CMS style configuration values
  */
 @cms-theme-id: 'theme-name'; /* technical name of theme */
@@ -75,29 +75,12 @@ html.theme-@{cms-theme-id} {
   div#noticebar {
 
     div.notice {
-      border: 2px solid @cms-text-color;
-      padding: 5px;
-      margin: 5px;
-
-      .border-radius(5px);
       .box-shadow(3px, 2px, 5px, @cms-text-color);
-      display: none;
-    }
-
-    div.notice.ok {
-      background-color: green;
-    }
-
-    div.notice.warning {
-      background-color: yellow;
-    }
-
-    div.notice.error {
-      background-color: red;
     }
 
     div.notice.info {
       background-color: @cms-inactive-background-color;
+      border-color: darken(@cms-inactive-background-color,30%);
     }
   }
 
@@ -127,9 +110,6 @@ html.theme-@{cms-theme-id} {
     color: @cms-text-color;
   }
 
-  div.dropdown > div.divide {
-    background-color: @cms-title-background-color;
-  }
 
   td.preview {
     background-color: papayawhip;
@@ -267,7 +247,6 @@ html.theme-@{cms-theme-id} {
   }
 
   #title > div > div.arrow-down {
-    display: inline;
     width: 0;
     height: 0;
     margin: 6;
@@ -285,6 +264,25 @@ html.theme-@{cms-theme-id} {
     .box-shadow(3px, 2px, 10px, @cms-title-background-color);
     opacity: 0.95;
     border: 2px solid @cms-title-background-color;
+
+    background-color: @cms-title-text-color;
+    color: @cms-text-color;
+
+
+
+
+    div.entry.selected,
+    > div.entry.active:hover,
+    > div.entry.active:hover > a,
+    a.element {
+      background-color: @cms-title-background-color;
+      color: @cms-title-text-color;
+    }
+
+    > div.divide {
+      background-color: @cms-title-background-color;
+    }
+
   }
 
   #title span.titletext {
@@ -413,12 +411,9 @@ html.theme-@{cms-theme-id} {
   }
 
   #title, ul.views > li.action {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    font-size: 13px;
   }
 
-  div.content pre, div.dropdown {
+  div.content pre {
     background-color: @cms-title-text-color;
     color: @cms-text-color;
   }
@@ -471,16 +466,28 @@ html.theme-@{cms-theme-id} {
     }
   }
 
-  div.entry.selected, div.dropdown > div.entry.active:hover, div.dropdown > div.entry.active:hover > a, a.element {
-    background-color: @cms-title-background-color;
-    color: @cms-title-text-color;
-
-  }
   div.clickable.filtered > a {
     color: @cms-inactive-background-color;
   }
   div.clickable.filtered.active > a {
     color: @cms-text-color;
+  }
+
+  div#workbench {
+    div {
+      nav {
+        background-color: darken(@cms-background-color,10%);
+      }
+
+      main section {
+        //.box-shadow(5px,5px,5px,@cms-text-color);
+        border-color: @cms-text-color;
+
+        &.open {
+          background-color: lighten(@cms-background-color,10%);
+        }
+      }
+    }
   }
 
 }

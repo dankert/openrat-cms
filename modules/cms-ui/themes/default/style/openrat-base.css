@@ -1,3 +1,186 @@
+/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+html {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	font-size: 0.8em;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+body {
+	margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+	display: block;
+}
+audio,
+canvas,
+progress,
+video {
+	display: inline-block;
+	vertical-align: baseline;
+}
+audio:not([controls]) {
+	display: none;
+	height: 0;
+}
+[hidden],
+template {
+	display: none;
+}
+a {
+	background: transparent;
+}
+a:active,
+a:hover {
+	outline: 0;
+}
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+b,
+strong {
+	font-weight: bold;
+}
+dfn {
+	font-style: italic;
+}
+h1 {
+	font-size: 1.2em;
+	margin: 0.67em 0;
+}
+mark {
+	background: #ff0;
+	color: #000;
+}
+small {
+	font-size: 80%;
+}
+sub,
+sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+img {
+	border: 0;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+figure {
+	margin: 1em 40px;
+}
+hr {
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	height: 0;
+}
+pre {
+	overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+	color: inherit;
+	font: inherit;
+	margin: 0;
+}
+button {
+	overflow: visible;
+}
+button,
+select {
+	text-transform: none;
+}
+button,
+html input[type="button"] {
+	-webkit-appearance: button;
+	cursor: pointer;
+}
+button[disabled],
+html input[disabled] {
+	cursor: default;
+}
+button input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+input {
+	line-height: normal;
+}
+input[type="reset"],
+input[type="submit"] {
+	-webkit-appearance: button;
+	cursor: pointer;
+}
+input[type="checkbox"],
+input[type="radio"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	height: auto;
+}
+input[type="search"] {
+	-webkit-appearance: textfield;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+fieldset {
+	border: 1px solid #c0c0c0;
+	margin: 0 2px;
+	padding: 0.35em 0.625em 0.75em;
+}
+legend {
+	border: 0;
+	padding: 0;
+}
+textarea {
+	overflow: auto;
+}
+optgroup {
+	font-weight: bold;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+td,
+th {
+	padding: 0;
+}
 /* Box-Sizing: We are using border-box as this is the most intuitive way for sizing. */
 *,
 ::before,
@@ -12,40 +195,4 @@
 * {
 	transition: width ease 0.5s;
 }
-div#workbench {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	/* vertikale Flex-Box zwischen Header und Hauptbereich */
-}
-div#workbench > header {
-	height: 3rem;
-}
-div#workbench > div {
-	/* Horizontale Flexbox */
-	display: flex;
-	flex: 1;
-	flex-direction: row;
-	/*
-    https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
-    Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
-     */
-	min-height: 0;
-}
-div#workbench > div > main {
-	flex: 3;
-}
-div#workbench > div > nav {
-	width: 10rem;
-	flex: 1;
-}
-div#workbench > div > aside {
-	xwidth: 10rem;
-	flex: 1;
-}
-div#workbench > div > * {
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-base.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAACA%3BAAAG%3BAAAU%3BCACX%3B%3B%3BAAIF%3BCACE%3B%3B%3BAAIF%3BCACE%2C2BAAA%3B%3BAAGF%2CGAAG%3BCACD%3BCACA%3BCACA%3BCACA%3B%3B%3BAAJF%2CGAAG%2CUAUC%3BCACA%3B%3BAAXJ%2CGAAG%2CUAaC%3B%3BCAGA%3BCACA%3BCACA%3B%3B%3B%3B%3BCAMA%3B%3BAAxBJ%2CGAAG%2CUAaC%2CMAaE%3BCACA%3B%3BAA3BN%2CGAAG%2CUAaC%2CMAgBE%3BCACA%3BCACA%3B%3BAA%5C%2FBN%2CGAAG%2CUAaC%2CMAoBE%3BCACA%3BCACA%3B%3BAAnCN%2CGAAG%2CUAaC%2CMAwBE%3BCACA%3BCACA%22%7D */
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-base.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3BAAIA%3BCACE%2CgDAAgD%2CYAAY%2CaAAa%2CUAAU%2CUAAU%2CUAAU%2CaACvG%2CaAAa%2CcAAc%2C4BAD3B%3BCAEA%3BCACA%3BCACA%3B%3BAAIF%3BCAAO%3B%3BAAMP%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3B%3BAAKF%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3B%3BAAKF%2CKAAK%2CIAAI%3BCACP%3BCACA%3B%3BAAKF%3BAACA%3BCACE%3B%3BAAKF%3BCACE%3B%3BAAEA%2CCAAC%3BAACD%2CCAAC%3BCACC%3B%3BAAOJ%2CIAAI%3BCAAU%2CyBAAA%3B%3BAAGd%3BAACA%3BCACE%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BCACE%3BCACA%2CgBAAA%3B%3BAAIF%3BCACE%3BCACA%3B%3BAAIF%3BCAAQ%3B%3BAAGR%3BAACA%3BCACE%3BCACA%3BCACA%3BCACA%3B%3BAAGF%3BCAAM%3B%3BAACN%3BCAAM%3B%3BAAIN%3BCAAM%3B%3BAAGN%2CGAAG%2CIAAI%3BCAAU%3B%3BAAIjB%3BCAAS%2CgBAAA%3B%3BAAGT%3BCACE%3BCACA%3BCACA%3B%3BAAIF%3BCAAM%3B%3BAAGN%3BAACA%3BAACA%3BAACA%3BCACE%2CiCAAA%3BCACA%3B%3BAAWF%3BAACA%3BAACA%3BAACA%3BAACA%3BCACE%3BCACA%3BCACA%3B%3BAAIF%3BCAAS%3B%3BAAMT%3BAACA%3BCACE%3B%3BAAMF%3BAACA%2CIAAK%2CMAAK%3BCACR%3BCACA%3B%3BAAIF%2CMAAM%3BAACN%2CIAAK%2CMAAK%3BCACR%3B%3BAAMA%2CMADF%2CMACG%3BCACC%3BCACA%3B%3BAAKJ%3BCACE%3B%3BAACA%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOF%2CKAAC%3BAACD%2CKAAC%3BCACC%3BCACA%3B%3BAAOA%2CKADD%2CeACE%3BAACD%2CKAFD%2CeAEE%3BCACC%3B%3BAAMJ%2CKAAC%3BCACC%3BCACA%3BCACA%3BCACA%3B%3BAAKA%2CKATD%2CeASE%3BAACD%2CKAVD%2CeAUE%3BCACC%3B%3BAAON%3BCACE%2CyBAAA%3BCACA%2CaAAA%3BCACA%2C8BAAA%3B%3BAAKF%3BCACE%3BCACA%3B%3BAAIF%3BCAAW%3B%3BAAIX%3BCAAW%3B%3BAAIX%3BCACE%3BCACA%3B%3BAAGF%3BAACA%3BCACE%3B%3B%3BAAUF%3BAAAG%3BAAAU%3BCACX%3B%3B%3BAAOF%3BCACE%3B%3B%3BAAMF%3BCACE%2C2BAAA%22%7D */

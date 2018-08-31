@@ -19,93 +19,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 Basis-Style for Openrat.
 */
-/* R e s e t - Alle Elemente zuruecksetzen */
-/* Source: http://meyerweb.com/eric/tools/css/reset/ */
-html,
-body,
-div,
-span,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-code,
-del,
-dfn,
-em,
-img,
-q,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-weight: inherit;
-	vertical-align: baseline;
-}
-body {
-	line-height: 1.5;
-}
-table {
-	border-collapse: separate;
-	border-spacing: 0;
-}
-caption,
-th,
-td {
-	text-align: left;
-	font-weight: normal;
-}
-table,
-td,
-th {
-	vertical-align: top;
-}
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-	content: "";
-}
-blockquote,
-q {
-	quotes: "" "";
-}
-a img {
-	border: none;
-}
-div#workbench div.panel.modal {
-	position: relative;
-	z-index: 101;
-	border: 1px solid !important;
-}
 div#dialog {
 	/* Modale Dialoge */
 }
@@ -174,4 +87,99 @@ div#dialog div#filler span.icon {
 html.nojs .noscript {
 	display: block;
 }
-/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAA0BA%3BAAAM%3BAAAM%3BAAAK%3BAAAM%3BAAAQ%3BAAAQ%3BAAAI%3BAAAI%3BAAAI%3BAAAI%3BAAAI%3BAAAI%3BAAAG%3BAAAY%3BAAAK%3BAAAG%3BAAAM%3BAAAS%3BAAAS%3BAAAM%3BAAAK%3BAAAK%3BAAAI%3BAAAK%3BAAAG%3BAAAI%3BAAAI%3BAAAI%3BAAAI%3BAAAI%3BAAAI%3BAAAU%3BAAAM%3BAAAO%3BAAAQ%3BAAAO%3BAAAS%3BAAAO%3BAAAO%3BAAAO%3BAAAI%3BAAAI%3BCAAI%3BCAAS%3BCAAU%3BCAAS%3BCAAoB%3B%3BAAClS%3BCAAM%3B%3BAACN%3BCAAO%3BCAAyB%3B%3BAAChC%3BAAAS%3BAAAI%3BCAAI%3BCAAgB%3B%3BAACjC%3BAAAO%3BAAAI%3BCAAI%3B%3BAACf%2CUAAU%3BAAAS%2CUAAU%3BAAAQ%2CCAAC%3BAAAS%2CCAAC%3BCAAQ%2CSAAQ%2CEAAR%3B%3BAACxD%3BAAAY%3BCAAG%2CQAAO%2CGAAG%2CEAAV%3B%3BAACf%2CCAAE%3BCAAK%3B%3BAAIP%2CGAAG%2CUAAW%2CIAAG%2CMAAM%3BCAEtB%3BCACA%3BCACA%2C4BAAA%3B%3BAAKD%2CGAAG%3B%3B%3BAAAH%2CGAAG%2COAEA%3BCACD%3B%3BCAGA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCAEA%2C4BAAA%3B%3BAAGD%2CGAjBE%2COAiBD%3BCACA%3B%3BAAlBF%2CGAAG%2COAsBF%2CIAAG%3BCACF%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAA7BF%2CGAAG%2COAsBF%2CIAAG%2COASF%2CKAAI%3BCACH%2CaAAa%2CaAAa%2CmBAA1B%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3B%3BAASF%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CMAAC%3BCACA%2CmCAAA%3BCACA%2CqBAAA%3BCACA%2CkCAAA%3BCACA%2CoCAAA%3BCACA%3B%3BAAED%2CMAAC%3BCACA%2CiCAAA%3BCACA%2CsBAAA%3BCACA%2CoCAAA%3BCACA%2CmCAAA%3BCACA%3B%3BAAIF%2COAAQ%3BCAEP%3B%3BAAID%3BCAEC%3B%3BAAED%2CIAAI%2CKAAM%3BCAET%22%7D */
+.toggle-open-close {
+	/* Geschlossene Fieldsets */
+	/* Offene Fieldsets */
+}
+.toggle-open-close .on-click-open-close {
+	cursor: pointer;
+	font-weight: normal;
+}
+.toggle-open-close > div {
+	transition: height ease 0.5s;
+	overflow: hidden;
+}
+.toggle-open-close.closed .on-click-open-close .on-closed {
+	display: inline;
+}
+.toggle-open-close.closed .on-click-open-close .on-open {
+	display: none;
+}
+.toggle-open-close.closed > div {
+	height: 0;
+}
+.toggle-open-close.open > div {
+	display: block;
+}
+.toggle-open-close.open .on-click-open-close .on-closed {
+	display: none;
+}
+.toggle-open-close.open .on-click-open-close .on-open {
+	display: inline;
+}
+div#workbench {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	/* vertikale Flex-Box zwischen Header und Hauptbereich */
+}
+div#workbench div.panel.modal {
+	position: relative;
+	z-index: 101;
+	border: 1px solid !important;
+}
+div#workbench > header {
+	height: 3rem;
+}
+div#workbench > header .toolbar-icon .arrow-down {
+	display: inline;
+}
+@media only screen and (max-width: 55rem) {
+	div#workbench > header .toolbar-icon span.label,
+	div#workbench > header .toolbar-icon .arrow-down {
+		display: none;
+	}
+}
+div#workbench > div {
+	/* Horizontale Flexbox */
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	height: 100%;
+	/*
+        https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
+        Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
+         */
+	min-height: 0;
+}
+div#workbench > div > main {
+	flex: 2;
+}
+div#workbench > div > nav {
+	width: 10rem;
+	flex: 1;
+	resize: horizontal;
+}
+@media only screen and (max-width: 55rem) {
+	div#workbench > div > nav {
+		width: 3rem;
+	}
+}
+div#workbench > div > nav.closed {
+	width: 3rem;
+}
+div#workbench > div > nav,
+div#workbench > div > main {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+div#workbench > div > main > section {
+	margin: 1.5em;
+	border: 1px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+}
+/*# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22openrat-workbench.less%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3B%3BAAuCA%2CGAAG%3B%3B%3BAAAH%2CGAAG%2COAEG%3BCACE%3B%3BCAGA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCAEA%2C4BAAA%3B%3BAAGJ%2CGAjBD%2COAiBE%3BCACG%3B%3BAAlBR%2CGAAG%2COAsBC%2CIAAG%3BCACC%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAA7BR%2CGAAG%2COAsBC%2CIAAG%2COASC%2CKAAI%3BCACA%2CaAAa%2CaAAa%2CmBAA1B%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCACA%3BCAEA%3BCACA%3BCACA%3B%3BAAMZ%3BCACI%3BCACA%3BCACA%3BCACA%3BCACA%3B%3BAAEA%2CMAAC%3BCACG%2CmCAAA%3BCACA%2CqBAAA%3BCACA%2CkCAAA%3BCACA%2CoCAAA%3BCACA%3B%3BAAEJ%2CMAAC%3BCACG%2CiCAAA%3BCACA%2CsBAAA%3BCACA%2CoCAAA%3BCACA%2CmCAAA%3BCACA%3B%3BAAIR%2COAAQ%3BCACJ%3B%3BAAGJ%3BCACI%3B%3BAAGJ%2CIAAI%2CKAAM%3BCACN%3B%3BAAGJ%3B%3B%3B%3BAAAA%2CkBAEI%3BCACI%3BCACA%3B%3BAAJR%2CkBAOM%3BCACE%2C4BAAA%3BCACA%3B%3BAAIJ%2CkBAAC%2COACG%2CqBAAqB%3BCACjB%3B%3BAAFR%2CkBAAC%2COAIG%2CqBAAqB%3BCACjB%3B%3BAALR%2CkBAAC%2COAOK%3BCACE%3B%3BAAKR%2CkBAAC%2CKACK%3BCACE%3B%3BAAFR%2CkBAAC%2CKAIG%2CqBAAqB%3BCACjB%3B%3BAALR%2CkBAAC%2CKAOG%2CqBAAqB%3BCACjB%3B%3BAAOZ%2CGAAG%3BCAEC%3BCACA%3BCACA%3BCACA%3B%3B%3BAALJ%2CGAAG%2CUAOC%2CIAAG%2CMAAM%3BCACL%3BCACA%3BCACA%2C4BAAA%3B%3BAAVR%2CGAAG%2CUAiBG%3BCACE%3B%3BAAlBR%2CGAAG%2CUAiBG%2CSAGE%2CcAEI%3BCACI%3B%3BAAOJ%3BCAAA%2CGA9BT%2CUAiBG%2CSAGE%2CcAMI%2CKAAI%3BCAIJ%2CGA9BT%2CUAiBG%2CSAGE%2CcAMgB%3BEAEJ%3B%3B%3BAA5BpB%2CGAAG%2CUAkCG%3B%3BCAGE%3BCACA%3BCACA%3BCACA%3B%3B%3B%3B%3BCAMA%3B%3BAA9CR%2CGAAG%2CUAkCG%2CMAcI%3BCACE%3B%3BAAjDZ%2CGAAG%2CUAkCG%2CMAiBI%3BCACE%3BCAaA%3BCACA%3B%3BAARA%3BCAAA%2CGA1DT%2CUAkCG%2CMAiBI%3BEAIM%3B%3B%3BAAMJ%2CGA7DT%2CUAkCG%2CMAiBI%2CMAUG%3BCACG%3B%3BAA9DhB%2CGAAG%2CUAkCG%2CMAmCI%3BAArEV%2CGAAG%2CUAkCG%2CMAmCW%3BCACL%3BCACA%3B%3BAAvEZ%2CGAAG%2CUAkCG%2CMAwCI%2COAAO%3BCACL%3BCACA%3BCAlNR%2CkBAAA%3BCACA%2CuBAAA%3BCACA%2C0BAAA%3BCACA%2CyBAAA%22%7D */
