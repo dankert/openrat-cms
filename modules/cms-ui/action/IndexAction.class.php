@@ -157,7 +157,7 @@ class IndexAction extends Action
         $messageOfTheDay = config('login', 'motd');
 
         if ( !empty($messageOfTheDay) )
-            $this->addNotice('user','','MOTD',OR_NOTICE_WARN,array('motd',$messageOfTheDay) );
+            $this->addNotice('user','','MOTD',OR_NOTICE_WARN,array('motd'=>$messageOfTheDay) );
 
         $methods = array(
             'edit'    => true,
