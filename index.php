@@ -10,9 +10,10 @@ try {
 } catch (Exception $e) {
 
 if (!headers_sent())
+{
     header('HTTP/1.0 500 Internal Server Error');
-    header('Content-Security-Policy: style-src: inline;' );
-
+    header('Content-Security-Policy: style-src: inline;');
+}
 
 ?><!DOCTYPE html>
 <html lang="en">
