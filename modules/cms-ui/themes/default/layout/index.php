@@ -68,7 +68,7 @@
                 </div>
 
 
-                    <div class="view view-loader data-action="<?php echo $action ?>" data-method="<?php echo $method['name'] ?>" data-id="<?php echo $id ?>"><?php if($method ['open']) {embedView($action,$method['name']);}else{echo '<!-- -->';} ?></div>
+                    <div class="view view-loader" data-method="<?php echo $method['name'] ?>"><?php if($method ['open']) {embedView($action,$method['name']);}else{echo '';} ?></div>
 
             </section>
             <?php } ?>
@@ -82,7 +82,7 @@
 
 <?php /* Modal dialog */ ?>
 <div id="dialog" class="is-<?php echo empty($dialogAction)?'closed':'open' ?>">
-    <div class="view" class="">
+    <div class="view">
         <?php // Shows directly a modal dialog (if present)
               if(!empty($dialogAction))
                   embedView($dialogAction,$dialogMethod);

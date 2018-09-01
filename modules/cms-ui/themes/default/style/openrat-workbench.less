@@ -160,6 +160,7 @@ html.nojs .noscript {
 }
 
 @smartphones: ~"only screen and (max-width: 55rem)";
+@wide: ~"only screen and (min-width: 75rem)";
 
 
 html, body { width:100%; height:100%;}
@@ -215,27 +216,6 @@ div#workbench {
         > main {
             flex: 1;
         }
-        > nav {
-            width: 33%;
-
-            @media @smartphones {
-                width: 3rem;
-            }
-
-            &.open {
-
-            }
-            &.closed {
-                width: 3rem;
-            }
-
-            //flex: 1;
-            resize: horizontal;
-
-            div.view {
-                height: 100%;
-            }
-        }
 
         > nav, > main {
             min-width: 0;
@@ -244,8 +224,43 @@ div#workbench {
             overflow-x: hidden;
         }
 
+        > nav {
+
+            width: 33%;
+            overflow-y: hidden;
+
+            @media @smartphones {
+                width: 0;
+            }
+
+            //&:hover,
+            &.open {
+
+                width: 33%;
+                overflow-y: auto;
+
+                @media @smartphones {
+                    width: 90%;
+                }
+            }
+
+            @media @wide {
+                width: 33%;
+                overflow-y: auto;
+            }
+
+
+            div.view {
+                height: 100%;
+            }
+        }
+
+
         > main > section {
             margin: 1.5em;
+            @media @smartphones {
+                margin:0.5em;
+            }
 
             //&.open, &:hover {
                 border: 1px solid;
@@ -278,6 +293,29 @@ div#workbench {
 
 }
 
+#title {
+
+    .toggle-nav-open-close {
+        display: none;
+        @media @smartphones {
+            display: inline;
+        }
+    }
+
+    .toolbar-icon.search {
+        width: 8em;
+        @media @smartphones {
+            width: 4em;
+        }
+
+        input {
+            @media @smartphones {
+                width: 3em;
+            }
+        }
+    }
+}
+
 /* Fortschrittsbalken */
 div.view {
 
@@ -292,4 +330,8 @@ div.view {
 }
 
 
-
+@media @smartphones {
+    html {
+        font-size: 1.0em;
+    }
+}

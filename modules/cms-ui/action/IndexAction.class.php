@@ -160,14 +160,13 @@ class IndexAction extends Action
             $this->addNotice('user','','MOTD',OR_NOTICE_WARN,array('motd'=>$messageOfTheDay) );
 
         $methods = array(
-            'edit'    => true,
-            'info'    => true,
-            'preview' => false,
-            'rights'  => false,
-            'preview' => false,
+            'edit'     => true,
+            'preview'  => true,
+            'info'     => true,
+            'prop'     => false,
             'settings' => false,
-            'history' => false,
-            'prop'    => false,
+            'rights'   => false,
+            'history'  => false,
         );
 
         $methodList = array();

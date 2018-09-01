@@ -324,7 +324,11 @@ function afterViewLoaded(viewEl )
 
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen
-	
+
+	$(viewEl).find('.toggle-nav-open-close').click( function() {
+		$('nav').toggleClass('open');
+	});
+
 	$(viewEl).find('div.headermenu > a').each( function(idx,el)
 	{
 		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.
@@ -440,6 +444,7 @@ function loadTree()
 		// Wurzel des Baums laden
 		//loadBranch( $('div#tree ul.tree > li'),'root',0);
 		$('#navigation').orTree( { type:'root',id:0,onSelect:function(name,type,id,extraId) {
+			$('nav').removeClass('open');
 			openNewAction( name,type,id, extraId );
 		} });
 		
