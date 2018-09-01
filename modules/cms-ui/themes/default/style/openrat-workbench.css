@@ -230,7 +230,7 @@ div#workbench > div > main > section.closed .view-toolbar {
 }
 @media only screen and (max-width: 55rem) {
 	#title .toolbar-icon.search {
-		width: 4em;
+		width: 8em;
 	}
 }
 @media only screen and (max-width: 55rem) {
