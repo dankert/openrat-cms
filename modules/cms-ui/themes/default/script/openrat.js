@@ -19,7 +19,7 @@ $( function()
 
 
     $('.view').each( function(index) {
-    	registerViewEvents(this);
+    	afterViewLoaded(this);
     });
 
     // Listening to the "popstate" event:
@@ -55,7 +55,6 @@ $( function()
     } );
 
     registerOpenClose( $('section.toggle-open-close') );
-
 });
 
 function initActualHistoryState() {
@@ -130,6 +129,7 @@ var Navigator = new function () {
 var Workbench = new function()
 {
     'use strict'; // Strict mode
+
 
     /**
 	 * Initializes the Workbench.
@@ -213,7 +213,8 @@ var Workbench = new function()
 				return;
 			}
 
-			registerViewEvents( targetDOMElement );
+			afterViewLoaded( targetDOMElement );
+
 		});
 
 	}
@@ -284,9 +285,15 @@ function loadView(contentEl,action,method,id,params  )
  *
  * @param viewEl DOM-Element der View
  */
-function registerViewEvents( viewEl )
+function afterViewLoaded(viewEl )
 {
-	$(viewEl).trigger('orViewLoaded');
+	// Die Section deaktivieren, wenn die View keinen Inhalt hat.
+    var section = $(viewEl).closest('section');
+
+    var viewHasContent = $(viewEl).children().length > 0;
+	section.toggleClass('disabled',!viewHasContent);
+
+    $(viewEl).trigger('orViewLoaded');
 
 	// Untermenüpunkte aus der View in das Fenstermenü kopieren...
 	$(viewEl).closest('div.panel').find('div.header div.dropdown div.entry.perview').remove(); // Alte Einträge löschen

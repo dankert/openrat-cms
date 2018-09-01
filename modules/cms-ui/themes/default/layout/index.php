@@ -52,18 +52,24 @@
             </header>
 
             <?php foreach( $methodList as $method ) { ?>
+            <?php if (DEVELOPMENT) echo "<!-- Section for : $action / ".$method['name']." -->";  ?>
             <section class="toggle-open-close <?php echo $method ['open']?'open':'closed' ?>">
 
                 <header class="on-click-open-close">
                     <div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div>
-                    <img src="/themes/default/images/icon/method/<?php echo $method['name'] ?>.svg" />
+                    <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/method/<?php echo $method['name'] ?>.svg" class="image-icon" />
                     <h1><?php echo lang('METHOD_'.$method['name'] ) ?></h1>
                 </header>
 
-
-                    <div class="view view-loader data-action="<?php echo $action ?>" data-method="<?php echo $method['name'] ?>" data-id="<?php echo $id ?>">
-                    <?php embedView($action,$method['name']); ?>
+                <div class="view-toolbar">
+                    <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/fullscreen.svg" class="image-icon on-normalscreen toolbar-action-fullscreen" />
+                    <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/fullscreen_exit.svg" class="image-icon on-fullscreen toolbar-action-exit-fullscreen"  />
+                    <img src="<?php echo OR_THEMES_DIR ?>/default/images/icon/menu/refresh.svg" class="image-icon toolbar-action-refresh" />
                 </div>
+
+
+                    <div class="view view-loader data-action="<?php echo $action ?>" data-method="<?php echo $method['name'] ?>" data-id="<?php echo $id ?>"><?php embedView($action,$method['name']); ?></div>
+
             </section>
             <?php } ?>
 
@@ -105,8 +111,6 @@
 </html>
 <?php
 function embedView( $action, $method ) {
-        if (DEVELOPMENT)
-            echo "<!-- $action - $method -->";
-        echo cms_ui\UI::executeEmbedded($action,$method);
+        cms_ui\UI::executeEmbedded($action,$method);
 }
 ?>

@@ -240,8 +240,44 @@ div#workbench {
             border: 1px;
 
             .border-radius(5px);
+
+            header {
+                * {
+                    display: inline;
+                }
+            }
+            .view-toolbar {
+                display: inline;
+            }
+
+            // Wenn Sektion geschlossen, keine Toolbar anzeigen.
+            &.closed {
+                .view-toolbar {
+                    display: none;
+                }
+            }
+
+            // Diabled Sections are not displayed.
+            &.disabled {
+                display: none;
+            }
         }
     }
 
 }
+
+/* Fortschrittsbalken */
+div.view {
+
+    &.loader
+    {
+        background: url(../images/loader.gif) no-repeat;
+        background-position: center;
+        opacity: 0.5;
+        cursor: wait;
+    }
+
+}
+
+
 
