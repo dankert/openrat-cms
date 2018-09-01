@@ -161,6 +161,9 @@ html.nojs .noscript {
 
 @smartphones: ~"only screen and (max-width: 55rem)";
 
+
+html, body { width:100%; height:100%;}
+
 div#workbench {
 
     width: 100%;
@@ -179,7 +182,7 @@ div#workbench {
     }
 
     > header {
-        height: 3rem;
+        height: 3.0rem;
 
         .toolbar-icon {
 
@@ -196,24 +199,24 @@ div#workbench {
     }
 
     > div {
+        flex: 1;
 
         /* Horizontale Flexbox */
         display: flex;
-        flex: 1;
         flex-direction: row;
-        height: 100%;
 
         /*
         https://stackoverflow.com/questions/28636832/firefox-overflow-y-not-working-with-nested-flexbox
         Whenever you've got an element with overflow: [hidden|scroll|auto] inside of a flex item, you need to give its ancestor flex item min-width:0 (in a horizontal flex container) or min-height:0 (in a vertical flex container), to disable this min-sizing behavior, or else the flex item will refuse to shrink smaller than the child's min-content size.
          */
+        min-width: 0;
         min-height: 0;
 
         > main {
-            flex: 2;
+            flex: 1;
         }
         > nav {
-            width: 10rem;
+            width: 33%;
 
             @media @smartphones {
                 width: 3rem;
@@ -226,18 +229,27 @@ div#workbench {
                 width: 3rem;
             }
 
-            flex: 1;
+            //flex: 1;
             resize: horizontal;
+
+            div.view {
+                height: 100%;
+            }
         }
 
         > nav, > main {
+            min-width: 0;
+            min-height: 0;
             overflow-y: auto;
             overflow-x: hidden;
         }
 
         > main > section {
             margin: 1.5em;
-            border: 1px;
+
+            //&.open, &:hover {
+                border: 1px solid;
+            //}
 
             .border-radius(5px);
 
@@ -259,7 +271,7 @@ div#workbench {
 
             // Diabled Sections are not displayed.
             &.disabled {
-                display: none;
+                //display: none;
             }
         }
     }

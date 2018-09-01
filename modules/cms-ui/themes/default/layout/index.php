@@ -68,7 +68,7 @@
                 </div>
 
 
-                    <div class="view view-loader data-action="<?php echo $action ?>" data-method="<?php echo $method['name'] ?>" data-id="<?php echo $id ?>"><?php embedView($action,$method['name']); ?></div>
+                    <div class="view view-loader data-action="<?php echo $action ?>" data-method="<?php echo $method['name'] ?>" data-id="<?php echo $id ?>"><?php if($method ['open']) {embedView($action,$method['name']);}else{echo '<!-- -->';} ?></div>
 
             </section>
             <?php } ?>

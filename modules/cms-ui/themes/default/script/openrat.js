@@ -1,14 +1,9 @@
 
-
-// Default-Subaction
-var DEFAULT_CONTENT_ACTION = 'edit';
-
 var OR_THEMES_EXT_DIR = 'modules/cms-ui/themes/';
 
 // Execute after DOM ready:
-$( function()
-{
-	// JS is available.
+$( function() {
+    // JS is available.
     $('html').removeClass('nojs');
 
     /* Fade in all elements. */
@@ -18,29 +13,30 @@ $( function()
     registerWorkbenchEvents();
 
 
-    $('.view').each( function(index) {
-    	afterViewLoaded(this);
+    $('.view').each(function (index) {
+        afterViewLoaded(this);
     });
 
     // Listening to the "popstate" event:
-    window.onpopstate = function(ev) {
+    window.onpopstate = function (ev) {
         Navigator.navigateTo(ev.state);
     };
 
     initActualHistoryState();
-	
-	Workbench.initialize();
+
+    Workbench.initialize();
 
     // Per Klick wird die Notice entfernt.
-    $('#noticebar .notice').click( function()
-    {
-        $(this).fadeOut('fast',function() { $(this).remove(); } );
-    } );
+    $('#noticebar .notice').click(function () {
+        $(this).fadeOut('fast', function () {
+            $(this).remove();
+        });
+    });
 
     loadTree(); // Initial Loading of the navigationtree
 
 
-    $(document).keyup(function(e) {
+    $(document).keyup(function (e) {
         if (e.keyCode == 27) { // ESC keycode
             $('#dialog .view').fadeOut('fast').html('');
             $('#dialog').removeClass('is-open').addClass('is-closed'); // Dialog schließen
@@ -49,13 +45,28 @@ $( function()
 
 
     // Per Klick werden die Notices entfernt.
-    $('#noticebar .notice').fadeIn().click( function()
-    {
-        $(this).fadeOut('fast',function() { $(this).remove(); } );
-    } );
+    $('#noticebar .notice').fadeIn().click(function () {
+        $(this).fadeOut('fast', function () {
+            $(this).remove();
+        });
+    });
 
-    registerOpenClose( $('section.toggle-open-close') );
+    registerOpenClose($('section.toggle-open-close'));
+
+    $('section.toggle-open-close .on-click-open-close').click(function () {
+        var section = $(this).closest('section');
+
+        // disabled sections are ignored.
+        if (section.hasClass('disabled'))
+            return;
+
+        // if view is empty, lets load the content.
+        var view = section.find('div.view-loader');
+        if (view.children().length == 0)
+            Workbench.loadNewActionIntoElement(view);
+    });
 });
+
 
 function initActualHistoryState() {
 	var state = {};
@@ -178,16 +189,32 @@ var Workbench = new function()
 
     	$('#editor').attr('data-action',action);
     	$('#editor').attr('data-id'    ,id    );
+    	$('#editor').attr('data-extra' ,JSON.stringify(params));
 
-        $('#workbench .view-loader').each( function(idx) {
+    	// View in geschlossenen Sektionen löschen, damit diese nicht stehen bleiben.
+        $('#workbench section.closed .view-loader').empty();
+
+        $('#workbench section.open .view-loader').each( function(idx) {
+
             var targetDOMElement = $(this);
-            var method = targetDOMElement.data('method');
 
-            Workbench.loadViewIntoElement(targetDOMElement,action,method,id,params)
+            Workbench.loadNewActionIntoElement(targetDOMElement)
         });
 
         filterMenus(action, id, params);
 
+    }
+
+
+    this.loadNewActionIntoElement = function(targetDOMElement) {
+
+        var action = $('#editor').attr('data-action');
+        var id     = $('#editor').attr('data-id'    );
+        var params = $('#editor').attr('data-extra' );
+
+        var method = targetDOMElement.data('method');
+
+        Workbench.loadViewIntoElement(targetDOMElement,action,method,id,params)
     }
 
 
