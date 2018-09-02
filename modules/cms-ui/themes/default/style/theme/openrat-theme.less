@@ -416,6 +416,15 @@ html.theme-@{cms-theme-id} {
         input {
           background-color: transparent;
           color: @cms-title-text-color;
+          &::placeholder {
+            opacity: 1;
+            color: @cms-title-text-color;
+          }
+          &:focus {
+            &::placeholder {
+              color: fadeout(@cms-title-text-color, 50%);
+            }
+          }
         }
       }
     }
