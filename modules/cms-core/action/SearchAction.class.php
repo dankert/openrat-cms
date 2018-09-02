@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\model\Project;
 use cms\model\User;
 use cms\model\Value;
 use cms\model\Template;
@@ -127,64 +128,84 @@ class SearchAction extends Action
 	 * Durchf?hren der Suche
 	 * und Anzeige der Ergebnisse
 	 */
-	private function performSearch( $text, $flag)
+	private function performSearch($searchText, $searchFlag)
 	{
-		global $conf;
-	
 		$listObjectIds   = array();
 		$listTemplateIds = array();
 	
         $resultList = array();
 
-        $user = User::loadWithName($text);
-        if	( is_object($user) )
+
+        if	( $searchFlag & SEARCH_FLAG_ID )
         {
-            $userResult = array( 'url'  => Html::url('template','',$templateid),
-                    'type' => 'user',
-                    'name' => $user->name,
-                    'desc' => lang('NO_DESCRIPTION_AVAILABLE'),
-                    'lastchange_date' => 0 );
+            if   ( BaseObject::available( intval($searchText) ) )
+                $listObjectIds[] = intval( $searchText );
+
+            if  ( $this->userIsAdmin() ) {
+
+                $user = new User( intval($searchText) );
+
+                try {
+                    $user->load();
+
+                    $userResult = array( 'url'  => '',
+                        'type' => 'user',
+                        'id' => $user->userid,
+                        'name' => $user->name,
+                        'desc' => $user->desc,
+                        'lastchange_date' => 0 );
+                    $resultList[] = $userResult;
+                }
+                catch( \ObjectNotFoundException $e) {
+                    ; // userid is unknown
+                }
+            }
         }
-        $resultList[] = $userResult;
 
-        $this->setTemplateVar( 'result',$resultList );
-        if	( $flag & SEARCH_FLAG_ID && BaseObject::available( intval($text) ) )
-            $listObjectIds[] = intval( $text );
-
-        if	( $flag & SEARCH_FLAG_NAME )
+        if	( $searchFlag & SEARCH_FLAG_NAME )
         {
-            $o = new BaseObject();
-            $listObjectIds += $o->getObjectIdsByName( $text );
+            if  ( $this->userIsAdmin() ) {
+
+                $user = User::loadWithName($searchText);
+                if (is_object($user)) {
+                    $userResult = array('url' => '',
+                        'type' => 'user',
+                        'id' => $user->userid,
+                        'name' => $user->name,
+                        'desc' => $user->desc,
+                        'lastchange_date' => 0);
+                    $resultList[] = $userResult;
+                }
+            }
+
+            $listObjectIds += BaseObject::getObjectIdsByName( $searchText );
         }
 
-        if	( $flag & SEARCH_FLAG_DESCRIPTION )
+        if	( $searchFlag & SEARCH_FLAG_DESCRIPTION )
         {
-            $o = new BaseObject();
-            $listObjectIds += $o->getObjectIdsByDescription( $text );
+            $listObjectIds += BaseObject::getObjectIdsByDescription( $searchText );
         }
 
-        if	( $flag & SEARCH_FLAG_FILENAME )
+        if	( $searchFlag & SEARCH_FLAG_FILENAME )
         {
-            $o = new BaseObject();
-            $listObjectIds += $o->getObjectIdsByFilename( $text );
+            $listObjectIds += BaseObject::getObjectIdsByFilename( $searchText );
 
-            $f = new File();
-            $listObjectIds += $f->getObjectIdsByExtension( $text );
+            $listObjectIds += File::getObjectIdsByExtension( $searchText );
         }
 
         // Inhalte durchsuchen
-        if	( $flag & SEARCH_FLAG_VALUE )
+        if	( $searchFlag & SEARCH_FLAG_VALUE )
         {
             $e = new Value();
-            $listObjectIds += $e->getObjectIdsByValue( $text );
+            $listObjectIds += $e->getObjectIdsByValue( $searchText );
 
-            $template = new Template();
-            $listTemplateIds += $template->getTemplateIdsByValue( $text );
+            $listTemplateIds += Template::getTemplateIdsByValue( $searchText );
         }
 
-        $this->explainResult( $listObjectIds, $listTemplateIds );
+        $resultList = array_merge( $resultList, $this->explainResult( $listObjectIds, $listTemplateIds ) );
 
-	}
+        $this->setTemplateVar( 'result',$resultList );
+    }
 	
 	
 	/**
@@ -198,33 +219,33 @@ class SearchAction extends Action
 		{
 			$o = new BaseObject( $objectid );
 			$o->load();
-			$resultList[$objectid] = array();
-			$resultList[$objectid]['id'  ] = $objectid;
-			$resultList[$objectid]['url' ] = Html::url($o->getType(),'',$objectid);
-			$resultList[$objectid]['type'] = $o->getType();
-			$resultList[$objectid]['name'] = $o->name;
-			$resultList[$objectid]['lastchange_date'] = $o->lastchangeDate;
-	
-			if	( $o->desc != '' )
-				$resultList[$objectid]['desc'] = $o->desc;
-			else
-				$resultList[$objectid]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
+            if ($o->hasRight( ACL_READ ))
+                $resultList[] = array(
+                    'id'              => $objectid,
+                    'type'            => $o->getType(),
+                    'name'            => $o->name,
+                    'lastchange_date' => $o->lastchangeDate,
+                    'desc'            => $o->desc
+                );
 		}
 	
 		foreach( $listTemplateIds as $templateid )
 		{
 			$t = new Template( $templateid );
 			$t->load();
-			$resultList['t'.$templateid] = array();
-			$resultList['t'.$templateid]['id'  ] = $templateid;
-			$resultList['t'.$templateid]['url' ] = Html::url('template','',$templateid);
-			$resultList['t'.$templateid]['type'] = 'template';
-			$resultList['t'.$templateid]['name'] = $t->name;
-			$resultList['t'.$templateid]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
-			$resultList['t'.$templateid]['lastchange_date'] = 0;
+			$p = new Project( $t->projectid );
+			$o = new BaseObject( $p->getRootObjectId() );
+			if ($o->hasRight( ACL_READ ))
+                $resultList[] = array(
+                    'id'  => $templateid,
+                    'type'=> 'template',
+                    'name'=> $t->name,
+                    'desc'=> '',
+                    'lastchange_date'=> 0
+                );
 		}
 	
-		$this->setTemplateVar( 'result',$resultList );
+		return $resultList;
 	}
 	
 }

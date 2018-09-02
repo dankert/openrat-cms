@@ -168,18 +168,16 @@ class File extends BaseObject
 	  * Es werden Objekte zu einer Dateierweiterung ermittelt
 	  *
 	  * @param String Dateierweiterung ohne fuehrenden Punkt (z.B. 'jpeg')
-	  * @return Array Liste der gefundenen Objekt-IDs
+	  * @return array Liste der gefundenen Objekt-IDs
 	  */
-	function getObjectIdsByExtension( $extension )
+	public static function getObjectIdsByExtension( $extension )
 	{
 		$db = db_connection();
 		
 		$sql = $db->sql( 'SELECT {{file}}.objectid FROM {{file}} '.
 		                ' LEFT JOIN {{object}} '.
 		                '   ON {{object}}.id={{file}}.objectid'.
-		                ' WHERE {{file}}.extension={extension}'.
-		                '   AND {{object}}.projectid={projectid}' );
-		$sql->setInt   ( 'projectid',$this->projectid );
+		                ' WHERE {{file}}.extension={extension}' );
 		$sql->setString( 'extension',$extension       );
 		
 		return $sql->getCol();

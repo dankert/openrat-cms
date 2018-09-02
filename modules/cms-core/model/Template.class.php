@@ -166,17 +166,15 @@ class Template
 	/**
 	  * Es werden Templates mit einem Inhalt gesucht
 	  * @param String Suchbegriff
-	  * @return Array Liste der gefundenen Template-IDs
+	  * @return array Liste der gefundenen Template-IDs
 	  */
-	function getTemplateIdsByValue( $text )
+	public static function getTemplateIdsByValue( $text )
 	{
 		$db = db_connection();
 
 		$stmt = $db->sql( 'SELECT templateid FROM {{templatemodel}}'.
-		                ' WHERE text LIKE {text} '.
-		                '   AND projectmodelid={modelid}' );
+		                ' WHERE text LIKE {text} ' );
 
-		$stmt->setInt   ( 'modelid',$this->modelid );
 		$stmt->setString( 'text'   ,'%'.$text.'%'  );
 		
 		return $stmt->getCol();

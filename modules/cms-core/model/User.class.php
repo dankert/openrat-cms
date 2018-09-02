@@ -286,7 +286,11 @@ SQL
 		                ' WHERE name={name}' );
 		//Html::debug($sql);
 		$sql->setString( 'name',$name );
+
 		$userId = $sql->getOne();
+
+		if (empty($userId))
+		    return null; // no user found.
 
 		// Benutzer �ber Id instanziieren
 		$neuerUser = new \cms\model\User( $userId );

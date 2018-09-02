@@ -226,7 +226,6 @@ namespace cms\model {
         {
             if	( is_null($this->aclMask) )
             {
-                $language = $this->languageid;
                 $user     = \Session::getUser();
 
                 if	( $user->isAdmin )
@@ -262,7 +261,7 @@ SELECT {{acl}}.* FROM {{acl}}
 SQL
                     );
 
-                    $sql->setInt  ( 'languageid'  ,$language->languageid   );
+                    $sql->setInt  ( 'languageid'  ,$this->languageid       );
                     $sql->setInt  ( 'objectid'    ,$this->objectid         );
                     $sql->setInt  ( 'userid'      ,$user->userid           );
 
@@ -1093,132 +1092,6 @@ SQL
         }
 
 
-        /**
-         * Es werden Objekte mit einem bestimmten Namen ermittelt
-         * @param String Suchbegriff
-         * @return Array Liste der gefundenen Objekt-IDs
-         */
-        function getObjectIdsByFileName( $text )
-        {
-            $db = db_connection();
-
-            $sql = $db->sql( 'SELECT id FROM {{object}} '.
-                ' WHERE filename LIKE {filename}'.
-                '   AND projectid={projectid}'.
-                '  ORDER BY lastchange_date DESC' );
-            $sql->setInt   ( 'projectid',$this->projectid );
-            $sql->setString( 'filename','%'.$text.'%' );
-
-            return $sql->getCol();
-        }
-
-
-        /**
-         * Es werden Objekte mit einem Namen ermittelt
-         * @param String Suchbegriff
-         * @return Array Liste der gefundenen Objekt-IDs
-         */
-        function getObjectIdsByName( $text )
-        {
-            $db = db_connection();
-
-            $sql = $db->sql( 'SELECT {{object}}.id FROM {{object}} '.
-                ' LEFT JOIN {{name}} '.
-                '   ON {{object}}.id={{name}}.objectid'.
-                ' WHERE {{name}}.name LIKE {name}'.
-                '   AND {{name}}.languageid={languageid}'.
-                '   AND {{object}}.projectid={projectid}'.
-                '  ORDER BY lastchange_date DESC' );
-            $sql->setInt   ( 'projectid' ,$this->projectid );
-            $sql->setInt   ( 'languageid',$this->languageid );
-            $sql->setString( 'name'      ,'%'.$text.'%' );
-
-            return $sql->getCol();
-        }
-
-
-        /**
-         * Es werden Objekte mit einer Beschreibung ermittelt
-         * @param String Suchbegriff
-         * @return Array Liste der gefundenen Objekt-IDs
-         */
-        function getObjectIdsByDescription( $text )
-        {
-            $db = db_connection();
-
-            $sql = $db->sql( 'SELECT {{object}}.id FROM {{object}} '.
-                ' LEFT JOIN {{name}} '.
-                '   ON {{object}}.id={{name}}.objectid'.
-                ' WHERE {{name}}.descr LIKE {desc}'.
-                '   AND {{name}}.languageid={languageid}'.
-                '   AND {{object}}.projectid={projectid}'.
-                '  ORDER BY lastchange_date DESC' );
-            $sql->setInt   ( 'projectid' ,$this->projectid );
-            $sql->setInt   ( 'languageid',$this->languageid );
-            $sql->setString( 'desc'      ,'%'.$text.'%' );
-
-            return $sql->getCol();
-        }
-
-
-        /**
-         * Es werden Objekte mit einer UserId ermittelt
-         * @param Integer Benutzer-Id der Erstellung
-         * @return Array Liste der gefundenen Objekt-IDs
-         */
-        function getObjectIdsByCreateUserId( $userid )
-        {
-            $db = db_connection();
-
-            $sql = $db->sql( 'SELECT id FROM {{object}} '.
-                ' WHERE create_userid={userid}'.
-                '   AND projectid={projectid}'.
-                '  ORDER BY lastchange_date DESC' );
-            $sql->setInt   ( 'projectid',$this->projectid );
-            $sql->setInt   ( 'userid'   ,$userid          );
-
-            return $sql->getCol();
-        }
-
-
-        /**
-         * Es werden Objekte mit einer UserId ermittelt
-         * @param Integer Benutzer-Id der letzten ?nderung
-         * @return Array Liste der gefundenen Objekt-IDs
-         */
-        function getObjectIdsByLastChangeUserId( $userid )
-        {
-            $db = db_connection();
-
-            $sql = $db->sql( 'SELECT id FROM {{object}} '.
-                ' WHERE lastchange_userid={userid}'.
-                '   AND projectid={projectid}'.
-                '  ORDER BY lastchange_date DESC' );
-            $sql->setInt   ( 'projectid',$this->projectid );
-            $sql->setInt   ( 'userid'   ,$userid          );
-
-            return $sql->getCol();
-        }
-
-
-        /**
-         * Gibt true zur?ck, wenn die angegebene Objekt-ID existiert
-         * @param Integer Objekt-ID
-         * @return Boolean
-         */
-        function isObjectId( $id )
-        {
-            $db = db_connection();
-
-            $sql = $db->sql( 'SELECT id FROM {{object}} '.
-                ' WHERE id={objectid}'.
-                '   AND projectid={projectid}' );
-            $sql->setInt   ( 'projectid' ,$this->projectid );
-            $sql->setInt   ( 'objectid'  ,$id              );
-
-            return ($sql->getOne() == intval($id) );
-        }
-
 
 
         /**
@@ -1416,6 +1289,104 @@ SQL
         public function getProject() {
             return Project::create( $this->projectid );
         }
+
+
+
+
+        /**
+         * Es werden Objekte mit einem bestimmten Namen ermittelt
+         * @param String Suchbegriff
+         * @return array Liste der gefundenen Objekt-IDs
+         */
+        public static function getObjectIdsByFileName( $text )
+        {
+            $db = db_connection();
+
+            $sql = $db->sql( 'SELECT id FROM {{object}} '.
+                ' WHERE filename LIKE {filename}'.
+                '  ORDER BY lastchange_date DESC' );
+            $sql->setString( 'filename','%'.$text.'%' );
+
+            return $sql->getCol();
+        }
+
+
+        /**
+         * Es werden Objekte mit einem Namen ermittelt
+         * @param String Suchbegriff
+         * @return array Liste der gefundenen Objekt-IDs
+         */
+        public static function getObjectIdsByName( $text )
+        {
+            $db = db_connection();
+
+            $sql = $db->sql( 'SELECT {{object}}.id FROM {{object}} '.
+                ' LEFT JOIN {{name}} '.
+                '   ON {{object}}.id={{name}}.objectid'.
+                ' WHERE {{name}}.name LIKE {name}'.
+                '  ORDER BY lastchange_date DESC' );
+            $sql->setString( 'name'      ,'%'.$text.'%' );
+
+            return $sql->getCol();
+        }
+
+
+        /**
+         * Es werden Objekte mit einer Beschreibung ermittelt
+         * @param String Suchbegriff
+         * @return array Liste der gefundenen Objekt-IDs
+         */
+        public static function getObjectIdsByDescription( $text )
+        {
+            $db = db_connection();
+
+            $sql = $db->sql( 'SELECT {{object}}.id FROM {{object}} '.
+                ' LEFT JOIN {{name}} '.
+                '   ON {{object}}.id={{name}}.objectid'.
+                ' WHERE {{name}}.descr LIKE {desc}'.
+                '  ORDER BY lastchange_date DESC' );
+            $sql->setString( 'desc'      ,'%'.$text.'%' );
+
+            return $sql->getCol();
+        }
+
+
+        /**
+         * Es werden Objekte mit einer UserId ermittelt
+         * @param Integer Benutzer-Id der Erstellung
+         * @return array Liste der gefundenen Objekt-IDs
+         */
+        public static function getObjectIdsByCreateUserId( $userid )
+        {
+            $db = db_connection();
+
+            $sql = $db->sql( 'SELECT id FROM {{object}} '.
+                ' WHERE create_userid={userid}'.
+                '  ORDER BY lastchange_date DESC' );
+            $sql->setInt   ( 'userid'   ,$userid          );
+
+            return $sql->getCol();
+        }
+
+
+        /**
+         * Es werden Objekte mit einer UserId ermittelt
+         * @param Integer Benutzer-Id der letzten ?nderung
+         * @return array Liste der gefundenen Objekt-IDs
+         */
+        public static function getObjectIdsByLastChangeUserId( $userid )
+        {
+            $db = db_connection();
+
+            $sql = $db->sql( 'SELECT id FROM {{object}} '.
+                ' WHERE lastchange_userid={userid}'.
+                '  ORDER BY lastchange_date DESC' );
+            $sql->setInt   ( 'userid'   ,$userid          );
+
+            return $sql->getCol();
+        }
+
+
 
     }
 
