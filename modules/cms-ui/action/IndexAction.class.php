@@ -388,7 +388,7 @@ class IndexAction extends Action
 			$js = array();
 			$js[] = OR_THEMES_DIR . 'default/script/jquery';
 			$js[] = OR_THEMES_DIR . 'default/script/jquery-ui';
-			$js[] = OR_THEMES_DIR . 'default/script/jquery.scrollTo';
+			//$js[] = OR_THEMES_DIR . 'default/script/jquery.scrollTo';
 			// $js[] = OR_THEMES_EXT_DIR default/script/jquery.mjs.nestedSortable.js"></script>
 			
 			// Jquery-Plugins
@@ -578,11 +578,15 @@ class IndexAction extends Action
 				{
 					if	( filemtime($jsFileNormal) > filemtime($jsFileMin) )
 					{
-						if	( is_writable( $jsFileMin))
-						$jz = new JSqueeze();
-						file_put_contents( $jsFileMin, $jz->squeeze(file_get_contents($jsFileNormal)));
-						$modTime = time();
-					}
+						if	( is_writable( $jsFileMin) )
+						{
+                            $jz = new JSqueeze();
+                            file_put_contents($jsFileMin, $jz->squeeze(file_get_contents($jsFileNormal)));
+                            $modTime = time();
+                        }
+                        else
+                            Logger::warn("Not writable: " . $jsFileMin);
+                    }
 					else
 					{
 						$modTime = filemtime($jsFileMin); 
@@ -601,9 +605,9 @@ class IndexAction extends Action
 				}
 				else
 				{
-					file_put_contents($productionJSFile, '');
+					file_put_contents($productionJSFile, ''); // Truncate file
 					foreach ($outProJsFiles as $srcFile)
-						file_put_contents($productionJSFile, file_get_contents($srcFile), FILE_APPEND);
+						file_put_contents($productionJSFile, "\n/* $srcFile */". file_get_contents($srcFile), FILE_APPEND);
 				}
 			}
 		}
