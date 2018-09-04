@@ -1349,14 +1349,14 @@ EL_PROP_DYN_PARAM:
 EL_PROP_FORMAT:
   de: Formatierung
   en: Format
-EL_PROP_HTML_DESC:
+EL_PROP_FORMAT_HTML_DESC:
   de: Dem Redakteur kann HTML-Code in diesem Platzhalter schreiben. Ist dieser Schalter nicht gesetzt, werden alle HTML-Tags maskiert.
   en: Allow writing raw HTML tags.
   es: Permitir el escribir de etiquetas crudas del HTML.
   fr: Laisser écrire les étiquettes crues de HTML.
   it: non lasciare che scriva le modifiche grezze del HTML.
   ru: Позвольте письменно вставлять теги.
-EL_PROP_HTML:
+EL_PROP_FORMAT_HTML:
   de: HTML mit erweitertem Editor
   en: HTML on
   es: HTML en
@@ -1394,22 +1394,31 @@ EL_PROP_THOUSAND_SEP:
   fr: mille-carboniser
   it: mille-carbonizzare
   ru: Тысячелетний символ
-EL_PROP_WIKI_DESC:
+EL_PROP_FORMAT_WIKI_DESC:
   de: Mit der Wiki-Schnellformatierung können Texte im Bearbeitungsfenster formatiert werden, z.B. Fett/Kursivschreibung, Verweise...
   en: Use wiki quickformat
   es: Utilizar el quickformat del wiki
   fr: Employer le quickformat de wiki
   ru: Используйте вики quickformat
-EL_PROP_WIKIHTML:
-  de: Wiki-ähnliche Schnellformatierung, HTML erlaubt
-  en: Wiki-like Formatting, HTML is allowed
-EL_PROP_WIKI:
+EL_PROP_FORMAT_WIKI:
   de: Wiki-ähnliche Schnellformatierung, HTML nicht erlaubt
   en: '<em>Wiki</em> Quick formatting'
   es: 'Formato rápido de <em>Wiki</em>'
   fr: 'Formatage rapide de <em>Wiki</em>'
   it: '<em>Wiki</em> che il quickformat rapido di wiki di uso di formattazione'
   ru: '<em> Wiki </em> Быстрое форматирование'
+EL_PROP_FORMAT_TEXT_DESC:
+  de: Einfacher Text
+  en: Plain text
+EL_PROP_FORMAT_TEXT:
+  de: Text
+  en: Text
+EL_PROP_FORMAT_MARKDOWN_DESC:
+  de: Markdown als Textauszeichnungssprache
+  en: Markdown as markup language
+EL_PROP_FORMAT_MARKDOWN:
+  de: Markdown
+  en: Markdown
 EL_PROP_WITH_ICON_DESC:
   de: Im Bearbeitungsmodus einer Seite erscheint vor diesem Platzhalter ein anklickbares Symbol
   en: In edit mode a icon is shown before the value
@@ -6056,3 +6065,27 @@ MENU_START:
   en: Start
 MENU_START_DESC:
   en: Start
+NOTICE_MOTD:
+  en: "Message: {motd}"
+  de: "Systemnachricht: {motd}"
+METHOD_EDIT:
+  en: Content
+  de: Inhalt
+METHOD_INFO:
+  en: Information
+  de: Informationen
+METHOD_PREVIEW:
+  en: Preview
+  de: Vorschau
+METHOD_RIGHTS:
+  en: Rights
+  de: Berechtigungen
+METHOD_SETTINGS:
+  en: Settings
+  de: Einstellungen
+METHOD_HISTORY:
+  en: History
+  de: Verlauf
+METHOD_PROP:
+  en: Properties
+  de: Eigenschaften
