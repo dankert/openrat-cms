@@ -10,7 +10,7 @@ class DateComponent extends Component
 	{
 		$date = $this->date;
 		
-		$this->include( 'date/component-date.php');
+		$this->includeResource( 'date/component-date.php');
 		echo '<?php component_date('.$this->value($this->date).') ?>';
 	}
 }

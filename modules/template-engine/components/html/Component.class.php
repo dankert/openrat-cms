@@ -87,7 +87,7 @@ abstract class Component
 	}
 	
 
-	protected function include( $file ) 
+	protected function includeResource($file )
 	{
 		echo "<?php include_once( 'modules/template-engine/components/html/".$file."') ?>";
 	}

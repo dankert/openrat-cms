@@ -71,7 +71,7 @@ class SelectboxComponent extends Component
 		else
 			$value = '$'.$this->varname($this->name);
 		
-		$this->include( 'selectbox/component-select-box.php');
+		$this->includeResource( 'selectbox/component-select-box.php');
 		echo '<?php component_select_option_list($'.$this->varname($this->list).','.$value.','.intval(boolval($this->addempty)).','.intval(boolval($this->lang)).') ?>';
 		
 		// Keine Einträge in der Liste, wir benötigen ein verstecktes Feld.

@@ -19,7 +19,7 @@ class RadioboxComponent extends Component
 	
 	public function begin()
 	{
-		$this->include( 'radiobox/component-radio-box.php');
+		$this->includeResource( 'radiobox/component-radio-box.php');
 		
 		if	( isset($this->default))
 			$value = $this->value($this->default);
