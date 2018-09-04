@@ -299,7 +299,8 @@ class ProfileAction extends Action
     public function setLanguage($l)
     {
         $conf = Session::getConfig();
-        $conf['language'] = Language::getLanguage($l,PRODUCTION);
+        $language = new \language\Language();
+        $conf['language'] = $language->getLanguage($l,PRODUCTION);
         $conf['language']['language_code'] = $l;
         Session::setConfig($conf);
     }

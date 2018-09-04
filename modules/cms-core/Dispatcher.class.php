@@ -239,7 +239,8 @@ class Dispatcher
                     continue; // language is not configured as available.
 
                 $isProduction = $conf['production'];
-                $lang = Language::getLanguage( $l,$isProduction);
+                $language = new \language\Language();
+                $lang = $language->getLanguage( $l,$isProduction);
                 $conf['language'] = $lang;
                 $conf['language']['language_code'] = $l;
                 break;

@@ -353,10 +353,14 @@ class LoginAction extends Action
 
         foreach( $conf['database'] as $dbid => $dbconf )
         {
-            if	( is_array($dbconf) && $dbconf['enabled'] )
-                $dbids[$dbid] = array('key'   => $dbid,
-                    'value' => empty($dbconf['name'])?$dbid:Text::maxLength($dbconf['name']),
-                    'title' => @$dbconf['description'] );
+            $dbconf += $conf['database-default']['defaults']; // Add Default-Values
+
+            if	( is_array($dbconf) && $dbconf['enabled'] ) // Database-Connection is enabled
+                $dbids[$dbid] = array(
+                    'key'   => $dbid,
+                    'value' => empty($dbconf['name']) ? $dbid : Text::maxLength($dbconf['name']),
+                    'title' => $dbconf['description']
+                );
         }
 
 
@@ -995,7 +999,8 @@ class LoginAction extends Action
 			$this->setStyle( $user->style ); // Benutzer-Style setzen
 
             $config = Session::getConfig();
-            $config['language'] = \language\Language::getLanguage($user->language);
+            $language = new \language\Language();
+            $config['language'] = $language->getLanguage($user->language);
             $config['language']['language_code'] = $user->language;
             Session::setConfig( $config );
 

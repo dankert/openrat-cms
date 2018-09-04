@@ -7,20 +7,25 @@ use Spyc;
 
 class Language
 {
-    private static $srcFile = __DIR__ . '/language.yml';
+    private $srcFile;
+
+    public function __construct()
+    {
+        $this->srcFile = __DIR__ . '/language.yml';
+    }
 
     /**
      * @param $iso ISO-Code
      * @param bool $production Are we in a production environment?
      * @return array The language values
      */
-    public static function getLanguage($iso, $production = true)
+    public function getLanguage($iso, $production = true)
     {
         if ( !$production) {
-            self::compileLanguage($iso);
+            $this->compileLanguage($iso);
         }
 
-        return self::getLanguageProduction($iso);
+        return $this->getLanguageProduction($iso);
     }
 
     /**
@@ -28,12 +33,12 @@ class Language
      * Only, if the YAML source file has changed.
      * @param $iso ISO-code
      */
-    private static function compileLanguage($iso)
+    private function compileLanguage($iso)
     {
-        if  ( filemtime(self::$srcFile) > filemtime( self::getOutputLanguageFile('en')) )
+        if  ( filemtime($this->srcFile) > filemtime( $this->getOutputLanguageFile('en')) )
         {
             // source file newer than production file => compile.
-            self::updateProduction();
+            $this->updateProduction();
         }
     }
 
@@ -41,27 +46,27 @@ class Language
      * @param $iso ISO-language-code
      * @return array
      */
-    private static function getLanguageProduction($iso)
+    private function getLanguageProduction($iso)
     {
 
-        $langFile = self::getOutputLanguageFile($iso,'en');
+        $langFile = $this->getOutputLanguageFile($iso,'en');
         require($langFile); // Contains the function 'language()'
         return language();
     }
 
 
-    private static function getLanguageSource()
+    private function getLanguageSource()
     {
-        return Spyc::YAMLLoad( self::$srcFile);
+        return Spyc::YAMLLoad( $this->srcFile);
     }
 
 
     /**
      * Creates the production environment.
      */
-    public static function updateProduction()
+    public function updateProduction()
     {
-        $lang = self::getLanguageSource();
+        $lang = $this->getLanguageSource();
 
         // creating a list of alle language iso codes.
         $isoList = array();
@@ -76,7 +81,7 @@ class Language
         }
 
         foreach ($isoList as $iso) {
-            $outputFilename = self::getOutputLanguageFile($iso);
+            $outputFilename = $this->getOutputLanguageFile($iso);
 
             $success = file_put_contents($outputFilename, "<?php /* DO NOT CHANGE THIS GENERATED FILE */\n");
 
@@ -108,7 +113,7 @@ class Language
      * @param null string $fallbackiso Fallback to this ISO-Code, if the file does not exist.
      * @return string filename
      */
-    private static function getOutputLanguageFile($iso, $fallbackiso = null )
+    private function getOutputLanguageFile($iso, $fallbackiso = null )
     {
         $langFile = __DIR__ . '/lang-' . $iso . '.php';
 

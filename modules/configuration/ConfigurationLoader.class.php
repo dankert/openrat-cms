@@ -69,9 +69,9 @@ class ConfigurationLoader
 
 
         // Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
-        $customConfig['config']['filename'              ] = self::$configFile;
-        $customConfig['config']['last_modification_time'] = filemtime(self::$configFile);
-        $customConfig['config']['last_modification'     ] = date('r', filemtime(self::$configFile));
+        $customConfig['config']['filename'              ] = $this->configFile;
+        $customConfig['config']['last_modification_time'] = filemtime($this->configFile);
+        $customConfig['config']['last_modification'     ] = date('r', filemtime($this->configFile));
         $customConfig['config']['read'                  ] = date('r');
 
         return $customConfig;
