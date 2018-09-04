@@ -44,9 +44,11 @@
 		key="menu_page_form"></text> </link>
 	-->
 
+<!--
 	<group title="message:menu_page_show">
 		<part>
 			<insert url="var:preview_url" name="preview"></insert>
 		</part>
 	</group>
+-->
 </output>

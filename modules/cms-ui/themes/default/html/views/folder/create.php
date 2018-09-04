@@ -1,9 +1,9 @@
 
 	
-		<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_CREATEFOLDER') ?>" data-type="dialog" data-name="<?php echo lang('MENU_CREATEFOLDER') ?>" data-method="createfolder"><img src="./themes/default/images/icon/action/createfolder.svg" title="<?php echo lang('MENU_createfolder_DESC') ?>" /><?php echo lang('MENU_createfolder') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_CREATELINK') ?>" data-type="dialog" data-name="<?php echo lang('MENU_CREATELINK') ?>" data-method="createlink"><img src="./themes/default/images/icon/action/createlink.svg" title="<?php echo lang('MENU_createlink_DESC') ?>" /><?php echo lang('MENU_createlink') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_CREATEPAGE') ?>" data-type="dialog" data-name="<?php echo lang('MENU_CREATEPAGE') ?>" data-method="createpage"><img src="./themes/default/images/icon/action/createpage.svg" title="<?php echo lang('MENU_createpage_DESC') ?>" /><?php echo lang('MENU_createpage') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_CREATEFILE') ?>" data-type="dialog" data-name="<?php echo lang('MENU_CREATEFILE') ?>" data-method="createfile"><img src="./themes/default/images/icon/action/createfile.svg" title="<?php echo lang('MENU_createfile_DESC') ?>" /><?php echo lang('MENU_createfile') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_CREATEURL') ?>" data-type="dialog" data-name="<?php echo lang('MENU_CREATEURL') ?>" data-method="createurl"><img src="./themes/default/images/icon/action/createurl.svg" title="<?php echo lang('MENU_createurl_DESC') ?>" /><?php echo lang('MENU_createurl') ?></a></div></div>
 		
-		<form name="" target="_self" action="<?php echo OR_ACTION ?>" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="POST" enctype="multipart/form-data" class="<?php echo OR_ACTION ?>" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('folder') ?></legend><div>
+		
+		<form name="" target="_self" data-target="view" action="./" data-method="create" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="multipart/form-data" class="folder" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="create" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('folder') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_folder" name="type" value="folder"<?php if('folder'==@$type)echo ' checked="checked"' ?> />
@@ -19,7 +19,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('file') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('file') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_file" name="type" value="file"<?php if('file'==@$type)echo ' checked="checked"' ?> />
@@ -30,7 +30,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<input size="30" id="req15173468271183810521_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  />
+						<input size="30" id="req15358300341552758255_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  />
 						
 						<br/>
 						
@@ -43,7 +43,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('page') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('page') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_page" name="type" value="page"<?php if('page'==@$type)echo ' checked="checked"' ?> />
@@ -71,7 +71,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('link') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('link') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_link" name="type" value="link"<?php if('link'==@$type)echo ' checked="checked"' ?> />
@@ -87,7 +87,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="<?php echo '1'?" open":"" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow-right closed" /><div class="arrow-down open" /><?php echo lang('url') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('url') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_url" name="type" value="url"<?php if('url'==@$type)echo ' checked="checked"' ?> />
@@ -103,5 +103,5 @@
 					</div>
 				</div>
 			</div></fieldset>
-		<div class="bottom"><div class="command "><input type="button" class="submit ok" value="OK" /></div></div></form>
+		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
 	

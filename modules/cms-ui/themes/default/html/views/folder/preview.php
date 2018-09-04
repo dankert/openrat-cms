@@ -15,7 +15,7 @@
 					
 				</td>
 			</tr>
-			<?php $if3=(!empty($up_url)); if($if3){?>
+			<?php $if3=(isset($up_url)); if($if3){?>
 				<tr class="data">
 					<td>
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_folder_up.png" />

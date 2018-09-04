@@ -50,7 +50,7 @@
 			<?php } ?>
 			<tr class="data">
 				<td colspan="3" class="clickable">
-					<a target="_self" date-name="<?php echo lang('add') ?>" name="<?php echo lang('add') ?>" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','add','',array()) ?>">
+					<a target="_self" date-name="<?php echo lang('add') ?>" name="<?php echo lang('add') ?>" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="<?php echo Html::url('','add','',array('dialogAction'=>'','dialogMethod'=>'add')) ?>">
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>

@@ -92,7 +92,7 @@
 					</div>
 				</div>
 			<?php } ?>
-			<fieldset class="<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_NEW_PASSWORD') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_NEW_PASSWORD') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_password1" class="label">
@@ -118,7 +118,7 @@
 					</div>
 				</div>
 			</div></fieldset>
-			<fieldset class="<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_TOKEN') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo ''?" open":" closed" ?><?php echo ''?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('USER_TOKEN') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_user_token" class="label">
@@ -133,7 +133,7 @@
 				</div>
 			</div></fieldset>
 			<?php $if3=(intval('1')<intval(@count($dbids))); if($if3){?>
-				<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><img src="/themes/default/images/icon/method/database.svg" /><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('DATABASE') ?></legend><div>
+				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><img src="/themes/default/images/icon/method/database.svg" /><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('DATABASE') ?></legend><div>
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_dbid" class="label">

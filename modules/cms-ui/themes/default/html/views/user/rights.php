@@ -4,7 +4,7 @@
 			<?php foreach($projects as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr>
 					<td colspan="2">
-						<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $projectname ?></legend><div>
+						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $projectname ?></legend><div>
 							<?php $if7=(empty($acls)); if($if7){?>
 								<div>
 									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
@@ -36,20 +36,20 @@
 									<?php foreach($rights as $aclid=>$acl){ ?><?php extract($acl) ?>
 										<tr class="data">
 											<td>
-												<?php $if12=(!empty($username)); if($if12){?>
+												<?php $if12=(isset($username)); if($if12){?>
 													<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_user.png" />
 													
 													<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $username,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
 													
 												<?php } ?>
-												<?php $if12=(!empty($groupname)); if($if12){?>
+												<?php $if12=(isset($groupname)); if($if12){?>
 													<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_group.png" />
 													
 													<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $groupname,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
 													
 												<?php } ?>
-												<?php $if12=!(!empty($username)); if($if12){?>
-													<?php $if13=!(!empty($groupname)); if($if13){?>
+												<?php $if12=!(isset($username)); if($if12){?>
+													<?php $if13=!(isset($groupname)); if($if13){?>
 														<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_group.png" />
 														
 														<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'global_all'.'')))); ?></span>
@@ -64,7 +64,7 @@
 											<td>
 												<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_<?php echo $objecttype ?>.png" />
 												
-												<a target="_self" data-action="<?php echo $objecttype ?>" data-method="" data-id="<?php echo $objectid ?>" href="<?php echo Html::url($objecttype,'',$objectid) ?>">
+												<a target="_self" data-action="<?php echo $objecttype ?>" data-method="" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($objecttype,'',$objectid,array()) ?>">
 													<span class="text" title="<?php echo lang('select') ?>"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $objectname,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
 													
 												</a>

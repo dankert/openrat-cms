@@ -42,7 +42,7 @@
 				<?php } ?>
 				<tr class="data">
 					<td class="clickable">
-						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $objectid ?>" href="<?php echo Html::url($type,'',$objectid) ?>">
+						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="history" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($type,'',$objectid,array()) ?>">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,30,'..',constant('STR_PAD_BOTH') )))); ?></span>
 							
 						</a>

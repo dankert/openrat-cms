@@ -1,11 +1,11 @@
 
 	
 		<?php $if2=($type=='folder'); if($if2){?>
-			<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_INHERIT') ?>" data-type="dialog" data-name="<?php echo lang('MENU_INHERIT') ?>" data-method="inherit"><img src="./themes/default/images/icon/action/inherit.svg" title="<?php echo lang('MENU_inherit_DESC') ?>" /><?php echo lang('MENU_inherit') ?></a></div><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_ACLFORM') ?>" data-type="dialog" data-name="<?php echo lang('MENU_ACLFORM') ?>" data-method="aclform"><img src="./themes/default/images/icon/action/aclform.svg" title="<?php echo lang('MENU_aclform_DESC') ?>" /><?php echo lang('MENU_aclform') ?></a></div></div>
+			
 			
 		<?php } ?>
 		<?php if(!$if2){?>
-			<div class="headermenu"><div class="toolbar-icon clickable"><a href="javascript:void(0);" title="<?php echo lang('MENU_ACLFORM') ?>" data-type="dialog" data-name="<?php echo lang('MENU_ACLFORM') ?>" data-method="aclform"><img src="./themes/default/images/icon/action/aclform.svg" title="<?php echo lang('MENU_aclform_DESC') ?>" /><?php echo lang('MENU_aclform') ?></a></div></div>
+			
 			
 		<?php } ?>
 		<table width="100%">
@@ -42,20 +42,20 @@
 			<?php foreach($acls as $aclid=>$acl){ ?><?php extract($acl) ?>
 				<tr class="data">
 					<td>
-						<?php $if6=(!empty($username)); if($if6){?>
+						<?php $if6=(isset($username)); if($if6){?>
 							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_user.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($username))); ?></span>
 							
 						<?php } ?>
-						<?php $if6=(!empty($groupname)); if($if6){?>
+						<?php $if6=(isset($groupname)); if($if6){?>
 							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_group.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($groupname))); ?></span>
 							
 						<?php } ?>
-						<?php $if6=!(!empty($username)); if($if6){?>
-							<?php $if7=!(!empty($groupname)); if($if7){?>
+						<?php $if6=!(isset($username)); if($if6){?>
+							<?php $if7=!(isset($groupname)); if($if7){?>
 								<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_group.png" />
 								
 								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'global_all'.'')))); ?></span>
@@ -86,7 +86,7 @@
 						</td>
 					<?php } ?>
 					<td class="clickable">
-						<a target="_self" data-type="post" data-action="" data-method="delacl" data-id="<?php echo OR_ID ?>" data-data="{&quot;action&quot;:&quot;<?php echo OR_ACTION ?>&quot;,&quot;subaction&quot;:&quot;delacl&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;var1&quot;:&quot;<?php echo $aclid ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
+						<a target="_self" data-type="post" data-action="" data-method="delacl" data-id="<?php echo OR_ID ?>" data-extra="{'aclid':'<?php echo $aclid ?>'}" data-data="{&quot;action&quot;:&quot;object&quot;,&quot;subaction&quot;:&quot;delacl&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;aclid&quot;:&quot;<?php echo $aclid ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_DELETE'.'')))); ?></span>
 							
 						</a>
@@ -96,7 +96,7 @@
 			<?php } ?>
 			<tr class="data">
 				<td colspan="99" class="clickable">
-					<a target="_self" date-name="<?php echo lang('menu_aclform') ?>" name="<?php echo lang('menu_aclform') ?>" data-type="dialog" data-action="" data-method="aclform" data-id="<?php echo OR_ID ?>" href="<?php echo Html::url('','aclform','') ?>">
+					<a target="_self" date-name="<?php echo lang('menu_aclform') ?>" name="<?php echo lang('menu_aclform') ?>" data-type="dialog" data-action="" data-method="aclform" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'aclform'}" href="<?php echo Html::url('','aclform','',array('dialogAction'=>'','dialogMethod'=>'aclform')) ?>">
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>

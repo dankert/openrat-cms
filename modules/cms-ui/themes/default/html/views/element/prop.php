@@ -10,27 +10,27 @@
 				</div>
 			<?php } ?>
 		<?php } ?>
-		<form name="" target="_self" data-target="view" action="./" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="1" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
-				<?php $if4=(!empty($subtype)); if($if4){?>
+				<?php $if4=(isset($subtype)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('ELEMENT_SUBTYPE')))); ?></span>
 							
 						</div>
 						<div class="input">
-							<?php $if7=(!empty($subtypes)); if($if7){?>
+							<?php $if7=(isset($subtypes)); if($if7){?>
 								<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_subtype" name="subtype" title="" class=""<?php if (count($subtypes)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($subtypes,$subtype,1,0) ?><?php if (count($subtypes)==0) { ?><input type="hidden" name="subtype" value="" /><?php } ?><?php if (count($subtypes)==1) { ?><input type="hidden" name="subtype" value="<?php echo array_keys($subtypes)[0] ?>" /><?php } ?>
 								</select></div>
 							<?php } ?>
-							<?php $if7=!(!empty($subtypes)); if($if7){?>
+							<?php $if7=!(isset($subtypes)); if($if7){?>
 								<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_subtype" name="subtype<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$subtype) ?>" /><?php if ('') { ?><input type="hidden" name="subtype" value="<?php $subtype ?>"/><?php } ?></div>
 								
 							<?php } ?>
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($with_icon)); if($if4){?>
+				<?php $if4=(isset($with_icon)); if($if4){?>
 					<div class="line">
 						<div class="label">
 						</div>
@@ -56,7 +56,33 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($all_languages)); if($if4){?>
+				<?php $if4=(isset($inherit)); if($if4){?>
+					<div class="line">
+						<div class="label">
+						</div>
+						<div class="input">
+							<?php { $tmpname     = 'inherit';$default  = '';$readonly = '';		
+		if	( isset($$tmpname) )
+			$checked = $$tmpname;
+		else
+			$checked = $default;
+
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+
+		if ( $readonly && $checked )
+		{ 
+		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
+		}
+		} ?>
+							
+							<label for="<?php echo REQUEST_ID ?>_inherit" class="label">
+								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_INHERIT')))); ?></span>
+								
+							</label>
+						</div>
+					</div>
+				<?php } ?>
+				<?php $if4=(isset($all_languages)); if($if4){?>
 					<div class="line">
 						<div class="label">
 						</div>
@@ -82,7 +108,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($writable)); if($if4){?>
+				<?php $if4=(isset($writable)); if($if4){?>
 					<div class="line">
 						<div class="label">
 						</div>
@@ -108,7 +134,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($width)); if($if4){?>
+				<?php $if4=(isset($width)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('width')))); ?></span>
@@ -120,7 +146,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($height)); if($if4){?>
+				<?php $if4=(isset($height)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('height')))); ?></span>
@@ -132,7 +158,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($dateformat)); if($if4){?>
+				<?php $if4=(isset($dateformat)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DATEFORMAT')))); ?></span>
@@ -144,7 +170,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($format)); if($if4){?>
+				<?php $if4=(isset($format)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_FORMAT')))); ?></span>
@@ -156,7 +182,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($decimals)); if($if4){?>
+				<?php $if4=(isset($decimals)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DECIMALS')))); ?></span>
@@ -168,7 +194,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($dec_point)); if($if4){?>
+				<?php $if4=(isset($dec_point)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DEC_POINT')))); ?></span>
@@ -180,7 +206,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($thousand_sep)); if($if4){?>
+				<?php $if4=(isset($thousand_sep)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_thousand_sep')))); ?></span>
@@ -192,7 +218,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($default_text)); if($if4){?>
+				<?php $if4=(isset($default_text)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_default_text')))); ?></span>
@@ -204,7 +230,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($default_longtext)); if($if4){?>
+				<?php $if4=(isset($default_longtext)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_default_longtext')))); ?></span>
@@ -216,7 +242,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($parameters)); if($if4){?>
+				<?php $if4=(isset($parameters)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DYNAMIC_PARAMETERS')))); ?></span>
@@ -248,7 +274,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($select_items)); if($if4){?>
+				<?php $if4=(isset($select_items)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_select_items')))); ?></span>
@@ -260,7 +286,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($linkelement)); if($if4){?>
+				<?php $if4=(isset($linkelement)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_LINK')))); ?></span>
@@ -272,7 +298,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($name)); if($if4){?>
+				<?php $if4=(isset($name)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('ELEMENT_NAME')))); ?></span>
@@ -284,7 +310,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($folderobjectid)); if($if4){?>
+				<?php $if4=(isset($folderobjectid)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DEFAULT_FOLDEROBJECT')))); ?></span>
@@ -296,7 +322,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($default_objectid)); if($if4){?>
+				<?php $if4=(isset($default_objectid)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_DEFAULT_OBJECT')))); ?></span>
@@ -308,7 +334,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($code)); if($if4){?>
+				<?php $if4=(isset($code)); if($if4){?>
 					<div class="line">
 						<div class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_PROP_code')))); ?></span>

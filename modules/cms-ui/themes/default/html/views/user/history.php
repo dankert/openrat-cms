@@ -18,7 +18,7 @@
 			<?php foreach($timeline as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
 					<td class="clickable">
-						<a target="_self" data-type="post" data-action="start" data-method="projectmenu" data-id="<?php echo $projectid ?>" data-data="{&quot;action&quot;:&quot;start&quot;,&quot;subaction&quot;:&quot;projectmenu&quot;,&quot;id&quot;:&quot;<?php echo $projectid ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
+						<a target="_self" data-type="post" data-action="start" data-method="projectmenu" data-id="<?php echo $projectid ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;start&quot;,&quot;subaction&quot;:&quot;projectmenu&quot;,&quot;id&quot;:&quot;<?php echo $projectid ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($projectname))); ?></span>
 							
 						</a>

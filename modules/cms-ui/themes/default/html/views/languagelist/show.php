@@ -24,7 +24,7 @@
 					<td class="clickable">
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon_language.png" />
 						
-						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="language" data-method="<?php echo OR_METHOD ?>" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url('language','',$id,array()) ?>">
+						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="language" data-method="show" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url('language','',$id,array()) ?>">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,25,'..',constant('STR_PAD_BOTH') )))); ?></span>
 							
 						</a>
@@ -34,7 +34,7 @@
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($isocode))); ?></span>
 						
 					</td>
-					<?php $if5=(!empty($default_url)); if($if5){?>
+					<?php $if5=(isset($default_url)); if($if5){?>
 						<td class="clickable">
 							<a target="_self" data-type="post" data-action="language" data-method="setdefault" data-id="<?php echo $id ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;language&quot;,&quot;subaction&quot;:&quot;setdefault&quot;,&quot;id&quot;:&quot;<?php echo $id ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_make_default')))); ?></span>
@@ -49,7 +49,7 @@
 							
 						</td>
 					<?php } ?>
-					<?php $if5=(!empty($select_url)); if($if5){?>
+					<?php $if5=(isset($select_url)); if($if5){?>
 						<td class="clickable">
 							<a target="_self" data-type="post" data-action="start" data-method="language" data-id="<?php echo $id ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;start&quot;,&quot;subaction&quot;:&quot;language&quot;,&quot;id&quot;:&quot;<?php echo $id ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_select')))); ?></span>

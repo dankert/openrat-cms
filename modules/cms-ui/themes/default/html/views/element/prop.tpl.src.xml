@@ -38,6 +38,18 @@
 					</part>
 				</part>
 			</if>
+			<if present="inherit">
+				<part class="line">
+					<part class="label">
+					</part>
+					<part class="input">
+						<checkbox name="inherit"></checkbox>
+						<label for="inherit">
+							<text text="EL_PROP_INHERIT"></text>
+						</label>
+					</part>
+				</part>
+			</if>
 			<if present="all_languages">
 				<part class="line">
 					<part class="label">
