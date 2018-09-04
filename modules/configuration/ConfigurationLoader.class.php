@@ -11,16 +11,27 @@
  */
 class ConfigurationLoader
 {
-    public static $configFile = __DIR__.'/../../config/config.yml';
+    public $configFile;
+
+
+    /*
+     * Erzeugt eine neue Instanz.
+     */
+    public function __construct( $configFile )
+    {
+        $this->configFile = $configFile;
+    }
+
+
 
     /**
      * Ermittelt den Zeitpunkt der letzten Änderung der Konfigurationsdatei.
      *
      * @return int Zeitpunkt der letzten Änderung als Unix-Timestamp
      */
-    public static function lastModificationTime()
+    public function lastModificationTime()
     {
-        return filemtime(self::$configFile);
+        return filemtime($this->configFile);
     }
 
 
@@ -29,9 +40,9 @@ class ConfigurationLoader
      *
      * @return array Configuration
      */
-    public static function load()
+    public function load()
     {
-        $customConfig = ConfigurationLoader::loadCustomConfig(self::$configFile);
+        $customConfig = ConfigurationLoader::loadCustomConfig($this->configFile);
 
 
         // Resolve dot-notated configuration keys to arrays.
@@ -72,7 +83,7 @@ class ConfigurationLoader
      *
      * @return array Configuration
      */
-    private static function loadCustomConfig( $configFile )
+    private function loadCustomConfig( $configFile )
     {
         if (!is_file($configFile) && !is_link($configFile)) {
             error_log('Warning: Configuration file ' . $configFile . ' not found');
@@ -120,7 +131,7 @@ class ConfigurationLoader
      * @param $value String Configuration value
      * @return String
      */
-    private static function resolveVariables($value)
+    private function resolveVariables($value)
     {
         return preg_replace_callback(
             "|\\$\{([[:alnum:]]+)\:([[:alnum:]_]+)\}|",

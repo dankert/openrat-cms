@@ -46,14 +46,15 @@ class Dispatcher
 
         $this->checkConfiguration();
 
+        // Vorhandene Konfiguration aus der Sitzung lesen.
+        global $conf;
+        $conf = Session::getConfig();
+
         define('PRODUCTION', Conf()->is('production'));
         define('DEVELOPMENT', !PRODUCTION);
 
         $this->setContentLanguageHeader();
 
-        // Vorhandene Konfiguration aus der Sitzung lesen.
-        global $conf;
-        $conf = Session::getConfig();
 
 
         // Nachdem die Konfiguration gelesen wurde, kann nun der Logger benutzt werden.
@@ -197,7 +198,9 @@ class Dispatcher
         // Konfiguration lesen.
         // Wenn Konfiguration noch nicht in Session vorhanden oder die Konfiguration geändert wurde (erkennbar anhand des Datei-Datums)
         // dann die Konfiguration neu einlesen.
-        if (!is_array($conf) || $conf['config']['auto_reload'] && ConfigurationLoader::lastModificationTime() > $conf['config']['last_modification_time']) {
+        $configLoader = new ConfigurationLoader( __DIR__.'/../../config/config.yml' );
+
+        if (!is_array($conf) || $conf['config']['auto_reload'] && $configLoader->lastModificationTime() > $conf['config']['last_modification_time']) {
 
             // Da die Konfiguration neu eingelesen wird, sollten wir auch die Sitzung komplett leeren.
             if (is_array($conf) && $conf['config']['session_destroy_on_config_reload'])
@@ -207,7 +210,7 @@ class Dispatcher
             require(OR_MODULES_DIR . 'util/config-default.php');
             $conf = createDefaultConfig();
 
-            $customConfig = ConfigurationLoader::load();
+            $customConfig = $configLoader->load();
             $conf = array_replace_recursive($conf, $customConfig);
 
 
