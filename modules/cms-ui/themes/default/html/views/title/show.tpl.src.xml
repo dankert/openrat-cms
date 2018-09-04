@@ -1,6 +1,11 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
+    <part class="toolbar-icon toggle-nav-open-close">
+        <image fileext="menu/menu.svg" align="left"></image>
+        <!--<text class="label" key="menu"></text>-->
+    </part>
+
     <!-- Info-Meldung anzeigen (sofern vorhanden) -->
     <if present="var:dbname">
         <part class="toolbar-icon">
@@ -401,7 +406,9 @@
     <!-- Suche -->
     <if true="var:isLoggedIn">
         <part class="toolbar-icon search">
-            <input name="text" hint="message:search" icon="search"></input>
+            <image method="search" align="left"></image>
+            <input name="text" hint="message:search"></input>
+            <part class="arrow-down"/>
             <part class="dropdown">
                 <text raw=""></text>
             </part>
