@@ -175,6 +175,7 @@ class IndexAction extends Action
             $methodList[] = array('name'=>$method,'open'=>$openByDefault);
         }
         $this->setTemplateVar('methodList', $methodList);
+        $this->setTemplateVar('favicon_url', Conf()->subset('theme')->get('favicon') );
 
         // HTML-Datei direkt einbinden.
         $vars = $this->getOutputData();

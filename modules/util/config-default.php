@@ -875,6 +875,7 @@ function createDefaultConfig()
     $conf['theme']['compiler']['cache']=true;
     $conf['theme']['compiler']['chmod']='';
     $conf['theme']['compiler']['compile_at_logout']=false;
+    $conf['theme']['favicon']='modules/cms-ui/themes/default/images/openrat-logo.ico';
     $conf['wiki'] = array();
     $conf['wiki']['convert_html']=true;
     $conf['wiki']['convert_bbcode']=true;

@@ -22,6 +22,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo Html::url('index','themestyle',0,array('embed'=>'1')) ?>" />
   <meta name="theme-color" content="<?php echo $themeColor ?>" />
   <link rel="manifest" href="<?php echo Html::url('index','manifest',0,array('embed'=>'1')) ?>" />
+  <link rel="shortcut icon" type="image/x-icon" href="<?php echo $favicon_url ?>">
 </head>
 
 <body>
