@@ -100,7 +100,7 @@ class LinkComponent extends Component
 		if (isset($this->subaction))
 			echo ' data-method="' . $this->htmlvalue($this->subaction) . '"';
 		else
-			echo ' data-method="<?php echo OR_METHOD ?>"';
+			echo ' data-method="'.$this->request->method.'"';
 		
 		if (isset($this->id))
 			echo ' data-id="' . $this->htmlvalue($this->id) . '"';
@@ -132,7 +132,7 @@ class LinkComponent extends Component
 				if (! empty($this->subaction))
 					echo $this->htmlvalue($this->subaction);
 				else
-					echo "<?php echo OR_METHOD ?>";
+					echo $this->request->method;
 				echo "&quot;,";
 				
 				echo "&quot;id&quot;:&quot;";
