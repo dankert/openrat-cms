@@ -302,7 +302,7 @@ class UI
     /**
      * @return array
      */
-    private static function getCSSFiles(): array
+    private static function getCSSFiles()
     {
         $css = array();
         $css[] = OR_THEMES_DIR . 'default/css/openrat-ui';
