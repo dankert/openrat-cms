@@ -153,7 +153,7 @@ class Expression
 			case 'text':
 				return $this->value;
 			default:
-				throw new \LogicException("Invalid expression type '$type' in attribute value. Allowed: text|var");
+				throw new \LogicException("Invalid expression type '$this->type' in attribute value. Allowed: text|var");
 		}
 	}
 	
