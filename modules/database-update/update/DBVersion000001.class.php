@@ -52,7 +52,7 @@ class DBVersion000001 extends DbVersion
 		$this->addTable('object');
 		$this->addColumn('object','parentid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
 		$this->addColumn('object','projectid',OR_DB_COLUMN_TYPE_INT,0,0,$not_nullable);
-		$this->addColumn('object','filename',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
+		$this->addColumn('object','filename',OR_DB_COLUMN_TYPE_VARCHAR,150,null,$not_nullable);
 		$this->addColumn('object','orderid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
 		$this->addColumn('object','create_date',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
 		$this->addColumn('object','create_userid',OR_DB_COLUMN_TYPE_INT,0,null,$nullable);
