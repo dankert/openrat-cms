@@ -124,7 +124,7 @@ class IndexAction extends Action
 		}
 
         // Theme für den angemeldeten Benuter ermitteln
-		if	( is_object($user) )
+		if	( is_object($user) && isset(config('style')[$user->style]) )
 			$style = $user->style;
 		else
 			$style = config('interface','style','default');
