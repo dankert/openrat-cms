@@ -65,12 +65,14 @@ class DbUpdate
 	}
 
 
-
-	
+    /**
+     * Ermittelt die Version des Datenbank-Schemas.
+     * @param Database $db
+     * @return int
+     */
 	private function getDbVersion( Database $db )
 	{
-		$sql = $db->sql('SELECT 1 FROM {{version}}',$db->id);
-		$versionTableExists = $sql->testQuery();
+		$versionTableExists = $this->testQuery( $db,'SELECT 1 FROM {{version}}' );
 		
 		if	( $versionTableExists )
 		{
@@ -99,8 +101,7 @@ SQL
 		}
 		else
 		{
-			$sql = $db->sql('SELECT 1 FROM {{project}}',$db->id);
-			$projectTableExists = $sql->testQuery();
+			$projectTableExists = $this->testQuery( $db,'SELECT 1 FROM {{project}}');
 				
 			if	( $projectTableExists )
 				// Entspricht dem Stand vor Einführung der automatischen Migration.
@@ -110,6 +111,27 @@ SQL
 				return 0;
 		}
 	}
+
+
+    /**
+     * Stellt fest, ob eine DB-Anfrage funktioniert.
+     * @param $db Database
+     * @param $sql
+     * @return <code>true</code> falls SQL funktioniert.
+     */
+	private function testQuery( $db,$sql )
+    {
+        try {
+            $sql = $db->sql($sql,$db->id);
+            $sql->execute();
+            return true; // Bisher alles ok? Dann funktioniert die Query.
+        }
+        catch( Exception $e )
+        {
+            // Query funktioniert nicht.
+            return false;
+        }
+    }
 }
 
 ?>

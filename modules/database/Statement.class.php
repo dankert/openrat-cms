@@ -235,25 +235,6 @@ class Statement
 	}
 	
 	
-	/**
-	 * Führt eine Query aus und gibt nur zurück, ob diese funktioniert.
-	 * 
-	 * @return boolean
-	 */
-	public function testQuery()
-	{
-		try
-		{
-			$result = $this->query();
-			return $result; 
-		}
-		catch( Exception $e )
-		{
-			return false;
-		}
-	}
-
-
     /**
      * Setzt eine Ganzzahl als Parameter.<br>
      * @param $name string
