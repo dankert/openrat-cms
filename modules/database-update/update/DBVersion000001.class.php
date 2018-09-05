@@ -220,7 +220,7 @@ class DBVersion000001 extends DbVersion
 		$this->addColumn('templatemodel','templateid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
 		$this->addColumn('templatemodel','projectmodelid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
 		$this->addColumn('templatemodel','extension',OR_DB_COLUMN_TYPE_VARCHAR,10,null,$nullable);
-		$this->addColumn('templatemodel',OR_DB_COLUMN_TYPE_TEXT,OR_DB_COLUMN_TYPE_TEXT,null,null,$not_nullable);
+		$this->addColumn('templatemodel','text',OR_DB_COLUMN_TYPE_TEXT,null,null,$not_nullable);
 		$this->addPrimaryKey('templatemodel','id');
 		$this->addConstraint('templatemodel','templateid','template','id');
 		$this->addConstraint('templatemodel','projectmodelid','projectmodel','id');
@@ -252,7 +252,7 @@ class DBVersion000001 extends DbVersion
 		$this->addColumn('value','languageid',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
 		$this->addColumn('value','elementid',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
 		$this->addColumn('value','linkobjectid',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
-		$this->addColumn('value',OR_DB_COLUMN_TYPE_TEXT,OR_DB_COLUMN_TYPE_TEXT,null,null,$nullable);
+		$this->addColumn('value','text',OR_DB_COLUMN_TYPE_TEXT,null,null,$nullable);
 		$this->addColumn('value','number',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
 		$this->addColumn('value','date',OR_DB_COLUMN_TYPE_INT,null,null,$nullable);
 		$this->addColumn('value','active',OR_DB_COLUMN_TYPE_INT,0,null,$not_nullable);
