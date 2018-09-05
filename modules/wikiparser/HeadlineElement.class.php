@@ -14,7 +14,7 @@ class HeadlineElement extends AbstractElement
 	/**
 	 * Konstruktor.
 	 */
-	function HeadlineElement( $level=1 )
+	function __construct( $level=1 )
 	{
 		$this->level = $level;
 	}
