@@ -1067,10 +1067,10 @@ class FolderAction extends ObjectAction
 	{
 		$val  = trim($val);
 		$last = strtolower($val{strlen($val)-1});
+		$val  = intval($val);
 		// Achtung: Der Trick ist das "Fallthrough", kein "break" vorhanden!
 		switch($last)
 		{
-			// The 'G' modifier is available since PHP 5.1.0
 			case 'g':
 				$val *= 1024;
 			case 'm':
