@@ -8,6 +8,7 @@ use cms\Dispatcher;
 use DomainException;
 use Exception;
 use Http;
+use Less_Parser;
 use Logger;
 use LogicException;
 use ObjectNotFoundException;
