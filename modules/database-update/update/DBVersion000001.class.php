@@ -30,24 +30,7 @@ class DBVersion000001 extends DbVersion
 		$this->addPrimaryKey('project','id');
 		$this->addIndex('project','name');
 		
-		/*
-		 * 
-		$this->addColumn('id',OR_DB_COLUMN_TYPE_INT,null,null,$not_nullable);
-		$this->addColumn('name',OR_DB_COLUMN_TYPE_VARCHAR,128,null,$not_nullable);
-		$this->addColumn('target_dir',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
-		$this->addColumn('ftp_url',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
-		$this->addColumn('ftp_passive',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('cmd_after_publish',OR_DB_COLUMN_TYPE_VARCHAR,255,null,$not_nullable);
-		$this->addColumn('content_negotiation',OR_DB_COLUMN_TYPE_INT,1,0,$not_nullable);
-		$this->addColumn('cut_$this->addIndex('',OR_DB_COLUMN_TYPE_INT);',1,0,$not_nullable);
-		$this->addPrimaryKey('','id');
-		close_table
-		unique_$this->addIndex('','name');
-		 */
-		
-		
-		
-				
+
 		$this->addTable('user');
 		$this->addColumn('user','name',OR_DB_COLUMN_TYPE_VARCHAR,128,null,$not_nullable);
 		$this->addColumn('user','password',OR_DB_COLUMN_TYPE_VARCHAR,50,null,$not_nullable);
@@ -330,7 +313,7 @@ class DBVersion000001 extends DbVersion
     /**
      * Initialisieren der frisch aktualisierten Datenbank.
      *
-     * @param DB $db
+     * @param Database $db
      */
     private function afterUpdate( Database $db )
     {
