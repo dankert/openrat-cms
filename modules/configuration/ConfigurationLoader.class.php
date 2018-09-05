@@ -112,7 +112,7 @@ class ConfigurationLoader
                 if   (substr($file, -4) == '.yml'    ||
                       substr($file, -5) == '.yaml'   ||
                       substr($file, -8) == '.yml.php'  )
-                    $customConfig += ConfigurationLoader::loadCustomConfig($file);
+                    $customConfig = array_merge( $customConfig, ConfigurationLoader::loadCustomConfig($file) );
                 else
                     error_log('Warning: ' . $file . ' is no .yml file - not loaded');
 
