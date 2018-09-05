@@ -69,7 +69,7 @@
 						</td>
 					</tr>
 				<?php } ?>
-				<?php $if4=(empty($object)); if($if4){?>
+				<?php $if4=(($object)==FALSE); if($if4){?>
 					<tr>
 						<td colspan="2">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>

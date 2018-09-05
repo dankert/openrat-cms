@@ -1,7 +1,7 @@
 
 	
 		<table width="100%">
-			<?php $if3=!(empty($el)); if($if3){?>
+			<?php $if3=!(($el)==FALSE); if($if3){?>
 				<tr class="headline">
 					<td class="help">
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('PAGE_ELEMENT_NAME')))); ?></span>
@@ -13,7 +13,7 @@
 					</td>
 				</tr>
 			<?php } ?>
-			<?php $if3=(empty($el)); if($if3){?>
+			<?php $if3=(($el)==FALSE); if($if3){?>
 				<tr>
 					<td>
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>

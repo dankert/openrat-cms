@@ -4,7 +4,7 @@
 		
 		<form name="" target="_self" data-target="top" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="login" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=(config('login','logo','enabled')); if($if3){?>
-				<?php $if4=!(empty(config('login','logo','url'))); if($if4){?>
+				<?php $if4=!((config('login','logo','url'))==FALSE); if($if4){?>
 					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="login" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 						<img class="" title="" src="<?php echo config('login','logo','image') ?>" />
 						
@@ -16,7 +16,7 @@
 					
 				<?php } ?>
 			<?php } ?>
-			<?php $if3=!(empty(config('login','motd'))); if($if3){?>
+			<?php $if3=!((config('login','motd'))==FALSE); if($if3){?>
 				<div class="message info">
 					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('login','motd')))); ?></span>
 					

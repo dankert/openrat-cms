@@ -65,7 +65,7 @@
 							</a>
 
 						<?php } ?>
-						<?php $if6=(empty($template_url)); if($if6){?>
+						<?php $if6=(($template_url)==FALSE); if($if6){?>
 							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon_template.png" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>

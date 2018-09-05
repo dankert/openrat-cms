@@ -361,7 +361,7 @@
 
 			</div>
 		<?php } ?>
-		<?php $if2=!(empty(config('login','motd'))); if($if2){?>
+		<?php $if2=!((config('login','motd'))==FALSE); if($if2){?>
 			<div class="toolbar-icon menu">
 				<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/motd.svg" />
 				

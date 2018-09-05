@@ -2,7 +2,7 @@
 	
 		
 		
-		<?php $if2=!(empty($image)); if($if2){?>
+		<?php $if2=!(($image)==FALSE); if($if2){?>
 			<div class="line">
 				<div class="line">
 					<img class="" title="" src="<?php echo $image ?>" />

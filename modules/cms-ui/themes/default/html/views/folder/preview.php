@@ -45,7 +45,7 @@
 					</td>
 				</tr>
 			<?php } ?>
-			<?php $if3=(empty($object)); if($if3){?>
+			<?php $if3=(($object)==FALSE); if($if3){?>
 				<tr>
 					<td colspan="2">
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>

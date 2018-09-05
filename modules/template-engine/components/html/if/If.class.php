@@ -37,7 +37,7 @@ HTML;
 		elseif (! empty($this->present))
 			echo 'isset(' . $this->textasvarname($this->present).')'; // 'isset' verwenden! Nicht empty(), da false empty ist.
 		elseif (! empty($this->empty))
-			echo 'empty(' . $this->textasvarname($this->empty).')';
+			echo '(' . $this->textasvarname($this->empty).')==FALSE';
 		else
 			throw new \LogicException("Element 'if' has not enough parameters.");
 		
