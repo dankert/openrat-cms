@@ -379,23 +379,24 @@ class LoginAction extends Action
 
         $this->setTemplateVar( 'dbids',$dbids );
 
+        // Vorausgewählte Datenbank-Id ermiteln
         $db = Session::getDatabase();
         if	( is_object($db) )
-            $this->setTemplateVar('actdbid',$db->id);
-        elseif( isset($this->templateVars['actid']) )
-            ;
+            // Datenbankverbindung ist noch in Sitzung, diese verwenden.
+            $this->setTemplateVar('dbid',$db->id);
         elseif  ( isset($_COOKIE['or_dbid']) && isset($dbids[$_COOKIE['or_dbid']]) )
             // DB-Id aus dem Cookie lesen.
-            $this->setTemplateVar('actdbid',$_COOKIE['or_dbid'] );
+            $this->setTemplateVar('dbid',$_COOKIE['or_dbid'] );
         elseif  ( ! empty($conf['database-default']['default-id'])  && isset($dbids[$conf['database-default']['default-id']]))
             // Default-Datenbankverbindung ist konfiguriert und vorhanden.
-            $this->setTemplateVar('actdbid',$conf['database-default']['default-id']);
+            $this->setTemplateVar('dbid',$conf['database-default']['default-id']);
         elseif  ( count($dbids) > 0)
             // Datenbankverbindungen sind vorhanden, wir nehmen die erste.
-            $this->setTemplateVar('actdbid',array_keys($dbids)[0]);
+            $this->setTemplateVar('dbid',array_keys($dbids)[0]);
         else
             // Keine Datenbankverbindung vorhanden. Fallback:
-            $this->setTemplateVar('actdbid','');
+            $this->setTemplateVar('dbid','');
+
 
         // Den Benutzernamen aus dem Client-Zertifikat lesen und in die Loginmaske eintragen.
         $ssl_user_var = $conf['security']['ssl']['client_cert_dn_env'];

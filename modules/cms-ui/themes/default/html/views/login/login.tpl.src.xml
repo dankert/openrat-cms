@@ -144,14 +144,14 @@
 						</label>
 					</part>
 					<part class="input">
-						<selectbox name="dbid" list="dbids" default="var:actdbid"></selectbox>
+						<selectbox name="dbid" list="dbids"></selectbox>
 					</part>
 				</part>
 			</group>
 		</if>
 		<else>
 			<!-- Nur 1 Datenbank zur Auswahl. Kein Auswahlfeld notwendig. -->
-			<hidden name="dbid" default="var:actdbid"></hidden>
+			<hidden name="dbid"></hidden>
 		</else>
 
 
