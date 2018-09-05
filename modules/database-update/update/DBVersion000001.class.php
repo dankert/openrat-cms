@@ -324,7 +324,8 @@ class DBVersion000001 extends DbVersion
         // Wenn noch kein Benutzer vorhanden, dann einen anlegen.
         if	( $countUsers == 0 )
         {
-            $sql = $db->sql("INSERT INTO {{user}} (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','admin','','Administrator','','','Account for administration tasks.','default',1)",$db->id);
+            // Hashing the admin password with MD5. In Version 6 the Algo will be set to 2 (=MD5).
+            $sql = $db->sql("INSERT INTO {{user}} (id,name,password,ldap_dn,fullname,tel,mail,descr,style,is_admin) VALUES(1,'admin','21232f297a57a5a743894a0e4a801fc3','','Administrator','','','Account for administration tasks.','default',1)",$db->id);
             $sql->query();
             $db->commit();
         }
