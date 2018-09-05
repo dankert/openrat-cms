@@ -1,13 +1,13 @@
 
 # OpenRat CMS configuration - Minimal settings
-# Change this file or create 'config-<hostname>.yml'.
+# Change this file or create 'config-<hostname>.yml' for a per-host-configuration
 
 database:
   db:
-    enabled : false        # remove this line or set the value to 'true' to enable this database
-    user    : dbuser       # user
-    password: dbpass       # password
-    database: cms          # database name
+    enabled : false          # remove this line or set the value to 'true' to enable this database
+    dsn     : "mysql:host=localhost; dbname=name_of_db; charset=utf8"
+    user    : "dbuser"       # user
+    password: "dbpass"       # password
 
 include:
   - ./config/config-${http:host}.yml
