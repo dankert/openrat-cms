@@ -197,6 +197,8 @@ function createDefaultConfig()
     $conf['database-default']['defaults']['transaction']     = true;
     $conf['database-default']['defaults']['update'     ]     = array();
     $conf['database-default']['defaults']['auto_update']     = true;
+    $conf['database-default']['default-id'] = '';
+
     $conf['date'] = array();
     $conf['date']['format'] = array();
     $conf['date']['format']['SHORT']= "";
