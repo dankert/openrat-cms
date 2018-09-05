@@ -351,6 +351,7 @@ class LoginAction extends Action
             $this->callSubAction('show');
         }
 
+        $dbids = array();
         foreach( $conf['database'] as $dbid => $dbconf )
         {
             $dbconf += $conf['database-default']['defaults']; // Add Default-Values
