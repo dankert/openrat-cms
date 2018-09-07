@@ -2,7 +2,7 @@
 
 use database\Database;
 
-define('OR_DB_SUPPORTED_VERSION'     ,16);
+define('OR_DB_SUPPORTED_VERSION'     ,17);
 
 define('OR_DB_STATUS_UPDATE_PROGRESS', 0);
 define('OR_DB_STATUS_UPDATE_SUCCESS' , 1);
@@ -83,7 +83,7 @@ SQL
 					,$db->id);
 			$countErrors = $sql->getOne();
 			if	( $countErrors > 0 )
-				throw new \LogicException('Database error','there are dirty versions (means: versions with status 0), see table VERSION for details.');
+				throw new \LogicException('Database error: There are dirty versions (means: versions with status 0), see table VERSION for details.');
 			
 			// Aktuelle Version ermitteln.
 			$sql = $db->sql(<<<SQL
