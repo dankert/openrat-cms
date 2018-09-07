@@ -388,6 +388,11 @@ function afterViewLoaded(viewEl )
 		$(this).parent('div.view').addClass('dirty');
 	});
 
+	// Theme-Auswahl mit Preview
+    $(viewEl).find('select.theme-chooser').change( function() {
+        setUserStyle( this.value );
+    });
+
 }
 
 

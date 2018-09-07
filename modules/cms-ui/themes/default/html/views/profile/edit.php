@@ -45,7 +45,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_fullname" name="fullname<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$fullname) ?>" /><?php if ('') { ?><input type="hidden" name="fullname" value="<?php $fullname ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_fullname" name="fullname<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$fullname) ?>" /><?php if ('') { ?><input type="hidden" name="fullname" value="<?php $fullname ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_tel" name="tel<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$tel) ?>" /><?php if ('') { ?><input type="hidden" name="tel" value="<?php $tel ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_tel" name="tel<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$tel) ?>" /><?php if ('') { ?><input type="hidden" name="tel" value="<?php $tel ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_desc" name="desc<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$desc) ?>" /><?php if ('') { ?><input type="hidden" name="desc" value="<?php $desc ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_desc" name="desc<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$desc) ?>" /><?php if ('') { ?><input type="hidden" name="desc" value="<?php $desc ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -75,7 +75,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_style" name="style" title="" class=""<?php if (count($allstyles)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($allstyles,config('interface','style','default'),0,0) ?><?php if (count($allstyles)==0) { ?><input type="hidden" name="style" value="" /><?php } ?><?php if (count($allstyles)==1) { ?><input type="hidden" name="style" value="<?php echo array_keys($allstyles)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_style" name="style" title="" class="theme-chooser"<?php if (count($allstyles)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($allstyles,config('interface','style','default'),0,0) ?><?php if (count($allstyles)==0) { ?><input type="hidden" name="style" value="" /><?php } ?><?php if (count($allstyles)==1) { ?><input type="hidden" name="style" value="<?php echo array_keys($allstyles)[0] ?>" /><?php } ?>
 						</select></div>
 					</div>
 				</div>

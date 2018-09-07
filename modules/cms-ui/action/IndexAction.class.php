@@ -345,7 +345,7 @@ class IndexAction extends Action
 				));
 				$parser->parseFile($lessFile,basename($lessFile));
 				
-				$styleConfig = config('style-default') + config('style', $styleId);
+				$styleConfig = array_merge( config('style-default'), config('style', $styleId) );
 				$lessVars = array(
 					'cms-theme-id' => strtolower($styleId),
 					'cms-image-path' => 'themes/default/images/'
