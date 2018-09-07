@@ -22,6 +22,8 @@ class InputareaComponent extends Component
 	public $class = 'inputarea';
 
 	public $default;
+
+	public $maxlength = 0;
 	
 	public function begin()
 	{
@@ -29,6 +31,10 @@ class InputareaComponent extends Component
 		echo '<textarea';
 		echo ' class="'.$this->htmlvalue($this->class).'"';
 		echo ' name="'.$this->htmlvalue($this->name).'"';
+
+		if (!empty($this->maxlength))
+            echo ' maxlength="'.intval($this->maxlength).'"';
+
 		echo '>';
 		echo '<?php echo Text::encodeHtml(';
 		if	(isset($this->default))

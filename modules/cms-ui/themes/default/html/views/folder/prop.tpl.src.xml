@@ -17,7 +17,7 @@
 				<label for="filename" key="global_filename" />
 			</part>
 			<part class="input">
-				<input name="filename" class="filename" />
+				<input name="filename" class="filename" maxlength="150" />
 			</part>
 		</part>
 		<part class="line">

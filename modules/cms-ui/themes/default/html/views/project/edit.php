@@ -10,7 +10,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
+						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="128" class="name" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -20,7 +20,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_url" name="url<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if ('') { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
+						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_url" name="url<?php if ('') echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if ('') { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -32,7 +32,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_target_dir" name="target_dir<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="filename" value="<?php echo Text::encodeHtml(@$target_dir) ?>" /><?php if ('') { ?><input type="hidden" name="target_dir" value="<?php $target_dir ?>"/><?php } ?></div>
+						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_target_dir" name="target_dir<?php if ('') echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="255" class="filename" value="<?php echo Text::encodeHtml(@$target_dir) ?>" /><?php if ('') { ?><input type="hidden" name="target_dir" value="<?php $target_dir ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if (!config('publish','project','override_system_command')) echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_cmd_after_publish" name="cmd_after_publish<?php if (!config('publish','project','override_system_command')) echo '_disabled' ?>" type="text" maxlength="256" class="filename" value="<?php echo Text::encodeHtml(@$cmd_after_publish) ?>" /><?php if (!config('publish','project','override_system_command')) { ?><input type="hidden" name="cmd_after_publish" value="<?php $cmd_after_publish ?>"/><?php } ?></div>
+						<div class="inputholder"><input<?php if (!config('publish','project','override_system_command')) echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_cmd_after_publish" name="cmd_after_publish<?php if (!config('publish','project','override_system_command')) echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="255" class="filename" value="<?php echo Text::encodeHtml(@$cmd_after_publish) ?>" /><?php if (!config('publish','project','override_system_command')) { ?><input type="hidden" name="cmd_after_publish" value="<?php $cmd_after_publish ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -98,7 +98,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if (!config('publish','ftp','enable')) echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_ftp_url" name="ftp_url<?php if (!config('publish','ftp','enable')) echo '_disabled' ?>" type="text" maxlength="256" class="filename" value="<?php echo Text::encodeHtml(@$ftp_url) ?>" /><?php if (!config('publish','ftp','enable')) { ?><input type="hidden" name="ftp_url" value="<?php $ftp_url ?>"/><?php } ?></div>
+						<div class="inputholder"><input<?php if (!config('publish','ftp','enable')) echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_ftp_url" name="ftp_url<?php if (!config('publish','ftp','enable')) echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="256" class="filename" value="<?php echo Text::encodeHtml(@$ftp_url) ?>" /><?php if (!config('publish','ftp','enable')) { ?><input type="hidden" name="ftp_url" value="<?php $ftp_url ?>"/><?php } ?></div>
 						
 						<br/>
 						

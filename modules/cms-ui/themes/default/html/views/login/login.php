@@ -44,11 +44,11 @@
 					</div>
 					<div class="input">
 						<?php $if6=!(isset($$force_username)); if($if6){?>
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> placeholder="<?php echo lang('USER_USERNAME') ?>" id="<?php echo REQUEST_ID ?>_login_name" name="login_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name" value="<?php echo Text::encodeHtml(@$login_name) ?>" /><?php if ('') { ?><input type="hidden" name="login_name" value="<?php $login_name ?>"/><?php } ?></div>
+							<div class="inputholder"><input placeholder="<?php echo lang('USER_USERNAME') ?>" id="<?php echo REQUEST_ID ?>_login_name" name="login_name<?php if ('') echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="128" class="name" value="<?php echo Text::encodeHtml(@$login_name) ?>" /><?php if ('') { ?><input type="hidden" name="login_name" value="<?php $login_name ?>"/><?php } ?></div>
 							
 						<?php } ?>
 						<?php if(!$if6){?>
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_login_name" name="login_name<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$login_name) ?>" /><?php if ('') { ?><input type="hidden" name="login_name" value="<?php $login_name ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_login_name" name="login_name<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$login_name) ?>" /><?php if ('') { ?><input type="hidden" name="login_name" value="<?php $login_name ?>"/><?php } ?></div>
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($force_username))); ?></span>
 							
@@ -127,7 +127,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_user_token" name="user_token<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml('') ?>" /><?php if ('') { ?><input type="hidden" name="user_token" value="<?php '' ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_user_token" name="user_token<?php if ('') echo '_disabled' ?>" type="text" maxlength="30" class="text" value="<?php echo Text::encodeHtml('') ?>" /><?php if ('') { ?><input type="hidden" name="user_token" value="<?php '' ?>"/><?php } ?></div>
 						
 					</div>
 				</div>

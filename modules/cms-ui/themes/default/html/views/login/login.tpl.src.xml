@@ -31,10 +31,6 @@
 		</if>
 
 		<if false="config:login/nologin">
-			<!--
-				<part class="line"> <part class="label" /> <part class="input">
-				<logo name="login"></logo> </part> </part>
-			-->
 
 			<part class="line">
 				<part class="label">
@@ -45,7 +41,7 @@
 				<part class="input">
 					<if not="true" present="var:force_username">
 						<input type="text" name="login_name" class="name" value=""
-							hint="message:USER_USERNAME" size="20"></input>
+							hint="message:USER_USERNAME" size="20" maxlength="128" focus="true" required="true"></input>
 					</if>
 					<else>
 							<input type="hidden" name="login_name" value="var:force_username"></input>
@@ -117,7 +113,7 @@
 					</label>
 				</part>
 				<part class="input">
-					<input name="user_token" default="" size="25" />
+					<input name="user_token" default="" size="25" maxlength="30" />
 				</part>
 			</part>
 		</group>

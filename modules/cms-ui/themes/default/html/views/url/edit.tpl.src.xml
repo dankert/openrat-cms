@@ -7,7 +7,7 @@
 					<text text="link_url"></text>
 				</part>
 				<part class="input">
-					<input name="url"></input>
+					<input name="url" maxlength="255"></input>
 				</part>
 			</part>
 

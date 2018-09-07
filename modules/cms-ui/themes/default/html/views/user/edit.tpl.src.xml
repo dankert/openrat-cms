@@ -7,7 +7,7 @@
 				<label for="name" key="user_username"></label>
 			</part>
 			<part class="input">
-				<input name="name" size="20" class="name,focus"></input>
+				<input name="name" size="20" class="name,focus" maxlength="128"></input>
 			</part>
 		</part>
 		<group title="message:ADDITIONAL_INFO">
@@ -16,7 +16,7 @@
 					<label for="fullname" key="user_fullname"></label>
 				</part>
 				<part class="input">
-					<input name="fullname"></input>
+					<input name="fullname" maxlength="128"></input>
 				</part>
 			</part>
 			<if true="config:security/user/show_admin_mail">
@@ -25,7 +25,7 @@
 						<label for="mail" key="user_mail"></label>
 					</part>
 					<part class="input">
-						<input name="mail"></input>
+						<input name="mail" maxlength="255"></input>
 						<qrcode value="tpl:mailto:{mail}" />
 					</part>
 				</part>
@@ -35,7 +35,7 @@
 					<label for="desc" key="user_desc"></label>
 				</part>
 				<part class="input">
-					<input name="desc"></input>
+					<input name="desc" maxlength="255"></input>
 				</part>
 			</part>
 			<part class="line">
@@ -43,7 +43,7 @@
 					<label for="tel" key="user_tel"></label>
 				</part>
 				<part class="input">
-					<input name="tel"></input>
+					<input name="tel" maxlength="128"></input>
 					<qrcode value="tpl:tel:{tel}" />
 					
 				</part>

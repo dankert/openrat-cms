@@ -712,6 +712,8 @@
         <xsd:attribute name="readonly" type="xsd:boolean"/>
         <xsd:attribute name="hint" type="xsd:string"/>
         <xsd:attribute name="icon" type="xsd:string"/>
+        <xsd:attribute name="required" type="xsd:boolean"/>
+        <xsd:attribute name="focus" type="xsd:boolean"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="insert" type="insertType"/>
@@ -1103,6 +1105,7 @@
         <xsd:attribute name="prefix" type="xsd:string"/>
         <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="default" type="xsd:string"/>
+        <xsd:attribute name="maxlength" type="xsd:int"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="window" type="windowType"/>

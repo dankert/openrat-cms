@@ -140,7 +140,7 @@
 								</tr>
 							<?php } ?>
 						</table>
-						<?php $if6=(empty($pages)); if($if6){?>
+						<?php $if6=(($pages)==FALSE); if($if6){?>
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
 							
 						<?php } ?>

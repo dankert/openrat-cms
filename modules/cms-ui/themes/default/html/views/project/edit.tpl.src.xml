@@ -8,7 +8,7 @@
 					<label for="name" key="PROJECT_NAME"></label>
 				</part>
 				<part class="input">
-					<input name="name" class="name"></input>
+					<input name="name" class="name" maxlength="128"></input>
 				</part>
 			</part>
 			<part class="line">
@@ -16,7 +16,7 @@
 					<label for="url" key="PROJECT_HOSTNAME"></label>
 				</part>
 				<part class="input">
-					<input name="url"></input>
+					<input name="url" maxlength="255"></input>
 				</part>
 			</part>
 		</group>
@@ -26,7 +26,7 @@
 					<label for="target_dir" key="PROJECT_TARGET_DIR"></label>
 				</part>
 				<part class="input">
-					<input name="target_dir" class="filename"></input>
+					<input name="target_dir" class="filename" maxlength="255"></input>
 				</part>
 			</part>
 			<part class="line">
@@ -35,7 +35,7 @@
 				</part>
 				<part class="input">
 					<input name="cmd_after_publish" class="filename"
-						readonly="not:config:publish/project/override_system_command"></input>
+						readonly="not:config:publish/project/override_system_command" maxlength="255"></input>
 				 
 				</part>
 			</part>

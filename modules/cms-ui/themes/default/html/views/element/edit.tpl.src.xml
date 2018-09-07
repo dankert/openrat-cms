@@ -7,7 +7,7 @@
 				<text text="ELEMENT_NAME"></text>
 			</part>
 			<part class="input">
-				<input name="name" class="focus"></input>
+				<input name="name" focus="true" required="true" maxlength="50" />
 			</part>
 		</part>
 
@@ -16,7 +16,7 @@
 				<text text="GLOBAL_DESCRIPTION"></text>
 			</part>
 			<part class="input">
-				<inputarea name="description" rows="5"></inputarea>
+				<inputarea name="description" rows="5" maxlength="255"></inputarea>
 			</part>
 		</part>
 

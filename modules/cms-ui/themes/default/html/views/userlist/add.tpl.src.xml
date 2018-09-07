@@ -6,7 +6,7 @@
 				<label for="name" key="user_username"></label>
 			</part>
 			<part class="input">
-				<input name="name" class="focus"></input>
+				<input name="name" class="focus" maxlength="128"></input>
 			</part>
 		</part>
 	</form>

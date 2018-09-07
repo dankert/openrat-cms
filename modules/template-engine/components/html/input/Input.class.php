@@ -31,6 +31,10 @@ class InputComponent extends Component
 
 	public $icon;
 
+	public $required = false;
+
+	public $focus = false;
+
 	public function begin()
 	{
 		if(!$this->type == 'hidden')
@@ -42,9 +46,9 @@ class InputComponent extends Component
 		{
 			echo '<div class="inputholder">';
 			echo '<input';
-			if(isset($this->readonly))
+			if($this->readonly)
 				echo '<?php if ('.$this->value($this->readonly).') '."echo ' disabled=\"true\"' ?>";
-			if (isset($this->hint))
+			if (!empty($this->hint))
 				echo ' placeholder="'.$this->htmlvalue($this->hint).'"';
 			
 			echo ' id="'.'<?php echo REQUEST_ID ?>_'.$this->htmlvalue($this->name).'"';
@@ -54,9 +58,15 @@ class InputComponent extends Component
 			echo $this->htmlvalue($this->name);
 			if(isset($this->readonly))
 				echo '<?php if ('.$this->value($this->readonly).') '."echo '_disabled' ?>";
-			echo '"';
-			
-			echo ' type="'.$this->htmlvalue($this->type).'"';
+            echo '"';
+
+            if($this->required)
+                echo ' required="required"';
+            if($this->focus)
+                echo ' autofocus="autofocus"';
+
+
+            echo ' type="'.$this->htmlvalue($this->type).'"';
 			echo ' maxlength="'.$this->htmlvalue($this->maxlength).'"';
 			echo ' class="'.$this->htmlvalue($this->class).'"';
 			

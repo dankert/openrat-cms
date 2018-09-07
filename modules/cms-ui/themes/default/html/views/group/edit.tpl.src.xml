@@ -9,7 +9,7 @@
 				</label>
 			</part>
 			<part class="input">
-				<input name="name" class="focus"></input>
+				<input name="name" class="focus" maxlength="100"></input>
 			</part>
 		</part>
 	</form>

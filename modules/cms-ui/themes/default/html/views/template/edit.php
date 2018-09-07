@@ -27,7 +27,7 @@
 					</td>
 				</tr>
 			<?php } ?>
-			<?php $if3=(empty($el)); if($if3){?>
+			<?php $if3=(($el)==FALSE); if($if3){?>
 				<tr>
 					<td colspan="2">
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NOT_FOUND'.'')))); ?></span>

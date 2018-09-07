@@ -7,7 +7,7 @@
 				<text text="GLOBAL_NAME"></text>
 			</part>
 			<part class="input">
-				<input name="name"></input>
+				<input name="name" maxlength="50"></input>
 			</part>
 		</part>
 	</form>

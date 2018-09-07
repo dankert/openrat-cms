@@ -19,7 +19,7 @@
 				</label>
 			</part>
 			<part class="input">
-				<input name="filename" class="filename"></input>
+				<input name="filename" class="filename" maxlength="150"></input>
 			</part>
 		</part>
 		<part class="line">

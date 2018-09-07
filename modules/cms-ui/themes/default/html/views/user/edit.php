@@ -9,7 +9,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name,focus" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="name,focus" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
@@ -20,7 +20,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_fullname" name="fullname<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$fullname) ?>" /><?php if ('') { ?><input type="hidden" name="fullname" value="<?php $fullname ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_fullname" name="fullname<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$fullname) ?>" /><?php if ('') { ?><input type="hidden" name="fullname" value="<?php $fullname ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -31,7 +31,7 @@
 							</label>
 						</div>
 						<div class="input">
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_mail" name="mail<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$mail) ?>" /><?php if ('') { ?><input type="hidden" name="mail" value="<?php $mail ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_mail" name="mail<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$mail) ?>" /><?php if ('') { ?><input type="hidden" name="mail" value="<?php $mail ?>"/><?php } ?></div>
 							
 							<div class="qrcode" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="<?php echo 'mailto:'.$mail.'' ?>"></div>
 							
@@ -44,7 +44,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_desc" name="desc<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$desc) ?>" /><?php if ('') { ?><input type="hidden" name="desc" value="<?php $desc ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_desc" name="desc<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$desc) ?>" /><?php if ('') { ?><input type="hidden" name="desc" value="<?php $desc ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_tel" name="tel<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$tel) ?>" /><?php if ('') { ?><input type="hidden" name="tel" value="<?php $tel ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_tel" name="tel<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$tel) ?>" /><?php if ('') { ?><input type="hidden" name="tel" value="<?php $tel ?>"/><?php } ?></div>
 						
 						<div class="qrcode" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="<?php echo 'tel:'.$tel.'' ?>"></div>
 						
@@ -114,7 +114,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_ldap_dn" name="ldap_dn<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$ldap_dn) ?>" /><?php if ('') { ?><input type="hidden" name="ldap_dn" value="<?php $ldap_dn ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_ldap_dn" name="ldap_dn<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$ldap_dn) ?>" /><?php if ('') { ?><input type="hidden" name="ldap_dn" value="<?php $ldap_dn ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
