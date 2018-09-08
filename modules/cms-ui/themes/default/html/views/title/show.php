@@ -29,7 +29,7 @@
 				<div class="arrow-down">
 				</div>
 				<div class="dropdown">
-					<div class="entry clickable filtered on-action-folder on-action-page on-action-file">
+					<div class="entry clickable filtered on-action-folder on-action-page on-action-file on-action-projectlist on-action-templatelist">
 						<a title="<?php echo lang('menu_new_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="new" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'new'}" href="<?php echo Html::url('','new','',array('dialogAction'=>'','dialogMethod'=>'new')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 							

@@ -30,7 +30,7 @@
             <part class="arrow-down"/>
             <part class="dropdown">
                 <part
-                        class="entry clickable filtered on-action-folder on-action-page on-action-file">
+                        class="entry clickable filtered on-action-folder on-action-page on-action-file on-action-projectlist on-action-templatelist">
                     <link type="dialog" title="message:menu_new_desc" subaction="new">
                         <image method="add" align="left"></image>
                         <text key="menu_new"></text>

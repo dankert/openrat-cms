@@ -872,8 +872,8 @@ SQL
 
             $this->checkFilename();
             $sql = $db->sql('INSERT INTO {{object}}'.
-                ' (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,typeid)'.
-                ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{createuserid},{createtime},{userid},{typeid} )');
+                ' (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,typeid,settings)'.
+                ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{createuserid},{createtime},{userid},{typeid},\'\' )');
 
             if	( $this->isRoot )
                 $sql->setNull('parentid');

@@ -2,6 +2,7 @@
 
 namespace cms\action;
 
+use cms\model\Folder;
 use cms\model\Project;
 
 // OpenRat Content Management System
@@ -30,7 +31,7 @@ use cms\model\Project;
  */
 class ProjectlistAction extends Action
 {
-	public $security = SECURITY_ADMIN;
+	public $security = SECURITY_USER;
 	
 	function __construct()
 	{
@@ -49,11 +50,25 @@ class ProjectlistAction extends Action
 
 		foreach(Project::getAllProjects() as $id=> $name )
 		{
-			$list[$id]             = array();
-			$list[$id]['id'      ] = $id;
-			$list[$id]['name'    ] = $name;
-		}
+
+            // Schleife ueber alle Projekte
+            foreach (Project::getAllProjects() as $id => $name) {
+
+                $project = new Project($id);
+                $rootFolder = new Folder($project->getRootObjectId());
+                $rootFolder->load();
+
+                // Berechtigt für das Projekt?
+                if ($rootFolder->hasRight(ACL_READ)) {
+                    $list[$id]             = array();
+                    $list[$id]['id'      ] = $id;
+                    $list[$id]['name'    ] = $name;
+                }
+            }
+        }
+
 		$this->setTemplateVar('projects',$list);
+		$this->setTemplateVar('add',$this->userIsAdmin());
 	}
 	
 	
@@ -70,6 +85,9 @@ class ProjectlistAction extends Action
 	 */
 	function addPost()
 	{
+	    if( !$this->userIsAdmin())
+	        throw new \SecurityException("user is not allowed to add a project");
+
 		if	( !$this->hasRequestVar('type') )
 		{
 			$this->addValidationError('type');
