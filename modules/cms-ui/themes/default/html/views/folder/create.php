@@ -14,7 +14,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_folder_name" name="folder_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="250" class="name" value="<?php echo Text::encodeHtml('') ?>" /><?php if ('') { ?><input type="hidden" name="folder_name" value="<?php '' ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_folder_name" name="folder_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="250" class="name" value="<?php echo Text::encodeHtml('') ?>" /><?php if ('') { ?><input type="hidden" name="folder_name" value="<?php '' ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -30,7 +30,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<input size="30" id="req15358300341552758255_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  />
+						<input size="30" id="req15365188552120055508_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  />
 						
 						<br/>
 						
@@ -66,7 +66,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_page_name" name="page_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="250" class="name" value="<?php echo Text::encodeHtml(@$page_name) ?>" /><?php if ('') { ?><input type="hidden" name="page_name" value="<?php $page_name ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_page_name" name="page_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="250" class="name" value="<?php echo Text::encodeHtml(@$page_name) ?>" /><?php if ('') { ?><input type="hidden" name="page_name" value="<?php $page_name ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -82,7 +82,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_link_name" name="link_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="250" class="name" value="<?php echo Text::encodeHtml(@$link_name) ?>" /><?php if ('') { ?><input type="hidden" name="link_name" value="<?php $link_name ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_link_name" name="link_name<?php if ('') echo '_disabled' ?>" type="text" maxlength="250" class="name" value="<?php echo Text::encodeHtml(@$link_name) ?>" /><?php if ('') { ?><input type="hidden" name="link_name" value="<?php $link_name ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -98,7 +98,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_url" name="url<?php if ('') echo '_disabled' ?>" type="text" maxlength="250" class="name" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if ('') { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_url" name="url<?php if ('') echo '_disabled' ?>" type="text" maxlength="250" class="name" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if ('') { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
 						
 					</div>
 				</div>

@@ -964,7 +964,7 @@ class FolderAction extends ObjectAction
 	/**
 	 * Alias für Methode 'create'.
 	 */
-	public function newView()
+	public function addView()
 	{
 		$this->nextSubAction('create');
 	}
@@ -973,7 +973,7 @@ class FolderAction extends ObjectAction
 	/**
 	 * Alias für Methode 'create'.
 	 */
-	public function newPost()
+	public function addPost()
 	{
 		$this->nextSubAction('create');
 	}

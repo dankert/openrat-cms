@@ -6,9 +6,9 @@
 				
 			</div>
 		<?php } ?>
-		<form name="" target="_self" data-target="view" action="./" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="1" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<?php $if3=(!empty($pages)); if($if3){?>
-				<?php $if4=(!empty($subdirs)); if($if4){?>
+		<form name="" target="_self" data-target="view" action="./" data-method="pub" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="folder" data-async="1" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pub" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<?php $if3=(isset($pages)); if($if3){?>
+				<?php $if4=(isset($subdirs)); if($if4){?>
 					<div class="line">
 						<div class="label">
 						</div>
@@ -37,7 +37,7 @@
 					</div>
 				<?php } ?>
 			<?php } ?>
-			<?php $if3=(!empty($files)); if($if3){?>
+			<?php $if3=(isset($files)); if($if3){?>
 				<?php $if4=($subdirs); if($if4){?>
 					<div class="line">
 						<div class="label">
@@ -67,8 +67,8 @@
 					</div>
 				<?php } ?>
 			<?php } ?>
-			<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
-				<?php $if4=(!empty($subdirs)); if($if4){?>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
+				<?php $if4=(isset($subdirs)); if($if4){?>
 					<div class="line">
 						<div class="label">
 						</div>
@@ -96,7 +96,7 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php $if4=(!empty($clean)); if($if4){?>
+				<?php $if4=(isset($clean)); if($if4){?>
 					<div class="line">
 						<div class="label">
 						</div>

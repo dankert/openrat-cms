@@ -31,7 +31,7 @@
             <part class="dropdown">
                 <part
                         class="entry clickable filtered on-action-folder on-action-page on-action-file on-action-projectlist on-action-templatelist">
-                    <link type="dialog" title="message:menu_new_desc" subaction="new">
+                    <link type="dialog" title="message:menu_new_desc" subaction="add">
                         <image method="add" align="left"></image>
                         <text key="menu_new"></text>
                     </link>
