@@ -62,149 +62,6 @@ class FolderAction extends ObjectAction
 
 
 
-	/**
-	 * Neues Objekt anlegen.<br>
-	 * Dies kann ein(e) Verzeichnis, Seite, Verkn�pfung oder Datei sein.<br>
-	 */
-    public function createPost()
-	{
-		global $conf;
-		$type = $this->getRequestVar('type'       );
-
-		switch( $type )
-		{
-			case 'folder':
-				$name = $this->getRequestVar('folder_name');
-
-				if   ( !empty($name) )
-				{
-					$f = new Folder();
-					$f->name     = $name;
-					$f->parentid = $this->folder->objectid;
-					$f->add();
-					$this->folder->setTimestamp();
-					$this->addNotice('folder',$f->name,'ADDED','ok');
-				}
-				else
-				{
-					$this->addValidationError('folder_name');
-					$this->callSubAction('create');
-				}
-				break;
-
-			case 'file':
-				$upload = new Upload();
-
-				if	( !$upload->isValid() )
-				{
-					$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
-					$this->callSubAction('createfile');
-					return;
-				}
-				// Pr�fen der maximal erlaubten Dateigr��e.
-				elseif	( $upload->size > $this->maxFileSize() )
-				{
-					// Maximale Dateigr��e ist �berschritten
-					$this->addValidationError('file','MAX_FILE_SIZE_EXCEEDED');
-					$this->callSubAction('createfile');
-					return;
-				}
-				elseif( $upload->size > 0 )
-				{
-					$file   = new File();
-					$file->desc      = '';
-					$file->filename  = $upload->filename;
-					$file->name      = $upload->filename;
-					$file->extension = $upload->extension;
-					$file->size      = $upload->size;
-					$file->parentid  = $this->folder->objectid;
-
-					$file->value     = $upload->value;
-
-					$file->add(); // Datei hinzufuegen
-					$this->folder->setTimestamp();
-					$this->addNotice('file',$file->name,'ADDED','ok');
-				}
-
-				break;
-
-			case 'page':
-
-				$name = $this->getRequestVar('page_name');
-				if   ( !empty($name) )
-				{
-					$page = new Page();
-					$page->name       = $name;
-					$page->templateid = $this->getRequestVar('page_templateid');
-					$page->parentid   = $this->folder->objectid;
-					$page->add();
-					$this->folder->setTimestamp();
-
-					$this->addNotice('page',$page->name,'ADDED','ok');
-				}
-				else
-				{
-					$this->addValidationError('page_name');
-					$this->callSubAction('create');
-				}
-				break;
-
-			case 'link':
-
-				$name = $this->getRequestVar('link_name');
-				if   ( !empty($name) )
-				{
-					$link = new Link();
-					$link->name           = $name;
-					$link->parentid       = $this->folder->objectid;
-
-					$link->add();
-					$this->folder->setTimestamp();
-
-					$this->addNotice('link',$link->name,'ADDED','ok');
-				}
-				else
-				{
-					$this->addValidationError('link_name');
-					$this->callSubAction('create');
-				}
-
-				break;
-
-			case 'url':
-
-				$urlValue = $this->getRequestVar('url');
-				if   ( !empty($urlValue) )
-				{
-					$url = new Url();
-                    $url->name           = $urlValue;
-                    $url->parentid       = $this->folder->objectid;
-
-                    $url->url            = $urlValue;
-
-                    $url->add();
-					$this->folder->setTimestamp();
-
-					$this->addNotice('url',$url->name,'ADDED','ok');
-				}
-				else
-				{
-					$this->addValidationError('url');
-					$this->callSubAction('create');
-				}
-
-				break;
-
-			default:
-				$this->addValidationError('type');
-				$this->callSubAction('create');
-
-		}
-
-	}
-
-
-
     public function createfolderPost()
 	{
 		$name        = $this->getRequestVar('name'       );
@@ -981,19 +838,14 @@ class FolderAction extends ObjectAction
 
     public function createView()
 	{
-		// Maximale Dateigroesse.
-		$maxSizeBytes = $this->maxFileSize();
-		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );
-		$this->setTemplateVar('maxlength',$maxSizeBytes );
+	    $this->setTemplateVar('mayCreateFolder',$this->folder->hasRight( ACL_CREATE_FOLDER ) );
+	    $this->setTemplateVar('mayCreateFile'  ,$this->folder->hasRight( ACL_CREATE_FILE   ) );
+	    $this->setTemplateVar('mayCreateText'  ,$this->folder->hasRight( ACL_CREATE_FILE   ) );
+	    $this->setTemplateVar('mayCreateImage' ,$this->folder->hasRight( ACL_CREATE_FILE   ) );
+	    $this->setTemplateVar('mayCreatePage'  ,$this->folder->hasRight( ACL_CREATE_PAGE   ) );
+	    $this->setTemplateVar('mayCreateUrl'   ,$this->folder->hasRight( ACL_CREATE_LINK   ) );
+	    $this->setTemplateVar('mayCreateLink'  ,$this->folder->hasRight( ACL_CREATE_LINK   ) );
 
-        $project = new Project( $this->folder->projectid );
-        $all_templates = $project->getTemplates();
-		$this->setTemplateVar('templates' ,$all_templates );
-
-		if	( count($all_templates) == 0 )
-			$this->addNotice('folder',$this->folder->name,'NO_TEMPLATES_AVAILABLE',OR_NOTICE_WARN);
-
-		$this->setTemplateVar('objectid'  ,$this->folder->objectid );
 	}
 
 

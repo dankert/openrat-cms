@@ -75,6 +75,9 @@ class ProjectlistAction extends Action
 	
 	function addView()
 	{
+	    if( ! $this->userIsAdmin() )
+	        throw new \SecurityException('user is not allowed to add a project');
+
 		$this->setTemplateVar( 'projects',Project::getAllProjects() );
 	}
 	

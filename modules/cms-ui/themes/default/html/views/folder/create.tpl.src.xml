@@ -1,100 +1,61 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<header back="true" views="createfolder,createlink,createpage,createfile,createurl"></header>
-	<form enctype="multipart/form-data">
-		<group title="message:folder">
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="folder" children="folder_name"></radio>
-					<label for="type_folder">
-						<text text="global_folder"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="folder_name" size="30" maxlength="250" default=""
-						class="name"></input>
-				</part>
-			</part>
+    <text raw="test"/>
 
-		</group>
+    <if true="var:mayCreateFolder">
+        <part class="clickable line">
+            <link type="dialog" subaction="createfolder">
+                <text key="menu_createfolder"></text>
+            </link>
+        </part>
+    </if>
 
-		<group title="message:file">
+    <if true="var:mayCreatePage">
+        <part class="clickable line">
+            <link type="dialog" subaction="createpage">
+                <text key="menu_createpage"></text>
+            </link>
+        </part>
+    </if>
 
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="file" children="file"></radio>
-					<label for="type_file">
-						<text text="global_FILE"></text>
-					</label>
-				</part>
-				<part class="input">
-					<upload name="file" size="30" maxlength="var:maxlength"></upload>
-					<newline></newline>
-					<text class="help" key="file_max_size"></text>
-					<text raw="_"></text>
-					<text var="max_size"></text>
-				</part>
-			</part>
-		</group>
+    <if true="var:mayCreateFile">
+        <part class="clickable line">
+            <link type="dialog" subaction="createfile">
+                <text key="menu_createfile"></text>
+            </link>
+        </part>
+    </if>
 
-		<group title="message:page">
+    <if true="var:mayCreateImage">
+        <part class="clickable line">
+            <link type="dialog" subaction="createimage">
+                <text key="menu_createimage"></text>
+            </link>
+        </part>
+    </if>
 
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="page" children="page_templateid,page_name"></radio>
-					<label for="type_page">
-						<text text="global_TEMPLATE"></text>
-					</label>
-				</part>
-				<part class="input">
-					<selectbox name="page_templateid" default="" list="templates"></selectbox>
-				</part>
-			</part>
+    <if true="var:mayCreateText">
+        <part class="clickable line">
+            <link type="dialog" subaction="createtext">
+                <text key="menu_createltext"></text>
+            </link>
+        </part>
+    </if>
 
+    <if true="var:mayCreateUrl">
+        <part class="clickable line">
+            <link type="dialog" subaction="createurl">
+                <text key="menu_createurl"></text>
+            </link>
+        </part>
+    </if>
 
-
-			<part class="line">
-				<part class="label">
-					<label for="type_page">
-						<text text="global_NAME"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="page_name" size="30" maxlength="250" class="name"></input>
-				</part>
-			</part>
-
-		</group>
-		<group title="message:link">
-
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="link" children="link_name"></radio>
-					<label for="type_link">
-						<text text="global_NAME"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="link_name" size="30" maxlength="250" class="name"></input>
-				</part>
-			</part>
-		</group>
-
-		<group title="message:url">
-
-			<part class="line">
-				<part class="label">
-					<radio name="type" value="url" children="url"></radio>
-					<label for="type_link">
-						<text text="url"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="url" size="50" maxlength="250" class="name"></input>
-				</part>
-			</part>
-		</group>
-
-	</form>
+    <if true="var:mayCreateLink">
+        <part class="clickable line">
+            <link type="dialog" subaction="createlink">
+                <text key="menu_createlink"></text>
+            </link>
+        </part>
+    </if>
 </output>
