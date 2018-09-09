@@ -1,7 +1,7 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<header views="changetemplate"></header>
-	<form>
+	<form languageid="var:languageid">
 		<part class="line">
 			<part class="label">
 				<label for="name">
@@ -32,6 +32,8 @@
 				<inputarea name="description" class="description"></inputarea>
 			</part>
 		</part>
+
+		<include file="../include/validity" />
 
 	</form>
 </output>

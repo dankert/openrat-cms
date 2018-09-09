@@ -27,7 +27,7 @@ use Session;
 class PageAction extends ObjectAction
 {
 	public $security = SECURITY_USER;
-	
+
 	var $page;
 	var $defaultSubAction = 'show';
 
@@ -44,11 +44,11 @@ class PageAction extends ObjectAction
 		    $this->page->modelid = $this->request->getModelId();
 
 		$this->page->load();
-		
+
 		// Hier kann leider nicht das Datum der letzten Änderung verwendet werden,
 		// da sich die Seite auch danach ändern kann, z.B. durch Includes anderer
 		// Seiten oder Änderung einer Vorlage oder Änderung des Dateinamens einer
-		// verlinkten Datei. 
+		// verlinkten Datei.
 		$this->lastModified( time() );
 	}
 
@@ -72,10 +72,10 @@ class PageAction extends ObjectAction
 				$value->element->load();
 				$value->publish = false;
 				$value->load();
-		
+
 				// Eingegebenen Inhalt aus dem Request lesen
 				$inhalt  = $this->getRequestVar( 'id'.$elementid );
-				
+
 				// Den Inhalt speichern.
 				switch( $value->element->type )
 				{
@@ -99,18 +99,18 @@ class PageAction extends ObjectAction
 						$value->linkToObjectId = intval($inhalt);
 						break;
 				}
-			
+
 				$value->page = &$this->page;
-				
+
 				// Ermitteln, ob Inhalt sofort freigegeben werden kann und soll
 				if	( $this->page->hasRight( ACL_RELEASE ) && $this->hasRequestVar('release') )
 					$value->publish = true;
 				else
 					$value->publish = false;
-		
+
 //				Html::debug($inhalt,'Eingabe');
 //				Html::debug($value,'Inhalt');
-		
+
 				// Inhalt speichern.
 				// Inhalt in allen Sprachen gleich?
 				if	( $value->element->allLanguages )
@@ -211,23 +211,23 @@ class PageAction extends ObjectAction
 
 			// Ermitteln aller verlinkbaren Objekte (fuer Editor)
 			$objects = array();
-	
+
 			foreach( Folder::getAllObjectIds() as $id )
 			{
 				$o = new BaseObject( $id );
 				$o->load();
-				
+
 				if	( $o->getType() != 'folder' )
-				{ 
+				{
 					$f = new Folder( $o->parentid );
-					$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': '; 
-					$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) ); 
+					$objects[ $id ]  = lang( 'GLOBAL_'.$o->getType() ).': ';
+					$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
 					$objects[ $id ] .= FILE_SEP.$o->name;
-				} 
+				}
 			}
 			asort($objects);
 			$this->setTemplateVar( 'objects' ,$objects );
-	
+
 			$this->setTemplateVar( 'release' ,$this->page->hasRight(ACL_RELEASE) );
 			$this->setTemplateVar( 'publish' ,$this->page->hasRight(ACL_PUBLISH) );
 			$this->setTemplateVar( 'html'    ,$value->element->html );
@@ -254,12 +254,12 @@ class PageAction extends ObjectAction
 					                   $this->getRequestVar('year'  ) );
 		}
 		else $value->date = 0; // Datum nicht gesetzt.
-	
+
 		$value->text = $this->getRequestVar('text');
 
 		$value->page = new Page( $value->objectid );
 		$value->page->load();
-		
+
 		// Inhalt sofort freigegeben, wenn
 		// - Recht vorhanden
 		// - Freigabe gewuenscht
@@ -269,7 +269,7 @@ class PageAction extends ObjectAction
 			$value->publish = false;
 
 		// Inhalt speichern
-		
+
 		// Wenn Inhalt in allen Sprachen gleich ist, dann wird der Inhalt
 		// fuer jede Sprache einzeln gespeichert.
 		if	( $value->element->allLanguages )
@@ -309,9 +309,18 @@ class PageAction extends ObjectAction
 			$this->page->filename    = $this->getRequestVar('filename'   ,OR_FILTER_FILENAME);
 			$this->page->desc        = $this->getRequestVar('description',OR_FILTER_FULL    );
 
+            if  ($this->getRequestVar( 'valid_from_date' ))
+			    $this->page->validFromDate = strtotime( $this->getRequestVar( 'valid_from_date' ).' '.$this->getRequestVar( 'valid_from_time' ) );
+            else
+                $this->page->validFromDate = null;
+            if  ($this->getRequestVar( 'valid_until_date'))
+    			$this->page->validToDate   = strtotime( $this->getRequestVar( 'valid_until_date').' '.$this->getRequestVar( 'valid_until_time') );
+            else
+                $this->page->validToDate = null;
+
 			$this->page->save();
 			$this->addNotice($this->page->getType(),$this->page->name,'PROP_SAVED','ok');
-			
+
 			if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
 				$this->page->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
 				$this->page->setCreationTimestamp();
@@ -330,7 +339,7 @@ class PageAction extends ObjectAction
 	function propView()
 	{
 		$this->setTemplateVar('id',$this->page->objectid);
-	
+
 		$this->page->public = true;
 		$this->page->load();
 		$this->page->full_filename();
@@ -339,22 +348,22 @@ class PageAction extends ObjectAction
 			$this->page->filename = '';
 
 		$this->setTemplateVars( $this->page->getProperties() );
-		
+
 		if   ( $this->userIsAdmin() )
 		{
 			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid,array(REQ_PARAM_MODEL_ID=>$this->page->modelid)));
 		}
-	
+
 		$template = new Template( $this->page->templateid );
 		$template->load();
 		$this->setTemplateVar('template_name',$template->name);
-	
+
 		// Alle Ordner ermitteln
 //		$this->setTemplateVar('act_folderobjectid',$this->page->parentid);
 //
 //		$folders = array();
 //		$folder = new Folder( $this->page->parentid );
-		
+
 //		foreach( $folder->getOtherFolders() as $oid )
 //		{
 //			$f = new Folder( $oid );
@@ -370,18 +379,25 @@ class PageAction extends ObjectAction
 			if	( $id != $this->page->templateid )
 				$templates[$id]=$name;
 		}
-		$this->setTemplateVar('templates',$templates); 
+		$this->setTemplateVar('templates',$templates);
+
+
+		$this->setTemplateVar( 'languageid' ,$this->page->languageid );
+		$this->setTemplateVar( 'valid_from_date' ,$this->page->validFromDate==null?'':date('Y-m-d',$this->page->validFromDate) );
+		$this->setTemplateVar( 'valid_from_time' ,$this->page->validFromDate==null?'':date('H:i'  ,$this->page->validFromDate) );
+		$this->setTemplateVar( 'valid_until_date',$this->page->validToDate  ==null?'':date('Y-m-d',$this->page->validToDate  ) );
+		$this->setTemplateVar( 'valid_until_time',$this->page->validToDate  ==null?'':date('H:i'  ,$this->page->validToDate  ) );
 	}
 
-	
-	
+
+
 	/**
 	 * Die Eigenschaften der Seite anzeigen
 	 */
 	function infoView()
 	{
 		$this->setTemplateVar('id',$this->page->objectid);
-	
+
 		$this->page->public = true;
 		$this->page->load();
 		$this->page->full_filename();
@@ -390,20 +406,21 @@ class PageAction extends ObjectAction
 			$this->page->filename = '';
 
 		$this->setTemplateVars( $this->page->getProperties() );
-		
+
 		if   ( $this->userIsAdmin() )
 		{
 			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid,array(REQ_PARAM_MODEL_ID=>$this->page->modelid)));
 		}
-	
+
 		$template = new Template( $this->page->templateid );
 		$template->load();
 		$this->setTemplateVar('template_name',$template->name);
-	
-	 
+
+
+
 	}
-	
-	
+
+
 
 
 	/**
@@ -423,12 +440,12 @@ class PageAction extends ObjectAction
 			$oldElements = array();
 			$oldTemplate = new Template( $this->page->templateid );
 			$newTemplate = new Template( $newTemplateId );
-			
+
 			foreach( $oldTemplate->getElementIds() as $elementid )
 			{
 				$e = new Element( $elementid );
 				$e->load();
-				
+
 				if	( !$e->isWritable() )
 					continue;
 
@@ -438,12 +455,12 @@ class PageAction extends ObjectAction
 
 				$newElements = Array();
 				$newElements[0] = lang('ELEMENT_DELETE_VALUES');
-	
+
 				foreach( $newTemplate->getElementIds() as $newelementid )
 				{
 					$ne = new Element( $newelementid );
 					$ne->load();
-					
+
 					// Nur neue Elemente anbieten, deren Typ identisch ist
 					if	( $ne->type == $e->type )
 						$newElements[$newelementid] = lang('ELEMENT').': '.$ne->name.' - '.lang('EL_'.$e->type );
@@ -471,11 +488,11 @@ class PageAction extends ObjectAction
 	{
 		$newTemplateId = $this->getRequestVar('newtemplateid');
 		$replaceElementMap = Array();
-		
+
 		$oldTemplate = new Template( $this->page->templateid );
 		foreach( $oldTemplate->getElementIds() as $elementid )
 			$replaceElementMap[$elementid] = $this->getRequestVar('from'.$elementid);
-		
+
 		if	( $newTemplateId != 0  )
 		{
 			$this->page->replaceTemplate( $newTemplateId,$replaceElementMap );
@@ -496,9 +513,9 @@ class PageAction extends ObjectAction
 		$this->page->public = true;
 		$this->page->simple = true;
 		$this->page->generate_elements();
-		
+
 		$list = array();
-	
+
 		// Schleife ueber alle Inhalte der Seite
 		foreach( $this->page->values as $id=>$value )
 		{
@@ -512,11 +529,11 @@ class PageAction extends ObjectAction
 				$list[$id]['languageid']     = $this->page->languageid;
 				$list[$id]['modelid'   ]     = $this->page->modelid;
 				$list[$id]['type']           = $value->element->type;
-	
+
 				$list[$id]['archive_count'] = intval($value->getCountVersions());
 				if	( $list[$id]['archive_count'] > 0 )
 					$list[$id]['archive_url'] = Html::url( 'pageelement','archive',$this->page->id,array(REQ_PARAM_ELEMENT_ID=>$id,REQ_PARAM_LANGUAGE_ID=>$this->page->languageid,REQ_PARAM_MODEL_ID=>$this->page->modelid) );
-				
+
 				// Inhalt anzeigen
 				$list[$id]['value'] = $value->value;
 			}
@@ -538,9 +555,9 @@ class PageAction extends ObjectAction
 		$this->page->public = false;
 		$this->page->simple = true;
 		$this->page->generate_elements();
-		
+
 		$list = array();
-	
+
 		foreach( $this->page->values as $id=>$value )
 		{
 			if   ( $value->element->isWritable() )
@@ -574,25 +591,25 @@ class PageAction extends ObjectAction
 
 					case 'link':
 						$objects = array();
-				
+
 						foreach( Folder::getAllObjectIds() as $oid )
 						{
 							$o = new BaseObject( $oid );
 							$o->load();
-							
+
 							if	( $o->getType() != 'folder' )
-							{ 
+							{
 								$f = new Folder( $o->parentid );
 								$f->load();
-								
-								$objects[ $oid ]  = lang( $o->getType() ).': '; 
-								$objects[ $oid ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) ); 
+
+								$objects[ $oid ]  = lang( $o->getType() ).': ';
+								$objects[ $oid ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
 								$objects[ $oid ] .= ' &raquo; '.$o->name;
-							} 
+							}
 						}
-		
+
 						asort( $objects ); // Sortieren
-				
+
 						$list[$id]['list' ] = $objects;
 						$list[$id]['value'] = $value->linkToObjectId;
 						break;
@@ -603,16 +620,16 @@ class PageAction extends ObjectAction
 						{
 							$f = new Folder( $oid );
 							$f->load();
-							
-							$objects[ $oid ]  = lang( $f->getType() ).': '; 
-							$objects[ $oid ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) ); 
+
+							$objects[ $oid ]  = lang( $f->getType() ).': ';
+							$objects[ $oid ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
 						}
-				
+
 						asort( $objects ); // Sortieren
-				
+
 						$this->setTemplateVar('list' ,$objects);
 						$this->setTemplateVar('value',$this->value->linkToObjectId);
-		
+
 						break;
 				}
 			}
@@ -648,7 +665,7 @@ class PageAction extends ObjectAction
         // Seite definieren
 		if	( $this->hasRequestVar('withIcons') )
 			$this->page->icons = true;
-		
+
 		$this->page->load();
 		$this->page->generate();
 
@@ -660,18 +677,18 @@ class PageAction extends ObjectAction
 		header('Content-Language: '.$language->isoCode);
 
 		Logger::debug("Preview page: ".$this->page->__toString() );
-		
-		// Wenn 
+
+		// Wenn
 		if	( ( config('publish','enable_php_in_page_content')=='auto' && $this->page->template->extension == 'php') ||
 		        config('publish','enable_php_in_page_content')===true )
 			require( $this->page->tmpfile() );
 		else
 			readfile( $this->page->tmpfile() );
-			
+
 		exit();
 	}
 
-	
+
 
 	/**
 	 * Den Quellcode der Seite anzeigen
@@ -684,18 +701,18 @@ class PageAction extends ObjectAction
 
 		$this->page->withLanguage = config('publish','filename_language') == 'always' || count($project->getLanguageIds()) > 1;
 		$this->page->withModel    = config('publish','filename_type'    ) == 'always' || count($project->getModelIds()   ) > 1;
-		
+
 		$this->page->public     = true; //
 		$this->page->load();
 
 		$src = $this->page->generate();
-		
+
 		// HTML Highlighting
-		
+
 		//$src = preg_replace( '|<(.+)( .+)?'.'>|Us'       , '<strong>&lt;$1</strong>$2<strong>&gt;</strong>', $src);
 		//$src = preg_replace( '|([a-zA-Z]+)="(.+)"|Us' , '<em>$1</em>=<var>"$2"</var>'                   , $src);
 		$src = htmlentities($src);
-		
+
 		$this->setTemplateVar('src',$src);
 	}
 
@@ -712,16 +729,16 @@ class PageAction extends ObjectAction
 
 
         $this->setTemplateVars( $this->page->getProperties() );
-		
+
 		if   ( $this->userIsAdmin() )
 		{
 			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid,array(REQ_PARAM_MODEL_ID=>$this->page->modelid)));
 		}
-	
+
 		$template = new Template( $this->page->templateid );
 		$template->load();
 		$this->setTemplateVar('template_name',$template->name);
-	
+
 		$templates = Array();
         $project = new Project( $this->page->projectid );
 		foreach( $project->getTemplates() as $id=>$name )
@@ -729,18 +746,18 @@ class PageAction extends ObjectAction
 			if	( $id != $this->page->templateid )
 				$templates[$id]=$name;
 		}
-		$this->setTemplateVar('templates',$templates); 
+		$this->setTemplateVar('templates',$templates);
 	}
 
 
 
-	
+
 
 	/**
 	 * Seite veroeffentlichen
 	 *
 	 * Es wird ein Formular angzeigt, mit dem die Seite veroeffentlicht
-	 * werden kann 
+	 * werden kann
 	 */
 	function pubView()
 	{
@@ -759,7 +776,7 @@ class PageAction extends ObjectAction
             throw new \SecurityException( 'no right for publish' );
 
 		Session::close();
-		
+
 		$this->page->public = true;
 		$this->page->publish();
 		$this->page->publish->close();
@@ -776,8 +793,8 @@ class PageAction extends ObjectAction
 		                  array(),
 		                  $this->page->publish->log  );
 	}
-	
-	
+
+
 	function setWindowMenu( $type ) {
 		switch( $type)
 		{
@@ -794,13 +811,13 @@ class PageAction extends ObjectAction
 
 		}
 	}
-	
-	
+
+
 	/**
 	 * Liefert die Struktur zu diesem Ordner:
 	 * - Mit den übergeordneten Ordnern und
 	 * - den in diesem Ordner enthaltenen Objekten
-	 * 
+	 *
 	 * Beispiel:
 	 * <pre>
 	 * - A
@@ -810,7 +827,7 @@ class PageAction extends ObjectAction
 	 *       - Seite
 	 *       - Seite
 	 *       - Datei
-	 * </pre> 
+	 * </pre>
 	 */
 	public function structureView()
 	{
@@ -818,50 +835,50 @@ class PageAction extends ObjectAction
 		$structure = array();
 		$tmp = &$structure;
 		$nr  = 0;
-		
+
 		$folder = new Folder( $this->page->parentid );
 		$parents = $folder->parentObjectNames(false,true);
-		
+
 		foreach( $parents as $id=>$name)
 		{
 			unset($children);
 			unset($o);
 			$children = array();
 			$o = array('id'=>$id,'name'=>$name,'type'=>'folder','level'=>++$nr,'children'=>&$children);
-			
+
 			$tmp[$id] = &$o;;
-			
+
 			unset($tmp);
-			
-			$tmp = &$children; 
+
+			$tmp = &$children;
 		}
-		
-		
-		
+
+
+
 		unset($children);
 		unset($id);
 		unset($name);
-		
+
 		$elementChildren = array();
-		
+
 		$tmp[ $this->page->objectid ] = array('id'=>$this->page->objectid,'name'=>$this->page->name,'type'=>'page','self'=>true,'children'=>&$elementChildren);
-		
+
 		$template = new Template( $this->page->templateid );
-		$elements = $template->getElementNames(); 
-		
+		$elements = $template->getElementNames();
+
 		foreach( $elements as $id=>$name )
 		{
 			$elementChildren[$id] = array('id'=>$this->page->objectid.'_'.$id,'name'=>$name,'type'=>'pageelement','children'=>array() );
 		}
-		
+
 		//Html::debug($structure);
-		
+
 		$this->setTemplateVar('outline',$structure);
 	}
-	
-	
-	
-	
+
+
+
+
 }
 
 ?>

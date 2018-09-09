@@ -1291,4 +1291,7 @@ MENU_INDEX_ADMINISTRATION_DESC =",
 'METHOD_SETTINGS'=>"Settings",
 'METHOD_HISTORY'=>"History",
 'METHOD_PROP'=>"Properties",
+'VALIDITY'=>"Validity",
+'FROM'=>"from",
+'UNTIL'=>"until",
 );}

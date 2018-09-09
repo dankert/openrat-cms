@@ -95,6 +95,10 @@ namespace cms\model {
          */
         public $publishedDate;
 
+
+        public $validFromDate;
+        public $validToDate;
+
         /**
          * Kennzeichen, ob Objekt ein Ordner ist
          * @type Boolean
@@ -585,6 +589,9 @@ SQL
             $this->lastchangeDate = $row['lastchange_date'];
             $this->publishedDate  = $row['published_date' ];
 
+            $this->validFromDate  = $row['valid_from' ];
+            $this->validToDate    = $row['valid_to'   ];
+
             $this->createUser = new User();
             $this->createUser->userid       = $row['create_userid'          ];
             if	( !empty($row['create_username']) )
@@ -669,6 +676,8 @@ UPDATE {{object}} SET
 		              lastchange_date   = {time}    ,
 		              lastchange_userid = {userid}  ,
 		              filename          = {filename},
+		              valid_from        = {validFrom},
+		              valid_to          = {validTo},
 		              settings          = {settings}
  WHERE id={objectid}
 SQL
@@ -683,11 +692,13 @@ SQL
             $user = \Session::getUser();
             $this->lastchangeUser = $user;
             $this->lastchangeDate = now();
-            $stmt->setInt   ('time'    ,$this->lastchangeDate          );
-            $stmt->setInt   ('userid'  ,$this->lastchangeUser->userid  );
-            $stmt->setString('filename', $this->filename);
-            $stmt->setString('settings', $this->settings);
-            $stmt->setInt   ('objectid', $this->objectid);
+            $stmt->setInt   ('time'     , $this->lastchangeDate          );
+            $stmt->setInt   ('userid'   , $this->lastchangeUser->userid  );
+            $stmt->setString('filename' , $this->filename                );
+            $stmt->setString('settings' , $this->settings                );
+            $stmt->setInt   ('validFrom', $this->validFromDate           );
+            $stmt->setInt   ('validTo'  , $this->validToDate             );
+            $stmt->setInt   ('objectid' , $this->objectid                );
 
 
             $stmt->query();
@@ -1386,6 +1397,19 @@ SQL
             return $sql->getCol();
         }
 
+
+        /**
+         * Stellt fest, ob das Objekt gueltig ist.
+         */
+        public function isValid()
+        {
+            $now = time();
+
+            return
+                ($this->validFromDate == null || $this->validFromDate < $now) &&
+                ($this->validToDate   == null || $this->validToDate   > $now);
+
+        }
 
 
     }

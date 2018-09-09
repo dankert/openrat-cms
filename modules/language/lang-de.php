@@ -1267,4 +1267,7 @@ function language() { return array(
 'METHOD_SETTINGS'=>"Einstellungen",
 'METHOD_HISTORY'=>"Verlauf",
 'METHOD_PROP'=>"Eigenschaften",
+'VALIDITY'=>"Gültigkeit",
+'FROM'=>"von",
+'UNTIL'=>"bis",
 );}

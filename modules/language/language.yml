@@ -6089,3 +6089,12 @@ METHOD_HISTORY:
 METHOD_PROP:
   en: Properties
   de: Eigenschaften
+VALIDITY:
+  de: Gültigkeit
+  en: Validity
+FROM:
+  de: von
+  en: from
+UNTIL:
+  de: bis
+  en: until
