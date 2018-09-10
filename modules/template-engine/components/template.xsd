@@ -654,6 +654,7 @@
         <xsd:attribute name="default" type="xsd:boolean"/>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="readonly" type="xsd:boolean"/>
+        <xsd:attribute name="required" type="xsd:boolean"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="input" type="inputType"/>

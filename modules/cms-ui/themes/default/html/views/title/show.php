@@ -233,7 +233,7 @@
 					</div>
 					<div class="divide">
 					</div>
-					<div class="entry clickable filtered on-action-project on-action-template on-action-page on-action-element on-action-image on-action-file on-action-folder on-action-link on-action-language on-action-model">
+					<div class="entry clickable filtered on-action-project on-action-template on-action-page on-action-element on-action-image on-action-file on-action-folder on-action-link on-action-language on-action-model on-action-user on-action-group">
 						<a title="<?php echo lang('menu_delete_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="remove" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'remove'}" href="<?php echo Html::url('','remove','',array('dialogAction'=>'','dialogMethod'=>'remove')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/delete.svg" />
 							

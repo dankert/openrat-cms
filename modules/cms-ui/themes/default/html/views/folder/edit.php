@@ -6,13 +6,13 @@
 			<table width="100%">
 				<tr class="headline">
 					<td class="help">
-						<?php { $tmpname     = 'checkall';$default  = '';$readonly = '';		
+						<?php { $tmpname     = 'checkall';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -34,13 +34,13 @@
 					<tr class="data">
 						<td width="1%">
 							<?php $if7=($writable); if($if7){?>
-								<?php { $tmpname     = $id;$default  = '';$readonly = '';		
+								<?php { $tmpname     = $id;$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -164,13 +164,13 @@
 								<div class="input">
 									<span class="text"><?php echo nl2br('&nbsp;&nbsp;&nbsp;&nbsp;'); ?></span>
 									
-									<?php { $tmpname     = 'confirm';$default  = '';$readonly = '';		
+									<?php { $tmpname     = 'confirm';$default  = '';$readonly = '';$required = '1';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 

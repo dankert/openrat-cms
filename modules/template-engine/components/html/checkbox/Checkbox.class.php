@@ -8,6 +8,7 @@ class CheckboxComponent extends Component
 	public $default = false;
 	public $name;
 	public $readonly = false;
+	public $required = false;
 	
 	protected function begin(){
 	
@@ -15,6 +16,7 @@ class CheckboxComponent extends Component
 		echo '$tmpname     = '.$this->value($this->name).';';
 		echo '$default  = '.$this->value($this->default).';';
 		echo '$readonly = '.$this->value($this->readonly).';';
+		echo '$required = '.$this->value($this->required).';';
 
 		echo <<<'HTML'
 		
@@ -23,7 +25,7 @@ class CheckboxComponent extends Component
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 

@@ -18,7 +18,7 @@
 				<part class="label">
 				</part>
 				<part class="input">
-					<checkbox name="confirm"></checkbox>
+					<checkbox name="confirm" required="true"></checkbox>
 					<label for="confirm">
 						<text text="CONFIRM_DELETE"></text>
 					</label>

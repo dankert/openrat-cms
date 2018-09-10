@@ -17,7 +17,7 @@
 
 				<part class="input">
 					<part>
-						<checkbox name="delete"></checkbox>
+						<checkbox name="delete" required="true"></checkbox>
 						<label for="delete">
 							<text text="CONFIRM_DELETE"></text>
 						</label>
