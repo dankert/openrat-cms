@@ -24,7 +24,7 @@
 					<label for="type_copy">
 						<text key="copy"></text>
 					</label>
-					<selectbox name="projectid" list="projects"></selectbox>
+					<selectbox name="projectid" list="projects" default=""></selectbox>
 				</part>
 			</part>
 		</group>

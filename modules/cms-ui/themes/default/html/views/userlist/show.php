@@ -21,11 +21,14 @@
 			</tr>
 			<?php foreach($el as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
-					<td data-name="<?php echo $name ?>" data-action="user" data-id="<?php echo $id ?>" class="clickable">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_user.png" />
-						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
-						
+					<td data-name="<?php echo $name ?>" data-action="user" data-id="<?php echo $id ?>" class="clickable clickable">
+						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="user" data-method="show" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url('user','',$id,array()) ?>">
+							<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/user.svg" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+							
+						</a>
+
 					</td>
 					<td data-name="<?php echo $name ?>" data-action="user" data-id="<?php echo $id ?>" class="clickable">
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($fullname))); ?></span>

@@ -16,9 +16,12 @@
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
-				<column id="var:id" name="var:name" action="user">
-					<image type="user"></image>
-					<text var="name"></text>
+				<column id="var:id" name="var:name" action="user" class="clickable">
+					<link type="open" id="var:id" name="var:name" action="user">
+						<image action="user"></image>
+						<text var="name"></text>
+					</link>
+
 				</column>
 				<column id="var:id" name="var:name" action="user">
 					<text value="var:fullname"></text>
