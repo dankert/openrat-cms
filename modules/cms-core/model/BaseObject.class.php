@@ -391,7 +391,7 @@ SQL
 
             if	( $conf['filename']['edit'] && $this->filename != '' && $this->filename != $this->objectid )
             {
-                $this->filename = BaseObject::urlify($this->name);
+                $this->filename = BaseObject::urlify($this->filename);
                 return $this->filename;
             }
 

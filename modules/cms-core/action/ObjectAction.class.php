@@ -12,6 +12,7 @@ use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\File;
 use cms\model\Link;
+use Http;
 use Session;
 
 // OpenRat Content Management System
@@ -45,8 +46,8 @@ class ObjectAction extends Action
 	public $security = SECURITY_USER;
 	
 	private $objectid;
-	private $baseObject;
 
+	protected $baseObject;
 
 	public function __construct()
     {
@@ -469,11 +470,11 @@ class ObjectAction extends Action
 	function delaclPost()
 	{
 		$acl = new Acl($this->getRequestVar('aclid'));
-		$acl->objectid = $this->getRequestId();
+		$acl->load();
 
 		// Nachschauen, ob der Benutzer ueberhaupt berechtigt ist, an
 		// diesem Objekt die ACLs zu aendern.
-		$o = new BaseObject( $this->getRequestId() );
+		$o = new BaseObject( $acl->objectid );
 
 		if	( !$o->hasRight( ACL_GRANT ) )
 			Http::notAuthorized('no grant rights'); // Da wollte uns wohl einer vereimern.
@@ -482,4 +483,30 @@ class ObjectAction extends Action
 		
 		$this->addNotice('','','DELETED',OR_NOTICE_OK);
 	}
+
+
+    public function propView()
+    {
+        $this->setTemplateVar( 'valid_from_date' ,$this->baseObject->validFromDate==null?'':date('Y-m-d',$this->baseObject->validFromDate) );
+        $this->setTemplateVar( 'valid_from_time' ,$this->baseObject->validFromDate==null?'':date('H:i'  ,$this->baseObject->validFromDate) );
+        $this->setTemplateVar( 'valid_until_date',$this->baseObject->validToDate  ==null?'':date('Y-m-d',$this->baseObject->validToDate  ) );
+        $this->setTemplateVar( 'valid_until_time',$this->baseObject->validToDate  ==null?'':date('H:i'  ,$this->baseObject->validToDate  ) );
+    }
+
+    public function propPost()
+    {
+        if  ($this->getRequestVar( 'valid_from_date' ))
+            $this->baseObject->validFromDate = strtotime( $this->getRequestVar( 'valid_from_date' ).' '.$this->getRequestVar( 'valid_from_time' ) );
+        else
+            $this->baseObject->validFromDate = null;
+        if  ($this->getRequestVar( 'valid_until_date'))
+            $this->baseObject->validToDate   = strtotime( $this->getRequestVar( 'valid_until_date').' '.$this->getRequestVar( 'valid_until_time') );
+        else
+            $this->baseObject->validToDate = null;
+
+        if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
+            $this->baseObject->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
+        $this->baseObject->setCreationTimestamp();
+
+    }
 }

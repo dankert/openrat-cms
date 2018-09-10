@@ -44,6 +44,7 @@ class PageAction extends ObjectAction
 		    $this->page->modelid = $this->request->getModelId();
 
 		$this->page->load();
+		$this->baseObject = & $this->page;
 
 		// Hier kann leider nicht das Datum der letzten Änderung verwendet werden,
 		// da sich die Seite auch danach ändern kann, z.B. durch Includes anderer
@@ -306,30 +307,19 @@ class PageAction extends ObjectAction
 		if   ( $this->getRequestVar('name')!='' )
 		{
 			$this->page->name        = $this->getRequestVar('name'       ,OR_FILTER_FULL    );
-			$this->page->filename    = $this->getRequestVar('filename'   ,OR_FILTER_FILENAME);
+			$this->page->filename    = BaseObject::urlify($this->getRequestVar('filename'   ,OR_FILTER_FULL));
 			$this->page->desc        = $this->getRequestVar('description',OR_FILTER_FULL    );
-
-            if  ($this->getRequestVar( 'valid_from_date' ))
-			    $this->page->validFromDate = strtotime( $this->getRequestVar( 'valid_from_date' ).' '.$this->getRequestVar( 'valid_from_time' ) );
-            else
-                $this->page->validFromDate = null;
-            if  ($this->getRequestVar( 'valid_until_date'))
-    			$this->page->validToDate   = strtotime( $this->getRequestVar( 'valid_until_date').' '.$this->getRequestVar( 'valid_until_time') );
-            else
-                $this->page->validToDate = null;
-
-			$this->page->save();
-			$this->addNotice($this->page->getType(),$this->page->name,'PROP_SAVED','ok');
-
-			if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
-				$this->page->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
-				$this->page->setCreationTimestamp();
 		}
 		else
 		{
 			$this->addValidationError('name');
 		}
-	}
+
+        parent::propPost();
+
+        $this->page->save();
+        $this->addNotice($this->page->getType(),$this->page->name,'PROP_SAVED','ok');
+    }
 
 
 
@@ -383,10 +373,8 @@ class PageAction extends ObjectAction
 
 
 		$this->setTemplateVar( 'languageid' ,$this->page->languageid );
-		$this->setTemplateVar( 'valid_from_date' ,$this->page->validFromDate==null?'':date('Y-m-d',$this->page->validFromDate) );
-		$this->setTemplateVar( 'valid_from_time' ,$this->page->validFromDate==null?'':date('H:i'  ,$this->page->validFromDate) );
-		$this->setTemplateVar( 'valid_until_date',$this->page->validToDate  ==null?'':date('Y-m-d',$this->page->validToDate  ) );
-		$this->setTemplateVar( 'valid_until_time',$this->page->validToDate  ==null?'':date('H:i'  ,$this->page->validToDate  ) );
+
+        parent::propView();
 	}
 
 
@@ -415,8 +403,6 @@ class PageAction extends ObjectAction
 		$template = new Template( $this->page->templateid );
 		$template->load();
 		$this->setTemplateVar('template_name',$template->name);
-
-
 
 	}
 
