@@ -50,8 +50,8 @@
 					<text raw="_" />
 				</column>
 				<column colspan="2" class="clickable">
-					<link type="view" action="folder" subaction="createfolder">
-						<image file="icon/create"></image>
+					<link type="dialog" action="folder" subaction="createfolder">
+						<image method="add"></image>
 						<text key="menu_folder_createfolder"></text>
 					</link>
 				</column>
@@ -61,8 +61,8 @@
 					<text raw="_" />
 				</column>
 				<column colspan="2" class="clickable">
-					<link type="view" action="folder" subaction="createpage">
-						<image file="icon/create"></image>
+					<link type="dialog" action="folder" subaction="createpage">
+						<image method="add"></image>
 						<text key="menu_folder_createpage"></text>
 					</link>
 				</column>
@@ -72,8 +72,8 @@
 					<text raw="_" />
 				</column>
 				<column colspan="2" class="clickable">
-					<link type="view" action="folder" subaction="createfile">
-						<image file="icon/create"></image>
+					<link type="dialog" action="folder" subaction="createfile">
+						<image method="add"></image>
 						<text key="menu_folder_createfile"></text>
 					</link>
 				</column>
@@ -83,8 +83,8 @@
 					<text raw="_" />
 				</column>
 				<column colspan="2" class="clickable">
-					<link type="view" action="folder" subaction="createlink">
-						<image file="icon/create"></image>
+					<link type="dialog" action="folder" subaction="createlink">
+						<image method="add"></image>
 						<text key="menu_folder_createlink"></text>
 					</link>
 				</column>

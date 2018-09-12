@@ -310,7 +310,7 @@ class TemplateAction extends Action
 	 */
 	function previewView()
 	{
-		$this->setTemplateVar('preview_url',Html::url('template','show',$this->template->templateid,array('target'=>'none') ) );
+		$this->setTemplateVar('preview_url',Html::url('template','show',$this->template->templateid,array('target'=>'none',REQ_PARAM_EMBED=>'1') ) );
 	}
 	
 	

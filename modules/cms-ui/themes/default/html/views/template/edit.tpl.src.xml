@@ -13,16 +13,18 @@
 		</row>
 		<list list="elements" extract="true">
 			<row class="data">
-				<column id="var:id" name="var:name" action="element">
-					<image elementtype="var:type"></image>
-					<text var="name" title="var:description"></text>
+				<column class="clickable">
+					<link type="open" id="var:id" name="var:name" action="element">
+						<image elementtype="var:type"></image>
+						<text var="name" title="var:description"></text>
+					</link>
 				</column>
 				<column>
 					<text key="var:type" prefix="EL_"></text>
 				</column>
 			</row>
 		</list>
-		<if empty="el">
+		<if empty="elements">
 			<row>
 				<column colspan="2">
 					<text key="GLOBAL_NOT_FOUND"></text>

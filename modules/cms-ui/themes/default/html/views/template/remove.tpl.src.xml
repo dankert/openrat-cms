@@ -1,6 +1,5 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<header back="true"></header>
 	<form>
 		<group>
 			<part class="line">
@@ -19,7 +18,7 @@
 				<part class="label">
 				</part>
 				<part class="input">
-					<checkbox name="delete"></checkbox>
+					<checkbox name="delete" required="true"></checkbox>
 					<label for="delete">
 						<text text="CONFIRM_DELETE"></text>
 					</label>

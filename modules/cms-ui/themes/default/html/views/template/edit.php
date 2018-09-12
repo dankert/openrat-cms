@@ -15,11 +15,14 @@
 			</tr>
 			<?php foreach($elements as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
-					<td data-name="<?php echo $name ?>" data-action="element" data-id="<?php echo $id ?>" class="clickable">
-						<img class="image-icon image-icon--element" title="" src="./modules/cms-ui/themes/default/images/icon/element/<?php echo $type ?>.svg" />
-						
-						<span class="text" title="<?php echo $description ?>"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
-						
+					<td class="clickable">
+						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="element" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url('element','',$id,array()) ?>">
+							<img class="image-icon image-icon--element" title="" src="./modules/cms-ui/themes/default/images/icon/element/<?php echo $type ?>.svg" />
+							
+							<span class="text" title="<?php echo $description ?>"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+							
+						</a>
+
 					</td>
 					<td>
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('EL_'.$type.'')))); ?></span>
@@ -27,7 +30,7 @@
 					</td>
 				</tr>
 			<?php } ?>
-			<?php $if3=(($el)==FALSE); if($if3){?>
+			<?php $if3=(($elements)==FALSE); if($if3){?>
 				<tr>
 					<td colspan="2">
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NOT_FOUND'.'')))); ?></span>

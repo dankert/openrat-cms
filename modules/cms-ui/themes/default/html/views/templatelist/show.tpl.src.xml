@@ -8,8 +8,11 @@
 		</row>
 		<list list="templates" extract="true">
 			<row class="data">
-				<column id="var:id" name="var:name" action="template">
+				<column class="clickable">
+					<image action="template" />
+					<link type="open" id="var:id" name="var:name" action="template">
 					<text var="name"></text>
+					</link>
 				</column>
 			</row>
 		</list>
@@ -21,8 +24,8 @@
 
 		<row class="data">
 			<column colspan="1" class="clickable">
-				<link type="view" subaction="add">
-					<image icon="add" />
+				<link type="dialog" subaction="add">
+					<image method="add" />
 					<text text="new" />
 				</link>
 			</column>

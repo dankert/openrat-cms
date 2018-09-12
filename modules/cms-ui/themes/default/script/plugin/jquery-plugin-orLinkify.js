@@ -65,7 +65,7 @@ jQuery.fn.orLinkify = function()
 			
 			else if	( type == 'open' )
 			{
-				openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id'),jQuery.parseJSON($(this).attr('data-extra')));
+				openNewAction( $(this).attr('data-name'),$(this).attr('data-action'),$(this).attr('data-id'),jQuery.parseJSON($(this).attr('data-extra').replace(/'/g,'"')));
 			}
 			else
 			{

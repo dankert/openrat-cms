@@ -15,9 +15,9 @@
 		<list list="el" extract="true">
 			<row class="data">
 				<column class="clickable">
-					<image file="icon_model"></image>
 
 					<link type="open" name="var:name" action="model" id="var:id">
+						<image action="model"></image>
 						<text var="name" maxlength="25"></text>
 					</link>
 				</column>
@@ -54,8 +54,8 @@
 		</list>
 		<row class="data">
 			<column colspan="3" class="clickable">
-				<link type="view" subaction="add">
-					<image icon="add" />
+				<link type="dialog" subaction="add">
+					<image method="add" />
 					<text text="new" />
 				</link>
 			</column>

@@ -11,11 +11,14 @@
 			</tr>
 			<?php foreach($el as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
-					<td data-name="<?php echo $name ?>" data-action="group" data-id="<?php echo $id ?>" class="clickable">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon_group.png" />
-						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
-						
+					<td data-name="<?php echo $name ?>" data-action="group" data-id="<?php echo $id ?>" class="clickable clickable">
+						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="group" data-method="show" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url('group','',$id,array()) ?>">
+							<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/group.svg" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,30,'..',constant('STR_PAD_BOTH') )))); ?></span>
+							
+						</a>
+
 					</td>
 				</tr>
 			<?php } ?>
