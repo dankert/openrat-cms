@@ -51,6 +51,30 @@ class ModelAction extends Action
 
 
 
+	public function propView()
+    {
+        $this->setTemplateVar('name'      ,$this->model->name      );
+        $this->setTemplateVar('is_default',$this->model->isDefault );
+    }
+
+
+
+    /**
+     * Speichern der Sprache
+     */
+    public function propPost()
+    {
+        if	( $this->hasRequestVar('name') ) {
+            $this->model->name = $this->getRequestVar('name');
+            $this->model->save();
+        }
+
+        if  ( $this->hasRequestVar('is_default') )
+            $this->model->setDefault();
+
+        $this->addNotice('model',$this->model->name,'DONE',OR_NOTICE_OK);
+    }
+
 
 	/**
 	 * Entfernen der Variante.<br>

@@ -86,18 +86,11 @@ class LanguageAction extends Action
 	}
 	
 	
-	public function propView()
-	{
-		$this->nextSubAction('advanced');
-	}
-
 	/**
 	 * Speichern der Sprache
 	 */
-	function advancedPost()
+	function propPost()
 	{
-		global $conf;
-
 		if	( $this->hasRequestVar('name') )
 		{
 			$this->language->name    = $this->getRequestVar('name'   );
@@ -105,13 +98,18 @@ class LanguageAction extends Action
 		}
 		else
 		{
-			$countryList = $conf['countries'];
+			$countryList = config()['countries'];
 			$iso = $this->getRequestVar('isocode');
 			$this->language->name    = $countryList[$iso];
 			$this->language->isoCode = strtolower( $iso );
 		}
+
+		if  ( $this->hasRequestVar('is_default') )
+		    $this->language->setDefault();
 		
 		$this->language->save();
+
+        $this->addNotice('language',$this->language->name,'DONE',OR_NOTICE_OK);
 	}
 
 
@@ -171,10 +169,11 @@ class LanguageAction extends Action
     }
 
 
-	function advancedView()
+	function propView()
 	{
-		$this->setTemplateVar('isocode',$this->language->isoCode);
-		$this->setTemplateVar('name'   ,$this->language->name   );
+		$this->setTemplateVar('isocode'   ,$this->language->isoCode   );
+		$this->setTemplateVar('name'      ,$this->language->name      );
+		$this->setTemplateVar('is_default',$this->language->isDefault );
 	}
 	
 	

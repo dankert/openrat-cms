@@ -155,7 +155,7 @@
 				<div class="arrow-down">
 				</div>
 				<div class="dropdown">
-					<div class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file">
+					<div class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-language on-action-model">
 						<a title="<?php echo lang('menu_prop_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="<?php echo Html::url('','prop','',array('dialogAction'=>'','dialogMethod'=>'prop')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/prop.svg" />
 							
@@ -222,7 +222,7 @@
 						</a>
 
 					</div>
-					<div class="entry clickable filtered on-action-language on-action-element">
+					<div class="entry clickable filtered on-action-element">
 						<a title="<?php echo lang('menu_advanced_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="advanced" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'advanced'}" href="<?php echo Html::url('','advanced','',array('dialogAction'=>'','dialogMethod'=>'advanced')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/advanced.svg" />
 							
