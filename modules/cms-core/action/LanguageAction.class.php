@@ -61,7 +61,9 @@ class LanguageAction extends Action
 	public function setdefaultPost()
 	{
 		$this->language->setDefault();
-	}
+
+        $this->addNotice('language',$this->language->name,'DONE',OR_NOTICE_OK);
+    }
 
 
 

@@ -76,14 +76,11 @@ class LanguagelistAction extends Action
 			$list[$id]['isocode'] = $l->isoCode;
 			
 			if	( $this->userIsAdmin() )
-			{
 				$list[$id]['id' ] = $id;
-			
-				if	( ! $l->isDefault )
-					$list[$id]['default_url'] = Html::url( 'language','setdefault',$id );
-			}
-				
-			$list[$id]['select_url']  = Html::url( 'index','language',$id );
+
+            $list[$id]['is_default'] = $l->isDefault;
+
+            $list[$id]['select_url']  = Html::url( 'index','language',$id );
 		}
 		
 		$this->setTemplateVar('el',$list);

@@ -11,9 +11,6 @@
 			<column>
 				<text raw=""></text>
 			</column>
-			<column>
-				<text raw=""></text>
-			</column>
 		</row>
 		<list list="el" extract="true">
 			<row class="data">
@@ -26,11 +23,16 @@
 				<column>
 					<text var="isocode"></text>
 				</column>
-				<if present="default_url">
+				<if false="var:is_default">
+
 					<column class="clickable">
-						<link type="post" action="language" subaction="setdefault" id="var:id">
-							<text text="GLOBAL_make_default"></text>
-						</link>
+						<if present="id">
+							<link type="post" action="language" subaction="setdefault" id="var:id">
+								<text text="GLOBAL_make_default"></text>
+							</link>
+						</if>
+						<else>
+						</else>
 					</column>
 				</if>
 				<else>
@@ -38,24 +40,12 @@
 						<text text="GLOBAL_is_default" type="emphatic" />
 					</column>
 				</else>
-				<if present="select_url">
-					<column class="clickable">
-						<link type="post" action="start" subaction="language" id="var:id">
-							<text text="GLOBAL_select"></text>
-						</link>
-					</column>
-				</if>
-				<else>
-					<column>
-						<text text="GLOBAL_selected" type="emphatic" />
-					</column>
-				</else>
 			</row>
 			<set var="select_url"></set>
 			<set var="default_url"></set>
 		</list>
 		<row class="data">
-			<column colspan="4" class="clickable">
+			<column colspan="3" class="clickable">
 				<link type="dialog" subaction="add">
 					<image method="add"/>
 					<text text="new"/>

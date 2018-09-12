@@ -107,7 +107,7 @@ class ModelAction extends Action
 
 		$this->model->setDefault();
 	
-		$this->callSubAction('listing');
+        $this->addNotice('model',$this->model->name,'DONE',OR_NOTICE_OK);
 	}
 
 

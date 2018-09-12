@@ -22,11 +22,13 @@
 					</link>
 				</column>
 
-				<if present="default_url">
+				<if false="var:is_default">
 					<column class="clickable">
-						<link type="post" action="model" subaction="setdefault" id="var:id">
-							<text text="GLOBAL_make_default"></text>
-						</link>
+						<if present="id">
+							<link type="post" action="model" subaction="setdefault" id="var:id">
+								<text text="GLOBAL_make_default"></text>
+							</link>
+						</if>
 					</column>
 				</if>
 				<else>
@@ -34,26 +36,12 @@
 						<text text="GLOBAL_is_default" type="emphatic" />
 					</column>
 				</else>
-
-
-				<if present="select_url">
-					<column class="clickable">
-						<link type="post" action="start" subaction="model" id="var:id">
-							<text text="GLOBAL_select"></text>
-						</link>
-					</column>
-				</if>
-				<else>
-					<column>
-						<text text="GLOBAL_selected" type="emphatic" />
-					</column>
-				</else>
 			</row>
 			<set var="select_url"></set>
 			<set var="default_url"></set>
 		</list>
 		<row class="data">
-			<column colspan="3" class="clickable">
+			<column colspan="2" class="clickable">
 				<link type="dialog" subaction="add">
 					<image method="add" />
 					<text text="new" />
