@@ -74,13 +74,15 @@ class ConfigurationAction extends Action
 	}
 
 
-
-
+    /**
+     * Die Konfiguration als YAML-String anzeigen.
+     */
 	public function srcView()
     {
         $conf = Session::getConfig();
         unset( $conf['language']);
 
+        // Mask passwords.
         array_walk_recursive($conf,function(&$item,$key)
         {
             if($key=='password'){
@@ -100,8 +102,9 @@ class ConfigurationAction extends Action
         {
             if	( is_array($val) )
             {
+                $new[$prefix.$key] = '';
 
-                $splitter = "\xC2\xA0"."\xC2\xBB"."\xC2\xA0"; // NBSP+RDQUO+NBSP as UTF-8
+                $splitter = "\xC2\xA0"."\xC2\xA0"."\xC2\xBB"."\xC2\xA0"."\xC2\xA0"; // NBSP+RDQUO+NBSP as UTF-8
                 $new += $this->flattenArray($prefix.$key.$splitter,$val);
             }
             else
@@ -137,7 +140,7 @@ class ConfigurationAction extends Action
         $conf['interpreter']['environment'] = $_ENV;
         $conf['interpreter']['temp_dir'] = sys_get_temp_dir();
 
-        $conf['interpreter']['ConfigurationLoader'] = ini_get_all();
+        $conf['interpreter']['configuration'] = ini_get_all();
         $conf['resources'] = getrusage();
 
         $extensions = get_loaded_extensions();
