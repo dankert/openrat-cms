@@ -37,16 +37,16 @@
 			<row class="data">
 				<column>
 					<if present="username">
-						<image type="user"></image>
+						<image action="user"></image>
 						<text var="username"></text>
 					</if>
 					<if present="groupname">
-						<image type="group"></image>
+						<image action="group"></image>
 						<text var="groupname"></text>
 					</if>
 					<if not="true" present="username">
 						<if not="true" present="groupname">
-							<image type="group"></image>
+							<image action="group"></image>
 							<text key="global_all"></text>
 						</if>
 					</if>
@@ -69,7 +69,7 @@
 		<row class="data">
 			<column colspan="99" class="clickable">
 				<link type="dialog" name="message:menu_aclform" subaction="aclform">
-					<image icon="add" />
+					<image method="add" />
 					<text text="new" />
 				</link>
 

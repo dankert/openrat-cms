@@ -29,7 +29,7 @@
 					
 				</td>
 			</tr>
-			<?php $if3=(empty($acls)); if($if3){?>
+			<?php $if3=(($acls)==FALSE); if($if3){?>
 				<tr class="data">
 					<td colspan="99">
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
@@ -37,26 +37,26 @@
 					</td>
 				</tr>
 			<?php } ?>
-			<?php $if3=!(empty($acls)); if($if3){?>
+			<?php $if3=!(($acls)==FALSE); if($if3){?>
 			<?php } ?>
 			<?php foreach($acls as $aclid=>$acl){ ?><?php extract($acl) ?>
 				<tr class="data">
 					<td>
 						<?php $if6=(isset($username)); if($if6){?>
-							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_user.png" />
+							<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/user.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($username))); ?></span>
 							
 						<?php } ?>
 						<?php $if6=(isset($groupname)); if($if6){?>
-							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_group.png" />
+							<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/group.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($groupname))); ?></span>
 							
 						<?php } ?>
 						<?php $if6=!(isset($username)); if($if6){?>
 							<?php $if7=!(isset($groupname)); if($if7){?>
-								<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_group.png" />
+								<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/group.svg" />
 								
 								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'global_all'.'')))); ?></span>
 								
@@ -69,13 +69,13 @@
 					</td>
 					<?php foreach($show as $list_key=>$t){ ?>
 						<td>
-							<?php { $tmpname     = $t;$default  = '';$readonly = '1';		
+							<?php { $tmpname     = $t;$default  = '';$readonly = '1';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -97,7 +97,7 @@
 			<tr class="data">
 				<td colspan="99" class="clickable">
 					<a target="_self" date-name="<?php echo lang('menu_aclform') ?>" name="<?php echo lang('menu_aclform') ?>" data-type="dialog" data-action="" data-method="aclform" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'aclform'}" href="<?php echo Html::url('','aclform','',array('dialogAction'=>'','dialogMethod'=>'aclform')) ?>">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/add.png" />
+						<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 						
 						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
 						
