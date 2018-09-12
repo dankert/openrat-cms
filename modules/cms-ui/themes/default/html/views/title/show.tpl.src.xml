@@ -141,6 +141,13 @@
                     </link>
                 </part>
                 <part
+                        class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-file on-action-url on-action-image">
+                    <link type="dialog" title="message:menu_settings_desc" subaction="settings">
+                        <image method="settings" align="left"></image>
+                        <text key="menu_settings"></text>
+                    </link>
+                </part>
+                <part
                         class="entry clickable filtered on-action-page on-action-file on-action-folder on-action-pageelement on-action-template">
                     <link type="dialog" title="message:menu_pub_desc" subaction="pub">
                         <image method="publish" align="left"></image>

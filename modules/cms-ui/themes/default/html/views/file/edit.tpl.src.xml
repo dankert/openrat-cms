@@ -12,20 +12,5 @@
 			</part>
 		</part>
 
-		<group title="message:settings">
-
-			<part class="line">
-				<part class="label">
-					<label for="settings">
-						<text key="SETTINGS"></text>
-					</label>
-				</part>
-				<part class="input">
-					<editor name="settings" type="code" mode="yaml"></editor>
-				</part>
-			</part>
-
-		</group>
-
 	</form>
 </output>

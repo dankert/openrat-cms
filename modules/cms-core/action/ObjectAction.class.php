@@ -509,4 +509,28 @@ class ObjectAction extends Action
         $this->baseObject->setCreationTimestamp();
 
     }
+
+
+    public function settingsView()
+    {
+        $this->setTemplateVar('settings',$this->baseObject->settings);
+        $this->request->action = 'object';
+    }
+
+    public function settingsPost()
+    {
+        $this->baseObject->settings  = $this->getRequestVar( 'settings');
+
+        // Validate YAML-Settings
+        try {
+            \Spyc::YAMLLoad( $this->baseObject->settings);
+        }
+        catch( \Exception $e )
+        {
+            throw new \ValidationException( 'settings' );
+        }
+
+        $this->baseObject->objectSave(false);
+        $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'SAVED',OR_NOTICE_OK);
+    }
 }

@@ -1,0 +1,21 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+    <form>
+
+        <group title="message:settings">
+
+            <part class="line">
+                <part class="label">
+                    <label for="settings">
+                        <text key="SETTINGS"></text>
+                    </label>
+                </part>
+                <part class="input">
+                    <editor name="settings" type="code" mode="yaml"></editor>
+                </part>
+            </part>
+
+        </group>
+
+    </form>
+</output>

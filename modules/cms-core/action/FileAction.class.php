@@ -65,18 +65,6 @@ class FileAction extends ObjectAction
 		$this->file->extension = $upload->extension;		
 		$this->file->size      = $upload->size;
 
-		$this->file->settings  = $this->getRequestVar( 'settings');
-
-		// Validate YAML-Settings
-		try {
-		    \Spyc::YAMLLoad( $this->file->settings);
-        }
-        catch( \Exception $e )
-        {
-            throw new \ValidationException( 'settings' );
-        }
-
-
 		$this->file->save();
 		
 		$this->file->value = $upload->value;

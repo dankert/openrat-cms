@@ -9,7 +9,7 @@
 				<div class="input">
 					<br/>
 					
-					<input size="40" id="req1536351057324003241_file" type="file" name="file" class="upload"  />
+					<input size="40" id="req15367875652052599737_file" type="file" name="file" class="upload"  />
 					
 					<br/>
 					
@@ -17,19 +17,5 @@
 					
 				</div>
 			</div>
-			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('settings') ?></legend><div>
-				<div class="line">
-					<div class="label">
-						<label for="<?php echo REQUEST_ID ?>_settings" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'SETTINGS'.'')))); ?></span>
-							
-						</label>
-					</div>
-					<div class="input">
-						<textarea name="settings" data-extension="" data-mimetype="" data-mode="yaml" class="editor code-editor"><?php echo ${'settings'} ?></textarea>
-						
-					</div>
-				</div>
-			</div></fieldset>
 		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
 	
