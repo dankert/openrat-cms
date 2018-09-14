@@ -24,11 +24,12 @@
 		</if>
 		<list list="object" extract="true">
 			<row class="data">
-				<column id="var:id" name="var:name" action="var:type" title="var:desc"
-					class="var:class">
-					<image type="var:icon"></image>
-					<text var="name"></text>
-					<text raw="_"></text>
+				<column class="clickable">
+					<link type="open" id="var:id" name="var:name" action="var:type" title="var:desc">
+						<image type="var:icon"></image>
+						<text var="name"></text>
+						<text raw="_"></text>
+					</link>
 				</column>
 				<column>
 					<date date="var:date"></date>

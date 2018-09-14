@@ -31,13 +31,16 @@
 			<?php } ?>
 			<?php foreach($object as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 				<tr class="data">
-					<td title="<?php echo $desc ?>" data-name="<?php echo $name ?>" data-action="<?php echo $type ?>" data-id="<?php echo $id ?>" class="clickable <?php echo $class ?>">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
-						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
-						
-						<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
-						
+					<td class="clickable">
+						<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="preview" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url($type,'',$id,array()) ?>">
+							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
+							
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+							
+							<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+							
+						</a>
+
 					</td>
 					<td>
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($date) ?>
