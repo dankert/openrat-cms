@@ -338,15 +338,6 @@
 						</a>
 
 					</div>
-					<div class="entry clickable filtered on-action-project">
-						<a title="<?php echo lang('menu_export_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="export" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'export'}" href="<?php echo Html::url('','export','',array('dialogAction'=>'','dialogMethod'=>'export')) ?>">
-							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/export.svg" />
-							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_export'.'')))); ?></span>
-							
-						</a>
-
-					</div>
 					<div class="entry clickable filtered on-action-user on-action-group">
 						<a title="<?php echo lang('menu_memberships_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="memberships" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'memberships'}" href="<?php echo Html::url('','memberships','',array('dialogAction'=>'','dialogMethod'=>'memberships')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/membership.svg" />

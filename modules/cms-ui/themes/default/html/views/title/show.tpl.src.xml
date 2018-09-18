@@ -292,6 +292,7 @@
                         <text key="menu_maintenance"></text>
                     </link>
                 </part>
+<!--
                 <part class="entry clickable filtered on-action-project">
                     <link type="dialog" title="message:menu_export_desc"
                           subaction="export">
@@ -299,6 +300,7 @@
                         <text key="menu_export"></text>
                     </link>
                 </part>
+-->
                 <part class="entry clickable filtered on-action-user on-action-group">
                     <link type="dialog" title="message:menu_memberships_desc"
                           subaction="memberships">

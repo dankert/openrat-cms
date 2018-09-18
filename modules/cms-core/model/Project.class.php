@@ -478,7 +478,7 @@ SQL
 		$root = new Folder( $this->getRootObjectId() );
 		$root->projectid = $this->projectid;
 		
-		$pages = $root->getAllObjectIds( array('page') );
+		$pages = $this->getAllObjectIds( array('page') );
 		$languages = $this->getLanguageIds();
 		
 		foreach( $pages as $objectid )
@@ -510,7 +510,7 @@ SQL
 	{
 		$this->log = array();
 		
-		$db = &Session::getDatabase();
+		$db = Session::getDatabase();
 
 		// Ordnerstruktur prüfen.
 		$sql = $db->sql( <<<EOF
