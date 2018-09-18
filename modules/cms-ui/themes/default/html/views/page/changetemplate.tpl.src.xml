@@ -21,7 +21,7 @@
 				<text text="page_template_new"></text>
 			</part>
 			<part class="input">
-				<selectbox name="newtemplateid" list="templates" class="focus"></selectbox>
+				<selectbox name="newtemplateid" list="templates" default=""></selectbox>
 			</part>
 		</part>
 
