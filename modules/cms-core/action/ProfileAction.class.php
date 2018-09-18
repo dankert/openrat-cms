@@ -19,6 +19,7 @@ namespace cms\action;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+use cms\model\BaseObject;
 use language\Language;
 use LogicException;
 use Mail;
@@ -312,8 +313,18 @@ class ProfileAction extends Action
      */
     public function historyView()
     {
-        $result = $this->user->getLastChanges();
-        $this->setTemplateVar('timeline', $result);
+        $lastChanges = $this->user->getLastChanges();
+
+        $timeline = array();
+
+        foreach( $lastChanges as $entry )
+        {
+            $timeline[ $entry['objectid'] ] = $entry;
+            $baseObject = new BaseObject( $entry['objectid']);
+            $baseObject->objectLoad();
+            $timeline[ $entry['objectid'] ]['type'] = $baseObject->getType();
+        }
+        $this->setTemplateVar('timeline', $timeline);
     }
 
 

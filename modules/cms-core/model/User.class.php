@@ -957,6 +957,7 @@ SQL
 		$sql = $db->sql( <<<SQL
 		SELECT {{object}}.id       as objectid,
 		       {{object}}.filename as filename,
+		       {{object}}.typeid   as typeid,
 		       {{object}}.lastchange_date as lastchange_date,
 		       {{project}}.id      as projectid,
 			   {{project}}.name    as projectname
