@@ -383,7 +383,7 @@ function createDefaultConfig()
     $conf['mail'] = array();
     $conf['mail']['enabled']=true;
     $conf['mail']['from']="OpenRat <user@example.com>";
-    $conf['mail']['signature']="http://www.openrat.de";
+    $conf['mail']['signature']='';
     $conf['mail']['cc']='0';
     $conf['mail']['bcc']='0';
     $conf['mail']['priority']='3';

@@ -51,7 +51,7 @@ class Mail
 	 * Falls beim Versendern der E-Mail etwas schiefgeht, steht hier drin
 	 * die technische Fehlermeldung.
 	 *
-	 * @var String Fehler
+	 * @var array Fehler
 	 */
 	var $error = array();
 	
@@ -59,7 +59,7 @@ class Mail
 	 * Set to true for debugging.
 	 * If true, All SMTP-Commands are written to error log.
 	 *
-	 * @var unknown_type
+	 * @var bool
 	 */
 	var $debug = true;
 	
@@ -72,7 +72,7 @@ class Mail
 	 * @param String unbenutzt.
 	 * @return Mail
 	 */
-	function Mail( $to,$text,$xy='' )
+	function __construct( $to,$text,$xy='' )
 	{
 		global $conf;
 		
@@ -87,17 +87,21 @@ class Mail
 			$this->header[] = 'X-Priority: '.$conf['mail']['priority'];
 			
 		$this->header[] = 'X-Mailer: '.$this->header_encode(OR_TITLE.' '.OR_VERSION);
-		$this->header[] = 'Content-Type: text/plain; charset='.lang( 'CHARSET' );
+		$this->header[] = 'Content-Type: text/plain; charset=UTF-8';
 		$this->subject  = $this->header_encode(lang( 'mail_subject_'.$text ));
 		$this->to       = $this->header_encode($to);
 		
 		$this->text = $this->nl.wordwrap(str_replace(';',$this->nl,lang('mail_text_'.$text)),70,$this->nl).$this->nl;
 
 		// Signatur anhaengen (sofern konfiguriert)
-		if	( !empty($conf['mail']['signature']) )
+		$signature = $conf['mail']['signature'];
+		if   ( empty( $signature ) )
+			$signature = $conf['application']['name'];
+
+        if   ( !empty( $signature ) )
 		{
 			$this->text .= $this->nl.'-- '.$this->nl;
-			$this->text .= str_replace(';',$this->nl,$conf['mail']['signature']);
+			$this->text .= str_replace(';',$this->nl,$signature);
 			$this->text .= $this->nl;
 		}
 		
@@ -118,7 +122,7 @@ class Mail
 	 * @param String $text Eingabe
 	 * @return Text im quoted-printable-Format
 	 */
-	function quoted_printable_encode( $text )
+    private function quoted_printable_encode( $text )
 	{
 		$text = str_replace(' ','=20',$text);
 		
@@ -135,7 +139,7 @@ class Mail
 	/**
 	 * Setzen einer Variablen in den Mail-Inhalt.
 	 */
-	function setVar( $varName,$varInhalt)
+    public function setVar( $varName,$varInhalt)
 	{
 		$this->text = str_replace( '{'.$varName.'}', $varInhalt, $this->text );
 	}
@@ -147,11 +151,14 @@ class Mail
 	 * 
 	 * @return boolean Erfolg
 	 */	
-	function send()
+	public function send()
 	{
 		global $conf;
-		
-		$to_domain = array_pop( explode('@',$this->to) );
+
+		if ( strpos( $this->to,'@') === FALSE )
+			throw new LogicException("E-Mail-Adress does not contain a domain name: ".$this->to);
+
+		$to_domain = explode('@',$this->to)[1];
 
 		// Prüfen gegen die Whitelist
 		$white = @$conf['mail']['whitelist'];
@@ -396,7 +403,7 @@ class Mail
 	 * @param unknown_type $cmd SMTP-Kommando
 	 * @return Server-Antwort
 	 */
-	function sendSmtpCommand( $socket,$cmd )
+    private function sendSmtpCommand( $socket,$cmd )
 	{
 		if	( $this->debug )
 			$this->error[] = 'CLIENT: >>> '.trim($cmd);
@@ -425,7 +432,7 @@ class Mail
 	 *
 	 * @param Resource Socket
 	 */
-	function sendSmtpQuit( $socket )
+	private function sendSmtpQuit( $socket )
 	{
 		
 		if	( $this->debug )
@@ -456,7 +463,7 @@ class Mail
 	 * @param String $text
 	 * @return String
 	 */
-	function header_encode( $text )
+	private function header_encode( $text )
 	{
 		global $conf;
 		
@@ -477,12 +484,12 @@ class Mail
 			elseif	( $type == 'q' )
 				$neu_wort = $this->quoted_printable_encode($wort);
 			else
-				Logger::error( 'Mail-Configuratin broken: UNKNOWN Header-Encoding type: '.$type);
+				throw new LogicException( 'Mail-Configuration broken: UNKNOWN Header-Encoding type: '.$type);
 
 			if	( strlen($wort)==strlen($neu_wort) )
 				$neu[] = $wort;
 			else
-				$neu[] = '=?'.lang('CHARSET').'?'.$type.'?'.$neu_wort.'?=';
+				$neu[] = '=?UTF-8?'.$type.'?'.$neu_wort.'?=';
 		}
 		
 		return implode(' ',$neu);
@@ -496,7 +503,7 @@ class Mail
 	 * @param String E-Mail-Adresse des Empf�ngers.
 	 * @return MX-Eintrag
 	 */
-	function getMxHost( $to )
+	private function getMxHost( $to )
 	{
 		list($user,$host) = explode('@',$to.'@');
 		
@@ -543,11 +550,11 @@ class Mail
 	/**
 	 * Prüft, ob eine Domain in einer List von Domains enthalten ist.
 	 * 
-	 * @param $checkDomain zu prüfende Domain
-	 * @param $domain_list Liste von Domains als kommaseparierte Liste
+	 * @param $checkDomain string zu prüfende Domain
+	 * @param $domain_list string Liste von Domains als kommaseparierte Liste
 	 * @return true, falls vorhanden, sonst false
 	 */
-	function containsDomain($checkDomain, $domain_list)
+	private static function containsDomain($checkDomain, $domain_list)
 	{
 		$domains = explode(',',$domain_list);
 		
