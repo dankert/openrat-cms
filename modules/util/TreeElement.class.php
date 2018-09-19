@@ -47,7 +47,6 @@ class TreeElement
 	var $description = "";
 	var $url         = "";
 	var $icon        = "";
-	var $target      = "";
 	var $action      = "";
 	
 	/**
@@ -64,6 +63,8 @@ class TreeElement
 	 * @type String
 	 */
 	var $type = "";
+
+	public $children = array();
 	
 	
 	// Konstruktor

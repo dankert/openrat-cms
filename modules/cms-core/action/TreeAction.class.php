@@ -46,70 +46,78 @@ class TreeAction extends Action
 	 */
 	public function loadBranchView()
 	{
-        $tree = new Tree();
 
         $type = $this->getRequestVar('type');
-		
-		if	( intval($this->getRequestVar('id')) != 0 )
-			$tree->$type( $this->getRequestId() );
-		else
-			$tree->$type();
-			
-		$branch = array();
-		foreach($tree->treeElements as $element )
-		{
-			$branch[] = get_object_vars($element);
-		}
-		
+
+        $branch = $this->loadTreeBranch( $type );
+
 		$this->setTemplateVar( 'branch',$branch ); 
 	}
-	
-
-	/**
-	 * Projekt-Einstellungen anzeigen.
-	 */
-	public function settingsView()
-	{
-	    /*
-		$this->setTemplateVar( 'languages' ,Language::getAll()                        );
-		$this->setTemplateVar( 'languageid',0 );
-		$this->setTemplateVar( 'models'    ,Model::getAll()                           );
-		$this->setTemplateVar( 'modelid'   ,0 );
-	    */
-	}
 
 
-    /**
-     * @deprecated
-     */
-	public function settingsPost()
-	{
 
-		$this->addNotice('language',$language->name,'DONE',OR_NOTICE_OK);
-		$this->addNotice('model'   ,$model->name   ,'DONE',OR_NOTICE_OK);
-	}
+	private function loadTreeBranch( $type )
+    {
+        $tree = new Tree();
+
+        if	( intval($this->getRequestVar('id')) != 0 )
+            $tree->$type( $this->getRequestId() );
+        else
+            $tree->$type();
+
+        $branch = array();
+        foreach($tree->treeElements as $element )
+        {
+            $branch[] = get_object_vars($element);
+        }
+
+        return $branch;
+    }
 
 
     /**
-     * @deprecated
+     * Initialer Aufbau des Navigationsbaums.
      */
-	public function languagePost()
-	{
-		$language = new Language( $this->getRequestId() );
-		$language->load();
+	public function treeView()
+    {
+        $branch = $this->loadTreeBranch( 'root' );
 
-		$this->addNotice('language',$language->name,'DONE',OR_NOTICE_OK);
-	}
-	
-	
-	public function modelPost()
-	{
-		$model = new Model( $this->getRequestId() );
-		$model->load();
+        foreach( $branch as $k=>$b )
+        {
+            if   ( !empty($b['type']) )
+                $branch[$k]['children'] = $this->loadTreeBranch( $b['type'] );
+            else
+                $branch[$k]['children'] = array();
+        }
 
-		$this->addNotice('model'   ,$model->name   ,'DONE',OR_NOTICE_OK);
-	}
-	
+        $this->outputTreeBranch( $branch );
+
+        //$this->setTemplateVar( 'branch',$branch );
+
+    }
+
+
+
+    private function outputTreeBranch($branch )
+    {
+        $json = new \JSON();
+        echo '<ul class="tree">';
+
+        foreach( $branch as $b )
+        {
+            echo '<li class="object" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'"><div class="tree"><div class="arrow"></div></div><a href="./?action='.$b['action'].'&id='.$b['internalId'].'" class="entry" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'" title="'.$b['description'].'"><img src="modules/cms-ui/themes/default/images/icon_'.$b['icon'].'.png" />'.$b['text'].'</a>';
+
+            if   ( isset($b['children']) && !empty($b['children']) )
+            {
+                $this->outputTreeBranch($b['children']);
+            }
+
+            echo '</li>';
+        }
+
+        echo '</ul>';
+    }
+
 }
 
 ?>

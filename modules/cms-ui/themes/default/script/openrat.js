@@ -443,19 +443,18 @@ function fullscreen( element ) {
 
 function loadTree()
 {
-		// Oberstes Tree-Element erzeugen
-		$('#navigation').html("&nbsp;");
-		
-		// Wurzel des Baums laden
+		$('#navigation div.tree').addClass('closed').find('.arrow').addClass('arrow-right');
+		// Klick-Funktion zum Öffnen des Zweiges.
+    	//$('#navigation div.tree').click( function() { $(this).parent().orTree( {type:line.type,id:line.internalId,extraId:line.extraId,onSelect:settings.onSelect,selectable:settings.selectable} );} ); // Zweig öffnen
+
+
+    // Wurzel des Baums laden
 		//loadBranch( $('div#tree ul.tree > li'),'root',0);
 		$('#navigation').orTree( { type:'root',id:0,onSelect:function(name,type,id,extraId) {
 			$('nav').removeClass('open');
 			openNewAction( name,type,id, extraId );
 		} });
 		
-		// Die ersten 2 Hierarchien öffnen:
-		$('#navigation > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
-		$('#navigation > div.sheet.action-tree.method-tree > ul.tree > div.tree').delay(500).click();
 }
 
 

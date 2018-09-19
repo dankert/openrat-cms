@@ -73,7 +73,6 @@ class Tree
         $treeElement->action = 'projectlist';
         $treeElement->icon = 'projectlist';
         $treeElement->type = 'projects';
-        $treeElement->target = 'cms_main';
 
         $this->addTreeElement($treeElement);
 
@@ -115,7 +114,6 @@ class Tree
         $treeElement->url = Html::url('user', 'listing', 0, array(REQ_PARAM_TARGET => 'content'));
         $treeElement->action = 'userlist';
         $treeElement->icon = 'userlist';
-        $treeElement->target = 'cms_main';
         $treeElement->type = 'users';
 
         $this->addTreeElement($treeElement);
@@ -126,7 +124,6 @@ class Tree
         $treeElement->url = Html::url('group', 'listing', 0, array(REQ_PARAM_TARGET => 'content'));
         $treeElement->action = 'grouplist';
         $treeElement->icon = 'userlist';
-        $treeElement->target = 'cms_main';
         $treeElement->type = 'groups';
 
         $this->addTreeElement($treeElement);
@@ -158,7 +155,6 @@ class Tree
                 $treeElement->action = 'project';
                 $treeElement->type = 'project';
                 $treeElement->description = '';
-                $treeElement->target = 'cms_main';
 
                 $this->addTreeElement($treeElement);
             }
@@ -193,7 +189,6 @@ class Tree
             $treeElement->icon = 'folder';
             $treeElement->action = 'folder';
 //			$treeElement->url         = Html::url( 'folder','',$folder->objectid,array(REQ_PARAM_TARGET=>'content') );
-            $treeElement->target = 'content';
             $treeElement->type = 'folder';
             $treeElement->internalId = $folder->objectid;
             $this->addTreeElement($treeElement);
@@ -213,7 +208,6 @@ class Tree
             $treeElement->description = lang('GLOBAL_TEMPLATES_DESC');
             $treeElement->icon = 'templatelist';
             $treeElement->action = 'templatelist';
-            $treeElement->target = 'content';
             $treeElement->type = 'templates';
             $this->addTreeElement($treeElement);
         }
@@ -230,7 +224,6 @@ class Tree
 //		$treeElement->url        = Html::url('language','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
         $treeElement->icon = 'languagelist';
         $treeElement->description = lang('GLOBAL_LANGUAGES_DESC');
-        $treeElement->target = 'content';
 
         // Nur fuer Projekt-Administratoren aufklappbar
         if ($userIsProjectAdmin)
@@ -255,7 +248,6 @@ class Tree
 //		$treeElement->url        = Html::url('model','listing',0,array(REQ_PARAM_TARGETSUBACTION=>'listing',REQ_PARAM_TARGET=>'content'));
         $treeElement->action = 'modellist';
         $treeElement->icon = 'modellist';
-        $treeElement->target = 'content';
         $this->addTreeElement($treeElement);
 
 
@@ -269,7 +261,6 @@ class Tree
         $treeElement->action = 'search';
         $treeElement->icon = 'search';
         $treeElement->description = lang('GLOBAL_SEARCH_DESC');
-        $treeElement->target = 'content';
         $this->addTreeElement($treeElement);
 
     }
@@ -301,7 +292,6 @@ class Tree
                 $desc .= ' - ' . $user->desc;
 
             $treeElement->description = $desc;
-            $treeElement->target = 'cms_main';
 
             $this->addTreeElement($treeElement);
         }
@@ -327,7 +317,6 @@ class Tree
                 array(REQ_PARAM_TARGET => 'content'));
             $treeElement->icon = 'group';
             $treeElement->description = lang('GLOBAL_GROUP') . ' ' . $g->name . ': ' . implode(', ', $g->getUsers());
-            $treeElement->target = 'cms_main';
             $treeElement->type = 'userofgroup';
             $treeElement->action = 'group';
 
@@ -355,7 +344,6 @@ class Tree
             $treeElement->icon = 'user';
             $treeElement->action = 'user';
             $treeElement->description = $u->fullname;
-            $treeElement->target = 'cms_main';
 
             $this->addTreeElement($treeElement);
         }
@@ -395,7 +383,6 @@ class Tree
                     $treeElement->description .= ' - ' . Text::maxLaenge(25, $element->desc);
                 else
                     $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-                $treeElement->target = 'content';
 
                 if (in_array($element->type, array('link', 'list', 'include'))) {
                     $treeElement->type = 'value';
@@ -441,7 +428,6 @@ class Tree
                     $treeElement->description .= ' - ' . Text::maxLaenge(25, $object->desc);
                 else
                     $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
-                $treeElement->target = 'content';
 
                 $this->addTreeElement($treeElement);
             }
@@ -460,7 +446,6 @@ class Tree
         $treeElement = new TreeElement();
         $treeElement->id = $o->objectid;
         $treeElement->internalId = $o->objectid;
-        $treeElement->target = 'content';
         $treeElement->text = $o->name;
         $treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $id;
 
@@ -505,7 +490,6 @@ class Tree
             $treeElement->id = $o->objectid;
             $treeElement->internalId = $o->objectid;
             $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $f->languageid, REQ_PARAM_MODEL_ID => $f->modelid);
-            $treeElement->target = 'content';
             $treeElement->text = $o->name;
             $treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $o->objectid;
 
@@ -564,7 +548,6 @@ class Tree
             $treeElement->url = Html::url('template', 'src', $id, array(REQ_PARAM_TARGETSUBACTION => 'src', REQ_PARAM_TARGET => 'content'));
             $treeElement->icon = 'template';
             $treeElement->action = 'template';
-            $treeElement->target = 'content';
             $treeElement->internalId = $id;
             $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
             $treeElement->type = 'template';
@@ -603,7 +586,6 @@ class Tree
             else
                 $desc = $e->desc;
             $treeElement->description = $e->name . ' (' . lang('EL_' . $e->type) . '): ' . Text::maxLaenge(40, $desc);
-            $treeElement->target = 'content';
             $this->addTreeElement($treeElement);
         }
     }
@@ -627,7 +609,6 @@ class Tree
             $treeElement->icon = 'language';
             $treeElement->action = 'language';
             $treeElement->description = '';
-            $treeElement->target = 'content';
             $this->addTreeElement($treeElement);
         }
     }
@@ -649,7 +630,6 @@ class Tree
             $treeElement->action = 'model';
             $treeElement->icon = 'model';
             $treeElement->description = '';
-            $treeElement->target = 'content';
             $this->addTreeElement($treeElement);
         }
     }
