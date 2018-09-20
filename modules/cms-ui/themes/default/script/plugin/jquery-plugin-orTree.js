@@ -1,5 +1,8 @@
 /**
  * Baum darstellen.
+ *
+ * Die Controls zum Öffnen/Schließen der Teilbäume werden mit Event-Listener bestückt.
+ * Beim Öffnen von Teilbäumen wird der Inhalt vom Server geladen.
  */
 jQuery.fn.orTree = function ()
 {
@@ -14,11 +17,12 @@ jQuery.fn.orTree = function ()
                 // Pfad ist offen -> schließen
                 $(node).children('ul').slideUp('fast').remove();
 
+                // Am Knoten die Klasse wechseln.
                 $(node).removeClass('or-navtree-node--is-open').addClass('or-navtree-node--is-closed').find('.arrow').removeClass('arrow-down').addClass('arrow-right');
             }
             else {
                 // Pfad ist geschlossen -> öffnen.
-                $(treeEl).closest('div.content').addClass('loader');
+                $(treeEl).closest('div.view').addClass('loader');
 
                 var type = $(node).data('type');
                 var id = $(node).data('id');
@@ -41,8 +45,10 @@ jQuery.fn.orTree = function ()
                     ;
                 }
 
+                // Die Inhalte des Zweiges laden.
                 $.getJSON(loadBranchUrl, function (json) {
 
+                    // Den neuen Unter-Zweig erzeugen.
                     $(treeEl).append('<ul class="or-navtree-list"/>');
                     var ul = $(treeEl).children('ul').first();
                     var output = json['output'];
@@ -51,25 +57,27 @@ jQuery.fn.orTree = function ()
                             //var img = (line.url!==undefined?'tree_plus':'tree_none');
                             var new_li = $('<li class="or-navtree-node or-navtree-node--is-closed" data-id="' + line.internalId + '" data-type="' + line.type + '"><div class="tree or-navtree-node-control"><div class="arrow arrow-right"></div></div><div class="clickable"><a href="./?action=' + line.action + '&id=' + line.internalId + '" class="entry" data-extra="' + JSON.stringify(line.extraId).replace(/"/g, "'") + '" data-id="' + line.internalId + '" data-action="' + line.action + '" data-type="open" title="' + line.description + '"><img src="modules/cms-ui/themes/default/images/icon_' + line['icon'] + '.png" />' + line.text + '</a></div></li>');
                             $(ul).append(new_li);
-                            //var new_li = $(ul).children('li').last();
-                            //$(new_li).children('div').unbind('click');
-                            $(new_li).orTree();
 
+                            $(new_li).orTree(); // Alle Unter-Knoten erhalten auch Event-Listener zum Öffnen/Schließen.
+
+                            // Die Navigationspunkte sind anklickbar, hier wird der Standardmechanismus benutzt.
                             $(new_li).find('.clickable').orLinkify();
                             $(new_li).find('.clickable a').click( function(event) {
-                                event.preventDefault();
+                                event.preventDefault(); // Links werden per Javascript geöffnet. Beim Öffnen im neuen Tab hat das aber keine Bedeutung.
                             } );
                         //}
                     });
-                    //$(ul).children('li:last-child').addClass('last');
                     $(ul).slideDown('fast'); // Einblenden
 
                 }).fail(function () {
-                    //
+                    // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
                 }).always(function () {
-                    $(treeEl).closest('div.content').removeClass('loader');
+
+                    // Die Loader-Animation entfernen.
+                    $(treeEl).closest('div.view').removeClass('loader');
                 });
 
+                // Am Knoten die Klasse wechseln.
                 $(node).addClass('or-navtree-node--is-open').removeClass('or-navtree-node--is-closed').find('.arrow').addClass('arrow-down').removeClass('arrow-right');
             }
         });
