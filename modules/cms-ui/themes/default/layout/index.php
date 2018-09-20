@@ -41,7 +41,7 @@
             <header>
                 <a href=""></a>
             </header>
-            <div id="navigation" class="view view-static" data-action="tree" data-method="tree">
+            <div id="navigation" class="or-navtree view view-static" data-action="tree" data-method="tree">
                 <?php embedView('tree','tree'); ?>
             </div>
 

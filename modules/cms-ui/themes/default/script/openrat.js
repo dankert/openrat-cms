@@ -443,18 +443,8 @@ function fullscreen( element ) {
 
 function loadTree()
 {
-		$('#navigation div.tree').addClass('closed').find('.arrow').addClass('arrow-right');
-		// Klick-Funktion zum Öffnen des Zweiges.
-    	//$('#navigation div.tree').click( function() { $(this).parent().orTree( {type:line.type,id:line.internalId,extraId:line.extraId,onSelect:settings.onSelect,selectable:settings.selectable} );} ); // Zweig öffnen
-
-
-    // Wurzel des Baums laden
-		//loadBranch( $('div#tree ul.tree > li'),'root',0);
-		$('#navigation').orTree( { type:'root',id:0,onSelect:function(name,type,id,extraId) {
-			$('nav').removeClass('open');
-			openNewAction( name,type,id, extraId );
-		} });
-		
+		// Klick-Funktionen zum Öffnen/Schließen des Zweiges.
+    	$('.or-navtree .or-navtree-node').orTree();
 }
 
 

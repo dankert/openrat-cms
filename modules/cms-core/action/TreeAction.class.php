@@ -101,13 +101,15 @@ class TreeAction extends Action
     private function outputTreeBranch($branch )
     {
         $json = new \JSON();
-        echo '<ul class="tree">';
+        echo '<ul class="or-navtree-list">';
 
         foreach( $branch as $b )
         {
-            echo '<li class="object" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'"><div class="tree"><div class="arrow"></div></div><a href="./?action='.$b['action'].'&id='.$b['internalId'].'" class="entry" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'" title="'.$b['description'].'"><img src="modules/cms-ui/themes/default/images/icon_'.$b['icon'].'.png" />'.$b['text'].'</a>';
+            $hasChildren = isset($b['children']) && !empty($b['children']);
 
-            if   ( isset($b['children']) && !empty($b['children']) )
+            echo '<li class="or-navtree-node or-navtree-node--'.($hasChildren?'is-open':'is-closed').'" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'"><div class="or-navtree-node-control"><div class="arrow '.($hasChildren?'arrow-down':'arrow-right').'"></div></div><div class="clickable"><a href="./?action='.$b['action'].'&id='.$b['internalId'].'" class="entry" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'" data-id="'.$b['internalId'].'" data-action="'.$b['type'].'" data-type="open" title="'.$b['description'].'"><img src="modules/cms-ui/themes/default/images/icon_'.$b['icon'].'.png" />'.$b['text'].'</a></div>';
+
+            if   ($hasChildren)
             {
                 $this->outputTreeBranch($b['children']);
             }
