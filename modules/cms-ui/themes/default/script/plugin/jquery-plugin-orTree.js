@@ -6,7 +6,7 @@ jQuery.fn.orTree = function ()
     $(this).each(function (idxx, treeEl)
     {
         // Klick-Funktion zum Öffnen des Zweiges.
-        $(treeEl).find('.or-navtree-node-control').click( function ()
+        $(treeEl).children('.or-navtree-node-control').click( function ()
         {
             var node = $(this).parent('.or-navtree-node');
 
