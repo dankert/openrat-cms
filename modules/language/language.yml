@@ -2862,8 +2862,8 @@ MAIL_SUBJECT_USER_MAIL:
   it: tu contraseña
   ru: Пароль
 MAIL_TEXT_MAIL_CHANGE_CODE:
-  de: 'Guten Tag {name},;;Mit dem nachfolgenden Code können Sie Ihre E-Mail-Adresse ändern:;;Code: {code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.'
-  en: 'Hello {name},;;Enter the following code to verify your e-Mail-adress:;;Code: {code};;Please copy this number an paste it into the input field.;;if you do not know where this mail comes from, please ignore it.'
+  de: 'Guten Tag {name},;;Sie erhalten diese E-Mail, weil Sie eine Änderung Ihrer E-Mail-Adresse wünschen.;;Mit dem nachfolgenden Code können Sie Ihre E-Mail-Adresse ändern:;;Code: {code};;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein.;;Wenn Sie nicht wissen, wieso Sie diese E-Mail erhalten haben, ignorieren Sie diese bitte.'
+  en: 'Hello {name},;;you are receiving this mail, because you want to change your e-mail-adresse.;;Enter the following code to verify your e-mail-adress:;;Code: {code};;Please copy this number an paste it into the input field.;;if you do not know where this mail comes from, please ignore it.'
 MAIL_TEXT_PASSWORD_COMMIT_CODE:
   de: 'Guten Tag {name},;;Ihr Code zum Anfordern eines neuen Kennwortes lautet: {code}.;;Bitte kopieren Sie diese Zahl und fügen Sie diese in das entsprechende Eingabefeld ein;;Sollten Sie kein neues Kennwort angefordert haben, so ignorieren Sie bitte diese E-Mail.;;Vielen Dank.'
   en: 'Hello {name};;your code for requesting a new password is: {code};;Please insert this number into the input field.;;If you have not request a new password, please ignore this e-mail. In this case, your password will stay unchanged.;;Thank you.'
@@ -6046,10 +6046,7 @@ USER_MAIL_TEXT_SUFFIX:
   it: "Notare questa parola d'accesso ad un posto sicuro e rimuovere questo E-mail. Vostro potere cambiare la vostra parola d'accesso dopo avere entrato."
   ru: Примечание пароль на этом безопасном месте и удалить это письмо. Ваш сможете изменить пароль после регистрации. Членства
 CHARSET:
-  es: ISO-8859-1
-  fr: ISO-8859-1
-  it: ISO-8859-1
-  ru: UTF-8
+  en: UTF-8
 MENU_TITLE_SEARCH_CONTENT:
   es: Search for value
   fr: Search for value
