@@ -2,7 +2,12 @@
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
     <part class="toolbar-icon toggle-nav-open-close">
-        <image fileext="menu/menu.svg" align="left"></image>
+        <image menu="menu" />
+        <!--<text class="label" key="menu"></text>-->
+    </part>
+
+    <part class="toolbar-icon toggle-nav-small">
+        <image menu="menu" />
         <!--<text class="label" key="menu"></text>-->
     </part>
 
@@ -469,14 +474,6 @@
                         <text key="menu_mail"></text>
                     </link>
                 </part>
-                <part class="entry clickable">
-                    <link type="post" title="message:menu_start_desc" action="start"
-                          subaction="start">
-                        <image action="dashboard" align="left"></image>
-                        <text key="menu_start"></text>
-                    </link>
-                </part>
-
                 <part class="divide"/>
 
                 <part class="entry clickable">

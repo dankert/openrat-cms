@@ -329,6 +329,10 @@ function afterViewLoaded(viewEl )
 		$('nav').toggleClass('open');
 	});
 
+	$(viewEl).find('.toggle-nav-small').click( function() {
+		$('nav').toggleClass('small');
+	});
+
 	$(viewEl).find('div.headermenu > a').each( function(idx,el)
 	{
 		// Jeden Untermenüpunkt zum Fenstermenü hinzufügen.

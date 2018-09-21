@@ -233,12 +233,21 @@ div#workbench {
                 width: 0;
             }
 
-            //&:hover,
+            &.small {
+                width: 5em;
+                opacity: 0.5;
+                overflow-y: hidden;
+
+                &:hover {
+                    width: 50%;
+                    overflow-y: auto;
+                    opacity: 1;
+                }
+            }
+
             &.open {
 
-                width: 33%;
                 overflow-y: auto;
-
                 @media @smartphones {
                     width: 90%;
                 }
@@ -294,6 +303,13 @@ div#workbench {
 }
 
 #title {
+
+    .toggle-nav-small {
+        display: inline;
+        @media @smartphones {
+            display: none;
+        }
+    }
 
     .toggle-nav-open-close {
         display: none;

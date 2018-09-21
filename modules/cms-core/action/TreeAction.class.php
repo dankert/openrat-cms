@@ -107,7 +107,7 @@ class TreeAction extends Action
         {
             $hasChildren = isset($b['children']) && !empty($b['children']);
 
-            echo '<li class="or-navtree-node or-navtree-node--'.($hasChildren?'is-open':'is-closed').'" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'"><div class="or-navtree-node-control"><div class="arrow '.($hasChildren?'arrow-down':'arrow-right').'"></div></div><div class="clickable"><a href="./?action='.$b['action'].'&id='.$b['internalId'].'" class="entry" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'" data-id="'.$b['internalId'].'" data-action="'.$b['type'].'" data-type="open" title="'.$b['description'].'"><img src="modules/cms-ui/themes/default/images/icon_'.$b['icon'].'.png" />'.$b['text'].'</a></div>';
+            echo '<li class="or-navtree-node or-navtree-node--'.($hasChildren?'is-open':'is-closed').'" data-id="'.$b['internalId'].'" data-type="'.$b['type'].'" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'"><div class="or-navtree-node-control"><div class="arrow '.($hasChildren?'arrow-down':'arrow-right').'"></div></div><div class="clickable"><a href="./?action='.$b['action'].'&id='.$b['internalId'].'" class="entry" data-extra="'.str_replace('"',"'",$json->encode($b['extraId'])).'" data-id="'.$b['internalId'].'" data-action="'.$b['action'].'" data-type="open" title="'.$b['description'].'"><img src="modules/cms-ui/themes/default/images/icon_'.$b['icon'].'.png" />'.$b['text'].'</a></div>';
 
             if   ($hasChildren)
             {

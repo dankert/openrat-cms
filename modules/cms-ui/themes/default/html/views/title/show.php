@@ -1,7 +1,11 @@
 
 	
 		<div class="toolbar-icon toggle-nav-open-close">
-			<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/menu/menu.svg" />
+			<img class="image-icon image-icon--menu" title="" src="./modules/cms-ui/themes/default/images/icon/menu/menu.svg" />
+			
+		</div>
+		<div class="toolbar-icon toggle-nav-small">
+			<img class="image-icon image-icon--menu" title="" src="./modules/cms-ui/themes/default/images/icon/menu/menu.svg" />
 			
 		</div>
 		<?php $if2=(isset($$dbname)); if($if2){?>
@@ -442,15 +446,6 @@
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/mail.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_mail'.'')))); ?></span>
-							
-						</a>
-
-					</div>
-					<div class="entry clickable">
-						<a title="<?php echo lang('menu_start_desc') ?>" target="_self" data-type="post" data-action="start" data-method="start" data-id="<?php echo OR_ID ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;start&quot;,&quot;subaction&quot;:&quot;start&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
-							<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/dashboard.svg" />
-							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_start'.'')))); ?></span>
 							
 						</a>
 
