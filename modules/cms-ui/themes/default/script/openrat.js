@@ -317,8 +317,9 @@ function afterViewLoaded(viewEl )
 	// Die Section deaktivieren, wenn die View keinen Inhalt hat.
     var section = $(viewEl).closest('section');
 
-    var viewHasContent = $(viewEl).children().length > 0;
-	section.toggleClass('disabled',!viewHasContent);
+    //var viewHasContent = $(viewEl).children().length > 0;
+	//section.toggleClass('disabled',!viewHasContent);
+	section.toggleClass('is-empty',$(viewEl).is(':empty'));
 
     $(viewEl).trigger('orViewLoaded');
 

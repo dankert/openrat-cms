@@ -164,9 +164,6 @@ class IndexAction extends Action
             'preview'  => true,
             'info'     => true,
             'prop'     => false,
-            'settings' => false,
-            'rights'   => false,
-            'history'  => false,
         );
 
         $methodList = array();
@@ -816,7 +813,7 @@ class IndexAction extends Action
         }
 
 
-        return 'start';
+        return 'projectlist';
     }
 
 }
