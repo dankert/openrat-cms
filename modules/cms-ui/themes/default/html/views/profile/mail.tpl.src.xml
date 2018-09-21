@@ -1,19 +1,28 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<form method="post">
-		<logo name="changemail" />
-		
-		<group title="message:user_mail">
-			<part class="line">
-				<part class="label">
-					<label for="mail">
-						<text text="user_new_mail"></text>
-					</label>
-				</part>
-				<part class="input">
-					<input name="mail"></input>
-				</part>
-			</part>
-		</group>
-	</form>
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+    <form method="post">
+        <logo name="changemail"/>
+
+        <group title="message:user_mail">
+            <part class="line">
+                <part class="label">
+                    <label for="mail">
+                        <text text="user_new_mail"></text>
+                    </label>
+                </part>
+                <part class="input">
+                    <input name="mail"></input>
+                </part>
+            </part>
+        </group>
+
+        <part class="clickable">
+
+            <link action="profile" subaction="confirmmail" type="dialog">
+                <text
+                        key="mail_code"/>
+            </link>
+        </part>
+
+    </form>
 </output>

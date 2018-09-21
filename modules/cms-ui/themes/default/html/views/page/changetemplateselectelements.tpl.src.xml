@@ -8,7 +8,7 @@
 					<text var="name"></text>
 				</part>
 				<part class="input">
-					<selectbox name="var:newElementsName" list="newElementsList"></selectbox>
+					<selectbox name="var:newElementsName" default="" list="newElementsList"></selectbox>
 				</part>
 			</part>
 		</list>

@@ -76,17 +76,18 @@ function formSubmit(form)
 	$(form).find('.error').removeClass('error');
 
 	var params = $(form).serializeArray();
+    var data = {};
+    $(params).each(function(index, obj){
+        data[obj.name] = obj.value;
+    });
 
 	var formMethod = $(form).attr('method').toUpperCase();
 	
 	if	( formMethod == 'GET' )
 	{
-		// GET-Request
-		var action  = $(form).data('action');
-		var method  = $(form).data('method');
-		var id      = $(form).data('id'    );
-
-		loadView(  $(form).closest('div.content'),action,method,id,params);
+		// Mehrseitiges Formular
+		// Die eingegebenen Formulardaten werden zur nächsten Action geschickt.
+        Workbench.loadViewIntoElement( $(form).parent('.view'),data.action, data.subaction,data.id,data );
 	}
 	else
 	{
@@ -228,24 +229,24 @@ function doResponse(data,status,element)
 	if	( data.control.redirect )
 		// Redirect
 		window.location.href = data.control.redirect;
-	
+
+	/* nein, das ist Dialoglogik.
 	if	( data.control.new_style )
 		// CSS-Datei setzen
 		setUserStyle( data.control.new_style );
-	
-	if	( data.control.refresh )
-		// Views aktualisieren
-		; //refreshAll();
-	
+	*/
+
+/*	nein, das ist Dialoglogik.
+
 	else if	( data.control.next_view )
 		// Nächste View aufrufen
 		//startView( $(element).closest('div.content'),data.control.next_view );
 		;
 		// Views gibt es so nicht mehr. Rauswerfen?
-
-	else if ( data.errors.length==0 )
+*/
+	//if ( data.errors.length==0 )
 		// Aktuelle View neu laden
-		$(element).closest('div.panel').find('li.action.active').orLoadView();
+	//	$(element).closest('div.panel').find('li.action.active').orLoadView();
 
 }
 

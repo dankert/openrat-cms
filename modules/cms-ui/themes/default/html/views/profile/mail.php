@@ -17,7 +17,7 @@
 	</div>
 </div>
 			</div>
-			<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('user_mail') ?></legend><div>
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('user_mail') ?></legend><div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_mail" class="label">
@@ -26,10 +26,17 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_mail" name="mail<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$mail) ?>" /><?php if ('') { ?><input type="hidden" name="mail" value="<?php $mail ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_mail" name="mail<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$mail) ?>" /><?php if ('') { ?><input type="hidden" name="mail" value="<?php $mail ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
 			</div></fieldset>
+			<div class="clickable">
+				<a target="_self" data-type="dialog" data-action="profile" data-method="confirmmail" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'profile','dialogMethod':'confirmmail'}" href="<?php echo Html::url('profile','confirmmail','',array('dialogAction'=>'profile','dialogMethod'=>'confirmmail')) ?>">
+					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'mail_code'.'')))); ?></span>
+					
+				</a>
+
+			</div>
 		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
 	

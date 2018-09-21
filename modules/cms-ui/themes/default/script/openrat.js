@@ -514,12 +514,15 @@ function startDialog( name,action,method,id,params )
  */
 function modalView( element,view )
 {
+	alert('modalView() called');
+	return;
+	/*
 	var action = $(element).closest('div.panel').find('li.active').attr('data-action');
 	var method = $(element).closest('div.panel').find('li.active').attr('data-method');
 	var id     = $(element).closest('div.panel').find('li.active').attr('data-id'    );
 	$(element).closest('div.content').modal( { "overlayClose":"true","xxxonClose":function(){alert("close)");} } );
 	loadView( $(element).closest('div.content'), action, method,id );
-	
+	*/
 	// Alle refresh-fähigen Views mit dem neuen Objekt laden.
 	// refreshAllRefreshables();
 }
