@@ -545,7 +545,10 @@ function setTitle( title )
  */
 function openNewAction( name,action,id,extraId )
 {
-	setTitle( name ); // Title setzen.
+	// Im Mobilmodus soll das Menü verschwinden, wenn eine neue Action geoeffnet wird.
+    $('nav').removeClass('open');
+
+    setTitle( name ); // Title setzen.
 	
 	setNewAction( action,id,extraId );
 }
