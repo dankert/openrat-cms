@@ -45,7 +45,6 @@ class TreeElement
 	 * @type String
 	 */
 	var $description = "";
-	var $url         = "";
 	var $icon        = "";
 	var $action      = "";
 	

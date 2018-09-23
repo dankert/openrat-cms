@@ -48,6 +48,11 @@ class ElementAction extends Action
 	{
         parent::__construct();
 
+    }
+
+
+    public function init()
+    {
         if	( $this->getRequestId() == 0 )
 			die('no element-id available');
 

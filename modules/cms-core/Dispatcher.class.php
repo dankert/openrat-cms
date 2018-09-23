@@ -283,6 +283,7 @@ class Dispatcher
         $do = new $actionClassNameWithNamespace;
 
         $do->request         = $this->request;
+        $do->init();
 
         if(!defined('OR_ID'))
         if (isset($REQ[REQ_PARAM_ID]))

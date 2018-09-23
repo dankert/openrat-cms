@@ -48,8 +48,15 @@ class LinkAction extends ObjectAction
 	{
         parent::__construct();
 
+    }
+
+
+    public function init()
+    {
 		$this->link = new Link( $this->getRequestId() );
 		$this->link->load();
+
+		parent::init();
 	}
 
 

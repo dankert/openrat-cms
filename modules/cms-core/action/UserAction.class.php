@@ -57,6 +57,11 @@ class UserAction extends Action
 	{
         parent::__construct();
 
+    }
+
+
+    public function init()
+    {
 		$this->user = new User( $this->getRequestId() );
 		$this->user->load();
 		$this->setTemplateVar('userid',$this->user->userid);
@@ -224,8 +229,6 @@ class UserAction extends Action
 		{
 		    /* @var $user User */
 			$list[$user->userid]         = $user->getProperties();
-			$list[$user->userid]['url' ] = Html::url('main','user',$user->userid,
-			                                         array(REQ_PARAM_TARGETSUBACTION=>'edit') );
 		}
 		$this->setTemplateVar('el',$list);
 	}	

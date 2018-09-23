@@ -103,12 +103,13 @@ class UI
      * Shows a UI fragment.
      * This can only be executed after a UI::execute()-call.
      */
-    public static function executeEmbedded($action, $subaction)
+    public static function executeEmbedded($action, $subaction, $id)
     {
         $request = new RequestParams();
 
         $request->isEmbedded = true;
         $request->action = $action;
+        $request->id     = $id;
         $request->method = $subaction;
 
         // Embedded Actions are ALWAYS Queries (means: GET).

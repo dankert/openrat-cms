@@ -51,6 +51,11 @@ class TemplateAction extends Action
 	{
         parent::__construct();
 
+    }
+
+
+    public function init()
+    {
 		$this->template = new Template( $this->getRequestId() );
 
 		$this->template->modelid = $this->request->getModelId();

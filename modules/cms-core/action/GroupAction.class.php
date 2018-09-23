@@ -47,7 +47,12 @@ class GroupAction extends Action
 	{
         parent::__construct();
 
-		$this->group = new Group( $this->getRequestId() );
+    }
+
+
+    public function init()
+    {
+        $this->group = new Group( $this->getRequestId() );
 		$this->group->load();
 		$this->setTemplateVar( 'groupid',$this->group->groupid );
 	}
@@ -155,7 +160,6 @@ class GroupAction extends Action
 		foreach( Group::getAll() as $id=>$name )
 		{
 			$list[$id]         = array();
-			$list[$id]['url' ] = Html::url('main','group',$id,array(REQ_PARAM_TARGETSUBACTION=>'edit'));
 			$list[$id]['name'] = $name;
 		}
 

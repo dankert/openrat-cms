@@ -69,7 +69,6 @@ class Tree
         $treeElement->id = 0;
         $treeElement->text = lang('GLOBAL_PROJECTS');
         $treeElement->description = lang('GLOBAL_PROJECTS');
-        $treeElement->url = Html::url('projectlist', 'show', 0, array(REQ_PARAM_TARGET => 'content'));
         $treeElement->action = 'projectlist';
         $treeElement->icon = 'projectlist';
         $treeElement->type = 'projects';
@@ -111,7 +110,6 @@ class Tree
         $treeElement = new TreeElement();
         $treeElement->text = lang('GLOBAL_USER');
         $treeElement->description = lang('GLOBAL_USER');
-        $treeElement->url = Html::url('user', 'listing', 0, array(REQ_PARAM_TARGET => 'content'));
         $treeElement->action = 'userlist';
         $treeElement->icon = 'userlist';
         $treeElement->type = 'users';
@@ -121,7 +119,6 @@ class Tree
         $treeElement = new TreeElement();
         $treeElement->text = lang('GLOBAL_GROUPS');
         $treeElement->description = lang('GLOBAL_GROUPS');
-        $treeElement->url = Html::url('group', 'listing', 0, array(REQ_PARAM_TARGET => 'content'));
         $treeElement->action = 'grouplist';
         $treeElement->icon = 'userlist';
         $treeElement->type = 'groups';
@@ -147,10 +144,6 @@ class Tree
                 $treeElement->internalId = $id;
                 $treeElement->id = $id;
                 $treeElement->text = $name;
-
-                if  ( $rootFolder->hasRight( ACL_PROP ) )
-                    // Project-Admins dürfen das Project bearbeiten.
-                    $treeElement->url = Html::url('project', 'edit', $id, array(REQ_PARAM_TARGET => 'content'));
                 $treeElement->icon = 'project';
                 $treeElement->action = 'project';
                 $treeElement->type = 'project';
@@ -277,8 +270,6 @@ class Tree
             $treeElement->id = $user->userid;
             $treeElement->internalId = $user->userid;
             $treeElement->text = $user->name;
-            $treeElement->url = Html::url('user', 'edit',
-                $user->userid, array(REQ_PARAM_TARGET => 'content'));
             $treeElement->action = 'user';
             $treeElement->icon = 'user';
 
@@ -313,8 +304,6 @@ class Tree
             $treeElement->id = $id;
             $treeElement->internalId = $id;
             $treeElement->text = $g->name;
-            $treeElement->url = Html::url('group', 'edit', $id,
-                array(REQ_PARAM_TARGET => 'content'));
             $treeElement->icon = 'group';
             $treeElement->description = lang('GLOBAL_GROUP') . ' ' . $g->name . ': ' . implode(', ', $g->getUsers());
             $treeElement->type = 'userofgroup';
@@ -340,7 +329,6 @@ class Tree
             $u->load();
             $treeElement->id = $u->userid;
             $treeElement->text = $u->name;
-            $treeElement->url = Html::url('user', 'edit', $id, array(REQ_PARAM_TARGET => 'content'));
             $treeElement->icon = 'user';
             $treeElement->action = 'user';
             $treeElement->description = $u->fullname;
@@ -369,10 +357,6 @@ class Tree
                 $treeElement->id = $id . '_' . $elementid;
                 $treeElement->extraId['elementid'] = $elementid;
                 $treeElement->text = $element->name;
-                $treeElement->url = Html::url('pageelement', 'edit',
-                    $id . '_' . $elementid,
-                    array('elementid' => $elementid,
-                        REQ_PARAM_TARGETSUBACTION => 'edit', REQ_PARAM_TARGET => 'content'));
                 $treeElement->action = 'pageelement';
                 $treeElement->icon = 'el_' . $element->type;
                 $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
@@ -419,7 +403,6 @@ class Tree
                     $treeElement->type = $object->getType();
                     $treeElement->internalId = $object->objectid;
                 }
-                $treeElement->url = Html::url($object->getType(), '', $objectid, array(REQ_PARAM_TARGET => 'content'));
                 $treeElement->action = $object->getType();
                 $treeElement->icon = $object->getType();
 
@@ -454,7 +437,6 @@ class Tree
         else
             $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
-        $treeElement->url = Html::url($o->getType(), '', $o->objectid, array(REQ_PARAM_TARGET => 'content'));
         $treeElement->action = $o->getType();
         $treeElement->icon = $o->getType();
         $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
@@ -498,7 +480,6 @@ class Tree
             else
                 $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
-            $treeElement->url = Html::url($o->getType(), '', $o->objectid, array('readit' => '__OID__' . $o->objectid . '__', REQ_PARAM_TARGET => 'content'));
             $treeElement->action = $o->getType();
             $treeElement->icon = $o->getType();
 
@@ -545,7 +526,6 @@ class Tree
             $t->load();
             $treeElement->text = $t->name;
             $treeElement->id = $id;
-            $treeElement->url = Html::url('template', 'src', $id, array(REQ_PARAM_TARGETSUBACTION => 'src', REQ_PARAM_TARGET => 'content'));
             $treeElement->icon = 'template';
             $treeElement->action = 'template';
             $treeElement->internalId = $id;
@@ -577,7 +557,6 @@ class Tree
             $treeElement->id = $elementid;
             $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $_REQUEST[REQ_PARAM_LANGUAGE_ID], REQ_PARAM_MODEL_ID => $_REQUEST[REQ_PARAM_MODEL_ID]);
             $treeElement->text = $e->name;
-            $treeElement->url = Html::url('element', '', $elementid, array(REQ_PARAM_TARGET => 'content'));
             $treeElement->icon = 'el_' . $e->type;
             $treeElement->action = 'element';
 
@@ -604,8 +583,6 @@ class Tree
             $treeElement = new TreeElement();
             $treeElement->id = $languageid;
             $treeElement->text = $name;
-            $treeElement->url = Html::url('language', 'edit', $languageid,
-                array(REQ_PARAM_TARGETSUBACTION => 'edit', REQ_PARAM_TARGET => 'content'));
             $treeElement->icon = 'language';
             $treeElement->action = 'language';
             $treeElement->description = '';
@@ -625,8 +602,6 @@ class Tree
             $treeElement = new TreeElement();
             $treeElement->id = $id;
             $treeElement->text = $name;
-            $treeElement->url = Html::url('model', 'edit', $id,
-                array(REQ_PARAM_TARGETSUBACTION => 'edit', REQ_PARAM_TARGET => 'content'));
             $treeElement->action = 'model';
             $treeElement->icon = 'model';
             $treeElement->description = '';

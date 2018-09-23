@@ -36,7 +36,12 @@ class PageAction extends ObjectAction
 	{
 	    parent::__construct();
 
-		$this->page = new Page( $this->getRequestId() );
+    }
+
+
+    public function init()
+    {
+        $this->page = new Page( $this->getRequestId() );
 
 		if  ( $this->request->hasLanguageId())
 		    $this->page->languageid = $this->request->getLanguageId();

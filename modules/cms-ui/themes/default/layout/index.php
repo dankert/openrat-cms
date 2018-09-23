@@ -31,7 +31,7 @@
 <div id="workbench" class="initial-hidden">
 
     <header id="title" class="view view-static" data-action="title" data-method="show">
-        <?php echo embedView('title','show'); ?>
+        <?php echo embedView('title','show', 0); ?>
     </header>
 
 
@@ -42,7 +42,7 @@
                 <a href=""></a>
             </header>
             <div id="navigation" class="or-navtree view view-static" data-action="tree" data-method="tree">
-                <?php embedView('tree','tree'); ?>
+                <?php embedView('tree','tree',0); ?>
             </div>
 
         </nav>
@@ -53,7 +53,7 @@
             </header>
 
             <?php foreach( $methodList as $method ) { ?>
-            <?php if (DEVELOPMENT) echo "<!-- Section for : $action / ".$method['name']." -->";  ?>
+            <?php if (DEVELOPMENT) echo "<!-- Section for : $action / ".$method['name']." / $id  -->";  ?>
             <section class="toggle-open-close <?php echo $method ['open']?'open':'closed' ?>">
 
                 <header class="on-click-open-close">
@@ -73,7 +73,7 @@
                     -->
 
 
-                <div class="view view-loader" data-method="<?php echo $method['name'] ?>"><?php if($method ['open']) {embedView($action,$method['name']);}else{echo '';} ?></div>
+                <div class="view view-loader" data-method="<?php echo $method['name'] ?>"><?php if($method ['open']) {embedView($action,$method['name'],$id);}else{echo '';} ?></div>
 
             </section>
             <?php } ?>
@@ -90,7 +90,7 @@
     <div class="view">
         <?php // Shows directly a modal dialog (if present)
               if(!empty($dialogAction))
-                  embedView($dialogAction,$dialogMethod);
+                  embedView($dialogAction,$dialogMethod, 0);
         ?>
     </div>
 
@@ -115,7 +115,7 @@
 </body>
 </html>
 <?php
-function embedView( $action, $method ) {
-        cms_ui\UI::executeEmbedded($action,$method);
+function embedView( $action, $method,$id ) {
+        cms_ui\UI::executeEmbedded($action,$method,$id);
 }
 ?>

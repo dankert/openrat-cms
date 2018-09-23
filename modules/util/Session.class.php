@@ -53,6 +53,8 @@ class Session
 
 
     /**
+     * Liefert den Benutzer aus der Sitzung oder <code>null</code>, wenn kein Benutze angemeldet ist.
+     *
      * @return User
      */
     public static function getUser()

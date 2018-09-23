@@ -145,7 +145,6 @@ class ProfileAction extends Action
 			if	( $mail->send() )
 			{
 				$this->addNotice('user',$this->user->name,'mail_sent',OR_NOTICE_OK); // Meldung
-				$this->nextView('confirmmail');
 			}
 			else
 			{

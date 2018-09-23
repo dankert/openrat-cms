@@ -45,6 +45,7 @@ if	( !defined('PROJECTID_ADMIN') )
  * @author $Author$
  * @version $Revision$
  * @package openrat.actions
+ * @deprecated
  */
 
 class StartAction extends Action

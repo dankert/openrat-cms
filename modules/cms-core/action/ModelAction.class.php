@@ -45,6 +45,11 @@ class ModelAction extends Action
 	{
         parent::__construct();
 
+    }
+
+
+    public function init()
+    {
 		$this->model = new Model( $this->getRequestId() );
 		$this->model->load();
 	}

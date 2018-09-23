@@ -53,6 +53,11 @@ class ObjectAction extends Action
     {
         parent::__construct();
 
+    }
+
+
+    public function init()
+    {
         $this->baseObject = new BaseObject( $this->getRequestId() );
         $this->baseObject->objectLoad();
     }

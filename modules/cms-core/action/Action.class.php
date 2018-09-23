@@ -56,21 +56,24 @@ namespace cms\action {
         public $request;
 
 
+        /**
+         * Will be called by the Dispatcher right after the contruction of this class instance.
+         */
+        public function init()
+        {
+
+        }
+
+
         protected function setStyle($style)
         {
             $this->setControlVar("new_style", $style);
         }
 
 
-        function nextView($viewName)
-        {
-            $this->setControlVar("next_view", $viewName);
-        }
-
-
         public function __construct()
         {
-            $this->request = new RequestParams();
+            //$this->request = new RequestParams();
 
             $this->currentUser = Session::getUser();
 
@@ -169,6 +172,7 @@ namespace cms\action {
          *
          * @param String $varName Schl�ssel
          * @param Mixed $value
+         * @deprecated Diese Schicht soll keine Dialog-Logik enthalten.
          */
         protected function setControlVar($varName, $value)
         {

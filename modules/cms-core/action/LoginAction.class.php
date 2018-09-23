@@ -1400,15 +1400,12 @@ class LoginAction extends Action
 		if	( $mail->send() )
 		{
 			$this->addNotice('','','mail_sent',OR_NOTICE_OK);
-			$this->nextView('registeruserdata');
 		}
 		else
 		{
 			$this->addNotice('','','mail_not_sent',OR_NOTICE_ERROR,array(),$mail->error);
 			return;
 		}
-				
-		$this->nextView('registercode');
 	}
 
 	
@@ -1463,8 +1460,6 @@ class LoginAction extends Action
 		$newUser->setPassword( $this->getRequestVar('password'),true );
 			
 		$this->addNotice('user',$newUser->name,'user_added','ok');
-		
-		$this->nextView('login');
 	}
 
 
@@ -1580,7 +1575,6 @@ class LoginAction extends Action
 		}
 		
 		$this->setSessionVar("password_commit_name",$user->name);
-		$this->nextView('passwordcode');
 	}
 
 	

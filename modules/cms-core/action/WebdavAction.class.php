@@ -33,6 +33,7 @@ use cms\model\Link;
  * 
  * @author Jan Dankert
  * @package openrat.actions
+ * @deprecated
  */
 
 class WebdavAction extends Action

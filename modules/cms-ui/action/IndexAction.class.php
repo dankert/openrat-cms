@@ -134,8 +134,10 @@ class IndexAction extends Action
         $userIsLoggedIn = is_object($user);
 
         // Welche Aktion soll ausgeführt werden?
-        $action = $this->getStartAction();
-        $id = $this->getRequestId();
+        $action = $this->getRequestVar( REQ_PARAM_ACTION );
+        $id     = $this->getRequestId();
+
+        $this->updateStartAction( $action, $id );
 
         $this->setTemplateVar('action',$action);
         $this->setTemplateVar('id'    ,$id    );
@@ -183,7 +185,8 @@ class IndexAction extends Action
 		exit;
 	}
 
-	
+
+
 	private function getCSSFiles()
 	{
 		$productionCSSFile = OR_THEMES_DIR . 'default/production/combined.min.css';
@@ -772,20 +775,24 @@ class IndexAction extends Action
     }
 
 
-
-    private function getStartAction()
+    /**
+     * Ermittelt die erste zu startende Aktion.
+     * @param $action
+     * @param $id
+     */
+    private function updateStartAction( &$action, &$id )
     {
-        if  ( isset($_REQUEST['action']) ) {
-            return $_REQUEST['action'];
-        }
-
         $user = Session::getUser();
 
         if  ( !is_object($user) )
-            return 'login';
+        {
+            $action = 'login';
+            $id     = 0;
+            return;
+        }
 
 
-        // Das zuletzt geänderte benutzen.
+        // Das zuletzt geänderte Objekt benutzen.
         if	( config('login','start','start_lastchanged_object') )
         {
             $objectid = Value::getLastChangedObjectByUserId($user->userid);
@@ -795,25 +802,25 @@ class IndexAction extends Action
                 $object = new BaseObject($objectid);
                 $object->objectLoad();
 
-                return $object->getType();
+                $action = $object->getType();
+                $id     = $objectid;
+                return;
             }
         }
 
-
+        // Das einzige Projekt benutzen
         if	( config('login','start','start_single_project') )
         {
             $projects = Project::getAllProjects();
             if ( count($projects) == 1 ) {
                 // Das einzige Projekt sofort starten.
-                return 'project';
-            }
-            else{
-                return 'projectlist';
+                $action = 'project';
+                $id     = array_keys($projects)[0];
             }
         }
 
-
-        return 'projectlist';
+        $action = 'projectlist';
+        $id     = 0;
     }
 
 }

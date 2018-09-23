@@ -76,6 +76,11 @@ class PageelementAction extends Action
 	function __construct()
 	{
         parent::__construct();
+    }
+
+
+    public function init()
+    {
 
         $this->value = new Value();
 

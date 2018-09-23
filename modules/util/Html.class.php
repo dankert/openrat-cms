@@ -91,9 +91,6 @@ class Html
 			$params[REQ_PARAM_ACTION   ] = $action;
 			$params[REQ_PARAM_SUBACTION] = $subaction;
 			$params[REQ_PARAM_ID       ] = $id;
-			
-			if	( !isset($params[REQ_PARAM_TARGET]))
-				$params[REQ_PARAM_TARGET   ] = $view;
 		}
 
 		if	( count($params) > 0 )

@@ -46,6 +46,11 @@ class TextAction extends FileAction
 	function __construct()
 	{
         parent::__construct();
+    }
+
+
+    public function init()
+    {
 
 		$this->text = new Text( $this->getRequestId() );
 		$this->text->load();

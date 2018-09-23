@@ -48,6 +48,11 @@ class LanguageAction extends Action
 	{
         parent::__construct();
 
+    }
+
+
+    public function init()
+    {
 		$this->language = new Language( $this->getRequestId() );
 		$this->language->load();
 	}

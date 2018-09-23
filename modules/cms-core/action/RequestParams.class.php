@@ -7,7 +7,6 @@ namespace {
     define('REQ_PARAM_TOKEN'          ,'token'          );
     define('REQ_PARAM_ACTION'         ,'action'         );
     define('REQ_PARAM_SUBACTION'      ,'subaction'      );
-    define('REQ_PARAM_TARGETSUBACTION','targetSubAction');
     define('REQ_PARAM_ID'             ,'id'             );
     define('REQ_PARAM_OBJECT_ID'      ,'objectid'       );
     define('REQ_PARAM_LANGUAGE_ID'    ,'languageid'     );
@@ -16,7 +15,6 @@ namespace {
     define('REQ_PARAM_ELEMENT_ID'     ,'elementid'      );
     define('REQ_PARAM_TEMPLATE_ID'    ,'templateid'     );
     define('REQ_PARAM_DATABASE_ID'    ,'dbid'           );
-    define('REQ_PARAM_TARGET'         ,'target'         );
 
     /* Filter Types */
     define('OR_FILTER_ALPHA', 'abc');
@@ -39,6 +37,7 @@ namespace cms\action {
     {
         public $action;
         public $method;
+        public $id;
         public $isEmbedded;
 
         public $isAction;
@@ -48,7 +47,8 @@ namespace cms\action {
          */
         public function __construct()
         {
-            $this->action     = @$_REQUEST[REQ_PARAM_ACTION];
+            $this->id         = @$_REQUEST[REQ_PARAM_ID       ];
+            $this->action     = @$_REQUEST[REQ_PARAM_ACTION   ];
             $this->method     = @$_REQUEST[REQ_PARAM_SUBACTION];
             $this->isEmbedded = @$_REQUEST[REQ_PARAM_EMBED]=='1';
 
@@ -65,6 +65,9 @@ namespace cms\action {
          */
         public function getRequestVar($varName, $transcode = OR_FILTER_FULL)
         {
+            if($varName == REQ_PARAM_ID)
+                return $this->id;
+
             if($varName == REQ_PARAM_ACTION)
                 return $this->action;
 

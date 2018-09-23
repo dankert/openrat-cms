@@ -46,8 +46,12 @@ class FileAction extends ObjectAction
 	 */
 	function __construct()
     {
-	    parent::__construct();
+        parent::__construct();
+    }
 
+
+    public function init()
+    {
 		$this->file = new File( $this->getRequestId() );
 		$this->file->languageid = $this->getRequestVar(REQ_PARAM_LANGUAGE_ID);
 		$this->file->load();
