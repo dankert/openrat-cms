@@ -56,17 +56,19 @@
 						</label>
 					</div>
 					<div class="input">
-						<?php $if6=(isset($template_url)); if($if6){?>
-							<a target="_self" data-url="<?php echo $template_url ?>" data-action="" data-method="info" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-								<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/template.png" />
-								
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
-								
-							</a>
+						<?php $if6=(isset($templateid)); if($if6){?>
+							<div class="clickable">
+								<a target="_self" data-type="open" data-action="template" data-method="info" data-id="<?php echo $templateid ?>" data-extra="[]" href="<?php echo Html::url('template','',$templateid,array()) ?>">
+									<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/template.svg" />
+									
+									<span class="text"><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
+									
+								</a>
 
+							</div>
 						<?php } ?>
-						<?php $if6=(($template_url)==FALSE); if($if6){?>
-							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon_template.png" />
+						<?php if(!$if6){?>
+							<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/template.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
 							

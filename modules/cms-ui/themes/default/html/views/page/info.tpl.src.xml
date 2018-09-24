@@ -46,16 +46,18 @@
 					</label>
 				</part>
 				<part class="input">
-					<if present="template_url">
-						<link url="var:template_url" target="cms_main">
-							<image icon="template"></image>
-							<text var="template_name"></text>
-						</link>
+					<if present="templateid">
+						<part class="clickable">
+							<link action="template" id="var:templateid" type="open">
+								<image action="template"></image>
+								<text var="template_name"></text>
+							</link>
+						</part>
 					</if>
-					<if empty="template_url">
-						<image file="icon_template"></image>
+					<else>
+						<image action="template"></image>
 						<text var="template_name"></text>
-					</if>
+					</else>
 				</part>
 			</part>
 			<part class="line">

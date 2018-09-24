@@ -28,8 +28,10 @@ class PageAction extends ObjectAction
 {
 	public $security = SECURITY_USER;
 
-	var $page;
-	var $defaultSubAction = 'show';
+    /**
+     * @var Page
+     */
+	private $page;
 
 
 	function __construct()
@@ -402,9 +404,10 @@ class PageAction extends ObjectAction
 
 		$this->setTemplateVars( $this->page->getProperties() );
 
-		if   ( $this->userIsAdmin() )
+		if   ( $this->userIsProjectAdmin() )
 		{
-			$this->setTemplateVar('template_url',Html::url('main','template',$this->page->templateid,array(REQ_PARAM_MODEL_ID=>$this->page->modelid)));
+			$this->setTemplateVar('templateid',$this->page->templateid);
+			$this->setTemplateVar('modelid',$this->page->modelid);
 		}
 
 		$template = new Template( $this->page->templateid );

@@ -47,6 +47,9 @@ class ObjectAction extends Action
 	
 	private $objectid;
 
+    /**
+     * @var BaseObject
+     */
 	protected $baseObject;
 
 	public function __construct()
@@ -537,5 +540,19 @@ class ObjectAction extends Action
 
         $this->baseObject->objectSave(false);
         $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'SAVED',OR_NOTICE_OK);
+    }
+
+
+    /**
+     * Stellt fest, ob der angemeldete Benutzer Projekt-Admin ist.
+     * Dies ist der Fall, wenn der Benutzer PROP-Rechte im Root-Folder hat.
+     * @return bool|int
+     */
+    protected function userIsProjectAdmin() {
+
+	    $project = new Project( $this->baseObject->projectid );
+	    $rootFolder = new Folder( $project->getRootObjectId() );
+
+	    return $rootFolder->hasRight(ACL_PROP);
     }
 }
