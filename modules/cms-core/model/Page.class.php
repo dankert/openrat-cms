@@ -244,6 +244,9 @@ class Page extends BaseObject
 		$sql->setInt('objectid',$this->objectid);
 		$row = $sql->getRow();
 
+		if   ( count($row)==0 )
+			throw new \ObjectNotFoundException("Page with Id $this->objectid not found.");
+
 		$this->pageid      = $row['id'        ];
 		$this->templateid  = $row['templateid'];
 
