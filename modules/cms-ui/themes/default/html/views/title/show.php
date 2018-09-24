@@ -159,7 +159,7 @@
 				<div class="arrow-down">
 				</div>
 				<div class="dropdown">
-					<div class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-language on-action-model">
+					<div class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-url on-action-image on-action-text on-action-language on-action-model">
 						<a title="<?php echo lang('menu_prop_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="<?php echo Html::url('','prop','',array('dialogAction'=>'','dialogMethod'=>'prop')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/prop.svg" />
 							
@@ -195,7 +195,7 @@
 						</a>
 
 					</div>
-					<div class="entry clickable filtered on-action-project on-action-folder on-action-link on-action-user on-action-group on-action-page on-action-file">
+					<div class="entry clickable filtered on-action-project on-action-folder on-action-link on-action-user on-action-group on-action-page on-action-file on-action-image on-action-text on-action-url">
 						<a title="<?php echo lang('menu_rights_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="rights" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'rights'}" href="<?php echo Html::url('','rights','',array('dialogAction'=>'','dialogMethod'=>'rights')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/rights.svg" />
 							

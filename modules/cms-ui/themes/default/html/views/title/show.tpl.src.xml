@@ -139,7 +139,7 @@
             <part class="arrow-down"/>
             <part class="dropdown">
                 <part
-                        class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-language on-action-model">
+                        class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-url on-action-image on-action-text on-action-language on-action-model">
                     <link type="dialog" title="message:menu_prop_desc" subaction="prop">
                         <image method="prop" align="left"></image>
                         <text key="menu_prop"></text>
@@ -167,7 +167,7 @@
                     </link>
                 </part>
                 <part
-                        class="entry clickable filtered on-action-project on-action-folder on-action-link on-action-user on-action-group on-action-page on-action-file">
+                        class="entry clickable filtered on-action-project on-action-folder on-action-link on-action-user on-action-group on-action-page on-action-file on-action-image on-action-text on-action-url">
                     <link type="dialog" title="message:menu_rights_desc"
                           subaction="rights">
                         <image method="rights" align="left"></image>
