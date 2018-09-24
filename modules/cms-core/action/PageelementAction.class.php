@@ -44,19 +44,17 @@ use ValidationException;
 class PageelementAction extends Action
 {
 	public $security = SECURITY_USER;
-	
-	var $defaultSubAction = 'edit';
 
 
 	/**
 	 * Enthaelt das Seitenobjekt
-	 * @type BaseObject
+	 * @type Page
 	 */
 	var $page;
 
 	/**
 	 * Enthaelt das Elementobjekt
-	 * @type BaseObject
+	 * @type Element
 	 */
 	var $element;
 
@@ -64,7 +62,7 @@ class PageelementAction extends Action
 	/**
 	 * Enth�lt den Inhalt
 	 *
-	 * @var BaseObject
+	 * @var Value
 	 */
 	var $value;
 
@@ -645,7 +643,7 @@ class PageelementAction extends Action
             $folder->load();
 
 			//Auch Dateien dazu
-			foreach( $folder->getAllObjectIds($types) as $id )
+			foreach( $project->getAllObjectIds($types) as $id )
 			{
 				$f = new Folder( $id );
 				$f->load();
@@ -654,7 +652,7 @@ class PageelementAction extends Action
 				$objects[ $id ] .=  implode( ' &raquo; ',$f->parentObjectNames(false,true) );
 			}
 
-			foreach( $folder->getAllFolders() as $id )
+			foreach( $project->getAllFolders() as $id )
 			{
 				$f = new Folder( $id );
 				$f->load();
