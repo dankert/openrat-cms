@@ -49,14 +49,16 @@ class PageAction extends ObjectAction
 		    $this->page->modelid = $this->request->getModelId();
 
 		$this->page->load();
-		$this->baseObject = & $this->page;
+		//$this->baseObject = & $this->page;
 
 		// Hier kann leider nicht das Datum der letzten Änderung verwendet werden,
 		// da sich die Seite auch danach ändern kann, z.B. durch Includes anderer
 		// Seiten oder Änderung einer Vorlage oder Änderung des Dateinamens einer
 		// verlinkten Datei.
 		$this->lastModified( time() );
-	}
+
+        parent::init();
+    }
 
 
 	/**

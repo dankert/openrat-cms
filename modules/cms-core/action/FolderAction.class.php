@@ -63,6 +63,8 @@ class FolderAction extends ObjectAction
 		$this->folder->load();
 
 		$this->lastModified( $this->folder->lastchangeDate);
+
+		parent::init();
 	}
 
 

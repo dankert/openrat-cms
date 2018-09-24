@@ -40,7 +40,10 @@ class ImageAction extends FileAction
 		$this->image->load();
 
 		$this->file = $this->image;
-	}
+
+        parent::init();
+
+    }
 
 
 	

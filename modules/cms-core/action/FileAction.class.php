@@ -55,6 +55,8 @@ class FileAction extends ObjectAction
 		$this->file = new File( $this->getRequestId() );
 		$this->file->languageid = $this->getRequestVar(REQ_PARAM_LANGUAGE_ID);
 		$this->file->load();
+
+        parent::init();
 	}
 
 
