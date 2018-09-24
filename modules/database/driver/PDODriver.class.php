@@ -98,7 +98,7 @@ class PDODriver
         }
         catch(\PDOException $e)
         {
-            Logger::warn( "Could not connect to database: ".$e->getMessage() );
+            Logger::warn( "Could not connect to database with dsn=$url and user=$user: ".$e->getMessage() );
             throw new \RuntimeException("Could not connect to database on host $url.",0,$e);
         }
 
