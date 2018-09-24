@@ -45,6 +45,11 @@ class TemplatelistAction extends Action
 	{
         parent::__construct();
 
+    }
+
+
+    public function init()
+    {
         $this->project = new Project( $this->request->getProjectId());
     }
 

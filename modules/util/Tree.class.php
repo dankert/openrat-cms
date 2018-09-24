@@ -328,6 +328,7 @@ class Tree
             $u = new User($id);
             $u->load();
             $treeElement->id = $u->userid;
+            $treeElement->internalId = $u->userid;
             $treeElement->text = $u->name;
             $treeElement->icon = 'user';
             $treeElement->action = 'user';
@@ -582,6 +583,7 @@ class Tree
         foreach ($project->getLanguages() as $languageid => $name) {
             $treeElement = new TreeElement();
             $treeElement->id = $languageid;
+            $treeElement->internalId = $languageid;
             $treeElement->text = $name;
             $treeElement->icon = 'language';
             $treeElement->action = 'language';
@@ -601,6 +603,7 @@ class Tree
         foreach ($project->getModels() as $id => $name) {
             $treeElement = new TreeElement();
             $treeElement->id = $id;
+            $treeElement->internalId = $id;
             $treeElement->text = $name;
             $treeElement->action = 'model';
             $treeElement->icon = 'model';
