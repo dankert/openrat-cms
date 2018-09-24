@@ -1462,28 +1462,23 @@ SQL
 						break;
 
 					case 'act_user_username':
-						$user = new User($SESS['user']['id']);
-						$user->load();
+						$user = \Session::getUser();
 						$inhalt = $user->name;
 						break;
 					case 'act_user_fullname':
-						$user = new User($SESS['user']['id']);
-						$user->load();
+						$user = \Session::getUser();
 						$inhalt = $user->fullname;
 						break;
 					case 'act_user_mail':
-						$user = new User($SESS['user']['id']);
-						$user->load();
+						$user = \Session::getUser();
 						$inhalt = $user->mail;
 						break;
 					case 'act_user_desc':
-						$user = new User($SESS['user']['id']);
-						$user->load();
+						$user = \Session::getUser();
 						$inhalt = $user->desc;
 						break;
 					case 'act_user_tel':
-						$user = new User($SESS['user']['id']);
-						$user->load();
+						$user = \Session::getUser();
 						$inhalt = $user->tel;
 						break;
 					default:
