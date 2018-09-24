@@ -10,7 +10,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="128" class="name" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="name" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -20,7 +20,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_url" name="url<?php if ('') echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if ('') { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_url" name="url<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if ('') { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -32,7 +32,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_target_dir" name="target_dir<?php if ('') echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="255" class="filename" value="<?php echo Text::encodeHtml(@$target_dir) ?>" /><?php if ('') { ?><input type="hidden" name="target_dir" value="<?php $target_dir ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_target_dir" name="target_dir<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="filename" value="<?php echo Text::encodeHtml(@$target_dir) ?>" /><?php if ('') { ?><input type="hidden" name="target_dir" value="<?php $target_dir ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if (!config('publish','project','override_system_command')) echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_cmd_after_publish" name="cmd_after_publish<?php if (!config('publish','project','override_system_command')) echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="255" class="filename" value="<?php echo Text::encodeHtml(@$cmd_after_publish) ?>" /><?php if (!config('publish','project','override_system_command')) { ?><input type="hidden" name="cmd_after_publish" value="<?php $cmd_after_publish ?>"/><?php } ?></div>
+						<div class="inputholder"><input<?php if (!config('publish','project','override_system_command')) echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_cmd_after_publish" name="cmd_after_publish<?php if (!config('publish','project','override_system_command')) echo '_disabled' ?>" type="text" maxlength="255" class="filename" value="<?php echo Text::encodeHtml(@$cmd_after_publish) ?>" /><?php if (!config('publish','project','override_system_command')) { ?><input type="hidden" name="cmd_after_publish" value="<?php $cmd_after_publish ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -50,13 +50,13 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'publishFileExtension';$default  = '';$readonly = '';		
+						<?php { $tmpname     = 'publishFileExtension';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -72,13 +72,13 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'publishPageExtension';$default  = '';$readonly = '';		
+						<?php { $tmpname     = 'publishPageExtension';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -98,17 +98,17 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input<?php if (!config('publish','ftp','enable')) echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_ftp_url" name="ftp_url<?php if (!config('publish','ftp','enable')) echo '_disabled' ?>" required="required" autofocus="autofocus" type="text" maxlength="256" class="filename" value="<?php echo Text::encodeHtml(@$ftp_url) ?>" /><?php if (!config('publish','ftp','enable')) { ?><input type="hidden" name="ftp_url" value="<?php $ftp_url ?>"/><?php } ?></div>
+						<div class="inputholder"><input<?php if (!config('publish','ftp','enable')) echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_ftp_url" name="ftp_url<?php if (!config('publish','ftp','enable')) echo '_disabled' ?>" type="text" maxlength="256" class="filename" value="<?php echo Text::encodeHtml(@$ftp_url) ?>" /><?php if (!config('publish','ftp','enable')) { ?><input type="hidden" name="ftp_url" value="<?php $ftp_url ?>"/><?php } ?></div>
 						
 						<br/>
 						
-						<?php { $tmpname     = 'ftp_passive';$default  = '';$readonly = !config('publish','ftp','enable');		
+						<?php { $tmpname     = 'ftp_passive';$default  = '';$readonly = !config('publish','ftp','enable');$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -126,13 +126,13 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'content_negotiation';$default  = '';$readonly = '';		
+						<?php { $tmpname     = 'content_negotiation';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -148,13 +148,13 @@
 					<div class="label">
 					</div>
 					<div class="input">
-						<?php { $tmpname     = 'cut_index';$default  = '';$readonly = '';		
+						<?php { $tmpname     = 'cut_index';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 

@@ -3,11 +3,11 @@
 		
 		
 		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="post" enctype="application/x-www-form-urlencoded" class="pageelement" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_languageid" name="languageid<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$languageid) ?>" /><?php if ('') { ?><input type="hidden" name="languageid" value="<?php $languageid ?>"/><?php } ?></div>
+			<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_languageid" name="languageid<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$languageid) ?>" /><?php if ('') { ?><input type="hidden" name="languageid" value="<?php $languageid ?>"/><?php } ?></div>
 			
-			<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_elementid" name="elementid<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$elementid) ?>" /><?php if ('') { ?><input type="hidden" name="elementid" value="<?php $elementid ?>"/><?php } ?></div>
+			<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_elementid" name="elementid<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$elementid) ?>" /><?php if ('') { ?><input type="hidden" name="elementid" value="<?php $elementid ?>"/><?php } ?></div>
 			
-			<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_value_time" name="value_time<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$value_time) ?>" /><?php if ('') { ?><input type="hidden" name="value_time" value="<?php $value_time ?>"/><?php } ?></div>
+			<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_value_time" name="value_time<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$value_time) ?>" /><?php if ('') { ?><input type="hidden" name="value_time" value="<?php $value_time ?>"/><?php } ?></div>
 			
 			
 				<span class="help"><?php echo nl2br(encodeHtml(htmlentities($desc))); ?></span>
@@ -74,7 +74,7 @@
 										</td>
 										<?php foreach($week as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 											<td width="12%">
-												<?php $if12=(empty($url)); if($if12){?>
+												<?php $if12=(($url)==FALSE); if($if12){?>
 													<span class="text"><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
 													
 													<strong class="text"><?php echo nl2br(encodeHtml(htmlentities($nr))); ?></strong>
@@ -82,7 +82,7 @@
 													<span class="text"><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
 													
 												<?php } ?>
-												<?php $if12=!(empty($url)); if($if12){?>
+												<?php $if12=!(($url)==FALSE); if($if12){?>
 													<a target="_self" data-url="<?php echo $url ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 														<span class="text"><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
 														
@@ -142,7 +142,7 @@
 				<?php $if4=($type=='text'); if($if4){?>
 					<tr>
 						<td colspan="2">
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_text" name="text<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if ('') { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_text" name="text<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if ('') { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?></div>
 							
 						</td>
 					</tr>
@@ -294,7 +294,7 @@
 								</label>
 							</div>
 							<div class="input">
-								<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_linkurl" name="linkurl<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$linkurl) ?>" /><?php if ('') { ?><input type="hidden" name="linkurl" value="<?php $linkurl ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_linkurl" name="linkurl<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$linkurl) ?>" /><?php if ('') { ?><input type="hidden" name="linkurl" value="<?php $linkurl ?>"/><?php } ?></div>
 								
 							</div>
 						</div>
@@ -325,7 +325,7 @@
 						<div>
 							<input type="hidden" name="decimals" value="decimals"/>
 							
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_number" name="number<?php if ('') echo '_disabled' ?>" type="text" maxlength="20" class="text" value="<?php echo Text::encodeHtml(@$number) ?>" /><?php if ('') { ?><input type="hidden" name="number" value="<?php $number ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_number" name="number<?php if ('') echo '_disabled' ?>" type="text" maxlength="20" class="text" value="<?php echo Text::encodeHtml(@$number) ?>" /><?php if ('') { ?><input type="hidden" name="number" value="<?php $number ?>"/><?php } ?></div>
 							
 						</div>
 					</div></fieldset>
@@ -358,13 +358,13 @@
 						<?php } ?>
 						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('PAGE_PREVIEW') ?></legend><div>
 							<div>
-								<?php { $tmpname     = 'preview';$default  = '';$readonly = '';		
+								<?php { $tmpname     = 'preview';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -383,13 +383,13 @@
 				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
 					<?php $if5=(isset($release)); if($if5){?>
 						<div>
-							<?php { $tmpname     = 'release';$default  = '';$readonly = '';		
+							<?php { $tmpname     = 'release';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -405,13 +405,13 @@
 					<?php } ?>
 					<?php $if5=(isset($publish)); if($if5){?>
 						<div>
-							<?php { $tmpname     = 'publish';$default  = '';$readonly = '';		
+							<?php { $tmpname     = 'publish';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 

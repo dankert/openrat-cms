@@ -10,8 +10,8 @@
 				</div>
 			<?php } ?>
 		<?php } ?>
-		<form name="" target="_self" data-target="view" action="./" data-method="<?php echo OR_METHOD ?>" data-action="<?php echo OR_ACTION ?>" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="<?php echo OR_ACTION ?>" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="<?php echo OR_ACTION ?>" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="<?php echo OR_METHOD ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<fieldset class="<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
+		<form name="" target="_self" data-target="view" action="./" data-method="prop" data-action="element" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="element" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="element" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="prop" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 				<?php $if4=(isset($subtype)); if($if4){?>
 					<div class="line">
 						<div class="label">
@@ -24,7 +24,7 @@
 								</select></div>
 							<?php } ?>
 							<?php $if7=!(isset($subtypes)); if($if7){?>
-								<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_subtype" name="subtype<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$subtype) ?>" /><?php if ('') { ?><input type="hidden" name="subtype" value="<?php $subtype ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_subtype" name="subtype<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$subtype) ?>" /><?php if ('') { ?><input type="hidden" name="subtype" value="<?php $subtype ?>"/><?php } ?></div>
 								
 							<?php } ?>
 						</div>
@@ -35,13 +35,13 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'with_icon';$default  = '';$readonly = '';		
+							<?php { $tmpname     = 'with_icon';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -61,13 +61,13 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'inherit';$default  = '';$readonly = '';		
+							<?php { $tmpname     = 'inherit';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -87,13 +87,13 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'all_languages';$default  = '';$readonly = '';		
+							<?php { $tmpname     = 'all_languages';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -113,13 +113,13 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'writable';$default  = '';$readonly = '';		
+							<?php { $tmpname     = 'writable';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -141,7 +141,7 @@
 							
 						</div>
 						<div class="input">
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_width" name="width<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$width) ?>" /><?php if ('') { ?><input type="hidden" name="width" value="<?php $width ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_width" name="width<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$width) ?>" /><?php if ('') { ?><input type="hidden" name="width" value="<?php $width ?>"/><?php } ?></div>
 							
 						</div>
 					</div>
@@ -153,7 +153,7 @@
 							
 						</div>
 						<div class="input">
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_height" name="height<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$height) ?>" /><?php if ('') { ?><input type="hidden" name="height" value="<?php $height ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_height" name="height<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$height) ?>" /><?php if ('') { ?><input type="hidden" name="height" value="<?php $height ?>"/><?php } ?></div>
 							
 						</div>
 					</div>
@@ -189,7 +189,7 @@
 							
 						</div>
 						<div class="input">
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_decimals" name="decimals<?php if ('') echo '_disabled' ?>" type="text" maxlength="2" class="text" value="<?php echo Text::encodeHtml(@$decimals) ?>" /><?php if ('') { ?><input type="hidden" name="decimals" value="<?php $decimals ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_decimals" name="decimals<?php if ('') echo '_disabled' ?>" type="text" maxlength="2" class="text" value="<?php echo Text::encodeHtml(@$decimals) ?>" /><?php if ('') { ?><input type="hidden" name="decimals" value="<?php $decimals ?>"/><?php } ?></div>
 							
 						</div>
 					</div>
@@ -201,7 +201,7 @@
 							
 						</div>
 						<div class="input">
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_dec_point" name="dec_point<?php if ('') echo '_disabled' ?>" type="text" maxlength="5" class="text" value="<?php echo Text::encodeHtml(@$dec_point) ?>" /><?php if ('') { ?><input type="hidden" name="dec_point" value="<?php $dec_point ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_dec_point" name="dec_point<?php if ('') echo '_disabled' ?>" type="text" maxlength="5" class="text" value="<?php echo Text::encodeHtml(@$dec_point) ?>" /><?php if ('') { ?><input type="hidden" name="dec_point" value="<?php $dec_point ?>"/><?php } ?></div>
 							
 						</div>
 					</div>
@@ -213,7 +213,7 @@
 							
 						</div>
 						<div class="input">
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_thousand_sep" name="thousand_sep<?php if ('') echo '_disabled' ?>" type="text" maxlength="1" class="text" value="<?php echo Text::encodeHtml(@$thousand_sep) ?>" /><?php if ('') { ?><input type="hidden" name="thousand_sep" value="<?php $thousand_sep ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_thousand_sep" name="thousand_sep<?php if ('') echo '_disabled' ?>" type="text" maxlength="1" class="text" value="<?php echo Text::encodeHtml(@$thousand_sep) ?>" /><?php if ('') { ?><input type="hidden" name="thousand_sep" value="<?php $thousand_sep ?>"/><?php } ?></div>
 							
 						</div>
 					</div>
@@ -225,7 +225,7 @@
 							
 						</div>
 						<div class="input">
-							<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_default_text" name="default_text<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$default_text) ?>" /><?php if ('') { ?><input type="hidden" name="default_text" value="<?php $default_text ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_default_text" name="default_text<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$default_text) ?>" /><?php if ('') { ?><input type="hidden" name="default_text" value="<?php $default_text ?>"/><?php } ?></div>
 							
 						</div>
 					</div>
