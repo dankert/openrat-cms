@@ -244,7 +244,7 @@ class Tree
         $this->addTreeElement($treeElement);
 
 
-        // Suche
+/*        // Suche
         $treeElement = new TreeElement();
         $treeElement->id = $projectid;
         $treeElement->internalId = $projectid;
@@ -254,7 +254,7 @@ class Tree
         $treeElement->action = 'search';
         $treeElement->icon = 'search';
         $treeElement->description = lang('GLOBAL_SEARCH_DESC');
-        $this->addTreeElement($treeElement);
+        $this->addTreeElement($treeElement);*/
 
     }
 
@@ -356,11 +356,11 @@ class Tree
             if ($element->isWritable()) {
                 $treeElement = new TreeElement();
                 $treeElement->id = $id . '_' . $elementid;
-                $treeElement->extraId['elementid'] = $elementid;
+                $treeElement->internalId = $id . '_' . $elementid;
                 $treeElement->text = $element->name;
                 $treeElement->action = 'pageelement';
                 $treeElement->icon = 'el_' . $element->type;
-                $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
+                $treeElement->extraId = array('elementid' => $elementid, REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
 
 
                 $treeElement->description = lang('EL_' . $element->type);
@@ -399,6 +399,7 @@ class Tree
 
                 $treeElement = new TreeElement();
                 $treeElement->id = $id;
+                $treeElement->internalId = $id;
                 $treeElement->text = $object->name;
                 if (in_array($object->getType(), array('page', 'folder'))) {
                     $treeElement->type = $object->getType();
@@ -406,6 +407,7 @@ class Tree
                 }
                 $treeElement->action = $object->getType();
                 $treeElement->icon = $object->getType();
+                $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $value->languageid);
 
                 $treeElement->description = lang('GLOBAL_' . $object->getType());
                 if ($object->desc != '')

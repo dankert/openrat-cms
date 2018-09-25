@@ -140,7 +140,14 @@ class Value
      */
 	public $simple;
 
-	/**
+
+    /**
+     * Sprach-Id.
+     * @var int
+     */
+    public $languageid;
+
+    /**
 	 * Konstruktor
 	 */
 	function __construct()
