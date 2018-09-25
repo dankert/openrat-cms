@@ -134,9 +134,8 @@ class IndexAction extends Action
         $userIsLoggedIn = is_object($user);
 
         // Welche Aktion soll ausgeführt werden?
-        $action = $this->getRequestVar( REQ_PARAM_ACTION );
-        $id     = $this->getRequestId();
-
+        $action = '';
+        $id     = 0;
         $this->updateStartAction( $action, $id );
 
         $this->setTemplateVar('action',$action);
@@ -788,6 +787,15 @@ class IndexAction extends Action
         {
             $action = 'login';
             $id     = 0;
+            return;
+        }
+
+
+        // Die Action im originalen Request hat Priorität.
+        if   ( isset($_GET[ REQ_PARAM_ACTION ] ) )
+        {
+            $action = $_GET[ REQ_PARAM_ACTION ];
+            $id     = $_GET[ REQ_PARAM_ID     ];
             return;
         }
 
