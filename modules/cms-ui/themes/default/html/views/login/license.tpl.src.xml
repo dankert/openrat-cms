@@ -1,26 +1,110 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<newline />
-	<table>
-		<row class="headline">
-			<column>
-				<text key="name" />
-			</column>
-			<column>
-				<text key="license" />
-			</column>
-		</row>
-		<list list="software" extract="true">
-			<row class="data">
-				<column class="clickable">
-					<link type="external" url="var:url">
-						<text var="name"></text>
-					</link>
-				</column>
-				<column>
-					<text var="license"></text>
-				</column>
-			</row>
-		</list>
-	</table>
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+
+    <part class="or-form">
+        <group title="message:USER" open="true" show="true">
+            <part class="line">
+                <part class="label">
+                    <text key="USER_USERNAME"></text>
+                </part>
+                <part class="input">
+                    <text var="user_name"/>
+                </part>
+            </part>
+            <part class="line">
+                <part class="label">
+                    <text key="USER_FULLNAME"></text>
+                </part>
+                <part class="input">
+                    <text var="user_fullname"/>
+                </part>
+            </part>
+            <part class="line">
+                <part class="label">
+                    <text key="USER_LOGIN_DATE"></text>
+                </part>
+                <part class="input">
+                    <date date="var:user_login"/>
+                </part>
+            </part>
+
+        </group>
+
+        <group title="message:CMS">
+            <part class="line">
+                <part class="label">
+                    <text key="NAME"></text>
+                </part>
+                <part class="input">
+                    <text var="cms_name"/>
+                    <text var="cms_version"/>
+                </part>
+            </part>
+            <part class="line">
+                <part class="label">
+                    <text key="OPERATOR"></text>
+                </part>
+                <part class="input">
+                    <text var="cms_operator"/>
+                </part>
+            </part>
+
+        </group>
+
+        <group title="message:SYSTEM">
+            <part class="line">
+                <part class="label">
+                    <text key="DATE_TIME"></text>
+                </part>
+                <part class="input">
+                    <text var="time"/>
+                </part>
+            </part>
+            <part class="line">
+                <part class="label">
+                    <text key="OPERATING_SYSTEM"></text>
+                </part>
+                <part class="input">
+                    <text var="os"/>
+                    <text var="release"/>
+                    <text var="machine"/>
+                </part>
+            </part>
+            <part class="line">
+                <part class="label">
+                    <text key="INTERPRETER"></text>
+                </part>
+                <part class="input">
+                    <text var="version"/>
+                </part>
+            </part>
+
+        </group>
+
+        <group title="message:LICENSE">
+
+            <table>
+                <row class="headline">
+                    <column>
+                        <text key="name"/>
+                    </column>
+                    <column>
+                        <text key="license"/>
+                    </column>
+                </row>
+                <list list="software" extract="true">
+                    <row class="data">
+                        <column class="clickable">
+                            <link type="external" url="var:url">
+                                <text var="name"></text>
+                            </link>
+                        </column>
+                        <column>
+                            <text var="license"></text>
+                        </column>
+                    </row>
+                </list>
+            </table>
+        </group>
+    </part>
 </output>

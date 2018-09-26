@@ -1685,12 +1685,6 @@ class LoginAction extends Action
 		$software[] = array('name'   =>'GeSHi - Generic Syntax Highlighter',
 		                    'url'    =>'http://qbnz.com/highlighter/',
 		                    'license'=>'GPL v2');
-		$software[] = array('name'   =>'CKEditor',
-		                    'url'    =>'http://ckeditor.com/',
-		                    'license'=>'GPL v2');
-		$software[] = array('name'   =>'960 Grid System CSS',
-		                    'url'    =>'http://960.gs/',
-		                    'license'=>'GPL v3, MIT');
 		$software[] = array('name'   =>'TAR file format',
 		                    'url'    =>'http://www.phpclasses.org/package/529',
 		                    'license'=>'LGPL');
@@ -1699,7 +1693,28 @@ class LoginAction extends Action
 		                    'license'=>'BSD');
 		
 		$this->setTemplateVar('software',$software);
-	}
+
+
+
+        $this->setTemplateVar('time'     ,date('r')     );
+        $this->setTemplateVar('os'       ,php_uname('s') );
+        $this->setTemplateVar('release'  ,php_uname('r') );
+        $this->setTemplateVar('machine'  ,php_uname('m') );
+        $this->setTemplateVar('version' , phpversion()          );
+
+        $this->setTemplateVar('cms_name'    , Conf()->subset('application')->get('name'    ) );
+        $this->setTemplateVar('cms_version' , Conf()->subset('application')->get('version' ) );
+        $this->setTemplateVar('cms_operator', Conf()->subset('application')->get('operator') );
+
+        $user = Session::getUser();
+        if   ( !empty($user) )
+        {
+            $this->setTemplateVar('user_login'   , $user->loginDate );
+            $this->setTemplateVar('user_name'    , $user->name      );
+            $this->setTemplateVar('user_fullname', $user->fullname  );
+        }
+
+    }
 	
 	
 	function pingView()

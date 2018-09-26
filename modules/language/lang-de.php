@@ -1270,4 +1270,9 @@ function language() { return array(
 'VALIDITY'=>"Gültigkeit",
 'FROM'=>"von",
 'UNTIL'=>"bis",
+'OPERATING_SYSTEM'=>"Betriebsystem",
+'INTERPRETER'=>"Interpreter",
+'OPERATOR'=>"Betreiber",
+'USER_LOGIN_DATE'=>"Angemeldet seit",
+'CMS'=>"Redaktionssystem",
 );}

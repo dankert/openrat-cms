@@ -64,7 +64,7 @@ class FormComponent extends Component
 		echo ' data-id="' . $this->htmlvalue($this->id) . '"';
 		echo ' method="' . $this->htmlvalue($this->method) . '"';
 		echo ' enctype="' . $this->htmlvalue($this->enctype) . '"';
-		echo ' class="' . $this->htmlvalue($this->action) . '"';
+		echo ' class="or-form ' . $this->htmlvalue($this->action) . '"';
 		echo ' data-async="' . $this->htmlvalue($this->async) . '"';
 		echo ' data-autosave="' . $this->htmlvalue($this->autosave) . '"';
 		echo '>';

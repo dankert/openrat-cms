@@ -156,6 +156,11 @@ class LinkComponent extends Component
 				echo ' href="' . $this->htmlvalue($this->url) . '"';
 				break;
 			
+			case 'external':
+
+				echo ' href="' . $this->htmlvalue($this->url) . '"';
+				break;
+
 			default:
 				echo ' href="<?php echo Html::url('.$this->value($this->action).','.$this->value($this->subaction).','.$this->value($this->id);
 

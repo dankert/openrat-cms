@@ -6095,3 +6095,17 @@ FROM:
 UNTIL:
   de: bis
   en: until
+OPERATING_SYSTEM:
+  de: Betriebsystem
+  en: Operating system
+INTERPRETER:
+  en: Interpreter
+OPERATOR:
+  de: Betreiber
+  en: Operator
+USER_LOGIN_DATE:
+  de: Angemeldet seit
+  en: Logged in since
+CMS:
+  de: Redaktionssystem
+  en: Content Management System
