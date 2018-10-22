@@ -81,7 +81,12 @@ class LoginAction extends Action
 			
 		$db = db_connection();
 		if	( is_object($db) )
+        {
 			$db->rollback();
+			$db->disconnect(); // Bäm. Dies. ist. notwenig. WTF.
+			//$db = null;
+            //Session::setDatabase( null );
+        }
 
         try
         {
