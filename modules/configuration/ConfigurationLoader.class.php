@@ -44,30 +44,6 @@ class ConfigurationLoader
     {
         $customConfig = ConfigurationLoader::loadCustomConfig($this->configFile);
 
-
-        // Resolve dot-notated configuration keys to arrays.
-        // Means: a.b.c is converted to array['a']['b']['c']
-        foreach ($customConfig as $key => $value) {
-            $parts = explode('.', $key);
-            if (count($parts) == 1)
-                ; // Kein Punkt enthalten. Dieser Konfigurationsschlüssel wird nicht geändert.
-            else {
-
-                if (count($parts) == 2)
-                    $customConfig[$parts[0]][$parts[1]] = $value;
-                elseif (count($parts) == 3)
-                    $customConfig[$parts[0]][$parts[1]][$parts[2]] = $value;
-                elseif (count($parts) == 4)
-                    $customConfig[$parts[0]][$parts[1]][$parts[2]][$parts[3]] = $value;
-                elseif (count($parts) == 5)
-                    $customConfig[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]] = $value;
-                elseif (count($parts) == 6)
-                    $customConfig[$parts[0]][$parts[1]][$parts[2]][$parts[3]][$parts[4]][$parts[5]] = $value;
-                unset($customConfig[$key]);
-            }
-        }
-
-
         // Den Dateinamen der Konfigurationsdatei in die Konfiguration schreiben.
         $customConfig['config']['filename'              ] = $this->configFile;
         $customConfig['config']['last_modification_time'] = filemtime($this->configFile);
