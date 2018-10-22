@@ -166,12 +166,14 @@ class Database
 	 */
 	public function commit()
 	{
-        Logger::debug("Committing database transaction!");
-		if	( $this->transactionInProgress )
-		{
-			$this->client->commit();
+        if	( $this->transactionInProgress )
+        {
+            Logger::debug("Committing database transaction!");
+            $this->client->commit();
 			$this->transactionInProgress = false;
-		}
+		} else {
+            Logger::warn("No Transaction in progress, ignoring commit request.");
+        }
 	}
 	
 
@@ -182,12 +184,14 @@ class Database
 	 */
 	public function rollback()
 	{
-        Logger::debug("Rolling back database transaction!");
-		if	( $this->transactionInProgress )
-		{
-			$this->client->rollback();
+        if	( $this->transactionInProgress )
+        {
+            Logger::debug("Rolling back database transaction!");
+            $this->client->rollback();
 			$this->transactionInProgress = false;
-		}
+        } else {
+            Logger::warn("No Transaction in progress, ignoring rollback request.");
+        }
 	}
 
     /**
