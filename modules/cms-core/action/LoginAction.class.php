@@ -352,8 +352,18 @@ class LoginAction extends Action
         }
 
         $dbids = array();
-        foreach( $conf['database'] as $dbid => $dbconf )
+
+        $databases = Conf()->get('database');
+
+        if   ( !is_array($databases))
+            throw new \LogicException("Corrupt configuration: Databases configuration must be an array.");
+
+
+        foreach( $databases as $dbid => $dbconf )
         {
+            if   ( !is_array($dbconf))
+                throw new \LogicException("Corrup configuration: Database configuration '".$dbid."' must be an array.'");
+
             $dbconf += $conf['database-default']['defaults']; // Add Default-Values
 
             if	( is_array($dbconf) && $dbconf['enabled'] ) // Database-Connection is enabled
@@ -1731,22 +1741,30 @@ class LoginAction extends Action
     private function updateDatabase($dbid)
     {
         try {
-            $db = new Database( config('database',$dbid), true);
-            $db->id = $dbid;
+            $adminDbConfig = Conf()->subset('database')->subset($dbid);
+
+            if ( !$adminDbConfig->is('auto_update')) {
+
+                Logger::warn("Auto-Update is disabled");
+                return;
+            }
+
+            $adminDb = new Database( config('database',$dbid), true);
+            $adminDb->id = $dbid;
         } catch (Exception $e) {
 
             throw new OpenRatException('DATABASE_ERROR_CONNECTION', $e->getMessage());
         }
 
         $updater = new DbUpdate();
-        $updater->update($db);
+        $updater->update($adminDb);
 
         // Try to close the PDO connection. PDO doc:
         // To close the connection, you need to destroy the object by ensuring that all
         // remaining references to it are deleted—you do this by assigning NULL to the variable that holds the object.
         // If you don't do this explicitly, PHP will automatically close the connection when your script ends.
-        $db = null;
-        unset($db);
+        $adminDb = null;
+        unset($adminDb);
     }
 
 
