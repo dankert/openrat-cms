@@ -194,6 +194,11 @@ class Database
         }
 	}
 
+
+	public function disconnect()
+    {
+        $this->client->disconnect();
+    }
     /**
      * @param $sql string das SQL
      * @return Statement
