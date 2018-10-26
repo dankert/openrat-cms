@@ -2,7 +2,7 @@
 	
 		
 		
-		<table width="100%">
+		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 			<tr class="headline">
 				<td>
 					<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_user.png" />

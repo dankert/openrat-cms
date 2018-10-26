@@ -37,4 +37,16 @@ $(document).on('orViewLoaded',function(event, data) {
 		$(this).closest('table').find('tr.data > td > input.checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
 	});
 
+    /**
+	 * Table-Filter.
+     */
+	$(event.target).find('.table-filter > input').keyup( function() {
+
+		let filterExpression = $(this).val().toLowerCase();
+
+        $(this).parents('.table-wrapper').find('tr').filter( function() {
+            $(this).toggle( $(this).text().toLowerCase().indexOf(filterExpression) > -1 )
+        } );
+
+	} );
 });
