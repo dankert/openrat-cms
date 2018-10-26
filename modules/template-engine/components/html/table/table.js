@@ -44,9 +44,48 @@ $(document).on('orViewLoaded',function(event, data) {
 
 		let filterExpression = $(this).val().toLowerCase();
 
-        $(this).parents('.table-wrapper').find('tr').filter( function() {
-            $(this).toggle( $(this).text().toLowerCase().indexOf(filterExpression) > -1 )
-        } );
+        let table = $(this).parents('.table-wrapper').find('table');
+        table.addClass('loader');
+
+        setTimeout( () => {
+            table.find('tr').filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(filterExpression) > -1)
+            })
+            table.removeClass('loader');
+        }, 50);
 
 	} );
+
+
+    /**
+	 * Table-Sortierung.
+     */
+	$(event.target).find('table > tbody > tr.headline > td').click( function() {
+
+        let table = $(this).parents('table');
+        table.addClass('loader');
+
+        setTimeout(function () {  // Sorting should be asynchronous, because we do not want to block the UI.
+
+            let rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+            this.asc = !this.asc
+            if (!this.asc) {
+                rows = rows.reverse()
+            }
+            for (var i = 0; i < rows.length; i++) {
+                table.append(rows[i])
+            }
+            table.removeClass('loader');
+        }, 50);
+
+	} );
+
+    function comparer(index) {
+        return function(a, b) {
+            let valA = getCellValue(a, index), valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+        }
+    }
+    function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+
 });
