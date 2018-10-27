@@ -57,6 +57,8 @@
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_new'.'')))); ?></span>
 							
+							<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','add')))); ?></span>
+							
 						</a>
 
 					</div>
@@ -183,6 +185,8 @@
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_prop'.'')))); ?></span>
 							
+							<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','prop')))); ?></span>
+							
 						</a>
 
 					</div>
@@ -201,6 +205,8 @@
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_pub'.'')))); ?></span>
 							
+							<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','pub')))); ?></span>
+							
 						</a>
 
 					</div>
@@ -210,6 +216,8 @@
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_archive'.'')))); ?></span>
 							
+							<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','archive')))); ?></span>
+							
 						</a>
 
 					</div>
@@ -218,6 +226,8 @@
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/rights.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_rights'.'')))); ?></span>
+							
+							<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','rights')))); ?></span>
 							
 						</a>
 
@@ -394,6 +404,8 @@
 							<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/user.svg" />
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_profile'.'')))); ?></span>
+							
+							<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','action','profile')))); ?></span>
 							
 						</a>
 

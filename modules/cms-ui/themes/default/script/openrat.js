@@ -43,6 +43,20 @@ $( function() {
         }
     });
 
+    // Binding aller Sondertasten.
+    $('.keystroke').each( function() {
+    	let keystrokeElement = $(this);
+        let keystroke = keystrokeElement.text();
+        if (keystroke.length == 0)
+        	return; // No Keybinding.
+    	let keyaction = function() {
+    		keystrokeElement.click();
+		};
+    	// Keybinding ausfuehren.
+        $(document).bind('keydown', keystroke, keyaction );
+	} );
+
+
 
     // Per Klick werden die Notices entfernt.
     $('#noticebar .notice').fadeIn().click(function () {

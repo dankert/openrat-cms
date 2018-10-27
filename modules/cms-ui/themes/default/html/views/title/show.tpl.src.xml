@@ -90,6 +90,7 @@
                     <link type="dialog" title="message:menu_new_desc" subaction="add">
                         <image method="add"></image>
                         <text key="menu_new"></text>
+                        <text class="keystroke" value="config:ui/keybinding/method/add"></text>
                     </link>
                 </part>
 
@@ -221,6 +222,7 @@
                     <link type="dialog" title="message:menu_prop_desc" subaction="prop">
                         <image method="prop"></image>
                         <text key="menu_prop"></text>
+                        <text class="keystroke" value="config:ui/keybinding/method/prop"></text>
                     </link>
                 </part>
                 <part
@@ -235,6 +237,7 @@
                     <link type="dialog" title="message:menu_pub_desc" subaction="pub">
                         <image method="publish"></image>
                         <text key="menu_pub"></text>
+                        <text class="keystroke" value="config:ui/keybinding/method/pub"></text>
                     </link>
                 </part>
                 <part class="entry clickable filtered on-action-pageelement">
@@ -242,6 +245,7 @@
                           title="message:menu_archive_desc">
                         <image method="archive"></image>
                         <text key="menu_archive"></text>
+                        <text class="keystroke" value="config:ui/keybinding/method/archive"></text>
                     </link>
                 </part>
                 <part
@@ -250,6 +254,7 @@
                           subaction="rights">
                         <image method="rights"></image>
                         <text key="menu_rights"></text>
+                        <text class="keystroke" value="config:ui/keybinding/method/rights"></text>
                     </link>
                 </part>
 
@@ -525,6 +530,7 @@
                     <link type="dialog" title="message:menu_PROFILE_DESC" action="profile" subaction="edit">
                         <image action="user"></image>
                         <text key="menu_profile"></text>
+                        <text class="keystroke" value="config:ui/keybinding/action/profile"></text>
                     </link>
                 </part>
                 <part class="entry clickable">

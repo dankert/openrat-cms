@@ -6,7 +6,7 @@
  *
  * @return String, leer falls Schluessel nicht vorhanden
  */
-function config( $part1=null,$part2=null,$part3=null )
+function config( $part1=null,$part2=null,$part3=null,$part4=null )
 {
     global $conf;
 
@@ -25,8 +25,14 @@ function config( $part1=null,$part2=null,$part3=null )
         else
             return '';
 
-    if	( isset($conf[$part1][$part2][$part3]))
-        return $conf[$part1][$part2][$part3];
+    if	( $part4 == null)
+        if	( isset($conf[$part1][$part2][$part3]))
+            return $conf[$part1][$part2][$part3];
+        else
+            return '';
+
+    if	( isset($conf[$part1][$part2][$part3][$part4]))
+        return $conf[$part1][$part2][$part3][$part4];
     else
         return '';
 }

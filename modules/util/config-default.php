@@ -889,5 +889,17 @@ function createDefaultConfig()
     $conf['application']['operator'] = OR_TITLE;
     $conf['production']= true;
 
+    $conf['ui']= array();
+    $conf['ui']['keybinding']= array();
+    $conf['ui']['keybinding']['method'] = array();
+    $conf['ui']['keybinding']['method']['prop'] = 'F4';
+    $conf['ui']['keybinding']['method']['add'] = 'F1';
+    $conf['ui']['keybinding']['method']['pub'] = 'F8';
+    $conf['ui']['keybinding']['method']['archive'] = '';
+    $conf['ui']['keybinding']['method']['rights'] = '';
+
+    $conf['ui']['keybinding']['action'] = array();
+    $conf['ui']['keybinding']['action']['profile'] = 'ALT+P';
+
     return $conf;
 }

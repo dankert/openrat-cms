@@ -398,6 +398,7 @@ class IndexAction extends Action
 			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orLoadView';
 			$js[] = OR_THEMES_DIR . 'default/script/plugin/jquery-plugin-orAutoheight';
             $js[] = OR_THEMES_DIR . 'default/script/jquery-qrcode';
+            $js[] = OR_THEMES_DIR . 'default/script/jquery.hotkeys';
 
             // Inlining of SVG
             $js[] = OR_THEMES_DIR . 'default/script/svg-injector';
