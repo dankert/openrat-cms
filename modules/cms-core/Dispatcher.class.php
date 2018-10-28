@@ -19,6 +19,7 @@ use ObjectNotFoundException;
 use OpenRatException;
 use SecurityException;
 use Session;
+use Spyc;
 
 
 /**
@@ -55,12 +56,13 @@ class Dispatcher
 
         $this->setContentLanguageHeader();
 
-
-
         // Nachdem die Konfiguration gelesen wurde, kann nun der Logger benutzt werden.
         require_once(OR_MODULES_DIR . "logger/require." . PHP_EXT);
         $this->initializeLogger();
 
+        // Sollte nur 1x pro Sitzung ausgeführt werden. Wie ermitteln wir das?
+        //if ( DEVELOPMENT )
+        //    Logger::debug( "Effective configuration:\n".Spyc::YAMLDump($conf) );
 
         if (!empty($conf['security']['umask']))
             umask(octdec($conf['security']['umask']));
@@ -213,7 +215,6 @@ class Dispatcher
             $customConfig = $configLoader->load();
             $conf = array_replace_recursive($conf, $customConfig);
 
-
             $conf['build'] = parse_ini_file('build.ini');
             $conf['version'] = parse_ini_file('version.ini');
             // Sprache lesen
@@ -305,19 +306,26 @@ class Dispatcher
 
         Logger::debug("Dispatcher executing {$this->request->action}/{$this->request->method}/" . @$REQ[REQ_PARAM_ID].' -> '.$actionClassName.'#'.$subactionMethodName.'() embed='.$this->request->isEmbedded);
 
-        if (!method_exists($do, $subactionMethodName))
-            throw new BadMethodCallException("Method '$subactionMethodName' does not exist");
 
         try {
-            $do->$subactionMethodName(); // <== Executing the Action
+            $method    = new \ReflectionMethod($do,$subactionMethodName);
+            $declaredClassName = $method->getDeclaringClass()->getShortName();
+            $declaredActionName = strtolower(substr($declaredClassName,0,strpos($declaredClassName,'Action')));
+
+            $method->invoke($do); // <== Executing the Action
         }
         catch (\ValidationException $ve)
         {
             $do->addValidationError( $ve->fieldName );
         }
+        catch (\ReflectionException $re)
+        {
+            throw new BadMethodCallException("Method '$subactionMethodName' does not exist",0,$re);
+        }
 
         // The action is able to change its method name.
         $this->request   = $do->request;
+        $this->request->action = $declaredActionName;
 
         $result = $do->getOutputData();
 

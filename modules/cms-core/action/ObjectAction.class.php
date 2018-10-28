@@ -354,8 +354,6 @@ class ObjectAction extends Action
 		$this->setTemplateVar('acls',$acllist );
 
 		$this->setTemplateVars( $o->getAssocRelatedAclTypes() );
-
-        $this->request->action = 'object';
     }
 
 	
@@ -371,8 +369,6 @@ class ObjectAction extends Action
 		
 		$acllist = array();
 		$this->setTemplateVar('acls',$acllist );
-
-        $this->request->action = 'object';
     }
 
 	
@@ -464,8 +460,6 @@ class ObjectAction extends Action
 		$this->setTemplateVar('languages',$languages       );
 		$this->setTemplateVar('objectid' ,$o->objectid     );
 		$this->setTemplateVar('action'   ,$this->request->action);
-
-		$this->request->action = 'object';
 	}
 
 
@@ -522,7 +516,6 @@ class ObjectAction extends Action
     public function settingsView()
     {
         $this->setTemplateVar('settings',$this->baseObject->settings);
-        $this->request->action = 'object';
     }
 
     public function settingsPost()
