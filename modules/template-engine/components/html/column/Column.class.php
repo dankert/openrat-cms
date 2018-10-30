@@ -15,7 +15,7 @@ class ColumnComponent extends Component
 	public $action;
 	public $id;
 	public $name;
-	
+
 	protected function begin()
 	{
 	    $styleClasses = array();
