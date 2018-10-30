@@ -62,14 +62,18 @@ $(document).on('orViewLoaded',function(event, data) {
      */
 	$(event.target).find('table > tbody > tr.headline > td').click( function() {
 
-        let table = $(this).parents('table');
+		let column = $(this);
+        let table = column.parents('table');
         table.addClass('loader');
+
+        let isAscending = !column.hasClass('sort-asc');
+        table.find('tr.headline > td').removeClass('sort-asc sort-desc');
+        if ( isAscending ) column.addClass('sort-asc'); else column.addClass('sort-desc');
 
         setTimeout(function () {  // Sorting should be asynchronous, because we do not want to block the UI.
 
-            let rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
-            this.asc = !this.asc
-            if (!this.asc) {
+            let rows = table.find('tr:gt(0)').toArray().sort(comparer(column.index()))
+            if (!isAscending) {
                 rows = rows.reverse()
             }
             for (var i = 0; i < rows.length; i++) {
@@ -86,6 +90,9 @@ $(document).on('orViewLoaded',function(event, data) {
             return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
         }
     }
-    function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).text();
+    }
 
 });
