@@ -200,6 +200,13 @@ table {
 
     padding: 3px;
     font-weight: bold;
+
+    &.sort-asc > span:last-child:after {
+      content: " \2193";
+    }
+    &.sort-desc > span:last-child:after {
+      content: " \2191";
+    }
   }
 
   tr.data > td {
