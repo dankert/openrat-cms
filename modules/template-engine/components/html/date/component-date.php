@@ -12,7 +12,8 @@ function component_date( $time )
 			$time += ((int)$_COOKIE['or_timezone_offset']*60);
 		}
 	
-		echo '<span class="initial-hidden">'.$time.'</span>'; // For sorting a table.
+		echo '<span class="sort-value">'.str_pad($time, 20, "0", STR_PAD_LEFT).'</span>'; // For sorting a table.
+
 		echo '<span title="';
 		$dl = date(lang('DATE_FORMAT_LONG'),$time);
 		$dl = str_replace('{weekday}',lang('DATE_WEEKDAY'.strval(date('w',$time))),$dl);
