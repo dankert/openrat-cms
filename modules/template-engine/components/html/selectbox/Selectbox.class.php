@@ -57,7 +57,8 @@ class SelectboxComponent extends Component
 		echo ' title="'.$this->htmlvalue($this->title).'"';
 		echo ' class="'.$this->htmlvalue($this->class).'"';
 
-		echo '<?php if (count($'.$this->varname($this->list).')<=1)'." echo ' disabled=\"disabled\"'; ?>";
+		if (! $this->addempty )
+		    echo '<?php if (count($'.$this->varname($this->list).')<=1)'." echo ' disabled=\"disabled\"'; ?>";
 	
 		
 		if($this->multiple)

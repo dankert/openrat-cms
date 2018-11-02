@@ -34,6 +34,16 @@
 		</part>
 		<part class="line">
 			<part class="label">
+				<label for="filterid">
+					<text text="filter"></text>
+				</label>
+			</part>
+			<part class="input">
+				<selectbox name="filterid" size="1" list="filterlist" addempty="true"  lang="true"></selectbox>
+			</part>
+		</part>
+		<part class="line">
+			<part class="label">
 				<label for="description">
 					<text text="global_description"></text>
 				</label>

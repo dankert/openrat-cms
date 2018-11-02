@@ -38,8 +38,10 @@ class FileAction extends ObjectAction
 {
 	public $security = SECURITY_USER;
 
-	var $file;
-	var $defaultSubAction = 'show';
+    /**
+     * @var File
+     */
+	protected $file;
 
 	/**
 	 * Konstruktor
@@ -80,17 +82,6 @@ class FileAction extends ObjectAction
 		//$setTemplateVar('tree_refresh',true);
 		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
 	}
-
-
-	public function valuePost()
-	{
-		$this->file->value = $this->getRequestVar('value',OR_FILTER_RAW);
-		$this->file->saveValue();
-	
-		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
-		$this->file->setTimestamp();
-	}
-
 
 	/**
 	 * Abspeichern der Eigenschaften zu dieser Datei.

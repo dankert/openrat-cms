@@ -1,15 +1,16 @@
 <?php
 
-namespace cms\action;
+namespace {
 
-use cms\model\Folder;
-use cms\model\BaseObject;
-use cms\model\File;
+    define('OR_FILE_FILTER_LESS',1);
+}
 
-use cms\model\Text;
-use Http;
-use \Html;
-use Upload;
+namespace cms\action
+{
+    use cms\model\BaseObject;
+
+    use cms\model\Text;
+    use \Html;
 
 // OpenRat Content Management System
 // Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
@@ -29,35 +30,104 @@ use Upload;
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
-/**
- * Action-Klasse zum Bearbeiten einer Datei
- * @author Jan Dankert
- * @package openrat.actions
- */
-class TextAction extends FileAction
-{
-	public $security = SECURITY_USER;
-
-	var $text;
-
-	/**
-	 * Konstruktor
-	 */
-	function __construct()
-	{
-        parent::__construct();
-    }
-
-
-    public function init()
+    /**
+     * Action-Klasse zum Bearbeiten einer Datei
+     * @author Jan Dankert
+     * @package openrat.actions
+     */
+    class TextAction extends FileAction
     {
+        public $security = SECURITY_USER;
 
-		$this->text = new Text( $this->getRequestId() );
-		$this->text->load();
+        var $text;
 
-        $this->file = $this->text;
+        /**
+         * Konstruktor
+         */
+        function __construct()
+        {
+            parent::__construct();
+        }
+
+
+        public function init()
+        {
+
+            $this->text = new Text($this->getRequestId());
+            $this->text->load();
+
+            $this->file = $this->text;
+        }
+
+
+        public function valuePost()
+        {
+            $this->file->value = $this->getRequestVar('value', OR_FILTER_RAW);
+            $this->file->saveValue();
+
+            $this->addNotice($this->file->getType(), $this->file->name, 'VALUE_SAVED', 'ok');
+            $this->file->setTimestamp();
+        }
+
+
+        function propView()
+        {
+
+            global $conf;
+
+            if ($this->file->filename == $this->file->objectid)
+                $this->file->filename = '';
+
+            // Eigenschaften der Datei uebertragen
+            $this->setTemplateVars($this->file->getProperties());
+
+            $this->setTemplateVar('size', number_format($this->file->size / 1000, 0, ',', '.') . ' kB');
+            $this->setTemplateVar('full_filename', $this->file->full_filename());
+
+            if (is_file($this->file->tmpfile())) {
+                $this->setTemplateVar('cache_filename', $this->file->tmpfile());
+                $this->setTemplateVar('cache_filemtime', @filemtime($this->file->tmpfile()));
+            }
+
+            // Alle Seiten mit dieser Datei ermitteln
+            $pages = $this->file->getDependentObjectIds();
+
+            $list = array();
+            foreach ($pages as $id) {
+                $o = new BaseObject($id);
+                $o->load();
+                $list[$id] = array();
+                $list[$id]['url'] = Html::url('main', 'page', $id);
+                $list[$id]['name'] = $o->name;
+            }
+            asort($list);
+            $this->setTemplateVar('pages', $list);
+            $this->setTemplateVar('edit_filename', $conf['filename']['edit']);
+
+            $this->setTemplateVar('filterlist', array(
+                OR_FILE_FILTER_LESS => 'less'
+            ));
+        }
+
+
+        /**
+         * Abspeichern der Eigenschaften zu dieser Datei.
+         *
+         */
+        function propPost()
+        {
+            // Eigenschaften speichern
+            $this->file->filename = $this->getRequestVar('filename', OR_FILTER_FILENAME);
+            $this->file->name = $this->getRequestVar('name', OR_FILTER_FULL);
+            $this->file->extension = $this->getRequestVar('extension', OR_FILTER_FILENAME);
+            $this->file->desc = $this->getRequestVar('description', OR_FILTER_FULL);
+            $this->file->filterid = $this->getRequestVar('filterid', OR_FILTER_NUMBER);
+
+            $this->file->save();
+            $this->file->setTimestamp();
+            $this->addNotice($this->file->getType(), $this->file->name, 'PROP_SAVED', 'ok');
+        }
+
+
     }
-
 }
-
-?>

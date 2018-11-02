@@ -39,9 +39,9 @@ class File extends BaseObject
 	var $fullFilename  = '';
 	var $publish       = null;
 	var $mime_type     = '';
-	
+
 	var $tmpfile;
-	
+
 	var $content_negotiation = false;
 
 
@@ -53,9 +53,10 @@ class File extends BaseObject
 	 */
 	var $storeValueAsBase64 = false;
 
+    public $filterid;
 
 
-	/**
+    /**
 	 * Konstruktor
 	 *
 	 * @param Objekt-Id
@@ -63,7 +64,7 @@ class File extends BaseObject
 	function __construct( $objectid='' )
 	{
 		global $conf;
-		
+
 		$db = \Session::getDatabase();
 		$this->storeValueAsBase64 = $db->conf['base64'];
 
@@ -87,7 +88,7 @@ class File extends BaseObject
 
 		if	( $this->content_negotiation && config('publish','negotiation','file_negotiate_type' ) )
 		{
-			// Link auf Datei: Extension bleibt aufgrund Content-Negotiation leer 
+			// Link auf Datei: Extension bleibt aufgrund Content-Negotiation leer
 		}
 		else
 		{
@@ -128,6 +129,7 @@ class File extends BaseObject
 		                    array('full_filename'=>$this->fullFilename,
 		                          'extension'    =>$this->extension,
 		                          'size'         =>$this->size,
+		                          'filterid'     =>$this->filterid,
 		                          'mimetype'     =>$this->mimetype()   ) );
 	}
 
@@ -140,7 +142,7 @@ class File extends BaseObject
 	{
 		global $SESS;
 		$db = db_connection();
-		
+
 		$sqlquery = 'SELECT * FROM {{object}} ';
 
 		if   ( $extension != '' )
@@ -158,7 +160,7 @@ class File extends BaseObject
 
 		$sql = $db->sql( $sqlquery );
 		$sql->setInt( 'projectid',$SESS['projectid'] );
-		
+
 		return $sql->getCol();
 	}
 
@@ -173,13 +175,13 @@ class File extends BaseObject
 	public static function getObjectIdsByExtension( $extension )
 	{
 		$db = db_connection();
-		
+
 		$sql = $db->sql( 'SELECT {{file}}.objectid FROM {{file}} '.
 		                ' LEFT JOIN {{object}} '.
 		                '   ON {{object}}.id={{file}}.objectid'.
 		                ' WHERE {{file}}.extension={extension}' );
 		$sql->setString( 'extension',$extension       );
-		
+
 		return $sql->getCol();
 	}
 
@@ -188,7 +190,7 @@ class File extends BaseObject
 	/**
 	 * Ermittelt den Mime-Type zu dieser Datei
 	 *
-	 * @return String Mime-Type  
+	 * @return String Mime-Type
 	 */
 	function mimeType()
 	{
@@ -197,9 +199,9 @@ class File extends BaseObject
 
 		global $conf;
 		$mime_types = $conf['mime-types'];
-		
 
-		
+
+
 		$ext = strtolower( $this->getRealExtension() );
 
 		if	( !empty($mime_types[$ext]) )
@@ -207,34 +209,35 @@ class File extends BaseObject
 		else
 			// Wenn kein Mime-Type gefunden, dann Standartwert setzen
 			$this->mime_type = OR_FILE_DEFAULT_MIMETYPE;
-			
+
 		return( $this->mime_type );
 	}
 
 
 	/**
 	 * Lesen der Datei aus der Datenbank.
-	 * 
+	 *
 	 * Es werden nur die Meta-Daten (Erweiterung, Gr��e) gelesen. Zum Lesen des
 	 * Datei-Inhaltes muss #loadValue() aufgerufen werden.
 	 */
-	function load()
+	public function load()
 	{
 		$db = db_connection();
 
-		$sql = $db->sql( 'SELECT id,extension,size'.
+		$sql = $db->sql( 'SELECT id,extension,size,filterid'.
 		                ' FROM {{file}}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 		$row = $sql->getRow();
-		
+
 		if	( count($row)!=0 )
 		{
 			$this->fileid    = $row['id'       ];
 			$this->extension = $row['extension'];
 			$this->size      = $row['size'     ];
+			$this->filterid  = $row['filterid' ];
 		}
-		
+
 		$this->objectLoad();
 
 		return $this;
@@ -254,12 +257,12 @@ class File extends BaseObject
 		                '  WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 		$sql->query();
-		
+
 		$this->objectDelete();
 	}
 
 
-	
+
 	/**
 	 * Stellt anhand der Dateiendung fest, ob es sich bei dieser Datei um ein Bild handelt
 	 */
@@ -268,11 +271,11 @@ class File extends BaseObject
 		return substr($this->mimeType(),0,6)=='image/';
 	}
 
-	
+
 
 	/**
 	 * Ermittelt die Datei-Endung.
-	 * 
+	 *
 	 * @return String Datei-Endung
 	 */
 	function extension()
@@ -287,7 +290,7 @@ class File extends BaseObject
 
 	/**
 	 * Einen Dateinamen in Dateiname und Extension aufteilen.
-	 * @param filename Dateiname 
+	 * @param filename Dateiname
 	 */
 	function parse_filename($filename)
 	{
@@ -310,14 +313,14 @@ class File extends BaseObject
 	/**
 	 * Speichert die Datei-Informationen in der Datenbank.
 	 */
-	function save()
+	public function save()
 	{
-		global $SESS;
 		$db = db_connection();
-		
+
 		$sql = $db->sql( <<<EOF
 UPDATE {{file}} SET
   size      = {size},
+  filterid  = {filterid},
   extension = {extension}
   WHERE objectid={objectid}
 EOF
@@ -325,8 +328,9 @@ EOF
 		$sql->setString('size'     ,$this->size      );
 		$sql->setString('extension',$this->extension );
 		$sql->setString('objectid' ,$this->objectid  );
+		$sql->setInt   ('filterid' ,$this->filterid  );
 		$sql->query();
-		
+
 		$this->objectSave();
 	}
 
@@ -345,7 +349,7 @@ EOF
 
 	/**
 	 * Lesen des Inhaltes der Datei aus der Datenbank.
-	 * 
+	 *
 	 * @return String Inhalt der Datei
 	 */
 	function loadValue()
@@ -360,7 +364,7 @@ EOF
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
 		$row = $sql->getRow();
-		
+
 		if	( count($row) != 0 )
 		{
 			$this->value = $row['value'];
@@ -374,7 +378,7 @@ EOF
 		$f = fopen( $this->tmpfile(),'w' );
 		fwrite( $f,$this->value );
 		fclose( $f );
-		
+
 		return $this->value;
 	}
 
@@ -395,7 +399,7 @@ EOF
 		                ' WHERE objectid={objectid}' );
 		$sql->setString( 'objectid' ,$this->objectid      );
 		$sql->setInt   ( 'size'     ,strlen($this->value) );
-		
+
 		if	( $this->storeValueAsBase64 )
 			$sql->setString( 'value',base64_encode($this->value) );
 		else
@@ -423,7 +427,7 @@ EOF
 		$db = db_connection();
 
 		$this->objectAdd();
-		
+
 		$sql = $db->sql('SELECT MAX(id) FROM {{file}}');
 		$this->fileid = intval($sql->getOne())+1;
 
@@ -435,9 +439,9 @@ EOF
 		$sql->setString('extension',$this->extension     );
 
 		$sql->query();
-		
+
 		$this->saveValue();
-	}	
+	}
 
 
 	function publish()
@@ -447,10 +451,10 @@ EOF
 
 		$this->write();
 		$this->publish->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );
-		
+
 		$this->publish->publishedObjects[] = $this->getProperties();
 	}
-	
+
 
 	/**
 	 * Ermittelt einen tempor�ren Dateinamen f�r diese Datei.
@@ -465,30 +469,30 @@ EOF
 		return $this->tmpfile;
 	}
 
-	
+
 	/**
 	 * Setzt den Zeitstempel der Datei auf die aktuelle Zeit.
-	 * 
+	 *
 	 * @see objectClasses/Object#setTimestamp()
 	 */
-	
+
 	function setTimestamp()
 	{
 		@unlink( $this->tmpfile() );
-		
+
 		parent::setTimestamp();
 	}
-	
 
-	
+
+
 	/**
 	 * Ermittelt die wirksame Datei-Endung. Diese kann sich
 	 * in der Extra-Dateiendung, aber auch direkt im Dateiname
 	 * befinden.
-	 * 
+	 *
 	 * @return Dateiendung
 	 */
-	function getRealExtension() 
+	function getRealExtension()
 	{
 		if	( !empty($this->extension))
 		{
