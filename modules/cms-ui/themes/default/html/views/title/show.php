@@ -34,7 +34,7 @@
 			</div>
 		<?php } ?>
 		<?php $if2=($isLoggedIn); if($if2){?>
-			<div class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-pageelement on-action-template">
+			<div class="toolbar-icon clickable filtered on-action-folder on-action-page on-action-file on-action-image on-action-text on-action-pageelement on-action-template">
 				<a title="<?php echo lang('menu_pub_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="pub" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'pub'}" href="<?php echo Html::url('','pub','',array('dialogAction'=>'','dialogMethod'=>'pub')) ?>">
 					<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/publish.svg" />
 					
@@ -199,7 +199,7 @@
 						</a>
 
 					</div>
-					<div class="entry clickable filtered on-action-page on-action-file on-action-folder on-action-pageelement on-action-template">
+					<div class="entry clickable filtered on-action-page on-action-file on-action-folder on-action-text on-action-image on-action-pageelement on-action-template">
 						<a title="<?php echo lang('menu_pub_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="pub" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'pub'}" href="<?php echo Html::url('','pub','',array('dialogAction'=>'','dialogMethod'=>'pub')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/publish.svg" />
 							

@@ -715,6 +715,7 @@
         <xsd:attribute name="icon" type="xsd:string"/>
         <xsd:attribute name="required" type="xsd:boolean"/>
         <xsd:attribute name="focus" type="xsd:boolean"/>
+        <xsd:attribute name="label" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="insert" type="insertType"/>
@@ -1107,6 +1108,7 @@
         <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="default" type="xsd:string"/>
         <xsd:attribute name="maxlength" type="xsd:int"/>
+        <xsd:attribute name="label" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="window" type="windowType"/>
@@ -1300,6 +1302,7 @@
         <xsd:attribute name="multiple" type="xsd:boolean"/>
         <xsd:attribute name="size" type="xsd:int"/>
         <xsd:attribute name="lang" type="xsd:boolean"/>
+        <xsd:attribute name="label" type="xsd:string"/>
         <xsd:attribute name="request" type="xsd:string"/>
     </xsd:complexType>
     <xsd:element name="column" type="columnType"/>
@@ -1809,7 +1812,7 @@
         <xsd:attribute name="modelid" type="xsd:string"/>
         <xsd:attribute name="label" type="xsd:string"/>
         <xsd:attribute name="cancel" type="xsd:boolean"/>
-        <xsd:attribute name="visible" type="xsd:boolean"/>
+        <xsd:attribute name="readonly" type="xsd:boolean"/>
         <xsd:attribute name="target" type="xsd:string"/>
         <xsd:attribute name="enctype" type="xsd:string"/>
         <xsd:attribute name="async" type="xsd:boolean"/>

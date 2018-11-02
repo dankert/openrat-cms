@@ -39,5 +39,3 @@ function component_select_option_list($values, $value, $addEmptyOption, $valuesA
 		echo '>' . $box_value . '</option>';
 	}
 }
-
-?>

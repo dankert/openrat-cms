@@ -22,7 +22,7 @@ class FormComponent extends Component
 
 	public $cancel = false;
 
-	public $visible = false;
+	public $readonly = false;
 
     /**
      * 'view' = Loads Action in the same view
@@ -69,8 +69,8 @@ class FormComponent extends Component
 		echo ' data-autosave="' . $this->htmlvalue($this->autosave) . '"';
 		echo '>';
 
-        // Enable Submit on Enter
-		echo '<input type="submit" class="invisible" />';
+        // Enable Submit on Enter - no need for...we have a submit button at the end.
+		// echo '<input type="submit" class="invisible" />';
 
 		if ( $this->target!='top')
             echo '<input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" />';
@@ -88,17 +88,19 @@ class FormComponent extends Component
 	{
 		$label = $this->htmlvalue($this->label);
 		
-		echo '<div class="bottom">';
-		echo "<div class=\"command {$this->visible}\">";
-
-		echo "<input type=\"submit\" class=\"submit ok\" value=\"{$label}\" />";
+		echo '<div class="or-form-actionbar">';
+		//echo "<div class=\"command {$this->visible}\">";
 
         // Cancel-Button nicht anzeigen, wenn cancel==false.
-		if ($this->cancel)
-		{
-			echo '<input type="button" class="submit cancel" value="<?php echo lang("CANCEL") ?>" />';
+        if ($this->cancel)
+        {
+            echo '<input type="button" class="or-form-btn or-form-btn" value="<?php echo lang("CANCEL") ?>" />';
         }
-        echo '</div>';
+
+        if ( !$this->readonly )
+            echo "<input type=\"submit\" class=\"or-form-btn or-form-btn--primary\" value=\"{$label}\" />";
+
+        //echo '</div>';
         echo '</div>';
         echo '</form>';
 

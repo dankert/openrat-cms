@@ -24,10 +24,17 @@ class InputareaComponent extends Component
 	public $default;
 
 	public $maxlength = 0;
+
+	public $label;
 	
 	public function begin()
 	{
-		echo '<div class="inputholder">';
+        if   ( $this->label )
+        {
+            echo '<label class="or-form-row"><span class="or-form-label">'.lang($this->label).'</span><span class="or-form-input">';
+        }
+
+        echo '<div class="inputholder">';
 		echo '<textarea';
 		echo ' class="'.$this->htmlvalue($this->class).'"';
 		echo ' name="'.$this->htmlvalue($this->name).'"';
@@ -44,6 +51,11 @@ class InputareaComponent extends Component
 		echo ') ?>';
 		echo '</textarea>';
 		echo '</div>';
+
+        if   ( $this->label )
+        {
+            echo '</span></label>';
+        }
 	}
 }
 

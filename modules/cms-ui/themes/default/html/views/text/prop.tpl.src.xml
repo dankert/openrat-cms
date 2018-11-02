@@ -1,57 +1,16 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<header views="size,compress,uncompress,extract"></header>
-	<form>
-		<part class="line">
-			<part class="label">
-				<label for="name">
-					<text text="global_name"></text>
-				</label>
-			</part>
-			<part class="input">
-				<input name="name" size="50" class="name"></input>
-			</part>
-		</part>
-		<part class="line">
-			<part class="label">
-				<label for="filename">
-					<text text="global_filename"></text>
-				</label>
-			</part>
-			<part class="input">
-				<input name="filename" class="filename" maxlength="150"></input>
-			</part>
-		</part>
-		<part class="line">
-			<part class="label">
-				<label for="extension">
-					<text text="file_extension"></text>
-				</label>
-			</part>
-			<part class="input">
-				<input name="extension" size="10" class="extension"></input>
-			</part>
-		</part>
-		<part class="line">
-			<part class="label">
-				<label for="filterid">
-					<text text="filter"></text>
-				</label>
-			</part>
-			<part class="input">
-				<selectbox name="filterid" size="1" list="filterlist" addempty="true"  lang="true"></selectbox>
-			</part>
-		</part>
-		<part class="line">
-			<part class="label">
-				<label for="description">
-					<text text="global_description"></text>
-				</label>
-			</part>
-			<part class="input">
-				<inputarea name="description" class="description"></inputarea>
-			</part>
-		</part>
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+    <form>
 
-	</form>
+        <input label="global_name" name="name" size="50" class="name"/>
+
+        <input label="global_filename" name="filename" class="filename" maxlength="150"/>
+
+        <input label="file_extension" name="extension" size="10" class="extension"/>
+
+        <selectbox label="filter" name="filterid" size="1" list="filterlist" addempty="true" lang="true"/>
+
+        <inputarea label="global_description" name="description" class="description"/>
+
+    </form>
 </output>

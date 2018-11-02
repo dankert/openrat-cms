@@ -533,13 +533,10 @@ div.content > form {
     cursor: pointer;
   }
 
-  input.submit.ok {
-    font-weight: bold; /* Primäre Aktion in Fettdruck */
-  }
 
 
+  padding: 1em;
 
-  padding: 20px;
   /* Style inputs, select elements and textareas */
   input[type=text], select, textarea {
     width: 100%;
@@ -587,11 +584,62 @@ div.content > form {
     clear: both;
   }
 
+  .or-form-row {
+    display: flex;
+    align-items: center;
+
+    .or-form-label {
+      width:25%;
+    }
+    .or-form-input {
+      width: 75%;
+    }
+  }
+
+  .or-form-actionbar {
+    display: flex;
+    justify-content: end;
+    padding: 1em;
+
+   .or-form-btn {
+     padding: 1em 2em;
+     min-width: 14em;
+     border: 0;
+
+     .border-radius(0.5em);
+     cursor: pointer;
+
+     &--primary {
+       font-weight: bold; /* Primäre Aktion in Fettdruck */
+     }
+
+   }
+  }
+
+
   /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
   @media screen and (max-width: 65rem) {
-    div.label, div.input, input[type=submit] {
+
+    div.label, div.input {
       width: 100%;
       margin-top: 0;
+    }
+
+    .or-form-row {
+     flex-direction: column;
+      .or-form-label,
+      .or-form-input {
+        width: 100%;
+      }
+    }
+
+    .or-form-actionbar {
+
+      align-items: center;
+
+      .or-form-btn {
+        width:100%;
+      }
     }
 
   }

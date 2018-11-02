@@ -45,11 +45,17 @@ class SelectboxComponent extends Component
 	 * @var string
 	 */
 	public $lang = false;
-	
+
+
+	public $label;
 	
 	public function begin()
 	{
-		
+        if   ( $this->label )
+        {
+            echo '<label class="or-form-row"><span class="or-form-label">'.lang($this->label).'</span><span class="or-form-input">';
+        }
+
 		echo '<div class="inputholder">';
 		echo '<select ';
 		echo ' id="'.'<?php echo REQUEST_ID ?>_'.$this->htmlvalue($this->name).'"';
@@ -85,6 +91,12 @@ class SelectboxComponent extends Component
 	{
 		echo '</select>';
 		echo '</div>';
+
+
+        if   ( $this->label )
+        {
+            echo '</span></label>';
+        }
 	}
 }
 

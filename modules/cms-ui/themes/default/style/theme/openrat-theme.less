@@ -224,10 +224,15 @@ html.theme-@{cms-theme-id} {
     border: 1px solid @cms-title-background-color;
   }
 
-  input.submit {
-    background-color: @cms-title-background-color;
+  input.submit,
+  .or-form-btn {
+    background-color: @cms-inactive-background-color;
     color: @cms-title-text-color;
     .box-shadow(0px, 0px, 15px, @cms-background-color);
+
+    &--primary {
+      background-color: @cms-title-background-color;
+    }
   }
 
   ul#history > li {
@@ -306,13 +311,20 @@ html.theme-@{cms-theme-id} {
     color: @cms-title-background-color;
   }
 
-  div.inputholder {
+  div.inputholder
+  {
     background-color: @cms-title-text-color;
     border: 1px solid @cms-title-background-color;
     .border-radius(3px);
     -webkit-box-shadow: inset 0px 0px 3px @cms-title-background-color;
     -moz-box-shadow: inset 0px 0px 3px @cms-title-background-color;
     box-shadow: inset 0px 0px 3px @cms-title-background-color;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    background-color: @cms-title-background-color;
+    .border-radius(3px);
   }
 
   div.inputholder > input, div.inputholder > textarea, div.inputholder > select {
@@ -343,7 +355,7 @@ html.theme-@{cms-theme-id} {
   }
 
   fieldset {
-    border-color: @cms-title-background-color;
+    border-color: mix(@cms-background-color,@cms-title-background-color)
   }
 
   tr.diff > td.line {

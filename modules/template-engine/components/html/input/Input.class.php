@@ -35,8 +35,15 @@ class InputComponent extends Component
 
 	public $focus = false;
 
+	public $label;
+
 	public function begin()
 	{
+	    if   ( $this->label )
+        {
+            echo '<label class="or-form-row"><span class="or-form-label">'.lang($this->label).'</span><span class="or-form-input">';
+        }
+
 		if(!$this->type == 'hidden')
 		{
 			// Verstecktes Feld.
@@ -81,7 +88,6 @@ class InputComponent extends Component
 
 			if(isset($this->readonly))
 			{
-				
 				echo '<?php if ('.$this->value($this->readonly).') { ?>';
 				$this->outputHiddenField();
 				echo '<?php } ?>';
@@ -92,26 +98,31 @@ class InputComponent extends Component
 				echo '<img src="'.OR_THEMES_DIR.'default/images/icon_'.$this->htmlvalue($this->icon). IMG_ICON_EXT .'" width="16" height="16" />';
 			
 			echo '</div>';
-			
 		}
+
+
+        if   ( $this->label )
+        {
+            echo '</span></label>';
+        }
 	}
-	
+
 	private function outputHiddenField()
 	{
 		echo '<input';
 		echo ' type="hidden"';
 		echo ' name="'.$this->htmlvalue($this->name).'"';
-		
+
 		echo ' value="<?php ';
-		
+
 		if(isset($this->default))
 			echo $this->value($this->default);
 		else
 			echo '$'.$this->varname($this->name);
-		
+
 		echo ' ?>"';
 		echo '/>';
-				
+
 	}
 }
 
