@@ -44,7 +44,7 @@
 							hint="message:USER_USERNAME" size="20" maxlength="128" focus="true" required="true"></input>
 					</if>
 					<else>
-							<input type="hidden" name="login_name" value="var:force_username"></input>
+						<hidden name="login_name"></hidden>
 							<text value="var:force_username"></text>
 						</else>
 				</part>

@@ -10,7 +10,7 @@
 					<text raw="text:: " />
 					<text var="password_proposal" />
 				</label>
-				<input type="hidden" name="password_proposal" />
+				<hidden name="password_proposal" />
 			</part>
 		</part>
 
