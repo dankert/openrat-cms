@@ -105,7 +105,7 @@ class IndexAction extends Action
 				try
 				{
 					$user = User::loadWithName( $username );
-					Session::setUser($user);
+					$user->setCurrent();
 					Logger::info('auto-login for user '.$username);
 				}
 				catch( ObjectNotFoundException $e )
