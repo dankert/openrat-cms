@@ -136,5 +136,11 @@ class ProjectlistAction extends Action
 		$result = Project::getAllLastChanges();
 		$this->setTemplateVar('timeline', $result);
 	}
+
+
+	public function infoView()
+    {
+
+    }
 	
 }

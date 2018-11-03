@@ -50,7 +50,7 @@ class TemplatelistAction extends Action
 
     public function init()
     {
-        $this->project = new Project( $this->request->getProjectId());
+        $this->project = new Project( $this->request->getRequestId());
     }
 
 
@@ -69,12 +69,7 @@ class TemplatelistAction extends Action
 	//
 	function showView()
 	{
-		global $conf_php;
-
 		$list = array();
-
-		$template = new Template();
-		$template->projectid = $this->project->projectid;
 
 		foreach( $this->project->getTemplates() as $id=>$name )
 		{
@@ -83,8 +78,6 @@ class TemplatelistAction extends Action
 			$list[$id]['id'  ] = $id;
 		}
 		
-//		$var['templatemodelid'] = htmlentities( $id   );
-//		$var['text']            = htmlentities( $text );
 		$this->setTemplateVar('templates',$list);
 	}
 

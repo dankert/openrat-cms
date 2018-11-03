@@ -32,8 +32,11 @@ use cms\model\Folder;
 class ProjectAction extends Action
 {
 	public $security = SECURITY_ADMIN;
-	
-	var $project;
+
+    /**
+     * @var Project
+     */
+	private $project;
 	var $defaultSubAction = 'listing';
 
 
@@ -50,7 +53,7 @@ class ProjectAction extends Action
 	}
 
 
-	function editPost()
+	function propPost()
 	{
 		if	( $this->getRequestVar('name') != '')
 		{
@@ -79,6 +82,34 @@ class ProjectAction extends Action
 	}
 
 
+
+
+	public function editView() {
+
+
+        $list[] = array(
+            'name'=>'content',
+            'type'=>'folder',
+            'id'  => $this->project->getRootObjectId()
+        );
+        $list[] = array(
+            'name'=>'templates',
+            'type'=>'templatelist',
+            'id'  => $this->project->projectid
+        );
+        $list[] = array(
+            'name'=>'languages',
+            'type'=>'languagelist',
+            'id'  => $this->project->projectid
+        );
+        $list[] = array(
+            'name'=>'models',
+            'type'=>'modellist',
+            'id'  => $this->project->projectid
+        );
+
+        $this->setTemplateVar('content',$list);
+    }
 
 	/**
 	 * Liste aller Projekte anzeigen.
@@ -130,7 +161,7 @@ class ProjectAction extends Action
 	/**
 	 * Anzeige der Eigenschaften des Projektes.
 	 */
-	function editView()
+	function propView()
 	{
 		$extraProperties = array('rootobjectid'=>$this->project->getRootObjectId());
 		
