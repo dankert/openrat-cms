@@ -1,99 +1,116 @@
 /*   H e a d e r   */
 #title {
+
     overflow: hidden;
     padding: 5px;
+}
 
-    /* Pfeile */
-    > div > div.arrow-down {
-        display: inline;
-        width: 0;
-        height: 0;
-        margin: 6px;
-        padding: 0px;
-        margin-top: 10px;
-    }
+.or-menu {
 
-    div.toolbar-icon {
-        padding: 2px;
+    display: flex;
+    justify-content: space-between;
 
-        margin-left: 10px;
-        float: left;
+    .or-menu-group {
+        display: flex;
 
-        /* Bestimmte Menüs sind nach rechts ausgerichet */
-        &.user,
-        &.search,
-        &.history {
-            float: right;
-            margin-right: 10px;
+        /* Pfeile */
+        div > div.arrow-down {
+            width: 0;
+            height: 0;
+            margin: 6px;
+            padding: 0px;
+            margin-top: 10px;
+        }
+
+        div.toolbar-icon {
+            padding: 2px;
+
             margin-left: 10px;
-        }
+            float: left;
 
-        &.menu {
-            cursor: default;
-        }
-        &.search{
-            .inputholder {
-                margin: 0;
-                padding: 0;
-                border: 0;
-                display: inline;
+            /* Bestimmte Menüs sind nach rechts ausgerichet */
+            &.user,
+            &.search,
+            &.history {
+                float: right;
+                margin-right: 10px;
+                margin-left: 10px;
+            }
 
-                input {
-                    border: 0;
+            &.menu {
+                cursor: default;
+            }
+            &.search {
+                .inputholder {
                     margin: 0;
                     padding: 0;
-                    width:3em;
+                    border: 0;
                     display: inline;
 
+                    input {
+                        border: 0;
+                        margin: 0;
+                        padding: 0;
+                        width: 3em;
+                        display: inline;
+
+                    }
+
+                }
+            }
+
+            /*   D r o p d o w n  -  M e n u e s  */
+            div.dropdown {
+                z-index: 2;
+                min-width: 250px;
+                display: none;
+                position: absolute;
+                padding: 5px 0px;
+
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+
+                div.entry {
+                    padding: 0;
+
+                    > a {
+                        display: flex;
+                        align-items: center;
+                        padding: 0 0.5em;
+
+                        * {
+                            margin: 0.25em;
+                        }
+
+                        span:first-of-type {
+                            flex: 1; /* Menü-Text füllt den Platz auf */
+                        }
+                    }
+
+                    /* Außenabstand Text */
+                    > .text {
+                        display: block;
+                        margin: 10px;
+                    }
                 }
 
-            }
-        }
-
-        /*   D r o p d o w n  -  M e n u e s  */
-        div.dropdown {
-            z-index: 2;
-            min-width: 250px;
-            display: none;
-            position: absolute;
-            padding: 5px 0px;
-
-            font-style: normal;
-            font-weight: normal;
-            text-decoration: none;
-
-            div.entry {
-                padding: 0;
-
-                > a {
-                    display: block;
+                div.divide {
+                    height: 1px;
                     width: 100%;
-                    height: 100%;
-                    padding: 2px 5px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
                 }
 
-                /* Außenabstand Text */
-                > .text {
-                    display: block;
-                    margin: 10px;
-                }
             }
-
-            div.divide {
-                height: 1px;
-                width: 100%;
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
-
         }
-    }
 
-    /* Dropdown anzeigen, wenn Titel geöffnet und wenn mit Maus überstrichen */
-    &.open {
-        .toolbar-icon.open {
-            > div.dropdown {
-                display: block;
+        /* Dropdown anzeigen, wenn Titel geöffnet und wenn mit Maus überstrichen */
+        &.open {
+            .toolbar-icon.open {
+                > div.dropdown {
+                    display: block;
+                }
             }
         }
     }
