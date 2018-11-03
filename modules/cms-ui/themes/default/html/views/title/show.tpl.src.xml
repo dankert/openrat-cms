@@ -218,7 +218,7 @@
                     <part class="arrow arrow-down"/>
                     <part class="dropdown">
                         <part
-                                class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-url on-action-image on-action-text on-action-language on-action-model">
+                                class="entry clickable filtered on-action-project on-action-link on-action-folder on-action-page on-action-template on-action-element on-action-file on-action-url on-action-image on-action-text on-action-language on-action-model">
                             <link type="dialog" title="message:menu_prop_desc" subaction="prop">
                                 <image method="prop"></image>
                                 <text key="menu_prop"></text>
