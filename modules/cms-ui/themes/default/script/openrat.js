@@ -422,17 +422,17 @@ function registerHeaderEvents()
 {
     // Mit der Maus irgendwo hin geklickt, das Menü muss schließen.
     $('body').click( function() {
-        $('.toolbar-icon.menu').parent().removeClass('open');
+        $('.toolbar-icon.menu').parents('.or-menu').removeClass('open');
     });
     // Mit der Maus geklicktes Menü aktivieren.
     $('#title .toolbar-icon.menu').click( function(event) {
         event.stopPropagation();
-        $(this).parent().toggleClass('open');
+        $(this).parents('.or-menu').toggleClass('open');
     });
 
     // Mit der Maus überstrichenes Menü aktivieren.
     $('#title .toolbar-icon.menu').mouseover( function() {
-        $(this).parent().find('.toolbar-icon.menu').removeClass('open');
+        $(this).parents('.or-menu').find('.toolbar-icon.menu').removeClass('open');
         $(this).addClass('open');
     });
 
