@@ -1,7 +1,5 @@
 
 syntax: glob
-.project
-.settings
-config/config-localhost.ini.php
-.buildpath
+config/config-localhost.yml
+config/config-duese.yml
 .idea
