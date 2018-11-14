@@ -1411,7 +1411,10 @@ SQL
 
         }
 
-
+        public function __toString()
+        {
+            return 'Object-Id '.$this->objectid.' (type='.$this->getType().',filename='.$this->filename.',language='.$this->languageid.', modelid='.$this->modelid.')';
+        }
     }
 
 
