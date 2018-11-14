@@ -1275,4 +1275,5 @@ function language() { return array(
 'OPERATOR'=>"Betreiber",
 'USER_LOGIN_DATE'=>"Angemeldet seit",
 'CMS'=>"Redaktionssystem",
+'SEARCH_FILTER'=>"Filter",
 );}
