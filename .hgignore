@@ -5,3 +5,5 @@ syntax: glob
 config/config-localhost.ini.php
 .buildpath
 .idea
+log/cms-*.log
+config/config-*.yml
