@@ -27,22 +27,22 @@ function language
 
 function check
 {
-    for jsfile in `find modules/cms-ui/themes -name "*.js" -not -name "*.min.js"`; do
+    for jsfile in `find ../modules/cms-ui/themes -name "*.js" -not -name "*.min.js"`; do
         jsfile="${jsfile%.*}"
         createfile $jsfile.min.js $jsfile.js
     done
-    for jsfile in `find modules/template-engine/components -name "*.js" -not -name "*.min.js"`; do
-        jsfile="${jsfile%.*}"
-        createfile $jsfile.min.js $jsfile.js
-    done
-
-    for jsfile in `find modules/editor/codemirror -name "*.js" -not -name "*.min.js"`; do
+    for jsfile in `find ../modules/template-engine/components -name "*.js" -not -name "*.min.js"`; do
         jsfile="${jsfile%.*}"
         createfile $jsfile.min.js $jsfile.js
     done
 
+    for jsfile in `find ../modules/editor/codemirror -name "*.js" -not -name "*.min.js"`; do
+        jsfile="${jsfile%.*}"
+        createfile $jsfile.min.js $jsfile.js
+    done
 
-    for tplfile in `find modules/cms-ui/themes/ -name "*.tpl.src.xml"`; do
+
+    for tplfile in `find ../modules/cms-ui/themes/ -name "*.tpl.src.xml"`; do
 
         tplfile="${tplfile%.*}"
         tplfile="${tplfile%.*}"
@@ -51,21 +51,21 @@ function check
     done
 
     # CSS-Files
-    for lessfile in `find modules/cms-ui/themes -name "*.less"`; do
+    for lessfile in `find ../modules/cms-ui/themes -name "*.less"`; do
         lessfile="${lessfile%.*}"
         createfile $lessfile.css
         createfile $lessfile.min.css;
     done
 
     # CSS-Files
-    for lessfile in `find modules/template-engine/components -name "*.less"`; do
+    for lessfile in `find ../modules/template-engine/components -name "*.less"`; do
         lessfile="${lessfile%.*}"
         createfile $lessfile.css
         createfile $lessfile.min.css;
     done
 
-    createfile modules/cms-ui/themes/default/production/combined.min.css
-    createfile modules/cms-ui/themes/default/production/combined.min.js
+    createfile ../modules/cms-ui/themes/default/production/combined.min.css
+    createfile ../modules/cms-ui/themes/default/production/combined.min.js
 
 }
 
