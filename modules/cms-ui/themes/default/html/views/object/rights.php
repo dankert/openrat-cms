@@ -8,7 +8,7 @@
 			
 			
 		<?php } ?>
-		<table width="100%">
+		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 			<tr class="headline">
 				<td class="help">
 					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NAME'.'')))); ?></span>
@@ -69,20 +69,10 @@
 					</td>
 					<?php foreach($show as $list_key=>$t){ ?>
 						<td>
-							<?php { $tmpname     = $t;$default  = '';$readonly = '1';$required = '';		
-		if	( isset($$tmpname) )
-			$checked = $$tmpname;
-		else
-			$checked = $default;
-
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
-
-		if ( $readonly && $checked )
-		{ 
-		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
-		}
-		} ?>
-							
+							<?php $if7=($$t); if($if7){?>
+								<span class="text"><?php echo nl2br('&check;'); ?></span>
+								
+							<?php } ?>
 						</td>
 					<?php } ?>
 					<td class="clickable">

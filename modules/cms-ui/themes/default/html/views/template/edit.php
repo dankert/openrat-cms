@@ -2,7 +2,7 @@
 	
 		
 		
-		<table width="100%">
+		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 			<tr class="headline">
 				<td>
 					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'name'.'')))); ?></span>
@@ -51,7 +51,7 @@
 			</tr>
 		</table>
 		<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('src') ?></legend><div>
-			<table width="100%">
+			<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 				<tr class="data">
 					<td>
 						<div class="clickable">

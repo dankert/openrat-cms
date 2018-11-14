@@ -2,7 +2,7 @@
 	
 		
 		
-		<form name="" target="_self" data-target="view" action="./" data-method="aclform" data-action="object" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="object" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="object" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="aclform" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="aclform" data-action="object" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form object" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="object" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="aclform" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('users') ?></legend><div>
 				<div class="line">
 					<div class="label">
@@ -26,7 +26,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_userid" name="userid" title="" class=""<?php if (count($users)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($users,'',1,0) ?><?php if (count($users)==0) { ?><input type="hidden" name="userid" value="" /><?php } ?><?php if (count($users)==1) { ?><input type="hidden" name="userid" value="<?php echo array_keys($users)[0] ?>" /><?php } ?>
+						<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_userid" name="userid" title="" class="" size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($users,'',1,0) ?><?php if (count($users)==0) { ?><input type="hidden" name="userid" value="" /><?php } ?><?php if (count($users)==1) { ?><input type="hidden" name="userid" value="<?php echo array_keys($users)[0] ?>" /><?php } ?>
 						</select></div>
 					</div>
 				</div>
@@ -41,7 +41,7 @@
 							</label>
 						</div>
 						<div class="input">
-							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_groupid" name="groupid" title="" class=""<?php if (count($groups)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($groups,'',1,0) ?><?php if (count($groups)==0) { ?><input type="hidden" name="groupid" value="" /><?php } ?><?php if (count($groups)==1) { ?><input type="hidden" name="groupid" value="<?php echo array_keys($groups)[0] ?>" /><?php } ?>
+							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_groupid" name="groupid" title="" class="" size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($groups,'',1,0) ?><?php if (count($groups)==0) { ?><input type="hidden" name="groupid" value="" /><?php } ?><?php if (count($groups)==1) { ?><input type="hidden" name="groupid" value="<?php echo array_keys($groups)[0] ?>" /><?php } ?>
 							</select></div>
 						</div>
 					</div>
@@ -113,5 +113,5 @@
 					</div>
 				</div>
 			</div></fieldset>
-		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
+		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
 	

@@ -2,12 +2,12 @@
 	
 		
 		
-		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="post" enctype="application/x-www-form-urlencoded" class="pageelement" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_languageid" name="languageid<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$languageid) ?>" /><?php if ('') { ?><input type="hidden" name="languageid" value="<?php $languageid ?>"/><?php } ?></div>
+		<form name="" target="_self" data-target="view" action="./" data-method="edit" data-action="pageelement" data-id="<?php echo OR_ID ?>" method="post" enctype="application/x-www-form-urlencoded" class="or-form pageelement" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="pageelement" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="edit" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<input type="hidden" name="languageid" value="<?php echo $languageid ?>"/>
 			
-			<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_elementid" name="elementid<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$elementid) ?>" /><?php if ('') { ?><input type="hidden" name="elementid" value="<?php $elementid ?>"/><?php } ?></div>
+			<input type="hidden" name="elementid" value="<?php echo $elementid ?>"/>
 			
-			<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_value_time" name="value_time<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$value_time) ?>" /><?php if ('') { ?><input type="hidden" name="value_time" value="<?php $value_time ?>"/><?php } ?></div>
+			<input type="hidden" name="value_time" value="<?php echo $value_time ?>"/>
 			
 			
 				<span class="help"><?php echo nl2br(encodeHtml(htmlentities($desc))); ?></span>
@@ -15,7 +15,7 @@
 				<?php $if4=($type=='date'); if($if4){?>
 					<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('calendar') ?></legend><div>
 						<div>
-							<table class="calendar" width="85%">
+							<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table class="calendar" width="85%"></div>
 								<tr>
 									<td colspan="8" class="help">
 										<a target="_self" data-url="<?php echo $lastmonthurl ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
@@ -178,7 +178,7 @@
 						<textarea name="text" class="editor wiki-editor"><?php echo ${'text'} ?></textarea>
 						
 						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('help') ?></legend><div>
-							<table width="100%">
+							<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 								<td>
 									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','strong-begin')))); ?></span>
 									
@@ -427,5 +427,5 @@
 					<?php } ?>
 				</div></fieldset>
 			
-		<div class="bottom"><div class="command yes"><input type="submit" class="submit ok" value="<?php echo lang('save') ?>" /></div></div></form>
+		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('save') ?>" /></div></form>
 	
