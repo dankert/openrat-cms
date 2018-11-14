@@ -3,59 +3,62 @@
 
     <text raw="test"/>
 
-    <if true="var:mayCreateFolder">
-        <part class="clickable line">
-            <link type="dialog" subaction="createfolder">
-                <text key="menu_createfolder"></text>
-            </link>
-        </part>
-    </if>
+    <part class="linklist">
 
-    <if true="var:mayCreatePage">
-        <part class="clickable line">
-            <link type="dialog" subaction="createpage">
-                <text key="menu_createpage"></text>
-            </link>
-        </part>
-    </if>
+        <if true="var:mayCreateFolder">
+            <part class="clickable line">
+                <link type="dialog" subaction="createfolder">
+                    <text key="menu_createfolder"></text>
+                </link>
+            </part>
+        </if>
 
-    <if true="var:mayCreateFile">
-        <part class="clickable line">
-            <link type="dialog" subaction="createfile">
-                <text key="menu_createfile"></text>
-            </link>
-        </part>
-    </if>
+        <if true="var:mayCreatePage">
+            <part class="clickable line">
+                <link type="dialog" subaction="createpage">
+                    <text key="menu_createpage"></text>
+                </link>
+            </part>
+        </if>
 
-    <if true="var:mayCreateImage">
-        <part class="clickable line">
-            <link type="dialog" subaction="createimage">
-                <text key="menu_createimage"></text>
-            </link>
-        </part>
-    </if>
+        <if true="var:mayCreateFile">
+            <part class="clickable line">
+                <link type="dialog" subaction="createfile">
+                    <text key="menu_createfile"></text>
+                </link>
+            </part>
+        </if>
 
-    <if true="var:mayCreateText">
-        <part class="clickable line">
-            <link type="dialog" subaction="createtext">
-                <text key="menu_createltext"></text>
-            </link>
-        </part>
-    </if>
+        <if true="var:mayCreateImage">
+            <part class="clickable line">
+                <link type="dialog" subaction="createimage">
+                    <text key="menu_createimage"></text>
+                </link>
+            </part>
+        </if>
 
-    <if true="var:mayCreateUrl">
-        <part class="clickable line">
-            <link type="dialog" subaction="createurl">
-                <text key="menu_createurl"></text>
-            </link>
-        </part>
-    </if>
+        <if true="var:mayCreateText">
+            <part class="clickable line">
+                <link type="dialog" subaction="createtext">
+                    <text key="menu_createltext"></text>
+                </link>
+            </part>
+        </if>
 
-    <if true="var:mayCreateLink">
-        <part class="clickable line">
-            <link type="dialog" subaction="createlink">
-                <text key="menu_createlink"></text>
-            </link>
-        </part>
-    </if>
+        <if true="var:mayCreateUrl">
+            <part class="clickable line">
+                <link type="dialog" subaction="createurl">
+                    <text key="menu_createurl"></text>
+                </link>
+            </part>
+        </if>
+
+        <if true="var:mayCreateLink">
+            <part class="clickable line">
+                <link type="dialog" subaction="createlink">
+                    <text key="menu_createlink"></text>
+                </link>
+            </part>
+        </if>
+    </part>
 </output>
