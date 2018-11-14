@@ -2,9 +2,9 @@
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 	<header views="link,import,export"></header>
 	<form method="post" label="message:save" visible="yes">
-		<input type="hidden" name="languageid"></input>
-		<input type="hidden" name="elementid"></input>
-		<input type="hidden" name="value_time"></input>
+		<hidden name="languageid" />
+		<hidden name="elementid" />
+		<hidden name="value_time" />
 		<window name="element">
 			<text var="desc" class="help"></text>
 			<if value="var:type" equals="date">
