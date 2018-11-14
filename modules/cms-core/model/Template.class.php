@@ -47,18 +47,21 @@ class Template
 	
 	/**
 	 * ID der Projektvariante
+     * @deprecated Zugriff über TemplateModel
 	 * @type Integer
 	 */
 	var $modelid = 0;
 
 	/**
 	 * Dateierweiterung dieses Templates (abh?ngig von der Projektvariante)
+     * @deprecated Zugriff über TemplateModel
 	 * @type String
 	 */
 	var $extension='';
 
 	/**
 	 * Inhalt des Templates (abh?ngig von der Projektvariante)
+     * @deprecated Zugriff über TemplateModel
 	 * @type String
 	 */
 	var $src='';
@@ -89,24 +92,11 @@ class Template
 		$this->name      = $row['name'     ];
 		$this->projectid = $row['projectid'];
 
-		$stmt = $db->sql( 'SELECT * FROM {{templatemodel}}'.
-		                ' WHERE templateid={templateid}'.
-		                '   AND projectmodelid={modelid}' );
-		$stmt->setInt( 'templateid',$this->templateid );
-		$stmt->setInt( 'modelid'   ,$this->modelid    );
-		$row = $stmt->getRow();
+		$templateModel = new TemplateModel( $this->templateid, $this->modelid );
+		$templateModel->load();
 
-		if	( isset($row['extension']) )
-		{
-			$this->extension = $row['extension'];
-			$this->src       = $row['text'];
-		}
-		else
-		{
-			$this->extension = null;
-			$this->src       = null;
-		}
-		
+        $this->extension = $templateModel->extension;
+        $this->src       = $templateModel->src;
 	}
 
 
@@ -268,7 +258,7 @@ SQL
  	 * Es wird eine Liste mit den Element-Namen zur?ckgegeben
  	 * @return Array
  	 */
-	function getElementNames()
+	public function getElementNames()
 	{
 		$db = db_connection();
 

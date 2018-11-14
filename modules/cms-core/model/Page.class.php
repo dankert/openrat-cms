@@ -62,7 +62,10 @@ class Page extends BaseObject
 
 	var $log_filenames       = array();
 	var $modelid = 0;
-	
+
+    /**
+     * @var \Publish
+     */
 	var $publish = null;
 	var $up_path = '';
 

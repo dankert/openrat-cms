@@ -43,6 +43,10 @@ class TemplateAction extends Action
 	public $security = SECURITY_USER;
 	
 	var $defaultSubAction = 'show';
+
+    /**
+     * @var Template
+     */
 	var $template;
 	var $element;
 
