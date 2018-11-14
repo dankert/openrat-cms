@@ -427,7 +427,8 @@ class LoginAction extends Action
             else {
 
                 // Benutzername ist in Eingabemaske unver�nderlich
-                $this->setTemplateVar('force_username',$username);
+                $this->setTemplateVar('force_username',true);
+                $this->setTemplateVar('login_name'    ,$username);
             }
 
         }

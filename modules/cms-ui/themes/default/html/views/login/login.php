@@ -2,7 +2,7 @@
 	
 		
 		
-		<form name="" target="_self" data-target="top" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="login" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="top" action="./" data-method="login" data-action="login" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form login" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="login" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<?php $if3=(config('login','logo','enabled')); if($if3){?>
 				<?php $if4=!((config('login','logo','url'))==FALSE); if($if4){?>
 					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="login" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
@@ -48,7 +48,7 @@
 							
 						<?php } ?>
 						<?php if(!$if6){?>
-							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_login_name" name="login_name<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$login_name) ?>" /><?php if ('') { ?><input type="hidden" name="login_name" value="<?php $login_name ?>"/><?php } ?></div>
+							<input type="hidden" name="login_name" value="<?php echo $login_name ?>"/>
 							
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($force_username))); ?></span>
 							
@@ -160,5 +160,5 @@
 			
 			<input type="hidden" name="languageid" value="<?php echo $languageid ?>"/>
 			
-		<div class="bottom"><div class="command 1"><input type="submit" class="submit ok" value="<?php echo lang('menu_login') ?>" /></div></div></form>
+		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('menu_login') ?>" /></div></form>
 	
