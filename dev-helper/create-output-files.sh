@@ -8,12 +8,25 @@
 # Do NOT use this in production environments! 
 #
 #
+echo "Preparing for developer mode"
+echo "----------------------------"
+echo
 echo "Start ("as `whoami` ")"
+
+
+function language
+{
+    for iso in de en es fr it ru cn; do
+
+        touch ../modules/language/lang-$iso.php
+        chmod -v a+w ../modules/language/lang-$iso.php
+    done
+}
+
+
 
 function check
 {
-
-
     for jsfile in `find modules/cms-ui/themes -name "*.js" -not -name "*.min.js"`; do
         jsfile="${jsfile%.*}"
         createfile $jsfile.min.js $jsfile.js
@@ -76,4 +89,5 @@ function createfile
 	fi
 }
 
+language
 check
