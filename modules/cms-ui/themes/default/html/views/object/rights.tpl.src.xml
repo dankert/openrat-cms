@@ -56,7 +56,9 @@
 				</column>
 				<list list="show" value="t">
 					<column>
-						<checkbox name="var:t" default="false" readonly="true"></checkbox>
+						<if true="var:$t">
+							<text raw="&amp;check;" escape="true" />
+						</if>
 					</column>
 				</list>
 				<column class="clickable">
