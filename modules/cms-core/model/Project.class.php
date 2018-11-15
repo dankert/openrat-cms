@@ -153,6 +153,11 @@ class Project extends ModelBase
 	}
 
 
+    /**
+     * Liefert die Projektmodelle als Array mit ID->Name.
+     *
+     * @return array
+     */
 	public function getModels()
 	{
 		$db = db_connection();

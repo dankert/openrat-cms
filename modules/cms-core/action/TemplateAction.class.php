@@ -9,7 +9,7 @@ use cms\model\Template;
 use cms\model\Page;
 
 
-
+use cms\model\TemplateModel;
 use Session;
 use \Html;
 use \Text;
@@ -77,26 +77,38 @@ class TemplateAction extends Action
 	}
 
 
-	function srcPost()
+    /**
+     * Speichern des Quelltextes.
+     */
+	public function srcPost()
 	{
-		// Speichern des Quelltextes
-		//
-		$text = $this->getRequestVar('src','raw');
-		
-		foreach( $this->template->getElementNames() as $elid=>$elname )
-		{
-			$text = str_replace('{{'.$elname.'}}'  ,'{{'.$elid.'}}',$text );
-			$text = str_replace('{{->'.$elname.'}}','{{->'.$elid.'}}',$text );
-			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFEMPTY'   ).':'.$elname.':'.lang('TEMPLATE_SRC_BEGIN').'}}','{{IFEMPTY:'   .$elid.':BEGIN}}',$text );
-			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFEMPTY'   ).':'.$elname.':'.lang('TEMPLATE_SRC_END'  ).'}}','{{IFEMPTY:'   .$elid.':END}}'  ,$text );
-			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$elname.':'.lang('TEMPLATE_SRC_BEGIN').'}}','{{IFNOTEMPTY:'.$elid.':BEGIN}}',$text );
-			$text = str_replace('{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$elname.':'.lang('TEMPLATE_SRC_END'  ).'}}','{{IFNOTEMPTY:'.$elid.':END}}'  ,$text );
-		}
-	
-		$this->template->src = $text;
-		$this->template->save();
-		$this->template->load();
-		
+        $project = new Project( $this->template->projectid );
+        $models = $project->getModels();
+
+        foreach( $models as $modelId => $modelName ) {
+
+            $templatemodel = new TemplateModel($this->template->templateid, $modelId);
+            $templatemodel->load();
+
+            $text = $this->getRequestVar($modelName, 'raw');
+
+            foreach ($this->template->getElementNames() as $elid => $elname) {
+                $text = str_replace('{{' . $elname . '}}', '{{' . $elid . '}}', $text);
+                $text = str_replace('{{->' . $elname . '}}', '{{->' . $elid . '}}', $text);
+                $text = str_replace('{{' . lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFEMPTY:' . $elid . ':BEGIN}}', $text);
+                $text = str_replace('{{' . lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_END') . '}}', '{{IFEMPTY:' . $elid . ':END}}', $text);
+                $text = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFNOTEMPTY:' . $elid . ':BEGIN}}', $text);
+                $text = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_END') . '}}', '{{IFNOTEMPTY:' . $elid . ':END}}', $text);
+            }
+
+            $templatemodel->src = $text;
+
+            if ( !$templatemodel->isPersistent() )
+                $templatemodel->add();
+            else
+                $templatemodel->save();
+        }
+
 		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
 	}
 
@@ -206,18 +218,45 @@ class TemplateAction extends Action
 	}
 
 
-	// Speichern der Dateiendung
-	//
-	function extensionPost()
+	/**
+     * Speichern der Dateiendung
+     */
+	public function extensionPost()
 	{
-		if	( $this->getRequestVar('type') == "list" )
-			$this->template->extension = $this->getRequestVar('extension');
-		else
-			$this->template->extension = $this->getRequestVar('extensiontext');
-		
-		$this->template->save(); 
+        $project = new Project( $this->template->projectid );
+        $models = $project->getModels();
+
+        $extensions = array();
+        foreach( $models as $modelId => $modelName ) {
+
+            $input = $this->getRequestVar( $modelName );
+
+            // Validierung: Werte dürfen nicht doppelt vorkommen.
+            if ( in_array($input, $extensions) )
+            {
+                $this->addNotice('template',$this->template->name,'DUPLICATE_INPUT','error');
+                throw new \ValidationException( $modelName );
+            }
+
+            $extensions[ $modelId ] = $input;
+        }
+
+        foreach( $models as $modelId => $modelName ) {
+
+            $templatemodel = new TemplateModel($this->template->templateid, $modelId);
+            $templatemodel->load();
+
+            $templatemodel->extension = $extensions[ $modelId ];
+
+            if ( !$templatemodel->isPersistent() )
+                $templatemodel->add();
+            else
+                $templatemodel->save();
+        }
+
 		$this->addNotice('template',$this->template->name,'SAVED','ok');
 	}
+
 
 
 	function addelView()
@@ -290,25 +329,27 @@ class TemplateAction extends Action
 
 
 	/**
-	 * Eigenschaften einer Vorlage anzeigen
+	 * Extension einer Vorlage anzeigen
 	 */
 	function extensionView()
 	{
+        $project = new Project( $this->template->projectid );
+        $models = $project->getModels();
 
-		global $conf;
-		$mime_types = array();
-		foreach( $conf['mime-types'] as $ext=>$type )
-			$mime_types[$ext] = $ext.' - '.$type;
+        $modelSrc = array();
 
-		$this->setTemplateVar('mime_types',$mime_types);
+        foreach( $models as $modelId => $modelName )
+        {
+            $templatemodel = new TemplateModel( $this->template->templateid, $modelId );
+            $templatemodel->load();
 
-		$this->setTemplateVar('extension'    ,$this->template->extension);
-		$this->setTemplateVar('extensiontext',$this->template->extension);
-		
-		if	( isset($mime_types[$this->template->extension]) )
-			$this->setTemplateVar('type','list');
-		else
-			$this->setTemplateVar('type','text');
+            $modelSrc[ $modelId ] = array(
+                'name'     =>$modelName,
+                'extension'=>$templatemodel->extension
+            );
+        }
+
+        $this->setTemplateVar( 'extension',$modelSrc );
 	}
 
 	
@@ -460,36 +501,52 @@ class TemplateAction extends Action
 	  */
 	function srcView()
 	{
-		$text = $this->template->src;
-	
-		foreach( $this->template->getElementIds() as $elid )
-		{
-			$element = new Element( $elid );
-			$element->load();
+	    $project = new Project( $this->template->projectid );
+	    $models = $project->getModels();
 
-			$text = str_replace('{{'.$elid.'}}',
-			                           '{{'.$element->name.'}}',
-			                           $text );
-			$text = str_replace('{{->'.$elid.'}}',
-			                           '{{->'.$element->name.'}}',
-			                           $text );
-			$text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
-			                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
-			                           $text );
-			$text = str_replace('{{IFEMPTY:'.$elid.':END}}',
-			                           '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
-			                           $text );
-			$text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
-			                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
-			                           $text );
-			$text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
-			                           '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
-			                           $text );
-		}
+	    $modelSrc = array();
 
-		$this->setTemplateVar( 'src',$text );
-		
-	}
+	    foreach( $models as $modelId => $modelName )
+	    {
+            $templatemodel = new TemplateModel( $this->template->templateid, $modelId );
+            $templatemodel->load();
+
+            $text = $templatemodel->src;
+
+            foreach( $this->template->getElementIds() as $elid )
+            {
+                $element = new Element( $elid );
+                $element->load();
+
+                $text = str_replace('{{'.$elid.'}}',
+                    '{{'.$element->name.'}}',
+                    $text );
+                $text = str_replace('{{->'.$elid.'}}',
+                    '{{->'.$element->name.'}}',
+                    $text );
+                $text = str_replace('{{IFEMPTY:'.$elid.':BEGIN}}',
+                    '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+                    $text );
+                $text = str_replace('{{IFEMPTY:'.$elid.':END}}',
+                    '{{'.lang('TEMPLATE_SRC_IFEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+                    $text );
+                $text = str_replace('{{IFNOTEMPTY:'.$elid.':BEGIN}}',
+                    '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_BEGIN').'}}',
+                    $text );
+                $text = str_replace('{{IFNOTEMPTY:'.$elid.':END}}',
+                    '{{'.lang('TEMPLATE_SRC_IFNOTEMPTY').':'.$element->name.':'.lang('TEMPLATE_SRC_END').'}}',
+                    $text );
+            }
+
+            $modelSrc[ $modelId ] = array(
+                'name'  =>$modelName,
+                'source'=>$text
+            );
+        }
+
+        $this->setTemplateVar( 'src',$modelSrc );
+
+    }
 
 
 	// Anzeigen aller Templates

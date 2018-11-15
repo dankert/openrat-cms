@@ -1,9 +1,14 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
-	<header views="srcelement" back="true"></header>
 	<form>
-		<hidden name="templateid" />
-		<hidden name="modelid" />
-		<editor type="code" name="src" mode="htmlmixed" />
+        <list list="src" extract="true">
+
+            <group title="var:name">
+
+                <set var="var:name" value="var:source" />
+                <editor type="code" name="var:name" mode="htmlmixed" />
+            </group>
+        </list>
+
 	</form>
 </output>

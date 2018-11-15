@@ -4346,6 +4346,10 @@ MENU_TEMPLATE_EXTENSION:
   de: Erweiterung
   en: Extension
   fr: Prolongation
+TEMPLATE_EXTENSION:
+  de: Erweiterung
+  en: Extension
+  fr: Prolongation
 MENU_TEMPLATE_LISTING:
   de: Anzeigen
   en: All templates
@@ -4768,6 +4772,9 @@ NOTICE_COPIED:
   fr: a été copié
   it: è stata copiata
   ru: копирования
+NOTICE_DUPLICATE_INPUT:
+  de: Ihre Eingabe muss eindeutig sein.
+  en: Duplicate Input detected.
 NOTICE_DATABASE_CONNECTION_ERROR:
   de: Es konnte keine Verbindung zur Datenbank hergestellt werden.
   en: The connection to the database could not be established.

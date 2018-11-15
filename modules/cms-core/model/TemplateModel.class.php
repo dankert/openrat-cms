@@ -124,7 +124,9 @@ class TemplateModel
 		$stmt->setInt   ( 'modelid'       ,$this->modelid        );
 
 		$stmt->query();
-	}
+
+        $this->templatemodelid = $nextid;
+    }
 
 
 	/**
