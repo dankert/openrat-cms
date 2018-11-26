@@ -2,7 +2,7 @@
 
 namespace template_engine\components;
 
-class EditorComponent extends Component
+class EditorComponent extends FieldComponent
 {
 	public $type;
 	public $name;
@@ -15,25 +15,25 @@ class EditorComponent extends Component
 		switch( $this->type )
 		{
 			case 'html':
-				echo '<textarea name="'.$this->htmlvalue($this->name).'" class="editor html-editor" id="pageelement_edit_editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
-				
+				echo '<textarea '.$this->outputNameAttribute().' class="editor html-editor" id="pageelement_edit_editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
+
 				break;
-				
+
 			case 'wiki':
-				echo '<textarea name="'.$this->htmlvalue($this->name).'" class="editor wiki-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
+				echo '<textarea '.$this->outputNameAttribute().' class="editor wiki-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
 				break;
-				
+
 			case 'text':
 			case 'raw':
-				echo '<textarea name="'.$this->htmlvalue($this->name).'" class="editor text-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
+				echo '<textarea '.$this->outputNameAttribute().' class="editor text-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
 				break;
-		
+
 			case 'markdown':
-				echo '<textarea name="'.$this->htmlvalue($this->name).'" class="editor markdown-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
+				echo '<textarea '.$this->outputNameAttribute().' class="editor markdown-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
 		        break;
 	            
 			case 'code':
-				echo '<textarea name="'.$this->htmlvalue($this->name).'" data-extension="'.$this->htmlvalue($this->extension).'" data-mimetype="'.$this->htmlvalue($this->mimetype).'" data-mode="'.$this->htmlvalue($this->mode).'" class="editor code-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
+				echo '<textarea '.$this->outputNameAttribute().' data-extension="'.$this->htmlvalue($this->extension).'" data-mimetype="'.$this->htmlvalue($this->mimetype).'" data-mode="'.$this->htmlvalue($this->mode).'" class="editor code-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
 		        break;
 
 

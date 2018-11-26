@@ -6,7 +6,7 @@
             <group title="var:name">
 
                 <set var="var:name" value="var:source" />
-                <editor type="code" name="var:name" mode="htmlmixed" />
+                <editor type="code" prefix="source" name="var:name" mode="htmlmixed" />
             </group>
         </list>
 

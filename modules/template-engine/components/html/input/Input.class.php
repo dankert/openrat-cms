@@ -2,11 +2,8 @@
 
 namespace template_engine\components;
 
-class InputComponent extends Component
+class InputComponent extends FieldComponent
 {
-
-	public $class = 'text';
-
 	public $default;
 
 	public $type = 'text';
@@ -24,8 +21,6 @@ class InputComponent extends Component
 	public $maxlength = 256;
 
 	public $onchange;
-
-	public $readonly = false;
 
 	public $hint;
 
@@ -60,12 +55,8 @@ class InputComponent extends Component
 			
 			echo ' id="'.'<?php echo REQUEST_ID ?>_'.$this->htmlvalue($this->name).'"';
 			
-			// Attribute name="..."
-			echo ' name="';
-			echo $this->htmlvalue($this->name);
-			if(isset($this->readonly))
-				echo '<?php if ('.$this->value($this->readonly).') '."echo '_disabled' ?>";
-            echo '"';
+			// Output Attribute name="..."
+            echo $this->outputNameAttribute();
 
             if($this->required)
                 echo ' required="required"';

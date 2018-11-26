@@ -2,7 +2,7 @@
 	
 		
 		
-		<form name="" target="_self" data-target="upload" action="./" data-method="createfile" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="multipart/form-data" class="folder" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="createfile" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="upload" action="./" data-method="createfile" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="multipart/form-data" class="or-form folder" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="createfile" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<input type="hidden" name="type" value="file"/>
 			
 			<div class="line">
@@ -13,7 +13,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input size="40" id="req15379905191788469430_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  multiple="multiple" />
+					<input size="40" id="req15431736221794568957_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  multiple="multiple" />
 					
 				</div>
 			</div>
@@ -65,7 +65,7 @@
 					
 				</div>
 			</div>
-		<div class="bottom"><div class="command 1"><input type="submit" class="submit ok" value="OK" /></div></div></form>
+		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
 		
 		
 	

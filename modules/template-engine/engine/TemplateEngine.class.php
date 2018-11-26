@@ -40,7 +40,9 @@ class TemplateEngine
 	{
 	    // Imports the base class of all component types.
 		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/Component.class.' . PHP_EXT);
-		
+		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/HtmlComponent.class.' . PHP_EXT);
+		require_once (dirname(__FILE__).'/../components/'.$this->renderType.'/FieldComponent.class.' . PHP_EXT);
+
 		try
 		{
 			$confCompiler = $this->config;

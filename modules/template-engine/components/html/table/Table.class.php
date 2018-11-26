@@ -2,10 +2,9 @@
 
 namespace template_engine\components;
 
-class TableComponent extends Component
+class TableComponent extends HtmlComponent
 {
 
-	public $class = '';
 	public $width = '100%';
 	
 	public function begin()

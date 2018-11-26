@@ -87,26 +87,30 @@ class TemplateAction extends Action
 
         foreach( $models as $modelId => $modelName ) {
 
-            $templatemodel = new TemplateModel($this->template->templateid, $modelId);
-            $templatemodel->load();
+            if ($this->hasRequestVar('source_'.$modelName))
+            {
+                $templatemodel = new TemplateModel($this->template->templateid, $modelId);
+                $templatemodel->load();
 
-            $text = $this->getRequestVar($modelName, 'raw');
+                // Nur wenn das Eingabefeld im Request vorhanden ist, speichern wir etwas ab.
+                $text = $this->getRequestVar('source_'.$modelName, 'raw');
 
-            foreach ($this->template->getElementNames() as $elid => $elname) {
-                $text = str_replace('{{' . $elname . '}}', '{{' . $elid . '}}', $text);
-                $text = str_replace('{{->' . $elname . '}}', '{{->' . $elid . '}}', $text);
-                $text = str_replace('{{' . lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFEMPTY:' . $elid . ':BEGIN}}', $text);
-                $text = str_replace('{{' . lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_END') . '}}', '{{IFEMPTY:' . $elid . ':END}}', $text);
-                $text = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFNOTEMPTY:' . $elid . ':BEGIN}}', $text);
-                $text = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_END') . '}}', '{{IFNOTEMPTY:' . $elid . ':END}}', $text);
+                foreach ($this->template->getElementNames() as $elid => $elname) {
+                    $text = str_replace('{{' . $elname . '}}', '{{' . $elid . '}}', $text);
+                    $text = str_replace('{{->' . $elname . '}}', '{{->' . $elid . '}}', $text);
+                    $text = str_replace('{{' . lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFEMPTY:' . $elid . ':BEGIN}}', $text);
+                    $text = str_replace('{{' . lang('TEMPLATE_SRC_IFEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_END') . '}}', '{{IFEMPTY:' . $elid . ':END}}', $text);
+                    $text = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_BEGIN') . '}}', '{{IFNOTEMPTY:' . $elid . ':BEGIN}}', $text);
+                    $text = str_replace('{{' . lang('TEMPLATE_SRC_IFNOTEMPTY') . ':' . $elname . ':' . lang('TEMPLATE_SRC_END') . '}}', '{{IFNOTEMPTY:' . $elid . ':END}}', $text);
+                }
+
+                $templatemodel->src = $text;
+
+                if ( !$templatemodel->isPersistent() )
+                    $templatemodel->add();
+                else
+                    $templatemodel->save();
             }
-
-            $templatemodel->src = $text;
-
-            if ( !$templatemodel->isPersistent() )
-                $templatemodel->add();
-            else
-                $templatemodel->save();
         }
 
 		$this->addNotice('template',$this->template->name,'SAVED',OR_NOTICE_OK);
