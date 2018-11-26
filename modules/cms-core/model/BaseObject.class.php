@@ -19,11 +19,10 @@ namespace cms\model {
     /**
      * Superklasse fuer Objekte im Projektbaum.
      *
-     * Dieses Objekt ist die Oberklasse fuer die 4 Klassen Ordner, Datei,
-     * Link oder Seite dar.
+     * Dieses Objekt ist die Oberklasse fuer die Klassen Ordner, Datei,
+     * Link, Seite usw.
      *
      * @author Jan Dankert
-     * @package openrat.objects
      */
     class BaseObject
     {
@@ -1414,6 +1413,24 @@ SQL
         public function __toString()
         {
             return 'Object-Id '.$this->objectid.' (type='.$this->getType().',filename='.$this->filename.',language='.$this->languageid.', modelid='.$this->modelid.')';
+        }
+
+
+        public function getNames()
+        {
+            $names = array();
+
+            foreach( $this->getProject()->getLanguages() as $languageId=>$languageName )
+            {
+                $name = new Name();
+                $name->objectid   = $this->objectid;
+                $name->languageid = $languageId;
+                $name->load();
+
+                $names[] = $name;
+            }
+
+            return $names;
         }
     }
 

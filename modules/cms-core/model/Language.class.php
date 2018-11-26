@@ -27,13 +27,12 @@ namespace cms\model;
  */
 class Language
 {
-	var $languageid = 0;
-	var $error      = '';
-	var $projectid;
+	public $languageid;
+    public $projectid;
 
-	var $name      = '';
-	var $isoCode   = '';
-	var $isDefault = false;
+    public $name;
+    public $isoCode;
+    public $isDefault = false;
 
 
 	// Konstruktor

@@ -12,22 +12,24 @@
 				<input name="name" class="name,focus"></input>
 			</part>
 		</part>
-		<part class="line">
-			<part class="label">
-				<label for="filename" key="global_filename" />
-			</part>
-			<part class="input">
-				<input name="filename" class="filename" maxlength="150" />
-			</part>
-		</part>
-		<part class="line">
-			<part class="label">
-				<label for="description" key="global_description">
-				</label>
-			</part>
-			<part class="input">
-				<inputarea name="description" class="description"></inputarea>
-			</part>
-		</part>
+
+		<input name="filename" label="global_filename" class="filename" maxlength="150" focus="true" />
+
+		<inputarea label="global_description" name="description" class="description"></inputarea>
+
+
+		<list list="names" extract="true">
+
+			<group title="var:languageName" open="var:languageIsDefault">
+
+				<set var="var:languageName" value="var:name" />
+				<input label="global_name" name="var:languageName" class="filename" prefix="name" maxlength="255" />
+
+				<set var="var:languageName" value="var:description" />
+				<inputarea label="global_description" prefix="description" name="var:languageName" class="description" maxlength="255" />
+
+			</group>
+		</list>
+
 	</form>
 </output>

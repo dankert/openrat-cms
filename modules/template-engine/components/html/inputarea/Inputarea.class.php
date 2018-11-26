@@ -2,10 +2,8 @@
 
 namespace template_engine\components;
 
-class InputareaComponent extends Component
+class InputareaComponent extends FieldComponent
 {
-
-	public $name;
 
 	public $rows = 10;
 
@@ -37,7 +35,8 @@ class InputareaComponent extends Component
         echo '<div class="inputholder">';
 		echo '<textarea';
 		echo ' class="'.$this->htmlvalue($this->class).'"';
-		echo ' name="'.$this->htmlvalue($this->name).'"';
+
+		echo $this->outputNameAttribute();
 
 		if (!empty($this->maxlength))
             echo ' maxlength="'.intval($this->maxlength).'"';

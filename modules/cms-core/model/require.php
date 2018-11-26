@@ -7,7 +7,8 @@ require_once( __DIR__.'/Value.class.php' );
 require_once( __DIR__.'/Acl.class.php' );
 require_once( __DIR__.'/Template.class.php' );
 require_once( __DIR__.'/TemplateModel.class.php' );
-require_once(__DIR__ . '/BaseObject.class.php');
+require_once( __DIR__ .'/BaseObject.class.php');
+require_once( __DIR__ .'/Name.class.php');
 require_once( __DIR__.'/Folder.class.php' );
 require_once( __DIR__.'/Link.class.php' );
 require_once( __DIR__.'/Url.class.php' );
@@ -22,4 +23,3 @@ require_once( __DIR__.'/Language.class.php' );
 require_once( __DIR__.'/Model.class.php' );
 require_once( __DIR__.'/Element.class.php' );
 
-?>

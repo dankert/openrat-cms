@@ -11,29 +11,25 @@
 					</label>
 				</div>
 				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name,focus" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="<?php if ('') echo ''.'_' ?>name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name,focus" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
-			<div class="line">
-				<div class="label">
-					<label for="<?php echo REQUEST_ID ?>_filename" class="label"><?php echo lang('global_filename') ?>
-					</label>
-				</div>
-				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_filename" name="filename<?php if ('') echo '_disabled' ?>" type="text" maxlength="150" class="filename" value="<?php echo Text::encodeHtml(@$filename) ?>" /><?php if ('') { ?><input type="hidden" name="filename" value="<?php $filename ?>"/><?php } ?></div>
+			<label class="or-form-row"><span class="or-form-label">Dateiname</span><span class="or-form-input"><div class="inputholder"><input id="<?php echo REQUEST_ID ?>_filename" name="<?php if ('') echo ''.'_' ?>filename<?php if ('') echo '_disabled' ?>" autofocus="autofocus" type="text" maxlength="150" class="filename" value="<?php echo Text::encodeHtml(@$filename) ?>" /><?php if ('') { ?><input type="hidden" name="filename" value="<?php $filename ?>"/><?php } ?></div></span></label>
+			
+			<label class="or-form-row"><span class="or-form-label">Beschreibung</span><span class="or-form-input"><div class="inputholder"><textarea class="description" name="<?php if ('') echo ''.'_' ?>description<?php if ('') echo '_disabled' ?>"><?php echo Text::encodeHtml($description) ?></textarea></div></span></label>
+			
+			<?php foreach($names as $list_key=>$list_value){ ?><?php extract($list_value) ?>
+				<fieldset class="toggle-open-close<?php echo $languageIsDefault?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $languageName ?></legend><div>
+					<?php $$languageName= $name; ?>
 					
-				</div>
-			</div>
-			<div class="line">
-				<div class="label">
-					<label for="<?php echo REQUEST_ID ?>_description" class="label"><?php echo lang('global_description') ?>
-					</label>
-				</div>
-				<div class="input">
-					<div class="inputholder"><textarea class="description" name="description"><?php echo Text::encodeHtml($description) ?></textarea></div>
+					<label class="or-form-row"><span class="or-form-label">Name</span><span class="or-form-input"><div class="inputholder"><input id="<?php echo REQUEST_ID ?>_<?php echo $languageName ?>" name="<?php if ('name') echo 'name'.'_' ?><?php echo $languageName ?><?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="filename" value="<?php echo Text::encodeHtml(@$$languageName) ?>" /><?php if ('') { ?><input type="hidden" name="<?php echo $languageName ?>" value="<?php $$languageName ?>"/><?php } ?></div></span></label>
 					
-				</div>
-			</div>
+					<?php $$languageName= $description; ?>
+					
+					<label class="or-form-row"><span class="or-form-label">Beschreibung</span><span class="or-form-input"><div class="inputholder"><textarea class="description" name="<?php if ('description') echo 'description'.'_' ?><?php echo $languageName ?><?php if ('') echo '_disabled' ?>" maxlength="255"><?php echo Text::encodeHtml($$languageName) ?></textarea></div></span></label>
+					
+				</div></fieldset>
+			<?php } ?>
 		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="<?php echo lang('global_save') ?>" /></div></form>
 	
