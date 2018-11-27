@@ -71,7 +71,7 @@ class PublicLinkSchema
                 $linkedObject = new BaseObject( $link->linkedObjectId );
                 $linkedObject->objectLoad();
 
-                switch( $linkedObject->getType() )
+                switch( $linkedObject->typeid )
                 {
                     case OR_TYPEID_FILE:
                         $f = new File( $link->linkedObjectId );
@@ -93,6 +93,8 @@ class PublicLinkSchema
                         $filename = $p->getFilename();
                         $to = $p;
                         break;
+                    default:
+                        throw new \LogicException("Unknown Type ".$linkedObject->getType());
                 }
                 break;
 
@@ -100,6 +102,8 @@ class PublicLinkSchema
                 $url = new Url( $to->objectid );
                 $url->load();
                 return $url->url;
+            default:
+                throw new \LogicException("Unknown Type ".$to->typeid);
         }
 
 
@@ -111,11 +115,11 @@ class PublicLinkSchema
 
             // Target is in another Project. So we have to create an absolute URL.
             $targetProject = Project::create( $to->projectid )->load();
-            $inhalt = $targetProject->url;
+            $prefix = $targetProject->url;
 
-            if   ( ! strpos($inhalt,'://' ) === FALSE ) {
+            if   ( ! strpos($prefix,'//' ) === FALSE ) {
                 // No protocol in hostname. So we have to prepend the URL with '//'.
-                $inhalt = '//'.$inhalt;
+                $prefix = '//'.$prefix;
             }
         }
         else {
@@ -156,12 +160,12 @@ class PublicLinkSchema
             $path .= '/';
         }
         else {
-
+            // Absolute Pfadangaben
             $folder = new Folder($to->parentid);
             $toPathFolders = $folder->parentObjectFileNames(false, true);
 
             $path = implode('/',$toPathFolders);
-            $path .= '/';
+            $path = '/'.$path.'/';
         }
 
 
