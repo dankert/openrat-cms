@@ -47,9 +47,9 @@ class Folder extends BaseObject
 	}
 
 
-	function add()
+	public function add()
 	{
-		$this->objectAdd();
+		parent::add();
 
 		$db = db_connection();
 

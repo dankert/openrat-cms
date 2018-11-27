@@ -13,7 +13,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input size="40" id="req15431736221794568957_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  multiple="multiple" />
+					<input size="40" id="req1543349803731534526_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  multiple="multiple" />
 					
 				</div>
 			</div>
@@ -39,7 +39,7 @@
 					
 				</div>
 				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_url" name="url<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if ('') { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_url" name="<?php if ('') echo ''.'_' ?>url<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$url) ?>" /><?php if ('') { ?><input type="hidden" name="url" value="<?php $url ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
@@ -51,7 +51,7 @@
 					
 				</div>
 				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="<?php if ('') echo ''.'_' ?>name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 					
 				</div>
 				<div class="input">
-					<div class="inputholder"><textarea class="inputarea" name="description"><?php echo Text::encodeHtml('') ?></textarea></div>
+					<div class="inputholder"><textarea class="inputarea" name="<?php if ('') echo ''.'_' ?>description<?php if ('') echo '_disabled' ?>"><?php echo Text::encodeHtml('') ?></textarea></div>
 					
 				</div>
 			</div>

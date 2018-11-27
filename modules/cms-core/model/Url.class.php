@@ -91,14 +91,12 @@ class Url extends BaseObject
 
 	function add()
 	{
-		$this->objectAdd();
+		parent::add();
 
-		$db = db_connection();
-
-		$sql = $db->sql('SELECT MAX(id) FROM {{url}}');
+		$sql = db()->sql('SELECT MAX(id) FROM {{url}}');
 		$this->urlid = intval($sql->getOne())+1;
 
-		$sql = $db->sql('INSERT INTO {{url}}'.
+		$sql = db()->sql('INSERT INTO {{url}}'.
 		               ' (id,objectid,url)'.
 		               ' VALUES( {urlid},{objectid},{url} )' );
 		$sql->setInt   ('urlid'      ,$this->urlid         );

@@ -217,16 +217,17 @@ class Page extends BaseObject
 	 */
 	function add()
 	{
-		$db = db_connection();
+		parent::add(); // Hinzuf?gen von Objekt (dabei wird Objekt-ID ermittelt)
 
-		$this->objectAdd(); // Hinzuf?gen von Objekt (dabei wird Objekt-ID ermittelt)
-
-		$sql = $db->sql('SELECT MAX(id) FROM {{page}}');
+		$sql = db()->sql('SELECT MAX(id) FROM {{page}}');
 		$this->pageid = intval($sql->getOne())+1;
 
-		$sql = $db->sql('INSERT INTO {{page}}'.
-		               ' (id,objectid,templateid)'.
-		               ' VALUES( {pageid},{objectid},{templateid} )' );
+		$sql = db()->sql(<<<SQL
+	INSERT INTO {{page}}
+	            (id,objectid,templateid)
+	       VALUES( {pageid},{objectid},{templateid} )
+SQL
+		);
 		$sql->setInt   ('pageid'    ,$this->pageid     );
 		$sql->setInt   ('objectid'  ,$this->objectid   );
 		$sql->setInt   ('templateid',$this->templateid );

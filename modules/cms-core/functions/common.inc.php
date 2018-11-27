@@ -155,6 +155,17 @@ function db_connection()
     return Session::getDatabase();
 }
 
+/**
+ * Liefert die Datenbankverbindung fuer die aktuelle Sitzung.
+ *
+ * @return \database\Database
+ */
+function db()
+{
+
+    return Session::getDatabase();
+}
+
 
 
 

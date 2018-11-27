@@ -424,14 +424,12 @@ EOF
 	 */
 	function add()
 	{
-		$db = db_connection();
+		parent::add();
 
-		$this->objectAdd();
-
-		$sql = $db->sql('SELECT MAX(id) FROM {{file}}');
+		$sql = db()->sql('SELECT MAX(id) FROM {{file}}');
 		$this->fileid = intval($sql->getOne())+1;
 
-		$sql = $db->sql('INSERT INTO {{file}}'.
+		$sql = db()->sql('INSERT INTO {{file}}'.
 		               ' (id,objectid,extension,size,value)'.
 		               " VALUES( {fileid},{objectid},{extension},0,'' )" );
 		$sql->setInt   ('fileid'   ,$this->fileid        );

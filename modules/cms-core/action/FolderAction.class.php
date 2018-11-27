@@ -3,6 +3,7 @@
 namespace cms\action;
 
 use ArchiveTar;
+use cms\model\Image;
 use cms\model\Language;
 use cms\model\Project;
 use cms\model\Template;
@@ -12,37 +13,18 @@ use cms\model\BaseObject;
 use cms\model\File;
 use cms\model\Link;
 
+use cms\model\Text;
 use cms\model\Url;
 use Http;
 use Publish;
 use Session;
 use \Html;
-use Text;
 use Upload;
 
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-
 /**
- * Action-Klasse zum Bearbeiten eines Ordners
- * @author $Author$
- * @version $Revision$
- * @package openrat.actions
+ * Action-Klasse zum Bearbeiten eines Ordners.
+ *
+ * @author Jan Dankert
  */
 
 class FolderAction extends ObjectAction
@@ -92,16 +74,16 @@ class FolderAction extends ObjectAction
 			$this->addNotice('folder',$f->name,'ADDED','ok');
 
 			// Die neue Folder-Id (wichtig für API-Aufrufe).
-			$this->setTemplateVar('objectid',$f->objectid);
-		}
-		else
-		{
-			$this->addValidationError('name');
-			$this->callSubAction('createfolder');
-		}
+            $this->setTemplateVar('objectid',$f->objectid);
 
-		$this->folder->setTimestamp();
-	}
+            $this->folder->setTimestamp(); // Zeitstempel setzen.
+        }
+    else
+        {
+            $this->addValidationError('name');
+        }
+
+    }
 
 
 
@@ -149,6 +131,7 @@ class FolderAction extends ObjectAction
 				$file->extension = $upload->extension;
 				$file->size      = $upload->size;
 				$file->parentid  = $this->folder->objectid;
+                $file->projectid = $this->folder->projectid;
 
 				$file->value     = $upload->value;
 			}
@@ -160,6 +143,7 @@ class FolderAction extends ObjectAction
 					$file->desc     = $this->getRequestVar('description');
 					$file->filename = $this->getRequestVar('filename', OR_FILTER_FILENAME);
 					$file->parentid = $this->folder->objectid;
+                    $file->projectid = $this->folder->projectid;
 				}
 				else
 				{
@@ -174,6 +158,159 @@ class FolderAction extends ObjectAction
 		$file->add(); // Datei hinzufuegen
 		$this->addNotice('file',$file->name,'ADDED','ok');
 		$this->setTemplateVar('objectid',$file->objectid);
+
+		$this->folder->setTimestamp();
+	}
+
+
+
+    public function createimagePost()
+	{
+		$type        = $this->getRequestVar('type'       );
+		$name        = $this->getRequestVar('name'       );
+		$filename    = $this->getRequestVar('filename'   );
+		$description = $this->getRequestVar('description');
+
+		$image       = new Image();
+
+		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
+		if	( $this->hasRequestVar('url') )
+		{
+			$url = $this->getRequestVar('url');
+			$http = new Http();
+			$http->setUrl( $url );
+
+			$ok = $http->request();
+
+			if	( !$ok )
+			{
+				$this->addValidationError('url','COMMON_VALIDATION_ERROR',array(),$http->error);
+				$this->callSubAction('createfile');
+				return;
+			}
+
+			$image->desc      = $description;
+			$image->filename  = basename($url);
+			$image->name      = !empty($name)?$name:basename($url);
+			$image->size      = strlen($http->body);
+			$image->value     = $http->body;
+			$image->parentid  = $this->folder->objectid;
+		}
+		else
+		{
+			$upload = new Upload();
+
+			if	( $upload->isValid() )
+			{
+				$image->desc      = $description;
+				$image->filename  = $upload->filename;
+				$image->name      = !empty($name)?$name:$upload->filename;
+				$image->extension = $upload->extension;
+				$image->size      = $upload->size;
+				$image->parentid  = $this->folder->objectid;
+				$image->projectid = $this->folder->projectid;
+
+				$image->value     = $upload->value;
+			}
+			else
+			{
+				if	( $this->hasRequestVar('name') )
+				{
+					$image->name     = $this->getRequestVar('name');
+					$image->desc     = $this->getRequestVar('description');
+					$image->filename = $this->getRequestVar('filename', OR_FILTER_FILENAME);
+					$image->parentid = $this->folder->objectid;
+				}
+				else
+				{
+					$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
+					$this->callSubAction('createfile');
+					return;
+				}
+
+			}
+		}
+
+		$image->add(); // Datei hinzufuegen
+		$this->addNotice('file',$image->name,'ADDED','ok');
+		$this->setTemplateVar('objectid',$image->objectid);
+
+		$this->folder->setTimestamp();
+	}
+
+
+
+    public function createtextPost()
+	{
+		$type        = $this->getRequestVar('type'       );
+		$name        = $this->getRequestVar('name'       );
+		$filename    = $this->getRequestVar('filename'   );
+		$description = $this->getRequestVar('description');
+
+		$text   = new Text();
+
+		// Die neue Datei wird über eine URL geladen und dann im CMS gespeichert.
+		if	( $this->hasRequestVar('url') )
+		{
+			$url = $this->getRequestVar('url');
+			$http = new Http();
+			$http->setUrl( $url );
+
+			$ok = $http->request();
+
+			if	( !$ok )
+			{
+				$this->addValidationError('url','COMMON_VALIDATION_ERROR',array(),$http->error);
+				$this->callSubAction('createfile');
+				return;
+			}
+
+			$text->desc      = $description;
+			$text->filename  = basename($url);
+			$text->name      = !empty($name)?$name:basename($url);
+			$text->size      = strlen($http->body);
+			$text->value     = $http->body;
+			$text->parentid  = $this->folder->objectid;
+            $text->projectid = $this->folder->projectid;
+		}
+		else
+		{
+			$upload = new Upload();
+
+			if	( $upload->isValid() )
+			{
+				$text->desc      = $description;
+				$text->filename  = $upload->filename;
+				$text->name      = !empty($name)?$name:$upload->filename;
+				$text->extension = $upload->extension;
+				$text->size      = $upload->size;
+				$text->parentid  = $this->folder->objectid;
+                $text->projectid = $this->folder->projectid;
+
+				$text->value     = $upload->value;
+			}
+			else
+			{
+				if	( $this->hasRequestVar('name') )
+				{
+					$text->name     = $this->getRequestVar('name');
+					$text->desc     = $this->getRequestVar('description');
+					$text->filename = $this->getRequestVar('filename', OR_FILTER_FILENAME);
+					$text->parentid = $this->folder->objectid;
+				}
+				else
+				{
+					$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
+					$this->callSubAction('createfile');
+					return;
+				}
+
+			}
+		}
+
+		$text->add(); // Datei hinzufuegen
+		$this->addNotice('file',$text->name,'ADDED','ok');
+		$this->setTemplateVar('objectid',$text->objectid);
 
 		$this->folder->setTimestamp();
 	}
@@ -195,6 +332,7 @@ class FolderAction extends ObjectAction
             $link->parentid       = $this->folder->objectid;
 
             $link->linkedObjectId = $this->getRequestVar('targetobjectid');
+            $link->projectid      = $this->folder->projectid;
 
             $link->add();
 
@@ -224,6 +362,7 @@ class FolderAction extends ObjectAction
 			$url->name           = $name;
 			$url->desc           = $description;
 			$url->parentid       = $this->folder->objectid;
+            $url->projectid      = $this->folder->projectid;
 
 			$url->url            = $this->getRequestVar('url');
 
@@ -259,6 +398,8 @@ class FolderAction extends ObjectAction
 			$page->filename   = $filename;
 			$page->templateid = $this->getRequestVar('templateid');
 			$page->parentid   = $this->folder->objectid;
+			$page->projectid  = $this->folder->projectid;
+
 
 			$page->add();
 
@@ -933,6 +1074,36 @@ class FolderAction extends ObjectAction
 
 
 	/**
+	 * Hochladen einer Datei.
+	 *
+	 */
+    public function createimageView()
+	{
+		// Maximale Dateigroesse.
+		$maxSizeBytes = $this->maxFileSize();
+		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );
+		$this->setTemplateVar('maxlength',$maxSizeBytes );
+
+		$this->setTemplateVar('objectid',$this->folder->objectid );
+	}
+
+
+	/**
+	 * Hochladen einer Datei.
+	 *
+	 */
+    public function createtextView()
+	{
+		// Maximale Dateigroesse.
+		$maxSizeBytes = $this->maxFileSize();
+		$this->setTemplateVar('max_size' ,($maxSizeBytes/1024).' KB' );
+		$this->setTemplateVar('maxlength',$maxSizeBytes );
+
+		$this->setTemplateVar('objectid',$this->folder->objectid );
+	}
+
+
+	/**
 	 * Umwandlung von abgek�rzten Bytewerten ("Shorthand Notation") wie
 	 * "4M" oder "500K" in eine ganzzahlige Byteanzahl.<br>
 	 * <br>
@@ -1018,9 +1189,9 @@ class FolderAction extends ObjectAction
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
-				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
-				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
-				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
+				$list[$id]['name']     = \Text::maxLaenge( 30,$o->name     );
+				$list[$id]['filename'] = \Text::maxLaenge( 20,$o->filename );
+				$list[$id]['desc']     = \Text::maxLaenge( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
@@ -1079,9 +1250,9 @@ class FolderAction extends ObjectAction
 
 			if   ( $o->hasRight(ACL_READ) )
 			{
-				$list[$id]['name']     = Text::maxLaenge( 30,$o->name     );
-				$list[$id]['filename'] = Text::maxLaenge( 20,$o->filename );
-				$list[$id]['desc']     = Text::maxLaenge( 30,$o->desc     );
+				$list[$id]['name']     = \Text::maxLaenge( 30,$o->name     );
+				$list[$id]['filename'] = \Text::maxLaenge( 20,$o->filename );
+				$list[$id]['desc']     = \Text::maxLaenge( 30,$o->desc     );
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = $list[$id]['desc'].' - '.lang('IMAGE').' '.$id;
@@ -1246,9 +1417,9 @@ class FolderAction extends ObjectAction
 			if   ( $o->hasRight(ACL_READ) )
 			{
 				$list[$id]['id'  ]     = $id;
-				$list[$id]['name']     = Text::maxLength( $o->name     ,30);
-				$list[$id]['filename'] = Text::maxLength( $o->filename ,20);
-				$list[$id]['desc']     = Text::maxLength( $o->desc     ,30);
+				$list[$id]['name']     = \Text::maxLength( $o->name     ,30);
+				$list[$id]['filename'] = \Text::maxLength( $o->filename ,20);
+				$list[$id]['desc']     = \Text::maxLength( $o->desc     ,30);
 				if	( $list[$id]['desc'] == '' )
 					$list[$id]['desc'] = lang('NO_DESCRIPTION_AVAILABLE');
 				$list[$id]['desc'] = 'ID '.$id.' - '.$list[$id]['desc'];

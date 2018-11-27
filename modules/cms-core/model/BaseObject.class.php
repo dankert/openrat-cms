@@ -874,14 +874,22 @@ SQL
          */
         function objectAdd()
         {
-            $db = db_connection();
+            self::add();
+        }
 
+        /**
+         * Objekt hinzufuegen.
+         *
+         * Standardrechte und vom Elternobjekt vererbbare Berechtigungen werden gesetzt.
+         */
+        function add()
+        {
             // Neue Objekt-Id bestimmen
-            $sql = $db->sql('SELECT MAX(id) FROM {{object}}');
+            $sql = db()->sql('SELECT MAX(id) FROM {{object}}');
             $this->objectid = intval($sql->getOne())+1;
 
             $this->checkFilename();
-            $sql = $db->sql('INSERT INTO {{object}}'.
+            $sql = db()->sql('INSERT INTO {{object}}'.
                 ' (id,parentid,projectid,filename,orderid,create_date,create_userid,lastchange_date,lastchange_userid,typeid,settings)'.
                 ' VALUES( {objectid},{parentid},{projectid},{filename},{orderid},{time},{createuserid},{createtime},{userid},{typeid},\'\' )');
 
@@ -903,9 +911,6 @@ SQL
             $sql->setInt(  'typeid',$this->getTypeid());
 
             $sql->query();
-
-            if	( !empty($this->name) )
-                $this->objectSaveName();
 
             // Standard-Rechte fuer dieses neue Objekt setzen.
             // Der angemeldete Benutzer erhaelt alle Rechte auf

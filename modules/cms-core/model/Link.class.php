@@ -104,14 +104,12 @@ class Link extends BaseObject
      */
     public function add()
 	{
-		$this->objectAdd();
+		parent::add();
 
-		$db = db_connection();
-
-		$stmt = $db->sql('SELECT MAX(id) FROM {{link}}');
+		$stmt = db()->sql('SELECT MAX(id) FROM {{link}}');
 		$this->linkid = intval($stmt->getOne())+1;
 
-		$stmt = $db->sql('INSERT INTO {{link}}'.
+		$stmt = db()->sql('INSERT INTO {{link}}'.
 		               ' (id,objectid,link_objectid)'.
 		               ' VALUES( {linkid},{objectid},{linkobjectid} )' );
 		$stmt->setInt   ('linkid'      ,$this->linkid         );
