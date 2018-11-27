@@ -391,8 +391,7 @@ SQL
 	  */
 	function full_filename()
 	{
-		$filename = $this->path();
-		$filename .= $this->getFilename();
+		$filename = $this->path().'/'.$this->getFilename();
 
 		$this->fullFilename = $filename;
 		return $filename;
@@ -410,43 +409,7 @@ SQL
 	  */
 	function getFilename()
 	{
-		if	( $this->cut_index && $this->filename == config('publish','default') )
-		{
-			return ''; // Link auf Index-Datei, der Dateiname bleibt leer.
-		}
-		else
-		{
-			$format = config('publish','format');
-			$format = str_replace('{filename}',parent::filename(),$format );
-
-			if	( !$this->withLanguage || $this->content_negotiation && config('publish','negotiation','page_negotiate_language' ) )
-			{
-				$format = str_replace('{language}'    ,'',$format );
-				$format = str_replace('{language_sep}','',$format );
-			}
-			else
-			{
-				$l = new Language( $this->languageid );
-				$l->load();
-				$format = str_replace('{language}'    ,$l->isoCode                     ,$format );
-				$format = str_replace('{language_sep}',config('publish','language_sep'),$format );
-			}
-
-			if	( !$this->withModel || $this->content_negotiation && config('publish','negotiation','page_negotiate_type' ) )
-			{
-				$format = str_replace('{type}'    ,'',$format );
-				$format = str_replace('{type_sep}','',$format );
-			}
-			else
-			{
-				$t = new Template( $this->templateid );
-				$t->modelid = $this->modelid;
-				$t->load();
-				$format = str_replace('{type}'    ,$t->extension               ,$format );
-				$format = str_replace('{type_sep}',config('publish','type_sep'),$format );
-			}
-			return $format;
-		}
+		return self::filename();
 	}
 
 
