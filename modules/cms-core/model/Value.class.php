@@ -1408,6 +1408,11 @@ SQL
 					case 'edit_fullurl':
 						$raw = true;
 						$inhalt = Http::getServer();
+
+						// Der Link soll nicht auf die API, sondern auf das UI zeigen.
+						if   ( substr($inhalt,-4) == 'api/' )
+						    $inhalt = substr($inhalt,0,-4);
+
 						$db = \Session::getDatabase();
 						$params = array('dbid'      =>$db->id,
 						                'objectid'  =>$this->page->objectid,
@@ -1498,13 +1503,10 @@ SQL
 				break;
 				
 			default:
-				// Unbekannte Elementtypen darf es nicht geben, daher ERROR loggen.
-				Logger::error('element:'.$this->element->name.', '.
-				              'unknown type:'.$this->element->type);
-				
+				// Unbekannte Elementtypen darf es nicht geben.
 				if	( !$this->publish )
-					$inhalt = lang('ERROR_IN_ELEMENT').' ('.$this->element->name.':'.
-				              'unknown type:'.$this->element->type.')';
+					throw new \LogicException( lang('ERROR_IN_ELEMENT').' ('.$this->element->name.':'.
+				              'unknown type:'.$this->element->type.')');
 				
 		}
 
