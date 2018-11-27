@@ -142,7 +142,7 @@
 				<?php $if4=($type=='text'); if($if4){?>
 					<tr>
 						<td colspan="2">
-							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_text" name="text<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if ('') { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_text" name="<?php if ('') echo ''.'_' ?>text<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="text" value="<?php echo Text::encodeHtml(@$text) ?>" /><?php if ('') { ?><input type="hidden" name="text" value="<?php $text ?>"/><?php } ?></div>
 							
 						</td>
 					</tr>
@@ -157,11 +157,11 @@
 						</div>
 					<?php } ?>
 					<?php $if5=($editor=='markdown'); if($if5){?>
-						<textarea name="text" class="editor markdown-editor"><?php echo ${'text'} ?></textarea>
+						<textarea  name="<?php if ('') echo ''.'_' ?>text<?php if ('') echo '_disabled' ?>" class="editor markdown-editor"><?php echo ${'text'} ?></textarea>
 						
 					<?php } ?>
 					<?php $if5=($editor=='html'); if($if5){?>
-						<textarea name="text" class="editor html-editor" id="pageelement_edit_editor"><?php echo ${'text'} ?></textarea>
+						<textarea  name="<?php if ('') echo ''.'_' ?>text<?php if ('') echo '_disabled' ?>" class="editor html-editor" id="pageelement_edit_editor"><?php echo ${'text'} ?></textarea>
 						
 					<?php } ?>
 					<?php $if5=($editor=='wiki'); if($if5){?>
@@ -175,7 +175,7 @@
 							<br/>
 							
 						<?php } ?>
-						<textarea name="text" class="editor wiki-editor"><?php echo ${'text'} ?></textarea>
+						<textarea  name="<?php if ('') echo ''.'_' ?>text<?php if ('') echo '_disabled' ?>" class="editor wiki-editor"><?php echo ${'text'} ?></textarea>
 						
 						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('help') ?></legend><div>
 							<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
@@ -261,7 +261,7 @@
 						</div></fieldset>
 					<?php } ?>
 					<?php $if5=($editor=='text'); if($if5){?>
-						<div class="inputholder"><textarea class="editor raw-editor" name="text"><?php echo Text::encodeHtml($text) ?></textarea></div>
+						<div class="inputholder"><textarea class="editor raw-editor" name="<?php if ('') echo ''.'_' ?>text<?php if ('') echo '_disabled' ?>"><?php echo Text::encodeHtml($text) ?></textarea></div>
 						
 						
 						
@@ -294,7 +294,7 @@
 								</label>
 							</div>
 							<div class="input">
-								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_linkurl" name="linkurl<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$linkurl) ?>" /><?php if ('') { ?><input type="hidden" name="linkurl" value="<?php $linkurl ?>"/><?php } ?></div>
+								<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_linkurl" name="<?php if ('') echo ''.'_' ?>linkurl<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="" value="<?php echo Text::encodeHtml(@$linkurl) ?>" /><?php if ('') { ?><input type="hidden" name="linkurl" value="<?php $linkurl ?>"/><?php } ?></div>
 								
 							</div>
 						</div>
@@ -325,7 +325,7 @@
 						<div>
 							<input type="hidden" name="decimals" value="decimals"/>
 							
-							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_number" name="number<?php if ('') echo '_disabled' ?>" type="text" maxlength="20" class="text" value="<?php echo Text::encodeHtml(@$number) ?>" /><?php if ('') { ?><input type="hidden" name="number" value="<?php $number ?>"/><?php } ?></div>
+							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_number" name="<?php if ('') echo ''.'_' ?>number<?php if ('') echo '_disabled' ?>" type="text" maxlength="20" class="" value="<?php echo Text::encodeHtml(@$number) ?>" /><?php if ('') { ?><input type="hidden" name="number" value="<?php $number ?>"/><?php } ?></div>
 							
 						</div>
 					</div></fieldset>

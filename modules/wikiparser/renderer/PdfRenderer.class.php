@@ -11,6 +11,10 @@
  * @package openrat.text
  */
 
+use cms\model\BaseObject;
+use cms\model\File;
+use cms\model\Image;
+
 require( __DIR__.'/fpdf.php');
 require(__DIR__.'/Pdf.class.php');
 
@@ -89,11 +93,11 @@ class PdfRenderer
 						break;
 
 					case 'imageelement':
-						if	( Object::available( $child->objectId ) )
+						if	( BaseObject::available( $child->objectId ) )
 						{
 							$this->pdf->ln(5);
 							// Breite/oe�he des Bildes bestimmen.
-							$image = new File( $child->objectId );
+							$image = new Image( $child->objectId );
 							
 							$image->load();
 							$image->write();
