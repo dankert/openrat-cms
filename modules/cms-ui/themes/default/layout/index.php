@@ -87,7 +87,7 @@
 
 <?php /* Modal dialog */ ?>
 <div id="dialog" class="is-<?php echo empty($dialogAction)?'closed':'open' ?>">
-    <div class="view">
+    <div class="view or-round-corners">
         <?php // Shows directly a modal dialog (if present)
               if(!empty($dialogAction))
                   embedView($dialogAction,$dialogMethod, 0);
