@@ -218,8 +218,11 @@ class Publish
 					$this->log[] = 'destination: '.$dest;
 					return; // Fehler beim Kopieren, also abbrechen.
 				}
-				if	( ! is_null($lastChangeDate) )
-					@touch( $dest,$lastChangeDate );
+
+				// Das Änderungsdatum der Datei auch in der Zieldatei setzen.
+                if  ( $conf['publish']['set_modification_date'] )
+                    if	( ! is_null($lastChangeDate) )
+                        @touch( $dest,$lastChangeDate );
 				
 				Logger::debug("published: $dest");
 			}

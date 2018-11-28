@@ -704,6 +704,7 @@ function createDefaultConfig()
     $conf['publish']['ftp']['path']='';
     $conf['publish']['ftp']['user']='anonymous';
     $conf['publish']['ftp']['pass']='mail@example.com';
+    $conf['publish']['set_modification_date']=true;
     $conf['replace'] = array();
     $conf['replace']['']='0';
     $conf['replace']['']='0';
