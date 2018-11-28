@@ -497,14 +497,6 @@ class ObjectAction extends Action
 
     public function propPost()
     {
-        if  ($this->getRequestVar( 'valid_from_date' ))
-            $this->baseObject->validFromDate = strtotime( $this->getRequestVar( 'valid_from_date' ).' '.$this->getRequestVar( 'valid_from_time' ) );
-        else
-            $this->baseObject->validFromDate = null;
-        if  ($this->getRequestVar( 'valid_until_date'))
-            $this->baseObject->validToDate   = strtotime( $this->getRequestVar( 'valid_until_date').' '.$this->getRequestVar( 'valid_until_time') );
-        else
-            $this->baseObject->validToDate = null;
 
         if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
             $this->baseObject->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
@@ -531,7 +523,19 @@ class ObjectAction extends Action
             throw new \ValidationException( 'settings' );
         }
 
-        $this->baseObject->objectSave(false);
+        // Gültigkeitszeiträume speichern.
+        if  ($this->getRequestVar( 'valid_from_date' ))
+            $this->baseObject->validFromDate = strtotime( $this->getRequestVar( 'valid_from_date' ).' '.$this->getRequestVar( 'valid_from_time' ) );
+        else
+            $this->baseObject->validFromDate = null;
+        if  ($this->getRequestVar( 'valid_until_date'))
+            $this->baseObject->validToDate   = strtotime( $this->getRequestVar( 'valid_until_date').' '.$this->getRequestVar( 'valid_until_time') );
+        else
+            $this->baseObject->validToDate = null;
+
+
+        $this->baseObject->save();
+
         $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'SAVED',OR_NOTICE_OK);
     }
 

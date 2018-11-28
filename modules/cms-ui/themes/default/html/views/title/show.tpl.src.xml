@@ -226,7 +226,7 @@
                             </link>
                         </part>
                         <part
-                                class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-file on-action-url on-action-image">
+                                class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-file on-action-text on-action-url on-action-image">
                             <link type="dialog" title="message:menu_settings_desc" subaction="settings">
                                 <image method="settings"></image>
                                 <text key="menu_settings"></text>

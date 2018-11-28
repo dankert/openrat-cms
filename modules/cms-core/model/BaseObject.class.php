@@ -652,24 +652,30 @@ SQL
 
         /**
          * Laden des Objektes
-         * @deprecated bitte objectLoad() benutzen
          */
         public function load()
         {
-            return $this->objectLoad();
+            return self::objectLoad();
         }
 
 
         /**
          * Eigenschaften des Objektes in Datenbank speichern
+         * @deprecated
          */
-        public function objectSave( $withName = true )
+        public function objectSave( $ignored = true )
         {
-            $db = db_connection();
+            self::save();
+        }
 
+        /**
+         * Eigenschaften des Objektes in Datenbank speichern
+         */
+        public function save()
+        {
             $this->checkFilename();
 
-            $stmt = $db->sql( <<<SQL
+            $stmt = db()->sql( <<<SQL
 UPDATE {{object}} SET 
                       parentid          = {parentid},
 		              lastchange_date   = {time}    ,
@@ -702,14 +708,7 @@ SQL
 
             $stmt->query();
 
-            // Nur wenn nicht Wurzelordner
-            if	( !$this->isRoot && $withName )
-            {
-                if	( $this->name == '' )
-                    $this->name = $this->filename;
-
-                $this->objectSaveName();
-            }
+            $this->setTimestamp();
         }
 
 
@@ -717,7 +716,7 @@ SQL
         /**
          * Aenderungsdatum auf Systemzeit setzen
          */
-        function setTimestamp()
+        public function setTimestamp()
         {
             $db = db_connection();
 

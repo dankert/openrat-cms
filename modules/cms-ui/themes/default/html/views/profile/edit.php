@@ -45,7 +45,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_fullname" name="fullname<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$fullname) ?>" /><?php if ('') { ?><input type="hidden" name="fullname" value="<?php $fullname ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_fullname" name="<?php if ('') echo ''.'_' ?>fullname<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="" value="<?php echo Text::encodeHtml(@$fullname) ?>" /><?php if ('') { ?><input type="hidden" name="fullname" value="<?php $fullname ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_tel" name="tel<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$tel) ?>" /><?php if ('') { ?><input type="hidden" name="tel" value="<?php $tel ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_tel" name="<?php if ('') echo ''.'_' ?>tel<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="" value="<?php echo Text::encodeHtml(@$tel) ?>" /><?php if ('') { ?><input type="hidden" name="tel" value="<?php $tel ?>"/><?php } ?></div>
 						
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_desc" name="desc<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="text" value="<?php echo Text::encodeHtml(@$desc) ?>" /><?php if ('') { ?><input type="hidden" name="desc" value="<?php $desc ?>"/><?php } ?></div>
+						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_desc" name="<?php if ('') echo ''.'_' ?>desc<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="" value="<?php echo Text::encodeHtml(@$desc) ?>" /><?php if ('') { ?><input type="hidden" name="desc" value="<?php $desc ?>"/><?php } ?></div>
 						
 					</div>
 				</div>

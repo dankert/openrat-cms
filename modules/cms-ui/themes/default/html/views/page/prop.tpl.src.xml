@@ -33,7 +33,5 @@
 			</part>
 		</part>
 
-		<include file="../include/validity" />
-
 	</form>
 </output>

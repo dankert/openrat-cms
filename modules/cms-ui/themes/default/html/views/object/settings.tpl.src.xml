@@ -2,6 +2,31 @@
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
     <form>
 
+        <group title="message:validity">
+            <part class="line">
+                <part class="label">
+                    <label for="validity_from_date">
+                        <text key="from"></text>
+                    </label>
+                </part>
+                <part class="input">
+                    <input type="date" name="valid_from_date" />
+                    <input type="time" name="valid_from_time" />
+                </part>
+            </part>
+            <part class="line">
+                <part class="label">
+                    <label for="validity_until_date">
+                        <text key="until"></text>
+                    </label>
+                </part>
+                <part class="input">
+                    <input type="date" name="valid_until_date" />
+                    <input type="time" name="valid_until_time" />
+                </part>
+            </part>
+        </group>
+
         <group title="message:settings">
 
             <part class="line">

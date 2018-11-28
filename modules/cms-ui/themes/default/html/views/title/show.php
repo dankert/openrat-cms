@@ -192,7 +192,7 @@
 								</a>
 
 							</div>
-							<div class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-file on-action-url on-action-image">
+							<div class="entry clickable filtered on-action-link on-action-folder on-action-page on-action-file on-action-text on-action-url on-action-image">
 								<a title="<?php echo lang('menu_settings_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="settings" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'settings'}" href="<?php echo Html::url('','settings','',array('dialogAction'=>'','dialogMethod'=>'settings')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/settings.svg" />
 									
