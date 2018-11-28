@@ -57,6 +57,8 @@ namespace cms\action
             $this->text->load();
 
             $this->file = $this->text;
+
+            parent::init();
         }
 
 

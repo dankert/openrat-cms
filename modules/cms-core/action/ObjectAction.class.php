@@ -489,10 +489,6 @@ class ObjectAction extends Action
 
     public function propView()
     {
-        $this->setTemplateVar( 'valid_from_date' ,$this->baseObject->validFromDate==null?'':date('Y-m-d',$this->baseObject->validFromDate) );
-        $this->setTemplateVar( 'valid_from_time' ,$this->baseObject->validFromDate==null?'':date('H:i'  ,$this->baseObject->validFromDate) );
-        $this->setTemplateVar( 'valid_until_date',$this->baseObject->validToDate  ==null?'':date('Y-m-d',$this->baseObject->validToDate  ) );
-        $this->setTemplateVar( 'valid_until_time',$this->baseObject->validToDate  ==null?'':date('H:i'  ,$this->baseObject->validToDate  ) );
     }
 
     public function propPost()
@@ -508,6 +504,11 @@ class ObjectAction extends Action
     public function settingsView()
     {
         $this->setTemplateVar('settings',$this->baseObject->settings);
+
+        $this->setTemplateVar( 'valid_from_date' ,$this->baseObject->validFromDate==null?'':date('Y-m-d',$this->baseObject->validFromDate) );
+        $this->setTemplateVar( 'valid_from_time' ,$this->baseObject->validFromDate==null?'':date('H:i'  ,$this->baseObject->validFromDate) );
+        $this->setTemplateVar( 'valid_until_date',$this->baseObject->validToDate  ==null?'':date('Y-m-d',$this->baseObject->validToDate  ) );
+        $this->setTemplateVar( 'valid_until_time',$this->baseObject->validToDate  ==null?'':date('H:i'  ,$this->baseObject->validToDate  ) );
     }
 
     public function settingsPost()
@@ -524,11 +525,12 @@ class ObjectAction extends Action
         }
 
         // Gültigkeitszeiträume speichern.
-        if  ($this->getRequestVar( 'valid_from_date' ))
+        if  ($this->hasRequestVar( 'valid_from_date' ))
             $this->baseObject->validFromDate = strtotime( $this->getRequestVar( 'valid_from_date' ).' '.$this->getRequestVar( 'valid_from_time' ) );
         else
             $this->baseObject->validFromDate = null;
-        if  ($this->getRequestVar( 'valid_until_date'))
+
+        if  ($this->hasRequestVar( 'valid_until_date'))
             $this->baseObject->validToDate   = strtotime( $this->getRequestVar( 'valid_until_date').' '.$this->getRequestVar( 'valid_until_time') );
         else
             $this->baseObject->validToDate = null;
