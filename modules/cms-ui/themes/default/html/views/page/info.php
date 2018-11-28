@@ -50,6 +50,18 @@
 				</div>
 				<div class="line">
 					<div class="label">
+						<label for="<?php echo REQUEST_ID ?>_full_filename" class="label">
+							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_full_filename')))); ?></span>
+							
+						</label>
+					</div>
+					<div class="input">
+						<span class="filename"><?php echo nl2br(encodeHtml(htmlentities($tmp_filename))); ?></span>
+						
+					</div>
+				</div>
+				<div class="line">
+					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_template_name" class="label">
 							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_template')))); ?></span>
 							

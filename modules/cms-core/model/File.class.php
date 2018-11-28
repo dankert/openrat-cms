@@ -64,6 +64,8 @@ class File extends BaseObject
 
     public $filterid;
 
+    public $public = false ;
+
 
     /**
 	 * Konstruktor
@@ -384,6 +386,9 @@ EOF
 		if	( $this->storeValueAsBase64 )
 			$this->value = base64_decode( $this->value );
 
+		if  ( $this->public )
+            $this->filterValue();
+
 		// Store in cache.
 		$f = fopen( $this->tmpfile(),'w' );
 		fwrite( $f,$this->value );
@@ -393,13 +398,18 @@ EOF
 	}
 
 
+	public function deleteTmpFile() {
+
+        if	( is_file($this->tmpfile()) )
+            @unlink( $this->tmpfile() );
+    }
+
 	/**
 	 * Speichert den Inhalt in der Datenbank.
 	 */
 	function saveValue( $value = '' )
 	{
-		if	( is_file($this->tmpfile()) )
-			@unlink( $this->tmpfile() );
+		$this->deleteTmpFile();
 
 		$db = db_connection();
 
@@ -454,12 +464,13 @@ EOF
 
 	public function publish()
 	{
+        $this->public              = true;
+        $this->deleteTmpFile();
 
         if	( ! is_object($this->publish) )
 			$this->publish = new \Publish( $this->projectid );
 
 		$this->write();
-        $this->filterValue();
 		$this->publish->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );
 
 		$this->publish->publishedObjects[] = $this->getProperties();
@@ -474,7 +485,7 @@ EOF
 		if	( $this->tmpfile == '' )
 		{
 			$db = db_connection();
-			$this->tmpfile = \FileUtils::getTempFileName( array('db'=>$db->id,'o'.$this->objectid) );
+			$this->tmpfile = \FileUtils::getTempFileName( array('db'=>$db->id,'o'=>$this->objectid,'p'=>intval($this->public)) );
 		}
 		return $this->tmpfile;
 	}

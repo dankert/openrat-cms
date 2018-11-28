@@ -413,6 +413,7 @@ class PageAction extends ObjectAction
 		$template = new Template( $this->page->templateid );
 		$template->load();
 		$this->setTemplateVar('template_name',$template->name);
+		$this->setTemplateVar('tmp_filename',$this->page->tmpfile() );
 
 	}
 
