@@ -245,9 +245,7 @@ class FolderAction extends ObjectAction
 
     public function createtextPost()
 	{
-		$type        = $this->getRequestVar('type'       );
 		$name        = $this->getRequestVar('name'       );
-		$filename    = $this->getRequestVar('filename'   );
 		$description = $this->getRequestVar('description');
 
 		$text   = new Text();
@@ -300,6 +298,7 @@ class FolderAction extends ObjectAction
 					$text->desc     = $this->getRequestVar('description');
 					$text->filename = BaseObject::urlify( $name );
 					$text->parentid = $this->folder->objectid;
+                    $text->projectid = $this->folder->projectid;
 				}
 				else
 				{

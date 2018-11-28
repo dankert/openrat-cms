@@ -41,7 +41,7 @@ class Folder extends BaseObject
 	function __construct( $objectid='' )
 	{
 		parent::__construct( $objectid );
-		$this->isFolder = true;
+		$this->isImage = true;
 	}
 
 

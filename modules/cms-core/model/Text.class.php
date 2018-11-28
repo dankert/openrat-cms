@@ -26,8 +26,6 @@ namespace cms\model;
  */
 class Text extends File
 {
-
-
     /**
      * Konstruktor
      *
@@ -35,7 +33,11 @@ class Text extends File
      */
 	function __construct( $objectid='' )
 	{
-		parent::__construct( $objectid );
+
+        parent::__construct( $objectid );
+
+        $this->isText = true;
+        $this->isFile = false;
 	}
 
 }

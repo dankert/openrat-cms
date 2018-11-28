@@ -19,6 +19,10 @@ namespace cms\model;
 
 
 // Standard Mime-Type 
+use JSqueeze;
+use Less_Parser;
+use Logger;
+
 define('OR_FILE_DEFAULT_MIMETYPE','application/octet-stream');
 
 
@@ -37,7 +41,12 @@ class File extends BaseObject
 	var $extension     = '';
 	var $log_filenames = array();
 	var $fullFilename  = '';
+
+    /**
+     * @var \Publish
+     */
 	var $publish       = null;
+
 	var $mime_type     = '';
 
 	var $tmpfile;
@@ -92,8 +101,9 @@ class File extends BaseObject
 		}
 		else
 		{
-			if	( !empty($this->extension) )
-				$filename .= '.'.$this->extension;
+		    // Nein, wurde bereits in filename() ergänzt.
+			//if	( !empty($this->extension) )
+			//	$filename .= '.'.$this->extension;
 		}
 
 		$this->fullFilename = $filename;
@@ -442,12 +452,14 @@ EOF
 	}
 
 
-	function publish()
+	public function publish()
 	{
-		if	( ! is_object($this->publish) )
+
+        if	( ! is_object($this->publish) )
 			$this->publish = new \Publish( $this->projectid );
 
 		$this->write();
+        $this->filterValue();
 		$this->publish->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );
 
 		$this->publish->publishedObjects[] = $this->getProperties();
@@ -457,7 +469,7 @@ EOF
 	/**
 	 * Ermittelt einen tempor�ren Dateinamen f�r diese Datei.
 	 */
-	function tmpfile()
+	public function tmpfile()
 	{
 		if	( $this->tmpfile == '' )
 		{
@@ -505,6 +517,60 @@ EOF
 				return substr($this->filename,$pos+1);
 		}
 	}
+
+    private function filterValue()
+    {
+        $settings = $this->getTotalSettings();
+        if  ( isset( $settings['filter']) && is_array( $settings['filter'] ) )
+        {
+            foreach( $settings['filter'] as $filterName )
+            {
+                switch( $filterName)
+                {
+                    case 'less':
+
+                        $parser = new Less_Parser(array(
+                            'sourceMap' => false,
+                            'indentation' => '	',
+                            'outputSourceFiles' => false,
+                            //'sourceMapBasepath' => $this->filename()
+                            //'sourceMapBasepath' => './'
+                        ));
+
+                        $parser->parse( $this->value );
+                        $this->value = $parser->getCss();
+
+                        break;
+
+                    case 'less-minifier':
+
+                        $parser = new Less_Parser(array(
+                            'compress' => true,
+                            'sourceMap' => false,
+                            'indentation' => ''
+                        ));
+
+                        $parser->parse( $this->value );
+                        $this->value = $parser->getCss();
+
+                        break;
+
+                    case "js-minifier":
+                        $jz = new JSqueeze();
+                        $this->value = $jz->squeeze( $this->value);
+                        break;
+
+                    default:
+                        Logger::warn("Filter not found: ".$filterName);
+                }
+            }
+
+            // Store in cache.
+            $f = fopen( $this->tmpfile(),'w' );
+            fwrite( $f,$this->value );
+            fclose( $f );
+        }
+    }
 }
 
 ?>

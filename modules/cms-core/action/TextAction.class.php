@@ -131,5 +131,9 @@ namespace cms\action
         }
 
 
+        public function valueView()
+        {
+            parent::valueView();
+        }
     }
 }

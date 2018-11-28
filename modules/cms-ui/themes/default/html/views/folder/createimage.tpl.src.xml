@@ -1,0 +1,65 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+	<header back="true"></header>
+	<form enctype="multipart/form-data" target="upload" type="upload" visible="true">
+		<hidden name="type" default="file"></hidden>
+		<part class="line">
+			<part class="label">
+				<label for="name">
+					<text text="global_FILE"></text>
+				</label>
+			</part>
+			<part class="input">
+				<upload name="file" maxlength="var:maxlength" multiple="true"></upload>
+			</part>
+		</part>
+
+		<part class="line filedropzone">
+			<part class="label">
+			</part>
+			<part class="input">
+			</part>
+		</part>
+
+		<part class="line">
+			<part class="label">
+				<text class="help" key="file_max_size"></text>
+			</part>
+			<part class="input">
+				<text var="max_size"></text>
+			</part>
+		</part>
+
+		<part class="line">
+			<part class="label">
+				<text key="HTTP_URL"></text>
+			</part>
+			<part class="input">
+				<input name="url" size="50"></input>
+			</part>
+		</part>
+		<group title="message:description"></group>
+
+
+		<part class="line">
+			<part class="label">
+				<text text="global_NAME"></text>
+			</part>
+			<part class="input">
+				<input name="name" size="50"></input>
+			</part>
+		</part>
+
+
+		<part class="line">
+			<part class="label">
+				<text text="global_DESCRIPTION"></text>
+			</part>
+			<part class="input">
+				<inputarea rows="5" cols="50" name="description" default=""></inputarea>
+			</part>
+		</part>
+
+	</form>
+	<focus field="name"></focus>
+</output>

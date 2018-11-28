@@ -27,8 +27,6 @@ namespace cms\model;
  */
 class Image extends File
 {
-	var $fileid;
-
 	/**
 	 * Breite eines Bildes. Ist nur verfuegbar, wenn vorher
 	 * #getImageSize() aufgerufen wurde.
@@ -50,7 +48,10 @@ class Image extends File
 	function __construct( $objectid='' )
 	{
 	    parent::__construct($objectid);
-	}
+
+        $this->isImage = true;
+        $this->isFile  = false;
+    }
 
 
 
