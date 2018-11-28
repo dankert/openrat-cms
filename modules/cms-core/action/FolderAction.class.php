@@ -71,6 +71,8 @@ class FolderAction extends ObjectAction
 			$f->parentid   = $this->folder->objectid;
 
 			$f->add();
+			$f->setNameForAllLanguages( $name,$description );
+
 			$this->addNotice('folder',$f->name,'ADDED','ok');
 
 			// Die neue Folder-Id (wichtig für API-Aufrufe).
@@ -113,7 +115,7 @@ class FolderAction extends ObjectAction
 			}
 
 			$file->desc      = $description;
-			$file->filename  = basename($url);
+			$file->filename  = BaseObject::urlify( $name );
 			$file->name      = !empty($name)?$name:basename($url);
 			$file->size      = strlen($http->body);
 			$file->value     = $http->body;
@@ -126,7 +128,7 @@ class FolderAction extends ObjectAction
 			if	( $upload->isValid() )
 			{
 				$file->desc      = $description;
-				$file->filename  = $upload->filename;
+				$file->filename  = BaseObject::urlify( $upload->filename );
 				$file->name      = !empty($name)?$name:$upload->filename;
 				$file->extension = $upload->extension;
 				$file->size      = $upload->size;
@@ -156,6 +158,8 @@ class FolderAction extends ObjectAction
 		}
 
 		$file->add(); // Datei hinzufuegen
+        $file->setNameForAllLanguages( $name,$description );
+
 		$this->addNotice('file',$file->name,'ADDED','ok');
 		$this->setTemplateVar('objectid',$file->objectid);
 
@@ -190,7 +194,7 @@ class FolderAction extends ObjectAction
 			}
 
 			$image->desc      = $description;
-			$image->filename  = basename($url);
+			$image->filename  = BaseObject::urlify( basename($url) );
 			$image->name      = !empty($name)?$name:basename($url);
 			$image->size      = strlen($http->body);
 			$image->value     = $http->body;
@@ -203,7 +207,7 @@ class FolderAction extends ObjectAction
 			if	( $upload->isValid() )
 			{
 				$image->desc      = $description;
-				$image->filename  = $upload->filename;
+				$image->filename  = BaseObject::urlify( $upload->filename );
 				$image->name      = !empty($name)?$name:$upload->filename;
 				$image->extension = $upload->extension;
 				$image->size      = $upload->size;
@@ -216,9 +220,7 @@ class FolderAction extends ObjectAction
 			{
 				if	( $this->hasRequestVar('name') )
 				{
-					$image->name     = $this->getRequestVar('name');
-					$image->desc     = $this->getRequestVar('description');
-					$image->filename = $this->getRequestVar('filename', OR_FILTER_FILENAME);
+					$image->filename = BaseObject::urlify( $name );
 					$image->parentid = $this->folder->objectid;
 				}
 				else
@@ -233,6 +235,7 @@ class FolderAction extends ObjectAction
 
 		$image->add(); // Datei hinzufuegen
 		$this->addNotice('file',$image->name,'ADDED','ok');
+        $image->setNameForAllLanguages( $name,$description );
 		$this->setTemplateVar('objectid',$image->objectid);
 
 		$this->folder->setTimestamp();
@@ -266,7 +269,7 @@ class FolderAction extends ObjectAction
 			}
 
 			$text->desc      = $description;
-			$text->filename  = basename($url);
+			$text->filename  = BaseObject::urlify( basename($url) );
 			$text->name      = !empty($name)?$name:basename($url);
 			$text->size      = strlen($http->body);
 			$text->value     = $http->body;
@@ -280,7 +283,7 @@ class FolderAction extends ObjectAction
 			if	( $upload->isValid() )
 			{
 				$text->desc      = $description;
-				$text->filename  = $upload->filename;
+				$text->filename  = BaseObject::urlify( $upload->filename );
 				$text->name      = !empty($name)?$name:$upload->filename;
 				$text->extension = $upload->extension;
 				$text->size      = $upload->size;
@@ -295,7 +298,7 @@ class FolderAction extends ObjectAction
 				{
 					$text->name     = $this->getRequestVar('name');
 					$text->desc     = $this->getRequestVar('description');
-					$text->filename = $this->getRequestVar('filename', OR_FILTER_FILENAME);
+					$text->filename = BaseObject::urlify( $name );
 					$text->parentid = $this->folder->objectid;
 				}
 				else
@@ -309,6 +312,7 @@ class FolderAction extends ObjectAction
 		}
 
 		$text->add(); // Datei hinzufuegen
+        $text->setNameForAllLanguages( $name,$description );
 		$this->addNotice('file',$text->name,'ADDED','ok');
 		$this->setTemplateVar('objectid',$text->objectid);
 
@@ -320,21 +324,19 @@ class FolderAction extends ObjectAction
     public function createlinkPost()
 	{
 		$name        = $this->getRequestVar('name'       );
-		$filename    = $this->getRequestVar('filename'   );
         $description = $this->getRequestVar('description');
 
         if   ( !empty($name) )
         {
             $link = new Link();
-            $link->filename       = $filename;
-            $link->name           = $name;
-            $link->desc           = $description;
+            $link->filename       = BaseObject::urlify( $name );
             $link->parentid       = $this->folder->objectid;
 
             $link->linkedObjectId = $this->getRequestVar('targetobjectid');
             $link->projectid      = $this->folder->projectid;
 
             $link->add();
+            $link->setNameForAllLanguages( $name,$description );
 
             $this->addNotice('link',$link->name,'ADDED','ok');
             $this->setTemplateVar('objectid',$link->objectid);
@@ -358,15 +360,14 @@ class FolderAction extends ObjectAction
 		if   ( !empty($name) )
 		{
 			$url = new Url();
-			$url->filename       = $filename;
-			$url->name           = $name;
-			$url->desc           = $description;
+			$url->filename       = BaseObject::urlify( $name );
 			$url->parentid       = $this->folder->objectid;
             $url->projectid      = $this->folder->projectid;
 
 			$url->url            = $this->getRequestVar('url');
 
 			$url->add();
+            $url->setNameForAllLanguages( $name,$description );
 
 			$this->addNotice('url',$url->name,'ADDED','ok');
 			$this->setTemplateVar('objectid',$url->objectid);
@@ -395,13 +396,14 @@ class FolderAction extends ObjectAction
 			$page = new Page();
 			$page->name       = $name;
 			$page->desc       = $description;
-			$page->filename   = $filename;
+			$page->filename   = BaseObject::urlify( $name );
 			$page->templateid = $this->getRequestVar('templateid');
 			$page->parentid   = $this->folder->objectid;
 			$page->projectid  = $this->folder->projectid;
 
 
 			$page->add();
+            $page->setNameForAllLanguages( $name,$description );
 
 			$this->addNotice('page',$page->name,'ADDED','ok');
 			$this->setTemplateVar('objectid',$page->objectid);

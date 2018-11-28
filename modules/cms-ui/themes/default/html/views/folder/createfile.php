@@ -13,7 +13,7 @@
 					</label>
 				</div>
 				<div class="input">
-					<input size="40" id="req1543349803731534526_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  multiple="multiple" />
+					<input size="40" id="req154344041025418490_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  multiple="multiple" />
 					
 				</div>
 			</div>

@@ -30,37 +30,44 @@ namespace cms\model {
          * @see #$objectid
          * @type Integer
          */
-        var $id;
+        public $id;
 
         /** eindeutige ID dieses Objektes
          * @type Integer
          */
-        var $objectid;
+        public $objectid;
 
         /** Objekt-ID des Ordners, in dem sich dieses Objekt befindet
          * Kann "null" oder "0" sein, wenn es sich um den Wurzelordner des Projektes handelt
          * @see #$isRoot
          * @type Integer
          */
-        var $parentid;
+        public $parentid;
 
         /** Physikalischer Dateiname des Objektes (bei Links nicht gef?llt)
          * <em>enth?lt nicht die Dateinamen-Erweiterung</em>
          * @type String
          */
-        var $filename = '';
+        public $filename = '';
 
         /** Logischer (sprachabhaengiger) Name des Objektes
          * (wird in Tabelle <code>name</code> abgelegt)
          * @type String
+         * @deprecated use modelclass Name instead
          */
         var $name = '';
 
         /** Logische (sprachabhaengige) Beschreibung des Objektes
          * (wird in Tabelle <code>name</code> abgelegt)
          * @type String
+         * @deprecated use modelclass Name instead
          */
         var $description = 'none';
+
+        /**
+         * @var string
+         * @deprecated
+         */
         var $desc = '';
 
         /** Zeitpunkt der Erstellung. Die Variable beinhaltet den Unix-Timestamp.
@@ -955,28 +962,28 @@ SQL
             if	( empty($this->filename) )
                 $this->filename = $this->objectid;
 
-//		$this->filename = trim(strtolower($this->filename));
-
-//		$this->filename = $this->goodFilename( $this->filename);
-
-            if	( $this->isRoot )
+            if	( $this->isRoot )  // Beim Root-Ordner ist es egal, es gibt nur einen.
                 return;
 
             if	( !$this->filenameIsUnique( $this->filename ) )
             {
-//			$this->filename = $this->objectid;
-//
-//			if	( !$this->filenameIsUnique( $this->filename ) )
-                $this->filename = $this->filename.'.'.md5(microtime());
+                // Append some string to filename.
+                $this->filename = $this->filename.'-'.base_convert(time(), 10, 36);
             }
         }
 
 
+        /**
+         * Stellt fest, dass der Dateiname im aktuellen Ordner kein weiteres Mal vorkommt.
+         * Dies muss vor dem Speichern geprüft werden, ansonsten erfolgt eine Index-Verletzung
+         * und der Datensatz kann nicht gespeichert werde.
+         *
+         * @param $filename
+         * @return bool
+         */
         private function filenameIsUnique( $filename )
         {
-            $db = db_connection();
-
-            $sql = $db->sql( <<<SQL
+            $sql = db()->sql( <<<SQL
 SELECT COUNT(*) FROM {{object}}
  WHERE parentid={parentid} AND filename={filename}
    AND NOT id = {objectid}
@@ -1436,9 +1443,34 @@ SQL
 
             return $names;
         }
+
+
+        /**
+         * Speichert Namen und Beschreibung für alle Sprachen. Das ist bei der Neuanlage von Objekten ganz praktisch.
+         *
+         * @param $nam
+         * @param $description
+         */
+        public function setNameForAllLanguages($nam, $description)
+        {
+            foreach( $this->getProject()->getLanguages() as $languageId=>$languageName )
+            {
+                $name = new Name();
+                $name->objectid   = $this->objectid;
+                $name->languageid = $languageId;
+                $name->load();
+
+                $name->name        = $nam;
+                $name->description = $description;
+
+                $name->save();
+            }
+
+        }
+
     }
 
 
 
 
-}?>
+}

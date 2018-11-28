@@ -27,13 +27,11 @@ namespace cms\model;
  */
 class Folder extends BaseObject
 {
-	var $folderid;
-	var $projectid;
+	public $folderid;
+
 	var $subfolders    = array();
 	var $filenames     = true;
-	var $name     = '';
-	var $filename = '';
-	var $desc     = '';
+
     /**
      * @var \Publish
      */
@@ -750,7 +748,8 @@ SQL
 	
 		return $sql->getAll();
 	}
-	
+
+
 }
 
 
