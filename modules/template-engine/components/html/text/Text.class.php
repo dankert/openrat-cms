@@ -2,13 +2,12 @@
 
 namespace template_engine\components;
 
-class TextComponent extends Component
+class TextComponent extends HtmlComponent
 {
 	public $prefix = '';
 	public $suffix = '';
 	public $title;
 	public $type;
-	public $class = 'text';
 	public $escape = true;
 	public $var;
 	public $text;
@@ -18,10 +17,14 @@ class TextComponent extends Component
 	public $maxlength;
 	public $accesskey;
 	public $cut = 'both';
-	
+	public $label;
+
 	public function begin()
 	{
-		if	( $this->raw )
+        if   ( $this->label )
+            echo '<label class="or-form-row"><span class="or-form-label">'.lang($this->label).'</span><span class="or-form-input">';
+
+        if	( $this->raw )
 			$this->escape = false;
 		
 		switch( $this->type )
@@ -117,7 +120,10 @@ class TextComponent extends Component
 		echo "echo $value;";
 			
 		echo ' ?></'.$tag.'>';  // Tag schliessen.
-	}
+
+        if   ( $this->label )
+            echo '</span></label>';
+    }
 }
 
 

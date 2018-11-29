@@ -61,24 +61,6 @@ class LinkAction extends ObjectAction
 
 
 
-	function remove()
-	{
-		$this->setTemplateVars( $this->link->getProperties() );
-	}
-	
-
-
-	function delete()
-	{
-		if	( $this->hasRequestVar("delete") )
-		{
-			$this->link->delete();
-			$this->addNotice('link',$this->link->name,'DELETED');
-		}
-	}
-	
-
-
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
@@ -195,4 +177,20 @@ class LinkAction extends ObjectAction
 		
 		$this->setTemplateVar('outline',$structure);
 	}
+
+    public function removeView()
+    {
+        $this->setTemplateVar( 'name',$this->link->filename );
+    }
+
+
+    public function removePost()
+    {
+        if ($this->getRequestVar('delete') != '') {
+            $this->link->delete();
+            $this->addNotice('link', $this->link->filename, 'DELETED', OR_NOTICE_OK);
+        } else {
+            $this->addNotice('link', $this->link->filename, 'CANCELED', OR_NOTICE_WARN);
+        }
+    }
 }

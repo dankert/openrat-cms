@@ -3,11 +3,11 @@
 		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 			<tr class="headline">
 				<td>
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_TYPE'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_TYPE'.'')))); ?></span>
 					
-					<span class="text"><?php echo nl2br('&nbsp;/&nbsp;'); ?></span>
+					<span><?php echo nl2br('&nbsp;/&nbsp;'); ?></span>
 					
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NAME'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NAME'.'')))); ?></span>
 					
 				</td>
 			</tr>
@@ -16,7 +16,7 @@
 					<td>
 						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_folder_up.png" />
 						
-						<span class="text"><?php echo nl2br('..'); ?></span>
+						<span><?php echo nl2br('..'); ?></span>
 						
 					</td>
 				</tr>
@@ -27,9 +27,9 @@
 						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url($type,'',$id,array()) ?>">
 							<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/<?php echo $type ?>.svg" />
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.$name.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.$name.'')))); ?></span>
 							
-							<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+							<span><?php echo nl2br('&nbsp;'); ?></span>
 							
 						</a>
 

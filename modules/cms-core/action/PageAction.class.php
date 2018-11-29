@@ -876,6 +876,27 @@ class PageAction extends ObjectAction
 
 
 
+    public function removeView()
+    {
+        $this->setTemplateVar( 'name',$this->page->filename );
+    }
+
+
+    public function removePost()
+    {
+        if   ( $this->getRequestVar('delete') != '' )
+        {
+            $this->page->delete();
+            $this->addNotice('page',$this->page->filename,'DELETED',OR_NOTICE_OK);
+        }
+        else
+        {
+            $this->addNotice('page',$this->page->filename,'CANCELED',OR_NOTICE_WARN);
+        }
+    }
+
+
+
 }
 
 ?>

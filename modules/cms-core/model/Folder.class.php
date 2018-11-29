@@ -606,6 +606,8 @@ class Folder extends BaseObject
 	 * Loeschen dieses Ordners.
 	 * Der Ordner wird nur geloescht, wenn er keine Unterelemente mehr enth?lt.
 	 * Zum Loeschen inklusive Unterelemente dient die Methode deleteAll()
+     *
+     * @throws \Exception if folder contains elements
 	 */
 	function delete()
 	{
@@ -627,6 +629,9 @@ class Folder extends BaseObject
 	
 			$this->objectDelete();
 		}
+		else {
+		    throw new \RuntimeException('There are children in the folder '.$this->objectid.'.');
+        }
 	}
 
 	
@@ -749,6 +754,15 @@ SQL
 		return $sql->getAll();
 	}
 
+
+    /**
+     * Stellt fest, ob der Ordner Unterelemente besitzt.
+     * @return bool
+     */
+	public function hasChildren()
+    {
+        return count($this->getObjectIds()) > 0;
+    }
 
 }
 

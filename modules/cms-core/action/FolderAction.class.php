@@ -1645,4 +1645,30 @@ class FolderAction extends ObjectAction
 	public function showView() {
 	    $this->nextSubAction('edit');
     }
+
+
+
+    public function removeView()
+    {
+        $this->setTemplateVar( 'name',$this->folder->filename );
+        $this->setTemplateVar( 'hasChildren', $this->folder->hasChildren() );
+    }
+
+
+    public function removePost()
+    {
+        if   ( !$this->hasRequestVar('delete') )
+            throw new \ValidationException("delete");
+
+        if  ( $this->hasRequestVar( 'withChildren'))
+            $this->folder->deleteAll();  // Delete with children
+        else
+            if   ( $this->folder->hasChildren() )
+                throw new \ValidationException("withChildren");
+            else
+                $this->folder->delete();  // Only delete current folder.
+
+        $this->addNotice('folder',$this->folder->filename,'DELETED',OR_NOTICE_OK);
+    }
+
 }

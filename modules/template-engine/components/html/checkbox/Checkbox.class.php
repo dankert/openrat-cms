@@ -9,10 +9,15 @@ class CheckboxComponent extends Component
 	public $name;
 	public $readonly = false;
 	public $required = false;
-	
+	public $label;
+
 	protected function begin(){
-	
-		echo '<?php { ';
+
+        if   ( $this->label )
+            echo '<label class="or-form-row"><span class="or-form-label"></span><span class="or-form-input">';
+
+
+        echo '<?php { ';
 		echo '$tmpname     = '.$this->value($this->name).';';
 		echo '$default  = '.$this->value($this->default).';';
 		echo '$readonly = '.$this->value($this->readonly).';';
@@ -33,7 +38,11 @@ class CheckboxComponent extends Component
 		}
 		} ?>
 HTML;
-	}
+
+        if   ( $this->label )
+            echo '&nbsp;'.lang($this->label).' </span></label>';
+
+    }
 }
 
 

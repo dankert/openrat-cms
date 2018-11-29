@@ -77,10 +77,30 @@ class UrlAction extends ObjectAction
 			$this->addNotice('url',$this->url->name,'DELETED');
 		}
 	}
-	
 
 
-	/**
+
+    public function removeView()
+    {
+        $this->setTemplateVar( 'name',$this->url->filename );
+    }
+
+
+    public function removePost()
+    {
+        if   ( $this->getRequestVar('delete') != '' )
+        {
+            $this->url->delete();
+            $this->addNotice('url',$this->url->filename,'DELETED',OR_NOTICE_OK);
+        }
+        else
+        {
+            $this->addNotice('url',$this->url->filename,'CANCELED',OR_NOTICE_WARN);
+        }
+    }
+
+
+    /**
 	 * Abspeichern der Eigenschaften
 	 */
 	function propPost()

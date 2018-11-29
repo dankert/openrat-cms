@@ -6,7 +6,7 @@
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_name" class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_name')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_name')))); ?></span>
 						
 					</label>
 				</div>
@@ -18,7 +18,7 @@
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_filename" class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_filename')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_filename')))); ?></span>
 						
 					</label>
 				</div>
@@ -30,7 +30,7 @@
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_description" class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_description')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_description')))); ?></span>
 						
 					</label>
 				</div>

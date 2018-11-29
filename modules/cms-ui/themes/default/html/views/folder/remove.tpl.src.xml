@@ -2,31 +2,10 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
     <form>
-        <row>
-            <column>
-                <text text="GLOBAL_NAME"></text>
-            </column>
-            <column>
-                <text var="name"></text>
-            </column>
-        </row>
-        <row>
-            <column>
-                <text text="GLOBAL_DELETE"></text>
-            </column>
-            <column>
-                <checkbox name="delete" required="true"></checkbox>
-            </column>
-        </row>
-        <row>
-            <column colspan="2" class="help">
-                <text text="GROUP_DELETE_DESC"></text>
-            </column>
-        </row>
-        <row>
-            <column colspan="2">
-                <button type="ok"></button>
-            </column>
-        </row>
+        <text label="GLOBAL_NAME" var="name"></text>
+
+        <checkbox label="GLOBAL_DELETE" name="delete"></checkbox>
+
+        <checkbox label="GLOBAL_DELETE_WITH_CHILDREN" name="withChildren" readonly="not:var:hasChildren"></checkbox>
     </form>
 </output>

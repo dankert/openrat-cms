@@ -4,7 +4,7 @@
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('link_url')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('link_url')))); ?></span>
 						
 					</div>
 					<div class="input">

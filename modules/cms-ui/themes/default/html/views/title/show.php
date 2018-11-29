@@ -20,7 +20,7 @@
 						</div>
 						<div class="dropdown">
 							<div class="entry">
-								<span class="text" title="<?php echo $dbid ?>"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $dbname,50,'..',constant('STR_PAD_BOTH') )))); ?></span>
+								<span title="<?php echo $dbid ?>"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $dbname,50,'..',constant('STR_PAD_BOTH') )))); ?></span>
 								
 							</div>
 						</div>
@@ -57,7 +57,7 @@
 								<a title="<?php echo lang('menu_new_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="<?php echo Html::url('','add','',array('dialogAction'=>'','dialogMethod'=>'add')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_new'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_new'.'')))); ?></span>
 									
 									<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','add')))); ?></span>
 									
@@ -70,7 +70,7 @@
 								<a title="<?php echo lang('menu_createfolder_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createfolder" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'createfolder'}" href="<?php echo Html::url('','createfolder','',array('dialogAction'=>'','dialogMethod'=>'createfolder')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createfolder'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createfolder'.'')))); ?></span>
 									
 								</a>
 
@@ -79,7 +79,7 @@
 								<a title="<?php echo lang('menu_createpage_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createpage" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'createpage'}" href="<?php echo Html::url('','createpage','',array('dialogAction'=>'','dialogMethod'=>'createpage')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createpage'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createpage'.'')))); ?></span>
 									
 								</a>
 
@@ -88,7 +88,7 @@
 								<a title="<?php echo lang('menu_createfile_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createfile" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'createfile'}" href="<?php echo Html::url('','createfile','',array('dialogAction'=>'','dialogMethod'=>'createfile')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createfile'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createfile'.'')))); ?></span>
 									
 								</a>
 
@@ -97,7 +97,7 @@
 								<a title="<?php echo lang('menu_createimage_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createimage" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'createimage'}" href="<?php echo Html::url('','createimage','',array('dialogAction'=>'','dialogMethod'=>'createimage')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createimage'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createimage'.'')))); ?></span>
 									
 								</a>
 
@@ -106,7 +106,7 @@
 								<a title="<?php echo lang('menu_createtext_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createtext" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'createtext'}" href="<?php echo Html::url('','createtext','',array('dialogAction'=>'','dialogMethod'=>'createtext')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createtext'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createtext'.'')))); ?></span>
 									
 								</a>
 
@@ -115,7 +115,7 @@
 								<a title="<?php echo lang('menu_createlink_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createlink" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'createlink'}" href="<?php echo Html::url('','createlink','',array('dialogAction'=>'','dialogMethod'=>'createlink')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createlink'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createlink'.'')))); ?></span>
 									
 								</a>
 
@@ -124,7 +124,7 @@
 								<a title="<?php echo lang('menu_createurl_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="createurl" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'createurl'}" href="<?php echo Html::url('','createurl','',array('dialogAction'=>'','dialogMethod'=>'createurl')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createurl'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_createurl'.'')))); ?></span>
 									
 								</a>
 
@@ -135,7 +135,7 @@
 								<a title="<?php echo lang('menu_compress_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="compress" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'compress'}" href="<?php echo Html::url('','compress','',array('dialogAction'=>'','dialogMethod'=>'compress')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/compress.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_compress'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_compress'.'')))); ?></span>
 									
 								</a>
 
@@ -144,7 +144,7 @@
 								<a title="<?php echo lang('menu_decompress_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="decompress" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'decompress'}" href="<?php echo Html::url('','decompress','',array('dialogAction'=>'','dialogMethod'=>'decompress')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/decompress.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_decompress'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_decompress'.'')))); ?></span>
 									
 								</a>
 
@@ -153,7 +153,7 @@
 								<a title="<?php echo lang('menu_extract_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="extract" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'extract'}" href="<?php echo Html::url('','extract','',array('dialogAction'=>'','dialogMethod'=>'extract')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/extract.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_extract'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_extract'.'')))); ?></span>
 									
 								</a>
 
@@ -164,7 +164,7 @@
 								<a class="entry" title="<?php echo lang('USER_LOGOUT_DESC') ?>" target="_self" data-type="post" data-action="login" data-method="logout" data-id="<?php echo OR_ID ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;login&quot;,&quot;subaction&quot;:&quot;logout&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/logout.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_LOGOUT'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_LOGOUT'.'')))); ?></span>
 									
 								</a>
 
@@ -185,7 +185,7 @@
 								<a title="<?php echo lang('menu_prop_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="prop" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'prop'}" href="<?php echo Html::url('','prop','',array('dialogAction'=>'','dialogMethod'=>'prop')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/prop.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_prop'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_prop'.'')))); ?></span>
 									
 									<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','prop')))); ?></span>
 									
@@ -196,7 +196,7 @@
 								<a title="<?php echo lang('menu_settings_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="settings" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'settings'}" href="<?php echo Html::url('','settings','',array('dialogAction'=>'','dialogMethod'=>'settings')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/settings.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_settings'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_settings'.'')))); ?></span>
 									
 								</a>
 
@@ -205,7 +205,7 @@
 								<a title="<?php echo lang('menu_pub_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="pub" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'pub'}" href="<?php echo Html::url('','pub','',array('dialogAction'=>'','dialogMethod'=>'pub')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/publish.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_pub'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_pub'.'')))); ?></span>
 									
 									<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','pub')))); ?></span>
 									
@@ -216,7 +216,7 @@
 								<a class="entry" title="<?php echo lang('menu_archive_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="archive" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'archive'}" href="<?php echo Html::url('','archive','',array('dialogAction'=>'','dialogMethod'=>'archive')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/archive.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_archive'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_archive'.'')))); ?></span>
 									
 									<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','archive')))); ?></span>
 									
@@ -227,7 +227,7 @@
 								<a title="<?php echo lang('menu_rights_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="rights" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'rights'}" href="<?php echo Html::url('','rights','',array('dialogAction'=>'','dialogMethod'=>'rights')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/rights.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_rights'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_rights'.'')))); ?></span>
 									
 									<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','method','rights')))); ?></span>
 									
@@ -238,18 +238,18 @@
 								<a title="<?php echo lang('menu_history_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="history" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'history'}" href="<?php echo Html::url('','history','',array('dialogAction'=>'','dialogMethod'=>'history')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/history.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_history'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_history'.'')))); ?></span>
 									
 								</a>
 
 							</div>
 							<div class="divide">
 							</div>
-							<div class="entry clickable filtered on-action-project on-action-template on-action-page on-action-element on-action-image on-action-file on-action-folder on-action-link on-action-language on-action-model on-action-user on-action-group">
+							<div class="entry clickable filtered on-action-project on-action-template on-action-page on-action-element on-action-image on-action-file on-action-folder on-action-url on-action-image on-action-text on-action-link on-action-language on-action-model on-action-user on-action-group">
 								<a title="<?php echo lang('menu_delete_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="remove" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'remove'}" href="<?php echo Html::url('','remove','',array('dialogAction'=>'','dialogMethod'=>'remove')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/delete.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_delete'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_delete'.'')))); ?></span>
 									
 								</a>
 
@@ -260,7 +260,7 @@
 								<a title="<?php echo lang('menu_preview_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="preview" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'preview'}" href="<?php echo Html::url('','preview','',array('dialogAction'=>'','dialogMethod'=>'preview')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/preview.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_preview'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_preview'.'')))); ?></span>
 									
 								</a>
 
@@ -281,7 +281,7 @@
 								<a title="<?php echo lang('menu_password_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="pw" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'pw'}" href="<?php echo Html::url('','pw','',array('dialogAction'=>'','dialogMethod'=>'pw')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/password.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_password'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_password'.'')))); ?></span>
 									
 								</a>
 
@@ -290,7 +290,7 @@
 								<a title="<?php echo lang('menu_memberships_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="memberships" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'memberships'}" href="<?php echo Html::url('','memberships','',array('dialogAction'=>'','dialogMethod'=>'memberships')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/membership.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_memberships'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_memberships'.'')))); ?></span>
 									
 								</a>
 
@@ -299,7 +299,7 @@
 								<a title="<?php echo lang('menu_advanced_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="advanced" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'advanced'}" href="<?php echo Html::url('','advanced','',array('dialogAction'=>'','dialogMethod'=>'advanced')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/advanced.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_advanced'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_advanced'.'')))); ?></span>
 									
 								</a>
 
@@ -310,7 +310,7 @@
 								<a title="<?php echo lang('menu_changetemplate_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="changetemplate" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'changetemplate'}" href="<?php echo Html::url('','changetemplate','',array('dialogAction'=>'','dialogMethod'=>'changetemplate')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/changetemplate.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_changetemplate'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_changetemplate'.'')))); ?></span>
 									
 								</a>
 
@@ -319,7 +319,7 @@
 								<a title="<?php echo lang('menu_src_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="src" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'src'}" href="<?php echo Html::url('','src','',array('dialogAction'=>'','dialogMethod'=>'src')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/code.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_src'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_src'.'')))); ?></span>
 									
 								</a>
 
@@ -328,7 +328,7 @@
 								<a title="<?php echo lang('menu_extension_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'extension'}" href="<?php echo Html::url('','extension','',array('dialogAction'=>'','dialogMethod'=>'extension')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/extension.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_extension'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_extension'.'')))); ?></span>
 									
 								</a>
 
@@ -339,7 +339,7 @@
 								<a title="<?php echo lang('menu_value_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="value" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'value'}" href="<?php echo Html::url('','value','',array('dialogAction'=>'','dialogMethod'=>'value')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/value.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_value'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_value'.'')))); ?></span>
 									
 								</a>
 
@@ -348,7 +348,7 @@
 								<a title="<?php echo lang('menu_order_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="order" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'order'}" href="<?php echo Html::url('','order','',array('dialogAction'=>'','dialogMethod'=>'order')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/order.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_order'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_order'.'')))); ?></span>
 									
 								</a>
 
@@ -359,7 +359,7 @@
 								<a title="<?php echo lang('menu_size_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="size" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'size'}" href="<?php echo Html::url('','size','',array('dialogAction'=>'','dialogMethod'=>'size')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/size.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_size'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_size'.'')))); ?></span>
 									
 								</a>
 
@@ -370,7 +370,7 @@
 								<a title="<?php echo lang('menu_maintenance_desc') ?>" target="_self" data-type="dialog" data-action="" data-method="maintenance" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'maintenance'}" href="<?php echo Html::url('','maintenance','',array('dialogAction'=>'','dialogMethod'=>'maintenance')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/maintenance.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_maintenance'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_maintenance'.'')))); ?></span>
 									
 								</a>
 
@@ -393,7 +393,7 @@
 								<a title="<?php echo lang('menu_PROFILE_DESC') ?>" target="_self" data-type="dialog" data-action="profile" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'profile','dialogMethod':'edit'}" href="<?php echo Html::url('profile','edit','',array('dialogAction'=>'profile','dialogMethod'=>'edit')) ?>">
 									<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/user.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_profile'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_profile'.'')))); ?></span>
 									
 									<span class="keystroke"><?php echo nl2br(encodeHtml(htmlentities(config('ui','keybinding','action','profile')))); ?></span>
 									
@@ -404,7 +404,7 @@
 								<a title="<?php echo lang('menu_password_DESC') ?>" target="_self" data-type="dialog" data-action="profile" data-method="pw" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'profile','dialogMethod':'pw'}" href="<?php echo Html::url('profile','pw','',array('dialogAction'=>'profile','dialogMethod'=>'pw')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/password.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_password'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_password'.'')))); ?></span>
 									
 								</a>
 
@@ -413,7 +413,7 @@
 								<a title="<?php echo lang('menu_mail_DESC') ?>" target="_self" data-type="dialog" data-action="profile" data-method="mail" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'profile','dialogMethod':'mail'}" href="<?php echo Html::url('profile','mail','',array('dialogAction'=>'profile','dialogMethod'=>'mail')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/mail.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_mail'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_mail'.'')))); ?></span>
 									
 								</a>
 
@@ -422,7 +422,7 @@
 								<a title="<?php echo lang('menu_license_DESC') ?>" target="_self" data-type="dialog" data-action="login" data-method="license" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'login','dialogMethod':'license'}" href="<?php echo Html::url('login','license','',array('dialogAction'=>'login','dialogMethod'=>'license')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/info.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_info'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_info'.'')))); ?></span>
 									
 								</a>
 
@@ -433,7 +433,7 @@
 								<a title="<?php echo lang('menu_history_desc') ?>" target="_self" data-type="dialog" data-action="profile" data-method="history" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'profile','dialogMethod':'history'}" href="<?php echo Html::url('profile','history','',array('dialogAction'=>'profile','dialogMethod'=>'history')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/history.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_history'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_history'.'')))); ?></span>
 									
 								</a>
 
@@ -444,7 +444,7 @@
 								<a class="entry" title="<?php echo lang('USER_LOGOUT_DESC') ?>" target="_self" data-type="post" data-action="login" data-method="logout" data-id="<?php echo OR_ID ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;login&quot;,&quot;subaction&quot;:&quot;logout&quot;,&quot;id&quot;:&quot;<?php echo OR_ID ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/logout.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_LOGOUT'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_LOGOUT'.'')))); ?></span>
 									
 								</a>
 
@@ -455,7 +455,7 @@
 								<a title="<?php echo lang('USER_LOGIN_DESC') ?>" target="_self" data-type="dialog" data-action="login" data-method="login" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'login','dialogMethod':'login'}" href="<?php echo Html::url('login','login','',array('dialogAction'=>'login','dialogMethod'=>'login')) ?>">
 									<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/user.svg" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_LOGIN'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_LOGIN'.'')))); ?></span>
 									
 								</a>
 
@@ -472,7 +472,7 @@
 						<div class="arrow arrow-down">
 						</div>
 						<div class="dropdown">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(''))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(''))); ?></span>
 							
 						</div>
 					</div>

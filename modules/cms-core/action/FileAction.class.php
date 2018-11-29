@@ -652,6 +652,26 @@ class FileAction extends ObjectAction
 		
 		$this->setTemplateVar('outline',$structure);
 	}
+
+
+	public function removeView()
+    {
+        $this->setTemplateVar( 'name',$this->file->filename );
+    }
+
+
+    public function removePost()
+    {
+        if   ( $this->getRequestVar('delete') != '' )
+        {
+            $this->file->delete();
+            $this->addNotice('template',$this->file->filename,'DELETED',OR_NOTICE_OK);
+        }
+        else
+        {
+            $this->addNotice('template',$this->file->filename,'CANCELED',OR_NOTICE_WARN);
+        }
+    }
 }
 
 ?>

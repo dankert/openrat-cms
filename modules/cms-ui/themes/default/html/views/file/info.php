@@ -4,7 +4,7 @@
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_name')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_name')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -14,7 +14,7 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_filename')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_filename')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -24,7 +24,7 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('file_extension')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('file_extension')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -34,11 +34,11 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_description')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_description')))); ?></span>
 						
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($description))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($description))); ?></span>
 						
 					</div>
 				</div>
@@ -47,41 +47,41 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_full_filename" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_full_filename')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_full_filename')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($full_filename))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($full_filename))); ?></span>
 						
 					</div>
 				</div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_size" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_SIZE')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_SIZE')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
 					</div>
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities($size))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities($size))); ?></span>
 					
 				</div>
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_mimetype" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_mimetype')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_mimetype')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($mimetype))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($mimetype))); ?></span>
 						
 						<br/>
 						
 						<a class="action" target="_self" data-action="file" data-method="size" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('file','size','',array()) ?>">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_file_size'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_file_size'.'')))); ?></span>
 							
 						</a>
 
@@ -89,11 +89,11 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(lang('id'))))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(lang('id'))))); ?></span>
 						
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($objectid))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($objectid))); ?></span>
 						
 					</div>
 				</div>
@@ -101,12 +101,12 @@
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_cache_filename" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('CACHE_FILENAME')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang('CACHE_FILENAME')))); ?></span>
 								
 							</label>
 						</div>
 						<div class="input">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($cache_filename))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities($cache_filename))); ?></span>
 							
 							<br/>
 							
@@ -120,7 +120,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_pages" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_PAGES')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('FILE_PAGES')))); ?></span>
 							
 						</label>
 					</div>
@@ -132,7 +132,7 @@
 										<a target="_self" data-url="<?php echo $url ?>" data-action="" data-method="info" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_page.png" />
 											
-											<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+											<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 											
 										</a>
 
@@ -141,7 +141,7 @@
 							<?php } ?>
 						</table>
 						<?php $if6=(($pages)==FALSE); if($if6){?>
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
 							
 						<?php } ?>
 					</div>
@@ -150,7 +150,7 @@
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('prop_userinfo') ?></legend><div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_created')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_created')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -168,7 +168,7 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_lastchange')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_lastchange')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -187,7 +187,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_published_date" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_published')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_published')))); ?></span>
 							
 						</label>
 					</div>

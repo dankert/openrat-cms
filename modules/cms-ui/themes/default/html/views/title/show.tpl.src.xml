@@ -269,7 +269,7 @@
 
                         <part class="divide"/>
 
-                        <part class="entry clickable filtered on-action-project on-action-template on-action-page on-action-element on-action-image on-action-file on-action-folder on-action-link on-action-language on-action-model on-action-user on-action-group">
+                        <part class="entry clickable filtered on-action-project on-action-template on-action-page on-action-element on-action-image on-action-file on-action-folder on-action-url on-action-image on-action-text on-action-link on-action-language on-action-model on-action-user on-action-group">
                             <link type="dialog" title="message:menu_delete_desc"
                                   subaction="remove">
                                 <image method="delete"></image>

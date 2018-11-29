@@ -1945,6 +1945,9 @@ GLOBAL_DELETE:
   es: Effacement
   fr: Effacement
   it: Cancelación
+GLOBAL_DELETE_WITH_CHILDREN:
+  de: Löschen mit Unterelementen
+  en: Delete with children
 GLOBAL_DESCRIPTION:
   de: Beschreibung
   en: Description

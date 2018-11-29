@@ -4,7 +4,7 @@
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('global_prop') ?></legend><div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_name')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_name')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -14,7 +14,7 @@
 				</div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_description')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_description')))); ?></span>
 						
 					</div>
 					<div class="input">
@@ -27,12 +27,12 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_objectid" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'id'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'id'.'')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($objectid))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($objectid))); ?></span>
 						
 					</div>
 				</div>
@@ -41,7 +41,7 @@
 				<div class="line">
 					<div class="label">
 						<label class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_created')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_created')))); ?></span>
 							
 						</label>
 					</div>
@@ -61,7 +61,7 @@
 				<div class="line">
 					<div class="label">
 						<label class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_lastchange')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_lastchange')))); ?></span>
 							
 						</label>
 					</div>

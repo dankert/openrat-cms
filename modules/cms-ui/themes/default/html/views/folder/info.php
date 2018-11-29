@@ -18,7 +18,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($filename))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($filename))); ?></span>
 						
 					</div>
 				</div>
@@ -40,7 +40,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($full_filename))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($full_filename))); ?></span>
 						
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($objectid))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($objectid))); ?></span>
 						
 					</div>
 				</div>

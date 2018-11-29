@@ -22,11 +22,11 @@
 						
 					</td>
 					<td class="help">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_TYPE'.'')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_TYPE'.'')))); ?></span>
 						
-						<span class="text"><?php echo nl2br('&nbsp;/&nbsp;'); ?></span>
+						<span><?php echo nl2br('&nbsp;/&nbsp;'); ?></span>
 						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NAME'.'')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_NAME'.'')))); ?></span>
 						
 					</td>
 				</tr>
@@ -50,7 +50,7 @@
 								
 							<?php } ?>
 							<?php $if7=(!'writable'); if($if7){?>
-								<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+								<span><?php echo nl2br('&nbsp;'); ?></span>
 								
 							<?php } ?>
 						</td>
@@ -59,9 +59,9 @@
 								<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="edit" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($type,'',$objectid,array()) ?>">
 									<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,40,'..',constant('STR_PAD_BOTH') )))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,40,'..',constant('STR_PAD_BOTH') )))); ?></span>
 									
-									<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+									<span><?php echo nl2br('&nbsp;'); ?></span>
 									
 								</a>
 
@@ -72,21 +72,21 @@
 				<?php $if4=(($object)==FALSE); if($if4){?>
 					<tr>
 						<td colspan="2">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_NOT_FOUND')))); ?></span>
 							
 						</td>
 					</tr>
 				<?php } ?>
 				<tr class="data">
 					<td>
-						<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+						<span><?php echo nl2br('&nbsp;'); ?></span>
 						
 					</td>
 					<td colspan="2" class="clickable">
 						<a target="_self" data-type="dialog" data-action="folder" data-method="createfolder" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'folder','dialogMethod':'createfolder'}" href="<?php echo Html::url('folder','createfolder','',array('dialogAction'=>'folder','dialogMethod'=>'createfolder')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfolder'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfolder'.'')))); ?></span>
 							
 						</a>
 
@@ -94,14 +94,14 @@
 				</tr>
 				<tr class="data">
 					<td>
-						<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+						<span><?php echo nl2br('&nbsp;'); ?></span>
 						
 					</td>
 					<td colspan="2" class="clickable">
 						<a target="_self" data-type="dialog" data-action="folder" data-method="createpage" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'folder','dialogMethod':'createpage'}" href="<?php echo Html::url('folder','createpage','',array('dialogAction'=>'folder','dialogMethod'=>'createpage')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createpage'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createpage'.'')))); ?></span>
 							
 						</a>
 
@@ -109,14 +109,14 @@
 				</tr>
 				<tr class="data">
 					<td>
-						<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+						<span><?php echo nl2br('&nbsp;'); ?></span>
 						
 					</td>
 					<td colspan="2" class="clickable">
 						<a target="_self" data-type="dialog" data-action="folder" data-method="createfile" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'folder','dialogMethod':'createfile'}" href="<?php echo Html::url('folder','createfile','',array('dialogAction'=>'folder','dialogMethod'=>'createfile')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfile'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfile'.'')))); ?></span>
 							
 						</a>
 
@@ -124,14 +124,14 @@
 				</tr>
 				<tr class="data">
 					<td>
-						<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+						<span><?php echo nl2br('&nbsp;'); ?></span>
 						
 					</td>
 					<td colspan="2" class="clickable">
 						<a target="_self" data-type="dialog" data-action="folder" data-method="createlink" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'folder','dialogMethod':'createlink'}" href="<?php echo Html::url('folder','createlink','',array('dialogAction'=>'folder','dialogMethod'=>'createlink')) ?>">
 							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createlink'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createlink'.'')))); ?></span>
 							
 						</a>
 
@@ -150,9 +150,9 @@
 										<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_<?php echo $actiontype ?>" name="type" value="<?php echo $actiontype ?>"<?php if($actiontype==@$type)echo ' checked="checked"' ?> />
 										
 										<label for="<?php echo REQUEST_ID ?>_type_<?php echo $actiontype ?>" class="label">
-											<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+											<span><?php echo nl2br('&nbsp;'); ?></span>
 											
-											<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('FOLDER_SELECT_'.$actiontype.'')))); ?></span>
+											<span><?php echo nl2br(encodeHtml(htmlentities(lang('FOLDER_SELECT_'.$actiontype.'')))); ?></span>
 											
 										</label>
 									</div>
@@ -162,7 +162,7 @@
 								<div class="label">
 								</div>
 								<div class="input">
-									<span class="text"><?php echo nl2br('&nbsp;&nbsp;&nbsp;&nbsp;'); ?></span>
+									<span><?php echo nl2br('&nbsp;&nbsp;&nbsp;&nbsp;'); ?></span>
 									
 									<?php { $tmpname     = 'confirm';$default  = '';$readonly = '';$required = '1';		
 		if	( isset($$tmpname) )
@@ -179,14 +179,14 @@
 		} ?>
 									
 									<label for="<?php echo REQUEST_ID ?>_confirm" class="label">
-										<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'CONFIRM_DELETE'.'')))); ?></span>
+										<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'CONFIRM_DELETE'.'')))); ?></span>
 										
 									</label>
 								</div>
 							</div>
 							<div class="line">
 								<div class="label">
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'FOLDER_SELECT_TARGET_FOLDER'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'FOLDER_SELECT_TARGET_FOLDER'.'')))); ?></span>
 									
 								</div>
 								<div class="input">
