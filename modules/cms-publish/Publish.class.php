@@ -36,45 +36,45 @@ class Publish
 	 * zu einem FTP-Server veroeffentlicht werden soll.
 	 * @var Object
 	 */
-	var $ftp;
+	public $ftp;
 	
 	/**
 	 * Flag, ob in das lokale Dateisystem veroeffentlicht werden soll.
 	 * @var boolean
 	 */
-	var $with_local          = false;
+	public $with_local          = false;
 	
 	/**
 	 * Flag, ob zu einem FTP-Server ver�ffentlicht werden soll.
 	 * @var boolean
 	 */
-	var $with_ftp            = false;
+	public $with_ftp            = false;
 	
-	var $local_destdir       = '';
-	
-	/**
-	 * Enthaelt die gleichnamige Einstellung aus dem Projekt.
-	 * @var boolean
-	 */
-	var $content_negotiation = false;
+	public $local_destdir       = '';
 	
 	/**
 	 * Enthaelt die gleichnamige Einstellung aus dem Projekt.
 	 * @var boolean
 	 */
-	var $cut_index           = false;
+	public $content_negotiation = false;
+	
+	/**
+	 * Enthaelt die gleichnamige Einstellung aus dem Projekt.
+	 * @var boolean
+	 */
+	public $cut_index           = false;
 	
 	/**
 	 * Enthaelt die gleichnamige Einstellung aus dem Projekt.
 	 * @var String
 	 */
-	var $cmd_after_publish   = '';
+	public $cmd_after_publish   = '';
 	
 	/**
 	 * Enthaelt am Ende der Ver�ffentlichung ein Array mit den ver�ffentlichten Objekten.
 	 * @var Array
 	 */
-	var $publishedObjects    = array();
+	public $publishedObjects    = array();
 	
 	/**
 	 * Enthaelt im Fehlerfall (wenn 'ok' auf 'false' steht) eine
@@ -82,15 +82,8 @@ class Publish
 	 * 
 	 * @var String
 	 */
-	var $log                 = array();
+	public $log                 = array();
 	
-	/**
-	 * Stellt nach der Ver�ffentlichung fest, ob der Vorgang erfolgreich ist.
-	 * Falls nicht, enth�lt die Variable 'log' eine Fehlermeldung. 
-	 * @var boolean
-	 */
-	var $ok                  = true;
-
 	/**
 	 * Konstruktor.<br>
 	 * <br>
@@ -98,15 +91,14 @@ class Publish
 	 *
 	 * @return Publish
 	 */
-	function __construct( $projectid )
+	public function __construct( $projectid )
 	{
 		$confPublish = config('publish');
 		
 		if	( config('security','nopublish') )
 		{
-			$this->ok = false;
-			$this->log[] = 'publishing is disabled.';
-			return;
+			Logger::warn('publishing is disabled.');
+			return; // this is no error.
 		}
 		
 		$project = new Project( $projectid );
@@ -126,14 +118,7 @@ class Publish
 		if	( ! empty($ftpUrl) )
 		{
 			$this->with_ftp = true;
-			$this->ftp = new Ftp( $project->ftp_url ); // Aufbauen einer FTP-Verbindung
-			
-			if	( ! $this->ftp->ok ) // FTP-Verbindung ok?
-			{
-				$this->ok = false;
-				$this->log = $this->ftp->log;
-				return; // Ende. Ohne FTP brauchen wir nicht weitermachen.
-			}
+            $this->ftp = new Ftp($project->ftp_url); // Aufbauen einer FTP-Verbindung
 
 			$this->ftp->passive = ( $project->ftp_passive == '1' );
 		}
@@ -148,6 +133,7 @@ class Publish
 		{
 			if	( empty( $localDir))
 				$localDir = $project->name;
+
 			// Konfiguriertes Verzeichnis verwenden.
 			$this->local_destdir = $confPublish['filesystem']['directory'].$localDir;
 		}
@@ -157,12 +143,7 @@ class Publish
 		if   ( $this->local_destdir != '' )
 		{
 			if   ( !is_writeable( $this->local_destdir ) )
-			{
-				$this->ok = false;
-				$this->log[] = 'directory not writable: '.$this->local_destdir;
-				$this->log[] = 'please correct the file permissions.';
-				return;
-			}
+                throw new OpenRatException('ERROR_PUBLISH','directory not writable: '.$this->local_destdir );
 
 			$this->with_local = true;
 		}
@@ -193,11 +174,8 @@ class Publish
 	 * @param String $tmp_filename
 	 * @param String $dest_filename
 	 */
-	function copy( $tmp_filename,$dest_filename,$lastChangeDate=null )
+	public function copy( $tmp_filename,$dest_filename,$lastChangeDate=null )
 	{
-		if	( !$this->ok)
-			return;
-				
 		global $conf;
 		$source = $tmp_filename;
 
@@ -211,19 +189,15 @@ class Publish
 					return;  // Fehler bei Verzeichniserstellung, also abbrechen.
 		
 				if   (!@copy( $source,$dest ))
-				{
-					$this->ok = false;
-					$this->log[] = 'failed copying local file:';
-					$this->log[] = 'source     : '.$source;
-					$this->log[] = 'destination: '.$dest;
-					return; // Fehler beim Kopieren, also abbrechen.
-				}
+                    throw new OpenRatException('ERROR_PUBLISH','failed copying local file:'."\n".
+					    'source     : '.$source."\n".
+					    'destination: '.$dest);
 
-				// Das Änderungsdatum der Datei auch in der Zieldatei setzen.
+                // Das Änderungsdatum der Datei auch in der Zieldatei setzen.
                 if  ( $conf['publish']['set_modification_date'] )
                     if	( ! is_null($lastChangeDate) )
                         @touch( $dest,$lastChangeDate );
-				
+
 				Logger::debug("published: $dest");
 			}
 			
@@ -231,11 +205,7 @@ class Publish
 			{
 				// CHMOD auf der Datei ausfuehren.
 				if	( ! @chmod($dest,octdec($conf['security']['chmod'])) )
-				{
-					$this->ok = false;
-					$this->log[] = 'Unable to CHMOD file '.$dest;
-					return;
-				}
+                    throw new OpenRatException('ERROR_PUBLISH','Unable to CHMOD file '.$dest);
 			}
 		}
 		
@@ -243,12 +213,6 @@ class Publish
 		{
 			$dest = $dest_filename;
 			$this->ftp->put( $source,$dest );
-
-			if	( ! $this->ftp->ok )
-			{
-				$this->ok = false;
-				$this->log[] = $this->ftp->log;
-			}
 		}
 	}
 	
@@ -263,7 +227,7 @@ class Publish
 	 * @param String Verzeichnis
 	 * @return boolean
 	 */
-	function mkdirs( $strPath )
+	private function mkdirs( $strPath )
 	{
 		global $conf;
 		
@@ -271,29 +235,22 @@ class Publish
 			return true;
 	 
 		$pStrPath = dirname($strPath);
+
 		if	( !$this->mkdirs($pStrPath) )
 			return false;
 		
 		if	( ! @mkdir($strPath,0777) )
-		{
-			$this->ok = false;
-			$this->log[] = 'Cannot create directory: '.$strPath;
-			return false;
-		}
+            throw new OpenRatException('ERROR_PUBLISH','Cannot create directory: '.$strPath);
 
 		// CHMOD auf dem Verzeichnis ausgef�hren.
 		if	(!empty($conf['security']['chmod_dir']))
 		{
 			if	( ! @chmod($strPath,octdec($conf['security']['chmod_dir'])) )
-			{
-				$this->ok = false;
-				$this->log[] = 'Unable to CHMOD directory: '.$strPath;
-				return false;
-			}
+                throw new OpenRatException('ERROR_PUBLISH','Unable to CHMOD directory: '.$strPath);
 		}
 		
 		
-		return $this->ok;
+		return true;
 	}
 
 
@@ -312,7 +269,7 @@ class Publish
 		}
 
 		// Ausfuehren des Systemkommandos.
-		if	( !empty($this->cmd_after_publish) && $this->ok )
+		if	( !empty($this->cmd_after_publish) )
 		{
 			$ausgabe = array();
 			$rc      = false;
@@ -323,20 +280,12 @@ class Publish
 			putenv("CMS_USER_MAIL=".$user->mail  );
 			exec( $this->cmd_after_publish,$ausgabe,$rc );
 			
-			if	( $rc != 0 ) // Wenn Returncode ungleich 0, dann Ausgabe ins Log schreiben und Fehler melden.
-			{
-				$this->log   = $ausgabe; 
-				$this->log[] = 'OpenRat: System command failed - returncode is '.$rc; 
-				$this->ok = false;
-				
-				Logger::warn('System command '.$this->cmd_after_publish.' failed with status '.$rc );
-				
-			}
+			if	( $rc != 0 ) // Wenn Returncode ungleich 0, dann Fehler melden.
+                throw new OpenRatException('ERROR_PUBLISH','System command failed - returncode is '.$rc."\n".
+                    $ausgabe);
 			else
-			{
 				Logger::debug('System command successful' );
-			}
-				
+
 		}
 	}
 	
@@ -348,11 +297,8 @@ class Publish
 	 * Datei, die laenger existiert als der aktuelle Request alt ist, wird geloescht.<br>
 	 * Natuerlich darf diese Funktion nur nach einem Gesamt-Veroeffentlichen ausgefuehrt werden.
 	 */
-	function clean()
+	public function clean()
 	{
-		if	( $this->ok )
-			return;
-			
 		if	( !empty($this->local_destdir) )
 			$this->cleanFolder($this->local_destdir);
 	} 
@@ -365,7 +311,7 @@ class Publish
 	 *
 	 * @param String Verzeichnis
 	 */
-	function cleanFolder( $folderName )
+	private function cleanFolder( $folderName )
 	{
 		$dh = opendir( $folderName );
 
@@ -394,4 +340,3 @@ class Publish
 
 }
 
-?>

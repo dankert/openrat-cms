@@ -1601,10 +1601,7 @@ class FolderAction extends ObjectAction
 		foreach( $publish->publishedObjects as $o )
 			$list[] = $o['full_filename'];
 
-		if	( !$publish->ok )
-			$this->addNotice('folder',$this->folder->name,'PUBLISHED_ERROR',OR_NOTICE_ERROR,array(),$publish->log);
-		else
-			$this->addNotice('folder',$this->folder->name,'PUBLISHED',OR_NOTICE_OK,array(),$list);
+		$this->addNotice('folder',$this->folder->name,'PUBLISHED',OR_NOTICE_OK,array(),$list);
 
 		// Wenn gewuenscht, das Zielverzeichnis aufraeumen
 		if	( $this->hasRequestVar('clean')      )
