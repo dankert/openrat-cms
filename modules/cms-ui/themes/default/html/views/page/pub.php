@@ -27,7 +27,7 @@
 		} ?>
 						
 						<label for="<?php echo REQUEST_ID ?>_files" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_files')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_files')))); ?></span>
 							
 						</label>
 					</div>

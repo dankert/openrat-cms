@@ -395,6 +395,7 @@ function language() { return array(
 'GLOBAL_DEFAULT_TEXT'=>"Default text",
 'GLOBAL_DELETED'=>"Object was deleted",
 'GLOBAL_DELETE'=>"Delete",
+'GLOBAL_DELETE_WITH_CHILDREN'=>"Delete with children",
 'GLOBAL_DESCRIPTION'=>"Description",
 'GLOBAL_DIFFERENCES_DESC'=>"Show differences between 2 Revisions",
 'GLOBAL_DIFFERENCES'=>"Differences",

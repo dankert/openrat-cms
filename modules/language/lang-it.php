@@ -395,6 +395,7 @@ function language() { return array(
 'GLOBAL_DEFAULT_TEXT'=>"Texto del defecto",
 'GLOBAL_DELETED'=>"El objeto fue suprimido",
 'GLOBAL_DELETE'=>"Cancelación",
+'GLOBAL_DELETE_WITH_CHILDREN'=>"Delete with children",
 'GLOBAL_DESCRIPTION'=>"Descripción",
 'GLOBAL_DIFFERENCES_DESC'=>"Demostrar las diferencias entre 2 revisiones",
 'GLOBAL_DIFFERENCES'=>"Diferencias",

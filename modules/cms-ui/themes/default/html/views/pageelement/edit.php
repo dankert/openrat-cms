@@ -23,29 +23,29 @@
 											
 										</a>
 
-										<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+										<span><?php echo nl2br('&nbsp;'); ?></span>
 										
-										<strong class="text"><?php echo nl2br(encodeHtml(htmlentities($monthname))); ?></strong>
+										<strong><?php echo nl2br(encodeHtml(htmlentities($monthname))); ?></strong>
 										
-										<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+										<span><?php echo nl2br('&nbsp;'); ?></span>
 										
 										<a target="_self" data-url="<?php echo $nextmonthurl ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/right.png" />
 											
 										</a>
 
-										<span class="text"><?php echo nl2br('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'); ?></span>
+										<span><?php echo nl2br('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'); ?></span>
 										
 										<a target="_self" data-url="<?php echo $lastyearurl ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/left.png" />
 											
 										</a>
 
-										<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+										<span><?php echo nl2br('&nbsp;'); ?></span>
 										
-										<strong class="text"><?php echo nl2br(encodeHtml(htmlentities($yearname))); ?></strong>
+										<strong><?php echo nl2br(encodeHtml(htmlentities($yearname))); ?></strong>
 										
-										<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+										<span><?php echo nl2br('&nbsp;'); ?></span>
 										
 										<a target="_self" data-url="<?php echo $nextyearurl ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
 											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/right.png" />
@@ -56,12 +56,12 @@
 								</tr>
 								<tr>
 									<td>
-										<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'week'.'')))); ?></span>
+										<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'week'.'')))); ?></span>
 										
 									</td>
 									<?php foreach($weekdays as $list_key=>$weekday){ ?>
 										<td>
-											<span class="text"><?php echo nl2br(encodeHtml(htmlentities($weekday))); ?></span>
+											<span><?php echo nl2br(encodeHtml(htmlentities($weekday))); ?></span>
 											
 										</td>
 									<?php } ?>
@@ -69,32 +69,32 @@
 								<?php foreach($weeklist as $weeknr=>$week){ ?>
 									<tr>
 										<td width="12%">
-											<span class="text"><?php echo nl2br(encodeHtml(htmlentities($weeknr))); ?></span>
+											<span><?php echo nl2br(encodeHtml(htmlentities($weeknr))); ?></span>
 											
 										</td>
 										<?php foreach($week as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 											<td width="12%">
 												<?php $if12=(($url)==FALSE); if($if12){?>
-													<span class="text"><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
+													<span><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
 													
-													<strong class="text"><?php echo nl2br(encodeHtml(htmlentities($nr))); ?></strong>
+													<strong><?php echo nl2br(encodeHtml(htmlentities($nr))); ?></strong>
 													
-													<span class="text"><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
+													<span><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
 													
 												<?php } ?>
 												<?php $if12=!(($url)==FALSE); if($if12){?>
 													<a target="_self" data-url="<?php echo $url ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-														<span class="text"><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
+														<span><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
 														
-														<span class="text"><?php echo nl2br(encodeHtml(htmlentities($nr))); ?></span>
+														<span><?php echo nl2br(encodeHtml(htmlentities($nr))); ?></span>
 														
-														<span class="text"><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
+														<span><?php echo nl2br('&nbsp;&nbsp;'); ?></span>
 														
 													</a>
 
 												<?php } ?>
 												<?php $if12=($today); if($if12){?>
-													<span class="text"><?php echo nl2br('*'); ?></span>
+													<span><?php echo nl2br('*'); ?></span>
 													
 												<?php } ?>
 											</td>
@@ -107,32 +107,32 @@
 					<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('date') ?></legend><div>
 						<div>
 							<label for="<?php echo REQUEST_ID ?>_year" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'date'.'')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'date'.'')))); ?></span>
 								
 							</label>
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_year" name="year" title="" class=""<?php if (count($all_years)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($all_years,$year,0,0) ?><?php if (count($all_years)==0) { ?><input type="hidden" name="year" value="" /><?php } ?><?php if (count($all_years)==1) { ?><input type="hidden" name="year" value="<?php echo array_keys($all_years)[0] ?>" /><?php } ?>
 							</select></div>
-							<span class="text"><?php echo nl2br('&nbsp;-&nbsp;'); ?></span>
+							<span><?php echo nl2br('&nbsp;-&nbsp;'); ?></span>
 							
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_month" name="month" title="" class=""<?php if (count($all_months)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($all_months,$month,0,0) ?><?php if (count($all_months)==0) { ?><input type="hidden" name="month" value="" /><?php } ?><?php if (count($all_months)==1) { ?><input type="hidden" name="month" value="<?php echo array_keys($all_months)[0] ?>" /><?php } ?>
 							</select></div>
-							<span class="text"><?php echo nl2br('&nbsp;-&nbsp;'); ?></span>
+							<span><?php echo nl2br('&nbsp;-&nbsp;'); ?></span>
 							
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_day" name="day" title="" class=""<?php if (count($all_days)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($all_days,$day,0,0) ?><?php if (count($all_days)==0) { ?><input type="hidden" name="day" value="" /><?php } ?><?php if (count($all_days)==1) { ?><input type="hidden" name="day" value="<?php echo array_keys($all_days)[0] ?>" /><?php } ?>
 							</select></div>
 						</div>
 						<div>
 							<label for="<?php echo REQUEST_ID ?>_hour" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'date_time'.'')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'date_time'.'')))); ?></span>
 								
 							</label>
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_hour" name="hour" title="" class=""<?php if (count($all_hours)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($all_hours,$hour,0,0) ?><?php if (count($all_hours)==0) { ?><input type="hidden" name="hour" value="" /><?php } ?><?php if (count($all_hours)==1) { ?><input type="hidden" name="hour" value="<?php echo array_keys($all_hours)[0] ?>" /><?php } ?>
 							</select></div>
-							<span class="text"><?php echo nl2br('&nbsp;-&nbsp;'); ?></span>
+							<span><?php echo nl2br('&nbsp;-&nbsp;'); ?></span>
 							
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_minute" name="minute" title="" class=""<?php if (count($all_minutes)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($all_minutes,$minute,0,0) ?><?php if (count($all_minutes)==0) { ?><input type="hidden" name="minute" value="" /><?php } ?><?php if (count($all_minutes)==1) { ?><input type="hidden" name="minute" value="<?php echo array_keys($all_minutes)[0] ?>" /><?php } ?>
 							</select></div>
-							<span class="text"><?php echo nl2br('&nbsp;-&nbsp;'); ?></span>
+							<span><?php echo nl2br('&nbsp;-&nbsp;'); ?></span>
 							
 							<div class="inputholder"><select  id="<?php echo REQUEST_ID ?>_second" name="second" title="" class=""<?php if (count($all_seconds)<=1) echo ' disabled="disabled"'; ?> size=1"><?php include_once( 'modules/template-engine/components/html/selectbox/component-select-box.php') ?><?php component_select_option_list($all_seconds,$second,0,0) ?><?php if (count($all_seconds)==0) { ?><input type="hidden" name="second" value="" /><?php } ?><?php if (count($all_seconds)==1) { ?><input type="hidden" name="second" value="<?php echo array_keys($all_seconds)[0] ?>" /><?php } ?>
 							</select></div>
@@ -151,7 +151,7 @@
 					<?php $if5=(isset($preview)); if($if5){?>
 						<div class="preview">
 							<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('page_preview') ?></legend><div>
-								<span class="text"><?php echo nl2br($preview); ?></span>
+								<span><?php echo nl2br($preview); ?></span>
 								
 							</div></fieldset>
 						</div>
@@ -167,7 +167,7 @@
 					<?php $if5=($editor=='wiki'); if($if5){?>
 						<?php $if6=(isset($languagetext)); if($if6){?>
 							<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $languagename ?></legend><div>
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities($languagetext))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities($languagetext))); ?></span>
 								
 							</div></fieldset>
 							<br/>
@@ -180,79 +180,79 @@
 						<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('help') ?></legend><div>
 							<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 								<td>
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','strong-begin')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','strong-begin')))); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_strong'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_strong'.'')))); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','strong-end')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','strong-end')))); ?></span>
 									
 									<br/>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','emphatic-begin')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','emphatic-begin')))); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_emphatic'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_emphatic'.'')))); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','emphatic-end')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','emphatic-end')))); ?></span>
 									
 								</td>
 								<td>
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','list-numbered')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','list-numbered')))); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_numbered_list'.'')))); ?></span>
-									
-									<br/>
-									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','list-numbered')))); ?></span>
-									
-									<span class="text"><?php echo nl2br('...'); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_numbered_list'.'')))); ?></span>
 									
 									<br/>
 									
-								</td>
-								<td>
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','list-unnumbered')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','list-numbered')))); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_unnumbered_list'.'')))); ?></span>
-									
-									<br/>
-									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','list-unnumbered')))); ?></span>
-									
-									<span class="text"><?php echo nl2br('...'); ?></span>
+									<span><?php echo nl2br('...'); ?></span>
 									
 									<br/>
 									
 								</td>
 								<td>
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','list-unnumbered')))); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_table'.'')))); ?></span>
-									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
-									
-									<span class="text"><?php echo nl2br('...'); ?></span>
-									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
-									
-									<span class="text"><?php echo nl2br('...'); ?></span>
-									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_unnumbered_list'.'')))); ?></span>
 									
 									<br/>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','list-unnumbered')))); ?></span>
 									
-									<span class="text"><?php echo nl2br('...'); ?></span>
+									<span><?php echo nl2br('...'); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									<br/>
 									
-									<span class="text"><?php echo nl2br('...'); ?></span>
+								</td>
+								<td>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'text_markup_table'.'')))); ?></span>
 									
-									<span class="text"><?php echo nl2br('...'); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
 									
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									<span><?php echo nl2br('...'); ?></span>
+									
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									
+									<span><?php echo nl2br('...'); ?></span>
+									
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									
+									<br/>
+									
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									
+									<span><?php echo nl2br('...'); ?></span>
+									
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									
+									<span><?php echo nl2br('...'); ?></span>
+									
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
+									
+									<span><?php echo nl2br('...'); ?></span>
+									
+									<span><?php echo nl2br(encodeHtml(htmlentities(config('editor','text-markup','table-cell-sep')))); ?></span>
 									
 									<br/>
 									
@@ -272,7 +272,7 @@
 						<div class="line">
 							<div class="label">
 								<label for="<?php echo REQUEST_ID ?>_linkobjectid" class="label">
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'link_target'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'link_target'.'')))); ?></span>
 									
 								</label>
 							</div>
@@ -289,7 +289,7 @@
 						<div class="line">
 							<div class="label">
 								<label for="<?php echo REQUEST_ID ?>_link_url" class="label">
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'link_url'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'link_url'.'')))); ?></span>
 									
 								</label>
 							</div>
@@ -347,7 +347,7 @@
 										<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_otherlanguageid_<?php echo $languageid ?>" name="otherlanguageid" value="<?php echo $languageid ?>"<?php if($languageid==@$otherlanguageid)echo ' checked="checked"' ?> />
 										
 										<label for="<?php echo REQUEST_ID ?>_<?php echo 'otherlanguageid_'.$languageid.'' ?>" class="label">
-											<span class="text"><?php echo nl2br(encodeHtml(htmlentities($languagename))); ?></span>
+											<span><?php echo nl2br(encodeHtml(htmlentities($languagename))); ?></span>
 											
 										</label>
 										<br/>
@@ -373,7 +373,7 @@
 		} ?>
 								
 								<label for="<?php echo REQUEST_ID ?>_preview" class="label">
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'PAGE_PREVIEW'.'')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'PAGE_PREVIEW'.'')))); ?></span>
 									
 								</label>
 							</div>
@@ -398,7 +398,7 @@
 		} ?>
 							
 							<label for="<?php echo REQUEST_ID ?>_release" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_RELEASE')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_RELEASE')))); ?></span>
 								
 							</label>
 						</div>
@@ -420,7 +420,7 @@
 		} ?>
 							
 							<label for="<?php echo REQUEST_ID ?>_publish" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('PAGE_PUBLISH_AFTER_SAVE')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang('PAGE_PUBLISH_AFTER_SAVE')))); ?></span>
 								
 							</label>
 						</div>
