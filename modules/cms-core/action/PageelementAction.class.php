@@ -1472,15 +1472,10 @@ class PageelementAction extends Action
 		$this->page->publish();
 		$this->page->publish->close();
 
-//		foreach( $this->page->publish->publishedObjects as $o )
-//		{
-//			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
-//		}
-
 		$this->addNotice( 'page',
 		                  $this->page->fullFilename,
-		                  'PUBLISHED'.($this->page->publish->ok?'':'_ERROR'),
-		                  $this->page->publish->ok,
+		                  'PUBLISHED',
+		                  OR_NOTICE_OK,
 		                  array(),
 		                  $this->page->publish->log  );
 	}

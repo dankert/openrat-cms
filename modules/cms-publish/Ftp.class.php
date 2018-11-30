@@ -40,14 +40,14 @@ class Ftp
 
 
     // Konstruktor
-	function __construct( $url )
+	public function __construct( $url )
 	{
 		$this->connect( $url );
 	}
 
 	
 	// Aufbauen der Verbindung
-	function connect( $url )
+	private function connect( $url )
 	{
 		$this->url = $url;
 		
@@ -62,10 +62,8 @@ class Ftp
 		// Nur FTP und FTPS (seit PHP 4.3) erlaubt
 		if   ( !in_array(@$ftp['scheme'],array('ftp','ftps')) )
 		{
-			$this->log[] = 'Unknown scheme in FTP Url: '.@$ftp['scheme'];
-			$this->log[] = 'Only FTP (and FTPS, if compiled in) are supported';
-			$this->ok  = false;
-			return;
+			throw new OpenRatException( 'ERROR_PUBLISH','Unknown scheme in FTP Url: '.@$ftp['scheme'].
+			'. Only FTP (and FTPS, if compiled in) are supported');
 		}
 		
 		if	( function_exists('ftp_ssl_connect') && $ftp['scheme'] == 'ftps' )
@@ -75,11 +73,8 @@ class Ftp
 
 		if   ( !$this->verb )
 		{
-			$this->log[] = 'Cannot connect to '.$ftp['scheme'].'-server: '.$ftp['host'].':'.$ftp['port'];
-			$this->ok = false;
-			
-			Logger::error('Cannot connect to '.$ftp['host'].':'.$ftp['port']);
-			return;
+            Logger::error('Cannot connect to '.$ftp['host'].':'.$ftp['port']);
+            throw new OpenRatException('ERROR_PUBLISH','Cannot connect to '.$ftp['scheme'].'-server: '.$ftp['host'].':'.$ftp['port']);
 		}
 
 		$this->log[] = 'Connected to FTP server '.$ftp['host'].':'.$ftp['port'];
@@ -91,24 +86,16 @@ class Ftp
 		}
 			
 		if	( ! ftp_login( $this->verb,$ftp['user'],$ftp['pass'] ) )
-		{
-			$this->log[] = 'Unable to login as user '.$ftp['user'];
-			$this->ok = false;
-			return;
-		}
-		
+			throw new OpenRatException('ERROR_PUBLISH','Unable to login as user '.$ftp['user']);
+
 		$this->log[] = 'Logged in as user '.$ftp['user'];
 
 		$pasv = (!empty($ftp['fragment']) && $ftp['fragment'] == 'passive' );
 		
 		$this->log[] = 'entering passive mode '.($pasv?'on':'off');
 		if	( ! ftp_pasv($this->verb,true) )
-		{
-			$this->log[] = 'cannot switch PASV mode';
-			$this->ok = false;
-			return;
-		}
-		
+			throw new OpenRatException('ERROR_PUBLISH','Cannot switch to FTP PASV mode');
+
 		if   ( !empty($ftp['query']) )
 		{
 			parse_str( $ftp['query'],$ftp_var );
@@ -118,14 +105,8 @@ class Ftp
 				$site_commands = explode( ',',$ftp_var['site'] );
 				foreach( $site_commands as $cmd )
 				{
-					$this->log .= 'executing SITE command: '.$cmd;
-
 					if	( ! @ftp_site( $this->verb,$cmd ) )
-					{
-						$this->log[] = 'unable to do SITE command: '.$cmd;
-						$this->ok = false;
-						return;
-					}
+                        throw new OpenRatException('ERROR_PUBLISH','unable to do SITE command: '.$cmd);
 				}
 			}
 		}
@@ -135,11 +116,7 @@ class Ftp
 		$this->log[] = 'Changing directory to '.$this->path;
 		
 		if	( ! @ftp_chdir( $this->verb,$this->path ) )
-		{
-			$this->log[] = 'unable CHDIR to directory: '.$this->path;
-			$this->ok = false;
-			return;
-		}
+            throw new OpenRatException('ERROR_PUBLISH','unable CHDIR to directory: '.$this->path);
 	}
 	
 
@@ -150,13 +127,8 @@ class Ftp
 	 * @param String Ziel
 	 * @param int FTP-Mode (BINARY oder ASCII)
 	 */
-	function put( $source,$dest )
+	public function put( $source,$dest )
 	{
-		if	( ! $this->ok )
-			return;
-			
-		$ftp = parse_url( $this->url );
-
 		$dest = $this->path.'/'.$dest;
 		
 		$this->log .= "Copying file: $source -&gt; $dest ...\n";
@@ -182,14 +154,11 @@ class Ftp
 			ftp_chdir( $this->verb,$this->path );
 
 			if	( ! @ftp_put( $this->verb,$dest,$source,$mode ) )
-			{
-				$this->ok = false;
-				$this->log[] = 'FTP PUT failed...';
-				$this->log[] = 'source     : '.$source;
-				$this->log[] = 'destination: '.$dest;
-				return;
-			}
-			
+                throw new OpenRatException('ERROR_PUBLISH',
+                    "FTP PUT failed.\n".
+				    "source     : $source\n".
+				    "destination: $dest");
+
 		}
 	}
 
@@ -201,7 +170,7 @@ class Ftp
 	 * @param String Pfad
 	 * @return boolean true, wenn ok
 	 */
-	function mkdirs( $strPath )
+	private function mkdirs( $strPath )
 	{
 		if	( @ftp_chdir($this->verb,$strPath) )
 			return true; // Verzeichnis existiert schon :)
@@ -212,31 +181,24 @@ class Ftp
 			return false;
 		
 		if	( ! @ftp_mkdir($this->verb,$strPath) )
-		{
-			$this->ok = false;
-			$this->log[] = "failed to create remote directory: $strPath";
-		}
-		
-		return $this->ok;
+            throw new OpenRatException('ERROR_PUBLISH',"failed to create remote directory: $strPath");
+
+		return true;
 	}
 	
 	
 	
 	/**
-	 * Schlie�en der FTP-Verbindung.<br>
+	 * Schliessen der FTP-Verbindung.<br>
 	 * Sollte unbedingt aufgerufen werden, damit keine unn�tigen Sockets aufbleiben.
 	 */
-	function close()
+	public function close()
 	{
-		if	( !$this->ok ) // Noch alles ok?
-			return;
-			
 		if	( ! @ftp_quit( $this->verb ) )
 		{
-			// Das Schlie�en der Verbindung hat nicht funktioniert.
-			// Eigentlich k�nnten wir das ignorieren, aber wir sind anst�ndig und melden eine Fehler.
-			$this->log[] = 'failed to close connection';
-			$this->ok = false;
+			// Closing not possible.
+			// Only logging. Maybe we could throw an Exception here?
+			Logger::warn('Failed to close FTP connection. Continueing...');
 			return;
 		}
 	}

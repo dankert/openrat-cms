@@ -609,8 +609,8 @@ class TemplateAction extends Action
 			
 			$this->addNotice( 'page',
 					$page->fullFilename,
-					'PUBLISHED'.($page->publish->ok?'':'_ERROR'),
-					$page->publish->ok,
+					'PUBLISHED',
+					OR_NOTICE_OK,
 					array(),
 					$page->publish->log  );
 		}

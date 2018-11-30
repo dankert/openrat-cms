@@ -784,8 +784,8 @@ class PageAction extends ObjectAction
 
 		$this->addNotice( 'page',
 		                  $this->page->fullFilename,
-		                  'PUBLISHED'.($this->page->publish->ok?'':'_ERROR'),
-		                  $this->page->publish->ok,
+		                  'PUBLISHED',
+		                  OR_NOTICE_OK,
 		                  array(),
 		                  $this->page->publish->log  );
 	}

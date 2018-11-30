@@ -20,7 +20,7 @@ require_once( __DIR__.'/'.'JSqueeze.class.php' );
 require_once( __DIR__.'/'.'Spyc.class.php' );
 require_once( __DIR__.'/'.'TreeElement.class.php' );
 require_once( __DIR__.'/'.'Tree.class.php');
-require_once( __DIR__.'/'.'Ftp.class.php' );
+require_once(__DIR__ . '/');
 require_once( __DIR__.'/'.'Macro.class.php'        );
 require_once( __DIR__.'/'.'Dynamic.class.php'        );
 require_once( __DIR__.'/'.'Api.class.php' );
