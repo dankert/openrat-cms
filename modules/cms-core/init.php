@@ -73,14 +73,10 @@ set_error_handler("exception_error_handler");
 
 function fatal_handler() {
     
-    $errfile = "unknown file";
-    $errstr  = "shutdown";
-    $errno   = E_CORE_ERROR;
-    $errline = 0;
-    
     $error = error_get_last();
     
-    if( $error !== NULL) {
+    if( $error !== NULL)
+    {
         $errno   = $error["type"];
         $errfile = $error["file"];
         $errline = $error["line"];
@@ -92,12 +88,20 @@ function fatal_handler() {
         else
         {
             error_log($message);
-            var_dump($error);
         }
+
+        // It is not possibile to throw an exception out of a shutdown function!
+        //throw new ErrorException($errstr, $errno, 1, $errfile, $errline);
+    }else {
+        error_log('Unknown fatal error. Sorry.');
+
+        // It is not possibile to throw an exception out of a shutdown function!
+        //throw new ErrorException('Fatal error.',E_CORE_ERROR );
     }
+
 }
 
-register_shutdown_function( "fatal_handler" );
+register_shutdown_function( "fatal_handler");
 
 
 

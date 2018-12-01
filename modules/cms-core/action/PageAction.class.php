@@ -788,7 +788,9 @@ class PageAction extends ObjectAction
 		                  'PUBLISHED',
 		                  OR_NOTICE_OK,
 		                  array(),
-		                  $this->page->publish->log  );
+		                  array_map(function($obj) { return $obj['full_filename'];
+                          },$this->page->publish->publishedObjects)
+         );
 	}
 
 

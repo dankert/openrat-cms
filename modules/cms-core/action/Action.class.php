@@ -8,6 +8,7 @@ namespace {
 
 
     define('OR_NOTICE_OK', 'ok');
+    define('OR_NOTICE_INFO', 'info');
     define('OR_NOTICE_WARN', 'warning');
     define('OR_NOTICE_ERROR', 'error');
 

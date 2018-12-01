@@ -44,29 +44,7 @@ $(document).on('orViewLoaded',function(event, data) {
 
 function formSubmit(form)
 {
-	// Login-Hack
-	/*
-	if ( $('div.panel form input[type=password]').length>0 )
-	{
-		$('#uname'    ).attr('value',$('div.panel form input[name=login_name]'    ).attr('value'));
-		$('#upassword').attr('value',$('div.panel form input[name=login_password]').attr('value'));
-		
-		$('#uname'    ).closest('form').submit();
-	}
-	*/
-
-	/*
-	if ( $('#pageelement_edit_editor').length>0 )
-	{
-		var instance = CKEDITOR.instances['pageelement_edit_editor'];
-	    if(instance)
-	    {
-	        var value = instance.getData();
-	        $('#pageelement_edit_editor').html( value );
-	    }
-	}*/
-	
-
+	// Show progress
 	var status = $('<div class="notice info"><div class="text loader"></div></div>');
 	$('#noticebar').prepend(status); // Notice anhängen.
 	$(status).show();
@@ -117,19 +95,18 @@ function formSubmit(form)
 				$(form).closest('div.content').removeClass('loader');
 				$(status).remove();
 				
-				var msg;
 				try
 				{
-					var error = jQuery.parseJSON( jqXHR.responseText );
-					msg = error.error + '/' + error.description + ': ' + error.reason;
+					let error = jQuery.parseJSON( jqXHR.responseText );
+                    notify('','','error',error.error,[error.description]);
 				}
 				catch( e )
 				{
-					msg = jqXHR.responseText;
+					let msg = jqXHR.responseText;
+                    notify('','','error','Server Error',[msg]);
 				}
-				
-				notify('error',msg);
-				
+
+
 			}
 			
 		} );
@@ -159,32 +136,17 @@ function doResponse(data,status,element)
 	// Hinweismeldungen in Statuszeile anzeigen
 	$.each(data['notices'], function(idx,value) {
 		
-		// Notice-Bar mit dieser Meldung erweitern.
-		var notice = $('<div class="notice '+value.status+'"><div class="text">'+value.text+'</div></div>');
-
 		// Bei asynchronen Requests wird zusätzlich eine Browser-Notice erzeugt, da der
 		// Benutzer bei länger laufenden Aktionen vielleicht das Tab oder Fenster
 		// gewechselt hat.
         if   ($(element).data('async') == 'true')
 			notifyBrowser(value.text);
 
-		$.each(value.log, function(name,value) {
-			$(notice).append('<div class="log">'+value+'</div>');
-		});
-		$('#noticebar').prepend(notice); // Notice anhängen.
+		notify(value.type, value.name, value.status, value.text, value.log ); // Notice anhängen.
 		
-		// Per Klick wird die Notice entfernt.
-		$(notice).fadeIn().click( function()
-		{
-			$(this).fadeOut('fast',function() { $(this).remove(); } );
-		} );
-		
-		var timeoutSeconds;
 		if	( value.status == 'ok' ) // Kein Fehler?
 		{
 			// Kein Fehler
-			timeoutSeconds = 3;
-			
 			// Nur bei synchronen Prozessen soll nach Verarbeitung der Dialog
 			// geschlossen werden.
 			if	( $(element).data('async') != 'true' )
@@ -199,13 +161,9 @@ function doResponse(data,status,element)
 			}
 		}
 		else
-			// Server liefert Fehler zurück.
+		// Server liefert Fehler zurück.
 		{
-			timeoutSeconds = 8;
 		}
-		
-		// Und nach einem Timeout entfernt sich die Notice von alleine.
-		setTimeout( function() { $(notice).fadeOut('slow').remove(); },timeoutSeconds*1000 );
 	});
 	
 	// Felder mit Fehleingaben markieren, ggf. das übergeordnete Fieldset aktivieren.

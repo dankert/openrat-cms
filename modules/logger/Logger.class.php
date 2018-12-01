@@ -124,6 +124,8 @@ class Logger
         $vars['level'] = str_pad($thisLevel, 5);
         $vars['agent'] = getenv('HTTP_USER_AGENT');
         $vars['time'] = date(Logger::$dateFormat);
+        if   ( $message instanceof Exception )
+            $message = $message->getTraceAsString();
         $vars['text'] = $message;
 
         $text = Logger::$messageFormat;

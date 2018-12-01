@@ -246,11 +246,7 @@ var Workbench = new function()
 				// Seite nicht gefunden.
 				$(targetDOMElement).html("");
 
-				notify('error',response);
-				// OK-button Ausblenden.
-				//$(targetEl).closest('div.panel').find('div.bottom > div.command > input').addClass('invisible');
-				// var msg = "Sorry but there was an error: ";
-				//$(this).html(msg + xhr.status + " " + xhr.statusText);
+				notify('','','error','Server Error',response);
 				return;
 			}
 
@@ -628,7 +624,7 @@ function notifyBrowser(text)
 	  // Let's check if the user is okay to get some notification
 	  else if (Notification.permission === "granted") {
 	    // If it's okay let's create a notification
-	    var notification = new Notification(text);
+	    let notification = new Notification(text);
 	  }
 
 	  // Otherwise, we need to ask the user for permission
@@ -636,7 +632,7 @@ function notifyBrowser(text)
 	    Notification.requestPermission(function (permission) {
 	      // If the user is okay, let's create a notification
 	      if (permission === "granted") {
-	        var notification = new Notification(text);
+	        let notification = new Notification(text);
 	      }
 	    });
 	  }
@@ -820,22 +816,70 @@ function help(el,url,suffix)
 }
 
 
-function notify( type,msg )
+/**
+ * Show a notice bubble in the UI.
+ * @param type
+ * @param name
+ * @param status
+ * @param msg
+ * @param log
+ */
+function notify( type,name,status,msg,log=[] )
 {
 	// Notice-Bar mit dieser Meldung erweitern.
-	var notice = $('<div class="notice '+type+'"><div class="text">'+msg+'</div></div>');
+
+	let notice = $('<div class="notice '+status+'"></div>');
+
+	let toolbar = $('<div class="or-notice-toolbar"></div>');
+	if   ( log.length )
+        $(toolbar).append('<img class="or-action-full" src="modules/cms-ui/themes/default/images/icon/menu/fullscreen.svg" />');
+	$(toolbar).append('<img class="or-action-close" src="modules/cms-ui/themes/default/images/icon/method/close.svg"/>');
+	$(notice).append(toolbar);
+
+	if	(name)
+		$(notice).append('<div class="name"><img class="or-action-full" src="modules/cms-ui/themes/default/images/icon/action/'+type+'.svg"/>'+name+'</div>');
+
+	$(notice).append( '<div class="text">'+htmlEntities(msg)+'</div>');
+
+	if (log.length) {
+
+        let logLi = log.reduce((result, item) => {
+            result += '<li><pre>'+htmlEntities(item)+'</pre></li>';
+            return result;
+        }, '');
+        $(notice).append('<div class="log"><ul>'+logLi+'</ul></div>');
+    }
+
 	$('#noticebar').prepend(notice); // Notice anhängen.
 
-	// Per Klick wird die Notice entfernt.
-	$(notice).fadeIn().click( function()
-	{
-		$(this).fadeOut('fast',function() { $(this).remove(); } );
-	} );
-	
+
+	// Toogle Fullscreen for notice
+    $(notice).find('.or-action-full').click( function() {
+        $(notice).toggleClass('full');
+    });
+
+    // Close the notice on click
+    $(notice).find('.or-action-close').click( function() {
+		$(notice).fadeOut('fast',function() { $(notice).remove(); } );
+	});
+
+	// Fadeout the notice after a while.
+	let timeout = 1;
+	if ( status == 'ok'     ) timeout = 20;
+	if ( status == 'info'   ) timeout = 60;
+	if ( status == 'warning') timeout = 120;
+	if ( status == 'error'  ) timeout = 120;
+
+	if (timeout > 0)
+    	setTimeout( function() {
+    		$(notice).fadeOut('slow').remove();
+    	},timeout*1000 );
 }
 
 
-
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 function registerOpenClose( $el )
 {
