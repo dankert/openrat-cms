@@ -872,7 +872,7 @@ function notify( type,name,status,msg,log=[] )
 
 	if (timeout > 0)
     	setTimeout( function() {
-    		$(notice).fadeOut('slow').remove();
+    		$(notice).fadeOut('slow', function() { $(this).remove(); } );
     	},timeout*1000 );
 }
 
