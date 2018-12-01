@@ -15,6 +15,7 @@ use cms\model\Link;
 
 use cms\model\Text;
 use cms\model\Url;
+use cms\publish\PublishPublic;
 use Http;
 use Publish;
 use Session;
@@ -1591,7 +1592,7 @@ class FolderAction extends ObjectAction
 		$files   = ( $this->hasRequestVar('files'  ) );
 
 		Session::close();
-		$publish = new Publish( $this->projectid );
+		$publish = new PublishPublic( $this->projectid );
 
 		$this->folder->publish = &$publish;
 		$this->folder->publish( $pages,$files,$subdirs );

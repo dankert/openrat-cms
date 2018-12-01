@@ -13,7 +13,7 @@ use cms\model\Url;
  * Time: 23:47
  */
 
-class PreviewLinkSchema
+class PublishPreview extends Publish
 {
     /**
      * @param $from \cms\model\BaseObject
@@ -76,5 +76,29 @@ class PreviewLinkSchema
 
         return $inhalt;
 
+    }
+
+    public function isPublic()
+    {
+        return false;
+    }
+
+    public function copy($tmp_filename,$dest_filename,$lastChangeDate=null)
+    {
+        // nothing to do.
+    }
+
+    public function clean()
+    {
+        // nothing to do.
+    }
+
+    public function close()
+    {
+        // nothing to do.
+    }
+    public function isSimplePreview()
+    {
+        return false;
     }
 }

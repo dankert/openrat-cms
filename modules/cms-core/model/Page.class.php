@@ -16,7 +16,7 @@ namespace cms\model;
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-use cms\publish\PreviewLinkSchema;use cms\publish\PublicLinkSchema;
+use cms\publish\PublishPreview;use cms\publish\PublishPublic;
 
 
 /**
@@ -34,7 +34,14 @@ class Page extends BaseObject
 	var $templateid;
 	var $template;
 
+    /**
+     * @deprecated
+     */
 	var $simple = false;
+
+    /**
+	 * @deprecated replaced by publish->isPublic()
+     */
 	var $public = false;
 
 	var $el = array();
@@ -66,8 +73,7 @@ class Page extends BaseObject
     /**
      * @var \Publish
      */
-	var $publish = null;
-	var $up_path = '';
+	var $publisher;
 
     public $values;
 
@@ -81,7 +87,9 @@ class Page extends BaseObject
 	{
 		parent::__construct( $objectid );
 		$this->isPage = true;
-	}
+
+		$this->publisher = new PublishPreview();
+    }
 
 
 	/**
@@ -159,57 +167,16 @@ class Page extends BaseObject
 	public function path_to_object( $objectid )
 	{
 		if	( ! BaseObject::available( $objectid) )
-			return '';
+			return 'about:blank';
 			
-		if   ( $this->public )
-			$linkSchema = new PublicLinkSchema();
-		else
-			$linkSchema = new PreviewLinkSchema();
-
         $to = new BaseObject($objectid);
         $to->load();
-        $inhalt = $linkSchema->linkToObject( $this, $to);
+        $inhalt = $this->publisher->linkToObject( $this, $to );
 
 		return $inhalt;
 	}
 
 
-
-	/**
-	  * Erzeugt Pr?fix f?r eine relative Pfadangabe
-	  * Beispiel: Seite liegt in Ordner /pfad/pfad dann '../../'
-	  *
-	  * @return String Pfadangabe
-	  * @access private 
-	  */ 
-	function up_path()
-	{
-		global $conf;
-
-		if	( $conf['filename']['url'] == 'absolute' )
-		{
-			$this->up_path = '/';
-			return $this->up_path;
-		}
-			
-		if	( $this->up_path != '' )
-			return $this->up_path;
-
-		$folder = new Folder( $this->parentid );
-		$folder->load();
-		$f = count( $folder->parentObjectFileNames(false,true) );
-		
-		if   ( $f == 0 )
-		{
-			$this->up_path = './';
-		}
-		else
-		{
-			$this->up_path = str_repeat( '../',$f );
-		}
-
-		return $this->up_path;
-	}
 
 
 	/**
@@ -241,9 +208,7 @@ SQL
 	  */
 	function load()
 	{
-		$db = db_connection();
-
-		$sql  = $db->sql( 'SELECT * FROM {{page}} '.
+		$sql  = db()->sql( 'SELECT * FROM {{page}} '.
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$this->objectid);
 		$row = $sql->getRow();
@@ -290,7 +255,6 @@ SQL
 			foreach( $project->getLanguages() as $lid=>$lname )
 			{
 				$val = new Value();
-				$val->publish = false;
 				$val->element = new Element( $elementid );
 	
 				$val->objectid   = $otherpageid;
@@ -548,7 +512,7 @@ SQL
 	{
 		$this->values = array();
 		
-		if	( $this->simple )
+		if	( $this->publisher->isSimplePreview() )
 			$elements = $this->getWritableElements();
 		else
 			$elements = $this->getElements();
@@ -557,13 +521,12 @@ SQL
 		{
 			// neues Inhaltobjekt erzeugen
 			$val = new Value();
-			$val->publish = $this->public;
 			$val->element = $element;
 
+			$val->publisher  = $this->publisher;
 			$val->objectid   = $this->objectid;
 			$val->pageid     = $this->pageid;
 			$val->languageid = $this->languageid;
-			$val->simple     = $this->simple;
 			$val->modelid    = $this->modelid;
 			$val->page       = $this;
 			$val->generate();
@@ -687,8 +650,7 @@ SQL
 	 */
 	public function publish()
 	{
-		if	( ! is_object($this->publish) )
-			$this->publish = new \Publish( $this->projectid );
+		$this->publisher = new PublishPublic( $this->projectid );
 		
 		$this->public              = true;
 
@@ -721,9 +683,9 @@ SQL
 				// Nur wenn eine Datei-Endung vorliegt wird die Seite veroeffentlicht
 				if	( !empty($t->extension) )
 				{ 	
-					$this->publish->copy( $this->tmpfile(),$this->full_filename() );
+					$this->publisher->copy( $this->tmpfile(),$this->full_filename() );
 					unlink( $this->tmpfile() );
-					$this->publish->publishedObjects[] = $this->getProperties();
+					$this->publisher->publishedObjects[] = $this->getProperties();
 				}
 			}
 		}
@@ -764,8 +726,7 @@ SQL
 		                                          'o' =>$this->objectid,
 		                                          'l' =>$this->languageid,
 		                                          'm' =>$this->modelid,
-		                                          'p' =>intval($this->public),
-		                                          's' =>intval($this->simple)   ) );
+		                                          'p' =>\ClassUtils::getSimpleClassName($this->publisher) ) );
 		return $filename;
 	}
 	

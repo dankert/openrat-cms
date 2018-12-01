@@ -80,7 +80,6 @@ class PageAction extends ObjectAction
 				$value->pageid     = Page::getPageIdFromObjectId( $value->objectid );
 				$value->element = new Element( $elementid );
 				$value->element->load();
-				$value->publish = false;
 				$value->load();
 
 				// Eingegebenen Inhalt aus dem Request lesen
@@ -168,7 +167,6 @@ class PageAction extends ObjectAction
         $value->element = new Element( $this->getRequestVar('elementid') );
 
 		$value->element->load();
-		$value->publish = false;
 		$value->load();
 
 		$value->number         = $this->getRequestVar('number') * pow(10,$value->element->decimals);
@@ -776,7 +774,7 @@ class PageAction extends ObjectAction
 
 		$this->page->public = true;
 		$this->page->publish();
-		$this->page->publish->close();
+		$this->page->publisher->close();
 
 //		foreach( $this->page->publish->publishedObjects as $o )
 //		{
@@ -789,7 +787,7 @@ class PageAction extends ObjectAction
 		                  OR_NOTICE_OK,
 		                  array(),
 		                  array_map(function($obj) { return $obj['full_filename'];
-                          },$this->page->publish->publishedObjects)
+                          },$this->page->publisher->publishedObjects)
          );
 	}
 

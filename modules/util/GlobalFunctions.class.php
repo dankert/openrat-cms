@@ -34,6 +34,7 @@ class GlobalFunctions
 	}
 
 
+
 }
 
 ?>

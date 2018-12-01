@@ -604,7 +604,7 @@ class TemplateAction extends Action
 			
 			$page->public = true;
 			$page->publish();
-			$page->publish->close();
+			$page->publisher->close();
 			
 			//		foreach( $this->page->publish->publishedObjects as $o )
 				//		{
@@ -616,7 +616,7 @@ class TemplateAction extends Action
 					'PUBLISHED',
 					OR_NOTICE_OK,
 					array(),
-					$page->publish->log  );
+					$page->publisher->log  );
 		}
 	}
 	

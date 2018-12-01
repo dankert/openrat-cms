@@ -1,5 +1,6 @@
 <?php
 namespace cms\model;
+use cms\publish\Publish;
 use \ObjectNotFoundException;
 use \Logger;
 use \Text;
@@ -129,14 +130,18 @@ class Value
 	var $active;
 	
 	/**
-	 * Schalter, ob dieser Inhalt der Inhalt ist, der veroeffentlicht
-	 * werden soll
-	 * @type Boolean
+	 * @type Publish
 	 */
-	var $publish;
+	public $publisher;
+
+	/**
+	 * @type Publish
+	 */
+	var $publish = false;
 
     /**
      * @type Boolean
+     * @deprecated
      */
 	public $simple;
 
@@ -176,7 +181,7 @@ class Value
 	{
 		$db = db_connection();
 
-		if	( $this->publish )
+		if	( $this->publisher->isPublic() )
 			$sql = $db->sql( 'SELECT * FROM {{value}}'.
 			                '  WHERE elementid ={elementid}'.
 			                '    AND pageid    ={pageid}'.
@@ -366,7 +371,6 @@ SQL
 	 */
 	function save()
 	{
-		global $SESS;
 		$db = db_connection();
 
 		$sql = $db->sql( 'UPDATE {{value}}'.
@@ -562,7 +566,6 @@ SQL
 			$v->isLink     = true;
 			$v->pageid     = $p->pageid;
 			$v->page       = $p;
-			$v->simple     = $this->simple;
 			$v->element    = $this->element;
 			$v->languageid = $this->languageid;
 			//$v->modelid    = $this->modelid;
@@ -590,11 +593,11 @@ SQL
 				
 				if	( $object->isFolder )
 				{
-					if   ( $this->simple )
+					if   ( $this->publisher->isSimplePreview() )
 					{
 						$f = new Folder( $objectid );
 						$f->load();
-						$inhalt = $f->name;
+						$inhalt = $f->filename;
 						unset( $f );
 					}
 					else
@@ -617,8 +620,7 @@ SQL
 												case OR_TYPE_PAGE:
 													$p = new Page( $oid );
 													$p->enclosingObjectId = $this->page->id;
-													$p->public         = $this->page->public;
-													$p->up_path        = $this->page->up_path();
+													$p->public         = $this->page->publisher->isPublic();
 													$p->modelid        = $this->page->modelid;
 													$p->languageid     = $this->languageid;
 													$p->mime_type      = $this->page->mimeType();
@@ -638,8 +640,7 @@ SQL
 														{
 															$p = new Page( $l->linkedObjectId );
 															$p->enclosingObjectId = $this->page->id;
-															$p->public         = $this->page->public;
-															$p->up_path        = $this->page->up_path();
+															$p->public         = $this->page->publisher->isPublic();
 															$p->modelid        = $this->page->modelid;
 															$p->languageid     = $this->languageid;
 															$p->load();
@@ -668,11 +669,11 @@ SQL
 				}
 				elseif	( $object->isPage )
 				{
-					if   ( $this->simple )
+					if   ( $this->publisher->isSimplePreview() )
 					{
 						$p = new Page( $objectid );
 						$p->load();
-						$inhalt = $p->name;
+						$inhalt = $p->filename;
 						unset( $p );
 					}
 					else
@@ -685,8 +686,7 @@ SQL
 								case 'inline':
 									$p = new Page( $objectid );
 									$p->enclosingObjectId = $this->page->id;
-									$p->public         = $this->page->public;
-									$p->up_path        = $this->page->up_path();
+									$p->publisher        = $this->page->publisher;
 									$p->modelid        = $this->page->modelid;
 									$p->languageid     = $this->languageid;
 									$p->mime_type      = $this->page->mimeType();
@@ -709,7 +709,7 @@ SQL
 					}
 				}
 
-				if	( $this->simple )
+				if	( $this->publisher->isSimplePreview() )
 				{
 					$inhalt = strip_tags( $inhalt );
 					$inhalt = str_replace( "\n",'',$inhalt );
@@ -732,13 +732,13 @@ SQL
 				}
 				elseif	 ( ! BaseObject::available($objectid) )
 				{
-					$inhalt = $this->simple?'-':'';
+					$inhalt = $this->publisher->isSimplePreview()?'-':'';
 				}
-				elseif   ( $this->simple )
+				elseif   ( $this->publisher->isSimplePreview() )
 				{
 					$o = new BaseObject( $objectid );
 					$o->load();
-					$inhalt = $o->name;
+					$inhalt = $o->filename;
 				}
 				elseif	($this->element->subtype == 'image_data_uri' )
 				{
@@ -773,7 +773,6 @@ SQL
 				$linkValue->element   = $element;
 				$linkValue->pageid = $this->pageid;
 				$linkValue->page   = $this->page;
-				$linkValue->simple = $this->simple;
 				$linkValue->languageid = $this->languageid;
 				$linkValue->load();
 				
@@ -795,7 +794,6 @@ SQL
 				$targetValue->element->load();
 				$targetValue->pageid = $linkedPage->pageid;
 				$targetValue->page   = $linkedPage;
-				$targetValue->simple = $this->simple;
 				$targetValue->generate();
 				
 				$inhalt = $targetValue->value; 
@@ -1124,7 +1122,7 @@ SQL
 					$inhalt = $transformer->text;
 				}
 	
-				if   ( $this->page->simple )
+				if   ( $this->publisher->isSimplePreview() )
 				{
 					$inhalt = strip_tags( $inhalt );
 					$inhalt = str_replace( "\n",'',$inhalt );
@@ -1182,7 +1180,7 @@ SQL
 			// Programmcode (PHP)
 			case 'code':
 
-				if   ( $this->page->simple )
+				if   ( $this->publisher->isSimplePreview() )
 					break;
 
 				// Die Ausführung von benutzer-erzeugtem PHP-Code kann in der
@@ -1213,7 +1211,7 @@ SQL
 			// Makros (dynamische Klassen)
 			case 'dynamic':
 
-				if   ( $this->page->simple )
+				if   ( $this->publisher->isSimplePreview() )
 					break;
 
 				$this->page->load();
@@ -1271,7 +1269,7 @@ SQL
 								}
 								else
 								{
-									if	( !$this->publish )
+									if	( !$this->publisher->isPublic() )
 										$inhalt .= "WARNING: Unknown parameter $param_name in macro $className\n";
 								}
 							}
@@ -1283,7 +1281,7 @@ SQL
 						{
 							Logger::warn('element:'.$this->element->name.', '.
 							             'class:'.$className.', no method: execute()');
-							if	( !$this->publish )
+							if	( !$this->publisher->isPublic() )
 								$inhalt = lang('ERROR_IN_ELEMENT').' (missing method: execute())';
 						}
 					}
@@ -1291,7 +1289,7 @@ SQL
 					{
 						Logger::warn('element:'.$this->element->name.', '.
 						             'class not found:'.$className);
-						if	( !$this->publish )
+						if	( !$this->publisher->isPublic() )
 							$inhalt = lang('ERROR_IN_ELEMENT').' (class not found:'.$className.')';
 					}
 				}
@@ -1299,7 +1297,7 @@ SQL
 				{
 					Logger::warn('element:'.$this->element->name.', '.
 					             'file not found:'.$fileName);
-					if	( !$this->publish )
+					if	( !$this->publisher->isPublic() )
 						$inhalt = lang('ERROR_IN_ELEMENT').' (file not found:'.$fileName.')';
 						
 				}
@@ -1314,7 +1312,7 @@ SQL
 			// Info-Feld als Datum
 			case 'infodate':
 
-				if   ( $this->page->simple )
+				if   ( $this->publisher->isSimplePreview() )
 					break;
 				
 				switch( $this->element->subtype )
@@ -1337,7 +1335,7 @@ SQL
 						Logger::warn('element:'.$this->element->name.', '.
 						             'type:'.$this->element->type.', '.
 						             'unknown subtype:'.$this->element->subtype);
-						if	( !$this->publish )
+						if	( !$this->publisher->isPublic() )
 							$inhalt = lang('ERROR_IN_ELEMENT');
 				}
 				
@@ -1352,7 +1350,7 @@ SQL
 			// Info-Feld
 			case 'info':
 
-				if   ( $this->page->simple )
+				if   ( $this->publisher->isSimplePreview() )
 					break;
 
 				switch( $this->element->subtype )
@@ -1504,7 +1502,7 @@ SQL
 				
 			default:
 				// Unbekannte Elementtypen darf es nicht geben.
-				if	( !$this->publish )
+				if	( !$this->publisher->isPublic() )
 					throw new \LogicException( lang('ERROR_IN_ELEMENT').' ('.$this->element->name.':'.
 				              'unknown type:'.$this->element->type.')');
 				
@@ -1658,8 +1656,7 @@ SQL
 		                                           'el'=>$this->element->elementid,
 		                                           'la'=>$this->languageid,
 		                                           'm' =>$this->page->modelid,
-		                                           'pu'=>intval($this->publish),
-		                                           'si'=>intval($this->page->simple)    ) );
+		                                           'pu'=>\ClassUtils::getSimpleClassName($this->publisher)  ) );
 		return $filename;
 	}
 	

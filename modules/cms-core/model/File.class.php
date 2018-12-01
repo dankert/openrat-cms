@@ -19,6 +19,7 @@ namespace cms\model;
 
 
 // Standard Mime-Type 
+use cms\publish\PublishPublic;
 use JSqueeze;
 use Less_Parser;
 use Logger;
@@ -468,7 +469,7 @@ EOF
         $this->deleteTmpFile();
 
         if	( ! is_object($this->publish) )
-			$this->publish = new \Publish( $this->projectid );
+			$this->publish = new PublishPublic( $this->projectid );
 
 		$this->write();
 		$this->publish->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );

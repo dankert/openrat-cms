@@ -10,6 +10,7 @@ use cms\model\Template;
 use cms\model\Page;
 use cms\model\Folder;
 use cms\model\BaseObject;
+use cms\publish\PublishPreview;
 use Html;
 use Http;
 use Session;
@@ -81,6 +82,7 @@ class PageelementAction extends Action
     {
 
         $this->value = new Value();
+        $this->value->publisher = new PublishPreview();
 
 		$id = $this->getRequestVar('id');
 		$ids = explode('_',$id);
@@ -125,7 +127,6 @@ class PageelementAction extends Action
 		$this->value->simple = false;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
-		$this->value->publish = false;
 		$this->value->load();
 
 		$this->setTemplateVar('name'        ,$this->value->element->name     );
@@ -162,7 +163,6 @@ class PageelementAction extends Action
 		$this->value->simple = false;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
-		$this->value->publish = false;
 		$this->value->load();
 
 		$this->setTemplateVar('name'        ,$this->value->element->name     );
@@ -199,7 +199,6 @@ class PageelementAction extends Action
 		$this->value->simple = false;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
-		$this->value->publish = false;
 		$this->value->load();
 
 		if	( $this->value->element->type == 'longtext' && $this->value->element->wiki )
@@ -223,7 +222,7 @@ class PageelementAction extends Action
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
-		$this->value->publish = false;
+		$this->value->publisher = false;
 
 		if	( intval($this->value->valueid)!=0 )
 		$this->value->loadWithId();
@@ -269,9 +268,6 @@ class PageelementAction extends Action
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
-		$this->value->publish = false;
-		$this->value->public  = true;
-		$this->value->simple  = true;
 
 		if	( intval($this->value->valueid)!=0 )
 		$this->value->loadWithId();
@@ -539,7 +535,6 @@ class PageelementAction extends Action
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
-		$this->value->publish = false;
 		$this->value->load();
 
 		$this->setTemplateVar('name'     ,$this->value->element->name     );
@@ -729,7 +724,7 @@ class PageelementAction extends Action
 					$otherValue->pageid     = $this->value->pageid;
 					$otherValue->element    = $this->value->element;
 					$otherValue->elementid  = $this->value->elementid;
-					$otherValue->publish    = $this->value->publish;
+					$otherValue->publisher    = $this->value->publisher;
 					$otherValue->load();
 					$this->setTemplateVar('languagetext'   ,wordwrap($otherValue->text,100)  );
 					$this->setTemplateVar('languagename'   ,$languages[$lid]   );
@@ -813,8 +808,6 @@ class PageelementAction extends Action
 		 */
 		public function historyView()
 		{
-			$this->page->public = true;
-			$this->page->simple = true;
 			$this->page->load();
 			$this->value->page = &$this->page;
 
@@ -976,7 +969,6 @@ class PageelementAction extends Action
 			$value->element = new Element( $this->getRequestVar('elementid') );
 
 			$value->element->load();
-			$value->publish = false;
 			$value->load();
 
 			if   ( $this->hasRequestVar('linkobjectid') )
@@ -1068,7 +1060,6 @@ class PageelementAction extends Action
 			$value->element = new Element( $this->getRequestVar('elementid') );
 
 			$value->element->load();
-			$value->publish = false;
 			$value->load();
 
 
@@ -1190,7 +1181,6 @@ class PageelementAction extends Action
 
 			$value->element = new Element( $this->getRequestVar('elementid') );
 			$value->element->load();
-			$value->publish = false;
 			$value->load();
 
 			if   ( $this->hasRequestVar('linkobjectid') )
@@ -1232,7 +1222,6 @@ class PageelementAction extends Action
 			$value->element = new Element( $this->getRequestVar('elementid') );
 
 			$value->element->load();
-			$value->publish = false;
 			$value->load();
 
 			$value->text           = $this->getRequestVar('text');
@@ -1259,7 +1248,6 @@ class PageelementAction extends Action
 		    $value->element = new Element( $this->getRequestVar('elementid') );
 
 			$value->element->load();
-			$value->publish = false;
 			$value->load();
 
 			if	( $this->hasRequestVar('linkurl') )
@@ -1301,7 +1289,6 @@ class PageelementAction extends Action
 			$value->element = new Element( $this->getRequestVar('elementid') );
 
 			$value->element->load();
-			$value->publish = false;
 			$value->load();
 
 			$value->linkToObjectId = intval($this->getRequestVar('linkobjectid'));
@@ -1328,7 +1315,6 @@ class PageelementAction extends Action
 			$value->element = new Element( $this->getRequestVar('elementid') );
 
 			$value->element->load();
-			$value->publish = false;
 			$value->load();
 
 			if   ( $this->hasRequestVar('linkobjectid') )
@@ -1470,14 +1456,14 @@ class PageelementAction extends Action
 
 		$this->page->public = true;
 		$this->page->publish();
-		$this->page->publish->close();
+		$this->page->publisher->close();
 
 		$this->addNotice( 'page',
 		                  $this->page->fullFilename,
 		                  'PUBLISHED',
 		                  OR_NOTICE_OK,
 		                  array(),
-		                  $this->page->publish->log  );
+		                  $this->page->publisher->log  );
 	}
 	
 }
