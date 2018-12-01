@@ -18,19 +18,19 @@
 			<?php } ?>
 			<?php $if3=!((config('login','motd'))==FALSE); if($if3){?>
 				<div class="message info">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(config('login','motd')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(config('login','motd')))); ?></span>
 					
 				</div>
 			<?php } ?>
 			<?php $if3=(config('login','nologin')); if($if3){?>
 				<div class="message error">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'LOGIN_NOLOGIN_DESC'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'LOGIN_NOLOGIN_DESC'.'')))); ?></span>
 					
 				</div>
 			<?php } ?>
 			<?php $if3=(config('security','readonly')); if($if3){?>
 				<div class="message warn">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_READONLY_DESC'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'GLOBAL_READONLY_DESC'.'')))); ?></span>
 					
 				</div>
 			<?php } ?>
@@ -38,7 +38,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_login_name" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_USERNAME'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_USERNAME'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -50,7 +50,7 @@
 						<?php if(!$if6){?>
 							<input type="hidden" name="login_name" value="<?php echo $login_name ?>"/>
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($force_username))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities($force_username))); ?></span>
 							
 						<?php } ?>
 					</div>
@@ -58,7 +58,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_login_password" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_PASSWORD'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_PASSWORD'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -86,7 +86,7 @@
 		} ?>
 						
 						<label for="<?php echo REQUEST_ID ?>_remember" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'REMEMBER_ME'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'REMEMBER_ME'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -96,7 +96,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_password1" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_NEW_PASSWORD'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_NEW_PASSWORD'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -108,7 +108,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_password2" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_NEW_PASSWORD_REPEAT'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_NEW_PASSWORD_REPEAT'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -122,7 +122,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_user_token" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_TOKEN'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_TOKEN'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -137,7 +137,7 @@
 					<div class="line">
 						<div class="label">
 							<label for="<?php echo REQUEST_ID ?>_dbid" class="label">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'DATABASE'.'')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'DATABASE'.'')))); ?></span>
 								
 							</label>
 						</div>

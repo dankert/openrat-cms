@@ -22,7 +22,7 @@
 						</label>
 					</div>
 					<div class="input">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($mail))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($mail))); ?></span>
 						
 						<br/>
 						
@@ -30,7 +30,7 @@
 						
 						<div class="clickable">
 							<a class="action" target="_self" date-name="<?php echo lang('mail') ?>" name="<?php echo lang('mail') ?>" data-type="dialog" data-action="profile" data-method="mail" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'profile','dialogMethod':'mail'}" href="<?php echo Html::url('profile','mail','',array('dialogAction'=>'profile','dialogMethod'=>'mail')) ?>">
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 								
 							</a>
 
@@ -82,7 +82,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_timezone_offset" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'timezone'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'timezone'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -94,7 +94,7 @@
 				<div class="line">
 					<div class="label">
 						<label class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'language'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'language'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -107,7 +107,7 @@
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('security') ?></legend><div>
 				<div class="line">
 					<div class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('user_password_expires')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('user_password_expires')))); ?></span>
 						
 					</div>
 					<div class="input">

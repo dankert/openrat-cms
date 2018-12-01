@@ -44,7 +44,7 @@ html.theme-@{cms-theme-id} {
     }
 
     div#filler {
-      background-color: @cms-text-color;
+      background-color: @cms-background-color;
 
       span.icon {
         color: @cms-background-color;
@@ -74,8 +74,50 @@ html.theme-@{cms-theme-id} {
 
   div#noticebar {
 
+    @notice-ok-color: #00d95a;
+    @notice-info-color: #86caff;
+    @notice-warning-color: #FBDE2D;
+    @notice-error-color: #f54b07;
+
     div.notice {
-      .box-shadow(3px, 2px, 5px, @cms-text-color);
+      color: black;
+      line-height: 1.5em;
+
+      &.ok {
+        background-color: @notice-ok-color;
+        border-color: darken(@notice-ok-color,10%);
+        &:after {
+          border-left-color: darken(@notice-ok-color,10%);
+        }
+        .box-shadow(3px, 3px, 10px, mix(@cms-background-color,@notice-ok-color,20%));
+      }
+
+      &.warning {
+        background-color: @notice-warning-color;
+        border-color: darken(@notice-warning-color,10%);
+        &:after {
+          border-left-color: darken(@notice-warning-color,10%);
+        }
+        .box-shadow(3px, 3px, 10px, mix(@cms-background-color,@notice-warning-color,20%));
+      }
+      &.info {
+        background-color: @notice-info-color;
+        border-color: darken(@notice-info-color,10%);
+        &:after {
+          border-left-color: darken(@notice-info-color,10%);
+        }
+        .box-shadow(3px, 3px, 10px, mix(@cms-background-color,@notice-info-color,20%));
+      }
+
+      &.error {
+        background-color: @notice-error-color;
+        border-color: darken(@notice-error-color,10%);
+        &:after {
+          border-left-color: darken(@notice-error-color,10%);
+        }
+        .box-shadow(3px, 3px, 10px, mix(@cms-background-color,@notice-error-color,20%));
+
+      }
     }
   }
 
@@ -101,7 +143,7 @@ html.theme-@{cms-theme-id} {
     border-color: red;
   }
 
-  a {
+  body, a {
     color: @cms-text-color;
   }
 
@@ -257,34 +299,72 @@ html.theme-@{cms-theme-id} {
     border-bottom-color: transparent;
   }
 
-  div.dropdown {
-    .border-radius(5px);
-    .box-shadow(3px, 2px, 10px, @cms-title-background-color);
-    opacity: 0.95;
-    border: 2px solid @cms-title-background-color;
+  header {
 
-    background-color: @cms-title-text-color;
-    color: @cms-text-color;
+    background-color: @cms-title-background-color;
+    background-image: linear-gradient(to bottom, lighten(@cms-title-background-color, 10%),@cms-title-background-color  80%, @cms-background-color);
+    color: @cms-title-text-color;
 
-
-
-
-    div.entry.selected,
-    > div.entry.active:hover,
-    > div.entry.active:hover > a,
-    a.element {
-      background-color: @cms-title-background-color;
+    div.toolbar-icon > a {
       color: @cms-title-text-color;
     }
 
-    > div.divide {
-      background-color: @cms-title-background-color;
+    .search {
+      .inputholder {
+        background-color: transparent;
+        .box-shadow(0,0,0,transparent);
+        input {
+          background-color: transparent;
+          color: @cms-title-text-color;
+          &::placeholder {
+            opacity: 1;
+            color: @cms-title-text-color;
+          }
+          &:focus {
+            &::placeholder {
+              color: fadeout(@cms-title-text-color, 50%);
+            }
+          }
+        }
+      }
     }
 
-  }
+    div.dropdown {
+      .border-radius(5px);
+      .box-shadow(3px, 2px, 10px, @cms-title-background-color);
+      opacity: 0.95;
+      border: 2px solid @cms-title-background-color;
 
-  #title span.titletext {
-    color: @cms-title-text-color;
+      background-color: @cms-title-text-color;
+      color: @cms-title-background-color;
+
+
+
+      > div.entry,
+      > div.entry > a
+      {
+        background-color: @cms-title-text-color;
+        color: @cms-title-background-color;
+      }
+
+      > div.entry.inactive,
+      > div.entry.inactive > a
+      {
+        color: mix(@cms-title-background-color,@cms-title-text-color,40%);
+      }
+
+      > div.entry.active:hover,
+      > div.entry.active:hover > a
+      {
+        background-color: @cms-title-background-color;
+        color: @cms-title-text-color;
+      }
+
+      > div.divide {
+        background-color: @cms-title-background-color;
+      }
+
+    }
   }
 
   div.toolbar-icon {
@@ -296,7 +376,7 @@ html.theme-@{cms-theme-id} {
     }
 
     &:hover {
-      border: 1px solid @cms-inactive-background-color;
+      border: 1px solid @cms-title-text-color;
     }
   }
 
@@ -405,39 +485,6 @@ html.theme-@{cms-theme-id} {
     color: @cms-title-text-color;
   }
 
-  #title {
-    background-color: @cms-title-background-color;
-    background-image: linear-gradient(to bottom, @cms-title-background-color, lighten(@cms-title-background-color, 10%) 80%, @cms-inactive-background-color);
-    color: @cms-title-text-color;
-
-    div.toolbar-icon > a {
-      color: @cms-title-text-color;
-    }
-
-    .search {
-      .inputholder {
-        background-color: transparent;
-        .box-shadow(0,0,0,transparent);
-        input {
-          background-color: transparent;
-          color: @cms-title-text-color;
-          &::placeholder {
-            opacity: 1;
-            color: @cms-title-text-color;
-          }
-          &:focus {
-            &::placeholder {
-              color: fadeout(@cms-title-text-color, 50%);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  #title, ul.views > li.action {
-  }
-
   div.content pre {
     background-color: @cms-title-text-color;
     color: @cms-text-color;
@@ -495,13 +542,14 @@ html.theme-@{cms-theme-id} {
     color: @cms-inactive-background-color;
   }
   div.clickable.filtered.active > a {
-    color: @cms-text-color;
+    color: @cms-background-color;
   }
 
   div#workbench {
     div {
-      nav {
-        background-color: darken(@cms-background-color,10%);
+      nav,main {
+        background-color: @cms-background-color;
+        background-image: linear-gradient( to bottom, @cms-background-color 0%, lighten(@cms-background-color,20%) 100% );
       }
 
       main section {

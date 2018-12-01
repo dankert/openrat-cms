@@ -840,6 +840,14 @@ function createDefaultConfig()
     $conf['style']['earlgrey']['background_color'] = '#e9e9e9';
     $conf['style']['earlgrey']['inactive_background_color'] = 'silver';
 
+    $conf['style']['dracula']=array();
+    $conf['style']['dracula']['name']='Dracula';
+    $conf['style']['dracula']['title_background_color']='#44475a';
+    $conf['style']['dracula']['title_text_color']='#f8f8f2';
+    $conf['style']['dracula']['text_color'] ='#f8f8f2';
+    $conf['style']['dracula']['background_color'] = '#282a36';
+    $conf['style']['dracula']['inactive_background_color'] = '#44475a';
+
     // $conf['style']['system']=array();
     // $conf['style']['system']['name']='System colors';
     // $conf['style']['system']['title_background_color']='Menu';
@@ -866,7 +874,7 @@ function createDefaultConfig()
 
     $conf['style']['dark']=array();
     $conf['style']['dark']['name']='Dark';
-    $conf['style']['dark']['title_background_color']='#868685';
+    $conf['style']['dark']['title_background_color']='#565655';
     $conf['style']['dark']['title_text_color']='#DCDCDC';
     $conf['style']['dark']['text_color'] ='#FFFFFF';
     $conf['style']['dark']['background_color'] = '#201F1D';
