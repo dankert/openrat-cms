@@ -110,7 +110,7 @@
 							
 							<br/>
 							
-							<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+							<imgsrc="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 							
 							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($cache_filemtime) ?>
 							
@@ -130,7 +130,7 @@
 								<tr>
 									<td>
 										<a target="_self" data-url="<?php echo $url ?>" data-action="" data-method="info" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-											<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_page.png" />
+											<imgsrc="./modules/cms-ui/themes/default/images/icon_page.png" />
 											
 											<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 											
@@ -154,13 +154,13 @@
 						
 					</div>
 					<div class="input">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+						<imgsrc="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($create_date) ?>
 						
 						<br/>
 						
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
+						<imgsrc="./modules/cms-ui/themes/default/images/icon/user.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($create_user) ?>
 						
@@ -172,13 +172,13 @@
 						
 					</div>
 					<div class="input">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+						<imgsrc="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
 						
 						<br/>
 						
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
+						<imgsrc="./modules/cms-ui/themes/default/images/icon/user.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
 						
@@ -192,13 +192,13 @@
 						</label>
 					</div>
 					<div class="input">
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+						<imgsrc="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($published_date) ?>
 						
 						<br/>
 						
-						<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/user.png" />
+						<imgsrc="./modules/cms-ui/themes/default/images/icon/user.png" />
 						
 						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($published_user) ?>
 						

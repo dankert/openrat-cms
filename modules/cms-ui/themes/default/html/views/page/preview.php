@@ -1,12 +1,12 @@
 
 	
 		<div class="toolbar-icon">
-			<img class="image-icon image-icon--menu" title="" src="./modules/cms-ui/themes/default/images/icon/menu/refresh.svg" />
+			<i class="image-icon image-icon--menu-refresh"></i>
 			
 		</div>
 		<div class="clickable">
 			<a class="action" target="_self" data-url="<?php echo $preview_url ?>" data-type="popup" data-action="" data-method="preview" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-				<img class="image-icon image-icon--menu" title="" src="./modules/cms-ui/themes/default/images/icon/menu/open_in_new.svg" />
+				<i class="image-icon image-icon--menu-open_in_new"></i>
 				
 				<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'link_open_in_new_window'.'')))); ?></span>
 				

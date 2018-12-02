@@ -193,7 +193,7 @@ class UI
             'frame-src \'self\'',
             'worker-src \'self\'',
             'form-action \'self\'',
-            'font-src \'none\'',
+            'font-src \'self\'',
             // Ajax-Calls
             'connect-src \'self\'');
         header('Content-Security-Policy: ' . implode(';', $contentSecurityPolicyEntries));

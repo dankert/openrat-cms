@@ -57,7 +57,7 @@
 						<td class="clickable">
 							<label for="<?php echo REQUEST_ID ?>_<?php echo $id ?>" class="label">
 								<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="edit" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($type,'',$objectid,array()) ?>">
-									<img class="" title="" src="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
+									<imgsrc="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,40,'..',constant('STR_PAD_BOTH') )))); ?></span>
 									
@@ -84,7 +84,7 @@
 					</td>
 					<td colspan="2" class="clickable">
 						<a target="_self" data-type="dialog" data-action="folder" data-method="createfolder" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'folder','dialogMethod':'createfolder'}" href="<?php echo Html::url('folder','createfolder','',array('dialogAction'=>'folder','dialogMethod'=>'createfolder')) ?>">
-							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
+							<i class="image-icon image-icon--method-add"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfolder'.'')))); ?></span>
 							
@@ -99,7 +99,7 @@
 					</td>
 					<td colspan="2" class="clickable">
 						<a target="_self" data-type="dialog" data-action="folder" data-method="createpage" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'folder','dialogMethod':'createpage'}" href="<?php echo Html::url('folder','createpage','',array('dialogAction'=>'folder','dialogMethod'=>'createpage')) ?>">
-							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
+							<i class="image-icon image-icon--method-add"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createpage'.'')))); ?></span>
 							
@@ -114,7 +114,7 @@
 					</td>
 					<td colspan="2" class="clickable">
 						<a target="_self" data-type="dialog" data-action="folder" data-method="createfile" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'folder','dialogMethod':'createfile'}" href="<?php echo Html::url('folder','createfile','',array('dialogAction'=>'folder','dialogMethod'=>'createfile')) ?>">
-							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
+							<i class="image-icon image-icon--method-add"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createfile'.'')))); ?></span>
 							
@@ -129,7 +129,7 @@
 					</td>
 					<td colspan="2" class="clickable">
 						<a target="_self" data-type="dialog" data-action="folder" data-method="createlink" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':'folder','dialogMethod':'createlink'}" href="<?php echo Html::url('folder','createlink','',array('dialogAction'=>'folder','dialogMethod'=>'createlink')) ?>">
-							<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
+							<i class="image-icon image-icon--method-add"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'menu_folder_createlink'.'')))); ?></span>
 							

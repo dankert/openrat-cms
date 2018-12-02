@@ -246,7 +246,7 @@ var Workbench = new function()
 				// Seite nicht gefunden.
 				$(targetDOMElement).html("");
 
-				notify('','','error','Server Error',response);
+				notify('','','error','Server Error',['Server Error while requesting '+action+' -> '+method,response]);
 				return;
 			}
 

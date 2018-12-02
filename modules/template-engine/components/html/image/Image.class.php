@@ -23,26 +23,33 @@ class ImageComponent extends Component
 	protected function begin()
 	{
         $styleClass = '';
+        $tagName = 'img';
+        $file = '';
+        $selfClosing = true;
 
 		if	( !empty($this->menu) )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/menu/'.$this->htmlvalue($this->menu).'.svg';
-			$styleClass = 'image-icon image-icon--menu';
+		    $tagName = 'i';
+			$styleClass = 'image-icon image-icon--menu-'.$this->menu;
+            $selfClosing = false;
 		}
 		elseif	( !empty($this->elementtype) )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/element/'.$this->htmlvalue($this->elementtype).'.svg';
-			$styleClass = 'image-icon image-icon--element';
+            $tagName = 'i';
+			$styleClass = 'image-icon image-icon--element-'.$this->elementtype;
+            $selfClosing = false;
 		}
 		elseif	( !empty($this->action) )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/action/'.$this->htmlvalue($this->action).'.svg';
-			$styleClass = 'image-icon image-icon--action';
+            $tagName = 'i';
+			$styleClass = 'image-icon image-icon--action-'.$this->action;
+            $selfClosing = false;
 		}
 		elseif	( !empty($this->method) )
 		{
-			$file = OR_THEMES_DIR.'default/images/icon/method/'.$this->htmlvalue($this->method).'.svg';
-			$styleClass = 'image-icon image-icon--method';
+            $tagName = 'i';
+			$styleClass = 'image-icon image-icon--method-'.$this->method;
+            $selfClosing = false;
 		}
 		elseif	( !empty($this->type) )
 		{
@@ -78,7 +85,22 @@ class ImageComponent extends Component
             $styleClass .= ' '.$this->class;
         }
 
-        echo '<img class="'.$styleClass.'" title="'.$this->htmlvalue($this->title).'" src="'.$file.'" />';
+
+        echo '<'.$tagName.'';
+
+		if( $styleClass )
+		    echo ' class="'.$styleClass.'"';
+
+		if($this->title)
+		    echo ' title="'.$this->htmlvalue($this->title).'"';
+
+		if   ( $file)
+		    echo 'src="'.$file.'"';
+
+		if   ( $selfClosing )
+		    echo ' />';
+		else
+		    echo '></'.$tagName.'>';
 	}
 
 	protected function end()

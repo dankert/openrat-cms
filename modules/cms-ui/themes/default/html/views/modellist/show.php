@@ -3,15 +3,15 @@
 		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 			<tr class="headline">
 				<td>
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'name'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'name'.'')))); ?></span>
 					
 				</td>
 				<td>
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(''))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(''))); ?></span>
 					
 				</td>
 				<td>
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(''))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(''))); ?></span>
 					
 				</td>
 			</tr>
@@ -19,9 +19,9 @@
 				<tr class="data">
 					<td class="clickable">
 						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="model" data-method="show" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url('model','',$id,array()) ?>">
-							<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/model.svg" />
+							<i class="image-icon image-icon--action-model"></i>
 							
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,25,'..',constant('STR_PAD_BOTH') )))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,25,'..',constant('STR_PAD_BOTH') )))); ?></span>
 							
 						</a>
 
@@ -30,7 +30,7 @@
 						<td class="clickable">
 							<?php $if7=(isset($id)); if($if7){?>
 								<a target="_self" data-type="post" data-action="model" data-method="setdefault" data-id="<?php echo $id ?>" data-extra="[]" data-data="{&quot;action&quot;:&quot;model&quot;,&quot;subaction&quot;:&quot;setdefault&quot;,&quot;id&quot;:&quot;<?php echo $id ?>&quot;,&quot;token&quot;:&quot;<?php echo token() ?>&quot;,&quot;none&quot;:&quot;0&quot;}">
-									<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_make_default')))); ?></span>
+									<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_make_default')))); ?></span>
 									
 								</a>
 
@@ -39,7 +39,7 @@
 					<?php } ?>
 					<?php if(!$if5){?>
 						<td>
-							<em class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_is_default')))); ?></em>
+							<em><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_is_default')))); ?></em>
 							
 						</td>
 					<?php } ?>
@@ -52,9 +52,9 @@
 			<tr class="data">
 				<td colspan="2" class="clickable">
 					<a target="_self" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="<?php echo Html::url('','add','',array('dialogAction'=>'','dialogMethod'=>'add')) ?>">
-						<img class="image-icon image-icon--method" title="" src="./modules/cms-ui/themes/default/images/icon/method/add.svg" />
+						<i class="image-icon image-icon--method-add"></i>
 						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
 						
 					</a>
 

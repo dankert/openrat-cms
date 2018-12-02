@@ -62,13 +62,13 @@
 						</label>
 					</div>
 					<div class="input">
-						<img class="image-icon image-icon--element" title="" src="./modules/cms-ui/themes/default/images/icon/element/date.svg" />
+						<i class="image-icon image-icon--element-date"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($create_date) ?>
 						
 						<br/>
 						
-						<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/user.svg" />
+						<i class="image-icon image-icon--action-user"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($create_user) ?>
 						
@@ -80,13 +80,13 @@
 						</label>
 					</div>
 					<div class="input">
-						<img class="image-icon image-icon--element" title="" src="./modules/cms-ui/themes/default/images/icon/element/date.svg" />
+						<i class="image-icon image-icon--element-date"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
 						
 						<br/>
 						
-						<img class="image-icon image-icon--action" title="" src="./modules/cms-ui/themes/default/images/icon/action/user.svg" />
+						<i class="image-icon image-icon--action-user"></i>
 						
 						<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
 						

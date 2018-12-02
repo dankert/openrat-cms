@@ -1,6 +1,110 @@
 /* Usage to this variable is safe to be removed */
 @color-overridden-by-theme: black;
 
+/* oxygen-regular - latin */
+@font-face {
+  font-family: 'Oxygen';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Oxygen Regular'), local('Oxygen-Regular'),
+  url('../font/oxygen-v7-latin-regular.woff') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  url('../font/oxygen-v7-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* source-code-pro-regular - latin */
+@font-face {
+  font-family: 'Source Code Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Source Code Pro'), local('SourceCodePro-Regular'),
+  url('../font/source-code-pro-v8-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  url('../font/source-code-pro-v8-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url('../font/MaterialIcons-Regular.woff2') format('woff2'),
+  url('../font/MaterialIcons-Regular.woff') format('woff');
+}
+
+.image-icon {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  //-webkit-font-smoothing: antialiased;
+
+  /* Support for Safari and Chrome. */
+  //text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  //-moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+
+  //&.image-icon--method-publish:after { content: "\F21E"; }
+  &.image-icon--element-date:after { content: "date_range"; }
+  &.image-icon--element-infodate:after { content: "info"; }
+  &.image-icon--element-insert:after { content: "vertical_split"; }
+  &.image-icon--element-text:after { content: "spellcheck"; }
+  &.image-icon--element-info:after { content: "info"; }
+  &.image-icon--element-dynamic:after { content: "play_circle_outline"; }
+  &.image-icon--element-longtext:after { content: "view_headline"; }
+
+  &.image-icon--action-image:after { content: "image"; }
+  &.image-icon--action-link:after { content: "call_made"; }
+  &.image-icon--action-url:after { content: "link"; }
+  &.image-icon--action-text:after { content: "text_format"; }
+  &.image-icon--action-page:after { content: "insert_drive_file"; }
+  &.image-icon--action-file:after { content: "save"; }
+  &.image-icon--action-modellist:after { content: "device_hub"; }
+  &.image-icon--action-model:after { content: "device_hub"; }
+  &.image-icon--action-folder:after { content: "folder_open"; }
+  &.image-icon--action-languagelist:after { content: "language"; }
+  &.image-icon--action-language:after { content: "language"; }
+  &.image-icon--action-template:after { content: "receipt"; }
+  &.image-icon--action-templatelist:after { content: "receipt"; }
+  &.image-icon--action-groupllist:after { content: "group"; }
+  &.image-icon--action-group:after { content: "group"; }
+  &.image-icon--action-userlist:after { content: "person"; }
+  &.image-icon--action-user:after { content: "person"; }
+  &.image-icon--action-profile:after { content: "person_pin"; }
+  &.image-icon--method-settings:after { content: "settings"; }
+  &.image-icon--action-configuration:after { content: "settings"; }
+  &.image-icon--action-projectlist:after { content: "list"; }
+  &.image-icon--action-project:after { content: "account_balance"; }
+
+  &.image-icon--action-membership { content: "card_membership"; }
+  &.image-icon--method-password:after { content: "lock"; }
+  &.image-icon--method-publish:after { content: "cloud_upload"; }
+  &.image-icon--method-show:after { content: "slideshow"; }
+  &.image-icon--method-src:after { content: "code"; }
+  &.image-icon--method-acl:after { content: "https"; }
+  &.image-icon--method-rights:after { content: "https"; }
+  &.image-icon--method-archive:after { content: "schedule"; }
+  &.image-icon--method-mail:after { content: "mail"; }
+  &.image-icon--method-search:after { content: "search"; }
+  &.image-icon--method-add:after { content: "add_box"; }
+
+  &.image-icon--menu-menu:after { content: "menu"; }
+
+  &.image-icon--node-open:after { content: "expand_more"; }
+  &.image-icon--node-closed:after { content: "chevron_right"; }
+}
+
+
 .border-radius (@radius) {
   border-radius: @radius;
   -moz-border-radius: @radius;
@@ -84,7 +188,10 @@ div#noticebar {
 
     div.log {
       display:  none;
-      font-family: monospace;
+      position: relative;
+      max-height:90%;
+      overflow: auto;
+      font-family: 'Source Code Pro',Monospace, Monospaced, Courier;
     }
 
     &.full {
@@ -690,8 +797,7 @@ fieldset > div input.ansidate,
 fieldset > div span.filename,
 fieldset > div span.extension,
 fieldset > div span.ansidate {
-  font-family: Courier;
-  font-size: 1em;
+  font-family: 'Source Code Pro',Monospace, Monospaced, Courier;
 }
 
 dl.notice {
