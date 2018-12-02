@@ -375,6 +375,7 @@ class Tree
                     $value->pageid = $page->pageid;
                     $value->element = $element;
                     $value->languageid = $page->languageid;
+                    $value->publisher = new \cms\publish\PublishPreview();
                     $value->load();
                     $treeElement->internalId = $value->valueid;
                 }

@@ -222,7 +222,7 @@ class PageelementAction extends Action
 		$this->value->pageid     = $this->page->pageid;
 		$this->value->element = &$this->element;
 		$this->value->element->load();
-		$this->value->publisher = false;
+		$this->value->publish = false;
 
 		if	( intval($this->value->valueid)!=0 )
 		$this->value->loadWithId();
