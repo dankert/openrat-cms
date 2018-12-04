@@ -211,23 +211,6 @@ html.theme-@{cms-theme-id} {
     border: 1px dotted;
   }
 
-  form.xlogin {
-    xbackground-color: #E0E0D5;
-    border: 2px solid @cms-inactive-background-color;
-    position: absolute;
-    z-index: 999;
-    top: 5%;
-    left: 5%;
-    width: 80%;
-    margin: 5%;
-    padding: 10%;
-    opacity: 1;
-    -webkit-box-shadow: 3px 2px 5px @cms-title-background-color;
-    -moz-box-shadow: 3px 2px 5px @cms-title-background-color;
-    box-shadow: 3px 2px 5px @cms-title-background-color;
-  }
-
-
   div.structure em {
     font-style: italic;
   }
@@ -384,17 +367,30 @@ html.theme-@{cms-theme-id} {
     color: @cms-title-background-color;
   }
 
-  div.inputholder
-  {
-    background-color: @cms-text-color;
-    color: @cms-background-color;
-    border: 1px solid mix(@cms-text-color, @cms-background-color);
-    .border-radius(3px);
-    -webkit-box-shadow: inset 0px 0px 3px @cms-text-color;
-    -moz-box-shadow: inset 0px 0px 3px @cms-text-color;
-    box-shadow: inset 0px 0px 3px @cms-text-color;
+  form {
+    div.inputholder, textarea {
+      background-color: @cms-text-color;
+      color: @cms-background-color;
+      border: 1px solid mix(@cms-text-color, @cms-background-color);
+      .box-shadow( 0px, 0px, 3px, @cms-text-color );
+    }
   }
 
+  .table-filter
+  {
+    width:100%;
+    text-align: right;
+    input {
+      background-color: inherit;
+      color: inherit;
+
+      border: 1px solid mix(@cms-text-color, @cms-background-color);
+      .border-radius( 3px );
+      padding:0.5em;
+      margin:1em;
+    }
+  }
+dan
   input[type='checkbox'],
   input[type='radio'] {
     background-color: @cms-title-background-color;
@@ -403,8 +399,7 @@ html.theme-@{cms-theme-id} {
 
   div.inputholder > input, div.inputholder > textarea, div.inputholder > select {
     border: 0px;
-    border-bottom: 1px solid @cms-title-text-color;
-    background-color: @cms-title-text-color;
+    border-bottom: 1px solid @cms-text-color;
   }
 
   input:focus, textarea:focus, select:focus {
@@ -424,12 +419,13 @@ html.theme-@{cms-theme-id} {
     color: @cms-title-background-color;
   }
 
-  fieldset > div input.name, fieldset > div span.name {
-    font-weight: bold;
-  }
-
   fieldset {
-    border-color: mix(@cms-text-color,@cms-background-color)
+    border-color: mix(@cms-text-color,@cms-background-color);
+
+    > div input.name, > div span.name {
+      font-weight: bold;
+    }
+
   }
 
   tr.diff > td.line {
