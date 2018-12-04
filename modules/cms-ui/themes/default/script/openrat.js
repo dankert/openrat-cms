@@ -433,11 +433,6 @@ function registerHeaderEvents()
     });
 
 
-	//   S u c h e
-	$('#title div.search input').blur( function(){
-		$('div.search input div.dropdown').fadeOut();
-	});
-	
 	$('#title div.search input').orSearch( { dropdown:'#title div.search div.dropdown' } );
 
 }

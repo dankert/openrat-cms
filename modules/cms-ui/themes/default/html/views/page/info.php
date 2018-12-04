@@ -122,13 +122,13 @@
 							</label>
 						</div>
 						<div class="input">
-							<imgsrc="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+							<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 							
 							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($create_date) ?>
 							
 							<br/>
 							
-							<imgsrc="./modules/cms-ui/themes/default/images/icon/user.png" />
+							<img src="./modules/cms-ui/themes/default/images/icon/user.png" />
 							
 							<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($create_user) ?>
 							
@@ -142,13 +142,13 @@
 							</label>
 						</div>
 						<div class="input">
-							<imgsrc="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+							<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 							
 							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
 							
 							<br/>
 							
-							<imgsrc="./modules/cms-ui/themes/default/images/icon/user.png" />
+							<img src="./modules/cms-ui/themes/default/images/icon/user.png" />
 							
 							<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
 							
@@ -162,13 +162,13 @@
 							</label>
 						</div>
 						<div class="input">
-							<imgsrc="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+							<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 							
 							<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($published_date) ?>
 							
 							<br/>
 							
-							<imgsrc="./modules/cms-ui/themes/default/images/icon/user.png" />
+							<img src="./modules/cms-ui/themes/default/images/icon/user.png" />
 							
 							<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($published_user) ?>
 							

@@ -13,6 +13,12 @@
     .or-menu-group {
         display: flex;
 
+        // Menüeinträge auf der rechten Seite rechtsbündig anzeigen.
+        &:nth-last-child(1) {
+            div.dropdown {
+                right: 10px;
+            }
+        }
         i.image-icon
         {
             width: 1.1em;

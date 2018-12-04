@@ -575,7 +575,7 @@
 
             <!-- Suche -->
             <if true="var:isLoggedIn">
-                <part class="toolbar-icon search">
+                <part class="toolbar-icon menu search">
                     <image method="search"></image>
                     <input name="text" hint="message:search"></input>
                     <part class="arrow arrow-down"/>

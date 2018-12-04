@@ -1,14 +1,21 @@
 /**
- * Input-Hints
+ * Enable clicking on '.clickable'-Areas.
  */
 jQuery.fn.orLinkify = function()
 {
 
-	return $(this).click(function()
+    // Das 'echte' Ausführen der Links deaktivieren, da dies schon per Javascript erfolgt.
+    // Das Öffnen in einem neuen Tab funktioniert aber weiterhin über die URL.
+    $(this).find('a').click( function(event) {
+        event.preventDefault();
+    } );
+
+    return $(this).click(function()
 	{
+
 		$(this).find('a').first().each( function() {
-			
-			var type = $(this).attr('data-type');
+
+			let type = $(this).attr('data-type');
 			
 			// Inaktive Menüpunkte sind natürlich nicht anklickbar.
 			if	( $(this).parent().hasClass('inactive') )

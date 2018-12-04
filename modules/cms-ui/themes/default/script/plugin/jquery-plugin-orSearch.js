@@ -11,28 +11,41 @@ jQuery.fn.orSearch = function( options )
 	
 	return $(this).keyup( function()
 	{
-		var val = $(this).val();
-		if	( val.length > 3 )
+		let searchArgument = $(this).val();
+		if	( searchArgument.length > 3 )
 		{
-			$(settings.dropdown).html('');
-			$.ajax( { 'type':'GET',url:'./api/?action=search&subaction=quicksearch&output=json&search='+val, data:null, success:function(data, textStatus, jqXHR)
+			$(settings.dropdown).empty(); // Leeren.
+
+			$.ajax( { 'type':'GET',url:'./api/?action=search&subaction=quicksearch&output=json&search='+searchArgument, data:null, success:function(data, textStatus, jqXHR)
 				{
 					for( id in data.output.result )
 					{
-						var result = data.output.result[id];
+						let result = data.output.result[id];
 						
 						// Suchergebnis-Zeile in das Ergebnis schreiben.
-						$(settings.dropdown).append('<div class="entry clickable" title="'+result.desc+'"><a href="javascript:void(0);" data-type="open" data-name="'+result.name+'" data-action="'+result.type+'" data-id="'+result.id+'"><img src="'+OR_THEMES_EXT_DIR+'default/images/icon_'+result.type+'.png" />'+result.name+'</a></div>');
+
+						let div = $('<div class="entry clickable" title="'+result.desc+'"></div>');
+						let link = $('<a href="./?action='+result.type+'&id='+result.id+'"></a>');
+						$(link).attr('data-type','open').attr('data-name',result.name).attr('data-action',result.type).attr('data-id',result.id).attr('data-extra','[]');
+						$(link).append('<i class="image-icon image-icon--action-'+result.type+'" />');
+						$(link).append('<span>'+result.name+'</span>');
+
+						$(div).append(link);
+						$(settings.dropdown).append(div);
 					}
-					$(settings.dropdown).orLinkify();
+                    $(settings.dropdown).closest('.toolbar-icon.menu').addClass('open');
+
+					// Register clickhandler for search results.
+					$(settings.dropdown).find('.clickable').orLinkify();
+
 				} } );
-			$(settings.dropdown).fadeIn();
-			
+
 			
 		}
 		else
 		{
-			$(settings.dropdown).fadeOut();
+			// No search argument.
+            $(settings.dropdown).empty(); // Leeren.
 		}
 	});
 };

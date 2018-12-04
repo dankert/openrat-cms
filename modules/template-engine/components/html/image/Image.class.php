@@ -95,7 +95,7 @@ class ImageComponent extends Component
 		    echo ' title="'.$this->htmlvalue($this->title).'"';
 
 		if   ( $file)
-		    echo 'src="'.$file.'"';
+		    echo ' src="'.$file.'"';
 
 		if   ( $selfClosing )
 		    echo ' />';

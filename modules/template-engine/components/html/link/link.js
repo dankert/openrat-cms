@@ -3,12 +3,6 @@ $(document).on('orViewLoaded',function(event, data) {
 	// Links aktivieren...
 	$(event.target).find('.clickable').orLinkify();
 
-	// Das Ausführen der Links deaktivieren, da dies schon per Javascript erfolgt.
-	// Das Öffnen in einem neuen Tab funktioniert aber weiterhin über die URL.
-	$(event.target).find('.clickable a').click( function(event) {
-		event.preventDefault();
-	} );
-
 });
 
 

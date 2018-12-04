@@ -14,7 +14,7 @@
 			<?php $if3=(isset($up_url)); if($if3){?>
 				<tr class="data">
 					<td>
-						<imgsrc="./modules/cms-ui/themes/default/images/icon_folder_up.png" />
+						<img src="./modules/cms-ui/themes/default/images/icon_folder_up.png" />
 						
 						<span><?php echo nl2br('..'); ?></span>
 						
