@@ -41,7 +41,7 @@
 		<row class="data">
 			<column colspan="3" class="clickable">
 				<link type="dialog" subaction="add" name="message:add">
-					<image icon="add"/>
+					<image method="add"/>
 					<text text="new"/>
 				</link>
 			</column>

@@ -11,7 +11,7 @@
 			<row class="data">
 				<column class="clickable">
 					<link type="open" id="var:id" name="var:name" action="project">
-						<image file="icon_project"></image>
+						<image action="project"></image>
 						<text value="var:name" maxlength="30"></text>
 					</link>
 				</column>
@@ -20,7 +20,7 @@
 		<row class="data">
 			<column class="clickable">
 				<link type="dialog" subaction="add" name="message:new">
-					<image icon="add" />
+					<image method="add" />
 					<text text="new" />
 				</link>
 			</column>

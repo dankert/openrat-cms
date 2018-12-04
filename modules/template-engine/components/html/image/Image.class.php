@@ -30,25 +30,25 @@ class ImageComponent extends Component
 		if	( !empty($this->menu) )
 		{
 		    $tagName = 'i';
-			$styleClass = 'image-icon image-icon--menu-'.$this->menu;
+			$styleClass = 'image-icon image-icon--menu-'.$this->htmlvalue($this->menu);
             $selfClosing = false;
 		}
 		elseif	( !empty($this->elementtype) )
 		{
             $tagName = 'i';
-			$styleClass = 'image-icon image-icon--element-'.$this->elementtype;
+			$styleClass = 'image-icon image-icon--element-'.$this->htmlvalue($this->elementtype);
             $selfClosing = false;
 		}
 		elseif	( !empty($this->action) )
 		{
             $tagName = 'i';
-			$styleClass = 'image-icon image-icon--action-'.$this->action;
+			$styleClass = 'image-icon image-icon--action-'.$this->htmlvalue($this->action);
             $selfClosing = false;
 		}
 		elseif	( !empty($this->method) )
 		{
             $tagName = 'i';
-			$styleClass = 'image-icon image-icon--method-'.$this->method;
+			$styleClass = 'image-icon image-icon--method-'.$this->htmlvalue($this->method);
             $selfClosing = false;
 		}
 		elseif	( !empty($this->type) )

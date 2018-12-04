@@ -26,7 +26,7 @@
 			<row class="data">
 				<column class="clickable">
 					<link type="open" id="var:id" name="var:name" action="var:type" title="var:desc">
-						<image type="var:icon"></image>
+						<image action="var:icon"></image>
 						<text var="name"></text>
 						<text raw="_"></text>
 					</link>
