@@ -33,7 +33,9 @@ jQuery.fn.orSearch = function( options )
 						$(div).append(link);
 						$(settings.dropdown).append(div);
 					}
-                    $(settings.dropdown).closest('.toolbar-icon.menu').addClass('open');
+
+					// Open the menu
+                    $(settings.dropdown).closest('.or-menu').addClass('open');
 
 					// Register clickhandler for search results.
 					$(settings.dropdown).find('.clickable').orLinkify();
