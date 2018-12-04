@@ -205,7 +205,7 @@ class File extends BaseObject
 	 *
 	 * @return String Mime-Type
 	 */
-	function mimeType()
+	public function mimeType()
 	{
 		if	( !empty( $this->mime_type ) )
 			return $this->mime_type;

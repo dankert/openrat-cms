@@ -1,3 +1,21 @@
 <output xmlns="http://www.openrat.de/template"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd"><dummy><window icon="folder"><row><column colspan="2"><insert url="var:preview_url"></insert><link class="action" action="file" subaction="edit"><image file="icon/edit"></image><text key="menu_file_edit"></text></link><link class="action" action="file" subaction="editvalue"><image file="icon/editvalue"></image><text key="menu_file_editvalue"></text></link></column></row></window></dummy></output>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+    <dummy>
+        <window icon="folder">
+            <row>
+                <column colspan="2">
+                    <insert url="var:preview_url"></insert>
+                    <link class="action" action="file" subaction="edit">
+                        <image file="icon/edit"></image>
+                        <text key="menu_file_edit"></text>
+                    </link>
+                    <link class="action" action="file" subaction="editvalue">
+                        <image file="icon/editvalue"></image>
+                        <text key="menu_file_editvalue"></text>
+                    </link>
+                </column>
+            </row>
+        </window>
+    </dummy>
+</output>

@@ -18,7 +18,7 @@
 			<?php $if3=(isset($up_url)); if($if3){?>
 				<tr class="data">
 					<td>
-						<imgsrc="./modules/cms-ui/themes/default/images/icon_folder_up.png" />
+						<img src="./modules/cms-ui/themes/default/images/icon_folder_up.png" />
 						
 						<span><?php echo nl2br('..'); ?></span>
 						
@@ -33,7 +33,7 @@
 				<tr class="data">
 					<td class="clickable">
 						<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="preview" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url($type,'',$id,array()) ?>">
-							<imgsrc="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
+							<img src="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 							

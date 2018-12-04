@@ -56,9 +56,9 @@ namespace cms\action
             $this->text = new Text($this->getRequestId());
             $this->text->load();
 
-            $this->file = $this->text;
-
             parent::init();
+
+            $this->file = $this->text;
         }
 
 
@@ -134,6 +134,18 @@ namespace cms\action
         public function valueView()
         {
             parent::valueView();
+        }
+
+
+        public function showView() {
+            $this->file = $this->text;
+
+            parent::showView();
+        }
+
+        public function previewView()
+        {
+            parent::previewView();
         }
     }
 }

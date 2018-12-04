@@ -31,7 +31,7 @@ class Text extends File
      *
      * @param string $objectid
      */
-	function __construct( $objectid='' )
+	public function __construct( $objectid='' )
 	{
 
         parent::__construct( $objectid );
@@ -40,6 +40,11 @@ class Text extends File
         $this->isFile = false;
 	}
 
+
+	public function mimeType()
+    {
+        return 'text/plain';
+    }
 }
 
 ?>

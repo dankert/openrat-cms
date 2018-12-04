@@ -205,4 +205,16 @@ class ImageAction extends FileAction
     }
 
 
+    /**
+     * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
+     * auf die Standardausgabe geschrieben
+     */
+    public function previewView()
+    {
+        parent::previewView();
+    }
+
+
+
+
 }

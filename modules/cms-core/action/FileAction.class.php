@@ -108,11 +108,8 @@ class FileAction extends ObjectAction
 	 */
 	function previewView()
 	{
-		$url = Html::url('file','show',$this->file->objectid,array('target'=>'none',REQ_PARAM_EMBED=>'1') );
+		$url = Html::url($this->file->getType(),'show',$this->file->objectid,array('target'=>'none',REQ_PARAM_EMBED=>'1') );
 		$this->setTemplateVar('preview_url',$url );
-		
-		$this->setTemplateVar('image',$this->file->isImage() );
-		
 	}
 	
 
@@ -140,7 +137,7 @@ class FileAction extends ObjectAction
 			if	( !empty($mime_types[$ext]) )
 				$mime_type = $mime_types[$ext];
 			else
-				// Wenn kein Mime-Type gefunden, dann Standartwert setzen
+				// Wenn kein Mime-Type gefunden, dann Standardwert setzen
 				$mime_type = OR_FILE_DEFAULT_MIMETYPE;
 				
 			header('Content-Type: '.$mime_type );
@@ -160,7 +157,7 @@ class FileAction extends ObjectAction
 		// - Dateiname wird benutzt, wenn der Browser das Bild speichern moechte
 		header('Content-Disposition: inline; filename='.$this->file->filename() );
 		header('Content-Transfer-Encoding: binary' );
-		header('Content-Description: '.$this->file->name );
+		header('Content-Description: '.$this->file->filename() );
 		
 		$this->file->write(); // Bild aus Datenbank laden
 		
