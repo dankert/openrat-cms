@@ -386,12 +386,13 @@ html.theme-@{cms-theme-id} {
 
   div.inputholder
   {
-    background-color: @cms-title-text-color;
-    border: 1px solid @cms-title-background-color;
+    background-color: @cms-text-color;
+    color: @cms-background-color;
+    border: 1px solid mix(@cms-text-color, @cms-background-color);
     .border-radius(3px);
-    -webkit-box-shadow: inset 0px 0px 3px @cms-title-background-color;
-    -moz-box-shadow: inset 0px 0px 3px @cms-title-background-color;
-    box-shadow: inset 0px 0px 3px @cms-title-background-color;
+    -webkit-box-shadow: inset 0px 0px 3px @cms-text-color;
+    -moz-box-shadow: inset 0px 0px 3px @cms-text-color;
+    box-shadow: inset 0px 0px 3px @cms-text-color;
   }
 
   input[type='checkbox'],
@@ -428,7 +429,7 @@ html.theme-@{cms-theme-id} {
   }
 
   fieldset {
-    border-color: mix(@cms-background-color,@cms-title-background-color)
+    border-color: mix(@cms-text-color,@cms-background-color)
   }
 
   tr.diff > td.line {
