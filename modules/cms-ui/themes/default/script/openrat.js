@@ -26,13 +26,6 @@ $( function() {
 
     Workbench.initialize();
 
-    // Per Klick wird die Notice entfernt.
-    $('#noticebar .notice').click(function () {
-        $(this).fadeOut('fast', function () {
-            $(this).remove();
-        });
-    });
-
     loadTree(); // Initial Loading of the navigationtree
 
 
@@ -58,12 +51,21 @@ $( function() {
 
 
 
-    // Per Klick werden die Notices entfernt.
-    $('#noticebar .notice').fadeIn().click(function () {
-        $(this).fadeOut('fast', function () {
+    // Per Klick wird die Notice entfernt.
+    $('#noticebar .notice .image-icon--menu-close').click(function () {
+        $(this).closest('.notice').fadeOut('fast', function () {
             $(this).remove();
         });
     });
+    // Die Notices verschwinden automatisch.
+    $('#noticebar .notice').each(function () {
+    	let noticeToClose = this;
+		setTimeout( function() {
+			$(noticeToClose).fadeOut('slow', function() { $(this).remove(); } );
+		},30/*seconds*/ *1000 );
+
+    });
+
 
     registerOpenClose($('section.toggle-open-close'));
 
@@ -827,12 +829,12 @@ function notify( type,name,status,msg,log=[] )
 
 	let toolbar = $('<div class="or-notice-toolbar"></div>');
 	if   ( log.length )
-        $(toolbar).append('<img class="or-action-full" src="modules/cms-ui/themes/default/images/icon/menu/fullscreen.svg" />');
-	$(toolbar).append('<img class="or-action-close" src="modules/cms-ui/themes/default/images/icon/method/close.svg"/>');
+        $(toolbar).append('<i class="or-action-full image-icon image-icon--menu-fullscreen"></i>');
+	$(toolbar).append('<i class="or-action-close image-icon image-icon--menu-close"></i>');
 	$(notice).append(toolbar);
 
 	if	(name)
-		$(notice).append('<div class="name"><img class="or-action-full" src="modules/cms-ui/themes/default/images/icon/action/'+type+'.svg"/>'+name+'</div>');
+		$(notice).append('<div class="name"><i class="or-action-full image-icon image-icon--action-'+type+'"></i> '+name+'</div>');
 
 	$(notice).append( '<div class="text">'+htmlEntities(msg)+'</div>');
 

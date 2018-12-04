@@ -99,6 +99,8 @@
   &.image-icon--method-mail:after { content: "mail"; }
   &.image-icon--method-search:after { content: "search"; }
   &.image-icon--method-add:after { content: "add_box"; }
+  &.image-icon--menu-close:after { content: "close"; }
+  &.image-icon--menu-fullscreen:after { content: "fullscreen"; }
 
   &.image-icon--menu-menu:after { content: "menu"; }
 
@@ -151,6 +153,20 @@ div#noticebar {
 
     .border-radius(5px);
     .box-shadow(3px, 2px, 5px, @color-overridden-by-theme);
+
+    .or-notice-toolbar {
+      float: right;
+      margin:0 0.2em;
+      font-size: 2em;
+      color: gray;
+      cursor: pointer;
+    }
+
+    &:hover {
+      .or-notice-toolbar {
+        color: black;
+      }
+    }
 
     &.full {
       display: block;

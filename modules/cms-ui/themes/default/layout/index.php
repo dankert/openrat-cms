@@ -102,7 +102,9 @@
 
 <div id="noticebar">
     <?php /* Inline Notices */ foreach( $notices as $notice ) { ?>
-        <div class="notice <?php echo $notice['status'] ?>"><div class="text"><?php echo $notice['text'] ?></div></div>
+        <div class="notice <?php echo $notice['status'] ?>">
+            <div class="or-notice-toolbar"><i class="or-action-close image-icon image-icon--menu-close"></i></div>
+            <div class="text"><?php echo $notice['text'] ?></div></div>
     <?php } ?>
 </div>
 
