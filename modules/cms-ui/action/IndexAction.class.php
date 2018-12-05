@@ -41,6 +41,28 @@ class IndexAction extends Action
 
 	public function manifestView()
     {
+        $user = Session::getUser();
+
+        // Theme für den angemeldeten Benuter ermitteln
+        if	( is_object($user) && isset(config('style')[$user->style]) )
+            $style = $user->style;
+        else
+            $style = config('interface','style','default');
+
+        $styleConfig     = config('style-default'); // default style config
+        $userStyleConfig = config('style', $style); // user style config
+
+        if (is_array($userStyleConfig))
+            $styleConfig = array_merge($styleConfig, $userStyleConfig ); // Merging user style into default style
+        else
+            ; // Unknown style name, we are ignoring this.
+
+        // Theme base color for smartphones colorizing their status bar.
+        $themeColor = $this->getColorHexCode($styleConfig['title_background_color']);
+
+
+
+
         $json = new JSON();
 
         $appName = config('application','name');
@@ -51,9 +73,7 @@ class IndexAction extends Action
             'short_name' => 'CMS',
             'display' => 'standalone',
             'orientation' => 'landscape',
-            "background_color" => "#EEEEEE",
-
-
+            "background_color" => $themeColor,
         );
 
         header("Content-Type: application/manifest+json");
@@ -148,7 +168,7 @@ class IndexAction extends Action
         $userStyleConfig = config('style', $style); // user style config
 
         if (is_array($userStyleConfig))
-            $styleConfig += $userStyleConfig; // Merging user style into default style
+            $styleConfig = array_merge($styleConfig,$userStyleConfig); // Merging user style into default style
         else
             ; // Unknown style name, we are ignoring this.
 
