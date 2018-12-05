@@ -103,6 +103,7 @@
   &.image-icon--menu-fullscreen:after { content: "fullscreen"; }
 
   &.image-icon--menu-menu:after { content: "menu"; }
+  &.image-icon--menu-qrcode:after { content: "phone_android"; }
 
   &.image-icon--node-open:after { content: "expand_more"; }
   &.image-icon--node-closed:after { content: "chevron_right"; }
@@ -854,4 +855,19 @@ img.image-icon {
     padding:1em;
     .border-radius(0.5em);
   }
+}
+
+
+
+.qrcode-wrapper {
+    width:100%;
+    border: 0;
+    font-size: 2em;
+    .border-radius(1em);
+    padding:2em;
+    text-align: center;
+
+    > div {
+        display: inline-block;
+    }
 }

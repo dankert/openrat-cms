@@ -12,8 +12,9 @@ class QrcodeComponent extends Component
 	protected function begin()
 	{
 		$value = $this->htmlvalue($this->value);
+		$title = lang('QRCODE_SHOW');
 		echo <<<HTML
-<div class="qrcode" data-qrcode="{$value}" title="{$value}"></div>
+<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="{$value}" title="{$title}"></i>
 HTML;
 	}
 

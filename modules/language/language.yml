@@ -6122,3 +6122,6 @@ CMS:
 SEARCH_FILTER:
   de: Filter
   en: Filter
+QRCODE_SHOW:
+  de: QR-Code anzeigen
+  en: Show QR-Code
