@@ -1427,6 +1427,11 @@ SQL
         }
 
 
+        /**
+         * Liefert alle Name-Objekte.
+         * @return array
+         * @throws \ObjectNotFoundException
+         */
         public function getNames()
         {
             $names = array();
@@ -1446,10 +1451,41 @@ SQL
 
 
         /**
+         * @return Name
+         */
+        public function getDefaultName()
+        {
+            $languageId = $this->getProject()->getDefaultLanguageId();
+
+            $name = new Name();
+            $name->objectid   = $this->objectid;
+            $name->languageid = $languageId;
+            $name->load();
+
+            return $name;
+        }
+
+
+        /**
+         * Name of the object. If not exist, the filename will be used.
+         * @return string Name
+         */
+        public function getName()
+        {
+            $name = $this->getDefaultName()->name;
+
+            if  ( empty($name))
+                $name = $this->filename;
+
+            return $name;
+        }
+
+
+        /**
          * Speichert Namen und Beschreibung für alle Sprachen. Das ist bei der Neuanlage von Objekten ganz praktisch.
          *
-         * @param $nam
-         * @param $description
+         * @param $nam string
+         * @param $description string
          */
         public function setNameForAllLanguages($nam, $description)
         {

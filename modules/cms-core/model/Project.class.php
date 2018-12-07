@@ -442,7 +442,12 @@ SQL
 		$sql->setInt( 'projectid',$this->projectid );
 		$sql->query();
 	}
-	
+
+
+    /**
+     * Liefert die Standard-Sprach-Id. If there is no default language, the first language-id will be used.
+     * @return String
+     */
 	public function getDefaultLanguageId()
 	{
 		$db = Session::getDatabase();
@@ -451,7 +456,7 @@ SQL
 		// gelesen wird
 		$sql = $db->sql( 'SELECT id FROM {{language}} '.
 		                '  WHERE projectid={projectid}'.
-		                '   ORDER BY is_default DESC' );
+		                '   ORDER BY is_default DESC, name ASC' );
 
 		$sql->setInt('projectid',$this->projectid );
 		

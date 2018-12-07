@@ -171,9 +171,15 @@ class PageelementAction extends Action
 		$this->setTemplateVar('element_type',$this->value->element->type     );
 
 		$user = new User( $this->value->lastchangeUserId );
-		$user->load();
-		$this->setTemplateVar('lastchange_user',$user->getProperties());
-		$this->setTemplateVar('lastchange_date',$this->value->lastchangeTimeStamp);
+
+		try{
+            $user->load();
+        }catch (\ObjectNotFoundException $e) {
+		    $user = new User(); // Empty User.
+        }
+
+        $this->setTemplateVar('lastchange_user',$user->getProperties());
+        $this->setTemplateVar('lastchange_date',$this->value->lastchangeTimeStamp);
 
 		$t = new Template( $this->page->templateid );
 		$t->load();
@@ -495,35 +501,15 @@ class PageelementAction extends Action
 		else
 			$types = array($type); // gewünschten Typ verwenden
 
-		$objects = array();
-
-		foreach( Folder::getAllObjectIds($types) as $id )
-		{
-			$o = new BaseObject( $id );
-			$o->load();
-
-			//			if	( in_array( $o->getType(),$types ))
-			//			{
-			$f = new Folder( $o->parentid );
-			//					$f->load();
-
-			$objects[ $id ]  = lang( $o->getType() ).': ';
-			$objects[ $id ] .=  implode( FILE_SEP,$f->parentObjectNames(false,true) );
-			$objects[ $id ] .= FILE_SEP.$o->name;
-			//			}
-		}
-
-		asort( $objects ); // Sortieren
-
-		$this->setTemplateVar('objects'         ,$objects);
+		$this->setTemplateVar('objects'         ,array() );
 		$this->setTemplateVar('linkobjectid',$this->value->linkToObjectId);
 		
 		$this->setTemplateVar('types',implode(',',$types));
 
 		if	( $this->getSessionVar('pageaction') != '' )
-		$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
+    		$this->setTemplateVar('old_pageaction',$this->getSessionVar('pageaction'));
 		else
-		$this->setTemplateVar('old_pageaction','show'                            );
+	    	$this->setTemplateVar('old_pageaction','show'                            );
 	}
 
 

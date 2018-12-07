@@ -12,23 +12,6 @@ use cms\model\Group;
 use cms\model\Folder;
 use cms\model\Value;
 
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 
 /**
  * Darstellen einer Baumstruktur mit Administrationfunktionen
@@ -359,29 +342,59 @@ class Tree
                 $treeElement->internalId = $id . '_' . $elementid;
                 $treeElement->text = $element->name;
                 $treeElement->action = 'pageelement';
-                $treeElement->icon = 'el_' . $element->type;
+                $treeElement->icon = 'el_' . $element->getTypeName();
                 $treeElement->extraId = array('elementid' => $elementid, REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
 
 
-                $treeElement->description = lang('EL_' . $element->type);
+                $treeElement->description = lang('EL_' . $element->getTypeName());
                 if ($element->desc != '')
-                    $treeElement->description .= ' - ' . Text::maxLaenge(25, $element->desc);
+                    $treeElement->description .= ' - ' . Text::maxLength( $element->desc,25);
                 else
                     $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
-                if (in_array($element->type, array('link', 'list', 'include'))) {
-                    $treeElement->type = 'value';
-                    $value = new Value();
-                    $value->pageid = $page->pageid;
-                    $value->element = $element;
-                    $value->languageid = $page->languageid;
-                    $value->publisher = new \cms\publish\PublishPreview();
-                    $value->load();
-                    $treeElement->internalId = $value->valueid;
-                }
+                $this->addTreeElement($treeElement);
+            }
+        }
+    }
+
+
+    function pageelement($id)
+    {
+        $ids = explode('_',$id);
+        if	( count($ids) > 1 )
+        {
+            list( $pageid, $elementid ) = $ids;
+
+            $page = new Page($pageid);
+            $page->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
+            $page->modelid = $_REQUEST[REQ_PARAM_MODEL_ID];
+
+            $page->load();
+
+            $element = new Element($elementid);
+            $element->load();
+
+            $value = new Value();
+            $value->pageid = $page->pageid;
+            $value->element = $element;
+            $value->languageid = $page->languageid;
+            $value->publisher = new \cms\publish\PublishPreview();
+            $value->load();
+
+            if  ( BaseObject::available($value->linkToObjectId) )
+            {
+                $o = new BaseObject( $value->linkToObjectId );
+                $treeElement = new TreeElement();
+                $treeElement->type       = $o->getType();
+                $treeElement->id         = $o->objectid;
+                $treeElement->internalId = $o->objectid;
+                $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
+                $treeElement->text = $o->getName();
+                $treeElement->description = lang('GLOBAL_' . $o->getType()) . ' ' . $o->objectid;
 
                 $this->addTreeElement($treeElement);
             }
+
         }
     }
 
@@ -467,7 +480,7 @@ class Tree
         $f->languageid = $_REQUEST[REQ_PARAM_LANGUAGE_ID];
         $f->modelid = $_REQUEST[REQ_PARAM_MODEL_ID];
 
-        foreach ($f->getObjects() as $o) {
+        foreach ($f->getObjects() as /*@var BaseObject */$o) {
             // Wenn keine Leseberechtigung
             if (!$o->hasRight(ACL_READ))
                 continue;
@@ -485,34 +498,8 @@ class Tree
                 $treeElement->description .= ' - ' . lang('GLOBAL_NO_DESCRIPTION_AVAILABLE');
 
             $treeElement->action = $o->getType();
-            $treeElement->icon = $o->getType();
-
-            // Besonderheiten fuer bestimmte Objekttypen
-
-            if ($o->isLink) {
-                $treeElement->type = 'link';
-            }
-
-            if ($o->isPage) {
-                // Nur wenn die Seite beschreibbar ist, werden die
-                // Elemente im Baum angezeigt
-                if ($o->hasRight(ACL_WRITE))
-                    $treeElement->type = 'page';
-            }
-
-            if ($o->isFile) {
-                $file = new File($o->objectid);
-                $file->load();
-
-                if (substr($file->mimeType(), 0, 6) == 'image/')
-                    $treeElement->icon = 'image';
-                else    $treeElement->icon = 'file';
-            }
-
-            if ($o->isFolder) {
-                $treeElement->type = 'folder';
-            }
-
+            $treeElement->icon   = $o->getType();
+            $treeElement->type   = $o->getType();
 
             $this->addTreeElement($treeElement);
         }
