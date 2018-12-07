@@ -13,7 +13,7 @@
 				<tr class="data">
 					<td class="clickable">
 						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="project" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url('project','',$id,array()) ?>">
-							<imgsrc="./modules/cms-ui/themes/default/images/icon/icon_project.png" />
+							<i class="image-icon image-icon--action-project"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,30,'..',constant('STR_PAD_BOTH') )))); ?></span>
 							
@@ -25,7 +25,7 @@
 			<tr class="data">
 				<td class="clickable">
 					<a target="_self" date-name="<?php echo lang('new') ?>" name="<?php echo lang('new') ?>" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="<?php echo Html::url('','add','',array('dialogAction'=>'','dialogMethod'=>'add')) ?>">
-						<imgsrc="./modules/cms-ui/themes/default/images/icon/add.png" />
+						<i class="image-icon image-icon--method-add"></i>
 						
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
 						

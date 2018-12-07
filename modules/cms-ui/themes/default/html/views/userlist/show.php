@@ -5,7 +5,7 @@
 		<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 			<tr class="headline">
 				<td>
-					<imgsrc="./modules/cms-ui/themes/default/images/icon_user.png" />
+					<img src="./modules/cms-ui/themes/default/images/icon_user.png" />
 					
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'name'.'')))); ?></span>
 					
@@ -54,7 +54,7 @@
 			<tr class="data">
 				<td colspan="3" class="clickable">
 					<a target="_self" date-name="<?php echo lang('add') ?>" name="<?php echo lang('add') ?>" data-type="dialog" data-action="" data-method="add" data-id="<?php echo OR_ID ?>" data-extra="{'dialogAction':null,'dialogMethod':'add'}" href="<?php echo Html::url('','add','',array('dialogAction'=>'','dialogMethod'=>'add')) ?>">
-						<imgsrc="./modules/cms-ui/themes/default/images/icon/add.png" />
+						<i class="image-icon image-icon--method-add"></i>
 						
 						<span><?php echo nl2br(encodeHtml(htmlentities(lang('new')))); ?></span>
 						

@@ -1053,13 +1053,14 @@ class PageelementAction extends Action
 			$value = new Value();
 			$value->languageid = $this->page->languageid;
 			$value->objectid   = $this->page->objectid;
-			$value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
+            $value->publisher  = $this->page->publisher;
+            $value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
 
             if	( !$this->hasRequestVar('elementid') )
-                throw new ValidationException('elementid');
-			$value->element = new Element( $this->getRequestVar('elementid') );
+            throw new ValidationException('elementid');
+            $value->element = new Element( $this->getRequestVar('elementid') );
 
-			$value->element->load();
+            $value->element->load();
 			$value->load();
 
 

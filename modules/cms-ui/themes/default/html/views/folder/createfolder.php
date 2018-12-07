@@ -7,7 +7,7 @@
 			
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_FOLDER')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_FOLDER')))); ?></span>
 					
 				</div>
 				<div class="input">
@@ -17,7 +17,7 @@
 			</div>
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_DESCRIPTION')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_DESCRIPTION')))); ?></span>
 					
 				</div>
 				<div class="input">

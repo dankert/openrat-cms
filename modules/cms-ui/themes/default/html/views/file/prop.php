@@ -6,48 +6,48 @@
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_name" class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_name')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_name')))); ?></span>
 						
 					</label>
 				</div>
 				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="<?php if ('') echo ''.'_' ?>name<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="name" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_filename" class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_filename')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_filename')))); ?></span>
 						
 					</label>
 				</div>
 				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_filename" name="filename<?php if ('') echo '_disabled' ?>" type="text" maxlength="150" class="filename" value="<?php echo Text::encodeHtml(@$filename) ?>" /><?php if ('') { ?><input type="hidden" name="filename" value="<?php $filename ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_filename" name="<?php if ('') echo ''.'_' ?>filename<?php if ('') echo '_disabled' ?>" type="text" maxlength="150" class="filename" value="<?php echo Text::encodeHtml(@$filename) ?>" /><?php if ('') { ?><input type="hidden" name="filename" value="<?php $filename ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_extension" class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('file_extension')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('file_extension')))); ?></span>
 						
 					</label>
 				</div>
 				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_extension" name="extension<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="extension" value="<?php echo Text::encodeHtml(@$extension) ?>" /><?php if ('') { ?><input type="hidden" name="extension" value="<?php $extension ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_extension" name="<?php if ('') echo ''.'_' ?>extension<?php if ('') echo '_disabled' ?>" type="text" maxlength="256" class="extension" value="<?php echo Text::encodeHtml(@$extension) ?>" /><?php if ('') { ?><input type="hidden" name="extension" value="<?php $extension ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_description" class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_description')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_description')))); ?></span>
 						
 					</label>
 				</div>
 				<div class="input">
-					<div class="inputholder"><textarea class="description" name="description"><?php echo Text::encodeHtml($description) ?></textarea></div>
+					<div class="inputholder"><textarea class="description" name="<?php if ('') echo ''.'_' ?>description<?php if ('') echo '_disabled' ?>"><?php echo Text::encodeHtml($description) ?></textarea></div>
 					
 				</div>
 			</div>

@@ -10,6 +10,8 @@ use cms\model\Page;
 use cms\model\Project;
 use cms\model\Url;
 use Logger;
+use OpenRatException;
+use Session;
 
 define('OR_LINK_SCHEMA_ABSOLUTE',1);
 define('OR_LINK_SCHEMA_RELATIVE',2);

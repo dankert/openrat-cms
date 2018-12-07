@@ -19,7 +19,7 @@
 								<tr>
 									<td colspan="8" class="help">
 										<a target="_self" data-url="<?php echo $lastmonthurl ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-											<imgsrc="./modules/cms-ui/themes/default/images/icon/left.png" />
+											<img src="./modules/cms-ui/themes/default/images/icon/left.png" />
 											
 										</a>
 
@@ -30,14 +30,14 @@
 										<span><?php echo nl2br('&nbsp;'); ?></span>
 										
 										<a target="_self" data-url="<?php echo $nextmonthurl ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-											<imgsrc="./modules/cms-ui/themes/default/images/icon/right.png" />
+											<img src="./modules/cms-ui/themes/default/images/icon/right.png" />
 											
 										</a>
 
 										<span><?php echo nl2br('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'); ?></span>
 										
 										<a target="_self" data-url="<?php echo $lastyearurl ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-											<imgsrc="./modules/cms-ui/themes/default/images/icon/left.png" />
+											<img src="./modules/cms-ui/themes/default/images/icon/left.png" />
 											
 										</a>
 
@@ -48,7 +48,7 @@
 										<span><?php echo nl2br('&nbsp;'); ?></span>
 										
 										<a target="_self" data-url="<?php echo $nextyearurl ?>" data-action="" data-method="edit" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-											<imgsrc="./modules/cms-ui/themes/default/images/icon/right.png" />
+											<img src="./modules/cms-ui/themes/default/images/icon/right.png" />
 											
 										</a>
 

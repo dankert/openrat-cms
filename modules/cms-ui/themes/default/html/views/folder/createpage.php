@@ -5,7 +5,7 @@
 		<form name="" target="_self" data-target="view" action="./" data-method="createpage" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form folder" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="createpage" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_TEMPLATE')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_TEMPLATE')))); ?></span>
 					
 				</div>
 				<div class="input">
@@ -15,7 +15,7 @@
 			</div>
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_NAME')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_NAME')))); ?></span>
 					
 				</div>
 				<div class="input">
@@ -25,7 +25,7 @@
 			</div>
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_DESCRIPTION')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_DESCRIPTION')))); ?></span>
 					
 				</div>
 				<div class="input">

@@ -1278,4 +1278,5 @@ function language() { return array(
 'USER_LOGIN_DATE'=>"Angemeldet seit",
 'CMS'=>"Redaktionssystem",
 'SEARCH_FILTER'=>"Filter",
+'QRCODE_SHOW'=>"QR-Code anzeigen",
 );}

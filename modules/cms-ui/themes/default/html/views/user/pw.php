@@ -1,6 +1,6 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="pw" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="user" data-async="" data-autosave=""><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pw" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+		<form name="" target="_self" data-target="view" action="./" data-method="pw" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pw" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
 				</div>
@@ -8,14 +8,14 @@
 					<input  class="radio" type="radio" id="<?php echo REQUEST_ID ?>_type_proposal" name="type" value="proposal"<?php if('proposal'==@$type)echo ' checked="checked"' ?> />
 					
 					<label for="<?php echo REQUEST_ID ?>_type_proposal" class="label"><?php echo $password_proposal ?>
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_new_password'.'')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'USER_new_password'.'')))); ?></span>
 						
-						<span class="text"><?php echo nl2br('text:: '); ?></span>
+						<span><?php echo nl2br('text:: '); ?></span>
 						
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities($password_proposal))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities($password_proposal))); ?></span>
 						
 					</label>
-					<div class="inputholder"><input<?php if ('') echo ' disabled="true"' ?> id="<?php echo REQUEST_ID ?>_password_proposal" name="password_proposal<?php if ('') echo '_disabled' ?>" type="hidden" maxlength="256" class="text" value="<?php echo Text::encodeHtml(@$password_proposal) ?>" /><?php if ('') { ?><input type="hidden" name="password_proposal" value="<?php $password_proposal ?>"/><?php } ?></div>
+					<input type="hidden" name="password_proposal" value="<?php echo $password_proposal ?>"/>
 					
 				</div>
 			</div>
@@ -69,13 +69,13 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'email';$default  = '';$readonly = '';		
+							<?php { $tmpname     = 'email';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -91,13 +91,13 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'timeout';$default  = '';$readonly = '';		
+							<?php { $tmpname     = 'timeout';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -113,5 +113,5 @@
 			<?php } ?>
 			
 			
-		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
+		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
 	

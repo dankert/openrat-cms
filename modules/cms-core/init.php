@@ -75,7 +75,7 @@ function fatal_handler() {
     
     $error = error_get_last();
     
-    if( $error !== NULL)
+    if( !is_null($error) )
     {
         $errno   = $error["type"];
         $errfile = $error["file"];

@@ -1,23 +1,23 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="memberships" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="user" data-async="" data-autosave="1"><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="memberships" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<table width="100%">
+		<form name="" target="_self" data-target="view" action="./" data-method="memberships" data-action="user" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form user" data-async="" data-autosave="1"><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="user" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="memberships" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 				<tr class="headline">
 					<td colspan="2">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'group'.'')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'group'.'')))); ?></span>
 						
 					</td>
 				</tr>
 				<?php foreach($memberships as $list_key=>$list_value){ ?><?php extract($list_value) ?>
 					<tr class="data">
 						<td width="10%">
-							<?php { $tmpname     = $var;$default  = '';$readonly = '';		
+							<?php { $tmpname     = $var;$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
 			$checked = $default;
 
-		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1" <?php if( $checked ) echo 'checked="checked"' ?> /><?php
+		?><input class="checkbox" type="checkbox" id="<?php echo REQUEST_ID ?>_<?php echo $tmpname ?>" name="<?php echo $tmpname  ?>"  <?php if ($readonly) echo ' disabled="disabled"' ?> value="1"<?php if( $checked ) echo ' checked="checked"' ?><?php if( $required ) echo ' required="required"' ?> /><?php
 
 		if ( $readonly && $checked )
 		{ 
@@ -28,9 +28,9 @@
 						</td>
 						<td>
 							<label for="<?php echo REQUEST_ID ?>_<?php echo $var ?>" class="label">
-								<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon_group.png" />
+								<img src="./modules/cms-ui/themes/default/images/icon/icon_group.png" />
 								
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 								
 							</label>
 						</td>
@@ -45,5 +45,5 @@
 					</td>
 				</tr>
 			</table>
-		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
+		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
 	

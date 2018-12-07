@@ -33,7 +33,7 @@
 				<tr class="data">
 					<td class="clickable">
 						<a title="<?php echo $desc ?>" target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="preview" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url($type,'',$id,array()) ?>">
-							<img src="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
+							<i class="image-icon image-icon--action-<?php echo $icon ?>"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 							

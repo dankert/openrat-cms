@@ -135,7 +135,7 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_totp" class="label"><?php echo lang('user_totp') ?>
 						</label>
-						<div class="qrcode" data-qrcode="<?php echo $totpSecretUrl ?>" title="<?php echo $totpSecretUrl ?>"></div>
+						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $totpSecretUrl ?>" title="QR-Code anzeigen"></i>
 						
 					</div>
 				</div>
@@ -159,7 +159,7 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_hotp" class="label"><?php echo lang('user_hotp') ?>
 						</label>
-						<div class="qrcode" data-qrcode="<?php echo $hotpSecretUrl ?>" title="<?php echo $hotpSecretUrl ?>"></div>
+						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $hotpSecretUrl ?>" title="QR-Code anzeigen"></i>
 						
 					</div>
 				</div>

@@ -136,6 +136,7 @@ class Value
 
 	/**
 	 * @type Publish
+     * @deprecated use #publisher
 	 */
 	var $publish = false;
 
@@ -819,6 +820,7 @@ SQL
 				$linkValue->element   = $element;
 				$linkValue->pageid = $this->pageid;
 				$linkValue->languageid = $this->languageid;
+				$linkValue->publisher  = $this->publisher;
 				$linkValue->load();
 				
 				$objectid = $linkValue->linkToObjectId;

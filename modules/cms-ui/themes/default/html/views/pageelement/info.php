@@ -39,7 +39,7 @@
 					
 				</td>
 				<td data-name="<?php echo $template_name ?>" data-action="template" data-id="<?php echo $template_id ?>" class="clickable">
-					<imgsrc="./modules/cms-ui/themes/default/images/icon/icon_template.png" />
+					<img src="./modules/cms-ui/themes/default/images/icon/icon_template.png" />
 					
 					<span><?php echo nl2br(encodeHtml(htmlentities($template_name))); ?></span>
 					
@@ -51,7 +51,7 @@
 					
 				</td>
 				<td data-name="<?php echo $element_name ?>" data-action="element" data-id="<?php echo $element_id ?>" class="clickable">
-					<imgsrc="./modules/cms-ui/themes/default/images/icon_<?php echo $element_type ?>.png" />
+					<img src="./modules/cms-ui/themes/default/images/icon_<?php echo $element_type ?>.png" />
 					
 					<span><?php echo nl2br(encodeHtml(htmlentities($element_name))); ?></span>
 					
@@ -63,13 +63,13 @@
 					
 				</td>
 				<td>
-					<imgsrc="./modules/cms-ui/themes/default/images/icon/el_date.png" />
+					<img src="./modules/cms-ui/themes/default/images/icon/el_date.png" />
 					
 					<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($lastchange_date) ?>
 					
 					<span><?php echo nl2br(', '); ?></span>
 					
-					<imgsrc="./modules/cms-ui/themes/default/images/icon/user.png" />
+					<img src="./modules/cms-ui/themes/default/images/icon/user.png" />
 					
 					<?php include_once( 'modules/template-engine/components/html/user/component-user.php') ?><?php component_user($lastchange_user) ?>
 					

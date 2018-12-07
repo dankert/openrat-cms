@@ -57,7 +57,7 @@
 						<td class="clickable">
 							<label for="<?php echo REQUEST_ID ?>_<?php echo $id ?>" class="label">
 								<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="edit" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($type,'',$objectid,array()) ?>">
-									<img src="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
+									<i class="image-icon image-icon--action-<?php echo $icon ?>"></i>
 									
 									<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $name,40,'..',constant('STR_PAD_BOTH') )))); ?></span>
 									

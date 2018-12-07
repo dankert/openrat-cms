@@ -25,7 +25,7 @@
 				<tr class="data">
 					<td class="clickable">
 						<a target="_self" date-name="<?php echo $name ?>" name="<?php echo $name ?>" data-type="open" data-action="<?php echo $type ?>" data-method="edit" data-id="<?php echo $id ?>" data-extra="[]" href="<?php echo Html::url($type,'',$id,array()) ?>">
-							<i class="image-icon image-icon--action-var:type"></i>
+							<i class="image-icon image-icon--action-<?php echo $type ?>"></i>
 							
 							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.$name.'')))); ?></span>
 							

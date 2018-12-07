@@ -5,7 +5,7 @@
 		<?php $if2=!(($image)==FALSE); if($if2){?>
 			<div class="line">
 				<div class="line">
-					<imgsrc="<?php echo $image ?>" />
+					<img src="<?php echo $image ?>" />
 					
 				</div>
 			</div>

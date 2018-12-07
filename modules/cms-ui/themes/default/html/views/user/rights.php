@@ -37,20 +37,20 @@
 										<tr class="data">
 											<td>
 												<?php $if12=(isset($username)); if($if12){?>
-													<imgsrc="./modules/cms-ui/themes/default/images/icon_user.png" />
+													<img src="./modules/cms-ui/themes/default/images/icon_user.png" />
 													
 													<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $username,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
 													
 												<?php } ?>
 												<?php $if12=(isset($groupname)); if($if12){?>
-													<imgsrc="./modules/cms-ui/themes/default/images/icon_group.png" />
+													<img src="./modules/cms-ui/themes/default/images/icon_group.png" />
 													
 													<span><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $groupname,20,'..',constant('STR_PAD_BOTH') )))); ?></span>
 													
 												<?php } ?>
 												<?php $if12=!(isset($username)); if($if12){?>
 													<?php $if13=!(isset($groupname)); if($if13){?>
-														<imgsrc="./modules/cms-ui/themes/default/images/icon_group.png" />
+														<img src="./modules/cms-ui/themes/default/images/icon_group.png" />
 														
 														<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'global_all'.'')))); ?></span>
 														
@@ -62,7 +62,7 @@
 												
 											</td>
 											<td>
-												<imgsrc="./modules/cms-ui/themes/default/images/icon_<?php echo $objecttype ?>.png" />
+												<img src="./modules/cms-ui/themes/default/images/icon_<?php echo $objecttype ?>.png" />
 												
 												<a target="_self" data-action="<?php echo $objecttype ?>" data-method="" data-id="<?php echo $objectid ?>" data-extra="[]" href="<?php echo Html::url($objecttype,'',$objectid,array()) ?>">
 													<span title="<?php echo lang('select') ?>"><?php echo nl2br(encodeHtml(htmlentities(Text::maxLength( $objectname,20,'..',constant('STR_PAD_BOTH') )))); ?></span>

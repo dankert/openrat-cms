@@ -1,12 +1,12 @@
 
 	
-		<form name="" target="_self" data-target="view" action="./" data-method="memberships" data-action="group" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="group" data-async="" data-autosave="1"><input type="submit" class="invisible" /><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="group" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="memberships" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<table width="100%">
+		<form name="" target="_self" data-target="view" action="./" data-method="memberships" data-action="group" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form group" data-async="" data-autosave="1"><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="group" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="memberships" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
+			<div class="table-wrapper"><div class="table-filter"><input type="search" name="filter" placeholder="<?php echo lang('SEARCH_FILTER') ?>" /></div><table width="100%"></div>
 				<tr class="headline">
 					<td width="10%">
 					</td>
 					<td>
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'name'.'')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'name'.'')))); ?></span>
 						
 					</td>
 				</tr>
@@ -30,9 +30,9 @@
 						</td>
 						<td>
 							<label for="<?php echo REQUEST_ID ?>_<?php echo $var ?>" class="label">
-								<img class="" title="" src="./modules/cms-ui/themes/default/images/icon/icon_user.png" />
+								<img src="./modules/cms-ui/themes/default/images/icon/icon_user.png" />
 								
-								<span class="text"><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
+								<span><?php echo nl2br(encodeHtml(htmlentities($name))); ?></span>
 								
 							</label>
 						</td>
@@ -47,5 +47,5 @@
 					</div>
 				</td>
 			</tr>
-		<div class="bottom"><div class="command "><input type="submit" class="submit ok" value="OK" /></div></div></form>
+		<div class="or-form-actionbar"><input type="submit" class="or-form-btn or-form-btn--primary" value="OK" /></div></form>
 	
