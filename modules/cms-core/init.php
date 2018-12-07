@@ -70,7 +70,9 @@ function exception_error_handler($severity, $message, $file, $line) {
 set_error_handler("exception_error_handler");
 
 
-
+/**
+ * Ermöglicht das Loggen von Fatal-Errors.
+ */
 function fatal_handler() {
     
     $error = error_get_last();
@@ -82,7 +84,7 @@ function fatal_handler() {
         $errline = $error["line"];
         $errstr  = $error["message"];
 
-        $message = $errno .' '. $errstr.' '. $errfile.' '. $errline;
+        $message = 'Error '.$errno .' '. $errstr.' in '. $errfile.':'. $errline;
         if(class_exists('Logger'))
         	Logger::error( $message);
         else
@@ -92,11 +94,6 @@ function fatal_handler() {
 
         // It is not possibile to throw an exception out of a shutdown function!
         //throw new ErrorException($errstr, $errno, 1, $errfile, $errline);
-    }else {
-        error_log('Unknown fatal error. Sorry.');
-
-        // It is not possibile to throw an exception out of a shutdown function!
-        //throw new ErrorException('Fatal error.',E_CORE_ERROR );
     }
 
 }

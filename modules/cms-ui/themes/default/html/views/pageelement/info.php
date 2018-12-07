@@ -27,7 +27,7 @@
 					
 				</td>
 				<td class="filename">
-					<i class="image-icon image-icon--element-var:element_type"></i>
+					<i class="image-icon image-icon--element-<?php echo $element_type ?>"></i>
 					
 					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'el_'.$element_type.''.'')))); ?></span>
 					
