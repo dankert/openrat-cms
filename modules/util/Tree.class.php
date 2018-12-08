@@ -342,6 +342,7 @@ class Tree
                 $treeElement->internalId = $id . '_' . $elementid;
                 $treeElement->text = $element->name;
                 $treeElement->action = 'pageelement';
+                $treeElement->type   = 'pageelement';
                 $treeElement->icon = 'el_' . $element->getTypeName();
                 $treeElement->extraId = array('elementid' => $elementid, REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);
 
@@ -384,8 +385,10 @@ class Tree
             if  ( BaseObject::available($value->linkToObjectId) )
             {
                 $o = new BaseObject( $value->linkToObjectId );
+                $o->load();
                 $treeElement = new TreeElement();
                 $treeElement->type       = $o->getType();
+                $treeElement->action     = $o->getType();
                 $treeElement->id         = $o->objectid;
                 $treeElement->internalId = $o->objectid;
                 $treeElement->extraId = array(REQ_PARAM_LANGUAGE_ID => $page->languageid, REQ_PARAM_MODEL_ID => $page->modelid);

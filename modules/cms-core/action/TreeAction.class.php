@@ -60,8 +60,8 @@ class TreeAction extends Action
     {
         $tree = new Tree();
 
-        if	( intval($this->getRequestVar('id')) != 0 )
-            $tree->$type( $this->getRequestId() );
+        if	( $this->hasRequestVar('id'))
+            $tree->$type( $this->getRequestVar('id') );
         else
             $tree->$type();
 
