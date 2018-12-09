@@ -5,7 +5,7 @@
 				<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo $name ?></legend><div>
 					<?php $$name= $extension; ?>
 					
-					<label class="or-form-row"><span class="or-form-label">?extension?</span><span class="or-form-input"><div class="inputholder"><input id="<?php echo REQUEST_ID ?>_<?php echo $name ?>" name="<?php echo $name ?><?php if ('') echo '_disabled' ?>" required="required" type="text" maxlength="10" class="text" value="<?php echo Text::encodeHtml(@$$name) ?>" /><?php if ('') { ?><input type="hidden" name="<?php echo $name ?>" value="<?php $$name ?>"/><?php } ?></div></span></label>
+					<label class="or-form-row"><span class="or-form-label">?extension?</span><span class="or-form-input"><div class="inputholder"><input id="<?php echo REQUEST_ID ?>_<?php echo $name ?>" name="<?php if ('') echo ''.'_' ?><?php echo $name ?><?php if ('') echo '_disabled' ?>" required="required" type="text" maxlength="10" class="" value="<?php echo Text::encodeHtml(@$$name) ?>" /><?php if ('') { ?><input type="hidden" name="<?php echo $name ?>" value="<?php $$name ?>"/><?php } ?></div></span></label>
 					
 				</div></fieldset>
 			<?php } ?>

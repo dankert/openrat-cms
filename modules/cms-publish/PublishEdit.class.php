@@ -18,7 +18,7 @@ class PublishEdit extends Publish
      */
     public function linkToObject( $from, $to )
     {
-        return '';
+        return '->'.$to;
     }
 
     public function isPublic()

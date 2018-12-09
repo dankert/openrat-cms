@@ -32,7 +32,6 @@ class Macro
     /**
      * @var \cms\model\Project Projekt
      */
-	var $project;
 	var $output   = '';
 	var $objectid = 0;
 
