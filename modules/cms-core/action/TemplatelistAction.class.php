@@ -120,6 +120,7 @@ class TemplatelistAction extends Action
 
 				// Neues Template anlegen.
 				$template = new Template();
+				$template->projectid = $this->project->projectid;
 				$template->add( $this->getRequestVar('name') );
 				$this->addNotice('template',$template->name,'ADDED','ok');
 				break;
@@ -136,6 +137,7 @@ class TemplatelistAction extends Action
 
 				// Neues Template anlegen.
 				$template = new Template();
+                $template->projectid = $this->project->projectid;
 				$template->add( $this->getRequestVar('name') );
 				$this->addNotice('template',$template->name,'ADDED','ok');
 
@@ -182,9 +184,8 @@ class TemplatelistAction extends Action
 
 				// Neues Template anlegen.
 				$template = new Template();
+                $template->projectid = $this->project->projectid;
 
-				$template->modelid = $this->project->getDefaultModelId();
-				
 				$template->add( $this->getRequestVar('name') );
 
 				$example = parse_ini_file('examples/templates/'.$this->getRequestVar('example'),true);
