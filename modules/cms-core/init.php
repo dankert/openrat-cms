@@ -43,7 +43,7 @@ define('OR_AUTHCLASSES_DIR'   ,OR_MODULES_DIR.'cms-core/auth/' );
 define('OR_TMP_DIR'           ,CMS_ROOT_DIR.'tmp/'            );
 
 define('START_TIME'           ,time()              );
-define('REQUEST_ID'           ,'req'.time().rand() );
+define('REQUEST_ID'           ,'req0' ); // Nicht mehr notwendig, kann entfallen.
 
 // Must be relative to HTML-Path!
 define('OR_HTML_MODULES_DIR'  ,'./modules/'      );
