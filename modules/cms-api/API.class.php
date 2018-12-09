@@ -42,26 +42,26 @@ class API
             Logger::warn($e);
 
             API::sendHTTPStatus(500, 'Method not found');
-            $data = array('status' => 500, 'error' => 'Method not found', 'description' => $e->getMessage(), 'reason' => $e->getCode());
+            $data = array('status' => 500, 'error' => 'Method not found', 'description' => $e->getMessage()."\n".$e->getMessage(), 'reason' => $e->getCode());
         } catch (ObjectNotFoundException $e) {
             Logger::warn($e);
 
             API::sendHTTPStatus(500, 'Object not found');
-            $data = array('status' => 500, 'error' => $e->getMessage(), 'description' => $e->getTraceAsString(), 'reason' => $e->getCode());
+            $data = array('status' => 500, 'error' => $e->getMessage(), 'description' => $e->getMessage()."\n".$e->getTraceAsString(), 'reason' => $e->getCode());
         } catch (OpenRatException $e) {
             Logger::warn($e);
 
             API::sendHTTPStatus(500, 'Internal CMS Error');
-            $data = array('status' => 500, 'error' => $e->getMessage(), 'description' => $e->getTraceAsString(), 'reason' => $e->getCode());
+            $data = array('status' => 500, 'error' => $e->getMessage(), 'description' => $e->getMessage()."\n".$e->getTraceAsString(), 'reason' => $e->getCode());
         } catch (SecurityException $e) {
             Logger::warn($e);
             //Logger::info('API request not allowed: ' . $e->getMessage());
             API::sendHTTPStatus(403, 'Forbidden');
-            $data = array('status' => 403, 'error' => 'You are not allowed to execute this action.', 'description' => $e->getTraceAsString(), 'reason' => $e->getCode());
+            $data = array('status' => 403, 'error' => 'You are not allowed to execute this action.', 'description' => $e->getMessage()."\n".$e->getTraceAsString(), 'reason' => $e->getCode());
         } catch (Exception $e) {
             Logger::warn($e);
             API::sendHTTPStatus(500, 'Internal Server Error');
-            $data = array('status' => 500, 'error' => 'Server error', 'description' => $e->getTraceAsString(), 'reason' => $e->getCode());
+            $data = array('status' => 500, 'error' => 'Server error', 'description' => $e->getMessage()."\n".$e->getTraceAsString(), 'reason' => $e->getCode());
         }
 
 
