@@ -13,8 +13,10 @@ try {
 
 } catch (Exception $e) {
 
-    echo $e->__toString();
+    if (!headers_sent())
+        header('HTTP/1.0 500 Internal Server Error');
 
+    echo $e->__toString();
 }
 
 
