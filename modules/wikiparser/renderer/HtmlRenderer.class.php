@@ -160,7 +160,7 @@ class HtmlRenderer
 								if	( strtolower(get_class($c)) == 'textelement')
 									$source .= $c->text."\n";
 							$child->children = array();
-							require_once('./geshi/geshi.php');
+							require_once( __DIR__.'/../../../geshi/geshi.php');
 							$geshi = new Geshi($source,$child->language);
 							$val = $geshi->parse_code(); 
 						}
