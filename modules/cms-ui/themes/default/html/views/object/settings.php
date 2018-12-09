@@ -5,7 +5,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_validity_from_date" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'from'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'from'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -19,7 +19,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_validity_until_date" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'until'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'until'.'')))); ?></span>
 							
 						</label>
 					</div>
@@ -35,12 +35,12 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_settings" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'SETTINGS'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'SETTINGS'.'')))); ?></span>
 							
 						</label>
 					</div>
 					<div class="input">
-						<textarea  name="<?php if ('') echo ''.'_' ?>settings<?php if ('') echo '_disabled' ?>" data-extension="" data-mimetype="" data-mode="yaml" class="editor code-editor"><?php echo ${'settings'} ?></textarea>
+						<textarea  name="<?php if ('') echo ''.'_' ?>settings<?php if ('') echo '_disabled' ?>" data-extension="" data-mimetype="" data-mode="yaml" class="editor code-editor"><?php echo htmlentities(${'settings'}) ?></textarea>
 						
 					</div>
 				</div>

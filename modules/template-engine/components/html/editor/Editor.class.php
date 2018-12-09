@@ -29,11 +29,11 @@ class EditorComponent extends FieldComponent
 				break;
 
 			case 'markdown':
-				echo '<textarea '.$this->outputNameAttribute().' class="editor markdown-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
+				echo '<textarea '.$this->outputNameAttribute().' class="editor markdown-editor"><?php echo htmlentities(${'.$this->value($this->name).'}) ?></textarea>';
 		        break;
 	            
 			case 'code':
-				echo '<textarea '.$this->outputNameAttribute().' data-extension="'.$this->htmlvalue($this->extension).'" data-mimetype="'.$this->htmlvalue($this->mimetype).'" data-mode="'.$this->htmlvalue($this->mode).'" class="editor code-editor"><?php echo ${'.$this->value($this->name).'} ?></textarea>';
+				echo '<textarea '.$this->outputNameAttribute().' data-extension="'.$this->htmlvalue($this->extension).'" data-mimetype="'.$this->htmlvalue($this->mimetype).'" data-mode="'.$this->htmlvalue($this->mode).'" class="editor code-editor"><?php echo htmlentities(${'.$this->value($this->name).'}) ?></textarea>';
 		        break;
 
 

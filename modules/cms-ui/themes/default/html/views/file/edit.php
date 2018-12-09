@@ -9,7 +9,7 @@
 				<div class="input">
 					<br/>
 					
-					<input size="40" id="req1544228380881665885_file" type="file" name="file" class="upload"  />
+					<input size="40" id="req0_file" type="file" name="file" class="upload"  />
 					
 					<br/>
 					

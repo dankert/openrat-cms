@@ -7,7 +7,7 @@
 					
 				</td>
 				<td>
-					<textarea  name="<?php if ('') echo ''.'_' ?>value<?php if ('') echo '_disabled' ?>" data-extension="<?php echo $extension ?>" data-mimetype="<?php echo $mimetype ?>" data-mode="htmlmixed" class="editor code-editor"><?php echo ${'value'} ?></textarea>
+					<textarea  name="<?php if ('') echo ''.'_' ?>value<?php if ('') echo '_disabled' ?>" data-extension="<?php echo $extension ?>" data-mimetype="<?php echo $mimetype ?>" data-mode="htmlmixed" class="editor code-editor"><?php echo htmlentities(${'value'}) ?></textarea>
 					
 				</td>
 			</tr>
