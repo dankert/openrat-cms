@@ -278,7 +278,7 @@ class Folder extends BaseObject
 
 
 	
-	function getPages()
+	public function getPages()
 	{
 		$db = db_connection();
 
@@ -526,32 +526,39 @@ class Folder extends BaseObject
 
 	// Ermitteln aller Unterordner
 	//
-	function subfolder()
+	public function subfolder()
 	{
-		$db = db_connection();
+		$stmt = db()->sql(<<<SQL
 
-		$sql = $db->sql('SELECT id FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_FOLDER.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt( 'objectid' ,$this->objectid  );
+SELECT id FROM {{object}}
+		                 WHERE parentid={objectid} AND typeid={typeid}
+		                 ORDER BY orderid ASC
+SQL
+        );
 
-		$this->subfolders = $sql->getCol();
+		$stmt->setInt( 'objectid' ,$this->objectid        );
+		$stmt->setInt( 'typeid'   ,OR_TYPEID_FOLDER );
+
+		$this->subfolders = $stmt->getCol();
 
 		return $this->subfolders;
 	}
 
 	
 	
-	function getSubfolderFilenames()
+	public function getSubfolderFilenames()
 	{
-		$db = db_connection();
+		$stmt = db()->sql(<<<SQL
+SELECT id,filename FROM {{object}}
+		                 WHERE parentid={objectid} AND typeid={typeid}
+		                 ORDER BY orderid ASC
+SQL
+        );
 
-		$sql = $db->sql('SELECT id,filename FROM {{object}} '.
-		               '  WHERE parentid={objectid} AND typeid='.OR_TYPEID_FOLDER.
-		               '  ORDER BY orderid ASC' );
-		$sql->setInt( 'objectid' ,$this->objectid  );
+		$stmt->setInt( 'objectid' ,$this->objectid        );
+        $stmt->setInt( 'typeid'   ,OR_TYPEID_FOLDER );
 
-		return $sql->getAssoc();
+		return $stmt->getAssoc();
 	}
 
 	
@@ -562,8 +569,6 @@ class Folder extends BaseObject
 	 */
 	function getAllSubFolderIds()
 	{
-		global $SESS;
-
 		$ids = array();
 
 		foreach( $this->getSubFolderIds() as $id )

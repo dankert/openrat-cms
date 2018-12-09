@@ -75,6 +75,9 @@ class Page extends BaseObject
      */
 	var $publisher;
 
+    /**
+     * @var Value[]
+     */
     public $values;
 
     /**
