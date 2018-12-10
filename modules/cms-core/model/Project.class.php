@@ -978,23 +978,30 @@ SQL
      * @param types Array
      * @return Liste von Object-Ids
      */
-    public function getAllObjectIds( $types=array('folder','page','link','file') )
+    public function getAllObjectIds( $types=array('folder','page','link','file','image','url','text') )
     {
-        $db = db_connection();
-
-        $stmt = $db->sql('SELECT id FROM {{object}}'.
-            '  WHERE projectid={projectid}'.
-            '    AND (    typeid  ={is_folder}' .
-            '          OR typeid  ={is_file}' .
-            '          OR typeid  ={is_page}' .
-            '          OR typeid  ={is_link} )' .
-            '  ORDER BY orderid ASC' );
+        $stmt = db()->sql( <<<SQL
+          SELECT id FROM {{object}}
+              WHERE projectid={projectid}
+                AND (    typeid  ={is_folder}
+                      OR typeid  ={is_file}
+                      OR typeid  ={is_image}
+                      OR typeid  ={is_text}
+                      OR typeid  ={is_page}
+                      OR typeid  ={is_link}
+                      OR typeid  ={is_url} )
+             ORDER BY orderid ASC
+SQL
+        );
 
         $stmt->setInt('projectid',$this->projectid );
         $stmt->setInt('is_folder',in_array('folder',$types)?OR_TYPEID_FOLDER:0);
-        $stmt->setInt('is_file'  ,in_array('file'  ,$types)?OR_TYPEID_FILE:0);
-        $stmt->setInt('is_page'  ,in_array('page'  ,$types)?OR_TYPEID_PAGE:0);
-        $stmt->setInt('is_link'  ,in_array('link'  ,$types)?OR_TYPEID_LINK:0);
+        $stmt->setInt('is_file'  ,in_array('file'  ,$types)?OR_TYPEID_FILE  :0);
+        $stmt->setInt('is_image' ,in_array('image' ,$types)?OR_TYPEID_IMAGE :0);
+        $stmt->setInt('is_text'  ,in_array('text'  ,$types)?OR_TYPEID_TEXT  :0);
+        $stmt->setInt('is_page'  ,in_array('page'  ,$types)?OR_TYPEID_PAGE  :0);
+        $stmt->setInt('is_link'  ,in_array('link'  ,$types)?OR_TYPEID_LINK  :0);
+        $stmt->setInt('is_url'   ,in_array('url'   ,$types)?OR_TYPEID_URL   :0);
 
         return( $stmt->getCol() );
     }

@@ -546,18 +546,13 @@ class ElementAction extends Action
 						
 						switch( $this->element->typeid )
 						{
-							case ELEMENT_TYPE_INSERT:
-								if	( !$o->isFolder )
-									continue 2;
-								break;
-
 							case ELEMENT_TYPE_LINK:
-								if	( !$o->isPage && !$o->isFile && !$o->isLink )
+								if	( ! in_array( $o->typeid, array(OR_TYPEID_PAGE,OR_TYPEID_IMAGE,OR_TYPEID_FILE,OR_TYPEID_LINK,OR_TYPEID_URL,OR_TYPEID_TEXT ) ) )
 									continue 2;
 								break;
 						        //Change tobias 
 							case ELEMENT_TYPE_INSERT:
-								if	( !$o->isFolder && !$o->isPage && !$o->isFile && !$o->isLink )
+                                if	( ! in_array( $o->typeid, array(OR_TYPEID_FOLDER,OR_TYPEID_PAGE,OR_TYPEID_IMAGE,OR_TYPEID_FILE,OR_TYPEID_LINK,OR_TYPEID_URL,OR_TYPEID_TEXT ) ) )
 									continue 2;
 								break;
 							//Change tobias end
