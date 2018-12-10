@@ -18,6 +18,13 @@ namespace cms\model {
 
         public $objectid;
 
+        /** Sprach-ID
+         * @see Language
+         * @type Integer
+         */
+        public $languageid;
+
+
         /** Logischer (sprachabhaengiger) Name des Objektes
          * (wird in Tabelle <code>name</code> abgelegt)
          * @type String
@@ -29,13 +36,6 @@ namespace cms\model {
          * @type String
          */
         public $description;
-
-        /** Sprach-ID
-         * @see Language
-         * @type Integer
-         */
-        public $languageid;
-
         /** <strong>Konstruktor</strong>
          *
          * @param Integer Objekt-ID

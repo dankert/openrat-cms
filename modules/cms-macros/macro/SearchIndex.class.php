@@ -1,6 +1,7 @@
 <?php
 
 use cms\model\Folder;
+use cms\model\Name;
 use cms\model\Page;
 use cms\model\Project;
 use cms\publish\PublishEdit;
@@ -43,9 +44,15 @@ class SearchIndex extends Macro
                 $page->publisher = new PublishEdit();
                 $page->load();
                 $page->generate();
-                $searchIndex[ $pageid ] = array(
-                    'url'    => $this->page->path_to_object( $pageid ),
-                    'content'=> array_reduce(
+
+                $name = $page->getNameForLanguage( $this->page->languageid );
+
+                $searchIndex[] = array(
+                    'id'      => $pageid,
+                    'title'   => $name->name,
+                    'filename'=> $page->filename,
+                    'url'     => $this->page->path_to_object( $pageid ),
+                    'content' => array_reduce(
                         $page->values,
                         function($act, $value)
                         {

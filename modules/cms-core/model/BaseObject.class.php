@@ -589,7 +589,8 @@ SQL
 
             if	( intval($this->parentid) == 0 )
                 $this->isRoot = true;
-            else	$this->isRoot = false;
+            else
+                $this->isRoot = false;
 
             $this->createDate     = $row['create_date'    ];
             $this->lastchangeDate = $row['lastchange_date'];
@@ -1457,9 +1458,18 @@ SQL
         {
             $languageId = $this->getProject()->getDefaultLanguageId();
 
+            return $this->getNameForLanguage( $languageId );
+        }
+
+
+        /**
+         * @return Name
+         */
+        public function getNameForLanguage( $languageid )
+        {
             $name = new Name();
             $name->objectid   = $this->objectid;
-            $name->languageid = $languageId;
+            $name->languageid = $languageid;
             $name->load();
 
             return $name;
