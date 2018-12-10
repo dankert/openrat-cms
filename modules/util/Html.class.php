@@ -100,7 +100,10 @@ class Html
 			{
 				$urlParameterList[] = urlencode($var).'='.urlencode($value);
 			}
-			$urlParameter = '?'.implode('&amp;',$urlParameterList);
+
+			// We do not escape '&' as '&amp;' here, as it would brake things like Ajax-Urls.
+            // Maybe the escaping should be controled by a parameter.
+			$urlParameter = '?'.implode('&',$urlParameterList);
 		}
 		else
 		{
