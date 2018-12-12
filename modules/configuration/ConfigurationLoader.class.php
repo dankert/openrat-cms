@@ -79,11 +79,18 @@ class ConfigurationLoader
         // Does we have includes?
         if (isset($customConfig['include'])) {
 
+            // 'include' must be an array
             if (is_string($customConfig['include']))
                 $customConfig['include'] = array($customConfig['include']);
 
             // Load include files.
             foreach ($customConfig['include'] as $key => $file) {
+
+                if   ( $file[0] == '/')
+                    ; // File has an absolute path - do not change.
+                else
+                    // Prepend file path with our config directory.
+                    $file = __DIR__.'/../../config/'.$file;
 
                 if   (substr($file, -4) == '.yml'    ||
                       substr($file, -5) == '.yaml'   ||

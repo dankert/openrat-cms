@@ -10,6 +10,6 @@ database:
     password: "dbpass"       # password
 
 include:
-  - ./config/config-${http:host}.yml
+  - ./config-${http:host}.yml
 
 # There are a lot of more configuration settings available, see file 'config-all-example.yml' ...
