@@ -78,14 +78,18 @@ class LoginAction extends Action
 
 		if	( !isset($conf['database'][$dbid] ))
 			throw new \LogicException( 'unknown DB-Id: '.$dbid );
-			
-		$db = db_connection();
-		if	( is_object($db) )
-        {
-			$db->rollback();
-			$db->disconnect(); // Bäm. Dies. ist. notwenig. WTF.
-			//$db = null;
-            //Session::setDatabase( null );
+
+        try{
+
+            $db = db();
+
+                $db->rollback();
+                $db->disconnect(); // Bäm. This seems to be necessary. WTF?
+                //$db = null;
+                //Session::setDatabase( null );
+        }
+        catch( Exception $e) {
+            // happens if we have no db connection.
         }
 
         try

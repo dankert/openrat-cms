@@ -148,11 +148,12 @@ function not($var) {
  * Liefert die Datenbankverbindung fuer die aktuelle Sitzung.
  *
  * @return \database\Database
+ * @deprecated use db()
  */
 function db_connection()
 {
 
-    return Session::getDatabase();
+    return db();
 }
 
 /**
@@ -163,7 +164,12 @@ function db_connection()
 function db()
 {
 
-    return Session::getDatabase();
+    $db = Session::getDatabase();
+
+    if   ( ! is_object($db))
+        throw new RuntimeException('no database available');
+
+    return $db;
 }
 
 
