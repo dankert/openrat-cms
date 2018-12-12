@@ -638,11 +638,6 @@ class LoginAction extends Action
 		if	( !$openId->checkAuthentication() )
 		{
 			throw new \SecurityException('OpenId-Login failed' );
-			die();
-			$this->addNotice('user',$openId->user,'LOGIN_OPENID_FAILED',OR_NOTICE_ERROR,array('name'=>$openId->user),array($openId->error) );
-			$this->addValidationError('openid_url','');
-			$this->callSubAction('showlogin');
-			return;
 		}
 		
 		//Html::debug($openId);
@@ -657,11 +652,6 @@ class LoginAction extends Action
 		{
 			// Es konnte kein Benutzername ermittelt werden.
 			throw new \SecurityException('no username supplied by openid provider' );
-			die();
-			$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
-			$this->addValidationError('openid_url','');
-			$this->callSubAction('showlogin');
-			return;
 		}
 		
 		$user = User::loadWithName( $username );
@@ -683,11 +673,6 @@ class LoginAction extends Action
 				Logger::debug("OpenId-Login failed for $username");
 				// Benutzer ist nicht in Benutzertabelle vorhanden (und angelegt werden soll er auch nicht).
 				throw new \SecurityException('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
-				die();
-				
-				$this->addNotice('user',$username,'LOGIN_OPENID_FAILED','error',array('name'=>$username) );
-				$this->addValidationError('openid_url','');
-				return;
 			}
 		}
 		else

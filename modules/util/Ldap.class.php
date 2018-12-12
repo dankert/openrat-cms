@@ -67,13 +67,13 @@ class Ldap
 		{
 			Logger::error( "connect to ldap server '$ldapHost:$ldapPort' failed" );
 			// Abbruch, wenn LDAP-Server nicht erreichbar
-			die( "Connection failed to $ldapHost:$ldapPort (".ldap_errno().'/'.ldap_error().'). Please contact your administrator.' );
+			throw new RuntimeException( "Connection failed to $ldapHost:$ldapPort (".ldap_errno().'/'.ldap_error().'). Please contact your administrator.' );
 		}
 		
 		// Protokollversion setzen.
 		$j = ldap_set_option( $this->connection, LDAP_OPT_PROTOCOL_VERSION,intval($conf['ldap']['protocol']) );
 		if	( ! $j )
-			die( 'LDAP error while setting protocol version'.ldap_errno().'/'.ldap_error().')' );
+			throw new LogicException( 'LDAP error while setting protocol version'.ldap_errno().'/'.ldap_error().')' );
 		
 	}	
 	

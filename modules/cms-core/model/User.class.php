@@ -750,7 +750,7 @@ SQL
 	 */
 	function getRights()
 	{
-		die('User.class::getRights()');
+		throw new \DomainException('User.class::getRights()');
 		
 //		$db = db_connection();
 //		$var = array();

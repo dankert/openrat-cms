@@ -33,7 +33,7 @@
 						<div class="input">
 							<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_mail" name="<?php if ('') echo ''.'_' ?>mail<?php if ('') echo '_disabled' ?>" type="text" maxlength="255" class="" value="<?php echo Text::encodeHtml(@$mail) ?>" /><?php if ('') { ?><input type="hidden" name="mail" value="<?php $mail ?>"/><?php } ?></div>
 							
-							<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="?QRCODE_SHOW?"></i>
+							<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo 'mailto:'.$mail.'' ?>" title="QR-Code anzeigen"></i>
 							
 						</div>
 					</div>
@@ -56,7 +56,7 @@
 					<div class="input">
 						<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_tel" name="<?php if ('') echo ''.'_' ?>tel<?php if ('') echo '_disabled' ?>" type="text" maxlength="128" class="" value="<?php echo Text::encodeHtml(@$tel) ?>" /><?php if ('') { ?><input type="hidden" name="tel" value="<?php $tel ?>"/><?php } ?></div>
 						
-						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="?QRCODE_SHOW?"></i>
+						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo 'tel:'.$tel.'' ?>" title="QR-Code anzeigen"></i>
 						
 					</div>
 				</div>
@@ -184,7 +184,7 @@
 						</label>
 						<span><?php echo nl2br(encodeHtml(htmlentities($otpSecret))); ?></span>
 						
-						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $totpSecretUrl ?>" title="?QRCODE_SHOW?"></i>
+						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $totpSecretUrl ?>" title="QR-Code anzeigen"></i>
 						
 					</div>
 				</div>
@@ -210,7 +210,7 @@
 						
 						<label for="<?php echo REQUEST_ID ?>_hotp" class="label"><?php echo lang('user_hotp') ?>
 						</label>
-						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $hotpSecretUrl ?>" title="?QRCODE_SHOW?"></i>
+						<i class="image-icon image-icon--menu-qrcode qrcode" data-qrcode="<?php echo $hotpSecretUrl ?>" title="QR-Code anzeigen"></i>
 						
 					</div>
 				</div>

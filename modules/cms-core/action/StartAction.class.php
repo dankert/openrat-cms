@@ -591,7 +591,6 @@ class StartAction extends Action
 			
 			Session::set('openid',$openId);
 			$openId->redirect();
-			die('Unreachable Code');
 		}
 		
 

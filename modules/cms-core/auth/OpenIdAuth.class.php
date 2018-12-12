@@ -375,27 +375,16 @@ class OpenIdAuth implements Auth
 		if	( $queryVars['openid.invalidate_handle'] != $this->handle )
 		{
 			throw new \SecurityException('Association-Handle mismatch.');
-			die();
-			$this->error = 'Association-Handle mismatch.';
-			return false;
 		}
 
 		if	( $queryVars['openid.mode'] != 'id_res' )
 		{
 			throw new \SecurityException('Open-Id: Unknown mode:'.$queryVars['openid.mode']);
-			die();
-			
-			$this->error ='Open-Id: Unknown mode:'.$queryVars['openid.mode'];
-			return false;
 		}
 		
 		if	( $this->provider=='identity' && $queryVars['openid.identity'] != $this->identity )
 		{
 			throw new \SecurityException('Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity']);
-			die();
-			
-			$this->error ='Open-Id: Identity mismatch. Wrong identity:'.$queryVars['openid.identity'];
-			return false;
 		}
 		
 
@@ -453,10 +442,6 @@ class OpenIdAuth implements Auth
 		{
 			// Zeile nicht gefunden.
 			throw new \SecurityException('Undefined Open-Id response: "is_valid" expected, but not found');
-			die();
-			
-			$this->error = 'Undefined Open-Id response: "is_valid" expected, but not found';
-			return false;
 		}
 		elseif	( $result['is_valid'] == 'true' )
 		{
@@ -467,9 +452,6 @@ class OpenIdAuth implements Auth
 		{
 			// Bestaetigung wurde durch den OpenId-Provider abgelehnt.
 			throw new \SecurityException('Server refused login.');
-			die();
-			$this->error = 'Server refused login.';
-			return false;
 		}
 	}
 	

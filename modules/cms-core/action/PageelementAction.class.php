@@ -13,6 +13,7 @@ use cms\model\BaseObject;
 use cms\publish\PublishPreview;
 use Html;
 use Http;
+use LogicException;
 use Session;
 use Transformer;
 use \Text;
@@ -776,7 +777,7 @@ class PageelementAction extends Action
 			$this->value->loadWithId();
 
 			if	( $this->value->pageid != $this->page->pageid )
-				die( 'cannot release, bad page' );
+				throw new LogicException( 'cannot release, bad page' );
 
 			// Pruefen, ob Berechtigung zum Freigeben besteht
 			if	( !$this->page->hasRight(ACL_RELEASE) )

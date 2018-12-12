@@ -797,7 +797,7 @@ class FolderAction extends ObjectAction
 								break;
 
 							default:
-								die('fatal: what type to delete?');
+								throw new \LogicException('fatal: what type to delete?');
 						}
 						$notices[] = lang('COPIED');
 						break;
@@ -1585,7 +1585,7 @@ class FolderAction extends ObjectAction
 	public function pubPost()
 	{
 		if	( !$this->folder->hasRight( ACL_PUBLISH ) )
-			die('no rights for publish');
+			throw new \SecurityException('no rights for publish');
 
 		$subdirs = ( $this->hasRequestVar('subdirs') );
 		$pages   = ( $this->hasRequestVar('pages'  ) );

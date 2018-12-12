@@ -54,7 +54,7 @@ class ElementAction extends Action
     public function init()
     {
         if	( $this->getRequestId() == 0 )
-			die('no element-id available');
+			throw new \ValidationException('no element-id available');
 
 		$this->element = new Element( $this->getRequestId() );
 		$this->element->load();

@@ -6,13 +6,13 @@
 			<?php $if3=(config('login','logo','enabled')); if($if3){?>
 				<?php $if4=!((config('login','logo','url'))==FALSE); if($if4){?>
 					<a target="_self" data-url="<?php echo config('login','logo','url') ?>" data-action="" data-method="login" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','','',array()) ?>">
-						<img class="" title="" src="<?php echo config('login','logo','image') ?>" />
+						<img src="<?php echo config('login','logo','image') ?>" />
 						
 					</a>
 
 				<?php } ?>
 				<?php if(!$if4){?>
-					<img class="" title="" src="<?php echo config('login','logo','image') ?>" />
+					<img src="<?php echo config('login','logo','image') ?>" />
 					
 				<?php } ?>
 			<?php } ?>

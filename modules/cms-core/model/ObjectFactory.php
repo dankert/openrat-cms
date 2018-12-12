@@ -42,8 +42,7 @@ class ObjectFactory
 				break;
 
 			default:
-				die( "Unknown Object-Typ: ".$o->getType() );
-				debug_backtrace();
+				throw new \LogicException( "Unknown Object-Typ: ".$o->getType() );
 		}
 		
 		$x->load();

@@ -543,7 +543,7 @@ SQL
             $row = $sql->getRow();
 
             if (count($row) == 0)
-                die('fatal: Object::objectLoadRaw(): objectid not found: '.$this->objectid.', SQL='.$sql->raw);
+                throw new \ObjectNotFoundException('objectid not found: '.$this->objectid);
 
             $this->parentid  = $row['parentid' ];
             $this->filename  = $row['filename' ];
@@ -580,7 +580,7 @@ SQL
         public function setDatabaseRow( $row )
         {
             if	( count($row)==0 )
-                die('setDatabaseRow() got empty array, oid='.$this->objectid);
+                throw new \LogicException('setDatabaseRow() got empty array, oid='.$this->objectid);
 
             $this->parentid  = $row['parentid' ];
             $this->projectid = $row['projectid'];

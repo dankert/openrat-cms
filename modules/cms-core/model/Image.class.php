@@ -151,7 +151,7 @@ class Image extends File
 				break;
 
 			default:
-				die('unsupported image format "'.$this->extension.'", cannot load image. resize failed');
+				throw new \LogicException('unsupported image format "'.$this->extension.'", cannot load image. resize failed');
 		}
 
 		// Ab Version 2 der GD-Bibliothek sind TrueColor-Umwandlungen moeglich.
@@ -234,7 +234,7 @@ class Image extends File
 				break;
 				
 			default:
-				die('unsupported image format "'.$newformat.'", cannot resize');
+				throw new \LogicException('unsupported image format "'.$newformat.'", cannot resize');
 		} 
 
 		$f = fopen( $this->tmpfile(), "r" );

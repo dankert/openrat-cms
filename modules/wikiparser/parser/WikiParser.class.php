@@ -154,7 +154,6 @@ class WikiParser
 				
 				$zeilenAuszug = $this->getListenAuszug( $zeilen,$zeileNr,$bisZeileNr);
 //				Html::debug($zeilenAuszug,"Auszug");
-//				die();
 				$quote->children = $this->parseMultiLineText($zeilenAuszug);
 				$zeileNr = $bisZeileNr;
 				$children[] = $quote;
@@ -176,7 +175,6 @@ class WikiParser
 				
 				$zeilenAuszug = $this->getListenAuszug( $zeilen,$zeileNr,$bisZeileNr);
 //				Html::debug($zeilenAuszug,"Auszug");
-//				die();
 				foreach( $zeilenAuszug as $zeile )
 				{
 					$sep = $conf['editor']['text-markup']['definition-sep'];
@@ -281,8 +279,7 @@ class WikiParser
 				$bisZeileNr--;
 //				Html::debug($zeileNr,"Zeile");
 //				Html::debug($bisZeileNr,"bisZeile-P");
-//				die();	
-				
+
 				$para = new ParagraphElement();
 				for( $zn=$zeileNr;$zn<=$bisZeileNr;$zn++)
 				{
@@ -305,7 +302,7 @@ class WikiParser
 				continue;
 			}
 			
-			die( 'unknown line: '.$dieseZeile );
+			throw new LogicException( 'unknown line: '.$dieseZeile );
 		}
 		
 		return $children;

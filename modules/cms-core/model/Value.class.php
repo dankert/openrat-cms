@@ -662,10 +662,10 @@ SQL
 											$inhalt = '?'.$this->element->subtype.'?';
 									}
 								}
-								else die('FATAL: recursion detected');
+								else throw new \LogicException('FATAL: recursion detected');
 							}
 						}
-						else die('FATAL: recursion detected');
+						else throw new LogicException('FATAL: recursion detected');
 					}
 				}
 				elseif	( $object->isPage )
@@ -706,7 +706,7 @@ SQL
 									break;
 							}
 						}
-						else die('FATAL: recursion detected');
+						else throw new LogicException('FATAL: recursion detected');
 					}
 				}
 

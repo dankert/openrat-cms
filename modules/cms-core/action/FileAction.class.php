@@ -363,7 +363,7 @@ class FileAction extends ObjectAction
 				break;
 
 			default:
-				die( 'cannot uncompress file with extension: '.$this->file->extension );
+				throw new \OpenRatException( 'cannot uncompress file with extension: '.$this->file->extension );
 		}
 
 		$this->addNotice('file',$this->file->name,'DONE',OR_NOTICE_OK);
@@ -442,7 +442,7 @@ class FileAction extends ObjectAction
 				break;
 
 			default:
-				die( 'cannot extract file with extension: '.$this->file->extension );
+				throw new \OpenRatException( 'cannot extract file with extension: '.$this->file->extension );
 		}
 		$this->callSubAction('edit');
 	}
@@ -514,7 +514,7 @@ class FileAction extends ObjectAction
 				
 				break;
 			default:
-				die( 'unknown compress type: '.$format );
+				throw new \OpenRatException( 'unknown compress type: '.$format );
 		}
 
 		$this->addNotice('file',$this->file->name,'DONE',OR_NOTICE_OK);
