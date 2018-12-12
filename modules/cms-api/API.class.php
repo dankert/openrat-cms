@@ -21,6 +21,8 @@ define('CMS_API_OUTPUT_PHPARRAY', 1);
 define('CMS_API_OUTPUT_PHPSERIALIZE', 2);
 define('CMS_API_OUTPUT_JSON', 3);
 define('CMS_API_OUTPUT_XML', 4);
+define('CMS_API_OUTPUT_YAML', 5);
+define('CMS_API_OUTPUT_HTML', 6);
 
 class API
 {
@@ -112,7 +114,19 @@ class API
                 $xml->root = 'server'; // Name des XML-root-Elementes
                 header('Content-Type: application/xml; charset=UTF-8');
                 $output = $xml->encode($data);
-                exit;
+                break;
+
+            case CMS_API_OUTPUT_HTML:
+                header('Content-Type: text/html; charset=UTF-8');
+                $output  = '<html><body><h1>API response:</h1><hr /><pre>';
+                $output .= print_r($data,true);
+                $output .= '</pre></body></html>';
+                break;
+
+            case CMS_API_OUTPUT_YAML:
+                header('Content-Type: text/x-yaml; charset=UTF-8');
+                $spyc = new \Spyc();
+                $output = $spyc->dump($data);
                 break;
         }
 
@@ -129,9 +143,9 @@ class API
     }
 
     /**
-     * Ermittelt den Output-Type für diesen API-Request.
+     * Discovering the output-type for this API-request
      *
-     * @return int Konstante CMS_API_OUTPUT_*
+     * @return int constant of CMS_API_OUTPUT_*
      */
     private static function discoverOutputType()
     {
@@ -150,6 +164,14 @@ class API
 
         if (sizeof($types) == 1 && in_array('application/xml', $types) || $reqOutput == 'xml')
             return CMS_API_OUTPUT_XML;
+
+        if (sizeof($types) == 1 && in_array('application/yaml', $types) || $reqOutput == 'yaml')
+            return CMS_API_OUTPUT_YAML;
+
+        if (in_array('text/html', $types))
+            return CMS_API_OUTPUT_HTML;  // normally an ordinary browser.
+
+        return CMS_API_OUTPUT_YAML;
     }
 
     /**
