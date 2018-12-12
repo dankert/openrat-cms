@@ -19,10 +19,8 @@ class InternalAuth implements Auth
 	 */
 	function login( $username, $password,$token )
 	{
-		$db = db_connection();
-		
 		// Lesen des Benutzers aus der DB-Tabelle
-		$sql = $db->sql( <<<SQL
+		$sql = db()->sql( <<<SQL
 SELECT * FROM {{user}}
  WHERE name={name}
 SQL

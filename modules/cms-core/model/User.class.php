@@ -82,13 +82,15 @@ class User extends ModelBase
 	}
 
 
-	// Lesen Benutzer aus der Datenbank
-	function getAllUsers()
+    /**
+     * Get all users.
+     *
+     * @return array with user objects
+     */
+	public static function getAllUsers()
 	{
 		$list = array();
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT * '.
+		$sql = db()->sql( 'SELECT * '.
 		                '  FROM {{user}}'.
 		                '  ORDER BY name' );
 
@@ -584,7 +586,7 @@ SQL
 			$sql->setInt('expires',$expire);
 		
 		$sql->setInt   ('algo'    ,$algo                                                  );
-		$sql->setString('password',Password::hash($this->pepperPassword($password),$algo) );
+		$sql->setString('password',Password::hash(User::pepperPassword($password),$algo) );
 		$sql->setInt   ('userid'  ,$this->userid  );
 
 		$sql->query();
@@ -895,7 +897,7 @@ SQL
 		$row_user = $sql->getRow();
 		
 		// Pruefen ob Kennwort mit Datenbank uebereinstimmt.
-		return Password::check($this->pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);
+		return Password::check(User::pepperPassword($password),$row_user['password_hash'],$row_user['password_algo']);
 	}
 	
 	
@@ -938,10 +940,11 @@ SQL
 	 * @param Kennwort
 	 * @return Das gepfefferte Kennwort
 	 */
-	public function pepperPassword( $pass )
+	public static function pepperPassword( $pass )
 	{
-		global $conf;
-		return $conf['security']['password']['pepper'].$pass;
+		$salt = Conf()->subset('security')->subset('password')->get('pepper');
+
+		return $salt.$pass;
 	}
 	
 	
