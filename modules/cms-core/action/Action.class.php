@@ -328,6 +328,9 @@ namespace cms\action {
          */
         protected function lastModified($time, $expirationDuration = 0)
         {
+            if   ( DEVELOPMENT )
+                return;
+            
             if   ( $this->request->isEmbedded )
                 return; // Embedded-Views können keine HTTP-Header setzen, daher ist alles weitere überflüssig.
 
