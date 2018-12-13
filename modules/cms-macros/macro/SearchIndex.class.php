@@ -15,9 +15,12 @@ class SearchIndex extends Macro
 {
     /**
      * Beschreibung dieser Klasse
+     *
      * @type String
      */
     var $description = '';
+
+    public $maxLength = 300;
 
 
     /**
@@ -52,14 +55,14 @@ class SearchIndex extends Macro
                     'title'   => $name->name,
                     'filename'=> $page->filename,
                     'url'     => $this->page->path_to_object( $pageid ),
-                    'content' => array_reduce(
+                    'content' => $this->truncate(array_reduce(
                         $page->values,
                         function($act, $value)
                         {
                             return $act.' '.$value->value;
                         },
                         ''
-                    )
+                    ))
                 );
             }
         }
@@ -67,6 +70,19 @@ class SearchIndex extends Macro
         // Output search index as JSON
         $json = new JSON();
         $this->output( $json->encode( $searchIndex ) );
+    }
+
+
+    private function truncate( $text) {
+        $text = str_replace('&quot;','',$text);
+        $text = str_replace('&lt;'  ,'',$text);
+        $text = str_replace('&rt;'  ,'',$text);
+        $text = strtr($text,';,:.\'"','      ');
+        $text = strtr($text,'  ',' ');
+        if   ( strlen($text) > $this->maxLength )
+            $text = mb_substr($text,0,$this->maxLength,'UTF-8');
+
+        return $text;
     }
 
 }
