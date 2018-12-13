@@ -231,9 +231,7 @@ class Project extends ModelBase
      */
     public function load()
 	{
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT * FROM {{project}} '.
+		$sql = db()->sql( 'SELECT * FROM {{project}} '.
 		                '   WHERE id={projectid}' );
 		$sql->setInt( 'projectid',$this->projectid );
 

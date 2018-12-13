@@ -79,9 +79,7 @@ class Template
  	 */
 	function load()
 	{
-		$db = db_connection();
-
-		$stmt = $db->sql( 'SELECT * FROM {{template}}'.
+		$stmt = db()->sql( 'SELECT * FROM {{template}}'.
 		                ' WHERE id={templateid}' );
 		$stmt->setInt( 'templateid',$this->templateid );
 		$row = $stmt->getRow();

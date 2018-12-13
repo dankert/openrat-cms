@@ -13,6 +13,7 @@ namespace {
 
 namespace cms\model {
 
+    use cms\publish\Publish;
     use phpseclib\Math\BigInteger;
     use Spyc;
 
@@ -196,6 +197,13 @@ namespace cms\model {
          * @type String
          */
         public $settings;
+
+        /**
+         * Strategy for publishing objects.
+         *
+         * @var Publish
+         */
+        public $publisher;
 
         /** <strong>Konstruktor</strong>
          * F?llen des neuen Objektes mit Init-Werten

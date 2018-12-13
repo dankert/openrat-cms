@@ -71,11 +71,6 @@ class Page extends BaseObject
 	var $modelid = 0;
 
     /**
-     * @var \Publish
-     */
-	var $publisher;
-
-    /**
      * @var Value[]
      */
     public $values;
@@ -653,10 +648,6 @@ SQL
 	 */
 	public function publish()
 	{
-		$this->publisher = new PublishPublic( $this->projectid );
-		
-		$this->public              = true;
-
 		$project = Project::create( $this->projectid );
 
 		$allLanguages = $project->getLanguageIds();

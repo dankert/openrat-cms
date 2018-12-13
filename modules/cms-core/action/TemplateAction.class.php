@@ -10,6 +10,7 @@ use cms\model\Page;
 
 
 use cms\model\TemplateModel;
+use cms\publish\PublishPublic;
 use Session;
 use \Html;
 use \Text;
@@ -47,8 +48,8 @@ class TemplateAction extends Action
     /**
      * @var Template
      */
-	var $template;
-	var $element;
+	private $template;
+	private $element;
 
 
 	function __construct()
@@ -594,31 +595,32 @@ class TemplateAction extends Action
 		$objectIds = $this->template->getDependentObjectIds();
 
 		Session::close();
+
+		$publisher = new PublishPublic( $this->template->projectid );
 		
 		foreach( $objectIds as $objectid )
 		{
 			$page = new Page( $objectid );
+			$page->load();
 			
 			if	( !$page->hasRight( ACL_PUBLISH ) )
 				continue;
 			
-			$page->public = true;
+			$page->publisher = $publisher;
 			$page->publish();
-			$page->publisher->close();
-			
-			//		foreach( $this->page->publish->publishedObjects as $o )
-				//		{
-				//			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
-				//		}
-			
-			$this->addNotice( 'page',
-					$page->fullFilename,
-					'PUBLISHED',
-					OR_NOTICE_OK,
-					array(),
-					$page->publisher->log  );
-		}
-	}
+        }
+
+        $this->addNotice( 'template',
+            $this->template->name,
+            'PUBLISHED',
+            OR_NOTICE_OK,
+            array(),
+            array_map( function($obj) {
+                return $obj['full_filename'];
+            },$publisher->publishedObjects) );
+
+        $publisher->close();
+    }
 	
 	
 

@@ -7,13 +7,12 @@
 			</div>
 		<?php } ?>
 		<form name="" target="_self" data-target="view" action="./" data-method="pub" data-action="folder" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form folder" data-async="1" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="folder" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="pub" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
-			<?php $if3=(isset($pages)); if($if3){?>
-				<?php $if4=(isset($subdirs)); if($if4){?>
-					<div class="line">
-						<div class="label">
-						</div>
-						<div class="input">
-							<?php { $tmpname     = 'pages';$default  = '';$readonly = '';$required = '';		
+			<?php $if3=($pages); if($if3){?>
+				<div class="line">
+					<div class="label">
+					</div>
+					<div class="input">
+						<?php { $tmpname     = 'pages';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -26,24 +25,22 @@
 		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
 		}
 		} ?>
+						
+						<label for="<?php echo REQUEST_ID ?>_pages" class="label">
+							<span><?php echo nl2br('&nbsp;'); ?></span>
 							
-							<label for="<?php echo REQUEST_ID ?>_pages" class="label">
-								<span><?php echo nl2br('&nbsp;'); ?></span>
-								
-								<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_pages')))); ?></span>
-								
-							</label>
-						</div>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_pages')))); ?></span>
+							
+						</label>
 					</div>
-				<?php } ?>
+				</div>
 			<?php } ?>
-			<?php $if3=(isset($files)); if($if3){?>
-				<?php $if4=($subdirs); if($if4){?>
-					<div class="line">
-						<div class="label">
-						</div>
-						<div class="input">
-							<?php { $tmpname     = 'files';$default  = '';$readonly = '';$required = '';		
+			<?php $if3=($files); if($if3){?>
+				<div class="line">
+					<div class="label">
+					</div>
+					<div class="input">
+						<?php { $tmpname     = 'files';$default  = '';$readonly = '';$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else
@@ -56,16 +53,15 @@
 		?><input type="hidden" name="<?php echo $tmpname ?>" value="1" /><?php
 		}
 		} ?>
+						
+						<label for="<?php echo REQUEST_ID ?>_files" class="label">
+							<span><?php echo nl2br('&nbsp;'); ?></span>
 							
-							<label for="<?php echo REQUEST_ID ?>_files" class="label">
-								<span><?php echo nl2br('&nbsp;'); ?></span>
-								
-								<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_files')))); ?></span>
-								
-							</label>
-						</div>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_files')))); ?></span>
+							
+						</label>
 					</div>
-				<?php } ?>
+				</div>
 			<?php } ?>
 			<fieldset class="toggle-open-close<?php echo '1'?" open":" closed" ?><?php echo '1'?" show":"" ?>"><legend class="on-click-open-close"><div class="arrow arrow-right on-closed"></div><div class="arrow arrow-down on-open"></div><?php echo lang('options') ?></legend><div>
 				<?php $if4=(isset($subdirs)); if($if4){?>
@@ -73,7 +69,7 @@
 						<div class="label">
 						</div>
 						<div class="input">
-							<?php { $tmpname     = 'subdirs';$default  = '';$readonly = '';$required = '';		
+							<?php { $tmpname     = 'subdirs';$default  = '';$readonly = $subdirs;$required = '';		
 		if	( isset($$tmpname) )
 			$checked = $$tmpname;
 		else

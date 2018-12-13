@@ -465,16 +465,12 @@ EOF
 
 	public function publish()
 	{
-        $this->public              = true;
         $this->deleteTmpFile();
 
-        if	( ! is_object($this->publish) )
-			$this->publish = new PublishPublic( $this->projectid );
-
 		$this->write();
-		$this->publish->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );
+		$this->publisher->copy( $this->tmpfile(),$this->full_filename(),$this->lastchangeDate );
 
-		$this->publish->publishedObjects[] = $this->getProperties();
+		$this->publisher->publishedObjects[] = $this->getProperties();
 	}
 
 

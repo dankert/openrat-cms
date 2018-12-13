@@ -1,77 +1,73 @@
 <output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
 
-	<!--
-		Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
-	-->
-	<if true="config:security/nopublish">
-		<part class="message warn">
-			<text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
-		</part>
-	</if>
+    <!--
+        Falls das Veroeffentlichen deaktiviert ist, eine Warnmeldung anzeigen.
+    -->
+    <if true="config:security/nopublish">
+        <part class="message warn">
+            <text key="GLOBAL_NOPUBLISH_DESC" class="help"></text>
+        </part>
+    </if>
 
 
-	<form cancel="false" visible="true" label="message:publish" async="true">
-		<if present="pages">
-			<if present="subdirs">
+    <form cancel="false" visible="true" label="message:publish" async="true">
+        <if true="var:pages">
 
-				<part class="line">
-					<part class="label">
-					</part>
-					<part class="input">
-						<checkbox name="pages"></checkbox>
-						<label for="pages">
-							<text raw="_"></text>
-							<text text="global_pages"></text>
-						</label>
-					</part>
-				</part>
-			</if>
-		</if>
-		<if present="files">
-			<if true="var:subdirs">
-				<part class="line">
-					<part class="label">
-					</part>
-					<part class="input">
-						<checkbox name="files"></checkbox>
-						<label for="files">
-							<text raw="_"></text>
-							<text text="global_files"></text>
-						</label>
-					</part>
-				</part>
+            <part class="line">
+                <part class="label">
+                </part>
+                <part class="input">
+                    <checkbox name="pages"></checkbox>
+                    <label for="pages">
+                        <text raw="_"></text>
+                        <text text="global_pages"></text>
+                    </label>
+                </part>
+            </part>
+        </if>
+        <if true="var:files">
+            <part class="line">
+                <part class="label">
+                </part>
+                <part class="input">
+                    <checkbox name="files"></checkbox>
+                    <label for="files">
+                        <text raw="_"></text>
+                        <text text="global_files"></text>
+                    </label>
+                </part>
+            </part>
 
-			</if>
-		</if>
-		<group title="message:options">
-			<if present="subdirs">
-				<part class="line">
-					<part class="label">
-					</part>
-					<part class="input">
-						<checkbox name="subdirs"></checkbox>
-						<label for="subdirs">
-							<text raw="_"></text>
-							<text text="GLOBAL_PUBLISH_WITH_SUBDIRS"></text>
-						</label>
-					</part>
-				</part>
-			</if>
-			<if present="clean">
-				<part class="line">
-					<part class="label">
-					</part>
-					<part class="input">
-						<checkbox name="clean"></checkbox>
-						<label for="clean">
-							<text raw="_"></text>
-							<text text="global_CLEAN_AFTER_PUBLISH"></text>
-						</label>
-					</part>
-				</part>
-			</if>
-		</group>
+        </if>
+        <group title="message:options">
+            <if present="subdirs">
+                <part class="line">
+                    <part class="label">
+                    </part>
+                    <part class="input">
+                        <checkbox readonly="var:subdirs" name="subdirs"></checkbox>
+                        <label for="subdirs">
+                            <text raw="_"></text>
+                            <text text="GLOBAL_PUBLISH_WITH_SUBDIRS"></text>
+                        </label>
+                    </part>
+                </part>
+            </if>
+            <if present="clean">
+                <part class="line">
+                    <part class="label">
+                    </part>
+                    <part class="input">
+                        <checkbox name="clean"></checkbox>
+                        <label for="clean">
+                            <text raw="_"></text>
+                            <text text="global_CLEAN_AFTER_PUBLISH"></text>
+                        </label>
+                    </part>
+                </part>
+            </if>
+        </group>
 
-	</form>
+    </form>
 </output>

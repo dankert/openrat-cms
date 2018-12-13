@@ -11,6 +11,8 @@ use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\Language;
 use cms\model\Model;
+use cms\publish\PublishPreview;
+use cms\publish\PublishPublic;
 use \Html;
 use Http;
 use Logger;
@@ -661,6 +663,10 @@ class PageAction extends ObjectAction
 		if	( $this->hasRequestVar('withIcons') )
 			$this->page->icons = true;
 
+		$publisher = new PublishPreview();
+
+		$this->page->publisher = $publisher;
+
 		$this->page->load();
 		$this->page->generate();
 
@@ -772,23 +778,23 @@ class PageAction extends ObjectAction
 
 		Session::close();
 
-		$this->page->public = true;
+		$publisher = new PublishPublic( $this->page->projectid );
+
+		$this->page->publisher = $publisher;
 		$this->page->publish();
 		$this->page->publisher->close();
-
-//		foreach( $this->page->publish->publishedObjects as $o )
-//		{
-//			$this->addNotice($o['type'],$o['full_filename'],'PUBLISHED','ok');
-//		}
 
 		$this->addNotice( 'page',
 		                  $this->page->fullFilename,
 		                  'PUBLISHED',
 		                  OR_NOTICE_OK,
 		                  array(),
-		                  array_map(function($obj) { return $obj['full_filename'];
-                          },$this->page->publisher->publishedObjects)
+		                  array_map(function($obj) {
+		                      return $obj['full_filename'];
+                          },$publisher->publishedObjects)
          );
+
+		$publisher->close();
 	}
 
 

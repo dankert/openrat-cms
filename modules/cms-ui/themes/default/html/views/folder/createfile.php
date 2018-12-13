@@ -8,12 +8,12 @@
 			<div class="line">
 				<div class="label">
 					<label for="<?php echo REQUEST_ID ?>_name" class="label">
-						<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_FILE')))); ?></span>
+						<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_FILE')))); ?></span>
 						
 					</label>
 				</div>
 				<div class="input">
-					<input size="40" id="req154344041025418490_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  multiple="multiple" />
+					<input size="40" id="req0_file" type="file" maxlength="<?php echo $maxlength ?>" name="file" class="upload"  multiple="multiple" />
 					
 				</div>
 			</div>
@@ -29,13 +29,13 @@
 					
 				</div>
 				<div class="input">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities($max_size))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities($max_size))); ?></span>
 					
 				</div>
 			</div>
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'HTTP_URL'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'HTTP_URL'.'')))); ?></span>
 					
 				</div>
 				<div class="input">
@@ -47,7 +47,7 @@
 			</div></fieldset>
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_NAME')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_NAME')))); ?></span>
 					
 				</div>
 				<div class="input">
@@ -57,7 +57,7 @@
 			</div>
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('global_DESCRIPTION')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang('global_DESCRIPTION')))); ?></span>
 					
 				</div>
 				<div class="input">

@@ -17,11 +17,6 @@ class Folder extends BaseObject
 	var $subfolders    = array();
 	var $filenames     = true;
 
-    /**
-     * @var Publish
-     */
-	public $publish  = null;
-	
 
 	function __construct( $objectid='' )
 	{
@@ -224,7 +219,7 @@ class Folder extends BaseObject
 			{
 				$p = new Page( $oid );
 				$p->load();
-				$p->publisher = &$this->publish;
+				$p->publisher = &$this->publisher;
 				$p->publish();
 			}
 
@@ -232,7 +227,7 @@ class Folder extends BaseObject
 			{
 				$f = new File( $oid );
 				$f->load();
-				$f->publish = &$this->publish;
+				$f->publisher = &$this->publisher;
 				$f->publish();
 			}
 
@@ -240,7 +235,7 @@ class Folder extends BaseObject
 			{
 				$f = new Image( $oid );
 				$f->load();
-				$f->publish = &$this->publish;
+				$f->publisher = &$this->publisher;
 				$f->publish();
 			}
 
@@ -248,7 +243,7 @@ class Folder extends BaseObject
 			{
 				$f = new Text( $oid );
 				$f->load();
-				$f->publish = &$this->publish;
+				$f->publisher = &$this->publisher;
 				$f->publish();
 			}
 
@@ -256,7 +251,7 @@ class Folder extends BaseObject
 			{
 				$f = new Folder( $oid );
 				$f->load();
-				$f->publish = &$this->publish;
+				$f->publisher = &$this->publisher;
 				$f->publish( $withPages,$withFiles,true );			
 			}
 		}

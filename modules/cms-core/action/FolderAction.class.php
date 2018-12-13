@@ -1571,9 +1571,11 @@ class FolderAction extends ObjectAction
 	public function pubView()
 	{
 		// Schalter nur anzeigen, wenn sinnvoll
-		$this->setTemplateVar('files'  ,count($this->folder->getFiles()) > 0 );
-		$this->setTemplateVar('pages'  ,count($this->folder->getPages()) > 0 );
-		$this->setTemplateVar('subdirs',count($this->folder->getSubFolderIds()) > 0 );
+
+        // TODO texts, urls....
+		$this->setTemplateVar('files'  ,count($this->folder->getFiles()) >= 0 );
+        $this->setTemplateVar('pages'  ,count($this->folder->getPages()) > 0 );
+        $this->setTemplateVar('subdirs',count($this->folder->getSubFolderIds()) > 0 );
 
 		//$this->setTemplateVar('clean'  ,$this->folder->isRoot );
 		// Gefaehrliche Option, da dies bestehende Dateien, die evtl. nicht zum CMS gehören, überschreibt.
@@ -1592,21 +1594,27 @@ class FolderAction extends ObjectAction
 		$files   = ( $this->hasRequestVar('files'  ) );
 
 		Session::close();
-		$publish = new PublishPublic( $this->projectid );
+		$publisher = new PublishPublic( $this->folder->projectid );
 
-		$this->folder->publish = &$publish;
+		$this->folder->publisher = &$publisher;
 		$this->folder->publish( $pages,$files,$subdirs );
-		$this->folder->publish->close();
 
-		$list = array();
-		foreach( $publish->publishedObjects as $o )
-			$list[] = $o['full_filename'];
+		$publisher->close();
 
-		$this->addNotice('folder',$this->folder->name,'PUBLISHED',OR_NOTICE_OK,array(),$list);
+
+		$list = array_map(
+		    function($obj)
+            {
+                return $obj['full_filename'];
+            },
+            $publisher->publishedObjects
+        );
+
+		$this->addNotice('folder',$this->folder->getDefaultName()->name,'PUBLISHED',OR_NOTICE_OK,array(),$list);
 
 		// Wenn gewuenscht, das Zielverzeichnis aufraeumen
 		if	( $this->hasRequestVar('clean')      )
-			$publish->clean();
+			$publisher->clean();
 	}
 
 
