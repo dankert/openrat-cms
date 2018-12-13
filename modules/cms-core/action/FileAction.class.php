@@ -178,6 +178,9 @@ class FileAction extends ObjectAction
 		else
 		    // PHP-Code nicht ausfuehren, Datei direkt auf die Standardausgabe schreiben
 			readfile( $this->file->tmpfile() );
+
+		// Maybe we want some gzip-encoding?
+
 		exit;
 	}
 
