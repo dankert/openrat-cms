@@ -114,11 +114,9 @@ class Page extends BaseObject
 	 * @deprecated pageid sollte nicht mehr benutzt werden
 	 * @return Integer pageid
 	 */
-	function getPageIdFromObjectId( $objectid )
+	public static function getPageIdFromObjectId( $objectid )
 	{
-		$db = db_connection();
-
-		$sql  = $db->sql( 'SELECT id FROM {{page}} '.
+		$sql  = db()->sql( 'SELECT id FROM {{page}} '.
 		                 '  WHERE objectid={objectid}' );
 		$sql->setInt('objectid',$objectid);
 

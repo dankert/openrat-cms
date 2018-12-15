@@ -157,7 +157,7 @@
 						</div>
 					<?php } ?>
 					<?php $if5=($editor=='markdown'); if($if5){?>
-						<textarea  name="<?php if ('') echo ''.'_' ?>text<?php if ('') echo '_disabled' ?>" class="editor markdown-editor"><?php echo ${'text'} ?></textarea>
+						<textarea  name="<?php if ('') echo ''.'_' ?>text<?php if ('') echo '_disabled' ?>" class="editor markdown-editor"><?php echo htmlentities(${'text'}) ?></textarea>
 						
 					<?php } ?>
 					<?php $if5=($editor=='html'); if($if5){?>

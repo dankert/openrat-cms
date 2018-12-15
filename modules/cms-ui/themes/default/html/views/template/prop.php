@@ -5,11 +5,11 @@
 		<form name="" target="_self" data-target="view" action="./" data-method="prop" data-action="template" data-id="<?php echo OR_ID ?>" method="POST" enctype="application/x-www-form-urlencoded" class="or-form template" data-async="" data-autosave=""><input type="hidden" name="<?php echo REQ_PARAM_EMBED ?>" value="1" /><input type="hidden" name="<?php echo REQ_PARAM_TOKEN ?>" value="<?php echo token() ?>" /><input type="hidden" name="<?php echo REQ_PARAM_ACTION ?>" value="template" /><input type="hidden" name="<?php echo REQ_PARAM_SUBACTION ?>" value="prop" /><input type="hidden" name="<?php echo REQ_PARAM_ID ?>" value="<?php echo OR_ID ?>" />
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('TEMPLATE_NAME')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang('TEMPLATE_NAME')))); ?></span>
 					
 				</div>
 				<div class="input">
-					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="name<?php if ('') echo '_disabled' ?>" type="text" maxlength="50" class="text" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
+					<div class="inputholder"><input id="<?php echo REQUEST_ID ?>_name" name="<?php if ('') echo ''.'_' ?>name<?php if ('') echo '_disabled' ?>" type="text" maxlength="50" class="" value="<?php echo Text::encodeHtml(@$name) ?>" /><?php if ('') { ?><input type="hidden" name="name" value="<?php $name ?>"/><?php } ?></div>
 					
 				</div>
 			</div>
@@ -17,20 +17,20 @@
 			</div></fieldset>
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'file_extension'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'file_extension'.'')))); ?></span>
 					
 				</div>
 				<div class="input">
 					<a target="_self" data-type="view" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','extension','',array()) ?>">
 						<div class="inputholder">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($extension))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities($extension))); ?></span>
 							
 						</div>
 					</a>
 
 					<div class="clickable">
 						<a class="action" target="_self" data-type="view" data-action="" data-method="extension" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('','extension','',array()) ?>">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'edit'.'')))); ?></span>
 							
 						</a>
 
@@ -39,13 +39,13 @@
 			</div>
 			<div class="line">
 				<div class="label">
-					<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang(''.'file_mimetype'.'')))); ?></span>
+					<span><?php echo nl2br(encodeHtml(htmlentities(lang(''.'file_mimetype'.'')))); ?></span>
 					
 				</div>
 				<div class="input">
 					<a target="_self" data-action="template" data-method="extension" data-id="<?php echo OR_ID ?>" data-extra="[]" href="<?php echo Html::url('template','extension','',array()) ?>">
 						<div class="inputholder">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities($mime_type))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities($mime_type))); ?></span>
 							
 						</div>
 					</a>
