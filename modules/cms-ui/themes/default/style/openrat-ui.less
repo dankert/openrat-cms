@@ -287,17 +287,23 @@ label,
   cursor: pointer;
 }
 
+
 /* Drag and Drop */
 
-.drophover {
-  border: 2px dotted green;
-  cursor: move;
+.or-droppable {
+
+  &--active {
+
+    background-color: #2E8B57 !important;
+    cursor: move;
+  }
+
+  &--hover {
+    background-color: #00d95a !important;
+    cursor: move;
+  }
 }
 
-.dropactive {
-  border: 1px dotted blue;
-  cursor: move;
-}
 
 /*   T a b s   */
 

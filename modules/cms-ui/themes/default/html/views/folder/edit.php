@@ -192,8 +192,8 @@
 								<div class="input">
 									<div class="selector">
 <div class="inputholder">
-<input type="hidden" name="targetobjectid" value="{id}" />
-<input type="text" disabled="disabled" value="{name}" />
+<input type="hidden" class="or-droppable" name="targetobjectid" value="<?php echo $rootfolderid ?>" />
+<input type="text" disabled="disabled" value="<?php echo $rootfoldername ?>" />
 </div>
 <div class="tree selector" data-types="{types}" data-init-id="<?php echo $rootfolderid ?>" data-init-folderid="<?php echo $rootfolderid ?>">
 									

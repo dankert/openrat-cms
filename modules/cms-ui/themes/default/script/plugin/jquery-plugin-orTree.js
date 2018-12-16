@@ -49,13 +49,13 @@ jQuery.fn.orTree = function ()
                 $.getJSON(loadBranchUrl, function (json) {
 
                     // Den neuen Unter-Zweig erzeugen.
-                    $(treeEl).append('<ul class="or-navtree-list"/>');
-                    var ul = $(treeEl).children('ul').first();
-                    var output = json['output'];
+                    let ul = $('<ul class="or-navtree-list" />');
+                    $(treeEl).append(ul);
+                    let output = json['output'];
                     $.each(output['branch'], function (idx, line) {
                         //if (!line.action || line.action == 'folder' || settings.selectable.length == 0 || settings.selectable[0] == '' || jQuery.inArray(line.action, settings.selectable) != -1) {
                             //var img = (line.url!==undefined?'tree_plus':'tree_none');
-                            var new_li = $('<li class="or-navtree-node or-navtree-node--is-closed" data-id="' + line.internalId + '" data-type="' + line.type + '" data-extra="' + JSON.stringify(line.extraId).replace(/"/g, "\'") + '"><div class="tree or-navtree-node-control"><i class="tree-icon image-icon image-icon--node-closed"></i></div><div class="clickable"><a href="./?action=' + line.action + '&id=' + line.internalId + '" class="entry" data-extra="' + JSON.stringify(line.extraId).replace(/"/g, "'") + '" data-id="' + line.internalId + '" data-action="' + line.action + '" data-type="open" title="' + line.description + '"><i class="image-icon image-icon--action-' + line['icon'] + '"></i> ' + line.text + '</a></div></li>');
+                            let new_li = $('<li class="or-navtree-node or-navtree-node--is-closed or-draggable or-draggable--type-'+line.type+'" data-id="' + line.internalId + '" data-type="' + line.type + '" data-extra="' + JSON.stringify(line.extraId).replace(/"/g, "\'") + '"><div class="tree or-navtree-node-control"><i class="tree-icon image-icon image-icon--node-closed"></i></div><div class="clickable"><a href="./?action=' + line.action + '&id=' + line.internalId + '" class="entry" data-extra="' + JSON.stringify(line.extraId).replace(/"/g, "'") + '" data-id="' + line.internalId + '" data-action="' + line.action + '" data-type="open" title="' + line.description + '"><i class="image-icon image-icon--action-' + line['icon'] + '"></i> ' + line.text + '</a></div></li>');
                             $(ul).append(new_li);
 
                             $(new_li).orTree(); // Alle Unter-Knoten erhalten auch Event-Listener zum Öffnen/Schließen.
@@ -65,12 +65,14 @@ jQuery.fn.orTree = function ()
                             $(new_li).find('.clickable a').click( function(event) {
                                 event.preventDefault(); // Links werden per Javascript geöffnet. Beim Öffnen im neuen Tab hat das aber keine Bedeutung.
                             } );
+                            registerTreeBranchEvents(ul);
                         //}
                     });
                     $(ul).slideDown('fast'); // Einblenden
 
                 }).fail(function () {
                     // Ups... aber was können wir hier schon tun, außer hässliche Meldungen anzeigen.
+                    notify('','','ERROR','failed to load subtree',[]);
                 }).always(function () {
 
                     // Die Loader-Animation entfernen.

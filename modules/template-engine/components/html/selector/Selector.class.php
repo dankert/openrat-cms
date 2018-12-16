@@ -25,9 +25,9 @@ class SelectorComponent extends Component
 		
 		echo <<<HTML
 <div class="selector">
-<div class="inputholder">
-<input type="hidden" name="{$param}" value="{id}" />
-<input type="text" disabled="disabled" value="{name}" />
+<div class="inputholder or-droppable">
+<input type="hidden" class="or-selector-link-value" name="{$param}" value="{$id}" />
+<input type="text" class="or-selector-link-name" disabled="disabled" value="{$name}" />
 </div>
 <div class="tree selector" data-types="{types}" data-init-id="{$id}" data-init-folderid="{$folderid}">
 HTML;

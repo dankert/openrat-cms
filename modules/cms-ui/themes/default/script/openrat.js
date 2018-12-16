@@ -380,24 +380,8 @@ function afterViewLoaded(viewEl )
 		} });
 	} );
 	
-	// Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
-	$('div.content li.object').draggable( {cursor:'move',revert: 'invalid' });
-	$('div.content li.object > .entry[data-type=\'folder\']').droppable( {accept:'li.object',hoverClass: 'drophover',activeClass: 'dropactive',drop: function(event, ui) {
-		var dropped   = ui.draggable;
-        var droppedOn = $(this).parent();
-        
-        //alert('Moving '+$(dropped).attr('data-id')+' to folder '+$(droppedOn).attr('data-id') );
-        startDialog($(this).text(),$(dropped).attr('data-type'),'copy',$(droppedOn).attr('data-id'),{'action':$(dropped).attr('data-type'),'subaction':'copy','id':$(dropped).attr('data-id'),'targetFolderId':$(droppedOn).attr('data-id')});
-        /*
-        if	( $(dropped).closest('div.panel').attr('id') == $(droppedOn).closest('div.panel').attr('id') )
-        	$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
-        else
-        	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
-        	*/
-    	//$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
-    	$(dropped).detach().css({top: 0,left: 0}).appendTo(droppedOn).click();
-	} } );
 
+	registerDragAndDrop(viewEl);
 	
 	
 	// Bei Änderungen in der View das Tab als 'dirty' markieren
@@ -406,13 +390,86 @@ function afterViewLoaded(viewEl )
 	});
 
 	// Theme-Auswahl mit Preview
-    $(viewEl).find('select.theme-chooser').change( function() {
+    $(viewEl).find('.or-theme-chooser').change( function() {
         setUserStyle( this.value );
     });
 
 }
 
 
+
+function registerDragAndDrop(viewEl)
+{
+
+    registerDraggable(viewEl);
+    registerDroppable(viewEl);
+}
+
+
+
+
+function registerDraggable(viewEl) {
+
+// Drag n Drop: Inhaltselemente (Dateien,Seiten,Ordner,Verknuepfungen) koennen auf Ordner gezogen werden.
+
+    $(viewEl).find('.or-draggable').draggable(
+        {
+            helper: 'clone',
+            opacity: 0.7,
+            zIndex: 2,
+            distance: 10,
+            cursor: 'move',
+            revert: 'false'
+        }
+    );
+
+}
+
+function registerTreeBranchEvents(viewEl)
+{
+    registerDraggable(viewEl);
+}
+
+
+function registerDroppable(viewEl) {
+
+    /*
+    $(viewEl).find('div.header > a.back').each( function(idx,el) {
+        $('div.content li.object > .entry[data-type=\'folder\']').droppable({
+            accept: 'li.object', hoverClass: 'drophover', activeClass: 'dropactive', drop: function (event, ui) {
+                let dropped = ui.draggable;
+                let droppedOn = $(this).parent();
+
+                //alert('Moving '+$(dropped).attr('data-id')+' to folder '+$(droppedOn).attr('data-id') );
+                startDialog($(this).text(), $(dropped).attr('data-type'), 'copy', $(droppedOn).attr('data-id'), {
+                    'action': $(dropped).attr('data-type'),
+                    'subaction': 'copy',
+                    'id': $(dropped).attr('data-id'),
+                    'targetFolderId': $(droppedOn).attr('data-id')
+                });
+                //$(dropped).css({top: 0,left: 0}); // Nicht auf das eigene Fenster fallen lassen.
+                $(dropped).detach().css({top: 0, left: 0}).appendTo(droppedOn).click();
+            }
+        });
+    }
+*/
+
+    $(viewEl).find('.or-droppable').droppable({
+        accept: '.or-draggable',
+        hoverClass: 'or-droppable--hover',
+        activeClass: 'or-droppable--active',
+
+        drop: function (event, ui) {
+
+            let dropped = ui.draggable;
+
+            $(this).find('.or-selector-link-value').val( dropped.data('id') );
+            $(this).find('.or-selector-link-name' ).val( dropped.data('id') );
+            // Id übertragen
+            //$(this).value(dropped.data('id'));
+        }
+    });
+}
 
 
 
