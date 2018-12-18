@@ -68,13 +68,14 @@ class User extends ModelBase
 	}
 
 
-	// Lesen Benutzer aus der Datenbank
-	function listAll()
+    /**
+     * get all users.
+     *
+     * @return array
+     */
+	public static function listAll()
 	{
-		global $conf;
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT id,name '.
+		$sql = db()->sql( 'SELECT id,name '.
 		                '  FROM {{user}}'.
 		                '  ORDER BY name' );
 
@@ -150,24 +151,6 @@ SQL
 
 		return $groupclause;
 	}
-
-
-	// Prueft, ob der Benutzer fuer ein Projekt berechtigt ist
-	function hasProject( $projectid )
-	{
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT COUNT(*)'.
-		                '  FROM {{acl}}'.
-		                '  LEFT JOIN {{object}} ON {{object}}.id={{acl}}.objectid '.
-		                '  WHERE projectid={projectidid} AND '.
-		                '        ( userid={userid} OR'.
-		                '          '.$this->getGroupClause().'    )' );
-		$sql->setInt   ( 'userid',$this->userid );
-
-		return $sql->getOne() > 0;
-	}
-
 
 
 	/**

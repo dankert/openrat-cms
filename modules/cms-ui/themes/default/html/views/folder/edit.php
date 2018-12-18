@@ -191,9 +191,9 @@
 								</div>
 								<div class="input">
 									<div class="selector">
-<div class="inputholder">
-<input type="hidden" class="or-droppable" name="targetobjectid" value="<?php echo $rootfolderid ?>" />
-<input type="text" disabled="disabled" value="<?php echo $rootfoldername ?>" />
+<div class="inputholder or-droppable">
+<input type="hidden" class="or-selector-link-value" name="targetobjectid" value="<?php echo $rootfolderid ?>" />
+<input type="text" class="or-selector-link-name" disabled="disabled" value="<?php echo $rootfoldername ?>" />
 </div>
 <div class="tree selector" data-types="{types}" data-init-id="<?php echo $rootfolderid ?>" data-init-folderid="<?php echo $rootfolderid ?>">
 									

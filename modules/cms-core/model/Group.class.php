@@ -49,24 +49,23 @@ class Group
 	}
 
 
-	// Lesen aller Gruppen aus der Datenbank
-	function getAll()
+	/**
+	* Read all groups
+     */
+	public static function getAll()
 	{
-		global $conf;
-		$db = db_connection();
+		$stmt = db()->sql( 'SELECT id,name FROM {{group}}' );
 
-		$sql = $db->sql( 'SELECT id,name FROM {{group}}' );
-
-		return $sql->getAssoc();
+		return $stmt->getAssoc();
 	}
 
 
-	// Lesen Gruppe aus der Datenbank
-	function load()
+	/**
+     * Lesen Gruppe aus der Datenbank
+     */
+	public function load()
 	{
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT * FROM {{group}}'.
+		$sql = db()->sql( 'SELECT * FROM {{group}}'.
 		                ' WHERE id={groupid}' );
 		$sql->setInt( 'groupid',$this->groupid );
 
@@ -78,12 +77,15 @@ class Group
 	}
 
 
-	// Lesen einer Gruppe aus der Datenbank
+    /**
+     * Read a group.
+     * @param $name string name of the group
+     * @return Group
+     * @throws \ObjectNotFoundException
+     */
 	public static function loadWithName( $name )
 	{
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT * FROM {{group}}'.
+		$sql = db()->sql( 'SELECT * FROM {{group}}'.
 		                ' WHERE name={name}' );
 		$sql->setString('name',$name );
 
@@ -102,16 +104,16 @@ class Group
 	}
 
 
-	// Speichern Benutzer in der Datenbank
-	function save()
+    /**
+     * Save a group.
+     */
+	public function save()
 	{
 		if	( empty($this->name) )
 			$this->name = lang('GLOBAL_GROUP').' '.$this->groupid;
 			
-		$db = db_connection();
-
-		// Gruppe speichern		
-		$sql = $db->sql( 'UPDATE {{group}} '.
+		// Gruppe speichern
+		$sql = db()->sql( 'UPDATE {{group}} '.
 		                'SET name = {name} '.
 		                'WHERE id={groupid}' );
 		$sql->setString( 'name'  ,$this->name    );
