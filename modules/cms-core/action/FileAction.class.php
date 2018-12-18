@@ -69,6 +69,15 @@ class FileAction extends ObjectAction
 	{
 		$upload = new Upload();
 
+        try
+        {
+            $upload->processUpload();
+        }
+        catch( \Exception $e )
+        {
+            throw $e;
+        }
+
 		$this->file->filename  = $upload->filename;
 		$this->file->extension = $upload->extension;		
 		$this->file->size      = $upload->size;
@@ -79,7 +88,6 @@ class FileAction extends ObjectAction
 		$this->file->saveValue();
 		$this->file->setTimestamp();
 
-		//$setTemplateVar('tree_refresh',true);
 		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
 	}
 

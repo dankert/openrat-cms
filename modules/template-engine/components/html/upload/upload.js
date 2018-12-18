@@ -3,7 +3,7 @@ $(document).on('orViewLoaded',function(event, data) {
 	var form = $(event.target).find('form');
 
 	// Dateiupload über Drag and Drop
-	var dropzone = $(event.target).find('div.filedropzone > div.input');
+	var dropzone = $(event.target).find('div.or-dropzone-upload > div.input');
 	dropzone.on('dragenter', function (e) 
 	{
 		e.stopPropagation();

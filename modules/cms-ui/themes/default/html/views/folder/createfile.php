@@ -17,7 +17,7 @@
 					
 				</div>
 			</div>
-			<div class="line filedropzone">
+			<div class="line or-dropzone-upload">
 				<div class="label">
 				</div>
 				<div class="input">

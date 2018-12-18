@@ -124,38 +124,29 @@ class FolderAction extends ObjectAction
 		}
 		else
 		{
-			$upload = new Upload();
+            $upload = new Upload('file');
 
-			if	( $upload->isValid() )
-			{
-				$file->desc      = $description;
-				$file->filename  = BaseObject::urlify( $upload->filename );
-				$file->name      = !empty($name)?$name:$upload->filename;
-				$file->extension = $upload->extension;
-				$file->size      = $upload->size;
-				$file->parentid  = $this->folder->objectid;
-                $file->projectid = $this->folder->projectid;
+		    try
+            {
+                $upload->processUpload();
+            }
+            catch( \Exception $e )
+            {
+                // technical error.
+                throw new \RuntimeException('Exception while processing the upload: '.$e->getMessage(), 0, $e);
 
-				$file->value     = $upload->value;
-			}
-			else
-			{
-				if	( $this->hasRequestVar('name') )
-				{
-					$file->name     = $this->getRequestVar('name');
-					$file->desc     = $this->getRequestVar('description');
-					$file->filename = $this->getRequestVar('filename', OR_FILTER_FILENAME);
-					$file->parentid = $this->folder->objectid;
-                    $file->projectid = $this->folder->projectid;
-				}
-				else
-				{
-					$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
-					$this->callSubAction('createfile');
-					return;
-				}
+                //throw new \ValidationException( $upload->parameterName );
+            }
 
-			}
+            $file->desc      = $description;
+            $file->filename  = BaseObject::urlify( $upload->filename );
+            $file->name      = !empty($name)?$name:$upload->filename;
+            $file->extension = $upload->extension;
+            $file->size      = $upload->size;
+            $file->parentid  = $this->folder->objectid;
+            $file->projectid = $this->folder->projectid;
+
+            $file->value     = $upload->value;
 		}
 
 		$file->add(); // Datei hinzufuegen
@@ -205,6 +196,7 @@ class FolderAction extends ObjectAction
 		{
 			$upload = new Upload();
 
+            $upload->processUpload();
 			if	( $upload->isValid() )
 			{
 				$image->desc      = $description;
@@ -279,36 +271,24 @@ class FolderAction extends ObjectAction
 		{
 			$upload = new Upload();
 
-			if	( $upload->isValid() )
-			{
-				$text->desc      = $description;
-				$text->filename  = BaseObject::urlify( $upload->filename );
-				$text->name      = !empty($name)?$name:$upload->filename;
-				$text->extension = $upload->extension;
-				$text->size      = $upload->size;
-				$text->parentid  = $this->folder->objectid;
-                $text->projectid = $this->folder->projectid;
+            try
+            {
+                $upload->processUpload();
+            }
+            catch( \Exception $e )
+            {
+                throw $e;
+            }
 
-				$text->value     = $upload->value;
-			}
-			else
-			{
-				if	( $this->hasRequestVar('name') )
-				{
-					$text->name     = $this->getRequestVar('name');
-					$text->desc     = $this->getRequestVar('description');
-					$text->filename = BaseObject::urlify( $name );
-					$text->parentid = $this->folder->objectid;
-                    $text->projectid = $this->folder->projectid;
-				}
-				else
-				{
-					$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
-					$this->callSubAction('createfile');
-					return;
-				}
+            $text->desc      = $description;
+            $text->filename  = BaseObject::urlify( $upload->filename );
+            $text->name      = !empty($name)?$name:$upload->filename;
+            $text->extension = $upload->extension;
+            $text->size      = $upload->size;
+            $text->parentid  = $this->folder->objectid;
+            $text->projectid = $this->folder->projectid;
 
-			}
+            $text->value     = $upload->value;
 		}
 
 		$text->add(); // Datei hinzufuegen

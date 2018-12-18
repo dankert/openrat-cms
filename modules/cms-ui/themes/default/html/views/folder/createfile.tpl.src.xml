@@ -14,7 +14,7 @@
 			</part>
 		</part>
 
-		<part class="line filedropzone">
+		<part class="line or-dropzone-upload">
 			<part class="label">
 			</part>
 			<part class="input">

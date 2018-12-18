@@ -25,24 +25,15 @@
  */
 class Upload
 {
-	var $filename;
-	var $extension;
-	var $value;
-	var $size;
-	var $error  = '';
+	public $filename;
+	public $extension;
+	public $value;
+	public $size;
 
-	
-	/**
-	 * Stellt fest, ob der Upload geklappt hat.
-	 *
-	 * @return boolean
-	 */
-	function isValid()
-	{
-		return empty($this->error);
-	}
-	
-	
+	public $parameterName;
+
+	public static $DEFAULT_PARAM_NAME = 'file';
+
 	
 	/**
 	 * Bearbeitet den Upload einer Datei.<br>
@@ -52,34 +43,38 @@ class Upload
 	 */
 	function __construct( $name='file' ) // Konstruktor
 	{
-		global $FILES;
-
-		if	( !isset($FILES[$name])              || 
-			  !isset($FILES[$name]['tmp_name'])  ||
-			  !is_file($FILES[$name]['tmp_name'])   )
-		{
-			$this->error = 'No file received.';
-			return;
-		}
-			
-		$this->size = filesize($FILES[$name]['tmp_name']);
-		
-		$fh    = fopen( $FILES[$name]['tmp_name'],'r' );
-		
-		$this->value = fread($fh,$this->size);
-		fclose( $fh );
-	
-		$this->filename = $FILES[$name]['name'];
-		$this->extension = '';
-
-		$p = strrpos( $this->filename,'.' ); // Letzten Punkt suchen
-
-		if   ($p!==false) // Wennn letzten Punkt gefunden, dann dort aufteilen
-		{
-			$this->extension = substr( $this->filename,$p+1 );
-			$this->filename  = substr( $this->filename,0,$p );
-		}
+	    $this->parameterName = $name;
 	}
+
+	public function processUpload()
+    {
+        $name = $this->parameterName;
+
+        if	( !isset($_FILES[$name])              ||
+            !isset($_FILES[$name]['tmp_name'])  ||
+            !is_file($_FILES[$name]['tmp_name'])   )
+        {
+            throw new InvalidArgumentException('No file received under the key '.$name );
+        }
+
+        $this->size = filesize($_FILES[$name]['tmp_name']);
+
+        $fh    = fopen( $_FILES[$name]['tmp_name'],'r' );
+
+        $this->value = fread($fh,$this->size);
+        fclose( $fh );
+
+        $this->filename = $_FILES[$name]['name'];
+        $this->extension = '';
+
+        $p = strrpos( $this->filename,'.' ); // Letzten Punkt suchen
+
+        if   ($p!==false) // Wennn letzten Punkt gefunden, dann dort aufteilen
+        {
+            $this->extension = substr( $this->filename,$p+1 );
+            $this->filename  = substr( $this->filename,0,$p );
+        }
+    }
 }
 
 ?>
