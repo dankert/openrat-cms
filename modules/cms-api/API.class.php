@@ -44,26 +44,26 @@ class API
             Logger::warn($e);
 
             API::sendHTTPStatus(500, 'Method not found');
-            $data = array('status' => 500, 'error' => 'Method not found', 'description' => $e->getMessage()."\n".$e->getMessage(), 'reason' => $e->getCode());
+            $data = array('status' => 500) + API::exceptionToArray( $e );
         } catch (ObjectNotFoundException $e) {
             Logger::warn($e);
 
             API::sendHTTPStatus(500, 'Object not found');
-            $data = array('status' => 500, 'error' => $e->getMessage(), 'description' => $e->getMessage()."\n".$e->getTraceAsString(), 'reason' => $e->getCode());
+            $data = array('status' => 500)+ API::exceptionToArray( $e );
         } catch (OpenRatException $e) {
             Logger::warn($e);
 
             API::sendHTTPStatus(500, 'Internal CMS Error');
-            $data = array('status' => 500, 'error' => $e->getMessage(), 'description' => $e->getMessage()."\n".$e->getTraceAsString(), 'reason' => $e->getCode());
+            $data = array('status' => 500)+ API::exceptionToArray( $e );
         } catch (SecurityException $e) {
             Logger::warn($e);
             //Logger::info('API request not allowed: ' . $e->getMessage());
             API::sendHTTPStatus(403, 'Forbidden');
-            $data = array('status' => 403, 'error' => 'You are not allowed to execute this action.', 'description' => $e->getMessage()."\n".$e->getTraceAsString(), 'reason' => $e->getCode());
+            $data = array('status' => 403)+ API::exceptionToArray( $e );
         } catch (Exception $e) {
             Logger::warn($e);
             API::sendHTTPStatus(500, 'Internal Server Error');
-            $data = array('status' => 500, 'error' => 'Server error', 'description' => $e->getMessage()."\n".$e->getTraceAsString(), 'reason' => $e->getCode());
+            $data = array('status' => 500)+ API::exceptionToArray( $e );
         }
 
 
@@ -124,7 +124,7 @@ class API
                 break;
 
             case CMS_API_OUTPUT_YAML:
-                header('Content-Type: text/x-yaml; charset=UTF-8');
+                header('Content-Type: application/yaml; charset=UTF-8');
                 $spyc = new \Spyc();
                 $output = $spyc->dump($data);
                 break;
@@ -139,7 +139,6 @@ class API
             header('Content-Length: ' . strlen($output));
 
         echo $output;
-
     }
 
     /**
@@ -186,5 +185,53 @@ class API
         } else {
             header('HTTP/1.0 ' . intval($status) . ' ' . $text);
         }
+    }
+
+    /**
+     * Converting an exception to an array.
+     *
+     * This will contain all exceptions out of the exception chain.
+     *
+     * @param $e Exception
+     */
+    private static function exceptionToArray($e)
+    {
+        $data = array(
+            'error'=>get_class($e),
+            'description'=>$e->getMessage(),
+            'code'=>$e->getCode(),
+
+            'trace'=>array_merge( array( array(
+                'file'=>$e->getFile(),
+                'line'=>$e->getLine(),
+                'function'=>'',
+                'class'   => ''
+                )), API::removeArgsFromTrace($e->getTrace()))
+        );
+
+        // the cause of the exception is another exception.
+        if   ( $e->getPrevious() != null )
+            $data['previous'] = API::exceptionToArray($e->getPrevious() );
+
+        return $data;
+    }
+
+
+    /**
+     * Removing the call argument from the trace.
+     *
+     * This is because of security reasons. The arguments could be an information leak.
+     *
+     * @param $trace array
+     * @return array
+     */
+    private static function removeArgsFromTrace($trace)
+    {
+        foreach( $trace as &$t )
+        {
+            unset($t['args']);
+        }
+
+        return $trace;
     }
 }
