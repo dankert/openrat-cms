@@ -5,7 +5,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_name" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_name')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_name')))); ?></span>
 							
 						</label>
 					</div>
@@ -17,7 +17,7 @@
 				<div class="line">
 					<div class="label">
 						<label for="<?php echo REQUEST_ID ?>_description" class="label">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_description')))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_description')))); ?></span>
 							
 						</label>
 					</div>

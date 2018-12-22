@@ -4,6 +4,7 @@ require_once( __DIR__.'/'.'exception/ValidationException.class.php' );
 require_once( __DIR__.'/'.'exception/OpenRatException.class.php' );
 require_once( __DIR__.'/'.'exception/SecurityException.class.php' );
 
+require_once( __DIR__.'/'.'ArrayUtils.class.php' );
 require_once( __DIR__.'/'.'ClassUtils.class.php' );
 require_once( __DIR__.'/'.'GlobalFunctions.class.php' );
 require_once( __DIR__.'/'.'Http.class.php' );

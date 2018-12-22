@@ -17,13 +17,6 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 namespace cms\publish;
 
-use cms\model\Project;
-
-define('OR_PUBLISH_TARGET_SHOW',1);
-define('OR_PUBLISH_TARGET_PREVIEW',2);
-define('OR_PUBLISH_TARGET_EDIT',3);
-define('OR_PUBLISH_TARGET_PUBLISH',4);
-
 /**
  * Strategy-baseclass for generating and publishing content.
  *

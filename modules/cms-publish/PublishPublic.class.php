@@ -491,12 +491,6 @@ class PublishPublic extends Publish
     }
 
 
-    public function getTarget()
-    {
-        return OR_PUBLISH_TARGET_PUBLISH;
-    }
-
-
     public function isSimplePreview()
     {
         return false;

@@ -19,7 +19,10 @@ namespace cms\model;
 
 
 // Standard Mime-Type 
+use cms\publish\PublishEdit;
+use cms\publish\PublishPreview;
 use cms\publish\PublishPublic;
+use cms\publish\PublishShow;
 use JSqueeze;
 use Less_Parser;
 use Logger;
@@ -365,14 +368,13 @@ EOF
 	 *
 	 * @return String Inhalt der Datei
 	 */
-	function loadValue()
+	public function loadValue()
 	{
-		if	( is_file($this->tmpfile()))
+	    // Read from cache, if cache exist and is not too old.
+		if	( is_file($this->tmpfile()) && filemtime($this->tmpfile()>=$this->lastchangeDate))
 			return implode('',file($this->tmpfile())); // From cache
 
-		$db = db_connection();
-
-		$sql = $db->sql( 'SELECT size,value'.
+		$sql = db()->sql( 'SELECT size,value'.
 		                ' FROM {{file}}'.
 		                ' WHERE objectid={objectid}' );
 		$sql->setInt( 'objectid',$this->objectid );
@@ -387,8 +389,7 @@ EOF
 		if	( $this->storeValueAsBase64 )
 			$this->value = base64_decode( $this->value );
 
-		if  ( $this->public )
-            $this->filterValue();
+        $this->filterValue();
 
 		// Store in cache.
 		$f = fopen( $this->tmpfile(),'w' );
@@ -528,56 +529,58 @@ EOF
 
     private function filterValue()
     {
-        $settings = $this->getTotalSettings();
-        if  ( isset( $settings['filter']) && is_array( $settings['filter'] ) )
+        $filterType = '';
+        if   ( $this->publisher instanceof PublishEdit    )  $filterType = 'edit';
+        if   ( $this->publisher instanceof PublishPublic  )  $filterType = 'public';
+        if   ( $this->publisher instanceof PublishPreview )  $filterType = 'preview';
+        if   ( $this->publisher instanceof PublishShow    )  $filterType = 'show';
+
+        foreach(\ArrayUtils::getSubArray($this->getTotalSettings(), array( 'publish', $filterType, 'filter')) as $filterName )
         {
-            foreach( $settings['filter'] as $filterName )
+            switch( $filterName)
             {
-                switch( $filterName)
-                {
-                    case 'less':
+                case 'less':
 
-                        $parser = new Less_Parser(array(
-                            'sourceMap' => false,
-                            'indentation' => '	',
-                            'outputSourceFiles' => false,
-                            //'sourceMapBasepath' => $this->filename()
-                            //'sourceMapBasepath' => './'
-                        ));
+                    $parser = new Less_Parser(array(
+                        'sourceMap' => false,
+                        'indentation' => '	',
+                        'outputSourceFiles' => false,
+                        //'sourceMapBasepath' => $this->filename()
+                        //'sourceMapBasepath' => './'
+                    ));
 
-                        $parser->parse( $this->value );
-                        $this->value = $parser->getCss();
+                    $parser->parse( $this->value );
+                    $this->value = $parser->getCss();
 
-                        break;
+                    break;
 
-                    case 'less-minifier':
+                case 'less-minifier':
 
-                        $parser = new Less_Parser(array(
-                            'compress' => true,
-                            'sourceMap' => false,
-                            'indentation' => ''
-                        ));
+                    $parser = new Less_Parser(array(
+                        'compress' => true,
+                        'sourceMap' => false,
+                        'indentation' => ''
+                    ));
 
-                        $parser->parse( $this->value );
-                        $this->value = $parser->getCss();
+                    $parser->parse( $this->value );
+                    $this->value = $parser->getCss();
 
-                        break;
+                    break;
 
-                    case "js-minifier":
-                        $jz = new JSqueeze();
-                        $this->value = $jz->squeeze( $this->value);
-                        break;
+                case "js-minifier":
+                    $jz = new JSqueeze();
+                    $this->value = $jz->squeeze( $this->value);
+                    break;
 
-                    default:
-                        Logger::warn("Filter not found: ".$filterName);
-                }
+                default:
+                    throw new \LogicException("Filter not found: ".$filterName);
             }
-
-            // Store in cache.
-            $f = fopen( $this->tmpfile(),'w' );
-            fwrite( $f,$this->value );
-            fclose( $f );
         }
+
+        // Store in cache.
+        $f = fopen( $this->tmpfile(),'w' );
+        fwrite( $f,$this->value );
+        fclose( $f );
     }
 }
 

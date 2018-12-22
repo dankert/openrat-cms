@@ -3,6 +3,7 @@
 namespace cms\model;
 
 use cms\publish\Publish;
+use Exception;
 
 
 /**
@@ -206,54 +207,59 @@ class Folder extends BaseObject
 	}
 
 
-	function publish( $withPages,$withFiles,$subdirs = false )
+	public function publish( $withPages,$withFiles,$subdirs = false )
 	{
 		set_time_limit(300);
 
 		foreach( $this->getObjectIds() as $oid )
 		{
-			$o = new BaseObject( $oid );
-			$o->objectLoadRaw();
+		    try {
+                $o = new BaseObject($oid);
+                $o->objectLoadRaw();
 
-			if	( $o->isPage && $withPages )
-			{
-				$p = new Page( $oid );
-				$p->load();
-				$p->publisher = &$this->publisher;
-				$p->publish();
-			}
+                if ($o->isPage && $withPages) {
+                    $p = new Page($oid);
+                    $p->load();
+                    $p->publisher = &$this->publisher;
+                    $p->publish();
+                }
 
-			if	( $o->isFile && $withFiles )
-			{
-				$f = new File( $oid );
-				$f->load();
-				$f->publisher = &$this->publisher;
-				$f->publish();
-			}
+                if ($o->isFile && $withFiles) {
+                    $f = new File($oid);
+                    $f->load();
+                    $f->publisher = &$this->publisher;
+                    $f->publish();
+                }
 
-			if	( $o->isImage && $withFiles )
-			{
-				$f = new Image( $oid );
-				$f->load();
-				$f->publisher = &$this->publisher;
-				$f->publish();
-			}
+                if ($o->isImage && $withFiles) {
+                    $f = new Image($oid);
+                    $f->load();
+                    $f->publisher = &$this->publisher;
+                    $f->publish();
+                }
 
-			if	( $o->isText && $withFiles )
-			{
-				$f = new Text( $oid );
-				$f->load();
-				$f->publisher = &$this->publisher;
-				$f->publish();
-			}
+                if ($o->isText && $withFiles) {
+                    $f = new Text($oid);
+                    $f->load();
+                    $f->publisher = &$this->publisher;
+                    $f->publish();
+                }
 
-			if	( $o->isFolder && $subdirs )
-			{
-				$f = new Folder( $oid );
-				$f->load();
-				$f->publisher = &$this->publisher;
-				$f->publish( $withPages,$withFiles,true );			
-			}
+                if ($o->isFolder && $subdirs) {
+                    $f = new Folder($oid);
+                    $f->load();
+                    $f->publisher = &$this->publisher;
+                    $f->publish($withPages, $withFiles, true);
+                }
+            }
+            catch( Exception $e)
+            {
+                // Maybe it is possible to start on with the next one?
+                // But we have to throw an exception here to inform the UI...
+
+                // Lets wrap it.
+                throw new \LogicException("Could not publish ".$o->__toString().": ".$e->getMessage(),$e->getCode(),$e);
+            }
 		}
 	}
 

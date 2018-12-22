@@ -6,6 +6,7 @@ use cms\model\Folder;
 use cms\model\BaseObject;
 use cms\model\File;
 
+use cms\publish\PublishPreview;
 use Http;
 use \Html;
 use Upload;
@@ -116,6 +117,7 @@ class FileAction extends ObjectAction
 	 */
 	function previewView()
 	{
+	    $this->file->publisher = new PublishPreview();
 		$url = Html::url($this->file->getType(),'show',$this->file->objectid,array('target'=>'none',REQ_PARAM_EMBED=>'1') );
 		$this->setTemplateVar('preview_url',$url );
 	}
@@ -127,6 +129,7 @@ class FileAction extends ObjectAction
 	 */
 	function showView()
 	{
+	    $this->file->publisher = new PublishPreview();
 		$this->lastModified( $this->file->lastchangeDate );
 		
 		if	( $this->file->extension == 'gz' )
