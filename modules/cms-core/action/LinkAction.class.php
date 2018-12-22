@@ -64,32 +64,12 @@ class LinkAction extends ObjectAction
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
-	function propPost()
-	{
-		// Wenn Name gefuellt, dann Datenbank-Update
-		if   ( $this->getRequestVar('name') != '' )
-		{
-			// Eigenschaften speichern
-			$this->link->name      = $this->getRequestVar('name'       ,'full');
-			$this->link->desc      = $this->getRequestVar('description','full');
-
-			$this->link->save();
-			$this->link->setTimestamp();
-		}
-	}
-
-
-	/**
-	 * Abspeichern der Eigenschaften
-	 */
 	function editPost()
 	{
-            $this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
+        $this->link->linkedObjectId = $this->getRequestVar('targetobjectid');
+        $this->link->save();
 
-			$this->link->save();
-			$this->link->setTimestamp();
-
-			$this->addNotice('link',$this->link->name,'SAVED',OR_NOTICE_OK);
+        $this->addNotice('link',$this->link->name,'SAVED',OR_NOTICE_OK);
 	}
 
 
@@ -106,14 +86,6 @@ class LinkAction extends ObjectAction
 
 
 
-	function propView()
-	{
-		$this->setTemplateVars( $this->link->getProperties() );
-		$this->setTemplateVar('act_linkobjectid',$this->link->linkedObjectId);
-	}
-	
-	
-	
 	function infoView()
 	{
 		$this->setTemplateVars( $this->link->getProperties() );

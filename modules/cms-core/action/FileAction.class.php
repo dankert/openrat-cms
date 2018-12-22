@@ -7,6 +7,7 @@ use cms\model\BaseObject;
 use cms\model\File;
 
 use cms\publish\PublishPreview;
+use cms\publish\PublishPublic;
 use Http;
 use \Html;
 use Upload;
@@ -92,26 +93,22 @@ class FileAction extends ObjectAction
 		$this->addNotice($this->file->getType(),$this->file->name,'VALUE_SAVED','ok');
 	}
 
-	/**
-	 * Abspeichern der Eigenschaften zu dieser Datei.
-	 *
-	 */
-	function propPost()
-	{
-		// Eigenschaften speichern
-		$this->file->filename  = $this->getRequestVar('filename'   ,OR_FILTER_FILENAME);
-		$this->file->name      = $this->getRequestVar('name'       ,OR_FILTER_FULL    );
-		$this->file->extension = $this->getRequestVar('extension'  ,OR_FILTER_FILENAME);
-		$this->file->desc      = $this->getRequestVar('description',OR_FILTER_FULL    );
-		
-		$this->file->save();
-		$this->file->setTimestamp();
-		$this->addNotice($this->file->getType(),$this->file->name,'PROP_SAVED','ok');
-	}
 
-	
-	
-	/**
+    /**
+     * Abspeichern der Eigenschaften zu dieser Datei.
+     *
+     */
+    function advancedPost()
+    {
+        $this->file->extension = $this->getRequestVar('extension'  ,OR_FILTER_FILENAME);
+        $this->file->save();
+
+        $this->addNotice($this->file->getType(),$this->file->filename,'PROP_SAVED','ok');
+    }
+
+
+
+    /**
 	 * Anzeigen des Inhaltes, der Inhalt wird samt Header direkt
 	 * auf die Standardausgabe geschrieben
 	 */
@@ -196,41 +193,12 @@ class FileAction extends ObjectAction
 	}
 
 
-	function propView()
+
+
+	public function advancedView()
 	{
-		
-				global $conf;
-		
-		if	( $this->file->filename == $this->file->objectid )
-			$this->file->filename = '';
-
 		// Eigenschaften der Datei uebertragen
-		$this->setTemplateVars( $this->file->getProperties() );
-
-		$this->setTemplateVar('size',number_format($this->file->size/1000,0,',','.').' kB' );
-		$this->setTemplateVar('full_filename',$this->file->full_filename());
-		
-		if	( is_file($this->file->tmpfile()))
-		{
-			$this->setTemplateVar('cache_filename' ,$this->file->tmpfile());
-			$this->setTemplateVar('cache_filemtime',@filemtime($this->file->tmpfile()));
-		}
-
-		// Alle Seiten mit dieser Datei ermitteln
-		$pages = $this->file->getDependentObjectIds();
-			
-		$list = array();
-		foreach( $pages as $id )
-		{
-			$o = new BaseObject( $id );
-			$o->load();
-			$list[$id] = array();
-			$list[$id]['url' ] = Html::url('main','page',$id);
-			$list[$id]['name'] = $o->name;
-		}
-		asort( $list );
-		$this->setTemplateVar('pages',$list);
-		$this->setTemplateVar('edit_filename',$conf['filename']['edit']);	
+		$this->setTemplateVar( 'extension',$this->file->extension );
 	}
 
 
@@ -549,6 +517,7 @@ class FileAction extends ObjectAction
 	 */
 	function pubPost()
 	{
+	    $this->file->publisher = new PublishPublic( $this->file->projectid );
 		$this->file->publish();
 		$this->file->publish->close();
 		

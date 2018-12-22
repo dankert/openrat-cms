@@ -401,47 +401,6 @@ class FolderAction extends ObjectAction
 
 
 	/**
-	 * Abspeichern der Ordner-Eigenschaften.
-	 */
-    public function propPost()
-	{
-		// Ordnereigenschaften speichern
-		if   ( $this->getRequestVar('name') != '' )
-			$this->folder->name     = $this->getRequestVar('name'    ,'full');
-		elseif ($this->getRequestVar('filename') != '' )
-		 	$this->folder->name     = $this->getRequestVar('filename',OR_FILTER_ALPHANUM);
-		else
-		{
-			$this->addValidationError('name');
-			$this->addValidationError('filename');
-			//$this->callSubAction('prop');
-			return;
-		}
-
-		$this->folder->filename = $this->getRequestVar('filename'   ,OR_FILTER_ALPHANUM);
-		$this->folder->desc     = $this->getRequestVar('description','full'    );
-		$this->folder->save();
-
-
-		// Name/Beschreibung für alle Sprachen speichern.
-		foreach( $this->folder->getNames() as $name )
-        {
-            $language = new Language( $name->languageid );
-            $language->load();
-
-            if   ( $this->hasRequestVar( 'name_'.$language->name ) )
-                $name->name = $this->getRequestVar( 'name_'.$language->name );
-            if   ( $this->hasRequestVar( 'description_'.$language->name ) )
-                $name->description = $this->getRequestVar( 'description_'.$language->name );
-
-            $name->save();
-        }
-
-		$this->addNotice($this->folder->getType(),$this->folder->name,'PROP_SAVED','ok');
-	}
-
-
-	/**
 	 * Reihenfolge von Objekten aendern.
 	 */
     public function orderPost()
@@ -1450,28 +1409,6 @@ class FolderAction extends ObjectAction
 	}
 
 
-
-	/**
-	 * Eigenschaften anzeigen.
-	 */
-	public function propView()
-	{
-		$this->setTemplateVars( $this->folder->getProperties() );
-
-		$nameProps = array();
-		foreach( $this->folder->getNames() as $name )
-        {
-            $nameProps[ $name->languageid ] = get_object_vars( $name );
-            $language = new Language( $name->languageid );
-            $language->load();
-            $nameProps[ $name->languageid ]['languageName'     ] = $language->name;
-            $nameProps[ $name->languageid ]['languageIsDefault'] = $language->isDefault;
-            $nameProps[ $name->languageid ]['languageIsoCode'  ] = $language->isoCode;
-        }
-        $this->setTemplateVar('names',$nameProps);
-
-
-	}
 
 	/**
 	 * Infos anzeigen.

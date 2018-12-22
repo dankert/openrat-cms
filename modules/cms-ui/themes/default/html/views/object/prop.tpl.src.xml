@@ -1,0 +1,24 @@
+<output xmlns="http://www.openrat.de/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.openrat.de/template ../../../../../../template-engine/components/template.xsd">
+    <form label="message:global_save">
+
+        <group title="message:global_prop">
+
+            <input name="filename" label="global_filename" class="filename" maxlength="150" focus="true" />
+        </group>
+
+        <list list="names" extract="true">
+
+            <group title="var:languageName" open="var:languageIsDefault">
+
+                <set var="var:languageName" value="var:name" />
+                <input label="global_name" name="var:languageName" class="filename" prefix="name" maxlength="255" />
+
+                <set var="var:languageName" value="var:description" />
+                <inputarea label="global_description" prefix="description" name="var:languageName" class="description" maxlength="255" />
+
+            </group>
+        </list>
+
+    </form>
+</output>

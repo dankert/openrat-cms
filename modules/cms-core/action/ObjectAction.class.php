@@ -15,29 +15,10 @@ use cms\model\Link;
 use Http;
 use Session;
 
-// OpenRat Content Management System
-// Copyright (C) 2002-2012 Jan Dankert, cms@jandankert.de
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 
 /**
- * Action-Klasse zum Bearbeiten eines Ordners
- * @author $Author$
- * @version $Revision$
- * @package openrat.actions
+ * Basis-Action-Klasse zum Bearbeiten des Basis-Objektes.
+ * @author Jan Dankert
  */
 
 class ObjectAction extends Action
@@ -487,13 +468,60 @@ class ObjectAction extends Action
 	}
 
 
-    public function propView()
-    {
-    }
-
+    /**
+     * Abspeichern der Ordner-Eigenschaften.
+     */
     public function propPost()
     {
+        if   ( ! $this->hasRequestVar('filename' ) )
+            throw new \ValidationException('filename');
 
+        $this->baseObject->filename = BaseObject::urlify( $this->getRequestVar('filename') );
+        $this->baseObject->save();
+
+        // Name/Beschreibung für alle Sprachen speichern.
+        foreach( $this->baseObject->getNames() as $name )
+        {
+            $language = new Language( $name->languageid );
+            $language->load();
+
+            if   ( $this->hasRequestVar( 'name_'.$language->name ) )
+                $name->name = $this->getRequestVar( 'name_'.$language->name );
+            if   ( $this->hasRequestVar( 'description_'.$language->name ) )
+                $name->description = $this->getRequestVar( 'description_'.$language->name );
+
+            $name->save();
+        }
+
+        $this->addNotice($this->baseObject->getType(),$this->baseObject->filename,'PROP_SAVED','ok');
+    }
+
+
+
+
+
+
+    /**
+     * Eigenschaften anzeigen.
+     */
+    public function propView()
+    {
+        $this->setTemplateVar( 'filename', $this->baseObject->filename );
+
+        $nameProps = array();
+        foreach( $this->baseObject->getNames() as $name )
+        {
+            $nameProps[ $name->languageid ] = get_object_vars( $name );
+            $language = new Language( $name->languageid );
+            $language->load();
+            $nameProps[ $name->languageid ]['languageName'     ] = $language->name;
+            $nameProps[ $name->languageid ]['languageIsDefault'] = $language->isDefault;
+            $nameProps[ $name->languageid ]['languageIsoCode'  ] = $language->isoCode;
+        }
+        $this->setTemplateVar('names',$nameProps);
+
+
+        // Should we do this?
         if	( $this->hasRequestVar('creationTimestamp') && $this->userIsAdmin() )
             $this->baseObject->createDate = $this->getRequestVar('creationTimestamp',OR_FILTER_NUMBER);
         $this->baseObject->setCreationTimestamp();

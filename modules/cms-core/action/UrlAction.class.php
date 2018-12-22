@@ -100,24 +100,6 @@ class UrlAction extends ObjectAction
     }
 
 
-    /**
-	 * Abspeichern der Eigenschaften
-	 */
-	function propPost()
-	{
-		// Wenn Name gefuellt, dann Datenbank-Update
-		if   ( $this->getRequestVar('name') != '' )
-		{
-			// Eigenschaften speichern
-			$this->url->name      = $this->getRequestVar('name'       ,'full');
-			$this->url->desc      = $this->getRequestVar('description','full');
-
-			$this->url->save();
-			$this->url->setTimestamp();
-		}
-	}
-
-
 	/**
 	 * Abspeichern der Eigenschaften
 	 */
@@ -142,15 +124,9 @@ class UrlAction extends ObjectAction
 	}
 
 
-
-	function propView()
-	{
-		$this->setTemplateVars( $this->url->getProperties() );
-	}
 	
 	
-	
-	function infoView()
+	public function infoView()
 	{
 		$this->setTemplateVars( $this->url->getProperties() );
 	}

@@ -689,6 +689,7 @@ SQL
          */
         public function save()
         {
+            $this->setTimestamp();
             $this->checkFilename();
 
             $stmt = db()->sql( <<<SQL
