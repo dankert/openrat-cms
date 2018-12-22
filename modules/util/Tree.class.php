@@ -473,6 +473,13 @@ class Tree
     }
 
 
+    public function url($id)
+    {
+        // URLs have no sub-nodes.
+        // do nothing.
+    }
+
+
     /**
      * Laedt Elemente zu einem Ordner
      */

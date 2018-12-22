@@ -60,10 +60,19 @@ class TreeAction extends Action
     {
         $tree = new Tree();
 
-        if	( $this->hasRequestVar('id'))
-            $tree->$type( $this->getRequestVar('id') );
-        else
-            $tree->$type();
+        try
+        {
+            $method    = new \ReflectionMethod($tree,$type);
+            if	( $this->hasRequestVar('id'))
+                $method->invoke($tree, $this->getRequestVar('id') );
+            else
+                $method->invoke($tree); // <== Executing the Action
+        }
+        catch (\ReflectionException $re)
+        {
+            throw new \LogicException('Treemethod not found: '.$type);
+        }
+
 
         $branch = array();
         foreach($tree->treeElements as $element )
