@@ -72,65 +72,6 @@ namespace cms\action
         }
 
 
-        function propView()
-        {
-
-            global $conf;
-
-            if ($this->file->filename == $this->file->objectid)
-                $this->file->filename = '';
-
-            // Eigenschaften der Datei uebertragen
-            $this->setTemplateVars($this->file->getProperties());
-
-            $this->setTemplateVar('size', number_format($this->file->size / 1000, 0, ',', '.') . ' kB');
-            $this->setTemplateVar('full_filename', $this->file->full_filename());
-
-            if (is_file($this->file->tmpfile())) {
-                $this->setTemplateVar('cache_filename', $this->file->tmpfile());
-                $this->setTemplateVar('cache_filemtime', @filemtime($this->file->tmpfile()));
-            }
-
-            // Alle Seiten mit dieser Datei ermitteln
-            $pages = $this->file->getDependentObjectIds();
-
-            $list = array();
-            foreach ($pages as $id) {
-                $o = new BaseObject($id);
-                $o->load();
-                $list[$id] = array();
-                $list[$id]['url'] = Html::url('main', 'page', $id);
-                $list[$id]['name'] = $o->name;
-            }
-            asort($list);
-            $this->setTemplateVar('pages', $list);
-            $this->setTemplateVar('edit_filename', $conf['filename']['edit']);
-
-            $this->setTemplateVar('filterlist', array(
-                OR_FILE_FILTER_LESS => 'less'
-            ));
-        }
-
-
-        /**
-         * Abspeichern der Eigenschaften zu dieser Datei.
-         *
-         */
-        function propPost()
-        {
-            // Eigenschaften speichern
-            $this->file->filename = $this->getRequestVar('filename', OR_FILTER_FILENAME);
-            $this->file->name = $this->getRequestVar('name', OR_FILTER_FULL);
-            $this->file->extension = $this->getRequestVar('extension', OR_FILTER_FILENAME);
-            $this->file->desc = $this->getRequestVar('description', OR_FILTER_FULL);
-            $this->file->filterid = $this->getRequestVar('filterid', OR_FILTER_NUMBER);
-
-            $this->file->save();
-            $this->file->setTimestamp();
-            $this->addNotice($this->file->getType(), $this->file->name, 'PROP_SAVED', 'ok');
-        }
-
-
         public function valueView()
         {
             parent::valueView();
