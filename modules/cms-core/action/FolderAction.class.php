@@ -412,7 +412,7 @@ class FolderAction extends ObjectAction
 
 		foreach( $order as $objectid )
 		{
-			if	( ! in_array($objectid,$ids) )
+			if	( ! is_numeric($objectid) || ! in_array($objectid,$ids) )
 			{
 				throw new \LogicException('Object-Id '.$objectid.' is not in this folder any more');
 			}
@@ -818,52 +818,6 @@ class FolderAction extends ObjectAction
 	}
 
 
-	/**
-	 * Reihenfolge von Objekten aendern.
-	 */
-	public function reorderPost()
-	{
-		$type = $this->getRequestVar('type');
-
-		switch( $type )
-		{
-			case 'type':
-				$ids = $this->folder->getObjectIdsByType();
-				break;
-
-			case 'name':
-				$ids = $this->folder->getChildObjectIdsByName();
-				break;
-
-			case 'lastchange':
-				$ids = $this->folder->getObjectIdsByLastChange();
-				break;
-
-			case 'flip':
-				$ids = $this->folder->getObjectIds();
-				$ids = array_reverse( $ids ); // Reihenfolge drehen
-
-				break;
-
-			default:
-				throw new \InvalidArgumentException('Unknown reordertype: '.$type );
-		}
-
-		// Und jetzt die neu ermittelte Reihenfolge speichern
-		$seq = 0;
-		foreach( $ids as $id )
-		{
-			$seq++; // Sequenz um 1 erhoehen
-
-			$o = new BaseObject( $id );
-			$o->setOrderId( $seq );
-
-			unset( $o );
-		}
-		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
-
-		$this->folder->setTimestamp();
-	}
 
 
     public function settopPost()

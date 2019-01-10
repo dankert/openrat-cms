@@ -1079,11 +1079,9 @@ SQL
          *
          * @param Integer neue Sequenz-Nr.
          */
-        function setOrderId( $orderid )
+        public function setOrderId( $orderid )
         {
-            $db = db_connection();
-
-            $sql = $db->sql('UPDATE {{object}} '.'  SET orderid={orderid}'.'  WHERE id={objectid}');
+            $sql = db()->sql('UPDATE {{object}} '.'  SET orderid={orderid}'.'  WHERE id={objectid}');
             $sql->setInt('objectid', $this->objectid);
             $sql->setInt('orderid', $orderid);
 
@@ -1097,7 +1095,7 @@ SQL
          *
          * @param Integer ?bergeordnete Objekt-ID
          */
-        function setParentId( $parentid )
+        public function setParentId( $parentid )
         {
             $db = db_connection();
 
@@ -1109,7 +1107,7 @@ SQL
         }
 
 
-        function getDependentObjectIds()
+        public function getDependentObjectIds()
         {
             $db = db_connection();
 
