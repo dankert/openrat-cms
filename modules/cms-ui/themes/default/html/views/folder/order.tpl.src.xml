@@ -4,13 +4,19 @@
         <table class="or-table--sortable">
 
             <row class="headline">
-                <column class="help clickable">
+                <column class="help">
                     <text key="FOLDER_ORDER"></text>
                 </column>
-                <column class="help clickable">
+                <column class="help">
+                    <text key="GLOBAL_TYPE"></text>
+                </column>
+                <column class="help">
                     <text key="GLOBAL_NAME"></text>
                 </column>
-                <column class="help clickable">
+                <column class="help">
+                    <text key="GLOBAL_FILENAME"></text>
+                </column>
+                <column class="help">
                     <text key="GLOBAL_LASTCHANGE"></text>
                 </column>
             </row>
@@ -20,8 +26,14 @@
                         <text raw="_"></text>
                     </column>
                     <column>
+                        <text class="sort-value" value="var:icon" />
                         <image type="var:icon"></image>
+                    </column>
+                    <column>
                         <text var="name"></text>
+                    </column>
+                    <column>
+                        <text var="filename"></text>
                     </column>
                     <column>
                         <date date="var:date"></date>

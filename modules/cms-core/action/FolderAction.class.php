@@ -429,36 +429,6 @@ class FolderAction extends ObjectAction
 	}
 
 
-	// Reihenfolge von Objekten aendern
-    public function changesequencePost()
-	{
-		$ids = $this->folder->getObjectIds();
-		$seq = 0;
-		foreach( $ids as $id )
-		{
-			$seq++; // Sequenz um 1 erhoehen
-
-			// Die beiden Ordner vertauschen
-			if   ( $id == $this->getRequestVar('objectid1') )
-				$id = $this->getRequestVar('objectid2');
-			elseif ( $id == $this->getRequestVar('objectid2') )
-				$id = $this->getRequestVar('objectid1');
-
-			$o = new BaseObject( $id );
-			$o->setOrderId( $seq );
-
-			unset( $o ); // Selfmade Garbage Collection :-)
-		}
-
-		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
-		$this->folder->setTimestamp();
-
-		// Ordner anzeigen
-		$this->callSubAction('order');
-
-	}
-
-
 	private function OLD__________editPost()
 	{
 		$type = $this->getRequestVar('type'); // Typ der Aktion, z.B "copy" oder "move"
@@ -818,66 +788,6 @@ class FolderAction extends ObjectAction
 	}
 
 
-
-
-    public function settopPost()
-	{
-		$o = new BaseObject( $this->getRequestVar('objectid1') );
-		$o->setOrderId( 1 );
-
-		$ids = $this->folder->getObjectIds();
-		$seq = 1;
-
-		foreach( $ids as $id )
-		{
-			if   ( $id != $this->getRequestVar('objectid1') )
-			{
-				$seq++; // Sequenz um 1 erhoehen
-
-				$o = new BaseObject( $id );
-				$o->setOrderId( $seq );
-
-				unset( $o ); // Selfmade Garbage Collection :-)
-			}
-		}
-
-		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
-		$this->folder->setTimestamp();
-
-		// Ordner anzeigen
-		$this->callSubAction('order');
-	}
-
-
-    public function setbottomPost()
-	{
-		$ids = $this->folder->getObjectIds();
-		$seq = 0;
-
-		foreach( $ids as $id )
-		{
-			if   ( $id != $this->getRequestVar('objectid1') )
-			{
-				$seq++; // Sequenz um 1 erhoehen
-
-				$o = new BaseObject( $id );
-				$o->setOrderId( $seq );
-
-				unset( $o ); // Selfmade Garbage Collection :-)
-			}
-		}
-
-		$seq++; // Sequenz um 1 erhoehen
-		$o = new BaseObject( $this->getRequestVar('objectid1') );
-		$o->setOrderId( $seq );
-
-		$this->addNotice($this->folder->getType(),$this->folder->name,'SEQUENCE_CHANGED','ok');
-		$this->folder->setTimestamp();
-
-		// Ordner anzeigen
-		$this->callSubAction('order');
-
-	}
 
 
 	/**
@@ -1337,29 +1247,12 @@ class FolderAction extends ObjectAction
 				$list[$id]['date'] = $o->lastchangeDate;
 				$list[$id]['user'] = $o->lastchangeUser;
 
-				if   ( $last_objectid != 0 && $o->hasRight(ACL_WRITE) )
-				{
-					$list[$id           ]['upurl'    ] = Html::url('folder','changesequence',0,array(
-					                                                     'objectid1'=>$id,
-					                                                     'objectid2'=>$last_objectid));
-					$list[$last_objectid]['downurl'  ] = $list[$id]['upurl'];
-					$list[$last_objectid]['bottomurl'] = Html::url('folder','setbottom',0,array(
-					                                                     'objectid1'=>$last_objectid));
-					$list[$id           ]['topurl'   ] = Html::url('folder','settop',0,array(
-					                                                     'objectid1'=>$id));
-				}
-
 				$last_objectid = $id;
 			}
 		}
 
-		$this->setTemplateVar('flip_url'             ,Html::url('folder','reorder',0,array('type'=>'flip'      )) );
-		$this->setTemplateVar('orderbyname_url'      ,Html::url('folder','reorder',0,array('type'=>'name'      )) );
-		$this->setTemplateVar('orderbytype_url'      ,Html::url('folder','reorder',0,array('type'=>'type'      )) );
-		$this->setTemplateVar('orderbylastchange_url',Html::url('folder','reorder',0,array('type'=>'lastchange')) );
 		$this->setTemplateVar('object'      ,$list            );
 		$this->setTemplateVar('act_objectid',$this->folder->id);
-		$this->setTemplateVar('token',token() );
 	}
 
 
