@@ -1,37 +1,25 @@
 $(document).on('orViewLoaded',function(event, data) {
 
-// Sortieren von Tabellen
-	$(event.target).find('table.sortable > tbody').sortable({
-		   update: function(event, ui)
-		   {
-			   $(ui).addClass('loader');
-				var order = [];
-				$(ui.item).closest('table.sortable').find('tbody > tr.data').each( function() {
-					var objectid = $(this).data('id');
-					order.push( objectid );
-				});
-				var url    = './api/';
-				var params = {};
-				params.action    = 'folder';
-				params.subaction = 'order';
-				params.token     = $('div.action-folder.method-order input[name=token]').attr('value');
-				params.order     = order.join(',');
-				params.id        = $('div#dialog').data('id');
-				params.output    = 'json';
-				
-				$.ajax( { 'type':'POST',url:url, data:params, success:function(data, textStatus, jqXHR)
-					{
-					   $(ui).removeClass('loader');
-						doResponse(data,textStatus,ui);
-					},
-					error:function(jqXHR, textStatus, errorThrown) {
-						alert( errorThrown );
-					}
-					
-				} );
-		   }
-	});
-	
+	// Manuelles Sortieren von Tabellen per Drag and drop.
+	$(event.target).find('table.or-table--sortable > tbody').sortable();
+
+
+    $(event.target).find('table.or-table--sortable > tbody').closest('form').submit( function() {
+
+            // Analyse the order of the objects in this folder.
+            var order = new Array();
+
+            $(this).find('table.or-table--sortable').find('tbody > tr.data').each(function () {
+                let objectid = $(this).data('id');
+                order.push(objectid);
+            });
+
+            // Set the comma-separated list of objects into a input field.
+            $(this).find('input[name=order]').val(order.join(','));
+        }
+    );
+
+
 	// Alle Checkboxen setzen oder nicht setzen.
 	$(event.target).find('tr.headline > td > input.checkbox').click( function() {
 		$(this).closest('table').find('tr.data > td > input.checkbox').attr('checked',Boolean( $(this).attr('checked') ) );
