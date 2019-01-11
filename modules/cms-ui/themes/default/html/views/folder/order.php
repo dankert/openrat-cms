@@ -33,7 +33,7 @@
 						<td>
 							<span class="sort-value"><?php echo nl2br(encodeHtml(htmlentities($icon))); ?></span>
 							
-							<img src="./modules/cms-ui/themes/default/images/icon_<?php echo $icon ?>.png" />
+							<i class="image-icon image-icon--action-<?php echo $icon ?>"></i>
 							
 						</td>
 						<td>

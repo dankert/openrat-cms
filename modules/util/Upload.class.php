@@ -29,6 +29,7 @@ class Upload
 	public $extension;
 	public $value;
 	public $size;
+	public $mimeType;
 
 	public $parameterName;
 
@@ -37,7 +38,6 @@ class Upload
 	
 	/**
 	 * Bearbeitet den Upload einer Datei.<br>
-	 * Bei der Objekterzeugung wird die Datei bereits geladen.<br>
 	 *
 	 * @return Upload
 	 */
@@ -46,25 +46,49 @@ class Upload
 	    $this->parameterName = $name;
 	}
 
+    /**
+     * Provision of an uploaded file.
+     */
 	public function processUpload()
     {
         $name = $this->parameterName;
 
-        if	( !isset($_FILES[$name])              ||
-            !isset($_FILES[$name]['tmp_name'])  ||
-            !is_file($_FILES[$name]['tmp_name'])   )
+        if	( !isset($_FILES[$name]) || !is_array($_FILES[$name]) )
+            throw new InvalidArgumentException('No file received under the key "'.$name.'"' );
+
+        $uFile = $_FILES[$name];
+
+        if	( !isset($uFile['tmp_name']) )
+            throw new InvalidArgumentException('No temporary filename found for uploaded file key "'.$name.'"' );
+
+        if	( !is_file($uFile['tmp_name']) )
+            throw new InvalidArgumentException('Not a file: '.$uFile['tmp_name'] );
+
+        switch( $uFile['error'] )
         {
-            throw new InvalidArgumentException('No file received under the key '.$name );
+            case UPLOAD_ERR_OK:
+                break;
+
+            case UPLOAD_ERR_INI_SIZE:
+                throw new InvalidArgumentException('Uploaded file is bigger than allowed in server configuration');
+
+            case UPLOAD_ERR_FORM_SIZE:
+                throw new InvalidArgumentException('Uploaded file is bigger than allowed in form');
+
+            default:
+                throw new InvalidArgumentException('Error code while uploading file: '.$uFile['error'] );
         }
 
-        $this->size = filesize($_FILES[$name]['tmp_name']);
+        $this->mimeType = $uFile['type'];
 
-        $fh    = fopen( $_FILES[$name]['tmp_name'],'r' );
+        $this->size = filesize($uFile['tmp_name']);
+
+        $fh    = fopen( $uFile['tmp_name'],'r' );
 
         $this->value = fread($fh,$this->size);
         fclose( $fh );
 
-        $this->filename = $_FILES[$name]['name'];
+        $this->filename = $uFile['name'];
         $this->extension = '';
 
         $p = strrpos( $this->filename,'.' ); // Letzten Punkt suchen

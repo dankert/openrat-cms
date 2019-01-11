@@ -48,7 +48,7 @@ function handleFileUpload(form,files)
 	    var form_data = new FormData();                  
 	    form_data.append('file'     , f);
 	    form_data.append('action'   ,'folder');
-	    form_data.append('subaction','createfile');
+	    form_data.append('subaction',$(form).data('method'));
 	    form_data.append('output'   ,'json');
 	    form_data.append('token'    ,$(form).find('input[name=token]').val() );
 	    form_data.append('id'       ,$(form).find('input[name=id]'   ).val() );

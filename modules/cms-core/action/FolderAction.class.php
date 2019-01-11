@@ -196,34 +196,27 @@ class FolderAction extends ObjectAction
 		{
 			$upload = new Upload();
 
-            $upload->processUpload();
-			if	( $upload->isValid() )
-			{
-				$image->desc      = $description;
-				$image->filename  = BaseObject::urlify( $upload->filename );
-				$image->name      = !empty($name)?$name:$upload->filename;
-				$image->extension = $upload->extension;
-				$image->size      = $upload->size;
-				$image->parentid  = $this->folder->objectid;
-				$image->projectid = $this->folder->projectid;
+            try
+            {
+                $upload->processUpload();
+            }
+            catch( \Exception $e )
+            {
+                // technical error.
+                throw new \RuntimeException('Exception while processing the upload: '.$e->getMessage(), 0, $e);
 
-				$image->value     = $upload->value;
-			}
-			else
-			{
-				if	( $this->hasRequestVar('name') )
-				{
-					$image->filename = BaseObject::urlify( $name );
-					$image->parentid = $this->folder->objectid;
-				}
-				else
-				{
-					$this->addValidationError('file','COMMON_VALIDATION_ERROR',array(),$upload->error);
-					$this->callSubAction('createfile');
-					return;
-				}
+                //throw new \ValidationException( $upload->parameterName );
+            }
 
-			}
+            $image->desc      = $description;
+            $image->filename  = BaseObject::urlify( $upload->filename );
+            $image->name      = !empty($name)?$name:$upload->filename;
+            $image->extension = $upload->extension;
+            $image->size      = $upload->size;
+            $image->parentid  = $this->folder->objectid;
+            $image->projectid = $this->folder->projectid;
+
+            $image->value     = $upload->value;
 		}
 
 		$image->add(); // Datei hinzufuegen
@@ -1120,19 +1113,6 @@ class FolderAction extends ObjectAction
 				$list[$id]['type'] = $o->getType();
 
 				$list[$id]['icon'] = $o->getType();
-
-				if	( $o->getType() == 'file' )
-				{
-					$file = new File( $id );
-					$file->load();
-					$list[$id]['size'] = $file->size;
-					$list[$id]['desc'] .= ' - '.intval($file->size/1000).'kB';
-
-					if	( substr($file->mimeType(),0,6) == 'image/' )
-						$list[$id]['icon'] = 'image';
-//					if	( substr($file->mimeType(),0,5) == 'text/' )
-//						$list[$id]['icon'] = 'text';
-				}
 
 				$list[$id]['url' ] = Html::url($o->getType(),'',$id);
 				$list[$id]['date'] = date( lang('DATE_FORMAT'),$o->lastchangeDate );

@@ -27,7 +27,7 @@
                     </column>
                     <column>
                         <text class="sort-value" value="var:icon" />
-                        <image type="var:icon"></image>
+                        <image action="var:icon"></image>
                     </column>
                     <column>
                         <text var="name"></text>
