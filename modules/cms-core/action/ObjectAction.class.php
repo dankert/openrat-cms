@@ -230,7 +230,7 @@ class ObjectAction extends Action
 		$o = new BaseObject( $acl->objectid );
 
 		if	( !$o->hasRight( ACL_GRANT ) )
-			throw new \SecurityException('uh?'); // Scheiss Hacker.
+			throw new \SecurityException('Not allowed to insert permissions.'); // Scheiss Hacker ;)
 		
 		// Handelt es sich um eine Benutzer- oder Gruppen ACL?
 		switch( $this->getRequestVar('type') )
