@@ -798,7 +798,7 @@ class PageelementAction extends Action
 			$this->page->load();
 			$this->value->page = &$this->page;
 
-			$this->value->simple = true;
+			$this->value->publisher  = $this->page->publisher;
 			$this->value->languageid = $this->page->languageid;
 			$this->value->objectid   = $this->page->objectid;
 			$this->value->pageid     = Page::getPageIdFromObjectId( $this->page->objectid );
@@ -814,7 +814,7 @@ class PageelementAction extends Action
 				$lfd_nr++;
 				$value->element = &$this->element;
 				$value->page    = &$this->page;
-				$value->simple  = true;
+				$value->publisher = &$this->page->publisher;
 				$value->generate();
 					
 

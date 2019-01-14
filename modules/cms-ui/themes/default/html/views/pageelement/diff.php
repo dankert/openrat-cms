@@ -5,9 +5,9 @@
 				<td>
 				</td>
 				<td>
-					<em class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_COMPARE')))); ?></em>
+					<em><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_COMPARE')))); ?></em>
 					
-					<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+					<span><?php echo nl2br('&nbsp;'); ?></span>
 					
 					<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($date_left) ?>
 					
@@ -15,9 +15,9 @@
 				<td>
 				</td>
 				<td>
-					<em class="text"><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_WITH')))); ?></em>
+					<em><?php echo nl2br(encodeHtml(htmlentities(lang('GLOBAL_WITH')))); ?></em>
 					
-					<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+					<span><?php echo nl2br('&nbsp;'); ?></span>
 					
 					<?php include_once( 'modules/template-engine/components/html/date/component-date.php') ?><?php component_date($date_right) ?>
 					
@@ -31,33 +31,33 @@
 				<tr class="diff">
 					<?php $if5=(isset($left)); if($if5){?>
 						<td width="5%" class="line">
-							<tt class="text"><?php echo nl2br(encodeHtml(htmlentities(@$left[line]))); ?></tt>
+							<tt><?php echo nl2br(encodeHtml(htmlentities(@$left[line]))); ?></tt>
 							
 						</td>
 						<td width="45%" class="<?php echo @$left[type] ?>">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(@$left[text]))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(@$left[text]))); ?></span>
 							
 						</td>
 					<?php } ?>
 					<?php if(!$if5){?>
 						<td width="50%" colspan="2" class="help">
-							<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+							<span><?php echo nl2br('&nbsp;'); ?></span>
 							
 						</td>
 					<?php } ?>
 					<?php $if5=(isset($right)); if($if5){?>
 						<td width="5%" class="line">
-							<tt class="text"><?php echo nl2br(encodeHtml(htmlentities(@$right[line]))); ?></tt>
+							<tt><?php echo nl2br(encodeHtml(htmlentities(@$right[line]))); ?></tt>
 							
 						</td>
 						<td width="45%" class="<?php echo @$right[type] ?>">
-							<span class="text"><?php echo nl2br(encodeHtml(htmlentities(@$right[text]))); ?></span>
+							<span><?php echo nl2br(encodeHtml(htmlentities(@$right[text]))); ?></span>
 							
 						</td>
 					<?php } ?>
 					<?php if(!$if5){?>
 						<td width="50%" colspan="2" class="help">
-							<span class="text"><?php echo nl2br('&nbsp;'); ?></span>
+							<span><?php echo nl2br('&nbsp;'); ?></span>
 							
 						</td>
 					<?php } ?>
